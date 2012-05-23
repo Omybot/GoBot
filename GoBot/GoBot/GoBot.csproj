@@ -1,0 +1,526 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">x86</Platform>
+    <ProductVersion>8.0.30703</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{2B2AB0B0-DA2E-4C88-A57B-BCB8D57B12BF}</ProjectGuid>
+    <OutputType>WinExe</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>GoBot</RootNamespace>
+    <AssemblyName>GoBot</AssemblyName>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <TargetFrameworkProfile>Client</TargetFrameworkProfile>
+    <FileAlignment>512</FileAlignment>
+    <IsWebBootstrapper>false</IsWebBootstrapper>
+    <PublishUrl>publish\</PublishUrl>
+    <Install>true</Install>
+    <InstallFrom>Disk</InstallFrom>
+    <UpdateEnabled>false</UpdateEnabled>
+    <UpdateMode>Foreground</UpdateMode>
+    <UpdateInterval>7</UpdateInterval>
+    <UpdateIntervalUnits>Days</UpdateIntervalUnits>
+    <UpdatePeriodically>false</UpdatePeriodically>
+    <UpdateRequired>false</UpdateRequired>
+    <MapFileExtensions>true</MapFileExtensions>
+    <ApplicationRevision>0</ApplicationRevision>
+    <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
+    <UseApplicationTrust>false</UseApplicationTrust>
+    <BootstrapperEnabled>true</BootstrapperEnabled>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x86' ">
+    <PlatformTarget>x86</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|x86' ">
+    <PlatformTarget>x86</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationIcon>robot.ico</ApplicationIcon>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Deployment" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Actions\GrosRobot\Asservissement\GRAccelerationPivotAction.cs" />
+    <Compile Include="Actions\GrosRobot\Asservissement\GRVitessePivotAction.cs" />
+    <Compile Include="Actions\GrosRobot\GRServoAction.cs" />
+    <Compile Include="Actions\Nommeur.cs" />
+    <Compile Include="Actions\PetitRobot\Asservissement\PRAccelerationPivotAction.cs" />
+    <Compile Include="Actions\PetitRobot\Asservissement\PRVitessePivotAction.cs" />
+    <Compile Include="Actions\PetitRobot\Asservissement\PRAccelerationLigneAction.cs" />
+    <Compile Include="Actions\GrosRobot\Asservissement\GRAccelerationLigneAction.cs" />
+    <Compile Include="Actions\PetitRobot\Asservissement\PRVitesseLigneAction.cs" />
+    <Compile Include="Actions\GrosRobot\Asservissement\GRVitesseLigneAction.cs" />
+    <Compile Include="Actions\PetitRobot\Deplacement\PRAvanceAction.cs" />
+    <Compile Include="Actions\PetitRobot\Deplacement\PRPivotDroiteAction.cs" />
+    <Compile Include="Actions\PetitRobot\Deplacement\PRPivotGaucheAction.cs" />
+    <Compile Include="Actions\PetitRobot\Deplacement\PRReculeAction.cs" />
+    <Compile Include="Actions\PetitRobot\Deplacement\PRStopAction.cs" />
+    <Compile Include="Actions\PetitRobot\Deplacement\PRVirageArriereDroitAction.cs" />
+    <Compile Include="Actions\PetitRobot\Deplacement\PRVirageArriereGaucheAction.cs" />
+    <Compile Include="Actions\PetitRobot\Deplacement\PRVirageAvantDroiteAction.cs" />
+    <Compile Include="Actions\PetitRobot\Deplacement\PRVirageAvantGaucheAction.cs" />
+    <Compile Include="Actions\GrosRobot\Deplacement\GRStopAction.cs" />
+    <Compile Include="Actions\GrosRobot\Deplacement\GRVirageArriereDroitAction.cs" />
+    <Compile Include="Actions\GrosRobot\Deplacement\GRVirageArriereGaucheAction.cs" />
+    <Compile Include="Actions\GrosRobot\Deplacement\GRVirageAvantDroiteAction.cs" />
+    <Compile Include="Actions\GrosRobot\Deplacement\GRPivotDroiteAction.cs" />
+    <Compile Include="Actions\GrosRobot\Deplacement\GRAvanceAction.cs" />
+    <Compile Include="Actions\GrosRobot\Deplacement\GRPivotGaucheAction.cs" />
+    <Compile Include="Actions\GrosRobot\Deplacement\GRReculeAction.cs" />
+    <Compile Include="Actions\GrosRobot\Deplacement\GRVirageAvantGaucheAction.cs" />
+    <Compile Include="Actions\IAction.cs" />
+    <Compile Include="Actions\PetitRobot\PRPompeAction.cs" />
+    <Compile Include="Actions\PetitRobot\PRServoAction.cs" />
+    <Compile Include="AStar\Arc.cs" />
+    <Compile Include="AStar\AStar.cs" />
+    <Compile Include="AStar\Graph.cs" />
+    <Compile Include="AStar\Node.cs" />
+    <Compile Include="AStar\Point3D.cs" />
+    <Compile Include="AStar\SortableList.cs" />
+    <Compile Include="AStar\Track.cs" />
+    <Compile Include="AStar\Vector3D.cs" />
+    <Compile Include="Balise.cs" />
+    <Compile Include="Calculs\Angle.cs" />
+    <Compile Include="Calculs\BaliseCalc.cs" />
+    <Compile Include="Calculs\DetectionBalise.cs" />
+    <Compile Include="Calculs\Formes\Cercle.cs" />
+    <Compile Include="Calculs\Formes\Droite.cs" />
+    <Compile Include="Calculs\Formes\IForme.cs" />
+    <Compile Include="Calculs\Formes\Point.cs" />
+    <Compile Include="Calculs\Formes\Polygone.cs" />
+    <Compile Include="Calculs\Formes\Segment.cs" />
+    <Compile Include="Calculs\Maths.cs" />
+    <Compile Include="Calculs\Position.cs" />
+    <Compile Include="CalibrateurBalise.cs" />
+    <Compile Include="Config.cs" />
+    <Compile Include="Enchainements\Gerome4Enchainement.cs" />
+    <Compile Include="Enchainements\Gerome3Enchainement.cs" />
+    <Compile Include="Enchainements\EnchainementEvitement.cs" />
+    <Compile Include="Enchainements\EvitementPRMerdique.cs" />
+    <Compile Include="Enchainements\Gerome2Enchainement.cs" />
+    <Compile Include="Enchainements\GeromeEnchainement.cs" />
+    <Compile Include="Enchainements\LigneEnchainement.cs" />
+    <Compile Include="Enchainements\IEnchainement.cs" />
+    <Compile Include="Enchainements\HomologationEnchainement.cs" />
+    <Compile Include="Enchainements\TestEnchainement.cs" />
+    <Compile Include="Enchainements\TotemEnchainement.cs" />
+    <Compile Include="Enums.cs" />
+    <Compile Include="ConnexionCheck.cs" />
+    <Compile Include="IHM\Composants\FocusablePanel.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="IHM\Composants\FocusablePanel.Designer.cs">
+      <DependentUpon>FocusablePanel.cs</DependentUpon>
+    </Compile>
+    <Compile Include="IHM\IHMGrosRobot\PanelDeplacementGR.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="IHM\IHMGrosRobot\PanelDeplacementGR.Designer.cs">
+      <DependentUpon>PanelDeplacementGR.cs</DependentUpon>
+    </Compile>
+    <Compile Include="IHM\IHMPetitRobot\PanelDeplacementPR.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="IHM\IHMPetitRobot\PanelDeplacementPR.Designer.cs">
+      <DependentUpon>PanelDeplacementPR.cs</DependentUpon>
+    </Compile>
+    <Compile Include="IHM\PanelBalise.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="IHM\PanelBalise.Designer.cs">
+      <DependentUpon>PanelBalise.cs</DependentUpon>
+    </Compile>
+    <Compile Include="IHM\PanelDeplacement.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="IHM\PanelDeplacement.Designer.cs">
+      <DependentUpon>PanelDeplacement.cs</DependentUpon>
+    </Compile>
+    <Compile Include="IHM\PanelHistorique.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="IHM\PanelHistorique.Designer.cs">
+      <DependentUpon>PanelHistorique.cs</DependentUpon>
+    </Compile>
+    <Compile Include="IHM\PanelServo.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="IHM\PanelServo.Designer.cs">
+      <DependentUpon>PanelServo.cs</DependentUpon>
+    </Compile>
+    <Compile Include="IHM\PanelTable.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="IHM\PanelTable.Designer.cs">
+      <DependentUpon>PanelTable.cs</DependentUpon>
+    </Compile>
+    <Compile Include="InterpreteurBalise.cs" />
+    <Compile Include="PetitRobot.cs" />
+    <Compile Include="IHM\Composants\BetterTextBox.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="IHM\Composants\BetterTextBox.Designer.cs">
+      <DependentUpon>BetterTextBox.cs</DependentUpon>
+    </Compile>
+    <Compile Include="IHM\Composants\Led.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="IHM\Composants\Led.Designer.cs">
+      <DependentUpon>Led.cs</DependentUpon>
+    </Compile>
+    <Compile Include="IHM\Composants\SwitchBouton.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="IHM\Composants\SwitchBouton.Designer.cs">
+      <DependentUpon>SwitchBouton.cs</DependentUpon>
+    </Compile>
+    <Compile Include="IHM\Composants\TrackBarPlus.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="IHM\Composants\TrackBarPlus.designer.cs">
+      <DependentUpon>TrackBarPlus.cs</DependentUpon>
+    </Compile>
+    <Compile Include="IHM\Fenetre.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="IHM\Fenetre.Designer.cs">
+      <DependentUpon>Fenetre.cs</DependentUpon>
+    </Compile>
+    <Compile Include="IHM\FenGoBot.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="IHM\FenGoBot.Designer.cs">
+      <DependentUpon>FenGoBot.cs</DependentUpon>
+    </Compile>
+    <Compile Include="IHM\IHMGrosRobot\PanelPinces.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="IHM\IHMGrosRobot\PanelPinces.Designer.cs">
+      <DependentUpon>PanelPinces.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Historique.cs" />
+    <Compile Include="IHM\IHMGrosRobot\PanelGrosRobot.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="IHM\IHMGrosRobot\PanelGrosRobot.Designer.cs">
+      <DependentUpon>PanelGrosRobot.cs</DependentUpon>
+    </Compile>
+    <Compile Include="IHM\IHMPetitRobot\PanelBras.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="IHM\IHMPetitRobot\PanelBras.Designer.cs">
+      <DependentUpon>PanelBras.cs</DependentUpon>
+    </Compile>
+    <Compile Include="IHM\IHMPetitRobot\PanelPetitRobot.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="IHM\IHMPetitRobot\PanelPetitRobot.Designer.cs">
+      <DependentUpon>PanelPetitRobot.cs</DependentUpon>
+    </Compile>
+    <Compile Include="PlanificateurBalise.cs" />
+    <Compile Include="Plateau.cs" />
+    <Compile Include="Program.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="GrosRobot.cs" />
+    <Compile Include="Replay.cs" />
+    <Compile Include="Robot.cs" />
+    <Compile Include="Servomoteur.cs" />
+    <Compile Include="UDP\TrameFactory.cs" />
+    <Compile Include="UDP\ConnexionUDP.cs" />
+    <Compile Include="UDP\EmissionUDP.cs" />
+    <Compile Include="UDP\ReceptionUDP.cs" />
+    <Compile Include="UDP\Trame.cs" />
+    <EmbeddedResource Include="IHM\Composants\BetterTextBox.resx">
+      <DependentUpon>BetterTextBox.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="IHM\Composants\Led.resx">
+      <DependentUpon>Led.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="IHM\Composants\SwitchBouton.resx">
+      <DependentUpon>SwitchBouton.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="IHM\Composants\TrackBarPlus.resx">
+      <DependentUpon>TrackBarPlus.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="IHM\IHMGrosRobot\PanelDeplacementGR.resx">
+      <DependentUpon>PanelDeplacementGR.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="IHM\IHMPetitRobot\PanelDeplacementPR.resx">
+      <DependentUpon>PanelDeplacementPR.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="IHM\PanelBalise.resx">
+      <DependentUpon>PanelBalise.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="IHM\PanelDeplacement.resx">
+      <DependentUpon>PanelDeplacement.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="IHM\Fenetre.resx">
+      <DependentUpon>Fenetre.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="IHM\FenGoBot.resx">
+      <DependentUpon>FenGoBot.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="IHM\IHMGrosRobot\PanelGrosRobot.resx">
+      <DependentUpon>PanelGrosRobot.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="IHM\IHMGrosRobot\PanelPinces.resx">
+      <DependentUpon>PanelPinces.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="IHM\IHMPetitRobot\PanelBras.resx">
+      <DependentUpon>PanelBras.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="IHM\IHMPetitRobot\PanelPetitRobot.resx">
+      <DependentUpon>PanelPetitRobot.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="IHM\PanelHistorique.resx">
+      <DependentUpon>PanelHistorique.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="IHM\PanelServo.resx">
+      <DependentUpon>PanelServo.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="IHM\PanelTable.resx">
+      <DependentUpon>PanelTable.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Resources.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Settings.settings</DependentUpon>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="img\close.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="img\virageAvGa.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="img\avance.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="img\virageAvDr.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="img\pivotDroite.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="img\pivotGauche.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="img\recule.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="img\virageArGa.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="img\virageArDr.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="img\stop.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="img\reglagePivot.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="img\bas.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="img\haut.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="img\ciseaux.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="img\disquette.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="img\fenetre.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="img\switchOff.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="img\switchOn.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="img\GrosRobot\BasDroiteFerme.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="img\GrosRobot\BasDroiteOuvert.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="img\GrosRobot\BasGaucheFerme.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="img\GrosRobot\BasGaucheOuvert.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="img\GrosRobot\HautDroiteFerme.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="img\GrosRobot\HautDroiteOuvert.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="img\GrosRobot\HautGaucheFerme.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="img\GrosRobot\HautGaucheOuvert.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="img\GrosRobot\MilieuDroiteFerme.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="img\GrosRobot\MilieuDroiteOuvert.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="img\GrosRobot\MilieuGaucheFerme.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="img\GrosRobot\MilieuGaucheOuvert.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="img\PetitRobot\PinceDroiteExt1.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="img\PetitRobot\PinceDroiteExt2.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="img\PetitRobot\PinceDroiteExt3.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="img\PetitRobot\PinceDroiteExt4.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="img\PetitRobot\PinceDroiteInt1.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="img\PetitRobot\PinceDroiteInt2.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="img\PetitRobot\PinceDroiteInt3.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="img\PetitRobot\PinceDroiteInt4.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="img\PetitRobot\PinceGaucheExt1.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="img\PetitRobot\PinceGaucheExt2.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="img\PetitRobot\PinceGaucheExt3.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="img\PetitRobot\PinceGaucheExt4.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="img\PetitRobot\PinceGaucheInt1.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="img\PetitRobot\PinceGaucheInt2.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="img\PetitRobot\PinceGaucheInt3.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="img\PetitRobot\PinceGaucheInt4.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="img\stopPetit.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="img\PetitRobot\PetitRepli.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="img\PetitRobot\PetitDepli.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BootstrapperPackage Include=".NETFramework,Version=v4.0,Profile=Client">
+      <Visible>False</Visible>
+      <ProductName>Microsoft .NET Framework 4 Client Profile %28x86 et x64%29</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Client.3.5">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1 Client Profile</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.3.5.SP1">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Windows.Installer.3.1">
+      <Visible>False</Visible>
+      <ProductName>Windows Installer 3.1</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="img\crochet.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="img\flecheDroite.png" />
+    <None Include="img\flecheGauche.png" />
+    <Content Include="img\iconeVitesse.png" />
+    <None Include="img\ledNeutre.png" />
+    <Content Include="img\ledOff.png" />
+    <Content Include="img\ledOn.png" />
+    <None Include="img\table.bmp" />
+    <None Include="img\pompe.png" />
+    <None Include="img\tableRouge.png" />
+    <None Include="img\tableViolet.png" />
+    <Content Include="img\trackBarCurseurNormal.png" />
+    <Content Include="img\trackBarCurseurSelect.png" />
+    <Content Include="img\trackBarFond.png" />
+    <Content Include="img\trackBarFondSelected.png" />
+    <None Include="Resources\mort.png" />
+    <Content Include="robot.ico" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>
