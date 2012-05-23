@@ -8,7 +8,7 @@ using System.Drawing;
 namespace GoBot.Enchainements
 {   
 
-    class TestEnchainement : IEnchainement
+    class TestEnchainement : Enchainement
     {
         private Thread thr;
         Color couleur;
@@ -121,31 +121,6 @@ namespace GoBot.Enchainements
             GrosRobot.PivotDroite(90);
             GrosRobot.OuvreBrasBasDroite();
             Thread.Sleep(150);
-        }
-
-        Color IEnchainement.GetCouleur()
-        {
-            throw new NotImplementedException();
-        }
-
-        void IEnchainement.SetCouleur(Color couleur)
-        {
-            throw new NotImplementedException();
-        }
-
-        void IEnchainement.Executer()
-        {
-            throw new NotImplementedException();
-        }
-
-        void IEnchainement.Stop()
-        {
-            throw new NotImplementedException();
-        }
-
-        void IEnchainement.Reprendre(int reculade)
-        {
-            throw new NotImplementedException();
         }
     }
 }

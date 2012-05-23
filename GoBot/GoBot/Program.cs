@@ -19,7 +19,6 @@ namespace GoBot
             PetitRobot.Init();
             Config.Load();
             Plateau.Init();
-            Plateau.InterpreteurBalise.PositionEnnemisActualisee += new InterpreteurBalise.PositionEnnemisDelegate(GrosRobot.InterpreteurBalise_PositionEnnemisActualisee);
             Application.Run(new FenGoBot());
         }
     }

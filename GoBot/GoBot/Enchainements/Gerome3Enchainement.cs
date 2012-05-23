@@ -9,7 +9,7 @@ using System.Windows.Forms;
 
 namespace GoBot.Enchainements
 {
-    class Gerome3Enchainement : IEnchainement
+    class Gerome3Enchainement : Enchainement
     {
         private Thread th;
         Color couleur;

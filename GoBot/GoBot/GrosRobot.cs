@@ -19,10 +19,26 @@ namespace GoBot
         static public ConnexionUDP connexionIo = null;
         static public ConnexionUDP connexionMove = null;
         static private Semaphore mutexDeplacement;
-        static private System.Timers.Timer timerFinMatch;
-        public static System.Timers.Timer timerDemandePos;
-        public static Position Position { get; set; }
-        public static List<PointReel> PositionsEnnemies { get; set; }
+        static private Semaphore mutexPosition;
+
+        private const int TIME_REFRESH_POS = 200;
+        static private DateTime DateRefreshPos { get; set; }
+        static private Position position;
+        public static Position Position
+        {
+            get
+            {
+                if ((DateTime.Now - DateRefreshPos).TotalMilliseconds > TIME_REFRESH_POS)
+                {
+                    DemandePosition();
+                }
+                return position;
+            }
+            set
+            {
+                position = value;
+            }
+        }
 
         public static int OffsetXAsserv { get; set; }
         public static int OffsetYAsserv { get; set; }
@@ -34,17 +50,13 @@ namespace GoBot
 
         public const String Nom = "Montoise";
 
-        static public Enchainements.IEnchainement Enchainement { get; set; }
+        static public Enchainements.Enchainement Enchainement { get; set; }
         static public Color Couleur;
-
-        static public bool avanceEnCours;
-        static public bool reculeEnCours;
 
         static public int distanceRestante = 0;
 
         static public void Init()
         {
-            PositionsEnnemies = new List<PointReel>();
             Evitement = true;
             Couleur = Color.Purple;
 
@@ -63,105 +75,16 @@ namespace GoBot
 
             historique = new Historique();
 
-            mutexDeplacement = new Semaphore(0, 1);
+            mutexDeplacement = new Semaphore(0, int.MaxValue);
+            mutexPosition = new Semaphore(0, int.MaxValue);
+            DateRefreshPos = DateTime.Now;
 
-            timerFinMatch = new System.Timers.Timer();
-            timerFinMatch.Elapsed += new ElapsedEventHandler(timerFinMatch_Elapsed);
-            timerFinMatch.Interval = 90000;
-
-            timerDemandePos = new System.Timers.Timer();
-            timerDemandePos.Elapsed += new ElapsedEventHandler(timerDemandeDeplacement_Elapsed);
-            //timerDemandePos.Interval = 50;//sylvain
-            timerDemandePos.Interval = 100;
-
-            //Enchainement = new Enchainements.HomologationEnchainement();
             Enchainement = new Enchainements.HomologationEnchainement();
-
-
-            timerDemandePos.Start();
-
-            avanceEnCours = false;
-            reculeEnCours = false;
         }
+        
 
 
-        // variable poubelle
-        public static int reculade = 0;
-        public static int distanceRecule = 100;
-        public static void InterpreteurBalise_PositionEnnemisActualisee(InterpreteurBalise interprete)
-        {
-            PositionsEnnemies = new List<PointReel>(interprete.PositionsEnnemies);
-            if (Evitement)
-            {
-                List<PointReel> points = new List<PointReel>();
-
-                double sinAngle = Math.Sin(Position.Angle.AngleRadians);
-                double cosAngle = Math.Cos(Position.Angle.AngleRadians);
-
-                PointReel pCentre = new PointReel(Position.Coordonnees.X + cosAngle * 350, Position.Coordonnees.Y + sinAngle * 350);
-                Cercle cercleDetection = new Cercle(pCentre, 400);
-
-                bool ennemi = false;
-                foreach (PointReel p in interprete.PositionsEnnemies)
-                {
-                    if (cercleDetection.contient(p))
-                    {
-                        ennemi = true;
-                    }
-                }
-
-                if (ennemi)
-                {
-                    if (avanceEnCours)
-                    {
-                        //mutexDeplacement.Release();
-                        Console.WriteLine("STOP");
-                        Stop(StopMode.Smooth);
-                        avanceEnCours = false;
-                    }
-                    else if (!reculeEnCours)
-                    {
-                        GrosRobot.VitesseDeplacement = 300;
-                        GrosRobot.AccelerationDeplacement = 300;
-                        GrosRobot.Reculer(distanceRecule, false);
-                        reculade += distanceRecule;
-                        Console.WriteLine("Je recule");
-                    }
-                }
-                else if (distanceRestante != 0)
-                {
-                    GrosRobot.VitesseDeplacement = 600;
-                    GrosRobot.AccelerationDeplacement = 2200;
-                    int distance = distanceRestante + reculade;
-                    distanceRestante = 0;
-                    reculade = 0;
-
-                    GrosRobot.Avancer(distance, false);
-                }
-            }
-        }
-
-        static void timerDemandeDeplacement_Elapsed(object sender, ElapsedEventArgs e)
-        {
-            Trame t = TrameFactory.GRDemandePosition();
-            connexionMove.SendMessage(t);
-        }
-
-        static void timerFinMatch_Elapsed(object sender, ElapsedEventArgs e)
-        {
-            GrosRobot.Stop(StopMode.Freely);
-            GrosRobot.CoupureAlim();
-            PetitRobot.Stop(StopMode.Freely);
-            Plateau.Balise1.ReglageVitesse = false;
-            Plateau.Balise2.ReglageVitesse = false;
-            Plateau.Balise3.ReglageVitesse = false;
-            Plateau.Balise1.VitesseRotation(0);
-            Plateau.Balise2.VitesseRotation(0);
-            Plateau.Balise3.VitesseRotation(0);
-            timerFinMatch.Stop();
-        }
-
-        static void CoupureAlim()
+        public static void CoupureAlim()
         {
             Trame t = TrameFactory.CoupureAlim();
             connexionIo.SendMessage(t);
@@ -180,19 +103,10 @@ namespace GoBot
         public static void DebutMatch()
         {
             Console.WriteLine("Goooooo");
-            //if (Enchainement == null)
-            //Enchainement = new Enchainements.HomologationEnchainement();
-            //Enchainement = new Enchainements.EvitementPRMerdique();
-
 
             Enchainement = new Enchainements.Gerome4Enchainement();
 
-
-            Enchainement.SetCouleur(Couleur);
-
-            //MessageBox.Show("Pas d'arret au bout d'une minute 30");
-            timerFinMatch.Start();
-            //Enchainement.SetCouleur(Color.Purple);
+            Enchainement.Couleur = Couleur;
             Enchainement.Executer();
         }
 
@@ -204,8 +118,6 @@ namespace GoBot
                 if (trameRecue[1] == (byte)TrameFactory.FonctionMove.FinDeplacement
                     || trameRecue[1] == (byte)TrameFactory.FonctionMove.FinRecallage)
                 {
-                    avanceEnCours = false;
-                    reculeEnCours = false;
                     if (distanceRestante == 0)
                     {
                         try
@@ -232,11 +144,11 @@ namespace GoBot
                     y = (short)(-y + OffsetYAsserv);
 
                     Position = new Position(new Angle(teta, AnglyeType.Degre), new PointReel(x, y));
+                    DateRefreshPos = DateTime.Now;
+                    mutexPosition.Release();
 
                     if (PositionActualisee != null)
-                    {
                         PositionActualisee(Position);
-                    }
                 }
             }
             if (trameRecue[0] == (byte)Carte.RecIo)
@@ -259,10 +171,12 @@ namespace GoBot
 
         static public void Avancer(int distance, bool attendre = true)
         {
+            if (attendre)
+                mutexDeplacement = new Semaphore(0, int.MaxValue);
+
             Trame trame = TrameFactory.GRDeplacer(SensAR.Avant, distance);
             connexionMove.SendMessage(trame);
 
-            avanceEnCours = true;
             historique.AjouterActionThread(new GRAvanceAction(distance));
 
             if (attendre)
@@ -297,9 +211,11 @@ namespace GoBot
 
         static public void Reculer(int distance, bool attendre = true)
         {
+            if (attendre)
+                mutexDeplacement = new Semaphore(0, int.MaxValue);
+
             historique.AjouterAction(new GRReculeAction(distance));
 
-            reculeEnCours = true;
             Trame trame = TrameFactory.GRDeplacer(SensAR.Arriere, distance);
             connexionMove.SendMessage(trame);
 
@@ -307,42 +223,32 @@ namespace GoBot
                 mutexDeplacement.WaitOne();
         }
 
-        static public void PivotGauche(int angle)
+        static public void PivotGauche(int angle, bool attendre = true)
         {
-            Trame trame;
-            if (Couleur == Color.Purple)
-            {
-                historique.AjouterAction(new GRPivotGaucheAction(angle));
+            if (attendre)
+                mutexDeplacement = new Semaphore(0, int.MaxValue);
 
-                trame = TrameFactory.GRPivot(SensGD.Gauche, angle);
-            }
-            else
-            {
-                historique.AjouterAction(new GRPivotDroiteAction(angle));
+            historique.AjouterAction(new GRPivotGaucheAction(angle));
+            Trame trame = TrameFactory.GRPivot(SensGD.Gauche, angle);
 
-                trame = TrameFactory.GRPivot(SensGD.Droite, angle);
-            }
             connexionMove.SendMessage(trame);
-            mutexDeplacement.WaitOne();
+
+            if (attendre)
+                mutexDeplacement.WaitOne();
 
         }
 
-        static public void PivotDroite(int angle)
+        static public void PivotDroite(int angle, bool attendre = true)
         {
+            if (attendre)
+                mutexDeplacement = new Semaphore(0, int.MaxValue);
 
-            if (Couleur == Color.Purple)
-            {
-                historique.AjouterAction(new GRPivotDroiteAction(angle));
-                Trame trame = TrameFactory.GRPivot(SensGD.Droite, angle);
-                connexionMove.SendMessage(trame);
-            }
-            else
-            {
-                historique.AjouterAction(new GRPivotGaucheAction(angle));
-                Trame trame = TrameFactory.GRPivot(SensGD.Gauche, angle);
-                connexionMove.SendMessage(trame);
-            }
-            mutexDeplacement.WaitOne();
+            historique.AjouterAction(new GRPivotDroiteAction(angle));
+            Trame trame = TrameFactory.GRPivot(SensGD.Droite, angle);
+            connexionMove.SendMessage(trame);
+
+            if (attendre)
+                mutexDeplacement.WaitOne();
         }
 
         static public void Stop(StopMode mode = StopMode.Smooth)
@@ -360,26 +266,31 @@ namespace GoBot
             connexionMove.SendMessage(trame);
         }
 
-        static public void Virage(SensAR sensAr, SensGD sensGd, int rayon, int angle)
+        static public void Virage(SensAR sensAr, SensGD sensGd, int rayon, int angle, bool attendre = true)
         {
+            if(attendre)
+                mutexDeplacement = new Semaphore(0, int.MaxValue);
+
             if (sensAr == SensAR.Avant)
             {
                 if (sensGd == SensGD.Droite)
-                    historique.AjouterAction(new GRVirageAvantDroiteAction(rayon, angle));
+                    historique.AjouterActionThread(new GRVirageAvantDroiteAction(rayon, angle));
                 else if (sensGd == SensGD.Gauche)
-                    historique.AjouterAction(new GRVirageAvantGaucheAction(rayon, angle));
+                    historique.AjouterActionThread(new GRVirageAvantGaucheAction(rayon, angle));
             }
             else if (sensAr == SensAR.Arriere)
             {
                 if (sensGd == SensGD.Droite)
-                    historique.AjouterAction(new GRVirageArriereDroiteAction(rayon, angle));
+                    historique.AjouterActionThread(new GRVirageArriereDroiteAction(rayon, angle));
                 else if (sensGd == SensGD.Gauche)
-                    historique.AjouterAction(new GRVirageArriereGaucheAction(rayon, angle));
+                    historique.AjouterActionThread(new GRVirageArriereGaucheAction(rayon, angle));
             }
 
             Trame trame = TrameFactory.GRVirage(sensAr, sensGd, rayon, angle);
             connexionMove.SendMessage(trame);
-            mutexDeplacement.WaitOne();
+
+            if (attendre)
+                mutexDeplacement.WaitOne();
 
         }
 
@@ -395,24 +306,28 @@ namespace GoBot
             connexionMove.SendMessage(trame);
         }
 
-        static public void DemandePosition()
+        static public void DemandePosition(bool attendre = true)
         {
-            Trame trame = TrameFactory.GRDemandePosition();
-            connexionMove.SendMessage(trame);
+            if(attendre)
+                mutexPosition = new Semaphore(0, int.MaxValue);
+
+            Trame t = TrameFactory.GRDemandePosition();
+            connexionMove.SendMessage(t);
+
+            if(attendre)
+                mutexPosition.WaitOne();
         }
 
         static public void Recallage(SensAR sens, bool attendre = true)
         {
-            DateTime debut = DateTime.Now;
+            if (attendre)
+                mutexDeplacement = new Semaphore(0, int.MaxValue);
 
             Trame trame = TrameFactory.GRRecallage(sens);
             connexionMove.SendMessage(trame);
 
             if (attendre)
                 mutexDeplacement.WaitOne();
-
-            if ((DateTime.Now - debut).TotalMilliseconds < 500)
-                Recallage(sens, attendre);
         }
 
         static public void BougeBras(ServomoteurID servo, int position)

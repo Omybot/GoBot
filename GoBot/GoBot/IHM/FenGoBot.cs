@@ -64,7 +64,6 @@ namespace GoBot
             panelBalise1.Balise.ConnexionCheck.Start();
             panelBalise2.Balise.ConnexionCheck.Start();
             panelBalise3.Balise.ConnexionCheck.Start();
-
         }
 
         void ConnexionPi_ConnexionChange(bool conn)
@@ -179,7 +178,7 @@ namespace GoBot
         private void btnCouleurViolet_Click(object sender, EventArgs e)
         {
             GrosRobot.Couleur = Color.Purple;
-            GrosRobot.Enchainement.SetCouleur(Color.Purple);
+            GrosRobot.Enchainement.Couleur = Color.Purple;
             pictureBoxCouleur.BackColor = Color.Purple;
             pictureBoxBalises.Image = Properties.Resources.tableViolet;
 
@@ -191,7 +190,7 @@ namespace GoBot
         private void btnCouleurRouge_Click(object sender, EventArgs e)
         {
             GrosRobot.Couleur = Color.Red;
-            GrosRobot.Enchainement.SetCouleur(Color.Red);
+            GrosRobot.Enchainement.Couleur = Color.Red;
             pictureBoxCouleur.BackColor = Color.Red;
             pictureBoxBalises.Image = Properties.Resources.tableRouge;
 
@@ -419,7 +418,7 @@ namespace GoBot
         {
             //GrosRobot.Enchainement = new HomologationEnchainement();
             GrosRobot.Enchainement = new TestEnchainement();
-            GrosRobot.Enchainement.SetCouleur(pictureBoxCouleur.BackColor);
+            GrosRobot.Enchainement.Couleur = pictureBoxCouleur.BackColor;
             GrosRobot.DebutMatch();
         }
 
@@ -435,7 +434,7 @@ namespace GoBot
         private void bnStratTotem_Click_1(object sender, EventArgs e)
         {
             GrosRobot.Enchainement = new LignemEnchainement();
-            GrosRobot.Enchainement.SetCouleur(pictureBoxCouleur.BackColor);
+            GrosRobot.Enchainement.Couleur = pictureBoxCouleur.BackColor;
             GrosRobot.DebutMatch();
         }
 
@@ -447,7 +446,7 @@ namespace GoBot
         private void button3_Click(object sender, EventArgs e)
         {
             GrosRobot.Enchainement = new EvitementEnchainement();
-            GrosRobot.Enchainement.SetCouleur(pictureBoxCouleur.BackColor);
+            GrosRobot.Enchainement.Couleur = pictureBoxCouleur.BackColor;
             GrosRobot.Enchainement.Executer();
         }
 

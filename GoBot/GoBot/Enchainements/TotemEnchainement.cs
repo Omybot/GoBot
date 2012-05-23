@@ -7,7 +7,7 @@ using System.Threading;
 
 namespace GoBot.Enchainements
 {
-    class TotemEnchainement : IEnchainement
+    class TotemEnchainement : Enchainement
     {private Thread th;
         Color couleur;
 
@@ -119,31 +119,6 @@ namespace GoBot.Enchainements
 
         private void ThreadEnchainementRouge()
         {
-        }
-
-        Color IEnchainement.GetCouleur()
-        {
-            throw new NotImplementedException();
-        }
-
-        void IEnchainement.SetCouleur(Color couleur)
-        {
-            throw new NotImplementedException();
-        }
-
-        void IEnchainement.Executer()
-        {
-            throw new NotImplementedException();
-        }
-
-        void IEnchainement.Stop()
-        {
-            throw new NotImplementedException();
-        }
-
-        void IEnchainement.Reprendre(int reculade)
-        {
-            throw new NotImplementedException();
         }
     }
 }

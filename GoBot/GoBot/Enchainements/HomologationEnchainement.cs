@@ -8,7 +8,7 @@ using GoBot.Actions;
 
 namespace GoBot.Enchainements
 {
-    class HomologationEnchainement : IEnchainement
+    class HomologationEnchainement : Enchainement
     {
         private Thread th;
         Color couleur;
@@ -30,7 +30,6 @@ namespace GoBot.Enchainements
 
         public void Executer()
         {
-            pas = 0;
             if (couleur == Color.Red)
                 th = new Thread(ThreadEnchainementRouge);
             else
@@ -39,8 +38,8 @@ namespace GoBot.Enchainements
             th.Start();
         }
 
-       
-            private void ThreadEnchainementViolet()
+
+        private void ThreadEnchainementViolet()
         {
             DateTime debut = DateTime.Now;
 
@@ -136,180 +135,46 @@ namespace GoBot.Enchainements
             GrosRobot.FermeBenne();
             GrosRobot.Avancer(144);
 
-                /*
-            // Go chez l'adversaire
-            GrosRobot.PivotDroite(90);
-            GrosRobot.Avancer(630);
-            GrosRobot.PivotDroite(100);
-            GrosRobot.VitesseDeplacement = 1500;
-            GrosRobot.AccelerationDeplacement = 1400;
-            GrosRobot.OuvreBrasBasDroite();
-            Thread.Sleep(150);
-            GrosRobot.OuvreBrasBasGauche();
-            Thread.Sleep(500);
-            DateTime debut2 = DateTime.Now;
-            GrosRobot.Avancer(1580);
-            GrosRobot.OuvreBrasBasDroite();
-            Thread.Sleep(150);
-            GrosRobot.BougeBrasBasGauche(481);
-            Thread.Sleep(700);
-            GrosRobot.Avancer(450);
-            GrosRobot.FermeBrasBasGauche();
-            Thread.Sleep(150);
-            GrosRobot.FermeBrasBasDroite();
-            Thread.Sleep(1000);
-            GrosRobot.Reculer(2150);
-            GrosRobot.PivotDroite(170);
-            GrosRobot.Avancer(300);
-            GrosRobot.OuvreBrasBasDroite();
-            Thread.Sleep(150);
-            GrosRobot.OuvreBrasBasGauche();
-            Thread.Sleep(1000);
-            GrosRobot.VitesseDeplacement = 700;
-            GrosRobot.AccelerationDeplacement = 700;
-            GrosRobot.Reculer(200);
-                */
+            /*
+        // Go chez l'adversaire
+        GrosRobot.PivotDroite(90);
+        GrosRobot.Avancer(630);
+        GrosRobot.PivotDroite(100);
+        GrosRobot.VitesseDeplacement = 1500;
+        GrosRobot.AccelerationDeplacement = 1400;
+        GrosRobot.OuvreBrasBasDroite();
+        Thread.Sleep(150);
+        GrosRobot.OuvreBrasBasGauche();
+        Thread.Sleep(500);
+        DateTime debut2 = DateTime.Now;
+        GrosRobot.Avancer(1580);
+        GrosRobot.OuvreBrasBasDroite();
+        Thread.Sleep(150);
+        GrosRobot.BougeBrasBasGauche(481);
+        Thread.Sleep(700);
+        GrosRobot.Avancer(450);
+        GrosRobot.FermeBrasBasGauche();
+        Thread.Sleep(150);
+        GrosRobot.FermeBrasBasDroite();
+        Thread.Sleep(1000);
+        GrosRobot.Reculer(2150);
+        GrosRobot.PivotDroite(170);
+        GrosRobot.Avancer(300);
+        GrosRobot.OuvreBrasBasDroite();
+        Thread.Sleep(150);
+        GrosRobot.OuvreBrasBasGauche();
+        Thread.Sleep(1000);
+        GrosRobot.VitesseDeplacement = 700;
+        GrosRobot.AccelerationDeplacement = 700;
+        GrosRobot.Reculer(200);
+            */
 
             Console.WriteLine((DateTime.Now - debut).TotalSeconds + "s");
         }
 
-        public List<MetaAction> listMetatRouge;
-        public int pas;
         private void ThreadEnchainementRouge()
         {
-            GrosRobot.VitesseDeplacement = 700;
-            GrosRobot.VitessePivot = 700;
-            GrosRobot.AccelerationDeplacement = 700;
-            GrosRobot.AccelerationPivot = 700;
 
-            listMetatRouge = new List<MetaAction>();
-
-            MetaAction temp = new MetaAction();
-
-            // fermeture des pinces
-            temp.list.Add(new GRServoAction(Config.CurrentConfig.PosPinceGaucheHautFerme, ServomoteurID.GRBrasHautGauche));
-            temp.list.Add(new GRServoAction(Config.CurrentConfig.PosPinceGaucheMilieuFerme, ServomoteurID.GRBrasMilieuGauche));
-            temp.list.Add(new GRServoAction(Config.CurrentConfig.PosPinceGaucheBasFerme, ServomoteurID.GRBrasBasGauche));
-            temp.list.Add(new GRServoAction(Config.CurrentConfig.PosPinceDroiteHautFerme, ServomoteurID.GRBrasHautDroite));
-            temp.list.Add(new GRServoAction(Config.CurrentConfig.PosPinceDroiteMilieuFerme, ServomoteurID.GRBrasMilieuDroite));
-            temp.list.Add(new GRServoAction(Config.CurrentConfig.PosPinceDroiteBasFerme, ServomoteurID.GRBrasBasDroite));
-            temp.list.Add(new GRAvanceAction(580));
-            listMetatRouge.Add(temp);
-
-            temp = new MetaAction();
-            temp.list.Add(new GRPivotGaucheAction(94));
-            listMetatRouge.Add(temp); 
-
-             temp = new MetaAction();
-            temp.list.Add(new GRAvanceAction(550));// déplacement du robot 
-            listMetatRouge.Add(temp);
-
-            temp = new MetaAction();
-            temp.list.Add(new GRPivotGaucheAction(94));
-            listMetatRouge.Add(temp);
-
-            temp = new MetaAction();
-            temp.list.Add(new GRAvanceAction(300));// déplacement du robot 
-            listMetatRouge.Add(temp);
-
-
-            temp = new MetaAction();
-            temp.list.Add(new GRReculeAction(290));
-            listMetatRouge.Add(temp);
-
-            temp = new MetaAction();
-            temp.list.Add(new GRPivotDroiteAction(92));
-            listMetatRouge.Add(temp);
-
-
-            temp = new MetaAction();
-            temp.list.Add(new GRAvanceAction(800));// déplacement du robot 
-            listMetatRouge.Add(temp);
-
-            temp = new MetaAction();
-            temp.list.Add(new GRPivotGaucheAction(185));
-            listMetatRouge.Add(temp);
-
-
-            temp = new MetaAction();
-            temp.list.Add(new GRReculeAction(210));
-            listMetatRouge.Add(temp);
-
-            temp = new MetaAction();
-            temp.list.Add(new GRAvanceAction(210));
-            listMetatRouge.Add(temp);
-
-
-            temp = new MetaAction();
-            temp.list.Add(new GRPivotGaucheAction(94));
-            listMetatRouge.Add(temp);
-
-            // c'est tres moche mais on s'en...
-            // il faudrais avoir le "remplissage de la liste et l'execution a 2 moment differant
-            for (int i = pas; i < listMetatRouge.Count; i++)
-            {
-                listMetatRouge[i].Executer();
-                pas++;
-            }
-
-            /* la fin que j'ai pas encore le courage de faire : si ça marche il faudrais un truc qui encapsule 
-             * les iaction
-             * les sleep
-             * les changement de vitesse
-             * 
-             * Donc soit on crée des iactions pour tout soit on fait un new truc
-            GrosRobot.VitesseDeplacement = 350;
-            GrosRobot.VitessePivot = 350;
-            GrosRobot.AccelerationDeplacement = 350;
-            GrosRobot.AccelerationPivot = 350;
-
-
-            GrosRobot.Avancer(1200);
-            GrosRobot.PivotDroite(90);
-            GrosRobot.Reculer(220);
-            GrosRobot.Avancer(415);
-            GrosRobot.PivotDroite(90);
-            GrosRobot.Avancer(950);
-
-            GrosRobot.VitesseDeplacement = 700;
-            GrosRobot.VitessePivot = 700;
-            GrosRobot.AccelerationDeplacement = 700;
-            GrosRobot.AccelerationPivot = 700;
-
-            GrosRobot.PivotGauche(45);
-            GrosRobot.Avancer(520);
-            GrosRobot.PivotDroite(45);
-            GrosRobot.Avancer(200);
-            GrosRobot.Reculer(100);*/
-        }
-
-
-
-        void IEnchainement.Stop()
-        {
-            throw new NotImplementedException();
-        }
-
-        void IEnchainement.Reprendre(int reculade)
-        {
-            throw new NotImplementedException();
-        }
-    }
-
-    class MetaAction
-    {
-        public List<IAction> list;
-     
-        public MetaAction()
-        {
-            list = new List<IAction>();
-        }
-        public void Executer()
-        {
-            foreach (IAction ia in list)
-            {
-                ia.Executer();
-            }
         }
     }
 }

@@ -7,7 +7,7 @@ using System.Drawing;
 
 namespace GoBot.Enchainements
 {
-    class EvitementEnchainement : IEnchainement
+    class EvitementEnchainement : Enchainement
     {
         private Thread th;
         Color couleur;

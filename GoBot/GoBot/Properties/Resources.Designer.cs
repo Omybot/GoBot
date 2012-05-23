@@ -242,13 +242,6 @@ namespace GoBot.Properties {
             }
         }
         
-        internal static System.Drawing.Bitmap mort {
-            get {
-                object obj = ResourceManager.GetObject("mort", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
         internal static System.Drawing.Bitmap PetitDepli {
             get {
                 object obj = ResourceManager.GetObject("PetitDepli", resourceCulture);

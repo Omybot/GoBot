@@ -71,10 +71,6 @@ namespace GoBot
                 StreamWriter myWriter = new StreamWriter(nomFichier);
                 mySerializer.Serialize(myWriter, tramesEntrantes);
                 myWriter.Close();
-                /*XmlSerializer mySerializer = new XmlSerializer(typeof(Replay));
-                StreamWriter myWriter = new StreamWriter(nomFichier);
-                mySerializer.Serialize(myWriter, this);
-                myWriter.Close();*/
                 return true;
             }
             catch (Exception)
