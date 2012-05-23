@@ -49,7 +49,7 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <PropertyGroup>
-    <ApplicationIcon>robot.ico</ApplicationIcon>
+    <ApplicationIcon>img/robot.ico</ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
@@ -95,15 +95,15 @@
     <Compile Include="Actions\IAction.cs" />
     <Compile Include="Actions\PetitRobot\PRPompeAction.cs" />
     <Compile Include="Actions\PetitRobot\PRServoAction.cs" />
-    <Compile Include="AStar\Arc.cs" />
-    <Compile Include="AStar\AStar.cs" />
-    <Compile Include="AStar\Graph.cs" />
-    <Compile Include="AStar\Node.cs" />
-    <Compile Include="AStar\Point3D.cs" />
-    <Compile Include="AStar\SortableList.cs" />
-    <Compile Include="AStar\Track.cs" />
-    <Compile Include="AStar\Vector3D.cs" />
-    <Compile Include="Balise.cs" />
+    <Compile Include="PathFinding\Arc.cs" />
+    <Compile Include="PathFinding\AStar.cs" />
+    <Compile Include="PathFinding\Graph.cs" />
+    <Compile Include="PathFinding\Node.cs" />
+    <Compile Include="PathFinding\Point3D.cs" />
+    <Compile Include="PathFinding\SortableList.cs" />
+    <Compile Include="PathFinding\Track.cs" />
+    <Compile Include="PathFinding\Vector3D.cs" />
+    <Compile Include="Balises\Balise.cs" />
     <Compile Include="Calculs\Angle.cs" />
     <Compile Include="Calculs\BaliseCalc.cs" />
     <Compile Include="Calculs\DetectionBalise.cs" />
@@ -115,7 +115,7 @@
     <Compile Include="Calculs\Formes\Segment.cs" />
     <Compile Include="Calculs\Maths.cs" />
     <Compile Include="Calculs\Position.cs" />
-    <Compile Include="CalibrateurBalise.cs" />
+    <Compile Include="Balises\CalibrateurBalise.cs" />
     <Compile Include="Config.cs" />
     <Compile Include="Enchainements\Gerome4Enchainement.cs" />
     <Compile Include="Enchainements\Gerome3Enchainement.cs" />
@@ -178,7 +178,7 @@
     <Compile Include="IHM\PanelTable.Designer.cs">
       <DependentUpon>PanelTable.cs</DependentUpon>
     </Compile>
-    <Compile Include="InterpreteurBalise.cs" />
+    <Compile Include="Balises\InterpreteurBalise.cs" />
     <Compile Include="PetitRobot.cs" />
     <Compile Include="IHM\Composants\BetterTextBox.cs">
       <SubType>Component</SubType>
@@ -241,7 +241,7 @@
     <Compile Include="IHM\IHMPetitRobot\PanelPetitRobot.Designer.cs">
       <DependentUpon>PanelPetitRobot.cs</DependentUpon>
     </Compile>
-    <Compile Include="PlanificateurBalise.cs" />
+    <Compile Include="Balises\PlanificateurBalise.cs" />
     <Compile Include="Plateau.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -512,8 +512,6 @@
     <Content Include="img\trackBarCurseurSelect.png" />
     <Content Include="img\trackBarFond.png" />
     <Content Include="img\trackBarFondSelected.png" />
-    <None Include="Resources\mort.png" />
-    <Content Include="robot.ico" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
