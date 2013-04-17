@@ -9,6 +9,18 @@ using System.Drawing;
 
 namespace GoBot
 {
+    class PointReelGenere
+    {
+        public PointReel Point { get; set; }
+        public List<DetectionBalise> DetectionsOrigine { get; set; }
+
+        public PointReelGenere(PointReel point, List<DetectionBalise> detections)
+        {
+            Point = point;
+            DetectionsOrigine = detections;
+        }
+    }
+
     /// <summary>
     /// Permet de transformer les détections des balises en coordonnées des alliés et ennemis
     /// </summary>
@@ -69,11 +81,11 @@ namespace GoBot
         public List<DetectionBalise> DetectionBalise3Haut { get; private set; }
 
         // Uniquement pour affichage et debug des calculs d'interpolation de la méthode par intersections
-        public List<PointReel> Intersections { get; private set; }
-        public List<List<PointReel>> RegroupementsIntersections { get; private set; }
-        public List<PointReel> MoyennesIntersections { get; private set; }
-        public List<List<PointReel>> RegroupementsDistance { get; private set; }
-        public List<PointReel> MoyennesDistance { get; private set; }
+        public List<PointReelGenere> Intersections { get; private set; }
+        public List<List<PointReelGenere>> RegroupementsIntersections { get; private set; }
+        public List<PointReelGenere> MoyennesIntersections { get; private set; }
+        public List<List<PointReelGenere>> RegroupementsDistance { get; private set; }
+        public List<PointReelGenere> MoyennesDistance { get; private set; }
         public List<List<PointReel>> AssociationPointDistanceIntersection { get; private set; }
 
         /// <summary>
@@ -175,12 +187,12 @@ namespace GoBot
         /// </summary>
         void Actualisation()
         {
-            donneesBalise1Recues = false;
-            donneesBalise2Recues = false;
-            donneesBalise3Recues = false;
-
             try
             {
+                donneesBalise1Recues = false;
+                donneesBalise2Recues = false;
+                donneesBalise3Recues = false;
+
                 InterpreterDetection(ModeInterpretation.Intersections);
             }
             catch (Exception)
@@ -197,6 +209,9 @@ namespace GoBot
             List<PointReel> detectionBas = null;
             List<PointReel> detectionHaut = null;
 
+            PositionsAlliees = new List<PointReel>();
+            PositionsEnnemies = new List<PointReel>();
+
             if(mode == ModeInterpretation.Polygones)
             {
                 detectionBas = InterpolationPolygonale(DetectionBalise1Bas, DetectionBalise2Bas, DetectionBalise3Bas);
@@ -204,13 +219,12 @@ namespace GoBot
             }
             else if(mode == ModeInterpretation.Intersections)
             {
-                detectionBas = DetectionParIntersections(DetectionBalise1Bas, DetectionBalise2Bas, DetectionBalise3Bas);
+                detectionBas = new List<PointReel>();// DetectionParIntersections(DetectionBalise1Bas, DetectionBalise2Bas, DetectionBalise3Bas);
                 detectionHaut = DetectionParIntersections(DetectionBalise1Haut, DetectionBalise2Haut, DetectionBalise3Haut);
             }
 
-            //detectionBas.Clear();
+            //detectionHaut.Clear();
 
-            /*
             // Cas si il y a plus de 2 détections en haut : c'est qu'on a des balises réfléchissantes sur la tête
             // On retire donc les positions alliées des positions ennemies
             if (detectionHaut.Count > 2)
@@ -234,12 +248,12 @@ namespace GoBot
                     // Si le point est à moins de 20 cm on l'enlève
                     if (distance < 200)
                         detectionHaut.RemoveAt(plusProche);
-                }*/
+                }
 
                 PositionsAlliees = new List<PointReel>(detectionBas);
                 PositionsEnnemies = new List<PointReel>(detectionHaut);
 
-                PositionEnnemisActualisee(this);/*
+                PositionEnnemisActualisee(this);
             }
             // Cas attendu si on a pas de balise réfléchissante sur la tête
             else if (detectionBas.Count == 2 && detectionHaut.Count == 2)
@@ -256,7 +270,7 @@ namespace GoBot
 
                 PositionEnnemisActualisee(this);
                 Console.WriteLine("Interprétation étrange : " + detectionHaut.Count + " alliés et " + detectionHaut.Count + " adversaires.");
-            }*/
+            }
         }
 
         #region Interprétation par polygones
@@ -381,7 +395,7 @@ namespace GoBot
         /// <returns></returns>
         private List<PointReel> DetectionParIntersections(List<DetectionBalise> detectionBalise1, List<DetectionBalise> detectionBalise2, List<DetectionBalise> detectionBalise3)
         {
-            List<PointReel> intersections = new List<PointReel>();
+            List<PointReelGenere> intersections = new List<PointReelGenere>();
 
             // On calcule tous les croisements entre les médianes de B1 et B2, B2 et B3, B3 et B1
             intersections.AddRange(CroisementsBalises(detectionBalise1, detectionBalise2));
@@ -389,22 +403,26 @@ namespace GoBot
             intersections.AddRange(CroisementsBalises(detectionBalise3, detectionBalise1));
                 
             // Pour affichage
-            Intersections = new List<PointReel>(intersections);
+            Intersections = new List<PointReelGenere>(intersections);
 
             // On regroupe les points les plus proches ensemble pour les moyenner
-            List<PointReel> intersectionsGroupees = RegroupementPoints(intersections, 2);
+            List<PointReelGenere> intersectionsGroupees = RegroupementPoints(intersections, 2);
 
             // Pour affichage
-            MoyennesIntersections = new List<PointReel>(intersectionsGroupees);
+            MoyennesIntersections = new List<PointReelGenere>(intersectionsGroupees);
 
-            List<PointReel> positionsDetectees = new List<PointReel>();
+            List<PointReelGenere> positionsDetectees = new List<PointReelGenere>();
 
             // On liste l'ensemble des points calculés grâce aux angles et distances approximées par les balises
-            foreach (DetectionBalise detection in DetectionBalisesBas)
-                positionsDetectees.Add(detection.Position);
+            foreach (DetectionBalise detection in DetectionBalisesHaut)
+            {
+                List<DetectionBalise> detections = new List<DetectionBalise>();
+                detections.Add(detection);
+                positionsDetectees.Add(new PointReelGenere(detection.Position, detections));
+            }
 
-            // Et on les moyenne en les regroupement par proximité
-            List<PointReel> positionsDetecteesGroupees = RegroupementPoints(positionsDetectees, 1);
+            // Et on les moyenne en les regroupement par proximité -> ou pas
+            List<PointReelGenere> positionsDetecteesGroupees = positionsDetectees;// RegroupementPoints(positionsDetectees, 1);
 
             // Pour affichage
             MoyennesDistance = positionsDetecteesGroupees;
@@ -413,25 +431,55 @@ namespace GoBot
 
             AssociationPointDistanceIntersection = new List<List<PointReel>>();
             // Pour chaque point de distance moyenné, on garde l'intersection moyennée la plus proche
-            foreach (PointReel pointDistance in positionsDetecteesGroupees)
+
+            Dictionary<PointReel, int> compteurProches = new Dictionary<PointReel, int>();
+
+            foreach (PointReelGenere pointDistance in positionsDetecteesGroupees)
             {
                 PointReel plusProche = null;
-                double distanceMin = double.MaxValue;
+                double distanceMin = 600;
 
-                foreach (PointReel pointIntersection in intersectionsGroupees)
+                foreach (PointReelGenere pointIntersection in intersectionsGroupees)
                 {
-                    double distance = pointDistance.getDistance(pointIntersection);
-                    if (distance < distanceMin)
+                    bool genereOk = false;
+
+                    foreach(DetectionBalise d1 in pointDistance.DetectionsOrigine)
+                        foreach(DetectionBalise d2 in pointIntersection.DetectionsOrigine)
+                            if (d1 == d2)
+                            {
+                                genereOk = true;
+                                break;
+                            }
+
+                    if (genereOk)
                     {
-                        plusProche = pointIntersection;
-                        distanceMin = distance;
+                        double distance = pointDistance.Point.getDistance(pointIntersection.Point);
+                        if (distance < distanceMin)
+                        {
+                            plusProche = pointIntersection.Point;
+                            distanceMin = distance;
+                        }
                     }
                 }
 
                 List<PointReel> asso = new List<PointReel>();
-                asso.Add(pointDistance);
+                asso.Add(pointDistance.Point);
                 asso.Add(plusProche);
-                positionsFinales.Add(plusProche);
+                AssociationPointDistanceIntersection.Add(asso);
+
+                if (plusProche != null && compteurProches.ContainsKey(plusProche))
+                    compteurProches[plusProche]++;
+                else if(plusProche != null)
+                    compteurProches.Add(plusProche, 1);
+
+                /*if (!positionsFinales.Contains(plusProche))
+                    positionsFinales.Add(plusProche);*/
+            }
+
+            foreach (KeyValuePair<PointReel, int> compteur in compteurProches)
+            {
+                if(compteur.Value >= 2)
+                    positionsFinales.Add(compteur.Key);
             }
 
             return positionsFinales;
@@ -444,9 +492,10 @@ namespace GoBot
         /// <param name="detectionBaliseA">Détection d'une balise</param>
         /// <param name="detectionBaliseB">Détection d'une autre balise</param>
         /// <returns>Intersections conservées</returns>
-        private List<PointReel> CroisementsBalises(List<DetectionBalise> detectionBaliseA, List<DetectionBalise> detectionBaliseB)
+        private List<PointReelGenere> CroisementsBalises(List<DetectionBalise> detectionBaliseA, List<DetectionBalise> detectionBaliseB)
         {
             List<PointReel> intersections = new List<PointReel>();
+            List<PointReelGenere> intersectionsAvecOrigine = new List<PointReelGenere>();
 
             foreach (DetectionBalise detection1 in detectionBaliseA)
             {
@@ -457,21 +506,26 @@ namespace GoBot
                     Droite droite2 = new Droite(detection2.Balise.Position.Coordonnees, detection2.Position);
                     PointReel croisement = droite1.getCroisement(droite2);
 
+                    List<DetectionBalise> detections = new List<DetectionBalise>();
+                    detections.Add(detection1);
+                    detections.Add(detection2);
+
                     // On ne considère pas les points en dehors du plateau
                     if (croisement != null && Plateau.Contient(croisement))
                     {
                         // Le point le plus proche de la balise (donc plus précis) entre les deux droites qui ont généré le croisement
-                        PointReel positionDistance = detection1.Distance < detection2.Distance ? detection1.Position : detection2.Position;
+                        //PointReel positionDistance = detection1.Distance < detection2.Distance ? detection1.Position : detection2.Position;
 
-                        // On ne considère cette intersection que si elle est à moins de 20 cm de la distance donnée par la plus précise des balises
+                        // On ne considère cette intersection que si elle est à moins de 50 cm de la distance donnée par la plus précise des balises
                         // Ce qui permet d'enlever tous les croisements éloignés d'une approximation de balise
-                        //if (positionDistance.getDistance(croisement) < 200)
-                            intersections.Add(croisement);
+                        if (detection1.Position.getDistance(croisement) < 500 && detection2.Position.getDistance(croisement) < 500)
+                            intersectionsAvecOrigine.Add(new PointReelGenere(croisement, detections));
+                            //intersections.Add(croisement);
                     }
                 }
             }
 
-            return intersections;
+            return intersectionsAvecOrigine;
         }
 
         /// <summary>
@@ -483,24 +537,24 @@ namespace GoBot
         /// <param name="points">Points à regrouper par paquets</param>
         /// <param name="var">Pour affichage, 1 pour regroupement des intersections et 2 pour regroupement des points de balise</param>
         /// <returns>Liste des points moyens de chaque regroupement de points</returns>
-        public List<PointReel> RegroupementPoints(List<PointReel> points, int var)
+        public List<PointReelGenere> RegroupementPoints(List<PointReelGenere> points, int var)
         {
             if (points.Count == 1)
                 return points;
 
-            Dictionary<PointReel, List<PointReel>> regroupements = new Dictionary<PointReel, List<PointReel>>();
-            List<List<PointReel>> regroupementsPoints = new List<List<PointReel>>();
+            Dictionary<PointReelGenere, List<PointReelGenere>> regroupements = new Dictionary<PointReelGenere, List<PointReelGenere>>();
+            List<List<PointReelGenere>> regroupementsPoints = new List<List<PointReelGenere>>();
 
             for (int i = 0; i < points.Count; i++)
             {
-                double distanceMin = 400;
-                PointReel plusProche = null;
+                double distanceMin = 200;
+                PointReelGenere plusProche = null;
 
                 for (int j = 0; j < points.Count; j++)
                 {
                     if (i != j)
                     {
-                        double distancePoint = points[i].getDistance(points[j]);
+                        double distancePoint = points[i].Point.getDistance(points[j].Point);
                         if (distancePoint < distanceMin)
                         {
                             distanceMin = distancePoint;
@@ -511,7 +565,7 @@ namespace GoBot
 
                 if (plusProche == null)
                 {
-                    List<PointReel> listeProches = new List<PointReel>();
+                    List<PointReelGenere> listeProches = new List<PointReelGenere>();
                     listeProches.Add(points[i]);
                     regroupementsPoints.Add(listeProches);
                 }
@@ -529,7 +583,7 @@ namespace GoBot
                 // Sinon on crée une nouvelle liste avec ces deux points et on leur attribue cette liste à tous les deux
                 else if(!regroupements.ContainsKey(points[i]) && !regroupements.ContainsKey(plusProche))
                 {
-                    List<PointReel> listeProches = new List<PointReel>();
+                    List<PointReelGenere> listeProches = new List<PointReelGenere>();
                     listeProches.Add(points[i]);
                     listeProches.Add(plusProche);
                     regroupementsPoints.Add(listeProches);
@@ -539,29 +593,72 @@ namespace GoBot
                 }
             }
 
-            List<PointReel> pointsGroupes = new List<PointReel>();
+            /*foreach (List<PointReel> regroupement in regroupementsPoints)
+            {
+                while (regroupement.Count > 3)
+                {
+                    double moyenneX = 0;
+                    double moyenneY = 0;
+
+                    foreach (PointReel point in regroupement)
+                    {
+                        moyenneX += point.X;
+                        moyenneY += point.Y;
+                    }
+
+                    moyenneX /= regroupement.Count;
+                    moyenneY /= regroupement.Count;
+
+                    PointReel barycentre = new PointReel(moyenneX, moyenneY);
+
+                    int indexMax = 0;
+                    double distanceMax = 0;
+                    for (int i = 0; i < regroupement.Count; i++)
+                    {
+                        PointReel point = regroupement[i];
+                        double distance = point.getDistance(barycentre);
+                        if (distanceMax < distance)
+                        {
+                            distanceMax = distance;
+                            indexMax = i;
+                        }
+                    }
+
+                    regroupement.RemoveAt(indexMax);
+                }
+            }*/
+
+            List<PointReelGenere> pointsGroupes = new List<PointReelGenere>();
 
             // Pour affichage
             if (var == 1)
-                RegroupementsDistance = new List<List<PointReel>>(regroupementsPoints);
+                RegroupementsDistance = new List<List<PointReelGenere>>(regroupementsPoints);
             else if (var == 2)
-                RegroupementsIntersections = new List<List<PointReel>>(regroupementsPoints);
+                RegroupementsIntersections = new List<List<PointReelGenere>>(regroupementsPoints);
 
-            foreach (List<PointReel> listePoints in regroupementsPoints)
+            foreach (List<PointReelGenere> listePoints in regroupementsPoints)
             {
                 double moyenneX = 0;
                 double moyenneY = 0;
 
-                foreach (PointReel point in listePoints)
+                List<DetectionBalise> detections = new List<DetectionBalise>();
+
+                foreach (PointReelGenere point in listePoints)
                 {
-                    moyenneX += point.X;
-                    moyenneY += point.Y;
+                    foreach(DetectionBalise detection in point.DetectionsOrigine)
+                        if(!detections.Contains(detection))
+                            detections.Add(detection);
+
+                    moyenneX += point.Point.X;
+                    moyenneY += point.Point.Y;
                 }
 
                 moyenneX /= listePoints.Count;
                 moyenneY /= listePoints.Count;
 
-                pointsGroupes.Add(new PointReel(moyenneX, moyenneY));
+
+
+                pointsGroupes.Add(new PointReelGenere(new PointReel(moyenneX, moyenneY), detections));
             }
 
             return pointsGroupes;

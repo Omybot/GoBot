@@ -7,9 +7,9 @@ namespace GoBot.Actions
 {
     class GRPivotDroiteAction : IAction
     {
-        private int angle;
+        private double angle;
 
-        public GRPivotDroiteAction(int a)
+        public GRPivotDroiteAction(double a)
         {
             angle = a;
         }
@@ -26,7 +26,7 @@ namespace GoBot.Actions
 
         void IAction.Executer()
         {
-            GrosRobot.PivotDroite(angle);
+            Plateau.GrosRobot.PivotDroite(angle);
         }
     }
 }

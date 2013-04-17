@@ -8,8 +8,8 @@ namespace GoBot.Calculs
 {
     public class Position
     {
-        private Angle angle;
-        private PointReel coordonnees;
+        public PointReel Coordonnees { get; private set; }
+        public Angle Angle { get; private set; }
 
         /// <summary>
         /// Constructeur par défaut
@@ -17,8 +17,8 @@ namespace GoBot.Calculs
         /// </summary>
         public Position()
         {
-            angle = new Angle();
-            coordonnees = new PointReel();
+            Angle = new Angle();
+            Coordonnees = new PointReel();
         }
 
         /// <summary>
@@ -28,52 +28,48 @@ namespace GoBot.Calculs
         /// <param name="c">Coordonnées de départ</param>
         public Position(Angle a, PointReel c)
         {
-            angle = a;
-            coordonnees = c;
+            Angle = a;
+            Coordonnees = c;
         }
 
         /// <summary>
         /// Déplace les coordonnées par rapport aux anciennes coordonnées
         /// </summary>
-        /// <param name="x">Déplacement sur l'axe des abscisses</param>
-        /// <param name="y">Déplacement sur l'axe des ordonnées</param>
-        public void deplacer(double x, double y)
+        /// <param name="x">Déplacement (mm) sur l'axe des abscisses</param>
+        /// <param name="y">Déplacement (mm) sur l'axe des ordonnées</param>
+        public void Deplacer(double x, double y)
         {
-            coordonnees.deplacer(x, y);
+            Coordonnees.deplacer(x, y);
         }
 
         /// <summary>
         /// Fait tourner l'angle de l'angle (en degrés) choisi
         /// </summary>
         /// <param name="a">Angle à tourner</param>
-        public void tourner(double a)
+        public void Tourner(double a)
         {
-            angle.tourner(a);
+            Angle.Tourner(a);
         }
 
         /// <summary>
         /// Fait tourner l'angle de l'angle (objet) choisi
         /// </summary>
         /// <param name="a">Angle à tourner</param>
-        public void tourner(Angle a)
+        public void Tourner(Angle a)
         {
-            angle.tourner(a);
+            Angle.Tourner(a);
         }
 
-        public PointReel Coordonnees
+        /// <summary>
+        /// Avance de la distance spécifiée suivant l'angle actuel
+        /// </summary>
+        /// <param name="distance">Distance à avancer (mm)</param>
+        public void Avancer(double distance)
         {
-            get
-            {
-                return coordonnees;
-            }
-        }
+            double depX = distance * Math.Cos(Angle.AngleRadians);
+            double depY = distance * Math.Sin(Angle.AngleRadians);
 
-        public Angle Angle
-        {
-            get
-            {
-                return angle;
-            }
+            Coordonnees.deplacer(depX, depY);
         }
     }
 }

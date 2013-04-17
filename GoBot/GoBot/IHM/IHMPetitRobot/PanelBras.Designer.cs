@@ -381,7 +381,6 @@
             this.btnAttrapeGauche.TabIndex = 0;
             this.btnAttrapeGauche.Text = "Attraper";
             this.btnAttrapeGauche.UseVisualStyleBackColor = true;
-            this.btnAttrapeGauche.Click += new System.EventHandler(this.btnAttrapeGauche_Click);
             // 
             // btnAttrapeDroite
             // 
@@ -391,7 +390,6 @@
             this.btnAttrapeDroite.TabIndex = 1;
             this.btnAttrapeDroite.Text = "Attraper";
             this.btnAttrapeDroite.UseVisualStyleBackColor = true;
-            this.btnAttrapeDroite.Click += new System.EventHandler(this.btnAttrapeDroite_Click);
             // 
             // btnRelacheGauche
             // 
@@ -401,7 +399,6 @@
             this.btnRelacheGauche.TabIndex = 2;
             this.btnRelacheGauche.Text = "Relâcher";
             this.btnRelacheGauche.UseVisualStyleBackColor = true;
-            this.btnRelacheGauche.Click += new System.EventHandler(this.btnRelacheGauche_Click);
             // 
             // btnRelacheDroite
             // 
@@ -411,7 +408,6 @@
             this.btnRelacheDroite.TabIndex = 3;
             this.btnRelacheDroite.Text = "Relâcher";
             this.btnRelacheDroite.UseVisualStyleBackColor = true;
-            this.btnRelacheDroite.Click += new System.EventHandler(this.btnRelacheDroite_Click);
             // 
             // label7
             // 

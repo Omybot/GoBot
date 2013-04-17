@@ -21,7 +21,7 @@ namespace GoBot.Actions
 
         void IAction.Executer()
         {
-            GrosRobot.Stop(mode);
+            Plateau.GrosRobot.Stop(mode);
         }
 
         public System.Drawing.Image Image

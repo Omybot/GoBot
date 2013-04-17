@@ -21,7 +21,7 @@ namespace GoBot.Actions
 
         void IAction.Executer()
         {
-            GrosRobot.VitesseDeplacement = vitesse;
+            Plateau.GrosRobot.VitesseDeplacement = vitesse;
         }
 
         public System.Drawing.Image Image

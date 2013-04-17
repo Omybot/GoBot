@@ -22,10 +22,10 @@ namespace GoBot.IHM.IHMGrosRobot
         public void Init()
         {
             panelDeplacementGR.Init();
-            panelPinces.Init();
+            //panelPinces.Init();
 
-            panelHistorique.setHistorique(GrosRobot.Historique);
-            GrosRobot.Historique.nouvelleAction += new Historique.delegateAction(MAJHistoriqueDel);
+            panelHistorique.setHistorique(Plateau.GrosRobot.Historique);
+            Plateau.GrosRobot.Historique.nouvelleAction += new Historique.delegateAction(MAJHistoriqueDel);
         }
 
         private void MAJHistoriqueDel(IAction action)

@@ -26,7 +26,7 @@ namespace GoBot.Actions
 
         void IAction.Executer()
         {
-            GrosRobot.Reculer(distance);
+            Plateau.GrosRobot.Reculer(distance);
         }
     }
 }

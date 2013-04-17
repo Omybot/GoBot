@@ -21,7 +21,7 @@ namespace GoBot.Actions
 
         void IAction.Executer()
         {
-            GrosRobot.Avancer(distance);
+            Plateau.GrosRobot.Avancer(distance);
         }
 
         public System.Drawing.Image Image

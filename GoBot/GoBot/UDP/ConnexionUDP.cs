@@ -5,7 +5,6 @@ using System.Text;
 using System.Net;
 using System.Net.Sockets;
 using GoBot;
-using System.Threading;
 
 namespace UDP
 {
@@ -125,20 +124,14 @@ namespace UDP
             Trame trameRecue = new Trame(receiveBytes);
             TrameRecue(trameRecue);
 
-            /*Thread th = new Thread(TrameRecue);
-            th.Start(trameRecue);
-            listeTh.Add(th);*/
-
             UdpState s = new UdpState();
             s.e = e;
             s.u = u;
             u.BeginReceive(ReceptionCallback, s);
         }
-        List<Thread> listeTh = new List<Thread>();
 
-        public void TrameRecue(Object o)
+        public void TrameRecue(Trame t)
         {
-            Trame t = (Trame)o;
             NouvelleTrame(t);
         }
     }

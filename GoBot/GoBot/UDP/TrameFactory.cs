@@ -138,7 +138,7 @@ namespace GoBot.UDP
             return new Trame(tab);
         }
 
-        public static Trame GROffsetPos(int offsetX, int offsetY, int offsetTeta)
+        public static Trame GROffsetPos(int offsetX, int offsetY, double offsetTeta)
         {
             byte[] tab = new byte[8];
             tab[0] = (byte)Carte.RecMove;
@@ -147,19 +147,19 @@ namespace GoBot.UDP
             tab[3] = ByteDivide(offsetX, false);
             tab[4] = ByteDivide(offsetY, true);
             tab[5] = ByteDivide(offsetY, false);
-            tab[6] = ByteDivide(offsetTeta, true);
-            tab[7] = ByteDivide(offsetTeta, false);
+            tab[6] = ByteDivide((int)(offsetTeta * 100), true);
+            tab[7] = ByteDivide((int)(offsetTeta * 100), false);
             return new Trame(tab);
         }
 
-        public static Trame GRPivot(SensGD sens, int distance)
+        public static Trame GRPivot(SensGD sens, double angle)
         {
-            byte[] tab = new byte[5];
+            byte[] tab = new byte[7];
             tab[0] = (byte)Carte.RecMove;
             tab[1] = (byte)FonctionMove.Pivot;
             tab[2] = (byte)sens;
-            tab[3] = ByteDivide(distance, true);
-            tab[4] = ByteDivide(distance, false);
+            tab[3] = ByteDivide((int)(angle * 100.0), true);
+            tab[4] = ByteDivide((int)(angle * 100*0), false);
             return new Trame(tab);
         }
 
@@ -209,14 +209,6 @@ namespace GoBot.UDP
             tab[3] = (byte)ByteDivide(x, false);
             tab[4] = (byte)ByteDivide(y, true);
             tab[5] = (byte)ByteDivide(y, false);
-            return new Trame(tab);
-        }
-
-        public static Trame GRStopAlim()
-        {
-            byte[] tab = new byte[2];
-            tab[0] = (byte)Carte.RecMove;
-            tab[1] = (byte)FonctionMove.Stop;
             return new Trame(tab);
         }
 
@@ -289,6 +281,20 @@ namespace GoBot.UDP
         {
             // 0x67 pour communication à 19200 bauds
             return ServoSetPosition(Carte.RecIo, (int)servo, 0x67, position);
+        }
+
+        public static Trame GRPID(int p, int i, int d)
+        {
+            byte[] tab = new byte[8];
+            tab[0] = (byte)Carte.RecMove;
+            tab[1] = (byte)FonctionMove.PID;
+            tab[2] = (byte)ByteDivide(p, true);
+            tab[3] = (byte)ByteDivide(p, false);
+            tab[4] = (byte)ByteDivide(i, true);
+            tab[5] = (byte)ByteDivide(i, false);
+            tab[6] = (byte)ByteDivide(d, true);
+            tab[7] = (byte)ByteDivide(d, false);
+            return new Trame(tab);
         }
 
         #endregion
@@ -684,7 +690,6 @@ namespace GoBot.UDP
 
         #endregion
 
-
         public static Trame TestConnexion(Carte carte)
         {
             byte[] tab = new byte[2];
@@ -692,6 +697,8 @@ namespace GoBot.UDP
             tab[1] = (byte)FonctionCommune.TestConnexion;
             return new Trame(tab);
         }
+
+        #region Balises
 
         public static Trame BaliseVitesse(Carte balise, int vitesse)
         {
@@ -735,18 +742,7 @@ namespace GoBot.UDP
             return new Trame(tab);
         }
 
-        public static Trame GRPID(int p, int i, int d)
-        {
-            byte[] tab = new byte[8];
-            tab[0] = (byte)Carte.RecMove;
-            tab[1] = (byte)FonctionMove.PID;
-            tab[2] = (byte)ByteDivide(p, true);
-            tab[3] = (byte)ByteDivide(p, false);
-            tab[4] = (byte)ByteDivide(i, true);
-            tab[5] = (byte)ByteDivide(i, false);
-            tab[6] = (byte)ByteDivide(d, true);
-            tab[7] = (byte)ByteDivide(d, false);
-            return new Trame(tab);
-        }
+        #endregion
+
     }
 }

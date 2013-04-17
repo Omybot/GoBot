@@ -47,8 +47,8 @@ namespace GoBot.Calculs
             Distance = AngleVisibleToDistance(Math.Abs(AngleFin - AngleDebut));
 
             // Bornes
-            if (Distance > 3000)
-                Distance = 3000;
+            if (Distance > Plateau.LongueurPlateau)
+                Distance = Plateau.LongueurPlateau;
             if (Distance < 1)
                 Distance = 1;
 

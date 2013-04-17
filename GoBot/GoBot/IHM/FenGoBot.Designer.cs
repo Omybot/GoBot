@@ -45,7 +45,6 @@ namespace GoBot
             this.btnSaveReplay = new System.Windows.Forms.Button();
             this.txtLogComplet = new System.Windows.Forms.RichTextBox();
             this.tabMatch = new System.Windows.Forms.TabPage();
-            this.button3 = new System.Windows.Forms.Button();
             this.bnStratTotem = new System.Windows.Forms.Button();
             this.btnHomolog = new System.Windows.Forms.Button();
             this.label5 = new System.Windows.Forms.Label();
@@ -68,11 +67,6 @@ namespace GoBot
             this.tabBalises = new System.Windows.Forms.TabPage();
             this.tabTable = new System.Windows.Forms.TabPage();
             this.tabPoubelle = new System.Windows.Forms.TabPage();
-            this.btnMilieuDroite = new System.Windows.Forms.Button();
-            this.btnHautDroite = new System.Windows.Forms.Button();
-            this.btnMilieuGauche = new System.Windows.Forms.Button();
-            this.btnHautGauche = new System.Windows.Forms.Button();
-            this.btnPRCoeffAsserv = new System.Windows.Forms.Button();
             this.btnPIDGR = new System.Windows.Forms.Button();
             this.label10 = new System.Windows.Forms.Label();
             this.label9 = new System.Windows.Forms.Label();
@@ -80,6 +74,17 @@ namespace GoBot
             this.numDGR = new System.Windows.Forms.NumericUpDown();
             this.numIGR = new System.Windows.Forms.NumericUpDown();
             this.numPGR = new System.Windows.Forms.NumericUpDown();
+            this.tabCapteurCouleur = new System.Windows.Forms.TabPage();
+            this.lblL = new System.Windows.Forms.Label();
+            this.label15 = new System.Windows.Forms.Label();
+            this.btnRefresh = new System.Windows.Forms.Button();
+            this.lblB = new System.Windows.Forms.Label();
+            this.lblV = new System.Windows.Forms.Label();
+            this.lblR = new System.Windows.Forms.Label();
+            this.label13 = new System.Windows.Forms.Label();
+            this.label12 = new System.Windows.Forms.Label();
+            this.label11 = new System.Windows.Forms.Label();
+            this.pictureBoxCapteur = new System.Windows.Forms.PictureBox();
             this.lblRecMove = new System.Windows.Forms.Label();
             this.lblRecIo = new System.Windows.Forms.Label();
             this.lblRecPi = new System.Windows.Forms.Label();
@@ -87,6 +92,8 @@ namespace GoBot
             this.lblRecBun = new System.Windows.Forms.Label();
             this.lblRecBoi = new System.Windows.Forms.Label();
             this.btnClose = new System.Windows.Forms.Button();
+            this.lblSimulation = new System.Windows.Forms.Label();
+            this.switchBoutonSimu = new GoBot.IHM.Composants.SwitchBouton();
             this.ledRecBoi = new GoBot.IHM.Composants.Led();
             this.ledRecBeu = new GoBot.IHM.Composants.Led();
             this.ledRecBun = new GoBot.IHM.Composants.Led();
@@ -108,7 +115,6 @@ namespace GoBot
             this.panelBalise2 = new GoBot.IHM.PanelBalise();
             this.panelBalise1 = new GoBot.IHM.PanelBalise();
             this.panelTable1 = new GoBot.IHM.PanelTable();
-            this.button4 = new System.Windows.Forms.Button();
             this.tabControl.SuspendLayout();
             this.tabGrosRobot.SuspendLayout();
             this.tabPetitRobot.SuspendLayout();
@@ -124,6 +130,8 @@ namespace GoBot
             ((System.ComponentModel.ISupportInitialize)(this.numDGR)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numIGR)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numPGR)).BeginInit();
+            this.tabCapteurCouleur.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBoxCapteur)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.ledRecBoi)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.ledRecBeu)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.ledRecBun)).BeginInit();
@@ -148,6 +156,7 @@ namespace GoBot
             this.tabControl.Controls.Add(this.tabBalises);
             this.tabControl.Controls.Add(this.tabTable);
             this.tabControl.Controls.Add(this.tabPoubelle);
+            this.tabControl.Controls.Add(this.tabCapteurCouleur);
             this.tabControl.HotTrack = true;
             this.tabControl.Location = new System.Drawing.Point(0, 0);
             this.tabControl.Name = "tabControl";
@@ -301,7 +310,6 @@ namespace GoBot
             // 
             // tabMatch
             // 
-            this.tabMatch.Controls.Add(this.button3);
             this.tabMatch.Controls.Add(this.bnStratTotem);
             this.tabMatch.Controls.Add(this.btnHomolog);
             this.tabMatch.Controls.Add(this.label5);
@@ -329,16 +337,6 @@ namespace GoBot
             this.tabMatch.TabIndex = 3;
             this.tabMatch.Text = "Match";
             this.tabMatch.UseVisualStyleBackColor = true;
-            // 
-            // button3
-            // 
-            this.button3.Location = new System.Drawing.Point(52, 176);
-            this.button3.Name = "button3";
-            this.button3.Size = new System.Drawing.Size(72, 37);
-            this.button3.TabIndex = 20;
-            this.button3.Text = "button3";
-            this.button3.UseVisualStyleBackColor = true;
-            this.button3.Click += new System.EventHandler(this.button3_Click);
             // 
             // bnStratTotem
             // 
@@ -555,12 +553,6 @@ namespace GoBot
             // 
             // tabPoubelle
             // 
-            this.tabPoubelle.Controls.Add(this.button4);
-            this.tabPoubelle.Controls.Add(this.btnMilieuDroite);
-            this.tabPoubelle.Controls.Add(this.btnHautDroite);
-            this.tabPoubelle.Controls.Add(this.btnMilieuGauche);
-            this.tabPoubelle.Controls.Add(this.btnHautGauche);
-            this.tabPoubelle.Controls.Add(this.btnPRCoeffAsserv);
             this.tabPoubelle.Controls.Add(this.btnPIDGR);
             this.tabPoubelle.Controls.Add(this.label10);
             this.tabPoubelle.Controls.Add(this.label9);
@@ -576,56 +568,6 @@ namespace GoBot
             this.tabPoubelle.Text = "Poubelle";
             this.tabPoubelle.UseVisualStyleBackColor = true;
             // 
-            // btnMilieuDroite
-            // 
-            this.btnMilieuDroite.Location = new System.Drawing.Point(559, 155);
-            this.btnMilieuDroite.Name = "btnMilieuDroite";
-            this.btnMilieuDroite.Size = new System.Drawing.Size(132, 23);
-            this.btnMilieuDroite.TabIndex = 11;
-            this.btnMilieuDroite.Text = "Attrape milieu droite";
-            this.btnMilieuDroite.UseVisualStyleBackColor = true;
-            this.btnMilieuDroite.Click += new System.EventHandler(this.btnMilieuDroite_Click);
-            // 
-            // btnHautDroite
-            // 
-            this.btnHautDroite.Location = new System.Drawing.Point(559, 126);
-            this.btnHautDroite.Name = "btnHautDroite";
-            this.btnHautDroite.Size = new System.Drawing.Size(132, 23);
-            this.btnHautDroite.TabIndex = 10;
-            this.btnHautDroite.Text = "Attrape haut droite";
-            this.btnHautDroite.UseVisualStyleBackColor = true;
-            this.btnHautDroite.Click += new System.EventHandler(this.btnHautDroite_Click);
-            // 
-            // btnMilieuGauche
-            // 
-            this.btnMilieuGauche.Location = new System.Drawing.Point(418, 155);
-            this.btnMilieuGauche.Name = "btnMilieuGauche";
-            this.btnMilieuGauche.Size = new System.Drawing.Size(132, 23);
-            this.btnMilieuGauche.TabIndex = 9;
-            this.btnMilieuGauche.Text = "Attrape milieu gauche";
-            this.btnMilieuGauche.UseVisualStyleBackColor = true;
-            this.btnMilieuGauche.Click += new System.EventHandler(this.btnMilieuGauche_Click);
-            // 
-            // btnHautGauche
-            // 
-            this.btnHautGauche.Location = new System.Drawing.Point(418, 126);
-            this.btnHautGauche.Name = "btnHautGauche";
-            this.btnHautGauche.Size = new System.Drawing.Size(132, 23);
-            this.btnHautGauche.TabIndex = 8;
-            this.btnHautGauche.Text = "Attrape haut gauche";
-            this.btnHautGauche.UseVisualStyleBackColor = true;
-            this.btnHautGauche.Click += new System.EventHandler(this.btnHautGauche_Click);
-            // 
-            // btnPRCoeffAsserv
-            // 
-            this.btnPRCoeffAsserv.Location = new System.Drawing.Point(113, 126);
-            this.btnPRCoeffAsserv.Name = "btnPRCoeffAsserv";
-            this.btnPRCoeffAsserv.Size = new System.Drawing.Size(88, 36);
-            this.btnPRCoeffAsserv.TabIndex = 7;
-            this.btnPRCoeffAsserv.Text = "Envoyer PID PetitRobot";
-            this.btnPRCoeffAsserv.UseVisualStyleBackColor = true;
-            this.btnPRCoeffAsserv.Click += new System.EventHandler(this.btnPRCoeffAsserv_Click);
-            // 
             // btnPIDGR
             // 
             this.btnPIDGR.Location = new System.Drawing.Point(19, 126);
@@ -639,7 +581,7 @@ namespace GoBot
             // label10
             // 
             this.label10.AutoSize = true;
-            this.label10.Location = new System.Drawing.Point(67, 101);
+            this.label10.Location = new System.Drawing.Point(16, 102);
             this.label10.Name = "label10";
             this.label10.Size = new System.Drawing.Size(15, 13);
             this.label10.TabIndex = 5;
@@ -648,7 +590,7 @@ namespace GoBot
             // label9
             // 
             this.label9.AutoSize = true;
-            this.label9.Location = new System.Drawing.Point(69, 75);
+            this.label9.Location = new System.Drawing.Point(18, 76);
             this.label9.Name = "label9";
             this.label9.Size = new System.Drawing.Size(10, 13);
             this.label9.TabIndex = 4;
@@ -657,7 +599,7 @@ namespace GoBot
             // label8
             // 
             this.label8.AutoSize = true;
-            this.label8.Location = new System.Drawing.Point(67, 49);
+            this.label8.Location = new System.Drawing.Point(16, 50);
             this.label8.Name = "label8";
             this.label8.Size = new System.Drawing.Size(14, 13);
             this.label8.TabIndex = 3;
@@ -665,7 +607,7 @@ namespace GoBot
             // 
             // numDGR
             // 
-            this.numDGR.Location = new System.Drawing.Point(88, 99);
+            this.numDGR.Location = new System.Drawing.Point(37, 100);
             this.numDGR.Maximum = new decimal(new int[] {
             1000,
             0,
@@ -677,7 +619,7 @@ namespace GoBot
             // 
             // numIGR
             // 
-            this.numIGR.Location = new System.Drawing.Point(88, 73);
+            this.numIGR.Location = new System.Drawing.Point(37, 74);
             this.numIGR.Maximum = new decimal(new int[] {
             1000,
             0,
@@ -689,7 +631,7 @@ namespace GoBot
             // 
             // numPGR
             // 
-            this.numPGR.Location = new System.Drawing.Point(88, 47);
+            this.numPGR.Location = new System.Drawing.Point(37, 48);
             this.numPGR.Maximum = new decimal(new int[] {
             1000,
             0,
@@ -698,6 +640,115 @@ namespace GoBot
             this.numPGR.Name = "numPGR";
             this.numPGR.Size = new System.Drawing.Size(60, 20);
             this.numPGR.TabIndex = 0;
+            // 
+            // tabCapteurCouleur
+            // 
+            this.tabCapteurCouleur.Controls.Add(this.lblL);
+            this.tabCapteurCouleur.Controls.Add(this.label15);
+            this.tabCapteurCouleur.Controls.Add(this.btnRefresh);
+            this.tabCapteurCouleur.Controls.Add(this.lblB);
+            this.tabCapteurCouleur.Controls.Add(this.lblV);
+            this.tabCapteurCouleur.Controls.Add(this.lblR);
+            this.tabCapteurCouleur.Controls.Add(this.label13);
+            this.tabCapteurCouleur.Controls.Add(this.label12);
+            this.tabCapteurCouleur.Controls.Add(this.label11);
+            this.tabCapteurCouleur.Controls.Add(this.pictureBoxCapteur);
+            this.tabCapteurCouleur.Location = new System.Drawing.Point(4, 22);
+            this.tabCapteurCouleur.Name = "tabCapteurCouleur";
+            this.tabCapteurCouleur.Padding = new System.Windows.Forms.Padding(3);
+            this.tabCapteurCouleur.Size = new System.Drawing.Size(1016, 548);
+            this.tabCapteurCouleur.TabIndex = 9;
+            this.tabCapteurCouleur.Text = "Capteur couleur";
+            this.tabCapteurCouleur.UseVisualStyleBackColor = true;
+            // 
+            // lblL
+            // 
+            this.lblL.AutoSize = true;
+            this.lblL.Location = new System.Drawing.Point(253, 112);
+            this.lblL.Name = "lblL";
+            this.lblL.Size = new System.Drawing.Size(13, 13);
+            this.lblL.TabIndex = 9;
+            this.lblL.Text = "0";
+            // 
+            // label15
+            // 
+            this.label15.AutoSize = true;
+            this.label15.Location = new System.Drawing.Point(221, 112);
+            this.label15.Name = "label15";
+            this.label15.Size = new System.Drawing.Size(13, 13);
+            this.label15.TabIndex = 8;
+            this.label15.Text = "L";
+            // 
+            // btnRefresh
+            // 
+            this.btnRefresh.Location = new System.Drawing.Point(216, 134);
+            this.btnRefresh.Name = "btnRefresh";
+            this.btnRefresh.Size = new System.Drawing.Size(58, 23);
+            this.btnRefresh.TabIndex = 7;
+            this.btnRefresh.Text = "Refresh";
+            this.btnRefresh.UseVisualStyleBackColor = true;
+            // 
+            // lblB
+            // 
+            this.lblB.AutoSize = true;
+            this.lblB.Location = new System.Drawing.Point(253, 86);
+            this.lblB.Name = "lblB";
+            this.lblB.Size = new System.Drawing.Size(13, 13);
+            this.lblB.TabIndex = 6;
+            this.lblB.Text = "0";
+            // 
+            // lblV
+            // 
+            this.lblV.AutoSize = true;
+            this.lblV.Location = new System.Drawing.Point(253, 60);
+            this.lblV.Name = "lblV";
+            this.lblV.Size = new System.Drawing.Size(13, 13);
+            this.lblV.TabIndex = 5;
+            this.lblV.Text = "0";
+            // 
+            // lblR
+            // 
+            this.lblR.AutoSize = true;
+            this.lblR.Location = new System.Drawing.Point(253, 34);
+            this.lblR.Name = "lblR";
+            this.lblR.Size = new System.Drawing.Size(13, 13);
+            this.lblR.TabIndex = 4;
+            this.lblR.Text = "0";
+            // 
+            // label13
+            // 
+            this.label13.AutoSize = true;
+            this.label13.Location = new System.Drawing.Point(221, 86);
+            this.label13.Name = "label13";
+            this.label13.Size = new System.Drawing.Size(14, 13);
+            this.label13.TabIndex = 3;
+            this.label13.Text = "B";
+            // 
+            // label12
+            // 
+            this.label12.AutoSize = true;
+            this.label12.Location = new System.Drawing.Point(221, 60);
+            this.label12.Name = "label12";
+            this.label12.Size = new System.Drawing.Size(14, 13);
+            this.label12.TabIndex = 2;
+            this.label12.Text = "V";
+            // 
+            // label11
+            // 
+            this.label11.AutoSize = true;
+            this.label11.Location = new System.Drawing.Point(221, 34);
+            this.label11.Name = "label11";
+            this.label11.Size = new System.Drawing.Size(15, 13);
+            this.label11.TabIndex = 1;
+            this.label11.Text = "R";
+            // 
+            // pictureBoxCapteur
+            // 
+            this.pictureBoxCapteur.Location = new System.Drawing.Point(37, 29);
+            this.pictureBoxCapteur.Name = "pictureBoxCapteur";
+            this.pictureBoxCapteur.Size = new System.Drawing.Size(134, 132);
+            this.pictureBoxCapteur.TabIndex = 0;
+            this.pictureBoxCapteur.TabStop = false;
             // 
             // lblRecMove
             // 
@@ -713,7 +764,7 @@ namespace GoBot
             // 
             this.lblRecIo.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.lblRecIo.AutoSize = true;
-            this.lblRecIo.Location = new System.Drawing.Point(224, 578);
+            this.lblRecIo.Location = new System.Drawing.Point(204, 578);
             this.lblRecIo.Name = "lblRecIo";
             this.lblRecIo.Size = new System.Drawing.Size(36, 13);
             this.lblRecIo.TabIndex = 29;
@@ -723,7 +774,7 @@ namespace GoBot
             // 
             this.lblRecPi.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.lblRecPi.AutoSize = true;
-            this.lblRecPi.Location = new System.Drawing.Point(392, 578);
+            this.lblRecPi.Location = new System.Drawing.Point(352, 578);
             this.lblRecPi.Name = "lblRecPi";
             this.lblRecPi.Size = new System.Drawing.Size(36, 13);
             this.lblRecPi.TabIndex = 33;
@@ -733,7 +784,7 @@ namespace GoBot
             // 
             this.lblRecBeu.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.lblRecBeu.AutoSize = true;
-            this.lblRecBeu.Location = new System.Drawing.Point(738, 578);
+            this.lblRecBeu.Location = new System.Drawing.Point(658, 578);
             this.lblRecBeu.Name = "lblRecBeu";
             this.lblRecBeu.Size = new System.Drawing.Size(46, 13);
             this.lblRecBeu.TabIndex = 39;
@@ -743,7 +794,7 @@ namespace GoBot
             // 
             this.lblRecBun.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.lblRecBun.AutoSize = true;
-            this.lblRecBun.Location = new System.Drawing.Point(560, 578);
+            this.lblRecBun.Location = new System.Drawing.Point(500, 578);
             this.lblRecBun.Name = "lblRecBun";
             this.lblRecBun.Size = new System.Drawing.Size(46, 13);
             this.lblRecBun.TabIndex = 37;
@@ -753,7 +804,7 @@ namespace GoBot
             // 
             this.lblRecBoi.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.lblRecBoi.AutoSize = true;
-            this.lblRecBoi.Location = new System.Drawing.Point(916, 578);
+            this.lblRecBoi.Location = new System.Drawing.Point(816, 578);
             this.lblRecBoi.Name = "lblRecBoi";
             this.lblRecBoi.Size = new System.Drawing.Size(42, 13);
             this.lblRecBoi.TabIndex = 43;
@@ -770,12 +821,33 @@ namespace GoBot
             this.btnClose.UseVisualStyleBackColor = true;
             this.btnClose.Click += new System.EventHandler(this.btnClose_Click);
             // 
+            // lblSimulation
+            // 
+            this.lblSimulation.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.lblSimulation.AutoSize = true;
+            this.lblSimulation.Location = new System.Drawing.Point(965, 578);
+            this.lblSimulation.Name = "lblSimulation";
+            this.lblSimulation.Size = new System.Drawing.Size(55, 13);
+            this.lblSimulation.TabIndex = 72;
+            this.lblSimulation.Text = "Simulation";
+            // 
+            // switchBoutonSimu
+            // 
+            this.switchBoutonSimu.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.switchBoutonSimu.BackColor = System.Drawing.Color.Transparent;
+            this.switchBoutonSimu.Location = new System.Drawing.Point(924, 578);
+            this.switchBoutonSimu.Name = "switchBoutonSimu";
+            this.switchBoutonSimu.Size = new System.Drawing.Size(35, 15);
+            this.switchBoutonSimu.Symetrique = true;
+            this.switchBoutonSimu.TabIndex = 73;
+            this.switchBoutonSimu.ChangementEtat += new GoBot.IHM.Composants.SwitchBouton.ChangeEtatDelegate(this.switchBoutonSimu_ChangementEtat);
+            // 
             // ledRecBoi
             // 
             this.ledRecBoi.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.ledRecBoi.Etat = false;
             this.ledRecBoi.Image = ((System.Drawing.Image)(resources.GetObject("ledRecBoi.Image")));
-            this.ledRecBoi.Location = new System.Drawing.Point(894, 577);
+            this.ledRecBoi.Location = new System.Drawing.Point(794, 577);
             this.ledRecBoi.Name = "ledRecBoi";
             this.ledRecBoi.Size = new System.Drawing.Size(16, 16);
             this.ledRecBoi.TabIndex = 42;
@@ -786,7 +858,7 @@ namespace GoBot
             this.ledRecBeu.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.ledRecBeu.Etat = false;
             this.ledRecBeu.Image = ((System.Drawing.Image)(resources.GetObject("ledRecBeu.Image")));
-            this.ledRecBeu.Location = new System.Drawing.Point(716, 577);
+            this.ledRecBeu.Location = new System.Drawing.Point(636, 577);
             this.ledRecBeu.Name = "ledRecBeu";
             this.ledRecBeu.Size = new System.Drawing.Size(16, 16);
             this.ledRecBeu.TabIndex = 38;
@@ -797,7 +869,7 @@ namespace GoBot
             this.ledRecBun.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.ledRecBun.Etat = false;
             this.ledRecBun.Image = ((System.Drawing.Image)(resources.GetObject("ledRecBun.Image")));
-            this.ledRecBun.Location = new System.Drawing.Point(538, 577);
+            this.ledRecBun.Location = new System.Drawing.Point(478, 577);
             this.ledRecBun.Name = "ledRecBun";
             this.ledRecBun.Size = new System.Drawing.Size(16, 16);
             this.ledRecBun.TabIndex = 36;
@@ -808,7 +880,7 @@ namespace GoBot
             this.ledRecPi.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.ledRecPi.Etat = false;
             this.ledRecPi.Image = ((System.Drawing.Image)(resources.GetObject("ledRecPi.Image")));
-            this.ledRecPi.Location = new System.Drawing.Point(370, 577);
+            this.ledRecPi.Location = new System.Drawing.Point(330, 577);
             this.ledRecPi.Name = "ledRecPi";
             this.ledRecPi.Size = new System.Drawing.Size(16, 16);
             this.ledRecPi.TabIndex = 32;
@@ -819,7 +891,7 @@ namespace GoBot
             this.ledRecIo.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.ledRecIo.Etat = false;
             this.ledRecIo.Image = ((System.Drawing.Image)(resources.GetObject("ledRecIo.Image")));
-            this.ledRecIo.Location = new System.Drawing.Point(202, 577);
+            this.ledRecIo.Location = new System.Drawing.Point(182, 577);
             this.ledRecIo.Name = "ledRecIo";
             this.ledRecIo.Size = new System.Drawing.Size(16, 16);
             this.ledRecIo.TabIndex = 28;
@@ -971,22 +1043,14 @@ namespace GoBot
             this.panelTable1.Size = new System.Drawing.Size(879, 526);
             this.panelTable1.TabIndex = 0;
             // 
-            // button4
-            // 
-            this.button4.Location = new System.Drawing.Point(49, 208);
-            this.button4.Name = "button4";
-            this.button4.Size = new System.Drawing.Size(324, 175);
-            this.button4.TabIndex = 12;
-            this.button4.Text = "Sauver config";
-            this.button4.UseVisualStyleBackColor = true;
-            this.button4.Click += new System.EventHandler(this.button4_Click);
-            // 
             // FenGoBot
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.White;
             this.ClientSize = new System.Drawing.Size(1024, 600);
+            this.Controls.Add(this.switchBoutonSimu);
+            this.Controls.Add(this.lblSimulation);
             this.Controls.Add(this.btnClose);
             this.Controls.Add(this.lblRecBoi);
             this.Controls.Add(this.ledRecBoi);
@@ -1008,6 +1072,7 @@ namespace GoBot
             this.Text = "GoBot";
             this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.FenGoBot_FormClosing);
+            this.Load += new System.EventHandler(this.FenGoBot_Load);
             this.tabControl.ResumeLayout(false);
             this.tabGrosRobot.ResumeLayout(false);
             this.tabPetitRobot.ResumeLayout(false);
@@ -1027,6 +1092,9 @@ namespace GoBot
             ((System.ComponentModel.ISupportInitialize)(this.numDGR)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.numIGR)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.numPGR)).EndInit();
+            this.tabCapteurCouleur.ResumeLayout(false);
+            this.tabCapteurCouleur.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBoxCapteur)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.ledRecBoi)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.ledRecBeu)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.ledRecBun)).EndInit();
@@ -1115,13 +1183,19 @@ namespace GoBot
         private System.Windows.Forms.NumericUpDown numIGR;
         private System.Windows.Forms.NumericUpDown numPGR;
         private System.Windows.Forms.Button bnStratTotem;
-        private System.Windows.Forms.Button btnPRCoeffAsserv;
-        private System.Windows.Forms.Button button3;
-        private System.Windows.Forms.Button btnMilieuDroite;
-        private System.Windows.Forms.Button btnHautDroite;
-        private System.Windows.Forms.Button btnMilieuGauche;
-        private System.Windows.Forms.Button btnHautGauche;
-        private System.Windows.Forms.Button button4;
+        private System.Windows.Forms.TabPage tabCapteurCouleur;
+        private System.Windows.Forms.Button btnRefresh;
+        private System.Windows.Forms.Label lblB;
+        private System.Windows.Forms.Label lblV;
+        private System.Windows.Forms.Label lblR;
+        private System.Windows.Forms.Label label13;
+        private System.Windows.Forms.Label label12;
+        private System.Windows.Forms.Label label11;
+        private System.Windows.Forms.PictureBox pictureBoxCapteur;
+        private System.Windows.Forms.Label lblL;
+        private System.Windows.Forms.Label label15;
+        private System.Windows.Forms.Label lblSimulation;
+        private IHM.Composants.SwitchBouton switchBoutonSimu;
     }
 }
 

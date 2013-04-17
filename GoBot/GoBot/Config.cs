@@ -11,7 +11,16 @@ namespace GoBot
 {
     [Serializable]
     public class Config
-    {
+    {        
+        /// <summary>
+        /// Permet de savoir si l'application est mode Design (concepteur graphique) ou en cours d'execution
+        /// Le DesignMode de base :
+        ///     - Ne fonctionne pas dans les contructeurs
+        ///     - Ne fonctionne pas pour les contrôles imbriqués
+        /// </summary>
+        public static bool DesignMode { get { return designMode; } set { designMode = value; } }
+        private static bool designMode = true;
+
         private static Config config = null;
 
         // Fenêtres gros robot

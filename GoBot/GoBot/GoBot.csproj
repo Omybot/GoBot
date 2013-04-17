@@ -49,7 +49,7 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <PropertyGroup>
-    <ApplicationIcon>img/robot.ico</ApplicationIcon>
+    <ApplicationIcon>robot.ico</ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
@@ -93,8 +93,8 @@
     <Compile Include="Actions\GrosRobot\Deplacement\GRReculeAction.cs" />
     <Compile Include="Actions\GrosRobot\Deplacement\GRVirageAvantGaucheAction.cs" />
     <Compile Include="Actions\IAction.cs" />
-    <Compile Include="Actions\PetitRobot\PRPompeAction.cs" />
     <Compile Include="Actions\PetitRobot\PRServoAction.cs" />
+    <Compile Include="UDP\Connexions.cs" />
     <Compile Include="PathFinding\Arc.cs" />
     <Compile Include="PathFinding\AStar.cs" />
     <Compile Include="PathFinding\Graph.cs" />
@@ -105,7 +105,6 @@
     <Compile Include="PathFinding\Vector3D.cs" />
     <Compile Include="Balises\Balise.cs" />
     <Compile Include="Calculs\Angle.cs" />
-    <Compile Include="Calculs\BaliseCalc.cs" />
     <Compile Include="Calculs\DetectionBalise.cs" />
     <Compile Include="Calculs\Formes\Cercle.cs" />
     <Compile Include="Calculs\Formes\Droite.cs" />
@@ -117,14 +116,8 @@
     <Compile Include="Calculs\Position.cs" />
     <Compile Include="Balises\CalibrateurBalise.cs" />
     <Compile Include="Config.cs" />
-    <Compile Include="Enchainements\Gerome4Enchainement.cs" />
-    <Compile Include="Enchainements\Gerome3Enchainement.cs" />
-    <Compile Include="Enchainements\EnchainementEvitement.cs" />
-    <Compile Include="Enchainements\LigneEnchainement.cs" />
-    <Compile Include="Enchainements\IEnchainement.cs" />
+    <Compile Include="Enchainements\Enchainement.cs" />
     <Compile Include="Enchainements\HomologationEnchainement.cs" />
-    <Compile Include="Enchainements\TestEnchainement.cs" />
-    <Compile Include="Enchainements\TotemEnchainement.cs" />
     <Compile Include="Enums.cs" />
     <Compile Include="ConnexionCheck.cs" />
     <Compile Include="IHM\Composants\FocusablePanel.cs">
@@ -213,12 +206,6 @@
     <Compile Include="IHM\FenGoBot.Designer.cs">
       <DependentUpon>FenGoBot.cs</DependentUpon>
     </Compile>
-    <Compile Include="IHM\IHMGrosRobot\PanelPinces.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="IHM\IHMGrosRobot\PanelPinces.Designer.cs">
-      <DependentUpon>PanelPinces.cs</DependentUpon>
-    </Compile>
     <Compile Include="Historique.cs" />
     <Compile Include="IHM\IHMGrosRobot\PanelGrosRobot.cs">
       <SubType>UserControl</SubType>
@@ -245,11 +232,10 @@
     <Compile Include="GrosRobot.cs" />
     <Compile Include="Replay.cs" />
     <Compile Include="Robot.cs" />
+    <Compile Include="RobotSimu.cs" />
     <Compile Include="Servomoteur.cs" />
     <Compile Include="UDP\TrameFactory.cs" />
     <Compile Include="UDP\ConnexionUDP.cs" />
-    <Compile Include="UDP\EmissionUDP.cs" />
-    <Compile Include="UDP\ReceptionUDP.cs" />
     <Compile Include="UDP\Trame.cs" />
     <EmbeddedResource Include="IHM\Composants\BetterTextBox.resx">
       <DependentUpon>BetterTextBox.cs</DependentUpon>
@@ -283,9 +269,6 @@
     </EmbeddedResource>
     <EmbeddedResource Include="IHM\IHMGrosRobot\PanelGrosRobot.resx">
       <DependentUpon>PanelGrosRobot.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="IHM\IHMGrosRobot\PanelPinces.resx">
-      <DependentUpon>PanelPinces.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="IHM\IHMPetitRobot\PanelBras.resx">
       <DependentUpon>PanelBras.cs</DependentUpon>
@@ -509,6 +492,8 @@
     <Content Include="img\trackBarCurseurSelect.png" />
     <Content Include="img\trackBarFond.png" />
     <Content Include="img\trackBarFondSelected.png" />
+    <None Include="Resources\mort.png" />
+    <Content Include="robot.ico" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

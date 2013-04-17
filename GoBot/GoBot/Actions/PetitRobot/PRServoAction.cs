@@ -23,7 +23,7 @@ namespace GoBot.Actions
 
         void IAction.Executer()
         {
-            PetitRobot.BougeBras(pince, position);
+            PetitRobot.BougeServo(pince, position);
         }
 
         public System.Drawing.Image Image

@@ -392,7 +392,7 @@ namespace GoBot.Calculs.Formes
                 double distanceDebut = point.getDistance(Debut);
                 double distanceFin = point.getDistance(Fin);
 
-                distance = distanceDebut < distanceFin ? distanceDebut : distanceFin;
+                distance = Math.Min(distanceDebut,  distanceFin);
             }
             else
             {

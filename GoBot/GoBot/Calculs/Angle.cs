@@ -75,7 +75,7 @@ namespace GoBot.Calculs
         /// Fait tourner l'angle de l'angle (en degrés) choisi
         /// </summary>
         /// <param name="angleTourne">Angle à tourner</param>
-        public void tourner(double angleTourne)
+        public void Tourner(double angleTourne)
         {
             angle += angleTourne;
             angle = angleOptimal(this);
@@ -85,9 +85,9 @@ namespace GoBot.Calculs
         /// Fait tourner l'angle de l'angle (objet) choisi
         /// </summary>
         /// <param name="angleTourne">Angle à tourner</param>
-        public void tourner(Angle angleTourne)
+        public void Tourner(Angle angleTourne)
         {
-            this.tourner(angleTourne.AngleDegres);
+            this.Tourner(angleTourne.AngleDegres);
         }
 
         /// <summary>

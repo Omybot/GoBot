@@ -13,9 +13,12 @@ namespace GoBot
         [STAThread]
         static void Main()
         {
+            Config.DesignMode = false;
+
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            GrosRobot.Init();
+            Connexions.Init();
+            Plateau.GrosRobot.Init();
             PetitRobot.Init();
             Config.Load();
             Plateau.Init();

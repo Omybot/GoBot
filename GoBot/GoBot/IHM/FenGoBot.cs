@@ -22,48 +22,51 @@ namespace GoBot
     {
         public FenGoBot()
         {
-
-            CheckForIllegalCrossThreadCalls = false;
             InitializeComponent();
-            panelGrosRobot.Init();
-            panelPetitRobot.Init();
 
-            if (Screen.PrimaryScreen.Bounds.Width == 1024)
+            if (!Config.DesignMode)
             {
-                WindowState = FormWindowState.Maximized;
-                FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
+                CheckForIllegalCrossThreadCalls = false;
+                panelGrosRobot.Init();
+                panelPetitRobot.Init();
+
+                if (Screen.PrimaryScreen.Bounds.Width == 1024)
+                {
+                    WindowState = FormWindowState.Maximized;
+                    FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
+                }
+                else
+                {
+                    WindowState = FormWindowState.Normal;
+                    FormBorderStyle = System.Windows.Forms.FormBorderStyle.Sizable;
+                    btnClose.Visible = false;
+                }
+
+                Plateau.GrosRobot.Historique.nouvelleAction += new Historique.delegateAction(HistoriqueGR_nouvelleAction);
+                PetitRobot.Historique.nouvelleAction += new Historique.delegateAction(HistoriquePR_nouvelleAction);
+
+                panelBalise1.Balise = Plateau.Balise1;
+                panelBalise2.Balise = Plateau.Balise2;
+                panelBalise3.Balise = Plateau.Balise3;
+
+                // Réglage rouge par défaut
+                btnCouleurRouge_Click(null, null);
+
+                Connexions.ConnexionMove.ConnexionCheck.ConnexionChange += new ConnexionCheck.ConnexionChangeDelegate(ConnexionMoveCheck_ConnexionChange);
+                Connexions.ConnexionIo.ConnexionCheck.ConnexionChange += new ConnexionCheck.ConnexionChangeDelegate(ConnexionIoCheck_ConnexionChange);
+
+                panelBalise1.Balise.ConnexionCheck.ConnexionChange += new ConnexionCheck.ConnexionChangeDelegate(ConnexionBunCheck_ConnexionChange);
+                panelBalise2.Balise.ConnexionCheck.ConnexionChange += new ConnexionCheck.ConnexionChangeDelegate(ConnexionBeuCheck_ConnexionChange);
+                panelBalise3.Balise.ConnexionCheck.ConnexionChange += new ConnexionCheck.ConnexionChangeDelegate(ConnexionBoiCheck_ConnexionChange);
+                PetitRobot.ConnexionCheck.ConnexionChange += new ConnexionCheck.ConnexionChangeDelegate(ConnexionPi_ConnexionChange);
+
+                Connexions.ConnexionMove.ConnexionCheck.Start();
+                Connexions.ConnexionIo.ConnexionCheck.Start();
+                PetitRobot.ConnexionCheck.Start();
+                panelBalise1.Balise.ConnexionCheck.Start();
+                panelBalise2.Balise.ConnexionCheck.Start();
+                panelBalise3.Balise.ConnexionCheck.Start();
             }
-            else
-            {
-                WindowState = FormWindowState.Normal;
-                FormBorderStyle = System.Windows.Forms.FormBorderStyle.Sizable;
-                btnClose.Visible = false;
-            }
-
-            GrosRobot.Historique.nouvelleAction += new Historique.delegateAction(HistoriqueGR_nouvelleAction);
-            PetitRobot.Historique.nouvelleAction += new Historique.delegateAction(HistoriquePR_nouvelleAction);
-
-            panelBalise1.Balise = Plateau.Balise1;
-            panelBalise2.Balise = Plateau.Balise2;
-            panelBalise3.Balise = Plateau.Balise3;
-
-            // Réglage rouge par défaut
-            btnCouleurRouge_Click(null, null);
-
-            GrosRobot.connexionMove.ConnexionCheck.ConnexionChange += new ConnexionCheck.ConnexionChangeDelegate(ConnexionMoveCheck_ConnexionChange);
-            GrosRobot.connexionIo.ConnexionCheck.ConnexionChange += new ConnexionCheck.ConnexionChangeDelegate(ConnexionIoCheck_ConnexionChange);
-
-            panelBalise1.Balise.ConnexionCheck.ConnexionChange += new ConnexionCheck.ConnexionChangeDelegate(ConnexionBunCheck_ConnexionChange);
-            panelBalise2.Balise.ConnexionCheck.ConnexionChange += new ConnexionCheck.ConnexionChangeDelegate(ConnexionBeuCheck_ConnexionChange);
-            panelBalise3.Balise.ConnexionCheck.ConnexionChange += new ConnexionCheck.ConnexionChangeDelegate(ConnexionBoiCheck_ConnexionChange);
-            PetitRobot.ConnexionCheck.ConnexionChange += new ConnexionCheck.ConnexionChangeDelegate(ConnexionPi_ConnexionChange);
-
-            GrosRobot.connexionMove.ConnexionCheck.Start();
-            GrosRobot.connexionIo.ConnexionCheck.Start();
-            PetitRobot.ConnexionCheck.Start();
-            panelBalise1.Balise.ConnexionCheck.Start();
-            panelBalise2.Balise.ConnexionCheck.Start();
-            panelBalise3.Balise.ConnexionCheck.Start();
         }
 
         void ConnexionPi_ConnexionChange(bool conn)
@@ -98,19 +101,22 @@ namespace GoBot
 
         void AjouterLigne(Color couleur, String texte)
         {
-            texte = DateTime.Now.ToLongTimeString() + " > " + texte + Environment.NewLine;
-            txtLogComplet.SuspendLayout();
+            this.Invoke(new EventHandler(delegate
+                {
+                    texte = DateTime.Now.ToLongTimeString() + " > " + texte + Environment.NewLine;
+                    txtLogComplet.SuspendLayout();
 
-            txtLogComplet.SelectionStart = 0;
-            txtLogComplet.SelectedText = texte;
+                    txtLogComplet.SelectionStart = 0;
+                    txtLogComplet.SelectedText = texte;
 
-            txtLogComplet.SelectionStart = 0;
-            txtLogComplet.SelectionLength = texte.Length;
-            txtLogComplet.SelectionColor = couleur;
+                    txtLogComplet.SelectionStart = 0;
+                    txtLogComplet.SelectionLength = texte.Length;
+                    txtLogComplet.SelectionColor = couleur;
 
-            txtLogComplet.ResumeLayout();
+                    txtLogComplet.ResumeLayout();
 
-            txtLogComplet.Select(txtLogComplet.TextLength, 0);
+                    txtLogComplet.Select(txtLogComplet.TextLength, 0);
+                }));
         }
 
         void HistoriqueGR_nouvelleAction(Actions.IAction action)
@@ -168,6 +174,10 @@ namespace GoBot
             panelBalise1.Balise.VitesseRotation(0);
             panelBalise2.Balise.VitesseRotation(0);
             panelBalise3.Balise.VitesseRotation(0);
+
+            Plateau.Balise1.writer.Close();
+            Plateau.Balise2.writer.Close();
+            Plateau.Balise3.writer.Close();
         }
 
         private void btnClose_Click(object sender, EventArgs e)
@@ -177,8 +187,8 @@ namespace GoBot
 
         private void btnCouleurViolet_Click(object sender, EventArgs e)
         {
-            GrosRobot.Couleur = Color.Purple;
-            GrosRobot.Enchainement.Couleur = Color.Purple;
+            //Plateau.GrosRobot.Couleur = Color.Purple;
+            //Plateau.GrosRobot.Enchainement.Couleur = Color.Purple;
             pictureBoxCouleur.BackColor = Color.Purple;
             pictureBoxBalises.Image = Properties.Resources.tableViolet;
 
@@ -189,8 +199,8 @@ namespace GoBot
 
         private void btnCouleurRouge_Click(object sender, EventArgs e)
         {
-            GrosRobot.Couleur = Color.Red;
-            GrosRobot.Enchainement.Couleur = Color.Red;
+            //Plateau.GrosRobot.Couleur = Color.Red;
+            //Plateau.GrosRobot.Enchainement.Couleur = Color.Red;
             pictureBoxCouleur.BackColor = Color.Red;
             pictureBoxBalises.Image = Properties.Resources.tableRouge;
 
@@ -208,105 +218,25 @@ namespace GoBot
 
         public void Recallages()
         {
-            /*
-            if (pictureBoxCouleur.BackColor == Color.Red)
-            {
-                GrosRobot.Evitement = false;
-                PetitRobot.Evitement = false;
+            Plateau.GrosRobot.VitesseDeplacement = 150;
+            Plateau.GrosRobot.AccelerationDeplacement = 150;
+            Plateau.GrosRobot.VitessePivot = 150;
+            Plateau.GrosRobot.AccelerationPivot = 150;
 
-                int vitesse = GrosRobot.VitesseDeplacement;
-                int accel = GrosRobot.AccelerationDeplacement;
-                GrosRobot.VitesseDeplacement = 150;
-                GrosRobot.AccelerationDeplacement = 150;
-
-                PetitRobot.VitesseDeplacement = 150;
-                PetitRobot.AccelerationDeplacement = 150;
-
-                PetitRobot.Avancer(10, false);
-                GrosRobot.Avancer(10);
-
-                PetitRobot.Recallage(SensAR.Arriere, false);
-                GrosRobot.Recallage(SensAR.Arriere);
-
-                PetitRobot.Avancer(480, false);
-                GrosRobot.Avancer(530);
-
-                PetitRobot.PivotDroite(90, false);
-                GrosRobot.PivotDroite(90);
-
-                PetitRobot.mutexDeplacement.WaitOne();
-                PetitRobot.Recallage(SensAR.Arriere);
-                PetitRobot.Avancer(186);
-                PetitRobot.PivotGauche(90);
-                PetitRobot.Recallage(SensAR.Arriere, false);
-
-                GrosRobot.Recallage(SensAR.Arriere);
-                GrosRobot.Avancer(132);
-                GrosRobot.PivotGauche(90);
-                GrosRobot.Reculer(325);
-                GrosRobot.Evitement = true;
-                PetitRobot.Evitement = true;
-            }
-            else
-            {
-                GrosRobot.Evitement = false;
-                PetitRobot.Evitement = false;
-
-                int vitesse = GrosRobot.VitesseDeplacement;
-                int accel = GrosRobot.AccelerationDeplacement;
-                GrosRobot.VitesseDeplacement = 150;
-                GrosRobot.AccelerationDeplacement = 150;
-
-                PetitRobot.VitesseDeplacement = 150;
-                PetitRobot.AccelerationDeplacement = 150;
-
-                PetitRobot.Avancer(10, false);
-                GrosRobot.Avancer(10);
-
-                PetitRobot.Recallage(SensAR.Arriere, false);
-                GrosRobot.Recallage(SensAR.Arriere);
-
-                PetitRobot.Avancer(480, false);
-                GrosRobot.Avancer(530);
-
-                PetitRobot.PivotGauche(90, false);
-                GrosRobot.PivotGauche(90);
-
-                PetitRobot.mutexDeplacement.WaitOne();
-                PetitRobot.Recallage(SensAR.Arriere);
-                PetitRobot.Avancer(186);
-                PetitRobot.PivotDroite(90);
-                PetitRobot.Recallage(SensAR.Arriere, false);
-
-                GrosRobot.Recallage(SensAR.Arriere);
-                GrosRobot.Avancer(132);
-                GrosRobot.PivotDroite(90);
-                GrosRobot.Reculer(325);
-                GrosRobot.Evitement = true;
-                PetitRobot.Evitement = true;
-            }*/
-
-            GrosRobot.FermeBenne();
-            GrosRobot.FermeBrasBasDroite();
-            GrosRobot.FermeBrasBasGauche();
-            GrosRobot.FermeBrasHautDroite();
-            GrosRobot.FermeBrasHautGauche();
-            GrosRobot.FermeBrasMilieuDroite();
-            GrosRobot.FermeBrasMilieuGauche();
-            GrosRobot.VitesseDeplacement = 150;
-            GrosRobot.AccelerationDeplacement = 150;
             DateTime debut = DateTime.Now;
-            GrosRobot.Recallage(SensAR.Arriere);
+            Plateau.GrosRobot.Recallage(SensAR.Arriere);
 
-            GrosRobot.Avancer(129);
-            GrosRobot.PivotGauche(90);
-            GrosRobot.Recallage(SensAR.Arriere);
+            Plateau.GrosRobot.Avancer(200);
+            Plateau.GrosRobot.PivotGauche(90);
+            Plateau.GrosRobot.Recallage(SensAR.Arriere);
             ledRecallage.On();
-            GrosRobot.ReglerOffsetAsserv(150, 150 + 129, 0);
+            Plateau.GrosRobot.ReglerOffsetAsserv((int)(3000 - 110), (int)(2000 - 200 - 110), 180);
 
-            GrosRobot.connexionMove.SendMessage(TrameFactory.ResetRecMove());
-            GrosRobot.Evitement = true;
-             
+            /*Plateau.GrosRobot.VitesseDeplacement = 500;
+            Plateau.GrosRobot.AccelerationDeplacement = 1000;
+            Plateau.GrosRobot.VitessePivot = 500;
+            Plateau.GrosRobot.AccelerationPivot = 1000;*/
+            Plateau.GrosRobot.Avancer(300);
         }
 
         private void btnBalises_Click(object sender, EventArgs e)
@@ -320,12 +250,12 @@ namespace GoBot
 
         private void btnAfficherTrame_Click(object sender, EventArgs e)
         {
-            GrosRobot.connexionIo.NouvelleTrame += new ConnexionUDP.ReceptionDelegate(ReceptionTrame);
-            GrosRobot.connexionMove.NouvelleTrame += new ConnexionUDP.ReceptionDelegate(ReceptionTrame);
+            Connexions.ConnexionIo.NouvelleTrame += new ConnexionUDP.ReceptionDelegate(ReceptionTrame);
+            Connexions.ConnexionMove.NouvelleTrame += new ConnexionUDP.ReceptionDelegate(ReceptionTrame);
 
             replay = new Replay();
-            GrosRobot.connexionIo.NouvelleTrame += new ConnexionUDP.ReceptionDelegate(replay.AjouterTrameEntrante);
-            GrosRobot.connexionMove.NouvelleTrame += new ConnexionUDP.ReceptionDelegate(replay.AjouterTrameEntrante);
+            Connexions.ConnexionIo.NouvelleTrame += new ConnexionUDP.ReceptionDelegate(replay.AjouterTrameEntrante);
+            Connexions.ConnexionMove.NouvelleTrame += new ConnexionUDP.ReceptionDelegate(replay.AjouterTrameEntrante);
         }
 
         Replay replay;
@@ -417,14 +347,14 @@ namespace GoBot
         private void btnHomolog_Click(object sender, EventArgs e)
         {
             //GrosRobot.Enchainement = new HomologationEnchainement();
-            GrosRobot.Enchainement = new TestEnchainement();
+            /*GrosRobot.Enchainement = new TestEnchainement();
             GrosRobot.Enchainement.Couleur = pictureBoxCouleur.BackColor;
-            GrosRobot.DebutMatch();
+            GrosRobot.DebutMatch();*/
         }
 
         private void btnPIDGR_Click(object sender, EventArgs e)
         {
-            GrosRobot.EnvoyerPID((int)numPGR.Value, (int)numIGR.Value, (int)numDGR.Value);
+            Plateau.GrosRobot.EnvoyerPID((int)numPGR.Value, (int)numIGR.Value, (int)numDGR.Value);
         }
 
         private void bnStratTotem_Click(object sender, EventArgs e)
@@ -433,9 +363,9 @@ namespace GoBot
 
         private void bnStratTotem_Click_1(object sender, EventArgs e)
         {
-            GrosRobot.Enchainement = new LignemEnchainement();
+            /*GrosRobot.Enchainement = new LignemEnchainement();
             GrosRobot.Enchainement.Couleur = pictureBoxCouleur.BackColor;
-            GrosRobot.DebutMatch();
+            GrosRobot.DebutMatch();*/
         }
 
         private void btnPRCoeffAsserv_Click(object sender, EventArgs e)
@@ -445,45 +375,24 @@ namespace GoBot
 
         private void button3_Click(object sender, EventArgs e)
         {
-            GrosRobot.Enchainement = new EvitementEnchainement();
+            /*GrosRobot.Enchainement = new EvitementEnchainement();
             GrosRobot.Enchainement.Couleur = pictureBoxCouleur.BackColor;
-            GrosRobot.Enchainement.Executer();
-        }
-
-        private void btnHautGauche_Click(object sender, EventArgs e)
-        {
-            GrosRobot.FermeBrasHautGauche();
-            Thread.Sleep(600);
-            GrosRobot.OuvreBrasHautGauche();
-        }
-
-        private void btnMilieuGauche_Click(object sender, EventArgs e)
-        {
-
-            GrosRobot.FermeBrasMilieuGauche();
-            Thread.Sleep(500);
-            GrosRobot.OuvreBrasMilieuGauche();
-        }
-
-        private void btnHautDroite_Click(object sender, EventArgs e)
-        {
-
-            GrosRobot.FermeBrasHautDroite();
-            Thread.Sleep(600);
-            GrosRobot.OuvreBrasHautDroite();
-        }
-
-        private void btnMilieuDroite_Click(object sender, EventArgs e)
-        {
-
-            GrosRobot.FermeBrasMilieuDroite();
-            Thread.Sleep(500);
-            GrosRobot.OuvreBrasMilieuDroite();
+            GrosRobot.Enchainement.Executer();*/
         }
 
         private void button4_Click(object sender, EventArgs e)
         {
             Config.Save();
+        }
+
+        private void FenGoBot_Load(object sender, EventArgs e)
+        {
+
+        }
+
+        private void switchBoutonSimu_ChangementEtat(bool actif)
+        {
+            Plateau.Simulation = actif;
         }
     }
 }

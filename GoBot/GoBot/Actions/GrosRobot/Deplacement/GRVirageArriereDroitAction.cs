@@ -23,7 +23,7 @@ namespace GoBot.Actions
 
         void IAction.Executer()
         {
-            GrosRobot.Virage(SensAR.Arriere, SensGD.Droite, distance, angle);
+            Plateau.GrosRobot.Virage(SensAR.Arriere, SensGD.Droite, distance, angle);
         }
 
         public System.Drawing.Image Image

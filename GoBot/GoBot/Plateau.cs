@@ -21,28 +21,90 @@ namespace GoBot
         public static Balise Balise2 { get; set; }
         public static Balise Balise3 { get; set; }
         public static InterpreteurBalise InterpreteurBalise { get; set; }
-        public static Color NotreCouleur { get; set; }
 
-        private static int LONGUEUR_PLATEAU = 3000;
-        private static int LARGEUR_PLATEAU = 2000;
+        private static List<IForme> ObstaclesFixes { get; set; }
+        private static List<IForme> ObstaclesTemporaires { get; set; }
 
-        private static Color COULEURJ1 = Color.FromArgb(32, 50, 123);
-        private static Color COULEURJ2 = Color.FromArgb(248, 215, 82);
+        public static Robot GrosRobot { get; set; }
 
-        private static Robot robot;
-        private static Robot adversaire;
-        private static List<IForme> obstacles;
+        public static bool Simulation { get; set; }
 
-        private static Graph graph;
+        /// <summary>
+        /// Sémaphore à verrouiller pendant la manipulation du graph du pathfinding pour éviter les modification pendant énumération entre autres
+        /// </summary>
+        public static Semaphore SemaphoreGraph { get; private set; }
+
+        public static Color CouleurJ1 { get { return Color.FromArgb(32, 50, 123); } }
+        public static Color CouleurJ2 { get { return Color.FromArgb(248, 215, 82); } }
+
+        /// <summary>
+        /// Longueur de la table (mm)
+        /// </summary>
+        public static int LongueurPlateau { get { return 3000; } }
+
+        /// <summary>
+        /// Largeur de la table (mm)
+        /// </summary>
+        public static int LargeurPlateau { get { return 2000; } }
+
+        /// <summary>
+        /// Liste complète des obstacles fixes et temporaires
+        /// </summary>
+        public List<IForme> ListeObstacles
+        {
+            get
+            {
+                List<IForme> toutObstacles = new List<IForme>();
+                toutObstacles.AddRange(ObstaclesFixes);
+                toutObstacles.AddRange(ObstaclesTemporaires);
+                return toutObstacles;
+            }
+        }
+
+        /// <summary>
+        /// Graph des noeuds et arcs pour le pathfinding
+        /// </summary>
+        public Graph Graph { get; private set; }
+
+        /// <summary>
+        /// Liste des noeuds du chemin en cours de parcours
+        /// </summary>
+        public List<Node> CheminEnCoursNoeuds { get; set; }
+
+        /// <summary>
+        /// Liste des arcs du chemin en cours de parcours
+        /// </summary>
+        public List<Arc> CheminEnCoursArcs { get; set; }
 
         public Plateau()
         {
-            robot = new Robot(new Position(new Angle(0, AnglyeType.Degre), new PointReel(220, 220)), Plateau.CouleurJ1);
-            adversaire = new Robot(new Position(new Angle(0, AnglyeType.Degre), new PointReel(2400, 200)), Plateau.CouleurJ2);
-            creerSommets();
+            if (!Config.DesignMode)
+            {
+                Plateau.SemaphoreGraph = new Semaphore(1, 1);
 
-            chargerGraph();
-            chargerObstacles();
+                //CreerSommets(150);
+                ChargerGraph();
+                ChargerObstacles();
+
+                ObstaclesTemporaires = new List<IForme>();
+
+                InterpreteurBalise = new InterpreteurBalise();
+                InterpreteurBalise.PositionEnnemisActualisee += new GoBot.InterpreteurBalise.PositionEnnemisDelegate(interpreteBalise_PositionEnnemisActualisee);
+
+                CheminTrouve = new List<Arc>();
+                CheminEnCoursArcs = new List<Arc>();
+                NodeTrouve = new List<Node>();
+
+                if (Connexions.ConnexionMove.ConnexionCheck.Connecte)
+                    Simulation = false;
+                else
+                    Simulation = true;
+            }
+        }
+
+        static Plateau()
+        {
+            GrosRobot = new RobotSimu();
         }
 
         public static void Init()
@@ -50,41 +112,280 @@ namespace GoBot
             Balise1 = new Balise(Carte.RecBun);
             Balise2 = new Balise(Carte.RecBeu);
             Balise3 = new Balise(Carte.RecBoi);
-
-            InterpreteurBalise = new InterpreteurBalise();
         }
 
-        public static Balise GetBalise(Carte carte)
+        public void GrosRobotAllerA(double x, double y)
         {
-            switch (carte)
+            CheminEnCoursNoeuds = new List<Node>();
+            CheminEnCoursArcs = new List<Arc>();
+
+            DateTime debut = DateTime.Now;
+
+            double distance;
+            bool nodeDebutAjoute = false;
+
+            Node debutNode = Graph.ClosestNode(GrosRobot.Position.Coordonnees.X, GrosRobot.Position.Coordonnees.Y, 0, out distance, false);
+            if (distance != 0)
             {
-                case Carte.RecBun:
-                    return Balise1;
-                case Carte.RecBeu:
-                    return Balise2;
-                case Carte.RecBoi:
-                    return Balise3;
+                debutNode = new Node(GrosRobot.Position.Coordonnees.X, GrosRobot.Position.Coordonnees.Y, 0);
+                AddNode(debutNode);
+                nodeDebutAjoute = true;
+            }
+            Node finNode = Graph.ClosestNode(x, y, 0, out distance, false);
+
+            // Teste s'il est possible d'aller directement à la fin sans passer par le graph
+            bool toutDroit = true;
+            Segment segment = new Segment(new PointReel(debutNode.X, debutNode.Y), new PointReel(finNode.X, finNode.Y));
+            foreach (IForme forme in ListeObstacles)
+            {
+                if (TropProche(segment, forme))
+                {
+                    toutDroit = false;
+                    break;
+                }
             }
 
-            return null;
+            if (toutDroit)
+            {
+                CheminEnCoursNoeuds.Add(debutNode);
+                CheminEnCoursNoeuds.Add(finNode);
+
+                Arc arcToutDroit = new Arc(debutNode, finNode);
+                arcToutDroit.Weight = 99999999;
+                CheminEnCoursArcs.Add(arcToutDroit);
+            }
+
+            // Sinon on passe par le graph
+            else
+            {
+                // Ajoute le point d'arrivée au graph
+                if (distance != 0)
+                {
+                    finNode = new Node(x, y, 0);
+                    AddNode(finNode);
+                }
+                AStar aStar = new AStar(Graph);
+                aStar.DijkstraHeuristicBalance = 1;
+                if (aStar.SearchPath(debutNode, finNode))
+                {
+                    List<Node> nodes = aStar.PathByNodes.ToList<Node>();
+                    List<Arc> arcs = aStar.PathByArcs.ToList<Arc>();
+
+                    CheminEnCoursNoeuds = new List<Node>();
+                    CheminEnCoursArcs = new List<Arc>();
+
+                    CheminTrouve = new List<Arc>(arcs);
+                    NodeTrouve = new List<Node>(nodes);
+
+                    // Simplification du chemin
+                    // On part du début et on essaie d'aller au point du plus éloigné au moins éloigné en testant si le passage est possible
+                    // Si c'est possible on zappe tous les points entre les deux
+                    for (int iNodeDepart = 0; iNodeDepart < nodes.Count - 1; iNodeDepart++)
+                    {
+                        CheminEnCoursNoeuds.Add(nodes[iNodeDepart]);
+
+                        bool raccourciPossible = true;
+                        for (int iNodeArrivee = nodes.Count - 1; iNodeArrivee > iNodeDepart; iNodeArrivee--)
+                        {
+                            raccourciPossible = true;
+
+                            Segment racourci = new Segment(new PointReel(nodes[iNodeDepart].X, nodes[iNodeDepart].Y), new PointReel(nodes[iNodeArrivee].X, nodes[iNodeArrivee].Y));
+                            Arc arcRacourci = new Arc(nodes[iNodeDepart], nodes[iNodeArrivee]);
+                            CheminTest = arcRacourci;
+                            arcRacourci.Passable = false;
+                            for(int i = ListeObstacles.Count - 1; i >= 4; i--)
+                            {
+                                IForme forme = ListeObstacles[i];
+                                ObstacleTeste = forme;
+                                ObstacleProbleme = null;
+
+                                if (TropProche(racourci, forme))
+                                {
+                                    ObstacleProbleme = forme;
+                                    //Thread.Sleep(500);
+                                    raccourciPossible = false;
+                                    break;
+                                }
+                                //else 
+                                    //Thread.Sleep(500);
+                            }
+                            ObstacleTeste = null;
+                            if (raccourciPossible)
+                            {
+                                /*Arc arcRacourci = new Arc(nodes[iNodeDepart], nodes[iNodeArrivee]);
+                                arcRacourci.Passable = false;*/
+                                CheminEnCoursArcs.Add(arcRacourci);
+                                iNodeDepart = iNodeArrivee - 1;
+                                break;
+                            }
+                        }
+                        CheminTest = null;
+                        if (!raccourciPossible)
+                        {
+                            Arc arc = new Arc(nodes[iNodeDepart], nodes[iNodeDepart + 1]);
+                            CheminEnCoursArcs.Add(arc);
+                        }
+                    }
+
+                    CheminEnCoursNoeuds.Add(nodes[nodes.Count - 1]);
+                }
+            }
+
+            ObstacleProbleme = null;
+            ObstacleTeste = null;
+            NodeTrouve = new List<Node>();
+            CheminTrouve = new List<Arc>();
+            ChargerGraph();
+
+            if(nodeDebutAjoute)
+                Graph.RemoveNode(debutNode);
+
+            // Execution du parcours
+            Thread th = new Thread(ThreadChemin);
+            th.Start();
         }
 
-        public void ajouterObstacle(IForme obstacle, bool fixe = false)
-        {
-            obstacles.Add(obstacle);
+        public List<Arc> CheminTrouve;
+        public List<Node> NodeTrouve;
+        public Arc CheminTest;
+        public IForme ObstacleTeste;
+        public IForme ObstacleProbleme;
 
-            for(int i = 0; i < ListeArcs.Count; i++)
+        /// <summary>
+        /// Parcours le chemin pour arriver au point de destination
+        /// </summary>
+        private void ThreadChemin()
+        {
+            nouvelleTrajectoire = false;
+            while (CheminEnCoursNoeuds.Count > 1)
             {
-                Arc arc = (Arc)ListeArcs[i];
+                PointReel c1 = new PointReel(CheminEnCoursNoeuds[0].X, CheminEnCoursNoeuds[0].Y);
+                PointReel c2 = new PointReel(CheminEnCoursNoeuds[1].X, CheminEnCoursNoeuds[1].Y);
+
+                Position p = new Position(GrosRobot.Position.Angle, c1);
+                Direction traj = Maths.GetDirection(p, c2);
+
+                //GrosRobot.GoToXY((int)c2.X, (int)c2.Y);
+                GrosRobot.PivotDroite(-traj.angle.AngleDegres);
+                if (nouvelleTrajectoire)
+                    break;
+                GrosRobot.Avancer((int)traj.distance);
+
+                CheminEnCoursNoeuds.RemoveAt(0);
+                CheminEnCoursArcs.RemoveAt(0);
+
+                if (nouvelleTrajectoire)
+                    break;
+            }
+            if (nouvelleTrajectoire)
+            {
+                GrosRobotAllerA(CheminEnCoursNoeuds[CheminEnCoursNoeuds.Count - 1].X, CheminEnCoursNoeuds[CheminEnCoursNoeuds.Count - 1].Y);
+            }
+        }
+
+        bool nouvelleTrajectoire = false;
+        public bool ObstacleTest(int x, int y)
+        {
+            if (nouvelleTrajectoire)
+                return false;
+
+            ViderObstacles();
+            AjouterObstacle(new Cercle(new PointReel(x, y), 200));
+
+            try
+            {
+                // Teste si le chemin en cours de parcous est toujours franchissable
+                if (!nouvelleTrajectoire && CheminEnCoursNoeuds != null && CheminEnCoursNoeuds.Count > 0)
+                {
+                    foreach (Arc a in CheminEnCoursArcs)
+                    {
+                        Segment segment = new Segment(new PointReel(a.StartNode.X, a.StartNode.Y), new PointReel(a.EndNode.X, a.EndNode.Y));
+
+                        if (segment.getDistance(new PointReel(x, y)) < GrosRobot.Rayon * 2)
+                        //if(!a.Passable)
+                        {
+                            // Demande de génération d'une nouvelle trajectoire
+                            nouvelleTrajectoire = true;
+                            if(GrosRobot.DeplacementLigne)
+                                GrosRobot.Stop();
+                            //Thread.Sleep(1500);
+                            //GrosRobot.semDeplacement.Release();
+                        }
+                    }
+                }
+            }
+            catch (Exception)
+            {
+                return false;
+            }
+
+            return true;
+        }
+        void interpreteBalise_PositionEnnemisActualisee(InterpreteurBalise interprete)
+        {
+            ViderObstacles();
+
+            foreach (PointReel p in interprete.PositionsEnnemies)
+                AjouterObstacle(new Cercle(p, 200));
+
+            // Teste si le chemin en cours de parcous est toujours franchissable
+            if (!nouvelleTrajectoire && CheminEnCoursNoeuds != null && CheminEnCoursNoeuds.Count > 0)
+            {
+                foreach (Arc a in CheminEnCoursArcs)
+                {
+                    Segment segment = new Segment(new PointReel(a.StartNode.X, a.StartNode.Y), new PointReel(a.EndNode.X, a.EndNode.Y));
+                    foreach (PointReel p in interprete.PositionsEnnemies)
+                    {
+                        if (segment.getDistance(p) < GrosRobot.Rayon * 2)
+                        {
+                            // Demande de génération d'une nouvelle trajectoire
+                            nouvelleTrajectoire = true;
+                            GrosRobot.Stop();
+                        }
+                    }
+                }
+            }
+        }
+
+        /// <summary>
+        /// Vide les obstacles temporaires et rend tout le graph parcourable
+        /// </summary>
+        public void ViderObstacles()
+        {
+            ObstaclesTemporaires.Clear();
+            for (int i = 0; i < Graph.Arcs.Count; i++)
+                ((Arc)Graph.Arcs[i]).Passable = true;
+            for (int i = 0; i < Graph.Nodes.Count; i++)
+                ((Node)Graph.Nodes[i]).Passable = true;
+        }
+
+        /// <summary>
+        /// Ajoute un obstacle et teste les endroits du graph qui ne sont plus franchissables
+        /// </summary>
+        /// <param name="obstacle">Forme de l'obstacle</param>
+        /// <param name="fixe">Si l'obstacle est fixe, on supprime complètement les noeuds et arcs non franchissables. Sinon on les rends non franchissables temporairement.</param>
+        public void AjouterObstacle(IForme obstacle, bool fixe = false)
+        {
+            DateTime debut = DateTime.Now;
+
+            if (fixe)
+                ObstaclesFixes.Add(obstacle);
+            else
+                ObstaclesTemporaires.Add(obstacle);
+
+            // Teste les arcs non franchissables
+            for (int i = 0; i < Graph.Arcs.Count; i++)
+            {
+                Arc arc = (Arc)Graph.Arcs[i];
 
                 if (arc.Passable)
                 {
                     Segment segment = new Segment(new PointReel(arc.StartNode.X, arc.StartNode.Y), new PointReel(arc.EndNode.X, arc.EndNode.Y));
-                    if (obstacle.getDistance(segment) < Robot.Rayon)
+                    if (TropProche(obstacle, segment))
                     {
                         if (fixe)
                         {
-                            graph.RemoveArc(i);
+                            Graph.RemoveArc(i);
                             i--;
                         }
                         else
@@ -93,18 +394,19 @@ namespace GoBot
                 }
             }
 
-            for(int i = 0; i < ListeNodes.Count; i++)
+            // Teste les noeuds non franchissables
+            for (int i = 0; i < Graph.Nodes.Count; i++)
             {
-                Node n = (Node)ListeNodes[i];
+                Node n = (Node)Graph.Nodes[i];
 
                 if (n.Passable)
                 {
                     PointReel noeud = new PointReel(n.X, n.Y);
-                    if (obstacle.getDistance(noeud) < Robot.Rayon)
+                    if (TropProche(obstacle, noeud))
                     {
                         if (fixe)
                         {
-                            graph.RemoveNode(i);
+                            Graph.RemoveNode(i);
                             i--;
                         }
                         else
@@ -115,278 +417,233 @@ namespace GoBot
             }
         }
 
-
-        public Node findCloserNode(Point p, out double distance)
+        /// <summary>
+        /// Teste si deux formes sont trop proches pour envisager le passage du robot
+        /// </summary>
+        /// <param name="forme1">Forme 1</param>
+        /// <param name="forme2">Forme 2</param>
+        /// <returns>Vrai si les deux formes sont trop proches</returns>
+        internal bool TropProche(IForme forme1, IForme forme2)
         {
-            Node retour = graph.ClosestNode(p.X, p.Y, 0, out distance, true);
-            return retour;
+            Type typeForme1 = forme1.GetType();
+            Type typeForme2 = forme2.GetType();
+
+            if (typeForme1.IsAssignableFrom(typeof(Segment)))
+                if (typeForme2.IsAssignableFrom(typeof(Segment)))
+                    return ((Segment)forme1).getDistance((Segment)forme2) < GrosRobot.Rayon;
+                else
+                    return ((Segment)forme1).getDistance(forme2) < GrosRobot.Rayon;
+            else
+                return forme1.getDistance(forme2) < GrosRobot.Rayon;
         }
 
-        public void sauverGraph()
+        /// <summary>
+        /// Sauve le graph pour une utilisation ultérieure
+        /// </summary>
+        public void SauverGraph()
         {
             IFormatter formatter = new BinaryFormatter();
             Stream stream = new FileStream("graph.bin", FileMode.OpenOrCreate, FileAccess.Write, FileShare.None);
-            formatter.Serialize(stream, graph);
+            formatter.Serialize(stream, Graph);
             stream.Close();
         }
 
-        public void chargerGraph()
+        /// <summary>
+        /// Charge le dernier graph sauvegardé. Permet de gagner du temps par rapport à une génération du graph à chaque execution.
+        /// </summary>
+        public void ChargerGraph()
         {
-
-            IFormatter formatter = new BinaryFormatter();
-            Stream stream = new FileStream("graph.bin", FileMode.Open, FileAccess.Read, FileShare.Read);
-            graph = (Graph)formatter.Deserialize(stream);
-            stream.Close();
-        }
-
-        private void creerSommets()
-        {
-            graph = new Graph();
-
-            for (int x = 0; x < 3000; x += 100)
+            try
             {
-                for (int y = 0; y < 2000; y += 100)
-                {
-                    graph.AddNode(x, y, 0); 
-                }
+                IFormatter formatter = new BinaryFormatter();
+                Stream stream = new FileStream("graph.bin", FileMode.Open, FileAccess.Read, FileShare.Read);
+                Graph = (Graph)formatter.Deserialize(stream);
+                stream.Close();
             }
-
-            Node positionRobot = new Node(220, 220, 0);
-            graph.AddNode(positionRobot);
-
-            Node n1 = new Node(1325, 800, 0);
-            Node n2 = new Node(1325, 1200, 0);
-            Node n3 = new Node(1675, 800, 0);
-            Node n4 = new Node(1675, 1200, 0);
-
-            graph.AddNode(n1);
-            graph.AddNode(n2);
-            graph.AddNode(n3);
-            graph.AddNode(n4);
-
-            foreach (Node n in graph.Nodes)
+            catch (Exception e)
             {
-                foreach (Node no in graph.Nodes)
+                MessageBox.Show("Impossible de charger le graph." + Environment.NewLine + e.Message);
+            }
+        }
+
+        /// <summary>
+        /// Crée le graph du pathfinding.
+        /// </summary>
+        /// <param name="resolution">Distance (mm) entre chaque noeud du graph en X et Y</param>
+        /// <param name="distanceLiaison">Distance (mm) jusqu'à laquelle les noeuds sont reliés par un arc. Par défaut on crée un graph minimal (liaison aux 8 points alentours : N/S/E/O/NE/NO/SE/SO)</param>
+        private void CreerSommets(int resolution, double distanceLiaison = -1)
+        {
+            if (distanceLiaison == -1)
+                distanceLiaison = Math.Sqrt((resolution * resolution) * 2) + 1;
+
+            Graph = new Graph();
+
+            // Création des noeuds
+            for (int x = 0; x < LongueurPlateau; x += resolution)
+                for (int y = 0; y < LargeurPlateau; y += resolution)
+                    Graph.AddNode(x, y, 0);
+
+            // Création des arcs
+            foreach (Node node1 in Graph.Nodes)
+                foreach (Node node2 in Graph.Nodes)
                 {
-                    if (n != no)
+                    if (node1 != node2)
                     {
-                        double distance = Math.Sqrt((n.Position.X - no.Position.X) * (n.Position.X - no.Position.X) + (n.Position.Y - no.Position.Y) * (n.Position.Y - no.Position.Y));
-                        if (distance < 60000)
+                        double distance = Math.Sqrt((node1.Position.X - node2.Position.X) * (node1.Position.X - node2.Position.X) + (node1.Position.Y - node2.Position.Y) * (node1.Position.Y - node2.Position.Y));
+                        if (distance < distanceLiaison)
                         {
-                            Arc b = new Arc(no, n);
-                            b.Weight = 5000 - distance;
-                            graph.AddArc(b);
+                            Arc b = new Arc(node2, node1);
+                            b.Weight = Math.Sqrt(distance);
+                            Graph.AddArc(b);
                         }
                     }
                 }
-            }
-
-
-            graph.AddArc(new Arc(n1, n2));
-            graph.AddArc(new Arc(n3, n4));
         }
 
-        public void setConfigStartRobot(float angleDepart, float angleEvit)
+        public void ChargerObstacles()
         {
-            robot.Position.Angle.setAngle(angleDepart, AnglyeType.Degre);
-        }
-
-        public void chargerObstacles()
-        {
-            obstacles = new List<IForme>();
+            ObstaclesFixes = new List<IForme>();
 
             // Contours du plateau
-            ajouterObstacle(new Calculs.Formes.Segment(new PointReel(0, 0), new PointReel(LongueurPlateau - 4, 0)), true);
-            ajouterObstacle(new Calculs.Formes.Segment(new PointReel(LongueurPlateau - 4, 0), new PointReel(LongueurPlateau - 4, LargeurPlateau - 4)), true);
-            ajouterObstacle(new Calculs.Formes.Segment(new PointReel(LongueurPlateau - 4, LargeurPlateau - 4), new PointReel(0, LargeurPlateau - 4)), true);
-            ajouterObstacle(new Calculs.Formes.Segment(new PointReel(0, LargeurPlateau - 4), new PointReel(0, 0)), true);
+            AjouterObstacle(new Calculs.Formes.Segment(new PointReel(0, 0), new PointReel(LongueurPlateau - 4, 0)), true);
+            AjouterObstacle(new Calculs.Formes.Segment(new PointReel(LongueurPlateau - 4, 0), new PointReel(LongueurPlateau - 4, LargeurPlateau - 4)), true);
+            AjouterObstacle(new Calculs.Formes.Segment(new PointReel(LongueurPlateau - 4, LargeurPlateau - 4), new PointReel(0, LargeurPlateau - 4)), true);
+            AjouterObstacle(new Calculs.Formes.Segment(new PointReel(0, LargeurPlateau - 4), new PointReel(0, 0)), true);
 
-            // Totem gauche
+            // Gateau
+            AjouterObstacle(new Cercle(new PointReel(1500, 0), 500), true);
+
+            // Coins surélevés
             List<PointReel> points = new List<PointReel>();
 
-            points.Add(new PointReel(975, 875));
-            points.Add(new PointReel(1225, 875));
-            points.Add(new PointReel(1225, 1125));
-            points.Add(new PointReel(975, 1125));
-
-            ajouterObstacle(new Polygone(points), true);
-
-            // Totem droit
+            points.Add(new PointReel(0, 0.1));
+            points.Add(new PointReel(400, 0));
+            points.Add(new PointReel(400, 100));
+            points.Add(new PointReel(0, 100));
+            AjouterObstacle(new Polygone(points), true);
 
             points.Clear();
-
-            points.Add(new PointReel(1775, 875));
-            points.Add(new PointReel(2025, 875));
-            points.Add(new PointReel(2025, 1125));
-            points.Add(new PointReel(1775, 1125));
-
-            ajouterObstacle(new Polygone(points), true);
-
-            // Arbre
-
-            ajouterObstacle(new Cercle(new PointReel(1500, 1000), 75), true);
-
-            // Bordure cale/depart rouge
+            points.Add(new PointReel(0, 1900));
+            points.Add(new PointReel(400, 1900));
+            points.Add(new PointReel(400, 2000));
+            points.Add(new PointReel(0, 2000));
+            AjouterObstacle(new Polygone(points), true);
 
             points.Clear();
-
-            points.Add(new PointReel(2600, 500));
-            points.Add(new PointReel(3000, 500));
-            points.Add(new PointReel(3000, 518));
-            points.Add(new PointReel(2600, 518));
-
-            ajouterObstacle(new Polygone(points), true);
-
-            // Bordure cale/depart violet
+            points.Add(new PointReel(2600, 1900));
+            points.Add(new PointReel(3000, 1900));
+            points.Add(new PointReel(3000, 2000));
+            points.Add(new PointReel(2600, 2000));
+            AjouterObstacle(new Polygone(points), true);
 
             points.Clear();
-
-            points.Add(new PointReel(0, 500));
-            points.Add(new PointReel(400, 500));
-            points.Add(new PointReel(400, 518));
-            points.Add(new PointReel(0, 518));
-
-            ajouterObstacle(new Polygone(points), true);
-
-            // Bordure cale violet
-
-            points.Clear();
-
-            points.Add(new PointReel(3000 - 363, 1250));
-            points.Add(new PointReel(3000 - 381, 1251));
-            points.Add(new PointReel(3000 - 343, 2000));
-            points.Add(new PointReel(3000 - 325, 2000));
-
-            ajouterObstacle(new Polygone(points), true);
-
-            // Bordure cale rouge
-
-            points.Clear();
-
-            points.Add(new PointReel(363, 1250));
-            points.Add(new PointReel(381, 1251));
-            points.Add(new PointReel(343, 2000));
-            points.Add(new PointReel(325, 2000));
-
-            ajouterObstacle(new Polygone(points), true);
+            points.Add(new PointReel(2600, 0));
+            points.Add(new PointReel(3000, 0));
+            points.Add(new PointReel(3000, 100));
+            points.Add(new PointReel(2600, 100));
+            AjouterObstacle(new Polygone(points), true);
         }
 
-        public static Color CouleurJ1
+        /// <summary>
+        /// Ajoute un noeud au graph en reliant tous les points à une distance maximale
+        /// </summary>
+        /// <param name="node">Noeud à ajouter</param>
+        /// <param name="distanceMax">Distance (mm) max de liaison avec les autres noeuds</param>
+        public void AddNode(Node node, int distanceMax = 213)
         {
-            get
-            {
-                return COULEURJ1;
-            }
-        }
+            SemaphoreGraph.WaitOne();
 
-        public static Color CouleurJ2
-        {
-            get
-            {
-                return COULEURJ2;
-            }
-        }
+            double distanceNode;
 
-        public static int LongueurPlateau
-        {
-            get
-            {
-                return LONGUEUR_PLATEAU;
-            }
-        }
+            // Si un noeud est deja présent à cet endroit on ne l'ajoute pas
+            Graph.ClosestNode(node.X, node.Y, node.Z, out distanceNode, true);
+            if (distanceNode == 0)
+                return;
 
-        public static int LargeurPlateau
-        {
-            get
-            {
-                return LARGEUR_PLATEAU;
-            }
-        }
-
-        public Robot Robot
-        {
-            get
-            {
-                return robot;
-            }
-        }
-
-        public List<IForme> ListeObstacles
-        {
-            get
-            {
-                return obstacles;
-            }
-        }
-
-        public IList ListeNodes
-        {
-            get
-            {
-                return graph.Nodes;
-            }
-        }
-
-        public IList ListeArcs
-        {
-            get
-            {
-                return graph.Arcs;
-            }
-        }
-
-        public Graph Graph
-        {
-            get
-            {
-                return graph;
-            }
-        }
-
-        public void addNode(Node node)
-        {
-            foreach (IForme obstacle in obstacles)
+            // Teste si le noeud est franchissable avec la liste des obstacles
+            foreach (IForme obstacle in ObstaclesFixes)
             {
                 if (obstacle.contient(new PointReel(node.X, node.Y)))
                 {
                     node.Passable = false;
-                    break;
+                    return;
                 }
             }
 
-            graph.Nodes.Add(node);
+            Graph.Nodes.Add(node);
 
-            foreach (Node no in graph.Nodes)
+            // Liaisons avec les autres noeuds du graph
+            foreach (Node no in Graph.Nodes)
             {
                 if (node != no)
                 {
                     double distance = Math.Sqrt((node.Position.X - no.Position.X) * (node.Position.X - no.Position.X) + (node.Position.Y - no.Position.Y) * (node.Position.Y - no.Position.Y));
-                    if (distance < 100000)
+                    if (distance < distanceMax)
                     {
                         Arc arc = new Arc(no, node);
-                        arc.Weight = 5000 - distance;
+                        arc.Weight = Math.Sqrt(distance);
+                        Arc arc2 = new Arc(node, no);
+                        arc2.Weight = Math.Sqrt(distance);
 
-                        foreach (IForme obstacle in obstacles)
+                        foreach (IForme obstacle in ObstaclesFixes)
                         {
-                            if (obstacle.croise(new Segment(new PointReel(no.X, no.Y), new PointReel(node.X, node.Y))))
+                            if (obstacle.getDistance(new Segment(new PointReel(no.X, no.Y), new PointReel(node.X, node.Y))) < GrosRobot.Taille / 2)
                             {
                                 arc.Passable = false;
+                                arc2.Passable = false;
                                 break;
                             }
                         }
 
-                        graph.AddArc(arc);
+                        Graph.AddArc(arc);
+                        Graph.AddArc(arc2);
                     }
                 }
             }
+
+            SemaphoreGraph.Release();
         }
 
-        public static bool Contient(PointReel croisement)
+        /// <summary>
+        /// Rend traversables tous les noeuds et arcs du graph
+        /// </summary>
+        internal void SupprimerObstacles()
         {
-            if (croisement.X < 0 || croisement.Y < 0 || croisement.X > LONGUEUR_PLATEAU || croisement.Y > LARGEUR_PLATEAU)
+            for (int i = 0; i < Graph.Nodes.Count; i++)
+                ((Node)(Graph.Nodes[i])).Passable = true;
+
+            for (int i = 0; i < Graph.Arcs.Count; i++)
+                ((Arc)(Graph.Arcs[i])).Passable = true;
+        }
+
+        /// <summary>
+        /// Teste si on point est contenu dans la table
+        /// </summary>
+        /// <param name="croisement">Point à tester</param>
+        /// <returns></returns>
+        public static bool Contient(PointReel point)
+        {
+            if (point.X < 0 || point.Y < 0 || point.X > LongueurPlateau || point.Y > LargeurPlateau)
                 return false;
 
             return true;
         }
+
+        /*private static Segment Arc2Segment(Arc arc)
+        {
+            return new Segment(new PointReel(arc.StartNode.X, arc.StartNode.Y), new PointReel(arc.EndNode.X, arc.EndNode.Y));
+        }
+
+        private static Arc Segment2Arc(Segment segment)
+        {
+        }
+
+        private static Node PointReel2Node(PointReel point)
+        {
+        }
+
+        private static PointReel Node2PointReel(Node noeud)
+        {
+        }*/
     }
 }

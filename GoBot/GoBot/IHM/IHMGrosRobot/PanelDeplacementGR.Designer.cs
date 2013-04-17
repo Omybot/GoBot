@@ -32,6 +32,10 @@
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxReglageVertical)).BeginInit();
             this.SuspendLayout();
             // 
+            // btnRecule
+            // 
+            this.btnRecule.Click += new System.EventHandler(this.btnRecule_Click_1);
+            // 
             // btnAvance
             // 
             this.btnAvance.Click += new System.EventHandler(this.btnAvance_Click_1);

@@ -43,10 +43,10 @@ namespace GoBot
             switch (carte)
             {
                 case (Carte.RecIo):
-                    connexionUdp = GrosRobot.connexionIo;
+                    connexionUdp = Connexions.ConnexionIo;
                     break;
                 case (Carte.RecMove):
-                    connexionUdp = GrosRobot.connexionMove;
+                    connexionUdp = Connexions.ConnexionMove;
                     break;
             }
 

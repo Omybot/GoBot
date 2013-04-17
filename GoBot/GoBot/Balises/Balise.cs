@@ -13,6 +13,21 @@ namespace GoBot
 {
     public class Balise
     {
+        public static Balise GetBalise(Carte carte)
+        {
+            switch (carte)
+            {
+                case Carte.RecBun:
+                    return Plateau.Balise1;
+                case Carte.RecBeu:
+                    return Plateau.Balise2;
+                case Carte.RecBoi:
+                    return Plateau.Balise3;
+            }
+
+            return null;
+        }
+
         public const int DISTANCE_LASER_TABLE = 0;
 
         /// <summary>
@@ -90,6 +105,9 @@ namespace GoBot
         /// </summary>
         public ConnexionCheck ConnexionCheck { get; set; }
 
+        public StreamWriter writer;
+        DateTime prec;
+
         public Balise(Carte carte)
         {
             Carte = carte;
@@ -101,15 +119,17 @@ namespace GoBot
             ConnexionCheck = new GoBot.ConnexionCheck(5000);
             ConnexionCheck.TestConnexion += new GoBot.ConnexionCheck.TestConnexionDelegate(TestConnexion);
 
-            GrosRobot.connexionIo.NouvelleTrame += new ConnexionUDP.ReceptionDelegate(connexionIo_NouvelleTrame);
+            Connexions.ConnexionIo.NouvelleTrame += new ConnexionUDP.ReceptionDelegate(connexionIo_NouvelleTrame);
 
-            Position = new Position();
+            writer = new StreamWriter(carte.ToString() + ".csv");
+            prec = DateTime.Now;
+            writer.WriteLine("Time since previous;PWM;angle;Distance;vitesse");
         }
 
         public void Reset()
         {
             Trame t = TrameFactory.BaliseReset(Carte);
-            GrosRobot.connexionIo.SendMessage(t);
+            Connexions.ConnexionIo.SendMessage(t);
         }
 
         /// <summary>
@@ -145,8 +165,9 @@ namespace GoBot
                     int nbTicks = trame[2] * 256 + trame[3];
                     VitesseToursSecActuelle = 400.0 / (nbTicks * 0.0064);
 
+                    int nouvelleVitesse = 0;
                     if (ReglageVitesse)
-                        AsservissementVitesse();
+                        nouvelleVitesse = AsservissementVitesse();
 
                     // Réception des données angulaires
                     int nbHaut = trame[4];
@@ -176,16 +197,21 @@ namespace GoBot
 
                         tabAngle.Sort();
 
+                        DetectionBalise d = null;
+
                         for (int i = 0; i < nbHaut; i++)
                         {
                             double debut = 360 - (tabAngle[i * 2] / 100.0) + Config.CurrentConfig.GetOffsetBaliseHaut(Carte);
                             double fin = 360 - (tabAngle[i * 2 + 1] / 100.0) + Config.CurrentConfig.GetOffsetBaliseHaut(Carte);
 
                             if (debut < 360 && debut > 0 && fin < 360 && fin > 0)
-                                DetectionsHaut.Add(new DetectionBalise(this, debut, fin));
+                                DetectionsHaut.Add(d = new DetectionBalise(this, debut, fin));
                             else
                                 Console.WriteLine("Mauvaise mesure : début = " + debut + " / fin = " + fin);
                         }
+
+                        writer.WriteLine((DateTime.Now - prec).TotalMilliseconds + ";" + nouvelleVitesse + ";" + (d == null ? ";;" : d.AngleCentral + ";" + d.Distance + ";") + VitesseToursSecActuelle);
+                        prec = DateTime.Now;
 
                         // Réception des mesures du capteur bas
 
@@ -210,6 +236,14 @@ namespace GoBot
                         {
                             verif -= tabAngle[i] * (i + 1);
                         }
+
+                        if (verif != 0)
+                        {
+                            Console.WriteLine();
+                            Console.WriteLine("Inversion détectée");
+                        }
+                        else
+                            Console.Write("-");
 
                         for (int i = 0; i < nbBas; i++)
                         {
@@ -247,8 +281,8 @@ namespace GoBot
                                 // Compteur arrivé à la fin, on calcule l'offset
                                 double moyenne = 0;
 
-                                foreach (double d in anglesMesuresPourOffsetHaut)
-                                    moyenne += d;
+                                foreach (double dv in anglesMesuresPourOffsetHaut)
+                                    moyenne += dv;
 
                                 moyenne /= anglesMesuresPourOffsetHaut.Count;
 
@@ -271,8 +305,8 @@ namespace GoBot
 
                                 moyenne = 0;
 
-                                foreach (double d in anglesMesuresPourOffsetBas)
-                                    moyenne += d;
+                                foreach (double dv in anglesMesuresPourOffsetBas)
+                                    moyenne += dv;
 
                                 moyenne /= anglesMesuresPourOffsetBas.Count;
 
@@ -319,18 +353,19 @@ namespace GoBot
             // Les valeurs correctes sont entre 0 et 4000
             if (vitesse > 4000 || vitesse < 0)
             {
-                vitesse = 2000;
+                vitesse = 4000;
                 ValeurConsigne = vitesse;
                 Trame t = TrameFactory.BaliseVitesse(Carte, vitesse);
-                GrosRobot.connexionIo.SendMessage(t);
+                Connexions.ConnexionIo.SendMessage(t);
 
                 Console.WriteLine("Erreur d'affectation de vitesse");
             }
             else
             {
+
                 ValeurConsigne = vitesse;
                 Trame t = TrameFactory.BaliseVitesse(Carte, vitesse);
-                GrosRobot.connexionIo.SendMessage(t);
+                Connexions.ConnexionIo.SendMessage(t);
             }
         }
 
@@ -340,7 +375,7 @@ namespace GoBot
         public void TestConnexion()
         {
             Trame t = TrameFactory.BaliseTestConnexion(Carte);
-            GrosRobot.connexionIo.SendMessage(t);
+            Connexions.ConnexionIo.SendMessage(t);
         }
 
         //Déclaration du délégué pour l’évènement détection de positions
@@ -363,7 +398,7 @@ namespace GoBot
         /// <summary>
         /// Ajuste la valeur pwm en fonction de la vitesse de rotation actuelle
         /// </summary>
-        public void AsservissementVitesse()
+        public int AsservissementVitesse()
         {
             dernieresErreurs.Add(VitesseConsigne - VitesseToursSecActuelle);
 
@@ -373,7 +408,8 @@ namespace GoBot
 
             // Asservissement de la vitesse en fonction de l'erreur mesurée au tour précédent
             // 150 est un coefficient modifiable pour la réactivité de l'asservissement
-            VitesseRotation((int)(ValeurConsigne + (VitesseConsigne - VitesseToursSecActuelle) * 150.0));
+            int nouvelleVitesse = (int)Math.Min((ValeurConsigne + (VitesseConsigne - VitesseToursSecActuelle) * 100.0), 4000);
+            VitesseRotation(nouvelleVitesse);
 
             if (!ReglageVitessePermanent && VitesseConsigne < VitesseToursSecActuelle * 1.01 && VitesseConsigne > VitesseToursSecActuelle * 0.99)
             {
@@ -389,6 +425,8 @@ namespace GoBot
                 }
                 ReglageVitesse = !historiqueOk;
             }
+
+            return nouvelleVitesse;
         }
 
         public DetectionBalise MoyennerMesures(int nbMesures)

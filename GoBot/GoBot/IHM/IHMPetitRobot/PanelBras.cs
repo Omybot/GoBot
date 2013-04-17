@@ -52,7 +52,7 @@ namespace GoBot.IHM.IHMPetitRobot
         private void trackBrasDroite_TickValueChanged()
         {
             int valeur = (int)trackBrasDroite.Value;
-            PetitRobot.BougeBrasDroite(valeur);
+            //PetitRobot.BougeBrasDroite(valeur);
             Config.CurrentConfig.PosBrasDroiteActuel = valeur;
 
             if (valeur < Config.CurrentConfig.PosBrasDroiteRange)
@@ -66,7 +66,7 @@ namespace GoBot.IHM.IHMPetitRobot
         private void trackBrasGauche_TickValueChanged()
         {
             int valeur = (int)trackBrasGauche.Value;
-            PetitRobot.BougeBrasGauche(valeur);
+            //PetitRobot.BougeBrasGauche(valeur);
             Config.CurrentConfig.PosBrasGaucheActuel = valeur;
 
             if (valeur < Config.CurrentConfig.PosBrasGaucheRange)
@@ -163,12 +163,12 @@ namespace GoBot.IHM.IHMPetitRobot
 
         private void switchBoutonPompeGauche_ChangementEtat(bool actif)
         {
-            PetitRobot.ActiverPompeGauche(actif);
+            //PetitRobot.ActiverPompeGauche(actif);
         }
 
         private void switchBoutonPompeDroite_ChangementEtat(bool actif)
         {
-            PetitRobot.ActiverPompeDroite(actif);
+            //PetitRobot.ActiverPompeDroite(actif);
         }
 
         private void trackBarBrasGaucheUtil_TickValueChanged()
@@ -201,26 +201,6 @@ namespace GoBot.IHM.IHMPetitRobot
             {
                 trackBrasDroite.SetValue(Config.CurrentConfig.PosBrasDroiteDeplie);
             }
-        }
-
-        private void btnAttrapeGauche_Click(object sender, EventArgs e)
-        {
-            PetitRobot.AttraperGauche();
-        }
-
-        private void btnRelacheGauche_Click(object sender, EventArgs e)
-        {
-            PetitRobot.RelacherGauche();
-        }
-
-        private void btnAttrapeDroite_Click(object sender, EventArgs e)
-        {
-            PetitRobot.AttraperDroite();
-        }
-
-        private void btnRelacheDroite_Click(object sender, EventArgs e)
-        {
-            PetitRobot.RelacherDroite();
         }
     }
 }

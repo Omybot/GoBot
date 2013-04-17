@@ -176,6 +176,7 @@ namespace GoBot.IHM
         private void btnStop_Click(object sender, EventArgs e)
         {
             balise.ReglageVitesse = false;
+            balise.VitesseRotation(0);
         }
 
         private void btnReset_Click(object sender, EventArgs e)

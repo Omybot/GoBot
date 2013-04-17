@@ -55,8 +55,9 @@ namespace GoBot
 
         static void timerDemandeDeplacement_Elapsed(object sender, ElapsedEventArgs e)
         {
+            /*if(Connexions.ConnexionIo.
             Trame t = TrameFactory.PRDemandePosition();
-            GrosRobot.connexionIo.SendMessage(t);
+            Connexions.ConnexionIo.SendMessage(t);*/
         }
 
         static public void ReceptionTrame(Trame trameRecue)
@@ -162,7 +163,7 @@ namespace GoBot
         static public void TestConnexion()
         {
             Trame trame = TrameFactory.TestConnexionMiwi(Carte.RecPi);
-            GrosRobot.connexionIo.SendMessage(trame);
+            Connexions.ConnexionIo.SendMessage(trame);
         }
 
         static public void Avancer(int distance, bool attendre = true)
@@ -170,7 +171,7 @@ namespace GoBot
             historique.AjouterAction(new PRAvanceAction(distance));
 
             Trame trame = TrameFactory.PRDeplacer(SensAR.Avant, distance);
-            GrosRobot.connexionIo.SendMessage(trame);
+            Connexions.ConnexionIo.SendMessage(trame);
 
             if (attendre)
                 mutexDeplacement.WaitOne();
@@ -181,7 +182,7 @@ namespace GoBot
             historique.AjouterAction(new PRReculeAction(distance));
 
             Trame trame = TrameFactory.PRDeplacer(SensAR.Arriere, distance);
-            GrosRobot.connexionIo.SendMessage(trame);
+            Connexions.ConnexionIo.SendMessage(trame);
 
             if (attendre)
                 mutexDeplacement.WaitOne();
@@ -192,7 +193,7 @@ namespace GoBot
             historique.AjouterAction(new PRPivotGaucheAction(angle));
 
             Trame trame = TrameFactory.PRPivot(SensGD.Gauche, angle);
-            GrosRobot.connexionIo.SendMessage(trame);
+            Connexions.ConnexionIo.SendMessage(trame);
 
             if (attendre)
                 mutexDeplacement.WaitOne();
@@ -203,7 +204,7 @@ namespace GoBot
             historique.AjouterAction(new PRPivotDroiteAction(angle));
 
             Trame trame = TrameFactory.PRPivot(SensGD.Droite, angle);
-            GrosRobot.connexionIo.SendMessage(trame);
+            Connexions.ConnexionIo.SendMessage(trame);
 
             if (attendre)
                 mutexDeplacement.WaitOne();
@@ -214,13 +215,13 @@ namespace GoBot
             historique.AjouterAction(new PRStopAction(mode));
 
             Trame trame = TrameFactory.PRStop(mode);
-            GrosRobot.connexionIo.SendMessage(trame);
+            Connexions.ConnexionIo.SendMessage(trame);
         }
 
         static public void CoefficientsAsserv(int p, int i, int d)
         {
             Trame trame = TrameFactory.PRCoeffAsserv(p, i, d);
-            GrosRobot.connexionIo.SendMessage(trame);
+            Connexions.ConnexionIo.SendMessage(trame);
         }
 
         static public void Virage(SensAR sensAr, SensGD sensGd, int rayon, int angle)
@@ -241,72 +242,35 @@ namespace GoBot
             }
 
             Trame trame = TrameFactory.PRVirage(sensAr, sensGd, rayon, angle);
-            GrosRobot.connexionIo.SendMessage(trame);
+            Connexions.ConnexionIo.SendMessage(trame);
         }
 
         static public void GoToXY(int x, int y)
         {
             Trame trame = TrameFactory.PRGotoXY(x, y);
-            GrosRobot.connexionIo.SendMessage(trame);
-        }
-
-        static public void StopAlimentation()
-        {
-            Trame trame = TrameFactory.GRStopAlim();
-            GrosRobot.connexionIo.SendMessage(trame);
+            Connexions.ConnexionIo.SendMessage(trame);
         }
 
         static public void DemandePosition()
         {
             Trame trame = TrameFactory.PRDemandePosition();
-            GrosRobot.connexionIo.SendMessage(trame);
+            Connexions.ConnexionIo.SendMessage(trame);
         }
 
         static public void Recallage(SensAR sens, bool attendre = true)
         {
             Trame trame = TrameFactory.PRRecallage(sens);
-            GrosRobot.connexionIo.SendMessage(trame);
+            Connexions.ConnexionIo.SendMessage(trame);
 
             if (attendre)
                 mutexDeplacement.WaitOne();
         }
 
-        static public void BougeBras(ServomoteurID servo, int position)
+        static public void BougeServo(ServomoteurID servo, int position)
         {
             Trame trame = TrameFactory.PRBougeServomoteur(servo, position);
-            GrosRobot.connexionIo.SendMessage(trame);
+            Connexions.ConnexionIo.SendMessage(trame);
             Historique.AjouterAction(new PRServoAction(position, servo));
-        }
-
-        static public void BougeBrasDroite(int position)
-        {
-            Trame trame = TrameFactory.PRBougeServomoteur(ServomoteurID.PRBrasDroite, position);
-            GrosRobot.connexionIo.SendMessage(trame);
-            Historique.AjouterAction(new PRServoAction(position, ServomoteurID.PRBrasDroite));
-        }
-
-        static public void BougeBrasGauche(int position)
-        {
-            Trame trame = TrameFactory.PRBougeServomoteur(ServomoteurID.PRBrasGauche, position);
-            GrosRobot.connexionIo.SendMessage(trame);
-            Historique.AjouterAction(new PRServoAction(position, ServomoteurID.PRBrasGauche));
-        }
-
-        static public void ActiverPompe(PompeID pompe, bool actif)
-        {
-            Trame trame = TrameFactory.PRPompe(pompe, actif);
-            GrosRobot.connexionIo.SendMessage(trame);
-            Historique.AjouterAction(new PRPompeAction(actif, pompe));
-        }
-
-        static public void ActiverPompeDroite(bool actif)
-        {
-            ActiverPompe(PompeID.PRPompeDroite, actif);
-        }
-
-        static public void ActiverPompeGauche(bool actif)
-        {
-            ActiverPompe(PompeID.PRPompeGauche, actif);
         }
 
         static private int vitesseDeplacement;
@@ -319,7 +283,7 @@ namespace GoBot
             set
             {
                 Trame trame = TrameFactory.PRVitesseLigne(value);
-                GrosRobot.connexionIo.SendMessage(trame);
+                Connexions.ConnexionIo.SendMessage(trame);
                 vitesseDeplacement = value;
                 historique.AjouterAction(new PRVitesseLigneAction(value));
             }
@@ -335,7 +299,7 @@ namespace GoBot
             set
             {
                 Trame trame = TrameFactory.PRAccelLigne(value);
-                GrosRobot.connexionIo.SendMessage(trame);
+                Connexions.ConnexionIo.SendMessage(trame);
                 accelDeplacement = value;
                 historique.AjouterAction(new PRAccelerationLigneAction(value));
             }
@@ -351,7 +315,7 @@ namespace GoBot
             set
             {
                 Trame trame = TrameFactory.PRVitessePivot(value);
-                GrosRobot.connexionIo.SendMessage(trame);
+                Connexions.ConnexionIo.SendMessage(trame);
                 vitessePivot = value;
                 historique.AjouterAction(new PRVitessePivotAction(value));
             }
@@ -367,60 +331,16 @@ namespace GoBot
             set
             {
                 Trame trame = TrameFactory.PRAccelPivot(value);
-                GrosRobot.connexionIo.SendMessage(trame);
+                Connexions.ConnexionIo.SendMessage(trame);
                 accelPivot = value;
                 historique.AjouterAction(new PRAccelerationPivotAction(value));
             }
         }
 
-        #region Petits enchainements
-
-        public static void AttraperGauche(int tempsMs = 600)
-        {
-            ActiverPompeGauche(true);
-            BougeBrasGauche(Config.CurrentConfig.PosBrasGaucheDeplie);
-            Thread.Sleep(tempsMs);
-            BougeBrasGauche(Config.CurrentConfig.PosBrasGaucheReplie);
-        }
-
-        public static void RelacherGauche(int tempsMs = 600)
-        {
-            ActiverPompeGauche(false);
-            BougeBrasGauche(Config.CurrentConfig.PosBrasGaucheDeplie);
-            Thread.Sleep(400);
-            BougeBrasGauche(Config.CurrentConfig.PosBrasGaucheRange);
-            Thread.Sleep(200);
-            BougeBrasGauche(Config.CurrentConfig.PosBrasGaucheDeplie);
-            Thread.Sleep(200);
-            BougeBrasGauche(Config.CurrentConfig.PosBrasGaucheRange);
-        }
-
-        public static void AttraperDroite(int tempsMs = 600)
-        {
-            ActiverPompeDroite(true);
-            BougeBrasDroite(Config.CurrentConfig.PosBrasDroiteDeplie);
-            Thread.Sleep(tempsMs);
-            BougeBrasDroite(Config.CurrentConfig.PosBrasDroiteReplie);
-        }
-
-        public static void RelacherDroite(int tempsMs = 600)
-        {
-            ActiverPompeDroite(false);
-            BougeBrasDroite(Config.CurrentConfig.PosBrasDroiteDeplie);
-            Thread.Sleep(400);
-            BougeBrasDroite(Config.CurrentConfig.PosBrasDroiteRange);
-            Thread.Sleep(200);
-            BougeBrasDroite(Config.CurrentConfig.PosBrasDroiteDeplie);
-            Thread.Sleep(200);
-            BougeBrasDroite(Config.CurrentConfig.PosBrasDroiteRange);
-        }
-
-        #endregion
-
         internal static void EnvoyerPID(int p, int i, int d)
         {
             Trame t = TrameFactory.PRCoeffAsserv(p, i, d);
-            GrosRobot.connexionIo.SendMessage(t);
+            Connexions.ConnexionIo.SendMessage(t);
         }
     }
 }

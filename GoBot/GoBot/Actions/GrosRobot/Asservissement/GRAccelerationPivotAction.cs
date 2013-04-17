@@ -21,7 +21,7 @@ namespace GoBot.Actions
 
         void IAction.Executer()
         {
-            GrosRobot.AccelerationPivot = vitesse;
+            Plateau.GrosRobot.AccelerationPivot = vitesse;
         }
 
         public System.Drawing.Image Image

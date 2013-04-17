@@ -2,173 +2,36 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using System.Drawing;
-using System.Threading;
 using GoBot.Calculs;
 
 namespace GoBot
 {
-    public enum Deplacement
+    public abstract class Robot
     {
-        Aucun,
-        Avance,
-        Recule,
-        TourneDroite,
-        TourneGauche
-    }
+        public Historique Historique { get; protected set; }
+        public bool DeplacementLigne { get; protected set; }
 
-    public class Robot
-    {
-        private Position position;
-        private Color couleur;
-        private static int TAILLE = 300;
-        private static int RAYON = 212;
-        Timer timerDep;
-        Deplacement depCourant;
-        double distanceDep;
-        double vitesse;
+        public abstract Position Position { get; protected set; }
 
-        public Robot()
-        {
-            couleur = Color.Blue;
-            position = new Position();
-            depCourant = Deplacement.Aucun;
-            vitesse = 1500;
-        }
+        public abstract void Avancer(int distance, bool attendre = true);
+        public abstract void Reculer(int distance, bool attendre = true);
+        public abstract void PivotGauche(double angle, bool attendre = true);
+        public abstract void PivotDroite(double angle, bool attendre = true);
+        public abstract void Stop(StopMode mode = StopMode.Smooth);
+        public abstract void Virage(SensAR sensAr, SensGD sensGd, int rayon, int angle, bool attendre = true);
+        public abstract void ReglerOffsetAsserv(int offsetX, int offsetY, int offsetTeta);
+        public abstract void Recallage(SensAR sens, bool attendre = true);
+        public abstract void Init();
+        public abstract void BougeServo(ServomoteurID servo, int position);
+        public abstract void EnvoyerPID(int p, int i, int d);
+        public abstract void CoupureAlim();
 
-        public Robot(Position pos, Color _color)
-        {
-            couleur = _color;
-            position = pos;
-            depCourant = Deplacement.Aucun;
-            vitesse = 1500;
-        }
+        public abstract int VitesseDeplacement { get; set; }
+        public abstract int AccelerationDeplacement { get; set; }
+        public abstract int VitessePivot { get; set; }
+        public abstract int AccelerationPivot { get; set; }
 
-        public void lancement()
-        {
-            TimerCallback timerDelegate = new TimerCallback(deplacement);
-            timerDep = new System.Threading.Timer(timerDelegate, (Object)this, 0, 1);
-        }
-
-        public bool Arrete
-        {
-            get
-            {
-                return distanceDep == 0;
-            }
-        }
-
-        private static void deplacement(Object param)
-        {
-            Robot robot = (Robot)param;
-
-            if (robot.depCourant == Deplacement.Avance)
-                robot.avancer();
-        }
-
-        public Position Position
-        {
-            get
-            {
-                return position;
-            }
-        }
-
-        public Color Couleur
-        {
-            get
-            {
-                return couleur;
-            }
-        }
-
-        public static int Taille
-        {
-            get
-            {
-                return TAILLE;
-            }
-        }
-
-        public static int Rayon
-        {
-            get
-            {
-                return RAYON;
-            }
-        }
-
-        public void avancer()
-        {
-            double depX = (float)Math.Cos(position.Angle.AngleRadians) * (float)vitesse / 66;
-            double depY = (float)Math.Sin(position.Angle.AngleRadians) * (float)vitesse / 66;
-
-            double distance = Math.Sqrt(depX * depX + depY * depY);
-
-            if (distance < distanceDep)
-            {
-                position.deplacer(depX, depY);
-                distanceDep -= distance;
-            }
-            else
-            {
-                depY = (distanceDep * depY) / distance;
-                depX = (distanceDep * depX) / distance;
-                position.deplacer(depX, depY);
-                distanceDep = 0;
-
-                // TODO calculer la bonne longueur
-            }
-        }
-
-        public void reculer()
-        {
-            position.deplacer(-(float)Math.Cos(position.Angle.AngleRadians), -(float)Math.Sin(position.Angle.AngleRadians));
-        }
-
-        public void tourner(double angleDegres)
-        {
-            if (angleDegres > 0)
-            {
-                while (angleDegres >= 1)
-                {
-                    angleDegres--;
-                    Thread.Sleep(7);
-                    position.tourner(1);
-                }
-
-                position.tourner(angleDegres);
-            }
-            else
-            {
-                while (angleDegres <= -1)
-                {
-                    angleDegres++;
-                    Thread.Sleep(7);
-                    position.tourner(-1);
-                }
-
-                position.tourner(angleDegres);
-            }
-        }
-
-        public void avancer(int distance)
-        {
-            depCourant = Deplacement.Avance;
-            distanceDep = distance;
-        }
-
-        public void reculer(int distance)
-        {
-            for (int i = 0; i < distance; i++)
-            {
-                reculer();
-                Thread.Sleep(0);
-            }
-        }
-
-        public void stop()
-        {
-        }
+        public abstract int Taille { get; }
+        public int Rayon { get { return (int)Math.Sqrt(Taille * Taille * 2) / 2; } }
     }
 }
