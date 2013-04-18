@@ -319,10 +319,19 @@ namespace GoBot.IHM
 
                     // Fin pathfinding
 
+                    // Dessin des bougies
+
+                    for (int i = 0; i < 20; i++)
+                    {
+                        g.FillEllipse(new SolidBrush(Plateau.CouleursBougies[i]), RealToScreen(Plateau.PositionsBougies[i, 0]), RealToScreen(Plateau.PositionsBougies[i, 1]), RealToScreen(80), RealToScreen(80));
+                        g.DrawEllipse(new Pen(Color.Black), RealToScreen(Plateau.PositionsBougies[i, 0]), RealToScreen(Plateau.PositionsBougies[i, 1]), RealToScreen(80), RealToScreen(80));
+                    }
+
                     pictureBoxTable.Image = bmp;
                 }
                 catch (Exception)
                 {
+                    Console.WriteLine("Erreur pendant le dessin de la table");
                 }
             }
         }

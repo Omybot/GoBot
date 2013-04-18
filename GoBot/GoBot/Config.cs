@@ -108,6 +108,11 @@ namespace GoBot
         public double OffsetBalise2Bas { get; set; }
         public double OffsetBalise3Bas { get; set; }
 
+        // Positions bougies
+
+        public int[] PositionsBougiesX { get; set; }
+        public int[] PositionsBougiesY { get; set; }
+
         public double GetOffsetBaliseHaut(Carte carteBalise)
         {
             switch (carteBalise)
@@ -193,7 +198,6 @@ namespace GoBot
                 FileStream myFileStream = new FileStream("config.xml", FileMode.Open);
                 CurrentConfig = (Config)mySerializer.Deserialize(myFileStream);
                 myFileStream.Close();
-
                 // Serialisation binaire
                 /*BinaryFormatter formatter = new BinaryFormatter();
                 FileStream stream = File.Open("config.cfg", FileMode.Open);
@@ -205,6 +209,8 @@ namespace GoBot
             {
                 MessageBox.Show("Aucune configuration chargée.");
             }
+
+            //CurrentConfig.PositionsBougies = new Int32[10, 2];
         }
 
         public static void Save()

@@ -58,4 +58,48 @@
   <OffsetBalise1Bas>-100.69425000000004</OffsetBalise1Bas>
   <OffsetBalise2Bas>71.090249999999969</OffsetBalise2Bas>
   <OffsetBalise3Bas>-15.127625000000023</OffsetBalise3Bas>
+  <PositionsBougiesX>
+    <int>435</int>
+    <int>495</int>
+    <int>365</int>
+    <int>442</int>
+    <int>281</int>
+    <int>369</int>
+    <int>289</int>
+    <int>210</int>
+    <int>201</int>
+    <int>152</int>
+    <int>0</int>
+    <int>0</int>
+    <int>0</int>
+    <int>0</int>
+    <int>0</int>
+    <int>0</int>
+    <int>0</int>
+    <int>0</int>
+    <int>0</int>
+    <int>0</int>
+  </PositionsBougiesX>
+  <PositionsBougiesY>
+    <int>224</int>
+    <int>283</int>
+    <int>226</int>
+    <int>291</int>
+    <int>232</int>
+    <int>296</int>
+    <int>303</int>
+    <int>305</int>
+    <int>236</int>
+    <int>301</int>
+    <int>0</int>
+    <int>0</int>
+    <int>0</int>
+    <int>0</int>
+    <int>0</int>
+    <int>0</int>
+    <int>0</int>
+    <int>0</int>
+    <int>0</int>
+    <int>0</int>
+  </PositionsBougiesY>
 </Config>

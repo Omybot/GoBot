@@ -189,8 +189,11 @@ namespace GoBot
         {
             //Plateau.GrosRobot.Couleur = Color.Purple;
             //Plateau.GrosRobot.Enchainement.Couleur = Color.Purple;
-            pictureBoxCouleur.BackColor = Color.Purple;
+            pictureBoxCouleur.BackColor = Color.Blue;
             pictureBoxBalises.Image = Properties.Resources.tableViolet;
+
+            Plateau.NotreCouleur = Color.Blue;
+            panelBougies1.ChangementCouleur();
 
             panelBalise1.Balise.Position = new Position(new Angle(90, AnglyeType.Degre), new PointReel(-Balise.DISTANCE_LASER_TABLE, -Balise.DISTANCE_LASER_TABLE));
             panelBalise2.Balise.Position = new Position(new Angle(270, AnglyeType.Degre), new PointReel(-Balise.DISTANCE_LASER_TABLE, Plateau.LargeurPlateau + Balise.DISTANCE_LASER_TABLE));
@@ -203,6 +206,9 @@ namespace GoBot
             //Plateau.GrosRobot.Enchainement.Couleur = Color.Red;
             pictureBoxCouleur.BackColor = Color.Red;
             pictureBoxBalises.Image = Properties.Resources.tableRouge;
+
+            Plateau.NotreCouleur = Color.Red;
+            panelBougies1.ChangementCouleur();
 
             panelBalise1.Balise.Position = new Position(new Angle(90, AnglyeType.Degre), new PointReel(Plateau.LongueurPlateau + Balise.DISTANCE_LASER_TABLE, -Balise.DISTANCE_LASER_TABLE));
             panelBalise2.Balise.Position = new Position(new Angle(270, AnglyeType.Degre), new PointReel(Plateau.LongueurPlateau + Balise.DISTANCE_LASER_TABLE, Plateau.LargeurPlateau + Balise.DISTANCE_LASER_TABLE));

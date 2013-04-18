@@ -94,6 +94,13 @@
     <Compile Include="Actions\GrosRobot\Deplacement\GRVirageAvantGaucheAction.cs" />
     <Compile Include="Actions\IAction.cs" />
     <Compile Include="Actions\PetitRobot\PRServoAction.cs" />
+    <Compile Include="CameraIP.cs" />
+    <Compile Include="IHM\PanelBougies.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="IHM\PanelBougies.Designer.cs">
+      <DependentUpon>PanelBougies.cs</DependentUpon>
+    </Compile>
     <Compile Include="UDP\Connexions.cs" />
     <Compile Include="PathFinding\Arc.cs" />
     <Compile Include="PathFinding\AStar.cs" />
@@ -248,6 +255,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="IHM\Composants\TrackBarPlus.resx">
       <DependentUpon>TrackBarPlus.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="IHM\PanelBougies.resx">
+      <DependentUpon>PanelBougies.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="IHM\IHMGrosRobot\PanelDeplacementGR.resx">
       <DependentUpon>PanelDeplacementGR.cs</DependentUpon>

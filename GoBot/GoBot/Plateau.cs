@@ -27,7 +27,13 @@ namespace GoBot
 
         public static Robot GrosRobot { get; set; }
 
+        public static Color NotreCouleur { get; set; }
+
         public static bool Simulation { get; set; }
+
+        public static Color[] CouleursBougies { get; set; }
+
+        public static int[,] PositionsBougies { get; set; }
 
         /// <summary>
         /// Sémaphore à verrouiller pendant la manipulation du graph du pathfinding pour éviter les modification pendant énumération entre autres
@@ -99,6 +105,35 @@ namespace GoBot
                     Simulation = false;
                 else
                     Simulation = true;
+
+                CouleursBougies = new Color[20];
+                for (int i = 0; i < 20; i++)
+                    CouleursBougies[i] = Color.White;
+
+                NotreCouleur = Color.Red;
+
+                PositionsBougies = new Int32[20, 2];
+
+                PositionsBougies[0, 0] = 0;     PositionsBougies[0, 1] = 0;
+                PositionsBougies[1, 0] = 80;    PositionsBougies[1, 1] = 0;
+                PositionsBougies[2, 0] = 160;   PositionsBougies[2, 1] = 0;
+                PositionsBougies[3, 0] = 240;   PositionsBougies[3, 1] = 0;
+                PositionsBougies[4, 0] = 320;   PositionsBougies[4, 1] = 0;
+                PositionsBougies[5, 0] = 400;   PositionsBougies[5, 1] = 0;
+                PositionsBougies[6, 0] = 480;   PositionsBougies[6, 1] = 0;
+                PositionsBougies[7, 0] = 560;   PositionsBougies[7, 1] = 0;
+                PositionsBougies[8, 0] = 640;   PositionsBougies[8, 1] = 0;
+                PositionsBougies[9, 0] = 720;   PositionsBougies[9, 1] = 0;
+                PositionsBougies[10, 0] = 800;  PositionsBougies[10, 1] = 0;
+                PositionsBougies[11, 0] = 880;  PositionsBougies[11, 1] = 0;
+                PositionsBougies[12, 0] = 960;  PositionsBougies[12, 1] = 0;
+                PositionsBougies[13, 0] = 1040; PositionsBougies[13, 1] = 0;
+                PositionsBougies[14, 0] = 1120; PositionsBougies[14, 1] = 0;
+                PositionsBougies[15, 0] = 1200; PositionsBougies[15, 1] = 0;
+                PositionsBougies[16, 0] = 1280; PositionsBougies[16, 1] = 0;
+                PositionsBougies[17, 0] = 1360; PositionsBougies[17, 1] = 0;
+                PositionsBougies[18, 0] = 1440; PositionsBougies[18, 1] = 0;
+                PositionsBougies[19, 0] = 1520; PositionsBougies[19, 1] = 0;
             }
         }
 
@@ -379,6 +414,7 @@ namespace GoBot
                 Arc arc = (Arc)Graph.Arcs[i];
 
                 if (arc.Passable)
+                
                 {
                     Segment segment = new Segment(new PointReel(arc.StartNode.X, arc.StartNode.Y), new PointReel(arc.EndNode.X, arc.EndNode.Y));
                     if (TropProche(obstacle, segment))
