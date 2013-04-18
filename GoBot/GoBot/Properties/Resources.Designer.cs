@@ -507,5 +507,12 @@ namespace GoBot.Properties {
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
+        
+        internal static System.Drawing.Bitmap Webcam {
+            get {
+                object obj = ResourceManager.GetObject("Webcam", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
     }
 }

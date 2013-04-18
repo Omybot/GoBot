@@ -504,6 +504,7 @@
     <Content Include="img\trackBarFond.png" />
     <Content Include="img\trackBarFondSelected.png" />
     <None Include="Resources\mort.png" />
+    <None Include="img\Webcam.jpg" />
     <Content Include="robot.ico" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
