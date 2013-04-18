@@ -42,7 +42,7 @@ namespace GoBot
                     btnClose.Visible = false;
                 }
 
-                Plateau.GrosRobot.Historique.nouvelleAction += new Historique.delegateAction(HistoriqueGR_nouvelleAction);
+                Robots.GrosRobot.Historique.nouvelleAction += new Historique.delegateAction(HistoriqueGR_nouvelleAction);
                 PetitRobot.Historique.nouvelleAction += new Historique.delegateAction(HistoriquePR_nouvelleAction);
 
                 panelBalise1.Balise = Plateau.Balise1;
@@ -66,6 +66,8 @@ namespace GoBot
                 panelBalise1.Balise.ConnexionCheck.Start();
                 panelBalise2.Balise.ConnexionCheck.Start();
                 panelBalise3.Balise.ConnexionCheck.Start();
+ 
+                switchBoutonSimu.SetActif(Robots.Simulation);
             }
         }
 
@@ -187,8 +189,8 @@ namespace GoBot
 
         private void btnCouleurViolet_Click(object sender, EventArgs e)
         {
-            //Plateau.GrosRobot.Couleur = Color.Purple;
-            //Plateau.GrosRobot.Enchainement.Couleur = Color.Purple;
+            //Robots.GrosRobot.Couleur = Color.Purple;
+            //Robots.GrosRobot.Enchainement.Couleur = Color.Purple;
             pictureBoxCouleur.BackColor = Color.Blue;
             pictureBoxBalises.Image = Properties.Resources.tableViolet;
 
@@ -202,8 +204,8 @@ namespace GoBot
 
         private void btnCouleurRouge_Click(object sender, EventArgs e)
         {
-            //Plateau.GrosRobot.Couleur = Color.Red;
-            //Plateau.GrosRobot.Enchainement.Couleur = Color.Red;
+            //Robots.GrosRobot.Couleur = Color.Red;
+            //Robots.GrosRobot.Enchainement.Couleur = Color.Red;
             pictureBoxCouleur.BackColor = Color.Red;
             pictureBoxBalises.Image = Properties.Resources.tableRouge;
 
@@ -224,25 +226,25 @@ namespace GoBot
 
         public void Recallages()
         {
-            Plateau.GrosRobot.VitesseDeplacement = 150;
-            Plateau.GrosRobot.AccelerationDeplacement = 150;
-            Plateau.GrosRobot.VitessePivot = 150;
-            Plateau.GrosRobot.AccelerationPivot = 150;
+            Robots.GrosRobot.VitesseDeplacement = 150;
+            Robots.GrosRobot.AccelerationDeplacement = 150;
+            Robots.GrosRobot.VitessePivot = 150;
+            Robots.GrosRobot.AccelerationPivot = 150;
 
             DateTime debut = DateTime.Now;
-            Plateau.GrosRobot.Recallage(SensAR.Arriere);
+            Robots.GrosRobot.Recallage(SensAR.Arriere);
 
-            Plateau.GrosRobot.Avancer(200);
-            Plateau.GrosRobot.PivotGauche(90);
-            Plateau.GrosRobot.Recallage(SensAR.Arriere);
+            Robots.GrosRobot.Avancer(200);
+            Robots.GrosRobot.PivotGauche(90);
+            Robots.GrosRobot.Recallage(SensAR.Arriere);
             ledRecallage.On();
-            Plateau.GrosRobot.ReglerOffsetAsserv((int)(3000 - 110), (int)(2000 - 200 - 110), 180);
+            Robots.GrosRobot.ReglerOffsetAsserv((int)(3000 - 110), (int)(2000 - 200 - 110), 180);
 
-            /*Plateau.GrosRobot.VitesseDeplacement = 500;
-            Plateau.GrosRobot.AccelerationDeplacement = 1000;
-            Plateau.GrosRobot.VitessePivot = 500;
-            Plateau.GrosRobot.AccelerationPivot = 1000;*/
-            Plateau.GrosRobot.Avancer(300);
+            /*Robots.GrosRobot.VitesseDeplacement = 500;
+            Robots.GrosRobot.AccelerationDeplacement = 1000;
+            Robots.GrosRobot.VitessePivot = 500;
+            Robots.GrosRobot.AccelerationPivot = 1000;*/
+            Robots.GrosRobot.Avancer(300);
         }
 
         private void btnBalises_Click(object sender, EventArgs e)
@@ -360,7 +362,7 @@ namespace GoBot
 
         private void btnPIDGR_Click(object sender, EventArgs e)
         {
-            Plateau.GrosRobot.EnvoyerPID((int)numPGR.Value, (int)numIGR.Value, (int)numDGR.Value);
+            Robots.GrosRobot.EnvoyerPID((int)numPGR.Value, (int)numIGR.Value, (int)numDGR.Value);
         }
 
         private void bnStratTotem_Click(object sender, EventArgs e)
@@ -398,7 +400,7 @@ namespace GoBot
 
         private void switchBoutonSimu_ChangementEtat(bool actif)
         {
-            Plateau.Simulation = actif;
+            Robots.Simuler(actif);
         }
     }
 }

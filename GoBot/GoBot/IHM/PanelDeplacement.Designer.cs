@@ -130,7 +130,7 @@
             this.trackBarAccel.BackColor = System.Drawing.Color.Transparent;
             this.trackBarAccel.IntervalTimer = 500;
             this.trackBarAccel.Location = new System.Drawing.Point(38, 197);
-            this.trackBarAccel.Max = 3000D;
+            this.trackBarAccel.Max = 5000D;
             this.trackBarAccel.MaximumSize = new System.Drawing.Size(3000, 15);
             this.trackBarAccel.Min = 0D;
             this.trackBarAccel.MinimumSize = new System.Drawing.Size(0, 15);

@@ -251,19 +251,19 @@ namespace GoBot.IHM
                     if (boxSourisObstacle.Checked)
                     {
                         g.DrawEllipse(crayonRougeFin,
-                            (int)(xSouris - RealToScreen(Plateau.GrosRobot.Rayon) * 2),
-                            (int)(ySouris - RealToScreen(Plateau.GrosRobot.Rayon) * 2), RealToScreen(Plateau.GrosRobot.Rayon) * 4, RealToScreen(Plateau.GrosRobot.Rayon) * 4); 
+                            (int)(xSouris - RealToScreen(Robots.GrosRobot.Rayon) * 2),
+                            (int)(ySouris - RealToScreen(Robots.GrosRobot.Rayon) * 2), RealToScreen(Robots.GrosRobot.Rayon) * 4, RealToScreen(Robots.GrosRobot.Rayon) * 4); 
                     }
 
                     // Dessin du robot
                     int xRobot, yRobot;
                     double angleRobot;
-                    xRobot = RealToScreen(Plateau.GrosRobot.Position.Coordonnees.X);
-                    yRobot = RealToScreen(Plateau.GrosRobot.Position.Coordonnees.Y);
-                    angleRobot = Plateau.GrosRobot.Position.Angle.AngleRadians + (90 * Math.PI / 360);
+                    xRobot = RealToScreen(Robots.GrosRobot.Position.Coordonnees.X);
+                    yRobot = RealToScreen(Robots.GrosRobot.Position.Coordonnees.Y);
+                    angleRobot = Robots.GrosRobot.Position.Angle.AngleRadians + (90 * Math.PI / 360);
 
                     Point p1, p2, p3, p4;
-                    double miDiago = RealToScreen((int)Math.Round((Math.Sqrt(2 * (Plateau.GrosRobot.Taille * Plateau.GrosRobot.Taille))) / 2));
+                    double miDiago = RealToScreen((int)Math.Round((Math.Sqrt(2 * (Robots.GrosRobot.Taille * Robots.GrosRobot.Taille))) / 2));
                     double sinAngle = Math.Sin(angleRobot);
                     double cosAngle = Math.Cos(angleRobot);
 
@@ -282,10 +282,10 @@ namespace GoBot.IHM
                     g.DrawPolygon(new Pen(Color.Black), tabPoints);
 
                     //Point pointDevant = new Point(Maths.ArCercleir(xRobot - cosAngle * realToScreen(Maths.ArCercleir(Robot.Taille / 2))), Maths.ArCercleir(yRobot - sinAngle * realToScreen(Maths.ArCercleir(Robot.Taille / 2))));
-                    double angle = Plateau.GrosRobot.Position.Angle.AngleRadians + (-180 * 2 * Math.PI / 360);
+                    double angle = Robots.GrosRobot.Position.Angle.AngleRadians + (-180 * 2 * Math.PI / 360);
                     double cos = Math.Cos(angle);
                     double sin = Math.Sin(angle);
-                    Point pointDevant = new Point(Maths.ArCercleir(xRobot - cos * RealToScreen(Maths.ArCercleir(Plateau.GrosRobot.Taille / 2))), Maths.ArCercleir(yRobot - sin * RealToScreen(Maths.ArCercleir(Plateau.GrosRobot.Taille / 2))));
+                    Point pointDevant = new Point(Maths.ArCercleir(xRobot - cos * RealToScreen(Maths.ArCercleir(Robots.GrosRobot.Taille / 2))), Maths.ArCercleir(yRobot - sin * RealToScreen(Maths.ArCercleir(Robots.GrosRobot.Taille / 2))));
 
                     g.DrawLine(new Pen(Color.Red), new Point(xRobot, yRobot), pointDevant);
 
@@ -447,7 +447,7 @@ namespace GoBot.IHM
             modeCourant = Mode.FinTrajectoire;
             double distance;
             //debutNode = Plateau.Graph.ClosestNode(0, 0, 0, out distance, false);
-            debutNode = Plateau.Graph.ClosestNode(Plateau.GrosRobot.Position.Coordonnees.X, Plateau.GrosRobot.Position.Coordonnees.Y, 0, out distance, false);
+            debutNode = Plateau.Graph.ClosestNode(Robots.GrosRobot.Position.Coordonnees.X, Robots.GrosRobot.Position.Coordonnees.Y, 0, out distance, false);
         }
 
         private void pictureBoxTable_Click(object sender, EventArgs e)

@@ -37,19 +37,12 @@ namespace GoBot.IHM.IHMGrosRobot
 
         protected override void btnAvance_Click(object sender, EventArgs e)
         {
-            th = new Thread(avancer);
-            th.Start();
-        }
-        Thread th;
-
-        private void avancer()
-        {
             base.btnAvance_Click(null, null);
 
             int distance;
             if (Int32.TryParse(txtDistance.Text, out distance) && distance != 0)
             {
-                Plateau.GrosRobot.Avancer(distance);
+                Robots.GrosRobot.Avancer(distance, false);
             }
         }
 
@@ -59,7 +52,7 @@ namespace GoBot.IHM.IHMGrosRobot
 
             int distance;
             if (Int32.TryParse(txtDistance.Text, out distance) && distance != 0)
-                Plateau.GrosRobot.Reculer(distance);
+                Robots.GrosRobot.Reculer(distance, false);
         }
 
         protected override void btnPivotGauche_Click(object sender, EventArgs e)
@@ -68,7 +61,7 @@ namespace GoBot.IHM.IHMGrosRobot
 
             int angle;
             if (Int32.TryParse(txtAngle.Text, out angle) && angle != 0)
-                Plateau.GrosRobot.PivotGauche(angle);
+                Robots.GrosRobot.PivotGauche(angle, false);
         }
 
         protected override void btnPivotDroite_Click(object sender, EventArgs e)
@@ -77,7 +70,7 @@ namespace GoBot.IHM.IHMGrosRobot
 
             int angle;
             if (Int32.TryParse(txtAngle.Text, out angle) && angle != 0)
-                Plateau.GrosRobot.PivotDroite(angle);
+                Robots.GrosRobot.PivotDroite(angle, false);
         }
 
         protected override void btnVirageAvDr_Click(object sender, EventArgs e)
@@ -91,7 +84,7 @@ namespace GoBot.IHM.IHMGrosRobot
             Int32.TryParse(txtAngle.Text, out angle);
 
             if (angle != 0 && distance != 0)
-                Plateau.GrosRobot.Virage(SensAR.Avant, SensGD.Droite, distance, angle);
+                Robots.GrosRobot.Virage(SensAR.Avant, SensGD.Droite, distance, angle, false);
         }
 
         protected override void btnVirageAvGa_Click(object sender, EventArgs e)
@@ -105,7 +98,7 @@ namespace GoBot.IHM.IHMGrosRobot
             Int32.TryParse(txtAngle.Text, out angle);
 
             if (angle != 0 && distance != 0)
-                Plateau.GrosRobot.Virage(SensAR.Avant, SensGD.Gauche, distance, angle);
+                Robots.GrosRobot.Virage(SensAR.Avant, SensGD.Gauche, distance, angle, false);
         }
 
         protected override void btnVirageArGa_Click(object sender, EventArgs e)
@@ -119,7 +112,7 @@ namespace GoBot.IHM.IHMGrosRobot
             Int32.TryParse(txtAngle.Text, out angle);
 
             if (angle != 0 && distance != 0)
-                Plateau.GrosRobot.Virage(SensAR.Arriere, SensGD.Gauche, distance, angle);
+                Robots.GrosRobot.Virage(SensAR.Arriere, SensGD.Gauche, distance, angle, false);
         }
 
         protected override void btnVirageArDr_Click(object sender, EventArgs e)
@@ -133,14 +126,14 @@ namespace GoBot.IHM.IHMGrosRobot
             Int32.TryParse(txtAngle.Text, out angle);
 
             if (angle != 0 && distance != 0)
-                Plateau.GrosRobot.Virage(SensAR.Arriere, SensGD.Droite, distance, angle);
+                Robots.GrosRobot.Virage(SensAR.Arriere, SensGD.Droite, distance, angle, false);
         }
 
         protected override void btnStop_Click(object sender, EventArgs e)
         {
             base.btnStop_Click(sender, e);
 
-            Plateau.GrosRobot.Stop();
+            Robots.GrosRobot.Stop();
         }
 
         protected override void boxPivot_CheckedChanged(object sender, EventArgs e)
@@ -165,12 +158,12 @@ namespace GoBot.IHM.IHMGrosRobot
 
             if (boxPivot.Checked)
             {
-                Plateau.GrosRobot.VitessePivot = (int)trackBarVitesse.Value;
+                Robots.GrosRobot.VitessePivot = (int)trackBarVitesse.Value;
                 Config.CurrentConfig.GRVitessePivot = (int)trackBarVitesse.Value;
             }
             else
             {
-                Plateau.GrosRobot.VitesseDeplacement = (int)trackBarVitesse.Value;
+                Robots.GrosRobot.VitesseDeplacement = (int)trackBarVitesse.Value;
                 Config.CurrentConfig.GRVitesseLigne = (int)trackBarVitesse.Value;
             }
         }
@@ -180,12 +173,12 @@ namespace GoBot.IHM.IHMGrosRobot
         {
             if (boxPivot.Checked)
             {
-                Plateau.GrosRobot.AccelerationPivot = (int)trackBarAccel.Value;
+                Robots.GrosRobot.AccelerationPivot = (int)trackBarAccel.Value;
                 Config.CurrentConfig.GRAccelerationPivot = (int)trackBarAccel.Value;
             }
             else
             {
-                Plateau.GrosRobot.AccelerationDeplacement = (int)trackBarAccel.Value;
+                Robots.GrosRobot.AccelerationDeplacement = (int)trackBarAccel.Value;
                 Config.CurrentConfig.GRAccelerationLigne = (int)trackBarAccel.Value;
             }
         }
@@ -195,32 +188,32 @@ namespace GoBot.IHM.IHMGrosRobot
             if (e.KeyCode == Keys.Down)
             {
                 // Reculer
-                Plateau.GrosRobot.Reculer(10000);
+                Robots.GrosRobot.Reculer(10000, false);
             }
             else if (e.KeyCode == Keys.Up)
             {
                 // Avancer
-                Plateau.GrosRobot.Avancer(10000);
+                Robots.GrosRobot.Avancer(10000, false);
             }
             else if (e.KeyCode == Keys.Left)
             {
                 // Pivot gauche
-                Plateau.GrosRobot.PivotGauche(10000);
+                Robots.GrosRobot.PivotGauche(3600, false);
             }
             else if (e.KeyCode == Keys.Right)
             {
                 // Pivot droit
-                Plateau.GrosRobot.PivotDroite(10000);
+                Robots.GrosRobot.PivotDroite(3600, false);
             }
             else if (e.KeyCode == Keys.Add)
             {
                 // Augmenter vitesse
-                Plateau.GrosRobot.VitesseDeplacement += 50;
+                Robots.GrosRobot.VitesseDeplacement += 50;
             }
             else if (e.KeyCode == Keys.Subtract)
             {
                 // Diminuer vitesse
-                Plateau.GrosRobot.VitesseDeplacement -= 50;
+                Robots.GrosRobot.VitesseDeplacement -= 50;
             }
         }
 
@@ -228,7 +221,7 @@ namespace GoBot.IHM.IHMGrosRobot
         {
             if(e.KeyCode == Keys.Down || e.KeyCode == Keys.Up || e.KeyCode == Keys.Left || e.KeyCode == Keys.Right)
             {
-                Plateau.GrosRobot.Stop();
+                Robots.GrosRobot.Stop();
             }
         }
 

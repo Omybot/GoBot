@@ -35,7 +35,7 @@ namespace GoBot.IHM.Composants
             }
         }
 
-        public void setActif(bool active, bool tickEvent = true)
+        public void SetActif(bool active, bool tickEvent = true)
         {
             if (actif != active)
             {
@@ -48,7 +48,7 @@ namespace GoBot.IHM.Composants
 
         protected override void OnKeyPress(KeyPressEventArgs e)
         {
-            setActif(!Actif);
+            SetActif(!Actif);
         }
 
         protected override void OnEnter(EventArgs e)

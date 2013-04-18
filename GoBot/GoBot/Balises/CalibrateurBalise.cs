@@ -34,7 +34,7 @@ namespace GoBot
             for (int i = 0; i < nombreMesures; i++)
             {
                 mesures[i] = Balise.MoyennerMesures(nbMesuresParPoint);
-                Plateau.GrosRobot.Avancer(intervalle);
+                Robots.GrosRobot.Avancer(intervalle);
                 Thread.Sleep(1000);
             }
         }

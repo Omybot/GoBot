@@ -63,7 +63,6 @@ namespace GoBot.IHM
         private Thread th;
         private void ThreadImage()
         {
-            CheckForIllegalCrossThreadCalls = false;
             this.Invoke(new EventHandler(delegate
                {
                    Bitmap img = Camera.GetImage();

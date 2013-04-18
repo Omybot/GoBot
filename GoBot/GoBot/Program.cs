@@ -18,7 +18,8 @@ namespace GoBot
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
             Connexions.Init();
-            Plateau.GrosRobot.Init();
+            Robots.Init();
+            //Robots.GrosRobot.Init();
             PetitRobot.Init();
             Config.Load();
             Plateau.Init();

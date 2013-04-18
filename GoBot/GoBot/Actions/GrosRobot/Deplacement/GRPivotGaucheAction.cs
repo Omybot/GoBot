@@ -26,7 +26,7 @@ namespace GoBot.Actions
 
         void IAction.Executer()
         {
-            Plateau.GrosRobot.PivotGauche(angle);
+            Robots.GrosRobot.PivotGauche(angle);
         }
     }
 }

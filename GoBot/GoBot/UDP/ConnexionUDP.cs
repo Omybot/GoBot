@@ -132,7 +132,8 @@ namespace UDP
 
         public void TrameRecue(Trame t)
         {
-            NouvelleTrame(t);
+            if(NouvelleTrame != null)
+                NouvelleTrame(t);
         }
     }
 }

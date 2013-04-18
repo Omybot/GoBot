@@ -149,7 +149,7 @@ namespace GoBot
             Balise3 = new Balise(Carte.RecBoi);
         }
 
-        public void GrosRobotAllerA(double x, double y)
+        public bool GrosRobotAllerA(double x, double y)
         {
             CheminEnCoursNoeuds = new List<Node>();
             CheminEnCoursArcs = new List<Arc>();
@@ -159,10 +159,10 @@ namespace GoBot
             double distance;
             bool nodeDebutAjoute = false;
 
-            Node debutNode = Graph.ClosestNode(GrosRobot.Position.Coordonnees.X, GrosRobot.Position.Coordonnees.Y, 0, out distance, false);
+            Node debutNode = Graph.ClosestNode(Robots.GrosRobot.Position.Coordonnees.X, Robots.GrosRobot.Position.Coordonnees.Y, 0, out distance, false);
             if (distance != 0)
             {
-                debutNode = new Node(GrosRobot.Position.Coordonnees.X, GrosRobot.Position.Coordonnees.Y, 0);
+                debutNode = new Node(Robots.GrosRobot.Position.Coordonnees.X, Robots.GrosRobot.Position.Coordonnees.Y, 0);
                 AddNode(debutNode);
                 nodeDebutAjoute = true;
             }
@@ -275,9 +275,15 @@ namespace GoBot
             if(nodeDebutAjoute)
                 Graph.RemoveNode(debutNode);
 
-            // Execution du parcours
-            Thread th = new Thread(ThreadChemin);
-            th.Start();
+            if (CheminEnCoursArcs.Count == 0)
+                return false;
+            else
+            {
+                // Execution du parcours
+                Thread th = new Thread(ThreadChemin);
+                th.Start();
+                return true;
+            }
         }
 
         public List<Arc> CheminTrouve;
@@ -297,14 +303,14 @@ namespace GoBot
                 PointReel c1 = new PointReel(CheminEnCoursNoeuds[0].X, CheminEnCoursNoeuds[0].Y);
                 PointReel c2 = new PointReel(CheminEnCoursNoeuds[1].X, CheminEnCoursNoeuds[1].Y);
 
-                Position p = new Position(GrosRobot.Position.Angle, c1);
+                Position p = new Position(Robots.GrosRobot.Position.Angle, c1);
                 Direction traj = Maths.GetDirection(p, c2);
 
                 //GrosRobot.GoToXY((int)c2.X, (int)c2.Y);
-                GrosRobot.PivotDroite(-traj.angle.AngleDegres);
+                Robots.GrosRobot.PivotDroite(-traj.angle.AngleDegres);
                 if (nouvelleTrajectoire)
                     break;
-                GrosRobot.Avancer((int)traj.distance);
+                Robots.GrosRobot.Avancer((int)traj.distance);
 
                 CheminEnCoursNoeuds.RemoveAt(0);
                 CheminEnCoursArcs.RemoveAt(0);
@@ -336,13 +342,13 @@ namespace GoBot
                     {
                         Segment segment = new Segment(new PointReel(a.StartNode.X, a.StartNode.Y), new PointReel(a.EndNode.X, a.EndNode.Y));
 
-                        if (segment.getDistance(new PointReel(x, y)) < GrosRobot.Rayon * 2)
+                        if (segment.getDistance(new PointReel(x, y)) < Robots.GrosRobot.Rayon * 2)
                         //if(!a.Passable)
                         {
                             // Demande de génération d'une nouvelle trajectoire
                             nouvelleTrajectoire = true;
-                            if(GrosRobot.DeplacementLigne)
-                                GrosRobot.Stop();
+                            if (Robots.GrosRobot.DeplacementLigne)
+                                Robots.GrosRobot.Stop();
                             //Thread.Sleep(1500);
                             //GrosRobot.semDeplacement.Release();
                         }
@@ -371,11 +377,11 @@ namespace GoBot
                     Segment segment = new Segment(new PointReel(a.StartNode.X, a.StartNode.Y), new PointReel(a.EndNode.X, a.EndNode.Y));
                     foreach (PointReel p in interprete.PositionsEnnemies)
                     {
-                        if (segment.getDistance(p) < GrosRobot.Rayon * 2)
+                        if (segment.getDistance(p) < Robots.GrosRobot.Rayon * 2)
                         {
                             // Demande de génération d'une nouvelle trajectoire
                             nouvelleTrajectoire = true;
-                            GrosRobot.Stop();
+                            Robots.GrosRobot.Stop();
                         }
                     }
                 }
@@ -414,7 +420,6 @@ namespace GoBot
                 Arc arc = (Arc)Graph.Arcs[i];
 
                 if (arc.Passable)
-                
                 {
                     Segment segment = new Segment(new PointReel(arc.StartNode.X, arc.StartNode.Y), new PointReel(arc.EndNode.X, arc.EndNode.Y));
                     if (TropProche(obstacle, segment))
@@ -466,11 +471,11 @@ namespace GoBot
 
             if (typeForme1.IsAssignableFrom(typeof(Segment)))
                 if (typeForme2.IsAssignableFrom(typeof(Segment)))
-                    return ((Segment)forme1).getDistance((Segment)forme2) < GrosRobot.Rayon;
+                    return ((Segment)forme1).getDistance((Segment)forme2) < Robots.GrosRobot.Rayon;
                 else
-                    return ((Segment)forme1).getDistance(forme2) < GrosRobot.Rayon;
+                    return ((Segment)forme1).getDistance(forme2) < Robots.GrosRobot.Rayon;
             else
-                return forme1.getDistance(forme2) < GrosRobot.Rayon;
+                return forme1.getDistance(forme2) < Robots.GrosRobot.Rayon;
         }
 
         /// <summary>
@@ -623,7 +628,7 @@ namespace GoBot
 
                         foreach (IForme obstacle in ObstaclesFixes)
                         {
-                            if (obstacle.getDistance(new Segment(new PointReel(no.X, no.Y), new PointReel(node.X, node.Y))) < GrosRobot.Taille / 2)
+                            if (obstacle.getDistance(new Segment(new PointReel(no.X, no.Y), new PointReel(node.X, node.Y))) < Robots.GrosRobot.Taille / 2)
                             {
                                 arc.Passable = false;
                                 arc2.Passable = false;

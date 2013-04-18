@@ -23,7 +23,7 @@ namespace GoBot
 
         public override int Taille { get { return 280; } }
 
-        private double IntervalleRafraichissementPosition = 50;
+        private double IntervalleRafraichissementPosition = 10;
 
         private Position Destination { get; set; }
         private SensGD SensPivot { get; set; }
@@ -94,7 +94,7 @@ namespace GoBot
 
         public override void Reculer(int distance, bool attendre = true)
         {
-            Avancer(-distance);
+            Avancer(-distance, attendre);
         }
 
         public void Pivoter(double angle, bool attendre = true)

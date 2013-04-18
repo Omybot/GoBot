@@ -23,7 +23,7 @@ namespace GoBot.Actions
 
         void IAction.Executer()
         {
-            Plateau.GrosRobot.BougeServo(pince, position);
+            Robots.GrosRobot.BougeServo(pince, position);
         }
 
         public System.Drawing.Image Image

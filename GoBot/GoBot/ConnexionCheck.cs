@@ -24,7 +24,7 @@ namespace GoBot
             start = false;
             interval = intervalle;
             connexionOffTimer = new Timer();
-            connexionOffTimer.Interval = 200;
+            connexionOffTimer.Interval = 1;
             connexionOffTimer.Elapsed += new ElapsedEventHandler(connexionOffTimer_Elapsed);
 
             Connecte = false;

@@ -101,6 +101,7 @@
     <Compile Include="IHM\PanelBougies.Designer.cs">
       <DependentUpon>PanelBougies.cs</DependentUpon>
     </Compile>
+    <Compile Include="Robots.cs" />
     <Compile Include="UDP\Connexions.cs" />
     <Compile Include="PathFinding\Arc.cs" />
     <Compile Include="PathFinding\AStar.cs" />
