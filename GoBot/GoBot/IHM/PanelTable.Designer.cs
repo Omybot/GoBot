@@ -28,7 +28,6 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.pictureBoxTable = new System.Windows.Forms.PictureBox();
             this.btnAffichage = new System.Windows.Forms.Button();
             this.boxDroites = new System.Windows.Forms.CheckBox();
             this.boxTable = new System.Windows.Forms.CheckBox();
@@ -38,19 +37,10 @@
             this.boxArretes = new System.Windows.Forms.CheckBox();
             this.btnAllerA = new System.Windows.Forms.Button();
             this.boxSourisObstacle = new System.Windows.Forms.CheckBox();
+            this.btnBougies = new System.Windows.Forms.Button();
+            this.pictureBoxTable = new System.Windows.Forms.PictureBox();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxTable)).BeginInit();
             this.SuspendLayout();
-            // 
-            // pictureBoxTable
-            // 
-            this.pictureBoxTable.Image = global::GoBot.Properties.Resources.table;
-            this.pictureBoxTable.Location = new System.Drawing.Point(126, 3);
-            this.pictureBoxTable.Name = "pictureBoxTable";
-            this.pictureBoxTable.Size = new System.Drawing.Size(750, 500);
-            this.pictureBoxTable.TabIndex = 0;
-            this.pictureBoxTable.TabStop = false;
-            this.pictureBoxTable.Click += new System.EventHandler(this.pictureBoxTable_Click);
-            this.pictureBoxTable.MouseMove += new System.Windows.Forms.MouseEventHandler(this.pictureBoxTable_MouseMove);
             // 
             // btnAffichage
             // 
@@ -144,11 +134,33 @@
             this.boxSourisObstacle.Text = "Souris obstacle";
             this.boxSourisObstacle.UseVisualStyleBackColor = true;
             // 
+            // btnBougies
+            // 
+            this.btnBougies.Location = new System.Drawing.Point(9, 403);
+            this.btnBougies.Name = "btnBougies";
+            this.btnBougies.Size = new System.Drawing.Size(93, 23);
+            this.btnBougies.TabIndex = 10;
+            this.btnBougies.Text = "Activer bougies";
+            this.btnBougies.UseVisualStyleBackColor = true;
+            this.btnBougies.Click += new System.EventHandler(this.btnBougies_Click);
+            // 
+            // pictureBoxTable
+            // 
+            this.pictureBoxTable.Image = global::GoBot.Properties.Resources.table;
+            this.pictureBoxTable.Location = new System.Drawing.Point(126, 3);
+            this.pictureBoxTable.Name = "pictureBoxTable";
+            this.pictureBoxTable.Size = new System.Drawing.Size(750, 500);
+            this.pictureBoxTable.TabIndex = 0;
+            this.pictureBoxTable.TabStop = false;
+            this.pictureBoxTable.Click += new System.EventHandler(this.pictureBoxTable_Click);
+            this.pictureBoxTable.MouseMove += new System.Windows.Forms.MouseEventHandler(this.pictureBoxTable_MouseMove);
+            // 
             // PanelTable
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.Transparent;
+            this.Controls.Add(this.btnBougies);
             this.Controls.Add(this.boxSourisObstacle);
             this.Controls.Add(this.btnAllerA);
             this.Controls.Add(this.boxArretes);
@@ -179,5 +191,6 @@
         private System.Windows.Forms.CheckBox boxArretes;
         private System.Windows.Forms.Button btnAllerA;
         private System.Windows.Forms.CheckBox boxSourisObstacle;
+        private System.Windows.Forms.Button btnBougies;
     }
 }

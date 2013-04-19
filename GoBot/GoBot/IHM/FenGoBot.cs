@@ -232,19 +232,28 @@ namespace GoBot
             Robots.GrosRobot.AccelerationPivot = 150;
 
             DateTime debut = DateTime.Now;
-            Robots.GrosRobot.Recallage(SensAR.Arriere);
+            /*Robots.GrosRobot.Recallage(SensAR.Arriere);
 
-            Robots.GrosRobot.Avancer(200);
-            Robots.GrosRobot.PivotGauche(90);
+            Robots.GrosRobot.Avancer(100);
+            Robots.GrosRobot.PivotDroite(90);
             Robots.GrosRobot.Recallage(SensAR.Arriere);
             ledRecallage.On();
             Robots.GrosRobot.ReglerOffsetAsserv((int)(3000 - 110), (int)(2000 - 200 - 110), 180);
 
-            /*Robots.GrosRobot.VitesseDeplacement = 500;
-            Robots.GrosRobot.AccelerationDeplacement = 1000;
-            Robots.GrosRobot.VitessePivot = 500;
-            Robots.GrosRobot.AccelerationPivot = 1000;*/
-            Robots.GrosRobot.Avancer(300);
+            Robots.GrosRobot.Avancer(700);
+            Robots.GrosRobot.PivotGauche(15);
+            Robots.GrosRobot.Reculer(245);*/
+
+            Robots.GrosRobot.Recallage(SensAR.Arriere);
+            Robots.GrosRobot.Avancer(890);
+            Robots.GrosRobot.PivotGauche(90);
+            Robots.GrosRobot.Recallage(SensAR.Arriere);
+            Robots.GrosRobot.Avancer(1390);
+
+            Thread.Sleep(3000);
+            Robots.GrosRobot.Reculer(1290 - 24);
+            Robots.GrosRobot.PivotDroite(90 - 15);
+            Robots.GrosRobot.Reculer(245 + 93);
         }
 
         private void btnBalises_Click(object sender, EventArgs e)

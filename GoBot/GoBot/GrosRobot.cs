@@ -77,6 +77,11 @@ namespace GoBot
             DemandePosition();
         }
 
+        public void Delete()
+        {
+            timerPosition.Stop();
+        }
+
         public void DebutMatch()
         {
             Console.WriteLine("Goooooo");

@@ -27,16 +27,19 @@ namespace GoBot
 
         private Position Destination { get; set; }
         private SensGD SensPivot { get; set; }
+        private SensAR SensDep { get; set; }
 
         public RobotSimu()
         {
             Position = new Position();
+
             VitesseActuelle = 0;
             timerDeplacement = new System.Timers.Timer(IntervalleRafraichissementPosition);
             timerDeplacement.Elapsed += new ElapsedEventHandler(timerDeplacement_Elapsed);
             timerDeplacement.Start();
             VitesseActuelle = 600;
             semDeplacement = new Semaphore(1, 1);
+            SensDep = SensAR.Avant;
         }
 
         void timerDeplacement_Elapsed(object sender, ElapsedEventArgs e)
@@ -48,7 +51,7 @@ namespace GoBot
                 difference = Destination.Angle.AngleDegres - Position.Angle.AngleDegres;
                 int coeff = 1;
 
-                if (difference > 180 || difference < 0)
+                if (SensPivot == SensGD.Gauche)
                     coeff = -1;
 
                 if (difference >= VitesseActuelle / 100.0)
@@ -67,7 +70,10 @@ namespace GoBot
                     Position = Destination;//.Avancer(Destination.Coordonnees.getDistance(Position.Coordonnees));
                 else
                 {
-                    Position.Avancer(distance);
+                    if (SensDep == SensAR.Avant)
+                        Position.Avancer(distance);
+                    else
+                        Position.Avancer(-distance);
                 }
             }
 
@@ -78,11 +84,15 @@ namespace GoBot
         {
             DeplacementLigne = true;
 
+            if (distance > 0)
+                SensDep = SensAR.Avant;
+            else
+                SensDep = SensAR.Arriere;
+
             double depX = distance * Math.Cos(Position.Angle.AngleRadians);
             double depY = distance * Math.Sin(Position.Angle.AngleRadians);
 
             Destination = new Position(Position.Angle, new PointReel(Position.Coordonnees.X + depX, Position.Coordonnees.Y + depY));
-
 
             if (attendre)
                 while (Position.Coordonnees.X != Destination.Coordonnees.X ||
@@ -104,7 +114,7 @@ namespace GoBot
 
         public override void PivotGauche(double angle, bool attendre = true)
         {
-            Destination = new Position(new Angle(Position.Angle.AngleDegres + angle, AnglyeType.Degre), new PointReel(Position.Coordonnees.X, Position.Coordonnees.Y));
+            Destination = new Position(new Angle(Position.Angle.AngleDegres - angle, AnglyeType.Degre), new PointReel(Position.Coordonnees.X, Position.Coordonnees.Y));
             SensPivot = SensGD.Gauche;
 
             if (attendre)
@@ -136,17 +146,34 @@ namespace GoBot
 
         public override void ReglerOffsetAsserv(int offsetX, int offsetY, int offsetTeta)
         {
-            throw new NotImplementedException();
+            Position = new Position(new Angle(offsetTeta, AnglyeType.Degre), new PointReel(offsetX, offsetY));
         }
 
         public override void Recallage(SensAR sens, bool attendre = true)
         {
-            throw new NotImplementedException();
+            if (sens == SensAR.Arriere)
+            {
+                while (Position.Coordonnees.X - Taille / 2 > 0 &&
+                    Position.Coordonnees.X + Taille / 2 < 3000 &&
+                    Position.Coordonnees.Y - Taille / 2 > 0 &&
+                    Position.Coordonnees.Y + Taille / 2 < 2000)
+                {
+                    Reculer(50);
+                }
+                if (Position.Coordonnees.X < 0)
+                    Position.Coordonnees.X = Taille / 2;
+                if (Position.Coordonnees.X > 3000)
+                    Position.Coordonnees.X = 3000 - Taille / 2;
+                if (Position.Coordonnees.Y < 0)
+                    Position.Coordonnees.Y = Taille / 2;
+                if (Position.Coordonnees.Y > 2000)
+                    Position.Coordonnees.Y = 2000 - Taille / 2;
+            }
         }
 
         public override void Init()
         {
-            Position = new Position(new Angle(0, AnglyeType.Degre), new PointReel(350, 350));
+            Position = new Position(new Angle(270, AnglyeType.Degre), new PointReel(3000-1100, 1000));
             Destination = Position;
             Historique = new Historique();
         }

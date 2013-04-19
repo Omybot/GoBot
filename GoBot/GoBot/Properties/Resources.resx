@@ -118,59 +118,104 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
-  <data name="disquette" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\img\disquette.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="PinceGaucheExt4" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\img\PetitRobot\PinceGaucheExt4.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="ledOn" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\img\ledOn.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="PinceGaucheExt2" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\img\PetitRobot\PinceGaucheExt2.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="fenetre" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\img\fenetre.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="virageAvDr" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\img\virageAvDr.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="PinceDroiteExt1" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\img\PetitRobot\PinceDroiteExt1.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="stop" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\img\stop.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="PinceGaucheExt1" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\img\PetitRobot\PinceGaucheExt1.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="crochet" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\img\crochet.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="trackBarCurseurNormal" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\img\trackBarCurseurNormal.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="pivotGauche" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\img\pivotGauche.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="haut" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\img\haut.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="PinceGaucheInt1" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\img\PetitRobot\PinceGaucheInt1.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="MilieuGaucheOuvert" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\img\GrosRobot\MilieuGaucheOuvert.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="ledOff" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\img\ledOff.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="recule" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\img\recule.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="trackBarFondSelected" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\img\trackBarFondSelected.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="bas" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\img\bas.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="BasGaucheFerme" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\img\GrosRobot\BasGaucheFerme.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="tableViolet" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\img\tableViolet.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="PinceGaucheInt2" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\img\PetitRobot\PinceGaucheInt2.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="reglagePivot" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\img\reglagePivot.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="stopPetit" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\img\stopPetit.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="HautGaucheOuvert" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\img\GrosRobot\HautGaucheOuvert.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="table" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\img\table.bmp;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="crochet" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\img\crochet.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="ciseaux" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\img\ciseaux.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="haut" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\img\haut.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="switchOn" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\img\switchOn.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="BasGaucheOuvert" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\img\GrosRobot\BasGaucheOuvert.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="fenetre" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\img\fenetre.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="PinceDroiteInt3" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\img\PetitRobot\PinceDroiteInt3.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="PinceDroiteInt1" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\img\PetitRobot\PinceDroiteInt1.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="HautGaucheFerme" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\img\GrosRobot\HautGaucheFerme.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="MilieuDroiteFerme" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\img\GrosRobot\MilieuDroiteFerme.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="HautDroiteFerme" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\img\GrosRobot\HautDroiteFerme.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="HautDroiteOuvert" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\img\GrosRobot\HautDroiteOuvert.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="PinceDroiteInt2" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\img\PetitRobot\PinceDroiteInt2.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="virageAvGa" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\img\virageAvGa.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="pivotGauche" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\img\pivotGauche.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="ledOn" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\img\ledOn.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="MilieuGaucheOuvert" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\img\GrosRobot\MilieuGaucheOuvert.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="PinceDroiteExt4" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\img\PetitRobot\PinceDroiteExt4.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="PinceGaucheInt1" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\img\PetitRobot\PinceGaucheInt1.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="PinceDroiteExt2" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\img\PetitRobot\PinceDroiteExt2.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="tableRouge" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\img\tableRouge.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="flecheGauche" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\img\flecheGauche.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="BasDroiteFerme" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\img\GrosRobot\BasDroiteFerme.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="PinceGaucheInt3" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\img\PetitRobot\PinceGaucheInt3.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
@@ -178,89 +223,32 @@
   <data name="ledNeutre" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\img\ledNeutre.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="MilieuGaucheFerme" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\img\GrosRobot\MilieuGaucheFerme.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="PinceGaucheExt4" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\img\PetitRobot\PinceGaucheExt4.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="HautDroiteOuvert" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\img\GrosRobot\HautDroiteOuvert.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="table" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\img\table.bmp;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="bas" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\img\bas.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="BasDroiteOuvert" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\img\GrosRobot\BasDroiteOuvert.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="PinceDroiteInt4" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\img\PetitRobot\PinceDroiteInt4.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="HautGaucheOuvert" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\img\GrosRobot\HautGaucheOuvert.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="PinceGaucheExt3" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\img\PetitRobot\PinceGaucheExt3.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="PinceDroiteInt1" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\img\PetitRobot\PinceDroiteInt1.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="flecheDroite" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\img\flecheDroite.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="PinceDroiteExt1" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\img\PetitRobot\PinceDroiteExt1.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="PinceDroiteInt2" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\img\PetitRobot\PinceDroiteInt2.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="switchOn" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\img\switchOn.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="virageAvGa" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\img\virageAvGa.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="pivotDroite" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\img\pivotDroite.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="trackBarFondSelected" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\img\trackBarFondSelected.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="PinceDroiteExt3" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\img\PetitRobot\PinceDroiteExt3.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="PinceDroiteExt4" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\img\PetitRobot\PinceDroiteExt4.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="BasDroiteOuvert" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\img\GrosRobot\BasDroiteOuvert.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="PinceDroiteInt3" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\img\PetitRobot\PinceDroiteInt3.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="Webcam" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\img\Webcam.jpg;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="virageArDr" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\img\virageArDr.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="reglagePivot" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\img\reglagePivot.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="HautDroiteFerme" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\img\GrosRobot\HautDroiteFerme.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="switchOff" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\img\switchOff.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="flecheGauche" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\img\flecheGauche.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="trackBarCurseurNormal" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\img\trackBarCurseurNormal.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="HautGaucheFerme" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\img\GrosRobot\HautGaucheFerme.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="MilieuDroiteOuvert" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\img\GrosRobot\MilieuDroiteOuvert.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="BasGaucheOuvert" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\img\GrosRobot\BasGaucheOuvert.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="BasDroiteFerme" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\img\GrosRobot\BasDroiteFerme.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="close" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\img\close.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="pompe" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\img\pompe.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="iconeVitesse" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\img\iconeVitesse.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="avance" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\img\avance.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="PetitDepli" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\img\PetitRobot\PetitDepli.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
@@ -268,41 +256,50 @@
   <data name="trackBarCurseurSelect" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\img\trackBarCurseurSelect.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="PinceDroiteExt2" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\img\PetitRobot\PinceDroiteExt2.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="virageAvDr" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\img\virageAvDr.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="stopPetit" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\img\stopPetit.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="recule" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\img\recule.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="trackBarFond" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\img\trackBarFond.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="virageArDr" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\img\virageArDr.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="PinceGaucheInt2" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\img\PetitRobot\PinceGaucheInt2.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="flecheDroite" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\img\flecheDroite.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="switchOff" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\img\switchOff.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="PinceGaucheExt1" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\img\PetitRobot\PinceGaucheExt1.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="MilieuDroiteFerme" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\img\GrosRobot\MilieuDroiteFerme.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="PinceGaucheExt2" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\img\PetitRobot\PinceGaucheExt2.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="ciseaux" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\img\ciseaux.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="disquette" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\img\disquette.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="virageArGa" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\img\virageArGa.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="tableRouge" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\img\tableRouge.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="close" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\img\close.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="avance" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\img\avance.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="pompe" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\img\pompe.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="MilieuDroiteOuvert" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\img\GrosRobot\MilieuDroiteOuvert.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="ledOff" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\img\ledOff.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="iconeVitesse" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\img\iconeVitesse.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="trackBarFond" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\img\trackBarFond.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="pivotDroite" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\img\pivotDroite.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="MilieuGaucheFerme" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\img\GrosRobot\MilieuGaucheFerme.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="PinceDroiteInt4" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\img\PetitRobot\PinceDroiteInt4.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="PinceGaucheInt4" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\img\PetitRobot\PinceGaucheInt4.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
@@ -310,7 +307,10 @@
   <data name="PetitRepli" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\img\PetitRobot\PetitRepli.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="Webcam" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\img\Webcam.jpg;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="tableViolet" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\img\tableViolet.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="PinceGaucheExt3" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\img\PetitRobot\PinceGaucheExt3.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
 </root>

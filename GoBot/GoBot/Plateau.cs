@@ -25,8 +25,6 @@ namespace GoBot
         private static List<IForme> ObstaclesFixes { get; set; }
         private static List<IForme> ObstaclesTemporaires { get; set; }
 
-        public static Robot GrosRobot { get; set; }
-
         public static Color NotreCouleur { get; set; }
 
         public static bool Simulation { get; set; }
@@ -34,14 +32,15 @@ namespace GoBot
         public static Color[] CouleursBougies { get; set; }
 
         public static int[,] PositionsBougies { get; set; }
+        public static bool[] BougiesEnfoncees { get; set; }
 
         /// <summary>
         /// Sémaphore à verrouiller pendant la manipulation du graph du pathfinding pour éviter les modification pendant énumération entre autres
         /// </summary>
         public static Semaphore SemaphoreGraph { get; private set; }
 
-        public static Color CouleurJ1 { get { return Color.FromArgb(32, 50, 123); } }
-        public static Color CouleurJ2 { get { return Color.FromArgb(248, 215, 82); } }
+        public static Color CouleurJ1 { get { return Color.FromArgb(165, 32, 25); } }
+        public static Color CouleurJ2 { get { return Color.FromArgb(6, 57, 113); } }
 
         /// <summary>
         /// Longueur de la table (mm)
@@ -114,32 +113,31 @@ namespace GoBot
 
                 PositionsBougies = new Int32[20, 2];
 
-                PositionsBougies[0, 0] = 0;     PositionsBougies[0, 1] = 0;
-                PositionsBougies[1, 0] = 80;    PositionsBougies[1, 1] = 0;
-                PositionsBougies[2, 0] = 160;   PositionsBougies[2, 1] = 0;
-                PositionsBougies[3, 0] = 240;   PositionsBougies[3, 1] = 0;
-                PositionsBougies[4, 0] = 320;   PositionsBougies[4, 1] = 0;
-                PositionsBougies[5, 0] = 400;   PositionsBougies[5, 1] = 0;
-                PositionsBougies[6, 0] = 480;   PositionsBougies[6, 1] = 0;
-                PositionsBougies[7, 0] = 560;   PositionsBougies[7, 1] = 0;
-                PositionsBougies[8, 0] = 640;   PositionsBougies[8, 1] = 0;
-                PositionsBougies[9, 0] = 720;   PositionsBougies[9, 1] = 0;
-                PositionsBougies[10, 0] = 800;  PositionsBougies[10, 1] = 0;
-                PositionsBougies[11, 0] = 880;  PositionsBougies[11, 1] = 0;
-                PositionsBougies[12, 0] = 960;  PositionsBougies[12, 1] = 0;
-                PositionsBougies[13, 0] = 1040; PositionsBougies[13, 1] = 0;
-                PositionsBougies[14, 0] = 1120; PositionsBougies[14, 1] = 0;
-                PositionsBougies[15, 0] = 1200; PositionsBougies[15, 1] = 0;
-                PositionsBougies[16, 0] = 1280; PositionsBougies[16, 1] = 0;
-                PositionsBougies[17, 0] = 1360; PositionsBougies[17, 1] = 0;
-                PositionsBougies[18, 0] = 1440; PositionsBougies[18, 1] = 0;
-                PositionsBougies[19, 0] = 1520; PositionsBougies[19, 1] = 0;
-            }
-        }
+                PositionsBougies[0, 1] = 68;     PositionsBougies[0, 0] = 1845;
+                PositionsBougies[1, 1] = 59;    PositionsBougies[1, 0] = 1946;
+                PositionsBougies[2, 1] = 194;   PositionsBougies[2, 0] = 1791;
+                PositionsBougies[3, 1] = 172;   PositionsBougies[3, 0] = 1916;
+                PositionsBougies[4, 1] = 291;   PositionsBougies[4, 0] = 1694;
+                PositionsBougies[5, 1] = 274;   PositionsBougies[5, 0] = 1857;
+                PositionsBougies[6, 1] = 357;   PositionsBougies[6, 0] = 1774;
+                PositionsBougies[7, 1] = 416;   PositionsBougies[7, 0] = 1672;
+                PositionsBougies[8, 1] = 343;   PositionsBougies[8, 0] = 1568;
+                PositionsBougies[9, 1] = 446;   PositionsBougies[9, 0] = 1559;
+                PositionsBougies[10, 1] = 68;  PositionsBougies[10, 0] = 1157;
+                PositionsBougies[11, 1] = 59;  PositionsBougies[11, 0] = 1054;
+                PositionsBougies[12, 1] = 194;  PositionsBougies[12, 0] = 1209;
+                PositionsBougies[13, 1] = 172; PositionsBougies[13, 0] = 1084;
+                PositionsBougies[14, 1] = 291; PositionsBougies[14, 0] = 1306;
+                PositionsBougies[15, 1] = 274; PositionsBougies[15, 0] = 1143;
+                PositionsBougies[16, 1] = 357; PositionsBougies[16, 0] = 1226;
+                PositionsBougies[17, 1] = 416; PositionsBougies[17, 0] = 1328;
+                PositionsBougies[18, 1] = 343; PositionsBougies[18, 0] = 1432;
+                PositionsBougies[19, 1] = 446; PositionsBougies[19, 0] = 1441;
 
-        static Plateau()
-        {
-            GrosRobot = new RobotSimu();
+                BougiesEnfoncees = new bool[20];
+                for (int i = 0; i < 20; i++)
+                    BougiesEnfoncees[i] = false;
+            }
         }
 
         public static void Init()

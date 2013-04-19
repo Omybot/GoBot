@@ -177,7 +177,7 @@ namespace GoBot.IHM
         private void btnAlea_Click(object sender, EventArgs e)
         {
             int nbBleues = 0;
-            int nbRouges = 0;
+            int nbRouges = 2;
 
             int nbMaxCouleur = 5;
             if(boxBlanches.Checked)
@@ -185,7 +185,13 @@ namespace GoBot.IHM
 
             Random rand = new Random(DateTime.Now.Millisecond);
 
-            for (int i = 0; i < 10; i++)
+            Plateau.CouleursBougies[1] = Plateau.CouleurJ1;
+            Plateau.CouleursBougies[11] = Plateau.CouleurJ2;
+
+            Plateau.CouleursBougies[0] = Plateau.CouleurJ1;
+            Plateau.CouleursBougies[10] = Plateau.CouleurJ2;
+
+            for (int i = 2; i < 10; i++)
             {
                 if (boxBlanches.Checked && (i == 7 || i == 9))
                 {
@@ -194,26 +200,21 @@ namespace GoBot.IHM
                 }
                 else if (nbRouges == nbMaxCouleur || (rand.Next(2) == 0 && nbBleues < nbMaxCouleur))
                 {
-                    Plateau.CouleursBougies[i] = Color.Blue;
-                    Plateau.CouleursBougies[i + 10] = Color.Red;
+                    Plateau.CouleursBougies[i] = Plateau.CouleurJ2;
+                    Plateau.CouleursBougies[i + 10] = Plateau.CouleurJ1;
                     nbBleues++;
                 }
                 else
                 {
-                    Plateau.CouleursBougies[i] = Color.Red;
-                    Plateau.CouleursBougies[i + 10] = Color.Blue;
+                    Plateau.CouleursBougies[i] = Plateau.CouleurJ1;
+                    Plateau.CouleursBougies[i + 10] = Plateau.CouleurJ2;
                     nbRouges++;
                 }
             }
 
             for (int i = 0; i < 20; i++)
             {
-                if (Plateau.CouleursBougies[i] == Color.Blue)
-                    Boutons[i].BackColor = Color.Blue;
-                else if (Plateau.CouleursBougies[i] == Color.Red)
-                    Boutons[i].BackColor = Color.Red;
-                else
-                    Boutons[i].BackColor = Color.White;
+                Boutons[i].BackColor = Plateau.CouleursBougies[i];
             }
         }
     }

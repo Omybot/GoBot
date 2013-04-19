@@ -61,6 +61,10 @@ namespace GoBot.Calculs.Formes
             {
                 return posX;
             }
+            set
+            {
+                posX = value;
+            }
         }
 
         /// <summary>
@@ -71,6 +75,10 @@ namespace GoBot.Calculs.Formes
             get
             {
                 return posY;
+            }
+            set
+            {
+                posY = value;
             }
         }
 

@@ -68,7 +68,7 @@ namespace GoBot.IHM
                             if (p == null)
                                 continue;
 
-                            g.FillEllipse(new SolidBrush(Plateau.CouleurJ1), RealToScreen(p.X - Plateau.GrosRobot.Rayon), RealToScreen(p.Y - Plateau.GrosRobot.Rayon), RealToScreen(Plateau.GrosRobot.Rayon * 2), RealToScreen(Plateau.GrosRobot.Rayon * 2));
+                            g.FillEllipse(new SolidBrush(Plateau.CouleurJ1), RealToScreen(p.X - Robots.GrosRobot.Rayon), RealToScreen(p.Y - Robots.GrosRobot.Rayon), RealToScreen(Robots.GrosRobot.Rayon * 2), RealToScreen(Robots.GrosRobot.Rayon * 2));
                             g.DrawLine(crayonRouge, new Point(RealToScreen(p.X) - 7, RealToScreen(p.Y) - 7), new Point(RealToScreen(p.X) + 7, RealToScreen(p.Y) + 7));
                             g.DrawLine(crayonRouge, new Point(RealToScreen(p.X) - 7, RealToScreen(p.Y) + 7), new Point(RealToScreen(p.X) + 7, RealToScreen(p.Y) - 7));
                         }
@@ -323,8 +323,14 @@ namespace GoBot.IHM
 
                     for (int i = 0; i < 20; i++)
                     {
-                        g.FillEllipse(new SolidBrush(Plateau.CouleursBougies[i]), RealToScreen(Plateau.PositionsBougies[i, 0]), RealToScreen(Plateau.PositionsBougies[i, 1]), RealToScreen(80), RealToScreen(80));
-                        g.DrawEllipse(new Pen(Color.Black), RealToScreen(Plateau.PositionsBougies[i, 0]), RealToScreen(Plateau.PositionsBougies[i, 1]), RealToScreen(80), RealToScreen(80));
+                        g.FillEllipse(new SolidBrush(Plateau.CouleursBougies[i]), RealToScreen(Plateau.PositionsBougies[i, 0] - 40), RealToScreen(Plateau.PositionsBougies[i, 1] - 40), RealToScreen(80), RealToScreen(80));
+                        g.DrawEllipse(new Pen(Color.Black), RealToScreen(Plateau.PositionsBougies[i, 0] - 40), RealToScreen(Plateau.PositionsBougies[i, 1] - 40), RealToScreen(80), RealToScreen(80));
+              
+                        if (Plateau.BougiesEnfoncees[i])
+                        {
+                            g.FillEllipse(new SolidBrush(Color.Black), RealToScreen(Plateau.PositionsBougies[i, 0] - 20), RealToScreen(Plateau.PositionsBougies[i, 1] - 20), RealToScreen(40), RealToScreen(40));
+                            g.DrawEllipse(new Pen(Color.White), RealToScreen(Plateau.PositionsBougies[i, 0] - 20), RealToScreen(Plateau.PositionsBougies[i, 1] - 20), RealToScreen(40), RealToScreen(40));
+                        }
                     }
 
                     pictureBoxTable.Image = bmp;
@@ -457,6 +463,12 @@ namespace GoBot.IHM
                 Plateau.GrosRobotAllerA(ScreenToReal(pictureBoxTable.PointToClient(MousePosition).X), ScreenToReal(pictureBoxTable.PointToClient(MousePosition).Y));
                 modeCourant = Mode.Visualisation;
             }
+        }
+
+        private void btnBougies_Click(object sender, EventArgs e)
+        {
+            for(int i = 0; i < 20; i++)
+                Plateau.BougiesEnfoncees[i] = true;
         }
     }
 }

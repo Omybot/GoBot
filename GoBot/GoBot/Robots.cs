@@ -27,7 +27,10 @@ namespace GoBot
             if (!Simulation)
                 GrosRobot = new GrosRobot();
             else
+            {
+                ((GrosRobot)GrosRobot).Delete();
                 GrosRobot = new RobotSimu();
+            }
 
             GrosRobot.Init();
         }
