@@ -278,6 +278,8 @@
             // boxBlanches
             // 
             this.boxBlanches.AutoSize = true;
+            this.boxBlanches.Checked = true;
+            this.boxBlanches.CheckState = System.Windows.Forms.CheckState.Checked;
             this.boxBlanches.Location = new System.Drawing.Point(772, 336);
             this.boxBlanches.Name = "boxBlanches";
             this.boxBlanches.Size = new System.Drawing.Size(110, 17);

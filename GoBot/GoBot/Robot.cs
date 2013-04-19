@@ -32,6 +32,8 @@ namespace GoBot
         public abstract int AccelerationPivot { get; set; }
 
         public abstract int Taille { get; }
+        public abstract int Longueur { get; }
+        public abstract int Largeur { get; }
         public int Rayon { get { return (int)Math.Sqrt(Taille * Taille * 2) / 2; } }
     }
 }

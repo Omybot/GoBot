@@ -251,9 +251,9 @@ namespace GoBot
             Robots.GrosRobot.Avancer(1390);
 
             Thread.Sleep(3000);
-            Robots.GrosRobot.Reculer(1290 - 24);
+            Robots.GrosRobot.Reculer(1290 - 50);
             Robots.GrosRobot.PivotDroite(90 - 15);
-            Robots.GrosRobot.Reculer(245 + 93);
+            Robots.GrosRobot.Reculer(245 + 110);
         }
 
         private void btnBalises_Click(object sender, EventArgs e)

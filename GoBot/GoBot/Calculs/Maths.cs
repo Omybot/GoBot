@@ -14,7 +14,7 @@ namespace GoBot.Calculs
 
     class Maths
     {
-        public static int ArCercleir(double nombre)
+        public static int Arrondi(double nombre)
         {
             return (int)(Math.Round(nombre));
         }

@@ -22,6 +22,8 @@ namespace GoBot
         private double VitesseActuelle { get; set; }
 
         public override int Taille { get { return 280; } }
+        public override int Longueur { get { return 220; } }
+        public override int Largeur { get { return 280; } }
 
         private double IntervalleRafraichissementPosition = 10;
 
@@ -151,29 +153,29 @@ namespace GoBot
 
         public override void Recallage(SensAR sens, bool attendre = true)
         {
-            if (sens == SensAR.Arriere)
+            while (Position.Coordonnees.X - Taille / 2 > 0 &&
+                Position.Coordonnees.X + Taille / 2 < 3000 &&
+                Position.Coordonnees.Y - Taille / 2 > 0 &&
+                Position.Coordonnees.Y + Taille / 2 < 2000)
             {
-                while (Position.Coordonnees.X - Taille / 2 > 0 &&
-                    Position.Coordonnees.X + Taille / 2 < 3000 &&
-                    Position.Coordonnees.Y - Taille / 2 > 0 &&
-                    Position.Coordonnees.Y + Taille / 2 < 2000)
-                {
+                if (sens == SensAR.Arriere)
                     Reculer(50);
-                }
-                if (Position.Coordonnees.X < 0)
-                    Position.Coordonnees.X = Taille / 2;
-                if (Position.Coordonnees.X > 3000)
-                    Position.Coordonnees.X = 3000 - Taille / 2;
-                if (Position.Coordonnees.Y < 0)
-                    Position.Coordonnees.Y = Taille / 2;
-                if (Position.Coordonnees.Y > 2000)
-                    Position.Coordonnees.Y = 2000 - Taille / 2;
+                else
+                    Avancer(50);
             }
+            if (Position.Coordonnees.X < 0)
+                Position.Coordonnees.X = Taille / 2;
+            if (Position.Coordonnees.X > 3000)
+                Position.Coordonnees.X = 3000 - Taille / 2;
+            if (Position.Coordonnees.Y < 0)
+                Position.Coordonnees.Y = Taille / 2;
+            if (Position.Coordonnees.Y > 2000)
+                Position.Coordonnees.Y = 2000 - Taille / 2;
         }
 
         public override void Init()
         {
-            Position = new Position(new Angle(270, AnglyeType.Degre), new PointReel(3000-1100, 1000));
+            Position = new Position(new Angle(270, AnglyeType.Degre), new PointReel(3000 - 1100, 1000));
             Destination = Position;
             Historique = new Historique();
         }
@@ -193,6 +195,6 @@ namespace GoBot
             throw new NotImplementedException();
         }
 
-        System.Timers.Timer timerDeplacement; 
+        System.Timers.Timer timerDeplacement;
     }
 }

@@ -20,6 +20,8 @@ namespace GoBot
         private Semaphore semPosition;
 
         public override int Taille { get { return 280; } }
+        public override int Longueur { get { return 220; } }
+        public override int Largeur { get { return 280; } }
 
         private const int TIME_REFRESH_POS = 200;
         private DateTime DateRefreshPos { get; set; }

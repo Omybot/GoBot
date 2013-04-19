@@ -47,6 +47,8 @@ namespace GoBot.IHM
             Boutons.Add(button19);
 
             ChangementCouleur();
+
+            btnAlea_Click(null, null);
         }
 
         private void PanelBougies_Load(object sender, EventArgs e)
