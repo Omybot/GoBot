@@ -29,10 +29,10 @@
         private void InitializeComponent()
         {
             this.flowLayoutPanel1 = new System.Windows.Forms.FlowLayoutPanel();
-            this.panelDeplacementGR = new GoBot.IHM.IHMGrosRobot.PanelDeplacementGR();
             this.panelHistorique = new GoBot.IHM.PanelHistorique();
             this.flowLayoutPanel2 = new System.Windows.Forms.FlowLayoutPanel();
             this.txtLog = new System.Windows.Forms.TextBox();
+            this.panelDeplacement = new GoBot.IHM.PanelDeplacement();
             this.flowLayoutPanel1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -40,21 +40,12 @@
             // 
             this.flowLayoutPanel1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left)));
-            this.flowLayoutPanel1.Controls.Add(this.panelDeplacementGR);
+            this.flowLayoutPanel1.Controls.Add(this.panelDeplacement);
             this.flowLayoutPanel1.Controls.Add(this.panelHistorique);
             this.flowLayoutPanel1.Location = new System.Drawing.Point(3, 3);
             this.flowLayoutPanel1.Name = "flowLayoutPanel1";
             this.flowLayoutPanel1.Size = new System.Drawing.Size(343, 556);
             this.flowLayoutPanel1.TabIndex = 90;
-            // 
-            // panelDeplacementGR
-            // 
-            this.panelDeplacementGR.AutoSize = true;
-            this.panelDeplacementGR.BackColor = System.Drawing.Color.Transparent;
-            this.panelDeplacementGR.Location = new System.Drawing.Point(3, 3);
-            this.panelDeplacementGR.Name = "panelDeplacementGR";
-            this.panelDeplacementGR.Size = new System.Drawing.Size(337, 262);
-            this.panelDeplacementGR.TabIndex = 72;
             // 
             // panelHistorique
             // 
@@ -86,6 +77,16 @@
             this.txtLog.Size = new System.Drawing.Size(299, 543);
             this.txtLog.TabIndex = 92;
             // 
+            // panelDeplacement1
+            // 
+            this.panelDeplacement.AutoSize = true;
+            this.panelDeplacement.BackColor = System.Drawing.Color.Transparent;
+            this.panelDeplacement.Location = new System.Drawing.Point(3, 3);
+            this.panelDeplacement.Name = "panelDeplacement1";
+            this.panelDeplacement.Robot = null;
+            this.panelDeplacement.Size = new System.Drawing.Size(337, 262);
+            this.panelDeplacement.TabIndex = 72;
+            // 
             // PanelGrosRobot
             // 
             this.BackColor = System.Drawing.Color.Transparent;
@@ -106,8 +107,8 @@
         private System.Windows.Forms.FlowLayoutPanel flowLayoutPanel1;
         private System.Windows.Forms.FlowLayoutPanel flowLayoutPanel2;
         private PanelHistorique panelHistorique;
-        private PanelDeplacementGR panelDeplacementGR;
         private System.Windows.Forms.TextBox txtLog;
+        private PanelDeplacement panelDeplacement;
 
     }
 }

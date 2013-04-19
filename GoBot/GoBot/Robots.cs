@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading;
+using GoBot.Calculs;
 
 namespace GoBot
 {
@@ -14,25 +15,43 @@ namespace GoBot
 
         public static void Init()
         {
-            //if (Connexions.ConnexionMove.ConnexionCheck.Connecte)
-                Simulation = false;
-            //else
-              //  Simulation = true;
-
+            Simulation = false;
             CreerRobots();
         }
 
         private static void CreerRobots()
         {
             if (!Simulation)
-                GrosRobot = new GrosRobot();
+            {
+                RobotReel grosRobot = new RobotReel();
+                grosRobot.Connexion = Connexions.ConnexionMove;
+                GrosRobot = grosRobot;
+
+                RobotReel petitRobot = new RobotReel();
+                petitRobot.Connexion = Connexions.ConnexionIo;
+                PetitRobot = petitRobot;
+            }
             else
             {
-                ((GrosRobot)GrosRobot).Delete();
+                if (GrosRobot != null)
+                    ((RobotReel)GrosRobot).Delete();
                 GrosRobot = new RobotSimu();
+                if (PetitRobot != null)
+                    ((RobotReel)PetitRobot).Delete();
+                PetitRobot = new RobotSimu();
             }
 
+            GrosRobot.Largeur = 280;
+            GrosRobot.Longueur = 220;
+            GrosRobot.Position = new Calculs.Position(new Angle(270, AnglyeType.Degre), new Calculs.Formes.PointReel(1500, 1000));
+            GrosRobot.Nom = "GrosRobot";
             GrosRobot.Init();
+
+            PetitRobot.Largeur = 200;
+            PetitRobot.Longueur = 120;
+            PetitRobot.Position = new Calculs.Position(new Angle(270, AnglyeType.Degre), new Calculs.Formes.PointReel(2500, 1000));
+            PetitRobot.Nom = "PetitRobot";
+            PetitRobot.Init();
         }
 
         public static void Simuler(bool simu)

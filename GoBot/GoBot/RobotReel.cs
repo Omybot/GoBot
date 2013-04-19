@@ -14,14 +14,13 @@ using System.Windows.Forms;
 
 namespace GoBot
 {
-    class GrosRobot : Robot
+    class RobotReel : Robot
     {
         public Semaphore semDeplacement;
         private Semaphore semPosition;
 
-        public override int Taille { get { return 280; } }
-        public override int Longueur { get { return 220; } }
-        public override int Largeur { get { return 280; } }
+        public override int Longueur { get; set; }
+        public override int Largeur { get; set; }
 
         private const int TIME_REFRESH_POS = 200;
         private DateTime DateRefreshPos { get; set; }
@@ -30,22 +29,9 @@ namespace GoBot
 
         public override String Nom { get; set; }
 
-        private Position position;
-        public override Position Position
-        {
-            get
-            {
-                /*if ((DateTime.Now - DateRefreshPos).TotalMilliseconds > TIME_REFRESH_POS)
-                {
-                    DemandePosition();
-                }*/
-                return position;
-            }
-            protected set
-            {
-                position = value;
-            }
-        }
+        public ConnexionUDP Connexion { get; set; }
+
+        public override Position Position { get; set; }
 
         public bool Evitement;
 
@@ -66,8 +52,7 @@ namespace GoBot
 
             Enchainement = new Enchainements.HomologationEnchainement();
 
-            Connexions.ConnexionMove.NouvelleTrame += new ConnexionUDP.ReceptionDelegate(ReceptionMessage);
-            Connexions.ConnexionIo.NouvelleTrame += new ConnexionUDP.ReceptionDelegate(ReceptionMessage);
+            Connexion.NouvelleTrame += new ConnexionUDP.ReceptionDelegate(ReceptionMessage);
 
             Position = new Calculs.Position(new Angle(0, AnglyeType.Degre), new PointReel(200, 300));
             timerPosition = new System.Timers.Timer(200);
@@ -150,7 +135,7 @@ namespace GoBot
 
             DeplacementLigne = true;
             Trame trame = TrameFactory.GRDeplacer(SensAR.Avant, distance);
-            Connexions.ConnexionMove.SendMessage(trame);
+            Connexion.SendMessage(trame);
 
             Historique.AjouterActionThread(new ActionAvance(this, distance));
 
@@ -162,7 +147,7 @@ namespace GoBot
         public override void ReglerOffsetAsserv(int offsetX, int offsetY, int offsetTeta)
         {
             Trame trame = TrameFactory.GROffsetPos(offsetX, offsetY, offsetTeta);
-            Connexions.ConnexionMove.SendMessage(trame);
+            Connexion.SendMessage(trame);
         }
 
         public override void Reculer(int distance, bool attendre = true)
@@ -174,7 +159,7 @@ namespace GoBot
             Historique.AjouterAction(new ActionRecule(this, distance));
 
             Trame trame = TrameFactory.GRDeplacer(SensAR.Arriere, distance);
-            Connexions.ConnexionMove.SendMessage(trame);
+            Connexion.SendMessage(trame);
             if (attendre)
                 semDeplacement.WaitOne();
 
@@ -189,7 +174,7 @@ namespace GoBot
             Historique.AjouterAction(new ActionPivot(this, angle, SensGD.Gauche));
             Trame trame = TrameFactory.GRPivot(SensGD.Gauche, angle);
 
-            Connexions.ConnexionMove.SendMessage(trame);
+            Connexion.SendMessage(trame);
 
             if (attendre)
                 semDeplacement.WaitOne();
@@ -203,7 +188,7 @@ namespace GoBot
 
             Historique.AjouterAction(new ActionPivot(this, angle, SensGD.Droite));
             Trame trame = TrameFactory.GRPivot(SensGD.Droite, angle);
-            Connexions.ConnexionMove.SendMessage(trame);
+            Connexion.SendMessage(trame);
 
             if (attendre)
                 semDeplacement.WaitOne();
@@ -213,7 +198,7 @@ namespace GoBot
         {
             Trame trame = TrameFactory.GRStop(mode);
 
-            Connexions.ConnexionMove.SendMessage(trame);
+            Connexion.SendMessage(trame);
             
             Historique.AjouterActionThread(new ActionStop(this, mode));
         }
@@ -226,7 +211,7 @@ namespace GoBot
             Historique.AjouterActionThread(new ActionVirage(this, rayon, angle, sensAr, sensGd));
 
             Trame trame = TrameFactory.GRVirage(sensAr, sensGd, rayon, angle);
-            Connexions.ConnexionMove.SendMessage(trame);
+            Connexion.SendMessage(trame);
 
             if (attendre)
                 semDeplacement.WaitOne();
@@ -235,7 +220,7 @@ namespace GoBot
         public void GoToXY(int x, int y)
         {
             Trame trame = TrameFactory.GRGotoXY(x, y);
-            Connexions.ConnexionMove.SendMessage(trame);
+            Connexion.SendMessage(trame);
         }
 
         public override void Recallage(SensAR sens, bool attendre = true)
@@ -245,7 +230,7 @@ namespace GoBot
 
             Historique.AjouterActionThread(new ActionRecallage(this, sens));
             Trame trame = TrameFactory.GRRecallage(sens);
-            Connexions.ConnexionMove.SendMessage(trame);
+            Connexion.SendMessage(trame);
 
             if (attendre)
                 semDeplacement.WaitOne();
@@ -256,13 +241,13 @@ namespace GoBot
         public override void EnvoyerPID(int p, int i, int d)
         {
             Trame trame = TrameFactory.GRPID(p, i, d);
-            Connexions.ConnexionMove.SendMessage(trame);
+            Connexion.SendMessage(trame);
         }
 
         public override void CoupureAlim()
         {
             Trame t = TrameFactory.CoupureAlim();
-            Connexions.ConnexionIo.SendMessage(t);
+            Connexion.SendMessage(t);
         }
 
         public void DemandePosition(bool attendre = true)
@@ -271,7 +256,7 @@ namespace GoBot
                 semPosition = new Semaphore(0, int.MaxValue);
 
             Trame t = TrameFactory.GRDemandePosition();
-            Connexions.ConnexionMove.SendMessage(t);
+            Connexion.SendMessage(t);
 
             if(attendre)
                 semPosition.WaitOne();
@@ -280,7 +265,7 @@ namespace GoBot
         public override void BougeServo(ServomoteurID servo, int position)
         {
             Trame trame = TrameFactory.GRBougeServomoteur(servo, position);
-            Connexions.ConnexionIo.SendMessage(trame);
+            Connexion.SendMessage(trame);
             Historique.AjouterAction(new ActionServo(this, position, servo));
         }
 
@@ -296,7 +281,7 @@ namespace GoBot
             set
             {
                 Trame trame = TrameFactory.GRVitesseLigne(value);
-                Connexions.ConnexionMove.SendMessage(trame);
+                Connexion.SendMessage(trame);
                 vitesseDeplacement = value;
                 Historique.AjouterAction(new ActionVitesseLigne(this, value));
             }
@@ -312,7 +297,7 @@ namespace GoBot
             set
             {
                 Trame trame = TrameFactory.GRAccelLigne(value);
-                Connexions.ConnexionMove.SendMessage(trame);
+                Connexion.SendMessage(trame);
                 accelDeplacement = value;
                 Historique.AjouterAction(new ActionAccelerationLigne(this, value));
             }
@@ -328,7 +313,7 @@ namespace GoBot
             set
             {
                 Trame trame = TrameFactory.GRVitessePivot(value);
-                Connexions.ConnexionMove.SendMessage(trame);
+                Connexion.SendMessage(trame);
                 vitessePivot = value;
                 Historique.AjouterAction(new ActionVitessePivot(this, value));
             }
@@ -344,14 +329,12 @@ namespace GoBot
             set
             {
                 Trame trame = TrameFactory.GRAccelPivot(value);
-                Connexions.ConnexionMove.SendMessage(trame);
+                Connexion.SendMessage(trame);
                 accelPivot = value;
                 Historique.AjouterAction(new ActionAccelerationPivot(this, value));
             }
         }
 
         #endregion
-
-
     }
 }

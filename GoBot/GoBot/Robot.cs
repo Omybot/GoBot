@@ -11,7 +11,7 @@ namespace GoBot
         public Historique Historique { get; protected set; }
         public bool DeplacementLigne { get; protected set; }
 
-        public abstract Position Position { get; protected set; }
+        public abstract Position Position { get; set; }
 
         public abstract void Avancer(int distance, bool attendre = true);
         public abstract void Reculer(int distance, bool attendre = true);
@@ -31,9 +31,9 @@ namespace GoBot
         public abstract int VitessePivot { get; set; }
         public abstract int AccelerationPivot { get; set; }
 
-        public abstract int Taille { get; }
-        public abstract int Longueur { get; }
-        public abstract int Largeur { get; }
+        public int Taille { get { return Math.Max(Longueur, Largeur); } }
+        public abstract int Longueur { get; set; }
+        public abstract int Largeur { get; set; }
         public int Rayon { get { return (int)Math.Sqrt(Taille * Taille * 2) / 2; } }
 
         public abstract String Nom { get; set; }

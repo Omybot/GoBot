@@ -41,9 +41,7 @@ namespace GoBot.IHM.IHMGrosRobot
 
             int distance;
             if (Int32.TryParse(txtDistance.Text, out distance) && distance != 0)
-            {
                 Robots.GrosRobot.Avancer(distance, false);
-            }
         }
 
         protected override void btnRecule_Click(object sender, EventArgs e)

@@ -13,7 +13,13 @@ namespace GoBot
     class RobotSimu : Robot
     {
         private Semaphore semDeplacement;
-        public override Position Position { get; protected set; }
+
+        private Position position;
+        public override Position Position 
+        {
+            get { return position; }
+            set { position = value; Destination = value; }
+        }
 
         public override int VitesseDeplacement { get; set; }
         public override int AccelerationDeplacement { get; set; }
@@ -22,9 +28,8 @@ namespace GoBot
 
         private double VitesseActuelle { get; set; }
 
-        public override int Taille { get { return 280; } }
-        public override int Longueur { get { return 220; } }
-        public override int Largeur { get { return 280; } }
+        public override int Longueur { get; set; }
+        public override int Largeur { get; set; }
 
         private double IntervalleRafraichissementPosition = 10;
 
@@ -175,10 +180,10 @@ namespace GoBot
             RecallageEnCours = true;
             Historique.AjouterActionThread(new ActionRecallage(this, sens));
 
-            while (Position.Coordonnees.X - Taille / 2 > 0 &&
-                Position.Coordonnees.X + Taille / 2 < 3000 &&
-                Position.Coordonnees.Y - Taille / 2 > 0 &&
-                Position.Coordonnees.Y + Taille / 2 < 2000)
+            while (Position.Coordonnees.X - Longueur / 2 > 0 &&
+                Position.Coordonnees.X + Longueur / 2 < 3000 &&
+                Position.Coordonnees.Y - Longueur / 2 > 0 &&
+                Position.Coordonnees.Y + Longueur / 2 < 2000)
             {
                 if (sens == SensAR.Arriere)
                     Reculer(50);
@@ -186,21 +191,19 @@ namespace GoBot
                     Avancer(50);
             }
             if (Position.Coordonnees.X < 0)
-                Position.Coordonnees.X = Taille / 2;
+                Position.Coordonnees.X = Longueur / 2;
             if (Position.Coordonnees.X > 3000)
-                Position.Coordonnees.X = 3000 - Taille / 2;
+                Position.Coordonnees.X = 3000 - Longueur / 2;
             if (Position.Coordonnees.Y < 0)
-                Position.Coordonnees.Y = Taille / 2;
+                Position.Coordonnees.Y = Longueur / 2;
             if (Position.Coordonnees.Y > 2000)
-                Position.Coordonnees.Y = 2000 - Taille / 2;
+                Position.Coordonnees.Y = 2000 - Longueur / 2;
 
             RecallageEnCours = false;
         }
 
         public override void Init()
         {
-            Position = new Position(new Angle(270, AnglyeType.Degre), new PointReel(3000 - 1100, 1000));
-            Destination = Position;
             Historique = new Historique();
         }
 

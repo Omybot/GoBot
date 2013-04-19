@@ -28,6 +28,7 @@ namespace GoBot
             {
                 CheckForIllegalCrossThreadCalls = false;
                 panelGrosRobot.Init();
+                panelDeplacement1.Robot = Robots.PetitRobot;
 
                 if (Screen.PrimaryScreen.Bounds.Width == 1024)
                 {
@@ -221,10 +222,7 @@ namespace GoBot
 
         public void Recallages()
         {
-            Robots.GrosRobot.VitesseDeplacement = 150;
-            Robots.GrosRobot.AccelerationDeplacement = 150;
-            Robots.GrosRobot.VitessePivot = 150;
-            Robots.GrosRobot.AccelerationPivot = 150;
+            Lent();
 
             DateTime debut = DateTime.Now;
             /*Robots.GrosRobot.Recallage(SensAR.Arriere);
@@ -240,15 +238,37 @@ namespace GoBot
             Robots.GrosRobot.Reculer(245);*/
 
             Robots.GrosRobot.Recallage(SensAR.Arriere);
+            Rapide();
             Robots.GrosRobot.Avancer(890);
             Robots.GrosRobot.PivotGauche(90);
+            Robots.GrosRobot.Reculer(500);
+            Lent();
             Robots.GrosRobot.Recallage(SensAR.Arriere);
+            Rapide();
+            Robots.GrosRobot.ReglerOffsetAsserv(3000 - 110, 1000, 180);
             Robots.GrosRobot.Avancer(1390);
 
-            Thread.Sleep(3000);
-            Robots.GrosRobot.Reculer(1290 - 50);
-            Robots.GrosRobot.PivotDroite(90 - 15);
-            Robots.GrosRobot.Reculer(245 + 110);
+            Thread.Sleep(1000);
+            Robots.GrosRobot.Reculer(1255);
+            Robots.GrosRobot.PivotDroite(75);
+            Lent();
+            Robots.GrosRobot.Reculer(335);
+        }
+
+        private void Rapide()
+        {
+            Robots.GrosRobot.VitesseDeplacement = 800;
+            Robots.GrosRobot.AccelerationDeplacement = 1400;
+            Robots.GrosRobot.VitessePivot = 800;
+            Robots.GrosRobot.AccelerationPivot = 1400;
+        }
+
+        private void Lent()
+        {
+            Robots.GrosRobot.VitesseDeplacement = 150;
+            Robots.GrosRobot.AccelerationDeplacement = 150;
+            Robots.GrosRobot.VitessePivot = 150;
+            Robots.GrosRobot.AccelerationPivot = 150;
         }
 
         private void btnBalises_Click(object sender, EventArgs e)
@@ -391,7 +411,9 @@ namespace GoBot
         {
             Robots.Simuler(actif);
             panelGrosRobot.Init();
+            panelDeplacement1.Robot = Robots.PetitRobot;
             Robots.GrosRobot.Historique.nouvelleAction += new Historique.delegateAction(HistoriqueGR_nouvelleAction);
+            Robots.PetitRobot.Historique.nouvelleAction += new Historique.delegateAction(HistoriquePR_nouvelleAction);
         }
     }
 }

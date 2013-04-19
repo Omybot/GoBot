@@ -255,44 +255,87 @@ namespace GoBot.IHM
                             (int)(ySouris - RealToScreen(Robots.GrosRobot.Rayon) * 2), RealToScreen(Robots.GrosRobot.Rayon) * 4, RealToScreen(Robots.GrosRobot.Rayon) * 4); 
                     }
 
-                    // Dessin du robot
-                    int xRobot, yRobot;
-                    double angleRobot;
-                    xRobot = RealToScreen(Robots.GrosRobot.Position.Coordonnees.X);
-                    yRobot = RealToScreen(Robots.GrosRobot.Position.Coordonnees.Y);
-                    angleRobot = Robots.GrosRobot.Position.Angle.AngleRadians;// +(90 * Math.PI / 360);
+                    // Dessin du gros robot
 
-                    Point p1, p2, p3, p4;
-                    double miDiagonale = RealToScreen((int)Math.Round((Math.Sqrt(Robots.GrosRobot.Largeur * Robots.GrosRobot.Largeur + Robots.GrosRobot.Longueur * Robots.GrosRobot.Longueur)) / 2));
+                    if (Robots.GrosRobot != null)
+                    {
+                        int xRobot, yRobot;
+                        double angleRobot;
+                        xRobot = RealToScreen(Robots.GrosRobot.Position.Coordonnees.X);
+                        yRobot = RealToScreen(Robots.GrosRobot.Position.Coordonnees.Y);
+                        angleRobot = Robots.GrosRobot.Position.Angle.AngleRadians;// +(90 * Math.PI / 360);
 
-                    double angle1 = angleRobot + Math.Atan((Robots.GrosRobot.Largeur / 2.0) / (Robots.GrosRobot.Longueur / 2.0));
-                    double angle2 = angleRobot - Math.Atan((Robots.GrosRobot.Largeur / 2.0) / (Robots.GrosRobot.Longueur / 2.0));
-                    double angle3 = angleRobot + Math.Atan((Robots.GrosRobot.Largeur / 2.0) / (Robots.GrosRobot.Longueur / 2.0)) + Math.PI;
-                    double angle4 = angleRobot - Math.Atan((Robots.GrosRobot.Largeur / 2.0) / (Robots.GrosRobot.Longueur / 2.0)) + Math.PI;
+                        Point p1, p2, p3, p4;
+                        double miDiagonale = RealToScreen((int)Math.Round((Math.Sqrt(Robots.GrosRobot.Largeur * Robots.GrosRobot.Largeur + Robots.GrosRobot.Longueur * Robots.GrosRobot.Longueur)) / 2));
 
-                    p1 = new Point((int)Math.Round(xRobot + Math.Cos(angle1) * miDiagonale), (int)Math.Round(yRobot + Math.Sin(angle1) * miDiagonale));
-                    p2 = new Point((int)Math.Round(xRobot + Math.Cos(angle2) * miDiagonale), (int)Math.Round(yRobot + Math.Sin(angle2) * miDiagonale));
-                    p3 = new Point((int)Math.Round(xRobot + Math.Cos(angle3) * miDiagonale), (int)Math.Round(yRobot + Math.Sin(angle3) * miDiagonale));
-                    p4 = new Point((int)Math.Round(xRobot + Math.Cos(angle4) * miDiagonale), (int)Math.Round(yRobot + Math.Sin(angle4) * miDiagonale));
+                        double angle1 = angleRobot + Math.Atan((Robots.GrosRobot.Largeur / 2.0) / (Robots.GrosRobot.Longueur / 2.0));
+                        double angle2 = angleRobot - Math.Atan((Robots.GrosRobot.Largeur / 2.0) / (Robots.GrosRobot.Longueur / 2.0));
+                        double angle3 = angleRobot + Math.Atan((Robots.GrosRobot.Largeur / 2.0) / (Robots.GrosRobot.Longueur / 2.0)) + Math.PI;
+                        double angle4 = angleRobot - Math.Atan((Robots.GrosRobot.Largeur / 2.0) / (Robots.GrosRobot.Longueur / 2.0)) + Math.PI;
 
-                    Point[] tabPoints = new Point[4];
-                    tabPoints[0] = p1;
-                    tabPoints[1] = p2;
-                    tabPoints[2] = p3;
-                    tabPoints[3] = p4;
+                        p1 = new Point((int)Math.Round(xRobot + Math.Cos(angle1) * miDiagonale), (int)Math.Round(yRobot + Math.Sin(angle1) * miDiagonale));
+                        p2 = new Point((int)Math.Round(xRobot + Math.Cos(angle2) * miDiagonale), (int)Math.Round(yRobot + Math.Sin(angle2) * miDiagonale));
+                        p3 = new Point((int)Math.Round(xRobot + Math.Cos(angle3) * miDiagonale), (int)Math.Round(yRobot + Math.Sin(angle3) * miDiagonale));
+                        p4 = new Point((int)Math.Round(xRobot + Math.Cos(angle4) * miDiagonale), (int)Math.Round(yRobot + Math.Sin(angle4) * miDiagonale));
 
-                    g.FillPolygon(new SolidBrush(Color.FromArgb(152, 199, 250)), tabPoints);
-                    g.DrawPolygon(new Pen(Plateau.CouleurJ2, 5), tabPoints);
+                        Point[] tabPoints = new Point[4];
+                        tabPoints[0] = p1;
+                        tabPoints[1] = p2;
+                        tabPoints[2] = p3;
+                        tabPoints[3] = p4;
 
-                    //Point pointDevant = new Point(Maths.ArCercleir(xRobot - cosAngle * realToScreen(Maths.ArCercleir(Robot.Taille / 2))), Maths.ArCercleir(yRobot - sinAngle * realToScreen(Maths.ArCercleir(Robot.Taille / 2))));
-                    double angle = Robots.GrosRobot.Position.Angle.AngleRadians + (-180 * 2 * Math.PI / 360);
-                    double cos = Math.Cos(angle);
-                    double sin = Math.Sin(angle);
-                    Point pointDevant = new Point(Maths.Arrondi(xRobot - cos * RealToScreen(Maths.Arrondi(Robots.GrosRobot.Longueur / 2))), Maths.Arrondi(yRobot - sin * RealToScreen(Maths.Arrondi(Robots.GrosRobot.Longueur / 2))));
+                        g.FillPolygon(new SolidBrush(Color.FromArgb(152, 199, 250)), tabPoints);
+                        g.DrawPolygon(new Pen(Plateau.CouleurJ2), tabPoints);
 
-                    g.DrawLine(new Pen(Plateau.CouleurJ2), new Point(xRobot, yRobot), pointDevant);
+                        double angle = Robots.GrosRobot.Position.Angle.AngleRadians + (-180 * 2 * Math.PI / 360);
+                        double cos = Math.Cos(angle);
+                        double sin = Math.Sin(angle);
+                        Point pointDevant = new Point(Maths.Arrondi(xRobot - cos * RealToScreen(Maths.Arrondi(Robots.GrosRobot.Longueur / 2))), Maths.Arrondi(yRobot - sin * RealToScreen(Maths.Arrondi(Robots.GrosRobot.Longueur / 2))));
+
+                        g.DrawLine(new Pen(Plateau.CouleurJ2), new Point(xRobot, yRobot), pointDevant);
+                    }
 
                     // Fin dessin robot
+
+                    // Dessin du petit robot
+                    if (Robots.PetitRobot != null)
+                    {
+                        int xRobot, yRobot;
+                        double angleRobot;
+                        xRobot = RealToScreen(Robots.PetitRobot.Position.Coordonnees.X);
+                        yRobot = RealToScreen(Robots.PetitRobot.Position.Coordonnees.Y);
+                        angleRobot = Robots.PetitRobot.Position.Angle.AngleRadians;// +(90 * Math.PI / 360);
+
+                        Point p1, p2, p3, p4;
+                        double miDiagonale = RealToScreen((int)Math.Round((Math.Sqrt(Robots.PetitRobot.Largeur * Robots.PetitRobot.Largeur + Robots.PetitRobot.Longueur * Robots.GrosRobot.Longueur)) / 2));
+
+                        double angle1 = angleRobot + Math.Atan((Robots.PetitRobot.Largeur / 2.0) / (Robots.PetitRobot.Longueur / 2.0));
+                        double angle2 = angleRobot - Math.Atan((Robots.PetitRobot.Largeur / 2.0) / (Robots.PetitRobot.Longueur / 2.0));
+                        double angle3 = angleRobot + Math.Atan((Robots.PetitRobot.Largeur / 2.0) / (Robots.PetitRobot.Longueur / 2.0)) + Math.PI;
+                        double angle4 = angleRobot - Math.Atan((Robots.PetitRobot.Largeur / 2.0) / (Robots.PetitRobot.Longueur / 2.0)) + Math.PI;
+
+                        p1 = new Point((int)Math.Round(xRobot + Math.Cos(angle1) * miDiagonale), (int)Math.Round(yRobot + Math.Sin(angle1) * miDiagonale));
+                        p2 = new Point((int)Math.Round(xRobot + Math.Cos(angle2) * miDiagonale), (int)Math.Round(yRobot + Math.Sin(angle2) * miDiagonale));
+                        p3 = new Point((int)Math.Round(xRobot + Math.Cos(angle3) * miDiagonale), (int)Math.Round(yRobot + Math.Sin(angle3) * miDiagonale));
+                        p4 = new Point((int)Math.Round(xRobot + Math.Cos(angle4) * miDiagonale), (int)Math.Round(yRobot + Math.Sin(angle4) * miDiagonale));
+
+                        Point[] tabPoints = new Point[4];
+                        tabPoints[0] = p1;
+                        tabPoints[1] = p2;
+                        tabPoints[2] = p3;
+                        tabPoints[3] = p4;
+
+                        g.FillPolygon(new SolidBrush(Color.FromArgb(152, 199, 250)), tabPoints);
+                        g.DrawPolygon(new Pen(Plateau.CouleurJ2), tabPoints);
+
+                        double angle = Robots.PetitRobot.Position.Angle.AngleRadians + (-180 * 2 * Math.PI / 360);
+                        double cos = Math.Cos(angle);
+                        double sin = Math.Sin(angle);
+                        Point pointDevant = new Point(Maths.Arrondi(xRobot - cos * RealToScreen(Maths.Arrondi(Robots.PetitRobot.Longueur / 2))), Maths.Arrondi(yRobot - sin * RealToScreen(Maths.Arrondi(Robots.PetitRobot.Longueur / 2))));
+
+                        g.DrawLine(new Pen(Plateau.CouleurJ2), new Point(xRobot, yRobot), pointDevant);
+                    }
+
 
                     // Dessin pathfinding
 
