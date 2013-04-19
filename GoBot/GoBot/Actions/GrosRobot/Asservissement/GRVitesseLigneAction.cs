@@ -16,7 +16,7 @@ namespace GoBot.Actions
 
         String IAction.ToString()
         {
-            return GrosRobot.Nom + " vitesse ligne à " + vitesse;
+            return Robots.GrosRobot.Nom + " vitesse ligne à " + vitesse;
         }
 
         void IAction.Executer()

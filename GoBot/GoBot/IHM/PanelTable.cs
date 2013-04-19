@@ -281,8 +281,8 @@ namespace GoBot.IHM
                     tabPoints[2] = p3;
                     tabPoints[3] = p4;
 
-                    g.FillPolygon(new SolidBrush(Plateau.CouleurJ2), tabPoints);
-                    g.DrawPolygon(new Pen(Color.Black), tabPoints);
+                    g.FillPolygon(new SolidBrush(Color.FromArgb(152, 199, 250)), tabPoints);
+                    g.DrawPolygon(new Pen(Plateau.CouleurJ2, 5), tabPoints);
 
                     //Point pointDevant = new Point(Maths.ArCercleir(xRobot - cosAngle * realToScreen(Maths.ArCercleir(Robot.Taille / 2))), Maths.ArCercleir(yRobot - sinAngle * realToScreen(Maths.ArCercleir(Robot.Taille / 2))));
                     double angle = Robots.GrosRobot.Position.Angle.AngleRadians + (-180 * 2 * Math.PI / 360);
@@ -290,7 +290,7 @@ namespace GoBot.IHM
                     double sin = Math.Sin(angle);
                     Point pointDevant = new Point(Maths.Arrondi(xRobot - cos * RealToScreen(Maths.Arrondi(Robots.GrosRobot.Longueur / 2))), Maths.Arrondi(yRobot - sin * RealToScreen(Maths.Arrondi(Robots.GrosRobot.Longueur / 2))));
 
-                    g.DrawLine(new Pen(Color.Red), new Point(xRobot, yRobot), pointDevant);
+                    g.DrawLine(new Pen(Plateau.CouleurJ2), new Point(xRobot, yRobot), pointDevant);
 
                     // Fin dessin robot
 
@@ -333,6 +333,18 @@ namespace GoBot.IHM
                         {
                             g.FillEllipse(new SolidBrush(Color.Black), RealToScreen(Plateau.PositionsBougies[i, 0] - 20), RealToScreen(Plateau.PositionsBougies[i, 1] - 20), RealToScreen(40), RealToScreen(40));
                             g.DrawEllipse(new Pen(Color.White), RealToScreen(Plateau.PositionsBougies[i, 0] - 20), RealToScreen(Plateau.PositionsBougies[i, 1] - 20), RealToScreen(40), RealToScreen(40));
+                        }
+                    }
+
+                    // Dessin des cadeaux
+
+                    for (int i = 0; i < 8; i++)
+                    {
+                        Color color = i % 2 == 0 ? Plateau.CouleurJ1 : Plateau.CouleurJ2;
+                        if (!Plateau.CadeauxActives[i])
+                        {
+                            g.FillRectangle(new SolidBrush(color), RealToScreen(Plateau.PositionsCadeaux[i, 0] - 75), RealToScreen(Plateau.PositionsCadeaux[i, 1] - 30), RealToScreen(150), RealToScreen(40));
+                            g.DrawRectangle(new Pen(Color.Black), RealToScreen(Plateau.PositionsCadeaux[i, 0] - 75), RealToScreen(Plateau.PositionsCadeaux[i, 1] - 30), RealToScreen(150), RealToScreen(40));
                         }
                     }
 

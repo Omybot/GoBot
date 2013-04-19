@@ -53,8 +53,6 @@ namespace GoBot
             this.btnSaveReplay = new System.Windows.Forms.Button();
             this.txtLogComplet = new System.Windows.Forms.RichTextBox();
             this.tabMatch = new System.Windows.Forms.TabPage();
-            this.bnStratTotem = new System.Windows.Forms.Button();
-            this.btnHomolog = new System.Windows.Forms.Button();
             this.label5 = new System.Windows.Forms.Label();
             this.lblPwmBalise3 = new System.Windows.Forms.Label();
             this.lblPwmBalise2 = new System.Windows.Forms.Label();
@@ -71,7 +69,7 @@ namespace GoBot
             this.pictureBoxBalises = new System.Windows.Forms.PictureBox();
             this.pictureBoxCouleur = new System.Windows.Forms.PictureBox();
             this.button2 = new System.Windows.Forms.Button();
-            this.button1 = new System.Windows.Forms.Button();
+            this.btnCouleurBleu = new System.Windows.Forms.Button();
             this.led1 = new GoBot.IHM.Composants.Led();
             this.ledBalises = new GoBot.IHM.Composants.Led();
             this.ledRecallage = new GoBot.IHM.Composants.Led();
@@ -384,8 +382,6 @@ namespace GoBot
             // 
             // tabMatch
             // 
-            this.tabMatch.Controls.Add(this.bnStratTotem);
-            this.tabMatch.Controls.Add(this.btnHomolog);
             this.tabMatch.Controls.Add(this.label5);
             this.tabMatch.Controls.Add(this.lblPwmBalise3);
             this.tabMatch.Controls.Add(this.lblPwmBalise2);
@@ -400,7 +396,7 @@ namespace GoBot
             this.tabMatch.Controls.Add(this.pictureBoxBalises);
             this.tabMatch.Controls.Add(this.pictureBoxCouleur);
             this.tabMatch.Controls.Add(this.button2);
-            this.tabMatch.Controls.Add(this.button1);
+            this.tabMatch.Controls.Add(this.btnCouleurBleu);
             this.tabMatch.Controls.Add(this.led1);
             this.tabMatch.Controls.Add(this.ledBalises);
             this.tabMatch.Controls.Add(this.ledRecallage);
@@ -411,26 +407,6 @@ namespace GoBot
             this.tabMatch.TabIndex = 3;
             this.tabMatch.Text = "Match";
             this.tabMatch.UseVisualStyleBackColor = true;
-            // 
-            // bnStratTotem
-            // 
-            this.bnStratTotem.Location = new System.Drawing.Point(37, 107);
-            this.bnStratTotem.Name = "bnStratTotem";
-            this.bnStratTotem.Size = new System.Drawing.Size(86, 34);
-            this.bnStratTotem.TabIndex = 19;
-            this.bnStratTotem.Text = "Strat totem";
-            this.bnStratTotem.UseVisualStyleBackColor = true;
-            this.bnStratTotem.Click += new System.EventHandler(this.bnStratTotem_Click_1);
-            // 
-            // btnHomolog
-            // 
-            this.btnHomolog.Location = new System.Drawing.Point(43, 65);
-            this.btnHomolog.Name = "btnHomolog";
-            this.btnHomolog.Size = new System.Drawing.Size(81, 36);
-            this.btnHomolog.TabIndex = 18;
-            this.btnHomolog.Text = "Lancer strat homologation";
-            this.btnHomolog.UseVisualStyleBackColor = true;
-            this.btnHomolog.Click += new System.EventHandler(this.btnHomolog_Click);
             // 
             // label5
             // 
@@ -583,23 +559,27 @@ namespace GoBot
             // 
             // button2
             // 
+            this.button2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(165)))), ((int)(((byte)(32)))), ((int)(((byte)(25)))));
+            this.button2.ForeColor = System.Drawing.Color.White;
             this.button2.Location = new System.Drawing.Point(391, 47);
             this.button2.Name = "button2";
             this.button2.Size = new System.Drawing.Size(75, 23);
             this.button2.TabIndex = 1;
             this.button2.Text = "Rouge";
-            this.button2.UseVisualStyleBackColor = true;
+            this.button2.UseVisualStyleBackColor = false;
             this.button2.Click += new System.EventHandler(this.btnCouleurRouge_Click);
             // 
-            // button1
+            // btnCouleurBleu
             // 
-            this.button1.Location = new System.Drawing.Point(391, 18);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(75, 23);
-            this.button1.TabIndex = 0;
-            this.button1.Text = "Violet";
-            this.button1.UseVisualStyleBackColor = true;
-            this.button1.Click += new System.EventHandler(this.btnCouleurViolet_Click);
+            this.btnCouleurBleu.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(6)))), ((int)(((byte)(57)))), ((int)(((byte)(113)))));
+            this.btnCouleurBleu.ForeColor = System.Drawing.Color.White;
+            this.btnCouleurBleu.Location = new System.Drawing.Point(391, 18);
+            this.btnCouleurBleu.Name = "btnCouleurBleu";
+            this.btnCouleurBleu.Size = new System.Drawing.Size(75, 23);
+            this.btnCouleurBleu.TabIndex = 0;
+            this.btnCouleurBleu.Text = "Bleu";
+            this.btnCouleurBleu.UseVisualStyleBackColor = false;
+            this.btnCouleurBleu.Click += new System.EventHandler(this.btnCouleurBleu_Click);
             // 
             // led1
             // 
@@ -1167,7 +1147,7 @@ namespace GoBot
         private PanelBalise panelBalise1;
         private System.Windows.Forms.PictureBox pictureBoxCouleur;
         private System.Windows.Forms.Button button2;
-        private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.Button btnCouleurBleu;
         private System.Windows.Forms.TabPage tabTable;
         private PanelTable panelTable1;
         private System.Windows.Forms.PictureBox pictureBoxBalises;
@@ -1195,7 +1175,6 @@ namespace GoBot
         private System.Windows.Forms.Button btnResetTrames;
         private System.Windows.Forms.Button btnChargerReplay;
         private System.Windows.Forms.Button btnRejouerReplay;
-        private System.Windows.Forms.Button btnHomolog;
         private System.Windows.Forms.TabPage tabPoubelle;
         private System.Windows.Forms.Button btnPIDGR;
         private System.Windows.Forms.Label label10;
@@ -1204,7 +1183,6 @@ namespace GoBot
         private System.Windows.Forms.NumericUpDown numDGR;
         private System.Windows.Forms.NumericUpDown numIGR;
         private System.Windows.Forms.NumericUpDown numPGR;
-        private System.Windows.Forms.Button bnStratTotem;
         private System.Windows.Forms.TabPage tabCapteurCouleur;
         private System.Windows.Forms.Button btnRefresh;
         private System.Windows.Forms.Label lblB;

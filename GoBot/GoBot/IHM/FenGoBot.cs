@@ -177,9 +177,9 @@ namespace GoBot
             panelBalise2.Balise.VitesseRotation(0);
             panelBalise3.Balise.VitesseRotation(0);
 
-            Plateau.Balise1.writer.Close();
+            /*Plateau.Balise1.writer.Close();
             Plateau.Balise2.writer.Close();
-            Plateau.Balise3.writer.Close();
+            Plateau.Balise3.writer.Close();*/
         }
 
         private void btnClose_Click(object sender, EventArgs e)
@@ -187,11 +187,9 @@ namespace GoBot
             Close();
         }
 
-        private void btnCouleurViolet_Click(object sender, EventArgs e)
+        private void btnCouleurBleu_Click(object sender, EventArgs e)
         {
-            //Robots.GrosRobot.Couleur = Color.Purple;
-            //Robots.GrosRobot.Enchainement.Couleur = Color.Purple;
-            pictureBoxCouleur.BackColor = Color.Blue;
+            pictureBoxCouleur.BackColor = Plateau.CouleurJ2;
             pictureBoxBalises.Image = Properties.Resources.tableViolet;
 
             Plateau.NotreCouleur = Color.Blue;
@@ -204,9 +202,7 @@ namespace GoBot
 
         private void btnCouleurRouge_Click(object sender, EventArgs e)
         {
-            //Robots.GrosRobot.Couleur = Color.Red;
-            //Robots.GrosRobot.Enchainement.Couleur = Color.Red;
-            pictureBoxCouleur.BackColor = Color.Red;
+            pictureBoxCouleur.BackColor = Plateau.CouleurJ1;
             pictureBoxBalises.Image = Properties.Resources.tableRouge;
 
             Plateau.NotreCouleur = Color.Red;
@@ -361,14 +357,6 @@ namespace GoBot
             threadReplay.Start();
         }
 
-        private void btnHomolog_Click(object sender, EventArgs e)
-        {
-            //GrosRobot.Enchainement = new HomologationEnchainement();
-            /*GrosRobot.Enchainement = new TestEnchainement();
-            GrosRobot.Enchainement.Couleur = pictureBoxCouleur.BackColor;
-            GrosRobot.DebutMatch();*/
-        }
-
         private void btnPIDGR_Click(object sender, EventArgs e)
         {
             Robots.GrosRobot.EnvoyerPID((int)numPGR.Value, (int)numIGR.Value, (int)numDGR.Value);
@@ -376,13 +364,6 @@ namespace GoBot
 
         private void bnStratTotem_Click(object sender, EventArgs e)
         {
-        }
-
-        private void bnStratTotem_Click_1(object sender, EventArgs e)
-        {
-            /*GrosRobot.Enchainement = new LignemEnchainement();
-            GrosRobot.Enchainement.Couleur = pictureBoxCouleur.BackColor;
-            GrosRobot.DebutMatch();*/
         }
 
         private void btnPRCoeffAsserv_Click(object sender, EventArgs e)
@@ -410,6 +391,9 @@ namespace GoBot
         private void switchBoutonSimu_ChangementEtat(bool actif)
         {
             Robots.Simuler(actif);
+            panelGrosRobot.Init();
+            panelPetitRobot.Init();
+            Robots.GrosRobot.Historique.nouvelleAction += new Historique.delegateAction(HistoriqueGR_nouvelleAction);
         }
     }
 }

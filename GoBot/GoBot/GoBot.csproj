@@ -66,6 +66,7 @@
   <ItemGroup>
     <Compile Include="Actions\GrosRobot\Asservissement\GRAccelerationPivotAction.cs" />
     <Compile Include="Actions\GrosRobot\Asservissement\GRVitessePivotAction.cs" />
+    <Compile Include="Actions\GrosRobot\Deplacement\GRRecallageAction.cs" />
     <Compile Include="Actions\GrosRobot\GRServoAction.cs" />
     <Compile Include="Actions\Nommeur.cs" />
     <Compile Include="Actions\PetitRobot\Asservissement\PRAccelerationPivotAction.cs" />
@@ -499,6 +500,7 @@
     <None Include="img\pompe.png" />
     <None Include="img\tableRouge.png" />
     <None Include="img\tableViolet.png" />
+    <None Include="img\recale.png" />
     <Content Include="img\trackBarCurseurNormal.png" />
     <Content Include="img\trackBarCurseurSelect.png" />
     <Content Include="img\trackBarFond.png" />

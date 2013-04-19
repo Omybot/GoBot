@@ -133,8 +133,8 @@
   <data name="bas" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\img\bas.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="BasGaucheFerme" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\img\GrosRobot\BasGaucheFerme.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="pompe" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\img\pompe.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="PinceGaucheInt2" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\img\PetitRobot\PinceGaucheInt2.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
@@ -160,9 +160,6 @@
   <data name="switchOn" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\img\switchOn.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="BasGaucheOuvert" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\img\GrosRobot\BasGaucheOuvert.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
   <data name="fenetre" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\img\fenetre.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
@@ -187,6 +184,9 @@
   <data name="PinceDroiteInt2" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\img\PetitRobot\PinceDroiteInt2.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="PinceDroiteExt3" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\img\PetitRobot\PinceDroiteExt3.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
   <data name="virageAvGa" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\img\virageAvGa.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
@@ -195,6 +195,9 @@
   </data>
   <data name="ledOn" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\img\ledOn.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="BasGaucheFerme" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\img\GrosRobot\BasGaucheFerme.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="MilieuGaucheOuvert" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\img\GrosRobot\MilieuGaucheOuvert.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
@@ -226,8 +229,8 @@
   <data name="trackBarFondSelected" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\img\trackBarFondSelected.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="PinceDroiteExt3" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\img\PetitRobot\PinceDroiteExt3.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="avance" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\img\avance.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="BasDroiteOuvert" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\img\GrosRobot\BasDroiteOuvert.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
@@ -246,9 +249,6 @@
   </data>
   <data name="MilieuDroiteOuvert" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\img\GrosRobot\MilieuDroiteOuvert.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="avance" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\img\avance.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="PetitDepli" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\img\PetitRobot\PetitDepli.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
@@ -280,8 +280,8 @@
   <data name="close" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\img\close.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="pompe" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\img\pompe.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="BasGaucheOuvert" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\img\GrosRobot\BasGaucheOuvert.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="ledOff" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\img\ledOff.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
@@ -312,5 +312,8 @@
   </data>
   <data name="PinceGaucheExt3" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\img\PetitRobot\PinceGaucheExt3.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="recale" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\img\recale.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
 </root>

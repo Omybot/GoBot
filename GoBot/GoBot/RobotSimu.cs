@@ -6,6 +6,7 @@ using GoBot.Calculs;
 using System.Timers;
 using GoBot.Calculs.Formes;
 using System.Threading;
+using GoBot.Actions;
 
 namespace GoBot
 {
@@ -31,6 +32,10 @@ namespace GoBot
         private SensGD SensPivot { get; set; }
         private SensAR SensDep { get; set; }
 
+        private bool RecallageEnCours { get; set; }
+
+        public override String Nom { get; set; }
+
         public RobotSimu()
         {
             Position = new Position();
@@ -42,6 +47,9 @@ namespace GoBot
             VitesseActuelle = 600;
             semDeplacement = new Semaphore(1, 1);
             SensDep = SensAR.Avant;
+
+            Nom = "GrosRobot";
+            RecallageEnCours = false;
         }
 
         void timerDeplacement_Elapsed(object sender, ElapsedEventArgs e)
@@ -85,11 +93,19 @@ namespace GoBot
         public override void Avancer(int distance, bool attendre = true)
         {
             DeplacementLigne = true;
-
+            
             if (distance > 0)
+            {
+                if (!RecallageEnCours)
+                    Historique.AjouterActionThread(new GRAvanceAction(distance));
                 SensDep = SensAR.Avant;
+            }
             else
+            {
+                if (!RecallageEnCours)
+                    Historique.AjouterAction(new GRReculeAction(-distance));
                 SensDep = SensAR.Arriere;
+            }
 
             double depX = distance * Math.Cos(Position.Angle.AngleRadians);
             double depY = distance * Math.Sin(Position.Angle.AngleRadians);
@@ -116,6 +132,7 @@ namespace GoBot
 
         public override void PivotGauche(double angle, bool attendre = true)
         {
+            Historique.AjouterAction(new GRPivotGaucheAction(angle));
             Destination = new Position(new Angle(Position.Angle.AngleDegres - angle, AnglyeType.Degre), new PointReel(Position.Coordonnees.X, Position.Coordonnees.Y));
             SensPivot = SensGD.Gauche;
 
@@ -126,6 +143,7 @@ namespace GoBot
 
         public override void PivotDroite(double angle, bool attendre = true)
         {
+            Historique.AjouterAction(new GRPivotDroiteAction(angle));
             Destination = new Position(new Angle(Position.Angle.AngleDegres + angle, AnglyeType.Degre), new PointReel(Position.Coordonnees.X, Position.Coordonnees.Y));
             SensPivot = SensGD.Droite;
 
@@ -136,6 +154,7 @@ namespace GoBot
 
         public override void Stop(StopMode mode)
         {
+            Historique.AjouterActionThread(new GRStopAction(mode));
             semDeplacement.WaitOne();
             Destination = Position;
             semDeplacement.Release();
@@ -153,6 +172,9 @@ namespace GoBot
 
         public override void Recallage(SensAR sens, bool attendre = true)
         {
+            RecallageEnCours = true;
+            Historique.AjouterActionThread(new GRRecallageAction(sens));
+
             while (Position.Coordonnees.X - Taille / 2 > 0 &&
                 Position.Coordonnees.X + Taille / 2 < 3000 &&
                 Position.Coordonnees.Y - Taille / 2 > 0 &&
@@ -171,6 +193,8 @@ namespace GoBot
                 Position.Coordonnees.Y = Taille / 2;
             if (Position.Coordonnees.Y > 2000)
                 Position.Coordonnees.Y = 2000 - Taille / 2;
+
+            RecallageEnCours = false;
         }
 
         public override void Init()

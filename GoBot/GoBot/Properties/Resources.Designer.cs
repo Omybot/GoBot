@@ -389,6 +389,13 @@ namespace GoBot.Properties {
             }
         }
         
+        internal static System.Drawing.Bitmap recale {
+            get {
+                object obj = ResourceManager.GetObject("recale", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
         internal static System.Drawing.Bitmap recule {
             get {
                 object obj = ResourceManager.GetObject("recule", resourceCulture);

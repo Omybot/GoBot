@@ -18,7 +18,7 @@ namespace GoBot.Actions
 
         String IAction.ToString()
         {
-            return GrosRobot.Nom + " bouge " + Nommeur.Nommer(pince) + " à " + Nommeur.Nommer(position, pince);
+            return Robots.GrosRobot.Nom + " bouge " + Nommeur.Nommer(pince) + " à " + Nommeur.Nommer(position, pince);
         }
 
         void IAction.Executer()

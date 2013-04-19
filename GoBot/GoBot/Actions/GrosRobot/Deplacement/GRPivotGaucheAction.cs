@@ -21,7 +21,7 @@ namespace GoBot.Actions
 
         string IAction.ToString()
         {
-            return GrosRobot.Nom + " pivote de " + angle + "° gauche";
+            return Robots.GrosRobot.Nom + " pivote de " + angle + "° gauche";
         }
 
         void IAction.Executer()

@@ -35,5 +35,7 @@ namespace GoBot
         public abstract int Longueur { get; }
         public abstract int Largeur { get; }
         public int Rayon { get { return (int)Math.Sqrt(Taille * Taille * 2) / 2; } }
+
+        public abstract String Nom { get; set; }
     }
 }

@@ -28,6 +28,8 @@ namespace GoBot
 
         private System.Timers.Timer timerPosition;
 
+        public override String Nom { get; set; }
+
         private Position position;
         public override Position Position
         {
@@ -47,13 +49,12 @@ namespace GoBot
 
         public bool Evitement;
 
-        public const String Nom = "Montoise";
-
         public Enchainements.Enchainement Enchainement { get; set; }
         public Color Couleur;
 
         public override void Init()
         {
+            Nom = "GrosRobot";
             Evitement = true;
             Couleur = Color.Purple;
 
@@ -255,6 +256,7 @@ namespace GoBot
             if (attendre)
                 semDeplacement = new Semaphore(0, int.MaxValue);
 
+            Historique.AjouterActionThread(new GRRecallageAction(sens));
             Trame trame = TrameFactory.GRRecallage(sens);
             Connexions.ConnexionMove.SendMessage(trame);
 

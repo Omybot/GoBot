@@ -21,7 +21,7 @@ namespace GoBot.Actions
 
         string IAction.ToString()
         {
-            return GrosRobot.Nom + " recule de " + distance + "mm";
+            return Robots.GrosRobot.Nom + " recule de " + distance + "mm";
         }
 
         void IAction.Executer()

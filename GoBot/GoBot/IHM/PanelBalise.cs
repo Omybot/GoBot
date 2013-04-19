@@ -50,15 +50,9 @@ namespace GoBot.IHM
                 VideAngles();
 
                 foreach (DetectionBalise detection in balise.DetectionsBas)
-                {
                     DessineAngle(detection.AngleDebut, detection.AngleFin, false);
-                    //lblAngleEnnemi.Text = Math.Round(angle.X, 2) + "°";
-                }
                 foreach (DetectionBalise detection in balise.DetectionsHaut)
-                {
                     DessineAngle(detection.AngleDebut, detection.AngleFin, true);
-                    //lblAngleEnnemi.Text = Math.Round(angle.X, 2) + "°";
-                }
 
                 CompleteAngles();
 
@@ -127,7 +121,6 @@ namespace GoBot.IHM
                 {
                     g.FillPie(new SolidBrush(Color.LightBlue), 5, 180, 190, 190, (int)debut, (int)(fin - debut));
                     g.DrawPie(new Pen(Color.Blue), 5, 180, 190, 190, (int)debut, (int)(fin - debut));
-                    //Console.WriteLine(debut + " -> " + fin);
                 }
 
                 pictureBoxAngle.Image = bmp;
@@ -157,7 +150,7 @@ namespace GoBot.IHM
         {
             Config.CurrentConfig.SetOffsetBaliseBas(Balise.Carte, 0);
             Config.CurrentConfig.SetOffsetBaliseHaut(Balise.Carte, 0);
-            balise.ReglerOffset(40);
+            balise.ReglerOffset(16); // 16 mesures à 4 tours seconde ce qui fait 4 secondes de calibration
         }
 
         private void btnAsserv_Click(object sender, EventArgs e)

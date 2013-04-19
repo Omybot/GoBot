@@ -33,6 +33,8 @@ namespace GoBot
 
         public static int[,] PositionsBougies { get; set; }
         public static bool[] BougiesEnfoncees { get; set; }
+        public static int[,] PositionsCadeaux { get; set; }
+        public static bool[] CadeauxActives { get; set; }
 
         /// <summary>
         /// Sémaphore à verrouiller pendant la manipulation du graph du pathfinding pour éviter les modification pendant énumération entre autres
@@ -137,6 +139,20 @@ namespace GoBot
                 BougiesEnfoncees = new bool[20];
                 for (int i = 0; i < 20; i++)
                     BougiesEnfoncees[i] = false;
+
+                PositionsCadeaux = new Int32[8, 2];
+                PositionsCadeaux[0, 0] = 600-86; PositionsCadeaux[0, 1] = 1995;
+                PositionsCadeaux[1, 0] = 600 + 86; PositionsCadeaux[1, 1] = 1995;
+                PositionsCadeaux[2, 0] = 1200 - 86; PositionsCadeaux[2, 1] = 1995;
+                PositionsCadeaux[3, 0] = 1200 + 86; PositionsCadeaux[3, 1] = 1995;
+                PositionsCadeaux[4, 0] = 1800 - 86; PositionsCadeaux[4, 1] = 1995;
+                PositionsCadeaux[5, 0] = 1800 + 86; PositionsCadeaux[5, 1] = 1995;
+                PositionsCadeaux[6, 0] = 2400 - 86; PositionsCadeaux[6, 1] = 1995;
+                PositionsCadeaux[7, 0] = 2400 + 86; PositionsCadeaux[7, 1] = 1995;
+
+                CadeauxActives = new bool[8];
+                for (int i = 0; i < 8; i++)
+                    CadeauxActives[i] = false;
             }
         }
 

@@ -16,7 +16,7 @@ namespace GoBot.Actions
 
         String IAction.ToString()
         {
-            return GrosRobot.Nom + " avance de " + distance + "mm";
+            return Robots.GrosRobot.Nom + " avance de " + distance + "mm";
         }
 
         void IAction.Executer()

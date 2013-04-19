@@ -16,7 +16,7 @@ namespace GoBot.Actions
 
         String IAction.ToString()
         {
-            return GrosRobot.Nom + " accélération pivot à " + vitesse;
+            return Robots.GrosRobot.Nom + " accélération pivot à " + vitesse;
         }
 
         void IAction.Executer()

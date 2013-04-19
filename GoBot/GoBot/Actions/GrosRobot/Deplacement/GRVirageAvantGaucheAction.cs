@@ -18,7 +18,7 @@ namespace GoBot.Actions
 
         String IAction.ToString()
         {
-            return GrosRobot.Nom + " tourne " + distance + "mm " + angle + "° avant gauche";
+            return Robots.GrosRobot.Nom + " tourne " + distance + "mm " + angle + "° avant gauche";
         }
 
         void IAction.Executer()

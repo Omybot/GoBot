@@ -48,7 +48,8 @@ namespace GoBot.IHM
 
             ChangementCouleur();
 
-            btnAlea_Click(null, null);
+            if (!Config.DesignMode)
+                btnAlea_Click(null, null);
         }
 
         private void PanelBougies_Load(object sender, EventArgs e)
@@ -217,6 +218,10 @@ namespace GoBot.IHM
             for (int i = 0; i < 20; i++)
             {
                 Boutons[i].BackColor = Plateau.CouleursBougies[i];
+                if (Plateau.CouleursBougies[i] == Color.White)
+                    Boutons[i].ForeColor = Color.Black;
+                else
+                    Boutons[i].ForeColor = Color.White;
             }
         }
     }

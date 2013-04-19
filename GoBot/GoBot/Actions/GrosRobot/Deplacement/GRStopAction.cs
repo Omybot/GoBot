@@ -16,7 +16,7 @@ namespace GoBot.Actions
 
         String IAction.ToString()
         {
-            return GrosRobot.Nom + " stop " + mode;
+            return Robots.GrosRobot.Nom + " stop " + mode;
         }
 
         void IAction.Executer()

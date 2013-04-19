@@ -105,7 +105,7 @@ namespace GoBot
         /// </summary>
         public ConnexionCheck ConnexionCheck { get; set; }
 
-        public StreamWriter writer;
+        //public StreamWriter writer;
         DateTime prec;
 
         public Balise(Carte carte)
@@ -121,9 +121,9 @@ namespace GoBot
 
             Connexions.ConnexionIo.NouvelleTrame += new ConnexionUDP.ReceptionDelegate(connexionIo_NouvelleTrame);
 
-            writer = new StreamWriter(carte.ToString() + ".csv");
+            /*writer = new StreamWriter(carte.ToString() + ".csv");
             prec = DateTime.Now;
-            writer.WriteLine("Time since previous;PWM;angle;Distance;vitesse");
+            writer.WriteLine("Time since previous;PWM;angle;Distance;vitesse");*/
         }
 
         public void Reset()
@@ -210,8 +210,8 @@ namespace GoBot
                                 Console.WriteLine("Mauvaise mesure : début = " + debut + " / fin = " + fin);
                         }
 
-                        writer.WriteLine((DateTime.Now - prec).TotalMilliseconds + ";" + nouvelleVitesse + ";" + (d == null ? ";;" : d.AngleCentral + ";" + d.Distance + ";") + VitesseToursSecActuelle);
-                        prec = DateTime.Now;
+                        /*writer.WriteLine((DateTime.Now - prec).TotalMilliseconds + ";" + nouvelleVitesse + ";" + (d == null ? ";;" : d.AngleCentral + ";" + d.Distance + ";") + VitesseToursSecActuelle);
+                        prec = DateTime.Now;*/
 
                         // Réception des mesures du capteur bas
 
@@ -259,18 +259,12 @@ namespace GoBot
                         // Réglage de l'offset d'angle des capteurs
                         if (ReglageOffset)
                         {
-                            compteurReglageOffset--;
-
                             // Si on a une mesure incorrecte (une mesure correcte demande une détection en haut et une en bas)
                             // Le réglage est annulé
-                            if (nbHaut != 1 || nbBas != 1)
+                            if (nbHaut == 1 || nbBas == 1)
                             {
-                                MessageBox.Show("Le réglage des offset doit être réalisé avec une et une seule balise à chaque niveau de détection, veuilez recommencer.", "Erreur", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                                compteurReglageOffset = 0;
-                                ReglageOffset = false;
-                            }
-                            else
-                            {
+                                compteurReglageOffset--;
+
                                 // On ajoute les angles mesurés à l'historique
                                 anglesMesuresPourOffsetBas.Add(DetectionsBas[0].AngleCentral);
                                 anglesMesuresPourOffsetHaut.Add(DetectionsHaut[0].AngleCentral);
