@@ -34,7 +34,6 @@ namespace GoBot
             this.tabGrosRobot = new System.Windows.Forms.TabPage();
             this.panelGrosRobot = new GoBot.IHM.IHMGrosRobot.PanelGrosRobot();
             this.tabPetitRobot = new System.Windows.Forms.TabPage();
-            this.panelPetitRobot = new GoBot.IHM.IHMPetitRobot.PanelPetitRobot();
             this.tabServos = new System.Windows.Forms.TabPage();
             this.panelServo5 = new GoBot.IHM.PanelServo();
             this.panelServo6 = new GoBot.IHM.PanelServo();
@@ -189,24 +188,12 @@ namespace GoBot
             // 
             // tabPetitRobot
             // 
-            this.tabPetitRobot.Controls.Add(this.panelPetitRobot);
             this.tabPetitRobot.Location = new System.Drawing.Point(4, 22);
             this.tabPetitRobot.Name = "tabPetitRobot";
             this.tabPetitRobot.Size = new System.Drawing.Size(1016, 548);
             this.tabPetitRobot.TabIndex = 2;
             this.tabPetitRobot.Text = "Petit Robot";
             this.tabPetitRobot.UseVisualStyleBackColor = true;
-            // 
-            // panelPetitRobot
-            // 
-            this.panelPetitRobot.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.panelPetitRobot.BackColor = System.Drawing.Color.Transparent;
-            this.panelPetitRobot.Location = new System.Drawing.Point(0, 0);
-            this.panelPetitRobot.Name = "panelPetitRobot";
-            this.panelPetitRobot.Size = new System.Drawing.Size(1016, 548);
-            this.panelPetitRobot.TabIndex = 92;
             // 
             // tabServos
             // 
@@ -1130,7 +1117,6 @@ namespace GoBot
         private IHM.Composants.Led ledRecBoi;
         private System.Windows.Forms.TabPage tabGrosRobot;
         private IHM.IHMGrosRobot.PanelGrosRobot panelGrosRobot;
-        private IHM.IHMPetitRobot.PanelPetitRobot panelPetitRobot;
         private System.Windows.Forms.Button btnClose;
         private System.Windows.Forms.RichTextBox txtLogComplet;
         private System.Windows.Forms.TabPage tabMatch;

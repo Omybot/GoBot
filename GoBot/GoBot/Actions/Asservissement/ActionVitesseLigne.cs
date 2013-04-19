@@ -5,23 +5,25 @@ using System.Text;
 
 namespace GoBot.Actions
 {
-    class PRVitesseLigneAction : IAction
+    class ActionVitesseLigne : IAction
     {
         private int vitesse;
+        private Robot robot;
 
-        public PRVitesseLigneAction(int vit)
+        public ActionVitesseLigne(Robot r, int vit)
         {
+            robot = r;
             vitesse = vit;
         }
 
         String IAction.ToString()
         {
-            return PetitRobot.Nom + " vitesse ligne à " + vitesse;
+            return robot.Nom + " vitesse ligne à " + vitesse;
         }
 
         void IAction.Executer()
         {
-            PetitRobot.VitesseDeplacement = vitesse;
+            robot.VitesseDeplacement = vitesse;
         }
 
         public System.Drawing.Image Image

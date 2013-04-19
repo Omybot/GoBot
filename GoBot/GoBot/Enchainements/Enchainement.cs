@@ -31,7 +31,7 @@ namespace GoBot.Enchainements
         {
             Robots.GrosRobot.Stop(StopMode.Freely);
             Robots.GrosRobot.CoupureAlim();
-            PetitRobot.Stop(StopMode.Freely);
+            //PetitRobot.Stop(StopMode.Freely);
             Plateau.Balise1.ReglageVitesse = false;
             Plateau.Balise2.ReglageVitesse = false;
             Plateau.Balise3.ReglageVitesse = false;

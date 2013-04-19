@@ -64,37 +64,19 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Actions\GrosRobot\Asservissement\GRAccelerationPivotAction.cs" />
-    <Compile Include="Actions\GrosRobot\Asservissement\GRVitessePivotAction.cs" />
-    <Compile Include="Actions\GrosRobot\Deplacement\GRRecallageAction.cs" />
-    <Compile Include="Actions\GrosRobot\GRServoAction.cs" />
+    <Compile Include="Actions\Asservissement\ActionAccelerationPivot.cs" />
+    <Compile Include="Actions\Asservissement\ActionVitessePivot.cs" />
+    <Compile Include="Actions\Deplacement\ActionRecallage.cs" />
+    <Compile Include="Actions\ActionServo.cs" />
     <Compile Include="Actions\Nommeur.cs" />
-    <Compile Include="Actions\PetitRobot\Asservissement\PRAccelerationPivotAction.cs" />
-    <Compile Include="Actions\PetitRobot\Asservissement\PRVitessePivotAction.cs" />
-    <Compile Include="Actions\PetitRobot\Asservissement\PRAccelerationLigneAction.cs" />
-    <Compile Include="Actions\GrosRobot\Asservissement\GRAccelerationLigneAction.cs" />
-    <Compile Include="Actions\PetitRobot\Asservissement\PRVitesseLigneAction.cs" />
-    <Compile Include="Actions\GrosRobot\Asservissement\GRVitesseLigneAction.cs" />
-    <Compile Include="Actions\PetitRobot\Deplacement\PRAvanceAction.cs" />
-    <Compile Include="Actions\PetitRobot\Deplacement\PRPivotDroiteAction.cs" />
-    <Compile Include="Actions\PetitRobot\Deplacement\PRPivotGaucheAction.cs" />
-    <Compile Include="Actions\PetitRobot\Deplacement\PRReculeAction.cs" />
-    <Compile Include="Actions\PetitRobot\Deplacement\PRStopAction.cs" />
-    <Compile Include="Actions\PetitRobot\Deplacement\PRVirageArriereDroitAction.cs" />
-    <Compile Include="Actions\PetitRobot\Deplacement\PRVirageArriereGaucheAction.cs" />
-    <Compile Include="Actions\PetitRobot\Deplacement\PRVirageAvantDroiteAction.cs" />
-    <Compile Include="Actions\PetitRobot\Deplacement\PRVirageAvantGaucheAction.cs" />
-    <Compile Include="Actions\GrosRobot\Deplacement\GRStopAction.cs" />
-    <Compile Include="Actions\GrosRobot\Deplacement\GRVirageArriereDroitAction.cs" />
-    <Compile Include="Actions\GrosRobot\Deplacement\GRVirageArriereGaucheAction.cs" />
-    <Compile Include="Actions\GrosRobot\Deplacement\GRVirageAvantDroiteAction.cs" />
-    <Compile Include="Actions\GrosRobot\Deplacement\GRPivotDroiteAction.cs" />
-    <Compile Include="Actions\GrosRobot\Deplacement\GRAvanceAction.cs" />
-    <Compile Include="Actions\GrosRobot\Deplacement\GRPivotGaucheAction.cs" />
-    <Compile Include="Actions\GrosRobot\Deplacement\GRReculeAction.cs" />
-    <Compile Include="Actions\GrosRobot\Deplacement\GRVirageAvantGaucheAction.cs" />
+    <Compile Include="Actions\Asservissement\ActionAccelerationLigne.cs" />
+    <Compile Include="Actions\Asservissement\ActionVitesseLigne.cs" />
+    <Compile Include="Actions\Deplacement\ActionStop.cs" />
+    <Compile Include="Actions\Deplacement\ActionVirage.cs" />
+    <Compile Include="Actions\Deplacement\ActionPivot.cs" />
+    <Compile Include="Actions\Deplacement\ActionAvance.cs" />
+    <Compile Include="Actions\Deplacement\ActionRecule.cs" />
     <Compile Include="Actions\IAction.cs" />
-    <Compile Include="Actions\PetitRobot\PRServoAction.cs" />
     <Compile Include="CameraIP.cs" />
     <Compile Include="IHM\PanelBougies.cs">
       <SubType>UserControl</SubType>
@@ -141,12 +123,6 @@
     <Compile Include="IHM\IHMGrosRobot\PanelDeplacementGR.Designer.cs">
       <DependentUpon>PanelDeplacementGR.cs</DependentUpon>
     </Compile>
-    <Compile Include="IHM\IHMPetitRobot\PanelDeplacementPR.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="IHM\IHMPetitRobot\PanelDeplacementPR.Designer.cs">
-      <DependentUpon>PanelDeplacementPR.cs</DependentUpon>
-    </Compile>
     <Compile Include="IHM\PanelBalise.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -178,7 +154,6 @@
       <DependentUpon>PanelTable.cs</DependentUpon>
     </Compile>
     <Compile Include="Balises\InterpreteurBalise.cs" />
-    <Compile Include="PetitRobot.cs" />
     <Compile Include="IHM\Composants\BetterTextBox.cs">
       <SubType>Component</SubType>
     </Compile>
@@ -222,18 +197,6 @@
     <Compile Include="IHM\IHMGrosRobot\PanelGrosRobot.Designer.cs">
       <DependentUpon>PanelGrosRobot.cs</DependentUpon>
     </Compile>
-    <Compile Include="IHM\IHMPetitRobot\PanelBras.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="IHM\IHMPetitRobot\PanelBras.Designer.cs">
-      <DependentUpon>PanelBras.cs</DependentUpon>
-    </Compile>
-    <Compile Include="IHM\IHMPetitRobot\PanelPetitRobot.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="IHM\IHMPetitRobot\PanelPetitRobot.Designer.cs">
-      <DependentUpon>PanelPetitRobot.cs</DependentUpon>
-    </Compile>
     <Compile Include="Balises\PlanificateurBalise.cs" />
     <Compile Include="Plateau.cs" />
     <Compile Include="Program.cs" />
@@ -264,9 +227,6 @@
     <EmbeddedResource Include="IHM\IHMGrosRobot\PanelDeplacementGR.resx">
       <DependentUpon>PanelDeplacementGR.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="IHM\IHMPetitRobot\PanelDeplacementPR.resx">
-      <DependentUpon>PanelDeplacementPR.cs</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="IHM\PanelBalise.resx">
       <DependentUpon>PanelBalise.cs</DependentUpon>
     </EmbeddedResource>
@@ -281,12 +241,6 @@
     </EmbeddedResource>
     <EmbeddedResource Include="IHM\IHMGrosRobot\PanelGrosRobot.resx">
       <DependentUpon>PanelGrosRobot.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="IHM\IHMPetitRobot\PanelBras.resx">
-      <DependentUpon>PanelBras.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="IHM\IHMPetitRobot\PanelPetitRobot.resx">
-      <DependentUpon>PanelPetitRobot.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="IHM\PanelHistorique.resx">
       <DependentUpon>PanelHistorique.cs</DependentUpon>

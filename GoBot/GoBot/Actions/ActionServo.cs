@@ -5,25 +5,27 @@ using System.Text;
 
 namespace GoBot.Actions
 {
-    class GRServoAction : IAction
+    class ActionServo : IAction
     {
         private int position;
         ServomoteurID pince;
+        private Robot robot;
 
-        public GRServoAction(int po, ServomoteurID pi)
+        public ActionServo(Robot r, int po, ServomoteurID pi)
         {
+            robot = r;
             position = po;
             pince = pi;
         }
 
         String IAction.ToString()
         {
-            return Robots.GrosRobot.Nom + " bouge " + Nommeur.Nommer(pince) + " à " + Nommeur.Nommer(position, pince);
+            return robot + " bouge " + Nommeur.Nommer(pince) + " à " + Nommeur.Nommer(position, pince);
         }
 
         void IAction.Executer()
         {
-            Robots.GrosRobot.BougeServo(pince, position);
+            robot.BougeServo(pince, position);
         }
 
         public System.Drawing.Image Image

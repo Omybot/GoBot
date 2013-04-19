@@ -5,12 +5,14 @@ using System.Text;
 
 namespace GoBot.Actions
 {
-    class PRReculeAction : IAction
+    class ActionRecule : IAction
     {
         private int distance;
+        private Robot robot;
 
-        public PRReculeAction(int dist)
+        public ActionRecule(Robot r, int dist)
         {
+            robot = r;
             distance = dist;
         }
 
@@ -21,12 +23,12 @@ namespace GoBot.Actions
 
         string IAction.ToString()
         {
-            return PetitRobot.Nom + " recule de " + distance + "mm";
+            return robot.Nom + " recule de " + distance + "mm";
         }
 
         void IAction.Executer()
         {
-            PetitRobot.Reculer(distance);
+            robot.Reculer(distance);
         }
     }
 }

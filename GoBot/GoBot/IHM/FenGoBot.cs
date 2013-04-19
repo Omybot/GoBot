@@ -28,7 +28,6 @@ namespace GoBot
             {
                 CheckForIllegalCrossThreadCalls = false;
                 panelGrosRobot.Init();
-                panelPetitRobot.Init();
 
                 if (Screen.PrimaryScreen.Bounds.Width == 1024)
                 {
@@ -43,7 +42,7 @@ namespace GoBot
                 }
 
                 Robots.GrosRobot.Historique.nouvelleAction += new Historique.delegateAction(HistoriqueGR_nouvelleAction);
-                PetitRobot.Historique.nouvelleAction += new Historique.delegateAction(HistoriquePR_nouvelleAction);
+                //PetitRobot.Historique.nouvelleAction += new Historique.delegateAction(HistoriquePR_nouvelleAction);
 
                 panelBalise1.Balise = Plateau.Balise1;
                 panelBalise2.Balise = Plateau.Balise2;
@@ -58,11 +57,11 @@ namespace GoBot
                 panelBalise1.Balise.ConnexionCheck.ConnexionChange += new ConnexionCheck.ConnexionChangeDelegate(ConnexionBunCheck_ConnexionChange);
                 panelBalise2.Balise.ConnexionCheck.ConnexionChange += new ConnexionCheck.ConnexionChangeDelegate(ConnexionBeuCheck_ConnexionChange);
                 panelBalise3.Balise.ConnexionCheck.ConnexionChange += new ConnexionCheck.ConnexionChangeDelegate(ConnexionBoiCheck_ConnexionChange);
-                PetitRobot.ConnexionCheck.ConnexionChange += new ConnexionCheck.ConnexionChangeDelegate(ConnexionPi_ConnexionChange);
+                //PetitRobot.ConnexionCheck.ConnexionChange += new ConnexionCheck.ConnexionChangeDelegate(ConnexionPi_ConnexionChange);
 
                 Connexions.ConnexionMove.ConnexionCheck.Start();
                 Connexions.ConnexionIo.ConnexionCheck.Start();
-                PetitRobot.ConnexionCheck.Start();
+                //PetitRobot.ConnexionCheck.Start();
                 panelBalise1.Balise.ConnexionCheck.Start();
                 panelBalise2.Balise.ConnexionCheck.Start();
                 panelBalise3.Balise.ConnexionCheck.Start();
@@ -368,7 +367,7 @@ namespace GoBot
 
         private void btnPRCoeffAsserv_Click(object sender, EventArgs e)
         {
-            PetitRobot.EnvoyerPID((int)numPGR.Value, (int)numIGR.Value, (int)numDGR.Value);
+            //PetitRobot.EnvoyerPID((int)numPGR.Value, (int)numIGR.Value, (int)numDGR.Value);
         }
 
         private void button3_Click(object sender, EventArgs e)
@@ -392,7 +391,6 @@ namespace GoBot
         {
             Robots.Simuler(actif);
             panelGrosRobot.Init();
-            panelPetitRobot.Init();
             Robots.GrosRobot.Historique.nouvelleAction += new Historique.delegateAction(HistoriqueGR_nouvelleAction);
         }
     }

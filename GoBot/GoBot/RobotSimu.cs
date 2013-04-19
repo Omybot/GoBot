@@ -97,13 +97,13 @@ namespace GoBot
             if (distance > 0)
             {
                 if (!RecallageEnCours)
-                    Historique.AjouterActionThread(new GRAvanceAction(distance));
+                    Historique.AjouterActionThread(new ActionAvance(this, distance));
                 SensDep = SensAR.Avant;
             }
             else
             {
                 if (!RecallageEnCours)
-                    Historique.AjouterAction(new GRReculeAction(-distance));
+                    Historique.AjouterAction(new ActionRecule(this, -distance));
                 SensDep = SensAR.Arriere;
             }
 
@@ -132,7 +132,7 @@ namespace GoBot
 
         public override void PivotGauche(double angle, bool attendre = true)
         {
-            Historique.AjouterAction(new GRPivotGaucheAction(angle));
+            Historique.AjouterAction(new ActionPivot(this, angle, SensGD.Gauche));
             Destination = new Position(new Angle(Position.Angle.AngleDegres - angle, AnglyeType.Degre), new PointReel(Position.Coordonnees.X, Position.Coordonnees.Y));
             SensPivot = SensGD.Gauche;
 
@@ -143,7 +143,7 @@ namespace GoBot
 
         public override void PivotDroite(double angle, bool attendre = true)
         {
-            Historique.AjouterAction(new GRPivotDroiteAction(angle));
+            Historique.AjouterAction(new ActionPivot(this, angle, SensGD.Droite));
             Destination = new Position(new Angle(Position.Angle.AngleDegres + angle, AnglyeType.Degre), new PointReel(Position.Coordonnees.X, Position.Coordonnees.Y));
             SensPivot = SensGD.Droite;
 
@@ -154,7 +154,7 @@ namespace GoBot
 
         public override void Stop(StopMode mode)
         {
-            Historique.AjouterActionThread(new GRStopAction(mode));
+            Historique.AjouterActionThread(new ActionStop(this, mode));
             semDeplacement.WaitOne();
             Destination = Position;
             semDeplacement.Release();
@@ -173,7 +173,7 @@ namespace GoBot
         public override void Recallage(SensAR sens, bool attendre = true)
         {
             RecallageEnCours = true;
-            Historique.AjouterActionThread(new GRRecallageAction(sens));
+            Historique.AjouterActionThread(new ActionRecallage(this, sens));
 
             while (Position.Coordonnees.X - Taille / 2 > 0 &&
                 Position.Coordonnees.X + Taille / 2 < 3000 &&

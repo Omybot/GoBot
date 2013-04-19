@@ -137,7 +137,7 @@ namespace GoBot
             }
             if (trameRecue[0] == (byte)Carte.RecPi)
             {
-                PetitRobot.ReceptionTrame(trameRecue);
+                //PetitRobot.ReceptionTrame(trameRecue);
             }
         }
 
@@ -152,7 +152,7 @@ namespace GoBot
             Trame trame = TrameFactory.GRDeplacer(SensAR.Avant, distance);
             Connexions.ConnexionMove.SendMessage(trame);
 
-            Historique.AjouterActionThread(new GRAvanceAction(distance));
+            Historique.AjouterActionThread(new ActionAvance(this, distance));
 
             if (attendre)
                 semDeplacement.WaitOne();
@@ -171,7 +171,7 @@ namespace GoBot
                 semDeplacement = new Semaphore(0, int.MaxValue);
 
             DeplacementLigne = true;
-            Historique.AjouterAction(new GRReculeAction(distance));
+            Historique.AjouterAction(new ActionRecule(this, distance));
 
             Trame trame = TrameFactory.GRDeplacer(SensAR.Arriere, distance);
             Connexions.ConnexionMove.SendMessage(trame);
@@ -186,7 +186,7 @@ namespace GoBot
             if (attendre)
                 semDeplacement = new Semaphore(0, int.MaxValue);
 
-            Historique.AjouterAction(new GRPivotGaucheAction(angle));
+            Historique.AjouterAction(new ActionPivot(this, angle, SensGD.Gauche));
             Trame trame = TrameFactory.GRPivot(SensGD.Gauche, angle);
 
             Connexions.ConnexionMove.SendMessage(trame);
@@ -201,7 +201,7 @@ namespace GoBot
             if (attendre)
                 semDeplacement = new Semaphore(0, int.MaxValue);
 
-            Historique.AjouterAction(new GRPivotDroiteAction(angle));
+            Historique.AjouterAction(new ActionPivot(this, angle, SensGD.Droite));
             Trame trame = TrameFactory.GRPivot(SensGD.Droite, angle);
             Connexions.ConnexionMove.SendMessage(trame);
 
@@ -215,7 +215,7 @@ namespace GoBot
 
             Connexions.ConnexionMove.SendMessage(trame);
             
-            Historique.AjouterActionThread(new GRStopAction(mode));
+            Historique.AjouterActionThread(new ActionStop(this, mode));
         }
 
         public override void Virage(SensAR sensAr, SensGD sensGd, int rayon, int angle, bool attendre = true)
@@ -223,20 +223,7 @@ namespace GoBot
             if(attendre)
                 semDeplacement = new Semaphore(0, int.MaxValue);
 
-            if (sensAr == SensAR.Avant)
-            {
-                if (sensGd == SensGD.Droite)
-                    Historique.AjouterActionThread(new GRVirageAvantDroiteAction(rayon, angle));
-                else if (sensGd == SensGD.Gauche)
-                    Historique.AjouterActionThread(new GRVirageAvantGaucheAction(rayon, angle));
-            }
-            else if (sensAr == SensAR.Arriere)
-            {
-                if (sensGd == SensGD.Droite)
-                    Historique.AjouterActionThread(new GRVirageArriereDroiteAction(rayon, angle));
-                else if (sensGd == SensGD.Gauche)
-                    Historique.AjouterActionThread(new GRVirageArriereGaucheAction(rayon, angle));
-            }
+            Historique.AjouterActionThread(new ActionVirage(this, rayon, angle, sensAr, sensGd));
 
             Trame trame = TrameFactory.GRVirage(sensAr, sensGd, rayon, angle);
             Connexions.ConnexionMove.SendMessage(trame);
@@ -256,7 +243,7 @@ namespace GoBot
             if (attendre)
                 semDeplacement = new Semaphore(0, int.MaxValue);
 
-            Historique.AjouterActionThread(new GRRecallageAction(sens));
+            Historique.AjouterActionThread(new ActionRecallage(this, sens));
             Trame trame = TrameFactory.GRRecallage(sens);
             Connexions.ConnexionMove.SendMessage(trame);
 
@@ -294,7 +281,7 @@ namespace GoBot
         {
             Trame trame = TrameFactory.GRBougeServomoteur(servo, position);
             Connexions.ConnexionIo.SendMessage(trame);
-            Historique.AjouterAction(new GRServoAction(position, servo));
+            Historique.AjouterAction(new ActionServo(this, position, servo));
         }
 
         #region Parametres deplacement
@@ -311,7 +298,7 @@ namespace GoBot
                 Trame trame = TrameFactory.GRVitesseLigne(value);
                 Connexions.ConnexionMove.SendMessage(trame);
                 vitesseDeplacement = value;
-                Historique.AjouterAction(new GRVitesseLigneAction(value));
+                Historique.AjouterAction(new ActionVitesseLigne(this, value));
             }
         }
 
@@ -327,7 +314,7 @@ namespace GoBot
                 Trame trame = TrameFactory.GRAccelLigne(value);
                 Connexions.ConnexionMove.SendMessage(trame);
                 accelDeplacement = value;
-                Historique.AjouterAction(new GRAccelerationLigneAction(value));
+                Historique.AjouterAction(new ActionAccelerationLigne(this, value));
             }
         }
 
@@ -343,7 +330,7 @@ namespace GoBot
                 Trame trame = TrameFactory.GRVitessePivot(value);
                 Connexions.ConnexionMove.SendMessage(trame);
                 vitessePivot = value;
-                Historique.AjouterAction(new GRVitessePivotAction(value));
+                Historique.AjouterAction(new ActionVitessePivot(this, value));
             }
         }
 
@@ -359,7 +346,7 @@ namespace GoBot
                 Trame trame = TrameFactory.GRAccelPivot(value);
                 Connexions.ConnexionMove.SendMessage(trame);
                 accelPivot = value;
-                Historique.AjouterAction(new GRAccelerationPivotAction(value));
+                Historique.AjouterAction(new ActionAccelerationPivot(this, value));
             }
         }
 

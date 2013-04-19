@@ -5,32 +5,32 @@ using System.Text;
 
 namespace GoBot.Actions
 {
-    class PRVirageAvantGaucheAction : IAction
+    class ActionAvance : IAction
     {
         private int distance;
-        private int angle;
+        private Robot robot;
 
-        public PRVirageAvantGaucheAction(int dist, int a)
+        public ActionAvance(Robot r, int dist)
         {
+            robot = r;
             distance = dist;
-            angle = a;
         }
 
         String IAction.ToString()
         {
-            return PetitRobot.Nom + " tourne " + distance + "mm " + angle + "° avant gauche";
+            return robot.Nom + " avance de " + distance + "mm";
         }
 
         void IAction.Executer()
         {
-            PetitRobot.Virage(SensAR.Avant, SensGD.Gauche, distance, angle);
+            robot.Avancer(distance);
         }
 
         public System.Drawing.Image Image
         {
             get 
             { 
-                return GoBot.Properties.Resources.virageAvGa;  
+                return GoBot.Properties.Resources.avance;  
             }
         }
     }

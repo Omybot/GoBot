@@ -19,8 +19,6 @@ namespace GoBot
             Application.SetCompatibleTextRenderingDefault(false);
             Connexions.Init();
             Robots.Init();
-            //Robots.GrosRobot.Init();
-            PetitRobot.Init();
             Config.Load();
             Plateau.Init();
             Application.Run(new FenGoBot());

@@ -5,30 +5,32 @@ using System.Text;
 
 namespace GoBot.Actions
 {
-    class GRAvanceAction : IAction
+    class ActionStop : IAction
     {
-        private int distance;
+        private StopMode mode;
+        private Robot robot;
 
-        public GRAvanceAction(int dist)
+        public ActionStop(Robot r, StopMode m)
         {
-            distance = dist;
+            robot = r;
+            mode = m;
         }
 
         String IAction.ToString()
         {
-            return Robots.GrosRobot.Nom + " avance de " + distance + "mm";
+            return robot.Nom + " stop " + mode;
         }
 
         void IAction.Executer()
         {
-            Robots.GrosRobot.Avancer(distance);
+            robot.Stop(mode);
         }
 
         public System.Drawing.Image Image
         {
             get 
             { 
-                return GoBot.Properties.Resources.avance;  
+                return GoBot.Properties.Resources.stopPetit;  
             }
         }
     }
