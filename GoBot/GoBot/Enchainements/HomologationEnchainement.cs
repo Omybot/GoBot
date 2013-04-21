@@ -28,7 +28,7 @@ namespace GoBot.Enchainements
             couleur = color;
         }
 
-        public void Executer()
+        public new void Executer()
         {
             if (couleur == Color.Red)
                 th = new Thread(ThreadEnchainementRouge);

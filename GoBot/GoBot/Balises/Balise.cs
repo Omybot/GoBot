@@ -106,7 +106,7 @@ namespace GoBot
         public ConnexionCheck ConnexionCheck { get; set; }
 
         //public StreamWriter writer;
-        DateTime prec;
+        //DateTime prec;
 
         public Balise(Carte carte)
         {
@@ -261,7 +261,7 @@ namespace GoBot
                         {
                             // Si on a une mesure incorrecte (une mesure correcte demande une détection en haut et une en bas)
                             // Le réglage est annulé
-                            if (nbHaut == 1 || nbBas == 1)
+                            if (DetectionsHaut.Count == 1 || DetectionsBas.Count == 1)
                             {
                                 compteurReglageOffset--;
 

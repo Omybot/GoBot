@@ -78,12 +78,34 @@
     <Compile Include="Actions\Deplacement\ActionRecule.cs" />
     <Compile Include="Actions\IAction.cs" />
     <Compile Include="CameraIP.cs" />
+    <Compile Include="IHM\PanelUtilGros.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="IHM\PanelUtilGros.Designer.cs">
+      <DependentUpon>PanelUtilGros.cs</DependentUpon>
+    </Compile>
+    <Compile Include="IHM\PanelPetitRobot.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="IHM\PanelPetitRobot.Designer.cs">
+      <DependentUpon>PanelPetitRobot.cs</DependentUpon>
+    </Compile>
     <Compile Include="IHM\PanelBougies.cs">
       <SubType>UserControl</SubType>
     </Compile>
     <Compile Include="IHM\PanelBougies.Designer.cs">
       <DependentUpon>PanelBougies.cs</DependentUpon>
     </Compile>
+    <Compile Include="IHM\PanelReglageGros.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="IHM\PanelReglageGros.Designer.cs">
+      <DependentUpon>PanelReglageGros.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Mouvements\MovePetitCadeau.cs" />
+    <Compile Include="Mouvements\Mouvement.cs" />
+    <Compile Include="Mouvements\MovePetitBougie.cs" />
+    <Compile Include="Mouvements\PositionsMouvements.cs" />
     <Compile Include="Robots.cs" />
     <Compile Include="UDP\Connexions.cs" />
     <Compile Include="PathFinding\Arc.cs" />
@@ -116,12 +138,6 @@
     </Compile>
     <Compile Include="IHM\Composants\FocusablePanel.Designer.cs">
       <DependentUpon>FocusablePanel.cs</DependentUpon>
-    </Compile>
-    <Compile Include="IHM\IHMGrosRobot\PanelDeplacementGR.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="IHM\IHMGrosRobot\PanelDeplacementGR.Designer.cs">
-      <DependentUpon>PanelDeplacementGR.cs</DependentUpon>
     </Compile>
     <Compile Include="IHM\PanelBalise.cs">
       <SubType>UserControl</SubType>
@@ -191,10 +207,10 @@
       <DependentUpon>FenGoBot.cs</DependentUpon>
     </Compile>
     <Compile Include="Historique.cs" />
-    <Compile Include="IHM\IHMGrosRobot\PanelGrosRobot.cs">
+    <Compile Include="IHM\PanelGrosRobot.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="IHM\IHMGrosRobot\PanelGrosRobot.Designer.cs">
+    <Compile Include="IHM\PanelGrosRobot.Designer.cs">
       <DependentUpon>PanelGrosRobot.cs</DependentUpon>
     </Compile>
     <Compile Include="Balises\PlanificateurBalise.cs" />
@@ -221,11 +237,14 @@
     <EmbeddedResource Include="IHM\Composants\TrackBarPlus.resx">
       <DependentUpon>TrackBarPlus.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="IHM\PanelUtilGros.resx">
+      <DependentUpon>PanelUtilGros.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="IHM\PanelPetitRobot.resx">
+      <DependentUpon>PanelPetitRobot.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="IHM\PanelBougies.resx">
       <DependentUpon>PanelBougies.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="IHM\IHMGrosRobot\PanelDeplacementGR.resx">
-      <DependentUpon>PanelDeplacementGR.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="IHM\PanelBalise.resx">
       <DependentUpon>PanelBalise.cs</DependentUpon>
@@ -239,11 +258,14 @@
     <EmbeddedResource Include="IHM\FenGoBot.resx">
       <DependentUpon>FenGoBot.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="IHM\IHMGrosRobot\PanelGrosRobot.resx">
+    <EmbeddedResource Include="IHM\PanelGrosRobot.resx">
       <DependentUpon>PanelGrosRobot.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="IHM\PanelHistorique.resx">
       <DependentUpon>PanelHistorique.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="IHM\PanelReglageGros.resx">
+      <DependentUpon>PanelReglageGros.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="IHM\PanelServo.resx">
       <DependentUpon>PanelServo.cs</DependentUpon>

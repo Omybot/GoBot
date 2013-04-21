@@ -21,12 +21,49 @@ namespace GoBot
             set { position = value; Destination = value; }
         }
 
-        public override int VitesseDeplacement { get; set; }
-        public override int AccelerationDeplacement { get; set; }
-        public override int VitessePivot { get; set; }
-        public override int AccelerationPivot { get; set; }
+        private int vitesseDeplacement;
+        public override int VitesseDeplacement 
+        {
+            get { return vitesseDeplacement; }
+            set
+            {
+                vitesseDeplacement = value;
+                Historique.AjouterAction(new ActionVitesseLigne(this, value));
+            }
+        }
+        
+        private int accelerationDeplacement;
+        public override int AccelerationDeplacement
+        {
+            get { return accelerationDeplacement; }
+            set
+            {
+                accelerationDeplacement = value;
+                Historique.AjouterAction(new ActionAccelerationLigne(this, value));
+            }
+        }
 
-        private double VitesseActuelle { get; set; }
+        private int vitessePivot;
+        public override int VitessePivot
+        {
+            get { return vitessePivot; }
+            set
+            {
+                vitessePivot = value;
+                Historique.AjouterAction(new ActionVitessePivot(this, value));
+            }
+        }
+
+        private int accelerationPivot;
+        public override int AccelerationPivot
+        {
+            get { return accelerationPivot; }
+            set
+            {
+                accelerationPivot = value;
+                Historique.AjouterAction(new ActionAccelerationPivot(this, value));
+            }
+        }
 
         public override int Longueur { get; set; }
         public override int Largeur { get; set; }
@@ -45,11 +82,9 @@ namespace GoBot
         {
             Position = new Position();
 
-            VitesseActuelle = 0;
             timerDeplacement = new System.Timers.Timer(IntervalleRafraichissementPosition);
             timerDeplacement.Elapsed += new ElapsedEventHandler(timerDeplacement_Elapsed);
             timerDeplacement.Start();
-            VitesseActuelle = 600;
             semDeplacement = new Semaphore(1, 1);
             SensDep = SensAR.Avant;
 
@@ -61,24 +96,24 @@ namespace GoBot
         {
             semDeplacement.WaitOne();
             double difference = Destination.Coordonnees.getDistance(Position.Coordonnees);
-            if (Position.Angle.AngleDegres != Destination.Angle.AngleDegres)
+            if (Math.Abs((Position.Angle - Destination.Angle).AngleDegres) > 0.01)// Math.Round(Position.Angle.AngleDegres, 2) != Math.Round(Destination.Angle.AngleDegres, 2))
             {
-                difference = Destination.Angle.AngleDegres - Position.Angle.AngleDegres;
+                Angle diff = Destination.Angle - Position.Angle;
                 int coeff = 1;
 
                 if (SensPivot == SensGD.Gauche)
                     coeff = -1;
 
-                if (difference >= VitesseActuelle / 100.0)
-                    Position.Angle.Tourner(coeff * VitesseActuelle / 100.0);
-                else if (difference <= -VitesseActuelle / 100.0)
-                    Position.Angle.Tourner(coeff * VitesseActuelle / 100.0);
+                if (Math.Abs(diff.AngleDegres) >= VitessePivot / 100.0)
+                    Position.Angle.Tourner(coeff * VitessePivot / 100.0);
+                else if (Math.Abs(diff.AngleDegres) <= -VitessePivot / 100.0)
+                    Position.Angle.Tourner(coeff * VitessePivot / 100.0);
                 else
-                    Position.Angle.Tourner(difference);
+                    Position.Angle.Tourner(diff.AngleDegres);
             }
             else if (difference > 0)
             {
-                double distance = VitesseActuelle / (1000.0 / IntervalleRafraichissementPosition);
+                double distance = VitesseDeplacement / (1000.0 / IntervalleRafraichissementPosition);
 
                 //VitesseActuelle += AccellerationDeplacement / (1000 / IntervalleRafraichissementPosition);
                 if (Destination.Coordonnees.getDistance(Position.Coordonnees) < distance)
@@ -130,30 +165,27 @@ namespace GoBot
             Avancer(-distance, attendre);
         }
 
-        public void Pivoter(double angle, bool attendre = true)
-        {
-            Destination = new Position(new Angle(Position.Angle.AngleDegres + angle, AnglyeType.Degre), new PointReel(Position.Coordonnees.X, Position.Coordonnees.Y));
-        }
-
         public override void PivotGauche(double angle, bool attendre = true)
         {
+            angle = Math.Round(angle, 2);
             Historique.AjouterAction(new ActionPivot(this, angle, SensGD.Gauche));
             Destination = new Position(new Angle(Position.Angle.AngleDegres - angle, AnglyeType.Degre), new PointReel(Position.Coordonnees.X, Position.Coordonnees.Y));
             SensPivot = SensGD.Gauche;
 
             if (attendre)
-                while (Position.Angle.AngleDegres != Destination.Angle.AngleDegres)
+                while (Position.Angle != Destination.Angle)
                     Thread.Sleep(50);
         }
 
         public override void PivotDroite(double angle, bool attendre = true)
         {
+            angle = Math.Round(angle, 2);
             Historique.AjouterAction(new ActionPivot(this, angle, SensGD.Droite));
             Destination = new Position(new Angle(Position.Angle.AngleDegres + angle, AnglyeType.Degre), new PointReel(Position.Coordonnees.X, Position.Coordonnees.Y));
             SensPivot = SensGD.Droite;
 
             if (attendre)
-                while (Position.Angle.AngleDegres != Destination.Angle.AngleDegres)
+                while (Position.Angle != Destination.Angle)
                     Thread.Sleep(50);
         }
 
@@ -209,7 +241,7 @@ namespace GoBot
 
         public override void BougeServo(ServomoteurID servo, int position)
         {
-            throw new NotImplementedException();
+            //throw new NotImplementedException();
         }
 
         public override void EnvoyerPID(int p, int i, int d)

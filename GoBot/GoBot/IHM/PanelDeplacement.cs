@@ -46,6 +46,12 @@ namespace GoBot.IHM
             trackBarVitesse.SetValue(Config.CurrentConfig.GRVitesseLigne);
             trackBarAccel.SetValue(Config.CurrentConfig.GRAccelerationLigne);
 
+            Robot.VitesseDeplacement = Config.CurrentConfig.GRVitesseLigne;
+            Robot.AccelerationDeplacement = Config.CurrentConfig.GRAccelerationLigne;
+
+            Robot.VitessePivot = Config.CurrentConfig.GRVitessePivot;
+            Robot.AccelerationPivot = Config.CurrentConfig.GRAccelerationPivot;
+
             Deployer(Config.CurrentConfig.DeplacementGROuvert);
         }
 

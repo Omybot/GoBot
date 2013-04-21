@@ -10,6 +10,7 @@ using GoBot.Calculs.Formes;
 using GoBot.Calculs;
 using AStarFolder;
 using System.Threading;
+using GoBot.Mouvements;
 
 namespace GoBot.IHM
 {
@@ -27,7 +28,7 @@ namespace GoBot.IHM
 
     public partial class PanelTable : UserControl
     {
-        Plateau Plateau { get; set; }
+        public static Plateau Plateau { get; set; }
 
         Mode modeCourant;
 
@@ -35,6 +36,15 @@ namespace GoBot.IHM
         {
             InitializeComponent();
             Plateau = new Plateau();
+            Plateau.ScoreChange += new EventHandler(Plateau_ScoreChange);
+        }
+
+        void Plateau_ScoreChange(object sender, EventArgs e)
+        {
+            this.Invoke(new EventHandler(delegate
+                {
+                    lblScore.Text = Plateau.Score + "";
+                }));
         }
 
         void MAJAffichage()
@@ -50,13 +60,17 @@ namespace GoBot.IHM
             Pen crayonBleu = new Pen(Color.Blue, 3);
             SolidBrush brush = new SolidBrush(Color.Black);
 
-            while (true)
+            while (continuerAffichage)
             {
                 try
                 {
                     Bitmap bmp = new Bitmap(750, 500);
                     Graphics g = Graphics.FromImage(bmp);
                     g.FillRectangle(new SolidBrush(Color.White), 0, 0, 750, 500);
+
+
+                    int xTable = ScreenToReal(pictureBoxTable.PointToClient(MousePosition).X);
+                    int yTable = ScreenToReal(pictureBoxTable.PointToClient(MousePosition).Y);
 
                     if (boxTable.Checked)
                         g.DrawImage(Properties.Resources.table, 0, 0);
@@ -367,15 +381,22 @@ namespace GoBot.IHM
 
                     // Dessin des bougies
 
+                    PointReel point = new PointReel(xTable, yTable);
+
                     for (int i = 0; i < 20; i++)
                     {
-                        g.FillEllipse(new SolidBrush(Plateau.CouleursBougies[i]), RealToScreen(Plateau.PositionsBougies[i, 0] - 40), RealToScreen(Plateau.PositionsBougies[i, 1] - 40), RealToScreen(80), RealToScreen(80));
-                        g.DrawEllipse(new Pen(Color.Black), RealToScreen(Plateau.PositionsBougies[i, 0] - 40), RealToScreen(Plateau.PositionsBougies[i, 1] - 40), RealToScreen(80), RealToScreen(80));
+                        g.FillEllipse(new SolidBrush(Plateau.CouleursBougies[i]), RealToScreen(Plateau.PositionsBougies[i].X - 40), RealToScreen(Plateau.PositionsBougies[i].Y - 40), RealToScreen(80), RealToScreen(80));
+                        g.DrawEllipse(new Pen(Color.Black), RealToScreen(Plateau.PositionsBougies[i].X - 40), RealToScreen(Plateau.PositionsBougies[i].Y - 40), RealToScreen(80), RealToScreen(80));
               
                         if (Plateau.BougiesEnfoncees[i])
                         {
-                            g.FillEllipse(new SolidBrush(Color.Black), RealToScreen(Plateau.PositionsBougies[i, 0] - 20), RealToScreen(Plateau.PositionsBougies[i, 1] - 20), RealToScreen(40), RealToScreen(40));
-                            g.DrawEllipse(new Pen(Color.White), RealToScreen(Plateau.PositionsBougies[i, 0] - 20), RealToScreen(Plateau.PositionsBougies[i, 1] - 20), RealToScreen(40), RealToScreen(40));
+                            g.FillEllipse(new SolidBrush(Color.Black), RealToScreen(Plateau.PositionsBougies[i].X - 20), RealToScreen(Plateau.PositionsBougies[i].Y - 20), RealToScreen(40), RealToScreen(40));
+                            g.DrawEllipse(new Pen(Color.White), RealToScreen(Plateau.PositionsBougies[i].X - 20), RealToScreen(Plateau.PositionsBougies[i].Y - 20), RealToScreen(40), RealToScreen(40));
+                        }
+
+                        else if (Plateau.PositionsBougies[i].getDistance(point) <= 40)
+                        {
+                            g.DrawEllipse(new Pen(Color.LightGreen, 3), RealToScreen(Plateau.PositionsBougies[i].X - 40), RealToScreen(Plateau.PositionsBougies[i].Y - 40), RealToScreen(80), RealToScreen(80));
                         }
                     }
 
@@ -383,13 +404,20 @@ namespace GoBot.IHM
 
                     for (int i = 0; i < 8; i++)
                     {
-                        Color color = i % 2 == 0 ? Plateau.CouleurJ1 : Plateau.CouleurJ2;
+                        Color color = i % 2 == 1 ? Plateau.CouleurJ1 : Plateau.CouleurJ2;
                         if (!Plateau.CadeauxActives[i])
                         {
-                            g.FillRectangle(new SolidBrush(color), RealToScreen(Plateau.PositionsCadeaux[i, 0] - 75), RealToScreen(Plateau.PositionsCadeaux[i, 1] - 30), RealToScreen(150), RealToScreen(40));
-                            g.DrawRectangle(new Pen(Color.Black), RealToScreen(Plateau.PositionsCadeaux[i, 0] - 75), RealToScreen(Plateau.PositionsCadeaux[i, 1] - 30), RealToScreen(150), RealToScreen(40));
+                            g.FillRectangle(new SolidBrush(color), RealToScreen(Plateau.PositionsCadeaux[i].X - 75), RealToScreen(Plateau.PositionsCadeaux[i].Y - 30), RealToScreen(150), RealToScreen(40));
+                            g.DrawRectangle(new Pen(Color.Black), RealToScreen(Plateau.PositionsCadeaux[i].X - 75), RealToScreen(Plateau.PositionsCadeaux[i].Y - 30), RealToScreen(150), RealToScreen(40));
+                        }
+
+                        if (!Plateau.CadeauxActives[i] && yTable >= 1970)
+                        {
+                            if (xTable > Plateau.PositionsCadeaux[i].X - 75 && xTable < Plateau.PositionsCadeaux[i].X + 75)
+                                g.DrawRectangle(new Pen(Color.LightGreen, 3), RealToScreen(Plateau.PositionsCadeaux[i].X - 75), RealToScreen(Plateau.PositionsCadeaux[i].Y - 30), RealToScreen(150), RealToScreen(40));
                         }
                     }
+
 
                     pictureBoxTable.Image = bmp;
                 }
@@ -493,6 +521,8 @@ namespace GoBot.IHM
                     ySouris = pictureBoxTable.PointToClient(MousePosition).Y;
                 }
             }
+
+            lblPos.Text = ScreenToReal(pictureBoxTable.PointToClient(MousePosition).X) + " : " + ScreenToReal(pictureBoxTable.PointToClient(MousePosition).Y);
         }
 
         private int ScreenToReal(double valeur)
@@ -521,12 +551,73 @@ namespace GoBot.IHM
                 Plateau.GrosRobotAllerA(ScreenToReal(pictureBoxTable.PointToClient(MousePosition).X), ScreenToReal(pictureBoxTable.PointToClient(MousePosition).Y));
                 modeCourant = Mode.Visualisation;
             }
+            else
+            {
+                
+                int xTable = ScreenToReal(pictureBoxTable.PointToClient(MousePosition).X);
+                int yTable = ScreenToReal(pictureBoxTable.PointToClient(MousePosition).Y);
+
+                PointReel point = new PointReel(xTable, yTable);
+
+                for (int i = 0; i < 20; i++)
+                {
+                    if (Plateau.PositionsBougies[i].getDistance(point) <= 40)
+                    {
+                        if (PositionsMouvements.PositionPetitBougie.ContainsKey(i))
+                            move = new MovePetitBougie(i);
+
+                        if (move != null)
+                        {
+                            th = new Thread(ThreadAction);
+                            th.Start();
+                            break;
+                        }
+                    }
+                }
+
+                for (int i = 0; i < 8; i++)
+                {
+                    if (yTable >= 1970)
+                    {
+                        if (xTable > Plateau.PositionsCadeaux[i].X - 75 && xTable < Plateau.PositionsCadeaux[i].X + 75)
+                        {
+                            move = new MovePetitCadeau(i);
+
+                            if (move != null)
+                            {
+                                th = new Thread(ThreadAction);
+                                th.Start();
+                            }
+                            break;
+                        }
+                    }
+                }
+            }
         }
 
-        private void btnBougies_Click(object sender, EventArgs e)
+        public void ThreadAction()
         {
-            for(int i = 0; i < 20; i++)
-                Plateau.BougiesEnfoncees[i] = true;
+            move.Executer();
+            move = null;
+        }
+
+        Mouvement move;
+        Thread th;
+
+        private void btnReset_Click(object sender, EventArgs e)
+        {
+            for (int i = 0; i < 20; i++)
+                Plateau.BougiesEnfoncees[i] = false;
+            for (int i = 0; i < 4; i++)
+                Plateau.CadeauxActives[i] = false;
+
+            Plateau.Score = 0;
+        }
+
+        private bool continuerAffichage = true;
+        public void Stop()
+        {
+            continuerAffichage = false;
         }
     }
 }

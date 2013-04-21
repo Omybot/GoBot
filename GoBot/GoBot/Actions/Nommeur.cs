@@ -43,59 +43,6 @@ namespace GoBot.Actions
         {
             switch (servo)
             {
-                case ServomoteurID.GRBrasBasDroite:
-
-                    if(position == Config.CurrentConfig.PosPinceDroiteBasFerme)
-                            return "fermé";
-                    if(position == Config.CurrentConfig.PosPinceDroiteBasOuvert)
-                            return "ouvert";
-                            
-                    return position.ToString();
-
-                case ServomoteurID.GRBrasBasGauche:
-
-                    if (position == Config.CurrentConfig.PosPinceGaucheBasFerme)
-                        return "fermé";
-                    if (position == Config.CurrentConfig.PosPinceGaucheBasOuvert)
-                        return "ouvert";
-
-                    return position.ToString();
-
-                case ServomoteurID.GRBrasHautDroite:
-
-                    if (position == Config.CurrentConfig.PosPinceDroiteHautFerme)
-                        return "fermé";
-                    if (position == Config.CurrentConfig.PosPinceDroiteHautOuvert)
-                        return "ouvert";
-
-                    return position.ToString();
-
-                case ServomoteurID.GRBrasHautGauche:
-
-                    if (position == Config.CurrentConfig.PosPinceGaucheHautFerme)
-                        return "fermé";
-                    if (position == Config.CurrentConfig.PosPinceGaucheHautOuvert)
-                        return "ouvert";
-
-                    return position.ToString();
-
-                case ServomoteurID.GRBrasMilieuDroite:
-
-                    if (position == Config.CurrentConfig.PosPinceDroiteMilieuFerme)
-                        return "fermé";
-                    if (position == Config.CurrentConfig.PosPinceDroiteMilieuOuvert)
-                        return "ouvert";
-
-                    return position.ToString();
-
-                case ServomoteurID.GRBrasMilieuGauche:
-
-                    if (position == Config.CurrentConfig.PosPinceGaucheMilieuFerme)
-                        return "fermé";
-                    if (position == Config.CurrentConfig.PosPinceGaucheMilieuFerme)
-                        return "ouvert";
-
-                    return position.ToString();
                 default:
                     return position.ToString();
             }

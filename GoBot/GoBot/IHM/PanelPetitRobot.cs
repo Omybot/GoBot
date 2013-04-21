@@ -8,11 +8,11 @@ using System.Text;
 using System.Windows.Forms;
 using GoBot.Actions;
 
-namespace GoBot.IHM.IHMGrosRobot
+namespace GoBot.IHM
 {
-    public partial class PanelGrosRobot : UserControl
+    public partial class PanelPetitRobot : UserControl
     {
-        public PanelGrosRobot()
+        public PanelPetitRobot()
         {
             InitializeComponent();
 
@@ -21,12 +21,10 @@ namespace GoBot.IHM.IHMGrosRobot
 
         public void Init()
         {
-            //panelPinces.Init();
-
-            panelDeplacement.Robot = Robots.GrosRobot;
+            panelDeplacement.Robot = Robots.PetitRobot;
             panelDeplacement.Init();
-            panelHistorique.setHistorique(Robots.GrosRobot.Historique);
-            Robots.GrosRobot.Historique.nouvelleAction += new Historique.delegateAction(MAJHistoriqueDel);
+            panelHistorique.setHistorique(Robots.PetitRobot.Historique);
+            Robots.PetitRobot.Historique.nouvelleAction += new Historique.delegateAction(MAJHistoriqueDel);
         }
 
         private void MAJHistoriqueDel(IAction action)
@@ -62,9 +60,9 @@ namespace GoBot.IHM.IHMGrosRobot
         private void panelHistorique_Resize(object sender, EventArgs e)
         {
             if (panelHistorique.Height > 50)
-                Config.CurrentConfig.HistoriqueGROuvert = true;
+                Config.CurrentConfig.HistoriquePROuvert = true;
             else
-                Config.CurrentConfig.HistoriqueGROuvert = false;
+                Config.CurrentConfig.HistoriquePROuvert = false;
         }
     }
 }

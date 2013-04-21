@@ -41,8 +41,10 @@ namespace GoBot
                 PetitRobot = new RobotSimu();
             }
 
-            GrosRobot.Largeur = 280;
-            GrosRobot.Longueur = 220;
+            //GrosRobot.Largeur = 280;
+            //GrosRobot.Longueur = 220;
+            GrosRobot.Largeur = 200;
+            GrosRobot.Longueur = 100;
             GrosRobot.Position = new Calculs.Position(new Angle(270, AnglyeType.Degre), new Calculs.Formes.PointReel(1500, 1000));
             GrosRobot.Nom = "GrosRobot";
             GrosRobot.Init();

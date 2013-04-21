@@ -26,6 +26,18 @@ namespace GoBot
         public abstract void EnvoyerPID(int p, int i, int d);
         public abstract void CoupureAlim();
 
+        public void PositionerAngle(Angle angle, double marge = 0)
+        {
+            Angle diff = angle - Position.Angle;
+            if (Math.Abs(diff.AngleDegres) > marge)
+            {
+                if (diff.AngleDegres > 0)
+                    PivotDroite(diff.AngleDegres);
+                else
+                    PivotGauche(-diff.AngleDegres);
+            }
+        }
+
         public abstract int VitesseDeplacement { get; set; }
         public abstract int AccelerationDeplacement { get; set; }
         public abstract int VitessePivot { get; set; }
@@ -34,7 +46,7 @@ namespace GoBot
         public int Taille { get { return Math.Max(Longueur, Largeur); } }
         public abstract int Longueur { get; set; }
         public abstract int Largeur { get; set; }
-        public int Rayon { get { return (int)Math.Sqrt(Taille * Taille * 2) / 2; } }
+        public int Rayon { get { return (int)Math.Sqrt(Longueur * Largeur * 2) / 2; } }
 
         public abstract String Nom { get; set; }
     }

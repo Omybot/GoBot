@@ -15,7 +15,7 @@ using GoBot.Calculs;
 
 namespace GoBot
 {
-    class Plateau
+    public class Plateau
     {
         public static Balise Balise1 { get; set; }
         public static Balise Balise2 { get; set; }
@@ -31,10 +31,18 @@ namespace GoBot
 
         public static Color[] CouleursBougies { get; set; }
 
-        public static int[,] PositionsBougies { get; set; }
+        public static PointReel[] PositionsBougies { get; set; }
         public static bool[] BougiesEnfoncees { get; set; }
-        public static int[,] PositionsCadeaux { get; set; }
+        public static PointReel[] PositionsCadeaux { get; set; }
         public static bool[] CadeauxActives { get; set; }
+
+        private static int score;
+        public static int Score
+        {
+            get { return score; }
+            set { score = value; if (ScoreChange != null) ScoreChange(null, null); }
+        }
+        public static event EventHandler ScoreChange;
 
         /// <summary>
         /// Sémaphore à verrouiller pendant la manipulation du graph du pathfinding pour éviter les modification pendant énumération entre autres
@@ -113,42 +121,43 @@ namespace GoBot
 
                 NotreCouleur = Color.Red;
 
-                PositionsBougies = new Int32[20, 2];
+                PositionsBougies = new PointReel[20];
 
-                PositionsBougies[0, 1] = 68;     PositionsBougies[0, 0] = 1845;
-                PositionsBougies[1, 1] = 59;    PositionsBougies[1, 0] = 1946;
-                PositionsBougies[2, 1] = 194;   PositionsBougies[2, 0] = 1791;
-                PositionsBougies[3, 1] = 172;   PositionsBougies[3, 0] = 1916;
-                PositionsBougies[4, 1] = 291;   PositionsBougies[4, 0] = 1694;
-                PositionsBougies[5, 1] = 274;   PositionsBougies[5, 0] = 1857;
-                PositionsBougies[6, 1] = 357;   PositionsBougies[6, 0] = 1774;
-                PositionsBougies[7, 1] = 416;   PositionsBougies[7, 0] = 1672;
-                PositionsBougies[8, 1] = 343;   PositionsBougies[8, 0] = 1568;
-                PositionsBougies[9, 1] = 446;   PositionsBougies[9, 0] = 1559;
-                PositionsBougies[10, 1] = 68;  PositionsBougies[10, 0] = 1157;
-                PositionsBougies[11, 1] = 59;  PositionsBougies[11, 0] = 1054;
-                PositionsBougies[12, 1] = 194;  PositionsBougies[12, 0] = 1209;
-                PositionsBougies[13, 1] = 172; PositionsBougies[13, 0] = 1084;
-                PositionsBougies[14, 1] = 291; PositionsBougies[14, 0] = 1306;
-                PositionsBougies[15, 1] = 274; PositionsBougies[15, 0] = 1143;
-                PositionsBougies[16, 1] = 357; PositionsBougies[16, 0] = 1226;
-                PositionsBougies[17, 1] = 416; PositionsBougies[17, 0] = 1328;
-                PositionsBougies[18, 1] = 343; PositionsBougies[18, 0] = 1432;
-                PositionsBougies[19, 1] = 446; PositionsBougies[19, 0] = 1441;
+                PositionsBougies[0] = new PointReel(1845, 68);
+                PositionsBougies[1] = new PointReel(1946, 59);
+                PositionsBougies[2] = new PointReel(1791, 194);
+                PositionsBougies[3] = new PointReel(1916, 172);
+                PositionsBougies[4] = new PointReel(1694, 291);
+                PositionsBougies[5] = new PointReel(1857, 274);
+                PositionsBougies[6] = new PointReel(1774, 357);
+                PositionsBougies[7] = new PointReel(1672, 416);
+                PositionsBougies[8] = new PointReel(1568, 343);
+                PositionsBougies[9] = new PointReel(1559, 446);
+
+                PositionsBougies[10] = new PointReel(1157, 68);
+                PositionsBougies[11] = new PointReel(1054, 59);
+                PositionsBougies[12] = new PointReel(1209, 194);
+                PositionsBougies[13] = new PointReel(1084, 172);
+                PositionsBougies[14] = new PointReel(1306, 291);
+                PositionsBougies[15] = new PointReel(1143, 274);
+                PositionsBougies[16] = new PointReel(1226, 357);
+                PositionsBougies[17] = new PointReel(1328, 416);
+                PositionsBougies[18] = new PointReel(1432, 343);
+                PositionsBougies[19] = new PointReel(1441, 446);
 
                 BougiesEnfoncees = new bool[20];
                 for (int i = 0; i < 20; i++)
                     BougiesEnfoncees[i] = false;
 
-                PositionsCadeaux = new Int32[8, 2];
-                PositionsCadeaux[0, 0] = 600-86; PositionsCadeaux[0, 1] = 1995;
-                PositionsCadeaux[1, 0] = 600 + 86; PositionsCadeaux[1, 1] = 1995;
-                PositionsCadeaux[2, 0] = 1200 - 86; PositionsCadeaux[2, 1] = 1995;
-                PositionsCadeaux[3, 0] = 1200 + 86; PositionsCadeaux[3, 1] = 1995;
-                PositionsCadeaux[4, 0] = 1800 - 86; PositionsCadeaux[4, 1] = 1995;
-                PositionsCadeaux[5, 0] = 1800 + 86; PositionsCadeaux[5, 1] = 1995;
-                PositionsCadeaux[6, 0] = 2400 - 86; PositionsCadeaux[6, 1] = 1995;
-                PositionsCadeaux[7, 0] = 2400 + 86; PositionsCadeaux[7, 1] = 1995;
+                PositionsCadeaux = new PointReel[8];
+                PositionsCadeaux[0] = new PointReel(600 - 86, 2000);
+                PositionsCadeaux[1] = new PointReel(600 + 86, 2000);
+                PositionsCadeaux[2] = new PointReel(1200 - 86, 2000);
+                PositionsCadeaux[3] = new PointReel(1200 + 86, 2000);
+                PositionsCadeaux[4] = new PointReel(1800 - 86, 2000);
+                PositionsCadeaux[5] = new PointReel(1800 + 86, 2000);
+                PositionsCadeaux[6] = new PointReel(2400 - 86, 2000);
+                PositionsCadeaux[7] = new PointReel(2400 + 86, 2000);
 
                 CadeauxActives = new bool[8];
                 for (int i = 0; i < 8; i++)
@@ -163,7 +172,19 @@ namespace GoBot
             Balise3 = new Balise(Carte.RecBoi);
         }
 
-        public bool GrosRobotAllerA(double x, double y)
+        public bool PathFinding(double x, double y, int timeOut = 0, bool attendre = false)
+        {
+            semTrajectoire = new Semaphore(0, 999);
+
+            GrosRobotAllerA(x, y, timeOut, attendre);
+
+            if (attendre)
+                semTrajectoire.WaitOne();
+
+            return true;
+        }
+
+        public bool GrosRobotAllerA(double x, double y, int timeOut = 0, bool attendre = false)
         {
             CheminEnCoursNoeuds = new List<Node>();
             CheminEnCoursArcs = new List<Arc>();
@@ -177,10 +198,15 @@ namespace GoBot
             if (distance != 0)
             {
                 debutNode = new Node(Robots.GrosRobot.Position.Coordonnees.X, Robots.GrosRobot.Position.Coordonnees.Y, 0);
-                AddNode(debutNode);
+                AddNode(debutNode, 500);
                 nodeDebutAjoute = true;
             }
             Node finNode = Graph.ClosestNode(x, y, 0, out distance, false);
+            if (distance != 0)
+            {
+                finNode = new Node(x, y, 0);
+                AddNode(finNode, 500);
+            }
 
             // Teste s'il est possible d'aller directement à la fin sans passer par le graph
             bool toutDroit = true;
@@ -207,12 +233,6 @@ namespace GoBot
             // Sinon on passe par le graph
             else
             {
-                // Ajoute le point d'arrivée au graph
-                if (distance != 0)
-                {
-                    finNode = new Node(x, y, 0);
-                    AddNode(finNode);
-                }
                 AStar aStar = new AStar(Graph);
                 aStar.DijkstraHeuristicBalance = 1;
                 if (aStar.SearchPath(debutNode, finNode))
@@ -242,7 +262,7 @@ namespace GoBot
                             Arc arcRacourci = new Arc(nodes[iNodeDepart], nodes[iNodeArrivee]);
                             CheminTest = arcRacourci;
                             arcRacourci.Passable = false;
-                            for(int i = ListeObstacles.Count - 1; i >= 4; i--)
+                            for (int i = ListeObstacles.Count - 1; i >= 4; i--)
                             {
                                 IForme forme = ListeObstacles[i];
                                 ObstacleTeste = forme;
@@ -256,7 +276,7 @@ namespace GoBot
                                     break;
                                 }
                                 //else 
-                                    //Thread.Sleep(500);
+                                //Thread.Sleep(500);
                             }
                             ObstacleTeste = null;
                             if (raccourciPossible)
@@ -286,7 +306,7 @@ namespace GoBot
             CheminTrouve = new List<Arc>();
             ChargerGraph();
 
-            if(nodeDebutAjoute)
+            if (nodeDebutAjoute)
                 Graph.RemoveNode(debutNode);
 
             if (CheminEnCoursArcs.Count == 0)
@@ -294,11 +314,15 @@ namespace GoBot
             else
             {
                 // Execution du parcours
-                Thread th = new Thread(ThreadChemin);
+
+                th = new Thread(ThreadChemin);
                 th.Start();
+
                 return true;
             }
         }
+        Thread th;
+        Semaphore semTrajectoire;
 
         public List<Arc> CheminTrouve;
         public List<Node> NodeTrouve;
@@ -320,8 +344,11 @@ namespace GoBot
                 Position p = new Position(Robots.GrosRobot.Position.Angle, c1);
                 Direction traj = Maths.GetDirection(p, c2);
 
-                //GrosRobot.GoToXY((int)c2.X, (int)c2.Y);
-                Robots.GrosRobot.PivotDroite(-traj.angle.AngleDegres);
+                if (traj.angle.AngleDegres < 0)
+                    Robots.GrosRobot.PivotDroite(-traj.angle.AngleDegres);
+                else
+                    Robots.GrosRobot.PivotGauche(traj.angle.AngleDegres);
+
                 if (nouvelleTrajectoire)
                     break;
                 Robots.GrosRobot.Avancer((int)traj.distance);
@@ -333,8 +360,11 @@ namespace GoBot
                     break;
             }
             if (nouvelleTrajectoire)
-            {
                 GrosRobotAllerA(CheminEnCoursNoeuds[CheminEnCoursNoeuds.Count - 1].X, CheminEnCoursNoeuds[CheminEnCoursNoeuds.Count - 1].Y);
+            else
+            {
+                if (semTrajectoire != null)
+                    semTrajectoire.Release();
             }
         }
 

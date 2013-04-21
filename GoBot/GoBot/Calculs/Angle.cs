@@ -52,7 +52,7 @@ namespace GoBot.Calculs
         /// Construit un angle avec la valeur passée en paramètre
         /// </summary>
         /// <param name="angle">Angle de départ</param>
-        public Angle(double angleDepart, AnglyeType type)
+        public Angle(double angleDepart, AnglyeType type = AnglyeType.Degre)
         {
             if (type == AnglyeType.Degre)
                 angle = angleDepart;
@@ -60,7 +60,7 @@ namespace GoBot.Calculs
                 angle = (double)(180 * angleDepart / Math.PI);
 
             angle = angle % 360;
-            angle = angleOptimal(this);
+            angle = AngleOptimal(this);
         }
 
         /// <summary>
@@ -78,7 +78,7 @@ namespace GoBot.Calculs
         public void Tourner(double angleTourne)
         {
             angle += angleTourne;
-            angle = angleOptimal(this);
+            angle = AngleOptimal(this);
         }
 
         /// <summary>
@@ -96,24 +96,16 @@ namespace GoBot.Calculs
         /// </summary>
         /// <param name="a">Angle à tester</param>
         /// <returns>Angle optimal (en degrés)</returns>
-        public static double angleOptimal(Angle a)
+        private static double AngleOptimal(Angle a)
         {
-            double retour = a.AngleDegres % 360;
+            double retour = a.AngleDegres;
 
-            if (retour > 180)
+            while (retour > 180)
                 retour = retour - 360;
+            while (retour < -180)
+                retour = retour + 360;
 
             return retour;
-        }
-
-        public void setAngle(double _angle, AnglyeType type)
-        {
-            if (type == AnglyeType.Degre)
-                angle = _angle;
-            else if (type == AnglyeType.Radian)
-                angle = (double)(180 * angle / Math.PI);
-
-            angle = angleOptimal(this);
         }
 
         public static Angle operator +(Angle a1, Angle a2)
@@ -123,12 +115,39 @@ namespace GoBot.Calculs
 
         public static Angle operator -(Angle a1, Angle a2)
         {
-            return new Angle(a1.AngleDegres - a2.AngleDegres, AnglyeType.Degre);
+            return new Angle(a1.AnglePositif - a2.AnglePositif, AnglyeType.Degre);
+        }
+
+        public static bool operator ==(Angle a1, Angle a2)
+        {
+            return (Math.Round(a1.AnglePositif, 2) == Math.Round(a2.AnglePositif, 2));
+        }
+
+        public static bool operator !=(Angle a1, Angle a2)
+        {
+            return !(a1 == a2);
         }
 
         public override string ToString()
         {
             return angle + "°";
+        }
+
+        public override bool Equals(object obj)
+        {
+            try
+            {
+                return ((Angle)obj).AngleDegres == AngleDegres;
+            }
+            catch
+            {
+                return false;
+            }
+        }
+
+        public override int GetHashCode()
+        {
+            return (int)(AngleDegres * 1000);
         }
     }
 }

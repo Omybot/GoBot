@@ -134,7 +134,7 @@ namespace GoBot
                 semDeplacement = new Semaphore(0, int.MaxValue);
 
             DeplacementLigne = true;
-            Trame trame = TrameFactory.GRDeplacer(SensAR.Avant, distance);
+            Trame trame = TrameFactory.Deplacer(SensAR.Avant, distance);
             Connexion.SendMessage(trame);
 
             Historique.AjouterActionThread(new ActionAvance(this, distance));
@@ -146,7 +146,7 @@ namespace GoBot
 
         public override void ReglerOffsetAsserv(int offsetX, int offsetY, int offsetTeta)
         {
-            Trame trame = TrameFactory.GROffsetPos(offsetX, offsetY, offsetTeta);
+            Trame trame = TrameFactory.OffsetPos(offsetX, offsetY, offsetTeta);
             Connexion.SendMessage(trame);
         }
 
@@ -158,7 +158,7 @@ namespace GoBot
             DeplacementLigne = true;
             Historique.AjouterAction(new ActionRecule(this, distance));
 
-            Trame trame = TrameFactory.GRDeplacer(SensAR.Arriere, distance);
+            Trame trame = TrameFactory.Deplacer(SensAR.Arriere, distance);
             Connexion.SendMessage(trame);
             if (attendre)
                 semDeplacement.WaitOne();
@@ -168,26 +168,27 @@ namespace GoBot
 
         public override void PivotGauche(double angle, bool attendre = true)
         {
+            angle = Math.Round(angle, 2);
             if (attendre)
                 semDeplacement = new Semaphore(0, int.MaxValue);
 
             Historique.AjouterAction(new ActionPivot(this, angle, SensGD.Gauche));
-            Trame trame = TrameFactory.GRPivot(SensGD.Gauche, angle);
+            Trame trame = TrameFactory.Pivot(SensGD.Gauche, angle);
 
             Connexion.SendMessage(trame);
 
             if (attendre)
                 semDeplacement.WaitOne();
-
         }
 
         public override void PivotDroite(double angle, bool attendre = true)
         {
+            angle = Math.Round(angle, 2);
             if (attendre)
                 semDeplacement = new Semaphore(0, int.MaxValue);
 
             Historique.AjouterAction(new ActionPivot(this, angle, SensGD.Droite));
-            Trame trame = TrameFactory.GRPivot(SensGD.Droite, angle);
+            Trame trame = TrameFactory.Pivot(SensGD.Droite, angle);
             Connexion.SendMessage(trame);
 
             if (attendre)
@@ -210,7 +211,7 @@ namespace GoBot
 
             Historique.AjouterActionThread(new ActionVirage(this, rayon, angle, sensAr, sensGd));
 
-            Trame trame = TrameFactory.GRVirage(sensAr, sensGd, rayon, angle);
+            Trame trame = TrameFactory.Virage(sensAr, sensGd, rayon, angle);
             Connexion.SendMessage(trame);
 
             if (attendre)
@@ -219,7 +220,7 @@ namespace GoBot
 
         public void GoToXY(int x, int y)
         {
-            Trame trame = TrameFactory.GRGotoXY(x, y);
+            Trame trame = TrameFactory.GotoXY(x, y);
             Connexion.SendMessage(trame);
         }
 
@@ -229,7 +230,7 @@ namespace GoBot
                 semDeplacement = new Semaphore(0, int.MaxValue);
 
             Historique.AjouterActionThread(new ActionRecallage(this, sens));
-            Trame trame = TrameFactory.GRRecallage(sens);
+            Trame trame = TrameFactory.Recallage(sens);
             Connexion.SendMessage(trame);
 
             if (attendre)
@@ -240,7 +241,7 @@ namespace GoBot
         
         public override void EnvoyerPID(int p, int i, int d)
         {
-            Trame trame = TrameFactory.GRPID(p, i, d);
+            Trame trame = TrameFactory.PID(p, i, d);
             Connexion.SendMessage(trame);
         }
 
@@ -250,21 +251,23 @@ namespace GoBot
             Connexion.SendMessage(t);
         }
 
-        public void DemandePosition(bool attendre = true)
+        public bool DemandePosition(bool attendre = true)
         {
             if(attendre)
                 semPosition = new Semaphore(0, int.MaxValue);
 
-            Trame t = TrameFactory.GRDemandePosition();
+            Trame t = TrameFactory.DemandePosition();
             Connexion.SendMessage(t);
 
-            if(attendre)
-                semPosition.WaitOne();
+            if (attendre)
+                return semPosition.WaitOne(1000);
+            else
+                return true;
         }
 
         public override void BougeServo(ServomoteurID servo, int position)
         {
-            Trame trame = TrameFactory.GRBougeServomoteur(servo, position);
+            Trame trame = TrameFactory.BougeServomoteur(servo, position);
             Connexion.SendMessage(trame);
             Historique.AjouterAction(new ActionServo(this, position, servo));
         }
@@ -280,7 +283,7 @@ namespace GoBot
             }
             set
             {
-                Trame trame = TrameFactory.GRVitesseLigne(value);
+                Trame trame = TrameFactory.VitesseLigne(value);
                 Connexion.SendMessage(trame);
                 vitesseDeplacement = value;
                 Historique.AjouterAction(new ActionVitesseLigne(this, value));
@@ -296,7 +299,7 @@ namespace GoBot
             }
             set
             {
-                Trame trame = TrameFactory.GRAccelLigne(value);
+                Trame trame = TrameFactory.AccelLigne(value);
                 Connexion.SendMessage(trame);
                 accelDeplacement = value;
                 Historique.AjouterAction(new ActionAccelerationLigne(this, value));
@@ -312,7 +315,7 @@ namespace GoBot
             }
             set
             {
-                Trame trame = TrameFactory.GRVitessePivot(value);
+                Trame trame = TrameFactory.VitessePivot(value);
                 Connexion.SendMessage(trame);
                 vitessePivot = value;
                 Historique.AjouterAction(new ActionVitessePivot(this, value));
@@ -328,7 +331,7 @@ namespace GoBot
             }
             set
             {
-                Trame trame = TrameFactory.GRAccelPivot(value);
+                Trame trame = TrameFactory.AccelPivot(value);
                 Connexion.SendMessage(trame);
                 accelPivot = value;
                 Historique.AjouterAction(new ActionAccelerationPivot(this, value));

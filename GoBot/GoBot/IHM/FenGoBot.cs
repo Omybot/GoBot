@@ -15,6 +15,7 @@ using GoBot.Enchainements;
 using GoBot.Calculs;
 using GoBot.Calculs.Formes;
 using System.Threading;
+using GoBot.Mouvements;
 
 namespace GoBot
 {
@@ -28,7 +29,7 @@ namespace GoBot
             {
                 CheckForIllegalCrossThreadCalls = false;
                 panelGrosRobot.Init();
-                panelDeplacement1.Robot = Robots.PetitRobot;
+                panelPetitRobot.Init();
 
                 if (Screen.PrimaryScreen.Bounds.Width == 1024)
                 {
@@ -176,6 +177,7 @@ namespace GoBot
             panelBalise1.Balise.VitesseRotation(0);
             panelBalise2.Balise.VitesseRotation(0);
             panelBalise3.Balise.VitesseRotation(0);
+            panelTable.Stop();
 
             /*Plateau.Balise1.writer.Close();
             Plateau.Balise2.writer.Close();
@@ -192,7 +194,7 @@ namespace GoBot
             pictureBoxCouleur.BackColor = Plateau.CouleurJ2;
             pictureBoxBalises.Image = Properties.Resources.tableViolet;
 
-            Plateau.NotreCouleur = Color.Blue;
+            Plateau.NotreCouleur = Plateau.CouleurJ2;
             panelBougies1.ChangementCouleur();
 
             panelBalise1.Balise.Position = new Position(new Angle(90, AnglyeType.Degre), new PointReel(-Balise.DISTANCE_LASER_TABLE, -Balise.DISTANCE_LASER_TABLE));
@@ -205,7 +207,7 @@ namespace GoBot
             pictureBoxCouleur.BackColor = Plateau.CouleurJ1;
             pictureBoxBalises.Image = Properties.Resources.tableRouge;
 
-            Plateau.NotreCouleur = Color.Red;
+            Plateau.NotreCouleur = Plateau.CouleurJ1;
             panelBougies1.ChangementCouleur();
 
             panelBalise1.Balise.Position = new Position(new Angle(90, AnglyeType.Degre), new PointReel(Plateau.LongueurPlateau + Balise.DISTANCE_LASER_TABLE, -Balise.DISTANCE_LASER_TABLE));
@@ -411,7 +413,7 @@ namespace GoBot
         {
             Robots.Simuler(actif);
             panelGrosRobot.Init();
-            panelDeplacement1.Robot = Robots.PetitRobot;
+            panelPetitRobot.Init();
             Robots.GrosRobot.Historique.nouvelleAction += new Historique.delegateAction(HistoriqueGR_nouvelleAction);
             Robots.PetitRobot.Historique.nouvelleAction += new Historique.delegateAction(HistoriquePR_nouvelleAction);
         }

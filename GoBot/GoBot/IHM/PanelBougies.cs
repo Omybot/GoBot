@@ -72,7 +72,7 @@ namespace GoBot.IHM
 
             this.Invoke(new EventHandler(delegate
             {
-                if (Plateau.NotreCouleur == Color.Red)
+                if (Plateau.NotreCouleur == Plateau.CouleurJ1)
                 {
                     for (int i = 0; i < 10; i++)
                     {
@@ -161,7 +161,7 @@ namespace GoBot.IHM
 
         public void ChangementCouleur()
         {
-            if (Plateau.NotreCouleur == Color.Blue)
+            if (Plateau.NotreCouleur == Plateau.CouleurJ2)
             {
                 for (int i = 10; i < 20; i++)
                     Boutons[i].Enabled = true;

@@ -9,7 +9,7 @@ using System.Drawing;
 
 namespace GoBot
 {
-    class PointReelGenere
+    public class PointReelGenere
     {
         public PointReel Point { get; set; }
         public List<DetectionBalise> DetectionsOrigine { get; set; }
@@ -24,7 +24,7 @@ namespace GoBot
     /// <summary>
     /// Permet de transformer les détections des balises en coordonnées des alliés et ennemis
     /// </summary>
-    class InterpreteurBalise
+    public class InterpreteurBalise
     {
         enum ModeInterpretation
         {

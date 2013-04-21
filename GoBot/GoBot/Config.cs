@@ -27,62 +27,13 @@ namespace GoBot
 
         public bool DeplacementGROuvert { get; set; }
         public bool HistoriqueGROuvert { get; set; }
-        public bool PincesGROuvert { get; set; }
-        public bool PincesBooleenGROuvert { get; set; }
-        public bool PincesPrecisGROuvert { get; set; }
+        public bool ReglageGROuvert { get; set; }
+        public bool UtilGROuvert { get; set; }
 
         // Fenêtres petit robot
 
         public bool DeplacementPROuvert { get; set; }
         public bool HistoriquePROuvert { get; set; }
-        public bool PincesPROuvert { get; set; }
-        public bool PincesBooleenPROuvert { get; set; }
-        public bool PincesPrecisPROuvert { get; set; }
-        public bool PlateauPROuvert { get; set; }
-        public bool PlateauBooleenPROuvert { get; set; }
-        public bool PlateauPrecisPROuvert { get; set; }
-
-        // Positions des pinces du gros robot
-
-        public int PosPinceGaucheHautOuvert { get; set; }
-        public int PosPinceGaucheMilieuOuvert { get; set; }
-        public int PosPinceGaucheBasOuvert { get; set; }
-        public int PosPinceGaucheHautFerme { get; set; }
-        public int PosPinceGaucheMilieuFerme { get; set; }
-        public int PosPinceGaucheBasFerme { get; set; }
-        public int PosPinceGaucheBasMilieu { get; set; }
-
-        public int PosPinceGaucheHautActuelle { get; set; }
-        public int PosPinceGaucheMilieuActuelle { get; set; }
-        public int PosPinceGaucheBasActuelle { get; set; }
-        public int PosPinceDroiteHautActuelle { get; set; }
-        public int PosPinceDroiteMilieuActuelle { get; set; }
-        public int PosPinceDroiteBasActuelle { get; set; }
-
-        public int PosPinceDroiteHautOuvert { get; set; }
-        public int PosPinceDroiteMilieuOuvert { get; set; }
-        public int PosPinceDroiteBasOuvert { get; set; }
-        public int PosPinceDroiteHautFerme { get; set; }
-        public int PosPinceDroiteMilieuFerme { get; set; }
-        public int PosPinceDroiteBasFerme { get; set; }
-        public int PosPinceDroiteBasMilieu { get; set; }
-
-        public int PosBenneOuvert { get; set; }
-        public int PosBenneFerme { get; set; }
-        public int PosBenneActuelle { get; set; }
-
-        // Positions des pinces du petit robot
-
-        public int PosBrasDroiteDeplie { get; set; }
-        public int PosBrasDroiteRange { get; set; }
-        public int PosBrasDroiteReplie { get; set; }
-        public int PosBrasDroiteActuel { get; set; }
-
-        public int PosBrasGaucheDeplie { get; set; }
-        public int PosBrasGaucheRange { get; set; }
-        public int PosBrasGaucheReplie { get; set; }
-        public int PosBrasGaucheActuel { get; set; }
-
 
         // Déplacement gros robot
 
@@ -108,7 +59,7 @@ namespace GoBot
         public double OffsetBalise2Bas { get; set; }
         public double OffsetBalise3Bas { get; set; }
 
-        // Positions bougies
+        // Positions bougies à la camera
 
         public int[] PositionsBougiesX { get; set; }
         public int[] PositionsBougiesY { get; set; }
@@ -198,19 +149,11 @@ namespace GoBot
                 FileStream myFileStream = new FileStream("config.xml", FileMode.Open);
                 CurrentConfig = (Config)mySerializer.Deserialize(myFileStream);
                 myFileStream.Close();
-                // Serialisation binaire
-                /*BinaryFormatter formatter = new BinaryFormatter();
-                FileStream stream = File.Open("config.cfg", FileMode.Open);
-                config = (Config)formatter.Deserialize(stream);
-
-                stream.Close();*/
             }
             catch(Exception)
             {
                 MessageBox.Show("Aucune configuration chargée.");
             }
-
-            //CurrentConfig.PositionsBougies = new Int32[10, 2];
         }
 
         public static void Save()
@@ -219,13 +162,6 @@ namespace GoBot
             StreamWriter myWriter = new StreamWriter("config.xml");
             mySerializer.Serialize(myWriter, CurrentConfig);
             myWriter.Close();
-
-            // Serialisation binaire
-            /*Stream stream = File.Open("config.cfg", FileMode.Create);
-            BinaryFormatter formatter = new BinaryFormatter();
-            formatter.Serialize(stream, config);
-
-            stream.Close();*/
         }
     }
 }
