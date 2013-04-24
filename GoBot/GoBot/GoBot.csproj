@@ -102,10 +102,14 @@
     <Compile Include="IHM\PanelReglageGros.Designer.cs">
       <DependentUpon>PanelReglageGros.cs</DependentUpon>
     </Compile>
+    <Compile Include="Mouvements\MoveGrosCadeau.cs" />
+    <Compile Include="Mouvements\MoveGrosBougie.cs" />
     <Compile Include="Mouvements\MovePetitCadeau.cs" />
     <Compile Include="Mouvements\Mouvement.cs" />
     <Compile Include="Mouvements\MovePetitBougie.cs" />
     <Compile Include="Mouvements\PositionsMouvements.cs" />
+    <Compile Include="Ponderations\Poids.cs" />
+    <Compile Include="Ponderations\PoidsBase.cs" />
     <Compile Include="Robots.cs" />
     <Compile Include="UDP\Connexions.cs" />
     <Compile Include="PathFinding\Arc.cs" />

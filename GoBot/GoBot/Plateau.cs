@@ -12,6 +12,7 @@ using System.Windows.Forms;
 using System.Runtime.Serialization;
 using System.Runtime.Serialization.Formatters.Binary;
 using GoBot.Calculs;
+using GoBot.Ponderations;
 
 namespace GoBot
 {
@@ -21,6 +22,8 @@ namespace GoBot
         public static Balise Balise2 { get; set; }
         public static Balise Balise3 { get; set; }
         public static InterpreteurBalise InterpreteurBalise { get; set; }
+
+        public static Poids PoidActions { get; set; }
 
         private static List<IForme> ObstaclesFixes { get; set; }
         private static List<IForme> ObstaclesTemporaires { get; set; }
@@ -172,19 +175,19 @@ namespace GoBot
             Balise3 = new Balise(Carte.RecBoi);
         }
 
-        public bool PathFinding(double x, double y, int timeOut = 0, bool attendre = false)
+        public bool PathFinding(Robot robot, double x, double y, int timeOut = 0, bool attendre = false)
         {
             semTrajectoire = new Semaphore(0, 999);
 
-            GrosRobotAllerA(x, y, timeOut, attendre);
+            bool result = ParcoursPathFinding(robot, x, y, timeOut, attendre);
 
             if (attendre)
                 semTrajectoire.WaitOne();
 
-            return true;
+            return result;
         }
 
-        public bool GrosRobotAllerA(double x, double y, int timeOut = 0, bool attendre = false)
+        public bool ParcoursPathFinding(Robot robot, double x, double y, int timeOut = 0, bool attendre = false)
         {
             CheminEnCoursNoeuds = new List<Node>();
             CheminEnCoursArcs = new List<Arc>();
@@ -192,14 +195,12 @@ namespace GoBot
             DateTime debut = DateTime.Now;
 
             double distance;
-            bool nodeDebutAjoute = false;
 
-            Node debutNode = Graph.ClosestNode(Robots.GrosRobot.Position.Coordonnees.X, Robots.GrosRobot.Position.Coordonnees.Y, 0, out distance, false);
+            Node debutNode = Graph.ClosestNode(robot.Position.Coordonnees.X, robot.Position.Coordonnees.Y, 0, out distance, false);
             if (distance != 0)
             {
-                debutNode = new Node(Robots.GrosRobot.Position.Coordonnees.X, Robots.GrosRobot.Position.Coordonnees.Y, 0);
+                debutNode = new Node(robot.Position.Coordonnees.X, robot.Position.Coordonnees.Y, 0);
                 AddNode(debutNode, 500);
-                nodeDebutAjoute = true;
             }
             Node finNode = Graph.ClosestNode(x, y, 0, out distance, false);
             if (distance != 0)
@@ -306,23 +307,23 @@ namespace GoBot
             CheminTrouve = new List<Arc>();
             ChargerGraph();
 
-            if (nodeDebutAjoute)
-                Graph.RemoveNode(debutNode);
-
             if (CheminEnCoursArcs.Count == 0)
+            {
+                semTrajectoire.Release();
                 return false;
+            }
             else
             {
                 // Execution du parcours
 
                 th = new Thread(ThreadChemin);
-                th.Start();
+                th.Start(robot);
 
                 return true;
             }
         }
         Thread th;
-        Semaphore semTrajectoire;
+        Semaphore[] semTrajectoire;
 
         public List<Arc> CheminTrouve;
         public List<Node> NodeTrouve;
@@ -333,25 +334,26 @@ namespace GoBot
         /// <summary>
         /// Parcours le chemin pour arriver au point de destination
         /// </summary>
-        private void ThreadChemin()
+        private void ThreadChemin(Object o)
         {
+            Robot robot = (Robot)o;
             nouvelleTrajectoire = false;
             while (CheminEnCoursNoeuds.Count > 1)
             {
                 PointReel c1 = new PointReel(CheminEnCoursNoeuds[0].X, CheminEnCoursNoeuds[0].Y);
                 PointReel c2 = new PointReel(CheminEnCoursNoeuds[1].X, CheminEnCoursNoeuds[1].Y);
 
-                Position p = new Position(Robots.GrosRobot.Position.Angle, c1);
+                Position p = new Position(robot.Position.Angle, c1);
                 Direction traj = Maths.GetDirection(p, c2);
 
                 if (traj.angle.AngleDegres < 0)
-                    Robots.GrosRobot.PivotDroite(-traj.angle.AngleDegres);
+                    robot.PivotDroite(-traj.angle.AngleDegres);
                 else
-                    Robots.GrosRobot.PivotGauche(traj.angle.AngleDegres);
+                    robot.PivotGauche(traj.angle.AngleDegres);
 
                 if (nouvelleTrajectoire)
                     break;
-                Robots.GrosRobot.Avancer((int)traj.distance);
+                robot.Avancer((int)traj.distance);
 
                 CheminEnCoursNoeuds.RemoveAt(0);
                 CheminEnCoursArcs.RemoveAt(0);
@@ -360,7 +362,7 @@ namespace GoBot
                     break;
             }
             if (nouvelleTrajectoire)
-                GrosRobotAllerA(CheminEnCoursNoeuds[CheminEnCoursNoeuds.Count - 1].X, CheminEnCoursNoeuds[CheminEnCoursNoeuds.Count - 1].Y);
+                ParcoursPathFinding(robot, CheminEnCoursNoeuds[CheminEnCoursNoeuds.Count - 1].X, CheminEnCoursNoeuds[CheminEnCoursNoeuds.Count - 1].Y);
             else
             {
                 if (semTrajectoire != null)

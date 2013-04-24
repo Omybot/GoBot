@@ -10,5 +10,6 @@ namespace GoBot.Mouvements
         public abstract bool Executer(int timeOut = 0);
         public abstract double Cout { get; }
         public abstract int Score { get; }
+        public abstract double ScorePondere { get; }
     }
 }

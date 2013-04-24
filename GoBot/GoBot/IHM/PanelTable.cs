@@ -548,7 +548,7 @@ namespace GoBot.IHM
         {
             if (modeCourant == Mode.FinTrajectoire)
             {
-                Plateau.GrosRobotAllerA(ScreenToReal(pictureBoxTable.PointToClient(MousePosition).X), ScreenToReal(pictureBoxTable.PointToClient(MousePosition).Y));
+                Plateau.PathFinding(Robots.GrosRobot, ScreenToReal(pictureBoxTable.PointToClient(MousePosition).X), ScreenToReal(pictureBoxTable.PointToClient(MousePosition).Y));
                 modeCourant = Mode.Visualisation;
             }
             else
@@ -597,7 +597,8 @@ namespace GoBot.IHM
 
         public void ThreadAction()
         {
-            move.Executer();
+            if (!move.Executer())
+                MessageBox.Show("Echec");
             move = null;
         }
 

@@ -6,43 +6,6 @@
   <UtilGROuvert>false</UtilGROuvert>
   <DeplacementPROuvert>true</DeplacementPROuvert>
   <HistoriquePROuvert>true</HistoriquePROuvert>
-  <PincesPROuvert>true</PincesPROuvert>
-  <PincesBooleenPROuvert>true</PincesBooleenPROuvert>
-  <PincesPrecisPROuvert>false</PincesPrecisPROuvert>
-  <PlateauPROuvert>false</PlateauPROuvert>
-  <PlateauBooleenPROuvert>false</PlateauBooleenPROuvert>
-  <PlateauPrecisPROuvert>false</PlateauPrecisPROuvert>
-  <PosPinceGaucheHautOuvert>187</PosPinceGaucheHautOuvert>
-  <PosPinceGaucheMilieuOuvert>219</PosPinceGaucheMilieuOuvert>
-  <PosPinceGaucheBasOuvert>0</PosPinceGaucheBasOuvert>
-  <PosPinceGaucheHautFerme>759</PosPinceGaucheHautFerme>
-  <PosPinceGaucheMilieuFerme>686</PosPinceGaucheMilieuFerme>
-  <PosPinceGaucheBasFerme>1023</PosPinceGaucheBasFerme>
-  <PosPinceGaucheBasMilieu>0</PosPinceGaucheBasMilieu>
-  <PosPinceGaucheHautActuelle>759</PosPinceGaucheHautActuelle>
-  <PosPinceGaucheMilieuActuelle>686</PosPinceGaucheMilieuActuelle>
-  <PosPinceGaucheBasActuelle>1023</PosPinceGaucheBasActuelle>
-  <PosPinceDroiteHautActuelle>256</PosPinceDroiteHautActuelle>
-  <PosPinceDroiteMilieuActuelle>397</PosPinceDroiteMilieuActuelle>
-  <PosPinceDroiteBasActuelle>0</PosPinceDroiteBasActuelle>
-  <PosPinceDroiteHautOuvert>812</PosPinceDroiteHautOuvert>
-  <PosPinceDroiteMilieuOuvert>781</PosPinceDroiteMilieuOuvert>
-  <PosPinceDroiteBasOuvert>1023</PosPinceDroiteBasOuvert>
-  <PosPinceDroiteHautFerme>256</PosPinceDroiteHautFerme>
-  <PosPinceDroiteMilieuFerme>397</PosPinceDroiteMilieuFerme>
-  <PosPinceDroiteBasFerme>0</PosPinceDroiteBasFerme>
-  <PosPinceDroiteBasMilieu>0</PosPinceDroiteBasMilieu>
-  <PosBenneOuvert>350</PosBenneOuvert>
-  <PosBenneFerme>811</PosBenneFerme>
-  <PosBenneActuelle>539</PosBenneActuelle>
-  <PosBrasDroiteDeplie>509</PosBrasDroiteDeplie>
-  <PosBrasDroiteRange>302</PosBrasDroiteRange>
-  <PosBrasDroiteReplie>196</PosBrasDroiteReplie>
-  <PosBrasDroiteActuel>302</PosBrasDroiteActuel>
-  <PosBrasGaucheDeplie>572</PosBrasGaucheDeplie>
-  <PosBrasGaucheRange>763</PosBrasGaucheRange>
-  <PosBrasGaucheReplie>839</PosBrasGaucheReplie>
-  <PosBrasGaucheActuel>763</PosBrasGaucheActuel>
   <GRVitesseLigne>878</GRVitesseLigne>
   <GRAccelerationLigne>1016</GRAccelerationLigne>
   <GRVitessePivot>561</GRVitessePivot>

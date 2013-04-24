@@ -8,36 +8,36 @@ using System.Threading;
 
 namespace GoBot.Mouvements
 {
-    class MovePetitBougie : Mouvement
+    class MoveGrosBougie : Mouvement
     {
         private Position position;
         private int numeroBougie;
 
-        public MovePetitBougie(int iBougie)
+        public MoveGrosBougie(int iBougie)
         {
             numeroBougie = iBougie;
-            position = PositionsMouvements.PositionPetitBougie[iBougie];
+            position = PositionsMouvements.PositionGrosBougie[iBougie];
         }
 
         public override bool Executer(int timeOut = 0)
         {
-            if (PanelTable.Plateau.PathFinding(Robots.PetitRobot, position.Coordonnees.X, position.Coordonnees.Y, timeOut, true))
+            if (PanelTable.Plateau.PathFinding(Robots.GrosRobot, position.Coordonnees.X, position.Coordonnees.Y, timeOut, true))
             {
-                Angle angle180 = position.Angle - Robots.PetitRobot.Position.Angle;
+                Angle angle180 = position.Angle - Robots.GrosRobot.Position.Angle;
 
                 if (Math.Abs(angle180.AngleDegres) < 90)
                 {
-                    Robots.PetitRobot.PositionerAngle(position.Angle, 1);
-                    Robots.PetitRobot.BougeServo(ServomoteurID.GRBrasBasDroite, 500);
+                    Robots.GrosRobot.PositionerAngle(position.Angle, 1);
+                    Robots.GrosRobot.BougeServo(ServomoteurID.GRBrasBasDroite, 500);
                     Thread.Sleep(500);
-                    Robots.PetitRobot.BougeServo(ServomoteurID.GRBrasBasDroite, 0);
+                    Robots.GrosRobot.BougeServo(ServomoteurID.GRBrasBasDroite, 0);
                 }
                 else
                 {
-                    Robots.PetitRobot.PositionerAngle(position.Angle - new Angle(180, AnglyeType.Degre), 1);
-                    Robots.PetitRobot.BougeServo(ServomoteurID.GRBrasBasGauche, 500);
+                    Robots.GrosRobot.PositionerAngle(position.Angle - new Angle(180, AnglyeType.Degre), 1);
+                    Robots.GrosRobot.BougeServo(ServomoteurID.GRBrasBasGauche, 500);
                     Thread.Sleep(500);
-                    Robots.PetitRobot.BougeServo(ServomoteurID.GRBrasBasGauche, 0);
+                    Robots.GrosRobot.BougeServo(ServomoteurID.GRBrasBasGauche, 0);
                 }
                 Plateau.Score += Score;
                 Plateau.BougiesEnfoncees[numeroBougie] = true;
@@ -75,7 +75,7 @@ namespace GoBot.Mouvements
         {
             get
             {
-                return Score * Plateau.PoidActions.PoidGlobalPetitBougie * Plateau.PoidActions.PoidsPetitBougie[numeroBougie];
+                return Score * Plateau.PoidActions.PoidGlobalGrosBougie * Plateau.PoidActions.PoidsGrosBougie[numeroBougie];
             }
         }
     }
