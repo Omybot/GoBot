@@ -10,35 +10,24 @@ namespace GoBot.Mouvements
 {
     class MoveGrosBougie : Mouvement
     {
-        private Position position;
+        public override Position Position { get; protected set; }
         private int numeroBougie;
 
         public MoveGrosBougie(int iBougie)
         {
             numeroBougie = iBougie;
-            position = PositionsMouvements.PositionGrosBougie[iBougie];
+            Position = PositionsMouvements.PositionGrosBougie[iBougie];
         }
 
         public override bool Executer(int timeOut = 0)
         {
-            if (PanelTable.Plateau.PathFinding(Robots.GrosRobot, position.Coordonnees.X, position.Coordonnees.Y, timeOut, true))
+            if (Robots.GrosRobot.PathFinding(Position.Coordonnees.X, Position.Coordonnees.Y, timeOut, true))
             {
-                Angle angle180 = position.Angle - Robots.GrosRobot.Position.Angle;
+                Robots.GrosRobot.PositionerAngle(Position.Angle, 1);
+                Robots.GrosRobot.BougeServo(ServomoteurID.GRBrasBasDroite, 500);
+                Thread.Sleep(500);
+                Robots.GrosRobot.BougeServo(ServomoteurID.GRBrasBasDroite, 0);
 
-                if (Math.Abs(angle180.AngleDegres) < 90)
-                {
-                    Robots.GrosRobot.PositionerAngle(position.Angle, 1);
-                    Robots.GrosRobot.BougeServo(ServomoteurID.GRBrasBasDroite, 500);
-                    Thread.Sleep(500);
-                    Robots.GrosRobot.BougeServo(ServomoteurID.GRBrasBasDroite, 0);
-                }
-                else
-                {
-                    Robots.GrosRobot.PositionerAngle(position.Angle - new Angle(180, AnglyeType.Degre), 1);
-                    Robots.GrosRobot.BougeServo(ServomoteurID.GRBrasBasGauche, 500);
-                    Thread.Sleep(500);
-                    Robots.GrosRobot.BougeServo(ServomoteurID.GRBrasBasGauche, 0);
-                }
                 Plateau.Score += Score;
                 Plateau.BougiesEnfoncees[numeroBougie] = true;
                 return true;
@@ -49,7 +38,14 @@ namespace GoBot.Mouvements
 
         public override double Cout
         {
-            get { throw new NotImplementedException(); }
+            get
+            {
+                if (Score <= 0)
+                    return double.MaxValue;
+
+                double distance = Robots.GrosRobot.Position.Coordonnees.Distance(Position.Coordonnees);
+                return distance * distance / ScorePondere;
+            }
         }
 
         public override int Score
@@ -62,7 +58,7 @@ namespace GoBot.Mouvements
                     if (Plateau.CouleursBougies[i] == System.Drawing.Color.White && Plateau.BougiesEnfoncees[i])
                         nbBlancEnfonces++;
                 }
-                if (Plateau.CouleursBougies[numeroBougie] == System.Drawing.Color.White && nbBlancEnfonces == 3)
+                if (!Plateau.BougiesEnfoncees[numeroBougie] && Plateau.CouleursBougies[numeroBougie] == System.Drawing.Color.White && nbBlancEnfonces == 3)
                     return 4 + 20;
                 else if (!Plateau.BougiesEnfoncees[numeroBougie] && (Plateau.CouleursBougies[numeroBougie] == Plateau.NotreCouleur || Plateau.CouleursBougies[numeroBougie] == System.Drawing.Color.White))
                     return 4;

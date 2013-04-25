@@ -157,7 +157,7 @@ namespace GoBot.UDP
             return new Trame(tab);
         }
 
-        public static Trame Virage(SensAR sensAr, SensGD sensGd, int rayon, int distance)
+        public static Trame Virage(SensAR sensAr, SensGD sensGd, int rayon, double angle)
         {
             byte[] tab = new byte[8];
             tab[0] = (byte)Carte.RecMove;
@@ -166,8 +166,8 @@ namespace GoBot.UDP
             tab[3] = (byte)sensGd;
             tab[4] = (byte)ByteDivide(rayon, true);
             tab[5] = (byte)ByteDivide(rayon, false);
-            tab[6] = (byte)ByteDivide(distance, true);
-            tab[7] = (byte)ByteDivide(distance, false);
+            tab[6] = (byte)ByteDivide((int)(angle * 100), true);
+            tab[7] = (byte)ByteDivide((int)(angle * 100), false);
             return new Trame(tab);
         }
 

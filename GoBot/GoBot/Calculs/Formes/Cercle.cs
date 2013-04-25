@@ -93,7 +93,7 @@ namespace GoBot.Calculs.Formes
         protected bool croise(Droite droite)
         {
             // Si une droite croise le Cercle, c'est que le point de la droite le plus proche du centre du Cercle est éloigné d'une distance inférieure au rayon
-            double distanceAuCentre = droite.getDistance(centre);
+            double distanceAuCentre = droite.Distance(centre);
             return distanceAuCentre <= rayon;
         }
 
@@ -105,7 +105,7 @@ namespace GoBot.Calculs.Formes
         protected bool croise(Segment segment)
         {
             // Même test que pour la droite
-            double distanceAuCentre = segment.getDistance(centre);
+            double distanceAuCentre = segment.Distance(centre);
             return distanceAuCentre <= rayon;
         }
 
@@ -135,7 +135,7 @@ namespace GoBot.Calculs.Formes
         {
             // Pour croiser un Cercle il suffit que son centre soit éloigné de notre centre de moins que la somme de nos 2 rayons
 
-            double distanceCentres = centre.getDistance(Cercle.centre);
+            double distanceCentres = centre.Distance(Cercle.centre);
 
             if (distanceCentres <= rayon + Cercle.rayon)
                 return true;
@@ -181,7 +181,7 @@ namespace GoBot.Calculs.Formes
         protected bool contient(PointReel point)
         {
             // Pour contenir un point, celui si se trouve à une distance inférieure au rayon du centre
-            return point.getDistance(centre) <= rayon;
+            return point.Distance(centre) <= rayon;
         }
 
         /// <summary>
@@ -231,7 +231,7 @@ namespace GoBot.Calculs.Formes
         protected bool contient(Cercle Cercle)
         {
             // Pour contenir un Cercle il faut que son rayon + la distance entre les centres des deux Cercles soit inférieure à notre rayon
-            return Cercle.rayon + Cercle.Centre.getDistance(Centre) < rayon;
+            return Cercle.rayon + Cercle.Centre.Distance(Centre) < rayon;
         }
 
         #endregion
@@ -282,20 +282,20 @@ namespace GoBot.Calculs.Formes
         /// </summary>
         /// <param name="forme">Forme testée</param>
         /// <returns>Distance minimale</returns>
-        public double getDistance(IForme forme)
+        public double Distance(IForme forme)
         {
             Type typeForme = forme.GetType();
 
             if (typeForme.IsAssignableFrom(typeof(Segment)))
-                return getDistance((Segment)forme);
+                return Distance((Segment)forme);
             else if (typeForme.IsAssignableFrom(typeof(PointReel)))
-                return getDistance((PointReel)forme);
+                return Distance((PointReel)forme);
             else if (typeForme.IsAssignableFrom(typeof(Droite)))
-                return getDistance((Droite)forme);
+                return Distance((Droite)forme);
             else if (typeForme.IsAssignableFrom(typeof(Polygone)))
-                return getDistance((Polygone)forme);
+                return Distance((Polygone)forme);
             else if (typeForme.IsAssignableFrom(typeof(Cercle)))
-                return getDistance((Cercle)forme);
+                return Distance((Cercle)forme);
             else
                 throw new NotImplementedException();
         }
@@ -305,10 +305,10 @@ namespace GoBot.Calculs.Formes
         /// </summary>
         /// <param name="forme">Segment testé</param>
         /// <returns>Distance minimale</returns>
-        public double getDistance(Segment segment)
+        public double Distance(Segment segment)
         {
             // Le segment sait le faire
-            return segment.getDistance(this);
+            return segment.Distance(this);
         }
 
         /// <summary>
@@ -316,9 +316,9 @@ namespace GoBot.Calculs.Formes
         /// </summary>
         /// <param name="forme">Droite testée</param>
         /// <returns>Distance minimale</returns>
-        public double getDistance(Droite droite)
+        public double Distance(Droite droite)
         {
-            return droite.getDistance(this);
+            return droite.Distance(this);
         }
 
         /// <summary>
@@ -326,12 +326,12 @@ namespace GoBot.Calculs.Formes
         /// </summary>
         /// <param name="forme">Cercle testé</param>
         /// <returns>Distance minimale</returns>
-        public double getDistance(Cercle Cercle)
+        public double Distance(Cercle Cercle)
         {
             if (croise(Cercle))
                 return 0;
 
-            return Cercle.Centre.getDistance(Centre) - Rayon - Cercle.Rayon;
+            return Cercle.Centre.Distance(Centre) - Rayon - Cercle.Rayon;
         }
 
         /// <summary>
@@ -339,9 +339,9 @@ namespace GoBot.Calculs.Formes
         /// </summary>
         /// <param name="forme">Polygone testé</param>
         /// <returns>Distance minimale</returns>
-        public double getDistance(Polygone polygone)
+        public double Distance(Polygone polygone)
         {
-            return polygone.getDistance(this);
+            return polygone.Distance(this);
         }
 
         /// <summary>
@@ -349,10 +349,10 @@ namespace GoBot.Calculs.Formes
         /// </summary>
         /// <param name="point">PointReel testé</param>
         /// <returns>Distance calculée</returns>
-        public double getDistance(PointReel point)
+        public double Distance(PointReel point)
         {
             // C'est la distance entre le centre du Cercle et le point moins le rayon du cercle
-            return point.getDistance(Centre) - Rayon;
+            return point.Distance(Centre) - Rayon;
         }
 
         #endregion

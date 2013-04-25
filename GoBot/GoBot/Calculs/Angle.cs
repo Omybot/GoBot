@@ -120,7 +120,7 @@ namespace GoBot.Calculs
 
         public static bool operator ==(Angle a1, Angle a2)
         {
-            return (Math.Round(a1.AnglePositif, 2) == Math.Round(a2.AnglePositif, 2));
+            return ((Math.Round(a1.AnglePositif % 360, 1) == Math.Round(a2.AnglePositif % 360, 1)) || (Math.Abs(a1.AngleDegres) <= 0.01 && Math.Abs(a2.AngleDegres) <= 0.01));
         }
 
         public static bool operator !=(Angle a1, Angle a2)

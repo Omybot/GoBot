@@ -252,20 +252,20 @@ namespace GoBot.Calculs.Formes
         /// </summary>
         /// <param name="forme">Forme testée</param>
         /// <returns>Distance minimale</returns>
-        new public double getDistance(IForme forme)
+        new public double Distance(IForme forme)
         {
             Type typeForme = forme.GetType();
 
             if (typeForme.IsAssignableFrom(typeof(Segment)))
-                return getDistance((Segment)forme);
+                return Distance((Segment)forme);
             else if (typeForme.IsAssignableFrom(typeof(PointReel)))
-                return getDistance((PointReel)forme);
+                return Distance((PointReel)forme);
             else if (typeForme.IsAssignableFrom(typeof(Droite)))
-                return getDistance((Droite)forme);
+                return Distance((Droite)forme);
             else if (typeForme.IsAssignableFrom(typeof(Polygone)))
-                return getDistance((Polygone)forme);
+                return Distance((Polygone)forme);
             else if (typeForme.IsAssignableFrom(typeof(Cercle)))
-                return getDistance((Cercle)forme);
+                return Distance((Cercle)forme);
             else
                 throw new NotImplementedException();
         }
@@ -275,7 +275,7 @@ namespace GoBot.Calculs.Formes
         /// </summary>
         /// <param name="forme">Segment testé</param>
         /// <returns>Distance minimale</returns>
-        new private double getDistance(Segment segment)
+        new private double Distance(Segment segment)
         {
             // Si les segments se croisent la distance est de 0
             if (croise(segment))
@@ -287,31 +287,31 @@ namespace GoBot.Calculs.Formes
             // TODO c'est faux dans pas mal de cas... Voir avec la projection orthogonale
 
             // Le minimal est peut être entre les extremités
-            minDistance = Math.Min(minDistance, segment.Debut.getDistance(Debut));
-            minDistance = Math.Min(minDistance, segment.Debut.getDistance(Fin));
-            minDistance = Math.Min(minDistance, segment.Fin.getDistance(Debut));
-            minDistance = Math.Min(minDistance, segment.Fin.getDistance(Fin));
+            minDistance = Math.Min(minDistance, segment.Debut.Distance(Debut));
+            minDistance = Math.Min(minDistance, segment.Debut.Distance(Fin));
+            minDistance = Math.Min(minDistance, segment.Fin.Distance(Debut));
+            minDistance = Math.Min(minDistance, segment.Fin.Distance(Fin));
 
             // Le minimal est peut etre entre une extremité et le projeté hortogonal sur l'autre segment
             Droite perpendiculaire = segment.getPerpendiculaire(Debut);
             PointReel croisement = segment.getCroisement(perpendiculaire);
             if(croisement != null)
-                minDistance = Math.Min(minDistance, croisement.getDistance(Debut));
+                minDistance = Math.Min(minDistance, croisement.Distance(Debut));
 
             perpendiculaire = segment.getPerpendiculaire(Fin);
             croisement = segment.getCroisement(perpendiculaire);
             if(croisement != null)
-                minDistance = Math.Min(minDistance, croisement.getDistance(Fin));
+                minDistance = Math.Min(minDistance, croisement.Distance(Fin));
 
             perpendiculaire = getPerpendiculaire(segment.Debut);
             croisement = getCroisement(perpendiculaire);
             if (croisement != null)
-                minDistance = Math.Min(minDistance, croisement.getDistance(segment.Debut));
+                minDistance = Math.Min(minDistance, croisement.Distance(segment.Debut));
 
             perpendiculaire = getPerpendiculaire(segment.Fin);
             croisement = getCroisement(perpendiculaire);
             if (croisement != null)
-                minDistance = Math.Min(minDistance, croisement.getDistance(segment.Fin));
+                minDistance = Math.Min(minDistance, croisement.Distance(segment.Fin));
 
             return minDistance;
         }
@@ -321,7 +321,7 @@ namespace GoBot.Calculs.Formes
         /// </summary>
         /// <param name="forme">Droite testée</param>
         /// <returns>Distance minimale</returns>
-        new private double getDistance(Droite droite)
+        new private double Distance(Droite droite)
         {
             // Si la droite et le segment se croisent la distance est de 0
             if (croise(droite))
@@ -331,8 +331,8 @@ namespace GoBot.Calculs.Formes
             double minDistance = double.MaxValue;
 
             // TODO c'est faux dans pas mal de cas...Voir avec la projection orthogonale
-            minDistance = Math.Min(minDistance, droite.getDistance(Debut));
-            minDistance = Math.Min(minDistance, droite.getDistance(Fin));
+            minDistance = Math.Min(minDistance, droite.Distance(Debut));
+            minDistance = Math.Min(minDistance, droite.Distance(Fin));
 
             return minDistance;
         }
@@ -342,13 +342,13 @@ namespace GoBot.Calculs.Formes
         /// </summary>
         /// <param name="forme">Cercle testé</param>
         /// <returns>Distance minimale</returns>
-        new private double getDistance(Cercle Cercle)
+        new private double Distance(Cercle Cercle)
         {
             if (croise(Cercle))
                 return 0;
 
             // Distance jusqu'au centre du cercle - son rayon
-            return getDistance(Cercle.Centre) - Cercle.Rayon;
+            return Distance(Cercle.Centre) - Cercle.Rayon;
         }
 
         /// <summary>
@@ -356,7 +356,7 @@ namespace GoBot.Calculs.Formes
         /// </summary>
         /// <param name="forme">Polygone testé</param>
         /// <returns>Distance minimale</returns>
-        new private double getDistance(Polygone polygone)
+        new private double Distance(Polygone polygone)
         {
             // Distance jusqu'au segment le plus proche
             double minDistance = double.MaxValue;
@@ -366,7 +366,7 @@ namespace GoBot.Calculs.Formes
                 if (croise(s))
                     return 0;
 
-                minDistance = Math.Min(s.getDistance(this), minDistance);
+                minDistance = Math.Min(s.Distance(this), minDistance);
             }
 
             return minDistance;
@@ -377,9 +377,9 @@ namespace GoBot.Calculs.Formes
         /// </summary>
         /// <param name="point">PointReel testé</param>
         /// <returns>Distance minimale</returns>
-        new private double getDistance(PointReel point)
+        new private double Distance(PointReel point)
         {
-            // Le raisonnement est le même que pour la droite cf Droite.getDistance
+            // Le raisonnement est le même que pour la droite cf Droite.Distance
 
             Droite perpendiculaire = getPerpendiculaire(point);
             PointReel pointProche = getCroisement(perpendiculaire);
@@ -389,14 +389,14 @@ namespace GoBot.Calculs.Formes
             // Seule différence : on teste si l'intersection appartient bien au segment, sinon on retourne la distance avec l'extrémité la plus proche
             if (pointProche == null)
             {
-                double distanceDebut = point.getDistance(Debut);
-                double distanceFin = point.getDistance(Fin);
+                double distanceDebut = point.Distance(Debut);
+                double distanceFin = point.Distance(Fin);
 
                 distance = Math.Min(distanceDebut,  distanceFin);
             }
             else
             {
-                distance = point.getDistance(pointProche);
+                distance = point.Distance(pointProche);
             }
 
             return distance;

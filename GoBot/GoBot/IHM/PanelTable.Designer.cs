@@ -42,6 +42,9 @@
             this.lblScore = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
             this.lblPos = new System.Windows.Forms.Label();
+            this.btnGo = new System.Windows.Forms.Button();
+            this.boxCoutGros = new System.Windows.Forms.CheckBox();
+            this.boxCoutPetit = new System.Windows.Forms.CheckBox();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxTable)).BeginInit();
             this.SuspendLayout();
             // 
@@ -139,7 +142,7 @@
             // 
             // btnReset
             // 
-            this.btnReset.Location = new System.Drawing.Point(17, 403);
+            this.btnReset.Location = new System.Drawing.Point(19, 371);
             this.btnReset.Name = "btnReset";
             this.btnReset.Size = new System.Drawing.Size(75, 23);
             this.btnReset.TabIndex = 10;
@@ -155,7 +158,7 @@
             this.pictureBoxTable.Size = new System.Drawing.Size(750, 500);
             this.pictureBoxTable.TabIndex = 0;
             this.pictureBoxTable.TabStop = false;
-            this.pictureBoxTable.Click += new System.EventHandler(this.pictureBoxTable_Click);
+            this.pictureBoxTable.MouseClick += new System.Windows.Forms.MouseEventHandler(this.pictureBoxTable_MouseClick);
             this.pictureBoxTable.MouseMove += new System.Windows.Forms.MouseEventHandler(this.pictureBoxTable_MouseMove);
             // 
             // lblScore
@@ -187,11 +190,44 @@
             this.lblPos.TabIndex = 15;
             this.lblPos.Text = "0 : 0";
             // 
+            // btnGo
+            // 
+            this.btnGo.Location = new System.Drawing.Point(17, 480);
+            this.btnGo.Name = "btnGo";
+            this.btnGo.Size = new System.Drawing.Size(75, 23);
+            this.btnGo.TabIndex = 16;
+            this.btnGo.Text = "Go !!";
+            this.btnGo.UseVisualStyleBackColor = true;
+            this.btnGo.Click += new System.EventHandler(this.btnGo_Click);
+            // 
+            // boxCoutGros
+            // 
+            this.boxCoutGros.AutoSize = true;
+            this.boxCoutGros.Location = new System.Drawing.Point(9, 400);
+            this.boxCoutGros.Name = "boxCoutGros";
+            this.boxCoutGros.Size = new System.Drawing.Size(103, 17);
+            this.boxCoutGros.TabIndex = 17;
+            this.boxCoutGros.Text = "Coûts gros robot";
+            this.boxCoutGros.UseVisualStyleBackColor = true;
+            // 
+            // boxCoutPetit
+            // 
+            this.boxCoutPetit.AutoSize = true;
+            this.boxCoutPetit.Location = new System.Drawing.Point(9, 423);
+            this.boxCoutPetit.Name = "boxCoutPetit";
+            this.boxCoutPetit.Size = new System.Drawing.Size(103, 17);
+            this.boxCoutPetit.TabIndex = 18;
+            this.boxCoutPetit.Text = "Coûts petit robot";
+            this.boxCoutPetit.UseVisualStyleBackColor = true;
+            // 
             // PanelTable
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.Transparent;
+            this.Controls.Add(this.boxCoutPetit);
+            this.Controls.Add(this.boxCoutGros);
+            this.Controls.Add(this.btnGo);
             this.Controls.Add(this.lblPos);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.lblScore);
@@ -230,5 +266,8 @@
         private System.Windows.Forms.Label lblScore;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label lblPos;
+        private System.Windows.Forms.Button btnGo;
+        private System.Windows.Forms.CheckBox boxCoutGros;
+        private System.Windows.Forms.CheckBox boxCoutPetit;
     }
 }

@@ -39,7 +39,7 @@ namespace GoBot.Calculs
         {
             Direction result = new Direction();
 
-            double distance = depart.Coordonnees.getDistance(arrivee);
+            double distance = depart.Coordonnees.Distance(arrivee);
             result.distance = distance;
 
             PointReel devantRobot = new PointReel(depart.Coordonnees.X + Math.Cos(depart.Angle.AngleRadians) * 100, depart.Coordonnees.Y + Math.Sin(depart.Angle.AngleRadians) * 100);

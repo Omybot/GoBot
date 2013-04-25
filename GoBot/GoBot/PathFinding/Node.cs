@@ -76,7 +76,7 @@ namespace AStarFolder
 				foreach (Arc A in _OutgoingArcs) A.Passable = value;
 				_Passable = value;
 			}
-			get { return _Passable; }		
+			get { return _Passable; }
 		}
 
 		/// <summary>

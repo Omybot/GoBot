@@ -31,26 +31,26 @@ namespace GoBot.Mouvements
             PositionPetitBougie.Add(11, new Position(new Angle(-106.6), new PointReel(868, 122)));
 
             PositionGrosBougie = new Dictionary<int, Position>();
-            PositionGrosBougie.Add(0, new Position(new Angle(0), new PointReel(0, 0)));
+            PositionGrosBougie.Add(0, new Position(new Angle(-249.12), new PointReel(2157, 188)));
             PositionGrosBougie.Add(1, new Position(new Angle(0), new PointReel(0, 0)));
-            PositionGrosBougie.Add(2, new Position(new Angle(0), new PointReel(0, 0)));
-            PositionGrosBougie.Add(3, new Position(new Angle(0), new PointReel(0, 0)));
-            PositionGrosBougie.Add(4, new Position(new Angle(0), new PointReel(0, 0)));
-            PositionGrosBougie.Add(5, new Position(new Angle(0), new PointReel(0, 0)));
-            PositionGrosBougie.Add(6, new Position(new Angle(0), new PointReel(0, 0)));
-            PositionGrosBougie.Add(7, new Position(new Angle(0), new PointReel(0, 0)));
-            PositionGrosBougie.Add(8, new Position(new Angle(0), new PointReel(0, 0)));
-            PositionGrosBougie.Add(9, new Position(new Angle(0), new PointReel(0, 0)));
-            PositionGrosBougie.Add(10, new Position(new Angle(0), new PointReel(0, 0)));
+            PositionGrosBougie.Add(2, new Position(new Angle(-226.44), new PointReel(2037, 421)));
+            PositionGrosBougie.Add(3, new Position(new Angle(-241.59), new PointReel(2128, 266)));
+            PositionGrosBougie.Add(4, new Position(new Angle(-203.84), new PointReel(1834, 595)));
+            PositionGrosBougie.Add(5, new Position(new Angle(-226.44), new PointReel(2037, 421)));
+            PositionGrosBougie.Add(6, new Position(new Angle(-211.30), new PointReel(1908, 547)));
+            PositionGrosBougie.Add(7, new Position(new Angle(-196.1), new PointReel(1751, 634)));
+            PositionGrosBougie.Add(8, new Position(new Angle(-181.02), new PointReel(1599, 678)));
+            PositionGrosBougie.Add(9, new Position(new Angle(-181.02), new PointReel(1599, 678)));
+            PositionGrosBougie.Add(10, new Position(new Angle(-110.88), new PointReel(863, 188)));
             PositionGrosBougie.Add(11, new Position(new Angle(0), new PointReel(0, 0)));
-            PositionGrosBougie.Add(12, new Position(new Angle(0), new PointReel(0, 0)));
-            PositionGrosBougie.Add(13, new Position(new Angle(0), new PointReel(0, 0)));
-            PositionGrosBougie.Add(14, new Position(new Angle(0), new PointReel(0, 0)));
-            PositionGrosBougie.Add(15, new Position(new Angle(0), new PointReel(0, 0)));
-            PositionGrosBougie.Add(16, new Position(new Angle(0), new PointReel(0, 0)));
-            PositionGrosBougie.Add(17, new Position(new Angle(0), new PointReel(0, 0)));
-            PositionGrosBougie.Add(18, new Position(new Angle(0), new PointReel(0, 0)));
-            PositionGrosBougie.Add(19, new Position(new Angle(0), new PointReel(0, 0)));
+            PositionGrosBougie.Add(12, new Position(new Angle(-112.59), new PointReel(898, 331)));
+            PositionGrosBougie.Add(13, new Position(new Angle(-105.59), new PointReel(863, 245)));
+            PositionGrosBougie.Add(14, new Position(new Angle(-141.9), new PointReel(1071, 531)));
+            PositionGrosBougie.Add(15, new Position(new Angle(-120.59), new PointReel(948, 401)));
+            PositionGrosBougie.Add(16, new Position(new Angle(-141.9), new PointReel(1071, 531)));
+            PositionGrosBougie.Add(17, new Position(new Angle(-150.73), new PointReel(1224, 624)));
+            PositionGrosBougie.Add(18, new Position(new Angle(-158.33), new PointReel(1309, 655)));
+            PositionGrosBougie.Add(19, new Position(new Angle(-165.87), new PointReel(1397, 675)));
 
             PositionPetitCadeau = new Dictionary<int, Position>();
             for (int i = 0; i < 8; i++)

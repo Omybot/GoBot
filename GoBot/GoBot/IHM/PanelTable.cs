@@ -11,6 +11,7 @@ using GoBot.Calculs;
 using AStarFolder;
 using System.Threading;
 using GoBot.Mouvements;
+using GoBot.Enchainements;
 
 namespace GoBot.IHM
 {
@@ -250,7 +251,7 @@ namespace GoBot.IHM
                             g.DrawEllipse(new Pen(new SolidBrush(Color.BlueViolet)), new Rectangle(RealToScreen(n.Position.X) - 3, RealToScreen(n.Position.Y) - 3, 6, 6));
                         }
                     }
-                    // Dessin  de la trajectoire en cours de parcours
+                    /*// Dessin  de la trajectoire en cours de parcours
                     else if (Plateau.CheminEnCoursNoeuds != null && Plateau.CheminEnCoursNoeuds.Count > 1)
                     {
                         foreach (Arc a in Plateau.CheminEnCoursArcs)
@@ -261,12 +262,12 @@ namespace GoBot.IHM
                         {
                             g.FillEllipse(new SolidBrush(Color.Firebrick), new Rectangle(RealToScreen(n.Position.X) - 4, RealToScreen(n.Position.Y) - 4, 8, 8));
                         }
-                    }
+                    }*/
                     if (boxSourisObstacle.Checked)
                     {
                         g.DrawEllipse(crayonRougeFin,
                             (int)(xSouris - RealToScreen(Robots.GrosRobot.Rayon) * 2),
-                            (int)(ySouris - RealToScreen(Robots.GrosRobot.Rayon) * 2), RealToScreen(Robots.GrosRobot.Rayon) * 4, RealToScreen(Robots.GrosRobot.Rayon) * 4); 
+                            (int)(ySouris - RealToScreen(Robots.GrosRobot.Rayon) * 2), RealToScreen(Robots.GrosRobot.Rayon) * 4, RealToScreen(Robots.GrosRobot.Rayon) * 4);
                     }
 
                     // Dessin du gros robot
@@ -353,30 +354,36 @@ namespace GoBot.IHM
 
                     // Dessin pathfinding
 
-                    foreach (Node n in Plateau.NodeTrouve) 
-                        g.FillEllipse(new SolidBrush(Color.Red), new Rectangle(RealToScreen(n.Position.X) - 4, RealToScreen(n.Position.Y) - 4, 8, 8));
+                    Robot[] robots = new Robot[2];
+                    robots[0] = Robots.GrosRobot;
+                    robots[1] = Robots.PetitRobot;
 
-                    foreach (Arc a in Plateau.CheminTrouve)
+                    foreach (Robot robot in robots)
                     {
-                        g.DrawLine(new Pen(Color.Orange, 3), new Point(RealToScreen(a.StartNode.Position.X), RealToScreen(a.StartNode.Position.Y)), new Point(RealToScreen(a.EndNode.Position.X), RealToScreen(a.EndNode.Position.Y)));
-                    }
-                    foreach (Arc a in Plateau.CheminEnCoursArcs)
-                    {
-                        g.DrawLine(new Pen(Color.Green, 3), new Point(RealToScreen(a.StartNode.Position.X), RealToScreen(a.StartNode.Position.Y)), new Point(RealToScreen(a.EndNode.Position.X), RealToScreen(a.EndNode.Position.Y)));
-                    }
-                    if (Plateau.CheminTest != null)
-                        g.DrawLine(new Pen(Color.Red, 3), new Point(RealToScreen(Plateau.CheminTest.StartNode.Position.X), RealToScreen(Plateau.CheminTest.StartNode.Position.Y)), new Point(RealToScreen(Plateau.CheminTest.EndNode.Position.X), RealToScreen(Plateau.CheminTest.EndNode.Position.Y)));
-                    
-                    if (Plateau.ObstacleTeste != null)
-                        DessinerForme(g, Color.Green, Plateau.ObstacleTeste); 
-                    
-                    if (Plateau.ObstacleProbleme != null)
-                        DessinerForme(g, Color.Red, Plateau.ObstacleProbleme);
+                        foreach (Node n in robot.NodeTrouve)
+                            g.FillEllipse(new SolidBrush(Color.Red), new Rectangle(RealToScreen(n.Position.X) - 4, RealToScreen(n.Position.Y) - 4, 8, 8));
 
-                    if( Plateau.CheminEnCoursNoeuds != null)
-                    foreach (Node n in Plateau.CheminEnCoursNoeuds)
-                        g.FillEllipse(new SolidBrush(Color.Green), new Rectangle(RealToScreen(n.Position.X) - 4, RealToScreen(n.Position.Y) - 4, 8, 8));
+                        foreach (Arc a in robot.CheminTrouve)
+                        {
+                            g.DrawLine(new Pen(Color.Orange, 3), new Point(RealToScreen(a.StartNode.Position.X), RealToScreen(a.StartNode.Position.Y)), new Point(RealToScreen(a.EndNode.Position.X), RealToScreen(a.EndNode.Position.Y)));
+                        }
+                        foreach (Arc a in robot.CheminEnCoursArcs)
+                        {
+                            g.DrawLine(new Pen(Color.Green, 3), new Point(RealToScreen(a.StartNode.Position.X), RealToScreen(a.StartNode.Position.Y)), new Point(RealToScreen(a.EndNode.Position.X), RealToScreen(a.EndNode.Position.Y)));
+                        }
+                        if (robot.CheminTest != null)
+                            g.DrawLine(new Pen(Color.Red, 3), new Point(RealToScreen(robot.CheminTest.StartNode.Position.X), RealToScreen(robot.CheminTest.StartNode.Position.Y)), new Point(RealToScreen(robot.CheminTest.EndNode.Position.X), RealToScreen(robot.CheminTest.EndNode.Position.Y)));
 
+                        if (robot.ObstacleTeste != null)
+                            DessinerForme(g, Color.Green, robot.ObstacleTeste);
+
+                        if (robot.ObstacleProbleme != null)
+                            DessinerForme(g, Color.Red, robot.ObstacleProbleme);
+
+                        if (robot.CheminEnCoursNoeuds != null)
+                            foreach (Node n in robot.CheminEnCoursNoeuds)
+                                g.FillEllipse(new SolidBrush(Color.Green), new Rectangle(RealToScreen(n.Position.X) - 4, RealToScreen(n.Position.Y) - 4, 8, 8));
+                    }
                     // Fin pathfinding
 
                     // Dessin des bougies
@@ -387,14 +394,14 @@ namespace GoBot.IHM
                     {
                         g.FillEllipse(new SolidBrush(Plateau.CouleursBougies[i]), RealToScreen(Plateau.PositionsBougies[i].X - 40), RealToScreen(Plateau.PositionsBougies[i].Y - 40), RealToScreen(80), RealToScreen(80));
                         g.DrawEllipse(new Pen(Color.Black), RealToScreen(Plateau.PositionsBougies[i].X - 40), RealToScreen(Plateau.PositionsBougies[i].Y - 40), RealToScreen(80), RealToScreen(80));
-              
+
                         if (Plateau.BougiesEnfoncees[i])
                         {
                             g.FillEllipse(new SolidBrush(Color.Black), RealToScreen(Plateau.PositionsBougies[i].X - 20), RealToScreen(Plateau.PositionsBougies[i].Y - 20), RealToScreen(40), RealToScreen(40));
                             g.DrawEllipse(new Pen(Color.White), RealToScreen(Plateau.PositionsBougies[i].X - 20), RealToScreen(Plateau.PositionsBougies[i].Y - 20), RealToScreen(40), RealToScreen(40));
                         }
 
-                        else if (Plateau.PositionsBougies[i].getDistance(point) <= 40)
+                        else if (Plateau.PositionsBougies[i].Distance(point) <= 40)
                         {
                             g.DrawEllipse(new Pen(Color.LightGreen, 3), RealToScreen(Plateau.PositionsBougies[i].X - 40), RealToScreen(Plateau.PositionsBougies[i].Y - 40), RealToScreen(80), RealToScreen(80));
                         }
@@ -415,6 +422,32 @@ namespace GoBot.IHM
                         {
                             if (xTable > Plateau.PositionsCadeaux[i].X - 75 && xTable < Plateau.PositionsCadeaux[i].X + 75)
                                 g.DrawRectangle(new Pen(Color.LightGreen, 3), RealToScreen(Plateau.PositionsCadeaux[i].X - 75), RealToScreen(Plateau.PositionsCadeaux[i].Y - 30), RealToScreen(150), RealToScreen(40));
+                        }
+                    }
+
+                    // Dessin des scores
+
+                    if (Plateau.Enchainement != null)
+                    {
+                        if (boxCoutGros.Checked)
+                        {
+                            Font police = new Font("Calibri", 8);
+                            SolidBrush brushPolice = new SolidBrush(Color.Red);
+                            foreach (Mouvement m in Plateau.Enchainement.ListeMouvementsGros)
+                            {
+                                if (m.Cout != double.MaxValue)
+                                    g.DrawString(Math.Round(m.Cout) + "", police, brushPolice, new PointF(RealToScreen(m.Position.Coordonnees.X), RealToScreen((float)m.Position.Coordonnees.Y)));
+                            }
+                        }
+                        if (boxCoutPetit.Checked)
+                        {
+                            Font police = new Font("Calibri", 8);
+                            SolidBrush brushPolice = new SolidBrush(Color.Blue);
+                            foreach (Mouvement m in Plateau.Enchainement.ListeMouvementsPetit)
+                            {
+                                if (m.Cout != double.MaxValue)
+                                    g.DrawString(Math.Round(m.Cout) + "", police, brushPolice, new PointF(RealToScreen(m.Position.Coordonnees.X), RealToScreen((float)m.Position.Coordonnees.Y)));
+                            }
                         }
                     }
 
@@ -489,7 +522,7 @@ namespace GoBot.IHM
             thAffichage.Start();
         }
 
-		private void btnSaveGraph_Click(object sender, EventArgs e)
+        private void btnSaveGraph_Click(object sender, EventArgs e)
         {
             Plateau.SauverGraph();
             MessageBox.Show("Graph sauvegardé", "Confirmation", MessageBoxButtons.OK, MessageBoxIcon.Information);
@@ -498,7 +531,7 @@ namespace GoBot.IHM
         List<Node> cheminNodes;
         List<Arc> cheminArcs;
 
-        int xSouris =0, ySouris=0;
+        int xSouris = 0, ySouris = 0;
         private void pictureBoxTable_MouseMove(object sender, MouseEventArgs e)
         {
             if (modeCourant == Mode.FinTrajectoire)
@@ -515,11 +548,10 @@ namespace GoBot.IHM
             }
             else if (boxSourisObstacle.Checked)
             {
-                if (Plateau.ObstacleTest(ScreenToReal(pictureBoxTable.PointToClient(MousePosition).X), ScreenToReal(pictureBoxTable.PointToClient(MousePosition).Y)))
-                {
-                    xSouris = pictureBoxTable.PointToClient(MousePosition).X;
-                    ySouris = pictureBoxTable.PointToClient(MousePosition).Y;
-                }
+                Plateau.ObstacleTest(ScreenToReal(pictureBoxTable.PointToClient(MousePosition).X), ScreenToReal(pictureBoxTable.PointToClient(MousePosition).Y));
+
+                xSouris = pictureBoxTable.PointToClient(MousePosition).X;
+                ySouris = pictureBoxTable.PointToClient(MousePosition).Y;
             }
 
             lblPos.Text = ScreenToReal(pictureBoxTable.PointToClient(MousePosition).X) + " : " + ScreenToReal(pictureBoxTable.PointToClient(MousePosition).Y);
@@ -544,16 +576,46 @@ namespace GoBot.IHM
             debutNode = Plateau.Graph.ClosestNode(Robots.GrosRobot.Position.Coordonnees.X, Robots.GrosRobot.Position.Coordonnees.Y, 0, out distance, false);
         }
 
-        private void pictureBoxTable_Click(object sender, EventArgs e)
+        public void ThreadAction()
+        {
+            if (!move.Executer())
+                MessageBox.Show("Echec");
+            move = null;
+        }
+
+        Mouvement move;
+        Thread th;
+
+        private void btnReset_Click(object sender, EventArgs e)
+        {
+            for (int i = 0; i < 20; i++)
+                Plateau.BougiesEnfoncees[i] = false;
+            for (int i = 0; i < 8; i++)
+                Plateau.CadeauxActives[i] = false;
+
+            Plateau.Score = 0;
+        }
+
+        private bool continuerAffichage = true;
+        public void Stop()
+        {
+            continuerAffichage = false;
+        }
+
+        private void pictureBoxTable_MouseClick(object sender, MouseEventArgs e)
         {
             if (modeCourant == Mode.FinTrajectoire)
             {
-                Plateau.PathFinding(Robots.GrosRobot, ScreenToReal(pictureBoxTable.PointToClient(MousePosition).X), ScreenToReal(pictureBoxTable.PointToClient(MousePosition).Y));
+                if (e.Button == System.Windows.Forms.MouseButtons.Left)
+                    Robots.GrosRobot.PathFinding(ScreenToReal(pictureBoxTable.PointToClient(MousePosition).X), ScreenToReal(pictureBoxTable.PointToClient(MousePosition).Y));
+                else
+                    Robots.PetitRobot.PathFinding(ScreenToReal(pictureBoxTable.PointToClient(MousePosition).X), ScreenToReal(pictureBoxTable.PointToClient(MousePosition).Y));
+
                 modeCourant = Mode.Visualisation;
             }
             else
             {
-                
+
                 int xTable = ScreenToReal(pictureBoxTable.PointToClient(MousePosition).X);
                 int yTable = ScreenToReal(pictureBoxTable.PointToClient(MousePosition).Y);
 
@@ -561,10 +623,15 @@ namespace GoBot.IHM
 
                 for (int i = 0; i < 20; i++)
                 {
-                    if (Plateau.PositionsBougies[i].getDistance(point) <= 40)
+                    if (Plateau.PositionsBougies[i].Distance(point) <= 40)
                     {
-                        if (PositionsMouvements.PositionPetitBougie.ContainsKey(i))
-                            move = new MovePetitBougie(i);
+                        if (e.Button == System.Windows.Forms.MouseButtons.Left)
+                        {
+                            if (PositionsMouvements.PositionPetitBougie.ContainsKey(i))
+                                move = new MovePetitBougie(i);
+                        }
+                        else
+                            move = new MoveGrosBougie(i);
 
                         if (move != null)
                         {
@@ -581,7 +648,10 @@ namespace GoBot.IHM
                     {
                         if (xTable > Plateau.PositionsCadeaux[i].X - 75 && xTable < Plateau.PositionsCadeaux[i].X + 75)
                         {
-                            move = new MovePetitCadeau(i);
+                            if (e.Button == System.Windows.Forms.MouseButtons.Left)
+                                move = new MovePetitCadeau(i);
+                            else
+                                move = new MoveGrosCadeau(i);
 
                             if (move != null)
                             {
@@ -595,30 +665,10 @@ namespace GoBot.IHM
             }
         }
 
-        public void ThreadAction()
+        private void btnGo_Click(object sender, EventArgs e)
         {
-            if (!move.Executer())
-                MessageBox.Show("Echec");
-            move = null;
-        }
-
-        Mouvement move;
-        Thread th;
-
-        private void btnReset_Click(object sender, EventArgs e)
-        {
-            for (int i = 0; i < 20; i++)
-                Plateau.BougiesEnfoncees[i] = false;
-            for (int i = 0; i < 4; i++)
-                Plateau.CadeauxActives[i] = false;
-
-            Plateau.Score = 0;
-        }
-
-        private bool continuerAffichage = true;
-        public void Stop()
-        {
-            continuerAffichage = false;
+            Plateau.Enchainement = new Enchainement();
+            Plateau.Enchainement.Executer();
         }
     }
 }

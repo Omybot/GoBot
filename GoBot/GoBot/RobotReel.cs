@@ -50,7 +50,7 @@ namespace GoBot
             semPosition = new Semaphore(0, int.MaxValue);
             DateRefreshPos = DateTime.Now;
 
-            Enchainement = new Enchainements.HomologationEnchainement();
+            //Enchainement = new Enchainements.HomologationEnchainement();
 
             Connexion.NouvelleTrame += new ConnexionUDP.ReceptionDelegate(ReceptionMessage);
 

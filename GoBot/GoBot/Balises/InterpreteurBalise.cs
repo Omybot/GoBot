@@ -237,7 +237,7 @@ namespace GoBot
 
                     for (int i = 0; i < detectionHaut.Count; i++)
                     {
-                        double distanceActuelle = p.getDistance(detectionHaut[i]);
+                        double distanceActuelle = p.Distance(detectionHaut[i]);
                         if (distanceActuelle < distance)
                         {
                             distance = distanceActuelle;
@@ -453,7 +453,7 @@ namespace GoBot
 
                     if (genereOk)
                     {
-                        double distance = pointDistance.Point.getDistance(pointIntersection.Point);
+                        double distance = pointDistance.Point.Distance(pointIntersection.Point);
                         if (distance < distanceMin)
                         {
                             plusProche = pointIntersection.Point;
@@ -518,7 +518,7 @@ namespace GoBot
 
                         // On ne considère cette intersection que si elle est à moins de 50 cm de la distance donnée par la plus précise des balises
                         // Ce qui permet d'enlever tous les croisements éloignés d'une approximation de balise
-                        if (detection1.Position.getDistance(croisement) < 500 && detection2.Position.getDistance(croisement) < 500)
+                        if (detection1.Position.Distance(croisement) < 500 && detection2.Position.Distance(croisement) < 500)
                             intersectionsAvecOrigine.Add(new PointReelGenere(croisement, detections));
                             //intersections.Add(croisement);
                     }
@@ -554,7 +554,7 @@ namespace GoBot
                 {
                     if (i != j)
                     {
-                        double distancePoint = points[i].Point.getDistance(points[j].Point);
+                        double distancePoint = points[i].Point.Distance(points[j].Point);
                         if (distancePoint < distanceMin)
                         {
                             distanceMin = distancePoint;
@@ -616,7 +616,7 @@ namespace GoBot
                     for (int i = 0; i < regroupement.Count; i++)
                     {
                         PointReel point = regroupement[i];
-                        double distance = point.getDistance(barycentre);
+                        double distance = point.Distance(barycentre);
                         if (distanceMax < distance)
                         {
                             distanceMax = distance;

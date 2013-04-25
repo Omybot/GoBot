@@ -34,6 +34,6 @@ namespace GoBot.Calculs.Formes
         /// </summary>
         /// <param name="forme">Forme testée</param>
         /// <returns>Distance entre la Forme actuelle et la Forme testée. Si les deux Formes se croisent la distance est de 0.</returns>
-        double getDistance(IForme forme);
+        double Distance(IForme forme);
     }
 }

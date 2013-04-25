@@ -95,7 +95,7 @@ namespace GoBot
         void timerDeplacement_Elapsed(object sender, ElapsedEventArgs e)
         {
             semDeplacement.WaitOne();
-            double difference = Destination.Coordonnees.getDistance(Position.Coordonnees);
+            double difference = Destination.Coordonnees.Distance(Position.Coordonnees);
             if (Math.Abs((Position.Angle - Destination.Angle).AngleDegres) > 0.01)// Math.Round(Position.Angle.AngleDegres, 2) != Math.Round(Destination.Angle.AngleDegres, 2))
             {
                 Angle diff = Destination.Angle - Position.Angle;
@@ -116,8 +116,8 @@ namespace GoBot
                 double distance = VitesseDeplacement / (1000.0 / IntervalleRafraichissementPosition);
 
                 //VitesseActuelle += AccellerationDeplacement / (1000 / IntervalleRafraichissementPosition);
-                if (Destination.Coordonnees.getDistance(Position.Coordonnees) < distance)
-                    Position = Destination;//.Avancer(Destination.Coordonnees.getDistance(Position.Coordonnees));
+                if (Destination.Coordonnees.Distance(Position.Coordonnees) < distance)
+                    Position = Destination;//.Avancer(Destination.Coordonnees.Distance(Position.Coordonnees));
                 else
                 {
                     if (SensDep == SensAR.Avant)

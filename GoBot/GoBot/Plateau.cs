@@ -13,6 +13,7 @@ using System.Runtime.Serialization;
 using System.Runtime.Serialization.Formatters.Binary;
 using GoBot.Calculs;
 using GoBot.Ponderations;
+using GoBot.Enchainements;
 
 namespace GoBot
 {
@@ -23,10 +24,11 @@ namespace GoBot
         public static Balise Balise3 { get; set; }
         public static InterpreteurBalise InterpreteurBalise { get; set; }
 
+        public static Enchainement Enchainement { get; set; }
         public static Poids PoidActions { get; set; }
 
         private static List<IForme> ObstaclesFixes { get; set; }
-        private static List<IForme> ObstaclesTemporaires { get; set; }
+        public static List<IForme> ObstaclesTemporaires { get; set; }
 
         public static Color NotreCouleur { get; set; }
 
@@ -68,7 +70,7 @@ namespace GoBot
         /// <summary>
         /// Liste complète des obstacles fixes et temporaires
         /// </summary>
-        public List<IForme> ListeObstacles
+        public static List<IForme> ListeObstacles
         {
             get
             {
@@ -79,26 +81,13 @@ namespace GoBot
             }
         }
 
-        /// <summary>
-        /// Graph des noeuds et arcs pour le pathfinding
-        /// </summary>
-        public Graph Graph { get; private set; }
-
-        /// <summary>
-        /// Liste des noeuds du chemin en cours de parcours
-        /// </summary>
-        public List<Node> CheminEnCoursNoeuds { get; set; }
-
-        /// <summary>
-        /// Liste des arcs du chemin en cours de parcours
-        /// </summary>
-        public List<Arc> CheminEnCoursArcs { get; set; }
-
         public Plateau()
         {
             if (!Config.DesignMode)
             {
                 Plateau.SemaphoreGraph = new Semaphore(1, 1);
+
+                PoidActions = new PoidsBase();
 
                 //CreerSommets(150);
                 ChargerGraph();
@@ -109,9 +98,6 @@ namespace GoBot
                 InterpreteurBalise = new InterpreteurBalise();
                 InterpreteurBalise.PositionEnnemisActualisee += new GoBot.InterpreteurBalise.PositionEnnemisDelegate(interpreteBalise_PositionEnnemisActualisee);
 
-                CheminTrouve = new List<Arc>();
-                CheminEnCoursArcs = new List<Arc>();
-                NodeTrouve = new List<Node>();
 
                 if (Connexions.ConnexionMove.ConnexionCheck.Connecte)
                     Simulation = false;
@@ -175,239 +161,15 @@ namespace GoBot
             Balise3 = new Balise(Carte.RecBoi);
         }
 
-        public bool PathFinding(Robot robot, double x, double y, int timeOut = 0, bool attendre = false)
+        public void ObstacleTest(int x, int y)
         {
-            semTrajectoire = new Semaphore(0, 999);
-
-            bool result = ParcoursPathFinding(robot, x, y, timeOut, attendre);
-
-            if (attendre)
-                semTrajectoire.WaitOne();
-
-            return result;
-        }
-
-        public bool ParcoursPathFinding(Robot robot, double x, double y, int timeOut = 0, bool attendre = false)
-        {
-            CheminEnCoursNoeuds = new List<Node>();
-            CheminEnCoursArcs = new List<Arc>();
-
-            DateTime debut = DateTime.Now;
-
-            double distance;
-
-            Node debutNode = Graph.ClosestNode(robot.Position.Coordonnees.X, robot.Position.Coordonnees.Y, 0, out distance, false);
-            if (distance != 0)
-            {
-                debutNode = new Node(robot.Position.Coordonnees.X, robot.Position.Coordonnees.Y, 0);
-                AddNode(debutNode, 500);
-            }
-            Node finNode = Graph.ClosestNode(x, y, 0, out distance, false);
-            if (distance != 0)
-            {
-                finNode = new Node(x, y, 0);
-                AddNode(finNode, 500);
-            }
-
-            // Teste s'il est possible d'aller directement à la fin sans passer par le graph
-            bool toutDroit = true;
-            Segment segment = new Segment(new PointReel(debutNode.X, debutNode.Y), new PointReel(finNode.X, finNode.Y));
-            foreach (IForme forme in ListeObstacles)
-            {
-                if (TropProche(segment, forme))
-                {
-                    toutDroit = false;
-                    break;
-                }
-            }
-
-            if (toutDroit)
-            {
-                CheminEnCoursNoeuds.Add(debutNode);
-                CheminEnCoursNoeuds.Add(finNode);
-
-                Arc arcToutDroit = new Arc(debutNode, finNode);
-                arcToutDroit.Weight = 99999999;
-                CheminEnCoursArcs.Add(arcToutDroit);
-            }
-
-            // Sinon on passe par le graph
-            else
-            {
-                AStar aStar = new AStar(Graph);
-                aStar.DijkstraHeuristicBalance = 1;
-                if (aStar.SearchPath(debutNode, finNode))
-                {
-                    List<Node> nodes = aStar.PathByNodes.ToList<Node>();
-                    List<Arc> arcs = aStar.PathByArcs.ToList<Arc>();
-
-                    CheminEnCoursNoeuds = new List<Node>();
-                    CheminEnCoursArcs = new List<Arc>();
-
-                    CheminTrouve = new List<Arc>(arcs);
-                    NodeTrouve = new List<Node>(nodes);
-
-                    // Simplification du chemin
-                    // On part du début et on essaie d'aller au point du plus éloigné au moins éloigné en testant si le passage est possible
-                    // Si c'est possible on zappe tous les points entre les deux
-                    for (int iNodeDepart = 0; iNodeDepart < nodes.Count - 1; iNodeDepart++)
-                    {
-                        CheminEnCoursNoeuds.Add(nodes[iNodeDepart]);
-
-                        bool raccourciPossible = true;
-                        for (int iNodeArrivee = nodes.Count - 1; iNodeArrivee > iNodeDepart; iNodeArrivee--)
-                        {
-                            raccourciPossible = true;
-
-                            Segment racourci = new Segment(new PointReel(nodes[iNodeDepart].X, nodes[iNodeDepart].Y), new PointReel(nodes[iNodeArrivee].X, nodes[iNodeArrivee].Y));
-                            Arc arcRacourci = new Arc(nodes[iNodeDepart], nodes[iNodeArrivee]);
-                            CheminTest = arcRacourci;
-                            arcRacourci.Passable = false;
-                            for (int i = ListeObstacles.Count - 1; i >= 4; i--)
-                            {
-                                IForme forme = ListeObstacles[i];
-                                ObstacleTeste = forme;
-                                ObstacleProbleme = null;
-
-                                if (TropProche(racourci, forme))
-                                {
-                                    ObstacleProbleme = forme;
-                                    //Thread.Sleep(500);
-                                    raccourciPossible = false;
-                                    break;
-                                }
-                                //else 
-                                //Thread.Sleep(500);
-                            }
-                            ObstacleTeste = null;
-                            if (raccourciPossible)
-                            {
-                                /*Arc arcRacourci = new Arc(nodes[iNodeDepart], nodes[iNodeArrivee]);
-                                arcRacourci.Passable = false;*/
-                                CheminEnCoursArcs.Add(arcRacourci);
-                                iNodeDepart = iNodeArrivee - 1;
-                                break;
-                            }
-                        }
-                        CheminTest = null;
-                        if (!raccourciPossible)
-                        {
-                            Arc arc = new Arc(nodes[iNodeDepart], nodes[iNodeDepart + 1]);
-                            CheminEnCoursArcs.Add(arc);
-                        }
-                    }
-
-                    CheminEnCoursNoeuds.Add(nodes[nodes.Count - 1]);
-                }
-            }
-
-            ObstacleProbleme = null;
-            ObstacleTeste = null;
-            NodeTrouve = new List<Node>();
-            CheminTrouve = new List<Arc>();
-            ChargerGraph();
-
-            if (CheminEnCoursArcs.Count == 0)
-            {
-                semTrajectoire.Release();
-                return false;
-            }
-            else
-            {
-                // Execution du parcours
-
-                th = new Thread(ThreadChemin);
-                th.Start(robot);
-
-                return true;
-            }
-        }
-        Thread th;
-        Semaphore[] semTrajectoire;
-
-        public List<Arc> CheminTrouve;
-        public List<Node> NodeTrouve;
-        public Arc CheminTest;
-        public IForme ObstacleTeste;
-        public IForme ObstacleProbleme;
-
-        /// <summary>
-        /// Parcours le chemin pour arriver au point de destination
-        /// </summary>
-        private void ThreadChemin(Object o)
-        {
-            Robot robot = (Robot)o;
-            nouvelleTrajectoire = false;
-            while (CheminEnCoursNoeuds.Count > 1)
-            {
-                PointReel c1 = new PointReel(CheminEnCoursNoeuds[0].X, CheminEnCoursNoeuds[0].Y);
-                PointReel c2 = new PointReel(CheminEnCoursNoeuds[1].X, CheminEnCoursNoeuds[1].Y);
-
-                Position p = new Position(robot.Position.Angle, c1);
-                Direction traj = Maths.GetDirection(p, c2);
-
-                if (traj.angle.AngleDegres < 0)
-                    robot.PivotDroite(-traj.angle.AngleDegres);
-                else
-                    robot.PivotGauche(traj.angle.AngleDegres);
-
-                if (nouvelleTrajectoire)
-                    break;
-                robot.Avancer((int)traj.distance);
-
-                CheminEnCoursNoeuds.RemoveAt(0);
-                CheminEnCoursArcs.RemoveAt(0);
-
-                if (nouvelleTrajectoire)
-                    break;
-            }
-            if (nouvelleTrajectoire)
-                ParcoursPathFinding(robot, CheminEnCoursNoeuds[CheminEnCoursNoeuds.Count - 1].X, CheminEnCoursNoeuds[CheminEnCoursNoeuds.Count - 1].Y);
-            else
-            {
-                if (semTrajectoire != null)
-                    semTrajectoire.Release();
-            }
-        }
-
-        bool nouvelleTrajectoire = false;
-        public bool ObstacleTest(int x, int y)
-        {
-            if (nouvelleTrajectoire)
-                return false;
-
             ViderObstacles();
             AjouterObstacle(new Cercle(new PointReel(x, y), 200));
 
-            try
-            {
-                // Teste si le chemin en cours de parcous est toujours franchissable
-                if (!nouvelleTrajectoire && CheminEnCoursNoeuds != null && CheminEnCoursNoeuds.Count > 0)
-                {
-                    foreach (Arc a in CheminEnCoursArcs)
-                    {
-                        Segment segment = new Segment(new PointReel(a.StartNode.X, a.StartNode.Y), new PointReel(a.EndNode.X, a.EndNode.Y));
-
-                        if (segment.getDistance(new PointReel(x, y)) < Robots.GrosRobot.Rayon * 2)
-                        //if(!a.Passable)
-                        {
-                            // Demande de génération d'une nouvelle trajectoire
-                            nouvelleTrajectoire = true;
-                            if (Robots.GrosRobot.DeplacementLigne)
-                                Robots.GrosRobot.Stop();
-                            //Thread.Sleep(1500);
-                            //GrosRobot.semDeplacement.Release();
-                        }
-                    }
-                }
-            }
-            catch (Exception)
-            {
-                return false;
-            }
-
-            return true;
+            Robots.PetitRobot.ObstacleTest();
+            Robots.GrosRobot.ObstacleTest();
         }
+
         void interpreteBalise_PositionEnnemisActualisee(InterpreteurBalise interprete)
         {
             ViderObstacles();
@@ -415,23 +177,8 @@ namespace GoBot
             foreach (PointReel p in interprete.PositionsEnnemies)
                 AjouterObstacle(new Cercle(p, 200));
 
-            // Teste si le chemin en cours de parcous est toujours franchissable
-            if (!nouvelleTrajectoire && CheminEnCoursNoeuds != null && CheminEnCoursNoeuds.Count > 0)
-            {
-                foreach (Arc a in CheminEnCoursArcs)
-                {
-                    Segment segment = new Segment(new PointReel(a.StartNode.X, a.StartNode.Y), new PointReel(a.EndNode.X, a.EndNode.Y));
-                    foreach (PointReel p in interprete.PositionsEnnemies)
-                    {
-                        if (segment.getDistance(p) < Robots.GrosRobot.Rayon * 2)
-                        {
-                            // Demande de génération d'une nouvelle trajectoire
-                            nouvelleTrajectoire = true;
-                            Robots.GrosRobot.Stop();
-                        }
-                    }
-                }
-            }
+            Robots.PetitRobot.ObstacleTest();
+            Robots.GrosRobot.ObstacleTest();
         }
 
         /// <summary>
@@ -468,7 +215,7 @@ namespace GoBot
                 if (arc.Passable)
                 {
                     Segment segment = new Segment(new PointReel(arc.StartNode.X, arc.StartNode.Y), new PointReel(arc.EndNode.X, arc.EndNode.Y));
-                    if (TropProche(obstacle, segment))
+                    if (Robots.GrosRobot.TropProche(obstacle, segment))
                     {
                         if (fixe)
                         {
@@ -489,7 +236,7 @@ namespace GoBot
                 if (n.Passable)
                 {
                     PointReel noeud = new PointReel(n.X, n.Y);
-                    if (TropProche(obstacle, noeud))
+                    if (Robots.GrosRobot.TropProche(obstacle, noeud))
                     {
                         if (fixe)
                         {
@@ -502,26 +249,6 @@ namespace GoBot
                     }
                 }
             }
-        }
-
-        /// <summary>
-        /// Teste si deux formes sont trop proches pour envisager le passage du robot
-        /// </summary>
-        /// <param name="forme1">Forme 1</param>
-        /// <param name="forme2">Forme 2</param>
-        /// <returns>Vrai si les deux formes sont trop proches</returns>
-        internal bool TropProche(IForme forme1, IForme forme2)
-        {
-            Type typeForme1 = forme1.GetType();
-            Type typeForme2 = forme2.GetType();
-
-            if (typeForme1.IsAssignableFrom(typeof(Segment)))
-                if (typeForme2.IsAssignableFrom(typeof(Segment)))
-                    return ((Segment)forme1).getDistance((Segment)forme2) < Robots.GrosRobot.Rayon;
-                else
-                    return ((Segment)forme1).getDistance(forme2) < Robots.GrosRobot.Rayon;
-            else
-                return forme1.getDistance(forme2) < Robots.GrosRobot.Rayon;
         }
 
         /// <summary>
@@ -538,7 +265,7 @@ namespace GoBot
         /// <summary>
         /// Charge le dernier graph sauvegardé. Permet de gagner du temps par rapport à une génération du graph à chaque execution.
         /// </summary>
-        public void ChargerGraph()
+        public static void ChargerGraph()
         {
             try
             {
@@ -552,6 +279,12 @@ namespace GoBot
                 MessageBox.Show("Impossible de charger le graph." + Environment.NewLine + e.Message);
             }
         }
+
+
+        /// <summary>
+        /// Graph des noeuds et arcs pour le pathfinding
+        /// </summary>
+        public static Graph Graph { get; private set; }
 
         /// <summary>
         /// Crée le graph du pathfinding.
@@ -636,10 +369,8 @@ namespace GoBot
         /// </summary>
         /// <param name="node">Noeud à ajouter</param>
         /// <param name="distanceMax">Distance (mm) max de liaison avec les autres noeuds</param>
-        public void AddNode(Node node, int distanceMax = 213)
+        public static void AddNode(Node node, Robot robot, int distanceMax = 400)
         {
-            SemaphoreGraph.WaitOne();
-
             double distanceNode;
 
             // Si un noeud est deja présent à cet endroit on ne l'ajoute pas
@@ -674,7 +405,7 @@ namespace GoBot
 
                         foreach (IForme obstacle in ObstaclesFixes)
                         {
-                            if (obstacle.getDistance(new Segment(new PointReel(no.X, no.Y), new PointReel(node.X, node.Y))) < Robots.GrosRobot.Taille / 2)
+                            if (obstacle.Distance(new Segment(new PointReel(no.X, no.Y), new PointReel(node.X, node.Y))) < robot.Taille / 2)
                             {
                                 arc.Passable = false;
                                 arc2.Passable = false;
@@ -687,8 +418,6 @@ namespace GoBot
                     }
                 }
             }
-
-            SemaphoreGraph.Release();
         }
 
         /// <summary>
@@ -715,22 +444,5 @@ namespace GoBot
 
             return true;
         }
-
-        /*private static Segment Arc2Segment(Arc arc)
-        {
-            return new Segment(new PointReel(arc.StartNode.X, arc.StartNode.Y), new PointReel(arc.EndNode.X, arc.EndNode.Y));
-        }
-
-        private static Arc Segment2Arc(Segment segment)
-        {
-        }
-
-        private static Node PointReel2Node(PointReel point)
-        {
-        }
-
-        private static PointReel Node2PointReel(Node noeud)
-        {
-        }*/
     }
 }

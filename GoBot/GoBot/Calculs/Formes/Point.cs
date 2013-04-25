@@ -134,20 +134,20 @@ namespace GoBot.Calculs.Formes
         /// </summary>
         /// <param name="forme">Forme testée</param>
         /// <returns>Distance minimale</returns>
-        public double getDistance(IForme forme)
+        public double Distance(IForme forme)
         {
             Type typeForme = forme.GetType();
 
             if (typeForme.IsAssignableFrom(typeof(Segment)))
-                return getDistance((Segment)forme);
+                return Distance((Segment)forme);
             else if (typeForme.IsAssignableFrom(typeof(PointReel)))
-                return getDistance((PointReel)forme);
+                return Distance((PointReel)forme);
             else if (typeForme.IsAssignableFrom(typeof(Droite)))
-                return getDistance((Droite)forme);
+                return Distance((Droite)forme);
             else if (typeForme.IsAssignableFrom(typeof(Polygone)))
-                return getDistance((Polygone)forme);
+                return Distance((Polygone)forme);
             else if (typeForme.IsAssignableFrom(typeof(Cercle)))
-                return getDistance((Cercle)forme);
+                return Distance((Cercle)forme);
             else
                 throw new NotImplementedException();
         }
@@ -157,10 +157,10 @@ namespace GoBot.Calculs.Formes
         /// </summary>
         /// <param name="forme">Segment testé</param>
         /// <returns>Distance minimale</returns>
-        public double getDistance(Segment segment)
+        public double Distance(Segment segment)
         {
             // Le segment sait le faire
-            return segment.getDistance(this);
+            return segment.Distance(this);
         }
         
         /// <summary>
@@ -168,10 +168,10 @@ namespace GoBot.Calculs.Formes
         /// </summary>
         /// <param name="forme">Droite testée</param>
         /// <returns>Distance minimale</returns>
-        public double getDistance(Droite droite)
+        public double Distance(Droite droite)
         {
             // La droite sait le faire
-            return droite.getDistance(this);
+            return droite.Distance(this);
         }
 
         /// <summary>
@@ -179,10 +179,10 @@ namespace GoBot.Calculs.Formes
         /// </summary>
         /// <param name="forme">Cercle testé</param>
         /// <returns>Distance minimale</returns>
-        public double getDistance(Cercle Cercle)
+        public double Distance(Cercle Cercle)
         {
             // Distance jusqu'au centre du cercle - son rayon
-            return getDistance(Cercle.Centre) - Cercle.Rayon;
+            return Distance(Cercle.Centre) - Cercle.Rayon;
         }
 
         /// <summary>
@@ -190,13 +190,13 @@ namespace GoBot.Calculs.Formes
         /// </summary>
         /// <param name="forme">Polygone testé</param>
         /// <returns>Distance minimale</returns>
-        public double getDistance(Polygone polygone)
+        public double Distance(Polygone polygone)
         {
             // Distance jusqu'au segment le plus proche
             double minDistance = double.MaxValue;
 
             foreach (Segment s in polygone.Cotes)
-                minDistance = Math.Min(s.getDistance(this), minDistance);
+                minDistance = Math.Min(s.Distance(this), minDistance);
 
             return minDistance;
         }
@@ -206,7 +206,7 @@ namespace GoBot.Calculs.Formes
         /// </summary>
         /// <param name="forme">PointReel testé</param>
         /// <returns>Distance minimale</returns>
-        public double getDistance(PointReel autrePoint)
+        public double Distance(PointReel autrePoint)
         {
             // Formule de collège \o/
             return Math.Sqrt((X - autrePoint.X) * (X - autrePoint.X) + (Y - autrePoint.Y) * (Y - autrePoint.Y));

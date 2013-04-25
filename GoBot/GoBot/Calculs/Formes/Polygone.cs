@@ -433,20 +433,20 @@ namespace GoBot.Calculs.Formes
         /// </summary>
         /// <param name="point">Forme testée</param>
         /// <returns>Distance minimum entre le Polygone courant et la Forme testée</returns>
-        public double getDistance(IForme forme)
+        public double Distance(IForme forme)
         {
             Type typeForme = forme.GetType();
 
             if (typeForme.IsAssignableFrom(typeof(Segment)))
-                return getDistance((Segment)forme);
+                return Distance((Segment)forme);
             else if (typeForme.IsAssignableFrom(typeof(PointReel)))
-                return getDistance((PointReel)forme);
+                return Distance((PointReel)forme);
             else if (typeForme.IsAssignableFrom(typeof(Droite)))
-                return getDistance((Droite)forme);
+                return Distance((Droite)forme);
             else if (typeForme.IsAssignableFrom(typeof(Polygone)))
-                return getDistance((Polygone)forme);
+                return Distance((Polygone)forme);
             else if (typeForme.IsAssignableFrom(typeof(Cercle)))
-                return getDistance((Cercle)forme);
+                return Distance((Cercle)forme);
             else
                 throw new NotImplementedException();
         }
@@ -456,10 +456,10 @@ namespace GoBot.Calculs.Formes
         /// </summary>
         /// <param name="point">Segment testé</param>
         /// <returns>Distance minimum entre le Polygone courant et le Segment testé</returns>
-        public double getDistance(Segment segment)
+        public double Distance(Segment segment)
         {
             // Le segment sait le faire
-            return segment.getDistance(this);
+            return segment.Distance(this);
         }
 
         /// <summary>
@@ -467,9 +467,9 @@ namespace GoBot.Calculs.Formes
         /// </summary>
         /// <param name="point">Droite testée</param>
         /// <returns>Distance minimum entre le Polygone courant et la Droite testée</returns>
-        public double getDistance(Droite droite)
+        public double Distance(Droite droite)
         {
-            return droite.getDistance(this);
+            return droite.Distance(this);
         }
 
         /// <summary>
@@ -477,12 +477,12 @@ namespace GoBot.Calculs.Formes
         /// </summary>
         /// <param name="point">Cercle testé</param>
         /// <returns>Distance minimum entre le Polygone courant et le Cercle testé</returns>
-        public double getDistance(Cercle Cercle)
+        public double Distance(Cercle Cercle)
         {
             double distanceMin = double.MaxValue;
 
             foreach (Segment s in Cotes)
-                distanceMin = Math.Min(distanceMin, s.getDistance(Cercle));
+                distanceMin = Math.Min(distanceMin, s.Distance(Cercle));
 
             return distanceMin;
         }
@@ -492,7 +492,7 @@ namespace GoBot.Calculs.Formes
         /// </summary>
         /// <param name="point">Polygone testé</param>
         /// <returns>Distance minimum entre le Polygone courant et le Polygone testé</returns>
-        public double getDistance(Polygone polygone)
+        public double Distance(Polygone polygone)
         {
             double minDistance = double.MaxValue;
 
@@ -501,7 +501,7 @@ namespace GoBot.Calculs.Formes
                 {
                     if (s1.croise(s2))
                         return 0;
-                    minDistance = Math.Min(minDistance, s1.getDistance(s2));
+                    minDistance = Math.Min(minDistance, s1.Distance(s2));
                 }
 
             return minDistance;
@@ -512,7 +512,7 @@ namespace GoBot.Calculs.Formes
         /// </summary>
         /// <param name="point">PointReel testé</param>
         /// <returns>Distance minimum entre le Polygone courant et le PointReel testé</returns>
-        public double getDistance(PointReel point)
+        public double Distance(PointReel point)
         {
             // C'est la distance minimale entre le point et chaque segment
 
@@ -522,7 +522,7 @@ namespace GoBot.Calculs.Formes
             double distanceMin = double.MaxValue;
 
             foreach (Segment s in cotes)
-                distanceMin = Math.Min(distanceMin, s.getDistance(point));
+                distanceMin = Math.Min(distanceMin, s.Distance(point));
 
             return distanceMin;
         }
@@ -541,7 +541,7 @@ namespace GoBot.Calculs.Formes
             {
                 for (int i = 0; i < lpr.Count; i++)
                 {
-                    if ((distance = reff.getDistance(lpr[i])) < distanceMin)
+                    if ((distance = reff.Distance(lpr[i])) < distanceMin)
                     {
                         min = i;
                         distanceMin = distance;
