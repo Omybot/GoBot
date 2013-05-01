@@ -60,14 +60,14 @@ namespace GoBot.IHM
                 lblVitesse.Text = balise.ValeurConsigne + "";
                 lblToursSecondesActuel.Text = Math.Round(balise.VitesseToursSecActuelle, 2) + "";
                 if (balise.ReglageVitesse)
-                    ledAsserv.On();
+                    ledAsserv.CouleurVert();
                 else
-                    ledAsserv.Off();
+                    ledAsserv.CouleurRouge();
 
                 if (balise.ReglageOffset)
-                    ledOffset.On();
+                    ledOffset.CouleurVert();
                 else
-                    ledOffset.Off();
+                    ledOffset.CouleurRouge();
             }
         }
 

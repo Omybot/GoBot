@@ -1,6 +1,6 @@
 ﻿namespace GoBot.IHM.Composants
 {
-    partial class BetterTextBox
+    partial class TextBoxPlus
     {
         /// <summary> 
         /// Variable nécessaire au concepteur.

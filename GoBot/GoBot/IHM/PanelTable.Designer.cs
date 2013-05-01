@@ -45,6 +45,20 @@
             this.btnGo = new System.Windows.Forms.Button();
             this.boxCoutGros = new System.Windows.Forms.CheckBox();
             this.boxCoutPetit = new System.Windows.Forms.CheckBox();
+            this.label2 = new System.Windows.Forms.Label();
+            this.label3 = new System.Windows.Forms.Label();
+            this.label4 = new System.Windows.Forms.Label();
+            this.label5 = new System.Windows.Forms.Label();
+            this.lblPosGrosTeta = new System.Windows.Forms.Label();
+            this.lblPosGrosY = new System.Windows.Forms.Label();
+            this.lblPosGrosX = new System.Windows.Forms.Label();
+            this.lblPosPetitTeta = new System.Windows.Forms.Label();
+            this.lblPosPetitY = new System.Windows.Forms.Label();
+            this.lblPosPetitX = new System.Windows.Forms.Label();
+            this.label9 = new System.Windows.Forms.Label();
+            this.label10 = new System.Windows.Forms.Label();
+            this.label11 = new System.Windows.Forms.Label();
+            this.label12 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxTable)).BeginInit();
             this.SuspendLayout();
             // 
@@ -164,7 +178,7 @@
             // lblScore
             // 
             this.lblScore.Font = new System.Drawing.Font("Century Gothic", 26.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblScore.Location = new System.Drawing.Point(894, 235);
+            this.lblScore.Location = new System.Drawing.Point(894, 435);
             this.lblScore.Name = "lblScore";
             this.lblScore.Size = new System.Drawing.Size(84, 41);
             this.lblScore.TabIndex = 13;
@@ -175,7 +189,7 @@
             // 
             this.label1.AutoSize = true;
             this.label1.Font = new System.Drawing.Font("Century Gothic", 8.25F);
-            this.label1.Location = new System.Drawing.Point(898, 213);
+            this.label1.Location = new System.Drawing.Point(898, 413);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(44, 16);
             this.label1.TabIndex = 14;
@@ -220,11 +234,151 @@
             this.boxCoutPetit.Text = "Coûts petit robot";
             this.boxCoutPetit.UseVisualStyleBackColor = true;
             // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(889, 20);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(94, 13);
+            this.label2.TabIndex = 19;
+            this.label2.Text = "Position gros robot";
+            // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Location = new System.Drawing.Point(906, 47);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(20, 13);
+            this.label3.TabIndex = 20;
+            this.label3.Text = "X :";
+            // 
+            // label4
+            // 
+            this.label4.AutoSize = true;
+            this.label4.Location = new System.Drawing.Point(906, 64);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(20, 13);
+            this.label4.TabIndex = 21;
+            this.label4.Text = "Y :";
+            // 
+            // label5
+            // 
+            this.label5.AutoSize = true;
+            this.label5.Location = new System.Drawing.Point(906, 81);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(19, 13);
+            this.label5.TabIndex = 22;
+            this.label5.Text = "θ :";
+            // 
+            // lblPosGrosTeta
+            // 
+            this.lblPosGrosTeta.AutoSize = true;
+            this.lblPosGrosTeta.Location = new System.Drawing.Point(932, 81);
+            this.lblPosGrosTeta.Name = "lblPosGrosTeta";
+            this.lblPosGrosTeta.Size = new System.Drawing.Size(17, 13);
+            this.lblPosGrosTeta.TabIndex = 25;
+            this.lblPosGrosTeta.Text = "0°";
+            // 
+            // lblPosGrosY
+            // 
+            this.lblPosGrosY.AutoSize = true;
+            this.lblPosGrosY.Location = new System.Drawing.Point(932, 64);
+            this.lblPosGrosY.Name = "lblPosGrosY";
+            this.lblPosGrosY.Size = new System.Drawing.Size(13, 13);
+            this.lblPosGrosY.TabIndex = 24;
+            this.lblPosGrosY.Text = "0";
+            // 
+            // lblPosGrosX
+            // 
+            this.lblPosGrosX.AutoSize = true;
+            this.lblPosGrosX.Location = new System.Drawing.Point(932, 47);
+            this.lblPosGrosX.Name = "lblPosGrosX";
+            this.lblPosGrosX.Size = new System.Drawing.Size(13, 13);
+            this.lblPosGrosX.TabIndex = 23;
+            this.lblPosGrosX.Text = "0";
+            // 
+            // lblPosPetitTeta
+            // 
+            this.lblPosPetitTeta.AutoSize = true;
+            this.lblPosPetitTeta.Location = new System.Drawing.Point(932, 179);
+            this.lblPosPetitTeta.Name = "lblPosPetitTeta";
+            this.lblPosPetitTeta.Size = new System.Drawing.Size(17, 13);
+            this.lblPosPetitTeta.TabIndex = 32;
+            this.lblPosPetitTeta.Text = "0°";
+            // 
+            // lblPosPetitY
+            // 
+            this.lblPosPetitY.AutoSize = true;
+            this.lblPosPetitY.Location = new System.Drawing.Point(932, 162);
+            this.lblPosPetitY.Name = "lblPosPetitY";
+            this.lblPosPetitY.Size = new System.Drawing.Size(13, 13);
+            this.lblPosPetitY.TabIndex = 31;
+            this.lblPosPetitY.Text = "0";
+            // 
+            // lblPosPetitX
+            // 
+            this.lblPosPetitX.AutoSize = true;
+            this.lblPosPetitX.Location = new System.Drawing.Point(932, 145);
+            this.lblPosPetitX.Name = "lblPosPetitX";
+            this.lblPosPetitX.Size = new System.Drawing.Size(13, 13);
+            this.lblPosPetitX.TabIndex = 30;
+            this.lblPosPetitX.Text = "0";
+            // 
+            // label9
+            // 
+            this.label9.AutoSize = true;
+            this.label9.Location = new System.Drawing.Point(906, 179);
+            this.label9.Name = "label9";
+            this.label9.Size = new System.Drawing.Size(19, 13);
+            this.label9.TabIndex = 29;
+            this.label9.Text = "θ :";
+            // 
+            // label10
+            // 
+            this.label10.AutoSize = true;
+            this.label10.Location = new System.Drawing.Point(906, 162);
+            this.label10.Name = "label10";
+            this.label10.Size = new System.Drawing.Size(20, 13);
+            this.label10.TabIndex = 28;
+            this.label10.Text = "Y :";
+            // 
+            // label11
+            // 
+            this.label11.AutoSize = true;
+            this.label11.Location = new System.Drawing.Point(906, 145);
+            this.label11.Name = "label11";
+            this.label11.Size = new System.Drawing.Size(20, 13);
+            this.label11.TabIndex = 27;
+            this.label11.Text = "X :";
+            // 
+            // label12
+            // 
+            this.label12.AutoSize = true;
+            this.label12.Location = new System.Drawing.Point(889, 118);
+            this.label12.Name = "label12";
+            this.label12.Size = new System.Drawing.Size(94, 13);
+            this.label12.TabIndex = 26;
+            this.label12.Text = "Position petit robot";
+            // 
             // PanelTable
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.Transparent;
+            this.Controls.Add(this.lblPosPetitTeta);
+            this.Controls.Add(this.lblPosPetitY);
+            this.Controls.Add(this.lblPosPetitX);
+            this.Controls.Add(this.label9);
+            this.Controls.Add(this.label10);
+            this.Controls.Add(this.label11);
+            this.Controls.Add(this.label12);
+            this.Controls.Add(this.lblPosGrosTeta);
+            this.Controls.Add(this.lblPosGrosY);
+            this.Controls.Add(this.lblPosGrosX);
+            this.Controls.Add(this.label5);
+            this.Controls.Add(this.label4);
+            this.Controls.Add(this.label3);
+            this.Controls.Add(this.label2);
             this.Controls.Add(this.boxCoutPetit);
             this.Controls.Add(this.boxCoutGros);
             this.Controls.Add(this.btnGo);
@@ -269,5 +423,19 @@
         private System.Windows.Forms.Button btnGo;
         private System.Windows.Forms.CheckBox boxCoutGros;
         private System.Windows.Forms.CheckBox boxCoutPetit;
+        private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.Label label5;
+        private System.Windows.Forms.Label lblPosGrosTeta;
+        private System.Windows.Forms.Label lblPosGrosY;
+        private System.Windows.Forms.Label lblPosGrosX;
+        private System.Windows.Forms.Label lblPosPetitTeta;
+        private System.Windows.Forms.Label lblPosPetitY;
+        private System.Windows.Forms.Label lblPosPetitX;
+        private System.Windows.Forms.Label label9;
+        private System.Windows.Forms.Label label10;
+        private System.Windows.Forms.Label label11;
+        private System.Windows.Forms.Label label12;
     }
 }

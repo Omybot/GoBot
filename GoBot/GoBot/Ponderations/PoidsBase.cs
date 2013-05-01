@@ -14,10 +14,10 @@ namespace GoBot.Ponderations
             PoidsPetitCadeau = new double[8];
             PoidsGrosCadeau = new double[8];
 
-            PoidGlobalPetitBougie = 1;
-            PoidGlobalPetitCadeau = 1;
+            PoidGlobalPetitBougie = 0;
+            PoidGlobalPetitCadeau = 0;
             PoidGlobalGrosBougie = 1;
-            PoidGlobalGrosCadeau = 1;
+            PoidGlobalGrosCadeau = 0;
 
             // Poids petit robot
 
@@ -48,7 +48,7 @@ namespace GoBot.Ponderations
             // Poids grand robot
 
             // Bougies
-            PoidsGrosBougie[0] = 1;
+            PoidsGrosBougie[0] = 10000;
             PoidsGrosBougie[1] = 1;
             PoidsGrosBougie[2] = 1;
             PoidsGrosBougie[2] = 1;

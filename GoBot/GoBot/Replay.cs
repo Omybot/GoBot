@@ -81,7 +81,7 @@ namespace GoBot
 
         public void Rejouer()
         {
-            ReceptionTrame += new ReceptionTrameDelegate(Connexions.ConnexionIo.TrameRecue);
+            ReceptionTrame += new ReceptionTrameDelegate(Connexions.ConnexionMiwi.TrameRecue);
 
             for (int i = tramesEntrantes.Count - 1; i > 0; i--)
             {

@@ -308,6 +308,10 @@ namespace GoBot.IHM
                         Point pointDevant = new Point(Maths.Arrondi(xRobot - cos * RealToScreen(Maths.Arrondi(Robots.GrosRobot.Longueur / 2))), Maths.Arrondi(yRobot - sin * RealToScreen(Maths.Arrondi(Robots.GrosRobot.Longueur / 2))));
 
                         g.DrawLine(new Pen(Plateau.CouleurJ2), new Point(xRobot, yRobot), pointDevant);
+
+                        lblPosGrosX.Text = Math.Round(Robots.GrosRobot.Position.Coordonnees.X, 2).ToString();
+                        lblPosGrosY.Text = Math.Round(Robots.GrosRobot.Position.Coordonnees.Y, 2).ToString();
+                        lblPosGrosTeta.Text = Robots.GrosRobot.Position.Angle.ToString();
                     }
 
                     // Fin dessin robot
@@ -349,6 +353,10 @@ namespace GoBot.IHM
                         Point pointDevant = new Point(Maths.Arrondi(xRobot - cos * RealToScreen(Maths.Arrondi(Robots.PetitRobot.Longueur / 2))), Maths.Arrondi(yRobot - sin * RealToScreen(Maths.Arrondi(Robots.PetitRobot.Longueur / 2))));
 
                         g.DrawLine(new Pen(Plateau.CouleurJ2), new Point(xRobot, yRobot), pointDevant);
+
+                        lblPosPetitX.Text = Math.Round(Robots.PetitRobot.Position.Coordonnees.X, 2).ToString();
+                        lblPosPetitY.Text = Math.Round(Robots.PetitRobot.Position.Coordonnees.Y, 2).ToString();
+                        lblPosPetitTeta.Text = Robots.PetitRobot.Position.Angle.ToString();
                     }
 
 

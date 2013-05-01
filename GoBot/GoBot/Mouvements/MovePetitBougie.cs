@@ -28,16 +28,16 @@ namespace GoBot.Mouvements
                 if (Math.Abs(angle180.AngleDegres) < 90)
                 {
                     Robots.PetitRobot.PositionerAngle(Position.Angle, 1);
-                    Robots.PetitRobot.BougeServo(ServomoteurID.GRBrasBasDroite, 500);
+                    Robots.PetitRobot.BougeServo(ServomoteurID.PRBras, 500);
                     Thread.Sleep(500);
-                    Robots.PetitRobot.BougeServo(ServomoteurID.GRBrasBasDroite, 0);
+                    Robots.PetitRobot.BougeServo(ServomoteurID.PRBras, 0);
                 }
                 else
                 {
                     Robots.PetitRobot.PositionerAngle(Position.Angle - new Angle(180, AnglyeType.Degre), 1);
-                    Robots.PetitRobot.BougeServo(ServomoteurID.GRBrasBasGauche, 500);
+                    Robots.PetitRobot.BougeServo(ServomoteurID.PRBras, 500);
                     Thread.Sleep(500);
-                    Robots.PetitRobot.BougeServo(ServomoteurID.GRBrasBasGauche, 0);
+                    Robots.PetitRobot.BougeServo(ServomoteurID.PRBras, 0);
                 }
                 Plateau.Score += Score;
                 Plateau.BougiesEnfoncees[numeroBougie] = true;

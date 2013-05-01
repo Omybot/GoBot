@@ -54,7 +54,7 @@ namespace GoBot
                 btnCouleurRouge_Click(null, null);
 
                 Connexions.ConnexionMove.ConnexionCheck.ConnexionChange += new ConnexionCheck.ConnexionChangeDelegate(ConnexionMoveCheck_ConnexionChange);
-                Connexions.ConnexionIo.ConnexionCheck.ConnexionChange += new ConnexionCheck.ConnexionChangeDelegate(ConnexionIoCheck_ConnexionChange);
+                Connexions.ConnexionMiwi.ConnexionCheck.ConnexionChange += new ConnexionCheck.ConnexionChangeDelegate(ConnexionIoCheck_ConnexionChange);
 
                 panelBalise1.Balise.ConnexionCheck.ConnexionChange += new ConnexionCheck.ConnexionChangeDelegate(ConnexionBunCheck_ConnexionChange);
                 panelBalise2.Balise.ConnexionCheck.ConnexionChange += new ConnexionCheck.ConnexionChangeDelegate(ConnexionBeuCheck_ConnexionChange);
@@ -62,7 +62,7 @@ namespace GoBot
                 //PetitRobot.ConnexionCheck.ConnexionChange += new ConnexionCheck.ConnexionChangeDelegate(ConnexionPi_ConnexionChange);
 
                 Connexions.ConnexionMove.ConnexionCheck.Start();
-                Connexions.ConnexionIo.ConnexionCheck.Start();
+                Connexions.ConnexionMiwi.ConnexionCheck.Start();
                 //PetitRobot.ConnexionCheck.Start();
                 panelBalise1.Balise.ConnexionCheck.Start();
                 panelBalise2.Balise.ConnexionCheck.Start();
@@ -70,11 +70,6 @@ namespace GoBot
  
                 switchBoutonSimu.SetActif(Robots.Simulation);
             }
-        }
-
-        void ConnexionPi_ConnexionChange(bool conn)
-        {
-            Robot_ConnexionChange(Carte.RecPi, conn);
         }
 
         void ConnexionBunCheck_ConnexionChange(bool conn)
@@ -99,7 +94,7 @@ namespace GoBot
 
         void ConnexionIoCheck_ConnexionChange(bool conn)
         {
-            Robot_ConnexionChange(Carte.RecIo, conn);
+            //Robot_ConnexionChange(Carte.RecIo, conn);
         }
 
         void AjouterLigne(Color couleur, String texte)
@@ -137,14 +132,8 @@ namespace GoBot
             Led selectLed = null;
             switch (carte)
             {
-                case Carte.RecIo:
-                    selectLed = ledRecIo;
-                    break;
                 case Carte.RecMove:
                     selectLed = ledRecMove;
-                    break;
-                case Carte.RecPi:
-                    selectLed = ledRecPi;
                     break;
                 case Carte.RecBun:
                     selectLed = ledRecBun;
@@ -166,9 +155,9 @@ namespace GoBot
         private void SetLed(Led led, bool on)
         {
             if (on)
-                led.On(true);
+                led.CouleurVert(true);
             else
-                led.Off(true);
+                led.CouleurRouge(true);
         }
 
         private void FenGoBot_FormClosing(object sender, FormClosingEventArgs e)
@@ -243,24 +232,29 @@ namespace GoBot
             Rapide();
             Robots.GrosRobot.Avancer(890);
             Robots.GrosRobot.PivotGauche(90);
-            Robots.GrosRobot.Reculer(500);
+            Robots.GrosRobot.Reculer(400);
             Lent();
             Robots.GrosRobot.Recallage(SensAR.Arriere);
-            Rapide();
-            Robots.GrosRobot.ReglerOffsetAsserv(3000 - 110, 1000, 180);
+            /*Robots.GrosRobot.ReglerOffsetAsserv(3000 - 110, 1000, 180);
             Robots.GrosRobot.Avancer(1390);
 
             Thread.Sleep(1000);
             Robots.GrosRobot.Reculer(1255);
             Robots.GrosRobot.PivotDroite(75);
             Lent();
-            Robots.GrosRobot.Reculer(335);
+            Robots.GrosRobot.Reculer(335);*/
+            Thread.Sleep(1000);
+            Robots.GrosRobot.ReglerOffsetAsserv(3000 - 110, 1000, 180);
+            //Robots.GrosRobot.Avancer(150);
+            //Robots.GrosRobot.PivotDroite(73.86);
+            //Robots.GrosRobot.Reculer(360);
+            //Rapide();
         }
 
         private void Rapide()
         {
-            Robots.GrosRobot.VitesseDeplacement = 800;
-            Robots.GrosRobot.AccelerationDeplacement = 1400;
+            Robots.GrosRobot.VitesseDeplacement = 600;
+            Robots.GrosRobot.AccelerationDeplacement = 1200;
             Robots.GrosRobot.VitessePivot = 800;
             Robots.GrosRobot.AccelerationPivot = 1400;
         }
@@ -275,7 +269,7 @@ namespace GoBot
 
         private void btnBalises_Click(object sender, EventArgs e)
         {
-            ledBalises.On();
+            ledBalises.CouleurVert();
 
             lblPwmBalise1.Visible = true;
             lblPwmBalise2.Visible = true;
@@ -284,11 +278,11 @@ namespace GoBot
 
         private void btnAfficherTrame_Click(object sender, EventArgs e)
         {
-            Connexions.ConnexionIo.NouvelleTrame += new ConnexionUDP.ReceptionDelegate(ReceptionTrame);
+            Connexions.ConnexionMiwi.NouvelleTrame += new ConnexionUDP.ReceptionDelegate(ReceptionTrame);
             Connexions.ConnexionMove.NouvelleTrame += new ConnexionUDP.ReceptionDelegate(ReceptionTrame);
 
             replay = new Replay();
-            Connexions.ConnexionIo.NouvelleTrame += new ConnexionUDP.ReceptionDelegate(replay.AjouterTrameEntrante);
+            Connexions.ConnexionMiwi.NouvelleTrame += new ConnexionUDP.ReceptionDelegate(replay.AjouterTrameEntrante);
             Connexions.ConnexionMove.NouvelleTrame += new ConnexionUDP.ReceptionDelegate(replay.AjouterTrameEntrante);
         }
 
@@ -307,14 +301,14 @@ namespace GoBot
                     texte = "Move\t" + texte;
                     couleur = Color.FromArgb(218, 37, 37);
                     break;
-                case (Byte)Carte.RecIo:
+                /*case (Byte)Carte.RecIo:
                     texte = "Io\t" + texte;
                     couleur = Color.FromArgb(238, 111, 17);
                     break;
                 case (Byte)Carte.RecPi:
                     texte = "Pi\t" + texte;
                     couleur = Color.FromArgb(5, 173, 10);
-                    break;
+                    break;*/
                 case (Byte)Carte.RecBun:
                     texte = "Bun\t" + texte;
                     couleur = Color.FromArgb(81, 101, 238);

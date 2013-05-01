@@ -32,7 +32,7 @@ namespace GoBot.Actions
         {
             get 
             { 
-                return GoBot.Properties.Resources.crochet;  
+                return GoBot.Properties.Resources.Moteur;  
             }
         }
     }

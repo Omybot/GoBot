@@ -55,9 +55,9 @@ namespace GoBot.IHM
             else
             {
                 if (on)
-                    ledConnect.On(true);
+                    ledConnect.CouleurVert(true);
                 else
-                    ledConnect.Off(true);
+                    ledConnect.CouleurRouge(true);
             }
         }
 
@@ -124,27 +124,27 @@ namespace GoBot.IHM
         private void PanelServo_Load(object sender, EventArgs e)
         {
             tootltip.SetToolTip(ledErreur1, "Instruction inconnue ou instruction envoyée sans Reg_Write");
-            ledErreur1.Neutre();
+            ledErreur1.CouleurGris();
 
             tootltip.SetToolTip(ledErreur2, "Couple hors plage");
-            ledErreur2.Neutre();
+            ledErreur2.CouleurGris();
 
             tootltip.SetToolTip(ledErreur3, "Checksum incorrect");
-            ledErreur3.Neutre();
+            ledErreur3.CouleurGris();
 
             tootltip.SetToolTip(ledErreur4, "Instruction hors plage");
-            ledErreur4.Neutre();
+            ledErreur4.CouleurGris();
 
             tootltip.SetToolTip(ledErreur5, "Température trop élevée");
-            ledErreur5.Neutre();
+            ledErreur5.CouleurGris();
 
             tootltip.SetToolTip(ledErreur6, "Position hors plage");
-            ledErreur6.Neutre();
+            ledErreur6.CouleurGris();
 
             tootltip.SetToolTip(ledErreur7, "Voltage hors plage");
-            ledErreur7.Neutre();
+            ledErreur7.CouleurGris();
 
-            ledConnect.Off();
+            ledConnect.CouleurRouge();
         }
 
         private void btnSet_Click(object sender, EventArgs e)
@@ -184,7 +184,7 @@ namespace GoBot.IHM
         {
             if (servo == null)
             {
-                servo = new Servomoteur(Carte.RecIo, (int)numID.Value, (double)numBaudrate.Value);
+                //servo = new Servomoteur(Carte.RecIo, (int)numID.Value, (double)numBaudrate.Value);
 
                 servo.RechercheAutoFinie += new Servomoteur.RechercheAutoDelegate(servo_RechercheAutoFinie);
                 servo.TemperatureChange += new Servomoteur.TemperatureDelegate(servo_TemperatureChange);

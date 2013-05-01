@@ -28,6 +28,7 @@ namespace GoBot
 
         public Servomoteur(Carte carte, int id, double baudrate)
         {
+            recherche = false;
             this.carte = carte;
             this.id = id;
             this.baudrate = baudrate;
@@ -42,9 +43,9 @@ namespace GoBot
 
             switch (carte)
             {
-                case (Carte.RecIo):
+                /*case (Carte.RecIo):
                     connexionUdp = Connexions.ConnexionIo;
-                    break;
+                    break;*/
                 case (Carte.RecMove):
                     connexionUdp = Connexions.ConnexionMove;
                     break;
@@ -147,9 +148,9 @@ namespace GoBot
 
         public void ChangerID(int nouvelID)
         {
-            Trame t = TrameFactory.ServoSetId(carte, id, BaudrateToValue(baudrate), nouvelID);
+            /*Trame t = TrameFactory.ServoSetId(carte, id, BaudrateToValue(baudrate), nouvelID);
             connexionUdp.SendMessage(t);
-            id = nouvelID;
+            id = nouvelID;*/
         }
 
         public double Baudrate
@@ -166,88 +167,88 @@ namespace GoBot
 
         public void ChangerBaudrate(int nouveauBaudrate)
         {
-            Trame t = TrameFactory.ServoSetBaudrate(carte, id, BaudrateToValue(baudrate), BaudrateToValue(nouveauBaudrate));
+            /*Trame t = TrameFactory.ServoSetBaudrate(carte, id, BaudrateToValue(baudrate), BaudrateToValue(nouveauBaudrate));
             connexionUdp.SendMessage(t);
-            baudrate = nouveauBaudrate;
+            baudrate = nouveauBaudrate;*/
         }
 
         public void TestConnexion()
         {
-            Trame t = TrameFactory.ServoTestConnexion(carte, id, BaudrateToValue(baudrate));
-            connexionUdp. SendMessage(t);
+            /*Trame t = TrameFactory.ServoTestConnexion(carte, id, BaudrateToValue(baudrate));
+            connexionUdp. SendMessage(t);*/
         }
 
         public void DemandeTemperature()
         {
-            Trame t = TrameFactory.ServoGetTemperature(carte, id, BaudrateToValue(baudrate));
-            connexionUdp.SendMessage(t);
+            /*Trame t = TrameFactory.ServoGetTemperature(carte, id, BaudrateToValue(baudrate));
+            connexionUdp.SendMessage(t);*/
         }
 
         public void DemandeCouple()
         {
-            Trame t = TrameFactory.ServoGetCouple(carte, id, BaudrateToValue(baudrate));
-            connexionUdp.SendMessage(t);
+            /*Trame t = TrameFactory.ServoGetCouple(carte, id, BaudrateToValue(baudrate));
+            connexionUdp.SendMessage(t);*/
         }
 
         public void DemandeTension()
         {
-            Trame t = TrameFactory.ServoGetTension(carte, id, BaudrateToValue(baudrate));
-            connexionUdp.SendMessage(t);
+            /*Trame t = TrameFactory.ServoGetTension(carte, id, BaudrateToValue(baudrate));
+            connexionUdp.SendMessage(t);*/
         }
 
         public void DemandePosition()
         {
-            Trame t = TrameFactory.ServoGetPosition(carte, id, BaudrateToValue(baudrate));
-            connexionUdp.SendMessage(t);
+            /*Trame t = TrameFactory.ServoGetPosition(carte, id, BaudrateToValue(baudrate));
+            connexionUdp.SendMessage(t);*/
         }
 
         public void SetPosition(int position)
         {
-            Trame t = TrameFactory.ServoSetPosition(carte, id, BaudrateToValue(baudrate), position);
-            connexionUdp.SendMessage(t);
+            /*Trame t = TrameFactory.ServoSetPosition(carte, id, BaudrateToValue(baudrate), position);
+            connexionUdp.SendMessage(t);*/
         }
 
         public void DemandeVitesse()
         {
-            Trame t = TrameFactory.ServoGetVitesse(carte, id, BaudrateToValue(baudrate));
-            connexionUdp.SendMessage(t);
+            /*Trame t = TrameFactory.ServoGetVitesse(carte, id, BaudrateToValue(baudrate));
+            connexionUdp.SendMessage(t);*/
         }
 
         public void SetVitesse(int vitesse)
         {
-            Trame t = TrameFactory.ServoSetVitesse(carte, id, BaudrateToValue(baudrate), vitesse);
-            connexionUdp.SendMessage(t);
+            /*Trame t = TrameFactory.ServoSetVitesse(carte, id, BaudrateToValue(baudrate), vitesse);
+            connexionUdp.SendMessage(t);*/
         }
 
         public void SetLed(bool allume)
         {
-            Trame t = TrameFactory.ServoSetLed(carte, id, BaudrateToValue(baudrate), allume);
-            connexionUdp.SendMessage(t);
+            /*Trame t = TrameFactory.ServoSetLed(carte, id, BaudrateToValue(baudrate), allume);
+            connexionUdp.SendMessage(t);*/
         }
 
         public void SetPositionMin(int position)
         {
-            Trame t = TrameFactory.ServoSetPositionMin(carte, id, BaudrateToValue(baudrate), position);
-            connexionUdp.SendMessage(t);
+            /*Trame t = TrameFactory.ServoSetPositionMin(carte, id, BaudrateToValue(baudrate), position);
+            connexionUdp.SendMessage(t);*/
         }
 
         public void SetPositionMax(int position)
         {
-            Trame t = TrameFactory.ServoSetPositionMax(carte, id, BaudrateToValue(baudrate), position);
-            connexionUdp.SendMessage(t);
+            /*Trame t = TrameFactory.ServoSetPositionMax(carte, id, BaudrateToValue(baudrate), position);
+            connexionUdp.SendMessage(t);*/
         }
 
         public void RechercheAuto()
         {
-            recherche = true;
+            /*recherche = true;
             Trame t = TrameFactory.ServoRechercheAuto(carte);
-            connexionUdp.SendMessage(t);
+            connexionUdp.SendMessage(t);*/
         }
 
         public void Reset()
         {
-            Trame t = TrameFactory.ServoReset(carte, id);
-            connexionUdp.SendMessage(t);
+            /*Trame t = TrameFactory.ServoReset(carte, id);
+            connexionUdp.SendMessage(t);*/
         }
 
         public void Surveiller()

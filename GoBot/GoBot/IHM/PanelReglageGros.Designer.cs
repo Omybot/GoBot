@@ -29,374 +29,663 @@
         private void InitializeComponent()
         {
             this.groupBoxReglage = new System.Windows.Forms.GroupBox();
-            this.groupBox2 = new System.Windows.Forms.GroupBox();
-            this.button9 = new System.Windows.Forms.Button();
-            this.button10 = new System.Windows.Forms.Button();
-            this.button11 = new System.Windows.Forms.Button();
-            this.label6 = new System.Windows.Forms.Label();
+            this.btnCameraBleu = new System.Windows.Forms.Button();
+            this.btnCameraRouge = new System.Windows.Forms.Button();
+            this.btnCameraOK = new System.Windows.Forms.Button();
+            this.numCamera = new System.Windows.Forms.NumericUpDown();
             this.label7 = new System.Windows.Forms.Label();
-            this.trackBarPlus2 = new GoBot.IHM.Composants.TrackBarPlus();
-            this.groupBoxGrandBras = new System.Windows.Forms.GroupBox();
-            this.button8 = new System.Windows.Forms.Button();
-            this.button5 = new System.Windows.Forms.Button();
-            this.button7 = new System.Windows.Forms.Button();
+            this.btnBrasDroitRange = new System.Windows.Forms.Button();
+            this.btnBrasDroitSorti = new System.Windows.Forms.Button();
+            this.btnBrasDroitOk = new System.Windows.Forms.Button();
+            this.numBrasDroit = new System.Windows.Forms.NumericUpDown();
             this.label2 = new System.Windows.Forms.Label();
+            this.btnBrasGaucheRange = new System.Windows.Forms.Button();
+            this.btnBrasGaucheSorti = new System.Windows.Forms.Button();
+            this.btnBrasGaucheOk = new System.Windows.Forms.Button();
+            this.numBrasGauche = new System.Windows.Forms.NumericUpDown();
+            this.label6 = new System.Windows.Forms.Label();
+            this.btnPetitBrasRange = new System.Windows.Forms.Button();
+            this.btnPetitBrasBas = new System.Windows.Forms.Button();
+            this.btnPetitBrasHaut = new System.Windows.Forms.Button();
+            this.btnPetitBrasOk = new System.Windows.Forms.Button();
+            this.numPetitBras = new System.Windows.Forms.NumericUpDown();
             this.label5 = new System.Windows.Forms.Label();
-            this.trackBarPlus1 = new GoBot.IHM.Composants.TrackBarPlus();
-            this.groupBoxShutter = new System.Windows.Forms.GroupBox();
-            this.button6 = new System.Windows.Forms.Button();
+            this.btnGrandBrasRange = new System.Windows.Forms.Button();
+            this.btnGrandBrasBas = new System.Windows.Forms.Button();
+            this.btnGrandBrasHaut = new System.Windows.Forms.Button();
+            this.btnGrandBrasOk = new System.Windows.Forms.Button();
+            this.numGrandBras = new System.Windows.Forms.NumericUpDown();
             this.label4 = new System.Windows.Forms.Label();
-            this.label3 = new System.Windows.Forms.Label();
-            this.numericUpDown1 = new System.Windows.Forms.NumericUpDown();
-            this.button4 = new System.Windows.Forms.Button();
-            this.groupBox1 = new System.Windows.Forms.GroupBox();
-            this.button3 = new System.Windows.Forms.Button();
-            this.button2 = new System.Windows.Forms.Button();
-            this.label10 = new System.Windows.Forms.Label();
+            this.btnDebloqueurBas = new System.Windows.Forms.Button();
+            this.btnDebloqueurHaut = new System.Windows.Forms.Button();
+            this.btnDebloqueurOk = new System.Windows.Forms.Button();
+            this.numDebloqueur = new System.Windows.Forms.NumericUpDown();
             this.label1 = new System.Windows.Forms.Label();
-            this.trackBarPropulseur = new GoBot.IHM.Composants.TrackBarPlus();
-            this.groupBoxTurbineReglage = new System.Windows.Forms.GroupBox();
-            this.button1 = new System.Windows.Forms.Button();
-            this.lblPuissanceTurbine = new System.Windows.Forms.Label();
-            this.trackBarTurbine = new GoBot.IHM.Composants.TrackBarPlus();
+            this.btnAspirateurBas = new System.Windows.Forms.Button();
+            this.btnAspirateurHaut = new System.Windows.Forms.Button();
+            this.btnAspirateurOk = new System.Windows.Forms.Button();
+            this.numAspirateur = new System.Windows.Forms.NumericUpDown();
+            this.label3 = new System.Windows.Forms.Label();
+            this.btnShutterOuvrir = new System.Windows.Forms.Button();
+            this.label11 = new System.Windows.Forms.Label();
+            this.numShutter = new System.Windows.Forms.NumericUpDown();
+            this.btnShutterOff = new System.Windows.Forms.Button();
+            this.btnShutterOn = new System.Windows.Forms.Button();
+            this.label10 = new System.Windows.Forms.Label();
+            this.btnCanonSaveMauvaise = new System.Windows.Forms.Button();
+            this.btnCanonSaveBonne = new System.Windows.Forms.Button();
+            this.btnCanonOk = new System.Windows.Forms.Button();
+            this.numCanon = new System.Windows.Forms.NumericUpDown();
+            this.label9 = new System.Windows.Forms.Label();
+            this.btnTurbineSave = new System.Windows.Forms.Button();
+            this.btnTurbineOk = new System.Windows.Forms.Button();
+            this.numTurbine = new System.Windows.Forms.NumericUpDown();
+            this.label8 = new System.Windows.Forms.Label();
             this.btnTaille = new System.Windows.Forms.Button();
             this.groupBoxReglage.SuspendLayout();
-            this.groupBox2.SuspendLayout();
-            this.groupBoxGrandBras.SuspendLayout();
-            this.groupBoxShutter.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).BeginInit();
-            this.groupBox1.SuspendLayout();
-            this.groupBoxTurbineReglage.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.numCamera)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numBrasDroit)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numBrasGauche)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numPetitBras)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numGrandBras)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numDebloqueur)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numAspirateur)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numShutter)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numCanon)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numTurbine)).BeginInit();
             this.SuspendLayout();
             // 
             // groupBoxReglage
             // 
             this.groupBoxReglage.BackColor = System.Drawing.Color.Transparent;
-            this.groupBoxReglage.Controls.Add(this.groupBox2);
-            this.groupBoxReglage.Controls.Add(this.groupBoxGrandBras);
-            this.groupBoxReglage.Controls.Add(this.groupBoxShutter);
-            this.groupBoxReglage.Controls.Add(this.groupBox1);
-            this.groupBoxReglage.Controls.Add(this.groupBoxTurbineReglage);
+            this.groupBoxReglage.Controls.Add(this.btnCameraBleu);
+            this.groupBoxReglage.Controls.Add(this.btnCameraRouge);
+            this.groupBoxReglage.Controls.Add(this.btnCameraOK);
+            this.groupBoxReglage.Controls.Add(this.numCamera);
+            this.groupBoxReglage.Controls.Add(this.label7);
+            this.groupBoxReglage.Controls.Add(this.btnBrasDroitRange);
+            this.groupBoxReglage.Controls.Add(this.btnBrasDroitSorti);
+            this.groupBoxReglage.Controls.Add(this.btnBrasDroitOk);
+            this.groupBoxReglage.Controls.Add(this.numBrasDroit);
+            this.groupBoxReglage.Controls.Add(this.label2);
+            this.groupBoxReglage.Controls.Add(this.btnBrasGaucheRange);
+            this.groupBoxReglage.Controls.Add(this.btnBrasGaucheSorti);
+            this.groupBoxReglage.Controls.Add(this.btnBrasGaucheOk);
+            this.groupBoxReglage.Controls.Add(this.numBrasGauche);
+            this.groupBoxReglage.Controls.Add(this.label6);
+            this.groupBoxReglage.Controls.Add(this.btnPetitBrasRange);
+            this.groupBoxReglage.Controls.Add(this.btnPetitBrasBas);
+            this.groupBoxReglage.Controls.Add(this.btnPetitBrasHaut);
+            this.groupBoxReglage.Controls.Add(this.btnPetitBrasOk);
+            this.groupBoxReglage.Controls.Add(this.numPetitBras);
+            this.groupBoxReglage.Controls.Add(this.label5);
+            this.groupBoxReglage.Controls.Add(this.btnGrandBrasRange);
+            this.groupBoxReglage.Controls.Add(this.btnGrandBrasBas);
+            this.groupBoxReglage.Controls.Add(this.btnGrandBrasHaut);
+            this.groupBoxReglage.Controls.Add(this.btnGrandBrasOk);
+            this.groupBoxReglage.Controls.Add(this.numGrandBras);
+            this.groupBoxReglage.Controls.Add(this.label4);
+            this.groupBoxReglage.Controls.Add(this.btnDebloqueurBas);
+            this.groupBoxReglage.Controls.Add(this.btnDebloqueurHaut);
+            this.groupBoxReglage.Controls.Add(this.btnDebloqueurOk);
+            this.groupBoxReglage.Controls.Add(this.numDebloqueur);
+            this.groupBoxReglage.Controls.Add(this.label1);
+            this.groupBoxReglage.Controls.Add(this.btnAspirateurBas);
+            this.groupBoxReglage.Controls.Add(this.btnAspirateurHaut);
+            this.groupBoxReglage.Controls.Add(this.btnAspirateurOk);
+            this.groupBoxReglage.Controls.Add(this.numAspirateur);
+            this.groupBoxReglage.Controls.Add(this.label3);
+            this.groupBoxReglage.Controls.Add(this.btnShutterOuvrir);
+            this.groupBoxReglage.Controls.Add(this.label11);
+            this.groupBoxReglage.Controls.Add(this.numShutter);
+            this.groupBoxReglage.Controls.Add(this.btnShutterOff);
+            this.groupBoxReglage.Controls.Add(this.btnShutterOn);
+            this.groupBoxReglage.Controls.Add(this.label10);
+            this.groupBoxReglage.Controls.Add(this.btnCanonSaveMauvaise);
+            this.groupBoxReglage.Controls.Add(this.btnCanonSaveBonne);
+            this.groupBoxReglage.Controls.Add(this.btnCanonOk);
+            this.groupBoxReglage.Controls.Add(this.numCanon);
+            this.groupBoxReglage.Controls.Add(this.label9);
+            this.groupBoxReglage.Controls.Add(this.btnTurbineSave);
+            this.groupBoxReglage.Controls.Add(this.btnTurbineOk);
+            this.groupBoxReglage.Controls.Add(this.numTurbine);
+            this.groupBoxReglage.Controls.Add(this.label8);
             this.groupBoxReglage.Controls.Add(this.btnTaille);
             this.groupBoxReglage.Location = new System.Drawing.Point(5, 3);
             this.groupBoxReglage.Name = "groupBoxReglage";
-            this.groupBoxReglage.Size = new System.Drawing.Size(332, 480);
+            this.groupBoxReglage.Size = new System.Drawing.Size(332, 357);
             this.groupBoxReglage.TabIndex = 0;
             this.groupBoxReglage.TabStop = false;
             this.groupBoxReglage.Text = "Réglage";
             // 
-            // groupBox2
+            // btnCameraBleu
             // 
-            this.groupBox2.Controls.Add(this.button9);
-            this.groupBox2.Controls.Add(this.button10);
-            this.groupBox2.Controls.Add(this.button11);
-            this.groupBox2.Controls.Add(this.label6);
-            this.groupBox2.Controls.Add(this.label7);
-            this.groupBox2.Controls.Add(this.trackBarPlus2);
-            this.groupBox2.Location = new System.Drawing.Point(6, 387);
-            this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(322, 85);
-            this.groupBox2.TabIndex = 102;
-            this.groupBox2.TabStop = false;
-            this.groupBox2.Text = "Petit bras";
+            this.btnCameraBleu.Location = new System.Drawing.Point(270, 323);
+            this.btnCameraBleu.Name = "btnCameraBleu";
+            this.btnCameraBleu.Size = new System.Drawing.Size(53, 23);
+            this.btnCameraBleu.TabIndex = 158;
+            this.btnCameraBleu.Text = "Bleu";
+            this.btnCameraBleu.UseVisualStyleBackColor = true;
+            this.btnCameraBleu.Click += new System.EventHandler(this.btnCameraBleu_Click);
             // 
-            // button9
+            // btnCameraRouge
             // 
-            this.button9.Location = new System.Drawing.Point(255, 51);
-            this.button9.Name = "button9";
-            this.button9.Size = new System.Drawing.Size(49, 23);
-            this.button9.TabIndex = 100;
-            this.button9.Text = "Bas";
-            this.button9.UseVisualStyleBackColor = true;
+            this.btnCameraRouge.Location = new System.Drawing.Point(211, 323);
+            this.btnCameraRouge.Name = "btnCameraRouge";
+            this.btnCameraRouge.Size = new System.Drawing.Size(53, 23);
+            this.btnCameraRouge.TabIndex = 157;
+            this.btnCameraRouge.Text = "Rouge";
+            this.btnCameraRouge.UseVisualStyleBackColor = true;
+            this.btnCameraRouge.Click += new System.EventHandler(this.btnCameraRouge_Click);
             // 
-            // button10
+            // btnCameraOK
             // 
-            this.button10.Location = new System.Drawing.Point(203, 51);
-            this.button10.Name = "button10";
-            this.button10.Size = new System.Drawing.Size(49, 23);
-            this.button10.TabIndex = 99;
-            this.button10.Text = "Milieu";
-            this.button10.UseVisualStyleBackColor = true;
+            this.btnCameraOK.Location = new System.Drawing.Point(152, 323);
+            this.btnCameraOK.Name = "btnCameraOK";
+            this.btnCameraOK.Size = new System.Drawing.Size(53, 23);
+            this.btnCameraOK.TabIndex = 156;
+            this.btnCameraOK.Text = "Ok";
+            this.btnCameraOK.UseVisualStyleBackColor = true;
+            this.btnCameraOK.Click += new System.EventHandler(this.btnCameraOK_Click);
             // 
-            // button11
+            // numCamera
             // 
-            this.button11.Location = new System.Drawing.Point(148, 51);
-            this.button11.Name = "button11";
-            this.button11.Size = new System.Drawing.Size(49, 23);
-            this.button11.TabIndex = 97;
-            this.button11.Text = "Haut";
-            this.button11.UseVisualStyleBackColor = true;
-            // 
-            // label6
-            // 
-            this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(38, 56);
-            this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(94, 13);
-            this.label6.TabIndex = 98;
-            this.label6.Text = "Enregistrer comme";
+            this.numCamera.Location = new System.Drawing.Point(82, 326);
+            this.numCamera.Maximum = new decimal(new int[] {
+            1024,
+            0,
+            0,
+            0});
+            this.numCamera.Name = "numCamera";
+            this.numCamera.Size = new System.Drawing.Size(64, 20);
+            this.numCamera.TabIndex = 155;
             // 
             // label7
             // 
             this.label7.AutoSize = true;
-            this.label7.Location = new System.Drawing.Point(287, 29);
+            this.label7.Location = new System.Drawing.Point(20, 328);
             this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(13, 13);
-            this.label7.TabIndex = 97;
-            this.label7.Text = "0";
+            this.label7.Size = new System.Drawing.Size(43, 13);
+            this.label7.TabIndex = 154;
+            this.label7.Text = "Camera";
             // 
-            // trackBarPlus2
+            // btnBrasDroitRange
             // 
-            this.trackBarPlus2.BackColor = System.Drawing.Color.Transparent;
-            this.trackBarPlus2.IntervalTimer = 1;
-            this.trackBarPlus2.Location = new System.Drawing.Point(26, 29);
-            this.trackBarPlus2.Max = 100D;
-            this.trackBarPlus2.MaximumSize = new System.Drawing.Size(3000, 15);
-            this.trackBarPlus2.Min = 0D;
-            this.trackBarPlus2.MinimumSize = new System.Drawing.Size(0, 15);
-            this.trackBarPlus2.Name = "trackBarPlus2";
-            this.trackBarPlus2.Reverse = false;
-            this.trackBarPlus2.Size = new System.Drawing.Size(258, 15);
-            this.trackBarPlus2.TabIndex = 96;
+            this.btnBrasDroitRange.Location = new System.Drawing.Point(270, 297);
+            this.btnBrasDroitRange.Name = "btnBrasDroitRange";
+            this.btnBrasDroitRange.Size = new System.Drawing.Size(53, 23);
+            this.btnBrasDroitRange.TabIndex = 153;
+            this.btnBrasDroitRange.Text = "Rangé";
+            this.btnBrasDroitRange.UseVisualStyleBackColor = true;
+            this.btnBrasDroitRange.Click += new System.EventHandler(this.btnBrasDroitRange_Click);
             // 
-            // groupBoxGrandBras
+            // btnBrasDroitSorti
             // 
-            this.groupBoxGrandBras.Controls.Add(this.button8);
-            this.groupBoxGrandBras.Controls.Add(this.button5);
-            this.groupBoxGrandBras.Controls.Add(this.button7);
-            this.groupBoxGrandBras.Controls.Add(this.label2);
-            this.groupBoxGrandBras.Controls.Add(this.label5);
-            this.groupBoxGrandBras.Controls.Add(this.trackBarPlus1);
-            this.groupBoxGrandBras.Location = new System.Drawing.Point(6, 296);
-            this.groupBoxGrandBras.Name = "groupBoxGrandBras";
-            this.groupBoxGrandBras.Size = new System.Drawing.Size(322, 85);
-            this.groupBoxGrandBras.TabIndex = 101;
-            this.groupBoxGrandBras.TabStop = false;
-            this.groupBoxGrandBras.Text = "Grand bras";
+            this.btnBrasDroitSorti.Location = new System.Drawing.Point(211, 297);
+            this.btnBrasDroitSorti.Name = "btnBrasDroitSorti";
+            this.btnBrasDroitSorti.Size = new System.Drawing.Size(53, 23);
+            this.btnBrasDroitSorti.TabIndex = 152;
+            this.btnBrasDroitSorti.Text = "Sorti";
+            this.btnBrasDroitSorti.UseVisualStyleBackColor = true;
+            this.btnBrasDroitSorti.Click += new System.EventHandler(this.btnBrasDroitSorti_Click);
             // 
-            // button8
+            // btnBrasDroitOk
             // 
-            this.button8.Location = new System.Drawing.Point(255, 51);
-            this.button8.Name = "button8";
-            this.button8.Size = new System.Drawing.Size(49, 23);
-            this.button8.TabIndex = 100;
-            this.button8.Text = "Bas";
-            this.button8.UseVisualStyleBackColor = true;
+            this.btnBrasDroitOk.Location = new System.Drawing.Point(152, 297);
+            this.btnBrasDroitOk.Name = "btnBrasDroitOk";
+            this.btnBrasDroitOk.Size = new System.Drawing.Size(53, 23);
+            this.btnBrasDroitOk.TabIndex = 151;
+            this.btnBrasDroitOk.Text = "Ok";
+            this.btnBrasDroitOk.UseVisualStyleBackColor = true;
+            this.btnBrasDroitOk.Click += new System.EventHandler(this.btnBrasDroitOk_Click);
             // 
-            // button5
+            // numBrasDroit
             // 
-            this.button5.Location = new System.Drawing.Point(203, 51);
-            this.button5.Name = "button5";
-            this.button5.Size = new System.Drawing.Size(49, 23);
-            this.button5.TabIndex = 99;
-            this.button5.Text = "Milieu";
-            this.button5.UseVisualStyleBackColor = true;
-            // 
-            // button7
-            // 
-            this.button7.Location = new System.Drawing.Point(148, 51);
-            this.button7.Name = "button7";
-            this.button7.Size = new System.Drawing.Size(49, 23);
-            this.button7.TabIndex = 97;
-            this.button7.Text = "Haut";
-            this.button7.UseVisualStyleBackColor = true;
+            this.numBrasDroit.Location = new System.Drawing.Point(82, 300);
+            this.numBrasDroit.Maximum = new decimal(new int[] {
+            1024,
+            0,
+            0,
+            0});
+            this.numBrasDroit.Name = "numBrasDroit";
+            this.numBrasDroit.Size = new System.Drawing.Size(64, 20);
+            this.numBrasDroit.TabIndex = 150;
             // 
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(38, 56);
+            this.label2.Location = new System.Drawing.Point(20, 302);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(94, 13);
-            this.label2.TabIndex = 98;
-            this.label2.Text = "Enregistrer comme";
+            this.label2.Size = new System.Drawing.Size(51, 13);
+            this.label2.TabIndex = 149;
+            this.label2.Text = "Bras droit";
+            // 
+            // btnBrasGaucheRange
+            // 
+            this.btnBrasGaucheRange.Location = new System.Drawing.Point(270, 271);
+            this.btnBrasGaucheRange.Name = "btnBrasGaucheRange";
+            this.btnBrasGaucheRange.Size = new System.Drawing.Size(53, 23);
+            this.btnBrasGaucheRange.TabIndex = 148;
+            this.btnBrasGaucheRange.Text = "Rangé";
+            this.btnBrasGaucheRange.UseVisualStyleBackColor = true;
+            this.btnBrasGaucheRange.Click += new System.EventHandler(this.btnBrasGaucheRange_Click);
+            // 
+            // btnBrasGaucheSorti
+            // 
+            this.btnBrasGaucheSorti.Location = new System.Drawing.Point(211, 271);
+            this.btnBrasGaucheSorti.Name = "btnBrasGaucheSorti";
+            this.btnBrasGaucheSorti.Size = new System.Drawing.Size(53, 23);
+            this.btnBrasGaucheSorti.TabIndex = 147;
+            this.btnBrasGaucheSorti.Text = "Sorti";
+            this.btnBrasGaucheSorti.UseVisualStyleBackColor = true;
+            this.btnBrasGaucheSorti.Click += new System.EventHandler(this.btnBrasGaucheSorti_Click);
+            // 
+            // btnBrasGaucheOk
+            // 
+            this.btnBrasGaucheOk.Location = new System.Drawing.Point(152, 271);
+            this.btnBrasGaucheOk.Name = "btnBrasGaucheOk";
+            this.btnBrasGaucheOk.Size = new System.Drawing.Size(53, 23);
+            this.btnBrasGaucheOk.TabIndex = 146;
+            this.btnBrasGaucheOk.Text = "Ok";
+            this.btnBrasGaucheOk.UseVisualStyleBackColor = true;
+            this.btnBrasGaucheOk.Click += new System.EventHandler(this.btnBrasGaucheOk_Click);
+            // 
+            // numBrasGauche
+            // 
+            this.numBrasGauche.Location = new System.Drawing.Point(82, 274);
+            this.numBrasGauche.Maximum = new decimal(new int[] {
+            1024,
+            0,
+            0,
+            0});
+            this.numBrasGauche.Name = "numBrasGauche";
+            this.numBrasGauche.Size = new System.Drawing.Size(64, 20);
+            this.numBrasGauche.TabIndex = 145;
+            // 
+            // label6
+            // 
+            this.label6.AutoSize = true;
+            this.label6.Location = new System.Drawing.Point(20, 276);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(67, 13);
+            this.label6.TabIndex = 144;
+            this.label6.Text = "Bras gauche";
+            // 
+            // btnPetitBrasRange
+            // 
+            this.btnPetitBrasRange.Location = new System.Drawing.Point(279, 245);
+            this.btnPetitBrasRange.Name = "btnPetitBrasRange";
+            this.btnPetitBrasRange.Size = new System.Drawing.Size(47, 23);
+            this.btnPetitBrasRange.TabIndex = 143;
+            this.btnPetitBrasRange.Text = "Rangé";
+            this.btnPetitBrasRange.UseVisualStyleBackColor = true;
+            this.btnPetitBrasRange.Click += new System.EventHandler(this.btnPetitBrasRange_Click);
+            // 
+            // btnPetitBrasBas
+            // 
+            this.btnPetitBrasBas.Location = new System.Drawing.Point(238, 245);
+            this.btnPetitBrasBas.Name = "btnPetitBrasBas";
+            this.btnPetitBrasBas.Size = new System.Drawing.Size(35, 23);
+            this.btnPetitBrasBas.TabIndex = 142;
+            this.btnPetitBrasBas.Text = "Bas";
+            this.btnPetitBrasBas.UseVisualStyleBackColor = true;
+            this.btnPetitBrasBas.Click += new System.EventHandler(this.btnPetitBrasBas_Click);
+            // 
+            // btnPetitBrasHaut
+            // 
+            this.btnPetitBrasHaut.Location = new System.Drawing.Point(188, 245);
+            this.btnPetitBrasHaut.Name = "btnPetitBrasHaut";
+            this.btnPetitBrasHaut.Size = new System.Drawing.Size(44, 23);
+            this.btnPetitBrasHaut.TabIndex = 141;
+            this.btnPetitBrasHaut.Text = "Haut";
+            this.btnPetitBrasHaut.UseVisualStyleBackColor = true;
+            this.btnPetitBrasHaut.Click += new System.EventHandler(this.btnPetitBrasHaut_Click);
+            // 
+            // btnPetitBrasOk
+            // 
+            this.btnPetitBrasOk.Location = new System.Drawing.Point(152, 245);
+            this.btnPetitBrasOk.Name = "btnPetitBrasOk";
+            this.btnPetitBrasOk.Size = new System.Drawing.Size(30, 23);
+            this.btnPetitBrasOk.TabIndex = 140;
+            this.btnPetitBrasOk.Text = "Ok";
+            this.btnPetitBrasOk.UseVisualStyleBackColor = true;
+            this.btnPetitBrasOk.Click += new System.EventHandler(this.btnPetitBrasOk_Click);
+            // 
+            // numPetitBras
+            // 
+            this.numPetitBras.Location = new System.Drawing.Point(82, 248);
+            this.numPetitBras.Maximum = new decimal(new int[] {
+            1024,
+            0,
+            0,
+            0});
+            this.numPetitBras.Name = "numPetitBras";
+            this.numPetitBras.Size = new System.Drawing.Size(64, 20);
+            this.numPetitBras.TabIndex = 139;
             // 
             // label5
             // 
             this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(287, 29);
+            this.label5.Location = new System.Drawing.Point(20, 250);
             this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(13, 13);
-            this.label5.TabIndex = 97;
-            this.label5.Text = "0";
+            this.label5.Size = new System.Drawing.Size(51, 13);
+            this.label5.TabIndex = 138;
+            this.label5.Text = "Petit bras";
             // 
-            // trackBarPlus1
+            // btnGrandBrasRange
             // 
-            this.trackBarPlus1.BackColor = System.Drawing.Color.Transparent;
-            this.trackBarPlus1.IntervalTimer = 1;
-            this.trackBarPlus1.Location = new System.Drawing.Point(26, 29);
-            this.trackBarPlus1.Max = 100D;
-            this.trackBarPlus1.MaximumSize = new System.Drawing.Size(3000, 15);
-            this.trackBarPlus1.Min = 0D;
-            this.trackBarPlus1.MinimumSize = new System.Drawing.Size(0, 15);
-            this.trackBarPlus1.Name = "trackBarPlus1";
-            this.trackBarPlus1.Reverse = false;
-            this.trackBarPlus1.Size = new System.Drawing.Size(258, 15);
-            this.trackBarPlus1.TabIndex = 96;
+            this.btnGrandBrasRange.Location = new System.Drawing.Point(279, 219);
+            this.btnGrandBrasRange.Name = "btnGrandBrasRange";
+            this.btnGrandBrasRange.Size = new System.Drawing.Size(47, 23);
+            this.btnGrandBrasRange.TabIndex = 137;
+            this.btnGrandBrasRange.Text = "Rangé";
+            this.btnGrandBrasRange.UseVisualStyleBackColor = true;
+            this.btnGrandBrasRange.Click += new System.EventHandler(this.btnGrandBrasRange_Click);
             // 
-            // groupBoxShutter
+            // btnGrandBrasBas
             // 
-            this.groupBoxShutter.Controls.Add(this.button6);
-            this.groupBoxShutter.Controls.Add(this.label4);
-            this.groupBoxShutter.Controls.Add(this.label3);
-            this.groupBoxShutter.Controls.Add(this.numericUpDown1);
-            this.groupBoxShutter.Controls.Add(this.button4);
-            this.groupBoxShutter.Location = new System.Drawing.Point(6, 221);
-            this.groupBoxShutter.Name = "groupBoxShutter";
-            this.groupBoxShutter.Size = new System.Drawing.Size(322, 69);
-            this.groupBoxShutter.TabIndex = 100;
-            this.groupBoxShutter.TabStop = false;
-            this.groupBoxShutter.Text = "Shutter";
+            this.btnGrandBrasBas.Location = new System.Drawing.Point(238, 219);
+            this.btnGrandBrasBas.Name = "btnGrandBrasBas";
+            this.btnGrandBrasBas.Size = new System.Drawing.Size(35, 23);
+            this.btnGrandBrasBas.TabIndex = 136;
+            this.btnGrandBrasBas.Text = "Bas";
+            this.btnGrandBrasBas.UseVisualStyleBackColor = true;
+            this.btnGrandBrasBas.Click += new System.EventHandler(this.btnGrandBrasBas_Click);
             // 
-            // button6
+            // btnGrandBrasHaut
             // 
-            this.button6.Location = new System.Drawing.Point(148, 27);
-            this.button6.Name = "button6";
-            this.button6.Size = new System.Drawing.Size(75, 23);
-            this.button6.TabIndex = 103;
-            this.button6.Text = "Ouvrir";
-            this.button6.UseVisualStyleBackColor = true;
+            this.btnGrandBrasHaut.Location = new System.Drawing.Point(188, 219);
+            this.btnGrandBrasHaut.Name = "btnGrandBrasHaut";
+            this.btnGrandBrasHaut.Size = new System.Drawing.Size(44, 23);
+            this.btnGrandBrasHaut.TabIndex = 135;
+            this.btnGrandBrasHaut.Text = "Haut";
+            this.btnGrandBrasHaut.UseVisualStyleBackColor = true;
+            this.btnGrandBrasHaut.Click += new System.EventHandler(this.btnGrandBrasHaut_Click);
+            // 
+            // btnGrandBrasOk
+            // 
+            this.btnGrandBrasOk.Location = new System.Drawing.Point(152, 219);
+            this.btnGrandBrasOk.Name = "btnGrandBrasOk";
+            this.btnGrandBrasOk.Size = new System.Drawing.Size(30, 23);
+            this.btnGrandBrasOk.TabIndex = 134;
+            this.btnGrandBrasOk.Text = "Ok";
+            this.btnGrandBrasOk.UseVisualStyleBackColor = true;
+            this.btnGrandBrasOk.Click += new System.EventHandler(this.btnGrandBrasOk_Click);
+            // 
+            // numGrandBras
+            // 
+            this.numGrandBras.Location = new System.Drawing.Point(82, 222);
+            this.numGrandBras.Maximum = new decimal(new int[] {
+            1024,
+            0,
+            0,
+            0});
+            this.numGrandBras.Name = "numGrandBras";
+            this.numGrandBras.Size = new System.Drawing.Size(64, 20);
+            this.numGrandBras.TabIndex = 133;
             // 
             // label4
             // 
             this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(122, 32);
+            this.label4.Location = new System.Drawing.Point(20, 224);
             this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(20, 13);
-            this.label4.TabIndex = 102;
-            this.label4.Text = "ms";
+            this.label4.Size = new System.Drawing.Size(59, 13);
+            this.label4.TabIndex = 132;
+            this.label4.Text = "Grand bras";
             // 
-            // label3
+            // btnDebloqueurBas
             // 
-            this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(13, 32);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(35, 13);
-            this.label3.TabIndex = 101;
-            this.label3.Text = "Ouvrir";
+            this.btnDebloqueurBas.Location = new System.Drawing.Point(270, 193);
+            this.btnDebloqueurBas.Name = "btnDebloqueurBas";
+            this.btnDebloqueurBas.Size = new System.Drawing.Size(53, 23);
+            this.btnDebloqueurBas.TabIndex = 131;
+            this.btnDebloqueurBas.Text = "Bas";
+            this.btnDebloqueurBas.UseVisualStyleBackColor = true;
+            this.btnDebloqueurBas.Click += new System.EventHandler(this.btnDebloqueurBas_Click);
             // 
-            // numericUpDown1
+            // btnDebloqueurHaut
             // 
-            this.numericUpDown1.Location = new System.Drawing.Point(54, 30);
-            this.numericUpDown1.Name = "numericUpDown1";
-            this.numericUpDown1.Size = new System.Drawing.Size(62, 20);
-            this.numericUpDown1.TabIndex = 100;
+            this.btnDebloqueurHaut.Location = new System.Drawing.Point(211, 193);
+            this.btnDebloqueurHaut.Name = "btnDebloqueurHaut";
+            this.btnDebloqueurHaut.Size = new System.Drawing.Size(53, 23);
+            this.btnDebloqueurHaut.TabIndex = 130;
+            this.btnDebloqueurHaut.Text = "Haut";
+            this.btnDebloqueurHaut.UseVisualStyleBackColor = true;
+            this.btnDebloqueurHaut.Click += new System.EventHandler(this.btnDebloqueurHaut_Click);
             // 
-            // button4
+            // btnDebloqueurOk
             // 
-            this.button4.Location = new System.Drawing.Point(229, 27);
-            this.button4.Name = "button4";
-            this.button4.Size = new System.Drawing.Size(75, 23);
-            this.button4.TabIndex = 99;
-            this.button4.Text = "Enregistrer";
-            this.button4.UseVisualStyleBackColor = true;
+            this.btnDebloqueurOk.Location = new System.Drawing.Point(152, 193);
+            this.btnDebloqueurOk.Name = "btnDebloqueurOk";
+            this.btnDebloqueurOk.Size = new System.Drawing.Size(53, 23);
+            this.btnDebloqueurOk.TabIndex = 129;
+            this.btnDebloqueurOk.Text = "Ok";
+            this.btnDebloqueurOk.UseVisualStyleBackColor = true;
+            this.btnDebloqueurOk.Click += new System.EventHandler(this.btnDebloqueurOk_Click);
             // 
-            // groupBox1
+            // numDebloqueur
             // 
-            this.groupBox1.Controls.Add(this.button3);
-            this.groupBox1.Controls.Add(this.button2);
-            this.groupBox1.Controls.Add(this.label10);
-            this.groupBox1.Controls.Add(this.label1);
-            this.groupBox1.Controls.Add(this.trackBarPropulseur);
-            this.groupBox1.Location = new System.Drawing.Point(6, 130);
-            this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(322, 85);
-            this.groupBox1.TabIndex = 89;
-            this.groupBox1.TabStop = false;
-            this.groupBox1.Text = " Propulseur";
-            // 
-            // button3
-            // 
-            this.button3.Location = new System.Drawing.Point(229, 51);
-            this.button3.Name = "button3";
-            this.button3.Size = new System.Drawing.Size(75, 23);
-            this.button3.TabIndex = 99;
-            this.button3.Text = "Couleur";
-            this.button3.UseVisualStyleBackColor = true;
-            // 
-            // button2
-            // 
-            this.button2.Location = new System.Drawing.Point(148, 51);
-            this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(75, 23);
-            this.button2.TabIndex = 97;
-            this.button2.Text = "Blanche";
-            this.button2.UseVisualStyleBackColor = true;
-            // 
-            // label10
-            // 
-            this.label10.AutoSize = true;
-            this.label10.Location = new System.Drawing.Point(38, 56);
-            this.label10.Name = "label10";
-            this.label10.Size = new System.Drawing.Size(94, 13);
-            this.label10.TabIndex = 98;
-            this.label10.Text = "Enregistrer comme";
+            this.numDebloqueur.Location = new System.Drawing.Point(82, 196);
+            this.numDebloqueur.Maximum = new decimal(new int[] {
+            1024,
+            0,
+            0,
+            0});
+            this.numDebloqueur.Name = "numDebloqueur";
+            this.numDebloqueur.Size = new System.Drawing.Size(64, 20);
+            this.numDebloqueur.TabIndex = 128;
             // 
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(287, 29);
+            this.label1.Location = new System.Drawing.Point(20, 198);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(13, 13);
-            this.label1.TabIndex = 97;
-            this.label1.Text = "0";
+            this.label1.Size = new System.Drawing.Size(62, 13);
+            this.label1.TabIndex = 127;
+            this.label1.Text = "Débloqueur";
             // 
-            // trackBarPropulseur
+            // btnAspirateurBas
             // 
-            this.trackBarPropulseur.BackColor = System.Drawing.Color.Transparent;
-            this.trackBarPropulseur.IntervalTimer = 1;
-            this.trackBarPropulseur.Location = new System.Drawing.Point(26, 29);
-            this.trackBarPropulseur.Max = 100D;
-            this.trackBarPropulseur.MaximumSize = new System.Drawing.Size(3000, 15);
-            this.trackBarPropulseur.Min = 0D;
-            this.trackBarPropulseur.MinimumSize = new System.Drawing.Size(0, 15);
-            this.trackBarPropulseur.Name = "trackBarPropulseur";
-            this.trackBarPropulseur.Reverse = false;
-            this.trackBarPropulseur.Size = new System.Drawing.Size(258, 15);
-            this.trackBarPropulseur.TabIndex = 96;
+            this.btnAspirateurBas.Location = new System.Drawing.Point(270, 167);
+            this.btnAspirateurBas.Name = "btnAspirateurBas";
+            this.btnAspirateurBas.Size = new System.Drawing.Size(53, 23);
+            this.btnAspirateurBas.TabIndex = 126;
+            this.btnAspirateurBas.Text = "Bas";
+            this.btnAspirateurBas.UseVisualStyleBackColor = true;
+            this.btnAspirateurBas.Click += new System.EventHandler(this.btnAspirateurBas_Click);
             // 
-            // groupBoxTurbineReglage
+            // btnAspirateurHaut
             // 
-            this.groupBoxTurbineReglage.Controls.Add(this.button1);
-            this.groupBoxTurbineReglage.Controls.Add(this.lblPuissanceTurbine);
-            this.groupBoxTurbineReglage.Controls.Add(this.trackBarTurbine);
-            this.groupBoxTurbineReglage.Location = new System.Drawing.Point(6, 39);
-            this.groupBoxTurbineReglage.Name = "groupBoxTurbineReglage";
-            this.groupBoxTurbineReglage.Size = new System.Drawing.Size(322, 85);
-            this.groupBoxTurbineReglage.TabIndex = 88;
-            this.groupBoxTurbineReglage.TabStop = false;
-            this.groupBoxTurbineReglage.Text = "Turbine";
+            this.btnAspirateurHaut.Location = new System.Drawing.Point(211, 167);
+            this.btnAspirateurHaut.Name = "btnAspirateurHaut";
+            this.btnAspirateurHaut.Size = new System.Drawing.Size(53, 23);
+            this.btnAspirateurHaut.TabIndex = 125;
+            this.btnAspirateurHaut.Text = "Haut";
+            this.btnAspirateurHaut.UseVisualStyleBackColor = true;
+            this.btnAspirateurHaut.Click += new System.EventHandler(this.btnAspirateurHaut_Click);
             // 
-            // button1
+            // btnAspirateurOk
             // 
-            this.button1.Location = new System.Drawing.Point(209, 49);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(75, 23);
-            this.button1.TabIndex = 96;
-            this.button1.Text = "Enregistrer";
-            this.button1.UseVisualStyleBackColor = true;
+            this.btnAspirateurOk.Location = new System.Drawing.Point(152, 167);
+            this.btnAspirateurOk.Name = "btnAspirateurOk";
+            this.btnAspirateurOk.Size = new System.Drawing.Size(53, 23);
+            this.btnAspirateurOk.TabIndex = 124;
+            this.btnAspirateurOk.Text = "Ok";
+            this.btnAspirateurOk.UseVisualStyleBackColor = true;
+            this.btnAspirateurOk.Click += new System.EventHandler(this.btnAspirateurOk_Click);
             // 
-            // lblPuissanceTurbine
+            // numAspirateur
             // 
-            this.lblPuissanceTurbine.AutoSize = true;
-            this.lblPuissanceTurbine.Location = new System.Drawing.Point(290, 28);
-            this.lblPuissanceTurbine.Name = "lblPuissanceTurbine";
-            this.lblPuissanceTurbine.Size = new System.Drawing.Size(13, 13);
-            this.lblPuissanceTurbine.TabIndex = 95;
-            this.lblPuissanceTurbine.Text = "0";
+            this.numAspirateur.Location = new System.Drawing.Point(82, 170);
+            this.numAspirateur.Maximum = new decimal(new int[] {
+            1024,
+            0,
+            0,
+            0});
+            this.numAspirateur.Name = "numAspirateur";
+            this.numAspirateur.Size = new System.Drawing.Size(64, 20);
+            this.numAspirateur.TabIndex = 123;
             // 
-            // trackBarTurbine
+            // label3
             // 
-            this.trackBarTurbine.BackColor = System.Drawing.Color.Transparent;
-            this.trackBarTurbine.IntervalTimer = 1;
-            this.trackBarTurbine.Location = new System.Drawing.Point(26, 28);
-            this.trackBarTurbine.Max = 100D;
-            this.trackBarTurbine.MaximumSize = new System.Drawing.Size(3000, 15);
-            this.trackBarTurbine.Min = 0D;
-            this.trackBarTurbine.MinimumSize = new System.Drawing.Size(0, 15);
-            this.trackBarTurbine.Name = "trackBarTurbine";
-            this.trackBarTurbine.Reverse = false;
-            this.trackBarTurbine.Size = new System.Drawing.Size(258, 15);
-            this.trackBarTurbine.TabIndex = 94;
+            this.label3.AutoSize = true;
+            this.label3.Location = new System.Drawing.Point(20, 172);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(54, 13);
+            this.label3.TabIndex = 122;
+            this.label3.Text = "Aspirateur";
+            // 
+            // btnShutterOuvrir
+            // 
+            this.btnShutterOuvrir.Location = new System.Drawing.Point(260, 118);
+            this.btnShutterOuvrir.Name = "btnShutterOuvrir";
+            this.btnShutterOuvrir.Size = new System.Drawing.Size(63, 23);
+            this.btnShutterOuvrir.TabIndex = 121;
+            this.btnShutterOuvrir.Text = "Ouvrir";
+            this.btnShutterOuvrir.UseVisualStyleBackColor = true;
+            this.btnShutterOuvrir.Click += new System.EventHandler(this.btnShutterOuvrir_Click);
+            // 
+            // label11
+            // 
+            this.label11.AutoSize = true;
+            this.label11.Location = new System.Drawing.Point(238, 123);
+            this.label11.Name = "label11";
+            this.label11.Size = new System.Drawing.Size(20, 13);
+            this.label11.TabIndex = 120;
+            this.label11.Text = "ms";
+            // 
+            // numShutter
+            // 
+            this.numShutter.Location = new System.Drawing.Point(180, 121);
+            this.numShutter.Maximum = new decimal(new int[] {
+            1000000,
+            0,
+            0,
+            0});
+            this.numShutter.Name = "numShutter";
+            this.numShutter.Size = new System.Drawing.Size(52, 20);
+            this.numShutter.TabIndex = 119;
+            // 
+            // btnShutterOff
+            // 
+            this.btnShutterOff.Location = new System.Drawing.Point(128, 118);
+            this.btnShutterOff.Name = "btnShutterOff";
+            this.btnShutterOff.Size = new System.Drawing.Size(41, 23);
+            this.btnShutterOff.TabIndex = 118;
+            this.btnShutterOff.Text = "Off";
+            this.btnShutterOff.UseVisualStyleBackColor = true;
+            this.btnShutterOff.Click += new System.EventHandler(this.btnShutterOff_Click);
+            // 
+            // btnShutterOn
+            // 
+            this.btnShutterOn.Location = new System.Drawing.Point(84, 118);
+            this.btnShutterOn.Name = "btnShutterOn";
+            this.btnShutterOn.Size = new System.Drawing.Size(41, 23);
+            this.btnShutterOn.TabIndex = 117;
+            this.btnShutterOn.Text = "On";
+            this.btnShutterOn.UseVisualStyleBackColor = true;
+            this.btnShutterOn.Click += new System.EventHandler(this.btnShutterOn_Click);
+            // 
+            // label10
+            // 
+            this.label10.AutoSize = true;
+            this.label10.Location = new System.Drawing.Point(20, 123);
+            this.label10.Name = "label10";
+            this.label10.Size = new System.Drawing.Size(41, 13);
+            this.label10.TabIndex = 116;
+            this.label10.Text = "Shutter";
+            // 
+            // btnCanonSaveMauvaise
+            // 
+            this.btnCanonSaveMauvaise.Location = new System.Drawing.Point(260, 89);
+            this.btnCanonSaveMauvaise.Name = "btnCanonSaveMauvaise";
+            this.btnCanonSaveMauvaise.Size = new System.Drawing.Size(65, 23);
+            this.btnCanonSaveMauvaise.TabIndex = 115;
+            this.btnCanonSaveMauvaise.Text = "Mauvaise";
+            this.btnCanonSaveMauvaise.UseVisualStyleBackColor = true;
+            this.btnCanonSaveMauvaise.Click += new System.EventHandler(this.btnCanonSaveMauvaise_Click);
+            // 
+            // btnCanonSaveBonne
+            // 
+            this.btnCanonSaveBonne.Location = new System.Drawing.Point(201, 89);
+            this.btnCanonSaveBonne.Name = "btnCanonSaveBonne";
+            this.btnCanonSaveBonne.Size = new System.Drawing.Size(53, 23);
+            this.btnCanonSaveBonne.TabIndex = 114;
+            this.btnCanonSaveBonne.Text = "Bonne";
+            this.btnCanonSaveBonne.UseVisualStyleBackColor = true;
+            this.btnCanonSaveBonne.Click += new System.EventHandler(this.btnCanonSaveBonne_Click);
+            // 
+            // btnCanonOk
+            // 
+            this.btnCanonOk.Location = new System.Drawing.Point(154, 89);
+            this.btnCanonOk.Name = "btnCanonOk";
+            this.btnCanonOk.Size = new System.Drawing.Size(41, 23);
+            this.btnCanonOk.TabIndex = 113;
+            this.btnCanonOk.Text = "Ok";
+            this.btnCanonOk.UseVisualStyleBackColor = true;
+            this.btnCanonOk.Click += new System.EventHandler(this.btnCanonOk_Click);
+            // 
+            // numCanon
+            // 
+            this.numCanon.Location = new System.Drawing.Point(84, 92);
+            this.numCanon.Maximum = new decimal(new int[] {
+            50000,
+            0,
+            0,
+            0});
+            this.numCanon.Name = "numCanon";
+            this.numCanon.Size = new System.Drawing.Size(64, 20);
+            this.numCanon.TabIndex = 112;
+            // 
+            // label9
+            // 
+            this.label9.AutoSize = true;
+            this.label9.Location = new System.Drawing.Point(20, 94);
+            this.label9.Name = "label9";
+            this.label9.Size = new System.Drawing.Size(38, 13);
+            this.label9.TabIndex = 111;
+            this.label9.Text = "Canon";
+            // 
+            // btnTurbineSave
+            // 
+            this.btnTurbineSave.Location = new System.Drawing.Point(201, 60);
+            this.btnTurbineSave.Name = "btnTurbineSave";
+            this.btnTurbineSave.Size = new System.Drawing.Size(70, 23);
+            this.btnTurbineSave.TabIndex = 110;
+            this.btnTurbineSave.Text = "Enregistrer";
+            this.btnTurbineSave.UseVisualStyleBackColor = true;
+            this.btnTurbineSave.Click += new System.EventHandler(this.btnTurbineSave_Click);
+            // 
+            // btnTurbineOk
+            // 
+            this.btnTurbineOk.Location = new System.Drawing.Point(154, 60);
+            this.btnTurbineOk.Name = "btnTurbineOk";
+            this.btnTurbineOk.Size = new System.Drawing.Size(41, 23);
+            this.btnTurbineOk.TabIndex = 109;
+            this.btnTurbineOk.Text = "Ok";
+            this.btnTurbineOk.UseVisualStyleBackColor = true;
+            this.btnTurbineOk.Click += new System.EventHandler(this.btnTurbineOk_Click);
+            // 
+            // numTurbine
+            // 
+            this.numTurbine.Location = new System.Drawing.Point(84, 63);
+            this.numTurbine.Maximum = new decimal(new int[] {
+            313,
+            0,
+            0,
+            0});
+            this.numTurbine.Name = "numTurbine";
+            this.numTurbine.Size = new System.Drawing.Size(64, 20);
+            this.numTurbine.TabIndex = 108;
+            // 
+            // label8
+            // 
+            this.label8.AutoSize = true;
+            this.label8.Location = new System.Drawing.Point(20, 65);
+            this.label8.Name = "label8";
+            this.label8.Size = new System.Drawing.Size(43, 13);
+            this.label8.TabIndex = 107;
+            this.label8.Text = "Turbine";
             // 
             // btnTaille
             // 
@@ -412,22 +701,24 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.AutoSize = true;
             this.BackColor = System.Drawing.Color.Transparent;
             this.Controls.Add(this.groupBoxReglage);
             this.Name = "PanelReglageGros";
-            this.Size = new System.Drawing.Size(341, 490);
+            this.Size = new System.Drawing.Size(341, 369);
+            this.Load += new System.EventHandler(this.PanelReglageGros_Load);
             this.groupBoxReglage.ResumeLayout(false);
-            this.groupBox2.ResumeLayout(false);
-            this.groupBox2.PerformLayout();
-            this.groupBoxGrandBras.ResumeLayout(false);
-            this.groupBoxGrandBras.PerformLayout();
-            this.groupBoxShutter.ResumeLayout(false);
-            this.groupBoxShutter.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).EndInit();
-            this.groupBox1.ResumeLayout(false);
-            this.groupBox1.PerformLayout();
-            this.groupBoxTurbineReglage.ResumeLayout(false);
-            this.groupBoxTurbineReglage.PerformLayout();
+            this.groupBoxReglage.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.numCamera)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numBrasDroit)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numBrasGauche)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numPetitBras)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numGrandBras)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numDebloqueur)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numAspirateur)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numShutter)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numCanon)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numTurbine)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -436,35 +727,57 @@
 
         private System.Windows.Forms.GroupBox groupBoxReglage;
         protected System.Windows.Forms.Button btnTaille;
-        private System.Windows.Forms.GroupBox groupBox1;
-        private System.Windows.Forms.Button button3;
-        private System.Windows.Forms.Button button2;
+        private System.Windows.Forms.Button btnTurbineSave;
+        private System.Windows.Forms.Button btnTurbineOk;
+        private System.Windows.Forms.NumericUpDown numTurbine;
+        private System.Windows.Forms.Label label8;
+        private System.Windows.Forms.Button btnCanonSaveBonne;
+        private System.Windows.Forms.Button btnCanonOk;
+        private System.Windows.Forms.NumericUpDown numCanon;
+        private System.Windows.Forms.Label label9;
+        private System.Windows.Forms.Button btnCanonSaveMauvaise;
+        private System.Windows.Forms.Button btnShutterOuvrir;
+        private System.Windows.Forms.Label label11;
+        private System.Windows.Forms.NumericUpDown numShutter;
+        private System.Windows.Forms.Button btnShutterOff;
+        private System.Windows.Forms.Button btnShutterOn;
         private System.Windows.Forms.Label label10;
+        private System.Windows.Forms.Button btnDebloqueurBas;
+        private System.Windows.Forms.Button btnDebloqueurHaut;
+        private System.Windows.Forms.Button btnDebloqueurOk;
+        private System.Windows.Forms.NumericUpDown numDebloqueur;
         private System.Windows.Forms.Label label1;
-        private Composants.TrackBarPlus trackBarPropulseur;
-        private System.Windows.Forms.GroupBox groupBoxTurbineReglage;
-        private System.Windows.Forms.Button button1;
-        private System.Windows.Forms.Label lblPuissanceTurbine;
-        private Composants.TrackBarPlus trackBarTurbine;
-        private System.Windows.Forms.GroupBox groupBox2;
-        private System.Windows.Forms.Button button9;
-        private System.Windows.Forms.Button button10;
-        private System.Windows.Forms.Button button11;
-        private System.Windows.Forms.Label label6;
-        private System.Windows.Forms.Label label7;
-        private Composants.TrackBarPlus trackBarPlus2;
-        private System.Windows.Forms.GroupBox groupBoxGrandBras;
-        private System.Windows.Forms.Button button8;
-        private System.Windows.Forms.Button button5;
-        private System.Windows.Forms.Button button7;
-        private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.Label label5;
-        private Composants.TrackBarPlus trackBarPlus1;
-        private System.Windows.Forms.GroupBox groupBoxShutter;
-        private System.Windows.Forms.Button button6;
-        private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.Button btnAspirateurBas;
+        private System.Windows.Forms.Button btnAspirateurHaut;
+        private System.Windows.Forms.Button btnAspirateurOk;
+        private System.Windows.Forms.NumericUpDown numAspirateur;
         private System.Windows.Forms.Label label3;
-        private System.Windows.Forms.NumericUpDown numericUpDown1;
-        private System.Windows.Forms.Button button4;
+        private System.Windows.Forms.Button btnBrasDroitRange;
+        private System.Windows.Forms.Button btnBrasDroitSorti;
+        private System.Windows.Forms.Button btnBrasDroitOk;
+        private System.Windows.Forms.NumericUpDown numBrasDroit;
+        private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.Button btnBrasGaucheRange;
+        private System.Windows.Forms.Button btnBrasGaucheSorti;
+        private System.Windows.Forms.Button btnBrasGaucheOk;
+        private System.Windows.Forms.NumericUpDown numBrasGauche;
+        private System.Windows.Forms.Label label6;
+        private System.Windows.Forms.Button btnPetitBrasRange;
+        private System.Windows.Forms.Button btnPetitBrasBas;
+        private System.Windows.Forms.Button btnPetitBrasHaut;
+        private System.Windows.Forms.Button btnPetitBrasOk;
+        private System.Windows.Forms.NumericUpDown numPetitBras;
+        private System.Windows.Forms.Label label5;
+        private System.Windows.Forms.Button btnGrandBrasRange;
+        private System.Windows.Forms.Button btnGrandBrasBas;
+        private System.Windows.Forms.Button btnGrandBrasHaut;
+        private System.Windows.Forms.Button btnGrandBrasOk;
+        private System.Windows.Forms.NumericUpDown numGrandBras;
+        private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.Button btnCameraBleu;
+        private System.Windows.Forms.Button btnCameraRouge;
+        private System.Windows.Forms.Button btnCameraOK;
+        private System.Windows.Forms.NumericUpDown numCamera;
+        private System.Windows.Forms.Label label7;
     }
 }

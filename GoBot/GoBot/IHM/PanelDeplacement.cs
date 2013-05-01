@@ -177,7 +177,7 @@ namespace GoBot.IHM
 
         protected virtual void btnStop_Click(object sender, EventArgs e)
         {
-            Robot.Stop();
+            Robot.Stop(StopMode.Freely);
         }
 
         private void btnTaille_Click(object sender, EventArgs e)

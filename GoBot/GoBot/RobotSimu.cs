@@ -249,11 +249,41 @@ namespace GoBot
             throw new NotImplementedException();
         }
 
-        public override void CoupureAlim()
+        public override void Allimentation(bool allume)
         {
             throw new NotImplementedException();
         }
+        
+        public override void AspirerBalles()
+        {
+        }
+
+        public override void EjecterBalles()
+        {
+        }
+
+        public override void AspirerVitesse(int vitesse)
+        {
+        }
+
+        public override void CanonVitesse(int vitesse)
+        {
+        }
+
+        public override void Shutter(bool ouvert)
+        {
+        }
 
         System.Timers.Timer timerDeplacement;
+
+        public override bool PresenceBalle()
+        {
+            return false;
+        }
+
+        public override string CouleurBalle()
+        {
+            return "0";
+        }
     }
 }

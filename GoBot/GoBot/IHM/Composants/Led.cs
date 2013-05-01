@@ -33,42 +33,44 @@ namespace GoBot.IHM.Composants
                 timer.Stop();
         }
 
-        public void On(bool blink = false, bool eteindre = false)
+        public void CouleurVert(bool blink = false, bool eteindre = false)
         {
-            timer.Stop();
-            Visible = true;
-            compteur = 0;
-            if (eteindre)
-                compteur = 1;
-            Image = global::GoBot.Properties.Resources.ledOn;
-            if (blink)
-                timer.Start();
-
-            Etat = true;
+            ChangementImage(global::GoBot.Properties.Resources.ledVert, blink, eteindre);
         }
 
-        public void Off(bool blink = false, bool eteindre = false)
+        public void CouleurOrange(bool blink = false, bool eteindre = false)
         {
-            timer.Stop();
-            Visible = true;
-            compteur = 0;
-            if (eteindre)
-                compteur = 1;
-            Image = global::GoBot.Properties.Resources.ledOff;
-            if (blink)
-                timer.Start();
-
-            Etat = false;
+            ChangementImage(global::GoBot.Properties.Resources.ledOrange, blink, eteindre);
         }
 
-        public void Neutre(bool blink = false, bool eteindre = false)
+        public void CouleurBleu(bool blink = false, bool eteindre = false)
+        {
+            ChangementImage(global::GoBot.Properties.Resources.ledBleu, blink, eteindre);
+        }
+
+        public void CouleurJaune(bool blink = false, bool eteindre = false)
+        {
+            ChangementImage(global::GoBot.Properties.Resources.ledJaune, blink, eteindre);
+        }
+
+        public void CouleurRouge(bool blink = false, bool eteindre = false)
+        {
+            ChangementImage(global::GoBot.Properties.Resources.ledRouge, blink, eteindre);
+        }
+
+        public void CouleurGris(bool blink = false, bool eteindre = false)
+        {
+            ChangementImage(global::GoBot.Properties.Resources.ledGris, blink, eteindre);
+        }
+
+        private void ChangementImage(Image img, bool blink = false, bool eteindre = false)
         {
             timer.Stop();
             Visible = true;
             compteur = 0;
             if (eteindre)
                 compteur = 1;
-            Image = global::GoBot.Properties.Resources.ledNeutre;
+            Image = img;
             if (blink)
                 timer.Start();
 

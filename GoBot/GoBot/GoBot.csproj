@@ -78,6 +78,18 @@
     <Compile Include="Actions\Deplacement\ActionRecule.cs" />
     <Compile Include="Actions\IAction.cs" />
     <Compile Include="CameraIP.cs" />
+    <Compile Include="IHM\PanelCapteursGros.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="IHM\PanelCapteursGros.Designer.cs">
+      <DependentUpon>PanelCapteursGros.cs</DependentUpon>
+    </Compile>
+    <Compile Include="IHM\PanelSequencesGros.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="IHM\PanelSequencesGros.Designer.cs">
+      <DependentUpon>PanelSequencesGros.cs</DependentUpon>
+    </Compile>
     <Compile Include="IHM\PanelUtilGros.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -240,6 +252,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="IHM\Composants\TrackBarPlus.resx">
       <DependentUpon>TrackBarPlus.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="IHM\PanelCapteursGros.resx">
+      <DependentUpon>PanelCapteursGros.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="IHM\PanelSequencesGros.resx">
+      <DependentUpon>PanelSequencesGros.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="IHM\PanelUtilGros.resx">
       <DependentUpon>PanelUtilGros.cs</DependentUpon>
@@ -474,6 +492,9 @@
     <None Include="img\flecheGauche.png" />
     <Content Include="img\iconeVitesse.png" />
     <None Include="img\ledNeutre.png" />
+    <None Include="img\ledBleu.png" />
+    <None Include="img\ledGris.png" />
+    <None Include="img\ledJaune.png" />
     <Content Include="img\ledOff.png" />
     <Content Include="img\ledOn.png" />
     <None Include="img\table.bmp" />
@@ -481,6 +502,10 @@
     <None Include="img\tableRouge.png" />
     <None Include="img\tableViolet.png" />
     <None Include="img\recale.png" />
+    <None Include="img\Moteur.png" />
+    <None Include="img\ledRouge.png" />
+    <None Include="img\ledVert.png" />
+    <None Include="img\ledOrange.png" />
     <Content Include="img\trackBarCurseurNormal.png" />
     <Content Include="img\trackBarCurseurSelect.png" />
     <Content Include="img\trackBarFond.png" />

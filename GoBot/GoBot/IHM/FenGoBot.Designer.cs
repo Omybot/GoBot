@@ -582,7 +582,7 @@ namespace GoBot
             // led1
             // 
             this.led1.Etat = false;
-            this.led1.Image = global::GoBot.Properties.Resources.ledOn;
+            this.led1.Image = global::GoBot.Properties.Resources.ledRouge;
             this.led1.Location = new System.Drawing.Point(547, 272);
             this.led1.Name = "led1";
             this.led1.Size = new System.Drawing.Size(16, 16);
@@ -592,7 +592,7 @@ namespace GoBot
             // ledBalises
             // 
             this.ledBalises.Etat = false;
-            this.ledBalises.Image = global::GoBot.Properties.Resources.ledOff;
+            this.ledBalises.Image = global::GoBot.Properties.Resources.ledRouge;
             this.ledBalises.Location = new System.Drawing.Point(624, 404);
             this.ledBalises.Name = "ledBalises";
             this.ledBalises.Size = new System.Drawing.Size(16, 16);
@@ -602,7 +602,7 @@ namespace GoBot
             // ledRecallage
             // 
             this.ledRecallage.Etat = false;
-            this.ledRecallage.Image = global::GoBot.Properties.Resources.ledOff;
+            this.ledRecallage.Image = global::GoBot.Properties.Resources.ledRouge;
             this.ledRecallage.Location = new System.Drawing.Point(624, 371);
             this.ledRecallage.Name = "ledRecallage";
             this.ledRecallage.Size = new System.Drawing.Size(16, 16);
@@ -1035,7 +1035,7 @@ namespace GoBot
             // 
             this.ledRecMove.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.ledRecMove.Etat = false;
-            this.ledRecMove.Image = global::GoBot.Properties.Resources.ledOff;
+            this.ledRecMove.Image = global::GoBot.Properties.Resources.ledRouge;
             this.ledRecMove.Location = new System.Drawing.Point(16, 577);
             this.ledRecMove.Name = "ledRecMove";
             this.ledRecMove.Size = new System.Drawing.Size(16, 16);

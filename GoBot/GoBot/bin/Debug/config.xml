@@ -4,10 +4,12 @@
   <HistoriqueGROuvert>true</HistoriqueGROuvert>
   <ReglageGROuvert>false</ReglageGROuvert>
   <UtilGROuvert>false</UtilGROuvert>
+  <SequencesGROuvert>true</SequencesGROuvert>
+  <CapteursGROuvert>true</CapteursGROuvert>
   <DeplacementPROuvert>true</DeplacementPROuvert>
   <HistoriquePROuvert>true</HistoriquePROuvert>
-  <GRVitesseLigne>878</GRVitesseLigne>
-  <GRAccelerationLigne>1016</GRAccelerationLigne>
+  <GRVitesseLigne>268</GRVitesseLigne>
+  <GRAccelerationLigne>346</GRAccelerationLigne>
   <GRVitessePivot>561</GRVitessePivot>
   <GRAccelerationPivot>1098</GRAccelerationPivot>
   <PRVitesseLigne>585</PRVitesseLigne>
@@ -20,6 +22,33 @@
   <OffsetBalise1Bas>-190.89156250000005</OffsetBalise1Bas>
   <OffsetBalise2Bas>166.8703125</OffsetBalise2Bas>
   <OffsetBalise3Bas>-12.602499999999964</OffsetBalise3Bas>
+  <PositionGRGrandBrasHaut>488</PositionGRGrandBrasHaut>
+  <PositionGRGrandBrasBas>545</PositionGRGrandBrasBas>
+  <PositionGRGrandBrasRange>815</PositionGRGrandBrasRange>
+  <PositionGRPetitBrasHaut>556</PositionGRPetitBrasHaut>
+  <PositionGRPetitBrasBas>454</PositionGRPetitBrasBas>
+  <PositionGRPetitBrasRange>216</PositionGRPetitBrasRange>
+  <PositionGRAspirateurHaut>260</PositionGRAspirateurHaut>
+  <PositionGRAspirateurBas>110</PositionGRAspirateurBas>
+  <PositionGRDebloqueurHaut>250</PositionGRDebloqueurHaut>
+  <PositionGRDebloqueurBas>550</PositionGRDebloqueurBas>
+  <PositionGRCameraBleu>400</PositionGRCameraBleu>
+  <PositionGRCameraRouge>600</PositionGRCameraRouge>
+  <PositionGRBrasGaucheSorti>600</PositionGRBrasGaucheSorti>
+  <PositionGRBrasGaucheRange>215</PositionGRBrasGaucheRange>
+  <PositionGRBrasDroitSorti>400</PositionGRBrasDroitSorti>
+  <PositionGRBrasDroitRange>785</PositionGRBrasDroitRange>
+  <VitesseAspiration>313</VitesseAspiration>
+  <VitessePropulsionBonne>476</VitessePropulsionBonne>
+  <VitessePropulsionMauvaise>450</VitessePropulsionMauvaise>
+  <PositionPRBrasGaucheHaut>0</PositionPRBrasGaucheHaut>
+  <PositionPRBrasGaucheMilieu>0</PositionPRBrasGaucheMilieu>
+  <PositionPRBrasGaucheBas>0</PositionPRBrasGaucheBas>
+  <PositionPRBrasGaucheRange>0</PositionPRBrasGaucheRange>
+  <PositionPRBrasDroiteHaut>0</PositionPRBrasDroiteHaut>
+  <PositionPRBrasDroiteMilieu>0</PositionPRBrasDroiteMilieu>
+  <PositionPRBrasDroiteBas>0</PositionPRBrasDroiteBas>
+  <PositionPRBrasDroiteRange>0</PositionPRBrasDroiteRange>
   <PositionsBougiesX>
     <int>435</int>
     <int>495</int>

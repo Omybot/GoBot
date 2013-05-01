@@ -130,7 +130,7 @@ namespace GoBot.Calculs
 
         public override string ToString()
         {
-            return angle + "°";
+            return Math.Round(angle, 2) + "°";
         }
 
         public override bool Equals(object obj)

@@ -119,7 +119,7 @@ namespace GoBot
             ConnexionCheck = new GoBot.ConnexionCheck(5000);
             ConnexionCheck.TestConnexion += new GoBot.ConnexionCheck.TestConnexionDelegate(TestConnexion);
 
-            Connexions.ConnexionIo.NouvelleTrame += new ConnexionUDP.ReceptionDelegate(connexionIo_NouvelleTrame);
+            Connexions.ConnexionMiwi.NouvelleTrame += new ConnexionUDP.ReceptionDelegate(connexionIo_NouvelleTrame);
 
             /*writer = new StreamWriter(carte.ToString() + ".csv");
             prec = DateTime.Now;
@@ -129,7 +129,7 @@ namespace GoBot
         public void Reset()
         {
             Trame t = TrameFactory.BaliseReset(Carte);
-            Connexions.ConnexionIo.SendMessage(t);
+            Connexions.ConnexionMiwi.SendMessage(t);
         }
 
         /// <summary>
@@ -350,7 +350,7 @@ namespace GoBot
                 vitesse = 4000;
                 ValeurConsigne = vitesse;
                 Trame t = TrameFactory.BaliseVitesse(Carte, vitesse);
-                Connexions.ConnexionIo.SendMessage(t);
+                Connexions.ConnexionMiwi.SendMessage(t);
 
                 Console.WriteLine("Erreur d'affectation de vitesse");
             }
@@ -359,7 +359,7 @@ namespace GoBot
 
                 ValeurConsigne = vitesse;
                 Trame t = TrameFactory.BaliseVitesse(Carte, vitesse);
-                Connexions.ConnexionIo.SendMessage(t);
+                Connexions.ConnexionMiwi.SendMessage(t);
             }
         }
 
@@ -369,7 +369,7 @@ namespace GoBot
         public void TestConnexion()
         {
             Trame t = TrameFactory.BaliseTestConnexion(Carte);
-            Connexions.ConnexionIo.SendMessage(t);
+            Connexions.ConnexionMiwi.SendMessage(t);
         }
 
         //Déclaration du délégué pour l’évènement détection de positions

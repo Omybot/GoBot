@@ -193,23 +193,44 @@ namespace GoBot.Properties {
             }
         }
         
-        internal static System.Drawing.Bitmap ledNeutre {
+        internal static System.Drawing.Bitmap ledBleu {
             get {
-                object obj = ResourceManager.GetObject("ledNeutre", resourceCulture);
+                object obj = ResourceManager.GetObject("ledBleu", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
         
-        internal static System.Drawing.Bitmap ledOff {
+        internal static System.Drawing.Bitmap ledGris {
             get {
-                object obj = ResourceManager.GetObject("ledOff", resourceCulture);
+                object obj = ResourceManager.GetObject("ledGris", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
         
-        internal static System.Drawing.Bitmap ledOn {
+        internal static System.Drawing.Bitmap ledJaune {
             get {
-                object obj = ResourceManager.GetObject("ledOn", resourceCulture);
+                object obj = ResourceManager.GetObject("ledJaune", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        internal static System.Drawing.Bitmap ledOrange {
+            get {
+                object obj = ResourceManager.GetObject("ledOrange", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        internal static System.Drawing.Bitmap ledRouge {
+            get {
+                object obj = ResourceManager.GetObject("ledRouge", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        internal static System.Drawing.Bitmap ledVert {
+            get {
+                object obj = ResourceManager.GetObject("ledVert", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -238,6 +259,13 @@ namespace GoBot.Properties {
         internal static System.Drawing.Bitmap MilieuGaucheOuvert {
             get {
                 object obj = ResourceManager.GetObject("MilieuGaucheOuvert", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        internal static System.Drawing.Bitmap Moteur {
+            get {
+                object obj = ResourceManager.GetObject("Moteur", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

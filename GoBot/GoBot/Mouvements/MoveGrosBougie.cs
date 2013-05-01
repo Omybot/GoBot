@@ -21,12 +21,29 @@ namespace GoBot.Mouvements
 
         public override bool Executer(int timeOut = 0)
         {
+            ServomoteurID servo = ServomoteurID.GRPetitBras;
+            int posHaut = Config.CurrentConfig.PositionGRPetitBrasHaut;
+            int posBas = Config.CurrentConfig.PositionGRPetitBrasBas;
+
+            if (numeroBougie == 1 || numeroBougie == 11 || numeroBougie == 0 || numeroBougie == 2 || numeroBougie == 4 || numeroBougie == 8 || numeroBougie == 10 || numeroBougie == 12 || numeroBougie == 14 || numeroBougie == 18)
+            {
+                servo = ServomoteurID.GRGrandBras;
+                posHaut = Config.CurrentConfig.PositionGRGrandBrasHaut;
+                posBas = Config.CurrentConfig.PositionGRGrandBrasBas;
+            }
+
+            Robots.GrosRobot.BougeServo(servo, posHaut);
             if (Robots.GrosRobot.PathFinding(Position.Coordonnees.X, Position.Coordonnees.Y, timeOut, true))
             {
                 Robots.GrosRobot.PositionerAngle(Position.Angle, 1);
-                Robots.GrosRobot.BougeServo(ServomoteurID.GRBrasBasDroite, 500);
-                Thread.Sleep(500);
-                Robots.GrosRobot.BougeServo(ServomoteurID.GRBrasBasDroite, 0);
+                
+                Robots.GrosRobot.BougeServo(servo, posBas);
+                Thread.Sleep(300);
+                Robots.GrosRobot.BougeServo(servo, posHaut);
+                Thread.Sleep(300);
+                Robots.GrosRobot.BougeServo(servo, posBas);
+                Thread.Sleep(300);
+                Robots.GrosRobot.BougeServo(servo, posHaut);
 
                 Plateau.Score += Score;
                 Plateau.BougiesEnfoncees[numeroBougie] = true;

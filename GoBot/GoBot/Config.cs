@@ -29,6 +29,8 @@ namespace GoBot
         public bool HistoriqueGROuvert { get; set; }
         public bool ReglageGROuvert { get; set; }
         public bool UtilGROuvert { get; set; }
+        public bool SequencesGROuvert { get; set; }
+        public bool CapteursGROuvert { get; set; }
 
         // Fenêtres petit robot
 
@@ -58,6 +60,57 @@ namespace GoBot
         public double OffsetBalise1Bas { get; set; }
         public double OffsetBalise2Bas { get; set; }
         public double OffsetBalise3Bas { get; set; }
+
+        // Positions bras gros robot
+
+        public int PositionGRGrandBrasHaut { get; set; }
+        public int PositionGRGrandBrasBas { get; set; }
+        public int PositionGRGrandBrasRange { get; set; }
+
+        public int PositionGRPetitBrasHaut { get; set; }
+        public int PositionGRPetitBrasBas { get; set; }
+        public int PositionGRPetitBrasRange { get; set; }
+
+        // Positions aspirateur
+
+        public int PositionGRAspirateurHaut { get; set; }
+        public int PositionGRAspirateurBas { get; set; }
+
+        // Positions débloqueur
+
+        public int PositionGRDebloqueurHaut { get; set; }
+        public int PositionGRDebloqueurBas { get; set; }
+
+        // Positions camera
+
+        public int PositionGRCameraBleu { get; set; }
+        public int PositionGRCameraRouge { get; set; }
+
+        // Positions bras latéraux
+
+        public int PositionGRBrasGaucheSorti { get; set; }
+        public int PositionGRBrasGaucheRange { get; set; }
+
+        public int PositionGRBrasDroitSorti { get; set; }
+        public int PositionGRBrasDroitRange { get; set; }
+
+        // Vitesses rotation
+
+        public int VitesseAspiration { get; set; }
+        public int VitessePropulsionBonne { get; set; }
+        public int VitessePropulsionMauvaise { get; set; }
+
+        // Positions bras petit robot
+
+        public int PositionPRBrasGaucheHaut { get; set; }
+        public int PositionPRBrasGaucheMilieu { get; set; }
+        public int PositionPRBrasGaucheBas { get; set; }
+        public int PositionPRBrasGaucheRange { get; set; }
+
+        public int PositionPRBrasDroiteHaut { get; set; }
+        public int PositionPRBrasDroiteMilieu { get; set; }
+        public int PositionPRBrasDroiteBas { get; set; }
+        public int PositionPRBrasDroiteRange { get; set; }
 
         // Positions bougies à la camera
 

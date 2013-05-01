@@ -91,13 +91,38 @@ namespace GoBot
                     semDeplacement.Release();
                 }
 
+                if (trameRecue[1] == (byte)TrameFactory.FonctionMove.ReponsePresence)
+                {
+                    presenceBalle = trameRecue[2] == 1 ? true : false;
+                    try
+                    {
+                        if(semCapteurPresence != null)
+                            semCapteurPresence.Release();
+                    }
+                    catch(Exception)
+                    {}
+                }
+
+                if (trameRecue[1] == (byte)TrameFactory.FonctionMove.ReponseCouleur)
+                {
+                    //presenceBalle = trameRecue[2] == 1 ? true : false;
+                    couleurBalle = (trameRecue[2] * 256 + trameRecue[3]).ToString();
+                    try
+                    {
+                        if (semCapteurCouleur != null)
+                            semCapteurCouleur.Release();
+                    }
+                    catch (Exception)
+                    { }
+                }
+
                 if (trameRecue[1] == (byte)TrameFactory.FonctionMove.PositionXYTeta)
                 {
                     // Réception de la position mesurée par l'asservissement
                     try
                     {
-                        int y = (short)(trameRecue[2] << 8 | trameRecue[3]);
-                        int x = (short)(trameRecue[4] << 8 | trameRecue[5]);
+                        double y = (double)((short)(trameRecue[2] << 8 | trameRecue[3])/10.0);
+                        double x = (double)((short)(trameRecue[4] << 8 | trameRecue[5])/10.0);
                         double teta = (trameRecue[6] << 8 | trameRecue[7]) / 100.0 - 180;
                         teta = (-teta);
                         y = -y;
@@ -113,17 +138,17 @@ namespace GoBot
                     }
                 }
             }
-            if (trameRecue[0] == (byte)Carte.RecIo)
+            /*if (trameRecue[0] == (byte)Carte.RecIo)
             {
                 if (trameRecue[1] == (byte)TrameFactory.FonctionIo.DepartJack)
                 {
                     DebutMatch();
                 }
-            }
-            if (trameRecue[0] == (byte)Carte.RecPi)
+            }*/
+            /*if (trameRecue[0] == (byte)Carte.RecPi)
             {
                 //PetitRobot.ReceptionTrame(trameRecue);
-            }
+            }*/
         }
 
         #region Déplacements
@@ -241,13 +266,13 @@ namespace GoBot
         
         public override void EnvoyerPID(int p, int i, int d)
         {
-            Trame trame = TrameFactory.PID(p, i, d);
+            Trame trame = TrameFactory.CoeffAsserv(p, i, d);
             Connexion.SendMessage(trame);
         }
 
-        public override void CoupureAlim()
+        public override void Allimentation(bool allume)
         {
-            Trame t = TrameFactory.CoupureAlim();
+            Trame t = TrameFactory.CoupureAlim(allume);
             Connexion.SendMessage(t);
         }
 
@@ -267,9 +292,44 @@ namespace GoBot
 
         public override void BougeServo(ServomoteurID servo, int position)
         {
-            Trame trame = TrameFactory.BougeServomoteur(servo, position);
+            Trame trame = TrameFactory.ServoPosition(servo, position);
             Connexion.SendMessage(trame);
             Historique.AjouterAction(new ActionServo(this, position, servo));
+        }
+        
+        public override void AspirerBalles()
+        {
+            Trame trame = TrameFactory.AspirerBalle();
+            Connexion.SendMessage(trame);
+            //Historique.AjouterAction(new ActionServo(this, position, servo));
+        }
+        
+        public override void EjecterBalles()
+        {
+            Trame trame = TrameFactory.EjecterBalle();
+            Connexion.SendMessage(trame);
+            //Historique.AjouterAction(new ActionServo(this, position, servo));
+        }
+        
+        public override void AspirerVitesse(int vitesse)
+        {
+            Trame trame = TrameFactory.VitesseAspirateur(vitesse);
+            Connexion.SendMessage(trame);
+            //Historique.AjouterAction(new ActionServo(this, position, servo));
+        }
+        
+        public override void CanonVitesse(int vitesse)
+        {
+            Trame trame = TrameFactory.VitesseCanon(vitesse);
+            Connexion.SendMessage(trame);
+            //Historique.AjouterAction(new ActionServo(this, position, servo));
+        }
+        
+        public override void Shutter(bool ouvert)
+        {
+            Trame trame = TrameFactory.Shutter(ouvert);
+            Connexion.SendMessage(trame);
+            //Historique.AjouterAction(new ActionServo(this, position, servo));
         }
 
         #region Parametres deplacement
@@ -339,5 +399,25 @@ namespace GoBot
         }
 
         #endregion
+
+        private Semaphore semCapteurPresence;
+        private bool presenceBalle;
+        public override bool PresenceBalle()
+        {
+            semCapteurPresence = new Semaphore(0, 1);
+            Connexion.SendMessage(TrameFactory.DemandePresenceBalle());
+            semCapteurPresence.WaitOne();
+            return presenceBalle;
+        }
+
+        private Semaphore semCapteurCouleur;
+        private String couleurBalle;
+        public override String CouleurBalle()
+        {
+            semCapteurCouleur = new Semaphore(0, 1);
+            Connexion.SendMessage(TrameFactory.DemandeCouleurBalle());
+            semCapteurCouleur.WaitOne();
+            return couleurBalle;
+        }
     }
 }

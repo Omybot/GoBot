@@ -27,7 +27,14 @@ namespace GoBot
         public abstract void Init();
         public abstract void BougeServo(ServomoteurID servo, int position);
         public abstract void EnvoyerPID(int p, int i, int d);
-        public abstract void CoupureAlim();
+        public abstract void Allimentation(bool allume);
+        public abstract void AspirerBalles();
+        public abstract void EjecterBalles();
+        public abstract void AspirerVitesse(int vitesse);
+        public abstract void CanonVitesse(int vitesse);
+        public abstract void Shutter(bool ouvert);
+        public abstract bool PresenceBalle();
+        public abstract String CouleurBalle();
 
         public void PositionerAngle(Angle angle, double marge = 0)
         {
@@ -340,6 +347,11 @@ namespace GoBot
             }
 
             return true;
+        }
+
+        public override string ToString()
+        {
+            return Nom;
         }
     }
 }

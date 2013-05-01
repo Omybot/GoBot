@@ -26,7 +26,7 @@ namespace GoBot
 
     public enum ServomoteurID
     {
-        GRBrasHautGauche = 0x05,
+        /*GRBrasHautGauche = 0x05,
         GRBrasMilieuGauche = 0x01,
         GRBrasBasGauche = 0x02,
         GRBrasBasDroite = 0x10,
@@ -35,7 +35,16 @@ namespace GoBot
         GRBenne = 0x14,
 
         PRBrasDroite = 0x11,
-        PRBrasGauche = 0x12
+        PRBrasGauche = 0x12*/
+
+        GRAspirateur = 16,
+        GRDebloqueur = 0,
+        GRGrandBras = 2, //?
+        GRPetitBras = 3, // ?
+        PRBras = 30, // ?
+        GRBrasGauche = 4,
+        GRBrasDroit = 1,
+        GRCamera = 5
     }
 
     public enum PompeID
@@ -48,8 +57,7 @@ namespace GoBot
     {
         PC = 0xA1,
         RecMove = 0xC1,
-        RecIo = 0xC2,
-        RecPi = 0xC3,
+        RecMiwi = 0xC2,
         RecBun = 0xB1,
         RecBeu = 0xB2,
         RecBoi = 0xB3

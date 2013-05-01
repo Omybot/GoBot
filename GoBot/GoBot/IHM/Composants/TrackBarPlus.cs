@@ -16,7 +16,59 @@ namespace GoBot.IHM.Composants
         private Timer timer;
         private bool reverse;
         private bool focus;
+        private bool vertical;
+        public bool Vertical 
+        { 
+            get 
+            {
+                return vertical;
+            }
+            set
+            {
+                int ancienWidth = Width;
+                int ancienHeight = Height;
+
+                if (value)
+                {
+                    MaximumSize = new Size(15, 3000);
+                    MinimumSize = new Size(15, 0);
+
+                    imgBarre.Anchor = AnchorStyles.Bottom | AnchorStyles.Top;
+                    imgBarre.Left = 5;
+                    imgBarre.Top = 0;
+                    imgBarre.Width = 5;
+                    imgBarre.Height = Height;
+                }
+                else
+                {
+                    MaximumSize = new Size(3000, 15);
+                    MinimumSize = new Size(0, 15);
+
+                    imgBarre.Anchor = AnchorStyles.Left | AnchorStyles.Right;
+                    imgBarre.Left = 0;
+                    imgBarre.Top = 5;
+                    imgBarre.Height = 5;
+                    imgBarre.Width = Width;
+                }
+
+                if (value)
+                {
+                    Height = Math.Max(ancienWidth, ancienHeight);
+                    Width = Math.Min(ancienWidth, ancienHeight);
+                }
+                else
+                {
+                    Width = Math.Max(ancienWidth, ancienHeight);
+                    Height = Math.Min(ancienWidth, ancienHeight);
+                }
+
+                vertical = value; 
+                SetBackGround();
+            }
+        }
         private double derniereValeurTick = -1;
+
+        public int NombreDecimales { get; set; }
 
         public delegate void delegateValueChanged();
         public event delegateValueChanged TickValueChanged;
@@ -26,6 +78,9 @@ namespace GoBot.IHM.Composants
         {
             InitializeComponent();
 
+            NombreDecimales = 0;
+            vertical = false;
+            reverse = false;
             intervalTimer = 1;
             timer = new Timer();
             timer.Tick += new EventHandler(timer_Tick);
@@ -229,23 +284,22 @@ namespace GoBot.IHM.Composants
             {
                 imgBarre.BackgroundImage = global::GoBot.Properties.Resources.trackBarFond;
 
-                if(!reverse) 
-                    imgBarre.BackgroundImage.RotateFlip(RotateFlipType.Rotate180FlipY);
-
                 imgCurseur.Image = global::GoBot.Properties.Resources.trackBarCurseurNormal;
             }
             else
             {
                 imgBarre.BackgroundImage = global::GoBot.Properties.Resources.trackBarFondSelected;
 
-                if (!reverse) 
-                    imgBarre.BackgroundImage.RotateFlip(RotateFlipType.Rotate180FlipY);
-
                 imgCurseur.Image = global::GoBot.Properties.Resources.trackBarCurseurSelect;
 
                 if(enDeplacement)
                     imgCurseur.Image.RotateFlip(RotateFlipType.Rotate180FlipNone);
             }
+
+            if(!reverse) 
+                imgBarre.BackgroundImage.RotateFlip(RotateFlipType.Rotate180FlipY);
+            if (Vertical)
+                imgBarre.BackgroundImage.RotateFlip(RotateFlipType.Rotate270FlipNone);
         }
 
         public double Min
@@ -338,42 +392,83 @@ namespace GoBot.IHM.Composants
 
         private Point PointCentral(Point gauche)
         {
-            return new Point(gauche.X - (imgCurseur.Width / 2), imgCurseur.Location.Y);
+            if(!Vertical)
+                return new Point(gauche.X - (imgCurseur.Width / 2), imgCurseur.Location.Y);
+            else
+                return new Point(imgCurseur.Location.X, gauche.Y - (imgCurseur.Height / 2));
         }
 
         private void DessineCurseur()
         {
-            if (!reverse)
-                imgCurseur.Location = new Point((int)((value_ * (Width - imgCurseur.Width)) / (Max - Min)), imgCurseur.Location.Y);
+            if (!Vertical)
+            {
+                if (!reverse)
+                    imgCurseur.Location = new Point((int)(((value_ - Min) * (Width - imgCurseur.Width)) / (Max - Min)), imgCurseur.Location.Y);
+                else
+                    imgCurseur.Location = new Point((int)(Width - imgCurseur.Width - (((value_ - Min) * (Width - imgCurseur.Width)) / (Max - Min))), imgCurseur.Location.Y);
+            }
             else
-                imgCurseur.Location = new Point((int)(Width - imgCurseur.Width - ((value_ * (Width - imgCurseur.Width)) / (Max - Min))), imgCurseur.Location.Y);
+            {
+                if (!reverse)
+                    imgCurseur.Location = new Point(imgCurseur.Location.X, (int)(((value_ - Min) * (Height - imgCurseur.Height)) / (Max - Min)));
+                else
+                    imgCurseur.Location = new Point(imgCurseur.Location.X, (int)(Height - imgCurseur.Height - ((value_ - Min) * (Height - imgCurseur.Height)) / (Max - Min)));
+            }
         }
 
         private void Deplacement(Point e)
         {
-            if (enDeplacement)
+            if (!Vertical)
             {
-                if (PointCentral(e).X <= 0)
+                if (enDeplacement)
                 {
-                    value_ = (reverse) ? Max : Min;
+                    if (PointCentral(e).X <= 0)
+                    {
+                        value_ = (reverse) ? Max : Min;
+                    }
+                    else if (e.X >= this.Width - imgCurseur.Width / 2)
+                    {
+                        value_ = (reverse) ? Min : Max;
+                    }
+                    else
+                    {
+                        value_ = Math.Round(Min + (Max - Min) * e.X / (float)Width, NombreDecimales);
+
+                        if (reverse)
+                            value_ = Max - Min - value_;
+                    }
+
+                    if (ValueChanged != null)
+                        ValueChanged();
+
+                    DessineCurseur();
                 }
-                else if (e.X >= this.Width - imgCurseur.Width / 2)
+            }
+            else
+            {
+                if (enDeplacement)
                 {
-                    value_ = (reverse) ? Min : Max;
+                    if (PointCentral(e).Y <= 0)
+                    {
+                        value_ = (reverse) ? Max : Min;
+                    }
+                    else if (e.Y >= this.Height - imgCurseur.Height / 2)
+                    {
+                        value_ = (reverse) ? Min : Max;
+                    }
+                    else
+                    {
+                        value_ = Math.Round(Min + (Max - Min) * e.Y / (float)Height);
+
+                        if (reverse)
+                            value_ = Max - Min - value_;
+                    }
+
+                    if (ValueChanged != null)
+                        ValueChanged();
+
+                    DessineCurseur();
                 }
-                else
-                {
-                    value_ = Math.Round(Min + (Max - Min) * e.X / (float)Width);
-
-                    if (reverse)
-                        value_ = Max - Min - value_;
-                }
-
-                if (ValueChanged != null)
-                    ValueChanged();
-
-                DessineCurseur();
-
             }
         }
     }

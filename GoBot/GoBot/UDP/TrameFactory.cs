@@ -12,26 +12,50 @@ namespace GoBot.UDP
         {
             Deplace = 0x01,
             Pivot = 0x03,
-            Stop = 0x05,
-            CoeffAsserv = 0x45,
             Virage = 0x04,
+            Stop = 0x05,
             GoToXY = 0x06,
-            StopAlim = 0x90,
-            DemandePos = 0x41,
+            Recallage = 0x10,
+
             VitesseLigne = 0x32,
             AccelLigne = 0x33,
             VitessePivot = 0x34,
             AccelPivot = 0x35,
-            Recallage = 0x10,
+            DemandePos = 0x41,
+            CoeffAsserv = 0x45,
+            OffsetPos = 0x46,
+
+            VitesseAspirateur = 0x53,
+            VitesseCanon = 0x54,
+            Shutter = 0x55,
+
+            ServoPosition = 0x60,
+            ServoVitesse = 0x61,
+
+            DemandeCouleur = 0x75,
+            ReponseCouleur = 0x76,
+            DemandePresence = 0x77,
+            ReponsePresence = 0x78,
+
+            AspirerBalle = 0x80,
+            EjecterBalle = 0x81,
+
+            TestConnexion = 0xF0,
+            Reset = 0xF1,
+            Alimentation = 0xF2,
+
             FinRecallage = 0x11,
             FinDeplacement = 0x50,
             DistanceRestante = 0x60,
-            PID = 0x45,
-            PositionXYTeta = 0x67,
-            OffsetPos = 0x46
+            PositionXYTeta = 0x67
         }
 
-        public enum FonctionIo
+        public enum FonctionMiwi
+        {
+            Transmettre = 0xA0
+        }
+
+        /*public enum FonctionIo
         {
             BougeServo = 0x10,
             ResetServo = 0x11,
@@ -43,14 +67,14 @@ namespace GoBot.UDP
             DepartJack = 0x52,
             CapteurUrgence = 0x78,
             FinCapteurUrgence = 0x79
-        }
+        }*/
 
-        public enum FonctionCommune
+        /*public enum FonctionCommune
         {
             ReglageServo = 0xE0,
             TestConnexion = 0xF0,
             Reset = 0xF2
-        }
+        }*/
 
         public enum FonctionReglageServo
         {
@@ -76,7 +100,8 @@ namespace GoBot.UDP
         {
             Vitesse = 0x01,
             Detection = 0xE4,
-            TestConnexion = 0xF0
+            TestConnexion = 0xF0,
+            Reset = 0xF2
         }
 
         private static byte ByteDivide(int valeur, bool poidsFort)
@@ -89,11 +114,12 @@ namespace GoBot.UDP
             return b;
         }
 
-        public static Trame CoupureAlim()
+        public static Trame CoupureAlim(bool allume)
         {
-            byte[] tab = new byte[2];
-            tab[0] = (byte)Carte.RecIo;
-            tab[1] = (byte)FonctionIo.CoupureAlim;
+            byte[] tab = new byte[3];
+            tab[0] = (byte)Carte.RecMove;
+            tab[1] = (byte)FonctionMove.Alimentation;
+            tab[2] = (byte)(allume ? 1 : 0);
 
             return new Trame(tab);
         }
@@ -125,12 +151,13 @@ namespace GoBot.UDP
 
         public static Trame Pivot(SensGD sens, double angle)
         {
+            //angle = angle * Math.PI * 268.471260977282 / 2.0 / 180.0;
             byte[] tab = new byte[7];
             tab[0] = (byte)Carte.RecMove;
             tab[1] = (byte)FonctionMove.Pivot;
             tab[2] = (byte)sens;
             tab[3] = ByteDivide((int)(angle * 100.0), true);
-            tab[4] = ByteDivide((int)(angle * 100*0), false);
+            tab[4] = ByteDivide((int)(angle * 100.0), false);
             return new Trame(tab);
         }
 
@@ -187,7 +214,7 @@ namespace GoBot.UDP
         {
             byte[] tab = new byte[2];
             tab[0] = (byte)Carte.RecMove;
-            tab[1] = (byte)FonctionCommune.Reset;
+            tab[1] = (byte)FonctionMove.Reset;
             return new Trame(tab);
         }
 
@@ -248,28 +275,37 @@ namespace GoBot.UDP
             return new Trame(tab);
         }
 
-        public static Trame BougeServomoteur(ServomoteurID servo, int position)
+        /*public static Trame BougeServomoteur(ServomoteurID servo, int position)
         {
             // 0x67 pour communication à 19200 bauds
             return ServoSetPosition(Carte.RecIo, (int)servo, 0x67, position);
+        }*/
+
+        public static Trame ServoPosition(ServomoteurID servo, int position)
+        {
+            byte[] tab = new byte[5];
+            tab[0] = (byte)Carte.RecMove;
+            tab[1] = (byte)FonctionMove.ServoPosition;
+            tab[2] = (byte)servo;
+            tab[3] = (byte)ByteDivide(position, true);
+            tab[4] = (byte)ByteDivide(position, false);
+
+            return new Trame(tab);
         }
 
-        public static Trame PID(int p, int i, int d)
+        public static Trame ServoVitesse(ServomoteurID servo, int vitesse)
         {
-            byte[] tab = new byte[8];
+            byte[] tab = new byte[4];
             tab[0] = (byte)Carte.RecMove;
-            tab[1] = (byte)FonctionMove.PID;
-            tab[2] = (byte)ByteDivide(p, true);
-            tab[3] = (byte)ByteDivide(p, false);
-            tab[4] = (byte)ByteDivide(i, true);
-            tab[5] = (byte)ByteDivide(i, false);
-            tab[6] = (byte)ByteDivide(d, true);
-            tab[7] = (byte)ByteDivide(d, false);
+            tab[1] = (byte)FonctionMove.ServoVitesse;
+            tab[2] = (byte)ByteDivide(vitesse, true);
+            tab[3] = (byte)ByteDivide(vitesse, false);
+
             return new Trame(tab);
         }
 
         #region Réglage servomoteurs
-
+        /*
         public static Trame ServoRechercheAuto(Carte carte)
         {
             byte[] tab = new byte[3];
@@ -453,14 +489,75 @@ namespace GoBot.UDP
             tab[4] = (byte)baudrate;
             return new Trame(tab);
         }
-
+        */
         #endregion
 
-        public static Trame TestConnexion(Carte carte)
+        public static Trame TestConnexionMove()
         {
             byte[] tab = new byte[2];
-            tab[0] = (byte)carte;
-            tab[1] = (byte)FonctionCommune.TestConnexion;
+            tab[0] = (byte)Carte.RecMove;
+            tab[1] = (byte)FonctionMove.TestConnexion;
+            return new Trame(tab);
+        }
+        
+        public static Trame AspirerBalle()
+        {
+            byte[] tab = new byte[2];
+            tab[0] = (byte)Carte.RecMove;
+            tab[1] = (byte)FonctionMove.AspirerBalle;
+            return new Trame(tab);
+        }
+        
+        public static Trame EjecterBalle()
+        {
+            byte[] tab = new byte[2];
+            tab[0] = (byte)Carte.RecMove;
+            tab[1] = (byte)FonctionMove.EjecterBalle;
+            return new Trame(tab);
+        }
+        
+        public static Trame VitesseAspirateur(int vitesse)
+        {
+            byte[] tab = new byte[4];
+            tab[0] = (byte)Carte.RecMove;
+            tab[1] = (byte)FonctionMove.VitesseAspirateur;
+            tab[2] = (byte)ByteDivide(vitesse, true);
+            tab[3] = (byte)ByteDivide(vitesse, false);
+            return new Trame(tab);
+        }
+        
+        public static Trame VitesseCanon(int vitesse)
+        {
+            byte[] tab = new byte[4];
+            tab[0] = (byte)Carte.RecMove;
+            tab[1] = (byte)FonctionMove.VitesseCanon;
+            tab[2] = (byte)ByteDivide(vitesse, true);
+            tab[3] = (byte)ByteDivide(vitesse, false);
+            return new Trame(tab);
+        }
+
+        public static Trame Shutter(bool ouvert)
+        {
+            byte[] tab = new byte[3];
+            tab[0] = (byte)Carte.RecMove;
+            tab[1] = (byte)FonctionMove.Shutter;
+            tab[2] = (byte)(ouvert ? 0x01 : 0x00);
+            return new Trame(tab);
+        }
+
+        public static Trame DemandePresenceBalle()
+        {
+            byte[] tab = new byte[2];
+            tab[0] = (byte)Carte.RecMove;
+            tab[1] = (byte)FonctionMove.DemandePresence;
+            return new Trame(tab);
+        }
+
+        public static Trame DemandeCouleurBalle()
+        {
+            byte[] tab = new byte[2];
+            tab[0] = (byte)Carte.RecMove;
+            tab[1] = (byte)FonctionMove.DemandeCouleur;
             return new Trame(tab);
         }
 
@@ -469,8 +566,8 @@ namespace GoBot.UDP
         public static Trame BaliseVitesse(Carte balise, int vitesse)
         {
             byte[] tab = new byte[6];
-            tab[0] = (byte)Carte.RecIo;
-            tab[1] = (byte)FonctionIo.Transmettre;
+            tab[0] = (byte)Carte.RecMiwi;
+            tab[1] = (byte)FonctionMiwi.Transmettre;
             tab[2] = (byte)balise;
             tab[3] = (byte)FonctionBalise.Vitesse;
             tab[4] = (byte)ByteDivide(vitesse, true);
@@ -481,18 +578,18 @@ namespace GoBot.UDP
         public static Trame BaliseReset(Carte balise)
         {
             byte[] tab = new byte[4];
-            tab[0] = (byte)Carte.RecIo;
-            tab[1] = (byte)FonctionIo.Transmettre;
+            tab[0] = (byte)Carte.RecMiwi;
+            tab[1] = (byte)FonctionMiwi.Transmettre;
             tab[2] = (byte)balise;
-            tab[3] = (byte)FonctionCommune.Reset;
+            tab[3] = (byte)FonctionBalise.Reset;
             return new Trame(tab);
         }
 
         public static Trame BaliseTestConnexion(Carte balise)
         {
             byte[] tab = new byte[4];
-            tab[0] = (byte)Carte.RecIo;
-            tab[1] = (byte)FonctionIo.Transmettre;
+            tab[0] = (byte)Carte.RecMiwi;
+            tab[1] = (byte)FonctionMiwi.Transmettre;
             tab[2] = (byte)balise;
             tab[3] = (byte)FonctionBalise.TestConnexion;
             return new Trame(tab);
@@ -501,8 +598,8 @@ namespace GoBot.UDP
         public static Trame BalisePositions(Carte balise)
         {
             byte[] tab = new byte[5];
-            tab[0] = (byte)Carte.RecIo;
-            tab[1] = (byte)FonctionIo.Transmettre;
+            tab[0] = (byte)Carte.RecMiwi;
+            tab[1] = (byte)FonctionMiwi.Transmettre;
             tab[2] = (byte)balise;
             tab[3] = (byte)FonctionBalise.Detection;
             return new Trame(tab);

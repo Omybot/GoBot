@@ -48,8 +48,8 @@
             this.btnVirageAvGa = new System.Windows.Forms.Button();
             this.btnVirageAvDr = new System.Windows.Forms.Button();
             this.btnRecule = new System.Windows.Forms.Button();
-            this.txtAngle = new GoBot.IHM.Composants.BetterTextBox();
-            this.txtDistance = new GoBot.IHM.Composants.BetterTextBox();
+            this.txtAngle = new GoBot.IHM.Composants.TextBoxPlus();
+            this.txtDistance = new GoBot.IHM.Composants.TextBoxPlus();
             this.btnAvance = new System.Windows.Forms.Button();
             this.groupDeplacement.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxReglageVertical)).BeginInit();
@@ -299,7 +299,7 @@
             this.txtAngle.TabIndex = 78;
             this.txtAngle.Text = "Angle";
             this.txtAngle.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-            this.txtAngle.TextMode = GoBot.IHM.Composants.BetterTextBox.TextModeEnum.Decimal;
+            this.txtAngle.TextMode = GoBot.IHM.Composants.TextBoxPlus.TextModeEnum.Decimal;
             // 
             // txtDistance
             // 
@@ -313,7 +313,7 @@
             this.txtDistance.TabIndex = 76;
             this.txtDistance.Text = "Distance";
             this.txtDistance.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-            this.txtDistance.TextMode = GoBot.IHM.Composants.BetterTextBox.TextModeEnum.Numeric;
+            this.txtDistance.TextMode = GoBot.IHM.Composants.TextBoxPlus.TextModeEnum.Numeric;
             // 
             // btnAvance
             // 
@@ -357,8 +357,8 @@
         protected System.Windows.Forms.Button btnVirageAvGa;
         protected System.Windows.Forms.Button btnVirageAvDr;
         protected System.Windows.Forms.Button btnRecule;
-        protected Composants.BetterTextBox txtAngle;
-        protected Composants.BetterTextBox txtDistance;
+        protected Composants.TextBoxPlus txtAngle;
+        protected Composants.TextBoxPlus txtDistance;
         protected System.Windows.Forms.Button btnAvance;
         protected Composants.TrackBarPlus trackBarVitesse;
         protected Composants.TrackBarPlus trackBarAccel;

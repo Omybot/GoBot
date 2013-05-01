@@ -9,7 +9,7 @@ using System.Windows.Forms;
 
 namespace GoBot.IHM.Composants
 {
-    public partial class BetterTextBox : TextBox
+    public partial class TextBoxPlus : TextBox
     {
         // Fonctionnalités supplémentaires :
         //      - Texte par défaut affiché en gris si aucun texte, disparition au focus
@@ -61,7 +61,7 @@ namespace GoBot.IHM.Composants
             }
         }
 
-        public BetterTextBox()
+        public TextBoxPlus()
         {
             InitializeComponent();
         }
