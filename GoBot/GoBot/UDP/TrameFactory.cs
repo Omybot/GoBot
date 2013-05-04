@@ -33,6 +33,8 @@ namespace GoBot.UDP
             VitesseAspirateur = 0x53,
             VitesseCanon = 0x54,
             Shutter = 0x55,
+            Pompe = 0x56,
+
 
             ServoPosition = 0x60,
             ServoVitesse = 0x61,
@@ -579,6 +581,15 @@ namespace GoBot.UDP
             byte[] tab = new byte[2];
             tab[0] = (byte)Carte.RecMove;
             tab[1] = (byte)FonctionMove.DemandePresenceAssiette;
+            return new Trame(tab);
+        }
+
+        public static Trame ActiverPompe(bool actif)
+        {
+            byte[] tab = new byte[3];
+            tab[0] = (byte)Carte.RecMove;
+            tab[1] = (byte)FonctionMove.Pompe;
+            tab[2] = (byte)(actif ? 1 : 0);
             return new Trame(tab);
         }
 

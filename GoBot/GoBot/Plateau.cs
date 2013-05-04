@@ -169,8 +169,10 @@ namespace GoBot
 
         public void ObstacleTest(int x, int y)
         {
+            SemaphoreGraph.WaitOne();
             ViderObstacles();
             AjouterObstacle(new Cercle(new PointReel(x, y), 200));
+            SemaphoreGraph.Release();
 
             Robots.PetitRobot.ObstacleTest();
             Robots.GrosRobot.ObstacleTest();
@@ -204,7 +206,7 @@ namespace GoBot
         /// </summary>
         /// <param name="obstacle">Forme de l'obstacle</param>
         /// <param name="fixe">Si l'obstacle est fixe, on supprime complètement les noeuds et arcs non franchissables. Sinon on les rends non franchissables temporairement.</param>
-        public void AjouterObstacle(IForme obstacle, bool fixe = false)
+        public static void AjouterObstacle(IForme obstacle, bool fixe = false)
         {
             DateTime debut = DateTime.Now;
 

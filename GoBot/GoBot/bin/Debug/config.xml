@@ -3,15 +3,15 @@
   <DeplacementGROuvert>true</DeplacementGROuvert>
   <HistoriqueGROuvert>true</HistoriqueGROuvert>
   <ReglageGROuvert>true</ReglageGROuvert>
-  <UtilGROuvert>false</UtilGROuvert>
+  <UtilGROuvert>true</UtilGROuvert>
   <SequencesGROuvert>true</SequencesGROuvert>
   <CapteursGROuvert>true</CapteursGROuvert>
   <DeplacementPROuvert>true</DeplacementPROuvert>
   <HistoriquePROuvert>true</HistoriquePROuvert>
-  <GRVitesseLigne>634</GRVitesseLigne>
-  <GRAccelerationLigne>1687</GRAccelerationLigne>
-  <GRVitessePivot>1171</GRVitessePivot>
-  <GRAccelerationPivot>2317</GRAccelerationPivot>
+  <GRVitesseLigne>1000</GRVitesseLigne>
+  <GRAccelerationLigne>2000</GRAccelerationLigne>
+  <GRVitessePivot>1000</GRVitessePivot>
+  <GRAccelerationPivot>4000</GRAccelerationPivot>
   <PRVitesseLigne>585</PRVitesseLigne>
   <PRAccelerationLigne>0</PRAccelerationLigne>
   <PRVitessePivot>0</PRVitessePivot>
@@ -22,10 +22,10 @@
   <OffsetBalise1Bas>-181.9690625</OffsetBalise1Bas>
   <OffsetBalise2Bas>163.5075</OffsetBalise2Bas>
   <OffsetBalise3Bas>-12.566249999999968</OffsetBalise3Bas>
-  <PositionGRGrandBrasHaut>488</PositionGRGrandBrasHaut>
+  <PositionGRGrandBrasHaut>465</PositionGRGrandBrasHaut>
   <PositionGRGrandBrasBas>545</PositionGRGrandBrasBas>
   <PositionGRGrandBrasRange>815</PositionGRGrandBrasRange>
-  <PositionGRPetitBrasHaut>556</PositionGRPetitBrasHaut>
+  <PositionGRPetitBrasHaut>575</PositionGRPetitBrasHaut>
   <PositionGRPetitBrasBas>454</PositionGRPetitBrasBas>
   <PositionGRPetitBrasRange>216</PositionGRPetitBrasRange>
   <PositionGRAspirateurHaut>350</PositionGRAspirateurHaut>

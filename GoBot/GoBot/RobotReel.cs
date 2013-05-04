@@ -369,6 +369,11 @@ namespace GoBot
                 Trame trame = TrameFactory.CoupureAlim(on);
                 Connexion.SendMessage(trame);
             }
+            else if (actionneur == ActionneurOnOffID.GRPompe)
+            {
+                Trame trame = TrameFactory.ActiverPompe(on);
+                Connexion.SendMessage(trame);
+            }
 
             Historique.AjouterActionThread(new ActionOnOff(this, actionneur, on));
         }

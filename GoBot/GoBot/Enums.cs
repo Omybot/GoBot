@@ -33,6 +33,7 @@ namespace GoBot
         GRBrasGauche = 4,
         GRBrasDroit = 1,
         GRCamera = 5,
+        GRServoAssiette = 6,
 
         PRBras = 99
     }
@@ -53,7 +54,8 @@ namespace GoBot
     public enum ActionneurOnOffID
     {
         GRShutter = 0,
-        GRAlimentation = 1
+        GRAlimentation = 1,
+        GRPompe = 2
     }
 
     public enum PompeID

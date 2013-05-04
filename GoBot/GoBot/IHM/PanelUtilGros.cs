@@ -216,5 +216,16 @@ namespace GoBot.IHM
         {
             Robots.GrosRobot.TourneMoteur(MoteurID.GRCanon, 0);
         }
+
+        private void btnPompeOn_Click(object sender, EventArgs e)
+        {
+            Robots.GrosRobot.ActionneurOnOff(ActionneurOnOffID.GRPompe, true);
+        }
+
+
+        private void btnPompeOff_Click(object sender, EventArgs e)
+        {
+            Robots.GrosRobot.ActionneurOnOff(ActionneurOnOffID.GRPompe, false);
+        }
     }
 }

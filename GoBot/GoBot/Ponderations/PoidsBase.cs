@@ -15,9 +15,9 @@ namespace GoBot.Ponderations
             PoidsGrosCadeau = new double[8];
 
             PoidGlobalPetitBougie = 0;
-            PoidGlobalPetitCadeau = 0;
-            PoidGlobalGrosBougie = 0;
-            PoidGlobalGrosCadeau = 1;
+            PoidGlobalPetitCadeau = 1;
+            PoidGlobalGrosBougie = 1;
+            PoidGlobalGrosCadeau = 0;
 
             // Poids petit robot
 
@@ -26,10 +26,10 @@ namespace GoBot.Ponderations
             PoidsPetitBougie[3] = 1;
             PoidsPetitBougie[5] = 1;
             PoidsPetitBougie[6] = 1;
-            PoidsPetitBougie[7] = 10;
-            PoidsPetitBougie[9] = 10;
-            PoidsPetitBougie[19] = 10;
-            PoidsPetitBougie[17] = 10;
+            PoidsPetitBougie[7] = 1;
+            PoidsPetitBougie[9] = 1;
+            PoidsPetitBougie[19] = 1;
+            PoidsPetitBougie[17] = 1;
             PoidsPetitBougie[16] = 1;
             PoidsPetitBougie[15] = 1;
             PoidsPetitBougie[13] = 1;
@@ -37,30 +37,30 @@ namespace GoBot.Ponderations
 
             // Cadeaux
             PoidsPetitCadeau[0] = 1;
-            PoidsPetitCadeau[1] = 1;
+            PoidsPetitCadeau[1] = 4;
             PoidsPetitCadeau[2] = 1;
-            PoidsPetitCadeau[3] = 1;
+            PoidsPetitCadeau[3] = 8;
             PoidsPetitCadeau[4] = 1;
-            PoidsPetitCadeau[5] = 1;
+            PoidsPetitCadeau[5] = 12;
             PoidsPetitCadeau[6] = 1;
-            PoidsPetitCadeau[7] = 1;
+            PoidsPetitCadeau[7] = 16;
 
             // Poids grand robot
 
             // Bougies
-            PoidsGrosBougie[0] = 10000;
-            PoidsGrosBougie[1] = 1;
+            PoidsGrosBougie[0] = 1;
+            PoidsGrosBougie[1] = 10;
             PoidsGrosBougie[2] = 1;
             PoidsGrosBougie[2] = 1;
             PoidsGrosBougie[3] = 1;
             PoidsGrosBougie[4] = 1;
             PoidsGrosBougie[5] = 1;
             PoidsGrosBougie[6] = 1;
-            PoidsGrosBougie[7] = 10;
-            PoidsGrosBougie[8] = 10;
-            PoidsGrosBougie[9] = 10;
-            PoidsGrosBougie[10] = 10;
-            PoidsGrosBougie[11] = 1;
+            PoidsGrosBougie[7] = 1;
+            PoidsGrosBougie[8] = 1;
+            PoidsGrosBougie[9] = 1;
+            PoidsGrosBougie[10] = 1;
+            PoidsGrosBougie[11] = 10;
             PoidsGrosBougie[12] = 1;
             PoidsGrosBougie[13] = 1;
             PoidsGrosBougie[14] = 1;
@@ -72,13 +72,13 @@ namespace GoBot.Ponderations
 
             // Cadeaux
             PoidsGrosCadeau[0] = 1;
-            PoidsGrosCadeau[1] = 1;
+            PoidsGrosCadeau[1] = 4;
             PoidsGrosCadeau[2] = 1;
-            PoidsGrosCadeau[3] = 1;
+            PoidsGrosCadeau[3] = 8;
             PoidsGrosCadeau[4] = 1;
-            PoidsGrosCadeau[5] = 1;
+            PoidsGrosCadeau[5] = 12;
             PoidsGrosCadeau[6] = 1;
-            PoidsGrosCadeau[7] = 1;
+            PoidsGrosCadeau[7] = 16;
         }
     }
 }

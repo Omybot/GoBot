@@ -91,6 +91,11 @@ namespace GoBot
 
         public bool PathFinding(double x, double y, int timeOut = 0, bool attendre = false)
         {
+            PointReel destination = new PointReel(x, y);
+
+            if (destination.Distance(Position.Coordonnees) <= 10)
+                return true;
+
             semTrajectoire = new Semaphore(0, 999);
 
             bool result = ParcoursPathFinding(x, y, timeOut, attendre);
@@ -223,6 +228,11 @@ namespace GoBot
             CheminTrouve = new List<Arc>();
 
             Plateau.ChargerGraph();
+            List<IForme> obstacles = new List<IForme>(Plateau.ObstaclesTemporaires);
+            Plateau.ObstaclesTemporaires = new List<IForme>();
+            foreach (IForme f in obstacles)
+                Plateau.AjouterObstacle(f);
+
             Plateau.SemaphoreGraph.Release();
 
             if (CheminEnCoursArcs.Count == 0)
@@ -329,7 +339,7 @@ namespace GoBot
                         {
                             Segment segment = new Segment(new PointReel(a.StartNode.X, a.StartNode.Y), new PointReel(a.EndNode.X, a.EndNode.Y));
 
-                            if (segment.Distance(forme) < Rayon + 200)
+                            if (TropProche(segment, forme))
                             {
                                 // Demande de génération d'une nouvelle trajectoire
                                 nouvelleTrajectoire = true;

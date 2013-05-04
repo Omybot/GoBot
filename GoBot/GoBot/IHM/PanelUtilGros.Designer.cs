@@ -62,12 +62,18 @@
             this.btnTurbineOn = new System.Windows.Forms.Button();
             this.label1 = new System.Windows.Forms.Label();
             this.btnTaille = new System.Windows.Forms.Button();
+            this.btnPompeOff = new System.Windows.Forms.Button();
+            this.btnPompeOn = new System.Windows.Forms.Button();
+            this.label11 = new System.Windows.Forms.Label();
             this.groupBoxUtil.SuspendLayout();
             this.SuspendLayout();
             // 
             // groupBoxUtil
             // 
             this.groupBoxUtil.BackColor = System.Drawing.Color.Transparent;
+            this.groupBoxUtil.Controls.Add(this.btnPompeOff);
+            this.groupBoxUtil.Controls.Add(this.btnPompeOn);
+            this.groupBoxUtil.Controls.Add(this.label11);
             this.groupBoxUtil.Controls.Add(this.btnCameraBleu);
             this.groupBoxUtil.Controls.Add(this.btnCameraRouge);
             this.groupBoxUtil.Controls.Add(this.label7);
@@ -103,7 +109,7 @@
             this.groupBoxUtil.Controls.Add(this.btnTaille);
             this.groupBoxUtil.Location = new System.Drawing.Point(5, 3);
             this.groupBoxUtil.Name = "groupBoxUtil";
-            this.groupBoxUtil.Size = new System.Drawing.Size(332, 343);
+            this.groupBoxUtil.Size = new System.Drawing.Size(332, 374);
             this.groupBoxUtil.TabIndex = 0;
             this.groupBoxUtil.TabStop = false;
             this.groupBoxUtil.Text = "Utilisation";
@@ -427,6 +433,35 @@
             this.btnTaille.UseVisualStyleBackColor = true;
             this.btnTaille.Click += new System.EventHandler(this.btnTaille_Click);
             // 
+            // btnPompeOff
+            // 
+            this.btnPompeOff.Location = new System.Drawing.Point(179, 338);
+            this.btnPompeOff.Name = "btnPompeOff";
+            this.btnPompeOff.Size = new System.Drawing.Size(65, 23);
+            this.btnPompeOff.TabIndex = 198;
+            this.btnPompeOff.Text = "Off";
+            this.btnPompeOff.UseVisualStyleBackColor = true;
+            this.btnPompeOff.Click += new System.EventHandler(this.btnPompeOff_Click);
+            // 
+            // btnPompeOn
+            // 
+            this.btnPompeOn.Location = new System.Drawing.Point(106, 338);
+            this.btnPompeOn.Name = "btnPompeOn";
+            this.btnPompeOn.Size = new System.Drawing.Size(67, 23);
+            this.btnPompeOn.TabIndex = 197;
+            this.btnPompeOn.Text = "On";
+            this.btnPompeOn.UseVisualStyleBackColor = true;
+            this.btnPompeOn.Click += new System.EventHandler(this.btnPompeOn_Click);
+            // 
+            // label11
+            // 
+            this.label11.AutoSize = true;
+            this.label11.Location = new System.Drawing.Point(36, 343);
+            this.label11.Name = "label11";
+            this.label11.Size = new System.Drawing.Size(40, 13);
+            this.label11.TabIndex = 196;
+            this.label11.Text = "Pompe";
+            // 
             // PanelUtilGros
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -435,7 +470,7 @@
             this.BackColor = System.Drawing.Color.Transparent;
             this.Controls.Add(this.groupBoxUtil);
             this.Name = "PanelUtilGros";
-            this.Size = new System.Drawing.Size(341, 357);
+            this.Size = new System.Drawing.Size(341, 392);
             this.Load += new System.EventHandler(this.PanelUtilGros_Load);
             this.groupBoxUtil.ResumeLayout(false);
             this.groupBoxUtil.PerformLayout();
@@ -479,5 +514,8 @@
         private System.Windows.Forms.Button btnAspirateurBas;
         private System.Windows.Forms.Button btnAspirateurHaut;
         private System.Windows.Forms.Label label10;
+        private System.Windows.Forms.Button btnPompeOff;
+        private System.Windows.Forms.Button btnPompeOn;
+        private System.Windows.Forms.Label label11;
     }
 }
