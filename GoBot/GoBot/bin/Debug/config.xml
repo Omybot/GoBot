@@ -2,34 +2,34 @@
 <Config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
   <DeplacementGROuvert>true</DeplacementGROuvert>
   <HistoriqueGROuvert>true</HistoriqueGROuvert>
-  <ReglageGROuvert>false</ReglageGROuvert>
+  <ReglageGROuvert>true</ReglageGROuvert>
   <UtilGROuvert>false</UtilGROuvert>
   <SequencesGROuvert>true</SequencesGROuvert>
   <CapteursGROuvert>true</CapteursGROuvert>
   <DeplacementPROuvert>true</DeplacementPROuvert>
   <HistoriquePROuvert>true</HistoriquePROuvert>
-  <GRVitesseLigne>268</GRVitesseLigne>
-  <GRAccelerationLigne>346</GRAccelerationLigne>
-  <GRVitessePivot>561</GRVitessePivot>
-  <GRAccelerationPivot>1098</GRAccelerationPivot>
+  <GRVitesseLigne>634</GRVitesseLigne>
+  <GRAccelerationLigne>1687</GRAccelerationLigne>
+  <GRVitessePivot>1171</GRVitessePivot>
+  <GRAccelerationPivot>2317</GRAccelerationPivot>
   <PRVitesseLigne>585</PRVitesseLigne>
   <PRAccelerationLigne>0</PRAccelerationLigne>
   <PRVitessePivot>0</PRVitessePivot>
   <PRAccelerationPivot>0</PRAccelerationPivot>
-  <OffsetBalise1Haut>-189.50968749999998</OffsetBalise1Haut>
-  <OffsetBalise2Haut>168.2028125</OffsetBalise2Haut>
-  <OffsetBalise3Haut>-11.734062499999993</OffsetBalise3Haut>
-  <OffsetBalise1Bas>-190.89156250000005</OffsetBalise1Bas>
-  <OffsetBalise2Bas>166.8703125</OffsetBalise2Bas>
-  <OffsetBalise3Bas>-12.602499999999964</OffsetBalise3Bas>
+  <OffsetBalise1Haut>-180.60687500000003</OffsetBalise1Haut>
+  <OffsetBalise2Haut>164.5259375</OffsetBalise2Haut>
+  <OffsetBalise3Haut>-11.50906249999997</OffsetBalise3Haut>
+  <OffsetBalise1Bas>-181.9690625</OffsetBalise1Bas>
+  <OffsetBalise2Bas>163.5075</OffsetBalise2Bas>
+  <OffsetBalise3Bas>-12.566249999999968</OffsetBalise3Bas>
   <PositionGRGrandBrasHaut>488</PositionGRGrandBrasHaut>
   <PositionGRGrandBrasBas>545</PositionGRGrandBrasBas>
   <PositionGRGrandBrasRange>815</PositionGRGrandBrasRange>
   <PositionGRPetitBrasHaut>556</PositionGRPetitBrasHaut>
   <PositionGRPetitBrasBas>454</PositionGRPetitBrasBas>
   <PositionGRPetitBrasRange>216</PositionGRPetitBrasRange>
-  <PositionGRAspirateurHaut>260</PositionGRAspirateurHaut>
-  <PositionGRAspirateurBas>110</PositionGRAspirateurBas>
+  <PositionGRAspirateurHaut>350</PositionGRAspirateurHaut>
+  <PositionGRAspirateurBas>130</PositionGRAspirateurBas>
   <PositionGRDebloqueurHaut>250</PositionGRDebloqueurHaut>
   <PositionGRDebloqueurBas>550</PositionGRDebloqueurBas>
   <PositionGRCameraBleu>400</PositionGRCameraBleu>
@@ -39,7 +39,7 @@
   <PositionGRBrasDroitSorti>400</PositionGRBrasDroitSorti>
   <PositionGRBrasDroitRange>785</PositionGRBrasDroitRange>
   <VitesseAspiration>313</VitesseAspiration>
-  <VitessePropulsionBonne>476</VitessePropulsionBonne>
+  <VitessePropulsionBonne>455</VitessePropulsionBonne>
   <VitessePropulsionMauvaise>450</VitessePropulsionMauvaise>
   <PositionPRBrasGaucheHaut>0</PositionPRBrasGaucheHaut>
   <PositionPRBrasGaucheMilieu>0</PositionPRBrasGaucheMilieu>

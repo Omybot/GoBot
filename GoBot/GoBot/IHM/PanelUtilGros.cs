@@ -194,27 +194,27 @@ namespace GoBot.IHM
 
         private void btnTurbineOn_Click(object sender, EventArgs e)
         {
-            Robots.GrosRobot.AspirerVitesse(Config.CurrentConfig.VitesseAspiration);
+            Robots.GrosRobot.TourneMoteur(MoteurID.GRTurbineAspirateur, Config.CurrentConfig.VitesseAspiration);
         }
 
         private void btnTurbineOff_Click(object sender, EventArgs e)
         {
-            Robots.GrosRobot.AspirerVitesse(0);
+            Robots.GrosRobot.TourneMoteur(MoteurID.GRTurbineAspirateur, 0);
         }
 
         private void btnCanonBonne_Click(object sender, EventArgs e)
         {
-            Robots.GrosRobot.CanonVitesse(Config.CurrentConfig.VitessePropulsionBonne);
+            Robots.GrosRobot.TourneMoteur(MoteurID.GRCanon, Config.CurrentConfig.VitessePropulsionBonne);
         }
 
         private void btnCanonMauvaise_Click(object sender, EventArgs e)
         {
-            Robots.GrosRobot.CanonVitesse(Config.CurrentConfig.VitessePropulsionMauvaise);
+            Robots.GrosRobot.TourneMoteur(MoteurID.GRCanon, Config.CurrentConfig.VitessePropulsionMauvaise);
         }
 
         private void btnCanonStop_Click(object sender, EventArgs e)
         {
-            Robots.GrosRobot.CanonVitesse(0);
+            Robots.GrosRobot.TourneMoteur(MoteurID.GRCanon, 0);
         }
     }
 }

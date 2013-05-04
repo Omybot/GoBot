@@ -16,8 +16,8 @@ namespace GoBot.Ponderations
 
             PoidGlobalPetitBougie = 0;
             PoidGlobalPetitCadeau = 0;
-            PoidGlobalGrosBougie = 1;
-            PoidGlobalGrosCadeau = 0;
+            PoidGlobalGrosBougie = 0;
+            PoidGlobalGrosCadeau = 1;
 
             // Poids petit robot
 

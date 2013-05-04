@@ -68,8 +68,11 @@ namespace GoBot.IHM
             timerPresence.Elapsed += new System.Timers.ElapsedEventHandler(timerBalle_Elapsed);
             timerCouleur = new System.Timers.Timer(100);
             timerCouleur.Elapsed += new System.Timers.ElapsedEventHandler(timerCouleur_Elapsed);
+            timerAssiette = new System.Timers.Timer(100);
+            timerAssiette.Elapsed += new System.Timers.ElapsedEventHandler(timerAssiette_Elapsed);
 
             ledPresence.CouleurGris();
+            ledAssiette.CouleurGris();
         }
 
         System.Timers.Timer timerPresence;
@@ -88,7 +91,7 @@ namespace GoBot.IHM
         {
             this.Invoke(new EventHandler(delegate
                 {
-                    if (Robots.GrosRobot.PresenceBalle())
+                    if (Robots.GrosRobot.PresenceBalle(false))
                         ledPresence.CouleurVert();
                     else
                         ledPresence.CouleurRouge();
@@ -108,7 +111,49 @@ namespace GoBot.IHM
         {
             this.Invoke(new EventHandler(delegate
             {
-                lblCouleur.Text = Robots.GrosRobot.CouleurBalle();
+                Color couleur = Robots.GrosRobot.CouleurBalle(false);
+
+                if (couleur == Plateau.CouleurJ1R)
+                {
+                    ledCouleur.Visible = true;
+                    ledCouleur.CouleurBleu();
+                }
+                else if (couleur == Plateau.CouleurJ2B)
+                {
+                    ledCouleur.Visible = true;
+                    ledCouleur.CouleurRouge();
+                }
+                else if (couleur == Color.White)
+                {
+                    ledCouleur.Visible = true;
+                    ledCouleur.CouleurGris();
+                }
+                else
+                    ledCouleur.Visible = false;
+
+            }));
+        }
+
+        System.Timers.Timer timerAssiette;
+        private void boxAssiette_CheckedChanged(object sender, EventArgs e)
+        {
+            if (boxAssiette.Checked)
+                timerAssiette.Start();
+            else
+            {
+                timerAssiette.Stop();
+                timerAssiette.Stop();
+            }
+        }
+
+        void timerAssiette_Elapsed(object sender, System.Timers.ElapsedEventArgs e)
+        {
+            this.Invoke(new EventHandler(delegate
+            {
+                if (Robots.GrosRobot.PresenceAssiette(false))
+                    ledAssiette.CouleurVert();
+                else
+                    ledAssiette.CouleurRouge();
             }));
         }
     }

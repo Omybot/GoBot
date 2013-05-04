@@ -309,5 +309,16 @@ namespace GoBot.IHM
                 Robot.VitesseDeplacement -= 50;
             }
         }
+
+        private void btnRecallage_Click(object sender, EventArgs e)
+        {
+            int vitesseTemp = Robot.VitesseDeplacement;
+            int accelerationTemp = Robot.AccelerationDeplacement;
+            Robot.VitesseDeplacement = 150;
+            Robot.AccelerationDeplacement = 150;
+            Robot.Recallage(SensAR.Arriere);
+            Robot.VitesseDeplacement = vitesseTemp;
+            Robot.AccelerationDeplacement = accelerationTemp;
+        }
     }
 }

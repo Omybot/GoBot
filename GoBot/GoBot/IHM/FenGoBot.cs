@@ -44,7 +44,7 @@ namespace GoBot
                 }
 
                 Robots.GrosRobot.Historique.nouvelleAction += new Historique.delegateAction(HistoriqueGR_nouvelleAction);
-                //PetitRobot.Historique.nouvelleAction += new Historique.delegateAction(HistoriquePR_nouvelleAction);
+                Robots.PetitRobot.Historique.nouvelleAction += new Historique.delegateAction(HistoriquePR_nouvelleAction);
 
                 panelBalise1.Balise = Plateau.Balise1;
                 panelBalise2.Balise = Plateau.Balise2;
@@ -104,16 +104,19 @@ namespace GoBot
                     texte = DateTime.Now.ToLongTimeString() + " > " + texte + Environment.NewLine;
                     txtLogComplet.SuspendLayout();
 
-                    txtLogComplet.SelectionStart = 0;
+                    txtLogComplet.SelectionStart = txtLogComplet.TextLength;
                     txtLogComplet.SelectedText = texte;
 
-                    txtLogComplet.SelectionStart = 0;
+                    txtLogComplet.SelectionStart = txtLogComplet.TextLength - texte.Length + 1;
                     txtLogComplet.SelectionLength = texte.Length;
                     txtLogComplet.SelectionColor = couleur;
 
                     txtLogComplet.ResumeLayout();
 
                     txtLogComplet.Select(txtLogComplet.TextLength, 0);
+
+                    txtLogComplet.SelectionStart = txtLogComplet.TextLength;
+                    txtLogComplet.ScrollToCaret();
                 }));
         }
 
@@ -180,28 +183,37 @@ namespace GoBot
 
         private void btnCouleurBleu_Click(object sender, EventArgs e)
         {
-            pictureBoxCouleur.BackColor = Plateau.CouleurJ2;
-            pictureBoxBalises.Image = Properties.Resources.tableViolet;
-
-            Plateau.NotreCouleur = Plateau.CouleurJ2;
-            panelBougies1.ChangementCouleur();
-
-            panelBalise1.Balise.Position = new Position(new Angle(90, AnglyeType.Degre), new PointReel(-Balise.DISTANCE_LASER_TABLE, -Balise.DISTANCE_LASER_TABLE));
-            panelBalise2.Balise.Position = new Position(new Angle(270, AnglyeType.Degre), new PointReel(-Balise.DISTANCE_LASER_TABLE, Plateau.LargeurPlateau + Balise.DISTANCE_LASER_TABLE));
-            panelBalise3.Balise.Position = new Position(new Angle(180, AnglyeType.Degre), new PointReel(Plateau.LongueurPlateau + Balise.DISTANCE_LASER_TABLE, Plateau.LargeurPlateau / 2));
+            Plateau.NotreCouleur = Plateau.CouleurJ2B;
         }
 
         private void btnCouleurRouge_Click(object sender, EventArgs e)
         {
-            pictureBoxCouleur.BackColor = Plateau.CouleurJ1;
+            Plateau.NotreCouleur = Plateau.CouleurJ1R;
+        }
+
+        public void CouleurRouge()
+        {
+            pictureBoxCouleur.BackColor = Plateau.CouleurJ1R;
             pictureBoxBalises.Image = Properties.Resources.tableRouge;
 
-            Plateau.NotreCouleur = Plateau.CouleurJ1;
             panelBougies1.ChangementCouleur();
 
             panelBalise1.Balise.Position = new Position(new Angle(90, AnglyeType.Degre), new PointReel(Plateau.LongueurPlateau + Balise.DISTANCE_LASER_TABLE, -Balise.DISTANCE_LASER_TABLE));
             panelBalise2.Balise.Position = new Position(new Angle(270, AnglyeType.Degre), new PointReel(Plateau.LongueurPlateau + Balise.DISTANCE_LASER_TABLE, Plateau.LargeurPlateau + Balise.DISTANCE_LASER_TABLE));
             panelBalise3.Balise.Position = new Position(new Angle(0, AnglyeType.Degre), new PointReel(-Balise.DISTANCE_LASER_TABLE, Plateau.LargeurPlateau / 2));
+        }
+
+        public void CouleurBleu()
+        {
+            pictureBoxCouleur.BackColor = Plateau.CouleurJ2B;
+            pictureBoxBalises.Image = Properties.Resources.tableViolet;
+
+            panelBougies1.ChangementCouleur();
+
+            panelBalise1.Balise.Position = new Position(new Angle(90, AnglyeType.Degre), new PointReel(-Balise.DISTANCE_LASER_TABLE, -Balise.DISTANCE_LASER_TABLE));
+            panelBalise2.Balise.Position = new Position(new Angle(270, AnglyeType.Degre), new PointReel(-Balise.DISTANCE_LASER_TABLE, Plateau.LargeurPlateau + Balise.DISTANCE_LASER_TABLE));
+            panelBalise3.Balise.Position = new Position(new Angle(180, AnglyeType.Degre), new PointReel(Plateau.LongueurPlateau + Balise.DISTANCE_LASER_TABLE, Plateau.LargeurPlateau / 2));
+
         }
 
         Thread thRecallage;
@@ -215,6 +227,38 @@ namespace GoBot
         {
             Lent();
 
+            Robots.GrosRobot.BougeServo(ServomoteurID.GRAspirateur, Config.CurrentConfig.PositionGRAspirateurBas);
+            Thread.Sleep(100);
+            Robots.GrosRobot.BougeServo(ServomoteurID.GRBrasDroit, Config.CurrentConfig.PositionGRBrasDroitSorti);
+            Thread.Sleep(100);
+            Robots.GrosRobot.BougeServo(ServomoteurID.GRBrasGauche, Config.CurrentConfig.PositionGRBrasGaucheSorti);
+            Thread.Sleep(100);
+            Robots.GrosRobot.BougeServo(ServomoteurID.GRCamera, Config.CurrentConfig.PositionGRCameraBleu);
+            Thread.Sleep(100);
+            Robots.GrosRobot.BougeServo(ServomoteurID.GRDebloqueur, Config.CurrentConfig.PositionGRDebloqueurHaut);
+            Thread.Sleep(100);
+            Robots.GrosRobot.BougeServo(ServomoteurID.GRGrandBras, Config.CurrentConfig.PositionGRGrandBrasHaut);
+            Thread.Sleep(100);
+            Robots.GrosRobot.BougeServo(ServomoteurID.GRPetitBras, Config.CurrentConfig.PositionGRPetitBrasHaut);
+            Thread.Sleep(100);
+            Robots.GrosRobot.ActionneurOnOff(ActionneurOnOffID.GRShutter, true);
+            Thread.Sleep(100);
+            Robots.GrosRobot.TourneMoteur(MoteurID.GRCanon, Config.CurrentConfig.VitessePropulsionBonne);
+            Thread.Sleep(100);
+            Robots.GrosRobot.TourneMoteur(MoteurID.GRTurbineAspirateur, Config.CurrentConfig.VitesseAspiration);
+
+            Thread.Sleep(1500);
+
+            Robots.GrosRobot.BougeServo(ServomoteurID.GRAspirateur, Config.CurrentConfig.PositionGRAspirateurHaut);
+            Robots.GrosRobot.BougeServo(ServomoteurID.GRBrasDroit, Config.CurrentConfig.PositionGRBrasDroitRange);
+            Robots.GrosRobot.BougeServo(ServomoteurID.GRBrasGauche, Config.CurrentConfig.PositionGRBrasGaucheRange);
+            Robots.GrosRobot.BougeServo(ServomoteurID.GRCamera, Config.CurrentConfig.PositionGRCameraRouge);
+            Robots.GrosRobot.BougeServo(ServomoteurID.GRDebloqueur, Config.CurrentConfig.PositionGRDebloqueurBas);
+            Robots.GrosRobot.BougeServo(ServomoteurID.GRGrandBras, Config.CurrentConfig.PositionGRGrandBrasRange);
+            Robots.GrosRobot.BougeServo(ServomoteurID.GRPetitBras, Config.CurrentConfig.PositionGRPetitBrasRange);
+            Robots.GrosRobot.ActionneurOnOff(ActionneurOnOffID.GRShutter, false);
+            Robots.GrosRobot.TourneMoteur(MoteurID.GRCanon, 0);
+            Robots.GrosRobot.TourneMoteur(MoteurID.GRTurbineAspirateur, 0);
             DateTime debut = DateTime.Now;
             /*Robots.GrosRobot.Recallage(SensAR.Arriere);
 
@@ -228,6 +272,7 @@ namespace GoBot
             Robots.GrosRobot.PivotGauche(15);
             Robots.GrosRobot.Reculer(245);*/
 
+            Robots.GrosRobot.Avancer(10);
             Robots.GrosRobot.Recallage(SensAR.Arriere);
             Rapide();
             Robots.GrosRobot.Avancer(890);
@@ -400,7 +445,19 @@ namespace GoBot
 
         private void FenGoBot_Load(object sender, EventArgs e)
         {
+            Plateau.NotreCouleurChange += new EventHandler(Plateau_NotreCouleurChange);
+            Connexions.ConnexionMove.SendMessage(TrameFactory.DemandeCouleurEquipe());
+        }
 
+        void Plateau_NotreCouleurChange(object sender, EventArgs e)
+        {
+            this.Invoke(new EventHandler(delegate
+                {
+                    if (Plateau.NotreCouleur == Plateau.CouleurJ1R)
+                        CouleurRouge();
+                    else if (Plateau.NotreCouleur == Plateau.CouleurJ2B)
+                        CouleurBleu();
+                }));
         }
 
         private void switchBoutonSimu_ChangementEtat(bool actif)

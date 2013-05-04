@@ -6,6 +6,7 @@ using GoBot.Calculs;
 using System.Threading;
 using AStarFolder;
 using GoBot.Calculs.Formes;
+using System.Drawing;
 
 namespace GoBot
 {
@@ -26,15 +27,13 @@ namespace GoBot
         public abstract void Recallage(SensAR sens, bool attendre = true);
         public abstract void Init();
         public abstract void BougeServo(ServomoteurID servo, int position);
+        public abstract void TourneMoteur(MoteurID moteur, int vitesse);
         public abstract void EnvoyerPID(int p, int i, int d);
-        public abstract void Allimentation(bool allume);
-        public abstract void AspirerBalles();
-        public abstract void EjecterBalles();
-        public abstract void AspirerVitesse(int vitesse);
-        public abstract void CanonVitesse(int vitesse);
-        public abstract void Shutter(bool ouvert);
-        public abstract bool PresenceBalle();
-        public abstract String CouleurBalle();
+        public abstract void ActionneurOnOff(ActionneurOnOffID actionneur, bool on);
+
+        public abstract bool PresenceBalle(bool historique = true);
+        public abstract Color CouleurBalle(bool historique = true);
+        public abstract bool PresenceAssiette(bool historique = true);
 
         public void PositionerAngle(Angle angle, double marge = 0)
         {

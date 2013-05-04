@@ -66,6 +66,9 @@
   <ItemGroup>
     <Compile Include="Actions\Asservissement\ActionAccelerationPivot.cs" />
     <Compile Include="Actions\Asservissement\ActionVitessePivot.cs" />
+    <Compile Include="Actions\ActionMoteur.cs" />
+    <Compile Include="Actions\ActionOnOff.cs" />
+    <Compile Include="Actions\ActionCapteur.cs" />
     <Compile Include="Actions\Deplacement\ActionRecallage.cs" />
     <Compile Include="Actions\ActionServo.cs" />
     <Compile Include="Actions\Nommeur.cs" />
@@ -186,11 +189,11 @@
       <DependentUpon>PanelTable.cs</DependentUpon>
     </Compile>
     <Compile Include="Balises\InterpreteurBalise.cs" />
-    <Compile Include="IHM\Composants\BetterTextBox.cs">
+    <Compile Include="IHM\Composants\TextBoxPlus.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="IHM\Composants\BetterTextBox.Designer.cs">
-      <DependentUpon>BetterTextBox.cs</DependentUpon>
+    <Compile Include="IHM\Composants\TextBoxPlus.Designer.cs">
+      <DependentUpon>TextBoxPlus.cs</DependentUpon>
     </Compile>
     <Compile Include="IHM\Composants\Led.cs">
       <SubType>Component</SubType>
@@ -241,8 +244,8 @@
     <Compile Include="UDP\TrameFactory.cs" />
     <Compile Include="UDP\ConnexionUDP.cs" />
     <Compile Include="UDP\Trame.cs" />
-    <EmbeddedResource Include="IHM\Composants\BetterTextBox.resx">
-      <DependentUpon>BetterTextBox.cs</DependentUpon>
+    <EmbeddedResource Include="IHM\Composants\TextBoxPlus.resx">
+      <DependentUpon>TextBoxPlus.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="IHM\Composants\Led.resx">
       <DependentUpon>Led.cs</DependentUpon>

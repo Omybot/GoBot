@@ -52,6 +52,7 @@
             this.btnAlea = new System.Windows.Forms.Button();
             this.boxBlanches = new System.Windows.Forms.CheckBox();
             this.pictureBoxImage = new System.Windows.Forms.PictureBox();
+            this.btnBlanc = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxImage)).BeginInit();
             this.SuspendLayout();
             // 
@@ -299,10 +300,21 @@
             this.pictureBoxImage.TabStop = false;
             this.pictureBoxImage.Click += new System.EventHandler(this.pictureBoxImage_Click);
             // 
+            // btnBlanc
+            // 
+            this.btnBlanc.Location = new System.Drawing.Point(788, 405);
+            this.btnBlanc.Name = "btnBlanc";
+            this.btnBlanc.Size = new System.Drawing.Size(75, 23);
+            this.btnBlanc.TabIndex = 44;
+            this.btnBlanc.Text = "button20";
+            this.btnBlanc.UseVisualStyleBackColor = true;
+            this.btnBlanc.Click += new System.EventHandler(this.btnBlanc_Click);
+            // 
             // PanelBougies
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.Controls.Add(this.btnBlanc);
             this.Controls.Add(this.boxBlanches);
             this.Controls.Add(this.btnAlea);
             this.Controls.Add(this.button19);
@@ -362,5 +374,6 @@
         private System.Windows.Forms.Button button0;
         private System.Windows.Forms.Button btnAlea;
         private System.Windows.Forms.CheckBox boxBlanches;
+        private System.Windows.Forms.Button btnBlanc;
     }
 }

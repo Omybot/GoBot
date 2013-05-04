@@ -29,10 +29,9 @@
         private void InitializeComponent()
         {
             this.groupBoxSeq = new System.Windows.Forms.GroupBox();
+            this.btnAssiette = new System.Windows.Forms.Button();
             this.btnCerise1 = new System.Windows.Forms.Button();
             this.btnCerises = new System.Windows.Forms.Button();
-            this.btnPropulsion = new System.Windows.Forms.Button();
-            this.btnAspiration = new System.Windows.Forms.Button();
             this.btnTaille = new System.Windows.Forms.Button();
             this.groupBoxSeq.SuspendLayout();
             this.SuspendLayout();
@@ -40,21 +39,30 @@
             // groupBoxSeq
             // 
             this.groupBoxSeq.BackColor = System.Drawing.Color.Transparent;
+            this.groupBoxSeq.Controls.Add(this.btnAssiette);
             this.groupBoxSeq.Controls.Add(this.btnCerise1);
             this.groupBoxSeq.Controls.Add(this.btnCerises);
-            this.groupBoxSeq.Controls.Add(this.btnPropulsion);
-            this.groupBoxSeq.Controls.Add(this.btnAspiration);
             this.groupBoxSeq.Controls.Add(this.btnTaille);
             this.groupBoxSeq.Location = new System.Drawing.Point(5, 3);
             this.groupBoxSeq.Name = "groupBoxSeq";
-            this.groupBoxSeq.Size = new System.Drawing.Size(332, 121);
+            this.groupBoxSeq.Size = new System.Drawing.Size(332, 102);
             this.groupBoxSeq.TabIndex = 0;
             this.groupBoxSeq.TabStop = false;
             this.groupBoxSeq.Text = "Sequences";
             // 
+            // btnAssiette
+            // 
+            this.btnAssiette.Location = new System.Drawing.Point(30, 68);
+            this.btnAssiette.Name = "btnAssiette";
+            this.btnAssiette.Size = new System.Drawing.Size(130, 23);
+            this.btnAssiette.TabIndex = 92;
+            this.btnAssiette.Text = "Assiette";
+            this.btnAssiette.UseVisualStyleBackColor = true;
+            this.btnAssiette.Click += new System.EventHandler(this.btnAssiette_Click);
+            // 
             // btnCerise1
             // 
-            this.btnCerise1.Location = new System.Drawing.Point(32, 71);
+            this.btnCerise1.Location = new System.Drawing.Point(30, 39);
             this.btnCerise1.Name = "btnCerise1";
             this.btnCerise1.Size = new System.Drawing.Size(130, 23);
             this.btnCerise1.TabIndex = 91;
@@ -64,33 +72,13 @@
             // 
             // btnCerises
             // 
-            this.btnCerises.Location = new System.Drawing.Point(168, 71);
+            this.btnCerises.Location = new System.Drawing.Point(166, 39);
             this.btnCerises.Name = "btnCerises";
             this.btnCerises.Size = new System.Drawing.Size(130, 23);
             this.btnCerises.TabIndex = 90;
             this.btnCerises.Text = "Cerises";
             this.btnCerises.UseVisualStyleBackColor = true;
             this.btnCerises.Click += new System.EventHandler(this.btnCerises_Click);
-            // 
-            // btnPropulsion
-            // 
-            this.btnPropulsion.Location = new System.Drawing.Point(168, 42);
-            this.btnPropulsion.Name = "btnPropulsion";
-            this.btnPropulsion.Size = new System.Drawing.Size(130, 23);
-            this.btnPropulsion.TabIndex = 89;
-            this.btnPropulsion.Text = "Propulsion chargement";
-            this.btnPropulsion.UseVisualStyleBackColor = true;
-            this.btnPropulsion.Click += new System.EventHandler(this.btnPropulsion_Click);
-            // 
-            // btnAspiration
-            // 
-            this.btnAspiration.Location = new System.Drawing.Point(32, 42);
-            this.btnAspiration.Name = "btnAspiration";
-            this.btnAspiration.Size = new System.Drawing.Size(130, 23);
-            this.btnAspiration.TabIndex = 88;
-            this.btnAspiration.Text = "Aspiration assiette";
-            this.btnAspiration.UseVisualStyleBackColor = true;
-            this.btnAspiration.Click += new System.EventHandler(this.btnAspiration_Click);
             // 
             // btnTaille
             // 
@@ -110,7 +98,7 @@
             this.BackColor = System.Drawing.Color.Transparent;
             this.Controls.Add(this.groupBoxSeq);
             this.Name = "PanelSequencesGros";
-            this.Size = new System.Drawing.Size(341, 127);
+            this.Size = new System.Drawing.Size(341, 114);
             this.Load += new System.EventHandler(this.PanelSequencesGros_Load);
             this.groupBoxSeq.ResumeLayout(false);
             this.ResumeLayout(false);
@@ -121,9 +109,8 @@
 
         private System.Windows.Forms.GroupBox groupBoxSeq;
         protected System.Windows.Forms.Button btnTaille;
-        private System.Windows.Forms.Button btnPropulsion;
-        private System.Windows.Forms.Button btnAspiration;
         private System.Windows.Forms.Button btnCerises;
         private System.Windows.Forms.Button btnCerise1;
+        private System.Windows.Forms.Button btnAssiette;
     }
 }

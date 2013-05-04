@@ -30,11 +30,8 @@
         {
             this.groupDeplacement = new System.Windows.Forms.GroupBox();
             this.label1 = new System.Windows.Forms.Label();
-            this.panelControleManuel = new GoBot.IHM.Composants.FocusablePanel();
             this.lblValeurAccel = new System.Windows.Forms.Label();
             this.lblValeurVitesse = new System.Windows.Forms.Label();
-            this.trackBarAccel = new GoBot.IHM.Composants.TrackBarPlus();
-            this.trackBarVitesse = new GoBot.IHM.Composants.TrackBarPlus();
             this.btnTaille = new System.Windows.Forms.Button();
             this.pictureBoxReglageVertical = new System.Windows.Forms.PictureBox();
             this.btnVirageArDr = new System.Windows.Forms.Button();
@@ -48,9 +45,13 @@
             this.btnVirageAvGa = new System.Windows.Forms.Button();
             this.btnVirageAvDr = new System.Windows.Forms.Button();
             this.btnRecule = new System.Windows.Forms.Button();
+            this.btnAvance = new System.Windows.Forms.Button();
+            this.panelControleManuel = new GoBot.IHM.Composants.FocusablePanel();
+            this.trackBarAccel = new GoBot.IHM.Composants.TrackBarPlus();
+            this.trackBarVitesse = new GoBot.IHM.Composants.TrackBarPlus();
             this.txtAngle = new GoBot.IHM.Composants.TextBoxPlus();
             this.txtDistance = new GoBot.IHM.Composants.TextBoxPlus();
-            this.btnAvance = new System.Windows.Forms.Button();
+            this.btnRecallage = new System.Windows.Forms.Button();
             this.groupDeplacement.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxReglageVertical)).BeginInit();
             this.SuspendLayout();
@@ -58,6 +59,7 @@
             // groupDeplacement
             // 
             this.groupDeplacement.BackColor = System.Drawing.Color.Transparent;
+            this.groupDeplacement.Controls.Add(this.btnRecallage);
             this.groupDeplacement.Controls.Add(this.label1);
             this.groupDeplacement.Controls.Add(this.panelControleManuel);
             this.groupDeplacement.Controls.Add(this.lblValeurAccel);
@@ -96,17 +98,6 @@
             this.label1.TabIndex = 92;
             this.label1.Text = "Contrôle manuel :";
             // 
-            // panelControleManuel
-            // 
-            this.panelControleManuel.BackColor = System.Drawing.Color.LightGray;
-            this.panelControleManuel.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.panelControleManuel.Location = new System.Drawing.Point(211, 221);
-            this.panelControleManuel.Name = "panelControleManuel";
-            this.panelControleManuel.Size = new System.Drawing.Size(74, 22);
-            this.panelControleManuel.TabIndex = 91;
-            this.panelControleManuel.ToucheEnfoncee += new GoBot.IHM.Composants.FocusablePanel.ToucheEnfonceeDelegate(this.panelControleManuel_ToucheEnfoncee);
-            this.panelControleManuel.KeyUp += new System.Windows.Forms.KeyEventHandler(this.panelControleManuel_KeyUp);
-            // 
             // lblValeurAccel
             // 
             this.lblValeurAccel.Location = new System.Drawing.Point(227, 180);
@@ -124,38 +115,6 @@
             this.lblValeurVitesse.TabIndex = 89;
             this.lblValeurVitesse.Text = "0";
             this.lblValeurVitesse.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-            // 
-            // trackBarAccel
-            // 
-            this.trackBarAccel.BackColor = System.Drawing.Color.Transparent;
-            this.trackBarAccel.IntervalTimer = 500;
-            this.trackBarAccel.Location = new System.Drawing.Point(38, 197);
-            this.trackBarAccel.Max = 5000D;
-            this.trackBarAccel.MaximumSize = new System.Drawing.Size(3000, 15);
-            this.trackBarAccel.Min = 0D;
-            this.trackBarAccel.MinimumSize = new System.Drawing.Size(0, 15);
-            this.trackBarAccel.Name = "trackBarAccel";
-            this.trackBarAccel.Reverse = false;
-            this.trackBarAccel.Size = new System.Drawing.Size(246, 15);
-            this.trackBarAccel.TabIndex = 88;
-            this.trackBarAccel.TickValueChanged += new GoBot.IHM.Composants.TrackBarPlus.delegateValueChanged(this.trackBarAccel_TickValueChanged);
-            this.trackBarAccel.ValueChanged += new GoBot.IHM.Composants.TrackBarPlus.delegateValueChanged(this.trackBarAccel_ValueChanged);
-            // 
-            // trackBarVitesse
-            // 
-            this.trackBarVitesse.BackColor = System.Drawing.Color.Transparent;
-            this.trackBarVitesse.IntervalTimer = 500;
-            this.trackBarVitesse.Location = new System.Drawing.Point(38, 157);
-            this.trackBarVitesse.Max = 3000D;
-            this.trackBarVitesse.MaximumSize = new System.Drawing.Size(3000, 15);
-            this.trackBarVitesse.Min = 0D;
-            this.trackBarVitesse.MinimumSize = new System.Drawing.Size(0, 15);
-            this.trackBarVitesse.Name = "trackBarVitesse";
-            this.trackBarVitesse.Reverse = false;
-            this.trackBarVitesse.Size = new System.Drawing.Size(246, 15);
-            this.trackBarVitesse.TabIndex = 87;
-            this.trackBarVitesse.TickValueChanged += new GoBot.IHM.Composants.TrackBarPlus.delegateValueChanged(this.trackBarVitesse_TickValueChanged);
-            this.trackBarVitesse.ValueChanged += new GoBot.IHM.Composants.TrackBarPlus.delegateValueChanged(this.trackBarVitesse_ValueChanged);
             // 
             // btnTaille
             // 
@@ -287,6 +246,63 @@
             this.btnRecule.UseVisualStyleBackColor = true;
             this.btnRecule.Click += new System.EventHandler(this.btnRecule_Click);
             // 
+            // btnAvance
+            // 
+            this.btnAvance.Image = global::GoBot.Properties.Resources.avance;
+            this.btnAvance.Location = new System.Drawing.Point(181, 21);
+            this.btnAvance.Name = "btnAvance";
+            this.btnAvance.Size = new System.Drawing.Size(67, 23);
+            this.btnAvance.TabIndex = 75;
+            this.btnAvance.UseVisualStyleBackColor = true;
+            this.btnAvance.Click += new System.EventHandler(this.btnAvance_Click);
+            // 
+            // panelControleManuel
+            // 
+            this.panelControleManuel.BackColor = System.Drawing.Color.LightGray;
+            this.panelControleManuel.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.panelControleManuel.Location = new System.Drawing.Point(211, 221);
+            this.panelControleManuel.Name = "panelControleManuel";
+            this.panelControleManuel.Size = new System.Drawing.Size(74, 22);
+            this.panelControleManuel.TabIndex = 91;
+            this.panelControleManuel.ToucheEnfoncee += new GoBot.IHM.Composants.FocusablePanel.ToucheEnfonceeDelegate(this.panelControleManuel_ToucheEnfoncee);
+            this.panelControleManuel.KeyUp += new System.Windows.Forms.KeyEventHandler(this.panelControleManuel_KeyUp);
+            // 
+            // trackBarAccel
+            // 
+            this.trackBarAccel.BackColor = System.Drawing.Color.Transparent;
+            this.trackBarAccel.IntervalTimer = 500;
+            this.trackBarAccel.Location = new System.Drawing.Point(38, 197);
+            this.trackBarAccel.Max = 5000D;
+            this.trackBarAccel.MaximumSize = new System.Drawing.Size(3000, 15);
+            this.trackBarAccel.Min = 0D;
+            this.trackBarAccel.MinimumSize = new System.Drawing.Size(0, 15);
+            this.trackBarAccel.Name = "trackBarAccel";
+            this.trackBarAccel.NombreDecimales = 0;
+            this.trackBarAccel.Reverse = false;
+            this.trackBarAccel.Size = new System.Drawing.Size(246, 15);
+            this.trackBarAccel.TabIndex = 88;
+            this.trackBarAccel.Vertical = false;
+            this.trackBarAccel.TickValueChanged += new GoBot.IHM.Composants.TrackBarPlus.delegateValueChanged(this.trackBarAccel_TickValueChanged);
+            this.trackBarAccel.ValueChanged += new GoBot.IHM.Composants.TrackBarPlus.delegateValueChanged(this.trackBarAccel_ValueChanged);
+            // 
+            // trackBarVitesse
+            // 
+            this.trackBarVitesse.BackColor = System.Drawing.Color.Transparent;
+            this.trackBarVitesse.IntervalTimer = 500;
+            this.trackBarVitesse.Location = new System.Drawing.Point(38, 157);
+            this.trackBarVitesse.Max = 3000D;
+            this.trackBarVitesse.MaximumSize = new System.Drawing.Size(3000, 15);
+            this.trackBarVitesse.Min = 0D;
+            this.trackBarVitesse.MinimumSize = new System.Drawing.Size(0, 15);
+            this.trackBarVitesse.Name = "trackBarVitesse";
+            this.trackBarVitesse.NombreDecimales = 0;
+            this.trackBarVitesse.Reverse = false;
+            this.trackBarVitesse.Size = new System.Drawing.Size(246, 15);
+            this.trackBarVitesse.TabIndex = 87;
+            this.trackBarVitesse.Vertical = false;
+            this.trackBarVitesse.TickValueChanged += new GoBot.IHM.Composants.TrackBarPlus.delegateValueChanged(this.trackBarVitesse_TickValueChanged);
+            this.trackBarVitesse.ValueChanged += new GoBot.IHM.Composants.TrackBarPlus.delegateValueChanged(this.trackBarVitesse_ValueChanged);
+            // 
             // txtAngle
             // 
             this.txtAngle.BackColor = System.Drawing.Color.White;
@@ -315,15 +331,15 @@
             this.txtDistance.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             this.txtDistance.TextMode = GoBot.IHM.Composants.TextBoxPlus.TextModeEnum.Numeric;
             // 
-            // btnAvance
+            // btnRecallage
             // 
-            this.btnAvance.Image = global::GoBot.Properties.Resources.avance;
-            this.btnAvance.Location = new System.Drawing.Point(181, 21);
-            this.btnAvance.Name = "btnAvance";
-            this.btnAvance.Size = new System.Drawing.Size(67, 23);
-            this.btnAvance.TabIndex = 75;
-            this.btnAvance.UseVisualStyleBackColor = true;
-            this.btnAvance.Click += new System.EventHandler(this.btnAvance_Click);
+            this.btnRecallage.Image = global::GoBot.Properties.Resources.recale;
+            this.btnRecallage.Location = new System.Drawing.Point(202, 125);
+            this.btnRecallage.Name = "btnRecallage";
+            this.btnRecallage.Size = new System.Drawing.Size(23, 23);
+            this.btnRecallage.TabIndex = 93;
+            this.btnRecallage.UseVisualStyleBackColor = true;
+            this.btnRecallage.Click += new System.EventHandler(this.btnRecallage_Click);
             // 
             // PanelDeplacement
             // 
@@ -366,6 +382,7 @@
         protected System.Windows.Forms.Label lblValeurVitesse;
         private GoBot.IHM.Composants.FocusablePanel panelControleManuel;
         private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Button btnRecallage;
 
     }
 }

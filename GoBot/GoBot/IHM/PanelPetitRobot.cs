@@ -37,7 +37,9 @@ namespace GoBot.IHM
 
         void Historique_nouvelleAction(IAction action)
         {
-            txtLog.Text = "> " + action.ToString() + Environment.NewLine + txtLog.Text;
+            txtLog.AppendText(Environment.NewLine + "> " + action.ToString());
+            txtLog.SelectionStart = txtLog.TextLength;
+            txtLog.ScrollToCaret();
         }
 
         private void btnClose_Click(object sender, EventArgs e)

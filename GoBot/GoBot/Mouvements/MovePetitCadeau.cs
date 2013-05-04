@@ -65,9 +65,9 @@ namespace GoBot.Mouvements
             get 
             {
                 if (!Plateau.CadeauxActives[numeroCadeau] && 
-                    ((Plateau.NotreCouleur == Plateau.CouleurJ2 && numeroCadeau % 2 == 0)
+                    ((Plateau.NotreCouleur == Plateau.CouleurJ2B && numeroCadeau % 2 == 0)
                     ||
-                    (Plateau.NotreCouleur == Plateau.CouleurJ1 && numeroCadeau % 2 == 1)))
+                    (Plateau.NotreCouleur == Plateau.CouleurJ1R && numeroCadeau % 2 == 1)))
                     return 4;
                 else
                     return 0;

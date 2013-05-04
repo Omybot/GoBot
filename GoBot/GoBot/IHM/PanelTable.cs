@@ -83,7 +83,7 @@ namespace GoBot.IHM
                             if (p == null)
                                 continue;
 
-                            g.FillEllipse(new SolidBrush(Plateau.CouleurJ1), RealToScreen(p.X - Robots.GrosRobot.Rayon), RealToScreen(p.Y - Robots.GrosRobot.Rayon), RealToScreen(Robots.GrosRobot.Rayon * 2), RealToScreen(Robots.GrosRobot.Rayon * 2));
+                            g.FillEllipse(new SolidBrush(Plateau.CouleurJ1R), RealToScreen(p.X - Robots.GrosRobot.Rayon), RealToScreen(p.Y - Robots.GrosRobot.Rayon), RealToScreen(Robots.GrosRobot.Rayon * 2), RealToScreen(Robots.GrosRobot.Rayon * 2));
                             g.DrawLine(crayonRouge, new Point(RealToScreen(p.X) - 7, RealToScreen(p.Y) - 7), new Point(RealToScreen(p.X) + 7, RealToScreen(p.Y) + 7));
                             g.DrawLine(crayonRouge, new Point(RealToScreen(p.X) - 7, RealToScreen(p.Y) + 7), new Point(RealToScreen(p.X) + 7, RealToScreen(p.Y) - 7));
                         }
@@ -300,14 +300,14 @@ namespace GoBot.IHM
                         tabPoints[3] = p4;
 
                         g.FillPolygon(new SolidBrush(Color.FromArgb(152, 199, 250)), tabPoints);
-                        g.DrawPolygon(new Pen(Plateau.CouleurJ2), tabPoints);
+                        g.DrawPolygon(new Pen(Plateau.CouleurJ2B), tabPoints);
 
                         double angle = Robots.GrosRobot.Position.Angle.AngleRadians + (-180 * 2 * Math.PI / 360);
                         double cos = Math.Cos(angle);
                         double sin = Math.Sin(angle);
                         Point pointDevant = new Point(Maths.Arrondi(xRobot - cos * RealToScreen(Maths.Arrondi(Robots.GrosRobot.Longueur / 2))), Maths.Arrondi(yRobot - sin * RealToScreen(Maths.Arrondi(Robots.GrosRobot.Longueur / 2))));
 
-                        g.DrawLine(new Pen(Plateau.CouleurJ2), new Point(xRobot, yRobot), pointDevant);
+                        g.DrawLine(new Pen(Plateau.CouleurJ2B), new Point(xRobot, yRobot), pointDevant);
 
                         lblPosGrosX.Text = Math.Round(Robots.GrosRobot.Position.Coordonnees.X, 2).ToString();
                         lblPosGrosY.Text = Math.Round(Robots.GrosRobot.Position.Coordonnees.Y, 2).ToString();
@@ -345,14 +345,14 @@ namespace GoBot.IHM
                         tabPoints[3] = p4;
 
                         g.FillPolygon(new SolidBrush(Color.FromArgb(152, 199, 250)), tabPoints);
-                        g.DrawPolygon(new Pen(Plateau.CouleurJ2), tabPoints);
+                        g.DrawPolygon(new Pen(Plateau.CouleurJ2B), tabPoints);
 
                         double angle = Robots.PetitRobot.Position.Angle.AngleRadians + (-180 * 2 * Math.PI / 360);
                         double cos = Math.Cos(angle);
                         double sin = Math.Sin(angle);
                         Point pointDevant = new Point(Maths.Arrondi(xRobot - cos * RealToScreen(Maths.Arrondi(Robots.PetitRobot.Longueur / 2))), Maths.Arrondi(yRobot - sin * RealToScreen(Maths.Arrondi(Robots.PetitRobot.Longueur / 2))));
 
-                        g.DrawLine(new Pen(Plateau.CouleurJ2), new Point(xRobot, yRobot), pointDevant);
+                        g.DrawLine(new Pen(Plateau.CouleurJ2B), new Point(xRobot, yRobot), pointDevant);
 
                         lblPosPetitX.Text = Math.Round(Robots.PetitRobot.Position.Coordonnees.X, 2).ToString();
                         lblPosPetitY.Text = Math.Round(Robots.PetitRobot.Position.Coordonnees.Y, 2).ToString();
@@ -419,7 +419,7 @@ namespace GoBot.IHM
 
                     for (int i = 0; i < 8; i++)
                     {
-                        Color color = i % 2 == 1 ? Plateau.CouleurJ1 : Plateau.CouleurJ2;
+                        Color color = i % 2 == 1 ? Plateau.CouleurJ1R : Plateau.CouleurJ2B;
                         if (!Plateau.CadeauxActives[i])
                         {
                             g.FillRectangle(new SolidBrush(color), RealToScreen(Plateau.PositionsCadeaux[i].X - 75), RealToScreen(Plateau.PositionsCadeaux[i].Y - 30), RealToScreen(150), RealToScreen(40));

@@ -29,14 +29,14 @@
         private void InitializeComponent()
         {
             this.flowLayoutPanel1 = new System.Windows.Forms.FlowLayoutPanel();
-            this.panelDeplacement = new GoBot.IHM.PanelDeplacement();
-            this.panelHistorique = new GoBot.IHM.PanelHistorique();
             this.txtLog = new System.Windows.Forms.TextBox();
             this.flowLayoutPanel2 = new System.Windows.Forms.FlowLayoutPanel();
             this.panelReglageGros1 = new GoBot.IHM.PanelReglageGros();
             this.panelUtilGros1 = new GoBot.IHM.PanelUtilGros();
             this.panelSequencesGros1 = new GoBot.IHM.PanelSequencesGros();
             this.panelCapteursGros1 = new GoBot.IHM.PanelCapteursGros();
+            this.panelDeplacement = new GoBot.IHM.PanelDeplacement();
+            this.panelHistorique = new GoBot.IHM.PanelHistorique();
             this.flowLayoutPanel1.SuspendLayout();
             this.flowLayoutPanel2.SuspendLayout();
             this.SuspendLayout();
@@ -52,26 +52,6 @@
             this.flowLayoutPanel1.Size = new System.Drawing.Size(343, 556);
             this.flowLayoutPanel1.TabIndex = 90;
             // 
-            // panelDeplacement
-            // 
-            this.panelDeplacement.AutoSize = true;
-            this.panelDeplacement.BackColor = System.Drawing.Color.Transparent;
-            this.panelDeplacement.Location = new System.Drawing.Point(3, 3);
-            this.panelDeplacement.Name = "panelDeplacement";
-            this.panelDeplacement.Robot = null;
-            this.panelDeplacement.Size = new System.Drawing.Size(337, 262);
-            this.panelDeplacement.TabIndex = 72;
-            // 
-            // panelHistorique
-            // 
-            this.panelHistorique.AutoSize = true;
-            this.panelHistorique.BackColor = System.Drawing.Color.Transparent;
-            this.panelHistorique.Location = new System.Drawing.Point(3, 271);
-            this.panelHistorique.Name = "panelHistorique";
-            this.panelHistorique.Size = new System.Drawing.Size(337, 115);
-            this.panelHistorique.TabIndex = 71;
-            this.panelHistorique.Resize += new System.EventHandler(this.panelHistorique_Resize);
-            // 
             // txtLog
             // 
             this.txtLog.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
@@ -80,6 +60,7 @@
             this.txtLog.Location = new System.Drawing.Point(706, 16);
             this.txtLog.Multiline = true;
             this.txtLog.Name = "txtLog";
+            this.txtLog.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
             this.txtLog.Size = new System.Drawing.Size(294, 543);
             this.txtLog.TabIndex = 92;
             // 
@@ -131,6 +112,26 @@
             this.panelCapteursGros1.Name = "panelCapteursGros1";
             this.panelCapteursGros1.Size = new System.Drawing.Size(340, 45);
             this.panelCapteursGros1.TabIndex = 118;
+            // 
+            // panelDeplacement
+            // 
+            this.panelDeplacement.AutoSize = true;
+            this.panelDeplacement.BackColor = System.Drawing.Color.Transparent;
+            this.panelDeplacement.Location = new System.Drawing.Point(3, 3);
+            this.panelDeplacement.Name = "panelDeplacement";
+            this.panelDeplacement.Robot = null;
+            this.panelDeplacement.Size = new System.Drawing.Size(337, 262);
+            this.panelDeplacement.TabIndex = 72;
+            // 
+            // panelHistorique
+            // 
+            this.panelHistorique.AutoSize = true;
+            this.panelHistorique.BackColor = System.Drawing.Color.Transparent;
+            this.panelHistorique.Location = new System.Drawing.Point(3, 271);
+            this.panelHistorique.Name = "panelHistorique";
+            this.panelHistorique.Size = new System.Drawing.Size(337, 115);
+            this.panelHistorique.TabIndex = 71;
+            this.panelHistorique.Resize += new System.EventHandler(this.panelHistorique_Resize);
             // 
             // PanelGrosRobot
             // 

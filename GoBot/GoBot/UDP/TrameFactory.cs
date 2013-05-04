@@ -16,14 +16,19 @@ namespace GoBot.UDP
             Stop = 0x05,
             GoToXY = 0x06,
             Recallage = 0x10,
+            FinRecallage = 0x11,
+            FinDeplacement = 0x12,
+            DebugAsser = 0x57,
+            Blocage = 0x70,
 
+            DemandePositionXYTeta = 0x30,
+            RetourPositionXYTeta = 0x31,
             VitesseLigne = 0x32,
             AccelLigne = 0x33,
             VitessePivot = 0x34,
             AccelPivot = 0x35,
-            DemandePos = 0x41,
-            CoeffAsserv = 0x45,
-            OffsetPos = 0x46,
+            CoeffAsservPID = 0x36,
+            EnvoiPositionAbsolue = 0x37,
 
             VitesseAspirateur = 0x53,
             VitesseCanon = 0x54,
@@ -32,10 +37,15 @@ namespace GoBot.UDP
             ServoPosition = 0x60,
             ServoVitesse = 0x61,
 
+            DepartJack = 0x71,
+            DemandeCouleurEquipe = 0x72,
+            ReponseCouleurEquipe = 0x73,
             DemandeCouleur = 0x75,
             ReponseCouleur = 0x76,
             DemandePresence = 0x77,
             ReponsePresence = 0x78,
+            DemandePresenceAssiette = 0x7A,
+            ReponsePresenceAssiette = 0x7B,
 
             AspirerBalle = 0x80,
             EjecterBalle = 0x81,
@@ -44,10 +54,6 @@ namespace GoBot.UDP
             Reset = 0xF1,
             Alimentation = 0xF2,
 
-            FinRecallage = 0x11,
-            FinDeplacement = 0x50,
-            DistanceRestante = 0x60,
-            PositionXYTeta = 0x67
         }
 
         public enum FonctionMiwi
@@ -64,7 +70,6 @@ namespace GoBot.UDP
             Transmettre = 0xA0,
             TestConnexion = 0xF0,
             CoupureAlim = 0xF1,
-            DepartJack = 0x52,
             CapteurUrgence = 0x78,
             FinCapteurUrgence = 0x79
         }*/
@@ -139,7 +144,7 @@ namespace GoBot.UDP
         {
             byte[] tab = new byte[8];
             tab[0] = (byte)Carte.RecMove;
-            tab[1] = (byte)FonctionMove.OffsetPos;
+            tab[1] = (byte)FonctionMove.EnvoiPositionAbsolue;
             tab[2] = ByteDivide(offsetX, true);
             tab[3] = ByteDivide(offsetX, false);
             tab[4] = ByteDivide(offsetY, true);
@@ -174,7 +179,7 @@ namespace GoBot.UDP
         {
             byte[] tab = new byte[8];
             tab[0] = (byte)Carte.RecMove;
-            tab[1] = (byte)FonctionMove.CoeffAsserv;
+            tab[1] = (byte)FonctionMove.CoeffAsservPID;
             tab[2] = (byte)ByteDivide(p, true);
             tab[3] = (byte)ByteDivide(p, false);
             tab[4] = (byte)ByteDivide(i, true);
@@ -222,7 +227,7 @@ namespace GoBot.UDP
         {
             byte[] tab = new byte[2];
             tab[0] = (byte)Carte.RecMove;
-            tab[1] = (byte)FonctionMove.PositionXYTeta;
+            tab[1] = (byte)FonctionMove.DemandePositionXYTeta;
             return new Trame(tab);
         }
 
@@ -558,6 +563,22 @@ namespace GoBot.UDP
             byte[] tab = new byte[2];
             tab[0] = (byte)Carte.RecMove;
             tab[1] = (byte)FonctionMove.DemandeCouleur;
+            return new Trame(tab);
+        }
+
+        public static Trame DemandeCouleurEquipe()
+        {
+            byte[] tab = new byte[2];
+            tab[0] = (byte)Carte.RecMove;
+            tab[1] = (byte)FonctionMove.DemandeCouleurEquipe;
+            return new Trame(tab);
+        }
+
+        public static Trame DemandePresenceAssiette()
+        {
+            byte[] tab = new byte[2];
+            tab[0] = (byte)Carte.RecMove;
+            tab[1] = (byte)FonctionMove.DemandePresenceAssiette;
             return new Trame(tab);
         }
 

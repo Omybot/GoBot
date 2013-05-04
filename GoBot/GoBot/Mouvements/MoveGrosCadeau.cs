@@ -26,20 +26,11 @@ namespace GoBot.Mouvements
             {
                 Angle angle180 = Position.Angle - Robots.GrosRobot.Position.Angle;
 
-                if (Math.Abs(angle180.AngleDegres) < 90)
-                {
-                    Robots.GrosRobot.PositionerAngle(Position.Angle, 1);
-                    Robots.GrosRobot.BougeServo(ServomoteurID.GRGrandBras, 500);
-                    Thread.Sleep(500);
-                    Robots.GrosRobot.BougeServo(ServomoteurID.GRGrandBras, 0);
-                }
-                else
-                {
-                    Robots.GrosRobot.PositionerAngle(Position.Angle - new Angle(180, AnglyeType.Degre), 1);
-                    Robots.GrosRobot.BougeServo(ServomoteurID.GRGrandBras, 500);
-                    Thread.Sleep(500);
-                    Robots.GrosRobot.BougeServo(ServomoteurID.GRGrandBras, 0);
-                }
+                Robots.GrosRobot.PositionerAngle(Position.Angle, 1);
+                Robots.GrosRobot.BougeServo(ServomoteurID.GRGrandBras, Config.CurrentConfig.PositionGRGrandBrasBas);
+                Thread.Sleep(200);
+                Robots.GrosRobot.BougeServo(ServomoteurID.GRGrandBras, Config.CurrentConfig.PositionGRGrandBrasRange);
+
                 Plateau.Score += Score;
                 Plateau.CadeauxActives[numeroCadeau] = true;
                 return true;
@@ -65,9 +56,9 @@ namespace GoBot.Mouvements
             get
             {
                 if (!Plateau.CadeauxActives[numeroCadeau] &&
-                    ((Plateau.NotreCouleur == Plateau.CouleurJ2 && numeroCadeau % 2 == 0)
+                    ((Plateau.NotreCouleur == Plateau.CouleurJ2B && numeroCadeau % 2 == 0)
                     ||
-                    (Plateau.NotreCouleur == Plateau.CouleurJ1 && numeroCadeau % 2 == 1)))
+                    (Plateau.NotreCouleur == Plateau.CouleurJ1R && numeroCadeau % 2 == 1)))
                     return 4;
                 else
                     return 0;

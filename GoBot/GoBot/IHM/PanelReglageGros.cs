@@ -63,7 +63,7 @@ namespace GoBot.IHM
         #region Aspiration
         private void btnTurbineOk_Click(object sender, EventArgs e)
         {
-            Robots.GrosRobot.AspirerVitesse((int)numTurbine.Value);
+            Robots.GrosRobot.TourneMoteur(MoteurID.GRTurbineAspirateur, (int)numTurbine.Value);
         }
 
         private void btnTurbineSave_Click(object sender, EventArgs e)
@@ -76,7 +76,7 @@ namespace GoBot.IHM
         #region Canon
         private void btnCanonOk_Click(object sender, EventArgs e)
         {
-            Robots.GrosRobot.CanonVitesse((int)numCanon.Value);
+            Robots.GrosRobot.TourneMoteur(MoteurID.GRCanon, (int)numCanon.Value);
         }
 
         private void btnCanonSaveBonne_Click(object sender, EventArgs e)
@@ -95,19 +95,19 @@ namespace GoBot.IHM
         #region Shutter
         private void btnShutterOn_Click(object sender, EventArgs e)
         {
-            Robots.GrosRobot.Shutter(true);
+            Robots.GrosRobot.ActionneurOnOff(ActionneurOnOffID.GRShutter, true);
         }
 
         private void btnShutterOff_Click(object sender, EventArgs e)
         {
-            Robots.GrosRobot.Shutter(false);
+            Robots.GrosRobot.ActionneurOnOff(ActionneurOnOffID.GRShutter, false);
         }
 
         private void btnShutterOuvrir_Click(object sender, EventArgs e)
         {
-            Robots.GrosRobot.Shutter(true);
+            Robots.GrosRobot.ActionneurOnOff(ActionneurOnOffID.GRShutter, true);
             Thread.Sleep((int)numShutter.Value);
-            Robots.GrosRobot.Shutter(false);
+            Robots.GrosRobot.ActionneurOnOff(ActionneurOnOffID.GRShutter, false);
         }
         #endregion
 

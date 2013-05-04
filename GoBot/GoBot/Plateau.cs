@@ -30,7 +30,13 @@ namespace GoBot
         private static List<IForme> ObstaclesFixes { get; set; }
         public static List<IForme> ObstaclesTemporaires { get; set; }
 
-        public static Color NotreCouleur { get; set; }
+        private static Color notreCouleur;
+        public static Color NotreCouleur 
+        {
+            get { return notreCouleur; }
+            set { notreCouleur = value; if(NotreCouleurChange != null) NotreCouleurChange(null, null); }
+        }
+        public static event EventHandler NotreCouleurChange;
 
         public static bool Simulation { get; set; }
 
@@ -54,8 +60,8 @@ namespace GoBot
         /// </summary>
         public static Semaphore SemaphoreGraph { get; private set; }
 
-        public static Color CouleurJ1 { get { return Color.FromArgb(165, 32, 25); } }
-        public static Color CouleurJ2 { get { return Color.FromArgb(6, 57, 113); } }
+        public static Color CouleurJ1R { get { return Color.FromArgb(165, 32, 25); } }
+        public static Color CouleurJ2B { get { return Color.FromArgb(6, 57, 113); } }
 
         /// <summary>
         /// Longueur de la table (mm)

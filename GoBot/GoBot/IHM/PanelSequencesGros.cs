@@ -60,35 +60,79 @@ namespace GoBot.IHM
             Config.CurrentConfig.SequencesGROuvert = deployer;
         }
 
-        private void btnAspiration_Click(object sender, EventArgs e)
-        {
-            Robots.GrosRobot.AspirerBalles();
-        }
-
-        private void btnPropulsion_Click(object sender, EventArgs e)
-        {
-            Robots.GrosRobot.EjecterBalles();
-        }
-
+        Thread th;
         private void btnCerises_Click(object sender, EventArgs e)
         {
-            Robots.GrosRobot.AspirerVitesse(Config.CurrentConfig.VitesseAspiration);
-            Robots.GrosRobot.CanonVitesse(Config.CurrentConfig.VitessePropulsionBonne);
+            th = new Thread(ThreadCerises);
+            th.Start();
+        }
+
+        private void ThreadCerises()
+        {
+            Robots.GrosRobot.TourneMoteur(MoteurID.GRTurbineAspirateur, Config.CurrentConfig.VitesseAspiration);
+            Robots.GrosRobot.TourneMoteur(MoteurID.GRCanon, Config.CurrentConfig.VitessePropulsionBonne);
             Robots.GrosRobot.BougeServo(ServomoteurID.GRAspirateur, Config.CurrentConfig.PositionGRAspirateurBas);
-            Thread.Sleep(1500);
+            Thread.Sleep(1300);
+            Robots.GrosRobot.TourneMoteur(MoteurID.GRTurbineAspirateur, 70);
+            Thread.Sleep(200);
             Robots.GrosRobot.BougeServo(ServomoteurID.GRAspirateur, Config.CurrentConfig.PositionGRAspirateurHaut);
             Thread.Sleep(1500);
-            Robots.GrosRobot.AspirerVitesse(0);
+            Robots.GrosRobot.TourneMoteur(MoteurID.GRTurbineAspirateur, 0);
+            Thread.Sleep(500);
+
+            LancerBalles();
+        }
+
+        private void btnCerise1_Click(object sender, EventArgs e)
+        {
+            Robots.GrosRobot.BougeServo(ServomoteurID.GRDebloqueur, 250);
+            Thread.Sleep(500);
+            Robots.GrosRobot.BougeServo(ServomoteurID.GRDebloqueur, 550);
+            Thread.Sleep(500);
+            Robots.GrosRobot.ActionneurOnOff(ActionneurOnOffID.GRShutter, true);
+            Thread.Sleep(300);
+            Robots.GrosRobot.ActionneurOnOff(ActionneurOnOffID.GRShutter, false);
+        }
+
+        private void PanelSequencesGros_Load(object sender, EventArgs e)
+        {
+            Deployer(Config.CurrentConfig.SequencesGROuvert);
+        }
+
+        private void btnAssiette_Click(object sender, EventArgs e)
+        {
+            Robots.GrosRobot.Avancer(80);
+            Robots.GrosRobot.PivotDroite(90);
+            Robots.GrosRobot.Reculer(250);
+
+            Robots.GrosRobot.TourneMoteur(MoteurID.GRTurbineAspirateur, Config.CurrentConfig.VitesseAspiration);
+            Robots.GrosRobot.TourneMoteur(MoteurID.GRCanon, Config.CurrentConfig.VitessePropulsionBonne);
+            Robots.GrosRobot.BougeServo(ServomoteurID.GRAspirateur, Config.CurrentConfig.PositionGRAspirateurBas);
+            Thread.Sleep(1200);
+            Robots.GrosRobot.TourneMoteur(MoteurID.GRTurbineAspirateur, 70);
+            Thread.Sleep(200);
+            Robots.GrosRobot.BougeServo(ServomoteurID.GRAspirateur, Config.CurrentConfig.PositionGRAspirateurHaut);
             Thread.Sleep(1500);
+            Robots.GrosRobot.TourneMoteur(MoteurID.GRTurbineAspirateur, 0);
+
+            Robots.GrosRobot.Avancer(120);
+            Robots.GrosRobot.PivotGauche(90);
+            Robots.GrosRobot.Avancer(200);
+            Robots.GrosRobot.PivotGauche(45);
+
+            LancerBalles();
+        }
+
+        private void LancerBalles()
+        {
             bool balle = true;
 
-            while(balle)
-            {
-                Robots.GrosRobot.Shutter(true);
-                Thread.Sleep(350);
-                Robots.GrosRobot.Shutter(false);
-                Thread.Sleep(600);
+            Robots.GrosRobot.BougeServo(ServomoteurID.GRDebloqueur, Config.CurrentConfig.PositionGRDebloqueurHaut);
+            Thread.Sleep(500);
+            Robots.GrosRobot.BougeServo(ServomoteurID.GRDebloqueur, Config.CurrentConfig.PositionGRDebloqueurBas);
 
+            while (balle)
+            {
                 if (!Robots.GrosRobot.PresenceBalle())
                 {
                     Robots.GrosRobot.BougeServo(ServomoteurID.GRDebloqueur, Config.CurrentConfig.PositionGRDebloqueurHaut);
@@ -97,9 +141,9 @@ namespace GoBot.IHM
 
                     if (!Robots.GrosRobot.PresenceBalle())
                     {
-                        Robots.GrosRobot.AspirerVitesse(Config.CurrentConfig.VitesseAspiration);
+                        Robots.GrosRobot.TourneMoteur(MoteurID.GRTurbineAspirateur, Config.CurrentConfig.VitesseAspiration);
                         Thread.Sleep(600);
-                        Robots.GrosRobot.AspirerVitesse(0);
+                        Robots.GrosRobot.TourneMoteur(MoteurID.GRTurbineAspirateur, 0);
                         Thread.Sleep(1200);
 
                         if (!Robots.GrosRobot.PresenceBalle())
@@ -113,24 +157,32 @@ namespace GoBot.IHM
                         }
                     }
                 }
+                else
+                {
+                    Color couleur = Robots.GrosRobot.CouleurBalle();
+                    Console.WriteLine(couleur);
+                    if (couleur != Color.White)
+                    {
+                        Robots.GrosRobot.PivotGauche(15);
+                        Robots.GrosRobot.ActionneurOnOff(ActionneurOnOffID.GRShutter, true);
+                        Thread.Sleep(350);
+                        Robots.GrosRobot.ActionneurOnOff(ActionneurOnOffID.GRShutter, false);
+                        Thread.Sleep(350);
+                        Robots.GrosRobot.PivotDroite(15);
+                    }
+                    else
+                    {
+                        Robots.GrosRobot.ActionneurOnOff(ActionneurOnOffID.GRShutter, true);
+                        Thread.Sleep(350);
+                        Robots.GrosRobot.ActionneurOnOff(ActionneurOnOffID.GRShutter, false);
+                        Thread.Sleep(500);
+                    }
+
+                }
             }
-            Robots.GrosRobot.CanonVitesse(0);
-        }
 
-        private void btnCerise1_Click(object sender, EventArgs e)
-        {
-            Robots.GrosRobot.BougeServo(ServomoteurID.GRDebloqueur, 250);
-            Thread.Sleep(500);
-            Robots.GrosRobot.BougeServo(ServomoteurID.GRDebloqueur, 550);
-            Thread.Sleep(500);
-            Robots.GrosRobot.Shutter(true);
-            Thread.Sleep(300);
-            Robots.GrosRobot.Shutter(false);
-        }
-
-        private void PanelSequencesGros_Load(object sender, EventArgs e)
-        {
-            Deployer(Config.CurrentConfig.SequencesGROuvert);
+            Robots.GrosRobot.ActionneurOnOff(ActionneurOnOffID.GRShutter, false);
+            Robots.GrosRobot.TourneMoteur(MoteurID.GRCanon, 0);
         }
     }
 }

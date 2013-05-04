@@ -26,25 +26,34 @@ namespace GoBot
 
     public enum ServomoteurID
     {
-        /*GRBrasHautGauche = 0x05,
-        GRBrasMilieuGauche = 0x01,
-        GRBrasBasGauche = 0x02,
-        GRBrasBasDroite = 0x10,
-        GRBrasMilieuDroite = 0x04,
-        GRBrasHautDroite = 0x00,
-        GRBenne = 0x14,
-
-        PRBrasDroite = 0x11,
-        PRBrasGauche = 0x12*/
-
         GRAspirateur = 16,
         GRDebloqueur = 0,
-        GRGrandBras = 2, //?
-        GRPetitBras = 3, // ?
-        PRBras = 30, // ?
+        GRGrandBras = 2,
+        GRPetitBras = 3,
         GRBrasGauche = 4,
         GRBrasDroit = 1,
-        GRCamera = 5
+        GRCamera = 5,
+
+        PRBras = 99
+    }
+
+    public enum MoteurID
+    {
+        GRCanon = 0,
+        GRTurbineAspirateur = 1
+    }
+
+    public enum CapteurID
+    {
+        GRPresenceBalle = 0,
+        GRCouleurBalle = 1,
+        GRPresenceAssiette = 2
+    }
+
+    public enum ActionneurOnOffID
+    {
+        GRShutter = 0,
+        GRAlimentation = 1
     }
 
     public enum PompeID

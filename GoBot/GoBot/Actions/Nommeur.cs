@@ -111,8 +111,72 @@ namespace GoBot.Actions
                     return "pompe droite";
                 case PompeID.PRPompeGauche:
                     return "pompe gauche";
-                default :
+                default:
                     return pompe.ToString();
+            }
+        }
+
+        public static String Nommer(MoteurID moteur)
+        {
+            switch (moteur)
+            {
+                case MoteurID.GRCanon:
+                    return "canon";
+                case MoteurID.GRTurbineAspirateur:
+                    return "aspiration";
+                default:
+                    return moteur.ToString();
+            }
+        }
+
+        /// <summary>
+        /// Retourne le nom de la vitesse en fonction du moteur (Arrêter, aspirer, souffler, etc...)
+        /// </summary>
+        /// <param name="position">Vitesse du moteur</param>
+        /// <param name="moteur">Moteur</param>
+        /// <returns></returns>
+        public static String Nommer(int vitesse, MoteurID moteur)
+        {
+            switch (moteur)
+            {
+                case MoteurID.GRCanon:
+                    if (vitesse == Config.CurrentConfig.VitessePropulsionBonne)
+                        return "panier (" + vitesse + ")";
+                    else
+                        return vitesse + "";
+                case MoteurID.GRTurbineAspirateur:
+                    if (vitesse == Config.CurrentConfig.VitesseAspiration)
+                        return "aspirer (" + vitesse + ")";
+                    else
+                        return vitesse + "";
+                default:
+                    return vitesse.ToString();
+            }
+        }
+
+        public static String Nommer(ActionneurOnOffID actionneur)
+        {
+            switch (actionneur)
+            {
+                case ActionneurOnOffID.GRShutter:
+                    return "shutter";
+                case ActionneurOnOffID.GRAlimentation:
+                    return "alimentation";
+                default:
+                    return actionneur.ToString();
+            }
+        }
+
+        public static String Nommer(CapteurID capteur)
+        {
+            switch (capteur)
+            {
+                case CapteurID.GRCouleurBalle:
+                    return "couleur balle";
+                case CapteurID.GRPresenceBalle:
+                    return "présence balle";
+                default:
+                    return capteur.ToString();
             }
         }
     }

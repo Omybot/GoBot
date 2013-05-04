@@ -31,26 +31,27 @@ namespace GoBot.Mouvements
             PositionPetitBougie.Add(11, new Position(new Angle(-106.6), new PointReel(868, 122)));
 
             PositionGrosBougie = new Dictionary<int, Position>();
-            PositionGrosBougie.Add(0, new Position(new Angle(108.96), new PointReel(2148, 224)));
-            PositionGrosBougie.Add(1, new Position(new Angle(122.5), new PointReel(2183, 261)));
-            PositionGrosBougie.Add(2, new Position(new Angle(122.77), new PointReel(2058, 421)));
-            PositionGrosBougie.Add(3, new Position(new Angle(115.23), new PointReel(2111, 314)));
-            PositionGrosBougie.Add(4, new Position(new Angle(140.09), new PointReel(1891, 582)));
-            PositionGrosBougie.Add(5, new Position(new Angle(126.67), new PointReel(2033, 458)));
-            PositionGrosBougie.Add(6, new Position(new Angle(137.6), new PointReel(1915, 562)));
-            PositionGrosBougie.Add(7, new Position(new Angle(154.36), new PointReel(1755, 654)));
-            PositionGrosBougie.Add(8, new Position(new Angle(157.1), new PointReel(1583, 691)));
-            PositionGrosBougie.Add(9, new Position(new Angle(176.05), new PointReel(1564, 696)));
-            PositionGrosBougie.Add(10, new Position(new Angle(-120.22), new PointReel(872, 242)));
-            PositionGrosBougie.Add(11, new Position(new Angle(-123.26), new PointReel(813, 215)));
-            PositionGrosBougie.Add(12, new Position(new Angle(-125.28), new PointReel(940, 394)));
-            PositionGrosBougie.Add(13, new Position(new Angle(-116.54), new PointReel(891, 291)));
-            PositionGrosBougie.Add(14, new Position(new Angle(-143.71), new PointReel(1105, 568)));
-            PositionGrosBougie.Add(15, new Position(new Angle(-129.96), new PointReel(969, 435)));
-            PositionGrosBougie.Add(16, new Position(new Angle(-142.27), new PointReel(1083, 551)));
-            PositionGrosBougie.Add(17, new Position(new Angle(-157.57), new PointReel(1235, 651)));
-            PositionGrosBougie.Add(18, new Position(new Angle(-167.74), new PointReel(1347, 687)));
-            PositionGrosBougie.Add(19, new Position(new Angle(-173.99), new PointReel(1409, 698)));
+            PositionGrosBougie.Add(0, new Position(new Angle(109.23), new PointReel(2146, 209)));
+            //PositionGrosBougie.Add(0, new Position(new Angle(-162.13), new PointReel(1765, 790)));
+            PositionGrosBougie.Add(1, new Position(new Angle(118.71), new PointReel(2194, 229)));
+            PositionGrosBougie.Add(2, new Position(new Angle(125.82), new PointReel(2014 ,433)));
+            PositionGrosBougie.Add(3, new Position(new Angle(112.67), new PointReel(2117, 284)));
+            PositionGrosBougie.Add(4, new Position(new Angle(132.54), new PointReel(1883, 584)));
+            PositionGrosBougie.Add(5, new Position(new Angle(125.12), new PointReel(2030, 430)));
+            PositionGrosBougie.Add(6, new Position(new Angle(142.44), new PointReel(1891, 557)));
+            PositionGrosBougie.Add(7, new Position(new Angle(157.53), new PointReel(1739, 639)));
+            PositionGrosBougie.Add(8, new Position(new Angle(171.3), new PointReel(1597, 672)));
+            PositionGrosBougie.Add(9, new Position(new Angle(174.92), new PointReel(1569, 675)));
+            PositionGrosBougie.Add(10, new Position(new Angle(-116.17), new PointReel(862, 193)));
+            PositionGrosBougie.Add(11, new Position(new Angle(-124.89), new PointReel(806, 205)));
+            PositionGrosBougie.Add(12, new Position(new Angle(-118.69), new PointReel(922, 335)));
+            PositionGrosBougie.Add(13, new Position(new Angle(-113.2), new PointReel(881, 251)));
+            PositionGrosBougie.Add(14, new Position(new Angle(-145.91), new PointReel(1110, 548)));
+            PositionGrosBougie.Add(15, new Position(new Angle(-124.56), new PointReel(959, 392)));
+            PositionGrosBougie.Add(16, new Position(new Angle(-138.23), new PointReel(1072, 518)));
+            PositionGrosBougie.Add(17, new Position(new Angle(-155.65), new PointReel(1227, 617)));
+            PositionGrosBougie.Add(18, new Position(new Angle(-166.29), new PointReel(1339, 656)));
+            PositionGrosBougie.Add(19, new Position(new Angle(-170.55), new PointReel(1395, 667)));
             
             /*PositionGrosBougie.Add(0, new Position(new Angle(-249.12), new PointReel(2157, 188)));
             PositionGrosBougie.Add(1, new Position(new Angle(0), new PointReel(0, 0)));
@@ -78,8 +79,11 @@ namespace GoBot.Mouvements
                 PositionPetitCadeau.Add(i, new Position(new Angle(0), new PointReel(Plateau.PositionsCadeaux[i].X, Plateau.PositionsCadeaux[i].Y - 141)));
 
             PositionGrosCadeau = new Dictionary<int, Position>();
-            for (int i = 0; i < 8; i++)
+            for (int i = 1; i < 7; i++)
                 PositionGrosCadeau.Add(i, new Position(new Angle(0), new PointReel(Plateau.PositionsCadeaux[i].X, Plateau.PositionsCadeaux[i].Y - 200)));
+                    
+            PositionGrosCadeau.Add(0, new Position(new Angle(15), new PointReel(Plateau.PositionsCadeaux[0].X + 35, Plateau.PositionsCadeaux[0].Y - 200)));
+            PositionGrosCadeau.Add(7, new Position(new Angle(-15), new PointReel(Plateau.PositionsCadeaux[7].X - 35, Plateau.PositionsCadeaux[7].Y - 200)));
         }
     }
 }

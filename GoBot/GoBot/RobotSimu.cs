@@ -7,6 +7,7 @@ using System.Timers;
 using GoBot.Calculs.Formes;
 using System.Threading;
 using GoBot.Actions;
+using System.Drawing;
 
 namespace GoBot
 {
@@ -199,7 +200,7 @@ namespace GoBot
 
         public override void Virage(SensAR sensAr, SensGD sensGd, int rayon, int angle, bool attendre = true)
         {
-            throw new NotImplementedException();
+            // TODO
         }
 
         public override void ReglerOffsetAsserv(int offsetX, int offsetY, int offsetTeta)
@@ -241,49 +242,45 @@ namespace GoBot
 
         public override void BougeServo(ServomoteurID servo, int position)
         {
-            //throw new NotImplementedException();
+            // TODO
+            Historique.AjouterActionThread(new ActionServo(this, position, servo));
         }
 
         public override void EnvoyerPID(int p, int i, int d)
         {
-            throw new NotImplementedException();
+            // TODO
         }
 
-        public override void Allimentation(bool allume)
+        public override void ActionneurOnOff(ActionneurOnOffID actionneur, bool on)
         {
-            throw new NotImplementedException();
-        }
-        
-        public override void AspirerBalles()
-        {
-        }
-
-        public override void EjecterBalles()
-        {
-        }
-
-        public override void AspirerVitesse(int vitesse)
-        {
-        }
-
-        public override void CanonVitesse(int vitesse)
-        {
-        }
-
-        public override void Shutter(bool ouvert)
-        {
+            // TODO
+            Historique.AjouterActionThread(new ActionOnOff(this, actionneur, on));
         }
 
         System.Timers.Timer timerDeplacement;
 
-        public override bool PresenceBalle()
+        public override bool PresenceBalle(bool historique = true)
         {
-            return false;
+            // TODO
+            return false; 
         }
 
-        public override string CouleurBalle()
+        public override Color CouleurBalle(bool historique = true)
         {
-            return "0";
+            // TODO
+            return Color.White;
+        }
+
+        public override bool PresenceAssiette(bool historique = true)
+        {
+            // TODO
+            return true;
+        }
+
+        public override void TourneMoteur(MoteurID moteur, int vitesse)
+        {
+            // TODO
+            Historique.AjouterActionThread(new ActionMoteur(this, vitesse, moteur));
         }
     }
 }

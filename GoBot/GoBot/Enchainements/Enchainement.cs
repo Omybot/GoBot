@@ -65,7 +65,7 @@ namespace GoBot.Enchainements
         private void timerFinMatch_Elapsed(object sender, ElapsedEventArgs e)
         {
             Robots.GrosRobot.Stop(StopMode.Freely);
-            Robots.GrosRobot.Allimentation(false);
+            Robots.GrosRobot.ActionneurOnOff(ActionneurOnOffID.GRAlimentation, false);
             //PetitRobot.Stop(StopMode.Freely);
             Plateau.Balise1.ReglageVitesse = false;
             Plateau.Balise2.ReglageVitesse = false;

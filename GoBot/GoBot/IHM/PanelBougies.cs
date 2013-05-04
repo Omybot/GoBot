@@ -72,7 +72,7 @@ namespace GoBot.IHM
 
             this.Invoke(new EventHandler(delegate
             {
-                if (Plateau.NotreCouleur == Plateau.CouleurJ1)
+                if (Plateau.NotreCouleur == Plateau.CouleurJ1R)
                 {
                     for (int i = 0; i < 10; i++)
                     {
@@ -161,7 +161,7 @@ namespace GoBot.IHM
 
         public void ChangementCouleur()
         {
-            if (Plateau.NotreCouleur == Plateau.CouleurJ2)
+            if (Plateau.NotreCouleur == Plateau.CouleurJ2B)
             {
                 for (int i = 10; i < 20; i++)
                     Boutons[i].Enabled = true;
@@ -188,11 +188,11 @@ namespace GoBot.IHM
 
             Random rand = new Random(DateTime.Now.Millisecond);
 
-            Plateau.CouleursBougies[1] = Plateau.CouleurJ1;
-            Plateau.CouleursBougies[11] = Plateau.CouleurJ2;
+            Plateau.CouleursBougies[1] = Plateau.CouleurJ1R;
+            Plateau.CouleursBougies[11] = Plateau.CouleurJ2B;
 
-            Plateau.CouleursBougies[0] = Plateau.CouleurJ1;
-            Plateau.CouleursBougies[10] = Plateau.CouleurJ2;
+            Plateau.CouleursBougies[0] = Plateau.CouleurJ1R;
+            Plateau.CouleursBougies[10] = Plateau.CouleurJ2B;
 
             for (int i = 2; i < 10; i++)
             {
@@ -203,14 +203,14 @@ namespace GoBot.IHM
                 }
                 else if (nbRouges == nbMaxCouleur || (rand.Next(2) == 0 && nbBleues < nbMaxCouleur))
                 {
-                    Plateau.CouleursBougies[i] = Plateau.CouleurJ2;
-                    Plateau.CouleursBougies[i + 10] = Plateau.CouleurJ1;
+                    Plateau.CouleursBougies[i] = Plateau.CouleurJ2B;
+                    Plateau.CouleursBougies[i + 10] = Plateau.CouleurJ1R;
                     nbBleues++;
                 }
                 else
                 {
-                    Plateau.CouleursBougies[i] = Plateau.CouleurJ1;
-                    Plateau.CouleursBougies[i + 10] = Plateau.CouleurJ2;
+                    Plateau.CouleursBougies[i] = Plateau.CouleurJ1R;
+                    Plateau.CouleursBougies[i + 10] = Plateau.CouleurJ2B;
                     nbRouges++;
                 }
             }
@@ -223,6 +223,12 @@ namespace GoBot.IHM
                 else
                     Boutons[i].ForeColor = Color.White;
             }
+        }
+
+        private void btnBlanc_Click(object sender, EventArgs e)
+        {
+            for (int i = 0; i < 20; i++)
+                Plateau.CouleursBougies[i] = Color.White;
         }
     }
 }
