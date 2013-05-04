@@ -411,7 +411,7 @@ namespace GoBot
                         Arc arc2 = new Arc(node, no);
                         arc2.Weight = Math.Sqrt(distance);
 
-                        foreach (IForme obstacle in ObstaclesFixes)
+                        foreach (IForme obstacle in ListeObstacles)
                         {
                             if (obstacle.Distance(new Segment(new PointReel(no.X, no.Y), new PointReel(node.X, node.Y))) < robot.Taille / 2)
                             {
@@ -421,8 +421,11 @@ namespace GoBot
                             }
                         }
 
-                        Graph.AddArc(arc);
-                        Graph.AddArc(arc2);
+                        if (arc.Passable)
+                        {
+                            Graph.AddArc(arc);
+                            Graph.AddArc(arc2);
+                        }
                     }
                 }
             }

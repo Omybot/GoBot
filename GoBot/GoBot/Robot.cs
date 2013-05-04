@@ -98,15 +98,17 @@ namespace GoBot
 
             semTrajectoire = new Semaphore(0, 999);
 
-            bool result = ParcoursPathFinding(x, y, timeOut, attendre);
+            succesPathFinding = false;
+            ParcoursPathFinding(x, y, timeOut, attendre);
 
             if (attendre)
                 semTrajectoire.WaitOne();
 
-            return result;
+            return succesPathFinding;
         }
 
-        public bool ParcoursPathFinding(double x, double y, int timeOut = 0, bool attendre = false)
+        private bool succesPathFinding;
+        public void ParcoursPathFinding(double x, double y, int timeOut = 0, bool attendre = false)
         {
             Plateau.SemaphoreGraph.WaitOne();
 
@@ -157,6 +159,7 @@ namespace GoBot
             {
                 AStar aStar = new AStar(Plateau.Graph);
                 aStar.DijkstraHeuristicBalance = 1;
+
                 if (aStar.SearchPath(debutNode, finNode))
                 {
                     List<Node> nodes = aStar.PathByNodes.ToList<Node>();
@@ -203,8 +206,6 @@ namespace GoBot
                             ObstacleTeste = null;
                             if (raccourciPossible)
                             {
-                                /*Arc arcRacourci = new Arc(nodes[iNodeDepart], nodes[iNodeArrivee]);
-                                arcRacourci.Passable = false;*/
                                 CheminEnCoursArcs.Add(arcRacourci);
                                 iNodeDepart = iNodeArrivee - 1;
                                 break;
@@ -220,6 +221,11 @@ namespace GoBot
 
                     CheminEnCoursNoeuds.Add(nodes[nodes.Count - 1]);
                 }
+                else
+                {
+                    CheminEnCoursNoeuds.Clear();
+                    CheminEnCoursArcs.Clear();
+                }
             }
 
             ObstacleProbleme = null;
@@ -227,6 +233,7 @@ namespace GoBot
             NodeTrouve = new List<Node>();
             CheminTrouve = new List<Arc>();
 
+            // Reset du graph (Trouver un meilleur moyen ?)
             Plateau.ChargerGraph();
             List<IForme> obstacles = new List<IForme>(Plateau.ObstaclesTemporaires);
             Plateau.ObstaclesTemporaires = new List<IForme>();
@@ -238,15 +245,15 @@ namespace GoBot
             if (CheminEnCoursArcs.Count == 0)
             {
                 semTrajectoire.Release();
-                return false;
+                succesPathFinding = false;
+                return;
             }
             else
             {
                 // Execution du parcours
                 th = new Thread(ThreadChemin);
                 th.Start();
-
-                return true;
+                return;
             }
         }
 
@@ -317,6 +324,7 @@ namespace GoBot
                 ParcoursPathFinding(CheminEnCoursNoeuds[CheminEnCoursNoeuds.Count - 1].X, CheminEnCoursNoeuds[CheminEnCoursNoeuds.Count - 1].Y);
             else
             {
+                succesPathFinding = true;
                 if (semTrajectoire != null)
                     semTrajectoire.Release();
             }
