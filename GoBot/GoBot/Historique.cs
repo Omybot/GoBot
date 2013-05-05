@@ -20,7 +20,7 @@ namespace GoBot
         }
 
         public delegate void delegateAction(IAction action);
-        public event delegateAction nouvelleAction;
+        public event delegateAction NouvelleAction;
 
         public Historique()
         {
@@ -30,8 +30,9 @@ namespace GoBot
         Thread th;
         public void AjouterActionThread(IAction action)
         {
-            th = new Thread(AjouterAction);
-            th.Start(action);
+            //th = new Thread(AjouterAction);
+            //th.Start(action);
+            AjouterAction(action);
         }
 
         public void AjouterAction(Object o)
@@ -47,8 +48,8 @@ namespace GoBot
             while (Actions.Count > NBACTIONSMAX)
                 Actions.RemoveAt(0);
 
-            if(nouvelleAction != null)
-                nouvelleAction(action);
+            if(NouvelleAction != null)
+                NouvelleAction(action);
         }
     }
 }

@@ -20,9 +20,9 @@ namespace GoBot.IHM
         public void setHistorique(Historique histo) 
         {
             if(historique != null)
-                historique.nouvelleAction -= new Historique.delegateAction(MAJHistoriqueDel);
+                historique.NouvelleAction -= new Historique.delegateAction(MAJHistoriqueDel);
             historique = histo;
-            historique.nouvelleAction += new Historique.delegateAction(MAJHistoriqueDel);
+            historique.NouvelleAction += new Historique.delegateAction(MAJHistoriqueDel);
         }
 
         int tailleMax;

@@ -87,17 +87,6 @@ namespace GoBot
             this.numDGR = new System.Windows.Forms.NumericUpDown();
             this.numIGR = new System.Windows.Forms.NumericUpDown();
             this.numPGR = new System.Windows.Forms.NumericUpDown();
-            this.tabCapteurCouleur = new System.Windows.Forms.TabPage();
-            this.lblL = new System.Windows.Forms.Label();
-            this.label15 = new System.Windows.Forms.Label();
-            this.btnRefresh = new System.Windows.Forms.Button();
-            this.lblB = new System.Windows.Forms.Label();
-            this.lblV = new System.Windows.Forms.Label();
-            this.lblR = new System.Windows.Forms.Label();
-            this.label13 = new System.Windows.Forms.Label();
-            this.label12 = new System.Windows.Forms.Label();
-            this.label11 = new System.Windows.Forms.Label();
-            this.pictureBoxCapteur = new System.Windows.Forms.PictureBox();
             this.tabBougies = new System.Windows.Forms.TabPage();
             this.panelBougies1 = new GoBot.IHM.PanelBougies();
             this.lblRecMove = new System.Windows.Forms.Label();
@@ -133,8 +122,6 @@ namespace GoBot
             ((System.ComponentModel.ISupportInitialize)(this.numDGR)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numIGR)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numPGR)).BeginInit();
-            this.tabCapteurCouleur.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBoxCapteur)).BeginInit();
             this.tabBougies.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.ledRecBoi)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.ledRecBeu)).BeginInit();
@@ -157,7 +144,6 @@ namespace GoBot
             this.tabControl.Controls.Add(this.tabBalises);
             this.tabControl.Controls.Add(this.tabTable);
             this.tabControl.Controls.Add(this.tabPoubelle);
-            this.tabControl.Controls.Add(this.tabCapteurCouleur);
             this.tabControl.Controls.Add(this.tabBougies);
             this.tabControl.HotTrack = true;
             this.tabControl.Location = new System.Drawing.Point(0, 0);
@@ -203,7 +189,7 @@ namespace GoBot
             this.panelPetitRobot.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panelPetitRobot.Location = new System.Drawing.Point(0, 0);
             this.panelPetitRobot.Name = "panelPetitRobot";
-            this.panelPetitRobot.Size = new System.Drawing.Size(1016, 548);
+            this.panelPetitRobot.Size = new System.Drawing.Size(192, 74);
             this.panelPetitRobot.TabIndex = 0;
             // 
             // tabServos
@@ -353,7 +339,7 @@ namespace GoBot
             this.txtTrames.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.txtTrames.Location = new System.Drawing.Point(198, 6);
             this.txtTrames.Name = "txtTrames";
-            this.txtTrames.Size = new System.Drawing.Size(380, 536);
+            this.txtTrames.Size = new System.Drawing.Size(380, 62);
             this.txtTrames.TabIndex = 2;
             this.txtTrames.Text = "";
             // 
@@ -374,7 +360,7 @@ namespace GoBot
             this.txtLogComplet.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.txtLogComplet.Location = new System.Drawing.Point(638, 6);
             this.txtLogComplet.Name = "txtLogComplet";
-            this.txtLogComplet.Size = new System.Drawing.Size(352, 536);
+            this.txtLogComplet.Size = new System.Drawing.Size(352, 62);
             this.txtLogComplet.TabIndex = 0;
             this.txtLogComplet.Text = "";
             // 
@@ -758,115 +744,6 @@ namespace GoBot
             this.numPGR.Size = new System.Drawing.Size(60, 20);
             this.numPGR.TabIndex = 0;
             // 
-            // tabCapteurCouleur
-            // 
-            this.tabCapteurCouleur.Controls.Add(this.lblL);
-            this.tabCapteurCouleur.Controls.Add(this.label15);
-            this.tabCapteurCouleur.Controls.Add(this.btnRefresh);
-            this.tabCapteurCouleur.Controls.Add(this.lblB);
-            this.tabCapteurCouleur.Controls.Add(this.lblV);
-            this.tabCapteurCouleur.Controls.Add(this.lblR);
-            this.tabCapteurCouleur.Controls.Add(this.label13);
-            this.tabCapteurCouleur.Controls.Add(this.label12);
-            this.tabCapteurCouleur.Controls.Add(this.label11);
-            this.tabCapteurCouleur.Controls.Add(this.pictureBoxCapteur);
-            this.tabCapteurCouleur.Location = new System.Drawing.Point(4, 22);
-            this.tabCapteurCouleur.Name = "tabCapteurCouleur";
-            this.tabCapteurCouleur.Padding = new System.Windows.Forms.Padding(3);
-            this.tabCapteurCouleur.Size = new System.Drawing.Size(1016, 548);
-            this.tabCapteurCouleur.TabIndex = 9;
-            this.tabCapteurCouleur.Text = "Capteur couleur";
-            this.tabCapteurCouleur.UseVisualStyleBackColor = true;
-            // 
-            // lblL
-            // 
-            this.lblL.AutoSize = true;
-            this.lblL.Location = new System.Drawing.Point(253, 112);
-            this.lblL.Name = "lblL";
-            this.lblL.Size = new System.Drawing.Size(13, 13);
-            this.lblL.TabIndex = 9;
-            this.lblL.Text = "0";
-            // 
-            // label15
-            // 
-            this.label15.AutoSize = true;
-            this.label15.Location = new System.Drawing.Point(221, 112);
-            this.label15.Name = "label15";
-            this.label15.Size = new System.Drawing.Size(13, 13);
-            this.label15.TabIndex = 8;
-            this.label15.Text = "L";
-            // 
-            // btnRefresh
-            // 
-            this.btnRefresh.Location = new System.Drawing.Point(216, 134);
-            this.btnRefresh.Name = "btnRefresh";
-            this.btnRefresh.Size = new System.Drawing.Size(58, 23);
-            this.btnRefresh.TabIndex = 7;
-            this.btnRefresh.Text = "Refresh";
-            this.btnRefresh.UseVisualStyleBackColor = true;
-            // 
-            // lblB
-            // 
-            this.lblB.AutoSize = true;
-            this.lblB.Location = new System.Drawing.Point(253, 86);
-            this.lblB.Name = "lblB";
-            this.lblB.Size = new System.Drawing.Size(13, 13);
-            this.lblB.TabIndex = 6;
-            this.lblB.Text = "0";
-            // 
-            // lblV
-            // 
-            this.lblV.AutoSize = true;
-            this.lblV.Location = new System.Drawing.Point(253, 60);
-            this.lblV.Name = "lblV";
-            this.lblV.Size = new System.Drawing.Size(13, 13);
-            this.lblV.TabIndex = 5;
-            this.lblV.Text = "0";
-            // 
-            // lblR
-            // 
-            this.lblR.AutoSize = true;
-            this.lblR.Location = new System.Drawing.Point(253, 34);
-            this.lblR.Name = "lblR";
-            this.lblR.Size = new System.Drawing.Size(13, 13);
-            this.lblR.TabIndex = 4;
-            this.lblR.Text = "0";
-            // 
-            // label13
-            // 
-            this.label13.AutoSize = true;
-            this.label13.Location = new System.Drawing.Point(221, 86);
-            this.label13.Name = "label13";
-            this.label13.Size = new System.Drawing.Size(14, 13);
-            this.label13.TabIndex = 3;
-            this.label13.Text = "B";
-            // 
-            // label12
-            // 
-            this.label12.AutoSize = true;
-            this.label12.Location = new System.Drawing.Point(221, 60);
-            this.label12.Name = "label12";
-            this.label12.Size = new System.Drawing.Size(14, 13);
-            this.label12.TabIndex = 2;
-            this.label12.Text = "V";
-            // 
-            // label11
-            // 
-            this.label11.AutoSize = true;
-            this.label11.Location = new System.Drawing.Point(221, 34);
-            this.label11.Name = "label11";
-            this.label11.Size = new System.Drawing.Size(15, 13);
-            this.label11.TabIndex = 1;
-            this.label11.Text = "R";
-            // 
-            // pictureBoxCapteur
-            // 
-            this.pictureBoxCapteur.Location = new System.Drawing.Point(37, 29);
-            this.pictureBoxCapteur.Name = "pictureBoxCapteur";
-            this.pictureBoxCapteur.Size = new System.Drawing.Size(134, 132);
-            this.pictureBoxCapteur.TabIndex = 0;
-            this.pictureBoxCapteur.TabStop = false;
-            // 
             // tabBougies
             // 
             this.tabBougies.Controls.Add(this.panelBougies1);
@@ -1094,9 +971,6 @@ namespace GoBot
             ((System.ComponentModel.ISupportInitialize)(this.numDGR)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.numIGR)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.numPGR)).EndInit();
-            this.tabCapteurCouleur.ResumeLayout(false);
-            this.tabCapteurCouleur.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBoxCapteur)).EndInit();
             this.tabBougies.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.ledRecBoi)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.ledRecBeu)).EndInit();
@@ -1180,17 +1054,6 @@ namespace GoBot
         private System.Windows.Forms.NumericUpDown numDGR;
         private System.Windows.Forms.NumericUpDown numIGR;
         private System.Windows.Forms.NumericUpDown numPGR;
-        private System.Windows.Forms.TabPage tabCapteurCouleur;
-        private System.Windows.Forms.Button btnRefresh;
-        private System.Windows.Forms.Label lblB;
-        private System.Windows.Forms.Label lblV;
-        private System.Windows.Forms.Label lblR;
-        private System.Windows.Forms.Label label13;
-        private System.Windows.Forms.Label label12;
-        private System.Windows.Forms.Label label11;
-        private System.Windows.Forms.PictureBox pictureBoxCapteur;
-        private System.Windows.Forms.Label lblL;
-        private System.Windows.Forms.Label label15;
         private System.Windows.Forms.Label lblSimulation;
         private IHM.Composants.SwitchBouton switchBoutonSimu;
         private System.Windows.Forms.TabPage tabBougies;

@@ -29,17 +29,17 @@
         private void InitializeComponent()
         {
             this.groupBoxCap = new System.Windows.Forms.GroupBox();
-            this.ledAspi = new GoBot.IHM.Composants.Led();
             this.boxAspiRemonte = new System.Windows.Forms.CheckBox();
-            this.ledAssiette = new GoBot.IHM.Composants.Led();
             this.boxAssiette = new System.Windows.Forms.CheckBox();
-            this.ledCouleur = new GoBot.IHM.Composants.Led();
-            this.ledPresence = new GoBot.IHM.Composants.Led();
             this.boxCouleur = new System.Windows.Forms.CheckBox();
             this.boxBalle = new System.Windows.Forms.CheckBox();
             this.btnTaille = new System.Windows.Forms.Button();
             this.lblVitesseCanon = new System.Windows.Forms.Label();
             this.boxVitesseCanon = new System.Windows.Forms.CheckBox();
+            this.ledAspi = new GoBot.IHM.Composants.Led();
+            this.ledAssiette = new GoBot.IHM.Composants.Led();
+            this.ledCouleur = new GoBot.IHM.Composants.Led();
+            this.ledPresence = new GoBot.IHM.Composants.Led();
             this.groupBoxCap.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.ledAspi)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.ledAssiette)).BeginInit();
@@ -68,15 +68,6 @@
             this.groupBoxCap.TabStop = false;
             this.groupBoxCap.Text = "Capteurs";
             // 
-            // ledAspi
-            // 
-            this.ledAspi.Etat = false;
-            this.ledAspi.Location = new System.Drawing.Point(146, 137);
-            this.ledAspi.Name = "ledAspi";
-            this.ledAspi.Size = new System.Drawing.Size(16, 16);
-            this.ledAspi.TabIndex = 97;
-            this.ledAspi.TabStop = false;
-            // 
             // boxAspiRemonte
             // 
             this.boxAspiRemonte.AutoSize = true;
@@ -88,15 +79,6 @@
             this.boxAspiRemonte.UseVisualStyleBackColor = true;
             this.boxAspiRemonte.CheckedChanged += new System.EventHandler(this.boxAspiRemonte_CheckedChanged);
             // 
-            // ledAssiette
-            // 
-            this.ledAssiette.Etat = false;
-            this.ledAssiette.Location = new System.Drawing.Point(146, 104);
-            this.ledAssiette.Name = "ledAssiette";
-            this.ledAssiette.Size = new System.Drawing.Size(16, 16);
-            this.ledAssiette.TabIndex = 95;
-            this.ledAssiette.TabStop = false;
-            // 
             // boxAssiette
             // 
             this.boxAssiette.AutoSize = true;
@@ -107,24 +89,6 @@
             this.boxAssiette.Text = "Présence assiette :";
             this.boxAssiette.UseVisualStyleBackColor = true;
             this.boxAssiette.CheckedChanged += new System.EventHandler(this.boxAssiette_CheckedChanged);
-            // 
-            // ledCouleur
-            // 
-            this.ledCouleur.Etat = false;
-            this.ledCouleur.Location = new System.Drawing.Point(146, 71);
-            this.ledCouleur.Name = "ledCouleur";
-            this.ledCouleur.Size = new System.Drawing.Size(16, 16);
-            this.ledCouleur.TabIndex = 93;
-            this.ledCouleur.TabStop = false;
-            // 
-            // ledPresence
-            // 
-            this.ledPresence.Etat = false;
-            this.ledPresence.Location = new System.Drawing.Point(146, 36);
-            this.ledPresence.Name = "ledPresence";
-            this.ledPresence.Size = new System.Drawing.Size(16, 16);
-            this.ledPresence.TabIndex = 92;
-            this.ledPresence.TabStop = false;
             // 
             // boxCouleur
             // 
@@ -172,11 +136,47 @@
             this.boxVitesseCanon.AutoSize = true;
             this.boxVitesseCanon.Location = new System.Drawing.Point(26, 169);
             this.boxVitesseCanon.Name = "boxVitesseCanon";
-            this.boxVitesseCanon.Size = new System.Drawing.Size(93, 17);
+            this.boxVitesseCanon.Size = new System.Drawing.Size(99, 17);
             this.boxVitesseCanon.TabIndex = 99;
-            this.boxVitesseCanon.Text = "Aspi remonté :";
+            this.boxVitesseCanon.Text = "Vitesse canon :";
             this.boxVitesseCanon.UseVisualStyleBackColor = true;
             this.boxVitesseCanon.CheckedChanged += new System.EventHandler(this.boxVitesseCanon_CheckedChanged);
+            // 
+            // ledAspi
+            // 
+            this.ledAspi.Etat = false;
+            this.ledAspi.Location = new System.Drawing.Point(146, 137);
+            this.ledAspi.Name = "ledAspi";
+            this.ledAspi.Size = new System.Drawing.Size(16, 16);
+            this.ledAspi.TabIndex = 97;
+            this.ledAspi.TabStop = false;
+            // 
+            // ledAssiette
+            // 
+            this.ledAssiette.Etat = false;
+            this.ledAssiette.Location = new System.Drawing.Point(146, 104);
+            this.ledAssiette.Name = "ledAssiette";
+            this.ledAssiette.Size = new System.Drawing.Size(16, 16);
+            this.ledAssiette.TabIndex = 95;
+            this.ledAssiette.TabStop = false;
+            // 
+            // ledCouleur
+            // 
+            this.ledCouleur.Etat = false;
+            this.ledCouleur.Location = new System.Drawing.Point(146, 71);
+            this.ledCouleur.Name = "ledCouleur";
+            this.ledCouleur.Size = new System.Drawing.Size(16, 16);
+            this.ledCouleur.TabIndex = 93;
+            this.ledCouleur.TabStop = false;
+            // 
+            // ledPresence
+            // 
+            this.ledPresence.Etat = false;
+            this.ledPresence.Location = new System.Drawing.Point(146, 36);
+            this.ledPresence.Name = "ledPresence";
+            this.ledPresence.Size = new System.Drawing.Size(16, 16);
+            this.ledPresence.TabIndex = 92;
+            this.ledPresence.TabStop = false;
             // 
             // PanelCapteursGros
             // 

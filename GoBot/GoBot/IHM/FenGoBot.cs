@@ -43,8 +43,8 @@ namespace GoBot
                     btnClose.Visible = false;
                 }
 
-                Robots.GrosRobot.Historique.nouvelleAction += new Historique.delegateAction(HistoriqueGR_nouvelleAction);
-                Robots.PetitRobot.Historique.nouvelleAction += new Historique.delegateAction(HistoriquePR_nouvelleAction);
+                Robots.GrosRobot.Historique.NouvelleAction += new Historique.delegateAction(HistoriqueGR_nouvelleAction);
+                Robots.PetitRobot.Historique.NouvelleAction += new Historique.delegateAction(HistoriquePR_nouvelleAction);
 
                 panelBalise1.Balise = Plateau.Balise1;
                 panelBalise2.Balise = Plateau.Balise2;
@@ -52,13 +52,6 @@ namespace GoBot
 
                 // Réglage rouge par défaut
                 btnCouleurRouge_Click(null, null);
-
-                Connexions.ConnexionMove.ConnexionCheck.ConnexionChange += new ConnexionCheck.ConnexionChangeDelegate(ConnexionMoveCheck_ConnexionChange);
-                Connexions.ConnexionMiwi.ConnexionCheck.ConnexionChange += new ConnexionCheck.ConnexionChangeDelegate(ConnexionIoCheck_ConnexionChange);
-
-                panelBalise1.Balise.ConnexionCheck.ConnexionChange += new ConnexionCheck.ConnexionChangeDelegate(ConnexionBunCheck_ConnexionChange);
-                panelBalise2.Balise.ConnexionCheck.ConnexionChange += new ConnexionCheck.ConnexionChangeDelegate(ConnexionBeuCheck_ConnexionChange);
-                panelBalise3.Balise.ConnexionCheck.ConnexionChange += new ConnexionCheck.ConnexionChangeDelegate(ConnexionBoiCheck_ConnexionChange);
                 //PetitRobot.ConnexionCheck.ConnexionChange += new ConnexionCheck.ConnexionChangeDelegate(ConnexionPi_ConnexionChange);
 
                 Connexions.ConnexionMove.ConnexionCheck.Start();
@@ -450,6 +443,25 @@ namespace GoBot
         {
             Plateau.NotreCouleurChange += new EventHandler(Plateau_NotreCouleurChange);
             Connexions.ConnexionMove.SendMessage(TrameFactory.DemandeCouleurEquipe());
+
+            Connexions.ConnexionMove.ConnexionCheck.ConnexionChange += new ConnexionCheck.ConnexionChangeDelegate(ConnexionMoveCheck_ConnexionChange);
+            Connexions.ConnexionMiwi.ConnexionCheck.ConnexionChange += new ConnexionCheck.ConnexionChangeDelegate(ConnexionIoCheck_ConnexionChange);
+
+            panelBalise1.Balise.ConnexionCheck.ConnexionChange += new ConnexionCheck.ConnexionChangeDelegate(ConnexionBunCheck_ConnexionChange);
+            panelBalise2.Balise.ConnexionCheck.ConnexionChange += new ConnexionCheck.ConnexionChangeDelegate(ConnexionBeuCheck_ConnexionChange);
+            panelBalise3.Balise.ConnexionCheck.ConnexionChange += new ConnexionCheck.ConnexionChangeDelegate(ConnexionBoiCheck_ConnexionChange);
+
+            if (Connexions.ConnexionMove.ConnexionCheck.Connecte)
+                SetLed(ledRecMove, true);
+            if (Connexions.ConnexionMiwi.ConnexionCheck.Connecte)
+                SetLed(ledRecIo, true);
+            if (panelBalise1.Balise.ConnexionCheck.Connecte)
+                SetLed(ledRecBun, true);
+            if (panelBalise2.Balise.ConnexionCheck.Connecte)
+                SetLed(ledRecBeu, true);
+            if (panelBalise3.Balise.ConnexionCheck.Connecte)
+                SetLed(ledRecBoi, true);
+
         }
 
         void Plateau_NotreCouleurChange(object sender, EventArgs e)
@@ -468,8 +480,8 @@ namespace GoBot
             Robots.Simuler(actif);
             panelGrosRobot.Init();
             panelPetitRobot.Init();
-            Robots.GrosRobot.Historique.nouvelleAction += new Historique.delegateAction(HistoriqueGR_nouvelleAction);
-            Robots.PetitRobot.Historique.nouvelleAction += new Historique.delegateAction(HistoriquePR_nouvelleAction);
+            Robots.GrosRobot.Historique.NouvelleAction += new Historique.delegateAction(HistoriqueGR_nouvelleAction);
+            Robots.PetitRobot.Historique.NouvelleAction += new Historique.delegateAction(HistoriquePR_nouvelleAction);
         }
     }
 }

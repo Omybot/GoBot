@@ -24,7 +24,7 @@ namespace GoBot.IHM
             panelDeplacement.Robot = Robots.GrosRobot;
             panelDeplacement.Init();
             panelHistorique.setHistorique(Robots.GrosRobot.Historique);
-            Robots.GrosRobot.Historique.nouvelleAction += new Historique.delegateAction(MAJHistoriqueDel);
+            Robots.GrosRobot.Historique.NouvelleAction += new Historique.delegateAction(MAJHistoriqueDel);
         }
 
         private void MAJHistoriqueDel(IAction action)

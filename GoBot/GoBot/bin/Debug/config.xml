@@ -51,13 +51,13 @@
   <PositionGRCameraBleu>400</PositionGRCameraBleu>
   <PositionGRCameraRouge>600</PositionGRCameraRouge>
   <PositionGRBloqueurOuvert>0</PositionGRBloqueurOuvert>
-  <PositionGRBloqueurFerme>3</PositionGRBloqueurFerme>
+  <PositionGRBloqueurFerme>250</PositionGRBloqueurFerme>
   <PositionGRBrasGaucheSorti>600</PositionGRBrasGaucheSorti>
   <PositionGRBrasGaucheRange>215</PositionGRBrasGaucheRange>
   <PositionGRBrasDroitSorti>400</PositionGRBrasDroitSorti>
   <PositionGRBrasDroitRange>785</PositionGRBrasDroitRange>
-  <VitesseAspiration>4</VitesseAspiration>
-  <VitesseAspirationMaintien>1</VitesseAspirationMaintien>
+  <VitesseAspiration>312</VitesseAspiration>
+  <VitesseAspirationMaintien>60</VitesseAspirationMaintien>
   <VitessePropulsionBonne>455</VitessePropulsionBonne>
   <PositionPRBrasGaucheHaut>0</PositionPRBrasGaucheHaut>
   <PositionPRBrasGaucheMilieu>0</PositionPRBrasGaucheMilieu>

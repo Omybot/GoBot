@@ -13,6 +13,7 @@ namespace GoBot.Ponderations
             PoidsGrosBougie = new double[20];
             PoidsPetitCadeau = new double[8];
             PoidsGrosCadeau = new double[8];
+            PoidsGrosAssiette = new double[10];
 
             PoidGlobalPetitBougie = 0;// 0.2;
             PoidGlobalPetitCadeau = 0;// 1;
@@ -87,7 +88,6 @@ namespace GoBot.Ponderations
             PoidsGrosCadeau[7] = 16;
 
             // Assiettes
-            PoidsGrosAssiette = new double[10];
             PoidsGrosAssiette[0] = 1;
             PoidsGrosAssiette[1] = 1;
             PoidsGrosAssiette[2] = 1;
@@ -98,8 +98,6 @@ namespace GoBot.Ponderations
             PoidsGrosAssiette[7] = 1;
             PoidsGrosAssiette[8] = 1;
             PoidsGrosAssiette[9] = 1;
-
-
         }
     }
 }
