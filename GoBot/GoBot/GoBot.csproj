@@ -117,6 +117,8 @@
     <Compile Include="IHM\PanelReglageGros.Designer.cs">
       <DependentUpon>PanelReglageGros.cs</DependentUpon>
     </Compile>
+    <Compile Include="Mouvements\MoveGrosAccrocheAssiette.cs" />
+    <Compile Include="Mouvements\MoveGrosLanceBalles.cs" />
     <Compile Include="Mouvements\MoveGrosAspireAssiette.cs" />
     <Compile Include="Mouvements\MoveGrosCadeau.cs" />
     <Compile Include="Mouvements\MoveGrosBougie.cs" />
@@ -497,13 +499,11 @@
     <None Include="img\AssiettePleineBleu.png" />
     <None Include="img\AssiettePleineRouge.png" />
     <None Include="img\AssietteVide.png" />
+    <None Include="img\Balles.png" />
     <Content Include="img\iconeVitesse.png" />
-    <None Include="img\ledNeutre.png" />
     <None Include="img\ledBleu.png" />
     <None Include="img\ledGris.png" />
     <None Include="img\ledJaune.png" />
-    <Content Include="img\ledOff.png" />
-    <Content Include="img\ledOn.png" />
     <None Include="img\table.bmp" />
     <None Include="img\pompe.png" />
     <None Include="img\tableRouge.png" />

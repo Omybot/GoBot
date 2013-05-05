@@ -72,6 +72,8 @@ namespace GoBot.IHM
             timerAssiette.Elapsed += new System.Timers.ElapsedEventHandler(timerAssiette_Elapsed);
             timerAspiRemonte = new System.Timers.Timer(100);
             timerAspiRemonte.Elapsed += new System.Timers.ElapsedEventHandler(timerAspiRemonte_Elapsed);
+            timerVitesseCanon = new System.Timers.Timer(500);
+            timerVitesseCanon.Elapsed += new System.Timers.ElapsedEventHandler(timerVitesseCanon_Elapsed);
 
             ledPresence.CouleurGris();
             ledAssiette.CouleurGris();
@@ -180,6 +182,23 @@ namespace GoBot.IHM
                     ledAspi.CouleurVert();
                 else
                     ledAspi.CouleurRouge();
+            }));
+        }
+
+        System.Timers.Timer timerVitesseCanon;
+        private void boxVitesseCanon_CheckedChanged(object sender, EventArgs e)
+        {
+            if (boxVitesseCanon.Checked)
+                timerVitesseCanon.Start();
+            else
+                timerVitesseCanon.Stop();
+        }
+
+        void timerVitesseCanon_Elapsed(object sender, System.Timers.ElapsedEventArgs e)
+        {
+            this.Invoke(new EventHandler(delegate
+            {
+                lblVitesseCanon.Text = Robots.GrosRobot.VitesseCanon(false) + " t/min";
             }));
         }
     }

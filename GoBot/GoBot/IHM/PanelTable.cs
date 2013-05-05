@@ -339,6 +339,11 @@ namespace GoBot.IHM
                         lblPosGrosX.Text = Math.Round(Robots.GrosRobot.Position.Coordonnees.X, 2).ToString();
                         lblPosGrosY.Text = Math.Round(Robots.GrosRobot.Position.Coordonnees.Y, 2).ToString();
                         lblPosGrosTeta.Text = Robots.GrosRobot.Position.Angle.ToString();
+
+                        if (Robots.GrosRobot.BallesChargees)
+                        {
+                            g.DrawImage(rotateImage(Properties.Resources.Balles, Robots.GrosRobot.Position.Angle.AngleDegres), RealToScreen(Robots.GrosRobot.Position.Coordonnees.X) - 61 / 2, RealToScreen(Robots.GrosRobot.Position.Coordonnees.Y) - 61 / 2, 61, 61);
+                        }
                     }
 
                     // Fin dessin robot

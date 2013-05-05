@@ -2,7 +2,7 @@
 <Config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
   <DeplacementGROuvert>true</DeplacementGROuvert>
   <HistoriqueGROuvert>true</HistoriqueGROuvert>
-  <ReglageGROuvert>true</ReglageGROuvert>
+  <ReglageGROuvert>false</ReglageGROuvert>
   <UtilGROuvert>true</UtilGROuvert>
   <SequencesGROuvert>true</SequencesGROuvert>
   <CapteursGROuvert>true</CapteursGROuvert>
@@ -12,6 +12,22 @@
   <GRAccelerationLigne>2000</GRAccelerationLigne>
   <GRVitessePivot>1000</GRVitessePivot>
   <GRAccelerationPivot>4000</GRAccelerationPivot>
+  <GRVitesseLigneRapide>1000</GRVitesseLigneRapide>
+  <GRAccelerationLigneRapide>1500</GRAccelerationLigneRapide>
+  <GRVitessePivotRapide>2000</GRVitessePivotRapide>
+  <GRAccelerationPivotRapide>4000</GRAccelerationPivotRapide>
+  <GRVitesseLigneLent>200</GRVitesseLigneLent>
+  <GRAccelerationLigneLent>300</GRAccelerationLigneLent>
+  <GRVitessePivotLent>500</GRVitessePivotLent>
+  <GRAccelerationPivotLent>500</GRAccelerationPivotLent>
+  <PositionsLancement>
+    <PositionLancement>
+      <X>1500</X>
+      <Y>1000</Y>
+      <Angle>90</Angle>
+      <PuissanceTir>0</PuissanceTir>
+    </PositionLancement>
+  </PositionsLancement>
   <PRVitesseLigne>585</PRVitesseLigne>
   <PRAccelerationLigne>0</PRAccelerationLigne>
   <PRVitessePivot>0</PRVitessePivot>
@@ -34,13 +50,15 @@
   <PositionGRDebloqueurBas>550</PositionGRDebloqueurBas>
   <PositionGRCameraBleu>400</PositionGRCameraBleu>
   <PositionGRCameraRouge>600</PositionGRCameraRouge>
+  <PositionGRBloqueurOuvert>0</PositionGRBloqueurOuvert>
+  <PositionGRBloqueurFerme>3</PositionGRBloqueurFerme>
   <PositionGRBrasGaucheSorti>600</PositionGRBrasGaucheSorti>
   <PositionGRBrasGaucheRange>215</PositionGRBrasGaucheRange>
   <PositionGRBrasDroitSorti>400</PositionGRBrasDroitSorti>
   <PositionGRBrasDroitRange>785</PositionGRBrasDroitRange>
-  <VitesseAspiration>313</VitesseAspiration>
+  <VitesseAspiration>4</VitesseAspiration>
+  <VitesseAspirationMaintien>1</VitesseAspirationMaintien>
   <VitessePropulsionBonne>455</VitessePropulsionBonne>
-  <VitessePropulsionMauvaise>450</VitessePropulsionMauvaise>
   <PositionPRBrasGaucheHaut>0</PositionPRBrasGaucheHaut>
   <PositionPRBrasGaucheMilieu>0</PositionPRBrasGaucheMilieu>
   <PositionPRBrasGaucheBas>0</PositionPRBrasGaucheBas>

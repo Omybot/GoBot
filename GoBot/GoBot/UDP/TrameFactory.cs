@@ -34,6 +34,7 @@ namespace GoBot.UDP
             VitesseCanon = 0x54,
             Shutter = 0x55,
             Pompe = 0x56,
+            VitesseCanonTours = 0x57,
 
 
             ServoPosition = 0x60,
@@ -50,6 +51,8 @@ namespace GoBot.UDP
             ReponsePresenceAssiette = 0x7B,
             DemandeAspiRemonte = 0x7C,
             ReponseAspiRemonte = 0x7D,
+            DemandeVitesseCanon = 0x7E,
+            ReponseVitesseCanon = 0x7F,
 
             Alimentation = 0x80,
             AlimentationCamera = 0x81,
@@ -574,6 +577,14 @@ namespace GoBot.UDP
             byte[] tab = new byte[2];
             tab[0] = (byte)Carte.RecMove;
             tab[1] = (byte)FonctionMove.DemandePresenceAssiette;
+            return new Trame(tab);
+        }
+
+        public static Trame DemandeVitesseCanon()
+        {
+            byte[] tab = new byte[2];
+            tab[0] = (byte)Carte.RecMove;
+            tab[1] = (byte)FonctionMove.DemandeVitesseCanon;
             return new Trame(tab);
         }
 

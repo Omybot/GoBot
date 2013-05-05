@@ -16,6 +16,7 @@ namespace GoBot
         public bool DeplacementLigne { get; protected set; }
 
         public abstract Position Position { get; set; }
+        public bool BallesChargees { get; set; }
 
         public abstract void Avancer(int distance, bool attendre = true);
         public abstract void Reculer(int distance, bool attendre = true);
@@ -35,10 +36,11 @@ namespace GoBot
         public abstract Color CouleurBalle(bool historique = true);
         public abstract bool PresenceAssiette(bool historique = true);
         public abstract bool AspiRemonte(bool historique = true);
+        public abstract int VitesseCanon(bool historique = true);
 
         public void Diagnostic()
         {
-            int tempsPause = 500;
+            int tempsPause = 300;
             //Avancer(50);
             //Reculer(50);
             BougeServo(ServomoteurID.GRAspirateur, Config.CurrentConfig.PositionGRAspirateurBas);
@@ -158,6 +160,23 @@ namespace GoBot
             ServoSorti.Add(ServomoteurID.GRBrasGauche, false);
             ServoSorti.Add(ServomoteurID.GRGrandBras, false);
             ServoSorti.Add(ServomoteurID.GRPetitBras, false);
+            BallesChargees = false;
+        }
+
+        public void Lent()
+        {
+            VitesseDeplacement = Config.CurrentConfig.GRVitesseLigneLent;
+            AccelerationDeplacement = Config.CurrentConfig.GRAccelerationLigneLent;
+            VitessePivot = Config.CurrentConfig.GRVitessePivotLent;
+            AccelerationPivot = Config.CurrentConfig.GRAccelerationLigneLent;
+        }
+
+        public void Rapide()
+        {
+            VitesseDeplacement = Config.CurrentConfig.GRVitesseLigneRapide;
+            AccelerationDeplacement = Config.CurrentConfig.GRAccelerationLigneRapide;
+            VitessePivot = Config.CurrentConfig.GRVitessePivotRapide;
+            AccelerationPivot = Config.CurrentConfig.GRAccelerationLigneRapide;
         }
 
         public bool PathFinding(double x, double y, int timeOut = 0, bool attendre = false)

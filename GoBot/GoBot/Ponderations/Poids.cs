@@ -18,6 +18,8 @@ namespace GoBot.Ponderations
         public double PoidGlobalGrosCadeau { get; set; }
         public double PoidGlobalGrosAspireAssiette { get; set; }
         public double PoidGlobalGrosAccrocheAssiette { get; set; }
-        public double PoidGlobalGrosLancerBalles { get; set; }
+        public double PoidGlobalGrosLancerBallesSansAssietteAccrochee { get; set; }
+        public double PoidGlobalGrosAspireAssietteAccrochee { get; set; }
+        public double PoidGlobalGrosLancerBallesAvecAssietteAccrochee { get; set; }
     }
 }

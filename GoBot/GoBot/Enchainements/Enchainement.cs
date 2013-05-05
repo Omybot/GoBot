@@ -43,6 +43,15 @@ namespace GoBot.Enchainements
             ListeMouvementsPetit.Add(new MovePetitBougie(16));
             ListeMouvementsPetit.Add(new MovePetitBougie(17));
             ListeMouvementsPetit.Add(new MovePetitBougie(19));
+
+            for (int i = 0; i < 10; i++)
+            {
+                ListeMouvementsGros.Add(new MoveGrosAccrocheAssiette(i));
+                ListeMouvementsGros.Add(new MoveGrosAspireAssiette(i));
+            }
+
+            for (int i = 0; i < Config.CurrentConfig.PositionsLancement.Length; i++)
+                ListeMouvementsGros.Add(new MoveGrosLanceBalles(Config.CurrentConfig.PositionsLancement[i]));
         }
 
         public void Executer()
@@ -93,7 +102,7 @@ namespace GoBot.Enchainements
                     }
                 }
 
-                if (ListeMouvementsGros[iMeilleur].Score != 0)
+                if (ListeMouvementsGros[iMeilleur].ScorePondere != 0)
                     ListeMouvementsGros[iMeilleur].Executer();
             }
         }

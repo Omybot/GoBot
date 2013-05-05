@@ -14,14 +14,16 @@ namespace GoBot.Ponderations
             PoidsPetitCadeau = new double[8];
             PoidsGrosCadeau = new double[8];
 
-            PoidGlobalPetitBougie = 0.2;
-            PoidGlobalPetitCadeau = 1;
+            PoidGlobalPetitBougie = 0;// 0.2;
+            PoidGlobalPetitCadeau = 0;// 1;
 
             PoidGlobalGrosBougie = 1;
             PoidGlobalGrosCadeau = 0.5;
-            PoidGlobalGrosAccrocheAssiette = 0.3;
-            PoidGlobalGrosAspireAssiette = 2;
-            PoidGlobalGrosLancerBalles = 5;
+            PoidGlobalGrosAspireAssiette = 50;
+            PoidGlobalGrosAccrocheAssiette = 50;
+            PoidGlobalGrosLancerBallesSansAssietteAccrochee = 5;
+            PoidGlobalGrosAspireAssietteAccrochee = 10000;
+            PoidGlobalGrosLancerBallesAvecAssietteAccrochee = 10000;
 
             // Poids petit robot
 
@@ -96,6 +98,8 @@ namespace GoBot.Ponderations
             PoidsGrosAssiette[7] = 1;
             PoidsGrosAssiette[8] = 1;
             PoidsGrosAssiette[9] = 1;
+
+
         }
     }
 }

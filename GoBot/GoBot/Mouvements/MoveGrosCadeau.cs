@@ -42,31 +42,6 @@ namespace GoBot.Mouvements
             }
         }
 
-        public override double Cout
-        {
-            get
-            {
-                if (Score <= 0)
-                    return double.MaxValue;
-
-                double distance = Robots.GrosRobot.Position.Coordonnees.Distance(Position.Coordonnees) / 10;
-                double cout = distance * distance / ScorePondere;
-
-                Plateau.SemaphoreGraph.WaitOne();
-                foreach (Cercle c in Plateau.ObstaclesTemporaires)
-                {
-                    double distanceAdv = Position.Coordonnees.Distance(c.Centre) / 10;
-                    if (distanceAdv < 45)
-                        cout = double.PositiveInfinity;
-                    else
-                        cout /= (distanceAdv * distanceAdv * distanceAdv);
-                }
-                Plateau.SemaphoreGraph.Release();
-
-                return cout * 10000;
-            }
-        }
-
         public override int Score
         {
             get

@@ -215,15 +215,17 @@ namespace GoBot
                     //Historique.AjouterActionThread(new ActionCapteur(this, CapteurID.GRCouleurBalle, "));
                 }
 
-                if (trameRecue[1] == (byte)TrameFactory.FonctionMove.ReponsePresenceAssiette)
+                if (trameRecue[1] == (byte)TrameFactory.FonctionMove.ReponseVitesseCanon)
                 {
-                    presenceAssiette = trameRecue[2] == 1;
-                    if (semCapteurAssiette != null)
-                        semCapteurAssiette.Release();
+                    vitesseCanon = trameRecue[2] * 256 + trameRecue[3];
+                    if (semVitesseCanon != null)
+                        semVitesseCanon.Release();
 
-                    if(historiquePresenceAssiette)
-                        Historique.AjouterActionThread(new ActionCapteur(this, CapteurID.GRPresenceAssiette, presenceAssiette ? " présente" : " absente"));
+                    if(historiqueVitesseCanon)
+                        Historique.AjouterActionThread(new ActionCapteur(this, CapteurID.GRVitesseCanon, vitesseCanon + "tours/min"));
                 }
+
+
             }
         }
 
@@ -503,6 +505,18 @@ namespace GoBot
             Connexion.SendMessage(TrameFactory.DemandeAspiRemonte());
             semAspiRemonte.WaitOne();
             return aspiRemonte;
+        }
+
+        private Semaphore semVitesseCanon;
+        private int vitesseCanon;
+        private bool historiqueVitesseCanon;
+        public override int VitesseCanon(bool historique = true)
+        {
+            historiqueVitesseCanon = historique;
+            semVitesseCanon = new Semaphore(0, 1);
+            Connexion.SendMessage(TrameFactory.DemandeVitesseCanon());
+            semVitesseCanon.WaitOne();
+            return vitesseCanon;
         }
 
         public override void TourneMoteur(MoteurID moteur, int vitesse)

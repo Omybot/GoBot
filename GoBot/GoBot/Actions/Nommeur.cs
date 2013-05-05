@@ -30,6 +30,8 @@ namespace GoBot.Actions
                     return "grand bras";
                 case ServomoteurID.GRPetitBras:
                     return "petit bras";
+                case ServomoteurID.GRServoAssiette:
+                    return "blocage assiette";
                 default:
                     return servo.ToString();
             }
@@ -98,6 +100,13 @@ namespace GoBot.Actions
                         return "rangé (" + position + ")";
                     else
                         return position + "";
+                case ServomoteurID.GRServoAssiette:
+                    if (position == Config.CurrentConfig.PositionGRBloqueurFerme)
+                        return "bloqué (" + position + ")";
+                    else if (position == Config.CurrentConfig.PositionGRBloqueurOuvert)
+                        return "ouvert (" + position + ")";
+                    else
+                        return position + "";
                 default:
                     return position.ToString();
             }
@@ -142,11 +151,17 @@ namespace GoBot.Actions
                 case MoteurID.GRCanon:
                     if (vitesse == Config.CurrentConfig.VitessePropulsionBonne)
                         return "panier (" + vitesse + ")";
+                    else if (vitesse == 0)
+                        return "éteint (0)";
                     else
                         return vitesse + "";
                 case MoteurID.GRTurbineAspirateur:
                     if (vitesse == Config.CurrentConfig.VitesseAspiration)
                         return "aspirer (" + vitesse + ")";
+                    else if (vitesse == Config.CurrentConfig.VitesseAspirationMaintien)
+                        return "maintien (" + vitesse + ")";
+                    else if (vitesse == 0)
+                        return "éteint (0)";
                     else
                         return vitesse + "";
                 default:

@@ -88,6 +88,13 @@ namespace GoBot.Properties {
             }
         }
         
+        internal static System.Drawing.Bitmap Balles {
+            get {
+                object obj = ResourceManager.GetObject("Balles", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
         internal static System.Drawing.Bitmap bas {
             get {
                 object obj = ResourceManager.GetObject("bas", resourceCulture);

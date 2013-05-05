@@ -14,6 +14,7 @@ namespace GoBot
     class RobotSimu : Robot
     {
         private Semaphore semDeplacement;
+        private Random rand;
 
         private Position position;
         public override Position Position 
@@ -91,6 +92,7 @@ namespace GoBot
 
             Nom = "GrosRobot";
             RecallageEnCours = false;
+            rand = new Random(DateTime.Now.Millisecond);
         }
 
         void timerDeplacement_Elapsed(object sender, ElapsedEventArgs e)
@@ -262,13 +264,17 @@ namespace GoBot
 
         public override bool PresenceBalle(bool historique = true)
         {
-            // TODO
+            if (rand.Next(10) == 0)
+                return true;
+
             return false; 
         }
 
         public override Color CouleurBalle(bool historique = true)
         {
-            // TODO
+            if (rand.Next(8) == 0)
+                return Color.Blue;
+
             return Color.White;
         }
 
@@ -293,6 +299,12 @@ namespace GoBot
         public override void AlimentationPuissance(bool on)
         {
             // TODO
+        }
+
+        public override int VitesseCanon(bool historique = true)
+        {
+            // TODO
+            return 1;
         }
     }
 }
