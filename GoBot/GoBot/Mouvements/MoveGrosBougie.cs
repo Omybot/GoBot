@@ -37,11 +37,16 @@ namespace GoBot.Mouvements
                 posBas = Config.CurrentConfig.PositionGRGrandBrasRange;
             }
 
-            Robots.GrosRobot.BougeServo(servo, posHaut);
+            Plateau.BougiesEnfoncees[numeroBougie] = true;
             if (Robots.GrosRobot.PathFinding(Position.Coordonnees.X, Position.Coordonnees.Y, timeOut, true))
             {
+                if (!Robots.GrosRobot.ServoSorti[servo])
+                {
+                    Robots.GrosRobot.PositionerAngle(new Angle(Position.Angle.AngleDegres + 90), 25);
+                    Robots.GrosRobot.BougeServo(servo, posHaut);
+                }
                 Robots.GrosRobot.PositionerAngle(Position.Angle, 1);
-                
+
                 Robots.GrosRobot.BougeServo(servo, posBas);
                 Thread.Sleep(300);
                 Robots.GrosRobot.BougeServo(servo, posHaut);
@@ -51,11 +56,13 @@ namespace GoBot.Mouvements
                 Robots.GrosRobot.BougeServo(servo, posHaut);
 
                 Plateau.Score += Score;
-                Plateau.BougiesEnfoncees[numeroBougie] = true;
                 return true;
             }
             else
+            {
+                Plateau.BougiesEnfoncees[numeroBougie] = false;
                 return false;
+            }
         }
 
         public override double Cout

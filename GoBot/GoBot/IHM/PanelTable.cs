@@ -270,6 +270,33 @@ namespace GoBot.IHM
                             (int)(ySouris - RealToScreen(Robots.GrosRobot.Rayon) * 2), RealToScreen(Robots.GrosRobot.Rayon) * 4, RealToScreen(Robots.GrosRobot.Rayon) * 4);
                     }
 
+                    // Dessin des assiettes
+
+                    if (Plateau.AssietteAttrapee != -1)
+                    {
+                        Plateau.PositionsAssiettes[Plateau.AssietteAttrapee] = new Position(new Angle(Robots.GrosRobot.Position.Angle.AngleDegres), new PointReel(
+                            Robots.GrosRobot.Position.Coordonnees.X - (170 / 2 + Robots.GrosRobot.Longueur / 2) * Math.Cos(Robots.GrosRobot.Position.Angle.AngleRadians),
+                            Robots.GrosRobot.Position.Coordonnees.Y - (170 / 2 + Robots.GrosRobot.Longueur / 2) * Math.Sin(Robots.GrosRobot.Position.Angle.AngleRadians)));
+                    }
+
+                    for (int i = 0; i < 5; i++)
+                    {
+                        if (Plateau.AssiettesExiste[i])
+                            if(!Plateau.AssiettesVidees[i])
+                                g.DrawImage(rotateImage(Properties.Resources.AssiettePleineBleu, Plateau.PositionsAssiettes[i].Angle.AngleDegres), RealToScreen(Plateau.PositionsAssiettes[i].Coordonnees.X) - 61 / 2, RealToScreen(Plateau.PositionsAssiettes[i].Coordonnees.Y) - 61 / 2, 61, 61);
+                            else
+                                g.DrawImage(rotateImage(Properties.Resources.AssietteVide, Plateau.PositionsAssiettes[i].Angle.AngleDegres), RealToScreen(Plateau.PositionsAssiettes[i].Coordonnees.X) - 61 / 2, RealToScreen(Plateau.PositionsAssiettes[i].Coordonnees.Y) - 61 / 2, 61, 61);
+
+                    }
+                    for (int i = 5; i < 10; i++)
+                    {
+                        if (Plateau.AssiettesExiste[i])
+                            if(!Plateau.AssiettesVidees[i])
+                                g.DrawImage(rotateImage(Properties.Resources.AssiettePleineRouge, Plateau.PositionsAssiettes[i].Angle.AngleDegres), RealToScreen(Plateau.PositionsAssiettes[i].Coordonnees.X) - 61 / 2, RealToScreen(Plateau.PositionsAssiettes[i].Coordonnees.Y) - 61 / 2, 61, 61);
+                            else
+                                g.DrawImage(rotateImage(Properties.Resources.AssietteVide, Plateau.PositionsAssiettes[i].Angle.AngleDegres), RealToScreen(Plateau.PositionsAssiettes[i].Coordonnees.X) - 61 / 2, RealToScreen(Plateau.PositionsAssiettes[i].Coordonnees.Y) - 61 / 2, 61, 61);
+                    }
+
                     // Dessin du gros robot
 
                     if (Robots.GrosRobot != null)
@@ -467,6 +494,23 @@ namespace GoBot.IHM
                     Console.WriteLine("Erreur pendant le dessin de la table");
                 }
             }
+        }
+
+        private Bitmap rotateImage(Bitmap b, double angle)
+        {
+            //create a new empty bitmap to hold rotated image
+            Bitmap returnBitmap = new Bitmap(b.Width, b.Height);
+            //make a graphics object from the empty bitmap
+            Graphics g = Graphics.FromImage(returnBitmap);
+            //move rotation point to center of image
+            g.TranslateTransform((float)b.Width / 2, (float)b.Height / 2);
+            //rotate
+            g.RotateTransform((float)angle);
+            //move image back
+            g.TranslateTransform(-(float)b.Width / 2, -(float)b.Height / 2);
+            //draw passed in image onto graphics object
+            g.DrawImage(b, 0, 0, b.Width, b.Height);
+            return returnBitmap;
         }
 
         #region Dessin des formes
@@ -677,6 +721,14 @@ namespace GoBot.IHM
         {
             Plateau.Enchainement = new Enchainement();
             Plateau.Enchainement.Executer();
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            if (Plateau.AssietteAttrapee == -1)
+                Plateau.AssietteAttrapee = 1;
+            else
+                Plateau.AssietteAttrapee = -1;
         }
     }
 }

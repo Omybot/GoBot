@@ -11,9 +11,13 @@ namespace GoBot.Ponderations
         public double[] PoidsGrosBougie { get; set; }
         public double[] PoidsPetitCadeau { get; set; }
         public double[] PoidsGrosCadeau { get; set; }
+        public double[] PoidsGrosAssiette { get; set; }
         public double PoidGlobalPetitBougie { get; set; }
         public double PoidGlobalGrosBougie { get; set; }
         public double PoidGlobalPetitCadeau { get; set; }
         public double PoidGlobalGrosCadeau { get; set; }
+        public double PoidGlobalGrosAspireAssiette { get; set; }
+        public double PoidGlobalGrosAccrocheAssiette { get; set; }
+        public double PoidGlobalGrosLancerBalles { get; set; }
     }
 }

@@ -189,6 +189,16 @@ namespace GoBot
                     }
                 }
 
+                if (trameRecue[1] == (byte)TrameFactory.FonctionMove.ReponseAspiRemonte)
+                {
+                    aspiRemonte = trameRecue[2] == 1 ? true : false;
+                    if (semAspiRemonte != null)
+                        semAspiRemonte.Release();
+
+                    if (historiqueAspiRemonte)
+                        Historique.AjouterActionThread(new ActionCapteur(this, CapteurID.GRAspiRemonte, aspiRemonte ? "bien remonté" : "erreur"));
+                }
+
                 if (trameRecue[1] == (byte)TrameFactory.FonctionMove.DepartJack)
                 {
                     Plateau.Enchainement = new GoBot.Enchainements.Enchainement();
@@ -352,6 +362,7 @@ namespace GoBot
 
         public override void BougeServo(ServomoteurID servo, int position)
         {
+            base.BougeServo(servo, position);
             Trame trame = TrameFactory.ServoPosition(servo, position);
             Connexion.SendMessage(trame);
             Historique.AjouterActionThread(new ActionServo(this, position, servo));
@@ -482,6 +493,18 @@ namespace GoBot
             return presenceAssiette;
         }
 
+        private Semaphore semAspiRemonte;
+        private bool aspiRemonte;
+        private bool historiqueAspiRemonte;
+        public override bool AspiRemonte(bool historique = true)
+        {
+            historiqueAspiRemonte = historique;
+            semAspiRemonte = new Semaphore(0, 1);
+            Connexion.SendMessage(TrameFactory.DemandeAspiRemonte());
+            semAspiRemonte.WaitOne();
+            return aspiRemonte;
+        }
+
         public override void TourneMoteur(MoteurID moteur, int vitesse)
         {
             if (moteur == MoteurID.GRCanon)
@@ -496,6 +519,12 @@ namespace GoBot
             }
 
             Historique.AjouterActionThread(new ActionMoteur(this, vitesse, moteur));
+        }
+
+        public override void AlimentationPuissance(bool on)
+        {
+            Trame trame = TrameFactory.CoupureAlim(on);
+            Connexion.SendMessage(trame);
         }
     }
 }

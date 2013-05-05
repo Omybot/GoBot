@@ -243,6 +243,7 @@ namespace GoBot
         public override void BougeServo(ServomoteurID servo, int position)
         {
             // TODO
+            base.BougeServo(servo, position);
             Historique.AjouterActionThread(new ActionServo(this, position, servo));
         }
 
@@ -277,10 +278,21 @@ namespace GoBot
             return true;
         }
 
+        public override bool AspiRemonte(bool historique = true)
+        {
+            // TODO
+            return true;
+        }
+
         public override void TourneMoteur(MoteurID moteur, int vitesse)
         {
             // TODO
             Historique.AjouterActionThread(new ActionMoteur(this, vitesse, moteur));
+        }
+
+        public override void AlimentationPuissance(bool on)
+        {
+            // TODO
         }
     }
 }

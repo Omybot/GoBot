@@ -26,14 +26,80 @@ namespace GoBot
         public abstract void ReglerOffsetAsserv(int offsetX, int offsetY, int offsetTeta);
         public abstract void Recallage(SensAR sens, bool attendre = true);
         public abstract void Init();
-        public abstract void BougeServo(ServomoteurID servo, int position);
         public abstract void TourneMoteur(MoteurID moteur, int vitesse);
         public abstract void EnvoyerPID(int p, int i, int d);
         public abstract void ActionneurOnOff(ActionneurOnOffID actionneur, bool on);
+        public abstract void AlimentationPuissance(bool on);
 
         public abstract bool PresenceBalle(bool historique = true);
         public abstract Color CouleurBalle(bool historique = true);
         public abstract bool PresenceAssiette(bool historique = true);
+        public abstract bool AspiRemonte(bool historique = true);
+
+        public void Diagnostic()
+        {
+            int tempsPause = 500;
+            //Avancer(50);
+            //Reculer(50);
+            BougeServo(ServomoteurID.GRAspirateur, Config.CurrentConfig.PositionGRAspirateurBas);
+            Thread.Sleep(tempsPause);
+            BougeServo(ServomoteurID.GRAspirateur, Config.CurrentConfig.PositionGRAspirateurHaut);
+            Thread.Sleep(tempsPause);
+            BougeServo(ServomoteurID.GRBrasDroit, Config.CurrentConfig.PositionGRBrasDroitSorti);
+            Thread.Sleep(tempsPause);
+            BougeServo(ServomoteurID.GRBrasDroit, Config.CurrentConfig.PositionGRBrasDroitRange);
+            Thread.Sleep(tempsPause);
+            BougeServo(ServomoteurID.GRBrasGauche, Config.CurrentConfig.PositionGRBrasGaucheSorti);
+            Thread.Sleep(tempsPause);
+            BougeServo(ServomoteurID.GRBrasGauche, Config.CurrentConfig.PositionGRBrasGaucheRange);
+            Thread.Sleep(tempsPause);
+            BougeServo(ServomoteurID.GRCamera, Config.CurrentConfig.PositionGRCameraBleu);
+            Thread.Sleep(tempsPause);
+            BougeServo(ServomoteurID.GRCamera, Config.CurrentConfig.PositionGRCameraRouge);
+            Thread.Sleep(tempsPause);
+            BougeServo(ServomoteurID.GRDebloqueur, Config.CurrentConfig.PositionGRDebloqueurHaut);
+            Thread.Sleep(tempsPause);
+            BougeServo(ServomoteurID.GRDebloqueur, Config.CurrentConfig.PositionGRDebloqueurBas);
+            Thread.Sleep(tempsPause);
+            BougeServo(ServomoteurID.GRGrandBras, Config.CurrentConfig.PositionGRGrandBrasHaut);
+            Thread.Sleep(tempsPause);
+            BougeServo(ServomoteurID.GRGrandBras, Config.CurrentConfig.PositionGRGrandBrasRange);
+            Thread.Sleep(tempsPause);
+            BougeServo(ServomoteurID.GRPetitBras, Config.CurrentConfig.PositionGRPetitBrasHaut);
+            Thread.Sleep(tempsPause);
+            BougeServo(ServomoteurID.GRPetitBras, Config.CurrentConfig.PositionGRPetitBrasRange);
+            Thread.Sleep(tempsPause);
+            BougeServo(ServomoteurID.GRServoAssiette, Config.CurrentConfig.PositionGRBloqueurFerme);
+            Thread.Sleep(tempsPause);
+            BougeServo(ServomoteurID.GRServoAssiette, Config.CurrentConfig.PositionGRBloqueurOuvert);
+            Thread.Sleep(tempsPause);
+            ActionneurOnOff(ActionneurOnOffID.GRShutter, true);
+            Thread.Sleep(tempsPause);
+            ActionneurOnOff(ActionneurOnOffID.GRShutter, false);
+            Thread.Sleep(tempsPause);
+            TourneMoteur(MoteurID.GRCanon, Config.CurrentConfig.VitessePropulsionBonne);
+            Thread.Sleep(tempsPause);
+            TourneMoteur(MoteurID.GRCanon, 0);
+            Thread.Sleep(tempsPause);
+            TourneMoteur(MoteurID.GRTurbineAspirateur, Config.CurrentConfig.VitesseAspiration);
+            Thread.Sleep(tempsPause);
+            TourneMoteur(MoteurID.GRTurbineAspirateur, 0);
+        }
+
+        public Dictionary<ServomoteurID, bool> ServoSorti { get; set; }
+        public virtual void BougeServo(ServomoteurID servo, int position)
+        {
+            if (ServoSorti.ContainsKey(servo))
+            {
+                if (servo == ServomoteurID.GRBrasDroit && position == Config.CurrentConfig.PositionGRBrasDroitSorti ||
+                    servo == ServomoteurID.GRBrasGauche && position == Config.CurrentConfig.PositionGRBrasGaucheSorti ||
+                    servo == ServomoteurID.GRGrandBras && position == Config.CurrentConfig.PositionGRGrandBrasHaut ||
+                    servo == ServomoteurID.GRPetitBras && position == Config.CurrentConfig.PositionGRPetitBrasHaut)
+                    ServoSorti[servo] = true;
+                else
+                    ServoSorti[servo] = false;
+            }
+        }
 
         public void PositionerAngle(Angle angle, double marge = 0)
         {
@@ -86,7 +152,12 @@ namespace GoBot
         {
             CheminTrouve = new List<Arc>();
             CheminEnCoursArcs = new List<Arc>();
-            NodeTrouve = new List<Node>(); 
+            NodeTrouve = new List<Node>();
+            ServoSorti = new Dictionary<ServomoteurID, bool>();
+            ServoSorti.Add(ServomoteurID.GRBrasDroit, false);
+            ServoSorti.Add(ServomoteurID.GRBrasGauche, false);
+            ServoSorti.Add(ServomoteurID.GRGrandBras, false);
+            ServoSorti.Add(ServomoteurID.GRPetitBras, false);
         }
 
         public bool PathFinding(double x, double y, int timeOut = 0, bool attendre = false)

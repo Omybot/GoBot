@@ -71,6 +71,13 @@ namespace GoBot.IHM
             if (MessageBox.Show("Enregistrer cette valeur pour la vitesse d'aspiration ?", "Confirmation", MessageBoxButtons.OKCancel, MessageBoxIcon.Question) == DialogResult.OK)
                 Config.CurrentConfig.VitesseAspiration = (int)numTurbine.Value;
         }
+
+        private void btnAspiMaintien_Click(object sender, EventArgs e)
+        {
+            if (MessageBox.Show("Enregistrer cette valeur pour la vitesse de maintien d'aspiration ?", "Confirmation", MessageBoxButtons.OKCancel, MessageBoxIcon.Question) == DialogResult.OK)
+                Config.CurrentConfig.VitesseAspirationMaintien = (int)numTurbine.Value;
+        }
+
         #endregion
 
         #region Canon
@@ -85,11 +92,6 @@ namespace GoBot.IHM
                 Config.CurrentConfig.VitessePropulsionBonne = (int)numCanon.Value;
         }
 
-        private void btnCanonSaveMauvaise_Click(object sender, EventArgs e)
-        {
-            if (MessageBox.Show("Enregistrer cette valeur pour la vitesse de propulsion des cerises de couleur ?", "Confirmation", MessageBoxButtons.OKCancel, MessageBoxIcon.Question) == DialogResult.OK)
-                Config.CurrentConfig.VitessePropulsionMauvaise = (int)numCanon.Value;
-        }
         #endregion
 
         #region Shutter
@@ -255,9 +257,31 @@ namespace GoBot.IHM
         }
         #endregion
 
+        #region Bloqueur
+
+        private void btnOkBloqueur_Click(object sender, EventArgs e)
+        {
+            Robots.GrosRobot.BougeServo(ServomoteurID.GRServoAssiette, (int)numBloqueur.Value);
+        }
+
+        private void btnBloqueurOuvert_Click(object sender, EventArgs e)
+        {
+            if (MessageBox.Show("Enregistrer cette valeur pour la position ouverte du bloqueur ?", "Confirmation", MessageBoxButtons.OKCancel, MessageBoxIcon.Question) == DialogResult.OK)
+                Config.CurrentConfig.PositionGRBloqueurOuvert = (int)numBloqueur.Value;
+        }
+
+        private void btnBloqueurFerme_Click(object sender, EventArgs e)
+        {
+            if (MessageBox.Show("Enregistrer cette valeur pour la position fermée du bloqueur ?", "Confirmation", MessageBoxButtons.OKCancel, MessageBoxIcon.Question) == DialogResult.OK)
+                Config.CurrentConfig.PositionGRBloqueurFerme = (int)numBloqueur.Value;
+        }
+
+        #endregion
+        
         private void PanelReglageGros_Load(object sender, EventArgs e)
         {
             Deployer(Config.CurrentConfig.ReglageGROuvert);
         }
+
     }
 }

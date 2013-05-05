@@ -29,6 +29,9 @@
         private void InitializeComponent()
         {
             this.groupBoxUtil = new System.Windows.Forms.GroupBox();
+            this.btnPompeOff = new System.Windows.Forms.Button();
+            this.btnPompeOn = new System.Windows.Forms.Button();
+            this.label11 = new System.Windows.Forms.Label();
             this.btnCameraBleu = new System.Windows.Forms.Button();
             this.btnCameraRouge = new System.Windows.Forms.Button();
             this.label7 = new System.Windows.Forms.Label();
@@ -55,22 +58,26 @@
             this.button1 = new System.Windows.Forms.Button();
             this.label3 = new System.Windows.Forms.Label();
             this.btnCanonStop = new System.Windows.Forms.Button();
-            this.btnCanonMauvaise = new System.Windows.Forms.Button();
             this.btnCanonBonne = new System.Windows.Forms.Button();
             this.label2 = new System.Windows.Forms.Label();
             this.btnTurbineOff = new System.Windows.Forms.Button();
             this.btnTurbineOn = new System.Windows.Forms.Button();
             this.label1 = new System.Windows.Forms.Label();
             this.btnTaille = new System.Windows.Forms.Button();
-            this.btnPompeOff = new System.Windows.Forms.Button();
-            this.btnPompeOn = new System.Windows.Forms.Button();
-            this.label11 = new System.Windows.Forms.Label();
+            this.label12 = new System.Windows.Forms.Label();
+            this.btnDiagnostic = new System.Windows.Forms.Button();
+            this.switchBoutonPuissance = new GoBot.IHM.Composants.SwitchBouton();
+            this.btnAspiMaintien = new System.Windows.Forms.Button();
             this.groupBoxUtil.SuspendLayout();
             this.SuspendLayout();
             // 
             // groupBoxUtil
             // 
             this.groupBoxUtil.BackColor = System.Drawing.Color.Transparent;
+            this.groupBoxUtil.Controls.Add(this.btnAspiMaintien);
+            this.groupBoxUtil.Controls.Add(this.btnDiagnostic);
+            this.groupBoxUtil.Controls.Add(this.switchBoutonPuissance);
+            this.groupBoxUtil.Controls.Add(this.label12);
             this.groupBoxUtil.Controls.Add(this.btnPompeOff);
             this.groupBoxUtil.Controls.Add(this.btnPompeOn);
             this.groupBoxUtil.Controls.Add(this.label11);
@@ -100,7 +107,6 @@
             this.groupBoxUtil.Controls.Add(this.button1);
             this.groupBoxUtil.Controls.Add(this.label3);
             this.groupBoxUtil.Controls.Add(this.btnCanonStop);
-            this.groupBoxUtil.Controls.Add(this.btnCanonMauvaise);
             this.groupBoxUtil.Controls.Add(this.btnCanonBonne);
             this.groupBoxUtil.Controls.Add(this.label2);
             this.groupBoxUtil.Controls.Add(this.btnTurbineOff);
@@ -109,10 +115,39 @@
             this.groupBoxUtil.Controls.Add(this.btnTaille);
             this.groupBoxUtil.Location = new System.Drawing.Point(5, 3);
             this.groupBoxUtil.Name = "groupBoxUtil";
-            this.groupBoxUtil.Size = new System.Drawing.Size(332, 374);
+            this.groupBoxUtil.Size = new System.Drawing.Size(332, 414);
             this.groupBoxUtil.TabIndex = 0;
             this.groupBoxUtil.TabStop = false;
             this.groupBoxUtil.Text = "Utilisation";
+            // 
+            // btnPompeOff
+            // 
+            this.btnPompeOff.Location = new System.Drawing.Point(179, 338);
+            this.btnPompeOff.Name = "btnPompeOff";
+            this.btnPompeOff.Size = new System.Drawing.Size(65, 23);
+            this.btnPompeOff.TabIndex = 198;
+            this.btnPompeOff.Text = "Off";
+            this.btnPompeOff.UseVisualStyleBackColor = true;
+            this.btnPompeOff.Click += new System.EventHandler(this.btnPompeOff_Click);
+            // 
+            // btnPompeOn
+            // 
+            this.btnPompeOn.Location = new System.Drawing.Point(106, 338);
+            this.btnPompeOn.Name = "btnPompeOn";
+            this.btnPompeOn.Size = new System.Drawing.Size(67, 23);
+            this.btnPompeOn.TabIndex = 197;
+            this.btnPompeOn.Text = "On";
+            this.btnPompeOn.UseVisualStyleBackColor = true;
+            this.btnPompeOn.Click += new System.EventHandler(this.btnPompeOn_Click);
+            // 
+            // label11
+            // 
+            this.label11.AutoSize = true;
+            this.label11.Location = new System.Drawing.Point(36, 343);
+            this.label11.Name = "label11";
+            this.label11.Size = new System.Drawing.Size(40, 13);
+            this.label11.TabIndex = 196;
+            this.label11.Text = "Pompe";
             // 
             // btnCameraBleu
             // 
@@ -341,7 +376,7 @@
             // 
             this.button1.Location = new System.Drawing.Point(106, 110);
             this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(66, 23);
+            this.button1.Size = new System.Drawing.Size(75, 23);
             this.button1.TabIndex = 96;
             this.button1.Text = "Ouvrir";
             this.button1.UseVisualStyleBackColor = true;
@@ -357,29 +392,19 @@
             // 
             // btnCanonStop
             // 
-            this.btnCanonStop.Location = new System.Drawing.Point(250, 81);
+            this.btnCanonStop.Location = new System.Drawing.Point(187, 81);
             this.btnCanonStop.Name = "btnCanonStop";
-            this.btnCanonStop.Size = new System.Drawing.Size(66, 23);
+            this.btnCanonStop.Size = new System.Drawing.Size(75, 23);
             this.btnCanonStop.TabIndex = 94;
             this.btnCanonStop.Text = "Stop";
             this.btnCanonStop.UseVisualStyleBackColor = true;
             this.btnCanonStop.Click += new System.EventHandler(this.btnCanonStop_Click);
             // 
-            // btnCanonMauvaise
-            // 
-            this.btnCanonMauvaise.Location = new System.Drawing.Point(178, 81);
-            this.btnCanonMauvaise.Name = "btnCanonMauvaise";
-            this.btnCanonMauvaise.Size = new System.Drawing.Size(66, 23);
-            this.btnCanonMauvaise.TabIndex = 93;
-            this.btnCanonMauvaise.Text = "Mauvaise";
-            this.btnCanonMauvaise.UseVisualStyleBackColor = true;
-            this.btnCanonMauvaise.Click += new System.EventHandler(this.btnCanonMauvaise_Click);
-            // 
             // btnCanonBonne
             // 
             this.btnCanonBonne.Location = new System.Drawing.Point(106, 81);
             this.btnCanonBonne.Name = "btnCanonBonne";
-            this.btnCanonBonne.Size = new System.Drawing.Size(66, 23);
+            this.btnCanonBonne.Size = new System.Drawing.Size(75, 23);
             this.btnCanonBonne.TabIndex = 92;
             this.btnCanonBonne.Text = "Bonne";
             this.btnCanonBonne.UseVisualStyleBackColor = true;
@@ -396,9 +421,9 @@
             // 
             // btnTurbineOff
             // 
-            this.btnTurbineOff.Location = new System.Drawing.Point(187, 52);
+            this.btnTurbineOff.Location = new System.Drawing.Point(240, 52);
             this.btnTurbineOff.Name = "btnTurbineOff";
-            this.btnTurbineOff.Size = new System.Drawing.Size(75, 23);
+            this.btnTurbineOff.Size = new System.Drawing.Size(60, 23);
             this.btnTurbineOff.TabIndex = 90;
             this.btnTurbineOff.Text = "Stop";
             this.btnTurbineOff.UseVisualStyleBackColor = true;
@@ -408,7 +433,7 @@
             // 
             this.btnTurbineOn.Location = new System.Drawing.Point(106, 52);
             this.btnTurbineOn.Name = "btnTurbineOn";
-            this.btnTurbineOn.Size = new System.Drawing.Size(75, 23);
+            this.btnTurbineOn.Size = new System.Drawing.Size(57, 23);
             this.btnTurbineOn.TabIndex = 89;
             this.btnTurbineOn.Text = "Aspirer";
             this.btnTurbineOn.UseVisualStyleBackColor = true;
@@ -433,34 +458,44 @@
             this.btnTaille.UseVisualStyleBackColor = true;
             this.btnTaille.Click += new System.EventHandler(this.btnTaille_Click);
             // 
-            // btnPompeOff
+            // label12
             // 
-            this.btnPompeOff.Location = new System.Drawing.Point(179, 338);
-            this.btnPompeOff.Name = "btnPompeOff";
-            this.btnPompeOff.Size = new System.Drawing.Size(65, 23);
-            this.btnPompeOff.TabIndex = 198;
-            this.btnPompeOff.Text = "Off";
-            this.btnPompeOff.UseVisualStyleBackColor = true;
-            this.btnPompeOff.Click += new System.EventHandler(this.btnPompeOff_Click);
+            this.label12.AutoSize = true;
+            this.label12.Location = new System.Drawing.Point(35, 369);
+            this.label12.Name = "label12";
+            this.label12.Size = new System.Drawing.Size(115, 13);
+            this.label12.TabIndex = 199;
+            this.label12.Text = "Alimentation puissance";
             // 
-            // btnPompeOn
+            // btnDiagnostic
             // 
-            this.btnPompeOn.Location = new System.Drawing.Point(106, 338);
-            this.btnPompeOn.Name = "btnPompeOn";
-            this.btnPompeOn.Size = new System.Drawing.Size(67, 23);
-            this.btnPompeOn.TabIndex = 197;
-            this.btnPompeOn.Text = "On";
-            this.btnPompeOn.UseVisualStyleBackColor = true;
-            this.btnPompeOn.Click += new System.EventHandler(this.btnPompeOn_Click);
+            this.btnDiagnostic.Location = new System.Drawing.Point(129, 18);
+            this.btnDiagnostic.Name = "btnDiagnostic";
+            this.btnDiagnostic.Size = new System.Drawing.Size(75, 23);
+            this.btnDiagnostic.TabIndex = 201;
+            this.btnDiagnostic.Text = "Diagnostic";
+            this.btnDiagnostic.UseVisualStyleBackColor = true;
+            this.btnDiagnostic.Click += new System.EventHandler(this.btnDiagnostic_Click);
             // 
-            // label11
+            // switchBoutonPuissance
             // 
-            this.label11.AutoSize = true;
-            this.label11.Location = new System.Drawing.Point(36, 343);
-            this.label11.Name = "label11";
-            this.label11.Size = new System.Drawing.Size(40, 13);
-            this.label11.TabIndex = 196;
-            this.label11.Text = "Pompe";
+            this.switchBoutonPuissance.BackColor = System.Drawing.Color.Transparent;
+            this.switchBoutonPuissance.Location = new System.Drawing.Point(165, 369);
+            this.switchBoutonPuissance.Name = "switchBoutonPuissance";
+            this.switchBoutonPuissance.Size = new System.Drawing.Size(35, 15);
+            this.switchBoutonPuissance.Symetrique = false;
+            this.switchBoutonPuissance.TabIndex = 200;
+            this.switchBoutonPuissance.ChangementEtat += new GoBot.IHM.Composants.SwitchBouton.ChangeEtatDelegate(this.switchBoutonPuissance_ChangementEtat);
+            // 
+            // btnAspiMaintien
+            // 
+            this.btnAspiMaintien.Location = new System.Drawing.Point(169, 52);
+            this.btnAspiMaintien.Name = "btnAspiMaintien";
+            this.btnAspiMaintien.Size = new System.Drawing.Size(65, 23);
+            this.btnAspiMaintien.TabIndex = 202;
+            this.btnAspiMaintien.Text = "Maintien";
+            this.btnAspiMaintien.UseVisualStyleBackColor = true;
+            this.btnAspiMaintien.Click += new System.EventHandler(this.btnAspiMaintien_Click);
             // 
             // PanelUtilGros
             // 
@@ -470,7 +505,7 @@
             this.BackColor = System.Drawing.Color.Transparent;
             this.Controls.Add(this.groupBoxUtil);
             this.Name = "PanelUtilGros";
-            this.Size = new System.Drawing.Size(341, 392);
+            this.Size = new System.Drawing.Size(341, 423);
             this.Load += new System.EventHandler(this.PanelUtilGros_Load);
             this.groupBoxUtil.ResumeLayout(false);
             this.groupBoxUtil.PerformLayout();
@@ -485,7 +520,6 @@
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Button btnTurbineOff;
         private System.Windows.Forms.Button btnTurbineOn;
-        private System.Windows.Forms.Button btnCanonMauvaise;
         private System.Windows.Forms.Button btnCanonBonne;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Button btnCanonStop;
@@ -517,5 +551,9 @@
         private System.Windows.Forms.Button btnPompeOff;
         private System.Windows.Forms.Button btnPompeOn;
         private System.Windows.Forms.Label label11;
+        private Composants.SwitchBouton switchBoutonPuissance;
+        private System.Windows.Forms.Label label12;
+        private System.Windows.Forms.Button btnDiagnostic;
+        private System.Windows.Forms.Button btnAspiMaintien;
     }
 }

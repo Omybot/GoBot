@@ -22,6 +22,7 @@ namespace GoBot.Mouvements
 
         public override bool Executer(int timeOut = 0)
         {
+            Plateau.BougiesEnfoncees[numeroBougie] = true;
             if (Robots.PetitRobot.PathFinding(Position.Coordonnees.X, Position.Coordonnees.Y, timeOut, true))
             {
                 Angle angle180 = Position.Angle - Robots.PetitRobot.Position.Angle;
@@ -41,11 +42,13 @@ namespace GoBot.Mouvements
                     Robots.PetitRobot.BougeServo(ServomoteurID.PRBras, 0);
                 }
                 Plateau.Score += Score;
-                Plateau.BougiesEnfoncees[numeroBougie] = true;
                 return true;
             }
             else
+            {
+                Plateau.BougiesEnfoncees[numeroBougie] = false;
                 return false;
+            }
         }
 
         public override double Cout

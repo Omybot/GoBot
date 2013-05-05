@@ -225,6 +225,9 @@ namespace GoBot
 
         public void Recallages()
         {
+            Connexions.ConnexionMove.SendMessage(TrameFactory.ResetRecMove());
+            Thread.Sleep(2000);
+
             Lent();
 
             Robots.GrosRobot.BougeServo(ServomoteurID.GRAspirateur, Config.CurrentConfig.PositionGRAspirateurBas);

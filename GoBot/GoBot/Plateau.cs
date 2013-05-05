@@ -46,6 +46,11 @@ namespace GoBot
         public static bool[] BougiesEnfoncees { get; set; }
         public static PointReel[] PositionsCadeaux { get; set; }
         public static bool[] CadeauxActives { get; set; }
+        public static Position[] PositionsAssiettes { get; set; }
+        public static bool[] AssiettesVidees { get; set; }
+        public static bool[] AssiettesExiste { get; set; }
+
+        public static int AssietteAttrapee { get; set; }
 
         private static int score;
         public static int Score
@@ -91,6 +96,7 @@ namespace GoBot
         {
             if (!Config.DesignMode)
             {
+                AssietteAttrapee = -1;
                 Plateau.SemaphoreGraph = new Semaphore(1, 1);
 
                 PoidActions = new PoidsBase();
@@ -157,6 +163,27 @@ namespace GoBot
                 CadeauxActives = new bool[8];
                 for (int i = 0; i < 8; i++)
                     CadeauxActives[i] = false;
+
+                Random r = new Random(DateTime.Now.Millisecond);
+                PositionsAssiettes = new Position[10];
+                PositionsAssiettes[0] = new Position(new Angle(r.Next(4) * 90), new PointReel(200, 250));
+                PositionsAssiettes[1] = new Position(new Angle(r.Next(4) * 90), new PointReel(200, 600));
+                PositionsAssiettes[2] = new Position(new Angle(r.Next(4) * 90), new PointReel(200, 1000));
+                PositionsAssiettes[3] = new Position(new Angle(r.Next(4) * 90), new PointReel(200, 1400));
+                PositionsAssiettes[4] = new Position(new Angle(r.Next(4) * 90), new PointReel(200, 1750));
+                PositionsAssiettes[5] = new Position(new Angle(r.Next(4) * 90), new PointReel(2800, 250));
+                PositionsAssiettes[6] = new Position(new Angle(r.Next(4) * 90), new PointReel(2800, 600));
+                PositionsAssiettes[7] = new Position(new Angle(r.Next(4) * 90), new PointReel(2800, 1000));
+                PositionsAssiettes[8] = new Position(new Angle(r.Next(4) * 90), new PointReel(2800, 1400));
+                PositionsAssiettes[9] = new Position(new Angle(r.Next(4) * 90), new PointReel(2800, 1750));
+
+                AssiettesExiste = new bool[10];
+                for (int i = 0; i < 10; i++)
+                    AssiettesExiste[i] = true;
+
+                AssiettesVidees = new bool[10];
+                for (int i = 0; i < 10; i++)
+                    AssiettesVidees[i] = false;
             }
         }
 
@@ -171,8 +198,23 @@ namespace GoBot
         {
             SemaphoreGraph.WaitOne();
             ViderObstacles();
-            AjouterObstacle(new Cercle(new PointReel(x, y), 200));
+            PointReel coordonnees = new PointReel(x, y);
+            AjouterObstacle(new Cercle(coordonnees, 200));
             SemaphoreGraph.Release();
+
+            // Avant de lancer le match
+            if(Plateau.Enchainement == null)
+            for (int i = 0; i < 10; i++)
+            {
+                if (PositionsAssiettes[i].Coordonnees.Distance(coordonnees) < 250)
+                    AssiettesExiste[i] = false;
+            }
+            // Une fois le match lancé
+            for (int i = 0; i < 10; i++)
+            {
+                if (PositionsAssiettes[i].Coordonnees.Distance(coordonnees) < 250)
+                    AssiettesVidees[i] = true;
+            }
 
             Robots.PetitRobot.ObstacleTest();
             Robots.GrosRobot.ObstacleTest();

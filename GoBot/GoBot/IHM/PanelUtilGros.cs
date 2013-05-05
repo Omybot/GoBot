@@ -190,6 +190,7 @@ namespace GoBot.IHM
         private void PanelUtilGros_Load(object sender, EventArgs e)
         {
             Deployer(Config.CurrentConfig.UtilGROuvert);
+            switchBoutonPuissance.SetActif(true, false);
         }
 
         private void btnTurbineOn_Click(object sender, EventArgs e)
@@ -207,11 +208,6 @@ namespace GoBot.IHM
             Robots.GrosRobot.TourneMoteur(MoteurID.GRCanon, Config.CurrentConfig.VitessePropulsionBonne);
         }
 
-        private void btnCanonMauvaise_Click(object sender, EventArgs e)
-        {
-            Robots.GrosRobot.TourneMoteur(MoteurID.GRCanon, Config.CurrentConfig.VitessePropulsionMauvaise);
-        }
-
         private void btnCanonStop_Click(object sender, EventArgs e)
         {
             Robots.GrosRobot.TourneMoteur(MoteurID.GRCanon, 0);
@@ -222,10 +218,24 @@ namespace GoBot.IHM
             Robots.GrosRobot.ActionneurOnOff(ActionneurOnOffID.GRPompe, true);
         }
 
-
         private void btnPompeOff_Click(object sender, EventArgs e)
         {
             Robots.GrosRobot.ActionneurOnOff(ActionneurOnOffID.GRPompe, false);
+        }
+
+        private void switchBoutonPuissance_ChangementEtat(bool actif)
+        {
+            Robots.GrosRobot.AlimentationPuissance(actif);
+        }
+
+        private void btnDiagnostic_Click(object sender, EventArgs e)
+        {
+            Robots.GrosRobot.Diagnostic();
+        }
+
+        private void btnAspiMaintien_Click(object sender, EventArgs e)
+        {
+            Robots.GrosRobot.TourneMoteur(MoteurID.GRTurbineAspirateur, Config.CurrentConfig.VitesseAspirationMaintien);
         }
     }
 }

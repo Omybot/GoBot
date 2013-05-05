@@ -70,9 +70,12 @@ namespace GoBot.IHM
             timerCouleur.Elapsed += new System.Timers.ElapsedEventHandler(timerCouleur_Elapsed);
             timerAssiette = new System.Timers.Timer(100);
             timerAssiette.Elapsed += new System.Timers.ElapsedEventHandler(timerAssiette_Elapsed);
+            timerAspiRemonte = new System.Timers.Timer(100);
+            timerAspiRemonte.Elapsed += new System.Timers.ElapsedEventHandler(timerAspiRemonte_Elapsed);
 
             ledPresence.CouleurGris();
             ledAssiette.CouleurGris();
+            ledAspi.CouleurGris();
         }
 
         System.Timers.Timer timerPresence;
@@ -154,6 +157,29 @@ namespace GoBot.IHM
                     ledAssiette.CouleurVert();
                 else
                     ledAssiette.CouleurRouge();
+            }));
+        }
+
+        System.Timers.Timer timerAspiRemonte;
+        private void boxAspiRemonte_CheckedChanged(object sender, EventArgs e)
+        {
+            if (boxAspiRemonte.Checked)
+                timerAspiRemonte.Start();
+            else
+            {
+                timerAspiRemonte.Stop();
+                ledAspi.CouleurGris();
+            }
+        }
+
+        void timerAspiRemonte_Elapsed(object sender, System.Timers.ElapsedEventArgs e)
+        {
+            this.Invoke(new EventHandler(delegate
+            {
+                if (Robots.GrosRobot.AspiRemonte(false))
+                    ledAspi.CouleurVert();
+                else
+                    ledAspi.CouleurRouge();
             }));
         }
     }

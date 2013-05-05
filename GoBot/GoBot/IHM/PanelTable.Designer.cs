@@ -59,6 +59,7 @@
             this.label10 = new System.Windows.Forms.Label();
             this.label11 = new System.Windows.Forms.Label();
             this.label12 = new System.Windows.Forms.Label();
+            this.button1 = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxTable)).BeginInit();
             this.SuspendLayout();
             // 
@@ -360,11 +361,22 @@
             this.label12.TabIndex = 26;
             this.label12.Text = "Position petit robot";
             // 
+            // button1
+            // 
+            this.button1.Location = new System.Drawing.Point(24, 448);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(50, 26);
+            this.button1.TabIndex = 33;
+            this.button1.Text = "button1";
+            this.button1.UseVisualStyleBackColor = true;
+            this.button1.Click += new System.EventHandler(this.button1_Click);
+            // 
             // PanelTable
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.Transparent;
+            this.Controls.Add(this.button1);
             this.Controls.Add(this.lblPosPetitTeta);
             this.Controls.Add(this.lblPosPetitY);
             this.Controls.Add(this.lblPosPetitX);
@@ -437,5 +449,6 @@
         private System.Windows.Forms.Label label10;
         private System.Windows.Forms.Label label11;
         private System.Windows.Forms.Label label12;
+        private System.Windows.Forms.Button button1;
     }
 }

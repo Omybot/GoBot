@@ -86,6 +86,11 @@ namespace GoBot
         public int PositionGRCameraBleu { get; set; }
         public int PositionGRCameraRouge { get; set; }
 
+        // Positions bloqueur
+
+        public int PositionGRBloqueurOuvert { get; set; }
+        public int PositionGRBloqueurFerme { get; set; }
+
         // Positions bras latéraux
 
         public int PositionGRBrasGaucheSorti { get; set; }
@@ -97,8 +102,8 @@ namespace GoBot
         // Vitesses rotation
 
         public int VitesseAspiration { get; set; }
+        public int VitesseAspirationMaintien { get; set; }
         public int VitessePropulsionBonne { get; set; }
-        public int VitessePropulsionMauvaise { get; set; }
 
         // Positions bras petit robot
 

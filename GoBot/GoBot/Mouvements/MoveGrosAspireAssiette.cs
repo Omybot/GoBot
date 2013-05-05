@@ -9,20 +9,24 @@ using GoBot.Calculs.Formes;
 
 namespace GoBot.Mouvements
 {
-    class MoveGrosCadeau : Mouvement
+    class MoveGrosAspireAssiette : Mouvement
     {
-        public override Position Position { get; protected set; }
-        private int numeroCadeau;
+        public override Position Position 
+        { 
+            get; protected set; 
+        }
 
-        public MoveGrosCadeau(int iCadeau)
+        private int numeroAssiette;
+
+        public MoveGrosAspireAssiette(int iAssiette)
         {
-            numeroCadeau = iCadeau;
-            Position = PositionsMouvements.PositionGrosCadeau[iCadeau];
+            numeroAssiette = iAssiette;
+            //Position = PositionsMouvements.PositionGrosCadeau[iCadeau];
         }
 
         public override bool Executer(int timeOut = 0)
         {
-            Plateau.CadeauxActives[numeroCadeau] = true;
+            Plateau.AssiettesVidees[numeroAssiette] = true;
             if (Robots.GrosRobot.PathFinding(Position.Coordonnees.X, Position.Coordonnees.Y, timeOut, true))
             {
                 Angle angle180 = Position.Angle - Robots.GrosRobot.Position.Angle;
@@ -37,7 +41,7 @@ namespace GoBot.Mouvements
             }
             else
             {
-                Plateau.CadeauxActives[numeroCadeau] = false;
+                Plateau.CadeauxActives[numeroAssiette] = false;
                 return false;
             }
         }
@@ -71,13 +75,7 @@ namespace GoBot.Mouvements
         {
             get
             {
-                if (!Plateau.CadeauxActives[numeroCadeau] &&
-                    ((Plateau.NotreCouleur == Plateau.CouleurJ2B && numeroCadeau % 2 == 0)
-                    ||
-                    (Plateau.NotreCouleur == Plateau.CouleurJ1R && numeroCadeau % 2 == 1)))
-                    return 4;
-                else
-                    return 0;
+                return 0;
             }
         }
 
@@ -85,7 +83,7 @@ namespace GoBot.Mouvements
         {
             get
             {
-                return Score * Plateau.PoidActions.PoidGlobalGrosCadeau * Plateau.PoidActions.PoidsGrosCadeau[numeroCadeau];
+                return 1 + Score * Plateau.PoidActions.PoidGlobalGrosCadeau * Plateau.PoidActions.PoidsGrosAssiette[numeroAssiette];
             }
         }
     }

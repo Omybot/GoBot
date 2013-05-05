@@ -60,6 +60,27 @@ namespace GoBot.Properties {
             }
         }
         
+        internal static System.Drawing.Bitmap AssiettePleineBleu {
+            get {
+                object obj = ResourceManager.GetObject("AssiettePleineBleu", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        internal static System.Drawing.Bitmap AssiettePleineRouge {
+            get {
+                object obj = ResourceManager.GetObject("AssiettePleineRouge", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        internal static System.Drawing.Bitmap AssietteVide {
+            get {
+                object obj = ResourceManager.GetObject("AssietteVide", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
         internal static System.Drawing.Bitmap avance {
             get {
                 object obj = ResourceManager.GetObject("avance", resourceCulture);

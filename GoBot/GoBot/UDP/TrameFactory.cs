@@ -48,13 +48,14 @@ namespace GoBot.UDP
             ReponsePresence = 0x78,
             DemandePresenceAssiette = 0x7A,
             ReponsePresenceAssiette = 0x7B,
+            DemandeAspiRemonte = 0x7C,
+            ReponseAspiRemonte = 0x7D,
 
-            AspirerBalle = 0x80,
-            EjecterBalle = 0x81,
+            Alimentation = 0x80,
+            AlimentationCamera = 0x81,
 
             TestConnexion = 0xF0,
             Reset = 0xF1,
-            Alimentation = 0xF2,
 
         }
 
@@ -507,22 +508,6 @@ namespace GoBot.UDP
             return new Trame(tab);
         }
         
-        public static Trame AspirerBalle()
-        {
-            byte[] tab = new byte[2];
-            tab[0] = (byte)Carte.RecMove;
-            tab[1] = (byte)FonctionMove.AspirerBalle;
-            return new Trame(tab);
-        }
-        
-        public static Trame EjecterBalle()
-        {
-            byte[] tab = new byte[2];
-            tab[0] = (byte)Carte.RecMove;
-            tab[1] = (byte)FonctionMove.EjecterBalle;
-            return new Trame(tab);
-        }
-        
         public static Trame VitesseAspirateur(int vitesse)
         {
             byte[] tab = new byte[4];
@@ -573,6 +558,14 @@ namespace GoBot.UDP
             byte[] tab = new byte[2];
             tab[0] = (byte)Carte.RecMove;
             tab[1] = (byte)FonctionMove.DemandeCouleurEquipe;
+            return new Trame(tab);
+        }
+
+        public static Trame DemandeAspiRemonte()
+        {
+            byte[] tab = new byte[2];
+            tab[0] = (byte)Carte.RecMove;
+            tab[1] = (byte)FonctionMove.DemandeAspiRemonte;
             return new Trame(tab);
         }
 

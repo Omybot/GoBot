@@ -29,6 +29,11 @@
         private void InitializeComponent()
         {
             this.groupBoxReglage = new System.Windows.Forms.GroupBox();
+            this.btnBloqueurFerme = new System.Windows.Forms.Button();
+            this.btnBloqueurOuvert = new System.Windows.Forms.Button();
+            this.btnOkBloqueur = new System.Windows.Forms.Button();
+            this.numBloqueur = new System.Windows.Forms.NumericUpDown();
+            this.label12 = new System.Windows.Forms.Label();
             this.btnCameraBleu = new System.Windows.Forms.Button();
             this.btnCameraRouge = new System.Windows.Forms.Button();
             this.btnCameraOK = new System.Windows.Forms.Button();
@@ -72,7 +77,6 @@
             this.btnShutterOff = new System.Windows.Forms.Button();
             this.btnShutterOn = new System.Windows.Forms.Button();
             this.label10 = new System.Windows.Forms.Label();
-            this.btnCanonSaveMauvaise = new System.Windows.Forms.Button();
             this.btnCanonSaveBonne = new System.Windows.Forms.Button();
             this.btnCanonOk = new System.Windows.Forms.Button();
             this.numCanon = new System.Windows.Forms.NumericUpDown();
@@ -82,7 +86,9 @@
             this.numTurbine = new System.Windows.Forms.NumericUpDown();
             this.label8 = new System.Windows.Forms.Label();
             this.btnTaille = new System.Windows.Forms.Button();
+            this.btnAspiMaintien = new System.Windows.Forms.Button();
             this.groupBoxReglage.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.numBloqueur)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numCamera)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numBrasDroit)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numBrasGauche)).BeginInit();
@@ -98,6 +104,12 @@
             // groupBoxReglage
             // 
             this.groupBoxReglage.BackColor = System.Drawing.Color.Transparent;
+            this.groupBoxReglage.Controls.Add(this.btnAspiMaintien);
+            this.groupBoxReglage.Controls.Add(this.btnBloqueurFerme);
+            this.groupBoxReglage.Controls.Add(this.btnBloqueurOuvert);
+            this.groupBoxReglage.Controls.Add(this.btnOkBloqueur);
+            this.groupBoxReglage.Controls.Add(this.numBloqueur);
+            this.groupBoxReglage.Controls.Add(this.label12);
             this.groupBoxReglage.Controls.Add(this.btnCameraBleu);
             this.groupBoxReglage.Controls.Add(this.btnCameraRouge);
             this.groupBoxReglage.Controls.Add(this.btnCameraOK);
@@ -141,7 +153,6 @@
             this.groupBoxReglage.Controls.Add(this.btnShutterOff);
             this.groupBoxReglage.Controls.Add(this.btnShutterOn);
             this.groupBoxReglage.Controls.Add(this.label10);
-            this.groupBoxReglage.Controls.Add(this.btnCanonSaveMauvaise);
             this.groupBoxReglage.Controls.Add(this.btnCanonSaveBonne);
             this.groupBoxReglage.Controls.Add(this.btnCanonOk);
             this.groupBoxReglage.Controls.Add(this.numCanon);
@@ -153,10 +164,61 @@
             this.groupBoxReglage.Controls.Add(this.btnTaille);
             this.groupBoxReglage.Location = new System.Drawing.Point(5, 3);
             this.groupBoxReglage.Name = "groupBoxReglage";
-            this.groupBoxReglage.Size = new System.Drawing.Size(332, 357);
+            this.groupBoxReglage.Size = new System.Drawing.Size(332, 384);
             this.groupBoxReglage.TabIndex = 0;
             this.groupBoxReglage.TabStop = false;
             this.groupBoxReglage.Text = "Réglage";
+            // 
+            // btnBloqueurFerme
+            // 
+            this.btnBloqueurFerme.Location = new System.Drawing.Point(270, 349);
+            this.btnBloqueurFerme.Name = "btnBloqueurFerme";
+            this.btnBloqueurFerme.Size = new System.Drawing.Size(53, 23);
+            this.btnBloqueurFerme.TabIndex = 163;
+            this.btnBloqueurFerme.Text = "Fermé";
+            this.btnBloqueurFerme.UseVisualStyleBackColor = true;
+            this.btnBloqueurFerme.Click += new System.EventHandler(this.btnBloqueurFerme_Click);
+            // 
+            // btnBloqueurOuvert
+            // 
+            this.btnBloqueurOuvert.Location = new System.Drawing.Point(211, 349);
+            this.btnBloqueurOuvert.Name = "btnBloqueurOuvert";
+            this.btnBloqueurOuvert.Size = new System.Drawing.Size(53, 23);
+            this.btnBloqueurOuvert.TabIndex = 162;
+            this.btnBloqueurOuvert.Text = "Ouvert";
+            this.btnBloqueurOuvert.UseVisualStyleBackColor = true;
+            this.btnBloqueurOuvert.Click += new System.EventHandler(this.btnBloqueurOuvert_Click);
+            // 
+            // btnOkBloqueur
+            // 
+            this.btnOkBloqueur.Location = new System.Drawing.Point(152, 349);
+            this.btnOkBloqueur.Name = "btnOkBloqueur";
+            this.btnOkBloqueur.Size = new System.Drawing.Size(53, 23);
+            this.btnOkBloqueur.TabIndex = 161;
+            this.btnOkBloqueur.Text = "Ok";
+            this.btnOkBloqueur.UseVisualStyleBackColor = true;
+            this.btnOkBloqueur.Click += new System.EventHandler(this.btnOkBloqueur_Click);
+            // 
+            // numBloqueur
+            // 
+            this.numBloqueur.Location = new System.Drawing.Point(82, 352);
+            this.numBloqueur.Maximum = new decimal(new int[] {
+            1024,
+            0,
+            0,
+            0});
+            this.numBloqueur.Name = "numBloqueur";
+            this.numBloqueur.Size = new System.Drawing.Size(64, 20);
+            this.numBloqueur.TabIndex = 160;
+            // 
+            // label12
+            // 
+            this.label12.AutoSize = true;
+            this.label12.Location = new System.Drawing.Point(20, 354);
+            this.label12.Name = "label12";
+            this.label12.Size = new System.Drawing.Size(49, 13);
+            this.label12.TabIndex = 159;
+            this.label12.Text = "Bloqueur";
             // 
             // btnCameraBleu
             // 
@@ -595,16 +657,6 @@
             this.label10.TabIndex = 116;
             this.label10.Text = "Shutter";
             // 
-            // btnCanonSaveMauvaise
-            // 
-            this.btnCanonSaveMauvaise.Location = new System.Drawing.Point(260, 89);
-            this.btnCanonSaveMauvaise.Name = "btnCanonSaveMauvaise";
-            this.btnCanonSaveMauvaise.Size = new System.Drawing.Size(65, 23);
-            this.btnCanonSaveMauvaise.TabIndex = 115;
-            this.btnCanonSaveMauvaise.Text = "Mauvaise";
-            this.btnCanonSaveMauvaise.UseVisualStyleBackColor = true;
-            this.btnCanonSaveMauvaise.Click += new System.EventHandler(this.btnCanonSaveMauvaise_Click);
-            // 
             // btnCanonSaveBonne
             // 
             this.btnCanonSaveBonne.Location = new System.Drawing.Point(201, 89);
@@ -650,9 +702,9 @@
             // 
             this.btnTurbineSave.Location = new System.Drawing.Point(201, 60);
             this.btnTurbineSave.Name = "btnTurbineSave";
-            this.btnTurbineSave.Size = new System.Drawing.Size(70, 23);
+            this.btnTurbineSave.Size = new System.Drawing.Size(57, 23);
             this.btnTurbineSave.TabIndex = 110;
-            this.btnTurbineSave.Text = "Enregistrer";
+            this.btnTurbineSave.Text = "Aspire";
             this.btnTurbineSave.UseVisualStyleBackColor = true;
             this.btnTurbineSave.Click += new System.EventHandler(this.btnTurbineSave_Click);
             // 
@@ -697,6 +749,16 @@
             this.btnTaille.UseVisualStyleBackColor = true;
             this.btnTaille.Click += new System.EventHandler(this.btnTaille_Click);
             // 
+            // btnAspiMaintien
+            // 
+            this.btnAspiMaintien.Location = new System.Drawing.Point(264, 60);
+            this.btnAspiMaintien.Name = "btnAspiMaintien";
+            this.btnAspiMaintien.Size = new System.Drawing.Size(57, 23);
+            this.btnAspiMaintien.TabIndex = 164;
+            this.btnAspiMaintien.Text = "Maintien";
+            this.btnAspiMaintien.UseVisualStyleBackColor = true;
+            this.btnAspiMaintien.Click += new System.EventHandler(this.btnAspiMaintien_Click);
+            // 
             // PanelReglageGros
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -705,10 +767,11 @@
             this.BackColor = System.Drawing.Color.Transparent;
             this.Controls.Add(this.groupBoxReglage);
             this.Name = "PanelReglageGros";
-            this.Size = new System.Drawing.Size(341, 369);
+            this.Size = new System.Drawing.Size(341, 395);
             this.Load += new System.EventHandler(this.PanelReglageGros_Load);
             this.groupBoxReglage.ResumeLayout(false);
             this.groupBoxReglage.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.numBloqueur)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.numCamera)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.numBrasDroit)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.numBrasGauche)).EndInit();
@@ -735,7 +798,6 @@
         private System.Windows.Forms.Button btnCanonOk;
         private System.Windows.Forms.NumericUpDown numCanon;
         private System.Windows.Forms.Label label9;
-        private System.Windows.Forms.Button btnCanonSaveMauvaise;
         private System.Windows.Forms.Button btnShutterOuvrir;
         private System.Windows.Forms.Label label11;
         private System.Windows.Forms.NumericUpDown numShutter;
@@ -779,5 +841,11 @@
         private System.Windows.Forms.Button btnCameraOK;
         private System.Windows.Forms.NumericUpDown numCamera;
         private System.Windows.Forms.Label label7;
+        private System.Windows.Forms.Button btnBloqueurFerme;
+        private System.Windows.Forms.Button btnBloqueurOuvert;
+        private System.Windows.Forms.Button btnOkBloqueur;
+        private System.Windows.Forms.NumericUpDown numBloqueur;
+        private System.Windows.Forms.Label label12;
+        private System.Windows.Forms.Button btnAspiMaintien;
     }
 }
