@@ -221,75 +221,34 @@ namespace GoBot
             Connexions.ConnexionMove.SendMessage(TrameFactory.ResetRecMove());
             Thread.Sleep(2000);
 
-            Lent();
-
-            Robots.GrosRobot.BougeServo(ServomoteurID.GRAspirateur, Config.CurrentConfig.PositionGRAspirateurBas);
-            Thread.Sleep(100);
-            Robots.GrosRobot.BougeServo(ServomoteurID.GRBrasDroit, Config.CurrentConfig.PositionGRBrasDroitSorti);
-            Thread.Sleep(100);
-            Robots.GrosRobot.BougeServo(ServomoteurID.GRBrasGauche, Config.CurrentConfig.PositionGRBrasGaucheSorti);
-            Thread.Sleep(100);
-            Robots.GrosRobot.BougeServo(ServomoteurID.GRCamera, Config.CurrentConfig.PositionGRCameraBleu);
-            Thread.Sleep(100);
-            Robots.GrosRobot.BougeServo(ServomoteurID.GRDebloqueur, Config.CurrentConfig.PositionGRDebloqueurHaut);
-            Thread.Sleep(100);
-            Robots.GrosRobot.BougeServo(ServomoteurID.GRGrandBras, Config.CurrentConfig.PositionGRGrandBrasHaut);
-            Thread.Sleep(100);
-            Robots.GrosRobot.BougeServo(ServomoteurID.GRPetitBras, Config.CurrentConfig.PositionGRPetitBrasHaut);
-            Thread.Sleep(100);
-            Robots.GrosRobot.ActionneurOnOff(ActionneurOnOffID.GRShutter, true);
-            Thread.Sleep(100);
-            Robots.GrosRobot.TourneMoteur(MoteurID.GRCanon, Config.CurrentConfig.VitessePropulsionBonne);
-            Thread.Sleep(100);
-            Robots.GrosRobot.TourneMoteur(MoteurID.GRTurbineAspirateur, Config.CurrentConfig.VitesseAspiration);
-
-            Thread.Sleep(1500);
-
-            Robots.GrosRobot.BougeServo(ServomoteurID.GRAspirateur, Config.CurrentConfig.PositionGRAspirateurHaut);
-            Robots.GrosRobot.BougeServo(ServomoteurID.GRBrasDroit, Config.CurrentConfig.PositionGRBrasDroitRange);
-            Robots.GrosRobot.BougeServo(ServomoteurID.GRBrasGauche, Config.CurrentConfig.PositionGRBrasGaucheRange);
-            Robots.GrosRobot.BougeServo(ServomoteurID.GRCamera, Config.CurrentConfig.PositionGRCameraRouge);
-            Robots.GrosRobot.BougeServo(ServomoteurID.GRDebloqueur, Config.CurrentConfig.PositionGRDebloqueurBas);
-            Robots.GrosRobot.BougeServo(ServomoteurID.GRGrandBras, Config.CurrentConfig.PositionGRGrandBrasRange);
-            Robots.GrosRobot.BougeServo(ServomoteurID.GRPetitBras, Config.CurrentConfig.PositionGRPetitBrasRange);
-            Robots.GrosRobot.ActionneurOnOff(ActionneurOnOffID.GRShutter, false);
-            Robots.GrosRobot.TourneMoteur(MoteurID.GRCanon, 0);
-            Robots.GrosRobot.TourneMoteur(MoteurID.GRTurbineAspirateur, 0);
-            DateTime debut = DateTime.Now;
-            /*Robots.GrosRobot.Recallage(SensAR.Arriere);
-
-            Robots.GrosRobot.Avancer(100);
-            Robots.GrosRobot.PivotDroite(90);
-            Robots.GrosRobot.Recallage(SensAR.Arriere);
-            ledRecallage.On();
-            Robots.GrosRobot.ReglerOffsetAsserv((int)(3000 - 110), (int)(2000 - 200 - 110), 180);
-
-            Robots.GrosRobot.Avancer(700);
-            Robots.GrosRobot.PivotGauche(15);
-            Robots.GrosRobot.Reculer(245);*/
-
+            Robots.GrosRobot.Lent();
             Robots.GrosRobot.Avancer(10);
             Robots.GrosRobot.Recallage(SensAR.Arriere);
-            Rapide();
+            Robots.GrosRobot.Rapide();
             Robots.GrosRobot.Avancer(890);
-            Robots.GrosRobot.PivotGauche(90);
-            Robots.GrosRobot.Reculer(400);
-            Lent();
-            Robots.GrosRobot.Recallage(SensAR.Arriere);
-            /*Robots.GrosRobot.ReglerOffsetAsserv(3000 - 110, 1000, 180);
-            Robots.GrosRobot.Avancer(1390);
 
-            Thread.Sleep(1000);
-            Robots.GrosRobot.Reculer(1255);
-            Robots.GrosRobot.PivotDroite(75);
-            Lent();
-            Robots.GrosRobot.Reculer(335);*/
-            Thread.Sleep(1000);
-            Robots.GrosRobot.ReglerOffsetAsserv(3000 - 110, 1000, 180);
-            //Robots.GrosRobot.Avancer(150);
-            //Robots.GrosRobot.PivotDroite(73.86);
-            //Robots.GrosRobot.Reculer(360);
-            //Rapide();
+            if(Plateau.NotreCouleur == Plateau.CouleurJ1R)
+                Robots.GrosRobot.PivotGauche(90);
+            else
+                Robots.GrosRobot.PivotDroite(90);
+
+            Robots.GrosRobot.Reculer(400);
+            Robots.GrosRobot.Lent();
+            Robots.GrosRobot.Recallage(SensAR.Arriere);
+            Robots.GrosRobot.Rapide();
+
+            Robots.GrosRobot.Avancer(1500 - Robots.GrosRobot.Longueur / 2);
+            Plateau.RecallageBalises();
+            Robots.GrosRobot.Reculer(1450 - Robots.GrosRobot.Longueur / 2);
+            Robots.GrosRobot.Rapide();
+            Robots.GrosRobot.Recallage(SensAR.Arriere);
+
+            if (Plateau.NotreCouleur == Plateau.CouleurJ1R)
+                Robots.GrosRobot.ReglerOffsetAsserv(3000 - Robots.GrosRobot.Longueur / 2, 1000, 180);
+            else
+                Robots.GrosRobot.ReglerOffsetAsserv(Robots.GrosRobot.Longueur / 2, 1000, 0);
+
+            Robots.GrosRobot.Rapide();
         }
 
         private void Rapide()

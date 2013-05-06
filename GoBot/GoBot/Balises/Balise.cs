@@ -28,7 +28,7 @@ namespace GoBot
             return null;
         }
 
-        public const int DISTANCE_LASER_TABLE = 0;
+        public const int DISTANCE_LASER_TABLE = 62;
 
         /// <summary>
         /// Détections effectuées par le capteur bas de la balise
