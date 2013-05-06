@@ -53,14 +53,14 @@ namespace GoBot.Mouvements
                 // Tant qu'il y a des balles à lancer
                 while (balle)
                 {
-                    if (!Robots.GrosRobot.PresenceBalle())
+                    if (!Robots.GrosRobot.GetPresenceBalle())
                     {
                         // 1ère fois qu'on ne voit pas de balle : un coup de débloqueur
                         Robots.GrosRobot.BougeServo(ServomoteurID.GRDebloqueur, Config.CurrentConfig.PositionGRDebloqueurHaut);
                         Thread.Sleep(500);
                         Robots.GrosRobot.BougeServo(ServomoteurID.GRDebloqueur, Config.CurrentConfig.PositionGRDebloqueurBas);
 
-                        if (!Robots.GrosRobot.PresenceBalle())
+                        if (!Robots.GrosRobot.GetPresenceBalle())
                         {
                             // 2ème fois on aspire un coup pour bouger les balles
                             Robots.GrosRobot.TourneMoteur(MoteurID.GRTurbineAspirateur, Config.CurrentConfig.VitesseAspiration);
@@ -68,14 +68,14 @@ namespace GoBot.Mouvements
                             Robots.GrosRobot.TourneMoteur(MoteurID.GRTurbineAspirateur, 0);
                             Thread.Sleep(1200);
 
-                            if (!Robots.GrosRobot.PresenceBalle())
+                            if (!Robots.GrosRobot.GetPresenceBalle())
                             {
                                 // 3ème fois : un coup de débloqueur
                                 Robots.GrosRobot.BougeServo(ServomoteurID.GRDebloqueur, Config.CurrentConfig.PositionGRDebloqueurHaut);
                                 Thread.Sleep(500);
                                 Robots.GrosRobot.BougeServo(ServomoteurID.GRDebloqueur, Config.CurrentConfig.PositionGRDebloqueurBas);
 
-                                if (!Robots.GrosRobot.PresenceBalle())
+                                if (!Robots.GrosRobot.GetPresenceBalle())
                                     // 4ème fois : Bon bah y'a peut être vraiment rien alors...
                                     balle = false;
                             }
@@ -84,7 +84,7 @@ namespace GoBot.Mouvements
                     else
                     {
                         // Test de la couleur de la balle
-                        Color couleur = Robots.GrosRobot.CouleurBalle();
+                        Color couleur = Robots.GrosRobot.GetCouleurBalle();
 
                         if (couleur != Color.White)
                         {

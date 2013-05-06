@@ -60,7 +60,7 @@ namespace GoBot.Mouvements
                 }
 
                 // Si pas d'assiette on abandonne et on s'en va. On considère que l'assiette n'est pas ici
-                if (!Robots.GrosRobot.PresenceAssiette())
+                if (!Robots.GrosRobot.GetPresenceAssiette())
                 {
                     if (numeroAssiette != Plateau.AssietteAttrapee)
                         Robots.GrosRobot.Avancer(150);
@@ -78,7 +78,7 @@ namespace GoBot.Mouvements
                     Thread.Sleep(1500);
 
                     // Teste si l'aspirateur est bien remonté
-                    aspirateurRemonte = Robots.GrosRobot.AspiRemonte();
+                    aspirateurRemonte = Robots.GrosRobot.GetAspiRemonte();
                     if (aspirateurRemonte)
                     {
                         Robots.GrosRobot.TourneMoteur(MoteurID.GRTurbineAspirateur, 0);

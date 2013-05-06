@@ -27,14 +27,6 @@ namespace GoBot
             actions = new List<IAction>();
         }
 
-        Thread th;
-        public void AjouterActionThread(IAction action)
-        {
-            //th = new Thread(AjouterAction);
-            //th.Start(action);
-            AjouterAction(action);
-        }
-
         public void AjouterAction(Object o)
         {
             IAction action = (IAction)o;

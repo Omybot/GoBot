@@ -133,33 +133,33 @@ namespace GoBot.IHM
 
             while (balle)
             {
-                if (!Robots.GrosRobot.PresenceBalle())
+                if (!Robots.GrosRobot.GetPresenceBalle())
                 {
                     Robots.GrosRobot.BougeServo(ServomoteurID.GRDebloqueur, Config.CurrentConfig.PositionGRDebloqueurHaut);
                     Thread.Sleep(500);
                     Robots.GrosRobot.BougeServo(ServomoteurID.GRDebloqueur, Config.CurrentConfig.PositionGRDebloqueurBas);
 
-                    if (!Robots.GrosRobot.PresenceBalle())
+                    if (!Robots.GrosRobot.GetPresenceBalle())
                     {
                         Robots.GrosRobot.TourneMoteur(MoteurID.GRTurbineAspirateur, Config.CurrentConfig.VitesseAspiration);
                         Thread.Sleep(600);
                         Robots.GrosRobot.TourneMoteur(MoteurID.GRTurbineAspirateur, 0);
                         Thread.Sleep(1200);
 
-                        if (!Robots.GrosRobot.PresenceBalle())
+                        if (!Robots.GrosRobot.GetPresenceBalle())
                         {
                             Robots.GrosRobot.BougeServo(ServomoteurID.GRDebloqueur, Config.CurrentConfig.PositionGRDebloqueurHaut);
                             Thread.Sleep(500);
                             Robots.GrosRobot.BougeServo(ServomoteurID.GRDebloqueur, Config.CurrentConfig.PositionGRDebloqueurBas);
 
-                            if (!Robots.GrosRobot.PresenceBalle())
+                            if (!Robots.GrosRobot.GetPresenceBalle())
                                 balle = false;
                         }
                     }
                 }
                 else
                 {
-                    Color couleur = Robots.GrosRobot.CouleurBalle();
+                    Color couleur = Robots.GrosRobot.GetCouleurBalle();
                     Console.WriteLine(couleur);
                     if (couleur != Color.White)
                     {

@@ -218,8 +218,15 @@ namespace GoBot
 
         public void Recallages()
         {
-            Connexions.ConnexionMove.SendMessage(TrameFactory.ResetRecMove());
-            Thread.Sleep(2000);
+            // Initialisation des balises
+
+            Plateau.Balise1.Lancer(4);
+            Plateau.Balise2.Lancer(4);
+            Plateau.Balise3.Lancer(4);
+
+            // Recallage du gros robot
+
+            Robots.GrosRobot.Reset();
 
             Robots.GrosRobot.Lent();
             Robots.GrosRobot.Avancer(10);
@@ -242,6 +249,9 @@ namespace GoBot
             Robots.GrosRobot.Reculer(1450 - Robots.GrosRobot.Longueur / 2);
             Robots.GrosRobot.Rapide();
             Robots.GrosRobot.Recallage(SensAR.Arriere);
+
+            // Réinitialise le robot pour remettre à 0 l'asserv
+            Robots.GrosRobot.Reset();
 
             if (Plateau.NotreCouleur == Plateau.CouleurJ1R)
                 Robots.GrosRobot.ReglerOffsetAsserv(3000 - Robots.GrosRobot.Longueur / 2, 1000, 180);

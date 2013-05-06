@@ -13,14 +13,21 @@ namespace GoBot.Enchainements
     {
         static private System.Timers.Timer timerFinMatch;
         public Color Couleur { get; set; }
-        public static int DureeMatch { get; set; }
+        public static TimeSpan DureeMatch { get; set; }
+
+        public DateTime DebutMatch { get; set; }
+        public TimeSpan TempsRestant { get { return (DebutMatch + DureeMatch) - DateTime.Now; } }
 
         public List<Mouvement> ListeMouvementsGros = new List<Mouvement>();
         public List<Mouvement> ListeMouvementsPetit = new List<Mouvement>();
 
+        static Enchainement()
+        {
+            DureeMatch = new TimeSpan(0, 0, 90);
+        }
+
         public Enchainement()
         {
-            DureeMatch = 90000;
             Couleur = Color.Purple;
 
             for(int i = 0; i < 20; i++)
@@ -58,7 +65,7 @@ namespace GoBot.Enchainements
         {
             timerFinMatch = new System.Timers.Timer();
             timerFinMatch.Elapsed += new ElapsedEventHandler(timerFinMatch_Elapsed);
-            timerFinMatch.Interval = DureeMatch;
+            timerFinMatch.Interval = DureeMatch.TotalMilliseconds;
             timerFinMatch.Start();
 
             thGrosRobot = new Thread(ThreadGros);
@@ -73,16 +80,16 @@ namespace GoBot.Enchainements
 
         private void timerFinMatch_Elapsed(object sender, ElapsedEventArgs e)
         {
+            timerFinMatch.Stop();
             Robots.GrosRobot.Stop(StopMode.Freely);
             Robots.GrosRobot.ActionneurOnOff(ActionneurOnOffID.GRAlimentation, false);
             //PetitRobot.Stop(StopMode.Freely);
-            Plateau.Balise1.ReglageVitesse = false;
-            Plateau.Balise2.ReglageVitesse = false;
-            Plateau.Balise3.ReglageVitesse = false;
-            Plateau.Balise1.VitesseRotation(0);
-            Plateau.Balise2.VitesseRotation(0);
-            Plateau.Balise3.VitesseRotation(0);
-            timerFinMatch.Stop();
+            Plateau.Balise1.Stop();
+            Plateau.Balise2.Stop();
+            Plateau.Balise3.Stop();
+            Robots.GrosRobot.ActionneurOnOff(ActionneurOnOffID.GRPompe, true);
+            Thread.Sleep(9500);
+            Robots.GrosRobot.ActionneurOnOff(ActionneurOnOffID.GRPompe, false);
         }
 
         private void ThreadGros()

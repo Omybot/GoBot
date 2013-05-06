@@ -96,7 +96,7 @@ namespace GoBot.IHM
         {
             this.Invoke(new EventHandler(delegate
                 {
-                    if (Robots.GrosRobot.PresenceBalle(false))
+                    if (Robots.GrosRobot.GetPresenceBalle(false))
                         ledPresence.CouleurVert();
                     else
                         ledPresence.CouleurRouge();
@@ -116,7 +116,7 @@ namespace GoBot.IHM
         {
             this.Invoke(new EventHandler(delegate
             {
-                Color couleur = Robots.GrosRobot.CouleurBalle(false);
+                Color couleur = Robots.GrosRobot.GetCouleurBalle(false);
 
                 if (couleur == Plateau.CouleurJ1R)
                 {
@@ -155,7 +155,7 @@ namespace GoBot.IHM
         {
             this.Invoke(new EventHandler(delegate
             {
-                if (Robots.GrosRobot.PresenceAssiette(false))
+                if (Robots.GrosRobot.GetPresenceAssiette(false))
                     ledAssiette.CouleurVert();
                 else
                     ledAssiette.CouleurRouge();
@@ -178,7 +178,7 @@ namespace GoBot.IHM
         {
             this.Invoke(new EventHandler(delegate
             {
-                if (Robots.GrosRobot.AspiRemonte(false))
+                if (Robots.GrosRobot.GetAspiRemonte(false))
                     ledAspi.CouleurVert();
                 else
                     ledAspi.CouleurRouge();
@@ -198,7 +198,7 @@ namespace GoBot.IHM
         {
             this.Invoke(new EventHandler(delegate
             {
-                lblVitesseCanon.Text = Robots.GrosRobot.VitesseCanon(false) + " t/min";
+                lblVitesseCanon.Text = Robots.GrosRobot.GetVitesseCanon(false) + " t/min";
             }));
         }
     }

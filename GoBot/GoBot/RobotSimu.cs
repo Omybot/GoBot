@@ -140,7 +140,7 @@ namespace GoBot
             if (distance > 0)
             {
                 if (!RecallageEnCours)
-                    Historique.AjouterActionThread(new ActionAvance(this, distance));
+                    Historique.AjouterAction(new ActionAvance(this, distance));
                 SensDep = SensAR.Avant;
             }
             else
@@ -194,7 +194,7 @@ namespace GoBot
 
         public override void Stop(StopMode mode)
         {
-            Historique.AjouterActionThread(new ActionStop(this, mode));
+            Historique.AjouterAction(new ActionStop(this, mode));
             semDeplacement.WaitOne();
             Destination = Position;
             semDeplacement.Release();
@@ -213,7 +213,7 @@ namespace GoBot
         public override void Recallage(SensAR sens, bool attendre = true)
         {
             RecallageEnCours = true;
-            Historique.AjouterActionThread(new ActionRecallage(this, sens));
+            Historique.AjouterAction(new ActionRecallage(this, sens));
 
             while (Position.Coordonnees.X - Longueur / 2 > 0 &&
                 Position.Coordonnees.X + Longueur / 2 < 3000 &&
@@ -246,7 +246,7 @@ namespace GoBot
         {
             // TODO
             base.BougeServo(servo, position);
-            Historique.AjouterActionThread(new ActionServo(this, position, servo));
+            Historique.AjouterAction(new ActionServo(this, position, servo));
         }
 
         public override void EnvoyerPID(int p, int i, int d)
@@ -257,12 +257,12 @@ namespace GoBot
         public override void ActionneurOnOff(ActionneurOnOffID actionneur, bool on)
         {
             // TODO
-            Historique.AjouterActionThread(new ActionOnOff(this, actionneur, on));
+            Historique.AjouterAction(new ActionOnOff(this, actionneur, on));
         }
 
         System.Timers.Timer timerDeplacement;
 
-        public override bool PresenceBalle(bool historique = true)
+        public override bool GetPresenceBalle(bool historique = true)
         {
             if (rand.Next(10) == 0)
                 return true;
@@ -270,7 +270,7 @@ namespace GoBot
             return false; 
         }
 
-        public override Color CouleurBalle(bool historique = true)
+        public override Color GetCouleurBalle(bool historique = true)
         {
             if (rand.Next(8) == 0)
                 return Color.Blue;
@@ -278,13 +278,13 @@ namespace GoBot
             return Color.White;
         }
 
-        public override bool PresenceAssiette(bool historique = true)
+        public override bool GetPresenceAssiette(bool historique = true)
         {
             // TODO
             return true;
         }
 
-        public override bool AspiRemonte(bool historique = true)
+        public override bool GetAspiRemonte(bool historique = true)
         {
             // TODO
             return true;
@@ -293,7 +293,7 @@ namespace GoBot
         public override void TourneMoteur(MoteurID moteur, int vitesse)
         {
             // TODO
-            Historique.AjouterActionThread(new ActionMoteur(this, vitesse, moteur));
+            Historique.AjouterAction(new ActionMoteur(this, vitesse, moteur));
         }
 
         public override void AlimentationPuissance(bool on)
@@ -301,10 +301,16 @@ namespace GoBot
             // TODO
         }
 
-        public override int VitesseCanon(bool historique = true)
+        public override int GetVitesseCanon(bool historique = true)
         {
             // TODO
             return 1;
+        }
+
+        public override void Reset()
+        {
+            // TODO
+            Thread.Sleep(500);
         }
     }
 }

@@ -26,23 +26,28 @@ namespace GoBot
         public abstract void Virage(SensAR sensAr, SensGD sensGd, int rayon, int angle, bool attendre = true);
         public abstract void ReglerOffsetAsserv(int offsetX, int offsetY, int offsetTeta);
         public abstract void Recallage(SensAR sens, bool attendre = true);
-        public abstract void Init();
-        public abstract void TourneMoteur(MoteurID moteur, int vitesse);
         public abstract void EnvoyerPID(int p, int i, int d);
-        public abstract void ActionneurOnOff(ActionneurOnOffID actionneur, bool on);
-        public abstract void AlimentationPuissance(bool on);
 
-        public abstract bool PresenceBalle(bool historique = true);
-        public abstract Color CouleurBalle(bool historique = true);
-        public abstract bool PresenceAssiette(bool historique = true);
-        public abstract bool AspiRemonte(bool historique = true);
-        public abstract int VitesseCanon(bool historique = true);
+        public abstract void TourneMoteur(MoteurID moteur, int vitesse);
+        public abstract void ActionneurOnOff(ActionneurOnOffID actionneur, bool on);
+
+        public abstract void Init();
+        public abstract void AlimentationPuissance(bool on);
+        public abstract void Reset();
+
+        public abstract bool GetPresenceBalle(bool historique = true);
+        public abstract Color GetCouleurBalle(bool historique = true);
+        public abstract bool GetPresenceAssiette(bool historique = true);
+        public abstract bool GetAspiRemonte(bool historique = true);
+        public abstract int GetVitesseCanon(bool historique = true);
 
         public void Diagnostic()
         {
             int tempsPause = 300;
-            //Avancer(50);
-            //Reculer(50);
+            Avancer(50);
+            Reculer(50);
+            PivotDroite(10);
+            PivotGauche(10);
             BougeServo(ServomoteurID.GRAspirateur, Config.CurrentConfig.PositionGRAspirateurBas);
             Thread.Sleep(tempsPause);
             BougeServo(ServomoteurID.GRAspirateur, Config.CurrentConfig.PositionGRAspirateurHaut);

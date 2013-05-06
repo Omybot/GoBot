@@ -112,19 +112,6 @@ namespace GoBot.Actions
             }
         }
 
-        public static String Nommer(PompeID pompe)
-        {
-            switch (pompe)
-            {
-                case PompeID.PRPompeDroite:
-                    return "pompe droite";
-                case PompeID.PRPompeGauche:
-                    return "pompe gauche";
-                default:
-                    return pompe.ToString();
-            }
-        }
-
         public static String Nommer(MoteurID moteur)
         {
             switch (moteur)

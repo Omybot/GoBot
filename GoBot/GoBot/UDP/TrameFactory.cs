@@ -59,7 +59,6 @@ namespace GoBot.UDP
 
             TestConnexion = 0xF0,
             Reset = 0xF1,
-
         }
 
         public enum FonctionMiwi

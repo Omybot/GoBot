@@ -47,7 +47,7 @@ namespace GoBot.Mouvements
                 Robots.GrosRobot.Rapide();
 
                 // Si pas d'assiette on abandonne et on s'en va. On considère que l'assiette n'est pas ici
-                if (!Robots.GrosRobot.PresenceAssiette())
+                if (!Robots.GrosRobot.GetPresenceAssiette())
                 {
                     Robots.GrosRobot.Avancer(150);
                     Plateau.AssiettesExiste[numeroAssiette] = false;

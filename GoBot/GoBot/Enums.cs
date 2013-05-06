@@ -60,12 +60,6 @@ namespace GoBot
         GRPompe = 2
     }
 
-    public enum PompeID
-    {
-        PRPompeDroite = 0x00,
-        PRPompeGauche = 0x01
-    }
-
     public enum Carte
     {
         PC = 0xA1,

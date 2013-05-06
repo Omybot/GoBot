@@ -96,7 +96,7 @@ namespace GoBot
                     presenceBalle = trameRecue[2] == 1 ? true : false;
 
                     if(historiquePresenceBalle)
-                        Historique.AjouterActionThread(new ActionCapteur(this, CapteurID.GRPresenceBalle, (presenceBalle ? "quelque chose" : "rien")));
+                        Historique.AjouterAction(new ActionCapteur(this, CapteurID.GRPresenceBalle, (presenceBalle ? "quelque chose" : "rien")));
 
                     try
                     {
@@ -161,7 +161,7 @@ namespace GoBot
 
                         //Console.Beep(valCouleurAllume4, 50);
                         if(historiqueCouleurBalle)
-                            Historique.AjouterActionThread(new ActionCapteur(this, CapteurID.GRCouleurBalle, couleur));
+                            Historique.AjouterAction(new ActionCapteur(this, CapteurID.GRCouleurBalle, couleur));
                     }
                     catch (Exception)
                     { }
@@ -196,7 +196,7 @@ namespace GoBot
                         semAspiRemonte.Release();
 
                     if (historiqueAspiRemonte)
-                        Historique.AjouterActionThread(new ActionCapteur(this, CapteurID.GRAspiRemonte, aspiRemonte ? "bien remonté" : "erreur"));
+                        Historique.AjouterAction(new ActionCapteur(this, CapteurID.GRAspiRemonte, aspiRemonte ? "bien remonté" : "erreur"));
                 }
 
                 if (trameRecue[1] == (byte)TrameFactory.FonctionMove.DepartJack)
@@ -212,7 +212,7 @@ namespace GoBot
                     else if (trameRecue[2] == 1)
                         Plateau.NotreCouleur = Plateau.CouleurJ2B;
 
-                    //Historique.AjouterActionThread(new ActionCapteur(this, CapteurID.GRCouleurBalle, "));
+                    //Historique.AjouterAction(new ActionCapteur(this, CapteurID.GRCouleurBalle, "));
                 }
 
                 if (trameRecue[1] == (byte)TrameFactory.FonctionMove.ReponseVitesseCanon)
@@ -222,10 +222,18 @@ namespace GoBot
                         semVitesseCanon.Release();
 
                     if(historiqueVitesseCanon)
-                        Historique.AjouterActionThread(new ActionCapteur(this, CapteurID.GRVitesseCanon, vitesseCanon + "tours/min"));
+                        Historique.AjouterAction(new ActionCapteur(this, CapteurID.GRVitesseCanon, vitesseCanon + "tours/min"));
                 }
 
+                if (trameRecue[1] == (byte)TrameFactory.FonctionMove.ReponsePresenceAssiette)
+                {
+                    presenceAssiette = trameRecue[2] == 0 ? false : true;
+                    if (semCapteurAssiette != null)
+                        semCapteurAssiette.Release();
 
+                    if (historiquePresenceAssiette)
+                        Historique.AjouterAction(new ActionCapteur(this, CapteurID.GRPresenceAssiette, presenceAssiette ? "assiette" : "rien"));
+                }
             }
         }
 
@@ -240,7 +248,7 @@ namespace GoBot
             Trame trame = TrameFactory.Deplacer(SensAR.Avant, distance);
             Connexion.SendMessage(trame);
 
-            Historique.AjouterActionThread(new ActionAvance(this, distance));
+            Historique.AjouterAction(new ActionAvance(this, distance));
 
             if (attendre)
                 semDeplacement.WaitOne();
@@ -304,7 +312,7 @@ namespace GoBot
 
             Connexion.SendMessage(trame);
             
-            Historique.AjouterActionThread(new ActionStop(this, mode));
+            Historique.AjouterAction(new ActionStop(this, mode));
         }
 
         public override void Virage(SensAR sensAr, SensGD sensGd, int rayon, int angle, bool attendre = true)
@@ -312,7 +320,7 @@ namespace GoBot
             if(attendre)
                 semDeplacement = new Semaphore(0, int.MaxValue);
 
-            Historique.AjouterActionThread(new ActionVirage(this, rayon, angle, sensAr, sensGd));
+            Historique.AjouterAction(new ActionVirage(this, rayon, angle, sensAr, sensGd));
 
             Trame trame = TrameFactory.Virage(sensAr, sensGd, rayon, angle);
             Connexion.SendMessage(trame);
@@ -332,7 +340,7 @@ namespace GoBot
             if (attendre)
                 semDeplacement = new Semaphore(0, int.MaxValue);
 
-            Historique.AjouterActionThread(new ActionRecallage(this, sens));
+            Historique.AjouterAction(new ActionRecallage(this, sens));
             Trame trame = TrameFactory.Recallage(sens);
             Connexion.SendMessage(trame);
 
@@ -367,7 +375,7 @@ namespace GoBot
             base.BougeServo(servo, position);
             Trame trame = TrameFactory.ServoPosition(servo, position);
             Connexion.SendMessage(trame);
-            Historique.AjouterActionThread(new ActionServo(this, position, servo));
+            Historique.AjouterAction(new ActionServo(this, position, servo));
         }
         
         public override void ActionneurOnOff(ActionneurOnOffID actionneur, bool on)
@@ -388,7 +396,7 @@ namespace GoBot
                 Connexion.SendMessage(trame);
             }
 
-            Historique.AjouterActionThread(new ActionOnOff(this, actionneur, on));
+            Historique.AjouterAction(new ActionOnOff(this, actionneur, on));
         }
 
         #region Parametres deplacement
@@ -462,7 +470,7 @@ namespace GoBot
         private Semaphore semCapteurPresence;
         private bool presenceBalle;
         private bool historiquePresenceBalle;
-        public override bool PresenceBalle(bool historique = true)
+        public override bool GetPresenceBalle(bool historique = true)
         {
             historiquePresenceBalle = historique;
             semCapteurPresence = new Semaphore(0, 1);
@@ -474,7 +482,7 @@ namespace GoBot
         private Semaphore semCapteurCouleur;
         private Color couleurBalle;
         private bool historiqueCouleurBalle;
-        public override Color CouleurBalle(bool historique = true)
+        public override Color GetCouleurBalle(bool historique = true)
         {
             historiqueCouleurBalle = historique;
             semCapteurCouleur = new Semaphore(0, 1);
@@ -486,7 +494,7 @@ namespace GoBot
         private Semaphore semCapteurAssiette;
         private bool presenceAssiette;
         private bool historiquePresenceAssiette;
-        public override bool PresenceAssiette(bool historique = true)
+        public override bool GetPresenceAssiette(bool historique = true)
         {
             historiquePresenceAssiette = historique;
             semCapteurAssiette = new Semaphore(0, 1);
@@ -498,7 +506,7 @@ namespace GoBot
         private Semaphore semAspiRemonte;
         private bool aspiRemonte;
         private bool historiqueAspiRemonte;
-        public override bool AspiRemonte(bool historique = true)
+        public override bool GetAspiRemonte(bool historique = true)
         {
             historiqueAspiRemonte = historique;
             semAspiRemonte = new Semaphore(0, 1);
@@ -510,7 +518,7 @@ namespace GoBot
         private Semaphore semVitesseCanon;
         private int vitesseCanon;
         private bool historiqueVitesseCanon;
-        public override int VitesseCanon(bool historique = true)
+        public override int GetVitesseCanon(bool historique = true)
         {
             historiqueVitesseCanon = historique;
             semVitesseCanon = new Semaphore(0, 1);
@@ -532,13 +540,19 @@ namespace GoBot
                 Connexion.SendMessage(trame);
             }
 
-            Historique.AjouterActionThread(new ActionMoteur(this, vitesse, moteur));
+            Historique.AjouterAction(new ActionMoteur(this, vitesse, moteur));
         }
 
         public override void AlimentationPuissance(bool on)
         {
             Trame trame = TrameFactory.CoupureAlim(on);
             Connexion.SendMessage(trame);
+        }
+
+        public override void Reset()
+        {
+            Connexion.SendMessage(TrameFactory.ResetRecMove());
+            Thread.Sleep(500);
         }
     }
 }

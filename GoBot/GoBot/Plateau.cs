@@ -497,5 +497,18 @@ namespace GoBot
 
             return true;
         }
+
+        /// <summary>
+        /// Recalle les balises en angle. Necessite qu'un réflecteur à deux étages soit au milieu de la piste
+        /// </summary>
+        public static void RecallageBalises()
+        {
+            Balise1.ReglerOffset(12);
+            Balise2.ReglerOffset(12);
+            Balise3.ReglerOffset(12);
+
+            while (Balise1.ReglageOffset || Balise2.ReglageOffset || Balise3.ReglageOffset)
+                Thread.Sleep(100);
+        }
     }
 }

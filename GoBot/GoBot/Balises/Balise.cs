@@ -356,7 +356,6 @@ namespace GoBot
             }
             else
             {
-
                 ValeurConsigne = vitesse;
                 Trame t = TrameFactory.BaliseVitesse(Carte, vitesse);
                 Connexions.ConnexionMiwi.SendMessage(t);
@@ -427,6 +426,29 @@ namespace GoBot
         {
             // TODO
             return null;
+        }
+
+        /// <summary>
+        /// Lance la balise à une vitesse de consigne
+        /// </summary>
+        /// <param name="vitesse">Vitesse de consigne en tours / seconde</param>
+        public void Lancer(double vitesse)
+        {
+            VitesseRotation(2500);
+            VitesseConsigne = vitesse;
+            ReglageVitesse = true;
+            ReglageVitessePermanent = true;
+            // Pour être sûr au cas où...
+            VitesseRotation(2500);
+        }
+
+        /// <summary>
+        /// Arrête la balise
+        /// </summary>
+        public void Stop()
+        {
+            VitesseRotation(0);
+            ReglageVitesse = false;
         }
     }
 }
