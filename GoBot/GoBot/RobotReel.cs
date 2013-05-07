@@ -40,7 +40,6 @@ namespace GoBot
 
         public override void Init()
         {
-            Nom = "GrosRobot";
             Evitement = true;
             Couleur = Color.Purple;
 

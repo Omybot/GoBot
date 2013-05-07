@@ -81,6 +81,12 @@
     <Compile Include="Actions\Deplacement\ActionRecule.cs" />
     <Compile Include="Actions\IAction.cs" />
     <Compile Include="CameraIP.cs" />
+    <Compile Include="IHM\PanelReglagePetit.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="IHM\PanelReglagePetit.Designer.cs">
+      <DependentUpon>PanelReglagePetit.cs</DependentUpon>
+    </Compile>
     <Compile Include="IHM\PanelCapteursGros.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -258,6 +264,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="IHM\Composants\TrackBarPlus.resx">
       <DependentUpon>TrackBarPlus.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="IHM\PanelReglagePetit.resx">
+      <DependentUpon>PanelReglagePetit.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="IHM\PanelCapteursGros.resx">
       <DependentUpon>PanelCapteursGros.cs</DependentUpon>

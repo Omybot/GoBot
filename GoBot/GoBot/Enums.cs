@@ -35,7 +35,14 @@ namespace GoBot
         GRCamera = 5,
         GRServoAssiette = 6,
 
-        PRBras = 99
+        PRBrasDroit = 18,
+        PRBrasGauche = 17,
+        PRBrasAvant = 1,
+        PRBrasArriere = 20,
+        PRBrasAvantGauche = 30,
+        PRBrasAvantDroit = 31,
+        PRBrasArriereGauche = 32,
+        PRBrasArriereDroit = 33
     }
 
     public enum MoteurID
@@ -67,7 +74,8 @@ namespace GoBot
         RecMiwi = 0xC2,
         RecBun = 0xB1,
         RecBeu = 0xB2,
-        RecBoi = 0xB3
+        RecBoi = 0xB3,
+        RecPi = 0xC1
     }
 
     public enum CapteurBalise

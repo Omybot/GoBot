@@ -32,6 +32,18 @@ namespace GoBot.Actions
                     return "petit bras";
                 case ServomoteurID.GRServoAssiette:
                     return "blocage assiette";
+                case ServomoteurID.PRBrasArriere:
+                    return "bras arrière";
+                //case ServomoteurID.PRBrasAvant:
+                //    return "bras avant";
+                case ServomoteurID.PRBrasAvantDroit:
+                    return "bras avant droit";
+                case ServomoteurID.PRBrasAvantGauche:
+                    return "bras avant gauche";
+                case ServomoteurID.PRBrasArriereDroit:
+                    return "bras avant droit";
+                case ServomoteurID.PRBrasArriereGauche:
+                    return "bras arrière gauche";
                 default:
                     return servo.ToString();
             }
@@ -52,36 +64,36 @@ namespace GoBot.Actions
                         return "bas (" + position + ")";
                     else if (position == Config.CurrentConfig.PositionGRAspirateurHaut)
                         return "haut (" + position + ")";
-                    else
-                        return position + "";
+                    else return position.ToString();
+
                 case ServomoteurID.GRDebloqueur:
                     if (position == Config.CurrentConfig.PositionGRDebloqueurBas)
                         return "bas (" + position + ")";
                     else if (position == Config.CurrentConfig.PositionGRDebloqueurHaut)
                         return "haut (" + position + ")";
-                    else
-                        return position + "";
+                    else return position.ToString();
+
                 case ServomoteurID.GRBrasDroit:
                     if (position == Config.CurrentConfig.PositionGRBrasDroitRange)
                         return "rangé (" + position + ")";
                     else if (position == Config.CurrentConfig.PositionGRBrasDroitSorti)
                         return "sorti (" + position + ")";
-                    else
-                        return position + "";
+                    else return position.ToString();
+
                 case ServomoteurID.GRBrasGauche:
                     if (position == Config.CurrentConfig.PositionGRBrasGaucheRange)
                         return "rangé (" + position + ")";
                     else if (position == Config.CurrentConfig.PositionGRBrasGaucheSorti)
                         return "sorti (" + position + ")";
-                    else
-                        return position + "";
+                    else return position.ToString();
+
                 case ServomoteurID.GRCamera:
                     if (position == Config.CurrentConfig.PositionGRCameraBleu)
                         return "bleu (" + position + ")";
                     else if (position == Config.CurrentConfig.PositionGRCameraRouge)
                         return "rouge (" + position + ")";
-                    else
-                        return position + "";
+                    else return position.ToString();
+
                 case ServomoteurID.GRGrandBras:
                     if (position == Config.CurrentConfig.PositionGRGrandBrasBas)
                         return "bas (" + position + ")";
@@ -89,8 +101,8 @@ namespace GoBot.Actions
                         return "haut (" + position + ")";
                     else if (position == Config.CurrentConfig.PositionGRGrandBrasRange)
                         return "rangé (" + position + ")";
-                    else
-                        return position + "";
+                    else return position.ToString();
+
                 case ServomoteurID.GRPetitBras:
                     if (position == Config.CurrentConfig.PositionGRPetitBrasBas)
                         return "bas (" + position + ")";
@@ -98,15 +110,66 @@ namespace GoBot.Actions
                         return "haut (" + position + ")";
                     else if (position == Config.CurrentConfig.PositionGRPetitBrasRange)
                         return "rangé (" + position + ")";
-                    else
-                        return position + "";
+                    else return position.ToString();
+
                 case ServomoteurID.GRServoAssiette:
                     if (position == Config.CurrentConfig.PositionGRBloqueurFerme)
                         return "bloqué (" + position + ")";
                     else if (position == Config.CurrentConfig.PositionGRBloqueurOuvert)
                         return "ouvert (" + position + ")";
-                    else
-                        return position + "";
+                    else return position.ToString();
+
+                case ServomoteurID.PRBrasArriere:
+                    if (position == Config.CurrentConfig.PositionPRBrasArriereBas)
+                        return "bas (" + position + ")";
+                    else if (position == Config.CurrentConfig.PositionPRBrasArriereHaut)
+                        return "haut (" + position + ")";
+                    else if (position == Config.CurrentConfig.PositionPRBrasArriereAssiette)
+                        return "assiette (" + position + ")";
+                    else if (position == Config.CurrentConfig.PositionPRBrasArriereRange)
+                        return "rangé (" + position + ")";
+                    else return position.ToString();
+
+                    /*
+                case ServomoteurID.PRBrasAvant:
+                    if (position == Config.CurrentConfig.PositionPRBrasAvantBas)
+                        return "bas (" + position + ")";
+                    else if (position == Config.CurrentConfig.PositionPRBrasAvantHaut)
+                        return "haut (" + position + ")";
+                    else if (position == Config.CurrentConfig.PositionPRBrasAvantAssiette)
+                        return "assiette (" + position + ")";
+                    else if (position == Config.CurrentConfig.PositionPRBrasAvantRange)
+                        return "rangé (" + position + ")";*/
+
+
+                case ServomoteurID.PRBrasAvantDroit:
+                    if (position == Config.CurrentConfig.PositionPRBrasAvantDroiteBas)
+                        return "bas (" + position + ")";
+                    else if (position == Config.CurrentConfig.PositionPRBrasAvantDroiteHaut)
+                        return "haut (" + position + ")";
+                    else return position.ToString();
+
+                case ServomoteurID.PRBrasAvantGauche:
+                    if (position == Config.CurrentConfig.PositionPRBrasAvantGaucheBas)
+                        return "bas (" + position + ")";
+                    else if (position == Config.CurrentConfig.PositionPRBrasAvantGaucheHaut)
+                        return "haut (" + position + ")";
+                    else return position.ToString();
+
+                case ServomoteurID.PRBrasArriereDroit:
+                    if (position == Config.CurrentConfig.PositionPRBrasArriereDroiteBas)
+                        return "bas (" + position + ")";
+                    else if (position == Config.CurrentConfig.PositionPRBrasArriereDroiteHaut)
+                        return "haut (" + position + ")";
+                    else return position.ToString();
+
+                case ServomoteurID.PRBrasArriereGauche:
+                    if (position == Config.CurrentConfig.PositionPRBrasArriereGaucheBas)
+                        return "bas (" + position + ")";
+                    else if (position == Config.CurrentConfig.PositionPRBrasArriereGaucheHaut)
+                        return "haut (" + position + ")";
+                    else return position.ToString();
+
                 default:
                     return position.ToString();
             }

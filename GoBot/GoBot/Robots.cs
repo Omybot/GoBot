@@ -28,7 +28,7 @@ namespace GoBot
                 GrosRobot = grosRobot;
 
                 RobotReel petitRobot = new RobotReel();
-                petitRobot.Connexion = Connexions.ConnexionMove;
+                petitRobot.Connexion = Connexions.ConnexionPi;
                 PetitRobot = petitRobot;
             }
             else
@@ -47,13 +47,13 @@ namespace GoBot
                 GrosRobot.Position = new Position(new Angle(180, AnglyeType.Degre), new Calculs.Formes.PointReel(3000 - Robots.GrosRobot.Longueur / 2, 1000));
             else
                 GrosRobot.Position = new Position(new Angle(0, AnglyeType.Degre), new Calculs.Formes.PointReel(Robots.GrosRobot.Longueur / 2, 1000));
-            GrosRobot.Nom = "GrosRobot";
+            GrosRobot.Nom = "Rocker";
             GrosRobot.Init();
 
             PetitRobot.Largeur = 200;
             PetitRobot.Longueur = 100;
             PetitRobot.Position = new Position(new Angle(270, AnglyeType.Degre), new Calculs.Formes.PointReel(2500, 1000));
-            PetitRobot.Nom = "PetitRobot";
+            PetitRobot.Nom = "Punk";
             PetitRobot.Init();
         }
 

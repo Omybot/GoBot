@@ -29,43 +29,25 @@
         private void InitializeComponent()
         {
             this.flowLayoutPanel1 = new System.Windows.Forms.FlowLayoutPanel();
-            this.flowLayoutPanel2 = new System.Windows.Forms.FlowLayoutPanel();
-            this.txtLog = new System.Windows.Forms.TextBox();
             this.panelDeplacement = new GoBot.IHM.PanelDeplacement();
             this.panelHistorique = new GoBot.IHM.PanelHistorique();
+            this.flowLayoutPanel2 = new System.Windows.Forms.FlowLayoutPanel();
+            this.txtLog = new System.Windows.Forms.TextBox();
+            this.panelReglagePetit1 = new GoBot.IHM.PanelReglagePetit();
             this.flowLayoutPanel1.SuspendLayout();
+            this.flowLayoutPanel2.SuspendLayout();
             this.SuspendLayout();
             // 
             // flowLayoutPanel1
             // 
-            this.flowLayoutPanel1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-                        | System.Windows.Forms.AnchorStyles.Left)));
+            this.flowLayoutPanel1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left)));
             this.flowLayoutPanel1.Controls.Add(this.panelDeplacement);
             this.flowLayoutPanel1.Controls.Add(this.panelHistorique);
             this.flowLayoutPanel1.Location = new System.Drawing.Point(3, 3);
             this.flowLayoutPanel1.Name = "flowLayoutPanel1";
             this.flowLayoutPanel1.Size = new System.Drawing.Size(343, 556);
             this.flowLayoutPanel1.TabIndex = 90;
-            // 
-            // flowLayoutPanel2
-            // 
-            this.flowLayoutPanel2.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-                        | System.Windows.Forms.AnchorStyles.Left)));
-            this.flowLayoutPanel2.Location = new System.Drawing.Point(352, 3);
-            this.flowLayoutPanel2.Name = "flowLayoutPanel2";
-            this.flowLayoutPanel2.Size = new System.Drawing.Size(343, 559);
-            this.flowLayoutPanel2.TabIndex = 91;
-            // 
-            // txtLog
-            // 
-            this.txtLog.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-                        | System.Windows.Forms.AnchorStyles.Right)));
-            this.txtLog.ForeColor = System.Drawing.Color.Green;
-            this.txtLog.Location = new System.Drawing.Point(701, 16);
-            this.txtLog.Multiline = true;
-            this.txtLog.Name = "txtLog";
-            this.txtLog.Size = new System.Drawing.Size(299, 543);
-            this.txtLog.TabIndex = 92;
             // 
             // panelDeplacement
             // 
@@ -87,6 +69,36 @@
             this.panelHistorique.TabIndex = 71;
             this.panelHistorique.Resize += new System.EventHandler(this.panelHistorique_Resize);
             // 
+            // flowLayoutPanel2
+            // 
+            this.flowLayoutPanel2.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left)));
+            this.flowLayoutPanel2.Controls.Add(this.panelReglagePetit1);
+            this.flowLayoutPanel2.Location = new System.Drawing.Point(352, 3);
+            this.flowLayoutPanel2.Name = "flowLayoutPanel2";
+            this.flowLayoutPanel2.Size = new System.Drawing.Size(343, 559);
+            this.flowLayoutPanel2.TabIndex = 91;
+            // 
+            // txtLog
+            // 
+            this.txtLog.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.txtLog.ForeColor = System.Drawing.Color.Green;
+            this.txtLog.Location = new System.Drawing.Point(701, 16);
+            this.txtLog.Multiline = true;
+            this.txtLog.Name = "txtLog";
+            this.txtLog.Size = new System.Drawing.Size(299, 543);
+            this.txtLog.TabIndex = 92;
+            // 
+            // panelReglagePetit1
+            // 
+            this.panelReglagePetit1.AutoSize = true;
+            this.panelReglagePetit1.BackColor = System.Drawing.Color.Transparent;
+            this.panelReglagePetit1.Location = new System.Drawing.Point(3, 3);
+            this.panelReglagePetit1.Name = "panelReglagePetit1";
+            this.panelReglagePetit1.Size = new System.Drawing.Size(340, 103);
+            this.panelReglagePetit1.TabIndex = 0;
+            // 
             // PanelPetitRobot
             // 
             this.BackColor = System.Drawing.Color.Transparent;
@@ -97,6 +109,8 @@
             this.Size = new System.Drawing.Size(1003, 562);
             this.flowLayoutPanel1.ResumeLayout(false);
             this.flowLayoutPanel1.PerformLayout();
+            this.flowLayoutPanel2.ResumeLayout(false);
+            this.flowLayoutPanel2.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -109,6 +123,7 @@
         private PanelHistorique panelHistorique;
         private System.Windows.Forms.TextBox txtLog;
         private PanelDeplacement panelDeplacement;
+        private PanelReglagePetit panelReglagePetit1;
 
     }
 }

@@ -22,6 +22,10 @@ namespace GoBot
             ConnexionMiwi = new ConnexionUDP();
             ConnexionMiwi.Connexion(System.Net.IPAddress.Parse("10.1.0.12"), 12312, 12322);
             ConnexionMiwi.ConnexionCheck.TestConnexion += new ConnexionCheck.TestConnexionDelegate(ConnexionMiwiCheck_TestConnexion);
+
+            ConnexionPi = new ConnexionUDP();
+            ConnexionPi.Connexion(System.Net.IPAddress.Parse("10.1.0.13"), 12313, 12323);
+            ConnexionPi.ConnexionCheck.TestConnexion += new ConnexionCheck.TestConnexionDelegate(ConnexionPiCheck_TestConnexion);
         }
 
         private static void ConnexionMoveCheck_TestConnexion()
@@ -32,6 +36,11 @@ namespace GoBot
         private static void ConnexionMiwiCheck_TestConnexion()
         {
             ConnexionMiwi.SendMessage(TrameFactory.TestConnexionMove());
+        }
+
+        private static void ConnexionPiCheck_TestConnexion()
+        {
+            ConnexionPi.SendMessage(TrameFactory.TestConnexionMove());
         }
     }
 }

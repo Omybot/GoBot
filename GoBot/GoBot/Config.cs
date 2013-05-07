@@ -131,14 +131,34 @@ namespace GoBot
         // Positions bras petit robot
 
         public int PositionPRBrasGaucheHaut { get; set; }
-        public int PositionPRBrasGaucheMilieu { get; set; }
         public int PositionPRBrasGaucheBas { get; set; }
         public int PositionPRBrasGaucheRange { get; set; }
 
         public int PositionPRBrasDroiteHaut { get; set; }
-        public int PositionPRBrasDroiteMilieu { get; set; }
         public int PositionPRBrasDroiteBas { get; set; }
         public int PositionPRBrasDroiteRange { get; set; }
+
+        public int PositionPRBrasAvantHaut { get; set; }
+        public int PositionPRBrasAvantBas { get; set; }
+        public int PositionPRBrasAvantRange { get; set; }
+        public int PositionPRBrasAvantAssiette { get; set; }
+
+        public int PositionPRBrasArriereHaut { get; set; }
+        public int PositionPRBrasArriereBas { get; set; }
+        public int PositionPRBrasArriereRange { get; set; }
+        public int PositionPRBrasArriereAssiette { get; set; }
+
+        public int PositionPRBrasAvantGaucheHaut { get; set; }
+        public int PositionPRBrasAvantGaucheBas { get; set; }
+
+        public int PositionPRBrasAvantDroiteHaut { get; set; }
+        public int PositionPRBrasAvantDroiteBas { get; set; }
+
+        public int PositionPRBrasArriereGaucheHaut { get; set; }
+        public int PositionPRBrasArriereGaucheBas { get; set; }
+
+        public int PositionPRBrasArriereDroiteHaut { get; set; }
+        public int PositionPRBrasArriereDroiteBas { get; set; }
 
         // Positions bougies à la camera
 

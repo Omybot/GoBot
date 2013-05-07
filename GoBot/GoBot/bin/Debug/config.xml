@@ -59,14 +59,28 @@
   <VitesseAspiration>312</VitesseAspiration>
   <VitesseAspirationMaintien>60</VitesseAspirationMaintien>
   <VitessePropulsionBonne>455</VitessePropulsionBonne>
-  <PositionPRBrasGaucheHaut>0</PositionPRBrasGaucheHaut>
-  <PositionPRBrasGaucheMilieu>0</PositionPRBrasGaucheMilieu>
-  <PositionPRBrasGaucheBas>0</PositionPRBrasGaucheBas>
-  <PositionPRBrasGaucheRange>0</PositionPRBrasGaucheRange>
-  <PositionPRBrasDroiteHaut>0</PositionPRBrasDroiteHaut>
-  <PositionPRBrasDroiteMilieu>0</PositionPRBrasDroiteMilieu>
-  <PositionPRBrasDroiteBas>0</PositionPRBrasDroiteBas>
-  <PositionPRBrasDroiteRange>0</PositionPRBrasDroiteRange>
+  <PositionPRBrasGaucheHaut>600</PositionPRBrasGaucheHaut>
+  <PositionPRBrasGaucheBas>350</PositionPRBrasGaucheBas>
+  <PositionPRBrasGaucheRange>140</PositionPRBrasGaucheRange>
+  <PositionPRBrasDroiteHaut>65</PositionPRBrasDroiteHaut>
+  <PositionPRBrasDroiteBas>300</PositionPRBrasDroiteBas>
+  <PositionPRBrasDroiteRange>517</PositionPRBrasDroiteRange>
+  <PositionPRBrasAvantHaut>440</PositionPRBrasAvantHaut>
+  <PositionPRBrasAvantBas>500</PositionPRBrasAvantBas>
+  <PositionPRBrasAvantRange>220</PositionPRBrasAvantRange>
+  <PositionPRBrasAvantAssiette>620</PositionPRBrasAvantAssiette>
+  <PositionPRBrasArriereHaut>460</PositionPRBrasArriereHaut>
+  <PositionPRBrasArriereBas>510</PositionPRBrasArriereBas>
+  <PositionPRBrasArriereRange>220</PositionPRBrasArriereRange>
+  <PositionPRBrasArriereAssiette>625</PositionPRBrasArriereAssiette>
+  <PositionPRBrasAvantGaucheHaut>0</PositionPRBrasAvantGaucheHaut>
+  <PositionPRBrasAvantGaucheBas>0</PositionPRBrasAvantGaucheBas>
+  <PositionPRBrasAvantDroiteHaut>0</PositionPRBrasAvantDroiteHaut>
+  <PositionPRBrasAvantDroiteBas>0</PositionPRBrasAvantDroiteBas>
+  <PositionPRBrasArriereGaucheHaut>0</PositionPRBrasArriereGaucheHaut>
+  <PositionPRBrasArriereGaucheBas>0</PositionPRBrasArriereGaucheBas>
+  <PositionPRBrasArriereDroiteHaut>0</PositionPRBrasArriereDroiteHaut>
+  <PositionPRBrasArriereDroiteBas>0</PositionPRBrasArriereDroiteBas>
   <PositionsBougiesX>
     <int>435</int>
     <int>495</int>

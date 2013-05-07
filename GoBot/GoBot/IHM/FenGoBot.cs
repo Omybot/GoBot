@@ -52,11 +52,11 @@ namespace GoBot
 
                 // Réglage rouge par défaut
                 btnCouleurRouge_Click(null, null);
-                //PetitRobot.ConnexionCheck.ConnexionChange += new ConnexionCheck.ConnexionChangeDelegate(ConnexionPi_ConnexionChange);
 
                 Connexions.ConnexionMove.ConnexionCheck.Start();
                 Connexions.ConnexionMiwi.ConnexionCheck.Start();
-                //PetitRobot.ConnexionCheck.Start();
+                Connexions.ConnexionPi.ConnexionCheck.Start();
+
                 panelBalise1.Balise.ConnexionCheck.Start();
                 panelBalise2.Balise.ConnexionCheck.Start();
                 panelBalise3.Balise.ConnexionCheck.Start();
@@ -85,9 +85,14 @@ namespace GoBot
             Robot_ConnexionChange(Carte.RecMove, conn);
         }
 
-        void ConnexionIoCheck_ConnexionChange(bool conn)
+        void ConnexionPiCheck_ConnexionChange(bool conn)
         {
-            //Robot_ConnexionChange(Carte.RecIo, conn);
+            Robot_ConnexionChange(Carte.RecPi, conn);
+        }
+
+        void ConnexionMiwiCheck_ConnexionChange(bool conn)
+        {
+            Robot_ConnexionChange(Carte.RecMiwi, conn);
         }
 
         void AjouterLigne(Color couleur, String texte)
@@ -261,22 +266,6 @@ namespace GoBot
             Robots.GrosRobot.Rapide();
         }
 
-        private void Rapide()
-        {
-            Robots.GrosRobot.VitesseDeplacement = 600;
-            Robots.GrosRobot.AccelerationDeplacement = 1200;
-            Robots.GrosRobot.VitessePivot = 800;
-            Robots.GrosRobot.AccelerationPivot = 1400;
-        }
-
-        private void Lent()
-        {
-            Robots.GrosRobot.VitesseDeplacement = 150;
-            Robots.GrosRobot.AccelerationDeplacement = 150;
-            Robots.GrosRobot.VitessePivot = 150;
-            Robots.GrosRobot.AccelerationPivot = 150;
-        }
-
         private void btnBalises_Click(object sender, EventArgs e)
         {
             ledBalises.CouleurVert();
@@ -391,18 +380,6 @@ namespace GoBot
         {
         }
 
-        private void btnPRCoeffAsserv_Click(object sender, EventArgs e)
-        {
-            //PetitRobot.EnvoyerPID((int)numPGR.Value, (int)numIGR.Value, (int)numDGR.Value);
-        }
-
-        private void button3_Click(object sender, EventArgs e)
-        {
-            /*GrosRobot.Enchainement = new EvitementEnchainement();
-            GrosRobot.Enchainement.Couleur = pictureBoxCouleur.BackColor;
-            GrosRobot.Enchainement.Executer();*/
-        }
-
         private void button4_Click(object sender, EventArgs e)
         {
             Config.Save();
@@ -414,7 +391,8 @@ namespace GoBot
             Connexions.ConnexionMove.SendMessage(TrameFactory.DemandeCouleurEquipe());
 
             Connexions.ConnexionMove.ConnexionCheck.ConnexionChange += new ConnexionCheck.ConnexionChangeDelegate(ConnexionMoveCheck_ConnexionChange);
-            Connexions.ConnexionMiwi.ConnexionCheck.ConnexionChange += new ConnexionCheck.ConnexionChangeDelegate(ConnexionIoCheck_ConnexionChange);
+            Connexions.ConnexionMiwi.ConnexionCheck.ConnexionChange += new ConnexionCheck.ConnexionChangeDelegate(ConnexionMiwiCheck_ConnexionChange);
+            Connexions.ConnexionPi.ConnexionCheck.ConnexionChange += new ConnexionCheck.ConnexionChangeDelegate(ConnexionPiCheck_ConnexionChange);
 
             panelBalise1.Balise.ConnexionCheck.ConnexionChange += new ConnexionCheck.ConnexionChangeDelegate(ConnexionBunCheck_ConnexionChange);
             panelBalise2.Balise.ConnexionCheck.ConnexionChange += new ConnexionCheck.ConnexionChangeDelegate(ConnexionBeuCheck_ConnexionChange);
@@ -424,6 +402,8 @@ namespace GoBot
                 SetLed(ledRecMove, true);
             if (Connexions.ConnexionMiwi.ConnexionCheck.Connecte)
                 SetLed(ledRecIo, true);
+            if (Connexions.ConnexionPi.ConnexionCheck.Connecte)
+                SetLed(ledRecPi, true);
             if (panelBalise1.Balise.ConnexionCheck.Connecte)
                 SetLed(ledRecBun, true);
             if (panelBalise2.Balise.ConnexionCheck.Connecte)
