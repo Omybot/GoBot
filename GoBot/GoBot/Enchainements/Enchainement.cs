@@ -16,7 +16,13 @@ namespace GoBot.Enchainements
         public static TimeSpan DureeMatch { get; set; }
 
         public DateTime DebutMatch { get; set; }
-        public TimeSpan TempsRestant { get { return (DebutMatch + DureeMatch) - DateTime.Now; } }
+        public TimeSpan TempsRestant 
+        { 
+            get 
+            { 
+                return (DebutMatch + DureeMatch) - DateTime.Now; 
+            } 
+        }
 
         public List<Mouvement> ListeMouvementsGros = new List<Mouvement>();
         public List<Mouvement> ListeMouvementsPetit = new List<Mouvement>();
@@ -63,6 +69,7 @@ namespace GoBot.Enchainements
 
         public void Executer()
         {
+            DebutMatch = DateTime.Now;
             timerFinMatch = new System.Timers.Timer();
             timerFinMatch.Elapsed += new ElapsedEventHandler(timerFinMatch_Elapsed);
             timerFinMatch.Interval = DureeMatch.TotalMilliseconds;
@@ -81,6 +88,8 @@ namespace GoBot.Enchainements
         private void timerFinMatch_Elapsed(object sender, ElapsedEventArgs e)
         {
             timerFinMatch.Stop();
+            thGrosRobot.Abort();
+            thPetitRobot.Abort();
             Robots.GrosRobot.Stop(StopMode.Freely);
             Robots.GrosRobot.ActionneurOnOff(ActionneurOnOffID.GRAlimentation, false);
             //PetitRobot.Stop(StopMode.Freely);
@@ -95,6 +104,8 @@ namespace GoBot.Enchainements
         private void ThreadGros()
         {
             int iMeilleur = 0;
+
+            Robots.GrosRobot.Avancer(150);
 
             while (ListeMouvementsGros.Count > 0)
             {

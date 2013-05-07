@@ -15,15 +15,31 @@ namespace GoBot.Ponderations
             PoidsGrosCadeau = new double[8];
             PoidsGrosAssiette = new double[10];
 
-            PoidGlobalPetitBougie = 0;// 0.2;
-            PoidGlobalPetitCadeau = 0;// 1;
+            /* À savoir :
+            
+            - Tant qu'on a une assiette accrochée, la priorité d'accrochage est à 0
+            - Tant qu'on a pas de balles à lancer, la priorité de lancement est à 0
+            - Tant qu'on a pas de balles à lancer, la priorité d'accrochage est à 0
+            
+            - Si il reste moins de 30 secondes de match et que le robot contient des cerises, la priorité de lancement est x10
+            - Si il reste moins de 30 secondes de match l'aspiration de balles est /10
+            - Si il reste moins de 18 secondes de match l'aspiration de balles est /1000
+            - Si il reste moins de 30 secondes de match, l'accochage d'assiette est réduit à 0
+             
+             */
 
-            PoidGlobalGrosBougie = 1;
+            PoidGlobalPetitBougie = 0;
+            PoidGlobalPetitCadeau = 0;
+
+            PoidGlobalGrosBougie = 10;
             PoidGlobalGrosCadeau = 0.5;
             PoidGlobalGrosAspireAssiette = 50;
             PoidGlobalGrosAccrocheAssiette = 50;
-            PoidGlobalGrosLancerBallesSansAssietteAccrochee = 5;
+            // Poids de l'aspiration de l'assiette accrochée si aucune balle n'est chargée
             PoidGlobalGrosAspireAssietteAccrochee = 10000;
+            // Poids du lancage de balles si aucune assiette n'est accrochée
+            PoidGlobalGrosLancerBallesSansAssietteAccrochee = 15;
+            // Poids du lancage de balles si une assiette est accrochée
             PoidGlobalGrosLancerBallesAvecAssietteAccrochee = 10000;
 
             // Poids petit robot
@@ -55,8 +71,8 @@ namespace GoBot.Ponderations
             // Poids grand robot
 
             // Bougies
-            PoidsGrosBougie[0] = 1;
-            PoidsGrosBougie[1] = 10;
+            PoidsGrosBougie[0] = 2;
+            PoidsGrosBougie[1] = 1;
             PoidsGrosBougie[2] = 1;
             PoidsGrosBougie[2] = 1;
             PoidsGrosBougie[3] = 1;
@@ -66,8 +82,8 @@ namespace GoBot.Ponderations
             PoidsGrosBougie[7] = 1;
             PoidsGrosBougie[8] = 1;
             PoidsGrosBougie[9] = 1;
-            PoidsGrosBougie[10] = 1;
-            PoidsGrosBougie[11] = 10;
+            PoidsGrosBougie[10] = 2;
+            PoidsGrosBougie[11] = 1;
             PoidsGrosBougie[12] = 1;
             PoidsGrosBougie[13] = 1;
             PoidsGrosBougie[14] = 1;

@@ -79,13 +79,16 @@ namespace GoBot.Mouvements
             get
             {
                 // Si on n'a pas de balles chargées on ne considère pas l'action sinon il est interessant d'accrocher une assiette
-                int score;
-                if (Plateau.AssietteAttrapee == -1 && Robots.GrosRobot.BallesChargees && !Plateau.AssiettesVidees[numeroAssiette])
-                    score = 14;
-                else
-                    score = 0;
+                double score = 14;
+                if (Plateau.AssietteAttrapee != -1 || !Robots.GrosRobot.BallesChargees || Plateau.AssiettesVidees[numeroAssiette] || !Plateau.AssiettesExiste[numeroAssiette])
+                    return 0;
 
-                return score * Plateau.PoidActions.PoidGlobalGrosAccrocheAssiette * Plateau.PoidActions.PoidsGrosAssiette[numeroAssiette];
+                if (Plateau.Enchainement.TempsRestant.TotalSeconds < 30)
+                    return 0;
+
+                score *= Plateau.PoidActions.PoidGlobalGrosAccrocheAssiette * Plateau.PoidActions.PoidsGrosAssiette[numeroAssiette];
+
+                return score;
             }
         }
     }

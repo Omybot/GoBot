@@ -344,6 +344,14 @@ namespace GoBot.IHM
                         {
                             g.DrawImage(rotateImage(Properties.Resources.Balles, Robots.GrosRobot.Position.Angle.AngleDegres), RealToScreen(Robots.GrosRobot.Position.Coordonnees.X) - 61 / 2, RealToScreen(Robots.GrosRobot.Position.Coordonnees.Y) - 61 / 2, 61, 61);
                         }
+
+                        // Avant de lancer le match on retire les assiettes
+                        if (Plateau.Enchainement == null)
+                            for (int i = 0; i < 10; i++)
+                            {
+                                if (Plateau.PositionsAssiettes[i].Coordonnees.Distance(Robots.GrosRobot.Position.Coordonnees) < 250)
+                                    Plateau.AssiettesExiste[i] = false;
+                            }
                     }
 
                     // Fin dessin robot
@@ -389,6 +397,14 @@ namespace GoBot.IHM
                         lblPosPetitX.Text = Math.Round(Robots.PetitRobot.Position.Coordonnees.X, 2).ToString();
                         lblPosPetitY.Text = Math.Round(Robots.PetitRobot.Position.Coordonnees.Y, 2).ToString();
                         lblPosPetitTeta.Text = Robots.PetitRobot.Position.Angle.ToString();
+
+                        // Avant de lancer le match
+                        if (Plateau.Enchainement == null)
+                            for (int i = 0; i < 10; i++)
+                            {
+                                if (Plateau.PositionsAssiettes[i].Coordonnees.Distance(Robots.PetitRobot.Position.Coordonnees) < 250)
+                                    Plateau.AssiettesExiste[i] = false;
+                            }
                     }
 
 
@@ -407,10 +423,18 @@ namespace GoBot.IHM
                         {
                             g.DrawLine(new Pen(Color.Orange, 3), new Point(RealToScreen(a.StartNode.Position.X), RealToScreen(a.StartNode.Position.Y)), new Point(RealToScreen(a.EndNode.Position.X), RealToScreen(a.EndNode.Position.Y)));
                         }
-                        foreach (Arc a in robot.CheminEnCoursArcs)
+
+                        if (robot.CheminEnCoursNoeuds != null && robot.CheminEnCoursNoeuds.Count > 1)
                         {
-                            g.DrawLine(new Pen(Color.Green, 3), new Point(RealToScreen(a.StartNode.Position.X), RealToScreen(a.StartNode.Position.Y)), new Point(RealToScreen(a.EndNode.Position.X), RealToScreen(a.EndNode.Position.Y)));
+                            Segment seg = new Segment(new PointReel(robot.CheminEnCoursNoeuds[1].X, robot.CheminEnCoursNoeuds[1].Y), robot.Position.Coordonnees);
+                            g.DrawLine(new Pen(Color.Green, 3), new Point(RealToScreen(robot.CheminEnCoursNoeuds[1].X), RealToScreen(robot.CheminEnCoursNoeuds[1].Y)), new Point(RealToScreen(robot.Position.Coordonnees.X), RealToScreen(robot.Position.Coordonnees.Y)));
+                            for (int i = 1; i < robot.CheminEnCoursArcs.Count; i++)
+                            {
+                                Arc a = robot.CheminEnCoursArcs[i];
+                                g.DrawLine(new Pen(Color.Green, 3), new Point(RealToScreen(a.StartNode.Position.X), RealToScreen(a.StartNode.Position.Y)), new Point(RealToScreen(a.EndNode.Position.X), RealToScreen(a.EndNode.Position.Y)));
+                            }
                         }
+
                         if (robot.CheminTest != null)
                             g.DrawLine(new Pen(Color.Red, 3), new Point(RealToScreen(robot.CheminTest.StartNode.Position.X), RealToScreen(robot.CheminTest.StartNode.Position.Y)), new Point(RealToScreen(robot.CheminTest.EndNode.Position.X), RealToScreen(robot.CheminTest.EndNode.Position.Y)));
 
@@ -465,7 +489,7 @@ namespace GoBot.IHM
                         }
                     }
 
-                    // Dessin des scores
+                    // Dessin des coûts des mouvements
 
                     if (Plateau.Enchainement != null)
                     {
@@ -489,6 +513,22 @@ namespace GoBot.IHM
                                     g.DrawString(Math.Round(m.Cout) + "", police, brushPolice, new PointF(RealToScreen(m.Position.Coordonnees.X), RealToScreen((float)m.Position.Coordonnees.Y)));
                             }
                         }
+
+                        TimeSpan tempsRestant = Plateau.Enchainement.TempsRestant;
+                        if (tempsRestant.TotalMilliseconds <= 0)
+                            tempsRestant = new TimeSpan(0);
+
+                        lblSecondes.Text = (int)tempsRestant.TotalSeconds + "";
+                        lblMilli.Text = tempsRestant.Milliseconds + "";
+
+                        Color couleur;
+                        if (tempsRestant.TotalSeconds > Enchainement.DureeMatch.TotalSeconds / 2)
+                            couleur = Color.FromArgb((int)((Enchainement.DureeMatch.TotalSeconds - tempsRestant.TotalSeconds) * (150.0 / (Enchainement.DureeMatch.TotalSeconds / 2.0))), 150, 0);
+                        else
+                            couleur = Color.FromArgb(150, 150 - (int)((Enchainement.DureeMatch.TotalSeconds / 2.0 - tempsRestant.TotalSeconds) * (150.0 / (Enchainement.DureeMatch.TotalSeconds / 2.0))), 0);
+
+                        lblSecondes.ForeColor = couleur;
+                        lblMilli.ForeColor = couleur;
                     }
 
 

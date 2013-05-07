@@ -299,6 +299,13 @@ namespace GoBot
         public override void AlimentationPuissance(bool on)
         {
             // TODO
+            if (!on)
+            {
+                VitesseDeplacement = 0;
+                AccelerationDeplacement = 0;
+                VitessePivot = 0;
+                AccelerationPivot = 0;
+            }
         }
 
         public override int GetVitesseCanon(bool historique = true)

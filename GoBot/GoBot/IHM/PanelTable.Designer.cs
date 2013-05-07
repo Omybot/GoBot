@@ -60,6 +60,8 @@
             this.label11 = new System.Windows.Forms.Label();
             this.label12 = new System.Windows.Forms.Label();
             this.button1 = new System.Windows.Forms.Button();
+            this.lblSecondes = new System.Windows.Forms.Label();
+            this.lblMilli = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxTable)).BeginInit();
             this.SuspendLayout();
             // 
@@ -371,11 +373,34 @@
             this.button1.UseVisualStyleBackColor = true;
             this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
+            // lblSecondes
+            // 
+            this.lblSecondes.Font = new System.Drawing.Font("Century Gothic", 26.25F);
+            this.lblSecondes.Location = new System.Drawing.Point(882, 289);
+            this.lblSecondes.Margin = new System.Windows.Forms.Padding(0);
+            this.lblSecondes.Name = "lblSecondes";
+            this.lblSecondes.Size = new System.Drawing.Size(67, 38);
+            this.lblSecondes.TabIndex = 34;
+            this.lblSecondes.Text = "90";
+            this.lblSecondes.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            // 
+            // lblMilli
+            // 
+            this.lblMilli.AutoSize = true;
+            this.lblMilli.Font = new System.Drawing.Font("Century Gothic", 10.25F);
+            this.lblMilli.Location = new System.Drawing.Point(941, 308);
+            this.lblMilli.Name = "lblMilli";
+            this.lblMilli.Size = new System.Drawing.Size(33, 19);
+            this.lblMilli.TabIndex = 35;
+            this.lblMilli.Text = "000";
+            // 
             // PanelTable
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.Transparent;
+            this.Controls.Add(this.lblMilli);
+            this.Controls.Add(this.lblSecondes);
             this.Controls.Add(this.button1);
             this.Controls.Add(this.lblPosPetitTeta);
             this.Controls.Add(this.lblPosPetitY);
@@ -450,5 +475,7 @@
         private System.Windows.Forms.Label label11;
         private System.Windows.Forms.Label label12;
         private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.Label lblSecondes;
+        private System.Windows.Forms.Label lblMilli;
     }
 }

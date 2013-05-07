@@ -128,16 +128,24 @@ namespace GoBot.Mouvements
             get
             {
                 // Si on n'a pas de balles chargées on peut aspirer sinon on ne considère pas l'action
-                int score;
-                if (!Robots.GrosRobot.BallesChargees && !Plateau.AssiettesVidees[numeroAssiette])
-                    score = 1;
-                else
-                    score = 0;
+                double score = 1;
+                if (Robots.GrosRobot.BallesChargees || Plateau.AssiettesVidees[numeroAssiette] || !Plateau.AssiettesExiste[numeroAssiette])
+                    return 0;
 
+                // Priorité ultime sur l'aspirage d'assiette accrochée : TODO : gérer un cas spécial en fin de match proche ?
                 if (numeroAssiette == Plateau.AssietteAttrapee)
-                    score *= 10000;
+                    return double.MaxValue;
 
-                return score * Plateau.PoidActions.PoidGlobalGrosAspireAssiette * Plateau.PoidActions.PoidsGrosAssiette[numeroAssiette];
+                score *= Plateau.PoidActions.PoidGlobalGrosAspireAssiette * Plateau.PoidActions.PoidsGrosAssiette[numeroAssiette];
+
+                // Intêret / 1000 dans les 18 dernières secondes
+                if (Plateau.Enchainement.TempsRestant.TotalSeconds < 18)
+                    score /= 1000;
+                // Intêret / 10 dans les 30 dernières secondes
+                else if (Plateau.Enchainement.TempsRestant.TotalSeconds < 30)
+                    score /= 10;
+
+                return score;
             }
         }
     }

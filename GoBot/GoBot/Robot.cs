@@ -436,13 +436,22 @@ namespace GoBot
                 if (CheminEnCoursNoeuds != null && CheminEnCoursNoeuds.Count > 0)
                 {
                     List<IForme> obstacles = new List<IForme>(Plateau.ObstaclesTemporaires);
+
+                    List<Segment> segmentsTrajectoire = new List<Segment>();
+                    // Calcule le segment entre nous et notre destination (permet de ne pas considérer un obstacle sur un tronçon déjà franchi)
+                    Segment seg = new Segment(Position.Coordonnees, new PointReel(CheminEnCoursNoeuds[1].X, CheminEnCoursNoeuds[1].Y));
+                    segmentsTrajectoire.Add(seg);
+
+                    for (int iArc = 1; iArc < CheminEnCoursArcs.Count; iArc++)
+                    {
+                        Arc a = CheminEnCoursArcs[iArc];
+                        segmentsTrajectoire.Add(new Segment(new PointReel(a.StartNode.X, a.StartNode.Y), new PointReel(a.EndNode.X, a.EndNode.Y)));
+                    }
                     foreach (IForme forme in Plateau.ObstaclesTemporaires)
                     {
-                        foreach (Arc a in CheminEnCoursArcs)
+                        foreach (Segment segment in segmentsTrajectoire)
                         {
-                            Segment segment = new Segment(new PointReel(a.StartNode.X, a.StartNode.Y), new PointReel(a.EndNode.X, a.EndNode.Y));
-
-                            if (TropProche(segment, forme))
+                            if (TropProche(seg, forme))
                             {
                                 // Demande de génération d'une nouvelle trajectoire
                                 nouvelleTrajectoire = true;

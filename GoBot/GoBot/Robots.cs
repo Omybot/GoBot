@@ -43,13 +43,16 @@ namespace GoBot
 
             GrosRobot.Largeur = 270;
             GrosRobot.Longueur = 220;
-            GrosRobot.Position = new Calculs.Position(new Angle(270, AnglyeType.Degre), new Calculs.Formes.PointReel(1500, 1000));
+            if(Plateau.NotreCouleur == Plateau.CouleurJ1R)
+                GrosRobot.Position = new Position(new Angle(180, AnglyeType.Degre), new Calculs.Formes.PointReel(3000 - Robots.GrosRobot.Longueur / 2, 1000));
+            else
+                GrosRobot.Position = new Position(new Angle(0, AnglyeType.Degre), new Calculs.Formes.PointReel(Robots.GrosRobot.Longueur / 2, 1000));
             GrosRobot.Nom = "GrosRobot";
             GrosRobot.Init();
 
             PetitRobot.Largeur = 200;
             PetitRobot.Longueur = 100;
-            PetitRobot.Position = new Calculs.Position(new Angle(270, AnglyeType.Degre), new Calculs.Formes.PointReel(2500, 1000));
+            PetitRobot.Position = new Position(new Angle(270, AnglyeType.Degre), new Calculs.Formes.PointReel(2500, 1000));
             PetitRobot.Nom = "PetitRobot";
             PetitRobot.Init();
         }
