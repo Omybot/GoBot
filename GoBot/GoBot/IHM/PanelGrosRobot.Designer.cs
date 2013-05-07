@@ -31,10 +31,10 @@
             this.flowLayoutPanel1 = new System.Windows.Forms.FlowLayoutPanel();
             this.txtLog = new System.Windows.Forms.TextBox();
             this.flowLayoutPanel2 = new System.Windows.Forms.FlowLayoutPanel();
-            this.panelReglageGros1 = new GoBot.IHM.PanelReglageGros();
-            this.panelUtilGros1 = new GoBot.IHM.PanelUtilGros();
-            this.panelSequencesGros1 = new GoBot.IHM.PanelSequencesGros();
-            this.panelCapteursGros1 = new GoBot.IHM.PanelCapteursGros();
+            this.panelReglageGros1 = new GoBot.IHM.PanelGrosRobotReglage();
+            this.panelUtilGros1 = new GoBot.IHM.PanelGrosRobotUtilisation();
+            this.panelSequencesGros1 = new GoBot.IHM.PanelGrosRobotSequences();
+            this.panelCapteursGros1 = new GoBot.IHM.PanelGrosRobotCapteurs();
             this.panelDeplacement = new GoBot.IHM.PanelDeplacement();
             this.panelHistorique = new GoBot.IHM.PanelHistorique();
             this.flowLayoutPanel1.SuspendLayout();
@@ -156,11 +156,11 @@
         private PanelHistorique panelHistorique;
         private System.Windows.Forms.TextBox txtLog;
         private PanelDeplacement panelDeplacement;
-        private PanelReglageGros panelReglageGros1;
+        private PanelGrosRobotReglage panelReglageGros1;
         private System.Windows.Forms.FlowLayoutPanel flowLayoutPanel2;
-        private PanelUtilGros panelUtilGros1;
-        private PanelSequencesGros panelSequencesGros1;
-        private PanelCapteursGros panelCapteursGros1;
+        private PanelGrosRobotUtilisation panelUtilGros1;
+        private PanelGrosRobotSequences panelSequencesGros1;
+        private PanelGrosRobotCapteurs panelCapteursGros1;
 
     }
 }

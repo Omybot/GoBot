@@ -1,6 +1,6 @@
 ﻿namespace GoBot.IHM
 {
-    partial class PanelUtilGros
+    partial class PanelGrosRobotUtilisation
     {
         /// <summary> 
         /// Variable nécessaire au concepteur.
@@ -29,6 +29,10 @@
         private void InitializeComponent()
         {
             this.groupBoxUtil = new System.Windows.Forms.GroupBox();
+            this.btnAspiMaintien = new System.Windows.Forms.Button();
+            this.btnDiagnostic = new System.Windows.Forms.Button();
+            this.switchBoutonPuissance = new GoBot.IHM.Composants.SwitchBouton();
+            this.label12 = new System.Windows.Forms.Label();
             this.btnPompeOff = new System.Windows.Forms.Button();
             this.btnPompeOn = new System.Windows.Forms.Button();
             this.label11 = new System.Windows.Forms.Label();
@@ -64,10 +68,6 @@
             this.btnTurbineOn = new System.Windows.Forms.Button();
             this.label1 = new System.Windows.Forms.Label();
             this.btnTaille = new System.Windows.Forms.Button();
-            this.label12 = new System.Windows.Forms.Label();
-            this.btnDiagnostic = new System.Windows.Forms.Button();
-            this.switchBoutonPuissance = new GoBot.IHM.Composants.SwitchBouton();
-            this.btnAspiMaintien = new System.Windows.Forms.Button();
             this.groupBoxUtil.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -119,6 +119,45 @@
             this.groupBoxUtil.TabIndex = 0;
             this.groupBoxUtil.TabStop = false;
             this.groupBoxUtil.Text = "Utilisation";
+            // 
+            // btnAspiMaintien
+            // 
+            this.btnAspiMaintien.Location = new System.Drawing.Point(169, 52);
+            this.btnAspiMaintien.Name = "btnAspiMaintien";
+            this.btnAspiMaintien.Size = new System.Drawing.Size(65, 23);
+            this.btnAspiMaintien.TabIndex = 202;
+            this.btnAspiMaintien.Text = "Maintien";
+            this.btnAspiMaintien.UseVisualStyleBackColor = true;
+            this.btnAspiMaintien.Click += new System.EventHandler(this.btnAspiMaintien_Click);
+            // 
+            // btnDiagnostic
+            // 
+            this.btnDiagnostic.Location = new System.Drawing.Point(203, 19);
+            this.btnDiagnostic.Name = "btnDiagnostic";
+            this.btnDiagnostic.Size = new System.Drawing.Size(75, 23);
+            this.btnDiagnostic.TabIndex = 201;
+            this.btnDiagnostic.Text = "Diagnostic";
+            this.btnDiagnostic.UseVisualStyleBackColor = true;
+            this.btnDiagnostic.Click += new System.EventHandler(this.btnDiagnostic_Click);
+            // 
+            // switchBoutonPuissance
+            // 
+            this.switchBoutonPuissance.BackColor = System.Drawing.Color.Transparent;
+            this.switchBoutonPuissance.Location = new System.Drawing.Point(137, 25);
+            this.switchBoutonPuissance.Name = "switchBoutonPuissance";
+            this.switchBoutonPuissance.Size = new System.Drawing.Size(35, 15);
+            this.switchBoutonPuissance.Symetrique = false;
+            this.switchBoutonPuissance.TabIndex = 200;
+            this.switchBoutonPuissance.ChangementEtat += new GoBot.IHM.Composants.SwitchBouton.ChangeEtatDelegate(this.switchBoutonPuissance_ChangementEtat);
+            // 
+            // label12
+            // 
+            this.label12.AutoSize = true;
+            this.label12.Location = new System.Drawing.Point(18, 25);
+            this.label12.Name = "label12";
+            this.label12.Size = new System.Drawing.Size(115, 13);
+            this.label12.TabIndex = 199;
+            this.label12.Text = "Alimentation puissance";
             // 
             // btnPompeOff
             // 
@@ -458,53 +497,14 @@
             this.btnTaille.UseVisualStyleBackColor = true;
             this.btnTaille.Click += new System.EventHandler(this.btnTaille_Click);
             // 
-            // label12
-            // 
-            this.label12.AutoSize = true;
-            this.label12.Location = new System.Drawing.Point(35, 369);
-            this.label12.Name = "label12";
-            this.label12.Size = new System.Drawing.Size(115, 13);
-            this.label12.TabIndex = 199;
-            this.label12.Text = "Alimentation puissance";
-            // 
-            // btnDiagnostic
-            // 
-            this.btnDiagnostic.Location = new System.Drawing.Point(129, 18);
-            this.btnDiagnostic.Name = "btnDiagnostic";
-            this.btnDiagnostic.Size = new System.Drawing.Size(75, 23);
-            this.btnDiagnostic.TabIndex = 201;
-            this.btnDiagnostic.Text = "Diagnostic";
-            this.btnDiagnostic.UseVisualStyleBackColor = true;
-            this.btnDiagnostic.Click += new System.EventHandler(this.btnDiagnostic_Click);
-            // 
-            // switchBoutonPuissance
-            // 
-            this.switchBoutonPuissance.BackColor = System.Drawing.Color.Transparent;
-            this.switchBoutonPuissance.Location = new System.Drawing.Point(165, 369);
-            this.switchBoutonPuissance.Name = "switchBoutonPuissance";
-            this.switchBoutonPuissance.Size = new System.Drawing.Size(35, 15);
-            this.switchBoutonPuissance.Symetrique = false;
-            this.switchBoutonPuissance.TabIndex = 200;
-            this.switchBoutonPuissance.ChangementEtat += new GoBot.IHM.Composants.SwitchBouton.ChangeEtatDelegate(this.switchBoutonPuissance_ChangementEtat);
-            // 
-            // btnAspiMaintien
-            // 
-            this.btnAspiMaintien.Location = new System.Drawing.Point(169, 52);
-            this.btnAspiMaintien.Name = "btnAspiMaintien";
-            this.btnAspiMaintien.Size = new System.Drawing.Size(65, 23);
-            this.btnAspiMaintien.TabIndex = 202;
-            this.btnAspiMaintien.Text = "Maintien";
-            this.btnAspiMaintien.UseVisualStyleBackColor = true;
-            this.btnAspiMaintien.Click += new System.EventHandler(this.btnAspiMaintien_Click);
-            // 
-            // PanelUtilGros
+            // PanelGrosRobotUtilisation
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoSize = true;
             this.BackColor = System.Drawing.Color.Transparent;
             this.Controls.Add(this.groupBoxUtil);
-            this.Name = "PanelUtilGros";
+            this.Name = "PanelGrosRobotUtilisation";
             this.Size = new System.Drawing.Size(341, 423);
             this.Load += new System.EventHandler(this.PanelUtilGros_Load);
             this.groupBoxUtil.ResumeLayout(false);

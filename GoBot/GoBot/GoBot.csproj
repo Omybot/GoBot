@@ -81,29 +81,35 @@
     <Compile Include="Actions\Deplacement\ActionRecule.cs" />
     <Compile Include="Actions\IAction.cs" />
     <Compile Include="CameraIP.cs" />
-    <Compile Include="IHM\PanelReglagePetit.cs">
+    <Compile Include="IHM\PanelPetitRobotUtilisation.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="IHM\PanelReglagePetit.Designer.cs">
-      <DependentUpon>PanelReglagePetit.cs</DependentUpon>
+    <Compile Include="IHM\PanelPetitRobotUtilisation.Designer.cs">
+      <DependentUpon>PanelPetitRobotUtilisation.cs</DependentUpon>
     </Compile>
-    <Compile Include="IHM\PanelCapteursGros.cs">
+    <Compile Include="IHM\PanelPetitRobotReglage.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="IHM\PanelCapteursGros.Designer.cs">
-      <DependentUpon>PanelCapteursGros.cs</DependentUpon>
+    <Compile Include="IHM\PanelPetitRobotReglage.Designer.cs">
+      <DependentUpon>PanelPetitRobotReglage.cs</DependentUpon>
     </Compile>
-    <Compile Include="IHM\PanelSequencesGros.cs">
+    <Compile Include="IHM\PanelGrosRobotCapteurs.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="IHM\PanelSequencesGros.Designer.cs">
-      <DependentUpon>PanelSequencesGros.cs</DependentUpon>
+    <Compile Include="IHM\PanelGrosRobotCapteurs.Designer.cs">
+      <DependentUpon>PanelGrosRobotCapteurs.cs</DependentUpon>
     </Compile>
-    <Compile Include="IHM\PanelUtilGros.cs">
+    <Compile Include="IHM\PanelGrosRobotSequences.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="IHM\PanelUtilGros.Designer.cs">
-      <DependentUpon>PanelUtilGros.cs</DependentUpon>
+    <Compile Include="IHM\PanelGrosRobotSequences.Designer.cs">
+      <DependentUpon>PanelGrosRobotSequences.cs</DependentUpon>
+    </Compile>
+    <Compile Include="IHM\PanelGrosRobotUtilisation.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="IHM\PanelGrosRobotUtilisation.Designer.cs">
+      <DependentUpon>PanelGrosRobotUtilisation.cs</DependentUpon>
     </Compile>
     <Compile Include="IHM\PanelPetitRobot.cs">
       <SubType>UserControl</SubType>
@@ -117,11 +123,11 @@
     <Compile Include="IHM\PanelBougies.Designer.cs">
       <DependentUpon>PanelBougies.cs</DependentUpon>
     </Compile>
-    <Compile Include="IHM\PanelReglageGros.cs">
+    <Compile Include="IHM\PanelGrosRobotReglage.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="IHM\PanelReglageGros.Designer.cs">
-      <DependentUpon>PanelReglageGros.cs</DependentUpon>
+    <Compile Include="IHM\PanelGrosRobotReglage.Designer.cs">
+      <DependentUpon>PanelGrosRobotReglage.cs</DependentUpon>
     </Compile>
     <Compile Include="Mouvements\MoveGrosAccrocheAssiette.cs" />
     <Compile Include="Mouvements\MoveGrosLanceBalles.cs" />
@@ -265,17 +271,20 @@
     <EmbeddedResource Include="IHM\Composants\TrackBarPlus.resx">
       <DependentUpon>TrackBarPlus.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="IHM\PanelReglagePetit.resx">
-      <DependentUpon>PanelReglagePetit.cs</DependentUpon>
+    <EmbeddedResource Include="IHM\PanelPetitRobotUtilisation.resx">
+      <DependentUpon>PanelPetitRobotUtilisation.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="IHM\PanelCapteursGros.resx">
-      <DependentUpon>PanelCapteursGros.cs</DependentUpon>
+    <EmbeddedResource Include="IHM\PanelPetitRobotReglage.resx">
+      <DependentUpon>PanelPetitRobotReglage.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="IHM\PanelSequencesGros.resx">
-      <DependentUpon>PanelSequencesGros.cs</DependentUpon>
+    <EmbeddedResource Include="IHM\PanelGrosRobotCapteurs.resx">
+      <DependentUpon>PanelGrosRobotCapteurs.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="IHM\PanelUtilGros.resx">
-      <DependentUpon>PanelUtilGros.cs</DependentUpon>
+    <EmbeddedResource Include="IHM\PanelGrosRobotSequences.resx">
+      <DependentUpon>PanelGrosRobotSequences.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="IHM\PanelGrosRobotUtilisation.resx">
+      <DependentUpon>PanelGrosRobotUtilisation.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="IHM\PanelPetitRobot.resx">
       <DependentUpon>PanelPetitRobot.cs</DependentUpon>
@@ -301,8 +310,8 @@
     <EmbeddedResource Include="IHM\PanelHistorique.resx">
       <DependentUpon>PanelHistorique.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="IHM\PanelReglageGros.resx">
-      <DependentUpon>PanelReglageGros.cs</DependentUpon>
+    <EmbeddedResource Include="IHM\PanelGrosRobotReglage.resx">
+      <DependentUpon>PanelGrosRobotReglage.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="IHM\PanelServo.resx">
       <DependentUpon>PanelServo.cs</DependentUpon>

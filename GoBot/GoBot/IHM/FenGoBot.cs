@@ -145,6 +145,12 @@ namespace GoBot
                 case Carte.RecBoi:
                     selectLed = ledRecBoi;
                     break;
+                case Carte.RecPi:
+                    selectLed = ledRecPi;
+                    break;
+                case Carte.RecMiwi:
+                    selectLed = ledRecMiwi;
+                    break;
             }
 
             this.Invoke(new EventHandler(delegate
@@ -401,7 +407,7 @@ namespace GoBot
             if (Connexions.ConnexionMove.ConnexionCheck.Connecte)
                 SetLed(ledRecMove, true);
             if (Connexions.ConnexionMiwi.ConnexionCheck.Connecte)
-                SetLed(ledRecIo, true);
+                SetLed(ledRecMiwi, true);
             if (Connexions.ConnexionPi.ConnexionCheck.Connecte)
                 SetLed(ledRecPi, true);
             if (panelBalise1.Balise.ConnexionCheck.Connecte)

@@ -3,11 +3,13 @@
   <DeplacementGROuvert>true</DeplacementGROuvert>
   <HistoriqueGROuvert>true</HistoriqueGROuvert>
   <ReglageGROuvert>false</ReglageGROuvert>
-  <UtilGROuvert>true</UtilGROuvert>
+  <UtilisationGROuvert>false</UtilisationGROuvert>
   <SequencesGROuvert>true</SequencesGROuvert>
   <CapteursGROuvert>true</CapteursGROuvert>
   <DeplacementPROuvert>true</DeplacementPROuvert>
   <HistoriquePROuvert>true</HistoriquePROuvert>
+  <ReglagePROuvert>true</ReglagePROuvert>
+  <UtilisationPROuvert>true</UtilisationPROuvert>
   <GRVitesseLigne>1000</GRVitesseLigne>
   <GRAccelerationLigne>2000</GRAccelerationLigne>
   <GRVitessePivot>1000</GRVitessePivot>
@@ -73,15 +75,15 @@
   <PositionPRBrasArriereBas>510</PositionPRBrasArriereBas>
   <PositionPRBrasArriereRange>220</PositionPRBrasArriereRange>
   <PositionPRBrasArriereAssiette>625</PositionPRBrasArriereAssiette>
-  <PositionPRBrasAvantGaucheHaut>0</PositionPRBrasAvantGaucheHaut>
-  <PositionPRBrasAvantGaucheBas>0</PositionPRBrasAvantGaucheBas>
-  <PositionPRBrasAvantDroiteHaut>0</PositionPRBrasAvantDroiteHaut>
-  <PositionPRBrasAvantDroiteBas>0</PositionPRBrasAvantDroiteBas>
-  <PositionPRBrasArriereGaucheHaut>0</PositionPRBrasArriereGaucheHaut>
-  <PositionPRBrasArriereGaucheBas>0</PositionPRBrasArriereGaucheBas>
-  <PositionPRBrasArriereDroiteHaut>0</PositionPRBrasArriereDroiteHaut>
-  <PositionPRBrasArriereDroiteBas>0</PositionPRBrasArriereDroiteBas>
-  <PositionsBougiesX>
+  <PositionPRBrasAvantGaucheHaut>280</PositionPRBrasAvantGaucheHaut>
+  <PositionPRBrasAvantGaucheBas>95</PositionPRBrasAvantGaucheBas>
+  <PositionPRBrasAvantDroitHaut>80</PositionPRBrasAvantDroitHaut>
+  <PositionPRBrasAvantDroitBas>260</PositionPRBrasAvantDroitBas>
+  <PositionPRBrasArriereGaucheHaut>100</PositionPRBrasArriereGaucheHaut>
+  <PositionPRBrasArriereGaucheBas>292</PositionPRBrasArriereGaucheBas>
+  <PositionPRBrasArriereDroitHaut>255</PositionPRBrasArriereDroitHaut>
+  <PositionPRBrasArriereDroitBas>78</PositionPRBrasArriereDroitBas>
+  <PositionsBougiesCameraX>
     <int>435</int>
     <int>495</int>
     <int>365</int>
@@ -102,8 +104,8 @@
     <int>0</int>
     <int>0</int>
     <int>0</int>
-  </PositionsBougiesX>
-  <PositionsBougiesY>
+  </PositionsBougiesCameraX>
+  <PositionsBougiesCameraY>
     <int>224</int>
     <int>283</int>
     <int>226</int>
@@ -124,5 +126,5 @@
     <int>0</int>
     <int>0</int>
     <int>0</int>
-  </PositionsBougiesY>
+  </PositionsBougiesCameraY>
 </Config>

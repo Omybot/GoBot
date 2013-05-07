@@ -10,13 +10,13 @@ using System.Threading;
 
 namespace GoBot.IHM
 {
-    public partial class PanelCapteursGros : UserControl
+    public partial class PanelGrosRobotCapteurs : UserControl
     {
         private ToolTip tooltip;
         int tailleMax;
         int tailleMin;
 
-        public PanelCapteursGros()
+        public PanelGrosRobotCapteurs()
         {
             InitializeComponent();
 

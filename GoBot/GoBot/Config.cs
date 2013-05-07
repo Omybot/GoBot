@@ -37,7 +37,7 @@ namespace GoBot
         public bool DeplacementGROuvert { get; set; }
         public bool HistoriqueGROuvert { get; set; }
         public bool ReglageGROuvert { get; set; }
-        public bool UtilGROuvert { get; set; }
+        public bool UtilisationGROuvert { get; set; }
         public bool SequencesGROuvert { get; set; }
         public bool CapteursGROuvert { get; set; }
 
@@ -45,6 +45,8 @@ namespace GoBot
 
         public bool DeplacementPROuvert { get; set; }
         public bool HistoriquePROuvert { get; set; }
+        public bool ReglagePROuvert { get; set; }
+        public bool UtilisationPROuvert { get; set; }
 
         // Déplacement gros robot
 
@@ -151,19 +153,19 @@ namespace GoBot
         public int PositionPRBrasAvantGaucheHaut { get; set; }
         public int PositionPRBrasAvantGaucheBas { get; set; }
 
-        public int PositionPRBrasAvantDroiteHaut { get; set; }
-        public int PositionPRBrasAvantDroiteBas { get; set; }
+        public int PositionPRBrasAvantDroitHaut { get; set; }
+        public int PositionPRBrasAvantDroitBas { get; set; }
 
         public int PositionPRBrasArriereGaucheHaut { get; set; }
         public int PositionPRBrasArriereGaucheBas { get; set; }
 
-        public int PositionPRBrasArriereDroiteHaut { get; set; }
-        public int PositionPRBrasArriereDroiteBas { get; set; }
+        public int PositionPRBrasArriereDroitHaut { get; set; }
+        public int PositionPRBrasArriereDroitBas { get; set; }
 
         // Positions bougies à la camera
 
-        public int[] PositionsBougiesX { get; set; }
-        public int[] PositionsBougiesY { get; set; }
+        public int[] PositionsBougiesCameraX { get; set; }
+        public int[] PositionsBougiesCameraY { get; set; }
 
         public double GetOffsetBaliseHaut(Carte carteBalise)
         {

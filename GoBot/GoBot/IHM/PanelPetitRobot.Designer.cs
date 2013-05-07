@@ -32,8 +32,9 @@
             this.panelDeplacement = new GoBot.IHM.PanelDeplacement();
             this.panelHistorique = new GoBot.IHM.PanelHistorique();
             this.flowLayoutPanel2 = new System.Windows.Forms.FlowLayoutPanel();
+            this.panelReglagePetit1 = new GoBot.IHM.PanelPetitRobotReglage();
             this.txtLog = new System.Windows.Forms.TextBox();
-            this.panelReglagePetit1 = new GoBot.IHM.PanelReglagePetit();
+            this.panelPetitRobotUtilisation1 = new GoBot.IHM.PanelPetitRobotUtilisation();
             this.flowLayoutPanel1.SuspendLayout();
             this.flowLayoutPanel2.SuspendLayout();
             this.SuspendLayout();
@@ -74,10 +75,20 @@
             this.flowLayoutPanel2.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left)));
             this.flowLayoutPanel2.Controls.Add(this.panelReglagePetit1);
+            this.flowLayoutPanel2.Controls.Add(this.panelPetitRobotUtilisation1);
             this.flowLayoutPanel2.Location = new System.Drawing.Point(352, 3);
             this.flowLayoutPanel2.Name = "flowLayoutPanel2";
             this.flowLayoutPanel2.Size = new System.Drawing.Size(343, 559);
             this.flowLayoutPanel2.TabIndex = 91;
+            // 
+            // panelReglagePetit1
+            // 
+            this.panelReglagePetit1.AutoSize = true;
+            this.panelReglagePetit1.BackColor = System.Drawing.Color.Transparent;
+            this.panelReglagePetit1.Location = new System.Drawing.Point(3, 3);
+            this.panelReglagePetit1.Name = "panelReglagePetit1";
+            this.panelReglagePetit1.Size = new System.Drawing.Size(340, 45);
+            this.panelReglagePetit1.TabIndex = 0;
             // 
             // txtLog
             // 
@@ -90,14 +101,14 @@
             this.txtLog.Size = new System.Drawing.Size(299, 543);
             this.txtLog.TabIndex = 92;
             // 
-            // panelReglagePetit1
+            // panelPetitRobotUtilisation1
             // 
-            this.panelReglagePetit1.AutoSize = true;
-            this.panelReglagePetit1.BackColor = System.Drawing.Color.Transparent;
-            this.panelReglagePetit1.Location = new System.Drawing.Point(3, 3);
-            this.panelReglagePetit1.Name = "panelReglagePetit1";
-            this.panelReglagePetit1.Size = new System.Drawing.Size(340, 103);
-            this.panelReglagePetit1.TabIndex = 0;
+            this.panelPetitRobotUtilisation1.AutoSize = true;
+            this.panelPetitRobotUtilisation1.BackColor = System.Drawing.Color.Transparent;
+            this.panelPetitRobotUtilisation1.Location = new System.Drawing.Point(3, 54);
+            this.panelPetitRobotUtilisation1.Name = "panelPetitRobotUtilisation1";
+            this.panelPetitRobotUtilisation1.Size = new System.Drawing.Size(340, 45);
+            this.panelPetitRobotUtilisation1.TabIndex = 1;
             // 
             // PanelPetitRobot
             // 
@@ -123,7 +134,8 @@
         private PanelHistorique panelHistorique;
         private System.Windows.Forms.TextBox txtLog;
         private PanelDeplacement panelDeplacement;
-        private PanelReglagePetit panelReglagePetit1;
+        private PanelPetitRobotReglage panelReglagePetit1;
+        private PanelPetitRobotUtilisation panelPetitRobotUtilisation1;
 
     }
 }

@@ -1,6 +1,6 @@
 ﻿namespace GoBot.IHM
 {
-    partial class PanelCapteursGros
+    partial class PanelGrosRobotCapteurs
     {
         /// <summary> 
         /// Variable nécessaire au concepteur.

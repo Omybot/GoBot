@@ -72,10 +72,10 @@ namespace GoBot
         PC = 0xA1,
         RecMove = 0xC1,
         RecMiwi = 0xC2,
+        RecPi = 0xC3,
         RecBun = 0xB1,
         RecBeu = 0xB2,
-        RecBoi = 0xB3,
-        RecPi = 0xC1
+        RecBoi = 0xB3
     }
 
     public enum CapteurBalise

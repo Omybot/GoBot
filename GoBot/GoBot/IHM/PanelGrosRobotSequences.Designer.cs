@@ -1,6 +1,6 @@
 ﻿namespace GoBot.IHM
 {
-    partial class PanelSequencesGros
+    partial class PanelGrosRobotSequences
     {
         /// <summary> 
         /// Variable nécessaire au concepteur.

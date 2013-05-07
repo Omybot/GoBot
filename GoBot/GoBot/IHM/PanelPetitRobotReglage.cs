@@ -11,13 +11,13 @@ using UDP;
 
 namespace GoBot.IHM
 {
-    public partial class PanelReglagePetit : UserControl
+    public partial class PanelPetitRobotReglage : UserControl
     {
         private ToolTip tooltip;
         int tailleMax;
         int tailleMin;
 
-        public PanelReglagePetit()
+        public PanelPetitRobotReglage()
         {
             InitializeComponent();
 
@@ -58,7 +58,7 @@ namespace GoBot.IHM
                 tooltip.SetToolTip(btnTaille, "Réduire");
             }
 
-            Config.CurrentConfig.ReglageGROuvert = deployer;
+            Config.CurrentConfig.ReglagePROuvert = deployer;
         }
 
         #region BrasGauche
@@ -203,13 +203,13 @@ namespace GoBot.IHM
         private void btnAvDrHaut_Click(object sender, EventArgs e)
         {
             if (MessageBox.Show("Enregistrer cette valeur pour la position haut du bras avant droit ?", "Confirmation", MessageBoxButtons.OKCancel, MessageBoxIcon.Question) == DialogResult.OK)
-                Config.CurrentConfig.PositionPRBrasAvantDroiteHaut = (int)numAvDr.Value;
+                Config.CurrentConfig.PositionPRBrasAvantDroitHaut = (int)numAvDr.Value;
         }
 
         private void btnAvDrBas_Click(object sender, EventArgs e)
         {
             if (MessageBox.Show("Enregistrer cette valeur pour la position basse du bras avant droit ?", "Confirmation", MessageBoxButtons.OKCancel, MessageBoxIcon.Question) == DialogResult.OK)
-                Config.CurrentConfig.PositionPRBrasAvantDroiteBas = (int)numAvDr.Value;
+                Config.CurrentConfig.PositionPRBrasAvantDroitBas = (int)numAvDr.Value;
         }
         #endregion
 
@@ -241,14 +241,19 @@ namespace GoBot.IHM
         private void btnArDrHaut_Click(object sender, EventArgs e)
         {
             if (MessageBox.Show("Enregistrer cette valeur pour la position haut du bras arriere droit ?", "Confirmation", MessageBoxButtons.OKCancel, MessageBoxIcon.Question) == DialogResult.OK)
-                Config.CurrentConfig.PositionPRBrasArriereDroiteHaut = (int)numArDr.Value;
+                Config.CurrentConfig.PositionPRBrasArriereDroitHaut = (int)numArDr.Value;
         }
 
         private void btnArDrBas_Click(object sender, EventArgs e)
         {
             if (MessageBox.Show("Enregistrer cette valeur pour la position basse du bras arriere droit ?", "Confirmation", MessageBoxButtons.OKCancel, MessageBoxIcon.Question) == DialogResult.OK)
-                Config.CurrentConfig.PositionPRBrasArriereDroiteBas = (int)numArDr.Value;
+                Config.CurrentConfig.PositionPRBrasArriereDroitBas = (int)numArDr.Value;
         }
         #endregion
+
+        private void PanelPetitRobotReglage_Load(object sender, EventArgs e)
+        {
+            Deployer(Config.CurrentConfig.ReglagePROuvert);
+        }
     }
 }

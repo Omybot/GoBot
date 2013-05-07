@@ -143,9 +143,9 @@ namespace GoBot.Actions
 
 
                 case ServomoteurID.PRBrasAvantDroit:
-                    if (position == Config.CurrentConfig.PositionPRBrasAvantDroiteBas)
+                    if (position == Config.CurrentConfig.PositionPRBrasAvantDroitBas)
                         return "bas (" + position + ")";
-                    else if (position == Config.CurrentConfig.PositionPRBrasAvantDroiteHaut)
+                    else if (position == Config.CurrentConfig.PositionPRBrasAvantDroitHaut)
                         return "haut (" + position + ")";
                     else return position.ToString();
 
@@ -157,9 +157,9 @@ namespace GoBot.Actions
                     else return position.ToString();
 
                 case ServomoteurID.PRBrasArriereDroit:
-                    if (position == Config.CurrentConfig.PositionPRBrasArriereDroiteBas)
+                    if (position == Config.CurrentConfig.PositionPRBrasArriereDroitBas)
                         return "bas (" + position + ")";
-                    else if (position == Config.CurrentConfig.PositionPRBrasArriereDroiteHaut)
+                    else if (position == Config.CurrentConfig.PositionPRBrasArriereDroitHaut)
                         return "haut (" + position + ")";
                     else return position.ToString();
 

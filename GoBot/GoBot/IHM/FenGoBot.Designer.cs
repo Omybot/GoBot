@@ -102,7 +102,7 @@ namespace GoBot
             this.ledRecBeu = new GoBot.IHM.Composants.Led();
             this.ledRecBun = new GoBot.IHM.Composants.Led();
             this.ledRecPi = new GoBot.IHM.Composants.Led();
-            this.ledRecIo = new GoBot.IHM.Composants.Led();
+            this.ledRecMiwi = new GoBot.IHM.Composants.Led();
             this.ledRecMove = new GoBot.IHM.Composants.Led();
             this.tabControl.SuspendLayout();
             this.tabGrosRobot.SuspendLayout();
@@ -127,7 +127,7 @@ namespace GoBot
             ((System.ComponentModel.ISupportInitialize)(this.ledRecBeu)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.ledRecBun)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.ledRecPi)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.ledRecIo)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.ledRecMiwi)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.ledRecMove)).BeginInit();
             this.SuspendLayout();
             // 
@@ -339,7 +339,7 @@ namespace GoBot
             this.txtTrames.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.txtTrames.Location = new System.Drawing.Point(198, 6);
             this.txtTrames.Name = "txtTrames";
-            this.txtTrames.Size = new System.Drawing.Size(380, 62);
+            this.txtTrames.Size = new System.Drawing.Size(380, 0);
             this.txtTrames.TabIndex = 2;
             this.txtTrames.Text = "";
             // 
@@ -360,7 +360,7 @@ namespace GoBot
             this.txtLogComplet.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.txtLogComplet.Location = new System.Drawing.Point(638, 6);
             this.txtLogComplet.Name = "txtLogComplet";
-            this.txtLogComplet.Size = new System.Drawing.Size(352, 62);
+            this.txtLogComplet.Size = new System.Drawing.Size(352, 0);
             this.txtLogComplet.TabIndex = 0;
             this.txtLogComplet.Text = "";
             // 
@@ -777,9 +777,9 @@ namespace GoBot
             this.lblRecIo.AutoSize = true;
             this.lblRecIo.Location = new System.Drawing.Point(204, 578);
             this.lblRecIo.Name = "lblRecIo";
-            this.lblRecIo.Size = new System.Drawing.Size(36, 13);
+            this.lblRecIo.Size = new System.Drawing.Size(48, 13);
             this.lblRecIo.TabIndex = 29;
-            this.lblRecIo.Text = "RecIo";
+            this.lblRecIo.Text = "RecMiwi";
             // 
             // lblRecPi
             // 
@@ -897,16 +897,16 @@ namespace GoBot
             this.ledRecPi.TabIndex = 32;
             this.ledRecPi.TabStop = false;
             // 
-            // ledRecIo
+            // ledRecMiwi
             // 
-            this.ledRecIo.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.ledRecIo.Etat = false;
-            this.ledRecIo.Image = ((System.Drawing.Image)(resources.GetObject("ledRecIo.Image")));
-            this.ledRecIo.Location = new System.Drawing.Point(182, 577);
-            this.ledRecIo.Name = "ledRecIo";
-            this.ledRecIo.Size = new System.Drawing.Size(16, 16);
-            this.ledRecIo.TabIndex = 28;
-            this.ledRecIo.TabStop = false;
+            this.ledRecMiwi.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.ledRecMiwi.Etat = false;
+            this.ledRecMiwi.Image = ((System.Drawing.Image)(resources.GetObject("ledRecMiwi.Image")));
+            this.ledRecMiwi.Location = new System.Drawing.Point(182, 577);
+            this.ledRecMiwi.Name = "ledRecMiwi";
+            this.ledRecMiwi.Size = new System.Drawing.Size(16, 16);
+            this.ledRecMiwi.TabIndex = 28;
+            this.ledRecMiwi.TabStop = false;
             // 
             // ledRecMove
             // 
@@ -937,7 +937,7 @@ namespace GoBot
             this.Controls.Add(this.lblRecPi);
             this.Controls.Add(this.ledRecPi);
             this.Controls.Add(this.lblRecIo);
-            this.Controls.Add(this.ledRecIo);
+            this.Controls.Add(this.ledRecMiwi);
             this.Controls.Add(this.lblRecMove);
             this.Controls.Add(this.ledRecMove);
             this.Controls.Add(this.tabControl);
@@ -976,7 +976,7 @@ namespace GoBot
             ((System.ComponentModel.ISupportInitialize)(this.ledRecBeu)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.ledRecBun)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.ledRecPi)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.ledRecIo)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.ledRecMiwi)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.ledRecMove)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
@@ -991,7 +991,7 @@ namespace GoBot
         private IHM.Composants.Led ledRecMove;
         private System.Windows.Forms.Label lblRecMove;
         private System.Windows.Forms.Label lblRecIo;
-        private IHM.Composants.Led ledRecIo;
+        private IHM.Composants.Led ledRecMiwi;
         private System.Windows.Forms.Label lblRecPi;
         private IHM.Composants.Led ledRecPi;
         private System.Windows.Forms.Label lblRecBeu;

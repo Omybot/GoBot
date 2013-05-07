@@ -10,13 +10,13 @@ using System.Threading;
 
 namespace GoBot.IHM
 {
-    public partial class PanelUtilGros : UserControl
+    public partial class PanelGrosRobotUtilisation : UserControl
     {
         private ToolTip tooltip;
         int tailleMax;
         int tailleMin;
 
-        public PanelUtilGros()
+        public PanelGrosRobotUtilisation()
         {
             InitializeComponent();
 
@@ -57,7 +57,7 @@ namespace GoBot.IHM
                 tooltip.SetToolTip(btnTaille, "Réduire");
             }
 
-            Config.CurrentConfig.UtilGROuvert = deployer;
+            Config.CurrentConfig.UtilisationGROuvert = deployer;
         }
 
         private void btnDebloqueur_Click(object sender, EventArgs e)
@@ -189,7 +189,7 @@ namespace GoBot.IHM
 
         private void PanelUtilGros_Load(object sender, EventArgs e)
         {
-            Deployer(Config.CurrentConfig.UtilGROuvert);
+            Deployer(Config.CurrentConfig.UtilisationGROuvert);
             switchBoutonPuissance.SetActif(true, false);
         }
 
