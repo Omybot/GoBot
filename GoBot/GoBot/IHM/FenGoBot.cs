@@ -16,6 +16,7 @@ using GoBot.Calculs;
 using GoBot.Calculs.Formes;
 using System.Threading;
 using GoBot.Mouvements;
+using System.Diagnostics;
 
 namespace GoBot
 {
@@ -40,7 +41,7 @@ namespace GoBot
                 {
                     WindowState = FormWindowState.Normal;
                     FormBorderStyle = System.Windows.Forms.FormBorderStyle.Sizable;
-                    btnClose.Visible = false;
+                    //btnClose.Visible = false;
                 }
 
                 Robots.GrosRobot.Historique.NouvelleAction += new Historique.delegateAction(HistoriqueGR_nouvelleAction);
@@ -185,7 +186,7 @@ namespace GoBot
 
         private void btnClose_Click(object sender, EventArgs e)
         {
-            Close();
+            Process.Start("KillGoBot.exe");
         }
 
         private void btnCouleurBleu_Click(object sender, EventArgs e)
@@ -226,6 +227,11 @@ namespace GoBot
         Thread thRecallage;
         private void btnRecallage_Click(object sender, EventArgs e)
         {
+            if (!Robots.GrosRobot.GetJack(false))
+            {
+                MessageBox.Show("Tu lances un recallages et tu branches pas le jack ? C'est comme si t'es Omybot t'as pas de robot quoi...", "Non mais allô quoi", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                return;
+            }
             if (Connexions.ConnexionMove.ConnexionCheck.Connecte)
             {
                 thRecallage = new Thread(RecallagesDebut);
@@ -242,6 +248,7 @@ namespace GoBot
         private void RecallagePetit()
         {
             Robots.PetitRobot.Lent();
+            Robots.PetitRobot.Avancer(10);
             Robots.PetitRobot.Recallage(SensAR.Arriere);
             Robots.PetitRobot.Avancer(250);
 
@@ -255,9 +262,9 @@ namespace GoBot
             Robots.PetitRobot.Reset();
 
             if (Plateau.NotreCouleur == Plateau.CouleurJ2B)
-                Robots.PetitRobot.ReglerOffsetAsserv(Robots.PetitRobot.Longueur / 2, 1850 - Robots.PetitRobot.Largeur / 2, 0);
+                Robots.PetitRobot.ReglerOffsetAsserv(Robots.PetitRobot.Longueur / 2, 1750 - Robots.PetitRobot.Longueur / 2, 0);
             else
-                Robots.PetitRobot.ReglerOffsetAsserv(3000 - Robots.PetitRobot.Longueur / 2, 1850 - Robots.PetitRobot.Largeur / 2, 0);
+                Robots.PetitRobot.ReglerOffsetAsserv(3000 - Robots.PetitRobot.Longueur / 2, 1750 - Robots.PetitRobot.Longueur / 2, 0);
         }
 
         public void RecallageSimpleGR()
@@ -469,6 +476,8 @@ namespace GoBot
         private void FenGoBot_Load(object sender, EventArgs e)
         {
             Plateau.NotreCouleurChange += new EventHandler(Plateau_NotreCouleurChange);
+
+            btnCouleurBleu_Click(null, null);
             Connexions.ConnexionMove.SendMessage(TrameFactory.DemandeCouleurEquipe());
 
             Connexions.ConnexionMove.ConnexionCheck.ConnexionChange += new ConnexionCheck.ConnexionChangeDelegate(ConnexionMoveCheck_ConnexionChange);
@@ -491,9 +500,6 @@ namespace GoBot
                 SetLed(ledRecBeu, true);
             if (panelBalise3.Balise.ConnexionCheck.Connecte)
                 SetLed(ledRecBoi, true);
-
-            btnCouleurBleu_Click(null, null);
-
         }
 
         void Plateau_NotreCouleurChange(object sender, EventArgs e)
@@ -519,6 +525,11 @@ namespace GoBot
         private void btnRecallageGR_Click(object sender, EventArgs e)
         {
             RecallageSimpleGR();
+        }
+
+        private void btnPIDPetitRobot_Click(object sender, EventArgs e)
+        {
+            Robots.PetitRobot.EnvoyerPID((int)numPPetit.Value, (int)numIPetit.Value, (int)numDPetit.Value);
         }
     }
 }

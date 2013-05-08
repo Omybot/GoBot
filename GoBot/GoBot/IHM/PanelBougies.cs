@@ -90,8 +90,12 @@ namespace GoBot.IHM
                 Bitmap img = Camera.GetImage();
                 Graphics g = Graphics.FromImage(img);
 
-                this.Invoke(new EventHandler(delegate
-                {
+                if (Plateau.Enchainement != null)
+                    return;
+
+                CheckForIllegalCrossThreadCalls = false;
+                //this.Invoke(new EventHandler(delegate
+                //{
                     Plateau.CouleursBougies[10] = Plateau.CouleurJ2B;
                     Plateau.CouleursBougies[11] = Plateau.CouleurJ2B;
 
@@ -106,16 +110,24 @@ namespace GoBot.IHM
                         Plateau.CouleursBougies[19] = Color.White;
                     }
 
-                    SortedDictionary<int, int> triSurBleu = new SortedDictionary<int, int>();
-                    for (int i = 12; i < 20; i++)
+                    List<int> valeursBleu = new List<int>();
+                    int min = 12, max = 20;
+                    if (Plateau.NotreCouleur == Plateau.CouleurJ1R)
                     {
-                        if (boxBlanches.Checked && (i == 17 || i == 19))
+                        min = 2; max = 10;
+                    }
+                    for (int i = min; i < max; i++)
+                    {
+                        if (boxBlanches.Checked && (i == 17 || i == 19 || i == 7 || i == 9))
                             continue;
 
                         Color pixel = img.GetPixel(Config.CurrentConfig.PositionsBougiesCameraX[i], Config.CurrentConfig.PositionsBougiesCameraY[i]);
-
-                        triSurBleu.Add(pixel.B, i);
+                        Console.WriteLine(i + " R=" + pixel.R + " G=" + pixel.G + " B=" + pixel.B);
+                        valeursBleu.Add(pixel.B);
                     }
+
+                    valeursBleu.Sort();
+                    List<int> valeursBleuMax = new List<int>();
 
                     int nbBleu = 4;
                     int delta = 10;
@@ -125,20 +137,30 @@ namespace GoBot.IHM
                         delta = -10;
                     }
 
-                    for (int i = 0; i < nbBleu; i++)
-                    {
-                        Plateau.CouleursBougies[triSurBleu.ElementAt(i).Value] = Plateau.CouleurJ2B;
-                        Plateau.CouleursBougies[triSurBleu.ElementAt(i).Value  + delta] = Plateau.CouleurJ1R;
-                    }
+                    for (int i = valeursBleu.Count - 1; i > valeursBleu.Count - nbBleu - 1; i--)
+                        valeursBleuMax.Add(valeursBleu[i]);
 
-                    for (int i = nbBleu; i < triSurBleu.Count; i++)
+                    for (int i = min; i < max; i++)
                     {
-                        Plateau.CouleursBougies[triSurBleu.ElementAt(i).Value] = Plateau.CouleurJ1R;
-                        Plateau.CouleursBougies[triSurBleu.ElementAt(i).Value + delta] = Plateau.CouleurJ2B;
+                        if (boxBlanches.Checked && (i == 17 || i == 19 || i == 7 || i == 9))
+                            continue;
+
+                        Color pixel = img.GetPixel(Config.CurrentConfig.PositionsBougiesCameraX[i], Config.CurrentConfig.PositionsBougiesCameraY[i]);
+
+                        if (valeursBleuMax.Contains(pixel.B))
+                        {
+                            Plateau.CouleursBougies[i] = Plateau.CouleurJ2B;
+                            Plateau.CouleursBougies[i + delta] = Plateau.CouleurJ1R;
+                        }
+                        else
+                        {
+                            Plateau.CouleursBougies[i] = Plateau.CouleurJ1R;
+                            Plateau.CouleursBougies[i + delta] = Plateau.CouleurJ2B;
+                        }
                     }
 
                     DessineChiffres(img);
-                }));
+                //}));
             }
             while (ContinuerJusquauDebutMatch);
         }

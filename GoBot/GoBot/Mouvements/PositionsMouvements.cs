@@ -67,6 +67,7 @@ namespace GoBot.Mouvements
             PositionGrosBougie.Add(18, new Position(new Angle(-164.2), new PointReel(1321, 640)));
             PositionGrosBougie.Add(19, new Position(new Angle(-168.73), new PointReel(1381, 642)));*/
 
+            
             // Positions CAO à la Ferté 
             // Positions identiques : 14 & 16 | 8 & 9 | 2 & 5
             PositionGrosBougie.Add(0, new Position(new Angle(-236.3), new PointReel(2122, 269)));
@@ -89,6 +90,30 @@ namespace GoBot.Mouvements
             PositionGrosBougie.Add(17, new Position(new Angle(-155.73), new PointReel(1222, 618)));
             PositionGrosBougie.Add(18, new Position(new Angle(-164.2), new PointReel(1321, 640))); // exp
             PositionGrosBougie.Add(19, new Position(new Angle(-170.9), new PointReel(1393, 670)));
+            
+            // Positions manuelles la ferté 1
+            /*
+            PositionGrosBougie.Add(0, new Position(new Angle(124.95), new PointReel(2109, 281)));
+            PositionGrosBougie.Add(1, new Position(new Angle(142.81), new PointReel(2109, 281)));
+            PositionGrosBougie.Add(2, new Position(new Angle(139.09), new PointReel(2029, 460)));
+            PositionGrosBougie.Add(3, new Position(new Angle(118.63), new PointReel(2109, 281)));
+            PositionGrosBougie.Add(4, new Position(new Angle(139.42), new PointReel(1929, 559)));
+            PositionGrosBougie.Add(5, new Position(new Angle(139.09), new PointReel(2029, 460)));
+            PositionGrosBougie.Add(6, new Position(new Angle(139.42), new PointReel(1929, 559)));
+            PositionGrosBougie.Add(7, new Position(new Angle(139.42), new PointReel(1841, 634)));
+            PositionGrosBougie.Add(8, new Position(new Angle(178.87), new PointReel(1542, 664)));
+            PositionGrosBougie.Add(9, new Position(new Angle(178.87), new PointReel(1542, 664)));
+            PositionGrosBougie.Add(10, new Position(new Angle(-113.54), new PointReel(828, 170)));
+            PositionGrosBougie.Add(11, new Position(new Angle(-121.61), new PointReel(828, 170)));
+            PositionGrosBougie.Add(12, new Position(new Angle(-122.09), new PointReel(936, 390)));
+            PositionGrosBougie.Add(13, new Position(new Angle(-122.09), new PointReel(876, 294)));
+            PositionGrosBougie.Add(14, new Position(new Angle(-140.74), new PointReel(1069, 527)));
+            PositionGrosBougie.Add(15, new Position(new Angle(-122.09), new PointReel(936, 390)));
+            PositionGrosBougie.Add(16, new Position(new Angle(-140.74), new PointReel(1069, 527)));
+            PositionGrosBougie.Add(17, new Position(new Angle(-178.87), new PointReel(1310, 664)));
+            PositionGrosBougie.Add(18, new Position(new Angle(-178.87), new PointReel(1411, 664)));
+            PositionGrosBougie.Add(19, new Position(new Angle(-178.87), new PointReel(1411, 664)));
+             * */
             
             /*PositionGrosBougie.Add(0, new Position(new Angle(-249.12), new PointReel(2157, 188)));
             PositionGrosBougie.Add(1, new Position(new Angle(0), new PointReel(0, 0)));
@@ -117,7 +142,7 @@ namespace GoBot.Mouvements
 
             PositionGrosCadeau = new Dictionary<int, Position>();
             for (int i = 1; i < 7; i++)
-                PositionGrosCadeau.Add(i, new Position(new Angle(0), new PointReel(Plateau.PositionsCadeaux[i].X, Plateau.PositionsCadeaux[i].Y - 200)));
+                PositionGrosCadeau.Add(i, new Position(new Angle(0), new PointReel(Plateau.PositionsCadeaux[i].X, Plateau.PositionsCadeaux[i].Y - 240)));
                     
             PositionGrosCadeau.Add(0, new Position(new Angle(15), new PointReel(Plateau.PositionsCadeaux[0].X + 35, Plateau.PositionsCadeaux[0].Y - 200)));
             PositionGrosCadeau.Add(7, new Position(new Angle(-15), new PointReel(Plateau.PositionsCadeaux[7].X - 35, Plateau.PositionsCadeaux[7].Y - 200)));

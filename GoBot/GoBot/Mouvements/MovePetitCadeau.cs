@@ -30,16 +30,16 @@ namespace GoBot.Mouvements
                 if (Math.Abs(angle180.AngleDegres) < 90)
                 {
                     Robots.PetitRobot.PositionerAngle(Position.Angle, 1);
-                    Robots.PetitRobot.BougeServo(ServomoteurID.PRBrasGauche, 500);
+                    Robots.PetitRobot.BougeServo(ServomoteurID.PRBrasDroit, Config.CurrentConfig.PositionPRBrasDroiteHaut);
                     Thread.Sleep(500);
-                    Robots.PetitRobot.BougeServo(ServomoteurID.PRBrasGauche, 0);
+                    Robots.PetitRobot.BougeServo(ServomoteurID.PRBrasDroit, Config.CurrentConfig.PositionPRBrasDroiteRange);
                 }
                 else
                 {
                     Robots.PetitRobot.PositionerAngle(Position.Angle - new Angle(180, AnglyeType.Degre), 1);
-                    Robots.PetitRobot.BougeServo(ServomoteurID.PRBrasDroit, 500);
+                    Robots.PetitRobot.BougeServo(ServomoteurID.PRBrasGauche, Config.CurrentConfig.PositionPRBrasGaucheHaut);
                     Thread.Sleep(500);
-                    Robots.PetitRobot.BougeServo(ServomoteurID.PRBrasDroit, 0);
+                    Robots.PetitRobot.BougeServo(ServomoteurID.PRBrasGauche, Config.CurrentConfig.PositionPRBrasGaucheRange);
                 }
                 Plateau.Score += Score;
                 return true;

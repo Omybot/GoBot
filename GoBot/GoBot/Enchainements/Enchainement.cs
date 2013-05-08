@@ -129,6 +129,7 @@ namespace GoBot.Enchainements
         private void ThreadPetit()
         {
             int iMeilleur = 0;
+            Robots.PetitRobot.Avancer(150);
 
             while (ListeMouvementsPetit.Count > 0)
             {

@@ -53,10 +53,15 @@ namespace GoBot
 
         // Déplacement petit robot
 
-        public int PRVitesseLigne { get; set; }
-        public int PRAccelerationLigne { get; set; }
-        public int PRVitessePivot { get; set; }
-        public int PRAccelerationPivot { get; set; }
+        public int PRVitesseLigneRapide { get; set; }
+        public int PRAccelerationLigneRapide { get; set; }
+        public int PRVitessePivotRapide { get; set; }
+        public int PRAccelerationPivotRapide { get; set; }
+
+        public int PRVitesseLigneLent { get; set; }
+        public int PRAccelerationLigneLent { get; set; }
+        public int PRVitessePivotLent { get; set; }
+        public int PRAccelerationPivotLent { get; set; }
 
         // Offset balises
 

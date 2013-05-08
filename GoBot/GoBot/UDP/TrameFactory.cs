@@ -60,6 +60,8 @@ namespace GoBot.UDP
 
             TestConnexion = 0xF0,
             Reset = 0xF1,
+            DemandeJack = 0xF3,
+            ReponseJack = 0xF4
         }
 
         public enum FonctionMiwi
@@ -659,6 +661,14 @@ namespace GoBot.UDP
             byte[] tab = new byte[2];
             tab[0] = (byte)Carte.RecMove;
             tab[1] = (byte)FonctionMove.ArmerJack;
+            return new Trame(tab);
+        }
+
+        public static Trame DemandeJack()
+        {
+            byte[] tab = new byte[2];
+            tab[0] = (byte)Carte.RecMove;
+            tab[1] = (byte)FonctionMove.DemandeJack;
             return new Trame(tab);
         }
     }

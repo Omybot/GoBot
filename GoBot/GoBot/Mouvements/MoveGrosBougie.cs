@@ -58,24 +58,54 @@ namespace GoBot.Mouvements
             }
             else if (numeroBougie == 2 && (Plateau.CouleursBougies[5] == Plateau.NotreCouleur || Plateau.CouleursBougies[5] == Color.White))
             {
-                petitBras = true; 
+                petitBras = true;
                 bougieAdditionnelle = 5;
+            }
+            else if (numeroBougie == 12 && (Plateau.CouleursBougies[15] == Plateau.NotreCouleur || Plateau.CouleursBougies[15] == Color.White))
+            {
+                petitBras = true;
+                bougieAdditionnelle = 15;
+            }
+            else if (numeroBougie == 4 && (Plateau.CouleursBougies[6] == Plateau.NotreCouleur || Plateau.CouleursBougies[6] == Color.White))
+            {
+                petitBras = true;
+                bougieAdditionnelle = 6;
+            }
+            else if (numeroBougie == 18 && (Plateau.CouleursBougies[19] == Plateau.NotreCouleur || Plateau.CouleursBougies[19] == Color.White))
+            {
+                petitBras = true;
+                bougieAdditionnelle = 19;
             }
 
             if (numeroBougie == 16 && (Plateau.CouleursBougies[14] == Plateau.NotreCouleur || Plateau.CouleursBougies[14] == Color.White))
             {
-                petitBras = true;
+                grandBras = true;
                 bougieAdditionnelle = 14;
             }
             else if (numeroBougie == 9 && (Plateau.CouleursBougies[8] == Plateau.NotreCouleur || Plateau.CouleursBougies[8] == Color.White))
             {
-                petitBras = true;
+                grandBras = true;
                 bougieAdditionnelle = 8;
             }
             else if (numeroBougie == 5 && (Plateau.CouleursBougies[2] == Plateau.NotreCouleur || Plateau.CouleursBougies[2] == Color.White))
             {
-                petitBras = true;
+                grandBras = true;
                 bougieAdditionnelle = 2;
+            }
+            else if (numeroBougie == 15 && (Plateau.CouleursBougies[12] == Plateau.NotreCouleur || Plateau.CouleursBougies[12] == Color.White))
+            {
+                grandBras = true;
+                bougieAdditionnelle = 12;
+            }
+            else if (numeroBougie == 6 && (Plateau.CouleursBougies[4] == Plateau.NotreCouleur || Plateau.CouleursBougies[4] == Color.White))
+            {
+                grandBras = true;
+                bougieAdditionnelle = 4;
+            }
+            else if (numeroBougie == 19 && (Plateau.CouleursBougies[18] == Plateau.NotreCouleur || Plateau.CouleursBougies[18] == Color.White))
+            {
+                grandBras = true;
+                bougieAdditionnelle = 18;
             }
 
             if(bougieAdditionnelle != -1)

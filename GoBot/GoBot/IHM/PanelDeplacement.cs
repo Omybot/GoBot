@@ -43,16 +43,22 @@ namespace GoBot.IHM
         {
             // Charger la config
 
-            trackBarVitesse.SetValue(Config.CurrentConfig.GRVitesseLigneRapide);
-            trackBarAccel.SetValue(Config.CurrentConfig.GRAccelerationLigneRapide);
+            if (Robot == Robots.GrosRobot)
+            {
+                trackBarVitesse.SetValue(Config.CurrentConfig.GRVitesseLigneRapide);
+                trackBarAccel.SetValue(Config.CurrentConfig.GRAccelerationLigneRapide);
 
-            Robot.VitesseDeplacement = Config.CurrentConfig.GRVitesseLigneRapide;
-            Robot.AccelerationDeplacement = Config.CurrentConfig.GRAccelerationLigneRapide;
+                Deployer(Config.CurrentConfig.DeplacementGROuvert);
+            }
+            else
+            {
+                trackBarVitesse.SetValue(Config.CurrentConfig.PRVitesseLigneRapide);
+                trackBarAccel.SetValue(Config.CurrentConfig.PRAccelerationLigneRapide);
 
-            Robot.VitessePivot = Config.CurrentConfig.GRVitessePivotRapide;
-            Robot.AccelerationPivot = Config.CurrentConfig.GRAccelerationPivotRapide;
+                Deployer(Config.CurrentConfig.DeplacementPROuvert);
+            }
 
-            Deployer(Config.CurrentConfig.DeplacementGROuvert);
+            Robot.Rapide();
         }
 
         protected virtual void btnAvance_Click(object sender, EventArgs e)
@@ -108,7 +114,7 @@ namespace GoBot.IHM
                 ok = false;
             }
 
-            if(ok)
+            if (ok)
                 Robot.Virage(SensAR.Avant, SensGD.Droite, distance, angle, false);
         }
 
@@ -177,7 +183,7 @@ namespace GoBot.IHM
 
         protected virtual void btnStop_Click(object sender, EventArgs e)
         {
-            Robot.Stop(StopMode.Freely);
+            Robot.Stop(StopMode.Smooth);
         }
 
         private void btnTaille_Click(object sender, EventArgs e)
@@ -210,7 +216,10 @@ namespace GoBot.IHM
                 tooltip.SetToolTip(btnTaille, "Réduire");
             }
 
-            Config.CurrentConfig.DeplacementGROuvert = deployer;
+            if (Robot == Robots.GrosRobot)
+                Config.CurrentConfig.DeplacementGROuvert = deployer;
+            else
+                Config.CurrentConfig.DeplacementPROuvert = deployer;
         }
 
         private void trackBarVitesse_ValueChanged()
@@ -246,12 +255,18 @@ namespace GoBot.IHM
             if (boxPivot.Checked)
             {
                 Robot.VitessePivot = (int)trackBarVitesse.Value;
-                Config.CurrentConfig.GRVitessePivotRapide = (int)trackBarVitesse.Value;
+                if (Robot == Robots.GrosRobot)
+                    Config.CurrentConfig.GRVitessePivotRapide = (int)trackBarVitesse.Value;
+                else
+                    Config.CurrentConfig.PRVitessePivotRapide = (int)trackBarVitesse.Value;
             }
             else
             {
                 Robot.VitesseDeplacement = (int)trackBarVitesse.Value;
-                Config.CurrentConfig.GRVitesseLigneRapide = (int)trackBarVitesse.Value;
+                if (Robot == Robots.GrosRobot)
+                    Config.CurrentConfig.GRVitesseLigneRapide = (int)trackBarVitesse.Value;
+                else
+                    Config.CurrentConfig.PRVitesseLigneRapide = (int)trackBarVitesse.Value;
             }
         }
 
@@ -260,18 +275,24 @@ namespace GoBot.IHM
             if (boxPivot.Checked)
             {
                 Robot.AccelerationPivot = (int)trackBarAccel.Value;
-                Config.CurrentConfig.GRAccelerationPivotRapide = (int)trackBarAccel.Value;
+                if (Robot == Robots.GrosRobot)
+                    Config.CurrentConfig.GRAccelerationPivotRapide = (int)trackBarAccel.Value;
+                else
+                    Config.CurrentConfig.PRAccelerationPivotRapide = (int)trackBarAccel.Value;
             }
             else
             {
                 Robot.AccelerationDeplacement = (int)trackBarAccel.Value;
-                Config.CurrentConfig.GRAccelerationLigneRapide = (int)trackBarAccel.Value;
+                if (Robot == Robots.GrosRobot)
+                    Config.CurrentConfig.GRAccelerationLigneRapide = (int)trackBarAccel.Value;
+                else
+                    Config.CurrentConfig.PRAccelerationLigneRapide = (int)trackBarAccel.Value;
             }
         }
 
         protected virtual void panelControleManuel_KeyUp(object sender, KeyEventArgs e)
         {
-            e.Handled = true; 
+            e.Handled = true;
             if (e.KeyCode == Keys.Down || e.KeyCode == Keys.Up || e.KeyCode == Keys.Left || e.KeyCode == Keys.Right)
                 Robot.Stop();
         }

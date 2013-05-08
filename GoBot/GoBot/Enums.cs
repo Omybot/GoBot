@@ -58,7 +58,8 @@ namespace GoBot
         GRCouleurBalle = 1,
         GRPresenceAssiette = 2,
         GRAspiRemonte = 3,
-        GRVitesseCanon = 4
+        GRVitesseCanon = 4,
+        GRJack
     }
 
     public enum ActionneurOnOffID

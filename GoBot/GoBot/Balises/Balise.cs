@@ -261,7 +261,7 @@ namespace GoBot
                         {
                             // Si on a une mesure incorrecte (une mesure correcte demande une détection en haut et une en bas)
                             // Le réglage est annulé
-                            if (DetectionsHaut.Count == 1 || DetectionsBas.Count == 1)
+                            if (DetectionsHaut.Count == 1 && DetectionsBas.Count == 1)
                             {
                                 compteurReglageOffset--;
 
@@ -280,22 +280,42 @@ namespace GoBot
 
                                 moyenne /= anglesMesuresPourOffsetHaut.Count;
 
-                                // Les valeurs sont les angles que doivent retourner chaque balise pour un reflecteur placé au centre de la table (sur le palmier)
-                                switch (Carte)
+                                if (Plateau.NotreCouleur == Plateau.CouleurJ2B)
                                 {
-                                    case GoBot.Carte.RecBun:
-                                        moyenne = 33.69 - moyenne;
-                                        break;
-                                    case GoBot.Carte.RecBeu:
-                                        moyenne = 326.31 - moyenne;
-                                        break;
-                                    case GoBot.Carte.RecBoi:
-                                        moyenne = 180 - moyenne;
-                                        break;
+                                    // Les valeurs sont les angles que doivent retourner chaque balise pour un reflecteur placé au centre de la table (sur le palmier)
+                                    switch (Carte)
+                                    {
+                                        case GoBot.Carte.RecBun:
+                                            moyenne = 33.69 - moyenne;
+                                            break;
+                                        case GoBot.Carte.RecBeu:
+                                            moyenne = 326.31 - moyenne;
+                                            break;
+                                        case GoBot.Carte.RecBoi:
+                                            moyenne = 180 - moyenne;
+                                            break;
+                                    }
+                                }
+                                else
+                                {
+                                    // Les valeurs sont les angles que doivent retourner chaque balise pour un reflecteur placé au centre de la table (sur le palmier)
+                                    switch (Carte)
+                                    {
+                                        case GoBot.Carte.RecBun:
+                                            moyenne = 146.31 - moyenne;
+                                            break;
+                                        case GoBot.Carte.RecBeu:
+                                            moyenne = - 33.69 - moyenne;
+                                            break;
+                                        case GoBot.Carte.RecBoi:
+                                            moyenne = - moyenne;
+                                            break;
+                                    }
                                 }
 
                                 // On le sauve dans la config (haut)
                                 Config.CurrentConfig.SetOffsetBaliseHaut(Carte, moyenne + Config.CurrentConfig.GetOffsetBaliseHaut(Carte));
+                                Config.Save();
 
                                 moyenne = 0;
 
@@ -313,13 +333,13 @@ namespace GoBot
                                         moyenne = 326.31 - moyenne;
                                         break;
                                     case GoBot.Carte.RecBoi:
-                                        moyenne = 180 - moyenne;
+                                        moyenne = - moyenne;
                                         break;
                                 }
 
                                 // On le sauve dans la config (bas)
                                 Config.CurrentConfig.SetOffsetBaliseBas(Carte, moyenne + Config.CurrentConfig.GetOffsetBaliseBas(Carte));
-
+                                Config.Save();
                                 // Réglage terminé
                                 ReglageOffset = false;
                             }

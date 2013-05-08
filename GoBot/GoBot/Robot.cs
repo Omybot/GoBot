@@ -41,6 +41,7 @@ namespace GoBot
         public abstract bool GetPresenceAssiette(bool historique = true);
         public abstract bool GetAspiRemonte(bool historique = true);
         public abstract int GetVitesseCanon(bool historique = true);
+        public abstract bool GetJack(bool historique = true);
 
         public void Diagnostic()
         {
@@ -175,18 +176,38 @@ namespace GoBot
 
         public void Lent()
         {
-            VitesseDeplacement = Config.CurrentConfig.GRVitesseLigneLent;
-            AccelerationDeplacement = Config.CurrentConfig.GRAccelerationLigneLent;
-            VitessePivot = Config.CurrentConfig.GRVitessePivotLent;
-            AccelerationPivot = Config.CurrentConfig.GRAccelerationLigneLent;
+            if (this == Robots.GrosRobot)
+            {
+                VitesseDeplacement = Config.CurrentConfig.GRVitesseLigneLent;
+                AccelerationDeplacement = Config.CurrentConfig.GRAccelerationLigneLent;
+                VitessePivot = Config.CurrentConfig.GRVitessePivotLent;
+                AccelerationPivot = Config.CurrentConfig.GRAccelerationLigneLent;
+            }
+            else
+            {
+                VitesseDeplacement = Config.CurrentConfig.PRVitesseLigneLent;
+                AccelerationDeplacement = Config.CurrentConfig.PRAccelerationLigneLent;
+                VitessePivot = Config.CurrentConfig.PRVitessePivotLent;
+                AccelerationPivot = Config.CurrentConfig.PRAccelerationLigneLent;
+            }
         }
 
         public void Rapide()
         {
-            VitesseDeplacement = Config.CurrentConfig.GRVitesseLigneRapide;
-            AccelerationDeplacement = Config.CurrentConfig.GRAccelerationLigneRapide;
-            VitessePivot = Config.CurrentConfig.GRVitessePivotRapide;
-            AccelerationPivot = Config.CurrentConfig.GRAccelerationLigneRapide;
+            if (this == Robots.GrosRobot)
+            {
+                VitesseDeplacement = Config.CurrentConfig.GRVitesseLigneRapide;
+                AccelerationDeplacement = Config.CurrentConfig.GRAccelerationLigneRapide;
+                VitessePivot = Config.CurrentConfig.GRVitessePivotRapide;
+                AccelerationPivot = Config.CurrentConfig.GRAccelerationLigneRapide;
+            }
+            else
+            {
+                VitesseDeplacement = Config.CurrentConfig.PRVitesseLigneRapide;
+                AccelerationDeplacement = Config.CurrentConfig.PRAccelerationLigneRapide;
+                VitessePivot = Config.CurrentConfig.PRVitessePivotRapide;
+                AccelerationPivot = Config.CurrentConfig.PRAccelerationLigneRapide;
+            }
         }
 
         public bool PathFinding(double x, double y, int timeOut = 0, bool attendre = false)

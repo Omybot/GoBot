@@ -10,24 +10,28 @@
   <HistoriquePROuvert>true</HistoriquePROuvert>
   <ReglagePROuvert>true</ReglagePROuvert>
   <UtilisationPROuvert>true</UtilisationPROuvert>
-  <GRVitesseLigneRapide>600</GRVitesseLigneRapide>
-  <GRAccelerationLigneRapide>1000</GRAccelerationLigneRapide>
+  <GRVitesseLigneRapide>500</GRVitesseLigneRapide>
+  <GRAccelerationLigneRapide>2000</GRAccelerationLigneRapide>
   <GRVitessePivotRapide>1000</GRVitessePivotRapide>
   <GRAccelerationPivotRapide>2800</GRAccelerationPivotRapide>
-  <GRVitesseLigneLent>200</GRVitesseLigneLent>
+  <GRVitesseLigneLent>300</GRVitesseLigneLent>
   <GRAccelerationLigneLent>300</GRAccelerationLigneLent>
-  <GRVitessePivotLent>500</GRVitessePivotLent>
-  <GRAccelerationPivotLent>500</GRAccelerationPivotLent>
-  <PRVitesseLigne>585</PRVitesseLigne>
-  <PRAccelerationLigne>0</PRAccelerationLigne>
-  <PRVitessePivot>0</PRVitessePivot>
-  <PRAccelerationPivot>0</PRAccelerationPivot>
-  <OffsetBalise1Haut>-194.08900000000003</OffsetBalise1Haut>
-  <OffsetBalise2Haut>165.0403125</OffsetBalise2Haut>
-  <OffsetBalise3Haut>-11.147187499999973</OffsetBalise3Haut>
-  <OffsetBalise1Bas>-195.40066666666664</OffsetBalise1Bas>
-  <OffsetBalise2Bas>163.8640625</OffsetBalise2Bas>
-  <OffsetBalise3Bas>-11.876562500000006</OffsetBalise3Bas>
+  <GRVitessePivotLent>300</GRVitessePivotLent>
+  <GRAccelerationPivotLent>300</GRAccelerationPivotLent>
+  <PRVitesseLigneRapide>500</PRVitesseLigneRapide>
+  <PRAccelerationLigneRapide>500</PRAccelerationLigneRapide>
+  <PRVitessePivotRapide>500</PRVitessePivotRapide>
+  <PRAccelerationPivotRapide>500</PRAccelerationPivotRapide>
+  <PRVitesseLigneLent>100</PRVitesseLigneLent>
+  <PRAccelerationLigneLent>100</PRAccelerationLigneLent>
+  <PRVitessePivotLent>100</PRVitessePivotLent>
+  <PRAccelerationPivotLent>100</PRAccelerationPivotLent>
+  <OffsetBalise1Haut>-192.21125</OffsetBalise1Haut>
+  <OffsetBalise2Haut>165.6715625</OffsetBalise2Haut>
+  <OffsetBalise3Haut>-10.369062499999956</OffsetBalise3Haut>
+  <OffsetBalise1Bas>-240.10750000000002</OffsetBalise1Bas>
+  <OffsetBalise2Bas>210.91375</OffsetBalise2Bas>
+  <OffsetBalise3Bas>-12.785312500000003</OffsetBalise3Bas>
   <PositionGRGrandBrasHaut>465</PositionGRGrandBrasHaut>
   <PositionGRGrandBrasBas>545</PositionGRGrandBrasBas>
   <PositionGRGrandBrasRange>815</PositionGRGrandBrasRange>
@@ -82,16 +86,16 @@
     <int>193</int>
     <int>202</int>
     <int>149</int>
-    <int>157</int>
-    <int>117</int>
-    <int>227</int>
-    <int>174</int>
-    <int>306</int>
-    <int>244</int>
-    <int>308</int>
-    <int>373</int>
-    <int>364</int>
-    <int>417</int>
+    <int>189</int>
+    <int>147</int>
+    <int>265</int>
+    <int>207</int>
+    <int>340</int>
+    <int>274</int>
+    <int>345</int>
+    <int>407</int>
+    <int>400</int>
+    <int>453</int>
   </PositionsBougiesCameraX>
   <PositionsBougiesCameraY>
     <int>184</int>
@@ -104,15 +108,15 @@
     <int>245</int>
     <int>180</int>
     <int>238</int>
-    <int>178</int>
-    <int>246</int>
+    <int>183</int>
+    <int>248</int>
+    <int>184</int>
+    <int>250</int>
     <int>177</int>
-    <int>247</int>
+    <int>250</int>
+    <int>244</int>
+    <int>234</int>
     <int>171</int>
-    <int>243</int>
-    <int>237</int>
-    <int>230</int>
-    <int>166</int>
-    <int>218</int>
+    <int>227</int>
   </PositionsBougiesCameraY>
 </Config>

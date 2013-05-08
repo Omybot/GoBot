@@ -50,7 +50,7 @@ namespace GoBot
             GrosRobot.Nom = "Rocker";
             GrosRobot.Init();
 
-            PetitRobot.Largeur = 200;
+            PetitRobot.Largeur = 195;
             PetitRobot.Longueur = 100;
             PetitRobot.Position = new Position(new Angle(270, AnglyeType.Degre), new Calculs.Formes.PointReel(2500, 1000));
             PetitRobot.Nom = "Punk";

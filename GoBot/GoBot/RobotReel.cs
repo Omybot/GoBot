@@ -167,6 +167,15 @@ namespace GoBot
                     { }
                 }
 
+                if (trameRecue[1] == (byte)TrameFactory.FonctionMove.ReponseJack)
+                {
+                    jackBranche = trameRecue[2] == 1 ? true : false;
+                    if (historiqueJack) 
+                        Historique.AjouterAction(new ActionCapteur(this, CapteurID.GRJack, jackBranche ? "branché" : "absent"));
+                    if(semJack != null)
+                        semJack.Release();
+                }
+
                 if (trameRecue[1] == (byte)TrameFactory.FonctionMove.RetourPositionXYTeta)
                 {
                     // Réception de la position mesurée par l'asservissement
@@ -562,7 +571,20 @@ namespace GoBot
         public override void Reset()
         {
             Connexion.SendMessage(TrameFactory.ResetRecMove());
-            Thread.Sleep(500);
+            Thread.Sleep(1500);
+        }
+
+
+        private Semaphore semJack;
+        private bool jackBranche;
+        private bool historiqueJack;
+        public override bool GetJack(bool historique = true)
+        {
+            historiqueJack = historique;
+            semJack = new Semaphore(0, 1);
+            Connexion.SendMessage(TrameFactory.DemandeJack());
+            semJack.WaitOne();
+            return jackBranche;
         }
     }
 }

@@ -31,8 +31,8 @@ namespace GoBot.Ponderations
             PoidGlobalPetitBougie = 0;
             PoidGlobalPetitCadeau = 0;
 
-            PoidGlobalGrosBougie = 1;
-            PoidGlobalGrosCadeau = 0;
+            PoidGlobalGrosBougie = 0;
+            PoidGlobalGrosCadeau = 1;
             PoidGlobalGrosAspireAssiette = 0;
             PoidGlobalGrosAccrocheAssiette = 0;
             // Poids de l'aspiration de l'assiette accrochée si aucune balle n'est chargée
@@ -60,13 +60,13 @@ namespace GoBot.Ponderations
 
             // Cadeaux
             PoidsPetitCadeau[0] = 1;
-            PoidsPetitCadeau[1] = 4;
+            PoidsPetitCadeau[1] = 1;
             PoidsPetitCadeau[2] = 1;
-            PoidsPetitCadeau[3] = 8;
+            PoidsPetitCadeau[3] = 1;
             PoidsPetitCadeau[4] = 1;
-            PoidsPetitCadeau[5] = 12;
+            PoidsPetitCadeau[5] = 1;
             PoidsPetitCadeau[6] = 1;
-            PoidsPetitCadeau[7] = 16;
+            PoidsPetitCadeau[7] = 1;
 
             // Poids grand robot
 
