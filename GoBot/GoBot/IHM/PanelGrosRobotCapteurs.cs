@@ -147,7 +147,7 @@ namespace GoBot.IHM
             else
             {
                 timerAssiette.Stop();
-                timerAssiette.Stop();
+                ledAssiette.CouleurGris();
             }
         }
 

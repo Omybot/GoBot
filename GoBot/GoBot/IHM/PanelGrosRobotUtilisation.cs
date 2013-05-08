@@ -237,5 +237,15 @@ namespace GoBot.IHM
         {
             Robots.GrosRobot.TourneMoteur(MoteurID.GRTurbineAspirateur, Config.CurrentConfig.VitesseAspirationMaintien);
         }
+
+        private void btnBloqueurHaut_Click(object sender, EventArgs e)
+        {
+            Robots.GrosRobot.BougeServo(ServomoteurID.GRServoAssiette, Config.CurrentConfig.PositionGRBloqueurOuvert);
+        }
+
+        private void btnBloqueurBas_Click(object sender, EventArgs e)
+        {
+            Robots.GrosRobot.BougeServo(ServomoteurID.GRServoAssiette, Config.CurrentConfig.PositionGRBloqueurFerme);
+        }
     }
 }

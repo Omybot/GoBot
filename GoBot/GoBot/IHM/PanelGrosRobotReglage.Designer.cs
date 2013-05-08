@@ -29,6 +29,7 @@
         private void InitializeComponent()
         {
             this.groupBoxReglage = new System.Windows.Forms.GroupBox();
+            this.btnAspiMaintien = new System.Windows.Forms.Button();
             this.btnBloqueurFerme = new System.Windows.Forms.Button();
             this.btnBloqueurOuvert = new System.Windows.Forms.Button();
             this.btnOkBloqueur = new System.Windows.Forms.Button();
@@ -86,7 +87,9 @@
             this.numTurbine = new System.Windows.Forms.NumericUpDown();
             this.label8 = new System.Windows.Forms.Label();
             this.btnTaille = new System.Windows.Forms.Button();
-            this.btnAspiMaintien = new System.Windows.Forms.Button();
+            this.button1 = new System.Windows.Forms.Button();
+            this.btnOkVitesseCanonTMin = new System.Windows.Forms.Button();
+            this.numCanonVitesseTMin = new System.Windows.Forms.NumericUpDown();
             this.groupBoxReglage.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numBloqueur)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numCamera)).BeginInit();
@@ -99,11 +102,15 @@
             ((System.ComponentModel.ISupportInitialize)(this.numShutter)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numCanon)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numTurbine)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numCanonVitesseTMin)).BeginInit();
             this.SuspendLayout();
             // 
             // groupBoxReglage
             // 
             this.groupBoxReglage.BackColor = System.Drawing.Color.Transparent;
+            this.groupBoxReglage.Controls.Add(this.button1);
+            this.groupBoxReglage.Controls.Add(this.btnOkVitesseCanonTMin);
+            this.groupBoxReglage.Controls.Add(this.numCanonVitesseTMin);
             this.groupBoxReglage.Controls.Add(this.btnAspiMaintien);
             this.groupBoxReglage.Controls.Add(this.btnBloqueurFerme);
             this.groupBoxReglage.Controls.Add(this.btnBloqueurOuvert);
@@ -164,14 +171,24 @@
             this.groupBoxReglage.Controls.Add(this.btnTaille);
             this.groupBoxReglage.Location = new System.Drawing.Point(5, 3);
             this.groupBoxReglage.Name = "groupBoxReglage";
-            this.groupBoxReglage.Size = new System.Drawing.Size(332, 384);
+            this.groupBoxReglage.Size = new System.Drawing.Size(332, 403);
             this.groupBoxReglage.TabIndex = 0;
             this.groupBoxReglage.TabStop = false;
             this.groupBoxReglage.Text = "Réglage";
             // 
+            // btnAspiMaintien
+            // 
+            this.btnAspiMaintien.Location = new System.Drawing.Point(264, 60);
+            this.btnAspiMaintien.Name = "btnAspiMaintien";
+            this.btnAspiMaintien.Size = new System.Drawing.Size(57, 23);
+            this.btnAspiMaintien.TabIndex = 164;
+            this.btnAspiMaintien.Text = "Maintien";
+            this.btnAspiMaintien.UseVisualStyleBackColor = true;
+            this.btnAspiMaintien.Click += new System.EventHandler(this.btnAspiMaintien_Click);
+            // 
             // btnBloqueurFerme
             // 
-            this.btnBloqueurFerme.Location = new System.Drawing.Point(270, 349);
+            this.btnBloqueurFerme.Location = new System.Drawing.Point(270, 373);
             this.btnBloqueurFerme.Name = "btnBloqueurFerme";
             this.btnBloqueurFerme.Size = new System.Drawing.Size(53, 23);
             this.btnBloqueurFerme.TabIndex = 163;
@@ -181,7 +198,7 @@
             // 
             // btnBloqueurOuvert
             // 
-            this.btnBloqueurOuvert.Location = new System.Drawing.Point(211, 349);
+            this.btnBloqueurOuvert.Location = new System.Drawing.Point(211, 373);
             this.btnBloqueurOuvert.Name = "btnBloqueurOuvert";
             this.btnBloqueurOuvert.Size = new System.Drawing.Size(53, 23);
             this.btnBloqueurOuvert.TabIndex = 162;
@@ -191,7 +208,7 @@
             // 
             // btnOkBloqueur
             // 
-            this.btnOkBloqueur.Location = new System.Drawing.Point(152, 349);
+            this.btnOkBloqueur.Location = new System.Drawing.Point(152, 373);
             this.btnOkBloqueur.Name = "btnOkBloqueur";
             this.btnOkBloqueur.Size = new System.Drawing.Size(53, 23);
             this.btnOkBloqueur.TabIndex = 161;
@@ -201,7 +218,7 @@
             // 
             // numBloqueur
             // 
-            this.numBloqueur.Location = new System.Drawing.Point(82, 352);
+            this.numBloqueur.Location = new System.Drawing.Point(82, 376);
             this.numBloqueur.Maximum = new decimal(new int[] {
             1024,
             0,
@@ -214,7 +231,7 @@
             // label12
             // 
             this.label12.AutoSize = true;
-            this.label12.Location = new System.Drawing.Point(20, 354);
+            this.label12.Location = new System.Drawing.Point(20, 378);
             this.label12.Name = "label12";
             this.label12.Size = new System.Drawing.Size(49, 13);
             this.label12.TabIndex = 159;
@@ -222,7 +239,7 @@
             // 
             // btnCameraBleu
             // 
-            this.btnCameraBleu.Location = new System.Drawing.Point(270, 323);
+            this.btnCameraBleu.Location = new System.Drawing.Point(270, 347);
             this.btnCameraBleu.Name = "btnCameraBleu";
             this.btnCameraBleu.Size = new System.Drawing.Size(53, 23);
             this.btnCameraBleu.TabIndex = 158;
@@ -232,7 +249,7 @@
             // 
             // btnCameraRouge
             // 
-            this.btnCameraRouge.Location = new System.Drawing.Point(211, 323);
+            this.btnCameraRouge.Location = new System.Drawing.Point(211, 347);
             this.btnCameraRouge.Name = "btnCameraRouge";
             this.btnCameraRouge.Size = new System.Drawing.Size(53, 23);
             this.btnCameraRouge.TabIndex = 157;
@@ -242,7 +259,7 @@
             // 
             // btnCameraOK
             // 
-            this.btnCameraOK.Location = new System.Drawing.Point(152, 323);
+            this.btnCameraOK.Location = new System.Drawing.Point(152, 347);
             this.btnCameraOK.Name = "btnCameraOK";
             this.btnCameraOK.Size = new System.Drawing.Size(53, 23);
             this.btnCameraOK.TabIndex = 156;
@@ -252,7 +269,7 @@
             // 
             // numCamera
             // 
-            this.numCamera.Location = new System.Drawing.Point(82, 326);
+            this.numCamera.Location = new System.Drawing.Point(82, 350);
             this.numCamera.Maximum = new decimal(new int[] {
             1024,
             0,
@@ -265,7 +282,7 @@
             // label7
             // 
             this.label7.AutoSize = true;
-            this.label7.Location = new System.Drawing.Point(20, 328);
+            this.label7.Location = new System.Drawing.Point(20, 352);
             this.label7.Name = "label7";
             this.label7.Size = new System.Drawing.Size(43, 13);
             this.label7.TabIndex = 154;
@@ -273,7 +290,7 @@
             // 
             // btnBrasDroitRange
             // 
-            this.btnBrasDroitRange.Location = new System.Drawing.Point(270, 297);
+            this.btnBrasDroitRange.Location = new System.Drawing.Point(270, 321);
             this.btnBrasDroitRange.Name = "btnBrasDroitRange";
             this.btnBrasDroitRange.Size = new System.Drawing.Size(53, 23);
             this.btnBrasDroitRange.TabIndex = 153;
@@ -283,7 +300,7 @@
             // 
             // btnBrasDroitSorti
             // 
-            this.btnBrasDroitSorti.Location = new System.Drawing.Point(211, 297);
+            this.btnBrasDroitSorti.Location = new System.Drawing.Point(211, 321);
             this.btnBrasDroitSorti.Name = "btnBrasDroitSorti";
             this.btnBrasDroitSorti.Size = new System.Drawing.Size(53, 23);
             this.btnBrasDroitSorti.TabIndex = 152;
@@ -293,7 +310,7 @@
             // 
             // btnBrasDroitOk
             // 
-            this.btnBrasDroitOk.Location = new System.Drawing.Point(152, 297);
+            this.btnBrasDroitOk.Location = new System.Drawing.Point(152, 321);
             this.btnBrasDroitOk.Name = "btnBrasDroitOk";
             this.btnBrasDroitOk.Size = new System.Drawing.Size(53, 23);
             this.btnBrasDroitOk.TabIndex = 151;
@@ -303,7 +320,7 @@
             // 
             // numBrasDroit
             // 
-            this.numBrasDroit.Location = new System.Drawing.Point(82, 300);
+            this.numBrasDroit.Location = new System.Drawing.Point(82, 324);
             this.numBrasDroit.Maximum = new decimal(new int[] {
             1024,
             0,
@@ -316,7 +333,7 @@
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(20, 302);
+            this.label2.Location = new System.Drawing.Point(20, 326);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(51, 13);
             this.label2.TabIndex = 149;
@@ -324,7 +341,7 @@
             // 
             // btnBrasGaucheRange
             // 
-            this.btnBrasGaucheRange.Location = new System.Drawing.Point(270, 271);
+            this.btnBrasGaucheRange.Location = new System.Drawing.Point(270, 295);
             this.btnBrasGaucheRange.Name = "btnBrasGaucheRange";
             this.btnBrasGaucheRange.Size = new System.Drawing.Size(53, 23);
             this.btnBrasGaucheRange.TabIndex = 148;
@@ -334,7 +351,7 @@
             // 
             // btnBrasGaucheSorti
             // 
-            this.btnBrasGaucheSorti.Location = new System.Drawing.Point(211, 271);
+            this.btnBrasGaucheSorti.Location = new System.Drawing.Point(211, 295);
             this.btnBrasGaucheSorti.Name = "btnBrasGaucheSorti";
             this.btnBrasGaucheSorti.Size = new System.Drawing.Size(53, 23);
             this.btnBrasGaucheSorti.TabIndex = 147;
@@ -344,7 +361,7 @@
             // 
             // btnBrasGaucheOk
             // 
-            this.btnBrasGaucheOk.Location = new System.Drawing.Point(152, 271);
+            this.btnBrasGaucheOk.Location = new System.Drawing.Point(152, 295);
             this.btnBrasGaucheOk.Name = "btnBrasGaucheOk";
             this.btnBrasGaucheOk.Size = new System.Drawing.Size(53, 23);
             this.btnBrasGaucheOk.TabIndex = 146;
@@ -354,7 +371,7 @@
             // 
             // numBrasGauche
             // 
-            this.numBrasGauche.Location = new System.Drawing.Point(82, 274);
+            this.numBrasGauche.Location = new System.Drawing.Point(82, 298);
             this.numBrasGauche.Maximum = new decimal(new int[] {
             1024,
             0,
@@ -367,7 +384,7 @@
             // label6
             // 
             this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(20, 276);
+            this.label6.Location = new System.Drawing.Point(20, 300);
             this.label6.Name = "label6";
             this.label6.Size = new System.Drawing.Size(67, 13);
             this.label6.TabIndex = 144;
@@ -375,7 +392,7 @@
             // 
             // btnPetitBrasRange
             // 
-            this.btnPetitBrasRange.Location = new System.Drawing.Point(279, 245);
+            this.btnPetitBrasRange.Location = new System.Drawing.Point(279, 269);
             this.btnPetitBrasRange.Name = "btnPetitBrasRange";
             this.btnPetitBrasRange.Size = new System.Drawing.Size(47, 23);
             this.btnPetitBrasRange.TabIndex = 143;
@@ -385,7 +402,7 @@
             // 
             // btnPetitBrasBas
             // 
-            this.btnPetitBrasBas.Location = new System.Drawing.Point(238, 245);
+            this.btnPetitBrasBas.Location = new System.Drawing.Point(238, 269);
             this.btnPetitBrasBas.Name = "btnPetitBrasBas";
             this.btnPetitBrasBas.Size = new System.Drawing.Size(35, 23);
             this.btnPetitBrasBas.TabIndex = 142;
@@ -395,7 +412,7 @@
             // 
             // btnPetitBrasHaut
             // 
-            this.btnPetitBrasHaut.Location = new System.Drawing.Point(188, 245);
+            this.btnPetitBrasHaut.Location = new System.Drawing.Point(188, 269);
             this.btnPetitBrasHaut.Name = "btnPetitBrasHaut";
             this.btnPetitBrasHaut.Size = new System.Drawing.Size(44, 23);
             this.btnPetitBrasHaut.TabIndex = 141;
@@ -405,7 +422,7 @@
             // 
             // btnPetitBrasOk
             // 
-            this.btnPetitBrasOk.Location = new System.Drawing.Point(152, 245);
+            this.btnPetitBrasOk.Location = new System.Drawing.Point(152, 269);
             this.btnPetitBrasOk.Name = "btnPetitBrasOk";
             this.btnPetitBrasOk.Size = new System.Drawing.Size(30, 23);
             this.btnPetitBrasOk.TabIndex = 140;
@@ -415,7 +432,7 @@
             // 
             // numPetitBras
             // 
-            this.numPetitBras.Location = new System.Drawing.Point(82, 248);
+            this.numPetitBras.Location = new System.Drawing.Point(82, 272);
             this.numPetitBras.Maximum = new decimal(new int[] {
             1024,
             0,
@@ -428,7 +445,7 @@
             // label5
             // 
             this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(20, 250);
+            this.label5.Location = new System.Drawing.Point(20, 274);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(51, 13);
             this.label5.TabIndex = 138;
@@ -436,7 +453,7 @@
             // 
             // btnGrandBrasRange
             // 
-            this.btnGrandBrasRange.Location = new System.Drawing.Point(279, 219);
+            this.btnGrandBrasRange.Location = new System.Drawing.Point(279, 243);
             this.btnGrandBrasRange.Name = "btnGrandBrasRange";
             this.btnGrandBrasRange.Size = new System.Drawing.Size(47, 23);
             this.btnGrandBrasRange.TabIndex = 137;
@@ -446,7 +463,7 @@
             // 
             // btnGrandBrasBas
             // 
-            this.btnGrandBrasBas.Location = new System.Drawing.Point(238, 219);
+            this.btnGrandBrasBas.Location = new System.Drawing.Point(238, 243);
             this.btnGrandBrasBas.Name = "btnGrandBrasBas";
             this.btnGrandBrasBas.Size = new System.Drawing.Size(35, 23);
             this.btnGrandBrasBas.TabIndex = 136;
@@ -456,7 +473,7 @@
             // 
             // btnGrandBrasHaut
             // 
-            this.btnGrandBrasHaut.Location = new System.Drawing.Point(188, 219);
+            this.btnGrandBrasHaut.Location = new System.Drawing.Point(188, 243);
             this.btnGrandBrasHaut.Name = "btnGrandBrasHaut";
             this.btnGrandBrasHaut.Size = new System.Drawing.Size(44, 23);
             this.btnGrandBrasHaut.TabIndex = 135;
@@ -466,7 +483,7 @@
             // 
             // btnGrandBrasOk
             // 
-            this.btnGrandBrasOk.Location = new System.Drawing.Point(152, 219);
+            this.btnGrandBrasOk.Location = new System.Drawing.Point(152, 243);
             this.btnGrandBrasOk.Name = "btnGrandBrasOk";
             this.btnGrandBrasOk.Size = new System.Drawing.Size(30, 23);
             this.btnGrandBrasOk.TabIndex = 134;
@@ -476,7 +493,7 @@
             // 
             // numGrandBras
             // 
-            this.numGrandBras.Location = new System.Drawing.Point(82, 222);
+            this.numGrandBras.Location = new System.Drawing.Point(82, 246);
             this.numGrandBras.Maximum = new decimal(new int[] {
             1024,
             0,
@@ -489,7 +506,7 @@
             // label4
             // 
             this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(20, 224);
+            this.label4.Location = new System.Drawing.Point(20, 248);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(59, 13);
             this.label4.TabIndex = 132;
@@ -497,7 +514,7 @@
             // 
             // btnDebloqueurBas
             // 
-            this.btnDebloqueurBas.Location = new System.Drawing.Point(270, 193);
+            this.btnDebloqueurBas.Location = new System.Drawing.Point(270, 217);
             this.btnDebloqueurBas.Name = "btnDebloqueurBas";
             this.btnDebloqueurBas.Size = new System.Drawing.Size(53, 23);
             this.btnDebloqueurBas.TabIndex = 131;
@@ -507,7 +524,7 @@
             // 
             // btnDebloqueurHaut
             // 
-            this.btnDebloqueurHaut.Location = new System.Drawing.Point(211, 193);
+            this.btnDebloqueurHaut.Location = new System.Drawing.Point(211, 217);
             this.btnDebloqueurHaut.Name = "btnDebloqueurHaut";
             this.btnDebloqueurHaut.Size = new System.Drawing.Size(53, 23);
             this.btnDebloqueurHaut.TabIndex = 130;
@@ -517,7 +534,7 @@
             // 
             // btnDebloqueurOk
             // 
-            this.btnDebloqueurOk.Location = new System.Drawing.Point(152, 193);
+            this.btnDebloqueurOk.Location = new System.Drawing.Point(152, 217);
             this.btnDebloqueurOk.Name = "btnDebloqueurOk";
             this.btnDebloqueurOk.Size = new System.Drawing.Size(53, 23);
             this.btnDebloqueurOk.TabIndex = 129;
@@ -527,7 +544,7 @@
             // 
             // numDebloqueur
             // 
-            this.numDebloqueur.Location = new System.Drawing.Point(82, 196);
+            this.numDebloqueur.Location = new System.Drawing.Point(82, 220);
             this.numDebloqueur.Maximum = new decimal(new int[] {
             1024,
             0,
@@ -540,7 +557,7 @@
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(20, 198);
+            this.label1.Location = new System.Drawing.Point(20, 222);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(62, 13);
             this.label1.TabIndex = 127;
@@ -548,7 +565,7 @@
             // 
             // btnAspirateurBas
             // 
-            this.btnAspirateurBas.Location = new System.Drawing.Point(270, 167);
+            this.btnAspirateurBas.Location = new System.Drawing.Point(270, 191);
             this.btnAspirateurBas.Name = "btnAspirateurBas";
             this.btnAspirateurBas.Size = new System.Drawing.Size(53, 23);
             this.btnAspirateurBas.TabIndex = 126;
@@ -558,7 +575,7 @@
             // 
             // btnAspirateurHaut
             // 
-            this.btnAspirateurHaut.Location = new System.Drawing.Point(211, 167);
+            this.btnAspirateurHaut.Location = new System.Drawing.Point(211, 191);
             this.btnAspirateurHaut.Name = "btnAspirateurHaut";
             this.btnAspirateurHaut.Size = new System.Drawing.Size(53, 23);
             this.btnAspirateurHaut.TabIndex = 125;
@@ -568,7 +585,7 @@
             // 
             // btnAspirateurOk
             // 
-            this.btnAspirateurOk.Location = new System.Drawing.Point(152, 167);
+            this.btnAspirateurOk.Location = new System.Drawing.Point(152, 191);
             this.btnAspirateurOk.Name = "btnAspirateurOk";
             this.btnAspirateurOk.Size = new System.Drawing.Size(53, 23);
             this.btnAspirateurOk.TabIndex = 124;
@@ -578,7 +595,7 @@
             // 
             // numAspirateur
             // 
-            this.numAspirateur.Location = new System.Drawing.Point(82, 170);
+            this.numAspirateur.Location = new System.Drawing.Point(82, 194);
             this.numAspirateur.Maximum = new decimal(new int[] {
             1024,
             0,
@@ -591,7 +608,7 @@
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(20, 172);
+            this.label3.Location = new System.Drawing.Point(20, 196);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(54, 13);
             this.label3.TabIndex = 122;
@@ -599,7 +616,7 @@
             // 
             // btnShutterOuvrir
             // 
-            this.btnShutterOuvrir.Location = new System.Drawing.Point(260, 118);
+            this.btnShutterOuvrir.Location = new System.Drawing.Point(260, 152);
             this.btnShutterOuvrir.Name = "btnShutterOuvrir";
             this.btnShutterOuvrir.Size = new System.Drawing.Size(63, 23);
             this.btnShutterOuvrir.TabIndex = 121;
@@ -610,7 +627,7 @@
             // label11
             // 
             this.label11.AutoSize = true;
-            this.label11.Location = new System.Drawing.Point(238, 123);
+            this.label11.Location = new System.Drawing.Point(238, 157);
             this.label11.Name = "label11";
             this.label11.Size = new System.Drawing.Size(20, 13);
             this.label11.TabIndex = 120;
@@ -618,7 +635,7 @@
             // 
             // numShutter
             // 
-            this.numShutter.Location = new System.Drawing.Point(180, 121);
+            this.numShutter.Location = new System.Drawing.Point(180, 155);
             this.numShutter.Maximum = new decimal(new int[] {
             1000000,
             0,
@@ -630,7 +647,7 @@
             // 
             // btnShutterOff
             // 
-            this.btnShutterOff.Location = new System.Drawing.Point(128, 118);
+            this.btnShutterOff.Location = new System.Drawing.Point(128, 152);
             this.btnShutterOff.Name = "btnShutterOff";
             this.btnShutterOff.Size = new System.Drawing.Size(41, 23);
             this.btnShutterOff.TabIndex = 118;
@@ -640,7 +657,7 @@
             // 
             // btnShutterOn
             // 
-            this.btnShutterOn.Location = new System.Drawing.Point(84, 118);
+            this.btnShutterOn.Location = new System.Drawing.Point(84, 152);
             this.btnShutterOn.Name = "btnShutterOn";
             this.btnShutterOn.Size = new System.Drawing.Size(41, 23);
             this.btnShutterOn.TabIndex = 117;
@@ -651,7 +668,7 @@
             // label10
             // 
             this.label10.AutoSize = true;
-            this.label10.Location = new System.Drawing.Point(20, 123);
+            this.label10.Location = new System.Drawing.Point(20, 157);
             this.label10.Name = "label10";
             this.label10.Size = new System.Drawing.Size(41, 13);
             this.label10.TabIndex = 116;
@@ -749,25 +766,46 @@
             this.btnTaille.UseVisualStyleBackColor = true;
             this.btnTaille.Click += new System.EventHandler(this.btnTaille_Click);
             // 
-            // btnAspiMaintien
+            // button1
             // 
-            this.btnAspiMaintien.Location = new System.Drawing.Point(264, 60);
-            this.btnAspiMaintien.Name = "btnAspiMaintien";
-            this.btnAspiMaintien.Size = new System.Drawing.Size(57, 23);
-            this.btnAspiMaintien.TabIndex = 164;
-            this.btnAspiMaintien.Text = "Maintien";
-            this.btnAspiMaintien.UseVisualStyleBackColor = true;
-            this.btnAspiMaintien.Click += new System.EventHandler(this.btnAspiMaintien_Click);
+            this.button1.Location = new System.Drawing.Point(201, 115);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(53, 23);
+            this.button1.TabIndex = 167;
+            this.button1.Text = "Bonne";
+            this.button1.UseVisualStyleBackColor = true;
             // 
-            // PanelReglageGros
+            // btnOkVitesseCanonTMin
+            // 
+            this.btnOkVitesseCanonTMin.Location = new System.Drawing.Point(154, 115);
+            this.btnOkVitesseCanonTMin.Name = "btnOkVitesseCanonTMin";
+            this.btnOkVitesseCanonTMin.Size = new System.Drawing.Size(41, 23);
+            this.btnOkVitesseCanonTMin.TabIndex = 166;
+            this.btnOkVitesseCanonTMin.Text = "Ok";
+            this.btnOkVitesseCanonTMin.UseVisualStyleBackColor = true;
+            this.btnOkVitesseCanonTMin.Click += new System.EventHandler(this.btnOkVitesseCanonTMin_Click);
+            // 
+            // numCanonVitesseTMin
+            // 
+            this.numCanonVitesseTMin.Location = new System.Drawing.Point(84, 118);
+            this.numCanonVitesseTMin.Maximum = new decimal(new int[] {
+            50000,
+            0,
+            0,
+            0});
+            this.numCanonVitesseTMin.Name = "numCanonVitesseTMin";
+            this.numCanonVitesseTMin.Size = new System.Drawing.Size(64, 20);
+            this.numCanonVitesseTMin.TabIndex = 165;
+            // 
+            // PanelGrosRobotReglage
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoSize = true;
             this.BackColor = System.Drawing.Color.Transparent;
             this.Controls.Add(this.groupBoxReglage);
-            this.Name = "PanelReglageGros";
-            this.Size = new System.Drawing.Size(341, 395);
+            this.Name = "PanelGrosRobotReglage";
+            this.Size = new System.Drawing.Size(341, 419);
             this.Load += new System.EventHandler(this.PanelReglageGros_Load);
             this.groupBoxReglage.ResumeLayout(false);
             this.groupBoxReglage.PerformLayout();
@@ -782,6 +820,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.numShutter)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.numCanon)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.numTurbine)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numCanonVitesseTMin)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -847,5 +886,8 @@
         private System.Windows.Forms.NumericUpDown numBloqueur;
         private System.Windows.Forms.Label label12;
         private System.Windows.Forms.Button btnAspiMaintien;
+        private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.Button btnOkVitesseCanonTMin;
+        private System.Windows.Forms.NumericUpDown numCanonVitesseTMin;
     }
 }

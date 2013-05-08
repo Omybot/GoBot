@@ -24,7 +24,7 @@ namespace GoBot
             ConnexionMiwi.ConnexionCheck.TestConnexion += new ConnexionCheck.TestConnexionDelegate(ConnexionMiwiCheck_TestConnexion);
 
             ConnexionPi = new ConnexionUDP();
-            ConnexionPi.Connexion(System.Net.IPAddress.Parse("10.1.0.13"), 12313, 12323);
+            ConnexionPi.Connexion(System.Net.IPAddress.Parse("10.0.0.13"), 12313, 12323);
             ConnexionPi.ConnexionCheck.TestConnexion += new ConnexionCheck.TestConnexionDelegate(ConnexionPiCheck_TestConnexion);
         }
 

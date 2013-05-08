@@ -48,6 +48,7 @@ namespace GoBot
     public enum MoteurID
     {
         GRCanon = 0,
+        GRCanonTMin = 2,
         GRTurbineAspirateur = 1
     }
 

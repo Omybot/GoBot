@@ -146,7 +146,7 @@ namespace GoBot.IHM
             balise.ReglageVitessePermanent = !boxAsservContinu.Checked;
         }
 
-        private void btnOffset_Click(object sender, EventArgs e)
+        public void btnOffset_Click(object sender, EventArgs e)
         {
             Config.CurrentConfig.SetOffsetBaliseBas(Balise.Carte, 0);
             Config.CurrentConfig.SetOffsetBaliseHaut(Balise.Carte, 0);
@@ -158,7 +158,7 @@ namespace GoBot.IHM
             balise.ReglageVitesse = !balise.ReglageVitesse;
         }
 
-        private void btnStart_Click(object sender, EventArgs e)
+        public void btnStart_Click(object sender, EventArgs e)
         {
             boxAffichage.Checked = true;
             trackBarConsigne.SetValue(40);

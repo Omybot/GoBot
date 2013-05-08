@@ -5,9 +5,9 @@ using System.Text;
 
 namespace GoBot.Ponderations
 {
-    class PoidsBase : Poids
+    class PoidsTest : Poids
     {
-        public PoidsBase()
+        public PoidsTest()
         {
             PoidsPetitBougie = new double[20];
             PoidsGrosBougie = new double[20];
@@ -28,17 +28,17 @@ namespace GoBot.Ponderations
              
              */
 
-            PoidGlobalPetitBougie = 2;
-            PoidGlobalPetitCadeau = 20;
+            PoidGlobalPetitBougie = 0;
+            PoidGlobalPetitCadeau = 0;
 
-            PoidGlobalGrosBougie = 10;
-            PoidGlobalGrosCadeau = 0.5;
-            PoidGlobalGrosAspireAssiette = 50;
-            PoidGlobalGrosAccrocheAssiette = 50;
+            PoidGlobalGrosBougie = 1;
+            PoidGlobalGrosCadeau = 0;
+            PoidGlobalGrosAspireAssiette = 0;
+            PoidGlobalGrosAccrocheAssiette = 0;
             // Poids de l'aspiration de l'assiette accrochée si aucune balle n'est chargée
             PoidGlobalGrosAspireAssietteAccrochee = 10000;
             // Poids du lancage de balles si aucune assiette n'est accrochée
-            PoidGlobalGrosLancerBallesSansAssietteAccrochee = 15;
+            PoidGlobalGrosLancerBallesSansAssietteAccrochee = 150;
             // Poids du lancage de balles si une assiette est accrochée
             PoidGlobalGrosLancerBallesAvecAssietteAccrochee = 10000;
 

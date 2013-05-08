@@ -63,12 +63,13 @@ namespace GoBot.Enchainements
                 ListeMouvementsGros.Add(new MoveGrosAspireAssiette(i));
             }
 
-            for (int i = 0; i < Config.CurrentConfig.PositionsLancement.Length; i++)
-                ListeMouvementsGros.Add(new MoveGrosLanceBalles(Config.CurrentConfig.PositionsLancement[i]));
+            for (int i = 0; i < PositionsMouvements.PositionTirCanon.Count; i++)
+                ListeMouvementsGros.Add(new MoveGrosLanceBalles(PositionsMouvements.PositionTirCanon[i]));
         }
 
         public void Executer()
         {
+            GoBot.IHM.PanelBougies.ContinuerJusquauDebutMatch = false;
             DebutMatch = DateTime.Now;
             timerFinMatch = new System.Timers.Timer();
             timerFinMatch.Elapsed += new ElapsedEventHandler(timerFinMatch_Elapsed);

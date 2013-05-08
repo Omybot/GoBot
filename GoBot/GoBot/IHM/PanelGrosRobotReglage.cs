@@ -283,5 +283,10 @@ namespace GoBot.IHM
             Deployer(Config.CurrentConfig.ReglageGROuvert);
         }
 
+        private void btnOkVitesseCanonTMin_Click(object sender, EventArgs e)
+        {
+            Robots.GrosRobot.TourneMoteur(MoteurID.GRCanonTMin, (int)numCanonVitesseTMin.Value);
+        }
+
     }
 }

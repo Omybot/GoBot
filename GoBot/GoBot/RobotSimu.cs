@@ -319,5 +319,10 @@ namespace GoBot
             // TODO
             Thread.Sleep(500);
         }
+
+        public override void ArmerJack()
+        {
+            // TODO
+        }
     }
 }

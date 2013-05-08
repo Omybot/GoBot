@@ -35,6 +35,7 @@ namespace GoBot
         public abstract void AlimentationPuissance(bool on);
         public abstract void Reset();
 
+        public abstract void ArmerJack();
         public abstract bool GetPresenceBalle(bool historique = true);
         public abstract Color GetCouleurBalle(bool historique = true);
         public abstract bool GetPresenceAssiette(bool historique = true);
@@ -43,54 +44,58 @@ namespace GoBot
 
         public void Diagnostic()
         {
-            int tempsPause = 300;
-            Avancer(50);
-            Reculer(50);
-            PivotDroite(10);
-            PivotGauche(10);
-            BougeServo(ServomoteurID.GRAspirateur, Config.CurrentConfig.PositionGRAspirateurBas);
-            Thread.Sleep(tempsPause);
-            BougeServo(ServomoteurID.GRAspirateur, Config.CurrentConfig.PositionGRAspirateurHaut);
-            Thread.Sleep(tempsPause);
-            BougeServo(ServomoteurID.GRBrasDroit, Config.CurrentConfig.PositionGRBrasDroitSorti);
-            Thread.Sleep(tempsPause);
-            BougeServo(ServomoteurID.GRBrasDroit, Config.CurrentConfig.PositionGRBrasDroitRange);
-            Thread.Sleep(tempsPause);
-            BougeServo(ServomoteurID.GRBrasGauche, Config.CurrentConfig.PositionGRBrasGaucheSorti);
-            Thread.Sleep(tempsPause);
-            BougeServo(ServomoteurID.GRBrasGauche, Config.CurrentConfig.PositionGRBrasGaucheRange);
-            Thread.Sleep(tempsPause);
-            BougeServo(ServomoteurID.GRCamera, Config.CurrentConfig.PositionGRCameraBleu);
-            Thread.Sleep(tempsPause);
-            BougeServo(ServomoteurID.GRCamera, Config.CurrentConfig.PositionGRCameraRouge);
-            Thread.Sleep(tempsPause);
-            BougeServo(ServomoteurID.GRDebloqueur, Config.CurrentConfig.PositionGRDebloqueurHaut);
-            Thread.Sleep(tempsPause);
-            BougeServo(ServomoteurID.GRDebloqueur, Config.CurrentConfig.PositionGRDebloqueurBas);
-            Thread.Sleep(tempsPause);
-            BougeServo(ServomoteurID.GRGrandBras, Config.CurrentConfig.PositionGRGrandBrasHaut);
-            Thread.Sleep(tempsPause);
-            BougeServo(ServomoteurID.GRGrandBras, Config.CurrentConfig.PositionGRGrandBrasRange);
-            Thread.Sleep(tempsPause);
-            BougeServo(ServomoteurID.GRPetitBras, Config.CurrentConfig.PositionGRPetitBrasHaut);
-            Thread.Sleep(tempsPause);
-            BougeServo(ServomoteurID.GRPetitBras, Config.CurrentConfig.PositionGRPetitBrasRange);
-            Thread.Sleep(tempsPause);
-            BougeServo(ServomoteurID.GRServoAssiette, Config.CurrentConfig.PositionGRBloqueurFerme);
-            Thread.Sleep(tempsPause);
-            BougeServo(ServomoteurID.GRServoAssiette, Config.CurrentConfig.PositionGRBloqueurOuvert);
-            Thread.Sleep(tempsPause);
-            ActionneurOnOff(ActionneurOnOffID.GRShutter, true);
-            Thread.Sleep(tempsPause);
-            ActionneurOnOff(ActionneurOnOffID.GRShutter, false);
-            Thread.Sleep(tempsPause);
-            TourneMoteur(MoteurID.GRCanon, Config.CurrentConfig.VitessePropulsionBonne);
-            Thread.Sleep(tempsPause);
-            TourneMoteur(MoteurID.GRCanon, 0);
-            Thread.Sleep(tempsPause);
-            TourneMoteur(MoteurID.GRTurbineAspirateur, Config.CurrentConfig.VitesseAspiration);
-            Thread.Sleep(tempsPause);
-            TourneMoteur(MoteurID.GRTurbineAspirateur, 0);
+            if (this == Robots.GrosRobot)
+            {
+                Lent();
+                int tempsPause = 400;
+                Avancer(50);
+                Reculer(50);
+                PivotDroite(10);
+                PivotGauche(10);
+                BougeServo(ServomoteurID.GRAspirateur, Config.CurrentConfig.PositionGRAspirateurBas);
+                Thread.Sleep(tempsPause);
+                BougeServo(ServomoteurID.GRAspirateur, Config.CurrentConfig.PositionGRAspirateurHaut);
+                Thread.Sleep(tempsPause);
+                BougeServo(ServomoteurID.GRBrasDroit, Config.CurrentConfig.PositionGRBrasDroitSorti);
+                Thread.Sleep(tempsPause);
+                BougeServo(ServomoteurID.GRBrasDroit, Config.CurrentConfig.PositionGRBrasDroitRange);
+                Thread.Sleep(tempsPause);
+                BougeServo(ServomoteurID.GRBrasGauche, Config.CurrentConfig.PositionGRBrasGaucheSorti);
+                Thread.Sleep(tempsPause);
+                BougeServo(ServomoteurID.GRBrasGauche, Config.CurrentConfig.PositionGRBrasGaucheRange);
+                Thread.Sleep(tempsPause);
+                BougeServo(ServomoteurID.GRCamera, Config.CurrentConfig.PositionGRCameraBleu);
+                Thread.Sleep(tempsPause);
+                BougeServo(ServomoteurID.GRCamera, Config.CurrentConfig.PositionGRCameraRouge);
+                Thread.Sleep(tempsPause);
+                BougeServo(ServomoteurID.GRDebloqueur, Config.CurrentConfig.PositionGRDebloqueurHaut);
+                Thread.Sleep(tempsPause);
+                BougeServo(ServomoteurID.GRDebloqueur, Config.CurrentConfig.PositionGRDebloqueurBas);
+                Thread.Sleep(tempsPause);
+                BougeServo(ServomoteurID.GRGrandBras, Config.CurrentConfig.PositionGRGrandBrasHaut);
+                Thread.Sleep(tempsPause);
+                BougeServo(ServomoteurID.GRGrandBras, Config.CurrentConfig.PositionGRGrandBrasRange);
+                Thread.Sleep(tempsPause);
+                BougeServo(ServomoteurID.GRPetitBras, Config.CurrentConfig.PositionGRPetitBrasHaut);
+                Thread.Sleep(tempsPause);
+                BougeServo(ServomoteurID.GRPetitBras, Config.CurrentConfig.PositionGRPetitBrasRange);
+                Thread.Sleep(tempsPause);
+                BougeServo(ServomoteurID.GRServoAssiette, Config.CurrentConfig.PositionGRBloqueurFerme);
+                Thread.Sleep(tempsPause);
+                BougeServo(ServomoteurID.GRServoAssiette, Config.CurrentConfig.PositionGRBloqueurOuvert);
+                Thread.Sleep(tempsPause);
+                ActionneurOnOff(ActionneurOnOffID.GRShutter, true);
+                Thread.Sleep(tempsPause);
+                ActionneurOnOff(ActionneurOnOffID.GRShutter, false);
+                Thread.Sleep(tempsPause);
+                TourneMoteur(MoteurID.GRCanonTMin, 7000);
+                Thread.Sleep(tempsPause);
+                TourneMoteur(MoteurID.GRCanonTMin, 0);
+                Thread.Sleep(tempsPause);
+                TourneMoteur(MoteurID.GRTurbineAspirateur, Config.CurrentConfig.VitesseAspiration);
+                Thread.Sleep(tempsPause);
+                TourneMoteur(MoteurID.GRTurbineAspirateur, 0);
+            }
         }
 
         public Dictionary<ServomoteurID, bool> ServoSorti { get; set; }

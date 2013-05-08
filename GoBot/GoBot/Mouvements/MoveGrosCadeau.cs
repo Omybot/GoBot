@@ -22,6 +22,7 @@ namespace GoBot.Mouvements
 
         public override bool Executer(int timeOut = 0)
         {
+            Plateau.BaisserBras();
             Plateau.CadeauxActives[numeroCadeau] = true;
             if (Robots.GrosRobot.PathFinding(Position.Coordonnees.X, Position.Coordonnees.Y, timeOut, true))
             {

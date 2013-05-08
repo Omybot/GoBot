@@ -60,8 +60,11 @@ namespace GoBot
                 panelBalise1.Balise.ConnexionCheck.Start();
                 panelBalise2.Balise.ConnexionCheck.Start();
                 panelBalise3.Balise.ConnexionCheck.Start();
- 
+
                 switchBoutonSimu.SetActif(Robots.Simulation);
+
+                Console.WriteLine("Bleu = " + Plateau.CouleurJ2B.ToArgb());
+                Console.WriteLine("Rouge = " + Plateau.CouleurJ1R.ToArgb());
             }
         }
 
@@ -121,7 +124,7 @@ namespace GoBot
         void HistoriqueGR_nouvelleAction(Actions.IAction action)
         {
             AjouterLigne(Color.RoyalBlue, action.ToString());
-       }
+        }
 
         void HistoriquePR_nouvelleAction(Actions.IAction action)
         {
@@ -200,7 +203,7 @@ namespace GoBot
             pictureBoxCouleur.BackColor = Plateau.CouleurJ1R;
             pictureBoxBalises.Image = Properties.Resources.tableRouge;
 
-            panelBougies1.ChangementCouleur();
+            panelBougies.ChangementCouleur();
 
             panelBalise1.Balise.Position = new Position(new Angle(90, AnglyeType.Degre), new PointReel(Plateau.LongueurPlateau + Balise.DISTANCE_LASER_TABLE, -Balise.DISTANCE_LASER_TABLE));
             panelBalise2.Balise.Position = new Position(new Angle(270, AnglyeType.Degre), new PointReel(Plateau.LongueurPlateau + Balise.DISTANCE_LASER_TABLE, Plateau.LargeurPlateau + Balise.DISTANCE_LASER_TABLE));
@@ -212,7 +215,7 @@ namespace GoBot
             pictureBoxCouleur.BackColor = Plateau.CouleurJ2B;
             pictureBoxBalises.Image = Properties.Resources.tableViolet;
 
-            panelBougies1.ChangementCouleur();
+            panelBougies.ChangementCouleur();
 
             panelBalise1.Balise.Position = new Position(new Angle(90, AnglyeType.Degre), new PointReel(-Balise.DISTANCE_LASER_TABLE, -Balise.DISTANCE_LASER_TABLE));
             panelBalise2.Balise.Position = new Position(new Angle(270, AnglyeType.Degre), new PointReel(-Balise.DISTANCE_LASER_TABLE, Plateau.LargeurPlateau + Balise.DISTANCE_LASER_TABLE));
@@ -223,17 +226,75 @@ namespace GoBot
         Thread thRecallage;
         private void btnRecallage_Click(object sender, EventArgs e)
         {
-            thRecallage = new Thread(Recallages);
-            thRecallage.Start();
+            if (Connexions.ConnexionMove.ConnexionCheck.Connecte)
+            {
+                thRecallage = new Thread(RecallagesDebut);
+                thRecallage.Start();
+            }
+            if (Connexions.ConnexionPi.ConnexionCheck.Connecte)
+            {
+                thRecallagePetit = new Thread(RecallagePetit);
+                thRecallagePetit.Start();
+            }
         }
 
-        public void Recallages()
+        Thread thRecallagePetit;
+        private void RecallagePetit()
         {
-            // Initialisation des balises
+            Robots.PetitRobot.Lent();
+            Robots.PetitRobot.Recallage(SensAR.Arriere);
+            Robots.PetitRobot.Avancer(250);
 
-            Plateau.Balise1.Lancer(4);
-            Plateau.Balise2.Lancer(4);
-            Plateau.Balise3.Lancer(4);
+            if(Plateau.NotreCouleur == Plateau.CouleurJ2B)
+                Robots.PetitRobot.PivotDroite(90);
+            else
+                Robots.PetitRobot.PivotGauche(90);
+
+            Robots.PetitRobot.Recallage(SensAR.Arriere);
+            Thread.Sleep(1000);
+            Robots.PetitRobot.Reset();
+
+            if (Plateau.NotreCouleur == Plateau.CouleurJ2B)
+                Robots.PetitRobot.ReglerOffsetAsserv(Robots.PetitRobot.Longueur / 2, 1850 - Robots.PetitRobot.Largeur / 2, 0);
+            else
+                Robots.PetitRobot.ReglerOffsetAsserv(3000 - Robots.PetitRobot.Longueur / 2, 1850 - Robots.PetitRobot.Largeur / 2, 0);
+        }
+
+        public void RecallageSimpleGR()
+        {
+            Robots.GrosRobot.ArmerJack();
+            return;
+            Robots.GrosRobot.Lent();
+            Robots.GrosRobot.Avancer(10);
+            Robots.GrosRobot.Recallage(SensAR.Arriere);
+            Robots.GrosRobot.Rapide();
+            Robots.GrosRobot.Avancer(890);
+
+            if (Plateau.NotreCouleur == Plateau.CouleurJ1R)
+                Robots.GrosRobot.PivotGauche(90);
+            else
+                Robots.GrosRobot.PivotDroite(90);
+
+            Robots.GrosRobot.Reculer(400);
+            Robots.GrosRobot.Lent();
+            Robots.GrosRobot.Recallage(SensAR.Arriere);
+            Robots.GrosRobot.Rapide();
+
+            // Réinitialise le robot pour remettre à 0 l'asserv
+            Robots.GrosRobot.Reset();
+
+            if (Plateau.NotreCouleur == Plateau.CouleurJ1R)
+                Robots.GrosRobot.ReglerOffsetAsserv(3000 - Robots.GrosRobot.Longueur / 2, 1000, 180);
+            else
+                Robots.GrosRobot.ReglerOffsetAsserv(Robots.GrosRobot.Longueur / 2, 1000, 0);
+
+            Robots.GrosRobot.Rapide();
+            panelBougies.btnCapture_Click(null, null);
+            Robots.GrosRobot.ArmerJack();
+        }
+
+        public void RecallagesDebut()
+        {
 
             // Recallage du gros robot
 
@@ -245,7 +306,7 @@ namespace GoBot
             Robots.GrosRobot.Rapide();
             Robots.GrosRobot.Avancer(890);
 
-            if(Plateau.NotreCouleur == Plateau.CouleurJ1R)
+            if (Plateau.NotreCouleur == Plateau.CouleurJ1R)
                 Robots.GrosRobot.PivotGauche(90);
             else
                 Robots.GrosRobot.PivotDroite(90);
@@ -256,9 +317,17 @@ namespace GoBot
             Robots.GrosRobot.Rapide();
 
             Robots.GrosRobot.Avancer(1500 - Robots.GrosRobot.Longueur / 2);
-            Plateau.RecallageBalises();
+
+            this.Invoke(new EventHandler(delegate
+            {
+                ledRecallage.CouleurVert();
+            }));
+        }
+
+        private void RecallagesFin()
+        {
             Robots.GrosRobot.Reculer(1450 - Robots.GrosRobot.Longueur / 2);
-            Robots.GrosRobot.Rapide();
+            Robots.GrosRobot.Lent();
             Robots.GrosRobot.Recallage(SensAR.Arriere);
 
             // Réinitialise le robot pour remettre à 0 l'asserv
@@ -270,15 +339,21 @@ namespace GoBot
                 Robots.GrosRobot.ReglerOffsetAsserv(Robots.GrosRobot.Longueur / 2, 1000, 0);
 
             Robots.GrosRobot.Rapide();
+            Robots.GrosRobot.ArmerJack();
+
+            PanelBougies.ContinuerJusquauDebutMatch = true;
+            panelBougies.btnCapture_Click(null, null);
+
+            this.Invoke(new EventHandler(delegate
+            {
+                ledBalises.CouleurVert();
+            }));
         }
 
         private void btnBalises_Click(object sender, EventArgs e)
         {
-            ledBalises.CouleurVert();
-
-            lblPwmBalise1.Visible = true;
-            lblPwmBalise2.Visible = true;
-            lblPwmBalise3.Visible = true;
+            thRecallage = new Thread(RecallagesFin);
+            thRecallage.Start();
         }
 
         private void btnAfficherTrame_Click(object sender, EventArgs e)
@@ -340,7 +415,7 @@ namespace GoBot
             txtTrames.SelectedText = texte;
 
             txtTrames.SelectionStart = 0;
-            txtTrames.SelectionLength = texte.Length-1;
+            txtTrames.SelectionLength = texte.Length - 1;
             txtTrames.SelectionColor = couleur;
 
             /*if (texte.Contains("Io"))
@@ -356,7 +431,7 @@ namespace GoBot
         private void btnSaveReplay_Click(object sender, EventArgs e)
         {
             SaveFileDialog open = new SaveFileDialog();
-            if(open.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+            if (open.ShowDialog() == System.Windows.Forms.DialogResult.OK)
                 replay.Save(open.FileName);
         }
 
@@ -417,6 +492,8 @@ namespace GoBot
             if (panelBalise3.Balise.ConnexionCheck.Connecte)
                 SetLed(ledRecBoi, true);
 
+            btnCouleurBleu_Click(null, null);
+
         }
 
         void Plateau_NotreCouleurChange(object sender, EventArgs e)
@@ -437,6 +514,11 @@ namespace GoBot
             panelPetitRobot.Init();
             Robots.GrosRobot.Historique.NouvelleAction += new Historique.delegateAction(HistoriqueGR_nouvelleAction);
             Robots.PetitRobot.Historique.NouvelleAction += new Historique.delegateAction(HistoriquePR_nouvelleAction);
+        }
+
+        private void btnRecallageGR_Click(object sender, EventArgs e)
+        {
+            RecallageSimpleGR();
         }
     }
 }

@@ -68,12 +68,18 @@
             this.btnTurbineOn = new System.Windows.Forms.Button();
             this.label1 = new System.Windows.Forms.Label();
             this.btnTaille = new System.Windows.Forms.Button();
+            this.btnBloqueurBas = new System.Windows.Forms.Button();
+            this.btnBloqueurHaut = new System.Windows.Forms.Button();
+            this.label13 = new System.Windows.Forms.Label();
             this.groupBoxUtil.SuspendLayout();
             this.SuspendLayout();
             // 
             // groupBoxUtil
             // 
             this.groupBoxUtil.BackColor = System.Drawing.Color.Transparent;
+            this.groupBoxUtil.Controls.Add(this.btnBloqueurBas);
+            this.groupBoxUtil.Controls.Add(this.btnBloqueurHaut);
+            this.groupBoxUtil.Controls.Add(this.label13);
             this.groupBoxUtil.Controls.Add(this.btnAspiMaintien);
             this.groupBoxUtil.Controls.Add(this.btnDiagnostic);
             this.groupBoxUtil.Controls.Add(this.switchBoutonPuissance);
@@ -497,6 +503,35 @@
             this.btnTaille.UseVisualStyleBackColor = true;
             this.btnTaille.Click += new System.EventHandler(this.btnTaille_Click);
             // 
+            // btnBloqueurBas
+            // 
+            this.btnBloqueurBas.Location = new System.Drawing.Point(178, 364);
+            this.btnBloqueurBas.Name = "btnBloqueurBas";
+            this.btnBloqueurBas.Size = new System.Drawing.Size(65, 23);
+            this.btnBloqueurBas.TabIndex = 205;
+            this.btnBloqueurBas.Text = "Bas";
+            this.btnBloqueurBas.UseVisualStyleBackColor = true;
+            this.btnBloqueurBas.Click += new System.EventHandler(this.btnBloqueurBas_Click);
+            // 
+            // btnBloqueurHaut
+            // 
+            this.btnBloqueurHaut.Location = new System.Drawing.Point(105, 364);
+            this.btnBloqueurHaut.Name = "btnBloqueurHaut";
+            this.btnBloqueurHaut.Size = new System.Drawing.Size(67, 23);
+            this.btnBloqueurHaut.TabIndex = 204;
+            this.btnBloqueurHaut.Text = "Haut";
+            this.btnBloqueurHaut.UseVisualStyleBackColor = true;
+            this.btnBloqueurHaut.Click += new System.EventHandler(this.btnBloqueurHaut_Click);
+            // 
+            // label13
+            // 
+            this.label13.AutoSize = true;
+            this.label13.Location = new System.Drawing.Point(35, 369);
+            this.label13.Name = "label13";
+            this.label13.Size = new System.Drawing.Size(49, 13);
+            this.label13.TabIndex = 203;
+            this.label13.Text = "Bloqueur";
+            // 
             // PanelGrosRobotUtilisation
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -555,5 +590,8 @@
         private System.Windows.Forms.Label label12;
         private System.Windows.Forms.Button btnDiagnostic;
         private System.Windows.Forms.Button btnAspiMaintien;
+        private System.Windows.Forms.Button btnBloqueurBas;
+        private System.Windows.Forms.Button btnBloqueurHaut;
+        private System.Windows.Forms.Label label13;
     }
 }

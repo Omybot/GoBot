@@ -138,6 +138,7 @@
     <Compile Include="Mouvements\Mouvement.cs" />
     <Compile Include="Mouvements\MovePetitBougie.cs" />
     <Compile Include="Mouvements\PositionsMouvements.cs" />
+    <Compile Include="Ponderations\PoidsTest.cs" />
     <Compile Include="Ponderations\Poids.cs" />
     <Compile Include="Ponderations\PoidsBase.cs" />
     <Compile Include="Robots.cs" />

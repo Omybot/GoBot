@@ -269,7 +269,7 @@ namespace GoBot
                 PositionsEnnemies = new List<PointReel>(detectionHaut);
 
                 PositionEnnemisActualisee(this);
-                Console.WriteLine("Interprétation étrange : " + detectionHaut.Count + " alliés et " + detectionHaut.Count + " adversaires.");
+                //Console.WriteLine("Interprétation étrange : " + detectionHaut.Count + " alliés et " + detectionHaut.Count + " adversaires.");
             }
         }
 

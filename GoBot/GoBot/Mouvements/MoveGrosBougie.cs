@@ -6,6 +6,7 @@ using GoBot.Calculs;
 using GoBot.IHM;
 using System.Threading;
 using GoBot.Calculs.Formes;
+using System.Drawing;
 
 namespace GoBot.Mouvements
 {
@@ -22,44 +23,109 @@ namespace GoBot.Mouvements
 
         public override bool Executer(int timeOut = 0)
         {
-            ServomoteurID servo = ServomoteurID.GRPetitBras;
-            int posHaut = Config.CurrentConfig.PositionGRPetitBrasHaut;
-            int posBas = Config.CurrentConfig.PositionGRPetitBrasBas;
+            bool grandBras = false;
+            bool petitBras = false;
+            int bougieAdditionnelle = -1;
 
-            if (numeroBougie == 1 || numeroBougie == 11 || numeroBougie == 0 || numeroBougie == 2 || numeroBougie == 4 || numeroBougie == 8 || numeroBougie == 10 || numeroBougie == 12 || numeroBougie == 14 || numeroBougie == 18)
+            Plateau.DerniereBougieGros = numeroBougie;
+            if (numeroBougie == 1 ||
+                numeroBougie == 11 ||
+                numeroBougie == 0 ||
+                numeroBougie == 2 ||
+                numeroBougie == 4 ||
+                numeroBougie == 8 ||
+                numeroBougie == 10 ||
+                numeroBougie == 12 ||
+                numeroBougie == 14 ||
+                numeroBougie == 18)
             {
-                servo = ServomoteurID.GRGrandBras;
-                posHaut = Config.CurrentConfig.PositionGRGrandBrasHaut;
-                posBas = Config.CurrentConfig.PositionGRGrandBrasBas;
+                grandBras = true;
             }
-            if (numeroBougie == 1 || numeroBougie == 11)
+            else
             {
-                posBas = Config.CurrentConfig.PositionGRGrandBrasRange;
+                petitBras = true;
             }
+
+            if (numeroBougie == 14 && (Plateau.CouleursBougies[16] == Plateau.NotreCouleur || Plateau.CouleursBougies[16] == Color.White))
+            {
+                petitBras = true;
+                bougieAdditionnelle = 16;
+            }
+            else if (numeroBougie == 8 && (Plateau.CouleursBougies[9] == Plateau.NotreCouleur || Plateau.CouleursBougies[9] == Color.White))
+            {
+                petitBras = true;
+                bougieAdditionnelle = 9;
+            }
+            else if (numeroBougie == 2 && (Plateau.CouleursBougies[5] == Plateau.NotreCouleur || Plateau.CouleursBougies[5] == Color.White))
+            {
+                petitBras = true; 
+                bougieAdditionnelle = 5;
+            }
+
+            if (numeroBougie == 16 && (Plateau.CouleursBougies[14] == Plateau.NotreCouleur || Plateau.CouleursBougies[14] == Color.White))
+            {
+                petitBras = true;
+                bougieAdditionnelle = 14;
+            }
+            else if (numeroBougie == 9 && (Plateau.CouleursBougies[8] == Plateau.NotreCouleur || Plateau.CouleursBougies[8] == Color.White))
+            {
+                petitBras = true;
+                bougieAdditionnelle = 8;
+            }
+            else if (numeroBougie == 5 && (Plateau.CouleursBougies[2] == Plateau.NotreCouleur || Plateau.CouleursBougies[2] == Color.White))
+            {
+                petitBras = true;
+                bougieAdditionnelle = 2;
+            }
+
+            if(bougieAdditionnelle != -1)
+                Plateau.BougiesEnfoncees[bougieAdditionnelle] = true;
 
             Plateau.BougiesEnfoncees[numeroBougie] = true;
+
             if (Robots.GrosRobot.PathFinding(Position.Coordonnees.X, Position.Coordonnees.Y, timeOut, true))
             {
-                if (!Robots.GrosRobot.ServoSorti[servo])
+                if (!Robots.GrosRobot.ServoSorti[ServomoteurID.GRPetitBras] || !Robots.GrosRobot.ServoSorti[ServomoteurID.GRGrandBras])
                 {
-                    Robots.GrosRobot.PositionerAngle(new Angle(Position.Angle.AngleDegres + 90), 25);
-                    Robots.GrosRobot.BougeServo(servo, posHaut);
+                    // Sors les bras
+                    Robots.GrosRobot.PositionerAngle(new Angle(Position.Angle.AngleDegres + 90), 5);
+                    Robots.GrosRobot.BougeServo(ServomoteurID.GRPetitBras, Config.CurrentConfig.PositionGRPetitBrasHaut);
+                    Robots.GrosRobot.BougeServo(ServomoteurID.GRGrandBras, Config.CurrentConfig.PositionGRGrandBrasHaut);
+                    Thread.Sleep(500);
                 }
                 Robots.GrosRobot.PositionerAngle(Position.Angle, 1);
 
-                Robots.GrosRobot.BougeServo(servo, posBas);
+                if (grandBras)
+                {
+                    // Les bougies des coins avec les grands bras
+                    if (numeroBougie == 1 || numeroBougie == 11)
+                        Robots.GrosRobot.BougeServo(ServomoteurID.GRGrandBras, Config.CurrentConfig.PositionGRGrandBrasRange);
+                    else
+                        Robots.GrosRobot.BougeServo(ServomoteurID.GRGrandBras, Config.CurrentConfig.PositionGRGrandBrasBas);
+                }
+                if (petitBras)
+                {
+                    Robots.GrosRobot.BougeServo(ServomoteurID.GRPetitBras, Config.CurrentConfig.PositionGRPetitBrasBas);
+                    //Thread.Sleep(50);
+                }
                 Thread.Sleep(300);
-                Robots.GrosRobot.BougeServo(servo, posHaut);
+                if (grandBras)
+                    Robots.GrosRobot.BougeServo(ServomoteurID.GRGrandBras, Config.CurrentConfig.PositionGRGrandBrasHaut);
+                if (petitBras)
+                {
+                    //Thread.Sleep(50);
+                    Robots.GrosRobot.BougeServo(ServomoteurID.GRPetitBras, Config.CurrentConfig.PositionGRPetitBrasHaut);
+                }
                 Thread.Sleep(300);
-                Robots.GrosRobot.BougeServo(servo, posBas);
-                Thread.Sleep(300);
-                Robots.GrosRobot.BougeServo(servo, posHaut);
 
                 Plateau.Score += Score;
                 return true;
             }
             else
             {
+                if (bougieAdditionnelle != -1)
+                    Plateau.BougiesEnfoncees[bougieAdditionnelle] = false;
+
                 Plateau.BougiesEnfoncees[numeroBougie] = false;
                 return false;
             }

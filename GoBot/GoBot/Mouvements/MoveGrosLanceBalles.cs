@@ -32,6 +32,7 @@ namespace GoBot.Mouvements
 
         public override bool Executer(int timeOut = 0)
         {
+            Plateau.BaisserBras();
             DateTime debut = DateTime.Now;
             Robots.GrosRobot.TourneMoteur(MoteurID.GRCanon, posLancement.PuissanceTir);
 
@@ -39,9 +40,18 @@ namespace GoBot.Mouvements
             {
                 Robots.GrosRobot.PositionerAngle(Position.Angle, 0.5);
 
-                // Si le moteur tourne depuis moins de 2 secondes on attends de finir les 2 secondes avant de lancer la séquence
+                // Si le moteur tourne depuis moins de 8 secondes on attends de finir les 8 secondes avant de lancer la séquence
+                // ou que le moteur soit à +- 30 la vitesse demandée
                 if ((DateTime.Now - debut).TotalMilliseconds < 2000)
                     Thread.Sleep((int)(2000 - (DateTime.Now - debut).TotalMilliseconds));
+
+                int vitesseActuelleCanon = Robots.GrosRobot.GetVitesseCanon();
+                while ((DateTime.Now - debut).TotalMilliseconds < 8000 &&
+                    (vitesseActuelleCanon + 30 < posLancement.PuissanceTir || vitesseActuelleCanon - 30 > posLancement.PuissanceTir))
+                {
+                    Thread.Sleep(500);
+                    vitesseActuelleCanon = Robots.GrosRobot.GetVitesseCanon();
+                }
 
                 bool balle = true;
 
@@ -131,11 +141,9 @@ namespace GoBot.Mouvements
             get
             {
                 // Si on n'a pas de balles chargées on ne considère pas l'action sinon il est interessant de les lancer
-                double score;
-                if (Robots.GrosRobot.BallesChargees)
-                    score = Score;
-                else
-                    score = 0;
+                double score = Score;
+                if (!Robots.GrosRobot.BallesChargees || posLancement.Couleur != Plateau.NotreCouleur)
+                    return 0;
 
                 if (Plateau.AssietteAttrapee != -1)
                     score *= Plateau.PoidActions.PoidGlobalGrosLancerBallesAvecAssietteAccrochee;

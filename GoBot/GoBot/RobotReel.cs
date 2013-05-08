@@ -87,6 +87,7 @@ namespace GoBot
                 if (trameRecue[1] == (byte)TrameFactory.FonctionMove.FinDeplacement
                     || trameRecue[1] == (byte)TrameFactory.FonctionMove.FinRecallage)
                 {
+                    Thread.Sleep(50);
                     semDeplacement.Release();
                 }
 
@@ -355,6 +356,11 @@ namespace GoBot
             Connexion.SendMessage(trame);
         }
 
+        public override void ArmerJack()
+        {
+            Connexion.SendMessage(TrameFactory.ArmerJack());
+        }
+
         public bool DemandePosition(bool attendre = true)
         {
             if(attendre)
@@ -536,6 +542,11 @@ namespace GoBot
             else if (moteur == MoteurID.GRTurbineAspirateur)
             {
                 Trame trame = TrameFactory.VitesseAspirateur(vitesse);
+                Connexion.SendMessage(trame);
+            }
+            else if (moteur == MoteurID.GRCanonTMin)
+            {
+                Trame trame = TrameFactory.VitesseCanonTMin(vitesse);
                 Connexion.SendMessage(trame);
             }
 

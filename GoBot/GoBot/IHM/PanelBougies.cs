@@ -50,97 +50,97 @@ namespace GoBot.IHM
 
             if (!Config.DesignMode)
                 btnAlea_Click(null, null);
+
+            ContinuerJusquauDebutMatch = false;
         }
 
         private void PanelBougies_Load(object sender, EventArgs e)
         {
-            Camera = new CameraIP();
         }
 
-        private void btnCapture_Click(object sender, EventArgs e)
+        public void btnCapture_Click(object sender, EventArgs e)
         {
             th = new Thread(ThreadImage);
             th.Start();
         }
 
+        public static bool ContinuerJusquauDebutMatch { get; set; }
+
         private Thread th;
         private void ThreadImage()
         {
-            Bitmap img = Camera.GetImage();
-            Graphics g = Graphics.FromImage(img);
-            Color color;
+            Camera = new CameraIP();
 
-            this.Invoke(new EventHandler(delegate
+            if (Plateau.NotreCouleur == Plateau.CouleurJ1R)
             {
-                if (Plateau.NotreCouleur == Plateau.CouleurJ1R)
+                Robots.GrosRobot.BougeServo(ServomoteurID.GRCamera, Config.CurrentConfig.PositionGRCameraBleu);
+                Thread.Sleep(200);
+                Robots.GrosRobot.BougeServo(ServomoteurID.GRCamera, Config.CurrentConfig.PositionGRCameraRouge);
+                Thread.Sleep(1000);
+            }
+            else
+            {
+                Robots.GrosRobot.BougeServo(ServomoteurID.GRCamera, Config.CurrentConfig.PositionGRCameraRouge);
+                Thread.Sleep(200);
+                Robots.GrosRobot.BougeServo(ServomoteurID.GRCamera, Config.CurrentConfig.PositionGRCameraBleu);
+                Thread.Sleep(1000);
+            }
+            do
+            {
+                Bitmap img = Camera.GetImage();
+                Graphics g = Graphics.FromImage(img);
+
+                this.Invoke(new EventHandler(delegate
                 {
-                    for (int i = 0; i < 10; i++)
+                    Plateau.CouleursBougies[10] = Plateau.CouleurJ2B;
+                    Plateau.CouleursBougies[11] = Plateau.CouleurJ2B;
+
+                    Plateau.CouleursBougies[0] = Plateau.CouleurJ1R;
+                    Plateau.CouleursBougies[1] = Plateau.CouleurJ1R;
+
+                    if (boxBlanches.Checked)
                     {
-                        Color pixel = img.GetPixel(Config.CurrentConfig.PositionsBougiesX[i], Config.CurrentConfig.PositionsBougiesY[i]);
-
-                        if (pixel.B > pixel.R)
-                        {
-                            Boutons[i].BackColor = Color.Blue;
-                            Boutons[i].ForeColor = Color.Red;
-                            Boutons[i + 10].BackColor = Color.Red;
-                            Boutons[i + 10].ForeColor = Color.Blue;
-                            color = Color.Red;
-                        }
-                        else if (pixel.R + pixel.B + pixel.G < 350)
-                        {
-                            Boutons[i].BackColor = Color.Red;
-                            Boutons[i].ForeColor = Color.Blue;
-                            Boutons[i + 10].BackColor = Color.Blue;
-                            Boutons[i + 10].ForeColor = Color.Red;
-                            color = Color.Blue;
-                        }
-                        else
-                        {
-                            Boutons[i].BackColor = Color.White;
-                            Boutons[i].ForeColor = Color.Black;
-                            Boutons[i + 10].BackColor = Color.White;
-                            Boutons[i + 10].ForeColor = Color.Black;
-                            color = Color.Black;
-                        }
-
-                        g.DrawString(i + "", font, new SolidBrush(color), new PointF(Config.CurrentConfig.PositionsBougiesX[i] - 2, Config.CurrentConfig.PositionsBougiesY[i] - 2));
-
-                        Plateau.CouleursBougies[i] = Boutons[i].BackColor;
+                        Plateau.CouleursBougies[7] = Color.White;
+                        Plateau.CouleursBougies[9] = Color.White;
+                        Plateau.CouleursBougies[17] = Color.White;
+                        Plateau.CouleursBougies[19] = Color.White;
                     }
-                }
-                else
-                {
-                    for (int i = 10; i < 20; i++)
+
+                    SortedDictionary<int, int> triSurBleu = new SortedDictionary<int, int>();
+                    for (int i = 12; i < 20; i++)
                     {
-                        Color pixel = img.GetPixel(Config.CurrentConfig.PositionsBougiesX[i], Config.CurrentConfig.PositionsBougiesY[i]);
+                        if (boxBlanches.Checked && (i == 17 || i == 19))
+                            continue;
 
-                        if (pixel.B > pixel.R)
-                        {
-                            Boutons[i].BackColor = Color.Blue;
-                            Boutons[i - 10].BackColor = Color.Red;
-                            color = Color.Red;
-                        }
-                        else if (pixel.R + pixel.B + pixel.G < 350)
-                        {
-                            Boutons[i].BackColor = Color.Red;
-                            Boutons[i - 10].BackColor = Color.Blue;
-                            color = Color.Blue;
-                        }
-                        else
-                        {
-                            Boutons[i].BackColor = Color.White;
-                            Boutons[i - 10].BackColor = Color.White;
-                            color = Color.Black;
-                        }
+                        Color pixel = img.GetPixel(Config.CurrentConfig.PositionsBougiesCameraX[i], Config.CurrentConfig.PositionsBougiesCameraY[i]);
 
-                        g.DrawString(i + "", font, new SolidBrush(color), new PointF(Config.CurrentConfig.PositionsBougiesX[i] - 2, Config.CurrentConfig.PositionsBougiesY[i] - 2));
-
-                        Plateau.CouleursBougies[i] = Boutons[i].BackColor;
+                        triSurBleu.Add(pixel.B, i);
                     }
-                }
 
-                pictureBoxImage.Image = img;
-            }));
+                    int nbBleu = 4;
+                    int delta = 10;
+                    if (Plateau.NotreCouleur == Plateau.CouleurJ2B)
+                    {
+                        nbBleu = 2;
+                        delta = -10;
+                    }
+
+                    for (int i = 0; i < nbBleu; i++)
+                    {
+                        Plateau.CouleursBougies[triSurBleu.ElementAt(i).Value] = Plateau.CouleurJ2B;
+                        Plateau.CouleursBougies[triSurBleu.ElementAt(i).Value  + delta] = Plateau.CouleurJ1R;
+                    }
+
+                    for (int i = nbBleu; i < triSurBleu.Count; i++)
+                    {
+                        Plateau.CouleursBougies[triSurBleu.ElementAt(i).Value] = Plateau.CouleurJ1R;
+                        Plateau.CouleursBougies[triSurBleu.ElementAt(i).Value + delta] = Plateau.CouleurJ2B;
+                    }
+
+                    DessineChiffres(img);
+                }));
+            }
+            while (ContinuerJusquauDebutMatch);
         }
 
         private void btnPosition_Click(object sender, EventArgs e)
@@ -152,8 +152,8 @@ namespace GoBot.IHM
         {
             if (BougiePlacement != -1)
             {
-                Config.CurrentConfig.PositionsBougiesX[BougiePlacement] = pictureBoxImage.PointToClient(MousePosition).X;
-                Config.CurrentConfig.PositionsBougiesY[BougiePlacement] = pictureBoxImage.PointToClient(MousePosition).Y;
+                Config.CurrentConfig.PositionsBougiesCameraX[BougiePlacement] = pictureBoxImage.PointToClient(MousePosition).X;
+                Config.CurrentConfig.PositionsBougiesCameraY[BougiePlacement] = pictureBoxImage.PointToClient(MousePosition).Y;
 
                 BougiePlacement = -1;
             }
@@ -183,7 +183,7 @@ namespace GoBot.IHM
             int nbRouges = 2;
 
             int nbMaxCouleur = 5;
-            if(boxBlanches.Checked)
+            if (boxBlanches.Checked)
                 nbMaxCouleur = 4;
 
             Random rand = new Random(DateTime.Now.Millisecond);
@@ -215,6 +215,19 @@ namespace GoBot.IHM
                 }
             }
 
+            DessineChiffres();
+        }
+
+        private void btnBlanc_Click(object sender, EventArgs e)
+        {
+            for (int i = 0; i < 20; i++)
+                Plateau.CouleursBougies[i] = Color.White;
+
+            DessineChiffres();
+        }
+
+        private void DessineChiffres(Bitmap img = null)
+        {
             for (int i = 0; i < 20; i++)
             {
                 Boutons[i].BackColor = Plateau.CouleursBougies[i];
@@ -223,12 +236,22 @@ namespace GoBot.IHM
                 else
                     Boutons[i].ForeColor = Color.White;
             }
-        }
+            if (img != null)
+            {
+                Graphics g = Graphics.FromImage(img);
 
-        private void btnBlanc_Click(object sender, EventArgs e)
-        {
-            for (int i = 0; i < 20; i++)
-                Plateau.CouleursBougies[i] = Color.White;
+                int debut = 0, fin = 10;
+                if (Plateau.NotreCouleur == Plateau.CouleurJ2B)
+                {
+                    debut = 10;
+                    fin = 20;
+                }
+
+                for (int i = debut; i < fin; i++)
+                    g.DrawString(i + "", font, new SolidBrush(Plateau.CouleursBougies[i] == Color.White ? Color.Black : Color.White), new PointF(Config.CurrentConfig.PositionsBougiesCameraX[i] - 2, Config.CurrentConfig.PositionsBougiesCameraY[i] - 2));
+
+                pictureBoxImage.Image = img;
+            }
         }
     }
 }

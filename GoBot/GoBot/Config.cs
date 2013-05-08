@@ -10,15 +10,6 @@ using System.Xml.Serialization;
 namespace GoBot
 {
     [Serializable]
-    public class PositionLancement
-    {
-        public int X { get; set; }
-        public int Y { get; set; }
-        public double Angle { get; set; }
-        public int PuissanceTir { get; set; }
-    }
-
-    [Serializable]
     public class Config
     {        
         /// <summary>
@@ -50,11 +41,6 @@ namespace GoBot
 
         // Déplacement gros robot
 
-        public int GRVitesseLigne { get; set; }
-        public int GRAccelerationLigne { get; set; }
-        public int GRVitessePivot { get; set; }
-        public int GRAccelerationPivot { get; set; }
-
         public int GRVitesseLigneRapide { get; set; }
         public int GRAccelerationLigneRapide { get; set; }
         public int GRVitessePivotRapide { get; set; }
@@ -64,10 +50,6 @@ namespace GoBot
         public int GRAccelerationLigneLent { get; set; }
         public int GRVitessePivotLent { get; set; }
         public int GRAccelerationPivotLent { get; set; }
-
-        // Positions de lancement des balles
-
-        public PositionLancement[] PositionsLancement { get; set; }
 
         // Déplacement petit robot
 

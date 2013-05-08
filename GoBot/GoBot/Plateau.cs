@@ -14,6 +14,7 @@ using System.Runtime.Serialization.Formatters.Binary;
 using GoBot.Calculs;
 using GoBot.Ponderations;
 using GoBot.Enchainements;
+using GoBot.Mouvements;
 
 namespace GoBot
 {
@@ -29,6 +30,8 @@ namespace GoBot
 
         private static List<IForme> ObstaclesFixes { get; set; }
         public static List<IForme> ObstaclesTemporaires { get; set; }
+
+        public static int DerniereBougieGros { get; set; }
 
         private static Color notreCouleur;
         public static Color NotreCouleur 
@@ -96,10 +99,11 @@ namespace GoBot
         {
             if (!Config.DesignMode)
             {
+                DerniereBougieGros = -1;
                 AssietteAttrapee = -1;
                 Plateau.SemaphoreGraph = new Semaphore(1, 1);
 
-                PoidActions = new PoidsBase();
+                PoidActions = new PoidsTest();
 
                 //CreerSommets(150);
                 ChargerGraph();
@@ -222,10 +226,28 @@ namespace GoBot
 
         void interpreteBalise_PositionEnnemisActualisee(InterpreteurBalise interprete)
         {
+            SemaphoreGraph.WaitOne();
             ViderObstacles();
+            for (int i = 0; i < interprete.PositionsEnnemies.Count; i++)
+            {
+                PointReel coordonnees = new PointReel(interprete.PositionsEnnemies[i].X, interprete.PositionsEnnemies[i].Y);
+                AjouterObstacle(new Cercle(coordonnees, 200));
 
-            foreach (PointReel p in interprete.PositionsEnnemies)
-                AjouterObstacle(new Cercle(p, 200));
+                // Avant de lancer le match
+                if (Plateau.Enchainement == null)
+                    for (int iAssiette = 0; iAssiette < 10; iAssiette++)
+                    {
+                        if (PositionsAssiettes[iAssiette].Coordonnees.Distance(coordonnees) < 250)
+                            AssiettesExiste[iAssiette] = false;
+                    }
+                // Une fois le match lancé
+                for (int iAssiette = 0; iAssiette < 10; iAssiette++)
+                {
+                    if (PositionsAssiettes[iAssiette].Coordonnees.Distance(coordonnees) < 250)
+                        AssiettesVidees[iAssiette] = true;
+                }
+            }
+            SemaphoreGraph.Release();
 
             Robots.PetitRobot.ObstacleTest();
             Robots.GrosRobot.ObstacleTest();
@@ -509,6 +531,15 @@ namespace GoBot
 
             while (Balise1.ReglageOffset || Balise2.ReglageOffset || Balise3.ReglageOffset)
                 Thread.Sleep(100);
+        }
+
+        public static void BaisserBras()
+        {
+            if (DerniereBougieGros != -1)
+            {
+                Robots.GrosRobot.PositionerAngle(new Angle(PositionsMouvements.PositionGrosBougie[DerniereBougieGros].Angle.AngleDegres + 90), 10);
+                DerniereBougieGros = -1;
+            }
         }
     }
 }

@@ -37,6 +37,7 @@ namespace GoBot.Mouvements
 
         public override bool Executer(int timeOut = 0)
         {
+            Plateau.BaisserBras();
             bool pathFindingOk = true;
             if (numeroAssiette != Plateau.AssietteAttrapee)
             {
@@ -60,14 +61,17 @@ namespace GoBot.Mouvements
                 }
 
                 // Si pas d'assiette on abandonne et on s'en va. On considère que l'assiette n'est pas ici
-                if (!Robots.GrosRobot.GetPresenceAssiette())
+                /*if (!Robots.GrosRobot.GetPresenceAssiette())
                 {
+                    Robots.GrosRobot.TourneMoteur(MoteurID.GRTurbineAspirateur, 0);
+                    Robots.GrosRobot.BougeServo(ServomoteurID.GRAspirateur, Config.CurrentConfig.PositionGRAspirateurHaut);
+
                     if (numeroAssiette != Plateau.AssietteAttrapee)
                         Robots.GrosRobot.Avancer(150);
 
                     Plateau.AssiettesExiste[numeroAssiette] = false;
                     return false;
-                }
+                }*/
 
                 while(true)
                 {
@@ -95,6 +99,48 @@ namespace GoBot.Mouvements
                     Robots.GrosRobot.TourneMoteur(MoteurID.GRTurbineAspirateur, Config.CurrentConfig.VitesseAspiration);
                 }
 
+                // Callage de la première balle devant le capteur
+                Robots.GrosRobot.BougeServo(ServomoteurID.GRDebloqueur, Config.CurrentConfig.PositionGRDebloqueurHaut);
+                Thread.Sleep(500);
+                Robots.GrosRobot.BougeServo(ServomoteurID.GRDebloqueur, Config.CurrentConfig.PositionGRDebloqueurBas);
+                // Teste si on voit des balles chargées
+
+                bool balle = true;
+                /*if (!Robots.GrosRobot.GetPresenceBalle())
+                {
+                    // 1ère fois qu'on ne voit pas de balle : un coup de débloqueur
+                    Robots.GrosRobot.BougeServo(ServomoteurID.GRDebloqueur, Config.CurrentConfig.PositionGRDebloqueurHaut);
+                    Thread.Sleep(500);
+                    Robots.GrosRobot.BougeServo(ServomoteurID.GRDebloqueur, Config.CurrentConfig.PositionGRDebloqueurBas);
+
+                    if (!Robots.GrosRobot.GetPresenceBalle())
+                    {
+                        // 2ème fois on aspire un coup pour bouger les balles
+                        Robots.GrosRobot.TourneMoteur(MoteurID.GRTurbineAspirateur, Config.CurrentConfig.VitesseAspiration);
+                        Thread.Sleep(600);
+                        Robots.GrosRobot.TourneMoteur(MoteurID.GRTurbineAspirateur, 0);
+                        Thread.Sleep(1200);
+
+                        if (!Robots.GrosRobot.GetPresenceBalle())
+                        {
+                            // 3ème fois : un coup de débloqueur
+                            Robots.GrosRobot.BougeServo(ServomoteurID.GRDebloqueur, Config.CurrentConfig.PositionGRDebloqueurHaut);
+                            Thread.Sleep(500);
+                            Robots.GrosRobot.BougeServo(ServomoteurID.GRDebloqueur, Config.CurrentConfig.PositionGRDebloqueurBas);
+
+                            if (!Robots.GrosRobot.GetPresenceBalle())
+                                // 4ème fois : Bon bah y'a peut être vraiment rien alors...
+                                balle = false;
+                        }
+                    }
+                }*/
+
+                if (!balle)
+                {
+                    Robots.GrosRobot.BallesChargees = false;
+                    Plateau.AssiettesExiste[numeroAssiette] = false;
+                }
+
                 if (numeroAssiette != Plateau.AssietteAttrapee)
                     Robots.GrosRobot.Avancer(150);
                 else
@@ -104,10 +150,14 @@ namespace GoBot.Mouvements
                     Plateau.AssietteAttrapee = -1;
                 }
 
-                Robots.GrosRobot.BallesChargees = true;
-                Plateau.AssiettesVidees[numeroAssiette] = true;
-                Plateau.Score += Score;
-                return true;
+                if (balle)
+                {
+                    Robots.GrosRobot.BallesChargees = true;
+                    Plateau.AssiettesVidees[numeroAssiette] = true;
+                    Plateau.Score += Score;
+                }
+
+                return balle;
             }
             else
             {

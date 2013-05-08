@@ -43,14 +43,14 @@ namespace GoBot.IHM
         {
             // Charger la config
 
-            trackBarVitesse.SetValue(Config.CurrentConfig.GRVitesseLigne);
-            trackBarAccel.SetValue(Config.CurrentConfig.GRAccelerationLigne);
+            trackBarVitesse.SetValue(Config.CurrentConfig.GRVitesseLigneRapide);
+            trackBarAccel.SetValue(Config.CurrentConfig.GRAccelerationLigneRapide);
 
-            Robot.VitesseDeplacement = Config.CurrentConfig.GRVitesseLigne;
-            Robot.AccelerationDeplacement = Config.CurrentConfig.GRAccelerationLigne;
+            Robot.VitesseDeplacement = Config.CurrentConfig.GRVitesseLigneRapide;
+            Robot.AccelerationDeplacement = Config.CurrentConfig.GRAccelerationLigneRapide;
 
-            Robot.VitessePivot = Config.CurrentConfig.GRVitessePivot;
-            Robot.AccelerationPivot = Config.CurrentConfig.GRAccelerationPivot;
+            Robot.VitessePivot = Config.CurrentConfig.GRVitessePivotRapide;
+            Robot.AccelerationPivot = Config.CurrentConfig.GRAccelerationPivotRapide;
 
             Deployer(Config.CurrentConfig.DeplacementGROuvert);
         }
@@ -229,15 +229,15 @@ namespace GoBot.IHM
             {
                 lblVitesse.Text = "Vitesse pivot";
                 lblAcceleration.Text = "Accélération pivot";
-                trackBarVitesse.SetValue(Config.CurrentConfig.GRVitessePivot, false);
-                trackBarAccel.SetValue(Config.CurrentConfig.GRAccelerationPivot, false);
+                trackBarVitesse.SetValue(Config.CurrentConfig.GRVitessePivotRapide, false);
+                trackBarAccel.SetValue(Config.CurrentConfig.GRAccelerationPivotRapide, false);
             }
             else
             {
                 lblVitesse.Text = "Vitesse ligne";
                 lblAcceleration.Text = "Accélération ligne";
-                trackBarVitesse.SetValue(Config.CurrentConfig.GRVitesseLigne, false);
-                trackBarAccel.SetValue(Config.CurrentConfig.GRAccelerationLigne, false);
+                trackBarVitesse.SetValue(Config.CurrentConfig.GRVitesseLigneRapide, false);
+                trackBarAccel.SetValue(Config.CurrentConfig.GRAccelerationLigneRapide, false);
             }
         }
 
@@ -246,12 +246,12 @@ namespace GoBot.IHM
             if (boxPivot.Checked)
             {
                 Robot.VitessePivot = (int)trackBarVitesse.Value;
-                Config.CurrentConfig.GRVitessePivot = (int)trackBarVitesse.Value;
+                Config.CurrentConfig.GRVitessePivotRapide = (int)trackBarVitesse.Value;
             }
             else
             {
                 Robot.VitesseDeplacement = (int)trackBarVitesse.Value;
-                Config.CurrentConfig.GRVitesseLigne = (int)trackBarVitesse.Value;
+                Config.CurrentConfig.GRVitesseLigneRapide = (int)trackBarVitesse.Value;
             }
         }
 
@@ -260,12 +260,12 @@ namespace GoBot.IHM
             if (boxPivot.Checked)
             {
                 Robot.AccelerationPivot = (int)trackBarAccel.Value;
-                Config.CurrentConfig.GRAccelerationPivot = (int)trackBarAccel.Value;
+                Config.CurrentConfig.GRAccelerationPivotRapide = (int)trackBarAccel.Value;
             }
             else
             {
                 Robot.AccelerationDeplacement = (int)trackBarAccel.Value;
-                Config.CurrentConfig.GRAccelerationLigne = (int)trackBarAccel.Value;
+                Config.CurrentConfig.GRAccelerationLigneRapide = (int)trackBarAccel.Value;
             }
         }
 

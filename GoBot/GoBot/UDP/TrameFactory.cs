@@ -40,6 +40,7 @@ namespace GoBot.UDP
             ServoPosition = 0x60,
             ServoVitesse = 0x61,
 
+            ArmerJack = 0x70,
             DepartJack = 0x71,
             DemandeCouleurEquipe = 0x72,
             ReponseCouleurEquipe = 0x73,
@@ -642,5 +643,23 @@ namespace GoBot.UDP
 
         #endregion
 
+
+        public static Trame VitesseCanonTMin(int vitesse)
+        {
+            byte[] tab = new byte[4];
+            tab[0] = (byte)Carte.RecMove;
+            tab[1] = (byte)FonctionMove.VitesseCanonTours;
+            tab[2] = (byte)ByteDivide(vitesse, true);
+            tab[3] = (byte)ByteDivide(vitesse, false);
+            return new Trame(tab);
+        }
+
+        public static Trame ArmerJack()
+        {
+            byte[] tab = new byte[2];
+            tab[0] = (byte)Carte.RecMove;
+            tab[1] = (byte)FonctionMove.ArmerJack;
+            return new Trame(tab);
+        }
     }
 }
