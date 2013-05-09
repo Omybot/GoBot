@@ -12,9 +12,11 @@ namespace GoBot.IHM
 {
     public partial class PanelBalise : UserControl
     {
+        private Font font;
         public PanelBalise()
         {
             InitializeComponent();
+            font = new Font("Calibri", 8);
         }
 
         private Balise balise;
@@ -43,16 +45,26 @@ namespace GoBot.IHM
             }));
         }
 
+        private int nbDetections;
         void balise_PositionsChange()
         {
             if (boxAffichage.Checked)
             {
                 VideAngles();
 
-                foreach (DetectionBalise detection in balise.DetectionsBas)
+                nbDetections = 0;
+                foreach (DetectionBalise detection in balise.DetectionsCapteur2)
+                {
                     DessineAngle(detection.AngleDebut, detection.AngleFin, false);
-                foreach (DetectionBalise detection in balise.DetectionsHaut)
+                    nbDetections++;
+                }
+
+                nbDetections = 0;
+                foreach (DetectionBalise detection in balise.DetectionsCapteur1)
+                {
                     DessineAngle(detection.AngleDebut, detection.AngleFin, true);
+                    nbDetections++;
+                }
 
                 CompleteAngles();
 
@@ -116,11 +128,13 @@ namespace GoBot.IHM
                 {
                     g.FillPie(new SolidBrush(Color.Salmon), 5, 5, 190, 190, (int)debut, (int)(fin - debut));
                     g.DrawPie(new Pen(Color.Red), 5, 5, 190, 190, (int)debut, (int)(fin - debut));
+                    g.DrawString((fin + debut) / 2.0 + "°", font, new SolidBrush(Color.Black), 2, 5 + 8 * nbDetections);
                 }
                 else
                 {
                     g.FillPie(new SolidBrush(Color.LightBlue), 5, 180, 190, 190, (int)debut, (int)(fin - debut));
                     g.DrawPie(new Pen(Color.Blue), 5, 180, 190, 190, (int)debut, (int)(fin - debut));
+                    g.DrawString((fin + debut) / 2.0 + "°", font, new SolidBrush(Color.Black), 2, 185 + 8 * nbDetections);
                 }
 
                 pictureBoxAngle.Image = bmp;
@@ -148,8 +162,8 @@ namespace GoBot.IHM
 
         public void btnOffset_Click(object sender, EventArgs e)
         {
-            Config.CurrentConfig.SetOffsetBaliseBas(Balise.Carte, 0);
-            Config.CurrentConfig.SetOffsetBaliseHaut(Balise.Carte, 0);
+            Config.CurrentConfig.SetOffsetBalise(Balise.Carte, 1, 0);
+            Config.CurrentConfig.SetOffsetBalise(Balise.Carte, 2, 0);
             balise.ReglerOffset(16); // 16 mesures à 4 tours seconde ce qui fait 4 secondes de calibration
         }
 

@@ -70,15 +70,15 @@ namespace GoBot
         /// <summary>
         /// Ensemble des détections du capteur haut de la balise 1 pour le calcul d'interpolation courant
         /// </summary>
-        public List<DetectionBalise> DetectionBalise1Haut { get; private set; }
+        public List<DetectionBalise> DetectionBalise1 { get; private set; }
         /// <summary>
         /// Ensemble des détections du capteur haut de la balise 2 pour le calcul d'interpolation courant
         /// </summary>
-        public List<DetectionBalise> DetectionBalise2Haut { get; private set; }
+        public List<DetectionBalise> DetectionBalise2 { get; private set; }
         /// <summary>
         /// Ensemble des détections du capteur haut de la balise 3 pour le calcul d'interpolation courant
         /// </summary>
-        public List<DetectionBalise> DetectionBalise3Haut { get; private set; }
+        public List<DetectionBalise> DetectionBalise3 { get; private set; }
 
         // Uniquement pour affichage et debug des calculs d'interpolation de la méthode par intersections
         public List<PointReelGenere> Intersections { get; private set; }
@@ -112,9 +112,9 @@ namespace GoBot
             get
             {
                 List<DetectionBalise> liste = new List<DetectionBalise>();
-                liste.AddRange(DetectionBalise1Haut);
-                liste.AddRange(DetectionBalise2Haut);
-                liste.AddRange(DetectionBalise3Haut);
+                liste.AddRange(DetectionBalise1);
+                liste.AddRange(DetectionBalise2);
+                liste.AddRange(DetectionBalise3);
 
                 return liste;
             }
@@ -145,8 +145,7 @@ namespace GoBot
         /// </summary>
         void Balise1_PositionsChange()
         {
-            DetectionBalise1Bas = new List<DetectionBalise>(Plateau.Balise1.DetectionsBas);
-            DetectionBalise1Haut = new List<DetectionBalise>(Plateau.Balise1.DetectionsHaut);
+            DetectionBalise1 = new List<DetectionBalise>(Plateau.Balise1.Detections);
             donneesBalise1Recues = true;
 
             // Si on a reçu les données de toutes les balises, on calcule l'interpolation des positions
@@ -159,8 +158,7 @@ namespace GoBot
         /// </summary>
         void Balise2_PositionsChange()
         {
-            DetectionBalise2Bas = new List<DetectionBalise>(Plateau.Balise2.DetectionsBas);
-            DetectionBalise2Haut = new List<DetectionBalise>(Plateau.Balise2.DetectionsHaut);
+            DetectionBalise2 = new List<DetectionBalise>(Plateau.Balise2.Detections);
             donneesBalise2Recues = true;
 
             // Si on a reçu les données de toutes les balises, on calcule l'interpolation des positions
@@ -173,8 +171,7 @@ namespace GoBot
         /// </summary>
         void Balise3_PositionsChange()
         {
-            DetectionBalise3Bas = new List<DetectionBalise>(Plateau.Balise3.DetectionsBas);
-            DetectionBalise3Haut = new List<DetectionBalise>(Plateau.Balise3.DetectionsHaut);
+            DetectionBalise3 = new List<DetectionBalise>(Plateau.Balise3.Detections);
             donneesBalise3Recues = true;
 
             // Si on a reçu les données de toutes les balises, on calcule l'interpolation des positions
@@ -215,12 +212,12 @@ namespace GoBot
             if(mode == ModeInterpretation.Polygones)
             {
                 detectionBas = InterpolationPolygonale(DetectionBalise1Bas, DetectionBalise2Bas, DetectionBalise3Bas);
-                detectionHaut = InterpolationPolygonale(DetectionBalise1Haut, DetectionBalise2Haut, DetectionBalise3Haut);
+                detectionHaut = InterpolationPolygonale(DetectionBalise1, DetectionBalise2, DetectionBalise3);
             }
             else if(mode == ModeInterpretation.Intersections)
             {
                 detectionBas = new List<PointReel>();// DetectionParIntersections(DetectionBalise1Bas, DetectionBalise2Bas, DetectionBalise3Bas);
-                detectionHaut = DetectionParIntersections(DetectionBalise1Haut, DetectionBalise2Haut, DetectionBalise3Haut);
+                detectionHaut = DetectionParIntersections(DetectionBalise1, DetectionBalise2, DetectionBalise3);
             }
 
             //detectionHaut.Clear();

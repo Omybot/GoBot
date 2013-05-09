@@ -31,14 +31,19 @@ namespace GoBot
         public const int DISTANCE_LASER_TABLE = 62;
 
         /// <summary>
-        /// Détections effectuées par le capteur bas de la balise
+        /// Détections effectuées par le capteur 1 de la balise
         /// </summary>
-        public List<DetectionBalise> DetectionsBas { get; set; }
+        public List<DetectionBalise> DetectionsCapteur2 { get; set; }
 
         /// <summary>
-        /// Détections effectuées par le capteur haut de la balise
+        /// Détections effectuées par le capteur 2 de la balise
         /// </summary>
-        public List<DetectionBalise> DetectionsHaut { get; set; }
+        public List<DetectionBalise> DetectionsCapteur1 { get; set; }
+
+        /// <summary>
+        /// Détections effectuées par les capteurs en prenant en compte les deux capteurs
+        /// </summary>
+        public List<DetectionBalise> Detections { get; set; }
 
         /// <summary>
         /// Vitesse appliqué à la pwm à appliquer
@@ -83,12 +88,12 @@ namespace GoBot
         /// <summary>
         /// Mesures pour l'offset du capteur haut
         /// </summary>
-        private List<double> anglesMesuresPourOffsetHaut;
+        private List<double> anglesMesuresPourOffsetCapteur1;
 
         /// <summary>
         /// Mesures pour l'offset du capteur bas
         /// </summary>
-        private List<double> anglesMesuresPourOffsetBas;
+        private List<double> anglesMesuresPourOffsetCapteur2;
 
         /// <summary>
         /// Historique des erreurs relatives de vitesse de rotation
@@ -113,8 +118,8 @@ namespace GoBot
             Carte = carte;
             dernieresErreurs = new List<double>();
             ReglageVitessePermanent = true;
-            DetectionsBas = new List<DetectionBalise>();
-            DetectionsHaut = new List<DetectionBalise>();
+            DetectionsCapteur2 = new List<DetectionBalise>();
+            DetectionsCapteur1 = new List<DetectionBalise>();
 
             ConnexionCheck = new GoBot.ConnexionCheck(5000);
             ConnexionCheck.TestConnexion += new GoBot.ConnexionCheck.TestConnexionDelegate(TestConnexion);
@@ -170,26 +175,26 @@ namespace GoBot
                         nouvelleVitesse = AsservissementVitesse();
 
                     // Réception des données angulaires
-                    int nbHaut = trame[4];
-                    int nbBas = trame[5];
+                    int nbMesures1 = trame[4];
+                    int nbMesures2 = trame[5];
 
                     // Si on a un nombre impair de fronts on laisse tomber cette mesure, elle n'est pas bonne
-                    if (nbHaut % 2 != 0 || nbBas % 2 != 0)
+                    if (nbMesures1 % 2 != 0 || nbMesures2 % 2 != 0)
                         return;
 
-                    nbHaut = nbHaut / 2;
-                    nbBas = nbBas / 2;
+                    nbMesures1 = nbMesures1 / 2;
+                    nbMesures2 = nbMesures2 / 2;
 
                     // Vérification de la taille de la trame
-                    if (trame.Length != 7 + nbHaut * 4 + nbBas * 4)
+                    if (trame.Length != 7 + nbMesures1 * 4 + nbMesures2 * 4)
                         Console.WriteLine(trame.ToString());
                     else
                     {
-                        // Réception des mesures du capteur haut
-                        DetectionsHaut.Clear();
+                        // Réception des mesures du capteur 1
+                        DetectionsCapteur1.Clear();
                         List<int> tabAngle = new List<int>();
 
-                        for (int i = 0; i < nbHaut * 4; i += 2)
+                        for (int i = 0; i < nbMesures1 * 4; i += 2)
                         {
                             int valeur = trame[6 + i] * 256 + trame[6 + i + 1];
                             tabAngle.Add(valeur);
@@ -199,13 +204,13 @@ namespace GoBot
 
                         DetectionBalise d = null;
 
-                        for (int i = 0; i < nbHaut; i++)
+                        for (int i = 0; i < nbMesures1; i++)
                         {
-                            double debut = 360 - (tabAngle[i * 2] / 100.0) + Config.CurrentConfig.GetOffsetBaliseHaut(Carte);
-                            double fin = 360 - (tabAngle[i * 2 + 1] / 100.0) + Config.CurrentConfig.GetOffsetBaliseHaut(Carte);
+                            double debut = 360 - (tabAngle[i * 2] / 100.0) + Config.CurrentConfig.GetOffsetBalise(Carte, 1);
+                            double fin = 360 - (tabAngle[i * 2 + 1] / 100.0) + Config.CurrentConfig.GetOffsetBalise(Carte, 1);
 
                             if (debut < 360 && debut > 0 && fin < 360 && fin > 0)
-                                DetectionsHaut.Add(d = new DetectionBalise(this, debut, fin));
+                                DetectionsCapteur1.Add(d = new DetectionBalise(this, debut, fin));
                             else
                                 Console.WriteLine("Mauvaise mesure : début = " + debut + " / fin = " + fin);
                         }
@@ -213,17 +218,17 @@ namespace GoBot
                         /*writer.WriteLine((DateTime.Now - prec).TotalMilliseconds + ";" + nouvelleVitesse + ";" + (d == null ? ";;" : d.AngleCentral + ";" + d.Distance + ";") + VitesseToursSecActuelle);
                         prec = DateTime.Now;*/
 
-                        // Réception des mesures du capteur bas
+                        // Réception des mesures du capteur 2
 
-                        int offSet = nbHaut * 4 + 6;
+                        int offSet = nbMesures1 * 4 + 6;
 
-                        DetectionsBas.Clear();
+                        DetectionsCapteur2.Clear();
 
                         // tableau pour trier les angles ( correction logiciel )
                         tabAngle.Clear();
 
                         long verif = 0;
-                        for (int i = 0; i < nbBas * 4; i += 2)
+                        for (int i = 0; i < nbMesures2 * 4; i += 2)
                         {
                             int valeur = trame[offSet + i] * 256 + trame[offSet + i + 1];
                             tabAngle.Add(valeur);
@@ -232,7 +237,7 @@ namespace GoBot
 
                         tabAngle.Sort();
 
-                        for (int i = 0; i < nbBas * 2; i++)
+                        for (int i = 0; i < nbMesures2 * 2; i++)
                         {
                             verif -= tabAngle[i] * (i + 1);
                         }
@@ -245,13 +250,13 @@ namespace GoBot
                         else
                             Console.Write("-");
 
-                        for (int i = 0; i < nbBas; i++)
+                        for (int i = 0; i < nbMesures2; i++)
                         {
-                            double debut = 360 - (tabAngle[i * 2] / 100.0) + Config.CurrentConfig.GetOffsetBaliseBas(Carte);
-                            double fin = 360 - (tabAngle[i * 2 + 1] / 100.0) + Config.CurrentConfig.GetOffsetBaliseBas(Carte);
+                            double debut = 360 - (tabAngle[i * 2] / 100.0) + Config.CurrentConfig.GetOffsetBalise(Carte, 2);
+                            double fin = 360 - (tabAngle[i * 2 + 1] / 100.0) + Config.CurrentConfig.GetOffsetBalise(Carte, 2);
 
                             if (debut < 360 && debut > 0 && fin < 360 && fin > 0)
-                                DetectionsBas.Add(new DetectionBalise(this, debut, fin));
+                                DetectionsCapteur2.Add(new DetectionBalise(this, debut, fin));
                             else
                                 Console.WriteLine("Mauvaise mesure : début = " + debut + " / fin = " + fin);
                         }
@@ -261,13 +266,13 @@ namespace GoBot
                         {
                             // Si on a une mesure incorrecte (une mesure correcte demande une détection en haut et une en bas)
                             // Le réglage est annulé
-                            if (DetectionsHaut.Count == 1 && DetectionsBas.Count == 1)
+                            if (DetectionsCapteur1.Count == 1 && DetectionsCapteur2.Count == 1)
                             {
                                 compteurReglageOffset--;
 
                                 // On ajoute les angles mesurés à l'historique
-                                anglesMesuresPourOffsetBas.Add(DetectionsBas[0].AngleCentral);
-                                anglesMesuresPourOffsetHaut.Add(DetectionsHaut[0].AngleCentral);
+                                anglesMesuresPourOffsetCapteur2.Add(DetectionsCapteur2[0].AngleCentral);
+                                anglesMesuresPourOffsetCapteur1.Add(DetectionsCapteur1[0].AngleCentral);
                             }
 
                             if (ReglageOffset && compteurReglageOffset == 0)
@@ -275,10 +280,10 @@ namespace GoBot
                                 // Compteur arrivé à la fin, on calcule l'offset
                                 double moyenne = 0;
 
-                                foreach (double dv in anglesMesuresPourOffsetHaut)
+                                foreach (double dv in anglesMesuresPourOffsetCapteur1)
                                     moyenne += dv;
 
-                                moyenne /= anglesMesuresPourOffsetHaut.Count;
+                                moyenne /= anglesMesuresPourOffsetCapteur1.Count;
 
                                 if (Plateau.NotreCouleur == Plateau.CouleurJ2B)
                                 {
@@ -314,15 +319,14 @@ namespace GoBot
                                 }
 
                                 // On le sauve dans la config (haut)
-                                Config.CurrentConfig.SetOffsetBaliseHaut(Carte, moyenne + Config.CurrentConfig.GetOffsetBaliseHaut(Carte));
-                                Config.Save();
+                                Config.CurrentConfig.SetOffsetBalise(Carte, 1,  moyenne + Config.CurrentConfig.GetOffsetBalise(Carte, 1));
 
                                 moyenne = 0;
 
-                                foreach (double dv in anglesMesuresPourOffsetBas)
+                                foreach (double dv in anglesMesuresPourOffsetCapteur2)
                                     moyenne += dv;
 
-                                moyenne /= anglesMesuresPourOffsetBas.Count;
+                                moyenne /= anglesMesuresPourOffsetCapteur2.Count;
 
                                 switch (Carte)
                                 {
@@ -338,11 +342,45 @@ namespace GoBot
                                 }
 
                                 // On le sauve dans la config (bas)
-                                Config.CurrentConfig.SetOffsetBaliseBas(Carte, moyenne + Config.CurrentConfig.GetOffsetBaliseBas(Carte));
+                                Config.CurrentConfig.SetOffsetBalise(Carte, 2, moyenne + Config.CurrentConfig.GetOffsetBalise(Carte, 2));
                                 Config.Save();
                                 // Réglage terminé
                                 ReglageOffset = false;
                             }
+                        }
+
+                        Detections = new List<DetectionBalise>();
+                        double ecartAngle = 1;
+
+                        foreach (DetectionBalise d1 in DetectionsCapteur1)
+                        {
+                            bool correspondance = false;
+                            foreach (DetectionBalise d2 in DetectionsCapteur2)
+                            {
+                                if (d1.AngleCentral > d2.AngleCentral - ecartAngle && d1.AngleCentral < d2.AngleCentral + ecartAngle)
+                                {
+                                    // Moins de +- 1° de différence, les capteurs ont la même cible
+                                    DetectionBalise detection = new DetectionBalise(this, (d1.AngleDebut + d2.AngleDebut) / 2, (d1.AngleFin + d2.AngleFin) / 2);
+                                    Detections.Add(detection);
+                                    correspondance = true;
+                                }
+                            }
+                            if (!correspondance)
+                                Detections.Add(d1);
+                        }
+                        // Cherche les détections du capteur 2 non trouvées par le capteur 1
+                        foreach (DetectionBalise d2 in DetectionsCapteur1)
+                        {
+                            bool correspondance = false;
+                            foreach (DetectionBalise d1 in DetectionsCapteur2)
+                            {
+                                if (d1.AngleCentral > d2.AngleCentral - ecartAngle && d1.AngleCentral < d2.AngleCentral + ecartAngle)
+                                {
+                                    correspondance = true;
+                                }
+                            }
+                            if (!correspondance)
+                                Detections.Add(d2);
                         }
 
                         // Génération de l'event de notification de détection
@@ -404,8 +442,8 @@ namespace GoBot
         {
             compteurReglageOffset = nbMesures;
             ReglageOffset = true;
-            anglesMesuresPourOffsetHaut = new List<double>();
-            anglesMesuresPourOffsetBas = new List<double>();
+            anglesMesuresPourOffsetCapteur1 = new List<double>();
+            anglesMesuresPourOffsetCapteur2 = new List<double>();
         }
 
         /// <summary>

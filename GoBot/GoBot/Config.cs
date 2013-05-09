@@ -11,7 +11,7 @@ namespace GoBot
 {
     [Serializable]
     public class Config
-    {        
+    {
         /// <summary>
         /// Permet de savoir si l'application est mode Design (concepteur graphique) ou en cours d'execution
         /// Le DesignMode de base :
@@ -65,13 +65,13 @@ namespace GoBot
 
         // Offset balises
 
-        public double OffsetBalise1Haut { get; set; }
-        public double OffsetBalise2Haut { get; set; }
-        public double OffsetBalise3Haut { get; set; }
+        public double OffsetBalise1Capteur1 { get; set; }
+        public double OffsetBalise2Capteur1 { get; set; }
+        public double OffsetBalise3Capteur1 { get; set; }
 
-        public double OffsetBalise1Bas { get; set; }
-        public double OffsetBalise2Bas { get; set; }
-        public double OffsetBalise3Bas { get; set; }
+        public double OffsetBalise1Capteur2 { get; set; }
+        public double OffsetBalise2Capteur2 { get; set; }
+        public double OffsetBalise3Capteur2 { get; set; }
 
         // Positions bras gros robot
 
@@ -154,65 +154,71 @@ namespace GoBot
         public int[] PositionsBougiesCameraX { get; set; }
         public int[] PositionsBougiesCameraY { get; set; }
 
-        public double GetOffsetBaliseHaut(Carte carteBalise)
+        public double GetOffsetBalise(Carte carteBalise, int iCapteur)
         {
-            switch (carteBalise)
+            if (iCapteur == 1)
             {
-                case Carte.RecBun:
-                    return OffsetBalise1Haut;
-                case Carte.RecBeu:
-                    return OffsetBalise2Haut;
-                case Carte.RecBoi:
-                    return OffsetBalise3Haut;
-                default:
-                    return 0;
+                switch (carteBalise)
+                {
+                    case Carte.RecBun:
+                        return OffsetBalise1Capteur1;
+                    case Carte.RecBeu:
+                        return OffsetBalise2Capteur1;
+                    case Carte.RecBoi:
+                        return OffsetBalise3Capteur1;
+                    default:
+                        return 0;
+                }
             }
+            else if (iCapteur == 2)
+            {
+                switch (carteBalise)
+                {
+                    case Carte.RecBun:
+                        return OffsetBalise1Capteur2;
+                    case Carte.RecBeu:
+                        return OffsetBalise2Capteur2;
+                    case Carte.RecBoi:
+                        return OffsetBalise3Capteur2;
+                    default:
+                        return 0;
+                }
+            }
+
+            return 0;
         }
 
-        public void SetOffsetBaliseHaut(Carte carteBalise, double offset)
+        public void SetOffsetBalise(Carte carteBalise, int iCapteur, double offset)
         {
-            switch (carteBalise)
+            if (iCapteur == 1)
             {
-                case Carte.RecBun:
-                    OffsetBalise1Haut = offset;
-                    break;
-                case Carte.RecBeu:
-                    OffsetBalise2Haut = offset;
-                    break;
-                case Carte.RecBoi:
-                    OffsetBalise3Haut = offset;
-                    break;
+                switch (carteBalise)
+                {
+                    case Carte.RecBun:
+                        OffsetBalise1Capteur1 = offset;
+                        break;
+                    case Carte.RecBeu:
+                        OffsetBalise2Capteur1 = offset;
+                        break;
+                    case Carte.RecBoi:
+                        OffsetBalise3Capteur1 = offset;
+                        break;
+                }
             }
-        }
-
-        public double GetOffsetBaliseBas(Carte carteBalise)
-        {
-            switch (carteBalise)
+            else if (iCapteur == 2)
             {
-                case Carte.RecBun:
-                    return OffsetBalise1Bas;
-                case Carte.RecBeu:
-                    return OffsetBalise2Bas;
-                case Carte.RecBoi:
-                    return OffsetBalise3Bas;
-                default:
-                    return 0;
-            }
-        }
-
-        public void SetOffsetBaliseBas(Carte carteBalise, double offset)
-        {
-            switch (carteBalise)
-            {
-                case Carte.RecBun:
-                    OffsetBalise1Bas = offset;
-                    break;
-                case Carte.RecBeu:
-                    OffsetBalise2Bas = offset;
-                    break;
-                case Carte.RecBoi:
-                    OffsetBalise3Bas = offset;
-                    break;
+                switch (carteBalise)
+                {
+                    case Carte.RecBun:
+                        OffsetBalise1Capteur2 = offset;
+                        break;
+                    case Carte.RecBeu:
+                        OffsetBalise2Capteur2 = offset;
+                        break;
+                    case Carte.RecBoi:
+                        OffsetBalise3Capteur2 = offset;
+                        break;
+                }
             }
         }
 
@@ -240,7 +246,7 @@ namespace GoBot
                 CurrentConfig = (Config)mySerializer.Deserialize(myFileStream);
                 myFileStream.Close();
             }
-            catch(Exception)
+            catch (Exception)
             {
                 MessageBox.Show("Aucune configuration chargée.");
             }
