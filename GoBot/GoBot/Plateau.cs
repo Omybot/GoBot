@@ -55,6 +55,8 @@ namespace GoBot
 
         public static int AssietteAttrapee { get; set; }
 
+        public static bool ReflecteursNosRobots { get; set; }
+
         private static int score;
         public static int Score
         {
@@ -99,11 +101,10 @@ namespace GoBot
         {
             if (!Config.DesignMode)
             {
+                ReflecteursNosRobots = false;
                 DerniereBougieGros = -1;
                 AssietteAttrapee = -1;
                 Plateau.SemaphoreGraph = new Semaphore(1, 1);
-
-                PoidActions = new PoidsTest();
 
                 //CreerSommets(150);
                 ChargerGraph();
@@ -538,6 +539,8 @@ namespace GoBot
             if (DerniereBougieGros != -1)
             {
                 Robots.GrosRobot.PositionerAngle(new Angle(PositionsMouvements.PositionGrosBougie[DerniereBougieGros].Angle.AngleDegres + 90), 10);
+                Robots.GrosRobot.BougeServo(ServomoteurID.GRGrandBras, Config.CurrentConfig.PositionGRGrandBrasRange);
+                Robots.GrosRobot.BougeServo(ServomoteurID.GRPetitBras, Config.CurrentConfig.PositionGRPetitBrasRange);
                 DerniereBougieGros = -1;
             }
         }

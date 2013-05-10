@@ -58,8 +58,10 @@ namespace GoBot.IHM
         {
         }
 
+        public bool imageRefresh;
         public void btnCapture_Click(object sender, EventArgs e)
         {
+            imageRefresh = false;
             th = new Thread(ThreadImage);
             th.Start();
         }
@@ -94,8 +96,8 @@ namespace GoBot.IHM
                     return;
 
                 CheckForIllegalCrossThreadCalls = false;
-                //this.Invoke(new EventHandler(delegate
-                //{
+                this.Invoke(new EventHandler(delegate
+                {
                     Plateau.CouleursBougies[10] = Plateau.CouleurJ2B;
                     Plateau.CouleursBougies[11] = Plateau.CouleurJ2B;
 
@@ -123,9 +125,15 @@ namespace GoBot.IHM
 
                         Color pixel = img.GetPixel(Config.CurrentConfig.PositionsBougiesCameraX[i], Config.CurrentConfig.PositionsBougiesCameraY[i]);
                         Console.WriteLine(i + " R=" + pixel.R + " G=" + pixel.G + " B=" + pixel.B);
-                        valeursBleu.Add(pixel.B);
+                        //valeursBleu.Add(pixel.B);
+
+                        if (pixel.R > pixel.B)
+                            Plateau.CouleursBougies[i] = Plateau.CouleurJ1R;
+                        else
+                            Plateau.CouleursBougies[i] = Plateau.CouleurJ2B;
                     }
 
+                    /*
                     valeursBleu.Sort();
                     List<int> valeursBleuMax = new List<int>();
 
@@ -157,10 +165,11 @@ namespace GoBot.IHM
                             Plateau.CouleursBougies[i] = Plateau.CouleurJ1R;
                             Plateau.CouleursBougies[i + delta] = Plateau.CouleurJ2B;
                         }
-                    }
+                    }*/
 
                     DessineChiffres(img);
-                //}));
+                    imageRefresh = true;
+                }));
             }
             while (ContinuerJusquauDebutMatch);
         }
@@ -176,15 +185,19 @@ namespace GoBot.IHM
             {
                 Config.CurrentConfig.PositionsBougiesCameraX[BougiePlacement] = pictureBoxImage.PointToClient(MousePosition).X;
                 Config.CurrentConfig.PositionsBougiesCameraY[BougiePlacement] = pictureBoxImage.PointToClient(MousePosition).Y;
-
-                BougiePlacement = -1;
+                BougiePlacement++;
+                if (BougiePlacement == 20)
+                    BougiePlacement = 12;
+                if(BougiePlacement == 10)
+                    BougiePlacement = 2;
             }
         }
-
+        
         public void ChangementCouleur()
         {
             if (Plateau.NotreCouleur == Plateau.CouleurJ2B)
             {
+                BougiePlacement = 12;
                 for (int i = 10; i < 20; i++)
                     Boutons[i].Enabled = true;
                 for (int i = 0; i < 10; i++)
@@ -192,6 +205,7 @@ namespace GoBot.IHM
             }
             else
             {
+                BougiePlacement = 2;
                 for (int i = 0; i < 10; i++)
                     Boutons[i].Enabled = true;
                 for (int i = 10; i < 20; i++)

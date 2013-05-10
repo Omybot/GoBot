@@ -61,11 +61,6 @@ namespace GoBot.Mouvements
                 petitBras = true;
                 bougieAdditionnelle = 5;
             }
-            else if (numeroBougie == 12 && (Plateau.CouleursBougies[15] == Plateau.NotreCouleur || Plateau.CouleursBougies[15] == Color.White))
-            {
-                petitBras = true;
-                bougieAdditionnelle = 15;
-            }
             else if (numeroBougie == 4 && (Plateau.CouleursBougies[6] == Plateau.NotreCouleur || Plateau.CouleursBougies[6] == Color.White))
             {
                 petitBras = true;
@@ -91,11 +86,6 @@ namespace GoBot.Mouvements
             {
                 grandBras = true;
                 bougieAdditionnelle = 2;
-            }
-            else if (numeroBougie == 15 && (Plateau.CouleursBougies[12] == Plateau.NotreCouleur || Plateau.CouleursBougies[12] == Color.White))
-            {
-                grandBras = true;
-                bougieAdditionnelle = 12;
             }
             else if (numeroBougie == 6 && (Plateau.CouleursBougies[4] == Plateau.NotreCouleur || Plateau.CouleursBougies[4] == Color.White))
             {

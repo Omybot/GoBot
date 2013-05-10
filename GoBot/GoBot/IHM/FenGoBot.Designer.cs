@@ -545,6 +545,7 @@ namespace GoBot
             this.radioBaliseOui.TabIndex = 0;
             this.radioBaliseOui.Text = "Oui";
             this.radioBaliseOui.UseVisualStyleBackColor = true;
+            this.radioBaliseOui.CheckedChanged += new System.EventHandler(this.radioBaliseOui_CheckedChanged);
             // 
             // pictureBoxBalises
             // 

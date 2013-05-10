@@ -6,6 +6,7 @@ using System.Drawing;
 using System.Timers;
 using GoBot.Mouvements;
 using System.Threading;
+using GoBot.Ponderations;
 
 namespace GoBot.Enchainements
 {
@@ -34,6 +35,7 @@ namespace GoBot.Enchainements
 
         public Enchainement()
         {
+            Plateau.PoidActions = new PoidsTest();
             Couleur = Color.Purple;
 
             for(int i = 0; i < 20; i++)
@@ -93,6 +95,8 @@ namespace GoBot.Enchainements
             thPetitRobot.Abort();
             Robots.GrosRobot.Stop(StopMode.Freely);
             Robots.GrosRobot.ActionneurOnOff(ActionneurOnOffID.GRAlimentation, false);
+            Robots.GrosRobot.TourneMoteur(MoteurID.GRCanonTMin, 0);
+            Robots.GrosRobot.TourneMoteur(MoteurID.GRTurbineAspirateur, 0);
             //PetitRobot.Stop(StopMode.Freely);
             Plateau.Balise1.Stop();
             Plateau.Balise2.Stop();

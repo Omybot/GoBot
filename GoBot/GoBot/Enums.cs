@@ -26,7 +26,7 @@ namespace GoBot
 
     public enum ServomoteurID
     {
-        GRAspirateur = 16,
+        GRAspirateur = 20,
         GRDebloqueur = 0,
         GRGrandBras = 2,
         GRPetitBras = 3,
@@ -38,7 +38,7 @@ namespace GoBot
         PRBrasDroit = 18,
         PRBrasGauche = 17,
         PRBrasAvant = 1,
-        PRBrasArriere = 20,
+        PRBrasArriere = 16,
         PRBrasAvantGauche = 30,
         PRBrasAvantDroit = 31,
         PRBrasArriereGauche = 32,

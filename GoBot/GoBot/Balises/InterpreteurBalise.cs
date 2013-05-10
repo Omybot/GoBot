@@ -206,8 +206,6 @@ namespace GoBot
             List<PointReel> detectionBas = null;
             List<PointReel> detectionHaut = null;
 
-            PositionsAlliees = new List<PointReel>();
-            PositionsEnnemies = new List<PointReel>();
 
             if(mode == ModeInterpretation.Polygones)
             {
@@ -219,6 +217,8 @@ namespace GoBot
                 detectionBas = new List<PointReel>();// DetectionParIntersections(DetectionBalise1Bas, DetectionBalise2Bas, DetectionBalise3Bas);
                 detectionHaut = DetectionParIntersections(DetectionBalise1, DetectionBalise2, DetectionBalise3);
             }
+            PositionsAlliees = new List<PointReel>();
+            PositionsEnnemies = new List<PointReel>();
 
             //detectionHaut.Clear();
 
@@ -473,14 +473,34 @@ namespace GoBot
                     positionsFinales.Add(plusProche);*/
             }
 
+            List<PointReel> positionsActuelles = new List<PointReel>();
+
             foreach (KeyValuePair<PointReel, int> compteur in compteurProches)
             {
-                if(compteur.Value >= 2)
-                    positionsFinales.Add(compteur.Key);
+                if (compteur.Value >= 2)
+                {
+                    positionsActuelles.Add(compteur.Key);
+
+                    bool associePrec = false;
+                    foreach (PointReel pointPrec in positionsPrec)
+                    {
+                        if (pointPrec.Distance(compteur.Key) < 400)
+                        {
+                            associePrec = true;
+                            break;
+                        }
+                    }
+                    if(associePrec)
+                        positionsFinales.Add(compteur.Key);
+                }
             }
+
+            positionsPrec = positionsActuelles;
 
             return positionsFinales;
         }
+
+        private List<PointReel> positionsPrec;
 
         /// <summary>
         /// Retourne les points de croisements entre les détections de 2 balises

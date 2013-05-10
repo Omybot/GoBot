@@ -2,7 +2,7 @@
 <Config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
   <DeplacementGROuvert>true</DeplacementGROuvert>
   <HistoriqueGROuvert>true</HistoriqueGROuvert>
-  <ReglageGROuvert>false</ReglageGROuvert>
+  <ReglageGROuvert>true</ReglageGROuvert>
   <UtilisationGROuvert>true</UtilisationGROuvert>
   <SequencesGROuvert>true</SequencesGROuvert>
   <CapteursGROuvert>true</CapteursGROuvert>
@@ -11,9 +11,9 @@
   <ReglagePROuvert>true</ReglagePROuvert>
   <UtilisationPROuvert>true</UtilisationPROuvert>
   <GRVitesseLigneRapide>500</GRVitesseLigneRapide>
-  <GRAccelerationLigneRapide>2000</GRAccelerationLigneRapide>
+  <GRAccelerationLigneRapide>1500</GRAccelerationLigneRapide>
   <GRVitessePivotRapide>1000</GRVitessePivotRapide>
-  <GRAccelerationPivotRapide>2800</GRAccelerationPivotRapide>
+  <GRAccelerationPivotRapide>2000</GRAccelerationPivotRapide>
   <GRVitesseLigneLent>300</GRVitesseLigneLent>
   <GRAccelerationLigneLent>300</GRAccelerationLigneLent>
   <GRVitessePivotLent>300</GRVitessePivotLent>
@@ -26,19 +26,19 @@
   <PRAccelerationLigneLent>100</PRAccelerationLigneLent>
   <PRVitessePivotLent>100</PRVitessePivotLent>
   <PRAccelerationPivotLent>100</PRAccelerationPivotLent>
-  <OffsetBalise1Haut>-192.21125</OffsetBalise1Haut>
-  <OffsetBalise2Haut>165.6715625</OffsetBalise2Haut>
-  <OffsetBalise3Haut>-10.369062499999956</OffsetBalise3Haut>
-  <OffsetBalise1Bas>-240.10750000000002</OffsetBalise1Bas>
-  <OffsetBalise2Bas>210.91375</OffsetBalise2Bas>
-  <OffsetBalise3Bas>-12.785312500000003</OffsetBalise3Bas>
+  <OffsetBalise1Capteur1>-13.876249999999999</OffsetBalise1Capteur1>
+  <OffsetBalise2Capteur1>-8.4134375000000148</OffsetBalise2Capteur1>
+  <OffsetBalise3Capteur1>-190.45875000000004</OffsetBalise3Capteur1>
+  <OffsetBalise1Capteur2>-194.68937499999993</OffsetBalise1Capteur2>
+  <OffsetBalise2Capteur2>170.0725</OffsetBalise2Capteur2>
+  <OffsetBalise3Capteur2>-190.97750000000002</OffsetBalise3Capteur2>
   <PositionGRGrandBrasHaut>465</PositionGRGrandBrasHaut>
   <PositionGRGrandBrasBas>545</PositionGRGrandBrasBas>
   <PositionGRGrandBrasRange>815</PositionGRGrandBrasRange>
   <PositionGRPetitBrasHaut>575</PositionGRPetitBrasHaut>
   <PositionGRPetitBrasBas>454</PositionGRPetitBrasBas>
   <PositionGRPetitBrasRange>216</PositionGRPetitBrasRange>
-  <PositionGRAspirateurHaut>350</PositionGRAspirateurHaut>
+  <PositionGRAspirateurHaut>300</PositionGRAspirateurHaut>
   <PositionGRAspirateurBas>130</PositionGRAspirateurBas>
   <PositionGRDebloqueurHaut>250</PositionGRDebloqueurHaut>
   <PositionGRDebloqueurBas>550</PositionGRDebloqueurBas>

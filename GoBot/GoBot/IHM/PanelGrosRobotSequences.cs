@@ -76,7 +76,7 @@ namespace GoBot.IHM
             Robots.GrosRobot.TourneMoteur(MoteurID.GRTurbineAspirateur, 70);
             Thread.Sleep(200);
             Robots.GrosRobot.BougeServo(ServomoteurID.GRAspirateur, Config.CurrentConfig.PositionGRAspirateurHaut);
-            Thread.Sleep(1500);
+            Thread.Sleep(00);
             Robots.GrosRobot.TourneMoteur(MoteurID.GRTurbineAspirateur, 0);
             Thread.Sleep(500);
 
@@ -125,36 +125,24 @@ namespace GoBot.IHM
 
         private void LancerBalles()
         {
+            DateTime debut = DateTime.Now;
             bool balle = true;
-
-            Robots.GrosRobot.BougeServo(ServomoteurID.GRDebloqueur, Config.CurrentConfig.PositionGRDebloqueurHaut);
-            Thread.Sleep(500);
-            Robots.GrosRobot.BougeServo(ServomoteurID.GRDebloqueur, Config.CurrentConfig.PositionGRDebloqueurBas);
-
             while (balle)
             {
+                Robots.GrosRobot.BougeServo(ServomoteurID.GRDebloqueur, Config.CurrentConfig.PositionGRDebloqueurHaut);
+                Thread.Sleep(350);
+                Robots.GrosRobot.BougeServo(ServomoteurID.GRDebloqueur, Config.CurrentConfig.PositionGRDebloqueurBas);
+
                 if (!Robots.GrosRobot.GetPresenceBalle())
                 {
+                    Thread.Sleep(350);
                     Robots.GrosRobot.BougeServo(ServomoteurID.GRDebloqueur, Config.CurrentConfig.PositionGRDebloqueurHaut);
-                    Thread.Sleep(500);
+                    Thread.Sleep(350);
                     Robots.GrosRobot.BougeServo(ServomoteurID.GRDebloqueur, Config.CurrentConfig.PositionGRDebloqueurBas);
 
                     if (!Robots.GrosRobot.GetPresenceBalle())
                     {
-                        Robots.GrosRobot.TourneMoteur(MoteurID.GRTurbineAspirateur, Config.CurrentConfig.VitesseAspiration);
-                        Thread.Sleep(600);
-                        Robots.GrosRobot.TourneMoteur(MoteurID.GRTurbineAspirateur, 0);
-                        Thread.Sleep(1200);
-
-                        if (!Robots.GrosRobot.GetPresenceBalle())
-                        {
-                            Robots.GrosRobot.BougeServo(ServomoteurID.GRDebloqueur, Config.CurrentConfig.PositionGRDebloqueurHaut);
-                            Thread.Sleep(500);
-                            Robots.GrosRobot.BougeServo(ServomoteurID.GRDebloqueur, Config.CurrentConfig.PositionGRDebloqueurBas);
-
-                            if (!Robots.GrosRobot.GetPresenceBalle())
-                                balle = false;
-                        }
+                        balle = false;
                     }
                 }
                 else
@@ -163,19 +151,17 @@ namespace GoBot.IHM
                     Console.WriteLine(couleur);
                     if (couleur != Color.White)
                     {
-                        Robots.GrosRobot.PivotGauche(15);
+                        Robots.GrosRobot.PivotGauche(10);
                         Robots.GrosRobot.ActionneurOnOff(ActionneurOnOffID.GRShutter, true);
-                        Thread.Sleep(350);
+                        Thread.Sleep(250);
                         Robots.GrosRobot.ActionneurOnOff(ActionneurOnOffID.GRShutter, false);
-                        Thread.Sleep(350);
-                        Robots.GrosRobot.PivotDroite(15);
+                        Robots.GrosRobot.PivotDroite(10);
                     }
                     else
                     {
                         Robots.GrosRobot.ActionneurOnOff(ActionneurOnOffID.GRShutter, true);
-                        Thread.Sleep(350);
+                        Thread.Sleep(250);
                         Robots.GrosRobot.ActionneurOnOff(ActionneurOnOffID.GRShutter, false);
-                        Thread.Sleep(500);
                     }
 
                 }
@@ -183,6 +169,8 @@ namespace GoBot.IHM
 
             Robots.GrosRobot.ActionneurOnOff(ActionneurOnOffID.GRShutter, false);
             Robots.GrosRobot.TourneMoteur(MoteurID.GRCanon, 0);
+
+            Console.WriteLine((DateTime.Now - debut).TotalMilliseconds + " ms");
         }
     }
 }

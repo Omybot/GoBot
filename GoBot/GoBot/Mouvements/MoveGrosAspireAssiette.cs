@@ -21,6 +21,16 @@ namespace GoBot.Mouvements
                 else
                     position = new Position(new Angle(180), new PointReel(Plateau.PositionsAssiettes[numeroAssiette].Coordonnees.X - 300, Plateau.PositionsAssiettes[numeroAssiette].Coordonnees.Y));
 
+                if (numeroAssiette == 0 || numeroAssiette == 1 || numeroAssiette == 2 || numeroAssiette == 3)
+                    position = new Position(new Angle(0), new PointReel(Plateau.PositionsAssiettes[numeroAssiette].Coordonnees.X + 300, Plateau.PositionsAssiettes[numeroAssiette].Coordonnees.Y + 40));
+                if (numeroAssiette == 6 || numeroAssiette == 7 || numeroAssiette == 8 || numeroAssiette == 9)
+                    position = new Position(new Angle(180), new PointReel(Plateau.PositionsAssiettes[numeroAssiette].Coordonnees.X - 340, Plateau.PositionsAssiettes[numeroAssiette].Coordonnees.Y - 40));
+
+                if (numeroAssiette == 4)
+                    position = new Position(new Angle(-18.47), new PointReel(530, 1653));
+                if (numeroAssiette == 5)
+                    position = new Position(new Angle(-18.47 + 180), new PointReel(3000 - 530, 2000 - 1653));
+                
                 return position;
             }
             protected set
@@ -37,12 +47,17 @@ namespace GoBot.Mouvements
 
         public override bool Executer(int timeOut = 0)
         {
+            int distance = 170;
+
+            if (numeroAssiette == 4 || numeroAssiette == 5)
+                distance = 207;
+
             Plateau.BaisserBras();
             bool pathFindingOk = true;
             if (numeroAssiette != Plateau.AssietteAttrapee)
             {
                 pathFindingOk = Robots.GrosRobot.PathFinding(Position.Coordonnees.X, Position.Coordonnees.Y, timeOut, true);
-                Robots.GrosRobot.PositionerAngle(Position.Angle, 5);
+                Robots.GrosRobot.PositionerAngle(Position.Angle, 1);
             }
             
             if (pathFindingOk)
@@ -56,28 +71,29 @@ namespace GoBot.Mouvements
                 if (numeroAssiette != Plateau.AssietteAttrapee)
                 {
                     Robots.GrosRobot.Lent();
-                    Robots.GrosRobot.Reculer(150);
+                    Robots.GrosRobot.Reculer(distance);
                     Robots.GrosRobot.Rapide();
                 }
 
                 // Si pas d'assiette on abandonne et on s'en va. On considère que l'assiette n'est pas ici
-                /*if (!Robots.GrosRobot.GetPresenceAssiette())
+                if (!Robots.GrosRobot.GetPresenceAssiette())
                 {
                     Robots.GrosRobot.TourneMoteur(MoteurID.GRTurbineAspirateur, 0);
                     Robots.GrosRobot.BougeServo(ServomoteurID.GRAspirateur, Config.CurrentConfig.PositionGRAspirateurHaut);
 
                     if (numeroAssiette != Plateau.AssietteAttrapee)
-                        Robots.GrosRobot.Avancer(150);
+                        Robots.GrosRobot.Avancer(distance);
 
                     Plateau.AssiettesExiste[numeroAssiette] = false;
                     return false;
-                }*/
+                }
 
-                while(true)
+                int i = 0;
+                while(i < 3)
                 {
                     // Remontage de l'aspirateur
                     Robots.GrosRobot.TourneMoteur(MoteurID.GRTurbineAspirateur, Config.CurrentConfig.VitesseAspirationMaintien);
-                    Thread.Sleep(200);
+                    Thread.Sleep(300);
                     Robots.GrosRobot.BougeServo(ServomoteurID.GRAspirateur, Config.CurrentConfig.PositionGRAspirateurHaut);
                     Thread.Sleep(1500);
 
@@ -95,8 +111,19 @@ namespace GoBot.Mouvements
                     Robots.GrosRobot.BougeServo(ServomoteurID.GRAspirateur, Config.CurrentConfig.PositionGRAspirateurBas);
                     Thread.Sleep(500);
                     Robots.GrosRobot.TourneMoteur(MoteurID.GRTurbineAspirateur, 0);
-                    Thread.Sleep(500);
+                    Thread.Sleep(1500);
                     Robots.GrosRobot.TourneMoteur(MoteurID.GRTurbineAspirateur, Config.CurrentConfig.VitesseAspiration);
+                    Thread.Sleep(1000);
+                    i++;
+
+                    if (i > 3)
+                    {
+                        Plateau.PoidActions.PoidGlobalGrosAspireAssiette = 0;
+                        Plateau.PoidActions.PoidGlobalGrosAccrocheAssiette = 0;
+                        Plateau.PoidActions.PoidGlobalGrosLancerBallesSansAssietteAccrochee = 0;
+                        Plateau.PoidActions.PoidGlobalGrosLancerBallesAvecAssietteAccrochee = 0;
+                        return false;
+                    }
                 }
 
                 // Callage de la première balle devant le capteur
@@ -106,7 +133,7 @@ namespace GoBot.Mouvements
                 // Teste si on voit des balles chargées
 
                 bool balle = true;
-                /*if (!Robots.GrosRobot.GetPresenceBalle())
+                if (!Robots.GrosRobot.GetPresenceBalle())
                 {
                     // 1ère fois qu'on ne voit pas de balle : un coup de débloqueur
                     Robots.GrosRobot.BougeServo(ServomoteurID.GRDebloqueur, Config.CurrentConfig.PositionGRDebloqueurHaut);
@@ -133,7 +160,7 @@ namespace GoBot.Mouvements
                                 balle = false;
                         }
                     }
-                }*/
+                }
 
                 if (!balle)
                 {
@@ -142,7 +169,7 @@ namespace GoBot.Mouvements
                 }
 
                 if (numeroAssiette != Plateau.AssietteAttrapee)
-                    Robots.GrosRobot.Avancer(150);
+                    Robots.GrosRobot.Avancer(distance);
                 else
                 {
                     // On relâche l'assiette

@@ -148,7 +148,7 @@ namespace GoBot
                             couleurBalle = Plateau.CouleurJ1R;
                             couleur = "Rouge";
                         }
-                        else if (valCouleurAllume4 > 3000)
+                        else if (valCouleurAllume4 > 3200)
                         {
                             couleurBalle = Plateau.CouleurJ2B;
                             couleur = "Bleu";
@@ -236,7 +236,7 @@ namespace GoBot
 
                 if (trameRecue[1] == (byte)TrameFactory.FonctionMove.ReponsePresenceAssiette)
                 {
-                    presenceAssiette = trameRecue[2] == 0 ? false : true;
+                    presenceAssiette = trameRecue[2] == 1 ? false : true;
                     if (semCapteurAssiette != null)
                         semCapteurAssiette.Release();
 

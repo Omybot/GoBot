@@ -8,6 +8,7 @@ using System.Drawing;
 using System.Windows.Forms;
 using System.IO;
 using GoBot.Calculs;
+using GoBot.Calculs.Formes;
 
 namespace GoBot
 {
@@ -209,10 +210,10 @@ namespace GoBot
                             double debut = 360 - (tabAngle[i * 2] / 100.0) + Config.CurrentConfig.GetOffsetBalise(Carte, 1);
                             double fin = 360 - (tabAngle[i * 2 + 1] / 100.0) + Config.CurrentConfig.GetOffsetBalise(Carte, 1);
 
-                            if (debut < 360 && debut > 0 && fin < 360 && fin > 0)
-                                DetectionsCapteur1.Add(d = new DetectionBalise(this, debut, fin));
-                            else
-                                Console.WriteLine("Mauvaise mesure : début = " + debut + " / fin = " + fin);
+                            //if (debut < 360 && debut > 0 && fin < 360 && fin > 0)
+                            DetectionsCapteur1.Add(d = new DetectionBalise(this, debut, fin));
+                            //else
+                            //    Console.WriteLine("Mauvaise mesure : début = " + debut + " / fin = " + fin);
                         }
 
                         /*writer.WriteLine((DateTime.Now - prec).TotalMilliseconds + ";" + nouvelleVitesse + ";" + (d == null ? ";;" : d.AngleCentral + ";" + d.Distance + ";") + VitesseToursSecActuelle);
@@ -232,7 +233,7 @@ namespace GoBot
                         {
                             int valeur = trame[offSet + i] * 256 + trame[offSet + i + 1];
                             tabAngle.Add(valeur);
-                            verif += valeur * (i/2 + 1);
+                            verif += valeur * (i / 2 + 1);
                         }
 
                         tabAngle.Sort();
@@ -254,11 +255,16 @@ namespace GoBot
                         {
                             double debut = 360 - (tabAngle[i * 2] / 100.0) + Config.CurrentConfig.GetOffsetBalise(Carte, 2);
                             double fin = 360 - (tabAngle[i * 2 + 1] / 100.0) + Config.CurrentConfig.GetOffsetBalise(Carte, 2);
+                            if (this == Plateau.Balise3)
+                            {
+                                debut = (debut + 180) % 360;
+                                fin = (fin + 180) % 360;
+                            }
 
-                            if (debut < 360 && debut > 0 && fin < 360 && fin > 0)
-                                DetectionsCapteur2.Add(new DetectionBalise(this, debut, fin));
-                            else
-                                Console.WriteLine("Mauvaise mesure : début = " + debut + " / fin = " + fin);
+                            //if (debut < 360 && debut > 0 && fin < 360 && fin > 0)
+                            DetectionsCapteur2.Add(new DetectionBalise(this, debut, fin));
+                            //else
+                            //    Console.WriteLine("Mauvaise mesure : début = " + debut + " / fin = " + fin);
                         }
 
                         // Réglage de l'offset d'angle des capteurs
@@ -310,16 +316,16 @@ namespace GoBot
                                             moyenne = 146.31 - moyenne;
                                             break;
                                         case GoBot.Carte.RecBeu:
-                                            moyenne = - 33.69 - moyenne;
+                                            moyenne = 213.69 - moyenne;
                                             break;
                                         case GoBot.Carte.RecBoi:
-                                            moyenne = - moyenne;
+                                            moyenne = -moyenne;
                                             break;
                                     }
                                 }
 
                                 // On le sauve dans la config (haut)
-                                Config.CurrentConfig.SetOffsetBalise(Carte, 1,  moyenne + Config.CurrentConfig.GetOffsetBalise(Carte, 1));
+                                Config.CurrentConfig.SetOffsetBalise(Carte, 1, moyenne + Config.CurrentConfig.GetOffsetBalise(Carte, 1));
 
                                 moyenne = 0;
 
@@ -327,18 +333,36 @@ namespace GoBot
                                     moyenne += dv;
 
                                 moyenne /= anglesMesuresPourOffsetCapteur2.Count;
-
-                                switch (Carte)
+                                if (Plateau.NotreCouleur == Plateau.CouleurJ2B)
                                 {
-                                    case GoBot.Carte.RecBun:
-                                        moyenne = 33.69 - moyenne;
-                                        break;
-                                    case GoBot.Carte.RecBeu:
-                                        moyenne = 326.31 - moyenne;
-                                        break;
-                                    case GoBot.Carte.RecBoi:
-                                        moyenne = - moyenne;
-                                        break;
+                                    switch (Carte)
+                                    {
+                                        case GoBot.Carte.RecBun:
+                                            moyenne = 33.69 - moyenne;
+                                            break;
+                                        case GoBot.Carte.RecBeu:
+                                            moyenne = 326.31 - moyenne;
+                                            break;
+                                        case GoBot.Carte.RecBoi:
+                                            moyenne = 180 - moyenne;
+                                            break;
+                                    }
+                                }
+                                else
+                                {
+                                    // Les valeurs sont les angles que doivent retourner chaque balise pour un reflecteur placé au centre de la table (sur le palmier)
+                                    switch (Carte)
+                                    {
+                                        case GoBot.Carte.RecBun:
+                                            moyenne = 146.31 - moyenne;
+                                            break;
+                                        case GoBot.Carte.RecBeu:
+                                            moyenne = 213.69 - moyenne;
+                                            break;
+                                        case GoBot.Carte.RecBoi:
+                                            moyenne = -moyenne;
+                                            break;
+                                    }
                                 }
 
                                 // On le sauve dans la config (bas)
@@ -349,9 +373,11 @@ namespace GoBot
                             }
                         }
 
+                        // Réunification des mesures détectées par les deux capteurs
                         Detections = new List<DetectionBalise>();
                         double ecartAngle = 1;
 
+                        /*
                         foreach (DetectionBalise d1 in DetectionsCapteur1)
                         {
                             bool correspondance = false;
@@ -381,8 +407,99 @@ namespace GoBot
                             }
                             if (!correspondance)
                                 Detections.Add(d2);
-                        }
+                        }*/
 
+                        foreach (DetectionBalise d2 in DetectionsCapteur1)
+                            Detections.Add(d2);
+
+                        foreach (DetectionBalise d1 in DetectionsCapteur2)
+                            Detections.Add(d1);
+
+                        // Retire les détections correspondant à la position de robots alliés
+                        if (Plateau.ReflecteursNosRobots)
+                        {
+                            for (int i = 0; i < Detections.Count; i++)
+                            {
+                                DetectionBalise detection = Detections[i];
+                                // Calcul du 3ème point du triangle rectangle Balise / Gros robot
+                                Droite droiteBalise0Degres = new Droite(Position.Coordonnees, new PointReel(Position.Coordonnees.X + 500, Position.Coordonnees.Y));
+                                Droite perpendiculaire = droiteBalise0Degres.getPerpendiculaire(Robots.GrosRobot.Position.Coordonnees);
+                                PointReel troisiemePoint = perpendiculaire.getCroisement(droiteBalise0Degres);
+                                //sohcahtoa
+                                double distanceBaliseTroisiemePoint = troisiemePoint.Distance(Position.Coordonnees);
+                                double distanceBaliseRobot = Robots.GrosRobot.Position.Coordonnees.Distance(Position.Coordonnees);
+
+                                double a = Math.Acos(distanceBaliseTroisiemePoint / distanceBaliseRobot);
+                                Angle angleGrosRobot = new Angle(a, AnglyeType.Radian);
+                                Angle angleDetection = new Angle(detection.AngleCentral);
+
+                                double marge = 2;
+
+                                if (Carte == GoBot.Carte.RecBeu && Plateau.NotreCouleur == Plateau.CouleurJ1R)
+                                {
+                                    Angle diff = new Angle(180) - (angleDetection - angleGrosRobot);
+                                    Console.WriteLine("Beu " + diff);
+                                    if (Math.Abs((diff).AngleDegres) < marge)
+                                    {
+                                        Console.WriteLine("GrosRobot repéré sur balise beu");
+                                        Detections.RemoveAt(i);
+                                        i--;
+                                    }
+                                }
+                                else if (Carte == GoBot.Carte.RecBoi && Plateau.NotreCouleur == Plateau.CouleurJ1R)
+                                {
+                                    Angle diff = angleGrosRobot - angleDetection;
+                                    Console.WriteLine("Boi " + diff);
+                                    if (Math.Abs((diff).AngleDegres) < marge)
+                                    {
+                                        Console.WriteLine("GrosRobot repéré sur balise boi");
+                                        Detections.RemoveAt(i);
+                                        i--;
+                                    }
+                                }
+                                else if (Carte == GoBot.Carte.RecBun && Plateau.NotreCouleur == Plateau.CouleurJ1R)
+                                {
+                                    Angle diff = new Angle(180) - (angleGrosRobot + angleDetection);
+                                    Console.WriteLine("Bun " + diff);
+                                    if (Math.Abs((diff).AngleDegres) < marge)
+                                    {
+                                        Console.WriteLine("GrosRobot repéré sur balise boi");
+                                        Detections.RemoveAt(i);
+                                        i--;
+                                    }
+                                } 
+                                else if (Carte == GoBot.Carte.RecBeu && Plateau.NotreCouleur == Plateau.CouleurJ2B)
+                                {
+                                    Angle diff = angleDetection + angleGrosRobot;
+                                    Console.WriteLine("Beu " + diff);
+                                    if (Math.Abs((diff).AngleDegres) < marge)
+                                    {
+                                        Detections.RemoveAt(i);
+                                        i--;
+                                    }
+                                }
+                                else if (Carte == GoBot.Carte.RecBoi && Plateau.NotreCouleur == Plateau.CouleurJ2B)
+                                {
+                                    Angle diff = new Angle(180) + angleGrosRobot - angleDetection;
+                                    Console.WriteLine("Boi " + diff);
+                                    if (Math.Abs((diff).AngleDegres) < marge)
+                                    {
+                                        Detections.RemoveAt(i);
+                                        i--;
+                                    }
+                                }
+                                else if (Carte == GoBot.Carte.RecBun && Plateau.NotreCouleur == Plateau.CouleurJ2B)
+                                {
+                                    Angle diff = angleGrosRobot - angleDetection;
+                                    Console.WriteLine("Bun " + diff);
+                                    if (Math.Abs((diff).AngleDegres) < marge)
+                                    {
+                                        Detections.RemoveAt(i);
+                                        i--;
+                                    }
+                                }
+                            }
+                        }
                         // Génération de l'event de notification de détection
                         PositionsChange();
                     }

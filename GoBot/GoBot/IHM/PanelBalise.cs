@@ -128,13 +128,13 @@ namespace GoBot.IHM
                 {
                     g.FillPie(new SolidBrush(Color.Salmon), 5, 5, 190, 190, (int)debut, (int)(fin - debut));
                     g.DrawPie(new Pen(Color.Red), 5, 5, 190, 190, (int)debut, (int)(fin - debut));
-                    g.DrawString((fin + debut) / 2.0 + "°", font, new SolidBrush(Color.Black), 2, 5 + 8 * nbDetections);
+                    g.DrawString(Math.Round((fin + debut) / 2.0, 2) + "°", font, new SolidBrush(Color.Black), 2, 5 + 8 * nbDetections);
                 }
                 else
                 {
                     g.FillPie(new SolidBrush(Color.LightBlue), 5, 180, 190, 190, (int)debut, (int)(fin - debut));
                     g.DrawPie(new Pen(Color.Blue), 5, 180, 190, 190, (int)debut, (int)(fin - debut));
-                    g.DrawString((fin + debut) / 2.0 + "°", font, new SolidBrush(Color.Black), 2, 185 + 8 * nbDetections);
+                    g.DrawString(Math.Round((fin + debut) / 2.0, 2) + "°", font, new SolidBrush(Color.Black), 2, 185 + 10 * nbDetections);
                 }
 
                 pictureBoxAngle.Image = bmp;

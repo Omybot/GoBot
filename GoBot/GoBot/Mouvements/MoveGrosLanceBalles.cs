@@ -34,16 +34,11 @@ namespace GoBot.Mouvements
         {
             Plateau.BaisserBras();
             DateTime debut = DateTime.Now;
-            Robots.GrosRobot.TourneMoteur(MoteurID.GRCanon, posLancement.PuissanceTir);
+            Robots.GrosRobot.TourneMoteur(MoteurID.GRCanonTMin, posLancement.PuissanceTir);
 
             if (Robots.GrosRobot.PathFinding(Position.Coordonnees.X, Position.Coordonnees.Y, timeOut, true))
             {
                 Robots.GrosRobot.PositionerAngle(Position.Angle, 0.5);
-
-                // Si le moteur tourne depuis moins de 8 secondes on attends de finir les 8 secondes avant de lancer la séquence
-                // ou que le moteur soit à +- 30 la vitesse demandée
-                if ((DateTime.Now - debut).TotalMilliseconds < 2000)
-                    Thread.Sleep((int)(2000 - (DateTime.Now - debut).TotalMilliseconds));
 
                 int vitesseActuelleCanon = Robots.GrosRobot.GetVitesseCanon();
                 while ((DateTime.Now - debut).TotalMilliseconds < 8000 &&

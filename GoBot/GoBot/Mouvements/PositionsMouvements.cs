@@ -70,7 +70,7 @@ namespace GoBot.Mouvements
             
             // Positions CAO à la Ferté 
             // Positions identiques : 14 & 16 | 8 & 9 | 2 & 5
-            PositionGrosBougie.Add(0, new Position(new Angle(-236.3), new PointReel(2122, 269)));
+            /*PositionGrosBougie.Add(0, new Position(new Angle(-236.3), new PointReel(2122, 269)));
             PositionGrosBougie.Add(1, new Position(new Angle(-225.55), new PointReel(2122, 269)));
             PositionGrosBougie.Add(2, new Position(new Angle(-231.47), new PointReel(2030, 422)));
             PositionGrosBougie.Add(3, new Position(new Angle(-246.61), new PointReel(2122, 269)));
@@ -89,7 +89,29 @@ namespace GoBot.Mouvements
             PositionGrosBougie.Add(16, new Position(new Angle(-140.74), new PointReel(1069, 527)));
             PositionGrosBougie.Add(17, new Position(new Angle(-155.73), new PointReel(1222, 618)));
             PositionGrosBougie.Add(18, new Position(new Angle(-164.2), new PointReel(1321, 640))); // exp
-            PositionGrosBougie.Add(19, new Position(new Angle(-170.9), new PointReel(1393, 670)));
+            PositionGrosBougie.Add(19, new Position(new Angle(-170.9), new PointReel(1393, 670)));*/
+
+            // Positions CAO à la Ferté 2
+            PositionGrosBougie.Add(0, new Position(new Angle(-236.3), new PointReel(2122, 269)));
+            PositionGrosBougie.Add(1, new Position(new Angle(-225.55), new PointReel(2122, 269)));
+            PositionGrosBougie.Add(2, new Position(new Angle(-232.12), new PointReel(2035, 416)));
+            PositionGrosBougie.Add(3, new Position(new Angle(-246.61), new PointReel(2122, 269)));
+            PositionGrosBougie.Add(4, new Position(new Angle(-230.8), new PointReel(1945, 532)));
+            PositionGrosBougie.Add(5, new Position(new Angle(-232.12), new PointReel(2035, 416)));
+            PositionGrosBougie.Add(6, new Position(new Angle(-230.8), new PointReel(1945, 532)));
+            PositionGrosBougie.Add(7, new Position(new Angle(-201.18), new PointReel(1745, 632)));
+            PositionGrosBougie.Add(8, new Position(new Angle(-187.28), new PointReel(1586, 673)));
+            PositionGrosBougie.Add(9, new Position(new Angle(-187.28), new PointReel(1586, 673)));
+            PositionGrosBougie.Add(10, new Position(new Angle(-127.38), new PointReel(868, 245)));
+            PositionGrosBougie.Add(11, new Position(new Angle(-156.49), new PointReel(908, 331)));
+            PositionGrosBougie.Add(12, new Position(new Angle(-119.26), new PointReel(908, 331)));
+            PositionGrosBougie.Add(13, new Position(new Angle(-107.73), new PointReel(868, 245))); 
+            PositionGrosBougie.Add(14, new Position(new Angle(-142.13), new PointReel(1084, 532)));
+            PositionGrosBougie.Add(15, new Position(new Angle(-138.16), new PointReel(969, 443)));
+            PositionGrosBougie.Add(16, new Position(new Angle(-142.13), new PointReel(1084, 532)));
+            PositionGrosBougie.Add(17, new Position(new Angle(-155.73), new PointReel(1222, 618)));
+            PositionGrosBougie.Add(18, new Position(new Angle(-192.85), new PointReel(1484, 678)));
+            PositionGrosBougie.Add(19, new Position(new Angle(-192.85), new PointReel(1484, 678)));
             
             // Positions manuelles la ferté 1
             /*
@@ -148,12 +170,38 @@ namespace GoBot.Mouvements
             PositionGrosCadeau.Add(7, new Position(new Angle(-15), new PointReel(Plateau.PositionsCadeaux[7].X - 35, Plateau.PositionsCadeaux[7].Y - 200)));
 
             PositionTirCanon = new List<PositionLancement>();
+
             PositionLancement position;
             position = new PositionLancement();
             position.Angle = 145.83;
             position.X = 2436;
             position.Y = 1389;
             position.Couleur = Plateau.CouleurJ1R;
+            position.PuissanceTir = 7325;
+            PositionTirCanon.Add(position);
+
+            position = new PositionLancement();
+            position.Angle = -136.51;
+            position.X = 477;
+            position.Y = 1000;
+            position.Couleur = Plateau.CouleurJ2B;
+            position.PuissanceTir = 6850;
+            PositionTirCanon.Add(position);
+
+            position = new PositionLancement();
+            position.Angle = 5;
+            position.X = 1500;
+            position.Y = 2000 - 100 - 140;
+            position.Couleur = Plateau.CouleurJ2B;
+            position.PuissanceTir = 7600;
+            PositionTirCanon.Add(position);
+
+            position = new PositionLancement();
+            position.Angle = 1;
+            position.X = 1500;
+            position.Y = 2000 - 100 - 140;
+            position.Couleur = Plateau.CouleurJ1R;
+            position.PuissanceTir = 7600;
             PositionTirCanon.Add(position);
         }
     }

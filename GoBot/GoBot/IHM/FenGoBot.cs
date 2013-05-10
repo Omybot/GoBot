@@ -259,7 +259,6 @@ namespace GoBot
 
             Robots.PetitRobot.Recallage(SensAR.Arriere);
             Thread.Sleep(1000);
-            Robots.PetitRobot.Reset();
 
             if (Plateau.NotreCouleur == Plateau.CouleurJ2B)
                 Robots.PetitRobot.ReglerOffsetAsserv(Robots.PetitRobot.Longueur / 2, 1750 - Robots.PetitRobot.Longueur / 2, 0);
@@ -302,7 +301,7 @@ namespace GoBot
 
         public void RecallagesDebut()
         {
-
+            panelBougies.btnCapture_Click(null, null);
             // Recallage du gros robot
 
             Robots.GrosRobot.Reset();
@@ -322,6 +321,9 @@ namespace GoBot
             Robots.GrosRobot.Lent();
             Robots.GrosRobot.Recallage(SensAR.Arriere);
             Robots.GrosRobot.Rapide();
+            panelBougies.btnCapture_Click(null, null);
+            while (!panelBougies.imageRefresh)
+                Thread.Sleep(100);
 
             Robots.GrosRobot.Avancer(1500 - Robots.GrosRobot.Longueur / 2);
 
@@ -337,8 +339,7 @@ namespace GoBot
             Robots.GrosRobot.Lent();
             Robots.GrosRobot.Recallage(SensAR.Arriere);
 
-            // Réinitialise le robot pour remettre à 0 l'asserv
-            Robots.GrosRobot.Reset();
+            Thread.Sleep(1000);
 
             if (Plateau.NotreCouleur == Plateau.CouleurJ1R)
                 Robots.GrosRobot.ReglerOffsetAsserv(3000 - Robots.GrosRobot.Longueur / 2, 1000, 180);
@@ -530,6 +531,11 @@ namespace GoBot
         private void btnPIDPetitRobot_Click(object sender, EventArgs e)
         {
             Robots.PetitRobot.EnvoyerPID((int)numPPetit.Value, (int)numIPetit.Value, (int)numDPetit.Value);
+        }
+
+        private void radioBaliseOui_CheckedChanged(object sender, EventArgs e)
+        {
+            Plateau.ReflecteursNosRobots = radioBaliseOui.Checked;
         }
     }
 }
