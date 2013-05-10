@@ -55,12 +55,16 @@
             this.btnAvGaHaut = new System.Windows.Forms.Button();
             this.label10 = new System.Windows.Forms.Label();
             this.btnTaille = new System.Windows.Forms.Button();
+            this.btnDanse = new System.Windows.Forms.Button();
+            this.btnDanse2 = new System.Windows.Forms.Button();
             this.groupBoxUtil.SuspendLayout();
             this.SuspendLayout();
             // 
             // groupBoxUtil
             // 
             this.groupBoxUtil.BackColor = System.Drawing.Color.Transparent;
+            this.groupBoxUtil.Controls.Add(this.btnDanse2);
+            this.groupBoxUtil.Controls.Add(this.btnDanse);
             this.groupBoxUtil.Controls.Add(this.btnArriereAssiette);
             this.groupBoxUtil.Controls.Add(this.btnArriereRange);
             this.groupBoxUtil.Controls.Add(this.btnArriereBas);
@@ -89,7 +93,7 @@
             this.groupBoxUtil.Controls.Add(this.btnTaille);
             this.groupBoxUtil.Location = new System.Drawing.Point(5, 3);
             this.groupBoxUtil.Name = "groupBoxUtil";
-            this.groupBoxUtil.Size = new System.Drawing.Size(332, 255);
+            this.groupBoxUtil.Size = new System.Drawing.Size(332, 324);
             this.groupBoxUtil.TabIndex = 0;
             this.groupBoxUtil.TabStop = false;
             this.groupBoxUtil.Text = "Utilisation";
@@ -347,6 +351,26 @@
             this.btnTaille.UseVisualStyleBackColor = true;
             this.btnTaille.Click += new System.EventHandler(this.btnTaille_Click);
             // 
+            // btnDanse
+            // 
+            this.btnDanse.Location = new System.Drawing.Point(134, 281);
+            this.btnDanse.Name = "btnDanse";
+            this.btnDanse.Size = new System.Drawing.Size(75, 23);
+            this.btnDanse.TabIndex = 221;
+            this.btnDanse.Text = "Danse !";
+            this.btnDanse.UseVisualStyleBackColor = true;
+            this.btnDanse.Click += new System.EventHandler(this.btnDanse_Click);
+            // 
+            // btnDanse2
+            // 
+            this.btnDanse2.Location = new System.Drawing.Point(229, 282);
+            this.btnDanse2.Name = "btnDanse2";
+            this.btnDanse2.Size = new System.Drawing.Size(75, 23);
+            this.btnDanse2.TabIndex = 222;
+            this.btnDanse2.Text = "Danse 2";
+            this.btnDanse2.UseVisualStyleBackColor = true;
+            this.btnDanse2.Click += new System.EventHandler(this.btnDanse2_Click);
+            // 
             // PanelPetitRobotUtilisation
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -392,5 +416,7 @@
         private System.Windows.Forms.Button btnAvantBas;
         private System.Windows.Forms.Button btnAvantHaut;
         private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.Button btnDanse;
+        private System.Windows.Forms.Button btnDanse2;
     }
 }

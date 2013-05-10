@@ -174,7 +174,7 @@ namespace GoBot.Mouvements
         {
             get
             {
-                return Score * Plateau.PoidActions.PoidGlobalGrosBougie * Plateau.PoidActions.PoidsGrosBougie[numeroBougie];
+                return (Score > 0 ? 1 : 0) * Plateau.PoidActions.PoidGlobalGrosBougie * Plateau.PoidActions.PoidsGrosBougie[numeroBougie];
             }
         }
     }

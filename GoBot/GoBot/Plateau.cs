@@ -101,7 +101,7 @@ namespace GoBot
         {
             if (!Config.DesignMode)
             {
-                ReflecteursNosRobots = false;
+                ReflecteursNosRobots = true;
                 DerniereBougieGros = -1;
                 AssietteAttrapee = -1;
                 Plateau.SemaphoreGraph = new Semaphore(1, 1);

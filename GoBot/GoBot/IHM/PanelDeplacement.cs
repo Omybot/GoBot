@@ -341,5 +341,10 @@ namespace GoBot.IHM
             Robot.VitesseDeplacement = vitesseTemp;
             Robot.AccelerationDeplacement = accelerationTemp;
         }
+
+        private void btnFreely_Click(object sender, EventArgs e)
+        {
+            Robot.Stop(StopMode.Freely);
+        }
     }
 }

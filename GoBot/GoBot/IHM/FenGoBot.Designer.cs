@@ -527,22 +527,22 @@ namespace GoBot
             // radioBaliseNon
             // 
             this.radioBaliseNon.AutoSize = true;
-            this.radioBaliseNon.Checked = true;
             this.radioBaliseNon.Location = new System.Drawing.Point(116, 23);
             this.radioBaliseNon.Name = "radioBaliseNon";
             this.radioBaliseNon.Size = new System.Drawing.Size(45, 17);
             this.radioBaliseNon.TabIndex = 1;
-            this.radioBaliseNon.TabStop = true;
             this.radioBaliseNon.Text = "Non";
             this.radioBaliseNon.UseVisualStyleBackColor = true;
             // 
             // radioBaliseOui
             // 
             this.radioBaliseOui.AutoSize = true;
+            this.radioBaliseOui.Checked = true;
             this.radioBaliseOui.Location = new System.Drawing.Point(47, 23);
             this.radioBaliseOui.Name = "radioBaliseOui";
             this.radioBaliseOui.Size = new System.Drawing.Size(41, 17);
             this.radioBaliseOui.TabIndex = 0;
+            this.radioBaliseOui.TabStop = true;
             this.radioBaliseOui.Text = "Oui";
             this.radioBaliseOui.UseVisualStyleBackColor = true;
             this.radioBaliseOui.CheckedChanged += new System.EventHandler(this.radioBaliseOui_CheckedChanged);

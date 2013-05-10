@@ -158,5 +158,168 @@ namespace GoBot.IHM
         {
             Robots.PetitRobot.BougeServo(ServomoteurID.PRBrasArriereDroit, Config.CurrentConfig.PositionPRBrasArriereDroitBas);
         }
+
+        Thread thDanse;
+        private void btnDanse_Click(object sender, EventArgs e)
+        {
+            thDanse = new Thread(Danse);
+            thDanse.Start();
+        }
+
+        public void Danse()
+        {
+            /*
+                        Robots.PetitRobot.BougeServo(ServomoteurID.PRBrasGauche, Config.CurrentConfig.PositionPRBrasGaucheHaut);//sherk gauche haut
+                        Robots.PetitRobot.BougeServo(ServomoteurID.PRBrasDroit, Config.CurrentConfig.PositionPRBrasDroiteHaut);//shrek droit haut
+                        Robots.PetitRobot.BougeServo(ServomoteurID.PRBrasDroit, Config.CurrentConfig.PositionPRBrasDroiteBas);//sherk droit bas
+                        Robots.PetitRobot.BougeServo(ServomoteurID.PRBrasGauche, Config.CurrentConfig.PositionPRBrasGaucheBas);//shrek gauche bas
+                        ServomoteurID.PRBrasArriereDroit;
+                        ServomoteurID.PRBrasArriereGauche;
+                        ServomoteurID.PRBrasAvantDroit;
+                        ServomoteurID.PRBrasAvantGauche;
+
+                        Robots.PetitRobot.BougeServo(ServomoteurID.PRBrasAvantGauche, Config.CurrentConfig.PositionPRBrasAvantGaucheBas);//baisse patte
+                        Robots.PetitRobot.BougeServo(ServomoteurID.PRBrasAvantDroit, Config.CurrentConfig.PositionPRBrasAvantDroitBas);
+                        Robots.PetitRobot.BougeServo(ServomoteurID.PRBrasArriereGauche, Config.CurrentConfig.PositionPRBrasArriereGaucheBas);
+                        Robots.PetitRobot.BougeServo(ServomoteurID.PRBrasArriereDroit, Config.CurrentConfig.PositionPRBrasArriereDroitBas);
+
+                        Robots.PetitRobot.BougeServo(ServomoteurID.PRBrasAvantGauche, Config.CurrentConfig.PositionPRBrasAvantGaucheHaut);//leve patte
+                        Robots.PetitRobot.BougeServo(ServomoteurID.PRBrasAvantDroit, Config.CurrentConfig.PositionPRBrasAvantDroitHaut);
+                        Robots.PetitRobot.BougeServo(ServomoteurID.PRBrasArriereGauche, Config.CurrentConfig.PositionPRBrasArriereGaucheHaut);
+                        Robots.PetitRobot.BougeServo(ServomoteurID.PRBrasArriereDroit, Config.CurrentConfig.PositionPRBrasArriereDroitHaut);
+
+
+                        Robots.PetitRobot.PivotDroite(90); // Angle en degrés
+                        Robots.PetitRobot.PivotGauche(90);
+
+                        Robots.PetitRobot.Avancer(200); // Distance en mm
+                        Robots.PetitRobot.Reculer(200);
+
+                        Robots.PetitRobot.Virage(SensAR.Arriere, SensGD.Droite, 200, 90); // SensAR.Arriere ou SensAR.Avant / SensGD.Droite ou SensGD.Gauche / Rayon en mm / Angle en °
+                        Thread.Sleep(300); //Tempo en ms */
+
+            int shrek = 0;
+            Robots.PetitRobot.BougeServo(ServomoteurID.PRBrasAvantGauche, Config.CurrentConfig.PositionPRBrasAvantGaucheHaut);//leve patte+shrek
+            Robots.PetitRobot.BougeServo(ServomoteurID.PRBrasAvantDroit, Config.CurrentConfig.PositionPRBrasAvantDroitHaut);
+            Robots.PetitRobot.BougeServo(ServomoteurID.PRBrasArriereGauche, Config.CurrentConfig.PositionPRBrasArriereGaucheHaut);
+            Robots.PetitRobot.BougeServo(ServomoteurID.PRBrasArriereDroit, Config.CurrentConfig.PositionPRBrasArriereDroitHaut);
+            Robots.PetitRobot.BougeServo(ServomoteurID.PRBrasGauche, Config.CurrentConfig.PositionPRBrasGaucheHaut);
+            Robots.PetitRobot.BougeServo(ServomoteurID.PRBrasDroit, Config.CurrentConfig.PositionPRBrasDroiteHaut);
+
+            Robots.PetitRobot.Virage(SensAR.Avant, SensGD.Droite, 60, 90);//petit caré qui tourne
+            Robots.PetitRobot.Virage(SensAR.Avant, SensGD.Gauche, 60, 180);
+            Robots.PetitRobot.Virage(SensAR.Avant, SensGD.Droite, 60, 90);
+            Robots.PetitRobot.Virage(SensAR.Avant, SensGD.Gauche, 60, 180);
+            Robots.PetitRobot.Virage(SensAR.Avant, SensGD.Droite, 60, 90);
+            Robots.PetitRobot.Virage(SensAR.Avant, SensGD.Gauche, 60, 180);
+
+            Robots.PetitRobot.BougeServo(ServomoteurID.PRBrasDroit, Config.CurrentConfig.PositionPRBrasDroiteBas);//shrek bas
+            Robots.PetitRobot.BougeServo(ServomoteurID.PRBrasGauche, Config.CurrentConfig.PositionPRBrasGaucheBas);
+            Thread.Sleep(400);
+            Robots.PetitRobot.BougeServo(ServomoteurID.PRBrasGauche, Config.CurrentConfig.PositionPRBrasGaucheHaut);//shrek haut
+            Robots.PetitRobot.BougeServo(ServomoteurID.PRBrasDroit, Config.CurrentConfig.PositionPRBrasDroiteHaut);
+            Thread.Sleep(150);
+            Robots.PetitRobot.BougeServo(ServomoteurID.PRBrasDroit, Config.CurrentConfig.PositionPRBrasDroiteBas);//sherk bas
+            Robots.PetitRobot.BougeServo(ServomoteurID.PRBrasGauche, Config.CurrentConfig.PositionPRBrasGaucheBas);
+            Thread.Sleep(150);
+
+            for (shrek = 0; shrek < 6; shrek++) //araignée
+            {
+                Robots.PetitRobot.BougeServo(ServomoteurID.PRBrasAvantGauche, Config.CurrentConfig.PositionPRBrasAvantGaucheBas);//baisse patte
+                Thread.Sleep(150);
+                Robots.PetitRobot.BougeServo(ServomoteurID.PRBrasAvantDroit, Config.CurrentConfig.PositionPRBrasAvantDroitBas);
+                Thread.Sleep(150);
+                Robots.PetitRobot.BougeServo(ServomoteurID.PRBrasArriereDroit, Config.CurrentConfig.PositionPRBrasArriereDroitBas);
+                Thread.Sleep(150);
+                Robots.PetitRobot.BougeServo(ServomoteurID.PRBrasArriereGauche, Config.CurrentConfig.PositionPRBrasArriereGaucheBas);
+                Thread.Sleep(150);
+                Robots.PetitRobot.BougeServo(ServomoteurID.PRBrasAvantGauche, Config.CurrentConfig.PositionPRBrasAvantGaucheHaut);//leve patte
+                Thread.Sleep(150);
+                Robots.PetitRobot.BougeServo(ServomoteurID.PRBrasAvantDroit, Config.CurrentConfig.PositionPRBrasAvantDroitHaut);
+                Thread.Sleep(150);
+                Robots.PetitRobot.BougeServo(ServomoteurID.PRBrasArriereDroit, Config.CurrentConfig.PositionPRBrasArriereDroitHaut);
+                Thread.Sleep(150);
+                Robots.PetitRobot.BougeServo(ServomoteurID.PRBrasArriereGauche, Config.CurrentConfig.PositionPRBrasArriereGaucheHaut);
+            }
+            Robots.PetitRobot.Avancer(200); // Distance en mm
+            Robots.PetitRobot.Reculer(200);
+
+            Robots.PetitRobot.BougeServo(ServomoteurID.PRBrasAvantGauche, Config.CurrentConfig.PositionPRBrasAvantGaucheBas);//baisse patte
+            Robots.PetitRobot.BougeServo(ServomoteurID.PRBrasAvantDroit, Config.CurrentConfig.PositionPRBrasAvantDroitBas);
+            Robots.PetitRobot.BougeServo(ServomoteurID.PRBrasArriereGauche, Config.CurrentConfig.PositionPRBrasArriereGaucheBas);
+            Robots.PetitRobot.BougeServo(ServomoteurID.PRBrasArriereDroit, Config.CurrentConfig.PositionPRBrasArriereDroitBas);
+            Thread.Sleep(300);
+            Robots.PetitRobot.BougeServo(ServomoteurID.PRBrasAvantGauche, Config.CurrentConfig.PositionPRBrasAvantGaucheHaut);//leve patte
+            Robots.PetitRobot.BougeServo(ServomoteurID.PRBrasAvantDroit, Config.CurrentConfig.PositionPRBrasAvantDroitHaut);
+            Robots.PetitRobot.BougeServo(ServomoteurID.PRBrasArriereGauche, Config.CurrentConfig.PositionPRBrasArriereGaucheHaut);
+            Robots.PetitRobot.BougeServo(ServomoteurID.PRBrasArriereDroit, Config.CurrentConfig.PositionPRBrasArriereDroitHaut);
+            Thread.Sleep(300);
+            Robots.PetitRobot.BougeServo(ServomoteurID.PRBrasGauche, Config.CurrentConfig.PositionPRBrasGaucheHaut);//sherk gauche haut
+            Robots.PetitRobot.BougeServo(ServomoteurID.PRBrasDroit, Config.CurrentConfig.PositionPRBrasDroiteHaut);//shrek droit haut
+            Robots.PetitRobot.Avancer(200); // Distance en mm
+            Robots.PetitRobot.Reculer(200);
+
+            for (shrek = 0; shrek < 5; shrek++) //alterne shrek
+            {
+                Robots.PetitRobot.BougeServo(ServomoteurID.PRBrasDroit, Config.CurrentConfig.PositionPRBrasDroiteBas);//sherk droit bas
+                Robots.PetitRobot.BougeServo(ServomoteurID.PRBrasGauche, Config.CurrentConfig.PositionPRBrasGaucheHaut);//sherk gauche haut
+                Thread.Sleep(200);
+                Robots.PetitRobot.BougeServo(ServomoteurID.PRBrasDroit, Config.CurrentConfig.PositionPRBrasDroiteHaut);//shrek droit haut
+                Robots.PetitRobot.BougeServo(ServomoteurID.PRBrasGauche, Config.CurrentConfig.PositionPRBrasGaucheBas);//shrek gauche bas
+                Thread.Sleep(200);
+                Robots.PetitRobot.BougeServo(ServomoteurID.PRBrasDroit, Config.CurrentConfig.PositionPRBrasDroiteBas);//sherk droit bas
+                Robots.PetitRobot.BougeServo(ServomoteurID.PRBrasGauche, Config.CurrentConfig.PositionPRBrasGaucheHaut);//sherk gauche haut
+                Thread.Sleep(200);
+                Robots.PetitRobot.BougeServo(ServomoteurID.PRBrasDroit, Config.CurrentConfig.PositionPRBrasDroiteHaut);//shrek droit haut
+                Robots.PetitRobot.BougeServo(ServomoteurID.PRBrasGauche, Config.CurrentConfig.PositionPRBrasGaucheBas);//shrek gauche bas
+            }
+
+            Robots.PetitRobot.Virage(SensAR.Avant, SensGD.Droite, 60, 90);
+            Robots.PetitRobot.Virage(SensAR.Avant, SensGD.Gauche, 60, 90);
+
+            Robots.PetitRobot.Virage(SensAR.Arriere, SensGD.Droite, 60, 90);
+            Robots.PetitRobot.Virage(SensAR.Arriere, SensGD.Gauche, 60, 90);
+
+            for (shrek = 0; shrek < 5; shrek++) //mille pattes
+            {
+                Robots.PetitRobot.BougeServo(ServomoteurID.PRBrasAvantDroit, Config.CurrentConfig.PositionPRBrasAvantDroitHaut);
+                Robots.PetitRobot.BougeServo(ServomoteurID.PRBrasArriereGauche, Config.CurrentConfig.PositionPRBrasArriereGaucheHaut);
+                Robots.PetitRobot.BougeServo(ServomoteurID.PRBrasAvantGauche, Config.CurrentConfig.PositionPRBrasAvantGaucheBas);
+                Robots.PetitRobot.BougeServo(ServomoteurID.PRBrasArriereDroit, Config.CurrentConfig.PositionPRBrasArriereDroitBas);
+                Thread.Sleep(200);
+                Robots.PetitRobot.BougeServo(ServomoteurID.PRBrasAvantGauche, Config.CurrentConfig.PositionPRBrasAvantGaucheHaut);
+                Robots.PetitRobot.BougeServo(ServomoteurID.PRBrasArriereDroit, Config.CurrentConfig.PositionPRBrasArriereDroitHaut);
+                Robots.PetitRobot.BougeServo(ServomoteurID.PRBrasAvantDroit, Config.CurrentConfig.PositionPRBrasAvantDroitBas);
+                Robots.PetitRobot.BougeServo(ServomoteurID.PRBrasArriereGauche, Config.CurrentConfig.PositionPRBrasArriereGaucheBas);
+                Thread.Sleep(200);
+            }
+
+
+        }
+
+        Thread thDanse2;
+        private void btnDanse2_Click(object sender, EventArgs e)
+        {
+            thDanse2 = new Thread(Danse2);
+            thDanse2.Start();
+        }
+
+        private void Danse2()
+        {
+            while (true)
+            {
+                Robots.PetitRobot.BougeServo(ServomoteurID.PRBrasDroit, Config.CurrentConfig.PositionPRBrasDroiteBas);//sherk droit bas
+                Robots.PetitRobot.BougeServo(ServomoteurID.PRBrasGauche, Config.CurrentConfig.PositionPRBrasGaucheHaut);//sherk gauche haut
+                Thread.Sleep(400);
+                Robots.PetitRobot.BougeServo(ServomoteurID.PRBrasDroit, Config.CurrentConfig.PositionPRBrasDroiteHaut);//shrek droit haut
+                Robots.PetitRobot.BougeServo(ServomoteurID.PRBrasGauche, Config.CurrentConfig.PositionPRBrasGaucheBas);//shrek gauche bas
+                Thread.Sleep(400);
+                Robots.PetitRobot.BougeServo(ServomoteurID.PRBrasDroit, Config.CurrentConfig.PositionPRBrasDroiteBas);//sherk droit bas
+                Robots.PetitRobot.BougeServo(ServomoteurID.PRBrasGauche, Config.CurrentConfig.PositionPRBrasGaucheHaut);//sherk gauche haut
+                Thread.Sleep(400);
+                Robots.PetitRobot.BougeServo(ServomoteurID.PRBrasDroit, Config.CurrentConfig.PositionPRBrasDroiteHaut);//shrek droit haut
+                Robots.PetitRobot.BougeServo(ServomoteurID.PRBrasGauche, Config.CurrentConfig.PositionPRBrasGaucheBas);//shrek gauche bas
+            }
+        }
     }
 }

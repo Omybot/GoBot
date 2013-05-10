@@ -33,19 +33,21 @@
             this.btnCerise1 = new System.Windows.Forms.Button();
             this.btnCerises = new System.Windows.Forms.Button();
             this.btnTaille = new System.Windows.Forms.Button();
+            this.btnVerres = new System.Windows.Forms.Button();
             this.groupBoxSeq.SuspendLayout();
             this.SuspendLayout();
             // 
             // groupBoxSeq
             // 
             this.groupBoxSeq.BackColor = System.Drawing.Color.Transparent;
+            this.groupBoxSeq.Controls.Add(this.btnVerres);
             this.groupBoxSeq.Controls.Add(this.btnAssiette);
             this.groupBoxSeq.Controls.Add(this.btnCerise1);
             this.groupBoxSeq.Controls.Add(this.btnCerises);
             this.groupBoxSeq.Controls.Add(this.btnTaille);
             this.groupBoxSeq.Location = new System.Drawing.Point(5, 3);
             this.groupBoxSeq.Name = "groupBoxSeq";
-            this.groupBoxSeq.Size = new System.Drawing.Size(332, 102);
+            this.groupBoxSeq.Size = new System.Drawing.Size(332, 144);
             this.groupBoxSeq.TabIndex = 0;
             this.groupBoxSeq.TabStop = false;
             this.groupBoxSeq.Text = "Sequences";
@@ -90,15 +92,25 @@
             this.btnTaille.UseVisualStyleBackColor = true;
             this.btnTaille.Click += new System.EventHandler(this.btnTaille_Click);
             // 
-            // PanelSequencesGros
+            // btnVerres
+            // 
+            this.btnVerres.Location = new System.Drawing.Point(30, 115);
+            this.btnVerres.Name = "btnVerres";
+            this.btnVerres.Size = new System.Drawing.Size(130, 23);
+            this.btnVerres.TabIndex = 93;
+            this.btnVerres.Text = "Verres départ";
+            this.btnVerres.UseVisualStyleBackColor = true;
+            this.btnVerres.Click += new System.EventHandler(this.btnVerres_Click);
+            // 
+            // PanelGrosRobotSequences
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoSize = true;
             this.BackColor = System.Drawing.Color.Transparent;
             this.Controls.Add(this.groupBoxSeq);
-            this.Name = "PanelSequencesGros";
-            this.Size = new System.Drawing.Size(341, 114);
+            this.Name = "PanelGrosRobotSequences";
+            this.Size = new System.Drawing.Size(341, 167);
             this.Load += new System.EventHandler(this.PanelSequencesGros_Load);
             this.groupBoxSeq.ResumeLayout(false);
             this.ResumeLayout(false);
@@ -112,5 +124,6 @@
         private System.Windows.Forms.Button btnCerises;
         private System.Windows.Forms.Button btnCerise1;
         private System.Windows.Forms.Button btnAssiette;
+        private System.Windows.Forms.Button btnVerres;
     }
 }

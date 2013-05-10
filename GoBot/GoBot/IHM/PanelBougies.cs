@@ -113,10 +113,10 @@ namespace GoBot.IHM
                     }
 
                     List<int> valeursBleu = new List<int>();
-                    int min = 12, max = 20;
+                    int min = 12, max = 20, offset = -10;
                     if (Plateau.NotreCouleur == Plateau.CouleurJ1R)
                     {
-                        min = 2; max = 10;
+                        min = 2; max = 10; offset = 10;
                     }
                     for (int i = min; i < max; i++)
                     {
@@ -128,9 +128,15 @@ namespace GoBot.IHM
                         //valeursBleu.Add(pixel.B);
 
                         if (pixel.R > pixel.B)
+                        {
                             Plateau.CouleursBougies[i] = Plateau.CouleurJ1R;
+                            Plateau.CouleursBougies[i + offset] = Plateau.CouleurJ2B;
+                        }
                         else
+                        {
                             Plateau.CouleursBougies[i] = Plateau.CouleurJ2B;
+                            Plateau.CouleursBougies[i + offset] = Plateau.CouleurJ1R;
+                        }
                     }
 
                     /*

@@ -69,17 +69,7 @@ namespace GoBot.IHM
 
         private void ThreadCerises()
         {
-            Robots.GrosRobot.TourneMoteur(MoteurID.GRTurbineAspirateur, Config.CurrentConfig.VitesseAspiration);
-            Robots.GrosRobot.TourneMoteur(MoteurID.GRCanon, Config.CurrentConfig.VitessePropulsionBonne);
-            Robots.GrosRobot.BougeServo(ServomoteurID.GRAspirateur, Config.CurrentConfig.PositionGRAspirateurBas);
-            Thread.Sleep(1300);
-            Robots.GrosRobot.TourneMoteur(MoteurID.GRTurbineAspirateur, 70);
-            Thread.Sleep(200);
-            Robots.GrosRobot.BougeServo(ServomoteurID.GRAspirateur, Config.CurrentConfig.PositionGRAspirateurHaut);
-            Thread.Sleep(00);
-            Robots.GrosRobot.TourneMoteur(MoteurID.GRTurbineAspirateur, 0);
-            Thread.Sleep(500);
-
+            AspirerBalles();
             LancerBalles();
         }
 
@@ -123,14 +113,88 @@ namespace GoBot.IHM
             LancerBalles();
         }
 
+        private bool AspirerBalles()
+        {
+            Robots.GrosRobot.TourneMoteur(MoteurID.GRCanonTMin, 7200);
+
+            int distance = 100;
+            // Approche d'aspiration
+            Robots.GrosRobot.TourneMoteur(MoteurID.GRTurbineAspirateur, Config.CurrentConfig.VitesseAspiration);
+            Robots.GrosRobot.BougeServo(ServomoteurID.GRAspirateur, Config.CurrentConfig.PositionGRAspirateurBas);
+
+                Robots.GrosRobot.Lent();
+                Robots.GrosRobot.Reculer(distance);
+                Robots.GrosRobot.Rapide();
+
+            // Si pas d'assiette on abandonne et on s'en va. On considère que l'assiette n'est pas ici
+            if (!Robots.GrosRobot.GetPresenceAssiette())
+            {
+                Robots.GrosRobot.TourneMoteur(MoteurID.GRTurbineAspirateur, 0);
+                Robots.GrosRobot.BougeServo(ServomoteurID.GRAspirateur, Config.CurrentConfig.PositionGRAspirateurHaut);
+
+                    Robots.GrosRobot.Avancer(distance);
+                    return false;
+            }
+
+            bool aspirateurRemonte;
+            int i = 0;
+            while (i < 3)
+            {
+                // Remontage de l'aspirateur
+                Robots.GrosRobot.TourneMoteur(MoteurID.GRTurbineAspirateur, Config.CurrentConfig.VitesseAspirationMaintien);
+                Thread.Sleep(300);
+                Robots.GrosRobot.BougeServo(ServomoteurID.GRAspirateur, Config.CurrentConfig.PositionGRAspirateurHaut);
+                Thread.Sleep(1500);
+
+                // Teste si l'aspirateur est bien remonté
+                aspirateurRemonte = Robots.GrosRobot.GetAspiRemonte();
+                if (aspirateurRemonte)
+                {
+                    Robots.GrosRobot.TourneMoteur(MoteurID.GRTurbineAspirateur, 0);
+                    break;
+                }
+
+                // Repose les bougies dans l'assiette et tente de les réaspirer
+                Robots.GrosRobot.TourneMoteur(MoteurID.GRTurbineAspirateur, Config.CurrentConfig.VitesseAspiration);
+                Thread.Sleep(500);
+                Robots.GrosRobot.BougeServo(ServomoteurID.GRAspirateur, Config.CurrentConfig.PositionGRAspirateurBas);
+                Thread.Sleep(500);
+                Robots.GrosRobot.TourneMoteur(MoteurID.GRTurbineAspirateur, 0);
+                Thread.Sleep(1500);
+                Robots.GrosRobot.TourneMoteur(MoteurID.GRTurbineAspirateur, Config.CurrentConfig.VitesseAspiration);
+                Thread.Sleep(1000);
+                i++;
+            }
+
+            Robots.GrosRobot.TourneMoteur(MoteurID.GRTurbineAspirateur, 0);
+            if (i == 3)
+            {
+                Thread.Sleep(1500);
+                Robots.GrosRobot.BougeServo(ServomoteurID.GRAspirateur, Config.CurrentConfig.PositionGRAspirateurHaut);
+            }
+            Robots.GrosRobot.Avancer(distance);
+
+            if (i == 3)
+                return false;
+
+            return true;
+        }
+
         private void LancerBalles()
         {
+            int vitesseActuelleCanon = Robots.GrosRobot.GetVitesseCanon();
+            while ((vitesseActuelleCanon + 60 < 7200 || vitesseActuelleCanon - 60 > 7200))
+            {
+                Thread.Sleep(500);
+                vitesseActuelleCanon = Robots.GrosRobot.GetVitesseCanon();
+            }
+
             DateTime debut = DateTime.Now;
             bool balle = true;
             while (balle)
             {
                 Robots.GrosRobot.BougeServo(ServomoteurID.GRDebloqueur, Config.CurrentConfig.PositionGRDebloqueurHaut);
-                Thread.Sleep(350);
+                Thread.Sleep(500);
                 Robots.GrosRobot.BougeServo(ServomoteurID.GRDebloqueur, Config.CurrentConfig.PositionGRDebloqueurBas);
 
                 if (!Robots.GrosRobot.GetPresenceBalle())
@@ -151,11 +215,11 @@ namespace GoBot.IHM
                     Console.WriteLine(couleur);
                     if (couleur != Color.White)
                     {
-                        Robots.GrosRobot.PivotGauche(10);
+                        Robots.GrosRobot.PivotGauche(15, false);
                         Robots.GrosRobot.ActionneurOnOff(ActionneurOnOffID.GRShutter, true);
-                        Thread.Sleep(250);
+                        Thread.Sleep(300);
                         Robots.GrosRobot.ActionneurOnOff(ActionneurOnOffID.GRShutter, false);
-                        Robots.GrosRobot.PivotDroite(10);
+                        Robots.GrosRobot.PivotDroite(15, false);
                     }
                     else
                     {
@@ -171,6 +235,33 @@ namespace GoBot.IHM
             Robots.GrosRobot.TourneMoteur(MoteurID.GRCanon, 0);
 
             Console.WriteLine((DateTime.Now - debut).TotalMilliseconds + " ms");
+        }
+
+        private void btnVerres_Click(object sender, EventArgs e)
+        {
+            Robots.GrosRobot.BougeServo(ServomoteurID.GRBrasDroit, Config.CurrentConfig.PositionGRBrasDroitRange);
+            Robots.GrosRobot.BougeServo(ServomoteurID.GRBrasGauche, Config.CurrentConfig.PositionGRBrasGaucheRange);
+            Robots.GrosRobot.VitesseDeplacement = 1800;
+            Robots.GrosRobot.AccelerationDeplacement = 2000;
+            Robots.GrosRobot.VitessePivot = 1000;
+            Robots.GrosRobot.AccelerationPivot = 2000;
+            Robots.GrosRobot.Avancer(1065);
+            Robots.GrosRobot.PivotDroite(37.21);
+            Robots.GrosRobot.Avancer(746);
+            Robots.GrosRobot.BougeServo(ServomoteurID.GRBrasDroit, Config.CurrentConfig.PositionGRBrasDroitSorti);
+            Robots.GrosRobot.BougeServo(ServomoteurID.GRBrasGauche, Config.CurrentConfig.PositionGRBrasGaucheSorti);
+            Robots.GrosRobot.PivotDroite(145.86);
+            Robots.GrosRobot.Avancer(1400);
+
+            /*Robots.GrosRobot.Avancer(80);
+            Robots.GrosRobot.PivotGauche(48);
+            Robots.GrosRobot.Virage(SensAR.Avant, SensGD.Droite, 1059, 103);
+            Robots.GrosRobot.BougeServo(ServomoteurID.GRBrasDroit, Config.CurrentConfig.PositionGRBrasDroitSorti);
+            Robots.GrosRobot.BougeServo(ServomoteurID.GRBrasGauche, Config.CurrentConfig.PositionGRBrasGaucheSorti);
+            Robots.GrosRobot.PivotDroite(126);
+            Robots.GrosRobot.Avancer(1420);*/
+            Robots.GrosRobot.BougeServo(ServomoteurID.GRBrasDroit, Config.CurrentConfig.PositionGRBrasDroitRange);
+            Robots.GrosRobot.BougeServo(ServomoteurID.GRBrasGauche, Config.CurrentConfig.PositionGRBrasGaucheRange);
         }
     }
 }

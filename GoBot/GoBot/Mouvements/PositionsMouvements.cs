@@ -179,7 +179,7 @@ namespace GoBot.Mouvements
             position.Couleur = Plateau.CouleurJ1R;
             position.PuissanceTir = 7325;
             PositionTirCanon.Add(position);
-
+            
             position = new PositionLancement();
             position.Angle = -136.51;
             position.X = 477;
@@ -188,8 +188,8 @@ namespace GoBot.Mouvements
             position.PuissanceTir = 6850;
             PositionTirCanon.Add(position);
 
-            position = new PositionLancement();
-            position.Angle = 5;
+            /*position = new PositionLancement();
+            position.Angle = -175;
             position.X = 1500;
             position.Y = 2000 - 100 - 140;
             position.Couleur = Plateau.CouleurJ2B;
@@ -197,12 +197,12 @@ namespace GoBot.Mouvements
             PositionTirCanon.Add(position);
 
             position = new PositionLancement();
-            position.Angle = 1;
+            position.Angle = 178;
             position.X = 1500;
             position.Y = 2000 - 100 - 140;
             position.Couleur = Plateau.CouleurJ1R;
             position.PuissanceTir = 7600;
-            PositionTirCanon.Add(position);
+            PositionTirCanon.Add(position);*/
         }
     }
 }

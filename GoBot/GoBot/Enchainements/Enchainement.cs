@@ -61,7 +61,8 @@ namespace GoBot.Enchainements
 
             for (int i = 0; i < 10; i++)
             {
-                ListeMouvementsGros.Add(new MoveGrosAccrocheAssiette(i));
+                if(i != 0 && i != 4 && i != 5 && i != 9)
+                    ListeMouvementsGros.Add(new MoveGrosAccrocheAssiette(i));
                 ListeMouvementsGros.Add(new MoveGrosAspireAssiette(i));
             }
 
@@ -94,15 +95,22 @@ namespace GoBot.Enchainements
             thGrosRobot.Abort();
             thPetitRobot.Abort();
             Robots.GrosRobot.Stop(StopMode.Freely);
+            Thread.Sleep(100);
             Robots.GrosRobot.ActionneurOnOff(ActionneurOnOffID.GRAlimentation, false);
+            Thread.Sleep(100);
             Robots.GrosRobot.TourneMoteur(MoteurID.GRCanonTMin, 0);
+            Thread.Sleep(100);
             Robots.GrosRobot.TourneMoteur(MoteurID.GRTurbineAspirateur, 0);
+            Thread.Sleep(100);
             //PetitRobot.Stop(StopMode.Freely);
             Plateau.Balise1.Stop();
+            Thread.Sleep(100);
             Plateau.Balise2.Stop();
+            Thread.Sleep(100);
             Plateau.Balise3.Stop();
+            Thread.Sleep(100);
             Robots.GrosRobot.ActionneurOnOff(ActionneurOnOffID.GRPompe, true);
-            Thread.Sleep(9500);
+            Thread.Sleep(9000);
             Robots.GrosRobot.ActionneurOnOff(ActionneurOnOffID.GRPompe, false);
         }
 

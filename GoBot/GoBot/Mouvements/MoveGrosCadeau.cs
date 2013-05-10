@@ -61,7 +61,7 @@ namespace GoBot.Mouvements
         {
             get
             {
-                return Score * Plateau.PoidActions.PoidGlobalGrosCadeau * Plateau.PoidActions.PoidsGrosCadeau[numeroCadeau];
+                return (Score > 0 ? 1 : 0) * Plateau.PoidActions.PoidGlobalGrosCadeau * Plateau.PoidActions.PoidsGrosCadeau[numeroCadeau];
             }
         }
     }

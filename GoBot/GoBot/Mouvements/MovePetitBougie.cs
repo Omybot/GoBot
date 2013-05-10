@@ -74,7 +74,7 @@ namespace GoBot.Mouvements
         {
             get
             {
-                return Score * Plateau.PoidActions.PoidGlobalPetitBougie * Plateau.PoidActions.PoidsPetitBougie[numeroBougie];
+                return (Score > 0 ? 1 : 0) * Plateau.PoidActions.PoidGlobalPetitBougie * Plateau.PoidActions.PoidsPetitBougie[numeroBougie];
             }
         }
     }

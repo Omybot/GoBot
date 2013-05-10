@@ -232,6 +232,7 @@ namespace GoBot
                 MessageBox.Show("Tu lances un recallages et tu branches pas le jack ? C'est comme si t'es Omybot t'as pas de robot quoi...", "Non mais allô quoi", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 return;
             }
+            btnRecallage.Enabled = false;
             if (Connexions.ConnexionMove.ConnexionCheck.Connecte)
             {
                 thRecallage = new Thread(RecallagesDebut);
@@ -304,7 +305,9 @@ namespace GoBot
             panelBougies.btnCapture_Click(null, null);
             // Recallage du gros robot
 
-            Robots.GrosRobot.Reset();
+            Robots.GrosRobot.BougeServo(ServomoteurID.GRAspirateur, Config.CurrentConfig.PositionGRAspirateurBas);
+            Thread.Sleep(400);
+            Robots.GrosRobot.BougeServo(ServomoteurID.GRAspirateur, Config.CurrentConfig.PositionGRAspirateurHaut);
 
             Robots.GrosRobot.Lent();
             Robots.GrosRobot.Avancer(10);

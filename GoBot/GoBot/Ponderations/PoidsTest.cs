@@ -33,8 +33,8 @@ namespace GoBot.Ponderations
 
             PoidGlobalGrosBougie = 5;
             PoidGlobalGrosCadeau = 5;
-            PoidGlobalGrosAspireAssiette = 2;
-            PoidGlobalGrosAccrocheAssiette = 20;
+            PoidGlobalGrosAspireAssiette = 2.5;
+            PoidGlobalGrosAccrocheAssiette = 0;
             // Poids de l'aspiration de l'assiette accrochée si aucune balle n'est chargée
             PoidGlobalGrosAspireAssietteAccrochee = 10000;
             // Poids du lancage de balles si aucune assiette n'est accrochée

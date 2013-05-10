@@ -2,7 +2,7 @@
 <Config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
   <DeplacementGROuvert>true</DeplacementGROuvert>
   <HistoriqueGROuvert>true</HistoriqueGROuvert>
-  <ReglageGROuvert>true</ReglageGROuvert>
+  <ReglageGROuvert>false</ReglageGROuvert>
   <UtilisationGROuvert>true</UtilisationGROuvert>
   <SequencesGROuvert>true</SequencesGROuvert>
   <CapteursGROuvert>true</CapteursGROuvert>
@@ -10,10 +10,10 @@
   <HistoriquePROuvert>true</HistoriquePROuvert>
   <ReglagePROuvert>true</ReglagePROuvert>
   <UtilisationPROuvert>true</UtilisationPROuvert>
-  <GRVitesseLigneRapide>500</GRVitesseLigneRapide>
-  <GRAccelerationLigneRapide>1500</GRAccelerationLigneRapide>
+  <GRVitesseLigneRapide>1000</GRVitesseLigneRapide>
+  <GRAccelerationLigneRapide>2000</GRAccelerationLigneRapide>
   <GRVitessePivotRapide>1000</GRVitessePivotRapide>
-  <GRAccelerationPivotRapide>2000</GRAccelerationPivotRapide>
+  <GRAccelerationPivotRapide>2500</GRAccelerationPivotRapide>
   <GRVitesseLigneLent>300</GRVitesseLigneLent>
   <GRAccelerationLigneLent>300</GRAccelerationLigneLent>
   <GRVitessePivotLent>300</GRVitessePivotLent>
@@ -88,14 +88,14 @@
     <int>149</int>
     <int>189</int>
     <int>147</int>
-    <int>265</int>
-    <int>207</int>
-    <int>340</int>
-    <int>274</int>
-    <int>345</int>
-    <int>407</int>
-    <int>400</int>
-    <int>453</int>
+    <int>224</int>
+    <int>169</int>
+    <int>304</int>
+    <int>242</int>
+    <int>313</int>
+    <int>372</int>
+    <int>363</int>
+    <int>419</int>
   </PositionsBougiesCameraX>
   <PositionsBougiesCameraY>
     <int>184</int>
@@ -110,13 +110,13 @@
     <int>238</int>
     <int>183</int>
     <int>248</int>
-    <int>184</int>
-    <int>250</int>
+    <int>188</int>
+    <int>254</int>
+    <int>185</int>
+    <int>257</int>
+    <int>248</int>
+    <int>241</int>
     <int>177</int>
-    <int>250</int>
-    <int>244</int>
-    <int>234</int>
-    <int>171</int>
-    <int>227</int>
+    <int>230</int>
   </PositionsBougiesCameraY>
 </Config>

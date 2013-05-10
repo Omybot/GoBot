@@ -99,7 +99,8 @@ namespace GoBot
         {
             semDeplacement.WaitOne();
             double difference = Destination.Coordonnees.Distance(Position.Coordonnees);
-            if (Math.Abs((Position.Angle - Destination.Angle).AngleDegres) > 0.01)// Math.Round(Position.Angle.AngleDegres, 2) != Math.Round(Destination.Angle.AngleDegres, 2))
+            Angle adifference = Position.Angle - Destination.Angle;
+            if (Math.Abs(adifference.AngleDegres) > 0.01)// Math.Round(Position.Angle.AngleDegres, 2) != Math.Round(Destination.Angle.AngleDegres, 2))
             {
                 Angle diff = Destination.Angle - Position.Angle;
                 int coeff = 1;
@@ -264,7 +265,7 @@ namespace GoBot
 
         public override bool GetPresenceBalle(bool historique = true)
         {
-            if (rand.Next(10) == 0)
+            if (rand.Next(2) == 0)
                 return true;
 
             return false; 
