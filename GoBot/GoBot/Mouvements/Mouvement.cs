@@ -22,7 +22,7 @@ namespace GoBot.Mouvements
                     return double.MaxValue;
 
                 double distance = Robots.GrosRobot.Position.Coordonnees.Distance(Position.Coordonnees) / 10;
-                double cout = distance * distance / ScorePondere;
+                double cout = distance / ScorePondere;
 
                 Plateau.SemaphoreGraph.WaitOne();
                 foreach (Cercle c in Plateau.ObstaclesTemporaires)
@@ -31,7 +31,7 @@ namespace GoBot.Mouvements
                     if (distanceAdv < 45)
                         cout = double.PositiveInfinity;
                     else
-                        cout /= (distanceAdv * distanceAdv * distanceAdv);
+                        cout /= (distanceAdv * distanceAdv);
                 }
                 Plateau.SemaphoreGraph.Release();
 

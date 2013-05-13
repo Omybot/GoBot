@@ -31,12 +31,12 @@ namespace GoBot.Ponderations
             PoidGlobalPetitBougie = 0;
             PoidGlobalPetitCadeau = 0;
 
-            PoidGlobalGrosBougie = 5;
-            PoidGlobalGrosCadeau = 5;
+            PoidGlobalGrosBougie = 50;
+            PoidGlobalGrosCadeau = 50;
             PoidGlobalGrosAspireAssiette = 2.5;
             PoidGlobalGrosAccrocheAssiette = 0;
             // Poids de l'aspiration de l'assiette accrochée si aucune balle n'est chargée
-            PoidGlobalGrosAspireAssietteAccrochee = 10000;
+            PoidGlobalGrosAspireAssietteAccrochee = 10000; 
             // Poids du lancage de balles si aucune assiette n'est accrochée
             PoidGlobalGrosLancerBallesSansAssietteAccrochee = 15;
             // Poids du lancage de balles si une assiette est accrochée
@@ -71,7 +71,7 @@ namespace GoBot.Ponderations
             // Poids grand robot
 
             // Bougies
-            PoidsGrosBougie[0] = 2;
+            PoidsGrosBougie[0] = 1;
             PoidsGrosBougie[1] = 1;
             PoidsGrosBougie[2] = 1;
             PoidsGrosBougie[2] = 1;
@@ -79,9 +79,9 @@ namespace GoBot.Ponderations
             PoidsGrosBougie[4] = 1;
             PoidsGrosBougie[5] = 1;
             PoidsGrosBougie[6] = 1;
-            PoidsGrosBougie[7] = 10;
+            PoidsGrosBougie[7] = 6;
             PoidsGrosBougie[8] = 1;
-            PoidsGrosBougie[9] = 10;
+            PoidsGrosBougie[9] = 6;
             PoidsGrosBougie[10] = 1;
             PoidsGrosBougie[11] = 1;
             PoidsGrosBougie[12] = 1;
@@ -89,9 +89,9 @@ namespace GoBot.Ponderations
             PoidsGrosBougie[14] = 1;
             PoidsGrosBougie[15] = 1;
             PoidsGrosBougie[16] = 1;
-            PoidsGrosBougie[17] = 10;
+            PoidsGrosBougie[17] = 6;
             PoidsGrosBougie[18] = 1;
-            PoidsGrosBougie[19] = 10;
+            PoidsGrosBougie[19] = 6;
 
             // Cadeaux
             PoidsGrosCadeau[0] = 1;
@@ -107,11 +107,11 @@ namespace GoBot.Ponderations
 
             if (Plateau.NotreCouleur == Plateau.CouleurJ1R)
             {
-                PoidsGrosAssiette[0] = 0.2;
-                PoidsGrosAssiette[1] = 0.2;
-                PoidsGrosAssiette[2] = 0.2;
-                PoidsGrosAssiette[3] = 0.2;
-                PoidsGrosAssiette[4] = 0.2;
+                PoidsGrosAssiette[0] = 0.7;
+                PoidsGrosAssiette[1] = 0.7;
+                PoidsGrosAssiette[2] = 0.7;
+                PoidsGrosAssiette[3] = 0.7;
+                PoidsGrosAssiette[4] = 0.7;
                 PoidsGrosAssiette[5] = 1;
                 PoidsGrosAssiette[6] = 1;
                 PoidsGrosAssiette[7] = 1;
@@ -125,11 +125,11 @@ namespace GoBot.Ponderations
                 PoidsGrosAssiette[2] = 1;
                 PoidsGrosAssiette[3] = 1;
                 PoidsGrosAssiette[4] = 1;
-                PoidsGrosAssiette[5] = 0.2;
-                PoidsGrosAssiette[6] = 0.2;
-                PoidsGrosAssiette[7] = 0.2;
-                PoidsGrosAssiette[8] = 0.2;
-                PoidsGrosAssiette[9] = 0.2;
+                PoidsGrosAssiette[5] = 0.7;
+                PoidsGrosAssiette[6] = 0.7;
+                PoidsGrosAssiette[7] = 0.7;
+                PoidsGrosAssiette[8] = 0.7;
+                PoidsGrosAssiette[9] = 0.7;
             }
         }
     }

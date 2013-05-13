@@ -26,12 +26,12 @@
   <PRAccelerationLigneLent>0</PRAccelerationLigneLent>
   <PRVitessePivotLent>0</PRVitessePivotLent>
   <PRAccelerationPivotLent>0</PRAccelerationPivotLent>
-  <OffsetBalise1Capteur1>-192.60593750000004</OffsetBalise1Capteur1>
-  <OffsetBalise2Capteur1>132.87093749999997</OffsetBalise2Capteur1>
-  <OffsetBalise3Capteur1>-9.9915624999999864</OffsetBalise3Capteur1>
-  <OffsetBalise1Capteur2>-13.417812499999997</OffsetBalise1Capteur2>
-  <OffsetBalise2Capteur2>311.2025</OffsetBalise2Capteur2>
-  <OffsetBalise3Capteur2>-10.541250000000019</OffsetBalise3Capteur2>
+  <OffsetBalise1Capteur1>-191.9765625</OffsetBalise1Capteur1>
+  <OffsetBalise2Capteur1>163.06656250000003</OffsetBalise2Capteur1>
+  <OffsetBalise3Capteur1>-10.406562499999978</OffsetBalise3Capteur1>
+  <OffsetBalise1Capteur2>-12.647187500000001</OffsetBalise1Capteur2>
+  <OffsetBalise2Capteur2>-17.822187499999984</OffsetBalise2Capteur2>
+  <OffsetBalise3Capteur2>-11.157812499999977</OffsetBalise3Capteur2>
   <PositionGRGrandBrasHaut>465</PositionGRGrandBrasHaut>
   <PositionGRGrandBrasBas>545</PositionGRGrandBrasBas>
   <PositionGRGrandBrasRange>815</PositionGRGrandBrasRange>

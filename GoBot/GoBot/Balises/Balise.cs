@@ -433,7 +433,7 @@ namespace GoBot
                                 Angle angleGrosRobot = new Angle(a, AnglyeType.Radian);
                                 Angle angleDetection = new Angle(detection.AngleCentral);
 
-                                double marge = 2;
+                                double marge = 4;
 
                                 if (Carte == GoBot.Carte.RecBeu && Plateau.NotreCouleur == Plateau.CouleurJ1R)
                                 {

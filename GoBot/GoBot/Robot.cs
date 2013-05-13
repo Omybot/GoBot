@@ -236,8 +236,6 @@ namespace GoBot
             CheminEnCoursNoeuds = new List<Node>();
             CheminEnCoursArcs = new List<Arc>();
 
-            DateTime debut = DateTime.Now;
-
             double distance;
 
             Node debutNode = Plateau.Graph.ClosestNode(Position.Coordonnees.X, Position.Coordonnees.Y, 0, out distance, false);

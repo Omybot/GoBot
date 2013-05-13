@@ -115,9 +115,9 @@ namespace GoBot.IHM
 
         private bool AspirerBalles()
         {
-            Robots.GrosRobot.TourneMoteur(MoteurID.GRCanonTMin, 7200);
+            Robots.GrosRobot.TourneMoteur(MoteurID.GRCanonTMin, 7600);
 
-            int distance = 100;
+            int distance = 0;
             // Approche d'aspiration
             Robots.GrosRobot.TourneMoteur(MoteurID.GRTurbineAspirateur, Config.CurrentConfig.VitesseAspiration);
             Robots.GrosRobot.BougeServo(ServomoteurID.GRAspirateur, Config.CurrentConfig.PositionGRAspirateurBas);
@@ -183,7 +183,7 @@ namespace GoBot.IHM
         private void LancerBalles()
         {
             int vitesseActuelleCanon = Robots.GrosRobot.GetVitesseCanon();
-            while ((vitesseActuelleCanon + 60 < 7200 || vitesseActuelleCanon - 60 > 7200))
+            while ((vitesseActuelleCanon + 60 < 7600 || vitesseActuelleCanon - 60 > 7600))
             {
                 Thread.Sleep(500);
                 vitesseActuelleCanon = Robots.GrosRobot.GetVitesseCanon();

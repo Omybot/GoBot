@@ -217,6 +217,13 @@ namespace GoBot
                 detectionBas = new List<PointReel>();// DetectionParIntersections(DetectionBalise1Bas, DetectionBalise2Bas, DetectionBalise3Bas);
                 detectionHaut = DetectionParIntersections(DetectionBalise1, DetectionBalise2, DetectionBalise3);
             }
+
+            if (detectionHaut.Count > 0)
+            {
+                PositionsEnnemies = new List<PointReel>(detectionHaut);
+                PositionEnnemisActualisee(this);
+            }
+            /*
             PositionsAlliees = new List<PointReel>();
             PositionsEnnemies = new List<PointReel>();
 
@@ -224,6 +231,8 @@ namespace GoBot
 
             // Cas si il y a plus de 2 détections en haut : c'est qu'on a des balises réfléchissantes sur la tête
             // On retire donc les positions alliées des positions ennemies
+            
+            
             if (detectionHaut.Count > 2)
             {
                 // On cherche nos points en bas pour retirer nos positions des positions ennemies
@@ -267,7 +276,7 @@ namespace GoBot
 
                 PositionEnnemisActualisee(this);
                 //Console.WriteLine("Interprétation étrange : " + detectionHaut.Count + " alliés et " + detectionHaut.Count + " adversaires.");
-            }
+            }*/
         }
 
         #region Interprétation par polygones

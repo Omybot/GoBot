@@ -24,6 +24,7 @@ namespace GoBot
         public static Balise Balise2 { get; set; }
         public static Balise Balise3 { get; set; }
         public static InterpreteurBalise InterpreteurBalise { get; set; }
+        public static bool Degommage { get; set; }
 
         public static Enchainement Enchainement { get; set; }
         public static Poids PoidActions { get; set; }
@@ -101,6 +102,7 @@ namespace GoBot
         {
             if (!Config.DesignMode)
             {
+                Degommage = false;
                 ReflecteursNosRobots = true;
                 DerniereBougieGros = -1;
                 AssietteAttrapee = -1;

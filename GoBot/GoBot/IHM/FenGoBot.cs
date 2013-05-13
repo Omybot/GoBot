@@ -352,6 +352,11 @@ namespace GoBot
             Robots.GrosRobot.Rapide();
             Robots.GrosRobot.ArmerJack();
 
+            if (Plateau.NotreCouleur == Plateau.CouleurJ1R)
+                Plateau.AssiettesExiste[7] = false;
+            else
+                Plateau.AssiettesExiste[2] = false;
+
             PanelBougies.ContinuerJusquauDebutMatch = true;
             panelBougies.btnCapture_Click(null, null);
 
@@ -539,6 +544,23 @@ namespace GoBot
         private void radioBaliseOui_CheckedChanged(object sender, EventArgs e)
         {
             Plateau.ReflecteursNosRobots = radioBaliseOui.Checked;
+        }
+
+        private void btnDegommage_Click(object sender, EventArgs e)
+        {
+            Plateau.Degommage = !Plateau.Degommage;
+
+            if (Plateau.Degommage)
+                led2.CouleurVert();
+            else
+                led2.CouleurRouge();
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            Robots.GrosRobot.PathFinding((int)numericUpDown1.Value, (int)numericUpDown2.Value, 0, true);
+
+            Robots.GrosRobot.PositionerAngle(new Angle((double)numericUpDown3.Value), 0.5);
         }
     }
 }

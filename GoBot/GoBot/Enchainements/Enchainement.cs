@@ -67,11 +67,30 @@ namespace GoBot.Enchainements
             }
 
             for (int i = 0; i < PositionsMouvements.PositionTirCanon.Count; i++)
-                ListeMouvementsGros.Add(new MoveGrosLanceBalles(PositionsMouvements.PositionTirCanon[i]));
+            {
+                MoveGrosLanceBalles move = new MoveGrosLanceBalles(PositionsMouvements.PositionTirCanon[i]);
+                if (i > 1)
+                    move.coef = 0.1;
+                ListeMouvementsGros.Add(move);
+            }
         }
 
         public void Executer()
         {
+            if (Plateau.NotreCouleur == Plateau.CouleurJ1R)
+            {
+                for (int i = 0; i < 10; i++)
+                    Plateau.PoidActions.PoidsGrosBougie[i]++;
+
+                Plateau.PoidActions.PoidsGrosBougie[0] = 200;
+            }
+            if (Plateau.NotreCouleur == Plateau.CouleurJ2B)
+            {
+                for (int i = 10; i < 20; i++)
+                    Plateau.PoidActions.PoidsGrosBougie[i]++;
+
+                Plateau.PoidActions.PoidsGrosBougie[10] = 200;
+            }
             GoBot.IHM.PanelBougies.ContinuerJusquauDebutMatch = false;
             DebutMatch = DateTime.Now;
             timerFinMatch = new System.Timers.Timer();
@@ -118,7 +137,24 @@ namespace GoBot.Enchainements
         {
             int iMeilleur = 0;
 
-            Robots.GrosRobot.Avancer(150);
+            if (Plateau.Degommage)
+            {
+                Robots.GrosRobot.BougeServo(ServomoteurID.GRBrasDroit, Config.CurrentConfig.PositionGRBrasDroitSorti);
+                Robots.GrosRobot.BougeServo(ServomoteurID.GRBrasGauche, Config.CurrentConfig.PositionGRBrasGaucheSorti);
+                Robots.GrosRobot.Avancer(1400);
+                if(Plateau.NotreCouleur == Plateau.CouleurJ2B)
+                    Robots.GrosRobot.PivotDroite(270);
+                else
+                    Robots.GrosRobot.PivotGauche(270);
+                Robots.GrosRobot.BougeServo(ServomoteurID.GRBrasDroit, Config.CurrentConfig.PositionGRBrasDroitRange);
+                Robots.GrosRobot.BougeServo(ServomoteurID.GRBrasGauche, Config.CurrentConfig.PositionGRBrasGaucheRange);
+            }
+
+            else
+            {
+                Robots.GrosRobot.Avancer(600);
+
+            }
 
             while (ListeMouvementsGros.Count > 0)
             {

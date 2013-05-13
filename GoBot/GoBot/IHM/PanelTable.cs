@@ -69,7 +69,6 @@ namespace GoBot.IHM
                     Graphics g = Graphics.FromImage(bmp);
                     g.FillRectangle(new SolidBrush(Color.White), 0, 0, 750, 500);
 
-
                     int xTable = ScreenToReal(pictureBoxTable.PointToClient(MousePosition).X);
                     int yTable = ScreenToReal(pictureBoxTable.PointToClient(MousePosition).Y);
 
@@ -296,6 +295,60 @@ namespace GoBot.IHM
                             else
                                 g.DrawImage(rotateImage(Properties.Resources.AssietteVide, Plateau.PositionsAssiettes[i].Angle.AngleDegres), RealToScreen(Plateau.PositionsAssiettes[i].Coordonnees.X) - 61 / 2, RealToScreen(Plateau.PositionsAssiettes[i].Coordonnees.Y) - 61 / 2, 61, 61);
                     }
+                    /*
+                    double[,] valeurs = new double[pictureBoxTable.Width, pictureBoxTable.Height];
+                    double min = double.MaxValue, max = double.MinValue;
+                    for (int i = 0; i < pictureBoxTable.Width; i++)
+                    {
+                        for (int j = 0; j < pictureBoxTable.Height; j++)
+                        {
+                            double valeur = 0;
+
+                            PointReel point20 = new PointReel(ScreenToReal(i), ScreenToReal(j));
+                            double distance = Robots.GrosRobot.Position.Coordonnees.Distance(point20) / 10;
+                            valeur = distance * distance * distance;
+
+                            Plateau.SemaphoreGraph.WaitOne();
+                            foreach (Cercle c in Plateau.ObstaclesTemporaires)
+                            {
+                                double distanceAdv = point20.Distance(c.Centre) / 10;
+                                    valeur /= (distanceAdv * distanceAdv * distanceAdv);
+                            }
+                            Plateau.SemaphoreGraph.Release();
+
+                            valeurs[i, j] = valeur;
+                        }
+                    }
+
+                    for (int i = 0; i < pictureBoxTable.Width; i++)
+                    {
+                        for (int j = 0; j < pictureBoxTable.Height; j++)
+                        {
+                            valeurs[i, j] = Math.Log10(valeurs[i, j]);
+                            if (valeurs[i, j] < 0)
+                                valeurs[i, j] = 0;
+                        }
+                    }
+
+                    for (int i = 0; i < pictureBoxTable.Width; i++)
+                    {
+                        for (int j = 0; j < pictureBoxTable.Height; j++)
+                        {
+                            min = Math.Min(min, valeurs[i, j]);
+                            max = Math.Max(max, valeurs[i, j]);
+                        }
+                    }
+
+                    for (int i = 0; i < pictureBoxTable.Width; i++)
+                    {
+                        for (int j = 0; j < pictureBoxTable.Height; j++)
+                        {
+                            if (valeurs[i, j] == 0)
+                                valeurs[i, j] = max;
+                            int val = (int)((valeurs[i, j] - min) / (max - min) * 255);
+                            bmp.SetPixel(i, j, Color.FromArgb(val, val, val));
+                        }
+                    }*/
 
                     // Dessin du gros robot
 
@@ -336,22 +389,26 @@ namespace GoBot.IHM
 
                         g.DrawLine(new Pen(Plateau.CouleurJ2B), new Point(xRobot, yRobot), pointDevant);
 
-                        lblPosGrosX.Text = Math.Round(Robots.GrosRobot.Position.Coordonnees.X, 2).ToString();
-                        lblPosGrosY.Text = Math.Round(Robots.GrosRobot.Position.Coordonnees.Y, 2).ToString();
-                        lblPosGrosTeta.Text = Robots.GrosRobot.Position.Angle.ToString();
+                        this.Invoke(new EventHandler(delegate
+                        {
+                            lblPosGrosX.Text = Math.Round(Robots.GrosRobot.Position.Coordonnees.X, 2).ToString();
+                            lblPosGrosY.Text = Math.Round(Robots.GrosRobot.Position.Coordonnees.Y, 2).ToString();
+                            lblPosGrosTeta.Text = Robots.GrosRobot.Position.Angle.ToString();
+                        }));
 
                         if (Robots.GrosRobot.BallesChargees)
                         {
                             g.DrawImage(rotateImage(Properties.Resources.Balles, Robots.GrosRobot.Position.Angle.AngleDegres), RealToScreen(Robots.GrosRobot.Position.Coordonnees.X) - 61 / 2, RealToScreen(Robots.GrosRobot.Position.Coordonnees.Y) - 61 / 2, 61, 61);
                         }
 
+                        /*
                         // Avant de lancer le match on retire les assiettes
                         if (Plateau.Enchainement == null)
                             for (int i = 0; i < 10; i++)
                             {
                                 if (Plateau.PositionsAssiettes[i].Coordonnees.Distance(Robots.GrosRobot.Position.Coordonnees) < 250)
                                     Plateau.AssiettesExiste[i] = false;
-                            }
+                            }*/
                     }
 
                     // Fin dessin robot
@@ -397,14 +454,14 @@ namespace GoBot.IHM
                         lblPosPetitX.Text = Math.Round(Robots.PetitRobot.Position.Coordonnees.X, 2).ToString();
                         lblPosPetitY.Text = Math.Round(Robots.PetitRobot.Position.Coordonnees.Y, 2).ToString();
                         lblPosPetitTeta.Text = Robots.PetitRobot.Position.Angle.ToString();
-
+                        /*
                         // Avant de lancer le match
                         if (Plateau.Enchainement == null)
                             for (int i = 0; i < 10; i++)
                             {
                                 if (Plateau.PositionsAssiettes[i].Coordonnees.Distance(Robots.PetitRobot.Position.Coordonnees) < 250)
                                     Plateau.AssiettesExiste[i] = false;
-                            }
+                            }*/
                     }
 
 
@@ -534,7 +591,7 @@ namespace GoBot.IHM
 
                     pictureBoxTable.Image = bmp;
                 }
-                catch (Exception)
+                catch (Exception ex)
                 {
                     Console.WriteLine("Erreur pendant le dessin de la table");
                 }
@@ -699,11 +756,11 @@ namespace GoBot.IHM
             continuerAffichage = false;
         }
 
-        private void pictureBoxTable_MouseClick(object sender, MouseEventArgs e)
+        private void PathFinding()
         {
             if (modeCourant == Mode.FinTrajectoire)
             {
-                if (e.Button == System.Windows.Forms.MouseButtons.Left)
+                if (ev.Button == System.Windows.Forms.MouseButtons.Left)
                     Robots.GrosRobot.PathFinding(ScreenToReal(pictureBoxTable.PointToClient(MousePosition).X), ScreenToReal(pictureBoxTable.PointToClient(MousePosition).Y));
                 else
                     Robots.PetitRobot.PathFinding(ScreenToReal(pictureBoxTable.PointToClient(MousePosition).X), ScreenToReal(pictureBoxTable.PointToClient(MousePosition).Y));
@@ -722,7 +779,7 @@ namespace GoBot.IHM
                 {
                     if (Plateau.PositionsBougies[i].Distance(point) <= 40)
                     {
-                        if (e.Button == System.Windows.Forms.MouseButtons.Left)
+                        if (ev.Button == System.Windows.Forms.MouseButtons.Left)
                         {
                             if (PositionsMouvements.PositionPetitBougie.ContainsKey(i))
                                 move = new MovePetitBougie(i);
@@ -745,7 +802,7 @@ namespace GoBot.IHM
                     {
                         if (xTable > Plateau.PositionsCadeaux[i].X - 75 && xTable < Plateau.PositionsCadeaux[i].X + 75)
                         {
-                            if (e.Button == System.Windows.Forms.MouseButtons.Left)
+                            if (ev.Button == System.Windows.Forms.MouseButtons.Left)
                                 move = new MovePetitCadeau(i);
                             else
                                 move = new MoveGrosCadeau(i);
@@ -760,6 +817,15 @@ namespace GoBot.IHM
                     }
                 }
             }
+        }
+
+        Thread thPath;
+        MouseEventArgs ev;
+        private void pictureBoxTable_MouseClick(object sender, MouseEventArgs e)
+        {
+            ev = e;
+            thPath = new Thread(PathFinding);
+            thPath.Start();
         }
 
         private void btnGo_Click(object sender, EventArgs e)

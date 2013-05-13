@@ -164,7 +164,7 @@ namespace GoBot.Mouvements
 
             PositionGrosCadeau = new Dictionary<int, Position>();
             for (int i = 1; i < 7; i++)
-                PositionGrosCadeau.Add(i, new Position(new Angle(0), new PointReel(Plateau.PositionsCadeaux[i].X, Plateau.PositionsCadeaux[i].Y - 240)));
+                PositionGrosCadeau.Add(i, new Position(new Angle(0), new PointReel(Plateau.PositionsCadeaux[i].X, Plateau.PositionsCadeaux[i].Y - 265)));
                     
             PositionGrosCadeau.Add(0, new Position(new Angle(15), new PointReel(Plateau.PositionsCadeaux[0].X + 35, Plateau.PositionsCadeaux[0].Y - 200)));
             PositionGrosCadeau.Add(7, new Position(new Angle(-15), new PointReel(Plateau.PositionsCadeaux[7].X - 35, Plateau.PositionsCadeaux[7].Y - 200)));
@@ -177,7 +177,7 @@ namespace GoBot.Mouvements
             position.X = 2436;
             position.Y = 1389;
             position.Couleur = Plateau.CouleurJ1R;
-            position.PuissanceTir = 7325;
+            position.PuissanceTir = 7390;
             PositionTirCanon.Add(position);
             
             position = new PositionLancement();
@@ -188,8 +188,8 @@ namespace GoBot.Mouvements
             position.PuissanceTir = 6850;
             PositionTirCanon.Add(position);
 
-            /*position = new PositionLancement();
-            position.Angle = -175;
+            position = new PositionLancement();
+            position.Angle = 175;
             position.X = 1500;
             position.Y = 2000 - 100 - 140;
             position.Couleur = Plateau.CouleurJ2B;
@@ -197,12 +197,12 @@ namespace GoBot.Mouvements
             PositionTirCanon.Add(position);
 
             position = new PositionLancement();
-            position.Angle = 178;
+            position.Angle = -178;
             position.X = 1500;
             position.Y = 2000 - 100 - 140;
             position.Couleur = Plateau.CouleurJ1R;
             position.PuissanceTir = 7600;
-            PositionTirCanon.Add(position);*/
+            PositionTirCanon.Add(position);
         }
     }
 }

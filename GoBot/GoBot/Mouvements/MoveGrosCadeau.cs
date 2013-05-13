@@ -30,7 +30,7 @@ namespace GoBot.Mouvements
 
                 Robots.GrosRobot.PositionerAngle(Position.Angle, 1);
                 Robots.GrosRobot.BougeServo(ServomoteurID.GRGrandBras, Config.CurrentConfig.PositionGRGrandBrasBas);
-                Thread.Sleep(400);
+                Thread.Sleep(600);
                 Robots.GrosRobot.BougeServo(ServomoteurID.GRGrandBras, Config.CurrentConfig.PositionGRGrandBrasRange);
 
                 Plateau.Score += Score;

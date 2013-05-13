@@ -12,6 +12,7 @@ namespace GoBot.Mouvements
 {
     class MoveGrosLanceBalles : Mouvement
     {
+        public double coef = 1;
         public override Position Position
         {
             get
@@ -131,6 +132,8 @@ namespace GoBot.Mouvements
                 // x10 dans les 30 dernières secondes
                 if (Plateau.Enchainement.TempsRestant.TotalSeconds < 30)
                     score *= 10;
+
+                score *= coef;
 
                 return score;
             }
