@@ -144,6 +144,9 @@ namespace GoBot
         /// <param name="trame">Message reçu</param>
         public void connexionIo_NouvelleTrame(Trame trame)
         {
+            if (trame == null)
+                return;
+
             // On ne traite que les messages qui nous sont adressés
             if (trame[0] != (byte)Carte)
                 return;
@@ -425,7 +428,7 @@ namespace GoBot
                                 Droite droiteBalise0Degres = new Droite(Position.Coordonnees, new PointReel(Position.Coordonnees.X + 500, Position.Coordonnees.Y));
                                 Droite perpendiculaire = droiteBalise0Degres.getPerpendiculaire(Robots.GrosRobot.Position.Coordonnees);
                                 PointReel troisiemePoint = perpendiculaire.getCroisement(droiteBalise0Degres);
-                                //sohcahtoa
+                                
                                 double distanceBaliseTroisiemePoint = troisiemePoint.Distance(Position.Coordonnees);
                                 double distanceBaliseRobot = Robots.GrosRobot.Position.Coordonnees.Distance(Position.Coordonnees);
 

@@ -77,6 +77,7 @@ namespace GoBot.Enchainements
 
         public void Executer()
         {
+            Robots.GrosRobot.Historique.Log("DEBUT DU MATCH", TypeLog.Strat);
             if (Plateau.NotreCouleur == Plateau.CouleurJ1R)
             {
                 for (int i = 0; i < 10; i++)
@@ -110,6 +111,7 @@ namespace GoBot.Enchainements
 
         private void timerFinMatch_Elapsed(object sender, ElapsedEventArgs e)
         {
+            Robots.GrosRobot.Historique.Log("FIN DU MATCH", TypeLog.Strat);
             timerFinMatch.Stop();
             thGrosRobot.Abort();
             thPetitRobot.Abort();

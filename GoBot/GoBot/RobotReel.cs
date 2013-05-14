@@ -87,7 +87,6 @@ namespace GoBot
                 if (trameRecue[1] == (byte)TrameFactory.FonctionMove.FinDeplacement
                     || trameRecue[1] == (byte)TrameFactory.FonctionMove.FinRecallage)
                 {
-                    Thread.Sleep(50);
                     semDeplacement.Release();
                 }
 

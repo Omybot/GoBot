@@ -33,6 +33,7 @@ namespace GoBot.Mouvements
 
         public override bool Executer(int timeOut = 0)
         {
+            Robots.GrosRobot.Historique.Log("Début lançage de balles");
             Plateau.BaisserBras();
             DateTime debut = DateTime.Now;
 
@@ -40,9 +41,12 @@ namespace GoBot.Mouvements
 
             if (Robots.GrosRobot.PathFinding(Position.Coordonnees.X, Position.Coordonnees.Y, timeOut, true))
             {
+                Robots.GrosRobot.Historique.Log("Position de lançage atteinte");
                 Robots.GrosRobot.PositionerAngle(Position.Angle, 0.5);
+                Robots.GrosRobot.Historique.Log("Angle de lançage atteint");
                 Robots.GrosRobot.BougeServo(ServomoteurID.GRServoAssiette, Config.CurrentConfig.PositionGRBloqueurOuvert);
 
+                Robots.GrosRobot.Historique.Log("Attente de la régulation de la vitesse du canon");
                 int vitesseActuelleCanon = Robots.GrosRobot.GetVitesseCanon();
                 while ((DateTime.Now - debut).TotalMilliseconds < 8000 &&
                     (vitesseActuelleCanon + 40 < posLancement.PuissanceTir || vitesseActuelleCanon - 40 > posLancement.PuissanceTir))
@@ -76,6 +80,7 @@ namespace GoBot.Mouvements
                         Console.WriteLine(couleur);
                         if (couleur != Color.White)
                         {
+                            Robots.GrosRobot.Historique.Log("Lance balle couleur");
                             Robots.GrosRobot.PivotGauche(15, false);
                             Robots.GrosRobot.ActionneurOnOff(ActionneurOnOffID.GRShutter, true);
                             Thread.Sleep(300);
@@ -84,13 +89,14 @@ namespace GoBot.Mouvements
                         }
                         else
                         {
+                            Robots.GrosRobot.Historique.Log("Lance balle blanche");
                             Robots.GrosRobot.ActionneurOnOff(ActionneurOnOffID.GRShutter, true);
                             Thread.Sleep(250);
                             Robots.GrosRobot.ActionneurOnOff(ActionneurOnOffID.GRShutter, false);
                         }
-
                     }
                 }
+                Robots.GrosRobot.Historique.Log("Plus de balles en stock");
 
                 Robots.GrosRobot.ActionneurOnOff(ActionneurOnOffID.GRShutter, false);
                 Robots.GrosRobot.BallesChargees = false;
@@ -100,6 +106,7 @@ namespace GoBot.Mouvements
             }
             else
             {
+                Robots.GrosRobot.Historique.Log("Abandon du lancement de balles");
                 //Robots.GrosRobot.TourneMoteur(MoteurID.GRCanon, 0);
                 Robots.GrosRobot.BougeServo(ServomoteurID.GRServoAssiette, Config.CurrentConfig.PositionGRBloqueurOuvert);
                 Robots.GrosRobot.Rapide();

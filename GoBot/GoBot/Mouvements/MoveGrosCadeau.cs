@@ -22,22 +22,28 @@ namespace GoBot.Mouvements
 
         public override bool Executer(int timeOut = 0)
         {
+            Robots.GrosRobot.Historique.Log("Début cadeau " + numeroCadeau);
             Plateau.BaisserBras();
             Plateau.CadeauxActives[numeroCadeau] = true;
             if (Robots.GrosRobot.PathFinding(Position.Coordonnees.X, Position.Coordonnees.Y, timeOut, true))
             {
+                Robots.GrosRobot.Historique.Log("Position cadeau " + numeroCadeau + " atteinte");
                 Angle angle180 = Position.Angle - Robots.GrosRobot.Position.Angle;
 
                 Robots.GrosRobot.PositionerAngle(Position.Angle, 1);
+                Robots.GrosRobot.Historique.Log("Angle cadeau " + numeroCadeau + " atteint");
+
                 Robots.GrosRobot.BougeServo(ServomoteurID.GRGrandBras, Config.CurrentConfig.PositionGRGrandBrasBas);
-                Thread.Sleep(600);
+                Thread.Sleep(400);
                 Robots.GrosRobot.BougeServo(ServomoteurID.GRGrandBras, Config.CurrentConfig.PositionGRGrandBrasRange);
 
+                Robots.GrosRobot.Historique.Log("Fin cadeau " + numeroCadeau);
                 Plateau.Score += Score;
                 return true;
             }
             else
             {
+                Robots.GrosRobot.Historique.Log("Annulation cadeau " + numeroCadeau);
                 Plateau.CadeauxActives[numeroCadeau] = false;
                 return false;
             }

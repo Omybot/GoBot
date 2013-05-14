@@ -540,6 +540,7 @@ namespace GoBot
         {
             if (DerniereBougieGros != -1)
             {
+                Robots.GrosRobot.Historique.Log("Fermeture des bras : fin des bougies");
                 Robots.GrosRobot.PositionerAngle(new Angle(PositionsMouvements.PositionGrosBougie[DerniereBougieGros].Angle.AngleDegres + 90), 10);
                 Robots.GrosRobot.BougeServo(ServomoteurID.GRGrandBras, Config.CurrentConfig.PositionGRGrandBrasRange);
                 Robots.GrosRobot.BougeServo(ServomoteurID.GRPetitBras, Config.CurrentConfig.PositionGRPetitBrasRange);

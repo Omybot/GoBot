@@ -144,11 +144,11 @@ namespace GoBot
         Thread th;
         Semaphore semTrajectoire;
 
-        public List<Arc> CheminTrouve;
-        public List<Node> NodeTrouve;
-        public Arc CheminTest;
-        public IForme ObstacleTeste;
-        public IForme ObstacleProbleme;
+        public List<Arc> CheminTrouve { get; set; }
+        public List<Node> NodeTrouve { get; set; }
+        public Arc CheminTest { get; set; }
+        public IForme ObstacleTeste { get; set; }
+        public IForme ObstacleProbleme { get; set; }
         bool nouvelleTrajectoire = false;
 
         /// <summary>
@@ -212,6 +212,7 @@ namespace GoBot
 
         public bool PathFinding(double x, double y, int timeOut = 0, bool attendre = false)
         {
+            Robots.GrosRobot.Historique.Log("Lancement pathfinding pour aller en " + x + " : " + y, TypeLog.PathFinding);
             PointReel destination = new PointReel(x, y);
 
             if (destination.Distance(Position.Coordonnees) <= 10)
@@ -265,6 +266,7 @@ namespace GoBot
 
             if (toutDroit)
             {
+                Robots.GrosRobot.Historique.Log("Chemin trouvé : ligne droite", TypeLog.PathFinding);
                 CheminEnCoursNoeuds.Add(debutNode);
                 CheminEnCoursNoeuds.Add(finNode);
 
@@ -283,6 +285,7 @@ namespace GoBot
                 {
                     List<Node> nodes = aStar.PathByNodes.ToList<Node>();
                     List<Arc> arcs = aStar.PathByArcs.ToList<Arc>();
+                    Robots.GrosRobot.Historique.Log("Chemin trouvé : " + (nodes.Count - 2) + " noeud(s) intermédiaire(s)", TypeLog.PathFinding);
 
                     CheminEnCoursNoeuds = new List<Node>();
                     CheminEnCoursArcs = new List<Arc>();
@@ -339,6 +342,7 @@ namespace GoBot
                     }
 
                     CheminEnCoursNoeuds.Add(nodes[nodes.Count - 1]);
+                    Robots.GrosRobot.Historique.Log("Chemin optimisé : " + (CheminEnCoursNoeuds.Count - 2) + " noeud(s) intermédiaire(s)", TypeLog.PathFinding);
                 }
                 else
                 {
@@ -440,9 +444,13 @@ namespace GoBot
                     break;
             }
             if (nouvelleTrajectoire)
+            {
+                Robots.GrosRobot.Historique.Log("Trajectoire interrompue, calcul d'un nouvel itinéraire", TypeLog.PathFinding);
                 ParcoursPathFinding(CheminEnCoursNoeuds[CheminEnCoursNoeuds.Count - 1].X, CheminEnCoursNoeuds[CheminEnCoursNoeuds.Count - 1].Y);
+            }
             else
             {
+                Robots.GrosRobot.Historique.Log("Trajectoire terminée", TypeLog.PathFinding);
                 succesPathFinding = true;
                 if (semTrajectoire != null)
                     semTrajectoire.Release();

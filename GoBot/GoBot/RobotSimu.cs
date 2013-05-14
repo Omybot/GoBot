@@ -295,6 +295,9 @@ namespace GoBot
         {
             // TODO
             Historique.AjouterAction(new ActionMoteur(this, vitesse, moteur));
+
+            if (moteur == MoteurID.GRCanonTMin)
+                vitesseCanonTMin = vitesse;
         }
 
         public override void AlimentationPuissance(bool on)
@@ -309,10 +312,10 @@ namespace GoBot
             }
         }
 
+        private int vitesseCanonTMin = 0;
         public override int GetVitesseCanon(bool historique = true)
         {
-            // TODO
-            return 1;
+            return vitesseCanonTMin;
         }
 
         public override void Reset()

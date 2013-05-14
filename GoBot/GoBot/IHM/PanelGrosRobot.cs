@@ -12,11 +12,17 @@ namespace GoBot.IHM
 {
     public partial class PanelGrosRobot : UserControl
     {
+        private Dictionary<TypeLog, Color> CouleursLog { get; set; }
+
         public PanelGrosRobot()
         {
             InitializeComponent();
 
             panelHistorique.Deployer(Config.CurrentConfig.HistoriqueGROuvert);
+            CouleursLog = new Dictionary<TypeLog, Color>();
+            CouleursLog.Add(TypeLog.Action, Color.Blue);
+            CouleursLog.Add(TypeLog.PathFinding, Color.Green);
+            CouleursLog.Add(TypeLog.Strat, Color.Red);
         }
 
         public void Init()
@@ -24,22 +30,41 @@ namespace GoBot.IHM
             panelDeplacement.Robot = Robots.GrosRobot;
             panelDeplacement.Init();
             panelHistorique.setHistorique(Robots.GrosRobot.Historique);
-            Robots.GrosRobot.Historique.NouvelleAction += new Historique.delegateAction(MAJHistoriqueDel);
+            Robots.GrosRobot.Historique.NouveauLog += new Historique.DelegateLog(MAJLog);
         }
 
-        private void MAJHistoriqueDel(IAction action)
+        private void AddText(String message, Color couleur)
         {
-            this.Invoke(new EventHandler(delegate
-            {
-                Historique_nouvelleAction(action);
-            }));
-        }
+            String texte = message + Environment.NewLine;
+            txtLog.SuspendLayout();
 
-        void Historique_nouvelleAction(IAction action)
-        {
-            txtLog.AppendText(Environment.NewLine + "> " + action.ToString());
+            txtLog.SelectionStart = txtLog.TextLength;
+            txtLog.SelectedText = texte;
+
+            txtLog.SelectionStart = txtLog.TextLength - texte.Length + 1;
+            txtLog.SelectionLength = texte.Length;
+            txtLog.SelectionColor = couleur;
+
+            txtLog.ResumeLayout();
+
+            txtLog.Select(txtLog.TextLength, 0);
+
             txtLog.SelectionStart = txtLog.TextLength;
             txtLog.ScrollToCaret();
+        }
+
+        private void MAJLog(HistoLigne ligne)
+        {
+            this.Invoke(new EventHandler(delegate
+                {
+                    if ((boxStrat.Checked && ligne.Type == TypeLog.Strat) ||
+                        (boxActions.Checked && ligne.Type == TypeLog.Action) ||
+                        (boxPathFinding.Checked && ligne.Type == TypeLog.PathFinding))
+                    {
+                        TimeSpan t = ligne.Heure - Plateau.Enchainement.DebutMatch;
+                        AddText((boxHeure.Checked ? t.Minutes + ":" + t.Seconds + ":" + t.Milliseconds : "") + " > " + ligne.Message, CouleursLog[ligne.Type]);
+                    }
+                }));
         }
 
         private void btnClose_Click(object sender, EventArgs e)
@@ -65,6 +90,36 @@ namespace GoBot.IHM
                 Config.CurrentConfig.HistoriqueGROuvert = true;
             else
                 Config.CurrentConfig.HistoriqueGROuvert = false;
+        }
+
+        private void boxStrat_CheckedChanged(object sender, EventArgs e)
+        {
+            MAJLog();
+        }
+
+        private void boxActions_CheckedChanged(object sender, EventArgs e)
+        {
+            MAJLog();
+        }
+
+        private void boxHeure_CheckedChanged(object sender, EventArgs e)
+        {
+            MAJLog();
+        }
+
+        private void MAJLog()
+        {
+            txtLog.Clear();
+
+            Robots.GrosRobot.Historique.HistoriqueLignes.Sort();
+            Robots.GrosRobot.Historique.HistoriqueLignes.Sort();
+
+            for(int i = 0; i < Robots.GrosRobot.Historique.HistoriqueLignes.Count; i++)
+            {
+                HistoLigne ligne = Robots.GrosRobot.Historique.HistoriqueLignes[i];
+
+                AddText((boxHeure.Checked ? ligne.Heure.Minute + ":" + ligne.Heure.Second + ":" + ligne.Heure.Millisecond : "") + " > " + ligne.Message, CouleursLog[ligne.Type]);
+            }
         }
     }
 }

@@ -593,7 +593,7 @@ namespace GoBot.IHM
                 }
                 catch (Exception ex)
                 {
-                    Console.WriteLine("Erreur pendant le dessin de la table");
+                    Console.WriteLine("Erreur pendant le dessin de la table " + ex.Message);
                 }
             }
         }

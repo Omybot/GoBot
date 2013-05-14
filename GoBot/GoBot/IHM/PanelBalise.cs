@@ -97,19 +97,28 @@ namespace GoBot.IHM
         {
             Bitmap bmp = new Bitmap(pictureBoxAngle.Width, pictureBoxAngle.Height);
             Graphics g = Graphics.FromImage(bmp);
-            g.FillRectangle(new SolidBrush(Color.White), 0, 0, pictureBoxAngle.Width, pictureBoxAngle.Height);
+            g.FillRectangle(brushBlanc, 0, 0, pictureBoxAngle.Width, pictureBoxAngle.Height);
 
             pictureBoxAngle.Image = bmp;
+            bmp.Dispose();
         }
 
         private void CompleteAngles()
         {
             Graphics g = Graphics.FromImage(pictureBoxAngle.Image);
-            g.FillEllipse(new SolidBrush(Color.Black), 97, 97, 5, 5);
-            g.FillEllipse(new SolidBrush(Color.Black), 97, 272, 5, 5);
+            SolidBrush brush = new SolidBrush(Color.Black);
+            g.FillEllipse(brush, 97, 97, 5, 5);
+            g.FillEllipse(brush, 97, 272, 5, 5);
             pictureBoxAngle.Refresh();
+            brush.Dispose();
         }
 
+        private SolidBrush brushRouge = new SolidBrush(Color.Salmon);
+        private SolidBrush brushBlanc = new SolidBrush(Color.White);
+        private SolidBrush brushNoir = new SolidBrush(Color.Black);
+        private SolidBrush brushBleu = new SolidBrush(Color.LightBlue);
+        private Pen penRouge = new Pen(Color.Salmon);
+        private Pen penBleu = new Pen(Color.LightBlue);
         private void DessineAngle(double debut, double fin, bool ennemi)
         {
             try
@@ -126,18 +135,19 @@ namespace GoBot.IHM
                 
                 if (ennemi)
                 {
-                    g.FillPie(new SolidBrush(Color.Salmon), 5, 5, 190, 190, (int)debut, (int)(fin - debut));
-                    g.DrawPie(new Pen(Color.Red), 5, 5, 190, 190, (int)debut, (int)(fin - debut));
-                    g.DrawString(Math.Round((fin + debut) / 2.0, 2) + "°", font, new SolidBrush(Color.Black), 2, 5 + 8 * nbDetections);
+                    g.FillPie(brushRouge, 5, 5, 190, 190, (int)debut, (int)(fin - debut));
+                    g.DrawPie(penRouge, 5, 5, 190, 190, (int)debut, (int)(fin - debut));
+                    g.DrawString(Math.Round((fin + debut) / 2.0, 2) + "°", font, brushNoir, 2, 5 + 8 * nbDetections);
                 }
                 else
                 {
-                    g.FillPie(new SolidBrush(Color.LightBlue), 5, 180, 190, 190, (int)debut, (int)(fin - debut));
-                    g.DrawPie(new Pen(Color.Blue), 5, 180, 190, 190, (int)debut, (int)(fin - debut));
-                    g.DrawString(Math.Round((fin + debut) / 2.0, 2) + "°", font, new SolidBrush(Color.Black), 2, 185 + 10 * nbDetections);
+                    g.FillPie(brushBleu, 5, 180, 190, 190, (int)debut, (int)(fin - debut));
+                    g.DrawPie(penBleu, 5, 180, 190, 190, (int)debut, (int)(fin - debut));
+                    g.DrawString(Math.Round((fin + debut) / 2.0, 2) + "°", font, brushNoir, 2, 185 + 10 * nbDetections);
                 }
 
                 pictureBoxAngle.Image = bmp;
+                bmp.Dispose();
             }
             catch (Exception)
             {

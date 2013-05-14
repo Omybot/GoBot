@@ -245,6 +245,7 @@ namespace GoBot
                 FileStream myFileStream = new FileStream("config.xml", FileMode.Open);
                 CurrentConfig = (Config)mySerializer.Deserialize(myFileStream);
                 myFileStream.Close();
+                myFileStream.Dispose();
             }
             catch (Exception)
             {
@@ -258,6 +259,7 @@ namespace GoBot
             StreamWriter myWriter = new StreamWriter("config.xml");
             mySerializer.Serialize(myWriter, CurrentConfig);
             myWriter.Close();
+            myWriter.Dispose();
         }
     }
 }

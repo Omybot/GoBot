@@ -23,6 +23,8 @@ namespace GoBot.Mouvements
 
         public override bool Executer(int timeOut = 0)
         {
+            Robots.GrosRobot.Historique.Log("Début bougie " + numeroBougie);
+
             bool grandBras = false;
             bool petitBras = false;
             int bougieAdditionnelle = -1;
@@ -98,22 +100,28 @@ namespace GoBot.Mouvements
                 bougieAdditionnelle = 18;
             }
 
-            if(bougieAdditionnelle != -1)
+            if (bougieAdditionnelle != -1)
+            {
                 Plateau.BougiesEnfoncees[bougieAdditionnelle] = true;
+                Robots.GrosRobot.Historique.Log("Ajout bougie " + bougieAdditionnelle + " additionnelle");
+            }
 
             Plateau.BougiesEnfoncees[numeroBougie] = true;
 
             if (Robots.GrosRobot.PathFinding(Position.Coordonnees.X, Position.Coordonnees.Y, timeOut, true))
             {
+                Robots.GrosRobot.Historique.Log("Position bougie " + numeroBougie + (bougieAdditionnelle != -1 ? " et " + bougieAdditionnelle : "") + " atteinte");
                 if (!Robots.GrosRobot.ServoSorti[ServomoteurID.GRPetitBras] || !Robots.GrosRobot.ServoSorti[ServomoteurID.GRGrandBras])
                 {
+                    Robots.GrosRobot.Historique.Log("Ouverture des bras pour les bougies");
                     // Sors les bras
                     Robots.GrosRobot.PositionerAngle(new Angle(Position.Angle.AngleDegres + 90), 5);
                     Robots.GrosRobot.BougeServo(ServomoteurID.GRPetitBras, Config.CurrentConfig.PositionGRPetitBrasHaut);
                     Robots.GrosRobot.BougeServo(ServomoteurID.GRGrandBras, Config.CurrentConfig.PositionGRGrandBrasHaut);
-                    Thread.Sleep(500);
+                    Thread.Sleep(300);
                 }
                 Robots.GrosRobot.PositionerAngle(Position.Angle, 1);
+                Robots.GrosRobot.Historique.Log("Angle bougie " + numeroBougie + " atteint");
 
                 if (grandBras)
                 {
@@ -122,27 +130,31 @@ namespace GoBot.Mouvements
                         Robots.GrosRobot.BougeServo(ServomoteurID.GRGrandBras, Config.CurrentConfig.PositionGRGrandBrasRange);
                     else
                         Robots.GrosRobot.BougeServo(ServomoteurID.GRGrandBras, Config.CurrentConfig.PositionGRGrandBrasBas);
+
+                    Robots.GrosRobot.Historique.Log("Grand bras pour enfoncer la bougie " + numeroBougie);
                 }
                 if (petitBras)
                 {
                     Robots.GrosRobot.BougeServo(ServomoteurID.GRPetitBras, Config.CurrentConfig.PositionGRPetitBrasBas);
-                    //Thread.Sleep(50);
+                    Robots.GrosRobot.Historique.Log("Petit bras pour enfoncer la bougie " + numeroBougie);
                 }
                 Thread.Sleep(300);
                 if (grandBras)
                     Robots.GrosRobot.BougeServo(ServomoteurID.GRGrandBras, Config.CurrentConfig.PositionGRGrandBrasHaut);
                 if (petitBras)
                 {
-                    //Thread.Sleep(50);
                     Robots.GrosRobot.BougeServo(ServomoteurID.GRPetitBras, Config.CurrentConfig.PositionGRPetitBrasHaut);
                 }
-                Thread.Sleep(300);
+                Thread.Sleep(200);
 
+                Robots.GrosRobot.Historique.Log("Fin bougie " + numeroBougie);
                 Plateau.Score += Score;
                 return true;
             }
             else
             {
+                Robots.GrosRobot.Historique.Log("Annulation bougie " + numeroBougie);
+
                 if (bougieAdditionnelle != -1)
                     Plateau.BougiesEnfoncees[bougieAdditionnelle] = false;
 

@@ -44,8 +44,8 @@ namespace GoBot
                     //btnClose.Visible = false;
                 }
 
-                Robots.GrosRobot.Historique.NouvelleAction += new Historique.delegateAction(HistoriqueGR_nouvelleAction);
-                Robots.PetitRobot.Historique.NouvelleAction += new Historique.delegateAction(HistoriquePR_nouvelleAction);
+                Robots.GrosRobot.Historique.NouvelleAction += new Historique.DelegateAction(HistoriqueGR_nouvelleAction);
+                Robots.PetitRobot.Historique.NouvelleAction += new Historique.DelegateAction(HistoriquePR_nouvelleAction);
 
                 panelBalise1.Balise = Plateau.Balise1;
                 panelBalise2.Balise = Plateau.Balise2;
@@ -270,34 +270,6 @@ namespace GoBot
         public void RecallageSimpleGR()
         {
             Robots.GrosRobot.ArmerJack();
-            return;
-            Robots.GrosRobot.Lent();
-            Robots.GrosRobot.Avancer(10);
-            Robots.GrosRobot.Recallage(SensAR.Arriere);
-            Robots.GrosRobot.Rapide();
-            Robots.GrosRobot.Avancer(890);
-
-            if (Plateau.NotreCouleur == Plateau.CouleurJ1R)
-                Robots.GrosRobot.PivotGauche(90);
-            else
-                Robots.GrosRobot.PivotDroite(90);
-
-            Robots.GrosRobot.Reculer(400);
-            Robots.GrosRobot.Lent();
-            Robots.GrosRobot.Recallage(SensAR.Arriere);
-            Robots.GrosRobot.Rapide();
-
-            // Réinitialise le robot pour remettre à 0 l'asserv
-            Robots.GrosRobot.Reset();
-
-            if (Plateau.NotreCouleur == Plateau.CouleurJ1R)
-                Robots.GrosRobot.ReglerOffsetAsserv(3000 - Robots.GrosRobot.Longueur / 2, 1000, 180);
-            else
-                Robots.GrosRobot.ReglerOffsetAsserv(Robots.GrosRobot.Longueur / 2, 1000, 0);
-
-            Robots.GrosRobot.Rapide();
-            panelBougies.btnCapture_Click(null, null);
-            Robots.GrosRobot.ArmerJack();
         }
 
         public void RecallagesDebut()
@@ -449,6 +421,7 @@ namespace GoBot
             SaveFileDialog open = new SaveFileDialog();
             if (open.ShowDialog() == System.Windows.Forms.DialogResult.OK)
                 replay.Save(open.FileName);
+            open.Dispose();
         }
 
         private void btnChargerReplay_Click(object sender, EventArgs e)
@@ -459,6 +432,7 @@ namespace GoBot
                 replay = new Replay();
                 replay.Load(open.FileName);
             }
+            open.Dispose();
         }
 
         Thread threadReplay;
@@ -527,8 +501,8 @@ namespace GoBot
             Robots.Simuler(actif);
             panelGrosRobot.Init();
             panelPetitRobot.Init();
-            Robots.GrosRobot.Historique.NouvelleAction += new Historique.delegateAction(HistoriqueGR_nouvelleAction);
-            Robots.PetitRobot.Historique.NouvelleAction += new Historique.delegateAction(HistoriquePR_nouvelleAction);
+            Robots.GrosRobot.Historique.NouvelleAction += new Historique.DelegateAction(HistoriqueGR_nouvelleAction);
+            Robots.PetitRobot.Historique.NouvelleAction += new Historique.DelegateAction(HistoriquePR_nouvelleAction);
         }
 
         private void btnRecallageGR_Click(object sender, EventArgs e)
