@@ -61,7 +61,9 @@ namespace GoBot.IHM
                         (boxActions.Checked && ligne.Type == TypeLog.Action) ||
                         (boxPathFinding.Checked && ligne.Type == TypeLog.PathFinding))
                     {
-                        TimeSpan t = ligne.Heure - Plateau.Enchainement.DebutMatch;
+                        TimeSpan t = new TimeSpan();
+                        if (Plateau.Enchainement != null && Plateau.Enchainement.DebutMatch != null)
+                            t = ligne.Heure - Plateau.Enchainement.DebutMatch;
                         AddText((boxHeure.Checked ? t.Minutes + ":" + t.Seconds + ":" + t.Milliseconds : "") + " > " + ligne.Message, CouleursLog[ligne.Type]);
                     }
                 }));
