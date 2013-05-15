@@ -441,10 +441,9 @@ namespace GoBot
                                 if (Carte == GoBot.Carte.RecBeu && Plateau.NotreCouleur == Plateau.CouleurJ1R)
                                 {
                                     Angle diff = new Angle(180) - (angleDetection - angleGrosRobot);
-                                    Console.WriteLine("Beu " + diff);
                                     if (Math.Abs((diff).AngleDegres) < marge)
                                     {
-                                        Console.WriteLine("GrosRobot repéré sur balise beu");
+                                        // GrosRobot repéré sur balise beu
                                         Detections.RemoveAt(i);
                                         i--;
                                     }
@@ -452,10 +451,9 @@ namespace GoBot
                                 else if (Carte == GoBot.Carte.RecBoi && Plateau.NotreCouleur == Plateau.CouleurJ1R)
                                 {
                                     Angle diff = angleGrosRobot - angleDetection;
-                                    Console.WriteLine("Boi " + diff);
                                     if (Math.Abs((diff).AngleDegres) < marge)
                                     {
-                                        Console.WriteLine("GrosRobot repéré sur balise boi");
+                                        // GrosRobot repéré sur balise boi
                                         Detections.RemoveAt(i);
                                         i--;
                                     }
@@ -463,10 +461,9 @@ namespace GoBot
                                 else if (Carte == GoBot.Carte.RecBun && Plateau.NotreCouleur == Plateau.CouleurJ1R)
                                 {
                                     Angle diff = new Angle(180) - (angleGrosRobot + angleDetection);
-                                    Console.WriteLine("Bun " + diff);
                                     if (Math.Abs((diff).AngleDegres) < marge)
                                     {
-                                        Console.WriteLine("GrosRobot repéré sur balise boi");
+                                        //GrosRobot repéré sur balise bun
                                         Detections.RemoveAt(i);
                                         i--;
                                     }
@@ -474,9 +471,9 @@ namespace GoBot
                                 else if (Carte == GoBot.Carte.RecBeu && Plateau.NotreCouleur == Plateau.CouleurJ2B)
                                 {
                                     Angle diff = angleDetection + angleGrosRobot;
-                                    Console.WriteLine("Beu " + diff);
                                     if (Math.Abs((diff).AngleDegres) < marge)
                                     {
+                                        // GrosRobot repéré sur balise beu
                                         Detections.RemoveAt(i);
                                         i--;
                                     }
@@ -484,9 +481,9 @@ namespace GoBot
                                 else if (Carte == GoBot.Carte.RecBoi && Plateau.NotreCouleur == Plateau.CouleurJ2B)
                                 {
                                     Angle diff = new Angle(180) + angleGrosRobot - angleDetection;
-                                    Console.WriteLine("Boi " + diff);
                                     if (Math.Abs((diff).AngleDegres) < marge)
                                     {
+                                        // GrosRobot repéré sur balise boi
                                         Detections.RemoveAt(i);
                                         i--;
                                     }
@@ -494,9 +491,9 @@ namespace GoBot
                                 else if (Carte == GoBot.Carte.RecBun && Plateau.NotreCouleur == Plateau.CouleurJ2B)
                                 {
                                     Angle diff = angleGrosRobot - angleDetection;
-                                    Console.WriteLine("Bun " + diff);
                                     if (Math.Abs((diff).AngleDegres) < marge)
                                     {
+                                        // GrosRobot repéré sur balise bun
                                         Detections.RemoveAt(i);
                                         i--;
                                     }

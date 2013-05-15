@@ -267,11 +267,6 @@ namespace GoBot
                 Robots.PetitRobot.ReglerOffsetAsserv(3000 - Robots.PetitRobot.Longueur / 2, 1750 - Robots.PetitRobot.Longueur / 2, 0);
         }
 
-        public void RecallageSimpleGR()
-        {
-            Robots.GrosRobot.ArmerJack();
-        }
-
         public void RecallagesDebut()
         {
             panelBougies.btnCapture_Click(null, null);
@@ -442,20 +437,6 @@ namespace GoBot
             threadReplay.Start();
         }
 
-        private void btnPIDGR_Click(object sender, EventArgs e)
-        {
-            Robots.GrosRobot.EnvoyerPID((int)numPGR.Value, (int)numIGR.Value, (int)numDGR.Value);
-        }
-
-        private void bnStratTotem_Click(object sender, EventArgs e)
-        {
-        }
-
-        private void button4_Click(object sender, EventArgs e)
-        {
-            Config.Save();
-        }
-
         private void FenGoBot_Load(object sender, EventArgs e)
         {
             Plateau.NotreCouleurChange += new EventHandler(Plateau_NotreCouleurChange);
@@ -507,12 +488,7 @@ namespace GoBot
 
         private void btnRecallageGR_Click(object sender, EventArgs e)
         {
-            RecallageSimpleGR();
-        }
-
-        private void btnPIDPetitRobot_Click(object sender, EventArgs e)
-        {
-            Robots.PetitRobot.EnvoyerPID((int)numPPetit.Value, (int)numIPetit.Value, (int)numDPetit.Value);
+            Robots.GrosRobot.ArmerJack();
         }
 
         private void radioBaliseOui_CheckedChanged(object sender, EventArgs e)
@@ -528,13 +504,6 @@ namespace GoBot
                 led2.CouleurVert();
             else
                 led2.CouleurRouge();
-        }
-
-        private void button1_Click(object sender, EventArgs e)
-        {
-            Robots.GrosRobot.PathFinding((int)numericUpDown1.Value, (int)numericUpDown2.Value, 0, true);
-
-            Robots.GrosRobot.PositionerAngle(new Angle((double)numericUpDown3.Value), 0.5);
         }
     }
 }

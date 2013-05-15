@@ -63,14 +63,14 @@
             this.panelDeplacement.Location = new System.Drawing.Point(3, 3);
             this.panelDeplacement.Name = "panelDeplacement";
             this.panelDeplacement.Robot = null;
-            this.panelDeplacement.Size = new System.Drawing.Size(337, 262);
+            this.panelDeplacement.Size = new System.Drawing.Size(337, 381);
             this.panelDeplacement.TabIndex = 72;
             // 
             // panelHistorique
             // 
             this.panelHistorique.AutoSize = true;
             this.panelHistorique.BackColor = System.Drawing.Color.Transparent;
-            this.panelHistorique.Location = new System.Drawing.Point(3, 271);
+            this.panelHistorique.Location = new System.Drawing.Point(3, 390);
             this.panelHistorique.Name = "panelHistorique";
             this.panelHistorique.Size = new System.Drawing.Size(337, 115);
             this.panelHistorique.TabIndex = 71;

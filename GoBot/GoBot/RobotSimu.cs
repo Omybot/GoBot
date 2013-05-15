@@ -16,15 +16,18 @@ namespace GoBot
         private Semaphore semDeplacement;
         private Random rand;
 
+        // Distance entre les deux roues en mm
+        private double Entraxe { get; set; }
+
         private Position position;
-        public override Position Position 
+        public override Position Position
         {
             get { return position; }
             set { position = value; Destination = value; }
         }
 
         private int vitesseDeplacement;
-        public override int VitesseDeplacement 
+        public override int VitesseDeplacement
         {
             get { return vitesseDeplacement; }
             set
@@ -33,7 +36,7 @@ namespace GoBot
                 Historique.AjouterAction(new ActionVitesseLigne(this, value));
             }
         }
-        
+
         private int accelerationDeplacement;
         public override int AccelerationDeplacement
         {
@@ -67,6 +70,8 @@ namespace GoBot
             }
         }
 
+        public double VitesseActuelle { get; set; }
+
         public override int Longueur { get; set; }
         public override int Largeur { get; set; }
 
@@ -90,9 +95,26 @@ namespace GoBot
             semDeplacement = new Semaphore(1, 1);
             SensDep = SensAR.Avant;
 
+            Entraxe = 250;
             Nom = "GrosRobot";
             RecallageEnCours = false;
             rand = new Random(DateTime.Now.Millisecond);
+        }
+
+        public double DistanceFreinageActuelle
+        {
+            get
+            {
+                return (VitesseActuelle * VitesseActuelle) / (2 * AccelerationDeplacement);
+            }
+        }
+
+        public double AngleFreinageActuel
+        {
+            get
+            {
+                return (VitesseActuelle * VitesseActuelle) / (2 * AccelerationPivot);
+            }
         }
 
         void timerDeplacement_Elapsed(object sender, ElapsedEventArgs e)
@@ -108,16 +130,29 @@ namespace GoBot
                 if (SensPivot == SensGD.Gauche)
                     coeff = -1;
 
-                if (Math.Abs(diff.AngleDegres) >= VitessePivot / 100.0)
-                    Position.Angle.Tourner(coeff * VitessePivot / 100.0);
-                else if (Math.Abs(diff.AngleDegres) <= -VitessePivot / 100.0)
-                    Position.Angle.Tourner(coeff * VitessePivot / 100.0);
+                double distance = Math.Abs(adifference.AngleDegres) / 360.0 * Entraxe * Math.PI;
+
+                if (distance > AngleFreinageActuel)
+                    VitesseActuelle = Math.Min(VitessePivot, VitesseActuelle + AccelerationPivot / (1000.0 / IntervalleRafraichissementPosition));
+                else
+                    VitesseActuelle = VitesseActuelle - AccelerationPivot / (1000.0 / IntervalleRafraichissementPosition);
+
+                if (Math.Abs(diff.AngleDegres) >= VitesseActuelle / 100.0)
+                    Position.Angle.Tourner(coeff * VitesseActuelle / 100.0);
+                else if (Math.Abs(diff.AngleDegres) <= -VitesseActuelle / 100.0)
+                    Position.Angle.Tourner(coeff * VitesseActuelle / 100.0);
                 else
                     Position.Angle.Tourner(diff.AngleDegres);
             }
             else if (difference > 0)
             {
-                double distance = VitesseDeplacement / (1000.0 / IntervalleRafraichissementPosition);
+                // Phase accélération ou déccélération
+                if (Position.Coordonnees.Distance(Destination.Coordonnees) > DistanceFreinageActuelle)
+                    VitesseActuelle = Math.Min(VitesseDeplacement, VitesseActuelle + AccelerationDeplacement / (1000.0 / IntervalleRafraichissementPosition));
+                else
+                    VitesseActuelle = VitesseActuelle - AccelerationDeplacement / (1000.0 / IntervalleRafraichissementPosition);
+
+                double distance = VitesseActuelle / (1000.0 / IntervalleRafraichissementPosition);
 
                 //VitesseActuelle += AccellerationDeplacement / (1000 / IntervalleRafraichissementPosition);
                 if (Destination.Coordonnees.Distance(Position.Coordonnees) < distance)
@@ -134,10 +169,12 @@ namespace GoBot
             semDeplacement.Release();
         }
 
+        DateTime debut;
         public override void Avancer(int distance, bool attendre = true)
         {
+            debut = DateTime.Now;
             DeplacementLigne = true;
-            
+
             if (distance > 0)
             {
                 if (!RecallageEnCours)
@@ -159,9 +196,11 @@ namespace GoBot
             if (attendre)
                 while (Position.Coordonnees.X != Destination.Coordonnees.X ||
                     Position.Coordonnees.Y != Destination.Coordonnees.Y)
-                    Thread.Sleep(50);
+                    Thread.Sleep(10);
 
             DeplacementLigne = false;
+
+            Console.WriteLine(((DateTime.Now) - debut).TotalMilliseconds + " ms");
         }
 
         public override void Reculer(int distance, bool attendre = true)
@@ -268,7 +307,7 @@ namespace GoBot
             if (rand.Next(2) == 0)
                 return true;
 
-            return false; 
+            return false;
         }
 
         public override Color GetCouleurBalle(bool historique = true)

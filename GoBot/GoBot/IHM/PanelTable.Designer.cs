@@ -59,7 +59,6 @@
             this.label10 = new System.Windows.Forms.Label();
             this.label11 = new System.Windows.Forms.Label();
             this.label12 = new System.Windows.Forms.Label();
-            this.button1 = new System.Windows.Forms.Button();
             this.lblSecondes = new System.Windows.Forms.Label();
             this.lblMilli = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxTable)).BeginInit();
@@ -159,9 +158,9 @@
             // 
             // btnReset
             // 
-            this.btnReset.Location = new System.Drawing.Point(19, 371);
+            this.btnReset.Location = new System.Drawing.Point(17, 371);
             this.btnReset.Name = "btnReset";
-            this.btnReset.Size = new System.Drawing.Size(75, 23);
+            this.btnReset.Size = new System.Drawing.Size(77, 23);
             this.btnReset.TabIndex = 10;
             this.btnReset.Text = "Reset table";
             this.btnReset.UseVisualStyleBackColor = true;
@@ -209,7 +208,7 @@
             // 
             // btnGo
             // 
-            this.btnGo.Location = new System.Drawing.Point(17, 480);
+            this.btnGo.Location = new System.Drawing.Point(17, 464);
             this.btnGo.Name = "btnGo";
             this.btnGo.Size = new System.Drawing.Size(75, 23);
             this.btnGo.TabIndex = 16;
@@ -363,16 +362,6 @@
             this.label12.TabIndex = 26;
             this.label12.Text = "Position petit robot";
             // 
-            // button1
-            // 
-            this.button1.Location = new System.Drawing.Point(24, 448);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(50, 26);
-            this.button1.TabIndex = 33;
-            this.button1.Text = "button1";
-            this.button1.UseVisualStyleBackColor = true;
-            this.button1.Click += new System.EventHandler(this.button1_Click);
-            // 
             // lblSecondes
             // 
             this.lblSecondes.Font = new System.Drawing.Font("Century Gothic", 26.25F);
@@ -401,7 +390,6 @@
             this.BackColor = System.Drawing.Color.Transparent;
             this.Controls.Add(this.lblMilli);
             this.Controls.Add(this.lblSecondes);
-            this.Controls.Add(this.button1);
             this.Controls.Add(this.lblPosPetitTeta);
             this.Controls.Add(this.lblPosPetitY);
             this.Controls.Add(this.lblPosPetitX);
@@ -474,7 +462,6 @@
         private System.Windows.Forms.Label label10;
         private System.Windows.Forms.Label label11;
         private System.Windows.Forms.Label label12;
-        private System.Windows.Forms.Button button1;
         private System.Windows.Forms.Label lblSecondes;
         private System.Windows.Forms.Label lblMilli;
     }

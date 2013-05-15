@@ -317,6 +317,7 @@ namespace GoBot
         public override void Stop(StopMode mode = StopMode.Smooth)
         {
             Trame trame = TrameFactory.GRStop(mode);
+            DeplacementLigne = false;
 
             Connexion.SendMessage(trame);
             

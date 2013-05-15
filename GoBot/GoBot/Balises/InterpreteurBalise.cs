@@ -138,6 +138,7 @@ namespace GoBot
             Plateau.Balise1.PositionsChange += new Balise.PositionsChangeDelegate(Balise1_PositionsChange);
             Plateau.Balise2.PositionsChange += new Balise.PositionsChangeDelegate(Balise2_PositionsChange);
             Plateau.Balise3.PositionsChange += new Balise.PositionsChangeDelegate(Balise3_PositionsChange);
+            positionsPrec = new List<PointReel>();
         }
 
         /// <summary>
