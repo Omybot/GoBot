@@ -205,6 +205,9 @@ namespace GoBot.Mouvements
 
                 if (balle)
                 {
+                    Robots.GrosRobot.NbBallesBlanchesCharges = 7;
+                    Robots.GrosRobot.BalleCouleurChargee = true;
+                    Robots.GrosRobot.CouleurBalleChargee = numeroAssiette < 5 ? Plateau.CouleurJ2B : Plateau.CouleurJ1R;
                     Robots.GrosRobot.BallesChargees = true;
                     Plateau.AssiettesVidees[numeroAssiette] = true;
                     Plateau.Score += Score;

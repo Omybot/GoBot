@@ -102,11 +102,9 @@ namespace GoBot.Mouvements
 
             if (bougieAdditionnelle != -1)
             {
-                Plateau.BougiesEnfoncees[bougieAdditionnelle] = true;
                 Robots.GrosRobot.Historique.Log("Ajout bougie " + bougieAdditionnelle + " additionnelle");
             }
 
-            Plateau.BougiesEnfoncees[numeroBougie] = true;
 
             if (Robots.GrosRobot.PathFinding(Position.Coordonnees.X, Position.Coordonnees.Y, timeOut, true))
             {
@@ -149,6 +147,12 @@ namespace GoBot.Mouvements
 
                 Robots.GrosRobot.Historique.Log("Fin bougie " + numeroBougie);
                 Plateau.Score += Score;
+                if (bougieAdditionnelle != -1)
+                {
+                    Plateau.Score += Score;
+                    Plateau.BougiesEnfoncees[bougieAdditionnelle] = true;
+                }
+                Plateau.BougiesEnfoncees[numeroBougie] = true;
                 return true;
             }
             else

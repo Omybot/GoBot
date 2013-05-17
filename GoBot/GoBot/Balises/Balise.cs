@@ -378,9 +378,9 @@ namespace GoBot
 
                         // Réunification des mesures détectées par les deux capteurs
                         Detections = new List<DetectionBalise>();
-                        double ecartAngle = 1;
+                        /*double ecartAngle = 1;
 
-                        /*
+                        
                         foreach (DetectionBalise d1 in DetectionsCapteur1)
                         {
                             bool correspondance = false;

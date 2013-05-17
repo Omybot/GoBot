@@ -24,7 +24,6 @@ namespace GoBot.Mouvements
         {
             Robots.GrosRobot.Historique.Log("Début cadeau " + numeroCadeau);
             Plateau.BaisserBras();
-            Plateau.CadeauxActives[numeroCadeau] = true;
             if (Robots.GrosRobot.PathFinding(Position.Coordonnees.X, Position.Coordonnees.Y, timeOut, true))
             {
                 Robots.GrosRobot.Historique.Log("Position cadeau " + numeroCadeau + " atteinte");
@@ -39,6 +38,8 @@ namespace GoBot.Mouvements
 
                 Robots.GrosRobot.Historique.Log("Fin cadeau " + numeroCadeau);
                 Plateau.Score += Score;
+                Plateau.CadeauxActives[numeroCadeau] = true;
+
                 return true;
             }
             else

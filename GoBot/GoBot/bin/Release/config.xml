@@ -12,7 +12,7 @@
   <UtilisationPROuvert>true</UtilisationPROuvert>
   <GRVitesseLigneRapide>600</GRVitesseLigneRapide>
   <GRAccelerationLigneRapide>1000</GRAccelerationLigneRapide>
-  <GRVitessePivotRapide>1000</GRVitessePivotRapide>
+  <GRVitessePivotRapide>1500</GRVitessePivotRapide>
   <GRAccelerationPivotRapide>1000</GRAccelerationPivotRapide>
   <GRVitesseLigneLent>200</GRVitesseLigneLent>
   <GRAccelerationLigneLent>300</GRAccelerationLigneLent>

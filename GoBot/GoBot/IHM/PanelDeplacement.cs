@@ -284,7 +284,7 @@ namespace GoBot.IHM
 
         private void trackBarVitessePivot_TickValueChanged()
         {
-            Robot.VitessePivot = (int)trackBarVitesseLigne.Value;
+            Robot.VitessePivot = (int)trackBarVitessePivot.Value;
             if (Robot == Robots.GrosRobot)
                 Config.CurrentConfig.GRVitessePivotRapide = (int)trackBarVitessePivot.Value;
             else
@@ -308,7 +308,7 @@ namespace GoBot.IHM
 
         private void trackBarAccelPivot_TickValueChanged()
         {
-            Robot.AccelerationPivot = (int)trackBarAccelLigne.Value;
+            Robot.AccelerationPivot = (int)trackBarAccelPivot.Value;
             if (Robot == Robots.GrosRobot)
                 Config.CurrentConfig.GRAccelerationPivotRapide = (int)trackBarAccelLigne.Value;
             else

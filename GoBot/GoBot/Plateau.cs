@@ -44,6 +44,10 @@ namespace GoBot
 
         public static bool Simulation { get; set; }
 
+        public static DateTime DateBalle;
+        public static Color CouleurBalleLancee;
+        public static int NbBallesMarquees { get; set; }
+
         public static Color[] CouleursBougies { get; set; }
 
         public static PointReel[] PositionsBougies { get; set; }
@@ -102,6 +106,7 @@ namespace GoBot
         {
             if (!Config.DesignMode)
             {
+                NbBallesMarquees = 0;
                 Degommage = false;
                 ReflecteursNosRobots = true;
                 DerniereBougieGros = -1;

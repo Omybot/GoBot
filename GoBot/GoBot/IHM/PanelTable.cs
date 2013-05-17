@@ -32,6 +32,7 @@ namespace GoBot.IHM
         public static Plateau Plateau { get; set; }
 
         Mode modeCourant;
+        Random rand;
 
         public PanelTable()
         {
@@ -60,6 +61,18 @@ namespace GoBot.IHM
             Pen crayonRouge = new Pen(Color.Red, 3);
             Pen crayonBleu = new Pen(Color.Blue, 3);
             SolidBrush brush = new SolidBrush(Color.Black);
+            int nbBallePrec = 0;
+            List<Point> coordonneesBallesPanier = new List<Point>();
+            rand = new Random(DateTime.Now.Millisecond);
+            List<Point> positionsBallesChargees = new List<Point>();
+
+            positionsBallesChargees.Add(new Point(10, 10));
+            positionsBallesChargees.Add(new Point(20, 10));
+            positionsBallesChargees.Add(new Point(31, 11));
+            positionsBallesChargees.Add(new Point(27, 20));
+            positionsBallesChargees.Add(new Point(10, 29));
+            positionsBallesChargees.Add(new Point(21, 31));
+            positionsBallesChargees.Add(new Point(31, 31));
 
             while (continuerAffichage)
             {
@@ -350,6 +363,27 @@ namespace GoBot.IHM
                         }
                     }*/
 
+                    // Dessin des bougies
+
+                    PointReel point = new PointReel(xTable, yTable);
+
+                    for (int i = 0; i < 20; i++)
+                    {
+                        g.FillEllipse(new SolidBrush(Plateau.CouleursBougies[i]), RealToScreen(Plateau.PositionsBougies[i].X - 40), RealToScreen(Plateau.PositionsBougies[i].Y - 40), RealToScreen(80), RealToScreen(80));
+                        g.DrawEllipse(new Pen(Color.Black), RealToScreen(Plateau.PositionsBougies[i].X - 40), RealToScreen(Plateau.PositionsBougies[i].Y - 40), RealToScreen(80), RealToScreen(80));
+
+                        if (Plateau.BougiesEnfoncees[i])
+                        {
+                            g.FillEllipse(new SolidBrush(Color.Black), RealToScreen(Plateau.PositionsBougies[i].X - 20), RealToScreen(Plateau.PositionsBougies[i].Y - 20), RealToScreen(40), RealToScreen(40));
+                            g.DrawEllipse(new Pen(Color.White), RealToScreen(Plateau.PositionsBougies[i].X - 20), RealToScreen(Plateau.PositionsBougies[i].Y - 20), RealToScreen(40), RealToScreen(40));
+                        }
+
+                        else if (Plateau.PositionsBougies[i].Distance(point) <= 40)
+                        {
+                            g.DrawEllipse(new Pen(Color.LightGreen, 3), RealToScreen(Plateau.PositionsBougies[i].X - 40), RealToScreen(Plateau.PositionsBougies[i].Y - 40), RealToScreen(80), RealToScreen(80));
+                        }
+                    }
+
                     // Dessin du gros robot
 
                     if (Robots.GrosRobot != null)
@@ -396,9 +430,28 @@ namespace GoBot.IHM
                             lblPosGrosTeta.Text = Robots.GrosRobot.Position.Angle.ToString();
                         }));
 
+                        // Dessin des balles dans le robot
                         if (Robots.GrosRobot.BallesChargees)
                         {
-                            g.DrawImage(rotateImage(Properties.Resources.Balles, Robots.GrosRobot.Position.Angle.AngleDegres), RealToScreen(Robots.GrosRobot.Position.Coordonnees.X) - 61 / 2, RealToScreen(Robots.GrosRobot.Position.Coordonnees.Y) - 61 / 2, 61, 61);
+                            Bitmap bmpBalles = new Bitmap(52, 52);
+                            Graphics gBalles = Graphics.FromImage(bmpBalles);
+                            g.FillRectangle(new SolidBrush(Color.Transparent), 0, 0, 52, 52);
+
+                            for (int i = 0; i < Robots.GrosRobot.NbBallesBlanchesCharges; i++)
+                            {
+                                gBalles.DrawImage(Properties.Resources.Balle, positionsBallesChargees[i].X, positionsBallesChargees[i].Y, 10, 10);
+                            }
+                            if (Robots.GrosRobot.BalleCouleurChargee)
+                            {
+                                Bitmap imageBalle = Properties.Resources.BalleBleue;
+                                if (Robots.GrosRobot.CouleurBalleChargee == Plateau.CouleurJ1R)
+                                    imageBalle = Properties.Resources.BalleRouge;
+
+                                gBalles.DrawImage(imageBalle, 16, 20, 10, 10);
+                            }
+
+                            g.DrawImage(rotateImage(bmpBalles, Robots.GrosRobot.Position.Angle.AngleDegres), RealToScreen(Robots.GrosRobot.Position.Coordonnees.X) - 52 / 2, RealToScreen(Robots.GrosRobot.Position.Coordonnees.Y) - 52 / 2, 52, 52);
+                            //g.DrawImage(rotateImage(Properties.Resources.Balles, Robots.GrosRobot.Position.Angle.AngleDegres), RealToScreen(Robots.GrosRobot.Position.Coordonnees.X) - 61 / 2, RealToScreen(Robots.GrosRobot.Position.Coordonnees.Y) - 61 / 2, 61, 61);
                         }
 
                         /*
@@ -409,6 +462,61 @@ namespace GoBot.IHM
                                 if (Plateau.PositionsAssiettes[i].Coordonnees.Distance(Robots.GrosRobot.Position.Coordonnees) < 250)
                                     Plateau.AssiettesExiste[i] = false;
                             }*/
+
+                        
+
+                        foreach (Point balleRentree in coordonneesBallesPanier)
+                            g.DrawImage(Properties.Resources.Balle, balleRentree.X, balleRentree.Y, 10, 10);
+
+                        // Test lancement de balle
+                        if (Robots.GrosRobot.LancementBalles)
+                        {
+                            int yBalle = 0;
+                            int xBalle = 0;
+                            Bitmap img;
+
+                            if (Plateau.CouleurBalleLancee == Color.White)
+                            {
+                                if (Plateau.NotreCouleur == Plateau.CouleurJ2B)
+                                    xBalle = 1400;
+                                else
+                                    xBalle = 1600;
+
+                                img = Properties.Resources.Balle;
+                            }
+                            else
+                            {
+                                if (Plateau.NotreCouleur == Plateau.CouleurJ2B)
+                                    xBalle = 1000;
+                                else
+                                    xBalle = 1100;
+
+                                if (Robots.GrosRobot.CouleurBalleChargee == Plateau.CouleurJ1R)
+                                    img = Properties.Resources.BalleRouge;
+                                else
+                                    img = Properties.Resources.BalleBleue;
+                            }
+
+                            if (nbBallePrec + 1 < Plateau.NbBallesMarquees || 
+                                (nbBallePrec < Plateau.NbBallesMarquees && (DateTime.Now - Plateau.DateBalle).TotalMilliseconds > 900) ||
+                                nbBallePrec < Plateau.NbBallesMarquees && Plateau.CouleurBalleLancee != Color.White)
+                            {
+                                nbBallePrec++;
+                                // Nouvelle balle
+                                int xBalleRentree = RealToScreen(rand.Next(150) + 1340);
+                                if (Plateau.NotreCouleur == Plateau.CouleurJ1R)
+                                    xBalleRentree = RealToScreen(rand.Next(150) + 1510);
+
+                                int yBalleRentree = RealToScreen(rand.Next(150));
+
+                                coordonneesBallesPanier.Add(new Point(xBalleRentree, yBalleRentree));
+                            }
+
+                            xBalle = RealToScreen(xBalle - (xBalle - Robots.GrosRobot.Position.Coordonnees.X) / 800.0 * (800 - (DateTime.Now - Plateau.DateBalle).TotalMilliseconds));
+                            yBalle = RealToScreen(100 - (100 - Robots.GrosRobot.Position.Coordonnees.Y) / 800.0 * (800 - (DateTime.Now - Plateau.DateBalle).TotalMilliseconds));
+
+                            g.DrawImage(img, xBalle - 5, yBalle - 5, 10, 10);
+                        }
                     }
 
                     // Fin dessin robot
@@ -507,26 +615,6 @@ namespace GoBot.IHM
                     }
                     // Fin pathfinding
 
-                    // Dessin des bougies
-
-                    PointReel point = new PointReel(xTable, yTable);
-
-                    for (int i = 0; i < 20; i++)
-                    {
-                        g.FillEllipse(new SolidBrush(Plateau.CouleursBougies[i]), RealToScreen(Plateau.PositionsBougies[i].X - 40), RealToScreen(Plateau.PositionsBougies[i].Y - 40), RealToScreen(80), RealToScreen(80));
-                        g.DrawEllipse(new Pen(Color.Black), RealToScreen(Plateau.PositionsBougies[i].X - 40), RealToScreen(Plateau.PositionsBougies[i].Y - 40), RealToScreen(80), RealToScreen(80));
-
-                        if (Plateau.BougiesEnfoncees[i])
-                        {
-                            g.FillEllipse(new SolidBrush(Color.Black), RealToScreen(Plateau.PositionsBougies[i].X - 20), RealToScreen(Plateau.PositionsBougies[i].Y - 20), RealToScreen(40), RealToScreen(40));
-                            g.DrawEllipse(new Pen(Color.White), RealToScreen(Plateau.PositionsBougies[i].X - 20), RealToScreen(Plateau.PositionsBougies[i].Y - 20), RealToScreen(40), RealToScreen(40));
-                        }
-
-                        else if (Plateau.PositionsBougies[i].Distance(point) <= 40)
-                        {
-                            g.DrawEllipse(new Pen(Color.LightGreen, 3), RealToScreen(Plateau.PositionsBougies[i].X - 40), RealToScreen(Plateau.PositionsBougies[i].Y - 40), RealToScreen(80), RealToScreen(80));
-                        }
-                    }
 
                     // Dessin des cadeaux
 

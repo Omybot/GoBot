@@ -131,6 +131,7 @@ namespace GoBot.Enchainements
             Plateau.Balise3.Stop();
             Thread.Sleep(100);
             Robots.GrosRobot.ActionneurOnOff(ActionneurOnOffID.GRPompe, true);
+            Plateau.Score += 12;
             Thread.Sleep(9000);
             Robots.GrosRobot.ActionneurOnOff(ActionneurOnOffID.GRPompe, false);
         }

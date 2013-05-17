@@ -169,10 +169,8 @@ namespace GoBot
             semDeplacement.Release();
         }
 
-        DateTime debut;
         public override void Avancer(int distance, bool attendre = true)
         {
-            debut = DateTime.Now;
             DeplacementLigne = true;
 
             if (distance > 0)
@@ -199,8 +197,6 @@ namespace GoBot
                     Thread.Sleep(10);
 
             DeplacementLigne = false;
-
-            Console.WriteLine(((DateTime.Now) - debut).TotalMilliseconds + " ms");
         }
 
         public override void Reculer(int distance, bool attendre = true)
@@ -304,7 +300,7 @@ namespace GoBot
 
         public override bool GetPresenceBalle(bool historique = true)
         {
-            if (rand.Next(2) == 0)
+            if (nbBalles > 0)
                 return true;
 
             return false;
@@ -312,8 +308,13 @@ namespace GoBot
 
         public override Color GetCouleurBalle(bool historique = true)
         {
-            if (rand.Next(8) == 0)
+            if (!couleurJetee && rand.Next(nbBalles) == 0)
+            {
+                couleurJetee = true;
                 return Color.Blue;
+            }
+
+            nbBalles--;
 
             return Color.White;
         }
@@ -324,9 +325,12 @@ namespace GoBot
             return true;
         }
 
+        private int nbBalles;
+        private bool couleurJetee;
         public override bool GetAspiRemonte(bool historique = true)
         {
-            // TODO
+            couleurJetee = false;
+            nbBalles = 7;
             return true;
         }
 

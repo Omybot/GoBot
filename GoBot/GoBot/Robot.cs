@@ -17,6 +17,9 @@ namespace GoBot
 
         public abstract Position Position { get; set; }
         public bool BallesChargees { get; set; }
+        public int NbBallesBlanchesCharges { get; set; }
+        public bool BalleCouleurChargee { get; set; }
+        public Color CouleurBalleChargee { get; set; }
 
         public abstract void Avancer(int distance, bool attendre = true);
         public abstract void Reculer(int distance, bool attendre = true);
@@ -172,6 +175,7 @@ namespace GoBot
             ServoSorti.Add(ServomoteurID.GRGrandBras, false);
             ServoSorti.Add(ServomoteurID.GRPetitBras, false);
             BallesChargees = false;
+            LancementBalles = false;
         }
 
         public void Lent()
@@ -506,5 +510,7 @@ namespace GoBot
         {
             return Nom;
         }
+
+        public bool LancementBalles { get; set; }
     }
 }

@@ -55,6 +55,7 @@ namespace GoBot.Mouvements
                     vitesseActuelleCanon = Robots.GrosRobot.GetVitesseCanon();
                 }
 
+                Robots.GrosRobot.LancementBalles = true;
                 bool balle = true;
                 while (balle)
                 {
@@ -77,22 +78,31 @@ namespace GoBot.Mouvements
                     else
                     {
                         Color couleur = Robots.GrosRobot.GetCouleurBalle();
-                        Console.WriteLine(couleur);
+                        Plateau.DateBalle = DateTime.Now;
                         if (couleur != Color.White)
                         {
                             Robots.GrosRobot.Historique.Log("Lance balle couleur");
+                            Plateau.CouleurBalleLancee = Color.Black;
                             Robots.GrosRobot.PivotGauche(15, false);
                             Robots.GrosRobot.ActionneurOnOff(ActionneurOnOffID.GRShutter, true);
                             Thread.Sleep(300);
                             Robots.GrosRobot.ActionneurOnOff(ActionneurOnOffID.GRShutter, false);
                             Robots.GrosRobot.PivotDroite(15, false);
+                            Robots.GrosRobot.BalleCouleurChargee = false;
                         }
                         else
                         {
                             Robots.GrosRobot.Historique.Log("Lance balle blanche");
+                            Plateau.CouleurBalleLancee = Color.White;
                             Robots.GrosRobot.ActionneurOnOff(ActionneurOnOffID.GRShutter, true);
                             Thread.Sleep(250);
                             Robots.GrosRobot.ActionneurOnOff(ActionneurOnOffID.GRShutter, false);
+                            if (Robots.GrosRobot.NbBallesBlanchesCharges > 0)
+                            {
+                                Plateau.Score += 2;
+                                Plateau.NbBallesMarquees++;
+                                Robots.GrosRobot.NbBallesBlanchesCharges--;
+                            }
                         }
                     }
                 }
@@ -102,6 +112,7 @@ namespace GoBot.Mouvements
                 Robots.GrosRobot.BallesChargees = false;
                 //Robots.GrosRobot.TourneMoteur(MoteurID.GRCanon, 0);
                 Robots.GrosRobot.Rapide();
+                Robots.GrosRobot.LancementBalles = false;
                 return true;
             }
             else
@@ -110,6 +121,7 @@ namespace GoBot.Mouvements
                 //Robots.GrosRobot.TourneMoteur(MoteurID.GRCanon, 0);
                 Robots.GrosRobot.BougeServo(ServomoteurID.GRServoAssiette, Config.CurrentConfig.PositionGRBloqueurOuvert);
                 Robots.GrosRobot.Rapide();
+                Robots.GrosRobot.LancementBalles = false;
                 return false;
             }
         }
