@@ -11,38 +11,26 @@ namespace GoBot.Mouvements
 {
     class MoveGrosAspireAssiette : Mouvement
     {
-        public override Position Position 
-        {
-            get
-            {
-                Position position;
-                if (numeroAssiette < 5)
-                    position = new Position(new Angle(0), new PointReel(Plateau.PositionsAssiettes[numeroAssiette].Coordonnees.X + 300, Plateau.PositionsAssiettes[numeroAssiette].Coordonnees.Y));
-                else
-                    position = new Position(new Angle(180), new PointReel(Plateau.PositionsAssiettes[numeroAssiette].Coordonnees.X - 300, Plateau.PositionsAssiettes[numeroAssiette].Coordonnees.Y));
-
-                if (numeroAssiette == 0 || numeroAssiette == 1 || numeroAssiette == 2 || numeroAssiette == 3)
-                    position = new Position(new Angle(0), new PointReel(Plateau.PositionsAssiettes[numeroAssiette].Coordonnees.X + 300, Plateau.PositionsAssiettes[numeroAssiette].Coordonnees.Y + 40));
-                if (numeroAssiette == 6 || numeroAssiette == 7 || numeroAssiette == 8 || numeroAssiette == 9)
-                    position = new Position(new Angle(180), new PointReel(Plateau.PositionsAssiettes[numeroAssiette].Coordonnees.X - 340, Plateau.PositionsAssiettes[numeroAssiette].Coordonnees.Y - 40));
-
-                if (numeroAssiette == 4)
-                    position = new Position(new Angle(-18.47), new PointReel(530, 1653));
-                if (numeroAssiette == 5)
-                    position = new Position(new Angle(-18.47 + 180), new PointReel(3000 - 530, 2000 - 1653));
-                
-                return position;
-            }
-            protected set
-            {
-            }
-        }
-
         private int numeroAssiette;
 
         public MoveGrosAspireAssiette(int iAssiette)
         {
             numeroAssiette = iAssiette;
+
+            if (numeroAssiette < 5)
+                Position = new Position(new Angle(0), new PointReel(Plateau.PositionsAssiettes[numeroAssiette].Coordonnees.X + 300, Plateau.PositionsAssiettes[numeroAssiette].Coordonnees.Y));
+            else
+                Position = new Position(new Angle(180), new PointReel(Plateau.PositionsAssiettes[numeroAssiette].Coordonnees.X - 300, Plateau.PositionsAssiettes[numeroAssiette].Coordonnees.Y));
+
+            if (numeroAssiette == 0 || numeroAssiette == 1 || numeroAssiette == 2 || numeroAssiette == 3)
+                Position = new Position(new Angle(0), new PointReel(Plateau.PositionsAssiettes[numeroAssiette].Coordonnees.X + 300, Plateau.PositionsAssiettes[numeroAssiette].Coordonnees.Y + 40));
+            if (numeroAssiette == 6 || numeroAssiette == 7 || numeroAssiette == 8 || numeroAssiette == 9)
+                Position = new Position(new Angle(180), new PointReel(Plateau.PositionsAssiettes[numeroAssiette].Coordonnees.X - 340, Plateau.PositionsAssiettes[numeroAssiette].Coordonnees.Y - 40));
+
+            if (numeroAssiette == 4)
+                Position = new Position(new Angle(-18.47), new PointReel(530, 1653));
+            if (numeroAssiette == 5)
+                Position = new Position(new Angle(-18.47 + 180), new PointReel(3000 - 530, 2000 - 1653));
         }
 
         public override bool Executer(int timeOut = 0)
@@ -183,7 +171,6 @@ namespace GoBot.Mouvements
 
                     if (!balle)
                     {
-                        Robots.GrosRobot.BallesChargees = false;
                         Plateau.AssiettesExiste[numeroAssiette] = false;
                         Robots.GrosRobot.Historique.Log("Aucune balle détectée");
                     }
@@ -208,7 +195,6 @@ namespace GoBot.Mouvements
                     Robots.GrosRobot.NbBallesBlanchesCharges = 7;
                     Robots.GrosRobot.BalleCouleurChargee = true;
                     Robots.GrosRobot.CouleurBalleChargee = numeroAssiette < 5 ? Plateau.CouleurJ2B : Plateau.CouleurJ1R;
-                    Robots.GrosRobot.BallesChargees = true;
                     Plateau.AssiettesVidees[numeroAssiette] = true;
                     Plateau.Score += Score;
                 }
@@ -235,7 +221,7 @@ namespace GoBot.Mouvements
             {
                 // Si on n'a pas de balles chargées on peut aspirer sinon on ne considère pas l'action
                 double score = 1;
-                if (Robots.GrosRobot.BallesChargees || Plateau.AssiettesVidees[numeroAssiette] || !Plateau.AssiettesExiste[numeroAssiette])
+                if (Robots.GrosRobot.NbBallesBlanchesCharges > 0 || Plateau.AssiettesVidees[numeroAssiette] || !Plateau.AssiettesExiste[numeroAssiette])
                     return 0;
 
                 // Priorité ultime sur l'aspirage d'assiette accrochée : TODO : gérer un cas spécial en fin de match proche ?

@@ -11,7 +11,6 @@ namespace GoBot.Mouvements
 {
     class MovePetitCadeau : Mouvement
     {
-        public override Position Position { get; protected set; }
         private int numeroCadeau;
 
         public MovePetitCadeau(int iCadeau)

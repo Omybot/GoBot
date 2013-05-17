@@ -80,12 +80,6 @@ namespace GoBot.IHM
                 parent.Dispose();
         }
 
-        private void btnFenetre_Click(object sender, EventArgs e)
-        {
-            Fenetre fen = new Fenetre(new PanelGrosRobot());
-            fen.Show();
-        }
-
         private void panelHistorique_Resize(object sender, EventArgs e)
         {
             if (panelHistorique.Height > 50)

@@ -16,11 +16,37 @@ namespace GoBot
         public bool DeplacementLigne { get; protected set; }
 
         public abstract Position Position { get; set; }
-        public bool BallesChargees { get; set; }
+
+        public bool LancementBalles { get; set; }
         public int NbBallesBlanchesCharges { get; set; }
         public bool BalleCouleurChargee { get; set; }
         public Color CouleurBalleChargee { get; set; }
 
+
+        public abstract int VitesseDeplacement { get; set; }
+        public abstract int AccelerationDeplacement { get; set; }
+        public abstract int VitessePivot { get; set; }
+        public abstract int AccelerationPivot { get; set; }
+
+        public int Taille { get { return Math.Max(Longueur, Largeur); } }
+        public int Longueur { get; set; }
+        public int Largeur { get; set; }
+        public int Rayon { get { return (int)Math.Sqrt(Longueur * Longueur + Largeur * Largeur) / 2; } }
+
+        public String Nom { get; set; }
+
+        // Pathfinding
+
+
+        private Thread threadTrajectoire;
+        private Semaphore semTrajectoire;
+
+        public List<Arc> CheminTrouve { get; set; }
+        public List<Node> NodeTrouve { get; set; }
+        public Arc CheminTest { get; set; }
+        public IForme ObstacleTeste { get; set; }
+        public IForme ObstacleProbleme { get; set; }
+        private bool nouvelleTrajectoire = false;
         public abstract void Avancer(int distance, bool attendre = true);
         public abstract void Reculer(int distance, bool attendre = true);
         public abstract void PivotGauche(double angle, bool attendre = true);
@@ -129,31 +155,6 @@ namespace GoBot
             }
         }
 
-        public abstract int VitesseDeplacement { get; set; }
-        public abstract int AccelerationDeplacement { get; set; }
-        public abstract int VitessePivot { get; set; }
-        public abstract int AccelerationPivot { get; set; }
-
-        public int Taille { get { return Math.Max(Longueur, Largeur); } }
-        public abstract int Longueur { get; set; }
-        public abstract int Largeur { get; set; }
-        public int Rayon { get { return (int)Math.Sqrt(Longueur * Longueur + Largeur * Largeur) / 2; } }
-
-        public abstract String Nom { get; set; }
-
-        // Pathfinding
-
-
-        Thread th;
-        Semaphore semTrajectoire;
-
-        public List<Arc> CheminTrouve { get; set; }
-        public List<Node> NodeTrouve { get; set; }
-        public Arc CheminTest { get; set; }
-        public IForme ObstacleTeste { get; set; }
-        public IForme ObstacleProbleme { get; set; }
-        bool nouvelleTrajectoire = false;
-
         /// <summary>
         /// Liste des noeuds du chemin en cours de parcours
         /// </summary>
@@ -174,7 +175,6 @@ namespace GoBot
             ServoSorti.Add(ServomoteurID.GRBrasGauche, false);
             ServoSorti.Add(ServomoteurID.GRGrandBras, false);
             ServoSorti.Add(ServomoteurID.GRPetitBras, false);
-            BallesChargees = false;
             LancementBalles = false;
         }
 
@@ -378,8 +378,8 @@ namespace GoBot
             else
             {
                 // Execution du parcours
-                th = new Thread(ThreadChemin);
-                th.Start();
+                threadTrajectoire = new Thread(ThreadChemin);
+                threadTrajectoire.Start();
                 return;
             }
         }
@@ -510,7 +510,5 @@ namespace GoBot
         {
             return Nom;
         }
-
-        public bool LancementBalles { get; set; }
     }
 }

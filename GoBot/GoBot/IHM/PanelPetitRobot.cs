@@ -46,17 +46,11 @@ namespace GoBot.IHM
         {
             Config.Save();
             Control parent = Parent;
-            while(parent.Parent != null)
+            while (parent.Parent != null)
                 parent = parent.Parent;
 
-            if(parent != null)
+            if (parent != null)
                 parent.Dispose();
-        }
-
-        private void btnFenetre_Click(object sender, EventArgs e)
-        {
-            Fenetre fen = new Fenetre(new PanelGrosRobot());
-            fen.Show();
         }
 
         private void panelHistorique_Resize(object sender, EventArgs e)

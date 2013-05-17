@@ -337,9 +337,8 @@ namespace GoBot
         public void SauverGraph()
         {
             IFormatter formatter = new BinaryFormatter();
-            Stream stream = new FileStream("graph.bin", FileMode.OpenOrCreate, FileAccess.Write, FileShare.None);
-            formatter.Serialize(stream, Graph);
-            stream.Close();
+            using(Stream stream = new FileStream("graph.bin", FileMode.OpenOrCreate, FileAccess.Write, FileShare.None))
+                formatter.Serialize(stream, Graph);
         }
 
         /// <summary>
@@ -350,9 +349,8 @@ namespace GoBot
             try
             {
                 IFormatter formatter = new BinaryFormatter();
-                Stream stream = new FileStream("graph.bin", FileMode.Open, FileAccess.Read, FileShare.Read);
-                Graph = (Graph)formatter.Deserialize(stream);
-                stream.Close();
+                using(Stream stream = new FileStream("graph.bin", FileMode.Open, FileAccess.Read, FileShare.Read))
+                    Graph = (Graph)formatter.Deserialize(stream);
             }
             catch (Exception e)
             {

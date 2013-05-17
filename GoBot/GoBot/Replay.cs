@@ -52,9 +52,9 @@ namespace GoBot
             try
             {
                 XmlSerializer mySerializer = new XmlSerializer(typeof(List<TrameReplay>));
-                FileStream myFileStream = new FileStream(nomFichier, FileMode.Open);
-                tramesEntrantes = (List<TrameReplay>)mySerializer.Deserialize(myFileStream);
-                myFileStream.Close();
+                using(FileStream myFileStream = new FileStream(nomFichier, FileMode.Open))
+                    tramesEntrantes = (List<TrameReplay>)mySerializer.Deserialize(myFileStream);
+
                 return true;
             }
             catch (Exception)
@@ -68,9 +68,9 @@ namespace GoBot
             try
             {
                 XmlSerializer mySerializer = new XmlSerializer(typeof(List<TrameReplay>));
-                StreamWriter myWriter = new StreamWriter(nomFichier);
-                mySerializer.Serialize(myWriter, tramesEntrantes);
-                myWriter.Close();
+                using(StreamWriter myWriter = new StreamWriter(nomFichier))
+                    mySerializer.Serialize(myWriter, tramesEntrantes);
+
                 return true;
             }
             catch (Exception)

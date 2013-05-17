@@ -69,8 +69,6 @@ namespace GoBot.Enchainements
             for (int i = 0; i < PositionsMouvements.PositionTirCanon.Count; i++)
             {
                 MoveGrosLanceBalles move = new MoveGrosLanceBalles(PositionsMouvements.PositionTirCanon[i]);
-                if (i > 1)
-                    move.coef = 0.1;
                 ListeMouvementsGros.Add(move);
             }
         }

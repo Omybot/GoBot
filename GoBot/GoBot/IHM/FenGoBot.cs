@@ -413,21 +413,19 @@ namespace GoBot
 
         private void btnSaveReplay_Click(object sender, EventArgs e)
         {
-            SaveFileDialog open = new SaveFileDialog();
-            if (open.ShowDialog() == System.Windows.Forms.DialogResult.OK)
-                replay.Save(open.FileName);
-            open.Dispose();
+            using(SaveFileDialog open = new SaveFileDialog())
+                if (open.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+                    replay.Save(open.FileName);
         }
 
         private void btnChargerReplay_Click(object sender, EventArgs e)
         {
-            OpenFileDialog open = new OpenFileDialog();
-            if (open.ShowDialog() == System.Windows.Forms.DialogResult.OK)
-            {
-                replay = new Replay();
-                replay.Load(open.FileName);
-            }
-            open.Dispose();
+            using(OpenFileDialog open = new OpenFileDialog())
+                if (open.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+                {
+                    replay = new Replay();
+                    replay.Load(open.FileName);
+                }
         }
 
         Thread threadReplay;
@@ -477,9 +475,9 @@ namespace GoBot
                 }));
         }
 
-        private void switchBoutonSimu_ChangementEtat(bool actif)
+        private void switchBoutonSimu_ChangementEtat(object sender, EventArgs e)
         {
-            Robots.Simuler(actif);
+            Robots.Simuler(switchBoutonSimu.Actif);
             panelGrosRobot.Init();
             panelPetitRobot.Init();
             Robots.GrosRobot.Historique.NouvelleAction += new Historique.DelegateAction(HistoriqueGR_nouvelleAction);

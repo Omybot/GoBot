@@ -291,7 +291,7 @@
             this.switchLed.Size = new System.Drawing.Size(35, 15);
             this.switchLed.Symetrique = false;
             this.switchLed.TabIndex = 52;
-            this.switchLed.ChangementEtat += new GoBot.IHM.Composants.SwitchBouton.ChangeEtatDelegate(this.switchLed_ChangementEtat);
+            this.switchLed.ChangementEtat += new System.EventHandler(this.switchLed_ChangementEtat);
             // 
             // switchSurveillance
             // 
@@ -452,8 +452,8 @@
             this.trackBarPosition.Reverse = false;
             this.trackBarPosition.Size = new System.Drawing.Size(193, 15);
             this.trackBarPosition.TabIndex = 6;
-            this.trackBarPosition.TickValueChanged += new GoBot.IHM.Composants.TrackBarPlus.delegateValueChanged(this.trackBarPosition_TickValueChanged);
-            this.trackBarPosition.ValueChanged += new GoBot.IHM.Composants.TrackBarPlus.delegateValueChanged(this.trackBarPosition_ValueChanged);
+            this.trackBarPosition.TickValueChanged += new System.EventHandler(this.trackBarPosition_TickValueChanged);
+            this.trackBarPosition.ValueChanged += new System.EventHandler(this.trackBarPosition_ValueChanged);
             // 
             // ledErreur1
             // 
@@ -477,8 +477,8 @@
             this.trackBarVitesse.Reverse = false;
             this.trackBarVitesse.Size = new System.Drawing.Size(193, 15);
             this.trackBarVitesse.TabIndex = 9;
-            this.trackBarVitesse.TickValueChanged += new GoBot.IHM.Composants.TrackBarPlus.delegateValueChanged(this.trackBarVitesse_TickValueChanged);
-            this.trackBarVitesse.ValueChanged += new GoBot.IHM.Composants.TrackBarPlus.delegateValueChanged(this.trackBarVitesse_ValueChanged);
+            this.trackBarVitesse.TickValueChanged += new System.EventHandler(this.trackBarVitesse_TickValueChanged);
+            this.trackBarVitesse.ValueChanged += new System.EventHandler(this.trackBarVitesse_ValueChanged);
             // 
             // PanelServo
             // 

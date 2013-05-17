@@ -12,28 +12,16 @@ namespace GoBot.Mouvements
 {
     class MoveGrosAccrocheAssiette : Mouvement
     {
-        public override Position Position
-        {
-            get
-            {
-                Position position = null;
-                if (numeroAssiette == 1 || numeroAssiette == 2 || numeroAssiette == 3)
-                    position = new Position(new Angle(0), new PointReel(Plateau.PositionsAssiettes[numeroAssiette].Coordonnees.X + 300, Plateau.PositionsAssiettes[numeroAssiette].Coordonnees.Y + 40));
-                if (numeroAssiette == 6 || numeroAssiette == 7 || numeroAssiette == 8)
-                    position = new Position(new Angle(180), new PointReel(Plateau.PositionsAssiettes[numeroAssiette].Coordonnees.X - 340, Plateau.PositionsAssiettes[numeroAssiette].Coordonnees.Y - 40));
-
-                return position;
-            }
-            protected set
-            {
-            }
-        }
-
         private int numeroAssiette;
 
         public MoveGrosAccrocheAssiette(int iAssiette)
         {
             numeroAssiette = iAssiette;
+
+            if (numeroAssiette == 1 || numeroAssiette == 2 || numeroAssiette == 3)
+                Position = new Position(new Angle(0), new PointReel(Plateau.PositionsAssiettes[numeroAssiette].Coordonnees.X + 300, Plateau.PositionsAssiettes[numeroAssiette].Coordonnees.Y + 40));
+            if (numeroAssiette == 6 || numeroAssiette == 7 || numeroAssiette == 8)
+                Position = new Position(new Angle(180), new PointReel(Plateau.PositionsAssiettes[numeroAssiette].Coordonnees.X - 340, Plateau.PositionsAssiettes[numeroAssiette].Coordonnees.Y - 40));
         }
 
         public override bool Executer(int timeOut = 0)
@@ -87,7 +75,7 @@ namespace GoBot.Mouvements
             {
                 // Si on n'a pas de balles chargées on ne considère pas l'action sinon il est interessant d'accrocher une assiette
                 if (Plateau.Enchainement.TempsRestant.TotalSeconds > 35 &&
-                    Plateau.AssietteAttrapee == -1 && Robots.GrosRobot.BallesChargees &&
+                    Plateau.AssietteAttrapee == -1 && Robots.GrosRobot.NbBallesBlanchesCharges > 0 &&
                     !Plateau.AssiettesVidees[numeroAssiette] &&
                     Plateau.AssiettesExiste[numeroAssiette])
                     return Plateau.PoidActions.PoidGlobalGrosAccrocheAssiette * Plateau.PoidActions.PoidsGrosAssiette[numeroAssiette];

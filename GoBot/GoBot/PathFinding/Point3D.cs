@@ -131,7 +131,8 @@ namespace AStarFolder
 		public override bool Equals(object Point)
 		{
 			Point3D P = (Point3D)Point;
-			if ( P==null ) throw new ArgumentException("Object must be of type "+GetType());
+            if (P == null)
+                return false;
 			bool Resultat = true;
 			for (int i=0; i<3; i++) Resultat &= P[i].Equals(this[i]);
 			return Resultat;

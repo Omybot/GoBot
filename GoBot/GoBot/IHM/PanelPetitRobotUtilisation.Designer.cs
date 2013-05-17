@@ -301,7 +301,7 @@
             this.switchBoutonPuissance.Size = new System.Drawing.Size(35, 15);
             this.switchBoutonPuissance.Symetrique = false;
             this.switchBoutonPuissance.TabIndex = 200;
-            this.switchBoutonPuissance.ChangementEtat += new GoBot.IHM.Composants.SwitchBouton.ChangeEtatDelegate(this.switchBoutonPuissance_ChangementEtat);
+            this.switchBoutonPuissance.ChangementEtat += new System.EventHandler(this.switchBoutonPuissance_ChangementEtat);
             // 
             // label12
             // 

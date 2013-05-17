@@ -42,7 +42,7 @@ namespace GoBot.IHM.Composants
                 actif = active;
                 ChangeImage();
                 if (tickEvent && ChangementEtat != null)
-                    ChangementEtat(actif);
+                    ChangementEtat(this, null);
             }
         }
 
@@ -81,8 +81,7 @@ namespace GoBot.IHM.Composants
             }
         }
         
-        public delegate void ChangeEtatDelegate(bool actif);
-        public event ChangeEtatDelegate ChangementEtat;
+        public event EventHandler ChangementEtat;
 
         private void ChangeImage()
         {
@@ -112,7 +111,7 @@ namespace GoBot.IHM.Composants
 
             ChangeImage();
             if (ChangementEtat != null)
-                ChangementEtat(actif);
+                ChangementEtat(this, null);
 
             Focus();
         }

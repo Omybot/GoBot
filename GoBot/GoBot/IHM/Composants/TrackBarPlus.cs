@@ -70,9 +70,8 @@ namespace GoBot.IHM.Composants
 
         public int NombreDecimales { get; set; }
 
-        public delegate void delegateValueChanged();
-        public event delegateValueChanged TickValueChanged;
-        public event delegateValueChanged ValueChanged;
+        public event EventHandler TickValueChanged;
+        public event EventHandler ValueChanged;
 
         public TrackBarPlus()
         {
@@ -336,10 +335,10 @@ namespace GoBot.IHM.Composants
             }
             
             if (tickEvent && TickValueChanged != null)
-                TickValueChanged();
+                TickValueChanged(this, null);
 
             if (ValueChanged != null)
-                ValueChanged();
+                ValueChanged(this, null);
         }
 
         private double value_;
@@ -384,7 +383,7 @@ namespace GoBot.IHM.Composants
             {
                 derniereValeurTick = value_;
                 if (TickValueChanged != null)
-                    TickValueChanged();
+                    TickValueChanged(this, null);
             }
             if (!enDeplacement)
                 timer.Stop();
@@ -439,7 +438,7 @@ namespace GoBot.IHM.Composants
                     }
 
                     if (ValueChanged != null)
-                        ValueChanged();
+                        ValueChanged(this, null);
 
                     DessineCurseur();
                 }
@@ -465,7 +464,7 @@ namespace GoBot.IHM.Composants
                     }
 
                     if (ValueChanged != null)
-                        ValueChanged();
+                        ValueChanged(this, null);
 
                     DessineCurseur();
                 }

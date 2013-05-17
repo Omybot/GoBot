@@ -201,22 +201,22 @@ namespace GoBot.IHM
             servo.TestConnexion();
         }
 
-        private void trackBarPosition_ValueChanged()
+        private void trackBarPosition_ValueChanged(object sender, EventArgs e)
         {
             lblPosition.Text = (int)trackBarPosition.Value + "";
         }
 
-        private void trackBarVitesse_ValueChanged()
+        private void trackBarVitesse_ValueChanged(object sender, EventArgs e)
         {
             lblVitesse.Text = (int)trackBarVitesse.Value + "";
         }
 
-        private void trackBarVitesse_TickValueChanged()
+        private void trackBarVitesse_TickValueChanged(object sender, EventArgs e)
         {
             servo.SetVitesse((int)trackBarVitesse.Value);
         }
 
-        private void trackBarPosition_TickValueChanged()
+        private void trackBarPosition_TickValueChanged(object sender, EventArgs e)
         {
             servo.SetPosition((int)trackBarPosition.Value);
         }
@@ -239,9 +239,9 @@ namespace GoBot.IHM
                 timerLed.Stop();
         }
 
-        private void switchLed_ChangementEtat(bool actif)
+        private void switchLed_ChangementEtat(object sender, EventArgs e)
         {
-            if (actif)
+            if (switchLed.Actif)
             {
                 timerLed.Start();
             }

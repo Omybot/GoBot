@@ -16,6 +16,13 @@
             if (disposing && (components != null))
             {
                 components.Dispose();
+                font.Dispose();
+                penBleu.Dispose();
+                penRouge.Dispose();
+                brushBlanc.Dispose();
+                brushBleu.Dispose();
+                brushNoir.Dispose();
+                brushRouge.Dispose();
             }
             base.Dispose(disposing);
         }
@@ -187,8 +194,8 @@
             this.trackBarConsigne.Reverse = false;
             this.trackBarConsigne.Size = new System.Drawing.Size(246, 15);
             this.trackBarConsigne.TabIndex = 8;
-            this.trackBarConsigne.TickValueChanged += new GoBot.IHM.Composants.TrackBarPlus.delegateValueChanged(this.trackBarConsigne_TickValueChanged);
-            this.trackBarConsigne.ValueChanged += new GoBot.IHM.Composants.TrackBarPlus.delegateValueChanged(this.trackBarConsigne_ValueChanged);
+            this.trackBarConsigne.TickValueChanged += new System.EventHandler(this.trackBarConsigne_TickValueChanged);
+            this.trackBarConsigne.ValueChanged += new System.EventHandler(this.trackBarConsigne_ValueChanged);
             // 
             // lblVitesseAff
             // 
@@ -238,8 +245,8 @@
             this.trackBarVitesse.Reverse = false;
             this.trackBarVitesse.Size = new System.Drawing.Size(246, 15);
             this.trackBarVitesse.TabIndex = 2;
-            this.trackBarVitesse.TickValueChanged += new GoBot.IHM.Composants.TrackBarPlus.delegateValueChanged(this.trackBarVitesse_TickValueChanged);
-            this.trackBarVitesse.ValueChanged += new GoBot.IHM.Composants.TrackBarPlus.delegateValueChanged(this.trackBarVitesse_ValueChanged);
+            this.trackBarVitesse.TickValueChanged += new System.EventHandler(this.trackBarVitesse_TickValueChanged);
+            this.trackBarVitesse.ValueChanged += new System.EventHandler(this.trackBarVitesse_ValueChanged);
             // 
             // btnStop
             // 

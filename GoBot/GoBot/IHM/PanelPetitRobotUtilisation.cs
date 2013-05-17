@@ -65,9 +65,9 @@ namespace GoBot.IHM
             switchBoutonPuissance.SetActif(true, false);
         }
 
-        private void switchBoutonPuissance_ChangementEtat(bool actif)
+        private void switchBoutonPuissance_ChangementEtat(object sender, EventArgs e)
         {
-            Robots.PetitRobot.AlimentationPuissance(actif);
+            Robots.PetitRobot.AlimentationPuissance(switchBoutonPuissance.Actif);
         }
 
         private void btnDiagnostic_Click(object sender, EventArgs e)

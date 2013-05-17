@@ -12,7 +12,7 @@ namespace GoBot.Mouvements
         public abstract bool Executer(int timeOut = 0);
         public abstract int Score { get; }
         public abstract double ScorePondere { get; }
-        public abstract Position Position { get; protected set; }
+        public Position Position { get; protected set; }
 
         public double Cout
         {

@@ -13,8 +13,18 @@ namespace GoBot
 {
     class RobotSimu : Robot
     {
-        private Semaphore semDeplacement;
-        private Random rand;
+        private Semaphore SemDeplacement { get; set; }
+        private Random Rand { get; set; }
+
+        public double VitesseActuelle { get; set; }
+
+        private double IntervalleRafraichissementPosition = 10;
+
+        private Position Destination { get; set; }
+        private SensGD SensPivot { get; set; }
+        private SensAR SensDep { get; set; }
+
+        private bool RecallageEnCours { get; set; }
 
         // Distance entre les deux roues en mm
         private double Entraxe { get; set; }
@@ -70,35 +80,18 @@ namespace GoBot
             }
         }
 
-        public double VitesseActuelle { get; set; }
-
-        public override int Longueur { get; set; }
-        public override int Largeur { get; set; }
-
-        private double IntervalleRafraichissementPosition = 10;
-
-        private Position Destination { get; set; }
-        private SensGD SensPivot { get; set; }
-        private SensAR SensDep { get; set; }
-
-        private bool RecallageEnCours { get; set; }
-
-        public override String Nom { get; set; }
-
         public RobotSimu()
         {
-            Position = new Position();
-
             timerDeplacement = new System.Timers.Timer(IntervalleRafraichissementPosition);
             timerDeplacement.Elapsed += new ElapsedEventHandler(timerDeplacement_Elapsed);
             timerDeplacement.Start();
-            semDeplacement = new Semaphore(1, 1);
+            SemDeplacement = new Semaphore(1, 1);
             SensDep = SensAR.Avant;
 
             Entraxe = 250;
             Nom = "GrosRobot";
             RecallageEnCours = false;
-            rand = new Random(DateTime.Now.Millisecond);
+            Rand = new Random(DateTime.Now.Millisecond);
         }
 
         public double DistanceFreinageActuelle
@@ -119,7 +112,7 @@ namespace GoBot
 
         void timerDeplacement_Elapsed(object sender, ElapsedEventArgs e)
         {
-            semDeplacement.WaitOne();
+            SemDeplacement.WaitOne();
             double difference = Destination.Coordonnees.Distance(Position.Coordonnees);
             Angle adifference = Position.Angle - Destination.Angle;
             if (Math.Abs(adifference.AngleDegres) > 0.01)// Math.Round(Position.Angle.AngleDegres, 2) != Math.Round(Destination.Angle.AngleDegres, 2))
@@ -166,7 +159,7 @@ namespace GoBot
                 }
             }
 
-            semDeplacement.Release();
+            SemDeplacement.Release();
         }
 
         public override void Avancer(int distance, bool attendre = true)
@@ -231,9 +224,9 @@ namespace GoBot
         public override void Stop(StopMode mode)
         {
             Historique.AjouterAction(new ActionStop(this, mode));
-            semDeplacement.WaitOne();
+            SemDeplacement.WaitOne();
             Destination = Position;
-            semDeplacement.Release();
+            SemDeplacement.Release();
         }
 
         public override void Virage(SensAR sensAr, SensGD sensGd, int rayon, int angle, bool attendre = true)
@@ -276,6 +269,7 @@ namespace GoBot
         public override void Init()
         {
             Historique = new Historique();
+            Position = new Calculs.Position(new Angle(0, AnglyeType.Degre), new PointReel(200, 300));
         }
 
         public override void BougeServo(ServomoteurID servo, int position)
@@ -300,7 +294,7 @@ namespace GoBot
 
         public override bool GetPresenceBalle(bool historique = true)
         {
-            if (nbBalles > 0)
+            if (NbBallesBlanchesCharges > 0)
                 return true;
 
             return false;
@@ -308,13 +302,11 @@ namespace GoBot
 
         public override Color GetCouleurBalle(bool historique = true)
         {
-            if (!couleurJetee && rand.Next(nbBalles) == 0)
+            if (!BalleCouleurChargee && Rand.Next(NbBallesBlanchesCharges + 1) == 0)
             {
-                couleurJetee = true;
+                BalleCouleurChargee = true;
                 return Color.Blue;
             }
-
-            nbBalles--;
 
             return Color.White;
         }
@@ -325,12 +317,8 @@ namespace GoBot
             return true;
         }
 
-        private int nbBalles;
-        private bool couleurJetee;
         public override bool GetAspiRemonte(bool historique = true)
         {
-            couleurJetee = false;
-            nbBalles = 7;
             return true;
         }
 

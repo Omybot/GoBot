@@ -234,7 +234,7 @@ namespace GoBot.IHM
 
         #region Vitesse ligne
 
-        protected virtual void trackBarVitesseLigne_TickValueChanged()
+        protected virtual void trackBarVitesseLigne_TickValueChanged(object sender, EventArgs e)
         {
             Robot.VitesseDeplacement = (int)trackBarVitesseLigne.Value;
             if (Robot == Robots.GrosRobot)
@@ -243,7 +243,7 @@ namespace GoBot.IHM
                 Config.CurrentConfig.PRVitesseLigneRapide = (int)trackBarVitesseLigne.Value;
         }
 
-        private void trackBarVitesseLigne_ValueChanged()
+        private void trackBarVitesseLigne_ValueChanged(object sender, EventArgs e)
         {
             numVitesseLigne.Value = (int)trackBarVitesseLigne.Value;
         }
@@ -258,7 +258,7 @@ namespace GoBot.IHM
 
         #region Accélération ligne
 
-        protected virtual void trackBarAccelLigne_TickValueChanged()
+        protected virtual void trackBarAccelLigne_TickValueChanged(object sender, EventArgs e)
         {
             Robot.AccelerationDeplacement = (int)trackBarAccelLigne.Value;
             if (Robot == Robots.GrosRobot)
@@ -267,7 +267,7 @@ namespace GoBot.IHM
                 Config.CurrentConfig.PRAccelerationLigneRapide = (int)trackBarAccelLigne.Value;
         }
 
-        private void trackBarAccelLigne_ValueChanged()
+        private void trackBarAccelLigne_ValueChanged(object sender, EventArgs e)
         {
             numAccelLigne.Value = (int)trackBarAccelLigne.Value;
         }
@@ -282,7 +282,7 @@ namespace GoBot.IHM
 
         #region Vitesse pivot
 
-        private void trackBarVitessePivot_TickValueChanged()
+        private void trackBarVitessePivot_TickValueChanged(object sender, EventArgs e)
         {
             Robot.VitessePivot = (int)trackBarVitessePivot.Value;
             if (Robot == Robots.GrosRobot)
@@ -291,7 +291,7 @@ namespace GoBot.IHM
                 Config.CurrentConfig.PRVitessePivotRapide = (int)trackBarVitessePivot.Value;
         }
 
-        private void trackBarVitessePivot_ValueChanged()
+        private void trackBarVitessePivot_ValueChanged(object sender, EventArgs e)
         {
             numVitessePivot.Value = (int)trackBarVitessePivot.Value;
         }
@@ -306,7 +306,7 @@ namespace GoBot.IHM
 
         #region Acceleration pivot
 
-        private void trackBarAccelPivot_TickValueChanged()
+        private void trackBarAccelPivot_TickValueChanged(object sender, EventArgs e)
         {
             Robot.AccelerationPivot = (int)trackBarAccelPivot.Value;
             if (Robot == Robots.GrosRobot)
@@ -315,7 +315,7 @@ namespace GoBot.IHM
                 Config.CurrentConfig.PRAccelerationPivotRapide = (int)trackBarAccelLigne.Value;
         }
 
-        private void trackBarAccelPivot_ValueChanged()
+        private void trackBarAccelPivot_ValueChanged(object sender, EventArgs e)
         {
             numAccelPivot.Value = (int)trackBarAccelPivot.Value;
         }

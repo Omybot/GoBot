@@ -713,7 +713,7 @@ namespace GoBot
             this.switchBoutonSimu.Size = new System.Drawing.Size(35, 15);
             this.switchBoutonSimu.Symetrique = true;
             this.switchBoutonSimu.TabIndex = 73;
-            this.switchBoutonSimu.ChangementEtat += new GoBot.IHM.Composants.SwitchBouton.ChangeEtatDelegate(this.switchBoutonSimu_ChangementEtat);
+            this.switchBoutonSimu.ChangementEtat += new System.EventHandler(this.switchBoutonSimu_ChangementEtat);
             // 
             // ledRecBoi
             // 

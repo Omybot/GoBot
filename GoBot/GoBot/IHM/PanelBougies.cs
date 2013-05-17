@@ -289,10 +289,12 @@ namespace GoBot.IHM
                     fin = 20;
                 }
 
-                for (int i = debut; i < fin; i++)
-                    g.DrawString(i + "", font, new SolidBrush(Plateau.CouleursBougies[i] == Color.White ? Color.Black : Color.White), new PointF(Config.CurrentConfig.PositionsBougiesCameraX[i] - 2, Config.CurrentConfig.PositionsBougiesCameraY[i] - 2));
+                using(SolidBrush brushBlanc = new SolidBrush(Color.White), brushNoir = new SolidBrush(Color.Black))
+                    for (int i = debut; i < fin; i++)
+                        g.DrawString(i + "", font, Plateau.CouleursBougies[i] == Color.White ? brushNoir : brushBlanc, new PointF(Config.CurrentConfig.PositionsBougiesCameraX[i] - 2, Config.CurrentConfig.PositionsBougiesCameraY[i] - 2));
 
                 pictureBoxImage.Image = img;
+                img.Dispose();
             }
         }
     }

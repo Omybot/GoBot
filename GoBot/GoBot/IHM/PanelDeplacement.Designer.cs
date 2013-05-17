@@ -277,8 +277,8 @@
             this.trackBarAccelPivot.Size = new System.Drawing.Size(249, 15);
             this.trackBarAccelPivot.TabIndex = 100;
             this.trackBarAccelPivot.Vertical = false;
-            this.trackBarAccelPivot.TickValueChanged += new GoBot.IHM.Composants.TrackBarPlus.delegateValueChanged(this.trackBarAccelPivot_TickValueChanged);
-            this.trackBarAccelPivot.ValueChanged += new GoBot.IHM.Composants.TrackBarPlus.delegateValueChanged(this.trackBarAccelPivot_ValueChanged);
+            this.trackBarAccelPivot.TickValueChanged += new System.EventHandler(this.trackBarAccelPivot_TickValueChanged);
+            this.trackBarAccelPivot.ValueChanged += new System.EventHandler(this.trackBarAccelPivot_ValueChanged);
             // 
             // trackBarVitessePivot
             // 
@@ -295,8 +295,8 @@
             this.trackBarVitessePivot.Size = new System.Drawing.Size(249, 15);
             this.trackBarVitessePivot.TabIndex = 99;
             this.trackBarVitessePivot.Vertical = false;
-            this.trackBarVitessePivot.TickValueChanged += new GoBot.IHM.Composants.TrackBarPlus.delegateValueChanged(this.trackBarVitessePivot_TickValueChanged);
-            this.trackBarVitessePivot.ValueChanged += new GoBot.IHM.Composants.TrackBarPlus.delegateValueChanged(this.trackBarVitessePivot_ValueChanged);
+            this.trackBarVitessePivot.TickValueChanged += new System.EventHandler(this.trackBarVitessePivot_TickValueChanged);
+            this.trackBarVitessePivot.ValueChanged += new System.EventHandler(this.trackBarVitessePivot_ValueChanged);
             // 
             // label2
             // 
@@ -397,8 +397,8 @@
             this.trackBarAccelLigne.Size = new System.Drawing.Size(249, 15);
             this.trackBarAccelLigne.TabIndex = 88;
             this.trackBarAccelLigne.Vertical = false;
-            this.trackBarAccelLigne.TickValueChanged += new GoBot.IHM.Composants.TrackBarPlus.delegateValueChanged(this.trackBarAccelLigne_TickValueChanged);
-            this.trackBarAccelLigne.ValueChanged += new GoBot.IHM.Composants.TrackBarPlus.delegateValueChanged(this.trackBarAccelLigne_ValueChanged);
+            this.trackBarAccelLigne.TickValueChanged += new System.EventHandler(this.trackBarAccelLigne_TickValueChanged);
+            this.trackBarAccelLigne.ValueChanged += new System.EventHandler(this.trackBarAccelLigne_ValueChanged);
             // 
             // trackBarVitesseLigne
             // 
@@ -415,8 +415,8 @@
             this.trackBarVitesseLigne.Size = new System.Drawing.Size(249, 15);
             this.trackBarVitesseLigne.TabIndex = 87;
             this.trackBarVitesseLigne.Vertical = false;
-            this.trackBarVitesseLigne.TickValueChanged += new GoBot.IHM.Composants.TrackBarPlus.delegateValueChanged(this.trackBarVitesseLigne_TickValueChanged);
-            this.trackBarVitesseLigne.ValueChanged += new GoBot.IHM.Composants.TrackBarPlus.delegateValueChanged(this.trackBarVitesseLigne_ValueChanged);
+            this.trackBarVitesseLigne.TickValueChanged += new System.EventHandler(this.trackBarVitesseLigne_TickValueChanged);
+            this.trackBarVitesseLigne.ValueChanged += new System.EventHandler(this.trackBarVitesseLigne_ValueChanged);
             // 
             // btnTaille
             // 

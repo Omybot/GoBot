@@ -246,7 +246,8 @@ namespace AStarFolder
 		public override bool Equals(object O)
 		{
 			Node N = (Node)O;
-			if ( N==null ) throw new ArgumentException("Type "+O.GetType()+" cannot be compared with type "+GetType()+" !");
+            if (N == null)
+                return false;
 			return Position.Equals(N.Position);
 		}
 

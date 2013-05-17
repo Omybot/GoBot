@@ -223,9 +223,9 @@ namespace GoBot.IHM
             Robots.GrosRobot.ActionneurOnOff(ActionneurOnOffID.GRPompe, false);
         }
 
-        private void switchBoutonPuissance_ChangementEtat(bool actif)
+        private void switchBoutonPuissance_ChangementEtat(object sender, EventArgs e)
         {
-            Robots.GrosRobot.AlimentationPuissance(actif);
+            Robots.GrosRobot.AlimentationPuissance(switchBoutonPuissance.Actif);
         }
 
         private void btnDiagnostic_Click(object sender, EventArgs e)

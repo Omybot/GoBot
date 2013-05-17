@@ -250,10 +250,8 @@ namespace GoBot
             try
             {
                 XmlSerializer mySerializer = new XmlSerializer(typeof(Config));
-                FileStream myFileStream = new FileStream("config.xml", FileMode.Open);
-                CurrentConfig = (Config)mySerializer.Deserialize(myFileStream);
-                myFileStream.Close();
-                myFileStream.Dispose();
+                using (FileStream myFileStream = new FileStream("config.xml", FileMode.Open))
+                    CurrentConfig = (Config)mySerializer.Deserialize(myFileStream);
             }
             catch (Exception)
             {
@@ -264,10 +262,8 @@ namespace GoBot
         public static void Save()
         {
             XmlSerializer mySerializer = new XmlSerializer(typeof(Config));
-            StreamWriter myWriter = new StreamWriter("config.xml");
-            mySerializer.Serialize(myWriter, CurrentConfig);
-            myWriter.Close();
-            myWriter.Dispose();
+            using (StreamWriter myWriter = new StreamWriter("config.xml"))
+                mySerializer.Serialize(myWriter, CurrentConfig);
         }
     }
 }

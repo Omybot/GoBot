@@ -175,8 +175,9 @@ namespace AStarFolder
 		/// <returns>'true' if both arcs are equal.</returns>
 		public override bool Equals(object O)
 		{
-			Arc A = (Arc) O;
-			if ( A==null ) throw new ArgumentException("Cannot compare type "+GetType()+" with type "+O.GetType()+" !");
+			Arc A = (Arc)O;
+            if (A == null)
+                return false;
 			return _StartNode.Equals(A._StartNode) && _EndNode.Equals(A._EndNode);
 		}
 

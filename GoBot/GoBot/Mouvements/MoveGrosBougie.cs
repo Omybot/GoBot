@@ -12,7 +12,6 @@ namespace GoBot.Mouvements
 {
     class MoveGrosBougie : Mouvement
     {
-        public override Position Position { get; protected set; }
         private int numeroBougie;
 
         public MoveGrosBougie(int iBougie)

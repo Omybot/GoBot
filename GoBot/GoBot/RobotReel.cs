@@ -19,15 +19,10 @@ namespace GoBot
         public Semaphore semDeplacement;
         private Semaphore semPosition;
 
-        public override int Longueur { get; set; }
-        public override int Largeur { get; set; }
-
         private const int TIME_REFRESH_POS = 200;
         private DateTime DateRefreshPos { get; set; }
 
         private System.Timers.Timer timerPosition;
-
-        public override String Nom { get; set; }
 
         public ConnexionUDP Connexion { get; set; }
 

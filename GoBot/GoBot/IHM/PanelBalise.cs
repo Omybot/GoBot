@@ -83,34 +83,36 @@ namespace GoBot.IHM
             }
         }
 
-        private void trackBarVitesse_TickValueChanged()
+        private void trackBarVitesse_TickValueChanged(object sender, EventArgs e)
         {
             balise.VitesseRotation((int)trackBarVitesse.Value);
         }
 
-        private void trackBarVitesse_ValueChanged()
+        private void trackBarVitesse_ValueChanged(object sender, EventArgs e)
         {
             lblVitesse.Text = trackBarVitesse.Value + "";
         }
 
         private void VideAngles()
         {
-            Bitmap bmp = new Bitmap(pictureBoxAngle.Width, pictureBoxAngle.Height);
-            Graphics g = Graphics.FromImage(bmp);
-            g.FillRectangle(brushBlanc, 0, 0, pictureBoxAngle.Width, pictureBoxAngle.Height);
+            using (Bitmap bmp = new Bitmap(pictureBoxAngle.Width, pictureBoxAngle.Height))
+            {
+                Graphics g = Graphics.FromImage(bmp);
+                g.FillRectangle(brushBlanc, 0, 0, pictureBoxAngle.Width, pictureBoxAngle.Height);
 
-            pictureBoxAngle.Image = bmp;
-            bmp.Dispose();
+                pictureBoxAngle.Image = bmp;
+            }
         }
 
         private void CompleteAngles()
         {
             Graphics g = Graphics.FromImage(pictureBoxAngle.Image);
-            SolidBrush brush = new SolidBrush(Color.Black);
-            g.FillEllipse(brush, 97, 97, 5, 5);
-            g.FillEllipse(brush, 97, 272, 5, 5);
+            using (SolidBrush brush = new SolidBrush(Color.Black))
+            {
+                g.FillEllipse(brush, 97, 97, 5, 5);
+                g.FillEllipse(brush, 97, 272, 5, 5);
+            }
             pictureBoxAngle.Refresh();
-            brush.Dispose();
         }
 
         private SolidBrush brushRouge = new SolidBrush(Color.Salmon);
@@ -154,13 +156,13 @@ namespace GoBot.IHM
             }
         }
 
-        private void trackBarConsigne_TickValueChanged()
+        private void trackBarConsigne_TickValueChanged(object sender, EventArgs e)
         {
             balise.VitesseConsigne = trackBarConsigne.Value / 10.0;
             balise.ReglageVitesse = true;
         }
 
-        private void trackBarConsigne_ValueChanged()
+        private void trackBarConsigne_ValueChanged(object sender, EventArgs e)
         {
             lblConsigne.Text = trackBarConsigne.Value / 10.0 + "";
         }

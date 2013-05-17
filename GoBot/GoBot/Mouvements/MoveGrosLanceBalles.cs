@@ -12,23 +12,13 @@ namespace GoBot.Mouvements
 {
     class MoveGrosLanceBalles : Mouvement
     {
-        public double coef = 1;
-        public override Position Position
-        {
-            get
-            {
-                return new Position(new Angle(posLancement.Angle), new PointReel(posLancement.X, posLancement.Y));
-            }
-            protected set
-            {
-            }
-        }
-
         private PositionLancement posLancement;
 
         public MoveGrosLanceBalles(PositionLancement pos)
         {
             posLancement = pos;
+
+            Position = new Position(new Angle(posLancement.Angle), new PointReel(posLancement.X, posLancement.Y));
         }
 
         public override bool Executer(int timeOut = 0)
@@ -109,7 +99,6 @@ namespace GoBot.Mouvements
                 Robots.GrosRobot.Historique.Log("Plus de balles en stock");
 
                 Robots.GrosRobot.ActionneurOnOff(ActionneurOnOffID.GRShutter, false);
-                Robots.GrosRobot.BallesChargees = false;
                 //Robots.GrosRobot.TourneMoteur(MoteurID.GRCanon, 0);
                 Robots.GrosRobot.Rapide();
                 Robots.GrosRobot.LancementBalles = false;
@@ -140,7 +129,7 @@ namespace GoBot.Mouvements
             {
                 // Si on n'a pas de balles chargées on ne considère pas l'action sinon il est interessant de les lancer
                 double score = 1;
-                if (!Robots.GrosRobot.BallesChargees || posLancement.Couleur != Plateau.NotreCouleur)
+                if (Robots.GrosRobot.NbBallesBlanchesCharges == 0 || posLancement.Couleur != Plateau.NotreCouleur)
                     return 0;
 
                 if (Plateau.AssietteAttrapee != -1)
@@ -151,8 +140,6 @@ namespace GoBot.Mouvements
                 // x10 dans les 30 dernières secondes
                 if (Plateau.Enchainement.TempsRestant.TotalSeconds < 30)
                     score *= 10;
-
-                score *= coef;
 
                 return score;
             }

@@ -519,9 +519,7 @@
     <None Include="img\AssiettePleineBleu.png" />
     <None Include="img\AssiettePleineRouge.png" />
     <None Include="img\AssietteVide.png" />
-    <None Include="img\Balles.png" />
     <None Include="img\Balle.png" />
-    <None Include="img\BalleCouleur.png" />
     <None Include="img\BalleRouge.png" />
     <None Include="img\BalleBleue.png" />
     <Content Include="img\iconeVitesse.png" />
