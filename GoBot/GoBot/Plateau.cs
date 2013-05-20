@@ -208,11 +208,14 @@ namespace GoBot
 
         public void ObstacleTest(int x, int y)
         {
+            Console.WriteLine("ObstacleTest veut prendre");
             SemaphoreGraph.WaitOne();
+            Console.WriteLine("ObstacleTest prend");
             ViderObstacles();
             PointReel coordonnees = new PointReel(x, y);
             AjouterObstacle(new Cercle(coordonnees, 200));
             SemaphoreGraph.Release();
+            Console.WriteLine("ObstacleTest libere");
 
             // Avant de lancer le match
             if(Plateau.Enchainement == null)

@@ -10,10 +10,10 @@
   <HistoriquePROuvert>true</HistoriquePROuvert>
   <ReglagePROuvert>true</ReglagePROuvert>
   <UtilisationPROuvert>true</UtilisationPROuvert>
-  <GRVitesseLigneRapide>600</GRVitesseLigneRapide>
-  <GRAccelerationLigneRapide>1000</GRAccelerationLigneRapide>
-  <GRVitessePivotRapide>1500</GRVitessePivotRapide>
-  <GRAccelerationPivotRapide>1000</GRAccelerationPivotRapide>
+  <GRVitesseLigneRapide>1000</GRVitesseLigneRapide>
+  <GRAccelerationLigneRapide>2000</GRAccelerationLigneRapide>
+  <GRVitessePivotRapide>2000</GRVitessePivotRapide>
+  <GRAccelerationPivotRapide>2000</GRAccelerationPivotRapide>
   <GRVitesseLigneLent>200</GRVitesseLigneLent>
   <GRAccelerationLigneLent>300</GRAccelerationLigneLent>
   <GRVitessePivotLent>500</GRVitessePivotLent>

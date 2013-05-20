@@ -134,6 +134,8 @@ namespace GoBot.Mouvements
                         return false;
                     }*/
 
+                    Robots.GrosRobot.NbBallesBlanchesCharges = 7;
+
                     Robots.GrosRobot.Historique.Log("Test 1 de la présence de balles");
                     if (!Robots.GrosRobot.GetPresenceBalle())
                     {
@@ -163,6 +165,7 @@ namespace GoBot.Mouvements
                                 if (!Robots.GrosRobot.GetPresenceBalle())
                                 {
                                     // 4ème fois : Bon bah y'a peut être vraiment rien alors...
+                                    Robots.GrosRobot.NbBallesBlanchesCharges = 0;
                                     balle = false;
                                 }
                             }

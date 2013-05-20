@@ -71,9 +71,9 @@ namespace GoBot
         public void Log(String message, TypeLog type = TypeLog.Strat)
         {
             HistoLigne ligne = new HistoLigne(DateTime.Now, message, type);
+            HistoriqueLignes.Add(ligne);
             if (NouveauLog != null)
                 NouveauLog(ligne);
-            HistoriqueLignes.Add(ligne);
         }
 
         public List<HistoLigne> HistoriqueLignes { get; set; }

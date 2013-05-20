@@ -100,8 +100,8 @@ namespace GoBot.Enchainements
             thGrosRobot = new Thread(ThreadGros);
             thGrosRobot.Start();
 
-            thPetitRobot = new Thread(ThreadPetit);
-            thPetitRobot.Start();
+            /*thPetitRobot = new Thread(ThreadPetit);
+            thPetitRobot.Start();*/
         }
 
         Thread thGrosRobot;

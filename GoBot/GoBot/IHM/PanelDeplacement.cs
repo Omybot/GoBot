@@ -310,9 +310,9 @@ namespace GoBot.IHM
         {
             Robot.AccelerationPivot = (int)trackBarAccelPivot.Value;
             if (Robot == Robots.GrosRobot)
-                Config.CurrentConfig.GRAccelerationPivotRapide = (int)trackBarAccelLigne.Value;
+                Config.CurrentConfig.GRAccelerationPivotRapide = (int)trackBarAccelPivot.Value;
             else
-                Config.CurrentConfig.PRAccelerationPivotRapide = (int)trackBarAccelLigne.Value;
+                Config.CurrentConfig.PRAccelerationPivotRapide = (int)trackBarAccelPivot.Value;
         }
 
         private void trackBarAccelPivot_ValueChanged(object sender, EventArgs e)

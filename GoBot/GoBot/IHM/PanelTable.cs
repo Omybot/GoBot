@@ -100,7 +100,7 @@ namespace GoBot.IHM
                     {
                         try
                         {
-                            using (Bitmap bmp = new Bitmap(750, 500))
+                            Bitmap bmp = new Bitmap(750, 500);
                             {
                                 Graphics g = Graphics.FromImage(bmp);
                                 g.FillRectangle(brushBlanc, 0, 0, 750, 500);
@@ -232,7 +232,9 @@ namespace GoBot.IHM
                                 // Dessin du graph
                                 if (boxGraph.Checked)
                                 {
+                                    Console.WriteLine("Dessine veut prendre");
                                     Plateau.SemaphoreGraph.WaitOne();
+                                    Console.WriteLine("Dessine prends");
 
                                     // Dessin des arcs
                                     if (boxArretes.Checked)
@@ -257,6 +259,7 @@ namespace GoBot.IHM
                                     }
 
                                     Plateau.SemaphoreGraph.Release();
+                                    Console.WriteLine("Dessine libere");
                                 }
 
                                 // Dessin de la trajectoire en cours de recherche
@@ -712,27 +715,30 @@ namespace GoBot.IHM
         int xSouris = 0, ySouris = 0;
         private void pictureBoxTable_MouseMove(object sender, MouseEventArgs e)
         {
-            if (modeCourant == Mode.FinTrajectoire)
-            {
-                double distance;
-                Node finNode = Plateau.Graph.ClosestNode(ScreenToReal(pictureBoxTable.PointToClient(MousePosition).X), ScreenToReal(pictureBoxTable.PointToClient(MousePosition).Y), 0, out distance, false);
-
-                AStar aStar = new AStar(Plateau.Graph);
-                if (aStar.SearchPath(debutNode, finNode))
+            this.Invoke(new EventHandler(delegate
                 {
-                    cheminNodes = aStar.PathByNodes.ToList<Node>();
-                    cheminArcs = aStar.PathByArcs.ToList<Arc>();
-                }
-            }
-            else if (boxSourisObstacle.Checked)
-            {
-                Plateau.ObstacleTest(ScreenToReal(pictureBoxTable.PointToClient(MousePosition).X), ScreenToReal(pictureBoxTable.PointToClient(MousePosition).Y));
+                    if (modeCourant == Mode.FinTrajectoire)
+                    {
+                        double distance;
+                        Node finNode = Plateau.Graph.ClosestNode(ScreenToReal(pictureBoxTable.PointToClient(MousePosition).X), ScreenToReal(pictureBoxTable.PointToClient(MousePosition).Y), 0, out distance, false);
 
-                xSouris = pictureBoxTable.PointToClient(MousePosition).X;
-                ySouris = pictureBoxTable.PointToClient(MousePosition).Y;
-            }
+                        AStar aStar = new AStar(Plateau.Graph);
+                        if (aStar.SearchPath(debutNode, finNode))
+                        {
+                            cheminNodes = aStar.PathByNodes.ToList<Node>();
+                            cheminArcs = aStar.PathByArcs.ToList<Arc>();
+                        }
+                    }
+                    else if (boxSourisObstacle.Checked)
+                    {
+                        Plateau.ObstacleTest(ScreenToReal(pictureBoxTable.PointToClient(MousePosition).X), ScreenToReal(pictureBoxTable.PointToClient(MousePosition).Y));
 
-            lblPos.Text = ScreenToReal(pictureBoxTable.PointToClient(MousePosition).X) + " : " + ScreenToReal(pictureBoxTable.PointToClient(MousePosition).Y);
+                        xSouris = pictureBoxTable.PointToClient(MousePosition).X;
+                        ySouris = pictureBoxTable.PointToClient(MousePosition).Y;
+                    }
+
+                    lblPos.Text = ScreenToReal(pictureBoxTable.PointToClient(MousePosition).X) + " : " + ScreenToReal(pictureBoxTable.PointToClient(MousePosition).Y);
+                }));
         }
 
         private int ScreenToReal(double valeur)

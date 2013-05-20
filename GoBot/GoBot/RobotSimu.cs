@@ -140,6 +140,7 @@ namespace GoBot
             else if (difference > 0)
             {
                 // Phase accélération ou déccélération
+                Console.WriteLine("Distance freinage :" + DistanceFreinageActuelle);
                 if (Position.Coordonnees.Distance(Destination.Coordonnees) > DistanceFreinageActuelle)
                     VitesseActuelle = Math.Min(VitesseDeplacement, VitesseActuelle + AccelerationDeplacement / (1000.0 / IntervalleRafraichissementPosition));
                 else
@@ -223,9 +224,12 @@ namespace GoBot
 
         public override void Stop(StopMode mode)
         {
+            // TODO
             Historique.AjouterAction(new ActionStop(this, mode));
             SemDeplacement.WaitOne();
-            Destination = Position;
+            Position nouvelleDestination = new Calculs.Position(new Angle(Position.Angle.AngleDegres), new PointReel(position.Coordonnees.X, position.Coordonnees.Y));
+            nouvelleDestination.Avancer(DistanceFreinageActuelle);
+            Destination = nouvelleDestination;
             SemDeplacement.Release();
         }
 
@@ -302,9 +306,9 @@ namespace GoBot
 
         public override Color GetCouleurBalle(bool historique = true)
         {
-            if (!BalleCouleurChargee && Rand.Next(NbBallesBlanchesCharges + 1) == 0)
+            if (BalleCouleurChargee && Rand.Next(NbBallesBlanchesCharges + 1) == 0)
             {
-                BalleCouleurChargee = true;
+                BalleCouleurChargee = false;
                 return Color.Blue;
             }
 
@@ -336,10 +340,10 @@ namespace GoBot
             // TODO
             if (!on)
             {
-                VitesseDeplacement = 0;
+                /*VitesseDeplacement = 0;
                 AccelerationDeplacement = 0;
                 VitessePivot = 0;
-                AccelerationPivot = 0;
+                AccelerationPivot = 0;*/
             }
         }
 

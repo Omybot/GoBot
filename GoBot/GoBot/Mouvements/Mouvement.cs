@@ -24,7 +24,9 @@ namespace GoBot.Mouvements
                 double distance = Robots.GrosRobot.Position.Coordonnees.Distance(Position.Coordonnees) / 10;
                 double cout = distance / ScorePondere;
 
+                Console.WriteLine("Mouvement veut prendre");
                 Plateau.SemaphoreGraph.WaitOne();
+                Console.WriteLine("Mouvement prends");
                 foreach (Cercle c in Plateau.ObstaclesTemporaires)
                 {
                     double distanceAdv = Position.Coordonnees.Distance(c.Centre) / 10;
@@ -34,6 +36,7 @@ namespace GoBot.Mouvements
                         cout /= (distanceAdv * distanceAdv);
                 }
                 Plateau.SemaphoreGraph.Release();
+                Console.WriteLine("Mouvement libère");
 
                 return cout * 10000;
             }

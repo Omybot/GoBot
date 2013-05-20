@@ -236,7 +236,9 @@ namespace GoBot
         private bool succesPathFinding;
         public void ParcoursPathFinding(double x, double y, int timeOut = 0, bool attendre = false)
         {
+            Console.WriteLine("ParcoursPathFinding veut prendre");
             Plateau.SemaphoreGraph.WaitOne();
+            Console.WriteLine("ParcoursPathFinding prends");
 
             CheminEnCoursNoeuds = new List<Node>();
             CheminEnCoursArcs = new List<Arc>();
@@ -270,13 +272,20 @@ namespace GoBot
 
             if (toutDroit)
             {
+                Console.WriteLine("5");
                 Robots.GrosRobot.Historique.Log("Chemin trouvé : ligne droite", TypeLog.PathFinding);
+                Console.WriteLine("5.1");
                 CheminEnCoursNoeuds.Add(debutNode);
+                Console.WriteLine("5.2");
                 CheminEnCoursNoeuds.Add(finNode);
+                Console.WriteLine("5.3");
 
                 Arc arcToutDroit = new Arc(debutNode, finNode);
+                Console.WriteLine("5.4");
                 arcToutDroit.Weight = 99999999;
+                Console.WriteLine("5.5");
                 CheminEnCoursArcs.Add(arcToutDroit);
+                Console.WriteLine("5.6");
             }
 
             // Sinon on passe par le graph
@@ -284,19 +293,27 @@ namespace GoBot
             {
                 AStar aStar = new AStar(Plateau.Graph);
                 aStar.DijkstraHeuristicBalance = 1;
-
+                
+            Console.WriteLine("6");
                 if (aStar.SearchPath(debutNode, finNode))
                 {
+                    Console.WriteLine("7");
                     List<Node> nodes = aStar.PathByNodes.ToList<Node>();
+                    Console.WriteLine("7.1");
                     List<Arc> arcs = aStar.PathByArcs.ToList<Arc>();
+                    Console.WriteLine("7.2");
                     Robots.GrosRobot.Historique.Log("Chemin trouvé : " + (nodes.Count - 2) + " noeud(s) intermédiaire(s)", TypeLog.PathFinding);
 
+                    Console.WriteLine("7.3");
                     CheminEnCoursNoeuds = new List<Node>();
+                    Console.WriteLine("7.4");
                     CheminEnCoursArcs = new List<Arc>();
 
+                    Console.WriteLine("8");
                     CheminTrouve = new List<Arc>(arcs);
                     NodeTrouve = new List<Node>(nodes);
 
+                    Console.WriteLine("9");
                     // Simplification du chemin
                     // On part du début et on essaie d'aller au point du plus éloigné au moins éloigné en testant si le passage est possible
                     // Si c'est possible on zappe tous les points entre les deux
@@ -344,30 +361,36 @@ namespace GoBot
                             CheminEnCoursArcs.Add(arc);
                         }
                     }
-
+                    Console.WriteLine("10");
+                    
                     CheminEnCoursNoeuds.Add(nodes[nodes.Count - 1]);
                     Robots.GrosRobot.Historique.Log("Chemin optimisé : " + (CheminEnCoursNoeuds.Count - 2) + " noeud(s) intermédiaire(s)", TypeLog.PathFinding);
                 }
                 else
                 {
+                    Console.WriteLine("11");
                     CheminEnCoursNoeuds.Clear();
                     CheminEnCoursArcs.Clear();
                 }
             }
+            Console.WriteLine("12");
 
             ObstacleProbleme = null;
             ObstacleTeste = null;
             NodeTrouve = new List<Node>();
             CheminTrouve = new List<Arc>();
-
+            
+            Console.WriteLine("11");
             // Reset du graph (Trouver un meilleur moyen ?)
             Plateau.ChargerGraph();
             List<IForme> obstacles = new List<IForme>(Plateau.ObstaclesTemporaires);
             Plateau.ObstaclesTemporaires = new List<IForme>();
             foreach (IForme f in obstacles)
                 Plateau.AjouterObstacle(f);
-
+            
+            Console.WriteLine("12");
             Plateau.SemaphoreGraph.Release();
+            Console.WriteLine("ParcoursPathFinding libère");
 
             if (CheminEnCoursArcs.Count == 0)
             {
@@ -469,7 +492,7 @@ namespace GoBot
             try
             {
                 // Teste si le chemin en cours de parcous est toujours franchissable
-                if (CheminEnCoursNoeuds != null && CheminEnCoursNoeuds.Count > 0)
+                if (CheminEnCoursNoeuds != null && CheminEnCoursNoeuds.Count > 1)
                 {
                     List<IForme> obstacles = new List<IForme>(Plateau.ObstaclesTemporaires);
 
