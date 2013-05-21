@@ -232,9 +232,7 @@ namespace GoBot.IHM
                                 // Dessin du graph
                                 if (boxGraph.Checked)
                                 {
-                                    Console.WriteLine("Dessine veut prendre");
                                     Plateau.SemaphoreGraph.WaitOne();
-                                    Console.WriteLine("Dessine prends");
 
                                     // Dessin des arcs
                                     if (boxArretes.Checked)
@@ -259,7 +257,6 @@ namespace GoBot.IHM
                                     }
 
                                     Plateau.SemaphoreGraph.Release();
-                                    Console.WriteLine("Dessine libere");
                                 }
 
                                 // Dessin de la trajectoire en cours de recherche
@@ -715,8 +712,8 @@ namespace GoBot.IHM
         int xSouris = 0, ySouris = 0;
         private void pictureBoxTable_MouseMove(object sender, MouseEventArgs e)
         {
-            this.Invoke(new EventHandler(delegate
-                {
+            //this.Invoke(new EventHandler(delegate
+            //    {
                     if (modeCourant == Mode.FinTrajectoire)
                     {
                         double distance;
@@ -731,14 +728,17 @@ namespace GoBot.IHM
                     }
                     else if (boxSourisObstacle.Checked)
                     {
-                        Plateau.ObstacleTest(ScreenToReal(pictureBoxTable.PointToClient(MousePosition).X), ScreenToReal(pictureBoxTable.PointToClient(MousePosition).Y));
-
-                        xSouris = pictureBoxTable.PointToClient(MousePosition).X;
-                        ySouris = pictureBoxTable.PointToClient(MousePosition).Y;
+                        if (xSouris != pictureBoxTable.PointToClient(MousePosition).X || ySouris != pictureBoxTable.PointToClient(MousePosition).Y)
+                        {
+                            Console.WriteLine("Souris bouge");
+                            xSouris = pictureBoxTable.PointToClient(MousePosition).X;
+                            ySouris = pictureBoxTable.PointToClient(MousePosition).Y;
+                            Plateau.ObstacleTest(ScreenToReal(pictureBoxTable.PointToClient(MousePosition).X), ScreenToReal(pictureBoxTable.PointToClient(MousePosition).Y));
+                        }
                     }
 
                     lblPos.Text = ScreenToReal(pictureBoxTable.PointToClient(MousePosition).X) + " : " + ScreenToReal(pictureBoxTable.PointToClient(MousePosition).Y);
-                }));
+            //    }));
         }
 
         private int ScreenToReal(double valeur)

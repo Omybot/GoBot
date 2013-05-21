@@ -140,7 +140,6 @@ namespace GoBot
             else if (difference > 0)
             {
                 // Phase accélération ou déccélération
-                Console.WriteLine("Distance freinage :" + DistanceFreinageActuelle);
                 if (Position.Coordonnees.Distance(Destination.Coordonnees) > DistanceFreinageActuelle)
                     VitesseActuelle = Math.Min(VitesseDeplacement, VitesseActuelle + AccelerationDeplacement / (1000.0 / IntervalleRafraichissementPosition));
                 else
@@ -229,6 +228,10 @@ namespace GoBot
             SemDeplacement.WaitOne();
             Position nouvelleDestination = new Calculs.Position(new Angle(Position.Angle.AngleDegres), new PointReel(position.Coordonnees.X, position.Coordonnees.Y));
             nouvelleDestination.Avancer(DistanceFreinageActuelle);
+            Console.WriteLine(Position);
+            Console.WriteLine(Destination);
+            Console.WriteLine(nouvelleDestination);
+            Console.WriteLine();
             Destination = nouvelleDestination;
             SemDeplacement.Release();
         }

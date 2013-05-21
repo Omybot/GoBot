@@ -63,9 +63,6 @@ namespace GoBot
                 panelBalise3.Balise.ConnexionCheck.Start();
 
                 switchBoutonSimu.SetActif(Robots.Simulation);
-
-                Console.WriteLine("Bleu = " + Plateau.CouleurJ2B.ToArgb());
-                Console.WriteLine("Rouge = " + Plateau.CouleurJ1R.ToArgb());
             }
         }
 

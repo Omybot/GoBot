@@ -23,6 +23,7 @@ namespace GoBot.IHM
             CouleursLog.Add(TypeLog.Action, Color.Blue);
             CouleursLog.Add(TypeLog.PathFinding, Color.Green);
             CouleursLog.Add(TypeLog.Strat, Color.Red);
+            majLogDelegate = new MajLog(MAJLog);
         }
 
         public void Init()
@@ -53,10 +54,17 @@ namespace GoBot.IHM
             txtLog.ScrollToCaret();
         }
 
+        public delegate void MajLog(HistoLigne ligne);
+        MajLog majLogDelegate;
         private void MAJLog(HistoLigne ligne)
         {
+            if (InvokeRequired)
+                this.Invoke(majLogDelegate, ligne);
+            else
+                MAJLogLigne(ligne);
+            /*
             this.Invoke(new EventHandler(delegate
-                {
+            {
                     if ((boxStrat.Checked && ligne.Type == TypeLog.Strat) ||
                         (boxActions.Checked && ligne.Type == TypeLog.Action) ||
                         (boxPathFinding.Checked && ligne.Type == TypeLog.PathFinding))
@@ -66,7 +74,20 @@ namespace GoBot.IHM
                             t = ligne.Heure - Plateau.Enchainement.DebutMatch;
                         AddText((boxHeure.Checked ? t.Minutes + ":" + t.Seconds + ":" + t.Milliseconds : "") + " > " + ligne.Message, CouleursLog[ligne.Type]);
                     }
-                }));
+            }));*/
+        }
+
+        private void MAJLogLigne(HistoLigne ligne)
+        {
+            if ((boxStrat.Checked && ligne.Type == TypeLog.Strat) ||
+                (boxActions.Checked && ligne.Type == TypeLog.Action) ||
+                (boxPathFinding.Checked && ligne.Type == TypeLog.PathFinding))
+            {
+                TimeSpan t = new TimeSpan();
+                if (Plateau.Enchainement != null && Plateau.Enchainement.DebutMatch != null)
+                    t = ligne.Heure - Plateau.Enchainement.DebutMatch;
+                AddText((boxHeure.Checked ? t.Minutes + ":" + t.Seconds + ":" + t.Milliseconds : "") + " > " + ligne.Message, CouleursLog[ligne.Type]);
+            }
         }
 
         private void btnClose_Click(object sender, EventArgs e)

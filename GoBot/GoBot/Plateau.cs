@@ -35,10 +35,10 @@ namespace GoBot
         public static int DerniereBougieGros { get; set; }
 
         private static Color notreCouleur;
-        public static Color NotreCouleur 
+        public static Color NotreCouleur
         {
             get { return notreCouleur; }
-            set { notreCouleur = value; if(NotreCouleurChange != null) NotreCouleurChange(null, null); }
+            set { notreCouleur = value; if (NotreCouleurChange != null) NotreCouleurChange(null, null); }
         }
         public static event EventHandler NotreCouleurChange;
 
@@ -196,6 +196,10 @@ namespace GoBot
                 AssiettesVidees = new bool[10];
                 for (int i = 0; i < 10; i++)
                     AssiettesVidees[i] = false;
+
+                SemaphoreCollisions = new Semaphore(0, 999999999);
+                thCollisions = new Thread(ThreadTestCollisions);
+                thCollisions.Start();
             }
         }
 
@@ -206,24 +210,33 @@ namespace GoBot
             Balise3 = new Balise(Carte.RecBoi);
         }
 
+        private Semaphore SemaphoreCollisions { get; set; }
+        private void ThreadTestCollisions()
+        {
+            while (true)
+            {
+                SemaphoreCollisions.WaitOne();
+                Robots.PetitRobot.ObstacleTest();
+                Robots.GrosRobot.ObstacleTest();
+            }
+        }
+
+        Thread thCollisions;
         public void ObstacleTest(int x, int y)
         {
-            Console.WriteLine("ObstacleTest veut prendre");
             SemaphoreGraph.WaitOne();
-            Console.WriteLine("ObstacleTest prend");
             ViderObstacles();
             PointReel coordonnees = new PointReel(x, y);
             AjouterObstacle(new Cercle(coordonnees, 200));
             SemaphoreGraph.Release();
-            Console.WriteLine("ObstacleTest libere");
 
             // Avant de lancer le match
-            if(Plateau.Enchainement == null)
-            for (int i = 0; i < 10; i++)
-            {
-                if (PositionsAssiettes[i].Coordonnees.Distance(coordonnees) < 250)
-                    AssiettesExiste[i] = false;
-            }
+            if (Plateau.Enchainement == null)
+                for (int i = 0; i < 10; i++)
+                {
+                    if (PositionsAssiettes[i].Coordonnees.Distance(coordonnees) < 250)
+                        AssiettesExiste[i] = false;
+                }
             // Une fois le match lancé
             for (int i = 0; i < 10; i++)
             {
@@ -231,8 +244,8 @@ namespace GoBot
                     AssiettesVidees[i] = true;
             }
 
-            Robots.PetitRobot.ObstacleTest();
-            Robots.GrosRobot.ObstacleTest();
+            Console.WriteLine("Autorisation 1 collision");
+            SemaphoreCollisions.Release();
         }
 
         void interpreteBalise_PositionEnnemisActualisee(InterpreteurBalise interprete)
@@ -260,8 +273,8 @@ namespace GoBot
             }
             SemaphoreGraph.Release();
 
-            Robots.PetitRobot.ObstacleTest();
-            Robots.GrosRobot.ObstacleTest();
+            Console.WriteLine("Autorisation 1 collision");
+            SemaphoreCollisions.Release();
         }
 
         /// <summary>
@@ -340,7 +353,7 @@ namespace GoBot
         public void SauverGraph()
         {
             IFormatter formatter = new BinaryFormatter();
-            using(Stream stream = new FileStream("graph.bin", FileMode.OpenOrCreate, FileAccess.Write, FileShare.None))
+            using (Stream stream = new FileStream("graph.bin", FileMode.OpenOrCreate, FileAccess.Write, FileShare.None))
                 formatter.Serialize(stream, Graph);
         }
 
@@ -352,7 +365,7 @@ namespace GoBot
             try
             {
                 IFormatter formatter = new BinaryFormatter();
-                using(Stream stream = new FileStream("graph.bin", FileMode.Open, FileAccess.Read, FileShare.Read))
+                using (Stream stream = new FileStream("graph.bin", FileMode.Open, FileAccess.Read, FileShare.Read))
                     Graph = (Graph)formatter.Deserialize(stream);
             }
             catch (Exception e)

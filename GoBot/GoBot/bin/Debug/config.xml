@@ -18,6 +18,9 @@
   <GRAccelerationLigneLent>300</GRAccelerationLigneLent>
   <GRVitessePivotLent>300</GRVitessePivotLent>
   <GRAccelerationPivotLent>300</GRAccelerationPivotLent>
+  <GRCoeffP>0</GRCoeffP>
+  <GRCoeffI>0</GRCoeffI>
+  <GRCoeffD>0</GRCoeffD>
   <PRVitesseLigneRapide>500</PRVitesseLigneRapide>
   <PRAccelerationLigneRapide>500</PRAccelerationLigneRapide>
   <PRVitessePivotRapide>500</PRVitessePivotRapide>
@@ -26,6 +29,9 @@
   <PRAccelerationLigneLent>100</PRAccelerationLigneLent>
   <PRVitessePivotLent>100</PRVitessePivotLent>
   <PRAccelerationPivotLent>100</PRAccelerationPivotLent>
+  <PRCoeffP>0</PRCoeffP>
+  <PRCoeffI>0</PRCoeffI>
+  <PRCoeffD>0</PRCoeffD>
   <OffsetBalise1Capteur1>-13.876249999999999</OffsetBalise1Capteur1>
   <OffsetBalise2Capteur1>-8.4134375000000148</OffsetBalise2Capteur1>
   <OffsetBalise3Capteur1>-190.45875000000004</OffsetBalise3Capteur1>
