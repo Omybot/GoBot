@@ -372,5 +372,20 @@ namespace GoBot
             // TODO
             return true;
         }
+
+        public override List<int>[] MesureTestPid(int consigne, SensAR sens, int nbValeurs)
+        {
+            List<int>[] retour = new List<int>[2];
+            retour[0] = new List<int>();
+            retour[1] = new List<int>();
+
+            for (double i = 0; i < nbValeurs; i++)
+            {
+                retour[0].Add((int)(Math.Sin((i + DateTime.Now.Millisecond) / 100.0 * Math.PI) * consigne * 10000000/ (i*i*i)));
+                retour[1].Add((int)(Math.Sin((i + DateTime.Now.Millisecond) / 100.0 * Math.PI) * consigne * 10000000/ (i*i*i) + 10));
+            }
+
+            return retour;
+        }
     }
 }

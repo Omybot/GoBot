@@ -18,9 +18,9 @@
   <GRAccelerationLigneLent>300</GRAccelerationLigneLent>
   <GRVitessePivotLent>300</GRVitessePivotLent>
   <GRAccelerationPivotLent>300</GRAccelerationPivotLent>
-  <GRCoeffP>0</GRCoeffP>
+  <GRCoeffP>20</GRCoeffP>
   <GRCoeffI>0</GRCoeffI>
-  <GRCoeffD>0</GRCoeffD>
+  <GRCoeffD>300</GRCoeffD>
   <PRVitesseLigneRapide>500</PRVitesseLigneRapide>
   <PRAccelerationLigneRapide>500</PRAccelerationLigneRapide>
   <PRVitessePivotRapide>500</PRVitessePivotRapide>

@@ -237,6 +237,21 @@ namespace GoBot
                     if (historiquePresenceAssiette)
                         Historique.AjouterAction(new ActionCapteur(this, CapteurID.GRPresenceAssiette, presenceAssiette ? "assiette" : "rien"));
                 }
+
+                if (trameRecue[1] == (byte)TrameFactory.FonctionMove.RetourPositionCodeurs)
+                {
+                    int nbPositions = trameRecue[2];
+                    Console.WriteLine("Retour " + nbPositions + " positions codeurs");
+
+                    for (int i = 0; i < nbPositions; i++)
+                    {
+                        int codeurGauche = (trameRecue[2 + i * 8] << 24 & trameRecue[3 + i * 8] << 16 & trameRecue[4 + i * 8] << 8 & trameRecue[5 + i * 8]);
+                        int codeurDroit = (trameRecue[6 + i * 8] << 24 & trameRecue[7 + i * 8] << 16 & trameRecue[8 + i * 8] << 8 & trameRecue[9 + i * 8]);
+
+                        retourTestPid[0].Add(codeurGauche);
+                        retourTestPid[1].Add(codeurDroit);
+                    }
+                }
             }
         }
 
@@ -580,6 +595,26 @@ namespace GoBot
             Connexion.SendMessage(TrameFactory.DemandeJack());
             semJack.WaitOne();
             return jackBranche;
+        }
+
+        private List<int>[] retourTestPid;
+        public override List<int>[] MesureTestPid(int consigne, SensAR sens, int nbValeurs)
+        {
+            retourTestPid = new List<int>[2];
+            retourTestPid[0] = new List<int>();
+            retourTestPid[1] = new List<int>();
+
+            Trame trame = TrameFactory.EnvoiConsigneBrute(consigne, sens);
+            Connexion.SendMessage(trame);
+
+            trame = TrameFactory.DemandePositionsCodeurs();
+            while (retourTestPid[0].Count < nbValeurs)
+            {
+                Connexion.SendMessage(trame);
+                Thread.Sleep(30);
+            }
+
+            return retourTestPid;
         }
     }
 }

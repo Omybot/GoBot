@@ -82,6 +82,12 @@
     <Compile Include="Actions\Deplacement\ActionRecule.cs" />
     <Compile Include="Actions\IAction.cs" />
     <Compile Include="CameraIP.cs" />
+    <Compile Include="IHM\Composants\CtrlGraphique.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="IHM\Composants\CtrlGraphique.designer.cs">
+      <DependentUpon>CtrlGraphique.cs</DependentUpon>
+    </Compile>
     <Compile Include="IHM\PanelPetitRobotUtilisation.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -129,6 +135,12 @@
     </Compile>
     <Compile Include="IHM\PanelGrosRobotReglage.Designer.cs">
       <DependentUpon>PanelGrosRobotReglage.cs</DependentUpon>
+    </Compile>
+    <Compile Include="IHM\PanelReglageAsserv.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="IHM\PanelReglageAsserv.Designer.cs">
+      <DependentUpon>PanelReglageAsserv.cs</DependentUpon>
     </Compile>
     <Compile Include="Mouvements\MoveGrosAccrocheAssiette.cs" />
     <Compile Include="Mouvements\MoveGrosLanceBalles.cs" />
@@ -261,6 +273,9 @@
     <Compile Include="UDP\TrameFactory.cs" />
     <Compile Include="UDP\ConnexionUDP.cs" />
     <Compile Include="UDP\Trame.cs" />
+    <EmbeddedResource Include="IHM\Composants\CtrlGraphique.resx">
+      <DependentUpon>CtrlGraphique.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="IHM\Composants\TextBoxPlus.resx">
       <DependentUpon>TextBoxPlus.cs</DependentUpon>
     </EmbeddedResource>
@@ -314,6 +329,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="IHM\PanelGrosRobotReglage.resx">
       <DependentUpon>PanelGrosRobotReglage.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="IHM\PanelReglageAsserv.resx">
+      <DependentUpon>PanelReglageAsserv.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="IHM\PanelServo.resx">
       <DependentUpon>PanelServo.cs</DependentUpon>

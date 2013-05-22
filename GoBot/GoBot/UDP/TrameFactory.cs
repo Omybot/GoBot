@@ -18,8 +18,11 @@ namespace GoBot.UDP
             Recallage = 0x10,
             FinRecallage = 0x11,
             FinDeplacement = 0x12,
-            DebugAsser = 0x57,
             Blocage = 0x70,
+
+            DemandePositionsCodeurs = 0x43,
+            RetourPositionCodeurs = 0x44,
+            EnvoiConsigneBrute = 0x45,
 
             DemandePositionXYTeta = 0x30,
             RetourPositionXYTeta = 0x31,
@@ -653,6 +656,25 @@ namespace GoBot.UDP
             tab[1] = (byte)FonctionMove.VitesseCanonTours;
             tab[2] = (byte)ByteDivide(vitesse, true);
             tab[3] = (byte)ByteDivide(vitesse, false);
+            return new Trame(tab);
+        }
+
+        public static Trame EnvoiConsigneBrute(int consigne, SensAR sens = SensAR.Avant)
+        {
+            byte[] tab = new byte[5];
+            tab[0] = (byte)Carte.RecMove;
+            tab[1] = (byte)FonctionMove.EnvoiConsigneBrute;
+            tab[2] = (byte)ByteDivide(consigne, true);
+            tab[3] = (byte)ByteDivide(consigne, false);
+            tab[4] = (byte)sens;
+            return new Trame(tab);
+        }
+
+        public static Trame DemandePositionsCodeurs()
+        {
+            byte[] tab = new byte[2];
+            tab[0] = (byte)Carte.RecMove;
+            tab[1] = (byte)FonctionMove.DemandePositionsCodeurs;
             return new Trame(tab);
         }
 
