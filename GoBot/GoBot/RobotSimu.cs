@@ -110,8 +110,13 @@ namespace GoBot
             }
         }
 
+        DateTime prec = DateTime.Now;
         void timerDeplacement_Elapsed(object sender, ElapsedEventArgs e)
         {
+            // Calcul du temps écoulé depuis la dernière mise à jour de la position
+            double intervalle = (DateTime.Now - prec).TotalMilliseconds;
+            prec = DateTime.Now;
+
             SemDeplacement.WaitOne();
             double difference = Destination.Coordonnees.Distance(Position.Coordonnees);
             Angle adifference = Position.Angle - Destination.Angle;
@@ -126,14 +131,14 @@ namespace GoBot
                 double distance = Math.Abs(adifference.AngleDegres) / 360.0 * Entraxe * Math.PI;
 
                 if (distance > AngleFreinageActuel)
-                    VitesseActuelle = Math.Min(VitessePivot, VitesseActuelle + AccelerationPivot / (1000.0 / IntervalleRafraichissementPosition));
+                    VitesseActuelle = Math.Min(VitessePivot, VitesseActuelle + AccelerationPivot / (1000.0 / intervalle));
                 else
-                    VitesseActuelle = VitesseActuelle - AccelerationPivot / (1000.0 / IntervalleRafraichissementPosition);
+                    VitesseActuelle = VitesseActuelle - AccelerationPivot / (1000.0 / intervalle);
 
-                if (Math.Abs(diff.AngleDegres) >= VitesseActuelle / 100.0)
-                    Position.Angle.Tourner(coeff * VitesseActuelle / 100.0);
-                else if (Math.Abs(diff.AngleDegres) <= -VitesseActuelle / 100.0)
-                    Position.Angle.Tourner(coeff * VitesseActuelle / 100.0);
+                if (Math.Abs(diff.AngleDegres) >= VitesseActuelle / (1000.0 / intervalle))
+                    Position.Angle.Tourner(coeff * VitesseActuelle / (1000.0 / intervalle));
+                else if (Math.Abs(diff.AngleDegres) <= -VitesseActuelle / (1000.0 / intervalle))
+                    Position.Angle.Tourner(coeff * VitesseActuelle / (1000.0 / intervalle));
                 else
                     Position.Angle.Tourner(diff.AngleDegres);
             }
@@ -141,11 +146,11 @@ namespace GoBot
             {
                 // Phase accélération ou déccélération
                 if (Position.Coordonnees.Distance(Destination.Coordonnees) > DistanceFreinageActuelle)
-                    VitesseActuelle = Math.Min(VitesseDeplacement, VitesseActuelle + AccelerationDeplacement / (1000.0 / IntervalleRafraichissementPosition));
+                    VitesseActuelle = Math.Min(VitesseDeplacement, VitesseActuelle + AccelerationDeplacement / (1000.0 / intervalle));
                 else
-                    VitesseActuelle = VitesseActuelle - AccelerationDeplacement / (1000.0 / IntervalleRafraichissementPosition);
+                    VitesseActuelle = VitesseActuelle - AccelerationDeplacement / (1000.0 / intervalle);
 
-                double distance = VitesseActuelle / (1000.0 / IntervalleRafraichissementPosition);
+                double distance = VitesseActuelle / (1000.0 / intervalle);
 
                 //VitesseActuelle += AccellerationDeplacement / (1000 / IntervalleRafraichissementPosition);
                 if (Destination.Coordonnees.Distance(Position.Coordonnees) < distance)

@@ -104,8 +104,6 @@ namespace GoBot.IHM
 
                     while (continuerAffichage)
                     {
-                        DateTime debut = DateTime.Now;
-
                         try
                         {
                             Bitmap bmp = new Bitmap(750, 500);
@@ -259,6 +257,43 @@ namespace GoBot.IHM
                                     gGros.DrawRectangle(penCouleurJ2B, bmpGrosRobot.Width / 2 - RealToScreen(Robots.GrosRobot.Largeur / 2), bmpGrosRobot.Height / 2 - RealToScreen(Robots.GrosRobot.Longueur / 2), RealToScreen(Robots.GrosRobot.Largeur), RealToScreen(Robots.GrosRobot.Longueur));
                                     gGros.DrawLine(penCouleurJ2B, bmpGrosRobot.Width / 2, bmpGrosRobot.Height / 2, bmpGrosRobot.Width / 2, bmpGrosRobot.Height / 2 - RealToScreen(Robots.GrosRobot.Longueur / 2));
 
+                                    if (Robots.GrosRobot.ServoSorti[ServomoteurID.GRBrasDroit])
+                                    {
+                                        List<Point> points = new List<Point>();
+                                        points.Add(new Point(bmpGrosRobot.Width / 2 + RealToScreen(Robots.GrosRobot.Largeur / 2), bmpGrosRobot.Height / 2 - RealToScreen(Robots.GrosRobot.Longueur / 2)));
+                                        points.Add(new Point(bmpGrosRobot.Width / 2 + RealToScreen(Robots.GrosRobot.Largeur / 2) + 4, bmpGrosRobot.Height / 2 - RealToScreen(Robots.GrosRobot.Longueur / 2)));
+                                        points.Add(new Point(bmpGrosRobot.Width / 2 + RealToScreen(Robots.GrosRobot.Largeur / 2) + 20, bmpGrosRobot.Height / 2 - RealToScreen(Robots.GrosRobot.Longueur / 2) - 20));
+                                        points.Add(new Point(bmpGrosRobot.Width / 2 + RealToScreen(Robots.GrosRobot.Largeur / 2) + 16, bmpGrosRobot.Height / 2 - RealToScreen(Robots.GrosRobot.Longueur / 2) - 20));
+
+                                        gGros.FillPolygon(brushBleuClair, points.ToArray<Point>());
+                                        gGros.DrawPolygon(penCouleurJ2B, points.ToArray<Point>());
+                                    }
+
+                                    if (Robots.GrosRobot.ServoSorti[ServomoteurID.GRBrasGauche])
+                                    {
+                                        List<Point> points = new List<Point>();
+                                        points.Add(new Point(bmpGrosRobot.Width / 2 - RealToScreen(Robots.GrosRobot.Largeur / 2), bmpGrosRobot.Height / 2 - RealToScreen(Robots.GrosRobot.Longueur / 2)));
+                                        points.Add(new Point(bmpGrosRobot.Width / 2 - RealToScreen(Robots.GrosRobot.Largeur / 2) - 4, bmpGrosRobot.Height / 2 - RealToScreen(Robots.GrosRobot.Longueur / 2)));
+                                        points.Add(new Point(bmpGrosRobot.Width / 2 - RealToScreen(Robots.GrosRobot.Largeur / 2) - 20, bmpGrosRobot.Height / 2 - RealToScreen(Robots.GrosRobot.Longueur / 2) - 20));
+                                        points.Add(new Point(bmpGrosRobot.Width / 2 - RealToScreen(Robots.GrosRobot.Largeur / 2) - 16, bmpGrosRobot.Height / 2 - RealToScreen(Robots.GrosRobot.Longueur / 2) - 20));
+
+                                        gGros.FillPolygon(brushBleuClair, points.ToArray<Point>());
+                                        gGros.DrawPolygon(penCouleurJ2B, points.ToArray<Point>());
+                                    }
+
+                                    if (Robots.GrosRobot.ServoSorti[ServomoteurID.GRPetitBras])
+                                    {
+                                        gGros.FillRectangle(brushBleuClair,
+                                            bmpGrosRobot.Width / 2 + RealToScreen(Robots.GrosRobot.Largeur / 2),
+                                            bmpGrosRobot.Height / 2 - 2,
+                                            RealToScreen(140),
+                                            4);
+                                        gGros.DrawRectangle(penCouleurJ2B,
+                                            bmpGrosRobot.Width / 2 + RealToScreen(Robots.GrosRobot.Largeur / 2),
+                                            bmpGrosRobot.Height / 2 - 2,
+                                            RealToScreen(140),
+                                            4);
+                                    }
                                     if (Robots.GrosRobot.ServoSorti[ServomoteurID.GRPetitBras])
                                     {
                                         gGros.FillRectangle(brushBleuClair,
@@ -602,8 +637,6 @@ namespace GoBot.IHM
                         {
                             Console.WriteLine("Erreur pendant le dessin de la table " + ex.Message);
                         }
-
-                        Console.WriteLine((DateTime.Now - debut).TotalMilliseconds + " ms");
                     }
                 }
             }

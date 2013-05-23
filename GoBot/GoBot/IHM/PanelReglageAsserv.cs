@@ -23,6 +23,7 @@ namespace GoBot.IHM
             this.numCoeffD.ValueChanged += new System.EventHandler(this.btnOk_Click);
             this.numCoeffI.ValueChanged += new System.EventHandler(this.btnOk_Click);
             this.numCoeffP.ValueChanged += new System.EventHandler(this.btnOk_Click);
+            Robot = Robots.GrosRobot;
         }
 
         private void rdoGrosRobot_CheckedChanged(object sender, EventArgs e)

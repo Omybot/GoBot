@@ -10,15 +10,15 @@
   <HistoriquePROuvert>true</HistoriquePROuvert>
   <ReglagePROuvert>true</ReglagePROuvert>
   <UtilisationPROuvert>true</UtilisationPROuvert>
-  <GRVitesseLigneRapide>1000</GRVitesseLigneRapide>
-  <GRAccelerationLigneRapide>2000</GRAccelerationLigneRapide>
+  <GRVitesseLigneRapide>1373</GRVitesseLigneRapide>
+  <GRAccelerationLigneRapide>2088</GRAccelerationLigneRapide>
   <GRVitessePivotRapide>2000</GRVitessePivotRapide>
   <GRAccelerationPivotRapide>2000</GRAccelerationPivotRapide>
   <GRVitesseLigneLent>200</GRVitesseLigneLent>
   <GRAccelerationLigneLent>300</GRAccelerationLigneLent>
   <GRVitessePivotLent>500</GRVitessePivotLent>
   <GRAccelerationPivotLent>500</GRAccelerationPivotLent>
-  <GRCoeffP>50</GRCoeffP>
+  <GRCoeffP>20</GRCoeffP>
   <GRCoeffI>0</GRCoeffI>
   <GRCoeffD>300</GRCoeffD>
   <PRVitesseLigneRapide>0</PRVitesseLigneRapide>
@@ -32,12 +32,12 @@
   <PRCoeffP>0</PRCoeffP>
   <PRCoeffI>0</PRCoeffI>
   <PRCoeffD>0</PRCoeffD>
-  <OffsetBalise1Capteur1>-191.9765625</OffsetBalise1Capteur1>
-  <OffsetBalise2Capteur1>163.06656250000003</OffsetBalise2Capteur1>
-  <OffsetBalise3Capteur1>-10.406562499999978</OffsetBalise3Capteur1>
-  <OffsetBalise1Capteur2>-12.647187500000001</OffsetBalise1Capteur2>
-  <OffsetBalise2Capteur2>-17.822187499999984</OffsetBalise2Capteur2>
-  <OffsetBalise3Capteur2>-11.157812499999977</OffsetBalise3Capteur2>
+  <OffsetBalise1Capteur1>-192.2290625</OffsetBalise1Capteur1>
+  <OffsetBalise2Capteur1>162.54312499999998</OffsetBalise2Capteur1>
+  <OffsetBalise3Capteur1>-10.627187499999991</OffsetBalise3Capteur1>
+  <OffsetBalise1Capteur2>-193.68531249999998</OffsetBalise1Capteur2>
+  <OffsetBalise2Capteur2>161.584375</OffsetBalise2Capteur2>
+  <OffsetBalise3Capteur2>168.41375</OffsetBalise3Capteur2>
   <PositionGRGrandBrasHaut>465</PositionGRGrandBrasHaut>
   <PositionGRGrandBrasBas>545</PositionGRGrandBrasBas>
   <PositionGRGrandBrasRange>815</PositionGRGrandBrasRange>
