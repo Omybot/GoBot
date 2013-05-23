@@ -375,10 +375,11 @@ namespace GoBot
                                 ReglageOffset = false;
                             }
                         }
-
-                        // Réunification des mesures détectées par les deux capteurs
                         Detections = new List<DetectionBalise>();
-                        /*double ecartAngle = 1;
+
+                        /*
+                        // Réunification des mesures détectées par les deux capteurs
+                        double ecartAngle = 1;
 
                         
                         foreach (DetectionBalise d1 in DetectionsCapteur1)

@@ -73,6 +73,8 @@ namespace GoBot.IHM
                 using (SolidBrush brushNoir = new SolidBrush(Color.Black),
                         brushBlanc = new SolidBrush(Color.White),
                         brushCouleurJ1R = new SolidBrush(Plateau.CouleurJ1R),
+                        brushCouleurJ1RTransparent = new SolidBrush(Color.FromArgb(100, Plateau.CouleurJ1R)),
+                        brushCouleurJ1RTresTransparent = new SolidBrush(Color.FromArgb(35, Plateau.CouleurJ1R)),
                         brushCouleurJ2B = new SolidBrush(Plateau.CouleurJ2B),
                         brushVertFonce = new SolidBrush(Color.DarkGreen),
                         brushRouge = new SolidBrush(Color.Red),
@@ -98,6 +100,8 @@ namespace GoBot.IHM
 
                     while (continuerAffichage)
                     {
+                        DateTime debut = DateTime.Now;
+
                         try
                         {
                             Bitmap bmp = new Bitmap(750, 500);
@@ -110,115 +114,6 @@ namespace GoBot.IHM
 
                                 if (boxTable.Checked)
                                     g.DrawImage(Properties.Resources.table, 0, 0);
-
-                                if (Plateau.InterpreteurBalise.PositionsEnnemies != null)
-                                {
-                                    foreach (PointReel p in Plateau.InterpreteurBalise.PositionsEnnemies)
-                                    {
-                                        if (p == null)
-                                            continue;
-
-                                        g.FillEllipse(brushCouleurJ1R, RealToScreen(p.X - Robots.GrosRobot.Rayon), RealToScreen(p.Y - Robots.GrosRobot.Rayon), RealToScreen(Robots.GrosRobot.Rayon * 2), RealToScreen(Robots.GrosRobot.Rayon * 2));
-                                        g.DrawLine(penRougeEpais, new Point(RealToScreen(p.X) - 7, RealToScreen(p.Y) - 7), new Point(RealToScreen(p.X) + 7, RealToScreen(p.Y) + 7));
-                                        g.DrawLine(penRougeEpais, new Point(RealToScreen(p.X) - 7, RealToScreen(p.Y) + 7), new Point(RealToScreen(p.X) + 7, RealToScreen(p.Y) - 7));
-                                    }
-
-                                    if (boxDroites.Checked)
-                                    {
-                                        /*foreach (DetectionBalise detection in interprete.DetectionBalisesBas)
-                                        {
-                                            // Ligne médiane
-                                            g.DrawLine(crayonBleuPointille,
-                                                new Point(RealToScreen(detection.Balise.Position.Coordonnees.X), RealToScreen(detection.Balise.Position.Coordonnees.Y)),
-                                                new Point(RealToScreen(detection.Position.X), RealToScreen(detection.Position.Y)));
-
-                                            // Dessin du polygone de détection
-                                            Polygone polygone = InterpreteurBalise.DetectionToPolygone(detection);
-                                            List<Point> points = new List<Point>();
-
-                                            foreach (Segment s in polygone.Cotes)
-                                            {
-                                                points.Add(new Point(RealToScreen(s.Debut.X), RealToScreen(s.Debut.Y)));
-                                                points.Add(new Point(RealToScreen(s.Fin.X), RealToScreen(s.Fin.Y)));
-                                            }
-
-                                            g.DrawPolygon(crayonBleuFin, points.ToArray());
-
-                                            g.DrawLine(crayonBleuFin, new Point(RealToScreen(detection.Position.X) - 4, RealToScreen(detection.Position.Y) - 4), new Point(RealToScreen(detection.Position.X) + 4, RealToScreen(detection.Position.Y) + 4));
-                                            g.DrawLine(crayonBleuFin, new Point(RealToScreen(detection.Position.X) - 4, RealToScreen(detection.Position.Y) + 4), new Point(RealToScreen(detection.Position.X) + 4, RealToScreen(detection.Position.Y) - 4));
-                                        }*/
-
-                                        foreach (DetectionBalise detection in Plateau.InterpreteurBalise.DetectionBalisesHaut)
-                                        {
-                                            // Ligne médiane
-                                            g.DrawLine(penRougePointille,
-                                                new Point(RealToScreen(detection.Balise.Position.Coordonnees.X), RealToScreen(detection.Balise.Position.Coordonnees.Y)),
-                                                new Point(RealToScreen(detection.Position.X), RealToScreen(detection.Position.Y)));
-
-                                            // Dessin du polygone de détection
-                                            Polygone polygone = InterpreteurBalise.DetectionToPolygone(detection);
-                                            List<Point> points = new List<Point>();
-
-                                            foreach (Segment s in polygone.Cotes)
-                                            {
-                                                points.Add(new Point(RealToScreen(s.Debut.X), RealToScreen(s.Debut.Y)));
-                                                points.Add(new Point(RealToScreen(s.Fin.X), RealToScreen(s.Fin.Y)));
-                                            }
-
-                                            g.DrawPolygon(penRougeFin, points.ToArray());
-                                            g.DrawLine(penRougeFin, new Point(RealToScreen(detection.Position.X) - 4, RealToScreen(detection.Position.Y) - 4), new Point(RealToScreen(detection.Position.X) + 4, RealToScreen(detection.Position.Y) + 4));
-                                            g.DrawLine(penRougeFin, new Point(RealToScreen(detection.Position.X) - 4, RealToScreen(detection.Position.Y) + 4), new Point(RealToScreen(detection.Position.X) + 4, RealToScreen(detection.Position.Y) - 4));
-                                        }
-
-                                        foreach (PointReelGenere p in Plateau.InterpreteurBalise.Intersections)
-                                        {
-                                            g.FillEllipse(brushVertFonce, RealToScreen(p.Point.X) - 2, RealToScreen(p.Point.Y) - 2, 4, 4);
-                                        }
-
-                                        /*foreach (PointReel p in interprete.MoyennesDistance)
-                                        {
-                                            g.FillEllipse(new SolidBrush(Color.Red), RealToScreen(p.X) - 4, RealToScreen(p.Y) - 4, 6, 6);
-                                        }*/
-
-                                        foreach (PointReelGenere p in Plateau.InterpreteurBalise.MoyennesIntersections)
-                                        {
-                                            g.FillEllipse(brushVertFonce, RealToScreen(p.Point.X) - 4, RealToScreen(p.Point.Y) - 4, 8, 8);
-                                        }
-
-                                        /*foreach (List<PointReel> liste in interprete.RegroupementsDistance)
-                                        {
-                                            if (liste.Count > 1)
-                                            {
-                                                Point[] points = new Point[liste.Count];
-                                                for (int i = 0; i < liste.Count; i++)
-                                                {
-                                                    points[i] = new Point(RealToScreen(liste[i].X), RealToScreen(liste[i].Y));
-                                                }
-                                                g.DrawPolygon(new Pen(Color.Red), points);
-                                            }
-                                        }*/
-
-                                        /*foreach (List<PointReel> liste in interprete.RegroupementsIntersections)
-                                        {
-                                            if (liste.Count > 1)
-                                            {
-                                                Point[] points = new Point[liste.Count];
-                                                for (int i = 0; i < liste.Count; i++)
-                                                {
-                                                    points[i] = new Point(RealToScreen(liste[i].X), RealToScreen(liste[i].Y));
-                                                }
-                                                g.DrawPolygon(new Pen(Color.DarkGreen), points);
-                                            }
-                                        }*/
-
-                                        foreach (List<PointReel> liste in Plateau.InterpreteurBalise.AssociationPointDistanceIntersection)
-                                        {
-                                            if (liste[0] == null || liste[1] == null)
-                                                continue;
-                                            g.DrawLine(penVertFonce, new Point(RealToScreen(liste[0].X), RealToScreen(liste[0].Y)), new Point(RealToScreen(liste[1].X), RealToScreen(liste[1].Y)));
-                                        }
-                                    }
-                                }
 
                                 // Dessin des obstacles
                                 if (boxObstacles.Checked)
@@ -323,6 +218,24 @@ namespace GoBot.IHM
                                     else if (Plateau.PositionsBougies[i].Distance(point) <= 40)
                                     {
                                         g.DrawEllipse(penVertClairEpais, RealToScreen(Plateau.PositionsBougies[i].X - 40), RealToScreen(Plateau.PositionsBougies[i].Y - 40), RealToScreen(80), RealToScreen(80));
+                                    }
+                                }
+
+                                // Dessin des cadeaux
+
+                                for (int i = 0; i < 8; i++)
+                                {
+                                    Color color = i % 2 == 1 ? Plateau.CouleurJ1R : Plateau.CouleurJ2B;
+                                    if (!Plateau.CadeauxActives[i])
+                                    {
+                                        g.FillRectangle(i % 2 == 1 ? brushCouleurJ1R : brushCouleurJ2B, RealToScreen(Plateau.PositionsCadeaux[i].X - 75), RealToScreen(Plateau.PositionsCadeaux[i].Y - 30), RealToScreen(150), RealToScreen(40));
+                                        g.DrawRectangle(penNoir, RealToScreen(Plateau.PositionsCadeaux[i].X - 75), RealToScreen(Plateau.PositionsCadeaux[i].Y - 30), RealToScreen(150), RealToScreen(40));
+                                    }
+
+                                    if (!Plateau.CadeauxActives[i] && yTable >= 1970)
+                                    {
+                                        if (xTable > Plateau.PositionsCadeaux[i].X - 75 && xTable < Plateau.PositionsCadeaux[i].X + 75)
+                                            g.DrawRectangle(penVertClairEpais, RealToScreen(Plateau.PositionsCadeaux[i].X - 75), RealToScreen(Plateau.PositionsCadeaux[i].Y - 30), RealToScreen(150), RealToScreen(40));
                                     }
                                 }
 
@@ -537,21 +450,62 @@ namespace GoBot.IHM
                                 // Fin pathfinding
 
 
-                                // Dessin des cadeaux
+                                // Dessin de la position des ennemis
 
-                                for (int i = 0; i < 8; i++)
+                                if (Plateau.InterpreteurBalise.PositionsEnnemies != null)
                                 {
-                                    Color color = i % 2 == 1 ? Plateau.CouleurJ1R : Plateau.CouleurJ2B;
-                                    if (!Plateau.CadeauxActives[i])
+                                    foreach (PointReel p in Plateau.InterpreteurBalise.PositionsEnnemies)
                                     {
-                                        g.FillRectangle(i % 2 == 1 ? brushCouleurJ1R : brushCouleurJ2B, RealToScreen(Plateau.PositionsCadeaux[i].X - 75), RealToScreen(Plateau.PositionsCadeaux[i].Y - 30), RealToScreen(150), RealToScreen(40));
-                                        g.DrawRectangle(penNoir, RealToScreen(Plateau.PositionsCadeaux[i].X - 75), RealToScreen(Plateau.PositionsCadeaux[i].Y - 30), RealToScreen(150), RealToScreen(40));
+                                        if (p == null)
+                                            continue;
+
+                                        g.FillEllipse(brushCouleurJ1RTransparent, RealToScreen(p.X - Robots.GrosRobot.Rayon), RealToScreen(p.Y - Robots.GrosRobot.Rayon), RealToScreen(Robots.GrosRobot.Rayon * 2), RealToScreen(Robots.GrosRobot.Rayon * 2));
+                                        g.DrawEllipse(penCouleurJ1R, RealToScreen(p.X - Robots.GrosRobot.Rayon), RealToScreen(p.Y - Robots.GrosRobot.Rayon), RealToScreen(Robots.GrosRobot.Rayon * 2), RealToScreen(Robots.GrosRobot.Rayon * 2));
+                                        g.DrawLine(penRougeEpais, new Point(RealToScreen(p.X) - 7, RealToScreen(p.Y) - 7), new Point(RealToScreen(p.X) + 7, RealToScreen(p.Y) + 7));
+                                        g.DrawLine(penRougeEpais, new Point(RealToScreen(p.X) - 7, RealToScreen(p.Y) + 7), new Point(RealToScreen(p.X) + 7, RealToScreen(p.Y) - 7));
                                     }
 
-                                    if (!Plateau.CadeauxActives[i] && yTable >= 1970)
+                                    if (boxDroites.Checked)
                                     {
-                                        if (xTable > Plateau.PositionsCadeaux[i].X - 75 && xTable < Plateau.PositionsCadeaux[i].X + 75)
-                                            g.DrawRectangle(penVertClairEpais, RealToScreen(Plateau.PositionsCadeaux[i].X - 75), RealToScreen(Plateau.PositionsCadeaux[i].Y - 30), RealToScreen(150), RealToScreen(40));
+                                        foreach (DetectionBalise detection in Plateau.InterpreteurBalise.DetectionBalises)
+                                        {
+                                            // Ligne médiane
+                                            g.DrawLine(penRougePointille,
+                                                new Point(RealToScreen(detection.Balise.Position.Coordonnees.X), RealToScreen(detection.Balise.Position.Coordonnees.Y)),
+                                                new Point(RealToScreen(detection.Position.X), RealToScreen(detection.Position.Y)));
+
+                                            // Dessin du polygone de détection
+                                            Polygone polygone = InterpreteurBalise.DetectionToPolygone(detection);
+                                            List<Point> points = new List<Point>();
+
+                                            foreach (Segment s in polygone.Cotes)
+                                            {
+                                                points.Add(new Point(RealToScreen(s.Debut.X), RealToScreen(s.Debut.Y)));
+                                                points.Add(new Point(RealToScreen(s.Fin.X), RealToScreen(s.Fin.Y)));
+                                            }
+
+                                            g.DrawPolygon(penRougeFin, points.ToArray());
+                                            g.FillPolygon(brushCouleurJ1RTresTransparent, points.ToArray());
+                                            g.DrawLine(penRougeFin, new Point(RealToScreen(detection.Position.X) - 4, RealToScreen(detection.Position.Y) - 4), new Point(RealToScreen(detection.Position.X) + 4, RealToScreen(detection.Position.Y) + 4));
+                                            g.DrawLine(penRougeFin, new Point(RealToScreen(detection.Position.X) - 4, RealToScreen(detection.Position.Y) + 4), new Point(RealToScreen(detection.Position.X) + 4, RealToScreen(detection.Position.Y) - 4));
+                                        }
+
+                                        foreach (PointReelGenere p in Plateau.InterpreteurBalise.Intersections)
+                                        {
+                                            g.FillEllipse(brushVertFonce, RealToScreen(p.Point.X) - 2, RealToScreen(p.Point.Y) - 2, 4, 4);
+                                        }
+
+                                        foreach (PointReelGenere p in Plateau.InterpreteurBalise.MoyennesIntersections)
+                                        {
+                                            g.FillEllipse(brushVertFonce, RealToScreen(p.Point.X) - 4, RealToScreen(p.Point.Y) - 4, 8, 8);
+                                        }
+
+                                        foreach (List<PointReel> liste in Plateau.InterpreteurBalise.AssociationPointDistanceIntersection)
+                                        {
+                                            if (liste[0] == null || liste[1] == null)
+                                                continue;
+                                            g.DrawLine(penVertFonce, new Point(RealToScreen(liste[0].X), RealToScreen(liste[0].Y)), new Point(RealToScreen(liste[1].X), RealToScreen(liste[1].Y)));
+                                        }
                                     }
                                 }
 
@@ -602,6 +556,8 @@ namespace GoBot.IHM
                         {
                             Console.WriteLine("Erreur pendant le dessin de la table " + ex.Message);
                         }
+
+                        Console.WriteLine((DateTime.Now - debut).TotalMilliseconds + " ms");
                     }
                 }
             }

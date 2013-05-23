@@ -6,6 +6,7 @@ using System.Threading;
 using GoBot.Calculs;
 using GoBot.Calculs.Formes;
 using System.Drawing;
+using System.Threading.Tasks;
 
 namespace GoBot
 {
@@ -55,19 +56,6 @@ namespace GoBot
         private bool donneesBalise3Recues;
 
         /// <summary>
-        /// Ensemble des détections du capteur bas de la balise 1 pour le calcul d'interpolation courant
-        /// </summary>
-        public List<DetectionBalise> DetectionBalise1Bas { get; private set; }
-        /// <summary>
-        /// Ensemble des détections du capteur bas de la balise 2 pour le calcul d'interpolation courant
-        /// </summary>
-        public List<DetectionBalise> DetectionBalise2Bas { get; private set; }
-        /// <summary>
-        /// Ensemble des détections du capteur bas de la balise 3 pour le calcul d'interpolation courant
-        /// </summary>
-        public List<DetectionBalise> DetectionBalise3Bas { get; private set; }
-
-        /// <summary>
         /// Ensemble des détections du capteur haut de la balise 1 pour le calcul d'interpolation courant
         /// </summary>
         public List<DetectionBalise> DetectionBalise1 { get; private set; }
@@ -87,27 +75,11 @@ namespace GoBot
         public List<List<PointReelGenere>> RegroupementsDistance { get; private set; }
         public List<PointReelGenere> MoyennesDistance { get; private set; }
         public List<List<PointReel>> AssociationPointDistanceIntersection { get; private set; }
-
-        /// <summary>
-        /// Ensemble des détections des capteurs bas de toutes les balises
-        /// </summary>
-        public List<DetectionBalise> DetectionBalisesBas
-        {
-            get
-            {
-                List<DetectionBalise> liste = new List<DetectionBalise>();
-                liste.AddRange(DetectionBalise1Bas);
-                liste.AddRange(DetectionBalise2Bas);
-                liste.AddRange(DetectionBalise3Bas);
-
-                return liste;
-            }
-        }
-
+        
         /// <summary>
         /// Ensemble des détections des capteurs haut de toutes les balises
         /// </summary>
-        public List<DetectionBalise> DetectionBalisesHaut
+        public List<DetectionBalise> DetectionBalises
         {
             get
             {
@@ -120,11 +92,6 @@ namespace GoBot
             }
         }
 
-        /// <summary>
-        /// Liste des positions Alliées calculées par la dernière interpolation réussie
-        /// </summary>
-        public List<PointReel> PositionsAlliees { get; private set; }
-        /// <summary>
         /// Liste des positions Ennemies calculées par la dernière interpolation réussie
         /// </summary>
         public List<PointReel> PositionsEnnemies { get; private set; }
@@ -150,7 +117,7 @@ namespace GoBot
             donneesBalise1Recues = true;
 
             // Si on a reçu les données de toutes les balises, on calcule l'interpolation des positions
-            if (donneesBalise1Recues && donneesBalise2Recues && donneesBalise3Recues)
+            //if (donneesBalise1Recues && donneesBalise2Recues && donneesBalise3Recues)
                 Actualisation();
         }
 
@@ -163,7 +130,7 @@ namespace GoBot
             donneesBalise2Recues = true;
 
             // Si on a reçu les données de toutes les balises, on calcule l'interpolation des positions
-            if (donneesBalise1Recues && donneesBalise2Recues && donneesBalise3Recues)
+            //if (donneesBalise1Recues && donneesBalise2Recues && donneesBalise3Recues)
                 Actualisation();
         }
 
@@ -176,7 +143,7 @@ namespace GoBot
             donneesBalise3Recues = true;
 
             // Si on a reçu les données de toutes les balises, on calcule l'interpolation des positions
-            if (donneesBalise1Recues && donneesBalise2Recues && donneesBalise3Recues)
+            //if (donneesBalise1Recues && donneesBalise2Recues && donneesBalise3Recues)
                 Actualisation();
         }
 
@@ -191,9 +158,7 @@ namespace GoBot
                 donneesBalise2Recues = false;
                 donneesBalise3Recues = false;
 
-                DateTime debut = DateTime.Now;
                 InterpreterDetection(ModeInterpretation.Intersections);
-                Console.WriteLine((DateTime.Now - debut).TotalMilliseconds + " ms");
             }
             catch (Exception)
             {
@@ -206,80 +171,22 @@ namespace GoBot
         /// <param name="mode">Mode de calcul de l'interpolation</param>
         private void InterpreterDetection(ModeInterpretation mode)
         {
-            List<PointReel> detectionBas = null;
-            List<PointReel> detectionHaut = null;
+            List<PointReel> detections = null;
 
-
-            if(mode == ModeInterpretation.Polygones)
+            if (mode == ModeInterpretation.Polygones)
             {
-                detectionBas = InterpolationPolygonale(DetectionBalise1Bas, DetectionBalise2Bas, DetectionBalise3Bas);
-                detectionHaut = InterpolationPolygonale(DetectionBalise1, DetectionBalise2, DetectionBalise3);
+                detections = InterpolationPolygonale(DetectionBalise1, DetectionBalise2, DetectionBalise3);
             }
-            else if(mode == ModeInterpretation.Intersections)
+            else if (mode == ModeInterpretation.Intersections)
             {
-                detectionBas = new List<PointReel>();// DetectionParIntersections(DetectionBalise1Bas, DetectionBalise2Bas, DetectionBalise3Bas);
-                detectionHaut = DetectionParIntersections(DetectionBalise1, DetectionBalise2, DetectionBalise3);
+                detections = DetectionParIntersections(DetectionBalise1, DetectionBalise2, DetectionBalise3);
             }
 
-            if (detectionHaut.Count > 0)
+            if (detections.Count > 0)
             {
-                PositionsEnnemies = new List<PointReel>(detectionHaut);
+                PositionsEnnemies = new List<PointReel>(detections);
                 PositionEnnemisActualisee(this);
             }
-            /*
-            PositionsAlliees = new List<PointReel>();
-            PositionsEnnemies = new List<PointReel>();
-
-            //detectionHaut.Clear();
-
-            // Cas si il y a plus de 2 détections en haut : c'est qu'on a des balises réfléchissantes sur la tête
-            // On retire donc les positions alliées des positions ennemies
-            
-            
-            if (detectionHaut.Count > 2)
-            {
-                // On cherche nos points en bas pour retirer nos positions des positions ennemies
-                foreach (PointReel p in detectionBas)
-                {
-                    double distance = double.MaxValue;
-                    int plusProche = -1;
-
-                    for (int i = 0; i < detectionHaut.Count; i++)
-                    {
-                        double distanceActuelle = p.Distance(detectionHaut[i]);
-                        if (distanceActuelle < distance)
-                        {
-                            distance = distanceActuelle;
-                            plusProche = i;
-                        }
-                    }
-
-                    // Si le point est à moins de 20 cm on l'enlève
-                    if (distance < 200)
-                        detectionHaut.RemoveAt(plusProche);
-                }
-
-                PositionsAlliees = new List<PointReel>(detectionBas);
-                PositionsEnnemies = new List<PointReel>(detectionHaut);
-
-                PositionEnnemisActualisee(this);
-            }
-            // Cas attendu si on a pas de balise réfléchissante sur la tête
-            else if (detectionBas.Count == 2 && detectionHaut.Count == 2)
-            {
-                PositionsAlliees = new List<PointReel>(detectionBas);
-                PositionsEnnemies = new List<PointReel>(detectionHaut);
-
-                PositionEnnemisActualisee(this);
-            }
-            else
-            {
-                PositionsAlliees = new List<PointReel>(detectionBas);
-                PositionsEnnemies = new List<PointReel>(detectionHaut);
-
-                PositionEnnemisActualisee(this);
-                //Console.WriteLine("Interprétation étrange : " + detectionHaut.Count + " alliés et " + detectionHaut.Count + " adversaires.");
-            }*/
         }
 
         #region Interprétation par polygones
@@ -405,45 +312,44 @@ namespace GoBot
         private List<PointReel> DetectionParIntersections(List<DetectionBalise> detectionBalise1, List<DetectionBalise> detectionBalise2, List<DetectionBalise> detectionBalise3)
         {
             List<PointReelGenere> intersections = new List<PointReelGenere>();
+            List<PointReelGenere> intersectionsGroupees = null;
+            List<PointReelGenere> positionsDetectees = null;
 
             // On calcule tous les croisements entre les médianes de B1 et B2, B2 et B3, B3 et B1
             intersections.AddRange(CroisementsBalises(detectionBalise1, detectionBalise2));
             intersections.AddRange(CroisementsBalises(detectionBalise2, detectionBalise3));
             intersections.AddRange(CroisementsBalises(detectionBalise3, detectionBalise1));
-                
+
             // Pour affichage
             Intersections = new List<PointReelGenere>(intersections);
 
             // On regroupe les points les plus proches ensemble pour les moyenner
-            List<PointReelGenere> intersectionsGroupees = RegroupementPoints(intersections, 2);
+            intersectionsGroupees = RegroupementPoints(intersections, 2);
 
             // Pour affichage
             MoyennesIntersections = new List<PointReelGenere>(intersectionsGroupees);
 
-            List<PointReelGenere> positionsDetectees = new List<PointReelGenere>();
+            positionsDetectees = new List<PointReelGenere>();
 
             // On liste l'ensemble des points calculés grâce aux angles et distances approximées par les balises
-            foreach (DetectionBalise detection in DetectionBalisesHaut)
+            foreach (DetectionBalise detection in DetectionBalises)
             {
                 List<DetectionBalise> detections = new List<DetectionBalise>();
                 detections.Add(detection);
                 positionsDetectees.Add(new PointReelGenere(detection.Position, detections));
             }
 
-            // Et on les moyenne en les regroupement par proximité -> ou pas
-            List<PointReelGenere> positionsDetecteesGroupees = positionsDetectees;// RegroupementPoints(positionsDetectees, 1);
-
             // Pour affichage
-            MoyennesDistance = positionsDetecteesGroupees;
+            MoyennesDistance = positionsDetectees;
+
 
             List<PointReel> positionsFinales = new List<PointReel>();
-
             AssociationPointDistanceIntersection = new List<List<PointReel>>();
-            // Pour chaque point de distance moyenné, on garde l'intersection moyennée la plus proche
 
+            // Pour chaque point de distance moyenné, on garde l'intersection moyennée la plus proche
             Dictionary<PointReel, int> compteurProches = new Dictionary<PointReel, int>();
 
-            foreach (PointReelGenere pointDistance in positionsDetecteesGroupees)
+            foreach (PointReelGenere pointDistance in positionsDetectees)
             {
                 PointReel plusProche = null;
                 double distanceMin = 600;
@@ -452,8 +358,8 @@ namespace GoBot
                 {
                     bool genereOk = false;
 
-                    foreach(DetectionBalise d1 in pointDistance.DetectionsOrigine)
-                        foreach(DetectionBalise d2 in pointIntersection.DetectionsOrigine)
+                    foreach (DetectionBalise d1 in pointDistance.DetectionsOrigine)
+                        foreach (DetectionBalise d2 in pointIntersection.DetectionsOrigine)
                             if (d1 == d2)
                             {
                                 genereOk = true;
@@ -478,7 +384,7 @@ namespace GoBot
 
                 if (plusProche != null && compteurProches.ContainsKey(plusProche))
                     compteurProches[plusProche]++;
-                else if(plusProche != null)
+                else if (plusProche != null)
                     compteurProches.Add(plusProche, 1);
 
                 /*if (!positionsFinales.Contains(plusProche))
@@ -502,7 +408,7 @@ namespace GoBot
                             break;
                         }
                     }
-                    if(associePrec)
+                    if (associePrec)
                         positionsFinales.Add(compteur.Key);
                 }
             }
@@ -605,7 +511,7 @@ namespace GoBot
                     regroupements.Add(plusProche, regroupements[points[i]]);
                 }
                 // Sinon on crée une nouvelle liste avec ces deux points et on leur attribue cette liste à tous les deux
-                else if(!regroupements.ContainsKey(points[i]) && !regroupements.ContainsKey(plusProche))
+                else if (!regroupements.ContainsKey(points[i]) && !regroupements.ContainsKey(plusProche))
                 {
                     List<PointReelGenere> listeProches = new List<PointReelGenere>();
                     listeProches.Add(points[i]);
@@ -669,8 +575,8 @@ namespace GoBot
 
                 foreach (PointReelGenere point in listePoints)
                 {
-                    foreach(DetectionBalise detection in point.DetectionsOrigine)
-                        if(!detections.Contains(detection))
+                    foreach (DetectionBalise detection in point.DetectionsOrigine)
+                        if (!detections.Contains(detection))
                             detections.Add(detection);
 
                     moyenneX += point.Point.X;

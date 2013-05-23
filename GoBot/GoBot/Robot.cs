@@ -238,6 +238,7 @@ namespace GoBot
         public void ParcoursPathFinding(double x, double y, int timeOut = 0, bool attendre = false)
         {
             Plateau.SemaphoreGraph.WaitOne();
+            Plateau.MajGraphFranchissable();
 
             CheminEnCoursNoeuds = new List<Node>();
             CheminEnCoursArcs = new List<Arc>();
@@ -466,7 +467,7 @@ namespace GoBot
         {
             if (nouvelleTrajectoire)
                 return false;
-            Console.WriteLine(DateTime.Now.Millisecond + " Test collision");
+
             try
             {
                 // Teste si le chemin en cours de parcous est toujours franchissable

@@ -225,7 +225,7 @@ namespace GoBot
         public void ObstacleTest(int x, int y)
         {
             SemaphoreGraph.WaitOne();
-            ViderObstacles();
+            ObstaclesTemporaires.Clear();
             PointReel coordonnees = new PointReel(x, y);
             AjouterObstacle(new Cercle(coordonnees, 200));
             SemaphoreGraph.Release();
@@ -244,14 +244,14 @@ namespace GoBot
                     AssiettesVidees[i] = true;
             }
 
-            Console.WriteLine("Autorisation 1 collision");
             SemaphoreCollisions.Release();
         }
 
         void interpreteBalise_PositionEnnemisActualisee(InterpreteurBalise interprete)
         {
             SemaphoreGraph.WaitOne();
-            ViderObstacles();
+            ObstaclesTemporaires.Clear();
+
             for (int i = 0; i < interprete.PositionsEnnemies.Count; i++)
             {
                 PointReel coordonnees = new PointReel(interprete.PositionsEnnemies[i].X, interprete.PositionsEnnemies[i].Y);
@@ -261,28 +261,26 @@ namespace GoBot
                 if (Plateau.Enchainement == null)
                     for (int iAssiette = 0; iAssiette < 10; iAssiette++)
                     {
-                        if (PositionsAssiettes[iAssiette].Coordonnees.Distance(coordonnees) < 250)
+                        if (PositionsAssiettes[iAssiette].Coordonnees.Distance(coordonnees) < 200)
                             AssiettesExiste[iAssiette] = false;
                     }
                 // Une fois le match lancé
                 for (int iAssiette = 0; iAssiette < 10; iAssiette++)
                 {
-                    if (PositionsAssiettes[iAssiette].Coordonnees.Distance(coordonnees) < 250)
+                    if (PositionsAssiettes[iAssiette].Coordonnees.Distance(coordonnees) < 200)
                         AssiettesVidees[iAssiette] = true;
                 }
             }
             SemaphoreGraph.Release();
 
-            Console.WriteLine("Autorisation 1 collision");
             SemaphoreCollisions.Release();
         }
 
         /// <summary>
         /// Vide les obstacles temporaires et rend tout le graph parcourable
         /// </summary>
-        public void ViderObstacles()
+        public static void ViderObstacles()
         {
-            ObstaclesTemporaires.Clear();
             for (int i = 0; i < Graph.Arcs.Count; i++)
                 ((Arc)Graph.Arcs[i]).Passable = true;
             for (int i = 0; i < Graph.Nodes.Count; i++)
@@ -294,54 +292,63 @@ namespace GoBot
         /// </summary>
         /// <param name="obstacle">Forme de l'obstacle</param>
         /// <param name="fixe">Si l'obstacle est fixe, on supprime complètement les noeuds et arcs non franchissables. Sinon on les rends non franchissables temporairement.</param>
-        public static void AjouterObstacle(IForme obstacle, bool fixe = false)
+        public static void AjouterObstacle(IForme obstacle, bool fixe = false, bool majGraph = false)
         {
-            DateTime debut = DateTime.Now;
-
             if (fixe)
                 ObstaclesFixes.Add(obstacle);
             else
                 ObstaclesTemporaires.Add(obstacle);
 
-            // Teste les arcs non franchissables
-            for (int i = 0; i < Graph.Arcs.Count; i++)
-            {
-                Arc arc = (Arc)Graph.Arcs[i];
+            if (majGraph)
+                MajGraphFranchissable();
+        }
 
-                if (arc.Passable)
+        public static void MajGraphFranchissable()
+        {
+            ViderObstacles();
+
+            foreach (IForme obstacle in ObstaclesTemporaires)
+            {
+                // Teste les arcs non franchissables
+                for (int i = 0; i < Graph.Arcs.Count; i++)
                 {
-                    Segment segment = new Segment(new PointReel(arc.StartNode.X, arc.StartNode.Y), new PointReel(arc.EndNode.X, arc.EndNode.Y));
-                    if (Robots.GrosRobot.TropProche(obstacle, segment))
+                    Arc arc = (Arc)Graph.Arcs[i];
+
+                    if (arc.Passable)
                     {
-                        if (fixe)
+                        Segment segment = new Segment(new PointReel(arc.StartNode.X, arc.StartNode.Y), new PointReel(arc.EndNode.X, arc.EndNode.Y));
+                        if (Robots.GrosRobot.TropProche(obstacle, segment))
                         {
-                            Graph.RemoveArc(i);
-                            i--;
+                            /*if (fixe)
+                            {
+                                Graph.RemoveArc(i);
+                                i--;
+                            }
+                            else*/
+                                arc.Passable = false;
                         }
-                        else
-                            arc.Passable = false;
                     }
                 }
-            }
 
-            // Teste les noeuds non franchissables
-            for (int i = 0; i < Graph.Nodes.Count; i++)
-            {
-                Node n = (Node)Graph.Nodes[i];
-
-                if (n.Passable)
+                // Teste les noeuds non franchissables
+                for (int i = 0; i < Graph.Nodes.Count; i++)
                 {
-                    PointReel noeud = new PointReel(n.X, n.Y);
-                    if (Robots.GrosRobot.TropProche(obstacle, noeud))
-                    {
-                        if (fixe)
-                        {
-                            Graph.RemoveNode(i);
-                            i--;
-                        }
-                        else
-                            n.Passable = false;
+                    Node n = (Node)Graph.Nodes[i];
 
+                    if (n.Passable)
+                    {
+                        PointReel noeud = new PointReel(n.X, n.Y);
+                        if (Robots.GrosRobot.TropProche(obstacle, noeud))
+                        {
+                            /*if (fixe)
+                            {
+                                Graph.RemoveNode(i);
+                                i--;
+                            }
+                            else*/
+                                n.Passable = false;
+
+                        }
                     }
                 }
             }

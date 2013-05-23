@@ -32,12 +32,12 @@
   <PRCoeffP>0</PRCoeffP>
   <PRCoeffI>0</PRCoeffI>
   <PRCoeffD>0</PRCoeffD>
-  <OffsetBalise1Capteur1>-13.876249999999999</OffsetBalise1Capteur1>
-  <OffsetBalise2Capteur1>-8.4134375000000148</OffsetBalise2Capteur1>
-  <OffsetBalise3Capteur1>-190.45875000000004</OffsetBalise3Capteur1>
-  <OffsetBalise1Capteur2>-194.68937499999993</OffsetBalise1Capteur2>
-  <OffsetBalise2Capteur2>170.0725</OffsetBalise2Capteur2>
-  <OffsetBalise3Capteur2>-190.97750000000002</OffsetBalise3Capteur2>
+  <OffsetBalise1Capteur1>-192.18687500000002</OffsetBalise1Capteur1>
+  <OffsetBalise2Capteur1>162.5728125</OffsetBalise2Capteur1>
+  <OffsetBalise3Capteur1>-10.688437500000021</OffsetBalise3Capteur1>
+  <OffsetBalise1Capteur2>-193.63875000000002</OffsetBalise1Capteur2>
+  <OffsetBalise2Capteur2>161.6065625</OffsetBalise2Capteur2>
+  <OffsetBalise3Capteur2>168.356875</OffsetBalise3Capteur2>
   <PositionGRGrandBrasHaut>465</PositionGRGrandBrasHaut>
   <PositionGRGrandBrasBas>545</PositionGRGrandBrasBas>
   <PositionGRGrandBrasRange>815</PositionGRGrandBrasRange>
