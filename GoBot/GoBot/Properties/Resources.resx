@@ -160,6 +160,9 @@
   <data name="haut" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\img\haut.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="BalleBleue" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\img\BalleBleue.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
   <data name="switchOn" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\img\switchOn.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
@@ -343,7 +346,13 @@
   <data name="PinceGaucheExt3" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\img\PetitRobot\PinceGaucheExt3.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="BalleBleue" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\img\BalleBleue.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="Helice1" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\img\Helice1.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Helice2" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\img\Helice2.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Helice3" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\img\Helice3.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
 </root>

@@ -31,7 +31,7 @@ namespace GoBot.Mouvements
                 Robots.GrosRobot.PositionerAngle(Position.Angle, 1);
                 Robots.GrosRobot.Historique.Log("Angle cadeau " + numeroCadeau + " atteint");
 
-                Robots.GrosRobot.BougeServo(ServomoteurID.GRGrandBras, Config.CurrentConfig.PositionGRGrandBrasBas);
+                Robots.GrosRobot.BougeServo(ServomoteurID.GRGrandBras, Config.CurrentConfig.PositionGRGrandBrasHaut);
                 Thread.Sleep(400);
                 Robots.GrosRobot.BougeServo(ServomoteurID.GRGrandBras, Config.CurrentConfig.PositionGRGrandBrasRange);
 

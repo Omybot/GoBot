@@ -51,6 +51,9 @@ namespace GoBot.IHM
 
         void MAJAffichage()
         {
+            int cptHelice1 = 1;
+            int cptHelice2 = 0;
+
             using (Pen penRougePointille = new Pen(Color.Red),
                     penBleuPointille = new Pen(Color.Blue),
                     penNoirPointille = new Pen(Color.Black),
@@ -65,7 +68,7 @@ namespace GoBot.IHM
                     penCouleurJ2B = new Pen(Plateau.CouleurJ2B),
 
                     penRougeEpais = new Pen(Color.Red, 3),
-                    penBleuEpais = new Pen(Color.Blue, 3),
+                    penBleuEpais = new Pen(Plateau.CouleurJ2B, 3),
                     penVertClairEpais = new Pen(Color.LightGreen, 3),
                     penOrangeEpais = new Pen(Color.Orange, 3),
                     penVertEpais = new Pen(Color.Green, 3))
@@ -79,7 +82,8 @@ namespace GoBot.IHM
                         brushVertFonce = new SolidBrush(Color.DarkGreen),
                         brushRouge = new SolidBrush(Color.Red),
                         brushVert = new SolidBrush(Color.Green),
-                        brushTransparent = new SolidBrush(Color.Transparent))
+                        brushTransparent = new SolidBrush(Color.Transparent),
+                        brushBleuClair = new SolidBrush(Color.FromArgb(152, 199, 250)))
                 {
                     penRougePointille.DashStyle = System.Drawing.Drawing2D.DashStyle.Dot;
                     penBleuPointille.DashStyle = System.Drawing.Drawing2D.DashStyle.Dot;
@@ -244,39 +248,100 @@ namespace GoBot.IHM
                                 if (Robots.GrosRobot != null)
                                 {
                                     int xRobot, yRobot;
-                                    double angleRobot;
                                     xRobot = RealToScreen(Robots.GrosRobot.Position.Coordonnees.X);
                                     yRobot = RealToScreen(Robots.GrosRobot.Position.Coordonnees.Y);
-                                    angleRobot = Robots.GrosRobot.Position.Angle.AngleRadians;// +(90 * Math.PI / 360);
 
-                                    Point p1, p2, p3, p4;
-                                    double miDiagonale = RealToScreen((int)Math.Round((Math.Sqrt(Robots.GrosRobot.Largeur * Robots.GrosRobot.Largeur + Robots.GrosRobot.Longueur * Robots.GrosRobot.Longueur)) / 2));
+                                    Bitmap bmpGrosRobot = new Bitmap(RealToScreen(Robots.GrosRobot.Taille * 3), RealToScreen(Robots.GrosRobot.Taille * 3));
+                                    Graphics gGros = Graphics.FromImage(bmpGrosRobot);
+                                    gGros.FillRectangle(brushTransparent, 0, 0, RealToScreen(Robots.GrosRobot.Taille * 2), RealToScreen(Robots.GrosRobot.Taille * 2));
 
-                                    double angle1 = angleRobot + Math.Atan((Robots.GrosRobot.Largeur / 2.0) / (Robots.GrosRobot.Longueur / 2.0));
-                                    double angle2 = angleRobot - Math.Atan((Robots.GrosRobot.Largeur / 2.0) / (Robots.GrosRobot.Longueur / 2.0));
-                                    double angle3 = angleRobot + Math.Atan((Robots.GrosRobot.Largeur / 2.0) / (Robots.GrosRobot.Longueur / 2.0)) + Math.PI;
-                                    double angle4 = angleRobot - Math.Atan((Robots.GrosRobot.Largeur / 2.0) / (Robots.GrosRobot.Longueur / 2.0)) + Math.PI;
+                                    gGros.FillRectangle(brushBleuClair, bmpGrosRobot.Width / 2 - RealToScreen(Robots.GrosRobot.Largeur / 2), bmpGrosRobot.Height / 2 - RealToScreen(Robots.GrosRobot.Longueur / 2), RealToScreen(Robots.GrosRobot.Largeur), RealToScreen(Robots.GrosRobot.Longueur));
+                                    gGros.DrawRectangle(penCouleurJ2B, bmpGrosRobot.Width / 2 - RealToScreen(Robots.GrosRobot.Largeur / 2), bmpGrosRobot.Height / 2 - RealToScreen(Robots.GrosRobot.Longueur / 2), RealToScreen(Robots.GrosRobot.Largeur), RealToScreen(Robots.GrosRobot.Longueur));
+                                    gGros.DrawLine(penCouleurJ2B, bmpGrosRobot.Width / 2, bmpGrosRobot.Height / 2, bmpGrosRobot.Width / 2, bmpGrosRobot.Height / 2 - RealToScreen(Robots.GrosRobot.Longueur / 2));
 
-                                    p1 = new Point((int)Math.Round(xRobot + Math.Cos(angle1) * miDiagonale), (int)Math.Round(yRobot + Math.Sin(angle1) * miDiagonale));
-                                    p2 = new Point((int)Math.Round(xRobot + Math.Cos(angle2) * miDiagonale), (int)Math.Round(yRobot + Math.Sin(angle2) * miDiagonale));
-                                    p3 = new Point((int)Math.Round(xRobot + Math.Cos(angle3) * miDiagonale), (int)Math.Round(yRobot + Math.Sin(angle3) * miDiagonale));
-                                    p4 = new Point((int)Math.Round(xRobot + Math.Cos(angle4) * miDiagonale), (int)Math.Round(yRobot + Math.Sin(angle4) * miDiagonale));
+                                    if (Robots.GrosRobot.ServoSorti[ServomoteurID.GRPetitBras])
+                                    {
+                                        gGros.FillRectangle(brushBleuClair,
+                                            bmpGrosRobot.Width / 2 + RealToScreen(Robots.GrosRobot.Largeur / 2),
+                                            bmpGrosRobot.Height / 2 - 2,
+                                            RealToScreen(140),
+                                            4);
+                                        gGros.DrawRectangle(penCouleurJ2B,
+                                            bmpGrosRobot.Width / 2 + RealToScreen(Robots.GrosRobot.Largeur / 2),
+                                            bmpGrosRobot.Height / 2 - 2,
+                                            RealToScreen(140),
+                                            4);
+                                    }
 
-                                    Point[] tabPoints = new Point[4];
-                                    tabPoints[0] = p1;
-                                    tabPoints[1] = p2;
-                                    tabPoints[2] = p3;
-                                    tabPoints[3] = p4;
+                                    if (Robots.GrosRobot.ServoSorti[ServomoteurID.GRGrandBras])
+                                    {
+                                        gGros.FillRectangle(brushBleuClair,
+                                            bmpGrosRobot.Width / 2 + RealToScreen(Robots.GrosRobot.Largeur / 2),
+                                            bmpGrosRobot.Height / 2 + 4,
+                                            RealToScreen(220),
+                                            4);
+                                        gGros.DrawRectangle(penCouleurJ2B,
+                                            bmpGrosRobot.Width / 2 + RealToScreen(Robots.GrosRobot.Largeur / 2),
+                                            bmpGrosRobot.Height / 2 + 4,
+                                            RealToScreen(220),
+                                            4);
+                                    }
 
-                                    g.FillPolygon(new SolidBrush(Color.FromArgb(152, 199, 250)), tabPoints);
-                                    g.DrawPolygon(penCouleurJ2B, tabPoints);
+                                    if (Robots.GrosRobot.ServoSorti[ServomoteurID.GRAspirateur])
+                                    {
+                                        gGros.FillRectangle(brushBleuClair,
+                                            bmpGrosRobot.Width / 2 - RealToScreen(130),
+                                            bmpGrosRobot.Height / 2 + RealToScreen(Robots.GrosRobot.Longueur / 2),
+                                            RealToScreen(200),
+                                            RealToScreen(50));
+                                        gGros.DrawRectangle(penCouleurJ2B,
+                                            bmpGrosRobot.Width / 2 - RealToScreen(130),
+                                            bmpGrosRobot.Height / 2 + RealToScreen(Robots.GrosRobot.Longueur / 2),
+                                            RealToScreen(200),
+                                            RealToScreen(50));
+                                    }
 
-                                    double angle = Robots.GrosRobot.Position.Angle.AngleRadians + (-180 * 2 * Math.PI / 360);
-                                    double cos = Math.Cos(angle);
-                                    double sin = Math.Sin(angle);
-                                    Point pointDevant = new Point(Maths.Arrondi(xRobot - cos * RealToScreen(Maths.Arrondi(Robots.GrosRobot.Longueur / 2))), Maths.Arrondi(yRobot - sin * RealToScreen(Maths.Arrondi(Robots.GrosRobot.Longueur / 2))));
+                                    if (Robots.GrosRobot.MoteurTourne[MoteurID.GRTurbineAspirateur])
+                                    {
+                                        switch (cptHelice1)
+                                        {
+                                            case 0:
+                                                gGros.DrawImage(Properties.Resources.Helice1, bmpGrosRobot.Width / 2 - 12, bmpGrosRobot.Height / 2 + RealToScreen(Robots.GrosRobot.Longueur / 2) - 4, 16, 16);
+                                                break;
+                                            case 1:
+                                                gGros.DrawImage(Properties.Resources.Helice2, bmpGrosRobot.Width / 2 - 12, bmpGrosRobot.Height / 2 + RealToScreen(Robots.GrosRobot.Longueur / 2) - 4, 16, 16);
+                                                break;
+                                            case 2:
+                                                gGros.DrawImage(Properties.Resources.Helice3, bmpGrosRobot.Width / 2 - 12, bmpGrosRobot.Height / 2 + RealToScreen(Robots.GrosRobot.Longueur / 2) - 4, 16, 16);
+                                                break;
+                                        }
 
-                                    g.DrawLine(penCouleurJ2B, new Point(xRobot, yRobot), pointDevant);
+                                        cptHelice1++;
+                                        if (cptHelice1 > 2)
+                                            cptHelice1 = 0;
+                                    }
+
+                                    if (Robots.GrosRobot.MoteurTourne[MoteurID.GRCanonTMin])
+                                    {
+                                        switch (cptHelice2)
+                                        {
+                                            case 0:
+                                                gGros.DrawImage(Properties.Resources.Helice1, bmpGrosRobot.Width / 2 + RealToScreen(Robots.GrosRobot.Largeur / 2) - 15, bmpGrosRobot.Height / 2 - 8, 16, 16);
+                                                break;
+                                            case 1:
+                                                gGros.DrawImage(Properties.Resources.Helice2, bmpGrosRobot.Width / 2 + RealToScreen(Robots.GrosRobot.Largeur / 2) - 15, bmpGrosRobot.Height / 2 - 8, 16, 16);
+                                                break;
+                                            case 2:
+                                                gGros.DrawImage(Properties.Resources.Helice3, bmpGrosRobot.Width / 2 + RealToScreen(Robots.GrosRobot.Largeur / 2) - 15, bmpGrosRobot.Height / 2 - 8, 16, 16);
+                                                break;
+                                        }
+
+                                        cptHelice2++;
+                                        if (cptHelice2 > 2)
+                                            cptHelice2 = 0;
+                                    }
+
+                                    g.DrawImage(rotateImage(bmpGrosRobot, Robots.GrosRobot.Position.Angle.AngleDegres + 90), xRobot - bmpGrosRobot.Width / 2, yRobot - bmpGrosRobot.Height / 2);
 
                                     this.Invoke(new EventHandler(delegate
                                     {
@@ -373,34 +438,15 @@ namespace GoBot.IHM
                                     yRobot = RealToScreen(Robots.PetitRobot.Position.Coordonnees.Y);
                                     angleRobot = Robots.PetitRobot.Position.Angle.AngleRadians;// +(90 * Math.PI / 360);
 
-                                    Point p1, p2, p3, p4;
-                                    double miDiagonale = RealToScreen((int)Math.Round((Math.Sqrt(Robots.PetitRobot.Largeur * Robots.PetitRobot.Largeur + Robots.PetitRobot.Longueur * Robots.GrosRobot.Longueur)) / 2));
+                                    Bitmap bmpPetitRobot = new Bitmap(RealToScreen(Robots.PetitRobot.Taille * 2), RealToScreen(Robots.PetitRobot.Taille * 2));
+                                    Graphics gPetit = Graphics.FromImage(bmpPetitRobot);
+                                    gPetit.FillRectangle(brushTransparent, 0, 0, RealToScreen(Robots.PetitRobot.Taille * 2), RealToScreen(Robots.PetitRobot.Taille * 2));
 
-                                    double angle1 = angleRobot + Math.Atan((Robots.PetitRobot.Largeur / 2.0) / (Robots.PetitRobot.Longueur / 2.0));
-                                    double angle2 = angleRobot - Math.Atan((Robots.PetitRobot.Largeur / 2.0) / (Robots.PetitRobot.Longueur / 2.0));
-                                    double angle3 = angleRobot + Math.Atan((Robots.PetitRobot.Largeur / 2.0) / (Robots.PetitRobot.Longueur / 2.0)) + Math.PI;
-                                    double angle4 = angleRobot - Math.Atan((Robots.PetitRobot.Largeur / 2.0) / (Robots.PetitRobot.Longueur / 2.0)) + Math.PI;
+                                    gPetit.FillRectangle(brushBleuClair, bmpPetitRobot.Width / 2 - RealToScreen(Robots.PetitRobot.Largeur / 2), bmpPetitRobot.Height / 2 - RealToScreen(Robots.PetitRobot.Longueur / 2), RealToScreen(Robots.PetitRobot.Largeur), RealToScreen(Robots.PetitRobot.Longueur));
+                                    gPetit.DrawRectangle(penCouleurJ2B, bmpPetitRobot.Width / 2 - RealToScreen(Robots.PetitRobot.Largeur / 2), bmpPetitRobot.Height / 2 - RealToScreen(Robots.PetitRobot.Longueur / 2), RealToScreen(Robots.PetitRobot.Largeur), RealToScreen(Robots.PetitRobot.Longueur));
+                                    gPetit.DrawLine(penCouleurJ2B, bmpPetitRobot.Width / 2, bmpPetitRobot.Height / 2, bmpPetitRobot.Width / 2, bmpPetitRobot.Height / 2 - RealToScreen(Robots.PetitRobot.Longueur / 2));
 
-                                    p1 = new Point((int)Math.Round(xRobot + Math.Cos(angle1) * miDiagonale), (int)Math.Round(yRobot + Math.Sin(angle1) * miDiagonale));
-                                    p2 = new Point((int)Math.Round(xRobot + Math.Cos(angle2) * miDiagonale), (int)Math.Round(yRobot + Math.Sin(angle2) * miDiagonale));
-                                    p3 = new Point((int)Math.Round(xRobot + Math.Cos(angle3) * miDiagonale), (int)Math.Round(yRobot + Math.Sin(angle3) * miDiagonale));
-                                    p4 = new Point((int)Math.Round(xRobot + Math.Cos(angle4) * miDiagonale), (int)Math.Round(yRobot + Math.Sin(angle4) * miDiagonale));
-
-                                    Point[] tabPoints = new Point[4];
-                                    tabPoints[0] = p1;
-                                    tabPoints[1] = p2;
-                                    tabPoints[2] = p3;
-                                    tabPoints[3] = p4;
-
-                                    g.FillPolygon(new SolidBrush(Color.FromArgb(152, 199, 250)), tabPoints);
-                                    g.DrawPolygon(penCouleurJ2B, tabPoints);
-
-                                    double angle = Robots.PetitRobot.Position.Angle.AngleRadians + (-180 * 2 * Math.PI / 360);
-                                    double cos = Math.Cos(angle);
-                                    double sin = Math.Sin(angle);
-                                    Point pointDevant = new Point(Maths.Arrondi(xRobot - cos * RealToScreen(Maths.Arrondi(Robots.PetitRobot.Longueur / 2))), Maths.Arrondi(yRobot - sin * RealToScreen(Maths.Arrondi(Robots.PetitRobot.Longueur / 2))));
-
-                                    g.DrawLine(penCouleurJ2B, new Point(xRobot, yRobot), pointDevant);
+                                    g.DrawImage(rotateImage(bmpPetitRobot, Robots.PetitRobot.Position.Angle.AngleDegres + 90), xRobot - RealToScreen(Robots.PetitRobot.Taille), yRobot - RealToScreen(Robots.PetitRobot.Taille));
 
                                     lblPosPetitX.Text = Math.Round(Robots.PetitRobot.Position.Coordonnees.X, 2).ToString();
                                     lblPosPetitY.Text = Math.Round(Robots.PetitRobot.Position.Coordonnees.Y, 2).ToString();
@@ -670,30 +716,30 @@ namespace GoBot.IHM
         {
             //this.Invoke(new EventHandler(delegate
             //    {
-                    if (modeCourant == Mode.FinTrajectoire)
-                    {
-                        double distance;
-                        Node finNode = Plateau.Graph.ClosestNode(ScreenToReal(pictureBoxTable.PointToClient(MousePosition).X), ScreenToReal(pictureBoxTable.PointToClient(MousePosition).Y), 0, out distance, false);
+            if (modeCourant == Mode.FinTrajectoire)
+            {
+                double distance;
+                Node finNode = Plateau.Graph.ClosestNode(ScreenToReal(pictureBoxTable.PointToClient(MousePosition).X), ScreenToReal(pictureBoxTable.PointToClient(MousePosition).Y), 0, out distance, false);
 
-                        AStar aStar = new AStar(Plateau.Graph);
-                        if (aStar.SearchPath(debutNode, finNode))
-                        {
-                            cheminNodes = aStar.PathByNodes.ToList<Node>();
-                            cheminArcs = aStar.PathByArcs.ToList<Arc>();
-                        }
-                    }
-                    else if (boxSourisObstacle.Checked)
-                    {
-                        if (xSouris != pictureBoxTable.PointToClient(MousePosition).X || ySouris != pictureBoxTable.PointToClient(MousePosition).Y)
-                        {
-                            Console.WriteLine("Souris bouge");
-                            xSouris = pictureBoxTable.PointToClient(MousePosition).X;
-                            ySouris = pictureBoxTable.PointToClient(MousePosition).Y;
-                            Plateau.ObstacleTest(ScreenToReal(pictureBoxTable.PointToClient(MousePosition).X), ScreenToReal(pictureBoxTable.PointToClient(MousePosition).Y));
-                        }
-                    }
+                AStar aStar = new AStar(Plateau.Graph);
+                if (aStar.SearchPath(debutNode, finNode))
+                {
+                    cheminNodes = aStar.PathByNodes.ToList<Node>();
+                    cheminArcs = aStar.PathByArcs.ToList<Arc>();
+                }
+            }
+            else if (boxSourisObstacle.Checked)
+            {
+                if (xSouris != pictureBoxTable.PointToClient(MousePosition).X || ySouris != pictureBoxTable.PointToClient(MousePosition).Y)
+                {
+                    Console.WriteLine("Souris bouge");
+                    xSouris = pictureBoxTable.PointToClient(MousePosition).X;
+                    ySouris = pictureBoxTable.PointToClient(MousePosition).Y;
+                    Plateau.ObstacleTest(ScreenToReal(pictureBoxTable.PointToClient(MousePosition).X), ScreenToReal(pictureBoxTable.PointToClient(MousePosition).Y));
+                }
+            }
 
-                    lblPos.Text = ScreenToReal(pictureBoxTable.PointToClient(MousePosition).X) + " : " + ScreenToReal(pictureBoxTable.PointToClient(MousePosition).Y);
+            lblPos.Text = ScreenToReal(pictureBoxTable.PointToClient(MousePosition).X) + " : " + ScreenToReal(pictureBoxTable.PointToClient(MousePosition).Y);
             //    }));
         }
 

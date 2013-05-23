@@ -228,6 +228,27 @@ namespace GoBot.Properties {
             }
         }
         
+        internal static System.Drawing.Bitmap Helice1 {
+            get {
+                object obj = ResourceManager.GetObject("Helice1", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        internal static System.Drawing.Bitmap Helice2 {
+            get {
+                object obj = ResourceManager.GetObject("Helice2", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        internal static System.Drawing.Bitmap Helice3 {
+            get {
+                object obj = ResourceManager.GetObject("Helice3", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
         internal static System.Drawing.Bitmap iconeVitesse {
             get {
                 object obj = ResourceManager.GetObject("iconeVitesse", resourceCulture);

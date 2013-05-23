@@ -540,6 +540,10 @@
     <None Include="img\Balle.png" />
     <None Include="img\BalleRouge.png" />
     <None Include="img\BalleBleue.png" />
+    <None Include="img\Helice.gif" />
+    <None Include="img\Helice1.png" />
+    <None Include="img\Helice2.png" />
+    <None Include="img\Helice3.png" />
     <Content Include="img\iconeVitesse.png" />
     <None Include="img\ledBleu.png" />
     <None Include="img\ledGris.png" />

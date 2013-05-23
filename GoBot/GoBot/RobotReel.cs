@@ -565,6 +565,8 @@ namespace GoBot
 
         public override void TourneMoteur(MoteurID moteur, int vitesse)
         {
+            base.TourneMoteur(moteur, vitesse);
+
             if (moteur == MoteurID.GRCanon)
             {
                 Trame trame = TrameFactory.VitesseCanon(vitesse);

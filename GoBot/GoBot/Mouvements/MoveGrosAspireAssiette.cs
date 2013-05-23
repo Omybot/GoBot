@@ -74,6 +74,11 @@ namespace GoBot.Mouvements
                 else
                     Thread.Sleep(1500);
 
+                Robots.GrosRobot.NbBallesBlanchesCharges = 7;
+                Robots.GrosRobot.BalleCouleurChargee = true;
+                Plateau.AssiettesVidees[numeroAssiette] = true;
+                Robots.GrosRobot.CouleurBalleChargee = numeroAssiette < 5 ? Plateau.CouleurJ2B : Plateau.CouleurJ1R;
+
                 // Remontage de l'aspirateur
                 int i = 0;
                 while (i < 2)
@@ -107,6 +112,8 @@ namespace GoBot.Mouvements
 
                 if (i == 2)
                 {
+                    Robots.GrosRobot.NbBallesBlanchesCharges = 0;
+                    Robots.GrosRobot.BalleCouleurChargee = false;
                     Plateau.AssiettesExiste[numeroAssiette] = false;
                     Robots.GrosRobot.Historique.Log("Abandon de l'assiette " + numeroAssiette);
                     Robots.GrosRobot.TourneMoteur(MoteurID.GRTurbineAspirateur, 0);
@@ -133,8 +140,6 @@ namespace GoBot.Mouvements
                         Plateau.AssiettesExiste[numeroAssiette] = false;
                         return false;
                     }*/
-
-                    Robots.GrosRobot.NbBallesBlanchesCharges = 7;
 
                     Robots.GrosRobot.Historique.Log("Test 1 de la présence de balles");
                     if (!Robots.GrosRobot.GetPresenceBalle())
@@ -166,6 +171,7 @@ namespace GoBot.Mouvements
                                 {
                                     // 4ème fois : Bon bah y'a peut être vraiment rien alors...
                                     Robots.GrosRobot.NbBallesBlanchesCharges = 0;
+                                    Robots.GrosRobot.BalleCouleurChargee = false;
                                     balle = false;
                                 }
                             }
@@ -191,15 +197,6 @@ namespace GoBot.Mouvements
                     Robots.GrosRobot.BougeServo(ServomoteurID.GRServoAssiette, Config.CurrentConfig.PositionGRBloqueurOuvert);
                     Robots.GrosRobot.Historique.Log("Relâche de l'assiette " + Plateau.AssietteAttrapee + "attrapée");
                     Plateau.AssietteAttrapee = -1;
-                }
-
-                if (balle)
-                {
-                    Robots.GrosRobot.NbBallesBlanchesCharges = 7;
-                    Robots.GrosRobot.BalleCouleurChargee = true;
-                    Robots.GrosRobot.CouleurBalleChargee = numeroAssiette < 5 ? Plateau.CouleurJ2B : Plateau.CouleurJ1R;
-                    Plateau.AssiettesVidees[numeroAssiette] = true;
-                    Plateau.Score += Score;
                 }
 
                 return balle;

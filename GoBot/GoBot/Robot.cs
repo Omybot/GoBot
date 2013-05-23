@@ -58,7 +58,6 @@ namespace GoBot
         public abstract void EnvoyerPID(int p, int i, int d);
         public abstract List<int>[] MesureTestPid(int consigne, SensAR sens, int nbValeurs);
 
-        public abstract void TourneMoteur(MoteurID moteur, int vitesse);
         public abstract void ActionneurOnOff(ActionneurOnOffID actionneur, bool on);
 
         public abstract void Init();
@@ -72,6 +71,9 @@ namespace GoBot
         public abstract bool GetAspiRemonte(bool historique = true);
         public abstract int GetVitesseCanon(bool historique = true);
         public abstract bool GetJack(bool historique = true);
+
+        public Dictionary<ServomoteurID, bool> ServoSorti { get; set; }
+        public Dictionary<MoteurID, bool> MoteurTourne { get; set; }
 
         public void Diagnostic()
         {
@@ -129,7 +131,6 @@ namespace GoBot
             }
         }
 
-        public Dictionary<ServomoteurID, bool> ServoSorti { get; set; }
         public virtual void BougeServo(ServomoteurID servo, int position)
         {
             if (ServoSorti.ContainsKey(servo))
@@ -137,11 +138,18 @@ namespace GoBot
                 if (servo == ServomoteurID.GRBrasDroit && position == Config.CurrentConfig.PositionGRBrasDroitSorti ||
                     servo == ServomoteurID.GRBrasGauche && position == Config.CurrentConfig.PositionGRBrasGaucheSorti ||
                     servo == ServomoteurID.GRGrandBras && position == Config.CurrentConfig.PositionGRGrandBrasHaut ||
-                    servo == ServomoteurID.GRPetitBras && position == Config.CurrentConfig.PositionGRPetitBrasHaut)
+                    servo == ServomoteurID.GRPetitBras && position == Config.CurrentConfig.PositionGRPetitBrasHaut ||
+                    servo == ServomoteurID.GRAspirateur && position == Config.CurrentConfig.PositionGRAspirateurBas)
                     ServoSorti[servo] = true;
                 else
                     ServoSorti[servo] = false;
             }
+        }
+
+        public virtual void TourneMoteur(MoteurID moteur, int vitesse)
+        {
+            if (MoteurTourne.ContainsKey(moteur))
+                MoteurTourne[moteur] = vitesse == 0 ? false : true;
         }
 
         public void PositionerAngle(Angle angle, double marge = 0)
@@ -176,6 +184,10 @@ namespace GoBot
             ServoSorti.Add(ServomoteurID.GRBrasGauche, false);
             ServoSorti.Add(ServomoteurID.GRGrandBras, false);
             ServoSorti.Add(ServomoteurID.GRPetitBras, false);
+            ServoSorti.Add(ServomoteurID.GRAspirateur, false);
+            MoteurTourne = new Dictionary<MoteurID, bool>();
+            MoteurTourne.Add(MoteurID.GRTurbineAspirateur, false);
+            MoteurTourne.Add(MoteurID.GRCanonTMin, false);
             LancementBalles = false;
         }
 

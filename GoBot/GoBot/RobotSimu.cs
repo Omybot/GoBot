@@ -331,7 +331,8 @@ namespace GoBot
 
         public override void TourneMoteur(MoteurID moteur, int vitesse)
         {
-            // TODO
+            base.TourneMoteur(moteur, vitesse);
+
             Historique.AjouterAction(new ActionMoteur(this, vitesse, moteur));
 
             if (moteur == MoteurID.GRCanonTMin)

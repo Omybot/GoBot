@@ -84,15 +84,15 @@ namespace GoBot.Mouvements
                         {
                             Robots.GrosRobot.Historique.Log("Lance balle blanche");
                             Plateau.CouleurBalleLancee = Color.White;
-                            Robots.GrosRobot.ActionneurOnOff(ActionneurOnOffID.GRShutter, true);
-                            Thread.Sleep(250);
-                            Robots.GrosRobot.ActionneurOnOff(ActionneurOnOffID.GRShutter, false);
                             if (Robots.GrosRobot.NbBallesBlanchesCharges > 0)
                             {
                                 Plateau.Score += 2;
                                 Plateau.NbBallesMarquees++;
                                 Robots.GrosRobot.NbBallesBlanchesCharges--;
                             }
+                            Robots.GrosRobot.ActionneurOnOff(ActionneurOnOffID.GRShutter, true);
+                            Thread.Sleep(250);
+                            Robots.GrosRobot.ActionneurOnOff(ActionneurOnOffID.GRShutter, false);
                         }
                     }
                 }
