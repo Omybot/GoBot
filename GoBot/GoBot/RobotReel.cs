@@ -241,12 +241,24 @@ namespace GoBot
                 if (trameRecue[1] == (byte)TrameFactory.FonctionMove.RetourPositionCodeurs)
                 {
                     int nbPositions = trameRecue[2];
-                    Console.WriteLine("Retour " + nbPositions + " positions codeurs");
 
                     for (int i = 0; i < nbPositions; i++)
                     {
-                        int codeurGauche = (trameRecue[2 + i * 8] << 24 & trameRecue[3 + i * 8] << 16 & trameRecue[4 + i * 8] << 8 & trameRecue[5 + i * 8]);
-                        int codeurDroit = (trameRecue[6 + i * 8] << 24 & trameRecue[7 + i * 8] << 16 & trameRecue[8 + i * 8] << 8 & trameRecue[9 + i * 8]);
+                        int gauche1 = trameRecue[3 + i * 8];
+                        int gauche2 = trameRecue[4 + i * 8];
+                        int gauche3 = trameRecue[5 + i * 8];
+                        int gauche4 = trameRecue[6 + i * 8];
+
+                        int codeurGauche = gauche1 * 256 * 256 * 256 + gauche2 * 256 * 256 + gauche3 * 256 + gauche4;
+
+                        int droite1 = trameRecue[7 + i * 8];
+                        int droite2 = trameRecue[8 + i * 8];
+                        int droite3 = trameRecue[9 + i * 8];
+                        int droite4 = trameRecue[10 + i * 8];
+
+                        int codeurDroit = droite1 * 256 * 256 * 256 + droite2 * 256 * 256 + droite3 * 256 + droite4;
+
+                        //Console.WriteLine("Retour " + codeurGauche + " positions codeurs");
 
                         retourTestPid[0].Add(codeurGauche);
                         retourTestPid[1].Add(codeurDroit);
@@ -613,6 +625,12 @@ namespace GoBot
                 Connexion.SendMessage(trame);
                 Thread.Sleep(30);
             }
+
+            while(retourTestPid[0].Count > nbValeurs)
+                retourTestPid[0].RemoveAt(retourTestPid[0].Count - 1);
+
+            while(retourTestPid[1].Count > nbValeurs)
+                retourTestPid[1].RemoveAt(retourTestPid[1].Count - 1);
 
             return retourTestPid;
         }

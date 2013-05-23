@@ -191,7 +191,9 @@ namespace GoBot
                 donneesBalise2Recues = false;
                 donneesBalise3Recues = false;
 
+                DateTime debut = DateTime.Now;
                 InterpreterDetection(ModeInterpretation.Intersections);
+                Console.WriteLine((DateTime.Now - debut).TotalMilliseconds + " ms");
             }
             catch (Exception)
             {
@@ -521,7 +523,6 @@ namespace GoBot
         /// <returns>Intersections conservées</returns>
         private List<PointReelGenere> CroisementsBalises(List<DetectionBalise> detectionBaliseA, List<DetectionBalise> detectionBaliseB)
         {
-            List<PointReel> intersections = new List<PointReel>();
             List<PointReelGenere> intersectionsAvecOrigine = new List<PointReelGenere>();
 
             foreach (DetectionBalise detection1 in detectionBaliseA)
@@ -540,14 +541,10 @@ namespace GoBot
                     // On ne considère pas les points en dehors du plateau
                     if (croisement != null && Plateau.Contient(croisement))
                     {
-                        // Le point le plus proche de la balise (donc plus précis) entre les deux droites qui ont généré le croisement
-                        //PointReel positionDistance = detection1.Distance < detection2.Distance ? detection1.Position : detection2.Position;
-
-                        // On ne considère cette intersection que si elle est à moins de 50 cm de la distance donnée par la plus précise des balises
+                        // On ne considère cette intersection que si elle est à moins de 50 cm de la distance donnée par les deux balises
                         // Ce qui permet d'enlever tous les croisements éloignés d'une approximation de balise
                         if (detection1.Position.Distance(croisement) < 500 && detection2.Position.Distance(croisement) < 500)
                             intersectionsAvecOrigine.Add(new PointReelGenere(croisement, detections));
-                            //intersections.Add(croisement);
                     }
                 }
             }

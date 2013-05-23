@@ -664,9 +664,9 @@ namespace GoBot.UDP
             byte[] tab = new byte[5];
             tab[0] = (byte)Carte.RecMove;
             tab[1] = (byte)FonctionMove.EnvoiConsigneBrute;
-            tab[2] = (byte)ByteDivide(consigne, true);
-            tab[3] = (byte)ByteDivide(consigne, false);
-            tab[4] = (byte)sens;
+            tab[2] = (byte)sens;
+            tab[3] = (byte)ByteDivide(consigne, true);
+            tab[4] = (byte)ByteDivide(consigne, false);
             return new Trame(tab);
         }
 

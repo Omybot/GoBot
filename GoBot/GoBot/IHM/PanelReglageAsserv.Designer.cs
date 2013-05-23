@@ -110,7 +110,6 @@
             this.numCoeffD.Name = "numCoeffD";
             this.numCoeffD.Size = new System.Drawing.Size(73, 20);
             this.numCoeffD.TabIndex = 115;
-            this.numCoeffD.ValueChanged += new System.EventHandler(this.btnOk_Click);
             // 
             // label6
             // 
@@ -137,7 +136,6 @@
             this.numCoeffI.Name = "numCoeffI";
             this.numCoeffI.Size = new System.Drawing.Size(73, 20);
             this.numCoeffI.TabIndex = 113;
-            this.numCoeffI.ValueChanged += new System.EventHandler(this.btnOk_Click);
             // 
             // label5
             // 
@@ -164,7 +162,6 @@
             this.numCoeffP.Name = "numCoeffP";
             this.numCoeffP.Size = new System.Drawing.Size(73, 20);
             this.numCoeffP.TabIndex = 111;
-            this.numCoeffP.ValueChanged += new System.EventHandler(this.btnOk_Click);
             // 
             // label4
             // 
@@ -187,7 +184,7 @@
             this.numPasCodeurs.Size = new System.Drawing.Size(73, 20);
             this.numPasCodeurs.TabIndex = 117;
             this.numPasCodeurs.Value = new decimal(new int[] {
-            1000,
+            50,
             0,
             0,
             0});
@@ -222,7 +219,7 @@
             this.numNbPoints.Size = new System.Drawing.Size(73, 20);
             this.numNbPoints.TabIndex = 119;
             this.numNbPoints.Value = new decimal(new int[] {
-            1000,
+            750,
             0,
             0,
             0});
