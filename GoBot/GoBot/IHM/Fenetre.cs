@@ -16,6 +16,8 @@ namespace GoBot.IHM
             Controls.Add(control);
             control.SetBounds(0, 0, control.Width, control.Height);
             InitializeComponent();
+            this.Width = control.Width + 10;
+            this.Height = control.Height + 30;
         }
 
         public Panel Panel

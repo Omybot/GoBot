@@ -81,6 +81,7 @@
     <Compile Include="Actions\Deplacement\ActionAvance.cs" />
     <Compile Include="Actions\Deplacement\ActionRecule.cs" />
     <Compile Include="Actions\IAction.cs" />
+    <Compile Include="Balises\SuiviBalise.cs" />
     <Compile Include="CameraIP.cs" />
     <Compile Include="IHM\Composants\CtrlGraphique.cs">
       <SubType>UserControl</SubType>

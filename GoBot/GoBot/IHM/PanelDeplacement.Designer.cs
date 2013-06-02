@@ -28,8 +28,8 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             this.groupDeplacement = new System.Windows.Forms.GroupBox();
-            this.btnStopFreely = new System.Windows.Forms.Button();
             this.btnPID = new System.Windows.Forms.Button();
             this.numCoeffD = new System.Windows.Forms.NumericUpDown();
             this.label6 = new System.Windows.Forms.Label();
@@ -39,21 +39,16 @@
             this.label4 = new System.Windows.Forms.Label();
             this.numAccelPivot = new System.Windows.Forms.NumericUpDown();
             this.numVitessePivot = new System.Windows.Forms.NumericUpDown();
-            this.trackBarAccelPivot = new GoBot.IHM.Composants.TrackBarPlus();
-            this.trackBarVitessePivot = new GoBot.IHM.Composants.TrackBarPlus();
             this.label2 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
             this.numAccelLigne = new System.Windows.Forms.NumericUpDown();
             this.numVitesseLigne = new System.Windows.Forms.NumericUpDown();
             this.btnRecallage = new System.Windows.Forms.Button();
             this.label1 = new System.Windows.Forms.Label();
-            this.panelControleManuel = new GoBot.IHM.Composants.FocusablePanel();
-            this.trackBarAccelLigne = new GoBot.IHM.Composants.TrackBarPlus();
-            this.trackBarVitesseLigne = new GoBot.IHM.Composants.TrackBarPlus();
             this.btnTaille = new System.Windows.Forms.Button();
             this.btnVirageArDr = new System.Windows.Forms.Button();
             this.btnPivotGauche = new System.Windows.Forms.Button();
-            this.btnStopSmooth = new System.Windows.Forms.Button();
+            this.btnStop = new System.Windows.Forms.Button();
             this.btnVirageArGa = new System.Windows.Forms.Button();
             this.lblAcceleration = new System.Windows.Forms.Label();
             this.btnPivotDroite = new System.Windows.Forms.Button();
@@ -61,9 +56,18 @@
             this.btnVirageAvGa = new System.Windows.Forms.Button();
             this.btnVirageAvDr = new System.Windows.Forms.Button();
             this.btnRecule = new System.Windows.Forms.Button();
+            this.btnAvance = new System.Windows.Forms.Button();
+            this.contextMenuStop = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.freelyToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.smoothToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.abruptToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.trackBarAccelPivot = new GoBot.IHM.Composants.TrackBarPlus();
+            this.trackBarVitessePivot = new GoBot.IHM.Composants.TrackBarPlus();
+            this.panelControleManuel = new GoBot.IHM.Composants.FocusablePanel();
+            this.trackBarAccelLigne = new GoBot.IHM.Composants.TrackBarPlus();
+            this.trackBarVitesseLigne = new GoBot.IHM.Composants.TrackBarPlus();
             this.txtAngle = new GoBot.IHM.Composants.TextBoxPlus();
             this.txtDistance = new GoBot.IHM.Composants.TextBoxPlus();
-            this.btnAvance = new System.Windows.Forms.Button();
             this.groupDeplacement.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numCoeffD)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numCoeffI)).BeginInit();
@@ -72,12 +76,12 @@
             ((System.ComponentModel.ISupportInitialize)(this.numVitessePivot)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numAccelLigne)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numVitesseLigne)).BeginInit();
+            this.contextMenuStop.SuspendLayout();
             this.SuspendLayout();
             // 
             // groupDeplacement
             // 
             this.groupDeplacement.BackColor = System.Drawing.Color.Transparent;
-            this.groupDeplacement.Controls.Add(this.btnStopFreely);
             this.groupDeplacement.Controls.Add(this.btnPID);
             this.groupDeplacement.Controls.Add(this.numCoeffD);
             this.groupDeplacement.Controls.Add(this.label6);
@@ -101,7 +105,7 @@
             this.groupDeplacement.Controls.Add(this.btnTaille);
             this.groupDeplacement.Controls.Add(this.btnVirageArDr);
             this.groupDeplacement.Controls.Add(this.btnPivotGauche);
-            this.groupDeplacement.Controls.Add(this.btnStopSmooth);
+            this.groupDeplacement.Controls.Add(this.btnStop);
             this.groupDeplacement.Controls.Add(this.btnVirageArGa);
             this.groupDeplacement.Controls.Add(this.lblAcceleration);
             this.groupDeplacement.Controls.Add(this.btnPivotDroite);
@@ -118,22 +122,6 @@
             this.groupDeplacement.TabIndex = 69;
             this.groupDeplacement.TabStop = false;
             this.groupDeplacement.Text = "Déplacement";
-            // 
-            // btnStopFreely
-            // 
-            this.btnStopFreely.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnStopFreely.ForeColor = System.Drawing.Color.Black;
-            this.btnStopFreely.Image = global::GoBot.Properties.Resources.stop;
-            this.btnStopFreely.ImageAlign = System.Drawing.ContentAlignment.BottomCenter;
-            this.btnStopFreely.Location = new System.Drawing.Point(27, 73);
-            this.btnStopFreely.Margin = new System.Windows.Forms.Padding(0);
-            this.btnStopFreely.Name = "btnStopFreely";
-            this.btnStopFreely.Size = new System.Drawing.Size(90, 48);
-            this.btnStopFreely.TabIndex = 110;
-            this.btnStopFreely.Text = "Freely";
-            this.btnStopFreely.TextAlign = System.Drawing.ContentAlignment.TopCenter;
-            this.btnStopFreely.UseVisualStyleBackColor = true;
-            this.btnStopFreely.Click += new System.EventHandler(this.btnStopFreely_Click);
             // 
             // btnPID
             // 
@@ -262,42 +250,6 @@
             this.numVitessePivot.TabIndex = 101;
             this.numVitessePivot.ValueChanged += new System.EventHandler(this.numVitessePivot_ValueChanged);
             // 
-            // trackBarAccelPivot
-            // 
-            this.trackBarAccelPivot.BackColor = System.Drawing.Color.Transparent;
-            this.trackBarAccelPivot.IntervalTimer = 500;
-            this.trackBarAccelPivot.Location = new System.Drawing.Point(19, 274);
-            this.trackBarAccelPivot.Max = 5000D;
-            this.trackBarAccelPivot.MaximumSize = new System.Drawing.Size(3000, 15);
-            this.trackBarAccelPivot.Min = 0D;
-            this.trackBarAccelPivot.MinimumSize = new System.Drawing.Size(0, 15);
-            this.trackBarAccelPivot.Name = "trackBarAccelPivot";
-            this.trackBarAccelPivot.NombreDecimales = 0;
-            this.trackBarAccelPivot.Reverse = false;
-            this.trackBarAccelPivot.Size = new System.Drawing.Size(249, 15);
-            this.trackBarAccelPivot.TabIndex = 100;
-            this.trackBarAccelPivot.Vertical = false;
-            this.trackBarAccelPivot.TickValueChanged += new System.EventHandler(this.trackBarAccelPivot_TickValueChanged);
-            this.trackBarAccelPivot.ValueChanged += new System.EventHandler(this.trackBarAccelPivot_ValueChanged);
-            // 
-            // trackBarVitessePivot
-            // 
-            this.trackBarVitessePivot.BackColor = System.Drawing.Color.Transparent;
-            this.trackBarVitessePivot.IntervalTimer = 500;
-            this.trackBarVitessePivot.Location = new System.Drawing.Point(19, 236);
-            this.trackBarVitessePivot.Max = 3000D;
-            this.trackBarVitessePivot.MaximumSize = new System.Drawing.Size(3000, 15);
-            this.trackBarVitessePivot.Min = 0D;
-            this.trackBarVitessePivot.MinimumSize = new System.Drawing.Size(0, 15);
-            this.trackBarVitessePivot.Name = "trackBarVitessePivot";
-            this.trackBarVitessePivot.NombreDecimales = 0;
-            this.trackBarVitessePivot.Reverse = false;
-            this.trackBarVitessePivot.Size = new System.Drawing.Size(249, 15);
-            this.trackBarVitessePivot.TabIndex = 99;
-            this.trackBarVitessePivot.Vertical = false;
-            this.trackBarVitessePivot.TickValueChanged += new System.EventHandler(this.trackBarVitessePivot_TickValueChanged);
-            this.trackBarVitessePivot.ValueChanged += new System.EventHandler(this.trackBarVitessePivot_ValueChanged);
-            // 
             // label2
             // 
             this.label2.Location = new System.Drawing.Point(16, 257);
@@ -371,53 +323,6 @@
             this.label1.TabIndex = 92;
             this.label1.Text = "Contrôle manuel :";
             // 
-            // panelControleManuel
-            // 
-            this.panelControleManuel.BackColor = System.Drawing.Color.LightGray;
-            this.panelControleManuel.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.panelControleManuel.Location = new System.Drawing.Point(174, 340);
-            this.panelControleManuel.Name = "panelControleManuel";
-            this.panelControleManuel.Size = new System.Drawing.Size(74, 22);
-            this.panelControleManuel.TabIndex = 91;
-            this.panelControleManuel.ToucheEnfoncee += new GoBot.IHM.Composants.FocusablePanel.ToucheEnfonceeDelegate(this.panelControleManuel_ToucheEnfoncee);
-            this.panelControleManuel.KeyUp += new System.Windows.Forms.KeyEventHandler(this.panelControleManuel_KeyUp);
-            // 
-            // trackBarAccelLigne
-            // 
-            this.trackBarAccelLigne.BackColor = System.Drawing.Color.Transparent;
-            this.trackBarAccelLigne.IntervalTimer = 500;
-            this.trackBarAccelLigne.Location = new System.Drawing.Point(19, 200);
-            this.trackBarAccelLigne.Max = 5000D;
-            this.trackBarAccelLigne.MaximumSize = new System.Drawing.Size(3000, 15);
-            this.trackBarAccelLigne.Min = 0D;
-            this.trackBarAccelLigne.MinimumSize = new System.Drawing.Size(0, 15);
-            this.trackBarAccelLigne.Name = "trackBarAccelLigne";
-            this.trackBarAccelLigne.NombreDecimales = 0;
-            this.trackBarAccelLigne.Reverse = false;
-            this.trackBarAccelLigne.Size = new System.Drawing.Size(249, 15);
-            this.trackBarAccelLigne.TabIndex = 88;
-            this.trackBarAccelLigne.Vertical = false;
-            this.trackBarAccelLigne.TickValueChanged += new System.EventHandler(this.trackBarAccelLigne_TickValueChanged);
-            this.trackBarAccelLigne.ValueChanged += new System.EventHandler(this.trackBarAccelLigne_ValueChanged);
-            // 
-            // trackBarVitesseLigne
-            // 
-            this.trackBarVitesseLigne.BackColor = System.Drawing.Color.Transparent;
-            this.trackBarVitesseLigne.IntervalTimer = 500;
-            this.trackBarVitesseLigne.Location = new System.Drawing.Point(19, 162);
-            this.trackBarVitesseLigne.Max = 3000D;
-            this.trackBarVitesseLigne.MaximumSize = new System.Drawing.Size(3000, 15);
-            this.trackBarVitesseLigne.Min = 0D;
-            this.trackBarVitesseLigne.MinimumSize = new System.Drawing.Size(0, 15);
-            this.trackBarVitesseLigne.Name = "trackBarVitesseLigne";
-            this.trackBarVitesseLigne.NombreDecimales = 0;
-            this.trackBarVitesseLigne.Reverse = false;
-            this.trackBarVitesseLigne.Size = new System.Drawing.Size(249, 15);
-            this.trackBarVitesseLigne.TabIndex = 87;
-            this.trackBarVitesseLigne.Vertical = false;
-            this.trackBarVitesseLigne.TickValueChanged += new System.EventHandler(this.trackBarVitesseLigne_TickValueChanged);
-            this.trackBarVitesseLigne.ValueChanged += new System.EventHandler(this.trackBarVitesseLigne_ValueChanged);
-            // 
             // btnTaille
             // 
             this.btnTaille.Image = global::GoBot.Properties.Resources.haut;
@@ -449,21 +354,21 @@
             this.btnPivotGauche.UseVisualStyleBackColor = true;
             this.btnPivotGauche.Click += new System.EventHandler(this.btnPivotGauche_Click);
             // 
-            // btnStopSmooth
+            // btnStop
             // 
-            this.btnStopSmooth.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnStopSmooth.ForeColor = System.Drawing.Color.Black;
-            this.btnStopSmooth.Image = global::GoBot.Properties.Resources.stop;
-            this.btnStopSmooth.ImageAlign = System.Drawing.ContentAlignment.TopCenter;
-            this.btnStopSmooth.Location = new System.Drawing.Point(27, 26);
-            this.btnStopSmooth.Margin = new System.Windows.Forms.Padding(0);
-            this.btnStopSmooth.Name = "btnStopSmooth";
-            this.btnStopSmooth.Size = new System.Drawing.Size(90, 48);
-            this.btnStopSmooth.TabIndex = 63;
-            this.btnStopSmooth.Text = "Smooth";
-            this.btnStopSmooth.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
-            this.btnStopSmooth.UseVisualStyleBackColor = true;
-            this.btnStopSmooth.Click += new System.EventHandler(this.btnStopSmooth_Click);
+            this.btnStop.ContextMenuStrip = this.contextMenuStop;
+            this.btnStop.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnStop.ForeColor = System.Drawing.Color.Black;
+            this.btnStop.Image = global::GoBot.Properties.Resources.stop;
+            this.btnStop.ImageAlign = System.Drawing.ContentAlignment.TopCenter;
+            this.btnStop.Location = new System.Drawing.Point(27, 26);
+            this.btnStop.Margin = new System.Windows.Forms.Padding(0);
+            this.btnStop.Name = "btnStop";
+            this.btnStop.Size = new System.Drawing.Size(97, 97);
+            this.btnStop.TabIndex = 63;
+            this.btnStop.Text = "STOP";
+            this.btnStop.UseVisualStyleBackColor = true;
+            this.btnStop.Click += new System.EventHandler(this.btnStopSmooth_Click);
             // 
             // btnVirageArGa
             // 
@@ -533,6 +438,134 @@
             this.btnRecule.UseVisualStyleBackColor = true;
             this.btnRecule.Click += new System.EventHandler(this.btnRecule_Click);
             // 
+            // btnAvance
+            // 
+            this.btnAvance.Image = global::GoBot.Properties.Resources.avance;
+            this.btnAvance.Location = new System.Drawing.Point(181, 21);
+            this.btnAvance.Name = "btnAvance";
+            this.btnAvance.Size = new System.Drawing.Size(67, 23);
+            this.btnAvance.TabIndex = 75;
+            this.btnAvance.UseVisualStyleBackColor = true;
+            this.btnAvance.Click += new System.EventHandler(this.btnAvance_Click);
+            // 
+            // contextMenuStop
+            // 
+            this.contextMenuStop.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.freelyToolStripMenuItem,
+            this.smoothToolStripMenuItem,
+            this.abruptToolStripMenuItem});
+            this.contextMenuStop.Name = "contextMenuStrip1";
+            this.contextMenuStop.Size = new System.Drawing.Size(153, 92);
+            // 
+            // freelyToolStripMenuItem
+            // 
+            this.freelyToolStripMenuItem.CheckOnClick = true;
+            this.freelyToolStripMenuItem.Name = "freelyToolStripMenuItem";
+            this.freelyToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.freelyToolStripMenuItem.Text = "Freely";
+            this.freelyToolStripMenuItem.Click += new System.EventHandler(this.stopToolStripMenuItem_Click);
+            // 
+            // smoothToolStripMenuItem
+            // 
+            this.smoothToolStripMenuItem.Checked = true;
+            this.smoothToolStripMenuItem.CheckOnClick = true;
+            this.smoothToolStripMenuItem.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.smoothToolStripMenuItem.Name = "smoothToolStripMenuItem";
+            this.smoothToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.smoothToolStripMenuItem.Text = "Smooth";
+            this.smoothToolStripMenuItem.Click += new System.EventHandler(this.stopToolStripMenuItem_Click);
+            // 
+            // abruptToolStripMenuItem
+            // 
+            this.abruptToolStripMenuItem.CheckOnClick = true;
+            this.abruptToolStripMenuItem.Name = "abruptToolStripMenuItem";
+            this.abruptToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.abruptToolStripMenuItem.Text = "Abrupt";
+            this.abruptToolStripMenuItem.Click += new System.EventHandler(this.stopToolStripMenuItem_Click);
+            // 
+            // trackBarAccelPivot
+            // 
+            this.trackBarAccelPivot.BackColor = System.Drawing.Color.Transparent;
+            this.trackBarAccelPivot.IntervalTimer = 500;
+            this.trackBarAccelPivot.Location = new System.Drawing.Point(19, 274);
+            this.trackBarAccelPivot.Max = 5000D;
+            this.trackBarAccelPivot.MaximumSize = new System.Drawing.Size(3000, 15);
+            this.trackBarAccelPivot.Min = 0D;
+            this.trackBarAccelPivot.MinimumSize = new System.Drawing.Size(0, 15);
+            this.trackBarAccelPivot.Name = "trackBarAccelPivot";
+            this.trackBarAccelPivot.NombreDecimales = 0;
+            this.trackBarAccelPivot.Reverse = false;
+            this.trackBarAccelPivot.Size = new System.Drawing.Size(249, 15);
+            this.trackBarAccelPivot.TabIndex = 100;
+            this.trackBarAccelPivot.Vertical = false;
+            this.trackBarAccelPivot.TickValueChanged += new System.EventHandler(this.trackBarAccelPivot_TickValueChanged);
+            this.trackBarAccelPivot.ValueChanged += new System.EventHandler(this.trackBarAccelPivot_ValueChanged);
+            // 
+            // trackBarVitessePivot
+            // 
+            this.trackBarVitessePivot.BackColor = System.Drawing.Color.Transparent;
+            this.trackBarVitessePivot.IntervalTimer = 500;
+            this.trackBarVitessePivot.Location = new System.Drawing.Point(19, 236);
+            this.trackBarVitessePivot.Max = 3000D;
+            this.trackBarVitessePivot.MaximumSize = new System.Drawing.Size(3000, 15);
+            this.trackBarVitessePivot.Min = 0D;
+            this.trackBarVitessePivot.MinimumSize = new System.Drawing.Size(0, 15);
+            this.trackBarVitessePivot.Name = "trackBarVitessePivot";
+            this.trackBarVitessePivot.NombreDecimales = 0;
+            this.trackBarVitessePivot.Reverse = false;
+            this.trackBarVitessePivot.Size = new System.Drawing.Size(249, 15);
+            this.trackBarVitessePivot.TabIndex = 99;
+            this.trackBarVitessePivot.Vertical = false;
+            this.trackBarVitessePivot.TickValueChanged += new System.EventHandler(this.trackBarVitessePivot_TickValueChanged);
+            this.trackBarVitessePivot.ValueChanged += new System.EventHandler(this.trackBarVitessePivot_ValueChanged);
+            // 
+            // panelControleManuel
+            // 
+            this.panelControleManuel.BackColor = System.Drawing.Color.LightGray;
+            this.panelControleManuel.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.panelControleManuel.Location = new System.Drawing.Point(174, 340);
+            this.panelControleManuel.Name = "panelControleManuel";
+            this.panelControleManuel.Size = new System.Drawing.Size(74, 22);
+            this.panelControleManuel.TabIndex = 91;
+            this.panelControleManuel.ToucheEnfoncee += new GoBot.IHM.Composants.FocusablePanel.ToucheEnfonceeDelegate(this.panelControleManuel_ToucheEnfoncee);
+            this.panelControleManuel.KeyUp += new System.Windows.Forms.KeyEventHandler(this.panelControleManuel_KeyUp);
+            // 
+            // trackBarAccelLigne
+            // 
+            this.trackBarAccelLigne.BackColor = System.Drawing.Color.Transparent;
+            this.trackBarAccelLigne.IntervalTimer = 500;
+            this.trackBarAccelLigne.Location = new System.Drawing.Point(19, 200);
+            this.trackBarAccelLigne.Max = 5000D;
+            this.trackBarAccelLigne.MaximumSize = new System.Drawing.Size(3000, 15);
+            this.trackBarAccelLigne.Min = 0D;
+            this.trackBarAccelLigne.MinimumSize = new System.Drawing.Size(0, 15);
+            this.trackBarAccelLigne.Name = "trackBarAccelLigne";
+            this.trackBarAccelLigne.NombreDecimales = 0;
+            this.trackBarAccelLigne.Reverse = false;
+            this.trackBarAccelLigne.Size = new System.Drawing.Size(249, 15);
+            this.trackBarAccelLigne.TabIndex = 88;
+            this.trackBarAccelLigne.Vertical = false;
+            this.trackBarAccelLigne.TickValueChanged += new System.EventHandler(this.trackBarAccelLigne_TickValueChanged);
+            this.trackBarAccelLigne.ValueChanged += new System.EventHandler(this.trackBarAccelLigne_ValueChanged);
+            // 
+            // trackBarVitesseLigne
+            // 
+            this.trackBarVitesseLigne.BackColor = System.Drawing.Color.Transparent;
+            this.trackBarVitesseLigne.IntervalTimer = 500;
+            this.trackBarVitesseLigne.Location = new System.Drawing.Point(19, 162);
+            this.trackBarVitesseLigne.Max = 3000D;
+            this.trackBarVitesseLigne.MaximumSize = new System.Drawing.Size(3000, 15);
+            this.trackBarVitesseLigne.Min = 0D;
+            this.trackBarVitesseLigne.MinimumSize = new System.Drawing.Size(0, 15);
+            this.trackBarVitesseLigne.Name = "trackBarVitesseLigne";
+            this.trackBarVitesseLigne.NombreDecimales = 0;
+            this.trackBarVitesseLigne.Reverse = false;
+            this.trackBarVitesseLigne.Size = new System.Drawing.Size(249, 15);
+            this.trackBarVitesseLigne.TabIndex = 87;
+            this.trackBarVitesseLigne.Vertical = false;
+            this.trackBarVitesseLigne.TickValueChanged += new System.EventHandler(this.trackBarVitesseLigne_TickValueChanged);
+            this.trackBarVitesseLigne.ValueChanged += new System.EventHandler(this.trackBarVitesseLigne_ValueChanged);
+            // 
             // txtAngle
             // 
             this.txtAngle.BackColor = System.Drawing.Color.White;
@@ -561,16 +594,6 @@
             this.txtDistance.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             this.txtDistance.TextMode = GoBot.IHM.Composants.TextBoxPlus.TextModeEnum.Numeric;
             // 
-            // btnAvance
-            // 
-            this.btnAvance.Image = global::GoBot.Properties.Resources.avance;
-            this.btnAvance.Location = new System.Drawing.Point(181, 21);
-            this.btnAvance.Name = "btnAvance";
-            this.btnAvance.Size = new System.Drawing.Size(67, 23);
-            this.btnAvance.TabIndex = 75;
-            this.btnAvance.UseVisualStyleBackColor = true;
-            this.btnAvance.Click += new System.EventHandler(this.btnAvance_Click);
-            // 
             // PanelDeplacement
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -589,6 +612,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.numVitessePivot)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.numAccelLigne)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.numVitesseLigne)).EndInit();
+            this.contextMenuStop.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -599,7 +623,7 @@
         protected System.Windows.Forms.Button btnTaille;
         protected System.Windows.Forms.Button btnVirageArDr;
         protected System.Windows.Forms.Button btnPivotGauche;
-        protected System.Windows.Forms.Button btnStopSmooth;
+        protected System.Windows.Forms.Button btnStop;
         protected System.Windows.Forms.Button btnVirageArGa;
         protected System.Windows.Forms.Label lblAcceleration;
         protected System.Windows.Forms.Button btnPivotDroite;
@@ -630,7 +654,10 @@
         protected System.Windows.Forms.Label label3;
         private System.Windows.Forms.NumericUpDown numAccelLigne;
         private System.Windows.Forms.NumericUpDown numVitesseLigne;
-        protected System.Windows.Forms.Button btnStopFreely;
+        private System.Windows.Forms.ContextMenuStrip contextMenuStop;
+        private System.Windows.Forms.ToolStripMenuItem freelyToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem smoothToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem abruptToolStripMenuItem;
 
     }
 }

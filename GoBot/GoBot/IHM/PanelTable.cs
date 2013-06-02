@@ -12,6 +12,7 @@ using AStarFolder;
 using System.Threading;
 using GoBot.Mouvements;
 using GoBot.Enchainements;
+using GoBot.Balises;
 
 namespace GoBot.IHM
 {
@@ -62,9 +63,10 @@ namespace GoBot.IHM
                     penNoir = new Pen(Color.Black),
                     penRougeFin = new Pen(Color.Red),
                     penBleuFin = new Pen(Color.Blue),
-                    penVertFonce = new Pen(Color.Blue),
+                    penVertFonce = new Pen(Color.Green),
                     penBleuViolet = new Pen(Color.BlueViolet),
                     penCouleurJ1R = new Pen(Plateau.CouleurJ1R),
+                    penCouleurJ1RFleche = new Pen(Plateau.CouleurJ1R, 3),
                     penCouleurJ2B = new Pen(Plateau.CouleurJ2B),
 
                     penRougeEpais = new Pen(Color.Red, 3),
@@ -88,6 +90,8 @@ namespace GoBot.IHM
                     penRougePointille.DashStyle = System.Drawing.Drawing2D.DashStyle.Dot;
                     penBleuPointille.DashStyle = System.Drawing.Drawing2D.DashStyle.Dot;
                     penNoirPointille.DashStyle = System.Drawing.Drawing2D.DashStyle.Dot;
+                    penCouleurJ1RFleche.StartCap = System.Drawing.Drawing2D.LineCap.Round;
+                    penCouleurJ1RFleche.EndCap = System.Drawing.Drawing2D.LineCap.ArrowAnchor;
 
                     int nbBallePrec = 0;
                     List<Point> coordonneesBallesPanier = new List<Point>();
@@ -109,6 +113,7 @@ namespace GoBot.IHM
                             Bitmap bmp = new Bitmap(750, 500);
                             {
                                 Graphics g = Graphics.FromImage(bmp);
+                                g.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.AntiAlias;
                                 g.FillRectangle(brushBlanc, 0, 0, 750, 500);
 
                                 int xTable = ScreenToReal(pictureBoxTable.PointToClient(MousePosition).X);
@@ -168,12 +173,12 @@ namespace GoBot.IHM
                                         g.DrawEllipse(penBleuViolet, new Rectangle(RealToScreen(n.Position.X) - 3, RealToScreen(n.Position.Y) - 3, 6, 6));
                                     }
                                 }
-                                if (boxSourisObstacle.Checked)
+                                /*if (boxSourisObstacle.Checked)
                                 {
                                     g.DrawEllipse(penRougeFin,
                                         (int)(xSouris - RealToScreen(Robots.GrosRobot.Rayon) * 2),
                                         (int)(ySouris - RealToScreen(Robots.GrosRobot.Rayon) * 2), RealToScreen(Robots.GrosRobot.Rayon) * 4, RealToScreen(Robots.GrosRobot.Rayon) * 4);
-                                }
+                                }*/
 
                                 // Dessin des assiettes
 
@@ -533,20 +538,35 @@ namespace GoBot.IHM
 
                                 // Dessin de la position des ennemis
 
-                                if (Plateau.InterpreteurBalise.PositionsEnnemies != null)
+                                //if (Plateau.InterpreteurBalise.PositionsEnnemies != null)
                                 {
-                                    foreach (PointReel p in Plateau.InterpreteurBalise.PositionsEnnemies)
+                                    for(int i = 0; i < SuiviBalise.PositionsEnnemies.Count; i++)
                                     {
+                                        PointReel p = SuiviBalise.PositionsEnnemies[i];
+
                                         if (p == null)
                                             continue;
 
+                                        double vitesse = Math.Round(Math.Sqrt(SuiviBalise.VecteursPositionsEnnemies[i].X * SuiviBalise.VecteursPositionsEnnemies[i].X + SuiviBalise.VecteursPositionsEnnemies[i].Y * SuiviBalise.VecteursPositionsEnnemies[i].Y));
+
+                                        if (i == 0)
+                                        {
+                                            lblXEnnemi1.Text = Math.Round(p.X).ToString();
+                                            lblYEnnemi1.Text = Math.Round(p.Y).ToString();
+                                            lblVitesseEnnemi1.Text = vitesse + " mm/s";
+                                        }
+
+                                        if (vitesse < 50)
+                                            g.DrawImage(Properties.Resources.stop, RealToScreen(p.X) - Properties.Resources.stop.Width / 2, RealToScreen(p.Y) - Properties.Resources.stop.Height / 2, Properties.Resources.stop.Width, Properties.Resources.stop.Height);
                                         g.FillEllipse(brushCouleurJ1RTransparent, RealToScreen(p.X - Robots.GrosRobot.Rayon), RealToScreen(p.Y - Robots.GrosRobot.Rayon), RealToScreen(Robots.GrosRobot.Rayon * 2), RealToScreen(Robots.GrosRobot.Rayon * 2));
                                         g.DrawEllipse(penCouleurJ1R, RealToScreen(p.X - Robots.GrosRobot.Rayon), RealToScreen(p.Y - Robots.GrosRobot.Rayon), RealToScreen(Robots.GrosRobot.Rayon * 2), RealToScreen(Robots.GrosRobot.Rayon * 2));
                                         g.DrawLine(penRougeEpais, new Point(RealToScreen(p.X) - 7, RealToScreen(p.Y) - 7), new Point(RealToScreen(p.X) + 7, RealToScreen(p.Y) + 7));
                                         g.DrawLine(penRougeEpais, new Point(RealToScreen(p.X) - 7, RealToScreen(p.Y) + 7), new Point(RealToScreen(p.X) + 7, RealToScreen(p.Y) - 7));
+                                        g.DrawLine(penCouleurJ1RFleche, RealToScreen(p.X), RealToScreen(p.Y), RealToScreen(p.X + SuiviBalise.VecteursPositionsEnnemies[i].X / 3), RealToScreen(p.Y + SuiviBalise.VecteursPositionsEnnemies[i].Y / 3));
+                                        g.DrawString(i + " - " + vitesse + "mm/s", new Font("Calibri", 9, FontStyle.Bold), brushBlanc, RealToScreen(p.X), RealToScreen(p.Y));
                                     }
 
-                                    if (boxDroites.Checked)
+                                    if (boxDroites.Checked && Plateau.InterpreteurBalise.PositionsEnnemies != null)
                                     {
                                         foreach (DetectionBalise detection in Plateau.InterpreteurBalise.DetectionBalises)
                                         {
@@ -743,10 +763,11 @@ namespace GoBot.IHM
 
         List<Node> cheminNodes;
         List<Arc> cheminArcs;
+        DateTime dateCapture = DateTime.Now;
 
-        int xSouris = 0, ySouris = 0;
         private void pictureBoxTable_MouseMove(object sender, MouseEventArgs e)
         {
+            int xSouris = 0, ySouris = 0;
             //this.Invoke(new EventHandler(delegate
             //    {
             if (modeCourant == Mode.FinTrajectoire)
@@ -763,12 +784,17 @@ namespace GoBot.IHM
             }
             else if (boxSourisObstacle.Checked)
             {
-                if (xSouris != pictureBoxTable.PointToClient(MousePosition).X || ySouris != pictureBoxTable.PointToClient(MousePosition).Y)
+                if((DateTime.Now - dateCapture).TotalMilliseconds > 50)
+                //if (xSouris != pictureBoxTable.PointToClient(MousePosition).X || ySouris != pictureBoxTable.PointToClient(MousePosition).Y)
                 {
+                    dateCapture = DateTime.Now;
                     Console.WriteLine("Souris bouge");
                     xSouris = pictureBoxTable.PointToClient(MousePosition).X;
                     ySouris = pictureBoxTable.PointToClient(MousePosition).Y;
-                    Plateau.ObstacleTest(ScreenToReal(pictureBoxTable.PointToClient(MousePosition).X), ScreenToReal(pictureBoxTable.PointToClient(MousePosition).Y));
+                    List<PointReel> positions = new List<PointReel>();
+                    positions.Add(new PointReel(ScreenToReal(pictureBoxTable.PointToClient(MousePosition).X), ScreenToReal(pictureBoxTable.PointToClient(MousePosition).Y)));
+                    SuiviBalise.MajPositions(positions, Plateau.Enchainement == null || Plateau.Enchainement.DebutMatch == null);
+                    //Plateau.ObstacleTest(ScreenToReal(pictureBoxTable.PointToClient(MousePosition).X), ScreenToReal(pictureBoxTable.PointToClient(MousePosition).Y));
                 }
             }
 

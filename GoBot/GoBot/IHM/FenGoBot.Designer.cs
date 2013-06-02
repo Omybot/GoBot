@@ -74,6 +74,7 @@ namespace GoBot
             this.panelBalise2 = new GoBot.IHM.PanelBalise();
             this.panelBalise1 = new GoBot.IHM.PanelBalise();
             this.tabTable = new System.Windows.Forms.TabPage();
+            this.btnPiloteGros = new System.Windows.Forms.Button();
             this.panelTable = new GoBot.IHM.PanelTable();
             this.tabBougies = new System.Windows.Forms.TabPage();
             this.panelBougies = new GoBot.IHM.PanelBougies();
@@ -94,7 +95,6 @@ namespace GoBot
             this.ledRecPi = new GoBot.IHM.Composants.Led();
             this.ledRecMiwi = new GoBot.IHM.Composants.Led();
             this.ledRecMove = new GoBot.IHM.Composants.Led();
-            this.btnPiloteGros = new System.Windows.Forms.Button();
             this.tabControl.SuspendLayout();
             this.tabGrosRobot.SuspendLayout();
             this.tabPetitRobot.SuspendLayout();
@@ -604,6 +604,16 @@ namespace GoBot
             this.tabTable.Text = "Table";
             this.tabTable.UseVisualStyleBackColor = true;
             // 
+            // btnPiloteGros
+            // 
+            this.btnPiloteGros.Location = new System.Drawing.Point(30, 509);
+            this.btnPiloteGros.Name = "btnPiloteGros";
+            this.btnPiloteGros.Size = new System.Drawing.Size(75, 23);
+            this.btnPiloteGros.TabIndex = 1;
+            this.btnPiloteGros.Text = "Pilote gros";
+            this.btnPiloteGros.UseVisualStyleBackColor = true;
+            this.btnPiloteGros.Click += new System.EventHandler(this.btnPiloteGros_Click);
+            // 
             // panelTable
             // 
             this.panelTable.BackColor = System.Drawing.Color.Transparent;
@@ -642,12 +652,10 @@ namespace GoBot
             // 
             // panelReglageAsserv
             // 
-            this.panelReglageAsserv.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-                        | System.Windows.Forms.AnchorStyles.Left)
-                        | System.Windows.Forms.AnchorStyles.Right)));
-            this.panelReglageAsserv.Location = new System.Drawing.Point(3, 0);
+            this.panelReglageAsserv.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.panelReglageAsserv.Location = new System.Drawing.Point(3, 3);
             this.panelReglageAsserv.Name = "panelReglageAsserv";
-            this.panelReglageAsserv.Size = new System.Drawing.Size(179, 88);
+            this.panelReglageAsserv.Size = new System.Drawing.Size(1010, 542);
             this.panelReglageAsserv.TabIndex = 0;
             // 
             // lblRecMove
@@ -807,16 +815,6 @@ namespace GoBot
             this.ledRecMove.Size = new System.Drawing.Size(16, 16);
             this.ledRecMove.TabIndex = 26;
             this.ledRecMove.TabStop = false;
-            // 
-            // btnPiloteGros
-            // 
-            this.btnPiloteGros.Location = new System.Drawing.Point(30, 509);
-            this.btnPiloteGros.Name = "btnPiloteGros";
-            this.btnPiloteGros.Size = new System.Drawing.Size(75, 23);
-            this.btnPiloteGros.TabIndex = 1;
-            this.btnPiloteGros.Text = "Pilote gros";
-            this.btnPiloteGros.UseVisualStyleBackColor = true;
-            this.btnPiloteGros.Click += new System.EventHandler(this.btnPiloteGros_Click);
             // 
             // FenGoBot
             // 

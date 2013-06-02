@@ -8,7 +8,7 @@ using GoBot.Calculs.Formes;
 using System.Drawing;
 using System.Threading.Tasks;
 
-namespace GoBot
+namespace GoBot.Balises
 {
     public class PointReelGenere
     {
@@ -185,7 +185,8 @@ namespace GoBot
             if (detections.Count > 0)
             {
                 PositionsEnnemies = new List<PointReel>(detections);
-                PositionEnnemisActualisee(this);
+                SuiviBalise.MajPositions(PositionsEnnemies, Plateau.Enchainement != null && Plateau.Enchainement.DebutMatch == null);
+                //PositionEnnemisActualisee(this);
             }
         }
 
@@ -596,9 +597,9 @@ namespace GoBot
 
         #endregion
 
-        //Déclaration du délégué pour l’évènement de position des ennemis
+        /*//Déclaration du délégué pour l’évènement de position des ennemis
         public delegate void PositionEnnemisDelegate(InterpreteurBalise interprete);
         //Déclaration de l’évènement utilisant le délégué
-        public event PositionEnnemisDelegate PositionEnnemisActualisee;
+        public event PositionEnnemisDelegate PositionEnnemisActualisee;*/
     }
 }

@@ -36,8 +36,7 @@ namespace GoBot.IHM
             tooltip.SetToolTip(btnVirageAvDr, "Virage vers l'avant droite");
             tooltip.SetToolTip(btnVirageArGa, "Virage vers l'arrière gauche");
             tooltip.SetToolTip(btnVirageAvGa, "Virage vers l'avant droite");
-            tooltip.SetToolTip(btnStopSmooth, "Stop (et active l'asserv)");
-            tooltip.SetToolTip(btnStopFreely, "Stop (et coupe l'asserv)");
+            tooltip.SetToolTip(btnStop, "Stop");
         }
 
         public virtual void Init()
@@ -412,12 +411,21 @@ namespace GoBot.IHM
 
         protected virtual void btnStopSmooth_Click(object sender, EventArgs e)
         {
-            Robot.Stop(StopMode.Smooth);
+            if (freelyToolStripMenuItem.Checked)
+                Robot.Stop(StopMode.Freely);
+            else if (smoothToolStripMenuItem.Checked)
+                Robot.Stop(StopMode.Smooth);
+            else if(abruptToolStripMenuItem.Checked)
+                Robot.Stop(StopMode.Abrupt);
         }
 
-        private void btnStopFreely_Click(object sender, EventArgs e)
+        private void stopToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            Robot.Stop(StopMode.Freely);
+            freelyToolStripMenuItem.Checked = false;
+            smoothToolStripMenuItem.Checked = false;
+            abruptToolStripMenuItem.Checked = false;
+            ((ToolStripMenuItem)sender).Checked = true;
+            btnStopSmooth_Click(sender, e);
         }
     }
 }

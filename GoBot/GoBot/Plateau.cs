@@ -15,6 +15,7 @@ using GoBot.Calculs;
 using GoBot.Ponderations;
 using GoBot.Enchainements;
 using GoBot.Mouvements;
+using GoBot.Balises;
 
 namespace GoBot
 {
@@ -120,8 +121,8 @@ namespace GoBot
                 ObstaclesTemporaires = new List<IForme>();
 
                 InterpreteurBalise = new InterpreteurBalise();
-                InterpreteurBalise.PositionEnnemisActualisee += new GoBot.InterpreteurBalise.PositionEnnemisDelegate(interpreteBalise_PositionEnnemisActualisee);
-
+                //InterpreteurBalise.PositionEnnemisActualisee += new InterpreteurBalise.PositionEnnemisDelegate(interpreteBalise_PositionEnnemisActualisee);
+                SuiviBalise.PositionEnnemisActualisee += new Balises.SuiviBalise.PositionEnnemisDelegate(interpreteBalise_PositionEnnemisActualisee);
 
                 if (Connexions.ConnexionMove.ConnexionCheck.Connecte)
                     Simulation = false;
@@ -247,14 +248,14 @@ namespace GoBot
             SemaphoreCollisions.Release();
         }
 
-        void interpreteBalise_PositionEnnemisActualisee(InterpreteurBalise interprete)
+        void interpreteBalise_PositionEnnemisActualisee()
         {
             SemaphoreGraph.WaitOne();
             ObstaclesTemporaires.Clear();
 
-            for (int i = 0; i < interprete.PositionsEnnemies.Count; i++)
+            for (int i = 0; i < SuiviBalise.PositionsEnnemies.Count; i++)
             {
-                PointReel coordonnees = new PointReel(interprete.PositionsEnnemies[i].X, interprete.PositionsEnnemies[i].Y);
+                PointReel coordonnees = new PointReel(SuiviBalise.PositionsEnnemies[i].X, SuiviBalise.PositionsEnnemies[i].Y);
                 AjouterObstacle(new Cercle(coordonnees, 200));
 
                 // Avant de lancer le match
