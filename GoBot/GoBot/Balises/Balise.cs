@@ -111,27 +111,27 @@ namespace GoBot
         /// </summary>
         public ConnexionCheck ConnexionCheck { get; set; }
 
-        //public StreamWriter writer;
-        //DateTime prec;
-
+        /// <summary>
+        /// Constructeur
+        /// </summary>
+        /// <param name="carte">Carte sur laquelle est connectée la balise</param>
         public Balise(Carte carte)
         {
             Carte = carte;
             dernieresErreurs = new List<double>();
             ReglageVitessePermanent = true;
-            DetectionsCapteur2 = new List<DetectionBalise>();
             DetectionsCapteur1 = new List<DetectionBalise>();
+            DetectionsCapteur2 = new List<DetectionBalise>();
 
             ConnexionCheck = new GoBot.ConnexionCheck(5000);
             ConnexionCheck.TestConnexion += new GoBot.ConnexionCheck.TestConnexionDelegate(TestConnexion);
 
             Connexions.ConnexionMiwi.NouvelleTrame += new ConnexionUDP.ReceptionDelegate(connexionIo_NouvelleTrame);
-
-            /*writer = new StreamWriter(carte.ToString() + ".csv");
-            prec = DateTime.Now;
-            writer.WriteLine("Time since previous;PWM;angle;Distance;vitesse");*/
         }
 
+        /// <summary>
+        /// Envoie un ordre de reset électronique à la balise
+        /// </summary>
         public void Reset()
         {
             Trame t = TrameFactory.BaliseReset(Carte);
@@ -139,7 +139,7 @@ namespace GoBot
         }
 
         /// <summary>
-        /// Réception d'un message envoyé par la balise
+        /// Réception d'un message envoyé par la carte de la balise
         /// </summary>
         /// <param name="trame">Message reçu</param>
         public void connexionIo_NouvelleTrame(Trame trame)

@@ -500,5 +500,15 @@ namespace GoBot
             else
                 led2.CouleurRouge();
         }
+
+        Fenetre fen;
+        private void btnPiloteGros_Click(object sender, EventArgs e)
+        {
+            PanelDeplacement panel = new PanelDeplacement();
+            panel.Robot = Robots.GrosRobot;
+            fen = new Fenetre(panel);
+            fen.TopMost = true;
+            fen.Show();
+        }
     }
 }

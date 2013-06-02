@@ -228,14 +228,14 @@ namespace GoBot
 
         public override void Stop(StopMode mode)
         {
-            // TODO
             Historique.AjouterAction(new ActionStop(this, mode));
             SemDeplacement.WaitOne();
             Position nouvelleDestination = new Calculs.Position(new Angle(Position.Angle.AngleDegres), new PointReel(position.Coordonnees.X, position.Coordonnees.Y));
-            nouvelleDestination.Avancer(DistanceFreinageActuelle);
-            Console.WriteLine(Position);
-            Console.WriteLine(Destination);
-            Console.WriteLine(nouvelleDestination);
+            if (SensDep == SensAR.Avant)
+                nouvelleDestination.Avancer(DistanceFreinageActuelle);
+            else
+                nouvelleDestination.Avancer(-DistanceFreinageActuelle);
+
             Console.WriteLine();
             Destination = nouvelleDestination;
             SemDeplacement.Release();
