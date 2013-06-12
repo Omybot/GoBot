@@ -18,7 +18,7 @@ namespace GoBot.Actions
 
         System.Drawing.Image IAction.Image
         {
-            get { return GoBot.Properties.Resources.recule; }
+            get { return GoBot.Properties.Resources.Recule; }
         }
 
         string IAction.ToString()

@@ -89,6 +89,18 @@
     <Compile Include="IHM\Composants\CtrlGraphique.designer.cs">
       <DependentUpon>CtrlGraphique.cs</DependentUpon>
     </Compile>
+    <Compile Include="IHM\PanelImagesBalises.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="IHM\PanelImagesBalises.Designer.cs">
+      <DependentUpon>PanelImagesBalises.cs</DependentUpon>
+    </Compile>
+    <Compile Include="IHM\PanelImageBalise.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="IHM\PanelImageBalise.Designer.cs">
+      <DependentUpon>PanelImageBalise.cs</DependentUpon>
+    </Compile>
     <Compile Include="IHM\PanelPetitRobotUtilisation.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -289,6 +301,12 @@
     <EmbeddedResource Include="IHM\Composants\TrackBarPlus.resx">
       <DependentUpon>TrackBarPlus.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="IHM\PanelImagesBalises.resx">
+      <DependentUpon>PanelImagesBalises.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="IHM\PanelImageBalise.resx">
+      <DependentUpon>PanelImageBalise.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="IHM\PanelPetitRobotUtilisation.resx">
       <DependentUpon>PanelPetitRobotUtilisation.cs</DependentUpon>
     </EmbeddedResource>
@@ -361,151 +379,61 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <None Include="img\close.png" />
+    <None Include="img\Close.png" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="img\virageAvGa.png" />
+    <None Include="img\VirageAvGa.png" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="img\avance.png" />
+    <None Include="img\Avance.png" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="img\virageAvDr.png" />
+    <None Include="img\VirageAvDr.png" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="img\pivotDroite.png" />
+    <None Include="img\PivotDroite.png" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="img\pivotGauche.png" />
+    <None Include="img\PivotGauche.png" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="img\recule.png" />
+    <None Include="img\Recule.png" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="img\virageArGa.png" />
+    <None Include="img\VirageArGa.png" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="img\virageArDr.png" />
+    <None Include="img\VirageArDr.png" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="img\stop.png" />
+    <None Include="img\Stop.png" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="img\reglagePivot.png" />
+    <None Include="img\ReglagePivot.png" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="img\bas.png" />
+    <None Include="img\Bas.png" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="img\haut.png" />
+    <None Include="img\Haut.png" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="img\ciseaux.png" />
+    <None Include="img\Ciseaux.png" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="img\disquette.png" />
+    <None Include="img\Disquette.png" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="img\fenetre.png" />
+    <None Include="img\Fenetre.png" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="img\switchOff.png" />
+    <None Include="img\SwitchOff.png" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="img\switchOn.png" />
+    <None Include="img\SwitchOn.png" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="img\GrosRobot\BasDroiteFerme.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="img\GrosRobot\BasDroiteOuvert.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="img\GrosRobot\BasGaucheFerme.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="img\GrosRobot\BasGaucheOuvert.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="img\GrosRobot\HautDroiteFerme.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="img\GrosRobot\HautDroiteOuvert.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="img\GrosRobot\HautGaucheFerme.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="img\GrosRobot\HautGaucheOuvert.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="img\GrosRobot\MilieuDroiteFerme.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="img\GrosRobot\MilieuDroiteOuvert.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="img\GrosRobot\MilieuGaucheFerme.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="img\GrosRobot\MilieuGaucheOuvert.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="img\PetitRobot\PinceDroiteExt1.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="img\PetitRobot\PinceDroiteExt2.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="img\PetitRobot\PinceDroiteExt3.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="img\PetitRobot\PinceDroiteExt4.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="img\PetitRobot\PinceDroiteInt1.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="img\PetitRobot\PinceDroiteInt2.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="img\PetitRobot\PinceDroiteInt3.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="img\PetitRobot\PinceDroiteInt4.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="img\PetitRobot\PinceGaucheExt1.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="img\PetitRobot\PinceGaucheExt2.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="img\PetitRobot\PinceGaucheExt3.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="img\PetitRobot\PinceGaucheExt4.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="img\PetitRobot\PinceGaucheInt1.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="img\PetitRobot\PinceGaucheInt2.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="img\PetitRobot\PinceGaucheInt3.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="img\PetitRobot\PinceGaucheInt4.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="img\stopPetit.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="img\PetitRobot\PetitRepli.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="img\PetitRobot\PetitDepli.png" />
+    <None Include="img\StopPetit.png" />
   </ItemGroup>
   <ItemGroup>
     <BootstrapperPackage Include=".NETFramework,Version=v4.0,Profile=Client">
@@ -530,41 +458,42 @@
     </BootstrapperPackage>
   </ItemGroup>
   <ItemGroup>
-    <None Include="img\crochet.png" />
+    <None Include="img\Crochet.png" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="img\flecheDroite.png" />
-    <None Include="img\flecheGauche.png" />
+    <None Include="img\FlecheDroite.png" />
+    <None Include="img\FlecheGauche.png" />
     <None Include="img\AssiettePleineBleu.png" />
     <None Include="img\AssiettePleineRouge.png" />
     <None Include="img\AssietteVide.png" />
     <None Include="img\Balle.png" />
     <None Include="img\BalleRouge.png" />
     <None Include="img\BalleBleue.png" />
-    <None Include="img\Helice.gif" />
     <None Include="img\Helice1.png" />
     <None Include="img\Helice2.png" />
     <None Include="img\Helice3.png" />
-    <Content Include="img\iconeVitesse.png" />
-    <None Include="img\ledBleu.png" />
-    <None Include="img\ledGris.png" />
-    <None Include="img\ledJaune.png" />
-    <None Include="img\table.bmp" />
-    <None Include="img\pompe.png" />
-    <None Include="img\tableRouge.png" />
-    <None Include="img\tableViolet.png" />
-    <None Include="img\recale.png" />
+    <Content Include="img\IconeVitesse.png" />
+    <None Include="img\LedBleu.png" />
+    <None Include="img\LedGris.png" />
+    <None Include="img\LedJaune.png" />
+    <None Include="img\Table.bmp" />
+    <None Include="img\Pompe.png" />
+    <None Include="img\TableRouge.png" />
+    <None Include="img\TableViolet.png" />
+    <None Include="img\Recale.png" />
     <None Include="img\Moteur.png" />
-    <None Include="img\ledRouge.png" />
-    <None Include="img\ledVert.png" />
-    <None Include="img\ledOrange.png" />
-    <Content Include="img\trackBarCurseurNormal.png" />
-    <Content Include="img\trackBarCurseurSelect.png" />
-    <Content Include="img\trackBarFond.png" />
-    <Content Include="img\trackBarFondSelected.png" />
-    <None Include="Resources\mort.png" />
+    <None Include="img\LedRouge.png" />
+    <None Include="img\LedVert.png" />
+    <None Include="img\LedOrange.png" />
+    <Content Include="img\TrackBarCurseurNormal.png" />
+    <Content Include="img\TrackBarCurseurSelect.png" />
+    <Content Include="img\TrackBarFond.png" />
+    <Content Include="img\TrackBarFondSelected.png" />
     <None Include="img\Webcam.jpg" />
     <Content Include="robot.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Resources\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

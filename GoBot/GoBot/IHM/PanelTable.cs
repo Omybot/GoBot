@@ -120,7 +120,7 @@ namespace GoBot.IHM
                                 int yTable = ScreenToReal(pictureBoxTable.PointToClient(MousePosition).Y);
 
                                 if (boxTable.Checked)
-                                    g.DrawImage(Properties.Resources.table, 0, 0);
+                                    g.DrawImage(Properties.Resources.Table, 0, 0);
 
                                 // Dessin des obstacles
                                 if (boxObstacles.Checked)
@@ -557,7 +557,7 @@ namespace GoBot.IHM
                                         }
 
                                         if (vitesse < 50)
-                                            g.DrawImage(Properties.Resources.stop, RealToScreen(p.X) - Properties.Resources.stop.Width / 2, RealToScreen(p.Y) - Properties.Resources.stop.Height / 2, Properties.Resources.stop.Width, Properties.Resources.stop.Height);
+                                            g.DrawImage(Properties.Resources.Stop, RealToScreen(p.X) - Properties.Resources.Stop.Width / 2, RealToScreen(p.Y) - Properties.Resources.Stop.Height / 2, Properties.Resources.Stop.Width, Properties.Resources.Stop.Height);
                                         g.FillEllipse(brushCouleurJ1RTransparent, RealToScreen(p.X - Robots.GrosRobot.Rayon), RealToScreen(p.Y - Robots.GrosRobot.Rayon), RealToScreen(Robots.GrosRobot.Rayon * 2), RealToScreen(Robots.GrosRobot.Rayon * 2));
                                         g.DrawEllipse(penCouleurJ1R, RealToScreen(p.X - Robots.GrosRobot.Rayon), RealToScreen(p.Y - Robots.GrosRobot.Rayon), RealToScreen(Robots.GrosRobot.Rayon * 2), RealToScreen(Robots.GrosRobot.Rayon * 2));
                                         g.DrawLine(penRougeEpais, new Point(RealToScreen(p.X) - 7, RealToScreen(p.Y) - 7), new Point(RealToScreen(p.X) + 7, RealToScreen(p.Y) + 7));
@@ -788,7 +788,6 @@ namespace GoBot.IHM
                 //if (xSouris != pictureBoxTable.PointToClient(MousePosition).X || ySouris != pictureBoxTable.PointToClient(MousePosition).Y)
                 {
                     dateCapture = DateTime.Now;
-                    Console.WriteLine("Souris bouge");
                     xSouris = pictureBoxTable.PointToClient(MousePosition).X;
                     ySouris = pictureBoxTable.PointToClient(MousePosition).Y;
                     List<PointReel> positions = new List<PointReel>();

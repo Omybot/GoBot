@@ -87,23 +87,23 @@ namespace GoBot.IHM
             if (!deployer)
             {
                 groupHistorique.Height = tailleMin;
-                btnTaille.Image = Properties.Resources.bas;
+                btnTaille.Image = Properties.Resources.Bas;
                 tooltip.SetToolTip(btnTaille, "Agrandir");
             }
             else
             {
                 groupHistorique.Height = tailleMax;
-                btnTaille.Image = Properties.Resources.haut;
+                btnTaille.Image = Properties.Resources.Haut;
                 tooltip.SetToolTip(btnTaille, "Réduire");
             }
         }
 
         private void MAJHistoriqueDel(IAction action)
         {
-            this.Invoke(new EventHandler(delegate
+            /*this.Invoke(new EventHandler(delegate
             {
                 MAJHistorique(action);
-            }));
+            }));*/
         }
 
         private void MAJHistorique(IAction action)

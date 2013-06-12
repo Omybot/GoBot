@@ -281,15 +281,15 @@ namespace GoBot.IHM.Composants
         {
             if (!focus)
             {
-                imgBarre.BackgroundImage = global::GoBot.Properties.Resources.trackBarFond;
+                imgBarre.BackgroundImage = global::GoBot.Properties.Resources.TrackBarFond;
 
-                imgCurseur.Image = global::GoBot.Properties.Resources.trackBarCurseurNormal;
+                imgCurseur.Image = global::GoBot.Properties.Resources.TrackBarCurseurNormal;
             }
             else
             {
-                imgBarre.BackgroundImage = global::GoBot.Properties.Resources.trackBarFondSelected;
+                imgBarre.BackgroundImage = global::GoBot.Properties.Resources.TrackBarFondSelected;
 
-                imgCurseur.Image = global::GoBot.Properties.Resources.trackBarCurseurSelect;
+                imgCurseur.Image = global::GoBot.Properties.Resources.TrackBarCurseurSelect;
 
                 if(enDeplacement)
                     imgCurseur.Image.RotateFlip(RotateFlipType.Rotate180FlipNone);

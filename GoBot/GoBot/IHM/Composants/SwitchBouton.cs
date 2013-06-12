@@ -86,9 +86,9 @@ namespace GoBot.IHM.Composants
         private void ChangeImage()
         {
             if (actif)
-                pictureBox.Image = global::GoBot.Properties.Resources.switchOn;
+                pictureBox.Image = global::GoBot.Properties.Resources.SwitchOn;
             else
-                pictureBox.Image = global::GoBot.Properties.Resources.switchOff;
+                pictureBox.Image = global::GoBot.Properties.Resources.SwitchOff;
 
             int x = 0;
             if((rightToLeft && !actif) || (!rightToLeft && actif))
@@ -97,9 +97,9 @@ namespace GoBot.IHM.Composants
             Bitmap bouton;
 
             if(focus)
-                bouton = global::GoBot.Properties.Resources.trackBarCurseurSelect;
+                bouton = global::GoBot.Properties.Resources.TrackBarCurseurSelect;
             else
-                bouton = global::GoBot.Properties.Resources.trackBarCurseurNormal;
+                bouton = global::GoBot.Properties.Resources.TrackBarCurseurNormal;
 
             Graphics g = Graphics.FromImage(pictureBox.Image);
             g.DrawImage(bouton, x, 0);

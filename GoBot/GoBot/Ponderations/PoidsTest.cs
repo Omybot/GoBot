@@ -34,7 +34,7 @@ namespace GoBot.Ponderations
             PoidGlobalGrosBougie = 50;
             PoidGlobalGrosCadeau = 50;
             PoidGlobalGrosAspireAssiette = 2.5;
-            PoidGlobalGrosAccrocheAssiette = 0;
+            PoidGlobalGrosAccrocheAssiette = 25;
             // Poids de l'aspiration de l'assiette accrochée si aucune balle n'est chargée
             PoidGlobalGrosAspireAssietteAccrochee = 10000; 
             // Poids du lancage de balles si aucune assiette n'est accrochée
@@ -73,24 +73,24 @@ namespace GoBot.Ponderations
             // Bougies
             PoidsGrosBougie[0] = 1;
             PoidsGrosBougie[1] = 1;
-            PoidsGrosBougie[2] = 1;
-            PoidsGrosBougie[2] = 1;
-            PoidsGrosBougie[3] = 1;
-            PoidsGrosBougie[4] = 1;
-            PoidsGrosBougie[5] = 1;
-            PoidsGrosBougie[6] = 1;
+            PoidsGrosBougie[2] = 0;
+            PoidsGrosBougie[2] = 0;
+            PoidsGrosBougie[3] = 0;
+            PoidsGrosBougie[4] = 0;
+            PoidsGrosBougie[5] = 0;
+            PoidsGrosBougie[6] = 0;
             PoidsGrosBougie[7] = 6;
-            PoidsGrosBougie[8] = 1;
+            PoidsGrosBougie[8] = 0;
             PoidsGrosBougie[9] = 6;
             PoidsGrosBougie[10] = 1;
             PoidsGrosBougie[11] = 1;
-            PoidsGrosBougie[12] = 1;
-            PoidsGrosBougie[13] = 1;
-            PoidsGrosBougie[14] = 1;
-            PoidsGrosBougie[15] = 1;
-            PoidsGrosBougie[16] = 1;
+            PoidsGrosBougie[12] = 0;
+            PoidsGrosBougie[13] = 0;
+            PoidsGrosBougie[14] = 0;
+            PoidsGrosBougie[15] = 0;
+            PoidsGrosBougie[16] = 0;
             PoidsGrosBougie[17] = 6;
-            PoidsGrosBougie[18] = 1;
+            PoidsGrosBougie[18] = 0;
             PoidsGrosBougie[19] = 6;
 
             // Cadeaux

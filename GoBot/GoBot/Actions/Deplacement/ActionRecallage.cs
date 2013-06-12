@@ -30,7 +30,7 @@ namespace GoBot.Actions
         {
             get
             {
-                return GoBot.Properties.Resources.recale;
+                return GoBot.Properties.Resources.Recale;
             }
         }
     }

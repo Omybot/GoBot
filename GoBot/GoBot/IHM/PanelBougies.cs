@@ -124,7 +124,7 @@ namespace GoBot.IHM
                             continue;
 
                         Color pixel = img.GetPixel(Config.CurrentConfig.PositionsBougiesCameraX[i], Config.CurrentConfig.PositionsBougiesCameraY[i]);
-                        Console.WriteLine(i + " R=" + pixel.R + " G=" + pixel.G + " B=" + pixel.B);
+                        //Console.WriteLine(i + " R=" + pixel.R + " G=" + pixel.G + " B=" + pixel.B);
                         //valeursBleu.Add(pixel.B);
 
                         if (pixel.R > pixel.B)

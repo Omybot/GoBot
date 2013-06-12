@@ -69,7 +69,7 @@
             // 
             // btnCopierHistorique
             // 
-            this.btnCopierHistorique.Image = global::GoBot.Properties.Resources.disquette;
+            this.btnCopierHistorique.Image = global::GoBot.Properties.Resources.Disquette;
             this.btnCopierHistorique.Location = new System.Drawing.Point(300, 52);
             this.btnCopierHistorique.Name = "btnCopierHistorique";
             this.btnCopierHistorique.Size = new System.Drawing.Size(23, 23);
@@ -178,7 +178,7 @@
             // 
             // btnTaille
             // 
-            this.btnTaille.Image = global::GoBot.Properties.Resources.bas;
+            this.btnTaille.Image = global::GoBot.Properties.Resources.Bas;
             this.btnTaille.Location = new System.Drawing.Point(301, 10);
             this.btnTaille.Name = "btnTaille";
             this.btnTaille.Size = new System.Drawing.Size(24, 23);

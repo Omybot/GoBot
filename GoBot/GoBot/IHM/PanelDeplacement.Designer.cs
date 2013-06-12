@@ -306,7 +306,7 @@
             // 
             // btnRecallage
             // 
-            this.btnRecallage.Image = global::GoBot.Properties.Resources.recale;
+            this.btnRecallage.Image = global::GoBot.Properties.Resources.Recale;
             this.btnRecallage.Location = new System.Drawing.Point(202, 125);
             this.btnRecallage.Name = "btnRecallage";
             this.btnRecallage.Size = new System.Drawing.Size(23, 23);
@@ -325,7 +325,7 @@
             // 
             // btnTaille
             // 
-            this.btnTaille.Image = global::GoBot.Properties.Resources.haut;
+            this.btnTaille.Image = global::GoBot.Properties.Resources.Haut;
             this.btnTaille.Location = new System.Drawing.Point(301, 10);
             this.btnTaille.Name = "btnTaille";
             this.btnTaille.Size = new System.Drawing.Size(24, 23);
@@ -335,7 +335,7 @@
             // 
             // btnVirageArDr
             // 
-            this.btnVirageArDr.Image = global::GoBot.Properties.Resources.virageArDr;
+            this.btnVirageArDr.Image = global::GoBot.Properties.Resources.VirageArDr;
             this.btnVirageArDr.Location = new System.Drawing.Point(254, 100);
             this.btnVirageArDr.Name = "btnVirageArDr";
             this.btnVirageArDr.Size = new System.Drawing.Size(32, 23);
@@ -346,7 +346,7 @@
             // btnPivotGauche
             // 
             this.btnPivotGauche.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnPivotGauche.Image = global::GoBot.Properties.Resources.pivotGauche;
+            this.btnPivotGauche.Image = global::GoBot.Properties.Resources.PivotGauche;
             this.btnPivotGauche.Location = new System.Drawing.Point(143, 48);
             this.btnPivotGauche.Name = "btnPivotGauche";
             this.btnPivotGauche.Size = new System.Drawing.Size(32, 48);
@@ -359,7 +359,7 @@
             this.btnStop.ContextMenuStrip = this.contextMenuStop;
             this.btnStop.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnStop.ForeColor = System.Drawing.Color.Black;
-            this.btnStop.Image = global::GoBot.Properties.Resources.stop;
+            this.btnStop.Image = global::GoBot.Properties.Resources.Stop;
             this.btnStop.ImageAlign = System.Drawing.ContentAlignment.TopCenter;
             this.btnStop.Location = new System.Drawing.Point(27, 26);
             this.btnStop.Margin = new System.Windows.Forms.Padding(0);
@@ -372,7 +372,7 @@
             // 
             // btnVirageArGa
             // 
-            this.btnVirageArGa.Image = global::GoBot.Properties.Resources.virageArGa;
+            this.btnVirageArGa.Image = global::GoBot.Properties.Resources.VirageArGa;
             this.btnVirageArGa.Location = new System.Drawing.Point(143, 100);
             this.btnVirageArGa.Name = "btnVirageArGa";
             this.btnVirageArGa.Size = new System.Drawing.Size(32, 23);
@@ -391,7 +391,7 @@
             // 
             // btnPivotDroite
             // 
-            this.btnPivotDroite.Image = global::GoBot.Properties.Resources.pivotDroite;
+            this.btnPivotDroite.Image = global::GoBot.Properties.Resources.PivotDroite;
             this.btnPivotDroite.Location = new System.Drawing.Point(254, 48);
             this.btnPivotDroite.Name = "btnPivotDroite";
             this.btnPivotDroite.Size = new System.Drawing.Size(32, 48);
@@ -410,7 +410,7 @@
             // 
             // btnVirageAvGa
             // 
-            this.btnVirageAvGa.Image = global::GoBot.Properties.Resources.virageAvGa;
+            this.btnVirageAvGa.Image = global::GoBot.Properties.Resources.VirageAvGa;
             this.btnVirageAvGa.Location = new System.Drawing.Point(143, 21);
             this.btnVirageAvGa.Name = "btnVirageAvGa";
             this.btnVirageAvGa.Size = new System.Drawing.Size(32, 23);
@@ -420,7 +420,7 @@
             // 
             // btnVirageAvDr
             // 
-            this.btnVirageAvDr.Image = global::GoBot.Properties.Resources.virageAvDr;
+            this.btnVirageAvDr.Image = global::GoBot.Properties.Resources.VirageAvDr;
             this.btnVirageAvDr.Location = new System.Drawing.Point(254, 21);
             this.btnVirageAvDr.Name = "btnVirageAvDr";
             this.btnVirageAvDr.Size = new System.Drawing.Size(32, 23);
@@ -430,7 +430,7 @@
             // 
             // btnRecule
             // 
-            this.btnRecule.Image = global::GoBot.Properties.Resources.recule;
+            this.btnRecule.Image = global::GoBot.Properties.Resources.Recule;
             this.btnRecule.Location = new System.Drawing.Point(181, 100);
             this.btnRecule.Name = "btnRecule";
             this.btnRecule.Size = new System.Drawing.Size(67, 23);
@@ -440,7 +440,7 @@
             // 
             // btnAvance
             // 
-            this.btnAvance.Image = global::GoBot.Properties.Resources.avance;
+            this.btnAvance.Image = global::GoBot.Properties.Resources.Avance;
             this.btnAvance.Location = new System.Drawing.Point(181, 21);
             this.btnAvance.Name = "btnAvance";
             this.btnAvance.Size = new System.Drawing.Size(67, 23);

@@ -366,6 +366,7 @@ namespace GoBot
                 }
                 else
                 {
+                    Plateau.SemaphoreGraph.Release();
                     CheminEnCoursNoeuds.Clear();
                     CheminEnCoursArcs.Clear();
                 }
@@ -375,13 +376,17 @@ namespace GoBot
             ObstacleTeste = null;
             NodeTrouve = new List<Node>();
             CheminTrouve = new List<Arc>();
-            
+
+            DateTime debut = DateTime.Now;
+
             // Reset du graph (Trouver un meilleur moyen ?)
             Plateau.ChargerGraph();
             List<IForme> obstacles = new List<IForme>(Plateau.ObstaclesTemporaires);
             Plateau.ObstaclesTemporaires = new List<IForme>();
             foreach (IForme f in obstacles)
                 Plateau.AjouterObstacle(f);
+
+            Console.WriteLine((DateTime.Now - debut).TotalMilliseconds + " ms");
 
             if (CheminEnCoursArcs.Count == 0)
             {

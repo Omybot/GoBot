@@ -84,7 +84,7 @@
             // 
             // btnTaille
             // 
-            this.btnTaille.Image = global::GoBot.Properties.Resources.haut;
+            this.btnTaille.Image = global::GoBot.Properties.Resources.Haut;
             this.btnTaille.Location = new System.Drawing.Point(304, 10);
             this.btnTaille.Name = "btnTaille";
             this.btnTaille.Size = new System.Drawing.Size(24, 23);

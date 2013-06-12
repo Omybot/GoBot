@@ -44,7 +44,7 @@ namespace GoBot.IHM
 
                 btnTaille.Visible = true;
                 groupBoxReglage.Height = tailleMin;
-                btnTaille.Image = Properties.Resources.bas;
+                btnTaille.Image = Properties.Resources.Bas;
                 tooltip.SetToolTip(btnTaille, "Agrandir");
             }
             else
@@ -53,7 +53,7 @@ namespace GoBot.IHM
                     c.Visible = true;
 
                 groupBoxReglage.Height = tailleMax;
-                btnTaille.Image = Properties.Resources.haut;
+                btnTaille.Image = Properties.Resources.Haut;
                 tooltip.SetToolTip(btnTaille, "Réduire");
             }
 

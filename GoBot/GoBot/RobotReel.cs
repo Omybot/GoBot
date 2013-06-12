@@ -125,7 +125,7 @@ namespace GoBot
                         "\t\t5|" + valCouleurAllume1 +
                         "\t\t6|" + valCouleurAllume2 +
                         "\t\t7|" + valCouleurAllume3 +
-                        "\t\t8|" + valCouleurAllume4 + "\t");
+                        "\t\t8|" + valCouleurAllume4 + "\t" + (valCouleur1+valCouleur2+valCouleur3+valCouleur4+valCouleurAllume1+valCouleurAllume2+valCouleurAllume3+valCouleurAllume4));
 
                     try
                     {
@@ -142,7 +142,8 @@ namespace GoBot
                             couleurBalle = Plateau.CouleurJ1R;
                             couleur = "Rouge";
                         }
-                        else if (valCouleurAllume4 > 3200)
+                        //else if (valCouleurAllume4 > 3200)
+                        else if (valCouleurAllume4 > 1500)
                         {
                             couleurBalle = Plateau.CouleurJ2B;
                             couleur = "Bleu";

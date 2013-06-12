@@ -44,7 +44,7 @@ namespace GoBot.IHM
 
                 btnTaille.Visible = true;
                 groupBoxSeq.Height = tailleMin;
-                btnTaille.Image = Properties.Resources.bas;
+                btnTaille.Image = Properties.Resources.Bas;
                 tooltip.SetToolTip(btnTaille, "Agrandir");
             }
             else
@@ -53,7 +53,7 @@ namespace GoBot.IHM
                     c.Visible = true;
 
                 groupBoxSeq.Height = tailleMax;
-                btnTaille.Image = Properties.Resources.haut;
+                btnTaille.Image = Properties.Resources.Haut;
                 tooltip.SetToolTip(btnTaille, "Réduire");
             }
 
@@ -117,7 +117,7 @@ namespace GoBot.IHM
         {
             Robots.GrosRobot.TourneMoteur(MoteurID.GRCanonTMin, 7600);
 
-            int distance = 0;
+            int distance = 50;
             // Approche d'aspiration
             Robots.GrosRobot.TourneMoteur(MoteurID.GRTurbineAspirateur, Config.CurrentConfig.VitesseAspiration);
             Robots.GrosRobot.BougeServo(ServomoteurID.GRAspirateur, Config.CurrentConfig.PositionGRAspirateurBas);

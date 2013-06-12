@@ -36,6 +36,7 @@ namespace GoBot.Mouvements
 
                 Robots.GrosRobot.Lent();
                 Robots.GrosRobot.Reculer(170);
+                Robots.GrosRobot.Rapide();
 
                 // Si pas d'assiette on abandonne et on s'en va. On considère que l'assiette n'est pas ici
                 if (!Robots.GrosRobot.GetPresenceAssiette())

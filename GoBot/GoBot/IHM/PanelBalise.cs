@@ -17,6 +17,8 @@ namespace GoBot.IHM
         {
             InitializeComponent();
             font = new Font("Calibri", 8);
+            Bitmap bmp = new Bitmap(pictureBoxAngle.Width, pictureBoxAngle.Height);
+            pictureBoxAngle.Image = bmp;
         }
 
         private Balise balise;
@@ -95,13 +97,11 @@ namespace GoBot.IHM
 
         private void VideAngles()
         {
-            using (Bitmap bmp = new Bitmap(pictureBoxAngle.Width, pictureBoxAngle.Height))
-            {
-                Graphics g = Graphics.FromImage(bmp);
-                g.FillRectangle(brushBlanc, 0, 0, pictureBoxAngle.Width, pictureBoxAngle.Height);
+            Bitmap bmp = new Bitmap(pictureBoxAngle.Width, pictureBoxAngle.Height);
+            Graphics g = Graphics.FromImage(bmp);
+            g.FillRectangle(brushBlanc, 0, 0, pictureBoxAngle.Width, pictureBoxAngle.Height);
 
-                pictureBoxAngle.Image = bmp;
-            }
+            pictureBoxAngle.Image = bmp;
         }
 
         private void CompleteAngles()
@@ -123,37 +123,30 @@ namespace GoBot.IHM
         private Pen penBleu = new Pen(Color.LightBlue);
         private void DessineAngle(double debut, double fin, bool ennemi)
         {
-            try
+            Bitmap bmp;
+            Graphics g;
+
+            if (pictureBoxAngle.Image == null)
+                bmp = new Bitmap(pictureBoxAngle.Width, pictureBoxAngle.Height);
+            else
+                bmp = (Bitmap)pictureBoxAngle.Image;
+
+            g = Graphics.FromImage(bmp);
+
+            if (ennemi)
             {
-                Bitmap bmp;
-                Graphics g;
-
-                if (pictureBoxAngle.Image == null)
-                    bmp = new Bitmap(pictureBoxAngle.Width, pictureBoxAngle.Height);
-                else
-                    bmp = (Bitmap)pictureBoxAngle.Image;
-
-                g = Graphics.FromImage(bmp);
-                
-                if (ennemi)
-                {
-                    g.FillPie(brushRouge, 5, 5, 190, 190, (int)debut, (int)(fin - debut));
-                    g.DrawPie(penRouge, 5, 5, 190, 190, (int)debut, (int)(fin - debut));
-                    g.DrawString(Math.Round((fin + debut) / 2.0, 2) + "°", font, brushNoir, 2, 5 + 8 * nbDetections);
-                }
-                else
-                {
-                    g.FillPie(brushBleu, 5, 180, 190, 190, (int)debut, (int)(fin - debut));
-                    g.DrawPie(penBleu, 5, 180, 190, 190, (int)debut, (int)(fin - debut));
-                    g.DrawString(Math.Round((fin + debut) / 2.0, 2) + "°", font, brushNoir, 2, 185 + 10 * nbDetections);
-                }
-
-                pictureBoxAngle.Image = bmp;
-                bmp.Dispose();
+                g.FillPie(brushRouge, 5, 5, 190, 190, (int)debut, (int)(fin - debut));
+                g.DrawPie(penRouge, 5, 5, 190, 190, (int)debut, (int)(fin - debut));
+                g.DrawString(Math.Round((fin + debut) / 2.0, 2) + "°", font, brushNoir, 2, 5 + 8 * nbDetections);
             }
-            catch (Exception)
+            else
             {
+                g.FillPie(brushBleu, 5, 180, 190, 190, (int)debut, (int)(fin - debut));
+                g.DrawPie(penBleu, 5, 180, 190, 190, (int)debut, (int)(fin - debut));
+                g.DrawString(Math.Round((fin + debut) / 2.0, 2) + "°", font, brushNoir, 2, 185 + 10 * nbDetections);
             }
+
+            pictureBoxAngle.Image = bmp;
         }
 
         private void trackBarConsigne_TickValueChanged(object sender, EventArgs e)

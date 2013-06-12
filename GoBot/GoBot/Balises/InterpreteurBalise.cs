@@ -43,19 +43,6 @@ namespace GoBot.Balises
         }
 
         /// <summary>
-        /// Vrai si les données de la balise 1 ont été reçues depuis la dernière interpolation de positions
-        /// </summary>
-        private bool donneesBalise1Recues;
-        /// <summary>
-        /// Vrai si les données de la balise 2 ont été reçues depuis la dernière interpolation de positions
-        /// </summary>
-        private bool donneesBalise2Recues;
-        /// <summary>
-        /// Vrai si les données de la balise 3 ont été reçues depuis la dernière interpolation de positions
-        /// </summary>
-        private bool donneesBalise3Recues;
-
-        /// <summary>
         /// Ensemble des détections du capteur haut de la balise 1 pour le calcul d'interpolation courant
         /// </summary>
         public List<DetectionBalise> DetectionBalise1 { get; private set; }
@@ -98,10 +85,6 @@ namespace GoBot.Balises
 
         public InterpreteurBalise()
         {
-            donneesBalise1Recues = false;
-            donneesBalise2Recues = false;
-            donneesBalise3Recues = false;
-
             Plateau.Balise1.PositionsChange += new Balise.PositionsChangeDelegate(Balise1_PositionsChange);
             Plateau.Balise2.PositionsChange += new Balise.PositionsChangeDelegate(Balise2_PositionsChange);
             Plateau.Balise3.PositionsChange += new Balise.PositionsChangeDelegate(Balise3_PositionsChange);
@@ -114,11 +97,9 @@ namespace GoBot.Balises
         void Balise1_PositionsChange()
         {
             DetectionBalise1 = new List<DetectionBalise>(Plateau.Balise1.Detections);
-            donneesBalise1Recues = true;
 
-            // Si on a reçu les données de toutes les balises, on calcule l'interpolation des positions
-            //if (donneesBalise1Recues && donneesBalise2Recues && donneesBalise3Recues)
-                Actualisation();
+            // On calcule l'interpolation des positions
+            Actualisation();
         }
 
         /// <summary>
@@ -127,11 +108,9 @@ namespace GoBot.Balises
         void Balise2_PositionsChange()
         {
             DetectionBalise2 = new List<DetectionBalise>(Plateau.Balise2.Detections);
-            donneesBalise2Recues = true;
 
-            // Si on a reçu les données de toutes les balises, on calcule l'interpolation des positions
-            //if (donneesBalise1Recues && donneesBalise2Recues && donneesBalise3Recues)
-                Actualisation();
+            // On calcule l'interpolation des positions
+            Actualisation();
         }
 
         /// <summary>
@@ -140,11 +119,9 @@ namespace GoBot.Balises
         void Balise3_PositionsChange()
         {
             DetectionBalise3 = new List<DetectionBalise>(Plateau.Balise3.Detections);
-            donneesBalise3Recues = true;
 
-            // Si on a reçu les données de toutes les balises, on calcule l'interpolation des positions
-            //if (donneesBalise1Recues && donneesBalise2Recues && donneesBalise3Recues)
-                Actualisation();
+            // On calcule l'interpolation des positions
+            Actualisation();
         }
 
         /// <summary>
@@ -154,10 +131,6 @@ namespace GoBot.Balises
         {
             try
             {
-                donneesBalise1Recues = false;
-                donneesBalise2Recues = false;
-                donneesBalise3Recues = false;
-
                 InterpreterDetection(ModeInterpretation.Intersections);
             }
             catch (Exception)
@@ -185,7 +158,7 @@ namespace GoBot.Balises
             if (detections.Count > 0)
             {
                 PositionsEnnemies = new List<PointReel>(detections);
-                SuiviBalise.MajPositions(PositionsEnnemies, Plateau.Enchainement != null && Plateau.Enchainement.DebutMatch == null);
+                SuiviBalise.MajPositions(PositionsEnnemies, Plateau.Enchainement == null || Plateau.Enchainement.DebutMatch == null);
                 //PositionEnnemisActualisee(this);
             }
         }

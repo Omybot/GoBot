@@ -199,7 +199,7 @@ namespace GoBot
         public void CouleurRouge()
         {
             pictureBoxCouleur.BackColor = Plateau.CouleurJ1R;
-            pictureBoxBalises.Image = Properties.Resources.tableRouge;
+            pictureBoxBalises.Image = Properties.Resources.TableRouge;
 
             panelBougies.ChangementCouleur();
 
@@ -211,7 +211,7 @@ namespace GoBot
         public void CouleurBleu()
         {
             pictureBoxCouleur.BackColor = Plateau.CouleurJ2B;
-            pictureBoxBalises.Image = Properties.Resources.tableViolet;
+            pictureBoxBalises.Image = Properties.Resources.TableViolet;
 
             panelBougies.ChangementCouleur();
 

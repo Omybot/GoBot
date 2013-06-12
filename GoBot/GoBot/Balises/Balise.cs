@@ -206,17 +206,12 @@ namespace GoBot
 
                         tabAngle.Sort();
 
-                        DetectionBalise d = null;
-
                         for (int i = 0; i < nbMesures1; i++)
                         {
                             double debut = 360 - (tabAngle[i * 2] / 100.0) + Config.CurrentConfig.GetOffsetBalise(Carte, 1);
                             double fin = 360 - (tabAngle[i * 2 + 1] / 100.0) + Config.CurrentConfig.GetOffsetBalise(Carte, 1);
 
-                            //if (debut < 360 && debut > 0 && fin < 360 && fin > 0)
-                            DetectionsCapteur1.Add(d = new DetectionBalise(this, debut, fin));
-                            //else
-                            //    Console.WriteLine("Mauvaise mesure : début = " + debut + " / fin = " + fin);
+                            DetectionsCapteur1.Add(new DetectionBalise(this, debut, fin));
                         }
 
                         /*writer.WriteLine((DateTime.Now - prec).TotalMilliseconds + ";" + nouvelleVitesse + ";" + (d == null ? ";;" : d.AngleCentral + ";" + d.Distance + ";") + VitesseToursSecActuelle);
@@ -248,7 +243,6 @@ namespace GoBot
 
                         if (verif != 0)
                         {
-                            Console.WriteLine();
                             Console.WriteLine("Inversion détectée");
                         }
                         else
@@ -375,44 +369,8 @@ namespace GoBot
                                 ReglageOffset = false;
                             }
                         }
+
                         Detections = new List<DetectionBalise>();
-
-                        /*
-                        // Réunification des mesures détectées par les deux capteurs
-                        double ecartAngle = 1;
-
-                        
-                        foreach (DetectionBalise d1 in DetectionsCapteur1)
-                        {
-                            bool correspondance = false;
-                            foreach (DetectionBalise d2 in DetectionsCapteur2)
-                            {
-                                if (d1.AngleCentral > d2.AngleCentral - ecartAngle && d1.AngleCentral < d2.AngleCentral + ecartAngle)
-                                {
-                                    // Moins de +- 1° de différence, les capteurs ont la même cible
-                                    DetectionBalise detection = new DetectionBalise(this, (d1.AngleDebut + d2.AngleDebut) / 2, (d1.AngleFin + d2.AngleFin) / 2);
-                                    Detections.Add(detection);
-                                    correspondance = true;
-                                }
-                            }
-                            if (!correspondance)
-                                Detections.Add(d1);
-                        }
-                        // Cherche les détections du capteur 2 non trouvées par le capteur 1
-                        foreach (DetectionBalise d2 in DetectionsCapteur1)
-                        {
-                            bool correspondance = false;
-                            foreach (DetectionBalise d1 in DetectionsCapteur2)
-                            {
-                                if (d1.AngleCentral > d2.AngleCentral - ecartAngle && d1.AngleCentral < d2.AngleCentral + ecartAngle)
-                                {
-                                    correspondance = true;
-                                }
-                            }
-                            if (!correspondance)
-                                Detections.Add(d2);
-                        }*/
-
                         foreach (DetectionBalise d2 in DetectionsCapteur1)
                             Detections.Add(d2);
 
@@ -420,7 +378,7 @@ namespace GoBot
                             Detections.Add(d1);
 
                         // Retire les détections correspondant à la position de robots alliés
-                        if (Plateau.ReflecteursNosRobots)
+                        if (!ReglageOffset && Plateau.ReflecteursNosRobots)
                         {
                             for (int i = 0; i < Detections.Count; i++)
                             {

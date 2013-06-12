@@ -2,7 +2,7 @@
 <Config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
   <DeplacementGROuvert>true</DeplacementGROuvert>
   <HistoriqueGROuvert>true</HistoriqueGROuvert>
-  <ReglageGROuvert>true</ReglageGROuvert>
+  <ReglageGROuvert>false</ReglageGROuvert>
   <UtilisationGROuvert>true</UtilisationGROuvert>
   <SequencesGROuvert>true</SequencesGROuvert>
   <CapteursGROuvert>true</CapteursGROuvert>
@@ -10,34 +10,34 @@
   <HistoriquePROuvert>true</HistoriquePROuvert>
   <ReglagePROuvert>true</ReglagePROuvert>
   <UtilisationPROuvert>true</UtilisationPROuvert>
-  <GRVitesseLigneRapide>1373</GRVitesseLigneRapide>
-  <GRAccelerationLigneRapide>2088</GRAccelerationLigneRapide>
-  <GRVitessePivotRapide>2000</GRVitessePivotRapide>
-  <GRAccelerationPivotRapide>2000</GRAccelerationPivotRapide>
-  <GRVitesseLigneLent>200</GRVitesseLigneLent>
+  <GRVitesseLigneRapide>952</GRVitesseLigneRapide>
+  <GRAccelerationLigneRapide>1627</GRAccelerationLigneRapide>
+  <GRVitessePivotRapide>940</GRVitessePivotRapide>
+  <GRAccelerationPivotRapide>1606</GRAccelerationPivotRapide>
+  <GRVitesseLigneLent>300</GRVitesseLigneLent>
   <GRAccelerationLigneLent>300</GRAccelerationLigneLent>
-  <GRVitessePivotLent>500</GRVitessePivotLent>
-  <GRAccelerationPivotLent>500</GRAccelerationPivotLent>
+  <GRVitessePivotLent>300</GRVitessePivotLent>
+  <GRAccelerationPivotLent>300</GRAccelerationPivotLent>
   <GRCoeffP>20</GRCoeffP>
   <GRCoeffI>0</GRCoeffI>
   <GRCoeffD>300</GRCoeffD>
-  <PRVitesseLigneRapide>0</PRVitesseLigneRapide>
-  <PRAccelerationLigneRapide>0</PRAccelerationLigneRapide>
-  <PRVitessePivotRapide>0</PRVitessePivotRapide>
-  <PRAccelerationPivotRapide>0</PRAccelerationPivotRapide>
-  <PRVitesseLigneLent>0</PRVitesseLigneLent>
-  <PRAccelerationLigneLent>0</PRAccelerationLigneLent>
-  <PRVitessePivotLent>0</PRVitessePivotLent>
-  <PRAccelerationPivotLent>0</PRAccelerationPivotLent>
+  <PRVitesseLigneRapide>500</PRVitesseLigneRapide>
+  <PRAccelerationLigneRapide>500</PRAccelerationLigneRapide>
+  <PRVitessePivotRapide>500</PRVitessePivotRapide>
+  <PRAccelerationPivotRapide>500</PRAccelerationPivotRapide>
+  <PRVitesseLigneLent>100</PRVitesseLigneLent>
+  <PRAccelerationLigneLent>100</PRAccelerationLigneLent>
+  <PRVitessePivotLent>100</PRVitessePivotLent>
+  <PRAccelerationPivotLent>100</PRAccelerationPivotLent>
   <PRCoeffP>0</PRCoeffP>
   <PRCoeffI>0</PRCoeffI>
   <PRCoeffD>0</PRCoeffD>
-  <OffsetBalise1Capteur1>-192.2290625</OffsetBalise1Capteur1>
-  <OffsetBalise2Capteur1>162.54312499999998</OffsetBalise2Capteur1>
-  <OffsetBalise3Capteur1>-10.627187499999991</OffsetBalise3Capteur1>
-  <OffsetBalise1Capteur2>-193.68531249999998</OffsetBalise1Capteur2>
-  <OffsetBalise2Capteur2>161.584375</OffsetBalise2Capteur2>
-  <OffsetBalise3Capteur2>168.41375</OffsetBalise3Capteur2>
+  <OffsetBalise1Capteur1>-10.033437499999991</OffsetBalise1Capteur1>
+  <OffsetBalise2Capteur1>-13.818437499999988</OffsetBalise2Capteur1>
+  <OffsetBalise3Capteur1>-188.01500000000002</OffsetBalise3Capteur1>
+  <OffsetBalise1Capteur2>-191.03281250000003</OffsetBalise1Capteur2>
+  <OffsetBalise2Capteur2>164.97562499999998</OffsetBalise2Capteur2>
+  <OffsetBalise3Capteur2>-189.58937500000002</OffsetBalise3Capteur2>
   <PositionGRGrandBrasHaut>465</PositionGRGrandBrasHaut>
   <PositionGRGrandBrasBas>545</PositionGRGrandBrasBas>
   <PositionGRGrandBrasRange>815</PositionGRGrandBrasRange>
@@ -92,16 +92,16 @@
     <int>193</int>
     <int>202</int>
     <int>149</int>
-    <int>157</int>
-    <int>117</int>
-    <int>225</int>
-    <int>168</int>
-    <int>317</int>
-    <int>251</int>
-    <int>321</int>
-    <int>382</int>
+    <int>189</int>
+    <int>147</int>
+    <int>224</int>
+    <int>169</int>
+    <int>304</int>
+    <int>242</int>
+    <int>313</int>
+    <int>372</int>
     <int>363</int>
-    <int>417</int>
+    <int>419</int>
   </PositionsBougiesCameraX>
   <PositionsBougiesCameraY>
     <int>184</int>
@@ -114,15 +114,15 @@
     <int>245</int>
     <int>180</int>
     <int>238</int>
-    <int>178</int>
-    <int>246</int>
-    <int>171</int>
+    <int>183</int>
+    <int>248</int>
+    <int>188</int>
+    <int>254</int>
+    <int>185</int>
+    <int>257</int>
+    <int>248</int>
     <int>241</int>
-    <int>165</int>
-    <int>236</int>
-    <int>232</int>
-    <int>224</int>
-    <int>160</int>
-    <int>218</int>
+    <int>177</int>
+    <int>230</int>
   </PositionsBougiesCameraY>
 </Config>

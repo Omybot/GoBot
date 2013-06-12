@@ -177,7 +177,7 @@
             // 
             // pictureBoxTable
             // 
-            this.pictureBoxTable.Image = global::GoBot.Properties.Resources.table;
+            this.pictureBoxTable.Image = global::GoBot.Properties.Resources.Table;
             this.pictureBoxTable.Location = new System.Drawing.Point(126, 3);
             this.pictureBoxTable.Name = "pictureBoxTable";
             this.pictureBoxTable.Size = new System.Drawing.Size(750, 500);

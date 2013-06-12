@@ -325,7 +325,7 @@
             // 
             // btnSet
             // 
-            this.btnSet.Image = global::GoBot.Properties.Resources.flecheGauche;
+            this.btnSet.Image = global::GoBot.Properties.Resources.FlecheGauche;
             this.btnSet.Location = new System.Drawing.Point(178, 218);
             this.btnSet.Name = "btnSet";
             this.btnSet.Size = new System.Drawing.Size(50, 15);
@@ -359,7 +359,7 @@
             // 
             // btnGet
             // 
-            this.btnGet.Image = global::GoBot.Properties.Resources.flecheDroite;
+            this.btnGet.Image = global::GoBot.Properties.Resources.FlecheDroite;
             this.btnGet.Location = new System.Drawing.Point(178, 202);
             this.btnGet.Name = "btnGet";
             this.btnGet.Size = new System.Drawing.Size(50, 15);

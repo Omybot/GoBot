@@ -17,12 +17,12 @@ namespace GoBot.Enchainements
         public static TimeSpan DureeMatch { get; set; }
 
         public DateTime DebutMatch { get; set; }
-        public TimeSpan TempsRestant 
-        { 
-            get 
-            { 
-                return (DebutMatch + DureeMatch) - DateTime.Now; 
-            } 
+        public TimeSpan TempsRestant
+        {
+            get
+            {
+                return (DebutMatch + DureeMatch) - DateTime.Now;
+            }
         }
 
         public List<Mouvement> ListeMouvementsGros = new List<Mouvement>();
@@ -38,14 +38,14 @@ namespace GoBot.Enchainements
             Plateau.PoidActions = new PoidsTest();
             Couleur = Color.Purple;
 
-            for(int i = 0; i < 20; i++)
+            for (int i = 0; i < 20; i++)
                 ListeMouvementsGros.Add(new MoveGrosBougie(i));
             for (int i = 0; i < 8; i++)
             {
                 ListeMouvementsGros.Add(new MoveGrosCadeau(i));
                 ListeMouvementsPetit.Add(new MovePetitCadeau(i));
             }
-            
+
             ListeMouvementsPetit.Add(new MovePetitBougie(1));
             ListeMouvementsPetit.Add(new MovePetitBougie(3));
             ListeMouvementsPetit.Add(new MovePetitBougie(5));
@@ -61,7 +61,7 @@ namespace GoBot.Enchainements
 
             for (int i = 0; i < 10; i++)
             {
-                if(i != 0 && i != 4 && i != 5 && i != 9)
+                if (i != 0 && i != 4 && i != 5 && i != 9)
                     ListeMouvementsGros.Add(new MoveGrosAccrocheAssiette(i));
                 ListeMouvementsGros.Add(new MoveGrosAspireAssiette(i));
             }
@@ -79,14 +79,16 @@ namespace GoBot.Enchainements
             if (Plateau.NotreCouleur == Plateau.CouleurJ1R)
             {
                 for (int i = 0; i < 10; i++)
-                    Plateau.PoidActions.PoidsGrosBougie[i]++;
+                    if (Plateau.PoidActions.PoidsGrosBougie[i] != 0)
+                        Plateau.PoidActions.PoidsGrosBougie[i]++;
 
                 Plateau.PoidActions.PoidsGrosBougie[0] = 200;
             }
             if (Plateau.NotreCouleur == Plateau.CouleurJ2B)
             {
                 for (int i = 10; i < 20; i++)
-                    Plateau.PoidActions.PoidsGrosBougie[i]++;
+                    if (Plateau.PoidActions.PoidsGrosBougie[i] != 0)
+                        Plateau.PoidActions.PoidsGrosBougie[i]++;
 
                 Plateau.PoidActions.PoidsGrosBougie[10] = 200;
             }
@@ -110,9 +112,10 @@ namespace GoBot.Enchainements
         private void timerFinMatch_Elapsed(object sender, ElapsedEventArgs e)
         {
             Robots.GrosRobot.Historique.Log("FIN DU MATCH", TypeLog.Strat);
+            Robots.GrosRobot.ActionneurOnOff(ActionneurOnOffID.GRPompe, true);
             timerFinMatch.Stop();
             thGrosRobot.Abort();
-            thPetitRobot.Abort();
+            //thPetitRobot.Abort();
             Robots.GrosRobot.Stop(StopMode.Freely);
             Thread.Sleep(100);
             Robots.GrosRobot.ActionneurOnOff(ActionneurOnOffID.GRAlimentation, false);
@@ -128,7 +131,6 @@ namespace GoBot.Enchainements
             Thread.Sleep(100);
             Plateau.Balise3.Stop();
             Thread.Sleep(100);
-            Robots.GrosRobot.ActionneurOnOff(ActionneurOnOffID.GRPompe, true);
             Plateau.Score += 12;
             Thread.Sleep(9000);
             Robots.GrosRobot.ActionneurOnOff(ActionneurOnOffID.GRPompe, false);
@@ -143,7 +145,7 @@ namespace GoBot.Enchainements
                 Robots.GrosRobot.BougeServo(ServomoteurID.GRBrasDroit, Config.CurrentConfig.PositionGRBrasDroitSorti);
                 Robots.GrosRobot.BougeServo(ServomoteurID.GRBrasGauche, Config.CurrentConfig.PositionGRBrasGaucheSorti);
                 Robots.GrosRobot.Avancer(1400);
-                if(Plateau.NotreCouleur == Plateau.CouleurJ2B)
+                if (Plateau.NotreCouleur == Plateau.CouleurJ2B)
                     Robots.GrosRobot.PivotDroite(270);
                 else
                     Robots.GrosRobot.PivotGauche(270);
@@ -160,10 +162,10 @@ namespace GoBot.Enchainements
             while (ListeMouvementsGros.Count > 0)
             {
                 double meilleurCout = double.MaxValue;
-                for(int j = 0; j < ListeMouvementsGros.Count; j++)
+                for (int j = 0; j < ListeMouvementsGros.Count; j++)
                 {
                     double cout = ListeMouvementsGros[j].Cout;
-                    if(meilleurCout > cout)
+                    if (meilleurCout > cout)
                     {
                         meilleurCout = cout;
                         iMeilleur = j;
@@ -193,7 +195,7 @@ namespace GoBot.Enchainements
                     }
                 }
 
-                if(ListeMouvementsPetit[iMeilleur].Score != 0)
+                if (ListeMouvementsPetit[iMeilleur].Score != 0)
                     ListeMouvementsPetit[iMeilleur].Executer();
             }
         }

@@ -30,7 +30,7 @@ namespace GoBot.Actions
         {
             get 
             { 
-                return GoBot.Properties.Resources.stopPetit;  
+                return GoBot.Properties.Resources.StopPetit;  
             }
         }
     }

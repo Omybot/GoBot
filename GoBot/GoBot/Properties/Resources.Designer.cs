@@ -81,9 +81,9 @@ namespace GoBot.Properties {
             }
         }
         
-        internal static System.Drawing.Bitmap avance {
+        internal static System.Drawing.Bitmap Avance {
             get {
-                object obj = ResourceManager.GetObject("avance", resourceCulture);
+                object obj = ResourceManager.GetObject("Avance", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -109,121 +109,65 @@ namespace GoBot.Properties {
             }
         }
         
-        internal static System.Drawing.Bitmap bas {
+        internal static System.Drawing.Bitmap Bas {
             get {
-                object obj = ResourceManager.GetObject("bas", resourceCulture);
+                object obj = ResourceManager.GetObject("Bas", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
         
-        internal static System.Drawing.Bitmap BasDroiteFerme {
+        internal static System.Drawing.Bitmap Ciseaux {
             get {
-                object obj = ResourceManager.GetObject("BasDroiteFerme", resourceCulture);
+                object obj = ResourceManager.GetObject("Ciseaux", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
         
-        internal static System.Drawing.Bitmap BasDroiteOuvert {
+        internal static System.Drawing.Bitmap Close {
             get {
-                object obj = ResourceManager.GetObject("BasDroiteOuvert", resourceCulture);
+                object obj = ResourceManager.GetObject("Close", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
         
-        internal static System.Drawing.Bitmap BasGaucheFerme {
+        internal static System.Drawing.Bitmap Crochet {
             get {
-                object obj = ResourceManager.GetObject("BasGaucheFerme", resourceCulture);
+                object obj = ResourceManager.GetObject("Crochet", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
         
-        internal static System.Drawing.Bitmap BasGaucheOuvert {
+        internal static System.Drawing.Bitmap Disquette {
             get {
-                object obj = ResourceManager.GetObject("BasGaucheOuvert", resourceCulture);
+                object obj = ResourceManager.GetObject("Disquette", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
         
-        internal static System.Drawing.Bitmap ciseaux {
+        internal static System.Drawing.Bitmap Fenetre {
             get {
-                object obj = ResourceManager.GetObject("ciseaux", resourceCulture);
+                object obj = ResourceManager.GetObject("Fenetre", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
         
-        internal static System.Drawing.Bitmap close {
+        internal static System.Drawing.Bitmap FlecheDroite {
             get {
-                object obj = ResourceManager.GetObject("close", resourceCulture);
+                object obj = ResourceManager.GetObject("FlecheDroite", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
         
-        internal static System.Drawing.Bitmap crochet {
+        internal static System.Drawing.Bitmap FlecheGauche {
             get {
-                object obj = ResourceManager.GetObject("crochet", resourceCulture);
+                object obj = ResourceManager.GetObject("FlecheGauche", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
         
-        internal static System.Drawing.Bitmap disquette {
+        internal static System.Drawing.Bitmap Haut {
             get {
-                object obj = ResourceManager.GetObject("disquette", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        internal static System.Drawing.Bitmap fenetre {
-            get {
-                object obj = ResourceManager.GetObject("fenetre", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        internal static System.Drawing.Bitmap flecheDroite {
-            get {
-                object obj = ResourceManager.GetObject("flecheDroite", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        internal static System.Drawing.Bitmap flecheGauche {
-            get {
-                object obj = ResourceManager.GetObject("flecheGauche", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        internal static System.Drawing.Bitmap haut {
-            get {
-                object obj = ResourceManager.GetObject("haut", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        internal static System.Drawing.Bitmap HautDroiteFerme {
-            get {
-                object obj = ResourceManager.GetObject("HautDroiteFerme", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        internal static System.Drawing.Bitmap HautDroiteOuvert {
-            get {
-                object obj = ResourceManager.GetObject("HautDroiteOuvert", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        internal static System.Drawing.Bitmap HautGaucheFerme {
-            get {
-                object obj = ResourceManager.GetObject("HautGaucheFerme", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        internal static System.Drawing.Bitmap HautGaucheOuvert {
-            get {
-                object obj = ResourceManager.GetObject("HautGaucheOuvert", resourceCulture);
+                object obj = ResourceManager.GetObject("Haut", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -249,79 +193,51 @@ namespace GoBot.Properties {
             }
         }
         
-        internal static System.Drawing.Bitmap iconeVitesse {
+        internal static System.Drawing.Bitmap IconeVitesse {
             get {
-                object obj = ResourceManager.GetObject("iconeVitesse", resourceCulture);
+                object obj = ResourceManager.GetObject("IconeVitesse", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
         
-        internal static System.Drawing.Bitmap ledBleu {
+        internal static System.Drawing.Bitmap LedBleu {
             get {
-                object obj = ResourceManager.GetObject("ledBleu", resourceCulture);
+                object obj = ResourceManager.GetObject("LedBleu", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
         
-        internal static System.Drawing.Bitmap ledGris {
+        internal static System.Drawing.Bitmap LedGris {
             get {
-                object obj = ResourceManager.GetObject("ledGris", resourceCulture);
+                object obj = ResourceManager.GetObject("LedGris", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
         
-        internal static System.Drawing.Bitmap ledJaune {
+        internal static System.Drawing.Bitmap LedJaune {
             get {
-                object obj = ResourceManager.GetObject("ledJaune", resourceCulture);
+                object obj = ResourceManager.GetObject("LedJaune", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
         
-        internal static System.Drawing.Bitmap ledOrange {
+        internal static System.Drawing.Bitmap LedOrange {
             get {
-                object obj = ResourceManager.GetObject("ledOrange", resourceCulture);
+                object obj = ResourceManager.GetObject("LedOrange", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
         
-        internal static System.Drawing.Bitmap ledRouge {
+        internal static System.Drawing.Bitmap LedRouge {
             get {
-                object obj = ResourceManager.GetObject("ledRouge", resourceCulture);
+                object obj = ResourceManager.GetObject("LedRouge", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
         
-        internal static System.Drawing.Bitmap ledVert {
+        internal static System.Drawing.Bitmap LedVert {
             get {
-                object obj = ResourceManager.GetObject("ledVert", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        internal static System.Drawing.Bitmap MilieuDroiteFerme {
-            get {
-                object obj = ResourceManager.GetObject("MilieuDroiteFerme", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        internal static System.Drawing.Bitmap MilieuDroiteOuvert {
-            get {
-                object obj = ResourceManager.GetObject("MilieuDroiteOuvert", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        internal static System.Drawing.Bitmap MilieuGaucheFerme {
-            get {
-                object obj = ResourceManager.GetObject("MilieuGaucheFerme", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        internal static System.Drawing.Bitmap MilieuGaucheOuvert {
-            get {
-                object obj = ResourceManager.GetObject("MilieuGaucheOuvert", resourceCulture);
+                object obj = ResourceManager.GetObject("LedVert", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -333,275 +249,149 @@ namespace GoBot.Properties {
             }
         }
         
-        internal static System.Drawing.Bitmap PetitDepli {
+        internal static System.Drawing.Bitmap PivotDroite {
             get {
-                object obj = ResourceManager.GetObject("PetitDepli", resourceCulture);
+                object obj = ResourceManager.GetObject("PivotDroite", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
         
-        internal static System.Drawing.Bitmap PetitRepli {
+        internal static System.Drawing.Bitmap PivotGauche {
             get {
-                object obj = ResourceManager.GetObject("PetitRepli", resourceCulture);
+                object obj = ResourceManager.GetObject("PivotGauche", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
         
-        internal static System.Drawing.Bitmap PinceDroiteExt1 {
+        internal static System.Drawing.Bitmap Pompe {
             get {
-                object obj = ResourceManager.GetObject("PinceDroiteExt1", resourceCulture);
+                object obj = ResourceManager.GetObject("Pompe", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
         
-        internal static System.Drawing.Bitmap PinceDroiteExt2 {
+        internal static System.Drawing.Bitmap Recale {
             get {
-                object obj = ResourceManager.GetObject("PinceDroiteExt2", resourceCulture);
+                object obj = ResourceManager.GetObject("Recale", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
         
-        internal static System.Drawing.Bitmap PinceDroiteExt3 {
+        internal static System.Drawing.Bitmap Recule {
             get {
-                object obj = ResourceManager.GetObject("PinceDroiteExt3", resourceCulture);
+                object obj = ResourceManager.GetObject("Recule", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
         
-        internal static System.Drawing.Bitmap PinceDroiteExt4 {
+        internal static System.Drawing.Bitmap ReglagePivot {
             get {
-                object obj = ResourceManager.GetObject("PinceDroiteExt4", resourceCulture);
+                object obj = ResourceManager.GetObject("ReglagePivot", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
         
-        internal static System.Drawing.Bitmap PinceDroiteInt1 {
+        internal static System.Drawing.Bitmap Stop {
             get {
-                object obj = ResourceManager.GetObject("PinceDroiteInt1", resourceCulture);
+                object obj = ResourceManager.GetObject("Stop", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
         
-        internal static System.Drawing.Bitmap PinceDroiteInt2 {
+        internal static System.Drawing.Bitmap StopPetit {
             get {
-                object obj = ResourceManager.GetObject("PinceDroiteInt2", resourceCulture);
+                object obj = ResourceManager.GetObject("StopPetit", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
         
-        internal static System.Drawing.Bitmap PinceDroiteInt3 {
+        internal static System.Drawing.Bitmap SwitchOff {
             get {
-                object obj = ResourceManager.GetObject("PinceDroiteInt3", resourceCulture);
+                object obj = ResourceManager.GetObject("SwitchOff", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
         
-        internal static System.Drawing.Bitmap PinceDroiteInt4 {
+        internal static System.Drawing.Bitmap SwitchOn {
             get {
-                object obj = ResourceManager.GetObject("PinceDroiteInt4", resourceCulture);
+                object obj = ResourceManager.GetObject("SwitchOn", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
         
-        internal static System.Drawing.Bitmap PinceGaucheExt1 {
+        internal static System.Drawing.Bitmap Table {
             get {
-                object obj = ResourceManager.GetObject("PinceGaucheExt1", resourceCulture);
+                object obj = ResourceManager.GetObject("Table", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
         
-        internal static System.Drawing.Bitmap PinceGaucheExt2 {
+        internal static System.Drawing.Bitmap TableRouge {
             get {
-                object obj = ResourceManager.GetObject("PinceGaucheExt2", resourceCulture);
+                object obj = ResourceManager.GetObject("TableRouge", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
         
-        internal static System.Drawing.Bitmap PinceGaucheExt3 {
+        internal static System.Drawing.Bitmap TableViolet {
             get {
-                object obj = ResourceManager.GetObject("PinceGaucheExt3", resourceCulture);
+                object obj = ResourceManager.GetObject("TableViolet", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
         
-        internal static System.Drawing.Bitmap PinceGaucheExt4 {
+        internal static System.Drawing.Bitmap TrackBarCurseurNormal {
             get {
-                object obj = ResourceManager.GetObject("PinceGaucheExt4", resourceCulture);
+                object obj = ResourceManager.GetObject("TrackBarCurseurNormal", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
         
-        internal static System.Drawing.Bitmap PinceGaucheInt1 {
+        internal static System.Drawing.Bitmap TrackBarCurseurSelect {
             get {
-                object obj = ResourceManager.GetObject("PinceGaucheInt1", resourceCulture);
+                object obj = ResourceManager.GetObject("TrackBarCurseurSelect", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
         
-        internal static System.Drawing.Bitmap PinceGaucheInt2 {
+        internal static System.Drawing.Bitmap TrackBarFond {
             get {
-                object obj = ResourceManager.GetObject("PinceGaucheInt2", resourceCulture);
+                object obj = ResourceManager.GetObject("TrackBarFond", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
         
-        internal static System.Drawing.Bitmap PinceGaucheInt3 {
+        internal static System.Drawing.Bitmap TrackBarFondSelected {
             get {
-                object obj = ResourceManager.GetObject("PinceGaucheInt3", resourceCulture);
+                object obj = ResourceManager.GetObject("TrackBarFondSelected", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
         
-        internal static System.Drawing.Bitmap PinceGaucheInt4 {
+        internal static System.Drawing.Bitmap VirageArDr {
             get {
-                object obj = ResourceManager.GetObject("PinceGaucheInt4", resourceCulture);
+                object obj = ResourceManager.GetObject("VirageArDr", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
         
-        internal static System.Drawing.Bitmap pivotDroite {
+        internal static System.Drawing.Bitmap VirageArGa {
             get {
-                object obj = ResourceManager.GetObject("pivotDroite", resourceCulture);
+                object obj = ResourceManager.GetObject("VirageArGa", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
         
-        internal static System.Drawing.Bitmap pivotGauche {
+        internal static System.Drawing.Bitmap VirageAvDr {
             get {
-                object obj = ResourceManager.GetObject("pivotGauche", resourceCulture);
+                object obj = ResourceManager.GetObject("VirageAvDr", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
         
-        internal static System.Drawing.Bitmap pompe {
+        internal static System.Drawing.Bitmap VirageAvGa {
             get {
-                object obj = ResourceManager.GetObject("pompe", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        internal static System.Drawing.Bitmap recale {
-            get {
-                object obj = ResourceManager.GetObject("recale", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        internal static System.Drawing.Bitmap recule {
-            get {
-                object obj = ResourceManager.GetObject("recule", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        internal static System.Drawing.Bitmap reglagePivot {
-            get {
-                object obj = ResourceManager.GetObject("reglagePivot", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        internal static System.Drawing.Bitmap stop {
-            get {
-                object obj = ResourceManager.GetObject("stop", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        internal static System.Drawing.Bitmap stopPetit {
-            get {
-                object obj = ResourceManager.GetObject("stopPetit", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        internal static System.Drawing.Bitmap switchOff {
-            get {
-                object obj = ResourceManager.GetObject("switchOff", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        internal static System.Drawing.Bitmap switchOn {
-            get {
-                object obj = ResourceManager.GetObject("switchOn", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        internal static System.Drawing.Bitmap table {
-            get {
-                object obj = ResourceManager.GetObject("table", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        internal static System.Drawing.Bitmap tableRouge {
-            get {
-                object obj = ResourceManager.GetObject("tableRouge", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        internal static System.Drawing.Bitmap tableViolet {
-            get {
-                object obj = ResourceManager.GetObject("tableViolet", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        internal static System.Drawing.Bitmap trackBarCurseurNormal {
-            get {
-                object obj = ResourceManager.GetObject("trackBarCurseurNormal", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        internal static System.Drawing.Bitmap trackBarCurseurSelect {
-            get {
-                object obj = ResourceManager.GetObject("trackBarCurseurSelect", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        internal static System.Drawing.Bitmap trackBarFond {
-            get {
-                object obj = ResourceManager.GetObject("trackBarFond", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        internal static System.Drawing.Bitmap trackBarFondSelected {
-            get {
-                object obj = ResourceManager.GetObject("trackBarFondSelected", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        internal static System.Drawing.Bitmap virageArDr {
-            get {
-                object obj = ResourceManager.GetObject("virageArDr", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        internal static System.Drawing.Bitmap virageArGa {
-            get {
-                object obj = ResourceManager.GetObject("virageArGa", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        internal static System.Drawing.Bitmap virageAvDr {
-            get {
-                object obj = ResourceManager.GetObject("virageAvDr", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        internal static System.Drawing.Bitmap virageAvGa {
-            get {
-                object obj = ResourceManager.GetObject("virageAvGa", resourceCulture);
+                object obj = ResourceManager.GetObject("VirageAvGa", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

@@ -35,32 +35,32 @@ namespace GoBot.IHM.Composants
 
         public void CouleurVert(bool blink = false, bool eteindre = false)
         {
-            ChangementImage(global::GoBot.Properties.Resources.ledVert, blink, eteindre);
+            ChangementImage(global::GoBot.Properties.Resources.LedVert, blink, eteindre);
         }
 
         public void CouleurOrange(bool blink = false, bool eteindre = false)
         {
-            ChangementImage(global::GoBot.Properties.Resources.ledOrange, blink, eteindre);
+            ChangementImage(global::GoBot.Properties.Resources.LedOrange, blink, eteindre);
         }
 
         public void CouleurBleu(bool blink = false, bool eteindre = false)
         {
-            ChangementImage(global::GoBot.Properties.Resources.ledBleu, blink, eteindre);
+            ChangementImage(global::GoBot.Properties.Resources.LedBleu, blink, eteindre);
         }
 
         public void CouleurJaune(bool blink = false, bool eteindre = false)
         {
-            ChangementImage(global::GoBot.Properties.Resources.ledJaune, blink, eteindre);
+            ChangementImage(global::GoBot.Properties.Resources.LedJaune, blink, eteindre);
         }
 
         public void CouleurRouge(bool blink = false, bool eteindre = false)
         {
-            ChangementImage(global::GoBot.Properties.Resources.ledRouge, blink, eteindre);
+            ChangementImage(global::GoBot.Properties.Resources.LedRouge, blink, eteindre);
         }
 
         public void CouleurGris(bool blink = false, bool eteindre = false)
         {
-            ChangementImage(global::GoBot.Properties.Resources.ledGris, blink, eteindre);
+            ChangementImage(global::GoBot.Properties.Resources.LedGris, blink, eteindre);
         }
 
         private void ChangementImage(Image img, bool blink = false, bool eteindre = false)
