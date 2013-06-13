@@ -200,48 +200,6 @@ namespace GoBot.Properties {
             }
         }
         
-        internal static System.Drawing.Bitmap LedBleu {
-            get {
-                object obj = ResourceManager.GetObject("LedBleu", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        internal static System.Drawing.Bitmap LedGris {
-            get {
-                object obj = ResourceManager.GetObject("LedGris", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        internal static System.Drawing.Bitmap LedJaune {
-            get {
-                object obj = ResourceManager.GetObject("LedJaune", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        internal static System.Drawing.Bitmap LedOrange {
-            get {
-                object obj = ResourceManager.GetObject("LedOrange", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        internal static System.Drawing.Bitmap LedRouge {
-            get {
-                object obj = ResourceManager.GetObject("LedRouge", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        internal static System.Drawing.Bitmap LedVert {
-            get {
-                object obj = ResourceManager.GetObject("LedVert", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
         internal static System.Drawing.Bitmap Moteur {
             get {
                 object obj = ResourceManager.GetObject("Moteur", resourceCulture);
@@ -305,20 +263,6 @@ namespace GoBot.Properties {
             }
         }
         
-        internal static System.Drawing.Bitmap SwitchOff {
-            get {
-                object obj = ResourceManager.GetObject("SwitchOff", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        internal static System.Drawing.Bitmap SwitchOn {
-            get {
-                object obj = ResourceManager.GetObject("SwitchOn", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
         internal static System.Drawing.Bitmap Table {
             get {
                 object obj = ResourceManager.GetObject("Table", resourceCulture);
@@ -336,34 +280,6 @@ namespace GoBot.Properties {
         internal static System.Drawing.Bitmap TableViolet {
             get {
                 object obj = ResourceManager.GetObject("TableViolet", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        internal static System.Drawing.Bitmap TrackBarCurseurNormal {
-            get {
-                object obj = ResourceManager.GetObject("TrackBarCurseurNormal", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        internal static System.Drawing.Bitmap TrackBarCurseurSelect {
-            get {
-                object obj = ResourceManager.GetObject("TrackBarCurseurSelect", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        internal static System.Drawing.Bitmap TrackBarFond {
-            get {
-                object obj = ResourceManager.GetObject("TrackBarFond", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        internal static System.Drawing.Bitmap TrackBarFondSelected {
-            get {
-                object obj = ResourceManager.GetObject("TrackBarFondSelected", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

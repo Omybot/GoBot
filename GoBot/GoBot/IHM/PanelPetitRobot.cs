@@ -15,15 +15,13 @@ namespace GoBot.IHM
         public PanelPetitRobot()
         {
             InitializeComponent();
-
-            panelHistorique.Deployer(Config.CurrentConfig.HistoriqueGROuvert);
         }
 
         public void Init()
         {
             panelDeplacement.Robot = Robots.PetitRobot;
             panelDeplacement.Init();
-            panelHistorique.setHistorique(Robots.PetitRobot.Historique);
+            panelHistorique.SetHistorique(Robots.PetitRobot.Historique);
             Robots.PetitRobot.Historique.NouvelleAction += new Historique.DelegateAction(MAJHistoriqueDel);
         }
 

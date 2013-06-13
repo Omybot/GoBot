@@ -51,7 +51,7 @@
             this.lblOvershootGauche = new System.Windows.Forms.Label();
             this.label10 = new System.Windows.Forms.Label();
             this.label11 = new System.Windows.Forms.Label();
-            this.ctrlGraphique1 = new GoBot.IHM.Composants.CtrlGraphique();
+            this.ctrlGraphique1 = new Composants.CtrlGraphique();
             ((System.ComponentModel.ISupportInitialize)(this.numCoeffD)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numCoeffI)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numCoeffP)).BeginInit();

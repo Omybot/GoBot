@@ -13,8 +13,6 @@ namespace GoBot.IHM
     public partial class PanelDeplacement : UserControl
     {
         private ToolTip tooltip;
-        private int tailleMax;
-        private int tailleMin;
 
         public Robot Robot { get; set; }
 
@@ -25,8 +23,7 @@ namespace GoBot.IHM
             tooltip = new ToolTip();
             tooltip.InitialDelay = 1500;
 
-            tailleMax = groupDeplacement.Height;
-            tailleMin = 39;
+            groupBoxDep.DeploiementChange += new Composants.GroupBoxRetractable.DeploiementDelegate(groupBoxDep_Deploiement);
 
             tooltip.SetToolTip(btnAvance, "Avancer");
             tooltip.SetToolTip(btnRecule, "Reculer");
@@ -37,6 +34,14 @@ namespace GoBot.IHM
             tooltip.SetToolTip(btnVirageArGa, "Virage vers l'arrière gauche");
             tooltip.SetToolTip(btnVirageAvGa, "Virage vers l'avant droite");
             tooltip.SetToolTip(btnStop, "Stop");
+        }
+
+        void groupBoxDep_Deploiement(bool deploye)
+        {
+            if (Robot == Robots.GrosRobot)
+                Config.CurrentConfig.DeplacementGROuvert = deploye;
+            else
+                Config.CurrentConfig.DeplacementPROuvert = deploye;
         }
 
         public virtual void Init()
@@ -55,7 +60,7 @@ namespace GoBot.IHM
                 numCoeffD.Value = Config.CurrentConfig.GRCoeffD;
                 Robot.EnvoyerPID(Config.CurrentConfig.GRCoeffP, Config.CurrentConfig.GRCoeffI, Config.CurrentConfig.GRCoeffD);
 
-                Deployer(Config.CurrentConfig.DeplacementGROuvert);
+                groupBoxDep.Deployer(Config.CurrentConfig.DeplacementGROuvert, false);
             }
             else
             {
@@ -69,7 +74,7 @@ namespace GoBot.IHM
                 numCoeffD.Value = Config.CurrentConfig.PRCoeffD;
                 Robot.EnvoyerPID(Config.CurrentConfig.PRCoeffP, Config.CurrentConfig.PRCoeffI, Config.CurrentConfig.PRCoeffD);
 
-                Deployer(Config.CurrentConfig.DeplacementPROuvert);
+                groupBoxDep.Deployer(Config.CurrentConfig.DeplacementPROuvert, false);
             }
 
             Robot.Rapide();
@@ -193,42 +198,6 @@ namespace GoBot.IHM
 
             if (ok)
                 Robot.Virage(SensAR.Arriere, SensGD.Droite, distance, angle, false);
-        }
-
-        private void btnTaille_Click(object sender, EventArgs e)
-        {
-            if (groupDeplacement.Height == tailleMax)
-                Deployer(false);
-            else
-                Deployer(true);
-        }
-
-        public virtual void Deployer(bool deployer)
-        {
-            if (!deployer)
-            {
-                foreach (Control c in groupDeplacement.Controls)
-                    c.Visible = false;
-
-                btnTaille.Visible = true;
-                groupDeplacement.Height = tailleMin;
-                btnTaille.Image = Properties.Resources.Bas;
-                tooltip.SetToolTip(btnTaille, "Agrandir");
-            }
-            else
-            {
-                foreach (Control c in groupDeplacement.Controls)
-                    c.Visible = true;
-
-                groupDeplacement.Height = tailleMax;
-                btnTaille.Image = Properties.Resources.Haut;
-                tooltip.SetToolTip(btnTaille, "Réduire");
-            }
-
-            if (Robot == Robots.GrosRobot)
-                Config.CurrentConfig.DeplacementGROuvert = deployer;
-            else
-                Config.CurrentConfig.DeplacementPROuvert = deployer;
         }
 
         #region Vitesse ligne

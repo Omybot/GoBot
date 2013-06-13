@@ -28,33 +28,27 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.groupBoxSeq = new System.Windows.Forms.GroupBox();
+            this.btnVerres = new System.Windows.Forms.Button();
             this.btnAssiette = new System.Windows.Forms.Button();
             this.btnCerise1 = new System.Windows.Forms.Button();
             this.btnCerises = new System.Windows.Forms.Button();
-            this.btnTaille = new System.Windows.Forms.Button();
-            this.btnVerres = new System.Windows.Forms.Button();
-            this.groupBoxSeq.SuspendLayout();
+            this.groupBoxSequences = new Composants.GroupBoxRetractable();
+            this.groupBoxSequences.SuspendLayout();
             this.SuspendLayout();
             // 
-            // groupBoxSeq
+            // btnVerres
             // 
-            this.groupBoxSeq.BackColor = System.Drawing.Color.Transparent;
-            this.groupBoxSeq.Controls.Add(this.btnVerres);
-            this.groupBoxSeq.Controls.Add(this.btnAssiette);
-            this.groupBoxSeq.Controls.Add(this.btnCerise1);
-            this.groupBoxSeq.Controls.Add(this.btnCerises);
-            this.groupBoxSeq.Controls.Add(this.btnTaille);
-            this.groupBoxSeq.Location = new System.Drawing.Point(5, 3);
-            this.groupBoxSeq.Name = "groupBoxSeq";
-            this.groupBoxSeq.Size = new System.Drawing.Size(332, 144);
-            this.groupBoxSeq.TabIndex = 0;
-            this.groupBoxSeq.TabStop = false;
-            this.groupBoxSeq.Text = "Sequences";
+            this.btnVerres.Location = new System.Drawing.Point(154, 69);
+            this.btnVerres.Name = "btnVerres";
+            this.btnVerres.Size = new System.Drawing.Size(130, 23);
+            this.btnVerres.TabIndex = 93;
+            this.btnVerres.Text = "Verres départ";
+            this.btnVerres.UseVisualStyleBackColor = true;
+            this.btnVerres.Click += new System.EventHandler(this.btnVerres_Click);
             // 
             // btnAssiette
             // 
-            this.btnAssiette.Location = new System.Drawing.Point(30, 68);
+            this.btnAssiette.Location = new System.Drawing.Point(18, 69);
             this.btnAssiette.Name = "btnAssiette";
             this.btnAssiette.Size = new System.Drawing.Size(130, 23);
             this.btnAssiette.TabIndex = 92;
@@ -64,7 +58,7 @@
             // 
             // btnCerise1
             // 
-            this.btnCerise1.Location = new System.Drawing.Point(30, 39);
+            this.btnCerise1.Location = new System.Drawing.Point(18, 40);
             this.btnCerise1.Name = "btnCerise1";
             this.btnCerise1.Size = new System.Drawing.Size(130, 23);
             this.btnCerise1.TabIndex = 91;
@@ -74,7 +68,7 @@
             // 
             // btnCerises
             // 
-            this.btnCerises.Location = new System.Drawing.Point(166, 39);
+            this.btnCerises.Location = new System.Drawing.Point(154, 40);
             this.btnCerises.Name = "btnCerises";
             this.btnCerises.Size = new System.Drawing.Size(130, 23);
             this.btnCerises.TabIndex = 90;
@@ -82,25 +76,18 @@
             this.btnCerises.UseVisualStyleBackColor = true;
             this.btnCerises.Click += new System.EventHandler(this.btnCerises_Click);
             // 
-            // btnTaille
+            // groupBoxSequences
             // 
-            this.btnTaille.Image = global::GoBot.Properties.Resources.Haut;
-            this.btnTaille.Location = new System.Drawing.Point(304, 10);
-            this.btnTaille.Name = "btnTaille";
-            this.btnTaille.Size = new System.Drawing.Size(24, 23);
-            this.btnTaille.TabIndex = 87;
-            this.btnTaille.UseVisualStyleBackColor = true;
-            this.btnTaille.Click += new System.EventHandler(this.btnTaille_Click);
-            // 
-            // btnVerres
-            // 
-            this.btnVerres.Location = new System.Drawing.Point(30, 115);
-            this.btnVerres.Name = "btnVerres";
-            this.btnVerres.Size = new System.Drawing.Size(130, 23);
-            this.btnVerres.TabIndex = 93;
-            this.btnVerres.Text = "Verres départ";
-            this.btnVerres.UseVisualStyleBackColor = true;
-            this.btnVerres.Click += new System.EventHandler(this.btnVerres_Click);
+            this.groupBoxSequences.Controls.Add(this.btnVerres);
+            this.groupBoxSequences.Controls.Add(this.btnAssiette);
+            this.groupBoxSequences.Controls.Add(this.btnCerises);
+            this.groupBoxSequences.Controls.Add(this.btnCerise1);
+            this.groupBoxSequences.Location = new System.Drawing.Point(3, 3);
+            this.groupBoxSequences.Name = "groupBoxSequences";
+            this.groupBoxSequences.Size = new System.Drawing.Size(332, 104);
+            this.groupBoxSequences.TabIndex = 1;
+            this.groupBoxSequences.TabStop = false;
+            this.groupBoxSequences.Text = "Séquences";
             // 
             // PanelGrosRobotSequences
             // 
@@ -108,22 +95,21 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoSize = true;
             this.BackColor = System.Drawing.Color.Transparent;
-            this.Controls.Add(this.groupBoxSeq);
+            this.Controls.Add(this.groupBoxSequences);
             this.Name = "PanelGrosRobotSequences";
-            this.Size = new System.Drawing.Size(341, 167);
+            this.Size = new System.Drawing.Size(341, 116);
             this.Load += new System.EventHandler(this.PanelSequencesGros_Load);
-            this.groupBoxSeq.ResumeLayout(false);
+            this.groupBoxSequences.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
 
         #endregion
 
-        private System.Windows.Forms.GroupBox groupBoxSeq;
-        protected System.Windows.Forms.Button btnTaille;
         private System.Windows.Forms.Button btnCerises;
         private System.Windows.Forms.Button btnCerise1;
         private System.Windows.Forms.Button btnAssiette;
         private System.Windows.Forms.Button btnVerres;
+        private Composants.GroupBoxRetractable groupBoxSequences;
     }
 }

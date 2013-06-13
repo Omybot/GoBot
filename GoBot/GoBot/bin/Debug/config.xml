@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
-  <DeplacementGROuvert>true</DeplacementGROuvert>
+  <DeplacementGROuvert>false</DeplacementGROuvert>
   <HistoriqueGROuvert>true</HistoriqueGROuvert>
   <ReglageGROuvert>false</ReglageGROuvert>
-  <UtilisationGROuvert>true</UtilisationGROuvert>
-  <SequencesGROuvert>true</SequencesGROuvert>
-  <CapteursGROuvert>true</CapteursGROuvert>
+  <UtilisationGROuvert>false</UtilisationGROuvert>
+  <SequencesGROuvert>false</SequencesGROuvert>
+  <CapteursGROuvert>false</CapteursGROuvert>
   <DeplacementPROuvert>true</DeplacementPROuvert>
   <HistoriquePROuvert>true</HistoriquePROuvert>
   <ReglagePROuvert>true</ReglagePROuvert>

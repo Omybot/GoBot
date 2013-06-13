@@ -1,0 +1,174 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>8.0.30703</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{665AB15C-9620-4FAB-9DA7-10428A2B53AC}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Composants</RootNamespace>
+    <AssemblyName>Composants</AssemblyName>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="CtrlGraphique.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="CtrlGraphique.Designer.cs">
+      <DependentUpon>CtrlGraphique.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FocusablePanel.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="FocusablePanel.Designer.cs">
+      <DependentUpon>FocusablePanel.cs</DependentUpon>
+    </Compile>
+    <Compile Include="GroupBoxRetractable.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="GroupBoxRetractable.designer.cs">
+      <DependentUpon>GroupBoxRetractable.cs</DependentUpon>
+    </Compile>
+    <Compile Include="LabelPlus.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="LabelPlus.designer.cs">
+      <DependentUpon>LabelPlus.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Led.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Led.Designer.cs">
+      <DependentUpon>Led.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <Compile Include="SwitchBouton.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="SwitchBouton.Designer.cs">
+      <DependentUpon>SwitchBouton.cs</DependentUpon>
+    </Compile>
+    <Compile Include="TextBoxPlus.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="TextBoxPlus.Designer.cs">
+      <DependentUpon>TextBoxPlus.cs</DependentUpon>
+    </Compile>
+    <Compile Include="TrackBarPlus.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="TrackBarPlus.designer.cs">
+      <DependentUpon>TrackBarPlus.cs</DependentUpon>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="CtrlGraphique.resx">
+      <DependentUpon>CtrlGraphique.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="GroupBoxRetractable.resx">
+      <DependentUpon>GroupBoxRetractable.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Led.resx">
+      <DependentUpon>Led.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="SwitchBouton.resx">
+      <DependentUpon>SwitchBouton.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="TextBoxPlus.resx">
+      <DependentUpon>TextBoxPlus.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="TrackBarPlus.resx">
+      <DependentUpon>TrackBarPlus.cs</DependentUpon>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="img\LedBleu.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="img\LedGris.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="img\LedJaune.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="img\LedOrange.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="img\LedRouge.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="img\LedVert.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="img\SwitchOff.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="img\SwitchOn.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="img\TrackBarCurseurNormal.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="img\TrackBarCurseurSelect.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="img\TrackBarFond.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="img\TrackBarFondSelected.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="img\FlecheBasGris.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="img\FlecheHautGris.png" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

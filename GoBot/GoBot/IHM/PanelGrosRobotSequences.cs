@@ -13,8 +13,6 @@ namespace GoBot.IHM
     public partial class PanelGrosRobotSequences : UserControl
     {
         private ToolTip tooltip;
-        int tailleMax;
-        int tailleMin;
 
         public PanelGrosRobotSequences()
         {
@@ -23,41 +21,12 @@ namespace GoBot.IHM
             tooltip = new ToolTip();
             tooltip.InitialDelay = 1500;
 
-            tailleMax = groupBoxSeq.Height;
-            tailleMin = 39;
+            groupBoxSequences.DeploiementChange += new Composants.GroupBoxRetractable.DeploiementDelegate(groupBoxSequences_Deploiement);
         }
 
-        private void btnTaille_Click(object sender, EventArgs e)
+        void groupBoxSequences_Deploiement(bool deploye)
         {
-            if (groupBoxSeq.Height == tailleMax)
-                Deployer(false);
-            else
-                Deployer(true);
-        }
-
-        public virtual void Deployer(bool deployer)
-        {
-            if (!deployer)
-            {
-                foreach (Control c in groupBoxSeq.Controls)
-                    c.Visible = false;
-
-                btnTaille.Visible = true;
-                groupBoxSeq.Height = tailleMin;
-                btnTaille.Image = Properties.Resources.Bas;
-                tooltip.SetToolTip(btnTaille, "Agrandir");
-            }
-            else
-            {
-                foreach (Control c in groupBoxSeq.Controls)
-                    c.Visible = true;
-
-                groupBoxSeq.Height = tailleMax;
-                btnTaille.Image = Properties.Resources.Haut;
-                tooltip.SetToolTip(btnTaille, "Réduire");
-            }
-
-            Config.CurrentConfig.SequencesGROuvert = deployer;
+            Config.CurrentConfig.SequencesGROuvert = deploye;
         }
 
         Thread th;
@@ -86,7 +55,7 @@ namespace GoBot.IHM
 
         private void PanelSequencesGros_Load(object sender, EventArgs e)
         {
-            Deployer(Config.CurrentConfig.SequencesGROuvert);
+            groupBoxSequences.Deployer(Config.CurrentConfig.SequencesGROuvert, false);
         }
 
         private void btnAssiette_Click(object sender, EventArgs e)

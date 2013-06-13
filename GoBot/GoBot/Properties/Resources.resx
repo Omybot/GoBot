@@ -121,62 +121,47 @@
   <data name="Balle" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\img\Balle.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="bas" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\img\bas.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="Bas" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\img\Bas.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="ledGris" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\img\ledGris.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="Pompe" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\img\Pompe.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="pompe" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\img\pompe.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="StopPetit" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\img\StopPetit.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="stopPetit" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\img\stopPetit.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="Table" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\img\Table.bmp;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="table" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\img\table.bmp;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="Crochet" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\img\Crochet.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="crochet" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\img\crochet.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="Ciseaux" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\img\Ciseaux.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="ciseaux" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\img\ciseaux.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="haut" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\img\haut.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="Haut" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\img\Haut.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="BalleBleue" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\img\BalleBleue.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="switchOn" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\img\switchOn.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="Recale" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\img\Recale.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="recale" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\img\recale.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="Fenetre" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\img\Fenetre.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="fenetre" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\img\fenetre.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="VirageAvGa" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\img\VirageAvGa.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="virageAvGa" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\img\virageAvGa.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="PivotGauche" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\img\PivotGauche.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="pivotGauche" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\img\pivotGauche.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="TableRouge" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\img\TableRouge.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="ledRouge" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\img\ledRouge.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="tableRouge" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\img\tableRouge.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="ledJaune" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\img\ledJaune.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="flecheGauche" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\img\flecheGauche.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="trackBarFondSelected" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\img\trackBarFondSelected.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="FlecheGauche" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\img\FlecheGauche.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="Avance" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\img\Avance.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
@@ -187,38 +172,26 @@
   <data name="AssiettePleineBleu" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\img\AssiettePleineBleu.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="reglagePivot" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\img\reglagePivot.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="ReglagePivot" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\img\ReglagePivot.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="AssietteVide" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\img\AssietteVide.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="stop" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\img\stop.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="Stop" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\img\Stop.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="switchOff" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\img\switchOff.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="VirageAvDr" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\img\VirageAvDr.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="trackBarCurseurNormal" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\img\trackBarCurseurNormal.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="Recule" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\img\Recule.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="ledVert" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\img\ledVert.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="VirageArDr" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\img\VirageArDr.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="trackBarCurseurSelect" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\img\trackBarCurseurSelect.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="virageAvDr" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\img\virageAvDr.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="recule" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\img\recule.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="virageArDr" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\img\virageArDr.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="flecheDroite" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\img\flecheDroite.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="FlecheDroite" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\img\FlecheDroite.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="AssiettePleineRouge" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\img\AssiettePleineRouge.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
@@ -226,35 +199,26 @@
   <data name="Moteur" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\img\Moteur.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="disquette" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\img\disquette.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="Disquette" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\img\Disquette.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="BalleRouge" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\img\BalleRouge.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="close" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\img\close.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="Close" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\img\Close.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="ledOrange" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\img\ledOrange.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="IconeVitesse" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\img\IconeVitesse.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="iconeVitesse" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\img\iconeVitesse.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="PivotDroite" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\img\PivotDroite.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="trackBarFond" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\img\trackBarFond.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="VirageArGa" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\img\VirageArGa.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="pivotDroite" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\img\pivotDroite.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="ledBleu" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\img\ledBleu.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="virageArGa" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\img\virageArGa.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="tableViolet" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\img\tableViolet.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="TableViolet" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\img\TableViolet.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="Helice1" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\img\Helice1.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>

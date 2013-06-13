@@ -1,4 +1,4 @@
-﻿namespace GoBot.IHM.Composants
+﻿namespace Composants
 {
     partial class SwitchBouton
     {

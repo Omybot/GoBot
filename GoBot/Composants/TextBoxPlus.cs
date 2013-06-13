@@ -7,7 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 
-namespace GoBot.IHM.Composants
+namespace Composants
 {
     public partial class TextBoxPlus : TextBox
     {

@@ -13,8 +13,6 @@ namespace GoBot.IHM
     public partial class PanelGrosRobotUtilisation : UserControl
     {
         private ToolTip tooltip;
-        int tailleMax;
-        int tailleMin;
 
         public PanelGrosRobotUtilisation()
         {
@@ -23,41 +21,18 @@ namespace GoBot.IHM
             tooltip = new ToolTip();
             tooltip.InitialDelay = 1500;
 
-            tailleMax = groupBoxUtil.Height;
-            tailleMin = 39;
+            groupBoxUtilisation.DeploiementChange += new Composants.GroupBoxRetractable.DeploiementDelegate(groupBoxUtilisation_Deploiement);
         }
 
-        private void btnTaille_Click(object sender, EventArgs e)
+        void groupBoxUtilisation_Deploiement(bool deploye)
         {
-            if (groupBoxUtil.Height == tailleMax)
-                Deployer(false);
-            else
-                Deployer(true);
+            Config.CurrentConfig.UtilisationGROuvert = deploye;
         }
 
-        public virtual void Deployer(bool deployer)
+        private void PanelUtilGros_Load(object sender, EventArgs e)
         {
-            if (!deployer)
-            {
-                foreach (Control c in groupBoxUtil.Controls)
-                    c.Visible = false;
-
-                btnTaille.Visible = true;
-                groupBoxUtil.Height = tailleMin;
-                btnTaille.Image = Properties.Resources.Bas;
-                tooltip.SetToolTip(btnTaille, "Agrandir");
-            }
-            else
-            {
-                foreach (Control c in groupBoxUtil.Controls)
-                    c.Visible = true;
-
-                groupBoxUtil.Height = tailleMax;
-                btnTaille.Image = Properties.Resources.Haut;
-                tooltip.SetToolTip(btnTaille, "Réduire");
-            }
-
-            Config.CurrentConfig.UtilisationGROuvert = deployer;
+            groupBoxUtilisation.Deployer(Config.CurrentConfig.UtilisationGROuvert, false);
+            switchBoutonPuissance.SetActif(true, false);
         }
 
         private void btnDebloqueur_Click(object sender, EventArgs e)
@@ -185,12 +160,6 @@ namespace GoBot.IHM
         private void btnCameraBleu_Click(object sender, EventArgs e)
         {
             Robots.GrosRobot.BougeServo(ServomoteurID.GRCamera, Config.CurrentConfig.PositionGRCameraBleu);
-        }
-
-        private void PanelUtilGros_Load(object sender, EventArgs e)
-        {
-            Deployer(Config.CurrentConfig.UtilisationGROuvert);
-            switchBoutonPuissance.SetActif(true, false);
         }
 
         private void btnTurbineOn_Click(object sender, EventArgs e)

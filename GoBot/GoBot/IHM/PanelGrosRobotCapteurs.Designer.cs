@@ -28,55 +28,53 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.groupBoxCap = new System.Windows.Forms.GroupBox();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(PanelGrosRobotCapteurs));
+            this.ledJack = new Composants.Led();
+            this.boxJack = new System.Windows.Forms.CheckBox();
             this.boxVitesseCanon = new System.Windows.Forms.CheckBox();
             this.lblVitesseCanon = new System.Windows.Forms.Label();
-            this.ledAspi = new GoBot.IHM.Composants.Led();
+            this.ledAspi = new Composants.Led();
             this.boxAspiRemonte = new System.Windows.Forms.CheckBox();
-            this.ledAssiette = new GoBot.IHM.Composants.Led();
+            this.ledAssiette = new Composants.Led();
             this.boxAssiette = new System.Windows.Forms.CheckBox();
-            this.ledCouleur = new GoBot.IHM.Composants.Led();
-            this.ledPresence = new GoBot.IHM.Composants.Led();
+            this.ledCouleur = new Composants.Led();
+            this.ledPresence = new Composants.Led();
             this.boxCouleur = new System.Windows.Forms.CheckBox();
             this.boxBalle = new System.Windows.Forms.CheckBox();
-            this.btnTaille = new System.Windows.Forms.Button();
-            this.ledJack = new GoBot.IHM.Composants.Led();
-            this.boxJack = new System.Windows.Forms.CheckBox();
-            this.groupBoxCap.SuspendLayout();
+            this.groupBoxCapteurs = new Composants.GroupBoxRetractable();
+            ((System.ComponentModel.ISupportInitialize)(this.ledJack)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.ledAspi)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.ledAssiette)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.ledCouleur)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.ledPresence)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.ledJack)).BeginInit();
+            this.groupBoxCapteurs.SuspendLayout();
             this.SuspendLayout();
             // 
-            // groupBoxCap
+            // ledJack
             // 
-            this.groupBoxCap.BackColor = System.Drawing.Color.Transparent;
-            this.groupBoxCap.Controls.Add(this.ledJack);
-            this.groupBoxCap.Controls.Add(this.boxJack);
-            this.groupBoxCap.Controls.Add(this.boxVitesseCanon);
-            this.groupBoxCap.Controls.Add(this.lblVitesseCanon);
-            this.groupBoxCap.Controls.Add(this.ledAspi);
-            this.groupBoxCap.Controls.Add(this.boxAspiRemonte);
-            this.groupBoxCap.Controls.Add(this.ledAssiette);
-            this.groupBoxCap.Controls.Add(this.boxAssiette);
-            this.groupBoxCap.Controls.Add(this.ledCouleur);
-            this.groupBoxCap.Controls.Add(this.ledPresence);
-            this.groupBoxCap.Controls.Add(this.boxCouleur);
-            this.groupBoxCap.Controls.Add(this.boxBalle);
-            this.groupBoxCap.Controls.Add(this.btnTaille);
-            this.groupBoxCap.Location = new System.Drawing.Point(5, 3);
-            this.groupBoxCap.Name = "groupBoxCap";
-            this.groupBoxCap.Size = new System.Drawing.Size(332, 227);
-            this.groupBoxCap.TabIndex = 0;
-            this.groupBoxCap.TabStop = false;
-            this.groupBoxCap.Text = "Capteurs";
+            this.ledJack.Etat = false;
+            this.ledJack.Image = ((System.Drawing.Image)(resources.GetObject("ledJack.Image")));
+            this.ledJack.Location = new System.Drawing.Point(139, 132);
+            this.ledJack.Name = "ledJack";
+            this.ledJack.Size = new System.Drawing.Size(16, 16);
+            this.ledJack.TabIndex = 101;
+            this.ledJack.TabStop = false;
+            // 
+            // boxJack
+            // 
+            this.boxJack.AutoSize = true;
+            this.boxJack.Location = new System.Drawing.Point(19, 132);
+            this.boxJack.Name = "boxJack";
+            this.boxJack.Size = new System.Drawing.Size(100, 17);
+            this.boxJack.TabIndex = 100;
+            this.boxJack.Text = "Présence jack :";
+            this.boxJack.UseVisualStyleBackColor = true;
+            this.boxJack.CheckedChanged += new System.EventHandler(this.boxJack_CheckedChanged);
             // 
             // boxVitesseCanon
             // 
             this.boxVitesseCanon.AutoSize = true;
-            this.boxVitesseCanon.Location = new System.Drawing.Point(180, 102);
+            this.boxVitesseCanon.Location = new System.Drawing.Point(173, 96);
             this.boxVitesseCanon.Name = "boxVitesseCanon";
             this.boxVitesseCanon.Size = new System.Drawing.Size(99, 17);
             this.boxVitesseCanon.TabIndex = 99;
@@ -87,7 +85,7 @@
             // lblVitesseCanon
             // 
             this.lblVitesseCanon.AutoSize = true;
-            this.lblVitesseCanon.Location = new System.Drawing.Point(297, 102);
+            this.lblVitesseCanon.Location = new System.Drawing.Point(290, 96);
             this.lblVitesseCanon.Name = "lblVitesseCanon";
             this.lblVitesseCanon.Size = new System.Drawing.Size(10, 13);
             this.lblVitesseCanon.TabIndex = 98;
@@ -96,7 +94,8 @@
             // ledAspi
             // 
             this.ledAspi.Etat = false;
-            this.ledAspi.Location = new System.Drawing.Point(300, 70);
+            this.ledAspi.Image = ((System.Drawing.Image)(resources.GetObject("ledAspi.Image")));
+            this.ledAspi.Location = new System.Drawing.Point(293, 64);
             this.ledAspi.Name = "ledAspi";
             this.ledAspi.Size = new System.Drawing.Size(16, 16);
             this.ledAspi.TabIndex = 97;
@@ -105,7 +104,7 @@
             // boxAspiRemonte
             // 
             this.boxAspiRemonte.AutoSize = true;
-            this.boxAspiRemonte.Location = new System.Drawing.Point(180, 70);
+            this.boxAspiRemonte.Location = new System.Drawing.Point(173, 64);
             this.boxAspiRemonte.Name = "boxAspiRemonte";
             this.boxAspiRemonte.Size = new System.Drawing.Size(93, 17);
             this.boxAspiRemonte.TabIndex = 96;
@@ -116,7 +115,8 @@
             // ledAssiette
             // 
             this.ledAssiette.Etat = false;
-            this.ledAssiette.Location = new System.Drawing.Point(146, 104);
+            this.ledAssiette.Image = ((System.Drawing.Image)(resources.GetObject("ledAssiette.Image")));
+            this.ledAssiette.Location = new System.Drawing.Point(139, 98);
             this.ledAssiette.Name = "ledAssiette";
             this.ledAssiette.Size = new System.Drawing.Size(16, 16);
             this.ledAssiette.TabIndex = 95;
@@ -125,7 +125,7 @@
             // boxAssiette
             // 
             this.boxAssiette.AutoSize = true;
-            this.boxAssiette.Location = new System.Drawing.Point(26, 104);
+            this.boxAssiette.Location = new System.Drawing.Point(19, 98);
             this.boxAssiette.Name = "boxAssiette";
             this.boxAssiette.Size = new System.Drawing.Size(116, 17);
             this.boxAssiette.TabIndex = 94;
@@ -136,7 +136,8 @@
             // ledCouleur
             // 
             this.ledCouleur.Etat = false;
-            this.ledCouleur.Location = new System.Drawing.Point(146, 71);
+            this.ledCouleur.Image = ((System.Drawing.Image)(resources.GetObject("ledCouleur.Image")));
+            this.ledCouleur.Location = new System.Drawing.Point(139, 65);
             this.ledCouleur.Name = "ledCouleur";
             this.ledCouleur.Size = new System.Drawing.Size(16, 16);
             this.ledCouleur.TabIndex = 93;
@@ -145,7 +146,8 @@
             // ledPresence
             // 
             this.ledPresence.Etat = false;
-            this.ledPresence.Location = new System.Drawing.Point(146, 36);
+            this.ledPresence.Image = ((System.Drawing.Image)(resources.GetObject("ledPresence.Image")));
+            this.ledPresence.Location = new System.Drawing.Point(139, 30);
             this.ledPresence.Name = "ledPresence";
             this.ledPresence.Size = new System.Drawing.Size(16, 16);
             this.ledPresence.TabIndex = 92;
@@ -154,7 +156,7 @@
             // boxCouleur
             // 
             this.boxCouleur.AutoSize = true;
-            this.boxCouleur.Location = new System.Drawing.Point(26, 71);
+            this.boxCouleur.Location = new System.Drawing.Point(19, 65);
             this.boxCouleur.Name = "boxCouleur";
             this.boxCouleur.Size = new System.Drawing.Size(93, 17);
             this.boxCouleur.TabIndex = 90;
@@ -165,7 +167,7 @@
             // boxBalle
             // 
             this.boxBalle.AutoSize = true;
-            this.boxBalle.Location = new System.Drawing.Point(26, 36);
+            this.boxBalle.Location = new System.Drawing.Point(19, 30);
             this.boxBalle.Name = "boxBalle";
             this.boxBalle.Size = new System.Drawing.Size(102, 17);
             this.boxBalle.TabIndex = 88;
@@ -173,35 +175,26 @@
             this.boxBalle.UseVisualStyleBackColor = true;
             this.boxBalle.CheckedChanged += new System.EventHandler(this.boxBalle_CheckedChanged);
             // 
-            // btnTaille
+            // groupBoxCapteurs
             // 
-            this.btnTaille.Image = global::GoBot.Properties.Resources.Haut;
-            this.btnTaille.Location = new System.Drawing.Point(304, 10);
-            this.btnTaille.Name = "btnTaille";
-            this.btnTaille.Size = new System.Drawing.Size(24, 23);
-            this.btnTaille.TabIndex = 87;
-            this.btnTaille.UseVisualStyleBackColor = true;
-            this.btnTaille.Click += new System.EventHandler(this.btnTaille_Click);
-            // 
-            // ledJack
-            // 
-            this.ledJack.Etat = false;
-            this.ledJack.Location = new System.Drawing.Point(146, 138);
-            this.ledJack.Name = "ledJack";
-            this.ledJack.Size = new System.Drawing.Size(16, 16);
-            this.ledJack.TabIndex = 101;
-            this.ledJack.TabStop = false;
-            // 
-            // boxJack
-            // 
-            this.boxJack.AutoSize = true;
-            this.boxJack.Location = new System.Drawing.Point(26, 138);
-            this.boxJack.Name = "boxJack";
-            this.boxJack.Size = new System.Drawing.Size(100, 17);
-            this.boxJack.TabIndex = 100;
-            this.boxJack.Text = "Présence jack :";
-            this.boxJack.UseVisualStyleBackColor = true;
-            this.boxJack.CheckedChanged += new System.EventHandler(this.boxJack_CheckedChanged);
+            this.groupBoxCapteurs.Controls.Add(this.ledJack);
+            this.groupBoxCapteurs.Controls.Add(this.boxJack);
+            this.groupBoxCapteurs.Controls.Add(this.boxBalle);
+            this.groupBoxCapteurs.Controls.Add(this.boxVitesseCanon);
+            this.groupBoxCapteurs.Controls.Add(this.boxCouleur);
+            this.groupBoxCapteurs.Controls.Add(this.lblVitesseCanon);
+            this.groupBoxCapteurs.Controls.Add(this.ledPresence);
+            this.groupBoxCapteurs.Controls.Add(this.ledAspi);
+            this.groupBoxCapteurs.Controls.Add(this.ledCouleur);
+            this.groupBoxCapteurs.Controls.Add(this.boxAspiRemonte);
+            this.groupBoxCapteurs.Controls.Add(this.boxAssiette);
+            this.groupBoxCapteurs.Controls.Add(this.ledAssiette);
+            this.groupBoxCapteurs.Location = new System.Drawing.Point(3, 3);
+            this.groupBoxCapteurs.Name = "groupBoxCapteurs";
+            this.groupBoxCapteurs.Size = new System.Drawing.Size(332, 165);
+            this.groupBoxCapteurs.TabIndex = 1;
+            this.groupBoxCapteurs.TabStop = false;
+            this.groupBoxCapteurs.Text = "Capteurs";
             // 
             // PanelGrosRobotCapteurs
             // 
@@ -209,25 +202,23 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoSize = true;
             this.BackColor = System.Drawing.Color.Transparent;
-            this.Controls.Add(this.groupBoxCap);
+            this.Controls.Add(this.groupBoxCapteurs);
             this.Name = "PanelGrosRobotCapteurs";
-            this.Size = new System.Drawing.Size(341, 233);
+            this.Size = new System.Drawing.Size(341, 174);
             this.Load += new System.EventHandler(this.PanelSequencesGros_Load);
-            this.groupBoxCap.ResumeLayout(false);
-            this.groupBoxCap.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.ledJack)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.ledAspi)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.ledAssiette)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.ledCouleur)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.ledPresence)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.ledJack)).EndInit();
+            this.groupBoxCapteurs.ResumeLayout(false);
+            this.groupBoxCapteurs.PerformLayout();
             this.ResumeLayout(false);
 
         }
 
         #endregion
 
-        private System.Windows.Forms.GroupBox groupBoxCap;
-        protected System.Windows.Forms.Button btnTaille;
         private System.Windows.Forms.CheckBox boxBalle;
         private System.Windows.Forms.CheckBox boxCouleur;
         private Composants.Led ledPresence;
@@ -240,5 +231,6 @@
         private System.Windows.Forms.CheckBox boxVitesseCanon;
         private Composants.Led ledJack;
         private System.Windows.Forms.CheckBox boxJack;
+        private Composants.GroupBoxRetractable groupBoxCapteurs;
     }
 }

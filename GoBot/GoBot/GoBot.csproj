@@ -83,12 +83,6 @@
     <Compile Include="Actions\IAction.cs" />
     <Compile Include="Balises\SuiviBalise.cs" />
     <Compile Include="CameraIP.cs" />
-    <Compile Include="IHM\Composants\CtrlGraphique.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="IHM\Composants\CtrlGraphique.designer.cs">
-      <DependentUpon>CtrlGraphique.cs</DependentUpon>
-    </Compile>
     <Compile Include="IHM\PanelImagesBalises.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -194,12 +188,6 @@
     <Compile Include="Enchainements\HomologationEnchainement.cs" />
     <Compile Include="Enums.cs" />
     <Compile Include="ConnexionCheck.cs" />
-    <Compile Include="IHM\Composants\FocusablePanel.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="IHM\Composants\FocusablePanel.Designer.cs">
-      <DependentUpon>FocusablePanel.cs</DependentUpon>
-    </Compile>
     <Compile Include="IHM\PanelBalise.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -231,30 +219,6 @@
       <DependentUpon>PanelTable.cs</DependentUpon>
     </Compile>
     <Compile Include="Balises\InterpreteurBalise.cs" />
-    <Compile Include="IHM\Composants\TextBoxPlus.cs">
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="IHM\Composants\TextBoxPlus.Designer.cs">
-      <DependentUpon>TextBoxPlus.cs</DependentUpon>
-    </Compile>
-    <Compile Include="IHM\Composants\Led.cs">
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="IHM\Composants\Led.Designer.cs">
-      <DependentUpon>Led.cs</DependentUpon>
-    </Compile>
-    <Compile Include="IHM\Composants\SwitchBouton.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="IHM\Composants\SwitchBouton.Designer.cs">
-      <DependentUpon>SwitchBouton.cs</DependentUpon>
-    </Compile>
-    <Compile Include="IHM\Composants\TrackBarPlus.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="IHM\Composants\TrackBarPlus.designer.cs">
-      <DependentUpon>TrackBarPlus.cs</DependentUpon>
-    </Compile>
     <Compile Include="IHM\Fenetre.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -286,21 +250,6 @@
     <Compile Include="UDP\TrameFactory.cs" />
     <Compile Include="UDP\ConnexionUDP.cs" />
     <Compile Include="UDP\Trame.cs" />
-    <EmbeddedResource Include="IHM\Composants\CtrlGraphique.resx">
-      <DependentUpon>CtrlGraphique.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="IHM\Composants\TextBoxPlus.resx">
-      <DependentUpon>TextBoxPlus.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="IHM\Composants\Led.resx">
-      <DependentUpon>Led.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="IHM\Composants\SwitchBouton.resx">
-      <DependentUpon>SwitchBouton.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="IHM\Composants\TrackBarPlus.resx">
-      <DependentUpon>TrackBarPlus.cs</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="IHM\PanelImagesBalises.resx">
       <DependentUpon>PanelImagesBalises.cs</DependentUpon>
     </EmbeddedResource>
@@ -495,7 +444,17 @@
   <ItemGroup>
     <Folder Include="Resources\" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Composants\Composants.csproj">
+      <Project>{665AB15C-9620-4FAB-9DA7-10428A2B53AC}</Project>
+      <Name>Composants</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <PropertyGroup>
+    <PostBuildEvent>
+    </PostBuildEvent>
+  </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">

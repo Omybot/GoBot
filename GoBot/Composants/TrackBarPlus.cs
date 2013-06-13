@@ -7,7 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 
-namespace GoBot.IHM.Composants
+namespace Composants
 {
     public partial class TrackBarPlus : UserControl
     {
@@ -281,15 +281,15 @@ namespace GoBot.IHM.Composants
         {
             if (!focus)
             {
-                imgBarre.BackgroundImage = global::GoBot.Properties.Resources.TrackBarFond;
+                imgBarre.BackgroundImage = global::Composants.Properties.Resources.TrackBarFond;
 
-                imgCurseur.Image = global::GoBot.Properties.Resources.TrackBarCurseurNormal;
+                imgCurseur.Image = global::Composants.Properties.Resources.TrackBarCurseurNormal;
             }
             else
             {
-                imgBarre.BackgroundImage = global::GoBot.Properties.Resources.TrackBarFondSelected;
+                imgBarre.BackgroundImage = global::Composants.Properties.Resources.TrackBarFondSelected;
 
-                imgCurseur.Image = global::GoBot.Properties.Resources.TrackBarCurseurSelect;
+                imgCurseur.Image = global::Composants.Properties.Resources.TrackBarCurseurSelect;
 
                 if(enDeplacement)
                     imgCurseur.Image.RotateFlip(RotateFlipType.Rotate180FlipNone);

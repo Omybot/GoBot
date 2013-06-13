@@ -8,7 +8,7 @@ using System.Text;
 using System.Windows.Forms;
 using System.Threading;
 
-namespace GoBot.IHM.Composants
+namespace Composants
 {
     public partial class CtrlGraphique : UserControl
     {

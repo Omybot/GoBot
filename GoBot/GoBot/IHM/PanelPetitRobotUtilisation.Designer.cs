@@ -49,7 +49,7 @@
             this.btnAvDrHaut = new System.Windows.Forms.Button();
             this.label1 = new System.Windows.Forms.Label();
             this.btnDiagnostic = new System.Windows.Forms.Button();
-            this.switchBoutonPuissance = new GoBot.IHM.Composants.SwitchBouton();
+            this.switchBoutonPuissance = new Composants.SwitchBouton();
             this.label12 = new System.Windows.Forms.Label();
             this.btnAvGaBas = new System.Windows.Forms.Button();
             this.btnAvGaHaut = new System.Windows.Forms.Button();

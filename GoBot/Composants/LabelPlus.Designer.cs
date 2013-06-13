@@ -1,8 +1,8 @@
-﻿namespace GoBot.IHM.Composants
+﻿namespace Composants
 {
-    partial class TextBoxPlus
+    partial class LabelPlus
     {
-        /// <summary> 
+        /// <summary>
         /// Variable nécessaire au concepteur.
         /// </summary>
         private System.ComponentModel.IContainer components = null;
@@ -22,21 +22,13 @@
 
         #region Code généré par le Concepteur de composants
 
-        /// <summary> 
-        /// Méthode requise pour la prise en charge du concepteur - ne modifiez pas 
+        /// <summary>
+        /// Méthode requise pour la prise en charge du concepteur - ne modifiez pas
         /// le contenu de cette méthode avec l'éditeur de code.
         /// </summary>
         private void InitializeComponent()
         {
-            this.SuspendLayout();
-            // 
-            // BetterTextBox
-            // 
-            this.Enter += new System.EventHandler(this.BetterTextBox_Enter);
-            this.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.BetterTextBox_KeyPress);
-            this.Leave += new System.EventHandler(this.BetterTextBox_Leave);
-            this.ResumeLayout(false);
-
+            components = new System.ComponentModel.Container();
         }
 
         #endregion

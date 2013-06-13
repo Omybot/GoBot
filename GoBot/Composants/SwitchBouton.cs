@@ -7,7 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 
-namespace GoBot.IHM.Composants
+namespace Composants
 {
     public partial class SwitchBouton : UserControl
     {
@@ -86,9 +86,9 @@ namespace GoBot.IHM.Composants
         private void ChangeImage()
         {
             if (actif)
-                pictureBox.Image = global::GoBot.Properties.Resources.SwitchOn;
+                pictureBox.Image = global::Composants.Properties.Resources.SwitchOn;
             else
-                pictureBox.Image = global::GoBot.Properties.Resources.SwitchOff;
+                pictureBox.Image = global::Composants.Properties.Resources.SwitchOff;
 
             int x = 0;
             if((rightToLeft && !actif) || (!rightToLeft && actif))
@@ -97,9 +97,9 @@ namespace GoBot.IHM.Composants
             Bitmap bouton;
 
             if(focus)
-                bouton = global::GoBot.Properties.Resources.TrackBarCurseurSelect;
+                bouton = global::Composants.Properties.Resources.TrackBarCurseurSelect;
             else
-                bouton = global::GoBot.Properties.Resources.TrackBarCurseurNormal;
+                bouton = global::Composants.Properties.Resources.TrackBarCurseurNormal;
 
             Graphics g = Graphics.FromImage(pictureBox.Image);
             g.DrawImage(bouton, x, 0);

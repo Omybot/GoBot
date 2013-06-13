@@ -12,32 +12,27 @@ namespace GoBot.IHM
 {
     public partial class PanelHistorique : UserControl
     {
-        ToolTip tooltip;
-        List<Button> listBtnHistorique;
+        private ToolTip tooltip;
+        private List<Button> listBtnHistorique;
 
-        private Historique historique;
+        private Historique Historique { get; set; }
 
-        public void setHistorique(Historique histo) 
+        public void SetHistorique(Historique histo) 
         {
-            if(historique != null)
-                historique.NouvelleAction -= new Historique.DelegateAction(MAJHistoriqueDel);
-            historique = histo;
-            historique.NouvelleAction += new Historique.DelegateAction(MAJHistoriqueDel);
+            if(Historique != null)
+                Historique.NouvelleAction -= new Historique.DelegateAction(MAJHistoriqueDel);
+            Historique = histo;
+            Historique.NouvelleAction += new Historique.DelegateAction(MAJHistoriqueDel);
         }
-
-        int tailleMax;
-        int tailleMin;
 
         public PanelHistorique()
         {
             InitializeComponent();
 
-            tailleMax = groupHistorique.Height;
-            tailleMin = 39;
-
             tooltip = new ToolTip();
             tooltip.InitialDelay = 1500;
             tooltip.SetToolTip(btnCopierHistorique, "Copier dans le presse-papiers");
+            groupBoxHisto.DeploiementChange += new Composants.GroupBoxRetractable.DeploiementDelegate(groupBoxHisto_Deploiement);
 
             listBtnHistorique = new List<Button>();
             listBtnHistorique.Add(btnHistorique0);
@@ -74,28 +69,10 @@ namespace GoBot.IHM
             this.btnHistorique9.Click += new System.EventHandler(this.btnHistorique_Click);
         }
 
-        private void btnTaille_Click(object sender, EventArgs e)
+        void groupBoxHisto_Deploiement(bool deploye)
         {
-            if (groupHistorique.Height == tailleMax)
-                Deployer(false);
-            else
-                Deployer(true);
-        }
-
-        public void Deployer(bool deployer)
-        {
-            if (!deployer)
-            {
-                groupHistorique.Height = tailleMin;
-                btnTaille.Image = Properties.Resources.Bas;
-                tooltip.SetToolTip(btnTaille, "Agrandir");
-            }
-            else
-            {
-                groupHistorique.Height = tailleMax;
-                btnTaille.Image = Properties.Resources.Haut;
-                tooltip.SetToolTip(btnTaille, "Réduire");
-            }
+            Config.CurrentConfig.HistoriqueGROuvert = deploye;
+            Config.CurrentConfig.HistoriquePROuvert = deploye;
         }
 
         private void MAJHistoriqueDel(IAction action)
@@ -111,9 +88,9 @@ namespace GoBot.IHM
             lblHistorique.Text = "";
             btnCopierHistorique.Enabled = true;
 
-            for (int iAction = 0; iAction < historique.Actions.Count; iAction++)
+            for (int iAction = 0; iAction < Historique.Actions.Count; iAction++)
             {
-                listBtnHistorique[iAction].Image = historique.Actions[iAction].Image;
+                listBtnHistorique[iAction].Image = Historique.Actions[iAction].Image;
                 listBtnHistorique[iAction].Enabled = true;
             }
         }
@@ -123,8 +100,8 @@ namespace GoBot.IHM
             Button bouton = (Button)sender;
             for (int iBtn = 0; iBtn < 10; iBtn++)
             {
-                if (listBtnHistorique[iBtn] == bouton && historique.Actions.Count >= iBtn)
-                    lblHistorique.Text = historique.Actions[iBtn].ToString();
+                if (listBtnHistorique[iBtn] == bouton && Historique.Actions.Count >= iBtn)
+                    lblHistorique.Text = Historique.Actions[iBtn].ToString();
             }
         }
 
@@ -133,9 +110,9 @@ namespace GoBot.IHM
             Button bouton = (Button)sender;
             for (int iBtn = 0; iBtn < 10; iBtn++)
             {
-                if (listBtnHistorique[iBtn] == bouton && historique.Actions.Count >= iBtn)
+                if (listBtnHistorique[iBtn] == bouton && Historique.Actions.Count >= iBtn)
                 {
-                    historique.Actions[iBtn].Executer();
+                    Historique.Actions[iBtn].Executer();
                     btnHistorique_MouseEnter(bouton, null);
                 }
             }
@@ -143,19 +120,23 @@ namespace GoBot.IHM
 
         private void btnCopierHistorique_Click(object sender, EventArgs e)
         {
-            if (historique.Actions.Count == 0)
+            if (Historique.Actions.Count == 0)
                 Clipboard.SetText("Aucune action");
             else
             {
                 String chaine = "";
-                foreach (IAction action in historique.Actions)
+                foreach (IAction action in Historique.Actions)
                     chaine += action.ToString() + Environment.NewLine;
-
 
                 Clipboard.SetText(chaine);
             }
 
             btnCopierHistorique.Enabled = false;
+        }
+
+        private void PanelHistorique_Load(object sender, EventArgs e)
+        {
+            groupBoxHisto.Deployer(Config.CurrentConfig.HistoriqueGROuvert, false);
         }
     }
 }

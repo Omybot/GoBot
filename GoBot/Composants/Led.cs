@@ -7,7 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 
-namespace GoBot.IHM.Composants
+namespace Composants
 {
     public partial class Led : PictureBox
     {
@@ -20,6 +20,7 @@ namespace GoBot.IHM.Composants
             timer = new Timer();
             timer.Interval = 100;
             timer.Tick += new EventHandler(timer_Tick);
+            CouleurRouge();
         }
 
         void timer_Tick(object sender, EventArgs e)
@@ -35,32 +36,32 @@ namespace GoBot.IHM.Composants
 
         public void CouleurVert(bool blink = false, bool eteindre = false)
         {
-            ChangementImage(global::GoBot.Properties.Resources.LedVert, blink, eteindre);
+            ChangementImage(global::Composants.Properties.Resources.LedVert, blink, eteindre);
         }
 
         public void CouleurOrange(bool blink = false, bool eteindre = false)
         {
-            ChangementImage(global::GoBot.Properties.Resources.LedOrange, blink, eteindre);
+            ChangementImage(global::Composants.Properties.Resources.LedOrange, blink, eteindre);
         }
 
         public void CouleurBleu(bool blink = false, bool eteindre = false)
         {
-            ChangementImage(global::GoBot.Properties.Resources.LedBleu, blink, eteindre);
+            ChangementImage(global::Composants.Properties.Resources.LedBleu, blink, eteindre);
         }
 
         public void CouleurJaune(bool blink = false, bool eteindre = false)
         {
-            ChangementImage(global::GoBot.Properties.Resources.LedJaune, blink, eteindre);
+            ChangementImage(global::Composants.Properties.Resources.LedJaune, blink, eteindre);
         }
 
         public void CouleurRouge(bool blink = false, bool eteindre = false)
         {
-            ChangementImage(global::GoBot.Properties.Resources.LedRouge, blink, eteindre);
+            ChangementImage(global::Composants.Properties.Resources.LedRouge, blink, eteindre);
         }
 
         public void CouleurGris(bool blink = false, bool eteindre = false)
         {
-            ChangementImage(global::GoBot.Properties.Resources.LedGris, blink, eteindre);
+            ChangementImage(global::Composants.Properties.Resources.LedGris, blink, eteindre);
         }
 
         private void ChangementImage(Image img, bool blink = false, bool eteindre = false)

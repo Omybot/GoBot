@@ -22,47 +22,17 @@ namespace GoBot.IHM
 
             tooltip = new ToolTip();
             tooltip.InitialDelay = 1500;
-
-            tailleMax = groupBoxCap.Height;
-            tailleMin = 39;
+            groupBoxCapteurs.DeploiementChange += new Composants.GroupBoxRetractable.DeploiementDelegate(groupBoxCapteurs_Deploiement);
         }
 
-        private void btnTaille_Click(object sender, EventArgs e)
+        void groupBoxCapteurs_Deploiement(bool deploye)
         {
-            if (groupBoxCap.Height == tailleMax)
-                Deployer(false);
-            else
-                Deployer(true);
-        }
-
-        public virtual void Deployer(bool deployer)
-        {
-            if (!deployer)
-            {
-                foreach (Control c in groupBoxCap.Controls)
-                    c.Visible = false;
-
-                btnTaille.Visible = true;
-                groupBoxCap.Height = tailleMin;
-                btnTaille.Image = Properties.Resources.Bas;
-                tooltip.SetToolTip(btnTaille, "Agrandir");
-            }
-            else
-            {
-                foreach (Control c in groupBoxCap.Controls)
-                    c.Visible = true;
-
-                groupBoxCap.Height = tailleMax;
-                btnTaille.Image = Properties.Resources.Haut;
-                tooltip.SetToolTip(btnTaille, "Réduire");
-            }
-
-            Config.CurrentConfig.CapteursGROuvert = deployer;
+            Config.CurrentConfig.CapteursGROuvert = deploye;
         }
 
         private void PanelSequencesGros_Load(object sender, EventArgs e)
         {
-            Deployer(Config.CurrentConfig.CapteursGROuvert);
+            groupBoxCapteurs.Deployer(Config.CurrentConfig.CapteursGROuvert, false);
 
             timerPresence = new System.Timers.Timer(100);
             timerPresence.Elapsed += new System.Timers.ElapsedEventHandler(timerBalle_Elapsed);
@@ -80,6 +50,8 @@ namespace GoBot.IHM
             ledPresence.CouleurGris();
             ledAssiette.CouleurGris();
             ledAspi.CouleurGris();
+            ledJack.CouleurGris();
+            ledCouleur.CouleurGris();
         }
 
         System.Timers.Timer timerPresence;

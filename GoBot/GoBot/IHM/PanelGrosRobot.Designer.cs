@@ -74,7 +74,6 @@
             this.panelHistorique.Name = "panelHistorique";
             this.panelHistorique.Size = new System.Drawing.Size(337, 115);
             this.panelHistorique.TabIndex = 71;
-            this.panelHistorique.Resize += new System.EventHandler(this.panelHistorique_Resize);
             // 
             // flowLayoutPanel2
             // 

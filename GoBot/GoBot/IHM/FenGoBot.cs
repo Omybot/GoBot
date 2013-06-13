@@ -7,7 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 using GoBot.IHM;
-using GoBot.IHM.Composants;
+using Composants;
 using GoBot.UDP;
 using UDP;
 using System.Net;

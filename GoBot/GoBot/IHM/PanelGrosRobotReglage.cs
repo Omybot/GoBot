@@ -13,8 +13,6 @@ namespace GoBot.IHM
     public partial class PanelGrosRobotReglage : UserControl
     {
         private ToolTip tooltip;
-        int tailleMax;
-        int tailleMin;
 
         public PanelGrosRobotReglage()
         {
@@ -23,41 +21,12 @@ namespace GoBot.IHM
             tooltip = new ToolTip();
             tooltip.InitialDelay = 1500;
 
-            tailleMax = groupBoxReglage.Height;
-            tailleMin = 39;
+            groupBoxReglage.DeploiementChange += new Composants.GroupBoxRetractable.DeploiementDelegate(groupBoxReglage_Deploiement);
         }
 
-        private void btnTaille_Click(object sender, EventArgs e)
+        void groupBoxReglage_Deploiement(bool deploye)
         {
-            if (groupBoxReglage.Height == tailleMax)
-                Deployer(false);
-            else
-                Deployer(true);
-        }
-
-        public virtual void Deployer(bool deployer)
-        {
-            if (!deployer)
-            {
-                foreach (Control c in groupBoxReglage.Controls)
-                    c.Visible = false;
-
-                btnTaille.Visible = true;
-                groupBoxReglage.Height = tailleMin;
-                btnTaille.Image = Properties.Resources.Bas;
-                tooltip.SetToolTip(btnTaille, "Agrandir");
-            }
-            else
-            {
-                foreach (Control c in groupBoxReglage.Controls)
-                    c.Visible = true;
-
-                groupBoxReglage.Height = tailleMax;
-                btnTaille.Image = Properties.Resources.Haut;
-                tooltip.SetToolTip(btnTaille, "Réduire");
-            }
-
-            Config.CurrentConfig.ReglageGROuvert = deployer;
+            Config.CurrentConfig.ReglageGROuvert = deploye;
         }
 
         #region Aspiration
@@ -280,7 +249,7 @@ namespace GoBot.IHM
         
         private void PanelReglageGros_Load(object sender, EventArgs e)
         {
-            Deployer(Config.CurrentConfig.ReglageGROuvert);
+            groupBoxReglage.Deployer(Config.CurrentConfig.ReglageGROuvert, false);
         }
 
         private void btnOkVitesseCanonTMin_Click(object sender, EventArgs e)

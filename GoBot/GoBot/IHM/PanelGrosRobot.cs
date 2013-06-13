@@ -18,7 +18,6 @@ namespace GoBot.IHM
         {
             InitializeComponent();
 
-            panelHistorique.Deployer(Config.CurrentConfig.HistoriqueGROuvert);
             CouleursLog = new Dictionary<TypeLog, Color>();
             CouleursLog.Add(TypeLog.Action, Color.Blue);
             CouleursLog.Add(TypeLog.PathFinding, Color.Green);
@@ -30,7 +29,7 @@ namespace GoBot.IHM
         {
             panelDeplacement.Robot = Robots.GrosRobot;
             panelDeplacement.Init();
-            panelHistorique.setHistorique(Robots.GrosRobot.Historique);
+            panelHistorique.SetHistorique(Robots.GrosRobot.Historique);
             Robots.GrosRobot.Historique.NouveauLog += new Historique.DelegateLog(MAJLog);
         }
 
@@ -99,14 +98,6 @@ namespace GoBot.IHM
 
             if(parent != null)
                 parent.Dispose();
-        }
-
-        private void panelHistorique_Resize(object sender, EventArgs e)
-        {
-            if (panelHistorique.Height > 50)
-                Config.CurrentConfig.HistoriqueGROuvert = true;
-            else
-                Config.CurrentConfig.HistoriqueGROuvert = false;
         }
 
         private void boxStrat_CheckedChanged(object sender, EventArgs e)
