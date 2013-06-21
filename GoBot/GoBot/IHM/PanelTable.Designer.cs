@@ -522,6 +522,7 @@
             this.Controls.Add(this.pictureBoxTable);
             this.Name = "PanelTable";
             this.Size = new System.Drawing.Size(998, 526);
+            this.Load += new System.EventHandler(this.PanelTable_Load);
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxTable)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();

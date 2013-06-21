@@ -116,6 +116,8 @@ namespace GoBot.UDP
         {
             Vitesse = 0x01,
             Detection = 0xE4,
+            AckDetection = 0xE5,
+            ErreurDetection = 0xE6,
             TestConnexion = 0xF0,
             Reset = 0xF2
         }
@@ -643,6 +645,26 @@ namespace GoBot.UDP
             tab[1] = (byte)FonctionMiwi.Transmettre;
             tab[2] = (byte)balise;
             tab[3] = (byte)FonctionBalise.Detection;
+            return new Trame(tab);
+        }
+
+        public static Trame BaliseAck(Carte balise)
+        {
+            byte[] tab = new byte[5];
+            tab[0] = (byte)Carte.RecMiwi;
+            tab[1] = (byte)FonctionMiwi.Transmettre;
+            tab[2] = (byte)balise;
+            tab[3] = (byte)FonctionBalise.AckDetection;
+            return new Trame(tab);
+        }
+
+        public static Trame BaliseErreurDetection(Carte balise)
+        {
+            byte[] tab = new byte[5];
+            tab[0] = (byte)Carte.RecMiwi;
+            tab[1] = (byte)FonctionMiwi.Transmettre;
+            tab[2] = (byte)balise;
+            tab[3] = (byte)FonctionBalise.ErreurDetection;
             return new Trame(tab);
         }
 

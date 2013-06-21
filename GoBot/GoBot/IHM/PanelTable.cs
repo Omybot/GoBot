@@ -42,6 +42,11 @@ namespace GoBot.IHM
             Plateau.ScoreChange += new EventHandler(Plateau_ScoreChange);
         }
 
+        void ParentForm_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            thAffichage.Abort();
+        }
+
         void Plateau_ScoreChange(object sender, EventArgs e)
         {
             this.Invoke(new EventHandler(delegate
@@ -106,7 +111,7 @@ namespace GoBot.IHM
                     positionsBallesChargees.Add(new Point(21, 31));
                     positionsBallesChargees.Add(new Point(31, 31));
 
-                    while (continuerAffichage)
+                    while (Thread.CurrentThread.IsAlive)
                     {
                         try
                         {
@@ -748,10 +753,11 @@ namespace GoBot.IHM
 
         #endregion
 
+        Thread thAffichage;
         private void btnAffichage_Click(object sender, EventArgs e)
         {
             btnAffichage.Enabled = false;
-            Thread thAffichage = new Thread(MAJAffichage);
+            thAffichage = new Thread(MAJAffichage);
             thAffichage.Start();
         }
 
@@ -840,12 +846,6 @@ namespace GoBot.IHM
             Plateau.Score = 0;
         }
 
-        private bool continuerAffichage = true;
-        public void Stop()
-        {
-            continuerAffichage = false;
-        }
-
         private void PathFinding()
         {
             if (modeCourant == Mode.FinTrajectoire)
@@ -924,12 +924,9 @@ namespace GoBot.IHM
             Plateau.Enchainement.Executer();
         }
 
-        private void button1_Click(object sender, EventArgs e)
+        private void PanelTable_Load(object sender, EventArgs e)
         {
-            if (Plateau.AssietteAttrapee == -1)
-                Plateau.AssietteAttrapee = 1;
-            else
-                Plateau.AssietteAttrapee = -1;
+            ParentForm.FormClosing += new FormClosingEventHandler(ParentForm_FormClosing);
         }
     }
 }

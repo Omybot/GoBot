@@ -4,8 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Drawing;
 using GoBot.Calculs.Formes;
+using GoBot.Calculs;
 
-namespace GoBot.Calculs
+namespace GoBot.Balises
 {
     public class DetectionBalise
     {

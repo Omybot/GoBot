@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 using GoBot.Calculs;
+using GoBot.Balises;
 
 namespace GoBot.IHM
 {
@@ -34,7 +35,7 @@ namespace GoBot.IHM
                 if (balise != null)
                 {
                     groupBalise.Text = "Balise " + balise.Carte;
-                    balise.PositionsChange += new GoBot.Balise.PositionsChangeDelegate(MAJPosition);
+                    balise.PositionsChange += new Balise.PositionsChangeDelegate(MAJPosition);
                 }
             }
         }

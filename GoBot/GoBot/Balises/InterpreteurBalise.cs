@@ -146,20 +146,24 @@ namespace GoBot.Balises
         {
             List<PointReel> detections = null;
 
-            if (mode == ModeInterpretation.Polygones)
+            if (DetectionBalise1 != null && DetectionBalise2 != null && DetectionBalise3 != null)
             {
-                detections = InterpolationPolygonale(DetectionBalise1, DetectionBalise2, DetectionBalise3);
-            }
-            else if (mode == ModeInterpretation.Intersections)
-            {
-                detections = DetectionParIntersections(DetectionBalise1, DetectionBalise2, DetectionBalise3);
-            }
 
-            if (detections.Count > 0)
-            {
-                PositionsEnnemies = new List<PointReel>(detections);
-                SuiviBalise.MajPositions(PositionsEnnemies, Plateau.Enchainement == null || Plateau.Enchainement.DebutMatch == null);
-                //PositionEnnemisActualisee(this);
+                if (mode == ModeInterpretation.Polygones)
+                {
+                    detections = InterpolationPolygonale(DetectionBalise1, DetectionBalise2, DetectionBalise3);
+                }
+                else if (mode == ModeInterpretation.Intersections)
+                {
+                    detections = DetectionParIntersections(DetectionBalise1, DetectionBalise2, DetectionBalise3);
+                }
+
+                if (detections.Count > 0)
+                {
+                    PositionsEnnemies = new List<PointReel>(detections);
+                    SuiviBalise.MajPositions(PositionsEnnemies, Plateau.Enchainement == null || Plateau.Enchainement.DebutMatch == null);
+                    //PositionEnnemisActualisee(this);
+                }
             }
         }
 

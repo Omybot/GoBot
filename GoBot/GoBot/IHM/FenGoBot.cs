@@ -17,6 +17,7 @@ using GoBot.Calculs.Formes;
 using System.Threading;
 using GoBot.Mouvements;
 using System.Diagnostics;
+using GoBot.Balises;
 
 namespace GoBot
 {
@@ -50,6 +51,10 @@ namespace GoBot
                 panelBalise1.Balise = Plateau.Balise1;
                 panelBalise2.Balise = Plateau.Balise2;
                 panelBalise3.Balise = Plateau.Balise3;
+
+                panelDiagnosticBalise1.Balise = Plateau.Balise1;
+                panelDiagnosticBalise2.Balise = Plateau.Balise2;
+                panelDiagnosticBalise3.Balise = Plateau.Balise3;
 
                 // Réglage rouge par défaut
                 btnCouleurRouge_Click(null, null);
@@ -174,7 +179,6 @@ namespace GoBot
             panelBalise1.Balise.VitesseRotation(0);
             panelBalise2.Balise.VitesseRotation(0);
             panelBalise3.Balise.VitesseRotation(0);
-            panelTable.Stop();
 
             /*Plateau.Balise1.writer.Close();
             Plateau.Balise2.writer.Close();

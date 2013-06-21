@@ -6,7 +6,7 @@ using System.Windows.Forms;
 using GoBot.Calculs;
 using System.Threading;
 
-namespace GoBot
+namespace GoBot.Balises
 {
     class CalibrateurBalise
     {

@@ -97,5 +97,21 @@ namespace GoBot.Calculs
 
             return positionAdv;
         }
+
+        public static double EcartType(List<double> liste)
+        {
+            double moyenne = liste.Average();
+
+            double ecarts = 0;
+
+            foreach (double val in liste)
+                ecarts += (val - moyenne) * (val - moyenne);
+
+            ecarts /= liste.Count;
+
+            ecarts = Math.Sqrt(ecarts);
+
+            return ecarts;
+        }
     }
 }

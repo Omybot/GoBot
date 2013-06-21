@@ -81,8 +81,15 @@
     <Compile Include="Actions\Deplacement\ActionAvance.cs" />
     <Compile Include="Actions\Deplacement\ActionRecule.cs" />
     <Compile Include="Actions\IAction.cs" />
+    <Compile Include="Balises\BaliseStats.cs" />
     <Compile Include="Balises\SuiviBalise.cs" />
     <Compile Include="CameraIP.cs" />
+    <Compile Include="IHM\PanelDiagnosticBalise.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="IHM\PanelDiagnosticBalise.Designer.cs">
+      <DependentUpon>PanelDiagnosticBalise.cs</DependentUpon>
+    </Compile>
     <Compile Include="IHM\PanelImagesBalises.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -173,7 +180,7 @@
     <Compile Include="PathFinding\Vector3D.cs" />
     <Compile Include="Balises\Balise.cs" />
     <Compile Include="Calculs\Angle.cs" />
-    <Compile Include="Calculs\DetectionBalise.cs" />
+    <Compile Include="Balises\DetectionBalise.cs" />
     <Compile Include="Calculs\Formes\Cercle.cs" />
     <Compile Include="Calculs\Formes\Droite.cs" />
     <Compile Include="Calculs\Formes\IForme.cs" />
@@ -250,6 +257,9 @@
     <Compile Include="UDP\TrameFactory.cs" />
     <Compile Include="UDP\ConnexionUDP.cs" />
     <Compile Include="UDP\Trame.cs" />
+    <EmbeddedResource Include="IHM\PanelDiagnosticBalise.resx">
+      <DependentUpon>PanelDiagnosticBalise.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="IHM\PanelImagesBalises.resx">
       <DependentUpon>PanelImagesBalises.cs</DependentUpon>
     </EmbeddedResource>

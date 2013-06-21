@@ -13,10 +13,10 @@ namespace GoBot.Calculs
 
     public class Angle
     {
-        private double angle;
+        private double angle { get; set; }
 
         /// <summary>
-        /// Retourne l'angle en degrés
+        /// Retourne l'angle en degrés (-180 à +180)
         /// </summary>
         public double AngleDegres
         {
@@ -26,6 +26,9 @@ namespace GoBot.Calculs
             }
         }
 
+        /// <summary>
+        /// Retourne l'angle en degrés positif (0 à 360 au lieu de -180 à +180)
+        /// </summary>
         public double AnglePositif
         {
             get
@@ -108,6 +111,8 @@ namespace GoBot.Calculs
             return retour;
         }
 
+        #region Operateurs
+
         public static Angle operator +(Angle a1, Angle a2)
         {
             return new Angle(a1.AngleDegres + a2.AngleDegres, AnglyeType.Degre);
@@ -127,6 +132,13 @@ namespace GoBot.Calculs
         {
             return !(a1 == a2);
         }
+
+        public static implicit operator Angle(int angle)
+        {
+            return new Angle(angle);
+        }
+
+        #endregion
 
         public override string ToString()
         {

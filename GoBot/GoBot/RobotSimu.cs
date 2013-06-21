@@ -294,7 +294,6 @@ namespace GoBot
 
         public override void BougeServo(ServomoteurID servo, int position)
         {
-            // TODO
             base.BougeServo(servo, position);
             Historique.AjouterAction(new ActionServo(this, position, servo));
         }

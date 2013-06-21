@@ -32,6 +32,12 @@ namespace GoBot.IHM
 
         private void PanelSequencesGros_Load(object sender, EventArgs e)
         {
+            ledPresence.CouleurGris();
+            ledAssiette.CouleurGris();
+            ledAspi.CouleurGris();
+            ledJack.CouleurGris();
+            ledCouleur.CouleurGris();
+
             groupBoxCapteurs.Deployer(Config.CurrentConfig.CapteursGROuvert, false);
 
             timerPresence = new System.Timers.Timer(100);
@@ -47,11 +53,6 @@ namespace GoBot.IHM
             timerJack = new System.Timers.Timer(100);
             timerJack.Elapsed += new System.Timers.ElapsedEventHandler(timerJack_Elapsed);
 
-            ledPresence.CouleurGris();
-            ledAssiette.CouleurGris();
-            ledAspi.CouleurGris();
-            ledJack.CouleurGris();
-            ledCouleur.CouleurGris();
         }
 
         System.Timers.Timer timerPresence;
