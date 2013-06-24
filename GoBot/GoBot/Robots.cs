@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading;
 using GoBot.Calculs;
+using GoBot.Communications;
 
 namespace GoBot
 {

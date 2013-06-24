@@ -33,26 +33,6 @@ namespace GoBot.IHM
             Robots.GrosRobot.Historique.NouveauLog += new Historique.DelegateLog(MAJLog);
         }
 
-        private void AddText(String message, Color couleur)
-        {
-            String texte = message + Environment.NewLine;
-            txtLog.SuspendLayout();
-
-            txtLog.SelectionStart = txtLog.TextLength;
-            txtLog.SelectedText = texte;
-
-            txtLog.SelectionStart = txtLog.TextLength - texte.Length + 1;
-            txtLog.SelectionLength = texte.Length;
-            txtLog.SelectionColor = couleur;
-
-            txtLog.ResumeLayout();
-
-            txtLog.Select(txtLog.TextLength, 0);
-
-            txtLog.SelectionStart = txtLog.TextLength;
-            txtLog.ScrollToCaret();
-        }
-
         public delegate void MajLog(HistoLigne ligne);
         MajLog majLogDelegate;
         private void MAJLog(HistoLigne ligne)
@@ -85,7 +65,8 @@ namespace GoBot.IHM
                 TimeSpan t = new TimeSpan();
                 if (Plateau.Enchainement != null && Plateau.Enchainement.DebutMatch != null)
                     t = ligne.Heure - Plateau.Enchainement.DebutMatch;
-                AddText((boxHeure.Checked ? t.Minutes + ":" + t.Seconds + ":" + t.Milliseconds : "") + " > " + ligne.Message, CouleursLog[ligne.Type]);
+
+                txtLog.AjouterLigne((boxHeure.Checked ? t.Minutes + ":" + t.Seconds + ":" + t.Milliseconds : "") + " > " + ligne.Message, CouleursLog[ligne.Type], false);
             }
         }
 
@@ -125,8 +106,7 @@ namespace GoBot.IHM
             for(int i = 0; i < Robots.GrosRobot.Historique.HistoriqueLignes.Count; i++)
             {
                 HistoLigne ligne = Robots.GrosRobot.Historique.HistoriqueLignes[i];
-
-                AddText((boxHeure.Checked ? ligne.Heure.Minute + ":" + ligne.Heure.Second + ":" + ligne.Heure.Millisecond : "") + " > " + ligne.Message, CouleursLog[ligne.Type]);
+                txtLog.AjouterLigne((boxHeure.Checked ? ligne.Heure.Minute + ":" + ligne.Heure.Second + ":" + ligne.Heure.Millisecond : "") + " > " + ligne.Message, CouleursLog[ligne.Type], false);
             }
         }
     }

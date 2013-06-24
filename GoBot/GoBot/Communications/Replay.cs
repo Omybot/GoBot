@@ -2,14 +2,16 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using UDP;
 using System.Xml.Serialization;
 using System.IO;
 using System.Windows.Forms;
 using System.Threading;
 
-namespace GoBot
+namespace GoBot.Communications
 {
+    /// <summary>
+    /// Association d'une trame et de son heure de réception
+    /// </summary>
     [Serializable]
     public class TrameReplay
     {
@@ -27,27 +29,47 @@ namespace GoBot
         }
     }
 
+    /// <summary>
+    /// Permet de sauvegarder l'historique des trames reçue ainsi que leur heure d'arrivée
+    /// </summary>
     [Serializable]
     public class Replay
     {
-        List<TrameReplay> tramesEntrantes;
+        /// <summary>
+        /// Liste des trames
+        /// </summary>
+        private List<TrameReplay> tramesEntrantes;
 
         public Replay()
         {
             tramesEntrantes = new List<TrameReplay>();
         }
 
+        /// <summary>
+        /// Ajoute une trame avec l'heure actuelle
+        /// </summary>
+        /// <param name="trame">Trame à ajouter</param>
         public void AjouterTrameEntrante(Trame trame)
         {
             AjouterTrameEntrante(trame, DateTime.Now);
         }
 
+        /// <summary>
+        /// Ajoute une trame avec l'heure définie
+        /// </summary>
+        /// <param name="trame">Trame à ajouter</param>
+        /// <param name="date">Heure de réception de la trame</param>
         public void AjouterTrameEntrante(Trame trame, DateTime date)
         {
             tramesEntrantes.Add(new TrameReplay(trame, date));
         }
 
-        public bool Load(String nomFichier)
+        /// <summary>
+        /// Charge une sauvegarde de Replay
+        /// </summary>
+        /// <param name="nomFichier">Chemin du fichier</param>
+        /// <returns>Vrai si la sauvegarde a été correctement chargée</returns>
+        public bool Charger(String nomFichier)
         {
             try
             {
@@ -63,7 +85,12 @@ namespace GoBot
             }
         }
 
-        public bool Save(String nomFichier)
+        /// <summary>
+        /// Sauvegarde l'ensemble des trames dans un fichier
+        /// </summary>
+        /// <param name="nomFichier">Chemin du fichier</param>
+        /// <returns>Vrai si la sauvegarde s'est correctement déroulée</returns>
+        public bool Sauvegarder(String nomFichier)
         {
             try
             {
@@ -79,6 +106,9 @@ namespace GoBot
             }
         }
 
+        /// <summary>
+        /// Permet de simuler la réception des trames enregistrées en respectant les intervalles de temps entre chaque trame
+        /// </summary>
         public void Rejouer()
         {
             ReceptionTrame += new ReceptionTrameDelegate(Connexions.ConnexionMiwi.TrameRecue);

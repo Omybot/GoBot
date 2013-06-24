@@ -2,9 +2,8 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using UDP;
-using GoBot.UDP;
 using System.Windows.Forms;
+using GoBot.Communications;
 
 namespace GoBot
 {
@@ -82,7 +81,7 @@ namespace GoBot
 
                     switch (trame[2])
                     {
-                        case (byte)GoBot.UDP.TrameFactory.FonctionReglageServo.GetCouple:
+                        case (byte)TrameFactory.FonctionReglageServo.GetCouple:
 
                             int nouveauCouple = trame[4] * 256 + trame[5];
                             if(couple != nouveauCouple)
@@ -92,9 +91,9 @@ namespace GoBot
                             }
                             break;
 
-                        case (byte)GoBot.UDP.TrameFactory.FonctionReglageServo.GetPosition:
+                        case (byte)TrameFactory.FonctionReglageServo.GetPosition:
                             break;
-                        case (byte)GoBot.UDP.TrameFactory.FonctionReglageServo.GetTemperature:
+                        case (byte)TrameFactory.FonctionReglageServo.GetTemperature:
 
                             int nouvelleTemp = trame[4] * 256 + trame[5];
                             if (temperature != nouvelleTemp)
@@ -104,7 +103,7 @@ namespace GoBot
                             }
                             break;
 
-                        case (byte)GoBot.UDP.TrameFactory.FonctionReglageServo.GetTension:
+                        case (byte)TrameFactory.FonctionReglageServo.GetTension:
                             
                             double nouvelleTension = (trame[4] * 256 + trame[5]) / 10.0;
                             if (tension != nouvelleTension)
@@ -114,9 +113,9 @@ namespace GoBot
                             }
                             break;
 
-                        case (byte)GoBot.UDP.TrameFactory.FonctionReglageServo.GetVitesse:
+                        case (byte)TrameFactory.FonctionReglageServo.GetVitesse:
                             break;
-                        case (byte)GoBot.UDP.TrameFactory.FonctionReglageServo.RechercheAuto:
+                        case (byte)TrameFactory.FonctionReglageServo.RechercheAuto:
 
                             if (recherche)
                             {
@@ -127,7 +126,7 @@ namespace GoBot
                             }
                             break;
 
-                        case (byte)GoBot.UDP.TrameFactory.FonctionReglageServo.TestConnexion:
+                        case (byte)TrameFactory.FonctionReglageServo.TestConnexion:
                             break;
                     }
                 }

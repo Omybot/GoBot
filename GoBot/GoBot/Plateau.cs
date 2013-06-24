@@ -16,6 +16,7 @@ using GoBot.Ponderations;
 using GoBot.Enchainements;
 using GoBot.Mouvements;
 using GoBot.Balises;
+using GoBot.Communications;
 
 namespace GoBot
 {

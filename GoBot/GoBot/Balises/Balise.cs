@@ -2,13 +2,12 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using UDP;
-using GoBot.UDP;
 using System.Drawing;
 using System.Windows.Forms;
 using System.IO;
 using GoBot.Calculs;
 using GoBot.Calculs.Formes;
+using GoBot.Communications;
 
 namespace GoBot.Balises
 {
@@ -128,8 +127,8 @@ namespace GoBot.Balises
             DetectionsCapteur1 = new List<DetectionBalise>();
             DetectionsCapteur2 = new List<DetectionBalise>();
 
-            ConnexionCheck = new GoBot.ConnexionCheck(5000);
-            ConnexionCheck.TestConnexion += new GoBot.ConnexionCheck.TestConnexionDelegate(TestConnexion);
+            ConnexionCheck = new ConnexionCheck(5000);
+            ConnexionCheck.TestConnexion += new ConnexionCheck.TestConnexionDelegate(TestConnexion);
 
             Connexions.ConnexionMiwi.NouvelleTrame += new ConnexionUDP.ReceptionDelegate(connexionIo_NouvelleTrame);
             Stats = new BaliseStats(this);

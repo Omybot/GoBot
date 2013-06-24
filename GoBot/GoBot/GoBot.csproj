@@ -169,7 +169,7 @@
     <Compile Include="Ponderations\Poids.cs" />
     <Compile Include="Ponderations\PoidsBase.cs" />
     <Compile Include="Robots.cs" />
-    <Compile Include="UDP\Connexions.cs" />
+    <Compile Include="Communications\Connexions.cs" />
     <Compile Include="PathFinding\Arc.cs" />
     <Compile Include="PathFinding\AStar.cs" />
     <Compile Include="PathFinding\Graph.cs" />
@@ -194,7 +194,7 @@
     <Compile Include="Enchainements\Enchainement.cs" />
     <Compile Include="Enchainements\HomologationEnchainement.cs" />
     <Compile Include="Enums.cs" />
-    <Compile Include="ConnexionCheck.cs" />
+    <Compile Include="Communications\ConnexionCheck.cs" />
     <Compile Include="IHM\PanelBalise.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -245,18 +245,17 @@
     <Compile Include="IHM\PanelGrosRobot.Designer.cs">
       <DependentUpon>PanelGrosRobot.cs</DependentUpon>
     </Compile>
-    <Compile Include="Balises\PlanificateurBalise.cs" />
     <Compile Include="Plateau.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RobotReel.cs" />
-    <Compile Include="Replay.cs" />
+    <Compile Include="Communications\Replay.cs" />
     <Compile Include="Robot.cs" />
     <Compile Include="RobotSimu.cs" />
     <Compile Include="Servomoteur.cs" />
-    <Compile Include="UDP\TrameFactory.cs" />
-    <Compile Include="UDP\ConnexionUDP.cs" />
-    <Compile Include="UDP\Trame.cs" />
+    <Compile Include="Communications\TrameFactory.cs" />
+    <Compile Include="Communications\ConnexionUDP.cs" />
+    <Compile Include="Communications\Trame.cs" />
     <EmbeddedResource Include="IHM\PanelDiagnosticBalise.resx">
       <DependentUpon>PanelDiagnosticBalise.cs</DependentUpon>
     </EmbeddedResource>

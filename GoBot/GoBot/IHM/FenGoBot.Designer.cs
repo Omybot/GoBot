@@ -42,9 +42,9 @@ namespace GoBot
             this.btnAfficherTrame = new System.Windows.Forms.Button();
             this.label7 = new System.Windows.Forms.Label();
             this.label6 = new System.Windows.Forms.Label();
-            this.txtTrames = new System.Windows.Forms.RichTextBox();
+            this.txtTrames = new Composants.RichTextBoxPlus();
             this.btnSaveReplay = new System.Windows.Forms.Button();
-            this.txtLogComplet = new System.Windows.Forms.RichTextBox();
+            this.txtLogComplet = new Composants.RichTextBoxPlus();
             this.tabMatch = new System.Windows.Forms.TabPage();
             this.led2 = new Composants.Led();
             this.btnDegommage = new System.Windows.Forms.Button();
@@ -658,7 +658,7 @@ namespace GoBot
             this.panelImagesBalises.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panelImagesBalises.Location = new System.Drawing.Point(0, 0);
             this.panelImagesBalises.Name = "panelImagesBalises";
-            this.panelImagesBalises.Size = new System.Drawing.Size(192, 74);
+            this.panelImagesBalises.Size = new System.Drawing.Size(1016, 548);
             this.panelImagesBalises.TabIndex = 0;
             // 
             // tabTable
@@ -724,7 +724,7 @@ namespace GoBot
             this.panelReglageAsserv.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panelReglageAsserv.Location = new System.Drawing.Point(3, 3);
             this.panelReglageAsserv.Name = "panelReglageAsserv";
-            this.panelReglageAsserv.Size = new System.Drawing.Size(186, 68);
+            this.panelReglageAsserv.Size = new System.Drawing.Size(1010, 542);
             this.panelReglageAsserv.TabIndex = 0;
             // 
             // lblRecMove
@@ -967,7 +967,7 @@ namespace GoBot
         private System.Windows.Forms.TabPage tabGrosRobot;
         private IHM.PanelGrosRobot panelGrosRobot;
         private System.Windows.Forms.Button btnClose;
-        private System.Windows.Forms.RichTextBox txtLogComplet;
+        private Composants.RichTextBoxPlus txtLogComplet;
         private System.Windows.Forms.TabPage tabMatch;
         private System.Windows.Forms.TabPage tabBalises;
         private PanelBalise panelBalise3;
@@ -995,7 +995,7 @@ namespace GoBot
         private Composants.Led ledRecallage;
         private Composants.Led led1;
         private System.Windows.Forms.Label label5;
-        private System.Windows.Forms.RichTextBox txtTrames;
+        private Composants.RichTextBoxPlus txtTrames;
         private System.Windows.Forms.Button btnSaveReplay;
         private System.Windows.Forms.Label label7;
         private System.Windows.Forms.Label label6;

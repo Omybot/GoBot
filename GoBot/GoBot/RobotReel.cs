@@ -2,15 +2,14 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using UDP;
 using System.Timers;
 using GoBot.Actions;
-using GoBot.UDP;
 using System.Threading;
 using GoBot.Calculs;
 using GoBot.Calculs.Formes;
 using System.Drawing;
 using System.Windows.Forms;
+using GoBot.Communications;
 
 namespace GoBot
 {

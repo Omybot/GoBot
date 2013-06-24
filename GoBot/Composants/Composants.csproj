@@ -78,6 +78,12 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
+    <Compile Include="RichTextBoxPlus.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="RichTextBoxPlus.Designer.cs">
+      <DependentUpon>RichTextBoxPlus.cs</DependentUpon>
+    </Compile>
     <Compile Include="SwitchBouton.cs">
       <SubType>UserControl</SubType>
     </Compile>

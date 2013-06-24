@@ -40,7 +40,7 @@
             this.boxActions = new System.Windows.Forms.CheckBox();
             this.boxHeure = new System.Windows.Forms.CheckBox();
             this.boxPathFinding = new System.Windows.Forms.CheckBox();
-            this.txtLog = new System.Windows.Forms.RichTextBox();
+            this.txtLog = new Composants.RichTextBoxPlus();
             this.flowLayoutPanel1.SuspendLayout();
             this.flowLayoutPanel2.SuspendLayout();
             this.SuspendLayout();
@@ -216,7 +216,7 @@
         private System.Windows.Forms.CheckBox boxActions;
         private System.Windows.Forms.CheckBox boxHeure;
         private System.Windows.Forms.CheckBox boxPathFinding;
-        private System.Windows.Forms.RichTextBox txtLog;
+        private Composants.RichTextBoxPlus txtLog;
 
     }
 }

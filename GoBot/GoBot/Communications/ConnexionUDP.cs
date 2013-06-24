@@ -5,8 +5,9 @@ using System.Text;
 using System.Net;
 using System.Net.Sockets;
 using GoBot;
+using GoBot.Communications;
 
-namespace UDP
+namespace GoBot.Communications
 {
     public class UdpState
     {

@@ -926,7 +926,8 @@ namespace GoBot.IHM
 
         private void PanelTable_Load(object sender, EventArgs e)
         {
-            ParentForm.FormClosing += new FormClosingEventHandler(ParentForm_FormClosing);
+            if(!Config.DesignMode)
+                ParentForm.FormClosing += new FormClosingEventHandler(ParentForm_FormClosing);
         }
     }
 }

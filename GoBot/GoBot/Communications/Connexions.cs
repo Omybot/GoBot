@@ -2,10 +2,9 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using UDP;
-using GoBot.UDP;
+using GoBot.Communications;
 
-namespace GoBot
+namespace GoBot.Communications
 {
     static class Connexions
     {

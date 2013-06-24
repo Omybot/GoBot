@@ -2,9 +2,8 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using UDP;
 
-namespace GoBot.UDP
+namespace GoBot.Communications
 {
     static class TrameFactory
     {

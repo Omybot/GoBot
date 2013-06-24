@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 using System.Threading;
+using GoBot.Communications;
 
 namespace GoBot.IHM
 {

@@ -8,8 +8,6 @@ using System.Text;
 using System.Windows.Forms;
 using GoBot.IHM;
 using Composants;
-using GoBot.UDP;
-using UDP;
 using System.Net;
 using GoBot.Enchainements;
 using GoBot.Calculs;
@@ -18,6 +16,7 @@ using System.Threading;
 using GoBot.Mouvements;
 using System.Diagnostics;
 using GoBot.Balises;
+using GoBot.Communications;
 
 namespace GoBot
 {
@@ -101,37 +100,20 @@ namespace GoBot
             Robot_ConnexionChange(Carte.RecMiwi, conn);
         }
 
-        void AjouterLigne(Color couleur, String texte)
-        {
-            this.Invoke(new EventHandler(delegate
-                {
-                    texte = DateTime.Now.ToLongTimeString() + " > " + texte + Environment.NewLine;
-                    txtLogComplet.SuspendLayout();
-
-                    txtLogComplet.SelectionStart = txtLogComplet.TextLength;
-                    txtLogComplet.SelectedText = texte;
-
-                    txtLogComplet.SelectionStart = txtLogComplet.TextLength - texte.Length + 1;
-                    txtLogComplet.SelectionLength = texte.Length;
-                    txtLogComplet.SelectionColor = couleur;
-
-                    txtLogComplet.ResumeLayout();
-
-                    txtLogComplet.Select(txtLogComplet.TextLength, 0);
-
-                    txtLogComplet.SelectionStart = txtLogComplet.TextLength;
-                    txtLogComplet.ScrollToCaret();
-                }));
-        }
-
         void HistoriqueGR_nouvelleAction(Actions.IAction action)
         {
-            AjouterLigne(Color.RoyalBlue, action.ToString());
+            this.Invoke(new EventHandler(delegate
+            {
+                txtLogComplet.AjouterLigne(action.ToString(), Color.RoyalBlue, true);
+            }));
         }
 
         void HistoriquePR_nouvelleAction(Actions.IAction action)
         {
-            AjouterLigne(Color.Green, action.ToString());
+            this.Invoke(new EventHandler(delegate
+            {
+                txtLogComplet.AjouterLigne(action.ToString(), Color.Green, true);
+            }));
         }
 
         void Robot_ConnexionChange(Carte carte, bool connecte)
@@ -387,36 +369,20 @@ namespace GoBot
                     break;
             }
 
-            AjouterLigneTrame(couleur, texte);
-        }
-
-        void AjouterLigneTrame(Color couleur, String texte)
-        {
-            texte = DateTime.Now.ToLongTimeString() + " > " + texte + Environment.NewLine;
-            txtTrames.SuspendLayout();
-
-            txtTrames.SelectionStart = 0;
-            txtTrames.SelectedText = texte;
-
-            txtTrames.SelectionStart = 0;
-            txtTrames.SelectionLength = texte.Length - 1;
-            txtTrames.SelectionColor = couleur;
-
-            /*if (texte.Contains("Io"))
-                txtTrames.SelectionAlignment = HorizontalAlignment.Right;
+            if (InvokeRequired)
+                this.Invoke(new EventHandler(delegate
+                {
+                    txtTrames.AjouterLigne(texte, couleur);
+                }));
             else
-                txtTrames.SelectionAlignment = HorizontalAlignment.Left;*/
-
-            txtTrames.ResumeLayout();
-
-            txtTrames.Select(txtLogComplet.TextLength, 0);
+                txtTrames.AjouterLigne(texte, couleur);
         }
 
         private void btnSaveReplay_Click(object sender, EventArgs e)
         {
             using(SaveFileDialog open = new SaveFileDialog())
                 if (open.ShowDialog() == System.Windows.Forms.DialogResult.OK)
-                    replay.Save(open.FileName);
+                    replay.Sauvegarder(open.FileName);
         }
 
         private void btnChargerReplay_Click(object sender, EventArgs e)
@@ -425,7 +391,7 @@ namespace GoBot
                 if (open.ShowDialog() == System.Windows.Forms.DialogResult.OK)
                 {
                     replay = new Replay();
-                    replay.Load(open.FileName);
+                    replay.Charger(open.FileName);
                 }
         }
 
