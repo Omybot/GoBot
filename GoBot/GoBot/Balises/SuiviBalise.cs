@@ -6,11 +6,26 @@ using GoBot.Calculs.Formes;
 
 namespace GoBot.Balises
 {
+    /// <summary>
+    /// Association d'une position dans un plan à une date d'acquisition
+    /// </summary>
     class PositionTemporelle
     {
+        /// <summary>
+        /// Date d'acquisition de la position
+        /// </summary>
         public DateTime Date { get; set; }
+
+        /// <summary>
+        /// Position mesurée
+        /// </summary>
         public PointReel Position { get; set; }
 
+        /// <summary>
+        /// Constructeur
+        /// </summary>
+        /// <param name="date">Date d'acquisition de la position</param>
+        /// <param name="position">Position mesurée</param>
         public PositionTemporelle(DateTime date, PointReel position)
         {
             Date = date;
@@ -18,6 +33,9 @@ namespace GoBot.Balises
         }
     }
 
+    /// <summary>
+    /// Petmet d'effectuer un tracking sur les différentes positions ennemies calculées par les balises.
+    /// </summary>
     public static class SuiviBalise
     {
         public static int NombreMaxBalises { get; set; }

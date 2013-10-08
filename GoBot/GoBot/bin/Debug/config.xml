@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
-  <DeplacementGROuvert>false</DeplacementGROuvert>
+  <DeplacementGROuvert>true</DeplacementGROuvert>
   <HistoriqueGROuvert>true</HistoriqueGROuvert>
   <ReglageGROuvert>false</ReglageGROuvert>
   <UtilisationGROuvert>false</UtilisationGROuvert>
@@ -10,10 +10,10 @@
   <HistoriquePROuvert>true</HistoriquePROuvert>
   <ReglagePROuvert>true</ReglagePROuvert>
   <UtilisationPROuvert>true</UtilisationPROuvert>
-  <GRVitesseLigneRapide>1000</GRVitesseLigneRapide>
-  <GRAccelerationLigneRapide>2000</GRAccelerationLigneRapide>
-  <GRVitessePivotRapide>1000</GRVitessePivotRapide>
-  <GRAccelerationPivotRapide>2500</GRAccelerationPivotRapide>
+  <GRVitesseLigneRapide>2072</GRVitesseLigneRapide>
+  <GRAccelerationLigneRapide>2530</GRAccelerationLigneRapide>
+  <GRVitessePivotRapide>1892</GRVitessePivotRapide>
+  <GRAccelerationPivotRapide>3112</GRAccelerationPivotRapide>
   <GRVitesseLigneLent>300</GRVitesseLigneLent>
   <GRAccelerationLigneLent>300</GRAccelerationLigneLent>
   <GRVitessePivotLent>300</GRVitessePivotLent>
@@ -32,15 +32,15 @@
   <PRCoeffP>0</PRCoeffP>
   <PRCoeffI>0</PRCoeffI>
   <PRCoeffD>0</PRCoeffD>
-  <OffsetBalise1Capteur1>-192.19593749999999</OffsetBalise1Capteur1>
-  <OffsetBalise2Capteur1>162.41625000000002</OffsetBalise2Capteur1>
-  <OffsetBalise3Capteur1>-10.939062500000034</OffsetBalise3Capteur1>
-  <OffsetBalise1Capteur2>-193.64031249999997</OffsetBalise1Capteur2>
-  <OffsetBalise2Capteur2>161.45843749999997</OffsetBalise2Capteur2>
-  <OffsetBalise3Capteur2>168.144375</OffsetBalise3Capteur2>
+  <OffsetBalise1Capteur1>-12.099374999999981</OffsetBalise1Capteur1>
+  <OffsetBalise2Capteur1>-13.217812500000008</OffsetBalise2Capteur1>
+  <OffsetBalise3Capteur1>-191.16625</OffsetBalise3Capteur1>
+  <OffsetBalise1Capteur2>-193.13624999999996</OffsetBalise1Capteur2>
+  <OffsetBalise2Capteur2>165.27374999999998</OffsetBalise2Capteur2>
+  <OffsetBalise3Capteur2>-192.58437499999997</OffsetBalise3Capteur2>
   <PositionGRGrandBrasHaut>465</PositionGRGrandBrasHaut>
   <PositionGRGrandBrasBas>545</PositionGRGrandBrasBas>
-  <PositionGRGrandBrasRange>815</PositionGRGrandBrasRange>
+  <PositionGRGrandBrasRange>850</PositionGRGrandBrasRange>
   <PositionGRPetitBrasHaut>575</PositionGRPetitBrasHaut>
   <PositionGRPetitBrasBas>454</PositionGRPetitBrasBas>
   <PositionGRPetitBrasRange>216</PositionGRPetitBrasRange>

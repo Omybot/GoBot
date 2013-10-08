@@ -8,6 +8,9 @@ using GoBot.Calculs;
 
 namespace GoBot.Balises
 {
+    /// <summary>
+    /// Classe de stockage de mesure de balise
+    /// </summary>
     public class DetectionBalise
     {
         /// <summary>
@@ -40,6 +43,12 @@ namespace GoBot.Balises
         /// </summary>
         public PointReel Position { get; set; }
 
+        /// <summary>
+        /// Constructeur
+        /// </summary>
+        /// <param name="balise">Balise ayant émis cette mesure</param>
+        /// <param name="angleDebut">Début de l'angle mesuré</param>
+        /// <param name="angleFin">Fin de l'angle mesuré</param>
         public DetectionBalise(Balise balise, double angleDebut, double angleFin)
         {
             AngleDebut = angleDebut;

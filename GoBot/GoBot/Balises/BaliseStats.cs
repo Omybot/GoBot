@@ -6,13 +6,29 @@ using GoBot.Calculs;
 
 namespace GoBot.Balises
 {
+    /// <summary>
+    /// Permet d'effectuer des calculs statistiques sur les données mesurées et émises par une balise
+    /// </summary>
     public class BaliseStats
     {
+        /// <summary>
+        /// Balise concernée
+        /// </summary>
         public Balise Balise { get; private set; }
 
+        /// <summary>
+        /// Date de réception du premier message de la balise. Permet de calculer le temps moyen par message
+        /// </summary>
         private DateTime DatePremierMessage { get; set; }
+
+        /// <summary>
+        /// Date du dernier message reçu.
+        /// </summary>
         private DateTime DateDernierMessage { get; set; }
 
+        /// <summary>
+        /// Temps moyen écoulé entre la réception de deux messages en provenance de la balise
+        /// </summary>
         public TimeSpan TempsMoyenInterMessage 
         {
             get
@@ -22,9 +38,19 @@ namespace GoBot.Balises
             }
         }
 
+        /// <summary>
+        /// Nombre total de messages reçus en provenance de la balise
+        /// </summary>
         public int NombreMessagesRecus { get; private set; }
 
+        /// <summary>
+        /// Liste des angles médians retournés par la balise depuis la dernière réinitialisation
+        /// </summary>
         public List<double> AnglesMesures { get; private set; }
+
+        /// <summary>
+        /// Retourne la stabilité en pourcentage de la mesure de l'angle depuis la dernière réinitialisation
+        /// </summary>
         public double StabiliteAngle
         {
             get
@@ -32,6 +58,10 @@ namespace GoBot.Balises
                 return 100 - 100 * Maths.EcartType(AnglesMesures) / AnglesMesures.Average();
             }
         }
+
+        /// <summary>
+        /// Retourne l'écart type de l'angle en degrés sur l'ensemble des angles mesurés depuis la dernière réinitialisation
+        /// </summary>
         public double EcartTypeAngle
         {
             get
@@ -40,7 +70,14 @@ namespace GoBot.Balises
             }
         }
 
+        /// <summary>
+        /// Liste des distance mesurées par la balise depuis la dernière réinitialisation
+        /// </summary>
         public List<double> DistancesMesures { get; private set; }
+
+        /// <summary>
+        /// Retourne la stabilité en pourcentage de la mesure de distance depuis la dernière réinitialisation
+        /// </summary>
         public double StabiliteDistance
         {
             get
@@ -48,6 +85,10 @@ namespace GoBot.Balises
                 return 100 - 100 * Maths.EcartType(DistancesMesures) / DistancesMesures.Average();
             }
         }
+
+        /// <summary>
+        /// Retourne l'écart type de la distance en millimètres sur l'ensemble des distances mesurées depuis la dernière réinitialisation
+        /// </summary>
         public double EcartTypeDistance
         {
             get
@@ -56,6 +97,10 @@ namespace GoBot.Balises
             }
         }
 
+        /// <summary>
+        /// Constructeur
+        /// </summary>
+        /// <param name="balise">Balise concernée</param>
         public BaliseStats(Balise balise)
         {
             Balise = balise;
@@ -65,7 +110,10 @@ namespace GoBot.Balises
             DistancesMesures = new List<double>();
         }
 
-        void Balise_PositionsChange()
+        /// <summary>
+        /// Fonction déclenchée à la réception d'une mesure de la balise
+        /// </summary>
+        private void Balise_PositionsChange()
         {
             if (NombreMessagesRecus == 0)
                 DatePremierMessage = DateTime.Now;
@@ -81,6 +129,9 @@ namespace GoBot.Balises
                 NouvelleDonnee(tempsEcoule, Balise.Detections[0]);
         }
 
+        /// <summary>
+        /// Réinitialise toutes les valeurs reçues de la balise
+        /// </summary>
         public void Reset()
         {
             NombreMessagesRecus = 0;

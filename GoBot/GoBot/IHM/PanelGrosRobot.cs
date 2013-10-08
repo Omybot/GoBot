@@ -35,25 +35,13 @@ namespace GoBot.IHM
 
         public delegate void MajLog(HistoLigne ligne);
         MajLog majLogDelegate;
+
         private void MAJLog(HistoLigne ligne)
         {
             if (InvokeRequired)
                 this.Invoke(majLogDelegate, ligne);
             else
                 MAJLogLigne(ligne);
-            /*
-            this.Invoke(new EventHandler(delegate
-            {
-                    if ((boxStrat.Checked && ligne.Type == TypeLog.Strat) ||
-                        (boxActions.Checked && ligne.Type == TypeLog.Action) ||
-                        (boxPathFinding.Checked && ligne.Type == TypeLog.PathFinding))
-                    {
-                        TimeSpan t = new TimeSpan();
-                        if (Plateau.Enchainement != null && Plateau.Enchainement.DebutMatch != null)
-                            t = ligne.Heure - Plateau.Enchainement.DebutMatch;
-                        AddText((boxHeure.Checked ? t.Minutes + ":" + t.Seconds + ":" + t.Milliseconds : "") + " > " + ligne.Message, CouleursLog[ligne.Type]);
-                    }
-            }));*/
         }
 
         private void MAJLogLigne(HistoLigne ligne)
