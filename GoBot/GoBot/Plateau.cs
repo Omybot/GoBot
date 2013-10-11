@@ -426,45 +426,38 @@ namespace GoBot
         public void ChargerObstacles()
         {
             ObstaclesFixes = new List<IForme>();
-
-            // Contours du plateau
-            AjouterObstacle(new Calculs.Formes.Segment(new PointReel(0, 0), new PointReel(LongueurPlateau - 4, 0)), true);
-            AjouterObstacle(new Calculs.Formes.Segment(new PointReel(LongueurPlateau - 4, 0), new PointReel(LongueurPlateau - 4, LargeurPlateau - 4)), true);
-            AjouterObstacle(new Calculs.Formes.Segment(new PointReel(LongueurPlateau - 4, LargeurPlateau - 4), new PointReel(0, LargeurPlateau - 4)), true);
-            AjouterObstacle(new Calculs.Formes.Segment(new PointReel(0, LargeurPlateau - 4), new PointReel(0, 0)), true);
-
-            // Gateau
-            AjouterObstacle(new Cercle(new PointReel(1500, 0), 500), true);
-
-            // Coins surélevés
             List<PointReel> points = new List<PointReel>();
 
-            points.Add(new PointReel(0, 0.1));
+            // Contours du plateau
+            AjouterObstacle(new Segment(new PointReel(0, 0), new PointReel(LongueurPlateau, 0)), true);
+            AjouterObstacle(new Segment(new PointReel(LongueurPlateau, 0), new PointReel(LongueurPlateau , LargeurPlateau)), true);
+            AjouterObstacle(new Segment(new PointReel(LongueurPlateau, LargeurPlateau), new PointReel(0, LargeurPlateau)), true);
+            AjouterObstacle(new Segment(new PointReel(0, LargeurPlateau), new PointReel(0, 0)), true);
+
+            // Panier 1
+            points.Clear();
             points.Add(new PointReel(400, 0));
-            points.Add(new PointReel(400, 100));
-            points.Add(new PointReel(0, 100));
+            points.Add(new PointReel(1100, 0));
+            points.Add(new PointReel(1100, 300));
+            points.Add(new PointReel(400, 300));
             AjouterObstacle(new Polygone(points), true);
 
+            // Panier 1
             points.Clear();
-            points.Add(new PointReel(0, 1900));
-            points.Add(new PointReel(400, 1900));
-            points.Add(new PointReel(400, 2000));
-            points.Add(new PointReel(0, 2000));
-            AjouterObstacle(new Polygone(points), true);
-
-            points.Clear();
-            points.Add(new PointReel(2600, 1900));
-            points.Add(new PointReel(3000, 1900));
-            points.Add(new PointReel(3000, 2000));
-            points.Add(new PointReel(2600, 2000));
-            AjouterObstacle(new Polygone(points), true);
-
-            points.Clear();
+            points.Add(new PointReel(1900, 0));
             points.Add(new PointReel(2600, 0));
-            points.Add(new PointReel(3000, 0));
-            points.Add(new PointReel(3000, 100));
-            points.Add(new PointReel(2600, 100));
+            points.Add(new PointReel(2600, 300));
+            points.Add(new PointReel(1900, 300));
             AjouterObstacle(new Polygone(points), true);
+
+            // Foyer central
+            AjouterObstacle(new Cercle(new PointReel(1500, 1050), 150), true);
+
+            // Foyer coin 1
+            AjouterObstacle(new Cercle(new PointReel(0, 2000), 250), true);
+
+            // Foyer coin 2
+            AjouterObstacle(new Cercle(new PointReel(3000, 2000), 250), true);
         }
 
         /// <summary>

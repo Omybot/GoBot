@@ -680,47 +680,46 @@ namespace GoBot.IHM
 
             Point positionSurTable = ScreenToRealPosition(pictureBoxTable.PointToClient(MousePosition));
             lblPos.Text = positionSurTable.X + " : " + positionSurTable.Y;
-            //    }));
         }
 
         #region Conversion coordonnées réelles / écran
 
-        private const double rapportScreenReal = 3.7;
-        private const int offsetImageX = 69;
-        private const int offsetImageY = 48;
+        private const double RAPPORT_SCREEN_REAL = 3.7;
+        private const int OFFSET_IMAGE_X = 69;
+        private const int OFFSET_IMAGE_Y = 48;
 
         // Ecran vers réel
 
         private int ScreenToRealDistance(double valeur)
         {
-            return (int)(valeur * rapportScreenReal);
+            return (int)(valeur * RAPPORT_SCREEN_REAL);
         }
 
         private PointReel ScreenToRealPosition(Point valeur)
         {
-            return new PointReel(ScreenToRealDistance(valeur.X - offsetImageX), ScreenToRealDistance(valeur.Y - offsetImageY));
+            return new PointReel(ScreenToRealDistance(valeur.X - OFFSET_IMAGE_X), ScreenToRealDistance(valeur.Y - OFFSET_IMAGE_Y));
         }
 
         private Point ScreenToRealPosition(double valeurX, double valeurY)
         {
-            return new Point(ScreenToRealDistance(valeurX - offsetImageX), ScreenToRealDistance(valeurY - offsetImageY));
+            return new Point(ScreenToRealDistance(valeurX - OFFSET_IMAGE_X), ScreenToRealDistance(valeurY - OFFSET_IMAGE_Y));
         }
 
         // Réel vers écran
 
         private int RealToScreenDistance(double valeur)
         {
-            return (int)(valeur / rapportScreenReal);
+            return (int)(valeur / RAPPORT_SCREEN_REAL);
         }
 
         private Point RealToScreenPosition(Point valeur)
         {
-            return new Point(RealToScreenDistance(valeur.X) + offsetImageX, RealToScreenDistance(valeur.Y) + offsetImageY);
+            return new Point(RealToScreenDistance(valeur.X) + OFFSET_IMAGE_X, RealToScreenDistance(valeur.Y) + OFFSET_IMAGE_Y);
         }
 
         private Point RealToScreenPosition(double valeurX, double valeurY)
         {
-            return new Point(RealToScreenDistance(valeurX) + offsetImageX, RealToScreenDistance(valeurY) + offsetImageY);
+            return new Point(RealToScreenDistance(valeurX) + OFFSET_IMAGE_X, RealToScreenDistance(valeurY) + OFFSET_IMAGE_Y);
         }
 
         #endregion
