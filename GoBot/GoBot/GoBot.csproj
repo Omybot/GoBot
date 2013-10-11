@@ -84,6 +84,9 @@
     <Compile Include="Balises\BaliseStats.cs" />
     <Compile Include="Balises\SuiviBalise.cs" />
     <Compile Include="CameraIP.cs" />
+    <Compile Include="ElementsJeu\ElementJeu.cs" />
+    <Compile Include="ElementsJeu\Feu.cs" />
+    <Compile Include="ElementsJeu\Fruimouth.cs" />
     <Compile Include="IHM\PanelDiagnosticBalise.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -138,11 +141,11 @@
     <Compile Include="IHM\PanelPetitRobot.Designer.cs">
       <DependentUpon>PanelPetitRobot.cs</DependentUpon>
     </Compile>
-    <Compile Include="IHM\PanelBougies.cs">
+    <Compile Include="IHM\PanelCamera.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="IHM\PanelBougies.Designer.cs">
-      <DependentUpon>PanelBougies.cs</DependentUpon>
+    <Compile Include="IHM\PanelCamera.Designer.cs">
+      <DependentUpon>PanelCamera.cs</DependentUpon>
     </Compile>
     <Compile Include="IHM\PanelGrosRobotReglage.cs">
       <SubType>UserControl</SubType>
@@ -156,14 +159,7 @@
     <Compile Include="IHM\PanelReglageAsserv.Designer.cs">
       <DependentUpon>PanelReglageAsserv.cs</DependentUpon>
     </Compile>
-    <Compile Include="Mouvements\MoveGrosAccrocheAssiette.cs" />
-    <Compile Include="Mouvements\MoveGrosLanceBalles.cs" />
-    <Compile Include="Mouvements\MoveGrosAspireAssiette.cs" />
-    <Compile Include="Mouvements\MoveGrosCadeau.cs" />
-    <Compile Include="Mouvements\MoveGrosBougie.cs" />
-    <Compile Include="Mouvements\MovePetitCadeau.cs" />
     <Compile Include="Mouvements\Mouvement.cs" />
-    <Compile Include="Mouvements\MovePetitBougie.cs" />
     <Compile Include="Mouvements\PositionsMouvements.cs" />
     <Compile Include="Ponderations\PoidsTest.cs" />
     <Compile Include="Ponderations\Poids.cs" />
@@ -283,8 +279,8 @@
     <EmbeddedResource Include="IHM\PanelPetitRobot.resx">
       <DependentUpon>PanelPetitRobot.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="IHM\PanelBougies.resx">
-      <DependentUpon>PanelBougies.cs</DependentUpon>
+    <EmbeddedResource Include="IHM\PanelCamera.resx">
+      <DependentUpon>PanelCamera.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="IHM\PanelBalise.resx">
       <DependentUpon>PanelBalise.cs</DependentUpon>

@@ -133,7 +133,7 @@ namespace GoBot.Calculs
             return !(a1 == a2);
         }
 
-        public static implicit operator Angle(int angle)
+        public static implicit operator Angle(double angle)
         {
             return new Angle(angle);
         }

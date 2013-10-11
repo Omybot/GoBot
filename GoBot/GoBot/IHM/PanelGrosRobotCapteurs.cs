@@ -91,12 +91,12 @@ namespace GoBot.IHM
             {
                 Color couleur = Robots.GrosRobot.GetCouleurBalle(false);
 
-                if (couleur == Plateau.CouleurJ1R)
+                if (couleur == Plateau.CouleurJ1Rouge)
                 {
                     ledCouleur.Visible = true;
                     ledCouleur.CouleurBleu();
                 }
-                else if (couleur == Plateau.CouleurJ2B)
+                else if (couleur == Plateau.CouleurJ2Jaune)
                 {
                     ledCouleur.Visible = true;
                     ledCouleur.CouleurRouge();

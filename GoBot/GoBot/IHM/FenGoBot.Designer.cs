@@ -83,8 +83,8 @@ namespace GoBot
             this.tabTable = new System.Windows.Forms.TabPage();
             this.btnPiloteGros = new System.Windows.Forms.Button();
             this.panelTable = new GoBot.IHM.PanelTable();
-            this.tabBougies = new System.Windows.Forms.TabPage();
-            this.panelBougies = new GoBot.IHM.PanelBougies();
+            this.tabCamera = new System.Windows.Forms.TabPage();
+            this.panelCamera = new GoBot.IHM.PanelCamera();
             this.tabReglagePID = new System.Windows.Forms.TabPage();
             this.panelReglageAsserv = new GoBot.IHM.PanelReglageAsserv();
             this.lblRecMove = new System.Windows.Forms.Label();
@@ -118,7 +118,7 @@ namespace GoBot
             this.tabDiagBalises.SuspendLayout();
             this.tabLedsBalises.SuspendLayout();
             this.tabTable.SuspendLayout();
-            this.tabBougies.SuspendLayout();
+            this.tabCamera.SuspendLayout();
             this.tabReglagePID.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.ledRecBoi)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.ledRecBeu)).BeginInit();
@@ -141,7 +141,7 @@ namespace GoBot
             this.tabControl.Controls.Add(this.tabDiagBalises);
             this.tabControl.Controls.Add(this.tabLedsBalises);
             this.tabControl.Controls.Add(this.tabTable);
-            this.tabControl.Controls.Add(this.tabBougies);
+            this.tabControl.Controls.Add(this.tabCamera);
             this.tabControl.Controls.Add(this.tabReglagePID);
             this.tabControl.HotTrack = true;
             this.tabControl.Location = new System.Drawing.Point(0, 0);
@@ -347,7 +347,6 @@ namespace GoBot
             this.btnDegommage.TabIndex = 19;
             this.btnDegommage.Text = "Dégommage";
             this.btnDegommage.UseVisualStyleBackColor = true;
-            this.btnDegommage.Click += new System.EventHandler(this.btnDegommage_Click);
             // 
             // btnArmerJack
             // 
@@ -693,22 +692,22 @@ namespace GoBot
             this.panelTable.Size = new System.Drawing.Size(1294, 706);
             this.panelTable.TabIndex = 0;
             // 
-            // tabBougies
+            // tabCamera
             // 
-            this.tabBougies.Controls.Add(this.panelBougies);
-            this.tabBougies.Location = new System.Drawing.Point(4, 22);
-            this.tabBougies.Name = "tabBougies";
-            this.tabBougies.Size = new System.Drawing.Size(1300, 712);
-            this.tabBougies.TabIndex = 10;
-            this.tabBougies.Text = "Bougies";
-            this.tabBougies.UseVisualStyleBackColor = true;
+            this.tabCamera.Controls.Add(this.panelCamera);
+            this.tabCamera.Location = new System.Drawing.Point(4, 22);
+            this.tabCamera.Name = "tabCamera";
+            this.tabCamera.Size = new System.Drawing.Size(1300, 712);
+            this.tabCamera.TabIndex = 10;
+            this.tabCamera.Text = "Bougies";
+            this.tabCamera.UseVisualStyleBackColor = true;
             // 
-            // panelBougies
+            // panelCamera
             // 
-            this.panelBougies.Location = new System.Drawing.Point(3, 3);
-            this.panelBougies.Name = "panelBougies";
-            this.panelBougies.Size = new System.Drawing.Size(1005, 501);
-            this.panelBougies.TabIndex = 0;
+            this.panelCamera.Location = new System.Drawing.Point(3, 3);
+            this.panelCamera.Name = "panelCamera";
+            this.panelCamera.Size = new System.Drawing.Size(1005, 501);
+            this.panelCamera.TabIndex = 0;
             // 
             // tabReglagePID
             // 
@@ -936,7 +935,7 @@ namespace GoBot
             this.tabDiagBalises.ResumeLayout(false);
             this.tabLedsBalises.ResumeLayout(false);
             this.tabTable.ResumeLayout(false);
-            this.tabBougies.ResumeLayout(false);
+            this.tabCamera.ResumeLayout(false);
             this.tabReglagePID.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.ledRecBoi)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.ledRecBeu)).EndInit();
@@ -1007,8 +1006,8 @@ namespace GoBot
         private System.Windows.Forms.Button btnRejouerReplay;
         private System.Windows.Forms.Label lblSimulation;
         private Composants.SwitchBouton switchBoutonSimu;
-        private System.Windows.Forms.TabPage tabBougies;
-        private PanelBougies panelBougies;
+        private System.Windows.Forms.TabPage tabCamera;
+        private PanelCamera panelCamera;
         private PanelPetitRobot panelPetitRobot;
         private System.Windows.Forms.Button btnArmerJack;
         private System.Windows.Forms.Button btnDegommage;

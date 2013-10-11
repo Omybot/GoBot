@@ -138,13 +138,13 @@ namespace GoBot
                         }
                         else if (valCouleurAllume4 > 7000)
                         {
-                            couleurBalle = Plateau.CouleurJ1R;
+                            couleurBalle = Plateau.CouleurJ1Rouge;
                             couleur = "Rouge";
                         }
                         //else if (valCouleurAllume4 > 3200)
                         else if (valCouleurAllume4 > 1500)
                         {
-                            couleurBalle = Plateau.CouleurJ2B;
+                            couleurBalle = Plateau.CouleurJ2Jaune;
                             couleur = "Bleu";
                         }
 
@@ -211,9 +211,9 @@ namespace GoBot
                 if (trameRecue[1] == (byte)TrameFactory.FonctionMove.ReponseCouleurEquipe)
                 {
                     if (trameRecue[2] == 0)
-                        Plateau.NotreCouleur = Plateau.CouleurJ1R;
+                        Plateau.NotreCouleur = Plateau.CouleurJ1Rouge;
                     else if (trameRecue[2] == 1)
-                        Plateau.NotreCouleur = Plateau.CouleurJ2B;
+                        Plateau.NotreCouleur = Plateau.CouleurJ2Jaune;
 
                     //Historique.AjouterAction(new ActionCapteur(this, CapteurID.GRCouleurBalle, "));
                 }

@@ -38,45 +38,13 @@ namespace GoBot.Enchainements
             Plateau.PoidActions = new PoidsTest();
             Couleur = Color.Purple;
 
-            for (int i = 0; i < 20; i++)
-                ListeMouvementsGros.Add(new MoveGrosBougie(i));
-            for (int i = 0; i < 8; i++)
-            {
-                ListeMouvementsGros.Add(new MoveGrosCadeau(i));
-                ListeMouvementsPetit.Add(new MovePetitCadeau(i));
-            }
-
-            ListeMouvementsPetit.Add(new MovePetitBougie(1));
-            ListeMouvementsPetit.Add(new MovePetitBougie(3));
-            ListeMouvementsPetit.Add(new MovePetitBougie(5));
-            ListeMouvementsPetit.Add(new MovePetitBougie(6));
-            ListeMouvementsPetit.Add(new MovePetitBougie(7));
-            ListeMouvementsPetit.Add(new MovePetitBougie(9));
-            ListeMouvementsPetit.Add(new MovePetitBougie(11));
-            ListeMouvementsPetit.Add(new MovePetitBougie(13));
-            ListeMouvementsPetit.Add(new MovePetitBougie(15));
-            ListeMouvementsPetit.Add(new MovePetitBougie(16));
-            ListeMouvementsPetit.Add(new MovePetitBougie(17));
-            ListeMouvementsPetit.Add(new MovePetitBougie(19));
-
-            for (int i = 0; i < 10; i++)
-            {
-                if (i != 0 && i != 4 && i != 5 && i != 9)
-                    ListeMouvementsGros.Add(new MoveGrosAccrocheAssiette(i));
-                ListeMouvementsGros.Add(new MoveGrosAspireAssiette(i));
-            }
-
-            for (int i = 0; i < PositionsMouvements.PositionTirCanon.Count; i++)
-            {
-                MoveGrosLanceBalles move = new MoveGrosLanceBalles(PositionsMouvements.PositionTirCanon[i]);
-                ListeMouvementsGros.Add(move);
-            }
+            // Todo Charger dans les listes ListeMouvementsGros et ListeMouvementsPetit les mouvements possibles
         }
 
         public void Executer()
         {
             Robots.GrosRobot.Historique.Log("DEBUT DU MATCH", TypeLog.Strat);
-            if (Plateau.NotreCouleur == Plateau.CouleurJ1R)
+            if (Plateau.NotreCouleur == Plateau.CouleurJ1Rouge)
             {
                 for (int i = 0; i < 10; i++)
                     if (Plateau.PoidActions.PoidsGrosBougie[i] != 0)
@@ -84,7 +52,7 @@ namespace GoBot.Enchainements
 
                 Plateau.PoidActions.PoidsGrosBougie[0] = 200;
             }
-            if (Plateau.NotreCouleur == Plateau.CouleurJ2B)
+            if (Plateau.NotreCouleur == Plateau.CouleurJ2Jaune)
             {
                 for (int i = 10; i < 20; i++)
                     if (Plateau.PoidActions.PoidsGrosBougie[i] != 0)
@@ -92,7 +60,7 @@ namespace GoBot.Enchainements
 
                 Plateau.PoidActions.PoidsGrosBougie[10] = 200;
             }
-            GoBot.IHM.PanelBougies.ContinuerJusquauDebutMatch = false;
+
             DebutMatch = DateTime.Now;
             timerFinMatch = new System.Timers.Timer();
             timerFinMatch.Elapsed += new ElapsedEventHandler(timerFinMatch_Elapsed);
@@ -120,44 +88,16 @@ namespace GoBot.Enchainements
             Thread.Sleep(100);
             Robots.GrosRobot.ActionneurOnOff(ActionneurOnOffID.GRAlimentation, false);
             Thread.Sleep(100);
-            Robots.GrosRobot.TourneMoteur(MoteurID.GRCanonTMin, 0);
-            Thread.Sleep(100);
-            Robots.GrosRobot.TourneMoteur(MoteurID.GRTurbineAspirateur, 0);
-            Thread.Sleep(100);
-            //PetitRobot.Stop(StopMode.Freely);
-            Plateau.Balise1.Stop();
-            Thread.Sleep(100);
-            Plateau.Balise2.Stop();
-            Thread.Sleep(100);
-            Plateau.Balise3.Stop();
-            Thread.Sleep(100);
-            Plateau.Score += 12;
-            Thread.Sleep(9000);
-            Robots.GrosRobot.ActionneurOnOff(ActionneurOnOffID.GRPompe, false);
+
+            // Todo Couper ici tous les actionneurs à la fin du match et lancer la Funny Action
         }
 
         private void ThreadGros()
         {
             int iMeilleur = 0;
 
-            if (Plateau.Degommage)
-            {
-                Robots.GrosRobot.BougeServo(ServomoteurID.GRBrasDroit, Config.CurrentConfig.PositionGRBrasDroitSorti);
-                Robots.GrosRobot.BougeServo(ServomoteurID.GRBrasGauche, Config.CurrentConfig.PositionGRBrasGaucheSorti);
-                Robots.GrosRobot.Avancer(1400);
-                if (Plateau.NotreCouleur == Plateau.CouleurJ2B)
-                    Robots.GrosRobot.PivotDroite(270);
-                else
-                    Robots.GrosRobot.PivotGauche(270);
-                Robots.GrosRobot.BougeServo(ServomoteurID.GRBrasDroit, Config.CurrentConfig.PositionGRBrasDroitRange);
-                Robots.GrosRobot.BougeServo(ServomoteurID.GRBrasGauche, Config.CurrentConfig.PositionGRBrasGaucheRange);
-            }
-
-            else
-            {
-                Robots.GrosRobot.Avancer(600);
-
-            }
+            // Todo Ajouter ici les actions fixes avant le lancement de l'IA
+            // Exemple : Robots.GrosRobot.Avancer(600);
 
             while (ListeMouvementsGros.Count > 0)
             {
@@ -180,7 +120,9 @@ namespace GoBot.Enchainements
         private void ThreadPetit()
         {
             int iMeilleur = 0;
-            Robots.PetitRobot.Avancer(150);
+
+            // Todo Ajouter ici les actions fixes avant le lancement de l'IA
+            // Exemple : Robots.PetitRobot.Avancer(600);
 
             while (ListeMouvementsPetit.Count > 0)
             {

@@ -44,7 +44,7 @@ namespace GoBot
 
             GrosRobot.Largeur = 270;
             GrosRobot.Longueur = 220;
-            if(Plateau.NotreCouleur == Plateau.CouleurJ1R)
+            if(Plateau.NotreCouleur == Plateau.CouleurJ1Rouge)
                 GrosRobot.Position = new Position(new Angle(180, AnglyeType.Degre), new Calculs.Formes.PointReel(3000 - Robots.GrosRobot.Longueur / 2, 1000));
             else
                 GrosRobot.Position = new Position(new Angle(0, AnglyeType.Degre), new Calculs.Formes.PointReel(Robots.GrosRobot.Longueur / 2, 1000));
