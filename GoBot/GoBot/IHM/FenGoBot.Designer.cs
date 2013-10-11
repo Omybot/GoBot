@@ -29,6 +29,7 @@ namespace GoBot
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FenGoBot));
             this.tabControl = new System.Windows.Forms.TabControl();
             this.tabGrosRobot = new System.Windows.Forms.TabPage();
@@ -42,9 +43,9 @@ namespace GoBot
             this.btnAfficherTrame = new System.Windows.Forms.Button();
             this.label7 = new System.Windows.Forms.Label();
             this.label6 = new System.Windows.Forms.Label();
-            this.txtTrames = new Composants.RichTextBoxPlus();
+            this.txtTrames = new Composants.RichTextBoxPlus(this.components);
             this.btnSaveReplay = new System.Windows.Forms.Button();
-            this.txtLogComplet = new Composants.RichTextBoxPlus();
+            this.txtLogComplet = new Composants.RichTextBoxPlus(this.components);
             this.tabMatch = new System.Windows.Forms.TabPage();
             this.led2 = new Composants.Led();
             this.btnDegommage = new System.Windows.Forms.Button();
@@ -129,9 +130,9 @@ namespace GoBot
             // 
             // tabControl
             // 
-            this.tabControl.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
+            this.tabControl.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+                        | System.Windows.Forms.AnchorStyles.Left)
+                        | System.Windows.Forms.AnchorStyles.Right)));
             this.tabControl.Controls.Add(this.tabGrosRobot);
             this.tabControl.Controls.Add(this.tabPetitRobot);
             this.tabControl.Controls.Add(this.tabLog);
@@ -146,7 +147,7 @@ namespace GoBot
             this.tabControl.Location = new System.Drawing.Point(0, 0);
             this.tabControl.Name = "tabControl";
             this.tabControl.SelectedIndex = 0;
-            this.tabControl.Size = new System.Drawing.Size(1024, 574);
+            this.tabControl.Size = new System.Drawing.Size(1308, 738);
             this.tabControl.TabIndex = 25;
             // 
             // tabGrosRobot
@@ -154,20 +155,20 @@ namespace GoBot
             this.tabGrosRobot.Controls.Add(this.panelGrosRobot);
             this.tabGrosRobot.Location = new System.Drawing.Point(4, 22);
             this.tabGrosRobot.Name = "tabGrosRobot";
-            this.tabGrosRobot.Size = new System.Drawing.Size(1016, 548);
+            this.tabGrosRobot.Size = new System.Drawing.Size(1300, 712);
             this.tabGrosRobot.TabIndex = 0;
             this.tabGrosRobot.Text = "Gros Robot";
             this.tabGrosRobot.UseVisualStyleBackColor = true;
             // 
             // panelGrosRobot
             // 
-            this.panelGrosRobot.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
+            this.panelGrosRobot.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+                        | System.Windows.Forms.AnchorStyles.Left)
+                        | System.Windows.Forms.AnchorStyles.Right)));
             this.panelGrosRobot.BackColor = System.Drawing.Color.White;
             this.panelGrosRobot.Location = new System.Drawing.Point(0, 0);
             this.panelGrosRobot.Name = "panelGrosRobot";
-            this.panelGrosRobot.Size = new System.Drawing.Size(1016, 548);
+            this.panelGrosRobot.Size = new System.Drawing.Size(1300, 712);
             this.panelGrosRobot.TabIndex = 0;
             // 
             // tabPetitRobot
@@ -175,7 +176,7 @@ namespace GoBot
             this.tabPetitRobot.Controls.Add(this.panelPetitRobot);
             this.tabPetitRobot.Location = new System.Drawing.Point(4, 22);
             this.tabPetitRobot.Name = "tabPetitRobot";
-            this.tabPetitRobot.Size = new System.Drawing.Size(1016, 548);
+            this.tabPetitRobot.Size = new System.Drawing.Size(1300, 712);
             this.tabPetitRobot.TabIndex = 2;
             this.tabPetitRobot.Text = "Petit Robot";
             this.tabPetitRobot.UseVisualStyleBackColor = true;
@@ -203,7 +204,7 @@ namespace GoBot
             this.tabLog.Location = new System.Drawing.Point(4, 22);
             this.tabLog.Name = "tabLog";
             this.tabLog.Padding = new System.Windows.Forms.Padding(3);
-            this.tabLog.Size = new System.Drawing.Size(1016, 548);
+            this.tabLog.Size = new System.Drawing.Size(1300, 712);
             this.tabLog.TabIndex = 1;
             this.tabLog.Text = "Logs";
             this.tabLog.UseVisualStyleBackColor = true;
@@ -267,8 +268,8 @@ namespace GoBot
             // 
             // txtTrames
             // 
-            this.txtTrames.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left)));
+            this.txtTrames.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+                        | System.Windows.Forms.AnchorStyles.Left)));
             this.txtTrames.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.txtTrames.Location = new System.Drawing.Point(198, 6);
             this.txtTrames.Name = "txtTrames";
@@ -288,8 +289,8 @@ namespace GoBot
             // 
             // txtLogComplet
             // 
-            this.txtLogComplet.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left)));
+            this.txtLogComplet.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+                        | System.Windows.Forms.AnchorStyles.Left)));
             this.txtLogComplet.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.txtLogComplet.Location = new System.Drawing.Point(638, 6);
             this.txtLogComplet.Name = "txtLogComplet";
@@ -323,7 +324,7 @@ namespace GoBot
             this.tabMatch.Location = new System.Drawing.Point(4, 22);
             this.tabMatch.Name = "tabMatch";
             this.tabMatch.Padding = new System.Windows.Forms.Padding(3);
-            this.tabMatch.Size = new System.Drawing.Size(1016, 548);
+            this.tabMatch.Size = new System.Drawing.Size(1300, 712);
             this.tabMatch.TabIndex = 3;
             this.tabMatch.Text = "Match";
             this.tabMatch.UseVisualStyleBackColor = true;
@@ -570,7 +571,7 @@ namespace GoBot
             this.tabBalises.Location = new System.Drawing.Point(4, 22);
             this.tabBalises.Name = "tabBalises";
             this.tabBalises.Padding = new System.Windows.Forms.Padding(3);
-            this.tabBalises.Size = new System.Drawing.Size(1016, 548);
+            this.tabBalises.Size = new System.Drawing.Size(1300, 712);
             this.tabBalises.TabIndex = 6;
             this.tabBalises.Text = "Balises";
             this.tabBalises.UseVisualStyleBackColor = true;
@@ -610,7 +611,7 @@ namespace GoBot
             this.tabDiagBalises.Location = new System.Drawing.Point(4, 22);
             this.tabDiagBalises.Name = "tabDiagBalises";
             this.tabDiagBalises.Padding = new System.Windows.Forms.Padding(3);
-            this.tabDiagBalises.Size = new System.Drawing.Size(1016, 548);
+            this.tabDiagBalises.Size = new System.Drawing.Size(1300, 712);
             this.tabDiagBalises.TabIndex = 13;
             this.tabDiagBalises.Text = "Diagnostic Balises";
             this.tabDiagBalises.UseVisualStyleBackColor = true;
@@ -647,7 +648,7 @@ namespace GoBot
             this.tabLedsBalises.Controls.Add(this.panelImagesBalises);
             this.tabLedsBalises.Location = new System.Drawing.Point(4, 22);
             this.tabLedsBalises.Name = "tabLedsBalises";
-            this.tabLedsBalises.Size = new System.Drawing.Size(1016, 548);
+            this.tabLedsBalises.Size = new System.Drawing.Size(1300, 712);
             this.tabLedsBalises.TabIndex = 12;
             this.tabLedsBalises.Text = "Leds Balises";
             this.tabLedsBalises.UseVisualStyleBackColor = true;
@@ -658,7 +659,7 @@ namespace GoBot
             this.panelImagesBalises.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panelImagesBalises.Location = new System.Drawing.Point(0, 0);
             this.panelImagesBalises.Name = "panelImagesBalises";
-            this.panelImagesBalises.Size = new System.Drawing.Size(1016, 548);
+            this.panelImagesBalises.Size = new System.Drawing.Size(192, 74);
             this.panelImagesBalises.TabIndex = 0;
             // 
             // tabTable
@@ -668,7 +669,7 @@ namespace GoBot
             this.tabTable.Location = new System.Drawing.Point(4, 22);
             this.tabTable.Name = "tabTable";
             this.tabTable.Padding = new System.Windows.Forms.Padding(3);
-            this.tabTable.Size = new System.Drawing.Size(1016, 548);
+            this.tabTable.Size = new System.Drawing.Size(1300, 712);
             this.tabTable.TabIndex = 7;
             this.tabTable.Text = "Table";
             this.tabTable.UseVisualStyleBackColor = true;
@@ -686,9 +687,10 @@ namespace GoBot
             // panelTable
             // 
             this.panelTable.BackColor = System.Drawing.Color.Transparent;
-            this.panelTable.Location = new System.Drawing.Point(12, 6);
+            this.panelTable.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.panelTable.Location = new System.Drawing.Point(3, 3);
             this.panelTable.Name = "panelTable";
-            this.panelTable.Size = new System.Drawing.Size(983, 526);
+            this.panelTable.Size = new System.Drawing.Size(1294, 706);
             this.panelTable.TabIndex = 0;
             // 
             // tabBougies
@@ -696,7 +698,7 @@ namespace GoBot
             this.tabBougies.Controls.Add(this.panelBougies);
             this.tabBougies.Location = new System.Drawing.Point(4, 22);
             this.tabBougies.Name = "tabBougies";
-            this.tabBougies.Size = new System.Drawing.Size(1016, 548);
+            this.tabBougies.Size = new System.Drawing.Size(1300, 712);
             this.tabBougies.TabIndex = 10;
             this.tabBougies.Text = "Bougies";
             this.tabBougies.UseVisualStyleBackColor = true;
@@ -714,7 +716,7 @@ namespace GoBot
             this.tabReglagePID.Location = new System.Drawing.Point(4, 22);
             this.tabReglagePID.Name = "tabReglagePID";
             this.tabReglagePID.Padding = new System.Windows.Forms.Padding(3);
-            this.tabReglagePID.Size = new System.Drawing.Size(1016, 548);
+            this.tabReglagePID.Size = new System.Drawing.Size(1300, 712);
             this.tabReglagePID.TabIndex = 11;
             this.tabReglagePID.Text = "Réglage PID";
             this.tabReglagePID.UseVisualStyleBackColor = true;
@@ -724,14 +726,14 @@ namespace GoBot
             this.panelReglageAsserv.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panelReglageAsserv.Location = new System.Drawing.Point(3, 3);
             this.panelReglageAsserv.Name = "panelReglageAsserv";
-            this.panelReglageAsserv.Size = new System.Drawing.Size(1010, 542);
+            this.panelReglageAsserv.Size = new System.Drawing.Size(186, 68);
             this.panelReglageAsserv.TabIndex = 0;
             // 
             // lblRecMove
             // 
             this.lblRecMove.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.lblRecMove.AutoSize = true;
-            this.lblRecMove.Location = new System.Drawing.Point(38, 578);
+            this.lblRecMove.Location = new System.Drawing.Point(38, 742);
             this.lblRecMove.Name = "lblRecMove";
             this.lblRecMove.Size = new System.Drawing.Size(54, 13);
             this.lblRecMove.TabIndex = 27;
@@ -741,7 +743,7 @@ namespace GoBot
             // 
             this.lblRecIo.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.lblRecIo.AutoSize = true;
-            this.lblRecIo.Location = new System.Drawing.Point(204, 578);
+            this.lblRecIo.Location = new System.Drawing.Point(204, 742);
             this.lblRecIo.Name = "lblRecIo";
             this.lblRecIo.Size = new System.Drawing.Size(48, 13);
             this.lblRecIo.TabIndex = 29;
@@ -751,7 +753,7 @@ namespace GoBot
             // 
             this.lblRecPi.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.lblRecPi.AutoSize = true;
-            this.lblRecPi.Location = new System.Drawing.Point(352, 578);
+            this.lblRecPi.Location = new System.Drawing.Point(352, 742);
             this.lblRecPi.Name = "lblRecPi";
             this.lblRecPi.Size = new System.Drawing.Size(36, 13);
             this.lblRecPi.TabIndex = 33;
@@ -761,7 +763,7 @@ namespace GoBot
             // 
             this.lblRecBeu.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.lblRecBeu.AutoSize = true;
-            this.lblRecBeu.Location = new System.Drawing.Point(658, 578);
+            this.lblRecBeu.Location = new System.Drawing.Point(658, 742);
             this.lblRecBeu.Name = "lblRecBeu";
             this.lblRecBeu.Size = new System.Drawing.Size(46, 13);
             this.lblRecBeu.TabIndex = 39;
@@ -771,7 +773,7 @@ namespace GoBot
             // 
             this.lblRecBun.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.lblRecBun.AutoSize = true;
-            this.lblRecBun.Location = new System.Drawing.Point(500, 578);
+            this.lblRecBun.Location = new System.Drawing.Point(500, 742);
             this.lblRecBun.Name = "lblRecBun";
             this.lblRecBun.Size = new System.Drawing.Size(46, 13);
             this.lblRecBun.TabIndex = 37;
@@ -781,7 +783,7 @@ namespace GoBot
             // 
             this.lblRecBoi.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.lblRecBoi.AutoSize = true;
-            this.lblRecBoi.Location = new System.Drawing.Point(816, 578);
+            this.lblRecBoi.Location = new System.Drawing.Point(816, 742);
             this.lblRecBoi.Name = "lblRecBoi";
             this.lblRecBoi.Size = new System.Drawing.Size(42, 13);
             this.lblRecBoi.TabIndex = 43;
@@ -791,7 +793,7 @@ namespace GoBot
             // 
             this.lblSimulation.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.lblSimulation.AutoSize = true;
-            this.lblSimulation.Location = new System.Drawing.Point(965, 578);
+            this.lblSimulation.Location = new System.Drawing.Point(1249, 742);
             this.lblSimulation.Name = "lblSimulation";
             this.lblSimulation.Size = new System.Drawing.Size(55, 13);
             this.lblSimulation.TabIndex = 72;
@@ -801,7 +803,7 @@ namespace GoBot
             // 
             this.btnClose.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.btnClose.Image = global::GoBot.Properties.Resources.Close;
-            this.btnClose.Location = new System.Drawing.Point(1002, 0);
+            this.btnClose.Location = new System.Drawing.Point(1286, 0);
             this.btnClose.Name = "btnClose";
             this.btnClose.Size = new System.Drawing.Size(20, 20);
             this.btnClose.TabIndex = 71;
@@ -812,7 +814,7 @@ namespace GoBot
             // 
             this.switchBoutonSimu.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.switchBoutonSimu.BackColor = System.Drawing.Color.Transparent;
-            this.switchBoutonSimu.Location = new System.Drawing.Point(924, 578);
+            this.switchBoutonSimu.Location = new System.Drawing.Point(1208, 742);
             this.switchBoutonSimu.Name = "switchBoutonSimu";
             this.switchBoutonSimu.Size = new System.Drawing.Size(35, 15);
             this.switchBoutonSimu.Symetrique = true;
@@ -824,7 +826,7 @@ namespace GoBot
             this.ledRecBoi.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.ledRecBoi.Etat = false;
             this.ledRecBoi.Image = ((System.Drawing.Image)(resources.GetObject("ledRecBoi.Image")));
-            this.ledRecBoi.Location = new System.Drawing.Point(794, 577);
+            this.ledRecBoi.Location = new System.Drawing.Point(794, 741);
             this.ledRecBoi.Name = "ledRecBoi";
             this.ledRecBoi.Size = new System.Drawing.Size(16, 16);
             this.ledRecBoi.TabIndex = 42;
@@ -835,7 +837,7 @@ namespace GoBot
             this.ledRecBeu.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.ledRecBeu.Etat = false;
             this.ledRecBeu.Image = ((System.Drawing.Image)(resources.GetObject("ledRecBeu.Image")));
-            this.ledRecBeu.Location = new System.Drawing.Point(636, 577);
+            this.ledRecBeu.Location = new System.Drawing.Point(636, 741);
             this.ledRecBeu.Name = "ledRecBeu";
             this.ledRecBeu.Size = new System.Drawing.Size(16, 16);
             this.ledRecBeu.TabIndex = 38;
@@ -846,7 +848,7 @@ namespace GoBot
             this.ledRecBun.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.ledRecBun.Etat = false;
             this.ledRecBun.Image = ((System.Drawing.Image)(resources.GetObject("ledRecBun.Image")));
-            this.ledRecBun.Location = new System.Drawing.Point(478, 577);
+            this.ledRecBun.Location = new System.Drawing.Point(478, 741);
             this.ledRecBun.Name = "ledRecBun";
             this.ledRecBun.Size = new System.Drawing.Size(16, 16);
             this.ledRecBun.TabIndex = 36;
@@ -857,7 +859,7 @@ namespace GoBot
             this.ledRecPi.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.ledRecPi.Etat = false;
             this.ledRecPi.Image = ((System.Drawing.Image)(resources.GetObject("ledRecPi.Image")));
-            this.ledRecPi.Location = new System.Drawing.Point(330, 577);
+            this.ledRecPi.Location = new System.Drawing.Point(330, 741);
             this.ledRecPi.Name = "ledRecPi";
             this.ledRecPi.Size = new System.Drawing.Size(16, 16);
             this.ledRecPi.TabIndex = 32;
@@ -868,7 +870,7 @@ namespace GoBot
             this.ledRecMiwi.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.ledRecMiwi.Etat = false;
             this.ledRecMiwi.Image = ((System.Drawing.Image)(resources.GetObject("ledRecMiwi.Image")));
-            this.ledRecMiwi.Location = new System.Drawing.Point(182, 577);
+            this.ledRecMiwi.Location = new System.Drawing.Point(182, 741);
             this.ledRecMiwi.Name = "ledRecMiwi";
             this.ledRecMiwi.Size = new System.Drawing.Size(16, 16);
             this.ledRecMiwi.TabIndex = 28;
@@ -879,7 +881,7 @@ namespace GoBot
             this.ledRecMove.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.ledRecMove.Etat = false;
             this.ledRecMove.Image = ((System.Drawing.Image)(resources.GetObject("ledRecMove.Image")));
-            this.ledRecMove.Location = new System.Drawing.Point(16, 577);
+            this.ledRecMove.Location = new System.Drawing.Point(16, 741);
             this.ledRecMove.Name = "ledRecMove";
             this.ledRecMove.Size = new System.Drawing.Size(16, 16);
             this.ledRecMove.TabIndex = 26;
@@ -890,7 +892,7 @@ namespace GoBot
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.White;
-            this.ClientSize = new System.Drawing.Size(1024, 600);
+            this.ClientSize = new System.Drawing.Size(1308, 764);
             this.Controls.Add(this.switchBoutonSimu);
             this.Controls.Add(this.lblSimulation);
             this.Controls.Add(this.btnClose);

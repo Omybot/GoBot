@@ -184,7 +184,7 @@
     <Compile Include="Calculs\Formes\Cercle.cs" />
     <Compile Include="Calculs\Formes\Droite.cs" />
     <Compile Include="Calculs\Formes\IForme.cs" />
-    <Compile Include="Calculs\Formes\Point.cs" />
+    <Compile Include="Calculs\Formes\PointReel.cs" />
     <Compile Include="Calculs\Formes\Polygone.cs" />
     <Compile Include="Calculs\Formes\Segment.cs" />
     <Compile Include="Calculs\Maths.cs" />
@@ -343,9 +343,6 @@
     <None Include="img\VirageAvGa.png" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="img\Avance.png" />
-  </ItemGroup>
-  <ItemGroup>
     <None Include="img\VirageAvDr.png" />
   </ItemGroup>
   <ItemGroup>
@@ -385,12 +382,6 @@
     <None Include="img\Fenetre.png" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="img\SwitchOff.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="img\SwitchOn.png" />
-  </ItemGroup>
-  <ItemGroup>
     <None Include="img\StopPetit.png" />
   </ItemGroup>
   <ItemGroup>
@@ -421,33 +412,18 @@
   <ItemGroup>
     <None Include="img\FlecheDroite.png" />
     <None Include="img\FlecheGauche.png" />
-    <None Include="img\AssiettePleineBleu.png" />
-    <None Include="img\AssiettePleineRouge.png" />
-    <None Include="img\AssietteVide.png" />
-    <None Include="img\Balle.png" />
-    <None Include="img\BalleRouge.png" />
-    <None Include="img\BalleBleue.png" />
     <None Include="img\Helice1.png" />
     <None Include="img\Helice2.png" />
     <None Include="img\Helice3.png" />
+    <None Include="img\Avance.png" />
     <Content Include="img\IconeVitesse.png" />
-    <None Include="img\LedBleu.png" />
-    <None Include="img\LedGris.png" />
-    <None Include="img\LedJaune.png" />
-    <None Include="img\Table.bmp" />
     <None Include="img\Pompe.png" />
     <None Include="img\TableRouge.png" />
     <None Include="img\TableViolet.png" />
     <None Include="img\Recale.png" />
     <None Include="img\Moteur.png" />
-    <None Include="img\LedRouge.png" />
-    <None Include="img\LedVert.png" />
-    <None Include="img\LedOrange.png" />
-    <Content Include="img\TrackBarCurseurNormal.png" />
-    <Content Include="img\TrackBarCurseurSelect.png" />
-    <Content Include="img\TrackBarFond.png" />
-    <Content Include="img\TrackBarFondSelected.png" />
     <None Include="img\Webcam.jpg" />
+    <None Include="img\TablePerspective.jpg" />
     <Content Include="robot.ico" />
   </ItemGroup>
   <ItemGroup>

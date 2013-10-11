@@ -10,6 +10,7 @@
 //-----------------------------------------------------------------------
 using System;
 using System.Xml.Serialization;
+using System.Drawing;
 
 
 namespace AStarFolder
@@ -53,6 +54,11 @@ namespace AStarFolder
         public Point3D()
         {
             X = Y = Z = 0;
+        }
+
+        public static implicit operator Point(Point3D point)
+        {
+            return new Point((int)point.X, (int)point.Y);
         }
 
 		/// <summary>

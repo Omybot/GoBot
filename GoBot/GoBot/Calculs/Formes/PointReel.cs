@@ -317,5 +317,14 @@ namespace GoBot.Calculs.Formes
             posY += y;
         }
 
+        public static implicit operator Point(PointReel point)
+        {
+            return new Point((int)point.X, (int)point.Y);
+        }
+
+        public static implicit operator PointF(PointReel point)
+        {
+            return new PointF((float)point.X, (float)point.Y);
+        }
     }
 }

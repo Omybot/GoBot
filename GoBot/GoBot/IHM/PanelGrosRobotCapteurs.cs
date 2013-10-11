@@ -13,8 +13,6 @@ namespace GoBot.IHM
     public partial class PanelGrosRobotCapteurs : UserControl
     {
         private ToolTip tooltip;
-        int tailleMax;
-        int tailleMin;
 
         public PanelGrosRobotCapteurs()
         {

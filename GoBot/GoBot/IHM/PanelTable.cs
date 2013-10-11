@@ -98,7 +98,6 @@ namespace GoBot.IHM
                     penCouleurJ1RFleche.StartCap = System.Drawing.Drawing2D.LineCap.Round;
                     penCouleurJ1RFleche.EndCap = System.Drawing.Drawing2D.LineCap.ArrowAnchor;
 
-                    int nbBallePrec = 0;
                     List<Point> coordonneesBallesPanier = new List<Point>();
                     rand = new Random(DateTime.Now.Millisecond);
                     List<Point> positionsBallesChargees = new List<Point>();
@@ -115,17 +114,17 @@ namespace GoBot.IHM
                     {
                         try
                         {
-                            Bitmap bmp = new Bitmap(750, 500);
+                            Bitmap bmp = new Bitmap(947, 645);
                             {
                                 Graphics g = Graphics.FromImage(bmp);
                                 g.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.AntiAlias;
-                                g.FillRectangle(brushBlanc, 0, 0, 750, 500);
-
-                                int xTable = ScreenToReal(pictureBoxTable.PointToClient(MousePosition).X);
-                                int yTable = ScreenToReal(pictureBoxTable.PointToClient(MousePosition).Y);
 
                                 if (boxTable.Checked)
-                                    g.DrawImage(Properties.Resources.Table, 0, 0);
+                                    if(!boxPerspective.Checked)
+                                        g.DrawImage(Properties.Resources.TablePlan, 0, 0, 945, 647);
+                                    else
+                                        g.DrawImage(Properties.Resources.TablePerspective, 0, 0, 945, 647);
+
 
                                 // Dessin des obstacles
                                 if (boxObstacles.Checked)
@@ -150,8 +149,8 @@ namespace GoBot.IHM
                                             {
                                                 //pen = new Pen(new SolidBrush(Color.Red));
 
-                                                g.DrawLine(penBlanc, new Point(RealToScreen(a.StartNode.Position.X), RealToScreen(a.StartNode.Position.Y)), new Point(RealToScreen(a.EndNode.Position.X), RealToScreen(a.EndNode.Position.Y)));
-                                                g.DrawLine(penNoirPointille, new Point(RealToScreen(a.StartNode.Position.X), RealToScreen(a.StartNode.Position.Y)), new Point(RealToScreen(a.EndNode.Position.X), RealToScreen(a.EndNode.Position.Y)));
+                                                g.DrawLine(penBlanc, RealToScreenPosition(a.StartNode.X, a.StartNode.Y), RealToScreenPosition(a.EndNode.X, a.EndNode.Y));
+                                                g.DrawLine(penNoirPointille, RealToScreenPosition(a.StartNode.X, a.StartNode.Y), RealToScreenPosition(a.EndNode.X,a.EndNode.Y));
                                             }
                                         }
                                     }
@@ -159,8 +158,9 @@ namespace GoBot.IHM
                                     // Dessin des noeuds
                                     foreach (Node n in Plateau.Graph.Nodes)
                                     {
-                                        g.FillEllipse(brushNoir, new Rectangle(RealToScreen(n.X) - 3, RealToScreen(n.Y) - 3, 6, 6));
-                                        g.DrawEllipse(n.Passable ? penBlanc : penRougeFin, new Rectangle(RealToScreen(n.X) - 3, RealToScreen(n.Y) - 3, 6, 6));
+                                        Point pointNode = RealToScreenPosition(n.Position);
+                                        g.FillEllipse(brushNoir, new Rectangle(pointNode.X - 3, pointNode.Y - 3, 6, 6));
+                                        g.DrawEllipse(n.Passable ? penBlanc : penRougeFin, new Rectangle(pointNode.X - 3, pointNode.Y - 3, 6, 6));
                                     }
 
                                     Plateau.SemaphoreGraph.Release();
@@ -171,11 +171,12 @@ namespace GoBot.IHM
                                 {
                                     foreach (Arc a in cheminArcs)
                                     {
-                                        g.DrawLine(penBleuViolet, new Point(RealToScreen(a.StartNode.Position.X), RealToScreen(a.StartNode.Position.Y)), new Point(RealToScreen(a.EndNode.Position.X), RealToScreen(a.EndNode.Position.Y)));
+                                        g.DrawLine(penBleuViolet, RealToScreenPosition(a.StartNode.X, a.StartNode.Y), RealToScreenPosition(a.EndNode.X, a.EndNode.Position.Y));
                                     }
                                     foreach (Node n in cheminNodes)
                                     {
-                                        g.DrawEllipse(penBleuViolet, new Rectangle(RealToScreen(n.Position.X) - 3, RealToScreen(n.Position.Y) - 3, 6, 6));
+                                        Point pointNode = RealToScreenPosition(n.X, n.Y);
+                                        g.DrawEllipse(penBleuViolet, new Rectangle(pointNode.X - 3, pointNode.Y - 3, 6, 6));
                                     }
                                 }
                                 /*if (boxSourisObstacle.Checked)
@@ -185,95 +186,29 @@ namespace GoBot.IHM
                                         (int)(ySouris - RealToScreen(Robots.GrosRobot.Rayon) * 2), RealToScreen(Robots.GrosRobot.Rayon) * 4, RealToScreen(Robots.GrosRobot.Rayon) * 4);
                                 }*/
 
-                                // Dessin des assiettes
+                                // ************** Dessin des éléments de jeu *************** //
 
-                                if (Plateau.AssietteAttrapee != -1)
-                                {
-                                    Plateau.PositionsAssiettes[Plateau.AssietteAttrapee] = new Position(new Angle(Robots.GrosRobot.Position.Angle.AngleDegres), new PointReel(
-                                        Robots.GrosRobot.Position.Coordonnees.X - (170 / 2 + Robots.GrosRobot.Longueur / 2) * Math.Cos(Robots.GrosRobot.Position.Angle.AngleRadians),
-                                        Robots.GrosRobot.Position.Coordonnees.Y - (170 / 2 + Robots.GrosRobot.Longueur / 2) * Math.Sin(Robots.GrosRobot.Position.Angle.AngleRadians)));
-                                }
-
-                                for (int i = 0; i < 5; i++)
-                                {
-                                    if (Plateau.AssiettesExiste[i])
-                                        if (!Plateau.AssiettesVidees[i])
-                                            g.DrawImage(rotateImage(Properties.Resources.AssiettePleineBleu, Plateau.PositionsAssiettes[i].Angle.AngleDegres), RealToScreen(Plateau.PositionsAssiettes[i].Coordonnees.X) - 61 / 2, RealToScreen(Plateau.PositionsAssiettes[i].Coordonnees.Y) - 61 / 2, 61, 61);
-                                        else
-                                            g.DrawImage(rotateImage(Properties.Resources.AssietteVide, Plateau.PositionsAssiettes[i].Angle.AngleDegres), RealToScreen(Plateau.PositionsAssiettes[i].Coordonnees.X) - 61 / 2, RealToScreen(Plateau.PositionsAssiettes[i].Coordonnees.Y) - 61 / 2, 61, 61);
-
-                                }
-                                for (int i = 5; i < 10; i++)
-                                {
-                                    if (Plateau.AssiettesExiste[i])
-                                        if (!Plateau.AssiettesVidees[i])
-                                            g.DrawImage(rotateImage(Properties.Resources.AssiettePleineRouge, Plateau.PositionsAssiettes[i].Angle.AngleDegres), RealToScreen(Plateau.PositionsAssiettes[i].Coordonnees.X) - 61 / 2, RealToScreen(Plateau.PositionsAssiettes[i].Coordonnees.Y) - 61 / 2, 61, 61);
-                                        else
-                                            g.DrawImage(rotateImage(Properties.Resources.AssietteVide, Plateau.PositionsAssiettes[i].Angle.AngleDegres), RealToScreen(Plateau.PositionsAssiettes[i].Coordonnees.X) - 61 / 2, RealToScreen(Plateau.PositionsAssiettes[i].Coordonnees.Y) - 61 / 2, 61, 61);
-                                }
-
-                                // Dessin des bougies
-
-                                PointReel point = new PointReel(xTable, yTable);
-
-                                for (int i = 0; i < 20; i++)
-                                {
-                                    g.FillEllipse(Plateau.CouleursBougies[i] == Color.White ? brushBlanc : Plateau.CouleursBougies[i] == Plateau.CouleurJ1R ? brushCouleurJ1R : brushCouleurJ2B, RealToScreen(Plateau.PositionsBougies[i].X - 40), RealToScreen(Plateau.PositionsBougies[i].Y - 40), RealToScreen(80), RealToScreen(80));
-                                    g.DrawEllipse(penNoir, RealToScreen(Plateau.PositionsBougies[i].X - 40), RealToScreen(Plateau.PositionsBougies[i].Y - 40), RealToScreen(80), RealToScreen(80));
-
-                                    if (Plateau.BougiesEnfoncees[i])
-                                    {
-                                        g.FillEllipse(brushNoir, RealToScreen(Plateau.PositionsBougies[i].X - 20), RealToScreen(Plateau.PositionsBougies[i].Y - 20), RealToScreen(40), RealToScreen(40));
-                                        g.DrawEllipse(penBlanc, RealToScreen(Plateau.PositionsBougies[i].X - 20), RealToScreen(Plateau.PositionsBougies[i].Y - 20), RealToScreen(40), RealToScreen(40));
-                                    }
-
-                                    else if (Plateau.PositionsBougies[i].Distance(point) <= 40)
-                                    {
-                                        g.DrawEllipse(penVertClairEpais, RealToScreen(Plateau.PositionsBougies[i].X - 40), RealToScreen(Plateau.PositionsBougies[i].Y - 40), RealToScreen(80), RealToScreen(80));
-                                    }
-                                }
-
-                                // Dessin des cadeaux
-
-                                for (int i = 0; i < 8; i++)
-                                {
-                                    Color color = i % 2 == 1 ? Plateau.CouleurJ1R : Plateau.CouleurJ2B;
-                                    if (!Plateau.CadeauxActives[i])
-                                    {
-                                        g.FillRectangle(i % 2 == 1 ? brushCouleurJ1R : brushCouleurJ2B, RealToScreen(Plateau.PositionsCadeaux[i].X - 75), RealToScreen(Plateau.PositionsCadeaux[i].Y - 30), RealToScreen(150), RealToScreen(40));
-                                        g.DrawRectangle(penNoir, RealToScreen(Plateau.PositionsCadeaux[i].X - 75), RealToScreen(Plateau.PositionsCadeaux[i].Y - 30), RealToScreen(150), RealToScreen(40));
-                                    }
-
-                                    if (!Plateau.CadeauxActives[i] && yTable >= 1970)
-                                    {
-                                        if (xTable > Plateau.PositionsCadeaux[i].X - 75 && xTable < Plateau.PositionsCadeaux[i].X + 75)
-                                            g.DrawRectangle(penVertClairEpais, RealToScreen(Plateau.PositionsCadeaux[i].X - 75), RealToScreen(Plateau.PositionsCadeaux[i].Y - 30), RealToScreen(150), RealToScreen(40));
-                                    }
-                                }
-
-                                // Dessin du gros robot
+                                // ************** Dessin du gros robot ************** //
 
                                 if (Robots.GrosRobot != null)
                                 {
-                                    int xRobot, yRobot;
-                                    xRobot = RealToScreen(Robots.GrosRobot.Position.Coordonnees.X);
-                                    yRobot = RealToScreen(Robots.GrosRobot.Position.Coordonnees.Y);
+                                    Point positionRobot = RealToScreenPosition(Robots.GrosRobot.Position.Coordonnees);
 
-                                    Bitmap bmpGrosRobot = new Bitmap(RealToScreen(Robots.GrosRobot.Taille * 3), RealToScreen(Robots.GrosRobot.Taille * 3));
+                                    Bitmap bmpGrosRobot = new Bitmap(RealToScreenDistance(Robots.GrosRobot.Taille * 3), RealToScreenDistance(Robots.GrosRobot.Taille * 3));
                                     Graphics gGros = Graphics.FromImage(bmpGrosRobot);
-                                    gGros.FillRectangle(brushTransparent, 0, 0, RealToScreen(Robots.GrosRobot.Taille * 2), RealToScreen(Robots.GrosRobot.Taille * 2));
+                                    gGros.FillRectangle(brushTransparent, 0, 0, RealToScreenDistance(Robots.GrosRobot.Taille * 2), RealToScreenDistance(Robots.GrosRobot.Taille * 2));
 
-                                    gGros.FillRectangle(brushBleuClair, bmpGrosRobot.Width / 2 - RealToScreen(Robots.GrosRobot.Largeur / 2), bmpGrosRobot.Height / 2 - RealToScreen(Robots.GrosRobot.Longueur / 2), RealToScreen(Robots.GrosRobot.Largeur), RealToScreen(Robots.GrosRobot.Longueur));
-                                    gGros.DrawRectangle(penCouleurJ2B, bmpGrosRobot.Width / 2 - RealToScreen(Robots.GrosRobot.Largeur / 2), bmpGrosRobot.Height / 2 - RealToScreen(Robots.GrosRobot.Longueur / 2), RealToScreen(Robots.GrosRobot.Largeur), RealToScreen(Robots.GrosRobot.Longueur));
-                                    gGros.DrawLine(penCouleurJ2B, bmpGrosRobot.Width / 2, bmpGrosRobot.Height / 2, bmpGrosRobot.Width / 2, bmpGrosRobot.Height / 2 - RealToScreen(Robots.GrosRobot.Longueur / 2));
+                                    gGros.FillRectangle(brushBleuClair, bmpGrosRobot.Width / 2 - RealToScreenDistance(Robots.GrosRobot.Largeur / 2), bmpGrosRobot.Height / 2 - RealToScreenDistance(Robots.GrosRobot.Longueur / 2), RealToScreenDistance(Robots.GrosRobot.Largeur), RealToScreenDistance(Robots.GrosRobot.Longueur));
+                                    gGros.DrawRectangle(penCouleurJ2B, bmpGrosRobot.Width / 2 - RealToScreenDistance(Robots.GrosRobot.Largeur / 2), bmpGrosRobot.Height / 2 - RealToScreenDistance(Robots.GrosRobot.Longueur / 2), RealToScreenDistance(Robots.GrosRobot.Largeur), RealToScreenDistance(Robots.GrosRobot.Longueur));
+                                    gGros.DrawLine(penCouleurJ2B, bmpGrosRobot.Width / 2, bmpGrosRobot.Height / 2, bmpGrosRobot.Width / 2, bmpGrosRobot.Height / 2 - RealToScreenDistance(Robots.GrosRobot.Longueur / 2));
 
                                     if (Robots.GrosRobot.ServoSorti[ServomoteurID.GRBrasDroit])
                                     {
                                         List<Point> points = new List<Point>();
-                                        points.Add(new Point(bmpGrosRobot.Width / 2 + RealToScreen(Robots.GrosRobot.Largeur / 2), bmpGrosRobot.Height / 2 - RealToScreen(Robots.GrosRobot.Longueur / 2)));
-                                        points.Add(new Point(bmpGrosRobot.Width / 2 + RealToScreen(Robots.GrosRobot.Largeur / 2) + 4, bmpGrosRobot.Height / 2 - RealToScreen(Robots.GrosRobot.Longueur / 2)));
-                                        points.Add(new Point(bmpGrosRobot.Width / 2 + RealToScreen(Robots.GrosRobot.Largeur / 2) + 20, bmpGrosRobot.Height / 2 - RealToScreen(Robots.GrosRobot.Longueur / 2) - 20));
-                                        points.Add(new Point(bmpGrosRobot.Width / 2 + RealToScreen(Robots.GrosRobot.Largeur / 2) + 16, bmpGrosRobot.Height / 2 - RealToScreen(Robots.GrosRobot.Longueur / 2) - 20));
+                                        points.Add(new Point(bmpGrosRobot.Width / 2 + RealToScreenDistance(Robots.GrosRobot.Largeur / 2), bmpGrosRobot.Height / 2 - RealToScreenDistance(Robots.GrosRobot.Longueur / 2)));
+                                        points.Add(new Point(bmpGrosRobot.Width / 2 + RealToScreenDistance(Robots.GrosRobot.Largeur / 2) + 4, bmpGrosRobot.Height / 2 - RealToScreenDistance(Robots.GrosRobot.Longueur / 2)));
+                                        points.Add(new Point(bmpGrosRobot.Width / 2 + RealToScreenDistance(Robots.GrosRobot.Largeur / 2) + 20, bmpGrosRobot.Height / 2 - RealToScreenDistance(Robots.GrosRobot.Longueur / 2) - 20));
+                                        points.Add(new Point(bmpGrosRobot.Width / 2 + RealToScreenDistance(Robots.GrosRobot.Largeur / 2) + 16, bmpGrosRobot.Height / 2 - RealToScreenDistance(Robots.GrosRobot.Longueur / 2) - 20));
 
                                         gGros.FillPolygon(brushBleuClair, points.ToArray<Point>());
                                         gGros.DrawPolygon(penCouleurJ2B, points.ToArray<Point>());
@@ -282,10 +217,10 @@ namespace GoBot.IHM
                                     if (Robots.GrosRobot.ServoSorti[ServomoteurID.GRBrasGauche])
                                     {
                                         List<Point> points = new List<Point>();
-                                        points.Add(new Point(bmpGrosRobot.Width / 2 - RealToScreen(Robots.GrosRobot.Largeur / 2), bmpGrosRobot.Height / 2 - RealToScreen(Robots.GrosRobot.Longueur / 2)));
-                                        points.Add(new Point(bmpGrosRobot.Width / 2 - RealToScreen(Robots.GrosRobot.Largeur / 2) - 4, bmpGrosRobot.Height / 2 - RealToScreen(Robots.GrosRobot.Longueur / 2)));
-                                        points.Add(new Point(bmpGrosRobot.Width / 2 - RealToScreen(Robots.GrosRobot.Largeur / 2) - 20, bmpGrosRobot.Height / 2 - RealToScreen(Robots.GrosRobot.Longueur / 2) - 20));
-                                        points.Add(new Point(bmpGrosRobot.Width / 2 - RealToScreen(Robots.GrosRobot.Largeur / 2) - 16, bmpGrosRobot.Height / 2 - RealToScreen(Robots.GrosRobot.Longueur / 2) - 20));
+                                        points.Add(new Point(bmpGrosRobot.Width / 2 - RealToScreenDistance(Robots.GrosRobot.Largeur / 2), bmpGrosRobot.Height / 2 - RealToScreenDistance(Robots.GrosRobot.Longueur / 2)));
+                                        points.Add(new Point(bmpGrosRobot.Width / 2 - RealToScreenDistance(Robots.GrosRobot.Largeur / 2) - 4, bmpGrosRobot.Height / 2 - RealToScreenDistance(Robots.GrosRobot.Longueur / 2)));
+                                        points.Add(new Point(bmpGrosRobot.Width / 2 - RealToScreenDistance(Robots.GrosRobot.Largeur / 2) - 20, bmpGrosRobot.Height / 2 - RealToScreenDistance(Robots.GrosRobot.Longueur / 2) - 20));
+                                        points.Add(new Point(bmpGrosRobot.Width / 2 - RealToScreenDistance(Robots.GrosRobot.Largeur / 2) - 16, bmpGrosRobot.Height / 2 - RealToScreenDistance(Robots.GrosRobot.Longueur / 2) - 20));
 
                                         gGros.FillPolygon(brushBleuClair, points.ToArray<Point>());
                                         gGros.DrawPolygon(penCouleurJ2B, points.ToArray<Point>());
@@ -294,56 +229,56 @@ namespace GoBot.IHM
                                     if (Robots.GrosRobot.ServoSorti[ServomoteurID.GRPetitBras])
                                     {
                                         gGros.FillRectangle(brushBleuClair,
-                                            bmpGrosRobot.Width / 2 + RealToScreen(Robots.GrosRobot.Largeur / 2),
+                                            bmpGrosRobot.Width / 2 + RealToScreenDistance(Robots.GrosRobot.Largeur / 2),
                                             bmpGrosRobot.Height / 2 - 2,
-                                            RealToScreen(140),
+                                            RealToScreenDistance(140),
                                             4);
                                         gGros.DrawRectangle(penCouleurJ2B,
-                                            bmpGrosRobot.Width / 2 + RealToScreen(Robots.GrosRobot.Largeur / 2),
+                                            bmpGrosRobot.Width / 2 + RealToScreenDistance(Robots.GrosRobot.Largeur / 2),
                                             bmpGrosRobot.Height / 2 - 2,
-                                            RealToScreen(140),
+                                            RealToScreenDistance(140),
                                             4);
                                     }
                                     if (Robots.GrosRobot.ServoSorti[ServomoteurID.GRPetitBras])
                                     {
                                         gGros.FillRectangle(brushBleuClair,
-                                            bmpGrosRobot.Width / 2 + RealToScreen(Robots.GrosRobot.Largeur / 2),
+                                            bmpGrosRobot.Width / 2 + RealToScreenDistance(Robots.GrosRobot.Largeur / 2),
                                             bmpGrosRobot.Height / 2 - 2,
-                                            RealToScreen(140),
+                                            RealToScreenDistance(140),
                                             4);
                                         gGros.DrawRectangle(penCouleurJ2B,
-                                            bmpGrosRobot.Width / 2 + RealToScreen(Robots.GrosRobot.Largeur / 2),
+                                            bmpGrosRobot.Width / 2 + RealToScreenDistance(Robots.GrosRobot.Largeur / 2),
                                             bmpGrosRobot.Height / 2 - 2,
-                                            RealToScreen(140),
+                                            RealToScreenDistance(140),
                                             4);
                                     }
 
                                     if (Robots.GrosRobot.ServoSorti[ServomoteurID.GRGrandBras])
                                     {
                                         gGros.FillRectangle(brushBleuClair,
-                                            bmpGrosRobot.Width / 2 + RealToScreen(Robots.GrosRobot.Largeur / 2),
+                                            bmpGrosRobot.Width / 2 + RealToScreenDistance(Robots.GrosRobot.Largeur / 2),
                                             bmpGrosRobot.Height / 2 + 4,
-                                            RealToScreen(220),
+                                            RealToScreenDistance(220),
                                             4);
                                         gGros.DrawRectangle(penCouleurJ2B,
-                                            bmpGrosRobot.Width / 2 + RealToScreen(Robots.GrosRobot.Largeur / 2),
+                                            bmpGrosRobot.Width / 2 + RealToScreenDistance(Robots.GrosRobot.Largeur / 2),
                                             bmpGrosRobot.Height / 2 + 4,
-                                            RealToScreen(220),
+                                            RealToScreenDistance(220),
                                             4);
                                     }
 
                                     if (Robots.GrosRobot.ServoSorti[ServomoteurID.GRAspirateur])
                                     {
                                         gGros.FillRectangle(brushBleuClair,
-                                            bmpGrosRobot.Width / 2 - RealToScreen(130),
-                                            bmpGrosRobot.Height / 2 + RealToScreen(Robots.GrosRobot.Longueur / 2),
-                                            RealToScreen(200),
-                                            RealToScreen(50));
+                                            bmpGrosRobot.Width / 2 - RealToScreenDistance(130),
+                                            bmpGrosRobot.Height / 2 + RealToScreenDistance(Robots.GrosRobot.Longueur / 2),
+                                            RealToScreenDistance(200),
+                                            RealToScreenDistance(50));
                                         gGros.DrawRectangle(penCouleurJ2B,
-                                            bmpGrosRobot.Width / 2 - RealToScreen(130),
-                                            bmpGrosRobot.Height / 2 + RealToScreen(Robots.GrosRobot.Longueur / 2),
-                                            RealToScreen(200),
-                                            RealToScreen(50));
+                                            bmpGrosRobot.Width / 2 - RealToScreenDistance(130),
+                                            bmpGrosRobot.Height / 2 + RealToScreenDistance(Robots.GrosRobot.Longueur / 2),
+                                            RealToScreenDistance(200),
+                                            RealToScreenDistance(50));
                                     }
 
                                     if (Robots.GrosRobot.MoteurTourne[MoteurID.GRTurbineAspirateur])
@@ -351,13 +286,13 @@ namespace GoBot.IHM
                                         switch (cptHelice1)
                                         {
                                             case 0:
-                                                gGros.DrawImage(Properties.Resources.Helice1, bmpGrosRobot.Width / 2 - 12, bmpGrosRobot.Height / 2 + RealToScreen(Robots.GrosRobot.Longueur / 2) - 4, 16, 16);
+                                                gGros.DrawImage(Properties.Resources.Helice1, bmpGrosRobot.Width / 2 - 12, bmpGrosRobot.Height / 2 + RealToScreenDistance(Robots.GrosRobot.Longueur / 2) - 4, 16, 16);
                                                 break;
                                             case 1:
-                                                gGros.DrawImage(Properties.Resources.Helice2, bmpGrosRobot.Width / 2 - 12, bmpGrosRobot.Height / 2 + RealToScreen(Robots.GrosRobot.Longueur / 2) - 4, 16, 16);
+                                                gGros.DrawImage(Properties.Resources.Helice2, bmpGrosRobot.Width / 2 - 12, bmpGrosRobot.Height / 2 + RealToScreenDistance(Robots.GrosRobot.Longueur / 2) - 4, 16, 16);
                                                 break;
                                             case 2:
-                                                gGros.DrawImage(Properties.Resources.Helice3, bmpGrosRobot.Width / 2 - 12, bmpGrosRobot.Height / 2 + RealToScreen(Robots.GrosRobot.Longueur / 2) - 4, 16, 16);
+                                                gGros.DrawImage(Properties.Resources.Helice3, bmpGrosRobot.Width / 2 - 12, bmpGrosRobot.Height / 2 + RealToScreenDistance(Robots.GrosRobot.Longueur / 2) - 4, 16, 16);
                                                 break;
                                         }
 
@@ -371,13 +306,13 @@ namespace GoBot.IHM
                                         switch (cptHelice2)
                                         {
                                             case 0:
-                                                gGros.DrawImage(Properties.Resources.Helice1, bmpGrosRobot.Width / 2 + RealToScreen(Robots.GrosRobot.Largeur / 2) - 15, bmpGrosRobot.Height / 2 - 8, 16, 16);
+                                                gGros.DrawImage(Properties.Resources.Helice1, bmpGrosRobot.Width / 2 + RealToScreenDistance(Robots.GrosRobot.Largeur / 2) - 15, bmpGrosRobot.Height / 2 - 8, 16, 16);
                                                 break;
                                             case 1:
-                                                gGros.DrawImage(Properties.Resources.Helice2, bmpGrosRobot.Width / 2 + RealToScreen(Robots.GrosRobot.Largeur / 2) - 15, bmpGrosRobot.Height / 2 - 8, 16, 16);
+                                                gGros.DrawImage(Properties.Resources.Helice2, bmpGrosRobot.Width / 2 + RealToScreenDistance(Robots.GrosRobot.Largeur / 2) - 15, bmpGrosRobot.Height / 2 - 8, 16, 16);
                                                 break;
                                             case 2:
-                                                gGros.DrawImage(Properties.Resources.Helice3, bmpGrosRobot.Width / 2 + RealToScreen(Robots.GrosRobot.Largeur / 2) - 15, bmpGrosRobot.Height / 2 - 8, 16, 16);
+                                                gGros.DrawImage(Properties.Resources.Helice3, bmpGrosRobot.Width / 2 + RealToScreenDistance(Robots.GrosRobot.Largeur / 2) - 15, bmpGrosRobot.Height / 2 - 8, 16, 16);
                                                 break;
                                         }
 
@@ -386,7 +321,7 @@ namespace GoBot.IHM
                                             cptHelice2 = 0;
                                     }
 
-                                    g.DrawImage(rotateImage(bmpGrosRobot, Robots.GrosRobot.Position.Angle.AngleDegres + 90), xRobot - bmpGrosRobot.Width / 2, yRobot - bmpGrosRobot.Height / 2);
+                                    g.DrawImage(RotateImage(bmpGrosRobot, Robots.GrosRobot.Position.Angle.AngleDegres + 90), positionRobot.X - bmpGrosRobot.Width / 2, positionRobot.Y - bmpGrosRobot.Height / 2);
 
                                     this.Invoke(new EventHandler(delegate
                                     {
@@ -394,82 +329,6 @@ namespace GoBot.IHM
                                         lblPosGrosY.Text = Math.Round(Robots.GrosRobot.Position.Coordonnees.Y, 2).ToString();
                                         lblPosGrosTeta.Text = Robots.GrosRobot.Position.Angle.ToString();
                                     }));
-
-                                    // Dessin des balles dans le robot
-                                    if (Robots.GrosRobot.NbBallesBlanchesCharges > 0 || Robots.GrosRobot.BalleCouleurChargee)
-                                    {
-                                        Bitmap bmpBalles = new Bitmap(52, 52);
-                                        Graphics gBalles = Graphics.FromImage(bmpBalles);
-                                        g.FillRectangle(brushTransparent, 0, 0, 52, 52);
-
-                                        for (int i = 0; i < Robots.GrosRobot.NbBallesBlanchesCharges; i++)
-                                        {
-                                            gBalles.DrawImage(Properties.Resources.Balle, positionsBallesChargees[i].X, positionsBallesChargees[i].Y, 10, 10);
-                                        }
-                                        if (Robots.GrosRobot.BalleCouleurChargee)
-                                        {
-                                            Bitmap imageBalle = Properties.Resources.BalleBleue;
-                                            if (Robots.GrosRobot.CouleurBalleChargee == Plateau.CouleurJ1R)
-                                                imageBalle = Properties.Resources.BalleRouge;
-
-                                            gBalles.DrawImage(imageBalle, 16, 20, 10, 10);
-                                        }
-
-                                        g.DrawImage(rotateImage(bmpBalles, Robots.GrosRobot.Position.Angle.AngleDegres), RealToScreen(Robots.GrosRobot.Position.Coordonnees.X) - 52 / 2, RealToScreen(Robots.GrosRobot.Position.Coordonnees.Y) - 52 / 2, 52, 52);
-                                    }
-
-                                    foreach (Point balleRentree in coordonneesBallesPanier)
-                                        g.DrawImage(Properties.Resources.Balle, balleRentree.X, balleRentree.Y, 10, 10);
-
-                                    // Test lancement de balle
-                                    if (Robots.GrosRobot.LancementBalles)
-                                    {
-                                        int yBalle = 0;
-                                        int xBalle = 0;
-                                        Bitmap img;
-
-                                        if (Plateau.CouleurBalleLancee == Color.White)
-                                        {
-                                            if (Plateau.NotreCouleur == Plateau.CouleurJ2B)
-                                                xBalle = 1400;
-                                            else
-                                                xBalle = 1600;
-
-                                            img = Properties.Resources.Balle;
-                                        }
-                                        else
-                                        {
-                                            if (Plateau.NotreCouleur == Plateau.CouleurJ2B)
-                                                xBalle = 1000;
-                                            else
-                                                xBalle = 1100;
-
-                                            if (Robots.GrosRobot.CouleurBalleChargee == Plateau.CouleurJ1R)
-                                                img = Properties.Resources.BalleRouge;
-                                            else
-                                                img = Properties.Resources.BalleBleue;
-                                        }
-
-                                        if (nbBallePrec + 1 < Plateau.NbBallesMarquees ||
-                                            (nbBallePrec < Plateau.NbBallesMarquees && (DateTime.Now - Plateau.DateBalle).TotalMilliseconds > 900) ||
-                                            nbBallePrec < Plateau.NbBallesMarquees && Plateau.CouleurBalleLancee != Color.White)
-                                        {
-                                            nbBallePrec++;
-                                            // Nouvelle balle
-                                            int xBalleRentree = RealToScreen(rand.Next(150) + 1340);
-                                            if (Plateau.NotreCouleur == Plateau.CouleurJ1R)
-                                                xBalleRentree = RealToScreen(rand.Next(150) + 1510);
-
-                                            int yBalleRentree = RealToScreen(rand.Next(150));
-
-                                            coordonneesBallesPanier.Add(new Point(xBalleRentree, yBalleRentree));
-                                        }
-
-                                        xBalle = RealToScreen(xBalle - (xBalle - Robots.GrosRobot.Position.Coordonnees.X) / 800.0 * (800 - (DateTime.Now - Plateau.DateBalle).TotalMilliseconds));
-                                        yBalle = RealToScreen(100 - (100 - Robots.GrosRobot.Position.Coordonnees.Y) / 800.0 * (800 - (DateTime.Now - Plateau.DateBalle).TotalMilliseconds));
-
-                                        g.DrawImage(img, xBalle - 5, yBalle - 5, 10, 10);
-                                    }
                                 }
 
                                 // Fin dessin robot
@@ -477,21 +336,19 @@ namespace GoBot.IHM
                                 // Dessin du petit robot
                                 if (Robots.PetitRobot != null)
                                 {
-                                    int xRobot, yRobot;
+                                    Point positionRobot = RealToScreenPosition(Robots.PetitRobot.Position.Coordonnees);
                                     double angleRobot;
-                                    xRobot = RealToScreen(Robots.PetitRobot.Position.Coordonnees.X);
-                                    yRobot = RealToScreen(Robots.PetitRobot.Position.Coordonnees.Y);
-                                    angleRobot = Robots.PetitRobot.Position.Angle.AngleRadians;// +(90 * Math.PI / 360);
+                                    angleRobot = Robots.PetitRobot.Position.Angle.AngleRadians;
 
-                                    Bitmap bmpPetitRobot = new Bitmap(RealToScreen(Robots.PetitRobot.Taille * 2), RealToScreen(Robots.PetitRobot.Taille * 2));
+                                    Bitmap bmpPetitRobot = new Bitmap(RealToScreenDistance(Robots.PetitRobot.Taille * 2), RealToScreenDistance(Robots.PetitRobot.Taille * 2));
                                     Graphics gPetit = Graphics.FromImage(bmpPetitRobot);
-                                    gPetit.FillRectangle(brushTransparent, 0, 0, RealToScreen(Robots.PetitRobot.Taille * 2), RealToScreen(Robots.PetitRobot.Taille * 2));
+                                    gPetit.FillRectangle(brushTransparent, 0, 0, RealToScreenDistance(Robots.PetitRobot.Taille * 2), RealToScreenDistance(Robots.PetitRobot.Taille * 2));
 
-                                    gPetit.FillRectangle(brushBleuClair, bmpPetitRobot.Width / 2 - RealToScreen(Robots.PetitRobot.Largeur / 2), bmpPetitRobot.Height / 2 - RealToScreen(Robots.PetitRobot.Longueur / 2), RealToScreen(Robots.PetitRobot.Largeur), RealToScreen(Robots.PetitRobot.Longueur));
-                                    gPetit.DrawRectangle(penCouleurJ2B, bmpPetitRobot.Width / 2 - RealToScreen(Robots.PetitRobot.Largeur / 2), bmpPetitRobot.Height / 2 - RealToScreen(Robots.PetitRobot.Longueur / 2), RealToScreen(Robots.PetitRobot.Largeur), RealToScreen(Robots.PetitRobot.Longueur));
-                                    gPetit.DrawLine(penCouleurJ2B, bmpPetitRobot.Width / 2, bmpPetitRobot.Height / 2, bmpPetitRobot.Width / 2, bmpPetitRobot.Height / 2 - RealToScreen(Robots.PetitRobot.Longueur / 2));
+                                    gPetit.FillRectangle(brushBleuClair, bmpPetitRobot.Width / 2 - RealToScreenDistance(Robots.PetitRobot.Largeur / 2), bmpPetitRobot.Height / 2 - RealToScreenDistance(Robots.PetitRobot.Longueur / 2), RealToScreenDistance(Robots.PetitRobot.Largeur), RealToScreenDistance(Robots.PetitRobot.Longueur));
+                                    gPetit.DrawRectangle(penCouleurJ2B, bmpPetitRobot.Width / 2 - RealToScreenDistance(Robots.PetitRobot.Largeur / 2), bmpPetitRobot.Height / 2 - RealToScreenDistance(Robots.PetitRobot.Longueur / 2), RealToScreenDistance(Robots.PetitRobot.Largeur), RealToScreenDistance(Robots.PetitRobot.Longueur));
+                                    gPetit.DrawLine(penCouleurJ2B, bmpPetitRobot.Width / 2, bmpPetitRobot.Height / 2, bmpPetitRobot.Width / 2, bmpPetitRobot.Height / 2 - RealToScreenDistance(Robots.PetitRobot.Longueur / 2));
 
-                                    g.DrawImage(rotateImage(bmpPetitRobot, Robots.PetitRobot.Position.Angle.AngleDegres + 90), xRobot - RealToScreen(Robots.PetitRobot.Taille), yRobot - RealToScreen(Robots.PetitRobot.Taille));
+                                    g.DrawImage(RotateImage(bmpPetitRobot, Robots.PetitRobot.Position.Angle.AngleDegres + 90), positionRobot.X - RealToScreenDistance(Robots.PetitRobot.Taille), positionRobot.Y - RealToScreenDistance(Robots.PetitRobot.Taille));
 
                                     lblPosPetitX.Text = Math.Round(Robots.PetitRobot.Position.Coordonnees.X, 2).ToString();
                                     lblPosPetitY.Text = Math.Round(Robots.PetitRobot.Position.Coordonnees.Y, 2).ToString();
@@ -508,25 +365,29 @@ namespace GoBot.IHM
                                 foreach (Robot robot in robots)
                                 {
                                     foreach (Node n in robot.NodeTrouve)
-                                        g.FillEllipse(brushRouge, new Rectangle(RealToScreen(n.Position.X) - 4, RealToScreen(n.Position.Y) - 4, 8, 8));
+                                    {
+                                        Point positionNode = RealToScreenPosition(n.Position);
+                                        g.FillEllipse(brushRouge, new Rectangle(positionNode.X - 4, positionNode.Y - 4, 8, 8));
+                                    }
 
                                     foreach (Arc a in robot.CheminTrouve)
-                                        g.DrawLine(penOrangeEpais, new Point(RealToScreen(a.StartNode.Position.X), RealToScreen(a.StartNode.Position.Y)), new Point(RealToScreen(a.EndNode.Position.X), RealToScreen(a.EndNode.Position.Y)));
-
+                                    {
+                                        g.DrawLine(penOrangeEpais, RealToScreenPosition(a.StartNode.Position), RealToScreenPosition(a.EndNode.Position));
+                                    }
 
                                     if (robot.CheminEnCoursNoeuds != null && robot.CheminEnCoursNoeuds.Count > 1)
                                     {
                                         Segment seg = new Segment(new PointReel(robot.CheminEnCoursNoeuds[1].X, robot.CheminEnCoursNoeuds[1].Y), robot.Position.Coordonnees);
-                                        g.DrawLine(penVertEpais, new Point(RealToScreen(robot.CheminEnCoursNoeuds[1].X), RealToScreen(robot.CheminEnCoursNoeuds[1].Y)), new Point(RealToScreen(robot.Position.Coordonnees.X), RealToScreen(robot.Position.Coordonnees.Y)));
+                                        g.DrawLine(penVertEpais, RealToScreenPosition(robot.CheminEnCoursNoeuds[1].Position), RealToScreenPosition(robot.Position.Coordonnees));
                                         for (int i = 1; i < robot.CheminEnCoursArcs.Count; i++)
                                         {
                                             Arc a = robot.CheminEnCoursArcs[i];
-                                            g.DrawLine(penVertEpais, new Point(RealToScreen(a.StartNode.Position.X), RealToScreen(a.StartNode.Position.Y)), new Point(RealToScreen(a.EndNode.Position.X), RealToScreen(a.EndNode.Position.Y)));
+                                            g.DrawLine(penVertEpais, RealToScreenPosition(a.StartNode.Position), RealToScreenPosition(a.EndNode.Position));
                                         }
                                     }
 
                                     if (robot.CheminTest != null)
-                                        g.DrawLine(penRougeEpais, new Point(RealToScreen(robot.CheminTest.StartNode.Position.X), RealToScreen(robot.CheminTest.StartNode.Position.Y)), new Point(RealToScreen(robot.CheminTest.EndNode.Position.X), RealToScreen(robot.CheminTest.EndNode.Position.Y)));
+                                        g.DrawLine(penRougeEpais, RealToScreenPosition(robot.CheminTest.StartNode.Position), RealToScreenPosition(robot.CheminTest.EndNode.Position));
 
                                     if (robot.ObstacleTeste != null)
                                         DessinerForme(g, Color.Green, robot.ObstacleTeste);
@@ -536,7 +397,10 @@ namespace GoBot.IHM
 
                                     if (robot.CheminEnCoursNoeuds != null)
                                         foreach (Node n in robot.CheminEnCoursNoeuds)
-                                            g.FillEllipse(brushVert, new Rectangle(RealToScreen(n.Position.X) - 4, RealToScreen(n.Position.Y) - 4, 8, 8));
+                                        {
+                                            Point positionNode = RealToScreenPosition(n.Position);
+                                            g.FillEllipse(brushVert, new Rectangle(positionNode.X - 4, positionNode.Y - 4, 8, 8));
+                                        }
                                 }
                                 // Fin pathfinding
 
@@ -548,6 +412,7 @@ namespace GoBot.IHM
                                     for(int i = 0; i < SuiviBalise.PositionsEnnemies.Count; i++)
                                     {
                                         PointReel p = SuiviBalise.PositionsEnnemies[i];
+                                        Point positionEcran = RealToScreenPosition(p);
 
                                         if (p == null)
                                             continue;
@@ -562,13 +427,13 @@ namespace GoBot.IHM
                                         }
 
                                         if (vitesse < 50)
-                                            g.DrawImage(Properties.Resources.Stop, RealToScreen(p.X) - Properties.Resources.Stop.Width / 2, RealToScreen(p.Y) - Properties.Resources.Stop.Height / 2, Properties.Resources.Stop.Width, Properties.Resources.Stop.Height);
-                                        g.FillEllipse(brushCouleurJ1RTransparent, RealToScreen(p.X - Robots.GrosRobot.Rayon), RealToScreen(p.Y - Robots.GrosRobot.Rayon), RealToScreen(Robots.GrosRobot.Rayon * 2), RealToScreen(Robots.GrosRobot.Rayon * 2));
-                                        g.DrawEllipse(penCouleurJ1R, RealToScreen(p.X - Robots.GrosRobot.Rayon), RealToScreen(p.Y - Robots.GrosRobot.Rayon), RealToScreen(Robots.GrosRobot.Rayon * 2), RealToScreen(Robots.GrosRobot.Rayon * 2));
-                                        g.DrawLine(penRougeEpais, new Point(RealToScreen(p.X) - 7, RealToScreen(p.Y) - 7), new Point(RealToScreen(p.X) + 7, RealToScreen(p.Y) + 7));
-                                        g.DrawLine(penRougeEpais, new Point(RealToScreen(p.X) - 7, RealToScreen(p.Y) + 7), new Point(RealToScreen(p.X) + 7, RealToScreen(p.Y) - 7));
-                                        g.DrawLine(penCouleurJ1RFleche, RealToScreen(p.X), RealToScreen(p.Y), RealToScreen(p.X + SuiviBalise.VecteursPositionsEnnemies[i].X / 3), RealToScreen(p.Y + SuiviBalise.VecteursPositionsEnnemies[i].Y / 3));
-                                        g.DrawString(i + " - " + vitesse + "mm/s", new Font("Calibri", 9, FontStyle.Bold), brushBlanc, RealToScreen(p.X), RealToScreen(p.Y));
+                                            g.DrawImage(Properties.Resources.Stop, positionEcran.X - Properties.Resources.Stop.Width / 2, positionEcran.Y - Properties.Resources.Stop.Height / 2, Properties.Resources.Stop.Width, Properties.Resources.Stop.Height);
+                                        g.FillEllipse(brushCouleurJ1RTransparent, positionEcran.X - RealToScreenDistance(Robots.GrosRobot.Rayon), positionEcran.Y - RealToScreenDistance(Robots.GrosRobot.Rayon), RealToScreenDistance(Robots.GrosRobot.Rayon * 2), RealToScreenDistance(Robots.GrosRobot.Rayon * 2));
+                                        g.DrawEllipse(penCouleurJ1R, positionEcran.X - RealToScreenDistance(Robots.GrosRobot.Rayon), positionEcran.Y - RealToScreenDistance(Robots.GrosRobot.Rayon), RealToScreenDistance(Robots.GrosRobot.Rayon * 2), RealToScreenDistance(Robots.GrosRobot.Rayon * 2));
+                                        g.DrawLine(penRougeEpais, new Point(positionEcran.X - 7, positionEcran.Y - 7), new Point(positionEcran.X + 7, positionEcran.Y + 7));
+                                        g.DrawLine(penRougeEpais, new Point(positionEcran.X - 7, positionEcran.Y + 7), new Point(positionEcran.X + 7, positionEcran.Y - 7));
+                                        g.DrawLine(penCouleurJ1RFleche, positionEcran.X, positionEcran.Y, positionEcran.X + RealToScreenDistance(SuiviBalise.VecteursPositionsEnnemies[i].X / 3), positionEcran.Y + RealToScreenDistance(SuiviBalise.VecteursPositionsEnnemies[i].Y / 3));
+                                        g.DrawString(i + " - " + vitesse + "mm/s", new Font("Calibri", 9, FontStyle.Bold), brushBlanc, positionEcran.X, positionEcran.Y);
                                     }
 
                                     if (boxDroites.Checked && Plateau.InterpreteurBalise.PositionsEnnemies != null)
@@ -577,8 +442,8 @@ namespace GoBot.IHM
                                         {
                                             // Ligne médiane
                                             g.DrawLine(penRougePointille,
-                                                new Point(RealToScreen(detection.Balise.Position.Coordonnees.X), RealToScreen(detection.Balise.Position.Coordonnees.Y)),
-                                                new Point(RealToScreen(detection.Position.X), RealToScreen(detection.Position.Y)));
+                                                RealToScreenPosition(detection.Balise.Position.Coordonnees),
+                                                (RealToScreenPosition(detection.Position)));
 
                                             // Dessin du polygone de détection
                                             Polygone polygone = InterpreteurBalise.DetectionToPolygone(detection);
@@ -586,31 +451,34 @@ namespace GoBot.IHM
 
                                             foreach (Segment s in polygone.Cotes)
                                             {
-                                                points.Add(new Point(RealToScreen(s.Debut.X), RealToScreen(s.Debut.Y)));
-                                                points.Add(new Point(RealToScreen(s.Fin.X), RealToScreen(s.Fin.Y)));
+                                                points.Add(RealToScreenPosition(s.Debut));
+                                                points.Add(RealToScreenPosition(s.Fin));
                                             }
 
+                                            Point positionEcran = RealToScreenPosition(detection.Position);
                                             g.DrawPolygon(penRougeFin, points.ToArray());
                                             g.FillPolygon(brushCouleurJ1RTresTransparent, points.ToArray());
-                                            g.DrawLine(penRougeFin, new Point(RealToScreen(detection.Position.X) - 4, RealToScreen(detection.Position.Y) - 4), new Point(RealToScreen(detection.Position.X) + 4, RealToScreen(detection.Position.Y) + 4));
-                                            g.DrawLine(penRougeFin, new Point(RealToScreen(detection.Position.X) - 4, RealToScreen(detection.Position.Y) + 4), new Point(RealToScreen(detection.Position.X) + 4, RealToScreen(detection.Position.Y) - 4));
+                                            g.DrawLine(penRougeFin, new Point(positionEcran.X - 4, positionEcran.Y - 4), new Point(positionEcran.X + 4, positionEcran.Y + 4));
+                                            g.DrawLine(penRougeFin, new Point(positionEcran.X - 4, positionEcran.Y + 4), new Point(positionEcran.X + 4, positionEcran.Y - 4));
                                         }
 
                                         foreach (PointReelGenere p in Plateau.InterpreteurBalise.Intersections)
                                         {
-                                            g.FillEllipse(brushVertFonce, RealToScreen(p.Point.X) - 2, RealToScreen(p.Point.Y) - 2, 4, 4);
+                                            Point positionEcran = RealToScreenPosition(p.Point);
+                                            g.FillEllipse(brushVertFonce, positionEcran.X - 2, positionEcran.Y - 2, 4, 4);
                                         }
 
                                         foreach (PointReelGenere p in Plateau.InterpreteurBalise.MoyennesIntersections)
                                         {
-                                            g.FillEllipse(brushVertFonce, RealToScreen(p.Point.X) - 4, RealToScreen(p.Point.Y) - 4, 8, 8);
+                                            Point positionEcran = RealToScreenPosition(p.Point);
+                                            g.FillEllipse(brushVertFonce, positionEcran.X - 4, positionEcran.Y - 4, 8, 8);
                                         }
 
                                         foreach (List<PointReel> liste in Plateau.InterpreteurBalise.AssociationPointDistanceIntersection)
                                         {
                                             if (liste[0] == null || liste[1] == null)
                                                 continue;
-                                            g.DrawLine(penVertFonce, new Point(RealToScreen(liste[0].X), RealToScreen(liste[0].Y)), new Point(RealToScreen(liste[1].X), RealToScreen(liste[1].Y)));
+                                            g.DrawLine(penVertFonce, RealToScreenPosition(liste[0].X, liste[0].Y), RealToScreenPosition(liste[1].X, liste[1].Y));
                                         }
                                     }
                                 }
@@ -625,7 +493,7 @@ namespace GoBot.IHM
                                         foreach (Mouvement m in Plateau.Enchainement.ListeMouvementsGros)
                                         {
                                             if (m.Cout != double.MaxValue)
-                                                g.DrawString(Math.Round(m.Cout) + "", police, brushRouge, new PointF(RealToScreen(m.Position.Coordonnees.X), RealToScreen((float)m.Position.Coordonnees.Y)));
+                                                g.DrawString(Math.Round(m.Cout) + "", police, brushRouge, RealToScreenPosition(m.Position.Coordonnees));
                                         }
                                     }
                                     if (boxCoutPetit.Checked)
@@ -634,7 +502,7 @@ namespace GoBot.IHM
                                         foreach (Mouvement m in Plateau.Enchainement.ListeMouvementsPetit)
                                         {
                                             if (m.Cout != double.MaxValue)
-                                                g.DrawString(Math.Round(m.Cout) + "", police, brushVert, new PointF(RealToScreen(m.Position.Coordonnees.X), RealToScreen((float)m.Position.Coordonnees.Y)));
+                                                g.DrawString(Math.Round(m.Cout) + "", police, brushVert, RealToScreenPosition(m.Position.Coordonnees));
                                         }
                                     }
 
@@ -667,7 +535,7 @@ namespace GoBot.IHM
             }
         }
 
-        private Bitmap rotateImage(Bitmap b, double angle)
+        private Bitmap RotateImage(Bitmap b, double angle)
         {
             //create a new empty bitmap to hold rotated image
             Bitmap returnBitmap = new Bitmap(b.Width, b.Height);
@@ -712,18 +580,24 @@ namespace GoBot.IHM
 
         private void DessinerForme(Graphics graphics, Color color, Cercle Cercle, bool plein = false)
         {
+            Point positionEcran = RealToScreenPosition(Cercle.Centre);
+            int rayonEcran = RealToScreenDistance(Cercle.Rayon);
+
             if (!plein)
                 using (Pen pen = new Pen(color, 10))
-                    graphics.DrawEllipse(pen, new Rectangle(RealToScreen(Cercle.Centre.X) - RealToScreen(Cercle.Rayon), RealToScreen(Cercle.Centre.Y) - RealToScreen(Cercle.Rayon), RealToScreen(Cercle.Rayon * 2), RealToScreen(Cercle.Rayon * 2)));
+                    graphics.DrawEllipse(pen, new Rectangle(positionEcran.X - rayonEcran, positionEcran.Y - rayonEcran, rayonEcran * 2, rayonEcran * 2));
             else
                 using (SolidBrush brush = new SolidBrush(color))
-                    graphics.FillEllipse(brush, new Rectangle(RealToScreen(Cercle.Centre.X) - RealToScreen(Cercle.Rayon), RealToScreen(Cercle.Centre.Y) - RealToScreen(Cercle.Rayon), RealToScreen(Cercle.Rayon * 2), RealToScreen(Cercle.Rayon * 2)));
+                    graphics.FillEllipse(brush, new Rectangle(positionEcran.X - rayonEcran, positionEcran.Y - rayonEcran, rayonEcran * 2, rayonEcran * 2));
         }
 
         private void DessinerForme(Graphics graphics, Color color, Segment segment)
         {
+            Point positionEcranDepart = RealToScreenPosition(segment.Debut);
+            Point positionEcranFin = RealToScreenPosition(segment.Fin);
+
             using (Pen pen = new Pen(color, 10))
-                graphics.DrawLine(pen, RealToScreen(segment.Debut.X), RealToScreen(segment.Debut.Y), RealToScreen(segment.Fin.X), RealToScreen(segment.Fin.Y));
+                graphics.DrawLine(pen, positionEcranDepart.X, positionEcranDepart.Y, positionEcranFin.X, positionEcranFin.Y);
         }
 
         private void DessinerForme(Graphics graphics, Color color, Polygone polygone, bool plein = false)
@@ -733,12 +607,12 @@ namespace GoBot.IHM
 
             Point[] listePoints = new Point[polygone.Cotes.Count + 1];
 
-            listePoints[0] = new Point(RealToScreen(polygone.Cotes[0].Debut.X), RealToScreen(polygone.Cotes[0].Debut.Y));
+            listePoints[0] = RealToScreenPosition(polygone.Cotes[0].Debut);
 
             for (int i = 0; i < polygone.Cotes.Count; i++)
             {
                 Segment s = polygone.Cotes[i];
-                listePoints[i] = new Point(RealToScreen(s.Fin.X), RealToScreen(s.Fin.Y));
+                listePoints[i] = RealToScreenPosition(s.Fin);
             }
 
             listePoints[listePoints.Length - 1] = listePoints[0];
@@ -778,8 +652,9 @@ namespace GoBot.IHM
             //    {
             if (modeCourant == Mode.FinTrajectoire)
             {
+                PointReel positionReelle = ScreenToRealPosition(pictureBoxTable.PointToClient(MousePosition));
                 double distance;
-                Node finNode = Plateau.Graph.ClosestNode(ScreenToReal(pictureBoxTable.PointToClient(MousePosition).X), ScreenToReal(pictureBoxTable.PointToClient(MousePosition).Y), 0, out distance, false);
+                Node finNode = Plateau.Graph.ClosestNode(positionReelle.X, positionReelle.Y, 0, out distance, false);
 
                 AStar aStar = new AStar(Plateau.Graph);
                 if (aStar.SearchPath(debutNode, finNode))
@@ -797,25 +672,58 @@ namespace GoBot.IHM
                     xSouris = pictureBoxTable.PointToClient(MousePosition).X;
                     ySouris = pictureBoxTable.PointToClient(MousePosition).Y;
                     List<PointReel> positions = new List<PointReel>();
-                    positions.Add(new PointReel(ScreenToReal(pictureBoxTable.PointToClient(MousePosition).X), ScreenToReal(pictureBoxTable.PointToClient(MousePosition).Y)));
+                    positions.Add(ScreenToRealPosition(pictureBoxTable.PointToClient(MousePosition)));
                     SuiviBalise.MajPositions(positions, Plateau.Enchainement == null || Plateau.Enchainement.DebutMatch == null);
                     //Plateau.ObstacleTest(ScreenToReal(pictureBoxTable.PointToClient(MousePosition).X), ScreenToReal(pictureBoxTable.PointToClient(MousePosition).Y));
                 }
             }
 
-            lblPos.Text = ScreenToReal(pictureBoxTable.PointToClient(MousePosition).X) + " : " + ScreenToReal(pictureBoxTable.PointToClient(MousePosition).Y);
+            Point positionSurTable = ScreenToRealPosition(pictureBoxTable.PointToClient(MousePosition));
+            lblPos.Text = positionSurTable.X + " : " + positionSurTable.Y;
             //    }));
         }
 
-        private int ScreenToReal(double valeur)
+        #region Conversion coordonnées réelles / écran
+
+        private const double rapportScreenReal = 3.7;
+        private const int offsetImageX = 69;
+        private const int offsetImageY = 48;
+
+        // Ecran vers réel
+
+        private int ScreenToRealDistance(double valeur)
         {
-            return (int)(valeur * 4.0);
+            return (int)(valeur * rapportScreenReal);
         }
 
-        private int RealToScreen(double valeur)
+        private PointReel ScreenToRealPosition(Point valeur)
         {
-            return (int)(valeur / 4.0);
+            return new PointReel(ScreenToRealDistance(valeur.X - offsetImageX), ScreenToRealDistance(valeur.Y - offsetImageY));
         }
+
+        private Point ScreenToRealPosition(double valeurX, double valeurY)
+        {
+            return new Point(ScreenToRealDistance(valeurX - offsetImageX), ScreenToRealDistance(valeurY - offsetImageY));
+        }
+
+        // Réel vers écran
+
+        private int RealToScreenDistance(double valeur)
+        {
+            return (int)(valeur / rapportScreenReal);
+        }
+
+        private Point RealToScreenPosition(Point valeur)
+        {
+            return new Point(RealToScreenDistance(valeur.X) + offsetImageX, RealToScreenDistance(valeur.Y) + offsetImageY);
+        }
+
+        private Point RealToScreenPosition(double valeurX, double valeurY)
+        {
+            return new Point(RealToScreenDistance(valeurX) + offsetImageX, RealToScreenDistance(valeurY) + offsetImageY);
+        }
+
+        #endregion
 
         Node debutNode;
         private void btnAllerA_Click(object sender, EventArgs e)
@@ -848,22 +756,19 @@ namespace GoBot.IHM
 
         private void PathFinding()
         {
+            PointReel positionReelle = ScreenToRealPosition(pictureBoxTable.PointToClient(MousePosition));
             if (modeCourant == Mode.FinTrajectoire)
             {
                 if (ev.Button == System.Windows.Forms.MouseButtons.Left)
-                    Robots.GrosRobot.PathFinding(ScreenToReal(pictureBoxTable.PointToClient(MousePosition).X), ScreenToReal(pictureBoxTable.PointToClient(MousePosition).Y));
+                    Robots.GrosRobot.PathFinding(positionReelle.X, positionReelle.Y);
                 else
-                    Robots.PetitRobot.PathFinding(ScreenToReal(pictureBoxTable.PointToClient(MousePosition).X), ScreenToReal(pictureBoxTable.PointToClient(MousePosition).Y));
+                    Robots.PetitRobot.PathFinding(positionReelle.X, positionReelle.Y);
 
                 modeCourant = Mode.Visualisation;
             }
             else
             {
-
-                int xTable = ScreenToReal(pictureBoxTable.PointToClient(MousePosition).X);
-                int yTable = ScreenToReal(pictureBoxTable.PointToClient(MousePosition).Y);
-
-                PointReel point = new PointReel(xTable, yTable);
+                PointReel point = new PointReel(positionReelle.X, positionReelle.Y);
 
                 for (int i = 0; i < 20; i++)
                 {
@@ -888,9 +793,9 @@ namespace GoBot.IHM
 
                 for (int i = 0; i < 8; i++)
                 {
-                    if (yTable >= 1970)
+                    if (positionReelle.Y >= 1970)
                     {
-                        if (xTable > Plateau.PositionsCadeaux[i].X - 75 && xTable < Plateau.PositionsCadeaux[i].X + 75)
+                        if (positionReelle.X > Plateau.PositionsCadeaux[i].X - 75 && positionReelle.X < Plateau.PositionsCadeaux[i].X + 75)
                         {
                             if (ev.Button == System.Windows.Forms.MouseButtons.Left)
                                 move = new MovePetitCadeau(i);
