@@ -48,6 +48,8 @@ namespace GoBot
             Connexion.NouvelleTrame += new ConnexionUDP.ReceptionDelegate(ReceptionMessage);
 
             Position = new Calculs.Position(new Angle(0, AnglyeType.Degre), new PointReel(200, 300));
+            PositionCible = Position.Coordonnees;
+
             timerPosition = new System.Timers.Timer(200);
             timerPosition.Elapsed += new ElapsedEventHandler(timer_Elapsed);
             timerPosition.Start();

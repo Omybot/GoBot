@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading;
 using GoBot.Calculs;
 using GoBot.Communications;
+using AStarFolder;
 
 namespace GoBot
 {
@@ -22,6 +23,13 @@ namespace GoBot
 
         private static void CreerRobots()
         {
+            Graph graphGros = null;
+            if (Robots.GrosRobot != null && Robots.GrosRobot.Graph != null)
+                graphGros = Robots.GrosRobot.Graph;
+            Graph graphPetit = null;
+            if (Robots.PetitRobot != null && Robots.PetitRobot.Graph != null)
+                graphPetit = Robots.PetitRobot.Graph;
+
             if (!Simulation)
             {
                 RobotReel grosRobot = new RobotReel();
@@ -50,12 +58,16 @@ namespace GoBot
                 GrosRobot.Position = new Position(new Angle(0, AnglyeType.Degre), new Calculs.Formes.PointReel(Robots.GrosRobot.Longueur / 2, 1000));
             GrosRobot.Nom = "Rocker";
             GrosRobot.Init();
+            if (graphGros != null)
+                Robots.GrosRobot.Graph = graphGros;
 
             PetitRobot.Largeur = 195;
             PetitRobot.Longueur = 100;
             PetitRobot.Position = new Position(new Angle(270, AnglyeType.Degre), new Calculs.Formes.PointReel(2500, 1000));
             PetitRobot.Nom = "Punk";
             PetitRobot.Init();
+            if (graphPetit != null)
+                Robots.PetitRobot.Graph = graphPetit;
         }
 
         public static void Simuler(bool simu)

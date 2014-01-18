@@ -484,7 +484,7 @@ namespace GoBot.Balises
                     // Génération de l'event de notification de détection
                     PositionsChange();
                 }
-                catch (Exception e)
+                catch (Exception)
                 {
                 }
             }

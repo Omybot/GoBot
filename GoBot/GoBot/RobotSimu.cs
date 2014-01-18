@@ -293,6 +293,8 @@ namespace GoBot
                 Position = new Calculs.Position(new Angle(0, AnglyeType.Degre), new PointReel(1500, 1500));
             else
                 Position = new Calculs.Position(new Angle(0, AnglyeType.Degre), new PointReel(1500, 400));
+
+            PositionCible = Position.Coordonnees;
         }
 
         public override void BougeServo(ServomoteurID servo, int position)

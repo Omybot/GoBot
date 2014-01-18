@@ -17,11 +17,11 @@ namespace GoBot.Enchainements
             Thread.Sleep(200);
             while (true)
             {
-                int next = rand.Next(Plateau.GraphGros.Nodes.Count);
-                if (!((Node)Plateau.GraphGros.Nodes[next]).Passable)
+                int next = rand.Next(Robots.GrosRobot.Graph.Nodes.Count);
+                if (!((Node)Robots.GrosRobot.Graph.Nodes[next]).Passable)
                     continue;
 
-                PointReel destination = new PointReel(((Node)Plateau.GraphGros.Nodes[next]).X, ((Node)Plateau.GraphGros.Nodes[next]).Y);
+                PointReel destination = new PointReel(((Node)Robots.GrosRobot.Graph.Nodes[next]).X, ((Node)Robots.GrosRobot.Graph.Nodes[next]).Y);
 
                 Robots.GrosRobot.PathFinding(destination.X, destination.Y, 0, true);
             }
@@ -31,11 +31,11 @@ namespace GoBot.Enchainements
         {
             while (true)
             {
-                int next = rand.Next(Plateau.GraphPetit.Nodes.Count);
-                if (!((Node)Plateau.GraphPetit.Nodes[next]).Passable)
+                int next = rand.Next(Robots.PetitRobot.Graph.Nodes.Count);
+                if (!((Node)Robots.PetitRobot.Graph.Nodes[next]).Passable)
                     continue;
 
-                PointReel destination = new PointReel(((Node)Plateau.GraphPetit.Nodes[next]).X, ((Node)Plateau.GraphPetit.Nodes[next]).Y);
+                PointReel destination = new PointReel(((Node)Robots.PetitRobot.Graph.Nodes[next]).X, ((Node)Robots.PetitRobot.Graph.Nodes[next]).Y);
 
                 Robots.PetitRobot.PathFinding(destination.X, destination.Y, 0, true);
             }

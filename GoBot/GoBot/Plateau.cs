@@ -31,7 +31,7 @@ namespace GoBot
         public static Enchainement Enchainement { get; set; }
         public static Poids PoidActions { get; set; }
 
-        private static List<IForme> ObstaclesFixes { get; set; }
+        public static List<IForme> ObstaclesFixes { get; set; }
         public static List<IForme> ObstaclesTemporaires { get; set; }
         public static PointReel PositionCibleGros { get; set; }
         public static PointReel PositionCiblePetit { get; set; }
@@ -66,13 +66,8 @@ namespace GoBot
         /// <summary>
         /// Graph des noeuds et arcs pour le pathfinding
         /// </summary>
-        public static Graph GraphGros { get; private set; }
-        public static Graph GraphPetit { get; private set; }
-
-        /// <summary>
-        /// Sémaphore à verrouiller pendant la manipulation du graph du pathfinding pour éviter les modification pendant énumération entre autres
-        /// </summary>
-        public static Semaphore SemaphoreGraph { get; private set; }
+        //public static Graph GraphGros { get; private set; }
+        //public static Graph GraphPetit { get; private set; }
 
         public static Color CouleurJ1Rouge { get { return Color.FromArgb(189, 1, 2); } }
         public static Color CouleurJ2Jaune { get { return Color.FromArgb(202, 201, 0); } }
@@ -109,8 +104,6 @@ namespace GoBot
                 FresquesCollees = false;
                 LancesCollees = false;
                 FiletLance = false;
-
-                Plateau.SemaphoreGraph = new Semaphore(1, 1);
 
                 ObstaclesTemporaires = new List<IForme>();
 
@@ -215,11 +208,9 @@ namespace GoBot
         public void ObstacleTest(int x, int y)
         {
             // Obstacle de simulation
-            SemaphoreGraph.WaitOne();
             ObstaclesTemporaires.Clear();
             PointReel coordonnees = new PointReel(x, y);
             AjouterObstacle(new Cercle(coordonnees, 200));
-            SemaphoreGraph.Release();
 
             if (Plateau.Enchainement == null)
             {
@@ -236,7 +227,6 @@ namespace GoBot
         void interpreteBalise_PositionEnnemisActualisee()
         {
             // Position ennemie signalée
-            SemaphoreGraph.WaitOne();
             ObstaclesTemporaires.Clear();
 
             for (int i = 0; i < SuiviBalise.PositionsEnnemies.Count; i++)
@@ -254,7 +244,6 @@ namespace GoBot
                 }
             }
 
-            SemaphoreGraph.Release();
             SemaphoreCollisions.Release();
         }
 
@@ -263,15 +252,13 @@ namespace GoBot
         /// </summary>
         public static void ViderObstacles()
         {
-            for (int i = 0; i < GraphGros.Arcs.Count; i++)
-                ((Arc)GraphGros.Arcs[i]).Passable = true;
-            for (int i = 0; i < GraphGros.Nodes.Count; i++)
-                ((Node)GraphGros.Nodes[i]).Passable = true;
-
-            for (int i = 0; i < GraphPetit.Arcs.Count; i++)
-                ((Arc)GraphPetit.Arcs[i]).Passable = true;
-            for (int i = 0; i < GraphPetit.Nodes.Count; i++)
-                ((Node)GraphPetit.Nodes[i]).Passable = true;
+            foreach(Robot robot in new List<Robot>{Robots.GrosRobot, Robots.PetitRobot})
+            {
+                for (int i = 0; i < robot.Graph.Arcs.Count; i++)
+                    ((Arc)robot.Graph.Arcs[i]).Passable = true;
+                for (int i = 0; i < robot.Graph.Nodes.Count; i++)
+                    ((Node)robot.Graph.Nodes[i]).Passable = true;
+            }
         }
 
         /// <summary>
@@ -281,127 +268,13 @@ namespace GoBot
         /// <param name="fixe">Si l'obstacle est fixe, on supprime complètement les noeuds et arcs non franchissables. Sinon on les rends non franchissables temporairement.</param>
         public static void AjouterObstacle(IForme obstacle, bool fixe = false, bool majGraph = false)
         {
+            if (majGraph)
+                ObstaclesTemporaires.Clear();
+
             if (fixe)
                 ObstaclesFixes.Add(obstacle);
             else
                 ObstaclesTemporaires.Add(obstacle);
-
-            if (majGraph)
-                MajGraphFranchissable();
-        }
-
-        public static void MajGraphFranchissable()
-        {
-            ViderObstacles();
-
-
-            Cercle obstaclePetit1 = new Cercle(PositionCiblePetit, Robots.PetitRobot.Rayon);
-            Cercle obstaclePetit2 = new Cercle(Robots.PetitRobot.Position.Coordonnees, Robots.PetitRobot.Rayon);
-            ObstaclesTemporaires.Add(obstaclePetit1);
-            ObstaclesTemporaires.Add(obstaclePetit2);
-
-            foreach (IForme obstacle in ObstaclesTemporaires)
-            {
-                // Teste les arcs non franchissables
-                for (int i = 0; i < GraphGros.Arcs.Count; i++)
-                {
-                    Arc arc = (Arc)GraphGros.Arcs[i];
-
-                    if (arc.Passable)
-                    {
-                        Segment segment = new Segment(new PointReel(arc.StartNode.X, arc.StartNode.Y), new PointReel(arc.EndNode.X, arc.EndNode.Y));
-                        if (Robots.GrosRobot.TropProche(obstacle, segment))
-                        {
-                            /*if (fixe)
-                            {
-                                Graph.RemoveArc(i);
-                                i--;
-                            }
-                            else*/
-                            arc.Passable = false;
-                        }
-                    }
-                }
-
-                // Teste les noeuds non franchissables
-                for (int i = 0; i < GraphGros.Nodes.Count; i++)
-                {
-                    Node n = (Node)GraphGros.Nodes[i];
-
-                    if (n.Passable)
-                    {
-                        PointReel noeud = new PointReel(n.X, n.Y);
-                        if (Robots.GrosRobot.TropProche(obstacle, noeud))
-                        {
-                            /*if (fixe)
-                            {
-                                Graph.RemoveNode(i);
-                                i--;
-                            }
-                            else*/
-                            n.Passable = false;
-
-                        }
-                    }
-                }
-            }
-
-            ObstaclesTemporaires.Remove(obstaclePetit1);
-            ObstaclesTemporaires.Remove(obstaclePetit2);
-
-            Cercle obstacleGros1 = new Cercle(PositionCibleGros, Robots.GrosRobot.Rayon);
-            Cercle obstacleGros2 = new Cercle(Robots.GrosRobot.Position.Coordonnees, Robots.GrosRobot.Rayon);
-            ObstaclesTemporaires.Add(obstacleGros1);
-            ObstaclesTemporaires.Add(obstacleGros2);
-                
-            foreach (IForme obstacle in ObstaclesTemporaires)
-            {
-                // Teste les arcs non franchissables
-                for (int i = 0; i < GraphPetit.Arcs.Count; i++)
-                {
-                    Arc arc = (Arc)GraphPetit.Arcs[i];
-
-                    if (arc.Passable)
-                    {
-                        Segment segment = new Segment(new PointReel(arc.StartNode.X, arc.StartNode.Y), new PointReel(arc.EndNode.X, arc.EndNode.Y));
-                        if (Robots.PetitRobot.TropProche(obstacle, segment))
-                        {
-                            /*if (fixe)
-                            {
-                                Graph.RemoveArc(i);
-                                i--;
-                            }
-                            else*/
-                            arc.Passable = false;
-                        }
-                    }
-                }
-
-                // Teste les noeuds non franchissables
-                for (int i = 0; i < GraphPetit.Nodes.Count; i++)
-                {
-                    Node n = (Node)GraphPetit.Nodes[i];
-
-                    if (n.Passable)
-                    {
-                        PointReel noeud = new PointReel(n.X, n.Y);
-                        if (Robots.PetitRobot.TropProche(obstacle, noeud))
-                        {
-                            /*if (fixe)
-                            {
-                                Graph.RemoveNode(i);
-                                i--;
-                            }
-                            else*/
-                            n.Passable = false;
-
-                        }
-                    }
-                }
-            }
-
-            ObstaclesTemporaires.Remove(obstacleGros1);
-            ObstaclesTemporaires.Remove(obstacleGros2);
         }
 
         /// <summary>
@@ -411,10 +284,10 @@ namespace GoBot
         {
             IFormatter formatter = new BinaryFormatter();
             using (Stream stream = new FileStream("graphGros.bin", FileMode.OpenOrCreate, FileAccess.Write, FileShare.None))
-                formatter.Serialize(stream, GraphGros);
+                formatter.Serialize(stream, Robots.GrosRobot.Graph);
 
             using (Stream stream = new FileStream("graphPetit.bin", FileMode.OpenOrCreate, FileAccess.Write, FileShare.None))
-                formatter.Serialize(stream, GraphPetit);
+                formatter.Serialize(stream, Robots.PetitRobot.Graph);
         }
 
         /// <summary>
@@ -426,7 +299,7 @@ namespace GoBot
             {
                 IFormatter formatter = new BinaryFormatter();
                 using (Stream stream = new FileStream("graphGros.bin", FileMode.Open, FileAccess.Read, FileShare.Read))
-                    GraphGros = (Graph)formatter.Deserialize(stream);
+                    Robots.GrosRobot.Graph = (Graph)formatter.Deserialize(stream);
             }
             catch (Exception e)
             {
@@ -443,7 +316,7 @@ namespace GoBot
             {
                 IFormatter formatter = new BinaryFormatter();
                 using (Stream stream = new FileStream("graphPetit.bin", FileMode.Open, FileAccess.Read, FileShare.Read))
-                    GraphPetit = (Graph)formatter.Deserialize(stream);
+                    Robots.PetitRobot.Graph = (Graph)formatter.Deserialize(stream);
             }
             catch (Exception e)
             {
@@ -461,19 +334,19 @@ namespace GoBot
             if (distanceLiaison == -1)
                 distanceLiaison = Math.Sqrt((resolution * resolution) * 2) + 1;
 
-            GraphGros = new Graph();
+            Robots.GrosRobot.Graph = new Graph();
 
             // Création des noeuds
             for (int x = resolution / 2; x < LongueurPlateau; x += resolution)
                 for (int y = resolution / 2; y < LargeurPlateau; y += resolution)
-                    AddNode(GraphGros, new Node(x, y, 0), Robots.GrosRobot, Math.Sqrt(resolution * resolution * 2) + 1);
+                    Robots.GrosRobot.AddNode(Robots.GrosRobot.Graph, new Node(x, y, 0), Math.Sqrt(resolution * resolution * 2) + 1);
 
-            GraphPetit = new Graph();
+            Robots.PetitRobot.Graph = new Graph();
 
             // Création des noeuds
             for (int x = resolution / 2; x < LongueurPlateau; x += resolution)
                 for (int y = resolution / 2; y < LargeurPlateau; y += resolution)
-                    AddNode(GraphPetit, new Node(x, y, 0), Robots.PetitRobot, Math.Sqrt(resolution * resolution * 2) + 1);
+                    Robots.PetitRobot.AddNode(Robots.PetitRobot.Graph, new Node(x, y, 0), Math.Sqrt(resolution * resolution * 2) + 1);
         }
 
         public void ChargerObstacles()
@@ -514,80 +387,18 @@ namespace GoBot
         }
 
         /// <summary>
-        /// Ajoute un noeud au graph en reliant tous les points à une distance maximale
-        /// </summary>
-        /// <param name="node">Noeud à ajouter</param>
-        /// <param name="distanceMax">Distance (mm) max de liaison avec les autres noeuds</param>
-        public static void AddNode(Graph graph, Node node, Robot robot, double distanceMax = 400)
-        {
-            double distanceNode;
-
-            // Si un noeud est deja présent à cet endroit on ne l'ajoute pas
-            graph.ClosestNode(node.X, node.Y, node.Z, out distanceNode, true);
-            if (distanceNode == 0)
-                return;
-
-            // Teste si le noeud est franchissable avec la liste des obstacles
-            foreach (IForme obstacle in ObstaclesFixes)
-            {
-                if (robot.TropProche(obstacle, new PointReel(node.X, node.Y)))
-                {
-                    node.Passable = false;
-                    return;
-                }
-            }
-
-            graph.Nodes.Add(node);
-
-            // Liaisons avec les autres noeuds du graph
-            foreach (Node no in graph.Nodes)
-            {
-                if (node != no)
-                {
-                    double distance = Math.Sqrt((node.Position.X - no.Position.X) * (node.Position.X - no.Position.X) + (node.Position.Y - no.Position.Y) * (node.Position.Y - no.Position.Y));
-                    if (distance < distanceMax)
-                    {
-                        Arc arc = new Arc(no, node);
-                        arc.Weight = Math.Sqrt(distance);
-                        Arc arc2 = new Arc(node, no);
-                        arc2.Weight = Math.Sqrt(distance);
-
-                        foreach (IForme obstacle in ListeObstacles)
-                        {
-                            if (robot.TropProche(obstacle, new Segment(new PointReel(no.X, no.Y), new PointReel(node.X, node.Y))))//.Distance() < robot.Taille / 2)
-                            {
-                                arc.Passable = false;
-                                arc2.Passable = false;
-                                break;
-                            }
-                        }
-
-                        if (arc.Passable)
-                        {
-                            graph.AddArc(arc);
-                            graph.AddArc(arc2);
-                        }
-                    }
-                }
-            }
-        }
-
-        /// <summary>
         /// Rend traversables tous les noeuds et arcs du graph
         /// </summary>
         internal void SupprimerObstacles()
         {
-            for (int i = 0; i < GraphGros.Nodes.Count; i++)
-                ((Node)(GraphGros.Nodes[i])).Passable = true;
+            foreach (Robot robot in new List<Robot> { Robots.GrosRobot, Robots.PetitRobot })
+            {
+                for (int i = 0; i < robot.Graph.Nodes.Count; i++)
+                    ((Node)(robot.Graph.Nodes[i])).Passable = true;
 
-            for (int i = 0; i < GraphGros.Arcs.Count; i++)
-                ((Arc)(GraphGros.Arcs[i])).Passable = true;
-
-            for (int i = 0; i < GraphPetit.Nodes.Count; i++)
-                ((Node)(GraphPetit.Nodes[i])).Passable = true;
-
-            for (int i = 0; i < GraphPetit.Arcs.Count; i++)
-                ((Arc)(GraphPetit.Arcs[i])).Passable = true;
+                for (int i = 0; i < robot.Graph.Arcs.Count; i++)
+                    ((Arc)(robot.Graph.Arcs[i])).Passable = true;
+            }
         }
 
         /// <summary>

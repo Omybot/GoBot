@@ -150,15 +150,15 @@ namespace GoBot.IHM
                                         DessinerForme(g, Color.Red, forme);
                                 }
 
-                                Plateau.SemaphoreGraph.WaitOne();
-
                                 // Dessin du graph
                                 if (boxGraphPetit.Checked)
                                 {
+                                    Robots.PetitRobot.SemGraph.WaitOne();
+
                                     // Dessin des arcs
                                     if (boxArretesPetit.Checked)
                                     {
-                                        foreach (Arc a in Plateau.GraphPetit.Arcs)
+                                        foreach (Arc a in Robots.PetitRobot.Graph.Arcs)
                                         {
                                             if (a.Passable != false)
                                             {
@@ -171,20 +171,24 @@ namespace GoBot.IHM
                                     }
 
                                     // Dessin des noeuds
-                                    foreach (Node n in Plateau.GraphPetit.Nodes)
+                                    foreach (Node n in Robots.PetitRobot.Graph.Nodes)
                                     {
                                         Point pointNode = RealToScreenPosition(n.Position);
                                         g.FillEllipse(brushNoir, new Rectangle(pointNode.X - 3, pointNode.Y - 3, 6, 6));
                                         g.DrawEllipse(n.Passable ? penBleuFin : penRougeFin, new Rectangle(pointNode.X - 3, pointNode.Y - 3, 6, 6));
                                     }
+
+                                    Robots.PetitRobot.SemGraph.Release();
                                 }
                                 // Dessin du graph
                                 if (boxGraphGros.Checked)
                                 {
+                                    Robots.GrosRobot.SemGraph.WaitOne();
+
                                     // Dessin des arcs
                                     if (boxArretesGros.Checked)
                                     {
-                                        foreach (Arc a in Plateau.GraphGros.Arcs)
+                                        foreach (Arc a in Robots.GrosRobot.Graph.Arcs)
                                         {
                                             if (a.Passable != false)
                                             {
@@ -197,16 +201,15 @@ namespace GoBot.IHM
                                     }
 
                                     // Dessin des noeuds
-                                    foreach (Node n in Plateau.GraphGros.Nodes)
+                                    foreach (Node n in Robots.GrosRobot.Graph.Nodes)
                                     {
                                         Point pointNode = RealToScreenPosition(n.Position);
                                         g.FillEllipse(brushNoir, new Rectangle(pointNode.X - 3, pointNode.Y - 3, 6, 6));
                                         g.DrawEllipse(n.Passable ? penBlanc : penRougeFin, new Rectangle(pointNode.X - 3, pointNode.Y - 3, 6, 6));
                                     }
 
+                                    Robots.GrosRobot.SemGraph.Release();
                                 }
-
-                                Plateau.SemaphoreGraph.Release();
 
                                 // Dessin de la trajectoire en cours de recherche
                                 if (modeCourant == Mode.FinTrajectoire && cheminArcs != null)
@@ -805,14 +808,19 @@ namespace GoBot.IHM
             {
                 PointReel positionReelle = ScreenToRealPosition(pictureBoxTable.PointToClient(MousePosition));
                 double distance;
-                Node finNode = Plateau.GraphGros.ClosestNode(positionReelle.X, positionReelle.Y, 0, out distance, false);
+                Node finNode = Robots.GrosRobot.Graph.ClosestNode(positionReelle.X, positionReelle.Y, 0, out distance, false);
 
-                AStar aStar = new AStar(Plateau.GraphGros);
+                AStar aStar = new AStar(Robots.GrosRobot.Graph);
+
+                Robots.GrosRobot.SemGraph.WaitOne();
+
                 if (aStar.SearchPath(debutNode, finNode))
                 {
                     cheminNodes = aStar.PathByNodes.ToList<Node>();
                     cheminArcs = aStar.PathByArcs.ToList<Arc>();
                 }
+
+                Robots.GrosRobot.SemGraph.Release();
             }
             else if (boxSourisObstacle.Checked)
             {
@@ -881,7 +889,7 @@ namespace GoBot.IHM
             modeCourant = Mode.FinTrajectoire;
             double distance;
             //debutNode = Plateau.Graph.ClosestNode(0, 0, 0, out distance, false);
-            debutNode = Plateau.GraphGros.ClosestNode(Robots.GrosRobot.Position.Coordonnees.X, Robots.GrosRobot.Position.Coordonnees.Y, 0, out distance, false);
+            debutNode = Robots.GrosRobot.Graph.ClosestNode(Robots.GrosRobot.Position.Coordonnees.X, Robots.GrosRobot.Position.Coordonnees.Y, 0, out distance, false);
         }
 
         public void ThreadAction()
