@@ -33,8 +33,8 @@
             this.boxTable = new System.Windows.Forms.CheckBox();
             this.boxObstacles = new System.Windows.Forms.CheckBox();
             this.btnSaveGraph = new System.Windows.Forms.Button();
-            this.boxGraph = new System.Windows.Forms.CheckBox();
-            this.boxArretes = new System.Windows.Forms.CheckBox();
+            this.boxGraphGros = new System.Windows.Forms.CheckBox();
+            this.boxArretesGros = new System.Windows.Forms.CheckBox();
             this.btnAllerA = new System.Windows.Forms.Button();
             this.boxSourisObstacle = new System.Windows.Forms.CheckBox();
             this.btnReset = new System.Windows.Forms.Button();
@@ -71,6 +71,9 @@
             this.label18 = new System.Windows.Forms.Label();
             this.boxPerspective = new System.Windows.Forms.CheckBox();
             this.pictureBoxTable = new System.Windows.Forms.PictureBox();
+            this.boxArretesPetit = new System.Windows.Forms.CheckBox();
+            this.boxGraphPetit = new System.Windows.Forms.CheckBox();
+            this.btnAleatoire = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxTable)).BeginInit();
             this.SuspendLayout();
             // 
@@ -118,7 +121,7 @@
             // 
             // btnSaveGraph
             // 
-            this.btnSaveGraph.Location = new System.Drawing.Point(17, 289);
+            this.btnSaveGraph.Location = new System.Drawing.Point(17, 359);
             this.btnSaveGraph.Name = "btnSaveGraph";
             this.btnSaveGraph.Size = new System.Drawing.Size(75, 23);
             this.btnSaveGraph.TabIndex = 5;
@@ -126,29 +129,29 @@
             this.btnSaveGraph.UseVisualStyleBackColor = true;
             this.btnSaveGraph.Click += new System.EventHandler(this.btnSaveGraph_Click);
             // 
-            // boxGraph
+            // boxGraphGros
             // 
-            this.boxGraph.AutoSize = true;
-            this.boxGraph.Location = new System.Drawing.Point(19, 212);
-            this.boxGraph.Name = "boxGraph";
-            this.boxGraph.Size = new System.Drawing.Size(55, 17);
-            this.boxGraph.TabIndex = 6;
-            this.boxGraph.Text = "Graph";
-            this.boxGraph.UseVisualStyleBackColor = true;
+            this.boxGraphGros.AutoSize = true;
+            this.boxGraphGros.Location = new System.Drawing.Point(19, 212);
+            this.boxGraphGros.Name = "boxGraphGros";
+            this.boxGraphGros.Size = new System.Drawing.Size(107, 17);
+            this.boxGraphGros.TabIndex = 6;
+            this.boxGraphGros.Text = "Graph Gros robot";
+            this.boxGraphGros.UseVisualStyleBackColor = true;
             // 
-            // boxArretes
+            // boxArretesGros
             // 
-            this.boxArretes.AutoSize = true;
-            this.boxArretes.Location = new System.Drawing.Point(37, 235);
-            this.boxArretes.Name = "boxArretes";
-            this.boxArretes.Size = new System.Drawing.Size(59, 17);
-            this.boxArretes.TabIndex = 7;
-            this.boxArretes.Text = "Arrêtes";
-            this.boxArretes.UseVisualStyleBackColor = true;
+            this.boxArretesGros.AutoSize = true;
+            this.boxArretesGros.Location = new System.Drawing.Point(37, 235);
+            this.boxArretesGros.Name = "boxArretesGros";
+            this.boxArretesGros.Size = new System.Drawing.Size(59, 17);
+            this.boxArretesGros.TabIndex = 7;
+            this.boxArretesGros.Text = "Arrêtes";
+            this.boxArretesGros.UseVisualStyleBackColor = true;
             // 
             // btnAllerA
             // 
-            this.btnAllerA.Location = new System.Drawing.Point(17, 342);
+            this.btnAllerA.Location = new System.Drawing.Point(17, 412);
             this.btnAllerA.Name = "btnAllerA";
             this.btnAllerA.Size = new System.Drawing.Size(75, 23);
             this.btnAllerA.TabIndex = 8;
@@ -159,7 +162,7 @@
             // boxSourisObstacle
             // 
             this.boxSourisObstacle.AutoSize = true;
-            this.boxSourisObstacle.Location = new System.Drawing.Point(19, 266);
+            this.boxSourisObstacle.Location = new System.Drawing.Point(19, 336);
             this.boxSourisObstacle.Name = "boxSourisObstacle";
             this.boxSourisObstacle.Size = new System.Drawing.Size(98, 17);
             this.boxSourisObstacle.TabIndex = 9;
@@ -168,7 +171,7 @@
             // 
             // btnReset
             // 
-            this.btnReset.Location = new System.Drawing.Point(17, 371);
+            this.btnReset.Location = new System.Drawing.Point(17, 441);
             this.btnReset.Name = "btnReset";
             this.btnReset.Size = new System.Drawing.Size(77, 23);
             this.btnReset.TabIndex = 10;
@@ -207,7 +210,7 @@
             // 
             // btnGo
             // 
-            this.btnGo.Location = new System.Drawing.Point(17, 464);
+            this.btnGo.Location = new System.Drawing.Point(17, 534);
             this.btnGo.Name = "btnGo";
             this.btnGo.Size = new System.Drawing.Size(75, 23);
             this.btnGo.TabIndex = 16;
@@ -218,7 +221,7 @@
             // boxCoutGros
             // 
             this.boxCoutGros.AutoSize = true;
-            this.boxCoutGros.Location = new System.Drawing.Point(9, 400);
+            this.boxCoutGros.Location = new System.Drawing.Point(9, 470);
             this.boxCoutGros.Name = "boxCoutGros";
             this.boxCoutGros.Size = new System.Drawing.Size(103, 17);
             this.boxCoutGros.TabIndex = 17;
@@ -228,7 +231,7 @@
             // boxCoutPetit
             // 
             this.boxCoutPetit.AutoSize = true;
-            this.boxCoutPetit.Location = new System.Drawing.Point(9, 423);
+            this.boxCoutPetit.Location = new System.Drawing.Point(9, 493);
             this.boxCoutPetit.Name = "boxCoutPetit";
             this.boxCoutPetit.Size = new System.Drawing.Size(103, 17);
             this.boxCoutPetit.TabIndex = 18;
@@ -486,11 +489,44 @@
             this.pictureBoxTable.MouseMove += new System.Windows.Forms.MouseEventHandler(this.pictureBoxTable_MouseMove);
             this.pictureBoxTable.MouseUp += new System.Windows.Forms.MouseEventHandler(this.pictureBoxTable_MouseUp);
             // 
+            // boxArretesPetit
+            // 
+            this.boxArretesPetit.AutoSize = true;
+            this.boxArretesPetit.Location = new System.Drawing.Point(37, 296);
+            this.boxArretesPetit.Name = "boxArretesPetit";
+            this.boxArretesPetit.Size = new System.Drawing.Size(59, 17);
+            this.boxArretesPetit.TabIndex = 47;
+            this.boxArretesPetit.Text = "Arrêtes";
+            this.boxArretesPetit.UseVisualStyleBackColor = true;
+            // 
+            // boxGraphPetit
+            // 
+            this.boxGraphPetit.AutoSize = true;
+            this.boxGraphPetit.Location = new System.Drawing.Point(19, 273);
+            this.boxGraphPetit.Name = "boxGraphPetit";
+            this.boxGraphPetit.Size = new System.Drawing.Size(106, 17);
+            this.boxGraphPetit.TabIndex = 46;
+            this.boxGraphPetit.Text = "Graph Petit robot";
+            this.boxGraphPetit.UseVisualStyleBackColor = true;
+            // 
+            // btnAleatoire
+            // 
+            this.btnAleatoire.Location = new System.Drawing.Point(0, 563);
+            this.btnAleatoire.Name = "btnAleatoire";
+            this.btnAleatoire.Size = new System.Drawing.Size(139, 23);
+            this.btnAleatoire.TabIndex = 48;
+            this.btnAleatoire.Text = "Déplacements aléatoires";
+            this.btnAleatoire.UseVisualStyleBackColor = true;
+            this.btnAleatoire.Click += new System.EventHandler(this.btnAleatoire_Click);
+            // 
             // PanelTable
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.Transparent;
+            this.Controls.Add(this.btnAleatoire);
+            this.Controls.Add(this.boxArretesPetit);
+            this.Controls.Add(this.boxGraphPetit);
             this.Controls.Add(this.boxPerspective);
             this.Controls.Add(this.lblVitesseEnnemi1);
             this.Controls.Add(this.label18);
@@ -526,8 +562,8 @@
             this.Controls.Add(this.btnReset);
             this.Controls.Add(this.boxSourisObstacle);
             this.Controls.Add(this.btnAllerA);
-            this.Controls.Add(this.boxArretes);
-            this.Controls.Add(this.boxGraph);
+            this.Controls.Add(this.boxArretesGros);
+            this.Controls.Add(this.boxGraphGros);
             this.Controls.Add(this.btnSaveGraph);
             this.Controls.Add(this.boxObstacles);
             this.Controls.Add(this.boxTable);
@@ -551,8 +587,8 @@
         private System.Windows.Forms.CheckBox boxTable;
         private System.Windows.Forms.CheckBox boxObstacles;
         private System.Windows.Forms.Button btnSaveGraph;
-        private System.Windows.Forms.CheckBox boxGraph;
-        private System.Windows.Forms.CheckBox boxArretes;
+        private System.Windows.Forms.CheckBox boxGraphGros;
+        private System.Windows.Forms.CheckBox boxArretesGros;
         private System.Windows.Forms.Button btnAllerA;
         private System.Windows.Forms.CheckBox boxSourisObstacle;
         private System.Windows.Forms.Button btnReset;
@@ -588,5 +624,8 @@
         private System.Windows.Forms.Label lblVitesseEnnemi1;
         private System.Windows.Forms.Label label18;
         private System.Windows.Forms.CheckBox boxPerspective;
+        private System.Windows.Forms.CheckBox boxArretesPetit;
+        private System.Windows.Forms.CheckBox boxGraphPetit;
+        private System.Windows.Forms.Button btnAleatoire;
     }
 }

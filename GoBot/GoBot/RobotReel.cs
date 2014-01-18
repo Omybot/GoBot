@@ -204,7 +204,7 @@ namespace GoBot
 
                 if (trameRecue[1] == (byte)TrameFactory.FonctionMove.DepartJack)
                 {
-                    Plateau.Enchainement = new GoBot.Enchainements.Enchainement();
+                    Plateau.Enchainement = new GoBot.Enchainements.EnchainementMatch();
                     Plateau.Enchainement.Executer();
                 }
 

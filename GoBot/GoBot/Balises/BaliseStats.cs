@@ -29,7 +29,7 @@ namespace GoBot.Balises
         /// <summary>
         /// Temps moyen écoulé entre la réception de deux messages en provenance de la balise
         /// </summary>
-        public TimeSpan TempsMoyenInterMessage 
+        public TimeSpan TempsMoyenInterMessage
         {
             get
             {
@@ -66,7 +66,7 @@ namespace GoBot.Balises
         {
             get
             {
-                return  Maths.EcartType(AnglesMesures);
+                return Maths.EcartType(AnglesMesures);
             }
         }
 
@@ -122,11 +122,14 @@ namespace GoBot.Balises
             TimeSpan tempsEcoule = DateTime.Now - DateDernierMessage;
             DateDernierMessage = DateTime.Now;
 
-            AnglesMesures.Add(Balise.Detections[0].AngleCentral);
-            DistancesMesures.Add(Balise.Detections[0].Distance);
+            if (Balise.Detections.Count > 0)
+            {
+                AnglesMesures.Add(Balise.Detections[0].AngleCentral);
+                DistancesMesures.Add(Balise.Detections[0].Distance);
 
-            if (NouvelleDonnee != null)
-                NouvelleDonnee(tempsEcoule, Balise.Detections[0]);
+                if (NouvelleDonnee != null)
+                    NouvelleDonnee(tempsEcoule, Balise.Detections[0]);
+            }
         }
 
         /// <summary>

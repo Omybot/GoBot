@@ -42,8 +42,8 @@ namespace GoBot
                 PetitRobot = new RobotSimu();
             }
 
-            GrosRobot.Largeur = 270;
-            GrosRobot.Longueur = 220;
+            GrosRobot.Largeur = 320;
+            GrosRobot.Longueur = 280;
             if(Plateau.NotreCouleur == Plateau.CouleurJ1Rouge)
                 GrosRobot.Position = new Position(new Angle(180, AnglyeType.Degre), new Calculs.Formes.PointReel(3000 - Robots.GrosRobot.Longueur / 2, 1000));
             else

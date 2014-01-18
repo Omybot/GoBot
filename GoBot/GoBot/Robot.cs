@@ -238,6 +238,7 @@ namespace GoBot
             semTrajectoire = new Semaphore(0, 999);
 
             succesPathFinding = false;
+
             ParcoursPathFinding(x, y, timeOut, attendre);
 
             if (attendre)
@@ -257,17 +258,21 @@ namespace GoBot
 
             double distance;
 
-            Node debutNode = Plateau.Graph.ClosestNode(Position.Coordonnees.X, Position.Coordonnees.Y, 0, out distance, false);
+            Graph graph = Plateau.GraphGros;
+            if (this == Robots.PetitRobot)
+                graph = Plateau.GraphPetit;
+
+            Node debutNode = graph.ClosestNode(Position.Coordonnees.X, Position.Coordonnees.Y, 0, out distance, false);
             if (distance != 0)
             {
                 debutNode = new Node(Position.Coordonnees.X, Position.Coordonnees.Y, 0);
-                Plateau.AddNode(debutNode, this, 600);
+                Plateau.AddNode(graph, debutNode, this, 600);
             }
-            Node finNode = Plateau.Graph.ClosestNode(x, y, 0, out distance, false);
+            Node finNode = graph.ClosestNode(x, y, 0, out distance, false);
             if (distance != 0)
             {
                 finNode = new Node(x, y, 0);
-                Plateau.AddNode(finNode, this, 600);
+                Plateau.AddNode(graph, finNode, this, 600);
             }
 
             // Teste s'il est possible d'aller directement à la fin sans passer par le graph
@@ -297,9 +302,9 @@ namespace GoBot
             // Sinon on passe par le graph
             else
             {
-                AStar aStar = new AStar(Plateau.Graph);
+                AStar aStar = new AStar(graph);
                 aStar.DijkstraHeuristicBalance = 1;
-                
+
                 if (aStar.SearchPath(debutNode, finNode))
                 {
                     List<Node> nodes = aStar.PathByNodes.ToList<Node>();
@@ -360,7 +365,7 @@ namespace GoBot
                             CheminEnCoursArcs.Add(arc);
                         }
                     }
-                    
+
                     CheminEnCoursNoeuds.Add(nodes[nodes.Count - 1]);
                     Robots.GrosRobot.Historique.Log("Chemin optimisé : " + (CheminEnCoursNoeuds.Count - 2) + " noeud(s) intermédiaire(s)", TypeLog.PathFinding);
                 }
@@ -380,7 +385,23 @@ namespace GoBot
             DateTime debut = DateTime.Now;
 
             // Reset du graph (Trouver un meilleur moyen ?)
-            Plateau.ChargerGraph();
+            if (this == Robots.GrosRobot)
+            {
+                Plateau.ChargerGraphGros();
+                Plateau.ChargerGraphPetit();
+
+                Plateau.PositionCibleGros = new PointReel(x, y);
+                Plateau.MajGraphFranchissable();
+            }
+            else
+            {
+                Plateau.ChargerGraphPetit();
+                Plateau.ChargerGraphGros();
+
+                Plateau.PositionCiblePetit = new PointReel(x, y);
+                Plateau.MajGraphFranchissable();
+            }
+
             List<IForme> obstacles = new List<IForme>(Plateau.ObstaclesTemporaires);
             Plateau.ObstaclesTemporaires = new List<IForme>();
             foreach (IForme f in obstacles)
@@ -455,6 +476,47 @@ namespace GoBot
                 if (nouvelleTrajectoire)
                     break;
 
+                Robot autreRobot = Robots.PetitRobot;
+                if (this == Robots.PetitRobot)
+                    autreRobot = Robots.GrosRobot;
+
+                bool continuer = false;
+                do
+                {
+                    continuer = false;
+                    Segment ligne = new Segment(c1, c2);
+
+                    if (autreRobot.CheminEnCoursNoeuds != null && autreRobot.CheminEnCoursNoeuds.Count >= 2)
+                    {
+                        Console.WriteLine("Test collision");
+                        Console.WriteLine("Moi : " + ligne);
+
+                        PointReel c1g = new PointReel(autreRobot.Position.Coordonnees.X, autreRobot.Position.Coordonnees.Y);
+                        PointReel c2g = new PointReel(autreRobot.CheminEnCoursNoeuds[1].X, autreRobot.CheminEnCoursNoeuds[1].Y);
+                        Segment ligneAutre = new Segment(c1g, c2g);
+                        Console.WriteLine("Autre : " + ligneAutre);
+
+                        if (Robots.GrosRobot.TropProche(ligne, ligneAutre))
+                            continuer = true;
+                    }
+
+                    if (continuer || Robots.GrosRobot.TropProche(autreRobot.Position.Coordonnees, ligne))
+                    {
+                        Console.WriteLine("COLLISION !!");
+                        continuer = true;
+                        Bloque = true;
+                        Thread.Sleep(100);
+                    }
+
+                    if (continuer && autreRobot.Bloque && !Robots.GrosRobot.TropProche(ligne, new Cercle(autreRobot.Position.Coordonnees, Robots.GrosRobot.Rayon)))
+                        continuer = false;
+
+                    if (Robots.PetitRobot.Bloque && Robots.GrosRobot.Bloque)
+                        Console.WriteLine("Interblocage !");
+                } while (continuer);
+
+                Bloque = false;
+
                 if (inverse)
                     Reculer((int)traj.distance);
                 else
@@ -479,6 +541,8 @@ namespace GoBot
                     semTrajectoire.Release();
             }
         }
+
+        public bool Bloque { get; set; }
 
         public bool ObstacleTest()
         {

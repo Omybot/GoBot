@@ -8,11 +8,14 @@ using System.IO;
 using GoBot.Calculs;
 using GoBot.Calculs.Formes;
 using GoBot.Communications;
+using System.Threading;
 
 namespace GoBot.Balises
 {
     public class Balise
     {
+        private Semaphore semTestConnexion;
+
         public static Balise GetBalise(Carte carte)
         {
             switch (carte)
@@ -27,6 +30,16 @@ namespace GoBot.Balises
 
             return null;
         }
+
+        /// <summary>
+        /// Vrai si on cherche à perdre volontairement des paquets pour tester les algorithmes d'acquitement
+        /// </summary>
+        public bool SimulationPerte { get; set; }
+
+        /// <summary>
+        /// Taux de paquets à volontairement perdre pour simulation
+        /// </summary>
+        public int SimulationTauxPerte { get; set; }
 
         public const int DISTANCE_LASER_TABLE = 62;
 
@@ -473,8 +486,12 @@ namespace GoBot.Balises
                 }
                 catch (Exception e)
                 {
-                    Console.WriteLine(e.Message);
                 }
+            }
+            else if(trame[1] == (byte)TrameFactory.FonctionBalise.TestConnexion)
+            {
+                if(semTestConnexion != null)
+                    semTestConnexion.Release();
             }
 
             ConnexionCheck.MajConnexion();
@@ -511,6 +528,20 @@ namespace GoBot.Balises
         {
             Trame t = TrameFactory.BaliseTestConnexion(Carte);
             Connexions.ConnexionMiwi.SendMessage(t);
+        }
+
+        /// <summary>
+        /// Teste la connexion avec la balise en lui demandant un echo
+        /// </summary>
+        /// <returns>Temps de ping</returns>
+        public int TestConnexionPing()
+        {
+            Trame t = TrameFactory.BaliseTestConnexion(Carte);
+            semTestConnexion = new Semaphore(0, 1);
+            Connexions.ConnexionMiwi.SendMessage(t);
+            DateTime debut = DateTime.Now;
+            semTestConnexion.WaitOne(1000);
+            return (int)(DateTime.Now - debut).TotalMilliseconds;
         }
 
         //Déclaration du délégué pour l’évènement détection de positions

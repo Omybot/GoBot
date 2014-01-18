@@ -10,7 +10,7 @@ using GoBot.Ponderations;
 
 namespace GoBot.Enchainements
 {
-    public class Enchainement
+    public abstract class Enchainement
     {
         static private System.Timers.Timer timerFinMatch;
         public Color Couleur { get; set; }
@@ -70,8 +70,8 @@ namespace GoBot.Enchainements
             thGrosRobot = new Thread(ThreadGros);
             thGrosRobot.Start();
 
-            /*thPetitRobot = new Thread(ThreadPetit);
-            thPetitRobot.Start();*/
+            thPetitRobot = new Thread(ThreadPetit);
+            thPetitRobot.Start();
         }
 
         Thread thGrosRobot;
@@ -83,7 +83,7 @@ namespace GoBot.Enchainements
             Robots.GrosRobot.ActionneurOnOff(ActionneurOnOffID.GRPompe, true);
             timerFinMatch.Stop();
             thGrosRobot.Abort();
-            //thPetitRobot.Abort();
+            thPetitRobot.Abort();
             Robots.GrosRobot.Stop(StopMode.Freely);
             Thread.Sleep(100);
             Robots.GrosRobot.ActionneurOnOff(ActionneurOnOffID.GRAlimentation, false);
@@ -92,54 +92,8 @@ namespace GoBot.Enchainements
             // Todo Couper ici tous les actionneurs à la fin du match et lancer la Funny Action
         }
 
-        private void ThreadGros()
-        {
-            int iMeilleur = 0;
+        protected abstract void ThreadGros();
 
-            // Todo Ajouter ici les actions fixes avant le lancement de l'IA
-            // Exemple : Robots.GrosRobot.Avancer(600);
-
-            while (ListeMouvementsGros.Count > 0)
-            {
-                double meilleurCout = double.MaxValue;
-                for (int j = 0; j < ListeMouvementsGros.Count; j++)
-                {
-                    double cout = ListeMouvementsGros[j].Cout;
-                    if (meilleurCout > cout)
-                    {
-                        meilleurCout = cout;
-                        iMeilleur = j;
-                    }
-                }
-
-                if (ListeMouvementsGros[iMeilleur].ScorePondere != 0)
-                    ListeMouvementsGros[iMeilleur].Executer();
-            }
-        }
-
-        private void ThreadPetit()
-        {
-            int iMeilleur = 0;
-
-            // Todo Ajouter ici les actions fixes avant le lancement de l'IA
-            // Exemple : Robots.PetitRobot.Avancer(600);
-
-            while (ListeMouvementsPetit.Count > 0)
-            {
-                double meilleurCout = double.MaxValue;
-                for (int j = 0; j < ListeMouvementsPetit.Count; j++)
-                {
-                    double cout = ListeMouvementsPetit[j].Cout;
-                    if (meilleurCout > cout)
-                    {
-                        meilleurCout = cout;
-                        iMeilleur = j;
-                    }
-                }
-
-                if (ListeMouvementsPetit[iMeilleur].Score != 0)
-                    ListeMouvementsPetit[iMeilleur].Executer();
-            }
-        }
+        protected abstract void ThreadPetit();
     }
 }

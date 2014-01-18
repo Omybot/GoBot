@@ -196,5 +196,10 @@ namespace GoBot.IHM
         {
             balise.Reset();
         }
+
+        private void btnPing_Click(object sender, EventArgs e)
+        {
+            lblPing.Text = Balise.TestConnexionPing() + " ms";
+        }
     }
 }

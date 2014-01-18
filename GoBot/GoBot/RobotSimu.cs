@@ -241,7 +241,7 @@ namespace GoBot
 
                 Destination = nouvelleDestination;
             }
-            else if(mode == StopMode.Abrupt)
+            else if (mode == StopMode.Abrupt)
             {
                 VitesseActuelle = 0;
                 Destination = Position;
@@ -289,7 +289,10 @@ namespace GoBot
         public override void Init()
         {
             Historique = new Historique();
-            Position = new Calculs.Position(new Angle(0, AnglyeType.Degre), new PointReel(200, 300));
+            if (this == Robots.PetitRobot)
+                Position = new Calculs.Position(new Angle(0, AnglyeType.Degre), new PointReel(1500, 1500));
+            else
+                Position = new Calculs.Position(new Angle(0, AnglyeType.Degre), new PointReel(1500, 400));
         }
 
         public override void BougeServo(ServomoteurID servo, int position)
@@ -394,8 +397,8 @@ namespace GoBot
 
             for (double i = 0; i < nbValeurs; i++)
             {
-                retour[0].Add((int)(Math.Sin((i + DateTime.Now.Millisecond) / 100.0 * Math.PI) * consigne * 10000000/ (i*i*i)));
-                retour[1].Add((int)(Math.Sin((i + DateTime.Now.Millisecond) / 100.0 * Math.PI) * consigne * 10000000/ (i*i*i) + 10));
+                retour[0].Add((int)(Math.Sin((i + DateTime.Now.Millisecond) / 100.0 * Math.PI) * consigne * 10000000 / (i * i * i)));
+                retour[1].Add((int)(Math.Sin((i + DateTime.Now.Millisecond) / 100.0 * Math.PI) * consigne * 10000000 / (i * i * i) + 10));
             }
 
             return retour;

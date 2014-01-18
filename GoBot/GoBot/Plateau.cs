@@ -33,6 +33,8 @@ namespace GoBot
 
         private static List<IForme> ObstaclesFixes { get; set; }
         public static List<IForme> ObstaclesTemporaires { get; set; }
+        public static PointReel PositionCibleGros { get; set; }
+        public static PointReel PositionCiblePetit { get; set; }
 
         private static Color notreCouleur;
         public static Color NotreCouleur
@@ -60,6 +62,12 @@ namespace GoBot
             set { score = value; if (ScoreChange != null) ScoreChange(null, null); }
         }
         public static event EventHandler ScoreChange;
+
+        /// <summary>
+        /// Graph des noeuds et arcs pour le pathfinding
+        /// </summary>
+        public static Graph GraphGros { get; private set; }
+        public static Graph GraphPetit { get; private set; }
 
         /// <summary>
         /// Sémaphore à verrouiller pendant la manipulation du graph du pathfinding pour éviter les modification pendant énumération entre autres
@@ -105,10 +113,11 @@ namespace GoBot
                 Plateau.SemaphoreGraph = new Semaphore(1, 1);
 
                 ObstaclesTemporaires = new List<IForme>();
+
                 ChargerObstacles();
-                //CreerSommets(150);
-                //SauverGraph();
-                ChargerGraph();
+                CreerSommets(150);
+                SauverGraph();
+                //ChargerGraph();
 
                 InterpreteurBalise = new InterpreteurBalise();
                 //InterpreteurBalise.PositionEnnemisActualisee += new InterpreteurBalise.PositionEnnemisDelegate(interpreteBalise_PositionEnnemisActualisee);
@@ -144,36 +153,36 @@ namespace GoBot
                 Fruimouths = new Fruimouth[24];
                 // Arbre 1
                 int rand = random.Next(6);
-                Fruimouths[0] = new Fruimouth(new PointReel(0, 0), rand < 1);
-                Fruimouths[1] = new Fruimouth(new PointReel(0, 0), rand >= 1 && rand < 2);
-                Fruimouths[2] = new Fruimouth(new PointReel(0, 0), rand >= 2 && rand < 3);
-                Fruimouths[3] = new Fruimouth(new PointReel(0, 0), rand >= 3 && rand < 4);
-                Fruimouths[4] = new Fruimouth(new PointReel(0, 0), rand >= 4 && rand < 5);
-                Fruimouths[5] = new Fruimouth(new PointReel(0, 0), rand >= 5 && rand < 6);
+                Fruimouths[0] = new Fruimouth(new PointReel(0, 1180), rand < 1);
+                Fruimouths[1] = new Fruimouth(new PointReel(103.92, 1240), rand >= 1 && rand < 2);
+                Fruimouths[2] = new Fruimouth(new PointReel(103.92, 1360), rand >= 2 && rand < 3);
+                Fruimouths[3] = new Fruimouth(new PointReel(0, 1420), rand >= 3 && rand < 4);
+                Fruimouths[4] = new Fruimouth(new PointReel(-103.92, 1360), rand >= 4 && rand < 5);
+                Fruimouths[5] = new Fruimouth(new PointReel(-103.92, 1240), rand >= 5 && rand < 6);
                 // Arbre 2
                 rand = random.Next(6);
-                Fruimouths[6] = new Fruimouth(new PointReel(0, 0), rand < 1);
-                Fruimouths[7] = new Fruimouth(new PointReel(0, 0), rand >= 1 && rand < 2);
-                Fruimouths[8] = new Fruimouth(new PointReel(0, 0), rand >= 2 && rand < 3);
-                Fruimouths[9] = new Fruimouth(new PointReel(0, 0), rand >= 3 && rand < 4);
-                Fruimouths[10] = new Fruimouth(new PointReel(0, 0), rand >= 4 && rand < 5);
-                Fruimouths[11] = new Fruimouth(new PointReel(0, 0), rand >= 5 && rand < 6);
+                Fruimouths[6] = new Fruimouth(new PointReel(640, 1896.08), rand < 1);
+                Fruimouths[7] = new Fruimouth(new PointReel(760, 1896.08), rand >= 1 && rand < 2);
+                Fruimouths[8] = new Fruimouth(new PointReel(820, 2000), rand >= 2 && rand < 3);
+                Fruimouths[9] = new Fruimouth(new PointReel(760, 2103.92), rand >= 3 && rand < 4);
+                Fruimouths[10] = new Fruimouth(new PointReel(640, 2103.92), rand >= 4 && rand < 5);
+                Fruimouths[11] = new Fruimouth(new PointReel(580, 2000), rand >= 5 && rand < 6);
                 // Arbre 3
                 rand = random.Next(6);
-                Fruimouths[12] = new Fruimouth(new PointReel(0, 0), rand < 1);
-                Fruimouths[13] = new Fruimouth(new PointReel(0, 0), rand >= 1 && rand < 2);
-                Fruimouths[14] = new Fruimouth(new PointReel(0, 0), rand >= 2 && rand < 3);
-                Fruimouths[15] = new Fruimouth(new PointReel(0, 0), rand >= 3 && rand < 4);
-                Fruimouths[16] = new Fruimouth(new PointReel(0, 0), rand >= 4 && rand < 5);
-                Fruimouths[17] = new Fruimouth(new PointReel(0, 0), rand >= 5 && rand < 6);
+                Fruimouths[12] = new Fruimouth(new PointReel(2240, 1896.08), rand < 1);
+                Fruimouths[13] = new Fruimouth(new PointReel(2360, 1896.08), rand >= 1 && rand < 2);
+                Fruimouths[14] = new Fruimouth(new PointReel(2420, 2000), rand >= 2 && rand < 3);
+                Fruimouths[15] = new Fruimouth(new PointReel(2360, 2103.92), rand >= 3 && rand < 4);
+                Fruimouths[16] = new Fruimouth(new PointReel(2240, 2103.92), rand >= 4 && rand < 5);
+                Fruimouths[17] = new Fruimouth(new PointReel(2180, 2000), rand >= 5 && rand < 6);
                 // Arbre 4
                 rand = random.Next(6);
-                Fruimouths[18] = new Fruimouth(new PointReel(0, 0), rand < 1);
-                Fruimouths[19] = new Fruimouth(new PointReel(0, 0), rand >= 1 && rand < 2);
-                Fruimouths[20] = new Fruimouth(new PointReel(0, 0), rand >= 2 && rand < 3);
-                Fruimouths[21] = new Fruimouth(new PointReel(0, 0), rand >= 3 && rand < 4);
-                Fruimouths[22] = new Fruimouth(new PointReel(0, 0), rand >= 4 && rand < 5);
-                Fruimouths[23] = new Fruimouth(new PointReel(0, 0), rand >= 5 && rand < 6);
+                Fruimouths[18] = new Fruimouth(new PointReel(3000, 1180), rand < 1);
+                Fruimouths[19] = new Fruimouth(new PointReel(3103.92, 1240), rand >= 1 && rand < 2);
+                Fruimouths[20] = new Fruimouth(new PointReel(3103.92, 1360), rand >= 2 && rand < 3);
+                Fruimouths[21] = new Fruimouth(new PointReel(3000, 1420), rand >= 3 && rand < 4);
+                Fruimouths[22] = new Fruimouth(new PointReel(2896.08, 1360), rand >= 4 && rand < 5);
+                Fruimouths[23] = new Fruimouth(new PointReel(2896.08, 1240), rand >= 5 && rand < 6);
 
                 SemaphoreCollisions = new Semaphore(0, 999999999);
                 thCollisions = new Thread(ThreadTestCollisions);
@@ -186,6 +195,9 @@ namespace GoBot
             Balise1 = new Balise(Carte.RecBun);
             Balise2 = new Balise(Carte.RecBeu);
             Balise3 = new Balise(Carte.RecBoi);
+
+            PositionCiblePetit = Robots.PetitRobot.Position.Coordonnees;
+            PositionCibleGros = Robots.GrosRobot.Position.Coordonnees;
         }
 
         private Semaphore SemaphoreCollisions { get; set; }
@@ -251,10 +263,15 @@ namespace GoBot
         /// </summary>
         public static void ViderObstacles()
         {
-            for (int i = 0; i < Graph.Arcs.Count; i++)
-                ((Arc)Graph.Arcs[i]).Passable = true;
-            for (int i = 0; i < Graph.Nodes.Count; i++)
-                ((Node)Graph.Nodes[i]).Passable = true;
+            for (int i = 0; i < GraphGros.Arcs.Count; i++)
+                ((Arc)GraphGros.Arcs[i]).Passable = true;
+            for (int i = 0; i < GraphGros.Nodes.Count; i++)
+                ((Node)GraphGros.Nodes[i]).Passable = true;
+
+            for (int i = 0; i < GraphPetit.Arcs.Count; i++)
+                ((Arc)GraphPetit.Arcs[i]).Passable = true;
+            for (int i = 0; i < GraphPetit.Nodes.Count; i++)
+                ((Node)GraphPetit.Nodes[i]).Passable = true;
         }
 
         /// <summary>
@@ -277,12 +294,18 @@ namespace GoBot
         {
             ViderObstacles();
 
+
+            Cercle obstaclePetit1 = new Cercle(PositionCiblePetit, Robots.PetitRobot.Rayon);
+            Cercle obstaclePetit2 = new Cercle(Robots.PetitRobot.Position.Coordonnees, Robots.PetitRobot.Rayon);
+            ObstaclesTemporaires.Add(obstaclePetit1);
+            ObstaclesTemporaires.Add(obstaclePetit2);
+
             foreach (IForme obstacle in ObstaclesTemporaires)
             {
                 // Teste les arcs non franchissables
-                for (int i = 0; i < Graph.Arcs.Count; i++)
+                for (int i = 0; i < GraphGros.Arcs.Count; i++)
                 {
-                    Arc arc = (Arc)Graph.Arcs[i];
+                    Arc arc = (Arc)GraphGros.Arcs[i];
 
                     if (arc.Passable)
                     {
@@ -295,15 +318,15 @@ namespace GoBot
                                 i--;
                             }
                             else*/
-                                arc.Passable = false;
+                            arc.Passable = false;
                         }
                     }
                 }
 
                 // Teste les noeuds non franchissables
-                for (int i = 0; i < Graph.Nodes.Count; i++)
+                for (int i = 0; i < GraphGros.Nodes.Count; i++)
                 {
-                    Node n = (Node)Graph.Nodes[i];
+                    Node n = (Node)GraphGros.Nodes[i];
 
                     if (n.Passable)
                     {
@@ -316,12 +339,69 @@ namespace GoBot
                                 i--;
                             }
                             else*/
-                                n.Passable = false;
+                            n.Passable = false;
 
                         }
                     }
                 }
             }
+
+            ObstaclesTemporaires.Remove(obstaclePetit1);
+            ObstaclesTemporaires.Remove(obstaclePetit2);
+
+            Cercle obstacleGros1 = new Cercle(PositionCibleGros, Robots.GrosRobot.Rayon);
+            Cercle obstacleGros2 = new Cercle(Robots.GrosRobot.Position.Coordonnees, Robots.GrosRobot.Rayon);
+            ObstaclesTemporaires.Add(obstacleGros1);
+            ObstaclesTemporaires.Add(obstacleGros2);
+                
+            foreach (IForme obstacle in ObstaclesTemporaires)
+            {
+                // Teste les arcs non franchissables
+                for (int i = 0; i < GraphPetit.Arcs.Count; i++)
+                {
+                    Arc arc = (Arc)GraphPetit.Arcs[i];
+
+                    if (arc.Passable)
+                    {
+                        Segment segment = new Segment(new PointReel(arc.StartNode.X, arc.StartNode.Y), new PointReel(arc.EndNode.X, arc.EndNode.Y));
+                        if (Robots.PetitRobot.TropProche(obstacle, segment))
+                        {
+                            /*if (fixe)
+                            {
+                                Graph.RemoveArc(i);
+                                i--;
+                            }
+                            else*/
+                            arc.Passable = false;
+                        }
+                    }
+                }
+
+                // Teste les noeuds non franchissables
+                for (int i = 0; i < GraphPetit.Nodes.Count; i++)
+                {
+                    Node n = (Node)GraphPetit.Nodes[i];
+
+                    if (n.Passable)
+                    {
+                        PointReel noeud = new PointReel(n.X, n.Y);
+                        if (Robots.PetitRobot.TropProche(obstacle, noeud))
+                        {
+                            /*if (fixe)
+                            {
+                                Graph.RemoveNode(i);
+                                i--;
+                            }
+                            else*/
+                            n.Passable = false;
+
+                        }
+                    }
+                }
+            }
+
+            ObstaclesTemporaires.Remove(obstacleGros1);
+            ObstaclesTemporaires.Remove(obstacleGros2);
         }
 
         /// <summary>
@@ -330,20 +410,23 @@ namespace GoBot
         public void SauverGraph()
         {
             IFormatter formatter = new BinaryFormatter();
-            using (Stream stream = new FileStream("graph.bin", FileMode.OpenOrCreate, FileAccess.Write, FileShare.None))
-                formatter.Serialize(stream, Graph);
+            using (Stream stream = new FileStream("graphGros.bin", FileMode.OpenOrCreate, FileAccess.Write, FileShare.None))
+                formatter.Serialize(stream, GraphGros);
+
+            using (Stream stream = new FileStream("graphPetit.bin", FileMode.OpenOrCreate, FileAccess.Write, FileShare.None))
+                formatter.Serialize(stream, GraphPetit);
         }
 
         /// <summary>
         /// Charge le dernier graph sauvegardé. Permet de gagner du temps par rapport à une génération du graph à chaque execution.
         /// </summary>
-        public static void ChargerGraph()
+        public static void ChargerGraphGros()
         {
             try
             {
                 IFormatter formatter = new BinaryFormatter();
-                using (Stream stream = new FileStream("graph.bin", FileMode.Open, FileAccess.Read, FileShare.Read))
-                    Graph = (Graph)formatter.Deserialize(stream);
+                using (Stream stream = new FileStream("graphGros.bin", FileMode.Open, FileAccess.Read, FileShare.Read))
+                    GraphGros = (Graph)formatter.Deserialize(stream);
             }
             catch (Exception e)
             {
@@ -351,11 +434,22 @@ namespace GoBot
             }
         }
 
-
         /// <summary>
-        /// Graph des noeuds et arcs pour le pathfinding
+        /// Charge le dernier graph sauvegardé. Permet de gagner du temps par rapport à une génération du graph à chaque execution.
         /// </summary>
-        public static Graph Graph { get; private set; }
+        public static void ChargerGraphPetit()
+        {
+            try
+            {
+                IFormatter formatter = new BinaryFormatter();
+                using (Stream stream = new FileStream("graphPetit.bin", FileMode.Open, FileAccess.Read, FileShare.Read))
+                    GraphPetit = (Graph)formatter.Deserialize(stream);
+            }
+            catch (Exception e)
+            {
+                MessageBox.Show("Impossible de charger le graph." + Environment.NewLine + e.Message);
+            }
+        }
 
         /// <summary>
         /// Crée le graph du pathfinding.
@@ -367,12 +461,19 @@ namespace GoBot
             if (distanceLiaison == -1)
                 distanceLiaison = Math.Sqrt((resolution * resolution) * 2) + 1;
 
-            Graph = new Graph();
+            GraphGros = new Graph();
 
             // Création des noeuds
             for (int x = resolution / 2; x < LongueurPlateau; x += resolution)
                 for (int y = resolution / 2; y < LargeurPlateau; y += resolution)
-                    AddNode(new Node (x, y, 0), Robots.GrosRobot, Math.Sqrt(resolution * resolution * 2) + 1);
+                    AddNode(GraphGros, new Node(x, y, 0), Robots.GrosRobot, Math.Sqrt(resolution * resolution * 2) + 1);
+
+            GraphPetit = new Graph();
+
+            // Création des noeuds
+            for (int x = resolution / 2; x < LongueurPlateau; x += resolution)
+                for (int y = resolution / 2; y < LargeurPlateau; y += resolution)
+                    AddNode(GraphPetit, new Node(x, y, 0), Robots.PetitRobot, Math.Sqrt(resolution * resolution * 2) + 1);
         }
 
         public void ChargerObstacles()
@@ -417,29 +518,29 @@ namespace GoBot
         /// </summary>
         /// <param name="node">Noeud à ajouter</param>
         /// <param name="distanceMax">Distance (mm) max de liaison avec les autres noeuds</param>
-        public static void AddNode(Node node, Robot robot, double distanceMax = 400)
+        public static void AddNode(Graph graph, Node node, Robot robot, double distanceMax = 400)
         {
             double distanceNode;
 
             // Si un noeud est deja présent à cet endroit on ne l'ajoute pas
-            Graph.ClosestNode(node.X, node.Y, node.Z, out distanceNode, true);
+            graph.ClosestNode(node.X, node.Y, node.Z, out distanceNode, true);
             if (distanceNode == 0)
                 return;
 
             // Teste si le noeud est franchissable avec la liste des obstacles
             foreach (IForme obstacle in ObstaclesFixes)
             {
-                if (obstacle.Distance(new PointReel(node.X, node.Y)) < robot.Taille / 2 + 1)
+                if (robot.TropProche(obstacle, new PointReel(node.X, node.Y)))
                 {
                     node.Passable = false;
                     return;
                 }
             }
 
-            Graph.Nodes.Add(node);
+            graph.Nodes.Add(node);
 
             // Liaisons avec les autres noeuds du graph
-            foreach (Node no in Graph.Nodes)
+            foreach (Node no in graph.Nodes)
             {
                 if (node != no)
                 {
@@ -453,7 +554,7 @@ namespace GoBot
 
                         foreach (IForme obstacle in ListeObstacles)
                         {
-                            if (obstacle.Distance(new Segment(new PointReel(no.X, no.Y), new PointReel(node.X, node.Y))) < robot.Taille / 2)
+                            if (robot.TropProche(obstacle, new Segment(new PointReel(no.X, no.Y), new PointReel(node.X, node.Y))))//.Distance() < robot.Taille / 2)
                             {
                                 arc.Passable = false;
                                 arc2.Passable = false;
@@ -463,8 +564,8 @@ namespace GoBot
 
                         if (arc.Passable)
                         {
-                            Graph.AddArc(arc);
-                            Graph.AddArc(arc2);
+                            graph.AddArc(arc);
+                            graph.AddArc(arc2);
                         }
                     }
                 }
@@ -476,11 +577,17 @@ namespace GoBot
         /// </summary>
         internal void SupprimerObstacles()
         {
-            for (int i = 0; i < Graph.Nodes.Count; i++)
-                ((Node)(Graph.Nodes[i])).Passable = true;
+            for (int i = 0; i < GraphGros.Nodes.Count; i++)
+                ((Node)(GraphGros.Nodes[i])).Passable = true;
 
-            for (int i = 0; i < Graph.Arcs.Count; i++)
-                ((Arc)(Graph.Arcs[i])).Passable = true;
+            for (int i = 0; i < GraphGros.Arcs.Count; i++)
+                ((Arc)(GraphGros.Arcs[i])).Passable = true;
+
+            for (int i = 0; i < GraphPetit.Nodes.Count; i++)
+                ((Node)(GraphPetit.Nodes[i])).Passable = true;
+
+            for (int i = 0; i < GraphPetit.Arcs.Count; i++)
+                ((Arc)(GraphPetit.Arcs[i])).Passable = true;
         }
 
         /// <summary>

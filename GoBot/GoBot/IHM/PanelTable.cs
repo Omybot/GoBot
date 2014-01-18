@@ -150,36 +150,63 @@ namespace GoBot.IHM
                                         DessinerForme(g, Color.Red, forme);
                                 }
 
-                                // Dessin du graph
-                                if (boxGraph.Checked)
-                                {
-                                    Plateau.SemaphoreGraph.WaitOne();
+                                Plateau.SemaphoreGraph.WaitOne();
 
+                                // Dessin du graph
+                                if (boxGraphPetit.Checked)
+                                {
                                     // Dessin des arcs
-                                    if (boxArretes.Checked)
+                                    if (boxArretesPetit.Checked)
                                     {
-                                        foreach (Arc a in Plateau.Graph.Arcs)
+                                        foreach (Arc a in Plateau.GraphPetit.Arcs)
+                                        {
+                                            if (a.Passable != false)
+                                            {
+                                                //pen = new Pen(new SolidBrush(Color.Red));
+
+                                                g.DrawLine(penBleuFin, RealToScreenPosition(a.StartNode.X, a.StartNode.Y), RealToScreenPosition(a.EndNode.X, a.EndNode.Y));
+                                                g.DrawLine(penNoirPointille, RealToScreenPosition(a.StartNode.X, a.StartNode.Y), RealToScreenPosition(a.EndNode.X, a.EndNode.Y));
+                                            }
+                                        }
+                                    }
+
+                                    // Dessin des noeuds
+                                    foreach (Node n in Plateau.GraphPetit.Nodes)
+                                    {
+                                        Point pointNode = RealToScreenPosition(n.Position);
+                                        g.FillEllipse(brushNoir, new Rectangle(pointNode.X - 3, pointNode.Y - 3, 6, 6));
+                                        g.DrawEllipse(n.Passable ? penBleuFin : penRougeFin, new Rectangle(pointNode.X - 3, pointNode.Y - 3, 6, 6));
+                                    }
+                                }
+                                // Dessin du graph
+                                if (boxGraphGros.Checked)
+                                {
+                                    // Dessin des arcs
+                                    if (boxArretesGros.Checked)
+                                    {
+                                        foreach (Arc a in Plateau.GraphGros.Arcs)
                                         {
                                             if (a.Passable != false)
                                             {
                                                 //pen = new Pen(new SolidBrush(Color.Red));
 
                                                 g.DrawLine(penBlanc, RealToScreenPosition(a.StartNode.X, a.StartNode.Y), RealToScreenPosition(a.EndNode.X, a.EndNode.Y));
-                                                g.DrawLine(penNoirPointille, RealToScreenPosition(a.StartNode.X, a.StartNode.Y), RealToScreenPosition(a.EndNode.X,a.EndNode.Y));
+                                                g.DrawLine(penNoirPointille, RealToScreenPosition(a.StartNode.X, a.StartNode.Y), RealToScreenPosition(a.EndNode.X, a.EndNode.Y));
                                             }
                                         }
                                     }
 
                                     // Dessin des noeuds
-                                    foreach (Node n in Plateau.Graph.Nodes)
+                                    foreach (Node n in Plateau.GraphGros.Nodes)
                                     {
                                         Point pointNode = RealToScreenPosition(n.Position);
                                         g.FillEllipse(brushNoir, new Rectangle(pointNode.X - 3, pointNode.Y - 3, 6, 6));
                                         g.DrawEllipse(n.Passable ? penBlanc : penRougeFin, new Rectangle(pointNode.X - 3, pointNode.Y - 3, 6, 6));
                                     }
 
-                                    Plateau.SemaphoreGraph.Release();
                                 }
+
+                                Plateau.SemaphoreGraph.Release();
 
                                 // Dessin de la trajectoire en cours de recherche
                                 if (modeCourant == Mode.FinTrajectoire && cheminArcs != null)
@@ -208,14 +235,29 @@ namespace GoBot.IHM
                                 // Dessin des fruimouth
                                 foreach (Fruimouth fruit in Plateau.Fruimouths)
                                 {
+                                    bool survol = false;
                                     Point positionEcran = RealToScreenPosition(fruit.Position);
                                     int rayonEcran = RealToScreenDistance(12);
-                                    if (fruit.Pourri)
-                                        g.FillEllipse(brushNoir, positionEcran.X - rayonEcran, positionEcran.Y - rayonEcran, rayonEcran * 2, rayonEcran * 2);
-                                    else
+
+                                    if (positionCurseur.Distance(fruit.Position) <= 12)
+                                        survol = true;
+
+                                    if (!(sourisClic && survol))
                                     {
-                                        g.FillEllipse(brushViolet, positionEcran.X - rayonEcran, positionEcran.Y - rayonEcran, rayonEcran * 2, rayonEcran * 2);
-                                        g.DrawEllipse(penNoir, positionEcran.X - rayonEcran, positionEcran.Y - rayonEcran, rayonEcran * 2, rayonEcran * 2);
+                                        if (fruit.Pourri)
+                                        {
+                                            g.FillEllipse(brushNoir, positionEcran.X - rayonEcran, positionEcran.Y - rayonEcran, rayonEcran * 2, rayonEcran * 2);
+                                            g.DrawEllipse(penNoir, positionEcran.X - rayonEcran, positionEcran.Y - rayonEcran, rayonEcran * 2, rayonEcran * 2);
+                                        }
+                                        else
+                                        {
+                                            g.FillEllipse(brushViolet, positionEcran.X - rayonEcran, positionEcran.Y - rayonEcran, rayonEcran * 2, rayonEcran * 2);
+                                            g.DrawEllipse(penNoir, positionEcran.X - rayonEcran, positionEcran.Y - rayonEcran, rayonEcran * 2, rayonEcran * 2);
+                                        }
+                                    }
+                                    if (survol)
+                                    {
+                                        g.DrawEllipse(new Pen(Color.LightGreen), positionEcran.X - rayonEcran, positionEcran.Y - rayonEcran, rayonEcran * 2, rayonEcran * 2);
                                     }
                                 }
 
@@ -228,7 +270,6 @@ namespace GoBot.IHM
                                     gFeu.FillRectangle(brushTransparent, 0, 0, 100, 100);
 
                                     bool survol = false;
-
                                     Point positionEcran = RealToScreenPosition(feu.Position);
                                     if (feu.Debout)
                                     {
@@ -273,14 +314,13 @@ namespace GoBot.IHM
                                     else
                                     {
                                         Brush brushFeu = feu.Couleur == Plateau.CouleurJ1Rouge ? brushCouleurJ1R : brushCouleurJ2J;
-
                                         List<PointReel> pointsFeux = new List<PointReel>();
-                                        pointsFeux.Add(new PointReel(RealToScreenDistance(65), RealToScreenDistance(10)));
-                                        pointsFeux.Add(new PointReel(RealToScreenDistance(77), RealToScreenDistance(10)));
-                                        pointsFeux.Add(new PointReel(RealToScreenDistance(134), RealToScreenDistance(111)));
-                                        pointsFeux.Add(new PointReel(RealToScreenDistance(128), RealToScreenDistance(121)));
-                                        pointsFeux.Add(new PointReel(RealToScreenDistance(13), RealToScreenDistance(121)));
-                                        pointsFeux.Add(new PointReel(RealToScreenDistance(7), RealToScreenDistance(111)));
+                                        pointsFeux.Add(new PointReel(RealToScreenDistance(57.017), RealToScreenDistance(0)));
+                                        pointsFeux.Add(new PointReel(RealToScreenDistance(70), RealToScreenDistance(0)));
+                                        pointsFeux.Add(new PointReel(RealToScreenDistance(127.017), RealToScreenDistance(98.756)));
+                                        pointsFeux.Add(new PointReel(RealToScreenDistance(120.526), RealToScreenDistance(110)));
+                                        pointsFeux.Add(new PointReel(RealToScreenDistance(6.491), RealToScreenDistance(110)));
+                                        pointsFeux.Add(new PointReel(RealToScreenDistance(0), RealToScreenDistance(98.756)));
                                         Polygone polyFeu = new Polygone(pointsFeux);
 
                                         if (positionCurseur.Distance(feu.Position) <= 80)
@@ -295,7 +335,7 @@ namespace GoBot.IHM
                                             DessinerForme(gFeu, Color.LightGreen, polyFeu, false, false);
 
                                         imgFeu = RotateImage(imgFeu, feu.Angle.AngleDegres);
-                                        g.DrawImage(imgFeu, positionEcran.X - RealToScreenDistance(70), positionEcran.Y - RealToScreenDistance(81));
+                                        g.DrawImage(imgFeu, positionEcran.X - RealToScreenDistance(63.509), positionEcran.Y - RealToScreenDistance(69.585));
                                     }
                                 }
 
@@ -765,9 +805,9 @@ namespace GoBot.IHM
             {
                 PointReel positionReelle = ScreenToRealPosition(pictureBoxTable.PointToClient(MousePosition));
                 double distance;
-                Node finNode = Plateau.Graph.ClosestNode(positionReelle.X, positionReelle.Y, 0, out distance, false);
+                Node finNode = Plateau.GraphGros.ClosestNode(positionReelle.X, positionReelle.Y, 0, out distance, false);
 
-                AStar aStar = new AStar(Plateau.Graph);
+                AStar aStar = new AStar(Plateau.GraphGros);
                 if (aStar.SearchPath(debutNode, finNode))
                 {
                     cheminNodes = aStar.PathByNodes.ToList<Node>();
@@ -841,7 +881,7 @@ namespace GoBot.IHM
             modeCourant = Mode.FinTrajectoire;
             double distance;
             //debutNode = Plateau.Graph.ClosestNode(0, 0, 0, out distance, false);
-            debutNode = Plateau.Graph.ClosestNode(Robots.GrosRobot.Position.Coordonnees.X, Robots.GrosRobot.Position.Coordonnees.Y, 0, out distance, false);
+            debutNode = Plateau.GraphGros.ClosestNode(Robots.GrosRobot.Position.Coordonnees.X, Robots.GrosRobot.Position.Coordonnees.Y, 0, out distance, false);
         }
 
         public void ThreadAction()
@@ -896,7 +936,7 @@ namespace GoBot.IHM
 
         private void btnGo_Click(object sender, EventArgs e)
         {
-            Plateau.Enchainement = new Enchainement();
+            Plateau.Enchainement = new EnchainementMatch();
             Plateau.Enchainement.Executer();
         }
 
@@ -915,6 +955,12 @@ namespace GoBot.IHM
         private void pictureBoxTable_MouseUp(object sender, MouseEventArgs e)
         {
             sourisClic = false;
+        }
+
+        private void btnAleatoire_Click(object sender, EventArgs e)
+        {
+            Plateau.Enchainement = new EnchainementAleatoire();
+            Plateau.Enchainement.Executer();
         }
     }
 }
