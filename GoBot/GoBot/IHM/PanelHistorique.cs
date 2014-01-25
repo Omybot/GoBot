@@ -77,10 +77,10 @@ namespace GoBot.IHM
 
         private void MAJHistoriqueDel(IAction action)
         {
-            /*this.Invoke(new EventHandler(delegate
+            this.Invoke(new EventHandler(delegate
             {
                 MAJHistorique(action);
-            }));*/
+            }));
         }
 
         private void MAJHistorique(IAction action)
