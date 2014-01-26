@@ -17,7 +17,6 @@ namespace GoBot.Communications
             Recallage = 0x10,
             FinRecallage = 0x11,
             FinDeplacement = 0x12,
-            Blocage = 0x70,
 
             DemandePositionsCodeurs = 0x43,
             RetourPositionCodeurs = 0x44,
@@ -26,9 +25,9 @@ namespace GoBot.Communications
             DemandePositionXYTeta = 0x30,
             RetourPositionXYTeta = 0x31,
             VitesseLigne = 0x32,
-            AccelLigne = 0x33,
+            AccelerationLigne = 0x33,
             VitessePivot = 0x34,
-            AccelPivot = 0x35,
+            AccelerationPivot = 0x35,
             CoeffAsservPID = 0x36,
             EnvoiPositionAbsolue = 0x37,
 
@@ -257,7 +256,7 @@ namespace GoBot.Communications
         {
             byte[] tab = new byte[4];
             tab[0] = (byte)Carte.RecMove;
-            tab[1] = (byte)FonctionMove.AccelLigne;
+            tab[1] = (byte)FonctionMove.AccelerationLigne;
             tab[2] = (byte)ByteDivide(accel, true);
             tab[3] = (byte)ByteDivide(accel, false);
             return new Trame(tab);
@@ -277,7 +276,7 @@ namespace GoBot.Communications
         {
             byte[] tab = new byte[4];
             tab[0] = (byte)Carte.RecMove;
-            tab[1] = (byte)FonctionMove.AccelPivot;
+            tab[1] = (byte)FonctionMove.AccelerationPivot;
             tab[2] = (byte)ByteDivide(accel, true);
             tab[3] = (byte)ByteDivide(accel, false);
             return new Trame(tab);
@@ -713,6 +712,264 @@ namespace GoBot.Communications
             tab[0] = (byte)Carte.RecMove;
             tab[1] = (byte)FonctionMove.DemandeJack;
             return new Trame(tab);
+        }
+
+        public static String Decode(String trame)
+        {
+            return Decode(new Trame(trame));
+        }
+
+        public static String Decode(Trame trame)
+        {
+            String message = "";
+
+            try
+            {
+                switch (trame[0])
+                {
+                    case (byte)Carte.RecMove:
+                    case (byte)Carte.RecPi:
+                        switch ((FonctionMove)trame[1])
+                        {
+                            case FonctionMove.AccelerationLigne:
+                                int valeurAccelLigne = trame[2] * 256 + trame[3];
+                                message = "Envoi accélération ligne : " + valeurAccelLigne;
+                                break;
+                            case FonctionMove.AccelerationPivot:
+                                int valeurAccelPivot = trame[2] * 256 + trame[3];
+                                message = "Envoi accélération pivot : " + valeurAccelPivot;
+                                break;
+                            case FonctionMove.Alimentation:
+                                byte valeurAlimentation = trame[2];
+                                message = "Envoi alimentation : " + (valeurAlimentation > 0 ? "On" : "Off");
+                                break;
+                            case FonctionMove.AlimentationCamera:
+                                byte valeurAlimentationCamera = trame[2];
+                                message = "Envoi alimentation camera : " + (valeurAlimentationCamera > 0 ? "On" : "Off");
+                                break;
+                            case FonctionMove.ArmerJack:
+                                message = "Armage du jack";
+                                break;
+                            case FonctionMove.CoeffAsservPID:
+                                int valeurP = trame[2] * 256 + trame[3];
+                                int valeurI = trame[4] * 256 + trame[5];
+                                int valeurD = trame[6] * 256 + trame[7];
+                                message = "Envoi PID : P=" + valeurP + " I=" + valeurI + " D=" + valeurD;
+                                break;
+                            case FonctionMove.DemandeCouleurEquipe:
+                                message = "Demande couleur équipe";
+                                break;
+                            case FonctionMove.DemandeJack:
+                                message = "Demande état jack";
+                                break;
+                            case FonctionMove.DemandePositionsCodeurs:
+                                message = "Demande position codeurs";
+                                break;
+                            case FonctionMove.DemandePositionXYTeta:
+                                message = "Demande position X Y Teta";
+                                break;
+                            case FonctionMove.DepartJack:
+                                message = "Top départ jack";
+                                break;
+                            case FonctionMove.Deplace:
+                                byte valeurAvance = trame[2];
+                                int valeurDistanceAvance = trame[3] * 256 + trame[4];
+                                message = (valeurAvance == (byte)SensAR.Avant ? "Avance" : "Recule") + " de " + valeurDistanceAvance + "mm";
+                                break;
+                            case FonctionMove.EnvoiConsigneBrute:
+                                byte valeurConsigneBrute = trame[2];
+                                int valeurDistanceConsigneBrute = trame[3] * 256 + trame[4];
+                                message = (valeurConsigneBrute == (byte)SensAR.Avant ? "Avance" : "Recule") + " brut de " + valeurDistanceConsigneBrute + " pas codeurs";
+                                break;
+                            case FonctionMove.EnvoiPositionAbsolue:
+                                int valeurPositionAbsolueX = trame[2] * 256 + trame[3];
+                                int valeurPositionABsolueY = trame[4] * 256 + trame[5];
+                                double valeurPositionAbsolueTeta = (double)(trame[6] * 256 + trame[7]) / 100.0;
+                                message = "Envoi position absolue X=" + valeurPositionAbsolueX + "mm Y=" + valeurPositionABsolueY + "mm Teta=" + valeurPositionAbsolueTeta + "°";
+                                break;
+                            case FonctionMove.FinDeplacement:
+                                message = "Fin du déplacement";
+                                break;
+                            case FonctionMove.FinRecallage:
+                                message = "Fin du recallage";
+                                break;
+                            case FonctionMove.Pivot:
+                                byte valeurSensPivot = trame[2];
+                                double valeurDistancePivot = (double)(trame[3] * 256 + trame[4]) / 100.0;
+                                message = "Pivot " + (valeurSensPivot == (char)SensGD.Droite ? "droite" : "gauche") + " de " + valeurDistancePivot + "°";
+                                break;
+                            case FonctionMove.Recallage:
+                                byte valeurSensRecallage = trame[2];
+                                message = "Recallage " + (valeurSensRecallage == (char)SensAR.Avant ? "avant" : "arrière");
+                                break;
+                            case FonctionMove.ReponseCouleurEquipe:
+                                byte valeurCouleurEquipe = trame[2];
+                                message = "Retour couleur équipe : " + (valeurCouleurEquipe == 0 ? "rouge" : "jaune");
+                                break;
+                            case FonctionMove.ReponseJack:
+                                byte valeurEtatJack = trame[2];
+                                message = "Retour jack : " + (valeurEtatJack == 0 ? "débranché" : "branché");
+                                break;
+                            case FonctionMove.Reset:
+                                message = "Envoi reset";
+                                break;
+                            case FonctionMove.RetourPositionCodeurs:
+                                byte valeurPositionsCodeursNombre = trame[2];
+                                message = "Retour positions codeurs : " + valeurPositionsCodeursNombre + " valeurs";
+                                break;
+                            case FonctionMove.RetourPositionXYTeta:
+                                double valeurPositionX = (double)(trame[2] * 256 + trame[3]) / 10.0;
+                                double valeurPositionY = (double)(trame[4] * 256 + trame[5]) / 10.0;
+                                double valeurPositionTeta = (double)(trame[6] * 256 + trame[7]) / 100.0;
+                                message = "Retour position X Y Teta : X=" + valeurPositionX + "mm Y=" + valeurPositionY + "mm Teta=" + valeurPositionTeta + "°";
+                                break;
+                            case FonctionMove.ServoPosition:
+                                byte valeurServoPositionId = trame[2];
+                                int valeurServoPosition = trame[3] * 256 + trame[4];
+                                message = "Envoi position servomoteur " + GoBot.Actions.Nommeur.Nommer((ServomoteurID)valeurServoPositionId) + " à " + GoBot.Actions.Nommeur.Nommer(valeurServoPosition, (ServomoteurID)valeurServoPositionId); ;
+                                break;
+                            case FonctionMove.ServoVitesse:
+                                byte valeurServoVitesseId = trame[2];
+                                int valeurServoVitesse = trame[3] * 256 + trame[4];
+                                String nomServoVitesse = GoBot.Actions.Nommeur.Nommer((ServomoteurID)valeurServoVitesseId);
+                                message = "Envoi vitesse servomoteur " + nomServoVitesse + " à " + valeurServoVitesse;
+                                break;
+                            case FonctionMove.Stop:
+                                String stopMode = ((StopMode)trame[2]).ToString();
+                                message = "Envoi stop " + stopMode;
+                                break;
+                            case FonctionMove.TestConnexion:
+                                message = "Test connexion";
+                                break;
+                            case FonctionMove.Virage:
+                                SensAR valeurVirageSensAR = ((SensAR)trame[2]);
+                                SensGD valeurVirageSensGD = ((SensGD)trame[3]);
+                                int valeurVirageRayon = trame[4] * 256 + trame[5];
+                                double valeurVirageAngle = (double)(trame[6] * 256 + trame[7]) / 100.0;
+                                message = "Envoi virage " + valeurVirageSensAR.ToString().ToLower() + " " + valeurVirageSensGD.ToString().ToLower() + " rayon=" + valeurVirageRayon + "mm angle=" + valeurVirageAngle + "°";
+                                break;
+                            case FonctionMove.VitesseLigne:
+                                int valeurVitesseLigne = trame[2] * 256 + trame[3];
+                                message = "Envoi vitesse ligne " + valeurVitesseLigne;
+                                break;
+                            case FonctionMove.VitessePivot:
+                                int valeurVitessePivot = trame[2] * 256 + trame[3];
+                                message = "Envoi vitesse pivot " + valeurVitessePivot;
+                                break;
+                            //case FonctionMove.VitesseAspirateur:
+                            //    break;
+                            //case FonctionMove.VitesseCanon:
+                            //    break;
+                            //case FonctionMove.VitesseCanonTours:
+                            //    break;
+                            //case FonctionMove.Shutter:
+                            //    break;
+                            //case FonctionMove.ReponseAspiRemonte:
+                            //    break;
+                            //case FonctionMove.ReponseCouleur:
+                            //    break;
+                            //case FonctionMove.ReponsePresence:
+                            //    break;
+                            //case FonctionMove.ReponsePresenceAssiette:
+                            //    break;
+                            //case FonctionMove.ReponseVitesseCanon:
+                            //    break;
+                            //case FonctionMove.Pompe:
+                            //    break;
+                            //case FonctionMove.GoToXY:
+                            //    break;
+                            //case FonctionMove.DemandePresence:
+                            //    break;
+                            //case FonctionMove.DemandePresenceAssiette:
+                            //    break;
+                            //case FonctionMove.DemandeVitesseCanon:
+                            //    break;
+                            //case FonctionMove.DemandeAspiRemonte:
+                            //    break;
+                            //case FonctionMove.DemandeCouleur:
+                            //    break;
+                            default:
+                                return "Inconnu";
+                        }
+                        break;
+                    case (byte)Carte.RecBeu:
+                    case (byte)Carte.RecBoi:
+                    case (byte)Carte.RecBun:
+                        switch ((FonctionBalise)trame[1])
+                        {
+                            case FonctionBalise.Detection:
+                                int valeurDetectionNombreTicksTour = trame[2] * 256 + trame[3];
+                                byte valeurDetectionNombre1 = trame[4];
+                                byte valeurDetectionNombre2 = trame[5];
+                                message = "Tour balise : " + valeurDetectionNombreTicksTour + " ticks/tour. Capteur 1: " + valeurDetectionNombre1 + " angles, Capteur 2 : " + valeurDetectionNombre2 + " angles";
+                                break;
+                            case FonctionBalise.Reset:
+                                message = "Envoi reset";
+                                break;
+                            case FonctionBalise.TestConnexion:
+                                message = "Test connexion";
+                                break;
+                            case FonctionBalise.Vitesse:
+                                int vitesse = trame[2] * 256 + trame[3];
+                                message = "Envoi vitesse pwm " + vitesse;
+                                break;
+                            //case FonctionBalise.ErreurDetection:
+                            //    break;
+                            //case FonctionBalise.AckDetection:
+                            //    break;
+                        }
+                        break;
+                    case (byte)Carte.RecMiwi:
+                        switch ((FonctionBalise)trame[2])
+                        {
+                            case FonctionBalise.Detection:
+                                int valeurDetectionNombreTicksTour = trame[2] * 256 + trame[3];
+                                byte valeurDetectionNombre1 = trame[4];
+                                byte valeurDetectionNombre2 = trame[5];
+                                message = "Tour balise : " + valeurDetectionNombreTicksTour + " ticks/tour. Capteur 1: " + valeurDetectionNombre1 + " angles, Capteur 2 : " + valeurDetectionNombre2 + " angles";
+                                break;
+                            case FonctionBalise.Reset:
+                                message = "Envoi reset";
+                                break;
+                            case FonctionBalise.TestConnexion:
+                                message = "Test connexion";
+                                break;
+                            case FonctionBalise.Vitesse:
+                                int vitesse = trame[2] * 256 + trame[3];
+                                message = "Envoi vitesse pwm " + vitesse;
+                                break;
+                            //case FonctionBalise.ErreurDetection:
+                            //    break;
+                            //case FonctionBalise.AckDetection:
+                            //    break;
+                        }
+                        break;
+                }
+            }
+            catch(Exception)
+            {
+                message = "Inconnu";
+            }
+
+            return message;
+        }
+
+        public static Carte Identifiant(Trame trame)
+        {
+            try
+            {
+                switch (trame[0])
+                {
+                    case (byte)Carte.RecMiwi:
+                        return (Carte)trame[2];
+                    default:
+                        return (Carte)trame[0];
+                }
+            }
+            catch (Exception)
+            {
+                return Carte.PC;
+            }
         }
     }
 }

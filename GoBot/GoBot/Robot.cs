@@ -468,7 +468,7 @@ namespace GoBot
 
                         foreach (IForme obstacle in obstacles)
                         {
-                            if (TropProche(obstacle, new Segment(new PointReel(no.X, no.Y), new PointReel(node.X, node.Y))))//.Distance() < robot.Taille / 2)
+                            if (TropProche(obstacle, new Segment(new PointReel(no.X, no.Y), new PointReel(node.X, node.Y))))
                             {
                                 arc.Passable = false;
                                 arc2.Passable = false;
@@ -543,10 +543,10 @@ namespace GoBot
                 if (nouvelleTrajectoire)
                     break;
 
-                bool continuer = false;
+                bool boucler = false;
                 do
                 {
-                    continuer = false;
+                    boucler = false;
                     Segment ligne = new Segment(c1, c2);
 
                     if (AutreRobot.CheminEnCoursNoeuds != null && AutreRobot.CheminEnCoursNoeuds.Count >= 2)
@@ -555,35 +555,36 @@ namespace GoBot
                         PointReel c2g = new PointReel(AutreRobot.CheminEnCoursNoeuds[1].X, AutreRobot.CheminEnCoursNoeuds[1].Y);
                         Segment ligneAutre = new Segment(c1g, c2g);
 
-                        if (Robots.GrosRobot.TropProche(ligne, ligneAutre))
-                            continuer = true;
+                        if (ligne.Distance(ligneAutre) < Robots.GrosRobot.Rayon + Robots.PetitRobot.Rayon)
+                            boucler = true;
                     }
 
-                    if (continuer || Robots.GrosRobot.TropProche(AutreRobot.Position.Coordonnees, ligne))
+                    if (boucler || AutreRobot.Position.Coordonnees.Distance(ligne) < Robots.GrosRobot.Rayon + Robots.PetitRobot.Rayon)
                     {
-                        continuer = true;
+                        boucler = true;
                         Bloque = true;
                         Thread.Sleep(100);
                     }
 
-                    // Si le petit robot est bloqué on autorise le gros à avancer s'il peut faire sa trajectoire sans rentrer dans le petit robot à sa position actuelle
-                    //if (continuer && this == Robots.GrosRobot && AutreRobot.Bloque && !TropProche(ligne, new Cercle(AutreRobot.Position.Coordonnees, Robots.GrosRobot.Rayon)))
-                    if (continuer && AutreRobot.Bloque && !TropProche(ligne, new Cercle(AutreRobot.Position.Coordonnees, AutreRobot.Rayon)))
+                    // Teste si l'autre robot est bloqué si on peut avancer sans problèmes
+                    // le sémaphore permet de ne pas lancer les deux robots sur ce déblocage en même temps
+                    if (boucler)
                     {
-                        Console.WriteLine("Autorisation 1");
-                        continuer = false;
+                        semDeblocage.WaitOne();
+                        if (AutreRobot.Bloque && ligne.Distance(AutreRobot.Position.Coordonnees) > Robots.GrosRobot.Rayon + Robots.PetitRobot.Rayon)
+                        {
+                            Console.WriteLine("Autorisation 1");
+                            Bloque = false;
+                            boucler = false;
+                        }
+                        semDeblocage.Release();
                     }
 
                     if (Robots.PetitRobot.Bloque && Robots.GrosRobot.Bloque)
                     {
                         Console.WriteLine("Interblocage !");
-                        if (this == Robots.PetitRobot)
-                        {
-                            nouvelleTrajectoire = true;
-                            break;
-                        }
                     }
-                } while (continuer);
+                } while (boucler);
 
                 Bloque = false;
 
@@ -613,6 +614,7 @@ namespace GoBot
         }
 
         public bool Bloque { get; set; }
+        private static Semaphore semDeblocage = new Semaphore(1, 1);
 
         public bool ObstacleTest()
         {

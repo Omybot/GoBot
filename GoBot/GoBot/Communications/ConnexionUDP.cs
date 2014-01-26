@@ -28,11 +28,14 @@ namespace GoBot.Communications
         private int portSortie;
         private UdpClient client;
         private bool isConnect = false;
+        public Replay Sauvegarde { get; private set; }
+
         public ConnexionCheck ConnexionCheck { get; set; }
 
         public ConnexionUDP()
         {
             ConnexionCheck = new ConnexionCheck(2000);
+            Sauvegarde = new Replay();
         }
 
         /// <summary>
@@ -80,6 +83,9 @@ namespace GoBot.Communications
             byte[] envoi = message.ToTabBytes();
             
             int retour = client.Send(envoi, envoi.Length);
+
+            Sauvegarde.AjouterTrameSortante(message);
+
             return retour;
         }
 
@@ -123,6 +129,8 @@ namespace GoBot.Communications
             ConnexionCheck.MajConnexion();
 
             Trame trameRecue = new Trame(receiveBytes);
+
+            Sauvegarde.AjouterTrameEntrante(trameRecue);
             TrameRecue(trameRecue);
 
             UdpState s = new UdpState();

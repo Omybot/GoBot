@@ -17,14 +17,21 @@ using GoBot.Mouvements;
 using System.Diagnostics;
 using GoBot.Balises;
 using GoBot.Communications;
+using System.IO;
 
 namespace GoBot
 {
     public partial class FenGoBot : Form
     {
+        private System.Windows.Forms.Timer timerSauvegarde;
+
         public FenGoBot()
         {
             InitializeComponent();
+            timerSauvegarde = new System.Windows.Forms.Timer();
+            timerSauvegarde.Interval = 10000;
+            timerSauvegarde.Tick += timerSauvegarde_Tick;
+            timerSauvegarde.Start();
 
             if (!Config.DesignMode)
             {
@@ -68,6 +75,11 @@ namespace GoBot
 
                 switchBoutonSimu.SetActif(Robots.Simulation);
             }
+        }
+
+        void timerSauvegarde_Tick(object sender, EventArgs e)
+        {
+            SauverLogs();
         }
 
         void ConnexionBunCheck_ConnexionChange(bool conn)
@@ -162,13 +174,22 @@ namespace GoBot
             panelBalise2.Balise.VitesseRotation(0);
             panelBalise3.Balise.VitesseRotation(0);
 
+            SauverLogs();
             /*Plateau.Balise1.writer.Close();
             Plateau.Balise2.writer.Close();
             Plateau.Balise3.writer.Close();*/
         }
 
+        private void SauverLogs()
+        {
+            Connexions.ConnexionMiwi.Sauvegarde.Sauvegarder("./Logs/ConnexionMiwi.tlog");
+            Connexions.ConnexionMove.Sauvegarde.Sauvegarder("./Logs/ConnexionMove.tlog");
+            Connexions.ConnexionPi.Sauvegarde.Sauvegarder("./Logs/ConnexionPi.tlog");
+        }
+
         private void btnClose_Click(object sender, EventArgs e)
         {
+            FenGoBot_FormClosing(null, null);
             Process.Start("KillGoBot.exe");
         }
 
@@ -424,6 +445,22 @@ namespace GoBot
                 SetLed(ledRecBeu, true);
             if (panelBalise3.Balise.ConnexionCheck.Connecte)
                 SetLed(ledRecBoi, true);
+
+            try
+            {
+                if (Directory.Exists("./Logs"))
+                {
+                    if (Directory.Exists("./LogsPrec"))
+                        Directory.Delete("./LogsPrec", true);
+                    Directory.Move("./Logs", "./LogsPrec");
+                }
+
+                Directory.CreateDirectory("./Logs");
+            }
+            catch(Exception)
+            {
+                MessageBox.Show("Problème lors de la création des dossiers de log.\nVérifiez si le dossier n'est pas protégé en écriture.", "Erreur", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
 
         void Plateau_NotreCouleurChange(object sender, EventArgs e)
@@ -463,6 +500,12 @@ namespace GoBot
             panel.Robot = Robots.GrosRobot;
             fen = new Fenetre(panel);
             fen.TopMost = true;
+            fen.Show();
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            Fenetre fen = new Fenetre(new PanelLogs());
             fen.Show();
         }
     }

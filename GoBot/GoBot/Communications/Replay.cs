@@ -17,11 +17,13 @@ namespace GoBot.Communications
     {
         public String Trame { get; set; }
         public DateTime Date { get; set; }
+        public bool Entrant { get; set; }
 
-        public TrameReplay(Trame trame, DateTime date)
+        public TrameReplay(Trame trame, DateTime date, bool entrant = true)
         {
             Trame = trame.ToString();
             Date = date;
+            Entrant = entrant;
         }
 
         public TrameReplay()
@@ -38,15 +40,15 @@ namespace GoBot.Communications
         /// <summary>
         /// Liste des trames
         /// </summary>
-        private List<TrameReplay> tramesEntrantes;
+        public List<TrameReplay> Trames { get; private set; }
 
         public Replay()
         {
-            tramesEntrantes = new List<TrameReplay>();
+            Trames = new List<TrameReplay>();
         }
 
         /// <summary>
-        /// Ajoute une trame avec l'heure actuelle
+        /// Ajoute une trame reçue avec l'heure actuelle
         /// </summary>
         /// <param name="trame">Trame à ajouter</param>
         public void AjouterTrameEntrante(Trame trame)
@@ -55,13 +57,32 @@ namespace GoBot.Communications
         }
 
         /// <summary>
-        /// Ajoute une trame avec l'heure définie
+        /// Ajoute une trame envoyée avec l'heure actuelle
+        /// </summary>
+        /// <param name="trame">Trame à ajouter</param>
+        public void AjouterTrameSortante(Trame trame)
+        {
+            AjouterTrameSortante(trame, DateTime.Now);
+        }
+
+        /// <summary>
+        /// Ajoute une trame reçue avec l'heure définie
         /// </summary>
         /// <param name="trame">Trame à ajouter</param>
         /// <param name="date">Heure de réception de la trame</param>
         public void AjouterTrameEntrante(Trame trame, DateTime date)
         {
-            tramesEntrantes.Add(new TrameReplay(trame, date));
+            Trames.Add(new TrameReplay(trame, date, true));
+        }
+
+        /// <summary>
+        /// Ajoute une trame envoyée avec l'heure définie
+        /// </summary>
+        /// <param name="trame">Trame à ajouter</param>
+        /// <param name="date">Heure de réception de la trame</param>
+        public void AjouterTrameSortante(Trame trame, DateTime date)
+        {
+            Trames.Add(new TrameReplay(trame, date, false));
         }
 
         /// <summary>
@@ -75,7 +96,7 @@ namespace GoBot.Communications
             {
                 XmlSerializer mySerializer = new XmlSerializer(typeof(List<TrameReplay>));
                 using(FileStream myFileStream = new FileStream(nomFichier, FileMode.Open))
-                    tramesEntrantes = (List<TrameReplay>)mySerializer.Deserialize(myFileStream);
+                    Trames = (List<TrameReplay>)mySerializer.Deserialize(myFileStream);
 
                 return true;
             }
@@ -96,7 +117,7 @@ namespace GoBot.Communications
             {
                 XmlSerializer mySerializer = new XmlSerializer(typeof(List<TrameReplay>));
                 using(StreamWriter myWriter = new StreamWriter(nomFichier))
-                    mySerializer.Serialize(myWriter, tramesEntrantes);
+                    mySerializer.Serialize(myWriter, Trames);
 
                 return true;
             }
@@ -113,11 +134,42 @@ namespace GoBot.Communications
         {
             ReceptionTrame += new ReceptionTrameDelegate(Connexions.ConnexionMiwi.TrameRecue);
 
-            for (int i = tramesEntrantes.Count - 1; i > 0; i--)
+            for (int i = Trames.Count - 1; i > 0; i--)
             {
-                ReceptionTrame(new Trame(tramesEntrantes[i].Trame));
+                if (Trames[i].Entrant)
+                    ReceptionTrame(new Trame(Trames[i].Trame));
                 if (i - 1 > 0)
-                    Thread.Sleep(tramesEntrantes[i].Date - tramesEntrantes[i - 1].Date);
+                    Thread.Sleep(Trames[i].Date - Trames[i - 1].Date);
+            }
+        }
+
+        public void Trier()
+        {
+            Trames.Sort(CompareTrameByDate);
+        }
+
+        private static int CompareTrameByDate(TrameReplay trame1, TrameReplay trame2)
+        {
+            if (trame1 == null)
+            {
+                if (trame2 == null)
+                    return 0;
+                else
+                    return -1;
+            }
+            else
+            {
+                if (trame2 == null)
+                    return 1;
+                else
+                {
+                    if (trame1.Date > trame2.Date)
+                        return 1;
+                    else if (trame1.Date < trame2.Date)
+                        return -1;
+                    else
+                        return 0;
+                }
             }
         }
 

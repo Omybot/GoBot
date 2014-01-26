@@ -42,7 +42,6 @@
             this.MaximizeBox = false;
             this.Name = "Fenetre";
             this.Text = "Fenetre";
-            this.TopMost = true;
             this.ResumeLayout(false);
 
         }

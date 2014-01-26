@@ -36,7 +36,6 @@ namespace GoBot.Communications
                     donnees.Add(0);
                 }
             }
-
         }
 
         public Byte this[int i]
@@ -93,6 +92,30 @@ namespace GoBot.Communications
             {
                 return donnees.Count;
             }
+        }
+
+        public Carte Carte
+        {
+            get
+            {
+                try
+                {
+                    Carte carte = (Carte)this[0];
+                    if (carte == GoBot.Carte.RecMiwi)
+                        carte = (Carte)this[2];
+
+                    return carte;
+                }
+                catch (Exception)
+                {
+                    return Carte.PC;
+                }
+            }
+        }
+
+        public String Decode()
+        {
+            return TrameFactory.Decode(this);
         }
     }
 }

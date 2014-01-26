@@ -161,6 +161,13 @@
     <Compile Include="IHM\PanelReglageAsserv.Designer.cs">
       <DependentUpon>PanelReglageAsserv.cs</DependentUpon>
     </Compile>
+    <Compile Include="IHM\PanelLogs.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="IHM\PanelLogs.Designer.cs">
+      <DependentUpon>PanelLogs.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Logs\Log.cs" />
     <Compile Include="Mouvements\Mouvement.cs" />
     <Compile Include="Mouvements\PositionsMouvements.cs" />
     <Compile Include="Ponderations\PoidsTest.cs" />
@@ -309,6 +316,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="IHM\PanelServo.resx">
       <DependentUpon>PanelServo.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="IHM\PanelLogs.resx">
+      <DependentUpon>PanelLogs.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="IHM\PanelTable.resx">
       <DependentUpon>PanelTable.cs</DependentUpon>

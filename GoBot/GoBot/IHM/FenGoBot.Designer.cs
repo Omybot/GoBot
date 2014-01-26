@@ -90,6 +90,7 @@ namespace GoBot
             this.ledRecPi = new Composants.Led();
             this.ledRecMiwi = new Composants.Led();
             this.ledRecMove = new Composants.Led();
+            this.button1 = new System.Windows.Forms.Button();
             this.panelGrosRobot = new GoBot.IHM.PanelGrosRobot();
             this.panelPetitRobot = new GoBot.IHM.PanelPetitRobot();
             this.panelBalise3 = new GoBot.IHM.PanelBalise();
@@ -130,9 +131,9 @@ namespace GoBot
             // 
             // tabControl
             // 
-            this.tabControl.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-                        | System.Windows.Forms.AnchorStyles.Left)
-                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.tabControl.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.tabControl.Controls.Add(this.tabGrosRobot);
             this.tabControl.Controls.Add(this.tabPetitRobot);
             this.tabControl.Controls.Add(this.tabLog);
@@ -172,6 +173,7 @@ namespace GoBot
             // 
             // tabLog
             // 
+            this.tabLog.Controls.Add(this.button1);
             this.tabLog.Controls.Add(this.btnRejouerReplay);
             this.tabLog.Controls.Add(this.btnChargerReplay);
             this.tabLog.Controls.Add(this.btnResetTrames);
@@ -248,8 +250,8 @@ namespace GoBot
             // 
             // txtTrames
             // 
-            this.txtTrames.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-                        | System.Windows.Forms.AnchorStyles.Left)));
+            this.txtTrames.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left)));
             this.txtTrames.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.txtTrames.Location = new System.Drawing.Point(198, 6);
             this.txtTrames.Name = "txtTrames";
@@ -269,8 +271,8 @@ namespace GoBot
             // 
             // txtLogComplet
             // 
-            this.txtLogComplet.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-                        | System.Windows.Forms.AnchorStyles.Left)));
+            this.txtLogComplet.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left)));
             this.txtLogComplet.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.txtLogComplet.Location = new System.Drawing.Point(638, 6);
             this.txtLogComplet.Name = "txtLogComplet";
@@ -779,11 +781,21 @@ namespace GoBot
             this.ledRecMove.TabIndex = 26;
             this.ledRecMove.TabStop = false;
             // 
+            // button1
+            // 
+            this.button1.Location = new System.Drawing.Point(13, 61);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(75, 23);
+            this.button1.TabIndex = 9;
+            this.button1.Text = "button1";
+            this.button1.UseVisualStyleBackColor = true;
+            this.button1.Click += new System.EventHandler(this.button1_Click);
+            // 
             // panelGrosRobot
             // 
-            this.panelGrosRobot.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-                        | System.Windows.Forms.AnchorStyles.Left)
-                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.panelGrosRobot.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.panelGrosRobot.BackColor = System.Drawing.Color.White;
             this.panelGrosRobot.Location = new System.Drawing.Point(0, 0);
             this.panelGrosRobot.Name = "panelGrosRobot";
@@ -1021,6 +1033,7 @@ namespace GoBot
         private PanelDiagnosticBalise panelDiagnosticBalise3;
         private PanelDiagnosticBalise panelDiagnosticBalise2;
         private PanelDiagnosticBalise panelDiagnosticBalise1;
+        private System.Windows.Forms.Button button1;
     }
 }
 
