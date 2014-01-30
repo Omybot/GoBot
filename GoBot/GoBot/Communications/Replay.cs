@@ -72,7 +72,8 @@ namespace GoBot.Communications
         /// <param name="date">Heure de réception de la trame</param>
         public void AjouterTrameEntrante(Trame trame, DateTime date)
         {
-            Trames.Add(new TrameReplay(trame, date, true));
+            lock (Trames)
+                Trames.Add(new TrameReplay(trame, date, true));
         }
 
         /// <summary>
@@ -82,7 +83,8 @@ namespace GoBot.Communications
         /// <param name="date">Heure de réception de la trame</param>
         public void AjouterTrameSortante(Trame trame, DateTime date)
         {
-            Trames.Add(new TrameReplay(trame, date, false));
+            lock (Trames)
+                Trames.Add(new TrameReplay(trame, date, false));
         }
 
         /// <summary>
@@ -133,11 +135,16 @@ namespace GoBot.Communications
         public void Rejouer()
         {
             ReceptionTrame += new ReceptionTrameDelegate(Connexions.ConnexionMiwi.TrameRecue);
+            ReceptionTrame += new ReceptionTrameDelegate(Connexions.ConnexionMove.TrameRecue);
 
-            for (int i = Trames.Count - 1; i > 0; i--)
+            for (int i = Trames.Count - 1; i >= 0; i--)
             {
                 if (Trames[i].Entrant)
                     ReceptionTrame(new Trame(Trames[i].Trame));
+                else
+                {
+                    // Envoyer sur la bonne comm
+                }
                 if (i - 1 > 0)
                     Thread.Sleep(Trames[i].Date - Trames[i - 1].Date);
             }

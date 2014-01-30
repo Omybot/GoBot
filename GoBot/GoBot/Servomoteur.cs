@@ -50,7 +50,7 @@ namespace GoBot
                     break;
             }
 
-            connexionUdp.NouvelleTrame += new ConnexionUDP.ReceptionDelegate(connexion_NouvelleTrame);
+            connexionUdp.NouvelleTrameRecue += new ConnexionUDP.ReceptionDelegate(connexion_NouvelleTrame);
         }
 
         public delegate void TemperatureDelegate(int temperature);

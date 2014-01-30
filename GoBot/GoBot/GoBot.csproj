@@ -89,6 +89,18 @@
     <Compile Include="ElementsJeu\Fruimouth.cs" />
     <Compile Include="Enchainements\EnchainementAleatoire.cs" />
     <Compile Include="Enchainements\EnchainementMatch.cs" />
+    <Compile Include="IHM\PanelMatch.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="IHM\PanelMatch.Designer.cs">
+      <DependentUpon>PanelMatch.cs</DependentUpon>
+    </Compile>
+    <Compile Include="IHM\PanelConnexions.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="IHM\PanelConnexions.Designer.cs">
+      <DependentUpon>PanelConnexions.cs</DependentUpon>
+    </Compile>
     <Compile Include="IHM\PanelDiagnosticBalise.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -161,11 +173,11 @@
     <Compile Include="IHM\PanelReglageAsserv.Designer.cs">
       <DependentUpon>PanelReglageAsserv.cs</DependentUpon>
     </Compile>
-    <Compile Include="IHM\PanelLogs.cs">
+    <Compile Include="IHM\PanelLogsTrames.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="IHM\PanelLogs.Designer.cs">
-      <DependentUpon>PanelLogs.cs</DependentUpon>
+    <Compile Include="IHM\PanelLogsTrames.Designer.cs">
+      <DependentUpon>PanelLogsTrames.cs</DependentUpon>
     </Compile>
     <Compile Include="Logs\Log.cs" />
     <Compile Include="Mouvements\Mouvement.cs" />
@@ -260,6 +272,12 @@
     <Compile Include="Communications\TrameFactory.cs" />
     <Compile Include="Communications\ConnexionUDP.cs" />
     <Compile Include="Communications\Trame.cs" />
+    <EmbeddedResource Include="IHM\PanelMatch.resx">
+      <DependentUpon>PanelMatch.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="IHM\PanelConnexions.resx">
+      <DependentUpon>PanelConnexions.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="IHM\PanelDiagnosticBalise.resx">
       <DependentUpon>PanelDiagnosticBalise.cs</DependentUpon>
     </EmbeddedResource>
@@ -317,8 +335,8 @@
     <EmbeddedResource Include="IHM\PanelServo.resx">
       <DependentUpon>PanelServo.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="IHM\PanelLogs.resx">
-      <DependentUpon>PanelLogs.cs</DependentUpon>
+    <EmbeddedResource Include="IHM\PanelLogsTrames.resx">
+      <DependentUpon>PanelLogsTrames.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="IHM\PanelTable.resx">
       <DependentUpon>PanelTable.cs</DependentUpon>

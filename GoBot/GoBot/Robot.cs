@@ -279,8 +279,9 @@ namespace GoBot
             // Teste s'il est possible d'aller directement à la fin sans passer par le graph
             bool toutDroit = true;
             Segment segment = new Segment(new PointReel(debutNode.X, debutNode.Y), new PointReel(finNode.X, finNode.Y));
-            Console.WriteLine(Plateau.ListeObstacles.Count + " obstacles");
-            foreach (IForme forme in Plateau.ListeObstacles)
+
+            List<IForme> obstacles = CalculerObstacles();
+            foreach (IForme forme in obstacles)
             {
                 if (TropProche(segment, forme))
                 {
@@ -336,9 +337,11 @@ namespace GoBot
                             CheminTest = arcRacourci;
                             arcRacourci.Passable = false;
 
-                            for (int i = Plateau.ListeObstacles.Count - 1; i >= 4; i--)
+                            List<IForme> obstaclesPlateau = CalculerObstacles();
+
+                            for (int i = obstaclesPlateau.Count - 1; i >= 4; i--)
                             {
-                                IForme forme = Plateau.ListeObstacles[i];
+                                IForme forme = obstaclesPlateau[i];
                                 ObstacleTeste = forme;
                                 ObstacleProbleme = null;
 
@@ -349,8 +352,8 @@ namespace GoBot
                                     raccourciPossible = false;
                                     break;
                                 }
-                                /*else 
-                                    Thread.Sleep(200);*/
+                                //else 
+                                    //Thread.Sleep(200);
                             }
                             ObstacleTeste = null;
                             if (raccourciPossible)
@@ -385,6 +388,7 @@ namespace GoBot
 
             SemGraph.WaitOne();
 
+
             foreach (Arc a in arcsAdd)
                 Graph.RemoveArc(a);
             arcsAdd.Clear();
@@ -393,7 +397,13 @@ namespace GoBot
                 Graph.RemoveNode(n);
             nodesAdd.Clear();
 
+            if (this == Robots.GrosRobot)
+                Plateau.ChargerGraphGros();
+            if (this == Robots.PetitRobot)
+                Plateau.ChargerGraphPetit();
+
             SemGraph.Release();
+            MajGraphFranchissable();
 
             PositionCible = new PointReel(x, y);
             AutreRobot.MajGraphFranchissable();
@@ -544,6 +554,7 @@ namespace GoBot
                     break;
 
                 bool boucler = false;
+                Bloque = false;
                 do
                 {
                     boucler = false;
@@ -562,7 +573,6 @@ namespace GoBot
                     if (boucler || AutreRobot.Position.Coordonnees.Distance(ligne) < Robots.GrosRobot.Rayon + Robots.PetitRobot.Rayon)
                     {
                         boucler = true;
-                        Bloque = true;
                         Thread.Sleep(100);
                     }
 
@@ -571,22 +581,30 @@ namespace GoBot
                     if (boucler)
                     {
                         semDeblocage.WaitOne();
+
                         if (AutreRobot.Bloque && ligne.Distance(AutreRobot.Position.Coordonnees) > Robots.GrosRobot.Rayon + Robots.PetitRobot.Rayon)
                         {
-                            Console.WriteLine("Autorisation 1");
-                            Bloque = false;
+                            Console.WriteLine("Autorisation déblocage");
                             boucler = false;
                         }
+                        else
+                            Bloque = true;
+
                         semDeblocage.Release();
                     }
 
                     if (Robots.PetitRobot.Bloque && Robots.GrosRobot.Bloque)
                     {
                         Console.WriteLine("Interblocage !");
+                        nouvelleTrajectoire = true;
+                        boucler = false;
                     }
                 } while (boucler);
 
                 Bloque = false;
+
+                if (nouvelleTrajectoire)
+                    break;
 
                 if (inverse)
                     Reculer((int)traj.distance);
@@ -596,8 +614,6 @@ namespace GoBot
                 CheminEnCoursNoeuds.RemoveAt(0);
                 CheminEnCoursArcs.RemoveAt(0);
 
-                if (nouvelleTrajectoire)
-                    break;
             }
             if (nouvelleTrajectoire)
             {
@@ -731,7 +747,7 @@ namespace GoBot
             List<IForme> obstacles = new List<IForme>();
             obstacles.AddRange(Plateau.ListeObstacles);
             obstacles.Add(new Cercle(AutreRobot.Position.Coordonnees, AutreRobot.Rayon));
-            obstacles.Add(AutreRobot.PositionCible);
+            obstacles.Add(new Cercle(AutreRobot.PositionCible, AutreRobot.Rayon));
 
             return obstacles;
         }

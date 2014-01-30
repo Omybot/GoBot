@@ -45,7 +45,7 @@ namespace GoBot
 
             //Enchainement = new Enchainements.HomologationEnchainement();
 
-            Connexion.NouvelleTrame += new ConnexionUDP.ReceptionDelegate(ReceptionMessage);
+            Connexion.NouvelleTrameRecue += new ConnexionUDP.ReceptionDelegate(ReceptionMessage);
 
             Position = new Calculs.Position(new Angle(0, AnglyeType.Degre), new PointReel(200, 300));
             PositionCible = Position.Coordonnees;

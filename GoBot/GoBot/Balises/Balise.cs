@@ -31,16 +31,6 @@ namespace GoBot.Balises
             return null;
         }
 
-        /// <summary>
-        /// Vrai si on cherche à perdre volontairement des paquets pour tester les algorithmes d'acquitement
-        /// </summary>
-        public bool SimulationPerte { get; set; }
-
-        /// <summary>
-        /// Taux de paquets à volontairement perdre pour simulation
-        /// </summary>
-        public int SimulationTauxPerte { get; set; }
-
         public const int DISTANCE_LASER_TABLE = 62;
 
         /// <summary>
@@ -143,7 +133,7 @@ namespace GoBot.Balises
             ConnexionCheck = new ConnexionCheck(5000);
             ConnexionCheck.TestConnexion += new ConnexionCheck.TestConnexionDelegate(TestConnexion);
 
-            Connexions.ConnexionMiwi.NouvelleTrame += new ConnexionUDP.ReceptionDelegate(connexionIo_NouvelleTrame);
+            Connexions.ConnexionMiwi.NouvelleTrameRecue += new ConnexionUDP.ReceptionDelegate(connexionIo_NouvelleTrame);
             Stats = new BaliseStats(this);
         }
 

@@ -4,6 +4,8 @@ using System.Linq;
 using System.Text;
 using GoBot.Actions;
 using System.Threading;
+using System.Xml.Serialization;
+using System.IO;
 
 namespace GoBot
 {
@@ -25,6 +27,10 @@ namespace GoBot
             Message = message;
             Heure = heure;
             Type = type;
+        }
+
+        public HistoLigne()
+        {
         }
 
         public int CompareTo(object obj)
@@ -79,5 +85,47 @@ namespace GoBot
         }
 
         public List<HistoLigne> HistoriqueLignes { get; set; }
+
+        /// <summary>
+        /// Charge une sauvegarde d'historique
+        /// </summary>
+        /// <param name="nomFichier">Chemin du fichier</param>
+        /// <returns>Vrai si la sauvegarde a été correctement chargée</returns>
+        public bool Charger(String nomFichier)
+        {
+            try
+            {
+                XmlSerializer mySerializer = new XmlSerializer(typeof(List<HistoLigne>));
+                using (FileStream myFileStream = new FileStream(nomFichier, FileMode.Open))
+                    HistoriqueLignes = (List<HistoLigne>)mySerializer.Deserialize(myFileStream);
+
+                return true;
+            }
+            catch (Exception)
+            {
+                return false;
+            }
+        }
+
+        /// <summary>
+        /// Sauvegarde l'ensemble de l'historique dans un fichier
+        /// </summary>
+        /// <param name="nomFichier">Chemin du fichier</param>
+        /// <returns>Vrai si la sauvegarde s'est correctement déroulée</returns>
+        public bool Sauvegarder(String nomFichier)
+        {
+            try
+            {
+                XmlSerializer mySerializer = new XmlSerializer(typeof(List<HistoLigne>));
+                using (StreamWriter myWriter = new StreamWriter(nomFichier))
+                    mySerializer.Serialize(myWriter, HistoriqueLignes);
+
+                return true;
+            }
+            catch (Exception)
+            {
+                return false;
+            }
+        }
     }
 }

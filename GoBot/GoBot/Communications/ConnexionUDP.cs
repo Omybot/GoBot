@@ -83,17 +83,17 @@ namespace GoBot.Communications
             byte[] envoi = message.ToTabBytes();
             
             int retour = client.Send(envoi, envoi.Length);
-
-            Sauvegarde.AjouterTrameSortante(message);
+            TrameEnvoyee(message);
 
             return retour;
         }
 
-
         //Déclaration du délégué pour l’évènement réception de message
         public delegate void ReceptionDelegate(Trame trame);
-        //Déclaration de l’évènement utilisant le délégué
-        public event ReceptionDelegate NouvelleTrame;
+        //Déclaration de l’évènement utilisant le délégué pour la réception d'une trame
+        public event ReceptionDelegate NouvelleTrameRecue;
+        //Déclaration de l’évènement utilisant le délégué pour l'émission d'une trame
+        public event ReceptionDelegate NouvelleTrameEnvoyee;
         
 
         /// <summary>
@@ -129,8 +129,6 @@ namespace GoBot.Communications
             ConnexionCheck.MajConnexion();
 
             Trame trameRecue = new Trame(receiveBytes);
-
-            Sauvegarde.AjouterTrameEntrante(trameRecue);
             TrameRecue(trameRecue);
 
             UdpState s = new UdpState();
@@ -141,8 +139,18 @@ namespace GoBot.Communications
 
         public void TrameRecue(Trame t)
         {
-            if(NouvelleTrame != null)
-                NouvelleTrame(t);
+            Sauvegarde.AjouterTrameEntrante(t);
+
+            if (NouvelleTrameRecue != null)
+                NouvelleTrameRecue(t);
+        }
+
+        public void TrameEnvoyee(Trame t)
+        {
+            Sauvegarde.AjouterTrameSortante(t);
+
+            if (NouvelleTrameEnvoyee != null)
+                NouvelleTrameEnvoyee(t);
         }
     }
 }

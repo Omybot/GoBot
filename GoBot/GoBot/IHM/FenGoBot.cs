@@ -51,9 +51,6 @@ namespace GoBot
                     //btnClose.Visible = false;
                 }
 
-                Robots.GrosRobot.Historique.NouvelleAction += new Historique.DelegateAction(HistoriqueGR_nouvelleAction);
-                Robots.PetitRobot.Historique.NouvelleAction += new Historique.DelegateAction(HistoriquePR_nouvelleAction);
-
                 panelBalise1.Balise = Plateau.Balise1;
                 panelBalise2.Balise = Plateau.Balise2;
                 panelBalise3.Balise = Plateau.Balise3;
@@ -82,37 +79,10 @@ namespace GoBot
             SauverLogs();
         }
 
-        void ConnexionBunCheck_ConnexionChange(bool conn)
-        {
-            Robot_ConnexionChange(Carte.RecBun, conn);
-        }
+        // Robots.GrosRobot.Historique.NouvelleAction += new Historique.DelegateAction(HistoriqueGR_nouvelleAction);
+        // Robots.PetitRobot.Historique.NouvelleAction += new Historique.DelegateAction(HistoriquePR_nouvelleAction);
 
-        void ConnexionBeuCheck_ConnexionChange(bool conn)
-        {
-            Robot_ConnexionChange(Carte.RecBeu, conn);
-        }
-
-        void ConnexionBoiCheck_ConnexionChange(bool conn)
-        {
-            Robot_ConnexionChange(Carte.RecBoi, conn);
-        }
-
-        void ConnexionMoveCheck_ConnexionChange(bool conn)
-        {
-            Robot_ConnexionChange(Carte.RecMove, conn);
-        }
-
-        void ConnexionPiCheck_ConnexionChange(bool conn)
-        {
-            Robot_ConnexionChange(Carte.RecPi, conn);
-        }
-
-        void ConnexionMiwiCheck_ConnexionChange(bool conn)
-        {
-            Robot_ConnexionChange(Carte.RecMiwi, conn);
-        }
-
-        void HistoriqueGR_nouvelleAction(Actions.IAction action)
+        /*void HistoriqueGR_nouvelleAction(Actions.IAction action)
         {
             this.Invoke(new EventHandler(delegate
             {
@@ -126,46 +96,8 @@ namespace GoBot
             {
                 txtLogComplet.AjouterLigne(action.ToString(), Color.Green, true);
             }));
-        }
+        }*/
 
-        void Robot_ConnexionChange(Carte carte, bool connecte)
-        {
-            Led selectLed = null;
-            switch (carte)
-            {
-                case Carte.RecMove:
-                    selectLed = ledRecMove;
-                    break;
-                case Carte.RecBun:
-                    selectLed = ledRecBun;
-                    break;
-                case Carte.RecBeu:
-                    selectLed = ledRecBeu;
-                    break;
-                case Carte.RecBoi:
-                    selectLed = ledRecBoi;
-                    break;
-                case Carte.RecPi:
-                    selectLed = ledRecPi;
-                    break;
-                case Carte.RecMiwi:
-                    selectLed = ledRecMiwi;
-                    break;
-            }
-
-            this.Invoke(new EventHandler(delegate
-            {
-                SetLed(selectLed, connecte);
-            }));
-        }
-
-        private void SetLed(Led led, bool on)
-        {
-            if (on)
-                led.CouleurVert(true);
-            else
-                led.CouleurRouge(true);
-        }
 
         private void FenGoBot_FormClosing(object sender, FormClosingEventArgs e)
         {
@@ -175,9 +107,6 @@ namespace GoBot
             panelBalise3.Balise.VitesseRotation(0);
 
             SauverLogs();
-            /*Plateau.Balise1.writer.Close();
-            Plateau.Balise2.writer.Close();
-            Plateau.Balise3.writer.Close();*/
         }
 
         private void SauverLogs()
@@ -185,6 +114,9 @@ namespace GoBot
             Connexions.ConnexionMiwi.Sauvegarde.Sauvegarder("./Logs/ConnexionMiwi.tlog");
             Connexions.ConnexionMove.Sauvegarde.Sauvegarder("./Logs/ConnexionMove.tlog");
             Connexions.ConnexionPi.Sauvegarde.Sauvegarder("./Logs/ConnexionPi.tlog");
+
+            Robots.GrosRobot.Historique.Sauvegarder("./Logs/ActionsGros.hlog");
+            Robots.PetitRobot.Historique.Sauvegarder("./Logs/ActionsPetit.hlog");
         }
 
         private void btnClose_Click(object sender, EventArgs e)
@@ -338,86 +270,6 @@ namespace GoBot
             thRecallage.Start();
         }
 
-        private void btnAfficherTrame_Click(object sender, EventArgs e)
-        {
-            Connexions.ConnexionMiwi.NouvelleTrame += new ConnexionUDP.ReceptionDelegate(ReceptionTrame);
-            Connexions.ConnexionMove.NouvelleTrame += new ConnexionUDP.ReceptionDelegate(ReceptionTrame);
-
-            replay = new Replay();
-            Connexions.ConnexionMiwi.NouvelleTrame += new ConnexionUDP.ReceptionDelegate(replay.AjouterTrameEntrante);
-            Connexions.ConnexionMove.NouvelleTrame += new ConnexionUDP.ReceptionDelegate(replay.AjouterTrameEntrante);
-        }
-
-        Replay replay;
-        private void ReceptionTrame(Trame t)
-        {
-            if (t.Length < 1)
-                return;
-
-            Color couleur = Color.Black;
-            String texte = t.ToString();
-
-            switch (t[0])
-            {
-                case (Byte)Carte.RecMove:
-                    texte = "Move\t" + texte;
-                    couleur = Color.FromArgb(218, 37, 37);
-                    break;
-                /*case (Byte)Carte.RecIo:
-                    texte = "Io\t" + texte;
-                    couleur = Color.FromArgb(238, 111, 17);
-                    break;
-                case (Byte)Carte.RecPi:
-                    texte = "Pi\t" + texte;
-                    couleur = Color.FromArgb(5, 173, 10);
-                    break;*/
-                case (Byte)Carte.RecBun:
-                    texte = "Bun\t" + texte;
-                    couleur = Color.FromArgb(81, 101, 238);
-                    break;
-                case (Byte)Carte.RecBeu:
-                    texte = "Beu\t" + texte;
-                    couleur = Color.FromArgb(20, 44, 205);
-                    break;
-                case (Byte)Carte.RecBoi:
-                    texte = "Boi\t" + texte;
-                    couleur = Color.FromArgb(11, 24, 117);
-                    break;
-            }
-
-            if (InvokeRequired)
-                this.Invoke(new EventHandler(delegate
-                {
-                    txtTrames.AjouterLigne(texte, couleur);
-                }));
-            else
-                txtTrames.AjouterLigne(texte, couleur);
-        }
-
-        private void btnSaveReplay_Click(object sender, EventArgs e)
-        {
-            using(SaveFileDialog open = new SaveFileDialog())
-                if (open.ShowDialog() == System.Windows.Forms.DialogResult.OK)
-                    replay.Sauvegarder(open.FileName);
-        }
-
-        private void btnChargerReplay_Click(object sender, EventArgs e)
-        {
-            using(OpenFileDialog open = new OpenFileDialog())
-                if (open.ShowDialog() == System.Windows.Forms.DialogResult.OK)
-                {
-                    replay = new Replay();
-                    replay.Charger(open.FileName);
-                }
-        }
-
-        Thread threadReplay;
-        private void btnRejouerReplay_Click(object sender, EventArgs e)
-        {
-            threadReplay = new Thread(replay.Rejouer);
-            threadReplay.Start();
-        }
-
         private void FenGoBot_Load(object sender, EventArgs e)
         {
             Plateau.NotreCouleurChange += new EventHandler(Plateau_NotreCouleurChange);
@@ -425,26 +277,6 @@ namespace GoBot
             btnCouleurBleu_Click(null, null);
             Connexions.ConnexionMove.SendMessage(TrameFactory.DemandeCouleurEquipe());
 
-            Connexions.ConnexionMove.ConnexionCheck.ConnexionChange += new ConnexionCheck.ConnexionChangeDelegate(ConnexionMoveCheck_ConnexionChange);
-            Connexions.ConnexionMiwi.ConnexionCheck.ConnexionChange += new ConnexionCheck.ConnexionChangeDelegate(ConnexionMiwiCheck_ConnexionChange);
-            Connexions.ConnexionPi.ConnexionCheck.ConnexionChange += new ConnexionCheck.ConnexionChangeDelegate(ConnexionPiCheck_ConnexionChange);
-
-            panelBalise1.Balise.ConnexionCheck.ConnexionChange += new ConnexionCheck.ConnexionChangeDelegate(ConnexionBunCheck_ConnexionChange);
-            panelBalise2.Balise.ConnexionCheck.ConnexionChange += new ConnexionCheck.ConnexionChangeDelegate(ConnexionBeuCheck_ConnexionChange);
-            panelBalise3.Balise.ConnexionCheck.ConnexionChange += new ConnexionCheck.ConnexionChangeDelegate(ConnexionBoiCheck_ConnexionChange);
-
-            if (Connexions.ConnexionMove.ConnexionCheck.Connecte)
-                SetLed(ledRecMove, true);
-            if (Connexions.ConnexionMiwi.ConnexionCheck.Connecte)
-                SetLed(ledRecMiwi, true);
-            if (Connexions.ConnexionPi.ConnexionCheck.Connecte)
-                SetLed(ledRecPi, true);
-            if (panelBalise1.Balise.ConnexionCheck.Connecte)
-                SetLed(ledRecBun, true);
-            if (panelBalise2.Balise.ConnexionCheck.Connecte)
-                SetLed(ledRecBeu, true);
-            if (panelBalise3.Balise.ConnexionCheck.Connecte)
-                SetLed(ledRecBoi, true);
 
             try
             {
@@ -479,8 +311,9 @@ namespace GoBot
             Robots.Simuler(switchBoutonSimu.Actif);
             panelGrosRobot.Init();
             panelPetitRobot.Init();
-            Robots.GrosRobot.Historique.NouvelleAction += new Historique.DelegateAction(HistoriqueGR_nouvelleAction);
-            Robots.PetitRobot.Historique.NouvelleAction += new Historique.DelegateAction(HistoriquePR_nouvelleAction);
+            // todo
+            //Robots.GrosRobot.Historique.NouvelleAction += new Historique.DelegateAction(HistoriqueGR_nouvelleAction);
+            //Robots.PetitRobot.Historique.NouvelleAction += new Historique.DelegateAction(HistoriquePR_nouvelleAction);
         }
 
         private void btnRecallageGR_Click(object sender, EventArgs e)
@@ -500,12 +333,6 @@ namespace GoBot
             panel.Robot = Robots.GrosRobot;
             fen = new Fenetre(panel);
             fen.TopMost = true;
-            fen.Show();
-        }
-
-        private void button1_Click(object sender, EventArgs e)
-        {
-            Fenetre fen = new Fenetre(new PanelLogs());
             fen.Show();
         }
     }

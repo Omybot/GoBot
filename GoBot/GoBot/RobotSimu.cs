@@ -290,7 +290,7 @@ namespace GoBot
         {
             Historique = new Historique();
             if (this == Robots.PetitRobot)
-                Position = new Calculs.Position(new Angle(0, AnglyeType.Degre), new PointReel(1500, 1500));
+                Position = new Calculs.Position(new Angle(0, AnglyeType.Degre), new PointReel(1500, 1600));
             else
                 Position = new Calculs.Position(new Angle(0, AnglyeType.Degre), new PointReel(1500, 400));
 

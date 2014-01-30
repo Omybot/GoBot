@@ -29,21 +29,10 @@ namespace GoBot
         /// </summary>
         private void InitializeComponent()
         {
-            this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FenGoBot));
             this.tabControl = new System.Windows.Forms.TabControl();
             this.tabGrosRobot = new System.Windows.Forms.TabPage();
             this.tabPetitRobot = new System.Windows.Forms.TabPage();
-            this.tabLog = new System.Windows.Forms.TabPage();
-            this.btnRejouerReplay = new System.Windows.Forms.Button();
-            this.btnChargerReplay = new System.Windows.Forms.Button();
-            this.btnResetTrames = new System.Windows.Forms.Button();
-            this.btnAfficherTrame = new System.Windows.Forms.Button();
-            this.label7 = new System.Windows.Forms.Label();
-            this.label6 = new System.Windows.Forms.Label();
-            this.txtTrames = new Composants.RichTextBoxPlus(this.components);
-            this.btnSaveReplay = new System.Windows.Forms.Button();
-            this.txtLogComplet = new Composants.RichTextBoxPlus(this.components);
             this.tabMatch = new System.Windows.Forms.TabPage();
             this.led2 = new Composants.Led();
             this.btnDegommage = new System.Windows.Forms.Button();
@@ -75,22 +64,12 @@ namespace GoBot
             this.btnPiloteGros = new System.Windows.Forms.Button();
             this.tabCamera = new System.Windows.Forms.TabPage();
             this.tabReglagePID = new System.Windows.Forms.TabPage();
-            this.lblRecMove = new System.Windows.Forms.Label();
-            this.lblRecIo = new System.Windows.Forms.Label();
-            this.lblRecPi = new System.Windows.Forms.Label();
-            this.lblRecBeu = new System.Windows.Forms.Label();
-            this.lblRecBun = new System.Windows.Forms.Label();
-            this.lblRecBoi = new System.Windows.Forms.Label();
+            this.tabLogsUdp = new System.Windows.Forms.TabPage();
+            this.tabPage1 = new System.Windows.Forms.TabPage();
             this.lblSimulation = new System.Windows.Forms.Label();
             this.btnClose = new System.Windows.Forms.Button();
             this.switchBoutonSimu = new Composants.SwitchBouton();
-            this.ledRecBoi = new Composants.Led();
-            this.ledRecBeu = new Composants.Led();
-            this.ledRecBun = new Composants.Led();
-            this.ledRecPi = new Composants.Led();
-            this.ledRecMiwi = new Composants.Led();
-            this.ledRecMove = new Composants.Led();
-            this.button1 = new System.Windows.Forms.Button();
+            this.panelConnexions = new GoBot.IHM.PanelConnexions();
             this.panelGrosRobot = new GoBot.IHM.PanelGrosRobot();
             this.panelPetitRobot = new GoBot.IHM.PanelPetitRobot();
             this.panelBalise3 = new GoBot.IHM.PanelBalise();
@@ -103,10 +82,10 @@ namespace GoBot
             this.panelTable = new GoBot.IHM.PanelTable();
             this.panelCamera = new GoBot.IHM.PanelCamera();
             this.panelReglageAsserv = new GoBot.IHM.PanelReglageAsserv();
+            this.panelLogs1 = new GoBot.IHM.PanelLogsTrames();
             this.tabControl.SuspendLayout();
             this.tabGrosRobot.SuspendLayout();
             this.tabPetitRobot.SuspendLayout();
-            this.tabLog.SuspendLayout();
             this.tabMatch.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.led2)).BeginInit();
             this.groupBox1.SuspendLayout();
@@ -121,12 +100,7 @@ namespace GoBot
             this.tabTable.SuspendLayout();
             this.tabCamera.SuspendLayout();
             this.tabReglagePID.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.ledRecBoi)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.ledRecBeu)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.ledRecBun)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.ledRecPi)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.ledRecMiwi)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.ledRecMove)).BeginInit();
+            this.tabLogsUdp.SuspendLayout();
             this.SuspendLayout();
             // 
             // tabControl
@@ -136,7 +110,6 @@ namespace GoBot
             | System.Windows.Forms.AnchorStyles.Right)));
             this.tabControl.Controls.Add(this.tabGrosRobot);
             this.tabControl.Controls.Add(this.tabPetitRobot);
-            this.tabControl.Controls.Add(this.tabLog);
             this.tabControl.Controls.Add(this.tabMatch);
             this.tabControl.Controls.Add(this.tabBalises);
             this.tabControl.Controls.Add(this.tabDiagBalises);
@@ -144,6 +117,8 @@ namespace GoBot
             this.tabControl.Controls.Add(this.tabTable);
             this.tabControl.Controls.Add(this.tabCamera);
             this.tabControl.Controls.Add(this.tabReglagePID);
+            this.tabControl.Controls.Add(this.tabLogsUdp);
+            this.tabControl.Controls.Add(this.tabPage1);
             this.tabControl.HotTrack = true;
             this.tabControl.Location = new System.Drawing.Point(0, 0);
             this.tabControl.Name = "tabControl";
@@ -170,115 +145,6 @@ namespace GoBot
             this.tabPetitRobot.TabIndex = 2;
             this.tabPetitRobot.Text = "Petit Robot";
             this.tabPetitRobot.UseVisualStyleBackColor = true;
-            // 
-            // tabLog
-            // 
-            this.tabLog.Controls.Add(this.button1);
-            this.tabLog.Controls.Add(this.btnRejouerReplay);
-            this.tabLog.Controls.Add(this.btnChargerReplay);
-            this.tabLog.Controls.Add(this.btnResetTrames);
-            this.tabLog.Controls.Add(this.btnAfficherTrame);
-            this.tabLog.Controls.Add(this.label7);
-            this.tabLog.Controls.Add(this.label6);
-            this.tabLog.Controls.Add(this.txtTrames);
-            this.tabLog.Controls.Add(this.btnSaveReplay);
-            this.tabLog.Controls.Add(this.txtLogComplet);
-            this.tabLog.Location = new System.Drawing.Point(4, 22);
-            this.tabLog.Name = "tabLog";
-            this.tabLog.Padding = new System.Windows.Forms.Padding(3);
-            this.tabLog.Size = new System.Drawing.Size(1300, 712);
-            this.tabLog.TabIndex = 1;
-            this.tabLog.Text = "Logs";
-            this.tabLog.UseVisualStyleBackColor = true;
-            // 
-            // btnRejouerReplay
-            // 
-            this.btnRejouerReplay.Location = new System.Drawing.Point(111, 151);
-            this.btnRejouerReplay.Name = "btnRejouerReplay";
-            this.btnRejouerReplay.Size = new System.Drawing.Size(75, 23);
-            this.btnRejouerReplay.TabIndex = 8;
-            this.btnRejouerReplay.Text = "Rejouer";
-            this.btnRejouerReplay.UseVisualStyleBackColor = true;
-            this.btnRejouerReplay.Click += new System.EventHandler(this.btnRejouerReplay_Click);
-            // 
-            // btnChargerReplay
-            // 
-            this.btnChargerReplay.Location = new System.Drawing.Point(6, 151);
-            this.btnChargerReplay.Name = "btnChargerReplay";
-            this.btnChargerReplay.Size = new System.Drawing.Size(99, 23);
-            this.btnChargerReplay.TabIndex = 7;
-            this.btnChargerReplay.Text = "Charger un replay";
-            this.btnChargerReplay.UseVisualStyleBackColor = true;
-            this.btnChargerReplay.Click += new System.EventHandler(this.btnChargerReplay_Click);
-            // 
-            // btnResetTrames
-            // 
-            this.btnResetTrames.Location = new System.Drawing.Point(124, 32);
-            this.btnResetTrames.Name = "btnResetTrames";
-            this.btnResetTrames.Size = new System.Drawing.Size(52, 23);
-            this.btnResetTrames.TabIndex = 6;
-            this.btnResetTrames.Text = "Reset";
-            this.btnResetTrames.UseVisualStyleBackColor = true;
-            // 
-            // btnAfficherTrame
-            // 
-            this.btnAfficherTrame.Location = new System.Drawing.Point(6, 32);
-            this.btnAfficherTrame.Name = "btnAfficherTrame";
-            this.btnAfficherTrame.Size = new System.Drawing.Size(112, 23);
-            this.btnAfficherTrame.TabIndex = 5;
-            this.btnAfficherTrame.Text = "Afficher les trames";
-            this.btnAfficherTrame.UseVisualStyleBackColor = true;
-            this.btnAfficherTrame.Click += new System.EventHandler(this.btnAfficherTrame_Click);
-            // 
-            // label7
-            // 
-            this.label7.AutoSize = true;
-            this.label7.Location = new System.Drawing.Point(144, 8);
-            this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(48, 13);
-            this.label7.TabIndex = 4;
-            this.label7.Text = "Trames :";
-            // 
-            // label6
-            // 
-            this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(584, 8);
-            this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(48, 13);
-            this.label6.TabIndex = 3;
-            this.label6.Text = "Actions :";
-            // 
-            // txtTrames
-            // 
-            this.txtTrames.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left)));
-            this.txtTrames.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.txtTrames.Location = new System.Drawing.Point(198, 6);
-            this.txtTrames.Name = "txtTrames";
-            this.txtTrames.Size = new System.Drawing.Size(380, 0);
-            this.txtTrames.TabIndex = 2;
-            this.txtTrames.Text = "";
-            // 
-            // btnSaveReplay
-            // 
-            this.btnSaveReplay.Location = new System.Drawing.Point(6, 95);
-            this.btnSaveReplay.Name = "btnSaveReplay";
-            this.btnSaveReplay.Size = new System.Drawing.Size(113, 23);
-            this.btnSaveReplay.TabIndex = 1;
-            this.btnSaveReplay.Text = "Enregistrer le replay";
-            this.btnSaveReplay.UseVisualStyleBackColor = true;
-            this.btnSaveReplay.Click += new System.EventHandler(this.btnSaveReplay_Click);
-            // 
-            // txtLogComplet
-            // 
-            this.txtLogComplet.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left)));
-            this.txtLogComplet.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.txtLogComplet.Location = new System.Drawing.Point(638, 6);
-            this.txtLogComplet.Name = "txtLogComplet";
-            this.txtLogComplet.Size = new System.Drawing.Size(352, 0);
-            this.txtLogComplet.TabIndex = 0;
-            this.txtLogComplet.Text = "";
             // 
             // tabMatch
             // 
@@ -623,65 +489,25 @@ namespace GoBot
             this.tabReglagePID.Text = "Réglage PID";
             this.tabReglagePID.UseVisualStyleBackColor = true;
             // 
-            // lblRecMove
+            // tabLogsUdp
             // 
-            this.lblRecMove.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.lblRecMove.AutoSize = true;
-            this.lblRecMove.Location = new System.Drawing.Point(38, 742);
-            this.lblRecMove.Name = "lblRecMove";
-            this.lblRecMove.Size = new System.Drawing.Size(54, 13);
-            this.lblRecMove.TabIndex = 27;
-            this.lblRecMove.Text = "RecMove";
+            this.tabLogsUdp.Controls.Add(this.panelLogs1);
+            this.tabLogsUdp.Location = new System.Drawing.Point(4, 22);
+            this.tabLogsUdp.Name = "tabLogsUdp";
+            this.tabLogsUdp.Padding = new System.Windows.Forms.Padding(3);
+            this.tabLogsUdp.Size = new System.Drawing.Size(1300, 712);
+            this.tabLogsUdp.TabIndex = 14;
+            this.tabLogsUdp.Text = "Logs UDP";
+            this.tabLogsUdp.UseVisualStyleBackColor = true;
             // 
-            // lblRecIo
+            // tabPage1
             // 
-            this.lblRecIo.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.lblRecIo.AutoSize = true;
-            this.lblRecIo.Location = new System.Drawing.Point(204, 742);
-            this.lblRecIo.Name = "lblRecIo";
-            this.lblRecIo.Size = new System.Drawing.Size(48, 13);
-            this.lblRecIo.TabIndex = 29;
-            this.lblRecIo.Text = "RecMiwi";
-            // 
-            // lblRecPi
-            // 
-            this.lblRecPi.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.lblRecPi.AutoSize = true;
-            this.lblRecPi.Location = new System.Drawing.Point(352, 742);
-            this.lblRecPi.Name = "lblRecPi";
-            this.lblRecPi.Size = new System.Drawing.Size(36, 13);
-            this.lblRecPi.TabIndex = 33;
-            this.lblRecPi.Text = "RecPi";
-            // 
-            // lblRecBeu
-            // 
-            this.lblRecBeu.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.lblRecBeu.AutoSize = true;
-            this.lblRecBeu.Location = new System.Drawing.Point(658, 742);
-            this.lblRecBeu.Name = "lblRecBeu";
-            this.lblRecBeu.Size = new System.Drawing.Size(46, 13);
-            this.lblRecBeu.TabIndex = 39;
-            this.lblRecBeu.Text = "RecBeu";
-            // 
-            // lblRecBun
-            // 
-            this.lblRecBun.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.lblRecBun.AutoSize = true;
-            this.lblRecBun.Location = new System.Drawing.Point(500, 742);
-            this.lblRecBun.Name = "lblRecBun";
-            this.lblRecBun.Size = new System.Drawing.Size(46, 13);
-            this.lblRecBun.TabIndex = 37;
-            this.lblRecBun.Text = "RecBun";
-            // 
-            // lblRecBoi
-            // 
-            this.lblRecBoi.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.lblRecBoi.AutoSize = true;
-            this.lblRecBoi.Location = new System.Drawing.Point(816, 742);
-            this.lblRecBoi.Name = "lblRecBoi";
-            this.lblRecBoi.Size = new System.Drawing.Size(42, 13);
-            this.lblRecBoi.TabIndex = 43;
-            this.lblRecBoi.Text = "RecBoi";
+            this.tabPage1.Location = new System.Drawing.Point(4, 22);
+            this.tabPage1.Name = "tabPage1";
+            this.tabPage1.Size = new System.Drawing.Size(1300, 712);
+            this.tabPage1.TabIndex = 15;
+            this.tabPage1.Text = "tabLogsActions";
+            this.tabPage1.UseVisualStyleBackColor = true;
             // 
             // lblSimulation
             // 
@@ -715,81 +541,14 @@ namespace GoBot
             this.switchBoutonSimu.TabIndex = 73;
             this.switchBoutonSimu.ChangementEtat += new System.EventHandler(this.switchBoutonSimu_ChangementEtat);
             // 
-            // ledRecBoi
+            // panelConnexions
             // 
-            this.ledRecBoi.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.ledRecBoi.Etat = false;
-            this.ledRecBoi.Image = ((System.Drawing.Image)(resources.GetObject("ledRecBoi.Image")));
-            this.ledRecBoi.Location = new System.Drawing.Point(794, 741);
-            this.ledRecBoi.Name = "ledRecBoi";
-            this.ledRecBoi.Size = new System.Drawing.Size(16, 16);
-            this.ledRecBoi.TabIndex = 42;
-            this.ledRecBoi.TabStop = false;
-            // 
-            // ledRecBeu
-            // 
-            this.ledRecBeu.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.ledRecBeu.Etat = false;
-            this.ledRecBeu.Image = ((System.Drawing.Image)(resources.GetObject("ledRecBeu.Image")));
-            this.ledRecBeu.Location = new System.Drawing.Point(636, 741);
-            this.ledRecBeu.Name = "ledRecBeu";
-            this.ledRecBeu.Size = new System.Drawing.Size(16, 16);
-            this.ledRecBeu.TabIndex = 38;
-            this.ledRecBeu.TabStop = false;
-            // 
-            // ledRecBun
-            // 
-            this.ledRecBun.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.ledRecBun.Etat = false;
-            this.ledRecBun.Image = ((System.Drawing.Image)(resources.GetObject("ledRecBun.Image")));
-            this.ledRecBun.Location = new System.Drawing.Point(478, 741);
-            this.ledRecBun.Name = "ledRecBun";
-            this.ledRecBun.Size = new System.Drawing.Size(16, 16);
-            this.ledRecBun.TabIndex = 36;
-            this.ledRecBun.TabStop = false;
-            // 
-            // ledRecPi
-            // 
-            this.ledRecPi.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.ledRecPi.Etat = false;
-            this.ledRecPi.Image = ((System.Drawing.Image)(resources.GetObject("ledRecPi.Image")));
-            this.ledRecPi.Location = new System.Drawing.Point(330, 741);
-            this.ledRecPi.Name = "ledRecPi";
-            this.ledRecPi.Size = new System.Drawing.Size(16, 16);
-            this.ledRecPi.TabIndex = 32;
-            this.ledRecPi.TabStop = false;
-            // 
-            // ledRecMiwi
-            // 
-            this.ledRecMiwi.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.ledRecMiwi.Etat = false;
-            this.ledRecMiwi.Image = ((System.Drawing.Image)(resources.GetObject("ledRecMiwi.Image")));
-            this.ledRecMiwi.Location = new System.Drawing.Point(182, 741);
-            this.ledRecMiwi.Name = "ledRecMiwi";
-            this.ledRecMiwi.Size = new System.Drawing.Size(16, 16);
-            this.ledRecMiwi.TabIndex = 28;
-            this.ledRecMiwi.TabStop = false;
-            // 
-            // ledRecMove
-            // 
-            this.ledRecMove.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.ledRecMove.Etat = false;
-            this.ledRecMove.Image = ((System.Drawing.Image)(resources.GetObject("ledRecMove.Image")));
-            this.ledRecMove.Location = new System.Drawing.Point(16, 741);
-            this.ledRecMove.Name = "ledRecMove";
-            this.ledRecMove.Size = new System.Drawing.Size(16, 16);
-            this.ledRecMove.TabIndex = 26;
-            this.ledRecMove.TabStop = false;
-            // 
-            // button1
-            // 
-            this.button1.Location = new System.Drawing.Point(13, 61);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(75, 23);
-            this.button1.TabIndex = 9;
-            this.button1.Text = "button1";
-            this.button1.UseVisualStyleBackColor = true;
-            this.button1.Click += new System.EventHandler(this.button1_Click);
+            this.panelConnexions.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.panelConnexions.BackColor = System.Drawing.Color.White;
+            this.panelConnexions.Location = new System.Drawing.Point(0, 735);
+            this.panelConnexions.Name = "panelConnexions";
+            this.panelConnexions.Size = new System.Drawing.Size(688, 27);
+            this.panelConnexions.TabIndex = 74;
             // 
             // panelGrosRobot
             // 
@@ -898,6 +657,15 @@ namespace GoBot
             this.panelReglageAsserv.Size = new System.Drawing.Size(1294, 706);
             this.panelReglageAsserv.TabIndex = 0;
             // 
+            // panelLogs1
+            // 
+            this.panelLogs1.BackColor = System.Drawing.Color.Transparent;
+            this.panelLogs1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.panelLogs1.Location = new System.Drawing.Point(3, 3);
+            this.panelLogs1.Name = "panelLogs1";
+            this.panelLogs1.Size = new System.Drawing.Size(1294, 706);
+            this.panelLogs1.TabIndex = 0;
+            // 
             // FenGoBot
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -907,19 +675,8 @@ namespace GoBot
             this.Controls.Add(this.switchBoutonSimu);
             this.Controls.Add(this.lblSimulation);
             this.Controls.Add(this.btnClose);
-            this.Controls.Add(this.lblRecBoi);
-            this.Controls.Add(this.ledRecBoi);
-            this.Controls.Add(this.lblRecBeu);
-            this.Controls.Add(this.ledRecBeu);
-            this.Controls.Add(this.lblRecBun);
-            this.Controls.Add(this.ledRecBun);
-            this.Controls.Add(this.lblRecPi);
-            this.Controls.Add(this.ledRecPi);
-            this.Controls.Add(this.lblRecIo);
-            this.Controls.Add(this.ledRecMiwi);
-            this.Controls.Add(this.lblRecMove);
-            this.Controls.Add(this.ledRecMove);
             this.Controls.Add(this.tabControl);
+            this.Controls.Add(this.panelConnexions);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MinimumSize = new System.Drawing.Size(1024, 600);
@@ -931,8 +688,6 @@ namespace GoBot
             this.tabControl.ResumeLayout(false);
             this.tabGrosRobot.ResumeLayout(false);
             this.tabPetitRobot.ResumeLayout(false);
-            this.tabLog.ResumeLayout(false);
-            this.tabLog.PerformLayout();
             this.tabMatch.ResumeLayout(false);
             this.tabMatch.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.led2)).EndInit();
@@ -949,12 +704,7 @@ namespace GoBot
             this.tabTable.ResumeLayout(false);
             this.tabCamera.ResumeLayout(false);
             this.tabReglagePID.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.ledRecBoi)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.ledRecBeu)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.ledRecBun)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.ledRecPi)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.ledRecMiwi)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.ledRecMove)).EndInit();
+            this.tabLogsUdp.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -964,23 +714,9 @@ namespace GoBot
 
         private System.Windows.Forms.TabControl tabControl;
         private System.Windows.Forms.TabPage tabPetitRobot;
-        private System.Windows.Forms.TabPage tabLog;
-        private Composants.Led ledRecMove;
-        private System.Windows.Forms.Label lblRecMove;
-        private System.Windows.Forms.Label lblRecIo;
-        private Composants.Led ledRecMiwi;
-        private System.Windows.Forms.Label lblRecPi;
-        private Composants.Led ledRecPi;
-        private System.Windows.Forms.Label lblRecBeu;
-        private Composants.Led ledRecBeu;
-        private System.Windows.Forms.Label lblRecBun;
-        private Composants.Led ledRecBun;
-        private System.Windows.Forms.Label lblRecBoi;
-        private Composants.Led ledRecBoi;
         private System.Windows.Forms.TabPage tabGrosRobot;
         private IHM.PanelGrosRobot panelGrosRobot;
         private System.Windows.Forms.Button btnClose;
-        private Composants.RichTextBoxPlus txtLogComplet;
         private System.Windows.Forms.TabPage tabMatch;
         private System.Windows.Forms.TabPage tabBalises;
         private PanelBalise panelBalise3;
@@ -1008,14 +744,6 @@ namespace GoBot
         private Composants.Led ledRecallage;
         private Composants.Led led1;
         private System.Windows.Forms.Label label5;
-        private Composants.RichTextBoxPlus txtTrames;
-        private System.Windows.Forms.Button btnSaveReplay;
-        private System.Windows.Forms.Label label7;
-        private System.Windows.Forms.Label label6;
-        private System.Windows.Forms.Button btnAfficherTrame;
-        private System.Windows.Forms.Button btnResetTrames;
-        private System.Windows.Forms.Button btnChargerReplay;
-        private System.Windows.Forms.Button btnRejouerReplay;
         private System.Windows.Forms.Label lblSimulation;
         private Composants.SwitchBouton switchBoutonSimu;
         private System.Windows.Forms.TabPage tabCamera;
@@ -1033,7 +761,10 @@ namespace GoBot
         private PanelDiagnosticBalise panelDiagnosticBalise3;
         private PanelDiagnosticBalise panelDiagnosticBalise2;
         private PanelDiagnosticBalise panelDiagnosticBalise1;
-        private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.TabPage tabLogsUdp;
+        private PanelLogsTrames panelLogs1;
+        private System.Windows.Forms.TabPage tabPage1;
+        private PanelConnexions panelConnexions;
     }
 }
 
