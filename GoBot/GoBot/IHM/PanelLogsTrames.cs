@@ -25,6 +25,8 @@ namespace GoBot.IHM
         private Dictionary<TrameFactory.FonctionMove, bool> dicMessagesMoveAutorises;
         private Dictionary<TrameFactory.FonctionMove, bool> dicMessagesPiAutorises;
         private Dictionary<TrameFactory.FonctionBalise, bool> dicMessagesBaliseAutorises;
+        private Dictionary<Carte, bool> dicExpediteurAutorises;
+        private Dictionary<Carte, bool> dicDestinataireAutorises;
 
         private DateTime dateDebut;
         private DateTime datePrec;
@@ -47,9 +49,9 @@ namespace GoBot.IHM
             dataGridViewLog.Columns.Add("Heure", "Heure");
             dataGridViewLog.Columns[3].Width = 80;
             dataGridViewLog.Columns.Add("Message", "Message");
-            dataGridViewLog.Columns[4].Width = 400;
+            dataGridViewLog.Columns[4].Width = 320;
             dataGridViewLog.Columns.Add("Trame", "Trame");
-            dataGridViewLog.Columns[5].Width = 285;
+            dataGridViewLog.Columns[5].Width = dataGridViewLog.Width - 18 - dataGridViewLog.Columns[0].Width - dataGridViewLog.Columns[1].Width - dataGridViewLog.Columns[2].Width - dataGridViewLog.Columns[3].Width - dataGridViewLog.Columns[4].Width;
 
             couleurCarte = new Dictionary<Carte, Color>();
             couleurCarte.Add(Carte.PC, Color.FromArgb(255, 235, 230));
@@ -62,6 +64,8 @@ namespace GoBot.IHM
             dicMessagesMoveAutorises = new Dictionary<TrameFactory.FonctionMove, bool>();
             dicMessagesPiAutorises = new Dictionary<TrameFactory.FonctionMove, bool>();
             dicMessagesBaliseAutorises = new Dictionary<TrameFactory.FonctionBalise, bool>();
+            dicDestinataireAutorises = new Dictionary<Carte, bool>();
+            dicExpediteurAutorises = new Dictionary<Carte, bool>();
 
             // L'ajout de champs déclenche le SetCheck event qui ajoute les éléments automatiquement dans le dictionnaire
             foreach (TrameFactory.FonctionMove fonction in Enum.GetValues(typeof(TrameFactory.FonctionMove)))
@@ -70,8 +74,13 @@ namespace GoBot.IHM
                 checkedListBoxPetit.Items.Add(fonction.ToString(), true);
             }
             foreach (TrameFactory.FonctionBalise fonction in Enum.GetValues(typeof(TrameFactory.FonctionBalise)))
-            { 
+            {
                 checkedListBoxBalise.Items.Add(fonction.ToString(), true);
+            }
+            foreach (Carte carte in Enum.GetValues(typeof(Carte)))
+            {
+                checkedListBoxExpediteur.Items.Add(carte.ToString(), true);
+                checkedListBoxDestinataire.Items.Add(carte.ToString(), true);
             }
 
         }
@@ -156,9 +165,7 @@ namespace GoBot.IHM
                         TrameReplay trameReplay = replay.Trames[Convert.ToInt32(dataGridViewLog["Id", index].Value)];
                         Trame trame = new Trame(trameReplay.Trame);
 
-                        Carte carte = (Carte)(trame[0]);
-                        if (carte == Carte.RecMiwi)
-                            carte = (Carte)trame[2];
+                        Carte carte = trame.Carte;
 
                         if (carte == Carte.RecMove)
                         {
@@ -252,8 +259,6 @@ namespace GoBot.IHM
         private void AfficherTrame(TrameReplay trameReplay)
         {
             Trame trame = new Trame(trameReplay.Trame);
-            Carte destinataire = trameReplay.Entrant ? Carte.PC : TrameFactory.Identifiant(trame);
-            Carte expediteur = trameReplay.Entrant ? TrameFactory.Identifiant(trame) : Carte.PC;
 
             String heure = "";
 
@@ -266,11 +271,21 @@ namespace GoBot.IHM
             if (rdoTempsPrecAff.Checked)
                 heure = (trameReplay.Date - datePrecAff).ToString(@"hh\:mm\:ss\:fff");
 
-            Carte carte = (Carte)trame[0];
-            if (carte == Carte.RecMiwi && (TrameFactory.FonctionMiwi)trame[1] == TrameFactory.FonctionMiwi.Transmettre)
-                carte = (Carte)trame[2];
+            Carte destinataire = trameReplay.Entrant ? Carte.PC : TrameFactory.Identifiant(trame);
+            Carte expediteur = trameReplay.Entrant ? TrameFactory.Identifiant(trame) : Carte.PC;
+            Carte carte = trame.Carte;
 
-            if (carte == Carte.RecMove && dicMessagesMoveAutorises[(TrameFactory.FonctionMove)trame[1]])
+            bool cartesAutorisees = false;
+            if (dicDestinataireAutorises[destinataire] && dicExpediteurAutorises[expediteur])
+                cartesAutorisees = true;
+
+            bool fonctionAutorisee = false;
+            if ((carte == Carte.RecMove && dicMessagesMoveAutorises[(TrameFactory.FonctionMove)trame[1]]) ||
+               (carte == Carte.RecPi && dicMessagesPiAutorises[(TrameFactory.FonctionMove)trame[1]]) ||
+               ((carte == Carte.RecBun || carte == Carte.RecBeu || carte == Carte.RecBoi) && dicMessagesBaliseAutorises[(TrameFactory.FonctionBalise)trame[3]]))
+                fonctionAutorisee = true;
+
+            if (cartesAutorisees && fonctionAutorisee)
             {
                 dataGridViewLog.Rows.Add(compteur, expediteur.ToString(), destinataire.ToString(), heure, TrameFactory.Decode(trame), trame.ToString());
                 datePrecAff = trameReplay.Date;
@@ -315,6 +330,122 @@ namespace GoBot.IHM
                     replaySelection.Trier();
                     threadReplay = new Thread(replaySelection.Rejouer);
                     threadReplay.Start();
+                }
+                catch (Exception)
+                {
+                }
+            }
+        }
+
+        private void checkedListBoxExpediteur_ItemCheck(object sender, ItemCheckEventArgs e)
+        {
+            String carteString = (String)checkedListBoxExpediteur.Items[e.Index];
+            Carte carte = (Carte)Enum.Parse(typeof(Carte), carteString);
+
+            dicExpediteurAutorises[carte] = (e.NewValue == CheckState.Checked);
+        }
+
+        private void checkedListBoxDestinataire_ItemCheck(object sender, ItemCheckEventArgs e)
+        {
+            String carteString = (String)checkedListBoxDestinataire.Items[e.Index];
+            Carte carte = (Carte)Enum.Parse(typeof(Carte), carteString);
+
+            dicDestinataireAutorises[carte] = (e.NewValue == CheckState.Checked);
+        }
+
+        private void checkedListBoxBalise_ItemCheck(object sender, ItemCheckEventArgs e)
+        {
+            String fonctionString = (String)checkedListBoxBalise.Items[e.Index];
+            TrameFactory.FonctionBalise fonction = (TrameFactory.FonctionBalise)Enum.Parse(typeof(TrameFactory.FonctionBalise), fonctionString);
+
+            dicMessagesBaliseAutorises[fonction] = (e.NewValue == CheckState.Checked);
+        }
+
+        private void checkedListBoxPetit_ItemCheck(object sender, ItemCheckEventArgs e)
+        {
+            String fonctionString = (String)checkedListBoxPetit.Items[e.Index];
+            TrameFactory.FonctionMove fonction = (TrameFactory.FonctionMove)Enum.Parse(typeof(TrameFactory.FonctionMove), fonctionString);
+
+            dicMessagesPiAutorises[fonction] = (e.NewValue == CheckState.Checked);
+        }
+
+        private void nePlusAfficherDeMessagesDeCetExpéditeurToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (dataGridViewLog.SelectedRows.Count >= 1)
+            {
+                try
+                {
+                    foreach (DataGridViewRow ligne in dataGridViewLog.SelectedRows)
+                    {
+                        int index = ligne.Index;
+                        TrameReplay trameReplay = replay.Trames[Convert.ToInt32(dataGridViewLog["Id", index].Value)];
+                        Trame trame = new Trame(trameReplay.Trame);
+
+                        Carte expediteur = trameReplay.Entrant ? TrameFactory.Identifiant(trame) : Carte.PC;
+
+                        checkedListBoxExpediteur.Items.Remove(expediteur.ToString());
+                        checkedListBoxExpediteur.Items.Add(expediteur.ToString(), false);
+                        dicExpediteurAutorises[expediteur] = false;
+                    }
+
+                    Afficher();
+                }
+                catch (Exception)
+                {
+                }
+            }
+        }
+
+        private void nePlusAfficherDeMessagesAvecCeDestinataireToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (dataGridViewLog.SelectedRows.Count >= 1)
+            {
+                try
+                {
+                    foreach (DataGridViewRow ligne in dataGridViewLog.SelectedRows)
+                    {
+                        int index = ligne.Index;
+                        TrameReplay trameReplay = replay.Trames[Convert.ToInt32(dataGridViewLog["Id", index].Value)];
+                        Trame trame = new Trame(trameReplay.Trame);
+
+                        Carte destinataire = trameReplay.Entrant ? Carte.PC : TrameFactory.Identifiant(trame);
+
+                        checkedListBoxDestinataire.Items.Remove(destinataire.ToString());
+                        checkedListBoxDestinataire.Items.Add(destinataire.ToString(), false);
+                        dicDestinataireAutorises[destinataire] = false;
+                    }
+
+                    Afficher();
+                }
+                catch (Exception)
+                {
+                }
+            }
+        }
+
+        private void nePlusAfficherDeMessagesDeCetteCarteToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (dataGridViewLog.SelectedRows.Count >= 1)
+            {
+                try
+                {
+                    foreach (DataGridViewRow ligne in dataGridViewLog.SelectedRows)
+                    {
+                        int index = ligne.Index;
+                        TrameReplay trameReplay = replay.Trames[Convert.ToInt32(dataGridViewLog["Id", index].Value)];
+                        Trame trame = new Trame(trameReplay.Trame);
+
+                        Carte carte = trame.Carte;
+
+                        checkedListBoxExpediteur.Items.Remove(carte.ToString());
+                        checkedListBoxExpediteur.Items.Add(carte.ToString(), false);
+                        dicExpediteurAutorises[carte] = false;
+                        checkedListBoxDestinataire.Items.Remove(carte.ToString());
+                        checkedListBoxDestinataire.Items.Add(carte.ToString(), false);
+                        dicDestinataireAutorises[carte] = false;
+                    }
+
+                    Afficher();
                 }
                 catch (Exception)
                 {

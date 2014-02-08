@@ -35,8 +35,8 @@
             this.nePlusAfficherCeTypeDeMessagesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.rdoAucun = new System.Windows.Forms.RadioButton();
-            this.rdoCarte = new System.Windows.Forms.RadioButton();
             this.rdoDest = new System.Windows.Forms.RadioButton();
+            this.rdoCarte = new System.Windows.Forms.RadioButton();
             this.rdoExp = new System.Windows.Forms.RadioButton();
             this.checkedListBoxGros = new System.Windows.Forms.CheckedListBox();
             this.btnRefresh = new System.Windows.Forms.Button();
@@ -55,16 +55,25 @@
             this.btnRejouerTout = new System.Windows.Forms.Button();
             this.btnRejouerSelection = new System.Windows.Forms.Button();
             this.boxScroll = new System.Windows.Forms.CheckBox();
+            this.groupBoxExpediteur = new System.Windows.Forms.GroupBox();
+            this.checkedListBoxExpediteur = new System.Windows.Forms.CheckedListBox();
+            this.checkedListBoxDestinataire = new System.Windows.Forms.CheckedListBox();
+            this.groupBoxDestinataire = new System.Windows.Forms.GroupBox();
+            this.nePlusAfficherDeMessagesDeCetExpéditeurToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.nePlusAfficherDeMessagesAvecCeDestinataireToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.nePlusAfficherDeMessagesDeCetteCarteToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewLog)).BeginInit();
             this.contextMenuStripRow.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.groupBox1.SuspendLayout();
             this.groupBoxMessages.SuspendLayout();
+            this.groupBoxExpediteur.SuspendLayout();
+            this.groupBoxDestinataire.SuspendLayout();
             this.SuspendLayout();
             // 
             // btnCharger
             // 
-            this.btnCharger.Location = new System.Drawing.Point(29, 24);
+            this.btnCharger.Location = new System.Drawing.Point(30, 33);
             this.btnCharger.Name = "btnCharger";
             this.btnCharger.Size = new System.Drawing.Size(104, 23);
             this.btnCharger.TabIndex = 0;
@@ -82,21 +91,24 @@
             this.dataGridViewLog.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.dataGridViewLog.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dataGridViewLog.ContextMenuStrip = this.contextMenuStripRow;
-            this.dataGridViewLog.Location = new System.Drawing.Point(325, 9);
+            this.dataGridViewLog.Location = new System.Drawing.Point(416, 9);
             this.dataGridViewLog.Name = "dataGridViewLog";
             this.dataGridViewLog.ReadOnly = true;
             this.dataGridViewLog.RowHeadersVisible = false;
             this.dataGridViewLog.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.dataGridViewLog.Size = new System.Drawing.Size(836, 657);
+            this.dataGridViewLog.Size = new System.Drawing.Size(854, 657);
             this.dataGridViewLog.TabIndex = 1;
             this.dataGridViewLog.CellMouseDown += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.dataGridViewLog_CellMouseDown);
             // 
             // contextMenuStripRow
             // 
             this.contextMenuStripRow.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.nePlusAfficherCeTypeDeMessagesToolStripMenuItem});
+            this.nePlusAfficherCeTypeDeMessagesToolStripMenuItem,
+            this.nePlusAfficherDeMessagesDeCetExpéditeurToolStripMenuItem,
+            this.nePlusAfficherDeMessagesAvecCeDestinataireToolStripMenuItem,
+            this.nePlusAfficherDeMessagesDeCetteCarteToolStripMenuItem});
             this.contextMenuStripRow.Name = "contextMenuStripRow";
-            this.contextMenuStripRow.Size = new System.Drawing.Size(269, 26);
+            this.contextMenuStripRow.Size = new System.Drawing.Size(368, 114);
             // 
             // nePlusAfficherCeTypeDeMessagesToolStripMenuItem
             // 
@@ -111,7 +123,7 @@
             this.groupBox2.Controls.Add(this.rdoDest);
             this.groupBox2.Controls.Add(this.rdoCarte);
             this.groupBox2.Controls.Add(this.rdoExp);
-            this.groupBox2.Location = new System.Drawing.Point(170, 3);
+            this.groupBox2.Location = new System.Drawing.Point(293, 129);
             this.groupBox2.Name = "groupBox2";
             this.groupBox2.Size = new System.Drawing.Size(117, 119);
             this.groupBox2.TabIndex = 14;
@@ -128,16 +140,6 @@
             this.rdoAucun.Text = "Aucun";
             this.rdoAucun.UseVisualStyleBackColor = true;
             // 
-            // rdoCarte
-            // 
-            this.rdoCarte.AutoSize = true;
-            this.rdoCarte.Location = new System.Drawing.Point(13, 67);
-            this.rdoCarte.Name = "rdoCarte";
-            this.rdoCarte.Size = new System.Drawing.Size(104, 17);
-            this.rdoCarte.TabIndex = 10;
-            this.rdoCarte.Text = "Carte concernée";
-            this.rdoCarte.UseVisualStyleBackColor = true;
-            // 
             // rdoDest
             // 
             this.rdoDest.AutoSize = true;
@@ -147,6 +149,16 @@
             this.rdoDest.TabIndex = 12;
             this.rdoDest.Text = "Destinataire";
             this.rdoDest.UseVisualStyleBackColor = true;
+            // 
+            // rdoCarte
+            // 
+            this.rdoCarte.AutoSize = true;
+            this.rdoCarte.Location = new System.Drawing.Point(13, 67);
+            this.rdoCarte.Name = "rdoCarte";
+            this.rdoCarte.Size = new System.Drawing.Size(104, 17);
+            this.rdoCarte.TabIndex = 10;
+            this.rdoCarte.Text = "Carte concernée";
+            this.rdoCarte.UseVisualStyleBackColor = true;
             // 
             // rdoExp
             // 
@@ -173,9 +185,9 @@
             // 
             // btnRefresh
             // 
-            this.btnRefresh.Location = new System.Drawing.Point(45, 70);
+            this.btnRefresh.Location = new System.Drawing.Point(30, 62);
             this.btnRefresh.Name = "btnRefresh";
-            this.btnRefresh.Size = new System.Drawing.Size(75, 23);
+            this.btnRefresh.Size = new System.Drawing.Size(104, 23);
             this.btnRefresh.TabIndex = 16;
             this.btnRefresh.Text = "Refresh";
             this.btnRefresh.UseVisualStyleBackColor = true;
@@ -245,6 +257,7 @@
             this.checkedListBoxPetit.Size = new System.Drawing.Size(177, 124);
             this.checkedListBoxPetit.Sorted = true;
             this.checkedListBoxPetit.TabIndex = 17;
+            this.checkedListBoxPetit.ItemCheck += new System.Windows.Forms.ItemCheckEventHandler(this.checkedListBoxPetit_ItemCheck);
             // 
             // checkedListBoxBalise
             // 
@@ -255,6 +268,7 @@
             this.checkedListBoxBalise.Size = new System.Drawing.Size(177, 124);
             this.checkedListBoxBalise.Sorted = true;
             this.checkedListBoxBalise.TabIndex = 18;
+            this.checkedListBoxBalise.ItemCheck += new System.Windows.Forms.ItemCheckEventHandler(this.checkedListBoxBalise_ItemCheck);
             // 
             // groupBoxMessages
             // 
@@ -300,7 +314,7 @@
             // 
             // btnAfficher
             // 
-            this.btnAfficher.Location = new System.Drawing.Point(1167, 9);
+            this.btnAfficher.Location = new System.Drawing.Point(293, 33);
             this.btnAfficher.Name = "btnAfficher";
             this.btnAfficher.Size = new System.Drawing.Size(106, 23);
             this.btnAfficher.TabIndex = 20;
@@ -310,7 +324,7 @@
             // 
             // btnRejouerTout
             // 
-            this.btnRejouerTout.Location = new System.Drawing.Point(1167, 87);
+            this.btnRejouerTout.Location = new System.Drawing.Point(159, 33);
             this.btnRejouerTout.Name = "btnRejouerTout";
             this.btnRejouerTout.Size = new System.Drawing.Size(106, 23);
             this.btnRejouerTout.TabIndex = 21;
@@ -320,7 +334,7 @@
             // 
             // btnRejouerSelection
             // 
-            this.btnRejouerSelection.Location = new System.Drawing.Point(1167, 116);
+            this.btnRejouerSelection.Location = new System.Drawing.Point(159, 63);
             this.btnRejouerSelection.Name = "btnRejouerSelection";
             this.btnRejouerSelection.Size = new System.Drawing.Size(106, 23);
             this.btnRejouerSelection.TabIndex = 22;
@@ -331,18 +345,83 @@
             // boxScroll
             // 
             this.boxScroll.AutoSize = true;
-            this.boxScroll.Location = new System.Drawing.Point(1177, 38);
+            this.boxScroll.Location = new System.Drawing.Point(306, 66);
             this.boxScroll.Name = "boxScroll";
             this.boxScroll.Size = new System.Drawing.Size(76, 17);
             this.boxScroll.TabIndex = 23;
             this.boxScroll.Text = "Scroll auto";
             this.boxScroll.UseVisualStyleBackColor = true;
             // 
+            // groupBoxExpediteur
+            // 
+            this.groupBoxExpediteur.Controls.Add(this.checkedListBoxExpediteur);
+            this.groupBoxExpediteur.Location = new System.Drawing.Point(293, 254);
+            this.groupBoxExpediteur.Name = "groupBoxExpediteur";
+            this.groupBoxExpediteur.Size = new System.Drawing.Size(117, 152);
+            this.groupBoxExpediteur.TabIndex = 24;
+            this.groupBoxExpediteur.TabStop = false;
+            this.groupBoxExpediteur.Text = "Expediteur";
+            // 
+            // checkedListBoxExpediteur
+            // 
+            this.checkedListBoxExpediteur.CheckOnClick = true;
+            this.checkedListBoxExpediteur.FormattingEnabled = true;
+            this.checkedListBoxExpediteur.Location = new System.Drawing.Point(6, 18);
+            this.checkedListBoxExpediteur.Name = "checkedListBoxExpediteur";
+            this.checkedListBoxExpediteur.Size = new System.Drawing.Size(105, 124);
+            this.checkedListBoxExpediteur.Sorted = true;
+            this.checkedListBoxExpediteur.TabIndex = 16;
+            this.checkedListBoxExpediteur.ItemCheck += new System.Windows.Forms.ItemCheckEventHandler(this.checkedListBoxExpediteur_ItemCheck);
+            // 
+            // checkedListBoxDestinataire
+            // 
+            this.checkedListBoxDestinataire.CheckOnClick = true;
+            this.checkedListBoxDestinataire.FormattingEnabled = true;
+            this.checkedListBoxDestinataire.Location = new System.Drawing.Point(6, 18);
+            this.checkedListBoxDestinataire.Name = "checkedListBoxDestinataire";
+            this.checkedListBoxDestinataire.Size = new System.Drawing.Size(105, 124);
+            this.checkedListBoxDestinataire.Sorted = true;
+            this.checkedListBoxDestinataire.TabIndex = 16;
+            this.checkedListBoxDestinataire.ItemCheck += new System.Windows.Forms.ItemCheckEventHandler(this.checkedListBoxDestinataire_ItemCheck);
+            // 
+            // groupBoxDestinataire
+            // 
+            this.groupBoxDestinataire.Controls.Add(this.checkedListBoxDestinataire);
+            this.groupBoxDestinataire.Location = new System.Drawing.Point(293, 412);
+            this.groupBoxDestinataire.Name = "groupBoxDestinataire";
+            this.groupBoxDestinataire.Size = new System.Drawing.Size(117, 152);
+            this.groupBoxDestinataire.TabIndex = 25;
+            this.groupBoxDestinataire.TabStop = false;
+            this.groupBoxDestinataire.Text = "Destinataire";
+            // 
+            // nePlusAfficherDeMessagesDeCetExpéditeurToolStripMenuItem
+            // 
+            this.nePlusAfficherDeMessagesDeCetExpéditeurToolStripMenuItem.Name = "nePlusAfficherDeMessagesDeCetExpéditeurToolStripMenuItem";
+            this.nePlusAfficherDeMessagesDeCetExpéditeurToolStripMenuItem.Size = new System.Drawing.Size(367, 22);
+            this.nePlusAfficherDeMessagesDeCetExpéditeurToolStripMenuItem.Text = "Ne plus afficher de messages avec le même expéditeur";
+            this.nePlusAfficherDeMessagesDeCetExpéditeurToolStripMenuItem.Click += new System.EventHandler(this.nePlusAfficherDeMessagesDeCetExpéditeurToolStripMenuItem_Click);
+            // 
+            // nePlusAfficherDeMessagesAvecCeDestinataireToolStripMenuItem
+            // 
+            this.nePlusAfficherDeMessagesAvecCeDestinataireToolStripMenuItem.Name = "nePlusAfficherDeMessagesAvecCeDestinataireToolStripMenuItem";
+            this.nePlusAfficherDeMessagesAvecCeDestinataireToolStripMenuItem.Size = new System.Drawing.Size(367, 22);
+            this.nePlusAfficherDeMessagesAvecCeDestinataireToolStripMenuItem.Text = "Ne plus afficher de messages avec le même destinataire";
+            this.nePlusAfficherDeMessagesAvecCeDestinataireToolStripMenuItem.Click += new System.EventHandler(this.nePlusAfficherDeMessagesAvecCeDestinataireToolStripMenuItem_Click);
+            // 
+            // nePlusAfficherDeMessagesDeCetteCarteToolStripMenuItem
+            // 
+            this.nePlusAfficherDeMessagesDeCetteCarteToolStripMenuItem.Name = "nePlusAfficherDeMessagesDeCetteCarteToolStripMenuItem";
+            this.nePlusAfficherDeMessagesDeCetteCarteToolStripMenuItem.Size = new System.Drawing.Size(367, 22);
+            this.nePlusAfficherDeMessagesDeCetteCarteToolStripMenuItem.Text = "Ne plus afficher de messages de cette carte";
+            this.nePlusAfficherDeMessagesDeCetteCarteToolStripMenuItem.Click += new System.EventHandler(this.nePlusAfficherDeMessagesDeCetteCarteToolStripMenuItem_Click);
+            // 
             // PanelLogsTrames
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.Transparent;
+            this.Controls.Add(this.groupBoxDestinataire);
+            this.Controls.Add(this.groupBoxExpediteur);
             this.Controls.Add(this.boxScroll);
             this.Controls.Add(this.btnRejouerSelection);
             this.Controls.Add(this.btnRejouerTout);
@@ -363,6 +442,8 @@
             this.groupBox1.PerformLayout();
             this.groupBoxMessages.ResumeLayout(false);
             this.groupBoxMessages.PerformLayout();
+            this.groupBoxExpediteur.ResumeLayout(false);
+            this.groupBoxDestinataire.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -396,6 +477,13 @@
         private System.Windows.Forms.Button btnRejouerTout;
         private System.Windows.Forms.Button btnRejouerSelection;
         private System.Windows.Forms.CheckBox boxScroll;
+        private System.Windows.Forms.GroupBox groupBoxExpediteur;
+        private System.Windows.Forms.CheckedListBox checkedListBoxExpediteur;
+        private System.Windows.Forms.CheckedListBox checkedListBoxDestinataire;
+        private System.Windows.Forms.GroupBox groupBoxDestinataire;
+        private System.Windows.Forms.ToolStripMenuItem nePlusAfficherDeMessagesDeCetExpéditeurToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem nePlusAfficherDeMessagesAvecCeDestinataireToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem nePlusAfficherDeMessagesDeCetteCarteToolStripMenuItem;
 
     }
 }

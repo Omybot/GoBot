@@ -967,29 +967,24 @@ namespace GoBot.Communications
                         }
                         break;
                     case (byte)Carte.RecMiwi:
-                        switch ((FonctionBalise)trame[2])
+                        switch ((FonctionMiwi)trame[1])
                         {
-                            case FonctionBalise.Detection:
-                                int valeurDetectionNombreTicksTour = trame[2] * 256 + trame[3];
-                                byte valeurDetectionNombre1 = trame[4];
-                                byte valeurDetectionNombre2 = trame[5];
-                                message = "Tour balise : " + valeurDetectionNombreTicksTour + " ticks/tour. Capteur 1: " + valeurDetectionNombre1 + " angles, Capteur 2 : " + valeurDetectionNombre2 + " angles";
+                            case FonctionMiwi.Transmettre:
+                                byte[] octets = trame.ToTabBytes();
+                                byte[] octetsExtrait = new byte[octets.Length - 1];
+                                for (int i = 2; i < octets.Length; i++)
+                                    octetsExtrait[i - 2] = octets[i];
+
+                                Trame trameInterne = new Trame(octetsExtrait);
+                                message = Decode(trameInterne);
                                 break;
-                            case FonctionBalise.Reset:
-                                message = "Envoi reset";
-                                break;
-                            case FonctionBalise.TestConnexion:
+                            case FonctionMiwi.TestConnexion:
                                 message = "Test connexion";
                                 break;
-                            case FonctionBalise.Vitesse:
-                                int vitesse = trame[2] * 256 + trame[3];
-                                message = "Envoi vitesse pwm " + vitesse;
-                                break;
-                            //case FonctionBalise.ErreurDetection:
-                            //    break;
-                            //case FonctionBalise.AckDetection:
-                            //    break;
                         }
+                        break;
+                    default:
+                        message = "Inconnu";
                         break;
                 }
             }
@@ -1015,7 +1010,6 @@ namespace GoBot.Communications
                             default:
                                 return Carte.RecMiwi;
                         }
-                        return (Carte)trame[2];
                     default:
                         return (Carte)trame[0];
                 }
