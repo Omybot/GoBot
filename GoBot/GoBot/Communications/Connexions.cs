@@ -34,12 +34,12 @@ namespace GoBot.Communications
 
         private static void ConnexionMiwiCheck_TestConnexion()
         {
-            ConnexionMiwi.SendMessage(TrameFactory.TestConnexionMove());
+            ConnexionMiwi.SendMessage(TrameFactory.TestConnexionMiwi());
         }
 
         private static void ConnexionPiCheck_TestConnexion()
         {
-            ConnexionPi.SendMessage(TrameFactory.TestConnexionMove());
+            ConnexionPi.SendMessage(TrameFactory.TestConnexionPi());
         }
     }
 }

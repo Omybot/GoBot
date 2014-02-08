@@ -1,6 +1,6 @@
 ﻿namespace GoBot.IHM
 {
-    partial class PanelLogsTrames
+    partial class PanelLogsEvents
     {
         /// <summary> 
         /// Variable nécessaire au concepteur.
@@ -35,26 +35,21 @@
             this.nePlusAfficherCeTypeDeMessagesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.rdoAucun = new System.Windows.Forms.RadioButton();
-            this.rdoCarte = new System.Windows.Forms.RadioButton();
-            this.rdoDest = new System.Windows.Forms.RadioButton();
-            this.rdoExp = new System.Windows.Forms.RadioButton();
-            this.checkedListBoxGros = new System.Windows.Forms.CheckedListBox();
+            this.rdoRobot = new System.Windows.Forms.RadioButton();
+            this.rdoType = new System.Windows.Forms.RadioButton();
             this.btnRefresh = new System.Windows.Forms.Button();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
-            this.rdoHeure = new System.Windows.Forms.RadioButton();
             this.rdoTempsDebut = new System.Windows.Forms.RadioButton();
+            this.rdoHeure = new System.Windows.Forms.RadioButton();
             this.rdoTempsPrecAff = new System.Windows.Forms.RadioButton();
             this.rdoTempsPrec = new System.Windows.Forms.RadioButton();
-            this.checkedListBoxPetit = new System.Windows.Forms.CheckedListBox();
-            this.checkedListBoxBalise = new System.Windows.Forms.CheckedListBox();
             this.groupBoxMessages = new System.Windows.Forms.GroupBox();
-            this.label2 = new System.Windows.Forms.Label();
+            this.btnAfficher = new System.Windows.Forms.Button();
+            this.boxScroll = new System.Windows.Forms.CheckBox();
+            this.checkedListBoxEvents = new System.Windows.Forms.CheckedListBox();
             this.label1 = new System.Windows.Forms.Label();
             this.lblGrosRobot = new System.Windows.Forms.Label();
-            this.btnAfficher = new System.Windows.Forms.Button();
-            this.btnRejouerTout = new System.Windows.Forms.Button();
-            this.btnRejouerSelection = new System.Windows.Forms.Button();
-            this.boxScroll = new System.Windows.Forms.CheckBox();
+            this.checkedListBoxRobots = new System.Windows.Forms.CheckedListBox();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewLog)).BeginInit();
             this.contextMenuStripRow.SuspendLayout();
             this.groupBox2.SuspendLayout();
@@ -108,9 +103,8 @@
             // groupBox2
             // 
             this.groupBox2.Controls.Add(this.rdoAucun);
-            this.groupBox2.Controls.Add(this.rdoDest);
-            this.groupBox2.Controls.Add(this.rdoCarte);
-            this.groupBox2.Controls.Add(this.rdoExp);
+            this.groupBox2.Controls.Add(this.rdoRobot);
+            this.groupBox2.Controls.Add(this.rdoType);
             this.groupBox2.Location = new System.Drawing.Point(170, 3);
             this.groupBox2.Name = "groupBox2";
             this.groupBox2.Size = new System.Drawing.Size(117, 119);
@@ -121,55 +115,34 @@
             // rdoAucun
             // 
             this.rdoAucun.AutoSize = true;
-            this.rdoAucun.Location = new System.Drawing.Point(13, 90);
+            this.rdoAucun.Location = new System.Drawing.Point(13, 82);
             this.rdoAucun.Name = "rdoAucun";
             this.rdoAucun.Size = new System.Drawing.Size(56, 17);
             this.rdoAucun.TabIndex = 13;
             this.rdoAucun.Text = "Aucun";
             this.rdoAucun.UseVisualStyleBackColor = true;
             // 
-            // rdoCarte
+            // rdoRobot
             // 
-            this.rdoCarte.AutoSize = true;
-            this.rdoCarte.Location = new System.Drawing.Point(13, 67);
-            this.rdoCarte.Name = "rdoCarte";
-            this.rdoCarte.Size = new System.Drawing.Size(104, 17);
-            this.rdoCarte.TabIndex = 10;
-            this.rdoCarte.Text = "Carte concernée";
-            this.rdoCarte.UseVisualStyleBackColor = true;
+            this.rdoRobot.AutoSize = true;
+            this.rdoRobot.Location = new System.Drawing.Point(13, 28);
+            this.rdoRobot.Name = "rdoRobot";
+            this.rdoRobot.Size = new System.Drawing.Size(54, 17);
+            this.rdoRobot.TabIndex = 10;
+            this.rdoRobot.Text = "Robot";
+            this.rdoRobot.UseVisualStyleBackColor = true;
             // 
-            // rdoDest
+            // rdoType
             // 
-            this.rdoDest.AutoSize = true;
-            this.rdoDest.Location = new System.Drawing.Point(13, 44);
-            this.rdoDest.Name = "rdoDest";
-            this.rdoDest.Size = new System.Drawing.Size(81, 17);
-            this.rdoDest.TabIndex = 12;
-            this.rdoDest.Text = "Destinataire";
-            this.rdoDest.UseVisualStyleBackColor = true;
-            // 
-            // rdoExp
-            // 
-            this.rdoExp.AutoSize = true;
-            this.rdoExp.Checked = true;
-            this.rdoExp.Location = new System.Drawing.Point(13, 21);
-            this.rdoExp.Name = "rdoExp";
-            this.rdoExp.Size = new System.Drawing.Size(75, 17);
-            this.rdoExp.TabIndex = 11;
-            this.rdoExp.TabStop = true;
-            this.rdoExp.Text = "Expéditeur";
-            this.rdoExp.UseVisualStyleBackColor = true;
-            // 
-            // checkedListBoxGros
-            // 
-            this.checkedListBoxGros.CheckOnClick = true;
-            this.checkedListBoxGros.FormattingEnabled = true;
-            this.checkedListBoxGros.Location = new System.Drawing.Point(98, 21);
-            this.checkedListBoxGros.Name = "checkedListBoxGros";
-            this.checkedListBoxGros.Size = new System.Drawing.Size(177, 124);
-            this.checkedListBoxGros.Sorted = true;
-            this.checkedListBoxGros.TabIndex = 15;
-            this.checkedListBoxGros.ItemCheck += new System.Windows.Forms.ItemCheckEventHandler(this.checkedListBoxGros_ItemCheck);
+            this.rdoType.AutoSize = true;
+            this.rdoType.Checked = true;
+            this.rdoType.Location = new System.Drawing.Point(13, 55);
+            this.rdoType.Name = "rdoType";
+            this.rdoType.Size = new System.Drawing.Size(49, 17);
+            this.rdoType.TabIndex = 11;
+            this.rdoType.TabStop = true;
+            this.rdoType.Text = "Type";
+            this.rdoType.UseVisualStyleBackColor = true;
             // 
             // btnRefresh
             // 
@@ -194,16 +167,6 @@
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Heure";
             // 
-            // rdoHeure
-            // 
-            this.rdoHeure.AutoSize = true;
-            this.rdoHeure.Location = new System.Drawing.Point(13, 67);
-            this.rdoHeure.Name = "rdoHeure";
-            this.rdoHeure.Size = new System.Drawing.Size(94, 17);
-            this.rdoHeure.TabIndex = 10;
-            this.rdoHeure.Text = "Heure absolue";
-            this.rdoHeure.UseVisualStyleBackColor = true;
-            // 
             // rdoTempsDebut
             // 
             this.rdoTempsDebut.AutoSize = true;
@@ -213,6 +176,16 @@
             this.rdoTempsDebut.TabIndex = 13;
             this.rdoTempsDebut.Text = "Temps écoulé depuis le début";
             this.rdoTempsDebut.UseVisualStyleBackColor = true;
+            // 
+            // rdoHeure
+            // 
+            this.rdoHeure.AutoSize = true;
+            this.rdoHeure.Location = new System.Drawing.Point(13, 67);
+            this.rdoHeure.Name = "rdoHeure";
+            this.rdoHeure.Size = new System.Drawing.Size(94, 17);
+            this.rdoHeure.TabIndex = 10;
+            this.rdoHeure.Text = "Heure absolue";
+            this.rdoHeure.UseVisualStyleBackColor = true;
             // 
             // rdoTempsPrecAff
             // 
@@ -236,67 +209,18 @@
             this.rdoTempsPrec.Text = "Temps écoulé depuis le message précédent";
             this.rdoTempsPrec.UseVisualStyleBackColor = true;
             // 
-            // checkedListBoxPetit
-            // 
-            this.checkedListBoxPetit.CheckOnClick = true;
-            this.checkedListBoxPetit.FormattingEnabled = true;
-            this.checkedListBoxPetit.Location = new System.Drawing.Point(98, 151);
-            this.checkedListBoxPetit.Name = "checkedListBoxPetit";
-            this.checkedListBoxPetit.Size = new System.Drawing.Size(177, 124);
-            this.checkedListBoxPetit.Sorted = true;
-            this.checkedListBoxPetit.TabIndex = 17;
-            // 
-            // checkedListBoxBalise
-            // 
-            this.checkedListBoxBalise.CheckOnClick = true;
-            this.checkedListBoxBalise.FormattingEnabled = true;
-            this.checkedListBoxBalise.Location = new System.Drawing.Point(98, 281);
-            this.checkedListBoxBalise.Name = "checkedListBoxBalise";
-            this.checkedListBoxBalise.Size = new System.Drawing.Size(177, 124);
-            this.checkedListBoxBalise.Sorted = true;
-            this.checkedListBoxBalise.TabIndex = 18;
-            // 
             // groupBoxMessages
             // 
-            this.groupBoxMessages.Controls.Add(this.label2);
             this.groupBoxMessages.Controls.Add(this.label1);
             this.groupBoxMessages.Controls.Add(this.lblGrosRobot);
-            this.groupBoxMessages.Controls.Add(this.checkedListBoxGros);
-            this.groupBoxMessages.Controls.Add(this.checkedListBoxBalise);
-            this.groupBoxMessages.Controls.Add(this.checkedListBoxPetit);
+            this.groupBoxMessages.Controls.Add(this.checkedListBoxRobots);
+            this.groupBoxMessages.Controls.Add(this.checkedListBoxEvents);
             this.groupBoxMessages.Location = new System.Drawing.Point(3, 254);
             this.groupBoxMessages.Name = "groupBoxMessages";
-            this.groupBoxMessages.Size = new System.Drawing.Size(281, 412);
+            this.groupBoxMessages.Size = new System.Drawing.Size(281, 180);
             this.groupBoxMessages.TabIndex = 19;
             this.groupBoxMessages.TabStop = false;
             this.groupBoxMessages.Text = "Afficher les messages suivants";
-            // 
-            // label2
-            // 
-            this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(39, 337);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(40, 13);
-            this.label2.TabIndex = 21;
-            this.label2.Text = "Balises";
-            // 
-            // label1
-            // 
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(24, 207);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(55, 13);
-            this.label1.TabIndex = 20;
-            this.label1.Text = "Petit robot";
-            // 
-            // lblGrosRobot
-            // 
-            this.lblGrosRobot.AutoSize = true;
-            this.lblGrosRobot.Location = new System.Drawing.Point(23, 77);
-            this.lblGrosRobot.Name = "lblGrosRobot";
-            this.lblGrosRobot.Size = new System.Drawing.Size(56, 13);
-            this.lblGrosRobot.TabIndex = 19;
-            this.lblGrosRobot.Text = "Gros robot";
             // 
             // btnAfficher
             // 
@@ -308,26 +232,6 @@
             this.btnAfficher.UseVisualStyleBackColor = true;
             this.btnAfficher.Click += new System.EventHandler(this.btnAfficher_Click);
             // 
-            // btnRejouerTout
-            // 
-            this.btnRejouerTout.Location = new System.Drawing.Point(1167, 87);
-            this.btnRejouerTout.Name = "btnRejouerTout";
-            this.btnRejouerTout.Size = new System.Drawing.Size(106, 23);
-            this.btnRejouerTout.TabIndex = 21;
-            this.btnRejouerTout.Text = "Rejouer tout";
-            this.btnRejouerTout.UseVisualStyleBackColor = true;
-            this.btnRejouerTout.Click += new System.EventHandler(this.btnRejouerTout_Click);
-            // 
-            // btnRejouerSelection
-            // 
-            this.btnRejouerSelection.Location = new System.Drawing.Point(1167, 116);
-            this.btnRejouerSelection.Name = "btnRejouerSelection";
-            this.btnRejouerSelection.Size = new System.Drawing.Size(106, 23);
-            this.btnRejouerSelection.TabIndex = 22;
-            this.btnRejouerSelection.Text = "Rejouer sélection";
-            this.btnRejouerSelection.UseVisualStyleBackColor = true;
-            this.btnRejouerSelection.Click += new System.EventHandler(this.btnRejouerSelection_Click);
-            // 
             // boxScroll
             // 
             this.boxScroll.AutoSize = true;
@@ -338,14 +242,51 @@
             this.boxScroll.Text = "Scroll auto";
             this.boxScroll.UseVisualStyleBackColor = true;
             // 
-            // PanelLogsTrames
+            // checkedListBoxEvents
+            // 
+            this.checkedListBoxEvents.CheckOnClick = true;
+            this.checkedListBoxEvents.FormattingEnabled = true;
+            this.checkedListBoxEvents.Location = new System.Drawing.Point(98, 97);
+            this.checkedListBoxEvents.Name = "checkedListBoxEvents";
+            this.checkedListBoxEvents.Size = new System.Drawing.Size(177, 64);
+            this.checkedListBoxEvents.Sorted = true;
+            this.checkedListBoxEvents.TabIndex = 17;
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(24, 123);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(61, 13);
+            this.label1.TabIndex = 20;
+            this.label1.Text = "Type event";
+            // 
+            // lblGrosRobot
+            // 
+            this.lblGrosRobot.AutoSize = true;
+            this.lblGrosRobot.Location = new System.Drawing.Point(14, 60);
+            this.lblGrosRobot.Name = "lblGrosRobot";
+            this.lblGrosRobot.Size = new System.Drawing.Size(71, 13);
+            this.lblGrosRobot.TabIndex = 19;
+            this.lblGrosRobot.Text = "Robot source";
+            // 
+            // checkedListBoxRobots
+            // 
+            this.checkedListBoxRobots.CheckOnClick = true;
+            this.checkedListBoxRobots.FormattingEnabled = true;
+            this.checkedListBoxRobots.Location = new System.Drawing.Point(98, 42);
+            this.checkedListBoxRobots.Name = "checkedListBoxRobots";
+            this.checkedListBoxRobots.Size = new System.Drawing.Size(177, 49);
+            this.checkedListBoxRobots.Sorted = true;
+            this.checkedListBoxRobots.TabIndex = 15;
+            this.checkedListBoxRobots.ItemCheck += new System.Windows.Forms.ItemCheckEventHandler(this.checkedListBoxGros_ItemCheck);
+            // 
+            // PanelLogsEvents
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.Transparent;
             this.Controls.Add(this.boxScroll);
-            this.Controls.Add(this.btnRejouerSelection);
-            this.Controls.Add(this.btnRejouerTout);
             this.Controls.Add(this.btnAfficher);
             this.Controls.Add(this.groupBoxMessages);
             this.Controls.Add(this.groupBox1);
@@ -353,7 +294,7 @@
             this.Controls.Add(this.groupBox2);
             this.Controls.Add(this.dataGridViewLog);
             this.Controls.Add(this.btnCharger);
-            this.Name = "PanelLogsTrames";
+            this.Name = "PanelLogsEvents";
             this.Size = new System.Drawing.Size(1273, 669);
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewLog)).EndInit();
             this.contextMenuStripRow.ResumeLayout(false);
@@ -373,29 +314,24 @@
         private System.Windows.Forms.Button btnCharger;
         private System.Windows.Forms.DataGridView dataGridViewLog;
         private System.Windows.Forms.GroupBox groupBox2;
-        private System.Windows.Forms.RadioButton rdoCarte;
-        private System.Windows.Forms.RadioButton rdoDest;
-        private System.Windows.Forms.RadioButton rdoExp;
+        private System.Windows.Forms.RadioButton rdoRobot;
+        private System.Windows.Forms.RadioButton rdoType;
         private System.Windows.Forms.RadioButton rdoAucun;
-        private System.Windows.Forms.CheckedListBox checkedListBoxGros;
         private System.Windows.Forms.Button btnRefresh;
         private System.Windows.Forms.GroupBox groupBox1;
         private System.Windows.Forms.RadioButton rdoTempsDebut;
         private System.Windows.Forms.RadioButton rdoHeure;
         private System.Windows.Forms.RadioButton rdoTempsPrecAff;
         private System.Windows.Forms.RadioButton rdoTempsPrec;
-        private System.Windows.Forms.CheckedListBox checkedListBoxPetit;
-        private System.Windows.Forms.CheckedListBox checkedListBoxBalise;
         private System.Windows.Forms.GroupBox groupBoxMessages;
-        private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.Label lblGrosRobot;
         private System.Windows.Forms.ContextMenuStrip contextMenuStripRow;
         private System.Windows.Forms.ToolStripMenuItem nePlusAfficherCeTypeDeMessagesToolStripMenuItem;
         private System.Windows.Forms.Button btnAfficher;
-        private System.Windows.Forms.Button btnRejouerTout;
-        private System.Windows.Forms.Button btnRejouerSelection;
         private System.Windows.Forms.CheckBox boxScroll;
+        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Label lblGrosRobot;
+        private System.Windows.Forms.CheckedListBox checkedListBoxRobots;
+        private System.Windows.Forms.CheckedListBox checkedListBoxEvents;
 
     }
 }

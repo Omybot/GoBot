@@ -343,6 +343,7 @@ namespace GoBot.IHM
             int accelerationTemp = Robot.AccelerationDeplacement;
             Robot.VitesseDeplacement = 150;
             Robot.AccelerationDeplacement = 150;
+            System.Threading.Thread.Sleep(200);
             Robot.Recallage(SensAR.Arriere);
             Robot.VitesseDeplacement = vitesseTemp;
             Robot.AccelerationDeplacement = accelerationTemp;

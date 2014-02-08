@@ -405,5 +405,11 @@ namespace GoBot
 
             return retour;
         }
+
+        public override List<int>[] MesureCharge(int nbValeurs)
+        {
+            return null;
+            // TODO
+        }
     }
 }

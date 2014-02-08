@@ -29,6 +29,9 @@ namespace Composants
             EchelleCommune = true;
             BackColor = Color.White;
             semaphore = new Semaphore(1, 1);
+            EchelleFixe = false;
+            EchelleMax = 1;
+            EchelleMin = 0;
         }
 
         /// <summary>
@@ -83,28 +86,37 @@ namespace Composants
 
             double min = double.MaxValue;
             double max = double.MinValue;
-            double coef = 1;
 
-            if (EchelleCommune)
+            if (EchelleFixe)
             {
-                foreach (KeyValuePair<String, List<double>> courbe in Donnees)
-                {
-                    if (courbe.Value.Count > 1)
-                    {
-                        min = Math.Min(min, courbe.Value.Min());
-                        max = Math.Max(max, courbe.Value.Max());
-                    }
-                }
-
-                lblMax.Text = max.ToString();
-                lblMin.Text = min.ToString();
-                coef = max == min ? 1 : (float)(pictureBox.Height - 1) / (max - min);
+                min = EchelleMin;
+                max = EchelleMax;
             }
             else
             {
-                lblMax.Visible = false;
-                lblMin.Visible = false;
+
+                if (EchelleCommune)
+                {
+                    foreach (KeyValuePair<String, List<double>> courbe in Donnees)
+                    {
+                        if (courbe.Value.Count > 1)
+                        {
+                            min = Math.Min(min, courbe.Value.Min());
+                            max = Math.Max(max, courbe.Value.Max());
+                        }
+                    }
+                }
+                else
+                {
+                    lblMax.Visible = false;
+                    lblMin.Visible = false;
+                }
             }
+
+            lblMax.Text = max.ToString();
+            lblMin.Text = min.ToString();
+            
+            double coef = max == min ? 1 : (float)(pictureBox.Height - 1) / (max - min);
 
             foreach (KeyValuePair<String, List<double>> courbe in Donnees)
             {
@@ -148,5 +160,9 @@ namespace Composants
                 Pens.Remove(nomCourbe);
             }
         }
+
+        public bool EchelleFixe { get; set; }
+        public double EchelleMin { get; set; }
+        public double EchelleMax { get; set; }
     }
 }

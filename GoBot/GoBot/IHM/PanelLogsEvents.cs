@@ -18,13 +18,13 @@ using GoBot.Communications;
 
 namespace GoBot.IHM
 {
-    public partial class PanelLogsTrames : UserControl
+    public partial class PanelLogsEvents : UserControl
     {
-        private Replay replay;
-        private Dictionary<Carte, Color> couleurCarte;
-        private Dictionary<TrameFactory.FonctionMove, bool> dicMessagesMoveAutorises;
-        private Dictionary<TrameFactory.FonctionMove, bool> dicMessagesPiAutorises;
-        private Dictionary<TrameFactory.FonctionBalise, bool> dicMessagesBaliseAutorises;
+        private Dictionary<Robot, Color> couleurRobot;
+        private Dictionary<TypeLog, Color> couleurTypeLog;
+
+        private Dictionary<Robot, bool> dicRobotsAutorises;
+        private Dictionary<TypeLog, bool> dicTypesAutorises;
 
         private DateTime dateDebut;
         private DateTime datePrec;
@@ -32,56 +32,50 @@ namespace GoBot.IHM
         private System.Windows.Forms.Timer timerAffichage;
         private bool affichageTempsReel = false;
         private int compteur = 0;
-        private Thread threadReplay;
 
-        public PanelLogsTrames()
+        public PanelLogsEvents()
         {
             InitializeComponent();
-            
+
             dataGridViewLog.Columns.Add("Id", "Id");
             dataGridViewLog.Columns[0].Width = 40;
-            dataGridViewLog.Columns.Add("Expediteur", "Expediteur");
-            dataGridViewLog.Columns[1].Width = 60;
-            dataGridViewLog.Columns.Add("Destinataire", "Destinataire");
-            dataGridViewLog.Columns[2].Width = 60;
             dataGridViewLog.Columns.Add("Heure", "Heure");
+            dataGridViewLog.Columns[1].Width = 40;
+            dataGridViewLog.Columns.Add("Type", "Type");
+            dataGridViewLog.Columns[2].Width = 60;
+            dataGridViewLog.Columns.Add("Robot", "Robot");
             dataGridViewLog.Columns[3].Width = 80;
             dataGridViewLog.Columns.Add("Message", "Message");
             dataGridViewLog.Columns[4].Width = 400;
-            dataGridViewLog.Columns.Add("Trame", "Trame");
-            dataGridViewLog.Columns[5].Width = 285;
 
-            couleurCarte = new Dictionary<Carte, Color>();
-            couleurCarte.Add(Carte.PC, Color.FromArgb(255, 235, 230));
-            couleurCarte.Add(Carte.RecMove, Color.FromArgb(204, 255, 204));
-            couleurCarte.Add(Carte.RecPi, Color.FromArgb(255, 204, 230));
-            couleurCarte.Add(Carte.RecBun, Color.FromArgb(226, 226, 255));
-            couleurCarte.Add(Carte.RecBeu, Color.FromArgb(202, 202, 255));
-            couleurCarte.Add(Carte.RecBoi, Color.FromArgb(176, 176, 255));
+            couleurRobot = new Dictionary<Robot, Color>();
+            couleurRobot.Add(Robots.GrosRobot, Color.LightBlue);
+            couleurRobot.Add(Robots.PetitRobot, Color.LightGreen);
 
-            dicMessagesMoveAutorises = new Dictionary<TrameFactory.FonctionMove, bool>();
-            dicMessagesPiAutorises = new Dictionary<TrameFactory.FonctionMove, bool>();
-            dicMessagesBaliseAutorises = new Dictionary<TrameFactory.FonctionBalise, bool>();
+            couleurTypeLog = new Dictionary<TypeLog, Color>();
+            couleurTypeLog.Add(TypeLog.Action, Color.Lavender);
+            couleurTypeLog.Add(TypeLog.PathFinding, Color.Khaki);
+            couleurTypeLog.Add(TypeLog.Strat, Color.IndianRed);
+
+            dicRobotsAutorises = new Dictionary<Robot, bool>();
+            dicTypesAutorises = new Dictionary<TypeLog, bool>();
+
+            checkedListBoxRobots.Items.Add("Gros robot", true);
+            checkedListBoxRobots.Items.Add("Petit robot", true);
 
             // L'ajout de champs déclenche le SetCheck event qui ajoute les éléments automatiquement dans le dictionnaire
-            foreach (TrameFactory.FonctionMove fonction in Enum.GetValues(typeof(TrameFactory.FonctionMove)))
+            foreach (TypeLog type in Enum.GetValues(typeof(TypeLog)))
             {
-                checkedListBoxGros.Items.Add(fonction.ToString(), true);
-                checkedListBoxPetit.Items.Add(fonction.ToString(), true);
+                checkedListBoxEvents.Items.Add(type.ToString(), true);
             }
-            foreach (TrameFactory.FonctionBalise fonction in Enum.GetValues(typeof(TrameFactory.FonctionBalise)))
-            { 
-                checkedListBoxBalise.Items.Add(fonction.ToString(), true);
-            }
-
         }
 
         private void btnCharger_Click(object sender, EventArgs e)
         {
             OpenFileDialog open = new OpenFileDialog();
-            open.Filter = "Fichiers replay trames (*.tlog)|*.tlog";
+            open.Filter = "Fichiers replay events (*.elog)|*.elog";
             open.Multiselect = true;
-            if (open.ShowDialog() == DialogResult.OK)
+            /*if (open.ShowDialog() == DialogResult.OK)
             {
                 replay = new Replay();
 
@@ -91,21 +85,21 @@ namespace GoBot.IHM
                 }
                 replay.Trier();
                 Afficher();
-            }
+            }*/
         }
 
         private void ChargerLog(String fichier)
         {
-            Replay replayTemp = new Replay();
+            /*Replay replayTemp = new Replay();
             replayTemp.Charger(fichier);
 
             foreach (TrameReplay t in replayTemp.Trames)
-                replay.Trames.Add(t);
+                replay.Trames.Add(t);*/
         }
 
         private void Afficher()
         {
-            try
+            /*try
             {
                 dataGridViewLog.Rows.Clear();
 
@@ -116,13 +110,13 @@ namespace GoBot.IHM
 
                 for (int iTrame = 0; iTrame < replay.Trames.Count; iTrame++)
                 {
-                    AfficherTrame(replay.Trames[iTrame]);
+                    AfficherEvent(replay.Trames[iTrame]);
                 }
             }
             catch (Exception)
             {
                 MessageBox.Show("Impossible de décoder toutes les trames contenues dans ce fichier.", "Erreur", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
+            }*/
         }
 
         private void btnRefresh_Click(object sender, EventArgs e)
@@ -132,10 +126,10 @@ namespace GoBot.IHM
 
         private void checkedListBoxGros_ItemCheck(object sender, ItemCheckEventArgs e)
         {
-            String fonctionString = (String)checkedListBoxGros.Items[e.Index];
+            /*String fonctionString = (String)checkedListBoxGros.Items[e.Index];
             TrameFactory.FonctionMove fonction = (TrameFactory.FonctionMove)Enum.Parse(typeof(TrameFactory.FonctionMove), fonctionString);
 
-            dicMessagesMoveAutorises[fonction] = (e.NewValue == CheckState.Checked);
+            dicMessagesMoveAutorises[fonction] = (e.NewValue == CheckState.Checked);*/
         }
 
         private void dataGridViewLog_CellMouseDown(object sender, DataGridViewCellMouseEventArgs e)
@@ -146,7 +140,7 @@ namespace GoBot.IHM
 
         private void nePlusAfficherCeTypeDeMessagesToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            if (dataGridViewLog.SelectedRows.Count >= 1)
+            /*if (dataGridViewLog.SelectedRows.Count >= 1)
             {
                 try
                 {
@@ -190,27 +184,24 @@ namespace GoBot.IHM
                 catch (Exception)
                 {
                 }
-            }
+            }*/
         }
 
         private void btnAfficher_Click(object sender, EventArgs e)
         {
-            if (!affichageTempsReel)
+            /*if (!affichageTempsReel)
             {
                 replay = new Replay();
                 timerAffichage = new System.Windows.Forms.Timer();
                 timerAffichage.Interval = 1000;
                 timerAffichage.Tick += timerAffichage_Tick;
                 timerAffichage.Start();
-
+                Robots.GrosRobot.Historique.NouvelleAction += Historique_NouvelleAction;
                 Connexions.ConnexionMiwi.NouvelleTrameRecue += new ConnexionUDP.ReceptionDelegate(replay.AjouterTrameEntrante);
                 Connexions.ConnexionMiwi.NouvelleTrameEnvoyee += new ConnexionUDP.ReceptionDelegate(replay.AjouterTrameSortante);
 
                 Connexions.ConnexionMove.NouvelleTrameRecue += new ConnexionUDP.ReceptionDelegate(replay.AjouterTrameEntrante);
                 Connexions.ConnexionMove.NouvelleTrameEnvoyee += new ConnexionUDP.ReceptionDelegate(replay.AjouterTrameSortante);
-
-                Connexions.ConnexionPi.NouvelleTrameRecue += new ConnexionUDP.ReceptionDelegate(replay.AjouterTrameEntrante);
-                Connexions.ConnexionPi.NouvelleTrameEnvoyee += new ConnexionUDP.ReceptionDelegate(replay.AjouterTrameSortante);
 
                 btnRejouerTout.Enabled = false;
                 btnRejouerSelection.Enabled = false;
@@ -228,28 +219,30 @@ namespace GoBot.IHM
                 Connexions.ConnexionMove.NouvelleTrameRecue -= new ConnexionUDP.ReceptionDelegate(replay.AjouterTrameEntrante);
                 Connexions.ConnexionMove.NouvelleTrameEnvoyee -= new ConnexionUDP.ReceptionDelegate(replay.AjouterTrameSortante);
 
-                Connexions.ConnexionPi.NouvelleTrameRecue -= new ConnexionUDP.ReceptionDelegate(replay.AjouterTrameEntrante);
-                Connexions.ConnexionPi.NouvelleTrameEnvoyee -= new ConnexionUDP.ReceptionDelegate(replay.AjouterTrameSortante);
-
                 btnRejouerTout.Enabled = true;
                 btnRejouerSelection.Enabled = true;
                 btnCharger.Enabled = true;
                 btnAfficher.Text = "Afficher temps réel";
                 affichageTempsReel = false;
-            }
+            }*/
+        }
+
+        void Historique_NouvelleAction(Actions.IAction action)
+        {
+            throw new NotImplementedException();
         }
 
         void timerAffichage_Tick(object sender, EventArgs e)
         {
-            int nbTrames = replay.Trames.Count;
+            /*int nbTrames = replay.Trames.Count;
             for (int i = compteur; i < nbTrames; i++)
-                AfficherTrame(replay.Trames[i]);
+                AfficherEvent(replay.Trames[i]);
 
             if(boxScroll.Checked && dataGridViewLog.Rows.Count > 10)
-                dataGridViewLog.FirstDisplayedScrollingRowIndex = dataGridViewLog.RowCount - 1;
+                dataGridViewLog.FirstDisplayedScrollingRowIndex = dataGridViewLog.RowCount - 1;*/
         }
 
-        private void AfficherTrame(TrameReplay trameReplay)
+        private void AfficherEvent(TrameReplay trameReplay)
         {
             Trame trame = new Trame(trameReplay.Trame);
             Carte destinataire = trameReplay.Entrant ? Carte.PC : TrameFactory.Identifiant(trame);
@@ -267,59 +260,25 @@ namespace GoBot.IHM
                 heure = (trameReplay.Date - datePrecAff).ToString(@"hh\:mm\:ss\:fff");
 
             Carte carte = (Carte)trame[0];
-            if (carte == Carte.RecMiwi && (TrameFactory.FonctionMiwi)trame[1] == TrameFactory.FonctionMiwi.Transmettre)
+            if (carte == Carte.RecMiwi)
                 carte = (Carte)trame[2];
 
-            if (carte == Carte.RecMove && dicMessagesMoveAutorises[(TrameFactory.FonctionMove)trame[1]])
+            /*if (carte == Carte.RecMove && dicMessagesMoveAutorises[(TrameFactory.FonctionMove)trame[1]])
             {
                 dataGridViewLog.Rows.Add(compteur, expediteur.ToString(), destinataire.ToString(), heure, TrameFactory.Decode(trame), trame.ToString());
                 datePrecAff = trameReplay.Date;
 
-                if (rdoCarte.Checked)
+                if (rdoRobot.Checked)
                     dataGridViewLog.Rows[dataGridViewLog.Rows.Count - 1].DefaultCellStyle.BackColor = couleurCarte[carte];
                 else if (rdoDest.Checked)
                     dataGridViewLog.Rows[dataGridViewLog.Rows.Count - 1].DefaultCellStyle.BackColor = couleurCarte[destinataire];
-                else if (rdoExp.Checked)
+                else if (rdoType.Checked)
                     dataGridViewLog.Rows[dataGridViewLog.Rows.Count - 1].DefaultCellStyle.BackColor = couleurCarte[expediteur];
-            }
+            }*/
 
             compteur++;
 
             datePrec = trameReplay.Date;
-        }
-
-        private void btnRejouerTout_Click(object sender, EventArgs e)
-        {
-            threadReplay = new Thread(replay.Rejouer);
-            threadReplay.Start();
-        }
-
-        private void btnRejouerSelection_Click(object sender, EventArgs e)
-        {
-            Replay replaySelection = new Replay();
-
-            if (dataGridViewLog.SelectedRows.Count >= 1)
-            {
-                try
-                {
-                    foreach (DataGridViewRow ligne in dataGridViewLog.SelectedRows)
-                    {
-                        int index = ligne.Index;
-                        TrameReplay trameReplay = replay.Trames[Convert.ToInt32(dataGridViewLog["Id", index].Value)];
-                        if (trameReplay.Entrant)
-                            replaySelection.AjouterTrameEntrante(new Trame(trameReplay.Trame), trameReplay.Date);
-                        else
-                            replaySelection.AjouterTrameSortante(new Trame(trameReplay.Trame), trameReplay.Date);
-                    }
-
-                    replaySelection.Trier();
-                    threadReplay = new Thread(replaySelection.Rejouer);
-                    threadReplay.Start();
-                }
-                catch (Exception)
-                {
-                }
-            }
         }
     }
 }

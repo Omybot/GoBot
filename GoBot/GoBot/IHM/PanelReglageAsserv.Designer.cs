@@ -51,7 +51,13 @@
             this.lblOvershootGauche = new System.Windows.Forms.Label();
             this.label10 = new System.Windows.Forms.Label();
             this.label11 = new System.Windows.Forms.Label();
-            this.ctrlGraphique1 = new Composants.CtrlGraphique();
+            this.ctrlGraphique = new Composants.CtrlGraphique();
+            this.boxMoyenne = new System.Windows.Forms.CheckBox();
+            this.groupBoxValeurFinale = new System.Windows.Forms.GroupBox();
+            this.lblValeurFinDroite = new System.Windows.Forms.Label();
+            this.lblValeurFinGauche = new System.Windows.Forms.Label();
+            this.label12 = new System.Windows.Forms.Label();
+            this.label13 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.numCoeffD)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numCoeffI)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numCoeffP)).BeginInit();
@@ -59,13 +65,14 @@
             ((System.ComponentModel.ISupportInitialize)(this.numNbPoints)).BeginInit();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
+            this.groupBoxValeurFinale.SuspendLayout();
             this.SuspendLayout();
             // 
             // rdoGrosRobot
             // 
             this.rdoGrosRobot.AutoSize = true;
             this.rdoGrosRobot.Checked = true;
-            this.rdoGrosRobot.Location = new System.Drawing.Point(50, 37);
+            this.rdoGrosRobot.Location = new System.Drawing.Point(69, 9);
             this.rdoGrosRobot.Name = "rdoGrosRobot";
             this.rdoGrosRobot.Size = new System.Drawing.Size(74, 17);
             this.rdoGrosRobot.TabIndex = 0;
@@ -77,7 +84,7 @@
             // rdoPetitRobot
             // 
             this.rdoPetitRobot.AutoSize = true;
-            this.rdoPetitRobot.Location = new System.Drawing.Point(130, 37);
+            this.rdoPetitRobot.Location = new System.Drawing.Point(69, 32);
             this.rdoPetitRobot.Name = "rdoPetitRobot";
             this.rdoPetitRobot.Size = new System.Drawing.Size(73, 17);
             this.rdoPetitRobot.TabIndex = 1;
@@ -86,7 +93,7 @@
             // 
             // btnOk
             // 
-            this.btnOk.Location = new System.Drawing.Point(68, 244);
+            this.btnOk.Location = new System.Drawing.Point(68, 254);
             this.btnOk.Name = "btnOk";
             this.btnOk.Size = new System.Drawing.Size(53, 23);
             this.btnOk.TabIndex = 116;
@@ -101,7 +108,7 @@
             0,
             0,
             0});
-            this.numCoeffD.Location = new System.Drawing.Point(68, 128);
+            this.numCoeffD.Location = new System.Drawing.Point(68, 112);
             this.numCoeffD.Maximum = new decimal(new int[] {
             1000,
             0,
@@ -114,7 +121,7 @@
             // label6
             // 
             this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(47, 130);
+            this.label6.Location = new System.Drawing.Point(47, 114);
             this.label6.Name = "label6";
             this.label6.Size = new System.Drawing.Size(15, 13);
             this.label6.TabIndex = 114;
@@ -127,7 +134,7 @@
             0,
             0,
             0});
-            this.numCoeffI.Location = new System.Drawing.Point(68, 102);
+            this.numCoeffI.Location = new System.Drawing.Point(68, 86);
             this.numCoeffI.Maximum = new decimal(new int[] {
             1000,
             0,
@@ -140,7 +147,7 @@
             // label5
             // 
             this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(52, 104);
+            this.label5.Location = new System.Drawing.Point(52, 88);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(10, 13);
             this.label5.TabIndex = 112;
@@ -153,7 +160,7 @@
             0,
             0,
             0});
-            this.numCoeffP.Location = new System.Drawing.Point(68, 76);
+            this.numCoeffP.Location = new System.Drawing.Point(68, 60);
             this.numCoeffP.Maximum = new decimal(new int[] {
             1000,
             0,
@@ -166,7 +173,7 @@
             // label4
             // 
             this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(48, 78);
+            this.label4.Location = new System.Drawing.Point(48, 62);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(14, 13);
             this.label4.TabIndex = 110;
@@ -174,7 +181,7 @@
             // 
             // numPasCodeurs
             // 
-            this.numPasCodeurs.Location = new System.Drawing.Point(68, 177);
+            this.numPasCodeurs.Location = new System.Drawing.Point(68, 161);
             this.numPasCodeurs.Maximum = new decimal(new int[] {
             10000,
             0,
@@ -192,7 +199,7 @@
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(13, 179);
+            this.label1.Location = new System.Drawing.Point(13, 163);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(49, 13);
             this.label1.TabIndex = 118;
@@ -201,7 +208,7 @@
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(13, 205);
+            this.label2.Location = new System.Drawing.Point(13, 189);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(52, 13);
             this.label2.TabIndex = 120;
@@ -209,7 +216,7 @@
             // 
             // numNbPoints
             // 
-            this.numNbPoints.Location = new System.Drawing.Point(68, 203);
+            this.numNbPoints.Location = new System.Drawing.Point(68, 187);
             this.numNbPoints.Maximum = new decimal(new int[] {
             10000,
             0,
@@ -322,20 +329,83 @@
             this.label11.TabIndex = 0;
             this.label11.Text = "Gauche :";
             // 
-            // ctrlGraphique1
+            // ctrlGraphique
             // 
-            this.ctrlGraphique1.BackColor = System.Drawing.Color.White;
-            this.ctrlGraphique1.EchelleCommune = true;
-            this.ctrlGraphique1.Location = new System.Drawing.Point(199, 64);
-            this.ctrlGraphique1.Name = "ctrlGraphique1";
-            this.ctrlGraphique1.Size = new System.Drawing.Size(773, 424);
-            this.ctrlGraphique1.TabIndex = 123;
+            this.ctrlGraphique.BackColor = System.Drawing.Color.White;
+            this.ctrlGraphique.EchelleCommune = true;
+            this.ctrlGraphique.Location = new System.Drawing.Point(199, 64);
+            this.ctrlGraphique.Name = "ctrlGraphique";
+            this.ctrlGraphique.Size = new System.Drawing.Size(773, 424);
+            this.ctrlGraphique.TabIndex = 123;
+            // 
+            // boxMoyenne
+            // 
+            this.boxMoyenne.AutoSize = true;
+            this.boxMoyenne.Checked = true;
+            this.boxMoyenne.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.boxMoyenne.Location = new System.Drawing.Point(69, 221);
+            this.boxMoyenne.Name = "boxMoyenne";
+            this.boxMoyenne.Size = new System.Drawing.Size(79, 17);
+            this.boxMoyenne.TabIndex = 124;
+            this.boxMoyenne.Text = "Antialiasing";
+            this.boxMoyenne.UseVisualStyleBackColor = true;
+            // 
+            // groupBoxValeurFinale
+            // 
+            this.groupBoxValeurFinale.Controls.Add(this.lblValeurFinDroite);
+            this.groupBoxValeurFinale.Controls.Add(this.lblValeurFinGauche);
+            this.groupBoxValeurFinale.Controls.Add(this.label12);
+            this.groupBoxValeurFinale.Controls.Add(this.label13);
+            this.groupBoxValeurFinale.Location = new System.Drawing.Point(21, 456);
+            this.groupBoxValeurFinale.Name = "groupBoxValeurFinale";
+            this.groupBoxValeurFinale.Size = new System.Drawing.Size(144, 74);
+            this.groupBoxValeurFinale.TabIndex = 123;
+            this.groupBoxValeurFinale.TabStop = false;
+            this.groupBoxValeurFinale.Text = "Valeur finale";
+            // 
+            // lblValeurFinDroite
+            // 
+            this.lblValeurFinDroite.AutoSize = true;
+            this.lblValeurFinDroite.Location = new System.Drawing.Point(74, 47);
+            this.lblValeurFinDroite.Name = "lblValeurFinDroite";
+            this.lblValeurFinDroite.Size = new System.Drawing.Size(10, 13);
+            this.lblValeurFinDroite.TabIndex = 3;
+            this.lblValeurFinDroite.Text = "-";
+            // 
+            // lblValeurFinGauche
+            // 
+            this.lblValeurFinGauche.AutoSize = true;
+            this.lblValeurFinGauche.Location = new System.Drawing.Point(74, 24);
+            this.lblValeurFinGauche.Name = "lblValeurFinGauche";
+            this.lblValeurFinGauche.Size = new System.Drawing.Size(10, 13);
+            this.lblValeurFinGauche.TabIndex = 2;
+            this.lblValeurFinGauche.Text = "-";
+            // 
+            // label12
+            // 
+            this.label12.AutoSize = true;
+            this.label12.Location = new System.Drawing.Point(17, 47);
+            this.label12.Name = "label12";
+            this.label12.Size = new System.Drawing.Size(41, 13);
+            this.label12.TabIndex = 1;
+            this.label12.Text = "Droite :";
+            // 
+            // label13
+            // 
+            this.label13.AutoSize = true;
+            this.label13.Location = new System.Drawing.Point(17, 24);
+            this.label13.Name = "label13";
+            this.label13.Size = new System.Drawing.Size(51, 13);
+            this.label13.TabIndex = 0;
+            this.label13.Text = "Gauche :";
             // 
             // PanelReglageAsserv
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.Controls.Add(this.ctrlGraphique1);
+            this.Controls.Add(this.groupBoxValeurFinale);
+            this.Controls.Add(this.boxMoyenne);
+            this.Controls.Add(this.ctrlGraphique);
             this.Controls.Add(this.groupBox2);
             this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.label2);
@@ -352,7 +422,7 @@
             this.Controls.Add(this.rdoPetitRobot);
             this.Controls.Add(this.rdoGrosRobot);
             this.Name = "PanelReglageAsserv";
-            this.Size = new System.Drawing.Size(1003, 500);
+            this.Size = new System.Drawing.Size(1003, 550);
             ((System.ComponentModel.ISupportInitialize)(this.numCoeffD)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.numCoeffI)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.numCoeffP)).EndInit();
@@ -362,6 +432,8 @@
             this.groupBox1.PerformLayout();
             this.groupBox2.ResumeLayout(false);
             this.groupBox2.PerformLayout();
+            this.groupBoxValeurFinale.ResumeLayout(false);
+            this.groupBoxValeurFinale.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -392,6 +464,12 @@
         private System.Windows.Forms.Label lblOvershootGauche;
         private System.Windows.Forms.Label label10;
         private System.Windows.Forms.Label label11;
-        private Composants.CtrlGraphique ctrlGraphique1;
+        private Composants.CtrlGraphique ctrlGraphique;
+        private System.Windows.Forms.CheckBox boxMoyenne;
+        private System.Windows.Forms.GroupBox groupBoxValeurFinale;
+        private System.Windows.Forms.Label lblValeurFinDroite;
+        private System.Windows.Forms.Label lblValeurFinGauche;
+        private System.Windows.Forms.Label label12;
+        private System.Windows.Forms.Label label13;
     }
 }

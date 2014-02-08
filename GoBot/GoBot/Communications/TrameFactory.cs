@@ -17,10 +17,14 @@ namespace GoBot.Communications
             Recallage = 0x10,
             FinRecallage = 0x11,
             FinDeplacement = 0x12,
+            Blocage = 0x13,
 
             DemandePositionsCodeurs = 0x43,
             RetourPositionCodeurs = 0x44,
             EnvoiConsigneBrute = 0x45,
+
+            DemandeCharge = 0x46,
+            RetourCharge = 0x47,
 
             DemandePositionXYTeta = 0x30,
             RetourPositionXYTeta = 0x31,
@@ -67,7 +71,9 @@ namespace GoBot.Communications
 
         public enum FonctionMiwi
         {
-            Transmettre = 0xA0
+            Transmettre = 0xA0,
+
+            TestConnexion = 0xF0
         }
 
         /*public enum FonctionIo
@@ -116,8 +122,13 @@ namespace GoBot.Communications
             Detection = 0xE4,
             AckDetection = 0xE5,
             ErreurDetection = 0xE6,
+
             TestConnexion = 0xF0,
-            Reset = 0xF2
+            Reset = 0xF2,
+            TestEmission = 0xF4,
+            TestEmissionReussi = 0xF5,
+            TestEmissionCorrompu = 0xF6,
+            TestEmissionPerdu = 0xF7
         }
 
         private static byte ByteDivide(int valeur, bool poidsFort)
@@ -515,6 +526,24 @@ namespace GoBot.Communications
             tab[1] = (byte)FonctionMove.TestConnexion;
             return new Trame(tab);
         }
+
+        public static Trame TestConnexionMiwi()
+        {
+            byte[] tab = new byte[2];
+            tab[0] = (byte)Carte.RecMiwi;
+            tab[1] = (byte)FonctionMiwi.TestConnexion;
+            return new Trame(tab);
+        }
+
+        public static Trame TestConnexionPi()
+        {
+            byte[] tab = new byte[4];
+            tab[0] = (byte)Carte.RecMiwi;
+            tab[1] = (byte)FonctionMiwi.TestConnexion;
+            tab[2] = (byte)Carte.RecPi;
+            tab[3] = (byte)FonctionMove.TestConnexion;
+            return new Trame(tab);
+        }
         
         public static Trame VitesseAspirateur(int vitesse)
         {
@@ -714,6 +743,14 @@ namespace GoBot.Communications
             return new Trame(tab);
         }
 
+        public static Trame DemandeChargeMove()
+        {
+            byte[] tab = new byte[2];
+            tab[0] = (byte)Carte.RecMove;
+            tab[1] = (byte)FonctionMove.DemandeCharge;
+            return new Trame(tab);
+        }
+
         public static String Decode(String trame)
         {
             return Decode(new Trame(trame));
@@ -749,6 +786,9 @@ namespace GoBot.Communications
                                 break;
                             case FonctionMove.ArmerJack:
                                 message = "Armage du jack";
+                                break;
+                            case FonctionMove.Blocage:
+                                message = "Blocage détécté";
                                 break;
                             case FonctionMove.CoeffAsservPID:
                                 int valeurP = trame[2] * 256 + trame[3];
@@ -856,6 +896,13 @@ namespace GoBot.Communications
                                 int valeurVitessePivot = trame[2] * 256 + trame[3];
                                 message = "Envoi vitesse pivot " + valeurVitessePivot;
                                 break;
+                            case FonctionMove.DemandeCharge:
+                                message = "Demande charge";
+                                break;
+                            case FonctionMove.RetourCharge:
+                                int nbValeurs = trame[2];
+                                message = "Retour charge : " + nbValeurs + " valeurs";
+                                break;
                             //case FonctionMove.VitesseAspirateur:
                             //    break;
                             //case FonctionMove.VitesseCanon:
@@ -961,6 +1008,13 @@ namespace GoBot.Communications
                 switch (trame[0])
                 {
                     case (byte)Carte.RecMiwi:
+                        switch ((FonctionMiwi)trame[1])
+                        {
+                            case FonctionMiwi.Transmettre:
+                                return (Carte)trame[2];
+                            default:
+                                return Carte.RecMiwi;
+                        }
                         return (Carte)trame[2];
                     default:
                         return (Carte)trame[0];

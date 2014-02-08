@@ -277,6 +277,13 @@ namespace GoBot.Properties {
             }
         }
         
+        internal static System.Drawing.Bitmap Vumetre {
+            get {
+                object obj = ResourceManager.GetObject("Vumetre", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
         internal static System.Drawing.Bitmap Webcam {
             get {
                 object obj = ResourceManager.GetObject("Webcam", resourceCulture);

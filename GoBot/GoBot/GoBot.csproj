@@ -89,6 +89,18 @@
     <Compile Include="ElementsJeu\Fruimouth.cs" />
     <Compile Include="Enchainements\EnchainementAleatoire.cs" />
     <Compile Include="Enchainements\EnchainementMatch.cs" />
+    <Compile Include="IHM\PanelChargeCPU.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="IHM\PanelChargeCPU.Designer.cs">
+      <DependentUpon>PanelChargeCPU.cs</DependentUpon>
+    </Compile>
+    <Compile Include="IHM\PanelLogsEvents.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="IHM\PanelLogsEvents.Designer.cs">
+      <DependentUpon>PanelLogsEvents.cs</DependentUpon>
+    </Compile>
     <Compile Include="IHM\PanelMatch.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -272,6 +284,12 @@
     <Compile Include="Communications\TrameFactory.cs" />
     <Compile Include="Communications\ConnexionUDP.cs" />
     <Compile Include="Communications\Trame.cs" />
+    <EmbeddedResource Include="IHM\PanelChargeCPU.resx">
+      <DependentUpon>PanelChargeCPU.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="IHM\PanelLogsEvents.resx">
+      <DependentUpon>PanelLogsEvents.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="IHM\PanelMatch.resx">
       <DependentUpon>PanelMatch.cs</DependentUpon>
     </EmbeddedResource>
@@ -449,6 +467,7 @@
     <None Include="img\Moteur.png" />
     <None Include="img\Webcam.jpg" />
     <None Include="img\TablePerspective.jpg" />
+    <None Include="img\Vumetre.png" />
     <Content Include="robot.ico" />
   </ItemGroup>
   <ItemGroup>

@@ -266,6 +266,23 @@ namespace GoBot
                         retourTestPid[1].Add(codeurDroit);
                     }
                 }
+
+                if (trameRecue[1] == (byte)TrameFactory.FonctionMove.RetourCharge)
+                {
+                    int nbValeurs = trameRecue[2];
+
+                    for (int i = 0; i < nbValeurs; i++)
+                    {
+                        int chargeCPU = trameRecue[3 + i * 6] * 256 + trameRecue[4 + i * 6];
+                        int chargePWMDroite = trameRecue[5 + i * 6] * 256 + trameRecue[6 + i * 6];
+                        int chargePWMGauche = trameRecue[7 + i * 6] * 256 + trameRecue[8 + i * 6];
+
+
+                        retourTestCharge[0].Add(chargeCPU);
+                        retourTestCharge[1].Add(chargePWMDroite);
+                        retourTestCharge[2].Add(chargePWMGauche);
+                    }
+                }
             }
         }
 
@@ -613,7 +630,7 @@ namespace GoBot
             return jackBranche;
         }
 
-        private List<int>[] retourTestPid;
+        List<int>[] retourTestPid;
         public override List<int>[] MesureTestPid(int consigne, SensAR sens, int nbValeurs)
         {
             retourTestPid = new List<int>[2];
@@ -637,6 +654,34 @@ namespace GoBot
                 retourTestPid[1].RemoveAt(retourTestPid[1].Count - 1);
 
             return retourTestPid;
+        }
+
+        List<int>[] retourTestCharge;
+        public override List<int>[] MesureCharge(int nbValeurs)
+        {
+            retourTestCharge = new List<int>[3];
+            retourTestCharge[0] = new List<int>();
+            retourTestCharge[1] = new List<int>();
+            retourTestCharge[2] = new List<int>();
+
+            Trame trame = TrameFactory.DemandeChargeMove();
+            while (retourTestCharge[0].Count <= nbValeurs)
+            {
+                Connexion.SendMessage(trame);
+                Thread.Sleep(30);
+            }
+
+            while (retourTestCharge[0].Count > nbValeurs)
+                retourTestCharge[0].RemoveAt(retourTestCharge[0].Count - 1);
+
+            while (retourTestCharge[1].Count > nbValeurs)
+                retourTestCharge[1].RemoveAt(retourTestCharge[1].Count - 1);
+
+            while (retourTestCharge[2].Count > nbValeurs)
+                retourTestCharge[2].RemoveAt(retourTestCharge[2].Count - 1);
+
+
+            return retourTestCharge;
         }
     }
 }

@@ -51,22 +51,26 @@ namespace GoBot.IHM
             int premiereValeurGauche = mesures[0][0];
             int premiereValeurDroite = mesures[1][0];
 
+            for (int i = 0; i < mesures[0].Count; i++)
+                mesures[0][i] = mesures[0][i] - premiereValeurGauche;
+            for (int i = 0; i < mesures[1].Count; i++)
+                mesures[1][i] = mesures[1][i] - premiereValeurDroite;
+
             if (derniereValeurGauche == 0)
                 derniereValeurGauche = 1;
 
             if (derniereValeurDroite == 0)
                 derniereValeurDroite = 1;
 
-            double depassementGauchePositif = (mesures[0].Max() - derniereValeurGauche) / (double)(derniereValeurGauche - premiereValeurGauche) * 100;
-
-            double depassementDroitePositif = (mesures[1].Max() - derniereValeurDroite) / (double)(derniereValeurDroite - premiereValeurDroite) * 100;
+            double depassementGauchePositif = (mesures[0].Max() - (int)numPasCodeurs.Value) / (double)numPasCodeurs.Value * 100;
+            double depassementDroitePositif = (mesures[1].Max() - (int)numPasCodeurs.Value) / (double)numPasCodeurs.Value * 100;
 
             int tempsGaucheStable = mesures[0].Count - 1;
-            while (tempsGaucheStable > 0 && mesures[0][tempsGaucheStable] < derniereValeurGauche * 1.05 && mesures[0][tempsGaucheStable] > derniereValeurGauche * 0.95)
+            while (tempsGaucheStable > 0 && mesures[0][tempsGaucheStable] < mesures[0][mesures[0].Count - 1] * 1.05 && mesures[0][tempsGaucheStable] > mesures[0][mesures[0].Count - 1] * 0.95)
                 tempsGaucheStable--;
 
             int tempsDroiteStable = mesures[1].Count - 1;
-            while (tempsDroiteStable > 0 && mesures[1][tempsDroiteStable] < derniereValeurDroite * 1.05 && mesures[1][tempsDroiteStable] > derniereValeurDroite * 0.95)
+            while (tempsDroiteStable > 0 && mesures[1][tempsDroiteStable] < mesures[1][mesures[1].Count - 1] * 1.05 && mesures[1][tempsDroiteStable] > mesures[1][mesures[1].Count - 1] * 0.95)
                 tempsDroiteStable--;
 
             lblTpsStabilisationGauche.Text = tempsGaucheStable + "ms";
@@ -75,16 +79,36 @@ namespace GoBot.IHM
             lblOvershootGauche.Text = Math.Round(depassementGauchePositif, 2) + "%";
             lblOvershootDroite.Text = Math.Round(depassementDroitePositif, 2) + "%";
 
-            ctrlGraphique1.SupprimerCourbe("Roue droite");
-            ctrlGraphique1.SupprimerCourbe("Roue gauche");
+            lblValeurFinGauche.Text = mesures[0][mesures[0].Count - 1].ToString();
+            lblValeurFinDroite.Text = mesures[1][mesures[1].Count - 1].ToString();
+
+            ctrlGraphique.SupprimerCourbe("Roue droite");
+            ctrlGraphique.SupprimerCourbe("Roue gauche");
+
 
             for (int i = 0; i < mesures[0].Count; i++)
-                ctrlGraphique1.AjouterPoint("Roue gauche", mesures[0][i], Color.Blue);
+            {
+                if(boxMoyenne.Checked && i > 1 && i < mesures[0].Count - 2)
+                {
+                    double valeur = (mesures[0][i - 2] + mesures[0][i - 1] + mesures[0][i] + mesures[0][i + 1] + mesures[0][i + 2]) / 5.0;
+                    ctrlGraphique.AjouterPoint("Roue gauche", valeur, Color.Blue);
+                }
+                else
+                    ctrlGraphique.AjouterPoint("Roue gauche", mesures[0][i], Color.Blue);
+            }
 
             for (int i = 0; i < mesures[1].Count; i++)
-                ctrlGraphique1.AjouterPoint("Roue droite", mesures[1][i], Color.Green);
+            {
+                if (boxMoyenne.Checked && i > 1 && i < mesures[1].Count - 2)
+                {
+                    double valeur = (mesures[1][i - 2] + mesures[1][i - 1] + mesures[1][i] + mesures[1][i + 1] + mesures[1][i + 2]) / 5.0;
+                    ctrlGraphique.AjouterPoint("Roue droite", valeur, Color.Green);
+                }
+                else
+                    ctrlGraphique.AjouterPoint("Roue droite", mesures[1][i], Color.Green);
+            }
 
-            ctrlGraphique1.DessineCourbes();
+            ctrlGraphique.DessineCourbes();
 
             Robot.MesureTestPid((int)numPasCodeurs.Value, SensAR.Arriere, (int)numNbPoints.Value);
         }
