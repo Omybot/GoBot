@@ -80,8 +80,9 @@ namespace GoBot
             }
         }
 
-        public RobotSimu()
+        public RobotSimu(IDRobot idRobot)
         {
+            IDRobot = idRobot;
             timerDeplacement = new System.Timers.Timer(IntervalleRafraichissementPosition);
             timerDeplacement.Elapsed += new ElapsedEventHandler(timerDeplacement_Elapsed);
             timerDeplacement.Start();
@@ -288,7 +289,7 @@ namespace GoBot
 
         public override void Init()
         {
-            Historique = new Historique();
+            Historique = new Historique(IDRobot);
             if (this == Robots.PetitRobot)
                 Position = new Calculs.Position(new Angle(0, AnglyeType.Degre), new PointReel(1500, 1600));
             else
@@ -406,9 +407,15 @@ namespace GoBot
             return retour;
         }
 
-        public override List<int>[] MesureCharge(int nbValeurs)
+        public override List<double>[] DiagnosticCpuPwm(int nbValeurs)
         {
             return null;
+            // TODO
+        }
+
+        public override double ChargeCPU()
+        {
+            return 0;
             // TODO
         }
     }

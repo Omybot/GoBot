@@ -23,8 +23,8 @@ namespace GoBot.Communications
             RetourPositionCodeurs = 0x44,
             EnvoiConsigneBrute = 0x45,
 
-            DemandeCharge = 0x46,
-            RetourCharge = 0x47,
+            DemandeDiagnostic = 0x46,
+            RetourDiagnostic = 0x47,
 
             DemandePositionXYTeta = 0x30,
             RetourPositionXYTeta = 0x31,
@@ -66,7 +66,14 @@ namespace GoBot.Communications
             TestConnexion = 0xF0,
             Reset = 0xF1,
             DemandeJack = 0xF3,
-            ReponseJack = 0xF4
+            ReponseJack = 0xF4,
+            DemandeChargeCPU = 0xF5,
+            ReponseChargeCPU = 0xF6,
+
+            TestEmission = 0xD4,
+            TestEmissionReussi = 0xD5,
+            TestEmissionCorrompu = 0xD6,
+            TestEmissionPerdu = 0xD7
         }
 
         public enum FonctionMiwi
@@ -125,10 +132,10 @@ namespace GoBot.Communications
 
             TestConnexion = 0xF0,
             Reset = 0xF2,
-            TestEmission = 0xF4,
-            TestEmissionReussi = 0xF5,
-            TestEmissionCorrompu = 0xF6,
-            TestEmissionPerdu = 0xF7
+            TestEmission = 0xD4,
+            TestEmissionReussi = 0xD5,
+            TestEmissionCorrompu = 0xD6,
+            TestEmissionPerdu = 0xD7
         }
 
         private static byte ByteDivide(int valeur, bool poidsFort)
@@ -606,6 +613,14 @@ namespace GoBot.Communications
             return new Trame(tab);
         }
 
+        public static Trame DemandeChargeCPU()
+        {
+            byte[] tab = new byte[2];
+            tab[0] = (byte)Carte.RecMove;
+            tab[1] = (byte)FonctionMove.DemandeChargeCPU;
+            return new Trame(tab);
+        }
+
         public static Trame DemandePresenceAssiette()
         {
             byte[] tab = new byte[2];
@@ -747,7 +762,35 @@ namespace GoBot.Communications
         {
             byte[] tab = new byte[2];
             tab[0] = (byte)Carte.RecMove;
-            tab[1] = (byte)FonctionMove.DemandeCharge;
+            tab[1] = (byte)FonctionMove.DemandeDiagnostic;
+            return new Trame(tab);
+        }
+
+        public static Trame TestEmission(Carte carte, byte id)
+        {
+            byte[] tab = new byte[21];
+            tab[0] = (byte)Carte.RecMiwi;
+            tab[1] = (byte)FonctionMiwi.Transmettre;
+            tab[2] = (byte)carte;
+            tab[3] = (byte)FonctionBalise.TestEmission;
+            tab[4] = id;
+            tab[5] = 0x00;
+            tab[6] = 0x01;
+            tab[7] = 0x02;
+            tab[8] = 0x03;
+            tab[9] = 0x04;
+            tab[10] = 0x05;
+            tab[11] = 0x06;
+            tab[12] = 0x07;
+            tab[13] = 0x08;
+            tab[14] = 0x09;
+            tab[15] = 0x0A;
+            tab[16] = 0x0B;
+            tab[17] = 0x0C;
+            tab[18] = 0x0D;
+            tab[19] = 0x0E;
+            tab[20] = 0x0F;
+
             return new Trame(tab);
         }
 
@@ -896,12 +939,24 @@ namespace GoBot.Communications
                                 int valeurVitessePivot = trame[2] * 256 + trame[3];
                                 message = "Envoi vitesse pivot " + valeurVitessePivot;
                                 break;
-                            case FonctionMove.DemandeCharge:
+                            case FonctionMove.DemandeDiagnostic:
                                 message = "Demande charge";
                                 break;
-                            case FonctionMove.RetourCharge:
+                            case FonctionMove.RetourDiagnostic:
                                 int nbValeurs = trame[2];
                                 message = "Retour charge : " + nbValeurs + " valeurs";
+                                break;
+                            case FonctionMove.TestEmission:
+                                message = "Test d'émission n°" + trame[2];
+                                break;
+                            case FonctionMove.TestEmissionCorrompu:
+                                message = "Test d'émission n°" + trame[2] + " corrompu";
+                                break;
+                            case FonctionMove.TestEmissionPerdu:
+                                message = "Test d'émission n°" + trame[2] + " perdu";
+                                break;
+                            case FonctionMove.TestEmissionReussi:
+                                message = "Test d'émission n°" + trame[2] + " réussi";
                                 break;
                             //case FonctionMove.VitesseAspirateur:
                             //    break;
@@ -959,6 +1014,18 @@ namespace GoBot.Communications
                             case FonctionBalise.Vitesse:
                                 int vitesse = trame[2] * 256 + trame[3];
                                 message = "Envoi vitesse pwm " + vitesse;
+                                break;
+                            case FonctionBalise.TestEmission:
+                                message = "Test d'émission n°" + trame[2];
+                                break;
+                            case FonctionBalise.TestEmissionCorrompu:
+                                message = "Test d'émission n°" + trame[2] + " corrompu";
+                                break;
+                            case FonctionBalise.TestEmissionPerdu:
+                                message = "Test d'émission n°" + trame[2] + " perdu";
+                                break;
+                            case FonctionBalise.TestEmissionReussi:
+                                message = "Test d'émission n°" + trame[2] + " réussi";
                                 break;
                             //case FonctionBalise.ErreurDetection:
                             //    break;

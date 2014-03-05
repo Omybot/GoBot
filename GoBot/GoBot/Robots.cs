@@ -9,8 +9,17 @@ using AStarFolder;
 
 namespace GoBot
 {
+    [Serializable]
+    public enum IDRobot
+    {
+        PetitRobot,
+        GrosRobot
+    }
+
     static class Robots
     {
+        public static Dictionary<IDRobot, Robot> DicRobots { get; set; }
+
         public static Robot GrosRobot { get; set; }
         public static Robot PetitRobot { get; set; }
         public static bool Simulation { get; set; }
@@ -32,11 +41,11 @@ namespace GoBot
 
             if (!Simulation)
             {
-                RobotReel grosRobot = new RobotReel();
+                RobotReel grosRobot = new RobotReel(IDRobot.GrosRobot);
                 grosRobot.Connexion = Connexions.ConnexionMove;
                 GrosRobot = grosRobot;
 
-                RobotReel petitRobot = new RobotReel();
+                RobotReel petitRobot = new RobotReel(IDRobot.PetitRobot);
                 petitRobot.Connexion = Connexions.ConnexionPi;
                 PetitRobot = petitRobot;
             }
@@ -44,11 +53,15 @@ namespace GoBot
             {
                 if (GrosRobot != null)
                     ((RobotReel)GrosRobot).Delete();
-                GrosRobot = new RobotSimu();
+                GrosRobot = new RobotSimu(IDRobot.GrosRobot);
                 if (PetitRobot != null)
                     ((RobotReel)PetitRobot).Delete();
-                PetitRobot = new RobotSimu();
+                PetitRobot = new RobotSimu(IDRobot.PetitRobot);
             }
+
+            DicRobots = new Dictionary<IDRobot, Robot>();
+            DicRobots.Add(IDRobot.PetitRobot, PetitRobot);
+            DicRobots.Add(IDRobot.GrosRobot, GrosRobot);
 
             GrosRobot.Largeur = 320;
             GrosRobot.Longueur = 280;

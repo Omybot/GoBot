@@ -32,68 +32,74 @@ namespace GoBot
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FenGoBot));
             this.tabControl = new System.Windows.Forms.TabControl();
             this.tabGrosRobot = new System.Windows.Forms.TabPage();
-            this.panelGrosRobot = new GoBot.IHM.PanelGrosRobot();
             this.tabPetitRobot = new System.Windows.Forms.TabPage();
-            this.panelPetitRobot = new GoBot.IHM.PanelPetitRobot();
             this.tabMatch = new System.Windows.Forms.TabPage();
-            this.panelMatch = new GoBot.IHM.PanelMatch();
             this.tabBalises = new System.Windows.Forms.TabPage();
+            this.tabLedsBalises = new System.Windows.Forms.TabPage();
+            this.tabTable = new System.Windows.Forms.TabPage();
+            this.btnPiloteGros = new System.Windows.Forms.Button();
+            this.tabCamera = new System.Windows.Forms.TabPage();
+            this.tabReglagePID = new System.Windows.Forms.TabPage();
+            this.tabLogsUdp = new System.Windows.Forms.TabPage();
+            this.tabLogsEvent = new System.Windows.Forms.TabPage();
+            this.tabDiagnosticBalises = new System.Windows.Forms.TabPage();
+            this.tabDiagnosticRecMove = new System.Windows.Forms.TabPage();
+            this.tabTestLiaisons = new System.Windows.Forms.TabPage();
+            this.lblSimulation = new System.Windows.Forms.Label();
+            this.btnClose = new System.Windows.Forms.Button();
+            this.switchBoutonSimu = new Composants.SwitchBouton();
+            this.panelGrosRobot = new GoBot.IHM.PanelGrosRobot();
+            this.panelPetitRobot = new GoBot.IHM.PanelPetitRobot();
+            this.panelMatch = new GoBot.IHM.PanelMatch();
             this.panelBalise3 = new GoBot.IHM.PanelBalise();
             this.panelBalise2 = new GoBot.IHM.PanelBalise();
             this.panelBalise1 = new GoBot.IHM.PanelBalise();
-            this.tabDiagBalises = new System.Windows.Forms.TabPage();
+            this.panelImagesBalises = new GoBot.IHM.PanelImagesBalises();
+            this.panelTable = new GoBot.IHM.PanelTable();
+            this.panelCamera = new GoBot.IHM.PanelCamera();
+            this.panelReglageAsserv = new GoBot.IHM.PanelReglageAsserv();
+            this.panelLogs1 = new GoBot.IHM.PanelLogsTrames();
             this.panelDiagnosticBalise3 = new GoBot.IHM.PanelDiagnosticBalise();
             this.panelDiagnosticBalise2 = new GoBot.IHM.PanelDiagnosticBalise();
             this.panelDiagnosticBalise1 = new GoBot.IHM.PanelDiagnosticBalise();
-            this.tabLedsBalises = new System.Windows.Forms.TabPage();
-            this.panelImagesBalises = new GoBot.IHM.PanelImagesBalises();
-            this.tabTable = new System.Windows.Forms.TabPage();
-            this.btnPiloteGros = new System.Windows.Forms.Button();
-            this.panelTable = new GoBot.IHM.PanelTable();
-            this.tabCamera = new System.Windows.Forms.TabPage();
-            this.panelCamera = new GoBot.IHM.PanelCamera();
-            this.tabReglagePID = new System.Windows.Forms.TabPage();
-            this.panelReglageAsserv = new GoBot.IHM.PanelReglageAsserv();
-            this.tabLogsUdp = new System.Windows.Forms.TabPage();
-            this.panelLogs1 = new GoBot.IHM.PanelLogsTrames();
-            this.tabLogsEvent = new System.Windows.Forms.TabPage();
-            this.tabCharge = new System.Windows.Forms.TabPage();
-            this.panelChargeCPU1 = new GoBot.IHM.PanelChargeCPU();
-            this.lblSimulation = new System.Windows.Forms.Label();
-            this.switchBoutonSimu = new Composants.SwitchBouton();
-            this.btnClose = new System.Windows.Forms.Button();
+            this.panelChargeCPU1 = new GoBot.IHM.PanelDiagnosticMove();
+            this.panelTestLiaisons1 = new GoBot.IHM.PanelTestLiaisons();
             this.panelConnexions = new GoBot.IHM.PanelConnexions();
+            this.panelLogsEvents = new GoBot.IHM.PanelLogsEvents();
             this.tabControl.SuspendLayout();
             this.tabGrosRobot.SuspendLayout();
             this.tabPetitRobot.SuspendLayout();
             this.tabMatch.SuspendLayout();
             this.tabBalises.SuspendLayout();
-            this.tabDiagBalises.SuspendLayout();
             this.tabLedsBalises.SuspendLayout();
             this.tabTable.SuspendLayout();
             this.tabCamera.SuspendLayout();
             this.tabReglagePID.SuspendLayout();
             this.tabLogsUdp.SuspendLayout();
-            this.tabCharge.SuspendLayout();
+            this.tabLogsEvent.SuspendLayout();
+            this.tabDiagnosticBalises.SuspendLayout();
+            this.tabDiagnosticRecMove.SuspendLayout();
+            this.tabTestLiaisons.SuspendLayout();
             this.SuspendLayout();
             // 
             // tabControl
             // 
-            this.tabControl.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
+            this.tabControl.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+                        | System.Windows.Forms.AnchorStyles.Left)
+                        | System.Windows.Forms.AnchorStyles.Right)));
             this.tabControl.Controls.Add(this.tabGrosRobot);
             this.tabControl.Controls.Add(this.tabPetitRobot);
             this.tabControl.Controls.Add(this.tabMatch);
             this.tabControl.Controls.Add(this.tabBalises);
-            this.tabControl.Controls.Add(this.tabDiagBalises);
             this.tabControl.Controls.Add(this.tabLedsBalises);
             this.tabControl.Controls.Add(this.tabTable);
             this.tabControl.Controls.Add(this.tabCamera);
             this.tabControl.Controls.Add(this.tabReglagePID);
             this.tabControl.Controls.Add(this.tabLogsUdp);
             this.tabControl.Controls.Add(this.tabLogsEvent);
-            this.tabControl.Controls.Add(this.tabCharge);
+            this.tabControl.Controls.Add(this.tabDiagnosticBalises);
+            this.tabControl.Controls.Add(this.tabDiagnosticRecMove);
+            this.tabControl.Controls.Add(this.tabTestLiaisons);
             this.tabControl.HotTrack = true;
             this.tabControl.Location = new System.Drawing.Point(0, 0);
             this.tabControl.Name = "tabControl";
@@ -111,17 +117,6 @@ namespace GoBot
             this.tabGrosRobot.Text = "Gros Robot";
             this.tabGrosRobot.UseVisualStyleBackColor = true;
             // 
-            // panelGrosRobot
-            // 
-            this.panelGrosRobot.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.panelGrosRobot.BackColor = System.Drawing.Color.White;
-            this.panelGrosRobot.Location = new System.Drawing.Point(0, 0);
-            this.panelGrosRobot.Name = "panelGrosRobot";
-            this.panelGrosRobot.Size = new System.Drawing.Size(1300, 712);
-            this.panelGrosRobot.TabIndex = 0;
-            // 
             // tabPetitRobot
             // 
             this.tabPetitRobot.Controls.Add(this.panelPetitRobot);
@@ -131,15 +126,6 @@ namespace GoBot
             this.tabPetitRobot.TabIndex = 2;
             this.tabPetitRobot.Text = "Petit Robot";
             this.tabPetitRobot.UseVisualStyleBackColor = true;
-            // 
-            // panelPetitRobot
-            // 
-            this.panelPetitRobot.BackColor = System.Drawing.Color.Transparent;
-            this.panelPetitRobot.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panelPetitRobot.Location = new System.Drawing.Point(0, 0);
-            this.panelPetitRobot.Name = "panelPetitRobot";
-            this.panelPetitRobot.Size = new System.Drawing.Size(192, 74);
-            this.panelPetitRobot.TabIndex = 0;
             // 
             // tabMatch
             // 
@@ -151,15 +137,6 @@ namespace GoBot
             this.tabMatch.TabIndex = 3;
             this.tabMatch.Text = "Match";
             this.tabMatch.UseVisualStyleBackColor = true;
-            // 
-            // panelMatch
-            // 
-            this.panelMatch.BackColor = System.Drawing.Color.White;
-            this.panelMatch.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panelMatch.Location = new System.Drawing.Point(3, 3);
-            this.panelMatch.Name = "panelMatch";
-            this.panelMatch.Size = new System.Drawing.Size(186, 68);
-            this.panelMatch.TabIndex = 0;
             // 
             // tabBalises
             // 
@@ -173,6 +150,176 @@ namespace GoBot
             this.tabBalises.TabIndex = 6;
             this.tabBalises.Text = "Balises";
             this.tabBalises.UseVisualStyleBackColor = true;
+            // 
+            // tabLedsBalises
+            // 
+            this.tabLedsBalises.Controls.Add(this.panelImagesBalises);
+            this.tabLedsBalises.Location = new System.Drawing.Point(4, 22);
+            this.tabLedsBalises.Name = "tabLedsBalises";
+            this.tabLedsBalises.Size = new System.Drawing.Size(1300, 712);
+            this.tabLedsBalises.TabIndex = 12;
+            this.tabLedsBalises.Text = "Leds Balises";
+            this.tabLedsBalises.UseVisualStyleBackColor = true;
+            // 
+            // tabTable
+            // 
+            this.tabTable.Controls.Add(this.btnPiloteGros);
+            this.tabTable.Controls.Add(this.panelTable);
+            this.tabTable.Location = new System.Drawing.Point(4, 22);
+            this.tabTable.Name = "tabTable";
+            this.tabTable.Padding = new System.Windows.Forms.Padding(3);
+            this.tabTable.Size = new System.Drawing.Size(1300, 712);
+            this.tabTable.TabIndex = 7;
+            this.tabTable.Text = "Table";
+            this.tabTable.UseVisualStyleBackColor = true;
+            // 
+            // btnPiloteGros
+            // 
+            this.btnPiloteGros.Location = new System.Drawing.Point(30, 509);
+            this.btnPiloteGros.Name = "btnPiloteGros";
+            this.btnPiloteGros.Size = new System.Drawing.Size(75, 23);
+            this.btnPiloteGros.TabIndex = 1;
+            this.btnPiloteGros.Text = "Pilote gros";
+            this.btnPiloteGros.UseVisualStyleBackColor = true;
+            this.btnPiloteGros.Click += new System.EventHandler(this.btnPiloteGros_Click);
+            // 
+            // tabCamera
+            // 
+            this.tabCamera.Controls.Add(this.panelCamera);
+            this.tabCamera.Location = new System.Drawing.Point(4, 22);
+            this.tabCamera.Name = "tabCamera";
+            this.tabCamera.Size = new System.Drawing.Size(1300, 712);
+            this.tabCamera.TabIndex = 10;
+            this.tabCamera.Text = "Bougies";
+            this.tabCamera.UseVisualStyleBackColor = true;
+            // 
+            // tabReglagePID
+            // 
+            this.tabReglagePID.Controls.Add(this.panelReglageAsserv);
+            this.tabReglagePID.Location = new System.Drawing.Point(4, 22);
+            this.tabReglagePID.Name = "tabReglagePID";
+            this.tabReglagePID.Padding = new System.Windows.Forms.Padding(3);
+            this.tabReglagePID.Size = new System.Drawing.Size(1300, 712);
+            this.tabReglagePID.TabIndex = 11;
+            this.tabReglagePID.Text = "Réglage PID";
+            this.tabReglagePID.UseVisualStyleBackColor = true;
+            // 
+            // tabLogsUdp
+            // 
+            this.tabLogsUdp.Controls.Add(this.panelLogs1);
+            this.tabLogsUdp.Location = new System.Drawing.Point(4, 22);
+            this.tabLogsUdp.Name = "tabLogsUdp";
+            this.tabLogsUdp.Padding = new System.Windows.Forms.Padding(3);
+            this.tabLogsUdp.Size = new System.Drawing.Size(1300, 712);
+            this.tabLogsUdp.TabIndex = 14;
+            this.tabLogsUdp.Text = "Logs UDP";
+            this.tabLogsUdp.UseVisualStyleBackColor = true;
+            // 
+            // tabLogsEvent
+            // 
+            this.tabLogsEvent.Controls.Add(this.panelLogsEvents);
+            this.tabLogsEvent.Location = new System.Drawing.Point(4, 22);
+            this.tabLogsEvent.Name = "tabLogsEvent";
+            this.tabLogsEvent.Size = new System.Drawing.Size(1300, 712);
+            this.tabLogsEvent.TabIndex = 15;
+            this.tabLogsEvent.Text = "Logs events";
+            this.tabLogsEvent.UseVisualStyleBackColor = true;
+            // 
+            // tabDiagnosticBalises
+            // 
+            this.tabDiagnosticBalises.Controls.Add(this.panelDiagnosticBalise3);
+            this.tabDiagnosticBalises.Controls.Add(this.panelDiagnosticBalise2);
+            this.tabDiagnosticBalises.Controls.Add(this.panelDiagnosticBalise1);
+            this.tabDiagnosticBalises.Location = new System.Drawing.Point(4, 22);
+            this.tabDiagnosticBalises.Name = "tabDiagnosticBalises";
+            this.tabDiagnosticBalises.Padding = new System.Windows.Forms.Padding(3);
+            this.tabDiagnosticBalises.Size = new System.Drawing.Size(1300, 712);
+            this.tabDiagnosticBalises.TabIndex = 13;
+            this.tabDiagnosticBalises.Text = "Diagnostic Balises";
+            this.tabDiagnosticBalises.UseVisualStyleBackColor = true;
+            // 
+            // tabDiagnosticRecMove
+            // 
+            this.tabDiagnosticRecMove.Controls.Add(this.panelChargeCPU1);
+            this.tabDiagnosticRecMove.Location = new System.Drawing.Point(4, 22);
+            this.tabDiagnosticRecMove.Name = "tabDiagnosticRecMove";
+            this.tabDiagnosticRecMove.Padding = new System.Windows.Forms.Padding(3);
+            this.tabDiagnosticRecMove.Size = new System.Drawing.Size(1300, 712);
+            this.tabDiagnosticRecMove.TabIndex = 16;
+            this.tabDiagnosticRecMove.Text = "Diagnostic RecMove";
+            this.tabDiagnosticRecMove.UseVisualStyleBackColor = true;
+            // 
+            // tabTestLiaisons
+            // 
+            this.tabTestLiaisons.Controls.Add(this.panelTestLiaisons1);
+            this.tabTestLiaisons.Location = new System.Drawing.Point(4, 22);
+            this.tabTestLiaisons.Name = "tabTestLiaisons";
+            this.tabTestLiaisons.Padding = new System.Windows.Forms.Padding(3);
+            this.tabTestLiaisons.Size = new System.Drawing.Size(1300, 712);
+            this.tabTestLiaisons.TabIndex = 17;
+            this.tabTestLiaisons.Text = "Test liaisons";
+            this.tabTestLiaisons.UseVisualStyleBackColor = true;
+            // 
+            // lblSimulation
+            // 
+            this.lblSimulation.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.lblSimulation.AutoSize = true;
+            this.lblSimulation.Location = new System.Drawing.Point(1249, 742);
+            this.lblSimulation.Name = "lblSimulation";
+            this.lblSimulation.Size = new System.Drawing.Size(55, 13);
+            this.lblSimulation.TabIndex = 72;
+            this.lblSimulation.Text = "Simulation";
+            // 
+            // btnClose
+            // 
+            this.btnClose.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnClose.Image = global::GoBot.Properties.Resources.Close;
+            this.btnClose.Location = new System.Drawing.Point(1286, 0);
+            this.btnClose.Name = "btnClose";
+            this.btnClose.Size = new System.Drawing.Size(20, 20);
+            this.btnClose.TabIndex = 71;
+            this.btnClose.UseVisualStyleBackColor = true;
+            this.btnClose.Click += new System.EventHandler(this.btnClose_Click);
+            // 
+            // switchBoutonSimu
+            // 
+            this.switchBoutonSimu.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.switchBoutonSimu.BackColor = System.Drawing.Color.Transparent;
+            this.switchBoutonSimu.Location = new System.Drawing.Point(1208, 742);
+            this.switchBoutonSimu.Name = "switchBoutonSimu";
+            this.switchBoutonSimu.Size = new System.Drawing.Size(35, 15);
+            this.switchBoutonSimu.Symetrique = true;
+            this.switchBoutonSimu.TabIndex = 73;
+            this.switchBoutonSimu.ChangementEtat += new System.EventHandler(this.switchBoutonSimu_ChangementEtat);
+            // 
+            // panelGrosRobot
+            // 
+            this.panelGrosRobot.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+                        | System.Windows.Forms.AnchorStyles.Left)
+                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.panelGrosRobot.BackColor = System.Drawing.Color.White;
+            this.panelGrosRobot.Location = new System.Drawing.Point(0, 0);
+            this.panelGrosRobot.Name = "panelGrosRobot";
+            this.panelGrosRobot.Size = new System.Drawing.Size(1300, 712);
+            this.panelGrosRobot.TabIndex = 0;
+            // 
+            // panelPetitRobot
+            // 
+            this.panelPetitRobot.BackColor = System.Drawing.Color.Transparent;
+            this.panelPetitRobot.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.panelPetitRobot.Location = new System.Drawing.Point(0, 0);
+            this.panelPetitRobot.Name = "panelPetitRobot";
+            this.panelPetitRobot.Size = new System.Drawing.Size(1300, 712);
+            this.panelPetitRobot.TabIndex = 0;
+            // 
+            // panelMatch
+            // 
+            this.panelMatch.BackColor = System.Drawing.Color.White;
+            this.panelMatch.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.panelMatch.Location = new System.Drawing.Point(3, 3);
+            this.panelMatch.Name = "panelMatch";
+            this.panelMatch.Size = new System.Drawing.Size(1294, 706);
+            this.panelMatch.TabIndex = 0;
             // 
             // panelBalise3
             // 
@@ -201,18 +348,47 @@ namespace GoBot
             this.panelBalise1.Size = new System.Drawing.Size(333, 700);
             this.panelBalise1.TabIndex = 0;
             // 
-            // tabDiagBalises
+            // panelImagesBalises
             // 
-            this.tabDiagBalises.Controls.Add(this.panelDiagnosticBalise3);
-            this.tabDiagBalises.Controls.Add(this.panelDiagnosticBalise2);
-            this.tabDiagBalises.Controls.Add(this.panelDiagnosticBalise1);
-            this.tabDiagBalises.Location = new System.Drawing.Point(4, 22);
-            this.tabDiagBalises.Name = "tabDiagBalises";
-            this.tabDiagBalises.Padding = new System.Windows.Forms.Padding(3);
-            this.tabDiagBalises.Size = new System.Drawing.Size(1300, 712);
-            this.tabDiagBalises.TabIndex = 13;
-            this.tabDiagBalises.Text = "Diagnostic Balises";
-            this.tabDiagBalises.UseVisualStyleBackColor = true;
+            this.panelImagesBalises.BackColor = System.Drawing.Color.Transparent;
+            this.panelImagesBalises.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.panelImagesBalises.Location = new System.Drawing.Point(0, 0);
+            this.panelImagesBalises.Name = "panelImagesBalises";
+            this.panelImagesBalises.Size = new System.Drawing.Size(1300, 712);
+            this.panelImagesBalises.TabIndex = 0;
+            // 
+            // panelTable
+            // 
+            this.panelTable.BackColor = System.Drawing.Color.Transparent;
+            this.panelTable.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.panelTable.Location = new System.Drawing.Point(3, 3);
+            this.panelTable.Name = "panelTable";
+            this.panelTable.Size = new System.Drawing.Size(1294, 706);
+            this.panelTable.TabIndex = 0;
+            // 
+            // panelCamera
+            // 
+            this.panelCamera.Location = new System.Drawing.Point(3, 3);
+            this.panelCamera.Name = "panelCamera";
+            this.panelCamera.Size = new System.Drawing.Size(1005, 501);
+            this.panelCamera.TabIndex = 0;
+            // 
+            // panelReglageAsserv
+            // 
+            this.panelReglageAsserv.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.panelReglageAsserv.Location = new System.Drawing.Point(3, 3);
+            this.panelReglageAsserv.Name = "panelReglageAsserv";
+            this.panelReglageAsserv.Size = new System.Drawing.Size(1294, 706);
+            this.panelReglageAsserv.TabIndex = 0;
+            // 
+            // panelLogs1
+            // 
+            this.panelLogs1.BackColor = System.Drawing.Color.Transparent;
+            this.panelLogs1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.panelLogs1.Location = new System.Drawing.Point(3, 3);
+            this.panelLogs1.Name = "panelLogs1";
+            this.panelLogs1.Size = new System.Drawing.Size(1294, 706);
+            this.panelLogs1.TabIndex = 0;
             // 
             // panelDiagnosticBalise3
             // 
@@ -241,132 +417,6 @@ namespace GoBot
             this.panelDiagnosticBalise1.Size = new System.Drawing.Size(397, 700);
             this.panelDiagnosticBalise1.TabIndex = 0;
             // 
-            // tabLedsBalises
-            // 
-            this.tabLedsBalises.Controls.Add(this.panelImagesBalises);
-            this.tabLedsBalises.Location = new System.Drawing.Point(4, 22);
-            this.tabLedsBalises.Name = "tabLedsBalises";
-            this.tabLedsBalises.Size = new System.Drawing.Size(1300, 712);
-            this.tabLedsBalises.TabIndex = 12;
-            this.tabLedsBalises.Text = "Leds Balises";
-            this.tabLedsBalises.UseVisualStyleBackColor = true;
-            // 
-            // panelImagesBalises
-            // 
-            this.panelImagesBalises.BackColor = System.Drawing.Color.Transparent;
-            this.panelImagesBalises.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panelImagesBalises.Location = new System.Drawing.Point(0, 0);
-            this.panelImagesBalises.Name = "panelImagesBalises";
-            this.panelImagesBalises.Size = new System.Drawing.Size(192, 74);
-            this.panelImagesBalises.TabIndex = 0;
-            // 
-            // tabTable
-            // 
-            this.tabTable.Controls.Add(this.btnPiloteGros);
-            this.tabTable.Controls.Add(this.panelTable);
-            this.tabTable.Location = new System.Drawing.Point(4, 22);
-            this.tabTable.Name = "tabTable";
-            this.tabTable.Padding = new System.Windows.Forms.Padding(3);
-            this.tabTable.Size = new System.Drawing.Size(1300, 712);
-            this.tabTable.TabIndex = 7;
-            this.tabTable.Text = "Table";
-            this.tabTable.UseVisualStyleBackColor = true;
-            // 
-            // btnPiloteGros
-            // 
-            this.btnPiloteGros.Location = new System.Drawing.Point(30, 509);
-            this.btnPiloteGros.Name = "btnPiloteGros";
-            this.btnPiloteGros.Size = new System.Drawing.Size(75, 23);
-            this.btnPiloteGros.TabIndex = 1;
-            this.btnPiloteGros.Text = "Pilote gros";
-            this.btnPiloteGros.UseVisualStyleBackColor = true;
-            this.btnPiloteGros.Click += new System.EventHandler(this.btnPiloteGros_Click);
-            // 
-            // panelTable
-            // 
-            this.panelTable.BackColor = System.Drawing.Color.Transparent;
-            this.panelTable.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panelTable.Location = new System.Drawing.Point(3, 3);
-            this.panelTable.Name = "panelTable";
-            this.panelTable.Size = new System.Drawing.Size(186, 68);
-            this.panelTable.TabIndex = 0;
-            // 
-            // tabCamera
-            // 
-            this.tabCamera.Controls.Add(this.panelCamera);
-            this.tabCamera.Location = new System.Drawing.Point(4, 22);
-            this.tabCamera.Name = "tabCamera";
-            this.tabCamera.Size = new System.Drawing.Size(1300, 712);
-            this.tabCamera.TabIndex = 10;
-            this.tabCamera.Text = "Bougies";
-            this.tabCamera.UseVisualStyleBackColor = true;
-            // 
-            // panelCamera
-            // 
-            this.panelCamera.Location = new System.Drawing.Point(3, 3);
-            this.panelCamera.Name = "panelCamera";
-            this.panelCamera.Size = new System.Drawing.Size(1005, 501);
-            this.panelCamera.TabIndex = 0;
-            // 
-            // tabReglagePID
-            // 
-            this.tabReglagePID.Controls.Add(this.panelReglageAsserv);
-            this.tabReglagePID.Location = new System.Drawing.Point(4, 22);
-            this.tabReglagePID.Name = "tabReglagePID";
-            this.tabReglagePID.Padding = new System.Windows.Forms.Padding(3);
-            this.tabReglagePID.Size = new System.Drawing.Size(1300, 712);
-            this.tabReglagePID.TabIndex = 11;
-            this.tabReglagePID.Text = "Réglage PID";
-            this.tabReglagePID.UseVisualStyleBackColor = true;
-            // 
-            // panelReglageAsserv
-            // 
-            this.panelReglageAsserv.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panelReglageAsserv.Location = new System.Drawing.Point(3, 3);
-            this.panelReglageAsserv.Name = "panelReglageAsserv";
-            this.panelReglageAsserv.Size = new System.Drawing.Size(186, 68);
-            this.panelReglageAsserv.TabIndex = 0;
-            // 
-            // tabLogsUdp
-            // 
-            this.tabLogsUdp.Controls.Add(this.panelLogs1);
-            this.tabLogsUdp.Location = new System.Drawing.Point(4, 22);
-            this.tabLogsUdp.Name = "tabLogsUdp";
-            this.tabLogsUdp.Padding = new System.Windows.Forms.Padding(3);
-            this.tabLogsUdp.Size = new System.Drawing.Size(1300, 712);
-            this.tabLogsUdp.TabIndex = 14;
-            this.tabLogsUdp.Text = "Logs UDP";
-            this.tabLogsUdp.UseVisualStyleBackColor = true;
-            // 
-            // panelLogs1
-            // 
-            this.panelLogs1.BackColor = System.Drawing.Color.Transparent;
-            this.panelLogs1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panelLogs1.Location = new System.Drawing.Point(3, 3);
-            this.panelLogs1.Name = "panelLogs1";
-            this.panelLogs1.Size = new System.Drawing.Size(186, 68);
-            this.panelLogs1.TabIndex = 0;
-            // 
-            // tabLogsEvent
-            // 
-            this.tabLogsEvent.Location = new System.Drawing.Point(4, 22);
-            this.tabLogsEvent.Name = "tabLogsEvent";
-            this.tabLogsEvent.Size = new System.Drawing.Size(1300, 712);
-            this.tabLogsEvent.TabIndex = 15;
-            this.tabLogsEvent.Text = "Logs events";
-            this.tabLogsEvent.UseVisualStyleBackColor = true;
-            // 
-            // tabCharge
-            // 
-            this.tabCharge.Controls.Add(this.panelChargeCPU1);
-            this.tabCharge.Location = new System.Drawing.Point(4, 22);
-            this.tabCharge.Name = "tabCharge";
-            this.tabCharge.Padding = new System.Windows.Forms.Padding(3);
-            this.tabCharge.Size = new System.Drawing.Size(1300, 712);
-            this.tabCharge.TabIndex = 16;
-            this.tabCharge.Text = "Suivi charge CPU";
-            this.tabCharge.UseVisualStyleBackColor = true;
-            // 
             // panelChargeCPU1
             // 
             this.panelChargeCPU1.Location = new System.Drawing.Point(3, 3);
@@ -374,37 +424,12 @@ namespace GoBot
             this.panelChargeCPU1.Size = new System.Drawing.Size(1133, 615);
             this.panelChargeCPU1.TabIndex = 0;
             // 
-            // lblSimulation
+            // panelTestLiaisons1
             // 
-            this.lblSimulation.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.lblSimulation.AutoSize = true;
-            this.lblSimulation.Location = new System.Drawing.Point(1249, 742);
-            this.lblSimulation.Name = "lblSimulation";
-            this.lblSimulation.Size = new System.Drawing.Size(55, 13);
-            this.lblSimulation.TabIndex = 72;
-            this.lblSimulation.Text = "Simulation";
-            // 
-            // switchBoutonSimu
-            // 
-            this.switchBoutonSimu.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.switchBoutonSimu.BackColor = System.Drawing.Color.Transparent;
-            this.switchBoutonSimu.Location = new System.Drawing.Point(1208, 742);
-            this.switchBoutonSimu.Name = "switchBoutonSimu";
-            this.switchBoutonSimu.Size = new System.Drawing.Size(35, 15);
-            this.switchBoutonSimu.Symetrique = true;
-            this.switchBoutonSimu.TabIndex = 73;
-            this.switchBoutonSimu.ChangementEtat += new System.EventHandler(this.switchBoutonSimu_ChangementEtat);
-            // 
-            // btnClose
-            // 
-            this.btnClose.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnClose.Image = global::GoBot.Properties.Resources.Close;
-            this.btnClose.Location = new System.Drawing.Point(1286, 0);
-            this.btnClose.Name = "btnClose";
-            this.btnClose.Size = new System.Drawing.Size(20, 20);
-            this.btnClose.TabIndex = 71;
-            this.btnClose.UseVisualStyleBackColor = true;
-            this.btnClose.Click += new System.EventHandler(this.btnClose_Click);
+            this.panelTestLiaisons1.Location = new System.Drawing.Point(8, 6);
+            this.panelTestLiaisons1.Name = "panelTestLiaisons1";
+            this.panelTestLiaisons1.Size = new System.Drawing.Size(822, 425);
+            this.panelTestLiaisons1.TabIndex = 0;
             // 
             // panelConnexions
             // 
@@ -414,6 +439,15 @@ namespace GoBot
             this.panelConnexions.Name = "panelConnexions";
             this.panelConnexions.Size = new System.Drawing.Size(849, 27);
             this.panelConnexions.TabIndex = 74;
+            // 
+            // panelLogsEvents
+            // 
+            this.panelLogsEvents.BackColor = System.Drawing.Color.Transparent;
+            this.panelLogsEvents.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.panelLogsEvents.Location = new System.Drawing.Point(0, 0);
+            this.panelLogsEvents.Name = "panelLogsEvents";
+            this.panelLogsEvents.Size = new System.Drawing.Size(1300, 712);
+            this.panelLogsEvents.TabIndex = 0;
             // 
             // FenGoBot
             // 
@@ -439,13 +473,15 @@ namespace GoBot
             this.tabPetitRobot.ResumeLayout(false);
             this.tabMatch.ResumeLayout(false);
             this.tabBalises.ResumeLayout(false);
-            this.tabDiagBalises.ResumeLayout(false);
             this.tabLedsBalises.ResumeLayout(false);
             this.tabTable.ResumeLayout(false);
             this.tabCamera.ResumeLayout(false);
             this.tabReglagePID.ResumeLayout(false);
             this.tabLogsUdp.ResumeLayout(false);
-            this.tabCharge.ResumeLayout(false);
+            this.tabLogsEvent.ResumeLayout(false);
+            this.tabDiagnosticBalises.ResumeLayout(false);
+            this.tabDiagnosticRecMove.ResumeLayout(false);
+            this.tabTestLiaisons.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -475,7 +511,7 @@ namespace GoBot
         private System.Windows.Forms.Button btnPiloteGros;
         private System.Windows.Forms.TabPage tabLedsBalises;
         private PanelImagesBalises panelImagesBalises;
-        private System.Windows.Forms.TabPage tabDiagBalises;
+        private System.Windows.Forms.TabPage tabDiagnosticBalises;
         private PanelDiagnosticBalise panelDiagnosticBalise3;
         private PanelDiagnosticBalise panelDiagnosticBalise2;
         private PanelDiagnosticBalise panelDiagnosticBalise1;
@@ -484,8 +520,11 @@ namespace GoBot
         private System.Windows.Forms.TabPage tabLogsEvent;
         private PanelConnexions panelConnexions;
         private PanelMatch panelMatch;
-        private System.Windows.Forms.TabPage tabCharge;
-        private PanelChargeCPU panelChargeCPU1;
+        private System.Windows.Forms.TabPage tabDiagnosticRecMove;
+        private PanelDiagnosticMove panelChargeCPU1;
+        private System.Windows.Forms.TabPage tabTestLiaisons;
+        private PanelTestLiaisons panelTestLiaisons1;
+        private PanelLogsEvents panelLogsEvents;
     }
 }
 

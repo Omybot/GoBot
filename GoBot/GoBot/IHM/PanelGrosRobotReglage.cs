@@ -82,91 +82,61 @@ namespace GoBot.IHM
         }
         #endregion
 
-        #region Aspirateur
-        private void btnAspirateurOk_Click(object sender, EventArgs e)
+        #region Coude
+        private void btnCoudeOk_Click(object sender, EventArgs e)
         {
-            Robots.GrosRobot.BougeServo(ServomoteurID.GRAspirateur, (int)numAspirateur.Value);
-        }
-
-        private void btnAspirateurHaut_Click(object sender, EventArgs e)
-        {
-            if (MessageBox.Show("Enregistrer cette valeur pour la position haute de l'aspirateur ?", "Confirmation", MessageBoxButtons.OKCancel, MessageBoxIcon.Question) == DialogResult.OK)
-                Config.CurrentConfig.PositionGRAspirateurHaut = (int)numAspirateur.Value;
-        }
-
-        private void btnAspirateurBas_Click(object sender, EventArgs e)
-        {
-            if (MessageBox.Show("Enregistrer cette valeur pour la position basse de l'aspirateur ?", "Confirmation", MessageBoxButtons.OKCancel, MessageBoxIcon.Question) == DialogResult.OK)
-                Config.CurrentConfig.PositionGRAspirateurBas = (int)numAspirateur.Value;
+            Robots.GrosRobot.BougeServo(ServomoteurID.GRCoude, (int)numCoude.Value);
         }
         #endregion
 
-        #region Débloqueur
-        private void btnDebloqueurOk_Click(object sender, EventArgs e)
+        #region Epaule
+        private void btnEpauleOk_Click(object sender, EventArgs e)
         {
-            Robots.GrosRobot.BougeServo(ServomoteurID.GRDebloqueur, (int)numDebloqueur.Value);
-        }
-
-        private void btnDebloqueurHaut_Click(object sender, EventArgs e)
-        {
-            if (MessageBox.Show("Enregistrer cette valeur pour la position haute du débloqueur ?", "Confirmation", MessageBoxButtons.OKCancel, MessageBoxIcon.Question) == DialogResult.OK)
-                Config.CurrentConfig.PositionGRDebloqueurHaut = (int)numDebloqueur.Value;
-        }
-
-        private void btnDebloqueurBas_Click(object sender, EventArgs e)
-        {
-            if (MessageBox.Show("Enregistrer cette valeur pour la position basse du débloqueur ?", "Confirmation", MessageBoxButtons.OKCancel, MessageBoxIcon.Question) == DialogResult.OK)
-                Config.CurrentConfig.PositionGRDebloqueurBas = (int)numDebloqueur.Value;
+            Robots.GrosRobot.BougeServo(ServomoteurID.GREpaule, (int)numEpaule.Value);
         }
         #endregion
 
-        #region GrandBras
-        private void btnGrandBrasOk_Click(object sender, EventArgs e)
+        #region Pince droite
+        private void btnPinceDroiteOk_Click(object sender, EventArgs e)
         {
-            Robots.GrosRobot.BougeServo(ServomoteurID.GRGrandBras, (int)numGrandBras.Value);
+            Robots.GrosRobot.BougeServo(ServomoteurID.GRPinceDroite, (int)numPinceDroite.Value);
         }
 
-        private void btnGrandBrasHaut_Click(object sender, EventArgs e)
+        private void btnPinceDroiteFermee_Click(object sender, EventArgs e)
         {
-            if (MessageBox.Show("Enregistrer cette valeur pour la position haute du grand bras ?", "Confirmation", MessageBoxButtons.OKCancel, MessageBoxIcon.Question) == DialogResult.OK)
-                Config.CurrentConfig.PositionGRGrandBrasHaut = (int)numGrandBras.Value;
+            if (MessageBox.Show("Enregistrer cette valeur pour la position fermée de la pince droite ?", "Confirmation", MessageBoxButtons.OKCancel, MessageBoxIcon.Question) == DialogResult.OK)
+                Config.CurrentConfig.PositionGRGrandBrasHaut = (int)numPinceDroite.Value;
         }
 
-        private void btnGrandBrasBas_Click(object sender, EventArgs e)
+        private void btnPinceDroiteOuverte_Click(object sender, EventArgs e)
         {
-            if (MessageBox.Show("Enregistrer cette valeur pour la position basse du grand bras ?", "Confirmation", MessageBoxButtons.OKCancel, MessageBoxIcon.Question) == DialogResult.OK)
-                Config.CurrentConfig.PositionGRGrandBrasBas = (int)numGrandBras.Value;
-        }
-
-        private void btnGrandBrasRange_Click(object sender, EventArgs e)
-        {
-            if (MessageBox.Show("Enregistrer cette valeur pour la position rangée du grand bras ?", "Confirmation", MessageBoxButtons.OKCancel, MessageBoxIcon.Question) == DialogResult.OK)
-                Config.CurrentConfig.PositionGRGrandBrasRange = (int)numGrandBras.Value;
+            if (MessageBox.Show("Enregistrer cette valeur pour la position ouverte de la pince droite ?", "Confirmation", MessageBoxButtons.OKCancel, MessageBoxIcon.Question) == DialogResult.OK)
+                Config.CurrentConfig.PositionGRGrandBrasBas = (int)numPinceDroite.Value;
         }
         #endregion
         
         #region PetitBras
         private void btnPetitBrasOk_Click(object sender, EventArgs e)
         {
-            Robots.GrosRobot.BougeServo(ServomoteurID.GRPetitBras, (int)numPetitBras.Value);
+            Robots.GrosRobot.BougeServo(ServomoteurID.GRPetitBras, (int)numPinceGauche.Value);
         }
 
         private void btnPetitBrasHaut_Click(object sender, EventArgs e)
         {
             if (MessageBox.Show("Enregistrer cette valeur pour la position haute du petit bras ?", "Confirmation", MessageBoxButtons.OKCancel, MessageBoxIcon.Question) == DialogResult.OK)
-                Config.CurrentConfig.PositionGRPetitBrasHaut = (int)numPetitBras.Value;
+                Config.CurrentConfig.PositionGRPetitBrasHaut = (int)numPinceGauche.Value;
         }
 
         private void btnPetitBrasBas_Click(object sender, EventArgs e)
         {
             if (MessageBox.Show("Enregistrer cette valeur pour la position basse du petit bras ?", "Confirmation", MessageBoxButtons.OKCancel, MessageBoxIcon.Question) == DialogResult.OK)
-                Config.CurrentConfig.PositionGRPetitBrasBas = (int)numPetitBras.Value;
+                Config.CurrentConfig.PositionGRPetitBrasBas = (int)numPinceGauche.Value;
         }
 
         private void btnPetitBrasRange_Click(object sender, EventArgs e)
         {
             if (MessageBox.Show("Enregistrer cette valeur pour la position rangée du petit bras ?", "Confirmation", MessageBoxButtons.OKCancel, MessageBoxIcon.Question) == DialogResult.OK)
-                Config.CurrentConfig.PositionGRPetitBrasRange = (int)numPetitBras.Value;
+                Config.CurrentConfig.PositionGRPetitBrasRange = (int)numPinceGauche.Value;
         }
         #endregion
 

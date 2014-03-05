@@ -13,7 +13,7 @@ namespace GoBot.Communications
     /// Association d'une trame et de son heure de réception
     /// </summary>
     [Serializable]
-    public class TrameReplay
+    public class TrameReplay : IComparable
     {
         public String Trame { get; set; }
         public DateTime Date { get; set; }
@@ -28,6 +28,11 @@ namespace GoBot.Communications
 
         public TrameReplay()
         {
+        }
+
+        public int CompareTo(object obj)
+        {
+            return Date.CompareTo(((HistoLigne)obj).Heure);
         }
     }
 
@@ -134,17 +139,15 @@ namespace GoBot.Communications
         /// </summary>
         public void Rejouer()
         {
-            ReceptionTrame += new ReceptionTrameDelegate(Connexions.ConnexionMiwi.TrameRecue);
-            ReceptionTrame += new ReceptionTrameDelegate(Connexions.ConnexionMove.TrameRecue);
-
             for (int i = Trames.Count - 1; i >= 0; i--)
             {
+                Trame trame = new Trame(Trames[i].Trame);
+
                 if (Trames[i].Entrant)
-                    ReceptionTrame(new Trame(Trames[i].Trame));
+                    Connexions.ConnexionParCarte[trame.Carte].TrameRecue(trame);
                 else
-                {
-                    // Envoyer sur la bonne comm
-                }
+                    Connexions.ConnexionParCarte[trame.Carte].SendMessage(trame);
+
                 if (i - 1 > 0)
                     Thread.Sleep(Trames[i].Date - Trames[i - 1].Date);
             }
@@ -152,35 +155,7 @@ namespace GoBot.Communications
 
         public void Trier()
         {
-            Trames.Sort(CompareTrameByDate);
+            Trames.Sort();
         }
-
-        private static int CompareTrameByDate(TrameReplay trame1, TrameReplay trame2)
-        {
-            if (trame1 == null)
-            {
-                if (trame2 == null)
-                    return 0;
-                else
-                    return -1;
-            }
-            else
-            {
-                if (trame2 == null)
-                    return 1;
-                else
-                {
-                    if (trame1.Date > trame2.Date)
-                        return 1;
-                    else if (trame1.Date < trame2.Date)
-                        return -1;
-                    else
-                        return 0;
-                }
-            }
-        }
-
-        public delegate void ReceptionTrameDelegate(Trame t);
-        public event ReceptionTrameDelegate ReceptionTrame;
     }
 }

@@ -28,28 +28,22 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.components = new System.ComponentModel.Container();
             this.flowLayoutPanel1 = new System.Windows.Forms.FlowLayoutPanel();
-            this.panelDeplacement = new GoBot.IHM.PanelDeplacement();
-            this.panelHistorique = new GoBot.IHM.PanelHistorique();
             this.flowLayoutPanel2 = new System.Windows.Forms.FlowLayoutPanel();
             this.panelReglageGros1 = new GoBot.IHM.PanelGrosRobotReglage();
             this.panelUtilGros1 = new GoBot.IHM.PanelGrosRobotUtilisation();
             this.panelSequencesGros1 = new GoBot.IHM.PanelGrosRobotSequences();
             this.panelCapteursGros1 = new GoBot.IHM.PanelGrosRobotCapteurs();
-            this.boxStrat = new System.Windows.Forms.CheckBox();
-            this.boxActions = new System.Windows.Forms.CheckBox();
-            this.boxHeure = new System.Windows.Forms.CheckBox();
-            this.boxPathFinding = new System.Windows.Forms.CheckBox();
-            this.txtLog = new Composants.RichTextBoxPlus(this.components);
+            this.panelDeplacement = new GoBot.IHM.PanelDeplacement();
+            this.panelHistorique = new GoBot.IHM.PanelHistorique();
             this.flowLayoutPanel1.SuspendLayout();
             this.flowLayoutPanel2.SuspendLayout();
             this.SuspendLayout();
             // 
             // flowLayoutPanel1
             // 
-            this.flowLayoutPanel1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left)));
+            this.flowLayoutPanel1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+                        | System.Windows.Forms.AnchorStyles.Left)));
             this.flowLayoutPanel1.Controls.Add(this.panelDeplacement);
             this.flowLayoutPanel1.Controls.Add(this.panelHistorique);
             this.flowLayoutPanel1.Location = new System.Drawing.Point(3, 3);
@@ -57,29 +51,10 @@
             this.flowLayoutPanel1.Size = new System.Drawing.Size(343, 556);
             this.flowLayoutPanel1.TabIndex = 90;
             // 
-            // panelDeplacement
-            // 
-            this.panelDeplacement.AutoSize = true;
-            this.panelDeplacement.BackColor = System.Drawing.Color.Transparent;
-            this.panelDeplacement.Location = new System.Drawing.Point(3, 3);
-            this.panelDeplacement.Name = "panelDeplacement";
-            this.panelDeplacement.Robot = null;
-            this.panelDeplacement.Size = new System.Drawing.Size(337, 382);
-            this.panelDeplacement.TabIndex = 72;
-            // 
-            // panelHistorique
-            // 
-            this.panelHistorique.AutoSize = true;
-            this.panelHistorique.BackColor = System.Drawing.Color.Transparent;
-            this.panelHistorique.Location = new System.Drawing.Point(3, 391);
-            this.panelHistorique.Name = "panelHistorique";
-            this.panelHistorique.Size = new System.Drawing.Size(337, 43);
-            this.panelHistorique.TabIndex = 71;
-            // 
             // flowLayoutPanel2
             // 
-            this.flowLayoutPanel2.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left)));
+            this.flowLayoutPanel2.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+                        | System.Windows.Forms.AnchorStyles.Left)));
             this.flowLayoutPanel2.Controls.Add(this.panelReglageGros1);
             this.flowLayoutPanel2.Controls.Add(this.panelUtilGros1);
             this.flowLayoutPanel2.Controls.Add(this.panelSequencesGros1);
@@ -125,71 +100,28 @@
             this.panelCapteursGros1.Size = new System.Drawing.Size(338, 43);
             this.panelCapteursGros1.TabIndex = 118;
             // 
-            // boxStrat
+            // panelDeplacement
             // 
-            this.boxStrat.AutoSize = true;
-            this.boxStrat.Checked = true;
-            this.boxStrat.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.boxStrat.Location = new System.Drawing.Point(867, 6);
-            this.boxStrat.Name = "boxStrat";
-            this.boxStrat.Size = new System.Drawing.Size(68, 17);
-            this.boxStrat.TabIndex = 93;
-            this.boxStrat.Text = "Stratégie";
-            this.boxStrat.UseVisualStyleBackColor = true;
-            this.boxStrat.CheckedChanged += new System.EventHandler(this.boxStrat_CheckedChanged);
+            this.panelDeplacement.AutoSize = true;
+            this.panelDeplacement.BackColor = System.Drawing.Color.Transparent;
+            this.panelDeplacement.Location = new System.Drawing.Point(3, 3);
+            this.panelDeplacement.Name = "panelDeplacement";
+            this.panelDeplacement.Robot = null;
+            this.panelDeplacement.Size = new System.Drawing.Size(337, 382);
+            this.panelDeplacement.TabIndex = 72;
             // 
-            // boxActions
+            // panelHistorique
             // 
-            this.boxActions.AutoSize = true;
-            this.boxActions.Checked = true;
-            this.boxActions.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.boxActions.Location = new System.Drawing.Point(941, 6);
-            this.boxActions.Name = "boxActions";
-            this.boxActions.Size = new System.Drawing.Size(61, 17);
-            this.boxActions.TabIndex = 94;
-            this.boxActions.Text = "Actions";
-            this.boxActions.UseVisualStyleBackColor = true;
-            this.boxActions.CheckedChanged += new System.EventHandler(this.boxActions_CheckedChanged);
-            // 
-            // boxHeure
-            // 
-            this.boxHeure.AutoSize = true;
-            this.boxHeure.Location = new System.Drawing.Point(717, 6);
-            this.boxHeure.Name = "boxHeure";
-            this.boxHeure.Size = new System.Drawing.Size(55, 17);
-            this.boxHeure.TabIndex = 95;
-            this.boxHeure.Text = "Heure";
-            this.boxHeure.UseVisualStyleBackColor = true;
-            this.boxHeure.CheckedChanged += new System.EventHandler(this.boxHeure_CheckedChanged);
-            // 
-            // boxPathFinding
-            // 
-            this.boxPathFinding.AutoSize = true;
-            this.boxPathFinding.Checked = true;
-            this.boxPathFinding.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.boxPathFinding.Location = new System.Drawing.Point(779, 6);
-            this.boxPathFinding.Name = "boxPathFinding";
-            this.boxPathFinding.Size = new System.Drawing.Size(82, 17);
-            this.boxPathFinding.TabIndex = 96;
-            this.boxPathFinding.Text = "PathFinding";
-            this.boxPathFinding.UseVisualStyleBackColor = true;
-            // 
-            // txtLog
-            // 
-            this.txtLog.Location = new System.Drawing.Point(701, 29);
-            this.txtLog.Name = "txtLog";
-            this.txtLog.Size = new System.Drawing.Size(302, 472);
-            this.txtLog.TabIndex = 97;
-            this.txtLog.Text = "";
+            this.panelHistorique.AutoSize = true;
+            this.panelHistorique.BackColor = System.Drawing.Color.Transparent;
+            this.panelHistorique.Location = new System.Drawing.Point(3, 391);
+            this.panelHistorique.Name = "panelHistorique";
+            this.panelHistorique.Size = new System.Drawing.Size(337, 43);
+            this.panelHistorique.TabIndex = 71;
             // 
             // PanelGrosRobot
             // 
             this.BackColor = System.Drawing.Color.Transparent;
-            this.Controls.Add(this.txtLog);
-            this.Controls.Add(this.boxPathFinding);
-            this.Controls.Add(this.boxHeure);
-            this.Controls.Add(this.boxActions);
-            this.Controls.Add(this.boxStrat);
             this.Controls.Add(this.flowLayoutPanel2);
             this.Controls.Add(this.flowLayoutPanel1);
             this.Name = "PanelGrosRobot";
@@ -199,7 +131,6 @@
             this.flowLayoutPanel2.ResumeLayout(false);
             this.flowLayoutPanel2.PerformLayout();
             this.ResumeLayout(false);
-            this.PerformLayout();
 
         }
 
@@ -213,11 +144,6 @@
         private PanelGrosRobotUtilisation panelUtilGros1;
         private PanelGrosRobotSequences panelSequencesGros1;
         private PanelGrosRobotCapteurs panelCapteursGros1;
-        private System.Windows.Forms.CheckBox boxStrat;
-        private System.Windows.Forms.CheckBox boxActions;
-        private System.Windows.Forms.CheckBox boxHeure;
-        private System.Windows.Forms.CheckBox boxPathFinding;
-        private Composants.RichTextBoxPlus txtLog;
 
     }
 }

@@ -9,21 +9,25 @@ using System.IO;
 
 namespace GoBot
 {
+    [Serializable]
     public enum TypeLog
     {
         Action,
         Strat,
         PathFinding
     }
-
+        
+    [Serializable]
     public class HistoLigne : IComparable
     {
         public String Message { get; set; }
         public DateTime Heure { get; set; }
         public TypeLog Type {get;set;}
+        public IDRobot Robot { get; set; }
 
-        public HistoLigne(DateTime heure, String message, TypeLog type = TypeLog.Strat)
+        public HistoLigne(IDRobot robot, DateTime heure, String message, TypeLog type = TypeLog.Strat)
         {
+            Robot = robot;
             Message = message;
             Heure = heure;
             Type = type;
@@ -42,6 +46,7 @@ namespace GoBot
     public class Historique
     {
         int NBACTIONSMAX = 10;
+        public IDRobot Robot { get; private set; }
         private List<IAction> actions;
         public List<IAction> Actions
         {
@@ -56,8 +61,9 @@ namespace GoBot
         public delegate void DelegateLog(HistoLigne ligne);
         public event DelegateLog NouveauLog;
 
-        public Historique()
+        public Historique(IDRobot robot)
         {
+            Robot = robot;
             actions = new List<IAction>();
             HistoriqueLignes = new List<HistoLigne>();
         }
@@ -76,7 +82,7 @@ namespace GoBot
 
         public void Log(String message, TypeLog type = TypeLog.Strat)
         {
-            HistoLigne ligne = new HistoLigne(DateTime.Now, message, type);
+            HistoLigne ligne = new HistoLigne(Robot, DateTime.Now, message, type);
             HistoriqueLignes.Add(ligne);
             if (NouveauLog != null)
                 NouveauLog(ligne);

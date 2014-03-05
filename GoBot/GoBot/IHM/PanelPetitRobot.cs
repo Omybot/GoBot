@@ -22,22 +22,6 @@ namespace GoBot.IHM
             panelDeplacement.Robot = Robots.PetitRobot;
             panelDeplacement.Init();
             panelHistorique.SetHistorique(Robots.PetitRobot.Historique);
-            Robots.PetitRobot.Historique.NouvelleAction += new Historique.DelegateAction(MAJHistoriqueDel);
-        }
-
-        private void MAJHistoriqueDel(IAction action)
-        {
-            this.Invoke(new EventHandler(delegate
-            {
-                Historique_nouvelleAction(action);
-            }));
-        }
-
-        void Historique_nouvelleAction(IAction action)
-        {
-            txtLog.AppendText(Environment.NewLine + "> " + action.ToString());
-            txtLog.SelectionStart = txtLog.TextLength;
-            txtLog.ScrollToCaret();
         }
 
         private void btnClose_Click(object sender, EventArgs e)

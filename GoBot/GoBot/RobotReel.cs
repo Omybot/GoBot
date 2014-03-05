@@ -32,12 +32,17 @@ namespace GoBot
         public Enchainements.Enchainement Enchainement { get; set; }
         public Color Couleur;
 
+        public RobotReel(IDRobot idRobot)
+        {
+            IDRobot = idRobot;
+        }
+
         public override void Init()
         {
             Evitement = true;
             Couleur = Color.Purple;
 
-            Historique = new Historique();
+            Historique = new Historique(IDRobot);
 
             semDeplacement = new Semaphore(0, int.MaxValue);
             semPosition = new Semaphore(0, int.MaxValue);
@@ -267,21 +272,27 @@ namespace GoBot
                     }
                 }
 
-                if (trameRecue[1] == (byte)TrameFactory.FonctionMove.RetourCharge)
+                if (trameRecue[1] == (byte)TrameFactory.FonctionMove.RetourDiagnostic)
                 {
                     int nbValeurs = trameRecue[2];
 
                     for (int i = 0; i < nbValeurs; i++)
                     {
-                        int chargeCPU = trameRecue[3 + i * 6] * 256 + trameRecue[4 + i * 6];
-                        int chargePWMDroite = trameRecue[5 + i * 6] * 256 + trameRecue[6 + i * 6];
-                        int chargePWMGauche = trameRecue[7 + i * 6] * 256 + trameRecue[8 + i * 6];
+                        double chargeCPU = (trameRecue[3 + i * 6] * 256 + trameRecue[4 + i * 6]) / 5000.0;
+                        double chargePWMDroite = trameRecue[5 + i * 6] * 256 + trameRecue[6 + i * 6] - 4000;
+                        double chargePWMGauche = trameRecue[7 + i * 6] * 256 + trameRecue[8 + i * 6] - 4000;
 
 
                         retourTestCharge[0].Add(chargeCPU);
                         retourTestCharge[1].Add(chargePWMDroite);
                         retourTestCharge[2].Add(chargePWMGauche);
                     }
+                }
+
+                if(trameRecue[1] == (byte)TrameFactory.FonctionMove.ReponseChargeCPU)
+                {
+                    chargeCPU = (trameRecue[2] * 256 + trameRecue[3]) / 5000.0;
+                    semChargeCPU.Release();
                 }
             }
         }
@@ -617,6 +628,15 @@ namespace GoBot
             Thread.Sleep(1500);
         }
 
+        private Semaphore semChargeCPU;
+        private double chargeCPU;
+        public override double ChargeCPU()
+        {
+            semChargeCPU = new Semaphore(0, 1);
+            Connexion.SendMessage(TrameFactory.DemandeChargeCPU());
+            semChargeCPU.WaitOne();
+            return chargeCPU;
+        }
 
         private Semaphore semJack;
         private bool jackBranche;
@@ -656,13 +676,13 @@ namespace GoBot
             return retourTestPid;
         }
 
-        List<int>[] retourTestCharge;
-        public override List<int>[] MesureCharge(int nbValeurs)
+        List<double>[] retourTestCharge;
+        public override List<double>[] DiagnosticCpuPwm(int nbValeurs)
         {
-            retourTestCharge = new List<int>[3];
-            retourTestCharge[0] = new List<int>();
-            retourTestCharge[1] = new List<int>();
-            retourTestCharge[2] = new List<int>();
+            retourTestCharge = new List<double>[3];
+            retourTestCharge[0] = new List<double>();
+            retourTestCharge[1] = new List<double>();
+            retourTestCharge[2] = new List<double>();
 
             Trame trame = TrameFactory.DemandeChargeMove();
             while (retourTestCharge[0].Count <= nbValeurs)

@@ -141,10 +141,13 @@ namespace GoBot.IHM
 
         private void checkedListBoxGros_ItemCheck(object sender, ItemCheckEventArgs e)
         {
-            String fonctionString = (String)checkedListBoxGros.Items[e.Index];
-            TrameFactory.FonctionMove fonction = (TrameFactory.FonctionMove)Enum.Parse(typeof(TrameFactory.FonctionMove), fonctionString);
+            if (!Config.DesignMode)
+            {
+                String fonctionString = (String)checkedListBoxGros.Items[e.Index];
+                TrameFactory.FonctionMove fonction = (TrameFactory.FonctionMove)Enum.Parse(typeof(TrameFactory.FonctionMove), fonctionString);
 
-            dicMessagesMoveAutorises[fonction] = (e.NewValue == CheckState.Checked);
+                dicMessagesMoveAutorises[fonction] = (e.NewValue == CheckState.Checked);
+            }
         }
 
         private void dataGridViewLog_CellMouseDown(object sender, DataGridViewCellMouseEventArgs e)
@@ -281,7 +284,7 @@ namespace GoBot.IHM
 
             bool fonctionAutorisee = false;
             if ((carte == Carte.RecMove && dicMessagesMoveAutorises[(TrameFactory.FonctionMove)trame[1]]) ||
-               (carte == Carte.RecPi && dicMessagesPiAutorises[(TrameFactory.FonctionMove)trame[1]]) ||
+               (carte == Carte.RecPi && dicMessagesPiAutorises[(TrameFactory.FonctionMove)trame[3]]) ||
                ((carte == Carte.RecBun || carte == Carte.RecBeu || carte == Carte.RecBoi) && dicMessagesBaliseAutorises[(TrameFactory.FonctionBalise)trame[3]]))
                 fonctionAutorisee = true;
 

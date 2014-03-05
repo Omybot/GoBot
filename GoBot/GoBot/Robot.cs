@@ -12,6 +12,7 @@ namespace GoBot
 {
     public abstract class Robot
     {
+        public IDRobot IDRobot { get; protected set; }
         public Semaphore SemGraph { get; set; }
         public Historique Historique { get; protected set; }
         public bool DeplacementLigne { get; protected set; }
@@ -58,7 +59,8 @@ namespace GoBot
         public abstract void Recallage(SensAR sens, bool attendre = true);
         public abstract void EnvoyerPID(int p, int i, int d);
         public abstract List<int>[] MesureTestPid(int consigne, SensAR sens, int nbValeurs);
-        public abstract List<int>[] MesureCharge(int nbValeurs);
+        public abstract List<double>[] DiagnosticCpuPwm(int nbValeurs);
+        public abstract double ChargeCPU();
 
         public abstract void ActionneurOnOff(ActionneurOnOffID actionneur, bool on);
 

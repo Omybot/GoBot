@@ -12,6 +12,8 @@ namespace GoBot.Communications
         public static ConnexionUDP ConnexionMove { get; set; }
         public static ConnexionUDP ConnexionPi { get; set; }
 
+        public static Dictionary<Carte, ConnexionUDP> ConnexionParCarte { get; private set; }
+
         public static void Init()
         {
             ConnexionMove = new ConnexionUDP();
@@ -25,6 +27,14 @@ namespace GoBot.Communications
             ConnexionPi = new ConnexionUDP();
             ConnexionPi.Connexion(System.Net.IPAddress.Parse("10.0.0.13"), 12313, 12323);
             ConnexionPi.ConnexionCheck.TestConnexion += new ConnexionCheck.TestConnexionDelegate(ConnexionPiCheck_TestConnexion);
+
+            ConnexionParCarte = new Dictionary<Carte, ConnexionUDP>();
+            ConnexionParCarte.Add(Carte.RecBun, ConnexionMiwi);
+            ConnexionParCarte.Add(Carte.RecBeu, ConnexionMiwi);
+            ConnexionParCarte.Add(Carte.RecBoi, ConnexionMiwi);
+            ConnexionParCarte.Add(Carte.RecMiwi, ConnexionMiwi);
+            ConnexionParCarte.Add(Carte.RecPi, ConnexionMiwi);
+            ConnexionParCarte.Add(Carte.RecMove, ConnexionMove);
         }
 
         private static void ConnexionMoveCheck_TestConnexion()

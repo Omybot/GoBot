@@ -84,16 +84,18 @@
     <Compile Include="Balises\BaliseStats.cs" />
     <Compile Include="Balises\SuiviBalise.cs" />
     <Compile Include="CameraIP.cs" />
+    <Compile Include="Communications\LiaisonDataCheck.cs" />
     <Compile Include="ElementsJeu\ElementJeu.cs" />
     <Compile Include="ElementsJeu\Feu.cs" />
     <Compile Include="ElementsJeu\Fruimouth.cs" />
     <Compile Include="Enchainements\EnchainementAleatoire.cs" />
     <Compile Include="Enchainements\EnchainementMatch.cs" />
-    <Compile Include="IHM\PanelChargeCPU.cs">
+    <Compile Include="EventsReplay.cs" />
+    <Compile Include="IHM\PanelDiagnosticMove.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="IHM\PanelChargeCPU.Designer.cs">
-      <DependentUpon>PanelChargeCPU.cs</DependentUpon>
+    <Compile Include="IHM\PanelDiagnosticMove.Designer.cs">
+      <DependentUpon>PanelDiagnosticMove.cs</DependentUpon>
     </Compile>
     <Compile Include="IHM\PanelLogsEvents.cs">
       <SubType>UserControl</SubType>
@@ -191,6 +193,12 @@
     <Compile Include="IHM\PanelLogsTrames.Designer.cs">
       <DependentUpon>PanelLogsTrames.cs</DependentUpon>
     </Compile>
+    <Compile Include="IHM\PanelTestLiaisons.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="IHM\PanelTestLiaisons.Designer.cs">
+      <DependentUpon>PanelTestLiaisons.cs</DependentUpon>
+    </Compile>
     <Compile Include="Logs\Log.cs" />
     <Compile Include="Mouvements\Mouvement.cs" />
     <Compile Include="Mouvements\PositionsMouvements.cs" />
@@ -284,8 +292,8 @@
     <Compile Include="Communications\TrameFactory.cs" />
     <Compile Include="Communications\ConnexionUDP.cs" />
     <Compile Include="Communications\Trame.cs" />
-    <EmbeddedResource Include="IHM\PanelChargeCPU.resx">
-      <DependentUpon>PanelChargeCPU.cs</DependentUpon>
+    <EmbeddedResource Include="IHM\PanelDiagnosticMove.resx">
+      <DependentUpon>PanelDiagnosticMove.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="IHM\PanelLogsEvents.resx">
       <DependentUpon>PanelLogsEvents.cs</DependentUpon>
@@ -358,6 +366,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="IHM\PanelTable.resx">
       <DependentUpon>PanelTable.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="IHM\PanelTestLiaisons.resx">
+      <DependentUpon>PanelTestLiaisons.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>

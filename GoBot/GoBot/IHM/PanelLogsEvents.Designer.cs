@@ -39,17 +39,17 @@
             this.rdoType = new System.Windows.Forms.RadioButton();
             this.btnRefresh = new System.Windows.Forms.Button();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
-            this.rdoTempsDebut = new System.Windows.Forms.RadioButton();
             this.rdoHeure = new System.Windows.Forms.RadioButton();
+            this.rdoTempsDebut = new System.Windows.Forms.RadioButton();
             this.rdoTempsPrecAff = new System.Windows.Forms.RadioButton();
             this.rdoTempsPrec = new System.Windows.Forms.RadioButton();
             this.groupBoxMessages = new System.Windows.Forms.GroupBox();
-            this.btnAfficher = new System.Windows.Forms.Button();
-            this.boxScroll = new System.Windows.Forms.CheckBox();
-            this.checkedListBoxEvents = new System.Windows.Forms.CheckedListBox();
             this.label1 = new System.Windows.Forms.Label();
             this.lblGrosRobot = new System.Windows.Forms.Label();
             this.checkedListBoxRobots = new System.Windows.Forms.CheckedListBox();
+            this.checkedListBoxEvents = new System.Windows.Forms.CheckedListBox();
+            this.btnAfficher = new System.Windows.Forms.Button();
+            this.boxScroll = new System.Windows.Forms.CheckBox();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewLog)).BeginInit();
             this.contextMenuStripRow.SuspendLayout();
             this.groupBox2.SuspendLayout();
@@ -82,7 +82,7 @@
             this.dataGridViewLog.ReadOnly = true;
             this.dataGridViewLog.RowHeadersVisible = false;
             this.dataGridViewLog.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.dataGridViewLog.Size = new System.Drawing.Size(836, 657);
+            this.dataGridViewLog.Size = new System.Drawing.Size(829, 657);
             this.dataGridViewLog.TabIndex = 1;
             this.dataGridViewLog.CellMouseDown += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.dataGridViewLog_CellMouseDown);
             // 
@@ -91,14 +91,12 @@
             this.contextMenuStripRow.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.nePlusAfficherCeTypeDeMessagesToolStripMenuItem});
             this.contextMenuStripRow.Name = "contextMenuStripRow";
-            this.contextMenuStripRow.Size = new System.Drawing.Size(269, 26);
+            this.contextMenuStripRow.Size = new System.Drawing.Size(68, 26);
             // 
             // nePlusAfficherCeTypeDeMessagesToolStripMenuItem
             // 
             this.nePlusAfficherCeTypeDeMessagesToolStripMenuItem.Name = "nePlusAfficherCeTypeDeMessagesToolStripMenuItem";
-            this.nePlusAfficherCeTypeDeMessagesToolStripMenuItem.Size = new System.Drawing.Size(268, 22);
-            this.nePlusAfficherCeTypeDeMessagesToolStripMenuItem.Text = "Ne plus afficher ce type de messages";
-            this.nePlusAfficherCeTypeDeMessagesToolStripMenuItem.Click += new System.EventHandler(this.nePlusAfficherCeTypeDeMessagesToolStripMenuItem_Click);
+            this.nePlusAfficherCeTypeDeMessagesToolStripMenuItem.Size = new System.Drawing.Size(67, 22);
             // 
             // groupBox2
             // 
@@ -167,16 +165,6 @@
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Heure";
             // 
-            // rdoTempsDebut
-            // 
-            this.rdoTempsDebut.AutoSize = true;
-            this.rdoTempsDebut.Location = new System.Drawing.Point(13, 90);
-            this.rdoTempsDebut.Name = "rdoTempsDebut";
-            this.rdoTempsDebut.Size = new System.Drawing.Size(167, 17);
-            this.rdoTempsDebut.TabIndex = 13;
-            this.rdoTempsDebut.Text = "Temps écoulé depuis le début";
-            this.rdoTempsDebut.UseVisualStyleBackColor = true;
-            // 
             // rdoHeure
             // 
             this.rdoHeure.AutoSize = true;
@@ -186,6 +174,16 @@
             this.rdoHeure.TabIndex = 10;
             this.rdoHeure.Text = "Heure absolue";
             this.rdoHeure.UseVisualStyleBackColor = true;
+            // 
+            // rdoTempsDebut
+            // 
+            this.rdoTempsDebut.AutoSize = true;
+            this.rdoTempsDebut.Location = new System.Drawing.Point(13, 90);
+            this.rdoTempsDebut.Name = "rdoTempsDebut";
+            this.rdoTempsDebut.Size = new System.Drawing.Size(167, 17);
+            this.rdoTempsDebut.TabIndex = 13;
+            this.rdoTempsDebut.Text = "Temps écoulé depuis le début";
+            this.rdoTempsDebut.UseVisualStyleBackColor = true;
             // 
             // rdoTempsPrecAff
             // 
@@ -222,36 +220,6 @@
             this.groupBoxMessages.TabStop = false;
             this.groupBoxMessages.Text = "Afficher les messages suivants";
             // 
-            // btnAfficher
-            // 
-            this.btnAfficher.Location = new System.Drawing.Point(1167, 9);
-            this.btnAfficher.Name = "btnAfficher";
-            this.btnAfficher.Size = new System.Drawing.Size(106, 23);
-            this.btnAfficher.TabIndex = 20;
-            this.btnAfficher.Text = "Afficher temps réel";
-            this.btnAfficher.UseVisualStyleBackColor = true;
-            this.btnAfficher.Click += new System.EventHandler(this.btnAfficher_Click);
-            // 
-            // boxScroll
-            // 
-            this.boxScroll.AutoSize = true;
-            this.boxScroll.Location = new System.Drawing.Point(1177, 38);
-            this.boxScroll.Name = "boxScroll";
-            this.boxScroll.Size = new System.Drawing.Size(76, 17);
-            this.boxScroll.TabIndex = 23;
-            this.boxScroll.Text = "Scroll auto";
-            this.boxScroll.UseVisualStyleBackColor = true;
-            // 
-            // checkedListBoxEvents
-            // 
-            this.checkedListBoxEvents.CheckOnClick = true;
-            this.checkedListBoxEvents.FormattingEnabled = true;
-            this.checkedListBoxEvents.Location = new System.Drawing.Point(98, 97);
-            this.checkedListBoxEvents.Name = "checkedListBoxEvents";
-            this.checkedListBoxEvents.Size = new System.Drawing.Size(177, 64);
-            this.checkedListBoxEvents.Sorted = true;
-            this.checkedListBoxEvents.TabIndex = 17;
-            // 
             // label1
             // 
             this.label1.AutoSize = true;
@@ -279,7 +247,38 @@
             this.checkedListBoxRobots.Size = new System.Drawing.Size(177, 49);
             this.checkedListBoxRobots.Sorted = true;
             this.checkedListBoxRobots.TabIndex = 15;
-            this.checkedListBoxRobots.ItemCheck += new System.Windows.Forms.ItemCheckEventHandler(this.checkedListBoxGros_ItemCheck);
+            this.checkedListBoxRobots.ItemCheck += new System.Windows.Forms.ItemCheckEventHandler(this.checkedListBoxRobots_ItemCheck);
+            // 
+            // checkedListBoxEvents
+            // 
+            this.checkedListBoxEvents.CheckOnClick = true;
+            this.checkedListBoxEvents.FormattingEnabled = true;
+            this.checkedListBoxEvents.Location = new System.Drawing.Point(98, 97);
+            this.checkedListBoxEvents.Name = "checkedListBoxEvents";
+            this.checkedListBoxEvents.Size = new System.Drawing.Size(177, 64);
+            this.checkedListBoxEvents.Sorted = true;
+            this.checkedListBoxEvents.TabIndex = 17;
+            this.checkedListBoxEvents.ItemCheck += new System.Windows.Forms.ItemCheckEventHandler(this.checkedListBoxEvents_ItemCheck);
+            // 
+            // btnAfficher
+            // 
+            this.btnAfficher.Location = new System.Drawing.Point(1167, 9);
+            this.btnAfficher.Name = "btnAfficher";
+            this.btnAfficher.Size = new System.Drawing.Size(106, 23);
+            this.btnAfficher.TabIndex = 20;
+            this.btnAfficher.Text = "Afficher temps réel";
+            this.btnAfficher.UseVisualStyleBackColor = true;
+            this.btnAfficher.Click += new System.EventHandler(this.btnAfficher_Click);
+            // 
+            // boxScroll
+            // 
+            this.boxScroll.AutoSize = true;
+            this.boxScroll.Location = new System.Drawing.Point(1177, 38);
+            this.boxScroll.Name = "boxScroll";
+            this.boxScroll.Size = new System.Drawing.Size(76, 17);
+            this.boxScroll.TabIndex = 23;
+            this.boxScroll.Text = "Scroll auto";
+            this.boxScroll.UseVisualStyleBackColor = true;
             // 
             // PanelLogsEvents
             // 

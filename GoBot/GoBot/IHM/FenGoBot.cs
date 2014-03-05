@@ -112,8 +112,8 @@ namespace GoBot
             Connexions.ConnexionMove.Sauvegarde.Sauvegarder("./Logs/ConnexionMove.tlog");
             Connexions.ConnexionPi.Sauvegarde.Sauvegarder("./Logs/ConnexionPi.tlog");
 
-            Robots.GrosRobot.Historique.Sauvegarder("./Logs/ActionsGros.hlog");
-            Robots.PetitRobot.Historique.Sauvegarder("./Logs/ActionsPetit.hlog");
+            Robots.GrosRobot.Historique.Sauvegarder("./Logs/ActionsGros.elog");
+            Robots.PetitRobot.Historique.Sauvegarder("./Logs/ActionsPetit.elog");
         }
 
         private void btnClose_Click(object sender, EventArgs e)
