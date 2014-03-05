@@ -21,12 +21,6 @@ namespace GoBot
         public abstract Position Position { get; set; }
         public PointReel PositionCible { get; set; }
 
-        public bool LancementBalles { get; set; }
-        public int NbBallesBlanchesCharges { get; set; }
-        public bool BalleCouleurChargee { get; set; }
-        public Color CouleurBalleChargee { get; set; }
-
-
         public abstract int VitesseDeplacement { get; set; }
         public abstract int AccelerationDeplacement { get; set; }
         public abstract int VitessePivot { get; set; }
@@ -69,11 +63,6 @@ namespace GoBot
         public abstract void Reset();
 
         public abstract void ArmerJack();
-        public abstract bool GetPresenceBalle(bool historique = true);
-        public abstract Color GetCouleurBalle(bool historique = true);
-        public abstract bool GetPresenceAssiette(bool historique = true);
-        public abstract bool GetAspiRemonte(bool historique = true);
-        public abstract int GetVitesseCanon(bool historique = true);
         public abstract bool GetJack(bool historique = true);
 
         public Dictionary<ServomoteurID, bool> ServoActive { get; set; }
@@ -147,7 +136,6 @@ namespace GoBot
             foreach (MoteurID moteur in Enum.GetValues(typeof(MoteurID)))
                 MoteurTourne.Add(moteur, false);
 
-            LancementBalles = false;
             SemGraph = new Semaphore(1, 1);
         }
 

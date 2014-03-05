@@ -91,83 +91,6 @@ namespace GoBot
                     semDeplacement.Release();
                 }
 
-                if (trameRecue[1] == (byte)TrameFactory.FonctionMove.ReponsePresence)
-                {
-                    presenceBalle = trameRecue[2] == 1 ? true : false;
-
-                    if(historiquePresenceBalle)
-                        Historique.AjouterAction(new ActionCapteur(this, CapteurID.GRPresenceBalle, (presenceBalle ? "quelque chose" : "rien")));
-
-                    try
-                    {
-                        if(semCapteurPresence != null)
-                            semCapteurPresence.Release();
-                    }
-                    catch(Exception)
-                    {}
-                }
-
-                if (trameRecue[1] == (byte)TrameFactory.FonctionMove.ReponseCouleur)
-                {
-                    if (trameRecue.Length != 18)
-                    {
-                        Console.Error.WriteLine("Erreur de retour du capteur couleur.");
-                        return;
-                    }
-
-                    int valCouleur1 = trameRecue[2] * 256 + trameRecue[3];
-                    int valCouleur2 = trameRecue[4] * 256 + trameRecue[5];
-                    int valCouleur3 = trameRecue[6] * 256 + trameRecue[7];
-                    int valCouleur4 = trameRecue[8] * 256 + trameRecue[9];
-                    int valCouleurAllume1 = trameRecue[10] * 256 + trameRecue[11];
-                    int valCouleurAllume2 = trameRecue[12] * 256 + trameRecue[13];
-                    int valCouleurAllume3 = trameRecue[14] * 256 + trameRecue[15];
-                    int valCouleurAllume4 = trameRecue[16] * 256 + trameRecue[17];
-
-                    Console.WriteLine("1|" + valCouleur1 + 
-                        "\t\t2|" + valCouleur2 +
-                        "\t\t3|" + valCouleur3 +
-                        "\t\t4|" + valCouleur4 +
-                        "\t\t5|" + valCouleurAllume1 +
-                        "\t\t6|" + valCouleurAllume2 +
-                        "\t\t7|" + valCouleurAllume3 +
-                        "\t\t8|" + valCouleurAllume4 + "\t" + (valCouleur1+valCouleur2+valCouleur3+valCouleur4+valCouleurAllume1+valCouleurAllume2+valCouleurAllume3+valCouleurAllume4));
-
-                    try
-                    {
-                        String couleur = "Blanc";
-                            couleurBalle = Color.White;
-
-                        if (valCouleurAllume4 > 23000)
-                        {
-                            couleurBalle = Color.Black;
-                            couleur = "Rien";
-                        }
-                        else if (valCouleurAllume4 > 7000)
-                        {
-                            couleurBalle = Plateau.CouleurJ1Rouge;
-                            couleur = "Rouge";
-                        }
-                        //else if (valCouleurAllume4 > 3200)
-                        else if (valCouleurAllume4 > 1500)
-                        {
-                            couleurBalle = Plateau.CouleurJ2Jaune;
-                            couleur = "Bleu";
-                        }
-
-                        couleur += " (" + valCouleurAllume4 + ")";
-
-                        if (semCapteurCouleur != null)
-                            semCapteurCouleur.Release();
-
-                        //Console.Beep(valCouleurAllume4, 50);
-                        if(historiqueCouleurBalle)
-                            Historique.AjouterAction(new ActionCapteur(this, CapteurID.GRCouleurBalle, couleur));
-                    }
-                    catch (Exception)
-                    { }
-                }
-
                 if (trameRecue[1] == (byte)TrameFactory.FonctionMove.ReponseJack)
                 {
                     jackBranche = trameRecue[2] == 1 ? true : false;
@@ -199,16 +122,6 @@ namespace GoBot
                     }
                 }
 
-                if (trameRecue[1] == (byte)TrameFactory.FonctionMove.ReponseAspiRemonte)
-                {
-                    aspiRemonte = trameRecue[2] == 1 ? true : false;
-                    if (semAspiRemonte != null)
-                        semAspiRemonte.Release();
-
-                    if (historiqueAspiRemonte)
-                        Historique.AjouterAction(new ActionCapteur(this, CapteurID.GRAspiRemonte, aspiRemonte ? "bien remonté" : "erreur"));
-                }
-
                 if (trameRecue[1] == (byte)TrameFactory.FonctionMove.DepartJack)
                 {
                     Plateau.Enchainement = new GoBot.Enchainements.EnchainementMatch();
@@ -223,26 +136,6 @@ namespace GoBot
                         Plateau.NotreCouleur = Plateau.CouleurJ2Jaune;
 
                     //Historique.AjouterAction(new ActionCapteur(this, CapteurID.GRCouleurBalle, "));
-                }
-
-                if (trameRecue[1] == (byte)TrameFactory.FonctionMove.ReponseVitesseCanon)
-                {
-                    vitesseCanon = trameRecue[2] * 256 + trameRecue[3];
-                    if (semVitesseCanon != null)
-                        semVitesseCanon.Release();
-
-                    if(historiqueVitesseCanon)
-                        Historique.AjouterAction(new ActionCapteur(this, CapteurID.GRVitesseCanon, vitesseCanon + "tours/min"));
-                }
-
-                if (trameRecue[1] == (byte)TrameFactory.FonctionMove.ReponsePresenceAssiette)
-                {
-                    presenceAssiette = trameRecue[2] == 1 ? false : true;
-                    if (semCapteurAssiette != null)
-                        semCapteurAssiette.Release();
-
-                    if (historiquePresenceAssiette)
-                        Historique.AjouterAction(new ActionCapteur(this, CapteurID.GRPresenceAssiette, presenceAssiette ? "assiette" : "rien"));
                 }
 
                 if (trameRecue[1] == (byte)TrameFactory.FonctionMove.RetourPositionCodeurs)
@@ -446,19 +339,9 @@ namespace GoBot
         
         public override void ActionneurOnOff(ActionneurOnOffID actionneur, bool on)
         {
-            if (actionneur == ActionneurOnOffID.GRShutter)
-            {
-                Trame trame = TrameFactory.Shutter(on);
-                Connexion.SendMessage(trame);
-            }
-            else if (actionneur == ActionneurOnOffID.GRAlimentation)
+            if (actionneur == ActionneurOnOffID.GRAlimentation)
             {
                 Trame trame = TrameFactory.CoupureAlim(on);
-                Connexion.SendMessage(trame);
-            }
-            else if (actionneur == ActionneurOnOffID.GRPompe)
-            {
-                Trame trame = TrameFactory.ActiverPompe(on);
                 Connexion.SendMessage(trame);
             }
 
@@ -533,85 +416,15 @@ namespace GoBot
 
         #endregion
 
-        private Semaphore semCapteurPresence;
-        private bool presenceBalle;
-        private bool historiquePresenceBalle;
-        public override bool GetPresenceBalle(bool historique = true)
-        {
-            historiquePresenceBalle = historique;
-            semCapteurPresence = new Semaphore(0, 1);
-            Connexion.SendMessage(TrameFactory.DemandePresenceBalle());
-            semCapteurPresence.WaitOne();
-            return presenceBalle;
-        }
-
-        private Semaphore semCapteurCouleur;
-        private Color couleurBalle;
-        private bool historiqueCouleurBalle;
-        public override Color GetCouleurBalle(bool historique = true)
-        {
-            historiqueCouleurBalle = historique;
-            semCapteurCouleur = new Semaphore(0, 1);
-            Connexion.SendMessage(TrameFactory.DemandeCouleurBalle());
-            semCapteurCouleur.WaitOne();
-            return couleurBalle;
-        }
-
-        private Semaphore semCapteurAssiette;
-        private bool presenceAssiette;
-        private bool historiquePresenceAssiette;
-        public override bool GetPresenceAssiette(bool historique = true)
-        {
-            historiquePresenceAssiette = historique;
-            semCapteurAssiette = new Semaphore(0, 1);
-            Connexion.SendMessage(TrameFactory.DemandePresenceAssiette());
-            semCapteurAssiette.WaitOne();
-            return presenceAssiette;
-        }
-
-        private Semaphore semAspiRemonte;
-        private bool aspiRemonte;
-        private bool historiqueAspiRemonte;
-        public override bool GetAspiRemonte(bool historique = true)
-        {
-            historiqueAspiRemonte = historique;
-            semAspiRemonte = new Semaphore(0, 1);
-            Connexion.SendMessage(TrameFactory.DemandeAspiRemonte());
-            semAspiRemonte.WaitOne();
-            return aspiRemonte;
-        }
-
-        private Semaphore semVitesseCanon;
-        private int vitesseCanon;
-        private bool historiqueVitesseCanon;
-        public override int GetVitesseCanon(bool historique = true)
-        {
-            historiqueVitesseCanon = historique;
-            semVitesseCanon = new Semaphore(0, 1);
-            Connexion.SendMessage(TrameFactory.DemandeVitesseCanon());
-            semVitesseCanon.WaitOne();
-            return vitesseCanon;
-        }
-
         public override void TourneMoteur(MoteurID moteur, int vitesse)
         {
             base.TourneMoteur(moteur, vitesse);
 
-            if (moteur == MoteurID.GRCanon)
+            /*if (moteur == MoteurID.GRCanon)
             {
                 Trame trame = TrameFactory.VitesseCanon(vitesse);
                 Connexion.SendMessage(trame);
-            }
-            else if (moteur == MoteurID.GRTurbineAspirateur)
-            {
-                Trame trame = TrameFactory.VitesseAspirateur(vitesse);
-                Connexion.SendMessage(trame);
-            }
-            else if (moteur == MoteurID.GRCanonTMin)
-            {
-                Trame trame = TrameFactory.VitesseCanonTMin(vitesse);
-                Connexion.SendMessage(trame);
-            }
+            }*/
 
             Historique.AjouterAction(new ActionMoteur(this, vitesse, moteur));
         }

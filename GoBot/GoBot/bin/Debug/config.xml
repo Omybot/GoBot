@@ -3,7 +3,7 @@
   <DeplacementGROuvert>true</DeplacementGROuvert>
   <HistoriqueGROuvert>true</HistoriqueGROuvert>
   <ReglageGROuvert>false</ReglageGROuvert>
-  <UtilisationGROuvert>false</UtilisationGROuvert>
+  <UtilisationGROuvert>true</UtilisationGROuvert>
   <SequencesGROuvert>false</SequencesGROuvert>
   <CapteursGROuvert>false</CapteursGROuvert>
   <DeplacementPROuvert>true</DeplacementPROuvert>
@@ -38,49 +38,12 @@
   <OffsetBalise1Capteur2>-193.13624999999996</OffsetBalise1Capteur2>
   <OffsetBalise2Capteur2>165.27374999999998</OffsetBalise2Capteur2>
   <OffsetBalise3Capteur2>-192.58437499999997</OffsetBalise3Capteur2>
-  <PositionGRGrandBrasHaut>465</PositionGRGrandBrasHaut>
-  <PositionGRGrandBrasBas>545</PositionGRGrandBrasBas>
-  <PositionGRGrandBrasRange>850</PositionGRGrandBrasRange>
-  <PositionGRPetitBrasHaut>575</PositionGRPetitBrasHaut>
-  <PositionGRPetitBrasBas>454</PositionGRPetitBrasBas>
-  <PositionGRPetitBrasRange>216</PositionGRPetitBrasRange>
-  <PositionGRAspirateurHaut>300</PositionGRAspirateurHaut>
-  <PositionGRAspirateurBas>130</PositionGRAspirateurBas>
-  <PositionGRDebloqueurHaut>250</PositionGRDebloqueurHaut>
-  <PositionGRDebloqueurBas>550</PositionGRDebloqueurBas>
-  <PositionGRCameraBleu>580</PositionGRCameraBleu>
-  <PositionGRCameraRouge>350</PositionGRCameraRouge>
-  <PositionGRBloqueurOuvert>0</PositionGRBloqueurOuvert>
-  <PositionGRBloqueurFerme>250</PositionGRBloqueurFerme>
-  <PositionGRBrasGaucheSorti>600</PositionGRBrasGaucheSorti>
-  <PositionGRBrasGaucheRange>215</PositionGRBrasGaucheRange>
-  <PositionGRBrasDroitSorti>400</PositionGRBrasDroitSorti>
-  <PositionGRBrasDroitRange>785</PositionGRBrasDroitRange>
-  <VitesseAspiration>312</VitesseAspiration>
-  <VitesseAspirationMaintien>60</VitesseAspirationMaintien>
-  <VitessePropulsionBonne>455</VitessePropulsionBonne>
-  <PositionPRBrasGaucheHaut>600</PositionPRBrasGaucheHaut>
-  <PositionPRBrasGaucheBas>350</PositionPRBrasGaucheBas>
-  <PositionPRBrasGaucheRange>140</PositionPRBrasGaucheRange>
-  <PositionPRBrasDroiteHaut>65</PositionPRBrasDroiteHaut>
-  <PositionPRBrasDroiteBas>300</PositionPRBrasDroiteBas>
-  <PositionPRBrasDroiteRange>517</PositionPRBrasDroiteRange>
-  <PositionPRBrasAvantHaut>440</PositionPRBrasAvantHaut>
-  <PositionPRBrasAvantBas>500</PositionPRBrasAvantBas>
-  <PositionPRBrasAvantRange>220</PositionPRBrasAvantRange>
-  <PositionPRBrasAvantAssiette>620</PositionPRBrasAvantAssiette>
-  <PositionPRBrasArriereHaut>460</PositionPRBrasArriereHaut>
-  <PositionPRBrasArriereBas>510</PositionPRBrasArriereBas>
-  <PositionPRBrasArriereRange>220</PositionPRBrasArriereRange>
-  <PositionPRBrasArriereAssiette>625</PositionPRBrasArriereAssiette>
-  <PositionPRBrasAvantGaucheHaut>280</PositionPRBrasAvantGaucheHaut>
-  <PositionPRBrasAvantGaucheBas>95</PositionPRBrasAvantGaucheBas>
-  <PositionPRBrasAvantDroitHaut>80</PositionPRBrasAvantDroitHaut>
-  <PositionPRBrasAvantDroitBas>260</PositionPRBrasAvantDroitBas>
-  <PositionPRBrasArriereGaucheHaut>100</PositionPRBrasArriereGaucheHaut>
-  <PositionPRBrasArriereGaucheBas>292</PositionPRBrasArriereGaucheBas>
-  <PositionPRBrasArriereDroitHaut>255</PositionPRBrasArriereDroitHaut>
-  <PositionPRBrasArriereDroitBas>78</PositionPRBrasArriereDroitBas>
+  <PositionGRPinceDroiteOuverte>0</PositionGRPinceDroiteOuverte>
+  <PositionGRPinceDroiteFermee>0</PositionGRPinceDroiteFermee>
+  <PositionGRPinceGaucheOuverte>0</PositionGRPinceGaucheOuverte>
+  <PositionGRPinceGaucheFermee>0</PositionGRPinceGaucheFermee>
+  <PositionGRCoudeRange>0</PositionGRCoudeRange>
+  <PositionGREpauleRange>0</PositionGREpauleRange>
   <PositionsBougiesCameraX>
     <int>408</int>
     <int>454</int>

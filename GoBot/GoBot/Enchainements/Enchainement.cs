@@ -80,7 +80,7 @@ namespace GoBot.Enchainements
         private void timerFinMatch_Elapsed(object sender, ElapsedEventArgs e)
         {
             Robots.GrosRobot.Historique.Log("FIN DU MATCH", TypeLog.Strat);
-            Robots.GrosRobot.ActionneurOnOff(ActionneurOnOffID.GRPompe, true);
+
             timerFinMatch.Stop();
             thGrosRobot.Abort();
             thPetitRobot.Abort();

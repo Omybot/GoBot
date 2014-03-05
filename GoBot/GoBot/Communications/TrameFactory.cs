@@ -35,13 +35,6 @@ namespace GoBot.Communications
             CoeffAsservPID = 0x36,
             EnvoiPositionAbsolue = 0x37,
 
-            VitesseAspirateur = 0x53,
-            VitesseCanon = 0x54,
-            Shutter = 0x55,
-            Pompe = 0x56,
-            VitesseCanonTours = 0x57,
-
-
             ServoPosition = 0x60,
             ServoVitesse = 0x61,
 
@@ -49,16 +42,6 @@ namespace GoBot.Communications
             DepartJack = 0x71,
             DemandeCouleurEquipe = 0x72,
             ReponseCouleurEquipe = 0x73,
-            DemandeCouleur = 0x75,
-            ReponseCouleur = 0x76,
-            DemandePresence = 0x77,
-            ReponsePresence = 0x78,
-            DemandePresenceAssiette = 0x7A,
-            ReponsePresenceAssiette = 0x7B,
-            DemandeAspiRemonte = 0x7C,
-            ReponseAspiRemonte = 0x7D,
-            DemandeVitesseCanon = 0x7E,
-            ReponseVitesseCanon = 0x7F,
 
             Alimentation = 0x80,
             AlimentationCamera = 0x81,
@@ -552,51 +535,6 @@ namespace GoBot.Communications
             return new Trame(tab);
         }
         
-        public static Trame VitesseAspirateur(int vitesse)
-        {
-            byte[] tab = new byte[4];
-            tab[0] = (byte)Carte.RecMove;
-            tab[1] = (byte)FonctionMove.VitesseAspirateur;
-            tab[2] = (byte)ByteDivide(vitesse, true);
-            tab[3] = (byte)ByteDivide(vitesse, false);
-            return new Trame(tab);
-        }
-        
-        public static Trame VitesseCanon(int vitesse)
-        {
-            byte[] tab = new byte[4];
-            tab[0] = (byte)Carte.RecMove;
-            tab[1] = (byte)FonctionMove.VitesseCanon;
-            tab[2] = (byte)ByteDivide(vitesse, true);
-            tab[3] = (byte)ByteDivide(vitesse, false);
-            return new Trame(tab);
-        }
-
-        public static Trame Shutter(bool ouvert)
-        {
-            byte[] tab = new byte[3];
-            tab[0] = (byte)Carte.RecMove;
-            tab[1] = (byte)FonctionMove.Shutter;
-            tab[2] = (byte)(ouvert ? 0x01 : 0x00);
-            return new Trame(tab);
-        }
-
-        public static Trame DemandePresenceBalle()
-        {
-            byte[] tab = new byte[2];
-            tab[0] = (byte)Carte.RecMove;
-            tab[1] = (byte)FonctionMove.DemandePresence;
-            return new Trame(tab);
-        }
-
-        public static Trame DemandeCouleurBalle()
-        {
-            byte[] tab = new byte[2];
-            tab[0] = (byte)Carte.RecMove;
-            tab[1] = (byte)FonctionMove.DemandeCouleur;
-            return new Trame(tab);
-        }
-
         public static Trame DemandeCouleurEquipe()
         {
             byte[] tab = new byte[2];
@@ -605,44 +543,11 @@ namespace GoBot.Communications
             return new Trame(tab);
         }
 
-        public static Trame DemandeAspiRemonte()
-        {
-            byte[] tab = new byte[2];
-            tab[0] = (byte)Carte.RecMove;
-            tab[1] = (byte)FonctionMove.DemandeAspiRemonte;
-            return new Trame(tab);
-        }
-
         public static Trame DemandeChargeCPU()
         {
             byte[] tab = new byte[2];
             tab[0] = (byte)Carte.RecMove;
             tab[1] = (byte)FonctionMove.DemandeChargeCPU;
-            return new Trame(tab);
-        }
-
-        public static Trame DemandePresenceAssiette()
-        {
-            byte[] tab = new byte[2];
-            tab[0] = (byte)Carte.RecMove;
-            tab[1] = (byte)FonctionMove.DemandePresenceAssiette;
-            return new Trame(tab);
-        }
-
-        public static Trame DemandeVitesseCanon()
-        {
-            byte[] tab = new byte[2];
-            tab[0] = (byte)Carte.RecMove;
-            tab[1] = (byte)FonctionMove.DemandeVitesseCanon;
-            return new Trame(tab);
-        }
-
-        public static Trame ActiverPompe(bool actif)
-        {
-            byte[] tab = new byte[3];
-            tab[0] = (byte)Carte.RecMove;
-            tab[1] = (byte)FonctionMove.Pompe;
-            tab[2] = (byte)(actif ? 1 : 0);
             return new Trame(tab);
         }
 
@@ -712,16 +617,6 @@ namespace GoBot.Communications
 
         #endregion
 
-
-        public static Trame VitesseCanonTMin(int vitesse)
-        {
-            byte[] tab = new byte[4];
-            tab[0] = (byte)Carte.RecMove;
-            tab[1] = (byte)FonctionMove.VitesseCanonTours;
-            tab[2] = (byte)ByteDivide(vitesse, true);
-            tab[3] = (byte)ByteDivide(vitesse, false);
-            return new Trame(tab);
-        }
 
         public static Trame EnvoiConsigneBrute(int consigne, SensAR sens = SensAR.Avant)
         {

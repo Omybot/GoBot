@@ -62,10 +62,6 @@ namespace GoBot.Actions
         {
             switch (moteur)
             {
-                case MoteurID.GRCanon:
-                    return "canon";
-                case MoteurID.GRTurbineAspirateur:
-                    return "aspiration";
                 default:
                     return moteur.ToString();
             }
@@ -97,8 +93,6 @@ namespace GoBot.Actions
         {
             switch (actionneur)
             {
-                case ActionneurOnOffID.GRShutter:
-                    return "shutter";
                 case ActionneurOnOffID.GRAlimentation:
                     return "alimentation";
                 default:
@@ -110,10 +104,6 @@ namespace GoBot.Actions
         {
             switch (capteur)
             {
-                case CapteurID.GRCouleurBalle:
-                    return "couleur balle";
-                case CapteurID.GRPresenceBalle:
-                    return "présence balle";
                 default:
                     return capteur.ToString();
             }

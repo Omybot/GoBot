@@ -317,44 +317,11 @@ namespace GoBot
 
         System.Timers.Timer timerDeplacement;
 
-        public override bool GetPresenceBalle(bool historique = true)
-        {
-            if (NbBallesBlanchesCharges > 0)
-                return true;
-
-            return false;
-        }
-
-        public override Color GetCouleurBalle(bool historique = true)
-        {
-            if (BalleCouleurChargee && Rand.Next(NbBallesBlanchesCharges + 1) == 0)
-            {
-                BalleCouleurChargee = false;
-                return Color.Blue;
-            }
-
-            return Color.White;
-        }
-
-        public override bool GetPresenceAssiette(bool historique = true)
-        {
-            // TODO
-            return true;
-        }
-
-        public override bool GetAspiRemonte(bool historique = true)
-        {
-            return true;
-        }
-
         public override void TourneMoteur(MoteurID moteur, int vitesse)
         {
             base.TourneMoteur(moteur, vitesse);
 
             Historique.AjouterAction(new ActionMoteur(this, vitesse, moteur));
-
-            if (moteur == MoteurID.GRCanonTMin)
-                vitesseCanonTMin = vitesse;
         }
 
         public override void AlimentationPuissance(bool on)
@@ -367,12 +334,6 @@ namespace GoBot
                 VitessePivot = 0;
                 AccelerationPivot = 0;*/
             }
-        }
-
-        private int vitesseCanonTMin = 0;
-        public override int GetVitesseCanon(bool historique = true)
-        {
-            return vitesseCanonTMin;
         }
 
         public override void Reset()

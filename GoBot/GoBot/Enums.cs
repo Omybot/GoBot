@@ -36,26 +36,28 @@ namespace GoBot
 
     public enum MoteurID
     {
-        GRCanon = 0,
+        /*GRCanon = 0,
         GRCanonTMin = 2,
-        GRTurbineAspirateur = 1
+        GRTurbineAspirateur = 1*/
     }
 
     public enum CapteurID
     {
-        GRPresenceBalle = 0,
+       /* GRPresenceBalle = 0,
         GRCouleurBalle = 1,
         GRPresenceAssiette = 2,
         GRAspiRemonte = 3,
         GRVitesseCanon = 4,
+        */
         GRJack
     }
 
     public enum ActionneurOnOffID
     {
-        GRShutter = 0,
+        /*GRShutter = 0,
         GRAlimentation = 1,
-        GRPompe = 2
+        GRPompe = 2*/
+        GRAlimentation = 1
     }
 
     public enum Carte
@@ -67,11 +69,5 @@ namespace GoBot
         RecBun = 0xB1,
         RecBeu = 0xB2,
         RecBoi = 0xB3
-    }
-
-    public enum CapteurBalise
-    {
-        CapteurHaut = 1,
-        CapteurBas = 0
     }
 }
