@@ -30,9 +30,8 @@ namespace GoBot
         GREpaule = 2,
         GRPinceDroite = 3,
         GRPinceGauche = 4,
-        GRTous = 255,
 
-        PRTous = 255
+        Tous = 255
     }
 
     public enum MoteurID

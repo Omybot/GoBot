@@ -32,6 +32,16 @@
             this.switchBoutonPuissance = new Composants.SwitchBouton();
             this.label12 = new System.Windows.Forms.Label();
             this.groupBoxUtilisation = new Composants.GroupBoxRetractable();
+            this.label3 = new System.Windows.Forms.Label();
+            this.label1 = new System.Windows.Forms.Label();
+            this.btnEpauleRange = new System.Windows.Forms.Button();
+            this.btnCoudeRange = new System.Windows.Forms.Button();
+            this.label4 = new System.Windows.Forms.Label();
+            this.btnPinceGaucheOuverte = new System.Windows.Forms.Button();
+            this.btnPinceGaucheFermee = new System.Windows.Forms.Button();
+            this.label5 = new System.Windows.Forms.Label();
+            this.btnPinceDroiteFermee = new System.Windows.Forms.Button();
+            this.btnPinceDroiteOuverte = new System.Windows.Forms.Button();
             this.groupBoxUtilisation.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -66,6 +76,16 @@
             // 
             // groupBoxUtilisation
             // 
+            this.groupBoxUtilisation.Controls.Add(this.label3);
+            this.groupBoxUtilisation.Controls.Add(this.label1);
+            this.groupBoxUtilisation.Controls.Add(this.btnEpauleRange);
+            this.groupBoxUtilisation.Controls.Add(this.btnCoudeRange);
+            this.groupBoxUtilisation.Controls.Add(this.label4);
+            this.groupBoxUtilisation.Controls.Add(this.btnPinceGaucheOuverte);
+            this.groupBoxUtilisation.Controls.Add(this.btnPinceGaucheFermee);
+            this.groupBoxUtilisation.Controls.Add(this.label5);
+            this.groupBoxUtilisation.Controls.Add(this.btnPinceDroiteFermee);
+            this.groupBoxUtilisation.Controls.Add(this.btnPinceDroiteOuverte);
             this.groupBoxUtilisation.Controls.Add(this.label12);
             this.groupBoxUtilisation.Controls.Add(this.btnDiagnostic);
             this.groupBoxUtilisation.Controls.Add(this.switchBoutonPuissance);
@@ -75,6 +95,102 @@
             this.groupBoxUtilisation.TabIndex = 1;
             this.groupBoxUtilisation.TabStop = false;
             this.groupBoxUtilisation.Text = "Utilisation";
+            // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Location = new System.Drawing.Point(26, 82);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(38, 13);
+            this.label3.TabIndex = 214;
+            this.label3.Text = "Coude";
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(26, 108);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(40, 13);
+            this.label1.TabIndex = 215;
+            this.label1.Text = "Epaule";
+            // 
+            // btnEpauleRange
+            // 
+            this.btnEpauleRange.Location = new System.Drawing.Point(117, 103);
+            this.btnEpauleRange.Name = "btnEpauleRange";
+            this.btnEpauleRange.Size = new System.Drawing.Size(53, 23);
+            this.btnEpauleRange.TabIndex = 213;
+            this.btnEpauleRange.Text = "Rangé";
+            this.btnEpauleRange.UseVisualStyleBackColor = true;
+            this.btnEpauleRange.Click += new System.EventHandler(this.btnEpauleRange_Click);
+            // 
+            // btnCoudeRange
+            // 
+            this.btnCoudeRange.Location = new System.Drawing.Point(117, 77);
+            this.btnCoudeRange.Name = "btnCoudeRange";
+            this.btnCoudeRange.Size = new System.Drawing.Size(53, 23);
+            this.btnCoudeRange.TabIndex = 212;
+            this.btnCoudeRange.Text = "Rangé";
+            this.btnCoudeRange.UseVisualStyleBackColor = true;
+            this.btnCoudeRange.Click += new System.EventHandler(this.btnCoudeRange_Click);
+            // 
+            // label4
+            // 
+            this.label4.AutoSize = true;
+            this.label4.Location = new System.Drawing.Point(26, 134);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(63, 13);
+            this.label4.TabIndex = 202;
+            this.label4.Text = "Pince droite";
+            // 
+            // btnPinceGaucheOuverte
+            // 
+            this.btnPinceGaucheOuverte.Location = new System.Drawing.Point(176, 155);
+            this.btnPinceGaucheOuverte.Name = "btnPinceGaucheOuverte";
+            this.btnPinceGaucheOuverte.Size = new System.Drawing.Size(53, 23);
+            this.btnPinceGaucheOuverte.TabIndex = 211;
+            this.btnPinceGaucheOuverte.Text = "Ouverte";
+            this.btnPinceGaucheOuverte.UseVisualStyleBackColor = true;
+            this.btnPinceGaucheOuverte.Click += new System.EventHandler(this.btnPinceGaucheOuverte_Click);
+            // 
+            // btnPinceGaucheFermee
+            // 
+            this.btnPinceGaucheFermee.Location = new System.Drawing.Point(117, 155);
+            this.btnPinceGaucheFermee.Name = "btnPinceGaucheFermee";
+            this.btnPinceGaucheFermee.Size = new System.Drawing.Size(53, 23);
+            this.btnPinceGaucheFermee.TabIndex = 210;
+            this.btnPinceGaucheFermee.Text = "Fermée";
+            this.btnPinceGaucheFermee.UseVisualStyleBackColor = true;
+            this.btnPinceGaucheFermee.Click += new System.EventHandler(this.btnPinceGaucheFermee_Click);
+            // 
+            // label5
+            // 
+            this.label5.AutoSize = true;
+            this.label5.Location = new System.Drawing.Point(26, 160);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(73, 13);
+            this.label5.TabIndex = 207;
+            this.label5.Text = "Pince gauche";
+            // 
+            // btnPinceDroiteFermee
+            // 
+            this.btnPinceDroiteFermee.Location = new System.Drawing.Point(117, 129);
+            this.btnPinceDroiteFermee.Name = "btnPinceDroiteFermee";
+            this.btnPinceDroiteFermee.Size = new System.Drawing.Size(53, 23);
+            this.btnPinceDroiteFermee.TabIndex = 205;
+            this.btnPinceDroiteFermee.Text = "Fermée";
+            this.btnPinceDroiteFermee.UseVisualStyleBackColor = true;
+            this.btnPinceDroiteFermee.Click += new System.EventHandler(this.btnPinceDroiteFermee_Click);
+            // 
+            // btnPinceDroiteOuverte
+            // 
+            this.btnPinceDroiteOuverte.Location = new System.Drawing.Point(176, 129);
+            this.btnPinceDroiteOuverte.Name = "btnPinceDroiteOuverte";
+            this.btnPinceDroiteOuverte.Size = new System.Drawing.Size(53, 23);
+            this.btnPinceDroiteOuverte.TabIndex = 206;
+            this.btnPinceDroiteOuverte.Text = "Ouverte";
+            this.btnPinceDroiteOuverte.UseVisualStyleBackColor = true;
+            this.btnPinceDroiteOuverte.Click += new System.EventHandler(this.btnPinceDroiteOuverte_Click);
             // 
             // PanelGrosRobotUtilisation
             // 
@@ -98,5 +214,15 @@
         private System.Windows.Forms.Label label12;
         private System.Windows.Forms.Button btnDiagnostic;
         private Composants.GroupBoxRetractable groupBoxUtilisation;
+        private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.Button btnPinceGaucheOuverte;
+        private System.Windows.Forms.Button btnPinceGaucheFermee;
+        private System.Windows.Forms.Label label5;
+        private System.Windows.Forms.Button btnPinceDroiteFermee;
+        private System.Windows.Forms.Button btnPinceDroiteOuverte;
+        private System.Windows.Forms.Button btnEpauleRange;
+        private System.Windows.Forms.Button btnCoudeRange;
+        private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.Label label1;
     }
 }

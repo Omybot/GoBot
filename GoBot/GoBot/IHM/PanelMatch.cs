@@ -102,11 +102,7 @@ namespace GoBot.IHM
         {
             //panelCamera.btnCapture_Click(null, null);
             // Recallage du gros robot
-
-            Robots.GrosRobot.BougeServo(ServomoteurID.GRAspirateur, Config.CurrentConfig.PositionGRAspirateurBas);
-            Thread.Sleep(400);
-            Robots.GrosRobot.BougeServo(ServomoteurID.GRAspirateur, Config.CurrentConfig.PositionGRAspirateurHaut);
-
+            
             Robots.GrosRobot.Lent();
             Robots.GrosRobot.Avancer(10);
             Robots.GrosRobot.Recallage(SensAR.Arriere);

@@ -45,6 +45,8 @@
             this.numCoude = new System.Windows.Forms.NumericUpDown();
             this.label3 = new System.Windows.Forms.Label();
             this.groupBoxReglage = new Composants.GroupBoxRetractable();
+            this.btnCoudeRange = new System.Windows.Forms.Button();
+            this.btnEpauleRange = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.numPinceGauche)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numPinceDroite)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numEpaule)).BeginInit();
@@ -60,7 +62,7 @@
             this.btnPinceGaucheOuverte.TabIndex = 142;
             this.btnPinceGaucheOuverte.Text = "Ouverte";
             this.btnPinceGaucheOuverte.UseVisualStyleBackColor = true;
-            this.btnPinceGaucheOuverte.Click += new System.EventHandler(this.btnPetitBrasBas_Click);
+            this.btnPinceGaucheOuverte.Click += new System.EventHandler(this.btnPinceGaucheOuverte_Click);
             // 
             // btnPinceGaucheFermee
             // 
@@ -70,7 +72,7 @@
             this.btnPinceGaucheFermee.TabIndex = 141;
             this.btnPinceGaucheFermee.Text = "Fermée";
             this.btnPinceGaucheFermee.UseVisualStyleBackColor = true;
-            this.btnPinceGaucheFermee.Click += new System.EventHandler(this.btnPetitBrasHaut_Click);
+            this.btnPinceGaucheFermee.Click += new System.EventHandler(this.btnPinceGaucheFermee_Click);
             // 
             // btnPinceGaucheOk
             // 
@@ -80,7 +82,7 @@
             this.btnPinceGaucheOk.TabIndex = 140;
             this.btnPinceGaucheOk.Text = "Ok";
             this.btnPinceGaucheOk.UseVisualStyleBackColor = true;
-            this.btnPinceGaucheOk.Click += new System.EventHandler(this.btnPetitBrasOk_Click);
+            this.btnPinceGaucheOk.Click += new System.EventHandler(this.btnPinceGaucheOk_Click);
             // 
             // numPinceGauche
             // 
@@ -218,6 +220,8 @@
             // 
             // groupBoxReglage
             // 
+            this.groupBoxReglage.Controls.Add(this.btnEpauleRange);
+            this.groupBoxReglage.Controls.Add(this.btnCoudeRange);
             this.groupBoxReglage.Controls.Add(this.label3);
             this.groupBoxReglage.Controls.Add(this.numCoude);
             this.groupBoxReglage.Controls.Add(this.btnCoudeOk);
@@ -240,6 +244,26 @@
             this.groupBoxReglage.TabIndex = 1;
             this.groupBoxReglage.TabStop = false;
             this.groupBoxReglage.Text = "Réglages";
+            // 
+            // btnCoudeRange
+            // 
+            this.btnCoudeRange.Location = new System.Drawing.Point(206, 45);
+            this.btnCoudeRange.Name = "btnCoudeRange";
+            this.btnCoudeRange.Size = new System.Drawing.Size(53, 23);
+            this.btnCoudeRange.TabIndex = 143;
+            this.btnCoudeRange.Text = "Rangé";
+            this.btnCoudeRange.UseVisualStyleBackColor = true;
+            this.btnCoudeRange.Click += new System.EventHandler(this.btnCoudeRange_Click);
+            // 
+            // btnEpauleRange
+            // 
+            this.btnEpauleRange.Location = new System.Drawing.Point(206, 71);
+            this.btnEpauleRange.Name = "btnEpauleRange";
+            this.btnEpauleRange.Size = new System.Drawing.Size(53, 23);
+            this.btnEpauleRange.TabIndex = 144;
+            this.btnEpauleRange.Text = "Rangé";
+            this.btnEpauleRange.UseVisualStyleBackColor = true;
+            this.btnEpauleRange.Click += new System.EventHandler(this.btnEpauleRange_Click);
             // 
             // PanelGrosRobotReglage
             // 
@@ -280,5 +304,7 @@
         private System.Windows.Forms.NumericUpDown numPinceDroite;
         private System.Windows.Forms.Label label4;
         private Composants.GroupBoxRetractable groupBoxReglage;
+        private System.Windows.Forms.Button btnEpauleRange;
+        private System.Windows.Forms.Button btnCoudeRange;
     }
 }

@@ -76,7 +76,7 @@ namespace GoBot
         public abstract int GetVitesseCanon(bool historique = true);
         public abstract bool GetJack(bool historique = true);
 
-        public Dictionary<ServomoteurID, bool> ServoSorti { get; set; }
+        public Dictionary<ServomoteurID, bool> ServoActive { get; set; }
         public Dictionary<MoteurID, bool> MoteurTourne { get; set; }
 
         public void Diagnostic()
@@ -89,64 +89,21 @@ namespace GoBot
                 Reculer(50);
                 PivotDroite(10);
                 PivotGauche(10);
-                BougeServo(ServomoteurID.GRAspirateur, Config.CurrentConfig.PositionGRAspirateurBas);
-                Thread.Sleep(tempsPause);
-                BougeServo(ServomoteurID.GRAspirateur, Config.CurrentConfig.PositionGRAspirateurHaut);
-                Thread.Sleep(tempsPause);
-                BougeServo(ServomoteurID.GRBrasDroit, Config.CurrentConfig.PositionGRBrasDroitSorti);
-                Thread.Sleep(tempsPause);
-                BougeServo(ServomoteurID.GRBrasDroit, Config.CurrentConfig.PositionGRBrasDroitRange);
-                Thread.Sleep(tempsPause);
-                BougeServo(ServomoteurID.GRBrasGauche, Config.CurrentConfig.PositionGRBrasGaucheSorti);
-                Thread.Sleep(tempsPause);
-                BougeServo(ServomoteurID.GRBrasGauche, Config.CurrentConfig.PositionGRBrasGaucheRange);
-                Thread.Sleep(tempsPause);
-                BougeServo(ServomoteurID.GRCamera, Config.CurrentConfig.PositionGRCameraBleu);
-                Thread.Sleep(tempsPause);
-                BougeServo(ServomoteurID.GRCamera, Config.CurrentConfig.PositionGRCameraRouge);
-                Thread.Sleep(tempsPause);
-                BougeServo(ServomoteurID.GRDebloqueur, Config.CurrentConfig.PositionGRDebloqueurHaut);
-                Thread.Sleep(tempsPause);
-                BougeServo(ServomoteurID.GRDebloqueur, Config.CurrentConfig.PositionGRDebloqueurBas);
-                Thread.Sleep(tempsPause);
-                BougeServo(ServomoteurID.GRGrandBras, Config.CurrentConfig.PositionGRGrandBrasHaut);
-                Thread.Sleep(tempsPause);
-                BougeServo(ServomoteurID.GRGrandBras, Config.CurrentConfig.PositionGRGrandBrasRange);
-                Thread.Sleep(tempsPause);
-                BougeServo(ServomoteurID.GRPetitBras, Config.CurrentConfig.PositionGRPetitBrasHaut);
-                Thread.Sleep(tempsPause);
-                BougeServo(ServomoteurID.GRPetitBras, Config.CurrentConfig.PositionGRPetitBrasRange);
-                Thread.Sleep(tempsPause);
-                BougeServo(ServomoteurID.GRServoAssiette, Config.CurrentConfig.PositionGRBloqueurFerme);
-                Thread.Sleep(tempsPause);
-                BougeServo(ServomoteurID.GRServoAssiette, Config.CurrentConfig.PositionGRBloqueurOuvert);
-                Thread.Sleep(tempsPause);
-                ActionneurOnOff(ActionneurOnOffID.GRShutter, true);
-                Thread.Sleep(tempsPause);
-                ActionneurOnOff(ActionneurOnOffID.GRShutter, false);
-                Thread.Sleep(tempsPause);
-                TourneMoteur(MoteurID.GRCanonTMin, 7000);
-                Thread.Sleep(tempsPause);
-                TourneMoteur(MoteurID.GRCanonTMin, 0);
-                Thread.Sleep(tempsPause);
-                TourneMoteur(MoteurID.GRTurbineAspirateur, Config.CurrentConfig.VitesseAspiration);
-                Thread.Sleep(tempsPause);
-                TourneMoteur(MoteurID.GRTurbineAspirateur, 0);
+                // TODO
             }
         }
 
         public virtual void BougeServo(ServomoteurID servo, int position)
         {
-            if (ServoSorti.ContainsKey(servo))
+            if (ServoActive.ContainsKey(servo))
             {
-                if (servo == ServomoteurID.GRBrasDroit && position == Config.CurrentConfig.PositionGRBrasDroitSorti ||
-                    servo == ServomoteurID.GRBrasGauche && position == Config.CurrentConfig.PositionGRBrasGaucheSorti ||
-                    servo == ServomoteurID.GRGrandBras && position == Config.CurrentConfig.PositionGRGrandBrasHaut ||
-                    servo == ServomoteurID.GRPetitBras && position == Config.CurrentConfig.PositionGRPetitBrasHaut ||
-                    servo == ServomoteurID.GRAspirateur && position == Config.CurrentConfig.PositionGRAspirateurBas)
-                    ServoSorti[servo] = true;
+                if (servo == ServomoteurID.GRPinceDroite && position == Config.CurrentConfig.PositionGRPinceDroiteOuverte ||
+                    servo == ServomoteurID.GRPinceGauche && position == Config.CurrentConfig.PositionGRPinceGaucheOuverte ||
+                    servo == ServomoteurID.GRCoude && position != Config.CurrentConfig.PositionGRCoudeRange ||
+                    servo == ServomoteurID.GREpaule && position != Config.CurrentConfig.PositionGREpauleRange)
+                    ServoActive[servo] = true;
                 else
-                    ServoSorti[servo] = false;
+                    ServoActive[servo] = false;
             }
         }
 
@@ -183,15 +140,13 @@ namespace GoBot
             CheminTrouve = new List<Arc>();
             CheminEnCoursArcs = new List<Arc>();
             NodeTrouve = new List<Node>();
-            ServoSorti = new Dictionary<ServomoteurID, bool>();
-            ServoSorti.Add(ServomoteurID.GRBrasDroit, false);
-            ServoSorti.Add(ServomoteurID.GRBrasGauche, false);
-            ServoSorti.Add(ServomoteurID.GRGrandBras, false);
-            ServoSorti.Add(ServomoteurID.GRPetitBras, false);
-            ServoSorti.Add(ServomoteurID.GRAspirateur, false);
+            ServoActive = new Dictionary<ServomoteurID, bool>();
+            foreach (ServomoteurID servo in Enum.GetValues(typeof(ServomoteurID)))
+                ServoActive.Add(servo, false);
             MoteurTourne = new Dictionary<MoteurID, bool>();
-            MoteurTourne.Add(MoteurID.GRTurbineAspirateur, false);
-            MoteurTourne.Add(MoteurID.GRCanonTMin, false);
+            foreach (MoteurID moteur in Enum.GetValues(typeof(MoteurID)))
+                MoteurTourne.Add(moteur, false);
+
             LancementBalles = false;
             SemGraph = new Semaphore(1, 1);
         }

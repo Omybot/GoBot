@@ -28,66 +28,30 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.btnVerres = new System.Windows.Forms.Button();
-            this.btnAssiette = new System.Windows.Forms.Button();
-            this.btnCerise1 = new System.Windows.Forms.Button();
-            this.btnCerises = new System.Windows.Forms.Button();
             this.groupBoxSequences = new Composants.GroupBoxRetractable();
+            this.btnRangeBras = new System.Windows.Forms.Button();
             this.groupBoxSequences.SuspendLayout();
             this.SuspendLayout();
             // 
-            // btnVerres
-            // 
-            this.btnVerres.Location = new System.Drawing.Point(154, 69);
-            this.btnVerres.Name = "btnVerres";
-            this.btnVerres.Size = new System.Drawing.Size(130, 23);
-            this.btnVerres.TabIndex = 93;
-            this.btnVerres.Text = "Verres départ";
-            this.btnVerres.UseVisualStyleBackColor = true;
-            this.btnVerres.Click += new System.EventHandler(this.btnVerres_Click);
-            // 
-            // btnAssiette
-            // 
-            this.btnAssiette.Location = new System.Drawing.Point(18, 69);
-            this.btnAssiette.Name = "btnAssiette";
-            this.btnAssiette.Size = new System.Drawing.Size(130, 23);
-            this.btnAssiette.TabIndex = 92;
-            this.btnAssiette.Text = "Assiette";
-            this.btnAssiette.UseVisualStyleBackColor = true;
-            this.btnAssiette.Click += new System.EventHandler(this.btnAssiette_Click);
-            // 
-            // btnCerise1
-            // 
-            this.btnCerise1.Location = new System.Drawing.Point(18, 40);
-            this.btnCerise1.Name = "btnCerise1";
-            this.btnCerise1.Size = new System.Drawing.Size(130, 23);
-            this.btnCerise1.TabIndex = 91;
-            this.btnCerise1.Text = "Une cerise";
-            this.btnCerise1.UseVisualStyleBackColor = true;
-            this.btnCerise1.Click += new System.EventHandler(this.btnCerise1_Click);
-            // 
-            // btnCerises
-            // 
-            this.btnCerises.Location = new System.Drawing.Point(154, 40);
-            this.btnCerises.Name = "btnCerises";
-            this.btnCerises.Size = new System.Drawing.Size(130, 23);
-            this.btnCerises.TabIndex = 90;
-            this.btnCerises.Text = "Cerises";
-            this.btnCerises.UseVisualStyleBackColor = true;
-            this.btnCerises.Click += new System.EventHandler(this.btnCerises_Click);
-            // 
             // groupBoxSequences
             // 
-            this.groupBoxSequences.Controls.Add(this.btnVerres);
-            this.groupBoxSequences.Controls.Add(this.btnAssiette);
-            this.groupBoxSequences.Controls.Add(this.btnCerises);
-            this.groupBoxSequences.Controls.Add(this.btnCerise1);
+            this.groupBoxSequences.Controls.Add(this.btnRangeBras);
             this.groupBoxSequences.Location = new System.Drawing.Point(3, 3);
             this.groupBoxSequences.Name = "groupBoxSequences";
             this.groupBoxSequences.Size = new System.Drawing.Size(332, 104);
             this.groupBoxSequences.TabIndex = 1;
             this.groupBoxSequences.TabStop = false;
             this.groupBoxSequences.Text = "Séquences";
+            // 
+            // btnRangeBras
+            // 
+            this.btnRangeBras.Location = new System.Drawing.Point(32, 44);
+            this.btnRangeBras.Name = "btnRangeBras";
+            this.btnRangeBras.Size = new System.Drawing.Size(109, 23);
+            this.btnRangeBras.TabIndex = 1;
+            this.btnRangeBras.Text = "Ranger le bras";
+            this.btnRangeBras.UseVisualStyleBackColor = true;
+            this.btnRangeBras.Click += new System.EventHandler(this.btnRangeBras_Click);
             // 
             // PanelGrosRobotSequences
             // 
@@ -106,10 +70,7 @@
 
         #endregion
 
-        private System.Windows.Forms.Button btnCerises;
-        private System.Windows.Forms.Button btnCerise1;
-        private System.Windows.Forms.Button btnAssiette;
-        private System.Windows.Forms.Button btnVerres;
         private Composants.GroupBoxRetractable groupBoxSequences;
+        private System.Windows.Forms.Button btnRangeBras;
     }
 }

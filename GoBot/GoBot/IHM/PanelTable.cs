@@ -356,124 +356,7 @@ namespace GoBot.IHM
                                     gGros.DrawRectangle(Plateau.NotreCouleur == Plateau.CouleurJ1Rouge ? penCouleurJ1R : penCouleurJ2J, bmpGrosRobot.Width / 2 - RealToScreenDistance(Robots.GrosRobot.Largeur / 2), bmpGrosRobot.Height / 2 - RealToScreenDistance(Robots.GrosRobot.Longueur / 2), RealToScreenDistance(Robots.GrosRobot.Largeur), RealToScreenDistance(Robots.GrosRobot.Longueur));
                                     gGros.DrawLine(Plateau.NotreCouleur == Plateau.CouleurJ1Rouge ? penCouleurJ1R : penCouleurJ2J, bmpGrosRobot.Width / 2, bmpGrosRobot.Height / 2, bmpGrosRobot.Width / 2, bmpGrosRobot.Height / 2 - RealToScreenDistance(Robots.GrosRobot.Longueur / 2));
 
-                                    if (Robots.GrosRobot.ServoSorti[ServomoteurID.GRBrasDroit])
-                                    {
-                                        List<Point> points = new List<Point>();
-                                        points.Add(new Point(bmpGrosRobot.Width / 2 + RealToScreenDistance(Robots.GrosRobot.Largeur / 2), bmpGrosRobot.Height / 2 - RealToScreenDistance(Robots.GrosRobot.Longueur / 2)));
-                                        points.Add(new Point(bmpGrosRobot.Width / 2 + RealToScreenDistance(Robots.GrosRobot.Largeur / 2) + 4, bmpGrosRobot.Height / 2 - RealToScreenDistance(Robots.GrosRobot.Longueur / 2)));
-                                        points.Add(new Point(bmpGrosRobot.Width / 2 + RealToScreenDistance(Robots.GrosRobot.Largeur / 2) + 20, bmpGrosRobot.Height / 2 - RealToScreenDistance(Robots.GrosRobot.Longueur / 2) - 20));
-                                        points.Add(new Point(bmpGrosRobot.Width / 2 + RealToScreenDistance(Robots.GrosRobot.Largeur / 2) + 16, bmpGrosRobot.Height / 2 - RealToScreenDistance(Robots.GrosRobot.Longueur / 2) - 20));
-
-                                        gGros.FillPolygon(brushBleuClair, points.ToArray<Point>());
-                                        gGros.DrawPolygon(penCouleurJ2J, points.ToArray<Point>());
-                                    }
-
-                                    if (Robots.GrosRobot.ServoSorti[ServomoteurID.GRBrasGauche])
-                                    {
-                                        List<Point> points = new List<Point>();
-                                        points.Add(new Point(bmpGrosRobot.Width / 2 - RealToScreenDistance(Robots.GrosRobot.Largeur / 2), bmpGrosRobot.Height / 2 - RealToScreenDistance(Robots.GrosRobot.Longueur / 2)));
-                                        points.Add(new Point(bmpGrosRobot.Width / 2 - RealToScreenDistance(Robots.GrosRobot.Largeur / 2) - 4, bmpGrosRobot.Height / 2 - RealToScreenDistance(Robots.GrosRobot.Longueur / 2)));
-                                        points.Add(new Point(bmpGrosRobot.Width / 2 - RealToScreenDistance(Robots.GrosRobot.Largeur / 2) - 20, bmpGrosRobot.Height / 2 - RealToScreenDistance(Robots.GrosRobot.Longueur / 2) - 20));
-                                        points.Add(new Point(bmpGrosRobot.Width / 2 - RealToScreenDistance(Robots.GrosRobot.Largeur / 2) - 16, bmpGrosRobot.Height / 2 - RealToScreenDistance(Robots.GrosRobot.Longueur / 2) - 20));
-
-                                        gGros.FillPolygon(brushBleuClair, points.ToArray<Point>());
-                                        gGros.DrawPolygon(penCouleurJ2J, points.ToArray<Point>());
-                                    }
-
-                                    if (Robots.GrosRobot.ServoSorti[ServomoteurID.GRPetitBras])
-                                    {
-                                        gGros.FillRectangle(brushBleuClair,
-                                            bmpGrosRobot.Width / 2 + RealToScreenDistance(Robots.GrosRobot.Largeur / 2),
-                                            bmpGrosRobot.Height / 2 - 2,
-                                            RealToScreenDistance(140),
-                                            4);
-                                        gGros.DrawRectangle(penCouleurJ2J,
-                                            bmpGrosRobot.Width / 2 + RealToScreenDistance(Robots.GrosRobot.Largeur / 2),
-                                            bmpGrosRobot.Height / 2 - 2,
-                                            RealToScreenDistance(140),
-                                            4);
-                                    }
-                                    if (Robots.GrosRobot.ServoSorti[ServomoteurID.GRPetitBras])
-                                    {
-                                        gGros.FillRectangle(brushBleuClair,
-                                            bmpGrosRobot.Width / 2 + RealToScreenDistance(Robots.GrosRobot.Largeur / 2),
-                                            bmpGrosRobot.Height / 2 - 2,
-                                            RealToScreenDistance(140),
-                                            4);
-                                        gGros.DrawRectangle(penCouleurJ2J,
-                                            bmpGrosRobot.Width / 2 + RealToScreenDistance(Robots.GrosRobot.Largeur / 2),
-                                            bmpGrosRobot.Height / 2 - 2,
-                                            RealToScreenDistance(140),
-                                            4);
-                                    }
-
-                                    if (Robots.GrosRobot.ServoSorti[ServomoteurID.GRGrandBras])
-                                    {
-                                        gGros.FillRectangle(brushBleuClair,
-                                            bmpGrosRobot.Width / 2 + RealToScreenDistance(Robots.GrosRobot.Largeur / 2),
-                                            bmpGrosRobot.Height / 2 + 4,
-                                            RealToScreenDistance(220),
-                                            4);
-                                        gGros.DrawRectangle(penCouleurJ2J,
-                                            bmpGrosRobot.Width / 2 + RealToScreenDistance(Robots.GrosRobot.Largeur / 2),
-                                            bmpGrosRobot.Height / 2 + 4,
-                                            RealToScreenDistance(220),
-                                            4);
-                                    }
-
-                                    if (Robots.GrosRobot.ServoSorti[ServomoteurID.GRAspirateur])
-                                    {
-                                        gGros.FillRectangle(brushBleuClair,
-                                            bmpGrosRobot.Width / 2 - RealToScreenDistance(130),
-                                            bmpGrosRobot.Height / 2 + RealToScreenDistance(Robots.GrosRobot.Longueur / 2),
-                                            RealToScreenDistance(200),
-                                            RealToScreenDistance(50));
-                                        gGros.DrawRectangle(penCouleurJ2J,
-                                            bmpGrosRobot.Width / 2 - RealToScreenDistance(130),
-                                            bmpGrosRobot.Height / 2 + RealToScreenDistance(Robots.GrosRobot.Longueur / 2),
-                                            RealToScreenDistance(200),
-                                            RealToScreenDistance(50));
-                                    }
-
-                                    if (Robots.GrosRobot.MoteurTourne[MoteurID.GRTurbineAspirateur])
-                                    {
-                                        switch (cptHelice1)
-                                        {
-                                            case 0:
-                                                gGros.DrawImage(Properties.Resources.Helice1, bmpGrosRobot.Width / 2 - 12, bmpGrosRobot.Height / 2 + RealToScreenDistance(Robots.GrosRobot.Longueur / 2) - 4, 16, 16);
-                                                break;
-                                            case 1:
-                                                gGros.DrawImage(Properties.Resources.Helice2, bmpGrosRobot.Width / 2 - 12, bmpGrosRobot.Height / 2 + RealToScreenDistance(Robots.GrosRobot.Longueur / 2) - 4, 16, 16);
-                                                break;
-                                            case 2:
-                                                gGros.DrawImage(Properties.Resources.Helice3, bmpGrosRobot.Width / 2 - 12, bmpGrosRobot.Height / 2 + RealToScreenDistance(Robots.GrosRobot.Longueur / 2) - 4, 16, 16);
-                                                break;
-                                        }
-
-                                        cptHelice1++;
-                                        if (cptHelice1 > 2)
-                                            cptHelice1 = 0;
-                                    }
-
-                                    if (Robots.GrosRobot.MoteurTourne[MoteurID.GRCanonTMin])
-                                    {
-                                        switch (cptHelice2)
-                                        {
-                                            case 0:
-                                                gGros.DrawImage(Properties.Resources.Helice1, bmpGrosRobot.Width / 2 + RealToScreenDistance(Robots.GrosRobot.Largeur / 2) - 15, bmpGrosRobot.Height / 2 - 8, 16, 16);
-                                                break;
-                                            case 1:
-                                                gGros.DrawImage(Properties.Resources.Helice2, bmpGrosRobot.Width / 2 + RealToScreenDistance(Robots.GrosRobot.Largeur / 2) - 15, bmpGrosRobot.Height / 2 - 8, 16, 16);
-                                                break;
-                                            case 2:
-                                                gGros.DrawImage(Properties.Resources.Helice3, bmpGrosRobot.Width / 2 + RealToScreenDistance(Robots.GrosRobot.Largeur / 2) - 15, bmpGrosRobot.Height / 2 - 8, 16, 16);
-                                                break;
-                                        }
-
-                                        cptHelice2++;
-                                        if (cptHelice2 > 2)
-                                            cptHelice2 = 0;
-                                    }
+                                    // Dessiner les actionneurs ici
 
                                     g.DrawImage(RotateImage(bmpGrosRobot, Robots.GrosRobot.Position.Angle.AngleDegres + 90), positionRobot.X - bmpGrosRobot.Width / 2, positionRobot.Y - bmpGrosRobot.Height / 2);
 
@@ -501,6 +384,8 @@ namespace GoBot.IHM
                                     gPetit.FillRectangle(brushBlanc, bmpPetitRobot.Width / 2 - RealToScreenDistance(Robots.PetitRobot.Largeur / 2), bmpPetitRobot.Height / 2 - RealToScreenDistance(Robots.PetitRobot.Longueur / 2), RealToScreenDistance(Robots.PetitRobot.Largeur), RealToScreenDistance(Robots.PetitRobot.Longueur));
                                     gPetit.DrawRectangle(Plateau.NotreCouleur == Plateau.CouleurJ1Rouge ? penCouleurJ1R : penCouleurJ2J, bmpPetitRobot.Width / 2 - RealToScreenDistance(Robots.PetitRobot.Largeur / 2), bmpPetitRobot.Height / 2 - RealToScreenDistance(Robots.PetitRobot.Longueur / 2), RealToScreenDistance(Robots.PetitRobot.Largeur), RealToScreenDistance(Robots.PetitRobot.Longueur));
                                     gPetit.DrawLine(Plateau.NotreCouleur == Plateau.CouleurJ1Rouge ? penCouleurJ1R : penCouleurJ2J, bmpPetitRobot.Width / 2, bmpPetitRobot.Height / 2, bmpPetitRobot.Width / 2, bmpPetitRobot.Height / 2 - RealToScreenDistance(Robots.PetitRobot.Longueur / 2));
+
+                                    // Dessiner les actionneurs ici
 
                                     g.DrawImage(RotateImage(bmpPetitRobot, Robots.PetitRobot.Position.Angle.AngleDegres + 90), positionRobot.X - RealToScreenDistance(Robots.PetitRobot.Taille), positionRobot.Y - RealToScreenDistance(Robots.PetitRobot.Taille));
 
