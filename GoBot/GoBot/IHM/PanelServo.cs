@@ -13,239 +13,228 @@ namespace GoBot.IHM
 {
     public partial class PanelServo : UserControl
     {
-        Servomoteur servo;
-
-        ToolTip tootltip;
-        System.Windows.Forms.Timer timerLed;
-        bool ledAllume;
+        private Servomoteur servo;
+        private bool MajIHM { get; set; }
 
         public PanelServo()
         {
             InitializeComponent();
-            tootltip = new ToolTip();
-
-            EnableInterface(false);
 
             servo = null;
-
-            timerLed = new System.Windows.Forms.Timer();
-            timerLed.Interval = 250;
-            timerLed.Tick += new EventHandler(timerled_Tick);
-
-            ledAllume = false;
-
-            comboBoxFonctions.Text = "ID";
         }
 
-
-        void Connexion_ConnexionChange(bool conn)
+        private void btnRefresh_Click(object sender, EventArgs e)
         {
-            SetLed(conn);
-
-            EnableInterface(conn);
+            Actualisation();
         }
 
-        delegate void SetLedCallback(bool on);
-        private void SetLed(bool on)
+        private void Actualisation()
         {
-            if (ledConnect.InvokeRequired)
+            MajIHM = true;
+
+            servo = new Servomoteur(Carte.RecMove, (int)numID.Value, 19200);
+
+            trackBarPosition.SetValue(servo.PositionActuelle);
+            trackBarPosition.SetValue(servo.VitesseActuelle);
+
+            lblModele.Text = servo.Modele.ToString();
+            lblFirmware.Text = servo.Firmware.ToString();
+            numBaudrate.Value = (decimal)servo.Baudrate;
+            numCouple.Value = (decimal)servo.CoupleMaximum;
+            numPositionMin.Value = (decimal)servo.PositionMin;
+            numPositionMax.Value = (decimal)servo.PositionMax;
+            numCCWSlope.Value = (decimal)servo.CCWSlope;
+            numCCWMargin.Value = (decimal)servo.CCWMargin;
+            numCWSlope.Value = (decimal)servo.CWSlope;
+            numCWMargin.Value = (decimal)servo.CWMargin;
+            if (servo.LedAllumee)
             {
-                SetLedCallback d = new SetLedCallback(SetLed);
-                this.Invoke(d, new object[] { on });
+                ledLed.CouleurRouge();
+                switchLed.SetActif(true, false);
             }
             else
             {
-                if (on)
-                    ledConnect.CouleurVert(true);
-                else
-                    ledConnect.CouleurRouge(true);
+                ledLed.CouleurGris();
+                switchLed.SetActif(false, false);
             }
-        }
 
-        delegate void SetTextCallback(Control control, String text);
-        private void SetText(Control control, String text)
-        {
-            if (control.InvokeRequired)
+            if (servo.CoupleActive)
             {
-                SetTextCallback d = new SetTextCallback(SetText);
-                this.Invoke(d, new object[] { control, text });
+                ledCouple.CouleurVert();
+                switchCouple.SetActif(true, false);
             }
             else
             {
-                control.Text = text;
+                ledCouple.CouleurGris();
+                switchCouple.SetActif(false, false);
             }
-        }
 
-        delegate void EnableControlCallback(Control control, bool enable);
-        private void EnableControl(Control control, bool enable)
-        {
-            if (control.InvokeRequired)
-            {
-                EnableControlCallback d = new EnableControlCallback(EnableControl);
-                this.Invoke(d, new object[] { control, enable });
-            }
+            if (servo.EnMouvement)
+                ledMouvement.CouleurVert();
             else
-            {
-                control.Enabled = enable;
-            }
+                ledMouvement.CouleurGris();
+
+            lblTemperature.Text = servo.Temperature + " °C";
+            lblTension.Text = servo.Tension + " V";
+            lblPositionActuelle.Text = servo.PositionActuelle.ToString();
+            lblVitesseActuelle.Text = servo.VitesseActuelle.ToString();
+
+            boxLEDAngleLimit.Checked = servo.AlarmeLEDAngleLimit;
+            boxLEDChecksum.Checked = servo.AlarmeLEDChecksum;
+            boxLEDInputVoltage.Checked = servo.AlarmeLEDInputVoltage;
+            boxLEDInstruction.Checked = servo.AlarmeLEDInstruction;
+            boxLEDOverheating.Checked = servo.AlarmeLEDOverheating;
+            boxLEDOverload.Checked = servo.AlarmeLEDOverload;
+            boxLEDRange.Checked = servo.AlarmeLEDRange;
+
+            boxShutdownAngleLimit.Checked = servo.AlarmeShutdownAngleLimit;
+            boxShutdownChecksum.Checked = servo.AlarmeShutdownChecksum;
+            boxShutdownInputVoltage.Checked = servo.AlarmeShutdownInputVoltage;
+            boxShutdownInstruction.Checked = servo.AlarmeShutdownInstruction;
+            boxShutdownOverheating.Checked = servo.AlarmeShutdownOverheating;
+            boxShutdownOverload.Checked = servo.AlarmeShutdownOverload;
+            boxShutdownRange.Checked = servo.AlarmeShutdownRange;
+
+            MajIHM = false;
         }
-        
-        void EnableInterface(bool enable)
+
+        private void btnOkBaudrate_Click(object sender, EventArgs e)
         {
-            EnableControl(comboBoxFonctions, enable);
-            EnableControl(btnGet, enable);
-            EnableControl(btnSet, enable);
-            EnableControl(numValeur, enable);
-            EnableControl(switchLed, enable);
-            EnableControl(trackBarPosition, enable);
-            EnableControl(trackBarVitesse, enable);
+            servo.Baudrate = (double)numBaudrate.Value;
         }
 
-        void servo_TensionChange(double tension)
+        private void btnOkCoupleMax_Click(object sender, EventArgs e)
         {
-            SetText(lblTension, tension + "V");
+            servo.CoupleMaximum = (int)numCouple.Value;
         }
 
-        void servo_TemperatureChange(int temperature)
+        private void btnOkPositionMin_Click(object sender, EventArgs e)
         {
-            SetText(lblTemperature, temperature + "°");
+            servo.PositionMin = (int)numPositionMin.Value;
         }
 
-        void servo_CoupleChange(int couple)
+        private void btnOkPositionMax_Click(object sender, EventArgs e)
         {
-            SetText(lblCouple, couple + "");
+            servo.PositionMax = (int)numPositionMax.Value;
         }
 
-        void servo_RechercheAutoFinie(int idServo, double baudrate)
+        private void btnOkCCWSlope_Click(object sender, EventArgs e)
         {
-            numID.Value = idServo;
-            numBaudrate.Value = (decimal)baudrate;
+            servo.CCWSlope = (byte)numCCWSlope.Value;
         }
 
-        private void PanelServo_Load(object sender, EventArgs e)
+        private void btnOkCCWMargin_Click(object sender, EventArgs e)
         {
-            tootltip.SetToolTip(ledErreur1, "Instruction inconnue ou instruction envoyée sans Reg_Write");
-            ledErreur1.CouleurGris();
-
-            tootltip.SetToolTip(ledErreur2, "Couple hors plage");
-            ledErreur2.CouleurGris();
-
-            tootltip.SetToolTip(ledErreur3, "Checksum incorrect");
-            ledErreur3.CouleurGris();
-
-            tootltip.SetToolTip(ledErreur4, "Instruction hors plage");
-            ledErreur4.CouleurGris();
-
-            tootltip.SetToolTip(ledErreur5, "Température trop élevée");
-            ledErreur5.CouleurGris();
-
-            tootltip.SetToolTip(ledErreur6, "Position hors plage");
-            ledErreur6.CouleurGris();
-
-            tootltip.SetToolTip(ledErreur7, "Voltage hors plage");
-            ledErreur7.CouleurGris();
-
-            ledConnect.CouleurRouge();
+            servo.CCWMargin = (byte)numCCWMargin.Value;
         }
 
-        private void btnSet_Click(object sender, EventArgs e)
+        private void btnOkCWSlope_Click(object sender, EventArgs e)
         {
-            if (MessageBox.Show("Êtes vous sûr de vouloir modifier la valeur " + comboBoxFonctions.Text + " à " + numValeur.Value + " ?", "Confirmation", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
-            {
-                // Faire le changement
-
-                if (comboBoxFonctions.Text == "Baudrate")
-                {
-                    // Changement de baudrate
-                    servo.ChangerBaudrate((int)numValeur.Value);
-                }
-
-                else if (comboBoxFonctions.Text == "ID")
-                {
-                    // Changement de baudrate
-                    servo.ChangerID((int)numValeur.Value);
-                    numID.Value = numValeur.Value;
-                }
-
-                else if (comboBoxFonctions.Text == "Position minimum")
-                {
-                    // Changement de baudrate
-                    servo.SetPositionMin((int)numValeur.Value);
-                }
-
-                else if (comboBoxFonctions.Text == "Position maximum")
-                {
-                    // Changement de baudrate
-                    servo.SetPositionMax((int)numValeur.Value);
-                }
-            }
+            servo.CWSlope = (byte)numCWSlope.Value;
         }
 
-        private void btnOk_Click(object sender, EventArgs e)
+        private void btnOkCWMargin_Click(object sender, EventArgs e)
         {
-            if (servo == null)
-            {
-                //servo = new Servomoteur(Carte.RecIo, (int)numID.Value, (double)numBaudrate.Value);
-
-                servo.RechercheAutoFinie += new Servomoteur.RechercheAutoDelegate(servo_RechercheAutoFinie);
-                servo.TemperatureChange += new Servomoteur.TemperatureDelegate(servo_TemperatureChange);
-                servo.TensionChange += new Servomoteur.TensionDelegate(servo_TensionChange);
-                servo.CoupleChange += new Servomoteur.CoupleDelegate(servo_CoupleChange);
-                servo.ConnexionCheck.ConnexionChange += new ConnexionCheck.ConnexionChangeDelegate(Connexion_ConnexionChange);
-            }
-            else
-            {
-                servo.ID = (int)numID.Value;
-                servo.Baudrate = (double)numBaudrate.Value;
-            }
-
-            servo.TestConnexion();
+            servo.CWMargin = (byte)numCWMargin.Value;
         }
 
-        private void trackBarPosition_ValueChanged(object sender, EventArgs e)
+        private void boxLEDInputVoltage_CheckedChanged(object sender, EventArgs e)
         {
-            lblPosition.Text = (int)trackBarPosition.Value + "";
+            if (!MajIHM)
+                servo.AlarmeLEDInputVoltage = boxLEDInputVoltage.Checked;
         }
 
-        private void trackBarVitesse_ValueChanged(object sender, EventArgs e)
+        private void boxLEDAngleLimit_CheckedChanged(object sender, EventArgs e)
         {
-            lblVitesse.Text = (int)trackBarVitesse.Value + "";
+            if (!MajIHM)
+                servo.AlarmeLEDAngleLimit = boxLEDAngleLimit.Checked;
         }
 
-        private void trackBarVitesse_TickValueChanged(object sender, EventArgs e)
+        private void boxLEDOverheating_CheckedChanged(object sender, EventArgs e)
         {
-            servo.SetVitesse((int)trackBarVitesse.Value);
+            if (!MajIHM)
+                servo.AlarmeLEDOverheating = boxLEDOverheating.Checked;
         }
 
-        private void trackBarPosition_TickValueChanged(object sender, EventArgs e)
+        private void boxLEDRange_CheckedChanged(object sender, EventArgs e)
         {
-            servo.SetPosition((int)trackBarPosition.Value);
+            if (!MajIHM)
+                servo.AlarmeLEDRange = boxLEDRange.Checked;
         }
 
+        private void boxLEDChecksum_CheckedChanged(object sender, EventArgs e)
+        {
+            if (!MajIHM)
+                servo.AlarmeLEDChecksum = boxLEDChecksum.Checked;
+        }
+
+        private void boxLEDOverload_CheckedChanged(object sender, EventArgs e)
+        {
+            if (!MajIHM)
+                servo.AlarmeLEDOverload = boxLEDOverload.Checked;
+        }
+
+        private void boxLEDInstruction_CheckedChanged(object sender, EventArgs e)
+        {
+            if (!MajIHM)
+                servo.AlarmeLEDInstruction = boxLEDInstruction.Checked;
+        }
+
+        private void boxShutdownInputVoltage_CheckedChanged(object sender, EventArgs e)
+        {
+            if (!MajIHM)
+                servo.AlarmeShutdownInputVoltage = boxShutdownInputVoltage.Checked;
+        }
+
+        private void boxShutdownAngleLimit_CheckedChanged(object sender, EventArgs e)
+        {
+            if (!MajIHM)
+                servo.AlarmeShutdownAngleLimit = boxShutdownAngleLimit.Checked;
+        }
+
+        private void boxShutdownOverheating_CheckedChanged(object sender, EventArgs e)
+        {
+            if (!MajIHM)
+                servo.AlarmeShutdownOverheating = boxShutdownOverheating.Checked;
+        }
+
+        private void boxShutdownRange_CheckedChanged(object sender, EventArgs e)
+        {
+            if (!MajIHM)
+                servo.AlarmeShutdownRange = boxShutdownRange.Checked;
+        }
+
+        private void boxShutdownChecksum_CheckedChanged(object sender, EventArgs e)
+        {
+            if (!MajIHM)
+                servo.AlarmeShutdownChecksum = boxShutdownChecksum.Checked;
+        }
+
+        private void boxShutdownOverload_CheckedChanged(object sender, EventArgs e)
+        {
+            if (!MajIHM)
+                servo.AlarmeShutdownOverload = boxShutdownOverload.Checked;
+        }
+
+        private void boxShutdownInstruction_CheckedChanged(object sender, EventArgs e)
+        {
+            if (!MajIHM)
+                servo.AlarmeShutdownInstruction = boxShutdownInstruction.Checked;
+        }
+
+        private System.Windows.Forms.Timer timer;
         private void btnAuto_Click(object sender, EventArgs e)
         {
-            servo.Reset();
+            timer = new System.Windows.Forms.Timer();
+            timer.Interval = (int)numIntervalle.Value;
+            timer.Tick += new EventHandler(timer_Tick);
+            timer.Start();
         }
 
-        private void btnLed_Click(object sender, EventArgs e)
+        void timer_Tick(object sender, EventArgs e)
         {
-            servo.SetLed(true);
-        }
-
-        void timerled_Tick(object sender, EventArgs e)
-        {
-            ledAllume = !ledAllume;
-            servo.SetLed(ledAllume);
-            if(!switchLed.Actif && !ledAllume)
-                timerLed.Stop();
-        }
-
-        private void switchLed_ChangementEtat(object sender, EventArgs e)
-        {
-            if (switchLed.Actif)
-            {
-                timerLed.Start();
-            }
+            servo.DemandeActualisation();
+            Actualisation();
         }
     }
 }

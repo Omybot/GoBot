@@ -7,6 +7,18 @@ namespace GoBot.Communications
 {
     static class TrameFactory
     {
+        public enum ServoBaudrate
+        {
+            b1000000 = 1,
+            b500000 = 3,
+            b400000 = 4,
+            b250000 = 7,
+            b200000 = 9,
+            b115200 = 16,
+            b57600 = 34,
+            b19200 = 103,
+            b9600 = 207
+        }
         public enum FonctionMove
         {
             Deplace = 0x01,
@@ -35,8 +47,7 @@ namespace GoBot.Communications
             CoeffAsservPID = 0x36,
             EnvoiPositionAbsolue = 0x37,
 
-            ServoPosition = 0x60,
-            ServoVitesse = 0x61,
+            CommandeServo = 0x60,
 
             ArmerJack = 0x70,
             DepartJack = 0x71,
@@ -57,6 +68,64 @@ namespace GoBot.Communications
             TestEmissionReussi = 0xD5,
             TestEmissionCorrompu = 0xD6,
             TestEmissionPerdu = 0xD7
+        }
+
+        public enum FonctionServo
+        {
+            DemandePositionCible = 0x01,
+            RetourPositionCible = 0x02,
+            EnvoiPositionCible = 0x03,
+            DemandeBaudrate = 0x04,
+            RetourBaudrate = 0x05,
+            EnvoiBaudrate = 0x06,
+            DemandeVitesseMax = 0x07,
+            RetourVitesseMax = 0x08,
+            EnvoiVitesseMax = 0x09,
+            DemandeId = 0x10,
+            RetourId = 0x11,
+            EnvoiId = 0x12,
+            Reset = 0x13,
+            DemandeCoupleMaximum = 0x14,
+            RetourCoupleMaximum = 0x15,
+            EnvoiCoupleMaximum = 0x16,
+            DemandeCoupleActive = 0x17,
+            RetourCoupleActive = 0x18,
+            EnvoiCoupleActive = 0x19,
+            DemandeTension = 0x20,
+            RetourTension = 0x21,
+            DemandeTemperature = 0x22,
+            RetourTemperature = 0x23,
+            DemandeMouvement = 0x24,
+            RetourMouvement = 0x25,
+            DemandePositionMinimum = 0x26,
+            RetourPositionMinimum = 0x27,
+            EnvoiPositionMinimum = 0x28,
+            DemandePositionMaximum = 0x29,
+            RetourPositionMaximum = 0x30,
+            EnvoiPositionMaximum = 0x31,
+            DemandeNumeroModele = 0x32,
+            RetourNumeroModele = 0x33,
+            DemandeVersionFirmware = 0x34,
+            RetourVersionFirmware = 0x35,
+            DemandeLed = 0x36,
+            RetourLed = 0x37,
+            EnvoiLed = 0x38,
+            DemandeConfigAlarmeLED = 0x42,
+            RetourConfigAlarmeLED = 0x43,
+            EnvoiConfigAlarmeLED = 0x44,
+            DemandeConfigAlarmeShutdown = 0x45,
+            RetourConfigAlarmeShutdown = 0x46,
+            EnvoiConfigAlarmeShutdown = 0x47,
+            DemandeConfigEcho = 0x48,
+            RetourConfigEcho = 0x49,
+            EnvoiConfigEcho = 0x50,
+            DemandeComplianceParams = 0x51,
+            RetourComplianceParams = 0x52,
+            EnvoiComplianceParams = 0x53,
+            DemandePositionActuelle = 0x54,
+            RetourPositionActuelle = 0x55,
+            DemandeVitesseActuelle = 0x56,
+            RetourVitesseActuelle = 0x57
         }
 
         public enum FonctionMiwi
@@ -131,7 +200,7 @@ namespace GoBot.Communications
             return b;
         }
 
-        public static Trame CoupureAlim(bool allume)
+        static public Trame CoupureAlim(bool allume)
         {
             byte[] tab = new byte[3];
             tab[0] = (byte)Carte.RecMove;
@@ -141,7 +210,7 @@ namespace GoBot.Communications
             return new Trame(tab);
         }
 
-        public static Trame Deplacer(SensAR sens, int distance)
+        static public Trame Deplacer(SensAR sens, int distance)
         {
             byte[] tab = new byte[5];
             tab[0] = (byte)Carte.RecMove;
@@ -152,7 +221,7 @@ namespace GoBot.Communications
             return new Trame(tab);
         }
 
-        public static Trame OffsetPos(int offsetX, int offsetY, double offsetTeta)
+        static public Trame OffsetPos(int offsetX, int offsetY, double offsetTeta)
         {
             byte[] tab = new byte[8];
             tab[0] = (byte)Carte.RecMove;
@@ -166,7 +235,7 @@ namespace GoBot.Communications
             return new Trame(tab);
         }
 
-        public static Trame Pivot(SensGD sens, double angle)
+        static public Trame Pivot(SensGD sens, double angle)
         {
             //angle = angle * Math.PI * 268.471260977282 / 2.0 / 180.0;
             byte[] tab = new byte[7];
@@ -178,7 +247,7 @@ namespace GoBot.Communications
             return new Trame(tab);
         }
 
-        public static Trame GRStop(StopMode mode)
+        static public Trame GRStop(StopMode mode)
         {
             byte[] tab = new byte[3];
             tab[0] = (byte)Carte.RecMove;
@@ -187,7 +256,7 @@ namespace GoBot.Communications
             return new Trame(tab);
         }
 
-        public static Trame CoeffAsserv(int p, int i, int d)
+        static public Trame CoeffAsserv(int p, int i, int d)
         {
             byte[] tab = new byte[8];
             tab[0] = (byte)Carte.RecMove;
@@ -201,7 +270,7 @@ namespace GoBot.Communications
             return new Trame(tab);
         }
 
-        public static Trame Virage(SensAR sensAr, SensGD sensGd, int rayon, double angle)
+        static public Trame Virage(SensAR sensAr, SensGD sensGd, int rayon, double angle)
         {
             byte[] tab = new byte[8];
             tab[0] = (byte)Carte.RecMove;
@@ -215,7 +284,7 @@ namespace GoBot.Communications
             return new Trame(tab);
         }
 
-        public static Trame GotoXY(int x, int y)
+        static public Trame GotoXY(int x, int y)
         {
             byte[] tab = new byte[6];
             tab[0] = (byte)Carte.RecMove;
@@ -227,7 +296,7 @@ namespace GoBot.Communications
             return new Trame(tab);
         }
 
-        public static Trame ResetRecMove()
+        static public Trame ResetRecMove()
         {
             byte[] tab = new byte[2];
             tab[0] = (byte)Carte.RecMove;
@@ -235,7 +304,7 @@ namespace GoBot.Communications
             return new Trame(tab);
         }
 
-        public static Trame DemandePosition()
+        static public Trame DemandePosition()
         {
             byte[] tab = new byte[2];
             tab[0] = (byte)Carte.RecMove;
@@ -243,7 +312,7 @@ namespace GoBot.Communications
             return new Trame(tab);
         }
 
-        public static Trame VitesseLigne(int vitesse)
+        static public Trame VitesseLigne(int vitesse)
         {
             byte[] tab = new byte[4];
             tab[0] = (byte)Carte.RecMove;
@@ -253,7 +322,7 @@ namespace GoBot.Communications
             return new Trame(tab);
         }
 
-        public static Trame AccelLigne(int accel)
+        static public Trame AccelLigne(int accel)
         {
             byte[] tab = new byte[4];
             tab[0] = (byte)Carte.RecMove;
@@ -263,7 +332,7 @@ namespace GoBot.Communications
             return new Trame(tab);
         }
 
-        public static Trame VitessePivot(int vitesse)
+        static public Trame VitessePivot(int vitesse)
         {
             byte[] tab = new byte[4];
             tab[0] = (byte)Carte.RecMove;
@@ -273,7 +342,7 @@ namespace GoBot.Communications
             return new Trame(tab);
         }
 
-        public static Trame AccelPivot(int accel)
+        static public Trame AccelPivot(int accel)
         {
             byte[] tab = new byte[4];
             tab[0] = (byte)Carte.RecMove;
@@ -283,7 +352,7 @@ namespace GoBot.Communications
             return new Trame(tab);
         }
 
-        public static Trame Recallage(SensAR sens)
+        static public Trame Recallage(SensAR sens)
         {
             byte[] tab = new byte[3];
             tab[0] = (byte)Carte.RecMove;
@@ -292,17 +361,17 @@ namespace GoBot.Communications
             return new Trame(tab);
         }
 
-        /*public static Trame BougeServomoteur(ServomoteurID servo, int position)
+        /*static public Trame BougeServomoteur(ServomoteurID servo, int position)
         {
             // 0x67 pour communication à 19200 bauds
             return ServoSetPosition(Carte.RecIo, (int)servo, 0x67, position);
         }*/
 
-        public static Trame ServoPosition(ServomoteurID servo, int position)
+        static public Trame ServoPosition(ServomoteurID servo, int position)
         {
             byte[] tab = new byte[5];
             tab[0] = (byte)Carte.RecMove;
-            tab[1] = (byte)FonctionMove.ServoPosition;
+            tab[1] = (byte)FonctionMove.CommandeServo;
             tab[2] = (byte)servo;
             tab[3] = (byte)ByteDivide(position, true);
             tab[4] = (byte)ByteDivide(position, false);
@@ -310,206 +379,7 @@ namespace GoBot.Communications
             return new Trame(tab);
         }
 
-        public static Trame ServoVitesse(ServomoteurID servo, int vitesse)
-        {
-            byte[] tab = new byte[4];
-            tab[0] = (byte)Carte.RecMove;
-            tab[1] = (byte)FonctionMove.ServoVitesse;
-            tab[2] = (byte)ByteDivide(vitesse, true);
-            tab[3] = (byte)ByteDivide(vitesse, false);
-
-            return new Trame(tab);
-        }
-
-        #region Réglage servomoteurs
-        /*
-        public static Trame ServoRechercheAuto(Carte carte)
-        {
-            byte[] tab = new byte[3];
-            tab[0] = (byte)carte;
-            tab[1] = (byte)FonctionCommune.ReglageServo;
-            tab[2] = (byte)FonctionReglageServo.RechercheAuto;
-            return new Trame(tab);
-        }
-
-        public static Trame ServoReset(Carte carte, int idServo)
-        {
-            byte[] tab = new byte[4];
-            tab[0] = (byte)carte;
-            tab[1] = (byte)FonctionCommune.ReglageServo;
-            tab[2] = (byte)FonctionReglageServo.Reset;
-            tab[3] = (byte)idServo;
-            return new Trame(tab);
-        }
-
-        public static Trame ServoSurveille(Carte carte, int idServo, int baudrate)
-        {
-            byte[] tab = new byte[5];
-            tab[0] = (byte)carte;
-            tab[1] = (byte)FonctionCommune.ReglageServo;
-            tab[2] = (byte)FonctionReglageServo.SurveillerServo;
-            tab[3] = (byte)idServo;
-            tab[4] = (byte)baudrate;
-            return new Trame(tab);
-        }
-
-        public static Trame ServoSetPosition(Carte carte, int idServo, int baudrate, int position)
-        {
-            byte[] tab = new byte[7];
-            tab[0] = (byte)carte;
-            tab[1] = (byte)FonctionCommune.ReglageServo;
-            tab[2] = (byte)FonctionReglageServo.SetPosition;
-            tab[3] = (byte)idServo;
-            tab[4] = (byte)baudrate;
-            tab[5] = (byte)ByteDivide(position, true);
-            tab[6] = (byte)ByteDivide(position, false);
-            return new Trame(tab);
-        }
-
-        public static Trame ServoSetPositionMin(Carte carte, int idServo, int baudrate, int position)
-        {
-            byte[] tab = new byte[7];
-            tab[0] = (byte)carte;
-            tab[1] = (byte)FonctionCommune.ReglageServo;
-            tab[2] = (byte)FonctionReglageServo.SetPositionMin;
-            tab[3] = (byte)idServo;
-            tab[4] = (byte)baudrate;
-            tab[5] = (byte)ByteDivide(position, true);
-            tab[6] = (byte)ByteDivide(position, false);
-            return new Trame(tab);
-        }
-
-        public static Trame ServoSetPositionMax(Carte carte, int idServo, int baudrate, int position)
-        {
-            byte[] tab = new byte[7];
-            tab[0] = (byte)carte;
-            tab[1] = (byte)FonctionCommune.ReglageServo;
-            tab[2] = (byte)FonctionReglageServo.SetPositionMax;
-            tab[3] = (byte)idServo;
-            tab[4] = (byte)baudrate;
-            tab[5] = (byte)ByteDivide(position, true);
-            tab[6] = (byte)ByteDivide(position, false);
-            return new Trame(tab);
-        }
-
-        public static Trame ServoSetVitesse(Carte carte, int idServo, int baudrate, int vitesse)
-        {
-            byte[] tab = new byte[7];
-            tab[0] = (byte)carte;
-            tab[1] = (byte)FonctionCommune.ReglageServo;
-            tab[2] = (byte)FonctionReglageServo.SetVitesse;
-            tab[3] = (byte)idServo;
-            tab[4] = (byte)baudrate;
-            tab[5] = (byte)ByteDivide(vitesse, true);
-            tab[6] = (byte)ByteDivide(vitesse, false);
-            return new Trame(tab);
-        }
-
-        public static Trame ServoSetLed(Carte carte, int idServo, int baudrate, bool allume)
-        {
-            byte[] tab = new byte[6];
-            tab[0] = (byte)carte;
-            tab[1] = (byte)FonctionCommune.ReglageServo;
-            tab[2] = (byte)FonctionReglageServo.SetLed;
-            tab[3] = (byte)idServo;
-            tab[4] = (byte)baudrate;
-            tab[5] = (byte)(allume ? 1 : 0);
-            return new Trame(tab);
-        }
-
-        public static Trame ServoSetId(Carte carte, int idServo, int baudrate, int newId)
-        {
-            byte[] tab = new byte[6];
-            tab[0] = (byte)carte;
-            tab[1] = (byte)FonctionCommune.ReglageServo;
-            tab[2] = (byte)FonctionReglageServo.SetID;
-            tab[3] = (byte)idServo;
-            tab[4] = (byte)baudrate;
-            tab[5] = (byte)newId;
-            return new Trame(tab);
-        }
-
-        public static Trame ServoSetBaudrate(Carte carte, int idServo, int baudrate, int nouveauBaudrate)
-        {
-            byte[] tab = new byte[6];
-            tab[0] = (byte)carte;
-            tab[1] = (byte)FonctionCommune.ReglageServo;
-            tab[2] = (byte)FonctionReglageServo.SetBaudrate;
-            tab[3] = (byte)idServo;
-            tab[4] = (byte)baudrate;
-            tab[5] = (byte)nouveauBaudrate;
-            return new Trame(tab);
-        }
-
-        public static Trame ServoTestConnexion(Carte carte, int idServo, int baudrate)
-        {
-            byte[] tab = new byte[5];
-            tab[0] = (byte)carte;
-            tab[1] = (byte)FonctionCommune.ReglageServo;
-            tab[2] = (byte)FonctionReglageServo.TestConnexion;
-            tab[3] = (byte)idServo;
-            tab[4] = (byte)baudrate;
-            return new Trame(tab);
-        }
-
-        public static Trame ServoGetTemperature(Carte carte, int idServo, int baudrate)
-        {
-            byte[] tab = new byte[5];
-            tab[0] = (byte)carte;
-            tab[1] = (byte)FonctionCommune.ReglageServo;
-            tab[2] = (byte)FonctionReglageServo.GetTemperature;
-            tab[3] = (byte)idServo;
-            tab[4] = (byte)baudrate;
-            return new Trame(tab);
-        }
-
-        public static Trame ServoGetCouple(Carte carte, int idServo, int baudrate)
-        {
-            byte[] tab = new byte[5];
-            tab[0] = (byte)carte;
-            tab[1] = (byte)FonctionCommune.ReglageServo;
-            tab[2] = (byte)FonctionReglageServo.GetCouple;
-            tab[3] = (byte)idServo;
-            tab[4] = (byte)baudrate;
-            return new Trame(tab);
-        }
-
-        public static Trame ServoGetTension(Carte carte, int idServo, int baudrate)
-        {
-            byte[] tab = new byte[5];
-            tab[0] = (byte)carte;
-            tab[1] = (byte)FonctionCommune.ReglageServo;
-            tab[2] = (byte)FonctionReglageServo.GetTension;
-            tab[3] = (byte)idServo;
-            tab[4] = (byte)baudrate;
-            return new Trame(tab);
-        }
-
-        public static Trame ServoGetPosition(Carte carte, int idServo, int baudrate)
-        {
-            byte[] tab = new byte[5];
-            tab[0] = (byte)carte;
-            tab[1] = (byte)FonctionCommune.ReglageServo;
-            tab[2] = (byte)FonctionReglageServo.GetPosition;
-            tab[3] = (byte)idServo;
-            tab[4] = (byte)baudrate;
-            return new Trame(tab);
-        }
-
-        public static Trame ServoGetVitesse(Carte carte, int idServo, int baudrate)
-        {
-            byte[] tab = new byte[5];
-            tab[0] = (byte)carte;
-            tab[1] = (byte)FonctionCommune.ReglageServo;
-            tab[2] = (byte)FonctionReglageServo.GetVitesse;
-            tab[3] = (byte)idServo;
-            tab[4] = (byte)baudrate;
-            return new Trame(tab);
-        }
-        */
-        #endregion
-
-        public static Trame TestConnexionMove()
+        static public Trame TestConnexionMove()
         {
             byte[] tab = new byte[2];
             tab[0] = (byte)Carte.RecMove;
@@ -517,7 +387,7 @@ namespace GoBot.Communications
             return new Trame(tab);
         }
 
-        public static Trame TestConnexionMiwi()
+        static public Trame TestConnexionMiwi()
         {
             byte[] tab = new byte[2];
             tab[0] = (byte)Carte.RecMiwi;
@@ -525,7 +395,7 @@ namespace GoBot.Communications
             return new Trame(tab);
         }
 
-        public static Trame TestConnexionPi()
+        static public Trame TestConnexionPi()
         {
             byte[] tab = new byte[4];
             tab[0] = (byte)Carte.RecMiwi;
@@ -534,8 +404,8 @@ namespace GoBot.Communications
             tab[3] = (byte)FonctionMove.TestConnexion;
             return new Trame(tab);
         }
-        
-        public static Trame DemandeCouleurEquipe()
+
+        static public Trame DemandeCouleurEquipe()
         {
             byte[] tab = new byte[2];
             tab[0] = (byte)Carte.RecMove;
@@ -543,7 +413,7 @@ namespace GoBot.Communications
             return new Trame(tab);
         }
 
-        public static Trame DemandeChargeCPU()
+        static public Trame DemandeChargeCPU()
         {
             byte[] tab = new byte[2];
             tab[0] = (byte)Carte.RecMove;
@@ -553,7 +423,7 @@ namespace GoBot.Communications
 
         #region Balises
 
-        public static Trame BaliseVitesse(Carte balise, int vitesse)
+        static public Trame BaliseVitesse(Carte balise, int vitesse)
         {
             byte[] tab = new byte[6];
             tab[0] = (byte)Carte.RecMiwi;
@@ -565,7 +435,7 @@ namespace GoBot.Communications
             return new Trame(tab);
         }
 
-        public static Trame BaliseReset(Carte balise)
+        static public Trame BaliseReset(Carte balise)
         {
             byte[] tab = new byte[4];
             tab[0] = (byte)Carte.RecMiwi;
@@ -575,7 +445,7 @@ namespace GoBot.Communications
             return new Trame(tab);
         }
 
-        public static Trame BaliseTestConnexion(Carte balise)
+        static public Trame BaliseTestConnexion(Carte balise)
         {
             byte[] tab = new byte[4];
             tab[0] = (byte)Carte.RecMiwi;
@@ -585,7 +455,7 @@ namespace GoBot.Communications
             return new Trame(tab);
         }
 
-        public static Trame BalisePositions(Carte balise)
+        static public Trame BalisePositions(Carte balise)
         {
             byte[] tab = new byte[5];
             tab[0] = (byte)Carte.RecMiwi;
@@ -595,7 +465,7 @@ namespace GoBot.Communications
             return new Trame(tab);
         }
 
-        public static Trame BaliseAck(Carte balise)
+        static public Trame BaliseAck(Carte balise)
         {
             byte[] tab = new byte[5];
             tab[0] = (byte)Carte.RecMiwi;
@@ -605,7 +475,7 @@ namespace GoBot.Communications
             return new Trame(tab);
         }
 
-        public static Trame BaliseErreurDetection(Carte balise)
+        static public Trame BaliseErreurDetection(Carte balise)
         {
             byte[] tab = new byte[5];
             tab[0] = (byte)Carte.RecMiwi;
@@ -618,7 +488,7 @@ namespace GoBot.Communications
         #endregion
 
 
-        public static Trame EnvoiConsigneBrute(int consigne, SensAR sens = SensAR.Avant)
+        static public Trame EnvoiConsigneBrute(int consigne, SensAR sens = SensAR.Avant)
         {
             byte[] tab = new byte[5];
             tab[0] = (byte)Carte.RecMove;
@@ -629,7 +499,7 @@ namespace GoBot.Communications
             return new Trame(tab);
         }
 
-        public static Trame DemandePositionsCodeurs()
+        static public Trame DemandePositionsCodeurs()
         {
             byte[] tab = new byte[2];
             tab[0] = (byte)Carte.RecMove;
@@ -637,7 +507,7 @@ namespace GoBot.Communications
             return new Trame(tab);
         }
 
-        public static Trame ArmerJack()
+        static public Trame ArmerJack()
         {
             byte[] tab = new byte[2];
             tab[0] = (byte)Carte.RecMove;
@@ -645,7 +515,7 @@ namespace GoBot.Communications
             return new Trame(tab);
         }
 
-        public static Trame DemandeJack()
+        static public Trame DemandeJack()
         {
             byte[] tab = new byte[2];
             tab[0] = (byte)Carte.RecMove;
@@ -653,7 +523,7 @@ namespace GoBot.Communications
             return new Trame(tab);
         }
 
-        public static Trame DemandeChargeMove()
+        static public Trame DemandeChargeMove()
         {
             byte[] tab = new byte[2];
             tab[0] = (byte)Carte.RecMove;
@@ -661,7 +531,7 @@ namespace GoBot.Communications
             return new Trame(tab);
         }
 
-        public static Trame TestEmission(Carte carte, byte id)
+        static public Trame TestEmission(Carte carte, byte id)
         {
             byte[] tab = new byte[21];
             tab[0] = (byte)Carte.RecMiwi;
@@ -688,6 +558,370 @@ namespace GoBot.Communications
 
             return new Trame(tab);
         }
+
+        #region Servomoteur
+
+        static public Trame ServoDemandePositionCible(ServomoteurID servo, Carte carte = Carte.RecMove)
+        {
+            byte[] tab = new byte[4];
+            tab[0] = (byte)carte;
+            tab[1] = (byte)FonctionMove.CommandeServo;
+            tab[2] = (byte)FonctionServo.DemandePositionCible;
+            tab[3] = (byte)servo;
+            return new Trame(tab);
+        }
+
+        static public Trame ServoEnvoiPositionCible(ServomoteurID servo, int position, Carte carte = Carte.RecMove)
+        {
+            byte[] tab = new byte[6];
+            tab[0] = (byte)carte;
+            tab[1] = (byte)FonctionMove.CommandeServo;
+            tab[2] = (byte)FonctionServo.EnvoiPositionCible;
+            tab[3] = (byte)servo;
+            tab[4] = ByteDivide(position, true);
+            tab[5] = ByteDivide(position, false);
+            return new Trame(tab);
+        }
+
+        static public Trame ServoDemandeBaudrate(ServomoteurID servo, Carte carte = Carte.RecMove)
+        {
+            byte[] tab = new byte[4];
+            tab[0] = (byte)carte;
+            tab[1] = (byte)FonctionMove.CommandeServo;
+            tab[2] = (byte)FonctionServo.DemandeBaudrate;
+            tab[3] = (byte)servo;
+            return new Trame(tab);
+        }
+
+        static public Trame ServoEnvoiBaudrate(ServomoteurID servo, ServoBaudrate baud, Carte carte = Carte.RecMove)
+        {
+            byte[] tab = new byte[5];
+            tab[0] = (byte)carte;
+            tab[1] = (byte)FonctionMove.CommandeServo;
+            tab[2] = (byte)FonctionServo.EnvoiBaudrate;
+            tab[3] = (byte)servo;
+            tab[4] = (byte)baud;
+            return new Trame(tab);
+        }
+
+        static public Trame ServoDemandeVitesseMax(ServomoteurID servo, Carte carte = Carte.RecMove)
+        {
+            byte[] tab = new byte[4];
+            tab[0] = (byte)carte;
+            tab[1] = (byte)FonctionMove.CommandeServo;
+            tab[2] = (byte)FonctionServo.DemandeVitesseMax;
+            tab[3] = (byte)servo;
+            return new Trame(tab);
+        }
+
+        static public Trame ServoEnvoiVitesseMax(ServomoteurID servo, int vitesse, Carte carte = Carte.RecMove)
+        {
+            byte[] tab = new byte[6];
+            tab[0] = (byte)carte;
+            tab[1] = (byte)FonctionMove.CommandeServo;
+            tab[2] = (byte)FonctionServo.EnvoiVitesseMax;
+            tab[3] = (byte)servo;
+            tab[4] = ByteDivide(vitesse, true);
+            tab[5] = ByteDivide(vitesse, false);
+            return new Trame(tab);
+        }
+
+        static public Trame ServoDemandeId(Carte carte = Carte.RecMove)
+        {
+            byte[] tab = new byte[3];
+            tab[0] = (byte)carte;
+            tab[1] = (byte)FonctionMove.CommandeServo;
+            tab[2] = (byte)FonctionServo.DemandeId;
+            return new Trame(tab);
+        }
+
+        static public Trame ServoEnvoiId(ServomoteurID servo, char nouvelId, Carte carte = Carte.RecMove)
+        {
+            byte[] tab = new byte[5];
+            tab[0] = (byte)carte;
+            tab[1] = (byte)FonctionMove.CommandeServo;
+            tab[2] = (byte)FonctionServo.EnvoiId;
+            tab[3] = (byte)servo;
+            tab[4] = (byte)nouvelId;
+            return new Trame(tab);
+        }
+
+        static public Trame ServoReset(ServomoteurID servo, Carte carte = Carte.RecMove)
+        {
+            byte[] tab = new byte[4];
+            tab[0] = (byte)carte;
+            tab[1] = (byte)FonctionMove.CommandeServo;
+            tab[2] = (byte)FonctionServo.Reset;
+            tab[3] = (byte)servo;
+            return new Trame(tab);
+        }
+
+        static public Trame ServoDemandeCoupleMaximum(ServomoteurID servo, Carte carte = Carte.RecMove)
+        {
+            byte[] tab = new byte[4];
+            tab[0] = (byte)carte;
+            tab[1] = (byte)FonctionMove.CommandeServo;
+            tab[2] = (byte)FonctionServo.DemandeCoupleMaximum;
+            tab[3] = (byte)servo;
+            return new Trame(tab);
+        }
+
+        static public Trame ServoEnvoiCoupleMaximum(ServomoteurID servo, int couple, Carte carte = Carte.RecMove)
+        {
+            byte[] tab = new byte[6];
+            tab[0] = (byte)carte;
+            tab[1] = (byte)FonctionMove.CommandeServo;
+            tab[2] = (byte)FonctionServo.EnvoiCoupleMaximum;
+            tab[3] = (byte)servo;
+            tab[4] = ByteDivide(couple, true);
+            tab[5] = ByteDivide(couple, false);
+            return new Trame(tab);
+        }
+
+        static public Trame ServoDemandeCoupleActive(ServomoteurID servo, Carte carte = Carte.RecMove)
+        {
+            byte[] tab = new byte[4];
+            tab[0] = (byte)carte;
+            tab[1] = (byte)FonctionMove.CommandeServo;
+            tab[2] = (byte)FonctionServo.DemandeCoupleActive;
+            tab[3] = (byte)servo;
+            return new Trame(tab);
+        }
+
+        static public Trame ServoEnvoiCoupleActive(ServomoteurID servo, bool actif, Carte carte = Carte.RecMove)
+        {
+            byte[] tab = new byte[5];
+            tab[0] = (byte)carte;
+            tab[1] = (byte)FonctionMove.CommandeServo;
+            tab[2] = (byte)FonctionServo.EnvoiCoupleActive;
+            tab[3] = (byte)servo;
+            tab[4] = (byte)(actif ? 1 : 0);
+            return new Trame(tab);
+        }
+
+        static public Trame ServoDemandeTemperature(ServomoteurID servo, Carte carte = Carte.RecMove)
+        {
+            byte[] tab = new byte[4];
+            tab[0] = (byte)carte;
+            tab[1] = (byte)FonctionMove.CommandeServo;
+            tab[2] = (byte)FonctionServo.DemandeTemperature;
+            tab[3] = (byte)servo;
+            return new Trame(tab);
+        }
+
+        static public Trame ServoDemandeMouvement(ServomoteurID servo, Carte carte = Carte.RecMove)
+        {
+            byte[] tab = new byte[4];
+            tab[0] = (byte)carte;
+            tab[1] = (byte)FonctionMove.CommandeServo;
+            tab[2] = (byte)FonctionServo.DemandeMouvement;
+            tab[3] = (byte)servo;
+            return new Trame(tab);
+        }
+
+        static public Trame ServoDemandePositionMinimum(ServomoteurID servo, Carte carte = Carte.RecMove)
+        {
+            byte[] tab = new byte[4];
+            tab[0] = (byte)carte;
+            tab[1] = (byte)FonctionMove.CommandeServo;
+            tab[2] = (byte)FonctionServo.DemandePositionMinimum;
+            tab[3] = (byte)servo;
+            return new Trame(tab);
+        }
+
+        static public Trame ServoEnvoiPositionMinimum(ServomoteurID servo, int position, Carte carte = Carte.RecMove)
+        {
+            byte[] tab = new byte[6];
+            tab[0] = (byte)carte;
+            tab[1] = (byte)FonctionMove.CommandeServo;
+            tab[2] = (byte)FonctionServo.EnvoiPositionMinimum;
+            tab[3] = (byte)servo;
+            tab[4] = ByteDivide(position, true);
+            tab[5] = ByteDivide(position, false);
+            return new Trame(tab);
+        }
+
+        static public Trame ServoDemandePositionMaximum(ServomoteurID servo, Carte carte = Carte.RecMove)
+        {
+            byte[] tab = new byte[4];
+            tab[0] = (byte)carte;
+            tab[1] = (byte)FonctionMove.CommandeServo;
+            tab[2] = (byte)FonctionServo.DemandePositionMaximum;
+            tab[3] = (byte)servo;
+            return new Trame(tab);
+        }
+
+        static public Trame ServoEnvoiPositionMaximum(ServomoteurID servo, int position, Carte carte = Carte.RecMove)
+        {
+            byte[] tab = new byte[6];
+            tab[0] = (byte)carte;
+            tab[1] = (byte)FonctionMove.CommandeServo;
+            tab[2] = (byte)FonctionServo.EnvoiPositionMaximum;
+            tab[3] = (byte)servo;
+            tab[4] = ByteDivide(position, true);
+            tab[5] = ByteDivide(position, false);
+            return new Trame(tab);
+        }
+
+        static public Trame ServoDemandeNumeroModele(ServomoteurID servo, Carte carte = Carte.RecMove)
+        {
+            byte[] tab = new byte[4];
+            tab[0] = (byte)carte;
+            tab[1] = (byte)FonctionMove.CommandeServo;
+            tab[2] = (byte)FonctionServo.DemandeNumeroModele;
+            tab[3] = (byte)servo;
+            return new Trame(tab);
+        }
+
+        static public Trame ServoDemandeVersionFirmware(ServomoteurID servo, Carte carte = Carte.RecMove)
+        {
+            byte[] tab = new byte[4];
+            tab[0] = (byte)carte;
+            tab[1] = (byte)FonctionMove.CommandeServo;
+            tab[2] = (byte)FonctionServo.DemandeVersionFirmware;
+            tab[3] = (byte)servo;
+            return new Trame(tab);
+        }
+
+        static public Trame ServoDemandeLed(ServomoteurID servo, Carte carte = Carte.RecMove)
+        {
+            byte[] tab = new byte[4];
+            tab[0] = (byte)carte;
+            tab[1] = (byte)FonctionMove.CommandeServo;
+            tab[2] = (byte)FonctionServo.DemandeLed;
+            tab[3] = (byte)servo;
+            return new Trame(tab);
+        }
+
+        static public Trame ServoEnvoiLed(ServomoteurID servo, bool allume, Carte carte = Carte.RecMove)
+        {
+            byte[] tab = new byte[5];
+            tab[0] = (byte)carte;
+            tab[1] = (byte)FonctionMove.CommandeServo;
+            tab[2] = (byte)FonctionServo.EnvoiLed;
+            tab[3] = (byte)servo;
+            tab[4] = (byte)(allume ? 1 : 0);
+            return new Trame(tab);
+        }
+
+        static public Trame ServoDemandeConfigAlarmeLED(ServomoteurID servo, Carte carte = Carte.RecMove)
+        {
+            byte[] tab = new byte[4];
+            tab[0] = (byte)carte;
+            tab[1] = (byte)FonctionMove.CommandeServo;
+            tab[2] = (byte)FonctionServo.DemandeConfigAlarmeLED;
+            tab[3] = (byte)servo;
+            return new Trame(tab);
+        }
+
+        static public Trame ServoEnvoiConfigAlarmeLED(ServomoteurID servo, bool inputVoltage, bool angleLimit, bool overheating, bool range, bool checksum, bool overload, Carte carte = Carte.RecMove)
+        {
+            byte[] tab = new byte[10];
+            tab[0] = (byte)carte;
+            tab[1] = (byte)FonctionMove.CommandeServo;
+            tab[2] = (byte)FonctionServo.EnvoiConfigAlarmeLED;
+            tab[3] = (byte)servo;
+            tab[4] = (byte)(inputVoltage ? 1 : 0);
+            tab[5] = (byte)(angleLimit ? 1 : 0);
+            tab[6] = (byte)(overheating ? 1 : 0);
+            tab[7] = (byte)(range ? 1 : 0);
+            tab[8] = (byte)(checksum ? 1 : 0);
+            tab[9] = (byte)(overload ? 1 : 0);
+            return new Trame(tab);
+        }
+
+        static public Trame ServoDemandeConfigAlarmeShutdown(ServomoteurID servo, Carte carte = Carte.RecMove)
+        {
+            byte[] tab = new byte[4];
+            tab[0] = (byte)carte;
+            tab[1] = (byte)FonctionMove.CommandeServo;
+            tab[2] = (byte)FonctionServo.DemandeConfigAlarmeShutdown;
+            tab[3] = (byte)servo;
+            return new Trame(tab);
+        }
+
+        static public Trame ServoEnvoiConfigAlarmeShutdown(ServomoteurID servo, bool inputVoltage, bool angleLimit, bool overheating, bool range, bool checksum, bool overload, Carte carte = Carte.RecMove)
+        {
+            byte[] tab = new byte[10];
+            tab[0] = (byte)carte;
+            tab[1] = (byte)FonctionMove.CommandeServo;
+            tab[2] = (byte)FonctionServo.EnvoiConfigAlarmeShutdown;
+            tab[3] = (byte)servo;
+            tab[4] = (byte)(inputVoltage ? 1 : 0);
+            tab[5] = (byte)(angleLimit ? 1 : 0);
+            tab[6] = (byte)(overheating ? 1 : 0);
+            tab[7] = (byte)(range ? 1 : 0);
+            tab[8] = (byte)(checksum ? 1 : 0);
+            tab[9] = (byte)(overload ? 1 : 0);
+            return new Trame(tab);
+        }
+
+        static public Trame ServoDemandeConfigEcho(ServomoteurID servo, Carte carte = Carte.RecMove)
+        {
+            byte[] tab = new byte[4];
+            tab[0] = (byte)carte;
+            tab[1] = (byte)FonctionMove.CommandeServo;
+            tab[2] = (byte)FonctionServo.DemandeConfigEcho;
+            tab[3] = (byte)servo;
+            return new Trame(tab);
+        }
+
+        static public Trame ServoEnvoiConfigEcho(ServomoteurID servo, char val, Carte carte = Carte.RecMove)
+        {
+            byte[] tab = new byte[5];
+            tab[0] = (byte)carte;
+            tab[1] = (byte)FonctionMove.CommandeServo;
+            tab[2] = (byte)FonctionServo.EnvoiConfigEcho;
+            tab[3] = (byte)servo;
+            tab[4] = (byte)val;
+            return new Trame(tab);
+        }
+
+        static public Trame ServoDemandeComplianceParams(ServomoteurID servo, Carte carte = Carte.RecMove)
+        {
+            byte[] tab = new byte[4];
+            tab[0] = (byte)carte;
+            tab[1] = (byte)FonctionMove.CommandeServo;
+            tab[2] = (byte)FonctionServo.DemandeComplianceParams;
+            tab[3] = (byte)servo;
+            return new Trame(tab);
+        }
+
+        static public Trame ServoEnvoiComplianceParams(ServomoteurID servo, byte CCWSlope, byte CCWMargin, byte CWMargin, byte CWSlope, Carte carte = Carte.RecMove)
+        {
+            byte[] tab = new byte[8];
+            tab[0] = (byte)carte;
+            tab[1] = (byte)FonctionMove.CommandeServo;
+            tab[2] = (byte)FonctionServo.EnvoiComplianceParams;
+            tab[3] = (byte)servo;
+            tab[4] = CCWSlope;
+            tab[5] = CCWMargin;
+            tab[6] = CWMargin;
+            tab[7] = CWSlope;
+            return new Trame(tab);
+        }
+
+        static public Trame ServoDemandePositionActuelle(ServomoteurID servo, Carte carte = Carte.RecMove)
+        {
+            byte[] tab = new byte[4];
+            tab[0] = (byte)carte;
+            tab[1] = (byte)FonctionMove.CommandeServo;
+            tab[2] = (byte)FonctionServo.DemandePositionActuelle;
+            tab[3] = (byte)servo;
+            return new Trame(tab);
+        }
+
+        static public Trame ServoDemandeVitesseActuelle(ServomoteurID servo, Carte carte = Carte.RecMove)
+        {
+            byte[] tab = new byte[4];
+            tab[0] = (byte)carte;
+            tab[1] = (byte)FonctionMove.CommandeServo;
+            tab[2] = (byte)FonctionServo.DemandeVitesseActuelle;
+            tab[3] = (byte)servo;
+            return new Trame(tab);
+        }
+
+        #endregion
 
         public static String Decode(String trame)
         {
@@ -801,16 +1035,172 @@ namespace GoBot.Communications
                                 double valeurPositionTeta = (double)(trame[6] * 256 + trame[7]) / 100.0;
                                 message = "Retour position X Y Teta : X=" + valeurPositionX + "mm Y=" + valeurPositionY + "mm Teta=" + valeurPositionTeta + "°";
                                 break;
-                            case FonctionMove.ServoPosition:
-                                byte valeurServoPositionId = trame[2];
-                                int valeurServoPosition = trame[3] * 256 + trame[4];
-                                message = "Envoi position servomoteur " + GoBot.Actions.Nommeur.Nommer((ServomoteurID)valeurServoPositionId) + " à " + GoBot.Actions.Nommeur.Nommer(valeurServoPosition, (ServomoteurID)valeurServoPositionId); ;
-                                break;
-                            case FonctionMove.ServoVitesse:
-                                byte valeurServoVitesseId = trame[2];
-                                int valeurServoVitesse = trame[3] * 256 + trame[4];
-                                String nomServoVitesse = GoBot.Actions.Nommeur.Nommer((ServomoteurID)valeurServoVitesseId);
-                                message = "Envoi vitesse servomoteur " + nomServoVitesse + " à " + valeurServoVitesse;
+                            case FonctionMove.CommandeServo:
+                                switch ((FonctionServo)trame[2])
+                                {
+                                    case FonctionServo.DemandeBaudrate:
+                                        message = "Demande baudrate servo " + GoBot.Actions.Nommeur.Nommer((ServomoteurID)trame[3]);
+                                        break;
+                                    case FonctionServo.DemandeComplianceParams:
+                                        message = "Demande compliance servo " + GoBot.Actions.Nommeur.Nommer((ServomoteurID)trame[3]);
+                                        break;
+                                    case FonctionServo.DemandeConfigAlarmeLED:
+                                        message = "Demande config alarme LED servo " + GoBot.Actions.Nommeur.Nommer((ServomoteurID)trame[3]);
+                                        break;
+                                    case FonctionServo.DemandeConfigAlarmeShutdown:
+                                        message = "Demande config alarme shutdown servo " + GoBot.Actions.Nommeur.Nommer((ServomoteurID)trame[3]);
+                                        break;
+                                    case FonctionServo.DemandeConfigEcho:
+                                        message = "Demande config echo servo " + GoBot.Actions.Nommeur.Nommer((ServomoteurID)trame[3]);
+                                        break;
+                                    case FonctionServo.DemandeCoupleActive:
+                                        message = "Demande couple actif servo " + GoBot.Actions.Nommeur.Nommer((ServomoteurID)trame[3]);
+                                        break;
+                                    case FonctionServo.DemandeCoupleMaximum:
+                                        message = "Demande couple max servo " + GoBot.Actions.Nommeur.Nommer((ServomoteurID)trame[3]);
+                                        break;
+                                    case FonctionServo.DemandeId:
+                                        message = "Demande ID servo";
+                                        break;
+                                    case FonctionServo.DemandeLed:
+                                        message = "Demande état LED servo " + GoBot.Actions.Nommeur.Nommer((ServomoteurID)trame[3]);
+                                        break;
+                                    case FonctionServo.DemandeMouvement:
+                                        message = "Demande mouvelement servo " + GoBot.Actions.Nommeur.Nommer((ServomoteurID)trame[3]);
+                                        break;
+                                    case FonctionServo.DemandeNumeroModele:
+                                        message = "Demande numéro modèle servo " + GoBot.Actions.Nommeur.Nommer((ServomoteurID)trame[3]);
+                                        break;
+                                    case FonctionServo.DemandePositionActuelle:
+                                        message = "Demand eposition actuelle sero " + GoBot.Actions.Nommeur.Nommer((ServomoteurID)trame[3]);
+                                        break;
+                                    case FonctionServo.DemandePositionCible:
+                                        message = "Demande position cible servo " + GoBot.Actions.Nommeur.Nommer((ServomoteurID)trame[3]);
+                                        break;
+                                    case FonctionServo.DemandePositionMaximum:
+                                        message = "Demande position maximum servo " + GoBot.Actions.Nommeur.Nommer((ServomoteurID)trame[3]);
+                                        break;
+                                    case FonctionServo.DemandePositionMinimum:
+                                        message = " Demande position minimum servo " + GoBot.Actions.Nommeur.Nommer((ServomoteurID)trame[3]);
+                                        break;
+                                    case FonctionServo.DemandeTemperature:
+                                        message = "Demande température servo " + GoBot.Actions.Nommeur.Nommer((ServomoteurID)trame[3]);
+                                        break;
+                                    case FonctionServo.DemandeTension:
+                                        message = "Demande tension servo " + GoBot.Actions.Nommeur.Nommer((ServomoteurID)trame[3]);
+                                        break;
+                                    case FonctionServo.DemandeVersionFirmware:
+                                        message = "Demande version firmware servo " + GoBot.Actions.Nommeur.Nommer((ServomoteurID)trame[3]);
+                                        break;
+                                    case FonctionServo.DemandeVitesseActuelle:
+                                        message = "Demande vitesse actuelle servo " + GoBot.Actions.Nommeur.Nommer((ServomoteurID)trame[3]);
+                                        break;
+                                    case FonctionServo.DemandeVitesseMax:
+                                        message = "Demande vitesse max servo " + GoBot.Actions.Nommeur.Nommer((ServomoteurID)trame[3]);
+                                        break;
+                                    case FonctionServo.EnvoiBaudrate:
+                                        message = "Envoi servo " + GoBot.Actions.Nommeur.Nommer((ServomoteurID)trame[3]) + " baudrate " + ((ServoBaudrate)trame[4]).ToString();
+                                        break;
+                                    case FonctionServo.EnvoiComplianceParams:
+                                        message = "Envoi servo " + GoBot.Actions.Nommeur.Nommer((ServomoteurID)trame[3]) + " compliance CCWSlope=" + trame[4] + " CCWMargin=" + trame[5] + " CWSlope=" + trame[6] + " CWMargin=" + trame[7];
+                                        break;
+                                    case FonctionServo.EnvoiConfigAlarmeLED:
+                                        message = "Envoi servo " + GoBot.Actions.Nommeur.Nommer((ServomoteurID)trame[3]) + " config alarme LED : Input Voltage=" + trame[4] + " Angle limit=" + trame[5] + " Overheating=" + trame[6] + " Range=" + trame[7] + " Checksum=" + trame[8] + " Overload=" + trame[9] + " Instruction=" + trame[10];
+                                        break;
+                                    case FonctionServo.EnvoiConfigAlarmeShutdown:
+                                        message = "Envoi servo " + GoBot.Actions.Nommeur.Nommer((ServomoteurID)trame[3]) + " config alarme shutdown : Input Voltage=" + trame[4] + " Angle limit=" + trame[5] + " Overheating=" + trame[6] + " Range=" + trame[7] + " Checksum=" + trame[8] + " Overload=" + trame[9] + " Instruction=" + trame[10];
+                                        break;
+                                    case FonctionServo.EnvoiConfigEcho:
+                                        message = "Envoi servo " + GoBot.Actions.Nommeur.Nommer((ServomoteurID)trame[3]) + " config echo  à " + trame[4];
+                                        break;
+                                    case FonctionServo.EnvoiCoupleActive:
+                                        message = "Envoi servo " + GoBot.Actions.Nommeur.Nommer((ServomoteurID)trame[3]) + " couple " + (trame[4] > 0 ? "Activé" : "Désactivé");
+                                        break;
+                                    case FonctionServo.EnvoiCoupleMaximum:
+                                        message = "Envoi servo " + GoBot.Actions.Nommeur.Nommer((ServomoteurID)trame[3]) + " couple maximum " + (trame[4] * 256 + trame[5]);
+                                        break;
+                                    case FonctionServo.EnvoiId:
+                                        message = "Envoi servo " + GoBot.Actions.Nommeur.Nommer((ServomoteurID)trame[3]) + " ID " + trame[4];
+                                        break;
+                                    case FonctionServo.EnvoiLed:
+                                        message = "Envoi servo " + GoBot.Actions.Nommeur.Nommer((ServomoteurID)trame[3]) + " LED " + (trame[4] > 0 ? "On" : "Off");;
+                                        break;
+                                    case FonctionServo.EnvoiPositionCible:
+                                        message = "Envoi servo " + GoBot.Actions.Nommeur.Nommer((ServomoteurID)trame[3]) + " position " + GoBot.Actions.Nommeur.Nommer(trame[4] * 256 + trame[5], (ServomoteurID)trame[3]);
+                                        break;
+                                    case FonctionServo.EnvoiPositionMaximum:
+                                        message = "Envoi servo " + GoBot.Actions.Nommeur.Nommer((ServomoteurID)trame[3]) + " position maximum " + (trame[4] * 256 + trame[5]);
+                                        break;
+                                    case FonctionServo.EnvoiPositionMinimum:
+                                        message = "Envoi servo " + GoBot.Actions.Nommeur.Nommer((ServomoteurID)trame[3]) + " position minimum " + (trame[4] * 256 + trame[5]);
+                                        break;
+                                    case FonctionServo.EnvoiVitesseMax:
+                                        message = "Envoi servo " + GoBot.Actions.Nommeur.Nommer((ServomoteurID)trame[3]) + " vitesse max " + (trame[4] * 256 + trame[5]) + " (" + ((double)(trame[4] * 256 + trame[5]) * 0.111) + "rpm)";
+                                        break;
+                                    case FonctionServo.Reset:
+                                        message = "Envoi servo " + GoBot.Actions.Nommeur.Nommer((ServomoteurID)trame[3]) + " reset";
+                                        break;
+                                    case FonctionServo.RetourBaudrate:
+                                        message = "Retour servo " + GoBot.Actions.Nommeur.Nommer((ServomoteurID)trame[3]) + " baudrate = " + ((ServoBaudrate)(trame[4])).ToString();
+                                        break;
+                                    case FonctionServo.RetourComplianceParams:
+                                        message = "Retour servo " + GoBot.Actions.Nommeur.Nommer((ServomoteurID)trame[3]) + " compliance : CCWSlope=" + trame[4] + " CCWMargin=" + trame[5] + " CWSlope=" + trame[6] + " CWMargin=" + trame[7];
+                                        break;
+                                    case FonctionServo.RetourConfigAlarmeLED:
+                                        message = "Retour servo " + GoBot.Actions.Nommeur.Nommer((ServomoteurID)trame[3]) + " config alarme LED : Input Voltage=" + trame[4] + " Angle limit=" + trame[5] + " Overheating=" + trame[6] + " Range=" + trame[7] + " Checksum=" + trame[8] + " Overload=" + trame[9] + " Instruction=" + trame[10];
+                                        break;
+                                    case FonctionServo.RetourConfigAlarmeShutdown:
+                                        message = "Retour servo " + GoBot.Actions.Nommeur.Nommer((ServomoteurID)trame[3]) + " config alarme shutdown : Input Voltage=" + trame[4] + " Angle limit=" + trame[5] + " Overheating=" + trame[6] + " Range=" + trame[7] + " Checksum=" + trame[8] + " Overload=" + trame[9] + " Instruction=" + trame[10];
+                                        break;
+                                    case FonctionServo.RetourConfigEcho:
+                                        message = "Retour servo " + GoBot.Actions.Nommeur.Nommer((ServomoteurID)trame[3]) + " config echo = " + trame[4];
+                                        break;
+                                    case FonctionServo.RetourCoupleActive:
+                                        message = "Retour servo " + GoBot.Actions.Nommeur.Nommer((ServomoteurID)trame[3]) + " couple = " + (trame[4] > 0 ? "On" : "Off");
+                                        break;
+                                    case FonctionServo.RetourCoupleMaximum:
+                                        message = "Retour servo " + GoBot.Actions.Nommeur.Nommer((ServomoteurID)trame[3]) + " couple maximum = " + (trame[4] * 256 + trame[5]);
+                                        break;
+                                    case FonctionServo.RetourId:
+                                        message = "Retour servo ID = " + trame[3];
+                                        break;
+                                    case FonctionServo.RetourLed:
+                                        message = "Retour servo " + GoBot.Actions.Nommeur.Nommer((ServomoteurID)trame[3]) + " LED " + (trame[4] > 0 ? "On" : "Off");
+                                        break;
+                                    case FonctionServo.RetourMouvement:
+                                        message = "Retour servo " + GoBot.Actions.Nommeur.Nommer((ServomoteurID)trame[3]) + " mouvement : " + (trame[4] > 0 ? "En cours" : "Terminé");
+                                        break;
+                                    case FonctionServo.RetourNumeroModele:
+                                        message = "Retour servo " + GoBot.Actions.Nommeur.Nommer((ServomoteurID)trame[3]) + " numéro modèle : " + (trame[4] * 256 + trame[5]);
+                                        break;
+                                    case FonctionServo.RetourPositionActuelle:
+                                        message = "Retour servo " + GoBot.Actions.Nommeur.Nommer((ServomoteurID)trame[3]) + " position actuelle : " + (trame[4] * 256 + trame[5]);
+                                        break;
+                                    case FonctionServo.RetourPositionCible:
+                                        message = "Retour servo " + GoBot.Actions.Nommeur.Nommer((ServomoteurID)trame[3]) + " position cible : " + (trame[4] * 256 + trame[5]);
+                                        break;
+                                    case FonctionServo.RetourPositionMaximum:
+                                        message = "Retour servo " + GoBot.Actions.Nommeur.Nommer((ServomoteurID)trame[3]) + " position maximum : " + (trame[4] * 256 + trame[5]);
+                                        break;
+                                    case FonctionServo.RetourPositionMinimum:
+                                        message = "Retour servo " + GoBot.Actions.Nommeur.Nommer((ServomoteurID)trame[3]) + " position minimum : " + (trame[4] * 256 + trame[5]);
+                                        break;
+                                    case FonctionServo.RetourTemperature:
+                                        message = "Retour servo " + GoBot.Actions.Nommeur.Nommer((ServomoteurID)trame[3]) + " température : " + trame[4] + "°C";
+                                        break;
+                                    case FonctionServo.RetourTension:
+                                        message = "Retour servo " + GoBot.Actions.Nommeur.Nommer((ServomoteurID)trame[3]) + " tension : " + ((double)trame[4] / 10.0) + "V";
+                                        break;
+                                    case FonctionServo.RetourVersionFirmware:
+                                        message = "Retour servo " + GoBot.Actions.Nommeur.Nommer((ServomoteurID)trame[3]) + " version firmware : " + trame[4];
+                                        break;
+                                    case FonctionServo.RetourVitesseActuelle:
+                                        message = "Retour servo " + GoBot.Actions.Nommeur.Nommer((ServomoteurID)trame[3]) + " vitesse actuelle : " + (trame[4] * 256 + trame[5]) + " (" + ((double)(trame[4] * 256 + trame[5]) * 0.111) + "rpm)";
+                                        break;
+                                    case FonctionServo.RetourVitesseMax:
+                                        message = "Retour servo " + GoBot.Actions.Nommeur.Nommer((ServomoteurID)trame[3]) + " vitesse maximum : " + (trame[4] * 256 + trame[5]) + " (" + ((double)(trame[4] * 256 + trame[5]) * 0.111) + "rpm)";
+                                        break;
+                                }
                                 break;
                             case FonctionMove.Stop:
                                 String stopMode = ((StopMode)trame[2]).ToString();
@@ -950,7 +1340,7 @@ namespace GoBot.Communications
                         break;
                 }
             }
-            catch(Exception)
+            catch (Exception)
             {
                 message = "Inconnu";
             }

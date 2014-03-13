@@ -2,7 +2,7 @@
 <Config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
   <DeplacementGROuvert>true</DeplacementGROuvert>
   <HistoriqueGROuvert>true</HistoriqueGROuvert>
-  <ReglageGROuvert>false</ReglageGROuvert>
+  <ReglageGROuvert>true</ReglageGROuvert>
   <UtilisationGROuvert>true</UtilisationGROuvert>
   <SequencesGROuvert>false</SequencesGROuvert>
   <CapteursGROuvert>false</CapteursGROuvert>
@@ -42,8 +42,8 @@
   <PositionGRPinceDroiteFermee>0</PositionGRPinceDroiteFermee>
   <PositionGRPinceGaucheOuverte>0</PositionGRPinceGaucheOuverte>
   <PositionGRPinceGaucheFermee>0</PositionGRPinceGaucheFermee>
-  <PositionGRCoudeRange>0</PositionGRCoudeRange>
-  <PositionGREpauleRange>0</PositionGREpauleRange>
+  <PositionGRCoudeRange>500</PositionGRCoudeRange>
+  <PositionGREpauleRange>350</PositionGREpauleRange>
   <PositionsBougiesCameraX>
     <int>408</int>
     <int>454</int>

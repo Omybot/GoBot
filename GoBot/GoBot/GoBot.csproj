@@ -97,6 +97,12 @@
     <Compile Include="IHM\PanelDiagnosticMove.Designer.cs">
       <DependentUpon>PanelDiagnosticMove.cs</DependentUpon>
     </Compile>
+    <Compile Include="IHM\PanelEnvoiUdp.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="IHM\PanelEnvoiUdp.Designer.cs">
+      <DependentUpon>PanelEnvoiUdp.cs</DependentUpon>
+    </Compile>
     <Compile Include="IHM\PanelLogsEvents.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -295,6 +301,9 @@
     <EmbeddedResource Include="IHM\PanelDiagnosticMove.resx">
       <DependentUpon>PanelDiagnosticMove.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="IHM\PanelEnvoiUdp.resx">
+      <DependentUpon>PanelEnvoiUdp.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="IHM\PanelLogsEvents.resx">
       <DependentUpon>PanelLogsEvents.cs</DependentUpon>
     </EmbeddedResource>
@@ -470,6 +479,7 @@
     <None Include="img\Helice2.png" />
     <None Include="img\Helice3.png" />
     <None Include="img\Avance.png" />
+    <None Include="img\Alertes.png" />
     <Content Include="img\IconeVitesse.png" />
     <None Include="img\Pompe.png" />
     <None Include="img\TableRouge.png" />

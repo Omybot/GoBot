@@ -23,9 +23,10 @@ namespace GoBot.Communications
 
     public class ConnexionUDP
     {
-        private IPAddress adresseIp;
-        private int portEntree;
-        private int portSortie;
+        public IPAddress AdresseIp { get; private set; }
+        public int PortEntree { get; private set; }
+        public int PortSortie { get; private set; }
+
         private UdpClient client;
         private bool isConnect = false;
         public Replay Sauvegarde { get; private set; }
@@ -48,14 +49,14 @@ namespace GoBot.Communications
         {
             Etat retour = Etat.Ok;
 
-            adresseIp = _adresseIP;
-            portSortie = _portSortie;
-            portEntree = _portEntree;
+            AdresseIp = _adresseIP;
+            PortSortie = _portSortie;
+            PortEntree = _portEntree;
             
             try
             {
                 client = new UdpClient();
-                client.Connect(adresseIp, portSortie);
+                client.Connect(AdresseIp, PortSortie);
                 isConnect = true;
 
                 StartReception();
@@ -77,7 +78,7 @@ namespace GoBot.Communications
         public int SendMessage(Trame message)
         {
             if (!isConnect)
-                if (Connexion(adresseIp, portSortie, portEntree) != Etat.Ok)
+                if (Connexion(AdresseIp, PortSortie, PortEntree) != Etat.Ok)
                     return -1;
 
             byte[] envoi = message.ToTabBytes();
@@ -101,7 +102,7 @@ namespace GoBot.Communications
         /// </summary>
         public void StartReception()
         {
-            IPEndPoint e = new IPEndPoint(IPAddress.Any, portEntree);
+            IPEndPoint e = new IPEndPoint(IPAddress.Any, PortEntree);
             UdpClient u = new UdpClient(e);
 
             UdpState s = new UdpState();
@@ -122,7 +123,7 @@ namespace GoBot.Communications
         {
             UdpClient u = (UdpClient)((UdpState)(ar.AsyncState)).u;
 
-            IPEndPoint e = new IPEndPoint(IPAddress.Any, portEntree);
+            IPEndPoint e = new IPEndPoint(IPAddress.Any, PortEntree);
 
             Byte[] receiveBytes = u.EndReceive(ar, ref e);
 

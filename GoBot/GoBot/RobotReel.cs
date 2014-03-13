@@ -336,6 +336,12 @@ namespace GoBot
             Connexion.SendMessage(trame);
             Historique.AjouterAction(new ActionServo(this, position, servo));
         }
+
+        public override void ServoVitesse(ServomoteurID servo, int vitesse)
+        {
+            Trame trame = TrameFactory.ServoEnvoiVitesseMax(servo, vitesse);
+            Connexion.SendMessage(trame);
+        }
         
         public override void ActionneurOnOff(ActionneurOnOffID actionneur, bool on)
         {

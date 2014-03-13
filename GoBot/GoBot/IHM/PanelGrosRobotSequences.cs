@@ -37,8 +37,7 @@ namespace GoBot.IHM
         private void btnRangeBras_Click(object sender, EventArgs e)
         {
             Robots.GrosRobot.BougeServo(ServomoteurID.GRCoude, Config.CurrentConfig.PositionGRCoudeRange);
-            Thread.Sleep(100);
-            Robots.GrosRobot.BougeServo(ServomoteurID.GREpaule, Config.CurrentConfig.PositionGREpauleRange);
+            Robots.GrosRobot.BougeServo(ServomoteurID.GRCoude, Config.CurrentConfig.PositionGREpauleRange);
         }
     }
 }

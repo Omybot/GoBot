@@ -202,6 +202,9 @@
   <data name="VirageArDr" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\img\VirageArDr.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="Vumetre" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\img\Vumetre.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
   <data name="Helice1" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\img\Helice1.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
@@ -214,7 +217,7 @@
   <data name="Avance" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\img\Avance.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="Vumetre" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\img\Vumetre.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="Alertes" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\img\Alertes.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
 </root>

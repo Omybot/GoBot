@@ -28,60 +28,106 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(PanelServo));
             this.lblID = new System.Windows.Forms.Label();
             this.numID = new System.Windows.Forms.NumericUpDown();
-            this.lblPositionText = new System.Windows.Forms.Label();
+            this.lblTxtPosition = new System.Windows.Forms.Label();
             this.lblPosition = new System.Windows.Forms.Label();
             this.lblVitesse = new System.Windows.Forms.Label();
-            this.lblVitesseText = new System.Windows.Forms.Label();
-            this.lblCouple = new System.Windows.Forms.Label();
-            this.lblCoupleText = new System.Windows.Forms.Label();
+            this.lblTxtVitesse = new System.Windows.Forms.Label();
             this.lblTemperature = new System.Windows.Forms.Label();
-            this.lblTemperatureText = new System.Windows.Forms.Label();
+            this.lblTxtTemperature = new System.Windows.Forms.Label();
             this.lblTension = new System.Windows.Forms.Label();
-            this.lblTensionText = new System.Windows.Forms.Label();
-            this.lblErreurs = new System.Windows.Forms.Label();
+            this.lblTxtTension = new System.Windows.Forms.Label();
             this.numBaudrate = new System.Windows.Forms.NumericUpDown();
-            this.btnOk = new System.Windows.Forms.Button();
-            this.lblBaudrate = new System.Windows.Forms.Label();
+            this.btnOkBaudrate = new System.Windows.Forms.Button();
+            this.lblTxtBaudrate = new System.Windows.Forms.Label();
             this.groupServo = new System.Windows.Forms.GroupBox();
+            this.boxShutdownInstruction = new System.Windows.Forms.CheckBox();
+            this.boxLEDInstruction = new System.Windows.Forms.CheckBox();
+            this.imgAlarmes = new System.Windows.Forms.PictureBox();
+            this.numCWMargin = new System.Windows.Forms.NumericUpDown();
+            this.btnOkCWMargin = new System.Windows.Forms.Button();
+            this.lblTxtCWMargin = new System.Windows.Forms.Label();
+            this.numCWSlope = new System.Windows.Forms.NumericUpDown();
+            this.btnOkCWSlope = new System.Windows.Forms.Button();
+            this.lblTxtCWSlope = new System.Windows.Forms.Label();
+            this.numCCWMargin = new System.Windows.Forms.NumericUpDown();
+            this.btnOkCCWMargin = new System.Windows.Forms.Button();
+            this.lblTxtCCWMargin = new System.Windows.Forms.Label();
+            this.numCCWSlope = new System.Windows.Forms.NumericUpDown();
+            this.btnOkCCWSlope = new System.Windows.Forms.Button();
+            this.lblTxtCCWSlope = new System.Windows.Forms.Label();
+            this.lblVitesseActuelle = new System.Windows.Forms.Label();
+            this.lblTxtVitesseActuelle = new System.Windows.Forms.Label();
+            this.lblPositionActuelle = new System.Windows.Forms.Label();
+            this.lblTxtPositionActuelle = new System.Windows.Forms.Label();
+            this.lblTxtAlarmeShutdown = new System.Windows.Forms.Label();
+            this.lblTxtAlarmeLED = new System.Windows.Forms.Label();
+            this.boxShutdownOverload = new System.Windows.Forms.CheckBox();
+            this.boxShutdownChecksum = new System.Windows.Forms.CheckBox();
+            this.boxShutdownRange = new System.Windows.Forms.CheckBox();
+            this.boxShutdownOverheating = new System.Windows.Forms.CheckBox();
+            this.boxLEDInputVoltage = new System.Windows.Forms.CheckBox();
+            this.boxLEDAngleLimit = new System.Windows.Forms.CheckBox();
+            this.boxLEDOverload = new System.Windows.Forms.CheckBox();
+            this.boxLEDChecksum = new System.Windows.Forms.CheckBox();
+            this.boxLEDRange = new System.Windows.Forms.CheckBox();
+            this.boxLEDOverheating = new System.Windows.Forms.CheckBox();
+            this.boxShutdownAngleLimit = new System.Windows.Forms.CheckBox();
+            this.boxShutdownInputVoltage = new System.Windows.Forms.CheckBox();
+            this.btnRefresh = new System.Windows.Forms.Button();
+            this.lblTxtIntervalleMs = new System.Windows.Forms.Label();
+            this.numIntervalle = new System.Windows.Forms.NumericUpDown();
+            this.lblTxtIntervalle = new System.Windows.Forms.Label();
+            this.ledCouple = new Composants.Led();
+            this.ledLed = new Composants.Led();
+            this.lblFirmware = new System.Windows.Forms.Label();
+            this.lblTxtFirmware = new System.Windows.Forms.Label();
+            this.lblModele = new System.Windows.Forms.Label();
+            this.lblTxtModele = new System.Windows.Forms.Label();
+            this.numPositionMax = new System.Windows.Forms.NumericUpDown();
+            this.btnOkPositionMax = new System.Windows.Forms.Button();
+            this.lblTxtPositionMax = new System.Windows.Forms.Label();
+            this.numPositionMin = new System.Windows.Forms.NumericUpDown();
+            this.btnOkPositionMin = new System.Windows.Forms.Button();
+            this.lblTxtPositionMin = new System.Windows.Forms.Label();
+            this.ledMouvement = new Composants.Led();
+            this.lblTxtMouvement = new System.Windows.Forms.Label();
+            this.switchCouple = new Composants.SwitchBouton();
+            this.lblTxtCouple = new System.Windows.Forms.Label();
+            this.numCouple = new System.Windows.Forms.NumericUpDown();
+            this.btnOkCoupleMax = new System.Windows.Forms.Button();
+            this.lblTxtCoupleMax = new System.Windows.Forms.Label();
+            this.btnReset = new System.Windows.Forms.Button();
             this.lblLed = new System.Windows.Forms.Label();
             this.switchLed = new Composants.SwitchBouton();
             this.switchSurveillance = new Composants.SwitchBouton();
-            this.lblSurveillance = new System.Windows.Forms.Label();
-            this.numValeur = new System.Windows.Forms.NumericUpDown();
-            this.btnSet = new System.Windows.Forms.Button();
-            this.comboBoxFonctions = new System.Windows.Forms.ComboBox();
-            this.btnGet = new System.Windows.Forms.Button();
-            this.ledConnect = new Composants.Led();
-            this.ledErreur7 = new Composants.Led();
-            this.ledErreur5 = new Composants.Led();
-            this.ledErreur6 = new Composants.Led();
-            this.ledErreur3 = new Composants.Led();
-            this.ledErreur4 = new Composants.Led();
-            this.ledErreur2 = new Composants.Led();
-            this.btnAuto = new System.Windows.Forms.Button();
+            this.lblTxtSurveillance = new System.Windows.Forms.Label();
             this.trackBarPosition = new Composants.TrackBarPlus();
-            this.ledErreur1 = new Composants.Led();
             this.trackBarVitesse = new Composants.TrackBarPlus();
+            this.btnAuto = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.numID)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numBaudrate)).BeginInit();
             this.groupServo.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.numValeur)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.ledConnect)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.ledErreur7)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.ledErreur5)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.ledErreur6)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.ledErreur3)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.ledErreur4)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.ledErreur2)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.ledErreur1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.imgAlarmes)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numCWMargin)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numCWSlope)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numCCWMargin)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numCCWSlope)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numIntervalle)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.ledCouple)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.ledLed)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numPositionMax)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numPositionMin)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.ledMouvement)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numCouple)).BeginInit();
             this.SuspendLayout();
             // 
             // lblID
             // 
             this.lblID.AutoSize = true;
-            this.lblID.Location = new System.Drawing.Point(22, 26);
+            this.lblID.Location = new System.Drawing.Point(15, 34);
             this.lblID.Name = "lblID";
             this.lblID.Size = new System.Drawing.Size(24, 13);
             this.lblID.TabIndex = 0;
@@ -89,7 +135,7 @@
             // 
             // numID
             // 
-            this.numID.Location = new System.Drawing.Point(49, 24);
+            this.numID.Location = new System.Drawing.Point(42, 32);
             this.numID.Maximum = new decimal(new int[] {
             255,
             0,
@@ -99,108 +145,81 @@
             this.numID.Size = new System.Drawing.Size(66, 20);
             this.numID.TabIndex = 4;
             // 
-            // lblPositionText
+            // lblTxtPosition
             // 
-            this.lblPositionText.AutoSize = true;
-            this.lblPositionText.Location = new System.Drawing.Point(22, 94);
-            this.lblPositionText.Name = "lblPositionText";
-            this.lblPositionText.Size = new System.Drawing.Size(50, 13);
-            this.lblPositionText.TabIndex = 7;
-            this.lblPositionText.Text = "Position :";
+            this.lblTxtPosition.AutoSize = true;
+            this.lblTxtPosition.Location = new System.Drawing.Point(70, 107);
+            this.lblTxtPosition.Name = "lblTxtPosition";
+            this.lblTxtPosition.Size = new System.Drawing.Size(44, 13);
+            this.lblTxtPosition.TabIndex = 7;
+            this.lblTxtPosition.Text = "Position";
             // 
             // lblPosition
             // 
             this.lblPosition.AutoSize = true;
-            this.lblPosition.Location = new System.Drawing.Point(285, 94);
+            this.lblPosition.Location = new System.Drawing.Point(451, 107);
             this.lblPosition.Name = "lblPosition";
-            this.lblPosition.Size = new System.Drawing.Size(19, 13);
+            this.lblPosition.Size = new System.Drawing.Size(13, 13);
             this.lblPosition.TabIndex = 8;
-            this.lblPosition.Text = "12";
+            this.lblPosition.Text = "0";
             // 
             // lblVitesse
             // 
             this.lblVitesse.AutoSize = true;
-            this.lblVitesse.Location = new System.Drawing.Point(285, 115);
+            this.lblVitesse.Location = new System.Drawing.Point(451, 128);
             this.lblVitesse.Name = "lblVitesse";
-            this.lblVitesse.Size = new System.Drawing.Size(19, 13);
+            this.lblVitesse.Size = new System.Drawing.Size(13, 13);
             this.lblVitesse.TabIndex = 11;
-            this.lblVitesse.Text = "12";
+            this.lblVitesse.Text = "0";
             // 
-            // lblVitesseText
+            // lblTxtVitesse
             // 
-            this.lblVitesseText.AutoSize = true;
-            this.lblVitesseText.Location = new System.Drawing.Point(22, 115);
-            this.lblVitesseText.Name = "lblVitesseText";
-            this.lblVitesseText.Size = new System.Drawing.Size(47, 13);
-            this.lblVitesseText.TabIndex = 10;
-            this.lblVitesseText.Text = "Vitesse :";
-            // 
-            // lblCouple
-            // 
-            this.lblCouple.AutoSize = true;
-            this.lblCouple.Location = new System.Drawing.Point(83, 147);
-            this.lblCouple.Name = "lblCouple";
-            this.lblCouple.Size = new System.Drawing.Size(19, 13);
-            this.lblCouple.TabIndex = 14;
-            this.lblCouple.Text = "12";
-            // 
-            // lblCoupleText
-            // 
-            this.lblCoupleText.AutoSize = true;
-            this.lblCoupleText.Location = new System.Drawing.Point(22, 147);
-            this.lblCoupleText.Name = "lblCoupleText";
-            this.lblCoupleText.Size = new System.Drawing.Size(46, 13);
-            this.lblCoupleText.TabIndex = 13;
-            this.lblCoupleText.Text = "Couple :";
+            this.lblTxtVitesse.AutoSize = true;
+            this.lblTxtVitesse.Location = new System.Drawing.Point(70, 128);
+            this.lblTxtVitesse.Name = "lblTxtVitesse";
+            this.lblTxtVitesse.Size = new System.Drawing.Size(41, 13);
+            this.lblTxtVitesse.TabIndex = 10;
+            this.lblTxtVitesse.Text = "Vitesse";
             // 
             // lblTemperature
             // 
             this.lblTemperature.AutoSize = true;
-            this.lblTemperature.Location = new System.Drawing.Point(198, 147);
+            this.lblTemperature.Location = new System.Drawing.Point(391, 242);
             this.lblTemperature.Name = "lblTemperature";
-            this.lblTemperature.Size = new System.Drawing.Size(23, 13);
+            this.lblTemperature.Size = new System.Drawing.Size(33, 13);
             this.lblTemperature.TabIndex = 20;
-            this.lblTemperature.Text = "12°";
+            this.lblTemperature.Text = "19 °C";
             // 
-            // lblTemperatureText
+            // lblTxtTemperature
             // 
-            this.lblTemperatureText.AutoSize = true;
-            this.lblTemperatureText.Location = new System.Drawing.Point(119, 147);
-            this.lblTemperatureText.Name = "lblTemperatureText";
-            this.lblTemperatureText.Size = new System.Drawing.Size(73, 13);
-            this.lblTemperatureText.TabIndex = 19;
-            this.lblTemperatureText.Text = "Température :";
+            this.lblTxtTemperature.AutoSize = true;
+            this.lblTxtTemperature.Location = new System.Drawing.Point(304, 242);
+            this.lblTxtTemperature.Name = "lblTxtTemperature";
+            this.lblTxtTemperature.Size = new System.Drawing.Size(67, 13);
+            this.lblTxtTemperature.TabIndex = 19;
+            this.lblTxtTemperature.Text = "Température";
             // 
             // lblTension
             // 
             this.lblTension.AutoSize = true;
-            this.lblTension.Location = new System.Drawing.Point(285, 147);
+            this.lblTension.Location = new System.Drawing.Point(391, 264);
             this.lblTension.Name = "lblTension";
-            this.lblTension.Size = new System.Drawing.Size(26, 13);
+            this.lblTension.Size = new System.Drawing.Size(29, 13);
             this.lblTension.TabIndex = 23;
-            this.lblTension.Text = "12V";
+            this.lblTension.Text = "12 V";
             // 
-            // lblTensionText
+            // lblTxtTension
             // 
-            this.lblTensionText.AutoSize = true;
-            this.lblTensionText.Location = new System.Drawing.Point(232, 147);
-            this.lblTensionText.Name = "lblTensionText";
-            this.lblTensionText.Size = new System.Drawing.Size(51, 13);
-            this.lblTensionText.TabIndex = 22;
-            this.lblTensionText.Text = "Tension :";
-            // 
-            // lblErreurs
-            // 
-            this.lblErreurs.AutoSize = true;
-            this.lblErreurs.Location = new System.Drawing.Point(22, 172);
-            this.lblErreurs.Name = "lblErreurs";
-            this.lblErreurs.Size = new System.Drawing.Size(46, 13);
-            this.lblErreurs.TabIndex = 24;
-            this.lblErreurs.Text = "Erreurs :";
+            this.lblTxtTension.AutoSize = true;
+            this.lblTxtTension.Location = new System.Drawing.Point(304, 264);
+            this.lblTxtTension.Name = "lblTxtTension";
+            this.lblTxtTension.Size = new System.Drawing.Size(45, 13);
+            this.lblTxtTension.TabIndex = 22;
+            this.lblTxtTension.Text = "Tension";
             // 
             // numBaudrate
             // 
-            this.numBaudrate.Location = new System.Drawing.Point(184, 24);
+            this.numBaudrate.Location = new System.Drawing.Point(101, 221);
             this.numBaudrate.Maximum = new decimal(new int[] {
             1000000,
             0,
@@ -210,275 +229,761 @@
             this.numBaudrate.Size = new System.Drawing.Size(66, 20);
             this.numBaudrate.TabIndex = 31;
             // 
-            // btnOk
+            // btnOkBaudrate
             // 
-            this.btnOk.Location = new System.Drawing.Point(252, 22);
-            this.btnOk.Name = "btnOk";
-            this.btnOk.Size = new System.Drawing.Size(30, 23);
-            this.btnOk.TabIndex = 28;
-            this.btnOk.Text = "Ok";
-            this.btnOk.UseVisualStyleBackColor = true;
-            this.btnOk.Click += new System.EventHandler(this.btnOk_Click);
+            this.btnOkBaudrate.Location = new System.Drawing.Point(173, 218);
+            this.btnOkBaudrate.Name = "btnOkBaudrate";
+            this.btnOkBaudrate.Size = new System.Drawing.Size(30, 23);
+            this.btnOkBaudrate.TabIndex = 28;
+            this.btnOkBaudrate.Text = "Ok";
+            this.btnOkBaudrate.UseVisualStyleBackColor = true;
+            this.btnOkBaudrate.Click += new System.EventHandler(this.btnOkBaudrate_Click);
             // 
-            // lblBaudrate
+            // lblTxtBaudrate
             // 
-            this.lblBaudrate.AutoSize = true;
-            this.lblBaudrate.Location = new System.Drawing.Point(125, 26);
-            this.lblBaudrate.Name = "lblBaudrate";
-            this.lblBaudrate.Size = new System.Drawing.Size(56, 13);
-            this.lblBaudrate.TabIndex = 27;
-            this.lblBaudrate.Text = "Baudrate :";
+            this.lblTxtBaudrate.AutoSize = true;
+            this.lblTxtBaudrate.Location = new System.Drawing.Point(15, 224);
+            this.lblTxtBaudrate.Name = "lblTxtBaudrate";
+            this.lblTxtBaudrate.Size = new System.Drawing.Size(50, 13);
+            this.lblTxtBaudrate.TabIndex = 27;
+            this.lblTxtBaudrate.Text = "Baudrate";
             // 
             // groupServo
             // 
             this.groupServo.BackColor = System.Drawing.Color.Transparent;
+            this.groupServo.Controls.Add(this.btnAuto);
+            this.groupServo.Controls.Add(this.boxShutdownInstruction);
+            this.groupServo.Controls.Add(this.boxLEDInstruction);
+            this.groupServo.Controls.Add(this.imgAlarmes);
+            this.groupServo.Controls.Add(this.numCWMargin);
+            this.groupServo.Controls.Add(this.btnOkCWMargin);
+            this.groupServo.Controls.Add(this.lblTxtCWMargin);
+            this.groupServo.Controls.Add(this.numCWSlope);
+            this.groupServo.Controls.Add(this.btnOkCWSlope);
+            this.groupServo.Controls.Add(this.lblTxtCWSlope);
+            this.groupServo.Controls.Add(this.numCCWMargin);
+            this.groupServo.Controls.Add(this.btnOkCCWMargin);
+            this.groupServo.Controls.Add(this.lblTxtCCWMargin);
+            this.groupServo.Controls.Add(this.numCCWSlope);
+            this.groupServo.Controls.Add(this.btnOkCCWSlope);
+            this.groupServo.Controls.Add(this.lblTxtCCWSlope);
+            this.groupServo.Controls.Add(this.lblVitesseActuelle);
+            this.groupServo.Controls.Add(this.lblTxtVitesseActuelle);
+            this.groupServo.Controls.Add(this.lblPositionActuelle);
+            this.groupServo.Controls.Add(this.lblTxtPositionActuelle);
+            this.groupServo.Controls.Add(this.lblTxtAlarmeShutdown);
+            this.groupServo.Controls.Add(this.lblTxtAlarmeLED);
+            this.groupServo.Controls.Add(this.boxShutdownOverload);
+            this.groupServo.Controls.Add(this.boxShutdownChecksum);
+            this.groupServo.Controls.Add(this.boxShutdownRange);
+            this.groupServo.Controls.Add(this.boxShutdownOverheating);
+            this.groupServo.Controls.Add(this.boxLEDInputVoltage);
+            this.groupServo.Controls.Add(this.boxLEDAngleLimit);
+            this.groupServo.Controls.Add(this.boxLEDOverload);
+            this.groupServo.Controls.Add(this.boxLEDChecksum);
+            this.groupServo.Controls.Add(this.boxLEDRange);
+            this.groupServo.Controls.Add(this.boxLEDOverheating);
+            this.groupServo.Controls.Add(this.boxShutdownAngleLimit);
+            this.groupServo.Controls.Add(this.boxShutdownInputVoltage);
+            this.groupServo.Controls.Add(this.btnRefresh);
+            this.groupServo.Controls.Add(this.lblTxtIntervalleMs);
+            this.groupServo.Controls.Add(this.numIntervalle);
+            this.groupServo.Controls.Add(this.lblTxtIntervalle);
+            this.groupServo.Controls.Add(this.ledCouple);
+            this.groupServo.Controls.Add(this.ledLed);
+            this.groupServo.Controls.Add(this.lblFirmware);
+            this.groupServo.Controls.Add(this.lblTxtFirmware);
+            this.groupServo.Controls.Add(this.lblModele);
+            this.groupServo.Controls.Add(this.lblTxtModele);
+            this.groupServo.Controls.Add(this.numPositionMax);
+            this.groupServo.Controls.Add(this.btnOkPositionMax);
+            this.groupServo.Controls.Add(this.lblTxtPositionMax);
+            this.groupServo.Controls.Add(this.numPositionMin);
+            this.groupServo.Controls.Add(this.btnOkPositionMin);
+            this.groupServo.Controls.Add(this.lblTxtPositionMin);
+            this.groupServo.Controls.Add(this.ledMouvement);
+            this.groupServo.Controls.Add(this.lblTxtMouvement);
+            this.groupServo.Controls.Add(this.switchCouple);
+            this.groupServo.Controls.Add(this.lblTxtCouple);
+            this.groupServo.Controls.Add(this.numCouple);
+            this.groupServo.Controls.Add(this.btnOkCoupleMax);
+            this.groupServo.Controls.Add(this.lblTxtCoupleMax);
+            this.groupServo.Controls.Add(this.btnReset);
             this.groupServo.Controls.Add(this.lblLed);
             this.groupServo.Controls.Add(this.switchLed);
             this.groupServo.Controls.Add(this.switchSurveillance);
-            this.groupServo.Controls.Add(this.lblSurveillance);
-            this.groupServo.Controls.Add(this.numValeur);
-            this.groupServo.Controls.Add(this.btnSet);
-            this.groupServo.Controls.Add(this.comboBoxFonctions);
-            this.groupServo.Controls.Add(this.btnGet);
-            this.groupServo.Controls.Add(this.ledConnect);
-            this.groupServo.Controls.Add(this.ledErreur7);
-            this.groupServo.Controls.Add(this.ledErreur5);
-            this.groupServo.Controls.Add(this.ledErreur6);
-            this.groupServo.Controls.Add(this.ledErreur3);
-            this.groupServo.Controls.Add(this.ledErreur4);
-            this.groupServo.Controls.Add(this.ledErreur2);
-            this.groupServo.Controls.Add(this.btnAuto);
+            this.groupServo.Controls.Add(this.lblTxtSurveillance);
             this.groupServo.Controls.Add(this.numID);
             this.groupServo.Controls.Add(this.lblID);
             this.groupServo.Controls.Add(this.numBaudrate);
-            this.groupServo.Controls.Add(this.btnOk);
-            this.groupServo.Controls.Add(this.lblBaudrate);
+            this.groupServo.Controls.Add(this.btnOkBaudrate);
+            this.groupServo.Controls.Add(this.lblTxtBaudrate);
             this.groupServo.Controls.Add(this.trackBarPosition);
-            this.groupServo.Controls.Add(this.lblPositionText);
-            this.groupServo.Controls.Add(this.ledErreur1);
+            this.groupServo.Controls.Add(this.lblTxtPosition);
             this.groupServo.Controls.Add(this.lblPosition);
-            this.groupServo.Controls.Add(this.lblErreurs);
             this.groupServo.Controls.Add(this.trackBarVitesse);
             this.groupServo.Controls.Add(this.lblTension);
-            this.groupServo.Controls.Add(this.lblVitesseText);
-            this.groupServo.Controls.Add(this.lblTensionText);
+            this.groupServo.Controls.Add(this.lblTxtVitesse);
+            this.groupServo.Controls.Add(this.lblTxtTension);
             this.groupServo.Controls.Add(this.lblVitesse);
             this.groupServo.Controls.Add(this.lblTemperature);
-            this.groupServo.Controls.Add(this.lblCoupleText);
-            this.groupServo.Controls.Add(this.lblTemperatureText);
-            this.groupServo.Controls.Add(this.lblCouple);
+            this.groupServo.Controls.Add(this.lblTxtTemperature);
             this.groupServo.Location = new System.Drawing.Point(3, 3);
             this.groupServo.Name = "groupServo";
-            this.groupServo.Size = new System.Drawing.Size(333, 244);
+            this.groupServo.Size = new System.Drawing.Size(553, 447);
             this.groupServo.TabIndex = 33;
             this.groupServo.TabStop = false;
             this.groupServo.Text = "Servomoteur";
             // 
+            // boxShutdownInstruction
+            // 
+            this.boxShutdownInstruction.AutoSize = true;
+            this.boxShutdownInstruction.Location = new System.Drawing.Point(487, 411);
+            this.boxShutdownInstruction.Name = "boxShutdownInstruction";
+            this.boxShutdownInstruction.Size = new System.Drawing.Size(15, 14);
+            this.boxShutdownInstruction.TabIndex = 113;
+            this.boxShutdownInstruction.UseVisualStyleBackColor = true;
+            this.boxShutdownInstruction.CheckedChanged += new System.EventHandler(this.boxShutdownInstruction_CheckedChanged);
+            // 
+            // boxLEDInstruction
+            // 
+            this.boxLEDInstruction.AutoSize = true;
+            this.boxLEDInstruction.Location = new System.Drawing.Point(487, 391);
+            this.boxLEDInstruction.Name = "boxLEDInstruction";
+            this.boxLEDInstruction.Size = new System.Drawing.Size(15, 14);
+            this.boxLEDInstruction.TabIndex = 112;
+            this.boxLEDInstruction.UseVisualStyleBackColor = true;
+            this.boxLEDInstruction.CheckedChanged += new System.EventHandler(this.boxLEDInstruction_CheckedChanged);
+            // 
+            // imgAlarmes
+            // 
+            this.imgAlarmes.Image = global::GoBot.Properties.Resources.Alertes;
+            this.imgAlarmes.Location = new System.Drawing.Point(323, 335);
+            this.imgAlarmes.Name = "imgAlarmes";
+            this.imgAlarmes.Size = new System.Drawing.Size(218, 50);
+            this.imgAlarmes.TabIndex = 111;
+            this.imgAlarmes.TabStop = false;
+            // 
+            // numCWMargin
+            // 
+            this.numCWMargin.Location = new System.Drawing.Point(101, 399);
+            this.numCWMargin.Maximum = new decimal(new int[] {
+            1000000,
+            0,
+            0,
+            0});
+            this.numCWMargin.Name = "numCWMargin";
+            this.numCWMargin.Size = new System.Drawing.Size(66, 20);
+            this.numCWMargin.TabIndex = 110;
+            // 
+            // btnOkCWMargin
+            // 
+            this.btnOkCWMargin.Location = new System.Drawing.Point(173, 397);
+            this.btnOkCWMargin.Name = "btnOkCWMargin";
+            this.btnOkCWMargin.Size = new System.Drawing.Size(30, 23);
+            this.btnOkCWMargin.TabIndex = 109;
+            this.btnOkCWMargin.Text = "Ok";
+            this.btnOkCWMargin.UseVisualStyleBackColor = true;
+            this.btnOkCWMargin.Click += new System.EventHandler(this.btnOkCWMargin_Click);
+            // 
+            // lblTxtCWMargin
+            // 
+            this.lblTxtCWMargin.AutoSize = true;
+            this.lblTxtCWMargin.Location = new System.Drawing.Point(15, 402);
+            this.lblTxtCWMargin.Name = "lblTxtCWMargin";
+            this.lblTxtCWMargin.Size = new System.Drawing.Size(60, 13);
+            this.lblTxtCWMargin.TabIndex = 108;
+            this.lblTxtCWMargin.Text = "CW Margin";
+            // 
+            // numCWSlope
+            // 
+            this.numCWSlope.Location = new System.Drawing.Point(101, 373);
+            this.numCWSlope.Maximum = new decimal(new int[] {
+            1000000,
+            0,
+            0,
+            0});
+            this.numCWSlope.Name = "numCWSlope";
+            this.numCWSlope.Size = new System.Drawing.Size(66, 20);
+            this.numCWSlope.TabIndex = 107;
+            // 
+            // btnOkCWSlope
+            // 
+            this.btnOkCWSlope.Location = new System.Drawing.Point(173, 371);
+            this.btnOkCWSlope.Name = "btnOkCWSlope";
+            this.btnOkCWSlope.Size = new System.Drawing.Size(30, 23);
+            this.btnOkCWSlope.TabIndex = 106;
+            this.btnOkCWSlope.Text = "Ok";
+            this.btnOkCWSlope.UseVisualStyleBackColor = true;
+            this.btnOkCWSlope.Click += new System.EventHandler(this.btnOkCWSlope_Click);
+            // 
+            // lblTxtCWSlope
+            // 
+            this.lblTxtCWSlope.AutoSize = true;
+            this.lblTxtCWSlope.Location = new System.Drawing.Point(15, 376);
+            this.lblTxtCWSlope.Name = "lblTxtCWSlope";
+            this.lblTxtCWSlope.Size = new System.Drawing.Size(55, 13);
+            this.lblTxtCWSlope.TabIndex = 105;
+            this.lblTxtCWSlope.Text = "CW Slope";
+            // 
+            // numCCWMargin
+            // 
+            this.numCCWMargin.Location = new System.Drawing.Point(101, 347);
+            this.numCCWMargin.Maximum = new decimal(new int[] {
+            1000000,
+            0,
+            0,
+            0});
+            this.numCCWMargin.Name = "numCCWMargin";
+            this.numCCWMargin.Size = new System.Drawing.Size(66, 20);
+            this.numCCWMargin.TabIndex = 104;
+            // 
+            // btnOkCCWMargin
+            // 
+            this.btnOkCCWMargin.Location = new System.Drawing.Point(173, 345);
+            this.btnOkCCWMargin.Name = "btnOkCCWMargin";
+            this.btnOkCCWMargin.Size = new System.Drawing.Size(30, 23);
+            this.btnOkCCWMargin.TabIndex = 103;
+            this.btnOkCCWMargin.Text = "Ok";
+            this.btnOkCCWMargin.UseVisualStyleBackColor = true;
+            this.btnOkCCWMargin.Click += new System.EventHandler(this.btnOkCCWMargin_Click);
+            // 
+            // lblTxtCCWMargin
+            // 
+            this.lblTxtCCWMargin.AutoSize = true;
+            this.lblTxtCCWMargin.Location = new System.Drawing.Point(15, 350);
+            this.lblTxtCCWMargin.Name = "lblTxtCCWMargin";
+            this.lblTxtCCWMargin.Size = new System.Drawing.Size(67, 13);
+            this.lblTxtCCWMargin.TabIndex = 102;
+            this.lblTxtCCWMargin.Text = "CCW Margin";
+            // 
+            // numCCWSlope
+            // 
+            this.numCCWSlope.Location = new System.Drawing.Point(101, 321);
+            this.numCCWSlope.Maximum = new decimal(new int[] {
+            1000000,
+            0,
+            0,
+            0});
+            this.numCCWSlope.Name = "numCCWSlope";
+            this.numCCWSlope.Size = new System.Drawing.Size(66, 20);
+            this.numCCWSlope.TabIndex = 101;
+            // 
+            // btnOkCCWSlope
+            // 
+            this.btnOkCCWSlope.Location = new System.Drawing.Point(173, 320);
+            this.btnOkCCWSlope.Name = "btnOkCCWSlope";
+            this.btnOkCCWSlope.Size = new System.Drawing.Size(30, 23);
+            this.btnOkCCWSlope.TabIndex = 100;
+            this.btnOkCCWSlope.Text = "Ok";
+            this.btnOkCCWSlope.UseVisualStyleBackColor = true;
+            this.btnOkCCWSlope.Click += new System.EventHandler(this.btnOkCCWSlope_Click);
+            // 
+            // lblTxtCCWSlope
+            // 
+            this.lblTxtCCWSlope.AutoSize = true;
+            this.lblTxtCCWSlope.Location = new System.Drawing.Point(15, 325);
+            this.lblTxtCCWSlope.Name = "lblTxtCCWSlope";
+            this.lblTxtCCWSlope.Size = new System.Drawing.Size(62, 13);
+            this.lblTxtCCWSlope.TabIndex = 99;
+            this.lblTxtCCWSlope.Text = "CCW Slope";
+            // 
+            // lblVitesseActuelle
+            // 
+            this.lblVitesseActuelle.AutoSize = true;
+            this.lblVitesseActuelle.Location = new System.Drawing.Point(391, 309);
+            this.lblVitesseActuelle.Name = "lblVitesseActuelle";
+            this.lblVitesseActuelle.Size = new System.Drawing.Size(39, 13);
+            this.lblVitesseActuelle.TabIndex = 98;
+            this.lblVitesseActuelle.Text = "12 rpm";
+            // 
+            // lblTxtVitesseActuelle
+            // 
+            this.lblTxtVitesseActuelle.AutoSize = true;
+            this.lblTxtVitesseActuelle.Location = new System.Drawing.Point(304, 308);
+            this.lblTxtVitesseActuelle.Name = "lblTxtVitesseActuelle";
+            this.lblTxtVitesseActuelle.Size = new System.Drawing.Size(81, 13);
+            this.lblTxtVitesseActuelle.TabIndex = 97;
+            this.lblTxtVitesseActuelle.Text = "Vitesse actuelle";
+            // 
+            // lblPositionActuelle
+            // 
+            this.lblPositionActuelle.AutoSize = true;
+            this.lblPositionActuelle.Location = new System.Drawing.Point(391, 286);
+            this.lblPositionActuelle.Name = "lblPositionActuelle";
+            this.lblPositionActuelle.Size = new System.Drawing.Size(25, 13);
+            this.lblPositionActuelle.TabIndex = 96;
+            this.lblPositionActuelle.Text = "512";
+            // 
+            // lblTxtPositionActuelle
+            // 
+            this.lblTxtPositionActuelle.AutoSize = true;
+            this.lblTxtPositionActuelle.Location = new System.Drawing.Point(304, 286);
+            this.lblTxtPositionActuelle.Name = "lblTxtPositionActuelle";
+            this.lblTxtPositionActuelle.Size = new System.Drawing.Size(84, 13);
+            this.lblTxtPositionActuelle.TabIndex = 95;
+            this.lblTxtPositionActuelle.Text = "Position actuelle";
+            // 
+            // lblTxtAlarmeShutdown
+            // 
+            this.lblTxtAlarmeShutdown.AutoSize = true;
+            this.lblTxtAlarmeShutdown.Location = new System.Drawing.Point(229, 411);
+            this.lblTxtAlarmeShutdown.Name = "lblTxtAlarmeShutdown";
+            this.lblTxtAlarmeShutdown.Size = new System.Drawing.Size(88, 13);
+            this.lblTxtAlarmeShutdown.TabIndex = 94;
+            this.lblTxtAlarmeShutdown.Text = "Alarme shutdown";
+            // 
+            // lblTxtAlarmeLED
+            // 
+            this.lblTxtAlarmeLED.AutoSize = true;
+            this.lblTxtAlarmeLED.Location = new System.Drawing.Point(229, 390);
+            this.lblTxtAlarmeLED.Name = "lblTxtAlarmeLED";
+            this.lblTxtAlarmeLED.Size = new System.Drawing.Size(63, 13);
+            this.lblTxtAlarmeLED.TabIndex = 93;
+            this.lblTxtAlarmeLED.Text = "Alarme LED";
+            // 
+            // boxShutdownOverload
+            // 
+            this.boxShutdownOverload.AutoSize = true;
+            this.boxShutdownOverload.Location = new System.Drawing.Point(460, 411);
+            this.boxShutdownOverload.Name = "boxShutdownOverload";
+            this.boxShutdownOverload.Size = new System.Drawing.Size(15, 14);
+            this.boxShutdownOverload.TabIndex = 91;
+            this.boxShutdownOverload.UseVisualStyleBackColor = true;
+            this.boxShutdownOverload.CheckedChanged += new System.EventHandler(this.boxShutdownOverload_CheckedChanged);
+            // 
+            // boxShutdownChecksum
+            // 
+            this.boxShutdownChecksum.AutoSize = true;
+            this.boxShutdownChecksum.Location = new System.Drawing.Point(433, 411);
+            this.boxShutdownChecksum.Name = "boxShutdownChecksum";
+            this.boxShutdownChecksum.Size = new System.Drawing.Size(15, 14);
+            this.boxShutdownChecksum.TabIndex = 90;
+            this.boxShutdownChecksum.UseVisualStyleBackColor = true;
+            this.boxShutdownChecksum.CheckedChanged += new System.EventHandler(this.boxShutdownChecksum_CheckedChanged);
+            // 
+            // boxShutdownRange
+            // 
+            this.boxShutdownRange.AutoSize = true;
+            this.boxShutdownRange.Location = new System.Drawing.Point(406, 411);
+            this.boxShutdownRange.Name = "boxShutdownRange";
+            this.boxShutdownRange.Size = new System.Drawing.Size(15, 14);
+            this.boxShutdownRange.TabIndex = 89;
+            this.boxShutdownRange.UseVisualStyleBackColor = true;
+            this.boxShutdownRange.CheckedChanged += new System.EventHandler(this.boxShutdownRange_CheckedChanged);
+            // 
+            // boxShutdownOverheating
+            // 
+            this.boxShutdownOverheating.AutoSize = true;
+            this.boxShutdownOverheating.Location = new System.Drawing.Point(379, 411);
+            this.boxShutdownOverheating.Name = "boxShutdownOverheating";
+            this.boxShutdownOverheating.Size = new System.Drawing.Size(15, 14);
+            this.boxShutdownOverheating.TabIndex = 88;
+            this.boxShutdownOverheating.UseVisualStyleBackColor = true;
+            this.boxShutdownOverheating.CheckedChanged += new System.EventHandler(this.boxShutdownOverheating_CheckedChanged);
+            // 
+            // boxLEDInputVoltage
+            // 
+            this.boxLEDInputVoltage.AutoSize = true;
+            this.boxLEDInputVoltage.Location = new System.Drawing.Point(325, 391);
+            this.boxLEDInputVoltage.Name = "boxLEDInputVoltage";
+            this.boxLEDInputVoltage.Size = new System.Drawing.Size(15, 14);
+            this.boxLEDInputVoltage.TabIndex = 87;
+            this.boxLEDInputVoltage.UseVisualStyleBackColor = true;
+            this.boxLEDInputVoltage.CheckedChanged += new System.EventHandler(this.boxLEDInputVoltage_CheckedChanged);
+            // 
+            // boxLEDAngleLimit
+            // 
+            this.boxLEDAngleLimit.AutoSize = true;
+            this.boxLEDAngleLimit.Location = new System.Drawing.Point(352, 391);
+            this.boxLEDAngleLimit.Name = "boxLEDAngleLimit";
+            this.boxLEDAngleLimit.Size = new System.Drawing.Size(15, 14);
+            this.boxLEDAngleLimit.TabIndex = 86;
+            this.boxLEDAngleLimit.UseVisualStyleBackColor = true;
+            this.boxLEDAngleLimit.CheckedChanged += new System.EventHandler(this.boxLEDAngleLimit_CheckedChanged);
+            // 
+            // boxLEDOverload
+            // 
+            this.boxLEDOverload.AutoSize = true;
+            this.boxLEDOverload.Location = new System.Drawing.Point(460, 391);
+            this.boxLEDOverload.Name = "boxLEDOverload";
+            this.boxLEDOverload.Size = new System.Drawing.Size(15, 14);
+            this.boxLEDOverload.TabIndex = 84;
+            this.boxLEDOverload.UseVisualStyleBackColor = true;
+            this.boxLEDOverload.CheckedChanged += new System.EventHandler(this.boxLEDOverload_CheckedChanged);
+            // 
+            // boxLEDChecksum
+            // 
+            this.boxLEDChecksum.AutoSize = true;
+            this.boxLEDChecksum.Location = new System.Drawing.Point(433, 391);
+            this.boxLEDChecksum.Name = "boxLEDChecksum";
+            this.boxLEDChecksum.Size = new System.Drawing.Size(15, 14);
+            this.boxLEDChecksum.TabIndex = 83;
+            this.boxLEDChecksum.UseVisualStyleBackColor = true;
+            this.boxLEDChecksum.CheckedChanged += new System.EventHandler(this.boxLEDChecksum_CheckedChanged);
+            // 
+            // boxLEDRange
+            // 
+            this.boxLEDRange.AutoSize = true;
+            this.boxLEDRange.Location = new System.Drawing.Point(406, 391);
+            this.boxLEDRange.Name = "boxLEDRange";
+            this.boxLEDRange.Size = new System.Drawing.Size(15, 14);
+            this.boxLEDRange.TabIndex = 82;
+            this.boxLEDRange.UseVisualStyleBackColor = true;
+            this.boxLEDRange.CheckedChanged += new System.EventHandler(this.boxLEDRange_CheckedChanged);
+            // 
+            // boxLEDOverheating
+            // 
+            this.boxLEDOverheating.AutoSize = true;
+            this.boxLEDOverheating.Location = new System.Drawing.Point(379, 391);
+            this.boxLEDOverheating.Name = "boxLEDOverheating";
+            this.boxLEDOverheating.Size = new System.Drawing.Size(15, 14);
+            this.boxLEDOverheating.TabIndex = 81;
+            this.boxLEDOverheating.UseVisualStyleBackColor = true;
+            this.boxLEDOverheating.CheckedChanged += new System.EventHandler(this.boxLEDOverheating_CheckedChanged);
+            // 
+            // boxShutdownAngleLimit
+            // 
+            this.boxShutdownAngleLimit.AutoSize = true;
+            this.boxShutdownAngleLimit.Location = new System.Drawing.Point(352, 411);
+            this.boxShutdownAngleLimit.Name = "boxShutdownAngleLimit";
+            this.boxShutdownAngleLimit.Size = new System.Drawing.Size(15, 14);
+            this.boxShutdownAngleLimit.TabIndex = 80;
+            this.boxShutdownAngleLimit.UseVisualStyleBackColor = true;
+            this.boxShutdownAngleLimit.CheckedChanged += new System.EventHandler(this.boxShutdownAngleLimit_CheckedChanged);
+            // 
+            // boxShutdownInputVoltage
+            // 
+            this.boxShutdownInputVoltage.AutoSize = true;
+            this.boxShutdownInputVoltage.Location = new System.Drawing.Point(325, 411);
+            this.boxShutdownInputVoltage.Name = "boxShutdownInputVoltage";
+            this.boxShutdownInputVoltage.Size = new System.Drawing.Size(15, 14);
+            this.boxShutdownInputVoltage.TabIndex = 79;
+            this.boxShutdownInputVoltage.UseVisualStyleBackColor = true;
+            this.boxShutdownInputVoltage.CheckedChanged += new System.EventHandler(this.boxShutdownInputVoltage_CheckedChanged);
+            // 
+            // btnRefresh
+            // 
+            this.btnRefresh.Location = new System.Drawing.Point(214, 53);
+            this.btnRefresh.Name = "btnRefresh";
+            this.btnRefresh.Size = new System.Drawing.Size(75, 23);
+            this.btnRefresh.TabIndex = 78;
+            this.btnRefresh.Text = "Refresh";
+            this.btnRefresh.UseVisualStyleBackColor = true;
+            this.btnRefresh.Click += new System.EventHandler(this.btnRefresh_Click);
+            // 
+            // lblTxtIntervalleMs
+            // 
+            this.lblTxtIntervalleMs.AutoSize = true;
+            this.lblTxtIntervalleMs.Location = new System.Drawing.Point(395, 34);
+            this.lblTxtIntervalleMs.Name = "lblTxtIntervalleMs";
+            this.lblTxtIntervalleMs.Size = new System.Drawing.Size(20, 13);
+            this.lblTxtIntervalleMs.TabIndex = 77;
+            this.lblTxtIntervalleMs.Text = "ms";
+            // 
+            // numIntervalle
+            // 
+            this.numIntervalle.Location = new System.Drawing.Point(323, 32);
+            this.numIntervalle.Maximum = new decimal(new int[] {
+            10000,
+            0,
+            0,
+            0});
+            this.numIntervalle.Minimum = new decimal(new int[] {
+            50,
+            0,
+            0,
+            0});
+            this.numIntervalle.Name = "numIntervalle";
+            this.numIntervalle.Size = new System.Drawing.Size(66, 20);
+            this.numIntervalle.TabIndex = 76;
+            this.numIntervalle.Value = new decimal(new int[] {
+            50,
+            0,
+            0,
+            0});
+            // 
+            // lblTxtIntervalle
+            // 
+            this.lblTxtIntervalle.AutoSize = true;
+            this.lblTxtIntervalle.Location = new System.Drawing.Point(261, 34);
+            this.lblTxtIntervalle.Name = "lblTxtIntervalle";
+            this.lblTxtIntervalle.Size = new System.Drawing.Size(56, 13);
+            this.lblTxtIntervalle.TabIndex = 75;
+            this.lblTxtIntervalle.Text = "Intervalle :";
+            // 
+            // ledCouple
+            // 
+            this.ledCouple.Etat = false;
+            this.ledCouple.Image = ((System.Drawing.Image)(resources.GetObject("ledCouple.Image")));
+            this.ledCouple.Location = new System.Drawing.Point(394, 195);
+            this.ledCouple.Name = "ledCouple";
+            this.ledCouple.Size = new System.Drawing.Size(16, 16);
+            this.ledCouple.TabIndex = 74;
+            this.ledCouple.TabStop = false;
+            // 
+            // ledLed
+            // 
+            this.ledLed.Etat = false;
+            this.ledLed.Image = ((System.Drawing.Image)(resources.GetObject("ledLed.Image")));
+            this.ledLed.Location = new System.Drawing.Point(394, 173);
+            this.ledLed.Name = "ledLed";
+            this.ledLed.Size = new System.Drawing.Size(16, 16);
+            this.ledLed.TabIndex = 73;
+            this.ledLed.TabStop = false;
+            // 
+            // lblFirmware
+            // 
+            this.lblFirmware.AutoSize = true;
+            this.lblFirmware.Location = new System.Drawing.Point(111, 198);
+            this.lblFirmware.Name = "lblFirmware";
+            this.lblFirmware.Size = new System.Drawing.Size(49, 13);
+            this.lblFirmware.TabIndex = 71;
+            this.lblFirmware.Text = "v12.5.17";
+            // 
+            // lblTxtFirmware
+            // 
+            this.lblTxtFirmware.AutoSize = true;
+            this.lblTxtFirmware.Location = new System.Drawing.Point(15, 200);
+            this.lblTxtFirmware.Name = "lblTxtFirmware";
+            this.lblTxtFirmware.Size = new System.Drawing.Size(84, 13);
+            this.lblTxtFirmware.TabIndex = 70;
+            this.lblTxtFirmware.Text = "Version firmware";
+            // 
+            // lblModele
+            // 
+            this.lblModele.AutoSize = true;
+            this.lblModele.Location = new System.Drawing.Point(111, 176);
+            this.lblModele.Name = "lblModele";
+            this.lblModele.Size = new System.Drawing.Size(45, 13);
+            this.lblModele.TabIndex = 69;
+            this.lblModele.Text = "P3Z656";
+            // 
+            // lblTxtModele
+            // 
+            this.lblTxtModele.AutoSize = true;
+            this.lblTxtModele.Location = new System.Drawing.Point(15, 176);
+            this.lblTxtModele.Name = "lblTxtModele";
+            this.lblTxtModele.Size = new System.Drawing.Size(56, 13);
+            this.lblTxtModele.TabIndex = 68;
+            this.lblTxtModele.Text = "N° modèle";
+            // 
+            // numPositionMax
+            // 
+            this.numPositionMax.Location = new System.Drawing.Point(101, 295);
+            this.numPositionMax.Maximum = new decimal(new int[] {
+            1000000,
+            0,
+            0,
+            0});
+            this.numPositionMax.Name = "numPositionMax";
+            this.numPositionMax.Size = new System.Drawing.Size(66, 20);
+            this.numPositionMax.TabIndex = 67;
+            // 
+            // btnOkPositionMax
+            // 
+            this.btnOkPositionMax.Location = new System.Drawing.Point(173, 294);
+            this.btnOkPositionMax.Name = "btnOkPositionMax";
+            this.btnOkPositionMax.Size = new System.Drawing.Size(30, 23);
+            this.btnOkPositionMax.TabIndex = 66;
+            this.btnOkPositionMax.Text = "Ok";
+            this.btnOkPositionMax.UseVisualStyleBackColor = true;
+            this.btnOkPositionMax.Click += new System.EventHandler(this.btnOkPositionMax_Click);
+            // 
+            // lblTxtPositionMax
+            // 
+            this.lblTxtPositionMax.AutoSize = true;
+            this.lblTxtPositionMax.Location = new System.Drawing.Point(15, 299);
+            this.lblTxtPositionMax.Name = "lblTxtPositionMax";
+            this.lblTxtPositionMax.Size = new System.Drawing.Size(66, 13);
+            this.lblTxtPositionMax.TabIndex = 65;
+            this.lblTxtPositionMax.Text = "Position max";
+            // 
+            // numPositionMin
+            // 
+            this.numPositionMin.Location = new System.Drawing.Point(101, 269);
+            this.numPositionMin.Maximum = new decimal(new int[] {
+            1000000,
+            0,
+            0,
+            0});
+            this.numPositionMin.Name = "numPositionMin";
+            this.numPositionMin.Size = new System.Drawing.Size(66, 20);
+            this.numPositionMin.TabIndex = 64;
+            // 
+            // btnOkPositionMin
+            // 
+            this.btnOkPositionMin.Location = new System.Drawing.Point(173, 268);
+            this.btnOkPositionMin.Name = "btnOkPositionMin";
+            this.btnOkPositionMin.Size = new System.Drawing.Size(30, 23);
+            this.btnOkPositionMin.TabIndex = 63;
+            this.btnOkPositionMin.Text = "Ok";
+            this.btnOkPositionMin.UseVisualStyleBackColor = true;
+            this.btnOkPositionMin.Click += new System.EventHandler(this.btnOkPositionMin_Click);
+            // 
+            // lblTxtPositionMin
+            // 
+            this.lblTxtPositionMin.AutoSize = true;
+            this.lblTxtPositionMin.Location = new System.Drawing.Point(15, 273);
+            this.lblTxtPositionMin.Name = "lblTxtPositionMin";
+            this.lblTxtPositionMin.Size = new System.Drawing.Size(63, 13);
+            this.lblTxtPositionMin.TabIndex = 62;
+            this.lblTxtPositionMin.Text = "Position min";
+            // 
+            // ledMouvement
+            // 
+            this.ledMouvement.Etat = false;
+            this.ledMouvement.Image = ((System.Drawing.Image)(resources.GetObject("ledMouvement.Image")));
+            this.ledMouvement.Location = new System.Drawing.Point(394, 217);
+            this.ledMouvement.Name = "ledMouvement";
+            this.ledMouvement.Size = new System.Drawing.Size(16, 16);
+            this.ledMouvement.TabIndex = 61;
+            this.ledMouvement.TabStop = false;
+            // 
+            // lblTxtMouvement
+            // 
+            this.lblTxtMouvement.AutoSize = true;
+            this.lblTxtMouvement.Location = new System.Drawing.Point(304, 220);
+            this.lblTxtMouvement.Name = "lblTxtMouvement";
+            this.lblTxtMouvement.Size = new System.Drawing.Size(78, 13);
+            this.lblTxtMouvement.TabIndex = 60;
+            this.lblTxtMouvement.Text = "En mouvement";
+            // 
+            // switchCouple
+            // 
+            this.switchCouple.BackColor = System.Drawing.Color.Transparent;
+            this.switchCouple.Location = new System.Drawing.Point(416, 196);
+            this.switchCouple.Name = "switchCouple";
+            this.switchCouple.Size = new System.Drawing.Size(35, 15);
+            this.switchCouple.Symetrique = false;
+            this.switchCouple.TabIndex = 59;
+            // 
+            // lblTxtCouple
+            // 
+            this.lblTxtCouple.AutoSize = true;
+            this.lblTxtCouple.Location = new System.Drawing.Point(304, 198);
+            this.lblTxtCouple.Name = "lblTxtCouple";
+            this.lblTxtCouple.Size = new System.Drawing.Size(40, 13);
+            this.lblTxtCouple.TabIndex = 58;
+            this.lblTxtCouple.Text = "Couple";
+            // 
+            // numCouple
+            // 
+            this.numCouple.Location = new System.Drawing.Point(101, 245);
+            this.numCouple.Maximum = new decimal(new int[] {
+            1000000,
+            0,
+            0,
+            0});
+            this.numCouple.Name = "numCouple";
+            this.numCouple.Size = new System.Drawing.Size(66, 20);
+            this.numCouple.TabIndex = 57;
+            // 
+            // btnOkCoupleMax
+            // 
+            this.btnOkCoupleMax.Location = new System.Drawing.Point(173, 243);
+            this.btnOkCoupleMax.Name = "btnOkCoupleMax";
+            this.btnOkCoupleMax.Size = new System.Drawing.Size(30, 23);
+            this.btnOkCoupleMax.TabIndex = 56;
+            this.btnOkCoupleMax.Text = "Ok";
+            this.btnOkCoupleMax.UseVisualStyleBackColor = true;
+            this.btnOkCoupleMax.Click += new System.EventHandler(this.btnOkCoupleMax_Click);
+            // 
+            // lblTxtCoupleMax
+            // 
+            this.lblTxtCoupleMax.AutoSize = true;
+            this.lblTxtCoupleMax.Location = new System.Drawing.Point(15, 248);
+            this.lblTxtCoupleMax.Name = "lblTxtCoupleMax";
+            this.lblTxtCoupleMax.Size = new System.Drawing.Size(62, 13);
+            this.lblTxtCoupleMax.TabIndex = 55;
+            this.lblTxtCoupleMax.Text = "Couple max";
+            // 
+            // btnReset
+            // 
+            this.btnReset.Location = new System.Drawing.Point(444, 29);
+            this.btnReset.Name = "btnReset";
+            this.btnReset.Size = new System.Drawing.Size(75, 23);
+            this.btnReset.TabIndex = 54;
+            this.btnReset.Text = "Reset";
+            this.btnReset.UseVisualStyleBackColor = true;
+            // 
             // lblLed
             // 
             this.lblLed.AutoSize = true;
-            this.lblLed.Location = new System.Drawing.Point(133, 58);
+            this.lblLed.Location = new System.Drawing.Point(304, 176);
             this.lblLed.Name = "lblLed";
-            this.lblLed.Size = new System.Drawing.Size(31, 13);
+            this.lblLed.Size = new System.Drawing.Size(25, 13);
             this.lblLed.TabIndex = 53;
-            this.lblLed.Text = "Led :";
+            this.lblLed.Text = "Led";
             // 
             // switchLed
             // 
             this.switchLed.BackColor = System.Drawing.Color.Transparent;
-            this.switchLed.Location = new System.Drawing.Point(170, 58);
+            this.switchLed.Location = new System.Drawing.Point(416, 173);
             this.switchLed.Name = "switchLed";
             this.switchLed.Size = new System.Drawing.Size(35, 15);
             this.switchLed.Symetrique = false;
             this.switchLed.TabIndex = 52;
-            this.switchLed.ChangementEtat += new System.EventHandler(this.switchLed_ChangementEtat);
             // 
             // switchSurveillance
             // 
             this.switchSurveillance.BackColor = System.Drawing.Color.Transparent;
-            this.switchSurveillance.Location = new System.Drawing.Point(289, 58);
+            this.switchSurveillance.Location = new System.Drawing.Point(214, 32);
             this.switchSurveillance.Name = "switchSurveillance";
             this.switchSurveillance.Size = new System.Drawing.Size(35, 15);
             this.switchSurveillance.Symetrique = false;
             this.switchSurveillance.TabIndex = 51;
             // 
-            // lblSurveillance
+            // lblTxtSurveillance
             // 
-            this.lblSurveillance.AutoSize = true;
-            this.lblSurveillance.Location = new System.Drawing.Point(212, 58);
-            this.lblSurveillance.Name = "lblSurveillance";
-            this.lblSurveillance.Size = new System.Drawing.Size(71, 13);
-            this.lblSurveillance.TabIndex = 50;
-            this.lblSurveillance.Text = "Surveillance :";
-            // 
-            // numValeur
-            // 
-            this.numValeur.Location = new System.Drawing.Point(234, 208);
-            this.numValeur.Maximum = new decimal(new int[] {
-            1000000,
-            0,
-            0,
-            0});
-            this.numValeur.Name = "numValeur";
-            this.numValeur.Size = new System.Drawing.Size(91, 20);
-            this.numValeur.TabIndex = 49;
-            // 
-            // btnSet
-            // 
-            this.btnSet.Image = global::GoBot.Properties.Resources.FlecheGauche;
-            this.btnSet.Location = new System.Drawing.Point(178, 218);
-            this.btnSet.Name = "btnSet";
-            this.btnSet.Size = new System.Drawing.Size(50, 15);
-            this.btnSet.TabIndex = 48;
-            this.btnSet.UseVisualStyleBackColor = true;
-            this.btnSet.Click += new System.EventHandler(this.btnSet_Click);
-            // 
-            // comboBoxFonctions
-            // 
-            this.comboBoxFonctions.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.comboBoxFonctions.FormattingEnabled = true;
-            this.comboBoxFonctions.Items.AddRange(new object[] {
-            "ID",
-            "Baudrate",
-            "Firmware",
-            "Position minimum",
-            "Position maximum",
-            "Limite de température",
-            "Limite de voltage minimum",
-            "Limite de voltage maximum",
-            "Couple maximum",
-            "CW compliance margin",
-            "CCW compliance margin",
-            "CW compliance slope",
-            "CCW compliance slope",
-            "Punch"});
-            this.comboBoxFonctions.Location = new System.Drawing.Point(11, 208);
-            this.comboBoxFonctions.Name = "comboBoxFonctions";
-            this.comboBoxFonctions.Size = new System.Drawing.Size(161, 21);
-            this.comboBoxFonctions.TabIndex = 46;
-            // 
-            // btnGet
-            // 
-            this.btnGet.Image = global::GoBot.Properties.Resources.FlecheDroite;
-            this.btnGet.Location = new System.Drawing.Point(178, 202);
-            this.btnGet.Name = "btnGet";
-            this.btnGet.Size = new System.Drawing.Size(50, 15);
-            this.btnGet.TabIndex = 45;
-            this.btnGet.UseVisualStyleBackColor = true;
-            // 
-            // ledConnect
-            // 
-            this.ledConnect.Etat = false;
-            this.ledConnect.Location = new System.Drawing.Point(27, 59);
-            this.ledConnect.Name = "ledConnect";
-            this.ledConnect.Size = new System.Drawing.Size(16, 16);
-            this.ledConnect.TabIndex = 43;
-            this.ledConnect.TabStop = false;
-            // 
-            // ledErreur7
-            // 
-            this.ledErreur7.Etat = false;
-            this.ledErreur7.Location = new System.Drawing.Point(289, 172);
-            this.ledErreur7.Name = "ledErreur7";
-            this.ledErreur7.Size = new System.Drawing.Size(16, 16);
-            this.ledErreur7.TabIndex = 42;
-            this.ledErreur7.TabStop = false;
-            // 
-            // ledErreur5
-            // 
-            this.ledErreur5.Etat = false;
-            this.ledErreur5.Location = new System.Drawing.Point(221, 172);
-            this.ledErreur5.Name = "ledErreur5";
-            this.ledErreur5.Size = new System.Drawing.Size(16, 16);
-            this.ledErreur5.TabIndex = 41;
-            this.ledErreur5.TabStop = false;
-            // 
-            // ledErreur6
-            // 
-            this.ledErreur6.Etat = false;
-            this.ledErreur6.Location = new System.Drawing.Point(255, 172);
-            this.ledErreur6.Name = "ledErreur6";
-            this.ledErreur6.Size = new System.Drawing.Size(16, 16);
-            this.ledErreur6.TabIndex = 39;
-            this.ledErreur6.TabStop = false;
-            // 
-            // ledErreur3
-            // 
-            this.ledErreur3.Etat = false;
-            this.ledErreur3.Location = new System.Drawing.Point(153, 172);
-            this.ledErreur3.Name = "ledErreur3";
-            this.ledErreur3.Size = new System.Drawing.Size(16, 16);
-            this.ledErreur3.TabIndex = 38;
-            this.ledErreur3.TabStop = false;
-            // 
-            // ledErreur4
-            // 
-            this.ledErreur4.Etat = false;
-            this.ledErreur4.Location = new System.Drawing.Point(187, 172);
-            this.ledErreur4.Name = "ledErreur4";
-            this.ledErreur4.Size = new System.Drawing.Size(16, 16);
-            this.ledErreur4.TabIndex = 37;
-            this.ledErreur4.TabStop = false;
-            // 
-            // ledErreur2
-            // 
-            this.ledErreur2.Etat = false;
-            this.ledErreur2.Location = new System.Drawing.Point(119, 172);
-            this.ledErreur2.Name = "ledErreur2";
-            this.ledErreur2.Size = new System.Drawing.Size(16, 16);
-            this.ledErreur2.TabIndex = 36;
-            this.ledErreur2.TabStop = false;
-            // 
-            // btnAuto
-            // 
-            this.btnAuto.Location = new System.Drawing.Point(283, 22);
-            this.btnAuto.Name = "btnAuto";
-            this.btnAuto.Size = new System.Drawing.Size(43, 23);
-            this.btnAuto.TabIndex = 35;
-            this.btnAuto.Text = "Auto";
-            this.btnAuto.UseVisualStyleBackColor = true;
-            this.btnAuto.Click += new System.EventHandler(this.btnAuto_Click);
+            this.lblTxtSurveillance.AutoSize = true;
+            this.lblTxtSurveillance.Location = new System.Drawing.Point(139, 34);
+            this.lblTxtSurveillance.Name = "lblTxtSurveillance";
+            this.lblTxtSurveillance.Size = new System.Drawing.Size(71, 13);
+            this.lblTxtSurveillance.TabIndex = 50;
+            this.lblTxtSurveillance.Text = "Surveillance :";
             // 
             // trackBarPosition
             // 
             this.trackBarPosition.BackColor = System.Drawing.Color.Transparent;
             this.trackBarPosition.IntervalTimer = 500;
-            this.trackBarPosition.Location = new System.Drawing.Point(84, 94);
+            this.trackBarPosition.Location = new System.Drawing.Point(132, 107);
             this.trackBarPosition.Max = 1023D;
             this.trackBarPosition.MaximumSize = new System.Drawing.Size(3000, 15);
             this.trackBarPosition.Min = 0D;
             this.trackBarPosition.MinimumSize = new System.Drawing.Size(0, 15);
             this.trackBarPosition.Name = "trackBarPosition";
+            this.trackBarPosition.NombreDecimales = 0;
             this.trackBarPosition.Reverse = false;
-            this.trackBarPosition.Size = new System.Drawing.Size(193, 15);
+            this.trackBarPosition.Size = new System.Drawing.Size(318, 15);
             this.trackBarPosition.TabIndex = 6;
-            this.trackBarPosition.TickValueChanged += new System.EventHandler(this.trackBarPosition_TickValueChanged);
-            this.trackBarPosition.ValueChanged += new System.EventHandler(this.trackBarPosition_ValueChanged);
-            // 
-            // ledErreur1
-            // 
-            this.ledErreur1.Etat = false;
-            this.ledErreur1.Location = new System.Drawing.Point(85, 172);
-            this.ledErreur1.Name = "ledErreur1";
-            this.ledErreur1.Size = new System.Drawing.Size(16, 16);
-            this.ledErreur1.TabIndex = 25;
-            this.ledErreur1.TabStop = false;
+            this.trackBarPosition.Vertical = false;
             // 
             // trackBarVitesse
             // 
             this.trackBarVitesse.BackColor = System.Drawing.Color.Transparent;
             this.trackBarVitesse.IntervalTimer = 500;
-            this.trackBarVitesse.Location = new System.Drawing.Point(84, 115);
+            this.trackBarVitesse.Location = new System.Drawing.Point(132, 128);
             this.trackBarVitesse.Max = 1023D;
             this.trackBarVitesse.MaximumSize = new System.Drawing.Size(3000, 15);
             this.trackBarVitesse.Min = 0D;
             this.trackBarVitesse.MinimumSize = new System.Drawing.Size(0, 15);
             this.trackBarVitesse.Name = "trackBarVitesse";
+            this.trackBarVitesse.NombreDecimales = 0;
             this.trackBarVitesse.Reverse = false;
-            this.trackBarVitesse.Size = new System.Drawing.Size(193, 15);
+            this.trackBarVitesse.Size = new System.Drawing.Size(318, 15);
             this.trackBarVitesse.TabIndex = 9;
-            this.trackBarVitesse.TickValueChanged += new System.EventHandler(this.trackBarVitesse_TickValueChanged);
-            this.trackBarVitesse.ValueChanged += new System.EventHandler(this.trackBarVitesse_ValueChanged);
+            this.trackBarVitesse.Vertical = false;
+            // 
+            // btnAuto
+            // 
+            this.btnAuto.Location = new System.Drawing.Point(314, 53);
+            this.btnAuto.Name = "btnAuto";
+            this.btnAuto.Size = new System.Drawing.Size(75, 23);
+            this.btnAuto.TabIndex = 114;
+            this.btnAuto.Text = "Auto";
+            this.btnAuto.UseVisualStyleBackColor = true;
+            this.btnAuto.Click += new System.EventHandler(this.btnAuto_Click);
             // 
             // PanelServo
             // 
@@ -487,21 +992,23 @@
             this.BackColor = System.Drawing.Color.Transparent;
             this.Controls.Add(this.groupServo);
             this.Name = "PanelServo";
-            this.Size = new System.Drawing.Size(344, 255);
-            this.Load += new System.EventHandler(this.PanelServo_Load);
+            this.Size = new System.Drawing.Size(559, 461);
             ((System.ComponentModel.ISupportInitialize)(this.numID)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.numBaudrate)).EndInit();
             this.groupServo.ResumeLayout(false);
             this.groupServo.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.numValeur)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.ledConnect)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.ledErreur7)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.ledErreur5)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.ledErreur6)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.ledErreur3)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.ledErreur4)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.ledErreur2)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.ledErreur1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.imgAlarmes)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numCWMargin)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numCWSlope)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numCCWMargin)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numCCWSlope)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numIntervalle)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.ledCouple)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.ledLed)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numPositionMax)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numPositionMin)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.ledMouvement)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numCouple)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -511,38 +1018,80 @@
         private System.Windows.Forms.Label lblID;
         private System.Windows.Forms.NumericUpDown numID;
         private Composants.TrackBarPlus trackBarPosition;
-        private System.Windows.Forms.Label lblPositionText;
+        private System.Windows.Forms.Label lblTxtPosition;
         private System.Windows.Forms.Label lblPosition;
         private System.Windows.Forms.Label lblVitesse;
-        private System.Windows.Forms.Label lblVitesseText;
+        private System.Windows.Forms.Label lblTxtVitesse;
         private Composants.TrackBarPlus trackBarVitesse;
-        private System.Windows.Forms.Label lblCouple;
-        private System.Windows.Forms.Label lblCoupleText;
         private System.Windows.Forms.Label lblTemperature;
-        private System.Windows.Forms.Label lblTemperatureText;
+        private System.Windows.Forms.Label lblTxtTemperature;
         private System.Windows.Forms.Label lblTension;
-        private System.Windows.Forms.Label lblTensionText;
-        private System.Windows.Forms.Label lblErreurs;
-        private Composants.Led ledErreur1;
+        private System.Windows.Forms.Label lblTxtTension;
         private System.Windows.Forms.NumericUpDown numBaudrate;
-        private System.Windows.Forms.Button btnOk;
-        private System.Windows.Forms.Label lblBaudrate;
+        private System.Windows.Forms.Button btnOkBaudrate;
+        private System.Windows.Forms.Label lblTxtBaudrate;
         private System.Windows.Forms.GroupBox groupServo;
-        private System.Windows.Forms.Button btnAuto;
-        private Composants.Led ledErreur7;
-        private Composants.Led ledErreur5;
-        private Composants.Led ledErreur6;
-        private Composants.Led ledErreur3;
-        private Composants.Led ledErreur4;
-        private Composants.Led ledErreur2;
-        private Composants.Led ledConnect;
-        private System.Windows.Forms.ComboBox comboBoxFonctions;
-        private System.Windows.Forms.Button btnGet;
-        private System.Windows.Forms.Button btnSet;
-        private System.Windows.Forms.NumericUpDown numValeur;
         private Composants.SwitchBouton switchSurveillance;
-        private System.Windows.Forms.Label lblSurveillance;
+        private System.Windows.Forms.Label lblTxtSurveillance;
         private System.Windows.Forms.Label lblLed;
         private Composants.SwitchBouton switchLed;
+        private System.Windows.Forms.NumericUpDown numCWMargin;
+        private System.Windows.Forms.Button btnOkCWMargin;
+        private System.Windows.Forms.Label lblTxtCWMargin;
+        private System.Windows.Forms.NumericUpDown numCWSlope;
+        private System.Windows.Forms.Button btnOkCWSlope;
+        private System.Windows.Forms.Label lblTxtCWSlope;
+        private System.Windows.Forms.NumericUpDown numCCWMargin;
+        private System.Windows.Forms.Button btnOkCCWMargin;
+        private System.Windows.Forms.Label lblTxtCCWMargin;
+        private System.Windows.Forms.NumericUpDown numCCWSlope;
+        private System.Windows.Forms.Button btnOkCCWSlope;
+        private System.Windows.Forms.Label lblTxtCCWSlope;
+        private System.Windows.Forms.Label lblVitesseActuelle;
+        private System.Windows.Forms.Label lblTxtVitesseActuelle;
+        private System.Windows.Forms.Label lblPositionActuelle;
+        private System.Windows.Forms.Label lblTxtPositionActuelle;
+        private System.Windows.Forms.Label lblTxtAlarmeShutdown;
+        private System.Windows.Forms.Label lblTxtAlarmeLED;
+        private System.Windows.Forms.CheckBox boxShutdownOverload;
+        private System.Windows.Forms.CheckBox boxShutdownChecksum;
+        private System.Windows.Forms.CheckBox boxShutdownRange;
+        private System.Windows.Forms.CheckBox boxShutdownOverheating;
+        private System.Windows.Forms.CheckBox boxLEDInputVoltage;
+        private System.Windows.Forms.CheckBox boxLEDAngleLimit;
+        private System.Windows.Forms.CheckBox boxLEDOverload;
+        private System.Windows.Forms.CheckBox boxLEDChecksum;
+        private System.Windows.Forms.CheckBox boxLEDRange;
+        private System.Windows.Forms.CheckBox boxLEDOverheating;
+        private System.Windows.Forms.CheckBox boxShutdownAngleLimit;
+        private System.Windows.Forms.CheckBox boxShutdownInputVoltage;
+        private System.Windows.Forms.Button btnRefresh;
+        private System.Windows.Forms.Label lblTxtIntervalleMs;
+        private System.Windows.Forms.NumericUpDown numIntervalle;
+        private System.Windows.Forms.Label lblTxtIntervalle;
+        private Composants.Led ledCouple;
+        private Composants.Led ledLed;
+        private System.Windows.Forms.Label lblFirmware;
+        private System.Windows.Forms.Label lblTxtFirmware;
+        private System.Windows.Forms.Label lblModele;
+        private System.Windows.Forms.Label lblTxtModele;
+        private System.Windows.Forms.NumericUpDown numPositionMax;
+        private System.Windows.Forms.Button btnOkPositionMax;
+        private System.Windows.Forms.Label lblTxtPositionMax;
+        private System.Windows.Forms.NumericUpDown numPositionMin;
+        private System.Windows.Forms.Button btnOkPositionMin;
+        private System.Windows.Forms.Label lblTxtPositionMin;
+        private Composants.Led ledMouvement;
+        private System.Windows.Forms.Label lblTxtMouvement;
+        private Composants.SwitchBouton switchCouple;
+        private System.Windows.Forms.Label lblTxtCouple;
+        private System.Windows.Forms.NumericUpDown numCouple;
+        private System.Windows.Forms.Button btnOkCoupleMax;
+        private System.Windows.Forms.Label lblTxtCoupleMax;
+        private System.Windows.Forms.Button btnReset;
+        private System.Windows.Forms.PictureBox imgAlarmes;
+        private System.Windows.Forms.CheckBox boxShutdownInstruction;
+        private System.Windows.Forms.CheckBox boxLEDInstruction;
+        private System.Windows.Forms.Button btnAuto;
     }
 }

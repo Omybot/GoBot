@@ -45,9 +45,10 @@ namespace GoBot
             this.tabDiagnosticBalises = new System.Windows.Forms.TabPage();
             this.tabDiagnosticRecMove = new System.Windows.Forms.TabPage();
             this.tabTestLiaisons = new System.Windows.Forms.TabPage();
+            this.tabConnexions = new System.Windows.Forms.TabPage();
             this.lblSimulation = new System.Windows.Forms.Label();
-            this.btnClose = new System.Windows.Forms.Button();
             this.switchBoutonSimu = new Composants.SwitchBouton();
+            this.btnClose = new System.Windows.Forms.Button();
             this.panelGrosRobot = new GoBot.IHM.PanelGrosRobot();
             this.panelPetitRobot = new GoBot.IHM.PanelPetitRobot();
             this.panelMatch = new GoBot.IHM.PanelMatch();
@@ -59,13 +60,14 @@ namespace GoBot
             this.panelCamera = new GoBot.IHM.PanelCamera();
             this.panelReglageAsserv = new GoBot.IHM.PanelReglageAsserv();
             this.panelLogs1 = new GoBot.IHM.PanelLogsTrames();
+            this.panelLogsEvents = new GoBot.IHM.PanelLogsEvents();
             this.panelDiagnosticBalise3 = new GoBot.IHM.PanelDiagnosticBalise();
             this.panelDiagnosticBalise2 = new GoBot.IHM.PanelDiagnosticBalise();
             this.panelDiagnosticBalise1 = new GoBot.IHM.PanelDiagnosticBalise();
             this.panelChargeCPU1 = new GoBot.IHM.PanelDiagnosticMove();
             this.panelTestLiaisons1 = new GoBot.IHM.PanelTestLiaisons();
+            this.panelEnvoiUdp1 = new GoBot.IHM.PanelEnvoiUdp();
             this.panelConnexions = new GoBot.IHM.PanelConnexions();
-            this.panelLogsEvents = new GoBot.IHM.PanelLogsEvents();
             this.tabControl.SuspendLayout();
             this.tabGrosRobot.SuspendLayout();
             this.tabPetitRobot.SuspendLayout();
@@ -80,13 +82,14 @@ namespace GoBot
             this.tabDiagnosticBalises.SuspendLayout();
             this.tabDiagnosticRecMove.SuspendLayout();
             this.tabTestLiaisons.SuspendLayout();
+            this.tabConnexions.SuspendLayout();
             this.SuspendLayout();
             // 
             // tabControl
             // 
-            this.tabControl.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-                        | System.Windows.Forms.AnchorStyles.Left)
-                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.tabControl.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.tabControl.Controls.Add(this.tabGrosRobot);
             this.tabControl.Controls.Add(this.tabPetitRobot);
             this.tabControl.Controls.Add(this.tabMatch);
@@ -100,6 +103,7 @@ namespace GoBot
             this.tabControl.Controls.Add(this.tabDiagnosticBalises);
             this.tabControl.Controls.Add(this.tabDiagnosticRecMove);
             this.tabControl.Controls.Add(this.tabTestLiaisons);
+            this.tabControl.Controls.Add(this.tabConnexions);
             this.tabControl.HotTrack = true;
             this.tabControl.Location = new System.Drawing.Point(0, 0);
             this.tabControl.Name = "tabControl";
@@ -260,6 +264,17 @@ namespace GoBot
             this.tabTestLiaisons.Text = "Test liaisons";
             this.tabTestLiaisons.UseVisualStyleBackColor = true;
             // 
+            // tabConnexions
+            // 
+            this.tabConnexions.Controls.Add(this.panelEnvoiUdp1);
+            this.tabConnexions.Location = new System.Drawing.Point(4, 22);
+            this.tabConnexions.Name = "tabConnexions";
+            this.tabConnexions.Padding = new System.Windows.Forms.Padding(3);
+            this.tabConnexions.Size = new System.Drawing.Size(1300, 712);
+            this.tabConnexions.TabIndex = 18;
+            this.tabConnexions.Text = "Connexions UDP";
+            this.tabConnexions.UseVisualStyleBackColor = true;
+            // 
             // lblSimulation
             // 
             this.lblSimulation.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
@@ -269,17 +284,6 @@ namespace GoBot
             this.lblSimulation.Size = new System.Drawing.Size(55, 13);
             this.lblSimulation.TabIndex = 72;
             this.lblSimulation.Text = "Simulation";
-            // 
-            // btnClose
-            // 
-            this.btnClose.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnClose.Image = global::GoBot.Properties.Resources.Close;
-            this.btnClose.Location = new System.Drawing.Point(1286, 0);
-            this.btnClose.Name = "btnClose";
-            this.btnClose.Size = new System.Drawing.Size(20, 20);
-            this.btnClose.TabIndex = 71;
-            this.btnClose.UseVisualStyleBackColor = true;
-            this.btnClose.Click += new System.EventHandler(this.btnClose_Click);
             // 
             // switchBoutonSimu
             // 
@@ -292,11 +296,22 @@ namespace GoBot
             this.switchBoutonSimu.TabIndex = 73;
             this.switchBoutonSimu.ChangementEtat += new System.EventHandler(this.switchBoutonSimu_ChangementEtat);
             // 
+            // btnClose
+            // 
+            this.btnClose.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnClose.Image = global::GoBot.Properties.Resources.Close;
+            this.btnClose.Location = new System.Drawing.Point(1286, 0);
+            this.btnClose.Name = "btnClose";
+            this.btnClose.Size = new System.Drawing.Size(20, 20);
+            this.btnClose.TabIndex = 71;
+            this.btnClose.UseVisualStyleBackColor = true;
+            this.btnClose.Click += new System.EventHandler(this.btnClose_Click);
+            // 
             // panelGrosRobot
             // 
-            this.panelGrosRobot.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-                        | System.Windows.Forms.AnchorStyles.Left)
-                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.panelGrosRobot.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.panelGrosRobot.BackColor = System.Drawing.Color.White;
             this.panelGrosRobot.Location = new System.Drawing.Point(0, 0);
             this.panelGrosRobot.Name = "panelGrosRobot";
@@ -390,6 +405,15 @@ namespace GoBot
             this.panelLogs1.Size = new System.Drawing.Size(1294, 706);
             this.panelLogs1.TabIndex = 0;
             // 
+            // panelLogsEvents
+            // 
+            this.panelLogsEvents.BackColor = System.Drawing.Color.Transparent;
+            this.panelLogsEvents.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.panelLogsEvents.Location = new System.Drawing.Point(0, 0);
+            this.panelLogsEvents.Name = "panelLogsEvents";
+            this.panelLogsEvents.Size = new System.Drawing.Size(1300, 712);
+            this.panelLogsEvents.TabIndex = 0;
+            // 
             // panelDiagnosticBalise3
             // 
             this.panelDiagnosticBalise3.BackColor = System.Drawing.Color.Transparent;
@@ -428,8 +452,16 @@ namespace GoBot
             // 
             this.panelTestLiaisons1.Location = new System.Drawing.Point(8, 6);
             this.panelTestLiaisons1.Name = "panelTestLiaisons1";
-            this.panelTestLiaisons1.Size = new System.Drawing.Size(822, 425);
+            this.panelTestLiaisons1.Size = new System.Drawing.Size(1260, 570);
             this.panelTestLiaisons1.TabIndex = 0;
+            // 
+            // panelEnvoiUdp1
+            // 
+            this.panelEnvoiUdp1.BackColor = System.Drawing.Color.White;
+            this.panelEnvoiUdp1.Location = new System.Drawing.Point(8, 6);
+            this.panelEnvoiUdp1.Name = "panelEnvoiUdp1";
+            this.panelEnvoiUdp1.Size = new System.Drawing.Size(850, 509);
+            this.panelEnvoiUdp1.TabIndex = 0;
             // 
             // panelConnexions
             // 
@@ -439,15 +471,6 @@ namespace GoBot
             this.panelConnexions.Name = "panelConnexions";
             this.panelConnexions.Size = new System.Drawing.Size(849, 27);
             this.panelConnexions.TabIndex = 74;
-            // 
-            // panelLogsEvents
-            // 
-            this.panelLogsEvents.BackColor = System.Drawing.Color.Transparent;
-            this.panelLogsEvents.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panelLogsEvents.Location = new System.Drawing.Point(0, 0);
-            this.panelLogsEvents.Name = "panelLogsEvents";
-            this.panelLogsEvents.Size = new System.Drawing.Size(1300, 712);
-            this.panelLogsEvents.TabIndex = 0;
             // 
             // FenGoBot
             // 
@@ -482,6 +505,7 @@ namespace GoBot
             this.tabDiagnosticBalises.ResumeLayout(false);
             this.tabDiagnosticRecMove.ResumeLayout(false);
             this.tabTestLiaisons.ResumeLayout(false);
+            this.tabConnexions.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -525,6 +549,8 @@ namespace GoBot
         private System.Windows.Forms.TabPage tabTestLiaisons;
         private PanelTestLiaisons panelTestLiaisons1;
         private PanelLogsEvents panelLogsEvents;
+        private System.Windows.Forms.TabPage tabConnexions;
+        private PanelEnvoiUdp panelEnvoiUdp1;
     }
 }
 

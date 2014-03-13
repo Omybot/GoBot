@@ -30,9 +30,9 @@ namespace GoBot.Communications
         {
         }
 
-        public int CompareTo(object obj)
+        int IComparable.CompareTo(object obj)
         {
-            return Date.CompareTo(((HistoLigne)obj).Heure);
+            return Date.CompareTo(((TrameReplay)obj).Date);
         }
     }
 

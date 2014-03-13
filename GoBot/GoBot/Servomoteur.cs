@@ -9,42 +9,333 @@ namespace GoBot
 {
     public class Servomoteur
     {
-        private int id = 0;
-        private double baudrate = 0;
         private Carte carte;
         private ConnexionUDP connexionUdp;
-        private bool recherche;
 
-        public ConnexionCheck ConnexionCheck
+        private int id;
+        public int ID
         {
-            get;
-            set;
+            get { return id; }
+            set
+            {
+                id = value;
+                connexionUdp.SendMessage(TrameFactory.ServoEnvoiId((ServomoteurID)id, (char)value));
+            }
+        }
+        private double baudrate;
+        public double Baudrate
+        {
+            get { return baudrate; }
+            set
+            {
+                // TODO
+                baudrate = value;
+                connexionUdp.SendMessage(TrameFactory.ServoEnvoiBaudrate((ServomoteurID)id, TrameFactory.ServoBaudrate.b19200));
+            }
+        }
+        private void EnvoiCompliance()
+        {
+            connexionUdp.SendMessage(TrameFactory.ServoEnvoiComplianceParams((ServomoteurID)id, ccwSlope, ccwMargin, cwMargin, cwSlope));
+        }
+        private byte ccwSlope;
+        public byte CCWSlope
+        {
+            get { return ccwSlope; }
+            set
+            {
+                ccwSlope = value;
+                EnvoiCompliance();
+            }
+        }
+        private byte cwSlope;
+        public byte CWSlope
+        {
+            get { return cwSlope; }
+            set
+            {
+                cwSlope = value;
+                EnvoiCompliance();
+            }
+        }
+        private byte ccwMargin;
+        public byte CCWMargin
+        {
+            get { return ccwMargin; }
+            set
+            {
+                ccwMargin = value;
+                EnvoiCompliance();
+            }
+        }
+        private byte cwMargin;
+        public byte CWMargin
+        {
+            get { return cwMargin; }
+            set
+            {
+                cwMargin = value;
+                EnvoiCompliance();
+            }
+        }
+        private void EnvoiParamLED()
+        {
+            connexionUdp.SendMessage(TrameFactory.ServoEnvoiConfigAlarmeLED((ServomoteurID)id, alarmeLEDInputVoltage, alarmeLEDAngleLimit, alarmeLEDOverheating, alarmeLEDRange, alarmeLEDChecksum, alarmeLEDOverload));
+        }
+        private bool alarmeLEDInputVoltage;
+        public bool AlarmeLEDInputVoltage
+        {
+            get { return alarmeLEDInputVoltage; }
+            set
+            {
+                alarmeLEDInputVoltage = value;
+                EnvoiParamLED();
+            }
+        }
+        private bool alarmeLEDAngleLimit;
+        public bool AlarmeLEDAngleLimit
+        {
+            get { return alarmeLEDAngleLimit; }
+            set
+            {
+                alarmeLEDAngleLimit = value;
+                EnvoiParamLED();
+            }
+        }
+        private bool alarmeLEDOverheating;
+        public bool AlarmeLEDOverheating
+        {
+            get { return alarmeLEDOverheating; }
+            set
+            {
+                alarmeLEDOverheating = value;
+                EnvoiParamLED();
+            }
+        }
+        private bool alarmeLEDRange;
+        public bool AlarmeLEDRange
+        {
+            get { return alarmeLEDRange; }
+            set
+            {
+                alarmeLEDRange = value;
+                EnvoiParamLED();
+            }
+        }
+        private bool alarmeLEDChecksum;
+        public bool AlarmeLEDChecksum
+        {
+            get { return alarmeLEDChecksum; }
+            set
+            {
+                alarmeLEDChecksum = value;
+                EnvoiParamLED();
+            }
+        }
+        private bool alarmeLEDOverload;
+        public bool AlarmeLEDOverload
+        {
+            get { return alarmeLEDOverload; }
+            set
+            {
+                alarmeLEDOverload = value;
+                EnvoiParamLED();
+            }
+        }
+        private bool alarmeLEDInstruction;
+        public bool AlarmeLEDInstruction
+        {
+            get { return alarmeLEDInstruction; }
+            set
+            {
+                alarmeLEDInstruction = value;
+                EnvoiParamLED();
+            }
         }
 
-        int temperature;
-        double tension;
-        int couple;
-
-        public Servomoteur(Carte carte, int id, double baudrate)
+        private void EnvoiParamShutdown()
         {
-            recherche = false;
+            connexionUdp.SendMessage(TrameFactory.ServoEnvoiConfigAlarmeShutdown((ServomoteurID)id, alarmeShutdownInputVoltage, alarmeShutdownAngleLimit, alarmeShutdownOverheating, alarmeShutdownRange, alarmeShutdownChecksum, alarmeShutdownOverload));
+        }
+        private bool alarmeShutdownInputVoltage;
+        public bool AlarmeShutdownInputVoltage
+        {
+            get { return alarmeShutdownInputVoltage; }
+            set
+            {
+                alarmeShutdownInputVoltage = value;
+                EnvoiParamShutdown();
+            }
+        }
+        private bool alarmeShutdownAngleLimit;
+        public bool AlarmeShutdownAngleLimit
+        {
+            get { return alarmeShutdownAngleLimit; }
+            set
+            {
+                alarmeShutdownAngleLimit = value;
+                EnvoiParamShutdown();
+            }
+        }
+        private bool alarmeShutdownOverheating;
+        public bool AlarmeShutdownOverheating
+        {
+            get { return alarmeShutdownOverheating; }
+            set
+            {
+                alarmeShutdownOverheating = value;
+                EnvoiParamShutdown();
+            }
+        }
+        private bool alarmeShutdownRange;
+        public bool AlarmeShutdownRange
+        {
+            get { return alarmeShutdownRange; }
+            set
+            {
+                alarmeShutdownRange = value;
+                EnvoiParamShutdown();
+            }
+        }
+        private bool alarmeShutdownChecksum;
+        public bool AlarmeShutdownChecksum
+        {
+            get { return alarmeShutdownChecksum; }
+            set
+            {
+                alarmeShutdownChecksum = value;
+                EnvoiParamShutdown();
+            }
+        }
+        private bool alarmeShutdownOverload;
+        public bool AlarmeShutdownOverload
+        {
+            get { return alarmeShutdownOverload; }
+            set
+            {
+                alarmeShutdownOverload = value;
+                EnvoiParamShutdown();
+            }
+        }
+        private bool alarmeShutdownInstruction;
+        public bool AlarmeShutdownInstruction
+        {
+            get { return alarmeShutdownInstruction; }
+            set
+            {
+                alarmeShutdownInstruction = value;
+                EnvoiParamShutdown();
+            }
+        }
+
+        private bool coupleActive;
+        public bool CoupleActive
+        {
+            get { return coupleActive; }
+            set
+            {
+                coupleActive = value;
+                connexionUdp.SendMessage(TrameFactory.ServoEnvoiCoupleActive((ServomoteurID)id, coupleActive));
+            }
+        }
+        private int coupleMaximum;
+        public int CoupleMaximum
+        {
+            get { return coupleMaximum; }
+            set
+            {
+                coupleMaximum = value;
+                connexionUdp.SendMessage(TrameFactory.ServoEnvoiCoupleMaximum((ServomoteurID)id, coupleMaximum));
+            }
+        }
+        private bool ledAllumee;
+        public bool LedAllumee
+        {
+            get { return ledAllumee; }
+            set
+            {
+                ledAllumee = value;
+                connexionUdp.SendMessage(TrameFactory.ServoEnvoiLed((ServomoteurID)id, ledAllumee));
+            }
+        }
+        private bool enMouvement;
+        public bool EnMouvement
+        {
+            get { return enMouvement; }
+        }
+        private int modele;
+        public int Modele
+        {
+            get { return modele; }
+        }
+        private int firmware;
+        public int Firmware
+        {
+            get { return firmware; }
+        }
+        private int positionActuelle;
+        public int PositionActuelle
+        {
+            get { return positionActuelle; }
+        }
+        private int vitesseActuelle;
+        public int VitesseActuelle
+        {
+            get { return vitesseActuelle; }
+        }
+        private int positionCible;
+        public int PositionCible
+        {
+            get { return positionCible; }
+            set
+            {
+                positionCible = value;
+                connexionUdp.SendMessage(TrameFactory.ServoEnvoiPositionCible((ServomoteurID)id, positionCible));
+            }
+        }
+        private int positionMin;
+        public int PositionMin
+        {
+            get { return positionMin; }
+            set
+            {
+                positionMin = value;
+                connexionUdp.SendMessage(TrameFactory.ServoEnvoiPositionMinimum((ServomoteurID)id, positionMin));
+            }
+        }
+        private int positionMax;
+        public int PositionMax
+        {
+            get { return positionMax; }
+            set
+            {
+                positionMax = value;
+                connexionUdp.SendMessage(TrameFactory.ServoEnvoiPositionMaximum((ServomoteurID)id, positionMax));
+            }
+        }
+        private int temperature;
+        public int Temperature
+        {
+            get { return temperature; }
+        }
+        private double tension;
+        public double Tension
+        {
+            get { return tension; }
+        }
+        private int vitesseMax;
+        public double VitesseMax
+        {
+            get { return vitesseMax; }
+        }
+        
+        public Servomoteur(Carte carte, int id, int baudrate)
+        {
             this.carte = carte;
             this.id = id;
             this.baudrate = baudrate;
 
-            temperature = 0;
-            tension = 0;
-            couple = 0;
-
-            ConnexionCheck = new ConnexionCheck(2000);
-            ConnexionCheck.TestConnexion += new ConnexionCheck.TestConnexionDelegate(TestConnexion);
-            ConnexionCheck.Start();
-
             switch (carte)
             {
-                /*case (Carte.RecIo):
-                    connexionUdp = Connexions.ConnexionIo;
-                    break;*/
                 case (Carte.RecMove):
                     connexionUdp = Connexions.ConnexionMove;
                     break;
@@ -53,206 +344,117 @@ namespace GoBot
             connexionUdp.NouvelleTrameRecue += new ConnexionUDP.ReceptionDelegate(connexion_NouvelleTrame);
         }
 
-        public delegate void TemperatureDelegate(int temperature);
-        public event TemperatureDelegate TemperatureChange;
-
-        public delegate void CoupleDelegate(int couple);
-        public event CoupleDelegate CoupleChange;
-
-        public delegate void TensionDelegate(double tension);
-        public event TensionDelegate TensionChange;
-
-        public delegate void RechercheAutoDelegate(int idServo, double baudrate);
-        public event RechercheAutoDelegate RechercheAutoFinie;
+        public void DemandeActualisation()
+        {
+            connexionUdp.SendMessage(TrameFactory.ServoDemandeBaudrate((ServomoteurID)id));
+            connexionUdp.SendMessage(TrameFactory.ServoDemandeComplianceParams((ServomoteurID)id));
+            connexionUdp.SendMessage(TrameFactory.ServoDemandeConfigAlarmeLED((ServomoteurID)id));
+            connexionUdp.SendMessage(TrameFactory.ServoDemandeConfigAlarmeShutdown((ServomoteurID)id));
+            connexionUdp.SendMessage(TrameFactory.ServoDemandeConfigEcho((ServomoteurID)id));
+            connexionUdp.SendMessage(TrameFactory.ServoDemandeCoupleActive((ServomoteurID)id));
+            connexionUdp.SendMessage(TrameFactory.ServoDemandeCoupleMaximum((ServomoteurID)id));
+            connexionUdp.SendMessage(TrameFactory.ServoDemandeLed((ServomoteurID)id));
+            connexionUdp.SendMessage(TrameFactory.ServoDemandeMouvement((ServomoteurID)id));
+            connexionUdp.SendMessage(TrameFactory.ServoDemandeNumeroModele((ServomoteurID)id));
+            connexionUdp.SendMessage(TrameFactory.ServoDemandePositionActuelle((ServomoteurID)id));
+            connexionUdp.SendMessage(TrameFactory.ServoDemandePositionCible((ServomoteurID)id));
+            connexionUdp.SendMessage(TrameFactory.ServoDemandePositionMaximum((ServomoteurID)id));
+            connexionUdp.SendMessage(TrameFactory.ServoDemandePositionMinimum((ServomoteurID)id));
+            connexionUdp.SendMessage(TrameFactory.ServoDemandeTemperature((ServomoteurID)id));
+            connexionUdp.SendMessage(TrameFactory.ServoDemandeVersionFirmware((ServomoteurID)id));
+            connexionUdp.SendMessage(TrameFactory.ServoDemandeVitesseActuelle((ServomoteurID)id));
+            connexionUdp.SendMessage(TrameFactory.ServoDemandeVitesseMax((ServomoteurID)id));
+        }
 
         void connexion_NouvelleTrame(Trame trame)
         {
-            if (trame[1] == 0xE0)
+            // Test trame de type configuration servomoteur
+            if (trame[1] == (byte)TrameFactory.FonctionMove.CommandeServo)
             {
-                if (trame[2] == (Byte)TrameFactory.FonctionReglageServo.RechercheAuto)
-                    return;
-
-                // Trame de configuration servomoteur
+                // Test trame pour ce servo
                 if (trame[3] == id)
                 {
-                    //Trame pour ce servo
-
-                    ConnexionCheck.MajConnexion();
-
+                    // Switch sur la fonction
                     switch (trame[2])
                     {
-                        case (byte)TrameFactory.FonctionReglageServo.GetCouple:
-
-                            int nouveauCouple = trame[4] * 256 + trame[5];
-                            if(couple != nouveauCouple)
-                            {
-                                CoupleChange(nouveauCouple);
-                                couple = nouveauCouple;
-                            }
+                        case (byte)TrameFactory.FonctionServo.RetourBaudrate:
+                            baudrate = ValueToBaudrate(trame[4]);
                             break;
-
-                        case (byte)TrameFactory.FonctionReglageServo.GetPosition:
+                        case (byte)TrameFactory.FonctionServo.RetourComplianceParams:
+                            ccwSlope = trame[4];
+                            ccwMargin = trame[5];
+                            cwSlope = trame[6];
+                            cwMargin = trame[7];
                             break;
-                        case (byte)TrameFactory.FonctionReglageServo.GetTemperature:
-
-                            int nouvelleTemp = trame[4] * 256 + trame[5];
-                            if (temperature != nouvelleTemp)
-                            {
-                                TemperatureChange(nouvelleTemp);
-                                temperature = nouvelleTemp;
-                            }
+                        case (byte)TrameFactory.FonctionServo.RetourConfigAlarmeLED:
+                            alarmeLEDInputVoltage = (trame[4] == 1 ? true : false);
+                            alarmeLEDAngleLimit = (trame[5] == 1 ? true : false);
+                            alarmeLEDOverheating = (trame[6] == 1 ? true : false);
+                            alarmeLEDRange = (trame[7] == 1 ? true : false);
+                            alarmeLEDChecksum = (trame[8] == 1 ? true : false);
+                            alarmeLEDOverload = (trame[9] == 1 ? true : false);
+                            alarmeLEDInstruction = (trame[10] == 1 ? true : false);
                             break;
-
-                        case (byte)TrameFactory.FonctionReglageServo.GetTension:
-                            
-                            double nouvelleTension = (trame[4] * 256 + trame[5]) / 10.0;
-                            if (tension != nouvelleTension)
-                            {
-                                TensionChange(nouvelleTension);
-                                tension = nouvelleTension;
-                            }
+                        case (byte)TrameFactory.FonctionServo.RetourConfigAlarmeShutdown:
+                            alarmeShutdownInputVoltage = (trame[4] == 1 ? true : false);
+                            alarmeShutdownAngleLimit = (trame[5] == 1 ? true : false);
+                            alarmeShutdownOverheating = (trame[6] == 1 ? true : false);
+                            alarmeShutdownRange = (trame[7] == 1 ? true : false);
+                            alarmeShutdownChecksum = (trame[8] == 1 ? true : false);
+                            alarmeShutdownOverload = (trame[9] == 1 ? true : false);
+                            alarmeShutdownInstruction = (trame[10] == 1 ? true : false);
                             break;
-
-                        case (byte)TrameFactory.FonctionReglageServo.GetVitesse:
+                        case (byte)TrameFactory.FonctionServo.RetourConfigEcho:
+                            // TODO
                             break;
-                        case (byte)TrameFactory.FonctionReglageServo.RechercheAuto:
-
-                            if (recherche)
-                            {
-                                id = trame[3];
-                                baudrate = 2000000 / (trame[4] + 1);
-
-                                RechercheAutoFinie(id, baudrate);
-                            }
+                        case (byte)TrameFactory.FonctionServo.RetourCoupleActive:
+                            coupleActive = (trame[4] == 1 ? true : false);
                             break;
-
-                        case (byte)TrameFactory.FonctionReglageServo.TestConnexion:
+                        case (byte)TrameFactory.FonctionServo.RetourCoupleMaximum:
+                            coupleMaximum = trame[4] * 256 + trame[5];
+                            break;
+                        case (byte)TrameFactory.FonctionServo.RetourId:
+                            id = trame[4];
+                            break;
+                        case (byte)TrameFactory.FonctionServo.RetourLed:
+                            ledAllumee = (trame[4] == 1 ? true : false);
+                            break;
+                        case (byte)TrameFactory.FonctionServo.RetourMouvement:
+                            enMouvement = (trame[4] == 1 ? true : false);
+                            break;
+                        case (byte)TrameFactory.FonctionServo.RetourNumeroModele:
+                            modele = trame[4] * 256 + trame[5];
+                            break;
+                        case (byte)TrameFactory.FonctionServo.RetourPositionActuelle:
+                            positionActuelle = trame[4] * 256 + trame[5];
+                            break;
+                        case (byte)TrameFactory.FonctionServo.RetourPositionCible:
+                            positionCible = trame[4] * 256 + trame[5];
+                            break;
+                        case (byte)TrameFactory.FonctionServo.RetourPositionMaximum:
+                            positionMax = trame[4] * 256 + trame[5];
+                            break;
+                        case (byte)TrameFactory.FonctionServo.RetourPositionMinimum:
+                            positionMin = trame[4] * 256 + trame[5];
+                            break;
+                        case (byte)TrameFactory.FonctionServo.RetourTemperature:
+                            temperature = trame[4];
+                            break;
+                        case (byte)TrameFactory.FonctionServo.RetourTension:
+                            tension = trame[4] / 10.0;
+                            break;
+                        case (byte)TrameFactory.FonctionServo.RetourVersionFirmware:
+                            firmware = trame[4];
+                            break;
+                        case (byte)TrameFactory.FonctionServo.RetourVitesseActuelle:
+                            vitesseActuelle = trame[4] * 256 + trame[5];
+                            break;
+                        case (byte)TrameFactory.FonctionServo.RetourVitesseMax:
+                            vitesseMax = trame[4] *256 + trame[5];
                             break;
                     }
                 }
             }
-        }
-
-        public int ID
-        {
-            get
-            {
-                return id;
-            }
-            set
-            {
-                id = value;
-            }
-        }
-
-        public void ChangerID(int nouvelID)
-        {
-            /*Trame t = TrameFactory.ServoSetId(carte, id, BaudrateToValue(baudrate), nouvelID);
-            connexionUdp.SendMessage(t);
-            id = nouvelID;*/
-        }
-
-        public double Baudrate
-        {
-            get
-            {
-                return baudrate;
-            }
-            set
-            {
-                baudrate = value;
-            }
-        }
-
-        public void ChangerBaudrate(int nouveauBaudrate)
-        {
-            /*Trame t = TrameFactory.ServoSetBaudrate(carte, id, BaudrateToValue(baudrate), BaudrateToValue(nouveauBaudrate));
-            connexionUdp.SendMessage(t);
-            baudrate = nouveauBaudrate;*/
-        }
-
-        public void TestConnexion()
-        {
-            /*Trame t = TrameFactory.ServoTestConnexion(carte, id, BaudrateToValue(baudrate));
-            connexionUdp. SendMessage(t);*/
-        }
-
-        public void DemandeTemperature()
-        {
-            /*Trame t = TrameFactory.ServoGetTemperature(carte, id, BaudrateToValue(baudrate));
-            connexionUdp.SendMessage(t);*/
-        }
-
-        public void DemandeCouple()
-        {
-            /*Trame t = TrameFactory.ServoGetCouple(carte, id, BaudrateToValue(baudrate));
-            connexionUdp.SendMessage(t);*/
-        }
-
-        public void DemandeTension()
-        {
-            /*Trame t = TrameFactory.ServoGetTension(carte, id, BaudrateToValue(baudrate));
-            connexionUdp.SendMessage(t);*/
-        }
-
-        public void DemandePosition()
-        {
-            /*Trame t = TrameFactory.ServoGetPosition(carte, id, BaudrateToValue(baudrate));
-            connexionUdp.SendMessage(t);*/
-        }
-
-        public void SetPosition(int position)
-        {
-            /*Trame t = TrameFactory.ServoSetPosition(carte, id, BaudrateToValue(baudrate), position);
-            connexionUdp.SendMessage(t);*/
-        }
-
-        public void DemandeVitesse()
-        {
-            /*Trame t = TrameFactory.ServoGetVitesse(carte, id, BaudrateToValue(baudrate));
-            connexionUdp.SendMessage(t);*/
-        }
-
-        public void SetVitesse(int vitesse)
-        {
-            /*Trame t = TrameFactory.ServoSetVitesse(carte, id, BaudrateToValue(baudrate), vitesse);
-            connexionUdp.SendMessage(t);*/
-        }
-
-        public void SetLed(bool allume)
-        {
-            /*Trame t = TrameFactory.ServoSetLed(carte, id, BaudrateToValue(baudrate), allume);
-            connexionUdp.SendMessage(t);*/
-        }
-
-        public void SetPositionMin(int position)
-        {
-            /*Trame t = TrameFactory.ServoSetPositionMin(carte, id, BaudrateToValue(baudrate), position);
-            connexionUdp.SendMessage(t);*/
-        }
-
-        public void SetPositionMax(int position)
-        {
-            /*Trame t = TrameFactory.ServoSetPositionMax(carte, id, BaudrateToValue(baudrate), position);
-            connexionUdp.SendMessage(t);*/
-        }
-
-        public void RechercheAuto()
-        {
-            /*recherche = true;
-            Trame t = TrameFactory.ServoRechercheAuto(carte);
-            connexionUdp.SendMessage(t);*/
-        }
-
-        public void Reset()
-        {
-            /*Trame t = TrameFactory.ServoReset(carte, id);
-            connexionUdp.SendMessage(t);*/
-        }
-
-        public void Surveiller()
-        {
-            //todo
         }
 
         private double ValueToBaudrate(int value)

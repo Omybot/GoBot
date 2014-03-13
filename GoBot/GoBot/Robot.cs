@@ -96,6 +96,8 @@ namespace GoBot
             }
         }
 
+        public abstract void ServoVitesse(ServomoteurID servo, int vitesse);
+
         public virtual void TourneMoteur(MoteurID moteur, int vitesse)
         {
             if (MoteurTourne.ContainsKey(moteur))

@@ -304,6 +304,10 @@ namespace GoBot
             Historique.AjouterAction(new ActionServo(this, position, servo));
         }
 
+        public override void ServoVitesse(ServomoteurID servo, int vitesse)
+        {
+        }
+
         public override void EnvoyerPID(int p, int i, int d)
         {
             // TODO
