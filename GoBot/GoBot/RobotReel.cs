@@ -181,12 +181,6 @@ namespace GoBot
                         retourTestCharge[2].Add(chargePWMGauche);
                     }
                 }
-
-                if(trameRecue[1] == (byte)TrameFactory.FonctionMove.ReponseChargeCPU)
-                {
-                    chargeCPU = (trameRecue[2] * 256 + trameRecue[3]) / 5000.0;
-                    semChargeCPU.Release();
-                }
             }
         }
 
@@ -332,7 +326,7 @@ namespace GoBot
         public override void BougeServo(ServomoteurID servo, int position)
         {
             base.BougeServo(servo, position);
-            Trame trame = TrameFactory.ServoPosition(servo, position);
+            Trame trame = TrameFactory.ServoEnvoiPositionCible(servo, position);
             Connexion.SendMessage(trame);
             Historique.AjouterAction(new ActionServo(this, position, servo));
         }
@@ -445,16 +439,6 @@ namespace GoBot
         {
             Connexion.SendMessage(TrameFactory.ResetRecMove());
             Thread.Sleep(1500);
-        }
-
-        private Semaphore semChargeCPU;
-        private double chargeCPU;
-        public override double ChargeCPU()
-        {
-            semChargeCPU = new Semaphore(0, 1);
-            Connexion.SendMessage(TrameFactory.DemandeChargeCPU());
-            semChargeCPU.WaitOne();
-            return chargeCPU;
         }
 
         private Semaphore semJack;

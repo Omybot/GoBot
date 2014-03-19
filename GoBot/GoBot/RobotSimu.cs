@@ -377,11 +377,5 @@ namespace GoBot
             return null;
             // TODO
         }
-
-        public override double ChargeCPU()
-        {
-            return 0;
-            // TODO
-        }
     }
 }

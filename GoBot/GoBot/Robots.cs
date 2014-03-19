@@ -87,5 +87,16 @@ namespace GoBot
 
             CreerRobots();
         }
+
+        public static void Delete()
+        {
+            if (!Simulation)
+            {
+                if (GrosRobot != null)
+                    ((RobotReel)GrosRobot).Delete();
+                if (PetitRobot != null)
+                    ((RobotReel)PetitRobot).Delete();
+            }
+        }
     }
 }

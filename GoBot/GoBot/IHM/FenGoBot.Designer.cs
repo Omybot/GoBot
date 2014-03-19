@@ -49,6 +49,7 @@ namespace GoBot
             this.lblSimulation = new System.Windows.Forms.Label();
             this.switchBoutonSimu = new Composants.SwitchBouton();
             this.btnClose = new System.Windows.Forms.Button();
+            this.btnFenetre = new System.Windows.Forms.Button();
             this.panelGrosRobot = new GoBot.IHM.PanelGrosRobot();
             this.panelPetitRobot = new GoBot.IHM.PanelPetitRobot();
             this.panelMatch = new GoBot.IHM.PanelMatch();
@@ -307,6 +308,17 @@ namespace GoBot
             this.btnClose.UseVisualStyleBackColor = true;
             this.btnClose.Click += new System.EventHandler(this.btnClose_Click);
             // 
+            // btnFenetre
+            // 
+            this.btnFenetre.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnFenetre.Image = global::GoBot.Properties.Resources.Fenetre;
+            this.btnFenetre.Location = new System.Drawing.Point(1262, 0);
+            this.btnFenetre.Name = "btnFenetre";
+            this.btnFenetre.Size = new System.Drawing.Size(20, 20);
+            this.btnFenetre.TabIndex = 75;
+            this.btnFenetre.UseVisualStyleBackColor = true;
+            this.btnFenetre.Click += new System.EventHandler(this.button1_Click);
+            // 
             // panelGrosRobot
             // 
             this.panelGrosRobot.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
@@ -481,6 +493,7 @@ namespace GoBot
             this.Controls.Add(this.switchBoutonSimu);
             this.Controls.Add(this.lblSimulation);
             this.Controls.Add(this.btnClose);
+            this.Controls.Add(this.btnFenetre);
             this.Controls.Add(this.tabControl);
             this.Controls.Add(this.panelConnexions);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
@@ -551,6 +564,7 @@ namespace GoBot
         private PanelLogsEvents panelLogsEvents;
         private System.Windows.Forms.TabPage tabConnexions;
         private PanelEnvoiUdp panelEnvoiUdp1;
+        private System.Windows.Forms.Button btnFenetre;
     }
 }
 

@@ -19,6 +19,7 @@ namespace GoBot.Communications
             b19200 = 103,
             b9600 = 207
         }
+
         public enum FonctionMove
         {
             Deplace = 0x01,
@@ -61,8 +62,6 @@ namespace GoBot.Communications
             Reset = 0xF1,
             DemandeJack = 0xF3,
             ReponseJack = 0xF4,
-            DemandeChargeCPU = 0xF5,
-            ReponseChargeCPU = 0xF6,
 
             TestEmission = 0xD4,
             TestEmissionReussi = 0xD5,
@@ -125,7 +124,9 @@ namespace GoBot.Communications
             DemandePositionActuelle = 0x54,
             RetourPositionActuelle = 0x55,
             DemandeVitesseActuelle = 0x56,
-            RetourVitesseActuelle = 0x57
+            RetourVitesseActuelle = 0x57,
+            DemandeErreurs = 0x58,
+            RetourErreurs = 0x59
         }
 
         public enum FonctionMiwi
@@ -155,25 +156,6 @@ namespace GoBot.Communications
             Reset = 0xF2
         }*/
 
-        public enum FonctionReglageServo
-        {
-            TestConnexion = 0x00,
-            GetTemperature = 0x10,
-            GetCouple = 0x11,
-            GetTension = 0x12,
-            GetPosition = 0x14,
-            GetVitesse = 0x15,
-            SetPosition = 0x24,
-            SetVitesse = 0x25,
-            SetLed = 0x26,
-            SetID = 0x27,
-            SetBaudrate = 0x28,
-            SetPositionMin = 0x29,
-            SetPositionMax = 0x2A,
-            SurveillerServo = 0x40,
-            RechercheAuto = 0x42,
-            Reset = 0x44
-        }
 
         public enum FonctionBalise
         {
@@ -366,19 +348,7 @@ namespace GoBot.Communications
             // 0x67 pour communication à 19200 bauds
             return ServoSetPosition(Carte.RecIo, (int)servo, 0x67, position);
         }*/
-
-        static public Trame ServoPosition(ServomoteurID servo, int position)
-        {
-            byte[] tab = new byte[5];
-            tab[0] = (byte)Carte.RecMove;
-            tab[1] = (byte)FonctionMove.CommandeServo;
-            tab[2] = (byte)servo;
-            tab[3] = (byte)ByteDivide(position, true);
-            tab[4] = (byte)ByteDivide(position, false);
-
-            return new Trame(tab);
-        }
-
+        
         static public Trame TestConnexionMove()
         {
             byte[] tab = new byte[2];
@@ -410,14 +380,6 @@ namespace GoBot.Communications
             byte[] tab = new byte[2];
             tab[0] = (byte)Carte.RecMove;
             tab[1] = (byte)FonctionMove.DemandeCouleurEquipe;
-            return new Trame(tab);
-        }
-
-        static public Trame DemandeChargeCPU()
-        {
-            byte[] tab = new byte[2];
-            tab[0] = (byte)Carte.RecMove;
-            tab[1] = (byte)FonctionMove.DemandeChargeCPU;
             return new Trame(tab);
         }
 
@@ -560,6 +522,16 @@ namespace GoBot.Communications
         }
 
         #region Servomoteur
+
+        static public Trame ServoDemandeErreurs(ServomoteurID servo, Carte carte = Carte.RecMove)
+        {
+            byte[] tab = new byte[4];
+            tab[0] = (byte)carte;
+            tab[1] = (byte)FonctionMove.CommandeServo;
+            tab[2] = (byte)FonctionServo.DemandeErreurs;
+            tab[3] = (byte)servo;
+            return new Trame(tab);
+        }
 
         static public Trame ServoDemandePositionCible(ServomoteurID servo, Carte carte = Carte.RecMove)
         {
@@ -1072,7 +1044,7 @@ namespace GoBot.Communications
                                         message = "Demande numéro modèle servo " + GoBot.Actions.Nommeur.Nommer((ServomoteurID)trame[3]);
                                         break;
                                     case FonctionServo.DemandePositionActuelle:
-                                        message = "Demand eposition actuelle sero " + GoBot.Actions.Nommeur.Nommer((ServomoteurID)trame[3]);
+                                        message = "Demand eposition actuelle servo " + GoBot.Actions.Nommeur.Nommer((ServomoteurID)trame[3]);
                                         break;
                                     case FonctionServo.DemandePositionCible:
                                         message = "Demande position cible servo " + GoBot.Actions.Nommeur.Nommer((ServomoteurID)trame[3]);
@@ -1199,6 +1171,32 @@ namespace GoBot.Communications
                                         break;
                                     case FonctionServo.RetourVitesseMax:
                                         message = "Retour servo " + GoBot.Actions.Nommeur.Nommer((ServomoteurID)trame[3]) + " vitesse maximum : " + (trame[4] * 256 + trame[5]) + " (" + ((double)(trame[4] * 256 + trame[5]) * 0.111) + "rpm)";
+                                        break;
+                                    case FonctionServo.DemandeErreurs:
+                                        message = "Demande erreurs servo " + GoBot.Actions.Nommeur.Nommer((ServomoteurID)trame[3]);
+                                        break;
+                                    case FonctionServo.RetourErreurs:
+                                        String listeErreurs = "";
+                                        message = "Retour servo " + GoBot.Actions.Nommeur.Nommer((ServomoteurID)trame[3]) + " erreurs : ";
+                                        if (trame[4] > 0)
+                                            listeErreurs += "AngleLimit, ";
+                                        if (trame[5] > 0)
+                                            listeErreurs += "Checksum, ";
+                                        if (trame[6] > 0)
+                                            listeErreurs += "InputVoltage, ";
+                                        if (trame[7] > 0)
+                                            listeErreurs += "Instruction, ";
+                                        if (trame[8] > 0)
+                                            listeErreurs += "Overheating, ";
+                                        if (trame[9] > 0)
+                                            listeErreurs += "Overload, ";
+                                        if (trame[10] > 0)
+                                            listeErreurs += "Range, ";
+
+                                        if(listeErreurs.Length == 0)
+                                            message += "Aucune";
+                                        else
+                                            message += listeErreurs.Substring(0, listeErreurs.Length - 2);
                                         break;
                                 }
                                 break;

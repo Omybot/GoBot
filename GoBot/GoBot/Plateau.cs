@@ -196,9 +196,9 @@ namespace GoBot
         private Semaphore SemaphoreCollisions { get; set; }
         private void ThreadTestCollisions()
         {
-            while (true)
+            while (!Config.Shutdown)
             {
-                SemaphoreCollisions.WaitOne();
+                while (!SemaphoreCollisions.WaitOne(1000) && !Config.Shutdown) ;
                 Robots.PetitRobot.ObstacleTest();
                 Robots.GrosRobot.ObstacleTest();
             }

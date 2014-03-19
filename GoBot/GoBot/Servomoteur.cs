@@ -327,7 +327,49 @@ namespace GoBot
         {
             get { return vitesseMax; }
         }
-        
+
+        private bool erreurInputVoltage;
+        public bool ErreurInputVoltage
+        {
+            get { return erreurInputVoltage; }
+        }
+
+        private bool erreurAngleLimit;
+        public bool ErreurAngleLimit
+        {
+            get { return erreurAngleLimit; }
+        }
+
+        private bool erreurOverheating;
+        public bool ErreurOverheating
+        {
+            get { return erreurOverheating; }
+        }
+
+        private bool erreurRange;
+        public bool ErreurRange
+        {
+            get { return erreurRange; }
+        }
+
+        private bool erreurChecksum;
+        public bool ErreurChecksum
+        {
+            get { return erreurChecksum; }
+        }
+
+        private bool erreurOverload;
+        public bool ErreurOverload
+        {
+            get { return erreurOverload; }
+        }
+
+        private bool erreurInstruction;
+        public bool ErreurInstruction
+        {
+            get { return erreurInstruction; }
+        }
+
         public Servomoteur(Carte carte, int id, int baudrate)
         {
             this.carte = carte;
@@ -364,6 +406,7 @@ namespace GoBot
             connexionUdp.SendMessage(TrameFactory.ServoDemandeVersionFirmware((ServomoteurID)id));
             connexionUdp.SendMessage(TrameFactory.ServoDemandeVitesseActuelle((ServomoteurID)id));
             connexionUdp.SendMessage(TrameFactory.ServoDemandeVitesseMax((ServomoteurID)id));
+            connexionUdp.SendMessage(TrameFactory.ServoDemandeErreurs((ServomoteurID)id));
         }
 
         void connexion_NouvelleTrame(Trame trame)
@@ -451,6 +494,15 @@ namespace GoBot
                             break;
                         case (byte)TrameFactory.FonctionServo.RetourVitesseMax:
                             vitesseMax = trame[4] *256 + trame[5];
+                            break;
+                        case (byte)TrameFactory.FonctionServo.RetourErreurs:
+                            erreurAngleLimit = (trame[4] == 1 ? true : false);
+                            erreurChecksum = (trame[5] == 1 ? true : false);
+                            erreurInputVoltage = (trame[6] == 1 ? true : false);
+                            erreurInstruction = (trame[7] == 1 ? true : false);
+                            erreurOverheating = (trame[8] == 1 ? true : false);
+                            erreurOverload = (trame[9] == 1 ? true : false);
+                            erreurRange = (trame[10] == 1 ? true : false);
                             break;
                     }
                 }

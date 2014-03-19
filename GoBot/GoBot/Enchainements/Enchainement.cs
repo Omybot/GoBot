@@ -95,5 +95,11 @@ namespace GoBot.Enchainements
         protected abstract void ThreadGros();
 
         protected abstract void ThreadPetit();
+
+        public void Stop()
+        {
+            thGrosRobot.Abort();
+            thPetitRobot.Abort();
+        }
     }
 }

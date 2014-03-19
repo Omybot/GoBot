@@ -13,6 +13,7 @@ namespace GoBot.IHM
     {
         public Fenetre(Control control)
         {
+            Control = control;
             Controls.Add(control);
             control.SetBounds(0, 0, control.Width, control.Height);
             InitializeComponent();
@@ -20,13 +21,10 @@ namespace GoBot.IHM
             this.Height = control.Height + 30;
         }
 
-        public Panel Panel
+        public Control Control
         {
-            set
-            {
-                Controls.Clear();
-                Controls.Add(value);
-            }
+            get;
+            private set;
         }
     }
 }

@@ -68,6 +68,11 @@ namespace GoBot
                 Plateau.Balise3.ConnexionCheck.Start();
 
                 switchBoutonSimu.SetActif(Robots.Simulation);
+
+                tabPrecedent = new Dictionary<TabPage, TabPage>();
+                tabPrecedent.Add(tabControl.TabPages[0], null);
+                for(int i = 1; i < tabControl.Controls.Count; i++)
+                    tabPrecedent.Add(tabControl.TabPages[i], (tabControl.TabPages[i - 1]));
             }
         }
 
@@ -104,16 +109,30 @@ namespace GoBot
 
             Config.Save();
             SauverLogs();
+
+            Robots.Delete();
+            Config.Shutdown = true;
+
+            if(Plateau.Enchainement != null)
+                Plateau.Enchainement.Stop();
         }
 
         private void SauverLogs()
         {
-            Connexions.ConnexionMiwi.Sauvegarde.Sauvegarder("./Logs/ConnexionMiwi.tlog");
-            Connexions.ConnexionMove.Sauvegarde.Sauvegarder("./Logs/ConnexionMove.tlog");
-            Connexions.ConnexionPi.Sauvegarde.Sauvegarder("./Logs/ConnexionPi.tlog");
+            Connexions.ConnexionMiwi.Sauvegarde.Sauvegarder("./Logs/Current/ConnexionMiwi.tlog");
+            Connexions.ConnexionMove.Sauvegarde.Sauvegarder("./Logs/Current/ConnexionMove.tlog");
+            Connexions.ConnexionPi.Sauvegarde.Sauvegarder("./Logs/Current/ConnexionPi.tlog");
 
-            Robots.GrosRobot.Historique.Sauvegarder("./Logs/ActionsGros.elog");
-            Robots.PetitRobot.Historique.Sauvegarder("./Logs/ActionsPetit.elog");
+            Robots.GrosRobot.Historique.Sauvegarder("./Logs/Current/ActionsGros.elog");
+            Robots.PetitRobot.Historique.Sauvegarder("./Logs/Current/ActionsPetit.elog");
+
+
+            Connexions.ConnexionMiwi.Sauvegarde.Sauvegarder("./Logs/"  + Config.DateLancementString + "/ConnexionMiwi.tlog");
+            Connexions.ConnexionMove.Sauvegarde.Sauvegarder("./Logs/" + Config.DateLancementString + "/ConnexionMove.tlog");
+            Connexions.ConnexionPi.Sauvegarde.Sauvegarder("./Logs/" + Config.DateLancementString + "/ConnexionPi.tlog");
+
+            Robots.GrosRobot.Historique.Sauvegarder("./Logs/" + Config.DateLancementString + "/ActionsGros.elog");
+            Robots.PetitRobot.Historique.Sauvegarder("./Logs/" + Config.DateLancementString + "/ActionsPetit.elog");
         }
 
         private void btnClose_Click(object sender, EventArgs e)
@@ -126,14 +145,12 @@ namespace GoBot
         {
             try
             {
-                if (Directory.Exists("./Logs"))
-                {
-                    if (Directory.Exists("./LogsPrec"))
-                        Directory.Delete("./LogsPrec", true);
-                    Directory.Move("./Logs", "./LogsPrec");
-                }
+                if (Directory.Exists("./Logs/Current/"))
+                    Directory.Delete("./Logs/Current/", true);
 
-                Directory.CreateDirectory("./Logs");
+                Directory.CreateDirectory("./Logs/Current/");
+
+                Directory.CreateDirectory("./Logs/" + Config.DateLancementString);
             }
             catch(Exception)
             {
@@ -157,6 +174,50 @@ namespace GoBot
             panel.Robot = Robots.GrosRobot;
             Fenetre fen = new Fenetre(panel);
             fen.Show();
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            TabControl tab = new TabControl();
+            tab.Height = tabControl.Height;
+            tab.Width = tabControl.Width;
+            tab.TabPages.Add(tabControl.SelectedTab);
+            Fenetre fen = new Fenetre(tab);
+            fen.Show();
+            fen.FormClosing += fen_FormClosing;
+        }
+
+        private Dictionary<TabPage, TabPage> tabPrecedent;
+
+        void fen_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            Fenetre fen = (Fenetre)sender;
+            TabControl tab = (TabControl)fen.Control;
+            TabPage page = tab.TabPages[0];
+
+            TabPage tabPrec = tabPrecedent[page];
+            bool trouve = false;
+            if(tabPrec == null)
+                tabControl.TabPages.Insert(0, page);
+            else
+            {
+                while(!trouve && tabPrec != null)
+                {
+                    for(int i = 0; i < tabControl.TabPages.Count; i++)
+                        if(tabControl.TabPages[i] == tabPrec)
+                        {
+                            trouve = true;
+                            tabControl.TabPages.Insert(i + 1, page);
+                            break;
+                        }
+
+                    if (!trouve)
+                        tabPrec = tabPrecedent[tabPrec];
+
+                    if (tabPrec == null)
+                        tabControl.TabPages.Insert(0, page);
+                }
+            }
         }
     }
 }

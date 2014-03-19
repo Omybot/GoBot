@@ -20,6 +20,11 @@ namespace GoBot
         /// </summary>
         public static bool DesignMode { get { return designMode; } set { designMode = value; } }
         private static bool designMode = true;
+        public static bool Shutdown { get { return shutdown; } set { shutdown = value; } }
+        private static bool shutdown = false;
+
+        public static DateTime DateLancement { get; set; }
+        public static String DateLancementString { get { return Config.DateLancement.Year.ToString("0000") + "." + Config.DateLancement.Month.ToString("00") + "." + Config.DateLancement.Day.ToString("00") + " " + Config.DateLancement.Hour.ToString("00") + "h" + Config.DateLancement.Minute.ToString("00") + "m" + Config.DateLancement.Second.ToString("00") + "s"; } }
 
         private static Config config = null;
 

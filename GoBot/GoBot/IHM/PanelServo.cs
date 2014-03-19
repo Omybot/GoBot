@@ -21,6 +21,16 @@ namespace GoBot.IHM
             InitializeComponent();
 
             servo = null;
+
+            ledErreurAngleLimit.CouleurGris();
+            ledErreurChecksum.CouleurGris();
+            ledErreurInputVoltage.CouleurGris();
+            ledErreurInstruction.CouleurGris();
+            ledErreurOverheating.CouleurGris();
+            ledErreurOverload.CouleurGris();
+            ledErreurRange.CouleurGris();
+            ledLed.CouleurGris();
+            ledMouvement.CouleurGris();
         }
 
         private void btnRefresh_Click(object sender, EventArgs e)
@@ -94,6 +104,41 @@ namespace GoBot.IHM
             boxShutdownOverheating.Checked = servo.AlarmeShutdownOverheating;
             boxShutdownOverload.Checked = servo.AlarmeShutdownOverload;
             boxShutdownRange.Checked = servo.AlarmeShutdownRange;
+
+            if (servo.ErreurAngleLimit)
+                ledErreurAngleLimit.CouleurRouge();
+            else
+                ledErreurAngleLimit.CouleurGris();
+
+            if (servo.ErreurChecksum)
+                ledErreurChecksum.CouleurRouge();
+            else
+                ledErreurChecksum.CouleurGris();
+
+            if (servo.ErreurInputVoltage)
+                ledErreurInputVoltage.CouleurRouge();
+            else
+                ledErreurInputVoltage.CouleurGris();
+
+            if (servo.ErreurInstruction)
+                ledErreurInstruction.CouleurRouge();
+            else
+                ledErreurInstruction.CouleurGris();
+
+            if (servo.ErreurOverheating)
+                ledErreurOverheating.CouleurRouge();
+            else
+                ledErreurOverheating.CouleurGris();
+
+            if (servo.ErreurOverload)
+                ledErreurOverload.CouleurRouge();
+            else
+                ledErreurOverload.CouleurGris();
+
+            if (servo.ErreurRange)
+                ledErreurRange.CouleurRouge();
+            else
+                ledErreurRange.CouleurGris();
 
             MajIHM = false;
         }
@@ -235,6 +280,19 @@ namespace GoBot.IHM
         {
             servo.DemandeActualisation();
             Actualisation();
+        }
+
+        private void switchSurveillance_ChangementEtat(object sender, EventArgs e)
+        {
+            if (switchSurveillance.Actif)
+            {
+                timer = new System.Windows.Forms.Timer();
+                timer.Interval = (int)numIntervalle.Value;
+                timer.Tick += new EventHandler(timer_Tick);
+                timer.Start();
+            }
+            else
+                timer.Stop();
         }
     }
 }

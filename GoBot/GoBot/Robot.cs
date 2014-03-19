@@ -54,7 +54,6 @@ namespace GoBot
         public abstract void EnvoyerPID(int p, int i, int d);
         public abstract List<int>[] MesureTestPid(int consigne, SensAR sens, int nbValeurs);
         public abstract List<double>[] DiagnosticCpuPwm(int nbValeurs);
-        public abstract double ChargeCPU();
 
         public abstract void ActionneurOnOff(ActionneurOnOffID actionneur, bool on);
 

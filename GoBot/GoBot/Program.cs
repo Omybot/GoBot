@@ -16,6 +16,7 @@ namespace GoBot
         static void Main()
         {
             Config.DesignMode = false;
+            Config.DateLancement = DateTime.Now;
 
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
