@@ -60,7 +60,7 @@ namespace GoBot
             this.panelTable = new GoBot.IHM.PanelTable();
             this.panelCamera = new GoBot.IHM.PanelCamera();
             this.panelReglageAsserv = new GoBot.IHM.PanelReglageAsserv();
-            this.panelLogs1 = new GoBot.IHM.PanelLogsTrames();
+            this.panelLogTrames = new GoBot.IHM.PanelLogsTrames();
             this.panelLogsEvents = new GoBot.IHM.PanelLogsEvents();
             this.panelDiagnosticBalise3 = new GoBot.IHM.PanelDiagnosticBalise();
             this.panelDiagnosticBalise2 = new GoBot.IHM.PanelDiagnosticBalise();
@@ -211,7 +211,7 @@ namespace GoBot
             // 
             // tabLogsUdp
             // 
-            this.tabLogsUdp.Controls.Add(this.panelLogs1);
+            this.tabLogsUdp.Controls.Add(this.panelLogTrames);
             this.tabLogsUdp.Location = new System.Drawing.Point(4, 22);
             this.tabLogsUdp.Name = "tabLogsUdp";
             this.tabLogsUdp.Padding = new System.Windows.Forms.Padding(3);
@@ -410,12 +410,12 @@ namespace GoBot
             // 
             // panelLogs1
             // 
-            this.panelLogs1.BackColor = System.Drawing.Color.Transparent;
-            this.panelLogs1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panelLogs1.Location = new System.Drawing.Point(3, 3);
-            this.panelLogs1.Name = "panelLogs1";
-            this.panelLogs1.Size = new System.Drawing.Size(1294, 706);
-            this.panelLogs1.TabIndex = 0;
+            this.panelLogTrames.BackColor = System.Drawing.Color.Transparent;
+            this.panelLogTrames.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.panelLogTrames.Location = new System.Drawing.Point(3, 3);
+            this.panelLogTrames.Name = "panelLogs1";
+            this.panelLogTrames.Size = new System.Drawing.Size(1294, 706);
+            this.panelLogTrames.TabIndex = 0;
             // 
             // panelLogsEvents
             // 
@@ -553,7 +553,7 @@ namespace GoBot
         private PanelDiagnosticBalise panelDiagnosticBalise2;
         private PanelDiagnosticBalise panelDiagnosticBalise1;
         private System.Windows.Forms.TabPage tabLogsUdp;
-        private PanelLogsTrames panelLogs1;
+        private PanelLogsTrames panelLogTrames;
         private System.Windows.Forms.TabPage tabLogsEvent;
         private PanelConnexions panelConnexions;
         private PanelMatch panelMatch;

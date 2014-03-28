@@ -786,9 +786,9 @@ namespace GoBot.Communications
             return new Trame(tab);
         }
 
-        static public Trame ServoEnvoiConfigAlarmeLED(ServomoteurID servo, bool inputVoltage, bool angleLimit, bool overheating, bool range, bool checksum, bool overload, Carte carte = Carte.RecMove)
+        static public Trame ServoEnvoiConfigAlarmeLED(ServomoteurID servo, bool inputVoltage, bool angleLimit, bool overheating, bool range, bool checksum, bool overload, bool instruction, Carte carte = Carte.RecMove)
         {
-            byte[] tab = new byte[10];
+            byte[] tab = new byte[11];
             tab[0] = (byte)carte;
             tab[1] = (byte)FonctionMove.CommandeServo;
             tab[2] = (byte)FonctionServo.EnvoiConfigAlarmeLED;
@@ -799,6 +799,7 @@ namespace GoBot.Communications
             tab[7] = (byte)(range ? 1 : 0);
             tab[8] = (byte)(checksum ? 1 : 0);
             tab[9] = (byte)(overload ? 1 : 0);
+            tab[10] = (byte)(instruction ? 1 : 0);
             return new Trame(tab);
         }
 
@@ -812,9 +813,9 @@ namespace GoBot.Communications
             return new Trame(tab);
         }
 
-        static public Trame ServoEnvoiConfigAlarmeShutdown(ServomoteurID servo, bool inputVoltage, bool angleLimit, bool overheating, bool range, bool checksum, bool overload, Carte carte = Carte.RecMove)
+        static public Trame ServoEnvoiConfigAlarmeShutdown(ServomoteurID servo, bool inputVoltage, bool angleLimit, bool overheating, bool range, bool checksum, bool overload, bool instruction, Carte carte = Carte.RecMove)
         {
-            byte[] tab = new byte[10];
+            byte[] tab = new byte[11];
             tab[0] = (byte)carte;
             tab[1] = (byte)FonctionMove.CommandeServo;
             tab[2] = (byte)FonctionServo.EnvoiConfigAlarmeShutdown;
@@ -825,6 +826,7 @@ namespace GoBot.Communications
             tab[7] = (byte)(range ? 1 : 0);
             tab[8] = (byte)(checksum ? 1 : 0);
             tab[9] = (byte)(overload ? 1 : 0);
+            tab[10] = (byte)(instruction ? 1 : 0);
             return new Trame(tab);
         }
 

@@ -113,6 +113,9 @@ namespace Composants
 
         private void BetterTextBox_KeyPress(object sender, KeyPressEventArgs e)
         {
+            if (TextMode == TextModeEnum.Text)
+                return;
+
             // Si la caractère tapé est numérique
             if (char.IsNumber(e.KeyChar))
                 if (e.KeyChar == '²')
@@ -123,7 +126,6 @@ namespace Composants
             // Si le caractère tapé est un caractère de "controle" (Enter, backspace, ...), on laisse passer
             else if (char.IsControl(e.KeyChar) || (e.KeyChar == '.' && this.TextMode != TextModeEnum.Numeric))
                 e.Handled = false;
-
             else
                 e.Handled = true; 
         }

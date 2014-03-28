@@ -70,6 +70,7 @@ namespace GoBot.IHM
             {
                 checkedListBoxRobots.Items.Add(robot.ToString(), true);
             }
+            Replay = new EventsReplay();
         }
 
         private void btnCharger_Click(object sender, EventArgs e)
@@ -79,7 +80,6 @@ namespace GoBot.IHM
             open.Multiselect = true;
             if (open.ShowDialog() == DialogResult.OK)
             {
-                Replay = new EventsReplay();
 
                 foreach(String fichier in open.FileNames)
                 {
@@ -90,7 +90,7 @@ namespace GoBot.IHM
             }
         }
 
-        private void ChargerLog(String fichier)
+        public void ChargerLog(String fichier)
         {
             EventsReplay replayTemp = new EventsReplay();
             replayTemp.Charger(fichier);
@@ -99,7 +99,7 @@ namespace GoBot.IHM
                 Replay.Events.Add(t);
         }
 
-        private void Afficher()
+        public void Afficher()
         {
             try
             {

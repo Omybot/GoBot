@@ -294,5 +294,35 @@ namespace GoBot.IHM
             else
                 timer.Stop();
         }
+
+        private void trackBarPosition_ValueChanged(object sender, EventArgs e)
+        {
+            lblPosition.Text = trackBarPosition.Value.ToString();
+        }
+
+        private void trackBarVitesse_ValueChanged(object sender, EventArgs e)
+        {
+            lblVitesse.Text = trackBarVitesse.Value.ToString();
+        }
+
+        private void trackBarPosition_TickValueChanged(object sender, EventArgs e)
+        {
+            servo.PositionCible = (int)trackBarPosition.Value;
+        }
+
+        private void trackBarVitesse_TickValueChanged(object sender, EventArgs e)
+        {
+            servo.VitesseMax = (int)trackBarVitesse.Value;
+        }
+
+        private void switchLed_ChangementEtat(object sender, EventArgs e)
+        {
+            servo.LedAllumee = switchLed.Actif;
+        }
+
+        private void switchCouple_ChangementEtat(object sender, EventArgs e)
+        {
+            servo.CoupleActive = switchCouple.Actif;
+        }
     }
 }

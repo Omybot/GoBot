@@ -33,6 +33,9 @@
             this.dataGridViewLog = new System.Windows.Forms.DataGridView();
             this.contextMenuStripRow = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.nePlusAfficherCeTypeDeMessagesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.nePlusAfficherDeMessagesDeCetExpéditeurToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.nePlusAfficherDeMessagesAvecCeDestinataireToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.nePlusAfficherDeMessagesDeCetteCarteToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.rdoAucun = new System.Windows.Forms.RadioButton();
             this.rdoDest = new System.Windows.Forms.RadioButton();
@@ -59,9 +62,7 @@
             this.checkedListBoxExpediteur = new System.Windows.Forms.CheckedListBox();
             this.checkedListBoxDestinataire = new System.Windows.Forms.CheckedListBox();
             this.groupBoxDestinataire = new System.Windows.Forms.GroupBox();
-            this.nePlusAfficherDeMessagesDeCetExpéditeurToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.nePlusAfficherDeMessagesAvecCeDestinataireToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.nePlusAfficherDeMessagesDeCetteCarteToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.nePlusAfficherTousCesMessagesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewLog)).BeginInit();
             this.contextMenuStripRow.SuspendLayout();
             this.groupBox2.SuspendLayout();
@@ -103,19 +104,41 @@
             // contextMenuStripRow
             // 
             this.contextMenuStripRow.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.nePlusAfficherTousCesMessagesToolStripMenuItem,
             this.nePlusAfficherCeTypeDeMessagesToolStripMenuItem,
             this.nePlusAfficherDeMessagesDeCetExpéditeurToolStripMenuItem,
             this.nePlusAfficherDeMessagesAvecCeDestinataireToolStripMenuItem,
             this.nePlusAfficherDeMessagesDeCetteCarteToolStripMenuItem});
             this.contextMenuStripRow.Name = "contextMenuStripRow";
-            this.contextMenuStripRow.Size = new System.Drawing.Size(368, 114);
+            this.contextMenuStripRow.Size = new System.Drawing.Size(368, 136);
             // 
             // nePlusAfficherCeTypeDeMessagesToolStripMenuItem
             // 
             this.nePlusAfficherCeTypeDeMessagesToolStripMenuItem.Name = "nePlusAfficherCeTypeDeMessagesToolStripMenuItem";
-            this.nePlusAfficherCeTypeDeMessagesToolStripMenuItem.Size = new System.Drawing.Size(268, 22);
+            this.nePlusAfficherCeTypeDeMessagesToolStripMenuItem.Size = new System.Drawing.Size(367, 22);
             this.nePlusAfficherCeTypeDeMessagesToolStripMenuItem.Text = "Ne plus afficher ce type de messages";
             this.nePlusAfficherCeTypeDeMessagesToolStripMenuItem.Click += new System.EventHandler(this.nePlusAfficherCeTypeDeMessagesToolStripMenuItem_Click);
+            // 
+            // nePlusAfficherDeMessagesDeCetExpéditeurToolStripMenuItem
+            // 
+            this.nePlusAfficherDeMessagesDeCetExpéditeurToolStripMenuItem.Name = "nePlusAfficherDeMessagesDeCetExpéditeurToolStripMenuItem";
+            this.nePlusAfficherDeMessagesDeCetExpéditeurToolStripMenuItem.Size = new System.Drawing.Size(367, 22);
+            this.nePlusAfficherDeMessagesDeCetExpéditeurToolStripMenuItem.Text = "Ne plus afficher de messages avec le même expéditeur";
+            this.nePlusAfficherDeMessagesDeCetExpéditeurToolStripMenuItem.Click += new System.EventHandler(this.nePlusAfficherDeMessagesDeCetExpéditeurToolStripMenuItem_Click);
+            // 
+            // nePlusAfficherDeMessagesAvecCeDestinataireToolStripMenuItem
+            // 
+            this.nePlusAfficherDeMessagesAvecCeDestinataireToolStripMenuItem.Name = "nePlusAfficherDeMessagesAvecCeDestinataireToolStripMenuItem";
+            this.nePlusAfficherDeMessagesAvecCeDestinataireToolStripMenuItem.Size = new System.Drawing.Size(367, 22);
+            this.nePlusAfficherDeMessagesAvecCeDestinataireToolStripMenuItem.Text = "Ne plus afficher de messages avec le même destinataire";
+            this.nePlusAfficherDeMessagesAvecCeDestinataireToolStripMenuItem.Click += new System.EventHandler(this.nePlusAfficherDeMessagesAvecCeDestinataireToolStripMenuItem_Click);
+            // 
+            // nePlusAfficherDeMessagesDeCetteCarteToolStripMenuItem
+            // 
+            this.nePlusAfficherDeMessagesDeCetteCarteToolStripMenuItem.Name = "nePlusAfficherDeMessagesDeCetteCarteToolStripMenuItem";
+            this.nePlusAfficherDeMessagesDeCetteCarteToolStripMenuItem.Size = new System.Drawing.Size(367, 22);
+            this.nePlusAfficherDeMessagesDeCetteCarteToolStripMenuItem.Text = "Ne plus afficher de messages de cette carte";
+            this.nePlusAfficherDeMessagesDeCetteCarteToolStripMenuItem.Click += new System.EventHandler(this.nePlusAfficherDeMessagesDeCetteCarteToolStripMenuItem_Click);
             // 
             // groupBox2
             // 
@@ -394,26 +417,12 @@
             this.groupBoxDestinataire.TabStop = false;
             this.groupBoxDestinataire.Text = "Destinataire";
             // 
-            // nePlusAfficherDeMessagesDeCetExpéditeurToolStripMenuItem
+            // nePlusAfficherTousCesMessagesToolStripMenuItem
             // 
-            this.nePlusAfficherDeMessagesDeCetExpéditeurToolStripMenuItem.Name = "nePlusAfficherDeMessagesDeCetExpéditeurToolStripMenuItem";
-            this.nePlusAfficherDeMessagesDeCetExpéditeurToolStripMenuItem.Size = new System.Drawing.Size(367, 22);
-            this.nePlusAfficherDeMessagesDeCetExpéditeurToolStripMenuItem.Text = "Ne plus afficher de messages avec le même expéditeur";
-            this.nePlusAfficherDeMessagesDeCetExpéditeurToolStripMenuItem.Click += new System.EventHandler(this.nePlusAfficherDeMessagesDeCetExpéditeurToolStripMenuItem_Click);
-            // 
-            // nePlusAfficherDeMessagesAvecCeDestinataireToolStripMenuItem
-            // 
-            this.nePlusAfficherDeMessagesAvecCeDestinataireToolStripMenuItem.Name = "nePlusAfficherDeMessagesAvecCeDestinataireToolStripMenuItem";
-            this.nePlusAfficherDeMessagesAvecCeDestinataireToolStripMenuItem.Size = new System.Drawing.Size(367, 22);
-            this.nePlusAfficherDeMessagesAvecCeDestinataireToolStripMenuItem.Text = "Ne plus afficher de messages avec le même destinataire";
-            this.nePlusAfficherDeMessagesAvecCeDestinataireToolStripMenuItem.Click += new System.EventHandler(this.nePlusAfficherDeMessagesAvecCeDestinataireToolStripMenuItem_Click);
-            // 
-            // nePlusAfficherDeMessagesDeCetteCarteToolStripMenuItem
-            // 
-            this.nePlusAfficherDeMessagesDeCetteCarteToolStripMenuItem.Name = "nePlusAfficherDeMessagesDeCetteCarteToolStripMenuItem";
-            this.nePlusAfficherDeMessagesDeCetteCarteToolStripMenuItem.Size = new System.Drawing.Size(367, 22);
-            this.nePlusAfficherDeMessagesDeCetteCarteToolStripMenuItem.Text = "Ne plus afficher de messages de cette carte";
-            this.nePlusAfficherDeMessagesDeCetteCarteToolStripMenuItem.Click += new System.EventHandler(this.nePlusAfficherDeMessagesDeCetteCarteToolStripMenuItem_Click);
+            this.nePlusAfficherTousCesMessagesToolStripMenuItem.Name = "nePlusAfficherTousCesMessagesToolStripMenuItem";
+            this.nePlusAfficherTousCesMessagesToolStripMenuItem.Size = new System.Drawing.Size(367, 22);
+            this.nePlusAfficherTousCesMessagesToolStripMenuItem.Text = "Ne plus afficher tous ces messages";
+            this.nePlusAfficherTousCesMessagesToolStripMenuItem.Click += new System.EventHandler(this.nePlusAfficherTousCesMessagesToolStripMenuItem_Click);
             // 
             // PanelLogsTrames
             // 
@@ -484,6 +493,7 @@
         private System.Windows.Forms.ToolStripMenuItem nePlusAfficherDeMessagesDeCetExpéditeurToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem nePlusAfficherDeMessagesAvecCeDestinataireToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem nePlusAfficherDeMessagesDeCetteCarteToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem nePlusAfficherTousCesMessagesToolStripMenuItem;
 
     }
 }

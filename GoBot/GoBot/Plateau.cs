@@ -283,10 +283,10 @@ namespace GoBot
         public void SauverGraph()
         {
             IFormatter formatter = new BinaryFormatter();
-            using (Stream stream = new FileStream("graphGros.bin", FileMode.OpenOrCreate, FileAccess.Write, FileShare.None))
+            using (Stream stream = new FileStream(Config.PathData + "/graphGros.bin", FileMode.OpenOrCreate, FileAccess.Write, FileShare.None))
                 formatter.Serialize(stream, Robots.GrosRobot.Graph);
 
-            using (Stream stream = new FileStream("graphPetit.bin", FileMode.OpenOrCreate, FileAccess.Write, FileShare.None))
+            using (Stream stream = new FileStream(Config.PathData + "/graphPetit.bin", FileMode.OpenOrCreate, FileAccess.Write, FileShare.None))
                 formatter.Serialize(stream, Robots.PetitRobot.Graph);
         }
 
@@ -298,7 +298,7 @@ namespace GoBot
             try
             {
                 IFormatter formatter = new BinaryFormatter();
-                using (Stream stream = new FileStream("graphGros.bin", FileMode.Open, FileAccess.Read, FileShare.Read))
+                using (Stream stream = new FileStream(Config.PathData + "/graphGros.bin", FileMode.Open, FileAccess.Read, FileShare.Read))
                     Robots.GrosRobot.Graph = (Graph)formatter.Deserialize(stream);
             }
             catch (Exception e)
@@ -315,7 +315,7 @@ namespace GoBot
             try
             {
                 IFormatter formatter = new BinaryFormatter();
-                using (Stream stream = new FileStream("graphPetit.bin", FileMode.Open, FileAccess.Read, FileShare.Read))
+                using (Stream stream = new FileStream(Config.PathData + "/graphPetit.bin", FileMode.Open, FileAccess.Read, FileShare.Read))
                     Robots.PetitRobot.Graph = (Graph)formatter.Deserialize(stream);
             }
             catch (Exception e)

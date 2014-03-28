@@ -79,7 +79,7 @@ namespace GoBot
         }
         private void EnvoiParamLED()
         {
-            connexionUdp.SendMessage(TrameFactory.ServoEnvoiConfigAlarmeLED((ServomoteurID)id, alarmeLEDInputVoltage, alarmeLEDAngleLimit, alarmeLEDOverheating, alarmeLEDRange, alarmeLEDChecksum, alarmeLEDOverload));
+            connexionUdp.SendMessage(TrameFactory.ServoEnvoiConfigAlarmeLED((ServomoteurID)id, alarmeLEDInputVoltage, alarmeLEDAngleLimit, alarmeLEDOverheating, alarmeLEDRange, alarmeLEDChecksum, alarmeLEDOverload, alarmeLEDInstruction));
         }
         private bool alarmeLEDInputVoltage;
         public bool AlarmeLEDInputVoltage
@@ -154,7 +154,7 @@ namespace GoBot
 
         private void EnvoiParamShutdown()
         {
-            connexionUdp.SendMessage(TrameFactory.ServoEnvoiConfigAlarmeShutdown((ServomoteurID)id, alarmeShutdownInputVoltage, alarmeShutdownAngleLimit, alarmeShutdownOverheating, alarmeShutdownRange, alarmeShutdownChecksum, alarmeShutdownOverload));
+            connexionUdp.SendMessage(TrameFactory.ServoEnvoiConfigAlarmeShutdown((ServomoteurID)id, alarmeShutdownInputVoltage, alarmeShutdownAngleLimit, alarmeShutdownOverheating, alarmeShutdownRange, alarmeShutdownChecksum, alarmeShutdownOverload, alarmeShutdownInstruction));
         }
         private bool alarmeShutdownInputVoltage;
         public bool AlarmeShutdownInputVoltage
@@ -323,9 +323,14 @@ namespace GoBot
             get { return tension; }
         }
         private int vitesseMax;
-        public double VitesseMax
+        public int VitesseMax
         {
             get { return vitesseMax; }
+            set
+            {
+                vitesseMax = value;
+                connexionUdp.SendMessage(TrameFactory.ServoEnvoiVitesseMax((ServomoteurID)id, vitesseMax));
+            }
         }
 
         private bool erreurInputVoltage;

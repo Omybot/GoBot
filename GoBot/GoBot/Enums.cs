@@ -39,7 +39,7 @@ namespace GoBot
 
     public enum ServomoteurID
     {
-        GRCoude = 2,
+        GRCoude = 254,
         GREpaule = 4,
         GRPinceDroite = 3,
         GRPinceGauche = 5,
@@ -299,7 +299,7 @@ namespace GoBot
         zLibre251 = 251,
         zLibre252 = 252,
         zLibre253 = 253,
-        zLibre254 = 254,
+        //zLibre254 = 254,
         //zLibre255 = 255
     }
 

@@ -77,14 +77,21 @@ namespace GoBot.Communications
         /// <returns>Nombre de caractères envoyés</returns>
         public int SendMessage(Trame message)
         {
-            if (!isConnect)
-                if (Connexion(AdresseIp, PortSortie, PortEntree) != Etat.Ok)
-                    return -1;
+            int retour = 0;
+            try
+            {
+                if (!isConnect)
+                    if (Connexion(AdresseIp, PortSortie, PortEntree) != Etat.Ok)
+                        return -1;
 
-            byte[] envoi = message.ToTabBytes();
-            
-            int retour = client.Send(envoi, envoi.Length);
-            TrameEnvoyee(message);
+                byte[] envoi = message.ToTabBytes();
+
+                retour = client.Send(envoi, envoi.Length);
+                TrameEnvoyee(message);
+            }
+            catch (SocketException)
+            {
+            }
 
             return retour;
         }

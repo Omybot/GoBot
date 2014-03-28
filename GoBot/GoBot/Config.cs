@@ -6,6 +6,7 @@ using System.Runtime.Serialization.Formatters.Binary;
 using System.IO;
 using System.Windows.Forms;
 using System.Xml.Serialization;
+using Microsoft.Win32;
 
 namespace GoBot
 {
@@ -191,7 +192,7 @@ namespace GoBot
             try
             {
                 XmlSerializer mySerializer = new XmlSerializer(typeof(Config));
-                using (FileStream myFileStream = new FileStream("config.xml", FileMode.Open))
+                using (FileStream myFileStream = new FileStream(PathData + "/config.xml", FileMode.Open))
                     CurrentConfig = (Config)mySerializer.Deserialize(myFileStream);
             }
             catch (Exception)
@@ -203,8 +204,16 @@ namespace GoBot
         public static void Save()
         {
             XmlSerializer mySerializer = new XmlSerializer(typeof(Config));
-            using (StreamWriter myWriter = new StreamWriter("config.xml"))
+            using (StreamWriter myWriter = new StreamWriter(PathData + "/config.xml"))
                 mySerializer.Serialize(myWriter, CurrentConfig);
+        }
+
+        public static String PathData
+        {
+            get
+            {
+                return (String)Registry.CurrentUser.OpenSubKey("Software").OpenSubKey("GoBot").GetValue("Path");
+            }
         }
     }
 }

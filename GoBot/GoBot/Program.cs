@@ -13,7 +13,7 @@ namespace GoBot
         /// Point d'entrée principal de l'application.
         /// </summary>
         [STAThread]
-        static void Main()
+        static void Main(string[] args)
         {
             Config.DesignMode = false;
             Config.DateLancement = DateTime.Now;
@@ -24,7 +24,7 @@ namespace GoBot
             Robots.Init();
             Config.Load();
             Plateau.Init();
-            Application.Run(new FenGoBot());
+            Application.Run(new FenGoBot(args));
         }
     }
 }

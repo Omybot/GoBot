@@ -25,7 +25,7 @@ namespace GoBot
     {
         private System.Windows.Forms.Timer timerSauvegarde;
 
-        public FenGoBot()
+        public FenGoBot(string[] args)
         {
             InitializeComponent();
             timerSauvegarde = new System.Windows.Forms.Timer();
@@ -73,6 +73,52 @@ namespace GoBot
                 tabPrecedent.Add(tabControl.TabPages[0], null);
                 for(int i = 1; i < tabControl.Controls.Count; i++)
                     tabPrecedent.Add(tabControl.TabPages[i], (tabControl.TabPages[i - 1]));
+
+                IPAddress[] adresses =  Dns.GetHostAddresses(Dns.GetHostName());
+
+                bool ipTrouvee = false;
+                foreach (IPAddress ip in adresses)
+                {
+                    if (ip.ToString().Length > 7)
+                    {
+                        String ipString = ip.ToString().Substring(0, 7);
+                        if (ipString == "10.1.0.")
+                            ipTrouvee = true;
+                    }
+                }
+
+                if (!ipTrouvee)
+                    MessageBox.Show("Aucune carte réseau n'est configurée pour se connecter au robot avec la bonne adresse IP (10.1.0.X)", "Configuration IP", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+                List<String> fichiersElog = new List<string>();
+                List<String> fichiersTlog = new List<string>();
+
+                foreach (String chaine in args)
+                {
+                    if (Path.GetExtension(chaine) == ".elog")
+                        fichiersElog.Add(chaine);
+                    if (Path.GetExtension(chaine) == ".tlog")
+                        fichiersTlog.Add(chaine);
+                }
+
+                if (fichiersElog.Count > 0)
+                {
+                    foreach (String fichier in fichiersElog)
+                        panelLogsEvents.ChargerLog(fichier);
+                    panelLogsEvents.Afficher();
+
+                    if (fichiersTlog.Count == 0)
+                        tabControl.SelectedTab = tabLogsEvent;
+                }
+
+                if (fichiersTlog.Count > 0)
+                {
+                    foreach (String fichier in fichiersTlog)
+                        panelLogTrames.ChargerLog(fichier);
+                    panelLogTrames.Afficher();
+
+                    tabControl.SelectedTab = tabLogsUdp;
+                }
             }
         }
 
@@ -119,38 +165,33 @@ namespace GoBot
 
         private void SauverLogs()
         {
-            Connexions.ConnexionMiwi.Sauvegarde.Sauvegarder("./Logs/Current/ConnexionMiwi.tlog");
-            Connexions.ConnexionMove.Sauvegarde.Sauvegarder("./Logs/Current/ConnexionMove.tlog");
-            Connexions.ConnexionPi.Sauvegarde.Sauvegarder("./Logs/Current/ConnexionPi.tlog");
+            DateTime debut = DateTime.Now;
 
-            Robots.GrosRobot.Historique.Sauvegarder("./Logs/Current/ActionsGros.elog");
-            Robots.PetitRobot.Historique.Sauvegarder("./Logs/Current/ActionsPetit.elog");
+            Connexions.ConnexionMiwi.Sauvegarde.Sauvegarder(Config.PathData + "/Logs/" + Config.DateLancementString + "/ConnexionMiwi.tlog");
+            Connexions.ConnexionMove.Sauvegarde.Sauvegarder(Config.PathData + "/Logs/" + Config.DateLancementString + "/ConnexionMove.tlog");
+            Connexions.ConnexionPi.Sauvegarde.Sauvegarder(Config.PathData + "/Logs/" + Config.DateLancementString + "/ConnexionPi.tlog");
 
+            Robots.GrosRobot.Historique.Sauvegarder(Config.PathData + "/Logs/" + Config.DateLancementString + "/ActionsGros.elog");
+            Robots.PetitRobot.Historique.Sauvegarder(Config.PathData + "/Logs/" + Config.DateLancementString + "/ActionsPetit.elog");
 
-            Connexions.ConnexionMiwi.Sauvegarde.Sauvegarder("./Logs/"  + Config.DateLancementString + "/ConnexionMiwi.tlog");
-            Connexions.ConnexionMove.Sauvegarde.Sauvegarder("./Logs/" + Config.DateLancementString + "/ConnexionMove.tlog");
-            Connexions.ConnexionPi.Sauvegarde.Sauvegarder("./Logs/" + Config.DateLancementString + "/ConnexionPi.tlog");
-
-            Robots.GrosRobot.Historique.Sauvegarder("./Logs/" + Config.DateLancementString + "/ActionsGros.elog");
-            Robots.PetitRobot.Historique.Sauvegarder("./Logs/" + Config.DateLancementString + "/ActionsPetit.elog");
+            Console.WriteLine(Connexions.ConnexionMove.Sauvegarde.Trames.Count + " trames RecMove");
+            Console.WriteLine((DateTime.Now - debut).TotalMilliseconds + " ms sauvegarde");
         }
 
         private void btnClose_Click(object sender, EventArgs e)
         {
             FenGoBot_FormClosing(null, null);
-            Process.Start("KillGoBot.exe");
+            Process.Start(Config.PathData + "/KillGoBot.exe");
         }
 
         private void FenGoBot_Load(object sender, EventArgs e)
         {
             try
             {
-                if (Directory.Exists("./Logs/Current/"))
-                    Directory.Delete("./Logs/Current/", true);
+                if (!Directory.Exists(Config.PathData + "/Logs/"))
+                    Directory.CreateDirectory(Config.PathData + "/Logs/");
 
-                Directory.CreateDirectory("./Logs/Current/");
-
-                Directory.CreateDirectory("./Logs/" + Config.DateLancementString);
+                Directory.CreateDirectory(Config.PathData + "/Logs/" + Config.DateLancementString);
             }
             catch(Exception)
             {

@@ -83,6 +83,7 @@ namespace GoBot.IHM
                 checkedListBoxDestinataire.Items.Add(carte.ToString(), true);
             }
 
+            replay = new Replay();
         }
 
         private void btnCharger_Click(object sender, EventArgs e)
@@ -92,7 +93,6 @@ namespace GoBot.IHM
             open.Multiselect = true;
             if (open.ShowDialog() == DialogResult.OK)
             {
-                replay = new Replay();
 
                 foreach(String fichier in open.FileNames)
                 {
@@ -103,7 +103,7 @@ namespace GoBot.IHM
             }
         }
 
-        private void ChargerLog(String fichier)
+        public void ChargerLog(String fichier)
         {
             Replay replayTemp = new Replay();
             replayTemp.Charger(fichier);
@@ -112,7 +112,7 @@ namespace GoBot.IHM
                 replay.Trames.Add(t);
         }
 
-        private void Afficher()
+        public void Afficher()
         {
             try
             {
@@ -453,6 +453,17 @@ namespace GoBot.IHM
                 catch (Exception)
                 {
                 }
+            }
+        }
+
+        private void nePlusAfficherTousCesMessagesToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (dataGridViewLog.Rows.Count > 0)
+            {
+                for (int i = 0; i < dataGridViewLog.Rows.Count; i++)
+                    dataGridViewLog.Rows[i].Selected = true;
+
+                nePlusAfficherCeTypeDeMessagesToolStripMenuItem_Click(null, null);
             }
         }
     }
