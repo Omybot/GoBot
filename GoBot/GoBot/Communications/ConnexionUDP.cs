@@ -6,6 +6,7 @@ using System.Net;
 using System.Net.Sockets;
 using GoBot;
 using GoBot.Communications;
+using System.Net.NetworkInformation;
 
 namespace GoBot.Communications
 {
@@ -47,21 +48,35 @@ namespace GoBot.Communications
         /// <returns>Etat de la connexion</returns>
         public Etat Connexion(IPAddress _adresseIP, int _portSortie, int _portEntree)
         {
+            if (_adresseIP == null || _adresseIP.ToString() != "10.1.0.11")
+                return Etat.Erreur;
+
             Etat retour = Etat.Ok;
 
             AdresseIp = _adresseIP;
             PortSortie = _portSortie;
             PortEntree = _portEntree;
-            
+
             try
             {
-                client = new UdpClient();
-                client.Connect(AdresseIp, PortSortie);
-                isConnect = true;
+                Ping ping = new Ping();
+                PingReply pingReponse = ping.Send(AdresseIp, 500);
+                Console.WriteLine(pingReponse.Status.ToString());
+                if (pingReponse.Status == IPStatus.Success)
+                {
+                    client = new UdpClient();
+                    client.Connect(AdresseIp, PortSortie);
+                    isConnect = true;
 
-                StartReception();
+                    StartReception();
+                }
+                else
+                {
+                    retour = Etat.Erreur;
+                    isConnect = false;
+                }
             }
-            catch(Exception)
+            catch (Exception)
             {
                 retour = Etat.Erreur;
                 isConnect = false;
@@ -91,6 +106,7 @@ namespace GoBot.Communications
             }
             catch (SocketException)
             {
+                isConnect = false;
             }
 
             return retour;
@@ -102,15 +118,18 @@ namespace GoBot.Communications
         public event ReceptionDelegate NouvelleTrameRecue;
         //Déclaration de l’évènement utilisant le délégué pour l'émission d'une trame
         public event ReceptionDelegate NouvelleTrameEnvoyee;
-        
 
+        IPEndPoint e;
+        UdpClient u;
         /// <summary>
         /// Lance la réception de trames sur le port actuel
         /// </summary>
         public void StartReception()
         {
-            IPEndPoint e = new IPEndPoint(IPAddress.Any, PortEntree);
-            UdpClient u = new UdpClient(e);
+            e = new IPEndPoint(IPAddress.Any, PortEntree);
+            if (u != null)
+                u.Close();
+            u = new UdpClient(e);
 
             UdpState s = new UdpState();
             s.e = e;
@@ -128,21 +147,27 @@ namespace GoBot.Communications
 
         private void ReceptionCallback(IAsyncResult ar)
         {
-            UdpClient u = (UdpClient)((UdpState)(ar.AsyncState)).u;
+            try
+            {
+                UdpClient u = (UdpClient)((UdpState)(ar.AsyncState)).u;
 
-            IPEndPoint e = new IPEndPoint(IPAddress.Any, PortEntree);
+                IPEndPoint e = new IPEndPoint(IPAddress.Any, PortEntree);
 
-            Byte[] receiveBytes = u.EndReceive(ar, ref e);
+                Byte[] receiveBytes = u.EndReceive(ar, ref e);
 
-            ConnexionCheck.MajConnexion();
+                ConnexionCheck.MajConnexion();
 
-            Trame trameRecue = new Trame(receiveBytes);
-            TrameRecue(trameRecue);
+                Trame trameRecue = new Trame(receiveBytes);
+                TrameRecue(trameRecue);
 
-            UdpState s = new UdpState();
-            s.e = e;
-            s.u = u;
-            u.BeginReceive(ReceptionCallback, s);
+                UdpState s = new UdpState();
+                s.e = e;
+                s.u = u;
+                u.BeginReceive(ReceptionCallback, s);
+            }
+            catch (Exception)
+            {
+            }
         }
 
         public void TrameRecue(Trame t)

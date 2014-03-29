@@ -35,7 +35,7 @@ namespace GoBot
 
             if (!Config.DesignMode)
             {
-                CheckForIllegalCrossThreadCalls = false;
+                //CheckForIllegalCrossThreadCalls = false;
                 panelGrosRobot.Init();
                 panelPetitRobot.Init();
 
@@ -173,9 +173,6 @@ namespace GoBot
 
             Robots.GrosRobot.Historique.Sauvegarder(Config.PathData + "/Logs/" + Config.DateLancementString + "/ActionsGros.elog");
             Robots.PetitRobot.Historique.Sauvegarder(Config.PathData + "/Logs/" + Config.DateLancementString + "/ActionsPetit.elog");
-
-            Console.WriteLine(Connexions.ConnexionMove.Sauvegarde.Trames.Count + " trames RecMove");
-            Console.WriteLine((DateTime.Now - debut).TotalMilliseconds + " ms sauvegarde");
         }
 
         private void btnClose_Click(object sender, EventArgs e)
