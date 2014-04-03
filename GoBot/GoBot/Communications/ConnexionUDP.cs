@@ -48,9 +48,6 @@ namespace GoBot.Communications
         /// <returns>Etat de la connexion</returns>
         public Etat Connexion(IPAddress _adresseIP, int _portSortie, int _portEntree)
         {
-            if (_adresseIP == null || _adresseIP.ToString() != "10.1.0.11")
-                return Etat.Erreur;
-
             Etat retour = Etat.Ok;
 
             AdresseIp = _adresseIP;
@@ -60,8 +57,8 @@ namespace GoBot.Communications
             try
             {
                 Ping ping = new Ping();
-                PingReply pingReponse = ping.Send(AdresseIp, 500);
-                Console.WriteLine(pingReponse.Status.ToString());
+                PingReply pingReponse = ping.Send(AdresseIp, 50);
+                //Console.WriteLine(pingReponse.Status.ToString());
                 if (pingReponse.Status == IPStatus.Success)
                 {
                     client = new UdpClient();

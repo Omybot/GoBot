@@ -130,6 +130,13 @@ namespace GoBot.Properties {
             }
         }
         
+        internal static System.Drawing.Bitmap FondServo {
+            get {
+                object obj = ResourceManager.GetObject("FondServo", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
         internal static System.Drawing.Bitmap Haut {
             get {
                 object obj = ResourceManager.GetObject("Haut", resourceCulture);

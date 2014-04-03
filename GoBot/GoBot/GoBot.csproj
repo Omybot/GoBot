@@ -91,6 +91,12 @@
     <Compile Include="Enchainements\EnchainementAleatoire.cs" />
     <Compile Include="Enchainements\EnchainementMatch.cs" />
     <Compile Include="EventsReplay.cs" />
+    <Compile Include="IHM\PanelGestionLogs.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="IHM\PanelGestionLogs.Designer.cs">
+      <DependentUpon>PanelGestionLogs.cs</DependentUpon>
+    </Compile>
     <Compile Include="IHM\PanelDiagnosticMove.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -298,6 +304,9 @@
     <Compile Include="Communications\TrameFactory.cs" />
     <Compile Include="Communications\ConnexionUDP.cs" />
     <Compile Include="Communications\Trame.cs" />
+    <EmbeddedResource Include="IHM\PanelGestionLogs.resx">
+      <DependentUpon>PanelGestionLogs.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="IHM\PanelDiagnosticMove.resx">
       <DependentUpon>PanelDiagnosticMove.cs</DependentUpon>
     </EmbeddedResource>
@@ -480,6 +489,7 @@
     <None Include="img\Helice3.png" />
     <None Include="img\Avance.png" />
     <None Include="img\Alertes.png" />
+    <None Include="img\FondServo.png" />
     <Content Include="img\IconeVitesse.png" />
     <None Include="img\Pompe.png" />
     <None Include="img\TableRouge.png" />

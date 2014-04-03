@@ -35,7 +35,7 @@ namespace GoBot
 
             if (!Config.DesignMode)
             {
-                //CheckForIllegalCrossThreadCalls = false;
+                CheckForIllegalCrossThreadCalls = false;
                 panelGrosRobot.Init();
                 panelPetitRobot.Init();
 

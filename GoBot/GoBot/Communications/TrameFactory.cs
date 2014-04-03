@@ -681,6 +681,16 @@ namespace GoBot.Communications
             return new Trame(tab);
         }
 
+        static public Trame ServoDemandeTension(ServomoteurID servo, Carte carte = Carte.RecMove)
+        {
+            byte[] tab = new byte[4];
+            tab[0] = (byte)carte;
+            tab[1] = (byte)FonctionMove.CommandeServo;
+            tab[2] = (byte)FonctionServo.DemandeTension;
+            tab[3] = (byte)servo;
+            return new Trame(tab);
+        }
+
         static public Trame ServoDemandeMouvement(ServomoteurID servo, Carte carte = Carte.RecMove)
         {
             byte[] tab = new byte[4];
@@ -1055,7 +1065,7 @@ namespace GoBot.Communications
                                         message = "Demande position maximum servo " + GoBot.Actions.Nommeur.Nommer((ServomoteurID)trame[3]);
                                         break;
                                     case FonctionServo.DemandePositionMinimum:
-                                        message = " Demande position minimum servo " + GoBot.Actions.Nommeur.Nommer((ServomoteurID)trame[3]);
+                                        message = "Demande position minimum servo " + GoBot.Actions.Nommeur.Nommer((ServomoteurID)trame[3]);
                                         break;
                                     case FonctionServo.DemandeTemperature:
                                         message = "Demande température servo " + GoBot.Actions.Nommeur.Nommer((ServomoteurID)trame[3]);

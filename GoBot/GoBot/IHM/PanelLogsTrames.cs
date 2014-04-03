@@ -466,5 +466,13 @@ namespace GoBot.IHM
                 nePlusAfficherCeTypeDeMessagesToolStripMenuItem_Click(null, null);
             }
         }
+
+        private void copierLaTrameToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (dataGridViewLog.Rows.Count > 0)
+            {
+                Clipboard.SetText((String)(dataGridViewLog.SelectedRows[0].Cells["Trame"].Value));
+            }
+        }
     }
 }

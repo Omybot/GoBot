@@ -385,9 +385,9 @@
             // panelServo1
             // 
             this.panelServo1.BackColor = System.Drawing.Color.Transparent;
-            this.panelServo1.Location = new System.Drawing.Point(550, 31);
+            this.panelServo1.Location = new System.Drawing.Point(112, 31);
             this.panelServo1.Name = "panelServo1";
-            this.panelServo1.Size = new System.Drawing.Size(561, 497);
+            this.panelServo1.Size = new System.Drawing.Size(843, 497);
             this.panelServo1.TabIndex = 40;
             // 
             // PanelTestLiaisons

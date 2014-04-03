@@ -32,6 +32,7 @@
             this.btnCharger = new System.Windows.Forms.Button();
             this.dataGridViewLog = new System.Windows.Forms.DataGridView();
             this.contextMenuStripRow = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.nePlusAfficherTousCesMessagesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.nePlusAfficherCeTypeDeMessagesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.nePlusAfficherDeMessagesDeCetExpéditeurToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.nePlusAfficherDeMessagesAvecCeDestinataireToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -62,7 +63,7 @@
             this.checkedListBoxExpediteur = new System.Windows.Forms.CheckedListBox();
             this.checkedListBoxDestinataire = new System.Windows.Forms.CheckedListBox();
             this.groupBoxDestinataire = new System.Windows.Forms.GroupBox();
-            this.nePlusAfficherTousCesMessagesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.copierLaTrameToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewLog)).BeginInit();
             this.contextMenuStripRow.SuspendLayout();
             this.groupBox2.SuspendLayout();
@@ -104,13 +105,21 @@
             // contextMenuStripRow
             // 
             this.contextMenuStripRow.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.copierLaTrameToolStripMenuItem,
             this.nePlusAfficherTousCesMessagesToolStripMenuItem,
             this.nePlusAfficherCeTypeDeMessagesToolStripMenuItem,
             this.nePlusAfficherDeMessagesDeCetExpéditeurToolStripMenuItem,
             this.nePlusAfficherDeMessagesAvecCeDestinataireToolStripMenuItem,
             this.nePlusAfficherDeMessagesDeCetteCarteToolStripMenuItem});
             this.contextMenuStripRow.Name = "contextMenuStripRow";
-            this.contextMenuStripRow.Size = new System.Drawing.Size(368, 136);
+            this.contextMenuStripRow.Size = new System.Drawing.Size(368, 158);
+            // 
+            // nePlusAfficherTousCesMessagesToolStripMenuItem
+            // 
+            this.nePlusAfficherTousCesMessagesToolStripMenuItem.Name = "nePlusAfficherTousCesMessagesToolStripMenuItem";
+            this.nePlusAfficherTousCesMessagesToolStripMenuItem.Size = new System.Drawing.Size(367, 22);
+            this.nePlusAfficherTousCesMessagesToolStripMenuItem.Text = "Ne plus afficher tous ces messages";
+            this.nePlusAfficherTousCesMessagesToolStripMenuItem.Click += new System.EventHandler(this.nePlusAfficherTousCesMessagesToolStripMenuItem_Click);
             // 
             // nePlusAfficherCeTypeDeMessagesToolStripMenuItem
             // 
@@ -417,12 +426,12 @@
             this.groupBoxDestinataire.TabStop = false;
             this.groupBoxDestinataire.Text = "Destinataire";
             // 
-            // nePlusAfficherTousCesMessagesToolStripMenuItem
+            // copierLaTrameToolStripMenuItem
             // 
-            this.nePlusAfficherTousCesMessagesToolStripMenuItem.Name = "nePlusAfficherTousCesMessagesToolStripMenuItem";
-            this.nePlusAfficherTousCesMessagesToolStripMenuItem.Size = new System.Drawing.Size(367, 22);
-            this.nePlusAfficherTousCesMessagesToolStripMenuItem.Text = "Ne plus afficher tous ces messages";
-            this.nePlusAfficherTousCesMessagesToolStripMenuItem.Click += new System.EventHandler(this.nePlusAfficherTousCesMessagesToolStripMenuItem_Click);
+            this.copierLaTrameToolStripMenuItem.Name = "copierLaTrameToolStripMenuItem";
+            this.copierLaTrameToolStripMenuItem.Size = new System.Drawing.Size(367, 22);
+            this.copierLaTrameToolStripMenuItem.Text = "Copier la trame";
+            this.copierLaTrameToolStripMenuItem.Click += new System.EventHandler(this.copierLaTrameToolStripMenuItem_Click);
             // 
             // PanelLogsTrames
             // 
@@ -494,6 +503,7 @@
         private System.Windows.Forms.ToolStripMenuItem nePlusAfficherDeMessagesAvecCeDestinataireToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem nePlusAfficherDeMessagesDeCetteCarteToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem nePlusAfficherTousCesMessagesToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem copierLaTrameToolStripMenuItem;
 
     }
 }

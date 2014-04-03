@@ -35,17 +35,63 @@ namespace GoBot.IHM
 
         private void btnRefresh_Click(object sender, EventArgs e)
         {
-            Actualisation();
+            servo = new Servomoteur(Carte.RecMove, (int)numID.Value, 19200);
+            Actualisation(true);
         }
 
-        private void Actualisation()
+        private void DessinePosition()
+        {
+            ctrlGraphiqueHisto.AjouterPoint("Position", servo.PositionActuelle, Color.DarkOrchid);
+            ctrlGraphiqueHisto.DessineCourbes();
+
+            Bitmap bmp = new Bitmap(160, 160);
+            Graphics g = Graphics.FromImage(bmp);
+            g.DrawImage(GoBot.Properties.Resources.FondServo, 0, 0, 160, 160);
+            g.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.AntiAlias;
+
+            double angleTotal = 120 / 360.0 * 2.0 * Math.PI;
+
+            // Position min
+            double alpha = 300.0 * servo.PositionMin / 1023.0;//servo.PositionActuelle / 1023;
+            alpha = alpha / 360 * 2 * Math.PI;
+
+            int xPosActuelle = (int)(80 + 65 * Math.Cos(angleTotal + alpha));
+            int yPosActuelle = (int)(80 + 65 * Math.Sin(angleTotal + alpha));
+
+            g.DrawLine(penPositionActuelleFond, 80, 80, xPosActuelle, yPosActuelle);
+            g.DrawLine(penPositionMin, 80, 80, xPosActuelle, yPosActuelle);
+
+            // Position max
+            alpha = 300.0 * servo.PositionMax / 1023.0;//servo.PositionActuelle / 1023;
+            alpha = alpha / 360 * 2 * Math.PI;
+
+            xPosActuelle = (int)(80 + 65 * Math.Cos(angleTotal + alpha));
+            yPosActuelle = (int)(80 + 65 * Math.Sin(angleTotal + alpha));
+
+            g.DrawLine(penPositionActuelleFond, 80, 80, xPosActuelle, yPosActuelle);
+            g.DrawLine(penPositionMax, 80, 80, xPosActuelle, yPosActuelle);
+
+            // Position actuelle
+            alpha = 300.0 * servo.PositionActuelle / 1023.0;//servo.PositionActuelle / 1023;
+            alpha = alpha / 360 * 2 * Math.PI;
+
+            xPosActuelle = (int)(80 + 65 * Math.Cos(angleTotal + alpha));
+            yPosActuelle = (int)(80 + 65 * Math.Sin(angleTotal + alpha));
+
+            g.DrawLine(penPositionActuelleFond, 80, 80, xPosActuelle, yPosActuelle);
+            g.DrawLine(penPositionActuelle, 80, 80, xPosActuelle, yPosActuelle);
+
+            pictureBoxAngles.Image = bmp;
+        }
+
+        private void Actualisation(bool complete)
         {
             MajIHM = true;
 
-            servo = new Servomoteur(Carte.RecMove, (int)numID.Value, 19200);
+            servo.DemandeActualisation(complete);
 
-            trackBarPosition.SetValue(servo.PositionActuelle);
-            trackBarPosition.SetValue(servo.VitesseActuelle);
+            //trackBarPosition.SetValue(servo.PositionActuelle, false);
+            //trackBarPosition.SetValue(servo.VitesseActuelle, false);
 
             lblModele.Text = servo.Modele.ToString();
             lblFirmware.Text = servo.Firmware.ToString();
@@ -139,6 +185,8 @@ namespace GoBot.IHM
                 ledErreurRange.CouleurRouge();
             else
                 ledErreurRange.CouleurGris();
+
+            DessinePosition();
 
             MajIHM = false;
         }
@@ -278,8 +326,7 @@ namespace GoBot.IHM
 
         void timer_Tick(object sender, EventArgs e)
         {
-            servo.DemandeActualisation();
-            Actualisation();
+            Actualisation(false);
         }
 
         private void switchSurveillance_ChangementEtat(object sender, EventArgs e)
@@ -323,6 +370,25 @@ namespace GoBot.IHM
         private void switchCouple_ChangementEtat(object sender, EventArgs e)
         {
             servo.CoupleActive = switchCouple.Actif;
+        }
+
+        private Pen penPositionActuelle;
+        private Pen penPositionActuelleFond;
+        private Pen penPositionMin;
+        private Pen penPositionMax;
+
+        private void PanelServo_Load(object sender, EventArgs e)
+        {
+            if (!Config.DesignMode)
+            {
+                penPositionActuelle = new Pen(Color.Red, 2);
+                penPositionActuelleFond = new Pen(Color.Black, 4);
+                penPositionMin = new Pen(Color.Red, 4);
+                penPositionMax = new Pen(Color.Red, 4);
+
+                penPositionMin.DashStyle = System.Drawing.Drawing2D.DashStyle.Dot;
+                penPositionMax.DashStyle = System.Drawing.Drawing2D.DashStyle.Dot;
+            }
         }
     }
 }
