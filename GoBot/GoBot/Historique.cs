@@ -86,8 +86,6 @@ namespace GoBot
             HistoriqueLignes.Add(ligne);
             if (NouveauLog != null)
                 NouveauLog(ligne);
-
-            Console.WriteLine(ligne.Message);
         }
 
         public List<HistoLigne> HistoriqueLignes { get; set; }

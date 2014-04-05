@@ -7,6 +7,8 @@ using System.Net.Sockets;
 using GoBot;
 using GoBot.Communications;
 using System.Net.NetworkInformation;
+using System.ComponentModel;
+using System.Threading;
 
 namespace GoBot.Communications
 {
@@ -38,7 +40,10 @@ namespace GoBot.Communications
         {
             ConnexionCheck = new ConnexionCheck(2000);
             Sauvegarde = new Replay();
+            DerniereTentative = new DateTime(1, 1, 1);
         }
+
+        private DateTime DerniereTentative;
 
         /// <summary>
         /// Initialise la connexion vers le client pour l'envoi de données
@@ -56,16 +61,25 @@ namespace GoBot.Communications
 
             try
             {
-                Ping ping = new Ping();
-                PingReply pingReponse = ping.Send(AdresseIp, 50);
-                //Console.WriteLine(pingReponse.Status.ToString());
-                if (pingReponse.Status == IPStatus.Success)
+                if ((DateTime.Now - DerniereTentative).TotalSeconds > 10)
                 {
-                    client = new UdpClient();
-                    client.Connect(AdresseIp, PortSortie);
-                    isConnect = true;
+                    Ping ping = new Ping();
+                    PingReply pingReponse = ping.Send(AdresseIp, 50);
+                    DerniereTentative = DateTime.Now;
 
-                    StartReception();
+                    if (pingReponse.Status == IPStatus.Success)
+                    {
+                        client = new UdpClient();
+                        client.Connect(AdresseIp, PortSortie);
+                        isConnect = true;
+                        retour = Etat.Ok;
+                        StartReception();
+                    }
+                    else
+                    {
+                        retour = Etat.Erreur;
+                        isConnect = false;
+                    }
                 }
                 else
                 {
@@ -75,7 +89,6 @@ namespace GoBot.Communications
             }
             catch (Exception)
             {
-                retour = Etat.Erreur;
                 isConnect = false;
             }
 

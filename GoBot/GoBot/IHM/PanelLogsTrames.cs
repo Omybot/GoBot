@@ -103,6 +103,11 @@ namespace GoBot.IHM
             }
         }
 
+        public void Clear()
+        {
+            replay = new Replay();
+        }
+
         public void ChargerLog(String fichier)
         {
             Replay replayTemp = new Replay();

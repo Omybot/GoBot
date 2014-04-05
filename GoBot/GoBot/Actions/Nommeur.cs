@@ -16,13 +16,13 @@ namespace GoBot.Actions
         {
             switch (servo)
             {
-                case ServomoteurID.GRCoude:
+                case ServomoteurID.GRFruitsCoude:
                     return "coude";
-                case ServomoteurID.GREpaule:
+                case ServomoteurID.GRFruitsEpaule:
                     return "épaule";
-                case ServomoteurID.GRPinceDroite:
+                case ServomoteurID.GRFruitsPinceDroite:
                     return "pince droite";
-                case ServomoteurID.GRPinceGauche:
+                case ServomoteurID.GRFruitsPinceGauche:
                     return "pince gauche";
                 default:
                     return servo.ToString();
@@ -39,14 +39,14 @@ namespace GoBot.Actions
         {
             switch (servo)
             {
-                case ServomoteurID.GRPinceDroite:
+                case ServomoteurID.GRFruitsPinceDroite:
                     if (position == Config.CurrentConfig.PositionGRPinceDroiteOuverte)
                         return "ouverte (" + position + ")";
                     else if (position == Config.CurrentConfig.PositionGRPinceDroiteFermee)
                         return "fermée (" + position + ")";
                     else return position.ToString();
 
-                case ServomoteurID.GRPinceGauche:
+                case ServomoteurID.GRFruitsPinceGauche:
                     if (position == Config.CurrentConfig.PositionGRPinceGaucheOuverte)
                         return "ouverte (" + position + ")";
                     else if (position == Config.CurrentConfig.PositionGRPinceGaucheFermee)

@@ -50,10 +50,10 @@ namespace GoBot.IHM
 
             if (Robot == Robots.GrosRobot)
             {
-                trackBarVitesseLigne.SetValue(Config.CurrentConfig.GRVitesseLigneRapide);
-                trackBarAccelLigne.SetValue(Config.CurrentConfig.GRAccelerationLigneRapide);
-                trackBarVitessePivot.SetValue(Config.CurrentConfig.GRVitessePivotRapide);
-                trackBarAccelPivot.SetValue(Config.CurrentConfig.GRAccelerationPivotRapide);
+                trackBarVitesseLigne.SetValue(Config.CurrentConfig.GRVitesseLigneRapide, false);
+                trackBarAccelLigne.SetValue(Config.CurrentConfig.GRAccelerationLigneRapide, false);
+                trackBarVitessePivot.SetValue(Config.CurrentConfig.GRVitessePivotRapide, false);
+                trackBarAccelPivot.SetValue(Config.CurrentConfig.GRAccelerationPivotRapide, false);
 
                 numCoeffP.Value = Config.CurrentConfig.GRCoeffP;
                 numCoeffI.Value = Config.CurrentConfig.GRCoeffI;
@@ -64,10 +64,10 @@ namespace GoBot.IHM
             }
             else
             {
-                trackBarVitesseLigne.SetValue(Config.CurrentConfig.PRVitesseLigneRapide);
-                trackBarAccelLigne.SetValue(Config.CurrentConfig.PRAccelerationLigneRapide);
-                trackBarVitessePivot.SetValue(Config.CurrentConfig.PRVitessePivotRapide);
-                trackBarAccelPivot.SetValue(Config.CurrentConfig.PRAccelerationPivotRapide);
+                trackBarVitesseLigne.SetValue(Config.CurrentConfig.PRVitesseLigneRapide, false);
+                trackBarAccelLigne.SetValue(Config.CurrentConfig.PRAccelerationLigneRapide, false);
+                trackBarVitessePivot.SetValue(Config.CurrentConfig.PRVitessePivotRapide, false);
+                trackBarAccelPivot.SetValue(Config.CurrentConfig.PRAccelerationPivotRapide, false);
 
                 numCoeffP.Value = Config.CurrentConfig.PRCoeffP;
                 numCoeffI.Value = Config.CurrentConfig.PRCoeffI;
@@ -76,8 +76,6 @@ namespace GoBot.IHM
 
                 groupBoxDep.Deployer(Config.CurrentConfig.DeplacementPROuvert, false);
             }
-
-            Robot.Rapide();
         }
 
         protected virtual void btnAvance_Click(object sender, EventArgs e)

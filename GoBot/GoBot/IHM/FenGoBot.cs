@@ -23,6 +23,7 @@ namespace GoBot
 {
     public partial class FenGoBot : Form
     {
+        public static FenGoBot Instance { get; private set; }
         private System.Windows.Forms.Timer timerSauvegarde;
 
         public FenGoBot(string[] args)
@@ -119,6 +120,26 @@ namespace GoBot
 
                     tabControl.SelectedTab = tabLogsUdp;
                 }
+
+                Instance = this;
+            }
+        }
+
+        public void ChargerReplay(String fichier)
+        {
+            if (Path.GetExtension(fichier) == ".tlog")
+            {
+                panelLogTrames.Clear();
+                panelLogTrames.ChargerLog(fichier);
+                panelLogTrames.Afficher();
+                tabControl.SelectedTab = tabLogsUdp;
+            }
+            else if (Path.GetExtension(fichier) == ".elog")
+            {
+                panelLogsEvents.Clear();
+                panelLogsEvents.ChargerLog(fichier);
+                panelLogsEvents.Afficher();
+                tabControl.SelectedTab = tabLogsEvent;
             }
         }
 

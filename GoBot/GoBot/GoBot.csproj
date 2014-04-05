@@ -91,6 +91,12 @@
     <Compile Include="Enchainements\EnchainementAleatoire.cs" />
     <Compile Include="Enchainements\EnchainementMatch.cs" />
     <Compile Include="EventsReplay.cs" />
+    <Compile Include="IHM\FenNomArchivage.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="IHM\FenNomArchivage.Designer.cs">
+      <DependentUpon>FenNomArchivage.cs</DependentUpon>
+    </Compile>
     <Compile Include="IHM\PanelGestionLogs.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -304,6 +310,9 @@
     <Compile Include="Communications\TrameFactory.cs" />
     <Compile Include="Communications\ConnexionUDP.cs" />
     <Compile Include="Communications\Trame.cs" />
+    <EmbeddedResource Include="IHM\FenNomArchivage.resx">
+      <DependentUpon>FenNomArchivage.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="IHM\PanelGestionLogs.resx">
       <DependentUpon>PanelGestionLogs.cs</DependentUpon>
     </EmbeddedResource>
@@ -398,6 +407,7 @@
       <DependentUpon>Resources.resx</DependentUpon>
       <DesignTime>True</DesignTime>
     </Compile>
+    <None Include="app.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>

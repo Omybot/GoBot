@@ -47,32 +47,32 @@ namespace GoBot.IHM
 
         private void btnPinceDroiteFermee_Click(object sender, EventArgs e)
         {
-            Robots.GrosRobot.BougeServo(ServomoteurID.GRPinceDroite, Config.CurrentConfig.PositionGRPinceDroiteFermee);
+            Robots.GrosRobot.BougeServo(ServomoteurID.GRFruitsPinceDroite, Config.CurrentConfig.PositionGRPinceDroiteFermee);
         }
 
         private void btnPinceDroiteOuverte_Click(object sender, EventArgs e)
         {
-            Robots.GrosRobot.BougeServo(ServomoteurID.GRPinceDroite, Config.CurrentConfig.PositionGRPinceDroiteOuverte);
+            Robots.GrosRobot.BougeServo(ServomoteurID.GRFruitsPinceDroite, Config.CurrentConfig.PositionGRPinceDroiteOuverte);
         }
 
         private void btnPinceGaucheFermee_Click(object sender, EventArgs e)
         {
-            Robots.GrosRobot.BougeServo(ServomoteurID.GRPinceGauche, Config.CurrentConfig.PositionGRPinceGaucheFermee);
+            Robots.GrosRobot.BougeServo(ServomoteurID.GRFruitsPinceGauche, Config.CurrentConfig.PositionGRPinceGaucheFermee);
         }
 
         private void btnPinceGaucheOuverte_Click(object sender, EventArgs e)
         {
-            Robots.GrosRobot.BougeServo(ServomoteurID.GRPinceGauche, Config.CurrentConfig.PositionGRPinceGaucheOuverte);
+            Robots.GrosRobot.BougeServo(ServomoteurID.GRFruitsPinceGauche, Config.CurrentConfig.PositionGRPinceGaucheOuverte);
         }
 
         private void btnCoudeRange_Click(object sender, EventArgs e)
         {
-            Robots.GrosRobot.BougeServo(ServomoteurID.GRCoude, Config.CurrentConfig.PositionGRCoudeRange);
+            Robots.GrosRobot.BougeServo(ServomoteurID.GRFruitsCoude, Config.CurrentConfig.PositionGRCoudeRange);
         }
 
         private void btnEpauleRange_Click(object sender, EventArgs e)
         {
-            Robots.GrosRobot.BougeServo(ServomoteurID.GREpaule, Config.CurrentConfig.PositionGREpauleRange);
+            Robots.GrosRobot.BougeServo(ServomoteurID.GRFruitsEpaule, Config.CurrentConfig.PositionGREpauleRange);
         }
     }
 }

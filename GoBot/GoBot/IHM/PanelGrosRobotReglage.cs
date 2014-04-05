@@ -32,13 +32,13 @@ namespace GoBot.IHM
         #region Coude
         private void btnCoudeOk_Click(object sender, EventArgs e)
         {
-            Robots.GrosRobot.BougeServo(ServomoteurID.GRCoude, (int)numCoude.Value);
+            Robots.GrosRobot.BougeServo(ServomoteurID.GRFruitsCoude, (int)numFruitsCoude.Value);
         }
 
         private void btnCoudeRange_Click(object sender, EventArgs e)
         {
             if (MessageBox.Show("Enregistrer cette valeur pour la position rangée du coude ?", "Confirmation", MessageBoxButtons.OKCancel, MessageBoxIcon.Question) == DialogResult.OK)
-                Config.CurrentConfig.PositionGRCoudeRange = (int)numCoude.Value;
+                Config.CurrentConfig.PositionGRCoudeRange = (int)numFruitsCoude.Value;
         }
 
         #endregion
@@ -46,51 +46,51 @@ namespace GoBot.IHM
         #region Epaule
         private void btnEpauleOk_Click(object sender, EventArgs e)
         {
-            Robots.GrosRobot.BougeServo(ServomoteurID.GREpaule, (int)numEpaule.Value);
+            Robots.GrosRobot.BougeServo(ServomoteurID.GRFruitsEpaule, (int)numFruitsEpaule.Value);
         }
 
         private void btnEpauleRange_Click(object sender, EventArgs e)
         {
             if (MessageBox.Show("Enregistrer cette valeur pour la position rangée de l'épaule ?", "Confirmation", MessageBoxButtons.OKCancel, MessageBoxIcon.Question) == DialogResult.OK)
-                Config.CurrentConfig.PositionGREpauleRange = (int)numEpaule.Value;
+                Config.CurrentConfig.PositionGREpauleRange = (int)numFruitsEpaule.Value;
         }
         #endregion
 
         #region Pince droite
         private void btnPinceDroiteOk_Click(object sender, EventArgs e)
         {
-            Robots.GrosRobot.BougeServo(ServomoteurID.GRPinceDroite, (int)numPinceDroite.Value);
+            Robots.GrosRobot.BougeServo(ServomoteurID.GRFruitsPinceDroite, (int)numFruitsPinceDroite.Value);
         }
 
         private void btnPinceDroiteFermee_Click(object sender, EventArgs e)
         {
             if (MessageBox.Show("Enregistrer cette valeur pour la position fermée de la pince droite ?", "Confirmation", MessageBoxButtons.OKCancel, MessageBoxIcon.Question) == DialogResult.OK)
-                Config.CurrentConfig.PositionGRPinceDroiteFermee = (int)numPinceDroite.Value;
+                Config.CurrentConfig.PositionGRPinceDroiteFermee = (int)numFruitsPinceDroite.Value;
         }
 
         private void btnPinceDroiteOuverte_Click(object sender, EventArgs e)
         {
             if (MessageBox.Show("Enregistrer cette valeur pour la position ouverte de la pince droite ?", "Confirmation", MessageBoxButtons.OKCancel, MessageBoxIcon.Question) == DialogResult.OK)
-                Config.CurrentConfig.PositionGRPinceDroiteOuverte = (int)numPinceDroite.Value;
+                Config.CurrentConfig.PositionGRPinceDroiteOuverte = (int)numFruitsPinceDroite.Value;
         }
         #endregion
         
         #region PinceGauche
         private void btnPinceGaucheOk_Click(object sender, EventArgs e)
         {
-            Robots.GrosRobot.BougeServo(ServomoteurID.GRPinceGauche, (int)numPinceGauche.Value);
+            Robots.GrosRobot.BougeServo(ServomoteurID.GRFruitsPinceGauche, (int)numFruitsPinceGauche.Value);
         }
 
         private void btnPinceGaucheFermee_Click(object sender, EventArgs e)
         {
             if (MessageBox.Show("Enregistrer cette valeur pour la position fermée de la pince gauche ?", "Confirmation", MessageBoxButtons.OKCancel, MessageBoxIcon.Question) == DialogResult.OK)
-                Config.CurrentConfig.PositionGRPinceGaucheFermee = (int)numPinceGauche.Value;
+                Config.CurrentConfig.PositionGRPinceGaucheFermee = (int)numFruitsPinceGauche.Value;
         }
 
         private void btnPinceGaucheOuverte_Click(object sender, EventArgs e)
         {
             if (MessageBox.Show("Enregistrer cette valeur pour la position ouverte de la pince gauche ?", "Confirmation", MessageBoxButtons.OKCancel, MessageBoxIcon.Question) == DialogResult.OK)
-                Config.CurrentConfig.PositionGRPinceGaucheOuverte = (int)numPinceGauche.Value;
+                Config.CurrentConfig.PositionGRPinceGaucheOuverte = (int)numFruitsPinceGauche.Value;
         }
         #endregion
 
@@ -98,5 +98,47 @@ namespace GoBot.IHM
         {
             groupBoxReglage.Deployer(Config.CurrentConfig.ReglageGROuvert, false);
         }
+
+        #region Coude Feux
+
+        private void btnFeuxOkCoude_Click(object sender, EventArgs e)
+        {
+            Robots.GrosRobot.BougeServo(ServomoteurID.GRFeuxCoude, (int)numFeuxCoude.Value);
+        }
+
+        private void btnFeuxCoudeSave_Click(object sender, EventArgs e)
+        {
+            // TODO
+        }
+
+        #endregion
+
+        #region Poignet Feux
+
+        private void btnFeuxOkPoignet_Click(object sender, EventArgs e)
+        {
+            Robots.GrosRobot.BougeServo(ServomoteurID.GRFeuxPoignet, (int)numFeuxPoignet.Value);
+        }
+
+        private void btnFeuxPoignetSave_Click(object sender, EventArgs e)
+        {
+            // TODO
+        }
+
+        #endregion
+
+        #region Epaule Feux
+
+        private void btnFeuxOkEpaule_Click(object sender, EventArgs e)
+        {
+            // TODO
+        }
+
+        private void btnFeuxEpauleSave_Click(object sender, EventArgs e)
+        {
+            // TODO
+        }
+
+        #endregion
     }
 }

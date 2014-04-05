@@ -85,10 +85,10 @@ namespace GoBot
         {
             if (ServoActive.ContainsKey(servo))
             {
-                if (servo == ServomoteurID.GRPinceDroite && position == Config.CurrentConfig.PositionGRPinceDroiteOuverte ||
-                    servo == ServomoteurID.GRPinceGauche && position == Config.CurrentConfig.PositionGRPinceGaucheOuverte ||
-                    servo == ServomoteurID.GRCoude && position != Config.CurrentConfig.PositionGRCoudeRange ||
-                    servo == ServomoteurID.GREpaule && position != Config.CurrentConfig.PositionGREpauleRange)
+                if (servo == ServomoteurID.GRFruitsPinceDroite && position == Config.CurrentConfig.PositionGRPinceDroiteOuverte ||
+                    servo == ServomoteurID.GRFruitsPinceGauche && position == Config.CurrentConfig.PositionGRPinceGaucheOuverte ||
+                    servo == ServomoteurID.GRFruitsCoude && position != Config.CurrentConfig.PositionGRCoudeRange ||
+                    servo == ServomoteurID.GRFruitsEpaule && position != Config.CurrentConfig.PositionGREpauleRange)
                     ServoActive[servo] = true;
                 else
                     ServoActive[servo] = false;

@@ -39,14 +39,15 @@ namespace GoBot
 
     public enum ServomoteurID
     {
-        GRCoude = 254,
-        GREpaule = 4,
-        GRPinceDroite = 3,
-        GRPinceGauche = 5,
+        GRFeuxCoude = 1,
+        GRFruitsCoude = 2,
+        GRFruitsPinceDroite = 3,
+        GRFruitsEpaule = 4,
+        GRFruitsPinceGauche = 5,
+        GRFeuxPoignet = 16,
 
         Tous = 255,
 
-        zLibre1 = 1,
         //zLibre2 = 2,
         //zLibre3 = 3,
         //zLibre4 = 4,
@@ -61,7 +62,6 @@ namespace GoBot
         zLibre13 = 13,
         zLibre14 = 14,
         zLibre15 = 15,
-        zLibre16 = 16,
         zLibre17 = 17,
         zLibre18 = 18,
         zLibre19 = 19,
