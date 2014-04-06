@@ -39,10 +39,10 @@ Source: "E:\Dropbox\Robot\GoBot\GoBot\GoBot\bin\Release\GoBot.exe"; DestDir: "{a
 Source: "E:\Dropbox\Robot\GoBot\GoBot\GoBot\bin\Release\Composants.dll"; DestDir: "{app}"; Flags: ignoreversion
 Source: "./iconeTlog.ico"; DestDir: "{app}"; Flags: ignoreversion
 Source: "./iconeElog.ico"; DestDir: "{app}"; Flags: ignoreversion
-Source: "E:\Dropbox\Robot\GoBot\GoBot\GoBot\bin\Release\graphGros.bin"; DestDir: "{localappdata}\GoBot"; Flags: ignoreversion
-Source: "E:\Dropbox\Robot\GoBot\GoBot\GoBot\bin\Release\graphPetit.bin"; DestDir: "{localappdata}\GoBot"; Flags: ignoreversion     
-Source: "E:\Dropbox\Robot\GoBot\GoBot\GoBot\bin\Release\KillGobot.exe"; DestDir: "{localappdata}\GoBot"; Flags: ignoreversion
-Source: "E:\Dropbox\Robot\GoBot\GoBot\GoBot\bin\Release\config.xml"; DestDir: "{localappdata}\GoBot"; Flags: ignoreversion
+Source: "C:\Users\Kryss\AppData\Local\GoBot\graphGros.bin"; DestDir: "{localappdata}\GoBot"; Flags: ignoreversion
+Source: "C:\Users\Kryss\AppData\Local\GoBot\graphPetit.bin"; DestDir: "{localappdata}\GoBot"; Flags: ignoreversion     
+Source: "C:\Users\Kryss\AppData\Local\GoBot\KillGobot.exe"; DestDir: "{localappdata}\GoBot"; Flags: ignoreversion
+Source: "C:\Users\Kryss\AppData\Local\GoBot\config.xml"; DestDir: "{localappdata}\GoBot"; Flags: ignoreversion
 ; NOTE: Don't use "Flags: ignoreversion" on any shared system files     
           
 [Registry]  

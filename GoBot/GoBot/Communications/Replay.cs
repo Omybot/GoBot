@@ -145,8 +145,8 @@ namespace GoBot.Communications
 
                 if (Trames[i].Entrant)
                     Connexions.ConnexionParCarte[trame.Carte].TrameRecue(trame);
-                else
-                    Connexions.ConnexionParCarte[trame.Carte].SendMessage(trame);
+                //else
+                //    Connexions.ConnexionParCarte[trame.Carte].SendMessage(trame);
 
                 if (i - 1 > 0)
                     Thread.Sleep(Trames[i].Date - Trames[i - 1].Date);

@@ -38,11 +38,16 @@ namespace GoBot.IHM
             }
         }
 
-        void Stats_NouvelleDonnee(TimeSpan temps, DetectionBalise detection)
+        void Stats_NouvelleDonnee(TimeSpan temps, int pwm, DetectionBalise detection1, DetectionBalise detection2)
         {
-            ctrlGraphiqueAngle.AjouterPoint("Angle", detection.AngleCentral, Color.Green);
-            ctrlGraphiqueDistance.AjouterPoint("Distance", detection.Distance, Color.Red);
+            ctrlGraphiqueAngle1.AjouterPoint("Angle 1", detection1.AngleCentral, Color.Green);
+            ctrlGraphiqueDistance1.AjouterPoint("Distance 1", detection1.Distance, Color.Red);
+
+            ctrlGraphiqueAngle2.AjouterPoint("Angle 2", detection2.AngleCentral, Color.Green);
+            ctrlGraphiqueDistance2.AjouterPoint("Distance 2", detection2.Distance, Color.Red);
+
             ctrlGraphiqueTemps.AjouterPoint("Temps(ms)", temps.TotalMilliseconds, Color.Blue);
+            ctrlGraphiquePWM.AjouterPoint("PWM", pwm, Color.DarkSalmon);
 
             this.Invoke(eventGraphiques);
         }
@@ -50,19 +55,27 @@ namespace GoBot.IHM
         private void btnReset_Click(object sender, EventArgs e)
         {
             balise.Stats.Reset();
-            ctrlGraphiqueAngle.SupprimerCourbe("Angle");
-            ctrlGraphiqueDistance.SupprimerCourbe("Distance");
-            ctrlGraphiqueTemps.SupprimerCourbe("Temps");
+            ctrlGraphiqueAngle1.SupprimerCourbe("Angle 1");
+            ctrlGraphiqueDistance1.SupprimerCourbe("Distance 1");
+            ctrlGraphiqueAngle2.SupprimerCourbe("Angle 2");
+            ctrlGraphiqueDistance2.SupprimerCourbe("Distance 2");
         }
 
         private void MAJGraphiques(object sender, EventArgs e)
         {
-            ctrlGraphiqueAngle.DessineCourbes();
-            ctrlGraphiqueDistance.DessineCourbes();
+            ctrlGraphiqueAngle1.DessineCourbes();
+            ctrlGraphiqueDistance1.DessineCourbes();
+            ctrlGraphiqueAngle2.DessineCourbes();
+            ctrlGraphiqueDistance2.DessineCourbes();
             ctrlGraphiqueTemps.DessineCourbes();
+            ctrlGraphiquePWM.DessineCourbes();
 
-            lblStabiliteAngle.Text = Balise.Stats.StabiliteAngle.ToString("0.00") + "% / " + Balise.Stats.EcartTypeAngle.ToString("0.00") + "°";
-            lblStabiliteDistance.Text = Balise.Stats.StabiliteDistance.ToString("0.00") + "% / " + Balise.Stats.EcartTypeDistance.ToString("0.00") + "mm";
+            lblStabiliteAngle1.Text = Balise.Stats.StabiliteAngle1.ToString("0.00") + "% / " + Balise.Stats.EcartTypeAngle1.ToString("0.00") + "°";
+            lblStabiliteDistance1.Text = Balise.Stats.StabiliteDistance1.ToString("0.00") + "% / " + Balise.Stats.EcartTypeDistance1.ToString("0.00") + "mm";
+
+            lblStabiliteAngle2.Text = Balise.Stats.StabiliteAngle2.ToString("0.00") + "% / " + Balise.Stats.EcartTypeAngle2.ToString("0.00") + "°";
+            lblStabiliteDistance2.Text = Balise.Stats.StabiliteDistance2.ToString("0.00") + "% / " + Balise.Stats.EcartTypeDistance2.ToString("0.00") + "mm";
+
             lblNbTrames.Text = Balise.Stats.NombreMessagesRecus + " messages";
         }
 

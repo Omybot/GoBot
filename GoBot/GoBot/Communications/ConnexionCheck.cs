@@ -8,7 +8,8 @@ namespace GoBot.Communications
 {
     public class ConnexionCheck
     {
-        private DateTime dernierMessage;
+        private DateTime derniereReception;
+        private DateTime dernierTest;
         public bool Connecte { get; private set; }
         private Timer connexionOffTimer;
         private int interval;
@@ -19,7 +20,8 @@ namespace GoBot.Communications
         /// </summary>
         public ConnexionCheck(int intervalle = 2000)
         {
-            dernierMessage = DateTime.Now - new TimeSpan(1, 0, 0);
+            derniereReception = DateTime.Now - new TimeSpan(0, 1, 0);
+            dernierTest = DateTime.Now;
 
             start = false;
             interval = intervalle;
@@ -71,21 +73,24 @@ namespace GoBot.Communications
             if (!start)
                 return;
 
-            if (Connecte && dernierMessage < DateTime.Now - new TimeSpan(0, 0, 0, 0, (int)(connexionOffTimer.Interval * 1.2)))
+            TimeSpan intervalleAutorise = new TimeSpan(0, 0, 0, 0, (int)(connexionOffTimer.Interval * 0.5));
+            TimeSpan intervalleEcoule = dernierTest - derniereReception;
+
+            if (Connecte && intervalleEcoule > intervalleAutorise)
             {
                 Connecte = false;
                 if (ConnexionChange != null)
                     ConnexionChange(false);
             }
 
-            else if (!Connecte && dernierMessage > DateTime.Now - new TimeSpan(0, 0, 0, 0, (int)(connexionOffTimer.Interval * 1.2)))
+            else if (!Connecte && intervalleEcoule < intervalleAutorise)
             {
                 Connecte = true;
                 if (ConnexionChange != null)
                     ConnexionChange(true);
             }
 
-            //connexionOffTimer.Interval = interval;
+            dernierTest = DateTime.Now;
         }
 
         /// <summary>
@@ -93,7 +98,7 @@ namespace GoBot.Communications
         /// </summary>
         public void MajConnexion()
         {
-            dernierMessage = DateTime.Now;
+            derniereReception = DateTime.Now;
             MajStatut();
         }
 

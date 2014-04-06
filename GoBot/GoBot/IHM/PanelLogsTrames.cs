@@ -39,7 +39,7 @@ namespace GoBot.IHM
         public PanelLogsTrames()
         {
             InitializeComponent();
-            
+
             dataGridViewLog.Columns.Add("Id", "Id");
             dataGridViewLog.Columns[0].Width = 40;
             dataGridViewLog.Columns.Add("Expediteur", "Expediteur");
@@ -60,6 +60,7 @@ namespace GoBot.IHM
             couleurCarte.Add(Carte.RecBun, Color.FromArgb(226, 226, 255));
             couleurCarte.Add(Carte.RecBeu, Color.FromArgb(202, 202, 255));
             couleurCarte.Add(Carte.RecBoi, Color.FromArgb(176, 176, 255));
+            couleurCarte.Add(Carte.RecMiwi, Color.FromArgb(244, 247, 153));
 
             dicMessagesMoveAutorises = new Dictionary<TrameFactory.FonctionMove, bool>();
             dicMessagesPiAutorises = new Dictionary<TrameFactory.FonctionMove, bool>();
@@ -94,7 +95,7 @@ namespace GoBot.IHM
             if (open.ShowDialog() == DialogResult.OK)
             {
 
-                foreach(String fichier in open.FileNames)
+                foreach (String fichier in open.FileNames)
                 {
                     ChargerLog(fichier);
                 }
@@ -260,7 +261,7 @@ namespace GoBot.IHM
             for (int i = compteur; i < nbTrames; i++)
                 AfficherTrame(replay.Trames[i]);
 
-            if(boxScroll.Checked && dataGridViewLog.Rows.Count > 10)
+            if (boxScroll.Checked && dataGridViewLog.Rows.Count > 10)
                 dataGridViewLog.FirstDisplayedScrollingRowIndex = dataGridViewLog.RowCount - 1;
         }
 
@@ -289,9 +290,12 @@ namespace GoBot.IHM
 
             bool fonctionAutorisee = false;
             if ((carte == Carte.RecMove && dicMessagesMoveAutorises[(TrameFactory.FonctionMove)trame[1]]) ||
-               (carte == Carte.RecPi && dicMessagesPiAutorises[(TrameFactory.FonctionMove)trame[3]]) ||
-               ((carte == Carte.RecBun || carte == Carte.RecBeu || carte == Carte.RecBoi) && dicMessagesBaliseAutorises[(TrameFactory.FonctionBalise)trame[3]]))
+                (carte == Carte.RecPi && dicMessagesPiAutorises[(TrameFactory.FonctionMove)trame[3]]) ||
+                ((expediteur == Carte.RecBun || expediteur == Carte.RecBeu || expediteur == Carte.RecBoi) && dicMessagesBaliseAutorises[(TrameFactory.FonctionBalise)trame[1]]) ||
+                ((destinataire == Carte.RecBun || destinataire == Carte.RecBeu || destinataire == Carte.RecBoi) && dicMessagesBaliseAutorises[(TrameFactory.FonctionBalise)trame[3]]) ||
+                (carte == Carte.RecMiwi))
                 fonctionAutorisee = true;
+
 
             if (cartesAutorisees && fonctionAutorisee)
             {

@@ -46,54 +46,113 @@ namespace GoBot.Balises
         /// <summary>
         /// Liste des angles médians retournés par la balise depuis la dernière réinitialisation
         /// </summary>
-        public List<double> AnglesMesures { get; private set; }
+        public List<double> AnglesMesures1 { get; private set; }
+
+        /// <summary>
+        /// Liste des angles médians retournés par la balise depuis la dernière réinitialisation
+        /// </summary>
+        public List<double> AnglesMesures2 { get; private set; }
+
+        /// <summary>
+        /// Liste des valeurs PWM envoyées pour asservissement
+        /// </summary>
+        public List<double> ValeursPWM { get; private set; }
 
         /// <summary>
         /// Retourne la stabilité en pourcentage de la mesure de l'angle depuis la dernière réinitialisation
         /// </summary>
-        public double StabiliteAngle
+        public double StabiliteAngle1
         {
             get
             {
-                return 100 - 100 * Maths.EcartType(AnglesMesures) / AnglesMesures.Average();
+                return 100 - 100 * Maths.EcartType(AnglesMesures1) / AnglesMesures1.Average();
+            }
+        }
+
+        /// <summary>
+        /// Retourne la stabilité en pourcentage de la mesure de l'angle depuis la dernière réinitialisation
+        /// </summary>
+        public double StabiliteAngle2
+        {
+            get
+            {
+                return 100 - 100 * Maths.EcartType(AnglesMesures2) / AnglesMesures2.Average();
             }
         }
 
         /// <summary>
         /// Retourne l'écart type de l'angle en degrés sur l'ensemble des angles mesurés depuis la dernière réinitialisation
         /// </summary>
-        public double EcartTypeAngle
+        public double EcartTypeAngle1
         {
             get
             {
-                return Maths.EcartType(AnglesMesures);
+                return Maths.EcartType(AnglesMesures1);
+            }
+        }
+
+        /// <summary>
+        /// Retourne l'écart type de l'angle en degrés sur l'ensemble des angles mesurés depuis la dernière réinitialisation
+        /// </summary>
+        public double EcartTypeAngle2
+        {
+            get
+            {
+                return Maths.EcartType(AnglesMesures2);
             }
         }
 
         /// <summary>
         /// Liste des distance mesurées par la balise depuis la dernière réinitialisation
         /// </summary>
-        public List<double> DistancesMesures { get; private set; }
+        public List<double> DistancesMesures1 { get; private set; }
+
+        /// <summary>
+        /// Liste des distance mesurées par la balise depuis la dernière réinitialisation
+        /// </summary>
+        public List<double> DistancesMesures2 { get; private set; }
 
         /// <summary>
         /// Retourne la stabilité en pourcentage de la mesure de distance depuis la dernière réinitialisation
         /// </summary>
-        public double StabiliteDistance
+        public double StabiliteDistance1
         {
             get
             {
-                return 100 - 100 * Maths.EcartType(DistancesMesures) / DistancesMesures.Average();
+                return 100 - 100 * Maths.EcartType(DistancesMesures1) / DistancesMesures1.Average();
+            }
+        }
+
+        /// <summary>
+        /// Retourne la stabilité en pourcentage de la mesure de distance depuis la dernière réinitialisation
+        /// </summary>
+        public double StabiliteDistance2
+        {
+            get
+            {
+                return 100 - 100 * Maths.EcartType(DistancesMesures2) / DistancesMesures2.Average();
             }
         }
 
         /// <summary>
         /// Retourne l'écart type de la distance en millimètres sur l'ensemble des distances mesurées depuis la dernière réinitialisation
         /// </summary>
-        public double EcartTypeDistance
+        public double EcartTypeDistance1
         {
             get
             {
-                return Maths.EcartType(DistancesMesures);
+                return Maths.EcartType(DistancesMesures1);
+            }
+        }
+
+        /// <summary>
+        /// Retourne l'écart type de la distance en millimètres sur l'ensemble des distances mesurées depuis la dernière réinitialisation
+        /// </summary>
+        public double EcartTypeDistance2
+        {
+            get
+            {
+                return Maths.EcartType(DistancesMesures2);
             }
         }
 
@@ -106,8 +165,11 @@ namespace GoBot.Balises
             Balise = balise;
             Balise.PositionsChange += new Balise.PositionsChangeDelegate(Balise_PositionsChange);
             NombreMessagesRecus = 0;
-            AnglesMesures = new List<double>();
-            DistancesMesures = new List<double>();
+            AnglesMesures1 = new List<double>();
+            DistancesMesures1 = new List<double>();
+            AnglesMesures2 = new List<double>();
+            DistancesMesures2 = new List<double>();
+            ValeursPWM = new List<double>();
         }
 
         /// <summary>
@@ -124,11 +186,16 @@ namespace GoBot.Balises
 
             if (Balise.Detections.Count > 0)
             {
-                AnglesMesures.Add(Balise.Detections[0].AngleCentral);
-                DistancesMesures.Add(Balise.Detections[0].Distance);
+                AnglesMesures1.Add(Balise.Detections[0].AngleCentral);
+                DistancesMesures1.Add(Balise.Detections[0].Distance);
+
+                AnglesMesures2.Add(Balise.Detections[1].AngleCentral);
+                DistancesMesures2.Add(Balise.Detections[1].Distance);
+
+                ValeursPWM.Add(Balise.ValeurConsigne);
 
                 if (NouvelleDonnee != null)
-                    NouvelleDonnee(tempsEcoule, Balise.Detections[0]);
+                    NouvelleDonnee(tempsEcoule, (int)Balise.ValeurConsigne, Balise.Detections[0], Balise.Detections[1]);
             }
         }
 
@@ -138,12 +205,14 @@ namespace GoBot.Balises
         public void Reset()
         {
             NombreMessagesRecus = 0;
-            AnglesMesures.Clear();
-            DistancesMesures.Clear();
+            AnglesMesures1.Clear();
+            DistancesMesures1.Clear();
+            AnglesMesures2.Clear();
+            DistancesMesures2.Clear();
         }
 
         //Déclaration du délégué pour l’évènement de nouvelle donnée
-        public delegate void NouvelleDonneeDelegate(TimeSpan temps, DetectionBalise detection);
+        public delegate void NouvelleDonneeDelegate(TimeSpan temps, int pwm, DetectionBalise detection1, DetectionBalise detection2);
         //Déclaration de l’évènement utilisant le délégué
         public event NouvelleDonneeDelegate NouvelleDonnee;
     }

@@ -19,6 +19,7 @@ namespace GoBot.IHM
         public PanelMatch()
         {
             InitializeComponent();
+            CouleurJaune();
         }
 
         private void btnCouleurJaune_Click(object sender, EventArgs e)
@@ -41,7 +42,7 @@ namespace GoBot.IHM
             Balise.GetBalise(Carte.RecBoi).Position = new Position(new Angle(0, AnglyeType.Degre), new PointReel(-Balise.DISTANCE_LASER_TABLE, Plateau.LargeurPlateau / 2));
         }
 
-        public void CouleurBleu()
+        public void CouleurJaune()
         {
             pictureBoxCouleur.BackColor = Plateau.CouleurJ2Jaune;
             pictureBoxBalises.Image = Properties.Resources.TableViolet;
@@ -168,7 +169,7 @@ namespace GoBot.IHM
                 if (Plateau.NotreCouleur == Plateau.CouleurJ1Rouge)
                     CouleurRouge();
                 else if (Plateau.NotreCouleur == Plateau.CouleurJ2Jaune)
-                    CouleurBleu();
+                    CouleurJaune();
             }));
         }
 

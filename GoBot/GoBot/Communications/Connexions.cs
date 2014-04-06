@@ -37,17 +37,17 @@ namespace GoBot.Communications
             ConnexionParCarte.Add(Carte.RecMove, ConnexionMove);
         }
 
-        private static void ConnexionMoveCheck_TestConnexion()
+        public static void ConnexionMoveCheck_TestConnexion()
         {
             ConnexionMove.SendMessage(TrameFactory.TestConnexionMove());
         }
 
-        private static void ConnexionMiwiCheck_TestConnexion()
+        public static void ConnexionMiwiCheck_TestConnexion()
         {
             ConnexionMiwi.SendMessage(TrameFactory.TestConnexionMiwi());
         }
 
-        private static void ConnexionPiCheck_TestConnexion()
+        public static void ConnexionPiCheck_TestConnexion()
         {
             ConnexionPi.SendMessage(TrameFactory.TestConnexionPi());
         }
