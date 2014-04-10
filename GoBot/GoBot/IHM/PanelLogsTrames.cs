@@ -22,9 +22,10 @@ namespace GoBot.IHM
     {
         private Replay replay;
         private Dictionary<Carte, Color> couleurCarte;
-        private Dictionary<TrameFactory.FonctionMove, bool> dicMessagesMoveAutorises;
-        private Dictionary<TrameFactory.FonctionMove, bool> dicMessagesPiAutorises;
-        private Dictionary<TrameFactory.FonctionBalise, bool> dicMessagesBaliseAutorises;
+        private Dictionary<FonctionMove, bool> dicMessagesMoveAutorises;
+        private Dictionary<FonctionIO, bool> dicMessagesIOAutorises;
+        private Dictionary<FonctionMove, bool> dicMessagesPiAutorises;
+        private Dictionary<FonctionBalise, bool> dicMessagesBaliseAutorises;
         private Dictionary<Carte, bool> dicExpediteurAutorises;
         private Dictionary<Carte, bool> dicDestinataireAutorises;
 
@@ -61,20 +62,25 @@ namespace GoBot.IHM
             couleurCarte.Add(Carte.RecBeu, Color.FromArgb(202, 202, 255));
             couleurCarte.Add(Carte.RecBoi, Color.FromArgb(176, 176, 255));
             couleurCarte.Add(Carte.RecMiwi, Color.FromArgb(244, 247, 153));
+            couleurCarte.Add(Carte.RecIO, Color.FromArgb(244, 111, 255));
 
-            dicMessagesMoveAutorises = new Dictionary<TrameFactory.FonctionMove, bool>();
-            dicMessagesPiAutorises = new Dictionary<TrameFactory.FonctionMove, bool>();
-            dicMessagesBaliseAutorises = new Dictionary<TrameFactory.FonctionBalise, bool>();
+            dicMessagesIOAutorises = new Dictionary<FonctionIO, bool>();
+            dicMessagesMoveAutorises = new Dictionary<FonctionMove, bool>();
+            dicMessagesPiAutorises = new Dictionary<FonctionMove, bool>();
+            dicMessagesBaliseAutorises = new Dictionary<FonctionBalise, bool>();
             dicDestinataireAutorises = new Dictionary<Carte, bool>();
             dicExpediteurAutorises = new Dictionary<Carte, bool>();
 
             // L'ajout de champs déclenche le SetCheck event qui ajoute les éléments automatiquement dans le dictionnaire
-            foreach (TrameFactory.FonctionMove fonction in Enum.GetValues(typeof(TrameFactory.FonctionMove)))
+            foreach (FonctionMove fonction in Enum.GetValues(typeof(FonctionMove)))
             {
-                checkedListBoxGros.Items.Add(fonction.ToString(), true);
-                checkedListBoxPetit.Items.Add(fonction.ToString(), true);
+                checkedListBoxMove.Items.Add(fonction.ToString(), true);
             }
-            foreach (TrameFactory.FonctionBalise fonction in Enum.GetValues(typeof(TrameFactory.FonctionBalise)))
+            foreach (FonctionIO fonction in Enum.GetValues(typeof(FonctionIO)))
+            {
+                checkedListBoxIO.Items.Add(fonction.ToString(), true);
+            }
+            foreach (FonctionBalise fonction in Enum.GetValues(typeof(FonctionBalise)))
             {
                 checkedListBoxBalise.Items.Add(fonction.ToString(), true);
             }
@@ -149,8 +155,8 @@ namespace GoBot.IHM
         {
             if (!Config.DesignMode)
             {
-                String fonctionString = (String)checkedListBoxGros.Items[e.Index];
-                TrameFactory.FonctionMove fonction = (TrameFactory.FonctionMove)Enum.Parse(typeof(TrameFactory.FonctionMove), fonctionString);
+                String fonctionString = (String)checkedListBoxMove.Items[e.Index];
+                FonctionMove fonction = (FonctionMove)Enum.Parse(typeof(FonctionMove), fonctionString);
 
                 dicMessagesMoveAutorises[fonction] = (e.NewValue == CheckState.Checked);
             }
@@ -178,23 +184,23 @@ namespace GoBot.IHM
 
                         if (carte == Carte.RecMove)
                         {
-                            TrameFactory.FonctionMove fonction = (TrameFactory.FonctionMove)trame[1];
-                            checkedListBoxGros.Items.Remove(fonction.ToString());
-                            checkedListBoxGros.Items.Add(fonction.ToString(), false);
+                            FonctionMove fonction = (FonctionMove)trame[1];
+                            checkedListBoxMove.Items.Remove(fonction.ToString());
+                            checkedListBoxMove.Items.Add(fonction.ToString(), false);
                             dicMessagesMoveAutorises[fonction] = false;
                         }
 
                         if (carte == Carte.RecPi)
                         {
-                            TrameFactory.FonctionMove fonction = (TrameFactory.FonctionMove)trame[1];
-                            checkedListBoxPetit.Items.Remove(fonction.ToString());
-                            checkedListBoxPetit.Items.Add(fonction.ToString(), false);
+                            FonctionMove fonction = (FonctionMove)trame[1];
+                            checkedListBoxIO.Items.Remove(fonction.ToString());
+                            checkedListBoxIO.Items.Add(fonction.ToString(), false);
                             dicMessagesPiAutorises[fonction] = false;
                         }
 
                         if (carte == Carte.RecBun || carte == Carte.RecBeu || carte == Carte.RecBoi)
                         {
-                            TrameFactory.FonctionBalise fonction = (TrameFactory.FonctionBalise)trame[3];
+                            FonctionBalise fonction = (FonctionBalise)trame[3];
                             checkedListBoxBalise.Items.Remove(fonction.ToString());
                             checkedListBoxBalise.Items.Add(fonction.ToString(), false);
                             dicMessagesBaliseAutorises[fonction] = false;
@@ -225,8 +231,8 @@ namespace GoBot.IHM
                 Connexions.ConnexionMove.NouvelleTrameRecue += new ConnexionUDP.ReceptionDelegate(replay.AjouterTrameEntrante);
                 Connexions.ConnexionMove.NouvelleTrameEnvoyee += new ConnexionUDP.ReceptionDelegate(replay.AjouterTrameSortante);
 
-                Connexions.ConnexionPi.NouvelleTrameRecue += new ConnexionUDP.ReceptionDelegate(replay.AjouterTrameEntrante);
-                Connexions.ConnexionPi.NouvelleTrameEnvoyee += new ConnexionUDP.ReceptionDelegate(replay.AjouterTrameSortante);
+                Connexions.ConnexionIO.NouvelleTrameRecue += new ConnexionUDP.ReceptionDelegate(replay.AjouterTrameEntrante);
+                Connexions.ConnexionIO.NouvelleTrameEnvoyee += new ConnexionUDP.ReceptionDelegate(replay.AjouterTrameSortante);
 
                 btnRejouerTout.Enabled = false;
                 btnRejouerSelection.Enabled = false;
@@ -244,8 +250,8 @@ namespace GoBot.IHM
                 Connexions.ConnexionMove.NouvelleTrameRecue -= new ConnexionUDP.ReceptionDelegate(replay.AjouterTrameEntrante);
                 Connexions.ConnexionMove.NouvelleTrameEnvoyee -= new ConnexionUDP.ReceptionDelegate(replay.AjouterTrameSortante);
 
-                Connexions.ConnexionPi.NouvelleTrameRecue -= new ConnexionUDP.ReceptionDelegate(replay.AjouterTrameEntrante);
-                Connexions.ConnexionPi.NouvelleTrameEnvoyee -= new ConnexionUDP.ReceptionDelegate(replay.AjouterTrameSortante);
+                Connexions.ConnexionIO.NouvelleTrameRecue -= new ConnexionUDP.ReceptionDelegate(replay.AjouterTrameEntrante);
+                Connexions.ConnexionIO.NouvelleTrameEnvoyee -= new ConnexionUDP.ReceptionDelegate(replay.AjouterTrameSortante);
 
                 btnRejouerTout.Enabled = true;
                 btnRejouerSelection.Enabled = true;
@@ -289,10 +295,10 @@ namespace GoBot.IHM
                 cartesAutorisees = true;
 
             bool fonctionAutorisee = false;
-            if ((carte == Carte.RecMove && dicMessagesMoveAutorises[(TrameFactory.FonctionMove)trame[1]]) ||
-                (carte == Carte.RecPi && dicMessagesPiAutorises[(TrameFactory.FonctionMove)trame[3]]) ||
-                ((expediteur == Carte.RecBun || expediteur == Carte.RecBeu || expediteur == Carte.RecBoi) && dicMessagesBaliseAutorises[(TrameFactory.FonctionBalise)trame[1]]) ||
-                ((destinataire == Carte.RecBun || destinataire == Carte.RecBeu || destinataire == Carte.RecBoi) && dicMessagesBaliseAutorises[(TrameFactory.FonctionBalise)trame[3]]) ||
+            if ((carte == Carte.RecMove && dicMessagesMoveAutorises[(FonctionMove)trame[1]]) ||
+                (carte == Carte.RecPi && dicMessagesPiAutorises[(FonctionMove)trame[3]]) ||
+                ((expediteur == Carte.RecBun || expediteur == Carte.RecBeu || expediteur == Carte.RecBoi) && dicMessagesBaliseAutorises[(FonctionBalise)trame[1]]) ||
+                ((destinataire == Carte.RecBun || destinataire == Carte.RecBeu || destinataire == Carte.RecBoi) && dicMessagesBaliseAutorises[(FonctionBalise)trame[3]]) ||
                 (carte == Carte.RecMiwi))
                 fonctionAutorisee = true;
 
@@ -368,17 +374,17 @@ namespace GoBot.IHM
         private void checkedListBoxBalise_ItemCheck(object sender, ItemCheckEventArgs e)
         {
             String fonctionString = (String)checkedListBoxBalise.Items[e.Index];
-            TrameFactory.FonctionBalise fonction = (TrameFactory.FonctionBalise)Enum.Parse(typeof(TrameFactory.FonctionBalise), fonctionString);
+            FonctionBalise fonction = (FonctionBalise)Enum.Parse(typeof(FonctionBalise), fonctionString);
 
             dicMessagesBaliseAutorises[fonction] = (e.NewValue == CheckState.Checked);
         }
 
-        private void checkedListBoxPetit_ItemCheck(object sender, ItemCheckEventArgs e)
+        private void checkedListBoxIO_ItemCheck(object sender, ItemCheckEventArgs e)
         {
-            String fonctionString = (String)checkedListBoxPetit.Items[e.Index];
-            TrameFactory.FonctionMove fonction = (TrameFactory.FonctionMove)Enum.Parse(typeof(TrameFactory.FonctionMove), fonctionString);
+            String fonctionString = (String)checkedListBoxIO.Items[e.Index];
+            FonctionIO fonction = (FonctionIO)Enum.Parse(typeof(FonctionIO), fonctionString);
 
-            dicMessagesPiAutorises[fonction] = (e.NewValue == CheckState.Checked);
+            dicMessagesIOAutorises[fonction] = (e.NewValue == CheckState.Checked);
         }
 
         private void nePlusAfficherDeMessagesDeCetExpéditeurToolStripMenuItem_Click(object sender, EventArgs e)

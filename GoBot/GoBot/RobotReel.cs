@@ -32,8 +32,9 @@ namespace GoBot
         public Enchainements.Enchainement Enchainement { get; set; }
         public Color Couleur;
 
-        public RobotReel(IDRobot idRobot)
+        public RobotReel(IDRobot idRobot, Carte carte)
         {
+            Carte = carte;
             IDRobot = idRobot;
             ServomoteursConnectes = new List<byte>();
         }
@@ -86,22 +87,13 @@ namespace GoBot
             // Analyser la trame reçue
             if (trameRecue[0] == (byte)Carte.RecMove)
             {
-                if (trameRecue[1] == (byte)TrameFactory.FonctionMove.FinDeplacement
-                    || trameRecue[1] == (byte)TrameFactory.FonctionMove.FinRecallage)
+                if (trameRecue[1] == (byte)FonctionMove.FinDeplacement
+                    || trameRecue[1] == (byte)FonctionMove.FinRecallage)
                 {
                     semDeplacement.Release();
                 }
 
-                if (trameRecue[1] == (byte)TrameFactory.FonctionMove.ReponseJack)
-                {
-                    jackBranche = trameRecue[2] == 1 ? true : false;
-                    if (historiqueJack)
-                        Historique.AjouterAction(new ActionCapteur(this, CapteurID.GRJack, jackBranche ? "branché" : "absent"));
-                    if (semJack != null)
-                        semJack.Release();
-                }
-
-                if (trameRecue[1] == (byte)TrameFactory.FonctionMove.RetourPositionXYTeta)
+                if (trameRecue[1] == (byte)FonctionMove.RetourPositionXYTeta)
                 {
                     // Réception de la position mesurée par l'asservissement
                     try
@@ -123,23 +115,7 @@ namespace GoBot
                     }
                 }
 
-                if (trameRecue[1] == (byte)TrameFactory.FonctionMove.DepartJack)
-                {
-                    Plateau.Enchainement = new GoBot.Enchainements.EnchainementMatch();
-                    Plateau.Enchainement.Executer();
-                }
-
-                if (trameRecue[1] == (byte)TrameFactory.FonctionMove.ReponseCouleurEquipe)
-                {
-                    if (trameRecue[2] == 0)
-                        Plateau.NotreCouleur = Plateau.CouleurJ1Rouge;
-                    else if (trameRecue[2] == 1)
-                        Plateau.NotreCouleur = Plateau.CouleurJ2Jaune;
-
-                    //Historique.AjouterAction(new ActionCapteur(this, CapteurID.GRCouleurBalle, "));
-                }
-
-                if (trameRecue[1] == (byte)TrameFactory.FonctionMove.RetourPositionCodeurs)
+                if (trameRecue[1] == (byte)FonctionMove.RetourPositionCodeurs)
                 {
                     int nbPositions = trameRecue[2];
 
@@ -166,7 +142,7 @@ namespace GoBot
                     }
                 }
 
-                if (trameRecue[1] == (byte)TrameFactory.FonctionMove.RetourDiagnostic)
+                if (trameRecue[1] == (byte)FonctionMove.RetourDiagnostic)
                 {
                     int nbValeurs = trameRecue[2];
 
@@ -183,6 +159,33 @@ namespace GoBot
                     }
                 }
             }
+            else if (trameRecue[0] == (byte)Carte.RecIO)
+            {
+                if (trameRecue[1] == (byte)FonctionIO.ReponseJack)
+                {
+                    jackBranche = trameRecue[2] == 1 ? true : false;
+                    if (historiqueJack)
+                        Historique.AjouterAction(new ActionCapteur(this, CapteurID.GRJack, jackBranche ? "branché" : "absent"));
+                    if (semJack != null)
+                        semJack.Release();
+                }
+
+                if (trameRecue[1] == (byte)FonctionIO.DepartJack)
+                {
+                    Plateau.Enchainement = new GoBot.Enchainements.EnchainementMatch();
+                    Plateau.Enchainement.Executer();
+                }
+
+                if (trameRecue[1] == (byte)FonctionIO.ReponseCouleurEquipe)
+                {
+                    if (trameRecue[2] == 0)
+                        Plateau.NotreCouleur = Plateau.CouleurJ1Rouge;
+                    else if (trameRecue[2] == 1)
+                        Plateau.NotreCouleur = Plateau.CouleurJ2Jaune;
+
+                    //Historique.AjouterAction(new ActionCapteur(this, CapteurID.GRCouleurBalle, "));
+                }
+            }
         }
 
         #region Déplacements
@@ -193,7 +196,7 @@ namespace GoBot
                 semDeplacement = new Semaphore(0, int.MaxValue);
 
             DeplacementLigne = true;
-            Trame trame = TrameFactory.Deplacer(SensAR.Avant, distance);
+            Trame trame = TrameFactory.Deplacer(SensAR.Avant, distance, this);
             Connexion.SendMessage(trame);
 
             Historique.AjouterAction(new ActionAvance(this, distance));
@@ -205,7 +208,7 @@ namespace GoBot
 
         public override void ReglerOffsetAsserv(int offsetX, int offsetY, int offsetTeta)
         {
-            Trame trame = TrameFactory.OffsetPos(offsetX, offsetY, offsetTeta);
+            Trame trame = TrameFactory.OffsetPos(offsetX, offsetY, offsetTeta, this);
             Connexion.SendMessage(trame);
         }
 
@@ -217,7 +220,7 @@ namespace GoBot
             DeplacementLigne = true;
             Historique.AjouterAction(new ActionRecule(this, distance));
 
-            Trame trame = TrameFactory.Deplacer(SensAR.Arriere, distance);
+            Trame trame = TrameFactory.Deplacer(SensAR.Arriere, distance, this);
             Connexion.SendMessage(trame);
             if (attendre)
                 semDeplacement.WaitOne();
@@ -232,7 +235,7 @@ namespace GoBot
                 semDeplacement = new Semaphore(0, int.MaxValue);
 
             Historique.AjouterAction(new ActionPivot(this, angle, SensGD.Gauche));
-            Trame trame = TrameFactory.Pivot(SensGD.Gauche, angle);
+            Trame trame = TrameFactory.Pivot(SensGD.Gauche, angle, this);
 
             Connexion.SendMessage(trame);
 
@@ -247,7 +250,7 @@ namespace GoBot
                 semDeplacement = new Semaphore(0, int.MaxValue);
 
             Historique.AjouterAction(new ActionPivot(this, angle, SensGD.Droite));
-            Trame trame = TrameFactory.Pivot(SensGD.Droite, angle);
+            Trame trame = TrameFactory.Pivot(SensGD.Droite, angle, this);
             Connexion.SendMessage(trame);
 
             if (attendre)
@@ -256,7 +259,7 @@ namespace GoBot
 
         public override void Stop(StopMode mode = StopMode.Smooth)
         {
-            Trame trame = TrameFactory.GRStop(mode);
+            Trame trame = TrameFactory.Stop(mode, this);
             DeplacementLigne = false;
 
             Connexion.SendMessage(trame);
@@ -271,7 +274,7 @@ namespace GoBot
 
             Historique.AjouterAction(new ActionVirage(this, rayon, angle, sensAr, sensGd));
 
-            Trame trame = TrameFactory.Virage(sensAr, sensGd, rayon, angle);
+            Trame trame = TrameFactory.Virage(sensAr, sensGd, rayon, angle, this);
             Connexion.SendMessage(trame);
 
             if (attendre)
@@ -280,7 +283,7 @@ namespace GoBot
 
         public void GoToXY(int x, int y)
         {
-            Trame trame = TrameFactory.GotoXY(x, y);
+            Trame trame = TrameFactory.GotoXY(x, y, this);
             Connexion.SendMessage(trame);
         }
 
@@ -290,7 +293,7 @@ namespace GoBot
                 semDeplacement = new Semaphore(0, int.MaxValue);
 
             Historique.AjouterAction(new ActionRecallage(this, sens));
-            Trame trame = TrameFactory.Recallage(sens);
+            Trame trame = TrameFactory.Recallage(sens, this);
             Connexion.SendMessage(trame);
 
             if (attendre)
@@ -301,13 +304,13 @@ namespace GoBot
         
         public override void EnvoyerPID(int p, int i, int d)
         {
-            Trame trame = TrameFactory.CoeffAsserv(p, i, d);
+            Trame trame = TrameFactory.CoeffAsserv(p, i, d, this);
             Connexion.SendMessage(trame);
         }
 
         public override void ArmerJack()
         {
-            Connexion.SendMessage(TrameFactory.ArmerJack());
+            Connexions.ConnexionIO.SendMessage(TrameFactory.ArmerJack());
         }
 
         public bool DemandePosition(bool attendre = true)
@@ -315,7 +318,7 @@ namespace GoBot
             if(attendre)
                 semPosition = new Semaphore(0, int.MaxValue);
 
-            Trame t = TrameFactory.DemandePosition();
+            Trame t = TrameFactory.DemandePosition(this);
             Connexion.SendMessage(t);
 
             if (attendre)
@@ -360,7 +363,7 @@ namespace GoBot
             }
             set
             {
-                Trame trame = TrameFactory.VitesseLigne(value);
+                Trame trame = TrameFactory.VitesseLigne(value, this);
                 Connexion.SendMessage(trame);
                 vitesseDeplacement = value;
                 Historique.AjouterAction(new ActionVitesseLigne(this, value));
@@ -376,7 +379,7 @@ namespace GoBot
             }
             set
             {
-                Trame trame = TrameFactory.AccelLigne(value);
+                Trame trame = TrameFactory.AccelLigne(value, this);
                 Connexion.SendMessage(trame);
                 accelDeplacement = value;
                 Historique.AjouterAction(new ActionAccelerationLigne(this, value));
@@ -392,7 +395,7 @@ namespace GoBot
             }
             set
             {
-                Trame trame = TrameFactory.VitessePivot(value);
+                Trame trame = TrameFactory.VitessePivot(value, this);
                 Connexion.SendMessage(trame);
                 vitessePivot = value;
                 Historique.AjouterAction(new ActionVitessePivot(this, value));
@@ -408,7 +411,7 @@ namespace GoBot
             }
             set
             {
-                Trame trame = TrameFactory.AccelPivot(value);
+                Trame trame = TrameFactory.AccelPivot(value, this);
                 Connexion.SendMessage(trame);
                 accelPivot = value;
                 Historique.AjouterAction(new ActionAccelerationPivot(this, value));
@@ -449,7 +452,7 @@ namespace GoBot
         {
             historiqueJack = historique;
             semJack = new Semaphore(0, 1);
-            Connexion.SendMessage(TrameFactory.DemandeJack());
+            Connexions.ConnexionIO.SendMessage(TrameFactory.DemandeJack());
             semJack.WaitOne();
             return jackBranche;
         }
@@ -461,10 +464,10 @@ namespace GoBot
             retourTestPid[0] = new List<int>();
             retourTestPid[1] = new List<int>();
 
-            Trame trame = TrameFactory.EnvoiConsigneBrute(consigne, sens);
+            Trame trame = TrameFactory.EnvoiConsigneBrute(consigne, sens, this);
             Connexion.SendMessage(trame);
 
-            trame = TrameFactory.DemandePositionsCodeurs();
+            trame = TrameFactory.DemandePositionsCodeurs(this);
             while (retourTestPid[0].Count < nbValeurs)
             {
                 Connexion.SendMessage(trame);
@@ -488,7 +491,7 @@ namespace GoBot
             retourTestCharge[1] = new List<double>();
             retourTestCharge[2] = new List<double>();
 
-            Trame trame = TrameFactory.DemandeChargeMove();
+            Trame trame = TrameFactory.DemandeCpuPwm(this);
             while (retourTestCharge[0].Count <= nbValeurs)
             {
                 Connexion.SendMessage(trame);

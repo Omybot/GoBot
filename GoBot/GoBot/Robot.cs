@@ -14,6 +14,7 @@ namespace GoBot
     {
         public IDRobot IDRobot { get; protected set; }
         public Semaphore SemGraph { get; set; }
+        public Carte Carte { get; set; }
         public Historique Historique { get; protected set; }
         public bool DeplacementLigne { get; protected set; }
         public Graph Graph { get; set; }

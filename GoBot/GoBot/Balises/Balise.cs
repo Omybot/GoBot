@@ -159,7 +159,7 @@ namespace GoBot.Balises
             if (trame[0] != (byte)Carte)
                 return;
 
-            if (trame[1] == (byte)TrameFactory.FonctionBalise.Detection)
+            if (trame[1] == (byte)FonctionBalise.Detection)
             {
                 // Réception d'une mesure sur un tour de rotation
                 try
@@ -478,7 +478,7 @@ namespace GoBot.Balises
                 {
                 }
             }
-            else if(trame[1] == (byte)TrameFactory.FonctionBalise.TestConnexion)
+            else if(trame[1] == (byte)FonctionBalise.TestConnexion)
             {
                 if(semTestConnexion != null)
                     semTestConnexion.Release();

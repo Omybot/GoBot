@@ -62,7 +62,7 @@ namespace GoBot
 
                 Connexions.ConnexionMove.ConnexionCheck.Start();
                 Connexions.ConnexionMiwi.ConnexionCheck.Start();
-                Connexions.ConnexionPi.ConnexionCheck.Start();
+                Connexions.ConnexionIO.ConnexionCheck.Start();
 
                 Plateau.Balise1.ConnexionCheck.Start();
                 Plateau.Balise2.ConnexionCheck.Start();
@@ -192,7 +192,7 @@ namespace GoBot
 
             Connexions.ConnexionMiwi.Sauvegarde.Sauvegarder(Config.PathData + "/Logs/" + Config.DateLancementString + "/ConnexionMiwi.tlog");
             Connexions.ConnexionMove.Sauvegarde.Sauvegarder(Config.PathData + "/Logs/" + Config.DateLancementString + "/ConnexionMove.tlog");
-            Connexions.ConnexionPi.Sauvegarde.Sauvegarder(Config.PathData + "/Logs/" + Config.DateLancementString + "/ConnexionPi.tlog");
+            Connexions.ConnexionIO.Sauvegarde.Sauvegarder(Config.PathData + "/Logs/" + Config.DateLancementString + "/ConnexionIO.tlog");
 
             Robots.GrosRobot.Historique.Sauvegarder(Config.PathData + "/Logs/" + Config.DateLancementString + "/ActionsGros.elog");
             Robots.PetitRobot.Historique.Sauvegarder(Config.PathData + "/Logs/" + Config.DateLancementString + "/ActionsPetit.elog");

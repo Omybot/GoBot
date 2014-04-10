@@ -41,12 +41,12 @@ namespace GoBot.Communications
 
         public void MessageRecu(Trame trame)
         {
-            if ((TrameFactory.FonctionBalise)trame[1] == TrameFactory.FonctionBalise.TestEmissionCorrompu)
+            if ((FonctionBalise)trame[1] == FonctionBalise.TestEmissionCorrompu)
             {
                 NombreMessagesTotal++;
                 NombreMessagesCorrompusEmission++;
             }
-            if ((TrameFactory.FonctionBalise)trame[1] == TrameFactory.FonctionBalise.TestEmissionReussi)
+            if ((FonctionBalise)trame[1] == FonctionBalise.TestEmissionReussi)
             {
                 NombreMessagesTotal++;
                 bool verif = true;
@@ -67,7 +67,7 @@ namespace GoBot.Communications
                         NombreMessagesCorrompusReception++;
                 }
             }
-            if ((TrameFactory.FonctionBalise)trame[1] == TrameFactory.FonctionBalise.TestEmissionPerdu)
+            if ((FonctionBalise)trame[1] == FonctionBalise.TestEmissionPerdu)
             {
                 NombreMessagesTotal++;
                 NombreMessagesPerdusEmission++;

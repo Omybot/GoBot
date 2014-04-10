@@ -51,6 +51,7 @@
             this.groupBox4 = new System.Windows.Forms.GroupBox();
             this.lblMonIP = new System.Windows.Forms.Label();
             this.label13 = new System.Windows.Forms.Label();
+            this.boxIO = new System.Windows.Forms.CheckBox();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.groupBox3.SuspendLayout();
@@ -239,6 +240,7 @@
             // 
             // groupBox3
             // 
+            this.groupBox3.Controls.Add(this.boxIO);
             this.groupBox3.Controls.Add(this.label4);
             this.groupBox3.Controls.Add(this.btnEnvoyer);
             this.groupBox3.Controls.Add(this.boxMove);
@@ -290,6 +292,16 @@
             this.label13.TabIndex = 8;
             this.label13.Text = "Mon IP :";
             // 
+            // boxIO
+            // 
+            this.boxIO.AutoSize = true;
+            this.boxIO.Location = new System.Drawing.Point(168, 26);
+            this.boxIO.Name = "boxIO";
+            this.boxIO.Size = new System.Drawing.Size(57, 17);
+            this.boxIO.TabIndex = 7;
+            this.boxIO.Text = "RecIO";
+            this.boxIO.UseVisualStyleBackColor = true;
+            // 
             // PanelEnvoiUdp
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -339,5 +351,6 @@
         private System.Windows.Forms.GroupBox groupBox4;
         private System.Windows.Forms.Label lblMonIP;
         private System.Windows.Forms.Label label13;
+        private System.Windows.Forms.CheckBox boxIO;
     }
 }

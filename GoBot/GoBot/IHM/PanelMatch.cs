@@ -66,11 +66,6 @@ namespace GoBot.IHM
                 thRecallage = new Thread(RecallagesDebut);
                 thRecallage.Start();
             }
-            if (Connexions.ConnexionPi.ConnexionCheck.Connecte)
-            {
-                thRecallagePetit = new Thread(RecallagePetit);
-                thRecallagePetit.Start();
-            }
         }
 
         Thread thRecallagePetit;
@@ -189,7 +184,7 @@ namespace GoBot.IHM
                 // Réglage rouge par défaut
                 btnCouleurRouge_Click(null, null);
                 Plateau.NotreCouleurChange += new EventHandler(Plateau_NotreCouleurChange);
-                Connexions.ConnexionMove.SendMessage(TrameFactory.DemandeCouleurEquipe());
+                Connexions.ConnexionIO.SendMessage(TrameFactory.DemandeCouleurEquipe());
             }
         }
     }

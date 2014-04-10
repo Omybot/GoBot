@@ -31,7 +31,7 @@ namespace GoBot
             {
                 // TODO
                 baudrate = value;
-                connexionUdp.SendMessage(TrameFactory.ServoEnvoiBaudrate((ServomoteurID)id, TrameFactory.ServoBaudrate.b19200));
+                connexionUdp.SendMessage(TrameFactory.ServoEnvoiBaudrate((ServomoteurID)id, ServoBaudrate.b19200));
             }
         }
         private void EnvoiCompliance()
@@ -409,7 +409,7 @@ namespace GoBot
         void connexion_NouvelleTrame(Trame trame)
         {
             // Test trame de type configuration servomoteur
-            if (trame[1] == (byte)TrameFactory.FonctionMove.CommandeServo)
+            if (trame[1] == (byte)FonctionMove.CommandeServo)
             {
                 // Test trame pour ce servo
                 if (trame[3] == id)
@@ -417,16 +417,16 @@ namespace GoBot
                     // Switch sur la fonction
                     switch (trame[2])
                     {
-                        case (byte)TrameFactory.FonctionServo.RetourBaudrate:
+                        case (byte)FonctionServo.RetourBaudrate:
                             baudrate = ValueToBaudrate(trame[4]);
                             break;
-                        case (byte)TrameFactory.FonctionServo.RetourComplianceParams:
+                        case (byte)FonctionServo.RetourComplianceParams:
                             ccwSlope = trame[4];
                             ccwMargin = trame[5];
                             cwSlope = trame[6];
                             cwMargin = trame[7];
                             break;
-                        case (byte)TrameFactory.FonctionServo.RetourConfigAlarmeLED:
+                        case (byte)FonctionServo.RetourConfigAlarmeLED:
                             alarmeLEDInputVoltage = (trame[4] == 1 ? true : false);
                             alarmeLEDAngleLimit = (trame[5] == 1 ? true : false);
                             alarmeLEDOverheating = (trame[6] == 1 ? true : false);
@@ -435,7 +435,7 @@ namespace GoBot
                             alarmeLEDOverload = (trame[9] == 1 ? true : false);
                             alarmeLEDInstruction = (trame[10] == 1 ? true : false);
                             break;
-                        case (byte)TrameFactory.FonctionServo.RetourConfigAlarmeShutdown:
+                        case (byte)FonctionServo.RetourConfigAlarmeShutdown:
                             alarmeShutdownInputVoltage = (trame[4] == 1 ? true : false);
                             alarmeShutdownAngleLimit = (trame[5] == 1 ? true : false);
                             alarmeShutdownOverheating = (trame[6] == 1 ? true : false);
@@ -444,56 +444,56 @@ namespace GoBot
                             alarmeShutdownOverload = (trame[9] == 1 ? true : false);
                             alarmeShutdownInstruction = (trame[10] == 1 ? true : false);
                             break;
-                        case (byte)TrameFactory.FonctionServo.RetourConfigEcho:
+                        case (byte)FonctionServo.RetourConfigEcho:
 
                             // TODO
                             break;
-                        case (byte)TrameFactory.FonctionServo.RetourCoupleActive:
+                        case (byte)FonctionServo.RetourCoupleActive:
                             coupleActive = (trame[4] == 1 ? true : false);
                             break;
-                        case (byte)TrameFactory.FonctionServo.RetourCoupleMaximum:
+                        case (byte)FonctionServo.RetourCoupleMaximum:
                             coupleMaximum = trame[4] * 256 + trame[5];
                             break;
-                        case (byte)TrameFactory.FonctionServo.RetourId:
+                        case (byte)FonctionServo.RetourId:
                             id = trame[4];
                             break;
-                        case (byte)TrameFactory.FonctionServo.RetourLed:
+                        case (byte)FonctionServo.RetourLed:
                             ledAllumee = (trame[4] == 1 ? true : false);
                             break;
-                        case (byte)TrameFactory.FonctionServo.RetourMouvement:
+                        case (byte)FonctionServo.RetourMouvement:
                             enMouvement = (trame[4] == 1 ? true : false);
                             break;
-                        case (byte)TrameFactory.FonctionServo.RetourNumeroModele:
+                        case (byte)FonctionServo.RetourNumeroModele:
                             modele = trame[4] * 256 + trame[5];
                             break;
-                        case (byte)TrameFactory.FonctionServo.RetourPositionActuelle:
+                        case (byte)FonctionServo.RetourPositionActuelle:
                             positionActuelle = trame[4] * 256 + trame[5];
                             break;
-                        case (byte)TrameFactory.FonctionServo.RetourPositionCible:
+                        case (byte)FonctionServo.RetourPositionCible:
                             positionCible = trame[4] * 256 + trame[5];
                             break;
-                        case (byte)TrameFactory.FonctionServo.RetourPositionMaximum:
+                        case (byte)FonctionServo.RetourPositionMaximum:
                             positionMax = trame[4] * 256 + trame[5];
                             break;
-                        case (byte)TrameFactory.FonctionServo.RetourPositionMinimum:
+                        case (byte)FonctionServo.RetourPositionMinimum:
                             positionMin = trame[4] * 256 + trame[5];
                             break;
-                        case (byte)TrameFactory.FonctionServo.RetourTemperature:
+                        case (byte)FonctionServo.RetourTemperature:
                             temperature = trame[4];
                             break;
-                        case (byte)TrameFactory.FonctionServo.RetourTension:
+                        case (byte)FonctionServo.RetourTension:
                             tension = (double)trame[4] / 10.0;
                             break;
-                        case (byte)TrameFactory.FonctionServo.RetourVersionFirmware:
+                        case (byte)FonctionServo.RetourVersionFirmware:
                             firmware = trame[4];
                             break;
-                        case (byte)TrameFactory.FonctionServo.RetourVitesseActuelle:
+                        case (byte)FonctionServo.RetourVitesseActuelle:
                             vitesseActuelle = trame[4] * 256 + trame[5];
                             break;
-                        case (byte)TrameFactory.FonctionServo.RetourVitesseMax:
+                        case (byte)FonctionServo.RetourVitesseMax:
                             vitesseMax = trame[4] * 256 + trame[5];
                             break;
-                        case (byte)TrameFactory.FonctionServo.RetourErreurs:
+                        case (byte)FonctionServo.RetourErreurs:
                             ErreurAngleLimit = (trame[4] == 1 ? true : false);
                             ErreurChecksum = (trame[5] == 1 ? true : false);
                             ErreurInputVoltage = (trame[6] == 1 ? true : false);

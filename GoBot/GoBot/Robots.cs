@@ -41,12 +41,12 @@ namespace GoBot
 
             if (!Simulation)
             {
-                RobotReel grosRobot = new RobotReel(IDRobot.GrosRobot);
+                RobotReel grosRobot = new RobotReel(IDRobot.GrosRobot, Carte.RecMove);
                 grosRobot.Connexion = Connexions.ConnexionMove;
                 GrosRobot = grosRobot;
 
-                RobotReel petitRobot = new RobotReel(IDRobot.PetitRobot);
-                petitRobot.Connexion = Connexions.ConnexionPi;
+                RobotReel petitRobot = new RobotReel(IDRobot.PetitRobot, Carte.RecPi);
+                petitRobot.Connexion = Connexions.ConnexionMiwi; // TODO envoyer correctement puisque miwi ne saura pas quoi faire d'un message non encapsulé. Créer une classe dérivée de UDP qui encapsule ? Bonne idée je pense
                 PetitRobot = petitRobot;
             }
             else
@@ -65,14 +65,14 @@ namespace GoBot
 
             GrosRobot.Largeur = 320;
             GrosRobot.Longueur = 280;
-            GrosRobot.Nom = "Rocker";
+            GrosRobot.Nom = "Gros robot";
             GrosRobot.Init();
             if (graphGros != null)
                 Robots.GrosRobot.Graph = graphGros;
 
             PetitRobot.Largeur = 195;
             PetitRobot.Longueur = 100;
-            PetitRobot.Nom = "Punk";
+            PetitRobot.Nom = "Petit robot";
             PetitRobot.Init();
             if (graphPetit != null)
                 Robots.PetitRobot.Graph = graphPetit;

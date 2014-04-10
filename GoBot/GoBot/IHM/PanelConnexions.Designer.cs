@@ -32,7 +32,7 @@
             this.lblRecBoi = new System.Windows.Forms.Label();
             this.lblRecBeu = new System.Windows.Forms.Label();
             this.lblRecBun = new System.Windows.Forms.Label();
-            this.lblRecPi = new System.Windows.Forms.Label();
+            this.lblRecIO = new System.Windows.Forms.Label();
             this.lblRecMiwi = new System.Windows.Forms.Label();
             this.lblRecMove = new System.Windows.Forms.Label();
             this.ledRecBoi = new Composants.Led();
@@ -79,15 +79,15 @@
             this.lblRecBun.TabIndex = 81;
             this.lblRecBun.Text = "RecBun";
             // 
-            // lblRecPi
+            // lblRecIO
             // 
-            this.lblRecPi.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.lblRecPi.AutoSize = true;
-            this.lblRecPi.Location = new System.Drawing.Point(340, 9);
-            this.lblRecPi.Name = "lblRecPi";
-            this.lblRecPi.Size = new System.Drawing.Size(36, 13);
-            this.lblRecPi.TabIndex = 79;
-            this.lblRecPi.Text = "RecPi";
+            this.lblRecIO.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.lblRecIO.AutoSize = true;
+            this.lblRecIO.Location = new System.Drawing.Point(340, 9);
+            this.lblRecIO.Name = "lblRecIO";
+            this.lblRecIO.Size = new System.Drawing.Size(38, 13);
+            this.lblRecIO.TabIndex = 79;
+            this.lblRecIO.Text = "RecIO";
             // 
             // lblRecMiwi
             // 
@@ -186,7 +186,7 @@
             this.Controls.Add(this.ledRecBeu);
             this.Controls.Add(this.lblRecBun);
             this.Controls.Add(this.ledRecBun);
-            this.Controls.Add(this.lblRecPi);
+            this.Controls.Add(this.lblRecIO);
             this.Controls.Add(this.ledRecPi);
             this.Controls.Add(this.lblRecMiwi);
             this.Controls.Add(this.ledRecMiwi);
@@ -214,7 +214,7 @@
         private Composants.Led ledRecBeu;
         private System.Windows.Forms.Label lblRecBun;
         private Composants.Led ledRecBun;
-        private System.Windows.Forms.Label lblRecPi;
+        private System.Windows.Forms.Label lblRecIO;
         private Composants.Led ledRecPi;
         private System.Windows.Forms.Label lblRecMiwi;
         private Composants.Led ledRecMiwi;

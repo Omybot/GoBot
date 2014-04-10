@@ -96,7 +96,7 @@ namespace GoBot.IHM
                     SetLed(ledRecMove, true);
                 if (Connexions.ConnexionMiwi.ConnexionCheck.Connecte)
                     SetLed(ledRecMiwi, true);
-                if (Connexions.ConnexionPi.ConnexionCheck.Connecte)
+                if (Connexions.ConnexionIO.ConnexionCheck.Connecte)
                     SetLed(ledRecPi, true);
                 if (Balise.GetBalise(Carte.RecBun).ConnexionCheck.Connecte)
                     SetLed(ledRecBun, true);
@@ -107,7 +107,7 @@ namespace GoBot.IHM
 
                 Connexions.ConnexionMove.ConnexionCheck.ConnexionChange += new ConnexionCheck.ConnexionChangeDelegate(ConnexionMoveCheck_ConnexionChange);
                 Connexions.ConnexionMiwi.ConnexionCheck.ConnexionChange += new ConnexionCheck.ConnexionChangeDelegate(ConnexionMiwiCheck_ConnexionChange);
-                Connexions.ConnexionPi.ConnexionCheck.ConnexionChange += new ConnexionCheck.ConnexionChangeDelegate(ConnexionPiCheck_ConnexionChange);
+                Connexions.ConnexionIO.ConnexionCheck.ConnexionChange += new ConnexionCheck.ConnexionChangeDelegate(ConnexionPiCheck_ConnexionChange);
 
                 Balise.GetBalise(Carte.RecBun).ConnexionCheck.ConnexionChange += new ConnexionCheck.ConnexionChangeDelegate(ConnexionBunCheck_ConnexionChange);
                 Balise.GetBalise(Carte.RecBeu).ConnexionCheck.ConnexionChange += new ConnexionCheck.ConnexionChangeDelegate(ConnexionBeuCheck_ConnexionChange);

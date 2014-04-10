@@ -10,7 +10,7 @@ namespace GoBot.Communications
     {
         public static ConnexionUDP ConnexionMiwi { get; set; }
         public static ConnexionUDP ConnexionMove { get; set; }
-        public static ConnexionUDP ConnexionPi { get; set; }
+        public static ConnexionUDP ConnexionIO { get; set; }
 
         public static Dictionary<Carte, ConnexionUDP> ConnexionParCarte { get; private set; }
 
@@ -24,9 +24,9 @@ namespace GoBot.Communications
             ConnexionMiwi.Connexion(System.Net.IPAddress.Parse("10.1.0.12"), 12312, 12322);
             ConnexionMiwi.ConnexionCheck.TestConnexion += new ConnexionCheck.TestConnexionDelegate(ConnexionMiwiCheck_TestConnexion);
 
-            ConnexionPi = new ConnexionUDP();
-            ConnexionPi.Connexion(System.Net.IPAddress.Parse("10.0.0.13"), 12313, 12323);
-            ConnexionPi.ConnexionCheck.TestConnexion += new ConnexionCheck.TestConnexionDelegate(ConnexionPiCheck_TestConnexion);
+            ConnexionIO = new ConnexionUDP();
+            ConnexionIO.Connexion(System.Net.IPAddress.Parse("10.1.0.14"), 12314, 12324);
+            ConnexionIO.ConnexionCheck.TestConnexion += new ConnexionCheck.TestConnexionDelegate(ConnexionIOCheck_TestConnexion);
 
             ConnexionParCarte = new Dictionary<Carte, ConnexionUDP>();
             ConnexionParCarte.Add(Carte.RecBun, ConnexionMiwi);
@@ -35,6 +35,7 @@ namespace GoBot.Communications
             ConnexionParCarte.Add(Carte.RecMiwi, ConnexionMiwi);
             ConnexionParCarte.Add(Carte.RecPi, ConnexionMiwi);
             ConnexionParCarte.Add(Carte.RecMove, ConnexionMove);
+            ConnexionParCarte.Add(Carte.RecIO, ConnexionIO);
         }
 
         public static void ConnexionMoveCheck_TestConnexion()
@@ -47,9 +48,9 @@ namespace GoBot.Communications
             ConnexionMiwi.SendMessage(TrameFactory.TestConnexionMiwi());
         }
 
-        public static void ConnexionPiCheck_TestConnexion()
+        public static void ConnexionIOCheck_TestConnexion()
         {
-            ConnexionPi.SendMessage(TrameFactory.TestConnexionPi());
+            ConnexionIO.SendMessage(TrameFactory.TestConnexionIO());
         }
     }
 }
