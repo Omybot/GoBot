@@ -63,7 +63,6 @@
             this.lblB2CorrompusReception = new System.Windows.Forms.Label();
             this.label33 = new System.Windows.Forms.Label();
             this.lblB1CorrompusReception = new System.Windows.Forms.Label();
-            this.panelServo1 = new GoBot.IHM.PanelServo();
             this.SuspendLayout();
             // 
             // btnStart
@@ -382,19 +381,10 @@
             this.lblB1CorrompusReception.TabIndex = 35;
             this.lblB1CorrompusReception.Text = "0 - 0%";
             // 
-            // panelServo1
-            // 
-            this.panelServo1.BackColor = System.Drawing.Color.Transparent;
-            this.panelServo1.Location = new System.Drawing.Point(112, 31);
-            this.panelServo1.Name = "panelServo1";
-            this.panelServo1.Size = new System.Drawing.Size(843, 497);
-            this.panelServo1.TabIndex = 40;
-            // 
             // PanelTestLiaisons
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.Controls.Add(this.panelServo1);
             this.Controls.Add(this.lblPRCorrompusReception);
             this.Controls.Add(this.lblB3CorrompusReception);
             this.Controls.Add(this.lblB2CorrompusReception);
@@ -474,6 +464,5 @@
         private System.Windows.Forms.Label lblB2CorrompusReception;
         private System.Windows.Forms.Label label33;
         private System.Windows.Forms.Label lblB1CorrompusReception;
-        private PanelServo panelServo1;
     }
 }

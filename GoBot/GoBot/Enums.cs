@@ -335,6 +335,7 @@ namespace GoBot
         RecMove = 0xC1,
         RecMiwi = 0xC2,
         RecPi = 0xC3,
+        RecIO = 0xC4,
         RecBun = 0xB1,
         RecBeu = 0xB2,
         RecBoi = 0xB3

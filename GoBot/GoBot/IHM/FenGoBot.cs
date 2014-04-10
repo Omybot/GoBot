@@ -63,10 +63,6 @@ namespace GoBot
                 Connexions.ConnexionMove.ConnexionCheck.Start();
                 Connexions.ConnexionMiwi.ConnexionCheck.Start();
                 Connexions.ConnexionPi.ConnexionCheck.Start();
-                
-                Connexions.ConnexionMoveCheck_TestConnexion();
-                Connexions.ConnexionMiwiCheck_TestConnexion();
-                Connexions.ConnexionPiCheck_TestConnexion();
 
                 Plateau.Balise1.ConnexionCheck.Start();
                 Plateau.Balise2.ConnexionCheck.Start();
@@ -126,6 +122,8 @@ namespace GoBot
                 }
 
                 Instance = this;
+
+                panelMatch.CouleurJaune();
             }
         }
 

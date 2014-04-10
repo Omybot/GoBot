@@ -26,7 +26,7 @@ namespace GoBot.Communications
             start = false;
             interval = intervalle;
             connexionOffTimer = new Timer();
-            connexionOffTimer.Interval = interval;
+            connexionOffTimer.Interval = intervalle;
             connexionOffTimer.Elapsed += new ElapsedEventHandler(connexionOffTimer_Elapsed);
 
             Connecte = false;
@@ -35,6 +35,7 @@ namespace GoBot.Communications
         public void Start()
         {
             start = true;
+            connexionOffTimer_Elapsed(null, null);
             connexionOffTimer.Start();
         }
 

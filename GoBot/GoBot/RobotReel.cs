@@ -35,6 +35,7 @@ namespace GoBot
         public RobotReel(IDRobot idRobot)
         {
             IDRobot = idRobot;
+            ServomoteursConnectes = new List<byte>();
         }
 
         public override void Init()
@@ -94,9 +95,9 @@ namespace GoBot
                 if (trameRecue[1] == (byte)TrameFactory.FonctionMove.ReponseJack)
                 {
                     jackBranche = trameRecue[2] == 1 ? true : false;
-                    if (historiqueJack) 
+                    if (historiqueJack)
                         Historique.AjouterAction(new ActionCapteur(this, CapteurID.GRJack, jackBranche ? "branché" : "absent"));
-                    if(semJack != null)
+                    if (semJack != null)
                         semJack.Release();
                 }
 
@@ -105,8 +106,8 @@ namespace GoBot
                     // Réception de la position mesurée par l'asservissement
                     try
                     {
-                        double y = (double)((short)(trameRecue[2] << 8 | trameRecue[3])/10.0);
-                        double x = (double)((short)(trameRecue[4] << 8 | trameRecue[5])/10.0);
+                        double y = (double)((short)(trameRecue[2] << 8 | trameRecue[3]) / 10.0);
+                        double x = (double)((short)(trameRecue[4] << 8 | trameRecue[5]) / 10.0);
                         double teta = (trameRecue[6] << 8 | trameRecue[7]) / 100.0 - 180;
                         teta = (-teta);
                         y = -y;

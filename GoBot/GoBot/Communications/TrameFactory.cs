@@ -20,6 +20,10 @@ namespace GoBot.Communications
             b9600 = 207
         }
 
+        public enum FonctionIO
+        {
+        }
+
         public enum FonctionMove
         {
             Deplace = 0x01,

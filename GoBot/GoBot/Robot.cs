@@ -31,6 +31,8 @@ namespace GoBot
         public int Largeur { get; set; }
         public int Rayon { get { return (int)Math.Sqrt(Longueur * Longueur + Largeur * Largeur) / 2; } }
 
+        public List<byte> ServomoteursConnectes { get; protected set; }
+
         public String Nom { get; set; }
 
         // Pathfinding

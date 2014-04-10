@@ -276,9 +276,9 @@ namespace GoBot.IHM
             if (rdoTempsDebut.Checked)
                 heure = (trameReplay.Date - dateDebut).ToString(@"hh\:mm\:ss\:fff");
             if (rdoTempsPrec.Checked)
-                heure = (trameReplay.Date - datePrec).ToString(@"hh\:mm\:ss\:fff");
+                heure = ((int)(trameReplay.Date - datePrec).TotalMilliseconds).ToString() + " ms";
             if (rdoTempsPrecAff.Checked)
-                heure = (trameReplay.Date - datePrecAff).ToString(@"hh\:mm\:ss\:fff");
+                heure = ((int)(trameReplay.Date - datePrecAff).TotalMilliseconds).ToString() + " ms";
 
             Carte destinataire = trameReplay.Entrant ? Carte.PC : TrameFactory.Identifiant(trame);
             Carte expediteur = trameReplay.Entrant ? TrameFactory.Identifiant(trame) : Carte.PC;

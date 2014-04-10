@@ -71,6 +71,8 @@ namespace GoBot
             this.btnClose = new System.Windows.Forms.Button();
             this.btnFenetre = new System.Windows.Forms.Button();
             this.panelConnexions = new GoBot.IHM.PanelConnexions();
+            this.tabServomoteurs = new System.Windows.Forms.TabPage();
+            this.panelServo1 = new GoBot.IHM.PanelServo();
             this.tabControl.SuspendLayout();
             this.tabGrosRobot.SuspendLayout();
             this.tabPetitRobot.SuspendLayout();
@@ -87,6 +89,7 @@ namespace GoBot
             this.tabTestLiaisons.SuspendLayout();
             this.tabConnexions.SuspendLayout();
             this.tabGestionLogs.SuspendLayout();
+            this.tabServomoteurs.SuspendLayout();
             this.SuspendLayout();
             // 
             // tabControl
@@ -109,6 +112,7 @@ namespace GoBot
             this.tabControl.Controls.Add(this.tabTestLiaisons);
             this.tabControl.Controls.Add(this.tabConnexions);
             this.tabControl.Controls.Add(this.tabGestionLogs);
+            this.tabControl.Controls.Add(this.tabServomoteurs);
             this.tabControl.HotTrack = true;
             this.tabControl.Location = new System.Drawing.Point(0, 0);
             this.tabControl.Name = "tabControl";
@@ -508,6 +512,25 @@ namespace GoBot
             this.panelConnexions.Size = new System.Drawing.Size(849, 27);
             this.panelConnexions.TabIndex = 74;
             // 
+            // tabServomoteurs
+            // 
+            this.tabServomoteurs.Controls.Add(this.panelServo1);
+            this.tabServomoteurs.Location = new System.Drawing.Point(4, 22);
+            this.tabServomoteurs.Name = "tabServomoteurs";
+            this.tabServomoteurs.Padding = new System.Windows.Forms.Padding(3);
+            this.tabServomoteurs.Size = new System.Drawing.Size(1300, 712);
+            this.tabServomoteurs.TabIndex = 20;
+            this.tabServomoteurs.Text = "Servomoteurs";
+            this.tabServomoteurs.UseVisualStyleBackColor = true;
+            // 
+            // panelServo1
+            // 
+            this.panelServo1.BackColor = System.Drawing.Color.Transparent;
+            this.panelServo1.Location = new System.Drawing.Point(333, 92);
+            this.panelServo1.Name = "panelServo1";
+            this.panelServo1.Size = new System.Drawing.Size(843, 497);
+            this.panelServo1.TabIndex = 41;
+            // 
             // FenGoBot
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -544,6 +567,7 @@ namespace GoBot
             this.tabTestLiaisons.ResumeLayout(false);
             this.tabConnexions.ResumeLayout(false);
             this.tabGestionLogs.ResumeLayout(false);
+            this.tabServomoteurs.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -592,6 +616,8 @@ namespace GoBot
         private System.Windows.Forms.Button btnFenetre;
         private System.Windows.Forms.TabPage tabGestionLogs;
         private PanelGestionLog panelGestionLog;
+        private System.Windows.Forms.TabPage tabServomoteurs;
+        private PanelServo panelServo1;
     }
 }
 

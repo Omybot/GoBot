@@ -19,7 +19,6 @@ namespace GoBot.IHM
         public PanelMatch()
         {
             InitializeComponent();
-            CouleurJaune();
         }
 
         private void btnCouleurJaune_Click(object sender, EventArgs e)
