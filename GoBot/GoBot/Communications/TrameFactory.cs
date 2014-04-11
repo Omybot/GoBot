@@ -27,6 +27,29 @@ namespace GoBot.Communications
             return new Trame(tab);
         }
 
+        static public Trame ActionneurOnOff(ActionneurOnOffID actionneur, bool onOff)
+        {
+            byte[] tab = new byte[4];
+            tab[0] = (byte)Carte.RecIO;
+            tab[1] = (byte)FonctionIO.ActionneurOnOff;
+            tab[2] = (byte)actionneur;
+            tab[3] = (byte)(onOff ? 1 : 0);
+
+            return new Trame(tab);
+        }
+
+        static public Trame MoteurVitesse(MoteurID moteur, int vitesse)
+        {
+            byte[] tab = new byte[5];
+            tab[0] = (byte)Carte.RecIO;
+            tab[1] = (byte)FonctionIO.Moteur;
+            tab[2] = (byte)moteur;
+            tab[3] = (byte)ByteDivide(vitesse, true);
+            tab[4] = (byte)ByteDivide(vitesse, false);
+
+            return new Trame(tab);
+        }
+
         static public Trame Deplacer(SensAR sens, int distance, Robot robot)
         {
             byte[] tab = new byte[5];
@@ -874,81 +897,10 @@ namespace GoBot.Communications
                                 byte valeurAlimentationCamera = trame[2];
                                 message = "Envoi alimentation camera : " + (valeurAlimentationCamera > 0 ? "On" : "Off");
                                 break;
-                        }
-                        break;
-
-                    case (byte)Carte.RecMove:
-                    case (byte)Carte.RecPi:
-                        switch ((FonctionMove)trame[1])
-                        {
-                            case FonctionMove.AccelerationLigne:
-                                int valeurAccelLigne = trame[2] * 256 + trame[3];
-                                message = "Envoi accélération ligne : " + valeurAccelLigne;
+                            case FonctionIO.TestConnexion:
+                                message = "Test connexion";
                                 break;
-                            case FonctionMove.AccelerationPivot:
-                                int valeurAccelPivot = trame[2] * 256 + trame[3];
-                                message = "Envoi accélération pivot : " + valeurAccelPivot;
-                                break;
-                            case FonctionMove.Blocage:
-                                message = "Blocage détécté";
-                                break;
-                            case FonctionMove.CoeffAsservPID:
-                                int valeurP = trame[2] * 256 + trame[3];
-                                int valeurI = trame[4] * 256 + trame[5];
-                                int valeurD = trame[6] * 256 + trame[7];
-                                message = "Envoi PID : P=" + valeurP + " I=" + valeurI + " D=" + valeurD;
-                                break;
-                            case FonctionMove.DemandePositionsCodeurs:
-                                message = "Demande position codeurs";
-                                break;
-                            case FonctionMove.DemandePositionXYTeta:
-                                message = "Demande position X Y Teta";
-                                break;
-                            case FonctionMove.Deplace:
-                                byte valeurAvance = trame[2];
-                                int valeurDistanceAvance = trame[3] * 256 + trame[4];
-                                message = (valeurAvance == (byte)SensAR.Avant ? "Avance" : "Recule") + " de " + valeurDistanceAvance + "mm";
-                                break;
-                            case FonctionMove.EnvoiConsigneBrute:
-                                byte valeurConsigneBrute = trame[2];
-                                int valeurDistanceConsigneBrute = trame[3] * 256 + trame[4];
-                                message = (valeurConsigneBrute == (byte)SensAR.Avant ? "Avance" : "Recule") + " brut de " + valeurDistanceConsigneBrute + " pas codeurs";
-                                break;
-                            case FonctionMove.EnvoiPositionAbsolue:
-                                int valeurPositionAbsolueX = trame[2] * 256 + trame[3];
-                                int valeurPositionABsolueY = trame[4] * 256 + trame[5];
-                                double valeurPositionAbsolueTeta = (double)(trame[6] * 256 + trame[7]) / 100.0;
-                                message = "Envoi position absolue X=" + valeurPositionAbsolueX + "mm Y=" + valeurPositionABsolueY + "mm Teta=" + valeurPositionAbsolueTeta + "°";
-                                break;
-                            case FonctionMove.FinDeplacement:
-                                message = "Fin du déplacement";
-                                break;
-                            case FonctionMove.FinRecallage:
-                                message = "Fin du recallage";
-                                break;
-                            case FonctionMove.Pivot:
-                                byte valeurSensPivot = trame[2];
-                                double valeurDistancePivot = (double)(trame[3] * 256 + trame[4]) / 100.0;
-                                message = "Pivot " + (valeurSensPivot == (char)SensGD.Droite ? "droite" : "gauche") + " de " + valeurDistancePivot + "°";
-                                break;
-                            case FonctionMove.Recallage:
-                                byte valeurSensRecallage = trame[2];
-                                message = "Recallage " + (valeurSensRecallage == (char)SensAR.Avant ? "avant" : "arrière");
-                                break;
-                            case FonctionMove.Reset:
-                                message = "Envoi reset";
-                                break;
-                            case FonctionMove.RetourPositionCodeurs:
-                                byte valeurPositionsCodeursNombre = trame[2];
-                                message = "Retour positions codeurs : " + valeurPositionsCodeursNombre + " valeurs";
-                                break;
-                            case FonctionMove.RetourPositionXYTeta:
-                                double valeurPositionX = (double)(trame[2] * 256 + trame[3]) / 10.0;
-                                double valeurPositionY = (double)(trame[4] * 256 + trame[5]) / 10.0;
-                                double valeurPositionTeta = (double)(trame[6] * 256 + trame[7]) / 100.0;
-                                message = "Retour position X Y Teta : X=" + valeurPositionX + "mm Y=" + valeurPositionY + "mm Teta=" + valeurPositionTeta + "°";
-                                break;
-                            case FonctionMove.CommandeServo:
+                            case FonctionIO.CommandeServo:
                                 switch ((FonctionServo)trame[2])
                                 {
                                     case FonctionServo.DemandeBaudrate:
@@ -1036,7 +988,7 @@ namespace GoBot.Communications
                                         message = "Envoi servo " + GoBot.Actions.Nommeur.Nommer((ServomoteurID)trame[3]) + " ID " + trame[4];
                                         break;
                                     case FonctionServo.EnvoiLed:
-                                        message = "Envoi servo " + GoBot.Actions.Nommeur.Nommer((ServomoteurID)trame[3]) + " LED " + (trame[4] > 0 ? "On" : "Off");;
+                                        message = "Envoi servo " + GoBot.Actions.Nommeur.Nommer((ServomoteurID)trame[3]) + " LED " + (trame[4] > 0 ? "On" : "Off"); ;
                                         break;
                                     case FonctionServo.EnvoiPositionCible:
                                         message = "Envoi servo " + GoBot.Actions.Nommeur.Nommer((ServomoteurID)trame[3]) + " position " + GoBot.Actions.Nommeur.Nommer(trame[4] * 256 + trame[5], (ServomoteurID)trame[3]);
@@ -1134,12 +1086,86 @@ namespace GoBot.Communications
                                         if (trame[10] > 0)
                                             listeErreurs += "Range, ";
 
-                                        if(listeErreurs.Length == 0)
+                                        if (listeErreurs.Length == 0)
                                             message += "Aucune";
                                         else
                                             message += listeErreurs.Substring(0, listeErreurs.Length - 2);
                                         break;
                                 }
+                                break;
+                        }
+                        break;
+
+                    case (byte)Carte.RecMove:
+                    case (byte)Carte.RecPi:
+                        switch ((FonctionMove)trame[1])
+                        {
+                            case FonctionMove.AccelerationLigne:
+                                int valeurAccelLigne = trame[2] * 256 + trame[3];
+                                message = "Envoi accélération ligne : " + valeurAccelLigne;
+                                break;
+                            case FonctionMove.AccelerationPivot:
+                                int valeurAccelPivot = trame[2] * 256 + trame[3];
+                                message = "Envoi accélération pivot : " + valeurAccelPivot;
+                                break;
+                            case FonctionMove.Blocage:
+                                message = "Blocage détécté";
+                                break;
+                            case FonctionMove.CoeffAsservPID:
+                                int valeurP = trame[2] * 256 + trame[3];
+                                int valeurI = trame[4] * 256 + trame[5];
+                                int valeurD = trame[6] * 256 + trame[7];
+                                message = "Envoi PID : P=" + valeurP + " I=" + valeurI + " D=" + valeurD;
+                                break;
+                            case FonctionMove.DemandePositionsCodeurs:
+                                message = "Demande position codeurs";
+                                break;
+                            case FonctionMove.DemandePositionXYTeta:
+                                message = "Demande position X Y Teta";
+                                break;
+                            case FonctionMove.Deplace:
+                                byte valeurAvance = trame[2];
+                                int valeurDistanceAvance = trame[3] * 256 + trame[4];
+                                message = (valeurAvance == (byte)SensAR.Avant ? "Avance" : "Recule") + " de " + valeurDistanceAvance + "mm";
+                                break;
+                            case FonctionMove.EnvoiConsigneBrute:
+                                byte valeurConsigneBrute = trame[2];
+                                int valeurDistanceConsigneBrute = trame[3] * 256 + trame[4];
+                                message = (valeurConsigneBrute == (byte)SensAR.Avant ? "Avance" : "Recule") + " brut de " + valeurDistanceConsigneBrute + " pas codeurs";
+                                break;
+                            case FonctionMove.EnvoiPositionAbsolue:
+                                int valeurPositionAbsolueX = trame[2] * 256 + trame[3];
+                                int valeurPositionABsolueY = trame[4] * 256 + trame[5];
+                                double valeurPositionAbsolueTeta = (double)(trame[6] * 256 + trame[7]) / 100.0;
+                                message = "Envoi position absolue X=" + valeurPositionAbsolueX + "mm Y=" + valeurPositionABsolueY + "mm Teta=" + valeurPositionAbsolueTeta + "°";
+                                break;
+                            case FonctionMove.FinDeplacement:
+                                message = "Fin du déplacement";
+                                break;
+                            case FonctionMove.FinRecallage:
+                                message = "Fin du recallage";
+                                break;
+                            case FonctionMove.Pivot:
+                                byte valeurSensPivot = trame[2];
+                                double valeurDistancePivot = (double)(trame[3] * 256 + trame[4]) / 100.0;
+                                message = "Pivot " + (valeurSensPivot == (char)SensGD.Droite ? "droite" : "gauche") + " de " + valeurDistancePivot + "°";
+                                break;
+                            case FonctionMove.Recallage:
+                                byte valeurSensRecallage = trame[2];
+                                message = "Recallage " + (valeurSensRecallage == (char)SensAR.Avant ? "avant" : "arrière");
+                                break;
+                            case FonctionMove.Reset:
+                                message = "Envoi reset";
+                                break;
+                            case FonctionMove.RetourPositionCodeurs:
+                                byte valeurPositionsCodeursNombre = trame[2];
+                                message = "Retour positions codeurs : " + valeurPositionsCodeursNombre + " valeurs";
+                                break;
+                            case FonctionMove.RetourPositionXYTeta:
+                                double valeurPositionX = (double)(trame[2] * 256 + trame[3]) / 10.0;
+                                double valeurPositionY = (double)(trame[4] * 256 + trame[5]) / 10.0;
+                                double valeurPositionTeta = (double)(trame[6] * 256 + trame[7]) / 100.0;
+                                message = "Retour position X Y Teta : X=" + valeurPositionX + "mm Y=" + valeurPositionY + "mm Teta=" + valeurPositionTeta + "°";
                                 break;
                             case FonctionMove.Stop:
                                 String stopMode = ((StopMode)trame[2]).ToString();

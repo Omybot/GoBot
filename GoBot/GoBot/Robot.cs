@@ -66,6 +66,7 @@ namespace GoBot
 
         public abstract void ArmerJack();
         public abstract bool GetJack(bool historique = true);
+        public abstract Color GetCouleurEquipe(bool historique = true);
 
         public Dictionary<ServomoteurID, bool> ServoActive { get; set; }
         public Dictionary<MoteurID, bool> MoteurTourne { get; set; }

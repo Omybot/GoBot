@@ -42,6 +42,8 @@
             this.label5 = new System.Windows.Forms.Label();
             this.btnPinceDroiteFermee = new System.Windows.Forms.Button();
             this.btnPinceDroiteOuverte = new System.Windows.Forms.Button();
+            this.switchBoutonPompeFeu = new Composants.SwitchBouton();
+            this.label2 = new System.Windows.Forms.Label();
             this.groupBoxUtilisation.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -76,7 +78,9 @@
             // 
             // groupBoxUtilisation
             // 
+            this.groupBoxUtilisation.Controls.Add(this.label2);
             this.groupBoxUtilisation.Controls.Add(this.label3);
+            this.groupBoxUtilisation.Controls.Add(this.switchBoutonPompeFeu);
             this.groupBoxUtilisation.Controls.Add(this.label1);
             this.groupBoxUtilisation.Controls.Add(this.btnEpauleRange);
             this.groupBoxUtilisation.Controls.Add(this.btnCoudeRange);
@@ -192,6 +196,25 @@
             this.btnPinceDroiteOuverte.UseVisualStyleBackColor = true;
             this.btnPinceDroiteOuverte.Click += new System.EventHandler(this.btnPinceDroiteOuverte_Click);
             // 
+            // switchBoutonPompeFeu
+            // 
+            this.switchBoutonPompeFeu.BackColor = System.Drawing.Color.Transparent;
+            this.switchBoutonPompeFeu.Location = new System.Drawing.Point(117, 184);
+            this.switchBoutonPompeFeu.Name = "switchBoutonPompeFeu";
+            this.switchBoutonPompeFeu.Size = new System.Drawing.Size(35, 15);
+            this.switchBoutonPompeFeu.Symetrique = true;
+            this.switchBoutonPompeFeu.TabIndex = 216;
+            this.switchBoutonPompeFeu.ChangementEtat += new System.EventHandler(this.switchBoutonPompeFeu_ChangementEtat);
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(26, 184);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(58, 13);
+            this.label2.TabIndex = 217;
+            this.label2.Text = "Pompe feu";
+            // 
             // PanelGrosRobotUtilisation
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -224,5 +247,7 @@
         private System.Windows.Forms.Button btnCoudeRange;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Label label2;
+        private Composants.SwitchBouton switchBoutonPompeFeu;
     }
 }

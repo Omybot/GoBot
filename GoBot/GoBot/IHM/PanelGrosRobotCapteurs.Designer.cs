@@ -32,8 +32,11 @@
             this.ledJack = new Composants.Led();
             this.boxJack = new System.Windows.Forms.CheckBox();
             this.groupBoxCapteurs = new Composants.GroupBoxRetractable();
+            this.boxCouleurEquipe = new System.Windows.Forms.CheckBox();
+            this.ledCouleurEquipe = new Composants.Led();
             ((System.ComponentModel.ISupportInitialize)(this.ledJack)).BeginInit();
             this.groupBoxCapteurs.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.ledCouleurEquipe)).BeginInit();
             this.SuspendLayout();
             // 
             // ledJack
@@ -59,6 +62,8 @@
             // 
             // groupBoxCapteurs
             // 
+            this.groupBoxCapteurs.Controls.Add(this.boxCouleurEquipe);
+            this.groupBoxCapteurs.Controls.Add(this.ledCouleurEquipe);
             this.groupBoxCapteurs.Controls.Add(this.boxJack);
             this.groupBoxCapteurs.Controls.Add(this.ledJack);
             this.groupBoxCapteurs.Location = new System.Drawing.Point(3, 3);
@@ -67,6 +72,27 @@
             this.groupBoxCapteurs.TabIndex = 1;
             this.groupBoxCapteurs.TabStop = false;
             this.groupBoxCapteurs.Text = "Capteurs";
+            // 
+            // boxCouleurEquipe
+            // 
+            this.boxCouleurEquipe.AutoSize = true;
+            this.boxCouleurEquipe.Location = new System.Drawing.Point(23, 63);
+            this.boxCouleurEquipe.Name = "boxCouleurEquipe";
+            this.boxCouleurEquipe.Size = new System.Drawing.Size(103, 17);
+            this.boxCouleurEquipe.TabIndex = 102;
+            this.boxCouleurEquipe.Text = "Couleur équipe :";
+            this.boxCouleurEquipe.UseVisualStyleBackColor = true;
+            this.boxCouleurEquipe.CheckedChanged += new System.EventHandler(this.boxCouleurEquipe_CheckedChanged);
+            // 
+            // ledCouleurEquipe
+            // 
+            this.ledCouleurEquipe.Etat = false;
+            this.ledCouleurEquipe.Image = ((System.Drawing.Image)(resources.GetObject("ledCouleurEquipe.Image")));
+            this.ledCouleurEquipe.Location = new System.Drawing.Point(143, 63);
+            this.ledCouleurEquipe.Name = "ledCouleurEquipe";
+            this.ledCouleurEquipe.Size = new System.Drawing.Size(16, 16);
+            this.ledCouleurEquipe.TabIndex = 103;
+            this.ledCouleurEquipe.TabStop = false;
             // 
             // PanelGrosRobotCapteurs
             // 
@@ -81,6 +107,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.ledJack)).EndInit();
             this.groupBoxCapteurs.ResumeLayout(false);
             this.groupBoxCapteurs.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.ledCouleurEquipe)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -90,5 +117,7 @@
         private Composants.Led ledJack;
         private System.Windows.Forms.CheckBox boxJack;
         private Composants.GroupBoxRetractable groupBoxCapteurs;
+        private System.Windows.Forms.CheckBox boxCouleurEquipe;
+        private Composants.Led ledCouleurEquipe;
     }
 }

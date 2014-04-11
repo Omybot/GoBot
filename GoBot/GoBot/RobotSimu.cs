@@ -357,6 +357,12 @@ namespace GoBot
             return true;
         }
 
+        public override Color GetCouleurEquipe(bool historique = true)
+        {
+            // TODO
+            return Plateau.CouleurJ2Jaune;
+        }
+
         public override List<int>[] MesureTestPid(int consigne, SensAR sens, int nbValeurs)
         {
             List<int>[] retour = new List<int>[2];

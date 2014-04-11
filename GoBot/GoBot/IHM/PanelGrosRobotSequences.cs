@@ -39,5 +39,26 @@ namespace GoBot.IHM
             Robots.GrosRobot.BougeServo(ServomoteurID.GRFruitsCoude, Config.CurrentConfig.PositionGRCoudeRange);
             Robots.GrosRobot.BougeServo(ServomoteurID.GRFruitsCoude, Config.CurrentConfig.PositionGREpauleRange);
         }
+
+        private void btnBrasFeuRange_Click(object sender, EventArgs e)
+        {
+            Robots.GrosRobot.TourneMoteur(MoteurID.GREpauleFeu, 2850);
+            Robots.GrosRobot.BougeServo(ServomoteurID.GRFeuxCoude, 937);
+            Robots.GrosRobot.BougeServo(ServomoteurID.GRFeuxPoignet, 563);
+        }
+
+        private void btnBrasFeuEtage1_Click(object sender, EventArgs e)
+        {
+            Robots.GrosRobot.TourneMoteur(MoteurID.GREpauleFeu, 1250);
+            Robots.GrosRobot.BougeServo(ServomoteurID.GRFeuxCoude, 570);
+            Robots.GrosRobot.BougeServo(ServomoteurID.GRFeuxPoignet, 487);
+        }
+
+        private void btnBrasFeuInterne1_Click(object sender, EventArgs e)
+        {
+            Robots.GrosRobot.TourneMoteur(MoteurID.GREpauleFeu, 2850);
+            Robots.GrosRobot.BougeServo(ServomoteurID.GRFeuxCoude, 971);
+            Robots.GrosRobot.BougeServo(ServomoteurID.GRFeuxPoignet, 486);
+        }
     }
 }

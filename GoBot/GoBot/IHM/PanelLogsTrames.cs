@@ -24,7 +24,7 @@ namespace GoBot.IHM
         private Dictionary<Carte, Color> couleurCarte;
         private Dictionary<FonctionMove, bool> dicMessagesMoveAutorises;
         private Dictionary<FonctionIO, bool> dicMessagesIOAutorises;
-        private Dictionary<FonctionMove, bool> dicMessagesPiAutorises;
+        private Dictionary<FonctionPi, bool> dicMessagesPiAutorises;
         private Dictionary<FonctionBalise, bool> dicMessagesBaliseAutorises;
         private Dictionary<Carte, bool> dicExpediteurAutorises;
         private Dictionary<Carte, bool> dicDestinataireAutorises;
@@ -62,11 +62,11 @@ namespace GoBot.IHM
             couleurCarte.Add(Carte.RecBeu, Color.FromArgb(202, 202, 255));
             couleurCarte.Add(Carte.RecBoi, Color.FromArgb(176, 176, 255));
             couleurCarte.Add(Carte.RecMiwi, Color.FromArgb(244, 247, 153));
-            couleurCarte.Add(Carte.RecIO, Color.FromArgb(244, 111, 255));
+            couleurCarte.Add(Carte.RecIO, Color.FromArgb(244, 170, 255));
 
             dicMessagesIOAutorises = new Dictionary<FonctionIO, bool>();
             dicMessagesMoveAutorises = new Dictionary<FonctionMove, bool>();
-            dicMessagesPiAutorises = new Dictionary<FonctionMove, bool>();
+            dicMessagesPiAutorises = new Dictionary<FonctionPi, bool>();
             dicMessagesBaliseAutorises = new Dictionary<FonctionBalise, bool>();
             dicDestinataireAutorises = new Dictionary<Carte, bool>();
             dicExpediteurAutorises = new Dictionary<Carte, bool>();
@@ -83,6 +83,10 @@ namespace GoBot.IHM
             foreach (FonctionBalise fonction in Enum.GetValues(typeof(FonctionBalise)))
             {
                 checkedListBoxBalise.Items.Add(fonction.ToString(), true);
+            }
+            foreach (FonctionPi fonction in Enum.GetValues(typeof(FonctionPi)))
+            {
+                checkedListBoxPi.Items.Add(fonction.ToString(), true);
             }
             foreach (Carte carte in Enum.GetValues(typeof(Carte)))
             {
@@ -192,10 +196,18 @@ namespace GoBot.IHM
 
                         if (carte == Carte.RecPi)
                         {
-                            FonctionMove fonction = (FonctionMove)trame[1];
+                            FonctionPi fonction = (FonctionPi)trame[1];
+                            checkedListBoxPi.Items.Remove(fonction.ToString());
+                            checkedListBoxPi.Items.Add(fonction.ToString(), false);
+                            dicMessagesPiAutorises[fonction] = false;
+                        }
+
+                        if (carte == Carte.RecIO)
+                        {
+                            FonctionIO fonction = (FonctionIO)trame[1];
                             checkedListBoxIO.Items.Remove(fonction.ToString());
                             checkedListBoxIO.Items.Add(fonction.ToString(), false);
-                            dicMessagesPiAutorises[fonction] = false;
+                            dicMessagesIOAutorises[fonction] = false;
                         }
 
                         if (carte == Carte.RecBun || carte == Carte.RecBeu || carte == Carte.RecBoi)
@@ -286,34 +298,45 @@ namespace GoBot.IHM
             if (rdoTempsPrecAff.Checked)
                 heure = ((int)(trameReplay.Date - datePrecAff).TotalMilliseconds).ToString() + " ms";
 
-            Carte destinataire = trameReplay.Entrant ? Carte.PC : TrameFactory.Identifiant(trame);
-            Carte expediteur = trameReplay.Entrant ? TrameFactory.Identifiant(trame) : Carte.PC;
-            Carte carte = trame.Carte;
-
-            bool cartesAutorisees = false;
-            if (dicDestinataireAutorises[destinataire] && dicExpediteurAutorises[expediteur])
-                cartesAutorisees = true;
-
-            bool fonctionAutorisee = false;
-            if ((carte == Carte.RecMove && dicMessagesMoveAutorises[(FonctionMove)trame[1]]) ||
-                (carte == Carte.RecPi && dicMessagesPiAutorises[(FonctionMove)trame[3]]) ||
-                ((expediteur == Carte.RecBun || expediteur == Carte.RecBeu || expediteur == Carte.RecBoi) && dicMessagesBaliseAutorises[(FonctionBalise)trame[1]]) ||
-                ((destinataire == Carte.RecBun || destinataire == Carte.RecBeu || destinataire == Carte.RecBoi) && dicMessagesBaliseAutorises[(FonctionBalise)trame[3]]) ||
-                (carte == Carte.RecMiwi))
-                fonctionAutorisee = true;
-
-
-            if (cartesAutorisees && fonctionAutorisee)
+            try
             {
-                dataGridViewLog.Rows.Add(compteur, expediteur.ToString(), destinataire.ToString(), heure, TrameFactory.Decode(trame), trame.ToString());
-                datePrecAff = trameReplay.Date;
 
-                if (rdoCarte.Checked)
-                    dataGridViewLog.Rows[dataGridViewLog.Rows.Count - 1].DefaultCellStyle.BackColor = couleurCarte[carte];
-                else if (rdoDest.Checked)
-                    dataGridViewLog.Rows[dataGridViewLog.Rows.Count - 1].DefaultCellStyle.BackColor = couleurCarte[destinataire];
-                else if (rdoExp.Checked)
-                    dataGridViewLog.Rows[dataGridViewLog.Rows.Count - 1].DefaultCellStyle.BackColor = couleurCarte[expediteur];
+                Carte destinataire = trameReplay.Entrant ? Carte.PC : TrameFactory.Identifiant(trame);
+                Carte expediteur = trameReplay.Entrant ? TrameFactory.Identifiant(trame) : Carte.PC;
+                Carte carte = trame.Carte;
+
+                bool cartesAutorisees = false;
+                if (dicDestinataireAutorises[destinataire] && dicExpediteurAutorises[expediteur])
+                    cartesAutorisees = true;
+
+                bool fonctionAutorisee = false;
+                if ((carte == Carte.RecMove && dicMessagesMoveAutorises[(FonctionMove)trame[1]]) ||
+                    (carte == Carte.RecIO && dicMessagesIOAutorises[(FonctionIO)trame[1]]) ||
+                    (expediteur == Carte.RecPi && dicMessagesPiAutorises[(FonctionPi)trame[1]]) ||
+                    (destinataire == Carte.RecPi && dicMessagesPiAutorises[(FonctionPi)trame[3]]) ||
+                    ((expediteur == Carte.RecBun || expediteur == Carte.RecBeu || expediteur == Carte.RecBoi) && dicMessagesBaliseAutorises[(FonctionBalise)trame[1]]) ||
+                    ((destinataire == Carte.RecBun || destinataire == Carte.RecBeu || destinataire == Carte.RecBoi) && dicMessagesBaliseAutorises[(FonctionBalise)trame[3]]) ||
+                    (carte == Carte.RecMiwi))
+                    fonctionAutorisee = true;
+
+
+                if (cartesAutorisees && fonctionAutorisee)
+                {
+                    dataGridViewLog.Rows.Add(compteur, expediteur.ToString(), destinataire.ToString(), heure, TrameFactory.Decode(trame), trame.ToString());
+                    datePrecAff = trameReplay.Date;
+
+                    if (rdoCarte.Checked)
+                        dataGridViewLog.Rows[dataGridViewLog.Rows.Count - 1].DefaultCellStyle.BackColor = couleurCarte[carte];
+                    else if (rdoDest.Checked)
+                        dataGridViewLog.Rows[dataGridViewLog.Rows.Count - 1].DefaultCellStyle.BackColor = couleurCarte[destinataire];
+                    else if (rdoExp.Checked)
+                        dataGridViewLog.Rows[dataGridViewLog.Rows.Count - 1].DefaultCellStyle.BackColor = couleurCarte[expediteur];
+                }
+            }
+            catch (Exception)
+            {
+                dataGridViewLog.Rows.Add(compteur, "?", "?", heure, "Inconnu !", trame.ToString());
+                dataGridViewLog.Rows[dataGridViewLog.Rows.Count - 1].DefaultCellStyle.BackColor = Color.Red;
             }
 
             compteur++;

@@ -45,10 +45,12 @@
             this.numFruitsCoude = new System.Windows.Forms.NumericUpDown();
             this.label3 = new System.Windows.Forms.Label();
             this.groupBoxReglage = new Composants.GroupBoxRetractable();
-            this.btnFruitsEpauleRange = new System.Windows.Forms.Button();
-            this.btnFruitsCoudeRange = new System.Windows.Forms.Button();
-            this.label2 = new System.Windows.Forms.Label();
-            this.label6 = new System.Windows.Forms.Label();
+            this.btnFeuxEpauleSave = new System.Windows.Forms.Button();
+            this.btnFeuxCoudeSave = new System.Windows.Forms.Button();
+            this.btnFeuxPoignetSave = new System.Windows.Forms.Button();
+            this.cboFeuxPoignet = new System.Windows.Forms.ComboBox();
+            this.cboFeuxCoude = new System.Windows.Forms.ComboBox();
+            this.cboFeuxEpaule = new System.Windows.Forms.ComboBox();
             this.label7 = new System.Windows.Forms.Label();
             this.numFeuxEpaule = new System.Windows.Forms.NumericUpDown();
             this.btnFeuxOkEpaule = new System.Windows.Forms.Button();
@@ -58,12 +60,10 @@
             this.label9 = new System.Windows.Forms.Label();
             this.numFeuxPoignet = new System.Windows.Forms.NumericUpDown();
             this.btnFeuxOkPoignet = new System.Windows.Forms.Button();
-            this.cboFeuxEpaule = new System.Windows.Forms.ComboBox();
-            this.cboFeuxCoude = new System.Windows.Forms.ComboBox();
-            this.cboFeuxPoignet = new System.Windows.Forms.ComboBox();
-            this.btnFeuxEpauleSave = new System.Windows.Forms.Button();
-            this.btnFeuxCoudeSave = new System.Windows.Forms.Button();
-            this.btnFeuxPoignetSave = new System.Windows.Forms.Button();
+            this.label6 = new System.Windows.Forms.Label();
+            this.btnFruitsEpauleRange = new System.Windows.Forms.Button();
+            this.label2 = new System.Windows.Forms.Label();
+            this.btnFruitsCoudeRange = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.numFruitsPinceGauche)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numFruitsPinceDroite)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numFruitsEpaule)).BeginInit();
@@ -282,43 +282,62 @@
             this.groupBoxReglage.TabStop = false;
             this.groupBoxReglage.Text = "Réglages";
             // 
-            // btnFruitsEpauleRange
+            // btnFeuxEpauleSave
             // 
-            this.btnFruitsEpauleRange.Location = new System.Drawing.Point(206, 71);
-            this.btnFruitsEpauleRange.Name = "btnFruitsEpauleRange";
-            this.btnFruitsEpauleRange.Size = new System.Drawing.Size(53, 23);
-            this.btnFruitsEpauleRange.TabIndex = 144;
-            this.btnFruitsEpauleRange.Text = "Rangé";
-            this.btnFruitsEpauleRange.UseVisualStyleBackColor = true;
-            this.btnFruitsEpauleRange.Click += new System.EventHandler(this.btnEpauleRange_Click);
+            this.btnFeuxEpauleSave.Location = new System.Drawing.Point(286, 196);
+            this.btnFeuxEpauleSave.Name = "btnFeuxEpauleSave";
+            this.btnFeuxEpauleSave.Size = new System.Drawing.Size(32, 23);
+            this.btnFeuxEpauleSave.TabIndex = 159;
+            this.btnFeuxEpauleSave.Text = "Ok";
+            this.btnFeuxEpauleSave.UseVisualStyleBackColor = true;
+            this.btnFeuxEpauleSave.Click += new System.EventHandler(this.btnFeuxEpauleSave_Click);
             // 
-            // btnFruitsCoudeRange
+            // btnFeuxCoudeSave
             // 
-            this.btnFruitsCoudeRange.Location = new System.Drawing.Point(206, 45);
-            this.btnFruitsCoudeRange.Name = "btnFruitsCoudeRange";
-            this.btnFruitsCoudeRange.Size = new System.Drawing.Size(53, 23);
-            this.btnFruitsCoudeRange.TabIndex = 143;
-            this.btnFruitsCoudeRange.Text = "Rangé";
-            this.btnFruitsCoudeRange.UseVisualStyleBackColor = true;
-            this.btnFruitsCoudeRange.Click += new System.EventHandler(this.btnCoudeRange_Click);
+            this.btnFeuxCoudeSave.Location = new System.Drawing.Point(286, 222);
+            this.btnFeuxCoudeSave.Name = "btnFeuxCoudeSave";
+            this.btnFeuxCoudeSave.Size = new System.Drawing.Size(32, 23);
+            this.btnFeuxCoudeSave.TabIndex = 160;
+            this.btnFeuxCoudeSave.Text = "Ok";
+            this.btnFeuxCoudeSave.UseVisualStyleBackColor = true;
+            this.btnFeuxCoudeSave.Click += new System.EventHandler(this.btnFeuxCoudeSave_Click);
             // 
-            // label2
+            // btnFeuxPoignetSave
             // 
-            this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(15, 26);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(38, 13);
-            this.label2.TabIndex = 145;
-            this.label2.Text = "Fruits :";
+            this.btnFeuxPoignetSave.Location = new System.Drawing.Point(286, 248);
+            this.btnFeuxPoignetSave.Name = "btnFeuxPoignetSave";
+            this.btnFeuxPoignetSave.Size = new System.Drawing.Size(32, 23);
+            this.btnFeuxPoignetSave.TabIndex = 161;
+            this.btnFeuxPoignetSave.Text = "Ok";
+            this.btnFeuxPoignetSave.UseVisualStyleBackColor = true;
+            this.btnFeuxPoignetSave.Click += new System.EventHandler(this.btnFeuxPoignetSave_Click);
             // 
-            // label6
+            // cboFeuxPoignet
             // 
-            this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(15, 175);
-            this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(36, 13);
-            this.label6.TabIndex = 146;
-            this.label6.Text = "Feux :";
+            this.cboFeuxPoignet.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cboFeuxPoignet.FormattingEnabled = true;
+            this.cboFeuxPoignet.Location = new System.Drawing.Point(185, 250);
+            this.cboFeuxPoignet.Name = "cboFeuxPoignet";
+            this.cboFeuxPoignet.Size = new System.Drawing.Size(95, 21);
+            this.cboFeuxPoignet.TabIndex = 158;
+            // 
+            // cboFeuxCoude
+            // 
+            this.cboFeuxCoude.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cboFeuxCoude.FormattingEnabled = true;
+            this.cboFeuxCoude.Location = new System.Drawing.Point(185, 224);
+            this.cboFeuxCoude.Name = "cboFeuxCoude";
+            this.cboFeuxCoude.Size = new System.Drawing.Size(95, 21);
+            this.cboFeuxCoude.TabIndex = 157;
+            // 
+            // cboFeuxEpaule
+            // 
+            this.cboFeuxEpaule.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cboFeuxEpaule.FormattingEnabled = true;
+            this.cboFeuxEpaule.Location = new System.Drawing.Point(185, 198);
+            this.cboFeuxEpaule.Name = "cboFeuxEpaule";
+            this.cboFeuxEpaule.Size = new System.Drawing.Size(95, 21);
+            this.cboFeuxEpaule.TabIndex = 156;
             // 
             // label7
             // 
@@ -333,7 +352,7 @@
             // 
             this.numFeuxEpaule.Location = new System.Drawing.Point(89, 199);
             this.numFeuxEpaule.Maximum = new decimal(new int[] {
-            1024,
+            4000,
             0,
             0,
             0});
@@ -413,62 +432,43 @@
             this.btnFeuxOkPoignet.UseVisualStyleBackColor = true;
             this.btnFeuxOkPoignet.Click += new System.EventHandler(this.btnFeuxOkPoignet_Click);
             // 
-            // cboFeuxEpaule
+            // label6
             // 
-            this.cboFeuxEpaule.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cboFeuxEpaule.FormattingEnabled = true;
-            this.cboFeuxEpaule.Location = new System.Drawing.Point(185, 198);
-            this.cboFeuxEpaule.Name = "cboFeuxEpaule";
-            this.cboFeuxEpaule.Size = new System.Drawing.Size(95, 21);
-            this.cboFeuxEpaule.TabIndex = 156;
+            this.label6.AutoSize = true;
+            this.label6.Location = new System.Drawing.Point(15, 175);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(36, 13);
+            this.label6.TabIndex = 146;
+            this.label6.Text = "Feux :";
             // 
-            // cboFeuxCoude
+            // btnFruitsEpauleRange
             // 
-            this.cboFeuxCoude.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cboFeuxCoude.FormattingEnabled = true;
-            this.cboFeuxCoude.Location = new System.Drawing.Point(185, 224);
-            this.cboFeuxCoude.Name = "cboFeuxCoude";
-            this.cboFeuxCoude.Size = new System.Drawing.Size(95, 21);
-            this.cboFeuxCoude.TabIndex = 157;
+            this.btnFruitsEpauleRange.Location = new System.Drawing.Point(206, 71);
+            this.btnFruitsEpauleRange.Name = "btnFruitsEpauleRange";
+            this.btnFruitsEpauleRange.Size = new System.Drawing.Size(53, 23);
+            this.btnFruitsEpauleRange.TabIndex = 144;
+            this.btnFruitsEpauleRange.Text = "Rangé";
+            this.btnFruitsEpauleRange.UseVisualStyleBackColor = true;
+            this.btnFruitsEpauleRange.Click += new System.EventHandler(this.btnEpauleRange_Click);
             // 
-            // cboFeuxPoignet
+            // label2
             // 
-            this.cboFeuxPoignet.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cboFeuxPoignet.FormattingEnabled = true;
-            this.cboFeuxPoignet.Location = new System.Drawing.Point(185, 250);
-            this.cboFeuxPoignet.Name = "cboFeuxPoignet";
-            this.cboFeuxPoignet.Size = new System.Drawing.Size(95, 21);
-            this.cboFeuxPoignet.TabIndex = 158;
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(15, 26);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(38, 13);
+            this.label2.TabIndex = 145;
+            this.label2.Text = "Fruits :";
             // 
-            // btnFeuxEpauleSave
+            // btnFruitsCoudeRange
             // 
-            this.btnFeuxEpauleSave.Location = new System.Drawing.Point(286, 196);
-            this.btnFeuxEpauleSave.Name = "btnFeuxEpauleSave";
-            this.btnFeuxEpauleSave.Size = new System.Drawing.Size(32, 23);
-            this.btnFeuxEpauleSave.TabIndex = 159;
-            this.btnFeuxEpauleSave.Text = "Ok";
-            this.btnFeuxEpauleSave.UseVisualStyleBackColor = true;
-            this.btnFeuxEpauleSave.Click += new System.EventHandler(this.btnFeuxEpauleSave_Click);
-            // 
-            // btnFeuxCoudeSave
-            // 
-            this.btnFeuxCoudeSave.Location = new System.Drawing.Point(286, 222);
-            this.btnFeuxCoudeSave.Name = "btnFeuxCoudeSave";
-            this.btnFeuxCoudeSave.Size = new System.Drawing.Size(32, 23);
-            this.btnFeuxCoudeSave.TabIndex = 160;
-            this.btnFeuxCoudeSave.Text = "Ok";
-            this.btnFeuxCoudeSave.UseVisualStyleBackColor = true;
-            this.btnFeuxCoudeSave.Click += new System.EventHandler(this.btnFeuxCoudeSave_Click);
-            // 
-            // btnFeuxPoignetSave
-            // 
-            this.btnFeuxPoignetSave.Location = new System.Drawing.Point(286, 248);
-            this.btnFeuxPoignetSave.Name = "btnFeuxPoignetSave";
-            this.btnFeuxPoignetSave.Size = new System.Drawing.Size(32, 23);
-            this.btnFeuxPoignetSave.TabIndex = 161;
-            this.btnFeuxPoignetSave.Text = "Ok";
-            this.btnFeuxPoignetSave.UseVisualStyleBackColor = true;
-            this.btnFeuxPoignetSave.Click += new System.EventHandler(this.btnFeuxPoignetSave_Click);
+            this.btnFruitsCoudeRange.Location = new System.Drawing.Point(206, 45);
+            this.btnFruitsCoudeRange.Name = "btnFruitsCoudeRange";
+            this.btnFruitsCoudeRange.Size = new System.Drawing.Size(53, 23);
+            this.btnFruitsCoudeRange.TabIndex = 143;
+            this.btnFruitsCoudeRange.Text = "Rangé";
+            this.btnFruitsCoudeRange.UseVisualStyleBackColor = true;
+            this.btnFruitsCoudeRange.Click += new System.EventHandler(this.btnCoudeRange_Click);
             // 
             // PanelGrosRobotReglage
             // 

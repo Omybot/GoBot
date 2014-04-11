@@ -26,12 +26,12 @@ namespace GoBot
 
     public enum ServomoteurID
     {
-        GRFeuxCoude = 1,
+        GRFeuxCoude = 16,
         GRFruitsCoude = 2,
         GRFruitsPinceDroite = 3,
         GRFruitsEpaule = 4,
         GRFruitsPinceGauche = 5,
-        GRFeuxPoignet = 16,
+        GRFeuxPoignet = 1,
 
         Tous = 255,
 
@@ -295,6 +295,7 @@ namespace GoBot
         /*GRCanon = 0,
         GRCanonTMin = 2,
         GRTurbineAspirateur = 1*/
+        GREpauleFeu = 0x00
     }
 
     public enum CapteurID
@@ -313,7 +314,8 @@ namespace GoBot
         /*GRShutter = 0,
         GRAlimentation = 1,
         GRPompe = 2*/
-        GRAlimentation = 1
+        GRAlimentation = 1,
+        GRPompeFeu = 0
     }
 
     public enum Carte
@@ -352,6 +354,9 @@ namespace GoBot
 
         Alimentation = 0x80,
         AlimentationCamera = 0x81,
+
+        ActionneurOnOff = 0x65,
+        Moteur = 0x66,
 
         TestConnexion = 0xF0,
         Reset = 0xF1,

@@ -348,12 +348,7 @@ namespace GoBot
             this.id = id;
             this.baudrate = baudrate;
 
-            switch (carte)
-            {
-                case (Carte.RecMove):
-                    connexionUdp = Connexions.ConnexionMove;
-                    break;
-            }
+            connexionUdp = Connexions.ConnexionParCarte[carte];
 
             connexionUdp.NouvelleTrameRecue += new ConnexionUDP.ReceptionDelegate(connexion_NouvelleTrame);
         }

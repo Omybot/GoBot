@@ -31,14 +31,19 @@ namespace GoBot.IHM
         private void PanelSequencesGros_Load(object sender, EventArgs e)
         {
             ledJack.CouleurGris();
+            ledCouleurEquipe.CouleurGris();
 
             groupBoxCapteurs.Deployer(Config.CurrentConfig.CapteursGROuvert, false);
 
             timerJack = new System.Timers.Timer(100);
             timerJack.Elapsed += new System.Timers.ElapsedEventHandler(timerJack_Elapsed);
+            timerCouleurEquipe = new System.Timers.Timer(100);
+            timerCouleurEquipe.Elapsed += new System.Timers.ElapsedEventHandler(timerCouleurEquipe_Elapsed);
         }
 
         System.Timers.Timer timerJack;
+        System.Timers.Timer timerCouleurEquipe;
+
         private void boxJack_CheckedChanged(object sender, EventArgs e)
         {
             if (boxJack.Checked)
@@ -59,6 +64,28 @@ namespace GoBot.IHM
                 else
                     ledJack.CouleurRouge();
             }));
+        }
+
+        void timerCouleurEquipe_Elapsed(object sender, System.Timers.ElapsedEventArgs e)
+        {
+            this.Invoke(new EventHandler(delegate
+            {
+                if (Robots.GrosRobot.GetCouleurEquipe(false) == Plateau.CouleurJ2Jaune)
+                    ledCouleurEquipe.CouleurJaune();
+                else
+                    ledCouleurEquipe.CouleurRouge();
+            }));
+        }
+
+        private void boxCouleurEquipe_CheckedChanged(object sender, EventArgs e)
+        {
+            if (boxCouleurEquipe.Checked)
+                timerCouleurEquipe.Start();
+            else
+            {
+                timerCouleurEquipe.Stop();
+                ledCouleurEquipe.CouleurGris();
+            }
         }
     }
 }

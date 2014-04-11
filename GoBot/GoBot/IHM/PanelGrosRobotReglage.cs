@@ -131,7 +131,7 @@ namespace GoBot.IHM
 
         private void btnFeuxOkEpaule_Click(object sender, EventArgs e)
         {
-            // TODO
+            Robots.GrosRobot.TourneMoteur(MoteurID.GREpauleFeu, (int)numFeuxEpaule.Value);
         }
 
         private void btnFeuxEpauleSave_Click(object sender, EventArgs e)

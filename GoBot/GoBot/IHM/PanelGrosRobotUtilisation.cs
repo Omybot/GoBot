@@ -74,5 +74,10 @@ namespace GoBot.IHM
         {
             Robots.GrosRobot.BougeServo(ServomoteurID.GRFruitsEpaule, Config.CurrentConfig.PositionGREpauleRange);
         }
+
+        private void switchBoutonPompeFeu_ChangementEtat(object sender, EventArgs e)
+        {
+            Robots.GrosRobot.ActionneurOnOff(ActionneurOnOffID.GRPompeFeu, switchBoutonPompeFeu.Actif);
+        }
     }
 }

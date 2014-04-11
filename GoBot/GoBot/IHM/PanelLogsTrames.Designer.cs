@@ -64,6 +64,7 @@
             this.checkedListBoxExpediteur = new System.Windows.Forms.CheckedListBox();
             this.checkedListBoxDestinataire = new System.Windows.Forms.CheckedListBox();
             this.groupBoxDestinataire = new System.Windows.Forms.GroupBox();
+            this.checkedListBoxPi = new System.Windows.Forms.CheckedListBox();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewLog)).BeginInit();
             this.contextMenuStripRow.SuspendLayout();
             this.groupBox2.SuspendLayout();
@@ -433,11 +434,22 @@
             this.groupBoxDestinataire.TabStop = false;
             this.groupBoxDestinataire.Text = "Destinataire";
             // 
+            // checkedListBoxPi
+            // 
+            this.checkedListBoxPi.CheckOnClick = true;
+            this.checkedListBoxPi.FormattingEnabled = true;
+            this.checkedListBoxPi.Location = new System.Drawing.Point(299, 570);
+            this.checkedListBoxPi.Name = "checkedListBoxPi";
+            this.checkedListBoxPi.Size = new System.Drawing.Size(100, 124);
+            this.checkedListBoxPi.Sorted = true;
+            this.checkedListBoxPi.TabIndex = 22;
+            // 
             // PanelLogsTrames
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.Transparent;
+            this.Controls.Add(this.checkedListBoxPi);
             this.Controls.Add(this.groupBoxDestinataire);
             this.Controls.Add(this.groupBoxExpediteur);
             this.Controls.Add(this.boxScroll);
@@ -504,6 +516,7 @@
         private System.Windows.Forms.ToolStripMenuItem nePlusAfficherDeMessagesDeCetteCarteToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem nePlusAfficherTousCesMessagesToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem copierLaTrameToolStripMenuItem;
+        private System.Windows.Forms.CheckedListBox checkedListBoxPi;
 
     }
 }

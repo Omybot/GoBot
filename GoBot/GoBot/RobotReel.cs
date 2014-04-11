@@ -37,6 +37,9 @@ namespace GoBot
             Carte = carte;
             IDRobot = idRobot;
             ServomoteursConnectes = new List<byte>();
+
+            semCouleurEquipe = null;
+            semJack = null;
         }
 
         public override void Init()
@@ -51,6 +54,10 @@ namespace GoBot
             DateRefreshPos = DateTime.Now;
 
             //Enchainement = new Enchainements.HomologationEnchainement();
+
+            Connexion.NouvelleTrameRecue += new ConnexionUDP.ReceptionDelegate(ReceptionMessage);
+            if(this == Robots.GrosRobot)
+                Connexions.ConnexionIO.NouvelleTrameRecue += new ConnexionUDP.ReceptionDelegate(ReceptionMessage);
 
             Connexion.NouvelleTrameRecue += new ConnexionUDP.ReceptionDelegate(ReceptionMessage);
 
@@ -179,10 +186,14 @@ namespace GoBot
                 if (trameRecue[1] == (byte)FonctionIO.ReponseCouleurEquipe)
                 {
                     if (trameRecue[2] == 0)
-                        Plateau.NotreCouleur = Plateau.CouleurJ1Rouge;
+                        couleurEquipe = Plateau.CouleurJ1Rouge;
                     else if (trameRecue[2] == 1)
-                        Plateau.NotreCouleur = Plateau.CouleurJ2Jaune;
+                        couleurEquipe = Plateau.CouleurJ2Jaune;
 
+                    Plateau.NotreCouleur = couleurEquipe;
+                    
+                    if(semCouleurEquipe != null)
+                        semCouleurEquipe.Release();
                     //Historique.AjouterAction(new ActionCapteur(this, CapteurID.GRCouleurBalle, "));
                 }
             }
@@ -331,23 +342,20 @@ namespace GoBot
         {
             base.BougeServo(servo, position);
             Trame trame = TrameFactory.ServoEnvoiPositionCible(servo, position);
-            Connexion.SendMessage(trame);
+            Connexions.ConnexionIO.SendMessage(trame);
             Historique.AjouterAction(new ActionServo(this, position, servo));
         }
 
         public override void ServoVitesse(ServomoteurID servo, int vitesse)
         {
             Trame trame = TrameFactory.ServoEnvoiVitesseMax(servo, vitesse);
-            Connexion.SendMessage(trame);
+            Connexions.ConnexionIO.SendMessage(trame);
         }
         
         public override void ActionneurOnOff(ActionneurOnOffID actionneur, bool on)
         {
-            if (actionneur == ActionneurOnOffID.GRAlimentation)
-            {
-                Trame trame = TrameFactory.CoupureAlim(on);
-                Connexion.SendMessage(trame);
-            }
+            Trame trame = TrameFactory.ActionneurOnOff(actionneur, on);
+            Connexions.ConnexionIO.SendMessage(trame);
 
             Historique.AjouterAction(new ActionOnOff(this, actionneur, on));
         }
@@ -424,11 +432,8 @@ namespace GoBot
         {
             base.TourneMoteur(moteur, vitesse);
 
-            /*if (moteur == MoteurID.GRCanon)
-            {
-                Trame trame = TrameFactory.VitesseCanon(vitesse);
-                Connexion.SendMessage(trame);
-            }*/
+            Trame trame = TrameFactory.MoteurVitesse(moteur, vitesse);
+            Connexions.ConnexionIO.SendMessage(trame);
 
             Historique.AjouterAction(new ActionMoteur(this, vitesse, moteur));
         }
@@ -453,8 +458,22 @@ namespace GoBot
             historiqueJack = historique;
             semJack = new Semaphore(0, 1);
             Connexions.ConnexionIO.SendMessage(TrameFactory.DemandeJack());
-            semJack.WaitOne();
+            semJack.WaitOne(50);
+            semJack = null;
             return jackBranche;
+        }
+
+        private Semaphore semCouleurEquipe;
+        private Color couleurEquipe;
+        private bool historiqueCouleurEquipe;
+        public override Color GetCouleurEquipe(bool historique = true)
+        {
+            historiqueCouleurEquipe = historique;
+            semCouleurEquipe = new Semaphore(0, 1);
+            Connexions.ConnexionIO.SendMessage(TrameFactory.DemandeCouleurEquipe());
+            semCouleurEquipe.WaitOne(50);
+            semCouleurEquipe = null;
+            return couleurEquipe;
         }
 
         List<int>[] retourTestPid;
