@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using GoBot.Actions;
 
 namespace GoBot.Communications
 {
@@ -15,6 +16,15 @@ namespace GoBot.Communications
             else
                 b = (byte)(valeur & 0x00FF);
             return b;
+        }
+
+        static public Trame DemandeTension()
+        {
+            byte[] tab = new byte[2];
+            tab[0] = (byte)Carte.RecIO;
+            tab[1] = (byte)FonctionIO.DemandeTension;
+
+            return new Trame(tab);
         }
 
         static public Trame CoupureAlim(bool allume)
@@ -869,6 +879,18 @@ namespace GoBot.Communications
                     case (byte)Carte.RecIO:
                         switch ((FonctionIO)trame[1])
                         {
+                            case FonctionIO.Moteur:
+                                message = "Moteur " + Nommeur.Nommer((MoteurID)trame[2]) + " position " + (trame[3] * 256 + trame[4]);
+                                break;
+                            case FonctionIO.ActionneurOnOff:
+                                message = "Actionneur " + Nommeur.Nommer((ActionneurOnOffID)trame[2]) + (trame[3] > 0 ? " on" : " off");
+                                break;
+                            case FonctionIO.RetourTension:
+                                message = "Tension batteries : Pack1 = " + (double)trame[2] / 10.0 + " V - Pack2 = " + (double)trame[3] / 10.0;
+                                break;
+                            case FonctionIO.DemandeTension:
+                                message = "Demande tension batteries";
+                                break;
                             case FonctionIO.ArmerJack:
                                 message = "Armage du jack";
                                 break;

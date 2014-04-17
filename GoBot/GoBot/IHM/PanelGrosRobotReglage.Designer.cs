@@ -28,16 +28,6 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.btnFruitsPinceGaucheOuverte = new System.Windows.Forms.Button();
-            this.btnFruitsPinceGaucheFermee = new System.Windows.Forms.Button();
-            this.btnFruitsPinceGaucheOk = new System.Windows.Forms.Button();
-            this.numFruitsPinceGauche = new System.Windows.Forms.NumericUpDown();
-            this.label5 = new System.Windows.Forms.Label();
-            this.btnFruitsPinceDroiteOuverte = new System.Windows.Forms.Button();
-            this.btnFruitsPinceDroiteFermee = new System.Windows.Forms.Button();
-            this.btnFruitsPinceDroiteOk = new System.Windows.Forms.Button();
-            this.numFruitsPinceDroite = new System.Windows.Forms.NumericUpDown();
-            this.label4 = new System.Windows.Forms.Label();
             this.btnFruitsEpauleOk = new System.Windows.Forms.Button();
             this.numFruitsEpaule = new System.Windows.Forms.NumericUpDown();
             this.label1 = new System.Windows.Forms.Label();
@@ -64,8 +54,6 @@
             this.btnFruitsEpauleRange = new System.Windows.Forms.Button();
             this.label2 = new System.Windows.Forms.Label();
             this.btnFruitsCoudeRange = new System.Windows.Forms.Button();
-            ((System.ComponentModel.ISupportInitialize)(this.numFruitsPinceGauche)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numFruitsPinceDroite)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numFruitsEpaule)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numFruitsCoude)).BeginInit();
             this.groupBoxReglage.SuspendLayout();
@@ -73,108 +61,6 @@
             ((System.ComponentModel.ISupportInitialize)(this.numFeuxCoude)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numFeuxPoignet)).BeginInit();
             this.SuspendLayout();
-            // 
-            // btnFruitsPinceGaucheOuverte
-            // 
-            this.btnFruitsPinceGaucheOuverte.Location = new System.Drawing.Point(265, 123);
-            this.btnFruitsPinceGaucheOuverte.Name = "btnFruitsPinceGaucheOuverte";
-            this.btnFruitsPinceGaucheOuverte.Size = new System.Drawing.Size(53, 23);
-            this.btnFruitsPinceGaucheOuverte.TabIndex = 142;
-            this.btnFruitsPinceGaucheOuverte.Text = "Ouverte";
-            this.btnFruitsPinceGaucheOuverte.UseVisualStyleBackColor = true;
-            this.btnFruitsPinceGaucheOuverte.Click += new System.EventHandler(this.btnPinceGaucheOuverte_Click);
-            // 
-            // btnFruitsPinceGaucheFermee
-            // 
-            this.btnFruitsPinceGaucheFermee.Location = new System.Drawing.Point(206, 123);
-            this.btnFruitsPinceGaucheFermee.Name = "btnFruitsPinceGaucheFermee";
-            this.btnFruitsPinceGaucheFermee.Size = new System.Drawing.Size(53, 23);
-            this.btnFruitsPinceGaucheFermee.TabIndex = 141;
-            this.btnFruitsPinceGaucheFermee.Text = "Fermée";
-            this.btnFruitsPinceGaucheFermee.UseVisualStyleBackColor = true;
-            this.btnFruitsPinceGaucheFermee.Click += new System.EventHandler(this.btnPinceGaucheFermee_Click);
-            // 
-            // btnFruitsPinceGaucheOk
-            // 
-            this.btnFruitsPinceGaucheOk.Location = new System.Drawing.Point(147, 123);
-            this.btnFruitsPinceGaucheOk.Name = "btnFruitsPinceGaucheOk";
-            this.btnFruitsPinceGaucheOk.Size = new System.Drawing.Size(53, 23);
-            this.btnFruitsPinceGaucheOk.TabIndex = 140;
-            this.btnFruitsPinceGaucheOk.Text = "Ok";
-            this.btnFruitsPinceGaucheOk.UseVisualStyleBackColor = true;
-            this.btnFruitsPinceGaucheOk.Click += new System.EventHandler(this.btnPinceGaucheOk_Click);
-            // 
-            // numFruitsPinceGauche
-            // 
-            this.numFruitsPinceGauche.Location = new System.Drawing.Point(89, 126);
-            this.numFruitsPinceGauche.Maximum = new decimal(new int[] {
-            1024,
-            0,
-            0,
-            0});
-            this.numFruitsPinceGauche.Name = "numFruitsPinceGauche";
-            this.numFruitsPinceGauche.Size = new System.Drawing.Size(52, 20);
-            this.numFruitsPinceGauche.TabIndex = 139;
-            // 
-            // label5
-            // 
-            this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(15, 128);
-            this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(73, 13);
-            this.label5.TabIndex = 138;
-            this.label5.Text = "Pince gauche";
-            // 
-            // btnFruitsPinceDroiteOuverte
-            // 
-            this.btnFruitsPinceDroiteOuverte.Location = new System.Drawing.Point(265, 97);
-            this.btnFruitsPinceDroiteOuverte.Name = "btnFruitsPinceDroiteOuverte";
-            this.btnFruitsPinceDroiteOuverte.Size = new System.Drawing.Size(53, 23);
-            this.btnFruitsPinceDroiteOuverte.TabIndex = 136;
-            this.btnFruitsPinceDroiteOuverte.Text = "Ouverte";
-            this.btnFruitsPinceDroiteOuverte.UseVisualStyleBackColor = true;
-            this.btnFruitsPinceDroiteOuverte.Click += new System.EventHandler(this.btnPinceDroiteOuverte_Click);
-            // 
-            // btnFruitsPinceDroiteFermee
-            // 
-            this.btnFruitsPinceDroiteFermee.Location = new System.Drawing.Point(206, 97);
-            this.btnFruitsPinceDroiteFermee.Name = "btnFruitsPinceDroiteFermee";
-            this.btnFruitsPinceDroiteFermee.Size = new System.Drawing.Size(53, 23);
-            this.btnFruitsPinceDroiteFermee.TabIndex = 135;
-            this.btnFruitsPinceDroiteFermee.Text = "Fermée";
-            this.btnFruitsPinceDroiteFermee.UseVisualStyleBackColor = true;
-            this.btnFruitsPinceDroiteFermee.Click += new System.EventHandler(this.btnPinceDroiteFermee_Click);
-            // 
-            // btnFruitsPinceDroiteOk
-            // 
-            this.btnFruitsPinceDroiteOk.Location = new System.Drawing.Point(147, 97);
-            this.btnFruitsPinceDroiteOk.Name = "btnFruitsPinceDroiteOk";
-            this.btnFruitsPinceDroiteOk.Size = new System.Drawing.Size(53, 23);
-            this.btnFruitsPinceDroiteOk.TabIndex = 134;
-            this.btnFruitsPinceDroiteOk.Text = "Ok";
-            this.btnFruitsPinceDroiteOk.UseVisualStyleBackColor = true;
-            this.btnFruitsPinceDroiteOk.Click += new System.EventHandler(this.btnPinceDroiteOk_Click);
-            // 
-            // numFruitsPinceDroite
-            // 
-            this.numFruitsPinceDroite.Location = new System.Drawing.Point(89, 100);
-            this.numFruitsPinceDroite.Maximum = new decimal(new int[] {
-            1024,
-            0,
-            0,
-            0});
-            this.numFruitsPinceDroite.Name = "numFruitsPinceDroite";
-            this.numFruitsPinceDroite.Size = new System.Drawing.Size(52, 20);
-            this.numFruitsPinceDroite.TabIndex = 133;
-            // 
-            // label4
-            // 
-            this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(15, 102);
-            this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(63, 13);
-            this.label4.TabIndex = 132;
-            this.label4.Text = "Pince droite";
             // 
             // btnFruitsEpauleOk
             // 
@@ -240,6 +126,7 @@
             // 
             // groupBoxReglage
             // 
+            this.groupBoxReglage.Controls.Add(this.btnFruitsEpauleRange);
             this.groupBoxReglage.Controls.Add(this.btnFeuxEpauleSave);
             this.groupBoxReglage.Controls.Add(this.btnFeuxCoudeSave);
             this.groupBoxReglage.Controls.Add(this.btnFeuxPoignetSave);
@@ -256,7 +143,6 @@
             this.groupBoxReglage.Controls.Add(this.numFeuxPoignet);
             this.groupBoxReglage.Controls.Add(this.btnFeuxOkPoignet);
             this.groupBoxReglage.Controls.Add(this.label6);
-            this.groupBoxReglage.Controls.Add(this.btnFruitsEpauleRange);
             this.groupBoxReglage.Controls.Add(this.label2);
             this.groupBoxReglage.Controls.Add(this.btnFruitsCoudeRange);
             this.groupBoxReglage.Controls.Add(this.label3);
@@ -265,16 +151,6 @@
             this.groupBoxReglage.Controls.Add(this.label1);
             this.groupBoxReglage.Controls.Add(this.btnFruitsEpauleOk);
             this.groupBoxReglage.Controls.Add(this.numFruitsEpaule);
-            this.groupBoxReglage.Controls.Add(this.label4);
-            this.groupBoxReglage.Controls.Add(this.btnFruitsPinceGaucheOuverte);
-            this.groupBoxReglage.Controls.Add(this.btnFruitsPinceGaucheFermee);
-            this.groupBoxReglage.Controls.Add(this.numFruitsPinceDroite);
-            this.groupBoxReglage.Controls.Add(this.btnFruitsPinceGaucheOk);
-            this.groupBoxReglage.Controls.Add(this.btnFruitsPinceDroiteOk);
-            this.groupBoxReglage.Controls.Add(this.label5);
-            this.groupBoxReglage.Controls.Add(this.numFruitsPinceGauche);
-            this.groupBoxReglage.Controls.Add(this.btnFruitsPinceDroiteFermee);
-            this.groupBoxReglage.Controls.Add(this.btnFruitsPinceDroiteOuverte);
             this.groupBoxReglage.Location = new System.Drawing.Point(3, 3);
             this.groupBoxReglage.Name = "groupBoxReglage";
             this.groupBoxReglage.Size = new System.Drawing.Size(332, 382);
@@ -284,7 +160,7 @@
             // 
             // btnFeuxEpauleSave
             // 
-            this.btnFeuxEpauleSave.Location = new System.Drawing.Point(286, 196);
+            this.btnFeuxEpauleSave.Location = new System.Drawing.Point(286, 138);
             this.btnFeuxEpauleSave.Name = "btnFeuxEpauleSave";
             this.btnFeuxEpauleSave.Size = new System.Drawing.Size(32, 23);
             this.btnFeuxEpauleSave.TabIndex = 159;
@@ -294,7 +170,7 @@
             // 
             // btnFeuxCoudeSave
             // 
-            this.btnFeuxCoudeSave.Location = new System.Drawing.Point(286, 222);
+            this.btnFeuxCoudeSave.Location = new System.Drawing.Point(286, 164);
             this.btnFeuxCoudeSave.Name = "btnFeuxCoudeSave";
             this.btnFeuxCoudeSave.Size = new System.Drawing.Size(32, 23);
             this.btnFeuxCoudeSave.TabIndex = 160;
@@ -304,7 +180,7 @@
             // 
             // btnFeuxPoignetSave
             // 
-            this.btnFeuxPoignetSave.Location = new System.Drawing.Point(286, 248);
+            this.btnFeuxPoignetSave.Location = new System.Drawing.Point(286, 190);
             this.btnFeuxPoignetSave.Name = "btnFeuxPoignetSave";
             this.btnFeuxPoignetSave.Size = new System.Drawing.Size(32, 23);
             this.btnFeuxPoignetSave.TabIndex = 161;
@@ -316,7 +192,7 @@
             // 
             this.cboFeuxPoignet.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cboFeuxPoignet.FormattingEnabled = true;
-            this.cboFeuxPoignet.Location = new System.Drawing.Point(185, 250);
+            this.cboFeuxPoignet.Location = new System.Drawing.Point(185, 192);
             this.cboFeuxPoignet.Name = "cboFeuxPoignet";
             this.cboFeuxPoignet.Size = new System.Drawing.Size(95, 21);
             this.cboFeuxPoignet.TabIndex = 158;
@@ -325,7 +201,7 @@
             // 
             this.cboFeuxCoude.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cboFeuxCoude.FormattingEnabled = true;
-            this.cboFeuxCoude.Location = new System.Drawing.Point(185, 224);
+            this.cboFeuxCoude.Location = new System.Drawing.Point(185, 166);
             this.cboFeuxCoude.Name = "cboFeuxCoude";
             this.cboFeuxCoude.Size = new System.Drawing.Size(95, 21);
             this.cboFeuxCoude.TabIndex = 157;
@@ -334,7 +210,7 @@
             // 
             this.cboFeuxEpaule.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cboFeuxEpaule.FormattingEnabled = true;
-            this.cboFeuxEpaule.Location = new System.Drawing.Point(185, 198);
+            this.cboFeuxEpaule.Location = new System.Drawing.Point(185, 140);
             this.cboFeuxEpaule.Name = "cboFeuxEpaule";
             this.cboFeuxEpaule.Size = new System.Drawing.Size(95, 21);
             this.cboFeuxEpaule.TabIndex = 156;
@@ -342,7 +218,7 @@
             // label7
             // 
             this.label7.AutoSize = true;
-            this.label7.Location = new System.Drawing.Point(15, 201);
+            this.label7.Location = new System.Drawing.Point(15, 143);
             this.label7.Name = "label7";
             this.label7.Size = new System.Drawing.Size(40, 13);
             this.label7.TabIndex = 147;
@@ -350,7 +226,7 @@
             // 
             // numFeuxEpaule
             // 
-            this.numFeuxEpaule.Location = new System.Drawing.Point(89, 199);
+            this.numFeuxEpaule.Location = new System.Drawing.Point(89, 141);
             this.numFeuxEpaule.Maximum = new decimal(new int[] {
             4000,
             0,
@@ -362,7 +238,7 @@
             // 
             // btnFeuxOkEpaule
             // 
-            this.btnFeuxOkEpaule.Location = new System.Drawing.Point(147, 196);
+            this.btnFeuxOkEpaule.Location = new System.Drawing.Point(147, 138);
             this.btnFeuxOkEpaule.Name = "btnFeuxOkEpaule";
             this.btnFeuxOkEpaule.Size = new System.Drawing.Size(32, 23);
             this.btnFeuxOkEpaule.TabIndex = 149;
@@ -373,7 +249,7 @@
             // label8
             // 
             this.label8.AutoSize = true;
-            this.label8.Location = new System.Drawing.Point(15, 227);
+            this.label8.Location = new System.Drawing.Point(15, 169);
             this.label8.Name = "label8";
             this.label8.Size = new System.Drawing.Size(38, 13);
             this.label8.TabIndex = 150;
@@ -381,7 +257,7 @@
             // 
             // btnFeuxOkCoude
             // 
-            this.btnFeuxOkCoude.Location = new System.Drawing.Point(147, 222);
+            this.btnFeuxOkCoude.Location = new System.Drawing.Point(147, 164);
             this.btnFeuxOkCoude.Name = "btnFeuxOkCoude";
             this.btnFeuxOkCoude.Size = new System.Drawing.Size(32, 23);
             this.btnFeuxOkCoude.TabIndex = 152;
@@ -391,7 +267,7 @@
             // 
             // numFeuxCoude
             // 
-            this.numFeuxCoude.Location = new System.Drawing.Point(89, 225);
+            this.numFeuxCoude.Location = new System.Drawing.Point(89, 167);
             this.numFeuxCoude.Maximum = new decimal(new int[] {
             1024,
             0,
@@ -404,7 +280,7 @@
             // label9
             // 
             this.label9.AutoSize = true;
-            this.label9.Location = new System.Drawing.Point(15, 253);
+            this.label9.Location = new System.Drawing.Point(15, 195);
             this.label9.Name = "label9";
             this.label9.Size = new System.Drawing.Size(43, 13);
             this.label9.TabIndex = 153;
@@ -412,7 +288,7 @@
             // 
             // numFeuxPoignet
             // 
-            this.numFeuxPoignet.Location = new System.Drawing.Point(89, 251);
+            this.numFeuxPoignet.Location = new System.Drawing.Point(89, 193);
             this.numFeuxPoignet.Maximum = new decimal(new int[] {
             1024,
             0,
@@ -424,7 +300,7 @@
             // 
             // btnFeuxOkPoignet
             // 
-            this.btnFeuxOkPoignet.Location = new System.Drawing.Point(147, 248);
+            this.btnFeuxOkPoignet.Location = new System.Drawing.Point(147, 190);
             this.btnFeuxOkPoignet.Name = "btnFeuxOkPoignet";
             this.btnFeuxOkPoignet.Size = new System.Drawing.Size(32, 23);
             this.btnFeuxOkPoignet.TabIndex = 155;
@@ -435,7 +311,7 @@
             // label6
             // 
             this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(15, 175);
+            this.label6.Location = new System.Drawing.Point(15, 117);
             this.label6.Name = "label6";
             this.label6.Size = new System.Drawing.Size(36, 13);
             this.label6.TabIndex = 146;
@@ -480,8 +356,6 @@
             this.Name = "PanelGrosRobotReglage";
             this.Size = new System.Drawing.Size(341, 396);
             this.Load += new System.EventHandler(this.PanelReglageGros_Load);
-            ((System.ComponentModel.ISupportInitialize)(this.numFruitsPinceGauche)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numFruitsPinceDroite)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.numFruitsEpaule)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.numFruitsCoude)).EndInit();
             this.groupBoxReglage.ResumeLayout(false);
@@ -501,16 +375,6 @@
         private System.Windows.Forms.Button btnFruitsCoudeOk;
         private System.Windows.Forms.NumericUpDown numFruitsCoude;
         private System.Windows.Forms.Label label3;
-        private System.Windows.Forms.Button btnFruitsPinceGaucheOuverte;
-        private System.Windows.Forms.Button btnFruitsPinceGaucheFermee;
-        private System.Windows.Forms.Button btnFruitsPinceGaucheOk;
-        private System.Windows.Forms.NumericUpDown numFruitsPinceGauche;
-        private System.Windows.Forms.Label label5;
-        private System.Windows.Forms.Button btnFruitsPinceDroiteOuverte;
-        private System.Windows.Forms.Button btnFruitsPinceDroiteFermee;
-        private System.Windows.Forms.Button btnFruitsPinceDroiteOk;
-        private System.Windows.Forms.NumericUpDown numFruitsPinceDroite;
-        private System.Windows.Forms.Label label4;
         private Composants.GroupBoxRetractable groupBoxReglage;
         private System.Windows.Forms.Button btnFruitsEpauleRange;
         private System.Windows.Forms.Button btnFruitsCoudeRange;

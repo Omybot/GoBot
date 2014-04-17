@@ -23,7 +23,7 @@ namespace GoBot.Communications
         {
             donnees = new List<Byte>();
 
-            String[] message = chaine.Split(separators);
+            String[] message = chaine.Split(separators,StringSplitOptions.RemoveEmptyEntries);
 
             for (int i = 0; i < message.Length; i++)
             {

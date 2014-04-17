@@ -17,13 +17,13 @@ namespace GoBot.Actions
             switch (servo)
             {
                 case ServomoteurID.GRFruitsCoude:
-                    return "coude";
+                    return "coude fruit";
                 case ServomoteurID.GRFruitsEpaule:
-                    return "épaule";
-                case ServomoteurID.GRFruitsPinceDroite:
-                    return "pince droite";
-                case ServomoteurID.GRFruitsPinceGauche:
-                    return "pince gauche";
+                    return "épaule fruit";
+                case ServomoteurID.GRFeuxCoude:
+                    return "coude feu";
+                case ServomoteurID.GRFeuxPoignet:
+                    return "poignet feu";
                 default:
                     return servo.ToString();
             }
@@ -39,19 +39,6 @@ namespace GoBot.Actions
         {
             switch (servo)
             {
-                case ServomoteurID.GRFruitsPinceDroite:
-                    if (position == Config.CurrentConfig.PositionGRPinceDroiteOuverte)
-                        return "ouverte (" + position + ")";
-                    else if (position == Config.CurrentConfig.PositionGRPinceDroiteFermee)
-                        return "fermée (" + position + ")";
-                    else return position.ToString();
-
-                case ServomoteurID.GRFruitsPinceGauche:
-                    if (position == Config.CurrentConfig.PositionGRPinceGaucheOuverte)
-                        return "ouverte (" + position + ")";
-                    else if (position == Config.CurrentConfig.PositionGRPinceGaucheFermee)
-                        return "fermée (" + position + ")";
-                    else return position.ToString();
 
                 default:
                     return position.ToString();
@@ -62,6 +49,8 @@ namespace GoBot.Actions
         {
             switch (moteur)
             {
+                case MoteurID.GREpauleFeu:
+                    return "épaule feu";
                 default:
                     return moteur.ToString();
             }
@@ -95,6 +84,10 @@ namespace GoBot.Actions
             {
                 case ActionneurOnOffID.GRAlimentation:
                     return "alimentation";
+                case ActionneurOnOffID.GRPinceDroite:
+                    return "pince feu droite";
+                case ActionneurOnOffID.GRPinceGauche:
+                    return "pince feu gauche";
                 default:
                     return actionneur.ToString();
             }
@@ -104,6 +97,8 @@ namespace GoBot.Actions
         {
             switch (capteur)
             {
+                case CapteurID.GRJack:
+                    return "jack";
                 default:
                     return capteur.ToString();
             }

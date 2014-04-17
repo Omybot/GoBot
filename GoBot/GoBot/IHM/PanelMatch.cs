@@ -23,34 +23,38 @@ namespace GoBot.IHM
 
         private void btnCouleurJaune_Click(object sender, EventArgs e)
         {
-            Plateau.NotreCouleur = Plateau.CouleurJ2Jaune;
+            Plateau.NotreCouleur = Plateau.CouleurDroiteJaune;
         }
 
         private void btnCouleurRouge_Click(object sender, EventArgs e)
         {
-            Plateau.NotreCouleur = Plateau.CouleurJ1Rouge;
+            Plateau.NotreCouleur = Plateau.CouleurGaucheRouge;
         }
 
         public void CouleurRouge()
         {
-            pictureBoxCouleur.BackColor = Plateau.CouleurJ1Rouge;
+            pictureBoxCouleur.BackColor = Plateau.CouleurGaucheRouge;
             pictureBoxBalises.Image = Properties.Resources.TableRouge;
 
-            Balise.GetBalise(Carte.RecBun).Position = new Position(new Angle(90, AnglyeType.Degre), new PointReel(Plateau.LongueurPlateau + Balise.DISTANCE_LASER_TABLE, -Balise.DISTANCE_LASER_TABLE));
-            Balise.GetBalise(Carte.RecBeu).Position = new Position(new Angle(270, AnglyeType.Degre), new PointReel(Plateau.LongueurPlateau + Balise.DISTANCE_LASER_TABLE, Plateau.LargeurPlateau + Balise.DISTANCE_LASER_TABLE));
-            Balise.GetBalise(Carte.RecBoi).Position = new Position(new Angle(0, AnglyeType.Degre), new PointReel(-Balise.DISTANCE_LASER_TABLE, Plateau.LargeurPlateau / 2));
-        }
-
-        public void CouleurJaune()
-        {
-            pictureBoxCouleur.BackColor = Plateau.CouleurJ2Jaune;
-            pictureBoxBalises.Image = Properties.Resources.TableViolet;
+            Robots.GrosRobot.ReglerOffsetAsserv(220, 150, 180);
 
             Balise.GetBalise(Carte.RecBun).Position = new Position(new Angle(90, AnglyeType.Degre), new PointReel(-Balise.DISTANCE_LASER_TABLE, -Balise.DISTANCE_LASER_TABLE));
             Balise.GetBalise(Carte.RecBeu).Position = new Position(new Angle(270, AnglyeType.Degre), new PointReel(-Balise.DISTANCE_LASER_TABLE, Plateau.LargeurPlateau + Balise.DISTANCE_LASER_TABLE));
             Balise.GetBalise(Carte.RecBoi).Position = new Position(new Angle(180, AnglyeType.Degre), new PointReel(Plateau.LongueurPlateau + Balise.DISTANCE_LASER_TABLE, Plateau.LargeurPlateau / 2));
-
+        
         }
+
+        public void CouleurJaune()
+        {
+            pictureBoxCouleur.BackColor = Plateau.CouleurDroiteJaune;
+            pictureBoxBalises.Image = Properties.Resources.TableViolet;
+
+            Robots.GrosRobot.ReglerOffsetAsserv(3000 - 220, 150, 180);
+
+            Balise.GetBalise(Carte.RecBun).Position = new Position(new Angle(90, AnglyeType.Degre), new PointReel(Plateau.LongueurPlateau + Balise.DISTANCE_LASER_TABLE, -Balise.DISTANCE_LASER_TABLE));
+            Balise.GetBalise(Carte.RecBeu).Position = new Position(new Angle(270, AnglyeType.Degre), new PointReel(Plateau.LongueurPlateau + Balise.DISTANCE_LASER_TABLE, Plateau.LargeurPlateau + Balise.DISTANCE_LASER_TABLE));
+            Balise.GetBalise(Carte.RecBoi).Position = new Position(new Angle(0, AnglyeType.Degre), new PointReel(-Balise.DISTANCE_LASER_TABLE, Plateau.LargeurPlateau / 2));
+}
 
         Thread thRecallage;
         private void btnRecallage_Click(object sender, EventArgs e)
@@ -76,7 +80,7 @@ namespace GoBot.IHM
             Robots.PetitRobot.Recallage(SensAR.Arriere);
             Robots.PetitRobot.Avancer(250);
 
-            if (Plateau.NotreCouleur == Plateau.CouleurJ2Jaune)
+            if (Plateau.NotreCouleur == Plateau.CouleurDroiteJaune)
                 Robots.PetitRobot.PivotDroite(90);
             else
                 Robots.PetitRobot.PivotGauche(90);
@@ -84,7 +88,7 @@ namespace GoBot.IHM
             Robots.PetitRobot.Recallage(SensAR.Arriere);
             Thread.Sleep(1000);
 
-            if (Plateau.NotreCouleur == Plateau.CouleurJ2Jaune)
+            if (Plateau.NotreCouleur == Plateau.CouleurDroiteJaune)
                 Robots.PetitRobot.ReglerOffsetAsserv(Robots.PetitRobot.Longueur / 2, 1750 - Robots.PetitRobot.Longueur / 2, 0);
             else
                 Robots.PetitRobot.ReglerOffsetAsserv(3000 - Robots.PetitRobot.Longueur / 2, 1750 - Robots.PetitRobot.Longueur / 2, 0);
@@ -104,7 +108,7 @@ namespace GoBot.IHM
             Robots.GrosRobot.Rapide();
             Robots.GrosRobot.Avancer(890);
 
-            if (Plateau.NotreCouleur == Plateau.CouleurJ1Rouge)
+            if (Plateau.NotreCouleur == Plateau.CouleurGaucheRouge)
                 Robots.GrosRobot.PivotGauche(90);
             else
                 Robots.GrosRobot.PivotDroite(90);
@@ -134,7 +138,7 @@ namespace GoBot.IHM
             Thread.Sleep(1000);
 
             // Envoyer la position actuelle au robot afin qu'il recalle ses offsets
-            if (Plateau.NotreCouleur == Plateau.CouleurJ1Rouge)
+            if (Plateau.NotreCouleur == Plateau.CouleurGaucheRouge)
                 Robots.GrosRobot.ReglerOffsetAsserv(3000 - Robots.GrosRobot.Longueur / 2, 1000, 180);
             else
                 Robots.GrosRobot.ReglerOffsetAsserv(Robots.GrosRobot.Longueur / 2, 1000, 0);
@@ -160,9 +164,9 @@ namespace GoBot.IHM
         {
             this.Invoke(new EventHandler(delegate
             {
-                if (Plateau.NotreCouleur == Plateau.CouleurJ1Rouge)
+                if (Plateau.NotreCouleur == Plateau.CouleurGaucheRouge)
                     CouleurRouge();
-                else if (Plateau.NotreCouleur == Plateau.CouleurJ2Jaune)
+                else if (Plateau.NotreCouleur == Plateau.CouleurDroiteJaune)
                     CouleurJaune();
             }));
         }
@@ -170,6 +174,7 @@ namespace GoBot.IHM
         private void btnArmerJack_Click(object sender, EventArgs e)
         {
             Robots.GrosRobot.ArmerJack();
+            Robots.GrosRobot.ReglerOffsetAsserv(0, 0, 270);
         }
 
         private void radioBaliseOui_CheckedChanged(object sender, EventArgs e)

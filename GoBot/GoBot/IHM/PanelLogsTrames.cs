@@ -512,5 +512,16 @@ namespace GoBot.IHM
                 Clipboard.SetText((String)(dataGridViewLog.SelectedRows[0].Cells["Trame"].Value));
             }
         }
+
+        private void checkedListBoxPi_ItemCheck(object sender, ItemCheckEventArgs e)
+        {
+            if (!Config.DesignMode)
+            {
+                String fonctionString = (String)checkedListBoxPi.Items[e.Index];
+                FonctionPi fonction = (FonctionPi)Enum.Parse(typeof(FonctionPi), fonctionString);
+
+                dicMessagesPiAutorises[fonction] = (e.NewValue == CheckState.Checked);
+            }
+        }
     }
 }

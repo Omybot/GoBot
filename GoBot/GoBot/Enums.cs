@@ -26,19 +26,17 @@ namespace GoBot
 
     public enum ServomoteurID
     {
-        GRFeuxCoude = 16,
+        GRFeuxCoude = 18,
         GRFruitsCoude = 2,
-        GRFruitsPinceDroite = 3,
         GRFruitsEpaule = 4,
-        GRFruitsPinceGauche = 5,
         GRFeuxPoignet = 1,
 
         Tous = 255,
 
         //zLibre2 = 2,
-        //zLibre3 = 3,
+        zLibre3 = 3,
         //zLibre4 = 4,
-        //zLibre5 = 5,
+        zLibre5 = 5,
         zLibre6 = 6,
         zLibre7 = 7,
         zLibre8 = 8,
@@ -49,8 +47,9 @@ namespace GoBot
         zLibre13 = 13,
         zLibre14 = 14,
         zLibre15 = 15,
+        zLibre16 = 16,
         zLibre17 = 17,
-        zLibre18 = 18,
+        //zLibre18 = 18,
         zLibre19 = 19,
         zLibre20 = 20,
         zLibre21 = 21,
@@ -315,7 +314,9 @@ namespace GoBot
         GRAlimentation = 1,
         GRPompe = 2*/
         GRAlimentation = 1,
-        GRPompeFeu = 0
+        GRPompeFeu = 0,
+        GRPinceDroite = 0x10,
+        GRPinceGauche = 0x11
     }
 
     public enum Carte
@@ -354,6 +355,8 @@ namespace GoBot
 
         Alimentation = 0x80,
         AlimentationCamera = 0x81,
+        DemandeTension = 0x82,
+        RetourTension = 0x83,
 
         ActionneurOnOff = 0x65,
         Moteur = 0x66,

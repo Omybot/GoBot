@@ -56,44 +56,6 @@ namespace GoBot.IHM
         }
         #endregion
 
-        #region Pince droite
-        private void btnPinceDroiteOk_Click(object sender, EventArgs e)
-        {
-            Robots.GrosRobot.BougeServo(ServomoteurID.GRFruitsPinceDroite, (int)numFruitsPinceDroite.Value);
-        }
-
-        private void btnPinceDroiteFermee_Click(object sender, EventArgs e)
-        {
-            if (MessageBox.Show("Enregistrer cette valeur pour la position fermée de la pince droite ?", "Confirmation", MessageBoxButtons.OKCancel, MessageBoxIcon.Question) == DialogResult.OK)
-                Config.CurrentConfig.PositionGRPinceDroiteFermee = (int)numFruitsPinceDroite.Value;
-        }
-
-        private void btnPinceDroiteOuverte_Click(object sender, EventArgs e)
-        {
-            if (MessageBox.Show("Enregistrer cette valeur pour la position ouverte de la pince droite ?", "Confirmation", MessageBoxButtons.OKCancel, MessageBoxIcon.Question) == DialogResult.OK)
-                Config.CurrentConfig.PositionGRPinceDroiteOuverte = (int)numFruitsPinceDroite.Value;
-        }
-        #endregion
-        
-        #region PinceGauche
-        private void btnPinceGaucheOk_Click(object sender, EventArgs e)
-        {
-            Robots.GrosRobot.BougeServo(ServomoteurID.GRFruitsPinceGauche, (int)numFruitsPinceGauche.Value);
-        }
-
-        private void btnPinceGaucheFermee_Click(object sender, EventArgs e)
-        {
-            if (MessageBox.Show("Enregistrer cette valeur pour la position fermée de la pince gauche ?", "Confirmation", MessageBoxButtons.OKCancel, MessageBoxIcon.Question) == DialogResult.OK)
-                Config.CurrentConfig.PositionGRPinceGaucheFermee = (int)numFruitsPinceGauche.Value;
-        }
-
-        private void btnPinceGaucheOuverte_Click(object sender, EventArgs e)
-        {
-            if (MessageBox.Show("Enregistrer cette valeur pour la position ouverte de la pince gauche ?", "Confirmation", MessageBoxButtons.OKCancel, MessageBoxIcon.Question) == DialogResult.OK)
-                Config.CurrentConfig.PositionGRPinceGaucheOuverte = (int)numFruitsPinceGauche.Value;
-        }
-        #endregion
-
         private void PanelReglageGros_Load(object sender, EventArgs e)
         {
             groupBoxReglage.Deployer(Config.CurrentConfig.ReglageGROuvert, false);

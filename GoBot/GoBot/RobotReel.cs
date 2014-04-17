@@ -22,6 +22,7 @@ namespace GoBot
         private DateTime DateRefreshPos { get; set; }
 
         private System.Timers.Timer timerPosition;
+        private System.Timers.Timer timerTension;
 
         public ConnexionUDP Connexion { get; set; }
 
@@ -61,17 +62,31 @@ namespace GoBot
 
             Connexion.NouvelleTrameRecue += new ConnexionUDP.ReceptionDelegate(ReceptionMessage);
 
-            Position = new Calculs.Position(new Angle(0, AnglyeType.Degre), new PointReel(200, 300));
+            Position = new Calculs.Position(new Angle(270, AnglyeType.Degre), new PointReel(200 + 160, 150));
             PositionCible = Position.Coordonnees;
 
             timerPosition = new System.Timers.Timer(200);
             timerPosition.Elapsed += new ElapsedEventHandler(timer_Elapsed);
             timerPosition.Start();
+
+            timerTension = new System.Timers.Timer(10000);
+            timerTension.Elapsed += new ElapsedEventHandler(timerTension_Elapsed);
+            timerTension.Start();
         }
 
         void timer_Elapsed(object sender, ElapsedEventArgs e)
         {
             DemandePosition();
+        }
+
+        void timerTension_Elapsed(object sender, ElapsedEventArgs e)
+        {
+            DemandeTension();
+        }
+
+        public void DemandeTension()
+        {
+            Connexions.ConnexionIO.SendMessage(TrameFactory.DemandeTension());
         }
 
         public void Delete()
@@ -97,6 +112,7 @@ namespace GoBot
                 if (trameRecue[1] == (byte)FonctionMove.FinDeplacement
                     || trameRecue[1] == (byte)FonctionMove.FinRecallage)
                 {
+                    Console.WriteLine("Déblocage déplacement " + DateTime.Now.Hour + ":" + DateTime.Now.Minute + ":" + DateTime.Now.Second + ":" + DateTime.Now.Millisecond);
                     semDeplacement.Release();
                 }
 
@@ -165,6 +181,12 @@ namespace GoBot
                         retourTestCharge[2].Add(chargePWMGauche);
                     }
                 }
+
+                if (trameRecue[1] == (byte)FonctionIO.RetourTension)
+                {
+                    TensionPack1 = (double)trameRecue[2] / 10.0;
+                    TensionPack2 = (double)trameRecue[3] / 10.0;
+                }
             }
             else if (trameRecue[0] == (byte)Carte.RecIO)
             {
@@ -179,16 +201,16 @@ namespace GoBot
 
                 if (trameRecue[1] == (byte)FonctionIO.DepartJack)
                 {
-                    Plateau.Enchainement = new GoBot.Enchainements.EnchainementMatch();
+                    Plateau.Enchainement = new GoBot.Enchainements.Enchainement1Point();
                     Plateau.Enchainement.Executer();
                 }
 
                 if (trameRecue[1] == (byte)FonctionIO.ReponseCouleurEquipe)
                 {
                     if (trameRecue[2] == 0)
-                        couleurEquipe = Plateau.CouleurJ1Rouge;
+                        couleurEquipe = Plateau.CouleurGaucheRouge;
                     else if (trameRecue[2] == 1)
-                        couleurEquipe = Plateau.CouleurJ2Jaune;
+                        couleurEquipe = Plateau.CouleurDroiteJaune;
 
                     Plateau.NotreCouleur = couleurEquipe;
                     

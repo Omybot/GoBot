@@ -70,7 +70,7 @@ namespace GoBot.IHM
         {
             this.Invoke(new EventHandler(delegate
             {
-                if (Robots.GrosRobot.GetCouleurEquipe(false) == Plateau.CouleurJ2Jaune)
+                if (Robots.GrosRobot.GetCouleurEquipe(false) == Plateau.CouleurDroiteJaune)
                     ledCouleurEquipe.CouleurJaune();
                 else
                     ledCouleurEquipe.CouleurRouge();

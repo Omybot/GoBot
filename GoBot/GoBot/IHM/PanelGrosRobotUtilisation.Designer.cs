@@ -32,7 +32,9 @@
             this.switchBoutonPuissance = new Composants.SwitchBouton();
             this.label12 = new System.Windows.Forms.Label();
             this.groupBoxUtilisation = new Composants.GroupBoxRetractable();
+            this.label2 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
+            this.switchBoutonPompeFeu = new Composants.SwitchBouton();
             this.label1 = new System.Windows.Forms.Label();
             this.btnEpauleRange = new System.Windows.Forms.Button();
             this.btnCoudeRange = new System.Windows.Forms.Button();
@@ -42,8 +44,6 @@
             this.label5 = new System.Windows.Forms.Label();
             this.btnPinceDroiteFermee = new System.Windows.Forms.Button();
             this.btnPinceDroiteOuverte = new System.Windows.Forms.Button();
-            this.switchBoutonPompeFeu = new Composants.SwitchBouton();
-            this.label2 = new System.Windows.Forms.Label();
             this.groupBoxUtilisation.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -95,10 +95,19 @@
             this.groupBoxUtilisation.Controls.Add(this.switchBoutonPuissance);
             this.groupBoxUtilisation.Location = new System.Drawing.Point(3, 3);
             this.groupBoxUtilisation.Name = "groupBoxUtilisation";
-            this.groupBoxUtilisation.Size = new System.Drawing.Size(332, 411);
+            this.groupBoxUtilisation.Size = new System.Drawing.Size(332, 211);
             this.groupBoxUtilisation.TabIndex = 1;
             this.groupBoxUtilisation.TabStop = false;
             this.groupBoxUtilisation.Text = "Utilisation";
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(26, 184);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(58, 13);
+            this.label2.TabIndex = 217;
+            this.label2.Text = "Pompe feu";
             // 
             // label3
             // 
@@ -108,6 +117,16 @@
             this.label3.Size = new System.Drawing.Size(38, 13);
             this.label3.TabIndex = 214;
             this.label3.Text = "Coude";
+            // 
+            // switchBoutonPompeFeu
+            // 
+            this.switchBoutonPompeFeu.BackColor = System.Drawing.Color.Transparent;
+            this.switchBoutonPompeFeu.Location = new System.Drawing.Point(117, 184);
+            this.switchBoutonPompeFeu.Name = "switchBoutonPompeFeu";
+            this.switchBoutonPompeFeu.Size = new System.Drawing.Size(35, 15);
+            this.switchBoutonPompeFeu.Symetrique = true;
+            this.switchBoutonPompeFeu.TabIndex = 216;
+            this.switchBoutonPompeFeu.ChangementEtat += new System.EventHandler(this.switchBoutonPompeFeu_ChangementEtat);
             // 
             // label1
             // 
@@ -196,25 +215,6 @@
             this.btnPinceDroiteOuverte.UseVisualStyleBackColor = true;
             this.btnPinceDroiteOuverte.Click += new System.EventHandler(this.btnPinceDroiteOuverte_Click);
             // 
-            // switchBoutonPompeFeu
-            // 
-            this.switchBoutonPompeFeu.BackColor = System.Drawing.Color.Transparent;
-            this.switchBoutonPompeFeu.Location = new System.Drawing.Point(117, 184);
-            this.switchBoutonPompeFeu.Name = "switchBoutonPompeFeu";
-            this.switchBoutonPompeFeu.Size = new System.Drawing.Size(35, 15);
-            this.switchBoutonPompeFeu.Symetrique = true;
-            this.switchBoutonPompeFeu.TabIndex = 216;
-            this.switchBoutonPompeFeu.ChangementEtat += new System.EventHandler(this.switchBoutonPompeFeu_ChangementEtat);
-            // 
-            // label2
-            // 
-            this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(26, 184);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(58, 13);
-            this.label2.TabIndex = 217;
-            this.label2.Text = "Pompe feu";
-            // 
             // PanelGrosRobotUtilisation
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -223,7 +223,7 @@
             this.BackColor = System.Drawing.Color.Transparent;
             this.Controls.Add(this.groupBoxUtilisation);
             this.Name = "PanelGrosRobotUtilisation";
-            this.Size = new System.Drawing.Size(341, 422);
+            this.Size = new System.Drawing.Size(341, 221);
             this.Load += new System.EventHandler(this.PanelUtilGros_Load);
             this.groupBoxUtilisation.ResumeLayout(false);
             this.groupBoxUtilisation.PerformLayout();

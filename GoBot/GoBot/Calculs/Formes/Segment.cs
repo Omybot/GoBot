@@ -284,8 +284,6 @@ namespace GoBot.Calculs.Formes
             // Sinon c'est la distance minimale entre (chaque extremité d'un segment) et (l'autre segment)
             double minDistance = double.MaxValue;
 
-            // TODO c'est faux dans pas mal de cas... Voir avec la projection orthogonale
-
             // Le minimal est peut être entre les extremités
             minDistance = Math.Min(minDistance, segment.Debut.Distance(Debut));
             minDistance = Math.Min(minDistance, segment.Debut.Distance(Fin));
@@ -330,7 +328,6 @@ namespace GoBot.Calculs.Formes
             // Sinon c'est la distance minimale entre chaque extremité du segment et la droite
             double minDistance = double.MaxValue;
 
-            // TODO c'est faux dans pas mal de cas...Voir avec la projection orthogonale
             minDistance = Math.Min(minDistance, droite.Distance(Debut));
             minDistance = Math.Min(minDistance, droite.Distance(Fin));
 

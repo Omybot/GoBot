@@ -113,7 +113,7 @@
             this.nePlusAfficherDeMessagesAvecCeDestinataireToolStripMenuItem,
             this.nePlusAfficherDeMessagesDeCetteCarteToolStripMenuItem});
             this.contextMenuStripRow.Name = "contextMenuStripRow";
-            this.contextMenuStripRow.Size = new System.Drawing.Size(368, 158);
+            this.contextMenuStripRow.Size = new System.Drawing.Size(368, 136);
             // 
             // copierLaTrameToolStripMenuItem
             // 
@@ -443,6 +443,7 @@
             this.checkedListBoxPi.Size = new System.Drawing.Size(100, 124);
             this.checkedListBoxPi.Sorted = true;
             this.checkedListBoxPi.TabIndex = 22;
+            this.checkedListBoxPi.ItemCheck += new System.Windows.Forms.ItemCheckEventHandler(this.checkedListBoxPi_ItemCheck);
             // 
             // PanelLogsTrames
             // 

@@ -53,7 +53,7 @@ namespace GoBot.Communications
         /// <returns>Etat de la connexion</returns>
         public Etat Connexion(IPAddress _adresseIP, int _portSortie, int _portEntree)
         {
-            Etat retour = Etat.Ok;
+            Etat retour = Etat.Erreur;
 
             AdresseIp = _adresseIP;
             PortSortie = _portSortie;

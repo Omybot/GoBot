@@ -47,22 +47,22 @@ namespace GoBot.IHM
 
         private void btnPinceDroiteFermee_Click(object sender, EventArgs e)
         {
-            Robots.GrosRobot.BougeServo(ServomoteurID.GRFruitsPinceDroite, Config.CurrentConfig.PositionGRPinceDroiteFermee);
+            Robots.GrosRobot.ActionneurOnOff(ActionneurOnOffID.GRPinceDroite, true);
         }
 
         private void btnPinceDroiteOuverte_Click(object sender, EventArgs e)
         {
-            Robots.GrosRobot.BougeServo(ServomoteurID.GRFruitsPinceDroite, Config.CurrentConfig.PositionGRPinceDroiteOuverte);
+            Robots.GrosRobot.ActionneurOnOff(ActionneurOnOffID.GRPinceDroite, false);
         }
 
         private void btnPinceGaucheFermee_Click(object sender, EventArgs e)
         {
-            Robots.GrosRobot.BougeServo(ServomoteurID.GRFruitsPinceGauche, Config.CurrentConfig.PositionGRPinceGaucheFermee);
+            Robots.GrosRobot.ActionneurOnOff(ActionneurOnOffID.GRPinceGauche, true);
         }
 
         private void btnPinceGaucheOuverte_Click(object sender, EventArgs e)
         {
-            Robots.GrosRobot.BougeServo(ServomoteurID.GRFruitsPinceGauche, Config.CurrentConfig.PositionGRPinceGaucheOuverte);
+            Robots.GrosRobot.ActionneurOnOff(ActionneurOnOffID.GRPinceGauche, false);
         }
 
         private void btnCoudeRange_Click(object sender, EventArgs e)

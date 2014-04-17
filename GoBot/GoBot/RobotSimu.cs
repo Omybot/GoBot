@@ -99,6 +99,9 @@ namespace GoBot
         {
             get
             {
+                if (VitesseActuelle == 0)
+                    return 0;
+
                 return (VitesseActuelle * VitesseActuelle) / (2 * AccelerationDeplacement);
             }
         }
@@ -293,7 +296,7 @@ namespace GoBot
             if (this == Robots.PetitRobot)
                 Position = new Calculs.Position(new Angle(0, AnglyeType.Degre), new PointReel(1500, 1600));
             else
-                Position = new Calculs.Position(new Angle(0, AnglyeType.Degre), new PointReel(1500, 400));
+                Position = new Calculs.Position(new Angle(90, AnglyeType.Degre), new PointReel(220, 150));
 
             PositionCible = Position.Coordonnees;
         }
@@ -360,7 +363,7 @@ namespace GoBot
         public override Color GetCouleurEquipe(bool historique = true)
         {
             // TODO
-            return Plateau.CouleurJ2Jaune;
+            return Plateau.CouleurDroiteJaune;
         }
 
         public override List<int>[] MesureTestPid(int consigne, SensAR sens, int nbValeurs)

@@ -44,22 +44,6 @@ namespace GoBot.Enchainements
         public void Executer()
         {
             Robots.GrosRobot.Historique.Log("DEBUT DU MATCH", TypeLog.Strat);
-            if (Plateau.NotreCouleur == Plateau.CouleurJ1Rouge)
-            {
-                for (int i = 0; i < 10; i++)
-                    if (Plateau.PoidActions.PoidsGrosBougie[i] != 0)
-                        Plateau.PoidActions.PoidsGrosBougie[i]++;
-
-                Plateau.PoidActions.PoidsGrosBougie[0] = 200;
-            }
-            if (Plateau.NotreCouleur == Plateau.CouleurJ2Jaune)
-            {
-                for (int i = 10; i < 20; i++)
-                    if (Plateau.PoidActions.PoidsGrosBougie[i] != 0)
-                        Plateau.PoidActions.PoidsGrosBougie[i]++;
-
-                Plateau.PoidActions.PoidsGrosBougie[10] = 200;
-            }
 
             DebutMatch = DateTime.Now;
             timerFinMatch = new System.Timers.Timer();

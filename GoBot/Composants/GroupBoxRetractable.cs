@@ -48,7 +48,7 @@ namespace Composants
         }
 
         Timer timerDeploi;
-        public void Deployer(bool deployer = true, bool animation = true)
+        public void Deployer(bool deployer = true, bool animation = false)
         {
             if (!deployer)
             {
@@ -116,7 +116,7 @@ namespace Composants
             }
         }
 
-        private void Replier(bool animation = true)
+        private void Replier(bool animation = false)
         {
             deploye = false;
 

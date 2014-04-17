@@ -33,6 +33,9 @@ namespace GoBot.Balises
 
         public const int DISTANCE_LASER_TABLE = 62;
 
+        // Tension des batteries
+        public double Tension { get; private set; }
+
         /// <summary>
         /// Détections effectuées par le capteur 1 de la balise
         /// </summary>
@@ -135,6 +138,7 @@ namespace GoBot.Balises
 
             Connexions.ConnexionMiwi.NouvelleTrameRecue += new ConnexionUDP.ReceptionDelegate(connexionIo_NouvelleTrame);
             Stats = new BaliseStats(this);
+            Tension = 0;
         }
 
         /// <summary>
@@ -188,8 +192,11 @@ namespace GoBot.Balises
                         nouvelleVitesse = AsservissementVitesse();
 
                     // Réception des données angulaires
-                    int nbMesures1 = trame[4];
-                    int nbMesures2 = trame[5];
+
+                    Tension = (double)trame[4] / 10.0;
+
+                    int nbMesures1 = trame[5];
+                    int nbMesures2 = trame[6];
 
                     // Si on a un nombre impair de fronts on laisse tomber cette mesure, elle n'est pas bonne
                     if (nbMesures1 % 2 != 0 || nbMesures2 % 2 != 0)
@@ -212,7 +219,7 @@ namespace GoBot.Balises
 
                     for (int i = 0; i < nbMesures1 * 4; i += 2)
                     {
-                        int valeur = trame[6 + i] * 256 + trame[6 + i + 1];
+                        int valeur = trame[7 + i] * 256 + trame[7 + i + 1];
                         tabAngle.Add(valeur);
                     }
 
@@ -231,7 +238,7 @@ namespace GoBot.Balises
 
                     // Réception des mesures du capteur 2
 
-                    int offSet = nbMesures1 * 4 + 6;
+                    int offSet = nbMesures1 * 4 + 7;
 
                     DetectionsCapteur2.Clear();
 
@@ -300,7 +307,7 @@ namespace GoBot.Balises
 
                             moyenne /= anglesMesuresPourOffsetCapteur1.Count;
 
-                            if (Plateau.NotreCouleur == Plateau.CouleurJ2Jaune)
+                            if (Plateau.NotreCouleur == Plateau.CouleurGaucheRouge)
                             {
                                 // Les valeurs sont les angles que doivent retourner chaque balise pour un reflecteur placé au centre de la table (sur le palmier)
                                 switch (Carte)
@@ -342,7 +349,7 @@ namespace GoBot.Balises
                                 moyenne += dv;
 
                             moyenne /= anglesMesuresPourOffsetCapteur2.Count;
-                            if (Plateau.NotreCouleur == Plateau.CouleurJ2Jaune)
+                            if (Plateau.NotreCouleur == Plateau.CouleurGaucheRouge)
                             {
                                 switch (Carte)
                                 {
@@ -390,6 +397,7 @@ namespace GoBot.Balises
                         Detections.Add(d1);
 
                     // Retire les détections correspondant à la position de robots alliés
+                    // TODO retirer le petit robot également
                     if (!ReglageOffset && Plateau.ReflecteursNosRobots)
                     {
                         for (int i = 0; i < Detections.Count; i++)
@@ -409,7 +417,7 @@ namespace GoBot.Balises
 
                             double marge = 4;
 
-                            if (Carte == GoBot.Carte.RecBeu && Plateau.NotreCouleur == Plateau.CouleurJ1Rouge)
+                            if (Carte == GoBot.Carte.RecBeu && Plateau.NotreCouleur == Plateau.CouleurDroiteJaune)
                             {
                                 Angle diff = new Angle(180) - (angleDetection - angleGrosRobot);
                                 if (Math.Abs((diff).AngleDegres) < marge)
@@ -419,7 +427,7 @@ namespace GoBot.Balises
                                     i--;
                                 }
                             }
-                            else if (Carte == GoBot.Carte.RecBoi && Plateau.NotreCouleur == Plateau.CouleurJ1Rouge)
+                            else if (Carte == GoBot.Carte.RecBoi && Plateau.NotreCouleur == Plateau.CouleurDroiteJaune)
                             {
                                 Angle diff = angleGrosRobot - angleDetection;
                                 if (Math.Abs((diff).AngleDegres) < marge)
@@ -429,7 +437,7 @@ namespace GoBot.Balises
                                     i--;
                                 }
                             }
-                            else if (Carte == GoBot.Carte.RecBun && Plateau.NotreCouleur == Plateau.CouleurJ1Rouge)
+                            else if (Carte == GoBot.Carte.RecBun && Plateau.NotreCouleur == Plateau.CouleurDroiteJaune)
                             {
                                 Angle diff = new Angle(180) - (angleGrosRobot + angleDetection);
                                 if (Math.Abs((diff).AngleDegres) < marge)
@@ -439,7 +447,7 @@ namespace GoBot.Balises
                                     i--;
                                 }
                             }
-                            else if (Carte == GoBot.Carte.RecBeu && Plateau.NotreCouleur == Plateau.CouleurJ2Jaune)
+                            else if (Carte == GoBot.Carte.RecBeu && Plateau.NotreCouleur == Plateau.CouleurGaucheRouge)
                             {
                                 Angle diff = angleDetection + angleGrosRobot;
                                 if (Math.Abs((diff).AngleDegres) < marge)
@@ -449,7 +457,7 @@ namespace GoBot.Balises
                                     i--;
                                 }
                             }
-                            else if (Carte == GoBot.Carte.RecBoi && Plateau.NotreCouleur == Plateau.CouleurJ2Jaune)
+                            else if (Carte == GoBot.Carte.RecBoi && Plateau.NotreCouleur == Plateau.CouleurGaucheRouge)
                             {
                                 Angle diff = new Angle(180) + angleGrosRobot - angleDetection;
                                 if (Math.Abs((diff).AngleDegres) < marge)
@@ -459,7 +467,7 @@ namespace GoBot.Balises
                                     i--;
                                 }
                             }
-                            else if (Carte == GoBot.Carte.RecBun && Plateau.NotreCouleur == Plateau.CouleurJ2Jaune)
+                            else if (Carte == GoBot.Carte.RecBun && Plateau.NotreCouleur == Plateau.CouleurGaucheRouge)
                             {
                                 Angle diff = angleGrosRobot - angleDetection;
                                 if (Math.Abs((diff).AngleDegres) < marge)
@@ -597,12 +605,12 @@ namespace GoBot.Balises
         /// <param name="vitesse">Vitesse de consigne en tours / seconde</param>
         public void Lancer(double vitesse)
         {
-            VitesseRotation(2500);
+            VitesseRotation(3200);
             VitesseConsigne = vitesse;
             ReglageVitesse = true;
             ReglageVitessePermanent = true;
             // Pour être sûr au cas où...
-            VitesseRotation(2500);
+            VitesseRotation(3200);
         }
 
         /// <summary>

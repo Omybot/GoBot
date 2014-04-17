@@ -88,13 +88,7 @@ namespace GoBot
         public double OffsetBalise3Capteur2 { get; set; }
 
         // Position des servos du gros robot
-
-        public int PositionGRPinceDroiteOuverte { get; set; }
-        public int PositionGRPinceDroiteFermee { get; set; }
-
-        public int PositionGRPinceGaucheOuverte { get; set; }
-        public int PositionGRPinceGaucheFermee { get; set; }
-
+        
         public int PositionGRCoudeRange { get; set; }
 
         public int PositionGREpauleRange { get; set; }

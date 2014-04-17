@@ -71,6 +71,9 @@ namespace GoBot
         public Dictionary<ServomoteurID, bool> ServoActive { get; set; }
         public Dictionary<MoteurID, bool> MoteurTourne { get; set; }
 
+        public double TensionPack1 { get; protected set; }
+        public double TensionPack2 { get; protected set; }
+
         public void Diagnostic()
         {
             if (this == Robots.GrosRobot)
@@ -89,9 +92,7 @@ namespace GoBot
         {
             if (ServoActive.ContainsKey(servo))
             {
-                if (servo == ServomoteurID.GRFruitsPinceDroite && position == Config.CurrentConfig.PositionGRPinceDroiteOuverte ||
-                    servo == ServomoteurID.GRFruitsPinceGauche && position == Config.CurrentConfig.PositionGRPinceGaucheOuverte ||
-                    servo == ServomoteurID.GRFruitsCoude && position != Config.CurrentConfig.PositionGRCoudeRange ||
+                if (servo == ServomoteurID.GRFruitsCoude && position != Config.CurrentConfig.PositionGRCoudeRange ||
                     servo == ServomoteurID.GRFruitsEpaule && position != Config.CurrentConfig.PositionGREpauleRange)
                     ServoActive[servo] = true;
                 else
@@ -142,6 +143,8 @@ namespace GoBot
                 MoteurTourne.Add(moteur, false);
 
             SemGraph = new Semaphore(1, 1);
+
+            TensionPack1 = TensionPack2 = 0;
         }
 
         public void Lent()
@@ -565,6 +568,7 @@ namespace GoBot
                 CheminEnCoursNoeuds.RemoveAt(0);
                 CheminEnCoursArcs.RemoveAt(0);
 
+                Robots.GrosRobot.Historique.Log("Noeud atteint", TypeLog.PathFinding);
             }
             if (nouvelleTrajectoire)
             {

@@ -69,8 +69,8 @@ namespace GoBot
         //public static Graph GraphGros { get; private set; }
         //public static Graph GraphPetit { get; private set; }
 
-        public static Color CouleurJ1Rouge { get { return Color.FromArgb(189, 1, 2); } }
-        public static Color CouleurJ2Jaune { get { return Color.FromArgb(202, 201, 0); } }
+        public static Color CouleurGaucheRouge { get { return Color.FromArgb(189, 1, 2); } }
+        public static Color CouleurDroiteJaune { get { return Color.FromArgb(202, 201, 0); } }
 
         /// <summary>
         /// Longueur de la table (mm)
@@ -128,16 +128,16 @@ namespace GoBot
                 Feux[0] = new Feu(new PointReel(15, 800), Color.Black, true, 0);
                 Feux[1] = new Feu(new PointReel(400, 1100), Color.Black, true, 90);
                 Feux[2] = new Feu(new PointReel(900, 600), Color.Black, true, 0);
-                Feux[3] = new Feu(new PointReel(900, 1100), Plateau.CouleurJ1Rouge, false, 0);
-                Feux[4] = new Feu(new PointReel(900, 1100), Plateau.CouleurJ2Jaune, false, 0);
-                Feux[5] = new Feu(new PointReel(900, 1100), Plateau.CouleurJ1Rouge, false, 0);
+                Feux[3] = new Feu(new PointReel(900, 1100), Plateau.CouleurGaucheRouge, false, 0);
+                Feux[4] = new Feu(new PointReel(900, 1100), Plateau.CouleurDroiteJaune, false, 0);
+                Feux[5] = new Feu(new PointReel(900, 1100), Plateau.CouleurGaucheRouge, false, 0);
                 Feux[6] = new Feu(new PointReel(900, 1600), Color.Black, true, 180);
                 Feux[7] = new Feu(new PointReel(1300, 1985), Color.Black, true, 90);
                 Feux[8] = new Feu(new PointReel(1700, 1985), Color.Black, true, 270);
                 Feux[9] = new Feu(new PointReel(2100, 600), Color.Black, true, 0);
-                Feux[10] = new Feu(new PointReel(2100, 1100), Plateau.CouleurJ2Jaune, false, 0);
-                Feux[11] = new Feu(new PointReel(2100, 1100), Plateau.CouleurJ1Rouge, false, 0);
-                Feux[12] = new Feu(new PointReel(2100, 1100), Plateau.CouleurJ2Jaune, false, 0);
+                Feux[10] = new Feu(new PointReel(2100, 1100), Plateau.CouleurDroiteJaune, false, 0);
+                Feux[11] = new Feu(new PointReel(2100, 1100), Plateau.CouleurGaucheRouge, false, 0);
+                Feux[12] = new Feu(new PointReel(2100, 1100), Plateau.CouleurDroiteJaune, false, 0);
                 Feux[13] = new Feu(new PointReel(2100, 1600), Color.Black, true, 180);
                 Feux[14] = new Feu(new PointReel(2600, 1100), Color.Black, true, 270);
                 Feux[15] = new Feu(new PointReel(2985, 800), Color.Black, true, 0);

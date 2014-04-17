@@ -33,6 +33,12 @@ namespace GoBot.IHM
             ledMouvement.CouleurGris();
         }
 
+        public void AfficherServo(ServomoteurID servo)
+        {
+            numID.Value = (int)servo;
+            btnRefresh_Click(null, null);
+        }
+
         private void btnRefresh_Click(object sender, EventArgs e)
         {
             servo = new Servomoteur(Carte.RecIO, (int)numID.Value, 19200);
