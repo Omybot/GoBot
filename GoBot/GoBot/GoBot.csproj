@@ -84,6 +84,8 @@
     <Compile Include="Balises\BaliseStats.cs" />
     <Compile Include="Balises\SuiviBalise.cs" />
     <Compile Include="CameraIP.cs" />
+    <Compile Include="Communications\ConnexionMiwi.cs" />
+    <Compile Include="Communications\Connexion.cs" />
     <Compile Include="Communications\LiaisonDataCheck.cs" />
     <Compile Include="ElementsJeu\ElementJeu.cs" />
     <Compile Include="ElementsJeu\Feu.cs" />

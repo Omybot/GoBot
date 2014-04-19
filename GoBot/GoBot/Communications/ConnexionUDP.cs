@@ -40,10 +40,10 @@ namespace GoBot.Communications
         {
             ConnexionCheck = new ConnexionCheck(2000);
             Sauvegarde = new Replay();
-            DerniereTentative = new DateTime(1, 1, 1);
+            DerniereTentativePing = new DateTime(1, 1, 1);
         }
 
-        private DateTime DerniereTentative;
+        private DateTime DerniereTentativePing;
 
         /// <summary>
         /// Initialise la connexion vers le client pour l'envoi de données
@@ -61,11 +61,11 @@ namespace GoBot.Communications
 
             try
             {
-                if ((DateTime.Now - DerniereTentative).TotalSeconds > 10)
+                if ((DateTime.Now - DerniereTentativePing).TotalSeconds > 10)
                 {
                     Ping ping = new Ping();
                     PingReply pingReponse = ping.Send(AdresseIp, 50);
-                    DerniereTentative = DateTime.Now;
+                    DerniereTentativePing = DateTime.Now;
 
                     if (pingReponse.Status == IPStatus.Success)
                     {
