@@ -29,7 +29,6 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            this.btnCharger = new System.Windows.Forms.Button();
             this.dataGridViewLog = new System.Windows.Forms.DataGridView();
             this.contextMenuStripRow = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.copierLaTrameToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -44,7 +43,6 @@
             this.rdoCarte = new System.Windows.Forms.RadioButton();
             this.rdoExp = new System.Windows.Forms.RadioButton();
             this.checkedListBoxMove = new System.Windows.Forms.CheckedListBox();
-            this.btnRefresh = new System.Windows.Forms.Button();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.rdoHeure = new System.Windows.Forms.RadioButton();
             this.rdoTempsDebut = new System.Windows.Forms.RadioButton();
@@ -53,10 +51,6 @@
             this.checkedListBoxIO = new System.Windows.Forms.CheckedListBox();
             this.checkedListBoxBalise = new System.Windows.Forms.CheckedListBox();
             this.groupBoxMessages = new System.Windows.Forms.GroupBox();
-            this.label2 = new System.Windows.Forms.Label();
-            this.lblRecIO = new System.Windows.Forms.Label();
-            this.lblRecMove = new System.Windows.Forms.Label();
-            this.btnAfficher = new System.Windows.Forms.Button();
             this.btnRejouerTout = new System.Windows.Forms.Button();
             this.btnRejouerSelection = new System.Windows.Forms.Button();
             this.boxScroll = new System.Windows.Forms.CheckBox();
@@ -65,6 +59,18 @@
             this.checkedListBoxDestinataire = new System.Windows.Forms.CheckedListBox();
             this.groupBoxDestinataire = new System.Windows.Forms.GroupBox();
             this.checkedListBoxPi = new System.Windows.Forms.CheckedListBox();
+            this.tabControlGestion = new System.Windows.Forms.TabControl();
+            this.tabPageCartes = new System.Windows.Forms.TabPage();
+            this.tabPageMessages = new System.Windows.Forms.TabPage();
+            this.tabControlMessages = new System.Windows.Forms.TabControl();
+            this.tabPageMove = new System.Windows.Forms.TabPage();
+            this.tabPageIO = new System.Windows.Forms.TabPage();
+            this.tabPagePi = new System.Windows.Forms.TabPage();
+            this.tabPageMiwi = new System.Windows.Forms.TabPage();
+            this.tabPageBalises = new System.Windows.Forms.TabPage();
+            this.btnAfficher = new System.Windows.Forms.Button();
+            this.btnRefresh = new System.Windows.Forms.Button();
+            this.btnCharger = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewLog)).BeginInit();
             this.contextMenuStripRow.SuspendLayout();
             this.groupBox2.SuspendLayout();
@@ -72,17 +78,15 @@
             this.groupBoxMessages.SuspendLayout();
             this.groupBoxExpediteur.SuspendLayout();
             this.groupBoxDestinataire.SuspendLayout();
+            this.tabControlGestion.SuspendLayout();
+            this.tabPageCartes.SuspendLayout();
+            this.tabPageMessages.SuspendLayout();
+            this.tabControlMessages.SuspendLayout();
+            this.tabPageMove.SuspendLayout();
+            this.tabPageIO.SuspendLayout();
+            this.tabPagePi.SuspendLayout();
+            this.tabPageBalises.SuspendLayout();
             this.SuspendLayout();
-            // 
-            // btnCharger
-            // 
-            this.btnCharger.Location = new System.Drawing.Point(30, 33);
-            this.btnCharger.Name = "btnCharger";
-            this.btnCharger.Size = new System.Drawing.Size(104, 23);
-            this.btnCharger.TabIndex = 0;
-            this.btnCharger.Text = "Charger un log";
-            this.btnCharger.UseVisualStyleBackColor = true;
-            this.btnCharger.Click += new System.EventHandler(this.btnCharger_Click);
             // 
             // dataGridViewLog
             // 
@@ -163,9 +167,9 @@
             this.groupBox2.Controls.Add(this.rdoDest);
             this.groupBox2.Controls.Add(this.rdoCarte);
             this.groupBox2.Controls.Add(this.rdoExp);
-            this.groupBox2.Location = new System.Drawing.Point(293, 129);
+            this.groupBox2.Location = new System.Drawing.Point(293, 114);
             this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(117, 119);
+            this.groupBox2.Size = new System.Drawing.Size(117, 120);
             this.groupBox2.TabIndex = 14;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Colorer par";
@@ -214,24 +218,19 @@
             // 
             // checkedListBoxMove
             // 
+            this.checkedListBoxMove.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.checkedListBoxMove.CheckOnClick = true;
+            this.checkedListBoxMove.ColumnWidth = 155;
+            this.checkedListBoxMove.Dock = System.Windows.Forms.DockStyle.Fill;
             this.checkedListBoxMove.FormattingEnabled = true;
-            this.checkedListBoxMove.Location = new System.Drawing.Point(98, 21);
+            this.checkedListBoxMove.Location = new System.Drawing.Point(3, 3);
+            this.checkedListBoxMove.Margin = new System.Windows.Forms.Padding(0);
+            this.checkedListBoxMove.MultiColumn = true;
             this.checkedListBoxMove.Name = "checkedListBoxMove";
-            this.checkedListBoxMove.Size = new System.Drawing.Size(177, 124);
+            this.checkedListBoxMove.Size = new System.Drawing.Size(355, 323);
             this.checkedListBoxMove.Sorted = true;
             this.checkedListBoxMove.TabIndex = 15;
             this.checkedListBoxMove.ItemCheck += new System.Windows.Forms.ItemCheckEventHandler(this.checkedListBoxGros_ItemCheck);
-            // 
-            // btnRefresh
-            // 
-            this.btnRefresh.Location = new System.Drawing.Point(30, 62);
-            this.btnRefresh.Name = "btnRefresh";
-            this.btnRefresh.Size = new System.Drawing.Size(104, 23);
-            this.btnRefresh.TabIndex = 16;
-            this.btnRefresh.Text = "Refresh";
-            this.btnRefresh.UseVisualStyleBackColor = true;
-            this.btnRefresh.Click += new System.EventHandler(this.btnRefresh_Click);
             // 
             // groupBox1
             // 
@@ -239,12 +238,12 @@
             this.groupBox1.Controls.Add(this.rdoTempsDebut);
             this.groupBox1.Controls.Add(this.rdoTempsPrecAff);
             this.groupBox1.Controls.Add(this.rdoTempsPrec);
-            this.groupBox1.Location = new System.Drawing.Point(3, 128);
+            this.groupBox1.Location = new System.Drawing.Point(3, 114);
             this.groupBox1.Name = "groupBox1";
             this.groupBox1.Size = new System.Drawing.Size(284, 120);
             this.groupBox1.TabIndex = 15;
             this.groupBox1.TabStop = false;
-            this.groupBox1.Text = "Heure";
+            this.groupBox1.Text = "Affichage heure";
             // 
             // rdoHeure
             // 
@@ -290,81 +289,49 @@
             // 
             // checkedListBoxIO
             // 
+            this.checkedListBoxIO.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.checkedListBoxIO.CheckOnClick = true;
+            this.checkedListBoxIO.ColumnWidth = 150;
+            this.checkedListBoxIO.Dock = System.Windows.Forms.DockStyle.Fill;
             this.checkedListBoxIO.FormattingEnabled = true;
-            this.checkedListBoxIO.Location = new System.Drawing.Point(98, 151);
+            this.checkedListBoxIO.Location = new System.Drawing.Point(3, 3);
+            this.checkedListBoxIO.MultiColumn = true;
             this.checkedListBoxIO.Name = "checkedListBoxIO";
-            this.checkedListBoxIO.Size = new System.Drawing.Size(177, 124);
+            this.checkedListBoxIO.Size = new System.Drawing.Size(355, 323);
             this.checkedListBoxIO.Sorted = true;
             this.checkedListBoxIO.TabIndex = 17;
             this.checkedListBoxIO.ItemCheck += new System.Windows.Forms.ItemCheckEventHandler(this.checkedListBoxIO_ItemCheck);
             // 
             // checkedListBoxBalise
             // 
+            this.checkedListBoxBalise.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.checkedListBoxBalise.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.checkedListBoxBalise.CheckOnClick = true;
+            this.checkedListBoxBalise.ColumnWidth = 155;
             this.checkedListBoxBalise.FormattingEnabled = true;
-            this.checkedListBoxBalise.Location = new System.Drawing.Point(98, 281);
+            this.checkedListBoxBalise.Location = new System.Drawing.Point(3, 3);
+            this.checkedListBoxBalise.MultiColumn = true;
             this.checkedListBoxBalise.Name = "checkedListBoxBalise";
-            this.checkedListBoxBalise.Size = new System.Drawing.Size(177, 124);
+            this.checkedListBoxBalise.Size = new System.Drawing.Size(355, 321);
             this.checkedListBoxBalise.Sorted = true;
             this.checkedListBoxBalise.TabIndex = 18;
             this.checkedListBoxBalise.ItemCheck += new System.Windows.Forms.ItemCheckEventHandler(this.checkedListBoxBalise_ItemCheck);
             // 
             // groupBoxMessages
             // 
-            this.groupBoxMessages.Controls.Add(this.label2);
-            this.groupBoxMessages.Controls.Add(this.lblRecIO);
-            this.groupBoxMessages.Controls.Add(this.lblRecMove);
-            this.groupBoxMessages.Controls.Add(this.checkedListBoxMove);
-            this.groupBoxMessages.Controls.Add(this.checkedListBoxBalise);
-            this.groupBoxMessages.Controls.Add(this.checkedListBoxIO);
+            this.groupBoxMessages.Controls.Add(this.tabControlGestion);
             this.groupBoxMessages.Location = new System.Drawing.Point(3, 254);
             this.groupBoxMessages.Name = "groupBoxMessages";
-            this.groupBoxMessages.Size = new System.Drawing.Size(281, 412);
+            this.groupBoxMessages.Size = new System.Drawing.Size(407, 412);
             this.groupBoxMessages.TabIndex = 19;
             this.groupBoxMessages.TabStop = false;
-            this.groupBoxMessages.Text = "Afficher les messages suivants";
-            // 
-            // label2
-            // 
-            this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(37, 337);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(40, 13);
-            this.label2.TabIndex = 21;
-            this.label2.Text = "Balises";
-            // 
-            // lblRecIO
-            // 
-            this.lblRecIO.AutoSize = true;
-            this.lblRecIO.Location = new System.Drawing.Point(39, 207);
-            this.lblRecIO.Name = "lblRecIO";
-            this.lblRecIO.Size = new System.Drawing.Size(38, 13);
-            this.lblRecIO.TabIndex = 20;
-            this.lblRecIO.Text = "RecIO";
-            // 
-            // lblRecMove
-            // 
-            this.lblRecMove.AutoSize = true;
-            this.lblRecMove.Location = new System.Drawing.Point(23, 77);
-            this.lblRecMove.Name = "lblRecMove";
-            this.lblRecMove.Size = new System.Drawing.Size(54, 13);
-            this.lblRecMove.TabIndex = 19;
-            this.lblRecMove.Text = "RecMove";
-            // 
-            // btnAfficher
-            // 
-            this.btnAfficher.Location = new System.Drawing.Point(293, 33);
-            this.btnAfficher.Name = "btnAfficher";
-            this.btnAfficher.Size = new System.Drawing.Size(106, 23);
-            this.btnAfficher.TabIndex = 20;
-            this.btnAfficher.Text = "Afficher temps réel";
-            this.btnAfficher.UseVisualStyleBackColor = true;
-            this.btnAfficher.Click += new System.EventHandler(this.btnAfficher_Click);
+            this.groupBoxMessages.Text = "Filtres sur les messages";
             // 
             // btnRejouerTout
             // 
-            this.btnRejouerTout.Location = new System.Drawing.Point(159, 33);
+            this.btnRejouerTout.Location = new System.Drawing.Point(140, 33);
             this.btnRejouerTout.Name = "btnRejouerTout";
             this.btnRejouerTout.Size = new System.Drawing.Size(106, 23);
             this.btnRejouerTout.TabIndex = 21;
@@ -374,7 +341,7 @@
             // 
             // btnRejouerSelection
             // 
-            this.btnRejouerSelection.Location = new System.Drawing.Point(159, 63);
+            this.btnRejouerSelection.Location = new System.Drawing.Point(140, 63);
             this.btnRejouerSelection.Name = "btnRejouerSelection";
             this.btnRejouerSelection.Size = new System.Drawing.Size(106, 23);
             this.btnRejouerSelection.TabIndex = 22;
@@ -385,74 +352,219 @@
             // boxScroll
             // 
             this.boxScroll.AutoSize = true;
-            this.boxScroll.Location = new System.Drawing.Point(306, 66);
+            this.boxScroll.Location = new System.Drawing.Point(278, 67);
             this.boxScroll.Name = "boxScroll";
-            this.boxScroll.Size = new System.Drawing.Size(76, 17);
+            this.boxScroll.Size = new System.Drawing.Size(113, 17);
             this.boxScroll.TabIndex = 23;
-            this.boxScroll.Text = "Scroll auto";
+            this.boxScroll.Text = "Scroll automatique";
             this.boxScroll.UseVisualStyleBackColor = true;
             // 
             // groupBoxExpediteur
             // 
+            this.groupBoxExpediteur.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left)));
             this.groupBoxExpediteur.Controls.Add(this.checkedListBoxExpediteur);
-            this.groupBoxExpediteur.Location = new System.Drawing.Point(293, 254);
+            this.groupBoxExpediteur.Location = new System.Drawing.Point(6, 6);
             this.groupBoxExpediteur.Name = "groupBoxExpediteur";
-            this.groupBoxExpediteur.Size = new System.Drawing.Size(117, 152);
+            this.groupBoxExpediteur.Size = new System.Drawing.Size(177, 349);
             this.groupBoxExpediteur.TabIndex = 24;
             this.groupBoxExpediteur.TabStop = false;
             this.groupBoxExpediteur.Text = "Expediteur";
             // 
             // checkedListBoxExpediteur
             // 
+            this.checkedListBoxExpediteur.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.checkedListBoxExpediteur.CheckOnClick = true;
+            this.checkedListBoxExpediteur.Dock = System.Windows.Forms.DockStyle.Fill;
             this.checkedListBoxExpediteur.FormattingEnabled = true;
-            this.checkedListBoxExpediteur.Location = new System.Drawing.Point(6, 18);
+            this.checkedListBoxExpediteur.Location = new System.Drawing.Point(3, 16);
             this.checkedListBoxExpediteur.Name = "checkedListBoxExpediteur";
-            this.checkedListBoxExpediteur.Size = new System.Drawing.Size(105, 124);
+            this.checkedListBoxExpediteur.Size = new System.Drawing.Size(171, 330);
             this.checkedListBoxExpediteur.Sorted = true;
             this.checkedListBoxExpediteur.TabIndex = 16;
             this.checkedListBoxExpediteur.ItemCheck += new System.Windows.Forms.ItemCheckEventHandler(this.checkedListBoxExpediteur_ItemCheck);
             // 
             // checkedListBoxDestinataire
             // 
+            this.checkedListBoxDestinataire.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.checkedListBoxDestinataire.CheckOnClick = true;
+            this.checkedListBoxDestinataire.Dock = System.Windows.Forms.DockStyle.Fill;
             this.checkedListBoxDestinataire.FormattingEnabled = true;
-            this.checkedListBoxDestinataire.Location = new System.Drawing.Point(6, 18);
+            this.checkedListBoxDestinataire.Location = new System.Drawing.Point(3, 16);
             this.checkedListBoxDestinataire.Name = "checkedListBoxDestinataire";
-            this.checkedListBoxDestinataire.Size = new System.Drawing.Size(105, 124);
+            this.checkedListBoxDestinataire.Size = new System.Drawing.Size(171, 330);
             this.checkedListBoxDestinataire.Sorted = true;
             this.checkedListBoxDestinataire.TabIndex = 16;
             this.checkedListBoxDestinataire.ItemCheck += new System.Windows.Forms.ItemCheckEventHandler(this.checkedListBoxDestinataire_ItemCheck);
             // 
             // groupBoxDestinataire
             // 
+            this.groupBoxDestinataire.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.groupBoxDestinataire.Controls.Add(this.checkedListBoxDestinataire);
-            this.groupBoxDestinataire.Location = new System.Drawing.Point(293, 412);
+            this.groupBoxDestinataire.Location = new System.Drawing.Point(192, 6);
             this.groupBoxDestinataire.Name = "groupBoxDestinataire";
-            this.groupBoxDestinataire.Size = new System.Drawing.Size(117, 152);
+            this.groupBoxDestinataire.Size = new System.Drawing.Size(177, 349);
             this.groupBoxDestinataire.TabIndex = 25;
             this.groupBoxDestinataire.TabStop = false;
             this.groupBoxDestinataire.Text = "Destinataire";
             // 
             // checkedListBoxPi
             // 
+            this.checkedListBoxPi.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.checkedListBoxPi.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.checkedListBoxPi.CheckOnClick = true;
+            this.checkedListBoxPi.ColumnWidth = 155;
             this.checkedListBoxPi.FormattingEnabled = true;
-            this.checkedListBoxPi.Location = new System.Drawing.Point(299, 570);
+            this.checkedListBoxPi.Location = new System.Drawing.Point(3, 3);
+            this.checkedListBoxPi.MultiColumn = true;
             this.checkedListBoxPi.Name = "checkedListBoxPi";
-            this.checkedListBoxPi.Size = new System.Drawing.Size(100, 124);
+            this.checkedListBoxPi.Size = new System.Drawing.Size(355, 323);
             this.checkedListBoxPi.Sorted = true;
             this.checkedListBoxPi.TabIndex = 22;
             this.checkedListBoxPi.ItemCheck += new System.Windows.Forms.ItemCheckEventHandler(this.checkedListBoxPi_ItemCheck);
+            // 
+            // tabControlGestion
+            // 
+            this.tabControlGestion.Controls.Add(this.tabPageCartes);
+            this.tabControlGestion.Controls.Add(this.tabPageMessages);
+            this.tabControlGestion.Location = new System.Drawing.Point(13, 19);
+            this.tabControlGestion.Name = "tabControlGestion";
+            this.tabControlGestion.SelectedIndex = 0;
+            this.tabControlGestion.Size = new System.Drawing.Size(383, 387);
+            this.tabControlGestion.TabIndex = 26;
+            // 
+            // tabPageCartes
+            // 
+            this.tabPageCartes.Controls.Add(this.groupBoxExpediteur);
+            this.tabPageCartes.Controls.Add(this.groupBoxDestinataire);
+            this.tabPageCartes.Location = new System.Drawing.Point(4, 22);
+            this.tabPageCartes.Name = "tabPageCartes";
+            this.tabPageCartes.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPageCartes.Size = new System.Drawing.Size(375, 361);
+            this.tabPageCartes.TabIndex = 0;
+            this.tabPageCartes.Text = "Cartes";
+            this.tabPageCartes.UseVisualStyleBackColor = true;
+            // 
+            // tabPageMessages
+            // 
+            this.tabPageMessages.Controls.Add(this.tabControlMessages);
+            this.tabPageMessages.Location = new System.Drawing.Point(4, 22);
+            this.tabPageMessages.Name = "tabPageMessages";
+            this.tabPageMessages.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPageMessages.Size = new System.Drawing.Size(375, 361);
+            this.tabPageMessages.TabIndex = 1;
+            this.tabPageMessages.Text = "Messages";
+            this.tabPageMessages.UseVisualStyleBackColor = true;
+            // 
+            // tabControlMessages
+            // 
+            this.tabControlMessages.Controls.Add(this.tabPageMove);
+            this.tabControlMessages.Controls.Add(this.tabPageIO);
+            this.tabControlMessages.Controls.Add(this.tabPagePi);
+            this.tabControlMessages.Controls.Add(this.tabPageMiwi);
+            this.tabControlMessages.Controls.Add(this.tabPageBalises);
+            this.tabControlMessages.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tabControlMessages.Location = new System.Drawing.Point(3, 3);
+            this.tabControlMessages.Name = "tabControlMessages";
+            this.tabControlMessages.SelectedIndex = 0;
+            this.tabControlMessages.Size = new System.Drawing.Size(369, 355);
+            this.tabControlMessages.TabIndex = 0;
+            // 
+            // tabPageMove
+            // 
+            this.tabPageMove.Controls.Add(this.checkedListBoxMove);
+            this.tabPageMove.Location = new System.Drawing.Point(4, 22);
+            this.tabPageMove.Name = "tabPageMove";
+            this.tabPageMove.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPageMove.Size = new System.Drawing.Size(361, 329);
+            this.tabPageMove.TabIndex = 0;
+            this.tabPageMove.Text = "RecMove";
+            this.tabPageMove.UseVisualStyleBackColor = true;
+            // 
+            // tabPageIO
+            // 
+            this.tabPageIO.Controls.Add(this.checkedListBoxIO);
+            this.tabPageIO.Location = new System.Drawing.Point(4, 22);
+            this.tabPageIO.Name = "tabPageIO";
+            this.tabPageIO.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPageIO.Size = new System.Drawing.Size(361, 329);
+            this.tabPageIO.TabIndex = 1;
+            this.tabPageIO.Text = "RecIO";
+            this.tabPageIO.UseVisualStyleBackColor = true;
+            // 
+            // tabPagePi
+            // 
+            this.tabPagePi.Controls.Add(this.checkedListBoxPi);
+            this.tabPagePi.Location = new System.Drawing.Point(4, 22);
+            this.tabPagePi.Name = "tabPagePi";
+            this.tabPagePi.Size = new System.Drawing.Size(361, 329);
+            this.tabPagePi.TabIndex = 2;
+            this.tabPagePi.Text = "RecPi";
+            this.tabPagePi.UseVisualStyleBackColor = true;
+            // 
+            // tabPageMiwi
+            // 
+            this.tabPageMiwi.Location = new System.Drawing.Point(4, 22);
+            this.tabPageMiwi.Name = "tabPageMiwi";
+            this.tabPageMiwi.Size = new System.Drawing.Size(361, 329);
+            this.tabPageMiwi.TabIndex = 3;
+            this.tabPageMiwi.Text = "RecMiwi";
+            this.tabPageMiwi.UseVisualStyleBackColor = true;
+            // 
+            // tabPageBalises
+            // 
+            this.tabPageBalises.Controls.Add(this.checkedListBoxBalise);
+            this.tabPageBalises.Location = new System.Drawing.Point(4, 22);
+            this.tabPageBalises.Name = "tabPageBalises";
+            this.tabPageBalises.Size = new System.Drawing.Size(361, 329);
+            this.tabPageBalises.TabIndex = 4;
+            this.tabPageBalises.Text = "Balises";
+            this.tabPageBalises.UseVisualStyleBackColor = true;
+            // 
+            // btnAfficher
+            // 
+            this.btnAfficher.Location = new System.Drawing.Point(270, 33);
+            this.btnAfficher.Name = "btnAfficher";
+            this.btnAfficher.Size = new System.Drawing.Size(129, 23);
+            this.btnAfficher.TabIndex = 20;
+            this.btnAfficher.Text = "Afficher temps réel";
+            this.btnAfficher.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.btnAfficher.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
+            this.btnAfficher.UseVisualStyleBackColor = true;
+            this.btnAfficher.Click += new System.EventHandler(this.btnAfficher_Click);
+            // 
+            // btnRefresh
+            // 
+            this.btnRefresh.Location = new System.Drawing.Point(11, 62);
+            this.btnRefresh.Name = "btnRefresh";
+            this.btnRefresh.Size = new System.Drawing.Size(104, 23);
+            this.btnRefresh.TabIndex = 16;
+            this.btnRefresh.Text = "Refresh";
+            this.btnRefresh.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.btnRefresh.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
+            this.btnRefresh.UseVisualStyleBackColor = true;
+            this.btnRefresh.Click += new System.EventHandler(this.btnRefresh_Click);
+            // 
+            // btnCharger
+            // 
+            this.btnCharger.Location = new System.Drawing.Point(11, 33);
+            this.btnCharger.Name = "btnCharger";
+            this.btnCharger.Size = new System.Drawing.Size(104, 23);
+            this.btnCharger.TabIndex = 0;
+            this.btnCharger.Text = "Charger un log";
+            this.btnCharger.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.btnCharger.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
+            this.btnCharger.UseVisualStyleBackColor = true;
+            this.btnCharger.Click += new System.EventHandler(this.btnCharger_Click);
             // 
             // PanelLogsTrames
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.Transparent;
-            this.Controls.Add(this.checkedListBoxPi);
-            this.Controls.Add(this.groupBoxDestinataire);
-            this.Controls.Add(this.groupBoxExpediteur);
             this.Controls.Add(this.boxScroll);
             this.Controls.Add(this.btnRejouerSelection);
             this.Controls.Add(this.btnRejouerTout);
@@ -472,9 +584,16 @@
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
             this.groupBoxMessages.ResumeLayout(false);
-            this.groupBoxMessages.PerformLayout();
             this.groupBoxExpediteur.ResumeLayout(false);
             this.groupBoxDestinataire.ResumeLayout(false);
+            this.tabControlGestion.ResumeLayout(false);
+            this.tabPageCartes.ResumeLayout(false);
+            this.tabPageMessages.ResumeLayout(false);
+            this.tabControlMessages.ResumeLayout(false);
+            this.tabPageMove.ResumeLayout(false);
+            this.tabPageIO.ResumeLayout(false);
+            this.tabPagePi.ResumeLayout(false);
+            this.tabPageBalises.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -499,9 +618,6 @@
         private System.Windows.Forms.CheckedListBox checkedListBoxIO;
         private System.Windows.Forms.CheckedListBox checkedListBoxBalise;
         private System.Windows.Forms.GroupBox groupBoxMessages;
-        private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.Label lblRecIO;
-        private System.Windows.Forms.Label lblRecMove;
         private System.Windows.Forms.ContextMenuStrip contextMenuStripRow;
         private System.Windows.Forms.ToolStripMenuItem nePlusAfficherCeTypeDeMessagesToolStripMenuItem;
         private System.Windows.Forms.Button btnAfficher;
@@ -518,6 +634,15 @@
         private System.Windows.Forms.ToolStripMenuItem nePlusAfficherTousCesMessagesToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem copierLaTrameToolStripMenuItem;
         private System.Windows.Forms.CheckedListBox checkedListBoxPi;
+        private System.Windows.Forms.TabControl tabControlGestion;
+        private System.Windows.Forms.TabPage tabPageCartes;
+        private System.Windows.Forms.TabPage tabPageMessages;
+        private System.Windows.Forms.TabControl tabControlMessages;
+        private System.Windows.Forms.TabPage tabPageMove;
+        private System.Windows.Forms.TabPage tabPageIO;
+        private System.Windows.Forms.TabPage tabPagePi;
+        private System.Windows.Forms.TabPage tabPageMiwi;
+        private System.Windows.Forms.TabPage tabPageBalises;
 
     }
 }

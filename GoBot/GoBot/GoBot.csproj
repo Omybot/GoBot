@@ -238,6 +238,11 @@
     <Compile Include="Ponderations\PoidsTest.cs" />
     <Compile Include="Ponderations\Poids.cs" />
     <Compile Include="Ponderations\PoidsBase.cs" />
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
     <Compile Include="Robots.cs" />
     <Compile Include="Communications\Connexions.cs" />
     <Compile Include="PathFinding\Arc.cs" />
@@ -420,14 +425,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
-      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
       <SubType>Designer</SubType>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <Compile Include="Properties\Resources.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DependentUpon>Resources.resx</DependentUpon>
-      <DesignTime>True</DesignTime>
-    </Compile>
     <None Include="app.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
@@ -521,6 +521,7 @@
     <None Include="img\Avance.png" />
     <None Include="img\Alertes.png" />
     <None Include="img\FondServo.png" />
+    <None Include="img\Dossier.png" />
     <Content Include="img\IconeVitesse.png" />
     <None Include="img\Pompe.png" />
     <None Include="img\TableRouge.png" />
@@ -530,6 +531,10 @@
     <None Include="img\Webcam.jpg" />
     <None Include="img\TablePerspective.jpg" />
     <None Include="img\Vumetre.png" />
+    <None Include="img\Pause.png" />
+    <None Include="img\Play.png" />
+    <None Include="img\PositionBalises1.png" />
+    <None Include="img\PositionBalises2.png" />
     <Content Include="robot.ico" />
   </ItemGroup>
   <ItemGroup>

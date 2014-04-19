@@ -69,8 +69,8 @@ namespace GoBot
         //public static Graph GraphGros { get; private set; }
         //public static Graph GraphPetit { get; private set; }
 
-        public static Color CouleurGaucheRouge { get { return Color.FromArgb(189, 1, 2); } }
-        public static Color CouleurDroiteJaune { get { return Color.FromArgb(202, 201, 0); } }
+        public static Color CouleurGaucheRouge { get { return Color.FromArgb(204, 6, 5); } }
+        public static Color CouleurDroiteJaune { get { return Color.FromArgb(250, 210, 1); } }
 
         /// <summary>
         /// Longueur de la table (mm)

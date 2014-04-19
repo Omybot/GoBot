@@ -45,8 +45,8 @@
             this.radioBaliseOui = new System.Windows.Forms.RadioButton();
             this.pictureBoxBalises = new System.Windows.Forms.PictureBox();
             this.pictureBoxCouleur = new System.Windows.Forms.PictureBox();
-            this.btnCouleurRouge = new System.Windows.Forms.Button();
-            this.btnCouleurJaune = new System.Windows.Forms.Button();
+            this.btnJoueurGauche = new System.Windows.Forms.Button();
+            this.btnJoueurDroite = new System.Windows.Forms.Button();
             this.ledJackBranche = new Composants.Led();
             this.ledBalises = new Composants.Led();
             this.ledRecallage = new Composants.Led();
@@ -204,7 +204,7 @@
             // 
             // pictureBoxBalises
             // 
-            this.pictureBoxBalises.Image = global::GoBot.Properties.Resources.TableRouge;
+            this.pictureBoxBalises.Image = global::GoBot.Properties.Resources.PositionBalises2;
             this.pictureBoxBalises.Location = new System.Drawing.Point(411, 140);
             this.pictureBoxBalises.Name = "pictureBoxBalises";
             this.pictureBoxBalises.Size = new System.Drawing.Size(250, 167);
@@ -219,29 +219,29 @@
             this.pictureBoxCouleur.TabIndex = 23;
             this.pictureBoxCouleur.TabStop = false;
             // 
-            // btnCouleurRouge
+            // btnJoueurGauche
             // 
-            this.btnCouleurRouge.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(165)))), ((int)(((byte)(32)))), ((int)(((byte)(25)))));
-            this.btnCouleurRouge.ForeColor = System.Drawing.Color.White;
-            this.btnCouleurRouge.Location = new System.Drawing.Point(667, 65);
-            this.btnCouleurRouge.Name = "btnCouleurRouge";
-            this.btnCouleurRouge.Size = new System.Drawing.Size(75, 50);
-            this.btnCouleurRouge.TabIndex = 22;
-            this.btnCouleurRouge.Text = "Rouge";
-            this.btnCouleurRouge.UseVisualStyleBackColor = false;
-            this.btnCouleurRouge.Click += new System.EventHandler(this.btnCouleurRouge_Click);
+            this.btnJoueurGauche.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(165)))), ((int)(((byte)(32)))), ((int)(((byte)(25)))));
+            this.btnJoueurGauche.ForeColor = System.Drawing.Color.White;
+            this.btnJoueurGauche.Location = new System.Drawing.Point(330, 65);
+            this.btnJoueurGauche.Name = "btnJoueurGauche";
+            this.btnJoueurGauche.Size = new System.Drawing.Size(75, 50);
+            this.btnJoueurGauche.TabIndex = 22;
+            this.btnJoueurGauche.Text = "Rouge";
+            this.btnJoueurGauche.UseVisualStyleBackColor = false;
+            this.btnJoueurGauche.Click += new System.EventHandler(this.btnCouleurRouge_Click);
             // 
-            // btnCouleurJaune
+            // btnJoueurDroite
             // 
-            this.btnCouleurJaune.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(202)))), ((int)(((byte)(201)))), ((int)(((byte)(0)))));
-            this.btnCouleurJaune.ForeColor = System.Drawing.Color.Black;
-            this.btnCouleurJaune.Location = new System.Drawing.Point(330, 65);
-            this.btnCouleurJaune.Name = "btnCouleurJaune";
-            this.btnCouleurJaune.Size = new System.Drawing.Size(75, 50);
-            this.btnCouleurJaune.TabIndex = 21;
-            this.btnCouleurJaune.Text = "Jaune";
-            this.btnCouleurJaune.UseVisualStyleBackColor = false;
-            this.btnCouleurJaune.Click += new System.EventHandler(this.btnCouleurJaune_Click);
+            this.btnJoueurDroite.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(240)))), ((int)(((byte)(235)))), ((int)(((byte)(36)))));
+            this.btnJoueurDroite.ForeColor = System.Drawing.Color.Black;
+            this.btnJoueurDroite.Location = new System.Drawing.Point(667, 65);
+            this.btnJoueurDroite.Name = "btnJoueurDroite";
+            this.btnJoueurDroite.Size = new System.Drawing.Size(75, 50);
+            this.btnJoueurDroite.TabIndex = 21;
+            this.btnJoueurDroite.Text = "Jaune";
+            this.btnJoueurDroite.UseVisualStyleBackColor = false;
+            this.btnJoueurDroite.Click += new System.EventHandler(this.btnCouleurJaune_Click);
             // 
             // ledJackBranche
             // 
@@ -303,8 +303,8 @@
             this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.pictureBoxBalises);
             this.Controls.Add(this.pictureBoxCouleur);
-            this.Controls.Add(this.btnCouleurRouge);
-            this.Controls.Add(this.btnCouleurJaune);
+            this.Controls.Add(this.btnJoueurGauche);
+            this.Controls.Add(this.btnJoueurDroite);
             this.Controls.Add(this.ledJackBranche);
             this.Controls.Add(this.ledBalises);
             this.Controls.Add(this.ledRecallage);
@@ -342,8 +342,8 @@
         private System.Windows.Forms.RadioButton radioBaliseOui;
         private System.Windows.Forms.PictureBox pictureBoxBalises;
         private System.Windows.Forms.PictureBox pictureBoxCouleur;
-        private System.Windows.Forms.Button btnCouleurRouge;
-        private System.Windows.Forms.Button btnCouleurJaune;
+        private System.Windows.Forms.Button btnJoueurGauche;
+        private System.Windows.Forms.Button btnJoueurDroite;
         private Composants.Led ledJackBranche;
         private Composants.Led ledBalises;
         private Composants.Led ledRecallage;

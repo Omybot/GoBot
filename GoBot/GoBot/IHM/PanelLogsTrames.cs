@@ -250,6 +250,7 @@ namespace GoBot.IHM
                 btnRejouerSelection.Enabled = false;
                 btnCharger.Enabled = false;
                 btnAfficher.Text = "Arrêter l'affichage";
+                btnAfficher.Image = GoBot.Properties.Resources.Pause;
                 affichageTempsReel = true;
             }
             else
@@ -269,6 +270,7 @@ namespace GoBot.IHM
                 btnRejouerSelection.Enabled = true;
                 btnCharger.Enabled = true;
                 btnAfficher.Text = "Afficher temps réel";
+                btnAfficher.Image = GoBot.Properties.Resources.Play;
                 affichageTempsReel = false;
             }
         }

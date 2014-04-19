@@ -182,7 +182,7 @@ namespace GoBot
                     }
                 }
 
-                if (trameRecue[1] == (byte)FonctionIO.RetourTension)
+                if (trameRecue[1] == (byte)FonctionIO.ReponseTension)
                 {
                     TensionPack1 = (double)trameRecue[2] / 10.0;
                     TensionPack2 = (double)trameRecue[3] / 10.0;

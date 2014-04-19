@@ -356,7 +356,7 @@ namespace GoBot
         Alimentation = 0x80,
         AlimentationCamera = 0x81,
         DemandeTension = 0x82,
-        RetourTension = 0x83,
+        ReponseTension = 0x83,
 
         ActionneurOnOff = 0x65,
         Moteur = 0x66,

@@ -885,7 +885,7 @@ namespace GoBot.Communications
                             case FonctionIO.ActionneurOnOff:
                                 message = "Actionneur " + Nommeur.Nommer((ActionneurOnOffID)trame[2]) + (trame[3] > 0 ? " on" : " off");
                                 break;
-                            case FonctionIO.RetourTension:
+                            case FonctionIO.ReponseTension:
                                 message = "Tension batteries : Pack1 = " + (double)trame[2] / 10.0 + " V - Pack2 = " + (double)trame[3] / 10.0;
                                 break;
                             case FonctionIO.DemandeTension:

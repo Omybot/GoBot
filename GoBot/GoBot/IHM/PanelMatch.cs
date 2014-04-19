@@ -19,6 +19,8 @@ namespace GoBot.IHM
         public PanelMatch()
         {
             InitializeComponent();
+            btnJoueurDroite.BackColor = Plateau.CouleurDroiteJaune;
+            btnJoueurGauche.BackColor = Plateau.CouleurGaucheRouge;
         }
 
         private void btnCouleurJaune_Click(object sender, EventArgs e)
@@ -34,7 +36,7 @@ namespace GoBot.IHM
         public void CouleurRouge()
         {
             pictureBoxCouleur.BackColor = Plateau.CouleurGaucheRouge;
-            pictureBoxBalises.Image = Properties.Resources.TableRouge;
+            pictureBoxBalises.Image = Properties.Resources.PositionBalises1;
 
             Robots.GrosRobot.ReglerOffsetAsserv(220, 150, 180);
 
@@ -47,7 +49,7 @@ namespace GoBot.IHM
         public void CouleurJaune()
         {
             pictureBoxCouleur.BackColor = Plateau.CouleurDroiteJaune;
-            pictureBoxBalises.Image = Properties.Resources.TableViolet;
+            pictureBoxBalises.Image = Properties.Resources.PositionBalises2;
 
             Robots.GrosRobot.ReglerOffsetAsserv(3000 - 220, 150, 180);
 
