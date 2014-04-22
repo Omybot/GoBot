@@ -67,12 +67,14 @@ namespace GoBot
             this.tabGestionLogs = new System.Windows.Forms.TabPage();
             this.panelGestionLog = new GoBot.IHM.PanelGestionLog();
             this.tabServomoteurs = new System.Windows.Forms.TabPage();
+            this.panelTestServos1 = new GoBot.IHM.PanelTestServos();
             this.lblSimulation = new System.Windows.Forms.Label();
             this.switchBoutonSimu = new Composants.SwitchBouton();
             this.btnClose = new System.Windows.Forms.Button();
             this.btnFenetre = new System.Windows.Forms.Button();
             this.panelConnexions = new GoBot.IHM.PanelConnexions();
-            this.panelTestServos1 = new GoBot.IHM.PanelTestServos();
+            this.tabPage1 = new System.Windows.Forms.TabPage();
+            this.panelAlimentation1 = new GoBot.IHM.PanelAlimentation();
             this.tabControl.SuspendLayout();
             this.tabGrosRobot.SuspendLayout();
             this.tabPetitRobot.SuspendLayout();
@@ -90,6 +92,7 @@ namespace GoBot
             this.tabConnexions.SuspendLayout();
             this.tabGestionLogs.SuspendLayout();
             this.tabServomoteurs.SuspendLayout();
+            this.tabPage1.SuspendLayout();
             this.SuspendLayout();
             // 
             // tabControl
@@ -113,6 +116,7 @@ namespace GoBot
             this.tabControl.Controls.Add(this.tabConnexions);
             this.tabControl.Controls.Add(this.tabGestionLogs);
             this.tabControl.Controls.Add(this.tabServomoteurs);
+            this.tabControl.Controls.Add(this.tabPage1);
             this.tabControl.HotTrack = true;
             this.tabControl.Location = new System.Drawing.Point(0, 0);
             this.tabControl.Name = "tabControl";
@@ -471,6 +475,13 @@ namespace GoBot
             this.tabServomoteurs.Text = "Servomoteurs";
             this.tabServomoteurs.UseVisualStyleBackColor = true;
             // 
+            // panelTestServos1
+            // 
+            this.panelTestServos1.Location = new System.Drawing.Point(8, 6);
+            this.panelTestServos1.Name = "panelTestServos1";
+            this.panelTestServos1.Size = new System.Drawing.Size(1202, 561);
+            this.panelTestServos1.TabIndex = 0;
+            // 
             // lblSimulation
             // 
             this.lblSimulation.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
@@ -523,12 +534,23 @@ namespace GoBot
             this.panelConnexions.Size = new System.Drawing.Size(849, 27);
             this.panelConnexions.TabIndex = 74;
             // 
-            // panelTestServos1
+            // tabPage1
             // 
-            this.panelTestServos1.Location = new System.Drawing.Point(8, 6);
-            this.panelTestServos1.Name = "panelTestServos1";
-            this.panelTestServos1.Size = new System.Drawing.Size(1202, 561);
-            this.panelTestServos1.TabIndex = 0;
+            this.tabPage1.Controls.Add(this.panelAlimentation1);
+            this.tabPage1.Location = new System.Drawing.Point(4, 22);
+            this.tabPage1.Name = "tabPage1";
+            this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPage1.Size = new System.Drawing.Size(1300, 712);
+            this.tabPage1.TabIndex = 21;
+            this.tabPage1.Text = "tabPage1";
+            this.tabPage1.UseVisualStyleBackColor = true;
+            // 
+            // panelAlimentation1
+            // 
+            this.panelAlimentation1.Location = new System.Drawing.Point(6, 6);
+            this.panelAlimentation1.Name = "panelAlimentation1";
+            this.panelAlimentation1.Size = new System.Drawing.Size(1025, 501);
+            this.panelAlimentation1.TabIndex = 0;
             // 
             // FenGoBot
             // 
@@ -567,6 +589,7 @@ namespace GoBot
             this.tabConnexions.ResumeLayout(false);
             this.tabGestionLogs.ResumeLayout(false);
             this.tabServomoteurs.ResumeLayout(false);
+            this.tabPage1.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -617,6 +640,8 @@ namespace GoBot
         private PanelGestionLog panelGestionLog;
         private System.Windows.Forms.TabPage tabServomoteurs;
         private PanelTestServos panelTestServos1;
+        private System.Windows.Forms.TabPage tabPage1;
+        private PanelAlimentation panelAlimentation1;
     }
 }
 

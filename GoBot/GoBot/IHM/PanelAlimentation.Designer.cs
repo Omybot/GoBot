@@ -44,6 +44,7 @@
             this.ledBalise1 = new Composants.Led();
             this.ledBalise2 = new Composants.Led();
             this.ledBalise3 = new Composants.Led();
+            this.ctrlGraphique = new Composants.CtrlGraphique();
             ((System.ComponentModel.ISupportInitialize)(this.ledPack1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.ledPack2)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.ledBalise1)).BeginInit();
@@ -191,10 +192,23 @@
             this.ledBalise3.TabIndex = 14;
             this.ledBalise3.TabStop = false;
             // 
+            // ctrlGraphique
+            // 
+            this.ctrlGraphique.BackColor = System.Drawing.Color.White;
+            this.ctrlGraphique.EchelleCommune = true;
+            this.ctrlGraphique.EchelleFixe = false;
+            this.ctrlGraphique.EchelleMax = 1D;
+            this.ctrlGraphique.EchelleMin = 0D;
+            this.ctrlGraphique.Location = new System.Drawing.Point(280, 48);
+            this.ctrlGraphique.Name = "ctrlGraphique";
+            this.ctrlGraphique.Size = new System.Drawing.Size(468, 298);
+            this.ctrlGraphique.TabIndex = 15;
+            // 
             // PanelAlimentation
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.Controls.Add(this.ctrlGraphique);
             this.Controls.Add(this.ledBalise3);
             this.Controls.Add(this.ledBalise2);
             this.Controls.Add(this.ledBalise1);
@@ -240,6 +254,7 @@
         private Composants.Led ledBalise1;
         private Composants.Led ledBalise2;
         private Composants.Led ledBalise3;
+        private Composants.CtrlGraphique ctrlGraphique;
 
     }
 }

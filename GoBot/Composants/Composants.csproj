@@ -42,6 +42,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Batterie.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Batterie.Designer.cs">
+      <DependentUpon>Batterie.cs</DependentUpon>
+    </Compile>
     <Compile Include="CtrlGraphique.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -104,6 +110,9 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="Batterie.resx">
+      <DependentUpon>Batterie.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="CtrlGraphique.resx">
       <DependentUpon>CtrlGraphique.cs</DependentUpon>
     </EmbeddedResource>
@@ -168,6 +177,18 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="img\FlecheHautGris.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="img\BatHigh.PNG" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="img\BatLow.PNG" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="img\BatMid.PNG" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="img\BatNo.PNG" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

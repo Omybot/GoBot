@@ -89,7 +89,7 @@ namespace GoBot
             SemDeplacement = new Semaphore(1, 1);
             SensDep = SensAR.Avant;
 
-            Entraxe = 250;
+            Entraxe = 306.11;
             Nom = "GrosRobot";
             RecallageEnCours = false;
             Rand = new Random(DateTime.Now.Millisecond);
@@ -157,8 +157,13 @@ namespace GoBot
                 double distance = VitesseActuelle / (1000.0 / intervalle);
 
                 //VitesseActuelle += AccellerationDeplacement / (1000 / IntervalleRafraichissementPosition);
-                if (Destination.Coordonnees.Distance(Position.Coordonnees) < distance)
+                if (Destination.Coordonnees.Distance(Position.Coordonnees) <= distance)
+                {
+                    VitesseActuelle = 0;
                     Position = Destination;//.Avancer(Destination.Coordonnees.Distance(Position.Coordonnees));
+
+                    DeplacementLigne = false;
+                }
                 else
                 {
                     if (SensDep == SensAR.Avant)
@@ -166,6 +171,8 @@ namespace GoBot
                     else
                         Position.Avancer(-distance);
                 }
+
+                Console.WriteLine(VitesseActuelle);
             }
 
             SemDeplacement.Release();
@@ -197,8 +204,6 @@ namespace GoBot
                 while (Position.Coordonnees.X != Destination.Coordonnees.X ||
                     Position.Coordonnees.Y != Destination.Coordonnees.Y)
                     Thread.Sleep(10);
-
-            DeplacementLigne = false;
         }
 
         public override void Reculer(int distance, bool attendre = true)
@@ -238,10 +243,14 @@ namespace GoBot
             if (mode == StopMode.Smooth)
             {
                 Position nouvelleDestination = new Calculs.Position(new Angle(Position.Angle.AngleDegres), new PointReel(position.Coordonnees.X, position.Coordonnees.Y));
-                if (SensDep == SensAR.Avant)
-                    nouvelleDestination.Avancer(DistanceFreinageActuelle);
-                else
-                    nouvelleDestination.Avancer(-DistanceFreinageActuelle);
+
+                if (DeplacementLigne)
+                {
+                    if (SensDep == SensAR.Avant)
+                        nouvelleDestination.Avancer(DistanceFreinageActuelle);
+                    else
+                        nouvelleDestination.Avancer(-DistanceFreinageActuelle);
+                }
 
                 Destination = nouvelleDestination;
             }

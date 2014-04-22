@@ -524,8 +524,6 @@
     <None Include="img\Dossier.png" />
     <Content Include="img\IconeVitesse.png" />
     <None Include="img\Pompe.png" />
-    <None Include="img\TableRouge.png" />
-    <None Include="img\TableViolet.png" />
     <None Include="img\Recale.png" />
     <None Include="img\Moteur.png" />
     <None Include="img\Webcam.jpg" />

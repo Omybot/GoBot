@@ -24,7 +24,7 @@ namespace GoBot.IHM
         {
             if (!Config.DesignMode)
             {
-                timerTension = new System.Timers.Timer(10000);
+                timerTension = new System.Timers.Timer(1000);
                 timerTension.Elapsed += new ElapsedEventHandler(timerTension_Elapsed);
                 timerTension.Start();
             }
@@ -38,6 +38,11 @@ namespace GoBot.IHM
             lblTensionBalise1.Text = Plateau.Balise1.Tension + " V";
             lblTensionBalise2.Text = Plateau.Balise2.Tension + " V";
             lblTensionBalise3.Text = Plateau.Balise3.Tension + " V";
+
+            ctrlGraphique.AjouterPoint("Pack 1", Robots.GrosRobot.TensionPack1, Color.Blue);
+            ctrlGraphique.AjouterPoint("Pack 2", Robots.GrosRobot.TensionPack2, Color.Green);
+
+            ctrlGraphique.DessineCourbes();
 
             if (Robots.GrosRobot.TensionPack1 < 25)
                 ledPack1.CouleurRouge();

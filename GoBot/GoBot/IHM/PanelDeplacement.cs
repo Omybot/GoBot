@@ -316,12 +316,12 @@ namespace GoBot.IHM
             else if (e.KeyCode == Keys.Left)
             {
                 // Pivot gauche
-                Robot.PivotGauche(3600, false);
+                Robot.PivotGauche(90, false);
             }
             else if (e.KeyCode == Keys.Right)
             {
                 // Pivot droit
-                Robot.PivotDroite(3600, false);
+                Robot.PivotDroite(90, false);
             }
             else if (e.KeyCode == Keys.Add)
             {

@@ -232,4 +232,39 @@
         X1u9ZYUqVRNNpfx/BJUSFelz9upTfkeZr+MsnZtVlpK8FiL/AKf3jwCiOroCAAAAAElFTkSuQmCC
 </value>
   </data>
+  <data name="batterieBoi.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+    <value>
+        iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8
+        YQUAAABDSURBVDhPY/iPAwIBiIBjZDlkiMREhWQZgK4JF0bRg8IBcs+cOYMXE2VAQ0MDVjxqwKgBIEw/
+        A/BhggYQgxE6/jMAAND4GsNXwUK+AAAAAElFTkSuQmCC
+</value>
+  </data>
+  <data name="batterieBeu.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+    <value>
+        iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8
+        YQUAAABDSURBVDhPY/iPAwIBiIBjZDlkiMREhWQZgK4JF0bRg8IBcs+cOYMXE2VAQ0MDVjxqwKgBIEw/
+        A/BhggYQgxE6/jMAAND4GsNXwUK+AAAAAElFTkSuQmCC
+</value>
+  </data>
+  <data name="batterieBun.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+    <value>
+        iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8
+        YQUAAABDSURBVDhPY/iPAwIBiIBjZDlkiMREhWQZgK4JF0bRg8IBcs+cOYMXE2VAQ0MDVjxqwKgBIEw/
+        A/BhggYQgxE6/jMAAND4GsNXwUK+AAAAAElFTkSuQmCC
+</value>
+  </data>
+  <data name="batteriePack2.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+    <value>
+        iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8
+        YQUAAABDSURBVDhPY/iPAwIBiIBjZDlkiMREhWQZgK4JF0bRg8IBcs+cOYMXE2VAQ0MDVjxqwKgBIEw/
+        A/BhggYQgxE6/jMAAND4GsNXwUK+AAAAAElFTkSuQmCC
+</value>
+  </data>
+  <data name="batteriePack1.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+    <value>
+        iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8
+        YQUAAABDSURBVDhPY/iPAwIBiIBjZDlkiMREhWQZgK4JF0bRg8IBcs+cOYMXE2VAQ0MDVjxqwKgBIEw/
+        A/BhggYQgxE6/jMAAND4GsNXwUK+AAAAAElFTkSuQmCC
+</value>
+  </data>
 </root>
