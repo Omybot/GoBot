@@ -63,7 +63,7 @@ namespace GoBot.IHM
         {
             if (!Robots.GrosRobot.GetJack(false))
             {
-                MessageBox.Show("Tu lances un recallages et tu branches pas le jack ? C'est comme si t'es Omybot t'as pas de robot quoi...", "Non mais allô quoi", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                MessageBox.Show("Jack absent !" + Environment.NewLine + "Jack nécessaire avant de commencer à recaller.", "Attention", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 return;
             }
             btnRecallage.Enabled = false;
@@ -105,22 +105,26 @@ namespace GoBot.IHM
             // Recallage du gros robot
             
             Robots.GrosRobot.Lent();
-            Robots.GrosRobot.Avancer(10);
-            Robots.GrosRobot.Recallage(SensAR.Arriere);
+            Robots.GrosRobot.Reculer(10);
+            Robots.GrosRobot.Recallage(SensAR.Avant);
             Robots.GrosRobot.Rapide();
-            Robots.GrosRobot.Avancer(890);
+            Robots.GrosRobot.Reculer(101);
 
             if (Plateau.NotreCouleur == Plateau.CouleurGaucheRouge)
-                Robots.GrosRobot.PivotGauche(90);
-            else
                 Robots.GrosRobot.PivotDroite(90);
+            else
+                Robots.GrosRobot.PivotGauche(90);
 
             Robots.GrosRobot.Reculer(400);
             Robots.GrosRobot.Lent();
             Robots.GrosRobot.Recallage(SensAR.Arriere);
             Robots.GrosRobot.Rapide();
+            Robots.GrosRobot.Avancer(352);
+            Robots.GrosRobot.PivotDroite(26);
 
-            Robots.GrosRobot.Avancer(1500 - Robots.GrosRobot.Longueur / 2);
+            Robots.GrosRobot.Reculer(339);
+
+            Robots.GrosRobot.ReglerOffsetAsserv(197, 402, 26);
 
             this.Invoke(new EventHandler(delegate
             {

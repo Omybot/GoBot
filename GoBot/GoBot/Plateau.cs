@@ -44,8 +44,6 @@ namespace GoBot
         }
         public static event EventHandler NotreCouleurChange;
 
-        public static bool Simulation { get; set; }
-
         public static bool FresquesCollees { get; set; }
         public static bool LancesCollees { get; set; }
         public static bool FiletLance { get; set; }
@@ -115,11 +113,6 @@ namespace GoBot
                 InterpreteurBalise = new InterpreteurBalise();
                 //InterpreteurBalise.PositionEnnemisActualisee += new InterpreteurBalise.PositionEnnemisDelegate(interpreteBalise_PositionEnnemisActualisee);
                 SuiviBalise.PositionEnnemisActualisee += new Balises.SuiviBalise.PositionEnnemisDelegate(interpreteBalise_PositionEnnemisActualisee);
-
-                if (Connexions.ConnexionMove.ConnexionCheck.Connecte)
-                    Simulation = false;
-                else
-                    Simulation = true;
 
                 NotreCouleur = Color.Red;
 

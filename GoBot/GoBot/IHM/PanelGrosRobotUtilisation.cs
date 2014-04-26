@@ -79,5 +79,10 @@ namespace GoBot.IHM
         {
             Robots.GrosRobot.ActionneurOnOff(ActionneurOnOffID.GRPompeFeu, switchBoutonPompeFeu.Actif);
         }
+
+        private void switchBoutonElectrvanne_ChangementEtat(object sender, EventArgs e)
+        {
+            Robots.GrosRobot.ActionneurOnOff(ActionneurOnOffID.GRElectrovanneFeu, switchBoutonElectrvanne.Actif);
+        }
     }
 }

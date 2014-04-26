@@ -313,6 +313,7 @@ namespace GoBot
         /*GRShutter = 0,
         GRAlimentation = 1,
         GRPompe = 2*/
+        GRElectrovanneFeu = 2,
         GRAlimentation = 1,
         GRPompeFeu = 0,
         GRPinceDroite = 0x10,

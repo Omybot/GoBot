@@ -28,10 +28,9 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.btnDiagnostic = new System.Windows.Forms.Button();
-            this.switchBoutonPuissance = new Composants.SwitchBouton();
-            this.label12 = new System.Windows.Forms.Label();
             this.groupBoxUtilisation = new Composants.GroupBoxRetractable();
+            this.label6 = new System.Windows.Forms.Label();
+            this.switchBoutonElectrvanne = new Composants.SwitchBouton();
             this.label2 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
             this.switchBoutonPompeFeu = new Composants.SwitchBouton();
@@ -44,40 +43,16 @@
             this.label5 = new System.Windows.Forms.Label();
             this.btnPinceDroiteFermee = new System.Windows.Forms.Button();
             this.btnPinceDroiteOuverte = new System.Windows.Forms.Button();
+            this.label12 = new System.Windows.Forms.Label();
+            this.btnDiagnostic = new System.Windows.Forms.Button();
+            this.switchBoutonPuissance = new Composants.SwitchBouton();
             this.groupBoxUtilisation.SuspendLayout();
             this.SuspendLayout();
             // 
-            // btnDiagnostic
-            // 
-            this.btnDiagnostic.Location = new System.Drawing.Point(211, 30);
-            this.btnDiagnostic.Name = "btnDiagnostic";
-            this.btnDiagnostic.Size = new System.Drawing.Size(75, 23);
-            this.btnDiagnostic.TabIndex = 201;
-            this.btnDiagnostic.Text = "Diagnostic";
-            this.btnDiagnostic.UseVisualStyleBackColor = true;
-            this.btnDiagnostic.Click += new System.EventHandler(this.btnDiagnostic_Click);
-            // 
-            // switchBoutonPuissance
-            // 
-            this.switchBoutonPuissance.BackColor = System.Drawing.Color.Transparent;
-            this.switchBoutonPuissance.Location = new System.Drawing.Point(145, 36);
-            this.switchBoutonPuissance.Name = "switchBoutonPuissance";
-            this.switchBoutonPuissance.Size = new System.Drawing.Size(35, 15);
-            this.switchBoutonPuissance.Symetrique = false;
-            this.switchBoutonPuissance.TabIndex = 200;
-            this.switchBoutonPuissance.ChangementEtat += new System.EventHandler(this.switchBoutonPuissance_ChangementEtat);
-            // 
-            // label12
-            // 
-            this.label12.AutoSize = true;
-            this.label12.Location = new System.Drawing.Point(26, 36);
-            this.label12.Name = "label12";
-            this.label12.Size = new System.Drawing.Size(115, 13);
-            this.label12.TabIndex = 199;
-            this.label12.Text = "Alimentation puissance";
-            // 
             // groupBoxUtilisation
             // 
+            this.groupBoxUtilisation.Controls.Add(this.label6);
+            this.groupBoxUtilisation.Controls.Add(this.switchBoutonElectrvanne);
             this.groupBoxUtilisation.Controls.Add(this.label2);
             this.groupBoxUtilisation.Controls.Add(this.label3);
             this.groupBoxUtilisation.Controls.Add(this.switchBoutonPompeFeu);
@@ -99,6 +74,25 @@
             this.groupBoxUtilisation.TabIndex = 1;
             this.groupBoxUtilisation.TabStop = false;
             this.groupBoxUtilisation.Text = "Utilisation";
+            // 
+            // label6
+            // 
+            this.label6.AutoSize = true;
+            this.label6.Location = new System.Drawing.Point(173, 184);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(70, 13);
+            this.label6.TabIndex = 219;
+            this.label6.Text = "Electrovanne";
+            // 
+            // switchBoutonElectrvanne
+            // 
+            this.switchBoutonElectrvanne.BackColor = System.Drawing.Color.Transparent;
+            this.switchBoutonElectrvanne.Location = new System.Drawing.Point(264, 184);
+            this.switchBoutonElectrvanne.Name = "switchBoutonElectrvanne";
+            this.switchBoutonElectrvanne.Size = new System.Drawing.Size(35, 15);
+            this.switchBoutonElectrvanne.Symetrique = true;
+            this.switchBoutonElectrvanne.TabIndex = 218;
+            this.switchBoutonElectrvanne.ChangementEtat += new System.EventHandler(this.switchBoutonElectrvanne_ChangementEtat);
             // 
             // label2
             // 
@@ -215,6 +209,35 @@
             this.btnPinceDroiteOuverte.UseVisualStyleBackColor = true;
             this.btnPinceDroiteOuverte.Click += new System.EventHandler(this.btnPinceDroiteOuverte_Click);
             // 
+            // label12
+            // 
+            this.label12.AutoSize = true;
+            this.label12.Location = new System.Drawing.Point(26, 36);
+            this.label12.Name = "label12";
+            this.label12.Size = new System.Drawing.Size(115, 13);
+            this.label12.TabIndex = 199;
+            this.label12.Text = "Alimentation puissance";
+            // 
+            // btnDiagnostic
+            // 
+            this.btnDiagnostic.Location = new System.Drawing.Point(211, 30);
+            this.btnDiagnostic.Name = "btnDiagnostic";
+            this.btnDiagnostic.Size = new System.Drawing.Size(75, 23);
+            this.btnDiagnostic.TabIndex = 201;
+            this.btnDiagnostic.Text = "Diagnostic";
+            this.btnDiagnostic.UseVisualStyleBackColor = true;
+            this.btnDiagnostic.Click += new System.EventHandler(this.btnDiagnostic_Click);
+            // 
+            // switchBoutonPuissance
+            // 
+            this.switchBoutonPuissance.BackColor = System.Drawing.Color.Transparent;
+            this.switchBoutonPuissance.Location = new System.Drawing.Point(145, 36);
+            this.switchBoutonPuissance.Name = "switchBoutonPuissance";
+            this.switchBoutonPuissance.Size = new System.Drawing.Size(35, 15);
+            this.switchBoutonPuissance.Symetrique = false;
+            this.switchBoutonPuissance.TabIndex = 200;
+            this.switchBoutonPuissance.ChangementEtat += new System.EventHandler(this.switchBoutonPuissance_ChangementEtat);
+            // 
             // PanelGrosRobotUtilisation
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -249,5 +272,7 @@
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label label2;
         private Composants.SwitchBouton switchBoutonPompeFeu;
+        private System.Windows.Forms.Label label6;
+        private Composants.SwitchBouton switchBoutonElectrvanne;
     }
 }

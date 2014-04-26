@@ -34,7 +34,8 @@ namespace GoBot.Balises
         public const int DISTANCE_LASER_TABLE = 62;
 
         // Tension des batteries
-        public double Tension { get; private set; }
+        public double Tension1 { get; private set; }
+        public double Tension2 { get; private set; }
 
         /// <summary>
         /// Détections effectuées par le capteur 1 de la balise
@@ -138,7 +139,7 @@ namespace GoBot.Balises
 
             Connexions.ConnexionMiwi.NouvelleTrameRecue += new ConnexionUDP.ReceptionDelegate(connexionIo_NouvelleTrame);
             Stats = new BaliseStats(this);
-            Tension = 0;
+            Tension1 = 0;
         }
 
         /// <summary>
@@ -191,12 +192,15 @@ namespace GoBot.Balises
                     if (ReglageVitesse)
                         nouvelleVitesse = AsservissementVitesse();
 
+                    Tension1 = (double)(trame[4] * 256 + trame[5]) / 100.0;
+                    Tension2 = (double)(trame[6] * 256 + trame[7]) / 100.0;
+
                     // Réception des données angulaires
 
-                    Tension = (double)trame[4] / 10.0;
+                    Tension1 = (double)trame[8] / 10.0;
 
-                    int nbMesures1 = trame[5];
-                    int nbMesures2 = trame[6];
+                    int nbMesures1 = trame[9];
+                    int nbMesures2 = trame[10];
 
                     // Si on a un nombre impair de fronts on laisse tomber cette mesure, elle n'est pas bonne
                     if (nbMesures1 % 2 != 0 || nbMesures2 % 2 != 0)
@@ -219,7 +223,7 @@ namespace GoBot.Balises
 
                     for (int i = 0; i < nbMesures1 * 4; i += 2)
                     {
-                        int valeur = trame[7 + i] * 256 + trame[7 + i + 1];
+                        int valeur = trame[11 + i] * 256 + trame[11 + i + 1];
                         tabAngle.Add(valeur);
                     }
 
@@ -238,7 +242,7 @@ namespace GoBot.Balises
 
                     // Réception des mesures du capteur 2
 
-                    int offSet = nbMesures1 * 4 + 7;
+                    int offSet = nbMesures1 * 4 + 11;
 
                     DetectionsCapteur2.Clear();
 

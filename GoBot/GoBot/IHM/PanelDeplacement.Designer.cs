@@ -67,6 +67,13 @@
             this.txtDistance = new Composants.TextBoxPlus();
             this.btnAvance = new System.Windows.Forms.Button();
             this.groupBoxDep = new Composants.GroupBoxRetractable();
+            this.btnGoCoordonnees = new System.Windows.Forms.Button();
+            this.numTeta = new System.Windows.Forms.NumericUpDown();
+            this.label7 = new System.Windows.Forms.Label();
+            this.numY = new System.Windows.Forms.NumericUpDown();
+            this.label8 = new System.Windows.Forms.Label();
+            this.numX = new System.Windows.Forms.NumericUpDown();
+            this.label9 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.numCoeffD)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numCoeffI)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numCoeffP)).BeginInit();
@@ -76,11 +83,14 @@
             ((System.ComponentModel.ISupportInitialize)(this.numVitesseLigne)).BeginInit();
             this.contextMenuStop.SuspendLayout();
             this.groupBoxDep.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.numTeta)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numY)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numX)).BeginInit();
             this.SuspendLayout();
             // 
             // btnPID
             // 
-            this.btnPID.Location = new System.Drawing.Point(257, 307);
+            this.btnPID.Location = new System.Drawing.Point(257, 346);
             this.btnPID.Name = "btnPID";
             this.btnPID.Size = new System.Drawing.Size(53, 23);
             this.btnPID.TabIndex = 109;
@@ -95,7 +105,7 @@
             0,
             0,
             0});
-            this.numCoeffD.Location = new System.Drawing.Point(187, 310);
+            this.numCoeffD.Location = new System.Drawing.Point(187, 349);
             this.numCoeffD.Maximum = new decimal(new int[] {
             1000,
             0,
@@ -109,7 +119,7 @@
             // label6
             // 
             this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(166, 312);
+            this.label6.Location = new System.Drawing.Point(166, 351);
             this.label6.Name = "label6";
             this.label6.Size = new System.Drawing.Size(15, 13);
             this.label6.TabIndex = 107;
@@ -122,7 +132,7 @@
             0,
             0,
             0});
-            this.numCoeffI.Location = new System.Drawing.Point(108, 310);
+            this.numCoeffI.Location = new System.Drawing.Point(108, 349);
             this.numCoeffI.Maximum = new decimal(new int[] {
             1000,
             0,
@@ -136,7 +146,7 @@
             // label5
             // 
             this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(92, 312);
+            this.label5.Location = new System.Drawing.Point(92, 351);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(10, 13);
             this.label5.TabIndex = 105;
@@ -149,7 +159,7 @@
             0,
             0,
             0});
-            this.numCoeffP.Location = new System.Drawing.Point(35, 310);
+            this.numCoeffP.Location = new System.Drawing.Point(35, 349);
             this.numCoeffP.Maximum = new decimal(new int[] {
             1000,
             0,
@@ -163,7 +173,7 @@
             // label4
             // 
             this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(15, 312);
+            this.label4.Location = new System.Drawing.Point(15, 351);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(14, 13);
             this.label4.TabIndex = 103;
@@ -176,7 +186,7 @@
             0,
             0,
             0});
-            this.numAccelPivot.Location = new System.Drawing.Point(259, 272);
+            this.numAccelPivot.Location = new System.Drawing.Point(259, 311);
             this.numAccelPivot.Maximum = new decimal(new int[] {
             5000,
             0,
@@ -194,7 +204,7 @@
             0,
             0,
             0});
-            this.numVitessePivot.Location = new System.Drawing.Point(259, 234);
+            this.numVitessePivot.Location = new System.Drawing.Point(259, 273);
             this.numVitessePivot.Maximum = new decimal(new int[] {
             3000,
             0,
@@ -209,7 +219,7 @@
             // 
             this.trackBarAccelPivot.BackColor = System.Drawing.Color.Transparent;
             this.trackBarAccelPivot.IntervalTimer = 500;
-            this.trackBarAccelPivot.Location = new System.Drawing.Point(4, 277);
+            this.trackBarAccelPivot.Location = new System.Drawing.Point(4, 316);
             this.trackBarAccelPivot.Max = 5000D;
             this.trackBarAccelPivot.MaximumSize = new System.Drawing.Size(3000, 15);
             this.trackBarAccelPivot.Min = 0D;
@@ -227,7 +237,7 @@
             // 
             this.trackBarVitessePivot.BackColor = System.Drawing.Color.Transparent;
             this.trackBarVitessePivot.IntervalTimer = 500;
-            this.trackBarVitessePivot.Location = new System.Drawing.Point(4, 239);
+            this.trackBarVitessePivot.Location = new System.Drawing.Point(4, 278);
             this.trackBarVitessePivot.Max = 3000D;
             this.trackBarVitessePivot.MaximumSize = new System.Drawing.Size(3000, 15);
             this.trackBarVitessePivot.Min = 0D;
@@ -243,7 +253,7 @@
             // 
             // label2
             // 
-            this.label2.Location = new System.Drawing.Point(1, 260);
+            this.label2.Location = new System.Drawing.Point(1, 299);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(269, 13);
             this.label2.TabIndex = 98;
@@ -252,7 +262,7 @@
             // 
             // label3
             // 
-            this.label3.Location = new System.Drawing.Point(1, 224);
+            this.label3.Location = new System.Drawing.Point(1, 263);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(269, 13);
             this.label3.TabIndex = 97;
@@ -266,7 +276,7 @@
             0,
             0,
             0});
-            this.numAccelLigne.Location = new System.Drawing.Point(259, 198);
+            this.numAccelLigne.Location = new System.Drawing.Point(259, 237);
             this.numAccelLigne.Maximum = new decimal(new int[] {
             5000,
             0,
@@ -284,7 +294,7 @@
             0,
             0,
             0});
-            this.numVitesseLigne.Location = new System.Drawing.Point(259, 160);
+            this.numVitesseLigne.Location = new System.Drawing.Point(259, 199);
             this.numVitesseLigne.Maximum = new decimal(new int[] {
             3000,
             0,
@@ -308,7 +318,7 @@
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(58, 348);
+            this.label1.Location = new System.Drawing.Point(58, 387);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(89, 13);
             this.label1.TabIndex = 92;
@@ -318,7 +328,7 @@
             // 
             this.panelControleManuel.BackColor = System.Drawing.Color.LightGray;
             this.panelControleManuel.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.panelControleManuel.Location = new System.Drawing.Point(159, 343);
+            this.panelControleManuel.Location = new System.Drawing.Point(159, 382);
             this.panelControleManuel.Name = "panelControleManuel";
             this.panelControleManuel.Size = new System.Drawing.Size(74, 22);
             this.panelControleManuel.TabIndex = 91;
@@ -329,7 +339,7 @@
             // 
             this.trackBarAccelLigne.BackColor = System.Drawing.Color.Transparent;
             this.trackBarAccelLigne.IntervalTimer = 500;
-            this.trackBarAccelLigne.Location = new System.Drawing.Point(4, 203);
+            this.trackBarAccelLigne.Location = new System.Drawing.Point(4, 242);
             this.trackBarAccelLigne.Max = 5000D;
             this.trackBarAccelLigne.MaximumSize = new System.Drawing.Size(3000, 15);
             this.trackBarAccelLigne.Min = 0D;
@@ -347,7 +357,7 @@
             // 
             this.trackBarVitesseLigne.BackColor = System.Drawing.Color.Transparent;
             this.trackBarVitesseLigne.IntervalTimer = 500;
-            this.trackBarVitesseLigne.Location = new System.Drawing.Point(4, 165);
+            this.trackBarVitesseLigne.Location = new System.Drawing.Point(4, 204);
             this.trackBarVitesseLigne.Max = 3000D;
             this.trackBarVitesseLigne.MaximumSize = new System.Drawing.Size(3000, 15);
             this.trackBarVitesseLigne.Min = 0D;
@@ -445,7 +455,7 @@
             // 
             // lblAcceleration
             // 
-            this.lblAcceleration.Location = new System.Drawing.Point(1, 186);
+            this.lblAcceleration.Location = new System.Drawing.Point(1, 225);
             this.lblAcceleration.Name = "lblAcceleration";
             this.lblAcceleration.Size = new System.Drawing.Size(269, 13);
             this.lblAcceleration.TabIndex = 70;
@@ -464,7 +474,7 @@
             // 
             // lblVitesse
             // 
-            this.lblVitesse.Location = new System.Drawing.Point(4, 150);
+            this.lblVitesse.Location = new System.Drawing.Point(4, 189);
             this.lblVitesse.Name = "lblVitesse";
             this.lblVitesse.Size = new System.Drawing.Size(266, 13);
             this.lblVitesse.TabIndex = 69;
@@ -541,6 +551,13 @@
             // 
             // groupBoxDep
             // 
+            this.groupBoxDep.Controls.Add(this.btnGoCoordonnees);
+            this.groupBoxDep.Controls.Add(this.numTeta);
+            this.groupBoxDep.Controls.Add(this.label7);
+            this.groupBoxDep.Controls.Add(this.numY);
+            this.groupBoxDep.Controls.Add(this.label8);
+            this.groupBoxDep.Controls.Add(this.numX);
+            this.groupBoxDep.Controls.Add(this.label9);
             this.groupBoxDep.Controls.Add(this.btnStop);
             this.groupBoxDep.Controls.Add(this.btnPID);
             this.groupBoxDep.Controls.Add(this.panelControleManuel);
@@ -576,10 +593,104 @@
             this.groupBoxDep.Controls.Add(this.label2);
             this.groupBoxDep.Location = new System.Drawing.Point(3, 3);
             this.groupBoxDep.Name = "groupBoxDep";
-            this.groupBoxDep.Size = new System.Drawing.Size(331, 376);
+            this.groupBoxDep.Size = new System.Drawing.Size(331, 413);
             this.groupBoxDep.TabIndex = 110;
             this.groupBoxDep.TabStop = false;
             this.groupBoxDep.Text = "Déplacement";
+            // 
+            // btnGoCoordonnees
+            // 
+            this.btnGoCoordonnees.Location = new System.Drawing.Point(252, 154);
+            this.btnGoCoordonnees.Name = "btnGoCoordonnees";
+            this.btnGoCoordonnees.Size = new System.Drawing.Size(53, 23);
+            this.btnGoCoordonnees.TabIndex = 116;
+            this.btnGoCoordonnees.Text = "Go";
+            this.btnGoCoordonnees.UseVisualStyleBackColor = true;
+            this.btnGoCoordonnees.Click += new System.EventHandler(this.btnGoCoordonnees_Click);
+            // 
+            // numTeta
+            // 
+            this.numTeta.DecimalPlaces = 2;
+            this.numTeta.Increment = new decimal(new int[] {
+            10,
+            0,
+            0,
+            0});
+            this.numTeta.Location = new System.Drawing.Point(182, 157);
+            this.numTeta.Maximum = new decimal(new int[] {
+            360,
+            0,
+            0,
+            0});
+            this.numTeta.Minimum = new decimal(new int[] {
+            360,
+            0,
+            0,
+            -2147483648});
+            this.numTeta.Name = "numTeta";
+            this.numTeta.Size = new System.Drawing.Size(51, 20);
+            this.numTeta.TabIndex = 115;
+            // 
+            // label7
+            // 
+            this.label7.AutoSize = true;
+            this.label7.Location = new System.Drawing.Point(161, 159);
+            this.label7.Name = "label7";
+            this.label7.Size = new System.Drawing.Size(14, 13);
+            this.label7.TabIndex = 114;
+            this.label7.Text = "T";
+            // 
+            // numY
+            // 
+            this.numY.Increment = new decimal(new int[] {
+            10,
+            0,
+            0,
+            0});
+            this.numY.Location = new System.Drawing.Point(103, 157);
+            this.numY.Maximum = new decimal(new int[] {
+            2000,
+            0,
+            0,
+            0});
+            this.numY.Name = "numY";
+            this.numY.Size = new System.Drawing.Size(51, 20);
+            this.numY.TabIndex = 113;
+            // 
+            // label8
+            // 
+            this.label8.AutoSize = true;
+            this.label8.Location = new System.Drawing.Point(87, 159);
+            this.label8.Name = "label8";
+            this.label8.Size = new System.Drawing.Size(14, 13);
+            this.label8.TabIndex = 112;
+            this.label8.Text = "Y";
+            // 
+            // numX
+            // 
+            this.numX.Increment = new decimal(new int[] {
+            10,
+            0,
+            0,
+            0});
+            this.numX.Location = new System.Drawing.Point(30, 157);
+            this.numX.Maximum = new decimal(new int[] {
+            3000,
+            0,
+            0,
+            0});
+            this.numX.Name = "numX";
+            this.numX.Size = new System.Drawing.Size(51, 20);
+            this.numX.TabIndex = 111;
+            // 
+            // label9
+            // 
+            this.label9.AutoSize = true;
+            this.label9.Location = new System.Drawing.Point(10, 159);
+            this.label9.Name = "label9";
+            this.label9.Size = new System.Drawing.Size(14, 13);
+            this.label9.TabIndex = 110;
+            this.label9.Text = "X";
             // 
             // PanelDeplacement
             // 
@@ -589,7 +700,7 @@
             this.BackColor = System.Drawing.Color.Transparent;
             this.Controls.Add(this.groupBoxDep);
             this.Name = "PanelDeplacement";
-            this.Size = new System.Drawing.Size(340, 382);
+            this.Size = new System.Drawing.Size(340, 422);
             ((System.ComponentModel.ISupportInitialize)(this.numCoeffD)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.numCoeffI)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.numCoeffP)).EndInit();
@@ -600,6 +711,9 @@
             this.contextMenuStop.ResumeLayout(false);
             this.groupBoxDep.ResumeLayout(false);
             this.groupBoxDep.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.numTeta)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numY)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numX)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -644,6 +758,13 @@
         private System.Windows.Forms.ToolStripMenuItem smoothToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem abruptToolStripMenuItem;
         private Composants.GroupBoxRetractable groupBoxDep;
+        private System.Windows.Forms.Button btnGoCoordonnees;
+        private System.Windows.Forms.NumericUpDown numTeta;
+        private System.Windows.Forms.Label label7;
+        private System.Windows.Forms.NumericUpDown numY;
+        private System.Windows.Forms.Label label8;
+        private System.Windows.Forms.NumericUpDown numX;
+        private System.Windows.Forms.Label label9;
 
     }
 }

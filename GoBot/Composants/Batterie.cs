@@ -21,15 +21,26 @@ namespace Composants
             get { return tension; }
             set
             {
-                tension = value;
-                if (tension > TensionMid)
-                    CouleurVert();
-                else if (tension > TensionLow)
-                    CouleurJaune();
+                if (Afficher)
+                {
+                    tension = value;
+                    if (tension > TensionMidHigh)
+                        CouleurVert();
+                    else if (tension > TensionMid)
+                        CouleurOrange();
+                    else if (tension > TensionLow)
+                        CouleurRouge(true);
+                    else if (tension >= 0)
+                        CouleurRougeCritique(true);
+                }
                 else
-                    CouleurRouge(true);
+                {
+                    CouleurGris();
+                }
             }
         }
+
+        public double TensionMidHigh { get; set; }
         public double TensionMid { get; set; }
         public double TensionLow { get; set; }
 
@@ -37,12 +48,14 @@ namespace Composants
         {
             InitializeComponent();
             timer = new Timer();
-            timer.Interval = 200;
+            timer.Interval = 300;
             timer.Tick += new EventHandler(timer_Tick);
+            Tension = -1;
+            TensionLow = 0;
+            TensionMid = 0;
+            TensionMidHigh = 0;
             CouleurGris();
-            Tension = 999;
-            TensionLow = 0;
-            TensionLow = 0;
+            Afficher = false;
         }
 
         void timer_Tick(object sender, EventArgs e)
@@ -64,16 +77,32 @@ namespace Composants
             ChangementImage(global::Composants.Properties.Resources.BatHigh, blink, eteindre);
         }
 
-        public void CouleurJaune(bool blink = false, bool eteindre = false)
+        public void CouleurOrange(bool blink = false, bool eteindre = false)
         {
             vide = false;
             ChangementImage(global::Composants.Properties.Resources.BatMid, blink, eteindre);
         }
 
+        public void CouleurJaune(bool blink = false, bool eteindre = false)
+        {
+            vide = false;
+            ChangementImage(global::Composants.Properties.Resources.BatMidHigh, blink, eteindre);
+        }
+
         public void CouleurRouge(bool blink = false, bool eteindre = false)
         {
             vide = true;
+            if(timer.Interval != 400)
+                timer.Interval = 400;
             ChangementImage(global::Composants.Properties.Resources.BatLow, blink, eteindre);
+        }
+
+        public void CouleurRougeCritique(bool blink = false, bool eteindre = false)
+        {
+            vide = true;
+            if (timer.Interval != 120)
+                timer.Interval = 120;
+            ChangementImage(global::Composants.Properties.Resources.BatCrit, blink, eteindre);
         }
 
         public void CouleurGris(bool blink = false, bool eteindre = false)
@@ -92,14 +121,8 @@ namespace Composants
             Image = img;
             if (blink)
                 timer.Start();
-
-            Etat = false;
         }
 
-        public bool Etat
-        {
-            get;
-            set;
-        }
+        public bool Afficher { get; set; }
     }
 }

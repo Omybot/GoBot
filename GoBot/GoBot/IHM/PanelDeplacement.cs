@@ -395,5 +395,10 @@ namespace GoBot.IHM
             ((ToolStripMenuItem)sender).Checked = true;
             btnStopSmooth_Click(sender, e);
         }
+
+        private void btnGoCoordonnees_Click(object sender, EventArgs e)
+        {
+            Robot.PathFinding((double)numX.Value, (double)numY.Value);
+        }
     }
 }

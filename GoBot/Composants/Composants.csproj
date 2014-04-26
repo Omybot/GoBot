@@ -48,6 +48,12 @@
     <Compile Include="Batterie.Designer.cs">
       <DependentUpon>Batterie.cs</DependentUpon>
     </Compile>
+    <Compile Include="IndicateurConnexion.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="IndicateurConnexion.Designer.cs">
+      <DependentUpon>IndicateurConnexion.cs</DependentUpon>
+    </Compile>
     <Compile Include="CtrlGraphique.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -112,6 +118,9 @@
   <ItemGroup>
     <EmbeddedResource Include="Batterie.resx">
       <DependentUpon>Batterie.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="IndicateurConnexion.resx">
+      <DependentUpon>IndicateurConnexion.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="CtrlGraphique.resx">
       <DependentUpon>CtrlGraphique.cs</DependentUpon>
@@ -189,6 +198,18 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="img\BatNo.PNG" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="img\BatMidHigh.PNG" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="img\ConnexionNok.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="img\ConnexionOk.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="img\BatCrit.PNG" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

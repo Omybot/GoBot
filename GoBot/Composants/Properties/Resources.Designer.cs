@@ -60,6 +60,13 @@ namespace Composants.Properties {
             }
         }
         
+        internal static System.Drawing.Bitmap BatCrit {
+            get {
+                object obj = ResourceManager.GetObject("BatCrit", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
         internal static System.Drawing.Bitmap BatHigh {
             get {
                 object obj = ResourceManager.GetObject("BatHigh", resourceCulture);
@@ -81,9 +88,30 @@ namespace Composants.Properties {
             }
         }
         
+        internal static System.Drawing.Bitmap BatMidHigh {
+            get {
+                object obj = ResourceManager.GetObject("BatMidHigh", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
         internal static System.Drawing.Bitmap BatNo {
             get {
                 object obj = ResourceManager.GetObject("BatNo", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        internal static System.Drawing.Bitmap ConnexionNok {
+            get {
+                object obj = ResourceManager.GetObject("ConnexionNok", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        internal static System.Drawing.Bitmap ConnexionOk {
+            get {
+                object obj = ResourceManager.GetObject("ConnexionOk", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

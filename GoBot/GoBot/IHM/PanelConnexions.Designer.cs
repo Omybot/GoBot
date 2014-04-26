@@ -35,28 +35,34 @@
             this.lblRecIO = new System.Windows.Forms.Label();
             this.lblRecMiwi = new System.Windows.Forms.Label();
             this.lblRecMove = new System.Windows.Forms.Label();
-            this.ledRecBoi = new Composants.Led();
-            this.ledRecBeu = new Composants.Led();
-            this.ledRecBun = new Composants.Led();
-            this.ledRecPi = new Composants.Led();
-            this.ledRecMiwi = new Composants.Led();
-            this.ledRecMove = new Composants.Led();
-            this.batterieBoi = new Composants.Batterie();
-            this.batterieBeu = new Composants.Batterie();
-            this.batterieBun = new Composants.Batterie();
-            this.batteriePack2 = new Composants.Batterie();
             this.batteriePack1 = new Composants.Batterie();
-            ((System.ComponentModel.ISupportInitialize)(this.ledRecBoi)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.ledRecBeu)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.ledRecBun)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.ledRecPi)).BeginInit();
+            this.ledRecMiwi = new Composants.IndicateurConnexion();
+            this.ledRecMove = new Composants.IndicateurConnexion();
+            this.ledRecPi = new Composants.IndicateurConnexion();
+            this.ledRecBun = new Composants.IndicateurConnexion();
+            this.ledRecBeu = new Composants.IndicateurConnexion();
+            this.ledRecBoi = new Composants.IndicateurConnexion();
+            this.batteriePack2 = new Composants.Batterie();
+            this.batterieBun1 = new Composants.Batterie();
+            this.batterieBeu1 = new Composants.Batterie();
+            this.batterieBoi1 = new Composants.Batterie();
+            this.batterieBun2 = new Composants.Batterie();
+            this.batterieBeu2 = new Composants.Batterie();
+            this.batterieBoi2 = new Composants.Batterie();
+            ((System.ComponentModel.ISupportInitialize)(this.batteriePack1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.ledRecMiwi)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.ledRecMove)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.batterieBoi)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.batterieBeu)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.batterieBun)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.ledRecPi)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.ledRecBun)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.ledRecBeu)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.ledRecBoi)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.batteriePack2)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.batteriePack1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.batterieBun1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.batterieBeu1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.batterieBoi1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.batterieBun2)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.batterieBeu2)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.batterieBoi2)).BeginInit();
             this.SuspendLayout();
             // 
             // lblRecBoi
@@ -119,158 +125,220 @@
             this.lblRecMove.TabIndex = 75;
             this.lblRecMove.Text = "RecMove";
             // 
-            // ledRecBoi
+            // batteriePack1
             // 
-            this.ledRecBoi.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.ledRecBoi.Etat = false;
-            this.ledRecBoi.Image = ((System.Drawing.Image)(resources.GetObject("ledRecBoi.Image")));
-            this.ledRecBoi.Location = new System.Drawing.Point(762, 7);
-            this.ledRecBoi.Name = "ledRecBoi";
-            this.ledRecBoi.Size = new System.Drawing.Size(16, 16);
-            this.ledRecBoi.TabIndex = 84;
-            this.ledRecBoi.TabStop = false;
-            // 
-            // ledRecBeu
-            // 
-            this.ledRecBeu.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.ledRecBeu.Etat = false;
-            this.ledRecBeu.Image = ((System.Drawing.Image)(resources.GetObject("ledRecBeu.Image")));
-            this.ledRecBeu.Location = new System.Drawing.Point(614, 7);
-            this.ledRecBeu.Name = "ledRecBeu";
-            this.ledRecBeu.Size = new System.Drawing.Size(16, 16);
-            this.ledRecBeu.TabIndex = 82;
-            this.ledRecBeu.TabStop = false;
-            // 
-            // ledRecBun
-            // 
-            this.ledRecBun.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.ledRecBun.Etat = false;
-            this.ledRecBun.Image = ((System.Drawing.Image)(resources.GetObject("ledRecBun.Image")));
-            this.ledRecBun.Location = new System.Drawing.Point(466, 7);
-            this.ledRecBun.Name = "ledRecBun";
-            this.ledRecBun.Size = new System.Drawing.Size(16, 16);
-            this.ledRecBun.TabIndex = 80;
-            this.ledRecBun.TabStop = false;
-            // 
-            // ledRecPi
-            // 
-            this.ledRecPi.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.ledRecPi.Etat = false;
-            this.ledRecPi.Image = ((System.Drawing.Image)(resources.GetObject("ledRecPi.Image")));
-            this.ledRecPi.Location = new System.Drawing.Point(318, 7);
-            this.ledRecPi.Name = "ledRecPi";
-            this.ledRecPi.Size = new System.Drawing.Size(16, 16);
-            this.ledRecPi.TabIndex = 78;
-            this.ledRecPi.TabStop = false;
+            this.batteriePack1.Afficher = false;
+            this.batteriePack1.Image = ((System.Drawing.Image)(resources.GetObject("batteriePack1.Image")));
+            this.batteriePack1.Location = new System.Drawing.Point(180, 7);
+            this.batteriePack1.Name = "batteriePack1";
+            this.batteriePack1.Size = new System.Drawing.Size(16, 16);
+            this.batteriePack1.TabIndex = 97;
+            this.batteriePack1.TabStop = false;
+            this.batteriePack1.Tension = 0D;
+            this.batteriePack1.TensionLow = 0D;
+            this.batteriePack1.TensionMid = 0D;
+            this.batteriePack1.TensionMidHigh = 0D;
             // 
             // ledRecMiwi
             // 
-            this.ledRecMiwi.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.ledRecMiwi.Etat = false;
             this.ledRecMiwi.Image = ((System.Drawing.Image)(resources.GetObject("ledRecMiwi.Image")));
-            this.ledRecMiwi.Location = new System.Drawing.Point(23, 6);
+            this.ledRecMiwi.Location = new System.Drawing.Point(23, 7);
             this.ledRecMiwi.Name = "ledRecMiwi";
             this.ledRecMiwi.Size = new System.Drawing.Size(16, 16);
-            this.ledRecMiwi.TabIndex = 76;
+            this.ledRecMiwi.TabIndex = 96;
             this.ledRecMiwi.TabStop = false;
             // 
             // ledRecMove
             // 
-            this.ledRecMove.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.ledRecMove.Etat = false;
             this.ledRecMove.Image = ((System.Drawing.Image)(resources.GetObject("ledRecMove.Image")));
-            this.ledRecMove.Location = new System.Drawing.Point(158, 6);
+            this.ledRecMove.Location = new System.Drawing.Point(158, 7);
             this.ledRecMove.Name = "ledRecMove";
             this.ledRecMove.Size = new System.Drawing.Size(16, 16);
-            this.ledRecMove.TabIndex = 74;
+            this.ledRecMove.TabIndex = 95;
             this.ledRecMove.TabStop = false;
             // 
-            // batterieBoi
+            // ledRecPi
             // 
-            this.batterieBoi.Etat = false;
-            this.batterieBoi.Image = ((System.Drawing.Image)(resources.GetObject("batterieBoi.Image")));
-            this.batterieBoi.Location = new System.Drawing.Point(786, 7);
-            this.batterieBoi.Name = "batterieBoi";
-            this.batterieBoi.Size = new System.Drawing.Size(16, 16);
-            this.batterieBoi.TabIndex = 86;
-            this.batterieBoi.TabStop = false;
+            this.ledRecPi.Etat = false;
+            this.ledRecPi.Image = ((System.Drawing.Image)(resources.GetObject("ledRecPi.Image")));
+            this.ledRecPi.Location = new System.Drawing.Point(319, 6);
+            this.ledRecPi.Name = "ledRecPi";
+            this.ledRecPi.Size = new System.Drawing.Size(16, 16);
+            this.ledRecPi.TabIndex = 94;
+            this.ledRecPi.TabStop = false;
             // 
-            // batterieBeu
+            // ledRecBun
             // 
-            this.batterieBeu.Etat = false;
-            this.batterieBeu.Image = ((System.Drawing.Image)(resources.GetObject("batterieBeu.Image")));
-            this.batterieBeu.Location = new System.Drawing.Point(636, 7);
-            this.batterieBeu.Name = "batterieBeu";
-            this.batterieBeu.Size = new System.Drawing.Size(16, 16);
-            this.batterieBeu.TabIndex = 87;
-            this.batterieBeu.TabStop = false;
+            this.ledRecBun.Etat = false;
+            this.ledRecBun.Image = ((System.Drawing.Image)(resources.GetObject("ledRecBun.Image")));
+            this.ledRecBun.Location = new System.Drawing.Point(455, 7);
+            this.ledRecBun.Name = "ledRecBun";
+            this.ledRecBun.Size = new System.Drawing.Size(16, 16);
+            this.ledRecBun.TabIndex = 93;
+            this.ledRecBun.TabStop = false;
             // 
-            // batterieBun
+            // ledRecBeu
             // 
-            this.batterieBun.Etat = false;
-            this.batterieBun.Image = ((System.Drawing.Image)(resources.GetObject("batterieBun.Image")));
-            this.batterieBun.Location = new System.Drawing.Point(488, 6);
-            this.batterieBun.Name = "batterieBun";
-            this.batterieBun.Size = new System.Drawing.Size(16, 16);
-            this.batterieBun.TabIndex = 88;
-            this.batterieBun.TabStop = false;
+            this.ledRecBeu.Etat = false;
+            this.ledRecBeu.Image = ((System.Drawing.Image)(resources.GetObject("ledRecBeu.Image")));
+            this.ledRecBeu.Location = new System.Drawing.Point(604, 7);
+            this.ledRecBeu.Name = "ledRecBeu";
+            this.ledRecBeu.Size = new System.Drawing.Size(16, 16);
+            this.ledRecBeu.TabIndex = 92;
+            this.ledRecBeu.TabStop = false;
+            // 
+            // ledRecBoi
+            // 
+            this.ledRecBoi.Etat = false;
+            this.ledRecBoi.Image = ((System.Drawing.Image)(resources.GetObject("ledRecBoi.Image")));
+            this.ledRecBoi.Location = new System.Drawing.Point(753, 7);
+            this.ledRecBoi.Name = "ledRecBoi";
+            this.ledRecBoi.Size = new System.Drawing.Size(16, 16);
+            this.ledRecBoi.TabIndex = 91;
+            this.ledRecBoi.TabStop = false;
             // 
             // batteriePack2
             // 
-            this.batteriePack2.Etat = false;
+            this.batteriePack2.Afficher = false;
             this.batteriePack2.Image = ((System.Drawing.Image)(resources.GetObject("batteriePack2.Image")));
             this.batteriePack2.Location = new System.Drawing.Point(340, 7);
             this.batteriePack2.Name = "batteriePack2";
             this.batteriePack2.Size = new System.Drawing.Size(16, 16);
             this.batteriePack2.TabIndex = 89;
             this.batteriePack2.TabStop = false;
+            this.batteriePack2.Tension = 0D;
+            this.batteriePack2.TensionLow = 0D;
+            this.batteriePack2.TensionMid = 0D;
+            this.batteriePack2.TensionMidHigh = 0D;
             // 
-            // batteriePack1
+            // batterieBun1
             // 
-            this.batteriePack1.Etat = false;
-            this.batteriePack1.Image = ((System.Drawing.Image)(resources.GetObject("batteriePack1.Image")));
-            this.batteriePack1.Location = new System.Drawing.Point(180, 6);
-            this.batteriePack1.Name = "batteriePack1";
-            this.batteriePack1.Size = new System.Drawing.Size(16, 16);
-            this.batteriePack1.TabIndex = 90;
-            this.batteriePack1.TabStop = false;
+            this.batterieBun1.Afficher = false;
+            this.batterieBun1.Image = ((System.Drawing.Image)(resources.GetObject("batterieBun1.Image")));
+            this.batterieBun1.Location = new System.Drawing.Point(477, 6);
+            this.batterieBun1.Name = "batterieBun1";
+            this.batterieBun1.Size = new System.Drawing.Size(16, 16);
+            this.batterieBun1.TabIndex = 88;
+            this.batterieBun1.TabStop = false;
+            this.batterieBun1.Tension = 0D;
+            this.batterieBun1.TensionLow = 0D;
+            this.batterieBun1.TensionMid = 0D;
+            this.batterieBun1.TensionMidHigh = 0D;
+            // 
+            // batterieBeu1
+            // 
+            this.batterieBeu1.Afficher = false;
+            this.batterieBeu1.Image = ((System.Drawing.Image)(resources.GetObject("batterieBeu1.Image")));
+            this.batterieBeu1.Location = new System.Drawing.Point(626, 7);
+            this.batterieBeu1.Name = "batterieBeu1";
+            this.batterieBeu1.Size = new System.Drawing.Size(16, 16);
+            this.batterieBeu1.TabIndex = 87;
+            this.batterieBeu1.TabStop = false;
+            this.batterieBeu1.Tension = 0D;
+            this.batterieBeu1.TensionLow = 0D;
+            this.batterieBeu1.TensionMid = 0D;
+            this.batterieBeu1.TensionMidHigh = 0D;
+            // 
+            // batterieBoi1
+            // 
+            this.batterieBoi1.Afficher = false;
+            this.batterieBoi1.Image = ((System.Drawing.Image)(resources.GetObject("batterieBoi1.Image")));
+            this.batterieBoi1.Location = new System.Drawing.Point(775, 7);
+            this.batterieBoi1.Name = "batterieBoi1";
+            this.batterieBoi1.Size = new System.Drawing.Size(16, 16);
+            this.batterieBoi1.TabIndex = 86;
+            this.batterieBoi1.TabStop = false;
+            this.batterieBoi1.Tension = 0D;
+            this.batterieBoi1.TensionLow = 0D;
+            this.batterieBoi1.TensionMid = 0D;
+            this.batterieBoi1.TensionMidHigh = 0D;
+            // 
+            // batterieBun2
+            // 
+            this.batterieBun2.Afficher = false;
+            this.batterieBun2.Image = ((System.Drawing.Image)(resources.GetObject("batterieBun2.Image")));
+            this.batterieBun2.Location = new System.Drawing.Point(492, 6);
+            this.batterieBun2.Name = "batterieBun2";
+            this.batterieBun2.Size = new System.Drawing.Size(16, 16);
+            this.batterieBun2.TabIndex = 98;
+            this.batterieBun2.TabStop = false;
+            this.batterieBun2.Tension = 0D;
+            this.batterieBun2.TensionLow = 0D;
+            this.batterieBun2.TensionMid = 0D;
+            this.batterieBun2.TensionMidHigh = 0D;
+            // 
+            // batterieBeu2
+            // 
+            this.batterieBeu2.Afficher = false;
+            this.batterieBeu2.Image = ((System.Drawing.Image)(resources.GetObject("batterieBeu2.Image")));
+            this.batterieBeu2.Location = new System.Drawing.Point(641, 7);
+            this.batterieBeu2.Name = "batterieBeu2";
+            this.batterieBeu2.Size = new System.Drawing.Size(16, 16);
+            this.batterieBeu2.TabIndex = 99;
+            this.batterieBeu2.TabStop = false;
+            this.batterieBeu2.Tension = 0D;
+            this.batterieBeu2.TensionLow = 0D;
+            this.batterieBeu2.TensionMid = 0D;
+            this.batterieBeu2.TensionMidHigh = 0D;
+            // 
+            // batterieBoi2
+            // 
+            this.batterieBoi2.Afficher = false;
+            this.batterieBoi2.Image = ((System.Drawing.Image)(resources.GetObject("batterieBoi2.Image")));
+            this.batterieBoi2.Location = new System.Drawing.Point(790, 7);
+            this.batterieBoi2.Name = "batterieBoi2";
+            this.batterieBoi2.Size = new System.Drawing.Size(16, 16);
+            this.batterieBoi2.TabIndex = 100;
+            this.batterieBoi2.TabStop = false;
+            this.batterieBoi2.Tension = 0D;
+            this.batterieBoi2.TensionLow = 0D;
+            this.batterieBoi2.TensionMid = 0D;
+            this.batterieBoi2.TensionMidHigh = 0D;
             // 
             // PanelConnexions
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.White;
+            this.Controls.Add(this.batterieBoi2);
+            this.Controls.Add(this.batterieBeu2);
+            this.Controls.Add(this.batterieBun2);
             this.Controls.Add(this.batteriePack1);
-            this.Controls.Add(this.batteriePack2);
-            this.Controls.Add(this.batterieBun);
-            this.Controls.Add(this.batterieBeu);
-            this.Controls.Add(this.batterieBoi);
-            this.Controls.Add(this.lblRecBoi);
-            this.Controls.Add(this.ledRecBoi);
-            this.Controls.Add(this.lblRecBeu);
-            this.Controls.Add(this.ledRecBeu);
-            this.Controls.Add(this.lblRecBun);
-            this.Controls.Add(this.ledRecBun);
-            this.Controls.Add(this.lblRecIO);
-            this.Controls.Add(this.ledRecPi);
-            this.Controls.Add(this.lblRecMiwi);
             this.Controls.Add(this.ledRecMiwi);
-            this.Controls.Add(this.lblRecMove);
             this.Controls.Add(this.ledRecMove);
+            this.Controls.Add(this.ledRecPi);
+            this.Controls.Add(this.ledRecBun);
+            this.Controls.Add(this.ledRecBeu);
+            this.Controls.Add(this.ledRecBoi);
+            this.Controls.Add(this.batteriePack2);
+            this.Controls.Add(this.batterieBun1);
+            this.Controls.Add(this.batterieBeu1);
+            this.Controls.Add(this.batterieBoi1);
+            this.Controls.Add(this.lblRecBoi);
+            this.Controls.Add(this.lblRecBeu);
+            this.Controls.Add(this.lblRecBun);
+            this.Controls.Add(this.lblRecIO);
+            this.Controls.Add(this.lblRecMiwi);
+            this.Controls.Add(this.lblRecMove);
             this.Name = "PanelConnexions";
             this.Size = new System.Drawing.Size(850, 27);
             this.Load += new System.EventHandler(this.PanelConnexions_Load);
-            ((System.ComponentModel.ISupportInitialize)(this.ledRecBoi)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.ledRecBeu)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.ledRecBun)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.ledRecPi)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.batteriePack1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.ledRecMiwi)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.ledRecMove)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.batterieBoi)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.batterieBeu)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.batterieBun)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.ledRecPi)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.ledRecBun)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.ledRecBeu)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.ledRecBoi)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.batteriePack2)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.batteriePack1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.batterieBun1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.batterieBeu1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.batterieBoi1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.batterieBun2)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.batterieBeu2)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.batterieBoi2)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -279,22 +347,25 @@
         #endregion
 
         private System.Windows.Forms.Label lblRecBoi;
-        private Composants.Led ledRecBoi;
         private System.Windows.Forms.Label lblRecBeu;
-        private Composants.Led ledRecBeu;
         private System.Windows.Forms.Label lblRecBun;
-        private Composants.Led ledRecBun;
         private System.Windows.Forms.Label lblRecIO;
-        private Composants.Led ledRecPi;
         private System.Windows.Forms.Label lblRecMiwi;
-        private Composants.Led ledRecMiwi;
         private System.Windows.Forms.Label lblRecMove;
-        private Composants.Led ledRecMove;
-        private Composants.Batterie batterieBoi;
-        private Composants.Batterie batterieBeu;
-        private Composants.Batterie batterieBun;
+        private Composants.Batterie batterieBoi1;
+        private Composants.Batterie batterieBeu1;
+        private Composants.Batterie batterieBun1;
         private Composants.Batterie batteriePack2;
+        private Composants.IndicateurConnexion ledRecBoi;
+        private Composants.IndicateurConnexion ledRecBeu;
+        private Composants.IndicateurConnexion ledRecBun;
+        private Composants.IndicateurConnexion ledRecPi;
+        private Composants.IndicateurConnexion ledRecMove;
+        private Composants.IndicateurConnexion ledRecMiwi;
         private Composants.Batterie batteriePack1;
+        private Composants.Batterie batterieBun2;
+        private Composants.Batterie batterieBeu2;
+        private Composants.Batterie batterieBoi2;
 
     }
 }

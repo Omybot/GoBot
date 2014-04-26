@@ -20,35 +20,94 @@ namespace GoBot.IHM
         public PanelConnexions()
         {
             InitializeComponent();
+
+            ledRecBun.ConnexionNok();
+            ledRecBeu.ConnexionNok();
+            ledRecBoi.ConnexionNok();
+            ledRecMiwi.ConnexionNok();
+            ledRecMove.ConnexionNok();
+            ledRecPi.ConnexionNok();
+
+            batteriePack1.CouleurGris();
         }
 
         void timerBatteries_Tick(object sender, EventArgs e)
         {
+            if (Robots.Simulation)
+            {
+                batteriePack1.CouleurGris();
+                batteriePack2.CouleurGris();
+                batterieBun1.CouleurGris();
+                batterieBeu1.CouleurGris();
+                batterieBoi1.CouleurGris();
+                return;
+            }
+
             if (Connexions.ConnexionIO.ConnexionCheck.Connecte)
             {
+                batteriePack1.Afficher = true;
+                batteriePack2.Afficher = true;
                 batteriePack1.Tension = Robots.GrosRobot.TensionPack1;
                 batteriePack2.Tension = Robots.GrosRobot.TensionPack2;
             }
             else
             {
+                batteriePack1.Afficher = false;
+                batteriePack2.Afficher = false;
                 batteriePack1.CouleurGris();
                 batteriePack2.CouleurGris();
             }
 
             if (Plateau.Balise1.ConnexionCheck.Connecte)
-                batterieBun.Tension = Plateau.Balise1.Tension;
+            {
+                batterieBun1.Afficher = true;
+                batterieBun1.Tension = Plateau.Balise1.Tension1;
+
+                batterieBun2.Afficher = true;
+                batterieBun2.Tension = Plateau.Balise1.Tension2;
+            }
             else
-                batterieBun.CouleurGris();
+            {
+                batterieBun1.Afficher = false;
+                batterieBun1.CouleurGris();
+
+                batterieBun2.Afficher = false;
+                batterieBun2.CouleurGris();
+            }
 
             if (Plateau.Balise2.ConnexionCheck.Connecte)
-                batterieBeu.Tension = Plateau.Balise2.Tension;
+            {
+                batterieBeu1.Afficher = true;
+                batterieBeu1.Tension = Plateau.Balise2.Tension1;
+
+                batterieBeu2.Afficher = true;
+                batterieBeu2.Tension = Plateau.Balise2.Tension2;
+            }
             else
-                batterieBeu.CouleurGris();
+            {
+                batterieBeu1.Afficher = false;
+                batterieBeu1.CouleurGris();
+
+                batterieBeu2.Afficher = false;
+                batterieBeu2.CouleurGris();
+            }
 
             if (Plateau.Balise3.ConnexionCheck.Connecte)
-                batterieBoi.Tension = Plateau.Balise3.Tension;
+            {
+                batterieBoi1.Afficher = true;
+                batterieBoi1.Tension = Plateau.Balise3.Tension1;
+
+                batterieBoi2.Afficher = true;
+                batterieBoi2.Tension = Plateau.Balise3.Tension2;
+            }
             else
-                batterieBoi.CouleurGris();
+            {
+                batterieBoi1.Afficher = false;
+                batterieBoi1.CouleurGris();
+
+                batterieBoi2.Afficher = false;
+                batterieBoi2.CouleurGris();
+            }
         }
 
         void ConnexionBunCheck_ConnexionChange(bool conn)
@@ -83,7 +142,7 @@ namespace GoBot.IHM
 
         void Robot_ConnexionChange(Carte carte, bool connecte)
         {
-            Led selectLed = null;
+            IndicateurConnexion selectLed = null;
             switch (carte)
             {
                 case Carte.RecMove:
@@ -112,12 +171,12 @@ namespace GoBot.IHM
             }));
         }
 
-        private void SetLed(Led led, bool on)
+        private void SetLed(IndicateurConnexion led, bool on)
         {
             if (on)
-                led.CouleurVert(true);
+                led.ConnexionOk(true);
             else
-                led.CouleurRouge(true);
+                led.ConnexionNok(true);
         }
 
         private void PanelConnexions_Load(object sender, EventArgs e)
@@ -145,20 +204,37 @@ namespace GoBot.IHM
                 Balise.GetBalise(Carte.RecBeu).ConnexionCheck.ConnexionChange += new ConnexionCheck.ConnexionChangeDelegate(ConnexionBeuCheck_ConnexionChange);
                 Balise.GetBalise(Carte.RecBoi).ConnexionCheck.ConnexionChange += new ConnexionCheck.ConnexionChangeDelegate(ConnexionBoiCheck_ConnexionChange);
 
-                batteriePack1.TensionMid = 9;
-                batteriePack2.TensionMid = 9;
+                batteriePack1.TensionMidHigh = 28.6;
+                batteriePack1.TensionMid = 26.95;
+                batteriePack1.TensionLow = 25.85;
 
-                batterieBun.TensionMid = 9;
-                batterieBeu.TensionMid = 9;
-                batterieBoi.TensionMid = 9;
+                batteriePack2.TensionMidHigh = 28.6;
+                batteriePack2.TensionMid = 26.95;
+                batteriePack2.TensionLow = 25.85;
 
+                batterieBun1.TensionMidHigh = 10;
+                batterieBun1.TensionMid = 9;
+                batterieBun1.TensionLow = 8;
 
-                batteriePack1.TensionLow = 8;
-                batteriePack2.TensionLow = 8;
+                batterieBun2.TensionMidHigh = 10;
+                batterieBun2.TensionMid = 9;
+                batterieBun2.TensionLow = 8;
 
-                batterieBun.TensionLow = 8;
-                batterieBeu.TensionLow = 8;
-                batterieBoi.TensionLow = 8;
+                batterieBeu1.TensionMidHigh = 10;
+                batterieBeu1.TensionMid = 9;
+                batterieBeu1.TensionLow = 8;
+
+                batterieBeu2.TensionMidHigh = 10;
+                batterieBeu2.TensionMid = 9;
+                batterieBeu2.TensionLow = 8;
+
+                batterieBoi1.TensionMidHigh = 10;
+                batterieBoi1.TensionMid = 9;
+                batterieBoi1.TensionLow = 8;
+
+                batterieBoi2.TensionMidHigh = 10;
+                batterieBoi2.TensionMid = 9;
+                batterieBoi2.TensionLow = 8;
 
                 timerBatteries = new System.Windows.Forms.Timer();
                 timerBatteries.Interval = 1000;
