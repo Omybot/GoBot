@@ -5,13 +5,14 @@ using System.Text;
 
 namespace GoBot.Communications
 {
-    abstract class ConnexionMiwi : Connexion
+    public class ConnexionMiwi : Connexion
     {
         public Carte Carte { get; private set; }
 
-        ConnexionMiwi(Carte carte)
+        public ConnexionMiwi(Carte carte)
         {
             Carte = carte;
+            Sauvegarde = new Replay();
         }
 
         /// <summary>
@@ -24,6 +25,9 @@ namespace GoBot.Communications
             // Rajoute l'entête de demande de transfert de message par Miwi
             byte[] tab = new byte[message.Length + 2];
             byte[] tabOrig = message.ToTabBytes();
+
+            tab[0] = (byte)Carte.RecMiwi;
+            tab[1] = (byte)FonctionMiwi.Transmettre;
 
             for (int i = 0; i < tabOrig.Length; i++)
                 tab[i + 2] = tabOrig[i];

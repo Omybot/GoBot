@@ -11,8 +11,12 @@ namespace GoBot.Communications
         public static ConnexionUDP ConnexionMiwi { get; set; }
         public static ConnexionUDP ConnexionMove { get; set; }
         public static ConnexionUDP ConnexionIO { get; set; }
+        public static ConnexionMiwi ConnexionBun { get; set; }
+        public static ConnexionMiwi ConnexionBeu { get; set; }
+        public static ConnexionMiwi ConnexionBoi { get; set; }
+        public static ConnexionMiwi ConnexionPi { get; set; }
 
-        public static Dictionary<Carte, ConnexionUDP> ConnexionParCarte { get; private set; }
+        public static Dictionary<Carte, Connexion> ConnexionParCarte { get; private set; }
 
         public static void Init()
         {
@@ -28,12 +32,21 @@ namespace GoBot.Communications
             ConnexionIO.Connexion(System.Net.IPAddress.Parse("10.1.0.14"), 12314, 12324);
             ConnexionIO.ConnexionCheck.TestConnexion += new ConnexionCheck.TestConnexionDelegate(ConnexionIOCheck_TestConnexion);
 
-            ConnexionParCarte = new Dictionary<Carte, ConnexionUDP>();
-            ConnexionParCarte.Add(Carte.RecBun, ConnexionMiwi);
-            ConnexionParCarte.Add(Carte.RecBeu, ConnexionMiwi);
-            ConnexionParCarte.Add(Carte.RecBoi, ConnexionMiwi);
+            ConnexionBun = new ConnexionMiwi(Carte.RecBun);
+            ConnexionBun.StartReception();
+            ConnexionBeu = new ConnexionMiwi(Carte.RecBeu);
+            ConnexionBeu.StartReception();
+            ConnexionBoi = new ConnexionMiwi(Carte.RecBoi);
+            ConnexionBoi.StartReception();
+
+            ConnexionPi = new ConnexionMiwi(Carte.RecPi);
+
+            ConnexionParCarte = new Dictionary<Carte, Connexion>();
+            ConnexionParCarte.Add(Carte.RecBun, ConnexionBun);
+            ConnexionParCarte.Add(Carte.RecBeu, ConnexionBeu);
+            ConnexionParCarte.Add(Carte.RecBoi, ConnexionBoi);
             ConnexionParCarte.Add(Carte.RecMiwi, ConnexionMiwi);
-            ConnexionParCarte.Add(Carte.RecPi, ConnexionMiwi);
+            ConnexionParCarte.Add(Carte.RecPi, ConnexionPi);
             ConnexionParCarte.Add(Carte.RecMove, ConnexionMove);
             ConnexionParCarte.Add(Carte.RecIO, ConnexionIO);
         }

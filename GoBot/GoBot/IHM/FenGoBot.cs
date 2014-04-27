@@ -64,9 +64,9 @@ namespace GoBot
                 Connexions.ConnexionMiwi.ConnexionCheck.Start();
                 Connexions.ConnexionIO.ConnexionCheck.Start();
 
-                Plateau.Balise1.ConnexionCheck.Start();
-                Plateau.Balise2.ConnexionCheck.Start();
-                Plateau.Balise3.ConnexionCheck.Start();
+                Plateau.Balise1.Connexion.ConnexionCheck.Start();
+                Plateau.Balise2.Connexion.ConnexionCheck.Start();
+                Plateau.Balise3.Connexion.ConnexionCheck.Start();
 
                 switchBoutonSimu.SetActif(Robots.Simulation);
 

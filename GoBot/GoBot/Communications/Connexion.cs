@@ -5,12 +5,12 @@ using System.Text;
 
 namespace GoBot.Communications
 {
-    abstract class Connexion
+    public abstract class Connexion
     {
         /// <summary>
         /// Sauvegarde les trames transitées par la connexion
         /// </summary>
-        public Replay Sauvegarde { get; private set; }
+        public Replay Sauvegarde { get; protected set; }
 
         /// <summary>
         /// Verificateur de connexion

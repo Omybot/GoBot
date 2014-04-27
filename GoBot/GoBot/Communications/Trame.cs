@@ -115,7 +115,7 @@ namespace GoBot.Communications
 
         public String Decode()
         {
-            return TrameFactory.Decode(this);
+            return DecodeurTrames.Decode(this);
         }
     }
 }

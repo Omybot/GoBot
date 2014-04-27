@@ -113,14 +113,11 @@ namespace GoBot.Balises
         public Carte Carte { get; set; }
 
         /// <summary>
-        /// Vérificateur de connexion avec la balise
-        /// </summary>
-        public ConnexionCheck ConnexionCheck { get; set; }
-
-        /// <summary>
         /// Statistiques sur la communication avec la balise
         /// </summary>
         public BaliseStats Stats { get; private set; }
+
+        public Connexion Connexion { get; private set; }
 
         /// <summary>
         /// Constructeur
@@ -134,10 +131,23 @@ namespace GoBot.Balises
             DetectionsCapteur1 = new List<DetectionBalise>();
             DetectionsCapteur2 = new List<DetectionBalise>();
 
-            ConnexionCheck = new ConnexionCheck(5000);
-            ConnexionCheck.TestConnexion += new ConnexionCheck.TestConnexionDelegate(TestConnexion);
+            switch (carte)
+            {
+                case GoBot.Carte.RecBun:
+                    Connexion = Connexions.ConnexionBun;
+                    break;
+                case GoBot.Carte.RecBeu:
+                    Connexion = Connexions.ConnexionBeu;
+                    break;
+                case GoBot.Carte.RecBoi:
+                    Connexion = Connexions.ConnexionBoi;
+                    break;
+            }
 
-            Connexions.ConnexionMiwi.NouvelleTrameRecue += new ConnexionUDP.ReceptionDelegate(connexionIo_NouvelleTrame);
+            Connexion.NouvelleTrameRecue += new ConnexionUDP.ReceptionDelegate(connexion_NouvelleTrame);
+            Connexion.ConnexionCheck = new Communications.ConnexionCheck(5000);
+            Connexion.ConnexionCheck.TestConnexion += new ConnexionCheck.TestConnexionDelegate(TestConnexion);
+
             Stats = new BaliseStats(this);
             Tension1 = 0;
         }
@@ -148,27 +158,27 @@ namespace GoBot.Balises
         public void Reset()
         {
             Trame t = TrameFactory.BaliseReset(Carte);
-            Connexions.ConnexionMiwi.SendMessage(t);
+            Connexion.SendMessage(t);
         }
 
         /// <summary>
         /// Réception d'un message envoyé par la carte de la balise
         /// </summary>
         /// <param name="trame">Message reçu</param>
-        public void connexionIo_NouvelleTrame(Trame trame)
+        public void connexion_NouvelleTrame(Trame trame)
         {
             if (trame == null)
                 return;
 
-            // On ne traite que les messages qui nous sont adressés
-            if (trame[0] != (byte)Carte)
-                return;
-
-            if (trame[1] == (byte)FonctionBalise.Detection)
+            try
             {
-                // Réception d'une mesure sur un tour de rotation
-                try
+                // On ne traite que les messages qui nous sont adressés
+                if (trame[0] != (byte)Carte)
+                    return;
+
+                if (trame[1] == (byte)FonctionBalise.Detection)
                 {
+                    // Réception d'une mesure sur un tour de rotation
                     // Vérification checksum
                     int checksumRecu = trame[trame.Length - 1];
 
@@ -180,7 +190,7 @@ namespace GoBot.Balises
                     if (checksumCalcul != checksumRecu)
                     {
                         Console.WriteLine("Erreur de ckecksum");
-                        Connexions.ConnexionMiwi.SendMessage(TrameFactory.BaliseErreurDetection(Carte));
+                        Connexion.SendMessage(TrameFactory.BaliseErreurDetection(Carte));
                         return;
                     }
 
@@ -192,15 +202,10 @@ namespace GoBot.Balises
                     if (ReglageVitesse)
                         nouvelleVitesse = AsservissementVitesse();
 
-                    Tension1 = (double)(trame[4] * 256 + trame[5]) / 100.0;
-                    Tension2 = (double)(trame[6] * 256 + trame[7]) / 100.0;
-
                     // Réception des données angulaires
 
-                    Tension1 = (double)trame[8] / 10.0;
-
-                    int nbMesures1 = trame[9];
-                    int nbMesures2 = trame[10];
+                    int nbMesures1 = trame[4];
+                    int nbMesures2 = trame[5];
 
                     // Si on a un nombre impair de fronts on laisse tomber cette mesure, elle n'est pas bonne
                     if (nbMesures1 % 2 != 0 || nbMesures2 % 2 != 0)
@@ -213,7 +218,7 @@ namespace GoBot.Balises
                     if (trame.Length != 7 + nbMesures1 * 4 + nbMesures2 * 4)
                     {
                         Console.WriteLine("Erreur de taille de trame");
-                        Connexions.ConnexionMiwi.SendMessage(TrameFactory.BaliseErreurDetection(Carte));
+                        Connexion.SendMessage(TrameFactory.BaliseErreurDetection(Carte));
                         return;
                     }
 
@@ -223,7 +228,7 @@ namespace GoBot.Balises
 
                     for (int i = 0; i < nbMesures1 * 4; i += 2)
                     {
-                        int valeur = trame[11 + i] * 256 + trame[11 + i + 1];
+                        int valeur = trame[6 + i] * 256 + trame[6 + i + 1];
                         tabAngle.Add(valeur);
                     }
 
@@ -242,7 +247,7 @@ namespace GoBot.Balises
 
                     // Réception des mesures du capteur 2
 
-                    int offSet = nbMesures1 * 4 + 11;
+                    int offSet = nbMesures1 * 4 + 6;
 
                     DetectionsCapteur2.Clear();
 
@@ -486,17 +491,19 @@ namespace GoBot.Balises
                     // Génération de l'event de notification de détection
                     PositionsChange();
                 }
-                catch (Exception)
+                else if (trame[1] == (byte)FonctionBalise.RetourTestConnexion)
                 {
+                    Tension1 = (double)(trame[2] * 256 + trame[3]) / 100.0;
+                    Tension2 = (double)(trame[4] * 256 + trame[5]) / 100.0;
+
+                    if (semTestConnexion != null)
+                        semTestConnexion.Release();
                 }
             }
-            else if(trame[1] == (byte)FonctionBalise.TestConnexion)
-            {
-                if(semTestConnexion != null)
-                    semTestConnexion.Release();
-            }
+            catch (Exception)
+            { }
 
-            ConnexionCheck.MajConnexion();
+            Connexion.ConnexionCheck.MajConnexion();
         }
 
         /// <summary>
@@ -511,7 +518,7 @@ namespace GoBot.Balises
                 vitesse = 4000;
                 ValeurConsigne = vitesse;
                 Trame t = TrameFactory.BaliseVitesse(Carte, vitesse);
-                Connexions.ConnexionMiwi.SendMessage(t);
+                Connexion.SendMessage(t);
 
                 Console.WriteLine("Erreur d'affectation de vitesse");
             }
@@ -519,7 +526,7 @@ namespace GoBot.Balises
             {
                 ValeurConsigne = vitesse;
                 Trame t = TrameFactory.BaliseVitesse(Carte, vitesse);
-                Connexions.ConnexionMiwi.SendMessage(t);
+                Connexion.SendMessage(t);
             }
         }
 
@@ -529,7 +536,7 @@ namespace GoBot.Balises
         public void TestConnexion()
         {
             Trame t = TrameFactory.BaliseTestConnexion(Carte);
-            Connexions.ConnexionMiwi.SendMessage(t);
+            Connexion.SendMessage(t);
         }
 
         /// <summary>
@@ -540,7 +547,7 @@ namespace GoBot.Balises
         {
             Trame t = TrameFactory.BaliseTestConnexion(Carte);
             semTestConnexion = new Semaphore(0, 1);
-            Connexions.ConnexionMiwi.SendMessage(t);
+            Connexion.SendMessage(t);
             DateTime debut = DateTime.Now;
             semTestConnexion.WaitOne(1000);
             return (int)(DateTime.Now - debut).TotalMilliseconds;
@@ -624,6 +631,30 @@ namespace GoBot.Balises
         {
             VitesseRotation(0);
             ReglageVitesse = false;
+        }
+
+        private int inclinaisonFace;
+        public int InclinaisonFace
+        {
+            get { return inclinaisonFace; }
+            set
+            {
+                inclinaisonFace = value;
+                Trame t = TrameFactory.BaliseInclinaisonFace(Carte, inclinaisonFace);
+                Connexion.SendMessage(t);
+            }
+        }
+
+        private int inclinaisonProfil;
+        public int InclinaisonProfil
+        {
+            get { return inclinaisonProfil; }
+            set
+            {
+                inclinaisonProfil = value;
+                Trame t = TrameFactory.BaliseInclinaisonProfil(Carte, inclinaisonProfil);
+                Connexion.SendMessage(t);
+            }
         }
     }
 }

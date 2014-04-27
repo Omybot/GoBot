@@ -86,6 +86,7 @@
     <Compile Include="CameraIP.cs" />
     <Compile Include="Communications\ConnexionMiwi.cs" />
     <Compile Include="Communications\Connexion.cs" />
+    <Compile Include="Communications\DecodeurTrames.cs" />
     <Compile Include="Communications\LiaisonDataCheck.cs" />
     <Compile Include="ElementsJeu\ElementJeu.cs" />
     <Compile Include="ElementsJeu\Feu.cs" />
@@ -94,6 +95,12 @@
     <Compile Include="Enchainements\EnchainementAleatoire.cs" />
     <Compile Include="Enchainements\EnchainementMatch.cs" />
     <Compile Include="EventsReplay.cs" />
+    <Compile Include="IHM\PanelBaliseInclinaison.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="IHM\PanelBaliseInclinaison.Designer.cs">
+      <DependentUpon>PanelBaliseInclinaison.cs</DependentUpon>
+    </Compile>
     <Compile Include="IHM\PanelAlimentation.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -148,23 +155,23 @@
     <Compile Include="IHM\PanelConnexions.Designer.cs">
       <DependentUpon>PanelConnexions.cs</DependentUpon>
     </Compile>
-    <Compile Include="IHM\PanelDiagnosticBalise.cs">
+    <Compile Include="IHM\PanelBaliseDiagnostic.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="IHM\PanelDiagnosticBalise.Designer.cs">
-      <DependentUpon>PanelDiagnosticBalise.cs</DependentUpon>
+    <Compile Include="IHM\PanelBaliseDiagnostic.Designer.cs">
+      <DependentUpon>PanelBaliseDiagnostic.cs</DependentUpon>
     </Compile>
-    <Compile Include="IHM\PanelImagesBalises.cs">
+    <Compile Include="IHM\PanelBalisesImages.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="IHM\PanelImagesBalises.Designer.cs">
-      <DependentUpon>PanelImagesBalises.cs</DependentUpon>
+    <Compile Include="IHM\PanelBalisesImages.Designer.cs">
+      <DependentUpon>PanelBalisesImages.cs</DependentUpon>
     </Compile>
-    <Compile Include="IHM\PanelImageBalise.cs">
+    <Compile Include="IHM\PanelBaliseImage.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="IHM\PanelImageBalise.Designer.cs">
-      <DependentUpon>PanelImageBalise.cs</DependentUpon>
+    <Compile Include="IHM\PanelBaliseImage.Designer.cs">
+      <DependentUpon>PanelBaliseImage.cs</DependentUpon>
     </Compile>
     <Compile Include="IHM\PanelPetitRobotUtilisation.cs">
       <SubType>UserControl</SubType>
@@ -330,6 +337,9 @@
     <Compile Include="Communications\TrameFactory.cs" />
     <Compile Include="Communications\ConnexionUDP.cs" />
     <Compile Include="Communications\Trame.cs" />
+    <EmbeddedResource Include="IHM\PanelBaliseInclinaison.resx">
+      <DependentUpon>PanelBaliseInclinaison.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="IHM\PanelAlimentation.resx">
       <DependentUpon>PanelAlimentation.cs</DependentUpon>
     </EmbeddedResource>
@@ -357,14 +367,14 @@
     <EmbeddedResource Include="IHM\PanelConnexions.resx">
       <DependentUpon>PanelConnexions.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="IHM\PanelDiagnosticBalise.resx">
-      <DependentUpon>PanelDiagnosticBalise.cs</DependentUpon>
+    <EmbeddedResource Include="IHM\PanelBaliseDiagnostic.resx">
+      <DependentUpon>PanelBaliseDiagnostic.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="IHM\PanelImagesBalises.resx">
-      <DependentUpon>PanelImagesBalises.cs</DependentUpon>
+    <EmbeddedResource Include="IHM\PanelBalisesImages.resx">
+      <DependentUpon>PanelBalisesImages.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="IHM\PanelImageBalise.resx">
-      <DependentUpon>PanelImageBalise.cs</DependentUpon>
+    <EmbeddedResource Include="IHM\PanelBaliseImage.resx">
+      <DependentUpon>PanelBaliseImage.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="IHM\PanelPetitRobotUtilisation.resx">
       <DependentUpon>PanelPetitRobotUtilisation.cs</DependentUpon>

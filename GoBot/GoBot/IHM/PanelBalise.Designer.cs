@@ -37,6 +37,8 @@
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(PanelBalise));
             this.groupBalise = new System.Windows.Forms.GroupBox();
+            this.lblPing = new System.Windows.Forms.Label();
+            this.btnPing = new System.Windows.Forms.Button();
             this.btnReset = new System.Windows.Forms.Button();
             this.btnStop = new System.Windows.Forms.Button();
             this.btnStart = new System.Windows.Forms.Button();
@@ -47,20 +49,18 @@
             this.lblToursSecondesActuel = new System.Windows.Forms.Label();
             this.lblConsigneAff = new System.Windows.Forms.Label();
             this.lblConsigne = new System.Windows.Forms.Label();
+            this.trackBarConsigne = new Composants.TrackBarPlus();
             this.lblVitesseAff = new System.Windows.Forms.Label();
             this.boxAffichage = new System.Windows.Forms.CheckBox();
-            this.pictureBoxAngle = new System.Windows.Forms.PictureBox();
             this.lblVitesse = new System.Windows.Forms.Label();
+            this.trackBarVitesse = new Composants.TrackBarPlus();
             this.ledOffset = new Composants.Led();
             this.ledAsserv = new Composants.Led();
-            this.trackBarConsigne = new Composants.TrackBarPlus();
-            this.trackBarVitesse = new Composants.TrackBarPlus();
-            this.btnPing = new System.Windows.Forms.Button();
-            this.lblPing = new System.Windows.Forms.Label();
+            this.pictureBoxAngle = new System.Windows.Forms.PictureBox();
             this.groupBalise.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBoxAngle)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.ledOffset)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.ledAsserv)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBoxAngle)).BeginInit();
             this.SuspendLayout();
             // 
             // groupBalise
@@ -92,6 +92,25 @@
             this.groupBalise.TabIndex = 0;
             this.groupBalise.TabStop = false;
             this.groupBalise.Text = "Balise";
+            // 
+            // lblPing
+            // 
+            this.lblPing.AutoSize = true;
+            this.lblPing.Location = new System.Drawing.Point(87, 506);
+            this.lblPing.Name = "lblPing";
+            this.lblPing.Size = new System.Drawing.Size(10, 13);
+            this.lblPing.TabIndex = 23;
+            this.lblPing.Text = "-";
+            // 
+            // btnPing
+            // 
+            this.btnPing.Location = new System.Drawing.Point(6, 501);
+            this.btnPing.Name = "btnPing";
+            this.btnPing.Size = new System.Drawing.Size(75, 23);
+            this.btnPing.TabIndex = 22;
+            this.btnPing.Text = "Ping";
+            this.btnPing.UseVisualStyleBackColor = true;
+            this.btnPing.Click += new System.EventHandler(this.btnPing_Click);
             // 
             // btnReset
             // 
@@ -189,6 +208,24 @@
             this.lblConsigne.TabIndex = 9;
             this.lblConsigne.Text = "0";
             // 
+            // trackBarConsigne
+            // 
+            this.trackBarConsigne.BackColor = System.Drawing.Color.Transparent;
+            this.trackBarConsigne.IntervalTimer = 500;
+            this.trackBarConsigne.Location = new System.Drawing.Point(65, 79);
+            this.trackBarConsigne.Max = 100D;
+            this.trackBarConsigne.MaximumSize = new System.Drawing.Size(3000, 15);
+            this.trackBarConsigne.Min = 0D;
+            this.trackBarConsigne.MinimumSize = new System.Drawing.Size(0, 15);
+            this.trackBarConsigne.Name = "trackBarConsigne";
+            this.trackBarConsigne.NombreDecimales = 0;
+            this.trackBarConsigne.Reverse = false;
+            this.trackBarConsigne.Size = new System.Drawing.Size(246, 15);
+            this.trackBarConsigne.TabIndex = 8;
+            this.trackBarConsigne.Vertical = false;
+            this.trackBarConsigne.TickValueChanged += new System.EventHandler(this.trackBarConsigne_TickValueChanged);
+            this.trackBarConsigne.ValueChanged += new System.EventHandler(this.trackBarConsigne_ValueChanged);
+            // 
             // lblVitesseAff
             // 
             this.lblVitesseAff.AutoSize = true;
@@ -207,14 +244,6 @@
             this.boxAffichage.Text = "Afficher les données";
             this.boxAffichage.UseVisualStyleBackColor = true;
             // 
-            // pictureBoxAngle
-            // 
-            this.pictureBoxAngle.Location = new System.Drawing.Point(106, 100);
-            this.pictureBoxAngle.Name = "pictureBoxAngle";
-            this.pictureBoxAngle.Size = new System.Drawing.Size(205, 379);
-            this.pictureBoxAngle.TabIndex = 4;
-            this.pictureBoxAngle.TabStop = false;
-            // 
             // lblVitesse
             // 
             this.lblVitesse.AutoSize = true;
@@ -223,6 +252,24 @@
             this.lblVitesse.Size = new System.Drawing.Size(13, 13);
             this.lblVitesse.TabIndex = 3;
             this.lblVitesse.Text = "0";
+            // 
+            // trackBarVitesse
+            // 
+            this.trackBarVitesse.BackColor = System.Drawing.Color.Transparent;
+            this.trackBarVitesse.IntervalTimer = 500;
+            this.trackBarVitesse.Location = new System.Drawing.Point(65, 37);
+            this.trackBarVitesse.Max = 4000D;
+            this.trackBarVitesse.MaximumSize = new System.Drawing.Size(3000, 15);
+            this.trackBarVitesse.Min = 0D;
+            this.trackBarVitesse.MinimumSize = new System.Drawing.Size(0, 15);
+            this.trackBarVitesse.Name = "trackBarVitesse";
+            this.trackBarVitesse.NombreDecimales = 0;
+            this.trackBarVitesse.Reverse = false;
+            this.trackBarVitesse.Size = new System.Drawing.Size(246, 15);
+            this.trackBarVitesse.TabIndex = 2;
+            this.trackBarVitesse.Vertical = false;
+            this.trackBarVitesse.TickValueChanged += new System.EventHandler(this.trackBarVitesse_TickValueChanged);
+            this.trackBarVitesse.ValueChanged += new System.EventHandler(this.trackBarVitesse_ValueChanged);
             // 
             // ledOffset
             // 
@@ -244,60 +291,13 @@
             this.ledAsserv.TabIndex = 14;
             this.ledAsserv.TabStop = false;
             // 
-            // trackBarConsigne
+            // pictureBoxAngle
             // 
-            this.trackBarConsigne.BackColor = System.Drawing.Color.Transparent;
-            this.trackBarConsigne.IntervalTimer = 500;
-            this.trackBarConsigne.Location = new System.Drawing.Point(65, 79);
-            this.trackBarConsigne.Max = 100D;
-            this.trackBarConsigne.MaximumSize = new System.Drawing.Size(3000, 15);
-            this.trackBarConsigne.Min = 0D;
-            this.trackBarConsigne.MinimumSize = new System.Drawing.Size(0, 15);
-            this.trackBarConsigne.Name = "trackBarConsigne";
-            this.trackBarConsigne.NombreDecimales = 0;
-            this.trackBarConsigne.Reverse = false;
-            this.trackBarConsigne.Size = new System.Drawing.Size(246, 15);
-            this.trackBarConsigne.TabIndex = 8;
-            this.trackBarConsigne.Vertical = false;
-            this.trackBarConsigne.TickValueChanged += new System.EventHandler(this.trackBarConsigne_TickValueChanged);
-            this.trackBarConsigne.ValueChanged += new System.EventHandler(this.trackBarConsigne_ValueChanged);
-            // 
-            // trackBarVitesse
-            // 
-            this.trackBarVitesse.BackColor = System.Drawing.Color.Transparent;
-            this.trackBarVitesse.IntervalTimer = 500;
-            this.trackBarVitesse.Location = new System.Drawing.Point(65, 37);
-            this.trackBarVitesse.Max = 4000D;
-            this.trackBarVitesse.MaximumSize = new System.Drawing.Size(3000, 15);
-            this.trackBarVitesse.Min = 0D;
-            this.trackBarVitesse.MinimumSize = new System.Drawing.Size(0, 15);
-            this.trackBarVitesse.Name = "trackBarVitesse";
-            this.trackBarVitesse.NombreDecimales = 0;
-            this.trackBarVitesse.Reverse = false;
-            this.trackBarVitesse.Size = new System.Drawing.Size(246, 15);
-            this.trackBarVitesse.TabIndex = 2;
-            this.trackBarVitesse.Vertical = false;
-            this.trackBarVitesse.TickValueChanged += new System.EventHandler(this.trackBarVitesse_TickValueChanged);
-            this.trackBarVitesse.ValueChanged += new System.EventHandler(this.trackBarVitesse_ValueChanged);
-            // 
-            // btnPing
-            // 
-            this.btnPing.Location = new System.Drawing.Point(6, 501);
-            this.btnPing.Name = "btnPing";
-            this.btnPing.Size = new System.Drawing.Size(75, 23);
-            this.btnPing.TabIndex = 22;
-            this.btnPing.Text = "Ping";
-            this.btnPing.UseVisualStyleBackColor = true;
-            this.btnPing.Click += new System.EventHandler(this.btnPing_Click);
-            // 
-            // lblPing
-            // 
-            this.lblPing.AutoSize = true;
-            this.lblPing.Location = new System.Drawing.Point(87, 506);
-            this.lblPing.Name = "lblPing";
-            this.lblPing.Size = new System.Drawing.Size(10, 13);
-            this.lblPing.TabIndex = 23;
-            this.lblPing.Text = "-";
+            this.pictureBoxAngle.Location = new System.Drawing.Point(106, 100);
+            this.pictureBoxAngle.Name = "pictureBoxAngle";
+            this.pictureBoxAngle.Size = new System.Drawing.Size(205, 379);
+            this.pictureBoxAngle.TabIndex = 4;
+            this.pictureBoxAngle.TabStop = false;
             // 
             // PanelBalise
             // 
@@ -309,9 +309,9 @@
             this.Size = new System.Drawing.Size(333, 604);
             this.groupBalise.ResumeLayout(false);
             this.groupBalise.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBoxAngle)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.ledOffset)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.ledAsserv)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBoxAngle)).EndInit();
             this.ResumeLayout(false);
 
         }

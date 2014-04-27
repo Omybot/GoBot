@@ -24,7 +24,7 @@ namespace GoBot.Communications
         Erreur
     }
 
-    public class ConnexionUDP
+    public class ConnexionUDP : Connexion
     {
         public IPAddress AdresseIp { get; private set; }
         public int PortEntree { get; private set; }
@@ -32,9 +32,7 @@ namespace GoBot.Communications
 
         private UdpClient client;
         private bool isConnect = false;
-        public Replay Sauvegarde { get; private set; }
 
-        public ConnexionCheck ConnexionCheck { get; set; }
 
         public ConnexionUDP()
         {
@@ -100,7 +98,7 @@ namespace GoBot.Communications
         /// </summary>
         /// <param name="message">Message à envoyer au client</param>
         /// <returns>Nombre de caractères envoyés</returns>
-        public int SendMessage(Trame message)
+        public override int SendMessage(Trame message)
         {
             int retour = 0;
             try
@@ -122,19 +120,12 @@ namespace GoBot.Communications
             return retour;
         }
 
-        //Déclaration du délégué pour l’évènement réception de message
-        public delegate void ReceptionDelegate(Trame trame);
-        //Déclaration de l’évènement utilisant le délégué pour la réception d'une trame
-        public event ReceptionDelegate NouvelleTrameRecue;
-        //Déclaration de l’évènement utilisant le délégué pour l'émission d'une trame
-        public event ReceptionDelegate NouvelleTrameEnvoyee;
-
         IPEndPoint e;
         UdpClient u;
         /// <summary>
         /// Lance la réception de trames sur le port actuel
         /// </summary>
-        public void StartReception()
+        public override void StartReception()
         {
             e = new IPEndPoint(IPAddress.Any, PortEntree);
             if (u != null)
@@ -150,7 +141,7 @@ namespace GoBot.Communications
         /// <summary>
         /// Libère la connexion vers le client
         /// </summary>
-        public void Close()
+        public override void Close()
         {
             client.Close();
         }
@@ -178,22 +169,6 @@ namespace GoBot.Communications
             catch (Exception)
             {
             }
-        }
-
-        public void TrameRecue(Trame t)
-        {
-            Sauvegarde.AjouterTrameEntrante(t);
-
-            if (NouvelleTrameRecue != null)
-                NouvelleTrameRecue(t);
-        }
-
-        public void TrameEnvoyee(Trame t)
-        {
-            Sauvegarde.AjouterTrameSortante(t);
-
-            if (NouvelleTrameEnvoyee != null)
-                NouvelleTrameEnvoyee(t);
         }
     }
 }

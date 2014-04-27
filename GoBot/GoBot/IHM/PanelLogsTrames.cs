@@ -302,7 +302,6 @@ namespace GoBot.IHM
 
             try
             {
-
                 Carte destinataire = trameReplay.Entrant ? Carte.PC : TrameFactory.Identifiant(trame);
                 Carte expediteur = trameReplay.Entrant ? TrameFactory.Identifiant(trame) : Carte.PC;
                 Carte carte = trame.Carte;
@@ -324,7 +323,7 @@ namespace GoBot.IHM
 
                 if (cartesAutorisees && fonctionAutorisee)
                 {
-                    dataGridViewLog.Rows.Add(compteur, expediteur.ToString(), destinataire.ToString(), heure, TrameFactory.Decode(trame), trame.ToString());
+                    dataGridViewLog.Rows.Add(compteur, expediteur.ToString(), destinataire.ToString(), heure, DecodeurTrames.Decode(trame), trame.ToString());
                     datePrecAff = trameReplay.Date;
 
                     if (rdoCarte.Checked)

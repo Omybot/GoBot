@@ -365,6 +365,7 @@ namespace GoBot
         Debug = 0xEE,
 
         TestConnexion = 0xF0,
+        RetourTestConnexion = 0xF5,
         Reset = 0xF1,
         DemandeJack = 0xF3,
         ReponseJack = 0xF4,
@@ -522,9 +523,13 @@ namespace GoBot
         Detection = 0xE4,
         ErreurDetection = 0xE6,
 
+        InclinaisonFace = 0x10,
+        InclinaisonProfil = 0x11,
+
         Debug = 0xEE,
 
         TestConnexion = 0xF0,
+        RetourTestConnexion = 0xF5,
         Reset = 0xF2,
         TestEmission = 0xD4,
         TestEmissionReussi = 0xD5,

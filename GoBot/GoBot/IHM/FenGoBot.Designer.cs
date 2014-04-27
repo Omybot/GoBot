@@ -44,9 +44,9 @@ namespace GoBot
             this.panelBalise3 = new GoBot.IHM.PanelBalise();
             this.panelBalise2 = new GoBot.IHM.PanelBalise();
             this.tabDiagnostic = new System.Windows.Forms.TabPage();
-            this.panelDiagnosticBalise3 = new GoBot.IHM.PanelDiagnosticBalise();
-            this.panelDiagnosticBalise2 = new GoBot.IHM.PanelDiagnosticBalise();
-            this.panelDiagnosticBalise1 = new GoBot.IHM.PanelDiagnosticBalise();
+            this.panelDiagnosticBalise3 = new GoBot.IHM.PanelBaliseDiagnostic();
+            this.panelDiagnosticBalise2 = new GoBot.IHM.PanelBaliseDiagnostic();
+            this.panelDiagnosticBalise1 = new GoBot.IHM.PanelBaliseDiagnostic();
             this.tabTable = new System.Windows.Forms.TabPage();
             this.panelTable = new GoBot.IHM.PanelTable();
             this.tabCamera = new System.Windows.Forms.TabPage();
@@ -69,7 +69,7 @@ namespace GoBot
             this.btnFenetre = new System.Windows.Forms.Button();
             this.panelConnexions = new GoBot.IHM.PanelConnexions();
             this.tabLeds = new System.Windows.Forms.TabPage();
-            this.panelImagesBalises = new GoBot.IHM.PanelImagesBalises();
+            this.panelImagesBalises = new GoBot.IHM.PanelBalisesImages();
             this.tabLogs = new System.Windows.Forms.TabPage();
             this.tabControlLogs = new System.Windows.Forms.TabControl();
             this.tabLogUDP = new System.Windows.Forms.TabPage();
@@ -675,11 +675,11 @@ namespace GoBot
         private System.Windows.Forms.TabControl tabControl1;
         private System.Windows.Forms.TabPage tabPilotage;
         private System.Windows.Forms.TabPage tabDiagnostic;
-        private PanelDiagnosticBalise panelDiagnosticBalise3;
-        private PanelDiagnosticBalise panelDiagnosticBalise2;
-        private PanelDiagnosticBalise panelDiagnosticBalise1;
+        private PanelBaliseDiagnostic panelDiagnosticBalise3;
+        private PanelBaliseDiagnostic panelDiagnosticBalise2;
+        private PanelBaliseDiagnostic panelDiagnosticBalise1;
         private System.Windows.Forms.TabPage tabLeds;
-        private PanelImagesBalises panelImagesBalises;
+        private PanelBalisesImages panelImagesBalises;
         private System.Windows.Forms.TabPage tabLogs;
         private System.Windows.Forms.TabControl tabControlLogs;
         private System.Windows.Forms.TabPage tabLogUDP;

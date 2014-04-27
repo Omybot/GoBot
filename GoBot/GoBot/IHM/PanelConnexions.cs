@@ -58,7 +58,7 @@ namespace GoBot.IHM
                 batteriePack2.CouleurGris();
             }
 
-            if (Plateau.Balise1.ConnexionCheck.Connecte)
+            if (Plateau.Balise1.Connexion.ConnexionCheck.Connecte)
             {
                 batterieBun1.Afficher = true;
                 batterieBun1.Tension = Plateau.Balise1.Tension1;
@@ -75,7 +75,7 @@ namespace GoBot.IHM
                 batterieBun2.CouleurGris();
             }
 
-            if (Plateau.Balise2.ConnexionCheck.Connecte)
+            if (Plateau.Balise2.Connexion.ConnexionCheck.Connecte)
             {
                 batterieBeu1.Afficher = true;
                 batterieBeu1.Tension = Plateau.Balise2.Tension1;
@@ -92,7 +92,7 @@ namespace GoBot.IHM
                 batterieBeu2.CouleurGris();
             }
 
-            if (Plateau.Balise3.ConnexionCheck.Connecte)
+            if (Plateau.Balise3.Connexion.ConnexionCheck.Connecte)
             {
                 batterieBoi1.Afficher = true;
                 batterieBoi1.Tension = Plateau.Balise3.Tension1;
@@ -189,20 +189,20 @@ namespace GoBot.IHM
                     SetLed(ledRecMiwi, true);
                 if (Connexions.ConnexionIO.ConnexionCheck.Connecte)
                     SetLed(ledRecPi, true);
-                if (Balise.GetBalise(Carte.RecBun).ConnexionCheck.Connecte)
+                if (Balise.GetBalise(Carte.RecBun).Connexion.ConnexionCheck.Connecte)
                     SetLed(ledRecBun, true);
-                if (Balise.GetBalise(Carte.RecBeu).ConnexionCheck.Connecte)
+                if (Balise.GetBalise(Carte.RecBeu).Connexion.ConnexionCheck.Connecte)
                     SetLed(ledRecBeu, true);
-                if (Balise.GetBalise(Carte.RecBoi).ConnexionCheck.Connecte)
+                if (Balise.GetBalise(Carte.RecBoi).Connexion.ConnexionCheck.Connecte)
                     SetLed(ledRecBoi, true);
 
                 Connexions.ConnexionMove.ConnexionCheck.ConnexionChange += new ConnexionCheck.ConnexionChangeDelegate(ConnexionMoveCheck_ConnexionChange);
                 Connexions.ConnexionMiwi.ConnexionCheck.ConnexionChange += new ConnexionCheck.ConnexionChangeDelegate(ConnexionMiwiCheck_ConnexionChange);
                 Connexions.ConnexionIO.ConnexionCheck.ConnexionChange += new ConnexionCheck.ConnexionChangeDelegate(ConnexionPiCheck_ConnexionChange);
 
-                Balise.GetBalise(Carte.RecBun).ConnexionCheck.ConnexionChange += new ConnexionCheck.ConnexionChangeDelegate(ConnexionBunCheck_ConnexionChange);
-                Balise.GetBalise(Carte.RecBeu).ConnexionCheck.ConnexionChange += new ConnexionCheck.ConnexionChangeDelegate(ConnexionBeuCheck_ConnexionChange);
-                Balise.GetBalise(Carte.RecBoi).ConnexionCheck.ConnexionChange += new ConnexionCheck.ConnexionChangeDelegate(ConnexionBoiCheck_ConnexionChange);
+                Balise.GetBalise(Carte.RecBun).Connexion.ConnexionCheck.ConnexionChange += new ConnexionCheck.ConnexionChangeDelegate(ConnexionBunCheck_ConnexionChange);
+                Balise.GetBalise(Carte.RecBeu).Connexion.ConnexionCheck.ConnexionChange += new ConnexionCheck.ConnexionChangeDelegate(ConnexionBeuCheck_ConnexionChange);
+                Balise.GetBalise(Carte.RecBoi).Connexion.ConnexionCheck.ConnexionChange += new ConnexionCheck.ConnexionChangeDelegate(ConnexionBoiCheck_ConnexionChange);
 
                 batteriePack1.TensionMidHigh = 28.6;
                 batteriePack1.TensionMid = 26.95;

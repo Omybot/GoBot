@@ -109,7 +109,7 @@ namespace GoBot.IHM
                 batteriePack2.CouleurGris();
             }
 
-            if (Plateau.Balise1.ConnexionCheck.Connecte)
+            if (Plateau.Balise1.Connexion.ConnexionCheck.Connecte)
             {
                 batterieBun1.Afficher = true;
                 batterieBun1.Tension = Plateau.Balise1.Tension1;
@@ -126,7 +126,7 @@ namespace GoBot.IHM
                 batterieBun2.CouleurGris();
             }
 
-            if (Plateau.Balise2.ConnexionCheck.Connecte)
+            if (Plateau.Balise2.Connexion.ConnexionCheck.Connecte)
             {
                 batterieBeu1.Afficher = true;
                 batterieBeu1.Tension = Plateau.Balise2.Tension1;
@@ -143,7 +143,7 @@ namespace GoBot.IHM
                 batterieBeu2.CouleurGris();
             }
 
-            if (Plateau.Balise3.ConnexionCheck.Connecte)
+            if (Plateau.Balise3.Connexion.ConnexionCheck.Connecte)
             {
                 batterieBoi1.Afficher = true;
                 batterieBoi1.Tension = Plateau.Balise3.Tension1;

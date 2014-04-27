@@ -103,7 +103,7 @@
             this.dataGridViewLog.ReadOnly = true;
             this.dataGridViewLog.RowHeadersVisible = false;
             this.dataGridViewLog.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.dataGridViewLog.Size = new System.Drawing.Size(854, 624);
+            this.dataGridViewLog.Size = new System.Drawing.Size(835, 624);
             this.dataGridViewLog.TabIndex = 1;
             this.dataGridViewLog.CellMouseDown += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.dataGridViewLog_CellMouseDown);
             // 
@@ -227,7 +227,7 @@
             this.checkedListBoxMove.Margin = new System.Windows.Forms.Padding(0);
             this.checkedListBoxMove.MultiColumn = true;
             this.checkedListBoxMove.Name = "checkedListBoxMove";
-            this.checkedListBoxMove.Size = new System.Drawing.Size(355, 323);
+            this.checkedListBoxMove.Size = new System.Drawing.Size(355, 298);
             this.checkedListBoxMove.Sorted = true;
             this.checkedListBoxMove.TabIndex = 15;
             this.checkedListBoxMove.ItemCheck += new System.Windows.Forms.ItemCheckEventHandler(this.checkedListBoxGros_ItemCheck);
@@ -407,7 +407,7 @@
             this.tabPageMessages.Location = new System.Drawing.Point(4, 22);
             this.tabPageMessages.Name = "tabPageMessages";
             this.tabPageMessages.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPageMessages.Size = new System.Drawing.Size(375, 361);
+            this.tabPageMessages.Size = new System.Drawing.Size(375, 336);
             this.tabPageMessages.TabIndex = 1;
             this.tabPageMessages.Text = "Messages";
             this.tabPageMessages.UseVisualStyleBackColor = true;
@@ -423,7 +423,7 @@
             this.tabControlMessages.Location = new System.Drawing.Point(3, 3);
             this.tabControlMessages.Name = "tabControlMessages";
             this.tabControlMessages.SelectedIndex = 0;
-            this.tabControlMessages.Size = new System.Drawing.Size(369, 355);
+            this.tabControlMessages.Size = new System.Drawing.Size(369, 330);
             this.tabControlMessages.TabIndex = 0;
             // 
             // tabPageMove
@@ -432,7 +432,7 @@
             this.tabPageMove.Location = new System.Drawing.Point(4, 22);
             this.tabPageMove.Name = "tabPageMove";
             this.tabPageMove.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPageMove.Size = new System.Drawing.Size(361, 329);
+            this.tabPageMove.Size = new System.Drawing.Size(361, 304);
             this.tabPageMove.TabIndex = 0;
             this.tabPageMove.Text = "RecMove";
             this.tabPageMove.UseVisualStyleBackColor = true;
@@ -526,6 +526,7 @@
             // 
             // btnAfficher
             // 
+            this.btnAfficher.Image = global::GoBot.Properties.Resources.Play;
             this.btnAfficher.Location = new System.Drawing.Point(270, 33);
             this.btnAfficher.Name = "btnAfficher";
             this.btnAfficher.Size = new System.Drawing.Size(129, 23);
@@ -538,6 +539,7 @@
             // 
             // btnRefresh
             // 
+            this.btnRefresh.Image = global::GoBot.Properties.Resources.PivotDroite;
             this.btnRefresh.Location = new System.Drawing.Point(11, 62);
             this.btnRefresh.Name = "btnRefresh";
             this.btnRefresh.Size = new System.Drawing.Size(104, 23);
@@ -550,6 +552,7 @@
             // 
             // btnCharger
             // 
+            this.btnCharger.Image = global::GoBot.Properties.Resources.Dossier;
             this.btnCharger.Location = new System.Drawing.Point(11, 33);
             this.btnCharger.Name = "btnCharger";
             this.btnCharger.Size = new System.Drawing.Size(104, 23);

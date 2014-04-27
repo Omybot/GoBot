@@ -99,7 +99,7 @@
             // 
             this.lblRecIO.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.lblRecIO.AutoSize = true;
-            this.lblRecIO.Location = new System.Drawing.Point(362, 8);
+            this.lblRecIO.Location = new System.Drawing.Point(360, 8);
             this.lblRecIO.Name = "lblRecIO";
             this.lblRecIO.Size = new System.Drawing.Size(38, 13);
             this.lblRecIO.TabIndex = 79;
@@ -119,7 +119,7 @@
             // 
             this.lblRecMove.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.lblRecMove.AutoSize = true;
-            this.lblRecMove.Location = new System.Drawing.Point(202, 7);
+            this.lblRecMove.Location = new System.Drawing.Point(184, 7);
             this.lblRecMove.Name = "lblRecMove";
             this.lblRecMove.Size = new System.Drawing.Size(54, 13);
             this.lblRecMove.TabIndex = 75;
@@ -129,7 +129,7 @@
             // 
             this.batteriePack1.Afficher = false;
             this.batteriePack1.Image = ((System.Drawing.Image)(resources.GetObject("batteriePack1.Image")));
-            this.batteriePack1.Location = new System.Drawing.Point(180, 7);
+            this.batteriePack1.Location = new System.Drawing.Point(323, 7);
             this.batteriePack1.Name = "batteriePack1";
             this.batteriePack1.Size = new System.Drawing.Size(16, 16);
             this.batteriePack1.TabIndex = 97;
@@ -153,7 +153,7 @@
             // 
             this.ledRecMove.Etat = false;
             this.ledRecMove.Image = ((System.Drawing.Image)(resources.GetObject("ledRecMove.Image")));
-            this.ledRecMove.Location = new System.Drawing.Point(158, 7);
+            this.ledRecMove.Location = new System.Drawing.Point(162, 7);
             this.ledRecMove.Name = "ledRecMove";
             this.ledRecMove.Size = new System.Drawing.Size(16, 16);
             this.ledRecMove.TabIndex = 95;
@@ -163,7 +163,7 @@
             // 
             this.ledRecPi.Etat = false;
             this.ledRecPi.Image = ((System.Drawing.Image)(resources.GetObject("ledRecPi.Image")));
-            this.ledRecPi.Location = new System.Drawing.Point(319, 6);
+            this.ledRecPi.Location = new System.Drawing.Point(301, 7);
             this.ledRecPi.Name = "ledRecPi";
             this.ledRecPi.Size = new System.Drawing.Size(16, 16);
             this.ledRecPi.TabIndex = 94;
@@ -203,7 +203,7 @@
             // 
             this.batteriePack2.Afficher = false;
             this.batteriePack2.Image = ((System.Drawing.Image)(resources.GetObject("batteriePack2.Image")));
-            this.batteriePack2.Location = new System.Drawing.Point(340, 7);
+            this.batteriePack2.Location = new System.Drawing.Point(338, 7);
             this.batteriePack2.Name = "batteriePack2";
             this.batteriePack2.Size = new System.Drawing.Size(16, 16);
             this.batteriePack2.TabIndex = 89;
