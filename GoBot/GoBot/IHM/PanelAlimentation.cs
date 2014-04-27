@@ -92,8 +92,6 @@ namespace GoBot.IHM
             ctrlGraphique.AjouterPoint("Boi 1", Plateau.Balise3.Tension1, Color.Orange);
             ctrlGraphique.AjouterPoint("Boi 2", Plateau.Balise3.Tension2, Color.Beige);
 
-            ctrlGraphique.BackColor = Color.Black;
-
             ctrlGraphique.DessineCourbes();
 
             if (Connexions.ConnexionIO.ConnexionCheck.Connecte)

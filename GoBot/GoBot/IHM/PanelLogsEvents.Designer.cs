@@ -77,12 +77,12 @@
             this.dataGridViewLog.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.dataGridViewLog.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dataGridViewLog.ContextMenuStrip = this.contextMenuStripRow;
-            this.dataGridViewLog.Location = new System.Drawing.Point(325, 9);
+            this.dataGridViewLog.Location = new System.Drawing.Point(300, 9);
             this.dataGridViewLog.Name = "dataGridViewLog";
             this.dataGridViewLog.ReadOnly = true;
             this.dataGridViewLog.RowHeadersVisible = false;
             this.dataGridViewLog.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.dataGridViewLog.Size = new System.Drawing.Size(829, 657);
+            this.dataGridViewLog.Size = new System.Drawing.Size(829, 629);
             this.dataGridViewLog.TabIndex = 1;
             this.dataGridViewLog.CellMouseDown += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.dataGridViewLog_CellMouseDown);
             // 
@@ -262,7 +262,7 @@
             // 
             // btnAfficher
             // 
-            this.btnAfficher.Location = new System.Drawing.Point(1167, 9);
+            this.btnAfficher.Location = new System.Drawing.Point(1135, 9);
             this.btnAfficher.Name = "btnAfficher";
             this.btnAfficher.Size = new System.Drawing.Size(106, 23);
             this.btnAfficher.TabIndex = 20;
@@ -273,7 +273,7 @@
             // boxScroll
             // 
             this.boxScroll.AutoSize = true;
-            this.boxScroll.Location = new System.Drawing.Point(1177, 38);
+            this.boxScroll.Location = new System.Drawing.Point(1145, 38);
             this.boxScroll.Name = "boxScroll";
             this.boxScroll.Size = new System.Drawing.Size(76, 17);
             this.boxScroll.TabIndex = 23;

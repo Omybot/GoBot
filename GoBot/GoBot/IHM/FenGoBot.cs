@@ -109,7 +109,10 @@ namespace GoBot
                     panelLogsEvents.Afficher();
 
                     if (fichiersTlog.Count == 0)
-                        tabControl.SelectedTab = tabLogsEvent;
+                    {
+                        tabControl.SelectedTab = tabLogs;
+                        tabControlLogs.SelectedTab = tabLogEvent;
+                    }
                 }
 
                 if (fichiersTlog.Count > 0)
@@ -118,7 +121,8 @@ namespace GoBot
                         panelLogTrames.ChargerLog(fichier);
                     panelLogTrames.Afficher();
 
-                    tabControl.SelectedTab = tabLogsUdp;
+                    tabControl.SelectedTab = tabLogs;
+                    tabControlLogs.SelectedTab = tabLogUDP;
                 }
 
                 Instance = this;
@@ -134,14 +138,16 @@ namespace GoBot
                 panelLogTrames.Clear();
                 panelLogTrames.ChargerLog(fichier);
                 panelLogTrames.Afficher();
-                tabControl.SelectedTab = tabLogsUdp;
+                tabControl.SelectedTab = tabLogs;
+                tabControlLogs.SelectedTab = tabLogUDP;
             }
             else if (Path.GetExtension(fichier) == ".elog")
             {
                 panelLogsEvents.Clear();
                 panelLogsEvents.ChargerLog(fichier);
                 panelLogsEvents.Afficher();
-                tabControl.SelectedTab = tabLogsEvent;
+                tabControl.SelectedTab = tabLogs;
+                tabControlLogs.SelectedTab = tabLogEvent;
             }
         }
 
@@ -149,26 +155,6 @@ namespace GoBot
         {
             SauverLogs();
         }
-
-        // Robots.GrosRobot.Historique.NouvelleAction += new Historique.DelegateAction(HistoriqueGR_nouvelleAction);
-        // Robots.PetitRobot.Historique.NouvelleAction += new Historique.DelegateAction(HistoriquePR_nouvelleAction);
-
-        /*void HistoriqueGR_nouvelleAction(Actions.IAction action)
-        {
-            this.Invoke(new EventHandler(delegate
-            {
-                txtLogComplet.AjouterLigne(action.ToString(), Color.RoyalBlue, true);
-            }));
-        }
-
-        void HistoriquePR_nouvelleAction(Actions.IAction action)
-        {
-            this.Invoke(new EventHandler(delegate
-            {
-                txtLogComplet.AjouterLigne(action.ToString(), Color.Green, true);
-            }));
-        }*/
-
 
         private void FenGoBot_FormClosing(object sender, FormClosingEventArgs e)
         {
@@ -229,15 +215,7 @@ namespace GoBot
             //Robots.PetitRobot.Historique.NouvelleAction += new Historique.DelegateAction(HistoriquePR_nouvelleAction);
         }
 
-        private void btnPiloteGros_Click(object sender, EventArgs e)
-        {
-            PanelDeplacement panel = new PanelDeplacement();
-            panel.Robot = Robots.GrosRobot;
-            Fenetre fen = new Fenetre(panel);
-            fen.Show();
-        }
-
-        private void button1_Click(object sender, EventArgs e)
+        private void buttonFenetre_Click(object sender, EventArgs e)
         {
             TabControl tab = new TabControl();
             tab.Height = tabControl.Height;

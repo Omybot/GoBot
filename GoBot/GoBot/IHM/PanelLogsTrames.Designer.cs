@@ -51,23 +51,23 @@
             this.checkedListBoxIO = new System.Windows.Forms.CheckedListBox();
             this.checkedListBoxBalise = new System.Windows.Forms.CheckedListBox();
             this.groupBoxMessages = new System.Windows.Forms.GroupBox();
-            this.btnRejouerTout = new System.Windows.Forms.Button();
-            this.btnRejouerSelection = new System.Windows.Forms.Button();
-            this.boxScroll = new System.Windows.Forms.CheckBox();
-            this.groupBoxExpediteur = new System.Windows.Forms.GroupBox();
-            this.checkedListBoxExpediteur = new System.Windows.Forms.CheckedListBox();
-            this.checkedListBoxDestinataire = new System.Windows.Forms.CheckedListBox();
-            this.groupBoxDestinataire = new System.Windows.Forms.GroupBox();
-            this.checkedListBoxPi = new System.Windows.Forms.CheckedListBox();
             this.tabControlGestion = new System.Windows.Forms.TabControl();
             this.tabPageCartes = new System.Windows.Forms.TabPage();
+            this.groupBoxExpediteur = new System.Windows.Forms.GroupBox();
+            this.checkedListBoxExpediteur = new System.Windows.Forms.CheckedListBox();
+            this.groupBoxDestinataire = new System.Windows.Forms.GroupBox();
+            this.checkedListBoxDestinataire = new System.Windows.Forms.CheckedListBox();
             this.tabPageMessages = new System.Windows.Forms.TabPage();
             this.tabControlMessages = new System.Windows.Forms.TabControl();
             this.tabPageMove = new System.Windows.Forms.TabPage();
             this.tabPageIO = new System.Windows.Forms.TabPage();
             this.tabPagePi = new System.Windows.Forms.TabPage();
+            this.checkedListBoxPi = new System.Windows.Forms.CheckedListBox();
             this.tabPageMiwi = new System.Windows.Forms.TabPage();
             this.tabPageBalises = new System.Windows.Forms.TabPage();
+            this.btnRejouerTout = new System.Windows.Forms.Button();
+            this.btnRejouerSelection = new System.Windows.Forms.Button();
+            this.boxScroll = new System.Windows.Forms.CheckBox();
             this.btnAfficher = new System.Windows.Forms.Button();
             this.btnRefresh = new System.Windows.Forms.Button();
             this.btnCharger = new System.Windows.Forms.Button();
@@ -76,10 +76,10 @@
             this.groupBox2.SuspendLayout();
             this.groupBox1.SuspendLayout();
             this.groupBoxMessages.SuspendLayout();
-            this.groupBoxExpediteur.SuspendLayout();
-            this.groupBoxDestinataire.SuspendLayout();
             this.tabControlGestion.SuspendLayout();
             this.tabPageCartes.SuspendLayout();
+            this.groupBoxExpediteur.SuspendLayout();
+            this.groupBoxDestinataire.SuspendLayout();
             this.tabPageMessages.SuspendLayout();
             this.tabControlMessages.SuspendLayout();
             this.tabPageMove.SuspendLayout();
@@ -103,7 +103,7 @@
             this.dataGridViewLog.ReadOnly = true;
             this.dataGridViewLog.RowHeadersVisible = false;
             this.dataGridViewLog.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.dataGridViewLog.Size = new System.Drawing.Size(854, 657);
+            this.dataGridViewLog.Size = new System.Drawing.Size(854, 624);
             this.dataGridViewLog.TabIndex = 1;
             this.dataGridViewLog.CellMouseDown += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.dataGridViewLog_CellMouseDown);
             // 
@@ -314,7 +314,7 @@
             this.checkedListBoxBalise.Location = new System.Drawing.Point(3, 3);
             this.checkedListBoxBalise.MultiColumn = true;
             this.checkedListBoxBalise.Name = "checkedListBoxBalise";
-            this.checkedListBoxBalise.Size = new System.Drawing.Size(355, 321);
+            this.checkedListBoxBalise.Size = new System.Drawing.Size(355, 315);
             this.checkedListBoxBalise.Sorted = true;
             this.checkedListBoxBalise.TabIndex = 18;
             this.checkedListBoxBalise.ItemCheck += new System.Windows.Forms.ItemCheckEventHandler(this.checkedListBoxBalise_ItemCheck);
@@ -322,42 +322,34 @@
             // groupBoxMessages
             // 
             this.groupBoxMessages.Controls.Add(this.tabControlGestion);
-            this.groupBoxMessages.Location = new System.Drawing.Point(3, 254);
+            this.groupBoxMessages.Location = new System.Drawing.Point(3, 240);
             this.groupBoxMessages.Name = "groupBoxMessages";
-            this.groupBoxMessages.Size = new System.Drawing.Size(407, 412);
+            this.groupBoxMessages.Size = new System.Drawing.Size(407, 393);
             this.groupBoxMessages.TabIndex = 19;
             this.groupBoxMessages.TabStop = false;
             this.groupBoxMessages.Text = "Filtres sur les messages";
             // 
-            // btnRejouerTout
+            // tabControlGestion
             // 
-            this.btnRejouerTout.Location = new System.Drawing.Point(140, 33);
-            this.btnRejouerTout.Name = "btnRejouerTout";
-            this.btnRejouerTout.Size = new System.Drawing.Size(106, 23);
-            this.btnRejouerTout.TabIndex = 21;
-            this.btnRejouerTout.Text = "Rejouer tout";
-            this.btnRejouerTout.UseVisualStyleBackColor = true;
-            this.btnRejouerTout.Click += new System.EventHandler(this.btnRejouerTout_Click);
+            this.tabControlGestion.Controls.Add(this.tabPageCartes);
+            this.tabControlGestion.Controls.Add(this.tabPageMessages);
+            this.tabControlGestion.Location = new System.Drawing.Point(13, 19);
+            this.tabControlGestion.Name = "tabControlGestion";
+            this.tabControlGestion.SelectedIndex = 0;
+            this.tabControlGestion.Size = new System.Drawing.Size(383, 362);
+            this.tabControlGestion.TabIndex = 26;
             // 
-            // btnRejouerSelection
+            // tabPageCartes
             // 
-            this.btnRejouerSelection.Location = new System.Drawing.Point(140, 63);
-            this.btnRejouerSelection.Name = "btnRejouerSelection";
-            this.btnRejouerSelection.Size = new System.Drawing.Size(106, 23);
-            this.btnRejouerSelection.TabIndex = 22;
-            this.btnRejouerSelection.Text = "Rejouer sélection";
-            this.btnRejouerSelection.UseVisualStyleBackColor = true;
-            this.btnRejouerSelection.Click += new System.EventHandler(this.btnRejouerSelection_Click);
-            // 
-            // boxScroll
-            // 
-            this.boxScroll.AutoSize = true;
-            this.boxScroll.Location = new System.Drawing.Point(278, 67);
-            this.boxScroll.Name = "boxScroll";
-            this.boxScroll.Size = new System.Drawing.Size(113, 17);
-            this.boxScroll.TabIndex = 23;
-            this.boxScroll.Text = "Scroll automatique";
-            this.boxScroll.UseVisualStyleBackColor = true;
+            this.tabPageCartes.Controls.Add(this.groupBoxExpediteur);
+            this.tabPageCartes.Controls.Add(this.groupBoxDestinataire);
+            this.tabPageCartes.Location = new System.Drawing.Point(4, 22);
+            this.tabPageCartes.Name = "tabPageCartes";
+            this.tabPageCartes.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPageCartes.Size = new System.Drawing.Size(375, 336);
+            this.tabPageCartes.TabIndex = 0;
+            this.tabPageCartes.Text = "Cartes";
+            this.tabPageCartes.UseVisualStyleBackColor = true;
             // 
             // groupBoxExpediteur
             // 
@@ -366,7 +358,7 @@
             this.groupBoxExpediteur.Controls.Add(this.checkedListBoxExpediteur);
             this.groupBoxExpediteur.Location = new System.Drawing.Point(6, 6);
             this.groupBoxExpediteur.Name = "groupBoxExpediteur";
-            this.groupBoxExpediteur.Size = new System.Drawing.Size(177, 349);
+            this.groupBoxExpediteur.Size = new System.Drawing.Size(177, 324);
             this.groupBoxExpediteur.TabIndex = 24;
             this.groupBoxExpediteur.TabStop = false;
             this.groupBoxExpediteur.Text = "Expediteur";
@@ -379,10 +371,22 @@
             this.checkedListBoxExpediteur.FormattingEnabled = true;
             this.checkedListBoxExpediteur.Location = new System.Drawing.Point(3, 16);
             this.checkedListBoxExpediteur.Name = "checkedListBoxExpediteur";
-            this.checkedListBoxExpediteur.Size = new System.Drawing.Size(171, 330);
+            this.checkedListBoxExpediteur.Size = new System.Drawing.Size(171, 305);
             this.checkedListBoxExpediteur.Sorted = true;
             this.checkedListBoxExpediteur.TabIndex = 16;
             this.checkedListBoxExpediteur.ItemCheck += new System.Windows.Forms.ItemCheckEventHandler(this.checkedListBoxExpediteur_ItemCheck);
+            // 
+            // groupBoxDestinataire
+            // 
+            this.groupBoxDestinataire.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.groupBoxDestinataire.Controls.Add(this.checkedListBoxDestinataire);
+            this.groupBoxDestinataire.Location = new System.Drawing.Point(192, 6);
+            this.groupBoxDestinataire.Name = "groupBoxDestinataire";
+            this.groupBoxDestinataire.Size = new System.Drawing.Size(177, 324);
+            this.groupBoxDestinataire.TabIndex = 25;
+            this.groupBoxDestinataire.TabStop = false;
+            this.groupBoxDestinataire.Text = "Destinataire";
             // 
             // checkedListBoxDestinataire
             // 
@@ -392,61 +396,10 @@
             this.checkedListBoxDestinataire.FormattingEnabled = true;
             this.checkedListBoxDestinataire.Location = new System.Drawing.Point(3, 16);
             this.checkedListBoxDestinataire.Name = "checkedListBoxDestinataire";
-            this.checkedListBoxDestinataire.Size = new System.Drawing.Size(171, 330);
+            this.checkedListBoxDestinataire.Size = new System.Drawing.Size(171, 305);
             this.checkedListBoxDestinataire.Sorted = true;
             this.checkedListBoxDestinataire.TabIndex = 16;
             this.checkedListBoxDestinataire.ItemCheck += new System.Windows.Forms.ItemCheckEventHandler(this.checkedListBoxDestinataire_ItemCheck);
-            // 
-            // groupBoxDestinataire
-            // 
-            this.groupBoxDestinataire.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.groupBoxDestinataire.Controls.Add(this.checkedListBoxDestinataire);
-            this.groupBoxDestinataire.Location = new System.Drawing.Point(192, 6);
-            this.groupBoxDestinataire.Name = "groupBoxDestinataire";
-            this.groupBoxDestinataire.Size = new System.Drawing.Size(177, 349);
-            this.groupBoxDestinataire.TabIndex = 25;
-            this.groupBoxDestinataire.TabStop = false;
-            this.groupBoxDestinataire.Text = "Destinataire";
-            // 
-            // checkedListBoxPi
-            // 
-            this.checkedListBoxPi.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.checkedListBoxPi.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.checkedListBoxPi.CheckOnClick = true;
-            this.checkedListBoxPi.ColumnWidth = 155;
-            this.checkedListBoxPi.FormattingEnabled = true;
-            this.checkedListBoxPi.Location = new System.Drawing.Point(3, 3);
-            this.checkedListBoxPi.MultiColumn = true;
-            this.checkedListBoxPi.Name = "checkedListBoxPi";
-            this.checkedListBoxPi.Size = new System.Drawing.Size(355, 323);
-            this.checkedListBoxPi.Sorted = true;
-            this.checkedListBoxPi.TabIndex = 22;
-            this.checkedListBoxPi.ItemCheck += new System.Windows.Forms.ItemCheckEventHandler(this.checkedListBoxPi_ItemCheck);
-            // 
-            // tabControlGestion
-            // 
-            this.tabControlGestion.Controls.Add(this.tabPageCartes);
-            this.tabControlGestion.Controls.Add(this.tabPageMessages);
-            this.tabControlGestion.Location = new System.Drawing.Point(13, 19);
-            this.tabControlGestion.Name = "tabControlGestion";
-            this.tabControlGestion.SelectedIndex = 0;
-            this.tabControlGestion.Size = new System.Drawing.Size(383, 387);
-            this.tabControlGestion.TabIndex = 26;
-            // 
-            // tabPageCartes
-            // 
-            this.tabPageCartes.Controls.Add(this.groupBoxExpediteur);
-            this.tabPageCartes.Controls.Add(this.groupBoxDestinataire);
-            this.tabPageCartes.Location = new System.Drawing.Point(4, 22);
-            this.tabPageCartes.Name = "tabPageCartes";
-            this.tabPageCartes.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPageCartes.Size = new System.Drawing.Size(375, 361);
-            this.tabPageCartes.TabIndex = 0;
-            this.tabPageCartes.Text = "Cartes";
-            this.tabPageCartes.UseVisualStyleBackColor = true;
             // 
             // tabPageMessages
             // 
@@ -505,6 +458,23 @@
             this.tabPagePi.Text = "RecPi";
             this.tabPagePi.UseVisualStyleBackColor = true;
             // 
+            // checkedListBoxPi
+            // 
+            this.checkedListBoxPi.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.checkedListBoxPi.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.checkedListBoxPi.CheckOnClick = true;
+            this.checkedListBoxPi.ColumnWidth = 155;
+            this.checkedListBoxPi.FormattingEnabled = true;
+            this.checkedListBoxPi.Location = new System.Drawing.Point(3, 3);
+            this.checkedListBoxPi.MultiColumn = true;
+            this.checkedListBoxPi.Name = "checkedListBoxPi";
+            this.checkedListBoxPi.Size = new System.Drawing.Size(355, 315);
+            this.checkedListBoxPi.Sorted = true;
+            this.checkedListBoxPi.TabIndex = 22;
+            this.checkedListBoxPi.ItemCheck += new System.Windows.Forms.ItemCheckEventHandler(this.checkedListBoxPi_ItemCheck);
+            // 
             // tabPageMiwi
             // 
             this.tabPageMiwi.Location = new System.Drawing.Point(4, 22);
@@ -523,6 +493,36 @@
             this.tabPageBalises.TabIndex = 4;
             this.tabPageBalises.Text = "Balises";
             this.tabPageBalises.UseVisualStyleBackColor = true;
+            // 
+            // btnRejouerTout
+            // 
+            this.btnRejouerTout.Location = new System.Drawing.Point(140, 33);
+            this.btnRejouerTout.Name = "btnRejouerTout";
+            this.btnRejouerTout.Size = new System.Drawing.Size(106, 23);
+            this.btnRejouerTout.TabIndex = 21;
+            this.btnRejouerTout.Text = "Rejouer tout";
+            this.btnRejouerTout.UseVisualStyleBackColor = true;
+            this.btnRejouerTout.Click += new System.EventHandler(this.btnRejouerTout_Click);
+            // 
+            // btnRejouerSelection
+            // 
+            this.btnRejouerSelection.Location = new System.Drawing.Point(140, 63);
+            this.btnRejouerSelection.Name = "btnRejouerSelection";
+            this.btnRejouerSelection.Size = new System.Drawing.Size(106, 23);
+            this.btnRejouerSelection.TabIndex = 22;
+            this.btnRejouerSelection.Text = "Rejouer sélection";
+            this.btnRejouerSelection.UseVisualStyleBackColor = true;
+            this.btnRejouerSelection.Click += new System.EventHandler(this.btnRejouerSelection_Click);
+            // 
+            // boxScroll
+            // 
+            this.boxScroll.AutoSize = true;
+            this.boxScroll.Location = new System.Drawing.Point(278, 67);
+            this.boxScroll.Name = "boxScroll";
+            this.boxScroll.Size = new System.Drawing.Size(113, 17);
+            this.boxScroll.TabIndex = 23;
+            this.boxScroll.Text = "Scroll automatique";
+            this.boxScroll.UseVisualStyleBackColor = true;
             // 
             // btnAfficher
             // 
@@ -576,7 +576,7 @@
             this.Controls.Add(this.dataGridViewLog);
             this.Controls.Add(this.btnCharger);
             this.Name = "PanelLogsTrames";
-            this.Size = new System.Drawing.Size(1273, 669);
+            this.Size = new System.Drawing.Size(1254, 669);
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewLog)).EndInit();
             this.contextMenuStripRow.ResumeLayout(false);
             this.groupBox2.ResumeLayout(false);
@@ -584,10 +584,10 @@
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
             this.groupBoxMessages.ResumeLayout(false);
-            this.groupBoxExpediteur.ResumeLayout(false);
-            this.groupBoxDestinataire.ResumeLayout(false);
             this.tabControlGestion.ResumeLayout(false);
             this.tabPageCartes.ResumeLayout(false);
+            this.groupBoxExpediteur.ResumeLayout(false);
+            this.groupBoxDestinataire.ResumeLayout(false);
             this.tabPageMessages.ResumeLayout(false);
             this.tabControlMessages.ResumeLayout(false);
             this.tabPageMove.ResumeLayout(false);

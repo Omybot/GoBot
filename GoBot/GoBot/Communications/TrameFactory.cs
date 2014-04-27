@@ -18,6 +18,32 @@ namespace GoBot.Communications
             return b;
         }
 
+        static public Trame Debug(Carte carte, int numDebug)
+        {
+            byte[] tab = new byte[3];
+            tab[0] = (byte)carte;
+            switch(carte)
+            {
+                case Carte.RecIO:
+                    tab[1] = (byte)FonctionIO.Debug;
+                    break;
+                case Carte.RecMove:
+                    tab[1] = (byte)FonctionMove.Debug;
+                    break;
+                case Carte.RecMiwi:
+                    tab[1] = (byte)FonctionMiwi.Debug;
+                    break;
+                case Carte.RecBun:
+                case Carte.RecBeu:
+                case Carte.RecBoi:
+                    tab[1] = (byte)FonctionBalise.Debug;
+                    break;
+            }
+            tab[2] = (byte)numDebug;
+
+            return new Trame(tab);
+        }
+
         static public Trame DemandeTension()
         {
             byte[] tab = new byte[2];
@@ -275,12 +301,6 @@ namespace GoBot.Communications
 
             return retour;
         }
-
-        /*static public Trame BougeServomoteur(ServomoteurID servo, int position)
-        {
-            // 0x67 pour communication à 19200 bauds
-            return ServoSetPosition(Carte.RecIo, (int)servo, 0x67, position);
-        }*/
         
         static public Trame TestConnexionMove()
         {
@@ -365,16 +385,6 @@ namespace GoBot.Communications
             tab[1] = (byte)FonctionMiwi.Transmettre;
             tab[2] = (byte)balise;
             tab[3] = (byte)FonctionBalise.Detection;
-            return new Trame(tab);
-        }
-
-        static public Trame BaliseAck(Carte balise)
-        {
-            byte[] tab = new byte[5];
-            tab[0] = (byte)Carte.RecMiwi;
-            tab[1] = (byte)FonctionMiwi.Transmettre;
-            tab[2] = (byte)balise;
-            tab[3] = (byte)FonctionBalise.AckDetection;
             return new Trame(tab);
         }
 
@@ -879,6 +889,9 @@ namespace GoBot.Communications
                     case (byte)Carte.RecIO:
                         switch ((FonctionIO)trame[1])
                         {
+                            case FonctionIO.Debug:
+                                message = "Debug " + (int)trame[2];
+                                break;
                             case FonctionIO.Moteur:
                                 message = "Moteur " + Nommeur.Nommer((MoteurID)trame[2]) + " position " + (trame[3] * 256 + trame[4]);
                                 break;
@@ -1119,9 +1132,20 @@ namespace GoBot.Communications
                         break;
 
                     case (byte)Carte.RecMove:
+                            switch ((FonctionMove)trame[1])
+                            {
+                                case FonctionMove.Debug:
+                                    message = "Debug " + (int)trame[2];
+                                    break;
+                            }
+                            break;
+
                     case (byte)Carte.RecPi:
                         switch ((FonctionMove)trame[1])
                         {
+                            case FonctionMove.Debug:
+                                message = "Debug " + (int)trame[2];
+                                break;
                             case FonctionMove.AccelerationLigne:
                                 int valeurAccelLigne = trame[2] * 256 + trame[3];
                                 message = "Envoi accélération ligne : " + valeurAccelLigne;
@@ -1218,38 +1242,6 @@ namespace GoBot.Communications
                                 int nbValeurs = trame[2];
                                 message = "Retour charge : " + nbValeurs + " valeurs";
                                 break;
-                            //case FonctionMove.VitesseAspirateur:
-                            //    break;
-                            //case FonctionMove.VitesseCanon:
-                            //    break;
-                            //case FonctionMove.VitesseCanonTours:
-                            //    break;
-                            //case FonctionMove.Shutter:
-                            //    break;
-                            //case FonctionMove.ReponseAspiRemonte:
-                            //    break;
-                            //case FonctionMove.ReponseCouleur:
-                            //    break;
-                            //case FonctionMove.ReponsePresence:
-                            //    break;
-                            //case FonctionMove.ReponsePresenceAssiette:
-                            //    break;
-                            //case FonctionMove.ReponseVitesseCanon:
-                            //    break;
-                            //case FonctionMove.Pompe:
-                            //    break;
-                            //case FonctionMove.GoToXY:
-                            //    break;
-                            //case FonctionMove.DemandePresence:
-                            //    break;
-                            //case FonctionMove.DemandePresenceAssiette:
-                            //    break;
-                            //case FonctionMove.DemandeVitesseCanon:
-                            //    break;
-                            //case FonctionMove.DemandeAspiRemonte:
-                            //    break;
-                            //case FonctionMove.DemandeCouleur:
-                            //    break;
                             default:
                                 return "Inconnu";
                         }
@@ -1259,6 +1251,9 @@ namespace GoBot.Communications
                     case (byte)Carte.RecBun:
                         switch ((FonctionBalise)trame[1])
                         {
+                            case FonctionBalise.Debug:
+                                message = "Debug " + (int)trame[2];
+                                break;
                             case FonctionBalise.Detection:
                                 int valeurDetectionNombreTicksTour = trame[2] * 256 + trame[3];
                                 byte valeurDetectionNombre1 = trame[4];
@@ -1292,6 +1287,9 @@ namespace GoBot.Communications
                     case (byte)Carte.RecMiwi:
                         switch ((FonctionMiwi)trame[1])
                         {
+                            case FonctionMiwi.Debug:
+                                message = "Debug " + (int)trame[2];
+                                break;
                             case FonctionMiwi.Transmettre:
                                 byte[] octets = trame.ToTabBytes();
                                 byte[] octetsExtrait = new byte[octets.Length - 1];

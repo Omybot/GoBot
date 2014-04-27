@@ -47,6 +47,10 @@ namespace GoBot.IHM
                 lblEntreeRecMove.Text = Connexions.ConnexionMove.PortEntree.ToString();
                 lblSortieRecMove.Text = Connexions.ConnexionMove.PortSortie.ToString();
 
+                lblIpRecIO.Text = Connexions.ConnexionIO.AdresseIp.ToString();
+                lblEntreeRecIO.Text = Connexions.ConnexionIO.PortEntree.ToString();
+                lblSortieRecIO.Text = Connexions.ConnexionIO.PortSortie.ToString();
+
                 lblIpRecMiwi.Text = Connexions.ConnexionMiwi.AdresseIp.ToString();
                 lblEntreeRecMiwi.Text = Connexions.ConnexionMiwi.PortEntree.ToString();
                 lblSortieRecMiwi.Text = Connexions.ConnexionMiwi.PortSortie.ToString();
@@ -72,6 +76,27 @@ namespace GoBot.IHM
                     lblMonIP.Text = "Incorrecte";
                     lblMonIP.ForeColor = Color.Red;
                 }
+            }
+        }
+
+        private void btnDebug_Click(object sender, EventArgs e)
+        {
+            int val = (int)(((Button)sender).Tag);
+
+            if (boxMove.Checked)
+            {
+                Trame trame = TrameFactory.Debug(Carte.RecMove, val);
+                Connexions.ConnexionMove.SendMessage(trame);
+            }
+            if (boxMiwi.Checked)
+            {
+                Trame trame = TrameFactory.Debug(Carte.RecMiwi, val);
+                Connexions.ConnexionMiwi.SendMessage(trame);
+            }
+            if (boxIO.Checked)
+            {
+                Trame trame = TrameFactory.Debug(Carte.RecIO, val);
+                Connexions.ConnexionIO.SendMessage(trame);
             }
         }
     }

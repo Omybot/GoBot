@@ -66,6 +66,9 @@ namespace GoBot.IHM
                 worker.WorkerReportsProgress = true;
                 worker.RunWorkerCompleted += new RunWorkerCompletedEventHandler(worker_RunWorkerCompleted);
                 worker.RunWorkerAsync();
+
+                //dataGridViewHistoLog.DataSource = dataSet.Tables[0];
+                //dataGridViewArchives.DataSource = dataSetArchivage.Tables[0];
             }
         }
 
@@ -93,14 +96,18 @@ namespace GoBot.IHM
         {
             plusVieux = DateTime.Now;
 
-            nbLogs = 0;
-            foreach (String dossier in Directory.EnumerateDirectories(Config.PathData + "/Logs/"))
-                nbLogs++;
-
             int currentLog = 0;
 
-            foreach (String dossier in Directory.EnumerateDirectories(Config.PathData + "/Logs/"))
+            List<String> dossiers = (List<String>)Directory.EnumerateDirectories(Config.PathData + "/Logs/").ToList<String>();
+            nbLogs = dossiers.Count;
+
+            dossiers.Sort(OrdreAlphabetiqueInverse);
+
+            foreach (String dossier in dossiers)
             {
+                if (Config.Shutdown)
+                    return;
+
                 currentLog++;
                 String dossier1 = Path.GetFileName(dossier);
                 DateTime date;
@@ -200,6 +207,9 @@ namespace GoBot.IHM
 
             foreach (String dossier in Directory.EnumerateDirectories(Config.PathData + "/Archives/"))
             {
+                if (Config.Shutdown)
+                    return;
+
                 currentLog++;
                 String dossier1 = Path.GetFileName(dossier);
                 DateTime date;
@@ -279,6 +289,11 @@ namespace GoBot.IHM
                 {
                 }
             }
+        }
+
+        private int OrdreAlphabetiqueInverse (String a, String b)
+        {
+            return a.CompareTo(b) * -1;
         }
 
         private void btnOuvrirDossier_Click(object sender, EventArgs e)

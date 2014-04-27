@@ -47,15 +47,34 @@
             this.label8 = new System.Windows.Forms.Label();
             this.label9 = new System.Windows.Forms.Label();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
+            this.btnDebug9 = new System.Windows.Forms.Button();
+            this.btnDebug8 = new System.Windows.Forms.Button();
+            this.btnDebug7 = new System.Windows.Forms.Button();
+            this.btnDebug6 = new System.Windows.Forms.Button();
+            this.btnDebug5 = new System.Windows.Forms.Button();
+            this.btnDebug4 = new System.Windows.Forms.Button();
+            this.btnDebug3 = new System.Windows.Forms.Button();
+            this.btnDebug2 = new System.Windows.Forms.Button();
+            this.btnDebug1 = new System.Windows.Forms.Button();
+            this.label5 = new System.Windows.Forms.Label();
+            this.btnDebug0 = new System.Windows.Forms.Button();
+            this.boxIO = new System.Windows.Forms.CheckBox();
             this.label4 = new System.Windows.Forms.Label();
             this.groupBox4 = new System.Windows.Forms.GroupBox();
             this.lblMonIP = new System.Windows.Forms.Label();
             this.label13 = new System.Windows.Forms.Label();
-            this.boxIO = new System.Windows.Forms.CheckBox();
+            this.groupBox5 = new System.Windows.Forms.GroupBox();
+            this.lblSortieRecIO = new System.Windows.Forms.Label();
+            this.lblEntreeRecIO = new System.Windows.Forms.Label();
+            this.lblIpRecIO = new System.Windows.Forms.Label();
+            this.label11 = new System.Windows.Forms.Label();
+            this.label12 = new System.Windows.Forms.Label();
+            this.label14 = new System.Windows.Forms.Label();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.groupBox3.SuspendLayout();
             this.groupBox4.SuspendLayout();
+            this.groupBox5.SuspendLayout();
             this.SuspendLayout();
             // 
             // btnEnvoyer
@@ -177,7 +196,7 @@
             this.groupBox2.Controls.Add(this.label7);
             this.groupBox2.Controls.Add(this.label8);
             this.groupBox2.Controls.Add(this.label9);
-            this.groupBox2.Location = new System.Drawing.Point(3, 173);
+            this.groupBox2.Location = new System.Drawing.Point(3, 281);
             this.groupBox2.Name = "groupBox2";
             this.groupBox2.Size = new System.Drawing.Size(200, 102);
             this.groupBox2.TabIndex = 14;
@@ -240,6 +259,17 @@
             // 
             // groupBox3
             // 
+            this.groupBox3.Controls.Add(this.btnDebug9);
+            this.groupBox3.Controls.Add(this.btnDebug8);
+            this.groupBox3.Controls.Add(this.btnDebug7);
+            this.groupBox3.Controls.Add(this.btnDebug6);
+            this.groupBox3.Controls.Add(this.btnDebug5);
+            this.groupBox3.Controls.Add(this.btnDebug4);
+            this.groupBox3.Controls.Add(this.btnDebug3);
+            this.groupBox3.Controls.Add(this.btnDebug2);
+            this.groupBox3.Controls.Add(this.btnDebug1);
+            this.groupBox3.Controls.Add(this.label5);
+            this.groupBox3.Controls.Add(this.btnDebug0);
             this.groupBox3.Controls.Add(this.boxIO);
             this.groupBox3.Controls.Add(this.label4);
             this.groupBox3.Controls.Add(this.btnEnvoyer);
@@ -248,10 +278,139 @@
             this.groupBox3.Controls.Add(this.boxMiwi);
             this.groupBox3.Location = new System.Drawing.Point(235, 62);
             this.groupBox3.Name = "groupBox3";
-            this.groupBox3.Size = new System.Drawing.Size(422, 100);
+            this.groupBox3.Size = new System.Drawing.Size(422, 149);
             this.groupBox3.TabIndex = 15;
             this.groupBox3.TabStop = false;
             this.groupBox3.Text = "Envoi rapide trame";
+            // 
+            // btnDebug9
+            // 
+            this.btnDebug9.Location = new System.Drawing.Point(317, 112);
+            this.btnDebug9.Name = "btnDebug9";
+            this.btnDebug9.Size = new System.Drawing.Size(23, 23);
+            this.btnDebug9.TabIndex = 26;
+            this.btnDebug9.Tag = "9";
+            this.btnDebug9.Text = "9";
+            this.btnDebug9.UseVisualStyleBackColor = true;
+            this.btnDebug9.Click += new System.EventHandler(this.btnDebug_Click);
+            // 
+            // btnDebug8
+            // 
+            this.btnDebug8.Location = new System.Drawing.Point(288, 112);
+            this.btnDebug8.Name = "btnDebug8";
+            this.btnDebug8.Size = new System.Drawing.Size(23, 23);
+            this.btnDebug8.TabIndex = 25;
+            this.btnDebug8.Tag = "8";
+            this.btnDebug8.Text = "8";
+            this.btnDebug8.UseVisualStyleBackColor = true;
+            this.btnDebug8.Click += new System.EventHandler(this.btnDebug_Click);
+            // 
+            // btnDebug7
+            // 
+            this.btnDebug7.Location = new System.Drawing.Point(259, 112);
+            this.btnDebug7.Name = "btnDebug7";
+            this.btnDebug7.Size = new System.Drawing.Size(23, 23);
+            this.btnDebug7.TabIndex = 24;
+            this.btnDebug7.Tag = "7";
+            this.btnDebug7.Text = "7";
+            this.btnDebug7.UseVisualStyleBackColor = true;
+            this.btnDebug7.Click += new System.EventHandler(this.btnDebug_Click);
+            // 
+            // btnDebug6
+            // 
+            this.btnDebug6.Location = new System.Drawing.Point(230, 112);
+            this.btnDebug6.Name = "btnDebug6";
+            this.btnDebug6.Size = new System.Drawing.Size(23, 23);
+            this.btnDebug6.TabIndex = 23;
+            this.btnDebug6.Tag = "6";
+            this.btnDebug6.Text = "6";
+            this.btnDebug6.UseVisualStyleBackColor = true;
+            this.btnDebug6.Click += new System.EventHandler(this.btnDebug_Click);
+            // 
+            // btnDebug5
+            // 
+            this.btnDebug5.Location = new System.Drawing.Point(201, 112);
+            this.btnDebug5.Name = "btnDebug5";
+            this.btnDebug5.Size = new System.Drawing.Size(23, 23);
+            this.btnDebug5.TabIndex = 22;
+            this.btnDebug5.Tag = "5";
+            this.btnDebug5.Text = "5";
+            this.btnDebug5.UseVisualStyleBackColor = true;
+            this.btnDebug5.Click += new System.EventHandler(this.btnDebug_Click);
+            // 
+            // btnDebug4
+            // 
+            this.btnDebug4.Location = new System.Drawing.Point(172, 112);
+            this.btnDebug4.Name = "btnDebug4";
+            this.btnDebug4.Size = new System.Drawing.Size(23, 23);
+            this.btnDebug4.TabIndex = 21;
+            this.btnDebug4.Tag = "4";
+            this.btnDebug4.Text = "4";
+            this.btnDebug4.UseVisualStyleBackColor = true;
+            this.btnDebug4.Click += new System.EventHandler(this.btnDebug_Click);
+            // 
+            // btnDebug3
+            // 
+            this.btnDebug3.Location = new System.Drawing.Point(143, 112);
+            this.btnDebug3.Name = "btnDebug3";
+            this.btnDebug3.Size = new System.Drawing.Size(23, 23);
+            this.btnDebug3.TabIndex = 20;
+            this.btnDebug3.Tag = "3";
+            this.btnDebug3.Text = "3";
+            this.btnDebug3.UseVisualStyleBackColor = true;
+            this.btnDebug3.Click += new System.EventHandler(this.btnDebug_Click);
+            // 
+            // btnDebug2
+            // 
+            this.btnDebug2.Location = new System.Drawing.Point(114, 112);
+            this.btnDebug2.Name = "btnDebug2";
+            this.btnDebug2.Size = new System.Drawing.Size(23, 23);
+            this.btnDebug2.TabIndex = 19;
+            this.btnDebug2.Tag = "2";
+            this.btnDebug2.Text = "2";
+            this.btnDebug2.UseVisualStyleBackColor = true;
+            this.btnDebug2.Click += new System.EventHandler(this.btnDebug_Click);
+            // 
+            // btnDebug1
+            // 
+            this.btnDebug1.Location = new System.Drawing.Point(85, 112);
+            this.btnDebug1.Name = "btnDebug1";
+            this.btnDebug1.Size = new System.Drawing.Size(23, 23);
+            this.btnDebug1.TabIndex = 18;
+            this.btnDebug1.Tag = "1";
+            this.btnDebug1.Text = "1";
+            this.btnDebug1.UseVisualStyleBackColor = true;
+            this.btnDebug1.Click += new System.EventHandler(this.btnDebug_Click);
+            // 
+            // label5
+            // 
+            this.label5.AutoSize = true;
+            this.label5.Location = new System.Drawing.Point(11, 117);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(39, 13);
+            this.label5.TabIndex = 17;
+            this.label5.Text = "Debug";
+            // 
+            // btnDebug0
+            // 
+            this.btnDebug0.Location = new System.Drawing.Point(56, 112);
+            this.btnDebug0.Name = "btnDebug0";
+            this.btnDebug0.Size = new System.Drawing.Size(23, 23);
+            this.btnDebug0.TabIndex = 16;
+            this.btnDebug0.Tag = "0";
+            this.btnDebug0.Text = "0";
+            this.btnDebug0.UseVisualStyleBackColor = true;
+            this.btnDebug0.Click += new System.EventHandler(this.btnDebug_Click);
+            // 
+            // boxIO
+            // 
+            this.boxIO.AutoSize = true;
+            this.boxIO.Location = new System.Drawing.Point(168, 26);
+            this.boxIO.Name = "boxIO";
+            this.boxIO.Size = new System.Drawing.Size(57, 17);
+            this.boxIO.TabIndex = 7;
+            this.boxIO.Text = "RecIO";
+            this.boxIO.UseVisualStyleBackColor = true;
             // 
             // label4
             // 
@@ -292,21 +451,81 @@
             this.label13.TabIndex = 8;
             this.label13.Text = "Mon IP :";
             // 
-            // boxIO
+            // groupBox5
             // 
-            this.boxIO.AutoSize = true;
-            this.boxIO.Location = new System.Drawing.Point(168, 26);
-            this.boxIO.Name = "boxIO";
-            this.boxIO.Size = new System.Drawing.Size(57, 17);
-            this.boxIO.TabIndex = 7;
-            this.boxIO.Text = "RecIO";
-            this.boxIO.UseVisualStyleBackColor = true;
+            this.groupBox5.Controls.Add(this.lblSortieRecIO);
+            this.groupBox5.Controls.Add(this.lblEntreeRecIO);
+            this.groupBox5.Controls.Add(this.lblIpRecIO);
+            this.groupBox5.Controls.Add(this.label11);
+            this.groupBox5.Controls.Add(this.label12);
+            this.groupBox5.Controls.Add(this.label14);
+            this.groupBox5.Location = new System.Drawing.Point(3, 173);
+            this.groupBox5.Name = "groupBox5";
+            this.groupBox5.Size = new System.Drawing.Size(200, 102);
+            this.groupBox5.TabIndex = 15;
+            this.groupBox5.TabStop = false;
+            this.groupBox5.Text = "RecIo";
+            // 
+            // lblSortieRecIO
+            // 
+            this.lblSortieRecIO.AutoSize = true;
+            this.lblSortieRecIO.Location = new System.Drawing.Point(88, 73);
+            this.lblSortieRecIO.Name = "lblSortieRecIO";
+            this.lblSortieRecIO.Size = new System.Drawing.Size(10, 13);
+            this.lblSortieRecIO.TabIndex = 13;
+            this.lblSortieRecIO.Text = "-";
+            // 
+            // lblEntreeRecIO
+            // 
+            this.lblEntreeRecIO.AutoSize = true;
+            this.lblEntreeRecIO.Location = new System.Drawing.Point(88, 49);
+            this.lblEntreeRecIO.Name = "lblEntreeRecIO";
+            this.lblEntreeRecIO.Size = new System.Drawing.Size(10, 13);
+            this.lblEntreeRecIO.TabIndex = 12;
+            this.lblEntreeRecIO.Text = "-";
+            // 
+            // lblIpRecIO
+            // 
+            this.lblIpRecIO.AutoSize = true;
+            this.lblIpRecIO.Location = new System.Drawing.Point(88, 25);
+            this.lblIpRecIO.Name = "lblIpRecIO";
+            this.lblIpRecIO.Size = new System.Drawing.Size(10, 13);
+            this.lblIpRecIO.TabIndex = 11;
+            this.lblIpRecIO.Text = "-";
+            // 
+            // label11
+            // 
+            this.label11.AutoSize = true;
+            this.label11.Location = new System.Drawing.Point(15, 73);
+            this.label11.Name = "label11";
+            this.label11.Size = new System.Drawing.Size(60, 13);
+            this.label11.TabIndex = 10;
+            this.label11.Text = "Port sortie :";
+            // 
+            // label12
+            // 
+            this.label12.AutoSize = true;
+            this.label12.Location = new System.Drawing.Point(15, 49);
+            this.label12.Name = "label12";
+            this.label12.Size = new System.Drawing.Size(65, 13);
+            this.label12.TabIndex = 9;
+            this.label12.Text = "Port entrée :";
+            // 
+            // label14
+            // 
+            this.label14.AutoSize = true;
+            this.label14.Location = new System.Drawing.Point(15, 25);
+            this.label14.Name = "label14";
+            this.label14.Size = new System.Drawing.Size(50, 13);
+            this.label14.TabIndex = 8;
+            this.label14.Text = "IP carte :";
             // 
             // PanelEnvoiUdp
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.White;
+            this.Controls.Add(this.groupBox5);
             this.Controls.Add(this.groupBox4);
             this.Controls.Add(this.groupBox3);
             this.Controls.Add(this.groupBox2);
@@ -322,6 +541,8 @@
             this.groupBox3.PerformLayout();
             this.groupBox4.ResumeLayout(false);
             this.groupBox4.PerformLayout();
+            this.groupBox5.ResumeLayout(false);
+            this.groupBox5.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -352,5 +573,23 @@
         private System.Windows.Forms.Label lblMonIP;
         private System.Windows.Forms.Label label13;
         private System.Windows.Forms.CheckBox boxIO;
+        private System.Windows.Forms.GroupBox groupBox5;
+        private System.Windows.Forms.Label lblSortieRecIO;
+        private System.Windows.Forms.Label lblEntreeRecIO;
+        private System.Windows.Forms.Label lblIpRecIO;
+        private System.Windows.Forms.Label label11;
+        private System.Windows.Forms.Label label12;
+        private System.Windows.Forms.Label label14;
+        private System.Windows.Forms.Button btnDebug9;
+        private System.Windows.Forms.Button btnDebug8;
+        private System.Windows.Forms.Button btnDebug7;
+        private System.Windows.Forms.Button btnDebug6;
+        private System.Windows.Forms.Button btnDebug5;
+        private System.Windows.Forms.Button btnDebug4;
+        private System.Windows.Forms.Button btnDebug3;
+        private System.Windows.Forms.Button btnDebug2;
+        private System.Windows.Forms.Button btnDebug1;
+        private System.Windows.Forms.Label label5;
+        private System.Windows.Forms.Button btnDebug0;
     }
 }

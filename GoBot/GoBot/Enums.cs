@@ -362,6 +362,8 @@ namespace GoBot
         ActionneurOnOff = 0x65,
         Moteur = 0x66,
 
+        Debug = 0xEE,
+
         TestConnexion = 0xF0,
         Reset = 0xF1,
         DemandeJack = 0xF3,
@@ -398,6 +400,8 @@ namespace GoBot
 
         CommandeServo = 0x60,
 
+        Debug = 0xEE,
+
         TestConnexion = 0xF0,
         Reset = 0xF1
     }
@@ -431,6 +435,8 @@ namespace GoBot
         EnvoiPositionAbsolue = 0x37,
 
         CommandeServo = 0x60,
+
+        Debug = 0xEE,
 
         TestConnexion = 0xF0,
         Reset = 0xF1,
@@ -505,6 +511,8 @@ namespace GoBot
     {
         Transmettre = 0xA0,
 
+        Debug = 0xEE,
+
         TestConnexion = 0xF0
     }
 
@@ -512,8 +520,9 @@ namespace GoBot
     {
         Vitesse = 0x01,
         Detection = 0xE4,
-        AckDetection = 0xE5,
         ErreurDetection = 0xE6,
+
+        Debug = 0xEE,
 
         TestConnexion = 0xF0,
         Reset = 0xF2,
