@@ -74,6 +74,16 @@ namespace GoBot.Communications
             return new Trame(tab);
         }
 
+        static public Trame DemandeCapteurOnOff(CapteurOnOff capteur)
+        {
+            byte[] tab = new byte[3];
+            tab[0] = (byte)Carte.RecIO;
+            tab[1] = (byte)FonctionIO.DemandeCapteurOnOff;
+            tab[2] = (byte)capteur;
+
+            return new Trame(tab);
+        }
+
         static public Trame MoteurVitesse(MoteurID moteur, int vitesse)
         {
             byte[] tab = new byte[5];
@@ -102,7 +112,7 @@ namespace GoBot.Communications
         static public Trame OffsetPos(int offsetX, int offsetY, double offsetTeta, Robot robot)
         {
             byte[] tab = new byte[8];
-            tab[0] = (byte)Carte.RecMove;
+            tab[0] = (byte)robot.Carte;
             tab[1] = (byte)FonctionMove.EnvoiPositionAbsolue;
             tab[2] = ByteDivide(offsetX, true);
             tab[3] = ByteDivide(offsetX, false);
@@ -119,7 +129,7 @@ namespace GoBot.Communications
         {
             //angle = angle * Math.PI * 268.471260977282 / 2.0 / 180.0;
             byte[] tab = new byte[7];
-            tab[0] = (byte)Carte.RecMove;
+            tab[0] = (byte)robot.Carte;
             tab[1] = (byte)FonctionMove.Pivot;
             tab[2] = (byte)sens;
             tab[3] = ByteDivide((int)(angle * 100.0), true);
@@ -132,7 +142,7 @@ namespace GoBot.Communications
         static public Trame Stop(StopMode mode, Robot robot)
         {
             byte[] tab = new byte[3];
-            tab[0] = (byte)Carte.RecMove;
+            tab[0] = (byte)robot.Carte;
             tab[1] = (byte)FonctionMove.Stop;
             tab[2] = (byte)mode;
 
@@ -143,7 +153,7 @@ namespace GoBot.Communications
         static public Trame CoeffAsserv(int p, int i, int d, Robot robot)
         {
             byte[] tab = new byte[8];
-            tab[0] = (byte)Carte.RecMove;
+            tab[0] = (byte)robot.Carte;
             tab[1] = (byte)FonctionMove.CoeffAsservPID;
             tab[2] = (byte)ByteDivide(p, true);
             tab[3] = (byte)ByteDivide(p, false);
@@ -159,7 +169,7 @@ namespace GoBot.Communications
         static public Trame Virage(SensAR sensAr, SensGD sensGd, int rayon, double angle, Robot robot)
         {
             byte[] tab = new byte[8];
-            tab[0] = (byte)Carte.RecMove;
+            tab[0] = (byte)robot.Carte;
             tab[1] = (byte)FonctionMove.Virage;
             tab[2] = (byte)sensAr;
             tab[3] = (byte)sensGd;
@@ -175,7 +185,7 @@ namespace GoBot.Communications
         static public Trame GotoXY(int x, int y, Robot robot)
         {
             byte[] tab = new byte[6];
-            tab[0] = (byte)Carte.RecMove;
+            tab[0] = (byte)robot.Carte;
             tab[1] = (byte)FonctionMove.GoToXY;
             tab[2] = (byte)ByteDivide(x, true);
             tab[3] = (byte)ByteDivide(x, false);
@@ -197,7 +207,7 @@ namespace GoBot.Communications
         static public Trame DemandePosition(Robot robot)
         {
             byte[] tab = new byte[2];
-            tab[0] = (byte)Carte.RecMove;
+            tab[0] = (byte)robot.Carte;
             tab[1] = (byte)FonctionMove.DemandePositionXYTeta;
 
             Trame retour = new Trame(tab);
@@ -207,7 +217,7 @@ namespace GoBot.Communications
         static public Trame VitesseLigne(int vitesse, Robot robot)
         {
             byte[] tab = new byte[4];
-            tab[0] = (byte)Carte.RecMove;
+            tab[0] = (byte)robot.Carte;
             tab[1] = (byte)FonctionMove.VitesseLigne;
             tab[2] = (byte)ByteDivide(vitesse, true);
             tab[3] = (byte)ByteDivide(vitesse, false);
@@ -219,7 +229,7 @@ namespace GoBot.Communications
         static public Trame AccelLigne(int accel, Robot robot)
         {
             byte[] tab = new byte[4];
-            tab[0] = (byte)Carte.RecMove;
+            tab[0] = (byte)robot.Carte;
             tab[1] = (byte)FonctionMove.AccelerationLigne;
             tab[2] = (byte)ByteDivide(accel, true);
             tab[3] = (byte)ByteDivide(accel, false);
@@ -231,7 +241,7 @@ namespace GoBot.Communications
         static public Trame VitessePivot(int vitesse, Robot robot)
         {
             byte[] tab = new byte[4];
-            tab[0] = (byte)Carte.RecMove;
+            tab[0] = (byte)robot.Carte;
             tab[1] = (byte)FonctionMove.VitessePivot;
             tab[2] = (byte)ByteDivide(vitesse, true);
             tab[3] = (byte)ByteDivide(vitesse, false);
@@ -243,7 +253,7 @@ namespace GoBot.Communications
         static public Trame AccelPivot(int accel, Robot robot)
         {
             byte[] tab = new byte[4];
-            tab[0] = (byte)Carte.RecMove;
+            tab[0] = (byte)robot.Carte;
             tab[1] = (byte)FonctionMove.AccelerationPivot;
             tab[2] = (byte)ByteDivide(accel, true);
             tab[3] = (byte)ByteDivide(accel, false);
@@ -255,7 +265,7 @@ namespace GoBot.Communications
         static public Trame Recallage(SensAR sens, Robot robot)
         {
             byte[] tab = new byte[3];
-            tab[0] = (byte)Carte.RecMove;
+            tab[0] = (byte)robot.Carte;
             tab[1] = (byte)FonctionMove.Recallage;
             tab[2] = (byte)sens;
 
@@ -281,11 +291,9 @@ namespace GoBot.Communications
 
         static public Trame TestConnexionPi()
         {
-            byte[] tab = new byte[4];
-            tab[0] = (byte)Carte.RecMiwi;
-            tab[1] = (byte)FonctionMiwi.TestConnexion;
-            tab[2] = (byte)Carte.RecPi;
-            tab[3] = (byte)FonctionMove.TestConnexion;
+            byte[] tab = new byte[2];
+            tab[0] = (byte)Carte.RecPi;
+            tab[1] = (byte)FonctionMove.TestConnexion;
             return new Trame(tab);
         }
 
@@ -343,7 +351,7 @@ namespace GoBot.Communications
 
         static public Trame BaliseInclinaisonFace(Carte balise, int position)
         {
-            byte[] tab = new byte[2];
+            byte[] tab = new byte[4];
             tab[0] = (byte)balise;
             tab[1] = (byte)FonctionBalise.InclinaisonFace;
             tab[2] = ByteDivide(position, true);
@@ -353,7 +361,7 @@ namespace GoBot.Communications
 
         static public Trame BaliseInclinaisonProfil(Carte balise, int position)
         {
-            byte[] tab = new byte[2];
+            byte[] tab = new byte[4];
             tab[0] = (byte)balise;
             tab[1] = (byte)FonctionBalise.InclinaisonProfil;
             tab[2] = ByteDivide(position, true);
@@ -367,7 +375,7 @@ namespace GoBot.Communications
         static public Trame EnvoiConsigneBrute(int consigne, SensAR sens, Robot robot)
         {
             byte[] tab = new byte[5];
-            tab[0] = (byte)Carte.RecMove;
+            tab[0] = (byte)robot.Carte;
             tab[1] = (byte)FonctionMove.EnvoiConsigneBrute;
             tab[2] = (byte)sens;
             tab[3] = (byte)ByteDivide(consigne, true);
@@ -380,7 +388,7 @@ namespace GoBot.Communications
         static public Trame DemandePositionsCodeurs(Robot robot)
         {
             byte[] tab = new byte[2];
-            tab[0] = (byte)Carte.RecMove;
+            tab[0] = (byte)robot.Carte;
             tab[1] = (byte)FonctionMove.DemandePositionsCodeurs;
 
             Trame retour = new Trame(tab);
@@ -406,7 +414,7 @@ namespace GoBot.Communications
         static public Trame DemandeCpuPwm(Robot robot)
         {
             byte[] tab = new byte[2];
-            tab[0] = (byte)Carte.RecMove;
+            tab[0] = (byte)robot.Carte;
             tab[1] = (byte)FonctionMove.DemandeDiagnostic;
 
             Trame retour = new Trame(tab);

@@ -34,16 +34,19 @@
             this.groupBoxCapteurs = new Composants.GroupBoxRetractable();
             this.boxCouleurEquipe = new System.Windows.Forms.CheckBox();
             this.ledCouleurEquipe = new Composants.Led();
+            this.boxPresenceBouchon = new System.Windows.Forms.CheckBox();
+            this.ledPresenceBouchon = new Composants.Led();
             ((System.ComponentModel.ISupportInitialize)(this.ledJack)).BeginInit();
             this.groupBoxCapteurs.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.ledCouleurEquipe)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.ledPresenceBouchon)).BeginInit();
             this.SuspendLayout();
             // 
             // ledJack
             // 
             this.ledJack.Etat = false;
             this.ledJack.Image = ((System.Drawing.Image)(resources.GetObject("ledJack.Image")));
-            this.ledJack.Location = new System.Drawing.Point(143, 40);
+            this.ledJack.Location = new System.Drawing.Point(147, 40);
             this.ledJack.Name = "ledJack";
             this.ledJack.Size = new System.Drawing.Size(16, 16);
             this.ledJack.TabIndex = 101;
@@ -62,6 +65,8 @@
             // 
             // groupBoxCapteurs
             // 
+            this.groupBoxCapteurs.Controls.Add(this.boxPresenceBouchon);
+            this.groupBoxCapteurs.Controls.Add(this.ledPresenceBouchon);
             this.groupBoxCapteurs.Controls.Add(this.boxCouleurEquipe);
             this.groupBoxCapteurs.Controls.Add(this.ledCouleurEquipe);
             this.groupBoxCapteurs.Controls.Add(this.boxJack);
@@ -88,11 +93,32 @@
             // 
             this.ledCouleurEquipe.Etat = false;
             this.ledCouleurEquipe.Image = ((System.Drawing.Image)(resources.GetObject("ledCouleurEquipe.Image")));
-            this.ledCouleurEquipe.Location = new System.Drawing.Point(143, 63);
+            this.ledCouleurEquipe.Location = new System.Drawing.Point(147, 63);
             this.ledCouleurEquipe.Name = "ledCouleurEquipe";
             this.ledCouleurEquipe.Size = new System.Drawing.Size(16, 16);
             this.ledCouleurEquipe.TabIndex = 103;
             this.ledCouleurEquipe.TabStop = false;
+            // 
+            // boxPresenceBouchon
+            // 
+            this.boxPresenceBouchon.AutoSize = true;
+            this.boxPresenceBouchon.Location = new System.Drawing.Point(23, 86);
+            this.boxPresenceBouchon.Name = "boxPresenceBouchon";
+            this.boxPresenceBouchon.Size = new System.Drawing.Size(122, 17);
+            this.boxPresenceBouchon.TabIndex = 104;
+            this.boxPresenceBouchon.Text = "Présence bouchon :";
+            this.boxPresenceBouchon.UseVisualStyleBackColor = true;
+            this.boxPresenceBouchon.CheckedChanged += new System.EventHandler(this.boxPresenceBouchon_CheckedChanged);
+            // 
+            // ledPresenceBouchon
+            // 
+            this.ledPresenceBouchon.Etat = false;
+            this.ledPresenceBouchon.Image = ((System.Drawing.Image)(resources.GetObject("ledPresenceBouchon.Image")));
+            this.ledPresenceBouchon.Location = new System.Drawing.Point(147, 86);
+            this.ledPresenceBouchon.Name = "ledPresenceBouchon";
+            this.ledPresenceBouchon.Size = new System.Drawing.Size(16, 16);
+            this.ledPresenceBouchon.TabIndex = 105;
+            this.ledPresenceBouchon.TabStop = false;
             // 
             // PanelGrosRobotCapteurs
             // 
@@ -108,6 +134,7 @@
             this.groupBoxCapteurs.ResumeLayout(false);
             this.groupBoxCapteurs.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.ledCouleurEquipe)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.ledPresenceBouchon)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -119,5 +146,7 @@
         private Composants.GroupBoxRetractable groupBoxCapteurs;
         private System.Windows.Forms.CheckBox boxCouleurEquipe;
         private Composants.Led ledCouleurEquipe;
+        private System.Windows.Forms.CheckBox boxPresenceBouchon;
+        private Composants.Led ledPresenceBouchon;
     }
 }

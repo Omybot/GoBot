@@ -87,6 +87,29 @@ namespace GoBot
         public double OffsetBalise2Capteur2 { get; set; }
         public double OffsetBalise3Capteur2 { get; set; }
 
+        // Servos balises
+
+        public int CourseBunFaceMin { get; set; }
+        public int CourseBunFaceMax { get; set; }
+        public int CourseBunFaceOpti { get; set; }
+        public int CourseBunProfilMin { get; set; }
+        public int CourseBunProfilMax { get; set; }
+        public int CourseBunProfilOpti { get; set; }
+
+        public int CourseBeuFaceMin { get; set; }
+        public int CourseBeuFaceMax { get; set; }
+        public int CourseBeuFaceOpti { get; set; }
+        public int CourseBeuProfilMin { get; set; }
+        public int CourseBeuProfilMax { get; set; }
+        public int CourseBeuProfilOpti { get; set; }
+
+        public int CourseBoiFaceMin { get; set; }
+        public int CourseBoiFaceMax { get; set; }
+        public int CourseBoiFaceOpti { get; set; }
+        public int CourseBoiProfilMin { get; set; }
+        public int CourseBoiProfilMax { get; set; }
+        public int CourseBoiProfilOpti { get; set; }
+
         // Position des servos du gros robot
         
         public int PositionGRCoudeRange { get; set; }
@@ -130,6 +153,96 @@ namespace GoBot
             }
 
             return 0;
+        }
+
+        public int GetCourseFaceMin(Carte carteBalise)
+        {
+            switch (carteBalise)
+            {
+                case Carte.RecBun:
+                    return CourseBunFaceMin;
+                case Carte.RecBeu:
+                    return CourseBeuFaceMin;
+                case Carte.RecBoi:
+                    return CourseBoiFaceMin;
+                default:
+                    return 0;
+            }
+        }
+
+        public int GetCourseFaceMax(Carte carteBalise)
+        {
+            switch (carteBalise)
+            {
+                case Carte.RecBun:
+                    return CourseBunFaceMax;
+                case Carte.RecBeu:
+                    return CourseBeuFaceMax;
+                case Carte.RecBoi:
+                    return CourseBoiFaceMax;
+                default:
+                    return 0;
+            }
+        }
+
+        public int GetCourseFaceOpti(Carte carteBalise)
+        {
+            switch (carteBalise)
+            {
+                case Carte.RecBun:
+                    return CourseBunFaceOpti;
+                case Carte.RecBeu:
+                    return CourseBeuFaceOpti;
+                case Carte.RecBoi:
+                    return CourseBoiFaceOpti;
+                default:
+                    return 0;
+            }
+        }
+
+        public int GetCourseProfilMin(Carte carteBalise)
+        {
+            switch (carteBalise)
+            {
+                case Carte.RecBun:
+                    return CourseBunProfilMin;
+                case Carte.RecBeu:
+                    return CourseBeuProfilMin;
+                case Carte.RecBoi:
+                    return CourseBoiProfilMin;
+                default:
+                    return 0;
+            }
+        }
+
+        public int GetCourseProfilMax(Carte carteBalise)
+        {
+            switch (carteBalise)
+            {
+                case Carte.RecBun:
+                    return CourseBunProfilMax;
+                case Carte.RecBeu:
+                    return CourseBeuProfilMax;
+                case Carte.RecBoi:
+                    return CourseBoiProfilMax;
+                default:
+                    return 0;
+            }
+        }
+
+        public int GetCourseProfilOpti(Carte carteBalise)
+        {
+            switch (carteBalise)
+            {
+                case Carte.RecBun:
+                    return CourseBunProfilOpti;
+                case Carte.RecBeu:
+                    return CourseBeuProfilOpti;
+                case Carte.RecBoi:
+                    return CourseBoiProfilOpti;
+                default:
+                    return 0;
+            }
         }
 
         public void SetOffsetBalise(Carte carteBalise, int iCapteur, double offset)

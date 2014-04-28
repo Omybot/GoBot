@@ -189,8 +189,8 @@ namespace GoBot.Balises
                 AnglesMesures1.Add(Balise.Detections[0].AngleCentral);
                 DistancesMesures1.Add(Balise.Detections[0].Distance);
 
-                AnglesMesures2.Add(Balise.Detections[1].AngleCentral);
-                DistancesMesures2.Add(Balise.Detections[1].Distance);
+                //AnglesMesures2.Add(Balise.Detections[1].AngleCentral);
+                //DistancesMesures2.Add(Balise.Detections[1].Distance);
 
                 ValeursPWM.Add(Balise.ValeurConsigne);
 

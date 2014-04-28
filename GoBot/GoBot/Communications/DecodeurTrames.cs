@@ -24,6 +24,12 @@ namespace GoBot.Communications
                     case (byte)Carte.RecIO:
                         switch ((FonctionIO)trame[1])
                         {
+                            case FonctionIO.DemandeCapteurOnOff:
+                                message = "Demande capteur " + Nommeur.Nommer((CapteurOnOff)trame[2]);
+                                break;
+                            case FonctionIO.RetourCapteurOnOff:
+                                message = "Retour capteur " + Nommeur.Nommer((CapteurOnOff)trame[2]) + " = " + (((int)trame[3]) > 0 ? "Oui" : "Non");
+                                break;
                             case FonctionIO.Debug:
                                 message = "Debug " + (int)trame[2];
                                 break;
@@ -391,6 +397,12 @@ namespace GoBot.Communications
                     case (byte)Carte.RecBun:
                         switch ((FonctionBalise)trame[1])
                         {
+                            case FonctionBalise.InclinaisonFace:
+                                message = "Inclinaison face " + (int)(trame[2] * 256 + trame[3]);
+                                break;
+                            case FonctionBalise.InclinaisonProfil:
+                                message = "Inclinaison profil " + (int)(trame[2] * 256 + trame[3]);
+                                break;
                             case FonctionBalise.Debug:
                                 message = "Debug " + (int)trame[2];
                                 break;

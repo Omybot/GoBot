@@ -11,6 +11,7 @@ namespace GoBot.Communications
 
         public ConnexionMiwi(Carte carte)
         {
+            ConnexionCheck = new ConnexionCheck(2000);
             Carte = carte;
             Sauvegarde = new Replay();
         }

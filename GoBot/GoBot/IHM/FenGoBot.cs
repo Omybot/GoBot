@@ -60,9 +60,14 @@ namespace GoBot
                 panelDiagnosticBalise2.Balise = Plateau.Balise2;
                 panelDiagnosticBalise3.Balise = Plateau.Balise3;
 
+                panelBaliseInclinaison1.Balise = Plateau.Balise1;
+                panelBaliseInclinaison2.Balise = Plateau.Balise2;
+                panelBaliseInclinaison3.Balise = Plateau.Balise3;
+
                 Connexions.ConnexionMove.ConnexionCheck.Start();
                 Connexions.ConnexionMiwi.ConnexionCheck.Start();
                 Connexions.ConnexionIO.ConnexionCheck.Start();
+                Connexions.ConnexionPi.ConnexionCheck.Start();
 
                 Plateau.Balise1.Connexion.ConnexionCheck.Start();
                 Plateau.Balise2.Connexion.ConnexionCheck.Start();
@@ -127,7 +132,7 @@ namespace GoBot
 
                 Instance = this;
 
-                panelMatch.CouleurJaune();
+                panelMatch.CouleurDroiteJaune();
             }
         }
 

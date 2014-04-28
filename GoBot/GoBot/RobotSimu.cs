@@ -316,6 +316,12 @@ namespace GoBot
             Historique.AjouterAction(new ActionServo(this, position, servo));
         }
 
+        public override bool DemandeCapteurOnOff(CapteurOnOff capteur, bool attendre = true)
+        {
+            // TODO
+            return true;
+        }
+
         public override void ServoVitesse(ServomoteurID servo, int vitesse)
         {
         }

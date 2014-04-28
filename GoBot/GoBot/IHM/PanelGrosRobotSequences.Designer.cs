@@ -29,257 +29,444 @@
         private void InitializeComponent()
         {
             this.groupBoxSequences = new Composants.GroupBoxRetractable();
+            this.btnFeuDeposeProche3 = new System.Windows.Forms.Button();
+            this.btnFeuDeposeProche2 = new System.Windows.Forms.Button();
+            this.btnFeuDeposeProche1 = new System.Windows.Forms.Button();
+            this.btnFeuSolProche = new System.Windows.Forms.Button();
             this.btnFeuRetourneTout = new System.Windows.Forms.Button();
-            this.btnBrasFeuInversion = new System.Windows.Forms.Button();
-            this.button2 = new System.Windows.Forms.Button();
-            this.button3 = new System.Windows.Forms.Button();
-            this.button4 = new System.Windows.Forms.Button();
-            this.btnBrasFeuInterne3 = new System.Windows.Forms.Button();
-            this.btnBrasFeuInterne2 = new System.Windows.Forms.Button();
-            this.button1 = new System.Windows.Forms.Button();
+            this.btnFeuRetournement = new System.Windows.Forms.Button();
+            this.btnFeuDeposeLoin3 = new System.Windows.Forms.Button();
+            this.btnFeuDeposeLoin2 = new System.Windows.Forms.Button();
+            this.btnFeuDeposeLoin1 = new System.Windows.Forms.Button();
+            this.btnFeuInterne3 = new System.Windows.Forms.Button();
+            this.btnFeuInterne2 = new System.Windows.Forms.Button();
+            this.btnFeuAttrapeTorcheTout = new System.Windows.Forms.Button();
             this.btnAttrapeTorche1 = new System.Windows.Forms.Button();
             this.btnAttrapeTorche2 = new System.Windows.Forms.Button();
-            this.btnFeuxTorche1 = new System.Windows.Forms.Button();
-            this.btnFeuIntermediaire = new System.Windows.Forms.Button();
-            this.btnFeuxTorche2 = new System.Windows.Forms.Button();
-            this.btnFeuxTorche3 = new System.Windows.Forms.Button();
-            this.btnBrasFeuInterne1 = new System.Windows.Forms.Button();
-            this.btnBrasFeuEtage1 = new System.Windows.Forms.Button();
+            this.btnFeuTorche1 = new System.Windows.Forms.Button();
+            this.btnFeuTorcheDessus = new System.Windows.Forms.Button();
+            this.btnFeuTorche2 = new System.Windows.Forms.Button();
+            this.btnFeuTorche3 = new System.Windows.Forms.Button();
+            this.btnFeuInterne1 = new System.Windows.Forms.Button();
             this.btnAttrapeTorche3 = new System.Windows.Forms.Button();
-            this.btnRangeBras = new System.Windows.Forms.Button();
-            this.btnBrasFeuRange = new System.Windows.Forms.Button();
-            this.btnFeuSolProche = new System.Windows.Forms.Button();
+            this.btnFeuSolLoin = new System.Windows.Forms.Button();
+            this.btnFeuRange = new System.Windows.Forms.Button();
+            this.btnFeuDeposeInverse3 = new System.Windows.Forms.Button();
+            this.btnFeuDeposeInverse2 = new System.Windows.Forms.Button();
+            this.btnFeuDeposeInverse1 = new System.Windows.Forms.Button();
+            this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.groupBox2 = new System.Windows.Forms.GroupBox();
+            this.groupBox3 = new System.Windows.Forms.GroupBox();
+            this.groupBox4 = new System.Windows.Forms.GroupBox();
+            this.groupBox5 = new System.Windows.Forms.GroupBox();
+            this.groupBox6 = new System.Windows.Forms.GroupBox();
+            this.groupBox7 = new System.Windows.Forms.GroupBox();
+            this.groupBox8 = new System.Windows.Forms.GroupBox();
+            this.groupBox9 = new System.Windows.Forms.GroupBox();
+            this.btnFeuDeposeProcheTout = new System.Windows.Forms.Button();
+            this.btnFeuDeposeLoinTout = new System.Windows.Forms.Button();
             this.groupBoxSequences.SuspendLayout();
+            this.groupBox1.SuspendLayout();
+            this.groupBox2.SuspendLayout();
+            this.groupBox3.SuspendLayout();
+            this.groupBox4.SuspendLayout();
+            this.groupBox5.SuspendLayout();
+            this.groupBox6.SuspendLayout();
+            this.groupBox7.SuspendLayout();
+            this.groupBox8.SuspendLayout();
+            this.groupBox9.SuspendLayout();
             this.SuspendLayout();
             // 
             // groupBoxSequences
             // 
-            this.groupBoxSequences.Controls.Add(this.btnFeuSolProche);
-            this.groupBoxSequences.Controls.Add(this.btnFeuRetourneTout);
-            this.groupBoxSequences.Controls.Add(this.btnBrasFeuInversion);
-            this.groupBoxSequences.Controls.Add(this.button2);
-            this.groupBoxSequences.Controls.Add(this.button3);
-            this.groupBoxSequences.Controls.Add(this.button4);
-            this.groupBoxSequences.Controls.Add(this.btnBrasFeuInterne3);
-            this.groupBoxSequences.Controls.Add(this.btnBrasFeuInterne2);
-            this.groupBoxSequences.Controls.Add(this.button1);
-            this.groupBoxSequences.Controls.Add(this.btnAttrapeTorche1);
-            this.groupBoxSequences.Controls.Add(this.btnAttrapeTorche2);
-            this.groupBoxSequences.Controls.Add(this.btnFeuxTorche1);
-            this.groupBoxSequences.Controls.Add(this.btnFeuIntermediaire);
-            this.groupBoxSequences.Controls.Add(this.btnFeuxTorche2);
-            this.groupBoxSequences.Controls.Add(this.btnFeuxTorche3);
-            this.groupBoxSequences.Controls.Add(this.btnBrasFeuInterne1);
-            this.groupBoxSequences.Controls.Add(this.btnAttrapeTorche3);
-            this.groupBoxSequences.Controls.Add(this.btnBrasFeuEtage1);
-            this.groupBoxSequences.Controls.Add(this.btnRangeBras);
-            this.groupBoxSequences.Controls.Add(this.btnBrasFeuRange);
+            this.groupBoxSequences.Controls.Add(this.groupBox5);
+            this.groupBoxSequences.Controls.Add(this.groupBox1);
             this.groupBoxSequences.Location = new System.Drawing.Point(3, 3);
             this.groupBoxSequences.Name = "groupBoxSequences";
-            this.groupBoxSequences.Size = new System.Drawing.Size(332, 443);
+            this.groupBoxSequences.Size = new System.Drawing.Size(332, 299);
             this.groupBoxSequences.TabIndex = 1;
             this.groupBoxSequences.TabStop = false;
             this.groupBoxSequences.Text = "Séquences";
             // 
+            // btnFeuDeposeProche3
+            // 
+            this.btnFeuDeposeProche3.Location = new System.Drawing.Point(69, 19);
+            this.btnFeuDeposeProche3.Name = "btnFeuDeposeProche3";
+            this.btnFeuDeposeProche3.Size = new System.Drawing.Size(23, 23);
+            this.btnFeuDeposeProche3.TabIndex = 23;
+            this.btnFeuDeposeProche3.Text = "3";
+            this.btnFeuDeposeProche3.UseVisualStyleBackColor = true;
+            this.btnFeuDeposeProche3.Click += new System.EventHandler(this.btnFeuDeposeProche3_Click);
+            // 
+            // btnFeuDeposeProche2
+            // 
+            this.btnFeuDeposeProche2.Location = new System.Drawing.Point(40, 19);
+            this.btnFeuDeposeProche2.Name = "btnFeuDeposeProche2";
+            this.btnFeuDeposeProche2.Size = new System.Drawing.Size(23, 23);
+            this.btnFeuDeposeProche2.TabIndex = 22;
+            this.btnFeuDeposeProche2.Text = "2";
+            this.btnFeuDeposeProche2.UseVisualStyleBackColor = true;
+            this.btnFeuDeposeProche2.Click += new System.EventHandler(this.btnFeuDeposeProche2_Click);
+            // 
+            // btnFeuDeposeProche1
+            // 
+            this.btnFeuDeposeProche1.Location = new System.Drawing.Point(11, 19);
+            this.btnFeuDeposeProche1.Name = "btnFeuDeposeProche1";
+            this.btnFeuDeposeProche1.Size = new System.Drawing.Size(23, 23);
+            this.btnFeuDeposeProche1.TabIndex = 21;
+            this.btnFeuDeposeProche1.Text = "1";
+            this.btnFeuDeposeProche1.UseVisualStyleBackColor = true;
+            this.btnFeuDeposeProche1.Click += new System.EventHandler(this.btnFeuDeposeProche1_Click);
+            // 
+            // btnFeuSolProche
+            // 
+            this.btnFeuSolProche.Location = new System.Drawing.Point(44, 19);
+            this.btnFeuSolProche.Name = "btnFeuSolProche";
+            this.btnFeuSolProche.Size = new System.Drawing.Size(49, 23);
+            this.btnFeuSolProche.TabIndex = 20;
+            this.btnFeuSolProche.Text = "Proche";
+            this.btnFeuSolProche.UseVisualStyleBackColor = true;
+            this.btnFeuSolProche.Click += new System.EventHandler(this.btnFeuSolProche_Click);
+            // 
             // btnFeuRetourneTout
             // 
-            this.btnFeuRetourneTout.Location = new System.Drawing.Point(147, 345);
+            this.btnFeuRetourneTout.Location = new System.Drawing.Point(98, 20);
             this.btnFeuRetourneTout.Name = "btnFeuRetourneTout";
-            this.btnFeuRetourneTout.Size = new System.Drawing.Size(123, 23);
+            this.btnFeuRetourneTout.Size = new System.Drawing.Size(37, 23);
             this.btnFeuRetourneTout.TabIndex = 19;
-            this.btnFeuRetourneTout.Text = "Bras feux retourne tout";
+            this.btnFeuRetourneTout.Text = "Tout";
             this.btnFeuRetourneTout.UseVisualStyleBackColor = true;
             this.btnFeuRetourneTout.Click += new System.EventHandler(this.btnFeuRetourneTout_Click);
             // 
-            // btnBrasFeuInversion
+            // btnFeuRetournement
             // 
-            this.btnBrasFeuInversion.Location = new System.Drawing.Point(32, 345);
-            this.btnBrasFeuInversion.Name = "btnBrasFeuInversion";
-            this.btnBrasFeuInversion.Size = new System.Drawing.Size(109, 23);
-            this.btnBrasFeuInversion.TabIndex = 18;
-            this.btnBrasFeuInversion.Text = "Bras feux dépose inversée";
-            this.btnBrasFeuInversion.UseVisualStyleBackColor = true;
-            this.btnBrasFeuInversion.Click += new System.EventHandler(this.btnBrasFeuInversion_Click);
+            this.btnFeuRetournement.Location = new System.Drawing.Point(96, 19);
+            this.btnFeuRetournement.Name = "btnFeuRetournement";
+            this.btnFeuRetournement.Size = new System.Drawing.Size(50, 23);
+            this.btnFeuRetournement.TabIndex = 18;
+            this.btnFeuRetournement.Text = "Inverse";
+            this.btnFeuRetournement.UseVisualStyleBackColor = true;
+            this.btnFeuRetournement.Click += new System.EventHandler(this.btnBrasFeuInversion_Click);
             // 
-            // button2
+            // btnFeuDeposeLoin3
             // 
-            this.button2.Location = new System.Drawing.Point(147, 258);
-            this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(123, 23);
-            this.button2.TabIndex = 17;
-            this.button2.Text = "Dépose 3";
-            this.button2.UseVisualStyleBackColor = true;
-            this.button2.Click += new System.EventHandler(this.button2_Click);
+            this.btnFeuDeposeLoin3.Location = new System.Drawing.Point(69, 19);
+            this.btnFeuDeposeLoin3.Name = "btnFeuDeposeLoin3";
+            this.btnFeuDeposeLoin3.Size = new System.Drawing.Size(23, 23);
+            this.btnFeuDeposeLoin3.TabIndex = 17;
+            this.btnFeuDeposeLoin3.Text = "3";
+            this.btnFeuDeposeLoin3.UseVisualStyleBackColor = true;
+            this.btnFeuDeposeLoin3.Click += new System.EventHandler(this.button2_Click);
             // 
-            // button3
+            // btnFeuDeposeLoin2
             // 
-            this.button3.Location = new System.Drawing.Point(147, 287);
-            this.button3.Name = "button3";
-            this.button3.Size = new System.Drawing.Size(123, 23);
-            this.button3.TabIndex = 16;
-            this.button3.Text = "Dépose 2";
-            this.button3.UseVisualStyleBackColor = true;
-            this.button3.Click += new System.EventHandler(this.button3_Click);
+            this.btnFeuDeposeLoin2.Location = new System.Drawing.Point(40, 19);
+            this.btnFeuDeposeLoin2.Name = "btnFeuDeposeLoin2";
+            this.btnFeuDeposeLoin2.Size = new System.Drawing.Size(23, 23);
+            this.btnFeuDeposeLoin2.TabIndex = 16;
+            this.btnFeuDeposeLoin2.Text = "2";
+            this.btnFeuDeposeLoin2.UseVisualStyleBackColor = true;
+            this.btnFeuDeposeLoin2.Click += new System.EventHandler(this.button3_Click);
             // 
-            // button4
+            // btnFeuDeposeLoin1
             // 
-            this.button4.Location = new System.Drawing.Point(147, 316);
-            this.button4.Name = "button4";
-            this.button4.Size = new System.Drawing.Size(123, 23);
-            this.button4.TabIndex = 15;
-            this.button4.Text = "Dépose 1";
-            this.button4.UseVisualStyleBackColor = true;
-            this.button4.Click += new System.EventHandler(this.button4_Click);
+            this.btnFeuDeposeLoin1.Location = new System.Drawing.Point(11, 19);
+            this.btnFeuDeposeLoin1.Name = "btnFeuDeposeLoin1";
+            this.btnFeuDeposeLoin1.Size = new System.Drawing.Size(23, 23);
+            this.btnFeuDeposeLoin1.TabIndex = 15;
+            this.btnFeuDeposeLoin1.Text = "1";
+            this.btnFeuDeposeLoin1.UseVisualStyleBackColor = true;
+            this.btnFeuDeposeLoin1.Click += new System.EventHandler(this.button4_Click);
             // 
-            // btnBrasFeuInterne3
+            // btnFeuInterne3
             // 
-            this.btnBrasFeuInterne3.Location = new System.Drawing.Point(32, 258);
-            this.btnBrasFeuInterne3.Name = "btnBrasFeuInterne3";
-            this.btnBrasFeuInterne3.Size = new System.Drawing.Size(109, 23);
-            this.btnBrasFeuInterne3.TabIndex = 14;
-            this.btnBrasFeuInterne3.Text = "Bras feux interne 3";
-            this.btnBrasFeuInterne3.UseVisualStyleBackColor = true;
-            this.btnBrasFeuInterne3.Click += new System.EventHandler(this.btnBrasFeuInterne3_Click);
+            this.btnFeuInterne3.Location = new System.Drawing.Point(64, 19);
+            this.btnFeuInterne3.Name = "btnFeuInterne3";
+            this.btnFeuInterne3.Size = new System.Drawing.Size(23, 23);
+            this.btnFeuInterne3.TabIndex = 14;
+            this.btnFeuInterne3.Text = "3";
+            this.btnFeuInterne3.UseVisualStyleBackColor = true;
+            this.btnFeuInterne3.Click += new System.EventHandler(this.btnBrasFeuInterne3_Click);
             // 
-            // btnBrasFeuInterne2
+            // btnFeuInterne2
             // 
-            this.btnBrasFeuInterne2.Location = new System.Drawing.Point(32, 287);
-            this.btnBrasFeuInterne2.Name = "btnBrasFeuInterne2";
-            this.btnBrasFeuInterne2.Size = new System.Drawing.Size(109, 23);
-            this.btnBrasFeuInterne2.TabIndex = 13;
-            this.btnBrasFeuInterne2.Text = "Bras feux interne 2";
-            this.btnBrasFeuInterne2.UseVisualStyleBackColor = true;
-            this.btnBrasFeuInterne2.Click += new System.EventHandler(this.btnBrasFeuInterne2_Click);
+            this.btnFeuInterne2.Location = new System.Drawing.Point(35, 19);
+            this.btnFeuInterne2.Name = "btnFeuInterne2";
+            this.btnFeuInterne2.Size = new System.Drawing.Size(23, 23);
+            this.btnFeuInterne2.TabIndex = 13;
+            this.btnFeuInterne2.Text = "2";
+            this.btnFeuInterne2.UseVisualStyleBackColor = true;
+            this.btnFeuInterne2.Click += new System.EventHandler(this.btnBrasFeuInterne2_Click);
             // 
-            // button1
+            // btnFeuAttrapeTorcheTout
             // 
-            this.button1.Location = new System.Drawing.Point(147, 229);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(123, 23);
-            this.button1.TabIndex = 12;
-            this.button1.Text = "Attrape torche complète";
-            this.button1.UseVisualStyleBackColor = true;
-            this.button1.Click += new System.EventHandler(this.button1_Click);
+            this.btnFeuAttrapeTorcheTout.Location = new System.Drawing.Point(98, 19);
+            this.btnFeuAttrapeTorcheTout.Name = "btnFeuAttrapeTorcheTout";
+            this.btnFeuAttrapeTorcheTout.Size = new System.Drawing.Size(37, 23);
+            this.btnFeuAttrapeTorcheTout.TabIndex = 12;
+            this.btnFeuAttrapeTorcheTout.Text = "Tout";
+            this.btnFeuAttrapeTorcheTout.UseVisualStyleBackColor = true;
+            this.btnFeuAttrapeTorcheTout.Click += new System.EventHandler(this.button1_Click);
             // 
             // btnAttrapeTorche1
             // 
-            this.btnAttrapeTorche1.Location = new System.Drawing.Point(147, 200);
+            this.btnAttrapeTorche1.Location = new System.Drawing.Point(11, 19);
             this.btnAttrapeTorche1.Name = "btnAttrapeTorche1";
-            this.btnAttrapeTorche1.Size = new System.Drawing.Size(123, 23);
+            this.btnAttrapeTorche1.Size = new System.Drawing.Size(23, 23);
             this.btnAttrapeTorche1.TabIndex = 11;
-            this.btnAttrapeTorche1.Text = "Attrape torche 1";
+            this.btnAttrapeTorche1.Text = "1";
             this.btnAttrapeTorche1.UseVisualStyleBackColor = true;
             this.btnAttrapeTorche1.Click += new System.EventHandler(this.btnAttrapeTorche1_Click);
             // 
             // btnAttrapeTorche2
             // 
-            this.btnAttrapeTorche2.Location = new System.Drawing.Point(147, 171);
+            this.btnAttrapeTorche2.Location = new System.Drawing.Point(40, 19);
             this.btnAttrapeTorche2.Name = "btnAttrapeTorche2";
-            this.btnAttrapeTorche2.Size = new System.Drawing.Size(123, 23);
+            this.btnAttrapeTorche2.Size = new System.Drawing.Size(23, 23);
             this.btnAttrapeTorche2.TabIndex = 10;
-            this.btnAttrapeTorche2.Text = "Attrape torche 2";
+            this.btnAttrapeTorche2.Text = "2";
             this.btnAttrapeTorche2.UseVisualStyleBackColor = true;
             this.btnAttrapeTorche2.Click += new System.EventHandler(this.btnAttrapeTorche2_Click);
             // 
-            // btnFeuxTorche1
+            // btnFeuTorche1
             // 
-            this.btnFeuxTorche1.Location = new System.Drawing.Point(32, 200);
-            this.btnFeuxTorche1.Name = "btnFeuxTorche1";
-            this.btnFeuxTorche1.Size = new System.Drawing.Size(109, 23);
-            this.btnFeuxTorche1.TabIndex = 9;
-            this.btnFeuxTorche1.Text = "Bras feux torche 1";
-            this.btnFeuxTorche1.UseVisualStyleBackColor = true;
-            this.btnFeuxTorche1.Click += new System.EventHandler(this.btnFeuxTorche1_Click);
+            this.btnFeuTorche1.Location = new System.Drawing.Point(5, 19);
+            this.btnFeuTorche1.Name = "btnFeuTorche1";
+            this.btnFeuTorche1.Size = new System.Drawing.Size(23, 23);
+            this.btnFeuTorche1.TabIndex = 9;
+            this.btnFeuTorche1.Text = "1";
+            this.btnFeuTorche1.UseVisualStyleBackColor = true;
+            this.btnFeuTorche1.Click += new System.EventHandler(this.btnFeuxTorche1_Click);
             // 
-            // btnFeuIntermediaire
+            // btnFeuTorcheDessus
             // 
-            this.btnFeuIntermediaire.Location = new System.Drawing.Point(32, 113);
-            this.btnFeuIntermediaire.Name = "btnFeuIntermediaire";
-            this.btnFeuIntermediaire.Size = new System.Drawing.Size(109, 23);
-            this.btnFeuIntermediaire.TabIndex = 8;
-            this.btnFeuIntermediaire.Text = "Bras feux intermediaire";
-            this.btnFeuIntermediaire.UseVisualStyleBackColor = true;
-            this.btnFeuIntermediaire.Click += new System.EventHandler(this.btnFeuIntermediaire_Click);
+            this.btnFeuTorcheDessus.Location = new System.Drawing.Point(92, 19);
+            this.btnFeuTorcheDessus.Name = "btnFeuTorcheDessus";
+            this.btnFeuTorcheDessus.Size = new System.Drawing.Size(53, 23);
+            this.btnFeuTorcheDessus.TabIndex = 8;
+            this.btnFeuTorcheDessus.Text = "Dessus";
+            this.btnFeuTorcheDessus.UseVisualStyleBackColor = true;
+            this.btnFeuTorcheDessus.Click += new System.EventHandler(this.btnFeuIntermediaire_Click);
             // 
-            // btnFeuxTorche2
+            // btnFeuTorche2
             // 
-            this.btnFeuxTorche2.Location = new System.Drawing.Point(32, 171);
-            this.btnFeuxTorche2.Name = "btnFeuxTorche2";
-            this.btnFeuxTorche2.Size = new System.Drawing.Size(109, 23);
-            this.btnFeuxTorche2.TabIndex = 7;
-            this.btnFeuxTorche2.Text = "Bras feux torche 2";
-            this.btnFeuxTorche2.UseVisualStyleBackColor = true;
-            this.btnFeuxTorche2.Click += new System.EventHandler(this.btnFeuxTorche2_Click);
+            this.btnFeuTorche2.Location = new System.Drawing.Point(34, 19);
+            this.btnFeuTorche2.Name = "btnFeuTorche2";
+            this.btnFeuTorche2.Size = new System.Drawing.Size(23, 23);
+            this.btnFeuTorche2.TabIndex = 7;
+            this.btnFeuTorche2.Text = "2";
+            this.btnFeuTorche2.UseVisualStyleBackColor = true;
+            this.btnFeuTorche2.Click += new System.EventHandler(this.btnFeuxTorche2_Click);
             // 
-            // btnFeuxTorche3
+            // btnFeuTorche3
             // 
-            this.btnFeuxTorche3.Location = new System.Drawing.Point(32, 142);
-            this.btnFeuxTorche3.Name = "btnFeuxTorche3";
-            this.btnFeuxTorche3.Size = new System.Drawing.Size(109, 23);
-            this.btnFeuxTorche3.TabIndex = 6;
-            this.btnFeuxTorche3.Text = "Bras feux torche 3";
-            this.btnFeuxTorche3.UseVisualStyleBackColor = true;
-            this.btnFeuxTorche3.Click += new System.EventHandler(this.btnFeuxTorche3_Click);
+            this.btnFeuTorche3.Location = new System.Drawing.Point(63, 19);
+            this.btnFeuTorche3.Name = "btnFeuTorche3";
+            this.btnFeuTorche3.Size = new System.Drawing.Size(23, 23);
+            this.btnFeuTorche3.TabIndex = 6;
+            this.btnFeuTorche3.Text = "3";
+            this.btnFeuTorche3.UseVisualStyleBackColor = true;
+            this.btnFeuTorche3.Click += new System.EventHandler(this.btnFeuxTorche3_Click);
             // 
-            // btnBrasFeuInterne1
+            // btnFeuInterne1
             // 
-            this.btnBrasFeuInterne1.Location = new System.Drawing.Point(32, 316);
-            this.btnBrasFeuInterne1.Name = "btnBrasFeuInterne1";
-            this.btnBrasFeuInterne1.Size = new System.Drawing.Size(109, 23);
-            this.btnBrasFeuInterne1.TabIndex = 4;
-            this.btnBrasFeuInterne1.Text = "Bras feux interne 1";
-            this.btnBrasFeuInterne1.UseVisualStyleBackColor = true;
-            this.btnBrasFeuInterne1.Click += new System.EventHandler(this.btnBrasFeuInterne1_Click);
-            // 
-            // btnBrasFeuEtage1
-            // 
-            this.btnBrasFeuEtage1.Location = new System.Drawing.Point(147, 44);
-            this.btnBrasFeuEtage1.Name = "btnBrasFeuEtage1";
-            this.btnBrasFeuEtage1.Size = new System.Drawing.Size(123, 23);
-            this.btnBrasFeuEtage1.TabIndex = 3;
-            this.btnBrasFeuEtage1.Text = "Bras feux au sol loin";
-            this.btnBrasFeuEtage1.UseVisualStyleBackColor = true;
-            this.btnBrasFeuEtage1.Click += new System.EventHandler(this.btnBrasFeuEtage1_Click);
+            this.btnFeuInterne1.Location = new System.Drawing.Point(6, 19);
+            this.btnFeuInterne1.Name = "btnFeuInterne1";
+            this.btnFeuInterne1.Size = new System.Drawing.Size(23, 23);
+            this.btnFeuInterne1.TabIndex = 4;
+            this.btnFeuInterne1.Text = "1";
+            this.btnFeuInterne1.UseVisualStyleBackColor = true;
+            this.btnFeuInterne1.Click += new System.EventHandler(this.btnBrasFeuInterne1_Click);
             // 
             // btnAttrapeTorche3
             // 
-            this.btnAttrapeTorche3.Location = new System.Drawing.Point(147, 142);
+            this.btnAttrapeTorche3.Location = new System.Drawing.Point(69, 19);
             this.btnAttrapeTorche3.Name = "btnAttrapeTorche3";
-            this.btnAttrapeTorche3.Size = new System.Drawing.Size(123, 23);
+            this.btnAttrapeTorche3.Size = new System.Drawing.Size(23, 23);
             this.btnAttrapeTorche3.TabIndex = 5;
-            this.btnAttrapeTorche3.Text = "Attrape torche 3";
+            this.btnAttrapeTorche3.Text = "3";
             this.btnAttrapeTorche3.UseVisualStyleBackColor = true;
             this.btnAttrapeTorche3.Click += new System.EventHandler(this.btnAttrapeTorche3_Click);
             // 
-            // btnRangeBras
+            // btnFeuSolLoin
             // 
-            this.btnRangeBras.Location = new System.Drawing.Point(32, 44);
-            this.btnRangeBras.Name = "btnRangeBras";
-            this.btnRangeBras.Size = new System.Drawing.Size(109, 23);
-            this.btnRangeBras.TabIndex = 1;
-            this.btnRangeBras.Text = "Ranger le bras";
-            this.btnRangeBras.UseVisualStyleBackColor = true;
-            this.btnRangeBras.Click += new System.EventHandler(this.btnRangeBras_Click);
+            this.btnFeuSolLoin.Location = new System.Drawing.Point(6, 19);
+            this.btnFeuSolLoin.Name = "btnFeuSolLoin";
+            this.btnFeuSolLoin.Size = new System.Drawing.Size(35, 23);
+            this.btnFeuSolLoin.TabIndex = 3;
+            this.btnFeuSolLoin.Text = "Loin";
+            this.btnFeuSolLoin.UseVisualStyleBackColor = true;
+            this.btnFeuSolLoin.Click += new System.EventHandler(this.btnBrasFeuEtage1_Click);
             // 
-            // btnBrasFeuRange
+            // btnFeuRange
             // 
-            this.btnBrasFeuRange.Location = new System.Drawing.Point(32, 84);
-            this.btnBrasFeuRange.Name = "btnBrasFeuRange";
-            this.btnBrasFeuRange.Size = new System.Drawing.Size(109, 23);
-            this.btnBrasFeuRange.TabIndex = 2;
-            this.btnBrasFeuRange.Text = "Bras feux rangé";
-            this.btnBrasFeuRange.UseVisualStyleBackColor = true;
-            this.btnBrasFeuRange.Click += new System.EventHandler(this.btnBrasFeuRange_Click);
+            this.btnFeuRange.Location = new System.Drawing.Point(93, 19);
+            this.btnFeuRange.Name = "btnFeuRange";
+            this.btnFeuRange.Size = new System.Drawing.Size(53, 23);
+            this.btnFeuRange.TabIndex = 2;
+            this.btnFeuRange.Text = "Rangé";
+            this.btnFeuRange.UseVisualStyleBackColor = true;
+            this.btnFeuRange.Click += new System.EventHandler(this.btnBrasFeuRange_Click);
             // 
-            // btnFeuSolProche
+            // btnFeuDeposeInverse3
             // 
-            this.btnFeuSolProche.Location = new System.Drawing.Point(147, 73);
-            this.btnFeuSolProche.Name = "btnFeuSolProche";
-            this.btnFeuSolProche.Size = new System.Drawing.Size(123, 23);
-            this.btnFeuSolProche.TabIndex = 20;
-            this.btnFeuSolProche.Text = "Bras feux au sol proche";
-            this.btnFeuSolProche.UseVisualStyleBackColor = true;
-            this.btnFeuSolProche.Click += new System.EventHandler(this.btnFeuSolProche_Click);
+            this.btnFeuDeposeInverse3.Location = new System.Drawing.Point(69, 19);
+            this.btnFeuDeposeInverse3.Name = "btnFeuDeposeInverse3";
+            this.btnFeuDeposeInverse3.Size = new System.Drawing.Size(23, 23);
+            this.btnFeuDeposeInverse3.TabIndex = 33;
+            this.btnFeuDeposeInverse3.Text = "3";
+            this.btnFeuDeposeInverse3.UseVisualStyleBackColor = true;
+            // 
+            // btnFeuDeposeInverse2
+            // 
+            this.btnFeuDeposeInverse2.Location = new System.Drawing.Point(40, 19);
+            this.btnFeuDeposeInverse2.Name = "btnFeuDeposeInverse2";
+            this.btnFeuDeposeInverse2.Size = new System.Drawing.Size(23, 23);
+            this.btnFeuDeposeInverse2.TabIndex = 32;
+            this.btnFeuDeposeInverse2.Text = "2";
+            this.btnFeuDeposeInverse2.UseVisualStyleBackColor = true;
+            // 
+            // btnFeuDeposeInverse1
+            // 
+            this.btnFeuDeposeInverse1.Location = new System.Drawing.Point(11, 19);
+            this.btnFeuDeposeInverse1.Name = "btnFeuDeposeInverse1";
+            this.btnFeuDeposeInverse1.Size = new System.Drawing.Size(23, 23);
+            this.btnFeuDeposeInverse1.TabIndex = 31;
+            this.btnFeuDeposeInverse1.Text = "1";
+            this.btnFeuDeposeInverse1.UseVisualStyleBackColor = true;
+            // 
+            // groupBox1
+            // 
+            this.groupBox1.Controls.Add(this.groupBox4);
+            this.groupBox1.Controls.Add(this.groupBox3);
+            this.groupBox1.Controls.Add(this.groupBox2);
+            this.groupBox1.Location = new System.Drawing.Point(3, 38);
+            this.groupBox1.Name = "groupBox1";
+            this.groupBox1.Size = new System.Drawing.Size(163, 256);
+            this.groupBox1.TabIndex = 34;
+            this.groupBox1.TabStop = false;
+            this.groupBox1.Text = "Positions";
+            // 
+            // groupBox2
+            // 
+            this.groupBox2.Controls.Add(this.btnFeuRange);
+            this.groupBox2.Controls.Add(this.btnFeuInterne1);
+            this.groupBox2.Controls.Add(this.btnFeuInterne3);
+            this.groupBox2.Controls.Add(this.btnFeuInterne2);
+            this.groupBox2.Location = new System.Drawing.Point(6, 31);
+            this.groupBox2.Name = "groupBox2";
+            this.groupBox2.Size = new System.Drawing.Size(151, 49);
+            this.groupBox2.TabIndex = 35;
+            this.groupBox2.TabStop = false;
+            this.groupBox2.Text = "Interne";
+            // 
+            // groupBox3
+            // 
+            this.groupBox3.Controls.Add(this.btnFeuTorcheDessus);
+            this.groupBox3.Controls.Add(this.btnFeuTorche3);
+            this.groupBox3.Controls.Add(this.btnFeuTorche2);
+            this.groupBox3.Controls.Add(this.btnFeuTorche1);
+            this.groupBox3.Location = new System.Drawing.Point(6, 86);
+            this.groupBox3.Name = "groupBox3";
+            this.groupBox3.Size = new System.Drawing.Size(151, 49);
+            this.groupBox3.TabIndex = 35;
+            this.groupBox3.TabStop = false;
+            this.groupBox3.Text = "Torche";
+            // 
+            // groupBox4
+            // 
+            this.groupBox4.Controls.Add(this.btnFeuRetournement);
+            this.groupBox4.Controls.Add(this.btnFeuSolLoin);
+            this.groupBox4.Controls.Add(this.btnFeuSolProche);
+            this.groupBox4.Location = new System.Drawing.Point(6, 141);
+            this.groupBox4.Name = "groupBox4";
+            this.groupBox4.Size = new System.Drawing.Size(151, 49);
+            this.groupBox4.TabIndex = 36;
+            this.groupBox4.TabStop = false;
+            this.groupBox4.Text = "Dépose";
+            // 
+            // groupBox5
+            // 
+            this.groupBox5.Controls.Add(this.groupBox9);
+            this.groupBox5.Controls.Add(this.groupBox6);
+            this.groupBox5.Controls.Add(this.groupBox7);
+            this.groupBox5.Controls.Add(this.groupBox8);
+            this.groupBox5.Location = new System.Drawing.Point(167, 38);
+            this.groupBox5.Name = "groupBox5";
+            this.groupBox5.Size = new System.Drawing.Size(163, 256);
+            this.groupBox5.TabIndex = 37;
+            this.groupBox5.TabStop = false;
+            this.groupBox5.Text = "Mouvements";
+            // 
+            // groupBox6
+            // 
+            this.groupBox6.Controls.Add(this.btnFeuDeposeProcheTout);
+            this.groupBox6.Controls.Add(this.btnFeuDeposeProche1);
+            this.groupBox6.Controls.Add(this.btnFeuDeposeProche2);
+            this.groupBox6.Controls.Add(this.btnFeuDeposeProche3);
+            this.groupBox6.Location = new System.Drawing.Point(6, 141);
+            this.groupBox6.Name = "groupBox6";
+            this.groupBox6.Size = new System.Drawing.Size(151, 49);
+            this.groupBox6.TabIndex = 36;
+            this.groupBox6.TabStop = false;
+            this.groupBox6.Text = "Dépose proche";
+            // 
+            // groupBox7
+            // 
+            this.groupBox7.Controls.Add(this.btnFeuDeposeLoinTout);
+            this.groupBox7.Controls.Add(this.btnFeuDeposeLoin1);
+            this.groupBox7.Controls.Add(this.btnFeuDeposeLoin2);
+            this.groupBox7.Controls.Add(this.btnFeuDeposeLoin3);
+            this.groupBox7.Location = new System.Drawing.Point(6, 86);
+            this.groupBox7.Name = "groupBox7";
+            this.groupBox7.Size = new System.Drawing.Size(151, 49);
+            this.groupBox7.TabIndex = 35;
+            this.groupBox7.TabStop = false;
+            this.groupBox7.Text = "Dépose loin";
+            // 
+            // groupBox8
+            // 
+            this.groupBox8.Controls.Add(this.btnFeuAttrapeTorcheTout);
+            this.groupBox8.Controls.Add(this.btnAttrapeTorche1);
+            this.groupBox8.Controls.Add(this.btnAttrapeTorche3);
+            this.groupBox8.Controls.Add(this.btnAttrapeTorche2);
+            this.groupBox8.Location = new System.Drawing.Point(6, 31);
+            this.groupBox8.Name = "groupBox8";
+            this.groupBox8.Size = new System.Drawing.Size(151, 49);
+            this.groupBox8.TabIndex = 35;
+            this.groupBox8.TabStop = false;
+            this.groupBox8.Text = "Attrape Torche";
+            // 
+            // groupBox9
+            // 
+            this.groupBox9.Controls.Add(this.btnFeuDeposeInverse1);
+            this.groupBox9.Controls.Add(this.btnFeuDeposeInverse2);
+            this.groupBox9.Controls.Add(this.btnFeuDeposeInverse3);
+            this.groupBox9.Controls.Add(this.btnFeuRetourneTout);
+            this.groupBox9.Location = new System.Drawing.Point(6, 198);
+            this.groupBox9.Name = "groupBox9";
+            this.groupBox9.Size = new System.Drawing.Size(151, 49);
+            this.groupBox9.TabIndex = 37;
+            this.groupBox9.TabStop = false;
+            this.groupBox9.Text = "Dépose inversée";
+            // 
+            // btnFeuDeposeProcheTout
+            // 
+            this.btnFeuDeposeProcheTout.Location = new System.Drawing.Point(98, 19);
+            this.btnFeuDeposeProcheTout.Name = "btnFeuDeposeProcheTout";
+            this.btnFeuDeposeProcheTout.Size = new System.Drawing.Size(37, 23);
+            this.btnFeuDeposeProcheTout.TabIndex = 34;
+            this.btnFeuDeposeProcheTout.Text = "Tout";
+            this.btnFeuDeposeProcheTout.UseVisualStyleBackColor = true;
+            // 
+            // btnFeuDeposeLoinTout
+            // 
+            this.btnFeuDeposeLoinTout.Location = new System.Drawing.Point(98, 19);
+            this.btnFeuDeposeLoinTout.Name = "btnFeuDeposeLoinTout";
+            this.btnFeuDeposeLoinTout.Size = new System.Drawing.Size(37, 23);
+            this.btnFeuDeposeLoinTout.TabIndex = 35;
+            this.btnFeuDeposeLoinTout.Text = "Tout";
+            this.btnFeuDeposeLoinTout.UseVisualStyleBackColor = true;
             // 
             // PanelGrosRobotSequences
             // 
@@ -289,9 +476,18 @@
             this.BackColor = System.Drawing.Color.Transparent;
             this.Controls.Add(this.groupBoxSequences);
             this.Name = "PanelGrosRobotSequences";
-            this.Size = new System.Drawing.Size(341, 449);
+            this.Size = new System.Drawing.Size(341, 305);
             this.Load += new System.EventHandler(this.PanelSequencesGros_Load);
             this.groupBoxSequences.ResumeLayout(false);
+            this.groupBox1.ResumeLayout(false);
+            this.groupBox2.ResumeLayout(false);
+            this.groupBox3.ResumeLayout(false);
+            this.groupBox4.ResumeLayout(false);
+            this.groupBox5.ResumeLayout(false);
+            this.groupBox6.ResumeLayout(false);
+            this.groupBox7.ResumeLayout(false);
+            this.groupBox8.ResumeLayout(false);
+            this.groupBox9.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -299,25 +495,41 @@
         #endregion
 
         private Composants.GroupBoxRetractable groupBoxSequences;
-        private System.Windows.Forms.Button btnRangeBras;
-        private System.Windows.Forms.Button btnBrasFeuEtage1;
-        private System.Windows.Forms.Button btnBrasFeuRange;
-        private System.Windows.Forms.Button btnBrasFeuInterne1;
+        private System.Windows.Forms.Button btnFeuSolLoin;
+        private System.Windows.Forms.Button btnFeuRange;
+        private System.Windows.Forms.Button btnFeuInterne1;
         private System.Windows.Forms.Button btnAttrapeTorche3;
-        private System.Windows.Forms.Button btnFeuxTorche3;
-        private System.Windows.Forms.Button btnFeuxTorche2;
-        private System.Windows.Forms.Button btnFeuIntermediaire;
-        private System.Windows.Forms.Button btnFeuxTorche1;
+        private System.Windows.Forms.Button btnFeuTorche3;
+        private System.Windows.Forms.Button btnFeuTorche2;
+        private System.Windows.Forms.Button btnFeuTorcheDessus;
+        private System.Windows.Forms.Button btnFeuTorche1;
         private System.Windows.Forms.Button btnAttrapeTorche1;
         private System.Windows.Forms.Button btnAttrapeTorche2;
-        private System.Windows.Forms.Button button1;
-        private System.Windows.Forms.Button btnBrasFeuInterne3;
-        private System.Windows.Forms.Button btnBrasFeuInterne2;
-        private System.Windows.Forms.Button button2;
-        private System.Windows.Forms.Button button3;
-        private System.Windows.Forms.Button button4;
-        private System.Windows.Forms.Button btnBrasFeuInversion;
+        private System.Windows.Forms.Button btnFeuAttrapeTorcheTout;
+        private System.Windows.Forms.Button btnFeuInterne3;
+        private System.Windows.Forms.Button btnFeuInterne2;
+        private System.Windows.Forms.Button btnFeuDeposeLoin3;
+        private System.Windows.Forms.Button btnFeuDeposeLoin2;
+        private System.Windows.Forms.Button btnFeuDeposeLoin1;
+        private System.Windows.Forms.Button btnFeuRetournement;
         private System.Windows.Forms.Button btnFeuRetourneTout;
         private System.Windows.Forms.Button btnFeuSolProche;
+        private System.Windows.Forms.Button btnFeuDeposeProche3;
+        private System.Windows.Forms.Button btnFeuDeposeProche2;
+        private System.Windows.Forms.Button btnFeuDeposeProche1;
+        private System.Windows.Forms.Button btnFeuDeposeInverse3;
+        private System.Windows.Forms.Button btnFeuDeposeInverse2;
+        private System.Windows.Forms.Button btnFeuDeposeInverse1;
+        private System.Windows.Forms.GroupBox groupBox5;
+        private System.Windows.Forms.GroupBox groupBox9;
+        private System.Windows.Forms.GroupBox groupBox6;
+        private System.Windows.Forms.Button btnFeuDeposeProcheTout;
+        private System.Windows.Forms.GroupBox groupBox7;
+        private System.Windows.Forms.Button btnFeuDeposeLoinTout;
+        private System.Windows.Forms.GroupBox groupBox8;
+        private System.Windows.Forms.GroupBox groupBox1;
+        private System.Windows.Forms.GroupBox groupBox4;
+        private System.Windows.Forms.GroupBox groupBox3;
+        private System.Windows.Forms.GroupBox groupBox2;
     }
 }

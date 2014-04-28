@@ -32,6 +32,7 @@ namespace GoBot.IHM
         {
             ledJack.CouleurGris();
             ledCouleurEquipe.CouleurGris();
+            ledPresenceBouchon.CouleurGris();
 
             groupBoxCapteurs.Deployer(Config.CurrentConfig.CapteursGROuvert, false);
 
@@ -39,10 +40,13 @@ namespace GoBot.IHM
             timerJack.Elapsed += new System.Timers.ElapsedEventHandler(timerJack_Elapsed);
             timerCouleurEquipe = new System.Timers.Timer(100);
             timerCouleurEquipe.Elapsed += new System.Timers.ElapsedEventHandler(timerCouleurEquipe_Elapsed);
+            timerPresenceBouchon = new System.Timers.Timer(100);
+            timerPresenceBouchon.Elapsed += new System.Timers.ElapsedEventHandler(timerPresenceBouchon_Elapsed);
         }
 
         System.Timers.Timer timerJack;
         System.Timers.Timer timerCouleurEquipe;
+        System.Timers.Timer timerPresenceBouchon;
 
         private void boxJack_CheckedChanged(object sender, EventArgs e)
         {
@@ -77,6 +81,17 @@ namespace GoBot.IHM
             }));
         }
 
+        void timerPresenceBouchon_Elapsed(object sender, System.Timers.ElapsedEventArgs e)
+        {
+            this.Invoke(new EventHandler(delegate
+            {
+                if (Robots.GrosRobot.DemandeCapteurOnOff(CapteurOnOff.GRPresenceBouchon))
+                    ledPresenceBouchon.CouleurVert();
+                else
+                    ledPresenceBouchon.CouleurRouge();
+            }));
+        }
+
         private void boxCouleurEquipe_CheckedChanged(object sender, EventArgs e)
         {
             if (boxCouleurEquipe.Checked)
@@ -85,6 +100,17 @@ namespace GoBot.IHM
             {
                 timerCouleurEquipe.Stop();
                 ledCouleurEquipe.CouleurGris();
+            }
+        }
+
+        private void boxPresenceBouchon_CheckedChanged(object sender, EventArgs e)
+        {
+            if (boxPresenceBouchon.Checked)
+                timerPresenceBouchon.Start();
+            else
+            {
+                timerCouleurEquipe.Stop();
+                ledPresenceBouchon.CouleurGris();
             }
         }
     }

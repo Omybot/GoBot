@@ -45,6 +45,17 @@ namespace GoBot.Actions
             }
         }
 
+        public static String Nommer(CapteurOnOff capteur)
+        {
+            switch (capteur)
+            {
+                case CapteurOnOff.GRPresenceBouchon:
+                    return "présence bouchon";
+                default :
+                    return "Inconnu";
+            }
+        }
+
         public static String Nommer(MoteurID moteur)
         {
             switch (moteur)

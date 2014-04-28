@@ -70,6 +70,10 @@
             this.label11 = new System.Windows.Forms.Label();
             this.label12 = new System.Windows.Forms.Label();
             this.label14 = new System.Windows.Forms.Label();
+            this.boxRecBun = new System.Windows.Forms.CheckBox();
+            this.boxRecBeu = new System.Windows.Forms.CheckBox();
+            this.boxRecBoi = new System.Windows.Forms.CheckBox();
+            this.boxRecPi = new System.Windows.Forms.CheckBox();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.groupBox3.SuspendLayout();
@@ -259,6 +263,10 @@
             // 
             // groupBox3
             // 
+            this.groupBox3.Controls.Add(this.boxRecPi);
+            this.groupBox3.Controls.Add(this.boxRecBoi);
+            this.groupBox3.Controls.Add(this.boxRecBeu);
+            this.groupBox3.Controls.Add(this.boxRecBun);
             this.groupBox3.Controls.Add(this.btnDebug9);
             this.groupBox3.Controls.Add(this.btnDebug8);
             this.groupBox3.Controls.Add(this.btnDebug7);
@@ -278,7 +286,7 @@
             this.groupBox3.Controls.Add(this.boxMiwi);
             this.groupBox3.Location = new System.Drawing.Point(235, 62);
             this.groupBox3.Name = "groupBox3";
-            this.groupBox3.Size = new System.Drawing.Size(422, 149);
+            this.groupBox3.Size = new System.Drawing.Size(481, 149);
             this.groupBox3.TabIndex = 15;
             this.groupBox3.TabStop = false;
             this.groupBox3.Text = "Envoi rapide trame";
@@ -520,6 +528,46 @@
             this.label14.TabIndex = 8;
             this.label14.Text = "IP carte :";
             // 
+            // boxRecBun
+            // 
+            this.boxRecBun.AutoSize = true;
+            this.boxRecBun.Location = new System.Drawing.Point(288, 26);
+            this.boxRecBun.Name = "boxRecBun";
+            this.boxRecBun.Size = new System.Drawing.Size(65, 17);
+            this.boxRecBun.TabIndex = 27;
+            this.boxRecBun.Text = "RecBun";
+            this.boxRecBun.UseVisualStyleBackColor = true;
+            // 
+            // boxRecBeu
+            // 
+            this.boxRecBeu.AutoSize = true;
+            this.boxRecBeu.Location = new System.Drawing.Point(351, 26);
+            this.boxRecBeu.Name = "boxRecBeu";
+            this.boxRecBeu.Size = new System.Drawing.Size(65, 17);
+            this.boxRecBeu.TabIndex = 28;
+            this.boxRecBeu.Text = "RecBeu";
+            this.boxRecBeu.UseVisualStyleBackColor = true;
+            // 
+            // boxRecBoi
+            // 
+            this.boxRecBoi.AutoSize = true;
+            this.boxRecBoi.Location = new System.Drawing.Point(414, 26);
+            this.boxRecBoi.Name = "boxRecBoi";
+            this.boxRecBoi.Size = new System.Drawing.Size(61, 17);
+            this.boxRecBoi.TabIndex = 29;
+            this.boxRecBoi.Text = "RecBoi";
+            this.boxRecBoi.UseVisualStyleBackColor = true;
+            // 
+            // boxRecPi
+            // 
+            this.boxRecPi.AutoSize = true;
+            this.boxRecPi.Location = new System.Drawing.Point(225, 26);
+            this.boxRecPi.Name = "boxRecPi";
+            this.boxRecPi.Size = new System.Drawing.Size(55, 17);
+            this.boxRecPi.TabIndex = 30;
+            this.boxRecPi.Text = "RecPi";
+            this.boxRecPi.UseVisualStyleBackColor = true;
+            // 
             // PanelEnvoiUdp
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -591,5 +639,9 @@
         private System.Windows.Forms.Button btnDebug1;
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.Button btnDebug0;
+        private System.Windows.Forms.CheckBox boxRecBoi;
+        private System.Windows.Forms.CheckBox boxRecBeu;
+        private System.Windows.Forms.CheckBox boxRecBun;
+        private System.Windows.Forms.CheckBox boxRecPi;
     }
 }

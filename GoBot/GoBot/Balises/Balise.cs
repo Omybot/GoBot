@@ -15,6 +15,7 @@ namespace GoBot.Balises
     public class Balise
     {
         private Semaphore semTestConnexion;
+        private Semaphore semReceptionBalise;
 
         public static Balise GetBalise(Carte carte)
         {
@@ -338,10 +339,10 @@ namespace GoBot.Balises
                                 switch (Carte)
                                 {
                                     case GoBot.Carte.RecBun:
-                                        moyenne = 146.31 - moyenne;
+                                        moyenne = 213.69 - moyenne;
                                         break;
                                     case GoBot.Carte.RecBeu:
-                                        moyenne = 213.69 - moyenne;
+                                        moyenne = 146.31 - moyenne;
                                         break;
                                     case GoBot.Carte.RecBoi:
                                         moyenne = -moyenne;
@@ -379,10 +380,10 @@ namespace GoBot.Balises
                                 switch (Carte)
                                 {
                                     case GoBot.Carte.RecBun:
-                                        moyenne = 146.31 - moyenne;
+                                        moyenne = 213.69 - moyenne;
                                         break;
                                     case GoBot.Carte.RecBeu:
-                                        moyenne = 213.69 - moyenne;
+                                        moyenne = 146.31 - moyenne;
                                         break;
                                     case GoBot.Carte.RecBoi:
                                         moyenne = -moyenne;
@@ -405,89 +406,99 @@ namespace GoBot.Balises
                     foreach (DetectionBalise d1 in DetectionsCapteur2)
                         Detections.Add(d1);
 
+                    angleTotal = 0;
+
+                    foreach (DetectionBalise detection in Detections)
+                        angleTotal += Math.Abs(detection.AngleFin - detection.AngleDebut);
+
                     // Retire les détections correspondant à la position de robots alliés
-                    // TODO retirer le petit robot également
                     if (!ReglageOffset && Plateau.ReflecteursNosRobots)
                     {
-                        for (int i = 0; i < Detections.Count; i++)
+                        foreach (Robot robot in Robots.DicRobots.Values)
                         {
-                            DetectionBalise detection = Detections[i];
-                            // Calcul du 3ème point du triangle rectangle Balise / Gros robot
-                            Droite droiteBalise0Degres = new Droite(Position.Coordonnees, new PointReel(Position.Coordonnees.X + 500, Position.Coordonnees.Y));
-                            Droite perpendiculaire = droiteBalise0Degres.getPerpendiculaire(Robots.GrosRobot.Position.Coordonnees);
-                            PointReel troisiemePoint = perpendiculaire.getCroisement(droiteBalise0Degres);
+                            for (int i = 0; i < Detections.Count; i++)
+                            {
+                                DetectionBalise detection = Detections[i];
+                                // Calcul du 3ème point du triangle rectangle Balise / Gros robot
+                                Droite droiteBalise0Degres = new Droite(Position.Coordonnees, new PointReel(Position.Coordonnees.X + 500, Position.Coordonnees.Y));
+                                Droite perpendiculaire = droiteBalise0Degres.getPerpendiculaire(robot.Position.Coordonnees);
+                                PointReel troisiemePoint = perpendiculaire.getCroisement(droiteBalise0Degres);
+                                double distanceBaliseTroisiemePoint = troisiemePoint.Distance(Position.Coordonnees);
+                                double distanceBaliseRobot = robot.Position.Coordonnees.Distance(Position.Coordonnees);
 
-                            double distanceBaliseTroisiemePoint = troisiemePoint.Distance(Position.Coordonnees);
-                            double distanceBaliseRobot = Robots.GrosRobot.Position.Coordonnees.Distance(Position.Coordonnees);
+                                double a = Math.Acos(distanceBaliseTroisiemePoint / distanceBaliseRobot);
+                                Angle angleGrosRobot = new Angle(a, AnglyeType.Radian);
+                                Angle angleDetection = new Angle(detection.AngleCentral);
 
-                            double a = Math.Acos(distanceBaliseTroisiemePoint / distanceBaliseRobot);
-                            Angle angleGrosRobot = new Angle(a, AnglyeType.Radian);
-                            Angle angleDetection = new Angle(detection.AngleCentral);
+                                double marge = 4;
 
-                            double marge = 4;
-
-                            if (Carte == GoBot.Carte.RecBeu && Plateau.NotreCouleur == Plateau.CouleurDroiteJaune)
-                            {
-                                Angle diff = new Angle(180) - (angleDetection - angleGrosRobot);
-                                if (Math.Abs((diff).AngleDegres) < marge)
+                                if (Carte == GoBot.Carte.RecBeu && Plateau.NotreCouleur == Plateau.CouleurDroiteJaune)
                                 {
-                                    // GrosRobot repéré sur balise beu
-                                    Detections.RemoveAt(i);
-                                    i--;
+                                    Angle diff = new Angle(180) - (angleGrosRobot + angleDetection);
+                                    if (Math.Abs((diff).AngleDegres) < marge)
+                                    {
+                                        // Robot repéré sur balise bun
+                                        Detections.RemoveAt(i);
+                                        i--;
+                                    }
                                 }
-                            }
-                            else if (Carte == GoBot.Carte.RecBoi && Plateau.NotreCouleur == Plateau.CouleurDroiteJaune)
-                            {
-                                Angle diff = angleGrosRobot - angleDetection;
-                                if (Math.Abs((diff).AngleDegres) < marge)
+                                else if (Carte == GoBot.Carte.RecBoi && Plateau.NotreCouleur == Plateau.CouleurDroiteJaune)
                                 {
-                                    // GrosRobot repéré sur balise boi
-                                    Detections.RemoveAt(i);
-                                    i--;
+                                    Angle diff = angleGrosRobot - angleDetection;
+                                    if (Math.Abs((diff).AngleDegres) < marge)
+                                    {
+                                        // Robot repéré sur balise boi
+                                        Detections.RemoveAt(i);
+                                        i--;
+                                    }
                                 }
-                            }
-                            else if (Carte == GoBot.Carte.RecBun && Plateau.NotreCouleur == Plateau.CouleurDroiteJaune)
-                            {
-                                Angle diff = new Angle(180) - (angleGrosRobot + angleDetection);
-                                if (Math.Abs((diff).AngleDegres) < marge)
+                                else if (Carte == GoBot.Carte.RecBun && Plateau.NotreCouleur == Plateau.CouleurDroiteJaune)
                                 {
-                                    //GrosRobot repéré sur balise bun
-                                    Detections.RemoveAt(i);
-                                    i--;
+                                    Angle diff = new Angle(180) - (angleDetection - angleGrosRobot);
+                                    if (Math.Abs((diff).AngleDegres) < marge)
+                                    {
+                                        // Robot repéré sur balise beu
+                                        Detections.RemoveAt(i);
+                                        i--;
+                                    }
                                 }
-                            }
-                            else if (Carte == GoBot.Carte.RecBeu && Plateau.NotreCouleur == Plateau.CouleurGaucheRouge)
-                            {
-                                Angle diff = angleDetection + angleGrosRobot;
-                                if (Math.Abs((diff).AngleDegres) < marge)
+                                else if (Carte == GoBot.Carte.RecBeu && Plateau.NotreCouleur == Plateau.CouleurGaucheRouge)
                                 {
-                                    // GrosRobot repéré sur balise beu
-                                    Detections.RemoveAt(i);
-                                    i--;
+                                    Angle diff = angleDetection + angleGrosRobot;
+                                    if (Math.Abs((diff).AngleDegres) < marge)
+                                    {
+                                        // Robot repéré sur balise beu
+                                        Detections.RemoveAt(i);
+                                        i--;
+                                    }
                                 }
-                            }
-                            else if (Carte == GoBot.Carte.RecBoi && Plateau.NotreCouleur == Plateau.CouleurGaucheRouge)
-                            {
-                                Angle diff = new Angle(180) + angleGrosRobot - angleDetection;
-                                if (Math.Abs((diff).AngleDegres) < marge)
+                                else if (Carte == GoBot.Carte.RecBoi && Plateau.NotreCouleur == Plateau.CouleurGaucheRouge)
                                 {
-                                    // GrosRobot repéré sur balise boi
-                                    Detections.RemoveAt(i);
-                                    i--;
+                                    Angle diff = new Angle(180) + angleGrosRobot - angleDetection;
+                                    if (Math.Abs((diff).AngleDegres) < marge)
+                                    {
+                                        // Robot repéré sur balise boi
+                                        Detections.RemoveAt(i);
+                                        i--;
+                                    }
                                 }
-                            }
-                            else if (Carte == GoBot.Carte.RecBun && Plateau.NotreCouleur == Plateau.CouleurGaucheRouge)
-                            {
-                                Angle diff = angleGrosRobot - angleDetection;
-                                if (Math.Abs((diff).AngleDegres) < marge)
+                                else if (Carte == GoBot.Carte.RecBun && Plateau.NotreCouleur == Plateau.CouleurGaucheRouge)
                                 {
-                                    // GrosRobot repéré sur balise bun
-                                    Detections.RemoveAt(i);
-                                    i--;
+                                    Angle diff = angleGrosRobot - angleDetection;
+                                    if (Math.Abs((diff).AngleDegres) < marge)
+                                    {
+                                        // Robot repéré sur balise bun
+                                        Detections.RemoveAt(i);
+                                        i--;
+                                    }
                                 }
                             }
                         }
                     }
+
+                    if (semReceptionBalise != null)
+                        semReceptionBalise.Release();
+
                     // Génération de l'event de notification de détection
                     PositionsChange();
                 }
@@ -640,6 +651,7 @@ namespace GoBot.Balises
             set
             {
                 inclinaisonFace = value;
+                Console.WriteLine("Envoi pwm face " + inclinaisonFace);
                 Trame t = TrameFactory.BaliseInclinaisonFace(Carte, inclinaisonFace);
                 Connexion.SendMessage(t);
             }
@@ -655,6 +667,56 @@ namespace GoBot.Balises
                 Trame t = TrameFactory.BaliseInclinaisonProfil(Carte, inclinaisonProfil);
                 Connexion.SendMessage(t);
             }
+        }
+
+        private double angleTotal;
+        public List<double> ParcourirAxeFace(int pas, int min, int max, bool stopSiTrouveDebut, bool stopSiTrouveFin)
+        {
+            List<double> valeurs = new List<double>();
+            bool trouve = false;
+
+            for (int i = min; i <= max; i += pas)
+            {
+                Console.WriteLine("Position face " + i);
+                Thread.Sleep(100);
+                InclinaisonFace = i;
+                semReceptionBalise = new Semaphore(0, int.MaxValue);
+                semReceptionBalise.WaitOne();
+                semReceptionBalise.WaitOne();
+                valeurs.Add(angleTotal);
+
+                if(angleTotal != 0)
+                    trouve = true;
+
+                Console.WriteLine(angleTotal + " / " + (trouve ? "Oui" : "Non"));
+
+                if (stopSiTrouveDebut && trouve)
+                    break;
+
+                if (stopSiTrouveFin && trouve && angleTotal == 0)
+                    break;
+            }
+
+            return valeurs;
+        }
+
+        public List<double> ParcourirAxeProfil(int pas, int min, int max, bool stopSiTrouve)
+        {
+            List<double> valeurs = new List<double>();
+
+            for (int i = min; i <= max; i += pas)
+            {
+                InclinaisonProfil = i;
+                semReceptionBalise = new Semaphore(0, int.MaxValue);
+                semReceptionBalise.WaitOne();
+                semReceptionBalise.WaitOne();
+                valeurs.Add(angleTotal);
+
+                if (stopSiTrouve && angleTotal == 0)
+                    break;
+            }
+
+            return valeurs;
         }
     }
 }

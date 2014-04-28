@@ -84,5 +84,10 @@ namespace GoBot.IHM
         {
             Robots.GrosRobot.ActionneurOnOff(ActionneurOnOffID.GRElectrovanneFeu, switchBoutonElectrvanne.Actif);
         }
+
+        private void btnTirBouchon_Click(object sender, EventArgs e)
+        {
+            Robots.GrosRobot.ActionneurOnOff(ActionneurOnOffID.GRCanonFruit, true);
+        }
     }
 }

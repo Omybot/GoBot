@@ -317,7 +317,13 @@ namespace GoBot
         GRAlimentation = 1,
         GRPompeFeu = 0,
         GRPinceDroite = 0x10,
-        GRPinceGauche = 0x11
+        GRPinceGauche = 0x11,
+        GRCanonFruit = 0x03
+    }
+
+    public enum CapteurOnOff
+    {
+        GRPresenceBouchon = 0x00
     }
 
     public enum Carte
@@ -361,6 +367,9 @@ namespace GoBot
 
         ActionneurOnOff = 0x65,
         Moteur = 0x66,
+
+        DemandeCapteurOnOff = 0x74,
+        RetourCapteurOnOff = 0x75,
 
         Debug = 0xEE,
 

@@ -212,29 +212,29 @@ namespace GoBot.IHM
                 batteriePack2.TensionMid = 26.95;
                 batteriePack2.TensionLow = 25.85;
 
-                batterieBun1.TensionMidHigh = 10;
-                batterieBun1.TensionMid = 9;
-                batterieBun1.TensionLow = 8;
+                batterieBun1.TensionMidHigh = 8;
+                batterieBun1.TensionMid = 7;
+                batterieBun1.TensionLow = 6;
 
-                batterieBun2.TensionMidHigh = 10;
-                batterieBun2.TensionMid = 9;
-                batterieBun2.TensionLow = 8;
+                batterieBun2.TensionMidHigh = 8;
+                batterieBun2.TensionMid = 7;
+                batterieBun2.TensionLow = 6;
 
-                batterieBeu1.TensionMidHigh = 10;
-                batterieBeu1.TensionMid = 9;
-                batterieBeu1.TensionLow = 8;
+                batterieBeu1.TensionMidHigh = 8;
+                batterieBeu1.TensionMid = 7;
+                batterieBeu1.TensionLow = 6;
 
-                batterieBeu2.TensionMidHigh = 10;
-                batterieBeu2.TensionMid = 9;
-                batterieBeu2.TensionLow = 8;
+                batterieBeu2.TensionMidHigh = 8;
+                batterieBeu2.TensionMid = 7;
+                batterieBeu2.TensionLow = 6;
 
-                batterieBoi1.TensionMidHigh = 10;
-                batterieBoi1.TensionMid = 9;
-                batterieBoi1.TensionLow = 8;
+                batterieBoi1.TensionMidHigh = 8;
+                batterieBoi1.TensionMid = 7;
+                batterieBoi1.TensionLow = 6;
 
-                batterieBoi2.TensionMidHigh = 10;
-                batterieBoi2.TensionMid = 9;
-                batterieBoi2.TensionLow = 8;
+                batterieBoi2.TensionMidHigh = 8;
+                batterieBoi2.TensionMid = 7;
+                batterieBoi2.TensionLow = 6;
 
                 timerBatteries = new System.Windows.Forms.Timer();
                 timerBatteries.Interval = 1000;

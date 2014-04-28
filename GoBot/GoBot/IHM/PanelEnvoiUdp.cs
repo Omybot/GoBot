@@ -37,6 +37,14 @@ namespace GoBot.IHM
                 Connexions.ConnexionMiwi.SendMessage(trame);
             if (boxIO.Checked)
                 Connexions.ConnexionIO.SendMessage(trame);
+            if (boxRecPi.Checked)
+                Connexions.ConnexionPi.SendMessage(trame);
+            if (boxRecBun.Checked)
+                Connexions.ConnexionBun.SendMessage(trame);
+            if (boxRecBeu.Checked)
+                Connexions.ConnexionBeu.SendMessage(trame);
+            if (boxRecBoi.Checked)
+                Connexions.ConnexionBoi.SendMessage(trame);
         }
 
         private void PanelEnvoiUdp_Load(object sender, EventArgs e)
@@ -97,6 +105,26 @@ namespace GoBot.IHM
             {
                 Trame trame = TrameFactory.Debug(Carte.RecIO, val);
                 Connexions.ConnexionIO.SendMessage(trame);
+            }
+            if (boxRecPi.Checked)
+            {
+                Trame trame = TrameFactory.Debug(Carte.RecPi, val);
+                Connexions.ConnexionPi.SendMessage(trame);
+            }
+            if (boxRecBun.Checked)
+            {
+                Trame trame = TrameFactory.Debug(Carte.RecBun, val);
+                Connexions.ConnexionBun.SendMessage(trame);
+            }
+            if (boxRecBeu.Checked)
+            {
+                Trame trame = TrameFactory.Debug(Carte.RecBeu, val);
+                Connexions.ConnexionBeu.SendMessage(trame);
+            }
+            if (boxRecBoi.Checked)
+            {
+                Trame trame = TrameFactory.Debug(Carte.RecBoi, val);
+                Connexions.ConnexionBoi.SendMessage(trame);
             }
         }
     }

@@ -83,6 +83,7 @@
     <Compile Include="Actions\IAction.cs" />
     <Compile Include="Balises\BaliseStats.cs" />
     <Compile Include="Balises\SuiviBalise.cs" />
+    <Compile Include="BrasFruits.cs" />
     <Compile Include="CameraIP.cs" />
     <Compile Include="Communications\ConnexionMiwi.cs" />
     <Compile Include="Communications\Connexion.cs" />
@@ -95,6 +96,7 @@
     <Compile Include="Enchainements\EnchainementAleatoire.cs" />
     <Compile Include="Enchainements\EnchainementMatch.cs" />
     <Compile Include="EventsReplay.cs" />
+    <Compile Include="BrasFeux.cs" />
     <Compile Include="IHM\PanelBaliseInclinaison.cs">
       <SubType>UserControl</SubType>
     </Compile>

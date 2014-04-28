@@ -46,11 +46,15 @@
             this.label12 = new System.Windows.Forms.Label();
             this.btnDiagnostic = new System.Windows.Forms.Button();
             this.switchBoutonPuissance = new Composants.SwitchBouton();
+            this.btnTirBouchon = new System.Windows.Forms.Button();
+            this.label7 = new System.Windows.Forms.Label();
             this.groupBoxUtilisation.SuspendLayout();
             this.SuspendLayout();
             // 
             // groupBoxUtilisation
             // 
+            this.groupBoxUtilisation.Controls.Add(this.btnTirBouchon);
+            this.groupBoxUtilisation.Controls.Add(this.label7);
             this.groupBoxUtilisation.Controls.Add(this.label6);
             this.groupBoxUtilisation.Controls.Add(this.switchBoutonElectrvanne);
             this.groupBoxUtilisation.Controls.Add(this.label2);
@@ -70,7 +74,7 @@
             this.groupBoxUtilisation.Controls.Add(this.switchBoutonPuissance);
             this.groupBoxUtilisation.Location = new System.Drawing.Point(3, 3);
             this.groupBoxUtilisation.Name = "groupBoxUtilisation";
-            this.groupBoxUtilisation.Size = new System.Drawing.Size(332, 211);
+            this.groupBoxUtilisation.Size = new System.Drawing.Size(332, 244);
             this.groupBoxUtilisation.TabIndex = 1;
             this.groupBoxUtilisation.TabStop = false;
             this.groupBoxUtilisation.Text = "Utilisation";
@@ -238,6 +242,25 @@
             this.switchBoutonPuissance.TabIndex = 200;
             this.switchBoutonPuissance.ChangementEtat += new System.EventHandler(this.switchBoutonPuissance_ChangementEtat);
             // 
+            // btnTirBouchon
+            // 
+            this.btnTirBouchon.Location = new System.Drawing.Point(117, 205);
+            this.btnTirBouchon.Name = "btnTirBouchon";
+            this.btnTirBouchon.Size = new System.Drawing.Size(53, 23);
+            this.btnTirBouchon.TabIndex = 221;
+            this.btnTirBouchon.Text = "Feu !!";
+            this.btnTirBouchon.UseVisualStyleBackColor = true;
+            this.btnTirBouchon.Click += new System.EventHandler(this.btnTirBouchon_Click);
+            // 
+            // label7
+            // 
+            this.label7.AutoSize = true;
+            this.label7.Location = new System.Drawing.Point(26, 210);
+            this.label7.Name = "label7";
+            this.label7.Size = new System.Drawing.Size(64, 13);
+            this.label7.TabIndex = 220;
+            this.label7.Text = "Tir bouchon";
+            // 
             // PanelGrosRobotUtilisation
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -246,7 +269,7 @@
             this.BackColor = System.Drawing.Color.Transparent;
             this.Controls.Add(this.groupBoxUtilisation);
             this.Name = "PanelGrosRobotUtilisation";
-            this.Size = new System.Drawing.Size(341, 221);
+            this.Size = new System.Drawing.Size(341, 250);
             this.Load += new System.EventHandler(this.PanelUtilGros_Load);
             this.groupBoxUtilisation.ResumeLayout(false);
             this.groupBoxUtilisation.PerformLayout();
@@ -274,5 +297,7 @@
         private Composants.SwitchBouton switchBoutonPompeFeu;
         private System.Windows.Forms.Label label6;
         private Composants.SwitchBouton switchBoutonElectrvanne;
+        private System.Windows.Forms.Button btnTirBouchon;
+        private System.Windows.Forms.Label label7;
     }
 }

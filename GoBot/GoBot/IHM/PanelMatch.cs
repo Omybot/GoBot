@@ -33,7 +33,7 @@ namespace GoBot.IHM
             Plateau.NotreCouleur = Plateau.CouleurGaucheRouge;
         }
 
-        public void CouleurRouge()
+        public void CouleurGaucheRouge()
         {
             pictureBoxCouleur.BackColor = Plateau.CouleurGaucheRouge;
             pictureBoxBalises.Image = Properties.Resources.PositionBalises1;
@@ -43,20 +43,19 @@ namespace GoBot.IHM
             Balise.GetBalise(Carte.RecBun).Position = new Position(new Angle(90, AnglyeType.Degre), new PointReel(-Balise.DISTANCE_LASER_TABLE, -Balise.DISTANCE_LASER_TABLE));
             Balise.GetBalise(Carte.RecBeu).Position = new Position(new Angle(270, AnglyeType.Degre), new PointReel(-Balise.DISTANCE_LASER_TABLE, Plateau.LargeurPlateau + Balise.DISTANCE_LASER_TABLE));
             Balise.GetBalise(Carte.RecBoi).Position = new Position(new Angle(180, AnglyeType.Degre), new PointReel(Plateau.LongueurPlateau + Balise.DISTANCE_LASER_TABLE, Plateau.LargeurPlateau / 2));
-        
         }
 
-        public void CouleurJaune()
+        public void CouleurDroiteJaune()
         {
             pictureBoxCouleur.BackColor = Plateau.CouleurDroiteJaune;
             pictureBoxBalises.Image = Properties.Resources.PositionBalises2;
 
             Robots.GrosRobot.ReglerOffsetAsserv(3000 - 220, 150, 180);
 
-            Balise.GetBalise(Carte.RecBun).Position = new Position(new Angle(90, AnglyeType.Degre), new PointReel(Plateau.LongueurPlateau + Balise.DISTANCE_LASER_TABLE, -Balise.DISTANCE_LASER_TABLE));
-            Balise.GetBalise(Carte.RecBeu).Position = new Position(new Angle(270, AnglyeType.Degre), new PointReel(Plateau.LongueurPlateau + Balise.DISTANCE_LASER_TABLE, Plateau.LargeurPlateau + Balise.DISTANCE_LASER_TABLE));
+            Balise.GetBalise(Carte.RecBeu).Position = new Position(new Angle(90, AnglyeType.Degre), new PointReel(Plateau.LongueurPlateau + Balise.DISTANCE_LASER_TABLE, -Balise.DISTANCE_LASER_TABLE));
+            Balise.GetBalise(Carte.RecBun).Position = new Position(new Angle(270, AnglyeType.Degre), new PointReel(Plateau.LongueurPlateau + Balise.DISTANCE_LASER_TABLE, Plateau.LargeurPlateau + Balise.DISTANCE_LASER_TABLE));
             Balise.GetBalise(Carte.RecBoi).Position = new Position(new Angle(0, AnglyeType.Degre), new PointReel(-Balise.DISTANCE_LASER_TABLE, Plateau.LargeurPlateau / 2));
-}
+        }
 
         Thread thRecallage;
         private void btnRecallage_Click(object sender, EventArgs e)
@@ -171,9 +170,9 @@ namespace GoBot.IHM
             this.Invoke(new EventHandler(delegate
             {
                 if (Plateau.NotreCouleur == Plateau.CouleurGaucheRouge)
-                    CouleurRouge();
+                    CouleurGaucheRouge();
                 else if (Plateau.NotreCouleur == Plateau.CouleurDroiteJaune)
-                    CouleurJaune();
+                    CouleurDroiteJaune();
             }));
         }
 

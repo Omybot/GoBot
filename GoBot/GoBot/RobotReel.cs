@@ -16,7 +16,9 @@ namespace GoBot
     class RobotReel : Robot
     {
         Dictionary<FonctionIO, Semaphore> SemaphoresIO = new Dictionary<FonctionIO, Semaphore>();
+        Dictionary<CapteurOnOff, Semaphore> SemaphoresCapteurs = new Dictionary<CapteurOnOff, Semaphore>();
         Dictionary<FonctionMove, Semaphore> SemaphoresMove = new Dictionary<FonctionMove, Semaphore>();
+        Dictionary<CapteurOnOff, bool> ValeursCapteurs = new Dictionary<CapteurOnOff, bool>();
 
         private const int TIME_REFRESH_POS = 200;
         private DateTime DateRefreshPos { get; set; }
@@ -24,7 +26,7 @@ namespace GoBot
         private System.Timers.Timer timerPosition;
         private System.Timers.Timer timerTension;
 
-        public ConnexionUDP Connexion { get; set; }
+        public Connexion Connexion { get; set; }
 
         public override Position Position { get; set; }
 
@@ -44,6 +46,9 @@ namespace GoBot
 
             foreach (FonctionMove fonction in Enum.GetValues(typeof(FonctionMove)))
                 SemaphoresMove.Add(fonction, new Semaphore(0, int.MaxValue));
+
+            foreach (CapteurOnOff fonction in Enum.GetValues(typeof(CapteurOnOff)))
+                SemaphoresCapteurs.Add(fonction, new Semaphore(0, int.MaxValue));
         }
 
         public override void Init()
@@ -89,6 +94,20 @@ namespace GoBot
         {
             Trame t = TrameFactory.DemandeTension();
             Connexions.ConnexionIO.SendMessage(t);
+        }
+
+        public override bool DemandeCapteurOnOff(CapteurOnOff capteur, bool attendre = true)
+        {
+            if (attendre)
+                SemaphoresCapteurs[capteur] = new Semaphore(0, int.MaxValue);
+
+            Trame t = TrameFactory.DemandeCapteurOnOff(capteur);
+            Connexions.ConnexionIO.SendMessage(t);
+
+            if (attendre)
+                SemaphoresCapteurs[capteur].WaitOne(100);
+
+            return ValeursCapteurs[capteur];
         }
 
         public void Delete()
@@ -185,6 +204,14 @@ namespace GoBot
             }
             else if (trameRecue[0] == (byte)Carte.RecIO)
             {
+                if (trameRecue[1] == (byte)FonctionIO.RetourCapteurOnOff)
+                {
+                    CapteurOnOff capteur = (CapteurOnOff)trameRecue[2];
+                    ValeursCapteurs[capteur] = trameRecue[3] > 0 ? true : false;
+                    if (SemaphoresCapteurs[capteur] != null)
+                        SemaphoresCapteurs[capteur].Release();
+                }
+
                 if (trameRecue[1] == (byte)FonctionIO.ReponseTension)
                 {
                     TensionPack1 = (double)(trameRecue[2] * 256 + trameRecue[3]) / 100.0;
@@ -348,6 +375,9 @@ namespace GoBot
 
         public bool DemandePosition(bool attendre = true)
         {
+            if (!Connexion.ConnexionCheck.Connecte)
+                return false;
+
             if(attendre)
                 SemaphoresMove[FonctionMove.RetourPositionCodeurs] = new Semaphore(0, int.MaxValue);
 

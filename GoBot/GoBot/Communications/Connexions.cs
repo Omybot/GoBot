@@ -40,6 +40,8 @@ namespace GoBot.Communications
             ConnexionBoi.StartReception();
 
             ConnexionPi = new ConnexionMiwi(Carte.RecPi);
+            ConnexionPi.StartReception();
+            ConnexionPi.ConnexionCheck.TestConnexion += new ConnexionCheck.TestConnexionDelegate(ConnexionPiCheck_TestConnexion);
 
             ConnexionParCarte = new Dictionary<Carte, Connexion>();
             ConnexionParCarte.Add(Carte.RecBun, ConnexionBun);
@@ -64,6 +66,11 @@ namespace GoBot.Communications
         public static void ConnexionIOCheck_TestConnexion()
         {
             ConnexionIO.SendMessage(TrameFactory.TestConnexionIO());
+        }
+
+        public static void ConnexionPiCheck_TestConnexion()
+        {
+            ConnexionPi.SendMessage(TrameFactory.TestConnexionPi());
         }
     }
 }
