@@ -230,7 +230,7 @@ namespace GoBot
 
                 if (trameRecue[1] == (byte)FonctionIO.DepartJack)
                 {
-                    Plateau.Enchainement = new GoBot.Enchainements.Enchainement1Point();
+                    Plateau.Enchainement = new GoBot.Enchainements.EnchainementMatch();
                     Plateau.Enchainement.Executer();
                 }
 
@@ -252,17 +252,35 @@ namespace GoBot
 
         public override void Avancer(int distance, bool attendre = true)
         {
+            Console.WriteLine("Déplacement " + DateTime.Now.Hour + ":" + DateTime.Now.Minute + ":" + DateTime.Now.Second + ":" + DateTime.Now.Millisecond);
             if (attendre)
+            {
+                Console.WriteLine("Création semaphore " + DateTime.Now.Hour + ":" + DateTime.Now.Minute + ":" + DateTime.Now.Second + ":" + DateTime.Now.Millisecond); 
+
                 SemaphoresMove[FonctionMove.FinDeplacement] = new Semaphore(0, int.MaxValue);
+            }
 
             DeplacementLigne = true;
             Trame trame = TrameFactory.Deplacer(SensAR.Avant, distance, this);
             Connexion.SendMessage(trame);
+            Console.WriteLine("Trame envoyée " + DateTime.Now.Hour + ":" + DateTime.Now.Minute + ":" + DateTime.Now.Second + ":" + DateTime.Now.Millisecond); 
+
 
             Historique.AjouterAction(new ActionAvance(this, distance));
 
             if (attendre)
+            {
+
+                Console.WriteLine("Attente semaphore " + DateTime.Now.Hour + ":" + DateTime.Now.Minute + ":" + DateTime.Now.Second + ":" + DateTime.Now.Millisecond); 
+
                 SemaphoresMove[FonctionMove.FinDeplacement].WaitOne();
+
+                Console.WriteLine("Semaphore libéré " + DateTime.Now.Hour + ":" + DateTime.Now.Minute + ":" + DateTime.Now.Second + ":" + DateTime.Now.Millisecond); 
+
+            }
+
+            Console.WriteLine("Deplacement terminé " + DateTime.Now.Hour + ":" + DateTime.Now.Minute + ":" + DateTime.Now.Second + ":" + DateTime.Now.Millisecond); 
+
             DeplacementLigne = false;
         }
 
@@ -274,16 +292,35 @@ namespace GoBot
 
         public override void Reculer(int distance, bool attendre = true)
         {
+
+            Console.WriteLine("Déplacement " + DateTime.Now.Hour + ":" + DateTime.Now.Minute + ":" + DateTime.Now.Second + ":" + DateTime.Now.Millisecond);
             if (attendre)
+            {
+                Console.WriteLine("Création semaphore " + DateTime.Now.Hour + ":" + DateTime.Now.Minute + ":" + DateTime.Now.Second + ":" + DateTime.Now.Millisecond);
+
                 SemaphoresMove[FonctionMove.FinDeplacement] = new Semaphore(0, int.MaxValue);
+            }
 
             DeplacementLigne = true;
-            Historique.AjouterAction(new ActionRecule(this, distance));
-
             Trame trame = TrameFactory.Deplacer(SensAR.Arriere, distance, this);
             Connexion.SendMessage(trame);
+            Console.WriteLine("Trame envoyée " + DateTime.Now.Hour + ":" + DateTime.Now.Minute + ":" + DateTime.Now.Second + ":" + DateTime.Now.Millisecond);
+
+
+            Historique.AjouterAction(new ActionRecule(this, distance));
+
             if (attendre)
+            {
+
+                Console.WriteLine("Attente semaphore " + DateTime.Now.Hour + ":" + DateTime.Now.Minute + ":" + DateTime.Now.Second + ":" + DateTime.Now.Millisecond);
+
                 SemaphoresMove[FonctionMove.FinDeplacement].WaitOne();
+
+                Console.WriteLine("Semaphore libéré " + DateTime.Now.Hour + ":" + DateTime.Now.Minute + ":" + DateTime.Now.Second + ":" + DateTime.Now.Millisecond);
+
+            }
+
+            Console.WriteLine("Deplacement terminé " + DateTime.Now.Hour + ":" + DateTime.Now.Minute + ":" + DateTime.Now.Second + ":" + DateTime.Now.Millisecond);
 
             DeplacementLigne = false;
         }
@@ -291,34 +328,80 @@ namespace GoBot
         public override void PivotGauche(double angle, bool attendre = true)
         {
             angle = Math.Round(angle, 2);
+
+
+            Console.WriteLine("Déplacement " + DateTime.Now.Hour + ":" + DateTime.Now.Minute + ":" + DateTime.Now.Second + ":" + DateTime.Now.Millisecond);
             if (attendre)
+            {
+                Console.WriteLine("Création semaphore " + DateTime.Now.Hour + ":" + DateTime.Now.Minute + ":" + DateTime.Now.Second + ":" + DateTime.Now.Millisecond);
+
                 SemaphoresMove[FonctionMove.FinDeplacement] = new Semaphore(0, int.MaxValue);
+            }
+
+            DeplacementLigne = true;
+            Trame trame = TrameFactory.Pivot(SensGD.Gauche, angle, this);
+            Connexion.SendMessage(trame);
+            Console.WriteLine("Trame envoyée " + DateTime.Now.Hour + ":" + DateTime.Now.Minute + ":" + DateTime.Now.Second + ":" + DateTime.Now.Millisecond);
+
 
             Historique.AjouterAction(new ActionPivot(this, angle, SensGD.Gauche));
-            Trame trame = TrameFactory.Pivot(SensGD.Gauche, angle, this);
-
-            Connexion.SendMessage(trame);
 
             if (attendre)
+            {
+
+                Console.WriteLine("Attente semaphore " + DateTime.Now.Hour + ":" + DateTime.Now.Minute + ":" + DateTime.Now.Second + ":" + DateTime.Now.Millisecond);
+
                 SemaphoresMove[FonctionMove.FinDeplacement].WaitOne();
+
+                Console.WriteLine("Semaphore libéré " + DateTime.Now.Hour + ":" + DateTime.Now.Minute + ":" + DateTime.Now.Second + ":" + DateTime.Now.Millisecond);
+
+            }
+
+            Console.WriteLine("Deplacement terminé " + DateTime.Now.Hour + ":" + DateTime.Now.Minute + ":" + DateTime.Now.Second + ":" + DateTime.Now.Millisecond);
+
+            DeplacementLigne = false;
         }
 
         public override void PivotDroite(double angle, bool attendre = true)
         {
             angle = Math.Round(angle, 2);
-            if (attendre)
-                SemaphoresMove[FonctionMove.FinDeplacement] = new Semaphore(0, int.MaxValue);
 
-            Historique.AjouterAction(new ActionPivot(this, angle, SensGD.Droite));
+            Console.WriteLine("Déplacement " + DateTime.Now.Hour + ":" + DateTime.Now.Minute + ":" + DateTime.Now.Second + ":" + DateTime.Now.Millisecond);
+            if (attendre)
+            {
+                Console.WriteLine("Création semaphore " + DateTime.Now.Hour + ":" + DateTime.Now.Minute + ":" + DateTime.Now.Second + ":" + DateTime.Now.Millisecond);
+
+                SemaphoresMove[FonctionMove.FinDeplacement] = new Semaphore(0, int.MaxValue);
+            }
+
+            DeplacementLigne = true;
             Trame trame = TrameFactory.Pivot(SensGD.Droite, angle, this);
             Connexion.SendMessage(trame);
+            Console.WriteLine("Trame envoyée " + DateTime.Now.Hour + ":" + DateTime.Now.Minute + ":" + DateTime.Now.Second + ":" + DateTime.Now.Millisecond);
+
+
+            Historique.AjouterAction(new ActionPivot(this, angle, SensGD.Droite));
 
             if (attendre)
+            {
+
+                Console.WriteLine("Attente semaphore " + DateTime.Now.Hour + ":" + DateTime.Now.Minute + ":" + DateTime.Now.Second + ":" + DateTime.Now.Millisecond);
+
                 SemaphoresMove[FonctionMove.FinDeplacement].WaitOne();
+
+                Console.WriteLine("Semaphore libéré " + DateTime.Now.Hour + ":" + DateTime.Now.Minute + ":" + DateTime.Now.Second + ":" + DateTime.Now.Millisecond);
+
+            }
+
+            Console.WriteLine("Deplacement terminé " + DateTime.Now.Hour + ":" + DateTime.Now.Minute + ":" + DateTime.Now.Second + ":" + DateTime.Now.Millisecond);
+
+            DeplacementLigne = false;
         }
 
         public override void Stop(StopMode mode = StopMode.Smooth)
         {
+            Console.WriteLine("Envoi stop " + DateTime.Now.Hour + ":" + DateTime.Now.Minute + ":" + DateTime.Now.Second + ":" + DateTime.Now.Millisecond);
+
             Trame trame = TrameFactory.Stop(mode, this);
             DeplacementLigne = false;
 

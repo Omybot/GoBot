@@ -12,7 +12,7 @@ namespace GoBot.Enchainements
             int iMeilleur = 0;
 
             // Todo Ajouter ici les actions fixes avant le lancement de l'IA
-            // Exemple : Robots.GrosRobot.Avancer(600);
+            Robots.GrosRobot.Avancer(600);
 
             while (ListeMouvementsGros.Count > 0)
             {

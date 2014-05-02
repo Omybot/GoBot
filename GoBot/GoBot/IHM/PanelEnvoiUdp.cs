@@ -127,5 +127,64 @@ namespace GoBot.IHM
                 Connexions.ConnexionBoi.SendMessage(trame);
             }
         }
+
+        private Timer timerTestConnexion;
+        private void btnSendTest_Click(object sender, EventArgs e)
+        {
+            if (btnSendTest.Text == "Envoyer")
+            {
+                btnSendTest.Text = "Stop";
+
+                timerTestConnexion = new Timer();
+                timerTestConnexion.Interval = (int)numIntervalleTest.Value;
+                timerTestConnexion.Tick += new EventHandler(timerTestConnexion_Tick);
+
+                timerTestConnexion.Start();
+            }
+            else
+            {
+                btnSendTest.Text = "Envoyer";
+                timerTestConnexion.Stop();
+            }
+        }
+
+        void timerTestConnexion_Tick(object sender, EventArgs e)
+        {
+            if (boxMove.Checked)
+            {
+                Trame trame = TrameFactory.TestConnexionMove();
+                Connexions.ConnexionMove.SendMessage(trame);
+            }
+            if (boxMiwi.Checked)
+            {
+                Trame trame = TrameFactory.TestConnexionMiwi();
+                Connexions.ConnexionMiwi.SendMessage(trame);
+            }
+            if (boxIO.Checked)
+            {
+                Trame trame = TrameFactory.TestConnexionIO();
+                Connexions.ConnexionIO.SendMessage(trame);
+            }
+            if (boxRecPi.Checked)
+            {
+                Trame trame = TrameFactory.TestConnexionPi();
+                Connexions.ConnexionPi.SendMessage(trame);
+            }
+            if (boxRecBun.Checked)
+            {
+                Trame trame = TrameFactory.BaliseTestConnexion(Carte.RecBun);
+                Connexions.ConnexionBun.SendMessage(trame);
+            }
+            if (boxRecBeu.Checked)
+            {
+                Trame trame = TrameFactory.BaliseTestConnexion(Carte.RecBeu);
+                Connexions.ConnexionBeu.SendMessage(trame);
+            }
+            if (boxRecBoi.Checked)
+            {
+                Trame trame = TrameFactory.BaliseTestConnexion(Carte.RecBoi);
+                Connexions.ConnexionBoi.SendMessage(trame);
+            }
+        }
     }
 }

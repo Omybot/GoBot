@@ -89,5 +89,20 @@ namespace GoBot.IHM
         {
             Robots.GrosRobot.ActionneurOnOff(ActionneurOnOffID.GRCanonFruit, true);
         }
+
+        private void switchBoutonPousse_ChangementEtat(object sender, EventArgs e)
+        {
+            Robots.GrosRobot.ActionneurOnOff(ActionneurOnOffID.GRPousseBouchon, switchBoutonPousse.Actif);
+        }
+
+        private void switchBoutonPinceDroite_ChangementEtat(object sender, EventArgs e)
+        {
+            Robots.GrosRobot.ActionneurOnOff(ActionneurOnOffID.GRPinceDroite, switchBoutonPinceDroite.Actif);
+        }
+
+        private void switchBoutonPinceGauche_ChangementEtat(object sender, EventArgs e)
+        {
+            Robots.GrosRobot.ActionneurOnOff(ActionneurOnOffID.GRPinceGauche, switchBoutonPinceGauche.Actif);
+        }
     }
 }

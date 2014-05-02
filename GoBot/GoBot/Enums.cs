@@ -26,6 +26,7 @@ namespace GoBot
 
     public enum ServomoteurID
     {
+        GRCanonInclinaison = 19,
         GRFeuxCoude = 18,
         GRFruitsCoude = 2,
         GRFruitsEpaule = 4,
@@ -50,7 +51,7 @@ namespace GoBot
         zLibre16 = 16,
         zLibre17 = 17,
         //zLibre18 = 18,
-        zLibre19 = 19,
+        //zLibre19 = 19,
         zLibre20 = 20,
         zLibre21 = 21,
         zLibre22 = 22,
@@ -318,6 +319,7 @@ namespace GoBot
         GRPompeFeu = 0,
         GRPinceDroite = 0x10,
         GRPinceGauche = 0x11,
+        GRPousseBouchon = 0x12,
         GRCanonFruit = 0x03
     }
 
@@ -523,7 +525,8 @@ namespace GoBot
 
         Debug = 0xEE,
 
-        TestConnexion = 0xF0
+        TestConnexion = 0xF0,
+        RetourTestConnexion = 0xF5
     }
 
     public enum FonctionBalise

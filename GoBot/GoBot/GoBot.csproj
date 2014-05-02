@@ -335,6 +335,7 @@
     <Compile Include="Communications\Replay.cs" />
     <Compile Include="Robot.cs" />
     <Compile Include="RobotSimu.cs" />
+    <Compile Include="SerializableDictionnary.cs" />
     <Compile Include="Servomoteur.cs" />
     <Compile Include="Communications\TrameFactory.cs" />
     <Compile Include="Communications\ConnexionUDP.cs" />

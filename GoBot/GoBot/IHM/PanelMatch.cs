@@ -60,11 +60,11 @@ namespace GoBot.IHM
         Thread thRecallage;
         private void btnRecallage_Click(object sender, EventArgs e)
         {
-            if (!Robots.GrosRobot.GetJack(false))
+            /*if (!Robots.GrosRobot.GetJack(false))
             {
                 MessageBox.Show("Jack absent !" + Environment.NewLine + "Jack nécessaire avant de commencer à recaller.", "Attention", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 return;
-            }
+            }*/
             btnRecallage.Enabled = false;
             if (Connexions.ConnexionMove.ConnexionCheck.Connecte)
             {
@@ -109,21 +109,28 @@ namespace GoBot.IHM
             Robots.GrosRobot.Rapide();
             Robots.GrosRobot.Reculer(101);
 
-            if (Plateau.NotreCouleur == Plateau.CouleurGaucheRouge)
-                Robots.GrosRobot.PivotDroite(90);
-            else
+            if (Plateau.NotreCouleur == Plateau.CouleurDroiteJaune)
                 Robots.GrosRobot.PivotGauche(90);
+            else
+                Robots.GrosRobot.PivotDroite(90);
 
             Robots.GrosRobot.Reculer(400);
             Robots.GrosRobot.Lent();
             Robots.GrosRobot.Recallage(SensAR.Arriere);
             Robots.GrosRobot.Rapide();
             Robots.GrosRobot.Avancer(352);
-            Robots.GrosRobot.PivotDroite(26);
+
+            if (Plateau.NotreCouleur == Plateau.CouleurDroiteJaune)
+                Robots.GrosRobot.PivotGauche(26);
+            else
+                Robots.GrosRobot.PivotDroite(26);
 
             Robots.GrosRobot.Reculer(339);
 
-            Robots.GrosRobot.ReglerOffsetAsserv(197, 402, 26);
+            if (Plateau.NotreCouleur == Plateau.CouleurDroiteJaune)
+                Robots.GrosRobot.ReglerOffsetAsserv(3000 - 197, 402, 26);
+            else
+                Robots.GrosRobot.ReglerOffsetAsserv(197, 402, -26);
 
             this.Invoke(new EventHandler(delegate
             {

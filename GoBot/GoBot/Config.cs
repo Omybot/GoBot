@@ -116,10 +116,15 @@ namespace GoBot
 
         public int PositionGREpauleRange { get; set; }
 
-        // Positions bougies à la camera
+        // Parametres logs UDP
 
-        public int[] PositionsBougiesCameraX { get; set; }
-        public int[] PositionsBougiesCameraY { get; set; }
+        public SerializableDictionary<FonctionBalise, bool> LogsFonctionsBalise { get; set; }
+        public SerializableDictionary<FonctionIO, bool> LogsFonctionsIO { get; set; }
+        public SerializableDictionary<FonctionMove, bool> LogsFonctionsMove { get; set; }
+        public SerializableDictionary<FonctionMiwi, bool> LogsFonctionsMiwi { get; set; }
+        public SerializableDictionary<FonctionPi, bool> LogsFonctionsPi { get; set; }
+        public SerializableDictionary<Carte, bool> LogsExpediteurs { get; set; }
+        public SerializableDictionary<Carte, bool> LogsDestinataires { get; set; }
 
         public double GetOffsetBalise(Carte carteBalise, int iCapteur)
         {

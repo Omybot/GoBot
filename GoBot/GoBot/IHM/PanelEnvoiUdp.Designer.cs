@@ -47,6 +47,10 @@
             this.label8 = new System.Windows.Forms.Label();
             this.label9 = new System.Windows.Forms.Label();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
+            this.boxRecPi = new System.Windows.Forms.CheckBox();
+            this.boxRecBoi = new System.Windows.Forms.CheckBox();
+            this.boxRecBeu = new System.Windows.Forms.CheckBox();
+            this.boxRecBun = new System.Windows.Forms.CheckBox();
             this.btnDebug9 = new System.Windows.Forms.Button();
             this.btnDebug8 = new System.Windows.Forms.Button();
             this.btnDebug7 = new System.Windows.Forms.Button();
@@ -70,15 +74,18 @@
             this.label11 = new System.Windows.Forms.Label();
             this.label12 = new System.Windows.Forms.Label();
             this.label14 = new System.Windows.Forms.Label();
-            this.boxRecBun = new System.Windows.Forms.CheckBox();
-            this.boxRecBeu = new System.Windows.Forms.CheckBox();
-            this.boxRecBoi = new System.Windows.Forms.CheckBox();
-            this.boxRecPi = new System.Windows.Forms.CheckBox();
+            this.groupBox6 = new System.Windows.Forms.GroupBox();
+            this.btnSendTest = new System.Windows.Forms.Button();
+            this.label6 = new System.Windows.Forms.Label();
+            this.numIntervalleTest = new System.Windows.Forms.NumericUpDown();
+            this.label10 = new System.Windows.Forms.Label();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.groupBox3.SuspendLayout();
             this.groupBox4.SuspendLayout();
             this.groupBox5.SuspendLayout();
+            this.groupBox6.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.numIntervalleTest)).BeginInit();
             this.SuspendLayout();
             // 
             // btnEnvoyer
@@ -263,6 +270,7 @@
             // 
             // groupBox3
             // 
+            this.groupBox3.Controls.Add(this.groupBox6);
             this.groupBox3.Controls.Add(this.boxRecPi);
             this.groupBox3.Controls.Add(this.boxRecBoi);
             this.groupBox3.Controls.Add(this.boxRecBeu);
@@ -286,10 +294,50 @@
             this.groupBox3.Controls.Add(this.boxMiwi);
             this.groupBox3.Location = new System.Drawing.Point(235, 62);
             this.groupBox3.Name = "groupBox3";
-            this.groupBox3.Size = new System.Drawing.Size(481, 149);
+            this.groupBox3.Size = new System.Drawing.Size(481, 224);
             this.groupBox3.TabIndex = 15;
             this.groupBox3.TabStop = false;
             this.groupBox3.Text = "Envoi rapide trame";
+            // 
+            // boxRecPi
+            // 
+            this.boxRecPi.AutoSize = true;
+            this.boxRecPi.Location = new System.Drawing.Point(225, 26);
+            this.boxRecPi.Name = "boxRecPi";
+            this.boxRecPi.Size = new System.Drawing.Size(55, 17);
+            this.boxRecPi.TabIndex = 30;
+            this.boxRecPi.Text = "RecPi";
+            this.boxRecPi.UseVisualStyleBackColor = true;
+            // 
+            // boxRecBoi
+            // 
+            this.boxRecBoi.AutoSize = true;
+            this.boxRecBoi.Location = new System.Drawing.Point(414, 26);
+            this.boxRecBoi.Name = "boxRecBoi";
+            this.boxRecBoi.Size = new System.Drawing.Size(61, 17);
+            this.boxRecBoi.TabIndex = 29;
+            this.boxRecBoi.Text = "RecBoi";
+            this.boxRecBoi.UseVisualStyleBackColor = true;
+            // 
+            // boxRecBeu
+            // 
+            this.boxRecBeu.AutoSize = true;
+            this.boxRecBeu.Location = new System.Drawing.Point(351, 26);
+            this.boxRecBeu.Name = "boxRecBeu";
+            this.boxRecBeu.Size = new System.Drawing.Size(65, 17);
+            this.boxRecBeu.TabIndex = 28;
+            this.boxRecBeu.Text = "RecBeu";
+            this.boxRecBeu.UseVisualStyleBackColor = true;
+            // 
+            // boxRecBun
+            // 
+            this.boxRecBun.AutoSize = true;
+            this.boxRecBun.Location = new System.Drawing.Point(288, 26);
+            this.boxRecBun.Name = "boxRecBun";
+            this.boxRecBun.Size = new System.Drawing.Size(65, 17);
+            this.boxRecBun.TabIndex = 27;
+            this.boxRecBun.Text = "RecBun";
+            this.boxRecBun.UseVisualStyleBackColor = true;
             // 
             // btnDebug9
             // 
@@ -528,45 +576,58 @@
             this.label14.TabIndex = 8;
             this.label14.Text = "IP carte :";
             // 
-            // boxRecBun
+            // groupBox6
             // 
-            this.boxRecBun.AutoSize = true;
-            this.boxRecBun.Location = new System.Drawing.Point(288, 26);
-            this.boxRecBun.Name = "boxRecBun";
-            this.boxRecBun.Size = new System.Drawing.Size(65, 17);
-            this.boxRecBun.TabIndex = 27;
-            this.boxRecBun.Text = "RecBun";
-            this.boxRecBun.UseVisualStyleBackColor = true;
+            this.groupBox6.Controls.Add(this.label10);
+            this.groupBox6.Controls.Add(this.numIntervalleTest);
+            this.groupBox6.Controls.Add(this.label6);
+            this.groupBox6.Controls.Add(this.btnSendTest);
+            this.groupBox6.Location = new System.Drawing.Point(17, 160);
+            this.groupBox6.Name = "groupBox6";
+            this.groupBox6.Size = new System.Drawing.Size(294, 52);
+            this.groupBox6.TabIndex = 16;
+            this.groupBox6.TabStop = false;
+            this.groupBox6.Text = "Envoi tests de connexion";
             // 
-            // boxRecBeu
+            // btnSendTest
             // 
-            this.boxRecBeu.AutoSize = true;
-            this.boxRecBeu.Location = new System.Drawing.Point(351, 26);
-            this.boxRecBeu.Name = "boxRecBeu";
-            this.boxRecBeu.Size = new System.Drawing.Size(65, 17);
-            this.boxRecBeu.TabIndex = 28;
-            this.boxRecBeu.Text = "RecBeu";
-            this.boxRecBeu.UseVisualStyleBackColor = true;
+            this.btnSendTest.Location = new System.Drawing.Point(203, 19);
+            this.btnSendTest.Name = "btnSendTest";
+            this.btnSendTest.Size = new System.Drawing.Size(75, 23);
+            this.btnSendTest.TabIndex = 38;
+            this.btnSendTest.Text = "Envoyer";
+            this.btnSendTest.UseVisualStyleBackColor = true;
+            this.btnSendTest.Click += new System.EventHandler(this.btnSendTest_Click);
             // 
-            // boxRecBoi
+            // label6
             // 
-            this.boxRecBoi.AutoSize = true;
-            this.boxRecBoi.Location = new System.Drawing.Point(414, 26);
-            this.boxRecBoi.Name = "boxRecBoi";
-            this.boxRecBoi.Size = new System.Drawing.Size(61, 17);
-            this.boxRecBoi.TabIndex = 29;
-            this.boxRecBoi.Text = "RecBoi";
-            this.boxRecBoi.UseVisualStyleBackColor = true;
+            this.label6.AutoSize = true;
+            this.label6.Location = new System.Drawing.Point(25, 24);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(56, 13);
+            this.label6.TabIndex = 39;
+            this.label6.Text = "Toutes les";
             // 
-            // boxRecPi
+            // numIntervalleTest
             // 
-            this.boxRecPi.AutoSize = true;
-            this.boxRecPi.Location = new System.Drawing.Point(225, 26);
-            this.boxRecPi.Name = "boxRecPi";
-            this.boxRecPi.Size = new System.Drawing.Size(55, 17);
-            this.boxRecPi.TabIndex = 30;
-            this.boxRecPi.Text = "RecPi";
-            this.boxRecPi.UseVisualStyleBackColor = true;
+            this.numIntervalleTest.Location = new System.Drawing.Point(87, 22);
+            this.numIntervalleTest.Maximum = new decimal(new int[] {
+            10000,
+            0,
+            0,
+            0});
+            this.numIntervalleTest.Name = "numIntervalleTest";
+            this.numIntervalleTest.Size = new System.Drawing.Size(75, 20);
+            this.numIntervalleTest.TabIndex = 40;
+            // 
+            // label10
+            // 
+            this.label10.AutoSize = true;
+            this.label10.Location = new System.Drawing.Point(168, 24);
+            this.label10.Name = "label10";
+            this.label10.Size = new System.Drawing.Size(20, 13);
+            this.label10.TabIndex = 41;
+            this.label10.Text = "ms";
             // 
             // PanelEnvoiUdp
             // 
@@ -591,6 +652,9 @@
             this.groupBox4.PerformLayout();
             this.groupBox5.ResumeLayout(false);
             this.groupBox5.PerformLayout();
+            this.groupBox6.ResumeLayout(false);
+            this.groupBox6.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.numIntervalleTest)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -643,5 +707,10 @@
         private System.Windows.Forms.CheckBox boxRecBeu;
         private System.Windows.Forms.CheckBox boxRecBun;
         private System.Windows.Forms.CheckBox boxRecPi;
+        private System.Windows.Forms.GroupBox groupBox6;
+        private System.Windows.Forms.Label label10;
+        private System.Windows.Forms.NumericUpDown numIntervalleTest;
+        private System.Windows.Forms.Label label6;
+        private System.Windows.Forms.Button btnSendTest;
     }
 }

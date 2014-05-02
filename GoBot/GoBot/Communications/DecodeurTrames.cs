@@ -283,15 +283,6 @@ namespace GoBot.Communications
                             case FonctionMove.Debug:
                                 message = "Debug " + (int)trame[2];
                                 break;
-                        }
-                        break;
-
-                    case (byte)Carte.RecPi:
-                        switch ((FonctionMove)trame[1])
-                        {
-                            case FonctionMove.Debug:
-                                message = "Debug " + (int)trame[2];
-                                break;
                             case FonctionMove.AccelerationLigne:
                                 int valeurAccelLigne = trame[2] * 256 + trame[3];
                                 message = "Envoi accélération ligne : " + valeurAccelLigne;
@@ -392,6 +383,125 @@ namespace GoBot.Communications
                                 return "Inconnu";
                         }
                         break;
+
+                    case (byte)Carte.RecPi:
+                        switch ((FonctionPi)trame[1])
+                        {
+                            case FonctionPi.Debug:
+                                message = "Debug " + (int)trame[2];
+                                break;
+                            case FonctionPi.AccelerationLigne:
+                                int valeurAccelLigne = trame[2] * 256 + trame[3];
+                                message = "Envoi accélération ligne : " + valeurAccelLigne;
+                                break;
+                            case FonctionPi.AccelerationPivot:
+                                int valeurAccelPivot = trame[2] * 256 + trame[3];
+                                message = "Envoi accélération pivot : " + valeurAccelPivot;
+                                break;
+                            case FonctionPi.Blocage:
+                                message = "Blocage détécté";
+                                break;
+                            case FonctionPi.CoeffAsservPID:
+                                int valeurP = trame[2] * 256 + trame[3];
+                                int valeurI = trame[4] * 256 + trame[5];
+                                int valeurD = trame[6] * 256 + trame[7];
+                                message = "Envoi PID : P=" + valeurP + " I=" + valeurI + " D=" + valeurD;
+                                break;
+                            case FonctionPi.DemandePositionsCodeurs:
+                                message = "Demande position codeurs";
+                                break;
+                            case FonctionPi.DemandePositionXYTeta:
+                                message = "Demande position X Y Teta";
+                                break;
+                            case FonctionPi.Deplace:
+                                byte valeurAvance = trame[2];
+                                int valeurDistanceAvance = trame[3] * 256 + trame[4];
+                                message = (valeurAvance == (byte)SensAR.Avant ? "Avance" : "Recule") + " de " + valeurDistanceAvance + "mm";
+                                break;
+                            case FonctionPi.EnvoiConsigneBrute:
+                                byte valeurConsigneBrute = trame[2];
+                                int valeurDistanceConsigneBrute = trame[3] * 256 + trame[4];
+                                message = (valeurConsigneBrute == (byte)SensAR.Avant ? "Avance" : "Recule") + " brut de " + valeurDistanceConsigneBrute + " pas codeurs";
+                                break;
+                            case FonctionPi.EnvoiPositionAbsolue:
+                                int valeurPositionAbsolueX = trame[2] * 256 + trame[3];
+                                int valeurPositionABsolueY = trame[4] * 256 + trame[5];
+                                double valeurPositionAbsolueTeta = (double)(trame[6] * 256 + trame[7]) / 100.0;
+                                message = "Envoi position absolue X=" + valeurPositionAbsolueX + "mm Y=" + valeurPositionABsolueY + "mm Teta=" + valeurPositionAbsolueTeta + "°";
+                                break;
+                            case FonctionPi.FinDeplacement:
+                                message = "Fin du déplacement";
+                                break;
+                            case FonctionPi.FinRecallage:
+                                message = "Fin du recallage";
+                                break;
+                            case FonctionPi.Pivot:
+                                byte valeurSensPivot = trame[2];
+                                double valeurDistancePivot = (double)(trame[3] * 256 + trame[4]) / 100.0;
+                                message = "Pivot " + (valeurSensPivot == (char)SensGD.Droite ? "droite" : "gauche") + " de " + valeurDistancePivot + "°";
+                                break;
+                            case FonctionPi.Recallage:
+                                byte valeurSensRecallage = trame[2];
+                                message = "Recallage " + (valeurSensRecallage == (char)SensAR.Avant ? "avant" : "arrière");
+                                break;
+                            case FonctionPi.Reset:
+                                message = "Envoi reset";
+                                break;
+                            case FonctionPi.RetourPositionCodeurs:
+                                byte valeurPositionsCodeursNombre = trame[2];
+                                message = "Retour positions codeurs : " + valeurPositionsCodeursNombre + " valeurs";
+                                break;
+                            case FonctionPi.RetourPositionXYTeta:
+                                double valeurPositionX = (double)(trame[2] * 256 + trame[3]) / 10.0;
+                                double valeurPositionY = (double)(trame[4] * 256 + trame[5]) / 10.0;
+                                double valeurPositionTeta = (double)(trame[6] * 256 + trame[7]) / 100.0;
+                                message = "Retour position X Y Teta : X=" + valeurPositionX + "mm Y=" + valeurPositionY + "mm Teta=" + valeurPositionTeta + "°";
+                                break;
+                            case FonctionPi.Stop:
+                                String stopMode = ((StopMode)trame[2]).ToString();
+                                message = "Envoi stop " + stopMode;
+                                break;
+                            case FonctionPi.TestConnexion:
+                                message = "Test connexion";
+                                break;
+                            case FonctionPi.Virage:
+                                SensAR valeurVirageSensAR = ((SensAR)trame[2]);
+                                SensGD valeurVirageSensGD = ((SensGD)trame[3]);
+                                int valeurVirageRayon = trame[4] * 256 + trame[5];
+                                double valeurVirageAngle = (double)(trame[6] * 256 + trame[7]) / 100.0;
+                                message = "Envoi virage " + valeurVirageSensAR.ToString().ToLower() + " " + valeurVirageSensGD.ToString().ToLower() + " rayon=" + valeurVirageRayon + "mm angle=" + valeurVirageAngle + "°";
+                                break;
+                            case FonctionPi.VitesseLigne:
+                                int valeurVitesseLigne = trame[2] * 256 + trame[3];
+                                message = "Envoi vitesse ligne " + valeurVitesseLigne;
+                                break;
+                            case FonctionPi.VitessePivot:
+                                int valeurVitessePivot = trame[2] * 256 + trame[3];
+                                message = "Envoi vitesse pivot " + valeurVitessePivot;
+                                break;
+                            case FonctionPi.DemandeDiagnostic:
+                                message = "Demande charge";
+                                break;
+                            case FonctionPi.RetourDiagnostic:
+                                int nbValeurs = trame[2];
+                                message = "Retour charge : " + nbValeurs + " valeurs";
+                                break;
+                            case FonctionPi.TestEmission:
+                                message = "Test d'émission n°" + trame[2];
+                                break;
+                            case FonctionPi.TestEmissionCorrompu:
+                                message = "Test d'émission n°" + trame[2] + " corrompu";
+                                break;
+                            case FonctionPi.TestEmissionPerdu:
+                                message = "Test d'émission perdu " + trame[2] + " à " + trame[3];
+                                break;
+                            case FonctionPi.TestEmissionReussi:
+                                message = "Test d'émission n°" + trame[2] + " réussi";
+                                break;
+                            default:
+                                return "Inconnu";
+                        }
+                        break;
                     case (byte)Carte.RecBeu:
                     case (byte)Carte.RecBoi:
                     case (byte)Carte.RecBun:
@@ -434,7 +544,7 @@ namespace GoBot.Communications
                                 message = "Test d'émission n°" + trame[2] + " corrompu";
                                 break;
                             case FonctionBalise.TestEmissionPerdu:
-                                message = "Test d'émission n°" + trame[2] + " perdu";
+                                message = "Test d'émission perdu " + trame[2] + " à " + trame[3];
                                 break;
                             case FonctionBalise.TestEmissionReussi:
                                 message = "Test d'émission n°" + trame[2] + " réussi";
@@ -458,6 +568,9 @@ namespace GoBot.Communications
                                 break;
                             case FonctionMiwi.TestConnexion:
                                 message = "Test connexion";
+                                break;
+                            case FonctionMiwi.RetourTestConnexion:
+                                message = "Retour test connexion";
                                 break;
                         }
                         break;

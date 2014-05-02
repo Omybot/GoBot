@@ -51,6 +51,8 @@
             this.checkedListBoxIO = new System.Windows.Forms.CheckedListBox();
             this.checkedListBoxBalise = new System.Windows.Forms.CheckedListBox();
             this.groupBoxMessages = new System.Windows.Forms.GroupBox();
+            this.btnDecocher = new System.Windows.Forms.Button();
+            this.btnCocher = new System.Windows.Forms.Button();
             this.tabControlGestion = new System.Windows.Forms.TabControl();
             this.tabPageCartes = new System.Windows.Forms.TabPage();
             this.groupBoxExpediteur = new System.Windows.Forms.GroupBox();
@@ -297,7 +299,7 @@
             this.checkedListBoxIO.Location = new System.Drawing.Point(3, 3);
             this.checkedListBoxIO.MultiColumn = true;
             this.checkedListBoxIO.Name = "checkedListBoxIO";
-            this.checkedListBoxIO.Size = new System.Drawing.Size(355, 323);
+            this.checkedListBoxIO.Size = new System.Drawing.Size(355, 298);
             this.checkedListBoxIO.Sorted = true;
             this.checkedListBoxIO.TabIndex = 17;
             this.checkedListBoxIO.ItemCheck += new System.Windows.Forms.ItemCheckEventHandler(this.checkedListBoxIO_ItemCheck);
@@ -314,13 +316,15 @@
             this.checkedListBoxBalise.Location = new System.Drawing.Point(3, 3);
             this.checkedListBoxBalise.MultiColumn = true;
             this.checkedListBoxBalise.Name = "checkedListBoxBalise";
-            this.checkedListBoxBalise.Size = new System.Drawing.Size(355, 315);
+            this.checkedListBoxBalise.Size = new System.Drawing.Size(355, 285);
             this.checkedListBoxBalise.Sorted = true;
             this.checkedListBoxBalise.TabIndex = 18;
             this.checkedListBoxBalise.ItemCheck += new System.Windows.Forms.ItemCheckEventHandler(this.checkedListBoxBalise_ItemCheck);
             // 
             // groupBoxMessages
             // 
+            this.groupBoxMessages.Controls.Add(this.btnDecocher);
+            this.groupBoxMessages.Controls.Add(this.btnCocher);
             this.groupBoxMessages.Controls.Add(this.tabControlGestion);
             this.groupBoxMessages.Location = new System.Drawing.Point(3, 240);
             this.groupBoxMessages.Name = "groupBoxMessages";
@@ -328,6 +332,26 @@
             this.groupBoxMessages.TabIndex = 19;
             this.groupBoxMessages.TabStop = false;
             this.groupBoxMessages.Text = "Filtres sur les messages";
+            // 
+            // btnDecocher
+            // 
+            this.btnDecocher.Location = new System.Drawing.Point(311, 12);
+            this.btnDecocher.Name = "btnDecocher";
+            this.btnDecocher.Size = new System.Drawing.Size(85, 23);
+            this.btnDecocher.TabIndex = 27;
+            this.btnDecocher.Text = "Tout décocher";
+            this.btnDecocher.UseVisualStyleBackColor = true;
+            this.btnDecocher.Click += new System.EventHandler(this.btnDecocher_Click);
+            // 
+            // btnCocher
+            // 
+            this.btnCocher.Location = new System.Drawing.Point(230, 12);
+            this.btnCocher.Name = "btnCocher";
+            this.btnCocher.Size = new System.Drawing.Size(75, 23);
+            this.btnCocher.TabIndex = 26;
+            this.btnCocher.Text = "Tout cocher";
+            this.btnCocher.UseVisualStyleBackColor = true;
+            this.btnCocher.Click += new System.EventHandler(this.btnCocher_Click);
             // 
             // tabControlGestion
             // 
@@ -443,7 +467,7 @@
             this.tabPageIO.Location = new System.Drawing.Point(4, 22);
             this.tabPageIO.Name = "tabPageIO";
             this.tabPageIO.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPageIO.Size = new System.Drawing.Size(361, 329);
+            this.tabPageIO.Size = new System.Drawing.Size(361, 304);
             this.tabPageIO.TabIndex = 1;
             this.tabPageIO.Text = "RecIO";
             this.tabPageIO.UseVisualStyleBackColor = true;
@@ -453,7 +477,7 @@
             this.tabPagePi.Controls.Add(this.checkedListBoxPi);
             this.tabPagePi.Location = new System.Drawing.Point(4, 22);
             this.tabPagePi.Name = "tabPagePi";
-            this.tabPagePi.Size = new System.Drawing.Size(361, 329);
+            this.tabPagePi.Size = new System.Drawing.Size(361, 304);
             this.tabPagePi.TabIndex = 2;
             this.tabPagePi.Text = "RecPi";
             this.tabPagePi.UseVisualStyleBackColor = true;
@@ -470,7 +494,7 @@
             this.checkedListBoxPi.Location = new System.Drawing.Point(3, 3);
             this.checkedListBoxPi.MultiColumn = true;
             this.checkedListBoxPi.Name = "checkedListBoxPi";
-            this.checkedListBoxPi.Size = new System.Drawing.Size(355, 315);
+            this.checkedListBoxPi.Size = new System.Drawing.Size(355, 285);
             this.checkedListBoxPi.Sorted = true;
             this.checkedListBoxPi.TabIndex = 22;
             this.checkedListBoxPi.ItemCheck += new System.Windows.Forms.ItemCheckEventHandler(this.checkedListBoxPi_ItemCheck);
@@ -479,7 +503,7 @@
             // 
             this.tabPageMiwi.Location = new System.Drawing.Point(4, 22);
             this.tabPageMiwi.Name = "tabPageMiwi";
-            this.tabPageMiwi.Size = new System.Drawing.Size(361, 329);
+            this.tabPageMiwi.Size = new System.Drawing.Size(361, 304);
             this.tabPageMiwi.TabIndex = 3;
             this.tabPageMiwi.Text = "RecMiwi";
             this.tabPageMiwi.UseVisualStyleBackColor = true;
@@ -489,7 +513,7 @@
             this.tabPageBalises.Controls.Add(this.checkedListBoxBalise);
             this.tabPageBalises.Location = new System.Drawing.Point(4, 22);
             this.tabPageBalises.Name = "tabPageBalises";
-            this.tabPageBalises.Size = new System.Drawing.Size(361, 329);
+            this.tabPageBalises.Size = new System.Drawing.Size(361, 304);
             this.tabPageBalises.TabIndex = 4;
             this.tabPageBalises.Text = "Balises";
             this.tabPageBalises.UseVisualStyleBackColor = true;
@@ -646,6 +670,8 @@
         private System.Windows.Forms.TabPage tabPagePi;
         private System.Windows.Forms.TabPage tabPageMiwi;
         private System.Windows.Forms.TabPage tabPageBalises;
+        private System.Windows.Forms.Button btnDecocher;
+        private System.Windows.Forms.Button btnCocher;
 
     }
 }

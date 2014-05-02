@@ -86,7 +86,9 @@ namespace GoBot.IHM
             this.Invoke(new EventHandler(delegate
             {
                 if (Robots.GrosRobot.DemandeCapteurOnOff(CapteurOnOff.GRPresenceBouchon))
+                {
                     ledPresenceBouchon.CouleurVert();
+                }
                 else
                     ledPresenceBouchon.CouleurRouge();
             }));
@@ -109,7 +111,7 @@ namespace GoBot.IHM
                 timerPresenceBouchon.Start();
             else
             {
-                timerCouleurEquipe.Stop();
+                timerPresenceBouchon.Stop();
                 ledPresenceBouchon.CouleurGris();
             }
         }

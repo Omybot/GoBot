@@ -93,12 +93,18 @@ namespace GoBot.Actions
         {
             switch (actionneur)
             {
-                case ActionneurOnOffID.GRAlimentation:
-                    return "alimentation";
+                case ActionneurOnOffID.GRElectrovanneFeu:
+                    return "électrovanne des feux";
+                case ActionneurOnOffID.GRPompeFeu:
+                    return "pompe des feux";
+                case ActionneurOnOffID.GRCanonFruit:
+                    return "canon à fruits";
                 case ActionneurOnOffID.GRPinceDroite:
                     return "pince feu droite";
                 case ActionneurOnOffID.GRPinceGauche:
                     return "pince feu gauche";
+                case ActionneurOnOffID.GRPousseBouchon:
+                    return "pousse bouchon";
                 default:
                     return actionneur.ToString();
             }

@@ -22,12 +22,6 @@ namespace GoBot.IHM
     {
         private Replay replay;
         private Dictionary<Carte, Color> couleurCarte;
-        private Dictionary<FonctionMove, bool> dicMessagesMoveAutorises;
-        private Dictionary<FonctionIO, bool> dicMessagesIOAutorises;
-        private Dictionary<FonctionPi, bool> dicMessagesPiAutorises;
-        private Dictionary<FonctionBalise, bool> dicMessagesBaliseAutorises;
-        private Dictionary<Carte, bool> dicExpediteurAutorises;
-        private Dictionary<Carte, bool> dicDestinataireAutorises;
 
         private DateTime dateDebut;
         private DateTime datePrec;
@@ -40,6 +34,8 @@ namespace GoBot.IHM
         public PanelLogsTrames()
         {
             InitializeComponent();
+
+            chargement = true;
 
             dataGridViewLog.Columns.Add("Id", "Id");
             dataGridViewLog.Columns[0].Width = 40;
@@ -64,38 +60,51 @@ namespace GoBot.IHM
             couleurCarte.Add(Carte.RecMiwi, Color.FromArgb(244, 247, 153));
             couleurCarte.Add(Carte.RecIO, Color.FromArgb(244, 170, 255));
 
-            dicMessagesIOAutorises = new Dictionary<FonctionIO, bool>();
-            dicMessagesMoveAutorises = new Dictionary<FonctionMove, bool>();
-            dicMessagesPiAutorises = new Dictionary<FonctionPi, bool>();
-            dicMessagesBaliseAutorises = new Dictionary<FonctionBalise, bool>();
-            dicDestinataireAutorises = new Dictionary<Carte, bool>();
-            dicExpediteurAutorises = new Dictionary<Carte, bool>();
 
             // L'ajout de champs déclenche le SetCheck event qui ajoute les éléments automatiquement dans le dictionnaire
             foreach (FonctionMove fonction in Enum.GetValues(typeof(FonctionMove)))
             {
-                checkedListBoxMove.Items.Add(fonction.ToString(), true);
+                if (!Config.CurrentConfig.LogsFonctionsMove.ContainsKey(fonction))
+                    Config.CurrentConfig.LogsFonctionsMove.Add(fonction, true);
+
+                checkedListBoxMove.Items.Add(fonction.ToString(), Config.CurrentConfig.LogsFonctionsMove[fonction]);
             }
             foreach (FonctionIO fonction in Enum.GetValues(typeof(FonctionIO)))
             {
-                checkedListBoxIO.Items.Add(fonction.ToString(), true);
+                if (!Config.CurrentConfig.LogsFonctionsIO.ContainsKey(fonction))
+                    Config.CurrentConfig.LogsFonctionsIO.Add(fonction, true);
+
+                checkedListBoxIO.Items.Add(fonction.ToString(), Config.CurrentConfig.LogsFonctionsIO[fonction]);
             }
             foreach (FonctionBalise fonction in Enum.GetValues(typeof(FonctionBalise)))
             {
-                checkedListBoxBalise.Items.Add(fonction.ToString(), true);
+                if (!Config.CurrentConfig.LogsFonctionsBalise.ContainsKey(fonction))
+                    Config.CurrentConfig.LogsFonctionsBalise.Add(fonction, true);
+
+                checkedListBoxBalise.Items.Add(fonction.ToString(), Config.CurrentConfig.LogsFonctionsBalise[fonction]);
             }
             foreach (FonctionPi fonction in Enum.GetValues(typeof(FonctionPi)))
             {
-                checkedListBoxPi.Items.Add(fonction.ToString(), true);
+                if (!Config.CurrentConfig.LogsFonctionsPi.ContainsKey(fonction))
+                    Config.CurrentConfig.LogsFonctionsPi.Add(fonction, true);
+
+                checkedListBoxPi.Items.Add(fonction.ToString(), Config.CurrentConfig.LogsFonctionsPi[fonction]);
             }
             foreach (Carte carte in Enum.GetValues(typeof(Carte)))
             {
-                checkedListBoxExpediteur.Items.Add(carte.ToString(), true);
-                checkedListBoxDestinataire.Items.Add(carte.ToString(), true);
+                if (!Config.CurrentConfig.LogsExpediteurs.ContainsKey(carte))
+                    Config.CurrentConfig.LogsExpediteurs.Add(carte, true);
+                if (!Config.CurrentConfig.LogsDestinataires.ContainsKey(carte))
+                    Config.CurrentConfig.LogsDestinataires.Add(carte, true);
+
+                checkedListBoxExpediteur.Items.Add(carte.ToString(), Config.CurrentConfig.LogsExpediteurs[carte]);
+                checkedListBoxDestinataire.Items.Add(carte.ToString(), Config.CurrentConfig.LogsDestinataires[carte]);
             }
 
+            chargement = false;
             replay = new Replay();
         }
+        bool chargement;
 
         private void btnCharger_Click(object sender, EventArgs e)
         {
@@ -157,12 +166,12 @@ namespace GoBot.IHM
 
         private void checkedListBoxGros_ItemCheck(object sender, ItemCheckEventArgs e)
         {
-            if (!Config.DesignMode)
+            if (!Config.DesignMode && !chargement)
             {
                 String fonctionString = (String)checkedListBoxMove.Items[e.Index];
                 FonctionMove fonction = (FonctionMove)Enum.Parse(typeof(FonctionMove), fonctionString);
 
-                dicMessagesMoveAutorises[fonction] = (e.NewValue == CheckState.Checked);
+                Config.CurrentConfig.LogsFonctionsMove[fonction] = (e.NewValue == CheckState.Checked);
             }
         }
 
@@ -191,7 +200,7 @@ namespace GoBot.IHM
                             FonctionMove fonction = (FonctionMove)trame[1];
                             checkedListBoxMove.Items.Remove(fonction.ToString());
                             checkedListBoxMove.Items.Add(fonction.ToString(), false);
-                            dicMessagesMoveAutorises[fonction] = false;
+                            Config.CurrentConfig.LogsFonctionsMove[fonction] = false;
                         }
 
                         if (carte == Carte.RecPi)
@@ -199,7 +208,7 @@ namespace GoBot.IHM
                             FonctionPi fonction = (FonctionPi)trame[1];
                             checkedListBoxPi.Items.Remove(fonction.ToString());
                             checkedListBoxPi.Items.Add(fonction.ToString(), false);
-                            dicMessagesPiAutorises[fonction] = false;
+                            Config.CurrentConfig.LogsFonctionsPi[fonction] = false;
                         }
 
                         if (carte == Carte.RecIO)
@@ -207,7 +216,7 @@ namespace GoBot.IHM
                             FonctionIO fonction = (FonctionIO)trame[1];
                             checkedListBoxIO.Items.Remove(fonction.ToString());
                             checkedListBoxIO.Items.Add(fonction.ToString(), false);
-                            dicMessagesIOAutorises[fonction] = false;
+                            Config.CurrentConfig.LogsFonctionsIO[fonction] = false;
                         }
 
                         if (carte == Carte.RecBun || carte == Carte.RecBeu || carte == Carte.RecBoi)
@@ -215,7 +224,7 @@ namespace GoBot.IHM
                             FonctionBalise fonction = (FonctionBalise)trame[3];
                             checkedListBoxBalise.Items.Remove(fonction.ToString());
                             checkedListBoxBalise.Items.Add(fonction.ToString(), false);
-                            dicMessagesBaliseAutorises[fonction] = false;
+                            Config.CurrentConfig.LogsFonctionsBalise[fonction] = false;
                         }
                     }
 
@@ -307,16 +316,16 @@ namespace GoBot.IHM
                 Carte carte = trame.Carte;
 
                 bool cartesAutorisees = false;
-                if (dicDestinataireAutorises[destinataire] && dicExpediteurAutorises[expediteur])
+                if (Config.CurrentConfig.LogsDestinataires[destinataire] && Config.CurrentConfig.LogsExpediteurs[expediteur])
                     cartesAutorisees = true;
 
                 bool fonctionAutorisee = false;
-                if ((carte == Carte.RecMove && dicMessagesMoveAutorises[(FonctionMove)trame[1]]) ||
-                    (carte == Carte.RecIO && dicMessagesIOAutorises[(FonctionIO)trame[1]]) ||
-                    (expediteur == Carte.RecPi && dicMessagesPiAutorises[(FonctionPi)trame[1]]) ||
-                    (destinataire == Carte.RecPi && dicMessagesPiAutorises[(FonctionPi)trame[3]]) ||
-                    ((expediteur == Carte.RecBun || expediteur == Carte.RecBeu || expediteur == Carte.RecBoi) && dicMessagesBaliseAutorises[(FonctionBalise)trame[1]]) ||
-                    ((destinataire == Carte.RecBun || destinataire == Carte.RecBeu || destinataire == Carte.RecBoi) && dicMessagesBaliseAutorises[(FonctionBalise)trame[3]]) ||
+                if ((carte == Carte.RecMove && Config.CurrentConfig.LogsFonctionsMove[(FonctionMove)trame[1]]) ||
+                    (carte == Carte.RecIO && Config.CurrentConfig.LogsFonctionsIO[(FonctionIO)trame[1]]) ||
+                    (expediteur == Carte.RecPi && Config.CurrentConfig.LogsFonctionsPi[(FonctionPi)trame[1]]) ||
+                    (destinataire == Carte.RecPi && Config.CurrentConfig.LogsFonctionsPi[(FonctionPi)trame[3]]) ||
+                    ((expediteur == Carte.RecBun || expediteur == Carte.RecBeu || expediteur == Carte.RecBoi) && Config.CurrentConfig.LogsFonctionsBalise[(FonctionBalise)trame[1]]) ||
+                    ((destinataire == Carte.RecBun || destinataire == Carte.RecBeu || destinataire == Carte.RecBoi) && Config.CurrentConfig.LogsFonctionsBalise[(FonctionBalise)trame[3]]) ||
                     (carte == Carte.RecMiwi))
                     fonctionAutorisee = true;
 
@@ -381,34 +390,46 @@ namespace GoBot.IHM
 
         private void checkedListBoxExpediteur_ItemCheck(object sender, ItemCheckEventArgs e)
         {
-            String carteString = (String)checkedListBoxExpediteur.Items[e.Index];
-            Carte carte = (Carte)Enum.Parse(typeof(Carte), carteString);
+            if (!Config.DesignMode && !chargement)
+            {
+                String carteString = (String)checkedListBoxExpediteur.Items[e.Index];
+                Carte carte = (Carte)Enum.Parse(typeof(Carte), carteString);
 
-            dicExpediteurAutorises[carte] = (e.NewValue == CheckState.Checked);
+                Config.CurrentConfig.LogsExpediteurs[carte] = (e.NewValue == CheckState.Checked);
+            }
         }
 
         private void checkedListBoxDestinataire_ItemCheck(object sender, ItemCheckEventArgs e)
         {
-            String carteString = (String)checkedListBoxDestinataire.Items[e.Index];
-            Carte carte = (Carte)Enum.Parse(typeof(Carte), carteString);
+            if (!Config.DesignMode && !chargement)
+            {
+                String carteString = (String)checkedListBoxDestinataire.Items[e.Index];
+                Carte carte = (Carte)Enum.Parse(typeof(Carte), carteString);
 
-            dicDestinataireAutorises[carte] = (e.NewValue == CheckState.Checked);
+                Config.CurrentConfig.LogsDestinataires[carte] = (e.NewValue == CheckState.Checked);
+            }
         }
 
         private void checkedListBoxBalise_ItemCheck(object sender, ItemCheckEventArgs e)
         {
-            String fonctionString = (String)checkedListBoxBalise.Items[e.Index];
-            FonctionBalise fonction = (FonctionBalise)Enum.Parse(typeof(FonctionBalise), fonctionString);
+            if (!Config.DesignMode && !chargement)
+            {
+                String fonctionString = (String)checkedListBoxBalise.Items[e.Index];
+                FonctionBalise fonction = (FonctionBalise)Enum.Parse(typeof(FonctionBalise), fonctionString);
 
-            dicMessagesBaliseAutorises[fonction] = (e.NewValue == CheckState.Checked);
+                Config.CurrentConfig.LogsFonctionsBalise[fonction] = (e.NewValue == CheckState.Checked);
+            }
         }
 
         private void checkedListBoxIO_ItemCheck(object sender, ItemCheckEventArgs e)
         {
-            String fonctionString = (String)checkedListBoxIO.Items[e.Index];
-            FonctionIO fonction = (FonctionIO)Enum.Parse(typeof(FonctionIO), fonctionString);
+            if (!Config.DesignMode && !chargement)
+            {
+                String fonctionString = (String)checkedListBoxIO.Items[e.Index];
+                FonctionIO fonction = (FonctionIO)Enum.Parse(typeof(FonctionIO), fonctionString);
 
-            dicMessagesIOAutorises[fonction] = (e.NewValue == CheckState.Checked);
+                Config.CurrentConfig.LogsFonctionsIO[fonction] = (e.NewValue == CheckState.Checked);
+            }
         }
 
         private void nePlusAfficherDeMessagesDeCetExpéditeurToolStripMenuItem_Click(object sender, EventArgs e)
@@ -427,7 +448,7 @@ namespace GoBot.IHM
 
                         checkedListBoxExpediteur.Items.Remove(expediteur.ToString());
                         checkedListBoxExpediteur.Items.Add(expediteur.ToString(), false);
-                        dicExpediteurAutorises[expediteur] = false;
+                        Config.CurrentConfig.LogsExpediteurs[expediteur] = false;
                     }
 
                     Afficher();
@@ -454,7 +475,7 @@ namespace GoBot.IHM
 
                         checkedListBoxDestinataire.Items.Remove(destinataire.ToString());
                         checkedListBoxDestinataire.Items.Add(destinataire.ToString(), false);
-                        dicDestinataireAutorises[destinataire] = false;
+                        Config.CurrentConfig.LogsDestinataires[destinataire] = false;
                     }
 
                     Afficher();
@@ -481,10 +502,10 @@ namespace GoBot.IHM
 
                         checkedListBoxExpediteur.Items.Remove(carte.ToString());
                         checkedListBoxExpediteur.Items.Add(carte.ToString(), false);
-                        dicExpediteurAutorises[carte] = false;
+                        Config.CurrentConfig.LogsExpediteurs[carte] = false;
                         checkedListBoxDestinataire.Items.Remove(carte.ToString());
                         checkedListBoxDestinataire.Items.Add(carte.ToString(), false);
-                        dicDestinataireAutorises[carte] = false;
+                        Config.CurrentConfig.LogsDestinataires[carte] = false;
                     }
 
                     Afficher();
@@ -516,13 +537,45 @@ namespace GoBot.IHM
 
         private void checkedListBoxPi_ItemCheck(object sender, ItemCheckEventArgs e)
         {
-            if (!Config.DesignMode)
+            if (!Config.DesignMode && !chargement)
             {
                 String fonctionString = (String)checkedListBoxPi.Items[e.Index];
                 FonctionPi fonction = (FonctionPi)Enum.Parse(typeof(FonctionPi), fonctionString);
 
-                dicMessagesPiAutorises[fonction] = (e.NewValue == CheckState.Checked);
+                Config.CurrentConfig.LogsFonctionsPi[fonction] = (e.NewValue == CheckState.Checked);
             }
+        }
+
+        private void btnCocher_Click(object sender, EventArgs e)
+        {
+            for (int i = 0; i < checkedListBoxBalise.Items.Count; i++)
+                checkedListBoxBalise.SetItemChecked(i, true);
+            for (int i = 0; i < checkedListBoxDestinataire.Items.Count; i++)
+                checkedListBoxDestinataire.SetItemChecked(i, true);
+            for (int i = 0; i < checkedListBoxExpediteur.Items.Count; i++)
+                checkedListBoxExpediteur.SetItemChecked(i, true);
+            for (int i = 0; i < checkedListBoxIO.Items.Count; i++)
+                checkedListBoxIO.SetItemChecked(i, true);
+            for (int i = 0; i < checkedListBoxMove.Items.Count; i++)
+                checkedListBoxMove.SetItemChecked(i, true);
+            for (int i = 0; i < checkedListBoxPi.Items.Count; i++)
+                checkedListBoxPi.SetItemChecked(i, true);
+        }
+
+        private void btnDecocher_Click(object sender, EventArgs e)
+        {
+            for (int i = 0; i < checkedListBoxBalise.Items.Count; i++)
+                checkedListBoxBalise.SetItemChecked(i, false);
+            for (int i = 0; i < checkedListBoxDestinataire.Items.Count; i++)
+                checkedListBoxDestinataire.SetItemChecked(i, false);
+            for (int i = 0; i < checkedListBoxExpediteur.Items.Count; i++)
+                checkedListBoxExpediteur.SetItemChecked(i, false);
+            for (int i = 0; i < checkedListBoxIO.Items.Count; i++)
+                checkedListBoxIO.SetItemChecked(i, false);
+            for (int i = 0; i < checkedListBoxMove.Items.Count; i++)
+                checkedListBoxMove.SetItemChecked(i, false);
+            for (int i = 0; i < checkedListBoxPi.Items.Count; i++)
+                checkedListBoxPi.SetItemChecked(i, false);
         }
     }
 }

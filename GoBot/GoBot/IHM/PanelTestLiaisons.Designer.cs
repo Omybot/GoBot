@@ -63,15 +63,22 @@
             this.lblB2CorrompusReception = new System.Windows.Forms.Label();
             this.label33 = new System.Windows.Forms.Label();
             this.lblB1CorrompusReception = new System.Windows.Forms.Label();
+            this.label7 = new System.Windows.Forms.Label();
+            this.numIntervalle = new System.Windows.Forms.NumericUpDown();
+            this.label8 = new System.Windows.Forms.Label();
+            ((System.ComponentModel.ISupportInitialize)(this.numIntervalle)).BeginInit();
             this.SuspendLayout();
             // 
             // btnStart
             // 
-            this.btnStart.Location = new System.Drawing.Point(31, 31);
+            this.btnStart.Image = global::GoBot.Properties.Resources.Play;
+            this.btnStart.Location = new System.Drawing.Point(339, 31);
             this.btnStart.Name = "btnStart";
             this.btnStart.Size = new System.Drawing.Size(75, 23);
             this.btnStart.TabIndex = 0;
             this.btnStart.Text = "Lancer";
+            this.btnStart.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.btnStart.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
             this.btnStart.UseVisualStyleBackColor = true;
             this.btnStart.Click += new System.EventHandler(this.btnStart_Click);
             // 
@@ -177,7 +184,7 @@
             // lblB2PerdusReception
             // 
             this.lblB2PerdusReception.AutoSize = true;
-            this.lblB2PerdusReception.Location = new System.Drawing.Point(305, 301);
+            this.lblB2PerdusReception.Location = new System.Drawing.Point(346, 301);
             this.lblB2PerdusReception.Name = "lblB2PerdusReception";
             this.lblB2PerdusReception.Size = new System.Drawing.Size(36, 13);
             this.lblB2PerdusReception.TabIndex = 22;
@@ -186,7 +193,7 @@
             // lblB2CorrompusEmission
             // 
             this.lblB2CorrompusEmission.AutoSize = true;
-            this.lblB2CorrompusEmission.Location = new System.Drawing.Point(305, 261);
+            this.lblB2CorrompusEmission.Location = new System.Drawing.Point(346, 261);
             this.lblB2CorrompusEmission.Name = "lblB2CorrompusEmission";
             this.lblB2CorrompusEmission.Size = new System.Drawing.Size(36, 13);
             this.lblB2CorrompusEmission.TabIndex = 21;
@@ -195,7 +202,7 @@
             // lblB2PerdusEmission
             // 
             this.lblB2PerdusEmission.AutoSize = true;
-            this.lblB2PerdusEmission.Location = new System.Drawing.Point(305, 221);
+            this.lblB2PerdusEmission.Location = new System.Drawing.Point(346, 221);
             this.lblB2PerdusEmission.Name = "lblB2PerdusEmission";
             this.lblB2PerdusEmission.Size = new System.Drawing.Size(36, 13);
             this.lblB2PerdusEmission.TabIndex = 20;
@@ -204,7 +211,7 @@
             // lblB2Corrects
             // 
             this.lblB2Corrects.AutoSize = true;
-            this.lblB2Corrects.Location = new System.Drawing.Point(305, 181);
+            this.lblB2Corrects.Location = new System.Drawing.Point(346, 181);
             this.lblB2Corrects.Name = "lblB2Corrects";
             this.lblB2Corrects.Size = new System.Drawing.Size(36, 13);
             this.lblB2Corrects.TabIndex = 19;
@@ -213,7 +220,7 @@
             // lblB2Nombre
             // 
             this.lblB2Nombre.AutoSize = true;
-            this.lblB2Nombre.Location = new System.Drawing.Point(305, 141);
+            this.lblB2Nombre.Location = new System.Drawing.Point(346, 141);
             this.lblB2Nombre.Name = "lblB2Nombre";
             this.lblB2Nombre.Size = new System.Drawing.Size(13, 13);
             this.lblB2Nombre.TabIndex = 18;
@@ -222,7 +229,7 @@
             // label17
             // 
             this.label17.AutoSize = true;
-            this.label17.Location = new System.Drawing.Point(305, 101);
+            this.label17.Location = new System.Drawing.Point(346, 101);
             this.label17.Name = "label17";
             this.label17.Size = new System.Drawing.Size(44, 13);
             this.label17.TabIndex = 17;
@@ -231,7 +238,7 @@
             // lblB3PerdusReception
             // 
             this.lblB3PerdusReception.AutoSize = true;
-            this.lblB3PerdusReception.Location = new System.Drawing.Point(370, 301);
+            this.lblB3PerdusReception.Location = new System.Drawing.Point(450, 301);
             this.lblB3PerdusReception.Name = "lblB3PerdusReception";
             this.lblB3PerdusReception.Size = new System.Drawing.Size(36, 13);
             this.lblB3PerdusReception.TabIndex = 28;
@@ -240,7 +247,7 @@
             // lblB3CorrompusEmission
             // 
             this.lblB3CorrompusEmission.AutoSize = true;
-            this.lblB3CorrompusEmission.Location = new System.Drawing.Point(370, 261);
+            this.lblB3CorrompusEmission.Location = new System.Drawing.Point(450, 261);
             this.lblB3CorrompusEmission.Name = "lblB3CorrompusEmission";
             this.lblB3CorrompusEmission.Size = new System.Drawing.Size(36, 13);
             this.lblB3CorrompusEmission.TabIndex = 27;
@@ -249,7 +256,7 @@
             // lblB3PerdusEmission
             // 
             this.lblB3PerdusEmission.AutoSize = true;
-            this.lblB3PerdusEmission.Location = new System.Drawing.Point(370, 221);
+            this.lblB3PerdusEmission.Location = new System.Drawing.Point(450, 221);
             this.lblB3PerdusEmission.Name = "lblB3PerdusEmission";
             this.lblB3PerdusEmission.Size = new System.Drawing.Size(36, 13);
             this.lblB3PerdusEmission.TabIndex = 26;
@@ -258,7 +265,7 @@
             // lblB3Corrects
             // 
             this.lblB3Corrects.AutoSize = true;
-            this.lblB3Corrects.Location = new System.Drawing.Point(370, 181);
+            this.lblB3Corrects.Location = new System.Drawing.Point(450, 181);
             this.lblB3Corrects.Name = "lblB3Corrects";
             this.lblB3Corrects.Size = new System.Drawing.Size(36, 13);
             this.lblB3Corrects.TabIndex = 25;
@@ -267,7 +274,7 @@
             // lblB3Nombre
             // 
             this.lblB3Nombre.AutoSize = true;
-            this.lblB3Nombre.Location = new System.Drawing.Point(370, 141);
+            this.lblB3Nombre.Location = new System.Drawing.Point(450, 141);
             this.lblB3Nombre.Name = "lblB3Nombre";
             this.lblB3Nombre.Size = new System.Drawing.Size(13, 13);
             this.lblB3Nombre.TabIndex = 24;
@@ -276,7 +283,7 @@
             // label23
             // 
             this.label23.AutoSize = true;
-            this.label23.Location = new System.Drawing.Point(370, 101);
+            this.label23.Location = new System.Drawing.Point(450, 101);
             this.label23.Name = "label23";
             this.label23.Size = new System.Drawing.Size(44, 13);
             this.label23.TabIndex = 23;
@@ -285,7 +292,7 @@
             // lblPRPerdusReception
             // 
             this.lblPRPerdusReception.AutoSize = true;
-            this.lblPRPerdusReception.Location = new System.Drawing.Point(431, 301);
+            this.lblPRPerdusReception.Location = new System.Drawing.Point(554, 301);
             this.lblPRPerdusReception.Name = "lblPRPerdusReception";
             this.lblPRPerdusReception.Size = new System.Drawing.Size(36, 13);
             this.lblPRPerdusReception.TabIndex = 34;
@@ -294,7 +301,7 @@
             // lblPRCorrompusEmission
             // 
             this.lblPRCorrompusEmission.AutoSize = true;
-            this.lblPRCorrompusEmission.Location = new System.Drawing.Point(431, 261);
+            this.lblPRCorrompusEmission.Location = new System.Drawing.Point(554, 261);
             this.lblPRCorrompusEmission.Name = "lblPRCorrompusEmission";
             this.lblPRCorrompusEmission.Size = new System.Drawing.Size(36, 13);
             this.lblPRCorrompusEmission.TabIndex = 33;
@@ -303,7 +310,7 @@
             // lblPRPerdusEmission
             // 
             this.lblPRPerdusEmission.AutoSize = true;
-            this.lblPRPerdusEmission.Location = new System.Drawing.Point(431, 221);
+            this.lblPRPerdusEmission.Location = new System.Drawing.Point(554, 221);
             this.lblPRPerdusEmission.Name = "lblPRPerdusEmission";
             this.lblPRPerdusEmission.Size = new System.Drawing.Size(36, 13);
             this.lblPRPerdusEmission.TabIndex = 32;
@@ -312,7 +319,7 @@
             // lblPRCorrects
             // 
             this.lblPRCorrects.AutoSize = true;
-            this.lblPRCorrects.Location = new System.Drawing.Point(431, 181);
+            this.lblPRCorrects.Location = new System.Drawing.Point(554, 181);
             this.lblPRCorrects.Name = "lblPRCorrects";
             this.lblPRCorrects.Size = new System.Drawing.Size(36, 13);
             this.lblPRCorrects.TabIndex = 31;
@@ -321,7 +328,7 @@
             // lblPRNombre
             // 
             this.lblPRNombre.AutoSize = true;
-            this.lblPRNombre.Location = new System.Drawing.Point(431, 141);
+            this.lblPRNombre.Location = new System.Drawing.Point(554, 141);
             this.lblPRNombre.Name = "lblPRNombre";
             this.lblPRNombre.Size = new System.Drawing.Size(13, 13);
             this.lblPRNombre.TabIndex = 30;
@@ -330,7 +337,7 @@
             // label29
             // 
             this.label29.AutoSize = true;
-            this.label29.Location = new System.Drawing.Point(431, 101);
+            this.label29.Location = new System.Drawing.Point(554, 101);
             this.label29.Name = "label29";
             this.label29.Size = new System.Drawing.Size(55, 13);
             this.label29.TabIndex = 29;
@@ -339,7 +346,7 @@
             // lblPRCorrompusReception
             // 
             this.lblPRCorrompusReception.AutoSize = true;
-            this.lblPRCorrompusReception.Location = new System.Drawing.Point(431, 339);
+            this.lblPRCorrompusReception.Location = new System.Drawing.Point(554, 339);
             this.lblPRCorrompusReception.Name = "lblPRCorrompusReception";
             this.lblPRCorrompusReception.Size = new System.Drawing.Size(36, 13);
             this.lblPRCorrompusReception.TabIndex = 39;
@@ -348,7 +355,7 @@
             // lblB3CorrompusReception
             // 
             this.lblB3CorrompusReception.AutoSize = true;
-            this.lblB3CorrompusReception.Location = new System.Drawing.Point(370, 339);
+            this.lblB3CorrompusReception.Location = new System.Drawing.Point(450, 339);
             this.lblB3CorrompusReception.Name = "lblB3CorrompusReception";
             this.lblB3CorrompusReception.Size = new System.Drawing.Size(36, 13);
             this.lblB3CorrompusReception.TabIndex = 38;
@@ -357,7 +364,7 @@
             // lblB2CorrompusReception
             // 
             this.lblB2CorrompusReception.AutoSize = true;
-            this.lblB2CorrompusReception.Location = new System.Drawing.Point(305, 339);
+            this.lblB2CorrompusReception.Location = new System.Drawing.Point(346, 339);
             this.lblB2CorrompusReception.Name = "lblB2CorrompusReception";
             this.lblB2CorrompusReception.Size = new System.Drawing.Size(36, 13);
             this.lblB2CorrompusReception.TabIndex = 37;
@@ -381,10 +388,43 @@
             this.lblB1CorrompusReception.TabIndex = 35;
             this.lblB1CorrompusReception.Text = "0 - 0%";
             // 
+            // label7
+            // 
+            this.label7.AutoSize = true;
+            this.label7.Location = new System.Drawing.Point(164, 36);
+            this.label7.Name = "label7";
+            this.label7.Size = new System.Drawing.Size(50, 13);
+            this.label7.TabIndex = 40;
+            this.label7.Text = "Intervalle";
+            // 
+            // numIntervalle
+            // 
+            this.numIntervalle.Location = new System.Drawing.Point(221, 34);
+            this.numIntervalle.Maximum = new decimal(new int[] {
+            10000,
+            0,
+            0,
+            0});
+            this.numIntervalle.Name = "numIntervalle";
+            this.numIntervalle.Size = new System.Drawing.Size(65, 20);
+            this.numIntervalle.TabIndex = 41;
+            // 
+            // label8
+            // 
+            this.label8.AutoSize = true;
+            this.label8.Location = new System.Drawing.Point(291, 36);
+            this.label8.Name = "label8";
+            this.label8.Size = new System.Drawing.Size(20, 13);
+            this.label8.TabIndex = 42;
+            this.label8.Text = "ms";
+            // 
             // PanelTestLiaisons
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.Controls.Add(this.label8);
+            this.Controls.Add(this.numIntervalle);
+            this.Controls.Add(this.label7);
             this.Controls.Add(this.lblPRCorrompusReception);
             this.Controls.Add(this.lblB3CorrompusReception);
             this.Controls.Add(this.lblB2CorrompusReception);
@@ -422,6 +462,7 @@
             this.Controls.Add(this.btnStart);
             this.Name = "PanelTestLiaisons";
             this.Size = new System.Drawing.Size(1202, 561);
+            ((System.ComponentModel.ISupportInitialize)(this.numIntervalle)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -464,5 +505,8 @@
         private System.Windows.Forms.Label lblB2CorrompusReception;
         private System.Windows.Forms.Label label33;
         private System.Windows.Forms.Label lblB1CorrompusReception;
+        private System.Windows.Forms.Label label7;
+        private System.Windows.Forms.NumericUpDown numIntervalle;
+        private System.Windows.Forms.Label label8;
     }
 }

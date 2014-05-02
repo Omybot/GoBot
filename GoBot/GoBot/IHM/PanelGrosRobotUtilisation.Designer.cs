@@ -29,6 +29,8 @@
         private void InitializeComponent()
         {
             this.groupBoxUtilisation = new Composants.GroupBoxRetractable();
+            this.btnTirBouchon = new System.Windows.Forms.Button();
+            this.label7 = new System.Windows.Forms.Label();
             this.label6 = new System.Windows.Forms.Label();
             this.switchBoutonElectrvanne = new Composants.SwitchBouton();
             this.label2 = new System.Windows.Forms.Label();
@@ -38,21 +40,23 @@
             this.btnEpauleRange = new System.Windows.Forms.Button();
             this.btnCoudeRange = new System.Windows.Forms.Button();
             this.label4 = new System.Windows.Forms.Label();
-            this.btnPinceGaucheOuverte = new System.Windows.Forms.Button();
-            this.btnPinceGaucheFermee = new System.Windows.Forms.Button();
             this.label5 = new System.Windows.Forms.Label();
-            this.btnPinceDroiteFermee = new System.Windows.Forms.Button();
-            this.btnPinceDroiteOuverte = new System.Windows.Forms.Button();
             this.label12 = new System.Windows.Forms.Label();
             this.btnDiagnostic = new System.Windows.Forms.Button();
             this.switchBoutonPuissance = new Composants.SwitchBouton();
-            this.btnTirBouchon = new System.Windows.Forms.Button();
-            this.label7 = new System.Windows.Forms.Label();
+            this.label8 = new System.Windows.Forms.Label();
+            this.switchBoutonPousse = new Composants.SwitchBouton();
+            this.switchBoutonPinceGauche = new Composants.SwitchBouton();
+            this.switchBoutonPinceDroite = new Composants.SwitchBouton();
             this.groupBoxUtilisation.SuspendLayout();
             this.SuspendLayout();
             // 
             // groupBoxUtilisation
             // 
+            this.groupBoxUtilisation.Controls.Add(this.switchBoutonPinceGauche);
+            this.groupBoxUtilisation.Controls.Add(this.switchBoutonPinceDroite);
+            this.groupBoxUtilisation.Controls.Add(this.label8);
+            this.groupBoxUtilisation.Controls.Add(this.switchBoutonPousse);
             this.groupBoxUtilisation.Controls.Add(this.btnTirBouchon);
             this.groupBoxUtilisation.Controls.Add(this.label7);
             this.groupBoxUtilisation.Controls.Add(this.label6);
@@ -64,11 +68,7 @@
             this.groupBoxUtilisation.Controls.Add(this.btnEpauleRange);
             this.groupBoxUtilisation.Controls.Add(this.btnCoudeRange);
             this.groupBoxUtilisation.Controls.Add(this.label4);
-            this.groupBoxUtilisation.Controls.Add(this.btnPinceGaucheOuverte);
-            this.groupBoxUtilisation.Controls.Add(this.btnPinceGaucheFermee);
             this.groupBoxUtilisation.Controls.Add(this.label5);
-            this.groupBoxUtilisation.Controls.Add(this.btnPinceDroiteFermee);
-            this.groupBoxUtilisation.Controls.Add(this.btnPinceDroiteOuverte);
             this.groupBoxUtilisation.Controls.Add(this.label12);
             this.groupBoxUtilisation.Controls.Add(this.btnDiagnostic);
             this.groupBoxUtilisation.Controls.Add(this.switchBoutonPuissance);
@@ -78,6 +78,25 @@
             this.groupBoxUtilisation.TabIndex = 1;
             this.groupBoxUtilisation.TabStop = false;
             this.groupBoxUtilisation.Text = "Utilisation";
+            // 
+            // btnTirBouchon
+            // 
+            this.btnTirBouchon.Location = new System.Drawing.Point(117, 205);
+            this.btnTirBouchon.Name = "btnTirBouchon";
+            this.btnTirBouchon.Size = new System.Drawing.Size(53, 23);
+            this.btnTirBouchon.TabIndex = 221;
+            this.btnTirBouchon.Text = "Feu !!";
+            this.btnTirBouchon.UseVisualStyleBackColor = true;
+            this.btnTirBouchon.Click += new System.EventHandler(this.btnTirBouchon_Click);
+            // 
+            // label7
+            // 
+            this.label7.AutoSize = true;
+            this.label7.Location = new System.Drawing.Point(26, 210);
+            this.label7.Name = "label7";
+            this.label7.Size = new System.Drawing.Size(64, 13);
+            this.label7.TabIndex = 220;
+            this.label7.Text = "Tir bouchon";
             // 
             // label6
             // 
@@ -164,26 +183,6 @@
             this.label4.TabIndex = 202;
             this.label4.Text = "Pince droite";
             // 
-            // btnPinceGaucheOuverte
-            // 
-            this.btnPinceGaucheOuverte.Location = new System.Drawing.Point(176, 155);
-            this.btnPinceGaucheOuverte.Name = "btnPinceGaucheOuverte";
-            this.btnPinceGaucheOuverte.Size = new System.Drawing.Size(53, 23);
-            this.btnPinceGaucheOuverte.TabIndex = 211;
-            this.btnPinceGaucheOuverte.Text = "Ouverte";
-            this.btnPinceGaucheOuverte.UseVisualStyleBackColor = true;
-            this.btnPinceGaucheOuverte.Click += new System.EventHandler(this.btnPinceGaucheOuverte_Click);
-            // 
-            // btnPinceGaucheFermee
-            // 
-            this.btnPinceGaucheFermee.Location = new System.Drawing.Point(117, 155);
-            this.btnPinceGaucheFermee.Name = "btnPinceGaucheFermee";
-            this.btnPinceGaucheFermee.Size = new System.Drawing.Size(53, 23);
-            this.btnPinceGaucheFermee.TabIndex = 210;
-            this.btnPinceGaucheFermee.Text = "Fermée";
-            this.btnPinceGaucheFermee.UseVisualStyleBackColor = true;
-            this.btnPinceGaucheFermee.Click += new System.EventHandler(this.btnPinceGaucheFermee_Click);
-            // 
             // label5
             // 
             this.label5.AutoSize = true;
@@ -192,26 +191,6 @@
             this.label5.Size = new System.Drawing.Size(73, 13);
             this.label5.TabIndex = 207;
             this.label5.Text = "Pince gauche";
-            // 
-            // btnPinceDroiteFermee
-            // 
-            this.btnPinceDroiteFermee.Location = new System.Drawing.Point(117, 129);
-            this.btnPinceDroiteFermee.Name = "btnPinceDroiteFermee";
-            this.btnPinceDroiteFermee.Size = new System.Drawing.Size(53, 23);
-            this.btnPinceDroiteFermee.TabIndex = 205;
-            this.btnPinceDroiteFermee.Text = "Fermée";
-            this.btnPinceDroiteFermee.UseVisualStyleBackColor = true;
-            this.btnPinceDroiteFermee.Click += new System.EventHandler(this.btnPinceDroiteFermee_Click);
-            // 
-            // btnPinceDroiteOuverte
-            // 
-            this.btnPinceDroiteOuverte.Location = new System.Drawing.Point(176, 129);
-            this.btnPinceDroiteOuverte.Name = "btnPinceDroiteOuverte";
-            this.btnPinceDroiteOuverte.Size = new System.Drawing.Size(53, 23);
-            this.btnPinceDroiteOuverte.TabIndex = 206;
-            this.btnPinceDroiteOuverte.Text = "Ouverte";
-            this.btnPinceDroiteOuverte.UseVisualStyleBackColor = true;
-            this.btnPinceDroiteOuverte.Click += new System.EventHandler(this.btnPinceDroiteOuverte_Click);
             // 
             // label12
             // 
@@ -242,24 +221,44 @@
             this.switchBoutonPuissance.TabIndex = 200;
             this.switchBoutonPuissance.ChangementEtat += new System.EventHandler(this.switchBoutonPuissance_ChangementEtat);
             // 
-            // btnTirBouchon
+            // label8
             // 
-            this.btnTirBouchon.Location = new System.Drawing.Point(117, 205);
-            this.btnTirBouchon.Name = "btnTirBouchon";
-            this.btnTirBouchon.Size = new System.Drawing.Size(53, 23);
-            this.btnTirBouchon.TabIndex = 221;
-            this.btnTirBouchon.Text = "Feu !!";
-            this.btnTirBouchon.UseVisualStyleBackColor = true;
-            this.btnTirBouchon.Click += new System.EventHandler(this.btnTirBouchon_Click);
+            this.label8.AutoSize = true;
+            this.label8.Location = new System.Drawing.Point(173, 210);
+            this.label8.Name = "label8";
+            this.label8.Size = new System.Drawing.Size(87, 13);
+            this.label8.TabIndex = 223;
+            this.label8.Text = "Pousse bouchon";
             // 
-            // label7
+            // switchBoutonPousse
             // 
-            this.label7.AutoSize = true;
-            this.label7.Location = new System.Drawing.Point(26, 210);
-            this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(64, 13);
-            this.label7.TabIndex = 220;
-            this.label7.Text = "Tir bouchon";
+            this.switchBoutonPousse.BackColor = System.Drawing.Color.Transparent;
+            this.switchBoutonPousse.Location = new System.Drawing.Point(264, 210);
+            this.switchBoutonPousse.Name = "switchBoutonPousse";
+            this.switchBoutonPousse.Size = new System.Drawing.Size(35, 15);
+            this.switchBoutonPousse.Symetrique = true;
+            this.switchBoutonPousse.TabIndex = 222;
+            this.switchBoutonPousse.ChangementEtat += new System.EventHandler(this.switchBoutonPousse_ChangementEtat);
+            // 
+            // switchBoutonPinceGauche
+            // 
+            this.switchBoutonPinceGauche.BackColor = System.Drawing.Color.Transparent;
+            this.switchBoutonPinceGauche.Location = new System.Drawing.Point(117, 160);
+            this.switchBoutonPinceGauche.Name = "switchBoutonPinceGauche";
+            this.switchBoutonPinceGauche.Size = new System.Drawing.Size(35, 15);
+            this.switchBoutonPinceGauche.Symetrique = true;
+            this.switchBoutonPinceGauche.TabIndex = 225;
+            this.switchBoutonPinceGauche.ChangementEtat += new System.EventHandler(this.switchBoutonPinceGauche_ChangementEtat);
+            // 
+            // switchBoutonPinceDroite
+            // 
+            this.switchBoutonPinceDroite.BackColor = System.Drawing.Color.Transparent;
+            this.switchBoutonPinceDroite.Location = new System.Drawing.Point(117, 134);
+            this.switchBoutonPinceDroite.Name = "switchBoutonPinceDroite";
+            this.switchBoutonPinceDroite.Size = new System.Drawing.Size(35, 15);
+            this.switchBoutonPinceDroite.Symetrique = true;
+            this.switchBoutonPinceDroite.TabIndex = 224;
+            this.switchBoutonPinceDroite.ChangementEtat += new System.EventHandler(this.switchBoutonPinceDroite_ChangementEtat);
             // 
             // PanelGrosRobotUtilisation
             // 
@@ -284,11 +283,7 @@
         private System.Windows.Forms.Button btnDiagnostic;
         private Composants.GroupBoxRetractable groupBoxUtilisation;
         private System.Windows.Forms.Label label4;
-        private System.Windows.Forms.Button btnPinceGaucheOuverte;
-        private System.Windows.Forms.Button btnPinceGaucheFermee;
         private System.Windows.Forms.Label label5;
-        private System.Windows.Forms.Button btnPinceDroiteFermee;
-        private System.Windows.Forms.Button btnPinceDroiteOuverte;
         private System.Windows.Forms.Button btnEpauleRange;
         private System.Windows.Forms.Button btnCoudeRange;
         private System.Windows.Forms.Label label3;
@@ -299,5 +294,9 @@
         private Composants.SwitchBouton switchBoutonElectrvanne;
         private System.Windows.Forms.Button btnTirBouchon;
         private System.Windows.Forms.Label label7;
+        private System.Windows.Forms.Label label8;
+        private Composants.SwitchBouton switchBoutonPousse;
+        private Composants.SwitchBouton switchBoutonPinceGauche;
+        private Composants.SwitchBouton switchBoutonPinceDroite;
     }
 }
