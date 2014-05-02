@@ -51,14 +51,14 @@ namespace GoBot.IHM
             dataGridViewLog.Columns[5].Width = dataGridViewLog.Width - 18 - dataGridViewLog.Columns[0].Width - dataGridViewLog.Columns[1].Width - dataGridViewLog.Columns[2].Width - dataGridViewLog.Columns[3].Width - dataGridViewLog.Columns[4].Width;
 
             couleurCarte = new Dictionary<Carte, Color>();
-            couleurCarte.Add(Carte.PC, Color.FromArgb(255, 235, 230));
-            couleurCarte.Add(Carte.RecMove, Color.FromArgb(204, 255, 204));
-            couleurCarte.Add(Carte.RecPi, Color.FromArgb(255, 204, 230));
+            couleurCarte.Add(Carte.PC, Color.FromArgb(180, 245, 245));
+            couleurCarte.Add(Carte.RecMove, Color.FromArgb(143, 255, 143));
+            couleurCarte.Add(Carte.RecPi, Color.FromArgb(255, 201, 201));
             couleurCarte.Add(Carte.RecBun, Color.FromArgb(226, 226, 255));
             couleurCarte.Add(Carte.RecBeu, Color.FromArgb(202, 202, 255));
             couleurCarte.Add(Carte.RecBoi, Color.FromArgb(176, 176, 255));
             couleurCarte.Add(Carte.RecMiwi, Color.FromArgb(244, 247, 153));
-            couleurCarte.Add(Carte.RecIO, Color.FromArgb(244, 170, 255));
+            couleurCarte.Add(Carte.RecIO, Color.FromArgb(210, 254, 211));
 
 
             // L'ajout de champs déclenche le SetCheck event qui ajoute les éléments automatiquement dans le dictionnaire

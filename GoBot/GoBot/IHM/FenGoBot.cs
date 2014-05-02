@@ -133,7 +133,13 @@ namespace GoBot
                 Instance = this;
 
                 panelMatch.CouleurDroiteJaune();
+                panelTable.TableDessinee += panelTable_TableDessinee;
             }
+        }
+
+        void panelTable_TableDessinee(Image img)
+        {
+            panelMatch.AfficherTable(img);
         }
 
         public void ChargerReplay(String fichier)

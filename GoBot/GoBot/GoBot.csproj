@@ -88,6 +88,7 @@
     <Compile Include="Communications\ConnexionMiwi.cs" />
     <Compile Include="Communications\Connexion.cs" />
     <Compile Include="Communications\DecodeurTrames.cs" />
+    <Compile Include="Communications\FonctionsTrames.cs" />
     <Compile Include="Communications\LiaisonDataCheck.cs" />
     <Compile Include="ElementsJeu\ElementJeu.cs" />
     <Compile Include="ElementsJeu\Feu.cs" />
@@ -252,6 +253,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
+    <Compile Include="Recallages.cs" />
     <Compile Include="Robots.cs" />
     <Compile Include="Communications\Connexions.cs" />
     <Compile Include="PathFinding\Arc.cs" />
@@ -535,6 +537,12 @@
     <None Include="img\Alertes.png" />
     <None Include="img\FondServo.png" />
     <None Include="img\Dossier.png" />
+    <None Include="img\BeuJaune.png" />
+    <None Include="img\BeuRouge.png" />
+    <None Include="img\BoiJaune.png" />
+    <None Include="img\BoiRouge.png" />
+    <None Include="img\BunJaune.png" />
+    <None Include="img\BunRouge.png" />
     <Content Include="img\IconeVitesse.png" />
     <None Include="img\Pompe.png" />
     <None Include="img\Recale.png" />

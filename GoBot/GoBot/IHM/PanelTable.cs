@@ -45,7 +45,8 @@ namespace GoBot.IHM
 
         void ParentForm_FormClosing(object sender, FormClosingEventArgs e)
         {
-            thAffichage.Abort();
+            if(thAffichage != null)
+                thAffichage.Abort();
         }
 
         void Plateau_ScoreChange(object sender, EventArgs e)
@@ -55,6 +56,13 @@ namespace GoBot.IHM
                     lblScore.Text = Plateau.Score + "";
                 }));
         }
+
+
+        //Déclaration du délégué pour l’évènement détection de positions
+        public delegate void TableDessineeDelegate(Image img);
+        //Déclaration de l’évènement utilisant le délégué
+        public event TableDessineeDelegate TableDessinee;
+
 
         void MAJAffichage()
         {
@@ -563,6 +571,7 @@ namespace GoBot.IHM
                                 }
 
                                 pictureBoxTable.Image = bmp;
+                                TableDessinee(bmp);
                             }
                         }
                         catch (Exception ex)
@@ -669,9 +678,19 @@ namespace GoBot.IHM
         Thread thAffichage;
         private void btnAffichage_Click(object sender, EventArgs e)
         {
-            btnAffichage.Enabled = false;
-            thAffichage = new Thread(MAJAffichage);
-            thAffichage.Start();
+            if (btnAffichage.Text == "Lancer l'affichage")
+            {
+                thAffichage = new Thread(MAJAffichage);
+                thAffichage.Start();
+                btnAffichage.Text = "Stopper l'affichage";
+                btnAffichage.Image = GoBot.Properties.Resources.Pause;
+            }
+            else
+            {
+                thAffichage.Abort();
+                btnAffichage.Text = "Lancer l'affichage";
+                btnAffichage.Image = GoBot.Properties.Resources.Play;
+            }
         }
 
         private void btnSaveGraph_Click(object sender, EventArgs e)

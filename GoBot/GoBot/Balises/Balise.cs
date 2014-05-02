@@ -34,8 +34,14 @@ namespace GoBot.Balises
 
         public const int DISTANCE_LASER_TABLE = 62;
 
-        // Tension des batteries
+        /// <summary>
+        /// Tension de la batterie 1
+        /// </summary>
         public double Tension1 { get; private set; }
+
+        /// <summary>
+        /// Tension de la batterie 2
+        /// </summary>
         public double Tension2 { get; private set; }
 
         /// <summary>
@@ -121,6 +127,13 @@ namespace GoBot.Balises
         public Connexion Connexion { get; private set; }
 
         /// <summary>
+        /// Détermine si la balise est rotation (Au moins un tour a été effectué durant la dernière seconde)
+        /// </summary>
+        public bool EnRotation { get; private set; }
+        private System.Timers.Timer timerRotation;
+        private int cptRotation;
+
+        /// <summary>
         /// Constructeur
         /// </summary>
         /// <param name="carte">Carte sur laquelle est connectée la balise</param>
@@ -129,6 +142,7 @@ namespace GoBot.Balises
             Carte = carte;
             dernieresErreurs = new List<double>();
             ReglageVitessePermanent = true;
+            EnRotation = false;
             DetectionsCapteur1 = new List<DetectionBalise>();
             DetectionsCapteur2 = new List<DetectionBalise>();
 
@@ -150,7 +164,22 @@ namespace GoBot.Balises
             Connexion.ConnexionCheck.TestConnexion += new ConnexionCheck.TestConnexionDelegate(TestConnexion);
 
             Stats = new BaliseStats(this);
-            Tension1 = 0;
+
+            cptRotation = 0;
+
+            timerRotation = new System.Timers.Timer();
+            timerRotation.Interval = 1000;
+            timerRotation.Elapsed += timerRotation_Elapsed;
+        }
+
+        void timerRotation_Elapsed(object sender, System.Timers.ElapsedEventArgs e)
+        {
+            bool temp = EnRotation;
+            EnRotation = cptRotation > 0;
+            cptRotation = 0;
+
+            if(temp != EnRotation)
+                RotationChange(EnRotation);
         }
 
         /// <summary>
@@ -181,6 +210,8 @@ namespace GoBot.Balises
                 {
                     // Réception d'une mesure sur un tour de rotation
                     // Vérification checksum
+                    cptRotation++;
+
                     int checksumRecu = trame[trame.Length - 1];
 
                     int checksumCalcul = 0;
@@ -396,6 +427,7 @@ namespace GoBot.Balises
                             Config.Save();
                             // Réglage terminé
                             ReglageOffset = false;
+                            CalibrationAngulaireTerminee();
                         }
                     }
 
@@ -569,12 +601,27 @@ namespace GoBot.Balises
         //Déclaration de l’évènement utilisant le délégué
         public event PositionsChangeDelegate PositionsChange;
 
+        //Déclaration du délégué pour l’évènement mise en rotation ou arrêt de la balise
+        public delegate void RotationChangeDelegate(bool rotation);
+        //Déclaration de l’évènement utilisant le délégué
+        public event RotationChangeDelegate RotationChange;
+
+        //Déclaration du délégué pour évènement simple
+        public delegate void ChangeDelegate();
+        //Déclaration de l’évènement utilisant le délégué
+        public event ChangeDelegate CalibrationAngulaireTerminee;
+        public event ChangeDelegate CalibrationAssietteTerminee;
+
         /// <summary>
         /// Démarre le réglage d'offset sur le nombre de mesures spécifié
         /// </summary>
         /// <param name="nbMesures">Nombre de mesures à moyenner pour calculer l'offset</param>
         public void ReglerOffset(int nbMesures)
         {
+            // Réinitialisation des offsets
+            Config.CurrentConfig.SetOffsetBalise(Carte, 1, 0);
+            Config.CurrentConfig.SetOffsetBalise(Carte, 2, 0);
+
             compteurReglageOffset = nbMesures;
             ReglageOffset = true;
             anglesMesuresPourOffsetCapteur1 = new List<double>();
@@ -717,6 +764,11 @@ namespace GoBot.Balises
             }
 
             return valeurs;
+        }
+
+        public void ReglerAssiette()
+        {
+            // todo
         }
     }
 }

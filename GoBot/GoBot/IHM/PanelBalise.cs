@@ -168,8 +168,6 @@ namespace GoBot.IHM
 
         public void btnOffset_Click(object sender, EventArgs e)
         {
-            Config.CurrentConfig.SetOffsetBalise(Balise.Carte, 1, 0);
-            Config.CurrentConfig.SetOffsetBalise(Balise.Carte, 2, 0);
             balise.ReglerOffset(16); // 16 mesures à 4 tours seconde ce qui fait 4 secondes de calibration
         }
 
@@ -182,7 +180,7 @@ namespace GoBot.IHM
         {
             boxAffichage.Checked = true;
             trackBarConsigne.SetValue(40);
-            trackBarVitesse.SetValue(2000);
+            trackBarVitesse.SetValue(3200);
             balise.ReglageVitesse = true;
         }
 

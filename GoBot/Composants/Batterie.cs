@@ -30,7 +30,7 @@ namespace Composants
                         CouleurOrange();
                     else if (tension > TensionLow)
                         CouleurRouge(true);
-                    else if (tension >= 0.1)
+                    else if (tension >= 0.5)
                         CouleurRougeCritique(true);
                     else
                         CouleurGris();

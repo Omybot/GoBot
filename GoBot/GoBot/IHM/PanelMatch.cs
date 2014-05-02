@@ -21,22 +21,143 @@ namespace GoBot.IHM
             InitializeComponent();
             btnJoueurDroite.BackColor = Plateau.CouleurDroiteJaune;
             btnJoueurGauche.BackColor = Plateau.CouleurGaucheRouge;
+            assietteAuto1 = assietteAuto2 = assietteAuto3 = false;
+            angleAuto1 = angleAuto2 = angleAuto3 = false;
+
+            Plateau.Balise1.RotationChange += Balise1_RotationChange;
+            Plateau.Balise2.RotationChange += Balise2_RotationChange;
+            Plateau.Balise3.RotationChange += Balise3_RotationChange;
+
+            Plateau.Balise1.CalibrationAngulaireTerminee += Balise1_CalibrationAngulaireTerminee;
+            Plateau.Balise2.CalibrationAngulaireTerminee += Balise2_CalibrationAngulaireTerminee;
+            Plateau.Balise3.CalibrationAngulaireTerminee += Balise3_CalibrationAngulaireTerminee;
+
+            Plateau.Balise1.CalibrationAssietteTerminee += Balise1_CalibrationAssietteTerminee;
+            Plateau.Balise2.CalibrationAssietteTerminee += Balise2_CalibrationAssietteTerminee;
+            Plateau.Balise3.CalibrationAssietteTerminee += Balise3_CalibrationAssietteTerminee;
+        }
+
+        public void AfficherTable(Image img)
+        {
+            pictureBoxTable.Image = img;
+        }
+
+        void Balise1_CalibrationAssietteTerminee()
+        {
+            ledBalise1Assiette.CouleurVert();
+
+            if (angleAuto1)
+            {
+                angleAuto1 = false;
+                Plateau.Balise1.ReglerOffset(16);
+            }
+        }
+        void Balise2_CalibrationAssietteTerminee()
+        {
+            ledBalise2Assiette.CouleurVert();
+
+            if (angleAuto2)
+            {
+                angleAuto2 = false;
+                Plateau.Balise2.ReglerOffset(16);
+            }
+        }
+        void Balise3_CalibrationAssietteTerminee()
+        {
+            ledBalise3Assiette.CouleurVert();
+
+            if (angleAuto3)
+            {
+                angleAuto3 = false;
+                Plateau.Balise3.ReglerOffset(16);
+            }
+        }
+
+        void Balise1_CalibrationAngulaireTerminee()
+        {
+            ledBalise1Angle.CouleurVert();
+        }
+        void Balise2_CalibrationAngulaireTerminee()
+        {
+            ledBalise2Angle.CouleurVert();
+        }
+        void Balise3_CalibrationAngulaireTerminee()
+        {
+            ledBalise3Angle.CouleurVert();
+        }
+
+        void Balise1_RotationChange(bool rotation)
+        {
+            if (rotation)
+            {
+                ledBalise1Rotation.CouleurVert();
+                if (assietteAuto1)
+                {
+                    assietteAuto1 = false;
+                    Plateau.Balise1.ReglerAssiette();
+                }
+            }
+            else
+                ledBalise1Rotation.CouleurRouge();
+        }
+        void Balise2_RotationChange(bool rotation)
+        {
+            if (rotation)
+            {
+                ledBalise2Rotation.CouleurVert();
+                if (assietteAuto2)
+                {
+                    assietteAuto2 = false;
+                    Plateau.Balise2.ReglerAssiette();
+                }
+            }
+            else
+                ledBalise2Rotation.CouleurRouge();
+        }
+        void Balise3_RotationChange(bool rotation)
+        {
+            if (rotation)
+            {
+                ledBalise3Rotation.CouleurVert();
+                if (assietteAuto3)
+                {
+                    assietteAuto3 = false;
+                    Plateau.Balise3.ReglerAssiette();
+                }
+            }
+            else
+                ledBalise3Rotation.CouleurRouge();
         }
 
         private void btnCouleurJaune_Click(object sender, EventArgs e)
         {
             Plateau.NotreCouleur = Plateau.CouleurDroiteJaune;
+
+            pictureBoxBunRouge.Visible = false;
+            pictureBoxBeuRouge.Visible = false;
+            pictureBoxBoiRouge.Visible = false;
+
+            pictureBoxBunJaune.Visible = true;
+            pictureBoxBeuJaune.Visible = true;
+            pictureBoxBoiJaune.Visible = true;
         }
 
         private void btnCouleurRouge_Click(object sender, EventArgs e)
         {
             Plateau.NotreCouleur = Plateau.CouleurGaucheRouge;
+
+            pictureBoxBunRouge.Visible = true;
+            pictureBoxBeuRouge.Visible = true;
+            pictureBoxBoiRouge.Visible = true;
+
+            pictureBoxBunJaune.Visible = false;
+            pictureBoxBeuJaune.Visible = false;
+            pictureBoxBoiJaune.Visible = false;
         }
 
         public void CouleurGaucheRouge()
         {
             pictureBoxCouleur.BackColor = Plateau.CouleurGaucheRouge;
-            pictureBoxBalises.Image = Properties.Resources.PositionBalises1;
 
             Robots.GrosRobot.ReglerOffsetAsserv(220, 150, 180);
 
@@ -48,7 +169,6 @@ namespace GoBot.IHM
         public void CouleurDroiteJaune()
         {
             pictureBoxCouleur.BackColor = Plateau.CouleurDroiteJaune;
-            pictureBoxBalises.Image = Properties.Resources.PositionBalises2;
 
             Robots.GrosRobot.ReglerOffsetAsserv(3000 - 220, 150, 180);
 
@@ -60,116 +180,52 @@ namespace GoBot.IHM
         Thread thRecallage;
         private void btnRecallage_Click(object sender, EventArgs e)
         {
-            /*if (!Robots.GrosRobot.GetJack(false))
+            if (!Robots.GrosRobot.GetJack(false))
             {
                 MessageBox.Show("Jack absent !" + Environment.NewLine + "Jack nécessaire avant de commencer à recaller.", "Attention", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 return;
-            }*/
-            btnRecallage.Enabled = false;
-            if (Connexions.ConnexionMove.ConnexionCheck.Connecte)
-            {
-                thRecallage = new Thread(RecallagesDebut);
-                thRecallage.Start();
             }
+
+            thRecallage = new Thread(RecallagesGros);
+            thRecallage.Start();
         }
 
         Thread thRecallagePetit;
         private void RecallagePetit()
         {
-            Robots.PetitRobot.Lent();
-            Robots.PetitRobot.Avancer(10);
-            Robots.PetitRobot.Recallage(SensAR.Arriere);
-            Robots.PetitRobot.Avancer(250);
+            // Recallage du gros robot
 
-            if (Plateau.NotreCouleur == Plateau.CouleurDroiteJaune)
-                Robots.PetitRobot.PivotDroite(90);
-            else
-                Robots.PetitRobot.PivotGauche(90);
+            this.Invoke(new EventHandler(delegate
+            {
+                ledRecallagePetit.CouleurOrange();
+            }));
 
-            Robots.PetitRobot.Recallage(SensAR.Arriere);
-            Thread.Sleep(1000);
+            Recallages.RecallagePetitRobot();
 
-            if (Plateau.NotreCouleur == Plateau.CouleurDroiteJaune)
-                Robots.PetitRobot.ReglerOffsetAsserv(Robots.PetitRobot.Longueur / 2, 1750 - Robots.PetitRobot.Longueur / 2, 0);
-            else
-                Robots.PetitRobot.ReglerOffsetAsserv(3000 - Robots.PetitRobot.Longueur / 2, 1750 - Robots.PetitRobot.Longueur / 2, 0);
+            this.Invoke(new EventHandler(delegate
+            {
+                ledRecallagePetit.CouleurVert();
+            }));
         }
 
         /// <summary>
         /// Première partie du recallage : Le robot doit terminer dans une position connue pour la calibration des balises
         /// </summary>
-        public void RecallagesDebut()
+        public void RecallagesGros()
         {
-            //panelCamera.btnCapture_Click(null, null);
             // Recallage du gros robot
-            
-            Robots.GrosRobot.Lent();
-            Robots.GrosRobot.Reculer(10);
-            Robots.GrosRobot.Recallage(SensAR.Avant);
-            Robots.GrosRobot.Rapide();
-            Robots.GrosRobot.Reculer(101);
-
-            if (Plateau.NotreCouleur == Plateau.CouleurDroiteJaune)
-                Robots.GrosRobot.PivotGauche(90);
-            else
-                Robots.GrosRobot.PivotDroite(90);
-
-            Robots.GrosRobot.Reculer(400);
-            Robots.GrosRobot.Lent();
-            Robots.GrosRobot.Recallage(SensAR.Arriere);
-            Robots.GrosRobot.Rapide();
-            Robots.GrosRobot.Avancer(352);
-
-            if (Plateau.NotreCouleur == Plateau.CouleurDroiteJaune)
-                Robots.GrosRobot.PivotGauche(26);
-            else
-                Robots.GrosRobot.PivotDroite(26);
-
-            Robots.GrosRobot.Reculer(339);
-
-            if (Plateau.NotreCouleur == Plateau.CouleurDroiteJaune)
-                Robots.GrosRobot.ReglerOffsetAsserv(3000 - 197, 402, 26);
-            else
-                Robots.GrosRobot.ReglerOffsetAsserv(197, 402, -26);
 
             this.Invoke(new EventHandler(delegate
             {
-                ledRecallage.CouleurOrange();
+                ledRecallageGros.CouleurOrange();
             }));
-        }
 
-        /// <summary>
-        /// Deuxième partie du recallage : le robot doit partir de la position de recallage des balises et arriver à son point de départ du match
-        /// </summary>
-        private void RecallagesFin()
-        {
-            Robots.GrosRobot.Reculer(1450 - Robots.GrosRobot.Longueur / 2);
-            Robots.GrosRobot.Lent();
-            Robots.GrosRobot.Recallage(SensAR.Arriere);
-
-            Thread.Sleep(1000);
-
-            // Envoyer la position actuelle au robot afin qu'il recalle ses offsets
-            if (Plateau.NotreCouleur == Plateau.CouleurGaucheRouge)
-                Robots.GrosRobot.ReglerOffsetAsserv(3000 - Robots.GrosRobot.Longueur / 2, 1000, 180);
-            else
-                Robots.GrosRobot.ReglerOffsetAsserv(Robots.GrosRobot.Longueur / 2, 1000, 0);
-
-            Robots.GrosRobot.Rapide();
-            Robots.GrosRobot.ArmerJack();
-
-            PanelCamera.ContinuerCamera = true;
+            Recallages.RecallageGrosRobot();
 
             this.Invoke(new EventHandler(delegate
             {
-                ledRecallage.CouleurVert();
+                ledRecallageGros.CouleurVert();
             }));
-        }
-
-        private void btnBalises_Click(object sender, EventArgs e)
-        {
-            thRecallage = new Thread(RecallagesFin);
-            thRecallage.Start();
         }
 
         void Plateau_NotreCouleurChange(object sender, EventArgs e)
@@ -186,7 +242,7 @@ namespace GoBot.IHM
         private void btnArmerJack_Click(object sender, EventArgs e)
         {
             Robots.GrosRobot.ArmerJack();
-            Robots.GrosRobot.ReglerOffsetAsserv(0, 0, 270);
+            ledJackArme.CouleurVert();
         }
 
         private void radioBaliseOui_CheckedChanged(object sender, EventArgs e)
@@ -203,6 +259,42 @@ namespace GoBot.IHM
                 Plateau.NotreCouleurChange += new EventHandler(Plateau_NotreCouleurChange);
                 Connexions.ConnexionIO.SendMessage(TrameFactory.DemandeCouleurEquipe());
             }
+        }
+
+        bool assietteAuto1, assietteAuto2, assietteAuto3;
+        bool angleAuto1, angleAuto2, angleAuto3;
+        private void btnBalises_Click(object sender, EventArgs e)
+        {
+            ledBalise1Rotation.CouleurOrange();
+            ledBalise2Rotation.CouleurOrange();
+            ledBalise3Rotation.CouleurOrange();
+
+            assietteAuto1 = boxCalibrationAssiette.Checked;
+            assietteAuto2 = boxCalibrationAssiette.Checked;
+            assietteAuto3 = boxCalibrationAssiette.Checked;
+            angleAuto1 = boxCalibrationAngulaire.Checked;
+            angleAuto2 = boxCalibrationAngulaire.Checked;
+            angleAuto3 = boxCalibrationAngulaire.Checked;
+
+            Plateau.Balise1.Lancer(4);
+            Plateau.Balise2.Lancer(4);
+            Plateau.Balise3.Lancer(4);
+        }
+
+        private void btnCalibrationAssiette_Click(object sender, EventArgs e)
+        {
+            // todo
+        }
+
+        private void btnCalibrationAngle_Click(object sender, EventArgs e)
+        {
+            ledBalise1Angle.CouleurOrange();
+            ledBalise2Angle.CouleurOrange();
+            ledBalise3Angle.CouleurOrange();
+
+            Plateau.Balise1.ReglerOffset(16); // 16 mesures à 4 tours seconde ce qui fait 4 secondes de calibration
+            Plateau.Balise2.ReglerOffset(16); 
+            Plateau.Balise3.ReglerOffset(16); 
         }
     }
 }

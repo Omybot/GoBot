@@ -79,11 +79,14 @@
             // 
             // btnAffichage
             // 
+            this.btnAffichage.Image = global::GoBot.Properties.Resources.Play;
             this.btnAffichage.Location = new System.Drawing.Point(9, 32);
             this.btnAffichage.Name = "btnAffichage";
-            this.btnAffichage.Size = new System.Drawing.Size(111, 25);
+            this.btnAffichage.Size = new System.Drawing.Size(130, 25);
             this.btnAffichage.TabIndex = 1;
-            this.btnAffichage.Text = "Lancer affichage";
+            this.btnAffichage.Text = "Lancer l\'affichage";
+            this.btnAffichage.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.btnAffichage.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
             this.btnAffichage.UseVisualStyleBackColor = true;
             this.btnAffichage.Click += new System.EventHandler(this.btnAffichage_Click);
             // 
@@ -202,7 +205,7 @@
             // lblPos
             // 
             this.lblPos.AutoSize = true;
-            this.lblPos.Location = new System.Drawing.Point(23, 10);
+            this.lblPos.Location = new System.Drawing.Point(142, 2);
             this.lblPos.Name = "lblPos";
             this.lblPos.Size = new System.Drawing.Size(28, 13);
             this.lblPos.TabIndex = 15;

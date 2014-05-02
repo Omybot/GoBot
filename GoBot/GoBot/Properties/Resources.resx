@@ -193,6 +193,9 @@
   <data name="FlecheGauche" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\img\FlecheGauche.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="PositionBalises2" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\img\PositionBalises2.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
   <data name="Webcam" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\img\Webcam.jpg;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
@@ -201,6 +204,9 @@
   </data>
   <data name="IconeVitesse" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\img\IconeVitesse.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="PositionBalises1" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\img\PositionBalises1.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="VirageArDr" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\img\VirageArDr.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
@@ -226,10 +232,22 @@
   <data name="Helice3" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\img\Helice3.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="PositionBalises1" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\img\PositionBalises1.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="BeuJaune" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\img\BeuJaune.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="PositionBalises2" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\img\PositionBalises2.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="BeuRouge" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\img\BeuRouge.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="BoiJaune" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\img\BoiJaune.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="BoiRouge" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\img\BoiRouge.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="BunJaune" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\img\BunJaune.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="BunRouge" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\img\BunRouge.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
 </root>
