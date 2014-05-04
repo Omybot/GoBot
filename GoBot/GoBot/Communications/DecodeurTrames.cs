@@ -518,9 +518,9 @@ namespace GoBot.Communications
                                 break;
                             case FonctionBalise.Detection:
                                 int valeurDetectionNombreTicksTour = trame[2] * 256 + trame[3];
-                                byte valeurDetectionNombre1 = trame[4];
-                                byte valeurDetectionNombre2 = trame[5];
-                                message = "Tour balise : " + valeurDetectionNombreTicksTour + " ticks " + valeurDetectionNombre1 + " angles / " + valeurDetectionNombre2 + " angles";
+                                double valeurDetectionNombre1 = (double)trame[4] / 2.0;
+                                double valeurDetectionNombre2 = (double)trame[5] / 2.0;
+                                message = "Tour balise : " + valeurDetectionNombreTicksTour + " ticks " + valeurDetectionNombre1 + " angle(s) / " + valeurDetectionNombre2 + " angle(s)";
                                 break;
                             case FonctionBalise.Reset:
                                 message = "Envoi reset";

@@ -20,66 +20,60 @@ namespace GoBot.Enchainements
             Robots.GrosRobot.VitessePivot = 800;
             Robots.GrosRobot.AccelerationPivot = 800;
 
-            if (Plateau.NotreCouleur == Plateau.CouleurGaucheRouge)
-            {
-                Robots.GrosRobot.TourneMoteur(MoteurID.GREpauleFeu, 2750);
-                Robots.GrosRobot.BougeServo(ServomoteurID.GRFeuxCoude, 780);
-                Robots.GrosRobot.BougeServo(ServomoteurID.GRFeuxPoignet, 605);
+            BrasFeux.PositionTorche1();
 
-                Robots.GrosRobot.Avancer(400);
-                Robots.GrosRobot.PivotGauche(20);
+            Robots.GrosRobot.Avancer(800);
 
-                Robots.GrosRobot.TourneMoteur(MoteurID.GREpauleFeu, 1750);
-                Robots.GrosRobot.BougeServo(ServomoteurID.GRFeuxCoude, 785);
-                Robots.GrosRobot.BougeServo(ServomoteurID.GRFeuxPoignet, 370);
-                Thread.Sleep(500);
+            BrasFeux.PositionRange();
 
-                Robots.GrosRobot.Avancer(600);
-            }
+            if (Plateau.NotreCouleur == Plateau.CouleurDroiteJaune)
+                Robots.GrosRobot.PivotGauche(64);
             else
-            {
-                Robots.GrosRobot.TourneMoteur(MoteurID.GREpauleFeu, 2750);
-                Robots.GrosRobot.BougeServo(ServomoteurID.GRFeuxCoude, 780);
-                Robots.GrosRobot.BougeServo(ServomoteurID.GRFeuxPoignet, 605);
+                Robots.GrosRobot.PivotDroite(64);
 
-                Robots.GrosRobot.Avancer(400);
-                Robots.GrosRobot.PivotDroite(20);
+            Robots.GrosRobot.Avancer(111);
 
-                Robots.GrosRobot.TourneMoteur(MoteurID.GREpauleFeu, 1750);
-                Robots.GrosRobot.BougeServo(ServomoteurID.GRFeuxCoude, 785);
-                Robots.GrosRobot.BougeServo(ServomoteurID.GRFeuxPoignet, 370);
-                Thread.Sleep(500);
+            BrasFeux.MoveAttrapeTorcheTout();
+            Robots.GrosRobot.Reculer(40);
 
-                Robots.GrosRobot.Avancer(600);
-            }
+            if (Plateau.NotreCouleur == Plateau.CouleurDroiteJaune)
+                Robots.GrosRobot.PivotDroite(70);
+            else
+                Robots.GrosRobot.PivotGauche(70);
 
+            Robots.GrosRobot.Avancer(300);
+            BrasFeux.MoveDeposeProche3();
+            Robots.GrosRobot.Reculer(120);
+            Robots.GrosRobot.PivotDroite(60);
+            BrasFeux.MoveDeposeRetourne2();
+            Thread.Sleep(500);
+            Robots.GrosRobot.PivotGauche(60);
+
+
+            BrasFeux.PositionInterne1();
+            Robots.GrosRobot.ActionneurOnOff(ActionneurOnOffID.GRPompeFeu, true);
+            Thread.Sleep(300);
+            BrasFeux.PositionRange();
+            Thread.Sleep(300);
+            BrasFeux.PositionTorcheDessus();
+            Thread.Sleep(300);
+            BrasFeux.PositionTorche1();
+            Thread.Sleep(400);
             Robots.GrosRobot.VitesseDeplacement = 400;
-            Robots.GrosRobot.AccelerationDeplacement = 400;
-            Robots.GrosRobot.VitessePivot = 400;
-            Robots.GrosRobot.AccelerationPivot = 400;
-            
-            while (true)
-            {
+            Robots.GrosRobot.Avancer(120);
+            Thread.Sleep(200);
+            //Robots.GrosRobot.Reculer(150);
+            //BrasFeux.MoveDeposeProche1();
+            Robots.GrosRobot.ActionneurOnOff(ActionneurOnOffID.GRPompeFeu, false);
+            BrasFeux.PositionTorcheDessus();
+            Thread.Sleep(500);
+            BrasFeux.PositionRange();
+            Thread.Sleep(500);
+            Robots.GrosRobot.VitesseDeplacement = 800;
+            Robots.GrosRobot.Reculer(150);
 
-                int next = rand.Next(Robots.GrosRobot.Graph.Nodes.Count);
-                if (!((Node)Robots.GrosRobot.Graph.Nodes[next]).Passable)
-                    continue;
 
-                PointReel destination = new PointReel(((Node)Robots.GrosRobot.Graph.Nodes[next]).X, ((Node)Robots.GrosRobot.Graph.Nodes[next]).Y);
 
-                bool retry = false;
-
-                int i = 0;
-                foreach (IForme forme in Plateau.ObstaclesFixes)
-                    if (forme.Distance(destination) < 150 + Robots.GrosRobot.Rayon)
-                    {
-                        retry = true;
-                        Console.WriteLine("Retry " + i++);
-                    }
-
-                if(!retry)
-                    Robots.GrosRobot.PathFinding(destination.X, destination.Y, 0, true);
-            }
         }
 
         protected override void ThreadPetit()

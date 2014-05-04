@@ -62,6 +62,18 @@ namespace GoBot.IHM
 
 
             // L'ajout de champs déclenche le SetCheck event qui ajoute les éléments automatiquement dans le dictionnaire
+            if (Config.CurrentConfig.LogsFonctionsMove == null)
+                Config.CurrentConfig.LogsFonctionsMove = new SerializableDictionary<FonctionMove, bool>();
+            if (Config.CurrentConfig.LogsFonctionsBalise == null)
+                Config.CurrentConfig.LogsFonctionsBalise = new SerializableDictionary<FonctionBalise, bool>();
+            if (Config.CurrentConfig.LogsFonctionsIO == null)
+                Config.CurrentConfig.LogsFonctionsIO = new SerializableDictionary<FonctionIO, bool>();
+            if (Config.CurrentConfig.LogsFonctionsPi == null)
+                Config.CurrentConfig.LogsFonctionsPi = new SerializableDictionary<FonctionPi, bool>();
+            if (Config.CurrentConfig.LogsExpediteurs == null)
+                Config.CurrentConfig.LogsExpediteurs = new SerializableDictionary<Carte, bool>();
+            if (Config.CurrentConfig.LogsDestinataires == null)
+                Config.CurrentConfig.LogsDestinataires = new SerializableDictionary<Carte, bool>();
             foreach (FonctionMove fonction in Enum.GetValues(typeof(FonctionMove)))
             {
                 if (!Config.CurrentConfig.LogsFonctionsMove.ContainsKey(fonction))

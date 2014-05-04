@@ -104,5 +104,35 @@ namespace GoBot.IHM
         {
             Robots.GrosRobot.ActionneurOnOff(ActionneurOnOffID.GRPinceGauche, switchBoutonPinceGauche.Actif);
         }
+
+        private void groupBoxUtilisation_Enter(object sender, EventArgs e)
+        {
+
+        }
+
+        private void btnCoudeGo_Click(object sender, EventArgs e)
+        {
+            BrasFruits.PositionCoude((double)numCoude.Value);
+        }
+
+        private void btnEpauleGo_Click(object sender, EventArgs e)
+        {
+            BrasFruits.PositionEpaule((double)numEpaule.Value);
+        }
+
+        private void btnDepose2_Click(object sender, EventArgs e)
+        {
+            BrasFruits.PositionDeposeBouchon2();
+        }
+
+        private void btnBrasRange_Click(object sender, EventArgs e)
+        {
+            BrasFruits.PositionRange();
+        }
+
+        private void btnDepose1_Click(object sender, EventArgs e)
+        {
+            BrasFruits.PositionDeposeBouchon1();
+        }
     }
 }

@@ -79,7 +79,7 @@ namespace GoBot.IHM
         {
             this.Invoke(new EventHandler(delegate
             {
-                MAJHistorique(action);
+                //MAJHistorique(action);
             }));
         }
 

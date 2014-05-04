@@ -138,37 +138,37 @@ namespace GoBot
                 Random random = new Random();
                 Fruimouths = new Fruimouth[24];
                 // Arbre 1
-                int rand = random.Next(6);
+                int rand = random.Next(4);
                 Fruimouths[0] = new Fruimouth(new PointReel(0, 1180), rand < 1);
-                Fruimouths[1] = new Fruimouth(new PointReel(103.92, 1240), rand >= 1 && rand < 2);
-                Fruimouths[2] = new Fruimouth(new PointReel(103.92, 1360), rand >= 2 && rand < 3);
-                Fruimouths[3] = new Fruimouth(new PointReel(0, 1420), rand >= 3 && rand < 4);
-                Fruimouths[4] = new Fruimouth(new PointReel(-103.92, 1360), rand >= 4 && rand < 5);
-                Fruimouths[5] = new Fruimouth(new PointReel(-103.92, 1240), rand >= 5 && rand < 6);
+                Fruimouths[1] = new Fruimouth(new PointReel(0, 1420), rand >= 1 && rand < 2);
+                Fruimouths[2] = new Fruimouth(new PointReel(-103.92, 1360), rand >= 2 && rand < 3);
+                Fruimouths[3] = new Fruimouth(new PointReel(-103.92, 1240), rand >= 3 && rand < 4);
+                Fruimouths[4] = new Fruimouth(new PointReel(103.92, 1240), false);
+                Fruimouths[5] = new Fruimouth(new PointReel(103.92, 1360), false);
                 // Arbre 2
-                rand = random.Next(6);
-                Fruimouths[6] = new Fruimouth(new PointReel(640, 1896.08), rand < 1);
-                Fruimouths[7] = new Fruimouth(new PointReel(760, 1896.08), rand >= 1 && rand < 2);
-                Fruimouths[8] = new Fruimouth(new PointReel(820, 2000), rand >= 2 && rand < 3);
-                Fruimouths[9] = new Fruimouth(new PointReel(760, 2103.92), rand >= 3 && rand < 4);
-                Fruimouths[10] = new Fruimouth(new PointReel(640, 2103.92), rand >= 4 && rand < 5);
-                Fruimouths[11] = new Fruimouth(new PointReel(580, 2000), rand >= 5 && rand < 6);
+                rand = random.Next(4);
+                Fruimouths[6] = new Fruimouth(new PointReel(820, 2000), rand < 1);
+                Fruimouths[7] = new Fruimouth(new PointReel(760, 2103.92), rand >= 1 && rand < 2);
+                Fruimouths[8] = new Fruimouth(new PointReel(640, 2103.92), rand >= 2 && rand < 3);
+                Fruimouths[9] = new Fruimouth(new PointReel(580, 2000), rand >= 3 && rand < 4);
+                Fruimouths[10] = new Fruimouth(new PointReel(640, 1896.08), false);
+                Fruimouths[11] = new Fruimouth(new PointReel(760, 1896.08), false);
                 // Arbre 3
-                rand = random.Next(6);
-                Fruimouths[12] = new Fruimouth(new PointReel(2240, 1896.08), rand < 1);
-                Fruimouths[13] = new Fruimouth(new PointReel(2360, 1896.08), rand >= 1 && rand < 2);
-                Fruimouths[14] = new Fruimouth(new PointReel(2420, 2000), rand >= 2 && rand < 3);
-                Fruimouths[15] = new Fruimouth(new PointReel(2360, 2103.92), rand >= 3 && rand < 4);
-                Fruimouths[16] = new Fruimouth(new PointReel(2240, 2103.92), rand >= 4 && rand < 5);
-                Fruimouths[17] = new Fruimouth(new PointReel(2180, 2000), rand >= 5 && rand < 6);
+                rand = random.Next(4);
+                Fruimouths[12] = new Fruimouth(new PointReel(2420, 2000), rand < 1);
+                Fruimouths[13] = new Fruimouth(new PointReel(2360, 2103.92), rand >= 1 && rand < 2);
+                Fruimouths[14] = new Fruimouth(new PointReel(2240, 2103.92), rand >= 2 && rand < 3);
+                Fruimouths[15] = new Fruimouth(new PointReel(2180, 2000), rand >= 3 && rand < 4);
+                Fruimouths[16] = new Fruimouth(new PointReel(2240, 1896.08), false);
+                Fruimouths[17] = new Fruimouth(new PointReel(2360, 1896.08), false);
                 // Arbre 4
-                rand = random.Next(6);
+                rand = random.Next(4);
                 Fruimouths[18] = new Fruimouth(new PointReel(3000, 1180), rand < 1);
                 Fruimouths[19] = new Fruimouth(new PointReel(3103.92, 1240), rand >= 1 && rand < 2);
                 Fruimouths[20] = new Fruimouth(new PointReel(3103.92, 1360), rand >= 2 && rand < 3);
                 Fruimouths[21] = new Fruimouth(new PointReel(3000, 1420), rand >= 3 && rand < 4);
-                Fruimouths[22] = new Fruimouth(new PointReel(2896.08, 1360), rand >= 4 && rand < 5);
-                Fruimouths[23] = new Fruimouth(new PointReel(2896.08, 1240), rand >= 5 && rand < 6);
+                Fruimouths[22] = new Fruimouth(new PointReel(2896.08, 1360), false);
+                Fruimouths[23] = new Fruimouth(new PointReel(2896.08, 1240), false);
 
                 SemaphoreCollisions = new Semaphore(0, 999999999);
                 thCollisions = new Thread(ThreadTestCollisions);

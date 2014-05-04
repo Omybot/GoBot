@@ -39,6 +39,12 @@ namespace GoBot.Enchainements
             Couleur = Color.Purple;
 
             // Todo Charger dans les listes ListeMouvementsGros et ListeMouvementsPetit les mouvements possibles
+
+            // Attrapage feux en bordure
+            ListeMouvementsGros.Add(new MouvementFeuBordure(0));
+            ListeMouvementsGros.Add(new MouvementFeuBordure(1));
+            ListeMouvementsGros.Add(new MouvementFeuBordure(2));
+            ListeMouvementsGros.Add(new MouvementFeuBordure(3));
         }
 
         public void Executer()

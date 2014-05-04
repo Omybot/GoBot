@@ -184,6 +184,18 @@ namespace GoBot
             }
         }
 
+        public bool GotoXYTeta(double x, double y, double teta)
+        {
+            if (PathFinding(x, y, 0, true))
+            {
+                Robots.GrosRobot.PositionerAngle(teta, 0.5);
+            }
+            else
+                return false;
+
+            return true;
+        }
+
         public bool PathFinding(double x, double y, int timeOut = 0, bool attendre = false)
         {
             Historique.Log("Lancement pathfinding pour aller en " + x + " : " + y, TypeLog.PathFinding);
@@ -205,7 +217,7 @@ namespace GoBot
         }
 
         private bool succesPathFinding;
-        public void ParcoursPathFinding(double x, double y, int timeOut = 0, bool attendre = false)
+        protected void ParcoursPathFinding(double x, double y, int timeOut = 0, bool attendre = false)
         {
             MajGraphFranchissable();
 

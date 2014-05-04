@@ -64,7 +64,7 @@ namespace GoBot
             DicRobots.Add(IDRobot.GrosRobot, GrosRobot);
 
             GrosRobot.Largeur = 320;
-            GrosRobot.Longueur = 280;
+            GrosRobot.Longueur = 300;
             GrosRobot.Nom = "Gros robot";
             GrosRobot.Init();
             if (graphGros != null)

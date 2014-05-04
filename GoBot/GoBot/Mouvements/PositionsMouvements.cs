@@ -19,15 +19,17 @@ namespace GoBot.Mouvements
 
     static class PositionsMouvements
     {
-        public static Dictionary<int, Position> PositionPetitBougie { get; private set; }
-        public static Dictionary<int, Position> PositionGrosBougie { get; private set; }
-        public static Dictionary<int, Position> PositionPetitCadeau { get; private set; }
-        public static Dictionary<int, Position> PositionGrosCadeau { get; private set; }
-        public static List<PositionLancement> PositionTirCanon { get; private set; }
+        public static Dictionary<int, Position> PositionGrosFeuxBordure { get; private set; }
+        public static Dictionary<int, Position> PositionGrosFoyers { get; private set; }
 
         static PositionsMouvements()
         {
             // Créer les positions des actions de jeu
+            PositionGrosFeuxBordure = new Dictionary<int, Position>();
+            PositionGrosFeuxBordure.Add(0, new Position(new Angle(0), new PointReel(3000 - 175, 800)));
+            PositionGrosFeuxBordure.Add(1, new Position(new Angle(90), new PointReel(1700, 2000 - 175)));
+            PositionGrosFeuxBordure.Add(2, new Position(new Angle(90), new PointReel(1300, 2000 - 175)));
+            PositionGrosFeuxBordure.Add(3, new Position(new Angle(180), new PointReel(175, 800)));
         }
     }
 }

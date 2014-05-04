@@ -62,7 +62,7 @@ namespace GoBot.IHM
 
         private void btnFeuxTorche3_Click(object sender, EventArgs e)
         {
-            BrasFeux.MoveAttrapeTorche3();
+            BrasFeux.PositionTorche3();
         }
 
         private void btnFeuxTorche2_Click(object sender, EventArgs e)
@@ -137,17 +137,49 @@ namespace GoBot.IHM
 
         private void btnFeuDeposeProche3_Click(object sender, EventArgs e)
         {
-            // todo
+            BrasFeux.MoveDeposeProche3();
         }
 
         private void btnFeuDeposeProche2_Click(object sender, EventArgs e)
         {
-            // todo
+            BrasFeux.MoveDeposeProche2();
         }
 
         private void btnFeuDeposeProche1_Click(object sender, EventArgs e)
         {
-            // todo
+            BrasFeux.MoveDeposeProche1();
+        }
+
+        private void btnFeuDeposeProcheTout_Click(object sender, EventArgs e)
+        {
+            BrasFeux.MoveDeposeProche3();
+            BrasFeux.MoveDeposeProche2();
+            BrasFeux.MoveDeposeProche1();
+        }
+
+        private void btnFeuDeposeInverse3_Click(object sender, EventArgs e)
+        {
+            BrasFeux.MoveDeposeRetourne3();
+        }
+
+        private void btnFeuDeposeInverse2_Click(object sender, EventArgs e)
+        {
+            BrasFeux.MoveDeposeRetourne2();
+        }
+
+        private void btnFeuDeposeInverse1_Click(object sender, EventArgs e)
+        {
+            BrasFeux.MoveDeposeRetourne1();
+        }
+
+        private void btnMur_Click(object sender, EventArgs e)
+        {
+            BrasFeux.PositionContreMur();
+        }
+
+        private void btnAttrapeContreMur_Click(object sender, EventArgs e)
+        {
+            BrasFeux.MoveAttrapeContreMur();
         }
     }
 }

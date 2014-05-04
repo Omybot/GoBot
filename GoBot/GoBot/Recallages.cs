@@ -38,9 +38,9 @@ namespace GoBot
             Robots.GrosRobot.Reculer(339);
 
             if (Plateau.NotreCouleur == Plateau.CouleurDroiteJaune)
-                Robots.GrosRobot.ReglerOffsetAsserv(3000 - 197, 402, 26);
+                Robots.GrosRobot.ReglerOffsetAsserv(2813, 397, 206);
             else
-                Robots.GrosRobot.ReglerOffsetAsserv(197, 402, -26);
+                Robots.GrosRobot.ReglerOffsetAsserv(187, 397, -26);
         }
     }
 }

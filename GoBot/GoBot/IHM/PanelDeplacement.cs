@@ -398,7 +398,7 @@ namespace GoBot.IHM
 
         private void btnGoCoordonnees_Click(object sender, EventArgs e)
         {
-            Robot.PathFinding((double)numX.Value, (double)numY.Value);
+            Robot.GotoXYTeta((double)numX.Value, (double)numY.Value, (double)numTeta.Value);
         }
     }
 }

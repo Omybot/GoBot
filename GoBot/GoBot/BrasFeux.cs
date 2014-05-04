@@ -14,6 +14,7 @@ namespace GoBot
 
         public static void PositionEpaule(double angle)
         {
+            // todo
             int valeur = (int)(angle * 1024 / (300.0)) + INIT_EPAULE;
             Robots.GrosRobot.TourneMoteur(MoteurID.GREpauleFeu, valeur);
         }
@@ -33,8 +34,8 @@ namespace GoBot
         public static void PositionRange()
         {
             Robots.GrosRobot.TourneMoteur(MoteurID.GREpauleFeu, 2750);
-            Robots.GrosRobot.BougeServo(ServomoteurID.GRFeuxCoude, 780);
-            Robots.GrosRobot.BougeServo(ServomoteurID.GRFeuxPoignet, 605);
+            Robots.GrosRobot.BougeServo(ServomoteurID.GRFeuxCoude, 800);
+            Robots.GrosRobot.BougeServo(ServomoteurID.GRFeuxPoignet, 600);
         }
 
         public static void PositionDeposeLoinSol()
@@ -54,14 +55,14 @@ namespace GoBot
         public static void PositionTorche2()
         {
             Robots.GrosRobot.TourneMoteur(MoteurID.GREpauleFeu, 1800);
-            Robots.GrosRobot.BougeServo(ServomoteurID.GRFeuxCoude, 730);
+            Robots.GrosRobot.BougeServo(ServomoteurID.GRFeuxCoude, 750);
             Robots.GrosRobot.BougeServo(ServomoteurID.GRFeuxPoignet, 430);
         }
 
         public static void PositionTorche3()
         {
             Robots.GrosRobot.TourneMoteur(MoteurID.GREpauleFeu, 1750);
-            Robots.GrosRobot.BougeServo(ServomoteurID.GRFeuxCoude, 650);
+            Robots.GrosRobot.BougeServo(ServomoteurID.GRFeuxCoude, 680);
             Robots.GrosRobot.BougeServo(ServomoteurID.GRFeuxPoignet, 500);
         }
 
@@ -75,14 +76,14 @@ namespace GoBot
         public static void PositionInterne1()
         {
             Robots.GrosRobot.TourneMoteur(MoteurID.GREpauleFeu, 2750);
-            Robots.GrosRobot.BougeServo(ServomoteurID.GRFeuxCoude, 920);
-            Robots.GrosRobot.BougeServo(ServomoteurID.GRFeuxPoignet, 486);
+            Robots.GrosRobot.BougeServo(ServomoteurID.GRFeuxCoude, 935);
+            Robots.GrosRobot.BougeServo(ServomoteurID.GRFeuxPoignet, 480);
         }
 
         public static void PositionInterne2()
         {
             Robots.GrosRobot.TourneMoteur(MoteurID.GREpauleFeu, 2800);
-            Robots.GrosRobot.BougeServo(ServomoteurID.GRFeuxCoude, 840);
+            Robots.GrosRobot.BougeServo(ServomoteurID.GRFeuxCoude, 870);
             Robots.GrosRobot.BougeServo(ServomoteurID.GRFeuxPoignet, 550);
         }
 
@@ -91,18 +92,27 @@ namespace GoBot
             PositionRange();
         }
 
+        public static void PositionContreMur()
+        {
+            Robots.GrosRobot.TourneMoteur(MoteurID.GREpauleFeu, 1900);
+            Robots.GrosRobot.BougeServo(ServomoteurID.GRFeuxCoude, 870);
+            Robots.GrosRobot.BougeServo(ServomoteurID.GRFeuxPoignet, 20);
+        }
+
 
         public static void MoveAttrapeTorche1()
         {
             PositionRange();
             Thread.Sleep(200);
             Robots.GrosRobot.ActionneurOnOff(ActionneurOnOffID.GRPompeFeu, true);
+            PositionTorche3();
+            Thread.Sleep(500);
             PositionTorche1();
-            Thread.Sleep(1300);
+            Thread.Sleep(400);
             PositionTorcheDessus();
-            Thread.Sleep(600);
+            Thread.Sleep(300);
             PositionRange();
-            Thread.Sleep(1000);
+            Thread.Sleep(600);
             Robots.GrosRobot.ActionneurOnOff(ActionneurOnOffID.GRPompeFeu, false);
         }
 
@@ -112,25 +122,23 @@ namespace GoBot
             Thread.Sleep(200);
             Robots.GrosRobot.ActionneurOnOff(ActionneurOnOffID.GRPompeFeu, true);
             PositionTorche2();
-            Thread.Sleep(1300);
+            Thread.Sleep(800);
             PositionTorcheDessus();
-            Thread.Sleep(600);
+            Thread.Sleep(300);
             PositionRange();
-            Thread.Sleep(1000);
+            Thread.Sleep(600);
             Robots.GrosRobot.ActionneurOnOff(ActionneurOnOffID.GRPompeFeu, false);
         }
 
         public static void MoveAttrapeTorche3()
         {
-            PositionRange();
-            Thread.Sleep(500);
             Robots.GrosRobot.ActionneurOnOff(ActionneurOnOffID.GRPompeFeu, true);
             PositionTorche3();
-            Thread.Sleep(1300);
+            Thread.Sleep(800);
             PositionTorcheDessus();
-            Thread.Sleep(600);
+            Thread.Sleep(300);
             PositionRange();
-            Thread.Sleep(1000);
+            Thread.Sleep(600);
             Robots.GrosRobot.ActionneurOnOff(ActionneurOnOffID.GRPompeFeu, false);
         }
 
@@ -181,6 +189,55 @@ namespace GoBot
             PositionRange();
         }
 
+        public static void MoveDeposeProche1()
+        {
+            PositionInterne1();
+            Robots.GrosRobot.ActionneurOnOff(ActionneurOnOffID.GRPompeFeu, true);
+            Thread.Sleep(300);
+            PositionRange();
+            Thread.Sleep(300);
+            PositionTorcheDessus();
+            Thread.Sleep(300);
+            PositionSolProche();
+            Thread.Sleep(250);
+            Robots.GrosRobot.ActionneurOnOff(ActionneurOnOffID.GRPompeFeu, false);
+            Thread.Sleep(200);
+            PositionRange();
+            Thread.Sleep(500);
+        }
+
+        public static void MoveDeposeProche2()
+        {
+            PositionInterne2();
+            Robots.GrosRobot.ActionneurOnOff(ActionneurOnOffID.GRPompeFeu, true);
+            Thread.Sleep(200);
+            PositionRange();
+            Thread.Sleep(250);
+            PositionTorcheDessus();
+            Thread.Sleep(250);
+            PositionSolProche();
+            Thread.Sleep(250);
+            Robots.GrosRobot.ActionneurOnOff(ActionneurOnOffID.GRPompeFeu, false);
+            Thread.Sleep(200);
+            PositionRange();
+            Thread.Sleep(500);
+        }
+
+        public static void MoveDeposeProche3()
+        {
+            PositionInterne3();
+            Robots.GrosRobot.ActionneurOnOff(ActionneurOnOffID.GRPompeFeu, true);
+            Thread.Sleep(100);
+            PositionTorcheDessus();
+            Thread.Sleep(250);
+            PositionSolProche();
+            Thread.Sleep(250);
+            Robots.GrosRobot.ActionneurOnOff(ActionneurOnOffID.GRPompeFeu, false);
+            Thread.Sleep(200);
+            PositionRange();
+            Thread.Sleep(500);
+        }
+
         public static void PositionRetournement()
         {
             Robots.GrosRobot.TourneMoteur(MoteurID.GREpauleFeu, 2100);
@@ -188,10 +245,36 @@ namespace GoBot
             Robots.GrosRobot.BougeServo(ServomoteurID.GRFeuxPoignet, 605);
         }
 
-        public static void MoveRetourneTout()
+        public static void MoveDeposeRetourne1()
         {
+            PositionInterne1();
+            Robots.GrosRobot.ActionneurOnOff(ActionneurOnOffID.GRPompeFeu, true);
+            Thread.Sleep(300);
             PositionRange();
+            Thread.Sleep(300);
+            PositionRetournement();
+            Thread.Sleep(300);
+            Robots.GrosRobot.ActionneurOnOff(ActionneurOnOffID.GRPompeFeu, false);
             Thread.Sleep(500);
+            PositionRange();
+        }
+
+        public static void MoveDeposeRetourne2()
+        {
+            PositionInterne2();
+            Robots.GrosRobot.ActionneurOnOff(ActionneurOnOffID.GRPompeFeu, true);
+            Thread.Sleep(300);
+            PositionRange();
+            Thread.Sleep(300);
+            PositionRetournement();
+            Thread.Sleep(300);
+            Robots.GrosRobot.ActionneurOnOff(ActionneurOnOffID.GRPompeFeu, false);
+            Thread.Sleep(250);
+            PositionRange();
+        }
+
+        public static void MoveDeposeRetourne3()
+        {
             PositionInterne3();
             Robots.GrosRobot.ActionneurOnOff(ActionneurOnOffID.GRPompeFeu, true);
             Thread.Sleep(300);
@@ -199,39 +282,36 @@ namespace GoBot
             Thread.Sleep(500);
             Robots.GrosRobot.ActionneurOnOff(ActionneurOnOffID.GRPompeFeu, false);
             Thread.Sleep(500);
+            PositionRange();
+        }
 
-            PositionRange();
-            Thread.Sleep(500);
-            PositionInterne2();
-            Robots.GrosRobot.ActionneurOnOff(ActionneurOnOffID.GRPompeFeu, true);
-            Thread.Sleep(500);
-            PositionRange();
-            Thread.Sleep(500);
-            PositionRetournement();
-            Thread.Sleep(500);
-            Robots.GrosRobot.ActionneurOnOff(ActionneurOnOffID.GRPompeFeu, false);
-            Thread.Sleep(500);
-
-            PositionRange();
-            Thread.Sleep(500);
-            PositionInterne1();
-            Robots.GrosRobot.ActionneurOnOff(ActionneurOnOffID.GRPompeFeu, true);
-            Thread.Sleep(500);
-            PositionRange();
-            Thread.Sleep(500);
-            PositionRetournement();
-            Thread.Sleep(500);
-            Robots.GrosRobot.ActionneurOnOff(ActionneurOnOffID.GRPompeFeu, false);
-            Thread.Sleep(500);
-
-            PositionRange();
+        public static void MoveRetourneTout()
+        {
+            MoveDeposeRetourne3();
+            MoveDeposeRetourne2();
+            MoveDeposeRetourne1();
         }
 
         public static void PositionSolProche()
         {
-            Robots.GrosRobot.TourneMoteur(MoteurID.GREpauleFeu, 1780);
-            Robots.GrosRobot.BougeServo(ServomoteurID.GRFeuxCoude, 900);
+            Robots.GrosRobot.TourneMoteur(MoteurID.GREpauleFeu, 1850);
+            Robots.GrosRobot.BougeServo(ServomoteurID.GRFeuxCoude, 850);
             Robots.GrosRobot.BougeServo(ServomoteurID.GRFeuxPoignet, 260);
+        }
+
+        public static void MoveAttrapeContreMur()
+        {
+            // Le robot doit être à 175mm du bord
+            Robots.GrosRobot.ActionneurOnOff(ActionneurOnOffID.GRPompeFeu, true);
+            PositionTorcheDessus();
+            Thread.Sleep(200);
+            PositionContreMur();
+            Thread.Sleep(500);
+            BrasFeux.PositionTorcheDessus();
+            Thread.Sleep(400);
+            BrasFeux.PositionRange();
+            Thread.Sleep(400);
+            Robots.GrosRobot.ActionneurOnOff(ActionneurOnOffID.GRPompeFeu, false);
         }
     }
 }

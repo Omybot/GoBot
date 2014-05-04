@@ -90,6 +90,7 @@
     <Compile Include="Communications\DecodeurTrames.cs" />
     <Compile Include="Communications\FonctionsTrames.cs" />
     <Compile Include="Communications\LiaisonDataCheck.cs" />
+    <Compile Include="Dessinateur.cs" />
     <Compile Include="ElementsJeu\ElementJeu.cs" />
     <Compile Include="ElementsJeu\Feu.cs" />
     <Compile Include="ElementsJeu\Fruimouth.cs" />
@@ -243,6 +244,7 @@
       <DependentUpon>PanelTestLiaisons.cs</DependentUpon>
     </Compile>
     <Compile Include="Logs\Log.cs" />
+    <Compile Include="Mouvements\FeuBordure.cs" />
     <Compile Include="Mouvements\Mouvement.cs" />
     <Compile Include="Mouvements\PositionsMouvements.cs" />
     <Compile Include="Ponderations\PoidsTest.cs" />

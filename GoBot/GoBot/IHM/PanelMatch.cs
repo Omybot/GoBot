@@ -132,19 +132,16 @@ namespace GoBot.IHM
         private void btnCouleurJaune_Click(object sender, EventArgs e)
         {
             Plateau.NotreCouleur = Plateau.CouleurDroiteJaune;
-
-            pictureBoxBunRouge.Visible = false;
-            pictureBoxBeuRouge.Visible = false;
-            pictureBoxBoiRouge.Visible = false;
-
-            pictureBoxBunJaune.Visible = true;
-            pictureBoxBeuJaune.Visible = true;
-            pictureBoxBoiJaune.Visible = true;
         }
 
         private void btnCouleurRouge_Click(object sender, EventArgs e)
         {
             Plateau.NotreCouleur = Plateau.CouleurGaucheRouge;
+        }
+
+        public void CouleurGaucheRouge()
+        {
+            pictureBoxCouleur.BackColor = Plateau.CouleurGaucheRouge;
 
             pictureBoxBunRouge.Visible = true;
             pictureBoxBeuRouge.Visible = true;
@@ -153,13 +150,6 @@ namespace GoBot.IHM
             pictureBoxBunJaune.Visible = false;
             pictureBoxBeuJaune.Visible = false;
             pictureBoxBoiJaune.Visible = false;
-        }
-
-        public void CouleurGaucheRouge()
-        {
-            pictureBoxCouleur.BackColor = Plateau.CouleurGaucheRouge;
-
-            Robots.GrosRobot.ReglerOffsetAsserv(220, 150, 180);
 
             Balise.GetBalise(Carte.RecBun).Position = new Position(new Angle(90, AnglyeType.Degre), new PointReel(-Balise.DISTANCE_LASER_TABLE, -Balise.DISTANCE_LASER_TABLE));
             Balise.GetBalise(Carte.RecBeu).Position = new Position(new Angle(270, AnglyeType.Degre), new PointReel(-Balise.DISTANCE_LASER_TABLE, Plateau.LargeurPlateau + Balise.DISTANCE_LASER_TABLE));
@@ -170,7 +160,13 @@ namespace GoBot.IHM
         {
             pictureBoxCouleur.BackColor = Plateau.CouleurDroiteJaune;
 
-            Robots.GrosRobot.ReglerOffsetAsserv(3000 - 220, 150, 180);
+            pictureBoxBunRouge.Visible = false;
+            pictureBoxBeuRouge.Visible = false;
+            pictureBoxBoiRouge.Visible = false;
+
+            pictureBoxBunJaune.Visible = true;
+            pictureBoxBeuJaune.Visible = true;
+            pictureBoxBoiJaune.Visible = true;
 
             Balise.GetBalise(Carte.RecBeu).Position = new Position(new Angle(90, AnglyeType.Degre), new PointReel(Plateau.LongueurPlateau + Balise.DISTANCE_LASER_TABLE, -Balise.DISTANCE_LASER_TABLE));
             Balise.GetBalise(Carte.RecBun).Position = new Position(new Angle(270, AnglyeType.Degre), new PointReel(Plateau.LongueurPlateau + Balise.DISTANCE_LASER_TABLE, Plateau.LargeurPlateau + Balise.DISTANCE_LASER_TABLE));
