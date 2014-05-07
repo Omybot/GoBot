@@ -29,6 +29,12 @@ namespace GoBot.Calculs
             return Math.PI * angle / 180.0;
         }
 
+        public static Direction GetDirection(PointReel depart, PointReel arrivee)
+        {
+            Position positionDepart = new Position(0, depart);
+            return GetDirection(positionDepart, arrivee);
+        }
+
         /// <summary>
         ///  Retourne la direction (angle et distance) à suivre pour arriver à un point donné en partant d'une position précise (coordonnées et angle)
         /// </summary>

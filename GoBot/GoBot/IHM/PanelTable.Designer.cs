@@ -74,6 +74,10 @@
             this.boxArretesPetit = new System.Windows.Forms.CheckBox();
             this.boxGraphPetit = new System.Windows.Forms.CheckBox();
             this.btnAleatoire = new System.Windows.Forms.Button();
+            this.btnPositionRP = new System.Windows.Forms.Button();
+            this.button1 = new System.Windows.Forms.Button();
+            this.btnRSFace = new System.Windows.Forms.Button();
+            this.btnRSCentre = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxTable)).BeginInit();
             this.SuspendLayout();
             // 
@@ -154,7 +158,7 @@
             // 
             // btnAllerA
             // 
-            this.btnAllerA.Location = new System.Drawing.Point(17, 412);
+            this.btnAllerA.Location = new System.Drawing.Point(17, 388);
             this.btnAllerA.Name = "btnAllerA";
             this.btnAllerA.Size = new System.Drawing.Size(75, 23);
             this.btnAllerA.TabIndex = 8;
@@ -174,9 +178,9 @@
             // 
             // btnReset
             // 
-            this.btnReset.Location = new System.Drawing.Point(17, 441);
+            this.btnReset.Location = new System.Drawing.Point(17, 417);
             this.btnReset.Name = "btnReset";
-            this.btnReset.Size = new System.Drawing.Size(77, 23);
+            this.btnReset.Size = new System.Drawing.Size(75, 23);
             this.btnReset.TabIndex = 10;
             this.btnReset.Text = "Reset table";
             this.btnReset.UseVisualStyleBackColor = true;
@@ -213,7 +217,7 @@
             // 
             // btnGo
             // 
-            this.btnGo.Location = new System.Drawing.Point(17, 534);
+            this.btnGo.Location = new System.Drawing.Point(17, 492);
             this.btnGo.Name = "btnGo";
             this.btnGo.Size = new System.Drawing.Size(75, 23);
             this.btnGo.TabIndex = 16;
@@ -224,7 +228,7 @@
             // boxCoutGros
             // 
             this.boxCoutGros.AutoSize = true;
-            this.boxCoutGros.Location = new System.Drawing.Point(9, 470);
+            this.boxCoutGros.Location = new System.Drawing.Point(9, 446);
             this.boxCoutGros.Name = "boxCoutGros";
             this.boxCoutGros.Size = new System.Drawing.Size(103, 17);
             this.boxCoutGros.TabIndex = 17;
@@ -234,7 +238,7 @@
             // boxCoutPetit
             // 
             this.boxCoutPetit.AutoSize = true;
-            this.boxCoutPetit.Location = new System.Drawing.Point(9, 493);
+            this.boxCoutPetit.Location = new System.Drawing.Point(9, 469);
             this.boxCoutPetit.Name = "boxCoutPetit";
             this.boxCoutPetit.Size = new System.Drawing.Size(103, 17);
             this.boxCoutPetit.TabIndex = 18;
@@ -514,7 +518,7 @@
             // 
             // btnAleatoire
             // 
-            this.btnAleatoire.Location = new System.Drawing.Point(0, 563);
+            this.btnAleatoire.Location = new System.Drawing.Point(0, 521);
             this.btnAleatoire.Name = "btnAleatoire";
             this.btnAleatoire.Size = new System.Drawing.Size(139, 23);
             this.btnAleatoire.TabIndex = 48;
@@ -522,11 +526,55 @@
             this.btnAleatoire.UseVisualStyleBackColor = true;
             this.btnAleatoire.Click += new System.EventHandler(this.btnAleatoire_Click);
             // 
+            // btnPositionRP
+            // 
+            this.btnPositionRP.Location = new System.Drawing.Point(14, 550);
+            this.btnPositionRP.Name = "btnPositionRP";
+            this.btnPositionRP.Size = new System.Drawing.Size(112, 23);
+            this.btnPositionRP.TabIndex = 49;
+            this.btnPositionRP.Text = "Position RP centre";
+            this.btnPositionRP.UseVisualStyleBackColor = true;
+            this.btnPositionRP.Click += new System.EventHandler(this.btnPositionRP_Click);
+            // 
+            // button1
+            // 
+            this.button1.Location = new System.Drawing.Point(14, 579);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(112, 23);
+            this.button1.TabIndex = 50;
+            this.button1.Text = "Position RP face";
+            this.button1.UseVisualStyleBackColor = true;
+            this.button1.Click += new System.EventHandler(this.button1_Click);
+            // 
+            // btnRSFace
+            // 
+            this.btnRSFace.Location = new System.Drawing.Point(14, 637);
+            this.btnRSFace.Name = "btnRSFace";
+            this.btnRSFace.Size = new System.Drawing.Size(112, 23);
+            this.btnRSFace.TabIndex = 52;
+            this.btnRSFace.Text = "Position RS face";
+            this.btnRSFace.UseVisualStyleBackColor = true;
+            this.btnRSFace.Click += new System.EventHandler(this.btnRSFace_Click);
+            // 
+            // btnRSCentre
+            // 
+            this.btnRSCentre.Location = new System.Drawing.Point(14, 608);
+            this.btnRSCentre.Name = "btnRSCentre";
+            this.btnRSCentre.Size = new System.Drawing.Size(112, 23);
+            this.btnRSCentre.TabIndex = 51;
+            this.btnRSCentre.Text = "Position RS centre";
+            this.btnRSCentre.UseVisualStyleBackColor = true;
+            this.btnRSCentre.Click += new System.EventHandler(this.btnRSCentre_Click);
+            // 
             // PanelTable
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.Transparent;
+            this.Controls.Add(this.btnRSFace);
+            this.Controls.Add(this.btnRSCentre);
+            this.Controls.Add(this.button1);
+            this.Controls.Add(this.btnPositionRP);
             this.Controls.Add(this.btnAleatoire);
             this.Controls.Add(this.boxArretesPetit);
             this.Controls.Add(this.boxGraphPetit);
@@ -630,5 +678,9 @@
         private System.Windows.Forms.CheckBox boxArretesPetit;
         private System.Windows.Forms.CheckBox boxGraphPetit;
         private System.Windows.Forms.Button btnAleatoire;
+        private System.Windows.Forms.Button btnPositionRP;
+        private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.Button btnRSFace;
+        private System.Windows.Forms.Button btnRSCentre;
     }
 }

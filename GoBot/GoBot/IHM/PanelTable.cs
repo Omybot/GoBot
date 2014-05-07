@@ -26,7 +26,11 @@ namespace GoBot.IHM
         Intersection,
         AjoutPolygone,
         DebutTrajectoire,
-        FinTrajectoire
+        FinTrajectoire,
+        PositionRPCentre,
+        PositionRPFace,
+        PositionRSCentre,
+        PositionRSFace
     }
 
     public partial class PanelTable : UserControl
@@ -74,6 +78,7 @@ namespace GoBot.IHM
                     penNoirPointille = new Pen(Color.Black),
 
                     penBlanc = new Pen(Color.White),
+                    penBlancFleche = new Pen(Color.White, 3),
                     penNoir = new Pen(Color.Black),
                     penRougeFin = new Pen(Color.Red),
                     penBleuFin = new Pen(Color.Blue),
@@ -118,6 +123,8 @@ namespace GoBot.IHM
                     penNoirPointille.DashStyle = System.Drawing.Drawing2D.DashStyle.Dot;
                     penCouleurJ1RFleche.StartCap = System.Drawing.Drawing2D.LineCap.Round;
                     penCouleurJ1RFleche.EndCap = System.Drawing.Drawing2D.LineCap.ArrowAnchor;
+                    penBlancFleche.StartCap = System.Drawing.Drawing2D.LineCap.Round;
+                    penBlancFleche.EndCap = System.Drawing.Drawing2D.LineCap.ArrowAnchor;
 
                     List<Point> coordonneesBallesPanier = new List<Point>();
                     rand = new Random(DateTime.Now.Millisecond);
@@ -570,6 +577,92 @@ namespace GoBot.IHM
                                     lblMilli.ForeColor = couleur;
                                 }
 
+                                if (modeCourant == Mode.PositionRPCentre && positionDepart != null)
+                                {
+                                    Point positionFin = pictureBoxTable.PointToClient(MousePosition);
+
+                                    Bitmap bmpGrosRobot = new Bitmap(RealToScreenDistance(Robots.GrosRobot.Taille * 3), RealToScreenDistance(Robots.GrosRobot.Taille * 3));
+                                    Graphics gGros = Graphics.FromImage(bmpGrosRobot);
+                                    gGros.FillRectangle(brushTransparent, 0, 0, RealToScreenDistance(Robots.GrosRobot.Taille * 2), RealToScreenDistance(Robots.GrosRobot.Taille * 2));
+
+                                    Direction traj = Maths.GetDirection(positionDepart, ScreenToRealPosition(pictureBoxTable.PointToClient(MousePosition)));
+
+                                    gGros.FillRectangle(brushNoirTresTransparent, bmpGrosRobot.Width / 2 - RealToScreenDistance(Robots.GrosRobot.Largeur / 2), bmpGrosRobot.Height / 2 - RealToScreenDistance(Robots.GrosRobot.Longueur / 2), RealToScreenDistance(Robots.GrosRobot.Largeur), RealToScreenDistance(Robots.GrosRobot.Longueur));
+                                    gGros.DrawRectangle(Plateau.NotreCouleur == Plateau.CouleurGaucheRouge ? penCouleurJ1R : penCouleurJ2J, bmpGrosRobot.Width / 2 - RealToScreenDistance(Robots.GrosRobot.Largeur / 2), bmpGrosRobot.Height / 2 - RealToScreenDistance(Robots.GrosRobot.Longueur / 2), RealToScreenDistance(Robots.GrosRobot.Largeur), RealToScreenDistance(Robots.GrosRobot.Longueur));
+                                    gGros.DrawLine(Plateau.NotreCouleur == Plateau.CouleurGaucheRouge ? penCouleurJ1R : penCouleurJ2J, bmpGrosRobot.Width / 2, bmpGrosRobot.Height / 2, bmpGrosRobot.Width / 2, bmpGrosRobot.Height / 2 - RealToScreenDistance(Robots.GrosRobot.Longueur / 2));
+
+                                    Point pointOrigine = RealToScreenPosition(positionDepart);
+                                    g.DrawImage(RotateImage(bmpGrosRobot, 360 - traj.angle.AngleDegres + 90), pointOrigine.X - bmpGrosRobot.Width / 2, pointOrigine.Y - bmpGrosRobot.Height / 2);
+
+                                    g.DrawLine(penBlancFleche, (Point)RealToScreenPosition(positionDepart), positionFin);
+                                }
+
+                                else if (modeCourant == Mode.PositionRPFace && positionDepart != null)
+                                {
+                                    Point positionFin = pictureBoxTable.PointToClient(MousePosition);
+
+                                    Bitmap bmpGrosRobot = new Bitmap(RealToScreenDistance(Robots.GrosRobot.Taille * 3), RealToScreenDistance(Robots.GrosRobot.Taille * 3));
+                                    Graphics gGros = Graphics.FromImage(bmpGrosRobot);
+                                    gGros.FillRectangle(brushTransparent, 0, 0, RealToScreenDistance(Robots.GrosRobot.Taille * 2), RealToScreenDistance(Robots.GrosRobot.Taille * 2));
+
+                                    Direction traj = Maths.GetDirection(positionDepart, ScreenToRealPosition(pictureBoxTable.PointToClient(MousePosition)));
+
+                                    Point pointOrigine = RealToScreenPosition(positionDepart);
+                                    Position departRecule = new Position(360 - traj.angle, pointOrigine);
+                                    departRecule.Avancer(RealToScreenDistance(-Robots.GrosRobot.Longueur / 2));
+
+                                    gGros.FillRectangle(brushNoirTresTransparent, bmpGrosRobot.Width / 2 - RealToScreenDistance(Robots.GrosRobot.Largeur / 2), bmpGrosRobot.Height / 2 - RealToScreenDistance(Robots.GrosRobot.Longueur / 2), RealToScreenDistance(Robots.GrosRobot.Largeur), RealToScreenDistance(Robots.GrosRobot.Longueur));
+                                    gGros.DrawRectangle(Plateau.NotreCouleur == Plateau.CouleurGaucheRouge ? penCouleurJ1R : penCouleurJ2J, bmpGrosRobot.Width / 2 - RealToScreenDistance(Robots.GrosRobot.Largeur / 2), bmpGrosRobot.Height / 2 - RealToScreenDistance(Robots.GrosRobot.Longueur / 2), RealToScreenDistance(Robots.GrosRobot.Largeur), RealToScreenDistance(Robots.GrosRobot.Longueur));
+                                    gGros.DrawLine(Plateau.NotreCouleur == Plateau.CouleurGaucheRouge ? penCouleurJ1R : penCouleurJ2J, bmpGrosRobot.Width / 2, bmpGrosRobot.Height / 2, bmpGrosRobot.Width / 2, bmpGrosRobot.Height / 2 - RealToScreenDistance(Robots.GrosRobot.Longueur / 2));
+
+                                    g.DrawImage(RotateImage(bmpGrosRobot, 360 - traj.angle.AngleDegres + 90), (int)(departRecule.Coordonnees.X) - bmpGrosRobot.Width / 2, (int)(departRecule.Coordonnees.Y) - bmpGrosRobot.Height / 2);
+
+                                    g.DrawLine(penBlancFleche, (Point)RealToScreenPosition(positionDepart), positionFin);
+                                }
+
+                                if (modeCourant == Mode.PositionRSCentre && positionDepart != null)
+                                {
+                                    Point positionFin = pictureBoxTable.PointToClient(MousePosition);
+
+                                    Bitmap bmpPetitRobot = new Bitmap(RealToScreenDistance(Robots.PetitRobot.Taille * 3), RealToScreenDistance(Robots.PetitRobot.Taille * 3));
+                                    Graphics gPetit = Graphics.FromImage(bmpPetitRobot);
+                                    gPetit.FillRectangle(brushTransparent, 0, 0, RealToScreenDistance(Robots.PetitRobot.Taille * 2), RealToScreenDistance(Robots.PetitRobot.Taille * 2));
+
+                                    Direction traj = Maths.GetDirection(positionDepart, ScreenToRealPosition(pictureBoxTable.PointToClient(MousePosition)));
+
+                                    gPetit.FillRectangle(brushNoirTresTransparent, bmpPetitRobot.Width / 2 - RealToScreenDistance(Robots.PetitRobot.Largeur / 2), bmpPetitRobot.Height / 2 - RealToScreenDistance(Robots.PetitRobot.Longueur / 2), RealToScreenDistance(Robots.PetitRobot.Largeur), RealToScreenDistance(Robots.PetitRobot.Longueur));
+                                    gPetit.DrawRectangle(Plateau.NotreCouleur == Plateau.CouleurGaucheRouge ? penCouleurJ1R : penCouleurJ2J, bmpPetitRobot.Width / 2 - RealToScreenDistance(Robots.PetitRobot.Largeur / 2), bmpPetitRobot.Height / 2 - RealToScreenDistance(Robots.PetitRobot.Longueur / 2), RealToScreenDistance(Robots.PetitRobot.Largeur), RealToScreenDistance(Robots.PetitRobot.Longueur));
+                                    gPetit.DrawLine(Plateau.NotreCouleur == Plateau.CouleurGaucheRouge ? penCouleurJ1R : penCouleurJ2J, bmpPetitRobot.Width / 2, bmpPetitRobot.Height / 2, bmpPetitRobot.Width / 2, bmpPetitRobot.Height / 2 - RealToScreenDistance(Robots.PetitRobot.Longueur / 2));
+
+                                    Point pointOrigine = RealToScreenPosition(positionDepart);
+                                    g.DrawImage(RotateImage(bmpPetitRobot, 360 - traj.angle.AngleDegres + 90), pointOrigine.X - bmpPetitRobot.Width / 2, pointOrigine.Y - bmpPetitRobot.Height / 2);
+
+                                    g.DrawLine(penBlancFleche, (Point)RealToScreenPosition(positionDepart), positionFin);
+                                }
+
+                                else if (modeCourant == Mode.PositionRSFace && positionDepart != null)
+                                {
+                                    Point positionFin = pictureBoxTable.PointToClient(MousePosition);
+
+                                    Bitmap bmpPetitRobot = new Bitmap(RealToScreenDistance(Robots.PetitRobot.Taille * 3), RealToScreenDistance(Robots.PetitRobot.Taille * 3));
+                                    Graphics gPetit = Graphics.FromImage(bmpPetitRobot);
+                                    gPetit.FillRectangle(brushTransparent, 0, 0, RealToScreenDistance(Robots.PetitRobot.Taille * 2), RealToScreenDistance(Robots.PetitRobot.Taille * 2));
+
+                                    Direction traj = Maths.GetDirection(positionDepart, ScreenToRealPosition(pictureBoxTable.PointToClient(MousePosition)));
+
+                                    Point pointOrigine = RealToScreenPosition(positionDepart);
+                                    Position departRecule = new Position(360 - traj.angle, pointOrigine);
+                                    departRecule.Avancer(RealToScreenDistance(-Robots.PetitRobot.Longueur / 2));
+
+                                    gPetit.FillRectangle(brushNoirTresTransparent, bmpPetitRobot.Width / 2 - RealToScreenDistance(Robots.PetitRobot.Largeur / 2), bmpPetitRobot.Height / 2 - RealToScreenDistance(Robots.PetitRobot.Longueur / 2), RealToScreenDistance(Robots.PetitRobot.Largeur), RealToScreenDistance(Robots.PetitRobot.Longueur));
+                                    gPetit.DrawRectangle(Plateau.NotreCouleur == Plateau.CouleurGaucheRouge ? penCouleurJ1R : penCouleurJ2J, bmpPetitRobot.Width / 2 - RealToScreenDistance(Robots.PetitRobot.Largeur / 2), bmpPetitRobot.Height / 2 - RealToScreenDistance(Robots.PetitRobot.Longueur / 2), RealToScreenDistance(Robots.PetitRobot.Largeur), RealToScreenDistance(Robots.PetitRobot.Longueur));
+                                    gPetit.DrawLine(Plateau.NotreCouleur == Plateau.CouleurGaucheRouge ? penCouleurJ1R : penCouleurJ2J, bmpPetitRobot.Width / 2, bmpPetitRobot.Height / 2, bmpPetitRobot.Width / 2, bmpPetitRobot.Height / 2 - RealToScreenDistance(Robots.PetitRobot.Longueur / 2));
+
+                                    g.DrawImage(RotateImage(bmpPetitRobot, 360 - traj.angle.AngleDegres + 90), (int)(departRecule.Coordonnees.X) - bmpPetitRobot.Width / 2, (int)(departRecule.Coordonnees.Y) - bmpPetitRobot.Height / 2);
+
+                                    g.DrawLine(penBlancFleche, (Point)RealToScreenPosition(positionDepart), positionFin);
+                                }
+
                                 pictureBoxTable.Image = bmp;
                                 TableDessinee(bmp);
                             }
@@ -861,11 +954,70 @@ namespace GoBot.IHM
         bool sourisClic = false;
         private void pictureBoxTable_MouseDown(object sender, MouseEventArgs e)
         {
+            positionDepart = ScreenToRealPosition(pictureBoxTable.PointToClient(MousePosition));
             sourisClic = true;
         }
 
+        Thread thGoToRP;
+        Thread thGoToRS;
         private void pictureBoxTable_MouseUp(object sender, MouseEventArgs e)
         {
+            if (modeCourant == Mode.PositionRPCentre)
+            {
+                Direction traj = Maths.GetDirection(positionDepart, ScreenToRealPosition(pictureBoxTable.PointToClient(MousePosition)));
+
+                positionArrivee = new Position(traj.angle, positionDepart);
+
+                thGoToRP = new Thread(ThreadTrajectoireGros);
+                thGoToRP.Start();
+
+                modeCourant = Mode.Visualisation;
+            }
+            else if (modeCourant == Mode.PositionRPFace)
+            {
+                Point positionFin = pictureBoxTable.PointToClient(MousePosition);
+
+                Direction traj = Maths.GetDirection(positionDepart, ScreenToRealPosition(pictureBoxTable.PointToClient(MousePosition)));
+
+                Point pointOrigine = positionDepart;
+                Position departRecule = new Position(360 - traj.angle, pointOrigine);
+                departRecule.Avancer(-Robots.GrosRobot.Longueur / 2);
+                departRecule = new Position(traj.angle, new PointReel(departRecule.Coordonnees.X, departRecule.Coordonnees.Y));
+                positionArrivee = departRecule;
+
+                thGoToRP = new Thread(ThreadTrajectoireGros);
+                thGoToRP.Start();
+
+                modeCourant = Mode.Visualisation;
+            }
+            else if (modeCourant == Mode.PositionRSCentre)
+            {
+                Direction traj = Maths.GetDirection(positionDepart, ScreenToRealPosition(pictureBoxTable.PointToClient(MousePosition)));
+
+                positionArrivee = new Position(traj.angle, positionDepart);
+
+                thGoToRS = new Thread(ThreadTrajectoirePetit);
+                thGoToRS.Start();
+
+                modeCourant = Mode.Visualisation;
+            }
+            else if (modeCourant == Mode.PositionRSFace)
+            {
+                Point positionFin = pictureBoxTable.PointToClient(MousePosition);
+
+                Direction traj = Maths.GetDirection(positionDepart, ScreenToRealPosition(pictureBoxTable.PointToClient(MousePosition)));
+
+                Point pointOrigine = positionDepart;
+                Position departRecule = new Position(360 - traj.angle, pointOrigine);
+                departRecule.Avancer(-Robots.PetitRobot.Longueur / 2);
+                departRecule = new Position(traj.angle, new PointReel(departRecule.Coordonnees.X, departRecule.Coordonnees.Y));
+                positionArrivee = departRecule;
+
+                thGoToRS = new Thread(ThreadTrajectoirePetit);
+                thGoToRS.Start();
+
+                modeCourant = Mode.Visualisation;
+            }
             sourisClic = false;
         }
 
@@ -873,6 +1025,75 @@ namespace GoBot.IHM
         {
             Plateau.Enchainement = new EnchainementAleatoire();
             Plateau.Enchainement.Executer();
+        }
+
+        PointReel positionDepart;
+        Position positionArrivee;
+
+        private void btnPositionRP_Click(object sender, EventArgs e)
+        {
+            positionDepart = null;
+            if (modeCourant != Mode.PositionRPCentre)
+                modeCourant = Mode.PositionRPCentre;
+            else
+                modeCourant = Mode.Visualisation;
+        }
+
+        private void ThreadTrajectoireGros()
+        {
+            this.Invoke(new EventHandler(delegate
+            {
+                btnPositionRP.Enabled = false;
+            }));
+
+            Robots.GrosRobot.GotoXYTeta(positionArrivee.Coordonnees.X, positionArrivee.Coordonnees.Y, 360 - positionArrivee.Angle.AngleDegres);
+
+            this.Invoke(new EventHandler(delegate
+            {
+                btnPositionRP.Enabled = true;
+            }));
+        }
+
+        private void ThreadTrajectoirePetit()
+        {
+            this.Invoke(new EventHandler(delegate
+            {
+                btnPositionRP.Enabled = false;
+            }));
+
+            Robots.PetitRobot.GotoXYTeta(positionArrivee.Coordonnees.X, positionArrivee.Coordonnees.Y, 360 - positionArrivee.Angle.AngleDegres);
+
+            this.Invoke(new EventHandler(delegate
+            {
+                btnPositionRP.Enabled = true;
+            }));
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            positionDepart = null;
+            if (modeCourant != Mode.PositionRPFace)
+                modeCourant = Mode.PositionRPFace;
+            else
+                modeCourant = Mode.Visualisation;
+        }
+
+        private void btnRSCentre_Click(object sender, EventArgs e)
+        {
+            positionDepart = null;
+            if (modeCourant != Mode.PositionRSCentre)
+                modeCourant = Mode.PositionRSCentre;
+            else
+                modeCourant = Mode.Visualisation;
+        }
+
+        private void btnRSFace_Click(object sender, EventArgs e)
+        {
+            positionDepart = null;
+            if (modeCourant != Mode.PositionRSFace)
+                modeCourant = Mode.PositionRSFace;
+            else
+                modeCourant = Mode.Visualisation;
         }
     }
 }

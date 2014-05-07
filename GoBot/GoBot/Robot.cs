@@ -187,9 +187,7 @@ namespace GoBot
         public bool GotoXYTeta(double x, double y, double teta)
         {
             if (PathFinding(x, y, 0, true))
-            {
-                Robots.GrosRobot.PositionerAngle(teta, 0.5);
-            }
+                PositionerAngle(teta, 0.5);
             else
                 return false;
 

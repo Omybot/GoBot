@@ -70,12 +70,22 @@ namespace GoBot
             if (graphGros != null)
                 Robots.GrosRobot.Graph = graphGros;
 
+            GrosRobot.VitesseDeplacement = Config.CurrentConfig.GRVitesseLigneRapide;
+            GrosRobot.AccelerationDeplacement = Config.CurrentConfig.GRAccelerationLigneRapide;
+            GrosRobot.VitessePivot = Config.CurrentConfig.GRVitessePivotRapide;
+            GrosRobot.AccelerationPivot = Config.CurrentConfig.GRAccelerationPivotRapide;
+
             PetitRobot.Largeur = 195;
             PetitRobot.Longueur = 100;
             PetitRobot.Nom = "Petit robot";
             PetitRobot.Init();
             if (graphPetit != null)
                 Robots.PetitRobot.Graph = graphPetit;
+
+            PetitRobot.VitesseDeplacement = Config.CurrentConfig.PRVitesseLigneRapide;
+            PetitRobot.AccelerationDeplacement = Config.CurrentConfig.PRVitesseLigneRapide;
+            PetitRobot.VitessePivot = Config.CurrentConfig.PRVitessePivotRapide;
+            PetitRobot.AccelerationPivot = Config.CurrentConfig.PRAccelerationPivotRapide;
         }
 
         public static void Simuler(bool simu)

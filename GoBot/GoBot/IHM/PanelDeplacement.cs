@@ -203,10 +203,6 @@ namespace GoBot.IHM
         protected virtual void trackBarVitesseLigne_TickValueChanged(object sender, EventArgs e)
         {
             Robot.VitesseDeplacement = (int)trackBarVitesseLigne.Value;
-            if (Robot == Robots.GrosRobot)
-                Config.CurrentConfig.GRVitesseLigneRapide = (int)trackBarVitesseLigne.Value;
-            else
-                Config.CurrentConfig.PRVitesseLigneRapide = (int)trackBarVitesseLigne.Value;
         }
 
         private void trackBarVitesseLigne_ValueChanged(object sender, EventArgs e)
@@ -227,10 +223,6 @@ namespace GoBot.IHM
         protected virtual void trackBarAccelLigne_TickValueChanged(object sender, EventArgs e)
         {
             Robot.AccelerationDeplacement = (int)trackBarAccelLigne.Value;
-            if (Robot == Robots.GrosRobot)
-                Config.CurrentConfig.GRAccelerationLigneRapide = (int)trackBarAccelLigne.Value;
-            else
-                Config.CurrentConfig.PRAccelerationLigneRapide = (int)trackBarAccelLigne.Value;
         }
 
         private void trackBarAccelLigne_ValueChanged(object sender, EventArgs e)
@@ -251,10 +243,6 @@ namespace GoBot.IHM
         private void trackBarVitessePivot_TickValueChanged(object sender, EventArgs e)
         {
             Robot.VitessePivot = (int)trackBarVitessePivot.Value;
-            if (Robot == Robots.GrosRobot)
-                Config.CurrentConfig.GRVitessePivotRapide = (int)trackBarVitessePivot.Value;
-            else
-                Config.CurrentConfig.PRVitessePivotRapide = (int)trackBarVitessePivot.Value;
         }
 
         private void trackBarVitessePivot_ValueChanged(object sender, EventArgs e)
@@ -275,10 +263,6 @@ namespace GoBot.IHM
         private void trackBarAccelPivot_TickValueChanged(object sender, EventArgs e)
         {
             Robot.AccelerationPivot = (int)trackBarAccelPivot.Value;
-            if (Robot == Robots.GrosRobot)
-                Config.CurrentConfig.GRAccelerationPivotRapide = (int)trackBarAccelPivot.Value;
-            else
-                Config.CurrentConfig.PRAccelerationPivotRapide = (int)trackBarAccelPivot.Value;
         }
 
         private void trackBarAccelPivot_ValueChanged(object sender, EventArgs e)
