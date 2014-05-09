@@ -30,6 +30,8 @@ namespace GoBot
 
         private static Config config = null;
 
+        public int AfficheDetailTraj { get; set; }
+
         // Fenêtres gros robot
 
         public bool DeplacementGROuvert { get; set; }

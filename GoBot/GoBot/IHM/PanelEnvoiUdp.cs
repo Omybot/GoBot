@@ -152,7 +152,7 @@ namespace GoBot.IHM
         {
             if (boxMove.Checked)
             {
-                Trame trame = TrameFactory.TestConnexionMove();
+                Trame trame = TrameFactory.TestConnexionMove(Robots.GrosRobot.TensionPack1 < 21 && Robots.GrosRobot.TensionPack2 < 21);
                 Connexions.ConnexionMove.SendMessage(trame);
             }
             if (boxMiwi.Checked)

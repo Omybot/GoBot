@@ -280,6 +280,9 @@ namespace GoBot.Communications
                     case (byte)Carte.RecMove:
                         switch ((FonctionMove)trame[1])
                         {
+                            case FonctionMove.DemandePositionContinue:
+                                message = "Demande position continue toutes les " + (int)trame[2] * 10 + "ms";
+                                break;
                             case FonctionMove.Debug:
                                 message = "Debug " + (int)trame[2];
                                 break;
@@ -355,7 +358,10 @@ namespace GoBot.Communications
                                 message = "Envoi stop " + stopMode;
                                 break;
                             case FonctionMove.TestConnexion:
-                                message = "Test connexion";
+                                message = "Test connexion bridage " + (trame[2] > 0 ? "activé" : "désactivé");
+                                break;
+                            case FonctionMove.RetourTestConnexion:
+                                message = "Retour test connexion";
                                 break;
                             case FonctionMove.Virage:
                                 SensAR valeurVirageSensAR = ((SensAR)trame[2]);
@@ -377,7 +383,10 @@ namespace GoBot.Communications
                                 break;
                             case FonctionMove.RetourDiagnostic:
                                 int nbValeurs = trame[2];
-                                message = "Retour charge : " + nbValeurs + " valeurs";
+                                double cpu = (trame[3] * 256 + trame[4]) / 50.0 ;
+                                int pwmGauche = trame[5] * 256 + trame[6] - 4000;
+                                int pwmDroite = trame[7] * 256 + trame[8] - 4000;
+                                message = "Retour charge : " + nbValeurs + " valeurs (CPU " + cpu + "% - PWM Gauche " + pwmGauche + " - PWM Droite " + pwmDroite;
                                 break;
                             default:
                                 return "Inconnu";
@@ -387,6 +396,9 @@ namespace GoBot.Communications
                     case (byte)Carte.RecPi:
                         switch ((FonctionPi)trame[1])
                         {
+                            case FonctionPi.DemandePositionContinue:
+                                message = "Demande position continue toutes les " + (int)trame[2] * 10 + "ms";
+                                break;
                             case FonctionPi.Debug:
                                 message = "Debug " + (int)trame[2];
                                 break;

@@ -9,6 +9,7 @@ namespace GoBot.Communications
     {
         private Connexion Connexion { get; set; }
         private Carte Carte { get; set; }
+        private bool Bloquant { get; set; }
 
         public byte IDTestEmissionActuel { get; set; }
         private byte IDTestReceptionActuel { get; set; }
@@ -30,7 +31,7 @@ namespace GoBot.Communications
             CorrompuReception,
         }
 
-        public LiaisonDataCheck(Connexion connexion, Carte carte)
+        public LiaisonDataCheck(Connexion connexion, Carte carte, bool bloquant)
         {
             Reponses = new Dictionary<int, List<ReponseLiaison>>();
             for (int i = 0; i < 255; i++ )
@@ -38,6 +39,7 @@ namespace GoBot.Communications
 
             Connexion = connexion;
             Carte = carte;
+            Bloquant = bloquant;
 
             NombreMessagesTotal = 0;
             NombreMessagesCorrects = 0;
@@ -170,6 +172,30 @@ namespace GoBot.Communications
                 }
 
                 IDTestReceptionActuel = (byte)(idRecu + 1);
+            }
+        }
+
+        public void CalculerResultats()
+        {
+            foreach(KeyValuePair<int, List<ReponseLiaison>> pair in Reponses)
+            {
+                if (Reponses[pair.Key].Count == 0)
+                    Reponses[pair.Key].Add(LiaisonDataCheck.ReponseLiaison.PerduEmission);
+            }
+
+            for (int i = 0; i < 255; i++)
+            {
+                int nbOk = 0;
+                foreach (LiaisonDataCheck.ReponseLiaison rep in Reponses[i])
+                {
+                    if (rep == LiaisonDataCheck.ReponseLiaison.OK)
+                        nbOk++;
+                    if (rep != LiaisonDataCheck.ReponseLiaison.OK)
+                        Console.WriteLine(i + " " + rep.ToString());
+                }
+
+                if (nbOk > 1)
+                    Console.WriteLine(i + " " + nbOk + " OK");
             }
         }
     }

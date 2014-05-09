@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
 
 namespace GoBot.Communications
 {
@@ -18,11 +19,17 @@ namespace GoBot.Communications
         public ConnexionCheck ConnexionCheck { get; set; }
 
         /// <summary>
+        /// Sémaphore bloquant pour l'attente de réception d'acquittement
+        /// </summary>
+        public Semaphore SemaphoreAck { get; set; }
+
+        /// <summary>
         /// Envoi le message au client actuellement connecté
         /// </summary>
         /// <param name="message">Message à envoyer au client</param>
+        /// <param name="bloquant">Vrai si la fonction doit être bloquante en attente d'un acquittement</param>
         /// <returns>Nombre de caractères envoyés</returns>
-        abstract public int SendMessage(Trame message);
+        abstract public int SendMessage(Trame message, bool bloquant = false);
 
         //Déclaration du délégué pour l’évènement réception de message
         public delegate void ReceptionDelegate(Trame trame);

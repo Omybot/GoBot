@@ -29,10 +29,10 @@ namespace GoBot.IHM
             {
                 Liaisons = new List<LiaisonDataCheck>();
 
-                Liaisons.Add(new LiaisonDataCheck(Connexions.ConnexionBun, Carte.RecBun));
-                Liaisons.Add(new LiaisonDataCheck(Connexions.ConnexionBeu, Carte.RecBeu));
-                Liaisons.Add(new LiaisonDataCheck(Connexions.ConnexionBoi, Carte.RecBoi));
-                Liaisons.Add(new LiaisonDataCheck(Connexions.ConnexionPi, Carte.RecPi));
+                Liaisons.Add(new LiaisonDataCheck(Connexions.ConnexionBun, Carte.RecBun, false));
+                Liaisons.Add(new LiaisonDataCheck(Connexions.ConnexionBeu, Carte.RecBeu, false));
+                Liaisons.Add(new LiaisonDataCheck(Connexions.ConnexionBoi, Carte.RecBoi, false));
+                Liaisons.Add(new LiaisonDataCheck(Connexions.ConnexionPi, Carte.RecPi, true));
 
                 Connexions.ConnexionMiwi.NouvelleTrameRecue += Liaisons[0].MessageRecu;
                 Connexions.ConnexionMiwi.NouvelleTrameRecue += Liaisons[1].MessageRecu;
@@ -124,26 +124,7 @@ namespace GoBot.IHM
 
                 Thread.Sleep(1000);
 
-                for (int i = 0; i < 255; i++)
-                {
-                    if (Liaisons[0].Reponses[i].Count == 0)
-                        Liaisons[0].Reponses[i].Add(LiaisonDataCheck.ReponseLiaison.PerduEmission);
-                }
-
-                for (int i = 0; i < 255; i++)
-                {
-                    int nbOk = 0;
-                    foreach (LiaisonDataCheck.ReponseLiaison rep in Liaisons[0].Reponses[i])
-                    {
-                        if (rep == LiaisonDataCheck.ReponseLiaison.OK)
-                            nbOk++;
-                        if (rep != LiaisonDataCheck.ReponseLiaison.OK)
-                            Console.WriteLine(i + " " + rep.ToString());
-                    }
-
-                    if (nbOk > 1)
-                        Console.WriteLine(i + " " + nbOk + " OK");
-                }
+                
             }
         }
     }

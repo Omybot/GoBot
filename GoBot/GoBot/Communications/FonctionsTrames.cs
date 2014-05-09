@@ -53,6 +53,8 @@ namespace GoBot.Communications
         DemandeDiagnostic = 0x46,
         RetourDiagnostic = 0x47,
 
+        DemandePositionContinue = 0x48,
+
         DemandePositionXYTeta = 0x30,
         RetourPositionXYTeta = 0x31,
         VitesseLigne = 0x32,
@@ -67,6 +69,7 @@ namespace GoBot.Communications
         Debug = 0xEE,
 
         TestConnexion = 0xF0,
+        RetourTestConnexion = 0xF5,
         Reset = 0xF1
     }
 
@@ -88,6 +91,8 @@ namespace GoBot.Communications
 
         DemandeDiagnostic = 0x46,
         RetourDiagnostic = 0x47,
+
+        DemandePositionContinue = 0x48,
 
         DemandePositionXYTeta = 0x30,
         RetourPositionXYTeta = 0x31,
@@ -174,6 +179,7 @@ namespace GoBot.Communications
     public enum FonctionMiwi
     {
         Transmettre = 0xA0,
+        Acquittement = 0xA1,
 
         Debug = 0xEE,
 

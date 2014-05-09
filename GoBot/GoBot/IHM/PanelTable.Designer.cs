@@ -78,6 +78,7 @@
             this.button1 = new System.Windows.Forms.Button();
             this.btnRSFace = new System.Windows.Forms.Button();
             this.btnRSCentre = new System.Windows.Forms.Button();
+            this.boxAfficheDetailTraj = new System.Windows.Forms.CheckBox();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxTable)).BeginInit();
             this.SuspendLayout();
             // 
@@ -566,11 +567,23 @@
             this.btnRSCentre.UseVisualStyleBackColor = true;
             this.btnRSCentre.Click += new System.EventHandler(this.btnRSCentre_Click);
             // 
+            // boxAfficheDetailTraj
+            // 
+            this.boxAfficheDetailTraj.AutoSize = true;
+            this.boxAfficheDetailTraj.Location = new System.Drawing.Point(19, 63);
+            this.boxAfficheDetailTraj.Name = "boxAfficheDetailTraj";
+            this.boxAfficheDetailTraj.Size = new System.Drawing.Size(113, 17);
+            this.boxAfficheDetailTraj.TabIndex = 53;
+            this.boxAfficheDetailTraj.Text = "Calcul path finding";
+            this.boxAfficheDetailTraj.UseVisualStyleBackColor = true;
+            this.boxAfficheDetailTraj.CheckedChanged += new System.EventHandler(this.boxAfficheDetailTraj_CheckedChanged);
+            // 
             // PanelTable
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.Transparent;
+            this.Controls.Add(this.boxAfficheDetailTraj);
             this.Controls.Add(this.btnRSFace);
             this.Controls.Add(this.btnRSCentre);
             this.Controls.Add(this.button1);
@@ -682,5 +695,6 @@
         private System.Windows.Forms.Button button1;
         private System.Windows.Forms.Button btnRSFace;
         private System.Windows.Forms.Button btnRSCentre;
+        private System.Windows.Forms.CheckBox boxAfficheDetailTraj;
     }
 }

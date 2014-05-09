@@ -30,7 +30,7 @@ namespace Composants
                         CouleurOrange();
                     else if (tension > TensionLow)
                         CouleurRouge(true);
-                    else if (tension >= 0.5)
+                    else if (tension >= TensionNull)
                         CouleurRougeCritique(true);
                     else
                         CouleurGris();
@@ -45,6 +45,7 @@ namespace Composants
         public double TensionMidHigh { get; set; }
         public double TensionMid { get; set; }
         public double TensionLow { get; set; }
+        public double TensionNull { get; set; }
 
         public Batterie()
         {

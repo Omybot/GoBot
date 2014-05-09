@@ -150,6 +150,17 @@ namespace GoBot.Communications
             return retour;
         }
 
+        static public Trame DemandePositionContinue(int intervalle, Robot robot)
+        {
+            byte[] tab = new byte[3];
+            tab[0] = (byte)robot.Carte;
+            tab[1] = (byte)FonctionMove.DemandePositionContinue;
+            tab[2] = (byte)(intervalle / 10.0);
+
+            Trame retour = new Trame(tab);
+            return retour;
+        }
+
         static public Trame CoeffAsserv(int p, int i, int d, Robot robot)
         {
             byte[] tab = new byte[8];
@@ -273,11 +284,12 @@ namespace GoBot.Communications
             return retour;
         }
         
-        static public Trame TestConnexionMove()
+        static public Trame TestConnexionMove(bool bridageAsserv)
         {
-            byte[] tab = new byte[2];
+            byte[] tab = new byte[3];
             tab[0] = (byte)Carte.RecMove;
             tab[1] = (byte)FonctionMove.TestConnexion;
+            tab[2] = (byte)(bridageAsserv ? 1 : 0);
             return new Trame(tab);
         }
 

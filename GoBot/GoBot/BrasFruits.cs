@@ -7,19 +7,29 @@ namespace GoBot
 {
     class BrasFruits
     {
-        private static readonly int INIT_COUDE = 300;
+        private static readonly int INIT_COUDE = 391;
         private static readonly int INIT_EPAULE = 410;
 
-        public static void PositionEpaule(double angle)
+        public static bool PositionEpaule(double angle)
         {
             int valeur = (int)(angle * 1024 / (300.0)) + INIT_EPAULE;
-            Robots.GrosRobot.BougeServo(ServomoteurID.GRFruitsEpaule, valeur);
+            if (valeur >= 0 && valeur <= 1024)
+                Robots.GrosRobot.BougeServo(ServomoteurID.GRFruitsEpaule, valeur);
+            else
+                return false;
+
+            return true;
         }
 
-        public static void PositionCoude(double angle)
+        public static bool PositionCoude(double angle)
         {
             int valeur = (int)(angle * 1024 / (300.0)) + INIT_COUDE;
-            Robots.GrosRobot.BougeServo(ServomoteurID.GRFruitsCoude, valeur);
+            if (valeur >= 0 && valeur <= 1024)
+                Robots.GrosRobot.BougeServo(ServomoteurID.GRFruitsCoude, valeur);
+            else
+                return false;
+
+            return true;
         }
 
         public static void PositionDeposeBouchon2()

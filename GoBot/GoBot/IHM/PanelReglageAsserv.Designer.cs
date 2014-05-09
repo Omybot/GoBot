@@ -110,7 +110,7 @@
             0});
             this.numCoeffD.Location = new System.Drawing.Point(68, 112);
             this.numCoeffD.Maximum = new decimal(new int[] {
-            1000,
+            10000,
             0,
             0,
             0});
@@ -136,7 +136,7 @@
             0});
             this.numCoeffI.Location = new System.Drawing.Point(68, 86);
             this.numCoeffI.Maximum = new decimal(new int[] {
-            1000,
+            10000,
             0,
             0,
             0});
@@ -162,7 +162,7 @@
             0});
             this.numCoeffP.Location = new System.Drawing.Point(68, 60);
             this.numCoeffP.Maximum = new decimal(new int[] {
-            1000,
+            10000,
             0,
             0,
             0});
@@ -333,6 +333,9 @@
             // 
             this.ctrlGraphique.BackColor = System.Drawing.Color.White;
             this.ctrlGraphique.EchelleCommune = true;
+            this.ctrlGraphique.EchelleFixe = false;
+            this.ctrlGraphique.EchelleMax = 1D;
+            this.ctrlGraphique.EchelleMin = 0D;
             this.ctrlGraphique.Location = new System.Drawing.Point(199, 64);
             this.ctrlGraphique.Name = "ctrlGraphique";
             this.ctrlGraphique.Size = new System.Drawing.Size(773, 424);

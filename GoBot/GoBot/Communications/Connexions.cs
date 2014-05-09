@@ -55,7 +55,7 @@ namespace GoBot.Communications
 
         public static void ConnexionMoveCheck_TestConnexion()
         {
-            ConnexionMove.SendMessage(TrameFactory.TestConnexionMove());
+            ConnexionMove.SendMessage(TrameFactory.TestConnexionMove(Robots.GrosRobot.TensionPack1 < 21 && Robots.GrosRobot.TensionPack2 < 21));
         }
 
         public static void ConnexionMiwiCheck_TestConnexion()

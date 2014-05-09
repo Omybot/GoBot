@@ -86,7 +86,7 @@
             // lblChargeCPU
             // 
             this.lblChargeCPU.AutoSize = true;
-            this.lblChargeCPU.Location = new System.Drawing.Point(1007, 133);
+            this.lblChargeCPU.Location = new System.Drawing.Point(1052, 128);
             this.lblChargeCPU.Name = "lblChargeCPU";
             this.lblChargeCPU.Size = new System.Drawing.Size(21, 13);
             this.lblChargeCPU.TabIndex = 127;

@@ -373,8 +373,6 @@ namespace GoBot
                 Thread.Sleep(10);
                 connexion.SendMessage(TrameFactory.ServoDemandeLed((ServomoteurID)id));
                 Thread.Sleep(10);
-                connexion.SendMessage(TrameFactory.ServoDemandeMouvement((ServomoteurID)id));
-                Thread.Sleep(10);
                 connexion.SendMessage(TrameFactory.ServoDemandeNumeroModele((ServomoteurID)id));
                 Thread.Sleep(10);
                 connexion.SendMessage(TrameFactory.ServoDemandePositionCible((ServomoteurID)id));
@@ -393,6 +391,8 @@ namespace GoBot
                 Thread.Sleep(30);
             }
 
+            connexion.SendMessage(TrameFactory.ServoDemandeMouvement((ServomoteurID)id));
+            Thread.Sleep(10);
             connexion.SendMessage(TrameFactory.ServoDemandePositionActuelle((ServomoteurID)id));
             Thread.Sleep(10);
             connexion.SendMessage(TrameFactory.ServoDemandeErreurs((ServomoteurID)id));

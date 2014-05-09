@@ -29,6 +29,15 @@
         private void InitializeComponent()
         {
             this.groupBoxUtilisation = new Composants.GroupBoxRetractable();
+            this.btnDepose1 = new System.Windows.Forms.Button();
+            this.btnBrasRange = new System.Windows.Forms.Button();
+            this.btnDepose2 = new System.Windows.Forms.Button();
+            this.label10 = new System.Windows.Forms.Label();
+            this.label9 = new System.Windows.Forms.Label();
+            this.numEpaule = new System.Windows.Forms.NumericUpDown();
+            this.numCoude = new System.Windows.Forms.NumericUpDown();
+            this.btnEpauleGo = new System.Windows.Forms.Button();
+            this.btnCoudeGo = new System.Windows.Forms.Button();
             this.switchBoutonPinceGauche = new Composants.SwitchBouton();
             this.switchBoutonPinceDroite = new Composants.SwitchBouton();
             this.label8 = new System.Windows.Forms.Label();
@@ -48,22 +57,15 @@
             this.label12 = new System.Windows.Forms.Label();
             this.btnDiagnostic = new System.Windows.Forms.Button();
             this.switchBoutonPuissance = new Composants.SwitchBouton();
-            this.btnCoudeGo = new System.Windows.Forms.Button();
-            this.btnEpauleGo = new System.Windows.Forms.Button();
-            this.numCoude = new System.Windows.Forms.NumericUpDown();
-            this.numEpaule = new System.Windows.Forms.NumericUpDown();
-            this.label9 = new System.Windows.Forms.Label();
-            this.label10 = new System.Windows.Forms.Label();
-            this.btnDepose2 = new System.Windows.Forms.Button();
-            this.btnBrasRange = new System.Windows.Forms.Button();
-            this.btnDepose1 = new System.Windows.Forms.Button();
+            this.btnTest = new System.Windows.Forms.Button();
             this.groupBoxUtilisation.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.numCoude)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numEpaule)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numCoude)).BeginInit();
             this.SuspendLayout();
             // 
             // groupBoxUtilisation
             // 
+            this.groupBoxUtilisation.Controls.Add(this.btnTest);
             this.groupBoxUtilisation.Controls.Add(this.btnDepose1);
             this.groupBoxUtilisation.Controls.Add(this.btnBrasRange);
             this.groupBoxUtilisation.Controls.Add(this.btnDepose2);
@@ -99,6 +101,105 @@
             this.groupBoxUtilisation.TabStop = false;
             this.groupBoxUtilisation.Text = "Utilisation";
             this.groupBoxUtilisation.Enter += new System.EventHandler(this.groupBoxUtilisation_Enter);
+            // 
+            // btnDepose1
+            // 
+            this.btnDepose1.Location = new System.Drawing.Point(105, 243);
+            this.btnDepose1.Name = "btnDepose1";
+            this.btnDepose1.Size = new System.Drawing.Size(92, 23);
+            this.btnDepose1.TabIndex = 234;
+            this.btnDepose1.Text = "Depose pince 1";
+            this.btnDepose1.UseVisualStyleBackColor = true;
+            this.btnDepose1.Click += new System.EventHandler(this.btnDepose1_Click);
+            // 
+            // btnBrasRange
+            // 
+            this.btnBrasRange.Location = new System.Drawing.Point(234, 243);
+            this.btnBrasRange.Name = "btnBrasRange";
+            this.btnBrasRange.Size = new System.Drawing.Size(92, 23);
+            this.btnBrasRange.TabIndex = 233;
+            this.btnBrasRange.Text = "Bras rangé";
+            this.btnBrasRange.UseVisualStyleBackColor = true;
+            this.btnBrasRange.Click += new System.EventHandler(this.btnBrasRange_Click);
+            // 
+            // btnDepose2
+            // 
+            this.btnDepose2.Location = new System.Drawing.Point(7, 243);
+            this.btnDepose2.Name = "btnDepose2";
+            this.btnDepose2.Size = new System.Drawing.Size(92, 23);
+            this.btnDepose2.TabIndex = 232;
+            this.btnDepose2.Text = "Depose pince 2";
+            this.btnDepose2.UseVisualStyleBackColor = true;
+            this.btnDepose2.Click += new System.EventHandler(this.btnDepose2_Click);
+            // 
+            // label10
+            // 
+            this.label10.AutoSize = true;
+            this.label10.Location = new System.Drawing.Point(266, 108);
+            this.label10.Name = "label10";
+            this.label10.Size = new System.Drawing.Size(11, 13);
+            this.label10.TabIndex = 231;
+            this.label10.Text = "°";
+            // 
+            // label9
+            // 
+            this.label9.AutoSize = true;
+            this.label9.Location = new System.Drawing.Point(266, 82);
+            this.label9.Name = "label9";
+            this.label9.Size = new System.Drawing.Size(11, 13);
+            this.label9.TabIndex = 230;
+            this.label9.Text = "°";
+            // 
+            // numEpaule
+            // 
+            this.numEpaule.DecimalPlaces = 2;
+            this.numEpaule.Location = new System.Drawing.Point(196, 106);
+            this.numEpaule.Maximum = new decimal(new int[] {
+            179,
+            0,
+            0,
+            0});
+            this.numEpaule.Name = "numEpaule";
+            this.numEpaule.Size = new System.Drawing.Size(64, 20);
+            this.numEpaule.TabIndex = 229;
+            // 
+            // numCoude
+            // 
+            this.numCoude.DecimalPlaces = 2;
+            this.numCoude.Location = new System.Drawing.Point(196, 80);
+            this.numCoude.Maximum = new decimal(new int[] {
+            360,
+            0,
+            0,
+            0});
+            this.numCoude.Minimum = new decimal(new int[] {
+            360,
+            0,
+            0,
+            -2147483648});
+            this.numCoude.Name = "numCoude";
+            this.numCoude.Size = new System.Drawing.Size(64, 20);
+            this.numCoude.TabIndex = 228;
+            // 
+            // btnEpauleGo
+            // 
+            this.btnEpauleGo.Location = new System.Drawing.Point(284, 103);
+            this.btnEpauleGo.Name = "btnEpauleGo";
+            this.btnEpauleGo.Size = new System.Drawing.Size(42, 23);
+            this.btnEpauleGo.TabIndex = 227;
+            this.btnEpauleGo.Text = "Go";
+            this.btnEpauleGo.UseVisualStyleBackColor = true;
+            this.btnEpauleGo.Click += new System.EventHandler(this.btnEpauleGo_Click);
+            // 
+            // btnCoudeGo
+            // 
+            this.btnCoudeGo.Location = new System.Drawing.Point(284, 77);
+            this.btnCoudeGo.Name = "btnCoudeGo";
+            this.btnCoudeGo.Size = new System.Drawing.Size(42, 23);
+            this.btnCoudeGo.TabIndex = 226;
+            this.btnCoudeGo.Text = "Go";
+            this.btnCoudeGo.UseVisualStyleBackColor = true;
+            this.btnCoudeGo.Click += new System.EventHandler(this.btnCoudeGo_Click);
             // 
             // switchBoutonPinceGauche
             // 
@@ -281,104 +382,15 @@
             this.switchBoutonPuissance.TabIndex = 200;
             this.switchBoutonPuissance.ChangementEtat += new System.EventHandler(this.switchBoutonPuissance_ChangementEtat);
             // 
-            // btnCoudeGo
+            // btnTest
             // 
-            this.btnCoudeGo.Location = new System.Drawing.Point(284, 77);
-            this.btnCoudeGo.Name = "btnCoudeGo";
-            this.btnCoudeGo.Size = new System.Drawing.Size(42, 23);
-            this.btnCoudeGo.TabIndex = 226;
-            this.btnCoudeGo.Text = "Go";
-            this.btnCoudeGo.UseVisualStyleBackColor = true;
-            this.btnCoudeGo.Click += new System.EventHandler(this.btnCoudeGo_Click);
-            // 
-            // btnEpauleGo
-            // 
-            this.btnEpauleGo.Location = new System.Drawing.Point(284, 103);
-            this.btnEpauleGo.Name = "btnEpauleGo";
-            this.btnEpauleGo.Size = new System.Drawing.Size(42, 23);
-            this.btnEpauleGo.TabIndex = 227;
-            this.btnEpauleGo.Text = "Go";
-            this.btnEpauleGo.UseVisualStyleBackColor = true;
-            this.btnEpauleGo.Click += new System.EventHandler(this.btnEpauleGo_Click);
-            // 
-            // numCoude
-            // 
-            this.numCoude.DecimalPlaces = 2;
-            this.numCoude.Location = new System.Drawing.Point(196, 80);
-            this.numCoude.Maximum = new decimal(new int[] {
-            360,
-            0,
-            0,
-            0});
-            this.numCoude.Minimum = new decimal(new int[] {
-            360,
-            0,
-            0,
-            -2147483648});
-            this.numCoude.Name = "numCoude";
-            this.numCoude.Size = new System.Drawing.Size(64, 20);
-            this.numCoude.TabIndex = 228;
-            // 
-            // numEpaule
-            // 
-            this.numEpaule.DecimalPlaces = 2;
-            this.numEpaule.Location = new System.Drawing.Point(196, 106);
-            this.numEpaule.Maximum = new decimal(new int[] {
-            179,
-            0,
-            0,
-            0});
-            this.numEpaule.Name = "numEpaule";
-            this.numEpaule.Size = new System.Drawing.Size(64, 20);
-            this.numEpaule.TabIndex = 229;
-            // 
-            // label9
-            // 
-            this.label9.AutoSize = true;
-            this.label9.Location = new System.Drawing.Point(266, 82);
-            this.label9.Name = "label9";
-            this.label9.Size = new System.Drawing.Size(11, 13);
-            this.label9.TabIndex = 230;
-            this.label9.Text = "°";
-            // 
-            // label10
-            // 
-            this.label10.AutoSize = true;
-            this.label10.Location = new System.Drawing.Point(266, 108);
-            this.label10.Name = "label10";
-            this.label10.Size = new System.Drawing.Size(11, 13);
-            this.label10.TabIndex = 231;
-            this.label10.Text = "°";
-            // 
-            // btnDepose2
-            // 
-            this.btnDepose2.Location = new System.Drawing.Point(7, 243);
-            this.btnDepose2.Name = "btnDepose2";
-            this.btnDepose2.Size = new System.Drawing.Size(92, 23);
-            this.btnDepose2.TabIndex = 232;
-            this.btnDepose2.Text = "Depose pince 2";
-            this.btnDepose2.UseVisualStyleBackColor = true;
-            this.btnDepose2.Click += new System.EventHandler(this.btnDepose2_Click);
-            // 
-            // btnBrasRange
-            // 
-            this.btnBrasRange.Location = new System.Drawing.Point(234, 243);
-            this.btnBrasRange.Name = "btnBrasRange";
-            this.btnBrasRange.Size = new System.Drawing.Size(92, 23);
-            this.btnBrasRange.TabIndex = 233;
-            this.btnBrasRange.Text = "Bras rangé";
-            this.btnBrasRange.UseVisualStyleBackColor = true;
-            this.btnBrasRange.Click += new System.EventHandler(this.btnBrasRange_Click);
-            // 
-            // btnDepose1
-            // 
-            this.btnDepose1.Location = new System.Drawing.Point(105, 243);
-            this.btnDepose1.Name = "btnDepose1";
-            this.btnDepose1.Size = new System.Drawing.Size(92, 23);
-            this.btnDepose1.TabIndex = 234;
-            this.btnDepose1.Text = "Depose pince 1";
-            this.btnDepose1.UseVisualStyleBackColor = true;
-            this.btnDepose1.Click += new System.EventHandler(this.btnDepose1_Click);
+            this.btnTest.Location = new System.Drawing.Point(257, 134);
+            this.btnTest.Name = "btnTest";
+            this.btnTest.Size = new System.Drawing.Size(42, 21);
+            this.btnTest.TabIndex = 235;
+            this.btnTest.Text = "Test";
+            this.btnTest.UseVisualStyleBackColor = true;
+            this.btnTest.Click += new System.EventHandler(this.btnTest_Click);
             // 
             // PanelGrosRobotUtilisation
             // 
@@ -392,8 +404,8 @@
             this.Load += new System.EventHandler(this.PanelUtilGros_Load);
             this.groupBoxUtilisation.ResumeLayout(false);
             this.groupBoxUtilisation.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.numCoude)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.numEpaule)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numCoude)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -429,5 +441,6 @@
         private System.Windows.Forms.Button btnDepose2;
         private System.Windows.Forms.Button btnBrasRange;
         private System.Windows.Forms.Button btnDepose1;
+        private System.Windows.Forms.Button btnTest;
     }
 }

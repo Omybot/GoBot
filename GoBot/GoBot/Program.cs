@@ -21,8 +21,8 @@ namespace GoBot
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
             Connexions.Init();
-            Robots.Init();
             Config.Load();
+            Robots.Init();
             Plateau.Init();
             Application.Run(new FenGoBot(args));
         }

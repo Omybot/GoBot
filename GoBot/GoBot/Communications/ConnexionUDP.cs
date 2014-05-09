@@ -97,9 +97,11 @@ namespace GoBot.Communications
         /// Envoi le message au client actuellement connecté
         /// </summary>
         /// <param name="message">Message à envoyer au client</param>
+        /// <param name="bloquant">Vrai si la fonction doit être bloquante en attente d'un acquittement</param>
         /// <returns>Nombre de caractères envoyés</returns>
-        public override int SendMessage(Trame message)
+        public override int SendMessage(Trame message, bool bloquant = false)
         {
+            // TODO attente acquittement
             int retour = 0;
             try
             {

@@ -18,6 +18,7 @@ namespace GoBot
         public Historique Historique { get; protected set; }
         public bool DeplacementLigne { get; protected set; }
         public Graph Graph { get; set; }
+        public bool FailTrajectoire { get; set; }
 
         public abstract Position Position { get; set; }
         public PointReel PositionCible { get; set; }
@@ -146,6 +147,7 @@ namespace GoBot
             SemGraph = new Semaphore(1, 1);
 
             TensionPack1 = TensionPack2 = 0;
+            FailTrajectoire = false;
         }
 
         public void Lent()
@@ -313,13 +315,16 @@ namespace GoBot
                                 if (TropProche(racourci, forme))
                                 {
                                     ObstacleProbleme = forme;
-                                    //Thread.Sleep(200);
+                                    if(Config.CurrentConfig.AfficheDetailTraj > 0)
+                                        Thread.Sleep(Config.CurrentConfig.AfficheDetailTraj);
                                     raccourciPossible = false;
                                     break;
                                 }
-                                //else 
-                                    //Thread.Sleep(200);
+                                //else if(Config.CurrentConfig.AfficheDetailTraj > 0)
+                                //    Thread.Sleep(Config.CurrentConfig.AfficheDetailTraj);
                             }
+                            if(Config.CurrentConfig.AfficheDetailTraj > 0)
+                                Thread.Sleep(Config.CurrentConfig.AfficheDetailTraj);
                             ObstacleTeste = null;
                             if (raccourciPossible)
                             {
@@ -518,6 +523,9 @@ namespace GoBot
                 if (nouvelleTrajectoire)
                     break;
 
+                if (FailTrajectoire)
+                    break;
+
                 bool boucler = false;
                 Bloque = false;
                 do
@@ -585,6 +593,13 @@ namespace GoBot
             {
                 Robots.GrosRobot.Historique.Log("Trajectoire interrompue, calcul d'un nouvel itinéraire", TypeLog.PathFinding);
                 ParcoursPathFinding(CheminEnCoursNoeuds[CheminEnCoursNoeuds.Count - 1].X, CheminEnCoursNoeuds[CheminEnCoursNoeuds.Count - 1].Y);
+            }
+            if (FailTrajectoire)
+            {
+                Robots.GrosRobot.Historique.Log("Trajectoire échouée", TypeLog.PathFinding);
+                succesPathFinding = false;
+                if (semTrajectoire != null)
+                    semTrajectoire.Release();
             }
             else
             {

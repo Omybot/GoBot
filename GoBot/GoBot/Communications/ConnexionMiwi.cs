@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
 
 namespace GoBot.Communications
 {
@@ -14,14 +15,16 @@ namespace GoBot.Communications
             ConnexionCheck = new ConnexionCheck(2000);
             Carte = carte;
             Sauvegarde = new Replay();
+            SemaphoreAck = new Semaphore(0, int.MaxValue);
         }
 
         /// <summary>
         /// Envoi le message au client actuellement connecté
         /// </summary>
         /// <param name="message">Message à envoyer au client</param>
+        /// <param name="bloquant">Vrai si la fonction doit être bloquante en attente d'un acquittement</param>
         /// <returns>Nombre de caractères envoyés</returns>
-        public override int SendMessage(Trame message)
+        public override int SendMessage(Trame message, bool bloquant = false)
         {
             // Rajoute l'entête de demande de transfert de message par Miwi
             byte[] tab = new byte[message.Length + 2];
@@ -35,9 +38,17 @@ namespace GoBot.Communications
 
             Trame messageComplet = new Trame(tab);
 
+            // Initialisation sémaphore ack
+            if(bloquant)
+                SemaphoreAck = new Semaphore(0, int.MaxValue);
+
             int retour = Connexions.ConnexionMiwi.SendMessage(messageComplet);
 
             TrameEnvoyee(messageComplet);
+
+            // Attente acquittement
+            if (bloquant)
+                SemaphoreAck.WaitOne();
 
             return retour;
         }
@@ -53,7 +64,13 @@ namespace GoBot.Communications
         void ConnexionMiwi_NouvelleTrameRecue(Trame trame)
         {
             if (trame.Carte == Carte)
-                TrameRecue(trame);
+            {
+                // Si on reçoit un message d'acquittement, on libère le sémaphore
+                if (trame.Length > 1 && trame[1] == (byte)FonctionMiwi.Acquittement)
+                    SemaphoreAck.Release();
+                else
+                    TrameRecue(trame);
+            }
         }
 
         /// <summary>

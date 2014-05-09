@@ -1095,5 +1095,13 @@ namespace GoBot.IHM
             else
                 modeCourant = Mode.Visualisation;
         }
+
+        private void boxAfficheDetailTraj_CheckedChanged(object sender, EventArgs e)
+        {
+            if (boxAfficheDetailTraj.Checked)
+                Config.CurrentConfig.AfficheDetailTraj = 200;
+            else
+                Config.CurrentConfig.AfficheDetailTraj = 0;
+        }
     }
 }

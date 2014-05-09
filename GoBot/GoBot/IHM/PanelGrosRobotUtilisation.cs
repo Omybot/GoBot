@@ -112,12 +112,14 @@ namespace GoBot.IHM
 
         private void btnCoudeGo_Click(object sender, EventArgs e)
         {
-            BrasFruits.PositionCoude((double)numCoude.Value);
+            if (!BrasFruits.PositionCoude((double)numCoude.Value))
+                MessageBox.Show("Position inaccessible", "Erreur", MessageBoxButtons.OK, MessageBoxIcon.Error);
         }
 
         private void btnEpauleGo_Click(object sender, EventArgs e)
         {
-            BrasFruits.PositionEpaule((double)numEpaule.Value);
+            if (!BrasFruits.PositionEpaule((double)numEpaule.Value))
+                MessageBox.Show("Position inaccessible", "Erreur", MessageBoxButtons.OK, MessageBoxIcon.Error);
         }
 
         private void btnDepose2_Click(object sender, EventArgs e)
@@ -133,6 +135,102 @@ namespace GoBot.IHM
         private void btnDepose1_Click(object sender, EventArgs e)
         {
             BrasFruits.PositionDeposeBouchon1();
+        }
+
+        private void btnTest_Click(object sender, EventArgs e)
+        {
+            Servomoteur coude = new Servomoteur(Carte.RecIO, (int)ServomoteurID.GRFruitsCoude, 0);
+            Servomoteur epaule = new Servomoteur(Carte.RecIO, (int)ServomoteurID.GRFruitsEpaule, 0);
+
+            coude.VitesseMax = 150;
+            epaule.VitesseMax = 150;
+
+            Robots.GrosRobot.ActionneurOnOff(ActionneurOnOffID.GRPinceDroite, false);
+            Robots.GrosRobot.ActionneurOnOff(ActionneurOnOffID.GRPinceGauche, false);
+
+            BrasFruits.PositionCoude(-95.77);
+            BrasFruits.PositionEpaule(163.79);
+
+
+            do
+            {
+                coude.DemandeActualisation(false);
+            } while (coude.EnMouvement);
+            do
+            {
+                epaule.DemandeActualisation(false);
+            } while (epaule.EnMouvement);
+
+
+            Robots.GrosRobot.Reculer(250);
+
+
+            BrasFruits.PositionCoude(-114);
+            BrasFruits.PositionEpaule(156.30);
+            do
+            {
+                coude.DemandeActualisation(false);
+            } while (coude.EnMouvement);
+            do
+            {
+                epaule.DemandeActualisation(false);
+            } while (epaule.EnMouvement);
+
+
+            BrasFruits.PositionCoude(-104.51);
+            BrasFruits.PositionEpaule(146.60);
+            do
+            {
+                coude.DemandeActualisation(false);
+            } while (coude.EnMouvement);
+            do
+            {
+                epaule.DemandeActualisation(false);
+            } while (epaule.EnMouvement);
+            
+            Robots.GrosRobot.ActionneurOnOff(ActionneurOnOffID.GRPinceDroite, true);
+            Robots.GrosRobot.ActionneurOnOff(ActionneurOnOffID.GRPinceGauche, true);
+            Thread.Sleep(500);
+            coude.VitesseMax = 1000;
+            epaule.VitesseMax = 1000;
+
+            BrasFruits.PositionCoude(-95.77);
+            BrasFruits.PositionEpaule(163.79);
+            do
+            {
+                coude.DemandeActualisation(false);
+            } while (coude.EnMouvement);
+            do
+            {
+                epaule.DemandeActualisation(false);
+            } while (epaule.EnMouvement);
+
+            Robots.GrosRobot.Avancer(250);
+
+            BrasFruits.PositionCoude(0);
+            do
+            {
+                coude.DemandeActualisation(false);
+            } while (coude.EnMouvement);
+
+            BrasFruits.PositionDeposeBouchon2();
+            do
+            {
+                coude.DemandeActualisation(false);
+            } while (coude.EnMouvement);
+            do
+            {
+                epaule.DemandeActualisation(false);
+            } while (epaule.EnMouvement);
+
+
+            Robots.GrosRobot.ActionneurOnOff(ActionneurOnOffID.GRPinceDroite, false);
+            Robots.GrosRobot.ActionneurOnOff(ActionneurOnOffID.GRPinceGauche, false);
+
+            Thread.Sleep(700);
+            Robots.GrosRobot.ActionneurOnOff(ActionneurOnOffID.GRPousseBouchon, true);
+            Thread.Sleep(500);
+            Robots.GrosRobot.ActionneurOnOff(ActionneurOnOffID.GRPousseBouchon, false);
         }
     }
 }
