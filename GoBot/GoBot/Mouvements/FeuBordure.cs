@@ -20,14 +20,11 @@ namespace GoBot.Mouvements
         {
             Robots.GrosRobot.Historique.Log("Début feu bordure " + numeroFeu);
 
-            if (Robots.GrosRobot.PathFinding(Position.Coordonnees.X, Position.Coordonnees.Y, timeOut, true))
+            if (Robots.GrosRobot.GotoXYTeta(Position.Coordonnees.X, Position.Coordonnees.Y, Position.Angle.AngleDegres))
             {
                 Robots.GrosRobot.Historique.Log("Position feu bordure " + numeroFeu + " atteinte");
-                Angle angle180 = Position.Angle - Robots.GrosRobot.Position.Angle;
-
-                Robots.GrosRobot.PositionerAngle(Position.Angle, 1);
                 BrasFeux.MoveAttrapeContreMur();
-
+                BrasFeux.NbFeuxStockes++;
                 Robots.GrosRobot.Historique.Log("Fin feu bordure " + numeroFeu);
             }
             else
@@ -46,7 +43,13 @@ namespace GoBot.Mouvements
 
         public override double ScorePondere
         {
-            get { return Score; }
+            get 
+            { 
+                if(BrasFeux.NbFeuxStockes == 3)
+                    return 0;
+                else
+                    return Score; 
+            }
         }
     }
 }

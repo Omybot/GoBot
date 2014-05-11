@@ -114,12 +114,16 @@ namespace GoBot.IHM
         {
             if (!BrasFruits.PositionCoude((double)numCoude.Value))
                 MessageBox.Show("Position inaccessible", "Erreur", MessageBoxButtons.OK, MessageBoxIcon.Error);
+
+            Console.WriteLine(Math.Round(BrasFruits.Perimetre1()) + " mm");
         }
 
         private void btnEpauleGo_Click(object sender, EventArgs e)
         {
             if (!BrasFruits.PositionEpaule((double)numEpaule.Value))
                 MessageBox.Show("Position inaccessible", "Erreur", MessageBoxButtons.OK, MessageBoxIcon.Error);
+
+            Console.WriteLine(Math.Round(BrasFruits.Perimetre1()) + " mm");
         }
 
         private void btnDepose2_Click(object sender, EventArgs e)

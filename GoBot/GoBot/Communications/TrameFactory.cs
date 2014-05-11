@@ -855,7 +855,7 @@ namespace GoBot.Communications
                         switch ((FonctionMiwi)trame[1])
                         {
                             case FonctionMiwi.Transmettre:
-                                return (Carte)trame[2];
+                                return (Carte)trame[3];
                             default:
                                 return Carte.RecMiwi;
                         }

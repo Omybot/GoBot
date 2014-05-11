@@ -53,7 +53,7 @@ namespace GoBot
         public abstract void PivotDroite(double angle, bool attendre = true);
         public abstract void Stop(StopMode mode = StopMode.Smooth);
         public abstract void Virage(SensAR sensAr, SensGD sensGd, int rayon, int angle, bool attendre = true);
-        public abstract void ReglerOffsetAsserv(int offsetX, int offsetY, int offsetTeta);
+        public abstract void ReglerOffsetAsserv(int offsetX, int offsetY, double offsetTeta);
         public abstract void Recallage(SensAR sens, bool attendre = true);
         public abstract void EnvoyerPID(int p, int i, int d);
         public abstract List<int>[] MesureTestPid(int consigne, SensAR sens, int nbValeurs);
@@ -186,7 +186,7 @@ namespace GoBot
             }
         }
 
-        public bool GotoXYTeta(double x, double y, double teta)
+        public bool GotoXYTeta(double x, double y, Angle teta)
         {
             if (PathFinding(x, y, 0, true))
                 PositionerAngle(teta, 0.5);
@@ -228,17 +228,109 @@ namespace GoBot
 
             SemGraph.WaitOne();
 
-            Node debutNode = Graph.ClosestNode(Position.Coordonnees.X, Position.Coordonnees.Y, 0, out distance, false);
+            int nbPointsDepart = 0;
+            int nbPointsArrivee = 0;
+
+            List<IForme> obstacles = CalculerObstacles();
+            Node debutNode;
+            Node nodeProche = Graph.ClosestNode(Position.Coordonnees.X, Position.Coordonnees.Y, 0, out distance, false);
             if (distance != 0)
             {
                 debutNode = new Node(Position.Coordonnees.X, Position.Coordonnees.Y, 0);
-                AddNode(Graph, debutNode, 600);
+                nbPointsDepart = AddNode(Graph, debutNode, 600);
             }
+            else
+                debutNode = nodeProche;
+
+            if (nbPointsDepart == 0)
+            {
+                // On ne peut pas partir de là où on est
+
+                Position positionActuelle = new Position(new Angle(Position.Angle), new PointReel(Position.Coordonnees.X, Position.Coordonnees.Y));
+                bool franchissable = true;
+
+                int i;
+                for(i = 0; i < 100 && nbPointsDepart == 0; i += 1)
+                {
+                    positionActuelle.Avancer(10);
+                    nbPointsDepart = AddNode(Graph, new Node(positionActuelle.Coordonnees.X, positionActuelle.Coordonnees.Y, 0), 600);
+
+                    foreach (Arc a in arcsAdd)
+                        Graph.RemoveArc(a);
+                    arcsAdd.Clear();
+
+                    foreach (Node n in nodesAdd)
+                        Graph.RemoveNode(n);
+                    nodesAdd.Clear();
+                }
+
+                if (nbPointsDepart > 0)
+                {
+                    Segment segmentTest = new Segment(new PointReel(positionActuelle.Coordonnees.X, positionActuelle.Coordonnees.Y), new PointReel(Position.Coordonnees.X, Position.Coordonnees.Y));
+
+                    foreach (IForme obstacle in obstacles)
+                    {
+                        if (obstacle.Distance(segmentTest) < Longueur / 2)
+                            franchissable = false;
+                    }
+
+                    if (franchissable)
+                    {
+                        Avancer(i * 10);
+                        debutNode = new Node(Position.Coordonnees.X, Position.Coordonnees.Y, 0);
+                        nbPointsDepart = AddNode(Graph, debutNode, 600);
+                    }
+                }
+
+                if (!franchissable)
+                {
+                    franchissable = true;
+                    positionActuelle = new Position(new Angle(Position.Angle), new PointReel(Position.Coordonnees.X, Position.Coordonnees.Y));
+                    nbPointsDepart = 0;
+                    for (i = 0; i < 100 && nbPointsDepart == 0; i += 1)
+                    {
+                        positionActuelle.Avancer(-10);
+                        nbPointsDepart = AddNode(Graph, new Node(positionActuelle.Coordonnees.X, positionActuelle.Coordonnees.Y, 0), 600);
+
+                        foreach (Arc a in arcsAdd)
+                            Graph.RemoveArc(a);
+                        arcsAdd.Clear();
+
+                        foreach (Node n in nodesAdd)
+                            Graph.RemoveNode(n);
+                        nodesAdd.Clear();
+                    }
+
+                    if (nbPointsDepart > 0)
+                    {
+                        Segment segmentTest = new Segment(new PointReel(positionActuelle.Coordonnees.X, positionActuelle.Coordonnees.Y), new PointReel(Position.Coordonnees.X, Position.Coordonnees.Y));
+
+                        foreach (IForme obstacle in obstacles)
+                        {
+                            if (obstacle.Distance(segmentTest) < Longueur / 2)
+                                franchissable = false;
+                        }
+
+                        if (franchissable)
+                        {
+                            Reculer(i * 10);
+                            debutNode = new Node(Position.Coordonnees.X, Position.Coordonnees.Y, 0);
+                            nbPointsDepart = AddNode(Graph, debutNode, 600);
+                        }
+                    }
+                }
+            }
+
             Node finNode = Graph.ClosestNode(x, y, 0, out distance, false);
             if (distance != 0)
             {
                 finNode = new Node(x, y, 0);
-                AddNode(Graph, finNode, 600);
+                nbPointsArrivee = AddNode(Graph, finNode, 600);
+            }
+            if (nbPointsArrivee == 0)
+            {
+                // On ne peut pas arriver là où on souhaite aller
+                // On teste si on peut faire une approche en ligne 
             }
 
             SemGraph.Release();
@@ -247,7 +339,6 @@ namespace GoBot
             bool toutDroit = true;
             Segment segment = new Segment(new PointReel(debutNode.X, debutNode.Y), new PointReel(finNode.X, finNode.Y));
 
-            List<IForme> obstacles = CalculerObstacles();
             foreach (IForme forme in obstacles)
             {
                 if (TropProche(segment, forme))
@@ -358,7 +449,6 @@ namespace GoBot
 
             SemGraph.WaitOne();
 
-
             foreach (Arc a in arcsAdd)
                 Graph.RemoveArc(a);
             arcsAdd.Clear();
@@ -409,14 +499,15 @@ namespace GoBot
         /// </summary>
         /// <param name="node">Noeud à ajouter</param>
         /// <param name="distanceMax">Distance (mm) max de liaison avec les autres noeuds</param>
-        public void AddNode(Graph graph, Node node, double distanceMax = 400)
+        /// <returns>Nombre de points reliés au point ajouté</returns>
+        public int AddNode(Graph graph, Node node, double distanceMax = 400, bool ajouter = true)
         {
             double distanceNode;
 
             // Si un noeud est deja présent à cet endroit on ne l'ajoute pas
             graph.ClosestNode(node.X, node.Y, node.Z, out distanceNode, true);
             if (distanceNode == 0)
-                return;
+                return 0;
 
             // Teste si le noeud est franchissable avec la liste des obstacles
             foreach (IForme obstacle in Plateau.ObstaclesFixes)
@@ -424,12 +515,14 @@ namespace GoBot
                 if (TropProche(obstacle, new PointReel(node.X, node.Y)))
                 {
                     node.Passable = false;
-                    return;
+                    return 0;
                 }
             }
 
             graph.Nodes.Add(node);
             nodesAdd.Add(node);
+
+            int nbLiaisons = 0;
 
             // Liaisons avec les autres noeuds du graph
             foreach (Node no in graph.Nodes)
@@ -463,10 +556,14 @@ namespace GoBot
 
                             arcsAdd.Add(arc);
                             arcsAdd.Add(arc2);
+
+                            nbLiaisons++;
                         }
                     }
                 }
             }
+
+            return nbLiaisons;
         }
 
         List<Arc> arcsAdd = new List<Arc>();
@@ -584,8 +681,10 @@ namespace GoBot
                 else
                     Avancer((int)traj.distance);
 
-                CheminEnCoursNoeuds.RemoveAt(0);
-                CheminEnCoursArcs.RemoveAt(0);
+                if(CheminEnCoursNoeuds.Count > 0)
+                    CheminEnCoursNoeuds.RemoveAt(0);
+                if (CheminEnCoursArcs.Count > 0)
+                    CheminEnCoursArcs.RemoveAt(0);
 
                 Robots.GrosRobot.Historique.Log("Noeud atteint", TypeLog.PathFinding);
             }
@@ -641,11 +740,15 @@ namespace GoBot
                         {
                             if (TropProche(seg, forme))
                             {
+                                Console.Beep();
                                 // Demande de génération d'une nouvelle trajectoire
-                                Console.WriteLine("Nouvelle traj");
+                                Historique.Log("Trajectoire coupée, annulation", TypeLog.PathFinding);
                                 nouvelleTrajectoire = true;
                                 if (DeplacementLigne)
+                                {
                                     Stop();
+                                    Thread.Sleep(2000);
+                                }
                             }
                         }
                     }

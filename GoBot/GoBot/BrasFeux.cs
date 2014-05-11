@@ -12,6 +12,8 @@ namespace GoBot
         private static readonly int INIT_EPAULE = 0;
         private static readonly int INIT_POIGNET = 0;
 
+        public static int NbFeuxStockes { get; set; }
+
         public static void PositionEpaule(double angle)
         {
             // todo

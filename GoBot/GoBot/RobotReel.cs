@@ -106,6 +106,7 @@ namespace GoBot
         public void ReceptionMessage(Trame trameRecue)
         {
             // Analyser la trame reçue
+
             if (trameRecue[0] == (byte)Carte.RecMove)
             {
                 if (trameRecue[1] == (byte)FonctionMove.Blocage)
@@ -259,7 +260,7 @@ namespace GoBot
             DeplacementLigne = false;
         }
 
-        public override void ReglerOffsetAsserv(int offsetX, int offsetY, int offsetTeta)
+        public override void ReglerOffsetAsserv(int offsetX, int offsetY, double offsetTeta)
         {
             Trame trame = TrameFactory.OffsetPos(offsetX, offsetY, offsetTeta, this);
             Connexion.SendMessage(trame);

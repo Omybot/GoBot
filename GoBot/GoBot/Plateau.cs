@@ -192,6 +192,7 @@ namespace GoBot
             while (!Config.Shutdown)
             {
                 while (!SemaphoreCollisions.WaitOne(1000) && !Config.Shutdown) ;
+                Console.WriteLine(DateTime.Now.Millisecond + DateTime.Now.Second * 1000 + " Test collisions");
                 Robots.PetitRobot.ObstacleTest();
                 Robots.GrosRobot.ObstacleTest();
             }

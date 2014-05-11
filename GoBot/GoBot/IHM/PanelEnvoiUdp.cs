@@ -8,6 +8,7 @@ using System.Text;
 using System.Windows.Forms;
 using GoBot.Communications;
 using System.Net;
+using System.Threading;
 
 namespace GoBot.IHM
 {
@@ -87,9 +88,37 @@ namespace GoBot.IHM
             }
         }
 
+        Thread thTrames;
+
+        private void ThreadEnvoi()
+        {
+            byte i = 0;
+            while (true)
+            {
+                Connexions.ConnexionPi.SendMessage(new Trame("C3 " + i.ToString("00")), true);
+                Thread.Sleep(10);
+                i++;
+                if (i == 100)
+                    i = 0;
+            }
+            //Connexions.ConnexionPi.SendMessage(new Trame("C3 02"), true);
+            //Connexions.ConnexionPi.SendMessage(new Trame("C3 03"), true);
+            //Connexions.ConnexionPi.SendMessage(new Trame("C3 04"), true);
+        }
         private void btnDebug_Click(object sender, EventArgs e)
         {
-            int val = (int)(((Button)sender).Tag);
+            Button btn = (Button)sender;
+            int val = Convert.ToInt16(btn.Tag);
+
+            if (val == 0)
+            {
+
+                thTrames = new Thread(ThreadEnvoi);
+                thTrames.Start();
+            }
+            else
+
+                Connexions.ConnexionPi.SendMessage(new Trame("C3 " + ("FF")), false);
 
             if (boxMove.Checked)
             {
@@ -128,14 +157,14 @@ namespace GoBot.IHM
             }
         }
 
-        private Timer timerTestConnexion;
+        private System.Windows.Forms.Timer timerTestConnexion;
         private void btnSendTest_Click(object sender, EventArgs e)
         {
             if (btnSendTest.Text == "Envoyer")
             {
                 btnSendTest.Text = "Stop";
 
-                timerTestConnexion = new Timer();
+                timerTestConnexion = new System.Windows.Forms.Timer();
                 timerTestConnexion.Interval = (int)numIntervalleTest.Value;
                 timerTestConnexion.Tick += new EventHandler(timerTestConnexion_Tick);
 

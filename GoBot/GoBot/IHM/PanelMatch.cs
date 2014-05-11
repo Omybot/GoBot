@@ -24,17 +24,20 @@ namespace GoBot.IHM
             assietteAuto1 = assietteAuto2 = assietteAuto3 = false;
             angleAuto1 = angleAuto2 = angleAuto3 = false;
 
-            Plateau.Balise1.RotationChange += Balise1_RotationChange;
-            Plateau.Balise2.RotationChange += Balise2_RotationChange;
-            Plateau.Balise3.RotationChange += Balise3_RotationChange;
+            if (!Config.DesignMode)
+            {
+                Plateau.Balise1.RotationChange += Balise1_RotationChange;
+                Plateau.Balise2.RotationChange += Balise2_RotationChange;
+                Plateau.Balise3.RotationChange += Balise3_RotationChange;
 
-            Plateau.Balise1.CalibrationAngulaireTerminee += Balise1_CalibrationAngulaireTerminee;
-            Plateau.Balise2.CalibrationAngulaireTerminee += Balise2_CalibrationAngulaireTerminee;
-            Plateau.Balise3.CalibrationAngulaireTerminee += Balise3_CalibrationAngulaireTerminee;
+                Plateau.Balise1.CalibrationAngulaireTerminee += Balise1_CalibrationAngulaireTerminee;
+                Plateau.Balise2.CalibrationAngulaireTerminee += Balise2_CalibrationAngulaireTerminee;
+                Plateau.Balise3.CalibrationAngulaireTerminee += Balise3_CalibrationAngulaireTerminee;
 
-            Plateau.Balise1.CalibrationAssietteTerminee += Balise1_CalibrationAssietteTerminee;
-            Plateau.Balise2.CalibrationAssietteTerminee += Balise2_CalibrationAssietteTerminee;
-            Plateau.Balise3.CalibrationAssietteTerminee += Balise3_CalibrationAssietteTerminee;
+                Plateau.Balise1.CalibrationAssietteTerminee += Balise1_CalibrationAssietteTerminee;
+                Plateau.Balise2.CalibrationAssietteTerminee += Balise2_CalibrationAssietteTerminee;
+                Plateau.Balise3.CalibrationAssietteTerminee += Balise3_CalibrationAssietteTerminee;
+            }
         }
 
         public void AfficherTable(Image img)
@@ -291,6 +294,30 @@ namespace GoBot.IHM
             Plateau.Balise1.ReglerOffset(16); // 16 mesures à 4 tours seconde ce qui fait 4 secondes de calibration
             Plateau.Balise2.ReglerOffset(16); 
             Plateau.Balise3.ReglerOffset(16); 
+        }
+
+        private void btnReset_Click(object sender, EventArgs e)
+        {
+            // Repasser toutes les leds à rouge et couper tous les threads en train de tourner
+
+            ledBalise1Angle.CouleurRouge();
+            ledBalise2Angle.CouleurRouge();
+            ledBalise3Angle.CouleurRouge();
+            ledBalise1Assiette.CouleurRouge();
+            ledBalise2Assiette.CouleurRouge();
+            ledBalise3Assiette.CouleurRouge();
+            ledBalise1Rotation.CouleurRouge();
+            ledBalise2Rotation.CouleurRouge();
+            ledBalise3Rotation.CouleurRouge();
+            ledRecallageGros.CouleurRouge();
+            ledRecallagePetit.CouleurRouge();
+
+            if (thRecallage != null && thRecallage.IsAlive)
+                thRecallage.Abort();
+
+            Thread.Sleep(100);
+            Robots.GrosRobot.Stop(StopMode.Smooth);
+            Robots.PetitRobot.Stop(StopMode.Smooth);
         }
     }
 }

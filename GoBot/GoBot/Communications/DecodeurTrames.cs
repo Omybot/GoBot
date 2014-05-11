@@ -571,9 +571,9 @@ namespace GoBot.Communications
                                 break;
                             case FonctionMiwi.Transmettre:
                                 byte[] octets = trame.ToTabBytes();
-                                byte[] octetsExtrait = new byte[octets.Length - 1];
-                                for (int i = 2; i < octets.Length; i++)
-                                    octetsExtrait[i - 2] = octets[i];
+                                byte[] octetsExtrait = new byte[octets.Length - 3];
+                                for (int i = 3; i < octets.Length; i++)
+                                    octetsExtrait[i - 3] = octets[i];
 
                                 Trame trameInterne = new Trame(octetsExtrait);
                                 message = Decode(trameInterne);
@@ -583,6 +583,9 @@ namespace GoBot.Communications
                                 break;
                             case FonctionMiwi.RetourTestConnexion:
                                 message = "Retour test connexion";
+                                break;
+                            case FonctionMiwi.Acquittement:
+                                message = "Acquittement miwi";
                                 break;
                         }
                         break;

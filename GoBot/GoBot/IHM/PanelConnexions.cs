@@ -26,6 +26,7 @@ namespace GoBot.IHM
             ledRecBoi.ConnexionNok();
             ledRecMiwi.ConnexionNok();
             ledRecMove.ConnexionNok();
+            ledRecIO.ConnexionNok();
             ledRecPi.ConnexionNok();
 
             batteriePack1.CouleurGris();
@@ -40,6 +41,7 @@ namespace GoBot.IHM
                 batterieBun1.CouleurGris();
                 batterieBeu1.CouleurGris();
                 batterieBoi1.CouleurGris();
+                batteriePi.CouleurGris();
                 return;
             }
 
@@ -108,6 +110,17 @@ namespace GoBot.IHM
                 batterieBoi2.Afficher = false;
                 batterieBoi2.CouleurGris();
             }
+
+            if (Connexions.ConnexionPi.ConnexionCheck.Connecte)
+            {
+                batteriePi.Afficher = true;
+                batteriePi.Tension = Robots.PetitRobot.TensionPack1;
+            }
+            else
+            {
+                batteriePi.Afficher = false;
+                batteriePi.CouleurGris();
+            }
         }
 
         void ConnexionBunCheck_ConnexionChange(bool conn)
@@ -135,6 +148,11 @@ namespace GoBot.IHM
             Robot_ConnexionChange(Carte.RecPi, conn);
         }
 
+        void ConnexionIoCheck_ConnexionChange(bool conn)
+        {
+            Robot_ConnexionChange(Carte.RecIO, conn);
+        }
+
         void ConnexionMiwiCheck_ConnexionChange(bool conn)
         {
             Robot_ConnexionChange(Carte.RecMiwi, conn);
@@ -157,11 +175,14 @@ namespace GoBot.IHM
                 case Carte.RecBoi:
                     selectLed = ledRecBoi;
                     break;
-                case Carte.RecPi:
-                    selectLed = ledRecPi;
+                case Carte.RecIO:
+                    selectLed = ledRecIO;
                     break;
                 case Carte.RecMiwi:
                     selectLed = ledRecMiwi;
+                    break;
+                case Carte.RecPi:
+                    selectLed = ledRecPi;
                     break;
             }
 
@@ -188,7 +209,7 @@ namespace GoBot.IHM
                 if (Connexions.ConnexionMiwi.ConnexionCheck.Connecte)
                     SetLed(ledRecMiwi, true);
                 if (Connexions.ConnexionIO.ConnexionCheck.Connecte)
-                    SetLed(ledRecPi, true);
+                    SetLed(ledRecIO, true);
                 if (Balise.GetBalise(Carte.RecBun).Connexion.ConnexionCheck.Connecte)
                     SetLed(ledRecBun, true);
                 if (Balise.GetBalise(Carte.RecBeu).Connexion.ConnexionCheck.Connecte)
@@ -198,7 +219,8 @@ namespace GoBot.IHM
 
                 Connexions.ConnexionMove.ConnexionCheck.ConnexionChange += new ConnexionCheck.ConnexionChangeDelegate(ConnexionMoveCheck_ConnexionChange);
                 Connexions.ConnexionMiwi.ConnexionCheck.ConnexionChange += new ConnexionCheck.ConnexionChangeDelegate(ConnexionMiwiCheck_ConnexionChange);
-                Connexions.ConnexionIO.ConnexionCheck.ConnexionChange += new ConnexionCheck.ConnexionChangeDelegate(ConnexionPiCheck_ConnexionChange);
+                Connexions.ConnexionIO.ConnexionCheck.ConnexionChange += new ConnexionCheck.ConnexionChangeDelegate(ConnexionIoCheck_ConnexionChange);
+                Connexions.ConnexionPi.ConnexionCheck.ConnexionChange += new ConnexionCheck.ConnexionChangeDelegate(ConnexionPiCheck_ConnexionChange);
 
                 Balise.GetBalise(Carte.RecBun).Connexion.ConnexionCheck.ConnexionChange += new ConnexionCheck.ConnexionChangeDelegate(ConnexionBunCheck_ConnexionChange);
                 Balise.GetBalise(Carte.RecBeu).Connexion.ConnexionCheck.ConnexionChange += new ConnexionCheck.ConnexionChangeDelegate(ConnexionBeuCheck_ConnexionChange);

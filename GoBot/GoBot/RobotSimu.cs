@@ -171,8 +171,6 @@ namespace GoBot
                     else
                         Position.Avancer(-distance);
                 }
-
-                Console.WriteLine(VitesseActuelle);
             }
 
             SemDeplacement.Release();
@@ -267,9 +265,9 @@ namespace GoBot
             // TODO
         }
 
-        public override void ReglerOffsetAsserv(int offsetX, int offsetY, int offsetTeta)
+        public override void ReglerOffsetAsserv(int offsetX, int offsetY, double offsetTeta)
         {
-            Position = new Position(new Angle(offsetTeta, AnglyeType.Degre), new PointReel(offsetX, offsetY));
+            Position = new Position(new Angle(-offsetTeta, AnglyeType.Degre), new PointReel(offsetX, offsetY));
         }
 
         public override void Recallage(SensAR sens, bool attendre = true)
@@ -277,15 +275,18 @@ namespace GoBot
             RecallageEnCours = true;
             Historique.AjouterAction(new ActionRecallage(this, sens));
 
+            int accelTmp = AccelerationDeplacement;
+            AccelerationDeplacement = 4000;
+
             while (Position.Coordonnees.X - Longueur / 2 > 0 &&
                 Position.Coordonnees.X + Longueur / 2 < Plateau.LongueurPlateau &&
                 Position.Coordonnees.Y - Longueur / 2 > 0 &&
                 Position.Coordonnees.Y + Longueur / 2 < Plateau.LargeurPlateau)
             {
                 if (sens == SensAR.Arriere)
-                    Reculer(50);
+                    Reculer(5);
                 else
-                    Avancer(50);
+                    Avancer(5);
             }
             if (Position.Coordonnees.X < 0)
                 Position.Coordonnees.X = Longueur / 2;
@@ -295,6 +296,8 @@ namespace GoBot
                 Position.Coordonnees.Y = Longueur / 2;
             if (Position.Coordonnees.Y > Plateau.LargeurPlateau)
                 Position.Coordonnees.Y = Plateau.LargeurPlateau - Longueur / 2;
+
+            AccelerationDeplacement = accelTmp;
 
             RecallageEnCours = false;
         }
@@ -361,7 +364,6 @@ namespace GoBot
         public override void Reset()
         {
             // TODO
-            Thread.Sleep(500);
         }
 
         public override void ArmerJack()
@@ -371,13 +373,11 @@ namespace GoBot
 
         public override bool GetJack(bool historique = true)
         {
-            // TODO
             return true;
         }
 
         public override Color GetCouleurEquipe(bool historique = true)
         {
-            // TODO
             return Plateau.CouleurDroiteJaune;
         }
 
@@ -399,7 +399,6 @@ namespace GoBot
         public override List<double>[] DiagnosticCpuPwm(int nbValeurs)
         {
             return null;
-            // TODO
         }
     }
 }

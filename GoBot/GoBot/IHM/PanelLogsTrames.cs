@@ -308,24 +308,26 @@ namespace GoBot.IHM
 
         private void AfficherTrame(TrameReplay trameReplay)
         {
-            Trame trame = new Trame(trameReplay.Trame);
-
             String heure = "";
-
-            if (rdoHeure.Checked)
-                heure = trameReplay.Date.ToString("hh:mm:ss:fff");
-            if (rdoTempsDebut.Checked)
-                heure = (trameReplay.Date - dateDebut).ToString(@"hh\:mm\:ss\:fff");
-            if (rdoTempsPrec.Checked)
-                heure = ((int)(trameReplay.Date - datePrec).TotalMilliseconds).ToString() + " ms";
-            if (rdoTempsPrecAff.Checked)
-                heure = ((int)(trameReplay.Date - datePrecAff).TotalMilliseconds).ToString() + " ms";
-
             try
             {
+                Trame trame = new Trame(trameReplay.Trame);
+
+                if (rdoHeure.Checked)
+                    heure = trameReplay.Date.ToString("hh:mm:ss:fff");
+                if (rdoTempsDebut.Checked)
+                    heure = (trameReplay.Date - dateDebut).ToString(@"hh\:mm\:ss\:fff");
+                if (rdoTempsPrec.Checked)
+                    heure = ((int)(trameReplay.Date - datePrec).TotalMilliseconds).ToString() + " ms";
+                if (rdoTempsPrecAff.Checked)
+                    heure = ((int)(trameReplay.Date - datePrecAff).TotalMilliseconds).ToString() + " ms";
+
                 Carte destinataire = trameReplay.Entrant ? Carte.PC : TrameFactory.Identifiant(trame);
                 Carte expediteur = trameReplay.Entrant ? TrameFactory.Identifiant(trame) : Carte.PC;
                 Carte carte = trame.Carte;
+
+                if (carte == Carte.PC)
+                    throw new Exception();
 
                 bool cartesAutorisees = false;
                 if (Config.CurrentConfig.LogsDestinataires[destinataire] && Config.CurrentConfig.LogsExpediteurs[expediteur])
@@ -335,9 +337,9 @@ namespace GoBot.IHM
                 if ((carte == Carte.RecMove && Config.CurrentConfig.LogsFonctionsMove[(FonctionMove)trame[1]]) ||
                     (carte == Carte.RecIO && Config.CurrentConfig.LogsFonctionsIO[(FonctionIO)trame[1]]) ||
                     (expediteur == Carte.RecPi && Config.CurrentConfig.LogsFonctionsPi[(FonctionPi)trame[1]]) ||
-                    (destinataire == Carte.RecPi && Config.CurrentConfig.LogsFonctionsPi[(FonctionPi)trame[3]]) ||
+                    (destinataire == Carte.RecPi && Config.CurrentConfig.LogsFonctionsPi[(FonctionPi)trame[4]]) ||
                     ((expediteur == Carte.RecBun || expediteur == Carte.RecBeu || expediteur == Carte.RecBoi) && Config.CurrentConfig.LogsFonctionsBalise[(FonctionBalise)trame[1]]) ||
-                    ((destinataire == Carte.RecBun || destinataire == Carte.RecBeu || destinataire == Carte.RecBoi) && Config.CurrentConfig.LogsFonctionsBalise[(FonctionBalise)trame[3]]) ||
+                    ((destinataire == Carte.RecBun || destinataire == Carte.RecBeu || destinataire == Carte.RecBoi) && Config.CurrentConfig.LogsFonctionsBalise[(FonctionBalise)trame[4]]) ||
                     (carte == Carte.RecMiwi))
                     fonctionAutorisee = true;
 
@@ -357,7 +359,7 @@ namespace GoBot.IHM
             }
             catch (Exception)
             {
-                dataGridViewLog.Rows.Add(compteur, "?", "?", heure, "Inconnu !", trame.ToString());
+                dataGridViewLog.Rows.Add(compteur, "?", "?", heure, "Inconnu !", trameReplay.Trame.ToString());
                 dataGridViewLog.Rows[dataGridViewLog.Rows.Count - 1].DefaultCellStyle.BackColor = Color.Red;
             }
 

@@ -102,7 +102,7 @@ namespace GoBot.Communications
                 {
                     Carte carte = (Carte)this[0];
                     if (carte == GoBot.Carte.RecMiwi && (FonctionMiwi)this[1] == FonctionMiwi.Transmettre)
-                        carte = (Carte)this[2];
+                        carte = (Carte)this[3];
 
                     return carte;
                 }

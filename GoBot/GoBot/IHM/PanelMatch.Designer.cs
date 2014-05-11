@@ -63,6 +63,7 @@
             this.pictureBoxBunJaune = new System.Windows.Forms.PictureBox();
             this.pictureBoxBeuJaune = new System.Windows.Forms.PictureBox();
             this.pictureBoxBoiJaune = new System.Windows.Forms.PictureBox();
+            this.btnReset = new System.Windows.Forms.Button();
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxBunRouge)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxTable)).BeginInit();
@@ -428,11 +429,22 @@
             this.pictureBoxBoiJaune.TabIndex = 62;
             this.pictureBoxBoiJaune.TabStop = false;
             // 
+            // btnReset
+            // 
+            this.btnReset.Location = new System.Drawing.Point(81, 424);
+            this.btnReset.Name = "btnReset";
+            this.btnReset.Size = new System.Drawing.Size(75, 23);
+            this.btnReset.TabIndex = 63;
+            this.btnReset.Text = "Reset";
+            this.btnReset.UseVisualStyleBackColor = true;
+            this.btnReset.Click += new System.EventHandler(this.btnReset_Click);
+            // 
             // PanelMatch
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.White;
+            this.Controls.Add(this.btnReset);
             this.Controls.Add(this.pictureBoxBoiJaune);
             this.Controls.Add(this.pictureBoxBeuJaune);
             this.Controls.Add(this.pictureBoxBunJaune);
@@ -532,6 +544,7 @@
         private System.Windows.Forms.PictureBox pictureBoxBunJaune;
         private System.Windows.Forms.PictureBox pictureBoxBeuJaune;
         private System.Windows.Forms.PictureBox pictureBoxBoiJaune;
+        private System.Windows.Forms.Button btnReset;
 
     }
 }

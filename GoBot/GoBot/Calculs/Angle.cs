@@ -29,7 +29,7 @@ namespace GoBot.Calculs
         /// <summary>
         /// Retourne l'angle en degrés positif (0 à 360 au lieu de -180 à +180)
         /// </summary>
-        public double AnglePositif
+        public double AngleDegresPositif
         {
             get
             {
@@ -47,7 +47,18 @@ namespace GoBot.Calculs
         {
             get
             {
-                return (double)(angle/180*Math.PI);
+                return (double)(angle / 180 * Math.PI);
+            }
+        }
+
+        /// <summary>
+        /// Retourne l'angle en radians positif
+        /// </summary>
+        public double AngleRadiansPositif
+        {
+            get
+            {
+                return (double)(AngleDegresPositif / 180 * Math.PI);
             }
         }
 
@@ -120,7 +131,7 @@ namespace GoBot.Calculs
 
         public static Angle operator -(Angle a1, Angle a2)
         {
-            return new Angle(a1.AnglePositif - a2.AnglePositif, AnglyeType.Degre);
+            return new Angle(a1.AngleDegresPositif - a2.AngleDegresPositif, AnglyeType.Degre);
         }
 
         public static bool operator ==(Angle a1, Angle a2)
@@ -136,6 +147,11 @@ namespace GoBot.Calculs
         public static implicit operator Angle(double angle)
         {
             return new Angle(angle);
+        }
+
+        public static implicit operator double(Angle angle)
+        {
+            return angle.AngleDegres;
         }
 
         #endregion

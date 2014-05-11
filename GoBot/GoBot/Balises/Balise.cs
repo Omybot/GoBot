@@ -354,13 +354,13 @@ namespace GoBot.Balises
                                 switch (Carte)
                                 {
                                     case GoBot.Carte.RecBun:
-                                        moyenne = 33.69 - moyenne;
+                                        moyenne = 35.45 - moyenne;
                                         break;
                                     case GoBot.Carte.RecBeu:
-                                        moyenne = 326.31 - moyenne;
+                                        moyenne = 327.061 - moyenne;
                                         break;
                                     case GoBot.Carte.RecBoi:
-                                        moyenne = 180 - moyenne;
+                                        moyenne = 178.473 - moyenne;
                                         break;
                                 }
                             }
@@ -370,13 +370,13 @@ namespace GoBot.Balises
                                 switch (Carte)
                                 {
                                     case GoBot.Carte.RecBun:
-                                        moyenne = 213.69 - moyenne;
+                                        moyenne = 212.939 - moyenne;
                                         break;
                                     case GoBot.Carte.RecBeu:
-                                        moyenne = 146.31 - moyenne;
+                                        moyenne = 144.553 - moyenne;
                                         break;
                                     case GoBot.Carte.RecBoi:
-                                        moyenne = -moyenne;
+                                        moyenne = 1.527 - moyenne;
                                         break;
                                 }
                             }
@@ -392,16 +392,17 @@ namespace GoBot.Balises
                             moyenne /= anglesMesuresPourOffsetCapteur2.Count;
                             if (Plateau.NotreCouleur == Plateau.CouleurGaucheRouge)
                             {
+                                // Les valeurs sont les angles que doivent retourner chaque balise pour un reflecteur placé au centre de la table (sur le palmier)
                                 switch (Carte)
                                 {
                                     case GoBot.Carte.RecBun:
-                                        moyenne = 33.69 - moyenne;
+                                        moyenne = 35.45 - moyenne;
                                         break;
                                     case GoBot.Carte.RecBeu:
-                                        moyenne = 326.31 - moyenne;
+                                        moyenne = 327.061 - moyenne;
                                         break;
                                     case GoBot.Carte.RecBoi:
-                                        moyenne = 180 - moyenne;
+                                        moyenne = 178.473 - moyenne;
                                         break;
                                 }
                             }
@@ -411,13 +412,13 @@ namespace GoBot.Balises
                                 switch (Carte)
                                 {
                                     case GoBot.Carte.RecBun:
-                                        moyenne = 213.69 - moyenne;
+                                        moyenne = 212.939 - moyenne;
                                         break;
                                     case GoBot.Carte.RecBeu:
-                                        moyenne = 146.31 - moyenne;
+                                        moyenne = 144.553 - moyenne;
                                         break;
                                     case GoBot.Carte.RecBoi:
-                                        moyenne = -moyenne;
+                                        moyenne = 1.527 - moyenne;
                                         break;
                                 }
                             }

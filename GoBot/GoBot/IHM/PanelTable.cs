@@ -30,7 +30,11 @@ namespace GoBot.IHM
         PositionRPCentre,
         PositionRPFace,
         PositionRSCentre,
-        PositionRSFace
+        PositionRSFace,
+        TeleportRPCentre,
+        TeleportRPFace,
+        TeleportRSCentre,
+        TeleportRSFace
     }
 
     public partial class PanelTable : UserControl
@@ -239,12 +243,15 @@ namespace GoBot.IHM
                                         g.DrawEllipse(penBleuViolet, new Rectangle(pointNode.X - 3, pointNode.Y - 3, 6, 6));
                                     }
                                 }
-                                /*if (boxSourisObstacle.Checked)
+                                if (boxSourisObstacle.Checked)
                                 {
+                                    int xSouris = pictureBoxTable.PointToClient(MousePosition).X;
+                                    int ySouris = pictureBoxTable.PointToClient(MousePosition).Y;
+
                                     g.DrawEllipse(penRougeFin,
-                                        (int)(xSouris - RealToScreen(Robots.GrosRobot.Rayon) * 2),
-                                        (int)(ySouris - RealToScreen(Robots.GrosRobot.Rayon) * 2), RealToScreen(Robots.GrosRobot.Rayon) * 4, RealToScreen(Robots.GrosRobot.Rayon) * 4);
-                                }*/
+                                        (int)(xSouris - RealToScreenDistance(Robots.GrosRobot.Rayon) * 2),
+                                        (int)(ySouris - RealToScreenDistance(Robots.GrosRobot.Rayon) * 2), RealToScreenDistance(Robots.GrosRobot.Rayon) * 4, RealToScreenDistance(Robots.GrosRobot.Rayon) * 4);
+                                }
 
                                 // ************** Dessin des éléments de jeu *************** //
 
@@ -577,7 +584,7 @@ namespace GoBot.IHM
                                     lblMilli.ForeColor = couleur;
                                 }
 
-                                if (modeCourant == Mode.PositionRPCentre && positionDepart != null)
+                                if ((modeCourant == Mode.PositionRPCentre || modeCourant == Mode.TeleportRPCentre) && positionDepart != null)
                                 {
                                     Point positionFin = pictureBoxTable.PointToClient(MousePosition);
 
@@ -597,7 +604,7 @@ namespace GoBot.IHM
                                     g.DrawLine(penBlancFleche, (Point)RealToScreenPosition(positionDepart), positionFin);
                                 }
 
-                                else if (modeCourant == Mode.PositionRPFace && positionDepart != null)
+                                else if ((modeCourant == Mode.PositionRPFace || modeCourant == Mode.TeleportRPFace) && positionDepart != null)
                                 {
                                     Point positionFin = pictureBoxTable.PointToClient(MousePosition);
 
@@ -620,7 +627,7 @@ namespace GoBot.IHM
                                     g.DrawLine(penBlancFleche, (Point)RealToScreenPosition(positionDepart), positionFin);
                                 }
 
-                                if (modeCourant == Mode.PositionRSCentre && positionDepart != null)
+                                if ((modeCourant == Mode.PositionRSCentre || modeCourant == Mode.TeleportRSCentre) && positionDepart != null)
                                 {
                                     Point positionFin = pictureBoxTable.PointToClient(MousePosition);
 
@@ -640,7 +647,7 @@ namespace GoBot.IHM
                                     g.DrawLine(penBlancFleche, (Point)RealToScreenPosition(positionDepart), positionFin);
                                 }
 
-                                else if (modeCourant == Mode.PositionRSFace && positionDepart != null)
+                                else if ((modeCourant == Mode.PositionRSFace || modeCourant == Mode.TeleportRSFace) && positionDepart != null)
                                 {
                                     Point positionFin = pictureBoxTable.PointToClient(MousePosition);
 
@@ -798,9 +805,6 @@ namespace GoBot.IHM
 
         private void pictureBoxTable_MouseMove(object sender, MouseEventArgs e)
         {
-            int xSouris = 0, ySouris = 0;
-            //this.Invoke(new EventHandler(delegate
-            //    {
             if (modeCourant == Mode.FinTrajectoire)
             {
                 PointReel positionReelle = ScreenToRealPosition(pictureBoxTable.PointToClient(MousePosition));
@@ -822,15 +826,15 @@ namespace GoBot.IHM
             else if (boxSourisObstacle.Checked)
             {
                 if((DateTime.Now - dateCapture).TotalMilliseconds > 50)
-                //if (xSouris != pictureBoxTable.PointToClient(MousePosition).X || ySouris != pictureBoxTable.PointToClient(MousePosition).Y)
                 {
                     dateCapture = DateTime.Now;
-                    xSouris = pictureBoxTable.PointToClient(MousePosition).X;
-                    ySouris = pictureBoxTable.PointToClient(MousePosition).Y;
+
+                    Point p = ScreenToRealPosition(pictureBoxTable.PointToClient(MousePosition));
+
                     List<PointReel> positions = new List<PointReel>();
                     positions.Add(ScreenToRealPosition(pictureBoxTable.PointToClient(MousePosition)));
                     SuiviBalise.MajPositions(positions, Plateau.Enchainement == null || Plateau.Enchainement.DebutMatch == null);
-                    //Plateau.ObstacleTest(ScreenToReal(pictureBoxTable.PointToClient(MousePosition).X), ScreenToReal(pictureBoxTable.PointToClient(MousePosition).Y));
+                    Plateau.ObstacleTest(p.X, p.Y);
                 }
             }
 
@@ -941,7 +945,7 @@ namespace GoBot.IHM
 
         private void btnGo_Click(object sender, EventArgs e)
         {
-            Plateau.Enchainement = new Enchainement1Point();
+            Plateau.Enchainement = new EnchainementMatch();
             Plateau.Enchainement.Executer();
         }
 
@@ -962,18 +966,23 @@ namespace GoBot.IHM
         Thread thGoToRS;
         private void pictureBoxTable_MouseUp(object sender, MouseEventArgs e)
         {
-            if (modeCourant == Mode.PositionRPCentre)
+            if (modeCourant == Mode.PositionRPCentre || modeCourant == Mode.TeleportRPCentre)
             {
                 Direction traj = Maths.GetDirection(positionDepart, ScreenToRealPosition(pictureBoxTable.PointToClient(MousePosition)));
 
                 positionArrivee = new Position(traj.angle, positionDepart);
 
-                thGoToRP = new Thread(ThreadTrajectoireGros);
-                thGoToRP.Start();
+                if (modeCourant == Mode.PositionRPCentre)
+                {
+                    thGoToRP = new Thread(ThreadTrajectoireGros);
+                    thGoToRP.Start();
+                }
+                else
+                    Robots.GrosRobot.ReglerOffsetAsserv((int)positionArrivee.Coordonnees.X, (int)positionArrivee.Coordonnees.Y, positionArrivee.Angle.AngleDegresPositif);
 
                 modeCourant = Mode.Visualisation;
             }
-            else if (modeCourant == Mode.PositionRPFace)
+            else if (modeCourant == Mode.PositionRPFace || modeCourant == Mode.TeleportRPFace)
             {
                 Point positionFin = pictureBoxTable.PointToClient(MousePosition);
 
@@ -985,23 +994,33 @@ namespace GoBot.IHM
                 departRecule = new Position(traj.angle, new PointReel(departRecule.Coordonnees.X, departRecule.Coordonnees.Y));
                 positionArrivee = departRecule;
 
-                thGoToRP = new Thread(ThreadTrajectoireGros);
-                thGoToRP.Start();
+                if (modeCourant == Mode.PositionRPFace)
+                {
+                    thGoToRP = new Thread(ThreadTrajectoireGros);
+                    thGoToRP.Start();
+                }
+                else
+                    Robots.GrosRobot.ReglerOffsetAsserv((int)positionArrivee.Coordonnees.X, (int)positionArrivee.Coordonnees.Y, positionArrivee.Angle.AngleDegresPositif);
 
                 modeCourant = Mode.Visualisation;
             }
-            else if (modeCourant == Mode.PositionRSCentre)
+            else if (modeCourant == Mode.PositionRSCentre || modeCourant == Mode.TeleportRSCentre)
             {
                 Direction traj = Maths.GetDirection(positionDepart, ScreenToRealPosition(pictureBoxTable.PointToClient(MousePosition)));
 
                 positionArrivee = new Position(traj.angle, positionDepart);
 
-                thGoToRS = new Thread(ThreadTrajectoirePetit);
-                thGoToRS.Start();
+                if (modeCourant == Mode.PositionRSCentre)
+                {
+                    thGoToRS = new Thread(ThreadTrajectoirePetit);
+                    thGoToRS.Start();
+                }
+                else
+                    Robots.PetitRobot.ReglerOffsetAsserv((int)positionArrivee.Coordonnees.X, (int)positionArrivee.Coordonnees.Y, positionArrivee.Angle.AngleDegresPositif);
 
                 modeCourant = Mode.Visualisation;
             }
-            else if (modeCourant == Mode.PositionRSFace)
+            else if (modeCourant == Mode.PositionRSFace || modeCourant == Mode.TeleportRSFace)
             {
                 Point positionFin = pictureBoxTable.PointToClient(MousePosition);
 
@@ -1013,8 +1032,13 @@ namespace GoBot.IHM
                 departRecule = new Position(traj.angle, new PointReel(departRecule.Coordonnees.X, departRecule.Coordonnees.Y));
                 positionArrivee = departRecule;
 
-                thGoToRS = new Thread(ThreadTrajectoirePetit);
-                thGoToRS.Start();
+                if (modeCourant == Mode.PositionRSFace)
+                {
+                    thGoToRS = new Thread(ThreadTrajectoirePetit);
+                    thGoToRS.Start();
+                }
+                else
+                    Robots.PetitRobot.ReglerOffsetAsserv((int)positionArrivee.Coordonnees.X, (int)positionArrivee.Coordonnees.Y, positionArrivee.Angle.AngleDegresPositif);
 
                 modeCourant = Mode.Visualisation;
             }
@@ -1102,6 +1126,47 @@ namespace GoBot.IHM
                 Config.CurrentConfig.AfficheDetailTraj = 200;
             else
                 Config.CurrentConfig.AfficheDetailTraj = 0;
+        }
+
+        private void btnTeleportRPCentre_Click(object sender, EventArgs e)
+        {
+            positionDepart = null;
+            if (modeCourant != Mode.TeleportRPCentre)
+                modeCourant = Mode.TeleportRPCentre;
+            else
+                modeCourant = Mode.Visualisation;
+        }
+
+        private void btnTeleportRPFace_Click(object sender, EventArgs e)
+        {
+            positionDepart = null;
+            if (modeCourant != Mode.TeleportRPFace)
+                modeCourant = Mode.TeleportRPFace;
+            else
+                modeCourant = Mode.Visualisation;
+        }
+
+        private void btnTeleportRSCentre_Click(object sender, EventArgs e)
+        {
+            positionDepart = null;
+            if (modeCourant != Mode.TeleportRSCentre)
+                modeCourant = Mode.TeleportRSCentre;
+            else
+                modeCourant = Mode.Visualisation;
+        }
+
+        private void btnTeleportRSFace_Click(object sender, EventArgs e)
+        {
+            positionDepart = null;
+            if (modeCourant != Mode.TeleportRSFace)
+                modeCourant = Mode.TeleportRSFace;
+            else
+                modeCourant = Mode.Visualisation;
+        }
+
+        private void boxSourisObstacle_CheckedChanged(object sender, EventArgs e)
+        {
+
         }
     }
 }
