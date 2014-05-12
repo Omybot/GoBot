@@ -244,6 +244,7 @@
       <DependentUpon>PanelTestLiaisons.cs</DependentUpon>
     </Compile>
     <Compile Include="Logs\Log.cs" />
+    <Compile Include="Logs\Logs.cs" />
     <Compile Include="Mouvements\FeuBordure.cs" />
     <Compile Include="Mouvements\Mouvement.cs" />
     <Compile Include="Mouvements\PositionsMouvements.cs" />

@@ -15,11 +15,12 @@ namespace GoBot.Logs
         {
             nomFichier = _nomFichier;
             writer = new StreamWriter(nomFichier);
+            writer.AutoFlush = true;
         }
 
         public void Ecrire(String message)
         {
-            writer.WriteLine(DateTime.Now.ToString("dd:MM:yyyy hh:mm:ss\t") + message);
+            writer.WriteLine(DateTime.Now.ToString("dd:MM:yyyy hh:mm:ss:ffff\t") + message);
         }
 
         public void Fermer()
