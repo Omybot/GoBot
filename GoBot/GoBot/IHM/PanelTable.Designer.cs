@@ -134,6 +134,7 @@
             this.boxObstacles.TabIndex = 4;
             this.boxObstacles.Text = "Obstacles";
             this.boxObstacles.UseVisualStyleBackColor = true;
+            this.boxObstacles.CheckedChanged += new System.EventHandler(this.boxObstacles_CheckedChanged);
             // 
             // btnSaveGraph
             // 

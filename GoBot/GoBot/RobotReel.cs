@@ -262,6 +262,7 @@ namespace GoBot
 
         public override void ReglerOffsetAsserv(int offsetX, int offsetY, double offsetTeta)
         {
+            PositionCible = new PointReel(offsetX, offsetY);
             Trame trame = TrameFactory.OffsetPos(offsetX, offsetY, offsetTeta, this);
             Connexion.SendMessage(trame);
         }

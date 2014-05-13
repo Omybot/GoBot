@@ -84,6 +84,7 @@
     <Compile Include="Balises\BaliseStats.cs" />
     <Compile Include="Balises\SuiviBalise.cs" />
     <Compile Include="BrasFruits.cs" />
+    <Compile Include="Calculs\Formes\RectanglePolygone.cs" />
     <Compile Include="CameraIP.cs" />
     <Compile Include="Communications\ConnexionMiwi.cs" />
     <Compile Include="Communications\Connexion.cs" />

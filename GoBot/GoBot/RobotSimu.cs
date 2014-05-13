@@ -268,6 +268,7 @@ namespace GoBot
         public override void ReglerOffsetAsserv(int offsetX, int offsetY, double offsetTeta)
         {
             Position = new Position(new Angle(-offsetTeta, AnglyeType.Degre), new PointReel(offsetX, offsetY));
+            PositionCible = new PointReel(offsetX, offsetY);
         }
 
         public override void Recallage(SensAR sens, bool attendre = true)

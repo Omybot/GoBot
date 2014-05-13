@@ -51,6 +51,14 @@ namespace GoBot.Calculs.Formes
         }
 
         /// <summary>
+        /// Constructeur par défaut utile uniquement pour les héritiés
+        /// </summary>
+        protected Polygone()
+        {
+            cotes = new List<Segment>();
+        }
+
+        /// <summary>
         /// Construit un polygone selon une liste de points
         /// Si le polygone n'est pas fermé le premier et le dernier point sont reliés
         /// </summary>
@@ -72,7 +80,7 @@ namespace GoBot.Calculs.Formes
             construirePolygone(cotesPoly);
         }
 
-        private void construirePolygone(List<Segment> cotesPolygone)
+        protected void construirePolygone(List<Segment> cotesPolygone)
         {
             if (cotesPolygone.Count == 0)
                 return;
@@ -193,7 +201,7 @@ namespace GoBot.Calculs.Formes
                 return contient((Droite)forme);
             else if (typeForme.IsAssignableFrom(typeof(Segment)))
                 return contient((Segment)forme);
-            else if (typeForme.IsAssignableFrom(typeof(Polygone)))
+            else if (typeForme.IsAssignableFrom(typeof(Polygone)) || typeForme.IsSubclassOf(typeof(Polygone)))
                 return contient((Polygone)forme);
             else if (typeForme.IsAssignableFrom(typeof(Cercle)))
                 return contient((Cercle)forme);
@@ -351,7 +359,7 @@ namespace GoBot.Calculs.Formes
                 return croise((Droite)forme);
             else if (typeForme.IsAssignableFrom(typeof(Segment)))
                 return croise((Segment)forme);
-            else if (typeForme.IsAssignableFrom(typeof(Polygone)))
+            else if (typeForme.IsAssignableFrom(typeof(Polygone)) || typeForme.IsSubclassOf(typeof(Polygone)))
                 return croise((Polygone)forme);
             else if (typeForme.IsAssignableFrom(typeof(Cercle)))
                 return forme.croise(this);
@@ -443,7 +451,7 @@ namespace GoBot.Calculs.Formes
                 return Distance((PointReel)forme);
             else if (typeForme.IsAssignableFrom(typeof(Droite)))
                 return Distance((Droite)forme);
-            else if (typeForme.IsAssignableFrom(typeof(Polygone)))
+            else if (typeForme.IsAssignableFrom(typeof(Polygone)) || typeForme.IsSubclassOf(typeof(Polygone)))
                 return Distance((Polygone)forme);
             else if (typeForme.IsAssignableFrom(typeof(Cercle)))
                 return Distance((Cercle)forme);

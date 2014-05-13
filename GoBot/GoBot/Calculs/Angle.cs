@@ -86,22 +86,13 @@ namespace GoBot.Calculs
         }
 
         /// <summary>
-        /// Fait tourner l'angle de l'angle (en degrés) choisi
-        /// </summary>
-        /// <param name="angleTourne">Angle à tourner</param>
-        public void Tourner(double angleTourne)
-        {
-            angle += angleTourne;
-            angle = AngleOptimal(this);
-        }
-
-        /// <summary>
         /// Fait tourner l'angle de l'angle (objet) choisi
         /// </summary>
         /// <param name="angleTourne">Angle à tourner</param>
         public void Tourner(Angle angleTourne)
         {
-            this.Tourner(angleTourne.AngleDegres);
+            angle += angleTourne;
+            angle = AngleOptimal(this);
         }
 
         /// <summary>
@@ -136,11 +127,15 @@ namespace GoBot.Calculs
 
         public static bool operator ==(Angle a1, Angle a2)
         {
+            if ((!(a1 is Angle) && a2 is Angle) || (a1 is Angle && !(a2 is Angle)))
+                return false;
             return Math.Abs((a1 - a2).AngleDegres) <= 0.01;
         }
 
         public static bool operator !=(Angle a1, Angle a2)
         {
+            if ((!(a1 is Angle) && a2 is Angle) || (a1 is Angle && !(a2 is Angle)))
+                return true;
             return !(a1 == a2);
         }
 

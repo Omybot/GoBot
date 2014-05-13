@@ -38,6 +38,7 @@ namespace GoBot.Balises
     /// </summary>
     public static class SuiviBalise
     {
+        // Nombre de balises à suivre
         public static int NombreMaxBalises { get; set; }
 
         public static List<PointReel> PositionsEnnemies { get; set; }
@@ -56,6 +57,9 @@ namespace GoBot.Balises
 
         public static void MajPositions(List<PointReel> detections, bool force = false)
         {
+            if (detections.Count < NombreMaxBalises && (detections.Count == 0 || detections.Count < PositionsEnnemies.Count))
+                return;
+
             if (force && detections.Count <= NombreMaxBalises)
             {
                 VecteursPositionsEnnemies.Clear();

@@ -70,7 +70,7 @@ namespace GoBot.Calculs.Formes
                 return getCroisement((Droite)forme) != null;
             else if (typeForme.IsAssignableFrom(typeof(Segment)))
                 return getCroisement((Segment)forme) != null;
-            else if (typeForme.IsAssignableFrom(typeof(Polygone)))
+            else if (typeForme.IsAssignableFrom(typeof(Polygone)) || typeForme.IsSubclassOf(typeof(Polygone)))
                 return forme.croise(this);
             else if (typeForme.IsAssignableFrom(typeof(Cercle)))
                 return forme.croise(this);
@@ -123,7 +123,7 @@ namespace GoBot.Calculs.Formes
                 return contient((Droite)forme);
             else if (typeForme.IsAssignableFrom(typeof(Segment)))
                 return contient((Segment)forme);
-            else if (typeForme.IsAssignableFrom(typeof(Polygone)))
+            else if (typeForme.IsAssignableFrom(typeof(Polygone)) || typeForme.IsSubclassOf(typeof(Polygone)))
                 return contient((Polygone)forme);
             else if (typeForme.IsAssignableFrom(typeof(Cercle)))
                 return contient((Cercle)forme);
@@ -262,7 +262,7 @@ namespace GoBot.Calculs.Formes
                 return Distance((PointReel)forme);
             else if (typeForme.IsAssignableFrom(typeof(Droite)))
                 return Distance((Droite)forme);
-            else if (typeForme.IsAssignableFrom(typeof(Polygone)))
+            else if (typeForme.IsAssignableFrom(typeof(Polygone)) || typeForme.IsSubclassOf(typeof(Polygone)))
                 return Distance((Polygone)forme);
             else if (typeForme.IsAssignableFrom(typeof(Cercle)))
                 return Distance((Cercle)forme);

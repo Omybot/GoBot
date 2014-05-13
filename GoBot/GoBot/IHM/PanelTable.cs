@@ -161,12 +161,18 @@ namespace GoBot.IHM
 
 
                                 // Dessin des obstacles
-                                if (boxObstacles.Checked)
+                                if (modeCourant == Mode.Obstacles)
                                 {
                                     g.FillRectangle(brushBlanc, 0, 0, 3000, 2000);
 
                                     foreach (IForme forme in Plateau.ListeObstacles)
-                                        DessinerForme(g, Color.Red, forme);
+                                        DessinerForme(g, Color.Red, 5, forme);
+
+                                    // Efface ce qui sort de la zone
+                                    DessinerForme(g, Color.White, 0, new RectanglePolygone(new PointReel(-1000, -1000), 990, Plateau.LongueurPlateau + 2000), true);
+                                    DessinerForme(g, Color.White, 0, new RectanglePolygone(new PointReel(Plateau.LongueurPlateau, -1000), 1000, Plateau.LongueurPlateau + 2000), true);
+                                    DessinerForme(g, Color.White, 0, new RectanglePolygone(new PointReel(-1000, -1000), Plateau.LargeurPlateau + 2000, 990), true);
+                                    DessinerForme(g, Color.White, 0, new RectanglePolygone(new PointReel(-1000, Plateau.LargeurPlateau), Plateau.LongueurPlateau + 2000, 990), true);
                                 }
 
                                 // Dessin du graph
@@ -243,124 +249,117 @@ namespace GoBot.IHM
                                         g.DrawEllipse(penBleuViolet, new Rectangle(pointNode.X - 3, pointNode.Y - 3, 6, 6));
                                     }
                                 }
-                                if (boxSourisObstacle.Checked)
-                                {
-                                    int xSouris = pictureBoxTable.PointToClient(MousePosition).X;
-                                    int ySouris = pictureBoxTable.PointToClient(MousePosition).Y;
-
-                                    g.DrawEllipse(penRougeFin,
-                                        (int)(xSouris - RealToScreenDistance(Robots.GrosRobot.Rayon) * 2),
-                                        (int)(ySouris - RealToScreenDistance(Robots.GrosRobot.Rayon) * 2), RealToScreenDistance(Robots.GrosRobot.Rayon) * 4, RealToScreenDistance(Robots.GrosRobot.Rayon) * 4);
-                                }
 
                                 // ************** Dessin des éléments de jeu *************** //
 
-                                // Todo : dessiner les éléments de jeu
-
-                                // Dessin des fruimouth
-                                foreach (Fruimouth fruit in Plateau.Fruimouths)
+                                if (modeCourant != Mode.Obstacles)
                                 {
-                                    bool survol = false;
-                                    Point positionEcran = RealToScreenPosition(fruit.Position);
-                                    int rayonEcran = RealToScreenDistance(12);
 
-                                    if (positionCurseur.Distance(fruit.Position) <= 12)
-                                        survol = true;
-
-                                    if (!(sourisClic && survol))
+                                    // Dessin des fruimouth
+                                    foreach (Fruimouth fruit in Plateau.Fruimouths)
                                     {
-                                        if (fruit.Pourri)
-                                        {
-                                            g.FillEllipse(brushNoir, positionEcran.X - rayonEcran, positionEcran.Y - rayonEcran, rayonEcran * 2, rayonEcran * 2);
-                                            g.DrawEllipse(penNoir, positionEcran.X - rayonEcran, positionEcran.Y - rayonEcran, rayonEcran * 2, rayonEcran * 2);
-                                        }
-                                        else
-                                        {
-                                            g.FillEllipse(brushViolet, positionEcran.X - rayonEcran, positionEcran.Y - rayonEcran, rayonEcran * 2, rayonEcran * 2);
-                                            g.DrawEllipse(penNoir, positionEcran.X - rayonEcran, positionEcran.Y - rayonEcran, rayonEcran * 2, rayonEcran * 2);
-                                        }
-                                    }
-                                    if (survol)
-                                    {
-                                        g.DrawEllipse(new Pen(Color.LightGreen), positionEcran.X - rayonEcran, positionEcran.Y - rayonEcran, rayonEcran * 2, rayonEcran * 2);
-                                    }
-                                }
+                                        bool survol = false;
+                                        Point positionEcran = RealToScreenPosition(fruit.Position);
+                                        int rayonEcran = RealToScreenDistance(12);
 
-                                // Dessin des feux
-                                foreach (Feu feu in Plateau.Feux)
-                                {
-                                    Bitmap imgFeu = new Bitmap(100, 100);
-                                    Graphics gFeu = Graphics.FromImage(imgFeu);
-                                    gFeu.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.AntiAlias;
-                                    gFeu.FillRectangle(brushTransparent, 0, 0, 100, 100);
+                                        if (positionCurseur.Distance(fruit.Position) <= 12)
+                                            survol = true;
 
-                                    bool survol = false;
-                                    Point positionEcran = RealToScreenPosition(feu.Position);
-                                    if (feu.Debout)
-                                    {
-                                        int widthEcran = RealToScreenDistance(30);
-                                        int heightEcran = RealToScreenDistance(130);
-
-                                        if (feu.Angle == 0 || feu.Angle == 180)
+                                        if (!(sourisClic && survol))
                                         {
-                                            if (positionCurseur.X > feu.Position.X - 15 &&
-                                                positionCurseur.X < feu.Position.X + 15 &&
-                                                positionCurseur.Y > feu.Position.Y - 65 &&
-                                                positionCurseur.Y < feu.Position.Y + 65)
+                                            if (fruit.Pourri)
                                             {
-                                                survol = true;
+                                                g.FillEllipse(brushNoir, positionEcran.X - rayonEcran, positionEcran.Y - rayonEcran, rayonEcran * 2, rayonEcran * 2);
+                                                g.DrawEllipse(penNoir, positionEcran.X - rayonEcran, positionEcran.Y - rayonEcran, rayonEcran * 2, rayonEcran * 2);
+                                            }
+                                            else
+                                            {
+                                                g.FillEllipse(brushViolet, positionEcran.X - rayonEcran, positionEcran.Y - rayonEcran, rayonEcran * 2, rayonEcran * 2);
+                                                g.DrawEllipse(penNoir, positionEcran.X - rayonEcran, positionEcran.Y - rayonEcran, rayonEcran * 2, rayonEcran * 2);
                                             }
                                         }
-                                        else if (feu.Angle == 90 || feu.Angle == 270)
-                                        {
-                                            if (positionCurseur.X > feu.Position.X - 65 &&
-                                                positionCurseur.X < feu.Position.X + 65 &&
-                                                positionCurseur.Y > feu.Position.Y - 15 &&
-                                                positionCurseur.Y < feu.Position.Y + 15)
-                                            {
-                                                survol = true;
-                                            }
-                                        }
-
                                         if (survol)
                                         {
-                                            gFeu.DrawRectangle(new Pen(Color.LightGreen), 49 - widthEcran / 2, 49 - heightEcran / 2, widthEcran + 2, heightEcran + 2);
+                                            g.DrawEllipse(new Pen(Color.LightGreen), positionEcran.X - rayonEcran, positionEcran.Y - rayonEcran, rayonEcran * 2, rayonEcran * 2);
                                         }
-                                        if(!survol || (survol && !sourisClic))
-                                        {
-                                            gFeu.FillRectangle(brushNoir, 50 - widthEcran / 2, 50 - heightEcran / 2, widthEcran, heightEcran);
-                                            gFeu.DrawLine(penCouleurJ1R, 50 - widthEcran / 2, 50 - heightEcran / 2, 50 - widthEcran / 2, 50 + heightEcran / 2);
-                                            gFeu.DrawLine(penCouleurJ2J, 50 + widthEcran / 2, 50 - heightEcran / 2, 50 + widthEcran / 2, 50 + heightEcran / 2);
-                                        }
-                                        
-                                        imgFeu = RotateImage(imgFeu, feu.Angle.AngleDegres);
-                                        g.DrawImage(imgFeu, positionEcran.X - 50, positionEcran.Y - 50);
                                     }
-                                    else
+
+                                    // Dessin des feux
+                                    foreach (Feu feu in Plateau.Feux)
                                     {
-                                        Brush brushFeu = feu.Couleur == Plateau.CouleurGaucheRouge ? brushCouleurJ1R : brushCouleurJ2J;
-                                        List<PointReel> pointsFeux = new List<PointReel>();
-                                        pointsFeux.Add(new PointReel(RealToScreenDistance(57.017), RealToScreenDistance(0)));
-                                        pointsFeux.Add(new PointReel(RealToScreenDistance(70), RealToScreenDistance(0)));
-                                        pointsFeux.Add(new PointReel(RealToScreenDistance(127.017), RealToScreenDistance(98.756)));
-                                        pointsFeux.Add(new PointReel(RealToScreenDistance(120.526), RealToScreenDistance(110)));
-                                        pointsFeux.Add(new PointReel(RealToScreenDistance(6.491), RealToScreenDistance(110)));
-                                        pointsFeux.Add(new PointReel(RealToScreenDistance(0), RealToScreenDistance(98.756)));
-                                        Polygone polyFeu = new Polygone(pointsFeux);
+                                        Bitmap imgFeu = new Bitmap(100, 100);
+                                        Graphics gFeu = Graphics.FromImage(imgFeu);
+                                        gFeu.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.AntiAlias;
+                                        gFeu.FillRectangle(brushTransparent, 0, 0, 100, 100);
 
-                                        if (positionCurseur.Distance(feu.Position) <= 80)
-                                            survol = true;
+                                        bool survol = false;
+                                        Point positionEcran = RealToScreenPosition(feu.Position);
+                                        if (feu.Debout)
+                                        {
+                                            int widthEcran = RealToScreenDistance(30);
+                                            int heightEcran = RealToScreenDistance(130);
+
+                                            if (feu.Angle == 0 || feu.Angle == 180)
+                                            {
+                                                if (positionCurseur.X > feu.Position.X - 15 &&
+                                                    positionCurseur.X < feu.Position.X + 15 &&
+                                                    positionCurseur.Y > feu.Position.Y - 65 &&
+                                                    positionCurseur.Y < feu.Position.Y + 65)
+                                                {
+                                                    survol = true;
+                                                }
+                                            }
+                                            else if (feu.Angle == 90 || feu.Angle == 270)
+                                            {
+                                                if (positionCurseur.X > feu.Position.X - 65 &&
+                                                    positionCurseur.X < feu.Position.X + 65 &&
+                                                    positionCurseur.Y > feu.Position.Y - 15 &&
+                                                    positionCurseur.Y < feu.Position.Y + 15)
+                                                {
+                                                    survol = true;
+                                                }
+                                            }
+
+                                            if (survol)
+                                            {
+                                                gFeu.DrawRectangle(new Pen(Color.LightGreen), 49 - widthEcran / 2, 49 - heightEcran / 2, widthEcran + 2, heightEcran + 2);
+                                            }
+                                            if (!survol || (survol && !sourisClic))
+                                            {
+                                                gFeu.FillRectangle(brushNoir, 50 - widthEcran / 2, 50 - heightEcran / 2, widthEcran, heightEcran);
+                                                gFeu.DrawLine(penCouleurJ1R, 50 - widthEcran / 2, 50 - heightEcran / 2, 50 - widthEcran / 2, 50 + heightEcran / 2);
+                                                gFeu.DrawLine(penCouleurJ2J, 50 + widthEcran / 2, 50 - heightEcran / 2, 50 + widthEcran / 2, 50 + heightEcran / 2);
+                                            }
+
+                                            imgFeu = RotateImage(imgFeu, feu.Angle.AngleDegres);
+                                            g.DrawImage(imgFeu, positionEcran.X - 50, positionEcran.Y - 50);
+                                        }
                                         else
-                                            DessinerForme(gFeu, Color.Black, polyFeu, false, false);
+                                        {
+                                            Brush brushFeu = feu.Couleur == Plateau.CouleurGaucheRouge ? brushCouleurJ1R : brushCouleurJ2J;
+                                            List<PointReel> pointsFeux = new List<PointReel>();
+                                            pointsFeux.Add(new PointReel(RealToScreenDistance(57.017), RealToScreenDistance(0)));
+                                            pointsFeux.Add(new PointReel(RealToScreenDistance(70), RealToScreenDistance(0)));
+                                            pointsFeux.Add(new PointReel(RealToScreenDistance(127.017), RealToScreenDistance(98.756)));
+                                            pointsFeux.Add(new PointReel(RealToScreenDistance(120.526), RealToScreenDistance(110)));
+                                            pointsFeux.Add(new PointReel(RealToScreenDistance(6.491), RealToScreenDistance(110)));
+                                            pointsFeux.Add(new PointReel(RealToScreenDistance(0), RealToScreenDistance(98.756)));
+                                            Polygone polyFeu = new Polygone(pointsFeux);
 
-                                        if(!survol || (survol && !sourisClic))
-                                            DessinerForme(gFeu, feu.Couleur, polyFeu, true, false);
+                                            if (positionCurseur.Distance(feu.Position) <= 80)
+                                                survol = true;
+                                            else
+                                                DessinerForme(gFeu, Color.Black, 1, polyFeu, false, false);
 
-                                        if(survol)
-                                            DessinerForme(gFeu, Color.LightGreen, polyFeu, false, false);
+                                            if (!survol || (survol && !sourisClic))
+                                                DessinerForme(gFeu, feu.Couleur, 1, polyFeu, true, false);
 
-                                        imgFeu = RotateImage(imgFeu, feu.Angle.AngleDegres);
-                                        g.DrawImage(imgFeu, positionEcran.X - RealToScreenDistance(63.509), positionEcran.Y - RealToScreenDistance(69.585));
+                                            if (survol)
+                                                DessinerForme(gFeu, Color.LightGreen, 1, polyFeu, false, false);
+
+                                            imgFeu = RotateImage(imgFeu, feu.Angle.AngleDegres);
+                                            g.DrawImage(imgFeu, positionEcran.X - RealToScreenDistance(63.509), positionEcran.Y - RealToScreenDistance(69.585));
+                                        }
                                     }
                                 }
 
@@ -450,11 +449,11 @@ namespace GoBot.IHM
                                     if (robot.CheminTest != null)
                                         g.DrawLine(penRougeEpais, RealToScreenPosition(robot.CheminTest.StartNode.Position), RealToScreenPosition(robot.CheminTest.EndNode.Position));
 
-                                    if (robot.ObstacleTeste != null)
-                                        DessinerForme(g, Color.Green, robot.ObstacleTeste);
+                                    //if (robot.ObstacleTeste != null)
+                                    //    DessinerForme(g, Color.Green, 10, robot.ObstacleTeste);
 
                                     if (robot.ObstacleProbleme != null)
-                                        DessinerForme(g, Color.Red, robot.ObstacleProbleme);
+                                        DessinerForme(g, Color.Red, 10, robot.ObstacleProbleme);
 
                                     if (robot.CheminEnCoursNoeuds != null)
                                         foreach (Node n in robot.CheminEnCoursNoeuds)
@@ -487,10 +486,10 @@ namespace GoBot.IHM
                                             lblVitesseEnnemi1.Text = vitesse + " mm/s";
                                         }
 
-                                        if (vitesse < 50)
-                                            g.DrawImage(Properties.Resources.Stop, positionEcran.X - Properties.Resources.Stop.Width / 2, positionEcran.Y - Properties.Resources.Stop.Height / 2, Properties.Resources.Stop.Width, Properties.Resources.Stop.Height);
-                                        g.FillEllipse(Plateau.NotreCouleur == Plateau.CouleurDroiteJaune ? brushCouleurJ1RTransparent : brushCouleurJ2JTransparent, positionEcran.X - RealToScreenDistance(Robots.GrosRobot.Rayon), positionEcran.Y - RealToScreenDistance(Robots.GrosRobot.Rayon), RealToScreenDistance(Robots.GrosRobot.Rayon * 2), RealToScreenDistance(Robots.GrosRobot.Rayon * 2));
-                                        g.DrawEllipse(Plateau.NotreCouleur == Plateau.CouleurDroiteJaune ?  penCouleurJ1R : penCouleurJ2J, positionEcran.X - RealToScreenDistance(Robots.GrosRobot.Rayon), positionEcran.Y - RealToScreenDistance(Robots.GrosRobot.Rayon), RealToScreenDistance(Robots.GrosRobot.Rayon * 2), RealToScreenDistance(Robots.GrosRobot.Rayon * 2));
+                                        //if (vitesse < 50)
+                                        //    g.DrawImage(Properties.Resources.Stop, positionEcran.X - Properties.Resources.Stop.Width / 2, positionEcran.Y - Properties.Resources.Stop.Height / 2, Properties.Resources.Stop.Width, Properties.Resources.Stop.Height);
+                                        g.FillEllipse(Plateau.NotreCouleur == Plateau.CouleurDroiteJaune ? brushCouleurJ1RTransparent : brushCouleurJ2JTransparent, positionEcran.X - RealToScreenDistance(Plateau.RayonAdversaire), positionEcran.Y - RealToScreenDistance(Plateau.RayonAdversaire), RealToScreenDistance(Plateau.RayonAdversaire * 2), RealToScreenDistance(Plateau.RayonAdversaire * 2));
+                                        g.DrawEllipse(Plateau.NotreCouleur == Plateau.CouleurDroiteJaune ?  penCouleurJ1R : penCouleurJ2J, positionEcran.X - RealToScreenDistance(Plateau.RayonAdversaire), positionEcran.Y - RealToScreenDistance(Plateau.RayonAdversaire), RealToScreenDistance(Plateau.RayonAdversaire * 2), RealToScreenDistance(Plateau.RayonAdversaire * 2));
                                         g.DrawLine(Plateau.NotreCouleur == Plateau.CouleurDroiteJaune ?  penCouleurJ1REpais : penCouleurJ2JEpais, new Point(positionEcran.X - 7, positionEcran.Y - 7), new Point(positionEcran.X + 7, positionEcran.Y + 7));
                                         g.DrawLine(Plateau.NotreCouleur == Plateau.CouleurDroiteJaune ?  penCouleurJ1REpais : penCouleurJ2JEpais, new Point(positionEcran.X - 7, positionEcran.Y + 7), new Point(positionEcran.X + 7, positionEcran.Y - 7));
                                         g.DrawLine(Plateau.NotreCouleur == Plateau.CouleurDroiteJaune ?  penCouleurJ1RFleche : penCouleurJ2JFleche, positionEcran.X, positionEcran.Y, positionEcran.X + RealToScreenDistance(SuiviBalise.VecteursPositionsEnnemies[i].X / 3), positionEcran.Y + RealToScreenDistance(SuiviBalise.VecteursPositionsEnnemies[i].Y / 3));
@@ -712,43 +711,43 @@ namespace GoBot.IHM
 
         #region Dessin des formes
 
-        public void DessinerForme(Graphics graphics, Color color, IForme inconnue, bool plein = false)
+        public void DessinerForme(Graphics graphics, Color color, int epaisseur, IForme inconnue, bool plein = false)
         {
             Type typeForme = inconnue.GetType();
 
             if (typeForme.IsAssignableFrom(typeof(Segment)))
-                DessinerForme(graphics, color, (Segment)inconnue);
+                DessinerForme(graphics, color, epaisseur, (Segment)inconnue);
             else if (typeForme.IsAssignableFrom(typeof(Cercle)))
-                DessinerForme(graphics, color, (Cercle)inconnue, plein);
-            else if (typeForme.IsAssignableFrom(typeof(Polygone)))
-                DessinerForme(graphics, color, (Polygone)inconnue);
+                DessinerForme(graphics, color, epaisseur, (Cercle)inconnue, plein);
+            else if (typeForme.IsAssignableFrom(typeof(Polygone)) || typeForme.IsSubclassOf(typeof(Polygone)))
+                DessinerForme(graphics, color, epaisseur, (Polygone)inconnue);
             else
                 throw new NotImplementedException("Je ne sais pas dessiner cette forme : " + inconnue.GetType().ToString());
         }
 
-        private void DessinerForme(Graphics graphics, Color color, Cercle Cercle, bool plein = false)
+        private void DessinerForme(Graphics graphics, Color color, int epaisseur, Cercle Cercle, bool plein = false)
         {
             Point positionEcran = RealToScreenPosition(Cercle.Centre);
             int rayonEcran = RealToScreenDistance(Cercle.Rayon);
 
             if (!plein)
-                using (Pen pen = new Pen(color, 10))
+                using (Pen pen = new Pen(color, epaisseur))
                     graphics.DrawEllipse(pen, new Rectangle(positionEcran.X - rayonEcran, positionEcran.Y - rayonEcran, rayonEcran * 2, rayonEcran * 2));
             else
                 using (SolidBrush brush = new SolidBrush(color))
                     graphics.FillEllipse(brush, new Rectangle(positionEcran.X - rayonEcran, positionEcran.Y - rayonEcran, rayonEcran * 2, rayonEcran * 2));
         }
 
-        private void DessinerForme(Graphics graphics, Color color, Segment segment)
+        private void DessinerForme(Graphics graphics, Color color, int epaisseur, Segment segment)
         {
             Point positionEcranDepart = RealToScreenPosition(segment.Debut);
             Point positionEcranFin = RealToScreenPosition(segment.Fin);
 
-            using (Pen pen = new Pen(color, 10))
+            using (Pen pen = new Pen(color, epaisseur))
                 graphics.DrawLine(pen, positionEcranDepart.X, positionEcranDepart.Y, positionEcranFin.X, positionEcranFin.Y);
         }
 
-        private void DessinerForme(Graphics graphics, Color color, Polygone polygone, bool plein = false, bool realToScreen = true)
+        private void DessinerForme(Graphics graphics, Color color, int epaisseur, Polygone polygone, bool plein = false, bool realToScreen = true)
         {
             if (polygone.Cotes.Count == 0)
                 return;
@@ -766,7 +765,7 @@ namespace GoBot.IHM
             listePoints[listePoints.Length - 1] = listePoints[0];
 
             if (!plein)
-                using (Pen pen = new Pen(color, 1))
+                using (Pen pen = new Pen(color, epaisseur))
                     graphics.DrawPolygon(pen, listePoints);
             else
                 using (SolidBrush brush = new SolidBrush(color))
@@ -832,9 +831,10 @@ namespace GoBot.IHM
                     Point p = ScreenToRealPosition(pictureBoxTable.PointToClient(MousePosition));
 
                     List<PointReel> positions = new List<PointReel>();
+
                     positions.Add(ScreenToRealPosition(pictureBoxTable.PointToClient(MousePosition)));
                     SuiviBalise.MajPositions(positions, Plateau.Enchainement == null || Plateau.Enchainement.DebutMatch == null);
-                    Plateau.ObstacleTest(p.X, p.Y);
+                    Console.Write(DateTime.Now.Millisecond + "MouseMove");
                 }
             }
 
@@ -1000,7 +1000,9 @@ namespace GoBot.IHM
                     thGoToRP.Start();
                 }
                 else
+                {
                     Robots.GrosRobot.ReglerOffsetAsserv((int)positionArrivee.Coordonnees.X, (int)positionArrivee.Coordonnees.Y, positionArrivee.Angle.AngleDegresPositif);
+                }
 
                 modeCourant = Mode.Visualisation;
             }
@@ -1167,6 +1169,14 @@ namespace GoBot.IHM
         private void boxSourisObstacle_CheckedChanged(object sender, EventArgs e)
         {
 
+        }
+
+        private void boxObstacles_CheckedChanged(object sender, EventArgs e)
+        {
+            if (boxObstacles.Checked)
+                modeCourant = Mode.Obstacles;
+            else
+                modeCourant = Mode.Visualisation;
         }
     }
 }

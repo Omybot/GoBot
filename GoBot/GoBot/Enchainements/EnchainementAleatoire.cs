@@ -24,7 +24,7 @@ namespace GoBot.Enchainements
                 PointReel destination = new PointReel(((Node)Robots.GrosRobot.Graph.Nodes[next]).X, ((Node)Robots.GrosRobot.Graph.Nodes[next]).Y);
 
                 Robots.GrosRobot.Historique.Log("Nouvelle destination " + destination.X + ":" + destination.Y);
-                Robots.GrosRobot.PathFinding(destination.X, destination.Y, 0, true);
+                Robots.GrosRobot.PathFinding(destination.X, destination.Y, null, 0, true);
             }
         }
 
@@ -38,7 +38,7 @@ namespace GoBot.Enchainements
 
                 PointReel destination = new PointReel(((Node)Robots.PetitRobot.Graph.Nodes[next]).X, ((Node)Robots.PetitRobot.Graph.Nodes[next]).Y);
 
-                Robots.PetitRobot.PathFinding(destination.X, destination.Y, 0, true);
+                Robots.PetitRobot.PathFinding(destination.X, destination.Y, null, 0, true);
             }
         }
     }

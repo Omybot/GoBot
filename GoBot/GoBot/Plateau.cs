@@ -23,6 +23,9 @@ namespace GoBot
 {
     public class Plateau
     {
+        public static int RayonAdversaireInitial { get; set; }
+        public static int RayonAdversaire { get; set; }
+
         public static Balise Balise1 { get; set; }
         public static Balise Balise2 { get; set; }
         public static Balise Balise3 { get; set; }
@@ -98,6 +101,9 @@ namespace GoBot
         {
             if (!Config.DesignMode)
             {
+                RayonAdversaireInitial = 200;
+                RayonAdversaire = RayonAdversaireInitial;
+
                 ReflecteursNosRobots = true;
                 FresquesCollees = false;
                 LancesCollees = false;
@@ -191,8 +197,9 @@ namespace GoBot
         {
             while (!Config.Shutdown)
             {
+                // Le timeout sur le Thread permet de vérifier chaque seconde si on est en train d'éteindre l'application pour couper le Thread.
                 while (!SemaphoreCollisions.WaitOne(1000) && !Config.Shutdown) ;
-                Console.WriteLine(DateTime.Now.Millisecond + DateTime.Now.Second * 1000 + " Test collisions");
+                Console.WriteLine(" Test collisions");
                 Robots.PetitRobot.ObstacleTest();
                 Robots.GrosRobot.ObstacleTest();
             }
@@ -204,6 +211,8 @@ namespace GoBot
             // Obstacle de simulation
             ObstaclesTemporaires.Clear();
             PointReel coordonnees = new PointReel(x, y);
+
+            Console.Write(" Ajout obstacle");
             AjouterObstacle(new Cercle(coordonnees, 200));
 
             if (Plateau.Enchainement == null)
@@ -226,7 +235,7 @@ namespace GoBot
             for (int i = 0; i < SuiviBalise.PositionsEnnemies.Count; i++)
             {
                 PointReel coordonnees = new PointReel(SuiviBalise.PositionsEnnemies[i].X, SuiviBalise.PositionsEnnemies[i].Y);
-                AjouterObstacle(new Cercle(coordonnees, 200));
+                AjouterObstacle(new Cercle(coordonnees, RayonAdversaire));
 
                 if (Plateau.Enchainement == null)
                 {
@@ -378,6 +387,18 @@ namespace GoBot
 
             // Foyer coin 2
             AjouterObstacle(new Cercle(new PointReel(3000, 2000), 250), true);
+
+            // Feux sur support sur les bords
+            AjouterObstacle(new RectanglePolygone(new PointReel(0, 733), 22, 134), true);
+            AjouterObstacle(new RectanglePolygone(new PointReel(1233, 1978), 134, 22), true);
+            AjouterObstacle(new RectanglePolygone(new PointReel(2978, 733), 22, 134), true);
+            AjouterObstacle(new RectanglePolygone(new PointReel(1633, 1978), 134, 22), true);
+
+            // Sommet des arbres
+            AjouterObstacle(new Cercle(new PointReel(0, 1300), 120), true);
+            AjouterObstacle(new Cercle(new PointReel(700, 2000), 120), true);
+            AjouterObstacle(new Cercle(new PointReel(2300, 2000), 120), true);
+            AjouterObstacle(new Cercle(new PointReel(3000, 1300), 120), true);
         }
 
         /// <summary>
