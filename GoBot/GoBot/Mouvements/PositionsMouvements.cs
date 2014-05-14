@@ -21,15 +21,20 @@ namespace GoBot.Mouvements
     {
         public static Dictionary<int, Position> PositionGrosFeuxBordure { get; private set; }
         public static Dictionary<int, Position> PositionGrosFoyers { get; private set; }
+        public static Dictionary<int, Position> PositionTorche { get; private set; }
 
         static PositionsMouvements()
         {
             // Créer les positions des actions de jeu
             PositionGrosFeuxBordure = new Dictionary<int, Position>();
-            PositionGrosFeuxBordure.Add(0, new Position(new Angle(0), new PointReel(3000 - 175, 800)));
-            PositionGrosFeuxBordure.Add(1, new Position(new Angle(90), new PointReel(1700, 2000 - 175)));
-            PositionGrosFeuxBordure.Add(2, new Position(new Angle(90), new PointReel(1300, 2000 - 175)));
-            PositionGrosFeuxBordure.Add(3, new Position(new Angle(180), new PointReel(175, 800)));
+            PositionGrosFeuxBordure.Add(15, new Position(new Angle(0), new PointReel(3000 - 175 - Robots.GrosRobot.Longueur / 2, 800)));
+            PositionGrosFeuxBordure.Add(8, new Position(new Angle(90), new PointReel(1700, 2000 - 175 - Robots.GrosRobot.Longueur / 2)));
+            PositionGrosFeuxBordure.Add(7, new Position(new Angle(90), new PointReel(1300, 2000 - 175 - Robots.GrosRobot.Longueur / 2)));
+            PositionGrosFeuxBordure.Add(0, new Position(new Angle(180), new PointReel(175 + Robots.GrosRobot.Longueur / 2, 800)));
+
+            PositionTorche = new Dictionary<int, Position>();
+            PositionTorche.Add(0, new Position(90, new PointReel(900, 864)));
+            PositionTorche.Add(1, new Position(90, new PointReel(2100, 864)));
         }
     }
 }

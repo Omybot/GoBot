@@ -53,8 +53,11 @@ namespace GoBot
 
         public static Feu[] Feux { get; set; }
         public static Fruimouth[] Fruimouths { get; set; }
-        
+        public static bool[] TorchesVidees { get; set; }
+
         public static bool ReflecteursNosRobots { get; set; }
+
+        public static IForme[] ObstaclesTorches { get; set; }
 
         private static int score;
         public static int Score
@@ -114,6 +117,9 @@ namespace GoBot
                 ChargerObstacles();
                 CreerSommets(150);
                 SauverGraph();
+                
+                ObstaclesFixes.Add(ObstaclesTorches[0]);
+                ObstaclesFixes.Add(ObstaclesTorches[1]);
                 //ChargerGraph();
 
                 InterpreteurBalise = new InterpreteurBalise();
@@ -175,6 +181,10 @@ namespace GoBot
                 Fruimouths[21] = new Fruimouth(new PointReel(3000, 1420), rand >= 3 && rand < 4);
                 Fruimouths[22] = new Fruimouth(new PointReel(2896.08, 1360), false);
                 Fruimouths[23] = new Fruimouth(new PointReel(2896.08, 1240), false);
+
+                TorchesVidees = new bool[2];
+                TorchesVidees[0] = false;
+                TorchesVidees[1] = false;
 
                 SemaphoreCollisions = new Semaphore(0, 999999999);
                 thCollisions = new Thread(ThreadTestCollisions);
@@ -255,7 +265,7 @@ namespace GoBot
         /// </summary>
         public static void ViderObstacles()
         {
-            foreach(Robot robot in new List<Robot>{Robots.GrosRobot, Robots.PetitRobot})
+            foreach (Robot robot in new List<Robot> { Robots.GrosRobot, Robots.PetitRobot })
             {
                 for (int i = 0; i < robot.Graph.Arcs.Count; i++)
                     ((Arc)robot.Graph.Arcs[i]).Passable = true;
@@ -399,6 +409,10 @@ namespace GoBot
             AjouterObstacle(new Cercle(new PointReel(700, 2000), 120), true);
             AjouterObstacle(new Cercle(new PointReel(2300, 2000), 120), true);
             AjouterObstacle(new Cercle(new PointReel(3000, 1300), 120), true);
+
+            ObstaclesTorches = new IForme[2];
+            ObstaclesTorches[0] = new Cercle(new PointReel(900, 1100), 80);
+            ObstaclesTorches[1] = new Cercle(new PointReel(2100, 1100), 80);
         }
 
         /// <summary>

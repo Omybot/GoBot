@@ -127,6 +127,9 @@ namespace GoBot.Calculs
 
         public static bool operator ==(Angle a1, Angle a2)
         {
+            if (!(a1 is Angle) && !(a2 is Angle))
+                return true;
+
             if ((!(a1 is Angle) && a2 is Angle) || (a1 is Angle && !(a2 is Angle)))
                 return false;
             return Math.Abs((a1 - a2).AngleDegres) <= 0.01;

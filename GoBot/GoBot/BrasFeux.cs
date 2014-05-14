@@ -3,16 +3,22 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading;
+using GoBot.ElementsJeu;
 
 namespace GoBot
 {
-    static class BrasFeux
+    public static class BrasFeux
     {
         private static readonly int INIT_COUDE = 0;
         private static readonly int INIT_EPAULE = 0;
         private static readonly int INIT_POIGNET = 0;
 
-        public static int NbFeuxStockes { get; set; }
+        public static List<Feu> FeuxStockes { get; private set; }
+
+        static BrasFeux()
+        {
+            FeuxStockes = new List<Feu>();
+        }
 
         public static void PositionEpaule(double angle)
         {

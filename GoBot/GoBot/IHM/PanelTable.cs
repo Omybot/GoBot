@@ -284,82 +284,111 @@ namespace GoBot.IHM
                                         }
                                     }
 
-                                    // Dessin des feux
+                                    // Dessin des feux non chargés
                                     foreach (Feu feu in Plateau.Feux)
                                     {
+                                        if (!feu.Charge)
+                                        {
+                                            Bitmap imgFeu = new Bitmap(100, 100);
+                                            Graphics gFeu = Graphics.FromImage(imgFeu);
+                                            gFeu.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.AntiAlias;
+                                            gFeu.FillRectangle(brushTransparent, 0, 0, 100, 100);
+
+                                            bool survol = false;
+                                            Point positionEcran = RealToScreenPosition(feu.Position);
+                                            if (feu.Debout)
+                                            {
+                                                int widthEcran = RealToScreenDistance(30);
+                                                int heightEcran = RealToScreenDistance(130);
+
+                                                if (feu.Angle == 0 || feu.Angle == 180)
+                                                {
+                                                    if (positionCurseur.X > feu.Position.X - 15 &&
+                                                        positionCurseur.X < feu.Position.X + 15 &&
+                                                        positionCurseur.Y > feu.Position.Y - 65 &&
+                                                        positionCurseur.Y < feu.Position.Y + 65)
+                                                    {
+                                                        survol = true;
+                                                    }
+                                                }
+                                                else if (feu.Angle == 90 || feu.Angle == 270)
+                                                {
+                                                    if (positionCurseur.X > feu.Position.X - 65 &&
+                                                        positionCurseur.X < feu.Position.X + 65 &&
+                                                        positionCurseur.Y > feu.Position.Y - 15 &&
+                                                        positionCurseur.Y < feu.Position.Y + 15)
+                                                    {
+                                                        survol = true;
+                                                    }
+                                                }
+
+                                                if (survol)
+                                                {
+                                                    gFeu.DrawRectangle(new Pen(Color.LightGreen), 49 - widthEcran / 2, 49 - heightEcran / 2, widthEcran + 2, heightEcran + 2);
+                                                }
+                                                if (!survol || (survol && !sourisClic))
+                                                {
+                                                    gFeu.FillRectangle(brushNoir, 50 - widthEcran / 2, 50 - heightEcran / 2, widthEcran, heightEcran);
+                                                    gFeu.DrawLine(penCouleurJ1R, 50 - widthEcran / 2, 50 - heightEcran / 2, 50 - widthEcran / 2, 50 + heightEcran / 2);
+                                                    gFeu.DrawLine(penCouleurJ2J, 50 + widthEcran / 2, 50 - heightEcran / 2, 50 + widthEcran / 2, 50 + heightEcran / 2);
+                                                }
+
+                                                imgFeu = RotateImage(imgFeu, feu.Angle.AngleDegres);
+                                                g.DrawImage(imgFeu, positionEcran.X - 50, positionEcran.Y - 50);
+                                            }
+                                            else
+                                            {
+                                                Brush brushFeu = feu.Couleur == Plateau.CouleurGaucheRouge ? brushCouleurJ1R : brushCouleurJ2J;
+                                                List<PointReel> pointsFeux = new List<PointReel>();
+                                                pointsFeux.Add(new PointReel(RealToScreenDistance(57.017), RealToScreenDistance(0)));
+                                                pointsFeux.Add(new PointReel(RealToScreenDistance(70), RealToScreenDistance(0)));
+                                                pointsFeux.Add(new PointReel(RealToScreenDistance(127.017), RealToScreenDistance(98.756)));
+                                                pointsFeux.Add(new PointReel(RealToScreenDistance(120.526), RealToScreenDistance(110)));
+                                                pointsFeux.Add(new PointReel(RealToScreenDistance(6.491), RealToScreenDistance(110)));
+                                                pointsFeux.Add(new PointReel(RealToScreenDistance(0), RealToScreenDistance(98.756)));
+                                                Polygone polyFeu = new Polygone(pointsFeux);
+
+                                                if (positionCurseur.Distance(feu.Position) <= 80)
+                                                    survol = true;
+                                                else
+                                                    DessinerForme(gFeu, Color.Black, 1, polyFeu, false, false);
+
+                                                if (!survol || (survol && !sourisClic))
+                                                    DessinerForme(gFeu, feu.Couleur, 1, polyFeu, true, false);
+
+                                                if (survol)
+                                                    DessinerForme(gFeu, Color.LightGreen, 1, polyFeu, false, false);
+
+                                                imgFeu = RotateImage(imgFeu, feu.Angle.AngleDegres);
+                                                g.DrawImage(imgFeu, positionEcran.X - RealToScreenDistance(63.509), positionEcran.Y - RealToScreenDistance(69.585));
+                                            }
+                                        }
+                                    }
+
+                                    for (int iFeu = 0; iFeu < BrasFeux.FeuxStockes.Count; iFeu++)
+                                    {
+                                        Feu feu = BrasFeux.FeuxStockes[iFeu];
+                                        PointReel position = new PointReel(3150, 400 - 60 * iFeu);
+
                                         Bitmap imgFeu = new Bitmap(100, 100);
                                         Graphics gFeu = Graphics.FromImage(imgFeu);
                                         gFeu.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.AntiAlias;
                                         gFeu.FillRectangle(brushTransparent, 0, 0, 100, 100);
 
-                                        bool survol = false;
-                                        Point positionEcran = RealToScreenPosition(feu.Position);
-                                        if (feu.Debout)
-                                        {
-                                            int widthEcran = RealToScreenDistance(30);
-                                            int heightEcran = RealToScreenDistance(130);
+                                        Point positionEcran = RealToScreenPosition(position);
+                                        Brush brushFeu = feu.Couleur == Plateau.CouleurGaucheRouge ? brushCouleurJ1R : brushCouleurJ2J;
+                                        List<PointReel> pointsFeux = new List<PointReel>();
+                                        pointsFeux.Add(new PointReel(RealToScreenDistance(57.017), RealToScreenDistance(0)));
+                                        pointsFeux.Add(new PointReel(RealToScreenDistance(70), RealToScreenDistance(0)));
+                                        pointsFeux.Add(new PointReel(RealToScreenDistance(127.017), RealToScreenDistance(98.756)));
+                                        pointsFeux.Add(new PointReel(RealToScreenDistance(120.526), RealToScreenDistance(110)));
+                                        pointsFeux.Add(new PointReel(RealToScreenDistance(6.491), RealToScreenDistance(110)));
+                                        pointsFeux.Add(new PointReel(RealToScreenDistance(0), RealToScreenDistance(98.756)));
+                                        Polygone polyFeu = new Polygone(pointsFeux);
 
-                                            if (feu.Angle == 0 || feu.Angle == 180)
-                                            {
-                                                if (positionCurseur.X > feu.Position.X - 15 &&
-                                                    positionCurseur.X < feu.Position.X + 15 &&
-                                                    positionCurseur.Y > feu.Position.Y - 65 &&
-                                                    positionCurseur.Y < feu.Position.Y + 65)
-                                                {
-                                                    survol = true;
-                                                }
-                                            }
-                                            else if (feu.Angle == 90 || feu.Angle == 270)
-                                            {
-                                                if (positionCurseur.X > feu.Position.X - 65 &&
-                                                    positionCurseur.X < feu.Position.X + 65 &&
-                                                    positionCurseur.Y > feu.Position.Y - 15 &&
-                                                    positionCurseur.Y < feu.Position.Y + 15)
-                                                {
-                                                    survol = true;
-                                                }
-                                            }
-
-                                            if (survol)
-                                            {
-                                                gFeu.DrawRectangle(new Pen(Color.LightGreen), 49 - widthEcran / 2, 49 - heightEcran / 2, widthEcran + 2, heightEcran + 2);
-                                            }
-                                            if (!survol || (survol && !sourisClic))
-                                            {
-                                                gFeu.FillRectangle(brushNoir, 50 - widthEcran / 2, 50 - heightEcran / 2, widthEcran, heightEcran);
-                                                gFeu.DrawLine(penCouleurJ1R, 50 - widthEcran / 2, 50 - heightEcran / 2, 50 - widthEcran / 2, 50 + heightEcran / 2);
-                                                gFeu.DrawLine(penCouleurJ2J, 50 + widthEcran / 2, 50 - heightEcran / 2, 50 + widthEcran / 2, 50 + heightEcran / 2);
-                                            }
-
-                                            imgFeu = RotateImage(imgFeu, feu.Angle.AngleDegres);
-                                            g.DrawImage(imgFeu, positionEcran.X - 50, positionEcran.Y - 50);
-                                        }
-                                        else
-                                        {
-                                            Brush brushFeu = feu.Couleur == Plateau.CouleurGaucheRouge ? brushCouleurJ1R : brushCouleurJ2J;
-                                            List<PointReel> pointsFeux = new List<PointReel>();
-                                            pointsFeux.Add(new PointReel(RealToScreenDistance(57.017), RealToScreenDistance(0)));
-                                            pointsFeux.Add(new PointReel(RealToScreenDistance(70), RealToScreenDistance(0)));
-                                            pointsFeux.Add(new PointReel(RealToScreenDistance(127.017), RealToScreenDistance(98.756)));
-                                            pointsFeux.Add(new PointReel(RealToScreenDistance(120.526), RealToScreenDistance(110)));
-                                            pointsFeux.Add(new PointReel(RealToScreenDistance(6.491), RealToScreenDistance(110)));
-                                            pointsFeux.Add(new PointReel(RealToScreenDistance(0), RealToScreenDistance(98.756)));
-                                            Polygone polyFeu = new Polygone(pointsFeux);
-
-                                            if (positionCurseur.Distance(feu.Position) <= 80)
-                                                survol = true;
-                                            else
-                                                DessinerForme(gFeu, Color.Black, 1, polyFeu, false, false);
-
-                                            if (!survol || (survol && !sourisClic))
-                                                DessinerForme(gFeu, feu.Couleur, 1, polyFeu, true, false);
-
-                                            if (survol)
-                                                DessinerForme(gFeu, Color.LightGreen, 1, polyFeu, false, false);
-
-                                            imgFeu = RotateImage(imgFeu, feu.Angle.AngleDegres);
-                                            g.DrawImage(imgFeu, positionEcran.X - RealToScreenDistance(63.509), positionEcran.Y - RealToScreenDistance(69.585));
-                                        }
+                                        DessinerForme(gFeu, feu.Couleur, 1, polyFeu, true, false);
+                                        DessinerForme(gFeu, Color.Black, 1, polyFeu, false, false);
+                                        g.DrawImage(imgFeu, positionEcran.X - RealToScreenDistance(63.509), positionEcran.Y - RealToScreenDistance(69.585));
                                     }
                                 }
 

@@ -246,9 +246,10 @@
     </Compile>
     <Compile Include="Logs\Log.cs" />
     <Compile Include="Logs\Logs.cs" />
-    <Compile Include="Mouvements\FeuBordure.cs" />
+    <Compile Include="Mouvements\MouvementFeuBordure.cs" />
     <Compile Include="Mouvements\Mouvement.cs" />
     <Compile Include="Mouvements\PositionsMouvements.cs" />
+    <Compile Include="Mouvements\MouvementTorche.cs" />
     <Compile Include="Ponderations\PoidsTest.cs" />
     <Compile Include="Ponderations\Poids.cs" />
     <Compile Include="Ponderations\PoidsBase.cs" />

@@ -41,10 +41,14 @@ namespace GoBot.Enchainements
             // Todo Charger dans les listes ListeMouvementsGros et ListeMouvementsPetit les mouvements possibles
 
             // Attrapage feux en bordure
+            ListeMouvementsGros.Add(new MouvementFeuBordure(15));
+            ListeMouvementsGros.Add(new MouvementFeuBordure(8));
+            ListeMouvementsGros.Add(new MouvementFeuBordure(7));
             ListeMouvementsGros.Add(new MouvementFeuBordure(0));
-            ListeMouvementsGros.Add(new MouvementFeuBordure(1));
-            ListeMouvementsGros.Add(new MouvementFeuBordure(2));
-            ListeMouvementsGros.Add(new MouvementFeuBordure(3));
+
+            // Vidage des torches
+            ListeMouvementsGros.Add(new MouvementTorche(0));
+            ListeMouvementsGros.Add(new MouvementTorche(1));
         }
 
         public void Executer()

@@ -27,15 +27,15 @@ namespace GoBot.Communications
         public override int SendMessage(Trame message, bool bloquant = false)
         {
             // Rajoute l'entête de demande de transfert de message par Miwi
-            /*byte[] tab = new byte[message.Length + 2];
+           byte[] tab = new byte[message.Length + 2];
             byte[] tabOrig = message.ToTabBytes();
 
             tab[0] = (byte)Carte.RecMiwi;
             tab[1] = (byte)FonctionMiwi.Transmettre;
 
             for (int i = 0; i < tabOrig.Length; i++)
-                tab[i + 2] = tabOrig[i];*/
-            byte[] tab = new byte[message.Length + 3];
+                tab[i + 2] = tabOrig[i];
+            /*byte[] tab = new byte[message.Length + 3];
             byte[] tabOrig = message.ToTabBytes();
 
             tab[0] = (byte)Carte.RecMiwi;
@@ -43,7 +43,7 @@ namespace GoBot.Communications
             tab[2] = (byte)(bloquant ? 1 : 0);
 
             for (int i = 0; i < tabOrig.Length; i++)
-                tab[i + 3] = tabOrig[i];
+                tab[i + 3] = tabOrig[i];*/
 
             Trame messageComplet = new Trame(tab);
 

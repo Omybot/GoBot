@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using GoBot.Calculs;
+using GoBot.Calculs.Formes;
 
 namespace GoBot.Mouvements
 {
@@ -24,7 +25,28 @@ namespace GoBot.Mouvements
             {
                 Robots.GrosRobot.Historique.Log("Position feu bordure " + numeroFeu + " atteinte");
                 BrasFeux.MoveAttrapeContreMur();
-                BrasFeux.NbFeuxStockes++;
+                BrasFeux.FeuxStockes.Add(Plateau.Feux[numeroFeu]);
+
+                switch (numeroFeu)
+                {
+                    case 15:
+                        Plateau.Feux[numeroFeu].Couleur = Plateau.CouleurGaucheRouge;
+                        break;
+                    case 8:
+                        Plateau.Feux[numeroFeu].Couleur = Plateau.CouleurDroiteJaune;
+                        break;
+                    case 7:
+                        Plateau.Feux[numeroFeu].Couleur = Plateau.CouleurGaucheRouge;
+                        break;
+                    case 0:
+                        Plateau.Feux[numeroFeu].Couleur = Plateau.CouleurDroiteJaune;
+                        break;
+                }
+
+                Plateau.Feux[numeroFeu].Debout = false;
+                Plateau.Feux[numeroFeu].Angle = 0;
+                Plateau.Feux[numeroFeu].Charge = true;
+
                 Robots.GrosRobot.Historique.Log("Fin feu bordure " + numeroFeu);
             }
             else
@@ -45,7 +67,7 @@ namespace GoBot.Mouvements
         {
             get 
             { 
-                if(BrasFeux.NbFeuxStockes == 3)
+                if(BrasFeux.FeuxStockes.Count == 3 || Plateau.Feux[numeroFeu].Charge || Plateau.Feux[numeroFeu].Positionne)
                     return 0;
                 else
                     return Score; 
