@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using GoBot.ElementsJeu;
 using GoBot.Calculs.Formes;
+using GoBot.Calculs;
 
 namespace GoBot.Mouvements
 {
@@ -15,7 +16,10 @@ namespace GoBot.Mouvements
         public MouvementTorche(int i)
         {
             numeroTorche = i;
-            Position = PositionsMouvements.PositionTorche[i];
+
+            foreach (Position p in PositionsMouvements.PositionTorche[i])
+                Positions.Add(p);
+
             feux = new List<Feu>();
 
             if (numeroTorche == 0)
@@ -36,7 +40,9 @@ namespace GoBot.Mouvements
         {
             Robots.GrosRobot.Historique.Log("Début torche " + numeroTorche);
 
-            if (Robots.GrosRobot.GotoXYTeta(Position.Coordonnees.X, Position.Coordonnees.Y, Position.Angle.AngleDegres))
+            Position position = PositionProche;
+
+            if (Robots.GrosRobot.GotoXYTeta(position.Coordonnees.X, position.Coordonnees.Y, position.Angle.AngleDegres))
             {
                 if (BrasFeux.FeuxStockes.Count < 3 && !feux[0].Charge && !feux[0].Positionne)
                 {

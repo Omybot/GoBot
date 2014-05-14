@@ -12,7 +12,40 @@ namespace GoBot.Mouvements
         public abstract bool Executer(int timeOut = 0);
         public abstract int Score { get; }
         public abstract double ScorePondere { get; }
-        public Position Position { get; protected set; }
+        public List<Position> Positions { get; protected set; }
+
+        public Mouvement()
+        {
+            Positions = new List<Position>();
+        }
+        public Mouvement(int i)
+        {
+            Positions = new List<Position>();
+        }
+
+        public Position PositionProche
+        {
+            get
+            {
+                if (Positions.Count == 1)
+                    return Positions[0];
+
+                double distance = double.MaxValue;
+                Position proche = Positions[0];
+
+                foreach (Position position in Positions)
+                {
+                    double distancePosition = Robots.GrosRobot.Position.Coordonnees.Distance(position.Coordonnees);
+                    if (distancePosition < distance)
+                    {
+                        distance = distancePosition;
+                        proche = position;
+                    }
+                }
+
+                return proche;
+            }
+        }
 
         public double Cout
         {
@@ -21,12 +54,14 @@ namespace GoBot.Mouvements
                 if (ScorePondere <= 0)
                     return double.MaxValue;
 
-                double distance = Robots.GrosRobot.Position.Coordonnees.Distance(Position.Coordonnees) / 10;
+                Position position = PositionProche;
+
+                double distance = Robots.GrosRobot.Position.Coordonnees.Distance(position.Coordonnees) / 10;
                 double cout = distance / ScorePondere;
 
                 foreach (Cercle c in Plateau.ObstaclesTemporaires)
                 {
-                    double distanceAdv = Position.Coordonnees.Distance(c.Centre) / 10;
+                    double distanceAdv = position.Coordonnees.Distance(c.Centre) / 10;
                     if (distanceAdv < 45)
                         cout = double.PositiveInfinity;
                     else

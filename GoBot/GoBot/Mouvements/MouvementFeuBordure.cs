@@ -14,14 +14,16 @@ namespace GoBot.Mouvements
         public MouvementFeuBordure(int i)
         {
             numeroFeu = i;
-            Position = PositionsMouvements.PositionGrosFeuxBordure[i];
+            Positions.Add(PositionsMouvements.PositionGrosFeuxBordure[i]);
         }
 
         public override bool Executer(int timeOut = 0)
         {
             Robots.GrosRobot.Historique.Log("Début feu bordure " + numeroFeu);
 
-            if (Robots.GrosRobot.GotoXYTeta(Position.Coordonnees.X, Position.Coordonnees.Y, Position.Angle.AngleDegres))
+            Position position = PositionProche;
+
+            if (Robots.GrosRobot.GotoXYTeta(position.Coordonnees.X, position.Coordonnees.Y, position.Angle.AngleDegres))
             {
                 Robots.GrosRobot.Historique.Log("Position feu bordure " + numeroFeu + " atteinte");
                 BrasFeux.MoveAttrapeContreMur();
