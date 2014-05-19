@@ -34,6 +34,7 @@
             this.btnAutocalibProfil = new System.Windows.Forms.Button();
             this.btnAutocalibFace = new System.Windows.Forms.Button();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
+            this.ctrlGraphique = new Composants.CtrlGraphique();
             this.label6 = new System.Windows.Forms.Label();
             this.label5 = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
@@ -52,7 +53,8 @@
             this.lblTxtInclinaisonFace = new System.Windows.Forms.Label();
             this.lblInclinaisonFace = new System.Windows.Forms.Label();
             this.trackBarInclinaisonFace = new Composants.TrackBarPlus();
-            this.ctrlGraphique = new Composants.CtrlGraphique();
+            this.btnStopFace = new System.Windows.Forms.Button();
+            this.btnStopProfil = new System.Windows.Forms.Button();
             this.groupBalise.SuspendLayout();
             this.groupBox4.SuspendLayout();
             this.groupBox3.SuspendLayout();
@@ -64,6 +66,8 @@
             // 
             // groupBalise
             // 
+            this.groupBalise.Controls.Add(this.btnStopProfil);
+            this.groupBalise.Controls.Add(this.btnStopFace);
             this.groupBalise.Controls.Add(this.groupBox4);
             this.groupBalise.Controls.Add(this.groupBox3);
             this.groupBalise.Controls.Add(this.groupBox2);
@@ -87,7 +91,7 @@
             this.groupBox4.Controls.Add(this.btnAutocalibTout);
             this.groupBox4.Controls.Add(this.btnAutocalibProfil);
             this.groupBox4.Controls.Add(this.btnAutocalibFace);
-            this.groupBox4.Location = new System.Drawing.Point(6, 453);
+            this.groupBox4.Location = new System.Drawing.Point(6, 491);
             this.groupBox4.Name = "groupBox4";
             this.groupBox4.Size = new System.Drawing.Size(305, 59);
             this.groupBox4.TabIndex = 16;
@@ -102,6 +106,7 @@
             this.btnAutocalibTout.TabIndex = 2;
             this.btnAutocalibTout.Text = "Tout";
             this.btnAutocalibTout.UseVisualStyleBackColor = true;
+            this.btnAutocalibTout.Click += new System.EventHandler(this.btnAutocalibTout_Click);
             // 
             // btnAutocalibProfil
             // 
@@ -111,6 +116,7 @@
             this.btnAutocalibProfil.TabIndex = 1;
             this.btnAutocalibProfil.Text = "Profil";
             this.btnAutocalibProfil.UseVisualStyleBackColor = true;
+            this.btnAutocalibProfil.Click += new System.EventHandler(this.btnAutocalibProfil_Click);
             // 
             // btnAutocalibFace
             // 
@@ -120,6 +126,7 @@
             this.btnAutocalibFace.TabIndex = 0;
             this.btnAutocalibFace.Text = "Face";
             this.btnAutocalibFace.UseVisualStyleBackColor = true;
+            this.btnAutocalibFace.Click += new System.EventHandler(this.btnAutocalibFace_Click);
             // 
             // groupBox3
             // 
@@ -128,12 +135,24 @@
             this.groupBox3.Controls.Add(this.label5);
             this.groupBox3.Controls.Add(this.label4);
             this.groupBox3.Controls.Add(this.label3);
-            this.groupBox3.Location = new System.Drawing.Point(6, 257);
+            this.groupBox3.Location = new System.Drawing.Point(6, 295);
             this.groupBox3.Name = "groupBox3";
             this.groupBox3.Size = new System.Drawing.Size(305, 190);
             this.groupBox3.TabIndex = 15;
             this.groupBox3.TabStop = false;
             this.groupBox3.Text = "Retour signal";
+            // 
+            // ctrlGraphique
+            // 
+            this.ctrlGraphique.BackColor = System.Drawing.Color.White;
+            this.ctrlGraphique.EchelleCommune = true;
+            this.ctrlGraphique.EchelleFixe = false;
+            this.ctrlGraphique.EchelleMax = 1D;
+            this.ctrlGraphique.EchelleMin = 0D;
+            this.ctrlGraphique.Location = new System.Drawing.Point(6, 44);
+            this.ctrlGraphique.Name = "ctrlGraphique";
+            this.ctrlGraphique.Size = new System.Drawing.Size(293, 140);
+            this.ctrlGraphique.TabIndex = 4;
             // 
             // label6
             // 
@@ -176,7 +195,7 @@
             this.groupBox2.Controls.Add(this.numPasProfil);
             this.groupBox2.Controls.Add(this.label2);
             this.groupBox2.Controls.Add(this.btnCourseProfil);
-            this.groupBox2.Location = new System.Drawing.Point(6, 187);
+            this.groupBox2.Location = new System.Drawing.Point(6, 225);
             this.groupBox2.Name = "groupBox2";
             this.groupBox2.Size = new System.Drawing.Size(305, 64);
             this.groupBox2.TabIndex = 14;
@@ -214,7 +233,7 @@
             this.groupBox1.Controls.Add(this.numPasFace);
             this.groupBox1.Controls.Add(this.label1);
             this.groupBox1.Controls.Add(this.btnCourseFace);
-            this.groupBox1.Location = new System.Drawing.Point(6, 117);
+            this.groupBox1.Location = new System.Drawing.Point(6, 155);
             this.groupBox1.Name = "groupBox1";
             this.groupBox1.Size = new System.Drawing.Size(305, 64);
             this.groupBox1.TabIndex = 12;
@@ -277,7 +296,7 @@
             this.trackBarInclinaisonProfil.Name = "trackBarInclinaisonProfil";
             this.trackBarInclinaisonProfil.NombreDecimales = 0;
             this.trackBarInclinaisonProfil.Reverse = false;
-            this.trackBarInclinaisonProfil.Size = new System.Drawing.Size(246, 15);
+            this.trackBarInclinaisonProfil.Size = new System.Drawing.Size(233, 15);
             this.trackBarInclinaisonProfil.TabIndex = 8;
             this.trackBarInclinaisonProfil.Vertical = false;
             this.trackBarInclinaisonProfil.TickValueChanged += new System.EventHandler(this.trackBarInclinaisonProfil_TickValueChanged);
@@ -313,23 +332,31 @@
             this.trackBarInclinaisonFace.Name = "trackBarInclinaisonFace";
             this.trackBarInclinaisonFace.NombreDecimales = 0;
             this.trackBarInclinaisonFace.Reverse = false;
-            this.trackBarInclinaisonFace.Size = new System.Drawing.Size(246, 15);
+            this.trackBarInclinaisonFace.Size = new System.Drawing.Size(233, 15);
             this.trackBarInclinaisonFace.TabIndex = 2;
             this.trackBarInclinaisonFace.Vertical = false;
             this.trackBarInclinaisonFace.TickValueChanged += new System.EventHandler(this.trackBarInclinaisonFace_TickValueChanged);
             this.trackBarInclinaisonFace.ValueChanged += new System.EventHandler(this.trackBarInclinaisonFace_ValueChanged);
             // 
-            // ctrlGraphique
+            // btnStopFace
             // 
-            this.ctrlGraphique.BackColor = System.Drawing.Color.White;
-            this.ctrlGraphique.EchelleCommune = true;
-            this.ctrlGraphique.EchelleFixe = false;
-            this.ctrlGraphique.EchelleMax = 1D;
-            this.ctrlGraphique.EchelleMin = 0D;
-            this.ctrlGraphique.Location = new System.Drawing.Point(6, 44);
-            this.ctrlGraphique.Name = "ctrlGraphique";
-            this.ctrlGraphique.Size = new System.Drawing.Size(293, 140);
-            this.ctrlGraphique.TabIndex = 4;
+            this.btnStopFace.Image = global::GoBot.Properties.Resources.Close;
+            this.btnStopFace.Location = new System.Drawing.Point(304, 34);
+            this.btnStopFace.Name = "btnStopFace";
+            this.btnStopFace.Size = new System.Drawing.Size(23, 23);
+            this.btnStopFace.TabIndex = 17;
+            this.btnStopFace.UseVisualStyleBackColor = true;
+            this.btnStopFace.Click += new System.EventHandler(this.btnStopFace_Click);
+            // 
+            // btnStopProfil
+            // 
+            this.btnStopProfil.Image = global::GoBot.Properties.Resources.Close;
+            this.btnStopProfil.Location = new System.Drawing.Point(304, 76);
+            this.btnStopProfil.Name = "btnStopProfil";
+            this.btnStopProfil.Size = new System.Drawing.Size(23, 23);
+            this.btnStopProfil.TabIndex = 18;
+            this.btnStopProfil.UseVisualStyleBackColor = true;
+            this.btnStopProfil.Click += new System.EventHandler(this.btnStopProfil_Click);
             // 
             // PanelBaliseInclinaison
             // 
@@ -381,5 +408,7 @@
         private System.Windows.Forms.Button btnCourseFace;
         private System.Windows.Forms.Button btnAutocalibTout;
         private Composants.CtrlGraphique ctrlGraphique;
+        private System.Windows.Forms.Button btnStopProfil;
+        private System.Windows.Forms.Button btnStopFace;
     }
 }

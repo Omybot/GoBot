@@ -66,6 +66,8 @@ namespace GoBot.IHM
 
         void worker_DoWork(object sender, DoWorkEventArgs e)
         {
+            /*Balise.InclinaisonFace = Config.CurrentConfig.GetCourseFaceMin(Balise.Carte);
+            Thread.Sleep(300);
             List<double> valeurs = Balise.ParcourirAxeFace((int)numPasFace.Value, Config.CurrentConfig.GetCourseFaceMin(Balise.Carte), Config.CurrentConfig.GetCourseFaceMax(Balise.Carte), true, true);
 
             ctrlGraphique.SupprimerCourbe("Face");
@@ -89,7 +91,8 @@ namespace GoBot.IHM
             int minPrecis = -1;
             int maxPrecis = -1;
 
-            Balise.InclinaisonFace = Config.CurrentConfig.GetCourseFaceMin(Balise.Carte);
+            //Balise.InclinaisonFace = Config.CurrentConfig.GetCourseFaceMin(Balise.Carte);
+            //Thread.Sleep(300);
             valeurs = Balise.ParcourirAxeFace(3, minLarge, Config.CurrentConfig.GetCourseFaceMax(Balise.Carte), false, true);
 
             for (int i = 0; i < valeurs.Count; i++)
@@ -101,9 +104,11 @@ namespace GoBot.IHM
                 }
 
             int position = ((maxPrecis + minPrecis) / 2);
-            Balise.InclinaisonFace = Config.CurrentConfig.GetCourseFaceMin(Balise.Carte);
-            Thread.Sleep(500);
+            Balise.InclinaisonFace = position - 10;
+            Thread.Sleep(300);
             Balise.InclinaisonFace = position;
+            Thread.Sleep(1000);
+            Balise.InclinaisonFace = 0;*/
         }
 
         private void btnCourseProfil_Click(object sender, EventArgs e)
@@ -116,6 +121,41 @@ namespace GoBot.IHM
                 ctrlGraphique.AjouterPoint("Profil", d, Color.Green);
 
             ctrlGraphique.DessineCourbes();*/
+        }
+
+        Thread thAssiette;
+
+        private void CalibrationAssiette()
+        {
+            DateTime debut = DateTime.Now;
+            Balise.ReglerAssiette();
+            Console.WriteLine((DateTime.Now - debut).TotalSeconds + " secondes calibration assiette");
+        }
+
+        private void btnAutocalibTout_Click(object sender, EventArgs e)
+        {
+            thAssiette = new Thread(CalibrationAssiette);
+            thAssiette.Start();
+        }
+
+        private void btnStopFace_Click(object sender, EventArgs e)
+        {
+            Balise.InclinaisonFace = 0;
+        }
+
+        private void btnStopProfil_Click(object sender, EventArgs e)
+        {
+            Balise.InclinaisonProfil = 0;
+        }
+
+        private void btnAutocalibFace_Click(object sender, EventArgs e)
+        {
+            Balise.ReglerAssietteFace();
+        }
+
+        private void btnAutocalibProfil_Click(object sender, EventArgs e)
+        {
+            Balise.ReglerAssietteProfil();
         }
     }
 }

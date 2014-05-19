@@ -551,23 +551,32 @@ namespace GoBot.IHM
                                             g.DrawLine(penRougeFin, new Point(positionEcran.X - 4, positionEcran.Y + 4), new Point(positionEcran.X + 4, positionEcran.Y - 4));
                                         }
 
-                                        foreach (PointReelGenere p in Plateau.InterpreteurBalise.Intersections)
+                                        if (Plateau.InterpreteurBalise.Intersections != null)
                                         {
-                                            Point positionEcran = RealToScreenPosition(p.Point);
-                                            g.FillEllipse(brushVertFonce, positionEcran.X - 2, positionEcran.Y - 2, 4, 4);
+                                            foreach (PointReelGenere p in Plateau.InterpreteurBalise.Intersections)
+                                            {
+                                                Point positionEcran = RealToScreenPosition(p.Point);
+                                                g.FillEllipse(brushVertFonce, positionEcran.X - 2, positionEcran.Y - 2, 4, 4);
+                                            }
                                         }
 
-                                        foreach (PointReelGenere p in Plateau.InterpreteurBalise.MoyennesIntersections)
+                                        if (Plateau.InterpreteurBalise.MoyennesIntersections != null)
                                         {
-                                            Point positionEcran = RealToScreenPosition(p.Point);
-                                            g.FillEllipse(brushVertFonce, positionEcran.X - 4, positionEcran.Y - 4, 8, 8);
+                                            foreach (PointReelGenere p in Plateau.InterpreteurBalise.MoyennesIntersections)
+                                            {
+                                                Point positionEcran = RealToScreenPosition(p.Point);
+                                                g.FillEllipse(brushVertFonce, positionEcran.X - 4, positionEcran.Y - 4, 8, 8);
+                                            }
                                         }
 
-                                        foreach (List<PointReel> liste in Plateau.InterpreteurBalise.AssociationPointDistanceIntersection)
+                                        if (Plateau.InterpreteurBalise.AssociationPointDistanceIntersection != null)
                                         {
-                                            if (liste[0] == null || liste[1] == null)
-                                                continue;
-                                            g.DrawLine(penVertFonce, RealToScreenPosition(liste[0].X, liste[0].Y), RealToScreenPosition(liste[1].X, liste[1].Y));
+                                            foreach (List<PointReel> liste in Plateau.InterpreteurBalise.AssociationPointDistanceIntersection)
+                                            {
+                                                if (liste[0] == null || liste[1] == null)
+                                                    continue;
+                                                g.DrawLine(penVertFonce, RealToScreenPosition(liste[0].X, liste[0].Y), RealToScreenPosition(liste[1].X, liste[1].Y));
+                                            }
                                         }
                                     }
                                 }

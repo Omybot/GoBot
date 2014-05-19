@@ -191,7 +191,6 @@ namespace GoBot.Communications
     {
         Vitesse = 0x01,
         Detection = 0xE4,
-        ErreurDetection = 0xE6,
 
         InclinaisonFace = 0x10,
         InclinaisonProfil = 0x11,

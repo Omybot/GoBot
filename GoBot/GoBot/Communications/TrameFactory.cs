@@ -353,14 +353,6 @@ namespace GoBot.Communications
             return new Trame(tab);
         }
 
-        static public Trame BaliseErreurDetection(Carte balise)
-        {
-            byte[] tab = new byte[2];
-            tab[0] = (byte)balise;
-            tab[1] = (byte)FonctionBalise.ErreurDetection;
-            return new Trame(tab);
-        }
-
         static public Trame BaliseInclinaisonFace(Carte balise, int position)
         {
             byte[] tab = new byte[4];

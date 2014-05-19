@@ -12,10 +12,43 @@ using System.Threading;
 
 namespace GoBot.Balises
 {
+    // Les balises tournent dans le sens anti-horaire
     public class Balise
     {
         private Semaphore semTestConnexion;
         private Semaphore semReceptionBalise;
+
+        public Angle AngleCentral()
+        {
+            if (Plateau.NotreCouleur == Plateau.CouleurGaucheRouge)
+            {
+                // Les valeurs sont les angles que doivent retourner chaque balise pour un reflecteur placé au centre de la table
+                switch (Carte)
+                {
+                    case GoBot.Carte.RecBun:
+                        return 35.45;
+                    case GoBot.Carte.RecBeu:
+                        return 327.061;
+                    case GoBot.Carte.RecBoi:
+                        return 178.473;
+                }
+            }
+            else
+            {
+                // Les valeurs sont les angles que doivent retourner chaque balise pour un reflecteur placé au centre de la table
+                switch (Carte)
+                {
+                    case GoBot.Carte.RecBun:
+                        return 212.939;
+                    case GoBot.Carte.RecBeu:
+                        return 144.553;
+                    case GoBot.Carte.RecBoi:
+                        return 1.527;
+                }
+            }
+
+            return 0;
+        }
 
         public static Balise GetBalise(Carte carte)
         {
@@ -69,10 +102,15 @@ namespace GoBot.Balises
         /// </summary>
         public double VitesseConsigne { get; set; }
 
+        private bool reglageVitesse = false;
         /// <summary>
         /// Vrai si la vitesse doit être réglée à la vitesse de consigne
         /// </summary>
-        public bool ReglageVitesse { get; set; }
+        public bool ReglageVitesse
+        {
+            get { return reglageVitesse; }
+            set { reglageVitesse = value; if (!reglageVitesse) FinAsservissement(); }
+        }
 
         /// <summary>
         /// Vrai si la vitesse doit être réglée en permanence, faux si on arrête d'asservir dès qu'on a 1% d'erreur
@@ -160,7 +198,7 @@ namespace GoBot.Balises
             }
 
             Connexion.NouvelleTrameRecue += new ConnexionUDP.ReceptionDelegate(connexion_NouvelleTrame);
-            Connexion.ConnexionCheck = new Communications.ConnexionCheck(5000);
+            Connexion.ConnexionCheck = new Communications.ConnexionCheck(2000);
             Connexion.ConnexionCheck.TestConnexion += new ConnexionCheck.TestConnexionDelegate(TestConnexion);
 
             Stats = new BaliseStats(this);
@@ -170,6 +208,7 @@ namespace GoBot.Balises
             timerRotation = new System.Timers.Timer();
             timerRotation.Interval = 1000;
             timerRotation.Elapsed += timerRotation_Elapsed;
+            timerRotation.Start();
         }
 
         void timerRotation_Elapsed(object sender, System.Timers.ElapsedEventArgs e)
@@ -178,7 +217,7 @@ namespace GoBot.Balises
             EnRotation = cptRotation > 0;
             cptRotation = 0;
 
-            if(temp != EnRotation)
+            if (temp != EnRotation)
                 RotationChange(EnRotation);
         }
 
@@ -212,20 +251,6 @@ namespace GoBot.Balises
                     // Vérification checksum
                     cptRotation++;
 
-                    int checksumRecu = trame[trame.Length - 1];
-
-                    int checksumCalcul = 0;
-
-                    for (int i = 0; i < trame.Length - 1; i++)
-                        checksumCalcul ^= trame[i];
-
-                    if (checksumCalcul != checksumRecu)
-                    {
-                        Console.WriteLine("Erreur de ckecksum");
-                        Connexion.SendMessage(TrameFactory.BaliseErreurDetection(Carte));
-                        return;
-                    }
-
                     // Calcul de la vitesse de rotation
                     int nbTicks = trame[2] * 256 + trame[3];
                     VitesseToursSecActuelle = 400.0 / (nbTicks * 0.0064);
@@ -241,16 +266,18 @@ namespace GoBot.Balises
 
                     // Si on a un nombre impair de fronts on laisse tomber cette mesure, elle n'est pas bonne
                     if (nbMesures1 % 2 != 0 || nbMesures2 % 2 != 0)
+                    {
+                        Console.WriteLine("Erreur de détection (fronts impairs)");
                         return;
+                    }
 
                     nbMesures1 = nbMesures1 / 2;
                     nbMesures2 = nbMesures2 / 2;
 
                     // Vérification de la taille de la trame
-                    if (trame.Length != 7 + nbMesures1 * 4 + nbMesures2 * 4)
+                    if (trame.Length != 6 + nbMesures1 * 4 + nbMesures2 * 4)
                     {
                         Console.WriteLine("Erreur de taille de trame");
-                        Connexion.SendMessage(TrameFactory.BaliseErreurDetection(Carte));
                         return;
                     }
 
@@ -258,24 +285,38 @@ namespace GoBot.Balises
                     DetectionsCapteur1.Clear();
                     List<int> tabAngle = new List<int>();
 
+                    long verif = 0;
                     for (int i = 0; i < nbMesures1 * 4; i += 2)
                     {
                         int valeur = trame[6 + i] * 256 + trame[6 + i + 1];
                         tabAngle.Add(valeur);
+                        verif += valeur * (i / 2 + 1);
                     }
 
                     tabAngle.Sort();
 
+                    for (int i = 0; i < nbMesures1 * 2; i++)
+                    {
+                        verif -= tabAngle[i] * (i + 1);
+                    }
+
+                    if (verif != 0)
+                    {
+                        Console.WriteLine("Inversion détectée capteur 1");
+                    }
+
                     for (int i = 0; i < nbMesures1; i++)
                     {
-                        double debut = 360 - (tabAngle[i * 2] / 100.0) + Config.CurrentConfig.GetOffsetBalise(Carte, 1);
-                        double fin = 360 - (tabAngle[i * 2 + 1] / 100.0) + Config.CurrentConfig.GetOffsetBalise(Carte, 1);
+                        double debut = 360 - (tabAngle[i * 2] / 100.0) + Config.CurrentConfig.GetOffsetBalise(Carte, Plateau.NotreCouleur, 1);
+                        double fin = 360 - (tabAngle[i * 2 + 1] / 100.0) + Config.CurrentConfig.GetOffsetBalise(Carte, Plateau.NotreCouleur, 1);
+                        if (this == Plateau.Balise3)
+                        {
+                            debut = (debut + 180) % 360;
+                            fin = (fin + 180) % 360;
+                        }
 
                         DetectionsCapteur1.Add(new DetectionBalise(this, debut, fin));
                     }
-
-                    /*writer.WriteLine((DateTime.Now - prec).TotalMilliseconds + ";" + nouvelleVitesse + ";" + (d == null ? ";;" : d.AngleCentral + ";" + d.Distance + ";") + VitesseToursSecActuelle);
-                    prec = DateTime.Now;*/
 
                     // Réception des mesures du capteur 2
 
@@ -286,7 +327,7 @@ namespace GoBot.Balises
                     // tableau pour trier les angles ( correction logiciel )
                     tabAngle.Clear();
 
-                    long verif = 0;
+                    verif = 0;
                     for (int i = 0; i < nbMesures2 * 4; i += 2)
                     {
                         int valeur = trame[offSet + i] * 256 + trame[offSet + i + 1];
@@ -303,39 +344,45 @@ namespace GoBot.Balises
 
                     if (verif != 0)
                     {
-                        Console.WriteLine("Inversion détectée");
+                        Console.WriteLine("Inversion détectée capteur 2");
                     }
-                    else
-                        Console.Write("-");
 
                     for (int i = 0; i < nbMesures2; i++)
                     {
-                        double debut = 360 - (tabAngle[i * 2] / 100.0) + Config.CurrentConfig.GetOffsetBalise(Carte, 2);
-                        double fin = 360 - (tabAngle[i * 2 + 1] / 100.0) + Config.CurrentConfig.GetOffsetBalise(Carte, 2);
+                        double debut = 360 - (tabAngle[i * 2] / 100.0) + Config.CurrentConfig.GetOffsetBalise(Carte, Plateau.NotreCouleur, 2);
+                        double fin = 360 - (tabAngle[i * 2 + 1] / 100.0) + Config.CurrentConfig.GetOffsetBalise(Carte, Plateau.NotreCouleur, 2);
                         if (this == Plateau.Balise3)
                         {
                             debut = (debut + 180) % 360;
                             fin = (fin + 180) % 360;
                         }
 
-                        //if (debut < 360 && debut > 0 && fin < 360 && fin > 0)
                         DetectionsCapteur2.Add(new DetectionBalise(this, debut, fin));
-                        //else
-                        //    Console.WriteLine("Mauvaise mesure : début = " + debut + " / fin = " + fin);
                     }
 
                     // Réglage de l'offset d'angle des capteurs
                     if (ReglageOffset)
                     {
-                        // Si on a une mesure incorrecte (une mesure correcte demande une détection en haut et une en bas)
+                        // Si on a une mesure incorrecte (une mesure correcte demande 2 détections sur chaque balise : un reflecteur au "centre" et un autre en bas de la piste)
                         // Le réglage est annulé
-                        if (DetectionsCapteur1.Count == 1 && DetectionsCapteur2.Count == 1)
+                        if (DetectionsCapteur1.Count == 2 && DetectionsCapteur2.Count == 2)
                         {
-                            compteurReglageOffset--;
+                            // 3 cas où on passe d'abord par la balise en bas de la piste avant celle du milieu (sens de rotation anti-horaire)
+                            if (Carte == GoBot.Carte.RecBun && Plateau.NotreCouleur == Plateau.CouleurGaucheRouge ||
+                                Carte == GoBot.Carte.RecBeu && Plateau.NotreCouleur == Plateau.CouleurGaucheRouge ||
+                                Carte == GoBot.Carte.RecBoi && Plateau.NotreCouleur == Plateau.CouleurDroiteJaune)
+                            {
+                                DetectionsCapteur1.RemoveAt(1);
+                                DetectionsCapteur2.RemoveAt(0);
+                            }
 
-                            // On ajoute les angles mesurés à l'historique
-                            anglesMesuresPourOffsetCapteur2.Add(DetectionsCapteur2[0].AngleCentral);
-                            anglesMesuresPourOffsetCapteur1.Add(DetectionsCapteur1[0].AngleCentral);
+                            if (ReglageOffset)
+                            {
+                                compteurReglageOffset--;
+                                // On ajoute les angles mesurés à l'historique
+                                anglesMesuresPourOffsetCapteur2.Add(DetectionsCapteur2[0].AngleCentral);
+                                anglesMesuresPourOffsetCapteur1.Add(DetectionsCapteur1[0].AngleCentral);
+                            }
                         }
 
                         if (ReglageOffset && compteurReglageOffset == 0)
@@ -348,41 +395,11 @@ namespace GoBot.Balises
 
                             moyenne /= anglesMesuresPourOffsetCapteur1.Count;
 
-                            if (Plateau.NotreCouleur == Plateau.CouleurGaucheRouge)
-                            {
-                                // Les valeurs sont les angles que doivent retourner chaque balise pour un reflecteur placé au centre de la table (sur le palmier)
-                                switch (Carte)
-                                {
-                                    case GoBot.Carte.RecBun:
-                                        moyenne = 35.45 - moyenne;
-                                        break;
-                                    case GoBot.Carte.RecBeu:
-                                        moyenne = 327.061 - moyenne;
-                                        break;
-                                    case GoBot.Carte.RecBoi:
-                                        moyenne = 178.473 - moyenne;
-                                        break;
-                                }
-                            }
-                            else
-                            {
-                                // Les valeurs sont les angles que doivent retourner chaque balise pour un reflecteur placé au centre de la table (sur le palmier)
-                                switch (Carte)
-                                {
-                                    case GoBot.Carte.RecBun:
-                                        moyenne = 212.939 - moyenne;
-                                        break;
-                                    case GoBot.Carte.RecBeu:
-                                        moyenne = 144.553 - moyenne;
-                                        break;
-                                    case GoBot.Carte.RecBoi:
-                                        moyenne = 1.527 - moyenne;
-                                        break;
-                                }
-                            }
+                            // Calcul l'offset en fonction de ce qu'il est censé mesurer au centre
+                            moyenne = AngleCentral() - moyenne;
 
                             // On le sauve dans la config (haut)
-                            Config.CurrentConfig.SetOffsetBalise(Carte, 1, moyenne + Config.CurrentConfig.GetOffsetBalise(Carte, 1));
+                            Config.CurrentConfig.SetOffsetBalise(Carte, Plateau.NotreCouleur, 1, moyenne + Config.CurrentConfig.GetOffsetBalise(Carte, Plateau.NotreCouleur, 1));
 
                             moyenne = 0;
 
@@ -390,41 +407,10 @@ namespace GoBot.Balises
                                 moyenne += dv;
 
                             moyenne /= anglesMesuresPourOffsetCapteur2.Count;
-                            if (Plateau.NotreCouleur == Plateau.CouleurGaucheRouge)
-                            {
-                                // Les valeurs sont les angles que doivent retourner chaque balise pour un reflecteur placé au centre de la table (sur le palmier)
-                                switch (Carte)
-                                {
-                                    case GoBot.Carte.RecBun:
-                                        moyenne = 35.45 - moyenne;
-                                        break;
-                                    case GoBot.Carte.RecBeu:
-                                        moyenne = 327.061 - moyenne;
-                                        break;
-                                    case GoBot.Carte.RecBoi:
-                                        moyenne = 178.473 - moyenne;
-                                        break;
-                                }
-                            }
-                            else
-                            {
-                                // Les valeurs sont les angles que doivent retourner chaque balise pour un reflecteur placé au centre de la table (sur le palmier)
-                                switch (Carte)
-                                {
-                                    case GoBot.Carte.RecBun:
-                                        moyenne = 212.939 - moyenne;
-                                        break;
-                                    case GoBot.Carte.RecBeu:
-                                        moyenne = 144.553 - moyenne;
-                                        break;
-                                    case GoBot.Carte.RecBoi:
-                                        moyenne = 1.527 - moyenne;
-                                        break;
-                                }
-                            }
+                            moyenne = AngleCentral() - moyenne;
 
                             // On le sauve dans la config (bas)
-                            Config.CurrentConfig.SetOffsetBalise(Carte, 2, moyenne + Config.CurrentConfig.GetOffsetBalise(Carte, 2));
+                            Config.CurrentConfig.SetOffsetBalise(Carte, Plateau.NotreCouleur, 2, moyenne + Config.CurrentConfig.GetOffsetBalise(Carte, Plateau.NotreCouleur, 2));
                             Config.Save();
                             // Réglage terminé
                             ReglageOffset = false;
@@ -438,11 +424,6 @@ namespace GoBot.Balises
 
                     foreach (DetectionBalise d1 in DetectionsCapteur2)
                         Detections.Add(d1);
-
-                    angleTotal = 0;
-
-                    foreach (DetectionBalise detection in Detections)
-                        angleTotal += Math.Abs(detection.AngleFin - detection.AngleDebut);
 
                     // Retire les détections correspondant à la position de robots alliés
                     if (!ReglageOffset && Plateau.ReflecteursNosRobots)
@@ -607,6 +588,11 @@ namespace GoBot.Balises
         //Déclaration de l’évènement utilisant le délégué
         public event RotationChangeDelegate RotationChange;
 
+        //Déclaration du délégué pour l’évènement fin de l'asservissement de la balise (la balise est reglée à la bonne vitesse)
+        public delegate void FinAsservissementDelegate();
+        //Déclaration de l’évènement utilisant le délégué
+        public event FinAsservissementDelegate FinAsservissement;
+
         //Déclaration du délégué pour évènement simple
         public delegate void ChangeDelegate();
         //Déclaration de l’évènement utilisant le délégué
@@ -620,8 +606,8 @@ namespace GoBot.Balises
         public void ReglerOffset(int nbMesures)
         {
             // Réinitialisation des offsets
-            Config.CurrentConfig.SetOffsetBalise(Carte, 1, 0);
-            Config.CurrentConfig.SetOffsetBalise(Carte, 2, 0);
+            Config.CurrentConfig.SetOffsetBalise(Carte, Plateau.NotreCouleur, 1, 0);
+            Config.CurrentConfig.SetOffsetBalise(Carte, Plateau.NotreCouleur, 2, 0);
 
             compteurReglageOffset = nbMesures;
             ReglageOffset = true;
@@ -642,7 +628,7 @@ namespace GoBot.Balises
 
             // Asservissement de la vitesse en fonction de l'erreur mesurée au tour précédent
             // 150 est un coefficient modifiable pour la réactivité de l'asservissement
-            int nouvelleVitesse = (int)Math.Min((ValeurConsigne + (VitesseConsigne - VitesseToursSecActuelle) * 100.0), 4000);
+            int nouvelleVitesse = (int)Math.Min((ValeurConsigne + (VitesseConsigne - VitesseToursSecActuelle) * 70.0), 4000);
             VitesseRotation(nouvelleVitesse);
 
             if (!ReglageVitessePermanent && VitesseConsigne < VitesseToursSecActuelle * 1.01 && VitesseConsigne > VitesseToursSecActuelle * 0.99)
@@ -699,7 +685,6 @@ namespace GoBot.Balises
             set
             {
                 inclinaisonFace = value;
-                Console.WriteLine("Envoi pwm face " + inclinaisonFace);
                 Trame t = TrameFactory.BaliseInclinaisonFace(Carte, inclinaisonFace);
                 Connexion.SendMessage(t);
             }
@@ -717,59 +702,254 @@ namespace GoBot.Balises
             }
         }
 
-        private double angleTotal;
-        public List<double> ParcourirAxeFace(int pas, int min, int max, bool stopSiTrouveDebut, bool stopSiTrouveFin)
+        public Dictionary<int, List<DetectionBalise>> ParcourirAxeFace(int pas, int min, int max)
         {
-            List<double> valeurs = new List<double>();
-            bool trouve = false;
+            Dictionary<int, List<DetectionBalise>> valeurs = new Dictionary<int, List<DetectionBalise>>();
 
             for (int i = min; i <= max; i += pas)
             {
-                Console.WriteLine("Position face " + i);
                 Thread.Sleep(100);
                 InclinaisonFace = i;
                 semReceptionBalise = new Semaphore(0, int.MaxValue);
                 semReceptionBalise.WaitOne();
                 semReceptionBalise.WaitOne();
-                valeurs.Add(angleTotal);
 
-                if(angleTotal != 0)
-                    trouve = true;
-
-                Console.WriteLine(angleTotal + " / " + (trouve ? "Oui" : "Non"));
-
-                if (stopSiTrouveDebut && trouve)
-                    break;
-
-                if (stopSiTrouveFin && trouve && angleTotal == 0)
-                    break;
+                valeurs.Add(i, new List<DetectionBalise>(Detections));
             }
 
             return valeurs;
         }
 
-        public List<double> ParcourirAxeProfil(int pas, int min, int max, bool stopSiTrouve)
+        public Dictionary<int, List<DetectionBalise>> ParcourirAxeProfil(int pas, int min, int max)
         {
-            List<double> valeurs = new List<double>();
+            Dictionary<int, List<DetectionBalise>> valeurs = new Dictionary<int, List<DetectionBalise>>();
 
             for (int i = min; i <= max; i += pas)
             {
+                Thread.Sleep(100);
                 InclinaisonProfil = i;
                 semReceptionBalise = new Semaphore(0, int.MaxValue);
                 semReceptionBalise.WaitOne();
                 semReceptionBalise.WaitOne();
-                valeurs.Add(angleTotal);
 
-                if (stopSiTrouve && angleTotal == 0)
-                    break;
+                valeurs.Add(i, new List<DetectionBalise>(Detections));
             }
 
             return valeurs;
         }
 
+        public void ReglerAssietteFace()
+        {
+            int pasGrossier = 6;
+            int pasPrecis = 2;
+            bool precis = true;
+
+            Angle angleMin = AngleCentral() - 20;
+            Angle angleMax = AngleCentral() + 20;
+
+            // Réglage axe face : Recherche le centre de la balise centrale grossièrement
+
+            InclinaisonFace = Config.CurrentConfig.GetCourseFaceMin(Carte);
+            Thread.Sleep(300);
+            Dictionary<int, List<DetectionBalise>> valeurs = ParcourirAxeFace(pasGrossier, Config.CurrentConfig.GetCourseFaceMin(Carte), Config.CurrentConfig.GetCourseFaceMax(Carte));
+
+            int debutGrossier = Config.CurrentConfig.GetCourseFaceOpti(Carte);
+            int finGrossier = Config.CurrentConfig.GetCourseFaceOpti(Carte);
+            bool trouve = false;
+
+            Console.WriteLine("Detection face :");
+            Console.WriteLine("Detection grossiere :");
+
+
+            // On cherche à avoir 2 détections qui voient la balise centrale (ce qui veut dire que les deux capteurs la voient)
+            foreach (KeyValuePair<int, List<DetectionBalise>> pair in valeurs)
+            {
+                bool trouveIteration = false;
+                int nbAngles = 0;
+                foreach (DetectionBalise detection in pair.Value)
+                    if (((Angle)detection.AngleCentral).ComprisEntre(angleMin, angleMax))
+                    {
+                        nbAngles++;
+                        if (nbAngles == 2)
+                            trouveIteration = true;
+                    }
+
+                Console.WriteLine(pair.Key + " Angles : " + nbAngles + "/" + pair.Value.Count + (trouveIteration ? " Oui" : " Non") + "/" + (trouve ? " Oui" : " Non"));
+
+                if (trouveIteration && !trouve)
+                {
+                    // Premier
+                    debutGrossier = pair.Key;
+                    trouve = true;
+                }
+                else if (trouveIteration && trouve)
+                {
+                    // Dernier
+                    finGrossier = pair.Key;
+                }
+            }
+            Console.WriteLine("Grossier : " + debutGrossier + " -> " + finGrossier + " = " + ((debutGrossier + finGrossier) / 2));
+
+            // Recherche affinée
+
+            InclinaisonFace = debutGrossier - pasGrossier;
+            Thread.Sleep(300);
+
+            if (precis)
+            {
+                valeurs = ParcourirAxeFace(pasPrecis, debutGrossier - pasGrossier, finGrossier + pasGrossier);
+
+                int debutPrecis = Config.CurrentConfig.GetCourseFaceOpti(Carte);
+                int finPrecis = Config.CurrentConfig.GetCourseFaceOpti(Carte);
+
+                Console.WriteLine("Detection précise :");
+
+                trouve = false;
+                foreach (KeyValuePair<int, List<DetectionBalise>> pair in valeurs)
+                {
+                    int nbAngles = 0;
+                    bool trouveIteration = false;
+                    foreach (DetectionBalise detection in pair.Value)
+                        if (((Angle)detection.AngleCentral).ComprisEntre(angleMin, angleMax))
+                        {
+                            nbAngles++;
+                            if (nbAngles == 2)
+                                trouveIteration = true;
+                        }
+
+                    Console.WriteLine(pair.Key + (trouveIteration ? " Oui" : " Non") + "/" + (trouve ? " Oui" : " Non"));
+
+                    if (trouveIteration && !trouve)
+                    {
+                        // Premier
+                        debutPrecis = pair.Key;
+                        trouve = true;
+                    }
+                    else if (trouveIteration && trouve)
+                    {
+                        // Dernier
+                        finPrecis = pair.Key;
+                    }
+                }
+
+                Console.WriteLine("Précis : " + debutPrecis + " -> " + finPrecis + " = " + ((debutPrecis + finPrecis) / 2));
+
+                // On se place au milieu de la détection du reflecteur central
+                InclinaisonFace = debutPrecis - pasGrossier;
+                Thread.Sleep(300);
+                InclinaisonFace = (finPrecis + debutPrecis) / 2;
+            }
+            else
+                InclinaisonFace = (debutGrossier + finGrossier) / 2;
+
+            Thread.Sleep(500);
+            // Eteint le servo
+            InclinaisonFace = 0;
+        }
+
+        public void ReglerAssietteProfil()
+        {
+            // Reglage axe profil : On cherche à avoir 2 réflecteurs
+            int pasGrossier = 6;
+            int pasPrecis = 2;
+            bool precis = true;
+
+            Console.WriteLine("Detection profil :");
+            Console.WriteLine("Detection grossiere :");
+
+            InclinaisonProfil = Config.CurrentConfig.GetCourseProfilMin(Carte);
+            Thread.Sleep(300);
+            Dictionary<int, List<DetectionBalise>> valeurs = ParcourirAxeProfil(pasGrossier, Config.CurrentConfig.GetCourseProfilMin(Carte), Config.CurrentConfig.GetCourseProfilMax(Carte));
+
+            int debutGrossier = Config.CurrentConfig.GetCourseProfilOpti(Carte);
+            int finGrossier = Config.CurrentConfig.GetCourseProfilOpti(Carte);
+            bool trouve = false;
+
+            // On cherche 4 reflexions ce qui veut dire que les 2 capteurs voient les 2 balises
+
+            foreach (KeyValuePair<int, List<DetectionBalise>> pair in valeurs)
+            {
+                bool trouveIteration = false;
+
+                if (pair.Value.Count >= 4)
+                    trouveIteration = true;
+
+                Console.WriteLine(pair.Key + " " + (trouveIteration ? "Oui" : "Non")  + "/" + (trouve ? "Oui" : "Non"));
+
+                if (trouveIteration && !trouve)
+                {
+                    // Premier
+                    trouve = true;
+                    debutGrossier = pair.Key;
+                }
+                else if (trouveIteration && trouve)
+                {
+                    // Dernier
+                    finGrossier = pair.Key;
+                }
+            }
+
+            Console.WriteLine("Grossier : " + debutGrossier + " -> " + finGrossier + " = " + ((debutGrossier + finGrossier) / 2));
+
+            InclinaisonProfil = debutGrossier - pasGrossier;
+            Thread.Sleep(300);
+
+            if (precis)
+            {
+                // Recherche affinée
+
+                valeurs = ParcourirAxeProfil(pasPrecis, debutGrossier - pasGrossier, finGrossier + pasGrossier);
+
+                int debutPrecis = Config.CurrentConfig.GetCourseFaceOpti(Carte);
+                int finPrecis = Config.CurrentConfig.GetCourseFaceOpti(Carte);
+
+                Console.WriteLine("Précis : ");
+
+                trouve = false;
+                foreach (KeyValuePair<int, List<DetectionBalise>> pair in valeurs)
+                {
+                    bool trouveIteration = false;
+                    if (pair.Value.Count >= 4)
+                        trouveIteration = true;
+
+                    Console.WriteLine(pair.Key + " " + (trouveIteration ? "Oui" : "Non") + (trouve ? "Oui" : "Non"));
+
+                    if (trouveIteration && !trouve)
+                    {
+                        // Premier
+                        trouve = true;
+                        debutPrecis = pair.Key;
+                    }
+                    else if (trouveIteration && trouve)
+                    {
+                        // Dernier
+                        finPrecis = pair.Key;
+                    }
+                }
+
+                Console.WriteLine("Précis : " + debutPrecis + " -> " + finPrecis + " = " + ((debutPrecis + finPrecis) / 2));
+
+                // On se place au milieu de la détection du reflecteur central
+                InclinaisonProfil = debutPrecis - pasGrossier;
+                Thread.Sleep(300);
+                InclinaisonProfil = (finPrecis + debutPrecis) / 2;
+            }
+            else
+                InclinaisonProfil = (debutGrossier + finGrossier) / 2;
+
+            Thread.Sleep(500);
+            // Eteint le servo
+            InclinaisonProfil = 0;
+        }
+
         public void ReglerAssiette()
         {
-            // todo
+            InclinaisonProfil = Config.CurrentConfig.GetCourseProfilOpti(Carte);
+
+            ReglerAssietteFace();
+            ReglerAssietteProfil();
+
+            CalibrationAssietteTerminee();
         }
     }
 }

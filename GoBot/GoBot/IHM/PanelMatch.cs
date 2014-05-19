@@ -26,6 +26,10 @@ namespace GoBot.IHM
 
             if (!Config.DesignMode)
             {
+                Plateau.Balise1.FinAsservissement += Balise1_FinAsservissement;
+                Plateau.Balise2.FinAsservissement += Balise2_FinAsservissement;
+                Plateau.Balise3.FinAsservissement += Balise3_FinAsservissement;
+
                 Plateau.Balise1.RotationChange += Balise1_RotationChange;
                 Plateau.Balise2.RotationChange += Balise2_RotationChange;
                 Plateau.Balise3.RotationChange += Balise3_RotationChange;
@@ -40,6 +44,30 @@ namespace GoBot.IHM
             }
         }
 
+        void Balise1_RotationChange(bool rotation)
+        {
+            if (!rotation)
+                ledBalise1Rotation.CouleurRouge(true);
+            else
+                ledBalise1Rotation.CouleurOrange();
+        }
+
+        void Balise2_RotationChange(bool rotation)
+        {
+            if (!rotation)
+                ledBalise2Rotation.CouleurRouge(true);
+            else
+                ledBalise2Rotation.CouleurOrange();
+        }
+
+        void Balise3_RotationChange(bool rotation)
+        {
+            if (!rotation)
+                ledBalise3Rotation.CouleurRouge(true);
+            else
+                ledBalise3Rotation.CouleurOrange();
+        }
+
         public void AfficherTable(Image img)
         {
             pictureBoxTable.Image = img;
@@ -51,6 +79,7 @@ namespace GoBot.IHM
 
             if (angleAuto1)
             {
+                ledBalise1Angle.CouleurOrange();
                 angleAuto1 = false;
                 Plateau.Balise1.ReglerOffset(16);
             }
@@ -61,6 +90,7 @@ namespace GoBot.IHM
 
             if (angleAuto2)
             {
+                ledBalise2Angle.CouleurOrange();
                 angleAuto2 = false;
                 Plateau.Balise2.ReglerOffset(16);
             }
@@ -71,6 +101,7 @@ namespace GoBot.IHM
 
             if (angleAuto3)
             {
+                ledBalise3Angle.CouleurOrange();
                 angleAuto3 = false;
                 Plateau.Balise3.ReglerOffset(16);
             }
@@ -89,47 +120,74 @@ namespace GoBot.IHM
             ledBalise3Angle.CouleurVert();
         }
 
-        void Balise1_RotationChange(bool rotation)
+        void Balise1_FinAsservissement()
         {
-            if (rotation)
+            ledBalise1Rotation.CouleurVert();
+            if (assietteAuto1)
             {
-                ledBalise1Rotation.CouleurVert();
-                if (assietteAuto1)
-                {
-                    assietteAuto1 = false;
-                    Plateau.Balise1.ReglerAssiette();
-                }
+                assietteAuto1 = false;
+                thAssiette1 = new Thread(ThreadAssiette);
+                thAssiette1.Start(Plateau.Balise1);
             }
-            else
-                ledBalise1Rotation.CouleurRouge();
         }
-        void Balise2_RotationChange(bool rotation)
+
+        void Balise2_FinAsservissement()
         {
-            if (rotation)
+            ledBalise2Rotation.CouleurVert();
+            if (assietteAuto2)
             {
-                ledBalise2Rotation.CouleurVert();
-                if (assietteAuto2)
-                {
-                    assietteAuto2 = false;
-                    Plateau.Balise2.ReglerAssiette();
-                }
+                assietteAuto2 = false;
+                thAssiette2 = new Thread(ThreadAssiette);
+                thAssiette2.Start(Plateau.Balise2);
             }
-            else
-                ledBalise2Rotation.CouleurRouge();
         }
-        void Balise3_RotationChange(bool rotation)
+
+        void Balise3_FinAsservissement()
         {
-            if (rotation)
+            ledBalise3Rotation.CouleurVert();
+            if (assietteAuto3)
             {
-                ledBalise3Rotation.CouleurVert();
-                if (assietteAuto3)
-                {
-                    assietteAuto3 = false;
-                    Plateau.Balise3.ReglerAssiette();
-                }
+                assietteAuto3 = false;
+                thAssiette3 = new Thread(ThreadAssiette);
+                thAssiette3.Start(Plateau.Balise3);
             }
-            else
-                ledBalise3Rotation.CouleurRouge();
+        }
+
+        Thread thAssiette1, thAssiette2, thAssiette3;
+
+        private void ThreadAssiette(Object o)
+        {
+            Balise balise = (Balise)o;
+
+            // Pause pour laisser la balise commencer à tourner tranquillement
+            Thread.Sleep(1000);
+            switch (balise.Carte)
+            {
+                case Carte.RecBun:
+                    ledBalise1Assiette.CouleurOrange();
+                    break;
+                case Carte.RecBeu:
+                    ledBalise2Assiette.CouleurOrange();
+                    break;
+                case Carte.RecBoi:
+                    ledBalise3Assiette.CouleurOrange();
+                    break;
+            }
+
+            balise.ReglerAssiette();
+
+            switch (balise.Carte)
+            {
+                case Carte.RecBun:
+                    ledBalise1Assiette.CouleurVert();
+                    break;
+                case Carte.RecBeu:
+                    ledBalise2Assiette.CouleurVert();
+                    break;
+                case Carte.RecBoi:
+                    ledBalise3Assiette.CouleurVert();
+                    break;
+            }
         }
 
         private void btnCouleurJaune_Click(object sender, EventArgs e)
@@ -264,10 +322,6 @@ namespace GoBot.IHM
         bool angleAuto1, angleAuto2, angleAuto3;
         private void btnBalises_Click(object sender, EventArgs e)
         {
-            ledBalise1Rotation.CouleurOrange();
-            ledBalise2Rotation.CouleurOrange();
-            ledBalise3Rotation.CouleurOrange();
-
             assietteAuto1 = boxCalibrationAssiette.Checked;
             assietteAuto2 = boxCalibrationAssiette.Checked;
             assietteAuto3 = boxCalibrationAssiette.Checked;
@@ -275,10 +329,65 @@ namespace GoBot.IHM
             angleAuto2 = boxCalibrationAngulaire.Checked;
             angleAuto3 = boxCalibrationAngulaire.Checked;
 
+            Plateau.Balise1.ReglageVitessePermanent = false;
+            Plateau.Balise2.ReglageVitessePermanent = false;
+            Plateau.Balise3.ReglageVitessePermanent = false;
+
             Plateau.Balise1.Lancer(4);
             Plateau.Balise2.Lancer(4);
             Plateau.Balise3.Lancer(4);
+
+            timerFinAsserBalise = new System.Windows.Forms.Timer();
+            timerFinAsserBalise.Interval = 3000;
+            timerFinAsserBalise.Tick += new EventHandler(timerFinAsserBalise_Tick);
+            timerFinAsserBalise.Start();
         }
+
+        void timerFinAsserBalise_Tick(object sender, EventArgs e)
+        {
+            bool toutesLancees = true;
+
+            if (Plateau.Balise1.EnRotation && Plateau.Balise1.ReglageVitesse)
+            {
+                Plateau.Balise1.ReglageVitesse = false;
+                Console.WriteLine("Balise 1 bien lancée, coupure asservissement manuel");
+            }
+            else
+            {
+                Plateau.Balise1.VitesseRotation(3200);
+                toutesLancees = false;
+                Console.WriteLine("Balise 1 mal lancée, relance");
+            }
+
+            if (Plateau.Balise2.EnRotation && Plateau.Balise2.ReglageVitesse)
+            {
+                Plateau.Balise2.ReglageVitesse = false;
+                Console.WriteLine("Balise 2 bien lancée, coupure asservissement manuel");
+            }
+            else
+            {
+                Plateau.Balise2.VitesseRotation(3200);
+                toutesLancees = false;
+                Console.WriteLine("Balise 2 mal lancée, relance");
+            }
+
+            if (Plateau.Balise3.EnRotation && Plateau.Balise3.ReglageVitesse)
+            {
+                Plateau.Balise3.ReglageVitesse = false;
+                Console.WriteLine("Balise 3 bien lancée, coupure asservissement manuel");
+            }
+            else
+            {
+                Plateau.Balise3.VitesseRotation(3200);
+                toutesLancees = false;
+                Console.WriteLine("Balise 3 mal lancée, relance");
+            }
+
+            if (toutesLancees)
+                timerFinAsserBalise.Stop();
+        }
+
+        System.Windows.Forms.Timer timerFinAsserBalise;
 
         private void btnCalibrationAssiette_Click(object sender, EventArgs e)
         {
@@ -292,8 +401,8 @@ namespace GoBot.IHM
             ledBalise3Angle.CouleurOrange();
 
             Plateau.Balise1.ReglerOffset(16); // 16 mesures à 4 tours seconde ce qui fait 4 secondes de calibration
-            Plateau.Balise2.ReglerOffset(16); 
-            Plateau.Balise3.ReglerOffset(16); 
+            Plateau.Balise2.ReglerOffset(16);
+            Plateau.Balise3.ReglerOffset(16);
         }
 
         private void btnReset_Click(object sender, EventArgs e)

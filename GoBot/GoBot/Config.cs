@@ -8,6 +8,7 @@ using System.Windows.Forms;
 using System.Xml.Serialization;
 using Microsoft.Win32;
 using GoBot.Communications;
+using System.Drawing;
 
 namespace GoBot
 {
@@ -82,13 +83,21 @@ namespace GoBot
 
         // Offset balises
 
-        public double OffsetBalise1Capteur1 { get; set; }
-        public double OffsetBalise2Capteur1 { get; set; }
-        public double OffsetBalise3Capteur1 { get; set; }
+        public double OffsetBaliseGaucheRouge1Capteur1 { get; set; }
+        public double OffsetBaliseGaucheRouge2Capteur1 { get; set; }
+        public double OffsetBaliseGaucheRouge3Capteur1 { get; set; }
 
-        public double OffsetBalise1Capteur2 { get; set; }
-        public double OffsetBalise2Capteur2 { get; set; }
-        public double OffsetBalise3Capteur2 { get; set; }
+        public double OffsetBaliseGaucheRouge1Capteur2 { get; set; }
+        public double OffsetBaliseGaucheRouge2Capteur2 { get; set; }
+        public double OffsetBaliseGaucheRouge3Capteur2 { get; set; }
+
+        public double OffsetBaliseDroiteJaune1Capteur1 { get; set; }
+        public double OffsetBaliseDroiteJaune2Capteur1 { get; set; }
+        public double OffsetBaliseDroiteJaune3Capteur1 { get; set; }
+
+        public double OffsetBaliseDroiteJaune1Capteur2 { get; set; }
+        public double OffsetBaliseDroiteJaune2Capteur2 { get; set; }
+        public double OffsetBaliseDroiteJaune3Capteur2 { get; set; }
 
         // Servos balises
 
@@ -129,34 +138,68 @@ namespace GoBot
         public SerializableDictionary<Carte, bool> LogsExpediteurs { get; set; }
         public SerializableDictionary<Carte, bool> LogsDestinataires { get; set; }
 
-        public double GetOffsetBalise(Carte carteBalise, int iCapteur)
+        public double GetOffsetBalise(Carte carteBalise, Color couleur, int iCapteur)
         {
-            if (iCapteur == 1)
+            if (couleur == Plateau.CouleurGaucheRouge)
             {
-                switch (carteBalise)
+                if (iCapteur == 1)
                 {
-                    case Carte.RecBun:
-                        return OffsetBalise1Capteur1;
-                    case Carte.RecBeu:
-                        return OffsetBalise2Capteur1;
-                    case Carte.RecBoi:
-                        return OffsetBalise3Capteur1;
-                    default:
-                        return 0;
+                    switch (carteBalise)
+                    {
+                        case Carte.RecBun:
+                            return OffsetBaliseGaucheRouge1Capteur1;
+                        case Carte.RecBeu:
+                            return OffsetBaliseGaucheRouge2Capteur1;
+                        case Carte.RecBoi:
+                            return OffsetBaliseGaucheRouge3Capteur1;
+                        default:
+                            return 0;
+                    }
+                }
+                else if (iCapteur == 2)
+                {
+                    switch (carteBalise)
+                    {
+                        case Carte.RecBun:
+                            return OffsetBaliseGaucheRouge1Capteur2;
+                        case Carte.RecBeu:
+                            return OffsetBaliseGaucheRouge2Capteur2;
+                        case Carte.RecBoi:
+                            return OffsetBaliseGaucheRouge3Capteur2;
+                        default:
+                            return 0;
+                    }
                 }
             }
-            else if (iCapteur == 2)
+            if (couleur == Plateau.CouleurDroiteJaune)
             {
-                switch (carteBalise)
+                if (iCapteur == 1)
                 {
-                    case Carte.RecBun:
-                        return OffsetBalise1Capteur2;
-                    case Carte.RecBeu:
-                        return OffsetBalise2Capteur2;
-                    case Carte.RecBoi:
-                        return OffsetBalise3Capteur2;
-                    default:
-                        return 0;
+                    switch (carteBalise)
+                    {
+                        case Carte.RecBun:
+                            return OffsetBaliseDroiteJaune1Capteur1;
+                        case Carte.RecBeu:
+                            return OffsetBaliseDroiteJaune2Capteur1;
+                        case Carte.RecBoi:
+                            return OffsetBaliseDroiteJaune3Capteur1;
+                        default:
+                            return 0;
+                    }
+                }
+                else if (iCapteur == 2)
+                {
+                    switch (carteBalise)
+                    {
+                        case Carte.RecBun:
+                            return OffsetBaliseDroiteJaune1Capteur2;
+                        case Carte.RecBeu:
+                            return OffsetBaliseDroiteJaune2Capteur2;
+                        case Carte.RecBoi:
+                            return OffsetBaliseDroiteJaune3Capteur2;
+                        default:
+                            return 0;
+                    }
                 }
             }
 
@@ -253,36 +296,72 @@ namespace GoBot
             }
         }
 
-        public void SetOffsetBalise(Carte carteBalise, int iCapteur, double offset)
+        public void SetOffsetBalise(Carte carteBalise, Color couleur, int iCapteur, double offset)
         {
-            if (iCapteur == 1)
+            if (couleur == Plateau.CouleurGaucheRouge)
             {
-                switch (carteBalise)
+                if (iCapteur == 1)
                 {
-                    case Carte.RecBun:
-                        OffsetBalise1Capteur1 = offset;
-                        break;
-                    case Carte.RecBeu:
-                        OffsetBalise2Capteur1 = offset;
-                        break;
-                    case Carte.RecBoi:
-                        OffsetBalise3Capteur1 = offset;
-                        break;
+                    switch (carteBalise)
+                    {
+                        case Carte.RecBun:
+                            OffsetBaliseGaucheRouge1Capteur1 = offset;
+                            break;
+                        case Carte.RecBeu:
+                            OffsetBaliseGaucheRouge2Capteur1 = offset;
+                            break;
+                        case Carte.RecBoi:
+                            OffsetBaliseGaucheRouge3Capteur1 = offset;
+                            break;
+                    }
+                }
+                else if (iCapteur == 2)
+                {
+                    switch (carteBalise)
+                    {
+                        case Carte.RecBun:
+                            OffsetBaliseGaucheRouge1Capteur2 = offset;
+                            break;
+                        case Carte.RecBeu:
+                            OffsetBaliseGaucheRouge2Capteur2 = offset;
+                            break;
+                        case Carte.RecBoi:
+                            OffsetBaliseGaucheRouge3Capteur2 = offset;
+                            break;
+                    }
                 }
             }
-            else if (iCapteur == 2)
+            if (couleur == Plateau.CouleurDroiteJaune)
             {
-                switch (carteBalise)
+                if (iCapteur == 1)
                 {
-                    case Carte.RecBun:
-                        OffsetBalise1Capteur2 = offset;
-                        break;
-                    case Carte.RecBeu:
-                        OffsetBalise2Capteur2 = offset;
-                        break;
-                    case Carte.RecBoi:
-                        OffsetBalise3Capteur2 = offset;
-                        break;
+                    switch (carteBalise)
+                    {
+                        case Carte.RecBun:
+                            OffsetBaliseDroiteJaune1Capteur1 = offset;
+                            break;
+                        case Carte.RecBeu:
+                            OffsetBaliseDroiteJaune2Capteur1 = offset;
+                            break;
+                        case Carte.RecBoi:
+                            OffsetBaliseDroiteJaune3Capteur1 = offset;
+                            break;
+                    }
+                }
+                else if (iCapteur == 2)
+                {
+                    switch (carteBalise)
+                    {
+                        case Carte.RecBun:
+                            OffsetBaliseDroiteJaune1Capteur2 = offset;
+                            break;
+                        case Carte.RecBeu:
+                            OffsetBaliseDroiteJaune2Capteur2 = offset;
+                            break;
+                        case Carte.RecBoi:
+                            OffsetBaliseDroiteJaune3Capteur2 = offset;
+                            break;
+                    }
                 }
             }
         }

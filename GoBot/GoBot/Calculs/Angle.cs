@@ -113,6 +113,16 @@ namespace GoBot.Calculs
             return retour;
         }
 
+        public bool ComprisEntre(Angle a1, Angle a2)
+        {
+            if (a1.AngleDegresPositif < a2.AngleDegresPositif)
+                return AngleDegresPositif > a1.AngleDegresPositif && AngleDegresPositif < a2.AngleDegresPositif;
+            else if (a1.AngleDegresPositif > a2.AngleDegresPositif)
+                return (AngleDegresPositif < a1.AngleDegresPositif && AngleDegresPositif > 0) || (AngleDegresPositif > a2.AngleDegresPositif && AngleDegresPositif < 0);
+
+            return true;
+        }
+
         #region Operateurs
 
         public static Angle operator +(Angle a1, Angle a2)

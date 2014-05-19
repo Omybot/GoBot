@@ -71,9 +71,12 @@ namespace GoBot.Balises
             get
             {
                 List<DetectionBalise> liste = new List<DetectionBalise>();
-                liste.AddRange(DetectionBalise1);
-                liste.AddRange(DetectionBalise2);
-                liste.AddRange(DetectionBalise3);
+                if(DetectionBalise1 != null)
+                    liste.AddRange(DetectionBalise1);
+                if (DetectionBalise2 != null)
+                    liste.AddRange(DetectionBalise2);
+                if (DetectionBalise3 != null)
+                    liste.AddRange(DetectionBalise3);
 
                 return liste;
             }
