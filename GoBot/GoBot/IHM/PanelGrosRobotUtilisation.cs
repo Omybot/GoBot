@@ -45,26 +45,6 @@ namespace GoBot.IHM
             Robots.GrosRobot.Diagnostic();
         }
 
-        private void btnPinceDroiteFermee_Click(object sender, EventArgs e)
-        {
-            Robots.GrosRobot.ActionneurOnOff(ActionneurOnOffID.GRPinceDroite, true);
-        }
-
-        private void btnPinceDroiteOuverte_Click(object sender, EventArgs e)
-        {
-            Robots.GrosRobot.ActionneurOnOff(ActionneurOnOffID.GRPinceDroite, false);
-        }
-
-        private void btnPinceGaucheFermee_Click(object sender, EventArgs e)
-        {
-            Robots.GrosRobot.ActionneurOnOff(ActionneurOnOffID.GRPinceGauche, true);
-        }
-
-        private void btnPinceGaucheOuverte_Click(object sender, EventArgs e)
-        {
-            Robots.GrosRobot.ActionneurOnOff(ActionneurOnOffID.GRPinceGauche, false);
-        }
-
         private void btnCoudeRange_Click(object sender, EventArgs e)
         {
             Robots.GrosRobot.BougeServo(ServomoteurID.GRFruitsCoude, Config.CurrentConfig.PositionGRCoudeRange);
@@ -92,22 +72,26 @@ namespace GoBot.IHM
 
         private void switchBoutonPousse_ChangementEtat(object sender, EventArgs e)
         {
-            Robots.GrosRobot.ActionneurOnOff(ActionneurOnOffID.GRPousseBouchon, switchBoutonPousse.Actif);
+            if (switchBoutonPinceDroiteBas.Actif)
+                Robots.GrosRobot.TourneMoteur(MoteurID.GRPousseBouchon, Config.CurrentConfig.PositionGRPousseBouchonFerme);
+            else
+                Robots.GrosRobot.TourneMoteur(MoteurID.GRPousseBouchon, Config.CurrentConfig.PositionGRPousseBouchonOuvert);
         }
 
         private void switchBoutonPinceDroite_ChangementEtat(object sender, EventArgs e)
         {
-            Robots.GrosRobot.ActionneurOnOff(ActionneurOnOffID.GRPinceDroite, switchBoutonPinceDroite.Actif);
+            if(switchBoutonPinceDroiteBas.Actif)
+                Robots.GrosRobot.TourneMoteur(MoteurID.GRPinceDroiteBas, Config.CurrentConfig.PositionGRPinceFruitBasDroiteOuvert);
+            else
+                Robots.GrosRobot.TourneMoteur(MoteurID.GRPinceDroiteBas, Config.CurrentConfig.PositionGRPinceFruitBasDroiteFerme);
         }
 
         private void switchBoutonPinceGauche_ChangementEtat(object sender, EventArgs e)
         {
-            Robots.GrosRobot.ActionneurOnOff(ActionneurOnOffID.GRPinceGauche, switchBoutonPinceGauche.Actif);
-        }
-
-        private void groupBoxUtilisation_Enter(object sender, EventArgs e)
-        {
-
+            if (switchBoutonPinceGaucheBas.Actif)
+                Robots.GrosRobot.TourneMoteur(MoteurID.GRPinceGaucheBas, Config.CurrentConfig.PositionGRPinceFruitBasGaucheOuvert);
+            else
+                Robots.GrosRobot.TourneMoteur(MoteurID.GRPinceGaucheBas, Config.CurrentConfig.PositionGRPinceFruitBasGaucheFerme);
         }
 
         private void btnCoudeGo_Click(object sender, EventArgs e)
@@ -143,14 +127,30 @@ namespace GoBot.IHM
 
         private void btnTest_Click(object sender, EventArgs e)
         {
+            Robots.GrosRobot.TourneMoteur(MoteurID.GRPinceDroiteBas, Config.CurrentConfig.PositionGRPinceFruitBasDroiteOuvert);
+            Robots.GrosRobot.TourneMoteur(MoteurID.GRPinceGaucheBas, Config.CurrentConfig.PositionGRPinceFruitBasGaucheOuvert);
+
+            Thread.Sleep(500);
+
+                Robots.GrosRobot.TourneMoteur(MoteurID.GRPinceDroiteHaut, Config.CurrentConfig.PositionGRPinceFruitHautDroiteOuvert);
+                Robots.GrosRobot.TourneMoteur(MoteurID.GRPinceGaucheHaut, Config.CurrentConfig.PositionGRPinceFruitHautGaucheOuvert);
+                Robots.GrosRobot.TourneMoteur(MoteurID.GRPinceDroiteBas, Config.CurrentConfig.PositionGRPinceFruitBasDroiteFerme);
+                Robots.GrosRobot.TourneMoteur(MoteurID.GRPinceGaucheBas, Config.CurrentConfig.PositionGRPinceFruitBasGaucheFerme);
+
+                Thread.Sleep(500);
+
+                Robots.GrosRobot.TourneMoteur(MoteurID.GRPinceDroiteBas, Config.CurrentConfig.PositionGRPinceFruitBasDroiteOuvert);
+                Robots.GrosRobot.TourneMoteur(MoteurID.GRPinceGaucheBas, Config.CurrentConfig.PositionGRPinceFruitBasGaucheOuvert);
+
+            /*
             Servomoteur coude = new Servomoteur(Carte.RecIO, (int)ServomoteurID.GRFruitsCoude, 0);
             Servomoteur epaule = new Servomoteur(Carte.RecIO, (int)ServomoteurID.GRFruitsEpaule, 0);
 
             coude.VitesseMax = 150;
             epaule.VitesseMax = 150;
 
-            Robots.GrosRobot.ActionneurOnOff(ActionneurOnOffID.GRPinceDroite, false);
-            Robots.GrosRobot.ActionneurOnOff(ActionneurOnOffID.GRPinceGauche, false);
+            Robots.GrosRobot.ActionneurOnOff(ActionneurOnOffID.GRPinceDroiteBas, false);
+            Robots.GrosRobot.ActionneurOnOff(ActionneurOnOffID.GRPinceGaucheBas, false);
 
             BrasFruits.PositionCoude(-95.77);
             BrasFruits.PositionEpaule(163.79);
@@ -192,8 +192,8 @@ namespace GoBot.IHM
                 epaule.DemandeActualisation(false);
             } while (epaule.EnMouvement);
             
-            Robots.GrosRobot.ActionneurOnOff(ActionneurOnOffID.GRPinceDroite, true);
-            Robots.GrosRobot.ActionneurOnOff(ActionneurOnOffID.GRPinceGauche, true);
+            Robots.GrosRobot.ActionneurOnOff(ActionneurOnOffID.GRPinceDroiteBas, true);
+            Robots.GrosRobot.ActionneurOnOff(ActionneurOnOffID.GRPinceGaucheBas, true);
             Thread.Sleep(500);
             coude.VitesseMax = 1000;
             epaule.VitesseMax = 1000;
@@ -228,19 +228,57 @@ namespace GoBot.IHM
             } while (epaule.EnMouvement);
 
 
-            Robots.GrosRobot.ActionneurOnOff(ActionneurOnOffID.GRPinceDroite, false);
-            Robots.GrosRobot.ActionneurOnOff(ActionneurOnOffID.GRPinceGauche, false);
+            Robots.GrosRobot.ActionneurOnOff(ActionneurOnOffID.GRPinceDroiteBas, false);
+            Robots.GrosRobot.ActionneurOnOff(ActionneurOnOffID.GRPinceGaucheBas, false);
 
             Thread.Sleep(700);
             Robots.GrosRobot.ActionneurOnOff(ActionneurOnOffID.GRPousseBouchon, true);
             Thread.Sleep(500);
-            Robots.GrosRobot.ActionneurOnOff(ActionneurOnOffID.GRPousseBouchon, false);
+            Robots.GrosRobot.ActionneurOnOff(ActionneurOnOffID.GRPousseBouchon, false);*/
         }
 
         private void switchBoutonPince_ChangementEtat(object sender, EventArgs e)
         {
-            Robots.GrosRobot.ActionneurOnOff(ActionneurOnOffID.GRPinceDroite, switchBoutonPince.Actif);
-            Robots.GrosRobot.ActionneurOnOff(ActionneurOnOffID.GRPinceGauche, switchBoutonPince.Actif);
+            if (switchBoutonPinceBas.Actif)
+            {
+                Robots.GrosRobot.TourneMoteur(MoteurID.GRPinceDroiteBas, Config.CurrentConfig.PositionGRPinceFruitBasDroiteFerme);
+                Robots.GrosRobot.TourneMoteur(MoteurID.GRPinceGaucheBas, Config.CurrentConfig.PositionGRPinceFruitBasGaucheFerme);
+            }
+            else
+            {
+                Robots.GrosRobot.TourneMoteur(MoteurID.GRPinceDroiteBas, Config.CurrentConfig.PositionGRPinceFruitBasDroiteOuvert);
+                Robots.GrosRobot.TourneMoteur(MoteurID.GRPinceGaucheBas, Config.CurrentConfig.PositionGRPinceFruitBasGaucheOuvert);
+            }
+        }
+
+        private void switchBoutonPinceDroiteHaut_ChangementEtat(object sender, EventArgs e)
+        {
+            if (switchBoutonPinceDroiteHaut.Actif)
+                Robots.GrosRobot.TourneMoteur(MoteurID.GRPinceDroiteHaut, Config.CurrentConfig.PositionGRPinceFruitHautDroiteFerme);
+            else
+                Robots.GrosRobot.TourneMoteur(MoteurID.GRPinceDroiteHaut, Config.CurrentConfig.PositionGRPinceFruitHautDroiteOuvert);
+        }
+
+        private void switchBoutonPinceGaucheHaut_ChangementEtat(object sender, EventArgs e)
+        {
+            if (switchBoutonPinceGaucheHaut.Actif)
+                Robots.GrosRobot.TourneMoteur(MoteurID.GRPinceGaucheHaut, Config.CurrentConfig.PositionGRPinceFruitHautGaucheFerme);
+            else
+                Robots.GrosRobot.TourneMoteur(MoteurID.GRPinceGaucheHaut, Config.CurrentConfig.PositionGRPinceFruitHautGaucheOuvert);
+        }
+
+        private void switchBoutonPinceHaut_ChangementEtat(object sender, EventArgs e)
+        {
+            if (switchBoutonPinceHaut.Actif)
+            {
+                Robots.GrosRobot.TourneMoteur(MoteurID.GRPinceDroiteHaut, Config.CurrentConfig.PositionGRPinceFruitHautDroiteFerme);
+                Robots.GrosRobot.TourneMoteur(MoteurID.GRPinceGaucheHaut, Config.CurrentConfig.PositionGRPinceFruitHautGaucheFerme);
+            }
+            else
+            {
+                Robots.GrosRobot.TourneMoteur(MoteurID.GRPinceDroiteHaut, Config.CurrentConfig.PositionGRPinceFruitHautDroiteOuvert);
+                Robots.GrosRobot.TourneMoteur(MoteurID.GRPinceGaucheHaut, Config.CurrentConfig.PositionGRPinceFruitHautGaucheOuvert);
+            }
         }
     }
 }

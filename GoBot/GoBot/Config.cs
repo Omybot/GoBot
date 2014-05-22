@@ -125,8 +125,19 @@ namespace GoBot
         // Position des servos du gros robot
         
         public int PositionGRCoudeRange { get; set; }
-
         public int PositionGREpauleRange { get; set; }
+
+        public int PositionGRPinceFruitHautDroiteOuvert { get; set; }
+        public int PositionGRPinceFruitHautDroiteFerme { get; set; }
+        public int PositionGRPinceFruitBasDroiteOuvert { get; set; }
+        public int PositionGRPinceFruitBasDroiteFerme { get; set; }
+        public int PositionGRPinceFruitHautGaucheOuvert { get; set; }
+        public int PositionGRPinceFruitHautGaucheFerme { get; set; }
+        public int PositionGRPinceFruitBasGaucheOuvert { get; set; }
+        public int PositionGRPinceFruitBasGaucheFerme { get; set; }
+
+        public int PositionGRPousseBouchonFerme { get; set; }
+        public int PositionGRPousseBouchonOuvert { get; set; }
 
         // Parametres logs UDP
 

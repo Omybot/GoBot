@@ -102,5 +102,90 @@ namespace GoBot.IHM
         }
 
         #endregion
+
+        private void btnOkPinceHautGauche_Click(object sender, EventArgs e)
+        {
+            Robots.GrosRobot.TourneMoteur(MoteurID.GRPinceGaucheHaut, (int)numPosPinceHautGauche.Value);
+        }
+
+        private void btnOuvertPinceHautGauche_Click(object sender, EventArgs e)
+        {
+            if (MessageBox.Show("Êtes vous sûr de vouloir sauvegarder la position comme étant la position ouverte ?", "Attention", MessageBoxButtons.OK, MessageBoxIcon.Question) == DialogResult.OK)
+                Config.CurrentConfig.PositionGRPinceFruitHautGaucheOuvert = (int)numPosPinceHautGauche.Value;
+        }
+
+        private void btnFermePinceHautGauche_Click(object sender, EventArgs e)
+        {
+            if (MessageBox.Show("Êtes vous sûr de vouloir sauvegarder la position comme étant la position fermée ?", "Attention", MessageBoxButtons.OK, MessageBoxIcon.Question) == DialogResult.OK)
+                Config.CurrentConfig.PositionGRPinceFruitHautGaucheFerme = (int)numPosPinceHautGauche.Value;
+        }
+
+        private void btnOkPinceHautDroite_Click(object sender, EventArgs e)
+        {
+            Robots.GrosRobot.TourneMoteur(MoteurID.GRPinceDroiteHaut, (int)numPosPinceHautDroite.Value);
+        }
+
+        private void btnOuvertPinceHautDroite_Click(object sender, EventArgs e)
+        {
+            if (MessageBox.Show("Êtes vous sûr de vouloir sauvegarder la position comme étant la position ouverte ?", "Attention", MessageBoxButtons.OK, MessageBoxIcon.Question) == DialogResult.OK)
+                Config.CurrentConfig.PositionGRPinceFruitHautDroiteOuvert = (int)numPosPinceHautDroite.Value;
+        }
+
+        private void btnFermePinceHautDroite_Click(object sender, EventArgs e)
+        {
+            if (MessageBox.Show("Êtes vous sûr de vouloir sauvegarder la position comme étant la position fermée ?", "Attention", MessageBoxButtons.OK, MessageBoxIcon.Question) == DialogResult.OK)
+                Config.CurrentConfig.PositionGRPinceFruitHautDroiteFerme = (int)numPosPinceHautDroite.Value;
+        }
+
+        private void btnOkPinceBasGauche_Click(object sender, EventArgs e)
+        {
+            Robots.GrosRobot.TourneMoteur(MoteurID.GRPinceGaucheBas, (int)numPosPinceBasGauche.Value);
+        }
+
+        private void btnOuvertPinceBasGauche_Click(object sender, EventArgs e)
+        {
+            if (MessageBox.Show("Êtes vous sûr de vouloir sauvegarder la position comme étant la position ouverte ?", "Attention", MessageBoxButtons.OK, MessageBoxIcon.Question) == DialogResult.OK)
+                Config.CurrentConfig.PositionGRPinceFruitBasGaucheOuvert = (int)numPosPinceBasGauche.Value;
+        }
+
+        private void btnFermePinceBasGauche_Click(object sender, EventArgs e)
+        {
+            if (MessageBox.Show("Êtes vous sûr de vouloir sauvegarder la position comme étant la position fermée ?", "Attention", MessageBoxButtons.OK, MessageBoxIcon.Question) == DialogResult.OK)
+                Config.CurrentConfig.PositionGRPinceFruitBasGaucheFerme = (int)numPosPinceBasGauche.Value;
+        }
+
+        private void btnOkPinceBasDroite_Click(object sender, EventArgs e)
+        {
+            Robots.GrosRobot.TourneMoteur(MoteurID.GRPinceDroiteBas, (int)numPosPinceBasDroite.Value);
+        }
+
+        private void btnOuvertPinceBasDroite_Click(object sender, EventArgs e)
+        {
+            if (MessageBox.Show("Êtes vous sûr de vouloir sauvegarder la position comme étant la position ouverte ?", "Attention", MessageBoxButtons.OK, MessageBoxIcon.Question) == DialogResult.OK)
+                Config.CurrentConfig.PositionGRPinceFruitBasDroiteOuvert = (int)numPosPinceBasDroite.Value;
+        }
+
+        private void btnFermePinceBasDroite_Click(object sender, EventArgs e)
+        {
+            if (MessageBox.Show("Êtes vous sûr de vouloir sauvegarder la position comme étant la position fermée ?", "Attention", MessageBoxButtons.OK, MessageBoxIcon.Question) == DialogResult.OK)
+                Config.CurrentConfig.PositionGRPinceFruitBasDroiteFerme = (int)numPosPinceBasDroite.Value;
+        }
+
+        private void btnOkPousseBouchon_Click(object sender, EventArgs e)
+        {
+            Robots.GrosRobot.TourneMoteur(MoteurID.GRPousseBouchon, (int)numPousseBouchon.Value);
+        }
+
+        private void btnPousseBouchonOuvert_Click(object sender, EventArgs e)
+        {
+            if (MessageBox.Show("Êtes vous sûr de vouloir sauvegarder la position comme étant la position ouverte ?", "Attention", MessageBoxButtons.OK, MessageBoxIcon.Question) == DialogResult.OK)
+                Config.CurrentConfig.PositionGRPousseBouchonOuvert = (int)numPousseBouchon.Value;
+        }
+
+        private void btnPousseBouchonFerme_Click(object sender, EventArgs e)
+        {
+            if (MessageBox.Show("Êtes vous sûr de vouloir sauvegarder la position comme étant la position fermée ?", "Attention", MessageBoxButtons.OK, MessageBoxIcon.Question) == DialogResult.OK)
+                Config.CurrentConfig.PositionGRPousseBouchonFerme = (int)numPousseBouchon.Value;
+        }
     }
 }

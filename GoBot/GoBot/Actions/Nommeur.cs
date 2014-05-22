@@ -62,6 +62,16 @@ namespace GoBot.Actions
             {
                 case MoteurID.GREpauleFeu:
                     return "épaule feu";
+                case MoteurID.GRPinceDroiteBas:
+                    return "pince fruit droite bas";
+                case MoteurID.GRPinceGaucheBas:
+                    return "pince fruit gauche bas";
+                case MoteurID.GRPinceDroiteHaut:
+                    return "pince fruit haut bas";
+                case MoteurID.GRPinceGaucheHaut:
+                    return "pince fruit gauche haut";
+                case MoteurID.GRPousseBouchon:
+                    return "pousse bouchon";
                 default:
                     return moteur.ToString();
             }
@@ -99,12 +109,6 @@ namespace GoBot.Actions
                     return "pompe des feux";
                 case ActionneurOnOffID.GRCanonFruit:
                     return "canon à fruits";
-                case ActionneurOnOffID.GRPinceDroite:
-                    return "pince feu droite";
-                case ActionneurOnOffID.GRPinceGauche:
-                    return "pince feu gauche";
-                case ActionneurOnOffID.GRPousseBouchon:
-                    return "pousse bouchon";
                 default:
                     return actionneur.ToString();
             }

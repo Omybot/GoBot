@@ -295,7 +295,12 @@ namespace GoBot
         /*GRCanon = 0,
         GRCanonTMin = 2,
         GRTurbineAspirateur = 1*/
-        GREpauleFeu = 0x00
+        GREpauleFeu = 0x00,
+        GRPinceDroiteBas = 0x10,
+        GRPinceGaucheBas = 0x11,
+        GRPousseBouchon = 0x12,
+        GRPinceDroiteHaut = 0x13,
+        GRPinceGaucheHaut = 0x14,
     }
 
     public enum CapteurID
@@ -317,9 +322,6 @@ namespace GoBot
         GRElectrovanneFeu = 2,
         GRAlimentation = 1,
         GRPompeFeu = 0,
-        GRPinceDroite = 0x10,
-        GRPinceGauche = 0x11,
-        GRPousseBouchon = 0x12,
         GRCanonFruit = 0x03
     }
 

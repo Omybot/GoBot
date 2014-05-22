@@ -119,6 +119,13 @@ namespace GoBot
 
             if ((trameRecue[0] == (byte)Carte.RecMove && this == Robots.GrosRobot) || (trameRecue[0] == (byte)Carte.RecPi && this == Robots.PetitRobot))
             {
+                if (trameRecue[0] == (byte)Carte.RecPi && trameRecue[1] == (byte)FonctionPi.RetourTestConnexion)
+                {
+                    // Uniquement sur le petit robot : Retour de la tension sur RecPi
+                    TensionPack1 = (double)((trameRecue[2] * 256 + trameRecue[3]) / 100.0);
+                    TensionPack2 = (double)((trameRecue[4] * 256 + trameRecue[5]) / 100.0);
+                }
+
                 if (trameRecue[1] == (byte)FonctionMove.Blocage)
                 {
                     thActivationAsser = new Thread(ActivationAsserv);
@@ -493,14 +500,14 @@ namespace GoBot
 
         #endregion
 
-        public override void TourneMoteur(MoteurID moteur, int vitesse)
+        public override void TourneMoteur(MoteurID moteur, int position)
         {
-            base.TourneMoteur(moteur, vitesse);
+            base.TourneMoteur(moteur, position);
 
-            Trame trame = TrameFactory.MoteurVitesse(moteur, vitesse);
+            Trame trame = TrameFactory.MoteurVitesse(moteur, position);
             Connexions.ConnexionIO.SendMessage(trame);
 
-            Historique.AjouterAction(new ActionMoteur(this, vitesse, moteur));
+            Historique.AjouterAction(new ActionMoteur(this, position, moteur));
         }
 
         public override void AlimentationPuissance(bool on)

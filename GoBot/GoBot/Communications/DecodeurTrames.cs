@@ -477,7 +477,9 @@ namespace GoBot.Communications
                                 message = "Test connexion";
                                 break;
                             case FonctionPi.RetourTestConnexion:
-                                message = "Retour test connexion";
+                                double TensionPack1 = (double)((trame[2] * 256 + trame[3]) / 100.0);
+                                double TensionPack2 = (double)((trame[4] * 256 + trame[5]) / 100.0);
+                                message = "Retour test connexion tension = " + TensionPack1 + "V / " + TensionPack2 + "V";
                                 break;
                             case FonctionPi.Virage:
                                 SensAR valeurVirageSensAR = ((SensAR)trame[2]);

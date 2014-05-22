@@ -69,15 +69,12 @@ namespace GoBot.Communications
         {
             try
             {
-                if (trame.Carte == Carte)
+                if(trame[1] == (byte)FonctionMiwi.Acquittement)
+                    SemaphoreAck.Release();
+                else if (trame.Carte == Carte)
                 {
                     ConnexionCheck.MajConnexion();
                     TrameRecue(trame);
-                }
-                else if (trame.Length > 2 && trame[1] == (byte)FonctionMiwi.Acquittement && trame[2] == (byte)Carte)
-                {
-                    // Si on reçoit un message d'acquittement, on libère le sémaphore
-                    SemaphoreAck.Release();
                 }
             }
             catch (Exception)

@@ -29,18 +29,18 @@
         private void InitializeComponent()
         {
             this.groupBoxUtilisation = new Composants.GroupBoxRetractable();
+            this.switchBoutonPinceBas = new Composants.SwitchBouton();
             this.btnTest = new System.Windows.Forms.Button();
             this.btnDepose1 = new System.Windows.Forms.Button();
             this.btnBrasRange = new System.Windows.Forms.Button();
-            this.btnDepose2 = new System.Windows.Forms.Button();
             this.label10 = new System.Windows.Forms.Label();
             this.label9 = new System.Windows.Forms.Label();
             this.numEpaule = new System.Windows.Forms.NumericUpDown();
             this.numCoude = new System.Windows.Forms.NumericUpDown();
             this.btnEpauleGo = new System.Windows.Forms.Button();
             this.btnCoudeGo = new System.Windows.Forms.Button();
-            this.switchBoutonPinceGauche = new Composants.SwitchBouton();
-            this.switchBoutonPinceDroite = new Composants.SwitchBouton();
+            this.switchBoutonPinceGaucheBas = new Composants.SwitchBouton();
+            this.switchBoutonPinceDroiteBas = new Composants.SwitchBouton();
             this.label8 = new System.Windows.Forms.Label();
             this.switchBoutonPousse = new Composants.SwitchBouton();
             this.btnTirBouchon = new System.Windows.Forms.Button();
@@ -58,7 +58,11 @@
             this.label12 = new System.Windows.Forms.Label();
             this.btnDiagnostic = new System.Windows.Forms.Button();
             this.switchBoutonPuissance = new Composants.SwitchBouton();
-            this.switchBoutonPince = new Composants.SwitchBouton();
+            this.switchBoutonPinceHaut = new Composants.SwitchBouton();
+            this.switchBoutonPinceGaucheHaut = new Composants.SwitchBouton();
+            this.switchBoutonPinceDroiteHaut = new Composants.SwitchBouton();
+            this.label11 = new System.Windows.Forms.Label();
+            this.label13 = new System.Windows.Forms.Label();
             this.groupBoxUtilisation.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numEpaule)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numCoude)).BeginInit();
@@ -66,19 +70,23 @@
             // 
             // groupBoxUtilisation
             // 
-            this.groupBoxUtilisation.Controls.Add(this.switchBoutonPince);
+            this.groupBoxUtilisation.Controls.Add(this.label13);
+            this.groupBoxUtilisation.Controls.Add(this.label11);
+            this.groupBoxUtilisation.Controls.Add(this.switchBoutonPinceHaut);
+            this.groupBoxUtilisation.Controls.Add(this.switchBoutonPinceGaucheHaut);
+            this.groupBoxUtilisation.Controls.Add(this.switchBoutonPinceDroiteHaut);
+            this.groupBoxUtilisation.Controls.Add(this.switchBoutonPinceBas);
             this.groupBoxUtilisation.Controls.Add(this.btnTest);
             this.groupBoxUtilisation.Controls.Add(this.btnDepose1);
             this.groupBoxUtilisation.Controls.Add(this.btnBrasRange);
-            this.groupBoxUtilisation.Controls.Add(this.btnDepose2);
             this.groupBoxUtilisation.Controls.Add(this.label10);
             this.groupBoxUtilisation.Controls.Add(this.label9);
             this.groupBoxUtilisation.Controls.Add(this.numEpaule);
             this.groupBoxUtilisation.Controls.Add(this.numCoude);
             this.groupBoxUtilisation.Controls.Add(this.btnEpauleGo);
             this.groupBoxUtilisation.Controls.Add(this.btnCoudeGo);
-            this.groupBoxUtilisation.Controls.Add(this.switchBoutonPinceGauche);
-            this.groupBoxUtilisation.Controls.Add(this.switchBoutonPinceDroite);
+            this.groupBoxUtilisation.Controls.Add(this.switchBoutonPinceGaucheBas);
+            this.groupBoxUtilisation.Controls.Add(this.switchBoutonPinceDroiteBas);
             this.groupBoxUtilisation.Controls.Add(this.label8);
             this.groupBoxUtilisation.Controls.Add(this.switchBoutonPousse);
             this.groupBoxUtilisation.Controls.Add(this.btnTirBouchon);
@@ -98,15 +106,24 @@
             this.groupBoxUtilisation.Controls.Add(this.switchBoutonPuissance);
             this.groupBoxUtilisation.Location = new System.Drawing.Point(3, 3);
             this.groupBoxUtilisation.Name = "groupBoxUtilisation";
-            this.groupBoxUtilisation.Size = new System.Drawing.Size(332, 296);
+            this.groupBoxUtilisation.Size = new System.Drawing.Size(332, 328);
             this.groupBoxUtilisation.TabIndex = 1;
             this.groupBoxUtilisation.TabStop = false;
             this.groupBoxUtilisation.Text = "Utilisation";
-            this.groupBoxUtilisation.Enter += new System.EventHandler(this.groupBoxUtilisation_Enter);
+            // 
+            // switchBoutonPinceBas
+            // 
+            this.switchBoutonPinceBas.BackColor = System.Drawing.Color.Transparent;
+            this.switchBoutonPinceBas.Location = new System.Drawing.Point(158, 169);
+            this.switchBoutonPinceBas.Name = "switchBoutonPinceBas";
+            this.switchBoutonPinceBas.Size = new System.Drawing.Size(35, 15);
+            this.switchBoutonPinceBas.Symetrique = true;
+            this.switchBoutonPinceBas.TabIndex = 236;
+            this.switchBoutonPinceBas.ChangementEtat += new System.EventHandler(this.switchBoutonPince_ChangementEtat);
             // 
             // btnTest
             // 
-            this.btnTest.Location = new System.Drawing.Point(257, 134);
+            this.btnTest.Location = new System.Drawing.Point(182, 301);
             this.btnTest.Name = "btnTest";
             this.btnTest.Size = new System.Drawing.Size(42, 21);
             this.btnTest.TabIndex = 235;
@@ -116,33 +133,23 @@
             // 
             // btnDepose1
             // 
-            this.btnDepose1.Location = new System.Drawing.Point(105, 243);
+            this.btnDepose1.Location = new System.Drawing.Point(29, 277);
             this.btnDepose1.Name = "btnDepose1";
             this.btnDepose1.Size = new System.Drawing.Size(92, 23);
             this.btnDepose1.TabIndex = 234;
-            this.btnDepose1.Text = "Depose pince 1";
+            this.btnDepose1.Text = "Depose pince";
             this.btnDepose1.UseVisualStyleBackColor = true;
             this.btnDepose1.Click += new System.EventHandler(this.btnDepose1_Click);
             // 
             // btnBrasRange
             // 
-            this.btnBrasRange.Location = new System.Drawing.Point(234, 243);
+            this.btnBrasRange.Location = new System.Drawing.Point(230, 277);
             this.btnBrasRange.Name = "btnBrasRange";
             this.btnBrasRange.Size = new System.Drawing.Size(92, 23);
             this.btnBrasRange.TabIndex = 233;
             this.btnBrasRange.Text = "Bras rangé";
             this.btnBrasRange.UseVisualStyleBackColor = true;
             this.btnBrasRange.Click += new System.EventHandler(this.btnBrasRange_Click);
-            // 
-            // btnDepose2
-            // 
-            this.btnDepose2.Location = new System.Drawing.Point(7, 243);
-            this.btnDepose2.Name = "btnDepose2";
-            this.btnDepose2.Size = new System.Drawing.Size(92, 23);
-            this.btnDepose2.TabIndex = 232;
-            this.btnDepose2.Text = "Depose pince 2";
-            this.btnDepose2.UseVisualStyleBackColor = true;
-            this.btnDepose2.Click += new System.EventHandler(this.btnDepose2_Click);
             // 
             // label10
             // 
@@ -213,30 +220,30 @@
             this.btnCoudeGo.UseVisualStyleBackColor = true;
             this.btnCoudeGo.Click += new System.EventHandler(this.btnCoudeGo_Click);
             // 
-            // switchBoutonPinceGauche
+            // switchBoutonPinceGaucheBas
             // 
-            this.switchBoutonPinceGauche.BackColor = System.Drawing.Color.Transparent;
-            this.switchBoutonPinceGauche.Location = new System.Drawing.Point(117, 160);
-            this.switchBoutonPinceGauche.Name = "switchBoutonPinceGauche";
-            this.switchBoutonPinceGauche.Size = new System.Drawing.Size(35, 15);
-            this.switchBoutonPinceGauche.Symetrique = true;
-            this.switchBoutonPinceGauche.TabIndex = 225;
-            this.switchBoutonPinceGauche.ChangementEtat += new System.EventHandler(this.switchBoutonPinceGauche_ChangementEtat);
+            this.switchBoutonPinceGaucheBas.BackColor = System.Drawing.Color.Transparent;
+            this.switchBoutonPinceGaucheBas.Location = new System.Drawing.Point(117, 183);
+            this.switchBoutonPinceGaucheBas.Name = "switchBoutonPinceGaucheBas";
+            this.switchBoutonPinceGaucheBas.Size = new System.Drawing.Size(35, 15);
+            this.switchBoutonPinceGaucheBas.Symetrique = true;
+            this.switchBoutonPinceGaucheBas.TabIndex = 225;
+            this.switchBoutonPinceGaucheBas.ChangementEtat += new System.EventHandler(this.switchBoutonPinceGauche_ChangementEtat);
             // 
-            // switchBoutonPinceDroite
+            // switchBoutonPinceDroiteBas
             // 
-            this.switchBoutonPinceDroite.BackColor = System.Drawing.Color.Transparent;
-            this.switchBoutonPinceDroite.Location = new System.Drawing.Point(117, 134);
-            this.switchBoutonPinceDroite.Name = "switchBoutonPinceDroite";
-            this.switchBoutonPinceDroite.Size = new System.Drawing.Size(35, 15);
-            this.switchBoutonPinceDroite.Symetrique = true;
-            this.switchBoutonPinceDroite.TabIndex = 224;
-            this.switchBoutonPinceDroite.ChangementEtat += new System.EventHandler(this.switchBoutonPinceDroite_ChangementEtat);
+            this.switchBoutonPinceDroiteBas.BackColor = System.Drawing.Color.Transparent;
+            this.switchBoutonPinceDroiteBas.Location = new System.Drawing.Point(117, 157);
+            this.switchBoutonPinceDroiteBas.Name = "switchBoutonPinceDroiteBas";
+            this.switchBoutonPinceDroiteBas.Size = new System.Drawing.Size(35, 15);
+            this.switchBoutonPinceDroiteBas.Symetrique = true;
+            this.switchBoutonPinceDroiteBas.TabIndex = 224;
+            this.switchBoutonPinceDroiteBas.ChangementEtat += new System.EventHandler(this.switchBoutonPinceDroite_ChangementEtat);
             // 
             // label8
             // 
             this.label8.AutoSize = true;
-            this.label8.Location = new System.Drawing.Point(173, 210);
+            this.label8.Location = new System.Drawing.Point(176, 236);
             this.label8.Name = "label8";
             this.label8.Size = new System.Drawing.Size(87, 13);
             this.label8.TabIndex = 223;
@@ -245,7 +252,7 @@
             // switchBoutonPousse
             // 
             this.switchBoutonPousse.BackColor = System.Drawing.Color.Transparent;
-            this.switchBoutonPousse.Location = new System.Drawing.Point(264, 210);
+            this.switchBoutonPousse.Location = new System.Drawing.Point(267, 236);
             this.switchBoutonPousse.Name = "switchBoutonPousse";
             this.switchBoutonPousse.Size = new System.Drawing.Size(35, 15);
             this.switchBoutonPousse.Symetrique = true;
@@ -274,7 +281,7 @@
             // label6
             // 
             this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(173, 184);
+            this.label6.Location = new System.Drawing.Point(176, 210);
             this.label6.Name = "label6";
             this.label6.Size = new System.Drawing.Size(70, 13);
             this.label6.TabIndex = 219;
@@ -283,7 +290,7 @@
             // switchBoutonElectrvanne
             // 
             this.switchBoutonElectrvanne.BackColor = System.Drawing.Color.Transparent;
-            this.switchBoutonElectrvanne.Location = new System.Drawing.Point(264, 184);
+            this.switchBoutonElectrvanne.Location = new System.Drawing.Point(267, 210);
             this.switchBoutonElectrvanne.Name = "switchBoutonElectrvanne";
             this.switchBoutonElectrvanne.Size = new System.Drawing.Size(35, 15);
             this.switchBoutonElectrvanne.Symetrique = true;
@@ -293,7 +300,7 @@
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(26, 184);
+            this.label2.Location = new System.Drawing.Point(26, 234);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(58, 13);
             this.label2.TabIndex = 217;
@@ -311,7 +318,7 @@
             // switchBoutonPompeFeu
             // 
             this.switchBoutonPompeFeu.BackColor = System.Drawing.Color.Transparent;
-            this.switchBoutonPompeFeu.Location = new System.Drawing.Point(117, 184);
+            this.switchBoutonPompeFeu.Location = new System.Drawing.Point(117, 234);
             this.switchBoutonPompeFeu.Name = "switchBoutonPompeFeu";
             this.switchBoutonPompeFeu.Size = new System.Drawing.Size(35, 15);
             this.switchBoutonPompeFeu.Symetrique = true;
@@ -350,7 +357,7 @@
             // label4
             // 
             this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(26, 134);
+            this.label4.Location = new System.Drawing.Point(26, 157);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(63, 13);
             this.label4.TabIndex = 202;
@@ -359,7 +366,7 @@
             // label5
             // 
             this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(26, 160);
+            this.label5.Location = new System.Drawing.Point(26, 183);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(73, 13);
             this.label5.TabIndex = 207;
@@ -394,15 +401,53 @@
             this.switchBoutonPuissance.TabIndex = 200;
             this.switchBoutonPuissance.ChangementEtat += new System.EventHandler(this.switchBoutonPuissance_ChangementEtat);
             // 
-            // switchBoutonPince
+            // switchBoutonPinceHaut
             // 
-            this.switchBoutonPince.BackColor = System.Drawing.Color.Transparent;
-            this.switchBoutonPince.Location = new System.Drawing.Point(158, 146);
-            this.switchBoutonPince.Name = "switchBoutonPince";
-            this.switchBoutonPince.Size = new System.Drawing.Size(35, 15);
-            this.switchBoutonPince.Symetrique = true;
-            this.switchBoutonPince.TabIndex = 236;
-            this.switchBoutonPince.ChangementEtat += new System.EventHandler(this.switchBoutonPince_ChangementEtat);
+            this.switchBoutonPinceHaut.BackColor = System.Drawing.Color.Transparent;
+            this.switchBoutonPinceHaut.Location = new System.Drawing.Point(251, 169);
+            this.switchBoutonPinceHaut.Name = "switchBoutonPinceHaut";
+            this.switchBoutonPinceHaut.Size = new System.Drawing.Size(35, 15);
+            this.switchBoutonPinceHaut.Symetrique = true;
+            this.switchBoutonPinceHaut.TabIndex = 239;
+            this.switchBoutonPinceHaut.ChangementEtat += new System.EventHandler(this.switchBoutonPinceHaut_ChangementEtat);
+            // 
+            // switchBoutonPinceGaucheHaut
+            // 
+            this.switchBoutonPinceGaucheHaut.BackColor = System.Drawing.Color.Transparent;
+            this.switchBoutonPinceGaucheHaut.Location = new System.Drawing.Point(210, 183);
+            this.switchBoutonPinceGaucheHaut.Name = "switchBoutonPinceGaucheHaut";
+            this.switchBoutonPinceGaucheHaut.Size = new System.Drawing.Size(35, 15);
+            this.switchBoutonPinceGaucheHaut.Symetrique = true;
+            this.switchBoutonPinceGaucheHaut.TabIndex = 238;
+            this.switchBoutonPinceGaucheHaut.ChangementEtat += new System.EventHandler(this.switchBoutonPinceGaucheHaut_ChangementEtat);
+            // 
+            // switchBoutonPinceDroiteHaut
+            // 
+            this.switchBoutonPinceDroiteHaut.BackColor = System.Drawing.Color.Transparent;
+            this.switchBoutonPinceDroiteHaut.Location = new System.Drawing.Point(210, 157);
+            this.switchBoutonPinceDroiteHaut.Name = "switchBoutonPinceDroiteHaut";
+            this.switchBoutonPinceDroiteHaut.Size = new System.Drawing.Size(35, 15);
+            this.switchBoutonPinceDroiteHaut.Symetrique = true;
+            this.switchBoutonPinceDroiteHaut.TabIndex = 237;
+            this.switchBoutonPinceDroiteHaut.ChangementEtat += new System.EventHandler(this.switchBoutonPinceDroiteHaut_ChangementEtat);
+            // 
+            // label11
+            // 
+            this.label11.AutoSize = true;
+            this.label11.Location = new System.Drawing.Point(139, 141);
+            this.label11.Name = "label11";
+            this.label11.Size = new System.Drawing.Size(25, 13);
+            this.label11.TabIndex = 240;
+            this.label11.Text = "Bas";
+            // 
+            // label13
+            // 
+            this.label13.AutoSize = true;
+            this.label13.Location = new System.Drawing.Point(238, 141);
+            this.label13.Name = "label13";
+            this.label13.Size = new System.Drawing.Size(30, 13);
+            this.label13.TabIndex = 241;
+            this.label13.Text = "Haut";
             // 
             // PanelGrosRobotUtilisation
             // 
@@ -412,7 +457,7 @@
             this.BackColor = System.Drawing.Color.Transparent;
             this.Controls.Add(this.groupBoxUtilisation);
             this.Name = "PanelGrosRobotUtilisation";
-            this.Size = new System.Drawing.Size(341, 302);
+            this.Size = new System.Drawing.Size(341, 334);
             this.Load += new System.EventHandler(this.PanelUtilGros_Load);
             this.groupBoxUtilisation.ResumeLayout(false);
             this.groupBoxUtilisation.PerformLayout();
@@ -442,18 +487,22 @@
         private System.Windows.Forms.Label label7;
         private System.Windows.Forms.Label label8;
         private Composants.SwitchBouton switchBoutonPousse;
-        private Composants.SwitchBouton switchBoutonPinceGauche;
-        private Composants.SwitchBouton switchBoutonPinceDroite;
+        private Composants.SwitchBouton switchBoutonPinceGaucheBas;
+        private Composants.SwitchBouton switchBoutonPinceDroiteBas;
         private System.Windows.Forms.Label label10;
         private System.Windows.Forms.Label label9;
         private System.Windows.Forms.NumericUpDown numEpaule;
         private System.Windows.Forms.NumericUpDown numCoude;
         private System.Windows.Forms.Button btnEpauleGo;
         private System.Windows.Forms.Button btnCoudeGo;
-        private System.Windows.Forms.Button btnDepose2;
         private System.Windows.Forms.Button btnBrasRange;
         private System.Windows.Forms.Button btnDepose1;
         private System.Windows.Forms.Button btnTest;
-        private Composants.SwitchBouton switchBoutonPince;
+        private Composants.SwitchBouton switchBoutonPinceBas;
+        private System.Windows.Forms.Label label13;
+        private System.Windows.Forms.Label label11;
+        private Composants.SwitchBouton switchBoutonPinceHaut;
+        private Composants.SwitchBouton switchBoutonPinceGaucheHaut;
+        private Composants.SwitchBouton switchBoutonPinceDroiteHaut;
     }
 }
