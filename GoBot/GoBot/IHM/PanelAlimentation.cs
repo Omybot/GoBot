@@ -31,11 +31,13 @@ namespace GoBot.IHM
 
                 batteriePack1.TensionMidHigh = 23;
                 batteriePack1.TensionMid = 22;
-                batteriePack1.TensionLow = 21.5;
+                batteriePack1.TensionLow = 21;
+                batteriePack1.TensionNull = 5;
 
                 batteriePack2.TensionMidHigh = 23;
                 batteriePack2.TensionMid = 22;
-                batteriePack2.TensionLow = 21.5;
+                batteriePack2.TensionLow = 21;
+                batteriePack2.TensionNull = 5;
 
                 batterieBun1.TensionMidHigh = 8;
                 batterieBun1.TensionMid = 7;

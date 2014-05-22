@@ -30,6 +30,17 @@ namespace GoBot.IHM
             ledRecPi.ConnexionNok();
 
             batteriePack1.CouleurGris();
+
+
+            Connexions.ConnexionMove.ConnexionCheck.ConnexionChange += new ConnexionCheck.ConnexionChangeDelegate(ConnexionMoveCheck_ConnexionChange);
+            Connexions.ConnexionMiwi.ConnexionCheck.ConnexionChange += new ConnexionCheck.ConnexionChangeDelegate(ConnexionMiwiCheck_ConnexionChange);
+            Connexions.ConnexionIO.ConnexionCheck.ConnexionChange += new ConnexionCheck.ConnexionChangeDelegate(ConnexionIoCheck_ConnexionChange);
+            Connexions.ConnexionPi.ConnexionCheck.ConnexionChange += new ConnexionCheck.ConnexionChangeDelegate(ConnexionPiCheck_ConnexionChange);
+
+            Balise.GetBalise(Carte.RecBun).Connexion.ConnexionCheck.ConnexionChange += new ConnexionCheck.ConnexionChangeDelegate(ConnexionBunCheck_ConnexionChange);
+            Balise.GetBalise(Carte.RecBeu).Connexion.ConnexionCheck.ConnexionChange += new ConnexionCheck.ConnexionChangeDelegate(ConnexionBeuCheck_ConnexionChange);
+            Balise.GetBalise(Carte.RecBoi).Connexion.ConnexionCheck.ConnexionChange += new ConnexionCheck.ConnexionChangeDelegate(ConnexionBoiCheck_ConnexionChange);
+
         }
 
         void timerBatteries_Tick(object sender, EventArgs e)
@@ -217,24 +228,15 @@ namespace GoBot.IHM
                 if (Balise.GetBalise(Carte.RecBoi).Connexion.ConnexionCheck.Connecte)
                     SetLed(ledRecBoi, true);
 
-                Connexions.ConnexionMove.ConnexionCheck.ConnexionChange += new ConnexionCheck.ConnexionChangeDelegate(ConnexionMoveCheck_ConnexionChange);
-                Connexions.ConnexionMiwi.ConnexionCheck.ConnexionChange += new ConnexionCheck.ConnexionChangeDelegate(ConnexionMiwiCheck_ConnexionChange);
-                Connexions.ConnexionIO.ConnexionCheck.ConnexionChange += new ConnexionCheck.ConnexionChangeDelegate(ConnexionIoCheck_ConnexionChange);
-                Connexions.ConnexionPi.ConnexionCheck.ConnexionChange += new ConnexionCheck.ConnexionChangeDelegate(ConnexionPiCheck_ConnexionChange);
+                batteriePack1.TensionMidHigh = 23;
+                batteriePack1.TensionMid = 22;
+                batteriePack1.TensionLow = 21;
+                batteriePack1.TensionNull = 5;
 
-                Balise.GetBalise(Carte.RecBun).Connexion.ConnexionCheck.ConnexionChange += new ConnexionCheck.ConnexionChangeDelegate(ConnexionBunCheck_ConnexionChange);
-                Balise.GetBalise(Carte.RecBeu).Connexion.ConnexionCheck.ConnexionChange += new ConnexionCheck.ConnexionChangeDelegate(ConnexionBeuCheck_ConnexionChange);
-                Balise.GetBalise(Carte.RecBoi).Connexion.ConnexionCheck.ConnexionChange += new ConnexionCheck.ConnexionChangeDelegate(ConnexionBoiCheck_ConnexionChange);
-
-                batteriePack1.TensionMidHigh = 28.6;
-                batteriePack1.TensionMid = 26.95;
-                batteriePack1.TensionLow = 25.85;
-                batteriePack1.TensionNull = 21;
-
-                batteriePack2.TensionMidHigh = 28.6;
-                batteriePack2.TensionMid = 26.95;
-                batteriePack2.TensionLow = 25.85;
-                batteriePack2.TensionNull = 21;
+                batteriePack2.TensionMidHigh = 23;
+                batteriePack2.TensionMid = 22;
+                batteriePack2.TensionLow = 21;
+                batteriePack2.TensionNull = 5;
 
                 batterieBun1.TensionMidHigh = 8;
                 batterieBun1.TensionMid = 7;

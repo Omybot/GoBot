@@ -108,6 +108,7 @@ namespace GoBot.Communications
         Debug = 0xEE,
 
         TestConnexion = 0xF0,
+        RetourTestConnexion = 0xF5,
         Reset = 0xF1,
 
         TestEmission = 0xD4,

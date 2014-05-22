@@ -476,6 +476,9 @@ namespace GoBot.Communications
                             case FonctionPi.TestConnexion:
                                 message = "Test connexion";
                                 break;
+                            case FonctionPi.RetourTestConnexion:
+                                message = "Retour test connexion";
+                                break;
                             case FonctionPi.Virage:
                                 SensAR valeurVirageSensAR = ((SensAR)trame[2]);
                                 SensGD valeurVirageSensGD = ((SensGD)trame[3]);

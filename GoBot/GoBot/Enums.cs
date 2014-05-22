@@ -32,7 +32,7 @@ namespace GoBot
         GRFruitsEpaule = 4,
         GRFeuxPoignet = 1,
 
-        Tous = 255,
+        Tous = 254,
 
         //zLibre2 = 2,
         zLibre3 = 3,
@@ -287,7 +287,7 @@ namespace GoBot
         zLibre252 = 252,
         zLibre253 = 253,
         //zLibre254 = 254,
-        //zLibre255 = 255
+        zLibre255 = 255
     }
 
     public enum MoteurID

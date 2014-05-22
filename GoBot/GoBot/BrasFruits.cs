@@ -44,14 +44,14 @@ namespace GoBot
 
         public static void PositionDeposeBouchon2()
         {
-            PositionEpaule(70);
-            PositionCoude(154);
+            PositionEpaule(73);
+            PositionCoude(157);
         }
 
         public static void PositionDeposeBouchon1()
         {
-            PositionEpaule(70);
-            PositionCoude(164);
+            PositionEpaule(73);
+            PositionCoude(157);
         }
 
         public static void PositionRange()

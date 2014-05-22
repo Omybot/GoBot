@@ -103,18 +103,26 @@ namespace GoBot
             Enchainement.Executer();*/
         }
 
+        Thread thActivationAsser;
+
+        public void ActivationAsserv()
+        {
+            Thread.Sleep(1500);
+            FailTrajectoire = true;
+            Stop(StopMode.Abrupt);
+            SemaphoresMove[FonctionMove.FinDeplacement].Release();
+        }
+
         public void ReceptionMessage(Trame trameRecue)
         {
             // Analyser la trame reçue
 
-            if (trameRecue[0] == (byte)Carte.RecMove)
+            if ((trameRecue[0] == (byte)Carte.RecMove && this == Robots.GrosRobot) || (trameRecue[0] == (byte)Carte.RecPi && this == Robots.PetitRobot))
             {
                 if (trameRecue[1] == (byte)FonctionMove.Blocage)
                 {
-                    Thread.Sleep(1500);
-                    FailTrajectoire = true;
-                    Stop(StopMode.Abrupt);
-                    SemaphoresMove[FonctionMove.FinDeplacement].Release();
+                    thActivationAsser = new Thread(ActivationAsserv);
+                    thActivationAsser.Start();
                 }
 
                 if (trameRecue[1] == (byte)FonctionMove.FinDeplacement

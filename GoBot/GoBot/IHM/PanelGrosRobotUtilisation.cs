@@ -236,5 +236,11 @@ namespace GoBot.IHM
             Thread.Sleep(500);
             Robots.GrosRobot.ActionneurOnOff(ActionneurOnOffID.GRPousseBouchon, false);
         }
+
+        private void switchBoutonPince_ChangementEtat(object sender, EventArgs e)
+        {
+            Robots.GrosRobot.ActionneurOnOff(ActionneurOnOffID.GRPinceDroite, switchBoutonPince.Actif);
+            Robots.GrosRobot.ActionneurOnOff(ActionneurOnOffID.GRPinceGauche, switchBoutonPince.Actif);
+        }
     }
 }

@@ -29,6 +29,7 @@
         private void InitializeComponent()
         {
             this.groupBoxUtilisation = new Composants.GroupBoxRetractable();
+            this.btnTest = new System.Windows.Forms.Button();
             this.btnDepose1 = new System.Windows.Forms.Button();
             this.btnBrasRange = new System.Windows.Forms.Button();
             this.btnDepose2 = new System.Windows.Forms.Button();
@@ -57,7 +58,7 @@
             this.label12 = new System.Windows.Forms.Label();
             this.btnDiagnostic = new System.Windows.Forms.Button();
             this.switchBoutonPuissance = new Composants.SwitchBouton();
-            this.btnTest = new System.Windows.Forms.Button();
+            this.switchBoutonPince = new Composants.SwitchBouton();
             this.groupBoxUtilisation.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numEpaule)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numCoude)).BeginInit();
@@ -65,6 +66,7 @@
             // 
             // groupBoxUtilisation
             // 
+            this.groupBoxUtilisation.Controls.Add(this.switchBoutonPince);
             this.groupBoxUtilisation.Controls.Add(this.btnTest);
             this.groupBoxUtilisation.Controls.Add(this.btnDepose1);
             this.groupBoxUtilisation.Controls.Add(this.btnBrasRange);
@@ -101,6 +103,16 @@
             this.groupBoxUtilisation.TabStop = false;
             this.groupBoxUtilisation.Text = "Utilisation";
             this.groupBoxUtilisation.Enter += new System.EventHandler(this.groupBoxUtilisation_Enter);
+            // 
+            // btnTest
+            // 
+            this.btnTest.Location = new System.Drawing.Point(257, 134);
+            this.btnTest.Name = "btnTest";
+            this.btnTest.Size = new System.Drawing.Size(42, 21);
+            this.btnTest.TabIndex = 235;
+            this.btnTest.Text = "Test";
+            this.btnTest.UseVisualStyleBackColor = true;
+            this.btnTest.Click += new System.EventHandler(this.btnTest_Click);
             // 
             // btnDepose1
             // 
@@ -382,15 +394,15 @@
             this.switchBoutonPuissance.TabIndex = 200;
             this.switchBoutonPuissance.ChangementEtat += new System.EventHandler(this.switchBoutonPuissance_ChangementEtat);
             // 
-            // btnTest
+            // switchBoutonPince
             // 
-            this.btnTest.Location = new System.Drawing.Point(257, 134);
-            this.btnTest.Name = "btnTest";
-            this.btnTest.Size = new System.Drawing.Size(42, 21);
-            this.btnTest.TabIndex = 235;
-            this.btnTest.Text = "Test";
-            this.btnTest.UseVisualStyleBackColor = true;
-            this.btnTest.Click += new System.EventHandler(this.btnTest_Click);
+            this.switchBoutonPince.BackColor = System.Drawing.Color.Transparent;
+            this.switchBoutonPince.Location = new System.Drawing.Point(158, 146);
+            this.switchBoutonPince.Name = "switchBoutonPince";
+            this.switchBoutonPince.Size = new System.Drawing.Size(35, 15);
+            this.switchBoutonPince.Symetrique = true;
+            this.switchBoutonPince.TabIndex = 236;
+            this.switchBoutonPince.ChangementEtat += new System.EventHandler(this.switchBoutonPince_ChangementEtat);
             // 
             // PanelGrosRobotUtilisation
             // 
@@ -442,5 +454,6 @@
         private System.Windows.Forms.Button btnBrasRange;
         private System.Windows.Forms.Button btnDepose1;
         private System.Windows.Forms.Button btnTest;
+        private Composants.SwitchBouton switchBoutonPince;
     }
 }

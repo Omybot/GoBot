@@ -86,6 +86,7 @@ namespace GoBot.Communications
 
             else if (!Connecte && intervalleEcoule < intervalleAutorise)
             {
+                Console.WriteLine("Connection");
                 Connecte = true;
                 if (ConnexionChange != null)
                     ConnexionChange(true);

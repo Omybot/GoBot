@@ -64,15 +64,6 @@ namespace GoBot
                 panelBaliseInclinaison2.Balise = Plateau.Balise2;
                 panelBaliseInclinaison3.Balise = Plateau.Balise3;
 
-                Connexions.ConnexionMove.ConnexionCheck.Start();
-                Connexions.ConnexionMiwi.ConnexionCheck.Start();
-                Connexions.ConnexionIO.ConnexionCheck.Start();
-                Connexions.ConnexionPi.ConnexionCheck.Start();
-
-                Plateau.Balise1.Connexion.ConnexionCheck.Start();
-                Plateau.Balise2.Connexion.ConnexionCheck.Start();
-                Plateau.Balise3.Connexion.ConnexionCheck.Start();
-
                 switchBoutonSimu.SetActif(Robots.Simulation);
 
                 tabPrecedent = new Dictionary<TabPage, TabPage>();
@@ -209,6 +200,15 @@ namespace GoBot
                     Directory.CreateDirectory(Config.PathData + "/Logs/");
 
                 Directory.CreateDirectory(Config.PathData + "/Logs/" + Config.DateLancementString);
+
+                Connexions.ConnexionMove.ConnexionCheck.Start();
+                Connexions.ConnexionMiwi.ConnexionCheck.Start();
+                Connexions.ConnexionIO.ConnexionCheck.Start();
+                Connexions.ConnexionPi.ConnexionCheck.Start();
+
+                Plateau.Balise1.Connexion.ConnexionCheck.Start();
+                Plateau.Balise2.Connexion.ConnexionCheck.Start();
+                Plateau.Balise3.Connexion.ConnexionCheck.Start();
             }
             catch(Exception)
             {
