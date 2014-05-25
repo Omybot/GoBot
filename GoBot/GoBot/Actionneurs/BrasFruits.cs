@@ -3,12 +3,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using GoBot.Calculs;
+using System.Threading;
 
-namespace GoBot
+namespace GoBot.Actionneur
 {
     class BrasFruits
     {
-        private static readonly int INIT_COUDE = 391;
+        private static readonly int INIT_COUDE = 398;
         private static readonly int INIT_EPAULE = 410;
 
         private static double angleEpaule;
@@ -42,13 +43,7 @@ namespace GoBot
             return true;
         }
 
-        public static void PositionDeposeBouchon2()
-        {
-            PositionEpaule(73);
-            PositionCoude(157);
-        }
-
-        public static void PositionDeposeBouchon1()
+        public static void PositionDeposeBouchon()
         {
             PositionEpaule(73);
             PositionCoude(157);
@@ -85,6 +80,42 @@ namespace GoBot
             double resultat = 720.64 + a * a + b * b - 2 * a * b * Math.Cos(alpha.AngleRadiansPositif)  + c * c + d * d - 2 * c * d * Math.Cos(beta.AngleRadiansPositif);
 
             return resultat;
+        }
+
+        public static void OuvrirPinceHaut(bool tempo = true)
+        {
+            Robots.GrosRobot.TourneMoteur(MoteurID.GRPinceDroiteHaut, Config.CurrentConfig.PositionGRPinceFruitHautDroiteOuvert);
+            Robots.GrosRobot.TourneMoteur(MoteurID.GRPinceGaucheHaut, Config.CurrentConfig.PositionGRPinceFruitHautGaucheOuvert);
+            if(tempo) Thread.Sleep(300);
+        }
+
+        public static void OuvrirPinceBas(bool tempo = true)
+        {
+            Robots.GrosRobot.TourneMoteur(MoteurID.GRPinceDroiteBas, Config.CurrentConfig.PositionGRPinceFruitBasDroiteOuvert);
+            Robots.GrosRobot.TourneMoteur(MoteurID.GRPinceGaucheBas, Config.CurrentConfig.PositionGRPinceFruitBasGaucheOuvert);
+            if (tempo) Thread.Sleep(500);
+        }
+
+        public static void FermerPinceHaut(bool tempo = true)
+        {
+            Robots.GrosRobot.TourneMoteur(MoteurID.GRPinceDroiteHaut, Config.CurrentConfig.PositionGRPinceFruitHautDroiteFerme);
+            Robots.GrosRobot.TourneMoteur(MoteurID.GRPinceGaucheHaut, Config.CurrentConfig.PositionGRPinceFruitHautGaucheFerme);
+            if (tempo) Thread.Sleep(150);
+        }
+
+        public static void FermerPinceBas(bool tempo = true)
+        {
+            Robots.GrosRobot.TourneMoteur(MoteurID.GRPinceDroiteBas, Config.CurrentConfig.PositionGRPinceFruitBasDroiteFerme);
+            Robots.GrosRobot.TourneMoteur(MoteurID.GRPinceGaucheBas, Config.CurrentConfig.PositionGRPinceFruitBasGaucheFerme);
+            if (tempo) Thread.Sleep(150);
+        }
+
+        public static void BouchonHautBas()
+        {
+            BrasFruits.FermerPinceBas(false);
+            Thread.Sleep(20);
+            BrasFruits.OuvrirPinceHaut(false);
+            Thread.Sleep(400);
         }
     }
 }

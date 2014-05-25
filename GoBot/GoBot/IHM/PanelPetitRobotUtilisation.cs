@@ -7,6 +7,8 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 using System.Threading;
+using GoBot.Actionneur;
+using GoBot.Actionneurs;
 
 namespace GoBot.IHM
 {
@@ -59,6 +61,7 @@ namespace GoBot.IHM
 
             Config.CurrentConfig.UtilisationPROuvert = deployer;
         }
+
         private void PanelUtilGros_Load(object sender, EventArgs e)
         {
             Deployer(Config.CurrentConfig.UtilisationPROuvert);
@@ -73,6 +76,30 @@ namespace GoBot.IHM
         private void btnDiagnostic_Click(object sender, EventArgs e)
         {
             Robots.PetitRobot.Diagnostic();
+        }
+
+        private void switchBoutonAimantLances_ChangementEtat(object sender, EventArgs e)
+        {
+            if (switchBoutonAimantLances.Actif)
+                CatapulteLances.Armer();
+            else
+                CatapulteLances.Tirer();
+        }
+
+        private void switchBoutonFilet_ChangementEtat(object sender, EventArgs e)
+        {
+            if (switchBoutonFilet.Actif)
+                LanceFilet.Tirer();
+            else
+                LanceFilet.Armer();
+        }
+
+        private void switchBoutonReservoir_ChangementEtat(object sender, EventArgs e)
+        {
+            if (switchBoutonReservoir.Actif)
+                ReservoirBouchons.Ouvrir();
+            else
+                ReservoirBouchons.Fermer();
         }
     }
 }

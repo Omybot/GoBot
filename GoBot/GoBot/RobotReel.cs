@@ -426,8 +426,16 @@ namespace GoBot
         
         public override void ActionneurOnOff(ActionneurOnOffID actionneur, bool on)
         {
-            Trame trame = TrameFactory.ActionneurOnOff(actionneur, on);
-            Connexions.ConnexionIO.SendMessage(trame);
+            if (this == Robots.GrosRobot)
+            {
+                Trame trame = TrameFactory.ActionneurOnOff(actionneur, on);
+                Connexions.ConnexionIO.SendMessage(trame);
+            }
+            else
+            {
+                Trame trame = TrameFactory.ActionneurOnOff(actionneur, on, true);
+                Connexion.SendMessage(trame);
+            }
 
             Historique.AjouterAction(new ActionOnOff(this, actionneur, on));
         }
@@ -504,8 +512,16 @@ namespace GoBot
         {
             base.TourneMoteur(moteur, position);
 
-            Trame trame = TrameFactory.MoteurVitesse(moteur, position);
-            Connexions.ConnexionIO.SendMessage(trame);
+            if (this == Robots.GrosRobot)
+            {
+                Trame trame = TrameFactory.MoteurVitesse(moteur, position);
+                Connexions.ConnexionIO.SendMessage(trame);
+            }
+            else
+            {
+                Trame trame = TrameFactory.MoteurVitesse(moteur, position, true);
+                Connexion.SendMessage(trame);
+            }
 
             Historique.AjouterAction(new ActionMoteur(this, position, moteur));
         }

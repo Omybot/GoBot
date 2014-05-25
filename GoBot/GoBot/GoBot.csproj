@@ -65,6 +65,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Actionneurs\BrasFresque.cs" />
+    <Compile Include="Actionneurs\CatapulteLances.cs" />
+    <Compile Include="Actionneurs\LanceFilet.cs" />
+    <Compile Include="Actionneurs\ReservoirBouchons.cs" />
     <Compile Include="Actions\Asservissement\ActionAccelerationPivot.cs" />
     <Compile Include="Actions\Asservissement\ActionVitessePivot.cs" />
     <Compile Include="Actions\ActionMoteur.cs" />
@@ -83,15 +87,17 @@
     <Compile Include="Actions\IAction.cs" />
     <Compile Include="Balises\BaliseStats.cs" />
     <Compile Include="Balises\SuiviBalise.cs" />
-    <Compile Include="BrasFruits.cs" />
+    <Compile Include="Actionneurs\BrasFruits.cs" />
     <Compile Include="Calculs\Formes\RectanglePolygone.cs" />
     <Compile Include="CameraIP.cs" />
+    <Compile Include="Actionneurs\CanonFruits.cs" />
     <Compile Include="Communications\ConnexionMiwi.cs" />
     <Compile Include="Communications\Connexion.cs" />
     <Compile Include="Communications\DecodeurTrames.cs" />
     <Compile Include="Communications\FonctionsTrames.cs" />
     <Compile Include="Communications\LiaisonDataCheck.cs" />
     <Compile Include="Dessinateur.cs" />
+    <Compile Include="ElementsJeu\Arbre.cs" />
     <Compile Include="ElementsJeu\ElementJeu.cs" />
     <Compile Include="ElementsJeu\Feu.cs" />
     <Compile Include="ElementsJeu\Fruimouth.cs" />
@@ -99,7 +105,7 @@
     <Compile Include="Enchainements\EnchainementAleatoire.cs" />
     <Compile Include="Enchainements\EnchainementMatch.cs" />
     <Compile Include="EventsReplay.cs" />
-    <Compile Include="BrasFeux.cs" />
+    <Compile Include="Actionneurs\BrasFeux.cs" />
     <Compile Include="IHM\PanelBaliseInclinaison.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -246,6 +252,8 @@
     </Compile>
     <Compile Include="Logs\Log.cs" />
     <Compile Include="Logs\Logs.cs" />
+    <Compile Include="Mouvements\MouvementArbre.cs" />
+    <Compile Include="Mouvements\MouvementDeposeFoyerCoin.cs" />
     <Compile Include="Mouvements\MouvementFeuBordure.cs" />
     <Compile Include="Mouvements\Mouvement.cs" />
     <Compile Include="Mouvements\PositionsMouvements.cs" />

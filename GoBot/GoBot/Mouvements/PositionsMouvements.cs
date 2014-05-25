@@ -20,8 +20,10 @@ namespace GoBot.Mouvements
     static class PositionsMouvements
     {
         public static Dictionary<int, Position> PositionGrosFeuxBordure { get; private set; }
-        public static Dictionary<int, Position> PositionGrosFoyers { get; private set; }
+        public static Dictionary<int, Position> PositionArbres { get; private set; }
+        public static Dictionary<int, Position> PositionGrosTorches { get; private set; }
         public static Dictionary<int, List<Position>> PositionTorche { get; private set; }
+        public static Dictionary<int, Position> PositionFoyersCoins { get; private set; }
 
         static PositionsMouvements()
         {
@@ -42,6 +44,19 @@ namespace GoBot.Mouvements
             PositionTorche[1].Add(new Position(90, new PointReel(2100, 864)));
             PositionTorche[1].Add(new Position(-90, new PointReel(2100, 1336)));
             PositionTorche[1].Add(new Position(180, new PointReel(2336, 1100)));
+
+            PositionArbres = new Dictionary<int, Position>();
+            PositionArbres.Add(0, new Position(-90, new PointReel(700, 1500)));
+            //PositionArbres.Add(1, new Position(-60, new PointReel(995, 1489))); // 60° 19sec
+            //PositionArbres.Add(1, new Position(-90, new PointReel(700, 1500)));
+            //PositionArbres.Add(1, new Position(-90, new PointReel(692, 1527))); // 30sec
+            PositionArbres.Add(1, new Position(-43, new PointReel(1041, 1682)));
+            PositionArbres.Add(2, new Position(-60, new PointReel(995, 1489)));
+            PositionArbres.Add(3, new Position(-60, new PointReel(995, 1489)));
+
+            PositionFoyersCoins = new Dictionary<int, Position>();
+            PositionFoyersCoins.Add(0, new Position(139, new PointReel(327, 1693)));
+            PositionFoyersCoins.Add(1, new Position(41, new PointReel(2673, 1693)));
         }
     }
 }

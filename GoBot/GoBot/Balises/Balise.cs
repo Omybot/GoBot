@@ -372,7 +372,7 @@ namespace GoBot.Balises
                                 Carte == GoBot.Carte.RecBeu && Plateau.NotreCouleur == Plateau.CouleurGaucheRouge ||
                                 Carte == GoBot.Carte.RecBoi && Plateau.NotreCouleur == Plateau.CouleurDroiteJaune)
                             {
-                                DetectionsCapteur1.RemoveAt(1);
+                                DetectionsCapteur1.RemoveAt(0);
                                 DetectionsCapteur2.RemoveAt(0);
                             }
 
@@ -661,12 +661,12 @@ namespace GoBot.Balises
         /// <param name="vitesse">Vitesse de consigne en tours / seconde</param>
         public void Lancer(double vitesse)
         {
-            VitesseRotation(3200);
+            VitesseRotation(2400);
             VitesseConsigne = vitesse;
             ReglageVitesse = true;
             ReglageVitessePermanent = true;
             // Pour être sûr au cas où...
-            VitesseRotation(3200);
+            VitesseRotation(2400);
         }
 
         /// <summary>
@@ -702,9 +702,9 @@ namespace GoBot.Balises
             }
         }
 
-        public Dictionary<int, List<DetectionBalise>> ParcourirAxeFace(int pas, int min, int max)
+        public Dictionary<int, Dictionary<int, List<DetectionBalise>>> ParcourirAxeFace(int pas, int min, int max)
         {
-            Dictionary<int, List<DetectionBalise>> valeurs = new Dictionary<int, List<DetectionBalise>>();
+            Dictionary<int, Dictionary<int, List<DetectionBalise>>> valeurs = new Dictionary<int, Dictionary<int, List<DetectionBalise>>>();
 
             for (int i = min; i <= max; i += pas)
             {
@@ -714,7 +714,9 @@ namespace GoBot.Balises
                 semReceptionBalise.WaitOne();
                 semReceptionBalise.WaitOne();
 
-                valeurs.Add(i, new List<DetectionBalise>(Detections));
+                valeurs.Add(i, new Dictionary<int, List<DetectionBalise>>());
+                valeurs[i].Add(1, new List<DetectionBalise>(DetectionsCapteur1));
+                valeurs[i].Add(2, new List<DetectionBalise>(DetectionsCapteur2));
             }
 
             return valeurs;
@@ -744,14 +746,11 @@ namespace GoBot.Balises
             int pasPrecis = 2;
             bool precis = true;
 
-            Angle angleMin = AngleCentral() - 20;
-            Angle angleMax = AngleCentral() + 20;
-
             // Réglage axe face : Recherche le centre de la balise centrale grossièrement
 
             InclinaisonFace = Config.CurrentConfig.GetCourseFaceMin(Carte);
             Thread.Sleep(300);
-            Dictionary<int, List<DetectionBalise>> valeurs = ParcourirAxeFace(pasGrossier, Config.CurrentConfig.GetCourseFaceMin(Carte), Config.CurrentConfig.GetCourseFaceMax(Carte));
+            Dictionary<int, Dictionary<int, List<DetectionBalise>>> valeurs = ParcourirAxeFace(pasGrossier, Config.CurrentConfig.GetCourseFaceMin(Carte), Config.CurrentConfig.GetCourseFaceMax(Carte));
 
             int debutGrossier = Config.CurrentConfig.GetCourseFaceOpti(Carte);
             int finGrossier = Config.CurrentConfig.GetCourseFaceOpti(Carte);
@@ -760,32 +759,86 @@ namespace GoBot.Balises
             Console.WriteLine("Detection face :");
             Console.WriteLine("Detection grossiere :");
 
+            Dictionary<int, Angle> angleMin = new Dictionary<int, Angle>();
+            Dictionary<int, Angle> angleMax = new Dictionary<int, Angle>();
+
+            angleMin.Add(1, 1);
+            angleMin.Add(2, 1);
+
+            angleMax.Add(1, 1);
+            angleMax.Add(2, 1);
+
+            foreach (KeyValuePair<int, Dictionary<int, List<DetectionBalise>>> pair in valeurs)
+            {
+                foreach (DetectionBalise detection in pair.Value[1])
+                {
+                    Angle angle = detection.AngleCentral;
+
+                    if (angle.AngleDegresPositif < angleMin[1].AngleDegresPositif)
+                        angleMin[1] = angle;
+                    if (angle.AngleDegresPositif > angleMax[1].AngleDegresPositif)
+                        angleMax[1] = angle;
+                }
+                foreach (DetectionBalise detection in pair.Value[2])
+                {
+                    Angle angle = detection.AngleCentral;
+
+                    if (angle.AngleDegresPositif < angleMin[2].AngleDegresPositif)
+                        angleMin[2] = angle;
+                    if (angle.AngleDegresPositif > angleMax[2].AngleDegresPositif)
+                        angleMax[2] = angle;
+                }
+            }
+
+            if (Plateau.NotreCouleur == Plateau.CouleurDroiteJaune && Carte == GoBot.Carte.RecBeu ||
+                Plateau.NotreCouleur == Plateau.CouleurDroiteJaune && Carte == GoBot.Carte.RecBun ||
+                Plateau.NotreCouleur == Plateau.CouleurGaucheRouge && Carte == GoBot.Carte.RecBoi)
+            {
+                angleMax[1] = angleMin[1] + 10;
+                angleMin[1] = angleMin[1] - 10;
+                angleMax[2] = angleMin[2] + 10;
+                angleMin[2] = angleMin[2] - 10;
+            }
+            else
+            {
+                angleMin[1] = angleMax[1] - 10;
+                angleMax[1] = angleMax[1] + 10;
+                angleMin[2] = angleMax[2] - 10;
+                angleMax[2] = angleMax[2] + 10;
+            }
+
+
 
             // On cherche à avoir 2 détections qui voient la balise centrale (ce qui veut dire que les deux capteurs la voient)
-            foreach (KeyValuePair<int, List<DetectionBalise>> pair in valeurs)
+            foreach (KeyValuePair<int, Dictionary<int, List<DetectionBalise>>> pairDic in valeurs)
             {
-                bool trouveIteration = false;
-                int nbAngles = 0;
-                foreach (DetectionBalise detection in pair.Value)
-                    if (((Angle)detection.AngleCentral).ComprisEntre(angleMin, angleMax))
+                foreach (KeyValuePair<int, List<DetectionBalise>> pair in pairDic.Value)
+                {
+                    bool trouveIteration = false;
+                    int nbAngles = 0;
+                    foreach (DetectionBalise detection in pair.Value)
                     {
-                        nbAngles++;
-                        if (nbAngles == 2)
-                            trouveIteration = true;
+                        if (((Angle)detection.AngleCentral).ComprisEntre(angleMin[pair.Key], angleMax[pair.Key]))
+                        {
+                            nbAngles++;
+                            if (nbAngles == 2)
+                                trouveIteration = true;
+                        }
                     }
 
-                Console.WriteLine(pair.Key + " Angles : " + nbAngles + "/" + pair.Value.Count + (trouveIteration ? " Oui" : " Non") + "/" + (trouve ? " Oui" : " Non"));
+                    Console.WriteLine(pairDic.Key + " Angles : " + nbAngles + "/" + pairDic.Value.Count + (trouveIteration ? " Oui" : " Non") + "/" + (trouve ? " Oui" : " Non"));
 
-                if (trouveIteration && !trouve)
-                {
-                    // Premier
-                    debutGrossier = pair.Key;
-                    trouve = true;
-                }
-                else if (trouveIteration && trouve)
-                {
-                    // Dernier
-                    finGrossier = pair.Key;
+                    if (trouveIteration && !trouve)
+                    {
+                        // Premier
+                        debutGrossier = pairDic.Key;
+                        trouve = true;
+                    }
+                    else if (trouveIteration && trouve)
+                    {
+                        // Dernier
+                        finGrossier = pairDic.Key;
+                    }
                 }
             }
             Console.WriteLine("Grossier : " + debutGrossier + " -> " + finGrossier + " = " + ((debutGrossier + finGrossier) / 2));
@@ -805,30 +858,33 @@ namespace GoBot.Balises
                 Console.WriteLine("Detection précise :");
 
                 trouve = false;
-                foreach (KeyValuePair<int, List<DetectionBalise>> pair in valeurs)
+                foreach (KeyValuePair<int, Dictionary<int, List<DetectionBalise>>> pairDic in valeurs)
                 {
-                    int nbAngles = 0;
-                    bool trouveIteration = false;
-                    foreach (DetectionBalise detection in pair.Value)
-                        if (((Angle)detection.AngleCentral).ComprisEntre(angleMin, angleMax))
+                    foreach (KeyValuePair<int, List<DetectionBalise>> pair in pairDic.Value)
+                    {
+                        int nbAngles = 0;
+                        bool trouveIteration = false;
+                        foreach (DetectionBalise detection in pair.Value)
+                            if (((Angle)detection.AngleCentral).ComprisEntre(angleMin[pair.Key], angleMax[pair.Key]))
+                            {
+                                nbAngles++;
+                                if (nbAngles == 2)
+                                    trouveIteration = true;
+                            }
+
+                        Console.WriteLine(pairDic.Key + (trouveIteration ? " Oui" : " Non") + "/" + (trouve ? " Oui" : " Non"));
+
+                        if (trouveIteration && !trouve)
                         {
-                            nbAngles++;
-                            if (nbAngles == 2)
-                                trouveIteration = true;
+                            // Premier
+                            debutPrecis = pairDic.Key;
+                            trouve = true;
                         }
-
-                    Console.WriteLine(pair.Key + (trouveIteration ? " Oui" : " Non") + "/" + (trouve ? " Oui" : " Non"));
-
-                    if (trouveIteration && !trouve)
-                    {
-                        // Premier
-                        debutPrecis = pair.Key;
-                        trouve = true;
-                    }
-                    else if (trouveIteration && trouve)
-                    {
-                        // Dernier
-                        finPrecis = pair.Key;
+                        else if (trouveIteration && trouve)
+                        {
+                            // Dernier
+                            finPrecis = pairDic.Key;
+                        }
                     }
                 }
 
@@ -874,7 +930,7 @@ namespace GoBot.Balises
                 if (pair.Value.Count >= 4)
                     trouveIteration = true;
 
-                Console.WriteLine(pair.Key + " " + (trouveIteration ? "Oui" : "Non")  + "/" + (trouve ? "Oui" : "Non"));
+                Console.WriteLine(pair.Key + " " + (trouveIteration ? "Oui" : "Non") + "/" + (trouve ? "Oui" : "Non"));
 
                 if (trouveIteration && !trouve)
                 {
@@ -900,8 +956,8 @@ namespace GoBot.Balises
 
                 valeurs = ParcourirAxeProfil(pasPrecis, debutGrossier - pasGrossier, finGrossier + pasGrossier);
 
-                int debutPrecis = Config.CurrentConfig.GetCourseFaceOpti(Carte);
-                int finPrecis = Config.CurrentConfig.GetCourseFaceOpti(Carte);
+                int debutPrecis = Config.CurrentConfig.GetCourseProfilOpti(Carte);
+                int finPrecis = Config.CurrentConfig.GetCourseProfilOpti(Carte);
 
                 Console.WriteLine("Précis : ");
 

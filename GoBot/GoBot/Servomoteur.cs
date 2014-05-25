@@ -20,7 +20,7 @@ namespace GoBot
             set
             {
                 id = value;
-                connexion.SendMessage(TrameFactory.ServoEnvoiId((ServomoteurID)id, (char)value));
+                connexion.SendMessage(TrameFactory.ServoEnvoiId((ServomoteurID)id, (char)value, carte));
             }
         }
         private double baudrate;
@@ -31,12 +31,12 @@ namespace GoBot
             {
                 // TODO
                 baudrate = value;
-                connexion.SendMessage(TrameFactory.ServoEnvoiBaudrate((ServomoteurID)id, ServoBaudrate.b19200));
+                connexion.SendMessage(TrameFactory.ServoEnvoiBaudrate((ServomoteurID)id, ServoBaudrate.b19200, carte));
             }
         }
         private void EnvoiCompliance()
         {
-            connexion.SendMessage(TrameFactory.ServoEnvoiComplianceParams((ServomoteurID)id, ccwSlope, ccwMargin, cwMargin, cwSlope));
+            connexion.SendMessage(TrameFactory.ServoEnvoiComplianceParams((ServomoteurID)id, ccwSlope, ccwMargin, cwMargin, cwSlope, carte));
         }
         private byte ccwSlope;
         public byte CCWSlope
@@ -80,7 +80,7 @@ namespace GoBot
         }
         private void EnvoiParamLED()
         {
-            connexion.SendMessage(TrameFactory.ServoEnvoiConfigAlarmeLED((ServomoteurID)id, alarmeLEDInputVoltage, alarmeLEDAngleLimit, alarmeLEDOverheating, alarmeLEDRange, alarmeLEDChecksum, alarmeLEDOverload, alarmeLEDInstruction));
+            connexion.SendMessage(TrameFactory.ServoEnvoiConfigAlarmeLED((ServomoteurID)id, alarmeLEDInputVoltage, alarmeLEDAngleLimit, alarmeLEDOverheating, alarmeLEDRange, alarmeLEDChecksum, alarmeLEDOverload, alarmeLEDInstruction, carte));
         }
         private bool alarmeLEDInputVoltage;
         public bool AlarmeLEDInputVoltage
@@ -155,7 +155,7 @@ namespace GoBot
 
         private void EnvoiParamShutdown()
         {
-            connexion.SendMessage(TrameFactory.ServoEnvoiConfigAlarmeShutdown((ServomoteurID)id, alarmeShutdownInputVoltage, alarmeShutdownAngleLimit, alarmeShutdownOverheating, alarmeShutdownRange, alarmeShutdownChecksum, alarmeShutdownOverload, alarmeShutdownInstruction));
+            connexion.SendMessage(TrameFactory.ServoEnvoiConfigAlarmeShutdown((ServomoteurID)id, alarmeShutdownInputVoltage, alarmeShutdownAngleLimit, alarmeShutdownOverheating, alarmeShutdownRange, alarmeShutdownChecksum, alarmeShutdownOverload, alarmeShutdownInstruction, carte));
         }
         private bool alarmeShutdownInputVoltage;
         public bool AlarmeShutdownInputVoltage
@@ -235,7 +235,7 @@ namespace GoBot
             set
             {
                 coupleActive = value;
-                connexion.SendMessage(TrameFactory.ServoEnvoiCoupleActive((ServomoteurID)id, coupleActive));
+                connexion.SendMessage(TrameFactory.ServoEnvoiCoupleActive((ServomoteurID)id, coupleActive, carte));
             }
         }
         private int coupleMaximum;
@@ -245,7 +245,7 @@ namespace GoBot
             set
             {
                 coupleMaximum = value;
-                connexion.SendMessage(TrameFactory.ServoEnvoiCoupleMaximum((ServomoteurID)id, coupleMaximum));
+                connexion.SendMessage(TrameFactory.ServoEnvoiCoupleMaximum((ServomoteurID)id, coupleMaximum, carte));
             }
         }
         private bool ledAllumee;
@@ -255,7 +255,7 @@ namespace GoBot
             set
             {
                 ledAllumee = value;
-                connexion.SendMessage(TrameFactory.ServoEnvoiLed((ServomoteurID)id, ledAllumee));
+                connexion.SendMessage(TrameFactory.ServoEnvoiLed((ServomoteurID)id, ledAllumee, carte));
             }
         }
         private bool enMouvement;
@@ -290,7 +290,7 @@ namespace GoBot
             set
             {
                 positionCible = value;
-                connexion.SendMessage(TrameFactory.ServoEnvoiPositionCible((ServomoteurID)id, positionCible));
+                connexion.SendMessage(TrameFactory.ServoEnvoiPositionCible((ServomoteurID)id, positionCible, carte));
             }
         }
         private int positionMin;
@@ -300,7 +300,7 @@ namespace GoBot
             set
             {
                 positionMin = value;
-                connexion.SendMessage(TrameFactory.ServoEnvoiPositionMinimum((ServomoteurID)id, positionMin));
+                connexion.SendMessage(TrameFactory.ServoEnvoiPositionMinimum((ServomoteurID)id, positionMin, carte));
             }
         }
         private int positionMax;
@@ -310,7 +310,7 @@ namespace GoBot
             set
             {
                 positionMax = value;
-                connexion.SendMessage(TrameFactory.ServoEnvoiPositionMaximum((ServomoteurID)id, positionMax));
+                connexion.SendMessage(TrameFactory.ServoEnvoiPositionMaximum((ServomoteurID)id, positionMax, carte));
             }
         }
         private int temperature;
@@ -330,7 +330,7 @@ namespace GoBot
             set
             {
                 vitesseMax = value;
-                connexion.SendMessage(TrameFactory.ServoEnvoiVitesseMax((ServomoteurID)id, vitesseMax));
+                connexion.SendMessage(TrameFactory.ServoEnvoiVitesseMax((ServomoteurID)id, vitesseMax, carte));
             }
         }
 
@@ -357,47 +357,47 @@ namespace GoBot
         {
             if (complete)
             {
-                connexion.SendMessage(TrameFactory.ServoDemandeBaudrate((ServomoteurID)id));
+                connexion.SendMessage(TrameFactory.ServoDemandeBaudrate((ServomoteurID)id, carte));
                 Thread.Sleep(10);
-                connexion.SendMessage(TrameFactory.ServoDemandeComplianceParams((ServomoteurID)id));
+                connexion.SendMessage(TrameFactory.ServoDemandeComplianceParams((ServomoteurID)id, carte));
                 Thread.Sleep(10);
-                connexion.SendMessage(TrameFactory.ServoDemandeConfigAlarmeLED((ServomoteurID)id));
+                connexion.SendMessage(TrameFactory.ServoDemandeConfigAlarmeLED((ServomoteurID)id, carte));
                 Thread.Sleep(10);
-                connexion.SendMessage(TrameFactory.ServoDemandeConfigAlarmeShutdown((ServomoteurID)id));
+                connexion.SendMessage(TrameFactory.ServoDemandeConfigAlarmeShutdown((ServomoteurID)id, carte));
                 Thread.Sleep(10);
-                connexion.SendMessage(TrameFactory.ServoDemandeConfigEcho((ServomoteurID)id));
+                connexion.SendMessage(TrameFactory.ServoDemandeConfigEcho((ServomoteurID)id, carte));
                 Thread.Sleep(10);
-                connexion.SendMessage(TrameFactory.ServoDemandeCoupleActive((ServomoteurID)id));
+                connexion.SendMessage(TrameFactory.ServoDemandeCoupleActive((ServomoteurID)id, carte));
                 Thread.Sleep(10);
-                connexion.SendMessage(TrameFactory.ServoDemandeCoupleMaximum((ServomoteurID)id));
+                connexion.SendMessage(TrameFactory.ServoDemandeCoupleMaximum((ServomoteurID)id, carte));
                 Thread.Sleep(10);
-                connexion.SendMessage(TrameFactory.ServoDemandeLed((ServomoteurID)id));
+                connexion.SendMessage(TrameFactory.ServoDemandeLed((ServomoteurID)id, carte));
                 Thread.Sleep(10);
-                connexion.SendMessage(TrameFactory.ServoDemandeNumeroModele((ServomoteurID)id));
+                connexion.SendMessage(TrameFactory.ServoDemandeNumeroModele((ServomoteurID)id, carte));
                 Thread.Sleep(10);
-                connexion.SendMessage(TrameFactory.ServoDemandePositionCible((ServomoteurID)id));
+                connexion.SendMessage(TrameFactory.ServoDemandePositionCible((ServomoteurID)id, carte));
                 Thread.Sleep(10);
-                connexion.SendMessage(TrameFactory.ServoDemandePositionMaximum((ServomoteurID)id));
+                connexion.SendMessage(TrameFactory.ServoDemandePositionMaximum((ServomoteurID)id, carte));
                 Thread.Sleep(10);
-                connexion.SendMessage(TrameFactory.ServoDemandePositionMinimum((ServomoteurID)id));
+                connexion.SendMessage(TrameFactory.ServoDemandePositionMinimum((ServomoteurID)id, carte));
                 Thread.Sleep(10);
-                connexion.SendMessage(TrameFactory.ServoDemandeTemperature((ServomoteurID)id));
+                connexion.SendMessage(TrameFactory.ServoDemandeTemperature((ServomoteurID)id, carte));
                 Thread.Sleep(10);
-                connexion.SendMessage(TrameFactory.ServoDemandeVersionFirmware((ServomoteurID)id));
+                connexion.SendMessage(TrameFactory.ServoDemandeVersionFirmware((ServomoteurID)id, carte));
                 Thread.Sleep(10);
-                connexion.SendMessage(TrameFactory.ServoDemandeVitesseMax((ServomoteurID)id));
+                connexion.SendMessage(TrameFactory.ServoDemandeVitesseMax((ServomoteurID)id, carte));
                 Thread.Sleep(10);
-                connexion.SendMessage(TrameFactory.ServoDemandeTension((ServomoteurID)id));
+                connexion.SendMessage(TrameFactory.ServoDemandeTension((ServomoteurID)id, carte));
                 Thread.Sleep(30);
             }
 
-            connexion.SendMessage(TrameFactory.ServoDemandeMouvement((ServomoteurID)id));
+            connexion.SendMessage(TrameFactory.ServoDemandeMouvement((ServomoteurID)id, carte));
             Thread.Sleep(10);
-            connexion.SendMessage(TrameFactory.ServoDemandePositionActuelle((ServomoteurID)id));
+            connexion.SendMessage(TrameFactory.ServoDemandePositionActuelle((ServomoteurID)id, carte));
             Thread.Sleep(10);
-            connexion.SendMessage(TrameFactory.ServoDemandeErreurs((ServomoteurID)id));
+            connexion.SendMessage(TrameFactory.ServoDemandeErreurs((ServomoteurID)id, carte));
             Thread.Sleep(10);
-            connexion.SendMessage(TrameFactory.ServoDemandeVitesseActuelle((ServomoteurID)id));
+            connexion.SendMessage(TrameFactory.ServoDemandeVitesseActuelle((ServomoteurID)id, carte));
             Thread.Sleep(10);
         }
 

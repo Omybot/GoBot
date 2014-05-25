@@ -29,6 +29,8 @@
         private void InitializeComponent()
         {
             this.groupBalise = new System.Windows.Forms.GroupBox();
+            this.btnStopProfil = new System.Windows.Forms.Button();
+            this.btnStopFace = new System.Windows.Forms.Button();
             this.groupBox4 = new System.Windows.Forms.GroupBox();
             this.btnAutocalibTout = new System.Windows.Forms.Button();
             this.btnAutocalibProfil = new System.Windows.Forms.Button();
@@ -53,8 +55,6 @@
             this.lblTxtInclinaisonFace = new System.Windows.Forms.Label();
             this.lblInclinaisonFace = new System.Windows.Forms.Label();
             this.trackBarInclinaisonFace = new Composants.TrackBarPlus();
-            this.btnStopFace = new System.Windows.Forms.Button();
-            this.btnStopProfil = new System.Windows.Forms.Button();
             this.groupBalise.SuspendLayout();
             this.groupBox4.SuspendLayout();
             this.groupBox3.SuspendLayout();
@@ -85,6 +85,26 @@
             this.groupBalise.TabIndex = 0;
             this.groupBalise.TabStop = false;
             this.groupBalise.Text = "Balise";
+            // 
+            // btnStopProfil
+            // 
+            this.btnStopProfil.Image = global::GoBot.Properties.Resources.Close;
+            this.btnStopProfil.Location = new System.Drawing.Point(304, 76);
+            this.btnStopProfil.Name = "btnStopProfil";
+            this.btnStopProfil.Size = new System.Drawing.Size(23, 23);
+            this.btnStopProfil.TabIndex = 18;
+            this.btnStopProfil.UseVisualStyleBackColor = true;
+            this.btnStopProfil.Click += new System.EventHandler(this.btnStopProfil_Click);
+            // 
+            // btnStopFace
+            // 
+            this.btnStopFace.Image = global::GoBot.Properties.Resources.Close;
+            this.btnStopFace.Location = new System.Drawing.Point(304, 34);
+            this.btnStopFace.Name = "btnStopFace";
+            this.btnStopFace.Size = new System.Drawing.Size(23, 23);
+            this.btnStopFace.TabIndex = 17;
+            this.btnStopFace.UseVisualStyleBackColor = true;
+            this.btnStopFace.Click += new System.EventHandler(this.btnStopFace_Click);
             // 
             // groupBox4
             // 
@@ -289,9 +309,9 @@
             this.trackBarInclinaisonProfil.BackColor = System.Drawing.Color.Transparent;
             this.trackBarInclinaisonProfil.IntervalTimer = 500;
             this.trackBarInclinaisonProfil.Location = new System.Drawing.Point(65, 79);
-            this.trackBarInclinaisonProfil.Max = 1000D;
+            this.trackBarInclinaisonProfil.Max = 200D;
             this.trackBarInclinaisonProfil.MaximumSize = new System.Drawing.Size(3000, 15);
-            this.trackBarInclinaisonProfil.Min = 0D;
+            this.trackBarInclinaisonProfil.Min = 50D;
             this.trackBarInclinaisonProfil.MinimumSize = new System.Drawing.Size(0, 15);
             this.trackBarInclinaisonProfil.Name = "trackBarInclinaisonProfil";
             this.trackBarInclinaisonProfil.NombreDecimales = 0;
@@ -325,9 +345,9 @@
             this.trackBarInclinaisonFace.BackColor = System.Drawing.Color.Transparent;
             this.trackBarInclinaisonFace.IntervalTimer = 500;
             this.trackBarInclinaisonFace.Location = new System.Drawing.Point(65, 37);
-            this.trackBarInclinaisonFace.Max = 1000D;
+            this.trackBarInclinaisonFace.Max = 200D;
             this.trackBarInclinaisonFace.MaximumSize = new System.Drawing.Size(3000, 15);
-            this.trackBarInclinaisonFace.Min = 0D;
+            this.trackBarInclinaisonFace.Min = 50D;
             this.trackBarInclinaisonFace.MinimumSize = new System.Drawing.Size(0, 15);
             this.trackBarInclinaisonFace.Name = "trackBarInclinaisonFace";
             this.trackBarInclinaisonFace.NombreDecimales = 0;
@@ -337,26 +357,6 @@
             this.trackBarInclinaisonFace.Vertical = false;
             this.trackBarInclinaisonFace.TickValueChanged += new System.EventHandler(this.trackBarInclinaisonFace_TickValueChanged);
             this.trackBarInclinaisonFace.ValueChanged += new System.EventHandler(this.trackBarInclinaisonFace_ValueChanged);
-            // 
-            // btnStopFace
-            // 
-            this.btnStopFace.Image = global::GoBot.Properties.Resources.Close;
-            this.btnStopFace.Location = new System.Drawing.Point(304, 34);
-            this.btnStopFace.Name = "btnStopFace";
-            this.btnStopFace.Size = new System.Drawing.Size(23, 23);
-            this.btnStopFace.TabIndex = 17;
-            this.btnStopFace.UseVisualStyleBackColor = true;
-            this.btnStopFace.Click += new System.EventHandler(this.btnStopFace_Click);
-            // 
-            // btnStopProfil
-            // 
-            this.btnStopProfil.Image = global::GoBot.Properties.Resources.Close;
-            this.btnStopProfil.Location = new System.Drawing.Point(304, 76);
-            this.btnStopProfil.Name = "btnStopProfil";
-            this.btnStopProfil.Size = new System.Drawing.Size(23, 23);
-            this.btnStopProfil.TabIndex = 18;
-            this.btnStopProfil.UseVisualStyleBackColor = true;
-            this.btnStopProfil.Click += new System.EventHandler(this.btnStopProfil_Click);
             // 
             // PanelBaliseInclinaison
             // 

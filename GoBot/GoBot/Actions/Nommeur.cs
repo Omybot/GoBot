@@ -109,6 +109,8 @@ namespace GoBot.Actions
                     return "pompe des feux";
                 case ActionneurOnOffID.GRCanonFruit:
                     return "canon à fruits";
+                case ActionneurOnOffID.PRLancesMammouth:
+                    return "canon à lances mammouth";
                 default:
                     return actionneur.ToString();
             }

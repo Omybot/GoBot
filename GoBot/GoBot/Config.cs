@@ -139,6 +139,11 @@ namespace GoBot
         public int PositionGRPousseBouchonFerme { get; set; }
         public int PositionGRPousseBouchonOuvert { get; set; }
 
+        // Positions servos petit robot
+
+        public int PositionPRFiletTir { get; set; }
+        public int PositionPRFiletArme { get; set; }
+
         // Parametres logs UDP
 
         public SerializableDictionary<FonctionBalise, bool> LogsFonctionsBalise { get; set; }

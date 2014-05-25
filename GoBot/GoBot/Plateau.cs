@@ -52,6 +52,7 @@ namespace GoBot
         public static bool FiletLance { get; set; }
 
         public static Feu[] Feux { get; set; }
+        public static Arbre[] Arbres { get; set; }
         public static Fruimouth[] Fruimouths { get; set; }
         public static bool[] TorchesVidees { get; set; }
 
@@ -146,6 +147,12 @@ namespace GoBot
                 Feux[13] = new Feu(new PointReel(2100, 1600), Color.Black, true, 180);
                 Feux[14] = new Feu(new PointReel(2600, 1100), Color.Black, true, 270);
                 Feux[15] = new Feu(new PointReel(2985, 800), Color.Black, true, 0);
+                
+                Arbres = new Arbre[4];
+                Arbres[0] = new Arbre(new PointReel(0, 1300));
+                Arbres[1] = new Arbre(new PointReel(700, 2000));
+                Arbres[2] = new Arbre(new PointReel(2300, 2000));
+                Arbres[3] = new Arbre(new PointReel(3000, 1300));
 
                 Random random = new Random();
                 Fruimouths = new Fruimouth[24];
@@ -405,10 +412,10 @@ namespace GoBot
             AjouterObstacle(new RectanglePolygone(new PointReel(1633, 1978), 134, 22), true);
 
             // Sommet des arbres
-            AjouterObstacle(new Cercle(new PointReel(0, 1300), 120), true);
-            AjouterObstacle(new Cercle(new PointReel(700, 2000), 120), true);
-            AjouterObstacle(new Cercle(new PointReel(2300, 2000), 120), true);
-            AjouterObstacle(new Cercle(new PointReel(3000, 1300), 120), true);
+            AjouterObstacle(new Cercle(new PointReel(0, 1300), 150), true);
+            AjouterObstacle(new Cercle(new PointReel(700, 2000), 150), true);
+            AjouterObstacle(new Cercle(new PointReel(2300, 2000), 150), true);
+            AjouterObstacle(new Cercle(new PointReel(3000, 1300), 150), true);
 
             ObstaclesTorches = new IForme[2];
             ObstaclesTorches[0] = new Cercle(new PointReel(900, 1100), 80);

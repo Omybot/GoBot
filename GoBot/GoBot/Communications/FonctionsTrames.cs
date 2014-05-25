@@ -89,6 +89,9 @@ namespace GoBot.Communications
         RetourPositionCodeurs = 0x44,
         EnvoiConsigneBrute = 0x45,
 
+        ActionneurOnOff = 0x65,
+        Moteur = 0x66,
+
         DemandeDiagnostic = 0x46,
         RetourDiagnostic = 0x47,
 

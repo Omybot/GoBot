@@ -41,7 +41,10 @@ namespace GoBot.IHM
 
         private void btnRefresh_Click(object sender, EventArgs e)
         {
-            servo = new Servomoteur(Carte.RecIO, (int)numID.Value, 19200);
+            if(numID.Value == 14 || numID.Value == 16)
+                servo = new Servomoteur(Carte.RecPi, (int)numID.Value, 19200);
+            else
+                servo = new Servomoteur(Carte.RecIO, (int)numID.Value, 19200);
             Actualisation(true);
         }
 

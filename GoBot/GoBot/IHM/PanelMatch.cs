@@ -240,7 +240,7 @@ namespace GoBot.IHM
             if (!Robots.GrosRobot.GetJack(false))
             {
                 MessageBox.Show("Jack absent !" + Environment.NewLine + "Jack nécessaire avant de commencer à recaller.", "Attention", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                return;
+                //return;
             }
 
             thRecallage = new Thread(RecallagesGros);
@@ -354,7 +354,7 @@ namespace GoBot.IHM
             }
             else
             {
-                Plateau.Balise1.VitesseRotation(3200);
+                Plateau.Balise1.VitesseRotation(2400);
                 toutesLancees = false;
                 Console.WriteLine("Balise 1 mal lancée, relance");
             }

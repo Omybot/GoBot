@@ -63,13 +63,19 @@ namespace GoBot.Communications
             return new Trame(tab);
         }
 
-        static public Trame ActionneurOnOff(ActionneurOnOffID actionneur, bool onOff)
+        static public Trame ActionneurOnOff(ActionneurOnOffID actionneur, bool onOff, bool petitRobot = false)
         {
             byte[] tab = new byte[4];
             tab[0] = (byte)Carte.RecIO;
             tab[1] = (byte)FonctionIO.ActionneurOnOff;
             tab[2] = (byte)actionneur;
             tab[3] = (byte)(onOff ? 1 : 0);
+
+            if (petitRobot)
+            {
+                tab[0] = (byte)Carte.RecPi;
+                tab[1] = (byte)FonctionPi.ActionneurOnOff;
+            }
 
             return new Trame(tab);
         }
@@ -84,7 +90,7 @@ namespace GoBot.Communications
             return new Trame(tab);
         }
 
-        static public Trame MoteurVitesse(MoteurID moteur, int vitesse)
+        static public Trame MoteurVitesse(MoteurID moteur, int vitesse, bool petitRobot = false)
         {
             byte[] tab = new byte[5];
             tab[0] = (byte)Carte.RecIO;
@@ -92,6 +98,12 @@ namespace GoBot.Communications
             tab[2] = (byte)moteur;
             tab[3] = (byte)ByteDivide(vitesse, true);
             tab[4] = (byte)ByteDivide(vitesse, false);
+
+            if (petitRobot)
+            {
+                tab[0] = (byte)Carte.RecPi;
+                tab[1] = (byte)FonctionPi.Moteur;
+            }
 
             return new Trame(tab);
         }

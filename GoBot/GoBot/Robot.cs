@@ -802,7 +802,10 @@ namespace GoBot
                 }
                 if(distanceRestanteApresPF != 0)
                 {
-                    Avancer((int)distanceRestanteApresPF);
+                    if (distanceRestanteApresPF < 0)
+                        Reculer((int)-distanceRestanteApresPF);
+                    else
+                        Avancer((int)distanceRestanteApresPF);
                     distanceRestanteApresPF = 0;
                 }
                 Robots.GrosRobot.Historique.Log("Trajectoire terminée", TypeLog.PathFinding);

@@ -64,5 +64,43 @@ namespace GoBot.IHM
         {
             Deployer(Config.CurrentConfig.ReglagePROuvert);
         }
+
+
+        private void btnOkFilet_Click(object sender, EventArgs e)
+        {
+            Robots.PetitRobot.TourneMoteur(MoteurID.PRLanceFilet, (int)numTirFilet.Value);
+        }
+
+        private void btnFiletTir_Click(object sender, EventArgs e)
+        {
+            if (MessageBox.Show("Êtes vous sûr de vouloir sauvegarder la position comme étant la position de tir ?", "Attention", MessageBoxButtons.OK, MessageBoxIcon.Question) == DialogResult.OK)
+                Config.CurrentConfig.PositionPRFiletTir = (int)numTirFilet.Value;
+        }
+
+        private void btnFiletArme_Click(object sender, EventArgs e)
+        {
+            if (MessageBox.Show("Êtes vous sûr de vouloir sauvegarder la position comme étant la position armée ?", "Attention", MessageBoxButtons.OK, MessageBoxIcon.Question) == DialogResult.OK)
+                Config.CurrentConfig.PositionPRFiletArme = (int)numTirFilet.Value;
+        }
+
+        private void trackBarReservoir_ValueChanged(object sender, EventArgs e)
+        {
+            lblPositionReservoir.Text = trackBarReservoir.Value.ToString();
+        }
+
+        private void trackBarReservoir_TickValueChanged(object sender, EventArgs e)
+        {
+            Robots.PetitRobot.BougeServo(ServomoteurID.PRBacBouchons, (int)trackBarReservoir.Value);
+        }
+
+        private void trackBarBrasFresque_ValueChanged(object sender, EventArgs e)
+        {
+            lblBrasFresque.Text = trackBarBrasFresque.Value.ToString();
+        }
+
+        private void trackBarBrasFresque_TickValueChanged(object sender, EventArgs e)
+        {
+            Robots.PetitRobot.BougeServo(ServomoteurID.PRFresque, (int)trackBarReservoir.Value);
+        }
     }
 }

@@ -49,6 +49,13 @@ namespace GoBot.Enchainements
             // Vidage des torches
             ListeMouvementsGros.Add(new MouvementTorche(0));
             ListeMouvementsGros.Add(new MouvementTorche(1));
+
+            // Arbres
+            ListeMouvementsGros.Add(new MouvementArbre(0));
+
+            // Foyers coins
+            ListeMouvementsGros.Add(new MouvementDeposeFoyerCoin(0));
+            ListeMouvementsGros.Add(new MouvementDeposeFoyerCoin(1));
         }
 
         public void Executer()

@@ -14,6 +14,7 @@ using GoBot.Mouvements;
 using GoBot.Enchainements;
 using GoBot.Balises;
 using GoBot.ElementsJeu;
+using GoBot.Actionneur;
 
 namespace GoBot.IHM
 {
@@ -281,6 +282,20 @@ namespace GoBot.IHM
                                         if (survol)
                                         {
                                             g.DrawEllipse(new Pen(Color.LightGreen), positionEcran.X - rayonEcran, positionEcran.Y - rayonEcran, rayonEcran * 2, rayonEcran * 2);
+                                        }
+                                    }
+
+                                    foreach (Arbre arbre in Plateau.Arbres)
+                                    {
+                                        double distance = positionCurseur.Distance(arbre.Position);
+                                        bool survol = distance < 150;
+
+                                        if (survol)
+                                        {
+                                            PointReel positionTable = RealToScreenPosition(arbre.Position);
+                                            int rayonEcran = RealToScreenDistance(150);
+
+                                            g.DrawEllipse(new Pen(Color.LightGreen), (int)(positionTable.X - rayonEcran), (int)(positionTable.Y - rayonEcran), rayonEcran * 2, rayonEcran * 2);
                                         }
                                     }
 
@@ -990,6 +1005,16 @@ namespace GoBot.IHM
                  th = new Thread(ThreadAction);
                  th.Start();*/
 
+                for (int iArbre = 0; iArbre < Plateau.Arbres.Length; iArbre++)
+                {
+                    Arbre arbre = Plateau.Arbres[iArbre];
+
+                    if (positionReelle.Distance(arbre.Position) <= 150)
+                    {
+                        move = new MouvementArbre(iArbre);
+                    }
+                }
+
                 for (int iFeu = 0; iFeu < Plateau.Feux.Length; iFeu++ )
                 {
                     Feu feu = Plateau.Feux[iFeu];
@@ -1053,14 +1078,13 @@ namespace GoBot.IHM
                                 move = null;
                                 break;
                         }
-
-                        if (move != null)
-                        {
-                            thAction = new Thread(ThreadAction);
-                            thAction.Start();
-                            break;
-                        }
                     }
+                }
+
+                if (move != null)
+                {
+                    thAction = new Thread(ThreadAction);
+                    thAction.Start();
                 }
             }
         }

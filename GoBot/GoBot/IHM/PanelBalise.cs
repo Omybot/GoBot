@@ -180,7 +180,7 @@ namespace GoBot.IHM
         {
             boxAffichage.Checked = true;
             trackBarConsigne.SetValue(40);
-            trackBarVitesse.SetValue(3200);
+            trackBarVitesse.SetValue(2400);
             balise.ReglageVitesse = true;
         }
 

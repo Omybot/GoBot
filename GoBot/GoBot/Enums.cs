@@ -31,6 +31,8 @@ namespace GoBot
         GRFruitsCoude = 2,
         GRFruitsEpaule = 4,
         GRFeuxPoignet = 1,
+        PRFresque = 14,
+        PRBacBouchons = 16,
 
         Tous = 254,
 
@@ -46,9 +48,9 @@ namespace GoBot
         zLibre11 = 11,
         zLibre12 = 12,
         zLibre13 = 13,
-        zLibre14 = 14,
+        //zLibre14 = 14,
         zLibre15 = 15,
-        zLibre16 = 16,
+        //zLibre16 = 16,
         //zLibre17 = 17,
         zLibre18 = 18,
         //zLibre19 = 19,
@@ -301,6 +303,7 @@ namespace GoBot
         GRPousseBouchon = 0x12,
         GRPinceDroiteHaut = 0x13,
         GRPinceGaucheHaut = 0x14,
+        PRLanceFilet = 0x32
     }
 
     public enum CapteurID
@@ -322,7 +325,10 @@ namespace GoBot
         GRElectrovanneFeu = 2,
         GRAlimentation = 1,
         GRPompeFeu = 0,
-        GRCanonFruit = 0x03
+        GRCanonFruit = 3,
+        GRCanonPuissance = 4,
+        GRPousseBouchon = 0x12,
+        PRLancesMammouth = 0x20
     }
 
     public enum CapteurOnOff

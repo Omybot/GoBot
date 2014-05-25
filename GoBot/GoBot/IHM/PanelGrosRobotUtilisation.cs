@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 using System.Threading;
+using GoBot.Actionneur;
 
 namespace GoBot.IHM
 {
@@ -110,11 +111,6 @@ namespace GoBot.IHM
             Console.WriteLine(Math.Round(BrasFruits.Perimetre1()) + " mm");
         }
 
-        private void btnDepose2_Click(object sender, EventArgs e)
-        {
-            BrasFruits.PositionDeposeBouchon2();
-        }
-
         private void btnBrasRange_Click(object sender, EventArgs e)
         {
             BrasFruits.PositionRange();
@@ -122,18 +118,21 @@ namespace GoBot.IHM
 
         private void btnDepose1_Click(object sender, EventArgs e)
         {
-            BrasFruits.PositionDeposeBouchon1();
+            BrasFruits.PositionDeposeBouchon();
         }
 
         private void btnTest_Click(object sender, EventArgs e)
         {
-            Robots.GrosRobot.TourneMoteur(MoteurID.GRPinceDroiteBas, Config.CurrentConfig.PositionGRPinceFruitBasDroiteOuvert);
-            Robots.GrosRobot.TourneMoteur(MoteurID.GRPinceGaucheBas, Config.CurrentConfig.PositionGRPinceFruitBasGaucheOuvert);
+            //Robots.GrosRobot.TourneMoteur(MoteurID.GRPinceDroiteBas, Config.CurrentConfig.PositionGRPinceFruitBasDroiteOuvert);
+            //Robots.GrosRobot.TourneMoteur(MoteurID.GRPinceGaucheBas, Config.CurrentConfig.PositionGRPinceFruitBasGaucheOuvert);
 
-            Thread.Sleep(500);
-
+            //Robots.GrosRobot.TourneMoteur(MoteurID.GRPinceDroiteBas, 400);
+            //Robots.GrosRobot.TourneMoteur(MoteurID.GRPinceGaucheBas, 500);
+            //Thread.Sleep(500);
+            /*
                 Robots.GrosRobot.TourneMoteur(MoteurID.GRPinceDroiteHaut, Config.CurrentConfig.PositionGRPinceFruitHautDroiteOuvert);
                 Robots.GrosRobot.TourneMoteur(MoteurID.GRPinceGaucheHaut, Config.CurrentConfig.PositionGRPinceFruitHautGaucheOuvert);
+                //Thread.Sleep(150);
                 Robots.GrosRobot.TourneMoteur(MoteurID.GRPinceDroiteBas, Config.CurrentConfig.PositionGRPinceFruitBasDroiteFerme);
                 Robots.GrosRobot.TourneMoteur(MoteurID.GRPinceGaucheBas, Config.CurrentConfig.PositionGRPinceFruitBasGaucheFerme);
 
@@ -235,6 +234,8 @@ namespace GoBot.IHM
             Robots.GrosRobot.ActionneurOnOff(ActionneurOnOffID.GRPousseBouchon, true);
             Thread.Sleep(500);
             Robots.GrosRobot.ActionneurOnOff(ActionneurOnOffID.GRPousseBouchon, false);*/
+
+            Robots.GrosRobot.ReglerOffsetAsserv(0, 0, 0);
         }
 
         private void switchBoutonPince_ChangementEtat(object sender, EventArgs e)
@@ -279,6 +280,26 @@ namespace GoBot.IHM
                 Robots.GrosRobot.TourneMoteur(MoteurID.GRPinceDroiteHaut, Config.CurrentConfig.PositionGRPinceFruitHautDroiteOuvert);
                 Robots.GrosRobot.TourneMoteur(MoteurID.GRPinceGaucheHaut, Config.CurrentConfig.PositionGRPinceFruitHautGaucheOuvert);
             }
+        }
+
+        private void btnArmeCanon_Click(object sender, EventArgs e)
+        {
+            Robots.GrosRobot.ActionneurOnOff(ActionneurOnOffID.GRCanonPuissance, true);
+        }
+
+        private void btnReset_Click(object sender, EventArgs e)
+        {
+            BrasFruits.OuvrirPinceBas();
+            BrasFruits.OuvrirPinceHaut();
+            BrasFruits.PositionCoude(160);
+            BrasFruits.PositionEpaule(0);
+            CanonFruits.Armer();
+            CanonFruits.PousseBouchon();
+            CanonFruits.Tirer();
+            BrasFruits.FermerPinceBas();
+            BrasFruits.FermerPinceHaut();
+            Thread.Sleep(500);
+            BrasFruits.PositionRange();
         }
     }
 }
