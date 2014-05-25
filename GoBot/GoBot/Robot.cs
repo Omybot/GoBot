@@ -281,7 +281,10 @@ namespace GoBot
                     // Si le semgent entre notre position et le graph relié au graph est parcourable on y va !
                     if (franchissable)
                     {
-                        Avancer(i * 10);
+                        if (i > 0)
+                            Avancer(i * 10);
+                        else
+                            Reculer(-i * 10);
                         debutNode = new Node(positionActuelle.Coordonnees.X, positionActuelle.Coordonnees.Y, 0);
                         nbPointsDepart = AddNode(Graph, debutNode, 600);
                     }
@@ -326,7 +329,11 @@ namespace GoBot
                         // Si le semgent entre notre position et le graph relié au graph est parcourable on y va !
                         if (franchissable)
                         {
-                            Avancer(i * 10);
+                            if(i > 0)
+                                Avancer(i * 10);
+                            else
+                                Reculer(-i * 10);
+
                             debutNode = new Node(positionActuelle.Coordonnees.X, positionActuelle.Coordonnees.Y, 0);
                             nbPointsDepart = AddNode(Graph, debutNode, 600);
                         }

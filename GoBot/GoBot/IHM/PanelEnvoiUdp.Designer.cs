@@ -47,6 +47,11 @@
             this.label8 = new System.Windows.Forms.Label();
             this.label9 = new System.Windows.Forms.Label();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
+            this.groupBox6 = new System.Windows.Forms.GroupBox();
+            this.label10 = new System.Windows.Forms.Label();
+            this.numIntervalleTest = new System.Windows.Forms.NumericUpDown();
+            this.label6 = new System.Windows.Forms.Label();
+            this.btnSendTest = new System.Windows.Forms.Button();
             this.boxRecPi = new System.Windows.Forms.CheckBox();
             this.boxRecBoi = new System.Windows.Forms.CheckBox();
             this.boxRecBeu = new System.Windows.Forms.CheckBox();
@@ -74,18 +79,29 @@
             this.label11 = new System.Windows.Forms.Label();
             this.label12 = new System.Windows.Forms.Label();
             this.label14 = new System.Windows.Forms.Label();
-            this.groupBox6 = new System.Windows.Forms.GroupBox();
-            this.btnSendTest = new System.Windows.Forms.Button();
-            this.label6 = new System.Windows.Forms.Label();
-            this.numIntervalleTest = new System.Windows.Forms.NumericUpDown();
-            this.label10 = new System.Windows.Forms.Label();
+            this.switchBoutonMove = new Composants.SwitchBouton();
+            this.switchBoutonIO = new Composants.SwitchBouton();
+            this.switchBoutonMiwi = new Composants.SwitchBouton();
+            this.switchBoutonPi = new Composants.SwitchBouton();
+            this.switchBoutonBun = new Composants.SwitchBouton();
+            this.switchBoutonBeu = new Composants.SwitchBouton();
+            this.RecMove = new System.Windows.Forms.Label();
+            this.label15 = new System.Windows.Forms.Label();
+            this.label16 = new System.Windows.Forms.Label();
+            this.label17 = new System.Windows.Forms.Label();
+            this.label18 = new System.Windows.Forms.Label();
+            this.label19 = new System.Windows.Forms.Label();
+            this.label20 = new System.Windows.Forms.Label();
+            this.switchBoutonBoi = new Composants.SwitchBouton();
+            this.groupBox7 = new System.Windows.Forms.GroupBox();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.groupBox3.SuspendLayout();
-            this.groupBox4.SuspendLayout();
-            this.groupBox5.SuspendLayout();
             this.groupBox6.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numIntervalleTest)).BeginInit();
+            this.groupBox4.SuspendLayout();
+            this.groupBox5.SuspendLayout();
+            this.groupBox7.SuspendLayout();
             this.SuspendLayout();
             // 
             // btnEnvoyer
@@ -292,12 +308,65 @@
             this.groupBox3.Controls.Add(this.boxMove);
             this.groupBox3.Controls.Add(this.txtTrame);
             this.groupBox3.Controls.Add(this.boxMiwi);
-            this.groupBox3.Location = new System.Drawing.Point(235, 62);
+            this.groupBox3.Location = new System.Drawing.Point(235, 3);
             this.groupBox3.Name = "groupBox3";
             this.groupBox3.Size = new System.Drawing.Size(481, 224);
             this.groupBox3.TabIndex = 15;
             this.groupBox3.TabStop = false;
             this.groupBox3.Text = "Envoi rapide trame";
+            // 
+            // groupBox6
+            // 
+            this.groupBox6.Controls.Add(this.label10);
+            this.groupBox6.Controls.Add(this.numIntervalleTest);
+            this.groupBox6.Controls.Add(this.label6);
+            this.groupBox6.Controls.Add(this.btnSendTest);
+            this.groupBox6.Location = new System.Drawing.Point(17, 160);
+            this.groupBox6.Name = "groupBox6";
+            this.groupBox6.Size = new System.Drawing.Size(294, 52);
+            this.groupBox6.TabIndex = 16;
+            this.groupBox6.TabStop = false;
+            this.groupBox6.Text = "Envoi tests de connexion";
+            // 
+            // label10
+            // 
+            this.label10.AutoSize = true;
+            this.label10.Location = new System.Drawing.Point(168, 24);
+            this.label10.Name = "label10";
+            this.label10.Size = new System.Drawing.Size(20, 13);
+            this.label10.TabIndex = 41;
+            this.label10.Text = "ms";
+            // 
+            // numIntervalleTest
+            // 
+            this.numIntervalleTest.Location = new System.Drawing.Point(87, 22);
+            this.numIntervalleTest.Maximum = new decimal(new int[] {
+            10000,
+            0,
+            0,
+            0});
+            this.numIntervalleTest.Name = "numIntervalleTest";
+            this.numIntervalleTest.Size = new System.Drawing.Size(75, 20);
+            this.numIntervalleTest.TabIndex = 40;
+            // 
+            // label6
+            // 
+            this.label6.AutoSize = true;
+            this.label6.Location = new System.Drawing.Point(25, 24);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(56, 13);
+            this.label6.TabIndex = 39;
+            this.label6.Text = "Toutes les";
+            // 
+            // btnSendTest
+            // 
+            this.btnSendTest.Location = new System.Drawing.Point(203, 19);
+            this.btnSendTest.Name = "btnSendTest";
+            this.btnSendTest.Size = new System.Drawing.Size(75, 23);
+            this.btnSendTest.TabIndex = 38;
+            this.btnSendTest.Text = "Envoyer";
+            this.btnSendTest.UseVisualStyleBackColor = true;
+            this.btnSendTest.Click += new System.EventHandler(this.btnSendTest_Click);
             // 
             // boxRecPi
             // 
@@ -576,64 +645,168 @@
             this.label14.TabIndex = 8;
             this.label14.Text = "IP carte :";
             // 
-            // groupBox6
+            // switchBoutonMove
             // 
-            this.groupBox6.Controls.Add(this.label10);
-            this.groupBox6.Controls.Add(this.numIntervalleTest);
-            this.groupBox6.Controls.Add(this.label6);
-            this.groupBox6.Controls.Add(this.btnSendTest);
-            this.groupBox6.Location = new System.Drawing.Point(17, 160);
-            this.groupBox6.Name = "groupBox6";
-            this.groupBox6.Size = new System.Drawing.Size(294, 52);
-            this.groupBox6.TabIndex = 16;
-            this.groupBox6.TabStop = false;
-            this.groupBox6.Text = "Envoi tests de connexion";
+            this.switchBoutonMove.BackColor = System.Drawing.Color.Transparent;
+            this.switchBoutonMove.Location = new System.Drawing.Point(119, 33);
+            this.switchBoutonMove.Name = "switchBoutonMove";
+            this.switchBoutonMove.Size = new System.Drawing.Size(35, 15);
+            this.switchBoutonMove.Symetrique = true;
+            this.switchBoutonMove.TabIndex = 16;
+            this.switchBoutonMove.ChangementEtat += new System.EventHandler(this.switchBoutonConnexion_ChangementEtat);
             // 
-            // btnSendTest
+            // switchBoutonIO
             // 
-            this.btnSendTest.Location = new System.Drawing.Point(203, 19);
-            this.btnSendTest.Name = "btnSendTest";
-            this.btnSendTest.Size = new System.Drawing.Size(75, 23);
-            this.btnSendTest.TabIndex = 38;
-            this.btnSendTest.Text = "Envoyer";
-            this.btnSendTest.UseVisualStyleBackColor = true;
-            this.btnSendTest.Click += new System.EventHandler(this.btnSendTest_Click);
+            this.switchBoutonIO.BackColor = System.Drawing.Color.Transparent;
+            this.switchBoutonIO.Location = new System.Drawing.Point(119, 54);
+            this.switchBoutonIO.Name = "switchBoutonIO";
+            this.switchBoutonIO.Size = new System.Drawing.Size(35, 15);
+            this.switchBoutonIO.Symetrique = true;
+            this.switchBoutonIO.TabIndex = 17;
+            this.switchBoutonIO.ChangementEtat += new System.EventHandler(this.switchBoutonConnexion_ChangementEtat);
             // 
-            // label6
+            // switchBoutonMiwi
             // 
-            this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(25, 24);
-            this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(56, 13);
-            this.label6.TabIndex = 39;
-            this.label6.Text = "Toutes les";
+            this.switchBoutonMiwi.BackColor = System.Drawing.Color.Transparent;
+            this.switchBoutonMiwi.Location = new System.Drawing.Point(119, 75);
+            this.switchBoutonMiwi.Name = "switchBoutonMiwi";
+            this.switchBoutonMiwi.Size = new System.Drawing.Size(35, 15);
+            this.switchBoutonMiwi.Symetrique = true;
+            this.switchBoutonMiwi.TabIndex = 18;
+            this.switchBoutonMiwi.ChangementEtat += new System.EventHandler(this.switchBoutonConnexion_ChangementEtat);
             // 
-            // numIntervalleTest
+            // switchBoutonPi
             // 
-            this.numIntervalleTest.Location = new System.Drawing.Point(87, 22);
-            this.numIntervalleTest.Maximum = new decimal(new int[] {
-            10000,
-            0,
-            0,
-            0});
-            this.numIntervalleTest.Name = "numIntervalleTest";
-            this.numIntervalleTest.Size = new System.Drawing.Size(75, 20);
-            this.numIntervalleTest.TabIndex = 40;
+            this.switchBoutonPi.BackColor = System.Drawing.Color.Transparent;
+            this.switchBoutonPi.Location = new System.Drawing.Point(119, 96);
+            this.switchBoutonPi.Name = "switchBoutonPi";
+            this.switchBoutonPi.Size = new System.Drawing.Size(35, 15);
+            this.switchBoutonPi.Symetrique = true;
+            this.switchBoutonPi.TabIndex = 19;
+            this.switchBoutonPi.ChangementEtat += new System.EventHandler(this.switchBoutonConnexion_ChangementEtat);
             // 
-            // label10
+            // switchBoutonBun
             // 
-            this.label10.AutoSize = true;
-            this.label10.Location = new System.Drawing.Point(168, 24);
-            this.label10.Name = "label10";
-            this.label10.Size = new System.Drawing.Size(20, 13);
-            this.label10.TabIndex = 41;
-            this.label10.Text = "ms";
+            this.switchBoutonBun.BackColor = System.Drawing.Color.Transparent;
+            this.switchBoutonBun.Location = new System.Drawing.Point(119, 117);
+            this.switchBoutonBun.Name = "switchBoutonBun";
+            this.switchBoutonBun.Size = new System.Drawing.Size(35, 15);
+            this.switchBoutonBun.Symetrique = true;
+            this.switchBoutonBun.TabIndex = 20;
+            this.switchBoutonBun.ChangementEtat += new System.EventHandler(this.switchBoutonConnexion_ChangementEtat);
+            // 
+            // switchBoutonBeu
+            // 
+            this.switchBoutonBeu.BackColor = System.Drawing.Color.Transparent;
+            this.switchBoutonBeu.Location = new System.Drawing.Point(119, 138);
+            this.switchBoutonBeu.Name = "switchBoutonBeu";
+            this.switchBoutonBeu.Size = new System.Drawing.Size(35, 15);
+            this.switchBoutonBeu.Symetrique = true;
+            this.switchBoutonBeu.TabIndex = 21;
+            this.switchBoutonBeu.ChangementEtat += new System.EventHandler(this.switchBoutonConnexion_ChangementEtat);
+            // 
+            // RecMove
+            // 
+            this.RecMove.AutoSize = true;
+            this.RecMove.Location = new System.Drawing.Point(42, 35);
+            this.RecMove.Name = "RecMove";
+            this.RecMove.Size = new System.Drawing.Size(54, 13);
+            this.RecMove.TabIndex = 14;
+            this.RecMove.Text = "RecMove";
+            // 
+            // label15
+            // 
+            this.label15.AutoSize = true;
+            this.label15.Location = new System.Drawing.Point(42, 56);
+            this.label15.Name = "label15";
+            this.label15.Size = new System.Drawing.Size(38, 13);
+            this.label15.TabIndex = 22;
+            this.label15.Text = "RecIO";
+            // 
+            // label16
+            // 
+            this.label16.AutoSize = true;
+            this.label16.Location = new System.Drawing.Point(42, 77);
+            this.label16.Name = "label16";
+            this.label16.Size = new System.Drawing.Size(48, 13);
+            this.label16.TabIndex = 23;
+            this.label16.Text = "RecMiwi";
+            // 
+            // label17
+            // 
+            this.label17.AutoSize = true;
+            this.label17.Location = new System.Drawing.Point(42, 98);
+            this.label17.Name = "label17";
+            this.label17.Size = new System.Drawing.Size(36, 13);
+            this.label17.TabIndex = 24;
+            this.label17.Text = "RecPi";
+            // 
+            // label18
+            // 
+            this.label18.AutoSize = true;
+            this.label18.Location = new System.Drawing.Point(42, 119);
+            this.label18.Name = "label18";
+            this.label18.Size = new System.Drawing.Size(46, 13);
+            this.label18.TabIndex = 25;
+            this.label18.Text = "RecBun";
+            // 
+            // label19
+            // 
+            this.label19.AutoSize = true;
+            this.label19.Location = new System.Drawing.Point(42, 140);
+            this.label19.Name = "label19";
+            this.label19.Size = new System.Drawing.Size(46, 13);
+            this.label19.TabIndex = 26;
+            this.label19.Text = "RecBeu";
+            // 
+            // label20
+            // 
+            this.label20.AutoSize = true;
+            this.label20.Location = new System.Drawing.Point(42, 161);
+            this.label20.Name = "label20";
+            this.label20.Size = new System.Drawing.Size(42, 13);
+            this.label20.TabIndex = 28;
+            this.label20.Text = "RecBoi";
+            // 
+            // switchBoutonBoi
+            // 
+            this.switchBoutonBoi.BackColor = System.Drawing.Color.Transparent;
+            this.switchBoutonBoi.Location = new System.Drawing.Point(119, 159);
+            this.switchBoutonBoi.Name = "switchBoutonBoi";
+            this.switchBoutonBoi.Size = new System.Drawing.Size(35, 15);
+            this.switchBoutonBoi.Symetrique = true;
+            this.switchBoutonBoi.TabIndex = 27;
+            this.switchBoutonBoi.ChangementEtat += new System.EventHandler(this.switchBoutonConnexion_ChangementEtat);
+            // 
+            // groupBox7
+            // 
+            this.groupBox7.Controls.Add(this.switchBoutonMove);
+            this.groupBox7.Controls.Add(this.label20);
+            this.groupBox7.Controls.Add(this.switchBoutonIO);
+            this.groupBox7.Controls.Add(this.switchBoutonBoi);
+            this.groupBox7.Controls.Add(this.switchBoutonMiwi);
+            this.groupBox7.Controls.Add(this.label19);
+            this.groupBox7.Controls.Add(this.switchBoutonPi);
+            this.groupBox7.Controls.Add(this.label18);
+            this.groupBox7.Controls.Add(this.switchBoutonBun);
+            this.groupBox7.Controls.Add(this.label17);
+            this.groupBox7.Controls.Add(this.switchBoutonBeu);
+            this.groupBox7.Controls.Add(this.label16);
+            this.groupBox7.Controls.Add(this.RecMove);
+            this.groupBox7.Controls.Add(this.label15);
+            this.groupBox7.Location = new System.Drawing.Point(235, 233);
+            this.groupBox7.Name = "groupBox7";
+            this.groupBox7.Size = new System.Drawing.Size(200, 199);
+            this.groupBox7.TabIndex = 29;
+            this.groupBox7.TabStop = false;
+            this.groupBox7.Text = "Activation connexions";
             // 
             // PanelEnvoiUdp
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.White;
+            this.Controls.Add(this.groupBox7);
             this.Controls.Add(this.groupBox5);
             this.Controls.Add(this.groupBox4);
             this.Controls.Add(this.groupBox3);
@@ -648,13 +821,15 @@
             this.groupBox2.PerformLayout();
             this.groupBox3.ResumeLayout(false);
             this.groupBox3.PerformLayout();
+            this.groupBox6.ResumeLayout(false);
+            this.groupBox6.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.numIntervalleTest)).EndInit();
             this.groupBox4.ResumeLayout(false);
             this.groupBox4.PerformLayout();
             this.groupBox5.ResumeLayout(false);
             this.groupBox5.PerformLayout();
-            this.groupBox6.ResumeLayout(false);
-            this.groupBox6.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.numIntervalleTest)).EndInit();
+            this.groupBox7.ResumeLayout(false);
+            this.groupBox7.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -712,5 +887,20 @@
         private System.Windows.Forms.NumericUpDown numIntervalleTest;
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.Button btnSendTest;
+        private Composants.SwitchBouton switchBoutonMove;
+        private Composants.SwitchBouton switchBoutonIO;
+        private Composants.SwitchBouton switchBoutonMiwi;
+        private Composants.SwitchBouton switchBoutonPi;
+        private Composants.SwitchBouton switchBoutonBun;
+        private Composants.SwitchBouton switchBoutonBeu;
+        private System.Windows.Forms.Label RecMove;
+        private System.Windows.Forms.Label label15;
+        private System.Windows.Forms.Label label16;
+        private System.Windows.Forms.Label label17;
+        private System.Windows.Forms.Label label18;
+        private System.Windows.Forms.Label label19;
+        private System.Windows.Forms.Label label20;
+        private Composants.SwitchBouton switchBoutonBoi;
+        private System.Windows.Forms.GroupBox groupBox7;
     }
 }

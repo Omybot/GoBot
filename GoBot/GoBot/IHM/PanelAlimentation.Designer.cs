@@ -50,6 +50,11 @@
             this.lblTensionBeu2 = new System.Windows.Forms.Label();
             this.batterieBoi2 = new Composants.Batterie();
             this.lblTensionBoi2 = new System.Windows.Forms.Label();
+            this.batteriePRPack2 = new Composants.Batterie();
+            this.batteriePRPack1 = new Composants.Batterie();
+            this.lblBatPRPack2 = new System.Windows.Forms.Label();
+            this.lblBatPRPack1 = new System.Windows.Forms.Label();
+            this.label6 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.batteriePack1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.batteriePack2)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.batterieBun1)).BeginInit();
@@ -58,21 +63,23 @@
             ((System.ComponentModel.ISupportInitialize)(this.batterieBun2)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.batterieBeu2)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.batterieBoi2)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.batteriePRPack2)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.batteriePRPack1)).BeginInit();
             this.SuspendLayout();
             // 
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(56, 67);
+            this.label1.Location = new System.Drawing.Point(37, 67);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(42, 13);
+            this.label1.Size = new System.Drawing.Size(67, 13);
             this.label1.TabIndex = 0;
-            this.label1.Text = "Robot :";
+            this.label1.Text = "Gros Robot :";
             // 
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(54, 114);
+            this.label3.Location = new System.Drawing.Point(54, 160);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(50, 13);
             this.label3.TabIndex = 2;
@@ -81,7 +88,7 @@
             // label4
             // 
             this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(54, 158);
+            this.label4.Location = new System.Drawing.Point(54, 204);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(50, 13);
             this.label4.TabIndex = 3;
@@ -108,7 +115,7 @@
             // lblTensionBun1
             // 
             this.lblTensionBun1.AutoSize = true;
-            this.lblTensionBun1.Location = new System.Drawing.Point(126, 114);
+            this.lblTensionBun1.Location = new System.Drawing.Point(126, 160);
             this.lblTensionBun1.Name = "lblTensionBun1";
             this.lblTensionBun1.Size = new System.Drawing.Size(23, 13);
             this.lblTensionBun1.TabIndex = 6;
@@ -117,7 +124,7 @@
             // lblTensionBeu1
             // 
             this.lblTensionBeu1.AutoSize = true;
-            this.lblTensionBeu1.Location = new System.Drawing.Point(126, 158);
+            this.lblTensionBeu1.Location = new System.Drawing.Point(126, 204);
             this.lblTensionBeu1.Name = "lblTensionBeu1";
             this.lblTensionBeu1.Size = new System.Drawing.Size(23, 13);
             this.lblTensionBeu1.TabIndex = 7;
@@ -126,7 +133,7 @@
             // lblTensionBoi1
             // 
             this.lblTensionBoi1.AutoSize = true;
-            this.lblTensionBoi1.Location = new System.Drawing.Point(126, 199);
+            this.lblTensionBoi1.Location = new System.Drawing.Point(126, 245);
             this.lblTensionBoi1.Name = "lblTensionBoi1";
             this.lblTensionBoi1.Size = new System.Drawing.Size(23, 13);
             this.lblTensionBoi1.TabIndex = 9;
@@ -135,7 +142,7 @@
             // label10
             // 
             this.label10.AutoSize = true;
-            this.label10.Location = new System.Drawing.Point(54, 199);
+            this.label10.Location = new System.Drawing.Point(54, 245);
             this.label10.Name = "label10";
             this.label10.Size = new System.Drawing.Size(50, 13);
             this.label10.TabIndex = 8;
@@ -166,6 +173,7 @@
             this.batteriePack1.TensionLow = 0D;
             this.batteriePack1.TensionMid = 0D;
             this.batteriePack1.TensionMidHigh = 0D;
+            this.batteriePack1.TensionNull = 0D;
             // 
             // batteriePack2
             // 
@@ -180,12 +188,13 @@
             this.batteriePack2.TensionLow = 0D;
             this.batteriePack2.TensionMid = 0D;
             this.batteriePack2.TensionMidHigh = 0D;
+            this.batteriePack2.TensionNull = 0D;
             // 
             // batterieBun1
             // 
             this.batterieBun1.Afficher = false;
             this.batterieBun1.Image = ((System.Drawing.Image)(resources.GetObject("batterieBun1.Image")));
-            this.batterieBun1.Location = new System.Drawing.Point(104, 111);
+            this.batterieBun1.Location = new System.Drawing.Point(104, 157);
             this.batterieBun1.Name = "batterieBun1";
             this.batterieBun1.Size = new System.Drawing.Size(16, 16);
             this.batterieBun1.TabIndex = 23;
@@ -194,12 +203,13 @@
             this.batterieBun1.TensionLow = 0D;
             this.batterieBun1.TensionMid = 0D;
             this.batterieBun1.TensionMidHigh = 0D;
+            this.batterieBun1.TensionNull = 0D;
             // 
             // batterieBeu1
             // 
             this.batterieBeu1.Afficher = false;
             this.batterieBeu1.Image = ((System.Drawing.Image)(resources.GetObject("batterieBeu1.Image")));
-            this.batterieBeu1.Location = new System.Drawing.Point(104, 155);
+            this.batterieBeu1.Location = new System.Drawing.Point(104, 201);
             this.batterieBeu1.Name = "batterieBeu1";
             this.batterieBeu1.Size = new System.Drawing.Size(16, 16);
             this.batterieBeu1.TabIndex = 24;
@@ -208,12 +218,13 @@
             this.batterieBeu1.TensionLow = 0D;
             this.batterieBeu1.TensionMid = 0D;
             this.batterieBeu1.TensionMidHigh = 0D;
+            this.batterieBeu1.TensionNull = 0D;
             // 
             // batterieBoi1
             // 
             this.batterieBoi1.Afficher = false;
             this.batterieBoi1.Image = ((System.Drawing.Image)(resources.GetObject("batterieBoi1.Image")));
-            this.batterieBoi1.Location = new System.Drawing.Point(104, 199);
+            this.batterieBoi1.Location = new System.Drawing.Point(104, 245);
             this.batterieBoi1.Name = "batterieBoi1";
             this.batterieBoi1.Size = new System.Drawing.Size(16, 16);
             this.batterieBoi1.TabIndex = 25;
@@ -222,12 +233,13 @@
             this.batterieBoi1.TensionLow = 0D;
             this.batterieBoi1.TensionMid = 0D;
             this.batterieBoi1.TensionMidHigh = 0D;
+            this.batterieBoi1.TensionNull = 0D;
             // 
             // batterieBun2
             // 
             this.batterieBun2.Afficher = false;
             this.batterieBun2.Image = ((System.Drawing.Image)(resources.GetObject("batterieBun2.Image")));
-            this.batterieBun2.Location = new System.Drawing.Point(104, 133);
+            this.batterieBun2.Location = new System.Drawing.Point(104, 179);
             this.batterieBun2.Name = "batterieBun2";
             this.batterieBun2.Size = new System.Drawing.Size(16, 16);
             this.batterieBun2.TabIndex = 27;
@@ -236,11 +248,12 @@
             this.batterieBun2.TensionLow = 0D;
             this.batterieBun2.TensionMid = 0D;
             this.batterieBun2.TensionMidHigh = 0D;
+            this.batterieBun2.TensionNull = 0D;
             // 
             // lblTensionBun2
             // 
             this.lblTensionBun2.AutoSize = true;
-            this.lblTensionBun2.Location = new System.Drawing.Point(126, 136);
+            this.lblTensionBun2.Location = new System.Drawing.Point(126, 182);
             this.lblTensionBun2.Name = "lblTensionBun2";
             this.lblTensionBun2.Size = new System.Drawing.Size(23, 13);
             this.lblTensionBun2.TabIndex = 26;
@@ -250,7 +263,7 @@
             // 
             this.batterieBeu2.Afficher = false;
             this.batterieBeu2.Image = ((System.Drawing.Image)(resources.GetObject("batterieBeu2.Image")));
-            this.batterieBeu2.Location = new System.Drawing.Point(104, 177);
+            this.batterieBeu2.Location = new System.Drawing.Point(104, 223);
             this.batterieBeu2.Name = "batterieBeu2";
             this.batterieBeu2.Size = new System.Drawing.Size(16, 16);
             this.batterieBeu2.TabIndex = 29;
@@ -259,11 +272,12 @@
             this.batterieBeu2.TensionLow = 0D;
             this.batterieBeu2.TensionMid = 0D;
             this.batterieBeu2.TensionMidHigh = 0D;
+            this.batterieBeu2.TensionNull = 0D;
             // 
             // lblTensionBeu2
             // 
             this.lblTensionBeu2.AutoSize = true;
-            this.lblTensionBeu2.Location = new System.Drawing.Point(126, 180);
+            this.lblTensionBeu2.Location = new System.Drawing.Point(126, 226);
             this.lblTensionBeu2.Name = "lblTensionBeu2";
             this.lblTensionBeu2.Size = new System.Drawing.Size(23, 13);
             this.lblTensionBeu2.TabIndex = 28;
@@ -273,7 +287,7 @@
             // 
             this.batterieBoi2.Afficher = false;
             this.batterieBoi2.Image = ((System.Drawing.Image)(resources.GetObject("batterieBoi2.Image")));
-            this.batterieBoi2.Location = new System.Drawing.Point(104, 221);
+            this.batterieBoi2.Location = new System.Drawing.Point(104, 267);
             this.batterieBoi2.Name = "batterieBoi2";
             this.batterieBoi2.Size = new System.Drawing.Size(16, 16);
             this.batterieBoi2.TabIndex = 31;
@@ -282,20 +296,83 @@
             this.batterieBoi2.TensionLow = 0D;
             this.batterieBoi2.TensionMid = 0D;
             this.batterieBoi2.TensionMidHigh = 0D;
+            this.batterieBoi2.TensionNull = 0D;
             // 
             // lblTensionBoi2
             // 
             this.lblTensionBoi2.AutoSize = true;
-            this.lblTensionBoi2.Location = new System.Drawing.Point(126, 221);
+            this.lblTensionBoi2.Location = new System.Drawing.Point(126, 267);
             this.lblTensionBoi2.Name = "lblTensionBoi2";
             this.lblTensionBoi2.Size = new System.Drawing.Size(23, 13);
             this.lblTensionBoi2.TabIndex = 30;
             this.lblTensionBoi2.Text = "0 V";
             // 
+            // batteriePRPack2
+            // 
+            this.batteriePRPack2.Afficher = false;
+            this.batteriePRPack2.Image = ((System.Drawing.Image)(resources.GetObject("batteriePRPack2.Image")));
+            this.batteriePRPack2.Location = new System.Drawing.Point(104, 134);
+            this.batteriePRPack2.Name = "batteriePRPack2";
+            this.batteriePRPack2.Size = new System.Drawing.Size(16, 16);
+            this.batteriePRPack2.TabIndex = 36;
+            this.batteriePRPack2.TabStop = false;
+            this.batteriePRPack2.Tension = 0D;
+            this.batteriePRPack2.TensionLow = 0D;
+            this.batteriePRPack2.TensionMid = 0D;
+            this.batteriePRPack2.TensionMidHigh = 0D;
+            this.batteriePRPack2.TensionNull = 0D;
+            // 
+            // batteriePRPack1
+            // 
+            this.batteriePRPack1.Afficher = false;
+            this.batteriePRPack1.Image = ((System.Drawing.Image)(resources.GetObject("batteriePRPack1.Image")));
+            this.batteriePRPack1.Location = new System.Drawing.Point(104, 112);
+            this.batteriePRPack1.Name = "batteriePRPack1";
+            this.batteriePRPack1.Size = new System.Drawing.Size(16, 16);
+            this.batteriePRPack1.TabIndex = 35;
+            this.batteriePRPack1.TabStop = false;
+            this.batteriePRPack1.Tension = 0D;
+            this.batteriePRPack1.TensionLow = 0D;
+            this.batteriePRPack1.TensionMid = 0D;
+            this.batteriePRPack1.TensionMidHigh = 0D;
+            this.batteriePRPack1.TensionNull = 0D;
+            // 
+            // lblBatPRPack2
+            // 
+            this.lblBatPRPack2.AutoSize = true;
+            this.lblBatPRPack2.Location = new System.Drawing.Point(126, 137);
+            this.lblBatPRPack2.Name = "lblBatPRPack2";
+            this.lblBatPRPack2.Size = new System.Drawing.Size(23, 13);
+            this.lblBatPRPack2.TabIndex = 34;
+            this.lblBatPRPack2.Text = "0 V";
+            // 
+            // lblBatPRPack1
+            // 
+            this.lblBatPRPack1.AutoSize = true;
+            this.lblBatPRPack1.Location = new System.Drawing.Point(126, 115);
+            this.lblBatPRPack1.Name = "lblBatPRPack1";
+            this.lblBatPRPack1.Size = new System.Drawing.Size(23, 13);
+            this.lblBatPRPack1.TabIndex = 33;
+            this.lblBatPRPack1.Text = "0 V";
+            // 
+            // label6
+            // 
+            this.label6.AutoSize = true;
+            this.label6.Location = new System.Drawing.Point(37, 112);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(66, 13);
+            this.label6.TabIndex = 32;
+            this.label6.Text = "Petit Robot :";
+            // 
             // PanelAlimentation
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.Controls.Add(this.batteriePRPack2);
+            this.Controls.Add(this.batteriePRPack1);
+            this.Controls.Add(this.lblBatPRPack2);
+            this.Controls.Add(this.lblBatPRPack1);
+            this.Controls.Add(this.label6);
             this.Controls.Add(this.batterieBoi2);
             this.Controls.Add(this.lblTensionBoi2);
             this.Controls.Add(this.batterieBeu2);
@@ -328,6 +405,8 @@
             ((System.ComponentModel.ISupportInitialize)(this.batterieBun2)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.batterieBeu2)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.batterieBoi2)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.batteriePRPack2)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.batteriePRPack1)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -356,6 +435,11 @@
         private System.Windows.Forms.Label lblTensionBeu2;
         private Composants.Batterie batterieBoi2;
         private System.Windows.Forms.Label lblTensionBoi2;
+        private Composants.Batterie batteriePRPack2;
+        private Composants.Batterie batteriePRPack1;
+        private System.Windows.Forms.Label lblBatPRPack2;
+        private System.Windows.Forms.Label lblBatPRPack1;
+        private System.Windows.Forms.Label label6;
 
     }
 }

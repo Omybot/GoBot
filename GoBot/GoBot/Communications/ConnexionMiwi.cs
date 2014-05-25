@@ -26,6 +26,9 @@ namespace GoBot.Communications
         /// <returns>Nombre de caractères envoyés</returns>
         public override int SendMessage(Trame message, bool bloquant = false)
         {
+            if (!Connexions.ActivationConnexion[message.Carte])
+                return 0;
+
             // Rajoute l'entête de demande de transfert de message par Miwi
             byte[] tab = new byte[message.Length + 3];
             byte[] tabOrig = message.ToTabBytes();

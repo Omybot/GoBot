@@ -47,6 +47,9 @@ namespace GoBot.Mouvements
                             else
                                 return true;
 
+                            Robots.GrosRobot.Avancer(50);
+                            Robots.GrosRobot.Reculer(50);
+
                             if (numeroFoyer == 0)
                                 feuHaut.Position = new Calculs.Formes.PointReel(132, 1852);
 
@@ -72,7 +75,7 @@ namespace GoBot.Mouvements
                             Thread.Sleep(500);
                             BrasFeux.PositionTorcheDessus();
                             Thread.Sleep(500);
-                            BrasFeux.PositionTorche2();
+                            BrasFeux.PositionPousseFoyer();
                             Thread.Sleep(500);
 
                             Robots.GrosRobot.Lent();

@@ -101,6 +101,9 @@ namespace GoBot.Communications
         /// <returns>Nombre de caractères envoyés</returns>
         public override int SendMessage(Trame message, bool bloquant = false)
         {
+            if (!Connexions.ActivationConnexion[message.Carte])
+                return 0;
+
             // TODO attente acquittement
             int retour = 0;
             try

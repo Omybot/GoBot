@@ -13,7 +13,7 @@ namespace GoBot.Actionneurs
         }
         public static void Tirer()
         {
-            Robots.PetitRobot.ActionneurOnOff(ActionneurOnOffID.PRLancesMammouth, true);
+            Robots.PetitRobot.ActionneurOnOff(ActionneurOnOffID.PRLancesMammouth, false);
         }
     }
 }

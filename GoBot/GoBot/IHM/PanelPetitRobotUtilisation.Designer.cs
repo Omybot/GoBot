@@ -29,6 +29,8 @@
         private void InitializeComponent()
         {
             this.groupBoxUtil = new System.Windows.Forms.GroupBox();
+            this.switchBoutonReservoir = new Composants.SwitchBouton();
+            this.label3 = new System.Windows.Forms.Label();
             this.switchBoutonFilet = new Composants.SwitchBouton();
             this.label2 = new System.Windows.Forms.Label();
             this.switchBoutonAimantLances = new Composants.SwitchBouton();
@@ -37,14 +39,18 @@
             this.switchBoutonPuissance = new Composants.SwitchBouton();
             this.label12 = new System.Windows.Forms.Label();
             this.btnTaille = new System.Windows.Forms.Button();
-            this.switchBoutonReservoir = new Composants.SwitchBouton();
-            this.label3 = new System.Windows.Forms.Label();
+            this.switchBoutonRideau = new Composants.SwitchBouton();
+            this.label4 = new System.Windows.Forms.Label();
+            this.btnLances = new System.Windows.Forms.Button();
             this.groupBoxUtil.SuspendLayout();
             this.SuspendLayout();
             // 
             // groupBoxUtil
             // 
             this.groupBoxUtil.BackColor = System.Drawing.Color.Transparent;
+            this.groupBoxUtil.Controls.Add(this.btnLances);
+            this.groupBoxUtil.Controls.Add(this.switchBoutonRideau);
+            this.groupBoxUtil.Controls.Add(this.label4);
             this.groupBoxUtil.Controls.Add(this.switchBoutonReservoir);
             this.groupBoxUtil.Controls.Add(this.label3);
             this.groupBoxUtil.Controls.Add(this.switchBoutonFilet);
@@ -61,6 +67,25 @@
             this.groupBoxUtil.TabIndex = 0;
             this.groupBoxUtil.TabStop = false;
             this.groupBoxUtil.Text = "Utilisation";
+            // 
+            // switchBoutonReservoir
+            // 
+            this.switchBoutonReservoir.BackColor = System.Drawing.Color.Transparent;
+            this.switchBoutonReservoir.Location = new System.Drawing.Point(98, 165);
+            this.switchBoutonReservoir.Name = "switchBoutonReservoir";
+            this.switchBoutonReservoir.Size = new System.Drawing.Size(35, 15);
+            this.switchBoutonReservoir.Symetrique = false;
+            this.switchBoutonReservoir.TabIndex = 208;
+            this.switchBoutonReservoir.ChangementEtat += new System.EventHandler(this.switchBoutonReservoir_ChangementEtat);
+            // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Location = new System.Drawing.Point(18, 165);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(52, 13);
+            this.label3.TabIndex = 207;
+            this.label3.Text = "Réservoir";
             // 
             // switchBoutonFilet
             // 
@@ -139,24 +164,34 @@
             this.btnTaille.UseVisualStyleBackColor = true;
             this.btnTaille.Click += new System.EventHandler(this.btnTaille_Click);
             // 
-            // switchBoutonReservoir
+            // switchBoutonRideau
             // 
-            this.switchBoutonReservoir.BackColor = System.Drawing.Color.Transparent;
-            this.switchBoutonReservoir.Location = new System.Drawing.Point(98, 165);
-            this.switchBoutonReservoir.Name = "switchBoutonReservoir";
-            this.switchBoutonReservoir.Size = new System.Drawing.Size(35, 15);
-            this.switchBoutonReservoir.Symetrique = false;
-            this.switchBoutonReservoir.TabIndex = 208;
-            this.switchBoutonReservoir.ChangementEtat += new System.EventHandler(this.switchBoutonReservoir_ChangementEtat);
+            this.switchBoutonRideau.BackColor = System.Drawing.Color.Transparent;
+            this.switchBoutonRideau.Location = new System.Drawing.Point(98, 196);
+            this.switchBoutonRideau.Name = "switchBoutonRideau";
+            this.switchBoutonRideau.Size = new System.Drawing.Size(35, 15);
+            this.switchBoutonRideau.Symetrique = false;
+            this.switchBoutonRideau.TabIndex = 210;
+            this.switchBoutonRideau.ChangementEtat += new System.EventHandler(this.switchBoutonRideau_ChangementEtat);
             // 
-            // label3
+            // label4
             // 
-            this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(18, 165);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(52, 13);
-            this.label3.TabIndex = 207;
-            this.label3.Text = "Réservoir";
+            this.label4.AutoSize = true;
+            this.label4.Location = new System.Drawing.Point(18, 196);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(41, 13);
+            this.label4.TabIndex = 209;
+            this.label4.Text = "Rideau";
+            // 
+            // btnLances
+            // 
+            this.btnLances.Location = new System.Drawing.Point(58, 251);
+            this.btnLances.Name = "btnLances";
+            this.btnLances.Size = new System.Drawing.Size(75, 23);
+            this.btnLances.TabIndex = 211;
+            this.btnLances.Text = "Attaque lances";
+            this.btnLances.UseVisualStyleBackColor = true;
+            this.btnLances.Click += new System.EventHandler(this.btnLances_Click);
             // 
             // PanelPetitRobotUtilisation
             // 
@@ -187,5 +222,8 @@
         private System.Windows.Forms.Label label2;
         private Composants.SwitchBouton switchBoutonReservoir;
         private System.Windows.Forms.Label label3;
+        private Composants.SwitchBouton switchBoutonRideau;
+        private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.Button btnLances;
     }
 }

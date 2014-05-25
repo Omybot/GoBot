@@ -144,6 +144,9 @@ namespace GoBot
         public int PositionPRFiletTir { get; set; }
         public int PositionPRFiletArme { get; set; }
 
+        public int PRTensionTissuRelache { get; set; }
+        public int PRTensionTissuTendu { get; set; }
+
         // Parametres logs UDP
 
         public SerializableDictionary<FonctionBalise, bool> LogsFonctionsBalise { get; set; }

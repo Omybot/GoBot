@@ -101,5 +101,26 @@ namespace GoBot.IHM
             else
                 ReservoirBouchons.Fermer();
         }
+
+        private void switchBoutonRideau_ChangementEtat(object sender, EventArgs e)
+        {
+            if (switchBoutonRideau.Actif)
+                ReservoirBouchons.TendTissu();
+            else
+                ReservoirBouchons.RelacheTissu();
+        }
+
+        private void btnLances_Click(object sender, EventArgs e)
+        {
+            ReservoirBouchons.TendTissu();
+            ReservoirBouchons.Ouvrir();
+            Thread.Sleep(1000);
+            CatapulteLances.Tirer();
+            Thread.Sleep(200);
+            ReservoirBouchons.Fermer();
+            ReservoirBouchons.RelacheTissu();
+            Robots.PetitRobot.PivotDroite(180);
+            LanceFilet.Tirer();
+        }
     }
 }

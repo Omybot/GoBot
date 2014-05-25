@@ -17,9 +17,19 @@ namespace GoBot.Communications
         public static ConnexionMiwi ConnexionPi { get; set; }
 
         public static Dictionary<Carte, Connexion> ConnexionParCarte { get; private set; }
+        public static Dictionary<Carte, bool> ActivationConnexion { get; private set; }
 
         public static void Init()
         {
+            ActivationConnexion = new Dictionary<Carte, bool>();
+            ActivationConnexion.Add(Carte.RecBun, true);
+            ActivationConnexion.Add(Carte.RecBeu, true);
+            ActivationConnexion.Add(Carte.RecBoi, true);
+            ActivationConnexion.Add(Carte.RecIO, true);
+            ActivationConnexion.Add(Carte.RecMiwi, true);
+            ActivationConnexion.Add(Carte.RecMove, true);
+            ActivationConnexion.Add(Carte.RecPi, true);
+
             ConnexionMove = new ConnexionUDP();
             ConnexionMove.Connexion(System.Net.IPAddress.Parse("10.1.0.11"), 12311, 12321);
             ConnexionMove.ConnexionCheck.TestConnexion += new ConnexionCheck.TestConnexionDelegate(ConnexionMoveCheck_TestConnexion);

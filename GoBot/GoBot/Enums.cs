@@ -303,7 +303,8 @@ namespace GoBot
         GRPousseBouchon = 0x12,
         GRPinceDroiteHaut = 0x13,
         GRPinceGaucheHaut = 0x14,
-        PRLanceFilet = 0x32
+        PRLanceFilet = 0x32,
+        PRTensionTissu = 0x33
     }
 
     public enum CapteurID

@@ -300,6 +300,27 @@ namespace GoBot.IHM
             BrasFruits.FermerPinceHaut();
             Thread.Sleep(500);
             BrasFruits.PositionRange();
+
+            BrasFeux.PositionInterne3();
+            Thread.Sleep(200);
+            BrasFeux.PositionTorche3();
+            Thread.Sleep(200);
+            BrasFeux.PositionInterne3();
+        }
+
+        private void btnPoignetFeux_Click(object sender, EventArgs e)
+        {
+            BrasFeux.PositionPoignet((double)numPoignetFeux.Value);
+        }
+
+        private void btnCoudeFeux_Click(object sender, EventArgs e)
+        {
+            BrasFeux.PositionCoude((double)numCoudeFeux.Value);
+        }
+
+        private void btnEpauleFeux_Click(object sender, EventArgs e)
+        {
+            BrasFeux.PositionEpaule((double)numEpauleFeux.Value);
         }
     }
 }

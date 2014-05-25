@@ -272,7 +272,13 @@ namespace GoBot.Communications
                                         else
                                             message += listeErreurs.Substring(0, listeErreurs.Length - 2);
                                         break;
+                                    default:
+                                        message = ((FonctionServo)trame[2]).ToString();
+                                        break;
                                 }
+                                break;
+                            default:
+                                message = ((FonctionIO)trame[1]).ToString();
                                 break;
                         }
                         break;
@@ -389,7 +395,8 @@ namespace GoBot.Communications
                                 message = "Retour charge : " + nbValeurs + " valeurs (CPU " + cpu + "% - PWM Gauche " + pwmGauche + " - PWM Droite " + pwmDroite;
                                 break;
                             default:
-                                return "Inconnu";
+                                message = ((FonctionMove)trame[2]).ToString();
+                                break;
                         }
                         break;
 
@@ -587,6 +594,9 @@ namespace GoBot.Communications
                                         else
                                             message += listeErreurs.Substring(0, listeErreurs.Length - 2);
                                         break;
+                                    default:
+                                        message = ((FonctionServo)trame[2]).ToString();
+                                        break;
                                 }
                                 break;
                             case FonctionPi.ActionneurOnOff:
@@ -712,7 +722,8 @@ namespace GoBot.Communications
                                 message = "Test d'émission n°" + trame[2] + " réussi";
                                 break;
                             default:
-                                return "Inconnu";
+                                message = ((FonctionPi)trame[1]).ToString();
+                                break;
                         }
                         break;
                     case (byte)Carte.RecBeu:
@@ -720,6 +731,9 @@ namespace GoBot.Communications
                     case (byte)Carte.RecBun:
                         switch ((FonctionBalise)trame[1])
                         {
+                            case FonctionBalise.Initialisation:
+                                message = "Initialisation";
+                                break;
                             case FonctionBalise.InclinaisonFace:
                                 message = "Inclinaison face " + (int)(trame[2] * 256 + trame[3]);
                                 break;
@@ -762,6 +776,9 @@ namespace GoBot.Communications
                             case FonctionBalise.TestEmissionReussi:
                                 message = "Test d'émission n°" + trame[2] + " réussi";
                                 break;
+                            default:
+                                message = ((FonctionBalise)trame[1]).ToString();
+                                break;
                         }
                         break;
                     case (byte)Carte.RecMiwi:
@@ -787,6 +804,9 @@ namespace GoBot.Communications
                                 break;
                             case FonctionMiwi.Acquittement:
                                 message = "Acquittement miwi";
+                                break;
+                            default :
+                                message = ((FonctionMiwi)trame[1]).ToString();
                                 break;
                         }
                         break;

@@ -413,8 +413,17 @@ namespace GoBot
         public override void BougeServo(ServomoteurID servo, int position)
         {
             base.BougeServo(servo, position);
-            Trame trame = TrameFactory.ServoEnvoiPositionCible(servo, position);
-            Connexions.ConnexionIO.SendMessage(trame);
+
+            if (this == Robots.GrosRobot)
+            {
+                Trame trame = TrameFactory.ServoEnvoiPositionCible(servo, position);
+                Connexions.ConnexionIO.SendMessage(trame);
+            }
+            else
+            {
+                Trame trame = TrameFactory.ServoEnvoiPositionCible(servo, position, GoBot.Carte.RecPi);
+                Connexion.SendMessage(trame);
+            }
             Historique.AjouterAction(new ActionServo(this, position, servo));
         }
 

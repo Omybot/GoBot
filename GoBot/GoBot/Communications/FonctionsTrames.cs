@@ -204,6 +204,7 @@ namespace GoBot.Communications
         TestConnexion = 0xF0,
         RetourTestConnexion = 0xF5,
         Reset = 0xF2,
+        Initialisation = 0xF3,
         TestEmission = 0xD4,
         TestEmissionReussi = 0xD5,
         TestEmissionCorrompu = 0xD6,

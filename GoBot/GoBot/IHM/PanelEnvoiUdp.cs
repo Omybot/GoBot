@@ -52,6 +52,14 @@ namespace GoBot.IHM
         {
             if (!Config.DesignMode)
             {
+                switchBoutonBeu.SetActif(true, false);
+                switchBoutonBoi.SetActif(true, false);
+                switchBoutonBun.SetActif(true, false);
+                switchBoutonMove.SetActif(true, false);
+                switchBoutonMiwi.SetActif(true, false);
+                switchBoutonIO.SetActif(true, false);
+                switchBoutonPi.SetActif(true, false);
+
                 lblIpRecMove.Text = Connexions.ConnexionMove.AdresseIp.ToString();
                 lblEntreeRecMove.Text = Connexions.ConnexionMove.PortEntree.ToString();
                 lblSortieRecMove.Text = Connexions.ConnexionMove.PortSortie.ToString();
@@ -214,6 +222,17 @@ namespace GoBot.IHM
                 Trame trame = TrameFactory.BaliseTestConnexion(Carte.RecBoi);
                 Connexions.ConnexionBoi.SendMessage(trame);
             }
+        }
+
+        private void switchBoutonConnexion_ChangementEtat(object sender, EventArgs e)
+        {
+            Connexions.ActivationConnexion[Carte.RecBun] = switchBoutonBun.Actif;
+            Connexions.ActivationConnexion[Carte.RecBeu] = switchBoutonBeu.Actif;
+            Connexions.ActivationConnexion[Carte.RecBoi] = switchBoutonBoi.Actif;
+            Connexions.ActivationConnexion[Carte.RecMove] = switchBoutonMove.Actif;
+            Connexions.ActivationConnexion[Carte.RecMiwi] = switchBoutonMiwi.Actif;
+            Connexions.ActivationConnexion[Carte.RecIO] = switchBoutonIO.Actif;
+            Connexions.ActivationConnexion[Carte.RecPi] = switchBoutonPi.Actif;
         }
     }
 }

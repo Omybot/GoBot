@@ -102,5 +102,27 @@ namespace GoBot.IHM
         {
             Robots.PetitRobot.BougeServo(ServomoteurID.PRFresque, (int)trackBarReservoir.Value);
         }
+
+        private void trackBarTensionTissu_ValueChanged(object sender, EventArgs e)
+        {
+            lblTensionTissu.Text = trackBarTensionTissu.Value.ToString();
+        }
+
+        private void trackBarTensionTissu_TickValueChanged(object sender, EventArgs e)
+        {
+            Robots.PetitRobot.TourneMoteur(MoteurID.PRTensionTissu, (int)trackBarTensionTissu.Value);
+        }
+
+        private void btnRideauRelache_Click(object sender, EventArgs e)
+        {
+            if (MessageBox.Show("Êtes vous sûr de vouloir sauvegarder la position comme étant la position lâche ?", "Attention", MessageBoxButtons.OK, MessageBoxIcon.Question) == DialogResult.OK)
+                Config.CurrentConfig.PRTensionTissuRelache = (int)trackBarTensionTissu.Value;
+        }
+
+        private void btnRideauTendu_Click(object sender, EventArgs e)
+        {
+            if (MessageBox.Show("Êtes vous sûr de vouloir sauvegarder la position comme étant la position tendue ?", "Attention", MessageBoxButtons.OK, MessageBoxIcon.Question) == DialogResult.OK)
+                Config.CurrentConfig.PRTensionTissuTendu = (int)trackBarTensionTissu.Value;
+        }
     }
 }

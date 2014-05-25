@@ -39,6 +39,16 @@ namespace GoBot.IHM
                 batteriePack2.TensionLow = 21;
                 batteriePack2.TensionNull = 5;
 
+                batteriePRPack1.TensionMidHigh = 23;
+                batteriePRPack1.TensionMid = 22;
+                batteriePRPack1.TensionLow = 21;
+                batteriePRPack1.TensionNull = 5;
+
+                batteriePRPack2.TensionMidHigh = 23;
+                batteriePRPack2.TensionMid = 22;
+                batteriePRPack2.TensionLow = 21;
+                batteriePRPack2.TensionNull = 5;
+
                 batterieBun1.TensionMidHigh = 8;
                 batterieBun1.TensionMid = 7;
                 batterieBun1.TensionLow = 6;
@@ -73,6 +83,9 @@ namespace GoBot.IHM
             lblTensionPack1.Text = Robots.GrosRobot.TensionPack1 + " V";
             lblTensionPack2.Text = Robots.GrosRobot.TensionPack2 + " V";
 
+            lblBatPRPack1.Text = Robots.PetitRobot.TensionPack1 + " V";
+            lblBatPRPack2.Text = Robots.PetitRobot.TensionPack2 + " V";
+
             lblTensionBun1.Text = Plateau.Balise1.Tension1 + " V";
             lblTensionBun2.Text = Plateau.Balise1.Tension2 + " V";
 
@@ -85,6 +98,9 @@ namespace GoBot.IHM
             ctrlGraphique.AjouterPoint("Pack 1", Robots.GrosRobot.TensionPack1, Color.Blue);
             ctrlGraphique.AjouterPoint("Pack 2", Robots.GrosRobot.TensionPack2, Color.LightBlue);
 
+            ctrlGraphique.AjouterPoint("Pack 1 PR", Robots.PetitRobot.TensionPack1, Color.Aqua);
+            ctrlGraphique.AjouterPoint("Pack 2 PR", Robots.PetitRobot.TensionPack2, Color.Black);
+
             ctrlGraphique.AjouterPoint("Bun 1", Plateau.Balise1.Tension1, Color.Red);
             ctrlGraphique.AjouterPoint("Bun 2", Plateau.Balise1.Tension2, Color.Magenta);
 
@@ -95,6 +111,21 @@ namespace GoBot.IHM
             ctrlGraphique.AjouterPoint("Boi 2", Plateau.Balise3.Tension2, Color.Chocolate);
 
             ctrlGraphique.DessineCourbes();
+
+            if (Connexions.ConnexionPi.ConnexionCheck.Connecte)
+            {
+                batteriePRPack1.Afficher = true;
+                batteriePRPack2.Afficher = true;
+                batteriePRPack1.Tension = Robots.PetitRobot.TensionPack1;
+                batteriePRPack2.Tension = Robots.PetitRobot.TensionPack2;
+            }
+            else
+            {
+                batteriePRPack1.Afficher = false;
+                batteriePRPack2.Afficher = false;
+                batteriePRPack1.CouleurGris();
+                batteriePRPack2.CouleurGris();
+            }
 
             if (Connexions.ConnexionIO.ConnexionCheck.Connecte)
             {
