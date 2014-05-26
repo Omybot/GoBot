@@ -334,7 +334,10 @@ namespace GoBot
 
     public enum CapteurOnOff
     {
-        GRPresenceBouchon = 0x00
+        GRPresenceBouchon = 0x00,
+        GRFeu1 = 0x30,
+        GRFeu1 = 0x31,
+        GRFeu1 = 0x32,
     }
 
     public enum Carte

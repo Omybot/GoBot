@@ -33,6 +33,9 @@ namespace GoBot.IHM
             ledJack.CouleurGris();
             ledCouleurEquipe.CouleurGris();
             ledPresenceBouchon.CouleurGris();
+            ledFeu1.CouleurGris();
+            ledFeu2.CouleurGris();
+            ledFeu3.CouleurGris();
 
             groupBoxCapteurs.Deployer(Config.CurrentConfig.CapteursGROuvert, false);
 
@@ -42,11 +45,14 @@ namespace GoBot.IHM
             timerCouleurEquipe.Elapsed += new System.Timers.ElapsedEventHandler(timerCouleurEquipe_Elapsed);
             timerPresenceBouchon = new System.Timers.Timer(100);
             timerPresenceBouchon.Elapsed += new System.Timers.ElapsedEventHandler(timerPresenceBouchon_Elapsed);
+            timerPresenceFeux = new System.Timers.Timer(100);
+            timerPresenceFeux.Elapsed += new System.Timers.ElapsedEventHandler(timerPresenceFeux_Elapsed);
         }
 
         System.Timers.Timer timerJack;
         System.Timers.Timer timerCouleurEquipe;
         System.Timers.Timer timerPresenceBouchon;
+        System.Timers.Timer timerPresenceFeux;
 
         private void boxJack_CheckedChanged(object sender, EventArgs e)
         {
@@ -57,6 +63,27 @@ namespace GoBot.IHM
                 timerJack.Stop();
                 ledJack.CouleurGris();
             }
+        }
+
+        void timerPresenceFeux_Elapsed(object sender, System.Timers.ElapsedEventArgs e)
+        {
+            this.Invoke(new EventHandler(delegate
+            {
+                if (Robots.GrosRobot.DemandeCapteurOnOff(CapteurOnOff.GRFeu1))
+                    ledFeu1.CouleurVert();
+                else
+                    ledFeu1.CouleurRouge();
+
+                if (Robots.GrosRobot.DemandeCapteurOnOff(CapteurOnOff.GRFeu2))
+                    ledFeu2.CouleurVert();
+                else
+                    ledFeu2.CouleurRouge();
+
+                if (Robots.GrosRobot.DemandeCapteurOnOff(CapteurOnOff.GRFeu3))
+                    ledFeu3.CouleurVert();
+                else
+                    ledFeu3.CouleurRouge();
+            }));
         }
 
         void timerJack_Elapsed(object sender, System.Timers.ElapsedEventArgs e)
@@ -113,6 +140,19 @@ namespace GoBot.IHM
             {
                 timerPresenceBouchon.Stop();
                 ledPresenceBouchon.CouleurGris();
+            }
+        }
+
+        private void boxFeux_CheckedChanged(object sender, EventArgs e)
+        {
+            if (boxFeux.Checked)
+                timerPresenceFeux.Start();
+            else
+            {
+                timerPresenceFeux.Stop();
+                ledFeu1.CouleurGris();
+                ledFeu2.CouleurGris();
+                ledFeu3.CouleurGris();
             }
         }
     }

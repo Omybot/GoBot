@@ -182,6 +182,7 @@ namespace GoBot.IHM
             trackBarConsigne.SetValue(40);
             trackBarVitesse.SetValue(2400);
             balise.ReglageVitesse = true;
+            balise.Lancer(4);
         }
 
         private void btnStop_Click(object sender, EventArgs e)

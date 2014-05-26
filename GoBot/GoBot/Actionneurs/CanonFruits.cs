@@ -8,6 +8,8 @@ namespace GoBot.Actionneur
 {
     public static class CanonFruits
     {
+        public static bool FruitComestible { get; set; }
+
         public static void Armer()
         {
             Robots.GrosRobot.ActionneurOnOff(ActionneurOnOffID.GRCanonPuissance, true);

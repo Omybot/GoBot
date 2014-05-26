@@ -163,7 +163,7 @@ namespace GoBot
             Balise.GetBalise(Carte.RecBun).VitesseRotation(0);
             Balise.GetBalise(Carte.RecBeu).VitesseRotation(0);
             Balise.GetBalise(Carte.RecBoi).VitesseRotation(0);
-
+            panelCamera.ContinuerCamera = false;
             Config.Save();
             SauverLogs();
 

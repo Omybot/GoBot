@@ -68,6 +68,11 @@ namespace GoBot.Balises
         public const int DISTANCE_LASER_TABLE = 62;
 
         /// <summary>
+        /// Vrai si la balise doit être en train de tourner
+        /// </summary>
+        public bool RotationDemandee { get; private set; }
+
+        /// <summary>
         /// Tension de la batterie 1
         /// </summary>
         public double Tension1 { get; private set; }
@@ -215,10 +220,20 @@ namespace GoBot.Balises
         {
             bool temp = EnRotation;
             EnRotation = cptRotation > 0;
+            Console.WriteLine(cptRotation + " tours");
             cptRotation = 0;
 
+
             if (temp != EnRotation)
+            {
                 RotationChange(EnRotation);
+            }
+
+            if (!EnRotation && RotationDemandee)
+            {
+                ReglageVitesse = true;
+                VitesseRotation(2400);
+            }
         }
 
         /// <summary>
@@ -675,6 +690,7 @@ namespace GoBot.Balises
             ReglageVitessePermanent = true;
             // Pour être sûr au cas où...
             VitesseRotation(2400);
+            RotationDemandee = true;
         }
 
         /// <summary>
@@ -684,6 +700,7 @@ namespace GoBot.Balises
         {
             VitesseRotation(0);
             ReglageVitesse = false;
+            RotationDemandee = false;
         }
 
         private int inclinaisonFace;
