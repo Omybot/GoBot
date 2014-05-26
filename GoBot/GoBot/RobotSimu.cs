@@ -268,7 +268,7 @@ namespace GoBot
         public override void ReglerOffsetAsserv(int offsetX, int offsetY, double offsetTeta)
         {
             Position = new Position(new Angle(-offsetTeta, AnglyeType.Degre), new PointReel(offsetX, offsetY));
-            PositionCible = new PointReel(offsetX, offsetY);
+            //PositionCible = new PointReel(offsetX, offsetY);
         }
 
         public override void Recallage(SensAR sens, bool attendre = true)
@@ -307,11 +307,11 @@ namespace GoBot
         {
             Historique = new Historique(IDRobot);
             if (this == Robots.PetitRobot)
-                Position = new Calculs.Position(new Angle(0, AnglyeType.Degre), new PointReel(1500, 1600));
+                Position = new Calculs.Position(new Angle(90, AnglyeType.Degre), new PointReel(191, 91));
             else
-                Position = new Calculs.Position(new Angle(90, AnglyeType.Degre), new PointReel(220, 150));
+                Position = new Calculs.Position(new Angle(26, AnglyeType.Degre), new PointReel(187, 397));
 
-            PositionCible = Position.Coordonnees;
+            PositionCible = null;
         }
 
         public override void BougeServo(ServomoteurID servo, int position)

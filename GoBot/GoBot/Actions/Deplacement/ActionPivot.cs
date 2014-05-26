@@ -37,9 +37,9 @@ namespace GoBot.Actions
         void IAction.Executer()
         {
             if(sens == SensGD.Droite)
-                Robots.GrosRobot.PivotDroite(angle);
+                robot.PivotDroite(angle);
             else
-                Robots.GrosRobot.PivotGauche(angle);
+                robot.PivotGauche(angle);
         }
     }
 }

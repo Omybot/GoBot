@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
 
 namespace GoBot.Enchainements
 {
@@ -12,7 +13,9 @@ namespace GoBot.Enchainements
             int iMeilleur = 0;
 
             // Todo Ajouter ici les actions fixes avant le lancement de l'IA
-            //Robots.GrosRobot.Avancer(600);
+            Robots.GrosRobot.Avancer(400);
+            Robots.GrosRobot.PivotDroite(90 - 26);
+            Robots.GrosRobot.Avancer(400);
 
             while (ListeMouvementsGros.Count > 0)
             {
@@ -38,6 +41,9 @@ namespace GoBot.Enchainements
 
             // Todo Ajouter ici les actions fixes avant le lancement de l'IA
             // Exemple : Robots.PetitRobot.Avancer(600);
+
+            Thread.Sleep(500);
+            Robots.PetitRobot.Avancer(400);
 
             while (ListeMouvementsPetit.Count > 0)
             {

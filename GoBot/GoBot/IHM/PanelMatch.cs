@@ -234,7 +234,7 @@ namespace GoBot.IHM
             Balise.GetBalise(Carte.RecBoi).Position = new Position(new Angle(0, AnglyeType.Degre), new PointReel(-Balise.DISTANCE_LASER_TABLE, Plateau.LargeurPlateau / 2));
         }
 
-        Thread thRecallage;
+        Thread thRecallageGros;
         private void btnRecallage_Click(object sender, EventArgs e)
         {
             if (!Robots.GrosRobot.GetJack(false))
@@ -243,8 +243,11 @@ namespace GoBot.IHM
                 //return;
             }
 
-            thRecallage = new Thread(RecallagesGros);
-            thRecallage.Start();
+            thRecallageGros = new Thread(RecallagesGros);
+            thRecallageGros.Start();
+
+            thRecallagePetit = new Thread(RecallagePetit);
+            thRecallagePetit.Start();
         }
 
         Thread thRecallagePetit;
@@ -421,8 +424,8 @@ namespace GoBot.IHM
             ledRecallageGros.CouleurRouge();
             ledRecallagePetit.CouleurRouge();
 
-            if (thRecallage != null && thRecallage.IsAlive)
-                thRecallage.Abort();
+            if (thRecallageGros != null && thRecallageGros.IsAlive)
+                thRecallageGros.Abort();
 
             Thread.Sleep(100);
             Robots.GrosRobot.Stop(StopMode.Smooth);

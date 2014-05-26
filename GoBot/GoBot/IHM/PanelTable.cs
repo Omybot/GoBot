@@ -15,6 +15,7 @@ using GoBot.Enchainements;
 using GoBot.Balises;
 using GoBot.ElementsJeu;
 using GoBot.Actionneur;
+using GoBot.Actionneurs;
 
 namespace GoBot.IHM
 {
@@ -255,6 +256,28 @@ namespace GoBot.IHM
 
                                 if (modeCourant != Mode.Obstacles)
                                 {
+                                    if (CatapulteLances.LancesCatapultees == 1)
+                                    {
+                                        for (int i = 0; i < 6; i++)
+                                        {
+                                            Point p = RealToScreenPosition(new Point(600 + i * 45, 0));
+                                            if(Plateau.NotreCouleur == Plateau.CouleurDroiteJaune)
+                                                g.FillEllipse(brushCouleurJ2J, p.X, p.Y, RealToScreenDistance(40), RealToScreenDistance(40));
+                                            else
+                                                g.FillEllipse(brushCouleurJ1R, p.X, p.Y, RealToScreenDistance(40), RealToScreenDistance(40));
+                                        }
+                                    }
+                                    else if (CatapulteLances.LancesCatapultees == 2)
+                                    {
+                                        for (int i = 0; i < 6; i++)
+                                        {
+                                            Point p = RealToScreenPosition(new Point(3000 - (600 + i * 45), 0));
+                                            if (Plateau.NotreCouleur == Plateau.CouleurDroiteJaune)
+                                                g.FillEllipse(brushCouleurJ2J, p.X, p.Y, RealToScreenDistance(40), RealToScreenDistance(40));
+                                            else
+                                                g.FillEllipse(brushCouleurJ1R, p.X, p.Y, RealToScreenDistance(40), RealToScreenDistance(40));
+                                        }
+                                    }
 
                                     // Dessin des fruimouth
                                     foreach (Fruimouth fruit in Plateau.Fruimouths)

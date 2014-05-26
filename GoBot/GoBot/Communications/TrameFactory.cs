@@ -313,11 +313,12 @@ namespace GoBot.Communications
             return new Trame(tab);
         }
 
-        static public Trame TestConnexionPi()
+        static public Trame TestConnexionPi(bool bridageAsserv)
         {
-            byte[] tab = new byte[2];
+            byte[] tab = new byte[3];
             tab[0] = (byte)Carte.RecPi;
-            tab[1] = (byte)FonctionMove.TestConnexion;
+            tab[1] = (byte)FonctionPi.TestConnexion;
+            tab[2] = (byte)(bridageAsserv ? 1 : 0);
             return new Trame(tab);
         }
 

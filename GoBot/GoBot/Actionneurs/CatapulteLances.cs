@@ -7,6 +7,8 @@ namespace GoBot.Actionneurs
 {
     public static class CatapulteLances
     {
+        public static int LancesCatapultees { get; set; }
+
         public static void Armer()
         {
             Robots.PetitRobot.ActionneurOnOff(ActionneurOnOffID.PRLancesMammouth, true);

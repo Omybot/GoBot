@@ -244,6 +244,7 @@ namespace GoBot
             if (nbPointsDepart == 0)
             {
                 // On ne peut pas partir de là où on est
+                DateTime debut = DateTime.Now;
 
                 Position positionActuelle = new Position(new Angle(Position.Angle), new PointReel(Position.Coordonnees.X, Position.Coordonnees.Y));
                 bool franchissable = true;
@@ -339,6 +340,7 @@ namespace GoBot
                         }
                     }
                 }
+                Console.WriteLine("Déblocage départ : " + (DateTime.Now - debut).TotalMilliseconds + "ms");
             }
 
             Node finNode = Graph.ClosestNode(x, y, 0, out distance, false);
@@ -349,6 +351,8 @@ namespace GoBot
             }
             if (nbPointsArrivee == 0 && teta != null)
             {
+                DateTime debut = DateTime.Now;
+
                 // On ne peut pas arriver là où on souhaite aller
                 // On teste si on peut faire une approche en ligne 
                 // teta ne doit pas être nul sinon c'est qu'on ne maitrise pas l'angle d'arrivée et on ne connait pas l'angle d'approche
@@ -360,10 +364,20 @@ namespace GoBot
                 int i;
                 for (i = 0; i < 100 && nbPointsArrivee == 0; i++)
                 {
+                    debut = DateTime.Now;
                     positionActuelle.Avancer(10);
                     nbPointsArrivee = AddNode(Graph, new Node(positionActuelle.Coordonnees.X, positionActuelle.Coordonnees.Y, 0), 600);
                     CleanNodesArcsAdd();
+
                 }
+
+                if (this == Robots.PetitRobot)
+                {
+                    Console.WriteLine("1PR " + (DateTime.Now - debut).TotalMilliseconds + "ms " + i);
+                }
+                else
+                    Console.WriteLine("1GR " + (DateTime.Now - debut).TotalMilliseconds + "ms " + i);
+                debut = DateTime.Now;
 
                 // Le point à i*10 mm devant nous est reliable au graph, on cherche à l'atteindre
                 if (nbPointsArrivee > 0)
@@ -386,6 +400,8 @@ namespace GoBot
                 else
                     franchissable = false;
 
+                Console.WriteLine("2 " + (DateTime.Now - debut).TotalMilliseconds);
+                debut = DateTime.Now;
                 // Si toujours pas, on teste en marche arrière
                 if (!franchissable)
                 {
@@ -412,6 +428,8 @@ namespace GoBot
                         }
                     }
                 }
+                Console.WriteLine("3 " + (DateTime.Now - debut).TotalMilliseconds);
+                debut = DateTime.Now;
 
                 // Si le semgent entre notre position et le graph relié au graph est parcourable on y va !
                 if (franchissable)
@@ -424,6 +442,10 @@ namespace GoBot
                     debutNode = new Node(Position.Coordonnees.X, Position.Coordonnees.Y, 0);
                     nbPointsDepart = AddNode(Graph, debutNode, 600);
                 }
+                Console.WriteLine("4 " + (DateTime.Now - debut).TotalMilliseconds);
+                debut = DateTime.Now;
+
+                Console.WriteLine("Déblocage arrivée : " + (DateTime.Now - debut).TotalMilliseconds + "ms");
             }
 
             // Teste s'il est possible d'aller directement à la fin sans passer par le graph
@@ -787,16 +809,18 @@ namespace GoBot
                 if (CheminEnCoursArcs.Count > 0)
                     CheminEnCoursArcs.RemoveAt(0);
 
-                Robots.GrosRobot.Historique.Log("Noeud atteint", TypeLog.PathFinding);
+                Historique.Log("Noeud atteint", TypeLog.PathFinding);
             }
+
+            PositionCible = null;
             if (nouvelleTrajectoire)
             {
-                Robots.GrosRobot.Historique.Log("Trajectoire interrompue, annulation", TypeLog.PathFinding);
+                Historique.Log("Trajectoire interrompue, annulation", TypeLog.PathFinding);
                 succesPathFinding = false;
             }
             else if (FailTrajectoire)
             {
-                Robots.GrosRobot.Historique.Log("Trajectoire échouée", TypeLog.PathFinding);
+                Historique.Log("Trajectoire échouée", TypeLog.PathFinding);
                 succesPathFinding = false;
             }
             else
@@ -815,7 +839,7 @@ namespace GoBot
                         Avancer((int)distanceRestanteApresPF);
                     distanceRestanteApresPF = 0;
                 }
-                Robots.GrosRobot.Historique.Log("Trajectoire terminée", TypeLog.PathFinding);
+                Historique.Log("Trajectoire terminée", TypeLog.PathFinding);
                 succesPathFinding = true;
             }
 
@@ -895,7 +919,7 @@ namespace GoBot
                     if (arc.Passable)
                     {
                         Segment segment = new Segment(new PointReel(arc.StartNode.X, arc.StartNode.Y), new PointReel(arc.EndNode.X, arc.EndNode.Y));
-                        if (Robots.GrosRobot.TropProche(obstacle, segment))
+                        if (TropProche(obstacle, segment))
                         {
                             arc.Passable = false;
                         }
@@ -910,7 +934,7 @@ namespace GoBot
                     if (n.Passable)
                     {
                         PointReel noeud = new PointReel(n.X, n.Y);
-                        if (Robots.GrosRobot.TropProche(obstacle, noeud))
+                        if (TropProche(obstacle, noeud))
                         {
                             n.Passable = false;
                         }
@@ -939,10 +963,14 @@ namespace GoBot
 
         public List<IForme> CalculerObstacles()
         {
+            if(this == Robots.PetitRobot)
+            Console.WriteLine("Calcul obstacle");
             List<IForme> obstacles = new List<IForme>();
             obstacles.AddRange(Plateau.ListeObstacles);
             obstacles.Add(new Cercle(AutreRobot.Position.Coordonnees, AutreRobot.Rayon));
-            obstacles.Add(new Cercle(AutreRobot.PositionCible, AutreRobot.Rayon));
+
+            if(AutreRobot.PositionCible != null)
+                obstacles.Add(new Cercle(AutreRobot.PositionCible, AutreRobot.Rayon));
 
             return obstacles;
         }

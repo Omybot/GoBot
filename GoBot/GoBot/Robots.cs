@@ -75,8 +75,8 @@ namespace GoBot
             GrosRobot.VitessePivot = Config.CurrentConfig.GRVitessePivotRapide;
             GrosRobot.AccelerationPivot = Config.CurrentConfig.GRAccelerationPivotRapide;
 
-            PetitRobot.Largeur = 195;
-            PetitRobot.Longueur = 100;
+            PetitRobot.Largeur = 202;
+            PetitRobot.Longueur = 183;
             PetitRobot.Nom = "Petit robot";
             PetitRobot.Init();
             if (graphPetit != null)

@@ -16,6 +16,7 @@ namespace GoBot.Mouvements
 
         public MouvementTorche(int i)
         {
+            Robot = Robots.GrosRobot;
             numeroTorche = i;
 
             foreach (Position p in PositionsMouvements.PositionTorche[i])

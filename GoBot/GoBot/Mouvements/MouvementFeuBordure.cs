@@ -16,6 +16,7 @@ namespace GoBot.Mouvements
         {
             numeroFeu = i;
             Positions.Add(PositionsMouvements.PositionGrosFeuxBordure[i]);
+            Robot = Robots.GrosRobot;
         }
 
         public override bool Executer(int timeOut = 0)

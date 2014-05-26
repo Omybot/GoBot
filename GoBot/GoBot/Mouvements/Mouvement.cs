@@ -13,6 +13,8 @@ namespace GoBot.Mouvements
         public abstract int Score { get; }
         public abstract double ScorePondere { get; }
         public List<Position> Positions { get; protected set; }
+        public Robot Robot { get; set; }
+        public DateTime DateMinimum { get; set; }
 
         public Mouvement()
         {
@@ -35,7 +37,7 @@ namespace GoBot.Mouvements
 
                 foreach (Position position in Positions)
                 {
-                    double distancePosition = Robots.GrosRobot.Position.Coordonnees.Distance(position.Coordonnees);
+                    double distancePosition = Robot.Position.Coordonnees.Distance(position.Coordonnees);
                     if (distancePosition < distance)
                     {
                         distance = distancePosition;
@@ -51,12 +53,16 @@ namespace GoBot.Mouvements
         {
             get
             {
+                // Si il faut attendre avant de faire cette action
+                if (DateMinimum != null && DateMinimum > DateTime.Now)
+                    return double.MaxValue;
+
                 if (ScorePondere <= 0)
                     return double.MaxValue;
 
                 Position position = PositionProche;
 
-                double distance = Robots.GrosRobot.Position.Coordonnees.Distance(position.Coordonnees) / 10;
+                double distance = Robot.Position.Coordonnees.Distance(position.Coordonnees) / 10;
                 double cout = distance / ScorePondere;
 
                 foreach (Cercle c in Plateau.ObstaclesTemporaires)

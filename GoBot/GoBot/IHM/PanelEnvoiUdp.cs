@@ -204,7 +204,7 @@ namespace GoBot.IHM
             }
             if (boxRecPi.Checked)
             {
-                Trame trame = TrameFactory.TestConnexionPi();
+                Trame trame = TrameFactory.TestConnexionPi(Robots.PetitRobot.TensionPack1 < 21 && Robots.PetitRobot.TensionPack2 < 21);
                 Connexions.ConnexionPi.SendMessage(trame);
             }
             if (boxRecBun.Checked)

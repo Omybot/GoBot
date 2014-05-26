@@ -17,6 +17,7 @@ namespace GoBot.Mouvements
         {
             numeroArbre = i;
             Positions.Add(PositionsMouvements.PositionArbres[i]);
+            Robot = Robots.GrosRobot;
         }
 
         public override bool Executer(int timeOut = 0)
@@ -196,7 +197,7 @@ namespace GoBot.Mouvements
                     Thread.Sleep(1000);
                     CanonFruits.Tirer();
                     */
-                    
+
                     /* Config 60° 19sec
                     CanonFruits.Baisser();
 
@@ -335,17 +336,22 @@ namespace GoBot.Mouvements
                     vide = true;
 
                     Console.WriteLine((DateTime.Now - debut).TotalSeconds + " ms");
+                    Robots.GrosRobot.Historique.Log("Fin arbre " + numeroArbre + (DateTime.Now - debut).TotalSeconds.ToString("#.#") + "s");
                 }
+
+                Plateau.ArbresVides[numeroArbre] = true;
             }
             else
+            {
+                Robots.GrosRobot.Historique.Log("Annulation arbre " + numeroArbre);
                 return false;
-
+            }
             return true;
         }
 
         public override int Score
         {
-            get { return 5; }
+            get { return Plateau.ArbresVides[numeroArbre] ? 0 : 5; }
         }
 
         public override double ScorePondere

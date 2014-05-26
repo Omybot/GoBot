@@ -24,6 +24,7 @@ namespace GoBot.Mouvements
         public static Dictionary<int, Position> PositionGrosTorches { get; private set; }
         public static Dictionary<int, List<Position>> PositionTorche { get; private set; }
         public static Dictionary<int, Position> PositionFoyersCoins { get; private set; }
+        public static Dictionary<int, Position> PositionsLances { get; private set; }
 
         static PositionsMouvements()
         {
@@ -57,6 +58,10 @@ namespace GoBot.Mouvements
             PositionFoyersCoins = new Dictionary<int, Position>();
             PositionFoyersCoins.Add(0, new Position(139, new PointReel(327, 1693)));
             PositionFoyersCoins.Add(1, new Position(41, new PointReel(2673, 1693)));
+
+            PositionsLances = new Dictionary<int, Position>();
+            PositionsLances.Add(1, new Position(90, new PointReel(740, 500)));
+            PositionsLances.Add(2, new Position(90, new PointReel(3000 - 740, 500)));
         }
     }
 }

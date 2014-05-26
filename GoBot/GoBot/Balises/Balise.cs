@@ -524,6 +524,14 @@ namespace GoBot.Balises
                     if (semTestConnexion != null)
                         semTestConnexion.Release();
                 }
+                else if (trame[1] == (byte)FonctionBalise.Initialisation)
+                {
+                    Tension1 = (double)(trame[2] * 256 + trame[3]) / 100.0;
+                    Tension2 = (double)(trame[4] * 256 + trame[5]) / 100.0;
+
+                    if (semTestConnexion != null)
+                        semTestConnexion.Release();
+                }
             }
             catch (Exception)
             { }

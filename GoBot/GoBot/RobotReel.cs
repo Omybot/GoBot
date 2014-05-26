@@ -63,7 +63,7 @@ namespace GoBot
                 Connexions.ConnexionIO.NouvelleTrameRecue += new ConnexionUDP.ReceptionDelegate(ReceptionMessage);
 
             Position = new Calculs.Position(new Angle(270, AnglyeType.Degre), new PointReel(200 + 160, 150));
-            PositionCible = Position.Coordonnees;
+            PositionCible = null;
 
             Connexion.SendMessage(TrameFactory.DemandePositionContinue(100, this));
         }
@@ -277,7 +277,7 @@ namespace GoBot
 
         public override void ReglerOffsetAsserv(int offsetX, int offsetY, double offsetTeta)
         {
-            PositionCible = new PointReel(offsetX, offsetY);
+            //PositionCible = new PointReel(offsetX, offsetY);
             Trame trame = TrameFactory.OffsetPos(offsetX, offsetY, offsetTeta, this);
             Connexion.SendMessage(trame);
         }

@@ -51,16 +51,21 @@ namespace GoBot.Enchainements
             ListeMouvementsGros.Add(new MouvementTorche(1));
 
             // Arbres
-            ListeMouvementsGros.Add(new MouvementArbre(0));
+            ListeMouvementsGros.Add(new MouvementArbre(1));
 
             // Foyers coins
             ListeMouvementsGros.Add(new MouvementDeposeFoyerCoin(0));
             ListeMouvementsGros.Add(new MouvementDeposeFoyerCoin(1));
+
+            // Lances mammouth
+            ListeMouvementsPetit.Add(new MouvementLances(1));
+            ListeMouvementsPetit.Add(new MouvementLances(2));
         }
 
         public void Executer()
         {
             Robots.GrosRobot.Historique.Log("DEBUT DU MATCH", TypeLog.Strat);
+            Robots.PetitRobot.Historique.Log("DEBUT DU MATCH", TypeLog.Strat);
 
             DebutMatch = DateTime.Now;
             timerFinMatch = new System.Timers.Timer();
@@ -81,11 +86,14 @@ namespace GoBot.Enchainements
         private void timerFinMatch_Elapsed(object sender, ElapsedEventArgs e)
         {
             Robots.GrosRobot.Historique.Log("FIN DU MATCH", TypeLog.Strat);
+            Robots.PetitRobot.Historique.Log("FIN DU MATCH", TypeLog.Strat);
 
             timerFinMatch.Stop();
             thGrosRobot.Abort();
             thPetitRobot.Abort();
             Robots.GrosRobot.Stop(StopMode.Freely);
+            Robots.PetitRobot.Stop(StopMode.Freely);
+
             Thread.Sleep(100);
             Robots.GrosRobot.ActionneurOnOff(ActionneurOnOffID.GRAlimentation, false);
             Thread.Sleep(100);

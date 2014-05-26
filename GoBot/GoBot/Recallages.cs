@@ -9,6 +9,25 @@ namespace GoBot
     {
         public static void RecallagePetitRobot()
         {
+            Robots.PetitRobot.Lent();
+            Robots.PetitRobot.Avancer(10);
+            Robots.PetitRobot.Recallage(SensAR.Arriere);
+            Robots.PetitRobot.Rapide();
+            Robots.PetitRobot.Avancer(100);
+
+            if (Plateau.NotreCouleur == Plateau.CouleurGaucheRouge)
+                Robots.PetitRobot.PivotDroite(90);
+            else
+                Robots.PetitRobot.PivotGauche(90);
+
+            Robots.PetitRobot.Lent();
+            Robots.PetitRobot.Recallage(SensAR.Arriere);
+            Robots.PetitRobot.Rapide();
+
+            if (Plateau.NotreCouleur == Plateau.CouleurGaucheRouge)
+                Robots.PetitRobot.ReglerOffsetAsserv(191, 91, 270);
+            else
+                Robots.PetitRobot.ReglerOffsetAsserv(3000 - 191, 91, 270);
         }
 
         public static void RecallageGrosRobot()

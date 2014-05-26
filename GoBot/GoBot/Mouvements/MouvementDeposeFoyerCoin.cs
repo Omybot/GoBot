@@ -19,6 +19,7 @@ namespace GoBot.Mouvements
         {
             numeroFoyer = i;
             Positions.Add(PositionsMouvements.PositionFoyersCoins[i]);
+            Robot = Robots.GrosRobot;
         }
 
         public override bool Executer(int timeOut = 0)
@@ -52,6 +53,8 @@ namespace GoBot.Mouvements
 
                             if (numeroFoyer == 0)
                                 feuHaut.Position = new Calculs.Formes.PointReel(132, 1852);
+                            else
+                                feuHaut.Position = new Calculs.Formes.PointReel(2852, 1859);
 
                             nbFeuxPoses++;
                         }
@@ -90,6 +93,8 @@ namespace GoBot.Mouvements
 
                             if (numeroFoyer == 0)
                                 feuHaut.Position = new Calculs.Formes.PointReel(66, 1922);
+                            else
+                                feuHaut.Position = new Calculs.Formes.PointReel(2918, 1922);
 
                             nbFeuxPoses++;
                         }
@@ -124,6 +129,10 @@ namespace GoBot.Mouvements
                                 feuHaut.Position = new Calculs.Formes.PointReel(154, 1568);
                             else if (numeroFoyer == 0 && deposeDroite)
                                 feuHaut.Position = new Calculs.Formes.PointReel(409, 1822);
+                            else if (numeroFoyer == 1 && deposeDroite)
+                                feuHaut.Position = new Calculs.Formes.PointReel(2848, 1586);
+                            else if (numeroFoyer == 1 && !deposeDroite)
+                                feuHaut.Position = new Calculs.Formes.PointReel(2520, 1830);
 
                             deposeDroite = true;
                         }
@@ -157,6 +166,10 @@ namespace GoBot.Mouvements
                             feuHaut.Position = new Calculs.Formes.PointReel(154, 1568);
                         else if (numeroFoyer == 0 && deposeDroite)
                             feuHaut.Position = new Calculs.Formes.PointReel(409, 1822);
+                        else if (numeroFoyer == 1 && deposeDroite)
+                            feuHaut.Position = new Calculs.Formes.PointReel(2848, 1586);
+                        else if (numeroFoyer == 1 && !deposeDroite)
+                            feuHaut.Position = new Calculs.Formes.PointReel(2520, 1830);
 
                         deposeDroite = true;
 

@@ -55,6 +55,7 @@ namespace GoBot
         public static Arbre[] Arbres { get; set; }
         public static Fruimouth[] Fruimouths { get; set; }
         public static bool[] TorchesVidees { get; set; }
+        public static bool[] ArbresVides { get; set; }
 
         public static bool ReflecteursNosRobots { get; set; }
 
@@ -192,6 +193,12 @@ namespace GoBot
                 TorchesVidees = new bool[2];
                 TorchesVidees[0] = false;
                 TorchesVidees[1] = false;
+
+                ArbresVides = new bool[4];
+                ArbresVides[0] = false;
+                ArbresVides[1] = false;
+                ArbresVides[2] = false;
+                ArbresVides[3] = false;
 
                 SemaphoreCollisions = new Semaphore(0, 999999999);
                 thCollisions = new Thread(ThreadTestCollisions);
