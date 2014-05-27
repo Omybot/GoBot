@@ -157,5 +157,45 @@ namespace GoBot.IHM
         {
             Balise.ReglerAssietteProfil();
         }
+
+        private void btnResetAngle_Click(object sender, EventArgs e)
+        {
+            if (Plateau.NotreCouleur == Plateau.CouleurDroiteJaune)
+            {
+                switch (Balise.Carte)
+                {
+                    case Carte.RecBun:
+                        Config.CurrentConfig.OffsetBaliseDroiteJaune1Capteur1 = balise.OffsetDefaut(1);
+                        Config.CurrentConfig.OffsetBaliseDroiteJaune1Capteur2 = balise.OffsetDefaut(2);
+                        break;
+                    case Carte.RecBeu:
+                        Config.CurrentConfig.OffsetBaliseDroiteJaune2Capteur1 = balise.OffsetDefaut(1);
+                        Config.CurrentConfig.OffsetBaliseDroiteJaune2Capteur2 = balise.OffsetDefaut(2);
+                        break;
+                    case Carte.RecBoi:
+                        Config.CurrentConfig.OffsetBaliseDroiteJaune3Capteur1 = balise.OffsetDefaut(1);
+                        Config.CurrentConfig.OffsetBaliseDroiteJaune3Capteur2 = balise.OffsetDefaut(2);
+                        break;
+                }
+            }
+            else
+            {
+                switch (Balise.Carte)
+                {
+                    case Carte.RecBun:
+                        Config.CurrentConfig.OffsetBaliseGaucheRouge1Capteur1 = balise.OffsetDefaut(1);
+                        Config.CurrentConfig.OffsetBaliseGaucheRouge1Capteur2 = balise.OffsetDefaut(2);
+                        break;
+                    case Carte.RecBeu:
+                        Config.CurrentConfig.OffsetBaliseGaucheRouge2Capteur1 = balise.OffsetDefaut(1);
+                        Config.CurrentConfig.OffsetBaliseGaucheRouge2Capteur2 = balise.OffsetDefaut(2);
+                        break;
+                    case Carte.RecBoi:
+                        Config.CurrentConfig.OffsetBaliseGaucheRouge3Capteur1 = balise.OffsetDefaut(1);
+                        Config.CurrentConfig.OffsetBaliseGaucheRouge3Capteur2 = balise.OffsetDefaut(2);
+                        break;
+                }
+            }
+        }
     }
 }

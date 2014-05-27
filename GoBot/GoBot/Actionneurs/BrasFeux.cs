@@ -13,9 +13,9 @@ namespace GoBot.Actionneur
         private static readonly int INIT_EPAULE = 2250; // 1600 = 45°
         private static readonly int INIT_POIGNET = 466;
 
-        public bool PresenceFeu1 { get; set; }
-        public bool PresenceFeu2 { get; set; }
-        public bool PresenceFeu3 { get; set; }
+        public static bool PresenceFeu1 { get; set; }
+        public static bool PresenceFeu2 { get; set; }
+        public static bool PresenceFeu3 { get; set; }
 
         public static List<Feu> FeuxStockes { get; private set; }
 

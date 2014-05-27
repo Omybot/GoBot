@@ -44,7 +44,10 @@ namespace GoBot
                 SemaphoresMove.Add(fonction, new Semaphore(0, int.MaxValue));
 
             foreach (CapteurOnOff fonction in Enum.GetValues(typeof(CapteurOnOff)))
+            {
                 SemaphoresCapteurs.Add(fonction, new Semaphore(0, int.MaxValue));
+                ValeursCapteurs.Add(fonction, false);
+            }
         }
 
         public override void Init()

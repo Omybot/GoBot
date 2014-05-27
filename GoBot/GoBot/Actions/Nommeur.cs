@@ -51,8 +51,14 @@ namespace GoBot.Actions
             {
                 case CapteurOnOff.GRPresenceBouchon:
                     return "présence bouchon";
+                case CapteurOnOff.GRFeu1:
+                    return "feu étage 1";
+                case CapteurOnOff.GRFeu2:
+                    return "feu étage 2";
+                case CapteurOnOff.GRFeu3:
+                    return "feu étage 3";
                 default :
-                    return "Inconnu";
+                    return capteur.ToString();
             }
         }
 

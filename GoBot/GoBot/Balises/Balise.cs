@@ -18,6 +18,39 @@ namespace GoBot.Balises
         private Semaphore semTestConnexion;
         private Semaphore semReceptionBalise;
 
+        public double OffsetDefaut(int numCapteur)
+        {
+            if (Plateau.NotreCouleur == Plateau.CouleurDroiteJaune)
+            {
+                if (numCapteur == 1)
+                {
+                    switch (Carte)
+                    {
+                        case GoBot.Carte.RecBun:
+                            return 120;
+                        case GoBot.Carte.RecBeu:
+                            return 53;
+                        case GoBot.Carte.RecBoi:
+                            return 77;
+                    }
+                }
+                else
+                {
+                    switch (Carte)
+                    {
+                        case GoBot.Carte.RecBun:
+                            return -60;
+                        case GoBot.Carte.RecBeu:
+                            return -125;
+                        case GoBot.Carte.RecBoi:
+                            return -102;
+                    }
+                }
+            }
+
+            return 0;
+        }
+
         public Angle AngleCentral()
         {
             if (Plateau.NotreCouleur == Plateau.CouleurGaucheRouge)
@@ -203,7 +236,7 @@ namespace GoBot.Balises
             }
 
             Connexion.NouvelleTrameRecue += new ConnexionUDP.ReceptionDelegate(connexion_NouvelleTrame);
-            Connexion.ConnexionCheck = new Communications.ConnexionCheck(2000);
+            Connexion.ConnexionCheck = new Communications.ConnexionCheck(1000);
             Connexion.ConnexionCheck.TestConnexion += new ConnexionCheck.TestConnexionDelegate(TestConnexion);
 
             Stats = new BaliseStats(this);
@@ -220,7 +253,6 @@ namespace GoBot.Balises
         {
             bool temp = EnRotation;
             EnRotation = cptRotation > 0;
-            Console.WriteLine(cptRotation + " tours");
             cptRotation = 0;
 
 
@@ -546,6 +578,29 @@ namespace GoBot.Balises
 
                     if (semTestConnexion != null)
                         semTestConnexion.Release();
+
+                    if (dateBeep < DateTime.Now - new TimeSpan(0, 0, 2))
+                    {
+                        if (this == Plateau.Balise1)
+                        {
+                            Console.Beep(4000, 300);
+                        }
+
+                        if (this == Plateau.Balise2)
+                        {
+                            Console.Beep(6000, 150);
+                            Console.Beep(6000, 150);
+                        }
+
+                        if (this == Plateau.Balise3)
+                        {
+                            Console.Beep(8000, 100);
+                            Console.Beep(8000, 100);
+                            Console.Beep(8000, 100);
+                        }
+                        dateBeep = DateTime.Now;
+                    }
+                    
                 }
             }
             catch (Exception)
@@ -553,6 +608,8 @@ namespace GoBot.Balises
 
             Connexion.ConnexionCheck.MajConnexion();
         }
+
+        DateTime dateBeep = DateTime.Now;
 
         /// <summary>
         /// Réglage de la vitesse de rotation de la balise en modifiant la valeur de la pwm
@@ -784,55 +841,8 @@ namespace GoBot.Balises
             Console.WriteLine("Detection face :");
             Console.WriteLine("Detection grossiere :");
 
-            Dictionary<int, Angle> angleMin = new Dictionary<int, Angle>();
-            Dictionary<int, Angle> angleMax = new Dictionary<int, Angle>();
-
-            angleMin.Add(1, 1);
-            angleMin.Add(2, 1);
-
-            angleMax.Add(1, 1);
-            angleMax.Add(2, 1);
-
-            foreach (KeyValuePair<int, Dictionary<int, List<DetectionBalise>>> pair in valeurs)
-            {
-                foreach (DetectionBalise detection in pair.Value[1])
-                {
-                    Angle angle = detection.AngleCentral;
-
-                    if (angle.AngleDegresPositif < angleMin[1].AngleDegresPositif)
-                        angleMin[1] = angle;
-                    if (angle.AngleDegresPositif > angleMax[1].AngleDegresPositif)
-                        angleMax[1] = angle;
-                }
-                foreach (DetectionBalise detection in pair.Value[2])
-                {
-                    Angle angle = detection.AngleCentral;
-
-                    if (angle.AngleDegresPositif < angleMin[2].AngleDegresPositif)
-                        angleMin[2] = angle;
-                    if (angle.AngleDegresPositif > angleMax[2].AngleDegresPositif)
-                        angleMax[2] = angle;
-                }
-            }
-
-            if (Plateau.NotreCouleur == Plateau.CouleurDroiteJaune && Carte == GoBot.Carte.RecBeu ||
-                Plateau.NotreCouleur == Plateau.CouleurDroiteJaune && Carte == GoBot.Carte.RecBun ||
-                Plateau.NotreCouleur == Plateau.CouleurGaucheRouge && Carte == GoBot.Carte.RecBoi)
-            {
-                angleMax[1] = angleMin[1] + 10;
-                angleMin[1] = angleMin[1] - 10;
-                angleMax[2] = angleMin[2] + 10;
-                angleMin[2] = angleMin[2] - 10;
-            }
-            else
-            {
-                angleMin[1] = angleMax[1] - 10;
-                angleMax[1] = angleMax[1] + 10;
-                angleMin[2] = angleMax[2] - 10;
-                angleMax[2] = angleMax[2] + 10;
-            }
-
-
+            Angle angleMin = AngleCentral() - 15;
+            Angle angleMax = AngleCentral() - 15;
 
             // On cherche à avoir 2 détections qui voient la balise centrale (ce qui veut dire que les deux capteurs la voient)
             foreach (KeyValuePair<int, Dictionary<int, List<DetectionBalise>>> pairDic in valeurs)
@@ -843,7 +853,7 @@ namespace GoBot.Balises
                     int nbAngles = 0;
                     foreach (DetectionBalise detection in pair.Value)
                     {
-                        if (((Angle)detection.AngleCentral).ComprisEntre(angleMin[pair.Key], angleMax[pair.Key]))
+                        if (((Angle)detection.AngleCentral).ComprisEntre(angleMin, angleMax))
                         {
                             nbAngles++;
                             if (nbAngles == 2)
@@ -857,6 +867,7 @@ namespace GoBot.Balises
                     {
                         // Premier
                         debutGrossier = pairDic.Key;
+                        finGrossier = pairDic.Key;
                         trouve = true;
                     }
                     else if (trouveIteration && trouve)
@@ -890,7 +901,7 @@ namespace GoBot.Balises
                         int nbAngles = 0;
                         bool trouveIteration = false;
                         foreach (DetectionBalise detection in pair.Value)
-                            if (((Angle)detection.AngleCentral).ComprisEntre(angleMin[pair.Key], angleMax[pair.Key]))
+                            if (((Angle)detection.AngleCentral).ComprisEntre(angleMin, angleMax))
                             {
                                 nbAngles++;
                                 if (nbAngles == 2)
@@ -903,6 +914,7 @@ namespace GoBot.Balises
                         {
                             // Premier
                             debutPrecis = pairDic.Key;
+                            finPrecis = pairDic.Key;
                             trouve = true;
                         }
                         else if (trouveIteration && trouve)
@@ -962,6 +974,7 @@ namespace GoBot.Balises
                     // Premier
                     trouve = true;
                     debutGrossier = pair.Key;
+                    finGrossier = pair.Key;
                 }
                 else if (trouveIteration && trouve)
                 {
@@ -1000,6 +1013,7 @@ namespace GoBot.Balises
                         // Premier
                         trouve = true;
                         debutPrecis = pair.Key;
+                        finPrecis = pair.Key;
                     }
                     else if (trouveIteration && trouve)
                     {

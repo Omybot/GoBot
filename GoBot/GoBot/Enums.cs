@@ -336,8 +336,8 @@ namespace GoBot
     {
         GRPresenceBouchon = 0x00,
         GRFeu1 = 0x30,
-        GRFeu1 = 0x31,
-        GRFeu1 = 0x32,
+        GRFeu2 = 0x31,
+        GRFeu3 = 0x32,
     }
 
     public enum Carte

@@ -55,6 +55,7 @@
             this.lblTxtInclinaisonFace = new System.Windows.Forms.Label();
             this.lblInclinaisonFace = new System.Windows.Forms.Label();
             this.trackBarInclinaisonFace = new Composants.TrackBarPlus();
+            this.btnResetAngle = new System.Windows.Forms.Button();
             this.groupBalise.SuspendLayout();
             this.groupBox4.SuspendLayout();
             this.groupBox3.SuspendLayout();
@@ -66,6 +67,7 @@
             // 
             // groupBalise
             // 
+            this.groupBalise.Controls.Add(this.btnResetAngle);
             this.groupBalise.Controls.Add(this.btnStopProfil);
             this.groupBalise.Controls.Add(this.btnStopFace);
             this.groupBalise.Controls.Add(this.groupBox4);
@@ -358,6 +360,16 @@
             this.trackBarInclinaisonFace.TickValueChanged += new System.EventHandler(this.trackBarInclinaisonFace_TickValueChanged);
             this.trackBarInclinaisonFace.ValueChanged += new System.EventHandler(this.trackBarInclinaisonFace_ValueChanged);
             // 
+            // btnResetAngle
+            // 
+            this.btnResetAngle.Location = new System.Drawing.Point(114, 556);
+            this.btnResetAngle.Name = "btnResetAngle";
+            this.btnResetAngle.Size = new System.Drawing.Size(92, 23);
+            this.btnResetAngle.TabIndex = 19;
+            this.btnResetAngle.Text = "Reset angles";
+            this.btnResetAngle.UseVisualStyleBackColor = true;
+            this.btnResetAngle.Click += new System.EventHandler(this.btnResetAngle_Click);
+            // 
             // PanelBaliseInclinaison
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -410,5 +422,6 @@
         private Composants.CtrlGraphique ctrlGraphique;
         private System.Windows.Forms.Button btnStopProfil;
         private System.Windows.Forms.Button btnStopFace;
+        private System.Windows.Forms.Button btnResetAngle;
     }
 }

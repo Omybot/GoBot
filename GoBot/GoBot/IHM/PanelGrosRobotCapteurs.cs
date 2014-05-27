@@ -69,17 +69,17 @@ namespace GoBot.IHM
         {
             this.Invoke(new EventHandler(delegate
             {
-                if (Robots.GrosRobot.DemandeCapteurOnOff(CapteurOnOff.GRFeu1))
+                if (Robots.GrosRobot.DemandeCapteurOnOff(CapteurOnOff.GRFeu1, false))
                     ledFeu1.CouleurVert();
                 else
                     ledFeu1.CouleurRouge();
 
-                if (Robots.GrosRobot.DemandeCapteurOnOff(CapteurOnOff.GRFeu2))
+                if (Robots.GrosRobot.DemandeCapteurOnOff(CapteurOnOff.GRFeu2, false))
                     ledFeu2.CouleurVert();
                 else
                     ledFeu2.CouleurRouge();
 
-                if (Robots.GrosRobot.DemandeCapteurOnOff(CapteurOnOff.GRFeu3))
+                if (Robots.GrosRobot.DemandeCapteurOnOff(CapteurOnOff.GRFeu3, false))
                     ledFeu3.CouleurVert();
                 else
                     ledFeu3.CouleurRouge();
