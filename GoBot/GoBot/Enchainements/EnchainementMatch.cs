@@ -31,7 +31,10 @@ namespace GoBot.Enchainements
                 }
 
                 if (ListeMouvementsGros[iMeilleur].ScorePondere != 0)
-                    ListeMouvementsGros[iMeilleur].Executer();
+                {
+                    if (!ListeMouvementsGros[iMeilleur].Executer())
+                        ListeMouvementsGros[iMeilleur].DateMinimum = DateTime.Now + new TimeSpan(0, 0, 10);
+                }
             }
         }
 

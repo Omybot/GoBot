@@ -259,6 +259,7 @@
     <Compile Include="Mouvements\MouvementDeposeFoyerCoin.cs" />
     <Compile Include="Mouvements\MouvementFeuBordure.cs" />
     <Compile Include="Mouvements\Mouvement.cs" />
+    <Compile Include="Mouvements\MouvementFilet.cs" />
     <Compile Include="Mouvements\MouvementLances.cs" />
     <Compile Include="Mouvements\PositionsMouvements.cs" />
     <Compile Include="Mouvements\MouvementTorche.cs" />

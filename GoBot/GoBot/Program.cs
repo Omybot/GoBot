@@ -20,6 +20,7 @@ namespace GoBot
 
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
+
             Connexions.Init();
             Config.Load();
             Robots.Init();

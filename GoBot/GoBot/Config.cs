@@ -419,6 +419,8 @@ namespace GoBot
             XmlSerializer mySerializer = new XmlSerializer(typeof(Config));
             using (StreamWriter myWriter = new StreamWriter(PathData + "/config.xml"))
                 mySerializer.Serialize(myWriter, CurrentConfig);
+            using (StreamWriter myWriter = new StreamWriter(PathData + "/Configs/config" + Config.DateLancementString + ".xml"))
+                mySerializer.Serialize(myWriter, CurrentConfig);
         }
 
         public static String PathData

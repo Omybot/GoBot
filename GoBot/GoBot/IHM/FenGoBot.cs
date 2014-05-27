@@ -198,6 +198,10 @@ namespace GoBot
             {
                 if (!Directory.Exists(Config.PathData + "/Logs/"))
                     Directory.CreateDirectory(Config.PathData + "/Logs/");
+                if (!Directory.Exists(Config.PathData + "/Configs/"))
+                    Directory.CreateDirectory(Config.PathData + "/Configs/");
+                if (!Directory.Exists(Config.PathData + "/LogsTraces/"))
+                    Directory.CreateDirectory(Config.PathData + "/LogsTraces/");
 
                 Directory.CreateDirectory(Config.PathData + "/Logs/" + Config.DateLancementString);
 

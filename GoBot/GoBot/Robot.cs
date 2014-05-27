@@ -963,8 +963,6 @@ namespace GoBot
 
         public List<IForme> CalculerObstacles()
         {
-            if(this == Robots.PetitRobot)
-            Console.WriteLine("Calcul obstacle");
             List<IForme> obstacles = new List<IForme>();
             obstacles.AddRange(Plateau.ListeObstacles);
             obstacles.Add(new Cercle(AutreRobot.Position.Coordonnees, AutreRobot.Rayon));

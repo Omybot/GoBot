@@ -20,27 +20,6 @@ namespace GoBot.IHM
         public PanelConnexions()
         {
             InitializeComponent();
-
-            ledRecBun.ConnexionNok();
-            ledRecBeu.ConnexionNok();
-            ledRecBoi.ConnexionNok();
-            ledRecMiwi.ConnexionNok();
-            ledRecMove.ConnexionNok();
-            ledRecIO.ConnexionNok();
-            ledRecPi.ConnexionNok();
-
-            batteriePack1.CouleurGris();
-
-
-            Connexions.ConnexionMove.ConnexionCheck.ConnexionChange += new ConnexionCheck.ConnexionChangeDelegate(ConnexionMoveCheck_ConnexionChange);
-            Connexions.ConnexionMiwi.ConnexionCheck.ConnexionChange += new ConnexionCheck.ConnexionChangeDelegate(ConnexionMiwiCheck_ConnexionChange);
-            Connexions.ConnexionIO.ConnexionCheck.ConnexionChange += new ConnexionCheck.ConnexionChangeDelegate(ConnexionIoCheck_ConnexionChange);
-            Connexions.ConnexionPi.ConnexionCheck.ConnexionChange += new ConnexionCheck.ConnexionChangeDelegate(ConnexionPiCheck_ConnexionChange);
-
-            Balise.GetBalise(Carte.RecBun).Connexion.ConnexionCheck.ConnexionChange += new ConnexionCheck.ConnexionChangeDelegate(ConnexionBunCheck_ConnexionChange);
-            Balise.GetBalise(Carte.RecBeu).Connexion.ConnexionCheck.ConnexionChange += new ConnexionCheck.ConnexionChangeDelegate(ConnexionBeuCheck_ConnexionChange);
-            Balise.GetBalise(Carte.RecBoi).Connexion.ConnexionCheck.ConnexionChange += new ConnexionCheck.ConnexionChangeDelegate(ConnexionBoiCheck_ConnexionChange);
-
         }
 
         void timerBatteries_Tick(object sender, EventArgs e)
@@ -215,6 +194,24 @@ namespace GoBot.IHM
         {
             if (!Config.DesignMode)
             {
+                ledRecBun.ConnexionNok();
+                ledRecBeu.ConnexionNok();
+                ledRecBoi.ConnexionNok();
+                ledRecMiwi.ConnexionNok();
+                ledRecMove.ConnexionNok();
+                ledRecIO.ConnexionNok();
+                ledRecPi.ConnexionNok();
+
+                Connexions.ConnexionMove.ConnexionCheck.ConnexionChange += new ConnexionCheck.ConnexionChangeDelegate(ConnexionMoveCheck_ConnexionChange);
+                Connexions.ConnexionMiwi.ConnexionCheck.ConnexionChange += new ConnexionCheck.ConnexionChangeDelegate(ConnexionMiwiCheck_ConnexionChange);
+                Connexions.ConnexionIO.ConnexionCheck.ConnexionChange += new ConnexionCheck.ConnexionChangeDelegate(ConnexionIoCheck_ConnexionChange);
+                Connexions.ConnexionPi.ConnexionCheck.ConnexionChange += new ConnexionCheck.ConnexionChangeDelegate(ConnexionPiCheck_ConnexionChange);
+
+                Balise.GetBalise(Carte.RecBun).Connexion.ConnexionCheck.ConnexionChange += new ConnexionCheck.ConnexionChangeDelegate(ConnexionBunCheck_ConnexionChange);
+                Balise.GetBalise(Carte.RecBeu).Connexion.ConnexionCheck.ConnexionChange += new ConnexionCheck.ConnexionChangeDelegate(ConnexionBeuCheck_ConnexionChange);
+                Balise.GetBalise(Carte.RecBoi).Connexion.ConnexionCheck.ConnexionChange += new ConnexionCheck.ConnexionChangeDelegate(ConnexionBoiCheck_ConnexionChange);
+
+
                 if (Connexions.ConnexionMove.ConnexionCheck.Connecte)
                     SetLed(ledRecMove, true);
                 if (Connexions.ConnexionMiwi.ConnexionCheck.Connecte)

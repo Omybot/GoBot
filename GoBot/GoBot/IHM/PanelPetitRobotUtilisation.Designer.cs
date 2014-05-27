@@ -29,6 +29,9 @@
         private void InitializeComponent()
         {
             this.groupBoxUtil = new System.Windows.Forms.GroupBox();
+            this.btnLances = new System.Windows.Forms.Button();
+            this.switchBoutonRideau = new Composants.SwitchBouton();
+            this.label4 = new System.Windows.Forms.Label();
             this.switchBoutonReservoir = new Composants.SwitchBouton();
             this.label3 = new System.Windows.Forms.Label();
             this.switchBoutonFilet = new Composants.SwitchBouton();
@@ -39,15 +42,28 @@
             this.switchBoutonPuissance = new Composants.SwitchBouton();
             this.label12 = new System.Windows.Forms.Label();
             this.btnTaille = new System.Windows.Forms.Button();
-            this.switchBoutonRideau = new Composants.SwitchBouton();
-            this.label4 = new System.Windows.Forms.Label();
-            this.btnLances = new System.Windows.Forms.Button();
+            this.label5 = new System.Windows.Forms.Label();
+            this.label6 = new System.Windows.Forms.Label();
+            this.label7 = new System.Windows.Forms.Label();
+            this.label8 = new System.Windows.Forms.Label();
+            this.label9 = new System.Windows.Forms.Label();
+            this.label10 = new System.Windows.Forms.Label();
+            this.label11 = new System.Windows.Forms.Label();
+            this.label13 = new System.Windows.Forms.Label();
             this.groupBoxUtil.SuspendLayout();
             this.SuspendLayout();
             // 
             // groupBoxUtil
             // 
             this.groupBoxUtil.BackColor = System.Drawing.Color.Transparent;
+            this.groupBoxUtil.Controls.Add(this.label13);
+            this.groupBoxUtil.Controls.Add(this.label11);
+            this.groupBoxUtil.Controls.Add(this.label9);
+            this.groupBoxUtil.Controls.Add(this.label10);
+            this.groupBoxUtil.Controls.Add(this.label8);
+            this.groupBoxUtil.Controls.Add(this.label7);
+            this.groupBoxUtil.Controls.Add(this.label6);
+            this.groupBoxUtil.Controls.Add(this.label5);
             this.groupBoxUtil.Controls.Add(this.btnLances);
             this.groupBoxUtil.Controls.Add(this.switchBoutonRideau);
             this.groupBoxUtil.Controls.Add(this.label4);
@@ -68,10 +84,39 @@
             this.groupBoxUtil.TabStop = false;
             this.groupBoxUtil.Text = "Utilisation";
             // 
+            // btnLances
+            // 
+            this.btnLances.Location = new System.Drawing.Point(137, 240);
+            this.btnLances.Name = "btnLances";
+            this.btnLances.Size = new System.Drawing.Size(100, 23);
+            this.btnLances.TabIndex = 211;
+            this.btnLances.Text = "Attaque lances";
+            this.btnLances.UseVisualStyleBackColor = true;
+            this.btnLances.Click += new System.EventHandler(this.btnLances_Click);
+            // 
+            // switchBoutonRideau
+            // 
+            this.switchBoutonRideau.BackColor = System.Drawing.Color.Transparent;
+            this.switchBoutonRideau.Location = new System.Drawing.Point(171, 196);
+            this.switchBoutonRideau.Name = "switchBoutonRideau";
+            this.switchBoutonRideau.Size = new System.Drawing.Size(35, 15);
+            this.switchBoutonRideau.Symetrique = false;
+            this.switchBoutonRideau.TabIndex = 210;
+            this.switchBoutonRideau.ChangementEtat += new System.EventHandler(this.switchBoutonRideau_ChangementEtat);
+            // 
+            // label4
+            // 
+            this.label4.AutoSize = true;
+            this.label4.Location = new System.Drawing.Point(18, 196);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(41, 13);
+            this.label4.TabIndex = 209;
+            this.label4.Text = "Rideau";
+            // 
             // switchBoutonReservoir
             // 
             this.switchBoutonReservoir.BackColor = System.Drawing.Color.Transparent;
-            this.switchBoutonReservoir.Location = new System.Drawing.Point(98, 165);
+            this.switchBoutonReservoir.Location = new System.Drawing.Point(171, 165);
             this.switchBoutonReservoir.Name = "switchBoutonReservoir";
             this.switchBoutonReservoir.Size = new System.Drawing.Size(35, 15);
             this.switchBoutonReservoir.Symetrique = false;
@@ -90,7 +135,7 @@
             // switchBoutonFilet
             // 
             this.switchBoutonFilet.BackColor = System.Drawing.Color.Transparent;
-            this.switchBoutonFilet.Location = new System.Drawing.Point(98, 134);
+            this.switchBoutonFilet.Location = new System.Drawing.Point(171, 134);
             this.switchBoutonFilet.Name = "switchBoutonFilet";
             this.switchBoutonFilet.Size = new System.Drawing.Size(35, 15);
             this.switchBoutonFilet.Symetrique = false;
@@ -109,7 +154,7 @@
             // switchBoutonAimantLances
             // 
             this.switchBoutonAimantLances.BackColor = System.Drawing.Color.Transparent;
-            this.switchBoutonAimantLances.Location = new System.Drawing.Point(98, 104);
+            this.switchBoutonAimantLances.Location = new System.Drawing.Point(171, 104);
             this.switchBoutonAimantLances.Name = "switchBoutonAimantLances";
             this.switchBoutonAimantLances.Size = new System.Drawing.Size(35, 15);
             this.switchBoutonAimantLances.Symetrique = false;
@@ -164,34 +209,77 @@
             this.btnTaille.UseVisualStyleBackColor = true;
             this.btnTaille.Click += new System.EventHandler(this.btnTaille_Click);
             // 
-            // switchBoutonRideau
+            // label5
             // 
-            this.switchBoutonRideau.BackColor = System.Drawing.Color.Transparent;
-            this.switchBoutonRideau.Location = new System.Drawing.Point(98, 196);
-            this.switchBoutonRideau.Name = "switchBoutonRideau";
-            this.switchBoutonRideau.Size = new System.Drawing.Size(35, 15);
-            this.switchBoutonRideau.Symetrique = false;
-            this.switchBoutonRideau.TabIndex = 210;
-            this.switchBoutonRideau.ChangementEtat += new System.EventHandler(this.switchBoutonRideau_ChangementEtat);
+            this.label5.AutoSize = true;
+            this.label5.Location = new System.Drawing.Point(131, 104);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(34, 13);
+            this.label5.TabIndex = 212;
+            this.label5.Text = "Armer";
             // 
-            // label4
+            // label6
             // 
-            this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(18, 196);
-            this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(41, 13);
-            this.label4.TabIndex = 209;
-            this.label4.Text = "Rideau";
+            this.label6.AutoSize = true;
+            this.label6.Location = new System.Drawing.Point(212, 104);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(28, 13);
+            this.label6.TabIndex = 213;
+            this.label6.Text = "Tirer";
             // 
-            // btnLances
+            // label7
             // 
-            this.btnLances.Location = new System.Drawing.Point(58, 251);
-            this.btnLances.Name = "btnLances";
-            this.btnLances.Size = new System.Drawing.Size(75, 23);
-            this.btnLances.TabIndex = 211;
-            this.btnLances.Text = "Attaque lances";
-            this.btnLances.UseVisualStyleBackColor = true;
-            this.btnLances.Click += new System.EventHandler(this.btnLances_Click);
+            this.label7.AutoSize = true;
+            this.label7.Location = new System.Drawing.Point(131, 134);
+            this.label7.Name = "label7";
+            this.label7.Size = new System.Drawing.Size(34, 13);
+            this.label7.TabIndex = 214;
+            this.label7.Text = "Armer";
+            // 
+            // label8
+            // 
+            this.label8.AutoSize = true;
+            this.label8.Location = new System.Drawing.Point(212, 134);
+            this.label8.Name = "label8";
+            this.label8.Size = new System.Drawing.Size(28, 13);
+            this.label8.TabIndex = 215;
+            this.label8.Text = "Tirer";
+            // 
+            // label9
+            // 
+            this.label9.AutoSize = true;
+            this.label9.Location = new System.Drawing.Point(125, 196);
+            this.label9.Name = "label9";
+            this.label9.Size = new System.Drawing.Size(40, 13);
+            this.label9.TabIndex = 217;
+            this.label9.Text = "Lâcher";
+            // 
+            // label10
+            // 
+            this.label10.AutoSize = true;
+            this.label10.Location = new System.Drawing.Point(126, 165);
+            this.label10.Name = "label10";
+            this.label10.Size = new System.Drawing.Size(39, 13);
+            this.label10.TabIndex = 216;
+            this.label10.Text = "Fermer";
+            // 
+            // label11
+            // 
+            this.label11.AutoSize = true;
+            this.label11.Location = new System.Drawing.Point(212, 165);
+            this.label11.Name = "label11";
+            this.label11.Size = new System.Drawing.Size(35, 13);
+            this.label11.TabIndex = 218;
+            this.label11.Text = "Ouvrir";
+            // 
+            // label13
+            // 
+            this.label13.AutoSize = true;
+            this.label13.Location = new System.Drawing.Point(212, 196);
+            this.label13.Name = "label13";
+            this.label13.Size = new System.Drawing.Size(41, 13);
+            this.label13.TabIndex = 219;
+            this.label13.Text = "Tendre";
             // 
             // PanelPetitRobotUtilisation
             // 
@@ -225,5 +313,13 @@
         private Composants.SwitchBouton switchBoutonRideau;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.Button btnLances;
+        private System.Windows.Forms.Label label13;
+        private System.Windows.Forms.Label label11;
+        private System.Windows.Forms.Label label9;
+        private System.Windows.Forms.Label label10;
+        private System.Windows.Forms.Label label8;
+        private System.Windows.Forms.Label label7;
+        private System.Windows.Forms.Label label6;
+        private System.Windows.Forms.Label label5;
     }
 }
