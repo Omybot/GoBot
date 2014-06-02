@@ -49,7 +49,8 @@ namespace GoBot
                 {
                     WindowState = FormWindowState.Normal;
                     FormBorderStyle = System.Windows.Forms.FormBorderStyle.Sizable;
-                    //btnClose.Visible = false;
+                    btnFenetre.Location = btnClose.Location;
+                    btnClose.Visible = false;
                 }
 
                 panelBalise1.Balise = Plateau.Balise1;
@@ -70,22 +71,6 @@ namespace GoBot
                 tabPrecedent.Add(tabControl.TabPages[0], null);
                 for(int i = 1; i < tabControl.Controls.Count; i++)
                     tabPrecedent.Add(tabControl.TabPages[i], (tabControl.TabPages[i - 1]));
-
-                IPAddress[] adresses =  Dns.GetHostAddresses(Dns.GetHostName());
-
-                bool ipTrouvee = false;
-                foreach (IPAddress ip in adresses)
-                {
-                    if (ip.ToString().Length > 7)
-                    {
-                        String ipString = ip.ToString().Substring(0, 7);
-                        if (ipString == "10.1.0.")
-                            ipTrouvee = true;
-                    }
-                }
-
-                if (!ipTrouvee)
-                    MessageBox.Show("Aucune carte réseau n'est configurée pour se connecter au robot avec la bonne adresse IP (10.1.0.X)", "Configuration IP", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
                 List<String> fichiersElog = new List<string>();
                 List<String> fichiersTlog = new List<string>();
@@ -123,9 +108,12 @@ namespace GoBot
 
                 Instance = this;
 
+                Plateau.NotreCouleur = Plateau.CouleurDroiteJaune;
                 panelMatch.CouleurDroiteJaune();
                 panelTable.TableDessinee += panelTable_TableDessinee;
             }
+
+            SplashScreen.CloseSplash();
         }
 
         void panelTable_TableDessinee(Image img)
@@ -172,6 +160,10 @@ namespace GoBot
 
             if(Plateau.Enchainement != null)
                 Plateau.Enchainement.Stop();
+
+            Process[] proc = Process.GetProcessesByName("GoBot");
+            foreach(Process p in proc)
+                p.Kill();
         }
 
         private void SauverLogs()

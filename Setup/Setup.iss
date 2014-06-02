@@ -34,16 +34,16 @@ Name: "french"; MessagesFile: "compiler:Languages\French.isl"
 
 [Tasks]
 Name: "desktopicon"; Description: "{cm:CreateDesktopIcon}"; GroupDescription: "{cm:AdditionalIcons}"; Flags: unchecked
-[Files]                                                                                            
-Source: "E:\Dropbox\Robot\GoBot\GoBot\GoBot\bin\Release\GoBot.exe"; DestDir: "{app}"; Flags: ignoreversion  
-Source: "E:\Dropbox\Robot\GoBot\GoBot\GoBot\bin\Release\Composants.dll"; DestDir: "{app}"; Flags: ignoreversion
+[Files]                                                                                          
+Source: "..\GoBot\GoBot\bin\Release\GoBot.exe"; DestDir: "{app}"; Flags: ignoreversion  
+Source: "..\GoBot\GoBot\bin\Release\Composants.dll"; DestDir: "{app}"; Flags: ignoreversion
 Source: "./iconeTlog.ico"; DestDir: "{app}"; Flags: ignoreversion
-Source: "./iconeElog.ico"; DestDir: "{app}"; Flags: ignoreversion
+Source: "./iconeElog.ico"; DestDir: "{app}"; Flags: ignoreversion  
+Source: "./DShowNET.dll"; DestDir: "{app}"; Flags: ignoreversion
+Source: "./Jokerman.TTF"; DestDir: "{fonts}"; FontInstall: "Jokerman"; Flags: onlyifdoesntexist uninsneveruninstall  
 Source: "C:\Users\Kryss\AppData\Local\GoBot\graphGros.bin"; DestDir: "{localappdata}\GoBot"; Flags: ignoreversion
-Source: "C:\Users\Kryss\AppData\Local\GoBot\graphPetit.bin"; DestDir: "{localappdata}\GoBot"; Flags: ignoreversion     
-Source: "C:\Users\Kryss\AppData\Local\GoBot\KillGobot.exe"; DestDir: "{localappdata}\GoBot"; Flags: ignoreversion   
-Source: "C:\Users\Kryss\AppData\Local\GoBot\config.xml"; DestDir: "{localappdata}\GoBot"; Flags: ignoreversion   
-Source: "E:\Dropbox\Robot\GoBot\GoBot\GoBot\DShowNET.dll"; DestDir: "{app}"; Flags: ignoreversion
+Source: "C:\Users\Kryss\AppData\Local\GoBot\graphPetit.bin"; DestDir: "{localappdata}\GoBot"; Flags: ignoreversion    
+Source: "C:\Users\Kryss\AppData\Local\GoBot\config.xml"; DestDir: "{localappdata}\GoBot"; Flags: ignoreversion  
 
 ; NOTE: Don't use "Flags: ignoreversion" on any shared system files     
           
@@ -65,5 +65,5 @@ Name: "{group}\{#MyAppName}"; Filename: "{app}\{#MyAppExeName}"
 Name: "{commondesktop}\{#MyAppName}"; Filename: "{app}\{#MyAppExeName}"; Tasks: desktopicon
 
 [Run]
-Filename: "{app}\{#MyAppExeName}"; Description: "{cm:LaunchProgram,{#StringChange(MyAppName, '&', '&&')}}"; Flags: nowait postinstall skipifsilent
+Filename: "{app}\{#MyAppExeName}"; Description: "{cm:LaunchProgram,{#StringChange(MyAppName, '&', '&&')}}"; Flags: nowait postinstall
 

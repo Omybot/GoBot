@@ -253,6 +253,12 @@
     <Compile Include="IHM\PanelTestLiaisons.Designer.cs">
       <DependentUpon>PanelTestLiaisons.cs</DependentUpon>
     </Compile>
+    <Compile Include="IHM\SplashScreen.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="IHM\SplashScreen.designer.cs">
+      <DependentUpon>SplashScreen.cs</DependentUpon>
+    </Compile>
     <Compile Include="Logs\Log.cs" />
     <Compile Include="Logs\Logs.cs" />
     <Compile Include="Mouvements\MouvementArbre.cs" />
@@ -459,6 +465,9 @@
     <EmbeddedResource Include="IHM\PanelTestLiaisons.resx">
       <DependentUpon>PanelTestLiaisons.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="IHM\SplashScreen.resx">
+      <DependentUpon>SplashScreen.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <SubType>Designer</SubType>
@@ -578,6 +587,7 @@
     <None Include="img\Play.png" />
     <None Include="img\PositionBalises1.png" />
     <None Include="img\PositionBalises2.png" />
+    <None Include="img\Splash.png" />
     <Content Include="robot.ico" />
   </ItemGroup>
   <ItemGroup>
