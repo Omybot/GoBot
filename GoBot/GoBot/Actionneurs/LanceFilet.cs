@@ -7,6 +7,8 @@ namespace GoBot.Actionneur
 {
     public static class LanceFilet
     {
+        public static int FiletLance { get; set; }
+
         public static void Armer()
         {
             Robots.PetitRobot.TourneMoteur(MoteurID.PRLanceFilet, Config.CurrentConfig.PositionPRFiletArme);

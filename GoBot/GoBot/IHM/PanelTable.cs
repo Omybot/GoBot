@@ -279,6 +279,32 @@ namespace GoBot.IHM
                                         }
                                     }
 
+                                    if (BrasFresque.FresquesCollees == 1)
+                                    {
+                                        Point p = RealToScreenPosition(new Point(1300, 0));
+                                        if (Plateau.NotreCouleur == Plateau.CouleurDroiteJaune)
+                                            g.FillRectangle(brushCouleurJ2J, p.X, p.Y, RealToScreenDistance(100), RealToScreenDistance(15));
+                                        else
+                                            g.FillRectangle(brushCouleurJ1R, p.X, p.Y, RealToScreenDistance(100), RealToScreenDistance(15));
+                                    }
+                                    else if (BrasFresque.FresquesCollees == 2)
+                                    {
+                                        Point p = RealToScreenPosition(new Point(1600, 0));
+                                        if (Plateau.NotreCouleur == Plateau.CouleurDroiteJaune)
+                                            g.FillRectangle(brushCouleurJ2J, p.X, p.Y, RealToScreenDistance(100), RealToScreenDistance(15));
+                                        else
+                                            g.FillRectangle(brushCouleurJ1R, p.X, p.Y, RealToScreenDistance(100), RealToScreenDistance(15));
+                                    }
+
+                                    if (LanceFilet.FiletLance == 1)
+                                    {
+                                        g.DrawImage(GoBot.Properties.Resources.Filet, 220, 20, 101, 51);
+                                    }
+                                    else if (LanceFilet.FiletLance == 2)
+                                    {
+                                        g.DrawImage(GoBot.Properties.Resources.Filet, 620, 20, 101, 51);
+                                    }
+
                                     // Dessin des fruimouth
                                     foreach (Fruimouth fruit in Plateau.Fruimouths)
                                     {
@@ -619,6 +645,17 @@ namespace GoBot.IHM
                                     }
                                 }
 
+                                if (Robots.GrosRobot.PositionCible != null)
+                                {
+                                    Point p = RealToScreenPosition(Robots.GrosRobot.PositionCible);
+                                    g.DrawRectangle(penRougeEpais, p.X - 5, p.Y - 5, 10, 10);
+                                }
+                                if (Robots.PetitRobot.PositionCible != null)
+                                {
+                                    Point p = RealToScreenPosition(Robots.PetitRobot.PositionCible);
+                                    g.DrawRectangle(penBleuEpais, p.X - 5, p.Y - 5, 10, 10);
+                                }
+
                                 // Dessin des coûts des mouvements
 
                                 if (Plateau.Enchainement != null)
@@ -657,8 +694,28 @@ namespace GoBot.IHM
                                         Font police = new Font("Calibri", 8);
                                         foreach (Mouvement m in Plateau.Enchainement.ListeMouvementsPetit)
                                         {
+                                            Point point;
+
                                             if (m.Cout != double.MaxValue)
-                                                g.DrawString(Math.Round(m.Cout) + "", police, brushVert, RealToScreenPosition(m.PositionProche.Coordonnees));
+                                            {
+                                                foreach (Position p in m.Positions)
+                                                {
+                                                    point = RealToScreenPosition(p.Coordonnees);
+                                                    g.FillEllipse(brushRouge, point.X - 2, point.Y - 2, 4, 4);
+                                                }
+
+                                                point = RealToScreenPosition(m.PositionProche.Coordonnees);
+                                                g.FillEllipse(brushBlanc, point.X - 2, point.Y - 2, 4, 4);
+                                                g.DrawString(Math.Round(m.Cout) + "", police, brushBlanc, RealToScreenPosition(m.PositionProche.Coordonnees));
+                                            }
+                                            else
+                                            {
+                                                foreach (Position p in m.Positions)
+                                                {
+                                                    point = RealToScreenPosition(p.Coordonnees);
+                                                    g.FillEllipse(brushNoir, point.X - 2, point.Y - 2, 4, 4);
+                                                }
+                                            }
                                         }
                                     }
 

@@ -392,5 +392,15 @@ namespace GoBot.IHM
         {
             Robot.GotoXYTeta((double)numX.Value, (double)numY.Value, (double)numTeta.Value);
         }
+
+        private void btnLent_Click(object sender, EventArgs e)
+        {
+            Robot.Lent();
+        }
+
+        private void btnRapide_Click(object sender, EventArgs e)
+        {
+            Robot.Rapide();
+        }
     }
 }

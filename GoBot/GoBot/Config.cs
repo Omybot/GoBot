@@ -33,6 +33,13 @@ namespace GoBot
 
         public int AfficheDetailTraj { get; set; }
 
+        // Zone camera
+
+        public int CameraXMin { get; set; }
+        public int CameraXMax { get; set; }
+        public int CameraYMin { get; set; }
+        public int CameraYMax { get; set; }
+
         // Fenêtres gros robot
 
         public bool DeplacementGROuvert { get; set; }

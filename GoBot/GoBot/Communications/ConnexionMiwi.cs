@@ -26,6 +26,7 @@ namespace GoBot.Communications
         /// <returns>Nombre de caractères envoyés</returns>
         public override int SendMessage(Trame message, bool bloquant = false)
         {
+            bloquant = true;
             if (!Connexions.ActivationConnexion[message.Carte])
                 return 0;
 
@@ -47,12 +48,13 @@ namespace GoBot.Communications
                 SemaphoreAck = new Semaphore(0, int.MaxValue);
 
             int retour = Connexions.ConnexionMiwi.SendMessage(messageComplet);
+            Thread.Sleep(100);
 
             TrameEnvoyee(messageComplet);
 
             // Attente acquittement
-            if (bloquant)
-                SemaphoreAck.WaitOne();
+            //if (bloquant)
+            //    SemaphoreAck.WaitOne(200);
 
             return retour;
         }
@@ -69,8 +71,13 @@ namespace GoBot.Communications
         {
             try
             {
-                if(trame[1] == (byte)FonctionMiwi.Acquittement)
+                if(trame[1] == (byte)FonctionMiwi.Acquittement && trame.Carte == Carte)
+                {
+                    trame = new Trame("C2 A1 C3");
                     SemaphoreAck.Release();
+                    ConnexionCheck.MajConnexion();
+                    TrameRecue(trame);
+                }
                 else if (trame.Carte == Carte)
                 {
                     ConnexionCheck.MajConnexion();

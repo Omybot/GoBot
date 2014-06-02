@@ -335,6 +335,7 @@ namespace GoBot.IHM
 
                 bool fonctionAutorisee = false;
                 if ((carte == Carte.RecMove && Config.CurrentConfig.LogsFonctionsMove[(FonctionMove)trame[1]]) ||
+                    trame[1] == 0xA1 ||
                     (carte == Carte.RecIO && Config.CurrentConfig.LogsFonctionsIO[(FonctionIO)trame[1]]) ||
                     (expediteur == Carte.RecPi && Config.CurrentConfig.LogsFonctionsPi[(FonctionPi)trame[1]]) ||
                     (destinataire == Carte.RecPi && Config.CurrentConfig.LogsFonctionsPi[(FonctionPi)trame[4]]) ||

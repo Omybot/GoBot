@@ -41,6 +41,7 @@ namespace GoBot
         private Thread threadTrajectoire;
         private Semaphore semTrajectoire;
 
+        public bool AspirationAutomatique { get; set; }
         public List<Arc> CheminTrouve { get; set; }
         public List<Node> NodeTrouve { get; set; }
         public Arc CheminTest { get; set; }
@@ -148,6 +149,7 @@ namespace GoBot
 
             TensionPack1 = TensionPack2 = 0;
             FailTrajectoire = false;
+            AspirationAutomatique = false;
         }
 
         public void Lent()
@@ -175,14 +177,14 @@ namespace GoBot
                 VitesseDeplacement = Config.CurrentConfig.GRVitesseLigneRapide;
                 AccelerationDeplacement = Config.CurrentConfig.GRAccelerationLigneRapide;
                 VitessePivot = Config.CurrentConfig.GRVitessePivotRapide;
-                AccelerationPivot = Config.CurrentConfig.GRAccelerationLigneRapide;
+                AccelerationPivot = Config.CurrentConfig.GRAccelerationPivotRapide;
             }
             else
             {
                 VitesseDeplacement = Config.CurrentConfig.PRVitesseLigneRapide;
                 AccelerationDeplacement = Config.CurrentConfig.PRAccelerationLigneRapide;
                 VitessePivot = Config.CurrentConfig.PRVitessePivotRapide;
-                AccelerationPivot = Config.CurrentConfig.PRAccelerationLigneRapide;
+                AccelerationPivot = Config.CurrentConfig.PRAccelerationPivotRapide;
             }
         }
 
@@ -353,6 +355,7 @@ namespace GoBot
             {
                 DateTime debut = DateTime.Now;
 
+                Console.WriteLine("Blocage arrivée : " + (DateTime.Now - debut).TotalMilliseconds + "ms");
                 // On ne peut pas arriver là où on souhaite aller
                 // On teste si on peut faire une approche en ligne 
                 // teta ne doit pas être nul sinon c'est qu'on ne maitrise pas l'angle d'arrivée et on ne connait pas l'angle d'approche
@@ -405,7 +408,6 @@ namespace GoBot
                 // Si toujours pas, on teste en marche arrière
                 if (!franchissable)
                 {
-                    franchissable = true;
                     positionActuelle = new Position(new Angle(teta), new PointReel(x, y));
                     nbPointsArrivee = 0;
 
@@ -418,6 +420,7 @@ namespace GoBot
 
                     if (nbPointsArrivee > 0)
                     {
+                        franchissable = true;
                         Segment segmentTest = new Segment(new PointReel(positionActuelle.Coordonnees.X, positionActuelle.Coordonnees.Y), new PointReel(x, y));
 
                         // Test des obstacles
@@ -843,6 +846,8 @@ namespace GoBot
                 succesPathFinding = true;
             }
 
+            FailTrajectoire = false;
+
             if (semTrajectoire != null)
                 semTrajectoire.Release();
         }
@@ -965,10 +970,13 @@ namespace GoBot
         {
             List<IForme> obstacles = new List<IForme>();
             obstacles.AddRange(Plateau.ListeObstacles);
-            obstacles.Add(new Cercle(AutreRobot.Position.Coordonnees, AutreRobot.Rayon));
+            /*obstacles.Add(new Cercle(AutreRobot.Position.Coordonnees, AutreRobot.Rayon));
 
-            if(AutreRobot.PositionCible != null)
+            if (AutreRobot.PositionCible != null)
+            {
+                Console.WriteLine(AutreRobot.Nom + " position cible non null");
                 obstacles.Add(new Cercle(AutreRobot.PositionCible, AutreRobot.Rayon));
+            }*/
 
             return obstacles;
         }

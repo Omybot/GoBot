@@ -74,6 +74,8 @@
             this.label8 = new System.Windows.Forms.Label();
             this.numX = new System.Windows.Forms.NumericUpDown();
             this.label9 = new System.Windows.Forms.Label();
+            this.btnLent = new System.Windows.Forms.Button();
+            this.btnRapide = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.numCoeffD)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numCoeffI)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numCoeffP)).BeginInit();
@@ -318,7 +320,7 @@
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(58, 387);
+            this.label1.Location = new System.Drawing.Point(150, 390);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(89, 13);
             this.label1.TabIndex = 92;
@@ -328,7 +330,7 @@
             // 
             this.panelControleManuel.BackColor = System.Drawing.Color.LightGray;
             this.panelControleManuel.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.panelControleManuel.Location = new System.Drawing.Point(159, 382);
+            this.panelControleManuel.Location = new System.Drawing.Point(251, 385);
             this.panelControleManuel.Name = "panelControleManuel";
             this.panelControleManuel.Size = new System.Drawing.Size(74, 22);
             this.panelControleManuel.TabIndex = 91;
@@ -551,6 +553,8 @@
             // 
             // groupBoxDep
             // 
+            this.groupBoxDep.Controls.Add(this.btnRapide);
+            this.groupBoxDep.Controls.Add(this.btnLent);
             this.groupBoxDep.Controls.Add(this.btnGoCoordonnees);
             this.groupBoxDep.Controls.Add(this.numTeta);
             this.groupBoxDep.Controls.Add(this.label7);
@@ -692,6 +696,26 @@
             this.label9.TabIndex = 110;
             this.label9.Text = "X";
             // 
+            // btnLent
+            // 
+            this.btnLent.Location = new System.Drawing.Point(7, 384);
+            this.btnLent.Name = "btnLent";
+            this.btnLent.Size = new System.Drawing.Size(43, 23);
+            this.btnLent.TabIndex = 117;
+            this.btnLent.Text = "Lent";
+            this.btnLent.UseVisualStyleBackColor = true;
+            this.btnLent.Click += new System.EventHandler(this.btnLent_Click);
+            // 
+            // btnRapide
+            // 
+            this.btnRapide.Location = new System.Drawing.Point(56, 384);
+            this.btnRapide.Name = "btnRapide";
+            this.btnRapide.Size = new System.Drawing.Size(53, 23);
+            this.btnRapide.TabIndex = 118;
+            this.btnRapide.Text = "Rapide";
+            this.btnRapide.UseVisualStyleBackColor = true;
+            this.btnRapide.Click += new System.EventHandler(this.btnRapide_Click);
+            // 
             // PanelDeplacement
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -765,6 +789,8 @@
         private System.Windows.Forms.Label label8;
         private System.Windows.Forms.NumericUpDown numX;
         private System.Windows.Forms.Label label9;
+        private System.Windows.Forms.Button btnRapide;
+        private System.Windows.Forms.Button btnLent;
 
     }
 }

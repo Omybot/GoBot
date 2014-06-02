@@ -25,6 +25,11 @@ namespace GoBot.Communications
         DemandeCapteurOnOff = 0x74,
         RetourCapteurOnOff = 0x75,
 
+        DemandeCourantPompe = 0x76,
+        ReponseTensionPompe = 0x77,
+
+        AspirationPompe = 0x78,
+
         Debug = 0xEE,
 
         TestConnexion = 0xF0,
@@ -113,6 +118,7 @@ namespace GoBot.Communications
         TestConnexion = 0xF0,
         RetourTestConnexion = 0xF5,
         Reset = 0xF1,
+        Acquittement = 0xA1,
 
         TestEmission = 0xD4,
         TestEmissionReussi = 0xD5,
@@ -195,6 +201,7 @@ namespace GoBot.Communications
     {
         Vitesse = 0x01,
         Detection = 0xE4,
+        Acquittement = 0xA1,
 
         InclinaisonFace = 0x11,
         InclinaisonProfil = 0x10,

@@ -129,6 +129,9 @@ namespace GoBot
                 SuiviBalise.PositionEnnemisActualisee += new Balises.SuiviBalise.PositionEnnemisDelegate(interpreteBalise_PositionEnnemisActualisee);
 
                 NotreCouleur = Color.Red;
+                TorchesVidees = new bool[2];
+                TorchesVidees[0] = false;
+                TorchesVidees[1] = false;
 
                 Feux = new Feu[16];
 
@@ -256,6 +259,8 @@ namespace GoBot
             // Position ennemie signalée
             ObstaclesTemporaires.Clear();
 
+            int vitesseMax = Config.CurrentConfig.GRVitesseLigneRapide;
+
             for (int i = 0; i < SuiviBalise.PositionsEnnemies.Count; i++)
             {
                 PointReel coordonnees = new PointReel(SuiviBalise.PositionsEnnemies[i].X, SuiviBalise.PositionsEnnemies[i].Y);
@@ -268,8 +273,22 @@ namespace GoBot
                 else
                 {
                     // Tester ici ce qu'il y a à tester en fonction de la position de l'ennemi PENDANT le match
+
+                    if (coordonnees.Distance(new PointReel(900, 1100)) < 250)
+                        TorchesVidees[0] = true;
+                    if (coordonnees.Distance(new PointReel(3000 - 900, 1100)) < 250)
+                        TorchesVidees[1] = true;
+
+                    double distanceAdv = Robots.GrosRobot.Position.Coordonnees.Distance(coordonnees);
+                    if (distanceAdv < 1500)
+                    {
+                        vitesseMax = (int)(Math.Min(vitesseMax, (distanceAdv - 500) / 1000.0 * Config.CurrentConfig.GRVitesseLigneRapide));
+                    }
                 }
             }
+
+            if (Plateau.Enchainement != null && (DateTime.Now - Plateau.Enchainement.DebutMatch).TotalSeconds > 10)
+                Robots.GrosRobot.VitesseDeplacement = vitesseMax;
 
             SemaphoreCollisions.Release();
         }

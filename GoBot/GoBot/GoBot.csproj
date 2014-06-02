@@ -259,7 +259,10 @@
     <Compile Include="Mouvements\MouvementDeposeFoyerCoin.cs" />
     <Compile Include="Mouvements\MouvementFeuBordure.cs" />
     <Compile Include="Mouvements\Mouvement.cs" />
+    <Compile Include="Mouvements\MouvementFeuTable.cs" />
     <Compile Include="Mouvements\MouvementFilet.cs" />
+    <Compile Include="Mouvements\MouvementFoyerCentral.cs" />
+    <Compile Include="Mouvements\MouvementFresque.cs" />
     <Compile Include="Mouvements\MouvementLances.cs" />
     <Compile Include="Mouvements\PositionsMouvements.cs" />
     <Compile Include="Mouvements\MouvementTorche.cs" />
@@ -461,7 +464,9 @@
       <SubType>Designer</SubType>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <None Include="app.config" />
+    <None Include="app.config">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
@@ -561,6 +566,7 @@
     <None Include="img\BoiRouge.png" />
     <None Include="img\BunJaune.png" />
     <None Include="img\BunRouge.png" />
+    <None Include="img\Filet.png" />
     <Content Include="img\IconeVitesse.png" />
     <None Include="img\Pompe.png" />
     <None Include="img\Recale.png" />

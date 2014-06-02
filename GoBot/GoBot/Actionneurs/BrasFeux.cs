@@ -9,9 +9,9 @@ namespace GoBot.Actionneur
 {
     public static class BrasFeux
     {
-        private static readonly int INIT_COUDE = 764;
-        private static readonly int INIT_EPAULE = 2250; // 1600 = 45°
-        private static readonly int INIT_POIGNET = 466;
+        private static readonly int INIT_COUDE = 792;
+        private static readonly int INIT_EPAULE = 2207; // 1600 = 45°
+        private static readonly int INIT_POIGNET = 460;
 
         public static bool PresenceFeu1 { get; set; }
         public static bool PresenceFeu2 { get; set; }
@@ -67,7 +67,7 @@ namespace GoBot.Actionneur
             //Robots.GrosRobot.TourneMoteur(MoteurID.GREpauleFeu, 1770);
             //Robots.GrosRobot.BougeServo(ServomoteurID.GRFeuxCoude, 750);
             //Robots.GrosRobot.BougeServo(ServomoteurID.GRFeuxPoignet, 360);
-            PositionEpaule(-33.23);
+            PositionEpaule(-29.23);
             PositionCoude(-4.10);
             PositionPoignet(-31.05);
         }
@@ -102,12 +102,14 @@ namespace GoBot.Actionneur
             PositionPoignet(9.96);
         }
 
-        public static void PositionTorcheDessus()
+        public static void PositionTorcheDessus(bool tempo =false)
         {
             //Robots.GrosRobot.TourneMoteur(MoteurID.GREpauleFeu, 1800);
             //Robots.GrosRobot.BougeServo(ServomoteurID.GRFeuxCoude, 570);
             //Robots.GrosRobot.BougeServo(ServomoteurID.GRFeuxPoignet, 550);
             PositionEpaule(-31.15);
+            if (tempo)
+                Thread.Sleep(50);
             PositionCoude(-56.84);
             PositionPoignet(24.61);
         }
@@ -118,8 +120,8 @@ namespace GoBot.Actionneur
             //Robots.GrosRobot.BougeServo(ServomoteurID.GRFeuxCoude, 905);
             //Robots.GrosRobot.BougeServo(ServomoteurID.GRFeuxPoignet, 480);
             PositionEpaule(34.62);
-            PositionCoude(41.31);
-            PositionPoignet(4.10);
+            PositionCoude(50.3);
+            PositionPoignet(9);
         }
 
         public static void PositionInterne2()
@@ -148,20 +150,19 @@ namespace GoBot.Actionneur
         }
 
 
-        public static void MoveAttrapeTorche1()
+        public static void MoveAttrapeTorche1(bool tempo = false)
         {
             PositionRange();
             Thread.Sleep(200);
             Robots.GrosRobot.ActionneurOnOff(ActionneurOnOffID.GRPompeFeu, true);
-            PositionTorche3();
-            Thread.Sleep(500);
             PositionTorche1();
-            Thread.Sleep(400);
+            Thread.Sleep(450);
             PositionTorcheDessus();
-            Thread.Sleep(300);
+            Thread.Sleep(250);
             PositionRange();
-            Thread.Sleep(600);
+            Thread.Sleep(500);
             Robots.GrosRobot.ActionneurOnOff(ActionneurOnOffID.GRPompeFeu, false);
+            Thread.Sleep(50);
         }
 
         public static void MoveAttrapeTorche2()
@@ -176,18 +177,53 @@ namespace GoBot.Actionneur
             PositionRange();
             Thread.Sleep(600);
             Robots.GrosRobot.ActionneurOnOff(ActionneurOnOffID.GRPompeFeu, false);
+            Thread.Sleep(50);
+        }
+
+        public static void MoveAttrapeTorche2DeposeInverse()
+        {
+            //PositionRange();
+            //Thread.Sleep(200);
+            PositionTorche2();
+            Robots.GrosRobot.ActionneurOnOff(ActionneurOnOffID.GRPompeFeu, true);
+            Thread.Sleep(500);
+            PositionTorcheDessus();
+            Thread.Sleep(300);
+            PositionRetournement();
+
+            Robots.GrosRobot.Reculer(30);
+
+            if(Plateau.NotreCouleur == Plateau.CouleurGaucheRouge)
+                Robots.GrosRobot.PivotGauche(30);
+            else
+                Robots.GrosRobot.PivotDroite(30);
+
+            Robots.GrosRobot.ActionneurOnOff(ActionneurOnOffID.GRPompeFeu, false);
+
+            if (Plateau.NotreCouleur == Plateau.CouleurGaucheRouge)
+                Robots.GrosRobot.PivotDroite(30);
+            else
+                Robots.GrosRobot.PivotGauche(30);
+
+            PositionTorcheDessus();
+
+            Robots.GrosRobot.Avancer(50);
         }
 
         public static void MoveAttrapeTorche3()
         {
             Robots.GrosRobot.ActionneurOnOff(ActionneurOnOffID.GRPompeFeu, true);
             PositionTorche3();
-            Thread.Sleep(800);
+            Thread.Sleep(550);
             PositionTorcheDessus();
-            Thread.Sleep(300);
+            Thread.Sleep(200);
             PositionRange();
-            Thread.Sleep(600);
+            Thread.Sleep(500);
+            PositionInterne1();
+            Thread.Sleep(100);
             Robots.GrosRobot.ActionneurOnOff(ActionneurOnOffID.GRPompeFeu, false);
+            PositionInterne3();
+            Thread.Sleep(100);
         }
 
         public static void MoveAttrapeTorcheTout()
@@ -288,9 +324,11 @@ namespace GoBot.Actionneur
 
         public static void PositionRetournement()
         {
-            Robots.GrosRobot.TourneMoteur(MoteurID.GREpauleFeu, 2100);
+            //Robots.GrosRobot.TourneMoteur(MoteurID.GREpauleFeu, 2100);
+            Robots.GrosRobot.TourneMoteur(MoteurID.GREpauleFeu, 2150);
             Robots.GrosRobot.BougeServo(ServomoteurID.GRFeuxCoude, 750);
             Robots.GrosRobot.BougeServo(ServomoteurID.GRFeuxPoignet, 605);
+            
         }
 
         public static void MoveDeposeRetourne1()
@@ -344,9 +382,101 @@ namespace GoBot.Actionneur
 
         public static void PositionSolProche()
         {
-            Robots.GrosRobot.TourneMoteur(MoteurID.GREpauleFeu, 1850);
-            Robots.GrosRobot.BougeServo(ServomoteurID.GRFeuxCoude, 820);
-            Robots.GrosRobot.BougeServo(ServomoteurID.GRFeuxPoignet, 260);
+            //PositionCoude(35);
+            //PositionEpaule(-35);
+            //PositionPoignet(-50);
+
+
+            PositionCoude(35);
+            PositionEpaule(-35);
+            //PositionPoignet(-60);
+            PositionPoignet(-70);
+        }
+
+        public static Feu FeuProche()
+        {
+            double distance = double.MaxValue;
+            Feu feuProche = null;
+
+            foreach (Feu feu in Plateau.Feux)
+            {
+                if (feu.Charge == false && feu.Positionne == false && feu.Position.Distance(Robots.GrosRobot.Position.Coordonnees) < distance)
+                {
+                    feuProche = feu;
+                    distance = feu.Position.Distance(Robots.GrosRobot.Position.Coordonnees);
+                }
+            }
+
+            return feuProche;
+        }
+
+        public static void RangerFeu()
+        {
+            if (FeuxStockes.Count < 3)
+            {
+                PositionTorcheDessus();
+                Thread.Sleep(500);
+                PositionInterne3();
+                Thread.Sleep(500);
+                /*if (FeuxStockes.Count < 1)
+                {
+                    //PositionInterne1();
+                    Thread.Sleep(200);
+                    PositionInterne3();
+                }*/
+                Robots.GrosRobot.ActionneurOnOff(ActionneurOnOffID.GRPompeFeu, false);
+                Thread.Sleep(100);
+                /*
+                Thread.Sleep(250);
+                Thread.Sleep(100);
+                if (FeuxStockes.Count < 2)
+                {
+                    PositionInterne3();
+                    Thread.Sleep(100);
+                }
+                Thread.Sleep(100);
+                Robots.GrosRobot.ActionneurOnOff(ActionneurOnOffID.GRPompeFeu, true);
+                Feu proche = FeuProche();
+
+                int i;
+                for (i = 0; i < Plateau.Feux.Length; i++)
+                    if (Plateau.Feux[i] == proche)
+                        break;
+
+                if ((i == 1 && Robots.GrosRobot.Position.Coordonnees.Y < proche.Position.Y) ||
+                    (i == 14 && Robots.GrosRobot.Position.Coordonnees.Y > proche.Position.Y) ||
+                    ((i == 6 || i == 13) && Robots.GrosRobot.Position.Coordonnees.X > proche.Position.X))
+                    proche.Couleur = Plateau.CouleurGaucheRouge;
+                else
+                    proche.Couleur = Plateau.CouleurDroiteJaune;
+
+                proche.Charge = true;
+                FeuxStockes.Add(proche);
+
+                BrasFeux.PositionTorcheDessus(true);
+                Thread.Sleep(200);
+                BrasFeux.PositionAspireDroit();*/
+            }
+            else
+            {
+                PositionMaintienAspire();
+            }
+        }
+
+        public static void PositionMaintienAspire()
+        {
+            PositionPoignet(-73);
+            PositionCoude(0);
+            PositionEpaule(30);
+        }
+
+        public static void PositionAspireDroit()
+        {
+            PositionPoignet(-150);
+            Thread.Sleep(250);
+            PositionCoude(50);
+            PositionEpaule(-10);
+            Robots.GrosRobot.ActionneurOnOff(ActionneurOnOffID.GRPompeFeu, true);
         }
 
         public static void MoveAttrapeContreMur()

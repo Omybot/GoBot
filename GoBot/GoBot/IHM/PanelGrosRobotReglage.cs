@@ -110,13 +110,13 @@ namespace GoBot.IHM
 
         private void btnOuvertPinceHautGauche_Click(object sender, EventArgs e)
         {
-            if (MessageBox.Show("Êtes vous sûr de vouloir sauvegarder la position comme étant la position ouverte ?", "Attention", MessageBoxButtons.OK, MessageBoxIcon.Question) == DialogResult.OK)
+            if (MessageBox.Show("Êtes vous sûr de vouloir sauvegarder la position comme étant la position ouverte ?", "Attention", MessageBoxButtons.OKCancel, MessageBoxIcon.Question) == DialogResult.OK)
                 Config.CurrentConfig.PositionGRPinceFruitHautGaucheOuvert = (int)numPosPinceHautGauche.Value;
         }
 
         private void btnFermePinceHautGauche_Click(object sender, EventArgs e)
         {
-            if (MessageBox.Show("Êtes vous sûr de vouloir sauvegarder la position comme étant la position fermée ?", "Attention", MessageBoxButtons.OK, MessageBoxIcon.Question) == DialogResult.OK)
+            if (MessageBox.Show("Êtes vous sûr de vouloir sauvegarder la position comme étant la position fermée ?", "Attention", MessageBoxButtons.OKCancel, MessageBoxIcon.Question) == DialogResult.OK)
                 Config.CurrentConfig.PositionGRPinceFruitHautGaucheFerme = (int)numPosPinceHautGauche.Value;
         }
 
@@ -127,13 +127,13 @@ namespace GoBot.IHM
 
         private void btnOuvertPinceHautDroite_Click(object sender, EventArgs e)
         {
-            if (MessageBox.Show("Êtes vous sûr de vouloir sauvegarder la position comme étant la position ouverte ?", "Attention", MessageBoxButtons.OK, MessageBoxIcon.Question) == DialogResult.OK)
+            if (MessageBox.Show("Êtes vous sûr de vouloir sauvegarder la position comme étant la position ouverte ?", "Attention", MessageBoxButtons.OKCancel, MessageBoxIcon.Question) == DialogResult.OK)
                 Config.CurrentConfig.PositionGRPinceFruitHautDroiteOuvert = (int)numPosPinceHautDroite.Value;
         }
 
         private void btnFermePinceHautDroite_Click(object sender, EventArgs e)
         {
-            if (MessageBox.Show("Êtes vous sûr de vouloir sauvegarder la position comme étant la position fermée ?", "Attention", MessageBoxButtons.OK, MessageBoxIcon.Question) == DialogResult.OK)
+            if (MessageBox.Show("Êtes vous sûr de vouloir sauvegarder la position comme étant la position fermée ?", "Attention", MessageBoxButtons.OKCancel, MessageBoxIcon.Question) == DialogResult.OK)
                 Config.CurrentConfig.PositionGRPinceFruitHautDroiteFerme = (int)numPosPinceHautDroite.Value;
         }
 
@@ -144,13 +144,13 @@ namespace GoBot.IHM
 
         private void btnOuvertPinceBasGauche_Click(object sender, EventArgs e)
         {
-            if (MessageBox.Show("Êtes vous sûr de vouloir sauvegarder la position comme étant la position ouverte ?", "Attention", MessageBoxButtons.OK, MessageBoxIcon.Question) == DialogResult.OK)
+            if (MessageBox.Show("Êtes vous sûr de vouloir sauvegarder la position comme étant la position ouverte ?", "Attention", MessageBoxButtons.OKCancel, MessageBoxIcon.Question) == DialogResult.OK)
                 Config.CurrentConfig.PositionGRPinceFruitBasGaucheOuvert = (int)numPosPinceBasGauche.Value;
         }
 
         private void btnFermePinceBasGauche_Click(object sender, EventArgs e)
         {
-            if (MessageBox.Show("Êtes vous sûr de vouloir sauvegarder la position comme étant la position fermée ?", "Attention", MessageBoxButtons.OK, MessageBoxIcon.Question) == DialogResult.OK)
+            if (MessageBox.Show("Êtes vous sûr de vouloir sauvegarder la position comme étant la position fermée ?", "Attention", MessageBoxButtons.OKCancel, MessageBoxIcon.Question) == DialogResult.OK)
                 Config.CurrentConfig.PositionGRPinceFruitBasGaucheFerme = (int)numPosPinceBasGauche.Value;
         }
 
@@ -161,13 +161,13 @@ namespace GoBot.IHM
 
         private void btnOuvertPinceBasDroite_Click(object sender, EventArgs e)
         {
-            if (MessageBox.Show("Êtes vous sûr de vouloir sauvegarder la position comme étant la position ouverte ?", "Attention", MessageBoxButtons.OK, MessageBoxIcon.Question) == DialogResult.OK)
+            if (MessageBox.Show("Êtes vous sûr de vouloir sauvegarder la position comme étant la position ouverte ?", "Attention", MessageBoxButtons.OKCancel, MessageBoxIcon.Question) == DialogResult.OK)
                 Config.CurrentConfig.PositionGRPinceFruitBasDroiteOuvert = (int)numPosPinceBasDroite.Value;
         }
 
         private void btnFermePinceBasDroite_Click(object sender, EventArgs e)
         {
-            if (MessageBox.Show("Êtes vous sûr de vouloir sauvegarder la position comme étant la position fermée ?", "Attention", MessageBoxButtons.OK, MessageBoxIcon.Question) == DialogResult.OK)
+            if (MessageBox.Show("Êtes vous sûr de vouloir sauvegarder la position comme étant la position fermée ?", "Attention", MessageBoxButtons.OKCancel, MessageBoxIcon.Question) == DialogResult.OK)
                 Config.CurrentConfig.PositionGRPinceFruitBasDroiteFerme = (int)numPosPinceBasDroite.Value;
         }
 
@@ -178,13 +178,13 @@ namespace GoBot.IHM
 
         private void btnPousseBouchonOuvert_Click(object sender, EventArgs e)
         {
-            if (MessageBox.Show("Êtes vous sûr de vouloir sauvegarder la position comme étant la position ouverte ?", "Attention", MessageBoxButtons.OK, MessageBoxIcon.Question) == DialogResult.OK)
+            if (MessageBox.Show("Êtes vous sûr de vouloir sauvegarder la position comme étant la position ouverte ?", "Attention", MessageBoxButtons.OKCancel, MessageBoxIcon.Question) == DialogResult.OK)
                 Config.CurrentConfig.PositionGRPousseBouchonOuvert = (int)numPousseBouchon.Value;
         }
 
         private void btnPousseBouchonFerme_Click(object sender, EventArgs e)
         {
-            if (MessageBox.Show("Êtes vous sûr de vouloir sauvegarder la position comme étant la position fermée ?", "Attention", MessageBoxButtons.OK, MessageBoxIcon.Question) == DialogResult.OK)
+            if (MessageBox.Show("Êtes vous sûr de vouloir sauvegarder la position comme étant la position fermée ?", "Attention", MessageBoxButtons.OKCancel, MessageBoxIcon.Question) == DialogResult.OK)
                 Config.CurrentConfig.PositionGRPousseBouchonFerme = (int)numPousseBouchon.Value;
         }
     }

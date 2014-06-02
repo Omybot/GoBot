@@ -139,7 +139,7 @@ namespace GoBot.Communications
         /// </summary>
         public void Rejouer()
         {
-            for (int i = Trames.Count - 1; i >= 0; i--)
+            for (int i = 0; i < Trames.Count;i++)
             {
                 Trame trame = new Trame(Trames[i].Trame);
 

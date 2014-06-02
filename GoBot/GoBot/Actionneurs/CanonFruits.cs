@@ -26,8 +26,11 @@ namespace GoBot.Actionneur
         public static void Tirer(bool tempo = true)
         {
             Robots.GrosRobot.ActionneurOnOff(ActionneurOnOffID.GRCanonFruit, true);
+            Robots.GrosRobot.ActionneurOnOff(ActionneurOnOffID.GRPompeFeu, true);
             if (tempo)
-                Thread.Sleep(500);
+                Thread.Sleep(1000);
+            //Robots.GrosRobot.ActionneurOnOff(ActionneurOnOffID.GRPompeFeu, false);
+            Robots.GrosRobot.ActionneurOnOff(ActionneurOnOffID.GRCanonPuissance, true);
         }
 
         public static void Baisser()
@@ -37,7 +40,11 @@ namespace GoBot.Actionneur
 
         public static void Monter()
         {
+#if false 
             Robots.GrosRobot.BougeServo(ServomoteurID.GRCanonInclinaison, 800);
+#else //kudo
+            Robots.GrosRobot.BougeServo(ServomoteurID.GRCanonInclinaison, 750);
+#endif
         }
     }
 }

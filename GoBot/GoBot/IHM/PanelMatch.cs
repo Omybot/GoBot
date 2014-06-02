@@ -240,14 +240,17 @@ namespace GoBot.IHM
             if (!Robots.GrosRobot.GetJack(false))
             {
                 MessageBox.Show("Jack absent !" + Environment.NewLine + "Jack nécessaire avant de commencer à recaller.", "Attention", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                //return;
+                return;
             }
 
             thRecallageGros = new Thread(RecallagesGros);
             thRecallageGros.Start();
 
-            thRecallagePetit = new Thread(RecallagePetit);
-            thRecallagePetit.Start();
+            if (boxPetit.Checked)
+            {
+                thRecallagePetit = new Thread(RecallagePetit);
+                thRecallagePetit.Start();
+            }
         }
 
         Thread thRecallagePetit;
@@ -280,7 +283,7 @@ namespace GoBot.IHM
                 ledRecallageGros.CouleurOrange();
             }));
 
-            Recallages.RecallageGrosRobot();
+            Recallages.RecallageGrosRobot(boxPetit.Checked);
 
             this.Invoke(new EventHandler(delegate
             {
@@ -369,7 +372,7 @@ namespace GoBot.IHM
             }
             else
             {
-                Plateau.Balise2.VitesseRotation(3200);
+                Plateau.Balise2.VitesseRotation(2400);
                 toutesLancees = false;
                 Console.WriteLine("Balise 2 mal lancée, relance");
             }
@@ -381,7 +384,7 @@ namespace GoBot.IHM
             }
             else
             {
-                Plateau.Balise3.VitesseRotation(3200);
+                Plateau.Balise3.VitesseRotation(2400);
                 toutesLancees = false;
                 Console.WriteLine("Balise 3 mal lancée, relance");
             }
@@ -430,6 +433,81 @@ namespace GoBot.IHM
             Thread.Sleep(100);
             Robots.GrosRobot.Stop(StopMode.Smooth);
             Robots.PetitRobot.Stop(StopMode.Smooth);
+        }
+
+        private void btnBalise1_Click(object sender, EventArgs e)
+        {
+            if(thAssiette1 != null && thAssiette1.IsAlive)
+                thAssiette1.Abort();
+
+            while (thAssiette1 != null && thAssiette1.IsAlive)
+                Thread.Sleep(100);
+
+            Plateau.Balise1.ReglageOffset = false;
+            Plateau.Balise1.InclinaisonFace = Config.CurrentConfig.CourseBunFaceOpti;
+            Thread.Sleep(100);
+            Plateau.Balise1.InclinaisonProfil = Config.CurrentConfig.CourseBunProfilOpti;
+
+            if (Plateau.NotreCouleur == Plateau.CouleurDroiteJaune)
+            {
+                Config.CurrentConfig.OffsetBaliseDroiteJaune1Capteur1 = Plateau.Balise1.OffsetDefaut(1);
+                Config.CurrentConfig.OffsetBaliseDroiteJaune1Capteur2 = Plateau.Balise1.OffsetDefaut(2);
+            }
+            else
+            {
+                Config.CurrentConfig.OffsetBaliseGaucheRouge1Capteur1 = Plateau.Balise1.OffsetDefaut(1);
+                Config.CurrentConfig.OffsetBaliseGaucheRouge1Capteur2 = Plateau.Balise1.OffsetDefaut(2);
+            }
+        }
+
+        private void btnBalise2_Click(object sender, EventArgs e)
+        {
+            if (thAssiette2 != null && thAssiette2.IsAlive)
+                thAssiette2.Abort();
+
+            while (thAssiette2 != null && thAssiette2.IsAlive)
+                Thread.Sleep(100);
+
+            Plateau.Balise2.ReglageOffset = false;
+            Plateau.Balise2.InclinaisonFace = Config.CurrentConfig.CourseBeuFaceOpti;
+            Thread.Sleep(100);
+            Plateau.Balise2.InclinaisonProfil = Config.CurrentConfig.CourseBeuProfilOpti;
+
+            if (Plateau.NotreCouleur == Plateau.CouleurDroiteJaune)
+            {
+                Config.CurrentConfig.OffsetBaliseDroiteJaune2Capteur1 = Plateau.Balise2.OffsetDefaut(1);
+                Config.CurrentConfig.OffsetBaliseDroiteJaune2Capteur2 = Plateau.Balise2.OffsetDefaut(2);
+            }
+            else
+            {
+                Config.CurrentConfig.OffsetBaliseGaucheRouge2Capteur1 = Plateau.Balise2.OffsetDefaut(1);
+                Config.CurrentConfig.OffsetBaliseGaucheRouge2Capteur2 = Plateau.Balise2.OffsetDefaut(2);
+            }
+        }
+
+        private void btnBalise3_Click(object sender, EventArgs e)
+        {
+            if (thAssiette3 != null && thAssiette3.IsAlive)
+                thAssiette3.Abort();
+
+            while (thAssiette3 != null && thAssiette3.IsAlive)
+                Thread.Sleep(100);
+
+            Plateau.Balise3.ReglageOffset = false;
+            Plateau.Balise3.InclinaisonFace = Config.CurrentConfig.CourseBoiFaceOpti;
+            Thread.Sleep(100);
+            Plateau.Balise3.InclinaisonProfil = Config.CurrentConfig.CourseBoiProfilOpti;
+
+            if (Plateau.NotreCouleur == Plateau.CouleurDroiteJaune)
+            {
+                Config.CurrentConfig.OffsetBaliseDroiteJaune3Capteur1 = Plateau.Balise3.OffsetDefaut(1);
+                Config.CurrentConfig.OffsetBaliseDroiteJaune3Capteur2 = Plateau.Balise3.OffsetDefaut(2);
+            }
+            else
+            {
+                Config.CurrentConfig.OffsetBaliseGaucheRouge3Capteur1 = Plateau.Balise3.OffsetDefaut(1);
+                Config.CurrentConfig.OffsetBaliseGaucheRouge3Capteur2 = Plateau.Balise3.OffsetDefaut(2);
+            }
         }
     }
 }

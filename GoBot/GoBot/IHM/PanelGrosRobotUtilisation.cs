@@ -118,7 +118,7 @@ namespace GoBot.IHM
 
         private void btnDepose1_Click(object sender, EventArgs e)
         {
-            BrasFruits.PositionDeposeBouchon();
+            BrasFruits.PositionDeposeBouchon(); 
         }
 
         private void btnTest_Click(object sender, EventArgs e)
@@ -235,7 +235,7 @@ namespace GoBot.IHM
             Thread.Sleep(500);
             Robots.GrosRobot.ActionneurOnOff(ActionneurOnOffID.GRPousseBouchon, false);*/
 
-            Robots.GrosRobot.ReglerOffsetAsserv(0, 0, 0);
+            BrasFruits.BouchonHautBas();
         }
 
         private void switchBoutonPince_ChangementEtat(object sender, EventArgs e)

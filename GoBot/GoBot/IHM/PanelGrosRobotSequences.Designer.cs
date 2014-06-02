@@ -29,6 +29,10 @@
         private void InitializeComponent()
         {
             this.groupBoxSequences = new Composants.GroupBoxRetractable();
+            this.btnMaintien = new System.Windows.Forms.Button();
+            this.btnAspireTraj = new System.Windows.Forms.Button();
+            this.button1 = new System.Windows.Forms.Button();
+            this.btnAttrapeContreMur = new System.Windows.Forms.Button();
             this.groupBox5 = new System.Windows.Forms.GroupBox();
             this.groupBox9 = new System.Windows.Forms.GroupBox();
             this.btnFeuDeposeInverse1 = new System.Windows.Forms.Button();
@@ -51,6 +55,7 @@
             this.btnAttrapeTorche3 = new System.Windows.Forms.Button();
             this.btnAttrapeTorche2 = new System.Windows.Forms.Button();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.btnMur = new System.Windows.Forms.Button();
             this.groupBox4 = new System.Windows.Forms.GroupBox();
             this.btnFeuRetournement = new System.Windows.Forms.Button();
             this.btnFeuSolLoin = new System.Windows.Forms.Button();
@@ -65,8 +70,7 @@
             this.btnFeuInterne1 = new System.Windows.Forms.Button();
             this.btnFeuInterne3 = new System.Windows.Forms.Button();
             this.btnFeuInterne2 = new System.Windows.Forms.Button();
-            this.btnMur = new System.Windows.Forms.Button();
-            this.btnAttrapeContreMur = new System.Windows.Forms.Button();
+            this.btnPousseFeu = new System.Windows.Forms.Button();
             this.groupBoxSequences.SuspendLayout();
             this.groupBox5.SuspendLayout();
             this.groupBox9.SuspendLayout();
@@ -81,15 +85,57 @@
             // 
             // groupBoxSequences
             // 
+            this.groupBoxSequences.Controls.Add(this.btnMaintien);
+            this.groupBoxSequences.Controls.Add(this.btnAspireTraj);
+            this.groupBoxSequences.Controls.Add(this.button1);
             this.groupBoxSequences.Controls.Add(this.btnAttrapeContreMur);
             this.groupBoxSequences.Controls.Add(this.groupBox5);
             this.groupBoxSequences.Controls.Add(this.groupBox1);
             this.groupBoxSequences.Location = new System.Drawing.Point(3, 3);
             this.groupBoxSequences.Name = "groupBoxSequences";
-            this.groupBoxSequences.Size = new System.Drawing.Size(332, 326);
+            this.groupBoxSequences.Size = new System.Drawing.Size(332, 376);
             this.groupBoxSequences.TabIndex = 1;
             this.groupBoxSequences.TabStop = false;
             this.groupBoxSequences.Text = "Séquences";
+            // 
+            // btnMaintien
+            // 
+            this.btnMaintien.Location = new System.Drawing.Point(166, 326);
+            this.btnMaintien.Name = "btnMaintien";
+            this.btnMaintien.Size = new System.Drawing.Size(116, 23);
+            this.btnMaintien.TabIndex = 42;
+            this.btnMaintien.Text = "Maintien droit";
+            this.btnMaintien.UseVisualStyleBackColor = true;
+            this.btnMaintien.Click += new System.EventHandler(this.btnMaintien_Click);
+            // 
+            // btnAspireTraj
+            // 
+            this.btnAspireTraj.Location = new System.Drawing.Point(44, 326);
+            this.btnAspireTraj.Name = "btnAspireTraj";
+            this.btnAspireTraj.Size = new System.Drawing.Size(116, 23);
+            this.btnAspireTraj.TabIndex = 41;
+            this.btnAspireTraj.Text = "Aspiration trajectoire";
+            this.btnAspireTraj.UseVisualStyleBackColor = true;
+            this.btnAspireTraj.Click += new System.EventHandler(this.btnAspireTraj_Click);
+            // 
+            // button1
+            // 
+            this.button1.Location = new System.Drawing.Point(44, 297);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(75, 23);
+            this.button1.TabIndex = 40;
+            this.button1.Text = "button1";
+            this.button1.UseVisualStyleBackColor = true;
+            // 
+            // btnAttrapeContreMur
+            // 
+            this.btnAttrapeContreMur.Location = new System.Drawing.Point(213, 297);
+            this.btnAttrapeContreMur.Name = "btnAttrapeContreMur";
+            this.btnAttrapeContreMur.Size = new System.Drawing.Size(75, 23);
+            this.btnAttrapeContreMur.TabIndex = 39;
+            this.btnAttrapeContreMur.Text = "Contre mur";
+            this.btnAttrapeContreMur.UseVisualStyleBackColor = true;
+            this.btnAttrapeContreMur.Click += new System.EventHandler(this.btnAttrapeContreMur_Click);
             // 
             // groupBox5
             // 
@@ -317,6 +363,7 @@
             // 
             // groupBox1
             // 
+            this.groupBox1.Controls.Add(this.btnPousseFeu);
             this.groupBox1.Controls.Add(this.btnMur);
             this.groupBox1.Controls.Add(this.groupBox4);
             this.groupBox1.Controls.Add(this.groupBox3);
@@ -327,6 +374,16 @@
             this.groupBox1.TabIndex = 34;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Positions";
+            // 
+            // btnMur
+            // 
+            this.btnMur.Location = new System.Drawing.Point(41, 198);
+            this.btnMur.Name = "btnMur";
+            this.btnMur.Size = new System.Drawing.Size(75, 23);
+            this.btnMur.TabIndex = 38;
+            this.btnMur.Text = "Contre mur";
+            this.btnMur.UseVisualStyleBackColor = true;
+            this.btnMur.Click += new System.EventHandler(this.btnMur_Click);
             // 
             // groupBox4
             // 
@@ -476,25 +533,15 @@
             this.btnFeuInterne2.UseVisualStyleBackColor = true;
             this.btnFeuInterne2.Click += new System.EventHandler(this.btnBrasFeuInterne2_Click);
             // 
-            // btnMur
+            // btnPousseFeu
             // 
-            this.btnMur.Location = new System.Drawing.Point(41, 198);
-            this.btnMur.Name = "btnMur";
-            this.btnMur.Size = new System.Drawing.Size(75, 23);
-            this.btnMur.TabIndex = 38;
-            this.btnMur.Text = "Contre mur";
-            this.btnMur.UseVisualStyleBackColor = true;
-            this.btnMur.Click += new System.EventHandler(this.btnMur_Click);
-            // 
-            // btnAttrapeContreMur
-            // 
-            this.btnAttrapeContreMur.Location = new System.Drawing.Point(213, 297);
-            this.btnAttrapeContreMur.Name = "btnAttrapeContreMur";
-            this.btnAttrapeContreMur.Size = new System.Drawing.Size(75, 23);
-            this.btnAttrapeContreMur.TabIndex = 39;
-            this.btnAttrapeContreMur.Text = "Contre mur";
-            this.btnAttrapeContreMur.UseVisualStyleBackColor = true;
-            this.btnAttrapeContreMur.Click += new System.EventHandler(this.btnAttrapeContreMur_Click);
+            this.btnPousseFeu.Location = new System.Drawing.Point(40, 224);
+            this.btnPousseFeu.Name = "btnPousseFeu";
+            this.btnPousseFeu.Size = new System.Drawing.Size(75, 23);
+            this.btnPousseFeu.TabIndex = 39;
+            this.btnPousseFeu.Text = "Pousse feu";
+            this.btnPousseFeu.UseVisualStyleBackColor = true;
+            this.btnPousseFeu.Click += new System.EventHandler(this.btnPousseFeu_Click);
             // 
             // PanelGrosRobotSequences
             // 
@@ -504,7 +551,7 @@
             this.BackColor = System.Drawing.Color.Transparent;
             this.Controls.Add(this.groupBoxSequences);
             this.Name = "PanelGrosRobotSequences";
-            this.Size = new System.Drawing.Size(341, 332);
+            this.Size = new System.Drawing.Size(341, 382);
             this.Load += new System.EventHandler(this.PanelSequencesGros_Load);
             this.groupBoxSequences.ResumeLayout(false);
             this.groupBox5.ResumeLayout(false);
@@ -561,5 +608,9 @@
         private System.Windows.Forms.GroupBox groupBox2;
         private System.Windows.Forms.Button btnMur;
         private System.Windows.Forms.Button btnAttrapeContreMur;
+        private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.Button btnAspireTraj;
+        private System.Windows.Forms.Button btnMaintien;
+        private System.Windows.Forms.Button btnPousseFeu;
     }
 }

@@ -37,7 +37,18 @@ namespace GoBot.Mouvements
 
                 foreach (Position position in Positions)
                 {
-                    double distancePosition = Robot.Position.Coordonnees.Distance(position.Coordonnees);
+                    double distancePosition = Robot.Position.Coordonnees.Distance(position.Coordonnees); 
+                    
+                    List<IForme> obstacles = new List<IForme>(Plateau.ObstaclesTemporaires);
+                    foreach (Cercle c in obstacles)
+                    {
+                        double distanceAdv = position.Coordonnees.Distance(c.Centre) / 10;
+                        if (distanceAdv < 45)
+                            distancePosition = double.PositiveInfinity;
+                        else
+                            distancePosition -= distanceAdv;
+                    }
+
                     if (distancePosition < distance)
                     {
                         distance = distancePosition;
@@ -65,7 +76,8 @@ namespace GoBot.Mouvements
                 double distance = Robot.Position.Coordonnees.Distance(position.Coordonnees) / 10;
                 double cout = distance / ScorePondere;
 
-                foreach (Cercle c in Plateau.ObstaclesTemporaires)
+                List<IForme> obstacles = new List<IForme>(Plateau.ObstaclesTemporaires);
+                foreach (Cercle c in obstacles)
                 {
                     double distanceAdv = position.Coordonnees.Distance(c.Centre) / 10;
                     if (distanceAdv < 45)

@@ -30,6 +30,11 @@ namespace GoBot.IHM
             this.timer = new System.Windows.Forms.Timer();
             timer.Interval = 5;
             this.timer.Tick += new System.EventHandler(this.timer_Tick);
+
+            xStart = Config.CurrentConfig.CameraXMin;
+            xEnd = Config.CurrentConfig.CameraXMax;
+            yStart = Config.CurrentConfig.CameraYMin;
+            yEnd = Config.CurrentConfig.CameraYMax;
         }
 
         private void Traitement()
@@ -42,7 +47,6 @@ namespace GoBot.IHM
             Pen pen = new Pen(Color.FromArgb(250, 21, 128, 191), 3);
             pen.DashStyle = System.Drawing.Drawing2D.DashStyle.Dash;
             Brush brush = new SolidBrush(Color.FromArgb(100, 179, 221, 247));
-
 
             int r = 0;
             int g = 0;
@@ -621,6 +625,14 @@ namespace GoBot.IHM
             {
                 xEnd = e.X;
                 yEnd = e.Y;
+
+                Config.CurrentConfig.CameraXMin = xStart;
+                Config.CurrentConfig.CameraXMax = xEnd;
+                Config.CurrentConfig.CameraYMin = yStart;
+                Config.CurrentConfig.CameraYMax = yEnd;
+
+                Config.Save();
+
                 definitionZone = false;
                 definitionZoneStarted = false;
             }

@@ -182,5 +182,21 @@ namespace GoBot.IHM
         {
             BrasFeux.MoveAttrapeContreMur();
         }
+
+        private void btnAspireTraj_Click(object sender, EventArgs e)
+        {
+            Robots.GrosRobot.AspirationAutomatique = true;
+            BrasFeux.PositionAspireDroit();
+        }
+
+        private void btnMaintien_Click(object sender, EventArgs e)
+        {
+            BrasFeux.PositionMaintienAspire();
+        }
+
+        private void btnPousseFeu_Click(object sender, EventArgs e)
+        {
+            BrasFeux.PositionPousseFoyer();
+        }
     }
 }

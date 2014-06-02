@@ -234,6 +234,11 @@
             0,
             0,
             0});
+            this.numCoudeFeux.Minimum = new decimal(new int[] {
+            100,
+            0,
+            0,
+            -2147483648});
             this.numCoudeFeux.Name = "numCoudeFeux";
             this.numCoudeFeux.Size = new System.Drawing.Size(64, 20);
             this.numCoudeFeux.TabIndex = 253;

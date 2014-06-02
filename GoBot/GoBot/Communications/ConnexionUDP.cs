@@ -164,6 +164,8 @@ namespace GoBot.Communications
                 ConnexionCheck.MajConnexion();
 
                 Trame trameRecue = new Trame(receiveBytes);
+                if (trameRecue.ToString() == "C2 A1 C5")
+                    trameRecue = new Trame("C2 A1 C3");
                 TrameRecue(trameRecue);
 
                 UdpState s = new UdpState();

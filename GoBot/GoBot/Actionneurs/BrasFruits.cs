@@ -112,10 +112,29 @@ namespace GoBot.Actionneur
 
         public static void BouchonHautBas()
         {
-            BrasFruits.FermerPinceBas(false);
-            Thread.Sleep(20);
+            Robots.GrosRobot.TourneMoteur(MoteurID.GRPinceDroiteBas, 500);
+            Robots.GrosRobot.TourneMoteur(MoteurID.GRPinceGaucheBas, 400);
+
             BrasFruits.OuvrirPinceHaut(false);
-            Thread.Sleep(400);
+#if false
+            Thread.Sleep(10);
+#else
+            Thread.Sleep(7);
+#endif
+            BrasFruits.FermerPinceBas(false);
+#if false //kudo
+            Thread.Sleep(500);
+            Thread.Sleep(500);
+
+            BrasFruits.OuvrirPinceBas(false);
+#endif
+        }
+        public static void BouchonRecalagePinceBas()
+        {
+            BrasFruits.OuvrirPinceBas(false);
+            Thread.Sleep(20);
+            BrasFruits.OuvrirPinceBas(false);
+            Thread.Sleep(20);
         }
     }
 }

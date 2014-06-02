@@ -161,6 +161,8 @@ namespace GoBot.Balises
                     detections = DetectionParIntersections(DetectionBalise1, DetectionBalise2, DetectionBalise3);
                 }
 
+                Console.WriteLine(detections.Count);
+
                 if (detections.Count > 0)
                 {
                     PositionsEnnemies = new List<PointReel>(detections);
@@ -379,7 +381,7 @@ namespace GoBot.Balises
                 if (compteur.Value >= 2)
                 {
                     positionsActuelles.Add(compteur.Key);
-
+                    /*
                     bool associePrec = false;
                     foreach (PointReel pointPrec in positionsPrec)
                     {
@@ -389,7 +391,7 @@ namespace GoBot.Balises
                             break;
                         }
                     }
-                    if (associePrec)
+                    if (associePrec)*/
                         positionsFinales.Add(compteur.Key);
                 }
             }

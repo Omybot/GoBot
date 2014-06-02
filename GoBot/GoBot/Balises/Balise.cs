@@ -27,11 +27,11 @@ namespace GoBot.Balises
                     switch (Carte)
                     {
                         case GoBot.Carte.RecBun:
-                            return 120;
+                            return 118.9;
                         case GoBot.Carte.RecBeu:
-                            return 53;
+                            return 51.134;
                         case GoBot.Carte.RecBoi:
-                            return 77;
+                            return 87;
                     }
                 }
                 else
@@ -39,11 +39,39 @@ namespace GoBot.Balises
                     switch (Carte)
                     {
                         case GoBot.Carte.RecBun:
+                            return -61.73;
+                        case GoBot.Carte.RecBeu:
+                            return -127.41;
+                        case GoBot.Carte.RecBoi:
+                            return -91.235;
+                    }
+                }
+            }
+            else
+            {
+                
+                if (numCapteur == 1)
+                {
+                    switch (Carte)
+                    {
+                        case GoBot.Carte.RecBun:
                             return -60;
                         case GoBot.Carte.RecBeu:
-                            return -125;
+                            return -128.63;
                         case GoBot.Carte.RecBoi:
-                            return -102;
+                            return -93.13;
+                    }
+                }
+                else
+                {
+                    switch (Carte)
+                    {
+                        case GoBot.Carte.RecBun:
+                            return 119.16;
+                        case GoBot.Carte.RecBeu:
+                            return 53.02;
+                        case GoBot.Carte.RecBoi:
+                            return 87.92;
                     }
                 }
             }
@@ -168,7 +196,7 @@ namespace GoBot.Balises
         /// <summary>
         /// Vrai si le réglage de l'offset est en cours
         /// </summary>
-        public bool ReglageOffset { get; private set; }
+        public bool ReglageOffset { get; set; }
 
         /// <summary>
         /// Nombre de ticks restants pour le réglage d'offset

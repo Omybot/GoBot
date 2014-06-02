@@ -10,6 +10,7 @@ using GoBot.Calculs.Formes;
 using System.Drawing;
 using System.Windows.Forms;
 using GoBot.Communications;
+using GoBot.Actionneur;
 
 namespace GoBot
 {
@@ -208,6 +209,18 @@ namespace GoBot
             }
             else if (trameRecue[0] == (byte)Carte.RecIO)
             {
+                if (trameRecue[1] == (byte)FonctionIO.AspirationPompe && AspirationAutomatique)
+                {
+                    VitesseDeplacement = Config.CurrentConfig.GRVitesseLigneLent;
+                    BrasFeux.RangerFeu();
+                    VitesseDeplacement = Config.CurrentConfig.GRVitesseLigneRapide;
+                }
+                if (trameRecue[1] == (byte)FonctionIO.ReponseTensionPompe)
+                {
+                    courantPompe = trameRecue[2] * 256 + trameRecue[3];
+                    if(semCourantPompe != null)
+                        semCourantPompe.Release();
+                }
                 if (trameRecue[1] == (byte)FonctionIO.RetourCapteurOnOff)
                 {
                     CapteurOnOff capteur = (CapteurOnOff)trameRecue[2];
@@ -240,7 +253,7 @@ namespace GoBot
 
                 if (trameRecue[1] == (byte)FonctionIO.DepartJack)
                 {
-                    Plateau.Enchainement = new GoBot.Enchainements.Enchainement1Point();
+                    Plateau.Enchainement = new GoBot.Enchainements.EnchainementMatch();
                     Plateau.Enchainement.Executer();
                 }
 
@@ -274,7 +287,6 @@ namespace GoBot
             if (attendre)
                 SemaphoresMove[FonctionMove.FinDeplacement].WaitOne();
 
-            FailTrajectoire = false;
             DeplacementLigne = false;
         }
 
@@ -299,7 +311,6 @@ namespace GoBot
             if (attendre)
                 SemaphoresMove[FonctionMove.FinDeplacement].WaitOne();
 
-            FailTrajectoire = false;
             DeplacementLigne = false;
         }
 
@@ -318,7 +329,6 @@ namespace GoBot
             if (attendre)
                 SemaphoresMove[FonctionMove.FinDeplacement].WaitOne();
 
-            FailTrajectoire = false;
             DeplacementLigne = false;
         }
 
@@ -336,8 +346,6 @@ namespace GoBot
 
             if (attendre)
                 SemaphoresMove[FonctionMove.FinDeplacement].WaitOne();
-
-            FailTrajectoire = false;
         }
 
         public override void Stop(StopMode mode = StopMode.Smooth)
@@ -536,6 +544,25 @@ namespace GoBot
             }
 
             Historique.AjouterAction(new ActionMoteur(this, position, moteur));
+        }
+
+        Semaphore semCourantPompe;
+        int courantPompe;
+        public int DemandeCourantPompe(bool attendre = true)
+        {
+            semCourantPompe = new Semaphore(0, int.MaxValue);
+            Trame trame = TrameFactory.DemandeCourantPompe();
+            Connexions.ConnexionIO.SendMessage(trame);
+
+            if(attendre)
+                semCourantPompe.WaitOne(300);
+
+            return courantPompe;
+        }
+
+        public bool PompeAspireQqchose()
+        {
+            return DemandeCourantPompe() > 1000;
         }
 
         public override void AlimentationPuissance(bool on)

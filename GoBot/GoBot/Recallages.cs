@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
+using GoBot.Actionneur;
 
 namespace GoBot
 {
@@ -9,6 +11,8 @@ namespace GoBot
     {
         public static void RecallagePetitRobot()
         {
+            semRecallagePetit = new Semaphore(0, int.MaxValue);
+
             Robots.PetitRobot.Lent();
             Robots.PetitRobot.Avancer(10);
             Robots.PetitRobot.Recallage(SensAR.Arriere);
@@ -28,10 +32,19 @@ namespace GoBot
                 Robots.PetitRobot.ReglerOffsetAsserv(191, 91, 270);
             else
                 Robots.PetitRobot.ReglerOffsetAsserv(3000 - 191, 91, 270);
+
+            semRecallagePetit.Release();
         }
 
-        public static void RecallageGrosRobot()
+        private static Semaphore semRecallagePetit;
+
+        public static void RecallageGrosRobot(bool attendrePetit)
         {
+            BrasFruits.PositionRange();
+            BrasFeux.PositionInterne3();
+            BrasFruits.FermerPinceBas();
+            BrasFruits.FermerPinceHaut();
+
             Robots.GrosRobot.Lent();
             Robots.GrosRobot.Reculer(10);
             Robots.GrosRobot.Recallage(SensAR.Avant);
@@ -54,12 +67,20 @@ namespace GoBot
             else
                 Robots.GrosRobot.PivotDroite(26);
 
+            if (attendrePetit && semRecallagePetit != null)
+            {
+                semRecallagePetit.WaitOne();
+                semRecallagePetit = null;
+            }
+
             Robots.GrosRobot.Reculer(339);
 
             if (Plateau.NotreCouleur == Plateau.CouleurDroiteJaune)
                 Robots.GrosRobot.ReglerOffsetAsserv(2813, 397, 206);
             else
                 Robots.GrosRobot.ReglerOffsetAsserv(187, 397, -26);
+
+            Robots.GrosRobot.ArmerJack();
         }
     }
 }

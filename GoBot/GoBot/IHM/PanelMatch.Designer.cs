@@ -44,6 +44,16 @@
             this.boxCalibrationAngulaire = new System.Windows.Forms.CheckBox();
             this.pictureBoxBunRouge = new System.Windows.Forms.PictureBox();
             this.pictureBoxTable = new System.Windows.Forms.PictureBox();
+            this.pictureBoxCouleur = new System.Windows.Forms.PictureBox();
+            this.pictureBoxBeuRouge = new System.Windows.Forms.PictureBox();
+            this.pictureBoxBoiRouge = new System.Windows.Forms.PictureBox();
+            this.pictureBoxBunJaune = new System.Windows.Forms.PictureBox();
+            this.pictureBoxBeuJaune = new System.Windows.Forms.PictureBox();
+            this.pictureBoxBoiJaune = new System.Windows.Forms.PictureBox();
+            this.btnReset = new System.Windows.Forms.Button();
+            this.btnBalise1 = new System.Windows.Forms.Button();
+            this.btnBalise2 = new System.Windows.Forms.Button();
+            this.btnBalise3 = new System.Windows.Forms.Button();
             this.ledRecallagePetit = new Composants.Led();
             this.ledBalise3Angle = new Composants.Led();
             this.ledBalise2Angle = new Composants.Led();
@@ -54,19 +64,19 @@
             this.ledBalise3Rotation = new Composants.Led();
             this.ledBalise2Rotation = new Composants.Led();
             this.ledJackArme = new Composants.Led();
-            this.pictureBoxCouleur = new System.Windows.Forms.PictureBox();
             this.ledJackBranche = new Composants.Led();
             this.ledBalise1Rotation = new Composants.Led();
             this.ledRecallageGros = new Composants.Led();
-            this.pictureBoxBeuRouge = new System.Windows.Forms.PictureBox();
-            this.pictureBoxBoiRouge = new System.Windows.Forms.PictureBox();
-            this.pictureBoxBunJaune = new System.Windows.Forms.PictureBox();
-            this.pictureBoxBeuJaune = new System.Windows.Forms.PictureBox();
-            this.pictureBoxBoiJaune = new System.Windows.Forms.PictureBox();
-            this.btnReset = new System.Windows.Forms.Button();
+            this.boxPetit = new System.Windows.Forms.CheckBox();
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxBunRouge)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxTable)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBoxCouleur)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBoxBeuRouge)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBoxBoiRouge)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBoxBunJaune)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBoxBeuJaune)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBoxBoiJaune)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.ledRecallagePetit)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.ledBalise3Angle)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.ledBalise2Angle)).BeginInit();
@@ -77,15 +87,9 @@
             ((System.ComponentModel.ISupportInitialize)(this.ledBalise3Rotation)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.ledBalise2Rotation)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.ledJackArme)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBoxCouleur)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.ledJackBranche)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.ledBalise1Rotation)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.ledRecallageGros)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBoxBeuRouge)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBoxBoiRouge)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBoxBunJaune)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBoxBeuJaune)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBoxBoiJaune)).BeginInit();
             this.SuspendLayout();
             // 
             // btnArmerJack
@@ -246,6 +250,99 @@
             this.pictureBoxTable.TabIndex = 56;
             this.pictureBoxTable.TabStop = false;
             // 
+            // pictureBoxCouleur
+            // 
+            this.pictureBoxCouleur.Location = new System.Drawing.Point(96, 63);
+            this.pictureBoxCouleur.Name = "pictureBoxCouleur";
+            this.pictureBoxCouleur.Size = new System.Drawing.Size(88, 50);
+            this.pictureBoxCouleur.TabIndex = 23;
+            this.pictureBoxCouleur.TabStop = false;
+            // 
+            // pictureBoxBeuRouge
+            // 
+            this.pictureBoxBeuRouge.Image = global::GoBot.Properties.Resources.BeuRouge;
+            this.pictureBoxBeuRouge.Location = new System.Drawing.Point(389, 549);
+            this.pictureBoxBeuRouge.Name = "pictureBoxBeuRouge";
+            this.pictureBoxBeuRouge.Size = new System.Drawing.Size(89, 41);
+            this.pictureBoxBeuRouge.TabIndex = 58;
+            this.pictureBoxBeuRouge.TabStop = false;
+            // 
+            // pictureBoxBoiRouge
+            // 
+            this.pictureBoxBoiRouge.Image = global::GoBot.Properties.Resources.BoiRouge;
+            this.pictureBoxBoiRouge.Location = new System.Drawing.Point(1151, 307);
+            this.pictureBoxBoiRouge.Name = "pictureBoxBoiRouge";
+            this.pictureBoxBoiRouge.Size = new System.Drawing.Size(84, 33);
+            this.pictureBoxBoiRouge.TabIndex = 59;
+            this.pictureBoxBoiRouge.TabStop = false;
+            // 
+            // pictureBoxBunJaune
+            // 
+            this.pictureBoxBunJaune.Image = global::GoBot.Properties.Resources.BunJaune;
+            this.pictureBoxBunJaune.Location = new System.Drawing.Point(1150, 67);
+            this.pictureBoxBunJaune.Name = "pictureBoxBunJaune";
+            this.pictureBoxBunJaune.Size = new System.Drawing.Size(86, 32);
+            this.pictureBoxBunJaune.TabIndex = 60;
+            this.pictureBoxBunJaune.TabStop = false;
+            // 
+            // pictureBoxBeuJaune
+            // 
+            this.pictureBoxBeuJaune.Image = global::GoBot.Properties.Resources.BeuJaune;
+            this.pictureBoxBeuJaune.Location = new System.Drawing.Point(1151, 549);
+            this.pictureBoxBeuJaune.Name = "pictureBoxBeuJaune";
+            this.pictureBoxBeuJaune.Size = new System.Drawing.Size(89, 35);
+            this.pictureBoxBeuJaune.TabIndex = 61;
+            this.pictureBoxBeuJaune.TabStop = false;
+            // 
+            // pictureBoxBoiJaune
+            // 
+            this.pictureBoxBoiJaune.Image = global::GoBot.Properties.Resources.BoiJaune;
+            this.pictureBoxBoiJaune.Location = new System.Drawing.Point(387, 308);
+            this.pictureBoxBoiJaune.Name = "pictureBoxBoiJaune";
+            this.pictureBoxBoiJaune.Size = new System.Drawing.Size(89, 41);
+            this.pictureBoxBoiJaune.TabIndex = 62;
+            this.pictureBoxBoiJaune.TabStop = false;
+            // 
+            // btnReset
+            // 
+            this.btnReset.Location = new System.Drawing.Point(81, 424);
+            this.btnReset.Name = "btnReset";
+            this.btnReset.Size = new System.Drawing.Size(75, 23);
+            this.btnReset.TabIndex = 63;
+            this.btnReset.Text = "Reset";
+            this.btnReset.UseVisualStyleBackColor = true;
+            this.btnReset.Click += new System.EventHandler(this.btnReset_Click);
+            // 
+            // btnBalise1
+            // 
+            this.btnBalise1.Location = new System.Drawing.Point(15, 482);
+            this.btnBalise1.Name = "btnBalise1";
+            this.btnBalise1.Size = new System.Drawing.Size(75, 23);
+            this.btnBalise1.TabIndex = 64;
+            this.btnBalise1.Text = "Reset B1";
+            this.btnBalise1.UseVisualStyleBackColor = true;
+            this.btnBalise1.Click += new System.EventHandler(this.btnBalise1_Click);
+            // 
+            // btnBalise2
+            // 
+            this.btnBalise2.Location = new System.Drawing.Point(96, 482);
+            this.btnBalise2.Name = "btnBalise2";
+            this.btnBalise2.Size = new System.Drawing.Size(75, 23);
+            this.btnBalise2.TabIndex = 65;
+            this.btnBalise2.Text = "Reset B2";
+            this.btnBalise2.UseVisualStyleBackColor = true;
+            this.btnBalise2.Click += new System.EventHandler(this.btnBalise2_Click);
+            // 
+            // btnBalise3
+            // 
+            this.btnBalise3.Location = new System.Drawing.Point(177, 482);
+            this.btnBalise3.Name = "btnBalise3";
+            this.btnBalise3.Size = new System.Drawing.Size(75, 23);
+            this.btnBalise3.TabIndex = 66;
+            this.btnBalise3.Text = "Reset B3";
+            this.btnBalise3.UseVisualStyleBackColor = true;
+            this.btnBalise3.Click += new System.EventHandler(this.btnBalise3_Click);
+            // 
             // ledRecallagePetit
             // 
             this.ledRecallagePetit.Etat = false;
@@ -346,14 +443,6 @@
             this.ledJackArme.TabIndex = 42;
             this.ledJackArme.TabStop = false;
             // 
-            // pictureBoxCouleur
-            // 
-            this.pictureBoxCouleur.Location = new System.Drawing.Point(96, 63);
-            this.pictureBoxCouleur.Name = "pictureBoxCouleur";
-            this.pictureBoxCouleur.Size = new System.Drawing.Size(88, 50);
-            this.pictureBoxCouleur.TabIndex = 23;
-            this.pictureBoxCouleur.TabStop = false;
-            // 
             // ledJackBranche
             // 
             this.ledJackBranche.Etat = false;
@@ -384,66 +473,25 @@
             this.ledRecallageGros.TabIndex = 35;
             this.ledRecallageGros.TabStop = false;
             // 
-            // pictureBoxBeuRouge
+            // boxPetit
             // 
-            this.pictureBoxBeuRouge.Image = global::GoBot.Properties.Resources.BeuRouge;
-            this.pictureBoxBeuRouge.Location = new System.Drawing.Point(389, 549);
-            this.pictureBoxBeuRouge.Name = "pictureBoxBeuRouge";
-            this.pictureBoxBeuRouge.Size = new System.Drawing.Size(89, 41);
-            this.pictureBoxBeuRouge.TabIndex = 58;
-            this.pictureBoxBeuRouge.TabStop = false;
-            // 
-            // pictureBoxBoiRouge
-            // 
-            this.pictureBoxBoiRouge.Image = global::GoBot.Properties.Resources.BoiRouge;
-            this.pictureBoxBoiRouge.Location = new System.Drawing.Point(1151, 307);
-            this.pictureBoxBoiRouge.Name = "pictureBoxBoiRouge";
-            this.pictureBoxBoiRouge.Size = new System.Drawing.Size(84, 33);
-            this.pictureBoxBoiRouge.TabIndex = 59;
-            this.pictureBoxBoiRouge.TabStop = false;
-            // 
-            // pictureBoxBunJaune
-            // 
-            this.pictureBoxBunJaune.Image = global::GoBot.Properties.Resources.BunJaune;
-            this.pictureBoxBunJaune.Location = new System.Drawing.Point(1150, 67);
-            this.pictureBoxBunJaune.Name = "pictureBoxBunJaune";
-            this.pictureBoxBunJaune.Size = new System.Drawing.Size(86, 32);
-            this.pictureBoxBunJaune.TabIndex = 60;
-            this.pictureBoxBunJaune.TabStop = false;
-            // 
-            // pictureBoxBeuJaune
-            // 
-            this.pictureBoxBeuJaune.Image = global::GoBot.Properties.Resources.BeuJaune;
-            this.pictureBoxBeuJaune.Location = new System.Drawing.Point(1151, 549);
-            this.pictureBoxBeuJaune.Name = "pictureBoxBeuJaune";
-            this.pictureBoxBeuJaune.Size = new System.Drawing.Size(89, 35);
-            this.pictureBoxBeuJaune.TabIndex = 61;
-            this.pictureBoxBeuJaune.TabStop = false;
-            // 
-            // pictureBoxBoiJaune
-            // 
-            this.pictureBoxBoiJaune.Image = global::GoBot.Properties.Resources.BoiJaune;
-            this.pictureBoxBoiJaune.Location = new System.Drawing.Point(387, 308);
-            this.pictureBoxBoiJaune.Name = "pictureBoxBoiJaune";
-            this.pictureBoxBoiJaune.Size = new System.Drawing.Size(89, 41);
-            this.pictureBoxBoiJaune.TabIndex = 62;
-            this.pictureBoxBoiJaune.TabStop = false;
-            // 
-            // btnReset
-            // 
-            this.btnReset.Location = new System.Drawing.Point(81, 424);
-            this.btnReset.Name = "btnReset";
-            this.btnReset.Size = new System.Drawing.Size(75, 23);
-            this.btnReset.TabIndex = 63;
-            this.btnReset.Text = "Reset";
-            this.btnReset.UseVisualStyleBackColor = true;
-            this.btnReset.Click += new System.EventHandler(this.btnReset_Click);
+            this.boxPetit.AutoSize = true;
+            this.boxPetit.Location = new System.Drawing.Point(309, 246);
+            this.boxPetit.Name = "boxPetit";
+            this.boxPetit.Size = new System.Drawing.Size(74, 17);
+            this.boxPetit.TabIndex = 67;
+            this.boxPetit.Text = "Petit robot";
+            this.boxPetit.UseVisualStyleBackColor = true;
             // 
             // PanelMatch
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.White;
+            this.Controls.Add(this.boxPetit);
+            this.Controls.Add(this.btnBalise3);
+            this.Controls.Add(this.btnBalise2);
+            this.Controls.Add(this.btnBalise1);
             this.Controls.Add(this.btnReset);
             this.Controls.Add(this.pictureBoxBoiJaune);
             this.Controls.Add(this.pictureBoxBeuJaune);
@@ -484,6 +532,12 @@
             this.groupBox1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxBunRouge)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxTable)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBoxCouleur)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBoxBeuRouge)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBoxBoiRouge)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBoxBunJaune)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBoxBeuJaune)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBoxBoiJaune)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.ledRecallagePetit)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.ledBalise3Angle)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.ledBalise2Angle)).EndInit();
@@ -494,15 +548,9 @@
             ((System.ComponentModel.ISupportInitialize)(this.ledBalise3Rotation)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.ledBalise2Rotation)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.ledJackArme)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBoxCouleur)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.ledJackBranche)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.ledBalise1Rotation)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.ledRecallageGros)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBoxBeuRouge)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBoxBoiRouge)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBoxBunJaune)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBoxBeuJaune)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBoxBoiJaune)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -545,6 +593,10 @@
         private System.Windows.Forms.PictureBox pictureBoxBeuJaune;
         private System.Windows.Forms.PictureBox pictureBoxBoiJaune;
         private System.Windows.Forms.Button btnReset;
+        private System.Windows.Forms.Button btnBalise1;
+        private System.Windows.Forms.Button btnBalise2;
+        private System.Windows.Forms.Button btnBalise3;
+        private System.Windows.Forms.CheckBox boxPetit;
 
     }
 }

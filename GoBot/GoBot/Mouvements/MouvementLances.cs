@@ -10,13 +10,10 @@ namespace GoBot.Mouvements
 {
     class MouvementLances : Mouvement
     {
-        private int numeroLances;
-        private bool termine = false;
-
-        public MouvementLances(int num)
+        public MouvementLances()
         {
-            numeroLances = num;
-            Positions.Add(PositionsMouvements.PositionsLances[num]);
+            Positions.Add(PositionsMouvements.PositionsLances[1]);
+            Positions.Add(PositionsMouvements.PositionsLances[2]);
             Robot = Robots.PetitRobot;
         }
 
@@ -33,13 +30,14 @@ namespace GoBot.Mouvements
                 ReservoirBouchons.Ouvrir();
                 Thread.Sleep(1200);
                 CatapulteLances.Tirer();
+                CatapulteLances.LancesCatapultees = Robots.PetitRobot.Position.Coordonnees.X < 1500 ? 1 : 2;
                 Thread.Sleep(200);
                 ReservoirBouchons.Fermer();
                 ReservoirBouchons.RelacheTissu();
-
                 Robots.PetitRobot.Historique.Log("Fin catapulte lances");
-                termine = true;
-                CatapulteLances.LancesCatapultees = numeroLances;
+
+                Plateau.Score += 12;
+
                 return true;
             }
 

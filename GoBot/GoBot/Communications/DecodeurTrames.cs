@@ -784,6 +784,9 @@ namespace GoBot.Communications
                     case (byte)Carte.RecMiwi:
                         switch ((FonctionMiwi)trame[1])
                         {
+                            case FonctionMiwi.Acquittement:
+                                message = "Ack " + ((Carte)trame[2]).ToString();
+                                break;
                             case FonctionMiwi.Debug:
                                 message = "Debug " + (int)trame[2];
                                 break;
@@ -801,9 +804,6 @@ namespace GoBot.Communications
                                 break;
                             case FonctionMiwi.RetourTestConnexion:
                                 message = "Retour test connexion";
-                                break;
-                            case FonctionMiwi.Acquittement:
-                                message = "Acquittement miwi";
                                 break;
                             default :
                                 message = ((FonctionMiwi)trame[1]).ToString();

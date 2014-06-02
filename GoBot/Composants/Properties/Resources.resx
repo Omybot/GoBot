@@ -118,11 +118,11 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
-  <data name="ConnexionOk" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\img\ConnexionOk.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="FlecheHautGris" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\img\FlecheHautGris.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="FlecheBasGris" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\img\FlecheBasGris.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="LedRouge" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\img\LedRouge.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="BatLow" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\img\BatLow.PNG;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
@@ -136,8 +136,14 @@
   <data name="TrackBarCurseurNormal" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\img\TrackBarCurseurNormal.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="LedBleu" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\img\LedBleu.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
   <data name="TrackBarFond" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\img\TrackBarFond.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="TrackBarCurseurSelect" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\img\TrackBarCurseurSelect.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="LedGris" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\img\LedGris.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
@@ -148,40 +154,34 @@
   <data name="BatMidHigh" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\img\BatMidHigh.PNG;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="LedBleu" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\img\LedBleu.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
   <data name="TrackBarFondSelected" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\img\TrackBarFondSelected.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="BatNo" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\img\BatNo.PNG;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="ConnexionNok" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\img\ConnexionNok.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="BatMid" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\img\BatMid.PNG;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="TrackBarCurseurSelect" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\img\TrackBarCurseurSelect.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="FlecheHautGris" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\img\FlecheHautGris.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="SwitchOff" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\img\SwitchOff.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="FlecheBasGris" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\img\FlecheBasGris.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="LedVert" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\img\LedVert.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="SwitchOff" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\img\SwitchOff.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
   <data name="LedJaune" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\img\LedJaune.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="LedRouge" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\img\LedRouge.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="BatMid" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\img\BatMid.PNG;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="ConnexionOk" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\img\ConnexionOk.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="BatCrit" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\img\BatCrit.PNG;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="ConnexionNok" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\img\ConnexionNok.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
 </root>

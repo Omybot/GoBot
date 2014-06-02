@@ -486,6 +486,14 @@ namespace GoBot.Communications
             return new Trame(tab);
         }
 
+        static public Trame DemandeCourantPompe()
+        {
+            byte[] tab = new byte[2];
+            tab[0] = (byte)Carte.RecIO;
+            tab[1] = (byte)FonctionIO.DemandeCourantPompe;
+            return new Trame(tab);
+        }
+
         static public Trame ServoEnvoiPositionCible(ServomoteurID servo, int position, Carte carte = Carte.RecIO)
         {
             byte[] tab = new byte[6];

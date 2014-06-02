@@ -73,13 +73,13 @@ namespace GoBot.IHM
 
         private void btnFiletTir_Click(object sender, EventArgs e)
         {
-            if (MessageBox.Show("Êtes vous sûr de vouloir sauvegarder la position comme étant la position de tir ?", "Attention", MessageBoxButtons.OK, MessageBoxIcon.Question) == DialogResult.OK)
+            if (MessageBox.Show("Êtes vous sûr de vouloir sauvegarder la position comme étant la position de tir ?", "Attention", MessageBoxButtons.OKCancel, MessageBoxIcon.Question) == DialogResult.OK)
                 Config.CurrentConfig.PositionPRFiletTir = (int)numTirFilet.Value;
         }
 
         private void btnFiletArme_Click(object sender, EventArgs e)
         {
-            if (MessageBox.Show("Êtes vous sûr de vouloir sauvegarder la position comme étant la position armée ?", "Attention", MessageBoxButtons.OK, MessageBoxIcon.Question) == DialogResult.OK)
+            if (MessageBox.Show("Êtes vous sûr de vouloir sauvegarder la position comme étant la position armée ?", "Attention", MessageBoxButtons.OKCancel, MessageBoxIcon.Question) == DialogResult.OK)
                 Config.CurrentConfig.PositionPRFiletArme = (int)numTirFilet.Value;
         }
 
@@ -100,7 +100,7 @@ namespace GoBot.IHM
 
         private void trackBarBrasFresque_TickValueChanged(object sender, EventArgs e)
         {
-            Robots.PetitRobot.BougeServo(ServomoteurID.PRFresque, (int)trackBarReservoir.Value);
+            Robots.PetitRobot.BougeServo(ServomoteurID.PRFresque, (int)trackBarBrasFresque.Value);
         }
 
         private void trackBarTensionTissu_ValueChanged(object sender, EventArgs e)
@@ -115,13 +115,13 @@ namespace GoBot.IHM
 
         private void btnRideauRelache_Click(object sender, EventArgs e)
         {
-            if (MessageBox.Show("Êtes vous sûr de vouloir sauvegarder la position comme étant la position lâche ?", "Attention", MessageBoxButtons.OK, MessageBoxIcon.Question) == DialogResult.OK)
+            if (MessageBox.Show("Êtes vous sûr de vouloir sauvegarder la position comme étant la position lâche ?", "Attention", MessageBoxButtons.OKCancel, MessageBoxIcon.Question) == DialogResult.OK)
                 Config.CurrentConfig.PRTensionTissuRelache = (int)trackBarTensionTissu.Value;
         }
 
         private void btnRideauTendu_Click(object sender, EventArgs e)
         {
-            if (MessageBox.Show("Êtes vous sûr de vouloir sauvegarder la position comme étant la position tendue ?", "Attention", MessageBoxButtons.OK, MessageBoxIcon.Question) == DialogResult.OK)
+            if (MessageBox.Show("Êtes vous sûr de vouloir sauvegarder la position comme étant la position tendue ?", "Attention", MessageBoxButtons.OKCancel, MessageBoxIcon.Question) == DialogResult.OK)
                 Config.CurrentConfig.PRTensionTissuTendu = (int)trackBarTensionTissu.Value;
         }
     }

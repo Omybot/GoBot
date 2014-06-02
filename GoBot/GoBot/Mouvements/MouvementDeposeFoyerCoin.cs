@@ -48,8 +48,10 @@ namespace GoBot.Mouvements
                             else
                                 return true;
 
+                            /*Robots.GrosRobot.Lent();
                             Robots.GrosRobot.Avancer(50);
                             Robots.GrosRobot.Reculer(50);
+                            Robots.GrosRobot.Rapide();*/
 
                             if (numeroFoyer == 0)
                                 feuHaut.Position = new Calculs.Formes.PointReel(132, 1852);
@@ -57,6 +59,7 @@ namespace GoBot.Mouvements
                                 feuHaut.Position = new Calculs.Formes.PointReel(2852, 1859);
 
                             nbFeuxPoses++;
+                            Plateau.Score += 2;
                         }
                         else if (nbFeuxPoses == 1)
                         {
@@ -72,7 +75,7 @@ namespace GoBot.Mouvements
                             else
                                 return true;
 
-                            Robots.GrosRobot.Reculer(100);
+                            Robots.GrosRobot.Reculer(120);
 
                             BrasFeux.PositionInterne3();
                             Thread.Sleep(500);
@@ -82,7 +85,7 @@ namespace GoBot.Mouvements
                             Thread.Sleep(500);
 
                             Robots.GrosRobot.Lent();
-                            Robots.GrosRobot.Avancer(100);
+                            Robots.GrosRobot.Avancer(120);
                             Robots.GrosRobot.Rapide();
 
                             Robots.GrosRobot.ActionneurOnOff(ActionneurOnOffID.GRPompeFeu, false);
@@ -97,6 +100,7 @@ namespace GoBot.Mouvements
                                 feuHaut.Position = new Calculs.Formes.PointReel(2918, 1922);
 
                             nbFeuxPoses++;
+                            Plateau.Score += 2;
                         }
                         else
                         {
@@ -118,12 +122,16 @@ namespace GoBot.Mouvements
                             else
                                 return true;
 
-                            if (!deposeDroite)
-                                Robots.GrosRobot.PivotGauche(90);
-                            else
-                                Robots.GrosRobot.PivotDroite(90);
+                            // Si il reste encore des feux à décharger
+                            if (BrasFeux.FeuxStockes.Count > 1)
+                            {
+                                if (!deposeDroite)
+                                    Robots.GrosRobot.PivotGauche(90);
+                                else
+                                    Robots.GrosRobot.PivotDroite(90);
 
-                            Robots.GrosRobot.Avancer(60);
+                                Robots.GrosRobot.Avancer(60);
+                            }
 
                             if (numeroFoyer == 0 && !deposeDroite)
                                 feuHaut.Position = new Calculs.Formes.PointReel(154, 1568);
@@ -135,6 +143,7 @@ namespace GoBot.Mouvements
                                 feuHaut.Position = new Calculs.Formes.PointReel(2520, 1830);
 
                             deposeDroite = true;
+                            Plateau.Score += 1;
                         }
                     }
                     else
@@ -155,12 +164,16 @@ namespace GoBot.Mouvements
                             BrasFeux.MoveDeposeRetourne1();
                         else
                             return true;
-
-                        if (!deposeDroite)
-                            Robots.GrosRobot.PivotGauche(90);
-                        else
-                            Robots.GrosRobot.PivotDroite(90);
-                        Robots.GrosRobot.Avancer(60);
+                        
+                        // Si il reste encore des feux à décharger
+                        if (BrasFeux.FeuxStockes.Count > 1)
+                        {
+                            if (!deposeDroite)
+                                Robots.GrosRobot.PivotGauche(90);
+                            else
+                                Robots.GrosRobot.PivotDroite(90);
+                            Robots.GrosRobot.Avancer(60);
+                        }
 
                         if (numeroFoyer == 0 && !deposeDroite)
                             feuHaut.Position = new Calculs.Formes.PointReel(154, 1568);
@@ -173,6 +186,7 @@ namespace GoBot.Mouvements
 
                         deposeDroite = true;
 
+                        Plateau.Score += 1;
                     }
 
                     feuHaut.Charge = false;
@@ -190,7 +204,16 @@ namespace GoBot.Mouvements
 
         public override int Score
         {
-            get { return 10 * BrasFeux.FeuxStockes.Count * (2 - nbFeuxPoses); }
+            get 
+            {
+                int feuxSensOk = 0;
+
+                foreach (Feu feu in BrasFeux.FeuxStockes)
+                    if (feu.Couleur == Plateau.NotreCouleur)
+                        feuxSensOk++;
+
+                return 2 * feuxSensOk * (2 - nbFeuxPoses); 
+            }
         }
 
         public override double ScorePondere

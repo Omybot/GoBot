@@ -57,10 +57,10 @@ namespace GoBot.Balises
 
         public static void MajPositions(List<PointReel> detections, bool force = false)
         {
-            if (detections.Count < NombreMaxBalises && (detections.Count == 0 || detections.Count < PositionsEnnemies.Count))
-                return;
+            //if (detections.Count < NombreMaxBalises && (detections.Count == 0 || detections.Count < PositionsEnnemies.Count))
+            //    return;
 
-            if (force && detections.Count <= NombreMaxBalises)
+            //if (force && detections.Count <= NombreMaxBalises)
             {
                 VecteursPositionsEnnemies.Clear();
                 PositionsEnnemies.Clear();
@@ -76,7 +76,7 @@ namespace GoBot.Balises
                     VecteursPositionsEnnemies.Add(new PointReel());
                 }
             }
-            else
+            /*else
             {
                 for (int i = 0; i < PositionsEnnemies.Count; i++)
                 {
@@ -103,7 +103,7 @@ namespace GoBot.Balises
 
             }
 
-            CalculVecteurs();
+            CalculVecteurs();*/
             PositionEnnemisActualisee();
         }
 

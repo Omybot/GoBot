@@ -306,10 +306,20 @@ namespace GoBot
         public override void Init()
         {
             Historique = new Historique(IDRobot);
-            if (this == Robots.PetitRobot)
-                Position = new Calculs.Position(new Angle(90, AnglyeType.Degre), new PointReel(191, 91));
+            if (Plateau.NotreCouleur == Plateau.CouleurGaucheRouge)
+            {
+                if (this == Robots.PetitRobot)
+                    Position = new Calculs.Position(new Angle(90, AnglyeType.Degre), new PointReel(191, 91));
+                else
+                    Position = new Calculs.Position(new Angle(26, AnglyeType.Degre), new PointReel(187, 397));
+            }
             else
-                Position = new Calculs.Position(new Angle(26, AnglyeType.Degre), new PointReel(187, 397));
+            {
+                if (this == Robots.PetitRobot)
+                    Position = new Calculs.Position(new Angle(90, AnglyeType.Degre), new PointReel(3000 - 191, 91));
+                else
+                    Position = new Calculs.Position(new Angle(180 - 26, AnglyeType.Degre), new PointReel(3000 - 187, 397));
+            }
 
             PositionCible = null;
         }

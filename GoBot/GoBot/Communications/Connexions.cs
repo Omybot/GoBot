@@ -80,7 +80,7 @@ namespace GoBot.Communications
 
         public static void ConnexionPiCheck_TestConnexion()
         {
-            ConnexionPi.SendMessage(TrameFactory.TestConnexionPi(Robots.PetitRobot.TensionPack1 < 21 && Robots.PetitRobot.TensionPack2 < 21));
+            //ConnexionPi.SendMessage(TrameFactory.TestConnexionPi(Robots.PetitRobot.TensionPack1 < 21 && Robots.PetitRobot.TensionPack2 < 21));
         }
     }
 }

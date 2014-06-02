@@ -46,6 +46,8 @@ namespace GoBot.Mouvements
 
             if (Robots.GrosRobot.GotoXYTeta(position.Coordonnees.X, position.Coordonnees.Y, position.Angle.AngleDegres))
             {
+                Robot.Reculer(10);
+
                 if (BrasFeux.FeuxStockes.Count < 3 && !feux[0].Charge && !feux[0].Positionne)
                 {
                     BrasFeux.MoveAttrapeTorche3();
@@ -64,12 +66,14 @@ namespace GoBot.Mouvements
                 }
                 if (BrasFeux.FeuxStockes.Count < 3 && !feux[2].Charge && !feux[2].Positionne)
                 {
-                    BrasFeux.MoveAttrapeTorche1();
+                    BrasFeux.MoveAttrapeTorche1(true);
                     BrasFeux.FeuxStockes.Add(feux[2]);
                     feux[2].Charge = true;
 
                     Robots.GrosRobot.Historique.Log("Feu bas attrapé");
                     Plateau.ObstaclesFixes.Remove(Plateau.ObstaclesTorches[numeroTorche]);
+
+                    Plateau.TorchesVidees[numeroTorche] = true;
                 }
                 Robots.GrosRobot.Historique.Log("Fin torche " + numeroTorche);
 
@@ -91,6 +95,9 @@ namespace GoBot.Mouvements
         {
             get 
             {
+                if (Plateau.TorchesVidees[numeroTorche])
+                    return 0;
+
                 int nbFeux = 0;
                 foreach(Feu feu in feux)
                     if (!feu.Charge && !feu.Positionne)
