@@ -13,22 +13,14 @@ namespace GoBot.Communications
         DepartJack = 0x71,
         DemandeCouleurEquipe = 0x72,
         ReponseCouleurEquipe = 0x73,
-
-        Alimentation = 0x80,
-        AlimentationCamera = 0x81,
-        DemandeTension = 0x82,
-        ReponseTension = 0x83,
-
-        ActionneurOnOff = 0x65,
-        Moteur = 0x66,
-
         DemandeCapteurOnOff = 0x74,
         RetourCapteurOnOff = 0x75,
-
-        DemandeCourantPompe = 0x76,
-        ReponseTensionPompe = 0x77,
-
         AspirationPompe = 0x78,
+
+        Alimentation = 0x80,
+
+        ActionneurOnOff = 0x65,
+        MoteurPosition = 0x66,
 
         Debug = 0xEE,
 
@@ -45,7 +37,6 @@ namespace GoBot.Communications
         Pivot = 0x03,
         Virage = 0x04,
         Stop = 0x05,
-        GoToXY = 0x06,
         Recallage = 0x10,
         FinRecallage = 0x11,
         FinDeplacement = 0x12,
@@ -118,12 +109,6 @@ namespace GoBot.Communications
         TestConnexion = 0xF0,
         RetourTestConnexion = 0xF5,
         Reset = 0xF1,
-        Acquittement = 0xA1,
-
-        TestEmission = 0xD4,
-        TestEmissionReussi = 0xD5,
-        TestEmissionCorrompu = 0xD6,
-        TestEmissionPerdu = 0xD7
     }
 
     public enum FonctionServo
@@ -183,7 +168,9 @@ namespace GoBot.Communications
         DemandeVitesseActuelle = 0x56,
         RetourVitesseActuelle = 0x57,
         DemandeErreurs = 0x58,
-        RetourErreurs = 0x59
+        RetourErreurs = 0x59,
+        DemandeCoupleCourant = 0x60,
+        RetourCoupleCourant = 0x61
     }
 
     public enum FonctionMiwi
@@ -201,7 +188,6 @@ namespace GoBot.Communications
     {
         Vitesse = 0x01,
         Detection = 0xE4,
-        Acquittement = 0xA1,
 
         InclinaisonFace = 0x11,
         InclinaisonProfil = 0x10,
@@ -210,11 +196,7 @@ namespace GoBot.Communications
 
         TestConnexion = 0xF0,
         RetourTestConnexion = 0xF5,
-        Reset = 0xF2,
+        Reset = 0xF1,
         Initialisation = 0xF3,
-        TestEmission = 0xD4,
-        TestEmissionReussi = 0xD5,
-        TestEmissionCorrompu = 0xD6,
-        TestEmissionPerdu = 0xD7
     }
 }

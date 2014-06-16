@@ -27,7 +27,7 @@ namespace GoBot.Actionneur
         public static void PositionEpaule(double angle)
         {
             int valeur = (int)(angle * 5200 / (360.0)) + INIT_EPAULE;
-            Robots.GrosRobot.TourneMoteur(MoteurID.GREpauleFeu, valeur);
+            Robots.GrosRobot.MoteurPosition(MoteurID.GREpauleFeu, valeur);
         }
 
         public static void PositionCoude(double angle)
@@ -325,7 +325,7 @@ namespace GoBot.Actionneur
         public static void PositionRetournement()
         {
             //Robots.GrosRobot.TourneMoteur(MoteurID.GREpauleFeu, 2100);
-            Robots.GrosRobot.TourneMoteur(MoteurID.GREpauleFeu, 2150);
+            Robots.GrosRobot.MoteurPosition(MoteurID.GREpauleFeu, 2150);
             Robots.GrosRobot.BougeServo(ServomoteurID.GRFeuxCoude, 750);
             Robots.GrosRobot.BougeServo(ServomoteurID.GRFeuxPoignet, 605);
             

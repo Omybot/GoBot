@@ -43,6 +43,7 @@
             this.btnOkBaudrate = new System.Windows.Forms.Button();
             this.lblTxtBaudrate = new System.Windows.Forms.Label();
             this.groupServo = new System.Windows.Forms.GroupBox();
+            this.ctrlGraphiqueTemperature = new Composants.CtrlGraphique();
             this.pictureBoxAngles = new System.Windows.Forms.PictureBox();
             this.ledErreurInstruction = new Composants.Led();
             this.ledErreurOverload = new Composants.Led();
@@ -114,7 +115,11 @@
             this.lblTxtSurveillance = new System.Windows.Forms.Label();
             this.trackBarPosition = new Composants.TrackBarPlus();
             this.trackBarVitesse = new Composants.TrackBarPlus();
-            this.ctrlGraphiqueHisto = new Composants.CtrlGraphique();
+            this.ctrlGraphiqueVitesse = new Composants.CtrlGraphique();
+            this.ctrlGraphiquePosition = new Composants.CtrlGraphique();
+            this.lblCoupleActuel = new System.Windows.Forms.Label();
+            this.lblTxtCoupleActuel = new System.Windows.Forms.Label();
+            this.ctrlGraphiqueCouple = new Composants.CtrlGraphique();
             ((System.ComponentModel.ISupportInitialize)(this.numID)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numBaudrate)).BeginInit();
             this.groupServo.SuspendLayout();
@@ -267,7 +272,12 @@
             // groupServo
             // 
             this.groupServo.BackColor = System.Drawing.Color.Transparent;
-            this.groupServo.Controls.Add(this.ctrlGraphiqueHisto);
+            this.groupServo.Controls.Add(this.ctrlGraphiqueCouple);
+            this.groupServo.Controls.Add(this.lblCoupleActuel);
+            this.groupServo.Controls.Add(this.lblTxtCoupleActuel);
+            this.groupServo.Controls.Add(this.ctrlGraphiquePosition);
+            this.groupServo.Controls.Add(this.ctrlGraphiqueVitesse);
+            this.groupServo.Controls.Add(this.ctrlGraphiqueTemperature);
             this.groupServo.Controls.Add(this.pictureBoxAngles);
             this.groupServo.Controls.Add(this.ledErreurInstruction);
             this.groupServo.Controls.Add(this.ledErreurOverload);
@@ -354,15 +364,27 @@
             this.groupServo.Controls.Add(this.lblTxtTemperature);
             this.groupServo.Location = new System.Drawing.Point(3, 3);
             this.groupServo.Name = "groupServo";
-            this.groupServo.Size = new System.Drawing.Size(808, 457);
+            this.groupServo.Size = new System.Drawing.Size(1028, 482);
             this.groupServo.TabIndex = 33;
             this.groupServo.TabStop = false;
             this.groupServo.Text = "Servomoteur";
             // 
+            // ctrlGraphiqueTemperature
+            // 
+            this.ctrlGraphiqueTemperature.BackColor = System.Drawing.Color.White;
+            this.ctrlGraphiqueTemperature.EchelleCommune = true;
+            this.ctrlGraphiqueTemperature.EchelleFixe = false;
+            this.ctrlGraphiqueTemperature.EchelleMax = 1D;
+            this.ctrlGraphiqueTemperature.EchelleMin = 0D;
+            this.ctrlGraphiqueTemperature.Location = new System.Drawing.Point(564, 325);
+            this.ctrlGraphiqueTemperature.Name = "ctrlGraphiqueTemperature";
+            this.ctrlGraphiqueTemperature.Size = new System.Drawing.Size(218, 140);
+            this.ctrlGraphiqueTemperature.TabIndex = 123;
+            // 
             // pictureBoxAngles
             // 
             this.pictureBoxAngles.Image = global::GoBot.Properties.Resources.FondServo;
-            this.pictureBoxAngles.Location = new System.Drawing.Point(586, 58);
+            this.pictureBoxAngles.Location = new System.Drawing.Point(593, 95);
             this.pictureBoxAngles.Name = "pictureBoxAngles";
             this.pictureBoxAngles.Size = new System.Drawing.Size(160, 160);
             this.pictureBoxAngles.TabIndex = 122;
@@ -372,7 +394,7 @@
             // 
             this.ledErreurInstruction.Etat = false;
             this.ledErreurInstruction.Image = ((System.Drawing.Image)(resources.GetObject("ledErreurInstruction.Image")));
-            this.ledErreurInstruction.Location = new System.Drawing.Point(483, 389);
+            this.ledErreurInstruction.Location = new System.Drawing.Point(483, 412);
             this.ledErreurInstruction.Name = "ledErreurInstruction";
             this.ledErreurInstruction.Size = new System.Drawing.Size(16, 16);
             this.ledErreurInstruction.TabIndex = 121;
@@ -382,7 +404,7 @@
             // 
             this.ledErreurOverload.Etat = false;
             this.ledErreurOverload.Image = ((System.Drawing.Image)(resources.GetObject("ledErreurOverload.Image")));
-            this.ledErreurOverload.Location = new System.Drawing.Point(456, 389);
+            this.ledErreurOverload.Location = new System.Drawing.Point(456, 412);
             this.ledErreurOverload.Name = "ledErreurOverload";
             this.ledErreurOverload.Size = new System.Drawing.Size(16, 16);
             this.ledErreurOverload.TabIndex = 120;
@@ -392,7 +414,7 @@
             // 
             this.ledErreurChecksum.Etat = false;
             this.ledErreurChecksum.Image = ((System.Drawing.Image)(resources.GetObject("ledErreurChecksum.Image")));
-            this.ledErreurChecksum.Location = new System.Drawing.Point(429, 389);
+            this.ledErreurChecksum.Location = new System.Drawing.Point(429, 412);
             this.ledErreurChecksum.Name = "ledErreurChecksum";
             this.ledErreurChecksum.Size = new System.Drawing.Size(16, 16);
             this.ledErreurChecksum.TabIndex = 119;
@@ -402,7 +424,7 @@
             // 
             this.ledErreurRange.Etat = false;
             this.ledErreurRange.Image = ((System.Drawing.Image)(resources.GetObject("ledErreurRange.Image")));
-            this.ledErreurRange.Location = new System.Drawing.Point(402, 389);
+            this.ledErreurRange.Location = new System.Drawing.Point(402, 412);
             this.ledErreurRange.Name = "ledErreurRange";
             this.ledErreurRange.Size = new System.Drawing.Size(16, 16);
             this.ledErreurRange.TabIndex = 118;
@@ -412,7 +434,7 @@
             // 
             this.ledErreurOverheating.Etat = false;
             this.ledErreurOverheating.Image = ((System.Drawing.Image)(resources.GetObject("ledErreurOverheating.Image")));
-            this.ledErreurOverheating.Location = new System.Drawing.Point(375, 389);
+            this.ledErreurOverheating.Location = new System.Drawing.Point(375, 412);
             this.ledErreurOverheating.Name = "ledErreurOverheating";
             this.ledErreurOverheating.Size = new System.Drawing.Size(16, 16);
             this.ledErreurOverheating.TabIndex = 117;
@@ -422,7 +444,7 @@
             // 
             this.ledErreurAngleLimit.Etat = false;
             this.ledErreurAngleLimit.Image = ((System.Drawing.Image)(resources.GetObject("ledErreurAngleLimit.Image")));
-            this.ledErreurAngleLimit.Location = new System.Drawing.Point(348, 389);
+            this.ledErreurAngleLimit.Location = new System.Drawing.Point(348, 412);
             this.ledErreurAngleLimit.Name = "ledErreurAngleLimit";
             this.ledErreurAngleLimit.Size = new System.Drawing.Size(16, 16);
             this.ledErreurAngleLimit.TabIndex = 116;
@@ -432,7 +454,7 @@
             // 
             this.ledErreurInputVoltage.Etat = false;
             this.ledErreurInputVoltage.Image = ((System.Drawing.Image)(resources.GetObject("ledErreurInputVoltage.Image")));
-            this.ledErreurInputVoltage.Location = new System.Drawing.Point(321, 389);
+            this.ledErreurInputVoltage.Location = new System.Drawing.Point(321, 412);
             this.ledErreurInputVoltage.Name = "ledErreurInputVoltage";
             this.ledErreurInputVoltage.Size = new System.Drawing.Size(16, 16);
             this.ledErreurInputVoltage.TabIndex = 115;
@@ -441,7 +463,7 @@
             // boxShutdownInstruction
             // 
             this.boxShutdownInstruction.AutoSize = true;
-            this.boxShutdownInstruction.Location = new System.Drawing.Point(484, 430);
+            this.boxShutdownInstruction.Location = new System.Drawing.Point(484, 453);
             this.boxShutdownInstruction.Name = "boxShutdownInstruction";
             this.boxShutdownInstruction.Size = new System.Drawing.Size(15, 14);
             this.boxShutdownInstruction.TabIndex = 113;
@@ -451,7 +473,7 @@
             // boxLEDInstruction
             // 
             this.boxLEDInstruction.AutoSize = true;
-            this.boxLEDInstruction.Location = new System.Drawing.Point(484, 410);
+            this.boxLEDInstruction.Location = new System.Drawing.Point(484, 433);
             this.boxLEDInstruction.Name = "boxLEDInstruction";
             this.boxLEDInstruction.Size = new System.Drawing.Size(15, 14);
             this.boxLEDInstruction.TabIndex = 112;
@@ -461,7 +483,7 @@
             // imgAlarmes
             // 
             this.imgAlarmes.Image = global::GoBot.Properties.Resources.Alertes;
-            this.imgAlarmes.Location = new System.Drawing.Point(323, 335);
+            this.imgAlarmes.Location = new System.Drawing.Point(323, 358);
             this.imgAlarmes.Name = "imgAlarmes";
             this.imgAlarmes.Size = new System.Drawing.Size(218, 50);
             this.imgAlarmes.TabIndex = 111;
@@ -630,7 +652,7 @@
             // lblTxtAlarmeShutdown
             // 
             this.lblTxtAlarmeShutdown.AutoSize = true;
-            this.lblTxtAlarmeShutdown.Location = new System.Drawing.Point(226, 430);
+            this.lblTxtAlarmeShutdown.Location = new System.Drawing.Point(226, 453);
             this.lblTxtAlarmeShutdown.Name = "lblTxtAlarmeShutdown";
             this.lblTxtAlarmeShutdown.Size = new System.Drawing.Size(88, 13);
             this.lblTxtAlarmeShutdown.TabIndex = 94;
@@ -639,7 +661,7 @@
             // lblTxtAlarmeLED
             // 
             this.lblTxtAlarmeLED.AutoSize = true;
-            this.lblTxtAlarmeLED.Location = new System.Drawing.Point(226, 409);
+            this.lblTxtAlarmeLED.Location = new System.Drawing.Point(226, 432);
             this.lblTxtAlarmeLED.Name = "lblTxtAlarmeLED";
             this.lblTxtAlarmeLED.Size = new System.Drawing.Size(63, 13);
             this.lblTxtAlarmeLED.TabIndex = 93;
@@ -648,7 +670,7 @@
             // boxShutdownOverload
             // 
             this.boxShutdownOverload.AutoSize = true;
-            this.boxShutdownOverload.Location = new System.Drawing.Point(457, 430);
+            this.boxShutdownOverload.Location = new System.Drawing.Point(457, 453);
             this.boxShutdownOverload.Name = "boxShutdownOverload";
             this.boxShutdownOverload.Size = new System.Drawing.Size(15, 14);
             this.boxShutdownOverload.TabIndex = 91;
@@ -658,7 +680,7 @@
             // boxShutdownChecksum
             // 
             this.boxShutdownChecksum.AutoSize = true;
-            this.boxShutdownChecksum.Location = new System.Drawing.Point(430, 430);
+            this.boxShutdownChecksum.Location = new System.Drawing.Point(430, 453);
             this.boxShutdownChecksum.Name = "boxShutdownChecksum";
             this.boxShutdownChecksum.Size = new System.Drawing.Size(15, 14);
             this.boxShutdownChecksum.TabIndex = 90;
@@ -668,7 +690,7 @@
             // boxShutdownRange
             // 
             this.boxShutdownRange.AutoSize = true;
-            this.boxShutdownRange.Location = new System.Drawing.Point(403, 430);
+            this.boxShutdownRange.Location = new System.Drawing.Point(403, 453);
             this.boxShutdownRange.Name = "boxShutdownRange";
             this.boxShutdownRange.Size = new System.Drawing.Size(15, 14);
             this.boxShutdownRange.TabIndex = 89;
@@ -678,7 +700,7 @@
             // boxShutdownOverheating
             // 
             this.boxShutdownOverheating.AutoSize = true;
-            this.boxShutdownOverheating.Location = new System.Drawing.Point(376, 430);
+            this.boxShutdownOverheating.Location = new System.Drawing.Point(376, 453);
             this.boxShutdownOverheating.Name = "boxShutdownOverheating";
             this.boxShutdownOverheating.Size = new System.Drawing.Size(15, 14);
             this.boxShutdownOverheating.TabIndex = 88;
@@ -688,7 +710,7 @@
             // boxLEDInputVoltage
             // 
             this.boxLEDInputVoltage.AutoSize = true;
-            this.boxLEDInputVoltage.Location = new System.Drawing.Point(322, 410);
+            this.boxLEDInputVoltage.Location = new System.Drawing.Point(322, 433);
             this.boxLEDInputVoltage.Name = "boxLEDInputVoltage";
             this.boxLEDInputVoltage.Size = new System.Drawing.Size(15, 14);
             this.boxLEDInputVoltage.TabIndex = 87;
@@ -698,7 +720,7 @@
             // boxLEDAngleLimit
             // 
             this.boxLEDAngleLimit.AutoSize = true;
-            this.boxLEDAngleLimit.Location = new System.Drawing.Point(349, 410);
+            this.boxLEDAngleLimit.Location = new System.Drawing.Point(349, 433);
             this.boxLEDAngleLimit.Name = "boxLEDAngleLimit";
             this.boxLEDAngleLimit.Size = new System.Drawing.Size(15, 14);
             this.boxLEDAngleLimit.TabIndex = 86;
@@ -708,7 +730,7 @@
             // boxLEDOverload
             // 
             this.boxLEDOverload.AutoSize = true;
-            this.boxLEDOverload.Location = new System.Drawing.Point(457, 410);
+            this.boxLEDOverload.Location = new System.Drawing.Point(457, 433);
             this.boxLEDOverload.Name = "boxLEDOverload";
             this.boxLEDOverload.Size = new System.Drawing.Size(15, 14);
             this.boxLEDOverload.TabIndex = 84;
@@ -718,7 +740,7 @@
             // boxLEDChecksum
             // 
             this.boxLEDChecksum.AutoSize = true;
-            this.boxLEDChecksum.Location = new System.Drawing.Point(430, 410);
+            this.boxLEDChecksum.Location = new System.Drawing.Point(430, 433);
             this.boxLEDChecksum.Name = "boxLEDChecksum";
             this.boxLEDChecksum.Size = new System.Drawing.Size(15, 14);
             this.boxLEDChecksum.TabIndex = 83;
@@ -728,7 +750,7 @@
             // boxLEDRange
             // 
             this.boxLEDRange.AutoSize = true;
-            this.boxLEDRange.Location = new System.Drawing.Point(403, 410);
+            this.boxLEDRange.Location = new System.Drawing.Point(403, 433);
             this.boxLEDRange.Name = "boxLEDRange";
             this.boxLEDRange.Size = new System.Drawing.Size(15, 14);
             this.boxLEDRange.TabIndex = 82;
@@ -738,7 +760,7 @@
             // boxLEDOverheating
             // 
             this.boxLEDOverheating.AutoSize = true;
-            this.boxLEDOverheating.Location = new System.Drawing.Point(376, 410);
+            this.boxLEDOverheating.Location = new System.Drawing.Point(376, 433);
             this.boxLEDOverheating.Name = "boxLEDOverheating";
             this.boxLEDOverheating.Size = new System.Drawing.Size(15, 14);
             this.boxLEDOverheating.TabIndex = 81;
@@ -748,7 +770,7 @@
             // boxShutdownAngleLimit
             // 
             this.boxShutdownAngleLimit.AutoSize = true;
-            this.boxShutdownAngleLimit.Location = new System.Drawing.Point(349, 430);
+            this.boxShutdownAngleLimit.Location = new System.Drawing.Point(349, 453);
             this.boxShutdownAngleLimit.Name = "boxShutdownAngleLimit";
             this.boxShutdownAngleLimit.Size = new System.Drawing.Size(15, 14);
             this.boxShutdownAngleLimit.TabIndex = 80;
@@ -758,7 +780,7 @@
             // boxShutdownInputVoltage
             // 
             this.boxShutdownInputVoltage.AutoSize = true;
-            this.boxShutdownInputVoltage.Location = new System.Drawing.Point(322, 430);
+            this.boxShutdownInputVoltage.Location = new System.Drawing.Point(322, 453);
             this.boxShutdownInputVoltage.Name = "boxShutdownInputVoltage";
             this.boxShutdownInputVoltage.Size = new System.Drawing.Size(15, 14);
             this.boxShutdownInputVoltage.TabIndex = 79;
@@ -1085,17 +1107,59 @@
             this.trackBarVitesse.TickValueChanged += new System.EventHandler(this.trackBarVitesse_TickValueChanged);
             this.trackBarVitesse.ValueChanged += new System.EventHandler(this.trackBarVitesse_ValueChanged);
             // 
-            // ctrlGraphiqueHisto
+            // ctrlGraphiqueVitesse
             // 
-            this.ctrlGraphiqueHisto.BackColor = System.Drawing.Color.White;
-            this.ctrlGraphiqueHisto.EchelleCommune = true;
-            this.ctrlGraphiqueHisto.EchelleFixe = false;
-            this.ctrlGraphiqueHisto.EchelleMax = 1D;
-            this.ctrlGraphiqueHisto.EchelleMin = 0D;
-            this.ctrlGraphiqueHisto.Location = new System.Drawing.Point(560, 245);
-            this.ctrlGraphiqueHisto.Name = "ctrlGraphiqueHisto";
-            this.ctrlGraphiqueHisto.Size = new System.Drawing.Size(218, 140);
-            this.ctrlGraphiqueHisto.TabIndex = 123;
+            this.ctrlGraphiqueVitesse.BackColor = System.Drawing.Color.White;
+            this.ctrlGraphiqueVitesse.EchelleCommune = true;
+            this.ctrlGraphiqueVitesse.EchelleFixe = false;
+            this.ctrlGraphiqueVitesse.EchelleMax = 1D;
+            this.ctrlGraphiqueVitesse.EchelleMin = 0D;
+            this.ctrlGraphiqueVitesse.Location = new System.Drawing.Point(795, 19);
+            this.ctrlGraphiqueVitesse.Name = "ctrlGraphiqueVitesse";
+            this.ctrlGraphiqueVitesse.Size = new System.Drawing.Size(218, 140);
+            this.ctrlGraphiqueVitesse.TabIndex = 124;
+            // 
+            // ctrlGraphiquePosition
+            // 
+            this.ctrlGraphiquePosition.BackColor = System.Drawing.Color.White;
+            this.ctrlGraphiquePosition.EchelleCommune = true;
+            this.ctrlGraphiquePosition.EchelleFixe = false;
+            this.ctrlGraphiquePosition.EchelleMax = 1D;
+            this.ctrlGraphiquePosition.EchelleMin = 0D;
+            this.ctrlGraphiquePosition.Location = new System.Drawing.Point(795, 172);
+            this.ctrlGraphiquePosition.Name = "ctrlGraphiquePosition";
+            this.ctrlGraphiquePosition.Size = new System.Drawing.Size(218, 140);
+            this.ctrlGraphiquePosition.TabIndex = 125;
+            // 
+            // lblCoupleActuel
+            // 
+            this.lblCoupleActuel.AutoSize = true;
+            this.lblCoupleActuel.Location = new System.Drawing.Point(411, 331);
+            this.lblCoupleActuel.Name = "lblCoupleActuel";
+            this.lblCoupleActuel.Size = new System.Drawing.Size(10, 13);
+            this.lblCoupleActuel.TabIndex = 127;
+            this.lblCoupleActuel.Text = "-";
+            // 
+            // lblTxtCoupleActuel
+            // 
+            this.lblTxtCoupleActuel.AutoSize = true;
+            this.lblTxtCoupleActuel.Location = new System.Drawing.Point(324, 330);
+            this.lblTxtCoupleActuel.Name = "lblTxtCoupleActuel";
+            this.lblTxtCoupleActuel.Size = new System.Drawing.Size(72, 13);
+            this.lblTxtCoupleActuel.TabIndex = 126;
+            this.lblTxtCoupleActuel.Text = "Couple actuel";
+            // 
+            // ctrlGraphiqueCouple
+            // 
+            this.ctrlGraphiqueCouple.BackColor = System.Drawing.Color.White;
+            this.ctrlGraphiqueCouple.EchelleCommune = true;
+            this.ctrlGraphiqueCouple.EchelleFixe = false;
+            this.ctrlGraphiqueCouple.EchelleMax = 1D;
+            this.ctrlGraphiqueCouple.EchelleMin = 0D;
+            this.ctrlGraphiqueCouple.Location = new System.Drawing.Point(795, 325);
+            this.ctrlGraphiqueCouple.Name = "ctrlGraphiqueCouple";
+            this.ctrlGraphiqueCouple.Size = new System.Drawing.Size(218, 140);
+            this.ctrlGraphiqueCouple.TabIndex = 128;
             // 
             // PanelServo
             // 
@@ -1104,7 +1168,7 @@
             this.BackColor = System.Drawing.Color.Transparent;
             this.Controls.Add(this.groupServo);
             this.Name = "PanelServo";
-            this.Size = new System.Drawing.Size(814, 467);
+            this.Size = new System.Drawing.Size(1041, 492);
             this.Load += new System.EventHandler(this.PanelServo_Load);
             ((System.ComponentModel.ISupportInitialize)(this.numID)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.numBaudrate)).EndInit();
@@ -1221,6 +1285,11 @@
         private Composants.Led ledErreurAngleLimit;
         private Composants.Led ledErreurInputVoltage;
         private System.Windows.Forms.PictureBox pictureBoxAngles;
-        private Composants.CtrlGraphique ctrlGraphiqueHisto;
+        private Composants.CtrlGraphique ctrlGraphiqueTemperature;
+        private Composants.CtrlGraphique ctrlGraphiquePosition;
+        private Composants.CtrlGraphique ctrlGraphiqueVitesse;
+        private System.Windows.Forms.Label lblCoupleActuel;
+        private System.Windows.Forms.Label lblTxtCoupleActuel;
+        private Composants.CtrlGraphique ctrlGraphiqueCouple;
     }
 }

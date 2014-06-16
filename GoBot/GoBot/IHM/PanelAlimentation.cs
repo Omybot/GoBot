@@ -29,49 +29,55 @@ namespace GoBot.IHM
                 timerTension.Elapsed += new ElapsedEventHandler(timerTension_Elapsed);
                 timerTension.Start();
 
-                batteriePack1.TensionMidHigh = 23;
-                batteriePack1.TensionMid = 22;
-                batteriePack1.TensionLow = 21;
-                batteriePack1.TensionNull = 5;
+                batteriePack1.TensionMidHigh = Config.CurrentConfig.BatterieRobotVert;
+                batteriePack1.TensionMid = Config.CurrentConfig.BatterieRobotOrange;
+                batteriePack1.TensionLow = Config.CurrentConfig.BatterieRobotRouge;
+                batteriePack1.TensionNull = Config.CurrentConfig.BatterieRobotCritique;
 
-                batteriePack2.TensionMidHigh = 23;
-                batteriePack2.TensionMid = 22;
-                batteriePack2.TensionLow = 21;
-                batteriePack2.TensionNull = 5;
+                batteriePack2.TensionMidHigh = Config.CurrentConfig.BatterieRobotVert;
+                batteriePack2.TensionMid = Config.CurrentConfig.BatterieRobotOrange;
+                batteriePack2.TensionLow = Config.CurrentConfig.BatterieRobotRouge;
+                batteriePack2.TensionNull = Config.CurrentConfig.BatterieRobotCritique;
 
-                batteriePRPack1.TensionMidHigh = 23;
-                batteriePRPack1.TensionMid = 22;
-                batteriePRPack1.TensionLow = 21;
-                batteriePRPack1.TensionNull = 5;
+                batteriePRPack1.TensionMidHigh = Config.CurrentConfig.BatterieRobotVert;
+                batteriePRPack1.TensionMid = Config.CurrentConfig.BatterieRobotOrange;
+                batteriePRPack1.TensionLow = Config.CurrentConfig.BatterieRobotRouge;
+                batteriePRPack1.TensionNull = Config.CurrentConfig.BatterieRobotCritique;
 
-                batteriePRPack2.TensionMidHigh = 23;
-                batteriePRPack2.TensionMid = 22;
-                batteriePRPack2.TensionLow = 21;
-                batteriePRPack2.TensionNull = 5;
+                batteriePRPack2.TensionMidHigh = Config.CurrentConfig.BatterieRobotVert;
+                batteriePRPack2.TensionMid = Config.CurrentConfig.BatterieRobotOrange;
+                batteriePRPack2.TensionLow = Config.CurrentConfig.BatterieRobotRouge;
+                batteriePRPack2.TensionNull = Config.CurrentConfig.BatterieRobotCritique;
 
-                batterieBun1.TensionMidHigh = 8;
-                batterieBun1.TensionMid = 7;
-                batterieBun1.TensionLow = 6;
+                batterieBun1.TensionMidHigh = Config.CurrentConfig.BatterieBaliseVert;
+                batterieBun1.TensionMid = Config.CurrentConfig.BatterieBaliseOrange;
+                batterieBun1.TensionLow = Config.CurrentConfig.BatterieBaliseRouge;
+                batterieBun1.TensionNull = Config.CurrentConfig.BatterieBaliseCritique;
 
-                batterieBun2.TensionMidHigh = 8;
-                batterieBun2.TensionMid = 7;
-                batterieBun2.TensionLow = 6;
+                batterieBun2.TensionMidHigh = Config.CurrentConfig.BatterieBaliseVert;
+                batterieBun2.TensionMid = Config.CurrentConfig.BatterieBaliseOrange;
+                batterieBun2.TensionLow = Config.CurrentConfig.BatterieBaliseRouge;
+                batterieBun2.TensionNull = Config.CurrentConfig.BatterieBaliseCritique;
 
-                batterieBeu1.TensionMidHigh = 8;
-                batterieBeu1.TensionMid = 7;
-                batterieBeu1.TensionLow = 6;
+                batterieBeu1.TensionMidHigh = Config.CurrentConfig.BatterieBaliseVert;
+                batterieBeu1.TensionMid = Config.CurrentConfig.BatterieBaliseOrange;
+                batterieBeu1.TensionLow = Config.CurrentConfig.BatterieBaliseRouge;
+                batterieBeu1.TensionNull = Config.CurrentConfig.BatterieBaliseCritique;
 
-                batterieBeu2.TensionMidHigh = 8;
-                batterieBeu2.TensionMid = 7;
-                batterieBeu2.TensionLow = 6;
+                batterieBeu2.TensionMidHigh = Config.CurrentConfig.BatterieBaliseVert;
+                batterieBeu2.TensionMid = Config.CurrentConfig.BatterieBaliseOrange;
+                batterieBeu2.TensionLow = Config.CurrentConfig.BatterieBaliseRouge;
+                batterieBeu2.TensionNull = Config.CurrentConfig.BatterieBaliseCritique;
 
-                batterieBoi1.TensionMidHigh = 8;
-                batterieBoi1.TensionMid = 7;
-                batterieBoi1.TensionLow = 6;
+                batterieBoi1.TensionMidHigh = Config.CurrentConfig.BatterieBaliseVert;
+                batterieBoi1.TensionMid = Config.CurrentConfig.BatterieBaliseOrange;
+                batterieBoi1.TensionLow = Config.CurrentConfig.BatterieBaliseRouge;
+                batterieBoi1.TensionNull = Config.CurrentConfig.BatterieBaliseCritique;
 
-                batterieBoi2.TensionMidHigh = 8;
-                batterieBoi2.TensionMid = 7;
-                batterieBoi2.TensionLow = 6;
+                batterieBoi2.TensionMidHigh = Config.CurrentConfig.BatterieBaliseVert;
+                batterieBoi2.TensionMid = Config.CurrentConfig.BatterieBaliseOrange;
+                batterieBoi2.TensionLow = Config.CurrentConfig.BatterieBaliseRouge;
+                batterieBoi2.TensionNull = Config.CurrentConfig.BatterieBaliseCritique;
             }
         }
 

@@ -68,7 +68,7 @@ namespace GoBot.IHM
 
         private void btnOkFilet_Click(object sender, EventArgs e)
         {
-            Robots.PetitRobot.TourneMoteur(MoteurID.PRLanceFilet, (int)numTirFilet.Value);
+            Robots.PetitRobot.MoteurPosition(MoteurID.PRLanceFilet, (int)numTirFilet.Value);
         }
 
         private void btnFiletTir_Click(object sender, EventArgs e)
@@ -110,7 +110,7 @@ namespace GoBot.IHM
 
         private void trackBarTensionTissu_TickValueChanged(object sender, EventArgs e)
         {
-            Robots.PetitRobot.TourneMoteur(MoteurID.PRTensionTissu, (int)trackBarTensionTissu.Value);
+            Robots.PetitRobot.MoteurPosition(MoteurID.PRTensionTissu, (int)trackBarTensionTissu.Value);
         }
 
         private void btnRideauRelache_Click(object sender, EventArgs e)

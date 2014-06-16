@@ -84,36 +84,36 @@ namespace GoBot.Actionneur
 
         public static void OuvrirPinceHaut(bool tempo = true)
         {
-            Robots.GrosRobot.TourneMoteur(MoteurID.GRPinceDroiteHaut, Config.CurrentConfig.PositionGRPinceFruitHautDroiteOuvert);
-            Robots.GrosRobot.TourneMoteur(MoteurID.GRPinceGaucheHaut, Config.CurrentConfig.PositionGRPinceFruitHautGaucheOuvert);
+            Robots.GrosRobot.MoteurPosition(MoteurID.GRPinceDroiteHaut, Config.CurrentConfig.PositionGRPinceFruitHautDroiteOuvert);
+            Robots.GrosRobot.MoteurPosition(MoteurID.GRPinceGaucheHaut, Config.CurrentConfig.PositionGRPinceFruitHautGaucheOuvert);
             if(tempo) Thread.Sleep(300);
         }
 
         public static void OuvrirPinceBas(bool tempo = true)
         {
-            Robots.GrosRobot.TourneMoteur(MoteurID.GRPinceDroiteBas, Config.CurrentConfig.PositionGRPinceFruitBasDroiteOuvert);
-            Robots.GrosRobot.TourneMoteur(MoteurID.GRPinceGaucheBas, Config.CurrentConfig.PositionGRPinceFruitBasGaucheOuvert);
+            Robots.GrosRobot.MoteurPosition(MoteurID.GRPinceDroiteBas, Config.CurrentConfig.PositionGRPinceFruitBasDroiteOuvert);
+            Robots.GrosRobot.MoteurPosition(MoteurID.GRPinceGaucheBas, Config.CurrentConfig.PositionGRPinceFruitBasGaucheOuvert);
             if (tempo) Thread.Sleep(500);
         }
 
         public static void FermerPinceHaut(bool tempo = true)
         {
-            Robots.GrosRobot.TourneMoteur(MoteurID.GRPinceDroiteHaut, Config.CurrentConfig.PositionGRPinceFruitHautDroiteFerme);
-            Robots.GrosRobot.TourneMoteur(MoteurID.GRPinceGaucheHaut, Config.CurrentConfig.PositionGRPinceFruitHautGaucheFerme);
+            Robots.GrosRobot.MoteurPosition(MoteurID.GRPinceDroiteHaut, Config.CurrentConfig.PositionGRPinceFruitHautDroiteFerme);
+            Robots.GrosRobot.MoteurPosition(MoteurID.GRPinceGaucheHaut, Config.CurrentConfig.PositionGRPinceFruitHautGaucheFerme);
             if (tempo) Thread.Sleep(150);
         }
 
         public static void FermerPinceBas(bool tempo = true)
         {
-            Robots.GrosRobot.TourneMoteur(MoteurID.GRPinceDroiteBas, Config.CurrentConfig.PositionGRPinceFruitBasDroiteFerme);
-            Robots.GrosRobot.TourneMoteur(MoteurID.GRPinceGaucheBas, Config.CurrentConfig.PositionGRPinceFruitBasGaucheFerme);
+            Robots.GrosRobot.MoteurPosition(MoteurID.GRPinceDroiteBas, Config.CurrentConfig.PositionGRPinceFruitBasDroiteFerme);
+            Robots.GrosRobot.MoteurPosition(MoteurID.GRPinceGaucheBas, Config.CurrentConfig.PositionGRPinceFruitBasGaucheFerme);
             if (tempo) Thread.Sleep(150);
         }
 
         public static void BouchonHautBas()
         {
-            Robots.GrosRobot.TourneMoteur(MoteurID.GRPinceDroiteBas, 500);
-            Robots.GrosRobot.TourneMoteur(MoteurID.GRPinceGaucheBas, 400);
+            Robots.GrosRobot.MoteurPosition(MoteurID.GRPinceDroiteBas, 500);
+            Robots.GrosRobot.MoteurPosition(MoteurID.GRPinceGaucheBas, 400);
 
             BrasFruits.OuvrirPinceHaut(false);
 #if false

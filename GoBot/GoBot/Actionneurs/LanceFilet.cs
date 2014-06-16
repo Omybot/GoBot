@@ -11,12 +11,12 @@ namespace GoBot.Actionneur
 
         public static void Armer()
         {
-            Robots.PetitRobot.TourneMoteur(MoteurID.PRLanceFilet, Config.CurrentConfig.PositionPRFiletArme);
+            Robots.PetitRobot.MoteurPosition(MoteurID.PRLanceFilet, Config.CurrentConfig.PositionPRFiletArme);
         }
 
         public static void Tirer()
         {
-            Robots.PetitRobot.TourneMoteur(MoteurID.PRLanceFilet, Config.CurrentConfig.PositionPRFiletTir);
+            Robots.PetitRobot.MoteurPosition(MoteurID.PRLanceFilet, Config.CurrentConfig.PositionPRFiletTir);
         }
     }
 }

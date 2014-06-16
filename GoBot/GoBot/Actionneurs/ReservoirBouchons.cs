@@ -19,12 +19,12 @@ namespace GoBot.Actionneurs
 
         public static void TendTissu()
         {
-            Robots.PetitRobot.TourneMoteur(MoteurID.PRTensionTissu, Config.CurrentConfig.PRTensionTissuTendu);
+            Robots.PetitRobot.MoteurPosition(MoteurID.PRTensionTissu, Config.CurrentConfig.PRTensionTissuTendu);
         }
 
         public static void RelacheTissu()
         {
-            Robots.PetitRobot.TourneMoteur(MoteurID.PRTensionTissu, Config.CurrentConfig.PRTensionTissuRelache);
+            Robots.PetitRobot.MoteurPosition(MoteurID.PRTensionTissu, Config.CurrentConfig.PRTensionTissuRelache);
         }		
     }
 }

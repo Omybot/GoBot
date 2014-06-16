@@ -189,7 +189,7 @@ namespace GoBot.IHM
         {
             if (boxMove.Checked)
             {
-                Trame trame = TrameFactory.TestConnexionMove(Robots.GrosRobot.TensionPack1 < 21 && Robots.GrosRobot.TensionPack2 < 21);
+                Trame trame = TrameFactory.TestConnexionMove(Robots.GrosRobot.TensionPack1 < Config.CurrentConfig.BatterieRobotOrange && Robots.GrosRobot.TensionPack2 < Config.CurrentConfig.BatterieRobotOrange);
                 Connexions.ConnexionMove.SendMessage(trame);
             }
             if (boxMiwi.Checked)
@@ -204,7 +204,7 @@ namespace GoBot.IHM
             }
             if (boxRecPi.Checked)
             {
-                Trame trame = TrameFactory.TestConnexionPi(Robots.PetitRobot.TensionPack1 < 21 && Robots.PetitRobot.TensionPack2 < 21);
+                Trame trame = TrameFactory.TestConnexionPi(Robots.PetitRobot.TensionPack1 < Config.CurrentConfig.BatterieRobotOrange && Robots.PetitRobot.TensionPack2 < Config.CurrentConfig.BatterieRobotOrange);
                 Connexions.ConnexionPi.SendMessage(trame);
             }
             if (boxRecBun.Checked)

@@ -238,6 +238,11 @@ namespace GoBot
                 connexion.SendMessage(TrameFactory.ServoEnvoiCoupleActive((ServomoteurID)id, coupleActive, carte));
             }
         }
+        private int coupleActuel;
+        public int CoupleActuel
+        {
+            get { return coupleActuel; }
+        }
         private int coupleMaximum;
         public int CoupleMaximum
         {
@@ -381,23 +386,25 @@ namespace GoBot
                 Thread.Sleep(10);
                 connexion.SendMessage(TrameFactory.ServoDemandePositionMinimum((ServomoteurID)id, carte));
                 Thread.Sleep(10);
-                connexion.SendMessage(TrameFactory.ServoDemandeTemperature((ServomoteurID)id, carte));
-                Thread.Sleep(10);
                 connexion.SendMessage(TrameFactory.ServoDemandeVersionFirmware((ServomoteurID)id, carte));
                 Thread.Sleep(10);
                 connexion.SendMessage(TrameFactory.ServoDemandeVitesseMax((ServomoteurID)id, carte));
-                Thread.Sleep(10);
-                connexion.SendMessage(TrameFactory.ServoDemandeTension((ServomoteurID)id, carte));
                 Thread.Sleep(30);
             }
 
+            connexion.SendMessage(TrameFactory.ServoDemandeTension((ServomoteurID)id, carte));
+            Thread.Sleep(10);
             connexion.SendMessage(TrameFactory.ServoDemandeMouvement((ServomoteurID)id, carte));
             Thread.Sleep(10);
             connexion.SendMessage(TrameFactory.ServoDemandePositionActuelle((ServomoteurID)id, carte));
             Thread.Sleep(10);
-            connexion.SendMessage(TrameFactory.ServoDemandeErreurs((ServomoteurID)id, carte));
-            Thread.Sleep(10);
             connexion.SendMessage(TrameFactory.ServoDemandeVitesseActuelle((ServomoteurID)id, carte));
+            Thread.Sleep(10);
+            connexion.SendMessage(TrameFactory.ServoDemandeCoupleActuel((ServomoteurID)id, carte));
+            Thread.Sleep(10);
+            connexion.SendMessage(TrameFactory.ServoDemandeTemperature((ServomoteurID)id, carte));
+            Thread.Sleep(10);
+            connexion.SendMessage(TrameFactory.ServoDemandeErreurs((ServomoteurID)id, carte));
             Thread.Sleep(10);
         }
 
@@ -484,9 +491,16 @@ namespace GoBot
                             break;
                         case (byte)FonctionServo.RetourVitesseActuelle:
                             vitesseActuelle = trame[4] * 256 + trame[5];
+                            if (vitesseActuelle > 1024)
+                                vitesseActuelle = 1024 - vitesseActuelle;
                             break;
                         case (byte)FonctionServo.RetourVitesseMax:
                             vitesseMax = trame[4] * 256 + trame[5];
+                            break;
+                        case (byte)FonctionServo.RetourCoupleCourant:
+                            coupleActuel = trame[4] * 256 + trame[5];
+                            if (coupleActuel > 1024)
+                                coupleActuel = 1024 - coupleActuel;
                             break;
                         case (byte)FonctionServo.RetourErreurs:
                             ErreurAngleLimit = (trame[4] == 1 ? true : false);

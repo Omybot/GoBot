@@ -87,6 +87,7 @@
             this.btnTeleportRSCentre = new System.Windows.Forms.Button();
             this.btnTeleportRPFace = new System.Windows.Forms.Button();
             this.btnTeleportRPCentre = new System.Windows.Forms.Button();
+            this.boxTrajectoire = new System.Windows.Forms.CheckBox();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxTable)).BeginInit();
             this.SuspendLayout();
             // 
@@ -128,7 +129,7 @@
             // boxObstacles
             // 
             this.boxObstacles.AutoSize = true;
-            this.boxObstacles.Location = new System.Drawing.Point(19, 176);
+            this.boxObstacles.Location = new System.Drawing.Point(19, 164);
             this.boxObstacles.Name = "boxObstacles";
             this.boxObstacles.Size = new System.Drawing.Size(73, 17);
             this.boxObstacles.TabIndex = 4;
@@ -664,11 +665,22 @@
             this.btnTeleportRPCentre.UseVisualStyleBackColor = true;
             this.btnTeleportRPCentre.Click += new System.EventHandler(this.btnTeleportRPCentre_Click);
             // 
+            // boxTrajectoire
+            // 
+            this.boxTrajectoire.AutoSize = true;
+            this.boxTrajectoire.Location = new System.Drawing.Point(19, 187);
+            this.boxTrajectoire.Name = "boxTrajectoire";
+            this.boxTrajectoire.Size = new System.Drawing.Size(76, 17);
+            this.boxTrajectoire.TabIndex = 62;
+            this.boxTrajectoire.Text = "Trajectoire";
+            this.boxTrajectoire.UseVisualStyleBackColor = true;
+            // 
             // PanelTable
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.Transparent;
+            this.Controls.Add(this.boxTrajectoire);
             this.Controls.Add(this.btnTeleportRSFace);
             this.Controls.Add(this.btnTeleportRSCentre);
             this.Controls.Add(this.btnTeleportRPFace);
@@ -798,5 +810,6 @@
         private System.Windows.Forms.Button btnTeleportRSCentre;
         private System.Windows.Forms.Button btnTeleportRPFace;
         private System.Windows.Forms.Button btnTeleportRPCentre;
+        private System.Windows.Forms.CheckBox boxTrajectoire;
     }
 }

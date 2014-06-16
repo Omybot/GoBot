@@ -102,12 +102,12 @@ namespace GoBot.Enchainements
             Robots.PetitRobot.Stop(StopMode.Freely);
 
             Robots.GrosRobot.ActionneurOnOff(ActionneurOnOffID.GRPompeFeu, false);
-            Robots.GrosRobot.TourneMoteur(MoteurID.GRPinceDroiteBas, 0);
-            Robots.GrosRobot.TourneMoteur(MoteurID.GRPinceDroiteHaut, 0);
-            Robots.GrosRobot.TourneMoteur(MoteurID.GRPinceGaucheBas, 0);
-            Robots.GrosRobot.TourneMoteur(MoteurID.GRPinceGaucheHaut, 0);
-            Robots.GrosRobot.TourneMoteur(MoteurID.GRPousseBouchon, 0);
-            Robots.GrosRobot.TourneMoteur(MoteurID.GREpauleFeu, 0);
+            Robots.GrosRobot.MoteurPosition(MoteurID.GRPinceDroiteBas, 0);
+            Robots.GrosRobot.MoteurPosition(MoteurID.GRPinceDroiteHaut, 0);
+            Robots.GrosRobot.MoteurPosition(MoteurID.GRPinceGaucheBas, 0);
+            Robots.GrosRobot.MoteurPosition(MoteurID.GRPinceGaucheHaut, 0);
+            Robots.GrosRobot.MoteurPosition(MoteurID.GRPousseBouchon, 0);
+            Robots.GrosRobot.MoteurPosition(MoteurID.GREpauleFeu, 0);
             Servomoteur servo = new Servomoteur(Carte.RecIO, (int)ServomoteurID.GRCanonInclinaison, 0);
             servo.CoupleActive = false; 
             servo = new Servomoteur(Carte.RecIO, (int)ServomoteurID.GRCanonInclinaison, 0);

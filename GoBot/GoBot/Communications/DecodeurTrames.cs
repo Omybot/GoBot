@@ -33,17 +33,11 @@ namespace GoBot.Communications
                             case FonctionIO.Debug:
                                 message = "Debug " + (int)trame[2];
                                 break;
-                            case FonctionIO.Moteur:
+                            case FonctionIO.MoteurPosition:
                                 message = "Moteur " + Nommeur.Nommer((MoteurID)trame[2]) + " position " + (trame[3] * 256 + trame[4]);
                                 break;
                             case FonctionIO.ActionneurOnOff:
                                 message = "Actionneur " + Nommeur.Nommer((ActionneurOnOffID)trame[2]) + (trame[3] > 0 ? " on" : " off");
-                                break;
-                            case FonctionIO.ReponseTension:
-                                message = "Tension batteries : Pack1 = " + (double)(trame[2] * 256 + trame[3]) / 100.0 + " V - Pack2 = " + (double)(trame[4] * 256 + trame[5]) / 100.0;
-                                break;
-                            case FonctionIO.DemandeTension:
-                                message = "Demande tension batteries";
                                 break;
                             case FonctionIO.ArmerJack:
                                 message = "Armage du jack";
@@ -68,10 +62,6 @@ namespace GoBot.Communications
                             case FonctionIO.Alimentation:
                                 byte valeurAlimentation = trame[2];
                                 message = "Envoi alimentation : " + (valeurAlimentation > 0 ? "On" : "Off");
-                                break;
-                            case FonctionIO.AlimentationCamera:
-                                byte valeurAlimentationCamera = trame[2];
-                                message = "Envoi alimentation camera : " + (valeurAlimentationCamera > 0 ? "On" : "Off");
                                 break;
                             case FonctionIO.RetourTestConnexion:
                                 double tension1 = (double)(trame[2] * 256 + trame[3]) / 100.0;
@@ -248,6 +238,12 @@ namespace GoBot.Communications
                                         break;
                                     case FonctionServo.DemandeErreurs:
                                         message = "Demande erreurs servo " + GoBot.Actions.Nommeur.Nommer((ServomoteurID)trame[3]);
+                                        break;
+                                    case FonctionServo.DemandeCoupleCourant:
+                                        message = "Demande couple courant servo " + GoBot.Actions.Nommeur.Nommer((ServomoteurID)trame[3]);
+                                        break;
+                                    case FonctionServo.RetourCoupleCourant:
+                                        message = "Retour servo " + GoBot.Actions.Nommeur.Nommer((ServomoteurID)trame[3]) + " couple courant : " + (trame[4] * 256 + trame[5]);
                                         break;
                                     case FonctionServo.RetourErreurs:
                                         String listeErreurs = "";
@@ -709,18 +705,6 @@ namespace GoBot.Communications
                                 int nbValeurs = trame[2];
                                 message = "Retour charge : " + nbValeurs + " valeurs";
                                 break;
-                            case FonctionPi.TestEmission:
-                                message = "Test d'émission n°" + trame[2];
-                                break;
-                            case FonctionPi.TestEmissionCorrompu:
-                                message = "Test d'émission n°" + trame[2] + " corrompu";
-                                break;
-                            case FonctionPi.TestEmissionPerdu:
-                                message = "Test d'émission perdu " + trame[2] + " à " + trame[3];
-                                break;
-                            case FonctionPi.TestEmissionReussi:
-                                message = "Test d'émission n°" + trame[2] + " réussi";
-                                break;
                             default:
                                 message = ((FonctionPi)trame[1]).ToString();
                                 break;
@@ -763,18 +747,6 @@ namespace GoBot.Communications
                             case FonctionBalise.Vitesse:
                                 int vitesse = trame[2] * 256 + trame[3];
                                 message = "Envoi vitesse pwm " + vitesse;
-                                break;
-                            case FonctionBalise.TestEmission:
-                                message = "Test d'émission n°" + trame[2];
-                                break;
-                            case FonctionBalise.TestEmissionCorrompu:
-                                message = "Test d'émission n°" + trame[2] + " corrompu";
-                                break;
-                            case FonctionBalise.TestEmissionPerdu:
-                                message = "Test d'émission perdu " + trame[2] + " à " + trame[3];
-                                break;
-                            case FonctionBalise.TestEmissionReussi:
-                                message = "Test d'émission n°" + trame[2] + " réussi";
                                 break;
                             default:
                                 message = ((FonctionBalise)trame[1]).ToString();

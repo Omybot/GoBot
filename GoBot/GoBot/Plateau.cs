@@ -226,7 +226,6 @@ namespace GoBot
             {
                 // Le timeout sur le Thread permet de vérifier chaque seconde si on est en train d'éteindre l'application pour couper le Thread.
                 while (!SemaphoreCollisions.WaitOne(1000) && !Config.Shutdown) ;
-                Console.WriteLine(" Test collisions");
                 Robots.PetitRobot.ObstacleTest();
                 Robots.GrosRobot.ObstacleTest();
             }

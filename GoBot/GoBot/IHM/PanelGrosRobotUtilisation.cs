@@ -74,25 +74,25 @@ namespace GoBot.IHM
         private void switchBoutonPousse_ChangementEtat(object sender, EventArgs e)
         {
             if (switchBoutonPinceDroiteBas.Actif)
-                Robots.GrosRobot.TourneMoteur(MoteurID.GRPousseBouchon, Config.CurrentConfig.PositionGRPousseBouchonFerme);
+                Robots.GrosRobot.MoteurPosition(MoteurID.GRPousseBouchon, Config.CurrentConfig.PositionGRPousseBouchonFerme);
             else
-                Robots.GrosRobot.TourneMoteur(MoteurID.GRPousseBouchon, Config.CurrentConfig.PositionGRPousseBouchonOuvert);
+                Robots.GrosRobot.MoteurPosition(MoteurID.GRPousseBouchon, Config.CurrentConfig.PositionGRPousseBouchonOuvert);
         }
 
         private void switchBoutonPinceDroite_ChangementEtat(object sender, EventArgs e)
         {
             if(switchBoutonPinceDroiteBas.Actif)
-                Robots.GrosRobot.TourneMoteur(MoteurID.GRPinceDroiteBas, Config.CurrentConfig.PositionGRPinceFruitBasDroiteOuvert);
+                Robots.GrosRobot.MoteurPosition(MoteurID.GRPinceDroiteBas, Config.CurrentConfig.PositionGRPinceFruitBasDroiteOuvert);
             else
-                Robots.GrosRobot.TourneMoteur(MoteurID.GRPinceDroiteBas, Config.CurrentConfig.PositionGRPinceFruitBasDroiteFerme);
+                Robots.GrosRobot.MoteurPosition(MoteurID.GRPinceDroiteBas, Config.CurrentConfig.PositionGRPinceFruitBasDroiteFerme);
         }
 
         private void switchBoutonPinceGauche_ChangementEtat(object sender, EventArgs e)
         {
             if (switchBoutonPinceGaucheBas.Actif)
-                Robots.GrosRobot.TourneMoteur(MoteurID.GRPinceGaucheBas, Config.CurrentConfig.PositionGRPinceFruitBasGaucheOuvert);
+                Robots.GrosRobot.MoteurPosition(MoteurID.GRPinceGaucheBas, Config.CurrentConfig.PositionGRPinceFruitBasGaucheOuvert);
             else
-                Robots.GrosRobot.TourneMoteur(MoteurID.GRPinceGaucheBas, Config.CurrentConfig.PositionGRPinceFruitBasGaucheFerme);
+                Robots.GrosRobot.MoteurPosition(MoteurID.GRPinceGaucheBas, Config.CurrentConfig.PositionGRPinceFruitBasGaucheFerme);
         }
 
         private void btnCoudeGo_Click(object sender, EventArgs e)
@@ -242,43 +242,43 @@ namespace GoBot.IHM
         {
             if (switchBoutonPinceBas.Actif)
             {
-                Robots.GrosRobot.TourneMoteur(MoteurID.GRPinceDroiteBas, Config.CurrentConfig.PositionGRPinceFruitBasDroiteFerme);
-                Robots.GrosRobot.TourneMoteur(MoteurID.GRPinceGaucheBas, Config.CurrentConfig.PositionGRPinceFruitBasGaucheFerme);
+                Robots.GrosRobot.MoteurPosition(MoteurID.GRPinceDroiteBas, Config.CurrentConfig.PositionGRPinceFruitBasDroiteFerme);
+                Robots.GrosRobot.MoteurPosition(MoteurID.GRPinceGaucheBas, Config.CurrentConfig.PositionGRPinceFruitBasGaucheFerme);
             }
             else
             {
-                Robots.GrosRobot.TourneMoteur(MoteurID.GRPinceDroiteBas, Config.CurrentConfig.PositionGRPinceFruitBasDroiteOuvert);
-                Robots.GrosRobot.TourneMoteur(MoteurID.GRPinceGaucheBas, Config.CurrentConfig.PositionGRPinceFruitBasGaucheOuvert);
+                Robots.GrosRobot.MoteurPosition(MoteurID.GRPinceDroiteBas, Config.CurrentConfig.PositionGRPinceFruitBasDroiteOuvert);
+                Robots.GrosRobot.MoteurPosition(MoteurID.GRPinceGaucheBas, Config.CurrentConfig.PositionGRPinceFruitBasGaucheOuvert);
             }
         }
 
         private void switchBoutonPinceDroiteHaut_ChangementEtat(object sender, EventArgs e)
         {
             if (switchBoutonPinceDroiteHaut.Actif)
-                Robots.GrosRobot.TourneMoteur(MoteurID.GRPinceDroiteHaut, Config.CurrentConfig.PositionGRPinceFruitHautDroiteFerme);
+                Robots.GrosRobot.MoteurPosition(MoteurID.GRPinceDroiteHaut, Config.CurrentConfig.PositionGRPinceFruitHautDroiteFerme);
             else
-                Robots.GrosRobot.TourneMoteur(MoteurID.GRPinceDroiteHaut, Config.CurrentConfig.PositionGRPinceFruitHautDroiteOuvert);
+                Robots.GrosRobot.MoteurPosition(MoteurID.GRPinceDroiteHaut, Config.CurrentConfig.PositionGRPinceFruitHautDroiteOuvert);
         }
 
         private void switchBoutonPinceGaucheHaut_ChangementEtat(object sender, EventArgs e)
         {
             if (switchBoutonPinceGaucheHaut.Actif)
-                Robots.GrosRobot.TourneMoteur(MoteurID.GRPinceGaucheHaut, Config.CurrentConfig.PositionGRPinceFruitHautGaucheFerme);
+                Robots.GrosRobot.MoteurPosition(MoteurID.GRPinceGaucheHaut, Config.CurrentConfig.PositionGRPinceFruitHautGaucheFerme);
             else
-                Robots.GrosRobot.TourneMoteur(MoteurID.GRPinceGaucheHaut, Config.CurrentConfig.PositionGRPinceFruitHautGaucheOuvert);
+                Robots.GrosRobot.MoteurPosition(MoteurID.GRPinceGaucheHaut, Config.CurrentConfig.PositionGRPinceFruitHautGaucheOuvert);
         }
 
         private void switchBoutonPinceHaut_ChangementEtat(object sender, EventArgs e)
         {
             if (switchBoutonPinceHaut.Actif)
             {
-                Robots.GrosRobot.TourneMoteur(MoteurID.GRPinceDroiteHaut, Config.CurrentConfig.PositionGRPinceFruitHautDroiteFerme);
-                Robots.GrosRobot.TourneMoteur(MoteurID.GRPinceGaucheHaut, Config.CurrentConfig.PositionGRPinceFruitHautGaucheFerme);
+                Robots.GrosRobot.MoteurPosition(MoteurID.GRPinceDroiteHaut, Config.CurrentConfig.PositionGRPinceFruitHautDroiteFerme);
+                Robots.GrosRobot.MoteurPosition(MoteurID.GRPinceGaucheHaut, Config.CurrentConfig.PositionGRPinceFruitHautGaucheFerme);
             }
             else
             {
-                Robots.GrosRobot.TourneMoteur(MoteurID.GRPinceDroiteHaut, Config.CurrentConfig.PositionGRPinceFruitHautDroiteOuvert);
-                Robots.GrosRobot.TourneMoteur(MoteurID.GRPinceGaucheHaut, Config.CurrentConfig.PositionGRPinceFruitHautGaucheOuvert);
+                Robots.GrosRobot.MoteurPosition(MoteurID.GRPinceDroiteHaut, Config.CurrentConfig.PositionGRPinceFruitHautDroiteOuvert);
+                Robots.GrosRobot.MoteurPosition(MoteurID.GRPinceGaucheHaut, Config.CurrentConfig.PositionGRPinceFruitHautGaucheOuvert);
             }
         }
 

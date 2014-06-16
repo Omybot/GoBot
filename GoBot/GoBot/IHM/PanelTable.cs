@@ -822,6 +822,19 @@ namespace GoBot.IHM
                                     g.DrawLine(penBlancFleche, (Point)RealToScreenPosition(positionDepart), positionFin);
                                 }
 
+                                if (boxTrajectoire.Checked && Robots.GrosRobot.HistoriqueCoordonnees != null)
+                                {
+                                    for (int i = 0; i < Robots.GrosRobot.HistoriqueCoordonnees.Count; i++)
+                                    {
+                                        int couleur = (int)(i * 255 / (double)Robots.GrosRobot.HistoriqueCoordonnees.Count);
+                                        PointReel point = RealToScreenPosition(Robots.GrosRobot.HistoriqueCoordonnees[i].Coordonnees);
+                                        using (Brush b = new SolidBrush(Color.FromArgb(couleur, couleur, couleur)))
+                                        {
+                                            g.FillEllipse(b, (int)point.X - 3, (int)point.Y - 3, 6, 6);
+                                        }
+                                    }
+                                }
+
                                 pictureBoxTable.Image = bmp;
                                 TableDessinee(bmp);
                             }

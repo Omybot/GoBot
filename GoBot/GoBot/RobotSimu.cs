@@ -86,6 +86,11 @@ namespace GoBot
             timerDeplacement = new System.Timers.Timer(IntervalleRafraichissementPosition);
             timerDeplacement.Elapsed += new ElapsedEventHandler(timerDeplacement_Elapsed);
             timerDeplacement.Start();
+
+            timerPositions = new System.Timers.Timer(100);
+            timerPositions.Elapsed += new ElapsedEventHandler(timerPositions_Elapsed);
+            timerPositions.Start();
+
             SemDeplacement = new Semaphore(1, 1);
             SensDep = SensAR.Avant;
 
@@ -93,6 +98,13 @@ namespace GoBot
             Nom = "GrosRobot";
             RecallageEnCours = false;
             Rand = new Random(DateTime.Now.Millisecond);
+        }
+
+        void timerPositions_Elapsed(object sender, ElapsedEventArgs e)
+        {
+            HistoriqueCoordonnees.Add(new Position(new Angle(Position.Angle), new PointReel(Position.Coordonnees.X, Position.Coordonnees.Y)));
+            while (HistoriqueCoordonnees.Count > 3000)
+                HistoriqueCoordonnees.RemoveAt(0);
         }
 
         public double DistanceFreinageActuelle
@@ -306,6 +318,7 @@ namespace GoBot
         public override void Init()
         {
             Historique = new Historique(IDRobot);
+            HistoriqueCoordonnees = new List<Position>();
             if (Plateau.NotreCouleur == Plateau.CouleurGaucheRouge)
             {
                 if (this == Robots.PetitRobot)
@@ -352,10 +365,11 @@ namespace GoBot
         }
 
         System.Timers.Timer timerDeplacement;
+        System.Timers.Timer timerPositions;
 
-        public override void TourneMoteur(MoteurID moteur, int vitesse)
+        public override void MoteurPosition(MoteurID moteur, int vitesse)
         {
-            base.TourneMoteur(moteur, vitesse);
+            base.MoteurPosition(moteur, vitesse);
 
             Historique.AjouterAction(new ActionMoteur(this, vitesse, moteur));
         }

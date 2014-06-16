@@ -69,13 +69,8 @@ namespace GoBot
             Position = new Calculs.Position(new Angle(270, AnglyeType.Degre), new PointReel(200 + 160, 150));
             PositionCible = null;
 
+            HistoriqueCoordonnees = new List<Position>();
             Connexion.SendMessage(TrameFactory.DemandePositionContinue(100, this));
-        }
-
-        public void DemandeTension()
-        {
-            Trame t = TrameFactory.DemandeTension();
-            Connexions.ConnexionIO.SendMessage(t);
         }
 
         public override bool DemandeCapteurOnOff(CapteurOnOff capteur, bool attendre = true)
@@ -158,6 +153,10 @@ namespace GoBot
                         Position = new Position(new Angle(teta, AnglyeType.Degre), new PointReel(x, y));
                         DateRefreshPos = DateTime.Now;
                         SemaphoresMove[FonctionMove.DemandePositionXYTeta].Release();
+
+                        HistoriqueCoordonnees.Add(new Position(teta, new PointReel(x, y)));
+                        while (HistoriqueCoordonnees.Count > 3000)
+                            HistoriqueCoordonnees.RemoveAt(0);
                     }
                     catch (Exception)
                     {
@@ -215,12 +214,6 @@ namespace GoBot
                     BrasFeux.RangerFeu();
                     VitesseDeplacement = Config.CurrentConfig.GRVitesseLigneRapide;
                 }
-                if (trameRecue[1] == (byte)FonctionIO.ReponseTensionPompe)
-                {
-                    courantPompe = trameRecue[2] * 256 + trameRecue[3];
-                    if(semCourantPompe != null)
-                        semCourantPompe.Release();
-                }
                 if (trameRecue[1] == (byte)FonctionIO.RetourCapteurOnOff)
                 {
                     CapteurOnOff capteur = (CapteurOnOff)trameRecue[2];
@@ -230,12 +223,6 @@ namespace GoBot
                 }
 
                 if (trameRecue[1] == (byte)FonctionIO.RetourTestConnexion)
-                {
-                    TensionPack1 = (double)(trameRecue[2] * 256 + trameRecue[3]) / 100.0;
-                    TensionPack2 = (double)(trameRecue[4] * 256 + trameRecue[5]) / 100.0;
-                }
-
-                if (trameRecue[1] == (byte)FonctionIO.ReponseTension)
                 {
                     TensionPack1 = (double)(trameRecue[2] * 256 + trameRecue[3]) / 100.0;
                     TensionPack2 = (double)(trameRecue[4] * 256 + trameRecue[5]) / 100.0;
@@ -370,12 +357,6 @@ namespace GoBot
 
             if (attendre)
                 SemaphoresMove[FonctionMove.FinDeplacement].WaitOne();
-        }
-
-        public void GoToXY(int x, int y)
-        {
-            Trame trame = TrameFactory.GotoXY(x, y, this);
-            Connexion.SendMessage(trame);
         }
 
         public override void Recallage(SensAR sens, bool attendre = true)
@@ -528,41 +509,22 @@ namespace GoBot
 
         #endregion
 
-        public override void TourneMoteur(MoteurID moteur, int position)
+        public override void MoteurPosition(MoteurID moteur, int position)
         {
-            base.TourneMoteur(moteur, position);
+            base.MoteurPosition(moteur, position);
 
             if (this == Robots.GrosRobot)
             {
-                Trame trame = TrameFactory.MoteurVitesse(moteur, position);
+                Trame trame = TrameFactory.MoteurPosition(moteur, position);
                 Connexions.ConnexionIO.SendMessage(trame);
             }
             else
             {
-                Trame trame = TrameFactory.MoteurVitesse(moteur, position, true);
+                Trame trame = TrameFactory.MoteurPosition(moteur, position, true);
                 Connexion.SendMessage(trame);
             }
 
             Historique.AjouterAction(new ActionMoteur(this, position, moteur));
-        }
-
-        Semaphore semCourantPompe;
-        int courantPompe;
-        public int DemandeCourantPompe(bool attendre = true)
-        {
-            semCourantPompe = new Semaphore(0, int.MaxValue);
-            Trame trame = TrameFactory.DemandeCourantPompe();
-            Connexions.ConnexionIO.SendMessage(trame);
-
-            if(attendre)
-                semCourantPompe.WaitOne(300);
-
-            return courantPompe;
-        }
-
-        public bool PompeAspireQqchose()
-        {
-            return DemandeCourantPompe() > 1000;
         }
 
         public override void AlimentationPuissance(bool on)

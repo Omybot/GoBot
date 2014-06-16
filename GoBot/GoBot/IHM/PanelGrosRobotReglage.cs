@@ -93,7 +93,7 @@ namespace GoBot.IHM
 
         private void btnFeuxOkEpaule_Click(object sender, EventArgs e)
         {
-            Robots.GrosRobot.TourneMoteur(MoteurID.GREpauleFeu, (int)numFeuxEpaule.Value);
+            Robots.GrosRobot.MoteurPosition(MoteurID.GREpauleFeu, (int)numFeuxEpaule.Value);
         }
 
         private void btnFeuxEpauleSave_Click(object sender, EventArgs e)
@@ -105,7 +105,7 @@ namespace GoBot.IHM
 
         private void btnOkPinceHautGauche_Click(object sender, EventArgs e)
         {
-            Robots.GrosRobot.TourneMoteur(MoteurID.GRPinceGaucheHaut, (int)numPosPinceHautGauche.Value);
+            Robots.GrosRobot.MoteurPosition(MoteurID.GRPinceGaucheHaut, (int)numPosPinceHautGauche.Value);
         }
 
         private void btnOuvertPinceHautGauche_Click(object sender, EventArgs e)
@@ -122,7 +122,7 @@ namespace GoBot.IHM
 
         private void btnOkPinceHautDroite_Click(object sender, EventArgs e)
         {
-            Robots.GrosRobot.TourneMoteur(MoteurID.GRPinceDroiteHaut, (int)numPosPinceHautDroite.Value);
+            Robots.GrosRobot.MoteurPosition(MoteurID.GRPinceDroiteHaut, (int)numPosPinceHautDroite.Value);
         }
 
         private void btnOuvertPinceHautDroite_Click(object sender, EventArgs e)
@@ -139,7 +139,7 @@ namespace GoBot.IHM
 
         private void btnOkPinceBasGauche_Click(object sender, EventArgs e)
         {
-            Robots.GrosRobot.TourneMoteur(MoteurID.GRPinceGaucheBas, (int)numPosPinceBasGauche.Value);
+            Robots.GrosRobot.MoteurPosition(MoteurID.GRPinceGaucheBas, (int)numPosPinceBasGauche.Value);
         }
 
         private void btnOuvertPinceBasGauche_Click(object sender, EventArgs e)
@@ -156,7 +156,7 @@ namespace GoBot.IHM
 
         private void btnOkPinceBasDroite_Click(object sender, EventArgs e)
         {
-            Robots.GrosRobot.TourneMoteur(MoteurID.GRPinceDroiteBas, (int)numPosPinceBasDroite.Value);
+            Robots.GrosRobot.MoteurPosition(MoteurID.GRPinceDroiteBas, (int)numPosPinceBasDroite.Value);
         }
 
         private void btnOuvertPinceBasDroite_Click(object sender, EventArgs e)
@@ -173,7 +173,7 @@ namespace GoBot.IHM
 
         private void btnOkPousseBouchon_Click(object sender, EventArgs e)
         {
-            Robots.GrosRobot.TourneMoteur(MoteurID.GRPousseBouchon, (int)numPousseBouchon.Value);
+            Robots.GrosRobot.MoteurPosition(MoteurID.GRPousseBouchon, (int)numPousseBouchon.Value);
         }
 
         private void btnPousseBouchonOuvert_Click(object sender, EventArgs e)

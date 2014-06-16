@@ -33,6 +33,19 @@ namespace GoBot
 
         public int AfficheDetailTraj { get; set; }
 
+        // Batteries
+
+        public double BatterieRobotVert { get; set; } // 23
+        public double BatterieRobotOrange { get; set; } // 22
+        public double BatterieRobotRouge { get; set; } // 21
+        public double BatterieRobotCritique { get; set; } // 3
+
+
+        public double BatterieBaliseVert { get; set; } // 8
+        public double BatterieBaliseOrange { get; set; } // 7
+        public double BatterieBaliseRouge { get; set; } // 6
+        public double BatterieBaliseCritique { get; set; } // 3
+
         // Zone camera
 
         public int CameraXMin { get; set; }

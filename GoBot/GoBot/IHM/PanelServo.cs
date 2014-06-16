@@ -48,10 +48,23 @@ namespace GoBot.IHM
             Actualisation(true);
         }
 
+        private int cptTemp = 0;
         private void DessinePosition()
         {
-            ctrlGraphiqueHisto.AjouterPoint("Position", servo.PositionActuelle, Color.DarkOrchid);
-            ctrlGraphiqueHisto.DessineCourbes();
+            cptTemp++;
+
+            ctrlGraphiquePosition.AjouterPoint("Position", servo.PositionActuelle, Color.DarkOrchid);
+            ctrlGraphiquePosition.DessineCourbes();
+            if(cptTemp == 10)
+            {
+                ctrlGraphiqueTemperature.AjouterPoint("Temperature", servo.Temperature, Color.DarkBlue);
+                ctrlGraphiqueTemperature.DessineCourbes();
+                cptTemp = 0;
+            }
+            ctrlGraphiqueVitesse.AjouterPoint("Vitesse", servo.VitesseActuelle, Color.DarkGreen);
+            ctrlGraphiqueVitesse.DessineCourbes();
+            ctrlGraphiqueCouple.AjouterPoint("Couple", servo.CoupleActuel, Color.DarkRed);
+            ctrlGraphiqueCouple.DessineCourbes();
 
             Bitmap bmp = new Bitmap(160, 160);
             Graphics g = Graphics.FromImage(bmp);
@@ -143,6 +156,7 @@ namespace GoBot.IHM
             lblTension.Text = servo.Tension + " V";
             lblPositionActuelle.Text = servo.PositionActuelle.ToString();
             lblVitesseActuelle.Text = servo.VitesseActuelle.ToString();
+            lblCoupleActuel.Text = servo.CoupleActuel.ToString();
 
             boxLEDAngleLimit.Checked = servo.AlarmeLEDAngleLimit;
             boxLEDChecksum.Checked = servo.AlarmeLEDChecksum;

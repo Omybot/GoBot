@@ -28,22 +28,14 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.panelServo = new GoBot.IHM.PanelServo();
             this.btnChercher = new System.Windows.Forms.Button();
             this.listBoxServos = new System.Windows.Forms.ListBox();
+            this.panelServo = new GoBot.IHM.PanelServo();
             this.SuspendLayout();
-            // 
-            // panelServo1
-            // 
-            this.panelServo.BackColor = System.Drawing.Color.Transparent;
-            this.panelServo.Location = new System.Drawing.Point(273, 44);
-            this.panelServo.Name = "panelServo1";
-            this.panelServo.Size = new System.Drawing.Size(814, 467);
-            this.panelServo.TabIndex = 0;
             // 
             // btnChercher
             // 
-            this.btnChercher.Location = new System.Drawing.Point(24, 44);
+            this.btnChercher.Location = new System.Drawing.Point(6, 42);
             this.btnChercher.Name = "btnChercher";
             this.btnChercher.Size = new System.Drawing.Size(134, 23);
             this.btnChercher.TabIndex = 1;
@@ -54,11 +46,19 @@
             // listBoxServos
             // 
             this.listBoxServos.FormattingEnabled = true;
-            this.listBoxServos.Location = new System.Drawing.Point(24, 87);
+            this.listBoxServos.Location = new System.Drawing.Point(6, 85);
             this.listBoxServos.Name = "listBoxServos";
             this.listBoxServos.Size = new System.Drawing.Size(134, 186);
             this.listBoxServos.TabIndex = 2;
             this.listBoxServos.SelectedValueChanged += new System.EventHandler(this.listBoxServos_SelectedValueChanged);
+            // 
+            // panelServo
+            // 
+            this.panelServo.BackColor = System.Drawing.Color.Transparent;
+            this.panelServo.Location = new System.Drawing.Point(159, 42);
+            this.panelServo.Name = "panelServo";
+            this.panelServo.Size = new System.Drawing.Size(1040, 495);
+            this.panelServo.TabIndex = 0;
             // 
             // PanelTestServos
             // 

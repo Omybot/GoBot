@@ -44,15 +44,6 @@ namespace GoBot.Communications
             return new Trame(tab);
         }
 
-        static public Trame DemandeTension()
-        {
-            byte[] tab = new byte[2];
-            tab[0] = (byte)Carte.RecIO;
-            tab[1] = (byte)FonctionIO.DemandeTension;
-
-            return new Trame(tab);
-        }
-
         static public Trame CoupureAlim(bool allume)
         {
             byte[] tab = new byte[3];
@@ -90,14 +81,14 @@ namespace GoBot.Communications
             return new Trame(tab);
         }
 
-        static public Trame MoteurVitesse(MoteurID moteur, int vitesse, bool petitRobot = false)
+        static public Trame MoteurPosition(MoteurID moteur, int position, bool petitRobot = false)
         {
             byte[] tab = new byte[5];
             tab[0] = (byte)Carte.RecIO;
-            tab[1] = (byte)FonctionIO.Moteur;
+            tab[1] = (byte)FonctionIO.MoteurPosition;
             tab[2] = (byte)moteur;
-            tab[3] = (byte)ByteDivide(vitesse, true);
-            tab[4] = (byte)ByteDivide(vitesse, false);
+            tab[3] = (byte)ByteDivide(position, true);
+            tab[4] = (byte)ByteDivide(position, false);
 
             if (petitRobot)
             {
@@ -200,20 +191,6 @@ namespace GoBot.Communications
             tab[5] = (byte)ByteDivide(rayon, false);
             tab[6] = (byte)ByteDivide((int)(angle * 100), true);
             tab[7] = (byte)ByteDivide((int)(angle * 100), false);
-
-            Trame retour = new Trame(tab);
-            return retour;
-        }
-
-        static public Trame GotoXY(int x, int y, Robot robot)
-        {
-            byte[] tab = new byte[6];
-            tab[0] = (byte)robot.Carte;
-            tab[1] = (byte)FonctionMove.GoToXY;
-            tab[2] = (byte)ByteDivide(x, true);
-            tab[3] = (byte)ByteDivide(x, false);
-            tab[4] = (byte)ByteDivide(y, true);
-            tab[5] = (byte)ByteDivide(y, false);
 
             Trame retour = new Trame(tab);
             return retour;
@@ -438,32 +415,6 @@ namespace GoBot.Communications
             return retour;
         }
 
-        static public Trame TestEmission(Carte carte, byte id)
-        {
-            byte[] tab = new byte[19];
-            tab[0] = (byte)carte;
-            tab[1] = (byte)FonctionBalise.TestEmission;
-            tab[2] = id;
-            tab[3] = 0x00;
-            tab[4] = 0x01;
-            tab[5] = 0x02;
-            tab[6] = 0x03;
-            tab[7] = 0x04;
-            tab[8] = 0x05;
-            tab[9] = 0x06;
-            tab[10] = 0x07;
-            tab[11] = 0x08;
-            tab[12] = 0x09;
-            tab[13] = 0x0A;
-            tab[14] = 0x0B;
-            tab[15] = 0x0C;
-            tab[16] = 0x0D;
-            tab[17] = 0x0E;
-            tab[18] = 0x0F;
-
-            return new Trame(tab);
-        }
-
         #region Servomoteur
 
         static public Trame ServoDemandeErreurs(ServomoteurID servo, Carte carte = Carte.RecIO)
@@ -483,14 +434,6 @@ namespace GoBot.Communications
             tab[1] = (byte)FonctionIO.CommandeServo;
             tab[2] = (byte)FonctionServo.DemandePositionCible;
             tab[3] = (byte)servo;
-            return new Trame(tab);
-        }
-
-        static public Trame DemandeCourantPompe()
-        {
-            byte[] tab = new byte[2];
-            tab[0] = (byte)Carte.RecIO;
-            tab[1] = (byte)FonctionIO.DemandeCourantPompe;
             return new Trame(tab);
         }
 
@@ -852,6 +795,16 @@ namespace GoBot.Communications
             tab[0] = (byte)carte;
             tab[1] = (byte)FonctionIO.CommandeServo;
             tab[2] = (byte)FonctionServo.DemandeVitesseActuelle;
+            tab[3] = (byte)servo;
+            return new Trame(tab);
+        }
+
+        static public Trame ServoDemandeCoupleActuel(ServomoteurID servo, Carte carte = Carte.RecIO)
+        {
+            byte[] tab = new byte[4];
+            tab[0] = (byte)carte;
+            tab[1] = (byte)FonctionIO.CommandeServo;
+            tab[2] = (byte)FonctionServo.DemandeCoupleCourant;
             tab[3] = (byte)servo;
             return new Trame(tab);
         }

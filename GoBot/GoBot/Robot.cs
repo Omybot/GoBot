@@ -33,6 +33,8 @@ namespace GoBot
         public int Largeur { get; set; }
         public int Rayon { get { return (int)Math.Sqrt(Longueur * Longueur + Largeur * Largeur) / 2; } }
 
+        public List<Position> HistoriqueCoordonnees { get; protected set; }
+
         public List<byte> ServomoteursConnectes { get; protected set; }
 
         public String Nom { get; set; }
@@ -105,7 +107,7 @@ namespace GoBot
 
         public abstract void ServoVitesse(ServomoteurID servo, int vitesse);
 
-        public virtual void TourneMoteur(MoteurID moteur, int vitesse)
+        public virtual void MoteurPosition(MoteurID moteur, int vitesse)
         {
             if (MoteurTourne.ContainsKey(moteur))
                 MoteurTourne[moteur] = vitesse == 0 ? false : true;
@@ -342,7 +344,6 @@ namespace GoBot
                         }
                     }
                 }
-                Console.WriteLine("Déblocage départ : " + (DateTime.Now - debut).TotalMilliseconds + "ms");
             }
 
             Node finNode = Graph.ClosestNode(x, y, 0, out distance, false);
@@ -374,14 +375,6 @@ namespace GoBot
 
                 }
 
-                if (this == Robots.PetitRobot)
-                {
-                    Console.WriteLine("1PR " + (DateTime.Now - debut).TotalMilliseconds + "ms " + i);
-                }
-                else
-                    Console.WriteLine("1GR " + (DateTime.Now - debut).TotalMilliseconds + "ms " + i);
-                debut = DateTime.Now;
-
                 // Le point à i*10 mm devant nous est reliable au graph, on cherche à l'atteindre
                 if (nbPointsArrivee > 0)
                 {
@@ -403,8 +396,6 @@ namespace GoBot
                 else
                     franchissable = false;
 
-                Console.WriteLine("2 " + (DateTime.Now - debut).TotalMilliseconds);
-                debut = DateTime.Now;
                 // Si toujours pas, on teste en marche arrière
                 if (!franchissable)
                 {
@@ -431,8 +422,6 @@ namespace GoBot
                         }
                     }
                 }
-                Console.WriteLine("3 " + (DateTime.Now - debut).TotalMilliseconds);
-                debut = DateTime.Now;
 
                 // Si le semgent entre notre position et le graph relié au graph est parcourable on y va !
                 if (franchissable)
@@ -445,10 +434,6 @@ namespace GoBot
                     debutNode = new Node(Position.Coordonnees.X, Position.Coordonnees.Y, 0);
                     nbPointsDepart = AddNode(Graph, debutNode, 600);
                 }
-                Console.WriteLine("4 " + (DateTime.Now - debut).TotalMilliseconds);
-                debut = DateTime.Now;
-
-                Console.WriteLine("Déblocage arrivée : " + (DateTime.Now - debut).TotalMilliseconds + "ms");
             }
 
             // Teste s'il est possible d'aller directement à la fin sans passer par le graph

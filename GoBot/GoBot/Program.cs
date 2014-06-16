@@ -36,6 +36,8 @@ namespace GoBot
                 return;
             }
 
+            bool lancement = true;
+#if RELEASE
             SplashScreen.SetMessage("GoBot recherche\ndes mises à jour...", Color.Black);
             String versionCourante = Application.ProductVersion.Substring(0, Application.ProductVersion.LastIndexOf('.'));
             String derniereVersion;
@@ -55,7 +57,6 @@ namespace GoBot
                 Thread.Sleep(1000);
             }
 
-            bool lancement = true;
             if (versionCourante != derniereVersion)
             {
                 lancement = false;
@@ -84,6 +85,7 @@ namespace GoBot
                     lancement = true;
                 }
             }
+#endif
 
             if(lancement)
             {

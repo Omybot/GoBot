@@ -25,7 +25,7 @@ namespace GoBot.Actions
 
         void IAction.Executer()
         {
-            robot.TourneMoteur(moteur, vitesse);
+            robot.MoteurPosition(moteur, vitesse);
         }
 
         public System.Drawing.Image Image
