@@ -99,6 +99,16 @@ namespace GoBot.Communications
             return new Trame(tab);
         }
 
+        static public Trame ChangementBaudrate(ServoBaudrate baudrate)
+        {
+            byte[] tab = new byte[3];
+            tab[0] = (byte)Carte.RecIO;
+            tab[1] = (byte)FonctionIO.ChangementBaudrateSerie;
+            tab[2] = (byte)baudrate;
+
+            return new Trame(tab);
+        }
+
         static public Trame Deplacer(SensAR sens, int distance, Robot robot)
         {
             byte[] tab = new byte[5];
@@ -449,16 +459,6 @@ namespace GoBot.Communications
             return new Trame(tab);
         }
 
-        static public Trame ServoDemandeBaudrate(ServomoteurID servo, Carte carte = Carte.RecIO)
-        {
-            byte[] tab = new byte[4];
-            tab[0] = (byte)carte;
-            tab[1] = (byte)FonctionIO.CommandeServo;
-            tab[2] = (byte)FonctionServo.DemandeBaudrate;
-            tab[3] = (byte)servo;
-            return new Trame(tab);
-        }
-
         static public Trame ServoEnvoiBaudrate(ServomoteurID servo, ServoBaudrate baud, Carte carte = Carte.RecIO)
         {
             byte[] tab = new byte[5];
@@ -489,15 +489,6 @@ namespace GoBot.Communications
             tab[3] = (byte)servo;
             tab[4] = ByteDivide(vitesse, true);
             tab[5] = ByteDivide(vitesse, false);
-            return new Trame(tab);
-        }
-
-        static public Trame ServoDemandeId(Carte carte = Carte.RecIO)
-        {
-            byte[] tab = new byte[3];
-            tab[0] = (byte)carte;
-            tab[1] = (byte)FonctionIO.CommandeServo;
-            tab[2] = (byte)FonctionServo.DemandeId;
             return new Trame(tab);
         }
 
@@ -544,6 +535,49 @@ namespace GoBot.Communications
             return new Trame(tab);
         }
 
+        static public Trame ServoEnvoiTensionMax(ServomoteurID servo, double tension, Carte carte = Carte.RecIO)
+        {
+            byte[] tab = new byte[5];
+            tab[0] = (byte)carte;
+            tab[1] = (byte)FonctionIO.CommandeServo;
+            tab[2] = (byte)FonctionServo.EnvoiTensionMax;
+            tab[3] = (byte)servo;
+            tab[4] = (byte)(tension * 10);
+            return new Trame(tab);
+        }
+
+        static public Trame ServoDemandeTemperatureMax(ServomoteurID servo, Carte carte = Carte.RecIO)
+        {
+            byte[] tab = new byte[4];
+            tab[0] = (byte)carte;
+            tab[1] = (byte)FonctionIO.CommandeServo;
+            tab[2] = (byte)FonctionServo.DemandeTemperatureMax;
+            tab[3] = (byte)servo;
+            return new Trame(tab);
+        }
+
+        static public Trame ServoEnvoiTemperatureMax(ServomoteurID servo, int temperature, Carte carte = Carte.RecIO)
+        {
+            byte[] tab = new byte[5];
+            tab[0] = (byte)carte;
+            tab[1] = (byte)FonctionIO.CommandeServo;
+            tab[2] = (byte)FonctionServo.EnvoiTemperatureMax;
+            tab[3] = (byte)servo;
+            tab[4] = (byte)temperature;
+            return new Trame(tab);
+        }
+
+        static public Trame ServoEnvoiTensionMin(ServomoteurID servo, double tension, Carte carte = Carte.RecIO)
+        {
+            byte[] tab = new byte[5];
+            tab[0] = (byte)carte;
+            tab[1] = (byte)FonctionIO.CommandeServo;
+            tab[2] = (byte)FonctionServo.EnvoiTensionMin;
+            tab[3] = (byte)servo;
+            tab[4] = (byte)(tension * 10);
+            return new Trame(tab);
+        }
+
         static public Trame ServoDemandeCoupleActive(ServomoteurID servo, Carte carte = Carte.RecIO)
         {
             byte[] tab = new byte[4];
@@ -581,6 +615,26 @@ namespace GoBot.Communications
             tab[0] = (byte)carte;
             tab[1] = (byte)FonctionIO.CommandeServo;
             tab[2] = (byte)FonctionServo.DemandeTension;
+            tab[3] = (byte)servo;
+            return new Trame(tab);
+        }
+
+        static public Trame ServoDemandeTensionMin(ServomoteurID servo, Carte carte = Carte.RecIO)
+        {
+            byte[] tab = new byte[4];
+            tab[0] = (byte)carte;
+            tab[1] = (byte)FonctionIO.CommandeServo;
+            tab[2] = (byte)FonctionServo.DemandeTensionMin;
+            tab[3] = (byte)servo;
+            return new Trame(tab);
+        }
+
+        static public Trame ServoDemandeTensionMax(ServomoteurID servo, Carte carte = Carte.RecIO)
+        {
+            byte[] tab = new byte[4];
+            tab[0] = (byte)carte;
+            tab[1] = (byte)FonctionIO.CommandeServo;
+            tab[2] = (byte)FonctionServo.DemandeTensionMax;
             tab[3] = (byte)servo;
             return new Trame(tab);
         }
@@ -806,6 +860,28 @@ namespace GoBot.Communications
             tab[1] = (byte)FonctionIO.CommandeServo;
             tab[2] = (byte)FonctionServo.DemandeCoupleCourant;
             tab[3] = (byte)servo;
+            return new Trame(tab);
+        }
+
+        static public Trame ServoDemandeCoupleLimite(ServomoteurID servo, Carte carte = Carte.RecIO)
+        {
+            byte[] tab = new byte[4];
+            tab[0] = (byte)carte;
+            tab[1] = (byte)FonctionIO.CommandeServo;
+            tab[2] = (byte)FonctionServo.DemandeCoupleLimite;
+            tab[3] = (byte)servo;
+            return new Trame(tab);
+        }
+
+        static public Trame ServoEnvoiCoupleLimite(ServomoteurID servo, int couple, Carte carte = Carte.RecIO)
+        {
+            byte[] tab = new byte[6];
+            tab[0] = (byte)carte;
+            tab[1] = (byte)FonctionIO.CommandeServo;
+            tab[2] = (byte)FonctionServo.EnvoiCoupleLimite;
+            tab[3] = (byte)servo;
+            tab[4] = ByteDivide(couple, true);
+            tab[5] = ByteDivide(couple, false);
             return new Trame(tab);
         }
 

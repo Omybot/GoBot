@@ -91,9 +91,17 @@ namespace GoBot.IHM
             BrasFeux.MoveAttrapeTorche1();
         }
 
-        private void button1_Click(object sender, EventArgs e)
+        Thread thMove;
+
+        public void threadMove()
         {
             BrasFeux.MoveAttrapeTorcheTout();
+        }
+        private void button1_Click(object sender, EventArgs e)
+        {
+            thMove = new Thread(threadMove);
+            thMove.Start();
+            //BrasFeux.MoveAttrapeTorcheTout();
         }
 
         private void btnBrasFeuInterne3_Click(object sender, EventArgs e)

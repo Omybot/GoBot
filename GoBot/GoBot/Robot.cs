@@ -43,6 +43,8 @@ namespace GoBot
         private Thread threadTrajectoire;
         private Semaphore semTrajectoire;
 
+        public Semaphore semHistoriquePosition;
+
         public bool AspirationAutomatique { get; set; }
         public List<Arc> CheminTrouve { get; set; }
         public List<Node> NodeTrouve { get; set; }
@@ -152,6 +154,8 @@ namespace GoBot
             TensionPack1 = TensionPack2 = 0;
             FailTrajectoire = false;
             AspirationAutomatique = false;
+
+            semHistoriquePosition = new Semaphore(1, int.MaxValue);
         }
 
         public void Lent()

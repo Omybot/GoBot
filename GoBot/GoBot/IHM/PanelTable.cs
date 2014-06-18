@@ -456,6 +456,20 @@ namespace GoBot.IHM
                                     }
                                 }
 
+                                if (boxTrajectoire.Checked && Robots.GrosRobot.HistoriqueCoordonnees != null)
+                                {
+                                    for (int i = 0; i < Robots.GrosRobot.HistoriqueCoordonnees.Count; i++)
+                                    {
+                                        int couleur = (int)(i * 1200 / Robots.GrosRobot.HistoriqueCoordonnees.Count * 255 / 1200);
+                                        PointReel point = RealToScreenPosition(Robots.GrosRobot.HistoriqueCoordonnees[i].Coordonnees);
+                                        using (Brush b = new SolidBrush(Color.FromArgb(couleur, couleur, couleur)))
+                                        {
+                                            g.FillEllipse(b, (int)point.X - 3, (int)point.Y - 3, 6, 6);
+                                            g.DrawEllipse(penNoir, (int)point.X - 3, (int)point.Y - 3, 6, 6);
+                                        }
+                                    }
+                                }
+
                                 // ************** Dessin du gros robot ************** //
 
                                 if (Robots.GrosRobot != null)
@@ -648,12 +662,12 @@ namespace GoBot.IHM
                                 if (Robots.GrosRobot.PositionCible != null)
                                 {
                                     Point p = RealToScreenPosition(Robots.GrosRobot.PositionCible);
-                                    g.DrawRectangle(penRougeEpais, p.X - 5, p.Y - 5, 10, 10);
+                                    g.DrawEllipse(penRougeEpais, p.X - 5, p.Y - 5, 10, 10);
                                 }
                                 if (Robots.PetitRobot.PositionCible != null)
                                 {
                                     Point p = RealToScreenPosition(Robots.PetitRobot.PositionCible);
-                                    g.DrawRectangle(penBleuEpais, p.X - 5, p.Y - 5, 10, 10);
+                                    g.DrawEllipse(penBleuEpais, p.X - 5, p.Y - 5, 10, 10);
                                 }
 
                                 // Dessin des coûts des mouvements
@@ -820,19 +834,6 @@ namespace GoBot.IHM
                                     g.DrawImage(RotateImage(bmpPetitRobot, 360 - traj.angle.AngleDegres + 90), (int)(departRecule.Coordonnees.X) - bmpPetitRobot.Width / 2, (int)(departRecule.Coordonnees.Y) - bmpPetitRobot.Height / 2);
 
                                     g.DrawLine(penBlancFleche, (Point)RealToScreenPosition(positionDepart), positionFin);
-                                }
-
-                                if (boxTrajectoire.Checked && Robots.GrosRobot.HistoriqueCoordonnees != null)
-                                {
-                                    for (int i = 0; i < Robots.GrosRobot.HistoriqueCoordonnees.Count; i++)
-                                    {
-                                        int couleur = (int)(i * 255 / (double)Robots.GrosRobot.HistoriqueCoordonnees.Count);
-                                        PointReel point = RealToScreenPosition(Robots.GrosRobot.HistoriqueCoordonnees[i].Coordonnees);
-                                        using (Brush b = new SolidBrush(Color.FromArgb(couleur, couleur, couleur)))
-                                        {
-                                            g.FillEllipse(b, (int)point.X - 3, (int)point.Y - 3, 6, 6);
-                                        }
-                                    }
                                 }
 
                                 pictureBoxTable.Image = bmp;

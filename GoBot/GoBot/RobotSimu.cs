@@ -103,8 +103,13 @@ namespace GoBot
         void timerPositions_Elapsed(object sender, ElapsedEventArgs e)
         {
             HistoriqueCoordonnees.Add(new Position(new Angle(Position.Angle), new PointReel(Position.Coordonnees.X, Position.Coordonnees.Y)));
-            while (HistoriqueCoordonnees.Count > 3000)
-                HistoriqueCoordonnees.RemoveAt(0);
+            if (HistoriqueCoordonnees.Count > 1200)
+            {
+                semHistoriquePosition.WaitOne();
+                while (HistoriqueCoordonnees.Count > 1200)
+                    HistoriqueCoordonnees.RemoveAt(0);
+                semHistoriquePosition.Release();
+            }
         }
 
         public double DistanceFreinageActuelle

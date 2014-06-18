@@ -8,6 +8,7 @@ namespace GoBot.Communications
     public enum FonctionIO
     {
         CommandeServo = 0x60,
+        ChangementBaudrateSerie = 0x61,
 
         ArmerJack = 0x70,
         DepartJack = 0x71,
@@ -116,14 +117,10 @@ namespace GoBot.Communications
         DemandePositionCible = 0x01,
         RetourPositionCible = 0x02,
         EnvoiPositionCible = 0x03,
-        DemandeBaudrate = 0x04,
-        RetourBaudrate = 0x05,
         EnvoiBaudrate = 0x06,
         DemandeVitesseMax = 0x07,
         RetourVitesseMax = 0x08,
         EnvoiVitesseMax = 0x09,
-        DemandeId = 0x10,
-        RetourId = 0x11,
         EnvoiId = 0x12,
         Reset = 0x13,
         DemandeCoupleMaximum = 0x14,
@@ -170,7 +167,21 @@ namespace GoBot.Communications
         DemandeErreurs = 0x58,
         RetourErreurs = 0x59,
         DemandeCoupleCourant = 0x60,
-        RetourCoupleCourant = 0x61
+        RetourCoupleCourant = 0x61,
+        DemandeStatusLevel = 0x62,
+        RetourStatusLevel = 0x63,
+        EnvoiTensionMax = 0x64,
+        DemandeTensionMax = 0x65,
+        RetourTensionMax = 0x66,
+        EnvoiTensionMin = 0x67,
+        DemandeTensionMin = 0x68,
+        RetourTensionMin = 0x69,
+        EnvoiTemperatureMax = 0x70,
+        DemandeTemperatureMax = 0x71,
+        RetourTemperatureMax = 0x72,
+        EnvoiCoupleLimite = 0x73,
+        DemandeCoupleLimite = 0x74,
+        RetourCoupleLimite = 0x75
     }
 
     public enum FonctionMiwi

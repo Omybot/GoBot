@@ -31,20 +31,26 @@ namespace GoBot.IHM
             ledErreurRange.CouleurGris();
             ledLed.CouleurGris();
             ledMouvement.CouleurGris();
+
+            foreach (ServoBaudrate baudrate in Enum.GetValues(typeof(ServoBaudrate)))
+            {
+                cboBaudrate.Items.Add(baudrate);
+            }
         }
 
-        public void AfficherServo(ServomoteurID servo)
+        public void AfficherServo(Servomoteur servo)
         {
-            numID.Value = (int)servo;
+            numID.Value = (int)servo.ID;
+            cboBaudrate.SelectedItem = servo.Baudrate;
             btnRefresh_Click(null, null);
         }
 
         private void btnRefresh_Click(object sender, EventArgs e)
         {
             if(numID.Value == 14 || numID.Value == 16)
-                servo = new Servomoteur(Carte.RecPi, (int)numID.Value, 19200);
+                servo = new Servomoteur(Carte.RecPi, (int)numID.Value, (ServoBaudrate)cboBaudrate.SelectedItem);
             else
-                servo = new Servomoteur(Carte.RecIO, (int)numID.Value, 19200);
+                servo = new Servomoteur(Carte.RecIO, (int)numID.Value, (ServoBaudrate)cboBaudrate.SelectedItem);
             Actualisation(true);
         }
 
@@ -104,6 +110,120 @@ namespace GoBot.IHM
             g.DrawLine(penPositionActuelle, 80, 80, xPosActuelle, yPosActuelle);
 
             pictureBoxAngles.Image = bmp;
+
+            servo.Punch = 10;
+            servo.CCWMargin = 50;
+            servo.CCWSlope = 50;
+            servo.CWMargin = 50;
+            servo.CWSlope = 50;
+
+            numCCWMargin.Value = 200;
+            numCWMargin.Value = 200;
+            numCCWSlope.Value = 50;
+            numCWSlope.Value = 50;
+            numPunch.Value = 20;
+        }
+
+        private void DessineCompliance(int parametre = 0)
+        {
+            Bitmap bmp = new Bitmap(218, 140);
+            Graphics g = Graphics.FromImage(bmp);
+
+            Pen penNoir = new Pen(Color.Black);
+            penNoir.DashStyle = System.Drawing.Drawing2D.DashStyle.Dash;
+            Pen penGris = new Pen(Color.DarkGray);
+            penGris.DashStyle = System.Drawing.Drawing2D.DashStyle.Dot;
+
+            Pen penRouge = new Pen(Color.Black);
+            penRouge.Width = 3;
+
+            Pen penRougeVif = new Pen(Color.Red);
+            penRougeVif.Width = 3;
+            penRougeVif.EndCap = System.Drawing.Drawing2D.LineCap.ArrowAnchor;
+            penRougeVif.StartCap = System.Drawing.Drawing2D.LineCap.ArrowAnchor;
+
+            g.DrawLine(penGris, 0, 70, 218, 70);
+            g.DrawLine(penGris, 109, 0, 109, 140);
+
+            g.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.AntiAlias;
+
+            g.DrawLine(penRouge, 0,
+                                   3,
+                                   (int)(10 + 100 - (3.1 * Math.Sqrt(servo.CCWMargin) + 3.1 * Math.Sqrt(servo.CCWSlope))),
+                                   3);
+
+            g.DrawLine(penRouge, (int)(10 + 100 - (3.1 * Math.Sqrt(servo.CCWMargin) + 3.1 * Math.Sqrt(servo.CCWSlope))),
+                                    3,
+                                    (int)(10 + 100 - 3.1 * Math.Sqrt(servo.CCWMargin)),
+                                    (int)(70 - 10.7 * Math.Sqrt(Math.Sqrt(servo.Punch))));
+
+            g.DrawLine(penRouge, (int)(10 + 100 - (3.1 * Math.Sqrt(servo.CCWMargin))),
+                                    (int)(70 - 10.7 * Math.Sqrt(Math.Sqrt(servo.Punch))),
+                                    (int)(10 + 100 - (3.1 * Math.Sqrt(servo.CCWMargin))),
+                                    70);
+
+            g.DrawLine(penRouge, (int)(10 + 100 - (3.1 * Math.Sqrt(servo.CCWMargin))),
+                                    70,
+                                    (int)(109 + (3.1 * Math.Sqrt(servo.CWMargin))),
+                                    70);
+
+            g.DrawLine(penRouge, (int)(109 + (3.1 * Math.Sqrt(servo.CWMargin))),
+                                    70,
+                                    (int)(109 + (3.1 * Math.Sqrt(servo.CWMargin))),
+                                    (int)(70 + 10.7 * Math.Sqrt(Math.Sqrt(servo.Punch))));
+
+            g.DrawLine(penRouge, (int)(109 + (3.1 * Math.Sqrt(servo.CWMargin))),
+                                    (int)(70 + 10.7 * Math.Sqrt(Math.Sqrt(servo.Punch))),
+                                    (int)(109 + (3.1 * Math.Sqrt(servo.CWMargin) + (3.1 * Math.Sqrt(servo.CWSlope)))),
+                                    137);
+
+            g.DrawLine(penRouge, (int)(109 + (3.1 * Math.Sqrt(servo.CWMargin) + (3.1 * Math.Sqrt(servo.CWSlope)))),
+                                    137,
+                                    218,
+                                    137);
+
+            switch(parametre)
+            {
+                case 0:
+                    break;
+                case 1: // CCW Slope
+                    g.DrawLine(penRougeVif, (int)(10 + 100 - ((3.1 * Math.Sqrt(servo.CCWMargin) + (3.1 * Math.Sqrt(servo.CCWSlope))))),
+                                            (int)(70 - 10.7 * Math.Sqrt(Math.Sqrt(servo.Punch))),
+                                            (int)(10 + 100 - (3.1 * Math.Sqrt(servo.CCWMargin))),
+                                            (int)(70 - 10.7 * Math.Sqrt(Math.Sqrt(servo.Punch))));
+                    break; 
+                case 2: // CCW Margin
+                    g.DrawLine(penRougeVif, (int)(10 + 100 - (3.1 * Math.Sqrt(servo.CCWMargin))),
+                                            (int)(70 - 10.7 * Math.Sqrt(Math.Sqrt(servo.Punch))),
+                                            109,
+                                            (int)(70 - 10.7 * Math.Sqrt(Math.Sqrt(servo.Punch))));
+                    break;
+                case 3: // CW Slope 
+                    g.DrawLine(penRougeVif, (int)(109 + (3.1 * Math.Sqrt(servo.CWMargin))),
+                                         (int)(70 + 10.7 * Math.Sqrt(Math.Sqrt(servo.Punch))),
+                                         (int)(109 + (3.1 * Math.Sqrt(servo.CWMargin) + (3.1 * Math.Sqrt(servo.CWSlope)))),
+                                         (int)(70 + 10.7 * Math.Sqrt(Math.Sqrt(servo.Punch))));
+                    break;
+                case 4: // CW Margin                    
+                    g.DrawLine(penRougeVif, 109,
+                                            (int)(70 + 10.7 * Math.Sqrt(Math.Sqrt(servo.Punch))),
+                                            (int)(109 + (3.1 * Math.Sqrt(servo.CWMargin))),
+                                            (int)(70 + 10.7 * Math.Sqrt(Math.Sqrt(servo.Punch))));
+                    break;
+                case 5: // Punch            
+                    g.DrawLine(penRougeVif, 108,
+                                         (int)(70 - 10.7 * Math.Sqrt(Math.Sqrt(servo.Punch))),
+                                         108,
+                                         70);
+                    g.DrawLine(penRougeVif, 108,
+                                         (int)(70 + 10.7 * Math.Sqrt(Math.Sqrt(servo.Punch))),
+                                         108,
+                                         70);
+                    break;
+                
+            }
+
+            pictureBoxCompliance.Image = bmp;
         }
 
         private void Actualisation(bool complete)
@@ -117,14 +237,19 @@ namespace GoBot.IHM
 
             lblModele.Text = servo.Modele.ToString();
             lblFirmware.Text = servo.Firmware.ToString();
-            numBaudrate.Value = (decimal)servo.Baudrate;
+            cboBaudrate.SelectedItem = servo.Baudrate;
             numCouple.Value = (decimal)servo.CoupleMaximum;
+            numCoupleLimite.Value = (decimal)servo.CoupleLimite;
             numPositionMin.Value = (decimal)servo.PositionMin;
             numPositionMax.Value = (decimal)servo.PositionMax;
             numCCWSlope.Value = (decimal)servo.CCWSlope;
             numCCWMargin.Value = (decimal)servo.CCWMargin;
             numCWSlope.Value = (decimal)servo.CWSlope;
             numCWMargin.Value = (decimal)servo.CWMargin;
+            numTensionMin.Value = (decimal)servo.TensionMinimum;
+            numTensionMax.Value = (decimal)servo.TensionMaximum;
+            numTempMax.Value = (decimal)servo.TemperatureMaximum;
+
             if (servo.LedAllumee)
             {
                 ledLed.CouleurRouge();
@@ -210,13 +335,14 @@ namespace GoBot.IHM
                 ledErreurRange.CouleurGris();
 
             DessinePosition();
+            DessineCompliance();
 
             MajIHM = false;
         }
 
         private void btnOkBaudrate_Click(object sender, EventArgs e)
         {
-            servo.Baudrate = (double)numBaudrate.Value;
+            servo.Baudrate = (ServoBaudrate)cboBaudrate.SelectedItem;
         }
 
         private void btnOkCoupleMax_Click(object sender, EventArgs e)
@@ -237,21 +363,25 @@ namespace GoBot.IHM
         private void btnOkCCWSlope_Click(object sender, EventArgs e)
         {
             servo.CCWSlope = (byte)numCCWSlope.Value;
+            DessineCompliance();
         }
 
         private void btnOkCCWMargin_Click(object sender, EventArgs e)
         {
             servo.CCWMargin = (byte)numCCWMargin.Value;
+            DessineCompliance();
         }
 
         private void btnOkCWSlope_Click(object sender, EventArgs e)
         {
             servo.CWSlope = (byte)numCWSlope.Value;
+            DessineCompliance();
         }
 
         private void btnOkCWMargin_Click(object sender, EventArgs e)
         {
             servo.CWMargin = (byte)numCWMargin.Value;
+            DessineCompliance();
         }
 
         private void boxLEDInputVoltage_CheckedChanged(object sender, EventArgs e)
@@ -412,6 +542,71 @@ namespace GoBot.IHM
                 penPositionMin.DashStyle = System.Drawing.Drawing2D.DashStyle.Dot;
                 penPositionMax.DashStyle = System.Drawing.Drawing2D.DashStyle.Dot;
             }
+        }
+
+        private void btnOkTensionMin_Click(object sender, EventArgs e)
+        {
+            servo.TensionMinimum = (double)numTensionMin.Value;
+        }
+
+        private void btnOkTensionMax_Click(object sender, EventArgs e)
+        {
+            servo.TensionMaximum = (double)numTensionMax.Value;
+        }
+
+        private void btnOkTempMax_Click(object sender, EventArgs e)
+        {
+            servo.TemperatureMaximum = (int)numTempMax.Value;
+        }
+
+        private void btnOkCoupleLimite_Click(object sender, EventArgs e)
+        {
+            servo.CoupleLimite = (int)numCoupleLimite.Value;
+        }
+
+        private void btnReset_Click(object sender, EventArgs e)
+        {
+        }
+
+        private void btnChangeID_Click(object sender, EventArgs e)
+        {
+            servo.ID = (int)numID.Value;
+        }
+
+        private void btnOkPunch_Click(object sender, EventArgs e)
+        {
+            servo.Punch = (byte)numPunch.Value;
+            DessineCompliance();
+        }
+
+        private void numCompliance_Leave(object sender, EventArgs e)
+        {
+            DessineCompliance(0);
+        }
+
+        private void numCCWSlope_Enter(object sender, EventArgs e)
+        {
+            DessineCompliance(1);
+        }
+
+        private void numCCWMargin_Enter(object sender, EventArgs e)
+        {
+            DessineCompliance(2);
+        }
+
+        private void numCWSlope_Enter(object sender, EventArgs e)
+        {
+            DessineCompliance(3);
+        }
+
+        private void numCWMargin_Enter(object sender, EventArgs e)
+        {
+            DessineCompliance(4);
+        }
+
+        private void numPunch_Enter(object sender, EventArgs e)
+        {
+            DessineCompliance(5);
         }
     }
 }

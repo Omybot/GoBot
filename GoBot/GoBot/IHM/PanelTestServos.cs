@@ -16,25 +16,67 @@ namespace GoBot.IHM
         public PanelTestServos()
         {
             InitializeComponent();
+            foreach (ServoBaudrate baudrate in Enum.GetValues(typeof(ServoBaudrate)))
+                checkedListBoxBaudrates.Items.Add(baudrate.ToString().Substring(1), true);
+        }
+
+        Thread thRechercheServo;
+
+        private void RechercheServos()
+        {
+            btnChercher.Text = "Stop";
+            listBoxServos.Items.Clear();
+
+            progressBarBaudrate.Value = 0;
+            int iBaudrate = 0;
+            foreach (ServoBaudrate baudrate in Enum.GetValues(typeof(ServoBaudrate)))
+            {
+                if (checkedListBoxBaudrates.CheckedIndices.Contains(iBaudrate))
+                {
+                    Connexions.ConnexionIO.SendMessage(TrameFactory.ChangementBaudrate(baudrate));
+                    Thread.Sleep(20);
+
+                    progressBarId.Value = 0;
+                    for (int i = 1; i <= 253; i++)
+                    {
+                        progressBarId.Value++;
+                        lblScannId.Text = "ID : " + i.ToString();
+                        lblScannBaudrate.Text = "Baud : " + baudrate.ToString().Substring(1);
+                        Servomoteur servo = new Servomoteur(Carte.RecIO, i, 0);
+                        if (servo.Connecte)
+                            listBoxServos.Items.Add(new Servomoteur(Carte.RecIO, i, baudrate));
+                    }
+                }
+
+                progressBarBaudrate.Value++;
+                iBaudrate++;
+            }
+
+            progressBarId.Value = 0;
+            progressBarBaudrate.Value = 0;
+            btnChercher.Text = "Chercher servomoteurs";
         }
 
         private void btnChercher_Click(object sender, EventArgs e)
         {
-            //Connexions.ConnexionMove.SendMessage(TrameFactory.ServoDemandeId(Carte.RecMove));
-            //Thread.Sleep(500);
-
-            listBoxServos.Items.Clear();
-
-            foreach (ServomoteurID servo in Enum.GetValues(typeof(ServomoteurID)))
+            if (thRechercheServo != null && thRechercheServo.IsAlive)
             {
-                if(!servo.ToString().Contains("zLibre"))
-                    listBoxServos.Items.Add(servo);
+                btnChercher.Text = "Chercher servomoteurs";
+                thRechercheServo.Abort();
+                progressBarId.Value = 0;
+                progressBarBaudrate.Value = 0;
+            }
+            else
+            {
+                thRechercheServo = new Thread(RechercheServos);
+                thRechercheServo.Start();
             }
         }
 
         private void listBoxServos_SelectedValueChanged(object sender, EventArgs e)
         {
-            ServomoteurID servo = (ServomoteurID)listBoxServos.SelectedItem;
+            Servomoteur servo = (Servomoteur)listBoxServos.SelectedItem;
+            Connexions.ConnexionIO.SendMessage(TrameFactory.ChangementBaudrate(servo.Baudrate));
             panelServo.AfficherServo(servo);
         }
     }

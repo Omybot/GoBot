@@ -21,6 +21,7 @@ namespace Composants
             get { return tension; }
             set
             {
+                toolTip.SetToolTip(this, tension + "V");
                 if (Afficher)
                 {
                     tension = value;
@@ -59,6 +60,7 @@ namespace Composants
             TensionMidHigh = 0;
             CouleurGris();
             Afficher = false;
+            toolTip.SetToolTip(this, "0V");
         }
 
         void timer_Tick(object sender, EventArgs e)

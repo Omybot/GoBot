@@ -19,24 +19,33 @@ namespace GoBot
             get { return id; }
             set
             {
-                id = value;
                 connexion.SendMessage(TrameFactory.ServoEnvoiId((ServomoteurID)id, (char)value, carte));
+                id = value;
             }
         }
-        private double baudrate;
-        public double Baudrate
+        private ServoBaudrate baudrate;
+        public ServoBaudrate Baudrate
         {
             get { return baudrate; }
             set
             {
-                // TODO
                 baudrate = value;
-                connexion.SendMessage(TrameFactory.ServoEnvoiBaudrate((ServomoteurID)id, ServoBaudrate.b19200, carte));
+                connexion.SendMessage(TrameFactory.ServoEnvoiBaudrate((ServomoteurID)id, baudrate, carte));
             }
         }
         private void EnvoiCompliance()
         {
             connexion.SendMessage(TrameFactory.ServoEnvoiComplianceParams((ServomoteurID)id, ccwSlope, ccwMargin, cwMargin, cwSlope, carte));
+        }
+        private int punch;
+        public int Punch
+        {
+            get { return punch; }
+            set
+            {
+                punch = value;
+                EnvoiCompliance();
+            }
         }
         private byte ccwSlope;
         public byte CCWSlope
@@ -76,6 +85,16 @@ namespace GoBot
             {
                 cwMargin = value;
                 EnvoiCompliance();
+            }
+        }
+        private int coupleLimite;
+        public int CoupleLimite
+        {
+            get { return coupleLimite; }
+            set
+            {
+                coupleLimite = value;
+                connexion.SendMessage(TrameFactory.ServoEnvoiCoupleLimite((ServomoteurID)id, coupleLimite, carte));
             }
         }
         private void EnvoiParamLED()
@@ -253,6 +272,39 @@ namespace GoBot
                 connexion.SendMessage(TrameFactory.ServoEnvoiCoupleMaximum((ServomoteurID)id, coupleMaximum, carte));
             }
         }
+        private double tensionMaximum = 5;
+        public double TensionMaximum
+        {
+            get { return tensionMaximum; }
+            set
+            {
+                if (value < 5)
+                    tensionMaximum = 5;
+                else
+                    tensionMaximum = value;
+                connexion.SendMessage(TrameFactory.ServoEnvoiTensionMax((ServomoteurID)id, tensionMaximum, carte));
+            }
+        }
+        private int temperatureMaximum;
+        public int TemperatureMaximum
+        {
+            get { return temperatureMaximum; }
+            set
+            {
+                temperatureMaximum = value;
+                connexion.SendMessage(TrameFactory.ServoEnvoiTemperatureMax((ServomoteurID)id, temperatureMaximum, carte));
+            }
+        }
+        private double tensionMinimum = 5;
+        public double TensionMinimum
+        {
+            get { return tensionMinimum; }
+            set
+            {
+                tensionMinimum = value;
+                connexion.SendMessage(TrameFactory.ServoEnvoiTensionMin((ServomoteurID)id, tensionMinimum, carte));
+            }
+        }
         private bool ledAllumee;
         public bool LedAllumee
         {
@@ -347,7 +399,7 @@ namespace GoBot
         public bool ErreurOverload { get; private set; }
         public bool ErreurInstruction { get; private set; }
 
-        public Servomoteur(Carte carte, int id, int baudrate)
+        public Servomoteur(Carte carte, int id, ServoBaudrate baudrate)
         {
             this.carte = carte;
             this.id = id;
@@ -362,8 +414,8 @@ namespace GoBot
         {
             if (complete)
             {
-                connexion.SendMessage(TrameFactory.ServoDemandeBaudrate((ServomoteurID)id, carte));
-                Thread.Sleep(10);
+                //connexion.SendMessage(TrameFactory.ServoDemandeBaudrate((ServomoteurID)id, carte));
+                //Thread.Sleep(10);
                 connexion.SendMessage(TrameFactory.ServoDemandeComplianceParams((ServomoteurID)id, carte));
                 Thread.Sleep(10);
                 connexion.SendMessage(TrameFactory.ServoDemandeConfigAlarmeLED((ServomoteurID)id, carte));
@@ -372,11 +424,7 @@ namespace GoBot
                 Thread.Sleep(10);
                 connexion.SendMessage(TrameFactory.ServoDemandeConfigEcho((ServomoteurID)id, carte));
                 Thread.Sleep(10);
-                connexion.SendMessage(TrameFactory.ServoDemandeCoupleActive((ServomoteurID)id, carte));
-                Thread.Sleep(10);
                 connexion.SendMessage(TrameFactory.ServoDemandeCoupleMaximum((ServomoteurID)id, carte));
-                Thread.Sleep(10);
-                connexion.SendMessage(TrameFactory.ServoDemandeLed((ServomoteurID)id, carte));
                 Thread.Sleep(10);
                 connexion.SendMessage(TrameFactory.ServoDemandeNumeroModele((ServomoteurID)id, carte));
                 Thread.Sleep(10);
@@ -389,6 +437,14 @@ namespace GoBot
                 connexion.SendMessage(TrameFactory.ServoDemandeVersionFirmware((ServomoteurID)id, carte));
                 Thread.Sleep(10);
                 connexion.SendMessage(TrameFactory.ServoDemandeVitesseMax((ServomoteurID)id, carte));
+                Thread.Sleep(30);
+                connexion.SendMessage(TrameFactory.ServoDemandeTensionMin((ServomoteurID)id, carte));
+                Thread.Sleep(30);
+                connexion.SendMessage(TrameFactory.ServoDemandeTensionMax((ServomoteurID)id, carte));
+                Thread.Sleep(30);
+                connexion.SendMessage(TrameFactory.ServoDemandeTemperatureMax((ServomoteurID)id, carte));
+                Thread.Sleep(30);
+                connexion.SendMessage(TrameFactory.ServoDemandeCoupleLimite((ServomoteurID)id, carte));
                 Thread.Sleep(30);
             }
 
@@ -406,6 +462,10 @@ namespace GoBot
             Thread.Sleep(10);
             connexion.SendMessage(TrameFactory.ServoDemandeErreurs((ServomoteurID)id, carte));
             Thread.Sleep(10);
+            connexion.SendMessage(TrameFactory.ServoDemandeCoupleActive((ServomoteurID)id, carte));
+            Thread.Sleep(10);
+            connexion.SendMessage(TrameFactory.ServoDemandeLed((ServomoteurID)id, carte));
+            Thread.Sleep(10);
         }
 
         void connexion_NouvelleTrame(Trame trame)
@@ -419,9 +479,6 @@ namespace GoBot
                     // Switch sur la fonction
                     switch (trame[2])
                     {
-                        case (byte)FonctionServo.RetourBaudrate:
-                            baudrate = ValueToBaudrate(trame[4]);
-                            break;
                         case (byte)FonctionServo.RetourComplianceParams:
                             ccwSlope = trame[4];
                             ccwMargin = trame[5];
@@ -455,9 +512,8 @@ namespace GoBot
                             break;
                         case (byte)FonctionServo.RetourCoupleMaximum:
                             coupleMaximum = trame[4] * 256 + trame[5];
-                            break;
-                        case (byte)FonctionServo.RetourId:
-                            id = trame[4];
+                            if (coupleMaximum < 0 || coupleMaximum > 1023)
+                                coupleMaximum = 0;
                             break;
                         case (byte)FonctionServo.RetourLed:
                             ledAllumee = (trame[4] == 1 ? true : false);
@@ -470,32 +526,62 @@ namespace GoBot
                             break;
                         case (byte)FonctionServo.RetourPositionActuelle:
                             positionActuelle = trame[4] * 256 + trame[5];
+                            if (positionActuelle < 0 || positionActuelle > 1023)
+                                positionActuelle = 0;
                             break;
                         case (byte)FonctionServo.RetourPositionCible:
                             positionCible = trame[4] * 256 + trame[5];
+                            if (positionCible < 0 || positionCible > 1023)
+                                positionCible = 0;
                             break;
                         case (byte)FonctionServo.RetourPositionMaximum:
                             positionMax = trame[4] * 256 + trame[5];
+                            if (positionMax < 0 || positionMax > 1023)
+                                positionMax = 0;
                             break;
                         case (byte)FonctionServo.RetourPositionMinimum:
                             positionMin = trame[4] * 256 + trame[5];
+                            if (positionMin < 0 || positionMin > 1023)
+                                positionMin = 0;
                             break;
                         case (byte)FonctionServo.RetourTemperature:
                             temperature = trame[4];
                             break;
                         case (byte)FonctionServo.RetourTension:
                             tension = (double)trame[4] / 10.0;
+                            if(semPing != null)
+                                semPing.Release();
+                            break;
+                        case (byte)FonctionServo.RetourTensionMin:
+                            tensionMinimum = (double)trame[4] / 10.0;
+                            if (tensionMinimum < 5 || tensionMinimum > 25)
+                                tensionMinimum = 5;
+                            break;
+                        case (byte)FonctionServo.RetourTensionMax:
+                            tensionMaximum = (double)trame[4] / 10.0;
+                            if (tensionMaximum < 5 || tensionMaximum > 25)
+                                tensionMaximum = 5;
+                            break;
+                        case (byte)FonctionServo.RetourCoupleLimite:
+                            coupleLimite = trame[4] * 256 + trame[5];
+                            if (coupleLimite < 0 || coupleLimite > 1023)
+                                coupleLimite = 0;
                             break;
                         case (byte)FonctionServo.RetourVersionFirmware:
                             firmware = trame[4];
                             break;
                         case (byte)FonctionServo.RetourVitesseActuelle:
                             vitesseActuelle = trame[4] * 256 + trame[5];
-                            if (vitesseActuelle > 1024)
+                            if (vitesseActuelle > 1023)
                                 vitesseActuelle = 1024 - vitesseActuelle;
                             break;
                         case (byte)FonctionServo.RetourVitesseMax:
                             vitesseMax = trame[4] * 256 + trame[5];
+                            if (vitesseMax < 0 || vitesseMax > 1023)
+                                vitesseMax = 0;
+                            break;
+                        case (byte)FonctionServo.RetourTemperatureMax:
+                            temperatureMaximum = trame[4];
                             break;
                         case (byte)FonctionServo.RetourCoupleCourant:
                             coupleActuel = trame[4] * 256 + trame[5];
@@ -516,6 +602,8 @@ namespace GoBot
             }
         }
 
+        private Semaphore semPing = null;
+
         private double ValueToBaudrate(int value)
         {
             return 2000000 / (value + 1);
@@ -524,6 +612,24 @@ namespace GoBot
         private int BaudrateToValue(double baudrate)
         {
             return (int)Math.Round((2000000 - baudrate) / baudrate);
+        }
+
+        public bool Connecte
+        {
+            get
+            {
+                semPing = new Semaphore(0, int.MaxValue);
+                connexion.SendMessage(TrameFactory.ServoDemandeTension((ServomoteurID)id, carte));
+                if (semPing.WaitOne(100))
+                    return Tension != 4.2; // Code de retour timeout = 42
+                else
+                    return false;
+            }
+        }
+
+        public override string ToString()
+        {
+            return ((ServomoteurID)id).ToString().Substring(2) + "\tID " + id + "\t" + baudrate.ToString().Substring(1);
         }
     }
 }

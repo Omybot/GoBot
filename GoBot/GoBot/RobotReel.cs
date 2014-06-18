@@ -155,8 +155,13 @@ namespace GoBot
                         SemaphoresMove[FonctionMove.DemandePositionXYTeta].Release();
 
                         HistoriqueCoordonnees.Add(new Position(teta, new PointReel(x, y)));
-                        while (HistoriqueCoordonnees.Count > 3000)
-                            HistoriqueCoordonnees.RemoveAt(0);
+                        if(HistoriqueCoordonnees.Count > 1200)
+                        {
+                            semHistoriquePosition.WaitOne();
+                            while (HistoriqueCoordonnees.Count > 1200)
+                                HistoriqueCoordonnees.RemoveAt(0);
+                            semHistoriquePosition.Release();
+                        }
                     }
                     catch (Exception)
                     {

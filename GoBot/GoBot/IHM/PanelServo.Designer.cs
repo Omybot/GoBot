@@ -39,10 +39,32 @@
             this.lblTxtTemperature = new System.Windows.Forms.Label();
             this.lblTension = new System.Windows.Forms.Label();
             this.lblTxtTension = new System.Windows.Forms.Label();
-            this.numBaudrate = new System.Windows.Forms.NumericUpDown();
             this.btnOkBaudrate = new System.Windows.Forms.Button();
             this.lblTxtBaudrate = new System.Windows.Forms.Label();
             this.groupServo = new System.Windows.Forms.GroupBox();
+            this.numPunch = new System.Windows.Forms.NumericUpDown();
+            this.btnOkPunch = new System.Windows.Forms.Button();
+            this.lblTxtPunch = new System.Windows.Forms.Label();
+            this.pictureBoxCompliance = new System.Windows.Forms.PictureBox();
+            this.cboBaudrate = new System.Windows.Forms.ComboBox();
+            this.btnChangeID = new System.Windows.Forms.Button();
+            this.numCoupleLimite = new System.Windows.Forms.NumericUpDown();
+            this.btnOkCoupleLimite = new System.Windows.Forms.Button();
+            this.lblTxtCoupleLimite = new System.Windows.Forms.Label();
+            this.numTempMax = new System.Windows.Forms.NumericUpDown();
+            this.btnOkTempMax = new System.Windows.Forms.Button();
+            this.lblTxtTempMax = new System.Windows.Forms.Label();
+            this.numTensionMax = new System.Windows.Forms.NumericUpDown();
+            this.btnOkTensionMax = new System.Windows.Forms.Button();
+            this.lblTxtTensionMax = new System.Windows.Forms.Label();
+            this.numTensionMin = new System.Windows.Forms.NumericUpDown();
+            this.btnOkTensionMin = new System.Windows.Forms.Button();
+            this.lblTxtTensionMin = new System.Windows.Forms.Label();
+            this.ctrlGraphiqueCouple = new Composants.CtrlGraphique();
+            this.lblCoupleActuel = new System.Windows.Forms.Label();
+            this.lblTxtCoupleActuel = new System.Windows.Forms.Label();
+            this.ctrlGraphiquePosition = new Composants.CtrlGraphique();
+            this.ctrlGraphiqueVitesse = new Composants.CtrlGraphique();
             this.ctrlGraphiqueTemperature = new Composants.CtrlGraphique();
             this.pictureBoxAngles = new System.Windows.Forms.PictureBox();
             this.ledErreurInstruction = new Composants.Led();
@@ -115,14 +137,14 @@
             this.lblTxtSurveillance = new System.Windows.Forms.Label();
             this.trackBarPosition = new Composants.TrackBarPlus();
             this.trackBarVitesse = new Composants.TrackBarPlus();
-            this.ctrlGraphiqueVitesse = new Composants.CtrlGraphique();
-            this.ctrlGraphiquePosition = new Composants.CtrlGraphique();
-            this.lblCoupleActuel = new System.Windows.Forms.Label();
-            this.lblTxtCoupleActuel = new System.Windows.Forms.Label();
-            this.ctrlGraphiqueCouple = new Composants.CtrlGraphique();
             ((System.ComponentModel.ISupportInitialize)(this.numID)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numBaudrate)).BeginInit();
             this.groupServo.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.numPunch)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBoxCompliance)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numCoupleLimite)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numTempMax)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numTensionMax)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numTensionMin)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxAngles)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.ledErreurInstruction)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.ledErreurOverload)).BeginInit();
@@ -205,7 +227,7 @@
             // lblTemperature
             // 
             this.lblTemperature.AutoSize = true;
-            this.lblTemperature.Location = new System.Drawing.Point(411, 242);
+            this.lblTemperature.Location = new System.Drawing.Point(304, 243);
             this.lblTemperature.Name = "lblTemperature";
             this.lblTemperature.Size = new System.Drawing.Size(10, 13);
             this.lblTemperature.TabIndex = 20;
@@ -214,7 +236,7 @@
             // lblTxtTemperature
             // 
             this.lblTxtTemperature.AutoSize = true;
-            this.lblTxtTemperature.Location = new System.Drawing.Point(324, 242);
+            this.lblTxtTemperature.Location = new System.Drawing.Point(217, 243);
             this.lblTxtTemperature.Name = "lblTxtTemperature";
             this.lblTxtTemperature.Size = new System.Drawing.Size(67, 13);
             this.lblTxtTemperature.TabIndex = 19;
@@ -223,7 +245,7 @@
             // lblTension
             // 
             this.lblTension.AutoSize = true;
-            this.lblTension.Location = new System.Drawing.Point(411, 264);
+            this.lblTension.Location = new System.Drawing.Point(304, 265);
             this.lblTension.Name = "lblTension";
             this.lblTension.Size = new System.Drawing.Size(10, 13);
             this.lblTension.TabIndex = 23;
@@ -232,27 +254,15 @@
             // lblTxtTension
             // 
             this.lblTxtTension.AutoSize = true;
-            this.lblTxtTension.Location = new System.Drawing.Point(324, 264);
+            this.lblTxtTension.Location = new System.Drawing.Point(217, 265);
             this.lblTxtTension.Name = "lblTxtTension";
             this.lblTxtTension.Size = new System.Drawing.Size(45, 13);
             this.lblTxtTension.TabIndex = 22;
             this.lblTxtTension.Text = "Tension";
             // 
-            // numBaudrate
-            // 
-            this.numBaudrate.Location = new System.Drawing.Point(101, 221);
-            this.numBaudrate.Maximum = new decimal(new int[] {
-            1000000,
-            0,
-            0,
-            0});
-            this.numBaudrate.Name = "numBaudrate";
-            this.numBaudrate.Size = new System.Drawing.Size(66, 20);
-            this.numBaudrate.TabIndex = 31;
-            // 
             // btnOkBaudrate
             // 
-            this.btnOkBaudrate.Location = new System.Drawing.Point(173, 218);
+            this.btnOkBaudrate.Location = new System.Drawing.Point(173, 196);
             this.btnOkBaudrate.Name = "btnOkBaudrate";
             this.btnOkBaudrate.Size = new System.Drawing.Size(30, 23);
             this.btnOkBaudrate.TabIndex = 28;
@@ -263,7 +273,7 @@
             // lblTxtBaudrate
             // 
             this.lblTxtBaudrate.AutoSize = true;
-            this.lblTxtBaudrate.Location = new System.Drawing.Point(15, 224);
+            this.lblTxtBaudrate.Location = new System.Drawing.Point(15, 202);
             this.lblTxtBaudrate.Name = "lblTxtBaudrate";
             this.lblTxtBaudrate.Size = new System.Drawing.Size(50, 13);
             this.lblTxtBaudrate.TabIndex = 27;
@@ -272,6 +282,24 @@
             // groupServo
             // 
             this.groupServo.BackColor = System.Drawing.Color.Transparent;
+            this.groupServo.Controls.Add(this.numPunch);
+            this.groupServo.Controls.Add(this.btnOkPunch);
+            this.groupServo.Controls.Add(this.lblTxtPunch);
+            this.groupServo.Controls.Add(this.pictureBoxCompliance);
+            this.groupServo.Controls.Add(this.cboBaudrate);
+            this.groupServo.Controls.Add(this.btnChangeID);
+            this.groupServo.Controls.Add(this.numCoupleLimite);
+            this.groupServo.Controls.Add(this.btnOkCoupleLimite);
+            this.groupServo.Controls.Add(this.lblTxtCoupleLimite);
+            this.groupServo.Controls.Add(this.numTempMax);
+            this.groupServo.Controls.Add(this.btnOkTempMax);
+            this.groupServo.Controls.Add(this.lblTxtTempMax);
+            this.groupServo.Controls.Add(this.numTensionMax);
+            this.groupServo.Controls.Add(this.btnOkTensionMax);
+            this.groupServo.Controls.Add(this.lblTxtTensionMax);
+            this.groupServo.Controls.Add(this.numTensionMin);
+            this.groupServo.Controls.Add(this.btnOkTensionMin);
+            this.groupServo.Controls.Add(this.lblTxtTensionMin);
             this.groupServo.Controls.Add(this.ctrlGraphiqueCouple);
             this.groupServo.Controls.Add(this.lblCoupleActuel);
             this.groupServo.Controls.Add(this.lblTxtCoupleActuel);
@@ -349,7 +377,6 @@
             this.groupServo.Controls.Add(this.lblTxtSurveillance);
             this.groupServo.Controls.Add(this.numID);
             this.groupServo.Controls.Add(this.lblID);
-            this.groupServo.Controls.Add(this.numBaudrate);
             this.groupServo.Controls.Add(this.btnOkBaudrate);
             this.groupServo.Controls.Add(this.lblTxtBaudrate);
             this.groupServo.Controls.Add(this.trackBarPosition);
@@ -364,10 +391,275 @@
             this.groupServo.Controls.Add(this.lblTxtTemperature);
             this.groupServo.Location = new System.Drawing.Point(3, 3);
             this.groupServo.Name = "groupServo";
-            this.groupServo.Size = new System.Drawing.Size(1028, 482);
+            this.groupServo.Size = new System.Drawing.Size(1028, 514);
             this.groupServo.TabIndex = 33;
             this.groupServo.TabStop = false;
             this.groupServo.Text = "Servomoteur";
+            // 
+            // numPunch
+            // 
+            this.numPunch.Location = new System.Drawing.Point(456, 318);
+            this.numPunch.Maximum = new decimal(new int[] {
+            255,
+            0,
+            0,
+            0});
+            this.numPunch.Name = "numPunch";
+            this.numPunch.Size = new System.Drawing.Size(66, 20);
+            this.numPunch.TabIndex = 146;
+            this.numPunch.Enter += new System.EventHandler(this.numPunch_Enter);
+            this.numPunch.Leave += new System.EventHandler(this.numCompliance_Leave);
+            // 
+            // btnOkPunch
+            // 
+            this.btnOkPunch.Location = new System.Drawing.Point(528, 316);
+            this.btnOkPunch.Name = "btnOkPunch";
+            this.btnOkPunch.Size = new System.Drawing.Size(30, 23);
+            this.btnOkPunch.TabIndex = 145;
+            this.btnOkPunch.Text = "Ok";
+            this.btnOkPunch.UseVisualStyleBackColor = true;
+            this.btnOkPunch.Click += new System.EventHandler(this.btnOkPunch_Click);
+            // 
+            // lblTxtPunch
+            // 
+            this.lblTxtPunch.AutoSize = true;
+            this.lblTxtPunch.Location = new System.Drawing.Point(370, 321);
+            this.lblTxtPunch.Name = "lblTxtPunch";
+            this.lblTxtPunch.Size = new System.Drawing.Size(38, 13);
+            this.lblTxtPunch.TabIndex = 144;
+            this.lblTxtPunch.Text = "Punch";
+            // 
+            // pictureBoxCompliance
+            // 
+            this.pictureBoxCompliance.Location = new System.Drawing.Point(564, 210);
+            this.pictureBoxCompliance.Name = "pictureBoxCompliance";
+            this.pictureBoxCompliance.Size = new System.Drawing.Size(218, 140);
+            this.pictureBoxCompliance.TabIndex = 143;
+            this.pictureBoxCompliance.TabStop = false;
+            // 
+            // cboBaudrate
+            // 
+            this.cboBaudrate.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cboBaudrate.FormattingEnabled = true;
+            this.cboBaudrate.Location = new System.Drawing.Point(101, 195);
+            this.cboBaudrate.Name = "cboBaudrate";
+            this.cboBaudrate.Size = new System.Drawing.Size(66, 21);
+            this.cboBaudrate.TabIndex = 142;
+            // 
+            // btnChangeID
+            // 
+            this.btnChangeID.Location = new System.Drawing.Point(33, 58);
+            this.btnChangeID.Name = "btnChangeID";
+            this.btnChangeID.Size = new System.Drawing.Size(75, 23);
+            this.btnChangeID.TabIndex = 141;
+            this.btnChangeID.Text = "Changer l\'ID";
+            this.btnChangeID.UseVisualStyleBackColor = true;
+            this.btnChangeID.Click += new System.EventHandler(this.btnChangeID_Click);
+            // 
+            // numCoupleLimite
+            // 
+            this.numCoupleLimite.Location = new System.Drawing.Point(101, 249);
+            this.numCoupleLimite.Maximum = new decimal(new int[] {
+            1023,
+            0,
+            0,
+            0});
+            this.numCoupleLimite.Name = "numCoupleLimite";
+            this.numCoupleLimite.Size = new System.Drawing.Size(66, 20);
+            this.numCoupleLimite.TabIndex = 140;
+            // 
+            // btnOkCoupleLimite
+            // 
+            this.btnOkCoupleLimite.Location = new System.Drawing.Point(173, 247);
+            this.btnOkCoupleLimite.Name = "btnOkCoupleLimite";
+            this.btnOkCoupleLimite.Size = new System.Drawing.Size(30, 23);
+            this.btnOkCoupleLimite.TabIndex = 139;
+            this.btnOkCoupleLimite.Text = "Ok";
+            this.btnOkCoupleLimite.UseVisualStyleBackColor = true;
+            this.btnOkCoupleLimite.Click += new System.EventHandler(this.btnOkCoupleLimite_Click);
+            // 
+            // lblTxtCoupleLimite
+            // 
+            this.lblTxtCoupleLimite.AutoSize = true;
+            this.lblTxtCoupleLimite.Location = new System.Drawing.Point(15, 252);
+            this.lblTxtCoupleLimite.Name = "lblTxtCoupleLimite";
+            this.lblTxtCoupleLimite.Size = new System.Drawing.Size(66, 13);
+            this.lblTxtCoupleLimite.TabIndex = 138;
+            this.lblTxtCoupleLimite.Text = "Couple limite";
+            // 
+            // numTempMax
+            // 
+            this.numTempMax.Location = new System.Drawing.Point(101, 483);
+            this.numTempMax.Maximum = new decimal(new int[] {
+            150,
+            0,
+            0,
+            0});
+            this.numTempMax.Name = "numTempMax";
+            this.numTempMax.Size = new System.Drawing.Size(66, 20);
+            this.numTempMax.TabIndex = 137;
+            this.numTempMax.Value = new decimal(new int[] {
+            5,
+            0,
+            0,
+            0});
+            // 
+            // btnOkTempMax
+            // 
+            this.btnOkTempMax.Location = new System.Drawing.Point(173, 481);
+            this.btnOkTempMax.Name = "btnOkTempMax";
+            this.btnOkTempMax.Size = new System.Drawing.Size(30, 23);
+            this.btnOkTempMax.TabIndex = 136;
+            this.btnOkTempMax.Text = "Ok";
+            this.btnOkTempMax.UseVisualStyleBackColor = true;
+            this.btnOkTempMax.Click += new System.EventHandler(this.btnOkTempMax_Click);
+            // 
+            // lblTxtTempMax
+            // 
+            this.lblTxtTempMax.AutoSize = true;
+            this.lblTxtTempMax.Location = new System.Drawing.Point(15, 486);
+            this.lblTxtTempMax.Name = "lblTxtTempMax";
+            this.lblTxtTempMax.Size = new System.Drawing.Size(59, 13);
+            this.lblTxtTempMax.TabIndex = 135;
+            this.lblTxtTempMax.Text = "Temp. max";
+            // 
+            // numTensionMax
+            // 
+            this.numTensionMax.DecimalPlaces = 1;
+            this.numTensionMax.Location = new System.Drawing.Point(101, 457);
+            this.numTensionMax.Maximum = new decimal(new int[] {
+            25,
+            0,
+            0,
+            0});
+            this.numTensionMax.Minimum = new decimal(new int[] {
+            5,
+            0,
+            0,
+            0});
+            this.numTensionMax.Name = "numTensionMax";
+            this.numTensionMax.Size = new System.Drawing.Size(66, 20);
+            this.numTensionMax.TabIndex = 134;
+            this.numTensionMax.Value = new decimal(new int[] {
+            5,
+            0,
+            0,
+            0});
+            // 
+            // btnOkTensionMax
+            // 
+            this.btnOkTensionMax.Location = new System.Drawing.Point(173, 455);
+            this.btnOkTensionMax.Name = "btnOkTensionMax";
+            this.btnOkTensionMax.Size = new System.Drawing.Size(30, 23);
+            this.btnOkTensionMax.TabIndex = 133;
+            this.btnOkTensionMax.Text = "Ok";
+            this.btnOkTensionMax.UseVisualStyleBackColor = true;
+            this.btnOkTensionMax.Click += new System.EventHandler(this.btnOkTensionMax_Click);
+            // 
+            // lblTxtTensionMax
+            // 
+            this.lblTxtTensionMax.AutoSize = true;
+            this.lblTxtTensionMax.Location = new System.Drawing.Point(15, 460);
+            this.lblTxtTensionMax.Name = "lblTxtTensionMax";
+            this.lblTxtTensionMax.Size = new System.Drawing.Size(67, 13);
+            this.lblTxtTensionMax.TabIndex = 132;
+            this.lblTxtTensionMax.Text = "Tension max";
+            // 
+            // numTensionMin
+            // 
+            this.numTensionMin.DecimalPlaces = 1;
+            this.numTensionMin.Location = new System.Drawing.Point(101, 431);
+            this.numTensionMin.Maximum = new decimal(new int[] {
+            25,
+            0,
+            0,
+            0});
+            this.numTensionMin.Minimum = new decimal(new int[] {
+            5,
+            0,
+            0,
+            0});
+            this.numTensionMin.Name = "numTensionMin";
+            this.numTensionMin.Size = new System.Drawing.Size(66, 20);
+            this.numTensionMin.TabIndex = 131;
+            this.numTensionMin.Value = new decimal(new int[] {
+            5,
+            0,
+            0,
+            0});
+            // 
+            // btnOkTensionMin
+            // 
+            this.btnOkTensionMin.Location = new System.Drawing.Point(173, 429);
+            this.btnOkTensionMin.Name = "btnOkTensionMin";
+            this.btnOkTensionMin.Size = new System.Drawing.Size(30, 23);
+            this.btnOkTensionMin.TabIndex = 130;
+            this.btnOkTensionMin.Text = "Ok";
+            this.btnOkTensionMin.UseVisualStyleBackColor = true;
+            this.btnOkTensionMin.Click += new System.EventHandler(this.btnOkTensionMin_Click);
+            // 
+            // lblTxtTensionMin
+            // 
+            this.lblTxtTensionMin.AutoSize = true;
+            this.lblTxtTensionMin.Location = new System.Drawing.Point(15, 434);
+            this.lblTxtTensionMin.Name = "lblTxtTensionMin";
+            this.lblTxtTensionMin.Size = new System.Drawing.Size(64, 13);
+            this.lblTxtTensionMin.TabIndex = 129;
+            this.lblTxtTensionMin.Text = "Tension min";
+            // 
+            // ctrlGraphiqueCouple
+            // 
+            this.ctrlGraphiqueCouple.BackColor = System.Drawing.Color.White;
+            this.ctrlGraphiqueCouple.EchelleCommune = true;
+            this.ctrlGraphiqueCouple.EchelleFixe = false;
+            this.ctrlGraphiqueCouple.EchelleMax = 1D;
+            this.ctrlGraphiqueCouple.EchelleMin = 0D;
+            this.ctrlGraphiqueCouple.Location = new System.Drawing.Point(795, 363);
+            this.ctrlGraphiqueCouple.Name = "ctrlGraphiqueCouple";
+            this.ctrlGraphiqueCouple.Size = new System.Drawing.Size(218, 140);
+            this.ctrlGraphiqueCouple.TabIndex = 128;
+            // 
+            // lblCoupleActuel
+            // 
+            this.lblCoupleActuel.AutoSize = true;
+            this.lblCoupleActuel.Location = new System.Drawing.Point(304, 332);
+            this.lblCoupleActuel.Name = "lblCoupleActuel";
+            this.lblCoupleActuel.Size = new System.Drawing.Size(10, 13);
+            this.lblCoupleActuel.TabIndex = 127;
+            this.lblCoupleActuel.Text = "-";
+            // 
+            // lblTxtCoupleActuel
+            // 
+            this.lblTxtCoupleActuel.AutoSize = true;
+            this.lblTxtCoupleActuel.Location = new System.Drawing.Point(217, 331);
+            this.lblTxtCoupleActuel.Name = "lblTxtCoupleActuel";
+            this.lblTxtCoupleActuel.Size = new System.Drawing.Size(72, 13);
+            this.lblTxtCoupleActuel.TabIndex = 126;
+            this.lblTxtCoupleActuel.Text = "Couple actuel";
+            // 
+            // ctrlGraphiquePosition
+            // 
+            this.ctrlGraphiquePosition.BackColor = System.Drawing.Color.White;
+            this.ctrlGraphiquePosition.EchelleCommune = true;
+            this.ctrlGraphiquePosition.EchelleFixe = false;
+            this.ctrlGraphiquePosition.EchelleMax = 1D;
+            this.ctrlGraphiquePosition.EchelleMin = 0D;
+            this.ctrlGraphiquePosition.Location = new System.Drawing.Point(795, 210);
+            this.ctrlGraphiquePosition.Name = "ctrlGraphiquePosition";
+            this.ctrlGraphiquePosition.Size = new System.Drawing.Size(218, 140);
+            this.ctrlGraphiquePosition.TabIndex = 125;
+            // 
+            // ctrlGraphiqueVitesse
+            // 
+            this.ctrlGraphiqueVitesse.BackColor = System.Drawing.Color.White;
+            this.ctrlGraphiqueVitesse.EchelleCommune = true;
+            this.ctrlGraphiqueVitesse.EchelleFixe = false;
+            this.ctrlGraphiqueVitesse.EchelleMax = 1D;
+            this.ctrlGraphiqueVitesse.EchelleMin = 0D;
+            this.ctrlGraphiqueVitesse.Location = new System.Drawing.Point(795, 57);
+            this.ctrlGraphiqueVitesse.Name = "ctrlGraphiqueVitesse";
+            this.ctrlGraphiqueVitesse.Size = new System.Drawing.Size(218, 140);
+            this.ctrlGraphiqueVitesse.TabIndex = 124;
             // 
             // ctrlGraphiqueTemperature
             // 
@@ -376,7 +668,7 @@
             this.ctrlGraphiqueTemperature.EchelleFixe = false;
             this.ctrlGraphiqueTemperature.EchelleMax = 1D;
             this.ctrlGraphiqueTemperature.EchelleMin = 0D;
-            this.ctrlGraphiqueTemperature.Location = new System.Drawing.Point(564, 325);
+            this.ctrlGraphiqueTemperature.Location = new System.Drawing.Point(564, 363);
             this.ctrlGraphiqueTemperature.Name = "ctrlGraphiqueTemperature";
             this.ctrlGraphiqueTemperature.Size = new System.Drawing.Size(218, 140);
             this.ctrlGraphiqueTemperature.TabIndex = 123;
@@ -384,7 +676,7 @@
             // pictureBoxAngles
             // 
             this.pictureBoxAngles.Image = global::GoBot.Properties.Resources.FondServo;
-            this.pictureBoxAngles.Location = new System.Drawing.Point(593, 95);
+            this.pictureBoxAngles.Location = new System.Drawing.Point(585, 19);
             this.pictureBoxAngles.Name = "pictureBoxAngles";
             this.pictureBoxAngles.Size = new System.Drawing.Size(160, 160);
             this.pictureBoxAngles.TabIndex = 122;
@@ -394,7 +686,7 @@
             // 
             this.ledErreurInstruction.Etat = false;
             this.ledErreurInstruction.Image = ((System.Drawing.Image)(resources.GetObject("ledErreurInstruction.Image")));
-            this.ledErreurInstruction.Location = new System.Drawing.Point(483, 412);
+            this.ledErreurInstruction.Location = new System.Drawing.Point(474, 445);
             this.ledErreurInstruction.Name = "ledErreurInstruction";
             this.ledErreurInstruction.Size = new System.Drawing.Size(16, 16);
             this.ledErreurInstruction.TabIndex = 121;
@@ -404,7 +696,7 @@
             // 
             this.ledErreurOverload.Etat = false;
             this.ledErreurOverload.Image = ((System.Drawing.Image)(resources.GetObject("ledErreurOverload.Image")));
-            this.ledErreurOverload.Location = new System.Drawing.Point(456, 412);
+            this.ledErreurOverload.Location = new System.Drawing.Point(447, 445);
             this.ledErreurOverload.Name = "ledErreurOverload";
             this.ledErreurOverload.Size = new System.Drawing.Size(16, 16);
             this.ledErreurOverload.TabIndex = 120;
@@ -414,7 +706,7 @@
             // 
             this.ledErreurChecksum.Etat = false;
             this.ledErreurChecksum.Image = ((System.Drawing.Image)(resources.GetObject("ledErreurChecksum.Image")));
-            this.ledErreurChecksum.Location = new System.Drawing.Point(429, 412);
+            this.ledErreurChecksum.Location = new System.Drawing.Point(420, 445);
             this.ledErreurChecksum.Name = "ledErreurChecksum";
             this.ledErreurChecksum.Size = new System.Drawing.Size(16, 16);
             this.ledErreurChecksum.TabIndex = 119;
@@ -424,7 +716,7 @@
             // 
             this.ledErreurRange.Etat = false;
             this.ledErreurRange.Image = ((System.Drawing.Image)(resources.GetObject("ledErreurRange.Image")));
-            this.ledErreurRange.Location = new System.Drawing.Point(402, 412);
+            this.ledErreurRange.Location = new System.Drawing.Point(393, 445);
             this.ledErreurRange.Name = "ledErreurRange";
             this.ledErreurRange.Size = new System.Drawing.Size(16, 16);
             this.ledErreurRange.TabIndex = 118;
@@ -434,7 +726,7 @@
             // 
             this.ledErreurOverheating.Etat = false;
             this.ledErreurOverheating.Image = ((System.Drawing.Image)(resources.GetObject("ledErreurOverheating.Image")));
-            this.ledErreurOverheating.Location = new System.Drawing.Point(375, 412);
+            this.ledErreurOverheating.Location = new System.Drawing.Point(366, 445);
             this.ledErreurOverheating.Name = "ledErreurOverheating";
             this.ledErreurOverheating.Size = new System.Drawing.Size(16, 16);
             this.ledErreurOverheating.TabIndex = 117;
@@ -444,7 +736,7 @@
             // 
             this.ledErreurAngleLimit.Etat = false;
             this.ledErreurAngleLimit.Image = ((System.Drawing.Image)(resources.GetObject("ledErreurAngleLimit.Image")));
-            this.ledErreurAngleLimit.Location = new System.Drawing.Point(348, 412);
+            this.ledErreurAngleLimit.Location = new System.Drawing.Point(339, 445);
             this.ledErreurAngleLimit.Name = "ledErreurAngleLimit";
             this.ledErreurAngleLimit.Size = new System.Drawing.Size(16, 16);
             this.ledErreurAngleLimit.TabIndex = 116;
@@ -454,7 +746,7 @@
             // 
             this.ledErreurInputVoltage.Etat = false;
             this.ledErreurInputVoltage.Image = ((System.Drawing.Image)(resources.GetObject("ledErreurInputVoltage.Image")));
-            this.ledErreurInputVoltage.Location = new System.Drawing.Point(321, 412);
+            this.ledErreurInputVoltage.Location = new System.Drawing.Point(312, 445);
             this.ledErreurInputVoltage.Name = "ledErreurInputVoltage";
             this.ledErreurInputVoltage.Size = new System.Drawing.Size(16, 16);
             this.ledErreurInputVoltage.TabIndex = 115;
@@ -463,7 +755,7 @@
             // boxShutdownInstruction
             // 
             this.boxShutdownInstruction.AutoSize = true;
-            this.boxShutdownInstruction.Location = new System.Drawing.Point(484, 453);
+            this.boxShutdownInstruction.Location = new System.Drawing.Point(475, 486);
             this.boxShutdownInstruction.Name = "boxShutdownInstruction";
             this.boxShutdownInstruction.Size = new System.Drawing.Size(15, 14);
             this.boxShutdownInstruction.TabIndex = 113;
@@ -473,7 +765,7 @@
             // boxLEDInstruction
             // 
             this.boxLEDInstruction.AutoSize = true;
-            this.boxLEDInstruction.Location = new System.Drawing.Point(484, 433);
+            this.boxLEDInstruction.Location = new System.Drawing.Point(475, 466);
             this.boxLEDInstruction.Name = "boxLEDInstruction";
             this.boxLEDInstruction.Size = new System.Drawing.Size(15, 14);
             this.boxLEDInstruction.TabIndex = 112;
@@ -483,7 +775,7 @@
             // imgAlarmes
             // 
             this.imgAlarmes.Image = global::GoBot.Properties.Resources.Alertes;
-            this.imgAlarmes.Location = new System.Drawing.Point(323, 358);
+            this.imgAlarmes.Location = new System.Drawing.Point(314, 391);
             this.imgAlarmes.Name = "imgAlarmes";
             this.imgAlarmes.Size = new System.Drawing.Size(218, 50);
             this.imgAlarmes.TabIndex = 111;
@@ -491,7 +783,7 @@
             // 
             // numCWMargin
             // 
-            this.numCWMargin.Location = new System.Drawing.Point(101, 399);
+            this.numCWMargin.Location = new System.Drawing.Point(456, 265);
             this.numCWMargin.Maximum = new decimal(new int[] {
             255,
             0,
@@ -500,10 +792,12 @@
             this.numCWMargin.Name = "numCWMargin";
             this.numCWMargin.Size = new System.Drawing.Size(66, 20);
             this.numCWMargin.TabIndex = 110;
+            this.numCWMargin.Enter += new System.EventHandler(this.numCWMargin_Enter);
+            this.numCWMargin.Leave += new System.EventHandler(this.numCompliance_Leave);
             // 
             // btnOkCWMargin
             // 
-            this.btnOkCWMargin.Location = new System.Drawing.Point(173, 397);
+            this.btnOkCWMargin.Location = new System.Drawing.Point(528, 263);
             this.btnOkCWMargin.Name = "btnOkCWMargin";
             this.btnOkCWMargin.Size = new System.Drawing.Size(30, 23);
             this.btnOkCWMargin.TabIndex = 109;
@@ -514,7 +808,7 @@
             // lblTxtCWMargin
             // 
             this.lblTxtCWMargin.AutoSize = true;
-            this.lblTxtCWMargin.Location = new System.Drawing.Point(15, 402);
+            this.lblTxtCWMargin.Location = new System.Drawing.Point(370, 268);
             this.lblTxtCWMargin.Name = "lblTxtCWMargin";
             this.lblTxtCWMargin.Size = new System.Drawing.Size(60, 13);
             this.lblTxtCWMargin.TabIndex = 108;
@@ -522,7 +816,7 @@
             // 
             // numCWSlope
             // 
-            this.numCWSlope.Location = new System.Drawing.Point(101, 373);
+            this.numCWSlope.Location = new System.Drawing.Point(456, 291);
             this.numCWSlope.Maximum = new decimal(new int[] {
             255,
             0,
@@ -531,10 +825,12 @@
             this.numCWSlope.Name = "numCWSlope";
             this.numCWSlope.Size = new System.Drawing.Size(66, 20);
             this.numCWSlope.TabIndex = 107;
+            this.numCWSlope.Enter += new System.EventHandler(this.numCWSlope_Enter);
+            this.numCWSlope.Leave += new System.EventHandler(this.numCompliance_Leave);
             // 
             // btnOkCWSlope
             // 
-            this.btnOkCWSlope.Location = new System.Drawing.Point(173, 371);
+            this.btnOkCWSlope.Location = new System.Drawing.Point(528, 289);
             this.btnOkCWSlope.Name = "btnOkCWSlope";
             this.btnOkCWSlope.Size = new System.Drawing.Size(30, 23);
             this.btnOkCWSlope.TabIndex = 106;
@@ -545,7 +841,7 @@
             // lblTxtCWSlope
             // 
             this.lblTxtCWSlope.AutoSize = true;
-            this.lblTxtCWSlope.Location = new System.Drawing.Point(15, 376);
+            this.lblTxtCWSlope.Location = new System.Drawing.Point(370, 294);
             this.lblTxtCWSlope.Name = "lblTxtCWSlope";
             this.lblTxtCWSlope.Size = new System.Drawing.Size(55, 13);
             this.lblTxtCWSlope.TabIndex = 105;
@@ -553,7 +849,7 @@
             // 
             // numCCWMargin
             // 
-            this.numCCWMargin.Location = new System.Drawing.Point(101, 347);
+            this.numCCWMargin.Location = new System.Drawing.Point(456, 239);
             this.numCCWMargin.Maximum = new decimal(new int[] {
             255,
             0,
@@ -562,10 +858,12 @@
             this.numCCWMargin.Name = "numCCWMargin";
             this.numCCWMargin.Size = new System.Drawing.Size(66, 20);
             this.numCCWMargin.TabIndex = 104;
+            this.numCCWMargin.Enter += new System.EventHandler(this.numCCWMargin_Enter);
+            this.numCCWMargin.Leave += new System.EventHandler(this.numCompliance_Leave);
             // 
             // btnOkCCWMargin
             // 
-            this.btnOkCCWMargin.Location = new System.Drawing.Point(173, 345);
+            this.btnOkCCWMargin.Location = new System.Drawing.Point(528, 237);
             this.btnOkCCWMargin.Name = "btnOkCCWMargin";
             this.btnOkCCWMargin.Size = new System.Drawing.Size(30, 23);
             this.btnOkCCWMargin.TabIndex = 103;
@@ -576,7 +874,7 @@
             // lblTxtCCWMargin
             // 
             this.lblTxtCCWMargin.AutoSize = true;
-            this.lblTxtCCWMargin.Location = new System.Drawing.Point(15, 350);
+            this.lblTxtCCWMargin.Location = new System.Drawing.Point(370, 242);
             this.lblTxtCCWMargin.Name = "lblTxtCCWMargin";
             this.lblTxtCCWMargin.Size = new System.Drawing.Size(67, 13);
             this.lblTxtCCWMargin.TabIndex = 102;
@@ -584,7 +882,7 @@
             // 
             // numCCWSlope
             // 
-            this.numCCWSlope.Location = new System.Drawing.Point(101, 321);
+            this.numCCWSlope.Location = new System.Drawing.Point(456, 212);
             this.numCCWSlope.Maximum = new decimal(new int[] {
             255,
             0,
@@ -593,10 +891,12 @@
             this.numCCWSlope.Name = "numCCWSlope";
             this.numCCWSlope.Size = new System.Drawing.Size(66, 20);
             this.numCCWSlope.TabIndex = 101;
+            this.numCCWSlope.Enter += new System.EventHandler(this.numCCWSlope_Enter);
+            this.numCCWSlope.Leave += new System.EventHandler(this.numCompliance_Leave);
             // 
             // btnOkCCWSlope
             // 
-            this.btnOkCCWSlope.Location = new System.Drawing.Point(173, 320);
+            this.btnOkCCWSlope.Location = new System.Drawing.Point(528, 211);
             this.btnOkCCWSlope.Name = "btnOkCCWSlope";
             this.btnOkCCWSlope.Size = new System.Drawing.Size(30, 23);
             this.btnOkCCWSlope.TabIndex = 100;
@@ -607,7 +907,7 @@
             // lblTxtCCWSlope
             // 
             this.lblTxtCCWSlope.AutoSize = true;
-            this.lblTxtCCWSlope.Location = new System.Drawing.Point(15, 325);
+            this.lblTxtCCWSlope.Location = new System.Drawing.Point(370, 216);
             this.lblTxtCCWSlope.Name = "lblTxtCCWSlope";
             this.lblTxtCCWSlope.Size = new System.Drawing.Size(62, 13);
             this.lblTxtCCWSlope.TabIndex = 99;
@@ -616,7 +916,7 @@
             // lblVitesseActuelle
             // 
             this.lblVitesseActuelle.AutoSize = true;
-            this.lblVitesseActuelle.Location = new System.Drawing.Point(411, 309);
+            this.lblVitesseActuelle.Location = new System.Drawing.Point(304, 310);
             this.lblVitesseActuelle.Name = "lblVitesseActuelle";
             this.lblVitesseActuelle.Size = new System.Drawing.Size(10, 13);
             this.lblVitesseActuelle.TabIndex = 98;
@@ -625,7 +925,7 @@
             // lblTxtVitesseActuelle
             // 
             this.lblTxtVitesseActuelle.AutoSize = true;
-            this.lblTxtVitesseActuelle.Location = new System.Drawing.Point(324, 308);
+            this.lblTxtVitesseActuelle.Location = new System.Drawing.Point(217, 309);
             this.lblTxtVitesseActuelle.Name = "lblTxtVitesseActuelle";
             this.lblTxtVitesseActuelle.Size = new System.Drawing.Size(81, 13);
             this.lblTxtVitesseActuelle.TabIndex = 97;
@@ -634,7 +934,7 @@
             // lblPositionActuelle
             // 
             this.lblPositionActuelle.AutoSize = true;
-            this.lblPositionActuelle.Location = new System.Drawing.Point(411, 286);
+            this.lblPositionActuelle.Location = new System.Drawing.Point(304, 287);
             this.lblPositionActuelle.Name = "lblPositionActuelle";
             this.lblPositionActuelle.Size = new System.Drawing.Size(10, 13);
             this.lblPositionActuelle.TabIndex = 96;
@@ -643,7 +943,7 @@
             // lblTxtPositionActuelle
             // 
             this.lblTxtPositionActuelle.AutoSize = true;
-            this.lblTxtPositionActuelle.Location = new System.Drawing.Point(324, 286);
+            this.lblTxtPositionActuelle.Location = new System.Drawing.Point(217, 287);
             this.lblTxtPositionActuelle.Name = "lblTxtPositionActuelle";
             this.lblTxtPositionActuelle.Size = new System.Drawing.Size(84, 13);
             this.lblTxtPositionActuelle.TabIndex = 95;
@@ -652,7 +952,7 @@
             // lblTxtAlarmeShutdown
             // 
             this.lblTxtAlarmeShutdown.AutoSize = true;
-            this.lblTxtAlarmeShutdown.Location = new System.Drawing.Point(226, 453);
+            this.lblTxtAlarmeShutdown.Location = new System.Drawing.Point(217, 486);
             this.lblTxtAlarmeShutdown.Name = "lblTxtAlarmeShutdown";
             this.lblTxtAlarmeShutdown.Size = new System.Drawing.Size(88, 13);
             this.lblTxtAlarmeShutdown.TabIndex = 94;
@@ -661,7 +961,7 @@
             // lblTxtAlarmeLED
             // 
             this.lblTxtAlarmeLED.AutoSize = true;
-            this.lblTxtAlarmeLED.Location = new System.Drawing.Point(226, 432);
+            this.lblTxtAlarmeLED.Location = new System.Drawing.Point(217, 465);
             this.lblTxtAlarmeLED.Name = "lblTxtAlarmeLED";
             this.lblTxtAlarmeLED.Size = new System.Drawing.Size(63, 13);
             this.lblTxtAlarmeLED.TabIndex = 93;
@@ -670,7 +970,7 @@
             // boxShutdownOverload
             // 
             this.boxShutdownOverload.AutoSize = true;
-            this.boxShutdownOverload.Location = new System.Drawing.Point(457, 453);
+            this.boxShutdownOverload.Location = new System.Drawing.Point(448, 486);
             this.boxShutdownOverload.Name = "boxShutdownOverload";
             this.boxShutdownOverload.Size = new System.Drawing.Size(15, 14);
             this.boxShutdownOverload.TabIndex = 91;
@@ -680,7 +980,7 @@
             // boxShutdownChecksum
             // 
             this.boxShutdownChecksum.AutoSize = true;
-            this.boxShutdownChecksum.Location = new System.Drawing.Point(430, 453);
+            this.boxShutdownChecksum.Location = new System.Drawing.Point(421, 486);
             this.boxShutdownChecksum.Name = "boxShutdownChecksum";
             this.boxShutdownChecksum.Size = new System.Drawing.Size(15, 14);
             this.boxShutdownChecksum.TabIndex = 90;
@@ -690,7 +990,7 @@
             // boxShutdownRange
             // 
             this.boxShutdownRange.AutoSize = true;
-            this.boxShutdownRange.Location = new System.Drawing.Point(403, 453);
+            this.boxShutdownRange.Location = new System.Drawing.Point(394, 486);
             this.boxShutdownRange.Name = "boxShutdownRange";
             this.boxShutdownRange.Size = new System.Drawing.Size(15, 14);
             this.boxShutdownRange.TabIndex = 89;
@@ -700,7 +1000,7 @@
             // boxShutdownOverheating
             // 
             this.boxShutdownOverheating.AutoSize = true;
-            this.boxShutdownOverheating.Location = new System.Drawing.Point(376, 453);
+            this.boxShutdownOverheating.Location = new System.Drawing.Point(367, 486);
             this.boxShutdownOverheating.Name = "boxShutdownOverheating";
             this.boxShutdownOverheating.Size = new System.Drawing.Size(15, 14);
             this.boxShutdownOverheating.TabIndex = 88;
@@ -710,7 +1010,7 @@
             // boxLEDInputVoltage
             // 
             this.boxLEDInputVoltage.AutoSize = true;
-            this.boxLEDInputVoltage.Location = new System.Drawing.Point(322, 433);
+            this.boxLEDInputVoltage.Location = new System.Drawing.Point(313, 466);
             this.boxLEDInputVoltage.Name = "boxLEDInputVoltage";
             this.boxLEDInputVoltage.Size = new System.Drawing.Size(15, 14);
             this.boxLEDInputVoltage.TabIndex = 87;
@@ -720,7 +1020,7 @@
             // boxLEDAngleLimit
             // 
             this.boxLEDAngleLimit.AutoSize = true;
-            this.boxLEDAngleLimit.Location = new System.Drawing.Point(349, 433);
+            this.boxLEDAngleLimit.Location = new System.Drawing.Point(340, 466);
             this.boxLEDAngleLimit.Name = "boxLEDAngleLimit";
             this.boxLEDAngleLimit.Size = new System.Drawing.Size(15, 14);
             this.boxLEDAngleLimit.TabIndex = 86;
@@ -730,7 +1030,7 @@
             // boxLEDOverload
             // 
             this.boxLEDOverload.AutoSize = true;
-            this.boxLEDOverload.Location = new System.Drawing.Point(457, 433);
+            this.boxLEDOverload.Location = new System.Drawing.Point(448, 466);
             this.boxLEDOverload.Name = "boxLEDOverload";
             this.boxLEDOverload.Size = new System.Drawing.Size(15, 14);
             this.boxLEDOverload.TabIndex = 84;
@@ -740,7 +1040,7 @@
             // boxLEDChecksum
             // 
             this.boxLEDChecksum.AutoSize = true;
-            this.boxLEDChecksum.Location = new System.Drawing.Point(430, 433);
+            this.boxLEDChecksum.Location = new System.Drawing.Point(421, 466);
             this.boxLEDChecksum.Name = "boxLEDChecksum";
             this.boxLEDChecksum.Size = new System.Drawing.Size(15, 14);
             this.boxLEDChecksum.TabIndex = 83;
@@ -750,7 +1050,7 @@
             // boxLEDRange
             // 
             this.boxLEDRange.AutoSize = true;
-            this.boxLEDRange.Location = new System.Drawing.Point(403, 433);
+            this.boxLEDRange.Location = new System.Drawing.Point(394, 466);
             this.boxLEDRange.Name = "boxLEDRange";
             this.boxLEDRange.Size = new System.Drawing.Size(15, 14);
             this.boxLEDRange.TabIndex = 82;
@@ -760,7 +1060,7 @@
             // boxLEDOverheating
             // 
             this.boxLEDOverheating.AutoSize = true;
-            this.boxLEDOverheating.Location = new System.Drawing.Point(376, 433);
+            this.boxLEDOverheating.Location = new System.Drawing.Point(367, 466);
             this.boxLEDOverheating.Name = "boxLEDOverheating";
             this.boxLEDOverheating.Size = new System.Drawing.Size(15, 14);
             this.boxLEDOverheating.TabIndex = 81;
@@ -770,7 +1070,7 @@
             // boxShutdownAngleLimit
             // 
             this.boxShutdownAngleLimit.AutoSize = true;
-            this.boxShutdownAngleLimit.Location = new System.Drawing.Point(349, 453);
+            this.boxShutdownAngleLimit.Location = new System.Drawing.Point(340, 486);
             this.boxShutdownAngleLimit.Name = "boxShutdownAngleLimit";
             this.boxShutdownAngleLimit.Size = new System.Drawing.Size(15, 14);
             this.boxShutdownAngleLimit.TabIndex = 80;
@@ -780,7 +1080,7 @@
             // boxShutdownInputVoltage
             // 
             this.boxShutdownInputVoltage.AutoSize = true;
-            this.boxShutdownInputVoltage.Location = new System.Drawing.Point(322, 453);
+            this.boxShutdownInputVoltage.Location = new System.Drawing.Point(313, 486);
             this.boxShutdownInputVoltage.Name = "boxShutdownInputVoltage";
             this.boxShutdownInputVoltage.Size = new System.Drawing.Size(15, 14);
             this.boxShutdownInputVoltage.TabIndex = 79;
@@ -841,7 +1141,7 @@
             // 
             this.ledCouple.Etat = false;
             this.ledCouple.Image = ((System.Drawing.Image)(resources.GetObject("ledCouple.Image")));
-            this.ledCouple.Location = new System.Drawing.Point(414, 195);
+            this.ledCouple.Location = new System.Drawing.Point(307, 196);
             this.ledCouple.Name = "ledCouple";
             this.ledCouple.Size = new System.Drawing.Size(16, 16);
             this.ledCouple.TabIndex = 74;
@@ -851,7 +1151,7 @@
             // 
             this.ledLed.Etat = false;
             this.ledLed.Image = ((System.Drawing.Image)(resources.GetObject("ledLed.Image")));
-            this.ledLed.Location = new System.Drawing.Point(414, 173);
+            this.ledLed.Location = new System.Drawing.Point(307, 174);
             this.ledLed.Name = "ledLed";
             this.ledLed.Size = new System.Drawing.Size(16, 16);
             this.ledLed.TabIndex = 73;
@@ -860,7 +1160,7 @@
             // lblFirmware
             // 
             this.lblFirmware.AutoSize = true;
-            this.lblFirmware.Location = new System.Drawing.Point(111, 198);
+            this.lblFirmware.Location = new System.Drawing.Point(111, 176);
             this.lblFirmware.Name = "lblFirmware";
             this.lblFirmware.Size = new System.Drawing.Size(10, 13);
             this.lblFirmware.TabIndex = 71;
@@ -869,7 +1169,7 @@
             // lblTxtFirmware
             // 
             this.lblTxtFirmware.AutoSize = true;
-            this.lblTxtFirmware.Location = new System.Drawing.Point(15, 200);
+            this.lblTxtFirmware.Location = new System.Drawing.Point(15, 178);
             this.lblTxtFirmware.Name = "lblTxtFirmware";
             this.lblTxtFirmware.Size = new System.Drawing.Size(84, 13);
             this.lblTxtFirmware.TabIndex = 70;
@@ -878,7 +1178,7 @@
             // lblModele
             // 
             this.lblModele.AutoSize = true;
-            this.lblModele.Location = new System.Drawing.Point(111, 176);
+            this.lblModele.Location = new System.Drawing.Point(111, 154);
             this.lblModele.Name = "lblModele";
             this.lblModele.Size = new System.Drawing.Size(10, 13);
             this.lblModele.TabIndex = 69;
@@ -887,7 +1187,7 @@
             // lblTxtModele
             // 
             this.lblTxtModele.AutoSize = true;
-            this.lblTxtModele.Location = new System.Drawing.Point(15, 176);
+            this.lblTxtModele.Location = new System.Drawing.Point(15, 154);
             this.lblTxtModele.Name = "lblTxtModele";
             this.lblTxtModele.Size = new System.Drawing.Size(56, 13);
             this.lblTxtModele.TabIndex = 68;
@@ -895,7 +1195,7 @@
             // 
             // numPositionMax
             // 
-            this.numPositionMax.Location = new System.Drawing.Point(101, 295);
+            this.numPositionMax.Location = new System.Drawing.Point(101, 300);
             this.numPositionMax.Maximum = new decimal(new int[] {
             1023,
             0,
@@ -907,7 +1207,7 @@
             // 
             // btnOkPositionMax
             // 
-            this.btnOkPositionMax.Location = new System.Drawing.Point(173, 294);
+            this.btnOkPositionMax.Location = new System.Drawing.Point(173, 299);
             this.btnOkPositionMax.Name = "btnOkPositionMax";
             this.btnOkPositionMax.Size = new System.Drawing.Size(30, 23);
             this.btnOkPositionMax.TabIndex = 66;
@@ -918,7 +1218,7 @@
             // lblTxtPositionMax
             // 
             this.lblTxtPositionMax.AutoSize = true;
-            this.lblTxtPositionMax.Location = new System.Drawing.Point(15, 299);
+            this.lblTxtPositionMax.Location = new System.Drawing.Point(15, 304);
             this.lblTxtPositionMax.Name = "lblTxtPositionMax";
             this.lblTxtPositionMax.Size = new System.Drawing.Size(66, 13);
             this.lblTxtPositionMax.TabIndex = 65;
@@ -926,7 +1226,7 @@
             // 
             // numPositionMin
             // 
-            this.numPositionMin.Location = new System.Drawing.Point(101, 269);
+            this.numPositionMin.Location = new System.Drawing.Point(101, 274);
             this.numPositionMin.Maximum = new decimal(new int[] {
             1023,
             0,
@@ -938,7 +1238,7 @@
             // 
             // btnOkPositionMin
             // 
-            this.btnOkPositionMin.Location = new System.Drawing.Point(173, 268);
+            this.btnOkPositionMin.Location = new System.Drawing.Point(173, 273);
             this.btnOkPositionMin.Name = "btnOkPositionMin";
             this.btnOkPositionMin.Size = new System.Drawing.Size(30, 23);
             this.btnOkPositionMin.TabIndex = 63;
@@ -949,7 +1249,7 @@
             // lblTxtPositionMin
             // 
             this.lblTxtPositionMin.AutoSize = true;
-            this.lblTxtPositionMin.Location = new System.Drawing.Point(15, 273);
+            this.lblTxtPositionMin.Location = new System.Drawing.Point(15, 278);
             this.lblTxtPositionMin.Name = "lblTxtPositionMin";
             this.lblTxtPositionMin.Size = new System.Drawing.Size(63, 13);
             this.lblTxtPositionMin.TabIndex = 62;
@@ -959,7 +1259,7 @@
             // 
             this.ledMouvement.Etat = false;
             this.ledMouvement.Image = ((System.Drawing.Image)(resources.GetObject("ledMouvement.Image")));
-            this.ledMouvement.Location = new System.Drawing.Point(414, 217);
+            this.ledMouvement.Location = new System.Drawing.Point(307, 218);
             this.ledMouvement.Name = "ledMouvement";
             this.ledMouvement.Size = new System.Drawing.Size(16, 16);
             this.ledMouvement.TabIndex = 61;
@@ -968,7 +1268,7 @@
             // lblTxtMouvement
             // 
             this.lblTxtMouvement.AutoSize = true;
-            this.lblTxtMouvement.Location = new System.Drawing.Point(324, 220);
+            this.lblTxtMouvement.Location = new System.Drawing.Point(217, 221);
             this.lblTxtMouvement.Name = "lblTxtMouvement";
             this.lblTxtMouvement.Size = new System.Drawing.Size(78, 13);
             this.lblTxtMouvement.TabIndex = 60;
@@ -977,7 +1277,7 @@
             // switchCouple
             // 
             this.switchCouple.BackColor = System.Drawing.Color.Transparent;
-            this.switchCouple.Location = new System.Drawing.Point(436, 196);
+            this.switchCouple.Location = new System.Drawing.Point(329, 197);
             this.switchCouple.Name = "switchCouple";
             this.switchCouple.Size = new System.Drawing.Size(35, 15);
             this.switchCouple.Symetrique = false;
@@ -987,7 +1287,7 @@
             // lblTxtCouple
             // 
             this.lblTxtCouple.AutoSize = true;
-            this.lblTxtCouple.Location = new System.Drawing.Point(324, 198);
+            this.lblTxtCouple.Location = new System.Drawing.Point(217, 199);
             this.lblTxtCouple.Name = "lblTxtCouple";
             this.lblTxtCouple.Size = new System.Drawing.Size(40, 13);
             this.lblTxtCouple.TabIndex = 58;
@@ -995,7 +1295,7 @@
             // 
             // numCouple
             // 
-            this.numCouple.Location = new System.Drawing.Point(101, 245);
+            this.numCouple.Location = new System.Drawing.Point(101, 223);
             this.numCouple.Maximum = new decimal(new int[] {
             1023,
             0,
@@ -1007,7 +1307,7 @@
             // 
             // btnOkCoupleMax
             // 
-            this.btnOkCoupleMax.Location = new System.Drawing.Point(173, 243);
+            this.btnOkCoupleMax.Location = new System.Drawing.Point(173, 221);
             this.btnOkCoupleMax.Name = "btnOkCoupleMax";
             this.btnOkCoupleMax.Size = new System.Drawing.Size(30, 23);
             this.btnOkCoupleMax.TabIndex = 56;
@@ -1018,7 +1318,7 @@
             // lblTxtCoupleMax
             // 
             this.lblTxtCoupleMax.AutoSize = true;
-            this.lblTxtCoupleMax.Location = new System.Drawing.Point(15, 248);
+            this.lblTxtCoupleMax.Location = new System.Drawing.Point(15, 226);
             this.lblTxtCoupleMax.Name = "lblTxtCoupleMax";
             this.lblTxtCoupleMax.Size = new System.Drawing.Size(62, 13);
             this.lblTxtCoupleMax.TabIndex = 55;
@@ -1032,11 +1332,12 @@
             this.btnReset.TabIndex = 54;
             this.btnReset.Text = "Reset";
             this.btnReset.UseVisualStyleBackColor = true;
+            this.btnReset.Click += new System.EventHandler(this.btnReset_Click);
             // 
             // lblLed
             // 
             this.lblLed.AutoSize = true;
-            this.lblLed.Location = new System.Drawing.Point(324, 176);
+            this.lblLed.Location = new System.Drawing.Point(217, 177);
             this.lblLed.Name = "lblLed";
             this.lblLed.Size = new System.Drawing.Size(25, 13);
             this.lblLed.TabIndex = 53;
@@ -1045,7 +1346,7 @@
             // switchLed
             // 
             this.switchLed.BackColor = System.Drawing.Color.Transparent;
-            this.switchLed.Location = new System.Drawing.Point(436, 173);
+            this.switchLed.Location = new System.Drawing.Point(329, 174);
             this.switchLed.Name = "switchLed";
             this.switchLed.Size = new System.Drawing.Size(35, 15);
             this.switchLed.Symetrique = false;
@@ -1076,7 +1377,7 @@
             this.trackBarPosition.BackColor = System.Drawing.Color.Transparent;
             this.trackBarPosition.IntervalTimer = 500;
             this.trackBarPosition.Location = new System.Drawing.Point(132, 107);
-            this.trackBarPosition.Max = 1023D;
+            this.trackBarPosition.Max = 1500D;
             this.trackBarPosition.MaximumSize = new System.Drawing.Size(3000, 15);
             this.trackBarPosition.Min = 0D;
             this.trackBarPosition.MinimumSize = new System.Drawing.Size(0, 15);
@@ -1107,60 +1408,6 @@
             this.trackBarVitesse.TickValueChanged += new System.EventHandler(this.trackBarVitesse_TickValueChanged);
             this.trackBarVitesse.ValueChanged += new System.EventHandler(this.trackBarVitesse_ValueChanged);
             // 
-            // ctrlGraphiqueVitesse
-            // 
-            this.ctrlGraphiqueVitesse.BackColor = System.Drawing.Color.White;
-            this.ctrlGraphiqueVitesse.EchelleCommune = true;
-            this.ctrlGraphiqueVitesse.EchelleFixe = false;
-            this.ctrlGraphiqueVitesse.EchelleMax = 1D;
-            this.ctrlGraphiqueVitesse.EchelleMin = 0D;
-            this.ctrlGraphiqueVitesse.Location = new System.Drawing.Point(795, 19);
-            this.ctrlGraphiqueVitesse.Name = "ctrlGraphiqueVitesse";
-            this.ctrlGraphiqueVitesse.Size = new System.Drawing.Size(218, 140);
-            this.ctrlGraphiqueVitesse.TabIndex = 124;
-            // 
-            // ctrlGraphiquePosition
-            // 
-            this.ctrlGraphiquePosition.BackColor = System.Drawing.Color.White;
-            this.ctrlGraphiquePosition.EchelleCommune = true;
-            this.ctrlGraphiquePosition.EchelleFixe = false;
-            this.ctrlGraphiquePosition.EchelleMax = 1D;
-            this.ctrlGraphiquePosition.EchelleMin = 0D;
-            this.ctrlGraphiquePosition.Location = new System.Drawing.Point(795, 172);
-            this.ctrlGraphiquePosition.Name = "ctrlGraphiquePosition";
-            this.ctrlGraphiquePosition.Size = new System.Drawing.Size(218, 140);
-            this.ctrlGraphiquePosition.TabIndex = 125;
-            // 
-            // lblCoupleActuel
-            // 
-            this.lblCoupleActuel.AutoSize = true;
-            this.lblCoupleActuel.Location = new System.Drawing.Point(411, 331);
-            this.lblCoupleActuel.Name = "lblCoupleActuel";
-            this.lblCoupleActuel.Size = new System.Drawing.Size(10, 13);
-            this.lblCoupleActuel.TabIndex = 127;
-            this.lblCoupleActuel.Text = "-";
-            // 
-            // lblTxtCoupleActuel
-            // 
-            this.lblTxtCoupleActuel.AutoSize = true;
-            this.lblTxtCoupleActuel.Location = new System.Drawing.Point(324, 330);
-            this.lblTxtCoupleActuel.Name = "lblTxtCoupleActuel";
-            this.lblTxtCoupleActuel.Size = new System.Drawing.Size(72, 13);
-            this.lblTxtCoupleActuel.TabIndex = 126;
-            this.lblTxtCoupleActuel.Text = "Couple actuel";
-            // 
-            // ctrlGraphiqueCouple
-            // 
-            this.ctrlGraphiqueCouple.BackColor = System.Drawing.Color.White;
-            this.ctrlGraphiqueCouple.EchelleCommune = true;
-            this.ctrlGraphiqueCouple.EchelleFixe = false;
-            this.ctrlGraphiqueCouple.EchelleMax = 1D;
-            this.ctrlGraphiqueCouple.EchelleMin = 0D;
-            this.ctrlGraphiqueCouple.Location = new System.Drawing.Point(795, 325);
-            this.ctrlGraphiqueCouple.Name = "ctrlGraphiqueCouple";
-            this.ctrlGraphiqueCouple.Size = new System.Drawing.Size(218, 140);
-            this.ctrlGraphiqueCouple.TabIndex = 128;
-            // 
             // PanelServo
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -1168,12 +1415,17 @@
             this.BackColor = System.Drawing.Color.Transparent;
             this.Controls.Add(this.groupServo);
             this.Name = "PanelServo";
-            this.Size = new System.Drawing.Size(1041, 492);
+            this.Size = new System.Drawing.Size(1041, 520);
             this.Load += new System.EventHandler(this.PanelServo_Load);
             ((System.ComponentModel.ISupportInitialize)(this.numID)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numBaudrate)).EndInit();
             this.groupServo.ResumeLayout(false);
             this.groupServo.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.numPunch)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBoxCompliance)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numCoupleLimite)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numTempMax)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numTensionMax)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numTensionMin)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxAngles)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.ledErreurInstruction)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.ledErreurOverload)).EndInit();
@@ -1212,7 +1464,6 @@
         private System.Windows.Forms.Label lblTxtTemperature;
         private System.Windows.Forms.Label lblTension;
         private System.Windows.Forms.Label lblTxtTension;
-        private System.Windows.Forms.NumericUpDown numBaudrate;
         private System.Windows.Forms.Button btnOkBaudrate;
         private System.Windows.Forms.Label lblTxtBaudrate;
         private System.Windows.Forms.GroupBox groupServo;
@@ -1291,5 +1542,23 @@
         private System.Windows.Forms.Label lblCoupleActuel;
         private System.Windows.Forms.Label lblTxtCoupleActuel;
         private Composants.CtrlGraphique ctrlGraphiqueCouple;
+        private System.Windows.Forms.NumericUpDown numTensionMax;
+        private System.Windows.Forms.Button btnOkTensionMax;
+        private System.Windows.Forms.Label lblTxtTensionMax;
+        private System.Windows.Forms.NumericUpDown numTensionMin;
+        private System.Windows.Forms.Button btnOkTensionMin;
+        private System.Windows.Forms.Label lblTxtTensionMin;
+        private System.Windows.Forms.NumericUpDown numTempMax;
+        private System.Windows.Forms.Button btnOkTempMax;
+        private System.Windows.Forms.Label lblTxtTempMax;
+        private System.Windows.Forms.NumericUpDown numCoupleLimite;
+        private System.Windows.Forms.Button btnOkCoupleLimite;
+        private System.Windows.Forms.Label lblTxtCoupleLimite;
+        private System.Windows.Forms.Button btnChangeID;
+        private System.Windows.Forms.ComboBox cboBaudrate;
+        private System.Windows.Forms.PictureBox pictureBoxCompliance;
+        private System.Windows.Forms.NumericUpDown numPunch;
+        private System.Windows.Forms.Button btnOkPunch;
+        private System.Windows.Forms.Label lblTxtPunch;
     }
 }

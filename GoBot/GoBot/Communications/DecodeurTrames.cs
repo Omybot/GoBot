@@ -63,6 +63,10 @@ namespace GoBot.Communications
                                 byte valeurAlimentation = trame[2];
                                 message = "Envoi alimentation : " + (valeurAlimentation > 0 ? "On" : "Off");
                                 break;
+                            case FonctionIO.ChangementBaudrateSerie:
+                                ServoBaudrate baudrate = (ServoBaudrate)trame[2];
+                                message = "Envoi baudrate série : " + baudrate;
+                                break;
                             case FonctionIO.RetourTestConnexion:
                                 double tension1 = (double)(trame[2] * 256 + trame[3]) / 100.0;
                                 double tension2 = (double)(trame[4] * 256 + trame[5]) / 100.0;
@@ -74,9 +78,6 @@ namespace GoBot.Communications
                             case FonctionIO.CommandeServo:
                                 switch ((FonctionServo)trame[2])
                                 {
-                                    case FonctionServo.DemandeBaudrate:
-                                        message = "Demande baudrate servo " + GoBot.Actions.Nommeur.Nommer((ServomoteurID)trame[3]);
-                                        break;
                                     case FonctionServo.DemandeComplianceParams:
                                         message = "Demande compliance servo " + GoBot.Actions.Nommeur.Nommer((ServomoteurID)trame[3]);
                                         break;
@@ -95,20 +96,17 @@ namespace GoBot.Communications
                                     case FonctionServo.DemandeCoupleMaximum:
                                         message = "Demande couple max servo " + GoBot.Actions.Nommeur.Nommer((ServomoteurID)trame[3]);
                                         break;
-                                    case FonctionServo.DemandeId:
-                                        message = "Demande ID servo";
-                                        break;
                                     case FonctionServo.DemandeLed:
                                         message = "Demande état LED servo " + GoBot.Actions.Nommeur.Nommer((ServomoteurID)trame[3]);
                                         break;
                                     case FonctionServo.DemandeMouvement:
-                                        message = "Demande mouvelement servo " + GoBot.Actions.Nommeur.Nommer((ServomoteurID)trame[3]);
+                                        message = "Demande mouvemement servo " + GoBot.Actions.Nommeur.Nommer((ServomoteurID)trame[3]);
                                         break;
                                     case FonctionServo.DemandeNumeroModele:
                                         message = "Demande numéro modèle servo " + GoBot.Actions.Nommeur.Nommer((ServomoteurID)trame[3]);
                                         break;
                                     case FonctionServo.DemandePositionActuelle:
-                                        message = "Demand eposition actuelle servo " + GoBot.Actions.Nommeur.Nommer((ServomoteurID)trame[3]);
+                                        message = "Demande position actuelle servo " + GoBot.Actions.Nommeur.Nommer((ServomoteurID)trame[3]);
                                         break;
                                     case FonctionServo.DemandePositionCible:
                                         message = "Demande position cible servo " + GoBot.Actions.Nommeur.Nommer((ServomoteurID)trame[3]);
@@ -176,9 +174,6 @@ namespace GoBot.Communications
                                     case FonctionServo.Reset:
                                         message = "Envoi servo " + GoBot.Actions.Nommeur.Nommer((ServomoteurID)trame[3]) + " reset";
                                         break;
-                                    case FonctionServo.RetourBaudrate:
-                                        message = "Retour servo " + GoBot.Actions.Nommeur.Nommer((ServomoteurID)trame[3]) + " baudrate = " + ((ServoBaudrate)(trame[4])).ToString();
-                                        break;
                                     case FonctionServo.RetourComplianceParams:
                                         message = "Retour servo " + GoBot.Actions.Nommeur.Nommer((ServomoteurID)trame[3]) + " compliance : CCWSlope=" + trame[4] + " CCWMargin=" + trame[5] + " CWSlope=" + trame[6] + " CWMargin=" + trame[7];
                                         break;
@@ -196,9 +191,6 @@ namespace GoBot.Communications
                                         break;
                                     case FonctionServo.RetourCoupleMaximum:
                                         message = "Retour servo " + GoBot.Actions.Nommeur.Nommer((ServomoteurID)trame[3]) + " couple maximum = " + (trame[4] * 256 + trame[5]);
-                                        break;
-                                    case FonctionServo.RetourId:
-                                        message = "Retour servo ID = " + trame[3];
                                         break;
                                     case FonctionServo.RetourLed:
                                         message = "Retour servo " + GoBot.Actions.Nommeur.Nommer((ServomoteurID)trame[3]) + " LED " + (trame[4] > 0 ? "On" : "Off");
@@ -244,6 +236,48 @@ namespace GoBot.Communications
                                         break;
                                     case FonctionServo.RetourCoupleCourant:
                                         message = "Retour servo " + GoBot.Actions.Nommeur.Nommer((ServomoteurID)trame[3]) + " couple courant : " + (trame[4] * 256 + trame[5]);
+                                        break;
+                                    case FonctionServo.DemandeStatusLevel:
+                                        message = "Demande status level servo " + GoBot.Actions.Nommeur.Nommer((ServomoteurID)trame[3]);
+                                        break;
+                                    case FonctionServo.RetourStatusLevel:
+                                        message = "Retour servo " + GoBot.Actions.Nommeur.Nommer((ServomoteurID)trame[3]) + " status level : " + trame[4];
+                                        break;
+                                    case FonctionServo.EnvoiTensionMax:
+                                        message = "Envoi servo " + GoBot.Actions.Nommeur.Nommer((ServomoteurID)trame[3]) + " tension max : " + (trame[4] * 256 + trame[5]) / 10.0 + "V";
+                                        break;
+                                    case FonctionServo.DemandeTensionMax:
+                                        message = "Demande tension max servo " + GoBot.Actions.Nommeur.Nommer((ServomoteurID)trame[3]);
+                                        break;
+                                    case FonctionServo.RetourTensionMax:
+                                        message = "Retour servo " + GoBot.Actions.Nommeur.Nommer((ServomoteurID)trame[3]) + " tension max : " + trame[4] / 10.0 + "V";
+                                        break;
+                                    case FonctionServo.EnvoiTensionMin:
+                                        message = "Envoi servo " + GoBot.Actions.Nommeur.Nommer((ServomoteurID)trame[3]) + " tension min : " + trame[4] / 10.0 + "V";
+                                        break;
+                                    case FonctionServo.DemandeTensionMin:
+                                        message = "Demande tension min servo " + GoBot.Actions.Nommeur.Nommer((ServomoteurID)trame[3]);
+                                        break;
+                                    case FonctionServo.RetourTensionMin:
+                                        message = "Retour servo " + GoBot.Actions.Nommeur.Nommer((ServomoteurID)trame[3]) + " tension min : " + trame[4] / 10.0 + "V";
+                                        break;
+                                    case FonctionServo.EnvoiTemperatureMax:
+                                        message = "Envoi servo " + GoBot.Actions.Nommeur.Nommer((ServomoteurID)trame[3]) + " temperature max : " + trame[4] + "°C";
+                                        break;
+                                    case FonctionServo.DemandeTemperatureMax:
+                                        message = "Demande temperature max servo " + GoBot.Actions.Nommeur.Nommer((ServomoteurID)trame[3]);
+                                        break;
+                                    case FonctionServo.RetourTemperatureMax:
+                                        message = "Retour servo " + GoBot.Actions.Nommeur.Nommer((ServomoteurID)trame[3]) + " temperature max : " + trame[4] + "°C";
+                                        break;
+                                    case FonctionServo.DemandeCoupleLimite:
+                                        message = "Demande couple limite servo " + GoBot.Actions.Nommeur.Nommer((ServomoteurID)trame[3]);
+                                        break;
+                                    case FonctionServo.RetourCoupleLimite:
+                                        message = "Retour servo " + GoBot.Actions.Nommeur.Nommer((ServomoteurID)trame[3]) + " couple limite : " + (trame[4] * 256 + trame[5]);
+                                        break;
+                                    case FonctionServo.EnvoiCoupleLimite:
+                                        message = "Envoi servo " + GoBot.Actions.Nommeur.Nommer((ServomoteurID)trame[3]) + " couple limite : " + (trame[4] * 256 + trame[5]);
                                         break;
                                     case FonctionServo.RetourErreurs:
                                         String listeErreurs = "";
@@ -402,9 +436,6 @@ namespace GoBot.Communications
                             case FonctionPi.CommandeServo:
                                 switch ((FonctionServo)trame[2])
                                 {
-                                    case FonctionServo.DemandeBaudrate:
-                                        message = "Demande baudrate servo " + GoBot.Actions.Nommeur.Nommer((ServomoteurID)trame[3]);
-                                        break;
                                     case FonctionServo.DemandeComplianceParams:
                                         message = "Demande compliance servo " + GoBot.Actions.Nommeur.Nommer((ServomoteurID)trame[3]);
                                         break;
@@ -423,20 +454,17 @@ namespace GoBot.Communications
                                     case FonctionServo.DemandeCoupleMaximum:
                                         message = "Demande couple max servo " + GoBot.Actions.Nommeur.Nommer((ServomoteurID)trame[3]);
                                         break;
-                                    case FonctionServo.DemandeId:
-                                        message = "Demande ID servo";
-                                        break;
                                     case FonctionServo.DemandeLed:
                                         message = "Demande état LED servo " + GoBot.Actions.Nommeur.Nommer((ServomoteurID)trame[3]);
                                         break;
                                     case FonctionServo.DemandeMouvement:
-                                        message = "Demande mouvelement servo " + GoBot.Actions.Nommeur.Nommer((ServomoteurID)trame[3]);
+                                        message = "Demande mouvemement servo " + GoBot.Actions.Nommeur.Nommer((ServomoteurID)trame[3]);
                                         break;
                                     case FonctionServo.DemandeNumeroModele:
                                         message = "Demande numéro modèle servo " + GoBot.Actions.Nommeur.Nommer((ServomoteurID)trame[3]);
                                         break;
                                     case FonctionServo.DemandePositionActuelle:
-                                        message = "Demand eposition actuelle servo " + GoBot.Actions.Nommeur.Nommer((ServomoteurID)trame[3]);
+                                        message = "Demande position actuelle servo " + GoBot.Actions.Nommeur.Nommer((ServomoteurID)trame[3]);
                                         break;
                                     case FonctionServo.DemandePositionCible:
                                         message = "Demande position cible servo " + GoBot.Actions.Nommeur.Nommer((ServomoteurID)trame[3]);
@@ -504,9 +532,6 @@ namespace GoBot.Communications
                                     case FonctionServo.Reset:
                                         message = "Envoi servo " + GoBot.Actions.Nommeur.Nommer((ServomoteurID)trame[3]) + " reset";
                                         break;
-                                    case FonctionServo.RetourBaudrate:
-                                        message = "Retour servo " + GoBot.Actions.Nommeur.Nommer((ServomoteurID)trame[3]) + " baudrate = " + ((ServoBaudrate)(trame[4])).ToString();
-                                        break;
                                     case FonctionServo.RetourComplianceParams:
                                         message = "Retour servo " + GoBot.Actions.Nommeur.Nommer((ServomoteurID)trame[3]) + " compliance : CCWSlope=" + trame[4] + " CCWMargin=" + trame[5] + " CWSlope=" + trame[6] + " CWMargin=" + trame[7];
                                         break;
@@ -524,9 +549,6 @@ namespace GoBot.Communications
                                         break;
                                     case FonctionServo.RetourCoupleMaximum:
                                         message = "Retour servo " + GoBot.Actions.Nommeur.Nommer((ServomoteurID)trame[3]) + " couple maximum = " + (trame[4] * 256 + trame[5]);
-                                        break;
-                                    case FonctionServo.RetourId:
-                                        message = "Retour servo ID = " + trame[3];
                                         break;
                                     case FonctionServo.RetourLed:
                                         message = "Retour servo " + GoBot.Actions.Nommeur.Nommer((ServomoteurID)trame[3]) + " LED " + (trame[4] > 0 ? "On" : "Off");
