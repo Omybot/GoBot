@@ -5,7 +5,7 @@ using System.Text;
 using GoBot.Calculs;
 using GoBot.ElementsJeu;
 using System.Threading;
-using GoBot.Actionneur;
+using GoBot.Actionneurs;
 
 namespace GoBot.Mouvements
 {

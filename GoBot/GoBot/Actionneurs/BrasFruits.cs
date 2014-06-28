@@ -5,7 +5,7 @@ using System.Text;
 using GoBot.Calculs;
 using System.Threading;
 
-namespace GoBot.Actionneur
+namespace GoBot.Actionneurs
 {
     class BrasFruits
     {

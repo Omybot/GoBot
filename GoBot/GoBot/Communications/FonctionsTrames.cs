@@ -121,6 +121,8 @@ namespace GoBot.Communications
         DemandeVitesseMax = 0x07,
         RetourVitesseMax = 0x08,
         EnvoiVitesseMax = 0x09,
+        DemandeAllIn = 0x10,
+        RetourAllIn = 0x11,
         EnvoiId = 0x12,
         Reset = 0x13,
         DemandeCoupleMaximum = 0x14,

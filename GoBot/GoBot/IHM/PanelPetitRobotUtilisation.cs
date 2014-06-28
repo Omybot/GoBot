@@ -7,7 +7,6 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 using System.Threading;
-using GoBot.Actionneur;
 using GoBot.Actionneurs;
 
 namespace GoBot.IHM

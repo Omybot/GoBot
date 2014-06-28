@@ -5,7 +5,7 @@ using System.Text;
 using GoBot.Calculs.Formes;
 using AStarFolder;
 using System.Threading;
-using GoBot.Actionneur;
+using GoBot.Actionneurs;
 
 namespace GoBot.Enchainements
 {

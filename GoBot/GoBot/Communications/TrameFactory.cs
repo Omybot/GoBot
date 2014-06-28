@@ -819,6 +819,16 @@ namespace GoBot.Communications
             return new Trame(tab);
         }
 
+        static public Trame ServoDemandeAllIn(ServomoteurID servo, Carte carte = Carte.RecIO)
+        {
+            byte[] tab = new byte[4];
+            tab[0] = (byte)carte;
+            tab[1] = (byte)FonctionIO.CommandeServo;
+            tab[2] = (byte)FonctionServo.DemandeAllIn;
+            tab[3] = (byte)servo;
+            return new Trame(tab);
+        }
+
         static public Trame ServoEnvoiComplianceParams(ServomoteurID servo, byte CCWSlope, byte CCWMargin, byte CWMargin, byte CWSlope, Carte carte = Carte.RecIO)
         {
             byte[] tab = new byte[8];

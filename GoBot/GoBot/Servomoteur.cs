@@ -412,7 +412,7 @@ namespace GoBot
 
         public void DemandeActualisation(bool complete)
         {
-            if (complete)
+            /*if (complete)
             {
                 //connexion.SendMessage(TrameFactory.ServoDemandeBaudrate((ServomoteurID)id, carte));
                 //Thread.Sleep(10);
@@ -465,7 +465,9 @@ namespace GoBot
             connexion.SendMessage(TrameFactory.ServoDemandeCoupleActive((ServomoteurID)id, carte));
             Thread.Sleep(10);
             connexion.SendMessage(TrameFactory.ServoDemandeLed((ServomoteurID)id, carte));
-            Thread.Sleep(10);
+            Thread.Sleep(10);*/
+
+            connexion.SendMessage(TrameFactory.ServoDemandeAllIn((ServomoteurID)id, carte));
         }
 
         void connexion_NouvelleTrame(Trame trame)
@@ -596,6 +598,57 @@ namespace GoBot
                             ErreurOverheating = (trame[8] == 1 ? true : false);
                             ErreurOverload = (trame[9] == 1 ? true : false);
                             ErreurRange = (trame[10] == 1 ? true : false);
+                            break;
+                        case (byte)FonctionServo.RetourAllIn:
+                            // 4 = taille de l'entête
+                            try
+                            {
+                                modele = trame[6 + 1] * 256 + trame[6 + 0];
+                                firmware = trame[6 + 2];
+                                positionMin = trame[6 + 7] * 256 + trame[6 + 6];
+                                positionMax = trame[6 + 9] * 256 + trame[6 + 8];
+                                temperatureMaximum = trame[6 + 11];
+                                tensionMinimum = trame[6 + 12] / 10.0;
+                                tensionMaximum = trame[6 + 13] / 10.0;
+                                coupleMaximum = trame[6 + 15] * 256 + trame[6 + 14];
+
+                                // todo incorrect
+                                alarmeLEDInputVoltage = (trame[6 + 17] == 1 ? true : false);
+                                alarmeLEDAngleLimit = (trame[6 + 17] == 1 ? true : false);
+                                alarmeLEDOverheating = (trame[6 + 17] == 1 ? true : false);
+                                alarmeLEDRange = (trame[6 + 17] == 1 ? true : false);
+                                alarmeLEDChecksum = (trame[6 + 17] == 1 ? true : false);
+                                alarmeLEDOverload = (trame[6 + 17] == 1 ? true : false);
+                                alarmeLEDInstruction = (trame[6 + 17] == 1 ? true : false);
+
+                                alarmeShutdownInputVoltage = (trame[6 + 18] == 1 ? true : false);
+                                alarmeShutdownAngleLimit = (trame[6 + 18] == 1 ? true : false);
+                                alarmeShutdownOverheating = (trame[6 + 18] == 1 ? true : false);
+                                alarmeShutdownRange = (trame[6 + 18] == 1 ? true : false);
+                                alarmeShutdownChecksum = (trame[6 + 18] == 1 ? true : false);
+                                alarmeShutdownOverload = (trame[6 + 18] == 1 ? true : false);
+                                alarmeShutdownInstruction = (trame[6 + 18] == 1 ? true : false);
+
+                                coupleActive = trame[6 + 24] > 0;
+                                ledAllumee = trame[6 + 25] > 0;
+                                cwMargin = trame[6 + 26];
+                                ccwMargin = trame[6 + 27];
+                                cwSlope = trame[6 + 28];
+                                ccwSlope = trame[6 + 29];
+                                positionCible = trame[6 + 31] * 256 + trame[6 + 32];
+                                vitesseMax = trame[6 + 33] * 256 + trame[6 + 32];
+                                coupleLimite = trame[6 + 35] * 256 + trame[6 + 34];
+                                positionActuelle = trame[6 + 37] * 256 + trame[6 + 36];
+                                vitesseActuelle = trame[6 + 39] * 256 + trame[6 + 38];
+                                coupleActuel = trame[6 + 41] * 256 + trame[6 + 40];
+                                tension = trame[6 + 42] / 10.0;
+                                temperature = trame[6 + 43];
+                                enMouvement = trame[6 + 46] > 0;
+                                //punch = trame[6 + 49] * 256 + trame[6 + 48];
+                            }
+                            catch (Exception)
+                            {
+                            }
                             break;
                     }
                 }

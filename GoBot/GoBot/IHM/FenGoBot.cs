@@ -110,15 +110,9 @@ namespace GoBot
 
                 Plateau.NotreCouleur = Plateau.CouleurDroiteJaune;
                 panelMatch.CouleurDroiteJaune();
-                panelTable.TableDessinee += panelTable_TableDessinee;
             }
 
             SplashScreen.CloseSplash();
-        }
-
-        void panelTable_TableDessinee(Image img)
-        {
-            panelMatch.AfficherTable(img);
         }
 
         public void ChargerReplay(String fichier)

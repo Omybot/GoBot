@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using GoBot.Calculs;
-using GoBot.Actionneur;
+using GoBot.Actionneurs;
 using System.Windows.Forms;
 using System.Threading;
 

@@ -10,7 +10,7 @@ using GoBot.Calculs.Formes;
 using System.Drawing;
 using System.Windows.Forms;
 using GoBot.Communications;
-using GoBot.Actionneur;
+using GoBot.Actionneurs;
 
 namespace GoBot
 {

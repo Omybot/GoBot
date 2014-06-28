@@ -29,12 +29,7 @@
         private void InitializeComponent()
         {
             this.btnAffichage = new System.Windows.Forms.Button();
-            this.boxDroites = new System.Windows.Forms.CheckBox();
-            this.boxTable = new System.Windows.Forms.CheckBox();
-            this.boxObstacles = new System.Windows.Forms.CheckBox();
             this.btnSaveGraph = new System.Windows.Forms.Button();
-            this.boxGraphGros = new System.Windows.Forms.CheckBox();
-            this.boxArretesGros = new System.Windows.Forms.CheckBox();
             this.btnAllerA = new System.Windows.Forms.Button();
             this.boxSourisObstacle = new System.Windows.Forms.CheckBox();
             this.btnReset = new System.Windows.Forms.Button();
@@ -42,8 +37,6 @@
             this.label1 = new System.Windows.Forms.Label();
             this.lblPos = new System.Windows.Forms.Label();
             this.btnGo = new System.Windows.Forms.Button();
-            this.boxCoutGros = new System.Windows.Forms.CheckBox();
-            this.boxCoutPetit = new System.Windows.Forms.CheckBox();
             this.label2 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
@@ -69,10 +62,7 @@
             this.label16 = new System.Windows.Forms.Label();
             this.lblVitesseEnnemi1 = new System.Windows.Forms.Label();
             this.label18 = new System.Windows.Forms.Label();
-            this.boxPerspective = new System.Windows.Forms.CheckBox();
             this.pictureBoxTable = new System.Windows.Forms.PictureBox();
-            this.boxArretesPetit = new System.Windows.Forms.CheckBox();
-            this.boxGraphPetit = new System.Windows.Forms.CheckBox();
             this.btnAleatoire = new System.Windows.Forms.Button();
             this.btnPositionRP = new System.Windows.Forms.Button();
             this.button1 = new System.Windows.Forms.Button();
@@ -88,6 +78,7 @@
             this.btnTeleportRPFace = new System.Windows.Forms.Button();
             this.btnTeleportRPCentre = new System.Windows.Forms.Button();
             this.boxTrajectoire = new System.Windows.Forms.CheckBox();
+            this.checkedListBox = new System.Windows.Forms.CheckedListBox();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxTable)).BeginInit();
             this.SuspendLayout();
             // 
@@ -104,39 +95,6 @@
             this.btnAffichage.UseVisualStyleBackColor = true;
             this.btnAffichage.Click += new System.EventHandler(this.btnAffichage_Click);
             // 
-            // boxDroites
-            // 
-            this.boxDroites.AutoSize = true;
-            this.boxDroites.Location = new System.Drawing.Point(19, 118);
-            this.boxDroites.Name = "boxDroites";
-            this.boxDroites.Size = new System.Drawing.Size(83, 17);
-            this.boxDroites.TabIndex = 2;
-            this.boxDroites.Text = "Afficher tout";
-            this.boxDroites.UseVisualStyleBackColor = true;
-            // 
-            // boxTable
-            // 
-            this.boxTable.AutoSize = true;
-            this.boxTable.Checked = true;
-            this.boxTable.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.boxTable.Location = new System.Drawing.Point(19, 141);
-            this.boxTable.Name = "boxTable";
-            this.boxTable.Size = new System.Drawing.Size(99, 17);
-            this.boxTable.TabIndex = 3;
-            this.boxTable.Text = "Afficher la table";
-            this.boxTable.UseVisualStyleBackColor = true;
-            // 
-            // boxObstacles
-            // 
-            this.boxObstacles.AutoSize = true;
-            this.boxObstacles.Location = new System.Drawing.Point(19, 164);
-            this.boxObstacles.Name = "boxObstacles";
-            this.boxObstacles.Size = new System.Drawing.Size(73, 17);
-            this.boxObstacles.TabIndex = 4;
-            this.boxObstacles.Text = "Obstacles";
-            this.boxObstacles.UseVisualStyleBackColor = true;
-            this.boxObstacles.CheckedChanged += new System.EventHandler(this.boxObstacles_CheckedChanged);
-            // 
             // btnSaveGraph
             // 
             this.btnSaveGraph.Location = new System.Drawing.Point(17, 359);
@@ -146,26 +104,6 @@
             this.btnSaveGraph.Text = "SauverGraph";
             this.btnSaveGraph.UseVisualStyleBackColor = true;
             this.btnSaveGraph.Click += new System.EventHandler(this.btnSaveGraph_Click);
-            // 
-            // boxGraphGros
-            // 
-            this.boxGraphGros.AutoSize = true;
-            this.boxGraphGros.Location = new System.Drawing.Point(19, 212);
-            this.boxGraphGros.Name = "boxGraphGros";
-            this.boxGraphGros.Size = new System.Drawing.Size(107, 17);
-            this.boxGraphGros.TabIndex = 6;
-            this.boxGraphGros.Text = "Graph Gros robot";
-            this.boxGraphGros.UseVisualStyleBackColor = true;
-            // 
-            // boxArretesGros
-            // 
-            this.boxArretesGros.AutoSize = true;
-            this.boxArretesGros.Location = new System.Drawing.Point(37, 235);
-            this.boxArretesGros.Name = "boxArretesGros";
-            this.boxArretesGros.Size = new System.Drawing.Size(59, 17);
-            this.boxArretesGros.TabIndex = 7;
-            this.boxArretesGros.Text = "Arrêtes";
-            this.boxArretesGros.UseVisualStyleBackColor = true;
             // 
             // btnAllerA
             // 
@@ -221,7 +159,7 @@
             // lblPos
             // 
             this.lblPos.AutoSize = true;
-            this.lblPos.Location = new System.Drawing.Point(142, 2);
+            this.lblPos.Location = new System.Drawing.Point(201, 3);
             this.lblPos.Name = "lblPos";
             this.lblPos.Size = new System.Drawing.Size(28, 13);
             this.lblPos.TabIndex = 15;
@@ -229,33 +167,13 @@
             // 
             // btnGo
             // 
-            this.btnGo.Location = new System.Drawing.Point(17, 492);
+            this.btnGo.Location = new System.Drawing.Point(0, 492);
             this.btnGo.Name = "btnGo";
-            this.btnGo.Size = new System.Drawing.Size(75, 23);
+            this.btnGo.Size = new System.Drawing.Size(139, 23);
             this.btnGo.TabIndex = 16;
             this.btnGo.Text = "Go !!";
             this.btnGo.UseVisualStyleBackColor = true;
             this.btnGo.Click += new System.EventHandler(this.btnGo_Click);
-            // 
-            // boxCoutGros
-            // 
-            this.boxCoutGros.AutoSize = true;
-            this.boxCoutGros.Location = new System.Drawing.Point(9, 446);
-            this.boxCoutGros.Name = "boxCoutGros";
-            this.boxCoutGros.Size = new System.Drawing.Size(103, 17);
-            this.boxCoutGros.TabIndex = 17;
-            this.boxCoutGros.Text = "Coûts gros robot";
-            this.boxCoutGros.UseVisualStyleBackColor = true;
-            // 
-            // boxCoutPetit
-            // 
-            this.boxCoutPetit.AutoSize = true;
-            this.boxCoutPetit.Location = new System.Drawing.Point(9, 469);
-            this.boxCoutPetit.Name = "boxCoutPetit";
-            this.boxCoutPetit.Size = new System.Drawing.Size(103, 17);
-            this.boxCoutPetit.TabIndex = 18;
-            this.boxCoutPetit.Text = "Coûts petit robot";
-            this.boxCoutPetit.UseVisualStyleBackColor = true;
             // 
             // label2
             // 
@@ -485,20 +403,10 @@
             this.label18.TabIndex = 43;
             this.label18.Text = "Vit :";
             // 
-            // boxPerspective
-            // 
-            this.boxPerspective.AutoSize = true;
-            this.boxPerspective.Location = new System.Drawing.Point(19, 93);
-            this.boxPerspective.Name = "boxPerspective";
-            this.boxPerspective.Size = new System.Drawing.Size(82, 17);
-            this.boxPerspective.TabIndex = 45;
-            this.boxPerspective.Text = "Perspective";
-            this.boxPerspective.UseVisualStyleBackColor = true;
-            // 
             // pictureBoxTable
             // 
             this.pictureBoxTable.Image = global::GoBot.Properties.Resources.TablePlan;
-            this.pictureBoxTable.Location = new System.Drawing.Point(145, 18);
+            this.pictureBoxTable.Location = new System.Drawing.Point(204, 19);
             this.pictureBoxTable.Name = "pictureBoxTable";
             this.pictureBoxTable.Size = new System.Drawing.Size(945, 647);
             this.pictureBoxTable.TabIndex = 0;
@@ -507,26 +415,6 @@
             this.pictureBoxTable.MouseDown += new System.Windows.Forms.MouseEventHandler(this.pictureBoxTable_MouseDown);
             this.pictureBoxTable.MouseMove += new System.Windows.Forms.MouseEventHandler(this.pictureBoxTable_MouseMove);
             this.pictureBoxTable.MouseUp += new System.Windows.Forms.MouseEventHandler(this.pictureBoxTable_MouseUp);
-            // 
-            // boxArretesPetit
-            // 
-            this.boxArretesPetit.AutoSize = true;
-            this.boxArretesPetit.Location = new System.Drawing.Point(37, 296);
-            this.boxArretesPetit.Name = "boxArretesPetit";
-            this.boxArretesPetit.Size = new System.Drawing.Size(59, 17);
-            this.boxArretesPetit.TabIndex = 47;
-            this.boxArretesPetit.Text = "Arrêtes";
-            this.boxArretesPetit.UseVisualStyleBackColor = true;
-            // 
-            // boxGraphPetit
-            // 
-            this.boxGraphPetit.AutoSize = true;
-            this.boxGraphPetit.Location = new System.Drawing.Point(19, 273);
-            this.boxGraphPetit.Name = "boxGraphPetit";
-            this.boxGraphPetit.Size = new System.Drawing.Size(106, 17);
-            this.boxGraphPetit.TabIndex = 46;
-            this.boxGraphPetit.Text = "Graph Petit robot";
-            this.boxGraphPetit.UseVisualStyleBackColor = true;
             // 
             // btnAleatoire
             // 
@@ -581,7 +469,7 @@
             // boxAfficheDetailTraj
             // 
             this.boxAfficheDetailTraj.AutoSize = true;
-            this.boxAfficheDetailTraj.Location = new System.Drawing.Point(19, 63);
+            this.boxAfficheDetailTraj.Location = new System.Drawing.Point(19, 446);
             this.boxAfficheDetailTraj.Name = "boxAfficheDetailTraj";
             this.boxAfficheDetailTraj.Size = new System.Drawing.Size(113, 17);
             this.boxAfficheDetailTraj.TabIndex = 53;
@@ -668,18 +556,46 @@
             // boxTrajectoire
             // 
             this.boxTrajectoire.AutoSize = true;
-            this.boxTrajectoire.Location = new System.Drawing.Point(19, 187);
+            this.boxTrajectoire.Location = new System.Drawing.Point(19, 469);
             this.boxTrajectoire.Name = "boxTrajectoire";
             this.boxTrajectoire.Size = new System.Drawing.Size(76, 17);
             this.boxTrajectoire.TabIndex = 62;
             this.boxTrajectoire.Text = "Trajectoire";
             this.boxTrajectoire.UseVisualStyleBackColor = true;
+            this.boxTrajectoire.CheckedChanged += new System.EventHandler(this.boxTrajectoire_CheckedChanged);
+            // 
+            // checkedListBox
+            // 
+            this.checkedListBox.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.checkedListBox.CheckOnClick = true;
+            this.checkedListBox.FormattingEnabled = true;
+            this.checkedListBox.Items.AddRange(new object[] {
+            "Plateau",
+            "Plateau perspective",
+            "Obstacles",
+            "Elements de jeu",
+            "Graph gros robots (noeuds)",
+            "Graph gros robot (arcs)",
+            "Graph petit robots  (noeuds)",
+            "Graph petit robot (arcs)",
+            "Coûts gros robot",
+            "Coûts petit robot",
+            "Calcul path finding",
+            "Détections balises",
+            "Historique trajectoire gros",
+            "Historique trajectoire petit"});
+            this.checkedListBox.Location = new System.Drawing.Point(14, 86);
+            this.checkedListBox.Name = "checkedListBox";
+            this.checkedListBox.Size = new System.Drawing.Size(184, 210);
+            this.checkedListBox.TabIndex = 63;
+            this.checkedListBox.ItemCheck += new System.Windows.Forms.ItemCheckEventHandler(this.checkedListBox_ItemCheck);
             // 
             // PanelTable
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.Transparent;
+            this.Controls.Add(this.checkedListBox);
             this.Controls.Add(this.boxTrajectoire);
             this.Controls.Add(this.btnTeleportRSFace);
             this.Controls.Add(this.btnTeleportRSCentre);
@@ -695,9 +611,6 @@
             this.Controls.Add(this.button1);
             this.Controls.Add(this.btnPositionRP);
             this.Controls.Add(this.btnAleatoire);
-            this.Controls.Add(this.boxArretesPetit);
-            this.Controls.Add(this.boxGraphPetit);
-            this.Controls.Add(this.boxPerspective);
             this.Controls.Add(this.lblVitesseEnnemi1);
             this.Controls.Add(this.label18);
             this.Controls.Add(this.lblAngleEnnemi1);
@@ -723,8 +636,6 @@
             this.Controls.Add(this.label4);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.label2);
-            this.Controls.Add(this.boxCoutPetit);
-            this.Controls.Add(this.boxCoutGros);
             this.Controls.Add(this.btnGo);
             this.Controls.Add(this.lblPos);
             this.Controls.Add(this.label1);
@@ -732,12 +643,7 @@
             this.Controls.Add(this.btnReset);
             this.Controls.Add(this.boxSourisObstacle);
             this.Controls.Add(this.btnAllerA);
-            this.Controls.Add(this.boxArretesGros);
-            this.Controls.Add(this.boxGraphGros);
             this.Controls.Add(this.btnSaveGraph);
-            this.Controls.Add(this.boxObstacles);
-            this.Controls.Add(this.boxTable);
-            this.Controls.Add(this.boxDroites);
             this.Controls.Add(this.btnAffichage);
             this.Controls.Add(this.pictureBoxTable);
             this.Name = "PanelTable";
@@ -753,12 +659,7 @@
 
         private System.Windows.Forms.PictureBox pictureBoxTable;
         private System.Windows.Forms.Button btnAffichage;
-        private System.Windows.Forms.CheckBox boxDroites;
-        private System.Windows.Forms.CheckBox boxTable;
-        private System.Windows.Forms.CheckBox boxObstacles;
         private System.Windows.Forms.Button btnSaveGraph;
-        private System.Windows.Forms.CheckBox boxGraphGros;
-        private System.Windows.Forms.CheckBox boxArretesGros;
         private System.Windows.Forms.Button btnAllerA;
         private System.Windows.Forms.CheckBox boxSourisObstacle;
         private System.Windows.Forms.Button btnReset;
@@ -766,8 +667,6 @@
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label lblPos;
         private System.Windows.Forms.Button btnGo;
-        private System.Windows.Forms.CheckBox boxCoutGros;
-        private System.Windows.Forms.CheckBox boxCoutPetit;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Label label4;
@@ -793,9 +692,6 @@
         private System.Windows.Forms.Label label16;
         private System.Windows.Forms.Label lblVitesseEnnemi1;
         private System.Windows.Forms.Label label18;
-        private System.Windows.Forms.CheckBox boxPerspective;
-        private System.Windows.Forms.CheckBox boxArretesPetit;
-        private System.Windows.Forms.CheckBox boxGraphPetit;
         private System.Windows.Forms.Button btnAleatoire;
         private System.Windows.Forms.Button btnPositionRP;
         private System.Windows.Forms.Button button1;
@@ -811,5 +707,6 @@
         private System.Windows.Forms.Button btnTeleportRPFace;
         private System.Windows.Forms.Button btnTeleportRPCentre;
         private System.Windows.Forms.CheckBox boxTrajectoire;
+        private System.Windows.Forms.CheckedListBox checkedListBox;
     }
 }

@@ -105,6 +105,8 @@ namespace GoBot
                 else
                     ServoActive[servo] = false;
             }
+
+            Thread.Sleep(10);
         }
 
         public abstract void ServoVitesse(ServomoteurID servo, int vitesse);

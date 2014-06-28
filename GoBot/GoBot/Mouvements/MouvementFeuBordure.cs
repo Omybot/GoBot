@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using GoBot.Calculs;
 using GoBot.Calculs.Formes;
-using GoBot.Actionneur;
+using GoBot.Actionneurs;
 
 namespace GoBot.Mouvements
 {

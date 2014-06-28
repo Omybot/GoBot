@@ -110,18 +110,6 @@ namespace GoBot.IHM
             g.DrawLine(penPositionActuelle, 80, 80, xPosActuelle, yPosActuelle);
 
             pictureBoxAngles.Image = bmp;
-
-            servo.Punch = 10;
-            servo.CCWMargin = 50;
-            servo.CCWSlope = 50;
-            servo.CWMargin = 50;
-            servo.CWSlope = 50;
-
-            numCCWMargin.Value = 200;
-            numCWMargin.Value = 200;
-            numCCWSlope.Value = 50;
-            numCWSlope.Value = 50;
-            numPunch.Value = 20;
         }
 
         private void DessineCompliance(int parametre = 0)
@@ -235,107 +223,114 @@ namespace GoBot.IHM
             //trackBarPosition.SetValue(servo.PositionActuelle, false);
             //trackBarPosition.SetValue(servo.VitesseActuelle, false);
 
-            lblModele.Text = servo.Modele.ToString();
-            lblFirmware.Text = servo.Firmware.ToString();
-            cboBaudrate.SelectedItem = servo.Baudrate;
-            numCouple.Value = (decimal)servo.CoupleMaximum;
-            numCoupleLimite.Value = (decimal)servo.CoupleLimite;
-            numPositionMin.Value = (decimal)servo.PositionMin;
-            numPositionMax.Value = (decimal)servo.PositionMax;
-            numCCWSlope.Value = (decimal)servo.CCWSlope;
-            numCCWMargin.Value = (decimal)servo.CCWMargin;
-            numCWSlope.Value = (decimal)servo.CWSlope;
-            numCWMargin.Value = (decimal)servo.CWMargin;
-            numTensionMin.Value = (decimal)servo.TensionMinimum;
-            numTensionMax.Value = (decimal)servo.TensionMaximum;
-            numTempMax.Value = (decimal)servo.TemperatureMaximum;
-
-            if (servo.LedAllumee)
+            try
             {
-                ledLed.CouleurRouge();
-                switchLed.SetActif(true, false);
+                lblModele.Text = servo.Modele.ToString();
+                lblFirmware.Text = servo.Firmware.ToString();
+                cboBaudrate.SelectedItem = servo.Baudrate;
+                numCouple.Value = (decimal)servo.CoupleMaximum;
+                numCoupleLimite.Value = (decimal)servo.CoupleLimite;
+                numPositionMin.Value = (decimal)servo.PositionMin;
+                numPositionMax.Value = (decimal)servo.PositionMax;
+                numCCWSlope.Value = (decimal)servo.CCWSlope;
+                numCCWMargin.Value = (decimal)servo.CCWMargin;
+                numCWSlope.Value = (decimal)servo.CWSlope;
+                numCWMargin.Value = (decimal)servo.CWMargin;
+                numTensionMin.Value = (decimal)servo.TensionMinimum;
+                numTensionMax.Value = (decimal)servo.TensionMaximum;
+                numTempMax.Value = (decimal)servo.TemperatureMaximum;
+
+                if (servo.LedAllumee)
+                {
+                    ledLed.CouleurRouge();
+                    switchLed.SetActif(true, false);
+                }
+                else
+                {
+                    ledLed.CouleurGris();
+                    switchLed.SetActif(false, false);
+                }
+
+                if (servo.CoupleActive)
+                {
+                    ledCouple.CouleurVert();
+                    switchCouple.SetActif(true, false);
+                }
+                else
+                {
+                    ledCouple.CouleurGris();
+                    switchCouple.SetActif(false, false);
+                }
+
+                if (servo.EnMouvement)
+                    ledMouvement.CouleurVert();
+                else
+                    ledMouvement.CouleurGris();
+
+                lblTemperature.Text = servo.Temperature + " °C";
+                lblTension.Text = servo.Tension + " V";
+                lblPositionActuelle.Text = servo.PositionActuelle.ToString();
+                lblVitesseActuelle.Text = servo.VitesseActuelle.ToString();
+                lblCoupleActuel.Text = servo.CoupleActuel.ToString();
+
+                boxLEDAngleLimit.Checked = servo.AlarmeLEDAngleLimit;
+                boxLEDChecksum.Checked = servo.AlarmeLEDChecksum;
+                boxLEDInputVoltage.Checked = servo.AlarmeLEDInputVoltage;
+                boxLEDInstruction.Checked = servo.AlarmeLEDInstruction;
+                boxLEDOverheating.Checked = servo.AlarmeLEDOverheating;
+                boxLEDOverload.Checked = servo.AlarmeLEDOverload;
+                boxLEDRange.Checked = servo.AlarmeLEDRange;
+
+                boxShutdownAngleLimit.Checked = servo.AlarmeShutdownAngleLimit;
+                boxShutdownChecksum.Checked = servo.AlarmeShutdownChecksum;
+                boxShutdownInputVoltage.Checked = servo.AlarmeShutdownInputVoltage;
+                boxShutdownInstruction.Checked = servo.AlarmeShutdownInstruction;
+                boxShutdownOverheating.Checked = servo.AlarmeShutdownOverheating;
+                boxShutdownOverload.Checked = servo.AlarmeShutdownOverload;
+                boxShutdownRange.Checked = servo.AlarmeShutdownRange;
+
+                if (servo.ErreurAngleLimit)
+                    ledErreurAngleLimit.CouleurRouge();
+                else
+                    ledErreurAngleLimit.CouleurGris();
+
+                if (servo.ErreurChecksum)
+                    ledErreurChecksum.CouleurRouge();
+                else
+                    ledErreurChecksum.CouleurGris();
+
+                if (servo.ErreurInputVoltage)
+                    ledErreurInputVoltage.CouleurRouge();
+                else
+                    ledErreurInputVoltage.CouleurGris();
+
+                if (servo.ErreurInstruction)
+                    ledErreurInstruction.CouleurRouge();
+                else
+                    ledErreurInstruction.CouleurGris();
+
+                if (servo.ErreurOverheating)
+                    ledErreurOverheating.CouleurRouge();
+                else
+                    ledErreurOverheating.CouleurGris();
+
+                if (servo.ErreurOverload)
+                    ledErreurOverload.CouleurRouge();
+                else
+                    ledErreurOverload.CouleurGris();
+
+                if (servo.ErreurRange)
+                    ledErreurRange.CouleurRouge();
+                else
+                    ledErreurRange.CouleurGris();
+
+                DessinePosition();
+                DessineCompliance();
             }
-            else
+            catch (Exception)
             {
-                ledLed.CouleurGris();
-                switchLed.SetActif(false, false);
+                lblFirmware.Text = "Erreur";
             }
-
-            if (servo.CoupleActive)
-            {
-                ledCouple.CouleurVert();
-                switchCouple.SetActif(true, false);
-            }
-            else
-            {
-                ledCouple.CouleurGris();
-                switchCouple.SetActif(false, false);
-            }
-
-            if (servo.EnMouvement)
-                ledMouvement.CouleurVert();
-            else
-                ledMouvement.CouleurGris();
-
-            lblTemperature.Text = servo.Temperature + " °C";
-            lblTension.Text = servo.Tension + " V";
-            lblPositionActuelle.Text = servo.PositionActuelle.ToString();
-            lblVitesseActuelle.Text = servo.VitesseActuelle.ToString();
-            lblCoupleActuel.Text = servo.CoupleActuel.ToString();
-
-            boxLEDAngleLimit.Checked = servo.AlarmeLEDAngleLimit;
-            boxLEDChecksum.Checked = servo.AlarmeLEDChecksum;
-            boxLEDInputVoltage.Checked = servo.AlarmeLEDInputVoltage;
-            boxLEDInstruction.Checked = servo.AlarmeLEDInstruction;
-            boxLEDOverheating.Checked = servo.AlarmeLEDOverheating;
-            boxLEDOverload.Checked = servo.AlarmeLEDOverload;
-            boxLEDRange.Checked = servo.AlarmeLEDRange;
-
-            boxShutdownAngleLimit.Checked = servo.AlarmeShutdownAngleLimit;
-            boxShutdownChecksum.Checked = servo.AlarmeShutdownChecksum;
-            boxShutdownInputVoltage.Checked = servo.AlarmeShutdownInputVoltage;
-            boxShutdownInstruction.Checked = servo.AlarmeShutdownInstruction;
-            boxShutdownOverheating.Checked = servo.AlarmeShutdownOverheating;
-            boxShutdownOverload.Checked = servo.AlarmeShutdownOverload;
-            boxShutdownRange.Checked = servo.AlarmeShutdownRange;
-
-            if (servo.ErreurAngleLimit)
-                ledErreurAngleLimit.CouleurRouge();
-            else
-                ledErreurAngleLimit.CouleurGris();
-
-            if (servo.ErreurChecksum)
-                ledErreurChecksum.CouleurRouge();
-            else
-                ledErreurChecksum.CouleurGris();
-
-            if (servo.ErreurInputVoltage)
-                ledErreurInputVoltage.CouleurRouge();
-            else
-                ledErreurInputVoltage.CouleurGris();
-
-            if (servo.ErreurInstruction)
-                ledErreurInstruction.CouleurRouge();
-            else
-                ledErreurInstruction.CouleurGris();
-
-            if (servo.ErreurOverheating)
-                ledErreurOverheating.CouleurRouge();
-            else
-                ledErreurOverheating.CouleurGris();
-
-            if (servo.ErreurOverload)
-                ledErreurOverload.CouleurRouge();
-            else
-                ledErreurOverload.CouleurGris();
-
-            if (servo.ErreurRange)
-                ledErreurRange.CouleurRouge();
-            else
-                ledErreurRange.CouleurGris();
-
-            DessinePosition();
-            DessineCompliance();
 
             MajIHM = false;
         }

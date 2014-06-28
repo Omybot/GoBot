@@ -2,10 +2,10 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using GoBot.Actionneur;
 using GoBot.ElementsJeu;
 using GoBot.Calculs;
 using System.Threading;
+using GoBot.Actionneurs;
 
 namespace GoBot.Mouvements
 {

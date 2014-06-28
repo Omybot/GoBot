@@ -7,7 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 using System.Threading;
-using GoBot.Actionneur;
+using GoBot.Actionneurs;
 
 namespace GoBot.IHM
 {
@@ -74,9 +74,9 @@ namespace GoBot.IHM
         private void switchBoutonPousse_ChangementEtat(object sender, EventArgs e)
         {
             if (switchBoutonPinceDroiteBas.Actif)
-                Robots.GrosRobot.MoteurPosition(MoteurID.GRPousseBouchon, Config.CurrentConfig.PositionGRPousseBouchonFerme);
+                Robots.GrosRobot.ActionneurOnOff(ActionneurOnOffID.GRPousseBouchon, true);
             else
-                Robots.GrosRobot.MoteurPosition(MoteurID.GRPousseBouchon, Config.CurrentConfig.PositionGRPousseBouchonOuvert);
+                Robots.GrosRobot.ActionneurOnOff(ActionneurOnOffID.GRPousseBouchon, false);
         }
 
         private void switchBoutonPinceDroite_ChangementEtat(object sender, EventArgs e)

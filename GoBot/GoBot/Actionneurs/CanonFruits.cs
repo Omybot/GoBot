@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading;
 
-namespace GoBot.Actionneur
+namespace GoBot.Actionneurs
 {
     public static class CanonFruits
     {

@@ -427,6 +427,8 @@ namespace GoBot
                 XmlSerializer mySerializer = new XmlSerializer(typeof(Config));
                 using (FileStream myFileStream = new FileStream(PathData + "/config.xml", FileMode.Open))
                     CurrentConfig = (Config)mySerializer.Deserialize(myFileStream);
+
+                CurrentConfig.AfficheDetailTraj = 0;
             }
             catch (Exception)
             {

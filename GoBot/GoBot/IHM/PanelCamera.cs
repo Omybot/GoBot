@@ -13,7 +13,7 @@ using DShowNET.Device;
 using System.Runtime.InteropServices;
 using System.Diagnostics;
 using System.Drawing.Imaging;
-using GoBot.Actionneur;
+using GoBot.Actionneurs;
 
 namespace GoBot.IHM
 {

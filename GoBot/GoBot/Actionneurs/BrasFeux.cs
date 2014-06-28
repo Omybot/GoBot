@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading;
 using GoBot.ElementsJeu;
 
-namespace GoBot.Actionneur
+namespace GoBot.Actionneurs
 {
     public static class BrasFeux
     {

@@ -41,7 +41,14 @@ namespace GoBot.IHM
                 Plateau.Balise1.CalibrationAssietteTerminee += Balise1_CalibrationAssietteTerminee;
                 Plateau.Balise2.CalibrationAssietteTerminee += Balise2_CalibrationAssietteTerminee;
                 Plateau.Balise3.CalibrationAssietteTerminee += Balise3_CalibrationAssietteTerminee;
+
+                Dessinateur.TableDessinee += Dessinateur_TableDessinee;
             }
+        }
+
+        void Dessinateur_TableDessinee(Image img)
+        {
+            pictureBoxTable.Image = img;
         }
 
         void Balise1_RotationChange(bool rotation)
