@@ -443,16 +443,6 @@ namespace GoBot.Properties {
         /// <summary>
         ///   Recherche une ressource localisée de type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap TablePerspective {
-            get {
-                object obj = ResourceManager.GetObject("TablePerspective", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Recherche une ressource localisée de type System.Drawing.Bitmap.
-        /// </summary>
         internal static System.Drawing.Bitmap TablePlan {
             get {
                 object obj = ResourceManager.GetObject("TablePlan", resourceCulture);

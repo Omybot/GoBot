@@ -169,17 +169,11 @@
   <data name="BoiJaune" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\img\BoiJaune.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="TablePerspective" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\img\TablePerspective.jpg;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
   <data name="VirageArGa" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\img\VirageArGa.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="Pause" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\img\Pause.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="Bas" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\img\Bas.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="FlecheDroite" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\img\FlecheDroite.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
@@ -196,20 +190,17 @@
   <data name="BeuRouge" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\img\BeuRouge.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="Bas" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\img\Bas.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
   <data name="BoiRouge" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\img\BoiRouge.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="Vumetre" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\img\Vumetre.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="TablePlan" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\img\TablePlan.jpg;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="Fenetre" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\img\Fenetre.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
   <data name="FlecheGauche" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\img\FlecheGauche.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="PivotDroite" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\img\PivotDroite.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="PositionBalises2" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\img\PositionBalises2.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
@@ -223,14 +214,20 @@
   <data name="IconeVitesse" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\img\IconeVitesse.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="Splash" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\img\Splash.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Fenetre" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\img\Fenetre.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
   <data name="PositionBalises1" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\img\PositionBalises1.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="VirageArDr" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\img\VirageArDr.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="PivotDroite" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\img\PivotDroite.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="Vumetre" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\img\Vumetre.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="Play" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\img\Play.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
@@ -253,7 +250,7 @@
   <data name="BunJaune" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\img\BunJaune.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="Splash" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\img\Splash.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="TablePlan" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\img\TablePlan.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
 </root>

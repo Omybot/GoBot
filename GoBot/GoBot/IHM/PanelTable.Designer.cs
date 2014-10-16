@@ -28,7 +28,6 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.btnAffichage = new System.Windows.Forms.Button();
             this.btnSaveGraph = new System.Windows.Forms.Button();
             this.btnAllerA = new System.Windows.Forms.Button();
             this.boxSourisObstacle = new System.Windows.Forms.CheckBox();
@@ -62,7 +61,6 @@
             this.label16 = new System.Windows.Forms.Label();
             this.lblVitesseEnnemi1 = new System.Windows.Forms.Label();
             this.label18 = new System.Windows.Forms.Label();
-            this.pictureBoxTable = new System.Windows.Forms.PictureBox();
             this.btnAleatoire = new System.Windows.Forms.Button();
             this.btnPositionRP = new System.Windows.Forms.Button();
             this.button1 = new System.Windows.Forms.Button();
@@ -79,21 +77,10 @@
             this.btnTeleportRPCentre = new System.Windows.Forms.Button();
             this.boxTrajectoire = new System.Windows.Forms.CheckBox();
             this.checkedListBox = new System.Windows.Forms.CheckedListBox();
+            this.btnAffichage = new System.Windows.Forms.Button();
+            this.pictureBoxTable = new System.Windows.Forms.PictureBox();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxTable)).BeginInit();
             this.SuspendLayout();
-            // 
-            // btnAffichage
-            // 
-            this.btnAffichage.Image = global::GoBot.Properties.Resources.Play;
-            this.btnAffichage.Location = new System.Drawing.Point(9, 32);
-            this.btnAffichage.Name = "btnAffichage";
-            this.btnAffichage.Size = new System.Drawing.Size(130, 25);
-            this.btnAffichage.TabIndex = 1;
-            this.btnAffichage.Text = "Lancer l\'affichage";
-            this.btnAffichage.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.btnAffichage.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
-            this.btnAffichage.UseVisualStyleBackColor = true;
-            this.btnAffichage.Click += new System.EventHandler(this.btnAffichage_Click);
             // 
             // btnSaveGraph
             // 
@@ -159,7 +146,7 @@
             // lblPos
             // 
             this.lblPos.AutoSize = true;
-            this.lblPos.Location = new System.Drawing.Point(201, 3);
+            this.lblPos.Location = new System.Drawing.Point(201, 0);
             this.lblPos.Name = "lblPos";
             this.lblPos.Size = new System.Drawing.Size(28, 13);
             this.lblPos.TabIndex = 15;
@@ -403,19 +390,6 @@
             this.label18.TabIndex = 43;
             this.label18.Text = "Vit :";
             // 
-            // pictureBoxTable
-            // 
-            this.pictureBoxTable.Image = global::GoBot.Properties.Resources.TablePlan;
-            this.pictureBoxTable.Location = new System.Drawing.Point(204, 19);
-            this.pictureBoxTable.Name = "pictureBoxTable";
-            this.pictureBoxTable.Size = new System.Drawing.Size(945, 647);
-            this.pictureBoxTable.TabIndex = 0;
-            this.pictureBoxTable.TabStop = false;
-            this.pictureBoxTable.MouseClick += new System.Windows.Forms.MouseEventHandler(this.pictureBoxTable_MouseClick);
-            this.pictureBoxTable.MouseDown += new System.Windows.Forms.MouseEventHandler(this.pictureBoxTable_MouseDown);
-            this.pictureBoxTable.MouseMove += new System.Windows.Forms.MouseEventHandler(this.pictureBoxTable_MouseMove);
-            this.pictureBoxTable.MouseUp += new System.Windows.Forms.MouseEventHandler(this.pictureBoxTable_MouseUp);
-            // 
             // btnAleatoire
             // 
             this.btnAleatoire.Location = new System.Drawing.Point(0, 521);
@@ -571,7 +545,6 @@
             this.checkedListBox.FormattingEnabled = true;
             this.checkedListBox.Items.AddRange(new object[] {
             "Plateau",
-            "Plateau perspective",
             "Obstacles",
             "Elements de jeu",
             "Graph gros robots (noeuds)",
@@ -589,6 +562,33 @@
             this.checkedListBox.Size = new System.Drawing.Size(184, 210);
             this.checkedListBox.TabIndex = 63;
             this.checkedListBox.ItemCheck += new System.Windows.Forms.ItemCheckEventHandler(this.checkedListBox_ItemCheck);
+            // 
+            // btnAffichage
+            // 
+            this.btnAffichage.Image = global::GoBot.Properties.Resources.Play;
+            this.btnAffichage.Location = new System.Drawing.Point(9, 32);
+            this.btnAffichage.Name = "btnAffichage";
+            this.btnAffichage.Size = new System.Drawing.Size(130, 25);
+            this.btnAffichage.TabIndex = 1;
+            this.btnAffichage.Text = "Lancer l\'affichage";
+            this.btnAffichage.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.btnAffichage.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
+            this.btnAffichage.UseVisualStyleBackColor = true;
+            this.btnAffichage.Click += new System.EventHandler(this.btnAffichage_Click);
+            // 
+            // pictureBoxTable
+            // 
+            this.pictureBoxTable.BackColor = System.Drawing.Color.Transparent;
+            this.pictureBoxTable.Image = global::GoBot.Properties.Resources.TablePlan;
+            this.pictureBoxTable.Location = new System.Drawing.Point(204, 16);
+            this.pictureBoxTable.Name = "pictureBoxTable";
+            this.pictureBoxTable.Size = new System.Drawing.Size(945, 650);
+            this.pictureBoxTable.TabIndex = 0;
+            this.pictureBoxTable.TabStop = false;
+            this.pictureBoxTable.MouseClick += new System.Windows.Forms.MouseEventHandler(this.pictureBoxTable_MouseClick);
+            this.pictureBoxTable.MouseDown += new System.Windows.Forms.MouseEventHandler(this.pictureBoxTable_MouseDown);
+            this.pictureBoxTable.MouseMove += new System.Windows.Forms.MouseEventHandler(this.pictureBoxTable_MouseMove);
+            this.pictureBoxTable.MouseUp += new System.Windows.Forms.MouseEventHandler(this.pictureBoxTable_MouseUp);
             // 
             // PanelTable
             // 

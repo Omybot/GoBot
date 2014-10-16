@@ -141,7 +141,7 @@ namespace GoBot.IHM
 
             if (Dessinateur.modeCourant == Dessinateur.Mode.FinTrajectoire)
             {
-                PointReel positionReelle = ScreenToRealPosition(pictureBoxTable.PointToClient(MousePosition));
+                PointReel positionReelle = Dessinateur.ScreenToRealPosition(pictureBoxTable.PointToClient(MousePosition));
                 double distance;
                 Node finNode = Robots.GrosRobot.Graph.ClosestNode(positionReelle.X, positionReelle.Y, 0, out distance, false);
 
@@ -163,61 +163,19 @@ namespace GoBot.IHM
                 {
                     dateCapture = DateTime.Now;
 
-                    Point p = ScreenToRealPosition(pictureBoxTable.PointToClient(MousePosition));
+                    Point p = Dessinateur.ScreenToRealPosition(pictureBoxTable.PointToClient(MousePosition));
 
                     List<PointReel> positions = new List<PointReel>();
 
-                    positions.Add(ScreenToRealPosition(pictureBoxTable.PointToClient(MousePosition)));
+                    positions.Add(Dessinateur.ScreenToRealPosition(pictureBoxTable.PointToClient(MousePosition)));
                     SuiviBalise.MajPositions(positions, Plateau.Enchainement == null || Plateau.Enchainement.DebutMatch == null);
                     Console.Write(DateTime.Now.Millisecond + "MouseMove");
                 }
             }
 
-            Point positionSurTable = ScreenToRealPosition(pictureBoxTable.PointToClient(MousePosition));
+            Point positionSurTable = Dessinateur.ScreenToRealPosition(pictureBoxTable.PointToClient(MousePosition));
             lblPos.Text = positionSurTable.X + " : " + positionSurTable.Y;
         }
-
-        #region Conversion coordonnées réelles / écran
-
-        private const double RAPPORT_SCREEN_REAL = 3.69;
-        private const int OFFSET_IMAGE_X = 69;
-        private const int OFFSET_IMAGE_Y = 48;
-
-        // Ecran vers réel
-
-        private int ScreenToRealDistance(double valeur)
-        {
-            return (int)(valeur * RAPPORT_SCREEN_REAL);
-        }
-
-        private PointReel ScreenToRealPosition(Point valeur)
-        {
-            return new PointReel(ScreenToRealDistance(valeur.X - OFFSET_IMAGE_X), ScreenToRealDistance(valeur.Y - OFFSET_IMAGE_Y));
-        }
-
-        private Point ScreenToRealPosition(double valeurX, double valeurY)
-        {
-            return new Point(ScreenToRealDistance(valeurX - OFFSET_IMAGE_X), ScreenToRealDistance(valeurY - OFFSET_IMAGE_Y));
-        }
-
-        // Réel vers écran
-
-        private int RealToScreenDistance(double valeur)
-        {
-            return (int)(valeur / RAPPORT_SCREEN_REAL);
-        }
-
-        private Point RealToScreenPosition(Point valeur)
-        {
-            return new Point(RealToScreenDistance(valeur.X) + OFFSET_IMAGE_X, RealToScreenDistance(valeur.Y) + OFFSET_IMAGE_Y);
-        }
-
-        private Point RealToScreenPosition(double valeurX, double valeurY)
-        {
-            return new Point(RealToScreenDistance(valeurX) + OFFSET_IMAGE_X, RealToScreenDistance(valeurY) + OFFSET_IMAGE_Y);
-        }
-
-        #endregion
 
         Node debutNode;
         private void btnAllerA_Click(object sender, EventArgs e)
@@ -246,7 +204,7 @@ namespace GoBot.IHM
 
         private void PathFindingClick()
         {
-            PointReel positionReelle = ScreenToRealPosition(pictureBoxTable.PointToClient(MousePosition));
+            PointReel positionReelle = Dessinateur.ScreenToRealPosition(pictureBoxTable.PointToClient(MousePosition));
             if (Dessinateur.modeCourant == Dessinateur.Mode.FinTrajectoire)
             {
                 if (ev.Button == System.Windows.Forms.MouseButtons.Left)
@@ -284,8 +242,8 @@ namespace GoBot.IHM
                     bool survol = false;
                     if (feu.Debout)
                     {
-                        int widthEcran = RealToScreenDistance(30);
-                        int heightEcran = RealToScreenDistance(130);
+                        int widthEcran = Dessinateur.RealToScreenDistance(30);
+                        int heightEcran = Dessinateur.RealToScreenDistance(130);
 
                         if (feu.Angle == 0 || feu.Angle == 180)
                         {
@@ -375,7 +333,7 @@ namespace GoBot.IHM
 
         private void pictureBoxTable_MouseDown(object sender, MouseEventArgs e)
         {
-            Dessinateur.positionDepart = ScreenToRealPosition(pictureBoxTable.PointToClient(MousePosition));
+            Dessinateur.positionDepart = Dessinateur.ScreenToRealPosition(pictureBoxTable.PointToClient(MousePosition));
             Dessinateur.sourisClic = true;
         }
 
@@ -385,7 +343,7 @@ namespace GoBot.IHM
         {
             if (Dessinateur.modeCourant == Dessinateur.Mode.PositionRPCentre || Dessinateur.modeCourant == Dessinateur.Mode.TeleportRPCentre)
             {
-                Direction traj = Maths.GetDirection(Dessinateur.positionDepart, ScreenToRealPosition(pictureBoxTable.PointToClient(MousePosition)));
+                Direction traj = Maths.GetDirection(Dessinateur.positionDepart, Dessinateur.ScreenToRealPosition(pictureBoxTable.PointToClient(MousePosition)));
 
                 positionArrivee = new Position(traj.angle, Dessinateur.positionDepart);
 
@@ -403,7 +361,7 @@ namespace GoBot.IHM
             {
                 Point positionFin = pictureBoxTable.PointToClient(MousePosition);
 
-                Direction traj = Maths.GetDirection(Dessinateur.positionDepart, ScreenToRealPosition(pictureBoxTable.PointToClient(MousePosition)));
+                Direction traj = Maths.GetDirection(Dessinateur.positionDepart, Dessinateur.ScreenToRealPosition(pictureBoxTable.PointToClient(MousePosition)));
 
                 Point pointOrigine = Dessinateur.positionDepart;
                 Position departRecule = new Position(360 - traj.angle, pointOrigine);
@@ -425,7 +383,7 @@ namespace GoBot.IHM
             }
             else if (Dessinateur.modeCourant == Dessinateur.Mode.PositionRSCentre || Dessinateur.modeCourant == Dessinateur.Mode.TeleportRSCentre)
             {
-                Direction traj = Maths.GetDirection(Dessinateur.positionDepart, ScreenToRealPosition(pictureBoxTable.PointToClient(MousePosition)));
+                Direction traj = Maths.GetDirection(Dessinateur.positionDepart, Dessinateur.ScreenToRealPosition(pictureBoxTable.PointToClient(MousePosition)));
 
                 positionArrivee = new Position(traj.angle, Dessinateur.positionDepart);
 
@@ -443,7 +401,7 @@ namespace GoBot.IHM
             {
                 Point positionFin = pictureBoxTable.PointToClient(MousePosition);
 
-                Direction traj = Maths.GetDirection(Dessinateur.positionDepart, ScreenToRealPosition(pictureBoxTable.PointToClient(MousePosition)));
+                Direction traj = Maths.GetDirection(Dessinateur.positionDepart, Dessinateur.ScreenToRealPosition(pictureBoxTable.PointToClient(MousePosition)));
 
                 Point pointOrigine = Dessinateur.positionDepart;
                 Position departRecule = new Position(360 - traj.angle, pointOrigine);

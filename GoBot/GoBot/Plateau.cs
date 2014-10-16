@@ -120,8 +120,6 @@ namespace GoBot
                 CreerSommets(150);
                 SauverGraph();
                 
-                ObstaclesFixes.Add(ObstaclesTorches[0]);
-                ObstaclesFixes.Add(ObstaclesTorches[1]);
                 //ChargerGraph();
 
                 InterpreteurBalise = new InterpreteurBalise();
@@ -405,46 +403,27 @@ namespace GoBot
             AjouterObstacle(new Segment(new PointReel(LongueurPlateau - 4, LargeurPlateau - 4), new PointReel(0, LargeurPlateau - 4)), true);
             AjouterObstacle(new Segment(new PointReel(0, LargeurPlateau - 4), new PointReel(0, 0)), true);
 
-            // Panier 1
-            points.Clear();
-            points.Add(new PointReel(400, 0));
-            points.Add(new PointReel(1100, 0));
-            points.Add(new PointReel(1100, 300));
-            points.Add(new PointReel(400, 300));
-            AjouterObstacle(new Polygone(points), true);
+            // Escaliers
+            AjouterObstacle(new RectanglePolygone(new PointReel(967, 0), 1066, 580), true);
 
-            // Panier 1
-            points.Clear();
-            points.Add(new PointReel(1900, 0));
-            points.Add(new PointReel(2600, 0));
-            points.Add(new PointReel(2600, 300));
-            points.Add(new PointReel(1900, 300));
-            AjouterObstacle(new Polygone(points), true);
+            // Distributeurs
+            AjouterObstacle(new RectanglePolygone(new PointReel(300-35, 0), 70, 70), true);
+            AjouterObstacle(new RectanglePolygone(new PointReel(600-35, 0), 70, 70), true);
+            AjouterObstacle(new RectanglePolygone(new PointReel(3000-300-35, 0), 70, 70), true);
+            AjouterObstacle(new RectanglePolygone(new PointReel(3000 - 600 - 35, 0), 70, 70), true);
 
-            // Foyer central
-            AjouterObstacle(new Cercle(new PointReel(1500, 1050), 150), true);
+            // Zone départ jaune
+            AjouterObstacle(new Segment(new PointReel(0, 800 - 11), new PointReel(400, 800 - 11)), true);
+            AjouterObstacle(new Segment(new PointReel(0, 1211), new PointReel(400, 1211)), true);
+            AjouterObstacle(new Segment(new PointReel(70 - 11, 800), new PointReel(70 - 11, 1200)), true);
 
-            // Foyer coin 1
-            AjouterObstacle(new Cercle(new PointReel(0, 2000), 250), true);
+            // Zone départ verte
+            AjouterObstacle(new Segment(new PointReel(3000, 800 - 11), new PointReel(3000-400, 800 - 11)), true);
+            AjouterObstacle(new Segment(new PointReel(3000, 1211), new PointReel(3000 - 400, 1211)), true);
+            AjouterObstacle(new Segment(new PointReel(3000 - 70 + 11, 800), new PointReel(3000 - 70 + 11, 1200)), true);
 
-            // Foyer coin 2
-            AjouterObstacle(new Cercle(new PointReel(3000, 2000), 250), true);
-
-            // Feux sur support sur les bords
-            AjouterObstacle(new RectanglePolygone(new PointReel(0, 733), 22, 134), true);
-            AjouterObstacle(new RectanglePolygone(new PointReel(1233, 1978), 134, 22), true);
-            AjouterObstacle(new RectanglePolygone(new PointReel(2978, 733), 22, 134), true);
-            AjouterObstacle(new RectanglePolygone(new PointReel(1633, 1978), 134, 22), true);
-
-            // Sommet des arbres
-            AjouterObstacle(new Cercle(new PointReel(0, 1300), 150), true);
-            AjouterObstacle(new Cercle(new PointReel(700, 2000), 150), true);
-            AjouterObstacle(new Cercle(new PointReel(2300, 2000), 150), true);
-            AjouterObstacle(new Cercle(new PointReel(3000, 1300), 150), true);
-
-            ObstaclesTorches = new IForme[2];
-            ObstaclesTorches[0] = new Cercle(new PointReel(900, 1100), 80);
-            ObstaclesTorches[1] = new Cercle(new PointReel(2100, 1100), 80);
+            // Dépose centrale
+            AjouterObstacle(new RectanglePolygone(new PointReel(1200, 1900), 600, 100), true);
         }
 
         /// <summary>

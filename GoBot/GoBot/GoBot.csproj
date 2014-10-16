@@ -580,13 +580,13 @@
     <None Include="img\Recale.png" />
     <None Include="img\Moteur.png" />
     <None Include="img\Webcam.jpg" />
-    <None Include="img\TablePerspective.jpg" />
     <None Include="img\Vumetre.png" />
     <None Include="img\Pause.png" />
     <None Include="img\Play.png" />
     <None Include="img\PositionBalises1.png" />
     <None Include="img\PositionBalises2.png" />
     <None Include="img\Splash.png" />
+    <None Include="img\TablePlan.png" />
     <Content Include="robot.ico" />
   </ItemGroup>
   <ItemGroup>
