@@ -19,10 +19,19 @@ namespace GoBot.IHM
         public PanelMatch()
         {
             InitializeComponent();
-            btnJoueurDroite.BackColor = Plateau.CouleurDroiteJaune;
-            btnJoueurGauche.BackColor = Plateau.CouleurGaucheRouge;
+            btnJoueurDroite.BackColor = Plateau.CouleurDroiteVert;
+            btnJoueurGauche.BackColor = Plateau.CouleurGaucheJaune;
             assietteAuto1 = assietteAuto2 = assietteAuto3 = false;
             angleAuto1 = angleAuto2 = angleAuto3 = false;
+
+            lblBunGauche.ForeColor = Plateau.CouleurGaucheJaune;
+            lblBoiGauche.ForeColor = Plateau.CouleurGaucheJaune;
+            lblBeuGauche.ForeColor = Plateau.CouleurGaucheJaune;
+
+            lblBunDroite.ForeColor = Plateau.CouleurDroiteVert;
+            lblBoiDroite.ForeColor = Plateau.CouleurDroiteVert;
+            lblBeuDroite.ForeColor = Plateau.CouleurDroiteVert;
+
 
             if (!Config.DesignMode)
             {
@@ -197,44 +206,44 @@ namespace GoBot.IHM
             }
         }
 
-        private void btnCouleurJaune_Click(object sender, EventArgs e)
+        private void btnCouleurJoueurDroite_Click(object sender, EventArgs e)
         {
-            Plateau.NotreCouleur = Plateau.CouleurDroiteJaune;
+            Plateau.NotreCouleur = Plateau.CouleurDroiteVert;
         }
 
-        private void btnCouleurRouge_Click(object sender, EventArgs e)
+        private void btnCouleurJoueurGauche_Click(object sender, EventArgs e)
         {
-            Plateau.NotreCouleur = Plateau.CouleurGaucheRouge;
+            Plateau.NotreCouleur = Plateau.CouleurGaucheJaune;
         }
 
-        public void CouleurGaucheRouge()
+        public void CouleurGauche()
         {
-            pictureBoxCouleur.BackColor = Plateau.CouleurGaucheRouge;
+            pictureBoxCouleur.BackColor = Plateau.CouleurGaucheJaune;
 
-            pictureBoxBunRouge.Visible = true;
-            pictureBoxBeuRouge.Visible = true;
-            pictureBoxBoiRouge.Visible = true;
+            lblBunGauche.Visible = true;
+            lblBoiGauche.Visible = true;
+            lblBeuGauche.Visible = true;
 
-            pictureBoxBunJaune.Visible = false;
-            pictureBoxBeuJaune.Visible = false;
-            pictureBoxBoiJaune.Visible = false;
+            lblBunDroite.Visible = false;
+            lblBoiDroite.Visible = false;
+            lblBeuDroite.Visible = false;
 
             Balise.GetBalise(Carte.RecBun).Position = new Position(new Angle(90, AnglyeType.Degre), new PointReel(-Balise.DISTANCE_LASER_TABLE, -Balise.DISTANCE_LASER_TABLE));
             Balise.GetBalise(Carte.RecBeu).Position = new Position(new Angle(270, AnglyeType.Degre), new PointReel(-Balise.DISTANCE_LASER_TABLE, Plateau.LargeurPlateau + Balise.DISTANCE_LASER_TABLE));
             Balise.GetBalise(Carte.RecBoi).Position = new Position(new Angle(180, AnglyeType.Degre), new PointReel(Plateau.LongueurPlateau + Balise.DISTANCE_LASER_TABLE, Plateau.LargeurPlateau / 2));
         }
 
-        public void CouleurDroiteJaune()
+        public void CouleurDroite()
         {
-            pictureBoxCouleur.BackColor = Plateau.CouleurDroiteJaune;
+            pictureBoxCouleur.BackColor = Plateau.CouleurDroiteVert;
 
-            pictureBoxBunRouge.Visible = false;
-            pictureBoxBeuRouge.Visible = false;
-            pictureBoxBoiRouge.Visible = false;
+            lblBunGauche.Visible = false;
+            lblBoiGauche.Visible = false;
+            lblBeuGauche.Visible = false;
 
-            pictureBoxBunJaune.Visible = true;
-            pictureBoxBeuJaune.Visible = true;
-            pictureBoxBoiJaune.Visible = true;
+            lblBunDroite.Visible = true;
+            lblBoiDroite.Visible = true;
+            lblBeuDroite.Visible = true;
 
             Balise.GetBalise(Carte.RecBeu).Position = new Position(new Angle(90, AnglyeType.Degre), new PointReel(Plateau.LongueurPlateau + Balise.DISTANCE_LASER_TABLE, -Balise.DISTANCE_LASER_TABLE));
             Balise.GetBalise(Carte.RecBun).Position = new Position(new Angle(270, AnglyeType.Degre), new PointReel(Plateau.LongueurPlateau + Balise.DISTANCE_LASER_TABLE, Plateau.LargeurPlateau + Balise.DISTANCE_LASER_TABLE));
@@ -302,10 +311,10 @@ namespace GoBot.IHM
         {
             this.Invoke(new EventHandler(delegate
             {
-                if (Plateau.NotreCouleur == Plateau.CouleurGaucheRouge)
-                    CouleurGaucheRouge();
-                else if (Plateau.NotreCouleur == Plateau.CouleurDroiteJaune)
-                    CouleurDroiteJaune();
+                if (Plateau.NotreCouleur == Plateau.CouleurGaucheJaune)
+                    CouleurGauche();
+                else if (Plateau.NotreCouleur == Plateau.CouleurDroiteVert)
+                    CouleurDroite();
             }));
         }
 
@@ -318,17 +327,6 @@ namespace GoBot.IHM
         private void radioBaliseOui_CheckedChanged(object sender, EventArgs e)
         {
             Plateau.ReflecteursNosRobots = radioBaliseOui.Checked;
-        }
-
-        private void PanelMatch_Load(object sender, EventArgs e)
-        {
-            if (!Config.DesignMode)
-            {
-                // Réglage rouge par défaut
-                btnCouleurRouge_Click(null, null);
-                Plateau.NotreCouleurChange += new EventHandler(Plateau_NotreCouleurChange);
-                Connexions.ConnexionIO.SendMessage(TrameFactory.DemandeCouleurEquipe());
-            }
         }
 
         bool assietteAuto1, assietteAuto2, assietteAuto3;
@@ -455,7 +453,7 @@ namespace GoBot.IHM
             Thread.Sleep(100);
             Plateau.Balise1.InclinaisonProfil = Config.CurrentConfig.CourseBunProfilOpti;
 
-            if (Plateau.NotreCouleur == Plateau.CouleurDroiteJaune)
+            if (Plateau.NotreCouleur == Plateau.CouleurDroiteVert)
             {
                 Config.CurrentConfig.OffsetBaliseDroiteJaune1Capteur1 = Plateau.Balise1.OffsetDefaut(1);
                 Config.CurrentConfig.OffsetBaliseDroiteJaune1Capteur2 = Plateau.Balise1.OffsetDefaut(2);
@@ -480,7 +478,7 @@ namespace GoBot.IHM
             Thread.Sleep(100);
             Plateau.Balise2.InclinaisonProfil = Config.CurrentConfig.CourseBeuProfilOpti;
 
-            if (Plateau.NotreCouleur == Plateau.CouleurDroiteJaune)
+            if (Plateau.NotreCouleur == Plateau.CouleurDroiteVert)
             {
                 Config.CurrentConfig.OffsetBaliseDroiteJaune2Capteur1 = Plateau.Balise2.OffsetDefaut(1);
                 Config.CurrentConfig.OffsetBaliseDroiteJaune2Capteur2 = Plateau.Balise2.OffsetDefaut(2);
@@ -505,7 +503,7 @@ namespace GoBot.IHM
             Thread.Sleep(100);
             Plateau.Balise3.InclinaisonProfil = Config.CurrentConfig.CourseBoiProfilOpti;
 
-            if (Plateau.NotreCouleur == Plateau.CouleurDroiteJaune)
+            if (Plateau.NotreCouleur == Plateau.CouleurDroiteVert)
             {
                 Config.CurrentConfig.OffsetBaliseDroiteJaune3Capteur1 = Plateau.Balise3.OffsetDefaut(1);
                 Config.CurrentConfig.OffsetBaliseDroiteJaune3Capteur2 = Plateau.Balise3.OffsetDefaut(2);
@@ -514,6 +512,19 @@ namespace GoBot.IHM
             {
                 Config.CurrentConfig.OffsetBaliseGaucheRouge3Capteur1 = Plateau.Balise3.OffsetDefaut(1);
                 Config.CurrentConfig.OffsetBaliseGaucheRouge3Capteur2 = Plateau.Balise3.OffsetDefaut(2);
+            }
+        }
+
+        private void PanelMatch_Load(object sender, EventArgs e)
+        {
+            if (!Config.DesignMode)
+            {
+                Plateau.NotreCouleurChange += new EventHandler(Plateau_NotreCouleurChange);
+
+                if (Plateau.NotreCouleur == Plateau.CouleurDroiteVert)
+                    CouleurDroite();
+                else
+                    CouleurGauche();
             }
         }
     }

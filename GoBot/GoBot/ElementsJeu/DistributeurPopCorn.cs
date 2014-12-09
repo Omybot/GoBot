@@ -2,16 +2,14 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using System.Drawing;
-using GoBot.Calculs;
 using GoBot.Calculs.Formes;
 
 namespace GoBot.ElementsJeu
 {
-    public class Arbre : ElementJeu
+    public class DistributeurPopCorn : ElementJeu
     {
-        public Arbre(PointReel position)
-            : base(position)
+        public DistributeurPopCorn(PointReel position)
+            : base(position, 60)
         {
         }
     }

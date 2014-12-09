@@ -19,7 +19,7 @@ namespace GoBot
             Robots.PetitRobot.Rapide();
             Robots.PetitRobot.Avancer(100);
 
-            if (Plateau.NotreCouleur == Plateau.CouleurGaucheRouge)
+            if (Plateau.NotreCouleur == Plateau.CouleurGaucheJaune)
                 Robots.PetitRobot.PivotDroite(90);
             else
                 Robots.PetitRobot.PivotGauche(90);
@@ -28,7 +28,7 @@ namespace GoBot
             Robots.PetitRobot.Recallage(SensAR.Arriere);
             Robots.PetitRobot.Rapide();
 
-            if (Plateau.NotreCouleur == Plateau.CouleurGaucheRouge)
+            if (Plateau.NotreCouleur == Plateau.CouleurGaucheJaune)
                 Robots.PetitRobot.ReglerOffsetAsserv(191, 91, 270);
             else
                 Robots.PetitRobot.ReglerOffsetAsserv(3000 - 191, 91, 270);
@@ -40,18 +40,13 @@ namespace GoBot
 
         public static void RecallageGrosRobot(bool attendrePetit)
         {
-            BrasFruits.PositionRange();
-            BrasFeux.PositionInterne3();
-            BrasFruits.FermerPinceBas();
-            BrasFruits.FermerPinceHaut();
-
             Robots.GrosRobot.Lent();
             Robots.GrosRobot.Reculer(10);
             Robots.GrosRobot.Recallage(SensAR.Avant);
             Robots.GrosRobot.Rapide();
             Robots.GrosRobot.Reculer(101);
 
-            if (Plateau.NotreCouleur == Plateau.CouleurDroiteJaune)
+            if (Plateau.NotreCouleur == Plateau.CouleurDroiteVert)
                 Robots.GrosRobot.PivotGauche(90);
             else
                 Robots.GrosRobot.PivotDroite(90);
@@ -62,7 +57,7 @@ namespace GoBot
             Robots.GrosRobot.Rapide();
             Robots.GrosRobot.Avancer(352);
 
-            if (Plateau.NotreCouleur == Plateau.CouleurDroiteJaune)
+            if (Plateau.NotreCouleur == Plateau.CouleurDroiteVert)
                 Robots.GrosRobot.PivotGauche(26);
             else
                 Robots.GrosRobot.PivotDroite(26);
@@ -75,7 +70,7 @@ namespace GoBot
 
             Robots.GrosRobot.Reculer(339);
 
-            if (Plateau.NotreCouleur == Plateau.CouleurDroiteJaune)
+            if (Plateau.NotreCouleur == Plateau.CouleurDroiteVert)
                 Robots.GrosRobot.ReglerOffsetAsserv(2813, 397, 206);
             else
                 Robots.GrosRobot.ReglerOffsetAsserv(187, 397, -26);

@@ -41,9 +41,9 @@ Source: "./iconeTlog.ico"; DestDir: "{app}"; Flags: ignoreversion
 Source: "./iconeElog.ico"; DestDir: "{app}"; Flags: ignoreversion  
 Source: "./DShowNET.dll"; DestDir: "{app}"; Flags: ignoreversion
 Source: "./Jokerman.TTF"; DestDir: "{fonts}"; FontInstall: "Jokerman"; Flags: onlyifdoesntexist uninsneveruninstall  
-Source: "C:\Users\Kryss\AppData\Local\GoBot\graphGros.bin"; DestDir: "{localappdata}\GoBot"; Flags: ignoreversion
-Source: "C:\Users\Kryss\AppData\Local\GoBot\graphPetit.bin"; DestDir: "{localappdata}\GoBot"; Flags: ignoreversion    
-Source: "C:\Users\Kryss\AppData\Local\GoBot\config.xml"; DestDir: "{localappdata}\GoBot"; Flags: ignoreversion  
+;Source: "C:\Users\Kryss\AppData\Local\GoBot\graphGros.bin"; DestDir: "{localappdata}\GoBot"; Flags: ignoreversion
+;Source: "C:\Users\Kryss\AppData\Local\GoBot\graphPetit.bin"; DestDir: "{localappdata}\GoBot"; Flags: ignoreversion    
+Source: "C:\Users\Christopher\AppData\Local\GoBot\config.xml"; DestDir: "{localappdata}\GoBot"; Flags: ignoreversion  
 
 ; NOTE: Don't use "Flags: ignoreversion" on any shared system files     
           

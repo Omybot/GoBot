@@ -99,11 +99,13 @@ namespace GoBot
         {
             if (ServoActive.ContainsKey(servo))
             {
-                if (servo == ServomoteurID.GRFruitsCoude && position != Config.CurrentConfig.PositionGRCoudeRange ||
+                /*
+                 * Todo
+                 * if (servo == ServomoteurID.GRFruitsCoude && position != Config.CurrentConfig.PositionGRCoudeRange ||
                     servo == ServomoteurID.GRFruitsEpaule && position != Config.CurrentConfig.PositionGREpauleRange)
                     ServoActive[servo] = true;
                 else
-                    ServoActive[servo] = false;
+                    ServoActive[servo] = false;*/
             }
 
             Thread.Sleep(10);
@@ -182,10 +184,15 @@ namespace GoBot
         {
             if (this == Robots.GrosRobot)
             {
-                VitesseDeplacement = Config.CurrentConfig.GRVitesseLigneRapide;
+                /*VitesseDeplacement = Config.CurrentConfig.GRVitesseLigneRapide;
                 AccelerationDeplacement = Config.CurrentConfig.GRAccelerationLigneRapide;
                 VitessePivot = Config.CurrentConfig.GRVitessePivotRapide;
-                AccelerationPivot = Config.CurrentConfig.GRAccelerationPivotRapide;
+                AccelerationPivot = Config.CurrentConfig.GRAccelerationPivotRapide;*/
+
+                VitesseDeplacement = 500;
+                AccelerationDeplacement = 1000;
+                VitessePivot = 600;
+                AccelerationPivot = 1000;
             }
             else
             {

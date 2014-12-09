@@ -39,35 +39,6 @@ namespace GoBot.Enchainements
             Couleur = Color.Purple;
 
             // Todo Charger dans les listes ListeMouvementsGros et ListeMouvementsPetit les mouvements possibles
-
-            // Attrapage feux en bordure
-            ListeMouvementsGros.Add(new MouvementFeuBordure(15));
-            ListeMouvementsGros.Add(new MouvementFeuBordure(8));
-            ListeMouvementsGros.Add(new MouvementFeuBordure(7));
-            ListeMouvementsGros.Add(new MouvementFeuBordure(0));
-
-            // Vidage des torches
-            ListeMouvementsGros.Add(new MouvementTorche(0));
-            ListeMouvementsGros.Add(new MouvementTorche(1));
-
-            // Arbres
-            //ListeMouvementsGros.Add(new MouvementArbre(1));
-
-            // Foyers coins
-            //ListeMouvementsGros.Add(new MouvementDeposeFoyerCoin(0));
-            //ListeMouvementsGros.Add(new MouvementDeposeFoyerCoin(1));
-
-            // Lances mammouth
-            ListeMouvementsPetit.Add(new MouvementLances());
-
-            // Fresques
-            ListeMouvementsPetit.Add(new MouvementFresque());
-
-            // Filet
-            ListeMouvementsPetit.Add(new MouvementFilet());
-
-            // Foyer central
-            ListeMouvementsGros.Add(new MouvementFoyerCentral());
         }
 
         public void Executer()
@@ -100,30 +71,6 @@ namespace GoBot.Enchainements
             thGrosRobot.Abort();
             Robots.GrosRobot.Stop(StopMode.Freely);
             Robots.PetitRobot.Stop(StopMode.Freely);
-
-            Robots.GrosRobot.ActionneurOnOff(ActionneurOnOffID.GRPompeFeu, false);
-            Robots.GrosRobot.MoteurPosition(MoteurID.GRPinceDroiteBas, 0);
-            Robots.GrosRobot.MoteurPosition(MoteurID.GRPinceDroiteHaut, 0);
-            Robots.GrosRobot.MoteurPosition(MoteurID.GRPinceGaucheBas, 0);
-            Robots.GrosRobot.MoteurPosition(MoteurID.GRPinceGaucheHaut, 0);
-            Robots.GrosRobot.MoteurPosition(MoteurID.GRPousseBouchon, 0);
-            Robots.GrosRobot.MoteurPosition(MoteurID.GREpauleFeu, 0);
-            Servomoteur servo = new Servomoteur(Carte.RecIO, (int)ServomoteurID.GRCanonInclinaison, 0);
-            servo.CoupleActive = false; 
-            servo = new Servomoteur(Carte.RecIO, (int)ServomoteurID.GRCanonInclinaison, 0);
-            servo.CoupleActive = false; 
-            servo = new Servomoteur(Carte.RecIO, (int)ServomoteurID.GRFeuxCoude, 0);
-            servo.CoupleActive = false; 
-            servo = new Servomoteur(Carte.RecIO, (int)ServomoteurID.GRFeuxPoignet, 0);
-            servo.CoupleActive = false; 
-            servo = new Servomoteur(Carte.RecIO, (int)ServomoteurID.GRFruitsCoude, 0);
-            servo.CoupleActive = false; 
-            servo = new Servomoteur(Carte.RecIO, (int)ServomoteurID.GRFruitsEpaule, 0);
-            servo.CoupleActive = false;
-            servo = new Servomoteur(Carte.RecPi, (int)ServomoteurID.PRBacBouchons, 0);
-            servo.CoupleActive = false;
-            servo = new Servomoteur(Carte.RecPi, (int)ServomoteurID.PRFresque, 0);
-            servo.CoupleActive = false;
 
             Thread.Sleep(100);
             Robots.GrosRobot.ActionneurOnOff(ActionneurOnOffID.GRAlimentation, false);

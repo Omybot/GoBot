@@ -39,23 +39,29 @@ namespace GoBot
         public static PointReel PositionCibleGros { get; set; }
         public static PointReel PositionCiblePetit { get; set; }
 
+        public static List<Clap> Claps { get; private set; }
+        public static List<Pied> Pieds { get; private set; }
+        public static List<DistributeurPopCorn> DistributeursPopCorn { get; private set; }
+
+        public static List<ElementJeu> ElementsJeu { get; private set; }
+
         private static Color notreCouleur;
         public static Color NotreCouleur
         {
             get { return notreCouleur; }
-            set { notreCouleur = value; if (NotreCouleurChange != null) NotreCouleurChange(null, null); }
+            set 
+            {
+                if (notreCouleur != value)
+                {
+                    notreCouleur = value;
+                    Robots.GrosRobot.Init();
+                    Robots.PetitRobot.Init();
+                    if (NotreCouleurChange != null)
+                        NotreCouleurChange(null, null);
+                }
+            }
         }
         public static event EventHandler NotreCouleurChange;
-
-        public static bool FresquesCollees { get; set; }
-        public static bool LancesCollees { get; set; }
-        public static bool FiletLance { get; set; }
-
-        public static Feu[] Feux { get; set; }
-        public static Arbre[] Arbres { get; set; }
-        public static Fruimouth[] Fruimouths { get; set; }
-        public static bool[] TorchesVidees { get; set; }
-        public static bool[] ArbresVides { get; set; }
 
         public static bool ReflecteursNosRobots { get; set; }
 
@@ -75,8 +81,8 @@ namespace GoBot
         //public static Graph GraphGros { get; private set; }
         //public static Graph GraphPetit { get; private set; }
 
-        public static Color CouleurGaucheRouge { get { return Color.FromArgb(204, 6, 5); } }
-        public static Color CouleurDroiteJaune { get { return Color.FromArgb(250, 210, 1); } }
+        public static Color CouleurGaucheJaune { get { return Color.FromArgb(250, 210, 1); } }
+        public static Color CouleurDroiteVert { get { return Color.FromArgb(87, 166, 57); } }
 
         /// <summary>
         /// Longueur de la table (mm)
@@ -110,9 +116,6 @@ namespace GoBot
                 RayonAdversaire = RayonAdversaireInitial;
 
                 ReflecteursNosRobots = true;
-                FresquesCollees = false;
-                LancesCollees = false;
-                FiletLance = false;
 
                 ObstaclesTemporaires = new List<IForme>();
 
@@ -126,81 +129,52 @@ namespace GoBot
                 //InterpreteurBalise.PositionEnnemisActualisee += new InterpreteurBalise.PositionEnnemisDelegate(interpreteBalise_PositionEnnemisActualisee);
                 SuiviBalise.PositionEnnemisActualisee += new Balises.SuiviBalise.PositionEnnemisDelegate(interpreteBalise_PositionEnnemisActualisee);
 
-                NotreCouleur = Color.Red;
-                TorchesVidees = new bool[2];
-                TorchesVidees[0] = false;
-                TorchesVidees[1] = false;
+                // Initialiser les elements de jeu ici
 
-                Feux = new Feu[16];
+                Claps = new List<Clap>();
+                Claps.Add(new Clap(new PointReel(400 - 80, 2000 + 15), CouleurGaucheJaune));
+                Claps.Add(new Clap(new PointReel(700 - 80, 2000 + 15), CouleurDroiteVert));
+                Claps.Add(new Clap(new PointReel(1000 - 80, 2000 + 15), CouleurGaucheJaune));
+                Claps.Add(new Clap(new PointReel(2000 + 80, 2000 + 15), CouleurDroiteVert));
+                Claps.Add(new Clap(new PointReel(2300 + 80, 2000 + 15), CouleurGaucheJaune));
+                Claps.Add(new Clap(new PointReel(2600 + 80, 2000 + 15), CouleurDroiteVert));
 
-                Feux[0] = new Feu(new PointReel(15, 800), Color.Black, true, 0);
-                Feux[1] = new Feu(new PointReel(400, 1100), Color.Black, true, 90);
-                Feux[2] = new Feu(new PointReel(900, 600), Color.Black, true, 0);
-                Feux[3] = new Feu(new PointReel(900, 1100), Plateau.CouleurGaucheRouge, false, 0);
-                Feux[4] = new Feu(new PointReel(900, 1100), Plateau.CouleurDroiteJaune, false, 0);
-                Feux[5] = new Feu(new PointReel(900, 1100), Plateau.CouleurGaucheRouge, false, 0);
-                Feux[6] = new Feu(new PointReel(900, 1600), Color.Black, true, 180);
-                Feux[7] = new Feu(new PointReel(1300, 1985), Color.Black, true, 90);
-                Feux[8] = new Feu(new PointReel(1700, 1985), Color.Black, true, 270);
-                Feux[9] = new Feu(new PointReel(2100, 600), Color.Black, true, 0);
-                Feux[10] = new Feu(new PointReel(2100, 1100), Plateau.CouleurDroiteJaune, false, 0);
-                Feux[11] = new Feu(new PointReel(2100, 1100), Plateau.CouleurGaucheRouge, false, 0);
-                Feux[12] = new Feu(new PointReel(2100, 1100), Plateau.CouleurDroiteJaune, false, 0);
-                Feux[13] = new Feu(new PointReel(2100, 1600), Color.Black, true, 180);
-                Feux[14] = new Feu(new PointReel(2600, 1100), Color.Black, true, 270);
-                Feux[15] = new Feu(new PointReel(2985, 800), Color.Black, true, 0);
-                
-                Arbres = new Arbre[4];
-                Arbres[0] = new Arbre(new PointReel(0, 1300));
-                Arbres[1] = new Arbre(new PointReel(700, 2000));
-                Arbres[2] = new Arbre(new PointReel(2300, 2000));
-                Arbres[3] = new Arbre(new PointReel(3000, 1300));
+                Pieds = new List<Pied>();
+                Pieds.Add(new Pied(new PointReel(90, 200), CouleurGaucheJaune));
+                Pieds.Add(new Pied(new PointReel(90, 1750), CouleurGaucheJaune));
+                Pieds.Add(new Pied(new PointReel(90, 1850), CouleurGaucheJaune));
+                Pieds.Add(new Pied(new PointReel(850, 100), CouleurGaucheJaune));
+                Pieds.Add(new Pied(new PointReel(850, 200), CouleurGaucheJaune));
+                Pieds.Add(new Pied(new PointReel(870, 1355), CouleurGaucheJaune));
+                Pieds.Add(new Pied(new PointReel(1100, 1770), CouleurGaucheJaune));
+                Pieds.Add(new Pied(new PointReel(1300, 1400), CouleurGaucheJaune));
+                Pieds.Add(new Pied(new PointReel(1700, 1400), CouleurDroiteVert));
+                Pieds.Add(new Pied(new PointReel(1900, 1770), CouleurDroiteVert));
+                Pieds.Add(new Pied(new PointReel(2130, 1355), CouleurDroiteVert));
+                Pieds.Add(new Pied(new PointReel(2150, 200), CouleurDroiteVert));
+                Pieds.Add(new Pied(new PointReel(2150, 100), CouleurDroiteVert));
+                Pieds.Add(new Pied(new PointReel(2910, 1850), CouleurDroiteVert));
+                Pieds.Add(new Pied(new PointReel(2910, 1750), CouleurDroiteVert));
+                Pieds.Add(new Pied(new PointReel(2910, 200), CouleurDroiteVert));
+
+                DistributeursPopCorn = new List<DistributeurPopCorn>();
+                DistributeursPopCorn.Add(new DistributeurPopCorn(new PointReel(300, 35)));
+                DistributeursPopCorn.Add(new DistributeurPopCorn(new PointReel(600, 35)));
+                DistributeursPopCorn.Add(new DistributeurPopCorn(new PointReel(2400, 35)));
+                DistributeursPopCorn.Add(new DistributeurPopCorn(new PointReel(2700, 35)));
+
+                ElementsJeu = new List<ElementJeu>();
+
+                for (int i = 0; i < Claps.Count; i++)
+                    ElementsJeu.Add(Claps[i]);
+                for (int i = 0; i < Pieds.Count; i++)
+                    ElementsJeu.Add(Pieds[i]);
+                for (int i = 0; i < DistributeursPopCorn.Count; i++)
+                    ElementsJeu.Add(DistributeursPopCorn[i]);
+
 
                 Random random = new Random();
-                Fruimouths = new Fruimouth[24];
-                // Arbre 1
-                int rand = random.Next(4);
-                Fruimouths[0] = new Fruimouth(new PointReel(0, 1180), rand < 1);
-                Fruimouths[1] = new Fruimouth(new PointReel(0, 1420), rand >= 1 && rand < 2);
-                Fruimouths[2] = new Fruimouth(new PointReel(-103.92, 1360), rand >= 2 && rand < 3);
-                Fruimouths[3] = new Fruimouth(new PointReel(-103.92, 1240), rand >= 3 && rand < 4);
-                Fruimouths[4] = new Fruimouth(new PointReel(103.92, 1240), false);
-                Fruimouths[5] = new Fruimouth(new PointReel(103.92, 1360), false);
-                // Arbre 2
-                rand = random.Next(4);
-                Fruimouths[6] = new Fruimouth(new PointReel(820, 2000), rand < 1);
-                Fruimouths[7] = new Fruimouth(new PointReel(760, 2103.92), rand >= 1 && rand < 2);
-                Fruimouths[8] = new Fruimouth(new PointReel(640, 2103.92), rand >= 2 && rand < 3);
-                Fruimouths[9] = new Fruimouth(new PointReel(580, 2000), rand >= 3 && rand < 4);
-                Fruimouths[10] = new Fruimouth(new PointReel(640, 1896.08), false);
-                Fruimouths[11] = new Fruimouth(new PointReel(760, 1896.08), false);
-                // Arbre 3
-                rand = random.Next(4);
-                Fruimouths[12] = new Fruimouth(new PointReel(2420, 2000), rand < 1);
-                Fruimouths[13] = new Fruimouth(new PointReel(2360, 2103.92), rand >= 1 && rand < 2);
-                Fruimouths[14] = new Fruimouth(new PointReel(2240, 2103.92), rand >= 2 && rand < 3);
-                Fruimouths[15] = new Fruimouth(new PointReel(2180, 2000), rand >= 3 && rand < 4);
-                Fruimouths[16] = new Fruimouth(new PointReel(2240, 1896.08), false);
-                Fruimouths[17] = new Fruimouth(new PointReel(2360, 1896.08), false);
-                // Arbre 4
-                rand = random.Next(4);
-                Fruimouths[18] = new Fruimouth(new PointReel(3000, 1180), rand < 1);
-                Fruimouths[19] = new Fruimouth(new PointReel(3103.92, 1240), rand >= 1 && rand < 2);
-                Fruimouths[20] = new Fruimouth(new PointReel(3103.92, 1360), rand >= 2 && rand < 3);
-                Fruimouths[21] = new Fruimouth(new PointReel(3000, 1420), rand >= 3 && rand < 4);
-                Fruimouths[22] = new Fruimouth(new PointReel(2896.08, 1360), false);
-                Fruimouths[23] = new Fruimouth(new PointReel(2896.08, 1240), false);
-
-                TorchesVidees = new bool[2];
-                TorchesVidees[0] = false;
-                TorchesVidees[1] = false;
-
-                ArbresVides = new bool[4];
-                ArbresVides[0] = false;
-                ArbresVides[1] = false;
-                ArbresVides[2] = false;
-                ArbresVides[3] = false;
-
+                
                 SemaphoreCollisions = new Semaphore(0, 999999999);
                 thCollisions = new Thread(ThreadTestCollisions);
                 thCollisions.Start();
@@ -270,12 +244,7 @@ namespace GoBot
                 else
                 {
                     // Tester ici ce qu'il y a à tester en fonction de la position de l'ennemi PENDANT le match
-
-                    if (coordonnees.Distance(new PointReel(900, 1100)) < 250)
-                        TorchesVidees[0] = true;
-                    if (coordonnees.Distance(new PointReel(3000 - 900, 1100)) < 250)
-                        TorchesVidees[1] = true;
-
+                    
                     double distanceAdv = Robots.GrosRobot.Position.Coordonnees.Distance(coordonnees);
                     if (distanceAdv < 1500)
                     {

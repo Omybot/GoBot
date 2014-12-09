@@ -76,50 +76,5 @@ namespace GoBot.IHM
         {
             Robots.PetitRobot.Diagnostic();
         }
-
-        private void switchBoutonAimantLances_ChangementEtat(object sender, EventArgs e)
-        {
-            if (switchBoutonAimantLances.Actif)
-                CatapulteLances.Armer();
-            else
-                CatapulteLances.Tirer();
-        }
-
-        private void switchBoutonFilet_ChangementEtat(object sender, EventArgs e)
-        {
-            if (switchBoutonFilet.Actif)
-                LanceFilet.Tirer();
-            else
-                LanceFilet.Armer();
-        }
-
-        private void switchBoutonReservoir_ChangementEtat(object sender, EventArgs e)
-        {
-            if (switchBoutonReservoir.Actif)
-                ReservoirBouchons.Ouvrir();
-            else
-                ReservoirBouchons.Fermer();
-        }
-
-        private void switchBoutonRideau_ChangementEtat(object sender, EventArgs e)
-        {
-            if (switchBoutonRideau.Actif)
-                ReservoirBouchons.TendTissu();
-            else
-                ReservoirBouchons.RelacheTissu();
-        }
-
-        private void btnLances_Click(object sender, EventArgs e)
-        {
-            ReservoirBouchons.TendTissu();
-            ReservoirBouchons.Ouvrir();
-            Thread.Sleep(1000);
-            CatapulteLances.Tirer();
-            Thread.Sleep(200);
-            ReservoirBouchons.Fermer();
-            ReservoirBouchons.RelacheTissu();
-            Robots.PetitRobot.PivotDroite(180);
-            LanceFilet.Tirer();
-        }
     }
 }

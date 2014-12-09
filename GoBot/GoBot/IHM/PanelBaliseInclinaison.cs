@@ -160,7 +160,7 @@ namespace GoBot.IHM
 
         private void btnResetAngle_Click(object sender, EventArgs e)
         {
-            if (Plateau.NotreCouleur == Plateau.CouleurDroiteJaune)
+            if (Plateau.NotreCouleur == Plateau.CouleurDroiteVert)
             {
                 switch (Balise.Carte)
                 {

@@ -26,17 +26,26 @@ namespace GoBot
 
     public enum ServomoteurID
     {
-        GRCanonInclinaison = 19,
+        /*GRCanonInclinaison = 19,
         GRFeuxCoude = 5,
         GRFruitsCoude = 2,
         GRFruitsEpaule = 4,
         GRFeuxPoignet = 3,
         PRFresque = 14,
-        PRBacBouchons = 16,
+        PRBacBouchons = 16,*/
+
+
+        GRDroitePinceDroite = 19,
+        GRGauchePinceDroite = 5,
+        zLibre2 = 2,
+        zLibre4 = 4,
+        zLibre3 = 3,
+        zLibre14 = 14,
+        zLibre16 = 16,
 
         Tous = 254,
 
-        zLibre2 = 1,
+        zLibre1 = 1,
         //zLibre2 = 2,
         //zLibre3 = 3,
         //zLibre4 = 4,
@@ -298,14 +307,15 @@ namespace GoBot
         /*GRCanon = 0,
         GRCanonTMin = 2,
         GRTurbineAspirateur = 1*/
-        GREpauleFeu = 0x00,
+        /*GREpauleFeu = 0x00,
         GRPinceDroiteBas = 0x10,
         GRPinceGaucheBas = 0x11,
         GRPousseBouchon = 0x12,
         GRPinceDroiteHaut = 0x13,
         GRPinceGaucheHaut = 0x14,
         PRLanceFilet = 0x32,
-        PRTensionTissu = 0x33
+        PRTensionTissu = 0x33*/
+        GRAscenseurDroite = 1
     }
 
     public enum CapteurID
@@ -324,13 +334,14 @@ namespace GoBot
         /*GRShutter = 0,
         GRAlimentation = 1,
         GRPompe = 2*/
-        GRElectrovanneFeu = 2,
+        /*GRElectrovanneFeu = 2,
         GRAlimentation = 1,
         GRPompeFeu = 0,
         GRCanonFruit = 3,
         GRCanonPuissance = 4,
         GRPousseBouchon = 0x12,
-        PRLancesMammouth = 0x20
+        PRLancesMammouth = 0x20*/
+        GRAlimentation = 1
     }
 
     public enum CapteurOnOff

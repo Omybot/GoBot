@@ -91,12 +91,10 @@ namespace GoBot.IHM
                 b < moy * 1.2 && b > moy * 0.80))
             {
                 panelCouleurFruit.BackColor = Color.Black;
-                CanonFruits.FruitComestible = false;
             }
             else
             {
                 panelCouleurFruit.BackColor = Color.Purple;
-                CanonFruits.FruitComestible = true;
             }
 
             panelCouleurMoyenne.BackColor = Color.FromArgb(r, g, b);

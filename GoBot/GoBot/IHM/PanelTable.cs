@@ -172,9 +172,32 @@ namespace GoBot.IHM
                     Console.Write(DateTime.Now.Millisecond + "MouseMove");
                 }
             }
+            else
+            {
+                Point positionSurTable = Dessinateur.ScreenToRealPosition(pictureBoxTable.PointToClient(MousePosition));
+                lblPos.Text = positionSurTable.X + " : " + positionSurTable.Y;
 
-            Point positionSurTable = Dessinateur.ScreenToRealPosition(pictureBoxTable.PointToClient(MousePosition));
-            lblPos.Text = positionSurTable.X + " : " + positionSurTable.Y;
+                bool hoverElement = false;
+
+                PointReel positionRelle = new PointReel(positionSurTable.X, positionSurTable.Y);
+
+
+                for (int i = 0; i < Plateau.ElementsJeu.Count; i++)
+                {
+                    if (positionRelle.Distance(Plateau.ElementsJeu[i].Position) < Plateau.ElementsJeu[i].RayonHover)
+                    {
+                        Plateau.ElementsJeu[i].Hover = true;
+                        hoverElement = true;
+                    }
+                    else
+                        Plateau.ElementsJeu[i].Hover = false;
+                }
+
+                if (hoverElement)
+                    this.Cursor = Cursors.Hand;
+                else
+                    this.Cursor = Cursors.Arrow;
+            }
         }
 
         Node debutNode;
@@ -220,86 +243,28 @@ namespace GoBot.IHM
 
                 /* Todo Tester ici si le clic a été fait sur un élément de jeu dans le but de lancer un mouvement.
                 // Si c'est le cas, lancer un thread pour effectuer le mouvement, exemple :
-                
+             
                  move = new MoveGrosCadeau(i);
                  th = new Thread(ThreadAction);
                  th.Start();*/
 
-                for (int iArbre = 0; iArbre < Plateau.Arbres.Length; iArbre++)
-                {
-                    Arbre arbre = Plateau.Arbres[iArbre];
-
-                    if (positionReelle.Distance(arbre.Position) <= 150)
+                for (int i = 0; i < Plateau.Claps.Count; i++)
+                    if (Plateau.Claps[i].Hover)
                     {
-                        move = new MouvementArbre(iArbre);
-                    }
-                }
-
-                for (int iFeu = 0; iFeu < Plateau.Feux.Length; iFeu++ )
-                {
-                    Feu feu = Plateau.Feux[iFeu];
-
-                    bool survol = false;
-                    if (feu.Debout)
-                    {
-                        int widthEcran = Dessinateur.RealToScreenDistance(30);
-                        int heightEcran = Dessinateur.RealToScreenDistance(130);
-
-                        if (feu.Angle == 0 || feu.Angle == 180)
-                        {
-                            if (positionReelle.X > feu.Position.X - 15 &&
-                                positionReelle.X < feu.Position.X + 15 &&
-                                positionReelle.Y > feu.Position.Y - 65 &&
-                                positionReelle.Y < feu.Position.Y + 65)
-                            {
-                                survol = true;
-                            }
-                        }
-                        else if (feu.Angle == 90 || feu.Angle == 270)
-                        {
-                            if (positionReelle.X > feu.Position.X - 65 &&
-                                positionReelle.X < feu.Position.X + 65 &&
-                                positionReelle.Y > feu.Position.Y - 15 &&
-                                positionReelle.Y < feu.Position.Y + 15)
-                            {
-                                survol = true;
-                            }
-                        }
-                    }
-                    else
-                    {
-                        if (positionReelle.Distance(feu.Position) <= 80)
-                        {
-                            survol = true;
-                        }
+                        // action au clic
                     }
 
-                    if (survol)
+                for (int i = 0; i < Plateau.Pieds.Count; i++)
+                    if (Plateau.Pieds[i].Hover)
                     {
-                        switch (iFeu)
-                        {
-                            case 3:
-                            case 4:
-                            case 5:
-                                move = new MouvementTorche(0);
-                                break;
-                            case 10:
-                            case 11:
-                            case 12:
-                                move = new MouvementTorche(1);
-                                break;
-                            case 0:
-                            case 7:
-                            case 8:
-                            case 15:
-                                move = new MouvementFeuBordure(iFeu);
-                                break;
-                            default :
-                                move = null;
-                                break;
-                        }
+                        // action au clic
                     }
-                }
+
+                for (int i = 0; i < Plateau.DistributeursPopCorn.Count; i++)
+                    if (Plateau.DistributeursPopCorn[i].Hover)
+                    {
+                        // action au clic
+                    }
 
                 if (move != null)
                 {

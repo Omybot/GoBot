@@ -66,7 +66,21 @@ namespace GoBot
             if(this == Robots.GrosRobot)
                 Connexions.ConnexionIO.NouvelleTrameRecue += new ConnexionUDP.ReceptionDelegate(ReceptionMessage);
 
-            Position = new Calculs.Position(new Angle(270, AnglyeType.Degre), new PointReel(200 + 160, 150));
+            if (this == Robots.GrosRobot)
+            {
+                if (Plateau.NotreCouleur == Plateau.CouleurGaucheJaune)
+                    Position = new Calculs.Position(new Angle(0, AnglyeType.Degre), new PointReel(230, 1000));
+                else
+                    Position = new Calculs.Position(new Angle(180, AnglyeType.Degre), new PointReel(3000 - 230, 1000));
+            }
+            else
+            {
+                if (Plateau.NotreCouleur == Plateau.CouleurGaucheJaune)
+                    Position = new Calculs.Position(new Angle(0, AnglyeType.Degre), new PointReel(480, 1000));
+                else
+                    Position = new Calculs.Position(new Angle(180, AnglyeType.Degre), new PointReel(3000 - 480, 1000));
+            }
+
             PositionCible = null;
 
             HistoriqueCoordonnees = new List<Position>();
@@ -216,7 +230,7 @@ namespace GoBot
                 if (trameRecue[1] == (byte)FonctionIO.AspirationPompe && AspirationAutomatique)
                 {
                     VitesseDeplacement = Config.CurrentConfig.GRVitesseLigneLent;
-                    BrasFeux.RangerFeu();
+                    //BrasFeux.RangerFeu();
                     VitesseDeplacement = Config.CurrentConfig.GRVitesseLigneRapide;
                 }
                 if (trameRecue[1] == (byte)FonctionIO.RetourCapteurOnOff)
@@ -252,9 +266,9 @@ namespace GoBot
                 if (trameRecue[1] == (byte)FonctionIO.ReponseCouleurEquipe)
                 {
                     if (trameRecue[2] == 0)
-                        couleurEquipe = Plateau.CouleurGaucheRouge;
+                        couleurEquipe = Plateau.CouleurGaucheJaune;
                     else if (trameRecue[2] == 1)
-                        couleurEquipe = Plateau.CouleurDroiteJaune;
+                        couleurEquipe = Plateau.CouleurDroiteVert;
 
                     Plateau.NotreCouleur = couleurEquipe;
 

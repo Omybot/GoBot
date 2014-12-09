@@ -108,8 +108,9 @@ namespace GoBot
 
                 Instance = this;
 
-                Plateau.NotreCouleur = Plateau.CouleurDroiteJaune;
-                panelMatch.CouleurDroiteJaune();
+                Plateau.NotreCouleur = Plateau.CouleurGaucheJaune;
+                
+                Connexions.ConnexionIO.SendMessage(TrameFactory.DemandeCouleurEquipe());
             }
 
             SplashScreen.CloseSplash();

@@ -16,14 +16,10 @@ namespace GoBot.Actions
         {
             switch (servo)
             {
-                case ServomoteurID.GRFruitsCoude:
-                    return "coude fruit";
-                case ServomoteurID.GRFruitsEpaule:
-                    return "épaule fruit";
-                case ServomoteurID.GRFeuxCoude:
-                    return "coude feu";
-                case ServomoteurID.GRFeuxPoignet:
-                    return "poignet feu";
+                case ServomoteurID.GRDroitePinceDroite:
+                    return "servo droite pince droite";
+                case ServomoteurID.GRGauchePinceDroite:
+                    return "servo gauche pince droite";
                 default:
                     return servo.ToString();
             }
@@ -66,18 +62,8 @@ namespace GoBot.Actions
         {
             switch (moteur)
             {
-                case MoteurID.GREpauleFeu:
-                    return "épaule feu";
-                case MoteurID.GRPinceDroiteBas:
-                    return "pince fruit droite bas";
-                case MoteurID.GRPinceGaucheBas:
-                    return "pince fruit gauche bas";
-                case MoteurID.GRPinceDroiteHaut:
-                    return "pince fruit haut bas";
-                case MoteurID.GRPinceGaucheHaut:
-                    return "pince fruit gauche haut";
-                case MoteurID.GRPousseBouchon:
-                    return "pousse bouchon";
+                case MoteurID.GRAscenseurDroite:
+                    return "ascenseur droite";
                 default:
                     return moteur.ToString();
             }
@@ -109,14 +95,8 @@ namespace GoBot.Actions
         {
             switch (actionneur)
             {
-                case ActionneurOnOffID.GRElectrovanneFeu:
-                    return "électrovanne des feux";
-                case ActionneurOnOffID.GRPompeFeu:
-                    return "pompe des feux";
-                case ActionneurOnOffID.GRCanonFruit:
-                    return "canon à fruits";
-                case ActionneurOnOffID.PRLancesMammouth:
-                    return "canon à lances mammouth";
+                case ActionneurOnOffID.GRAlimentation:
+                    return "alimentation";
                 default:
                     return actionneur.ToString();
             }

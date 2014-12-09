@@ -6,12 +6,35 @@ using GoBot.Calculs.Formes;
 
 namespace GoBot.ElementsJeu
 {
-    public class ElementJeu
+    public abstract class ElementJeu
     {
-        public PointReel Position { get; set; }
+        private PointReel position;
 
-        public ElementJeu(PointReel position)
+        public PointReel Position
         {
+            get { return position; }
+            set { position = value; }
+        }
+
+        private bool hover;
+
+        public bool Hover
+        {
+            get { return hover; }
+            set { hover = value; }
+        }
+
+        private int rayonHover;
+
+        public int RayonHover
+        {
+            get { return rayonHover; }
+            set { rayonHover = value; }
+        }
+
+        public ElementJeu(PointReel position, int rayonHover)
+        {
+            RayonHover = rayonHover;
             Position = position;
         }
     }

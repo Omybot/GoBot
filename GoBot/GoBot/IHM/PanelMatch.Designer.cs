@@ -42,14 +42,8 @@
             this.btnCalibrationAngle = new System.Windows.Forms.Button();
             this.boxCalibrationAssiette = new System.Windows.Forms.CheckBox();
             this.boxCalibrationAngulaire = new System.Windows.Forms.CheckBox();
-            this.pictureBoxBunRouge = new System.Windows.Forms.PictureBox();
             this.pictureBoxTable = new System.Windows.Forms.PictureBox();
             this.pictureBoxCouleur = new System.Windows.Forms.PictureBox();
-            this.pictureBoxBeuRouge = new System.Windows.Forms.PictureBox();
-            this.pictureBoxBoiRouge = new System.Windows.Forms.PictureBox();
-            this.pictureBoxBunJaune = new System.Windows.Forms.PictureBox();
-            this.pictureBoxBeuJaune = new System.Windows.Forms.PictureBox();
-            this.pictureBoxBoiJaune = new System.Windows.Forms.PictureBox();
             this.btnReset = new System.Windows.Forms.Button();
             this.btnBalise1 = new System.Windows.Forms.Button();
             this.btnBalise2 = new System.Windows.Forms.Button();
@@ -68,15 +62,15 @@
             this.ledBalise1Rotation = new Composants.Led();
             this.ledRecallageGros = new Composants.Led();
             this.boxPetit = new System.Windows.Forms.CheckBox();
+            this.lblBunGauche = new System.Windows.Forms.Label();
+            this.lblBeuGauche = new System.Windows.Forms.Label();
+            this.lblBoiDroite = new System.Windows.Forms.Label();
+            this.lblBunDroite = new System.Windows.Forms.Label();
+            this.lblBoiGauche = new System.Windows.Forms.Label();
+            this.lblBeuDroite = new System.Windows.Forms.Label();
             this.groupBox1.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBoxBunRouge)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxTable)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxCouleur)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBoxBeuRouge)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBoxBoiRouge)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBoxBunJaune)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBoxBeuJaune)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBoxBoiJaune)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.ledRecallagePetit)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.ledBalise3Angle)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.ledBalise2Angle)).BeginInit();
@@ -167,27 +161,25 @@
             // 
             // btnJoueurGauche
             // 
-            this.btnJoueurGauche.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(165)))), ((int)(((byte)(32)))), ((int)(((byte)(25)))));
-            this.btnJoueurGauche.ForeColor = System.Drawing.Color.White;
+            this.btnJoueurGauche.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(250)))), ((int)(((byte)(210)))), ((int)(((byte)(1)))));
+            this.btnJoueurGauche.ForeColor = System.Drawing.Color.Black;
             this.btnJoueurGauche.Location = new System.Drawing.Point(15, 63);
             this.btnJoueurGauche.Name = "btnJoueurGauche";
             this.btnJoueurGauche.Size = new System.Drawing.Size(75, 50);
             this.btnJoueurGauche.TabIndex = 22;
-            this.btnJoueurGauche.Text = "Rouge";
             this.btnJoueurGauche.UseVisualStyleBackColor = false;
-            this.btnJoueurGauche.Click += new System.EventHandler(this.btnCouleurRouge_Click);
+            this.btnJoueurGauche.Click += new System.EventHandler(this.btnCouleurJoueurGauche_Click);
             // 
             // btnJoueurDroite
             // 
-            this.btnJoueurDroite.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(240)))), ((int)(((byte)(235)))), ((int)(((byte)(36)))));
+            this.btnJoueurDroite.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(87)))), ((int)(((byte)(166)))), ((int)(((byte)(57)))));
             this.btnJoueurDroite.ForeColor = System.Drawing.Color.Black;
             this.btnJoueurDroite.Location = new System.Drawing.Point(190, 63);
             this.btnJoueurDroite.Name = "btnJoueurDroite";
             this.btnJoueurDroite.Size = new System.Drawing.Size(75, 50);
             this.btnJoueurDroite.TabIndex = 21;
-            this.btnJoueurDroite.Text = "Jaune";
             this.btnJoueurDroite.UseVisualStyleBackColor = false;
-            this.btnJoueurDroite.Click += new System.EventHandler(this.btnCouleurJaune_Click);
+            this.btnJoueurDroite.Click += new System.EventHandler(this.btnCouleurJoueurDroite_Click);
             // 
             // btnCalibrationAssiette
             // 
@@ -231,15 +223,6 @@
             this.boxCalibrationAngulaire.TabIndex = 54;
             this.boxCalibrationAngulaire.UseVisualStyleBackColor = true;
             // 
-            // pictureBoxBunRouge
-            // 
-            this.pictureBoxBunRouge.Image = global::GoBot.Properties.Resources.BunRouge;
-            this.pictureBoxBunRouge.Location = new System.Drawing.Point(394, 66);
-            this.pictureBoxBunRouge.Name = "pictureBoxBunRouge";
-            this.pictureBoxBunRouge.Size = new System.Drawing.Size(84, 33);
-            this.pictureBoxBunRouge.TabIndex = 57;
-            this.pictureBoxBunRouge.TabStop = false;
-            // 
             // pictureBoxTable
             // 
             this.pictureBoxTable.Image = global::GoBot.Properties.Resources.TablePlan;
@@ -257,51 +240,6 @@
             this.pictureBoxCouleur.Size = new System.Drawing.Size(88, 50);
             this.pictureBoxCouleur.TabIndex = 23;
             this.pictureBoxCouleur.TabStop = false;
-            // 
-            // pictureBoxBeuRouge
-            // 
-            this.pictureBoxBeuRouge.Image = global::GoBot.Properties.Resources.BeuRouge;
-            this.pictureBoxBeuRouge.Location = new System.Drawing.Point(389, 549);
-            this.pictureBoxBeuRouge.Name = "pictureBoxBeuRouge";
-            this.pictureBoxBeuRouge.Size = new System.Drawing.Size(89, 41);
-            this.pictureBoxBeuRouge.TabIndex = 58;
-            this.pictureBoxBeuRouge.TabStop = false;
-            // 
-            // pictureBoxBoiRouge
-            // 
-            this.pictureBoxBoiRouge.Image = global::GoBot.Properties.Resources.BoiRouge;
-            this.pictureBoxBoiRouge.Location = new System.Drawing.Point(1151, 307);
-            this.pictureBoxBoiRouge.Name = "pictureBoxBoiRouge";
-            this.pictureBoxBoiRouge.Size = new System.Drawing.Size(84, 33);
-            this.pictureBoxBoiRouge.TabIndex = 59;
-            this.pictureBoxBoiRouge.TabStop = false;
-            // 
-            // pictureBoxBunJaune
-            // 
-            this.pictureBoxBunJaune.Image = global::GoBot.Properties.Resources.BunJaune;
-            this.pictureBoxBunJaune.Location = new System.Drawing.Point(1150, 67);
-            this.pictureBoxBunJaune.Name = "pictureBoxBunJaune";
-            this.pictureBoxBunJaune.Size = new System.Drawing.Size(86, 32);
-            this.pictureBoxBunJaune.TabIndex = 60;
-            this.pictureBoxBunJaune.TabStop = false;
-            // 
-            // pictureBoxBeuJaune
-            // 
-            this.pictureBoxBeuJaune.Image = global::GoBot.Properties.Resources.BeuJaune;
-            this.pictureBoxBeuJaune.Location = new System.Drawing.Point(1151, 549);
-            this.pictureBoxBeuJaune.Name = "pictureBoxBeuJaune";
-            this.pictureBoxBeuJaune.Size = new System.Drawing.Size(89, 35);
-            this.pictureBoxBeuJaune.TabIndex = 61;
-            this.pictureBoxBeuJaune.TabStop = false;
-            // 
-            // pictureBoxBoiJaune
-            // 
-            this.pictureBoxBoiJaune.Image = global::GoBot.Properties.Resources.BoiJaune;
-            this.pictureBoxBoiJaune.Location = new System.Drawing.Point(387, 308);
-            this.pictureBoxBoiJaune.Name = "pictureBoxBoiJaune";
-            this.pictureBoxBoiJaune.Size = new System.Drawing.Size(89, 41);
-            this.pictureBoxBoiJaune.TabIndex = 62;
-            this.pictureBoxBoiJaune.TabStop = false;
             // 
             // btnReset
             // 
@@ -483,22 +421,88 @@
             this.boxPetit.Text = "Petit robot";
             this.boxPetit.UseVisualStyleBackColor = true;
             // 
+            // lblBunGauche
+            // 
+            this.lblBunGauche.AutoSize = true;
+            this.lblBunGauche.Font = new System.Drawing.Font("Jokerman", 24F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblBunGauche.ForeColor = System.Drawing.SystemColors.ControlText;
+            this.lblBunGauche.Location = new System.Drawing.Point(341, 37);
+            this.lblBunGauche.Name = "lblBunGauche";
+            this.lblBunGauche.Size = new System.Drawing.Size(107, 47);
+            this.lblBunGauche.TabIndex = 68;
+            this.lblBunGauche.Text = "Bun 1";
+            // 
+            // lblBeuGauche
+            // 
+            this.lblBeuGauche.AutoSize = true;
+            this.lblBeuGauche.Font = new System.Drawing.Font("Jokerman", 24F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblBeuGauche.ForeColor = System.Drawing.SystemColors.ControlText;
+            this.lblBeuGauche.Location = new System.Drawing.Point(336, 572);
+            this.lblBeuGauche.Name = "lblBeuGauche";
+            this.lblBeuGauche.Size = new System.Drawing.Size(112, 47);
+            this.lblBeuGauche.TabIndex = 69;
+            this.lblBeuGauche.Text = "Beu 2";
+            // 
+            // lblBoiDroite
+            // 
+            this.lblBoiDroite.AutoSize = true;
+            this.lblBoiDroite.Font = new System.Drawing.Font("Jokerman", 24F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblBoiDroite.ForeColor = System.Drawing.SystemColors.ControlText;
+            this.lblBoiDroite.Location = new System.Drawing.Point(339, 303);
+            this.lblBoiDroite.Name = "lblBoiDroite";
+            this.lblBoiDroite.Size = new System.Drawing.Size(107, 47);
+            this.lblBoiDroite.TabIndex = 70;
+            this.lblBoiDroite.Text = "Boi 3";
+            // 
+            // lblBunDroite
+            // 
+            this.lblBunDroite.AutoSize = true;
+            this.lblBunDroite.Font = new System.Drawing.Font("Jokerman", 24F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblBunDroite.ForeColor = System.Drawing.SystemColors.ControlText;
+            this.lblBunDroite.Location = new System.Drawing.Point(1176, 37);
+            this.lblBunDroite.Name = "lblBunDroite";
+            this.lblBunDroite.Size = new System.Drawing.Size(107, 47);
+            this.lblBunDroite.TabIndex = 71;
+            this.lblBunDroite.Text = "1 Bun";
+            // 
+            // lblBoiGauche
+            // 
+            this.lblBoiGauche.AutoSize = true;
+            this.lblBoiGauche.Font = new System.Drawing.Font("Jokerman", 24F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblBoiGauche.ForeColor = System.Drawing.SystemColors.ControlText;
+            this.lblBoiGauche.Location = new System.Drawing.Point(1178, 305);
+            this.lblBoiGauche.Name = "lblBoiGauche";
+            this.lblBoiGauche.Size = new System.Drawing.Size(107, 47);
+            this.lblBoiGauche.TabIndex = 72;
+            this.lblBoiGauche.Text = "3 Boi";
+            // 
+            // lblBeuDroite
+            // 
+            this.lblBeuDroite.AutoSize = true;
+            this.lblBeuDroite.Font = new System.Drawing.Font("Jokerman", 24F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblBeuDroite.ForeColor = System.Drawing.SystemColors.ControlText;
+            this.lblBeuDroite.Location = new System.Drawing.Point(1176, 572);
+            this.lblBeuDroite.Name = "lblBeuDroite";
+            this.lblBeuDroite.Size = new System.Drawing.Size(112, 47);
+            this.lblBeuDroite.TabIndex = 73;
+            this.lblBeuDroite.Text = "2 Beu";
+            // 
             // PanelMatch
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.White;
+            this.Controls.Add(this.lblBeuDroite);
+            this.Controls.Add(this.lblBoiGauche);
+            this.Controls.Add(this.lblBunDroite);
+            this.Controls.Add(this.lblBoiDroite);
+            this.Controls.Add(this.lblBeuGauche);
+            this.Controls.Add(this.lblBunGauche);
             this.Controls.Add(this.boxPetit);
             this.Controls.Add(this.btnBalise3);
             this.Controls.Add(this.btnBalise2);
             this.Controls.Add(this.btnBalise1);
             this.Controls.Add(this.btnReset);
-            this.Controls.Add(this.pictureBoxBoiJaune);
-            this.Controls.Add(this.pictureBoxBeuJaune);
-            this.Controls.Add(this.pictureBoxBunJaune);
-            this.Controls.Add(this.pictureBoxBoiRouge);
-            this.Controls.Add(this.pictureBoxBeuRouge);
-            this.Controls.Add(this.pictureBoxBunRouge);
             this.Controls.Add(this.pictureBoxTable);
             this.Controls.Add(this.ledRecallagePetit);
             this.Controls.Add(this.boxCalibrationAngulaire);
@@ -530,14 +534,8 @@
             this.Load += new System.EventHandler(this.PanelMatch_Load);
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBoxBunRouge)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxTable)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxCouleur)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBoxBeuRouge)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBoxBoiRouge)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBoxBunJaune)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBoxBeuJaune)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBoxBoiJaune)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.ledRecallagePetit)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.ledBalise3Angle)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.ledBalise2Angle)).EndInit();
@@ -586,17 +584,17 @@
         private System.Windows.Forms.CheckBox boxCalibrationAngulaire;
         private Composants.Led ledRecallagePetit;
         private System.Windows.Forms.PictureBox pictureBoxTable;
-        private System.Windows.Forms.PictureBox pictureBoxBunRouge;
-        private System.Windows.Forms.PictureBox pictureBoxBeuRouge;
-        private System.Windows.Forms.PictureBox pictureBoxBoiRouge;
-        private System.Windows.Forms.PictureBox pictureBoxBunJaune;
-        private System.Windows.Forms.PictureBox pictureBoxBeuJaune;
-        private System.Windows.Forms.PictureBox pictureBoxBoiJaune;
         private System.Windows.Forms.Button btnReset;
         private System.Windows.Forms.Button btnBalise1;
         private System.Windows.Forms.Button btnBalise2;
         private System.Windows.Forms.Button btnBalise3;
         private System.Windows.Forms.CheckBox boxPetit;
+        private System.Windows.Forms.Label lblBunGauche;
+        private System.Windows.Forms.Label lblBeuGauche;
+        private System.Windows.Forms.Label lblBoiDroite;
+        private System.Windows.Forms.Label lblBunDroite;
+        private System.Windows.Forms.Label lblBoiGauche;
+        private System.Windows.Forms.Label lblBeuDroite;
 
     }
 }

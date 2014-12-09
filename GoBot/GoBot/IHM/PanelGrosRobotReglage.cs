@@ -29,163 +29,54 @@ namespace GoBot.IHM
             Config.CurrentConfig.ReglageGROuvert = deploye;
         }
 
-        #region Coude
-        private void btnCoudeOk_Click(object sender, EventArgs e)
-        {
-            Robots.GrosRobot.BougeServo(ServomoteurID.GRFruitsCoude, (int)numFruitsCoude.Value);
-        }
-
-        private void btnCoudeRange_Click(object sender, EventArgs e)
-        {
-            if (MessageBox.Show("Enregistrer cette valeur pour la position rangée du coude ?", "Confirmation", MessageBoxButtons.OKCancel, MessageBoxIcon.Question) == DialogResult.OK)
-                Config.CurrentConfig.PositionGRCoudeRange = (int)numFruitsCoude.Value;
-        }
-
-        #endregion
-
-        #region Epaule
-        private void btnEpauleOk_Click(object sender, EventArgs e)
-        {
-            Robots.GrosRobot.BougeServo(ServomoteurID.GRFruitsEpaule, (int)numFruitsEpaule.Value);
-        }
-
-        private void btnEpauleRange_Click(object sender, EventArgs e)
-        {
-            if (MessageBox.Show("Enregistrer cette valeur pour la position rangée de l'épaule ?", "Confirmation", MessageBoxButtons.OKCancel, MessageBoxIcon.Question) == DialogResult.OK)
-                Config.CurrentConfig.PositionGREpauleRange = (int)numFruitsEpaule.Value;
-        }
-        #endregion
-
         private void PanelReglageGros_Load(object sender, EventArgs e)
         {
             groupBoxReglage.Deployer(Config.CurrentConfig.ReglageGROuvert, false);
         }
 
-        #region Coude Feux
-
-        private void btnFeuxOkCoude_Click(object sender, EventArgs e)
+        private void btnOkDroitePinceDroite_Click(object sender, EventArgs e)
         {
-            Robots.GrosRobot.BougeServo(ServomoteurID.GRFeuxCoude, (int)numFeuxCoude.Value);
+            Robots.GrosRobot.BougeServo(ServomoteurID.GRDroitePinceDroite, (int)numDroitePinceDroite.Value);
         }
 
-        private void btnFeuxCoudeSave_Click(object sender, EventArgs e)
+        private void btnFermeDroitePinceDroite_Click(object sender, EventArgs e)
         {
-            // TODO
+            Config.CurrentConfig.PositionGRDroitePinceDroiteFerme = (int)numDroitePinceDroite.Value;
         }
 
-        #endregion
-
-        #region Poignet Feux
-
-        private void btnFeuxOkPoignet_Click(object sender, EventArgs e)
+        private void btnOuvertDroitePinceDroite_Click(object sender, EventArgs e)
         {
-            Robots.GrosRobot.BougeServo(ServomoteurID.GRFeuxPoignet, (int)numFeuxPoignet.Value);
+            Config.CurrentConfig.PositionGRDroitePinceDroiteOuvert = (int)numDroitePinceDroite.Value;
         }
 
-        private void btnFeuxPoignetSave_Click(object sender, EventArgs e)
+        private void btnOkGauchePinceDroite_Click(object sender, EventArgs e)
         {
-            // TODO
+            Robots.GrosRobot.BougeServo(ServomoteurID.GRGauchePinceDroite, (int)numGauchePinceDroite.Value);
         }
 
-        #endregion
-
-        #region Epaule Feux
-
-        private void btnFeuxOkEpaule_Click(object sender, EventArgs e)
+        private void btnFermeGauchePinceDroite_Click(object sender, EventArgs e)
         {
-            Robots.GrosRobot.MoteurPosition(MoteurID.GREpauleFeu, (int)numFeuxEpaule.Value);
+            Config.CurrentConfig.PositionGRGauchePinceDroiteFerme = (int)numGauchePinceDroite.Value;
         }
 
-        private void btnFeuxEpauleSave_Click(object sender, EventArgs e)
+        private void btnOuvertGauchePinceDroite_Click(object sender, EventArgs e)
         {
-            // TODO
+            Config.CurrentConfig.PositionGRGauchePinceDroiteOuvert = (int)numGauchePinceDroite.Value;
         }
 
-        #endregion
-
-        private void btnOkPinceHautGauche_Click(object sender, EventArgs e)
+        private void btnOkPinceDroite_Click(object sender, EventArgs e)
         {
-            Robots.GrosRobot.MoteurPosition(MoteurID.GRPinceGaucheHaut, (int)numPosPinceHautGauche.Value);
+            Robots.GrosRobot.MoteurPosition(MoteurID.GRAscenseurDroite, (int)numHauteurPinceDroite.Value);
         }
 
-        private void btnOuvertPinceHautGauche_Click(object sender, EventArgs e)
+        private void btnHautPinceDroite_Click(object sender, EventArgs e)
         {
-            if (MessageBox.Show("Êtes vous sûr de vouloir sauvegarder la position comme étant la position ouverte ?", "Attention", MessageBoxButtons.OKCancel, MessageBoxIcon.Question) == DialogResult.OK)
-                Config.CurrentConfig.PositionGRPinceFruitHautGaucheOuvert = (int)numPosPinceHautGauche.Value;
+            Config.CurrentConfig.PositionGRHautPinceDroite = (int)numHauteurPinceDroite.Value;
         }
 
-        private void btnFermePinceHautGauche_Click(object sender, EventArgs e)
+        private void btnBasPinceDroite_Click(object sender, EventArgs e)
         {
-            if (MessageBox.Show("Êtes vous sûr de vouloir sauvegarder la position comme étant la position fermée ?", "Attention", MessageBoxButtons.OKCancel, MessageBoxIcon.Question) == DialogResult.OK)
-                Config.CurrentConfig.PositionGRPinceFruitHautGaucheFerme = (int)numPosPinceHautGauche.Value;
-        }
-
-        private void btnOkPinceHautDroite_Click(object sender, EventArgs e)
-        {
-            Robots.GrosRobot.MoteurPosition(MoteurID.GRPinceDroiteHaut, (int)numPosPinceHautDroite.Value);
-        }
-
-        private void btnOuvertPinceHautDroite_Click(object sender, EventArgs e)
-        {
-            if (MessageBox.Show("Êtes vous sûr de vouloir sauvegarder la position comme étant la position ouverte ?", "Attention", MessageBoxButtons.OKCancel, MessageBoxIcon.Question) == DialogResult.OK)
-                Config.CurrentConfig.PositionGRPinceFruitHautDroiteOuvert = (int)numPosPinceHautDroite.Value;
-        }
-
-        private void btnFermePinceHautDroite_Click(object sender, EventArgs e)
-        {
-            if (MessageBox.Show("Êtes vous sûr de vouloir sauvegarder la position comme étant la position fermée ?", "Attention", MessageBoxButtons.OKCancel, MessageBoxIcon.Question) == DialogResult.OK)
-                Config.CurrentConfig.PositionGRPinceFruitHautDroiteFerme = (int)numPosPinceHautDroite.Value;
-        }
-
-        private void btnOkPinceBasGauche_Click(object sender, EventArgs e)
-        {
-            Robots.GrosRobot.MoteurPosition(MoteurID.GRPinceGaucheBas, (int)numPosPinceBasGauche.Value);
-        }
-
-        private void btnOuvertPinceBasGauche_Click(object sender, EventArgs e)
-        {
-            if (MessageBox.Show("Êtes vous sûr de vouloir sauvegarder la position comme étant la position ouverte ?", "Attention", MessageBoxButtons.OKCancel, MessageBoxIcon.Question) == DialogResult.OK)
-                Config.CurrentConfig.PositionGRPinceFruitBasGaucheOuvert = (int)numPosPinceBasGauche.Value;
-        }
-
-        private void btnFermePinceBasGauche_Click(object sender, EventArgs e)
-        {
-            if (MessageBox.Show("Êtes vous sûr de vouloir sauvegarder la position comme étant la position fermée ?", "Attention", MessageBoxButtons.OKCancel, MessageBoxIcon.Question) == DialogResult.OK)
-                Config.CurrentConfig.PositionGRPinceFruitBasGaucheFerme = (int)numPosPinceBasGauche.Value;
-        }
-
-        private void btnOkPinceBasDroite_Click(object sender, EventArgs e)
-        {
-            Robots.GrosRobot.MoteurPosition(MoteurID.GRPinceDroiteBas, (int)numPosPinceBasDroite.Value);
-        }
-
-        private void btnOuvertPinceBasDroite_Click(object sender, EventArgs e)
-        {
-            if (MessageBox.Show("Êtes vous sûr de vouloir sauvegarder la position comme étant la position ouverte ?", "Attention", MessageBoxButtons.OKCancel, MessageBoxIcon.Question) == DialogResult.OK)
-                Config.CurrentConfig.PositionGRPinceFruitBasDroiteOuvert = (int)numPosPinceBasDroite.Value;
-        }
-
-        private void btnFermePinceBasDroite_Click(object sender, EventArgs e)
-        {
-            if (MessageBox.Show("Êtes vous sûr de vouloir sauvegarder la position comme étant la position fermée ?", "Attention", MessageBoxButtons.OKCancel, MessageBoxIcon.Question) == DialogResult.OK)
-                Config.CurrentConfig.PositionGRPinceFruitBasDroiteFerme = (int)numPosPinceBasDroite.Value;
-        }
-
-        private void btnOkPousseBouchon_Click(object sender, EventArgs e)
-        {
-            Robots.GrosRobot.MoteurPosition(MoteurID.GRPousseBouchon, (int)numPousseBouchon.Value);
-        }
-
-        private void btnPousseBouchonOuvert_Click(object sender, EventArgs e)
-        {
-            if (MessageBox.Show("Êtes vous sûr de vouloir sauvegarder la position comme étant la position ouverte ?", "Attention", MessageBoxButtons.OKCancel, MessageBoxIcon.Question) == DialogResult.OK)
-                Config.CurrentConfig.PositionGRPousseBouchonOuvert = (int)numPousseBouchon.Value;
-        }
-
-        private void btnPousseBouchonFerme_Click(object sender, EventArgs e)
-        {
-            if (MessageBox.Show("Êtes vous sûr de vouloir sauvegarder la position comme étant la position fermée ?", "Attention", MessageBoxButtons.OKCancel, MessageBoxIcon.Question) == DialogResult.OK)
-                Config.CurrentConfig.PositionGRPousseBouchonFerme = (int)numPousseBouchon.Value;
+            Config.CurrentConfig.PositionGRBasPinceDroite = (int)numHauteurPinceDroite.Value;
         }
     }
 }

@@ -1,4 +1,5 @@
-﻿using System;
+﻿/*
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -44,13 +45,7 @@ namespace GoBot.Mouvements
                     //initialiser le bras
                     BrasFruits.PositionRange();
                     BrasFeux.PositionInterne3();
-                    /*BrasFruits.FermerPinceBas(false);
-                    BrasFruits.FermerPinceHaut(false);
-                    Thread.Sleep(500);
-#endif
 
-                    BrasFruits.OuvrirPinceHaut(false);
-                    BrasFruits.OuvrirPinceBas(false);*/
 
                     // Attrapage fruit 1
 
@@ -91,14 +86,14 @@ namespace GoBot.Mouvements
 #else
                     CanonFruits.Monter();
 
-                    if (Plateau.NotreCouleur == Plateau.CouleurDroiteJaune)
+                    if (Plateau.NotreCouleur == Plateau.CouleurDroiteVert)
                         Robots.GrosRobot.PivotGauche(29.19);
 
                     Thread.Sleep(200);
                     CanonFruits.Tirer();
                     CanonFruits.Baisser();
 
-                    if (Plateau.NotreCouleur == Plateau.CouleurDroiteJaune)
+                    if (Plateau.NotreCouleur == Plateau.CouleurDroiteVert)
                         Robots.GrosRobot.PivotDroite(29.19);
 #endif
                     // Attapage fruit 2
@@ -138,7 +133,7 @@ namespace GoBot.Mouvements
                     Thread.Sleep(200);
                     CanonFruits.PousseBouchon();
 
-                    if (Plateau.NotreCouleur == Plateau.CouleurDroiteJaune)
+                    if (Plateau.NotreCouleur == Plateau.CouleurDroiteVert)
                         Robots.GrosRobot.PivotGauche(29.19);
 #if false
                     CanonFruits.Tirer();
@@ -169,7 +164,7 @@ namespace GoBot.Mouvements
                     vide = true;
 
                     BrasFruits.PositionRange();
-                    if (Plateau.NotreCouleur == Plateau.CouleurDroiteJaune)
+                    if (Plateau.NotreCouleur == Plateau.CouleurDroiteVert)
                         Robots.GrosRobot.PivotDroite(29.19);
 
                     Console.WriteLine((DateTime.Now - debut).TotalSeconds + " ms");
@@ -197,3 +192,4 @@ namespace GoBot.Mouvements
         }
     }
 }
+*/

@@ -324,19 +324,19 @@ namespace GoBot
         {
             Historique = new Historique(IDRobot);
             HistoriqueCoordonnees = new List<Position>();
-            if (Plateau.NotreCouleur == Plateau.CouleurGaucheRouge)
+            if (this == Robots.GrosRobot)
             {
-                if (this == Robots.PetitRobot)
-                    Position = new Calculs.Position(new Angle(90, AnglyeType.Degre), new PointReel(191, 91));
+                if (Plateau.NotreCouleur == Plateau.CouleurGaucheJaune)
+                    Position = new Calculs.Position(new Angle(0, AnglyeType.Degre), new PointReel(230, 1000));
                 else
-                    Position = new Calculs.Position(new Angle(26, AnglyeType.Degre), new PointReel(187, 397));
+                    Position = new Calculs.Position(new Angle(180, AnglyeType.Degre), new PointReel(3000 - 230, 1000));
             }
             else
             {
-                if (this == Robots.PetitRobot)
-                    Position = new Calculs.Position(new Angle(90, AnglyeType.Degre), new PointReel(3000 - 191, 91));
+                if (Plateau.NotreCouleur == Plateau.CouleurGaucheJaune)
+                    Position = new Calculs.Position(new Angle(0, AnglyeType.Degre), new PointReel(480, 1000));
                 else
-                    Position = new Calculs.Position(new Angle(180 - 26, AnglyeType.Degre), new PointReel(3000 - 187, 397));
+                    Position = new Calculs.Position(new Angle(180, AnglyeType.Degre), new PointReel(3000 - 480, 1000));
             }
 
             PositionCible = null;
@@ -408,7 +408,7 @@ namespace GoBot
 
         public override Color GetCouleurEquipe(bool historique = true)
         {
-            return Plateau.CouleurDroiteJaune;
+            return Plateau.CouleurDroiteVert;
         }
 
         public override List<int>[] MesureTestPid(int consigne, SensAR sens, int nbValeurs)

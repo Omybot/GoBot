@@ -32,21 +32,11 @@
             this.ledJack = new Composants.Led();
             this.boxJack = new System.Windows.Forms.CheckBox();
             this.groupBoxCapteurs = new Composants.GroupBoxRetractable();
-            this.boxPresenceBouchon = new System.Windows.Forms.CheckBox();
-            this.ledPresenceBouchon = new Composants.Led();
             this.boxCouleurEquipe = new System.Windows.Forms.CheckBox();
             this.ledCouleurEquipe = new Composants.Led();
-            this.boxFeux = new System.Windows.Forms.CheckBox();
-            this.ledFeu1 = new Composants.Led();
-            this.ledFeu2 = new Composants.Led();
-            this.ledFeu3 = new Composants.Led();
             ((System.ComponentModel.ISupportInitialize)(this.ledJack)).BeginInit();
             this.groupBoxCapteurs.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.ledPresenceBouchon)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.ledCouleurEquipe)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.ledFeu1)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.ledFeu2)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.ledFeu3)).BeginInit();
             this.SuspendLayout();
             // 
             // ledJack
@@ -72,12 +62,6 @@
             // 
             // groupBoxCapteurs
             // 
-            this.groupBoxCapteurs.Controls.Add(this.ledFeu3);
-            this.groupBoxCapteurs.Controls.Add(this.ledFeu2);
-            this.groupBoxCapteurs.Controls.Add(this.boxFeux);
-            this.groupBoxCapteurs.Controls.Add(this.ledFeu1);
-            this.groupBoxCapteurs.Controls.Add(this.boxPresenceBouchon);
-            this.groupBoxCapteurs.Controls.Add(this.ledPresenceBouchon);
             this.groupBoxCapteurs.Controls.Add(this.boxCouleurEquipe);
             this.groupBoxCapteurs.Controls.Add(this.ledCouleurEquipe);
             this.groupBoxCapteurs.Controls.Add(this.boxJack);
@@ -88,27 +72,6 @@
             this.groupBoxCapteurs.TabIndex = 1;
             this.groupBoxCapteurs.TabStop = false;
             this.groupBoxCapteurs.Text = "Capteurs";
-            // 
-            // boxPresenceBouchon
-            // 
-            this.boxPresenceBouchon.AutoSize = true;
-            this.boxPresenceBouchon.Location = new System.Drawing.Point(23, 86);
-            this.boxPresenceBouchon.Name = "boxPresenceBouchon";
-            this.boxPresenceBouchon.Size = new System.Drawing.Size(122, 17);
-            this.boxPresenceBouchon.TabIndex = 104;
-            this.boxPresenceBouchon.Text = "Présence bouchon :";
-            this.boxPresenceBouchon.UseVisualStyleBackColor = true;
-            this.boxPresenceBouchon.CheckedChanged += new System.EventHandler(this.boxPresenceBouchon_CheckedChanged);
-            // 
-            // ledPresenceBouchon
-            // 
-            this.ledPresenceBouchon.Etat = false;
-            this.ledPresenceBouchon.Image = ((System.Drawing.Image)(resources.GetObject("ledPresenceBouchon.Image")));
-            this.ledPresenceBouchon.Location = new System.Drawing.Point(147, 86);
-            this.ledPresenceBouchon.Name = "ledPresenceBouchon";
-            this.ledPresenceBouchon.Size = new System.Drawing.Size(16, 16);
-            this.ledPresenceBouchon.TabIndex = 105;
-            this.ledPresenceBouchon.TabStop = false;
             // 
             // boxCouleurEquipe
             // 
@@ -131,47 +94,6 @@
             this.ledCouleurEquipe.TabIndex = 103;
             this.ledCouleurEquipe.TabStop = false;
             // 
-            // boxFeux
-            // 
-            this.boxFeux.AutoSize = true;
-            this.boxFeux.Location = new System.Drawing.Point(23, 109);
-            this.boxFeux.Name = "boxFeux";
-            this.boxFeux.Size = new System.Drawing.Size(100, 17);
-            this.boxFeux.TabIndex = 106;
-            this.boxFeux.Text = "Présence feux :";
-            this.boxFeux.UseVisualStyleBackColor = true;
-            this.boxFeux.CheckedChanged += new System.EventHandler(this.boxFeux_CheckedChanged);
-            // 
-            // ledFeu1
-            // 
-            this.ledFeu1.Etat = false;
-            this.ledFeu1.Image = ((System.Drawing.Image)(resources.GetObject("ledFeu1.Image")));
-            this.ledFeu1.Location = new System.Drawing.Point(147, 109);
-            this.ledFeu1.Name = "ledFeu1";
-            this.ledFeu1.Size = new System.Drawing.Size(16, 16);
-            this.ledFeu1.TabIndex = 107;
-            this.ledFeu1.TabStop = false;
-            // 
-            // ledFeu2
-            // 
-            this.ledFeu2.Etat = false;
-            this.ledFeu2.Image = ((System.Drawing.Image)(resources.GetObject("ledFeu2.Image")));
-            this.ledFeu2.Location = new System.Drawing.Point(169, 109);
-            this.ledFeu2.Name = "ledFeu2";
-            this.ledFeu2.Size = new System.Drawing.Size(16, 16);
-            this.ledFeu2.TabIndex = 108;
-            this.ledFeu2.TabStop = false;
-            // 
-            // ledFeu3
-            // 
-            this.ledFeu3.Etat = false;
-            this.ledFeu3.Image = ((System.Drawing.Image)(resources.GetObject("ledFeu3.Image")));
-            this.ledFeu3.Location = new System.Drawing.Point(191, 109);
-            this.ledFeu3.Name = "ledFeu3";
-            this.ledFeu3.Size = new System.Drawing.Size(16, 16);
-            this.ledFeu3.TabIndex = 109;
-            this.ledFeu3.TabStop = false;
-            // 
             // PanelGrosRobotCapteurs
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -185,11 +107,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.ledJack)).EndInit();
             this.groupBoxCapteurs.ResumeLayout(false);
             this.groupBoxCapteurs.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.ledPresenceBouchon)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.ledCouleurEquipe)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.ledFeu1)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.ledFeu2)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.ledFeu3)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -201,11 +119,5 @@
         private Composants.GroupBoxRetractable groupBoxCapteurs;
         private System.Windows.Forms.CheckBox boxCouleurEquipe;
         private Composants.Led ledCouleurEquipe;
-        private System.Windows.Forms.CheckBox boxPresenceBouchon;
-        private Composants.Led ledPresenceBouchon;
-        private Composants.Led ledFeu3;
-        private Composants.Led ledFeu2;
-        private System.Windows.Forms.CheckBox boxFeux;
-        private Composants.Led ledFeu1;
     }
 }

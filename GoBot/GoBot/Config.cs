@@ -143,29 +143,15 @@ namespace GoBot
         public int CourseBoiProfilOpti { get; set; }
 
         // Position des servos du gros robot
-        
-        public int PositionGRCoudeRange { get; set; }
-        public int PositionGREpauleRange { get; set; }
 
-        public int PositionGRPinceFruitHautDroiteOuvert { get; set; }
-        public int PositionGRPinceFruitHautDroiteFerme { get; set; }
-        public int PositionGRPinceFruitBasDroiteOuvert { get; set; }
-        public int PositionGRPinceFruitBasDroiteFerme { get; set; }
-        public int PositionGRPinceFruitHautGaucheOuvert { get; set; }
-        public int PositionGRPinceFruitHautGaucheFerme { get; set; }
-        public int PositionGRPinceFruitBasGaucheOuvert { get; set; }
-        public int PositionGRPinceFruitBasGaucheFerme { get; set; }
-
-        public int PositionGRPousseBouchonFerme { get; set; }
-        public int PositionGRPousseBouchonOuvert { get; set; }
+        public int PositionGRDroitePinceDroiteFerme { get; set; }
+        public int PositionGRDroitePinceDroiteOuvert { get; set; }
+        public int PositionGRGauchePinceDroiteFerme { get; set; }
+        public int PositionGRGauchePinceDroiteOuvert { get; set; }
+        public int PositionGRBasPinceDroite { get; set; }
+        public int PositionGRHautPinceDroite { get; set; }
 
         // Positions servos petit robot
-
-        public int PositionPRFiletTir { get; set; }
-        public int PositionPRFiletArme { get; set; }
-
-        public int PRTensionTissuRelache { get; set; }
-        public int PRTensionTissuTendu { get; set; }
 
         // Parametres logs UDP
 
@@ -179,7 +165,7 @@ namespace GoBot
 
         public double GetOffsetBalise(Carte carteBalise, Color couleur, int iCapteur)
         {
-            if (couleur == Plateau.CouleurGaucheRouge)
+            if (couleur == Plateau.CouleurGaucheJaune)
             {
                 if (iCapteur == 1)
                 {
@@ -210,7 +196,7 @@ namespace GoBot
                     }
                 }
             }
-            if (couleur == Plateau.CouleurDroiteJaune)
+            if (couleur == Plateau.CouleurDroiteVert)
             {
                 if (iCapteur == 1)
                 {
@@ -337,7 +323,7 @@ namespace GoBot
 
         public void SetOffsetBalise(Carte carteBalise, Color couleur, int iCapteur, double offset)
         {
-            if (couleur == Plateau.CouleurGaucheRouge)
+            if (couleur == Plateau.CouleurGaucheJaune)
             {
                 if (iCapteur == 1)
                 {
@@ -370,7 +356,7 @@ namespace GoBot
                     }
                 }
             }
-            if (couleur == Plateau.CouleurDroiteJaune)
+            if (couleur == Plateau.CouleurDroiteVert)
             {
                 if (iCapteur == 1)
                 {

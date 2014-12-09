@@ -9,6 +9,7 @@ using GoBot.Actionneurs;
 
 namespace GoBot.Enchainements
 {
+    /*
     class Enchainement1Point : Enchainement
     {
         protected override void ThreadGros()
@@ -27,7 +28,7 @@ namespace GoBot.Enchainements
 
             BrasFeux.PositionRange();
 
-            if (Plateau.NotreCouleur == Plateau.CouleurDroiteJaune)
+            if (Plateau.NotreCouleur == Plateau.CouleurDroiteVert)
                 Robots.GrosRobot.PivotGauche(64);
             else
                 Robots.GrosRobot.PivotDroite(64);
@@ -37,7 +38,7 @@ namespace GoBot.Enchainements
             BrasFeux.MoveAttrapeTorcheTout();
             Robots.GrosRobot.Reculer(40);
 
-            if (Plateau.NotreCouleur == Plateau.CouleurDroiteJaune)
+            if (Plateau.NotreCouleur == Plateau.CouleurDroiteVert)
                 Robots.GrosRobot.PivotDroite(70);
             else
                 Robots.GrosRobot.PivotGauche(70);
@@ -81,4 +82,5 @@ namespace GoBot.Enchainements
         {
         }
     }
+    */
 }
