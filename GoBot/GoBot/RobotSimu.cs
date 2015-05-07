@@ -327,9 +327,9 @@ namespace GoBot
             if (this == Robots.GrosRobot)
             {
                 if (Plateau.NotreCouleur == Plateau.CouleurGaucheJaune)
-                    Position = new Calculs.Position(new Angle(0, AnglyeType.Degre), new PointReel(230, 1000));
+                    Position = new Calculs.Position(new Angle(0, AnglyeType.Degre), new PointReel(240, 1000));
                 else
-                    Position = new Calculs.Position(new Angle(180, AnglyeType.Degre), new PointReel(3000 - 230, 1000));
+                    Position = new Calculs.Position(new Angle(180, AnglyeType.Degre), new PointReel(3000 - 240, 1000));
             }
             else
             {
@@ -348,7 +348,7 @@ namespace GoBot
             Historique.AjouterAction(new ActionServo(this, position, servo));
         }
 
-        public override bool DemandeCapteurOnOff(CapteurOnOff capteur, bool attendre = true)
+        public override bool DemandeCapteurOnOff(CapteurOnOffID capteur, bool attendre = true)
         {
             // TODO
             return true;
@@ -375,8 +375,16 @@ namespace GoBot
         public override void MoteurPosition(MoteurID moteur, int vitesse)
         {
             base.MoteurPosition(moteur, vitesse);
+        }
 
-            Historique.AjouterAction(new ActionMoteur(this, vitesse, moteur));
+        public virtual void MoteurVitesse(MoteurID moteur, int vitesse)
+        {
+            base.MoteurVitesse(moteur, vitesse);
+        }
+
+        public virtual void MoteurAcceleration(MoteurID moteur, int acceleration)
+        {
+            base.MoteurAcceleration(moteur, acceleration);
         }
 
         public override void AlimentationPuissance(bool on)
@@ -429,6 +437,20 @@ namespace GoBot
         public override List<double>[] DiagnosticCpuPwm(int nbValeurs)
         {
             return null;
+        }
+
+        public override void DemandeValeursAnalogiques(bool attendre)
+        {
+            lock(ValeursAnalogiques)
+            {
+                ValeursAnalogiques = new List<double>();
+                ValeursAnalogiques.Add(1);
+                ValeursAnalogiques.Add(2);
+                ValeursAnalogiques.Add(3);
+                ValeursAnalogiques.Add(4);
+                ValeursAnalogiques.Add(5);
+                ValeursAnalogiques.Add(6);
+            }
         }
     }
 }

@@ -41,7 +41,9 @@ namespace GoBot
 
         public static List<Clap> Claps { get; private set; }
         public static List<Pied> Pieds { get; private set; }
+        public static List<Gobelet> Gobelets { get; private set; }
         public static List<DistributeurPopCorn> DistributeursPopCorn { get; private set; }
+        public static List<Tapis> ListeTapis { get; private set; }
 
         public static List<ElementJeu> ElementsJeu { get; private set; }
 
@@ -54,10 +56,32 @@ namespace GoBot
                 if (notreCouleur != value)
                 {
                     notreCouleur = value;
-                    Robots.GrosRobot.Init();
-                    Robots.PetitRobot.Init();
+                    //Robots.GrosRobot.Init();
+                    //Robots.PetitRobot.Init();
                     if (NotreCouleurChange != null)
                         NotreCouleurChange(null, null);
+
+
+                    if (Plateau.NotreCouleur == Plateau.CouleurDroiteVert)
+                    {
+                        Balise.GetBalise(Carte.RecBeu).Position = new Position(new Angle(90, AnglyeType.Degre), new PointReel(Plateau.LongueurPlateau + Balise.DISTANCE_LASER_TABLE, -Balise.DISTANCE_LASER_TABLE));
+                        Balise.GetBalise(Carte.RecBun).Position = new Position(new Angle(270, AnglyeType.Degre), new PointReel(Plateau.LongueurPlateau + Balise.DISTANCE_LASER_TABLE, Plateau.LargeurPlateau + Balise.DISTANCE_LASER_TABLE));
+                        Balise.GetBalise(Carte.RecBoi).Position = new Position(new Angle(0, AnglyeType.Degre), new PointReel(-Balise.DISTANCE_LASER_TABLE, Plateau.LargeurPlateau / 2));
+
+                        Plateau.ObstaclesPieds = new IForme[8];
+                        for (int iPied = 8; iPied < 16; iPied++)
+                            Plateau.ObstaclesPieds[iPied - 8] = new Cercle(Plateau.Pieds[iPied].Position, 40);
+                    }
+                    else
+                    {
+                        Balise.GetBalise(Carte.RecBun).Position = new Position(new Angle(90, AnglyeType.Degre), new PointReel(-Balise.DISTANCE_LASER_TABLE, -Balise.DISTANCE_LASER_TABLE));
+                        Balise.GetBalise(Carte.RecBeu).Position = new Position(new Angle(270, AnglyeType.Degre), new PointReel(-Balise.DISTANCE_LASER_TABLE, Plateau.LargeurPlateau + Balise.DISTANCE_LASER_TABLE));
+                        Balise.GetBalise(Carte.RecBoi).Position = new Position(new Angle(180, AnglyeType.Degre), new PointReel(Plateau.LongueurPlateau + Balise.DISTANCE_LASER_TABLE, Plateau.LargeurPlateau / 2));
+
+                        Plateau.ObstaclesPieds = new IForme[8];
+                        for (int iPied = 0; iPied < 8; iPied++)
+                            Plateau.ObstaclesPieds[iPied] = new Cercle(Plateau.Pieds[iPied].Position, 40);
+                    }
                 }
             }
         }
@@ -65,7 +89,7 @@ namespace GoBot
 
         public static bool ReflecteursNosRobots { get; set; }
 
-        public static IForme[] ObstaclesTorches { get; set; }
+        public static IForme[] ObstaclesPieds { get; set; }
 
         private static int score;
         public static int Score
@@ -103,7 +127,8 @@ namespace GoBot
             {
                 List<IForme> toutObstacles = new List<IForme>();
                 toutObstacles.AddRange(ObstaclesFixes);
-                toutObstacles.AddRange(ObstaclesTemporaires);
+                //toutObstacles.AddRange(ObstaclesTemporaires); todo
+                //toutObstacles.AddRange(ObstaclesPieds);
                 return toutObstacles;
             }
         }
@@ -112,6 +137,7 @@ namespace GoBot
         {
             if (!Config.DesignMode)
             {
+                ObstaclesPieds = new IForme[0];
                 RayonAdversaireInitial = 200;
                 RayonAdversaire = RayonAdversaireInitial;
 
@@ -128,49 +154,7 @@ namespace GoBot
                 InterpreteurBalise = new InterpreteurBalise();
                 //InterpreteurBalise.PositionEnnemisActualisee += new InterpreteurBalise.PositionEnnemisDelegate(interpreteBalise_PositionEnnemisActualisee);
                 SuiviBalise.PositionEnnemisActualisee += new Balises.SuiviBalise.PositionEnnemisDelegate(interpreteBalise_PositionEnnemisActualisee);
-
-                // Initialiser les elements de jeu ici
-
-                Claps = new List<Clap>();
-                Claps.Add(new Clap(new PointReel(400 - 80, 2000 + 15), CouleurGaucheJaune));
-                Claps.Add(new Clap(new PointReel(700 - 80, 2000 + 15), CouleurDroiteVert));
-                Claps.Add(new Clap(new PointReel(1000 - 80, 2000 + 15), CouleurGaucheJaune));
-                Claps.Add(new Clap(new PointReel(2000 + 80, 2000 + 15), CouleurDroiteVert));
-                Claps.Add(new Clap(new PointReel(2300 + 80, 2000 + 15), CouleurGaucheJaune));
-                Claps.Add(new Clap(new PointReel(2600 + 80, 2000 + 15), CouleurDroiteVert));
-
-                Pieds = new List<Pied>();
-                Pieds.Add(new Pied(new PointReel(90, 200), CouleurGaucheJaune));
-                Pieds.Add(new Pied(new PointReel(90, 1750), CouleurGaucheJaune));
-                Pieds.Add(new Pied(new PointReel(90, 1850), CouleurGaucheJaune));
-                Pieds.Add(new Pied(new PointReel(850, 100), CouleurGaucheJaune));
-                Pieds.Add(new Pied(new PointReel(850, 200), CouleurGaucheJaune));
-                Pieds.Add(new Pied(new PointReel(870, 1355), CouleurGaucheJaune));
-                Pieds.Add(new Pied(new PointReel(1100, 1770), CouleurGaucheJaune));
-                Pieds.Add(new Pied(new PointReel(1300, 1400), CouleurGaucheJaune));
-                Pieds.Add(new Pied(new PointReel(1700, 1400), CouleurDroiteVert));
-                Pieds.Add(new Pied(new PointReel(1900, 1770), CouleurDroiteVert));
-                Pieds.Add(new Pied(new PointReel(2130, 1355), CouleurDroiteVert));
-                Pieds.Add(new Pied(new PointReel(2150, 200), CouleurDroiteVert));
-                Pieds.Add(new Pied(new PointReel(2150, 100), CouleurDroiteVert));
-                Pieds.Add(new Pied(new PointReel(2910, 1850), CouleurDroiteVert));
-                Pieds.Add(new Pied(new PointReel(2910, 1750), CouleurDroiteVert));
-                Pieds.Add(new Pied(new PointReel(2910, 200), CouleurDroiteVert));
-
-                DistributeursPopCorn = new List<DistributeurPopCorn>();
-                DistributeursPopCorn.Add(new DistributeurPopCorn(new PointReel(300, 35)));
-                DistributeursPopCorn.Add(new DistributeurPopCorn(new PointReel(600, 35)));
-                DistributeursPopCorn.Add(new DistributeurPopCorn(new PointReel(2400, 35)));
-                DistributeursPopCorn.Add(new DistributeurPopCorn(new PointReel(2700, 35)));
-
-                ElementsJeu = new List<ElementJeu>();
-
-                for (int i = 0; i < Claps.Count; i++)
-                    ElementsJeu.Add(Claps[i]);
-                for (int i = 0; i < Pieds.Count; i++)
-                    ElementsJeu.Add(Pieds[i]);
-                for (int i = 0; i < DistributeursPopCorn.Count; i++)
-                    ElementsJeu.Add(DistributeursPopCorn[i]);
+                InitElementsJeu();
 
 
                 Random random = new Random();
@@ -179,6 +163,70 @@ namespace GoBot
                 thCollisions = new Thread(ThreadTestCollisions);
                 thCollisions.Start();
             }
+        }
+
+        public static void InitElementsJeu()
+        {
+            // Initialiser les elements de jeu ici
+
+            Claps = new List<Clap>();
+            Claps.Add(new Clap(new PointReel(400 - 80, 2000 + 15), CouleurGaucheJaune));
+            Claps.Add(new Clap(new PointReel(700 - 80, 2000 + 15), CouleurDroiteVert));
+            Claps.Add(new Clap(new PointReel(1000 - 80, 2000 + 15), CouleurGaucheJaune));
+            Claps.Add(new Clap(new PointReel(2000 + 80, 2000 + 15), CouleurDroiteVert));
+            Claps.Add(new Clap(new PointReel(2300 + 80, 2000 + 15), CouleurGaucheJaune));
+            Claps.Add(new Clap(new PointReel(2600 + 80, 2000 + 15), CouleurDroiteVert));
+
+            Pieds = new List<Pied>();
+            Pieds.Add(new Pied(new PointReel(90, 200), CouleurGaucheJaune));
+            Pieds.Add(new Pied(new PointReel(90, 1750), CouleurGaucheJaune));
+            Pieds.Add(new Pied(new PointReel(90, 1850), CouleurGaucheJaune));
+            Pieds.Add(new Pied(new PointReel(850, 100), CouleurGaucheJaune));
+            Pieds.Add(new Pied(new PointReel(850, 200), CouleurGaucheJaune));
+            Pieds.Add(new Pied(new PointReel(870, 1355), CouleurGaucheJaune));
+            Pieds.Add(new Pied(new PointReel(1100, 1770), CouleurGaucheJaune));
+            Pieds.Add(new Pied(new PointReel(1300, 1400), CouleurGaucheJaune));
+            Pieds.Add(new Pied(new PointReel(1700, 1400), CouleurDroiteVert));
+            Pieds.Add(new Pied(new PointReel(1900, 1770), CouleurDroiteVert));
+            Pieds.Add(new Pied(new PointReel(2130, 1355), CouleurDroiteVert));
+            Pieds.Add(new Pied(new PointReel(2150, 200), CouleurDroiteVert));
+            Pieds.Add(new Pied(new PointReel(2150, 100), CouleurDroiteVert));
+            Pieds.Add(new Pied(new PointReel(2910, 1850), CouleurDroiteVert));
+            Pieds.Add(new Pied(new PointReel(2910, 1750), CouleurDroiteVert));
+            Pieds.Add(new Pied(new PointReel(2910, 200), CouleurDroiteVert));
+
+            DistributeursPopCorn = new List<DistributeurPopCorn>();
+            DistributeursPopCorn.Add(new DistributeurPopCorn(new PointReel(300, 35)));
+            DistributeursPopCorn.Add(new DistributeurPopCorn(new PointReel(600, 35)));
+            DistributeursPopCorn.Add(new DistributeurPopCorn(new PointReel(2400, 35)));
+            DistributeursPopCorn.Add(new DistributeurPopCorn(new PointReel(2700, 35)));
+
+            Gobelets = new List<Gobelet>();
+            Gobelets.Add(new Gobelet(new PointReel(250, 1750)));
+            Gobelets.Add(new Gobelet(new PointReel(910, 830)));
+            Gobelets.Add(new Gobelet(new PointReel(1500, 1650)));
+            Gobelets.Add(new Gobelet(new PointReel(2090, 830)));
+            Gobelets.Add(new Gobelet(new PointReel(2750, 1750)));
+
+            ListeTapis = new List<Tapis>();
+            ListeTapis.Add(new Tapis(new PointReel(989 + Tapis.LARGEUR / 2, 300 + Tapis.LONGUEUR / 2)));
+            ListeTapis.Add(new Tapis(new PointReel(1389 + Tapis.LARGEUR / 2, 300 + Tapis.LONGUEUR / 2)));
+            ListeTapis.Add(new Tapis(new PointReel(1511 + Tapis.LARGEUR / 2, 300 + Tapis.LONGUEUR / 2)));
+            ListeTapis.Add(new Tapis(new PointReel(1911 + Tapis.LARGEUR / 2, 300 + Tapis.LONGUEUR / 2)));
+
+
+            ElementsJeu = new List<ElementJeu>();
+
+            for (int i = 0; i < Claps.Count; i++)
+                ElementsJeu.Add(Claps[i]);
+            for (int i = 0; i < Pieds.Count; i++)
+                ElementsJeu.Add(Pieds[i]);
+            for (int i = 0; i < DistributeursPopCorn.Count; i++)
+                ElementsJeu.Add(DistributeursPopCorn[i]);
+            for (int i = 0; i < Gobelets.Count; i++)
+                ElementsJeu.Add(Gobelets[i]);
+            for (int i = 0; i < ListeTapis.Count; i++)
+                ElementsJeu.Add(ListeTapis[i]);
         }
 
         public static void Init()

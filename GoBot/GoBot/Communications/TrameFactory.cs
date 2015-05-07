@@ -71,7 +71,7 @@ namespace GoBot.Communications
             return new Trame(tab);
         }
 
-        static public Trame DemandeCapteurOnOff(CapteurOnOff capteur)
+        static public Trame DemandeCapteurOnOff(CapteurOnOffID capteur)
         {
             byte[] tab = new byte[3];
             tab[0] = (byte)Carte.RecIO;
@@ -95,6 +95,30 @@ namespace GoBot.Communications
                 tab[0] = (byte)Carte.RecPi;
                 tab[1] = (byte)FonctionPi.Moteur;
             }
+
+            return new Trame(tab);
+        }
+
+        static public Trame MoteurVitesse(MoteurID moteur, int vitesse)
+        {
+            byte[] tab = new byte[5];
+            tab[0] = (byte)Carte.RecIO;
+            tab[1] = (byte)FonctionIO.MoteurVitesse;
+            tab[2] = (byte)moteur;
+            tab[3] = (byte)ByteDivide(vitesse, true);
+            tab[4] = (byte)ByteDivide(vitesse, false);
+
+            return new Trame(tab);
+        }
+
+        static public Trame MoteurAcceleration(MoteurID moteur, int acceleration)
+        {
+            byte[] tab = new byte[5];
+            tab[0] = (byte)Carte.RecIO;
+            tab[1] = (byte)FonctionIO.MoteurAcceleration;
+            tab[2] = (byte)moteur;
+            tab[3] = (byte)ByteDivide(acceleration, true);
+            tab[4] = (byte)ByteDivide(acceleration, false);
 
             return new Trame(tab);
         }
@@ -399,6 +423,16 @@ namespace GoBot.Communications
             return retour;
         }
 
+        static public Trame DemandeValeursAnalogiques(Carte carte)
+        {
+            byte[] tab = new byte[2];
+            tab[0] = (byte)carte;
+            tab[1] = (byte)FonctionIO.DemandeValeursAnalogiques;
+
+            Trame retour = new Trame(tab);
+            return retour;
+        }
+
         static public Trame ArmerJack()
         {
             byte[] tab = new byte[2];
@@ -420,6 +454,19 @@ namespace GoBot.Communications
             byte[] tab = new byte[2];
             tab[0] = (byte)robot.Carte;
             tab[1] = (byte)FonctionMove.DemandeDiagnostic;
+
+            Trame retour = new Trame(tab);
+            return retour;
+        }
+
+        static public Trame EnvoyerUart(Carte carte, Trame trame)
+        {
+            byte[] tab = new byte[3 + trame.Length];
+            tab[0] = (byte)carte;
+            tab[1] = (byte)FonctionMove.EnvoiUart;
+            tab[2] = (byte)trame.Length;
+            for (int i = 0; i < trame.Length; i++)
+                tab[3 + i] = trame[i];
 
             Trame retour = new Trame(tab);
             return retour;

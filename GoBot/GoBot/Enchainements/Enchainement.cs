@@ -39,6 +39,11 @@ namespace GoBot.Enchainements
             Couleur = Color.Purple;
 
             // Todo Charger dans les listes ListeMouvementsGros et ListeMouvementsPetit les mouvements possibles
+
+            for (int iPied = 0; iPied < Plateau.Pieds.Count; iPied++)
+                ListeMouvementsGros.Add(new MouvementPied(iPied));
+            for (int iTapis = 0; iTapis < Plateau.ListeTapis.Count; iTapis++)
+                ListeMouvementsGros.Add(new MouvementTapis(iTapis));
         }
 
         public void Executer()
@@ -73,7 +78,7 @@ namespace GoBot.Enchainements
             Robots.PetitRobot.Stop(StopMode.Freely);
 
             Thread.Sleep(100);
-            Robots.GrosRobot.ActionneurOnOff(ActionneurOnOffID.GRAlimentation, false);
+            Robots.GrosRobot.ActionneurOnOff(ActionneurOnOffID.Alimentation, false);
             Thread.Sleep(100);
 
             Thread.Sleep(4000);

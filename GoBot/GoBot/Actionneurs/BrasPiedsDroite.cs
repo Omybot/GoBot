@@ -6,38 +6,89 @@ using System.Threading;
 
 namespace GoBot.Actionneurs
 {
-    public static class BrasPiedsDroite
+    public class BrasPiedsDroite : BrasPieds
     {
-        public static void FermerPince()
-        {
-            Robots.GrosRobot.BougeServo(ServomoteurID.GRDroitePinceDroite, Config.CurrentConfig.PositionGRDroitePinceDroiteFerme);
-            Robots.GrosRobot.BougeServo(ServomoteurID.GRGauchePinceDroite, Config.CurrentConfig.PositionGRGauchePinceDroiteFerme);
+        public override int Minimum { get { return 4000; } }
+
+        public override int Hauteur 
+        { 
+            get 
+            {
+                Robots.GrosRobot.DemandeValeursAnalogiques(true);
+                return (int)Robots.GrosRobot.ValeursAnalogiques[0];
+            } 
         }
 
-        public static void OuvrirPince()
+        public override int PositionPinceBasDroiteFermee
         {
-            Robots.GrosRobot.BougeServo(ServomoteurID.GRDroitePinceDroite, Config.CurrentConfig.PositionGRDroitePinceDroiteFerme);
-            Robots.GrosRobot.BougeServo(ServomoteurID.GRGauchePinceDroite, Config.CurrentConfig.PositionGRGauchePinceDroiteFerme);
+            get { return Config.CurrentConfig.PositionGRBrasDroitPinceBasDroiteFerme; }
+            set { Config.CurrentConfig.PositionGRBrasDroitPinceBasDroiteFerme = value; }
         }
 
-        public static void MonterBras()
+        public override int PositionPinceBasDroiteOuverte
         {
-            Robots.GrosRobot.MoteurPosition(MoteurID.GRAscenseurDroite, Config.CurrentConfig.PositionGRHautPinceDroite);
+            get { return Config.CurrentConfig.PositionGRBrasDroitPinceBasDroiteOuverte; }
+            set { Config.CurrentConfig.PositionGRBrasDroitPinceBasDroiteOuverte = value; }
         }
 
-        public static void DescendreBras()
+        public override int PositionPinceBasGaucheFermee
         {
-            Robots.GrosRobot.MoteurPosition(MoteurID.GRAscenseurDroite, Config.CurrentConfig.PositionGRBasPinceDroite);
+            get { return Config.CurrentConfig.PositionGRBrasDroitPinceBasGaucheFermee; }
+            set { Config.CurrentConfig.PositionGRBrasDroitPinceBasGaucheFermee = value; }
         }
 
-        public static void Empiler()
+        public override int PositionPinceBasGaucheOuverte
         {
-            OuvrirPince();
-            DescendreBras();
-            Thread.Sleep(500);
-            FermerPince();
-            Thread.Sleep(500);
-            MonterBras();
+            get { return Config.CurrentConfig.PositionGRBrasDroitPinceBasGaucheOuverte; }
+            set { Config.CurrentConfig.PositionGRBrasDroitPinceBasGaucheOuverte = value; }
         }
+
+        public override int PositionPinceHautDroiteFermee
+        {
+            get { return Config.CurrentConfig.PositionGRBrasDroitPinceHautDroiteFerme; }
+            set { Config.CurrentConfig.PositionGRBrasDroitPinceHautDroiteFerme = value; }
+        }
+
+        public override int PositionPinceHautDroiteOuverte
+        {
+            get { return Config.CurrentConfig.PositionGRBrasDroitPinceHautDroiteOuverte; }
+            set { Config.CurrentConfig.PositionGRBrasDroitPinceHautDroiteOuverte = value; }
+        }
+
+        public override int PositionPinceHautGaucheFermee
+        {
+            get { return Config.CurrentConfig.PositionGRBrasDroitPinceHautGaucheFermee; }
+            set { Config.CurrentConfig.PositionGRBrasDroitPinceHautGaucheFermee = value; }
+        }
+
+        public override int PositionPinceHautGaucheOuverte
+        {
+            get { return Config.CurrentConfig.PositionGRBrasDroitPinceHautGaucheOuverte; }
+            set { Config.CurrentConfig.PositionGRBrasDroitPinceHautGaucheOuverte = value; }
+        }
+
+        public override int PositionHauteurHaute
+        {
+            get { return Config.CurrentConfig.PositionGRPinceDroiteHauteurHaute; }
+            set { Config.CurrentConfig.PositionGRPinceDroiteHauteurHaute = value; }
+        }
+
+        public override int PositionHauteurBasse
+        {
+            get { return Config.CurrentConfig.PositionGRPinceDroiteHauteurBasse; }
+            set { Config.CurrentConfig.PositionGRPinceDroiteHauteurBasse = value; }
+        }
+
+        public override ServomoteurID ServoHautGauche { get { return ServomoteurID.AscenseurDroitPinceHautGauche; } }
+        public override ServomoteurID ServoHautDroite { get { return ServomoteurID.AscenseurDroitPinceHautDroite; } }
+        public override ServomoteurID ServoBasGauche { get { return ServomoteurID.AscenseurDroitPinceBasGauche; } }
+        public override ServomoteurID ServoBasDroite { get { return ServomoteurID.AscenseurDroitPinceBasDroite; } }
+
+        public override MoteurID MoteurHauteur { get { return MoteurID.AscenseurDroit; } }
+
+        public override int DifferenceHauteurSwitchBas { get { return -50; } }
+        public override int DifferenceHauteurBasHaut { get { return -1850; } }
+        public override int DifferenceHauteurBas2 { get { return -200; } }
+        public override int DifferenceHauteurBas3 { get { return -270; } }
     }
 }

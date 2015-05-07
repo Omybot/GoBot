@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using GoBot.Calculs;
 using GoBot.Calculs.Formes;
+using GoBot.ElementsJeu;
 
 namespace GoBot.Mouvements
 {
@@ -13,6 +14,7 @@ namespace GoBot.Mouvements
         public abstract int Score { get; }
         public abstract double ScorePondere { get; }
         public List<Position> Positions { get; protected set; }
+        public ElementJeu Element { get; protected set; }
         public Robot Robot { get; set; }
         public DateTime DateMinimum { get; set; }
 
@@ -33,6 +35,10 @@ namespace GoBot.Mouvements
                     return Positions[0];
 
                 double distance = double.MaxValue;
+
+                if (Positions.Count < 1)
+                    return null;
+
                 Position proche = Positions[0];
 
                 foreach (Position position in Positions)
@@ -68,10 +74,13 @@ namespace GoBot.Mouvements
                 if (DateMinimum != null && DateMinimum > DateTime.Now)
                     return double.MaxValue;
 
-                if (ScorePondere <= 0)
+                if (ScorePondere <= 0 && Positions.Count < 1)
                     return double.MaxValue;
 
                 Position position = PositionProche;
+
+                if (position == null) 
+                    return double.MaxValue;
 
                 double distance = Robot.Position.Coordonnees.Distance(position.Coordonnees) / 10;
                 double cout = distance / ScorePondere;

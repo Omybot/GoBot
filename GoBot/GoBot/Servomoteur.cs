@@ -10,6 +10,28 @@ namespace GoBot
 {
     public class Servomoteur
     {
+        public static Dictionary<ServomoteurID, byte> servosPololu = new Dictionary<ServomoteurID, byte>();
+
+        static Servomoteur()
+        {
+            servosPololu.Add(ServomoteurID.AscenseurDroitPinceBasDroite, 3);
+            servosPololu.Add(ServomoteurID.AscenseurDroitPinceBasGauche, 2);
+            servosPololu.Add(ServomoteurID.AscenseurDroitPinceHautDroite, 5);
+            servosPololu.Add(ServomoteurID.AscenseurDroitPinceHautGauche, 4);
+            servosPololu.Add(ServomoteurID.AscenseurGauchePinceBasDroite, 7);
+            servosPololu.Add(ServomoteurID.AscenseurGauchePinceBasGauche, 10);
+            servosPololu.Add(ServomoteurID.AscenseurGauchePinceHautDroite, 8);
+            servosPololu.Add(ServomoteurID.AscenseurGauchePinceHautGauche, 9);
+        }
+
+        public static short idServoPololu(ServomoteurID servo)
+        {
+            if (servosPololu.ContainsKey(servo))
+                return servosPololu[servo];
+            else
+                return -1;
+        }
+
         private Carte carte;
         private Connexion connexion;
 

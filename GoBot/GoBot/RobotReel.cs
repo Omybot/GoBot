@@ -11,15 +11,17 @@ using System.Drawing;
 using System.Windows.Forms;
 using GoBot.Communications;
 using GoBot.Actionneurs;
+using GoBot.Devices;
+using Pololu.Usc;
+using Pololu.UsbWrapper;
 
 namespace GoBot
 {
     class RobotReel : Robot
     {
         Dictionary<FonctionIO, Semaphore> SemaphoresIO = new Dictionary<FonctionIO, Semaphore>();
-        Dictionary<CapteurOnOff, Semaphore> SemaphoresCapteurs = new Dictionary<CapteurOnOff, Semaphore>();
+        Dictionary<CapteurOnOffID, Semaphore> SemaphoresCapteurs = new Dictionary<CapteurOnOffID, Semaphore>();
         Dictionary<FonctionMove, Semaphore> SemaphoresMove = new Dictionary<FonctionMove, Semaphore>();
-        Dictionary<CapteurOnOff, bool> ValeursCapteurs = new Dictionary<CapteurOnOff, bool>();
 
         private DateTime DateRefreshPos { get; set; }
 
@@ -37,6 +39,7 @@ namespace GoBot
             Carte = carte;
             IDRobot = idRobot;
             ServomoteursConnectes = new List<byte>();
+            CapteurActive = new Dictionary<CapteurOnOffID, bool>();
 
             foreach (FonctionIO fonction in Enum.GetValues(typeof(FonctionIO)))
                 SemaphoresIO.Add(fonction, new Semaphore(0, int.MaxValue));
@@ -44,10 +47,10 @@ namespace GoBot
             foreach (FonctionMove fonction in Enum.GetValues(typeof(FonctionMove)))
                 SemaphoresMove.Add(fonction, new Semaphore(0, int.MaxValue));
 
-            foreach (CapteurOnOff fonction in Enum.GetValues(typeof(CapteurOnOff)))
+            foreach (CapteurOnOffID fonction in Enum.GetValues(typeof(CapteurOnOffID)))
             {
                 SemaphoresCapteurs.Add(fonction, new Semaphore(0, int.MaxValue));
-                ValeursCapteurs.Add(fonction, false);
+                CapteurActive.Add(fonction, false);
             }
         }
 
@@ -63,15 +66,15 @@ namespace GoBot
             //Enchainement = new Enchainements.HomologationEnchainement();
 
             Connexion.NouvelleTrameRecue += new ConnexionUDP.ReceptionDelegate(ReceptionMessage);
-            if(this == Robots.GrosRobot)
+            if (this == Robots.GrosRobot)
                 Connexions.ConnexionIO.NouvelleTrameRecue += new ConnexionUDP.ReceptionDelegate(ReceptionMessage);
 
             if (this == Robots.GrosRobot)
             {
                 if (Plateau.NotreCouleur == Plateau.CouleurGaucheJaune)
-                    Position = new Calculs.Position(new Angle(0, AnglyeType.Degre), new PointReel(230, 1000));
+                    Position = new Calculs.Position(new Angle(0, AnglyeType.Degre), new PointReel(240, 1000));
                 else
-                    Position = new Calculs.Position(new Angle(180, AnglyeType.Degre), new PointReel(3000 - 230, 1000));
+                    Position = new Calculs.Position(new Angle(180, AnglyeType.Degre), new PointReel(3000 - 240, 1000));
             }
             else
             {
@@ -87,7 +90,7 @@ namespace GoBot
             Connexion.SendMessage(TrameFactory.DemandePositionContinue(100, this));
         }
 
-        public override bool DemandeCapteurOnOff(CapteurOnOff capteur, bool attendre = true)
+        public override bool DemandeCapteurOnOff(CapteurOnOffID capteur, bool attendre = true)
         {
             if (attendre)
                 SemaphoresCapteurs[capteur] = new Semaphore(0, int.MaxValue);
@@ -98,7 +101,7 @@ namespace GoBot
             if (attendre)
                 SemaphoresCapteurs[capteur].WaitOne(100);
 
-            return ValeursCapteurs[capteur];
+            return CapteurActive[capteur];
         }
 
         public void Delete()
@@ -148,7 +151,7 @@ namespace GoBot
                 if (trameRecue[1] == (byte)FonctionMove.FinDeplacement
                     || trameRecue[1] == (byte)FonctionMove.FinRecallage)
                 {
-                    Console.WriteLine("Déblocage déplacement " + DateTime.Now.Hour + ":" + DateTime.Now.Minute + ":" + DateTime.Now.Second + ":" + DateTime.Now.Millisecond); 
+                    Console.WriteLine("Déblocage déplacement " + DateTime.Now.Hour + ":" + DateTime.Now.Minute + ":" + DateTime.Now.Second + ":" + DateTime.Now.Millisecond);
                     SemaphoresMove[FonctionMove.FinDeplacement].Release();
                 }
 
@@ -169,13 +172,15 @@ namespace GoBot
                         SemaphoresMove[FonctionMove.DemandePositionXYTeta].Release();
 
                         HistoriqueCoordonnees.Add(new Position(teta, new PointReel(x, y)));
-                        if(HistoriqueCoordonnees.Count > 1200)
+                        if (HistoriqueCoordonnees.Count > 1200)
                         {
                             semHistoriquePosition.WaitOne();
                             while (HistoriqueCoordonnees.Count > 1200)
                                 HistoriqueCoordonnees.RemoveAt(0);
                             semHistoriquePosition.Release();
                         }
+
+                        Plateau.Balise1.Position = Position;
                     }
                     catch (Exception)
                     {
@@ -227,6 +232,42 @@ namespace GoBot
             }
             else if (trameRecue[0] == (byte)Carte.RecIO)
             {
+                if (trameRecue[1] == (byte)FonctionIO.RetourValeursAnalogiques)
+                {
+                    double valeurAnalogique1 = (trameRecue[2] * 256 + trameRecue[3]);
+                    double valeurAnalogique2 = (trameRecue[4] * 256 + trameRecue[5]);
+                    double valeurAnalogique3 = (trameRecue[6] * 256 + trameRecue[7]);
+                    double valeurAnalogique4 = (trameRecue[8] * 256 + trameRecue[9]);
+                    double valeurAnalogique5 = (trameRecue[10] * 256 + trameRecue[11]);
+                    double valeurAnalogique6 = (trameRecue[12] * 256 + trameRecue[13]);
+
+                    double valeurAnalogique1V = valeurAnalogique1 * 0.0008056640625;
+                    double valeurAnalogique2V = valeurAnalogique2 * 0.0008056640625;
+                    double valeurAnalogique3V = valeurAnalogique3 * 0.0008056640625;
+                    double valeurAnalogique4V = valeurAnalogique4 * 0.0008056640625;
+                    double valeurAnalogique5V = valeurAnalogique5 * 0.0008056640625;
+                    double valeurAnalogique6V = valeurAnalogique6 * 0.0008056640625;
+
+                    /*
+                        Codeur effet hall Ascenseur Droite
+                        VadcV2 (AN1)
+                        Codeur effet hall Ascenseur Gauche
+                        Switchs Ascenseur Gauche
+                        Switchs Ascenseur Droite
+                        Switchs Bonus
+                    */
+
+                    ValeursAnalogiques = new List<double>();
+                    ValeursAnalogiques.Add(valeurAnalogique1);
+                    ValeursAnalogiques.Add(valeurAnalogique2);
+                    ValeursAnalogiques.Add(valeurAnalogique3);
+                    ValeursAnalogiques.Add(valeurAnalogique4);
+                    ValeursAnalogiques.Add(valeurAnalogique5);
+                    ValeursAnalogiques.Add(valeurAnalogique6);
+
+                    if (SemaphoresIO[FonctionIO.RetourValeursAnalogiques] != null)
+                        SemaphoresIO[FonctionIO.RetourValeursAnalogiques].Release();
+                }
                 if (trameRecue[1] == (byte)FonctionIO.AspirationPompe && AspirationAutomatique)
                 {
                     VitesseDeplacement = Config.CurrentConfig.GRVitesseLigneLent;
@@ -235,8 +276,12 @@ namespace GoBot
                 }
                 if (trameRecue[1] == (byte)FonctionIO.RetourCapteurOnOff)
                 {
-                    CapteurOnOff capteur = (CapteurOnOff)trameRecue[2];
-                    ValeursCapteurs[capteur] = trameRecue[3] > 0 ? true : false;
+                    CapteurOnOffID capteur = (CapteurOnOffID)trameRecue[2];
+                    bool nouvelEtat = trameRecue[3] > 0 ? true : false;
+                    if (nouvelEtat != CapteurActive[capteur])
+                    {
+                        ChangerEtatCapteurOnOff(capteur, nouvelEtat);
+                    }
                     if (SemaphoresCapteurs[capteur] != null)
                         SemaphoresCapteurs[capteur].Release();
                 }
@@ -252,7 +297,7 @@ namespace GoBot
                     jackBranche = trameRecue[2] == 1 ? true : false;
 
                     if (historiqueJack)
-                        Historique.AjouterAction(new ActionCapteur(this, CapteurID.GRJack, jackBranche ? "branché" : "absent"));
+                        Historique.AjouterAction(new ActionCapteur(this, CapteurID.Jack, jackBranche ? "branché" : "absent"));
 
                     SemaphoresIO[FonctionIO.ReponseJack].Release();
                 }
@@ -273,6 +318,30 @@ namespace GoBot
                     Plateau.NotreCouleur = couleurEquipe;
 
                     SemaphoresIO[FonctionIO.ReponseCouleurEquipe].Release();
+                }
+
+                if (trameRecue[1] == (byte)FonctionIO.RetourValeurCapteur)
+                {
+                    if (trameRecue[2] == (byte)CapteurID.Balise)
+                    {
+                        // Recomposition de la trame comme si elle venait d'une balise
+                        String message = "B1 E4 " + trameRecue.ToString().Substring(9);
+                        Plateau.Balise1.connexion_NouvelleTrame(new Trame(message));
+                    }
+
+                    if (trameRecue[2] == (byte)CapteurID.BaliseRapide1)
+                    {
+                        // Recomposition de la trame comme si elle venait d'une balise
+                        String message = "B1 E5 02 " + trameRecue.ToString().Substring(9);
+                        Plateau.Balise1.connexion_NouvelleTrame(new Trame(message));
+                    }
+
+                    if (trameRecue[2] == (byte)CapteurID.BaliseRapide2)
+                    {
+                        // Recomposition de la trame comme si elle venait d'une balise
+                        String message = "B1 E5 01 " + trameRecue.ToString().Substring(9);
+                        Plateau.Balise1.connexion_NouvelleTrame(new Trame(message));
+                    }
                 }
             }
         }
@@ -299,6 +368,8 @@ namespace GoBot
         public override void ReglerOffsetAsserv(int offsetX, int offsetY, double offsetTeta)
         {
             //PositionCible = new PointReel(offsetX, offsetY);
+            Position.Coordonnees.X = offsetX;
+            Position.Coordonnees.Y = offsetY;
             Trame trame = TrameFactory.OffsetPos(offsetX, offsetY, offsetTeta, this);
             Connexion.SendMessage(trame);
         }
@@ -360,13 +431,13 @@ namespace GoBot
             DeplacementLigne = false;
 
             Connexion.SendMessage(trame);
-            
+
             Historique.AjouterAction(new ActionStop(this, mode));
         }
 
         public override void Virage(SensAR sensAr, SensGD sensGd, int rayon, int angle, bool attendre = true)
         {
-            if(attendre)
+            if (attendre)
                 SemaphoresMove[FonctionMove.FinDeplacement] = new Semaphore(0, int.MaxValue);
 
             Historique.AjouterAction(new ActionVirage(this, rayon, angle, sensAr, sensGd));
@@ -392,7 +463,7 @@ namespace GoBot
         }
 
         #endregion
-        
+
         public override void EnvoyerPID(int p, int i, int d)
         {
             Trame trame = TrameFactory.CoeffAsserv(p, i, d, this);
@@ -409,7 +480,7 @@ namespace GoBot
             if (!Connexion.ConnexionCheck.Connecte)
                 return false;
 
-            if(attendre)
+            if (attendre)
                 SemaphoresMove[FonctionMove.RetourPositionCodeurs] = new Semaphore(0, int.MaxValue);
 
             Trame t = TrameFactory.DemandePosition(this);
@@ -425,17 +496,40 @@ namespace GoBot
         {
             base.BougeServo(servo, position);
 
-            if (this == Robots.GrosRobot)
-            {
-                Trame trame = TrameFactory.ServoEnvoiPositionCible(servo, position);
-                Connexions.ConnexionIO.SendMessage(trame);
-            }
+            // Envoi à la pololu si c'est un servo géré par la carte
+            int idPololu = Servomoteur.idServoPololu(servo);
+            if (idPololu != -1)
+                PololuMiniUart.setTarget((byte)idPololu, (ushort)position);
+            // Sinon en UDP aux cartes elecs
             else
             {
-                Trame trame = TrameFactory.ServoEnvoiPositionCible(servo, position, GoBot.Carte.RecPi);
-                Connexion.SendMessage(trame);
+                if (this == Robots.GrosRobot)
+                {
+                    Trame trame = TrameFactory.ServoEnvoiPositionCible(servo, position);
+                    Connexions.ConnexionIO.SendMessage(trame);
+                }
+                else
+                {
+                    Trame trame = TrameFactory.ServoEnvoiPositionCible(servo, position, GoBot.Carte.RecPi);
+                    Connexion.SendMessage(trame);
+                }
             }
             Historique.AjouterAction(new ActionServo(this, position, servo));
+        }
+
+        public override void DemandeValeursAnalogiques(bool attendre = true)
+        {
+            if (!Connexions.ConnexionIO.ConnexionCheck.Connecte)
+                return;
+
+            if (attendre)
+                SemaphoresIO[FonctionIO.RetourValeursAnalogiques] = new Semaphore(0, int.MaxValue);
+
+            Trame trame = TrameFactory.DemandeValeursAnalogiques(Carte.RecIO);
+            Connexions.ConnexionIO.SendMessage(trame);
+
+            if (attendre)
+                SemaphoresIO[FonctionIO.RetourValeursAnalogiques].WaitOne(1000);
         }
 
         public override void ServoVitesse(ServomoteurID servo, int vitesse)
@@ -443,7 +537,7 @@ namespace GoBot
             Trame trame = TrameFactory.ServoEnvoiVitesseMax(servo, vitesse);
             Connexions.ConnexionIO.SendMessage(trame);
         }
-        
+
         public override void ActionneurOnOff(ActionneurOnOffID actionneur, bool on)
         {
             if (this == Robots.GrosRobot)
@@ -542,8 +636,22 @@ namespace GoBot
                 Trame trame = TrameFactory.MoteurPosition(moteur, position, true);
                 Connexion.SendMessage(trame);
             }
+        }
 
-            Historique.AjouterAction(new ActionMoteur(this, position, moteur));
+        public override void MoteurVitesse(MoteurID moteur, int vitesse)
+        {
+            base.MoteurVitesse(moteur, vitesse);
+
+            Trame trame = TrameFactory.MoteurVitesse(moteur, vitesse);
+            Connexions.ConnexionIO.SendMessage(trame);
+        }
+
+        public override void MoteurAcceleration(MoteurID moteur, int acceleration)
+        {
+            base.MoteurAcceleration(moteur, acceleration);
+
+            Trame trame = TrameFactory.MoteurAcceleration(moteur, acceleration);
+            Connexions.ConnexionIO.SendMessage(trame);
         }
 
         public override void AlimentationPuissance(bool on)
@@ -597,10 +705,10 @@ namespace GoBot
                 Thread.Sleep(30);
             }
 
-            while(retourTestPid[0].Count > nbValeurs)
+            while (retourTestPid[0].Count > nbValeurs)
                 retourTestPid[0].RemoveAt(retourTestPid[0].Count - 1);
 
-            while(retourTestPid[1].Count > nbValeurs)
+            while (retourTestPid[1].Count > nbValeurs)
                 retourTestPid[1].RemoveAt(retourTestPid[1].Count - 1);
 
             return retourTestPid;
@@ -633,6 +741,12 @@ namespace GoBot
 
 
             return retourTestCharge;
+        }
+
+        public void EnvoyerUart(Carte carte, Trame trame)
+        {
+            Trame trameUart = TrameFactory.EnvoyerUart(carte, trame);
+            Connexions.ConnexionParCarte[carte].SendMessage(trameUart);
         }
     }
 }

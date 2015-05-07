@@ -28,10 +28,8 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.btnSaveGraph = new System.Windows.Forms.Button();
-            this.btnAllerA = new System.Windows.Forms.Button();
+            this.components = new System.ComponentModel.Container();
             this.boxSourisObstacle = new System.Windows.Forms.CheckBox();
-            this.btnReset = new System.Windows.Forms.Button();
             this.lblScore = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
             this.lblPos = new System.Windows.Forms.Label();
@@ -62,66 +60,39 @@
             this.lblVitesseEnnemi1 = new System.Windows.Forms.Label();
             this.label18 = new System.Windows.Forms.Label();
             this.btnAleatoire = new System.Windows.Forms.Button();
-            this.btnPositionRP = new System.Windows.Forms.Button();
-            this.button1 = new System.Windows.Forms.Button();
-            this.btnRSFace = new System.Windows.Forms.Button();
-            this.btnRSCentre = new System.Windows.Forms.Button();
-            this.boxAfficheDetailTraj = new System.Windows.Forms.CheckBox();
-            this.label7 = new System.Windows.Forms.Label();
-            this.label8 = new System.Windows.Forms.Label();
-            this.label13 = new System.Windows.Forms.Label();
-            this.label17 = new System.Windows.Forms.Label();
+            this.checkedListBox = new System.Windows.Forms.CheckedListBox();
+            this.lblGrosRobotDeplacements = new Composants.LabelPlus();
+            this.lblPetitRobotDeplacements = new Composants.LabelPlus();
+            this.groupBox = new System.Windows.Forms.GroupBox();
+            this.groupBoxDeplacements = new System.Windows.Forms.GroupBox();
+            this.toolTip = new System.Windows.Forms.ToolTip(this.components);
+            this.btnPathRPCentre = new System.Windows.Forms.Button();
+            this.btnPathRPFace = new System.Windows.Forms.Button();
+            this.btnPathRSCentre = new System.Windows.Forms.Button();
+            this.btnPathRSFace = new System.Windows.Forms.Button();
             this.btnTeleportRSFace = new System.Windows.Forms.Button();
+            this.btnTeleportRPCentre = new System.Windows.Forms.Button();
             this.btnTeleportRSCentre = new System.Windows.Forms.Button();
             this.btnTeleportRPFace = new System.Windows.Forms.Button();
-            this.btnTeleportRPCentre = new System.Windows.Forms.Button();
-            this.boxTrajectoire = new System.Windows.Forms.CheckBox();
-            this.checkedListBox = new System.Windows.Forms.CheckedListBox();
+            this.btnReset = new System.Windows.Forms.Button();
             this.btnAffichage = new System.Windows.Forms.Button();
             this.pictureBoxTable = new System.Windows.Forms.PictureBox();
+            this.groupBoxAffichage = new System.Windows.Forms.GroupBox();
+            this.groupBox.SuspendLayout();
+            this.groupBoxDeplacements.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxTable)).BeginInit();
+            this.groupBoxAffichage.SuspendLayout();
             this.SuspendLayout();
-            // 
-            // btnSaveGraph
-            // 
-            this.btnSaveGraph.Location = new System.Drawing.Point(17, 359);
-            this.btnSaveGraph.Name = "btnSaveGraph";
-            this.btnSaveGraph.Size = new System.Drawing.Size(75, 23);
-            this.btnSaveGraph.TabIndex = 5;
-            this.btnSaveGraph.Text = "SauverGraph";
-            this.btnSaveGraph.UseVisualStyleBackColor = true;
-            this.btnSaveGraph.Click += new System.EventHandler(this.btnSaveGraph_Click);
-            // 
-            // btnAllerA
-            // 
-            this.btnAllerA.Location = new System.Drawing.Point(17, 388);
-            this.btnAllerA.Name = "btnAllerA";
-            this.btnAllerA.Size = new System.Drawing.Size(75, 23);
-            this.btnAllerA.TabIndex = 8;
-            this.btnAllerA.Text = "Aller à";
-            this.btnAllerA.UseVisualStyleBackColor = true;
-            this.btnAllerA.Click += new System.EventHandler(this.btnAllerA_Click);
             // 
             // boxSourisObstacle
             // 
             this.boxSourisObstacle.AutoSize = true;
-            this.boxSourisObstacle.Location = new System.Drawing.Point(19, 336);
+            this.boxSourisObstacle.Location = new System.Drawing.Point(14, 315);
             this.boxSourisObstacle.Name = "boxSourisObstacle";
             this.boxSourisObstacle.Size = new System.Drawing.Size(98, 17);
             this.boxSourisObstacle.TabIndex = 9;
             this.boxSourisObstacle.Text = "Souris obstacle";
             this.boxSourisObstacle.UseVisualStyleBackColor = true;
-            this.boxSourisObstacle.CheckedChanged += new System.EventHandler(this.boxSourisObstacle_CheckedChanged);
-            // 
-            // btnReset
-            // 
-            this.btnReset.Location = new System.Drawing.Point(17, 417);
-            this.btnReset.Name = "btnReset";
-            this.btnReset.Size = new System.Drawing.Size(75, 23);
-            this.btnReset.TabIndex = 10;
-            this.btnReset.Text = "Reset table";
-            this.btnReset.UseVisualStyleBackColor = true;
-            this.btnReset.Click += new System.EventHandler(this.btnReset_Click);
             // 
             // lblScore
             // 
@@ -154,11 +125,11 @@
             // 
             // btnGo
             // 
-            this.btnGo.Location = new System.Drawing.Point(0, 492);
+            this.btnGo.Location = new System.Drawing.Point(32, 31);
             this.btnGo.Name = "btnGo";
             this.btnGo.Size = new System.Drawing.Size(139, 23);
             this.btnGo.TabIndex = 16;
-            this.btnGo.Text = "Go !!";
+            this.btnGo.Text = "Stratégie";
             this.btnGo.UseVisualStyleBackColor = true;
             this.btnGo.Click += new System.EventHandler(this.btnGo_Click);
             // 
@@ -392,151 +363,13 @@
             // 
             // btnAleatoire
             // 
-            this.btnAleatoire.Location = new System.Drawing.Point(0, 521);
+            this.btnAleatoire.Location = new System.Drawing.Point(32, 60);
             this.btnAleatoire.Name = "btnAleatoire";
             this.btnAleatoire.Size = new System.Drawing.Size(139, 23);
             this.btnAleatoire.TabIndex = 48;
             this.btnAleatoire.Text = "Déplacements aléatoires";
             this.btnAleatoire.UseVisualStyleBackColor = true;
             this.btnAleatoire.Click += new System.EventHandler(this.btnAleatoire_Click);
-            // 
-            // btnPositionRP
-            // 
-            this.btnPositionRP.Location = new System.Drawing.Point(50, 550);
-            this.btnPositionRP.Name = "btnPositionRP";
-            this.btnPositionRP.Size = new System.Drawing.Size(37, 23);
-            this.btnPositionRP.TabIndex = 49;
-            this.btnPositionRP.Text = "Path";
-            this.btnPositionRP.UseVisualStyleBackColor = true;
-            this.btnPositionRP.Click += new System.EventHandler(this.btnPositionRP_Click);
-            // 
-            // button1
-            // 
-            this.button1.Location = new System.Drawing.Point(50, 579);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(37, 23);
-            this.button1.TabIndex = 50;
-            this.button1.Text = "Path";
-            this.button1.UseVisualStyleBackColor = true;
-            this.button1.Click += new System.EventHandler(this.button1_Click);
-            // 
-            // btnRSFace
-            // 
-            this.btnRSFace.Location = new System.Drawing.Point(50, 637);
-            this.btnRSFace.Name = "btnRSFace";
-            this.btnRSFace.Size = new System.Drawing.Size(37, 23);
-            this.btnRSFace.TabIndex = 52;
-            this.btnRSFace.Text = "Path";
-            this.btnRSFace.UseVisualStyleBackColor = true;
-            this.btnRSFace.Click += new System.EventHandler(this.btnRSFace_Click);
-            // 
-            // btnRSCentre
-            // 
-            this.btnRSCentre.Location = new System.Drawing.Point(50, 608);
-            this.btnRSCentre.Name = "btnRSCentre";
-            this.btnRSCentre.Size = new System.Drawing.Size(37, 23);
-            this.btnRSCentre.TabIndex = 51;
-            this.btnRSCentre.Text = "Path";
-            this.btnRSCentre.UseVisualStyleBackColor = true;
-            this.btnRSCentre.Click += new System.EventHandler(this.btnRSCentre_Click);
-            // 
-            // boxAfficheDetailTraj
-            // 
-            this.boxAfficheDetailTraj.AutoSize = true;
-            this.boxAfficheDetailTraj.Location = new System.Drawing.Point(19, 446);
-            this.boxAfficheDetailTraj.Name = "boxAfficheDetailTraj";
-            this.boxAfficheDetailTraj.Size = new System.Drawing.Size(113, 17);
-            this.boxAfficheDetailTraj.TabIndex = 53;
-            this.boxAfficheDetailTraj.Text = "Calcul path finding";
-            this.boxAfficheDetailTraj.UseVisualStyleBackColor = true;
-            this.boxAfficheDetailTraj.CheckedChanged += new System.EventHandler(this.boxAfficheDetailTraj_CheckedChanged);
-            // 
-            // label7
-            // 
-            this.label7.AutoSize = true;
-            this.label7.Location = new System.Drawing.Point(-3, 555);
-            this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(53, 13);
-            this.label7.TabIndex = 54;
-            this.label7.Text = "RPCentre";
-            // 
-            // label8
-            // 
-            this.label8.AutoSize = true;
-            this.label8.Location = new System.Drawing.Point(-3, 584);
-            this.label8.Name = "label8";
-            this.label8.Size = new System.Drawing.Size(46, 13);
-            this.label8.TabIndex = 55;
-            this.label8.Text = "RPFace";
-            // 
-            // label13
-            // 
-            this.label13.AutoSize = true;
-            this.label13.Location = new System.Drawing.Point(-3, 642);
-            this.label13.Name = "label13";
-            this.label13.Size = new System.Drawing.Size(46, 13);
-            this.label13.TabIndex = 57;
-            this.label13.Text = "RSFace";
-            // 
-            // label17
-            // 
-            this.label17.AutoSize = true;
-            this.label17.Location = new System.Drawing.Point(-3, 613);
-            this.label17.Name = "label17";
-            this.label17.Size = new System.Drawing.Size(53, 13);
-            this.label17.TabIndex = 56;
-            this.label17.Text = "RSCentre";
-            // 
-            // btnTeleportRSFace
-            // 
-            this.btnTeleportRSFace.Location = new System.Drawing.Point(93, 637);
-            this.btnTeleportRSFace.Name = "btnTeleportRSFace";
-            this.btnTeleportRSFace.Size = new System.Drawing.Size(54, 23);
-            this.btnTeleportRSFace.TabIndex = 61;
-            this.btnTeleportRSFace.Text = "Téléport";
-            this.btnTeleportRSFace.UseVisualStyleBackColor = true;
-            this.btnTeleportRSFace.Click += new System.EventHandler(this.btnTeleportRSFace_Click);
-            // 
-            // btnTeleportRSCentre
-            // 
-            this.btnTeleportRSCentre.Location = new System.Drawing.Point(93, 608);
-            this.btnTeleportRSCentre.Name = "btnTeleportRSCentre";
-            this.btnTeleportRSCentre.Size = new System.Drawing.Size(54, 23);
-            this.btnTeleportRSCentre.TabIndex = 60;
-            this.btnTeleportRSCentre.Text = "Téléport";
-            this.btnTeleportRSCentre.UseVisualStyleBackColor = true;
-            this.btnTeleportRSCentre.Click += new System.EventHandler(this.btnTeleportRSCentre_Click);
-            // 
-            // btnTeleportRPFace
-            // 
-            this.btnTeleportRPFace.Location = new System.Drawing.Point(93, 579);
-            this.btnTeleportRPFace.Name = "btnTeleportRPFace";
-            this.btnTeleportRPFace.Size = new System.Drawing.Size(54, 23);
-            this.btnTeleportRPFace.TabIndex = 59;
-            this.btnTeleportRPFace.Text = "Téléport";
-            this.btnTeleportRPFace.UseVisualStyleBackColor = true;
-            this.btnTeleportRPFace.Click += new System.EventHandler(this.btnTeleportRPFace_Click);
-            // 
-            // btnTeleportRPCentre
-            // 
-            this.btnTeleportRPCentre.Location = new System.Drawing.Point(93, 550);
-            this.btnTeleportRPCentre.Name = "btnTeleportRPCentre";
-            this.btnTeleportRPCentre.Size = new System.Drawing.Size(54, 23);
-            this.btnTeleportRPCentre.TabIndex = 58;
-            this.btnTeleportRPCentre.Text = "Téléport";
-            this.btnTeleportRPCentre.UseVisualStyleBackColor = true;
-            this.btnTeleportRPCentre.Click += new System.EventHandler(this.btnTeleportRPCentre_Click);
-            // 
-            // boxTrajectoire
-            // 
-            this.boxTrajectoire.AutoSize = true;
-            this.boxTrajectoire.Location = new System.Drawing.Point(19, 469);
-            this.boxTrajectoire.Name = "boxTrajectoire";
-            this.boxTrajectoire.Size = new System.Drawing.Size(76, 17);
-            this.boxTrajectoire.TabIndex = 62;
-            this.boxTrajectoire.Text = "Trajectoire";
-            this.boxTrajectoire.UseVisualStyleBackColor = true;
-            this.boxTrajectoire.CheckedChanged += new System.EventHandler(this.boxTrajectoire_CheckedChanged);
             // 
             // checkedListBox
             // 
@@ -557,16 +390,157 @@
             "Détections balises",
             "Historique trajectoire gros",
             "Historique trajectoire petit"});
-            this.checkedListBox.Location = new System.Drawing.Point(14, 86);
+            this.checkedListBox.Location = new System.Drawing.Point(3, 19);
             this.checkedListBox.Name = "checkedListBox";
-            this.checkedListBox.Size = new System.Drawing.Size(184, 210);
+            this.checkedListBox.Size = new System.Drawing.Size(184, 195);
             this.checkedListBox.TabIndex = 63;
             this.checkedListBox.ItemCheck += new System.Windows.Forms.ItemCheckEventHandler(this.checkedListBox_ItemCheck);
+            // 
+            // lblGrosRobotDeplacements
+            // 
+            this.lblGrosRobotDeplacements.AutoSize = true;
+            this.lblGrosRobotDeplacements.Location = new System.Drawing.Point(6, 35);
+            this.lblGrosRobotDeplacements.Name = "lblGrosRobotDeplacements";
+            this.lblGrosRobotDeplacements.Size = new System.Drawing.Size(56, 13);
+            this.lblGrosRobotDeplacements.TabIndex = 64;
+            this.lblGrosRobotDeplacements.Text = "Gros robot";
+            // 
+            // lblPetitRobotDeplacements
+            // 
+            this.lblPetitRobotDeplacements.AutoSize = true;
+            this.lblPetitRobotDeplacements.Location = new System.Drawing.Point(6, 64);
+            this.lblPetitRobotDeplacements.Name = "lblPetitRobotDeplacements";
+            this.lblPetitRobotDeplacements.Size = new System.Drawing.Size(55, 13);
+            this.lblPetitRobotDeplacements.TabIndex = 65;
+            this.lblPetitRobotDeplacements.Text = "Petit robot";
+            // 
+            // groupBox
+            // 
+            this.groupBox.Controls.Add(this.btnGo);
+            this.groupBox.Controls.Add(this.btnAleatoire);
+            this.groupBox.Location = new System.Drawing.Point(0, 415);
+            this.groupBox.Name = "groupBox";
+            this.groupBox.Size = new System.Drawing.Size(200, 100);
+            this.groupBox.TabIndex = 66;
+            this.groupBox.TabStop = false;
+            this.groupBox.Text = "Lancement";
+            // 
+            // groupBoxDeplacements
+            // 
+            this.groupBoxDeplacements.Controls.Add(this.lblGrosRobotDeplacements);
+            this.groupBoxDeplacements.Controls.Add(this.btnPathRPCentre);
+            this.groupBoxDeplacements.Controls.Add(this.lblPetitRobotDeplacements);
+            this.groupBoxDeplacements.Controls.Add(this.btnPathRPFace);
+            this.groupBoxDeplacements.Controls.Add(this.btnPathRSCentre);
+            this.groupBoxDeplacements.Controls.Add(this.btnPathRSFace);
+            this.groupBoxDeplacements.Controls.Add(this.btnTeleportRSFace);
+            this.groupBoxDeplacements.Controls.Add(this.btnTeleportRPCentre);
+            this.groupBoxDeplacements.Controls.Add(this.btnTeleportRSCentre);
+            this.groupBoxDeplacements.Controls.Add(this.btnTeleportRPFace);
+            this.groupBoxDeplacements.Location = new System.Drawing.Point(0, 532);
+            this.groupBoxDeplacements.Name = "groupBoxDeplacements";
+            this.groupBoxDeplacements.Size = new System.Drawing.Size(200, 100);
+            this.groupBoxDeplacements.TabIndex = 67;
+            this.groupBoxDeplacements.TabStop = false;
+            this.groupBoxDeplacements.Text = "Déplacements";
+            // 
+            // btnPathRPCentre
+            // 
+            this.btnPathRPCentre.Image = global::GoBot.Properties.Resources.PathCentre;
+            this.btnPathRPCentre.Location = new System.Drawing.Point(68, 30);
+            this.btnPathRPCentre.Name = "btnPathRPCentre";
+            this.btnPathRPCentre.Size = new System.Drawing.Size(27, 23);
+            this.btnPathRPCentre.TabIndex = 49;
+            this.btnPathRPCentre.UseVisualStyleBackColor = true;
+            this.btnPathRPCentre.Click += new System.EventHandler(this.btnPathRPCentre_Click);
+            // 
+            // btnPathRPFace
+            // 
+            this.btnPathRPFace.Image = global::GoBot.Properties.Resources.PathFace;
+            this.btnPathRPFace.Location = new System.Drawing.Point(134, 30);
+            this.btnPathRPFace.Name = "btnPathRPFace";
+            this.btnPathRPFace.Size = new System.Drawing.Size(27, 23);
+            this.btnPathRPFace.TabIndex = 50;
+            this.btnPathRPFace.UseVisualStyleBackColor = true;
+            this.btnPathRPFace.Click += new System.EventHandler(this.btnPathRPFace_Click);
+            // 
+            // btnPathRSCentre
+            // 
+            this.btnPathRSCentre.Image = global::GoBot.Properties.Resources.PathCentre;
+            this.btnPathRSCentre.Location = new System.Drawing.Point(68, 59);
+            this.btnPathRSCentre.Name = "btnPathRSCentre";
+            this.btnPathRSCentre.Size = new System.Drawing.Size(27, 23);
+            this.btnPathRSCentre.TabIndex = 51;
+            this.btnPathRSCentre.UseVisualStyleBackColor = true;
+            this.btnPathRSCentre.Click += new System.EventHandler(this.btnPathRSCentre_Click);
+            // 
+            // btnPathRSFace
+            // 
+            this.btnPathRSFace.Image = global::GoBot.Properties.Resources.PathFace;
+            this.btnPathRSFace.Location = new System.Drawing.Point(134, 59);
+            this.btnPathRSFace.Name = "btnPathRSFace";
+            this.btnPathRSFace.Size = new System.Drawing.Size(27, 23);
+            this.btnPathRSFace.TabIndex = 52;
+            this.btnPathRSFace.UseVisualStyleBackColor = true;
+            this.btnPathRSFace.Click += new System.EventHandler(this.btnPathRSFace_Click);
+            // 
+            // btnTeleportRSFace
+            // 
+            this.btnTeleportRSFace.Image = global::GoBot.Properties.Resources.TeleportFace;
+            this.btnTeleportRSFace.Location = new System.Drawing.Point(167, 59);
+            this.btnTeleportRSFace.Name = "btnTeleportRSFace";
+            this.btnTeleportRSFace.Size = new System.Drawing.Size(27, 23);
+            this.btnTeleportRSFace.TabIndex = 61;
+            this.btnTeleportRSFace.UseVisualStyleBackColor = true;
+            this.btnTeleportRSFace.Click += new System.EventHandler(this.btnTeleportRSFace_Click);
+            // 
+            // btnTeleportRPCentre
+            // 
+            this.btnTeleportRPCentre.Image = global::GoBot.Properties.Resources.TeleportCentre;
+            this.btnTeleportRPCentre.Location = new System.Drawing.Point(101, 30);
+            this.btnTeleportRPCentre.Name = "btnTeleportRPCentre";
+            this.btnTeleportRPCentre.Size = new System.Drawing.Size(27, 23);
+            this.btnTeleportRPCentre.TabIndex = 58;
+            this.btnTeleportRPCentre.UseVisualStyleBackColor = true;
+            this.btnTeleportRPCentre.Click += new System.EventHandler(this.btnTeleportRPCentre_Click);
+            // 
+            // btnTeleportRSCentre
+            // 
+            this.btnTeleportRSCentre.Image = global::GoBot.Properties.Resources.TeleportCentre;
+            this.btnTeleportRSCentre.Location = new System.Drawing.Point(101, 59);
+            this.btnTeleportRSCentre.Name = "btnTeleportRSCentre";
+            this.btnTeleportRSCentre.Size = new System.Drawing.Size(27, 23);
+            this.btnTeleportRSCentre.TabIndex = 60;
+            this.btnTeleportRSCentre.UseVisualStyleBackColor = true;
+            this.btnTeleportRSCentre.Click += new System.EventHandler(this.btnTeleportRSCentre_Click);
+            // 
+            // btnTeleportRPFace
+            // 
+            this.btnTeleportRPFace.Image = global::GoBot.Properties.Resources.TeleportFace;
+            this.btnTeleportRPFace.Location = new System.Drawing.Point(167, 30);
+            this.btnTeleportRPFace.Name = "btnTeleportRPFace";
+            this.btnTeleportRPFace.Size = new System.Drawing.Size(27, 23);
+            this.btnTeleportRPFace.TabIndex = 59;
+            this.btnTeleportRPFace.UseVisualStyleBackColor = true;
+            this.btnTeleportRPFace.Click += new System.EventHandler(this.btnTeleportRPFace_Click);
+            // 
+            // btnReset
+            // 
+            this.btnReset.Image = global::GoBot.Properties.Resources.Refresh;
+            this.btnReset.Location = new System.Drawing.Point(14, 350);
+            this.btnReset.Name = "btnReset";
+            this.btnReset.Size = new System.Drawing.Size(98, 25);
+            this.btnReset.TabIndex = 10;
+            this.btnReset.Text = "Reset table";
+            this.btnReset.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.btnReset.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
+            this.btnReset.UseVisualStyleBackColor = true;
+            this.btnReset.Click += new System.EventHandler(this.btnReset_Click);
             // 
             // btnAffichage
             // 
             this.btnAffichage.Image = global::GoBot.Properties.Resources.Play;
-            this.btnAffichage.Location = new System.Drawing.Point(9, 32);
+            this.btnAffichage.Location = new System.Drawing.Point(31, 31);
             this.btnAffichage.Name = "btnAffichage";
             this.btnAffichage.Size = new System.Drawing.Size(130, 25);
             this.btnAffichage.TabIndex = 1;
@@ -590,27 +564,24 @@
             this.pictureBoxTable.MouseMove += new System.Windows.Forms.MouseEventHandler(this.pictureBoxTable_MouseMove);
             this.pictureBoxTable.MouseUp += new System.Windows.Forms.MouseEventHandler(this.pictureBoxTable_MouseUp);
             // 
+            // groupBoxAffichage
+            // 
+            this.groupBoxAffichage.Controls.Add(this.checkedListBox);
+            this.groupBoxAffichage.Location = new System.Drawing.Point(0, 71);
+            this.groupBoxAffichage.Name = "groupBoxAffichage";
+            this.groupBoxAffichage.Size = new System.Drawing.Size(200, 223);
+            this.groupBoxAffichage.TabIndex = 68;
+            this.groupBoxAffichage.TabStop = false;
+            this.groupBoxAffichage.Text = "Affichage";
+            // 
             // PanelTable
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.Transparent;
-            this.Controls.Add(this.checkedListBox);
-            this.Controls.Add(this.boxTrajectoire);
-            this.Controls.Add(this.btnTeleportRSFace);
-            this.Controls.Add(this.btnTeleportRSCentre);
-            this.Controls.Add(this.btnTeleportRPFace);
-            this.Controls.Add(this.btnTeleportRPCentre);
-            this.Controls.Add(this.label13);
-            this.Controls.Add(this.label17);
-            this.Controls.Add(this.label8);
-            this.Controls.Add(this.label7);
-            this.Controls.Add(this.boxAfficheDetailTraj);
-            this.Controls.Add(this.btnRSFace);
-            this.Controls.Add(this.btnRSCentre);
-            this.Controls.Add(this.button1);
-            this.Controls.Add(this.btnPositionRP);
-            this.Controls.Add(this.btnAleatoire);
+            this.Controls.Add(this.groupBoxAffichage);
+            this.Controls.Add(this.groupBoxDeplacements);
+            this.Controls.Add(this.groupBox);
             this.Controls.Add(this.lblVitesseEnnemi1);
             this.Controls.Add(this.label18);
             this.Controls.Add(this.lblAngleEnnemi1);
@@ -636,20 +607,21 @@
             this.Controls.Add(this.label4);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.label2);
-            this.Controls.Add(this.btnGo);
             this.Controls.Add(this.lblPos);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.lblScore);
             this.Controls.Add(this.btnReset);
             this.Controls.Add(this.boxSourisObstacle);
-            this.Controls.Add(this.btnAllerA);
-            this.Controls.Add(this.btnSaveGraph);
             this.Controls.Add(this.btnAffichage);
             this.Controls.Add(this.pictureBoxTable);
             this.Name = "PanelTable";
             this.Size = new System.Drawing.Size(1273, 669);
             this.Load += new System.EventHandler(this.PanelTable_Load);
+            this.groupBox.ResumeLayout(false);
+            this.groupBoxDeplacements.ResumeLayout(false);
+            this.groupBoxDeplacements.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxTable)).EndInit();
+            this.groupBoxAffichage.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -659,8 +631,6 @@
 
         private System.Windows.Forms.PictureBox pictureBoxTable;
         private System.Windows.Forms.Button btnAffichage;
-        private System.Windows.Forms.Button btnSaveGraph;
-        private System.Windows.Forms.Button btnAllerA;
         private System.Windows.Forms.CheckBox boxSourisObstacle;
         private System.Windows.Forms.Button btnReset;
         private System.Windows.Forms.Label lblScore;
@@ -693,20 +663,20 @@
         private System.Windows.Forms.Label lblVitesseEnnemi1;
         private System.Windows.Forms.Label label18;
         private System.Windows.Forms.Button btnAleatoire;
-        private System.Windows.Forms.Button btnPositionRP;
-        private System.Windows.Forms.Button button1;
-        private System.Windows.Forms.Button btnRSFace;
-        private System.Windows.Forms.Button btnRSCentre;
-        private System.Windows.Forms.CheckBox boxAfficheDetailTraj;
-        private System.Windows.Forms.Label label7;
-        private System.Windows.Forms.Label label8;
-        private System.Windows.Forms.Label label13;
-        private System.Windows.Forms.Label label17;
+        private System.Windows.Forms.Button btnPathRPCentre;
+        private System.Windows.Forms.Button btnPathRPFace;
+        private System.Windows.Forms.Button btnPathRSFace;
+        private System.Windows.Forms.Button btnPathRSCentre;
         private System.Windows.Forms.Button btnTeleportRSFace;
         private System.Windows.Forms.Button btnTeleportRSCentre;
         private System.Windows.Forms.Button btnTeleportRPFace;
         private System.Windows.Forms.Button btnTeleportRPCentre;
-        private System.Windows.Forms.CheckBox boxTrajectoire;
         private System.Windows.Forms.CheckedListBox checkedListBox;
+        private Composants.LabelPlus lblGrosRobotDeplacements;
+        private Composants.LabelPlus lblPetitRobotDeplacements;
+        private System.Windows.Forms.GroupBox groupBox;
+        private System.Windows.Forms.GroupBox groupBoxDeplacements;
+        private System.Windows.Forms.ToolTip toolTip;
+        private System.Windows.Forms.GroupBox groupBoxAffichage;
     }
 }

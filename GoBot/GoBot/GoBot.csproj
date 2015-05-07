@@ -53,8 +53,14 @@
     <ApplicationIcon>robot.ico</ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Bytecode">
+      <HintPath>Librairies\Bytecode.dll</HintPath>
+    </Reference>
     <Reference Include="DShowNET">
       <HintPath>.\DShowNET.dll</HintPath>
+    </Reference>
+    <Reference Include="Sequencer">
+      <HintPath>Librairies\Sequencer.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -66,9 +72,21 @@
     <Reference Include="System.Drawing" />
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
+    <Reference Include="UsbWrapper">
+      <HintPath>Librairies\UsbWrapper.dll</HintPath>
+    </Reference>
+    <Reference Include="Usc">
+      <HintPath>Librairies\Usc.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Actionneurs\Actionneur.cs" />
+    <Compile Include="Actionneurs\BrasAmpoule.cs" />
+    <Compile Include="Actionneurs\BrasPieds.cs" />
     <Compile Include="Actionneurs\BrasPiedsDroite.cs" />
+    <Compile Include="Actionneurs\BrasPiedsGauche.cs" />
+    <Compile Include="Actionneurs\BrasTapis.cs" />
+    <Compile Include="Actionneurs\Positionnables.cs" />
     <Compile Include="Actions\Asservissement\ActionAccelerationPivot.cs" />
     <Compile Include="Actions\Asservissement\ActionVitessePivot.cs" />
     <Compile Include="Actions\ActionMoteur.cs" />
@@ -94,6 +112,8 @@
     <Compile Include="Communications\DecodeurTrames.cs" />
     <Compile Include="Communications\FonctionsTrames.cs" />
     <Compile Include="Dessinateur.cs" />
+    <Compile Include="Devices\PololuMiniUart.cs" />
+    <Compile Include="Devices\PololuMiniUsb.cs" />
     <Compile Include="ElementsJeu\Clap.cs" />
     <Compile Include="ElementsJeu\DistributeurPopCorn.cs" />
     <Compile Include="ElementsJeu\ElementJeu.cs" />
@@ -106,7 +126,18 @@
     <Compile Include="Enchainements\EnchainementAleatoire.cs" />
     <Compile Include="Enchainements\EnchainementMatch.cs" />
     <Compile Include="EventsReplay.cs" />
-    <Compile Include="Actionneurs\Exemple.cs" />
+    <Compile Include="IHM\PanelAnalogique.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="IHM\PanelAnalogique.Designer.cs">
+      <DependentUpon>PanelAnalogique.cs</DependentUpon>
+    </Compile>
+    <Compile Include="IHM\PanelBaliseUnique.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="IHM\PanelBaliseUnique.Designer.cs">
+      <DependentUpon>PanelBaliseUnique.cs</DependentUpon>
+    </Compile>
     <Compile Include="IHM\PanelConstantes.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -259,8 +290,9 @@
     </Compile>
     <Compile Include="Logs\Log.cs" />
     <Compile Include="Logs\Logs.cs" />
-    <Compile Include="Mouvements\MouvementArbre.cs" />
     <Compile Include="Mouvements\Mouvement.cs" />
+    <Compile Include="Mouvements\MouvementPied.cs" />
+    <Compile Include="Mouvements\MouvementTapis.cs" />
     <Compile Include="Mouvements\PositionsMouvements.cs" />
     <Compile Include="Ponderations\PoidsTest.cs" />
     <Compile Include="Ponderations\Poids.cs" />
@@ -359,6 +391,13 @@
     <Compile Include="Communications\TrameFactory.cs" />
     <Compile Include="Communications\ConnexionUDP.cs" />
     <Compile Include="Communications\Trame.cs" />
+    <Compile Include="TestCode.cs" />
+    <EmbeddedResource Include="IHM\PanelAnalogique.resx">
+      <DependentUpon>PanelAnalogique.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="IHM\PanelBaliseUnique.resx">
+      <DependentUpon>PanelBaliseUnique.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="IHM\PanelConstantes.resx">
       <DependentUpon>PanelConstantes.cs</DependentUpon>
     </EmbeddedResource>
@@ -564,6 +603,8 @@
     <None Include="img\ClapJaune.png" />
     <None Include="img\ClapJauneOuvert.png" />
     <None Include="img\ClapVertOuvert.png" />
+    <None Include="img\Fermee.png" />
+    <None Include="img\FermerPince.png" />
     <Content Include="img\IconeVitesse.png" />
     <None Include="img\Pompe.png" />
     <None Include="img\Recale.png" />
@@ -576,6 +617,21 @@
     <None Include="img\PositionBalises2.png" />
     <None Include="img\Splash.png" />
     <None Include="img\TablePlan.png" />
+    <None Include="img\PathCentre.png" />
+    <None Include="img\TeleportCentre.png" />
+    <None Include="img\PathFace.png" />
+    <None Include="img\TeleportFace.png" />
+    <None Include="img\Refresh.png" />
+    <None Include="img\Rail.png" />
+    <None Include="img\PinceDroiteFermee.png" />
+    <None Include="img\PinceGaucheFermee.png" />
+    <None Include="img\PinceDroiteOuverte.png" />
+    <None Include="img\PinceGaucheOuverte.png" />
+    <None Include="img\OuvrirPince.png" />
+    <None Include="img\PinceFermeeBas.png" />
+    <None Include="img\PinceFermeeHaut.png" />
+    <None Include="img\PinceOuverteBas.png" />
+    <None Include="img\PinceOuverteHaut.png" />
     <Content Include="robot.ico" />
   </ItemGroup>
   <ItemGroup>

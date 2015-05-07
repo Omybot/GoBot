@@ -16,12 +16,31 @@ namespace GoBot.Actions
         {
             switch (servo)
             {
-                case ServomoteurID.GRDroitePinceDroite:
-                    return "servo droite pince droite";
-                case ServomoteurID.GRGauchePinceDroite:
-                    return "servo gauche pince droite";
+                case ServomoteurID.Tous:
+                    return "tous les servomoteurs";
+                case ServomoteurID.AscenseurDroitPinceBasDroite:
+                    return "servo pince droite bas droit";
+                case ServomoteurID.AscenseurDroitPinceBasGauche:
+                    return "servo pince droite bas gauche";
+                case ServomoteurID.AscenseurDroitPinceHautDroite:
+                    return "servo pince droite haut droit";
+                case ServomoteurID.AscenseurDroitPinceHautGauche:
+                    return "servo pince droite haut gauche";
+                case ServomoteurID.AscenseurGauchePinceBasDroite:
+                    return "servo pince gauche bas droit";
+                case ServomoteurID.AscenseurGauchePinceBasGauche:
+                    return "servo pince gauche bas gauche";
+                case ServomoteurID.AscenseurGauchePinceHautDroite:
+                    return "servo pince gauche haut droit";
+                case ServomoteurID.AscenseurGauchePinceHautGauche:
+                    return "servo pince gauche haut gauche";
+                case ServomoteurID.PinceAmpoule:
+                    return "servo pince attrapage balle";
                 default:
-                    return servo.ToString();
+                    if (servo.ToString().Contains("zzLibre"))
+                        return "servo n°" + (int)servo;
+                    else
+                        return servo.ToString();
             }
         }
 
@@ -41,18 +60,26 @@ namespace GoBot.Actions
             }
         }
 
-        public static String Nommer(CapteurOnOff capteur)
+        public static String Nommer(CapteurOnOffID capteur)
         {
             switch (capteur)
             {
-                case CapteurOnOff.GRPresenceBouchon:
-                    return "présence bouchon";
-                case CapteurOnOff.GRFeu1:
-                    return "feu étage 1";
-                case CapteurOnOff.GRFeu2:
-                    return "feu étage 2";
-                case CapteurOnOff.GRFeu3:
-                    return "feu étage 3";
+                case CapteurOnOffID.SwitchBrasDroitBas:
+                    return "présence pied bras droit bas";
+                case CapteurOnOffID.SwitchBrasDroitHaut:
+                    return "présence pied bras droit haut";
+                case CapteurOnOffID.SwitchBrasGaucheBas:
+                    return "présence pied bras gauche bas";
+                case CapteurOnOffID.SwitchBrasGaucheHaut:
+                    return "présence pied bras gauche haut";
+                case CapteurOnOffID.OptiqueBrasDroit:
+                    return "présence pied bras droit au sol";
+                case CapteurOnOffID.OptiqueBrasGauche:
+                    return "présence pied bras gauche au sol";
+                case CapteurOnOffID.SwitchBrasDroiteOrigine:
+                    return "prise d'origine bras droite";
+                case CapteurOnOffID.SwitchBrasGaucheOrigine:
+                    return "prise d'origine bras gauche";
                 default :
                     return capteur.ToString();
             }
@@ -62,8 +89,14 @@ namespace GoBot.Actions
         {
             switch (moteur)
             {
-                case MoteurID.GRAscenseurDroite:
+                case MoteurID.AscenseurDroit:
                     return "ascenseur droite";
+                case MoteurID.AscenseurGauche:
+                    return "ascenseur gauche";
+                case MoteurID.Balise:
+                    return "balise";
+                case MoteurID.AscenseurAmpoule:
+                    return "ascenseur ampoule";
                 default:
                     return moteur.ToString();
             }
@@ -95,7 +128,7 @@ namespace GoBot.Actions
         {
             switch (actionneur)
             {
-                case ActionneurOnOffID.GRAlimentation:
+                case ActionneurOnOffID.Alimentation:
                     return "alimentation";
                 default:
                     return actionneur.ToString();
@@ -106,11 +139,33 @@ namespace GoBot.Actions
         {
             switch (capteur)
             {
-                case CapteurID.GRJack:
+                case CapteurID.Jack:
                     return "jack";
+                case CapteurID.Balise:
+                    return "balise";
+                case CapteurID.BaliseRapide1:
+                    return "balise capteur 1";
+                case CapteurID.BaliseRapide2:
+                    return "balise capteur 2";
                 default:
                     return capteur.ToString();
             }
+        }
+
+        public static String Nommer(object o)
+        {
+            if (o is CapteurID)
+                return Nommer((CapteurID)o);
+            else if (o is CapteurOnOffID)
+                return Nommer((CapteurOnOffID)o);
+            else if (o is ActionneurOnOffID)
+                return Nommer((ActionneurOnOffID)o);
+            else if (o is ServomoteurID)
+                return Nommer((ServomoteurID)o);
+            else if (o is MoteurID)
+                return Nommer((MoteurID)o);
+            else
+                return "";
         }
     }
 }

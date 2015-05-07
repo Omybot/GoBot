@@ -9,11 +9,13 @@ using System.Xml.Serialization;
 using Microsoft.Win32;
 using GoBot.Communications;
 using System.Drawing;
+using GoBot.Actionneurs;
+using System.Reflection;
 
 namespace GoBot
 {
     [Serializable]
-    public class Config
+    public partial class Config
     {
         /// <summary>
         /// Permet de savoir si l'application est mode Design (concepteur graphique) ou en cours d'execution
@@ -30,6 +32,24 @@ namespace GoBot
         public static String DateLancementString { get { return Config.DateLancement.Year.ToString("0000") + "." + Config.DateLancement.Month.ToString("00") + "." + Config.DateLancement.Day.ToString("00") + " " + Config.DateLancement.Hour.ToString("00") + "h" + Config.DateLancement.Minute.ToString("00") + "m" + Config.DateLancement.Second.ToString("00") + "s"; } }
 
         private static Config config = null;
+
+        public static List<Positionnable> Positionnables { get; set; }
+
+        public static void ChargerPositionnables()
+        {
+            Positionnables = new List<Positionnable>();
+            PropertyInfo[] proprietes = typeof(Config).GetProperties();
+            foreach (PropertyInfo p in proprietes)
+            {
+                if (p.PropertyType.IsSubclassOf(typeof(Positionnable)))
+                {
+                    if (p.GetValue(Config.CurrentConfig, null) == null)
+                        p.SetValue(Config.CurrentConfig, Activator.CreateInstance(p.PropertyType), null);
+
+                    Positionnables.Add((Positionnable)(p.GetValue(Config.CurrentConfig, null)));
+                }
+            }
+        }
 
         public int AfficheDetailTraj { get; set; }
 
@@ -144,12 +164,31 @@ namespace GoBot
 
         // Position des servos du gros robot
 
-        public int PositionGRDroitePinceDroiteFerme { get; set; }
-        public int PositionGRDroitePinceDroiteOuvert { get; set; }
-        public int PositionGRGauchePinceDroiteFerme { get; set; }
-        public int PositionGRGauchePinceDroiteOuvert { get; set; }
-        public int PositionGRBasPinceDroite { get; set; }
-        public int PositionGRHautPinceDroite { get; set; }
+        public int PositionGRBrasDroitPinceBasDroiteFerme { get; set; }
+        public int PositionGRBrasDroitPinceBasDroiteOuverte { get; set; }
+        public int PositionGRBrasDroitPinceBasGaucheFermee { get; set; }
+        public int PositionGRBrasDroitPinceBasGaucheOuverte { get; set; }
+
+        public int PositionGRBrasDroitPinceHautDroiteFerme { get; set; }
+        public int PositionGRBrasDroitPinceHautDroiteOuverte { get; set; }
+        public int PositionGRBrasDroitPinceHautGaucheFermee { get; set; }
+        public int PositionGRBrasDroitPinceHautGaucheOuverte { get; set; }
+
+        public int PositionGRBrasGauchePinceBasDroiteFerme { get; set; }
+        public int PositionGRBrasGauchePinceBasDroiteOuverte { get; set; }
+        public int PositionGRBrasGauchePinceBasGaucheFermee { get; set; }
+        public int PositionGRBrasGauchePinceBasGaucheOuverte { get; set; }
+
+        public int PositionGRBrasGauchePinceHautDroiteFerme { get; set; }
+        public int PositionGRBrasGauchePinceHautDroiteOuverte { get; set; }
+        public int PositionGRBrasGauchePinceHautGaucheFermee { get; set; }
+        public int PositionGRBrasGauchePinceHautGaucheOuverte { get; set; }
+
+        public int PositionGRPinceDroiteHauteurBasse { get; set; }
+        public int PositionGRPinceDroiteHauteurHaute { get; set; }
+
+        public int PositionGRPinceGaucheHauteurBasse { get; set; }
+        public int PositionGRPinceGaucheHauteurHaute { get; set; }
 
         // Positions servos petit robot
 
@@ -414,6 +453,7 @@ namespace GoBot
                 using (FileStream myFileStream = new FileStream(PathData + "/config.xml", FileMode.Open))
                     CurrentConfig = (Config)mySerializer.Deserialize(myFileStream);
 
+                ChargerPositionnables();
                 CurrentConfig.AfficheDetailTraj = 0;
             }
             catch (Exception)

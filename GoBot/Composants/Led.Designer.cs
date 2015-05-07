@@ -28,12 +28,14 @@
         /// </summary>
         private void InitializeComponent()
         {
+            ((System.ComponentModel.ISupportInitialize)(this)).BeginInit();
             this.SuspendLayout();
             // 
             // Led
             // 
-            this.Name = "Led";
+            this.BackColor = System.Drawing.Color.Transparent;
             this.Size = new System.Drawing.Size(16, 16);
+            ((System.ComponentModel.ISupportInitialize)(this)).EndInit();
             this.ResumeLayout(false);
 
         }

@@ -227,10 +227,6 @@ namespace GoBot.IHM
             lblBunDroite.Visible = false;
             lblBoiDroite.Visible = false;
             lblBeuDroite.Visible = false;
-
-            Balise.GetBalise(Carte.RecBun).Position = new Position(new Angle(90, AnglyeType.Degre), new PointReel(-Balise.DISTANCE_LASER_TABLE, -Balise.DISTANCE_LASER_TABLE));
-            Balise.GetBalise(Carte.RecBeu).Position = new Position(new Angle(270, AnglyeType.Degre), new PointReel(-Balise.DISTANCE_LASER_TABLE, Plateau.LargeurPlateau + Balise.DISTANCE_LASER_TABLE));
-            Balise.GetBalise(Carte.RecBoi).Position = new Position(new Angle(180, AnglyeType.Degre), new PointReel(Plateau.LongueurPlateau + Balise.DISTANCE_LASER_TABLE, Plateau.LargeurPlateau / 2));
         }
 
         public void CouleurDroite()
@@ -244,10 +240,6 @@ namespace GoBot.IHM
             lblBunDroite.Visible = true;
             lblBoiDroite.Visible = true;
             lblBeuDroite.Visible = true;
-
-            Balise.GetBalise(Carte.RecBeu).Position = new Position(new Angle(90, AnglyeType.Degre), new PointReel(Plateau.LongueurPlateau + Balise.DISTANCE_LASER_TABLE, -Balise.DISTANCE_LASER_TABLE));
-            Balise.GetBalise(Carte.RecBun).Position = new Position(new Angle(270, AnglyeType.Degre), new PointReel(Plateau.LongueurPlateau + Balise.DISTANCE_LASER_TABLE, Plateau.LargeurPlateau + Balise.DISTANCE_LASER_TABLE));
-            Balise.GetBalise(Carte.RecBoi).Position = new Position(new Angle(0, AnglyeType.Degre), new PointReel(-Balise.DISTANCE_LASER_TABLE, Plateau.LargeurPlateau / 2));
         }
 
         Thread thRecallageGros;
@@ -256,10 +248,10 @@ namespace GoBot.IHM
             if (!Robots.GrosRobot.GetJack(false))
             {
                 MessageBox.Show("Jack absent !" + Environment.NewLine + "Jack nécessaire avant de commencer à recaller.", "Attention", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                return;
+                //return;
             }
 
-            thRecallageGros = new Thread(RecallagesGros);
+            thRecallageGros = new Thread(RecallageGros);
             thRecallageGros.Start();
 
             if (boxPetit.Checked)
@@ -290,7 +282,7 @@ namespace GoBot.IHM
         /// <summary>
         /// Première partie du recallage : Le robot doit terminer dans une position connue pour la calibration des balises
         /// </summary>
-        public void RecallagesGros()
+        public void RecallageGros()
         {
             // Recallage du gros robot
 

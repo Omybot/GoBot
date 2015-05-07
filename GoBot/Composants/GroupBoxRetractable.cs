@@ -80,7 +80,8 @@ namespace Composants
                 this.Height = hauteurTotale;
             }
 
-            DeploiementChange(true);
+            if(DeploiementChange != null)
+                DeploiementChange(true);
         }
 
         void timerDeploi_Tick(object sender, EventArgs e)
@@ -143,7 +144,8 @@ namespace Composants
                 btnFleche.Visible = true;
             }
 
-            DeploiementChange(false);
+            if(DeploiementChange != null)
+                DeploiementChange(false);
         }
 
         public delegate void DeploiementDelegate(bool deploye);

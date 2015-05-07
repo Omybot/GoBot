@@ -17,6 +17,7 @@ namespace Composants
         public Led()
         {
             InitializeComponent();
+            BackColor = Color.Transparent;
             timer = new Timer();
             timer.Interval = 100;
             timer.Tick += new EventHandler(timer_Tick);

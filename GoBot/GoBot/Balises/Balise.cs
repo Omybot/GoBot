@@ -158,6 +158,8 @@ namespace GoBot.Balises
         /// </summary>
         public List<DetectionBalise> Detections { get; set; }
 
+        public List<DetectionBalise> DetectionsRapides { get; set; }
+
         /// <summary>
         /// Vitesse appliqué à la pwm à appliquer
         /// </summary>
@@ -305,6 +307,8 @@ namespace GoBot.Balises
             Connexion.SendMessage(t);
         }
 
+        private int nbDetectionsRapides = 0;
+
         /// <summary>
         /// Réception d'un message envoyé par la carte de la balise
         /// </summary>
@@ -320,15 +324,44 @@ namespace GoBot.Balises
                 if (trame[0] != (byte)Carte)
                     return;
 
+                if (trame[1] == (byte)FonctionBalise.DetectionRapide)
+                {
+                    int capteur = trame[2];
+
+                    double debut = 360 - ((trame[3] * 256 + trame[4]) / 100.0) + Config.CurrentConfig.GetOffsetBalise(Carte, Plateau.NotreCouleur, capteur);
+                    double fin = 360 - ((trame[5] * 256 + trame[6]) / 100.0) + Config.CurrentConfig.GetOffsetBalise(Carte, Plateau.NotreCouleur, capteur);
+
+                    debut = debut + Position.Angle;
+                    fin = fin + Position.Angle;
+
+                    if (this == Plateau.Balise3)
+                    {
+                        debut = (debut + 180) % 360;
+                        fin = (fin + 180) % 360;
+                    }
+
+                    if (DetectionsRapides == null)
+                        DetectionsRapides = new List<DetectionBalise>();
+
+                    DetectionsRapides.Add(new DetectionBalise(this, debut, fin));
+                    nbDetectionsRapides++;
+                }
+
                 if (trame[1] == (byte)FonctionBalise.Detection)
                 {
+                    // Vide les détections rapides datant de plus d'un tour
+                    for (int i = 0; i < DetectionsRapides.Count - nbDetectionsRapides; i++ )
+                        DetectionsRapides.RemoveAt(0);
+
+                    nbDetectionsRapides = 0;
+
                     // Réception d'une mesure sur un tour de rotation
                     // Vérification checksum
                     cptRotation++;
 
                     // Calcul de la vitesse de rotation
                     int nbTicks = trame[2] * 256 + trame[3];
-                    VitesseToursSecActuelle = 400.0 / (nbTicks * 0.0064);
+                    VitesseToursSecActuelle = 1 / (nbTicks * 0.0000064);
 
                     int nouvelleVitesse = 0;
                     if (ReglageVitesse)
@@ -384,6 +417,10 @@ namespace GoBot.Balises
                     {
                         double debut = 360 - (tabAngle[i * 2] / 100.0) + Config.CurrentConfig.GetOffsetBalise(Carte, Plateau.NotreCouleur, 1);
                         double fin = 360 - (tabAngle[i * 2 + 1] / 100.0) + Config.CurrentConfig.GetOffsetBalise(Carte, Plateau.NotreCouleur, 1);
+
+                        debut = debut + Position.Angle;
+                        fin = fin + Position.Angle;
+
                         if (this == Plateau.Balise3)
                         {
                             debut = (debut + 180) % 360;
@@ -426,6 +463,10 @@ namespace GoBot.Balises
                     {
                         double debut = 360 - (tabAngle[i * 2] / 100.0) + Config.CurrentConfig.GetOffsetBalise(Carte, Plateau.NotreCouleur, 2);
                         double fin = 360 - (tabAngle[i * 2 + 1] / 100.0) + Config.CurrentConfig.GetOffsetBalise(Carte, Plateau.NotreCouleur, 2);
+
+                        debut = debut + Position.Angle;
+                        fin = fin + Position.Angle;
+
                         if (this == Plateau.Balise3)
                         {
                             debut = (debut + 180) % 360;

@@ -579,9 +579,9 @@ namespace GoBot.Balises
 
         #endregion
 
-        /*//Déclaration du délégué pour l’évènement de position des ennemis
+        //Déclaration du délégué pour l’évènement de position des ennemis
         public delegate void PositionEnnemisDelegate(InterpreteurBalise interprete);
         //Déclaration de l’évènement utilisant le délégué
-        public event PositionEnnemisDelegate PositionEnnemisActualisee;*/
+        public event PositionEnnemisDelegate PositionEnnemisActualisee;
     }
 }

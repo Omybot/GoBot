@@ -10,18 +10,24 @@ namespace GoBot.Communications
         CommandeServo = 0x60,
         ChangementBaudrateSerie = 0x61,
 
+        DemandeValeurCapteur = 0x50,
+        RetourValeurCapteur = 0x51,
         ArmerJack = 0x70,
         DepartJack = 0x71,
         DemandeCouleurEquipe = 0x72,
         ReponseCouleurEquipe = 0x73,
         DemandeCapteurOnOff = 0x74,
         RetourCapteurOnOff = 0x75,
+        DemandeValeursAnalogiques = 0x76,
+        RetourValeursAnalogiques = 0x77,
         AspirationPompe = 0x78,
 
         Alimentation = 0x80,
 
         ActionneurOnOff = 0x65,
         MoteurPosition = 0x66,
+        MoteurVitesse = 0x67,
+        MoteurAcceleration = 0x68,
 
         Debug = 0xEE,
 
@@ -62,6 +68,9 @@ namespace GoBot.Communications
         EnvoiPositionAbsolue = 0x37,
 
         CommandeServo = 0x60,
+
+        EnvoiUart = 0xA0,
+        RetourUart = 0xA1,
 
         Debug = 0xEE,
 
@@ -201,6 +210,7 @@ namespace GoBot.Communications
     {
         Vitesse = 0x01,
         Detection = 0xE4,
+        DetectionRapide = 0xE5,
 
         InclinaisonFace = 0x11,
         InclinaisonProfil = 0x10,

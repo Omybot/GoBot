@@ -502,7 +502,10 @@ namespace GoBot.IHM
 
         private void trackBarPosition_TickValueChanged(object sender, EventArgs e)
         {
-            servo.PositionCible = (int)trackBarPosition.Value;
+            if (Servomoteur.servosPololu.ContainsKey((ServomoteurID)numID.Value))
+                Devices.PololuMiniUart.setTarget(Servomoteur.servosPololu[(ServomoteurID)numID.Value], (ushort)trackBarPosition.Value);
+            else
+                servo.PositionCible = (int)trackBarPosition.Value;
         }
 
         private void trackBarVitesse_TickValueChanged(object sender, EventArgs e)
@@ -565,7 +568,13 @@ namespace GoBot.IHM
 
         private void btnChangeID_Click(object sender, EventArgs e)
         {
-            servo.ID = (int)numID.Value;
+            if (!Servomoteur.servosPololu.ContainsKey((ServomoteurID)numID.Value))
+                servo.ID = (int)numID.Value;
+            else
+            {
+                trackBarPosition.Min = 2432;
+                trackBarPosition.Max = 8192;
+            }
         }
 
         private void btnOkPunch_Click(object sender, EventArgs e)

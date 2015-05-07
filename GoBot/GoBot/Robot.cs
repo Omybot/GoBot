@@ -7,6 +7,7 @@ using System.Threading;
 using AStarFolder;
 using GoBot.Calculs.Formes;
 using System.Drawing;
+using GoBot.Actions;
 
 namespace GoBot
 {
@@ -31,7 +32,7 @@ namespace GoBot
         public int Taille { get { return Math.Max(Longueur, Largeur); } }
         public int Longueur { get; set; }
         public int Largeur { get; set; }
-        public int Rayon { get { return (int)Math.Sqrt(Longueur * Longueur + Largeur * Largeur) / 2; } }
+        public int Rayon { get { return (int)Math.Sqrt(Longueur * Longueur + Largeur * Largeur) / 2 - 14; } } // -14 = valeur calculée pour l'année 2015 sur les biseaux
 
         public List<Position> HistoriqueCoordonnees { get; protected set; }
 
@@ -63,7 +64,8 @@ namespace GoBot
         public abstract void EnvoyerPID(int p, int i, int d);
         public abstract List<int>[] MesureTestPid(int consigne, SensAR sens, int nbValeurs);
         public abstract List<double>[] DiagnosticCpuPwm(int nbValeurs);
-        public abstract bool DemandeCapteurOnOff(CapteurOnOff capteur, bool attendre = true);
+        public abstract bool DemandeCapteurOnOff(CapteurOnOffID capteur, bool attendre = true);
+        public abstract void DemandeValeursAnalogiques(bool attendre = true);
 
         public abstract void ActionneurOnOff(ActionneurOnOffID actionneur, bool on);
 
@@ -74,6 +76,25 @@ namespace GoBot
         public abstract void ArmerJack();
         public abstract bool GetJack(bool historique = true);
         public abstract Color GetCouleurEquipe(bool historique = true);
+
+        public Dictionary<CapteurOnOffID, bool> CapteurActive { get; set; }
+        public List<double> ValeursAnalogiques { get; set; }
+
+        //Déclaration du délégué pour l’évènement changement d'état d'un capteurOnOff
+        public delegate void ChangementEtatCapteurOnOffDelegate(CapteurOnOffID capteur, bool etat);
+        //Déclaration de l’évènement utilisant le délégué pour le changement d'état d'un capteurOnOff
+        public event ChangementEtatCapteurOnOffDelegate ChangementEtatCapteurOnOff;
+
+        /// <summary>
+        /// Lance l'évènement de changement d'état d'un capteur
+        /// </summary>
+        /// <param name="capteur"></param>
+        /// <param name="etat"></param>
+        protected void ChangerEtatCapteurOnOff(CapteurOnOffID capteur, bool etat)
+        {
+            CapteurActive[capteur] = etat;
+            ChangementEtatCapteurOnOff(capteur, etat);
+        }
 
         public Dictionary<ServomoteurID, bool> ServoActive { get; set; }
         public Dictionary<MoteurID, bool> MoteurTourne { get; set; }
@@ -113,10 +134,21 @@ namespace GoBot
 
         public abstract void ServoVitesse(ServomoteurID servo, int vitesse);
 
-        public virtual void MoteurPosition(MoteurID moteur, int vitesse)
+        public virtual void MoteurPosition(MoteurID moteur, int position)
+        {
+            Historique.AjouterAction(new ActionMoteur(this, position, moteur));
+        }
+
+        public virtual void MoteurVitesse(MoteurID moteur, int vitesse)
         {
             if (MoteurTourne.ContainsKey(moteur))
                 MoteurTourne[moteur] = vitesse == 0 ? false : true;
+            Historique.AjouterAction(new ActionMoteur(this, vitesse, moteur));
+        }
+
+        public virtual void MoteurAcceleration(MoteurID moteur, int acceleration)
+        {
+            Historique.AjouterAction(new ActionMoteur(this, acceleration, moteur));
         }
 
         public void PositionerAngle(Angle angle, double marge = 0)
@@ -747,6 +779,7 @@ namespace GoBot
                 if (FailTrajectoire)
                     break;
 
+                /* TODO pour éviter l'autre robot de notre équipe : décommenter
                 bool boucler = false;
                 Bloque = false;
                 do
@@ -793,7 +826,7 @@ namespace GoBot
                         nouvelleTrajectoire = true;
                         boucler = false;
                     }
-                } while (boucler);
+                } while (boucler);*/
 
                 Bloque = false;
 

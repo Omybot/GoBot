@@ -37,7 +37,7 @@ namespace GoBot
             }
 
             bool lancement = true;
-#if RELEASE
+#if !DEBUG
             SplashScreen.SetMessage("GoBot recherche\ndes mises à jour...", Color.Black);
             String versionCourante = Application.ProductVersion.Substring(0, Application.ProductVersion.LastIndexOf('.'));
             String derniereVersion;

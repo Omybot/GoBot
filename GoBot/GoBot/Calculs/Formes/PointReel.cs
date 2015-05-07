@@ -9,7 +9,6 @@ namespace GoBot.Calculs.Formes
 {
     public class PointReel : GoBot.Calculs.Formes.IForme
     {
-        // TODO commentaires
         public const double PRECISION = 0.01;
 
         #region Attributs
@@ -35,6 +34,15 @@ namespace GoBot.Calculs.Formes
         {
             posX = 0;
             posY = 0;
+        }
+
+        /// <summary>
+        /// Constructeur par copie
+        /// </summary>
+        public PointReel(PointReel other)
+        {
+            posX = other.posX;
+            posY = other.posY;
         }
 
         /// <summary>

@@ -25,16 +25,22 @@ namespace GoBot.Communications
                         switch ((FonctionIO)trame[1])
                         {
                             case FonctionIO.DemandeCapteurOnOff:
-                                message = "Demande capteur " + Nommeur.Nommer((CapteurOnOff)trame[2]);
+                                message = "Demande capteur " + Nommeur.Nommer((CapteurOnOffID)trame[2]);
                                 break;
                             case FonctionIO.RetourCapteurOnOff:
-                                message = "Retour capteur " + Nommeur.Nommer((CapteurOnOff)trame[2]) + " = " + (((int)trame[3]) > 0 ? "Oui" : "Non");
+                                message = "Retour capteur " + Nommeur.Nommer((CapteurOnOffID)trame[2]) + " = " + (((int)trame[3]) > 0 ? "Oui" : "Non");
                                 break;
                             case FonctionIO.Debug:
                                 message = "Debug " + (int)trame[2];
                                 break;
                             case FonctionIO.MoteurPosition:
                                 message = "Moteur " + Nommeur.Nommer((MoteurID)trame[2]) + " position " + (trame[3] * 256 + trame[4]);
+                                break;
+                            case FonctionIO.MoteurVitesse:
+                                message = "Moteur " + Nommeur.Nommer((MoteurID)trame[2]) + " vitesse " + (trame[3] * 256 + trame[4]);
+                                break;
+                            case FonctionIO.MoteurAcceleration:
+                                message = "Moteur " + Nommeur.Nommer((MoteurID)trame[2]) + " acceleration " + (trame[3] * 256 + trame[4]);
                                 break;
                             case FonctionIO.ActionneurOnOff:
                                 message = "Actionneur " + Nommeur.Nommer((ActionneurOnOffID)trame[2]) + (trame[3] > 0 ? " on" : " off");
@@ -425,7 +431,7 @@ namespace GoBot.Communications
                                 message = "Retour charge : " + nbValeurs + " valeurs (CPU " + cpu + "% - PWM Gauche " + pwmGauche + " - PWM Droite " + pwmDroite;
                                 break;
                             default:
-                                message = ((FonctionMove)trame[2]).ToString();
+                                message = ((FonctionMove)trame[1]).ToString();
                                 break;
                         }
                         break;

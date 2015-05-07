@@ -114,6 +114,10 @@ namespace GoBot
             }
 
             SplashScreen.CloseSplash();
+
+#if DEBUG
+            TestCode.VerificationEnums();
+#endif
         }
 
         public void ChargerReplay(String fichier)
