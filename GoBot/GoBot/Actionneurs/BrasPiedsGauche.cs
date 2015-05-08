@@ -21,62 +21,62 @@ namespace GoBot.Actionneurs
 
         public override int PositionPinceBasDroiteFermee
         {
-            get { return Config.CurrentConfig.PositionGRBrasGauchePinceBasDroiteFerme; }
-            set { Config.CurrentConfig.PositionGRBrasGauchePinceBasDroiteFerme = value; }
+            get { return Config.CurrentConfig.ServoAscenseurGaucheBasDroit.PositionFerme; }
+            set { Config.CurrentConfig.ServoAscenseurGaucheBasDroit.PositionFerme = value; }
         }
 
         public override int PositionPinceBasDroiteOuverte
         {
-            get { return Config.CurrentConfig.PositionGRBrasGauchePinceBasDroiteOuverte; }
-            set { Config.CurrentConfig.PositionGRBrasGauchePinceBasDroiteOuverte = value; }
+            get { return Config.CurrentConfig.ServoAscenseurGaucheBasDroit.PositionOuvert; }
+            set { Config.CurrentConfig.ServoAscenseurGaucheBasDroit.PositionOuvert = value; }
         }
 
         public override int PositionPinceBasGaucheFermee
         {
-            get { return Config.CurrentConfig.PositionGRBrasGauchePinceBasGaucheFermee; }
-            set { Config.CurrentConfig.PositionGRBrasGauchePinceBasGaucheFermee = value; }
+            get { return Config.CurrentConfig.ServoAscenseurGaucheBasGauche.PositionFerme; }
+            set { Config.CurrentConfig.ServoAscenseurGaucheBasGauche.PositionFerme = value; }
         }
 
         public override int PositionPinceBasGaucheOuverte
         {
-            get { return Config.CurrentConfig.PositionGRBrasGauchePinceBasGaucheOuverte; }
-            set { Config.CurrentConfig.PositionGRBrasGauchePinceBasGaucheOuverte = value; }
+            get { return Config.CurrentConfig.ServoAscenseurGaucheBasGauche.PositionOuvert; }
+            set { Config.CurrentConfig.ServoAscenseurGaucheBasGauche.PositionOuvert = value; }
         }
 
         public override int PositionPinceHautDroiteFermee
         {
-            get { return Config.CurrentConfig.PositionGRBrasGauchePinceHautDroiteFerme; }
-            set { Config.CurrentConfig.PositionGRBrasGauchePinceHautDroiteFerme = value; }
+            get { return Config.CurrentConfig.ServoAscenseurGaucheHautDroit.PositionFerme; }
+            set { Config.CurrentConfig.ServoAscenseurGaucheHautDroit.PositionFerme = value; }
         }
 
         public override int PositionPinceHautDroiteOuverte
         {
-            get { return Config.CurrentConfig.PositionGRBrasGauchePinceHautDroiteOuverte; }
-            set { Config.CurrentConfig.PositionGRBrasGauchePinceHautDroiteOuverte = value; }
+            get { return Config.CurrentConfig.ServoAscenseurGaucheHautDroit.PositionOuvert; }
+            set { Config.CurrentConfig.ServoAscenseurGaucheHautDroit.PositionOuvert = value; }
         }
 
         public override int PositionPinceHautGaucheFermee
         {
-            get { return Config.CurrentConfig.PositionGRBrasGauchePinceHautGaucheFermee; }
-            set { Config.CurrentConfig.PositionGRBrasGauchePinceHautGaucheFermee = value; }
+            get { return Config.CurrentConfig.ServoAscenseurGaucheHautGauche.PositionFerme; }
+            set { Config.CurrentConfig.ServoAscenseurGaucheHautGauche.PositionFerme = value; }
         }
 
         public override int PositionPinceHautGaucheOuverte
         {
-            get { return Config.CurrentConfig.PositionGRBrasGauchePinceHautGaucheOuverte; }
-            set { Config.CurrentConfig.PositionGRBrasGauchePinceHautGaucheOuverte = value; }
+            get { return Config.CurrentConfig.ServoAscenseurGaucheHautGauche.PositionOuvert; }
+            set { Config.CurrentConfig.ServoAscenseurGaucheHautGauche.PositionOuvert = value; }
         }
 
         public override int PositionHauteurHaute
         {
-            get { return Config.CurrentConfig.PositionGRPinceGaucheHauteurHaute; }
-            set { Config.CurrentConfig.PositionGRPinceGaucheHauteurHaute = value; }
+            get { return Config.CurrentConfig.AscenseurGauche.PositionHaute; }
+            set { Config.CurrentConfig.AscenseurGauche.PositionHaute = value; }
         }
 
         public override int PositionHauteurBasse
         {
-            get { return Config.CurrentConfig.PositionGRPinceGaucheHauteurBasse; }
-            set { Config.CurrentConfig.PositionGRPinceGaucheHauteurBasse = value; }
+            get { return Config.CurrentConfig.AscenseurGauche.PositionAttrapage; }
+            set { Config.CurrentConfig.AscenseurGauche.PositionAttrapage = value; }
         }
 
         public override ServomoteurID ServoHautGauche { get { return ServomoteurID.AscenseurGauchePinceHautGauche; } }

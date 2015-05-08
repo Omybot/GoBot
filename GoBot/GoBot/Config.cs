@@ -162,36 +162,6 @@ namespace GoBot
         public int CourseBoiProfilMax { get; set; }
         public int CourseBoiProfilOpti { get; set; }
 
-        // Position des servos du gros robot
-
-        public int PositionGRBrasDroitPinceBasDroiteFerme { get; set; }
-        public int PositionGRBrasDroitPinceBasDroiteOuverte { get; set; }
-        public int PositionGRBrasDroitPinceBasGaucheFermee { get; set; }
-        public int PositionGRBrasDroitPinceBasGaucheOuverte { get; set; }
-
-        public int PositionGRBrasDroitPinceHautDroiteFerme { get; set; }
-        public int PositionGRBrasDroitPinceHautDroiteOuverte { get; set; }
-        public int PositionGRBrasDroitPinceHautGaucheFermee { get; set; }
-        public int PositionGRBrasDroitPinceHautGaucheOuverte { get; set; }
-
-        public int PositionGRBrasGauchePinceBasDroiteFerme { get; set; }
-        public int PositionGRBrasGauchePinceBasDroiteOuverte { get; set; }
-        public int PositionGRBrasGauchePinceBasGaucheFermee { get; set; }
-        public int PositionGRBrasGauchePinceBasGaucheOuverte { get; set; }
-
-        public int PositionGRBrasGauchePinceHautDroiteFerme { get; set; }
-        public int PositionGRBrasGauchePinceHautDroiteOuverte { get; set; }
-        public int PositionGRBrasGauchePinceHautGaucheFermee { get; set; }
-        public int PositionGRBrasGauchePinceHautGaucheOuverte { get; set; }
-
-        public int PositionGRPinceDroiteHauteurBasse { get; set; }
-        public int PositionGRPinceDroiteHauteurHaute { get; set; }
-
-        public int PositionGRPinceGaucheHauteurBasse { get; set; }
-        public int PositionGRPinceGaucheHauteurHaute { get; set; }
-
-        // Positions servos petit robot
-
         // Parametres logs UDP
 
         public SerializableDictionary<FonctionBalise, bool> LogsFonctionsBalise { get; set; }

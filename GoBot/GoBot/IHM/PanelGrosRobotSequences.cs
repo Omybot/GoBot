@@ -88,7 +88,7 @@ namespace GoBot.IHM
             Robots.GrosRobot.AccelerationDeplacement = 2000;
 
             Actionneur.BrasAmpoule.Fermer();
-            Thread.Sleep(300);
+            Thread.Sleep(250);
             Actionneur.BrasAmpoule.Monter();
 
             Actionneur.BrasPiedsDroite.OuvrirPinceBas();
