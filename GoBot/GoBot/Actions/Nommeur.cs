@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Reflection;
+using GoBot.Actionneurs;
 
 namespace GoBot.Actions
 {
@@ -36,6 +38,20 @@ namespace GoBot.Actions
                     return "servo pince gauche haut gauche";
                 case ServomoteurID.PinceAmpoule:
                     return "servo pince attrapage balle";
+                case ServomoteurID.AspirateurCoude:
+                    return "servo aspirateur coude";
+                case ServomoteurID.AspirateurEpaule:
+                    return "servo aspirateur épaule";
+                case ServomoteurID.BalleVerouillageDroit:
+                    return "servo verrouillage balle droit";
+                case ServomoteurID.BalleVerouillageGauche:
+                    return "servo verrouillage balle gauche";
+                case ServomoteurID.TapisBras:
+                    return "servo bras tapis";
+                case ServomoteurID.TapisPinceDroite:
+                    return "servo pince tapis droit";
+                case ServomoteurID.TapisPinceGauche:
+                    return "servo pince tapis gauche";
                 default:
                     if (servo.ToString().Contains("zzLibre"))
                         return "servo n°" + (int)servo;
@@ -43,6 +59,8 @@ namespace GoBot.Actions
                         return servo.ToString();
             }
         }
+
+        private static Dictionary<ServomoteurID, PositionnableServo> PositionnableServos = null;
 
         /// <summary>
         /// Retourne le nom de la position en fonction du servomoteur (Ouvert, fermé, etc...)
@@ -52,12 +70,56 @@ namespace GoBot.Actions
         /// <returns></returns>
         public static String Nommer(int position, ServomoteurID servo)
         {
-            switch (servo)
+            PropertyInfo[] proprietes = typeof(Config).GetProperties();
+            foreach (PropertyInfo p in proprietes)
             {
+                if (p.PropertyType.IsSubclassOf(typeof(PositionnableServo)))
+                {
+                    PositionnableServo positionnableServo = (PositionnableServo)(p.GetValue(Config.CurrentConfig, null));
 
-                default:
-                    return position.ToString();
+                    if (positionnableServo.ID == servo)
+                    {
+                        PropertyInfo[] proprietesServo = positionnableServo.GetType().GetProperties();
+                        foreach (PropertyInfo ps in proprietesServo)
+                        {
+                            if (ps.Name.StartsWith("Position") && ((int)(ps.GetValue(positionnableServo, null)) == position))
+                                return Config.PropertyNameToScreen(ps) + " (" + position + ")";
+                        }
+                    }
+                }
             }
+                    
+            return position.ToString();
+        }
+
+        /// <summary>
+        /// Retourne le nom de la position en fonction du moteur (Haut, Bas, etc...)
+        /// </summary>
+        /// <param name="position">Position du moteur</param>
+        /// <param name="moteur">Moteur</param>
+        /// <returns></returns>
+        public static String Nommer(int position, MoteurID moteur)
+        {
+            PropertyInfo[] proprietes = typeof(Config).GetProperties();
+            foreach (PropertyInfo p in proprietes)
+            {
+                if (p.PropertyType.IsSubclassOf(typeof(PositionnableMoteur)))
+                {
+                    PositionnableMoteur positionnableMoteur = (PositionnableMoteur)(p.GetValue(Config.CurrentConfig, null));
+
+                    if (positionnableMoteur.ID == moteur)
+                    {
+                        PropertyInfo[] proprietesMoteur = positionnableMoteur.GetType().GetProperties();
+                        foreach (PropertyInfo ps in proprietesMoteur)
+                        {
+                            if (ps.Name.StartsWith("Position") && ((int)(ps.GetValue(positionnableMoteur, null)) == position))
+                                return Config.PropertyNameToScreen(ps) + " (" + position + ")";
+                        }
+                    }
+                }
+            }
+
+            return position.ToString();
         }
 
         public static String Nommer(CapteurOnOffID capteur)
@@ -99,28 +161,6 @@ namespace GoBot.Actions
                     return "ascenseur ampoule";
                 default:
                     return moteur.ToString();
-            }
-        }
-
-        /// <summary>
-        /// Retourne le nom de la vitesse en fonction du moteur (Arrêter, aspirer, souffler, etc...)
-        /// </summary>
-        /// <param name="position">Vitesse du moteur</param>
-        /// <param name="moteur">Moteur</param>
-        /// <returns></returns>
-        public static String Nommer(int vitesse, MoteurID moteur)
-        {
-            switch (moteur)
-            {
-                /*case MoteurID.GRCanon:
-                    if (vitesse == Config.CurrentConfig.VitessePropulsionBonne)
-                        return "panier (" + vitesse + ")";
-                    else if (vitesse == 0)
-                        return "éteint (0)";
-                    else
-                        return vitesse + "";*/
-                default:
-                    return vitesse.ToString();
             }
         }
 

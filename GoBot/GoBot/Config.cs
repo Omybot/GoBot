@@ -51,6 +51,25 @@ namespace GoBot
             }
         }
 
+        public static string PropertyNameToScreen(PropertyInfo property)
+        {
+            String typeName = property.Name;
+            String nom = "";
+
+            foreach (char c in typeName)
+            {
+                char ch = c;
+                if (c <= 'Z')
+                    nom += " " + (char)(c + 32);
+                else
+                    nom += c;
+            }
+
+            nom = typeName.Substring(0, 1) + nom.Substring(2);
+
+            return nom;
+        }
+
         public int AfficheDetailTraj { get; set; }
 
         // Batteries

@@ -34,7 +34,7 @@ namespace GoBot.Communications
                                 message = "Debug " + (int)trame[2];
                                 break;
                             case FonctionIO.MoteurPosition:
-                                message = "Moteur " + Nommeur.Nommer((MoteurID)trame[2]) + " position " + (trame[3] * 256 + trame[4]);
+                                message = "Moteur " + Nommeur.Nommer((MoteurID)trame[2]) + " position " + Nommeur.Nommer((trame[3] * 256 + trame[4]), (MoteurID)trame[2]);
                                 break;
                             case FonctionIO.MoteurVitesse:
                                 message = "Moteur " + Nommeur.Nommer((MoteurID)trame[2]) + " vitesse " + (trame[3] * 256 + trame[4]);

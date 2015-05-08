@@ -56,7 +56,7 @@ namespace GoBot.IHM
             {
                 if (property.Name != "ID")
                 {
-                    noms.Add(PropertyNameToScreen(property) + " - " + property.GetValue(positionnable, null));
+                    noms.Add(Config.PropertyNameToScreen(property) + " - " + property.GetValue(positionnable, null));
                     dicProperties.Add(noms[noms.Count - 1], property);
                 }
             }
@@ -66,25 +66,6 @@ namespace GoBot.IHM
 
             trackBarValeurPosition.Min = positionnable.Minimum;
             trackBarValeurPosition.Max = positionnable.Maximum;
-        }
-
-        public string PropertyNameToScreen(PropertyInfo property)
-        {
-            String typeName = property.Name;
-            String nom = "";
-
-            foreach (char c in typeName)
-            {
-                char ch = c;
-                if (c <= 'Z')
-                    nom += " " + (char)(c + 32);
-                else
-                    nom += c;
-            }
-
-            nom = typeName.Substring(0, 1) + nom.Substring(2);
-
-            return nom;
         }
 
         private void comboBoxPosition_SelectedValueChanged(object sender, EventArgs e)

@@ -31,6 +31,13 @@ namespace GoBot
         AspirateurEpaule = 5,
         AspirateurCoude = 2,
 
+        TapisBras = 50,
+        TapisPinceGauche = 51,
+        TapisPinceDroite = 52,
+
+        BalleVerouillageGauche = 53,
+        BalleVerouillageDroit = 54,
+
         AscenseurDroitPinceBasDroite = 10,
         AscenseurDroitPinceBasGauche = 11,
         AscenseurDroitPinceHautDroite = 12,
