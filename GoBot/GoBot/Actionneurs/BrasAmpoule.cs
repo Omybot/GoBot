@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using GoBot.Communications;
+using System.Threading;
 
 namespace GoBot.Actionneurs
 {
@@ -9,27 +11,22 @@ namespace GoBot.Actionneurs
     {
         public void Monter()
         {
-            Robots.GrosRobot.MoteurPosition(MoteurID.AscenseurAmpoule, 13000);
+            Robots.GrosRobot.MoteurPosition(MoteurID.AscenseurAmpoule, Config.CurrentConfig.AscenseurAmpoule.PositionHaute);
         }
 
         public void Descendre()
         {
-            Robots.GrosRobot.MoteurPosition(MoteurID.AscenseurAmpoule, 700);
+            Robots.GrosRobot.MoteurPosition(MoteurID.AscenseurAmpoule, Config.CurrentConfig.AscenseurAmpoule.PositionAttrapage);
         }
 
         public void Ouvrir()
         {
-            Robots.GrosRobot.BougeServo(ServomoteurID.PinceAmpoule, 585);
-        }
-
-        public void OuvrirAttrapage()
-        {
-            Robots.GrosRobot.BougeServo(ServomoteurID.PinceAmpoule, 500);
+            Robots.GrosRobot.BougeServo(ServomoteurID.PinceAmpoule, Config.CurrentConfig.ServoAttrapageAmpoule.PositionOuvert);
         }
 
         public void Fermer()
         {
-            Robots.GrosRobot.BougeServo(ServomoteurID.PinceAmpoule, 253);
+            Robots.GrosRobot.BougeServo(ServomoteurID.PinceAmpoule, Config.CurrentConfig.ServoAttrapageAmpoule.PositionFerme);
         }
 
         public void Hauteur(int hauteur)
@@ -39,7 +36,12 @@ namespace GoBot.Actionneurs
 
         public void AscenseurCalibration()
         {
-            // TODO
+            Fermer();
+            Thread.Sleep(200);
+            Monter();
+            Thread.Sleep(200);
+
+            Connexions.ConnexionIO.SendMessage(TrameFactory.CalibrationAscenseurAmpoule());
         }
     }
 }

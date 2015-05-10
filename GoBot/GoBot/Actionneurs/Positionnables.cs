@@ -24,8 +24,10 @@ namespace GoBot
 
         public ServoAspirateurCoude ServoAspirateurCoude { get; set; }
         public ServoAspirateurEpaule ServoAspirateurEpaule { get; set; }
+        public ServoAspirateurTurbine ServoAspirateurTurbine { get; set; }
 
         public AscenseurAmpoule AscenseurAmpoule { get; set; }
+        public ServoAttrapageAmpoule ServoAttrapageAmpoule { get; set; }
         public AscenseurDroit AscenseurDroit { get; set; }
         public AscenseurGauche AscenseurGauche { get; set; }
 
@@ -160,6 +162,7 @@ namespace GoBot.Actionneurs
 
         public int PositionOuvert { get; set; }
         public int PositionFerme { get; set; }
+        public int PositionLibere { get; set; }
     }
 
     public class ServoBalleVerrouillageGauche : PositionnableServo
@@ -168,6 +171,7 @@ namespace GoBot.Actionneurs
 
         public int PositionOuvert { get; set; }
         public int PositionFerme { get; set; }
+        public int PositionLibere { get; set; }
     }
 
     #endregion
@@ -190,6 +194,23 @@ namespace GoBot.Actionneurs
         public int PositionRange { get; set; }
         public int PositionAspiration { get; set; }
         public int PositionDepose { get; set; }
+    }
+
+    public class ServoAspirateurTurbine : PositionnableServo
+    {
+        public override ServomoteurID ID { get { return ServomoteurID.AspirateurTurbine; } }
+
+        public int Aspiration { get; set; }
+        public int Maintien { get; set; }
+        public int Eteint { get; set; }
+    }
+
+    public class ServoAttrapageAmpoule : PositionnableServo
+    {
+        public override ServomoteurID ID { get { return ServomoteurID.PinceAmpoule; } }
+
+        public int PositionOuvert { get; set; }
+        public int PositionFerme { get; set; }
     }
 
     #endregion

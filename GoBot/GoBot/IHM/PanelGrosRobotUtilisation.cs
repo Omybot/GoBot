@@ -24,6 +24,8 @@ namespace GoBot.IHM
             ledBrasDroitSwitchBas.SetBounds(ledBrasDroitSwitchBas.Left - pictureBoxBrasDroit.Left, ledBrasDroitSwitchBas.Top - pictureBoxBrasDroit.Top, ledBrasDroitSwitchBas.Width, ledBrasDroitSwitchBas.Height);
             ledBrasDroitSwitchHaut.SetBounds(ledBrasDroitSwitchHaut.Left - pictureBoxBrasDroit.Left, ledBrasDroitSwitchHaut.Top - pictureBoxBrasDroit.Top, ledBrasDroitSwitchHaut.Width, ledBrasDroitSwitchHaut.Height);
             ledBarriereOptiqueDroite.SetBounds(ledBarriereOptiqueDroite.Left - pictureBoxBrasDroit.Left, ledBarriereOptiqueDroite.Top - pictureBoxBrasDroit.Top, ledBarriereOptiqueDroite.Width, ledBarriereOptiqueDroite.Height);
+            Actionneur.BrasPiedsDroite.DetectionChange += BrasPiedsDroite_DetectionChange;
+            Actionneur.BrasPiedsDroite.NbPiedsChange += BrasPiedsDroite_NbPiedsChange;
 
             ledBrasGaucheSwitchHaut.Parent = pictureBoxBrasGauche;
             ledBrasGaucheSwitchBas.Parent = pictureBoxBrasGauche;
@@ -31,6 +33,8 @@ namespace GoBot.IHM
             ledBrasGaucheSwitchBas.SetBounds(ledBrasGaucheSwitchBas.Left - pictureBoxBrasGauche.Left, ledBrasGaucheSwitchBas.Top - pictureBoxBrasGauche.Top, ledBrasGaucheSwitchBas.Width, ledBrasGaucheSwitchBas.Height);
             ledBrasGaucheSwitchHaut.SetBounds(ledBrasGaucheSwitchHaut.Left - pictureBoxBrasGauche.Left, ledBrasGaucheSwitchHaut.Top - pictureBoxBrasGauche.Top, ledBrasGaucheSwitchHaut.Width, ledBrasGaucheSwitchHaut.Height);
             ledBarriereOptiqueGauche.SetBounds(ledBarriereOptiqueGauche.Left - pictureBoxBrasGauche.Left, ledBarriereOptiqueGauche.Top - pictureBoxBrasGauche.Top, ledBarriereOptiqueGauche.Width, ledBarriereOptiqueGauche.Height);
+            Actionneur.BrasPiedsGauche.DetectionChange += BrasPiedsGauche_DetectionChange;
+            Actionneur.BrasPiedsGauche.NbPiedsChange += BrasPiedsGauche_NbPiedsChange;
 
             if(!Config.DesignMode)
                 Robots.GrosRobot.ChangementEtatCapteurOnOff += new Robot.ChangementEtatCapteurOnOffDelegate(GrosRobot_ChangementEtatCapteurOnOff);
@@ -39,6 +43,32 @@ namespace GoBot.IHM
             tooltip.InitialDelay = 1500;
 
             groupBoxUtilisation.DeploiementChange += new Composants.GroupBoxRetractable.DeploiementDelegate(groupBoxUtilisation_Deploiement);
+        }
+
+        void BrasPiedsDroite_NbPiedsChange(int nbPieds)
+        {
+            lblNbPiedsDroit.Text = nbPieds.ToString();
+        }
+
+        void BrasPiedsGauche_NbPiedsChange(int nbPieds)
+        {
+            lblNbPiedsGauche.Text = nbPieds.ToString();
+        }
+
+        void BrasPiedsGauche_DetectionChange(bool detection)
+        {
+            if (detection)
+                ledBarriereOptiqueGauche.CouleurVert();
+            else
+                ledBarriereOptiqueGauche.CouleurRouge();
+        }
+
+        void BrasPiedsDroite_DetectionChange(bool detection)
+        {
+            if (detection)
+                ledBarriereOptiqueDroite.CouleurVert();
+            else
+                ledBarriereOptiqueDroite.CouleurRouge();
         }
 
         void GrosRobot_ChangementEtatCapteurOnOff(CapteurOnOffID capteur, bool etat)
@@ -116,28 +146,26 @@ namespace GoBot.IHM
 
         private void btnDiagnostic_Click(object sender, EventArgs e)
         {
-            Robots.GrosRobot.DemandeCapteurOnOff(CapteurOnOffID.SwitchBrasDroiteOrigine);
-            Robots.GrosRobot.DemandeCapteurOnOff(CapteurOnOffID.OptiqueBrasDroit);
-            Robots.GrosRobot.DemandeCapteurOnOff(CapteurOnOffID.OptiqueBrasGauche);
-            Robots.GrosRobot.DemandeCapteurOnOff(CapteurOnOffID.SwitchBrasDroitBas);
-            Robots.GrosRobot.DemandeCapteurOnOff(CapteurOnOffID.SwitchBrasDroitHaut);
-            Robots.GrosRobot.DemandeCapteurOnOff(CapteurOnOffID.SwitchBrasGaucheBas);
-            Robots.GrosRobot.DemandeCapteurOnOff(CapteurOnOffID.SwitchBrasGaucheHaut);
-            Robots.GrosRobot.DemandeCapteurOnOff(CapteurOnOffID.SwitchBrasGaucheOrigine);
-            //Robots.GrosRobot.Diagnostic();
+            Robots.GrosRobot.Diagnostic();
         }
 
         bool brasGauchePinceMontee = false;
+        bool brasGaucheAmpouleBloquee = false;
         bool brasGauchePinceHautGaucheFermee = false;
         bool brasGauchePinceHautDroiteFermee = false;
         bool brasGauchePinceBasGaucheFermee = false;
         bool brasGauchePinceBasDroiteFermee = false;
 
         bool brasDroitPinceMontee = false;
+        bool brasDroitAmpouleBloquee = false;
         bool brasDroitPinceHautGaucheFermee = false;
         bool brasDroitPinceHautDroiteFermee = false;
         bool brasDroitPinceBasGaucheFermee = false;
         bool brasDroitPinceBasDroiteFermee = false;
+
+        bool brasTapisMonte = true;
+        bool brasTapisGaucheFermee = false;
+        bool brasTapisDroiteFermee = false;
 
         private void btnHauteurBrasGauche_Click(object sender, EventArgs e)
         {
@@ -618,6 +646,126 @@ namespace GoBot.IHM
         private void btnCalibrationAscenseurAmpoule_Click(object sender, EventArgs e)
         {
             Actionneur.BrasAmpoule.AscenseurCalibration();
+            pinceMontee = false;
+            pinceOuverte = false;
+            DessinePince();
+        }
+
+        private void btnAspirateurAspiration_Click(object sender, EventArgs e)
+        {
+            Actionneur.BrasAspirateur.PositionAspire();
+        }
+
+        private void btnAspirateurDepose_Click(object sender, EventArgs e)
+        {
+            Actionneur.BrasAspirateur.PositionDepose();
+        }
+
+        private void btnAspirateurRange_Click(object sender, EventArgs e)
+        {
+            Actionneur.BrasAspirateur.PositionRange();
+        }
+
+        private void btnTurbineOn_Click(object sender, EventArgs e)
+        {
+            Actionneur.BrasAspirateur.Aspirer();
+        }
+
+        private void btnTurbineOff_Click(object sender, EventArgs e)
+        {
+            Actionneur.BrasAspirateur.Arreter();
+        }
+
+        private void btnTurbineMaintien_Click(object sender, EventArgs e)
+        {
+            Actionneur.BrasAspirateur.Maintenir();
+        }
+
+        private void btnBrasTapisHauteur_Click(object sender, EventArgs e)
+        {
+            brasTapisMonte = !brasTapisMonte;
+            SuspendLayout();
+
+            if (brasTapisMonte)
+            {
+                pictureBoxBrasTapis.Image = Properties.Resources.BrasTapisHaut;
+                btnBrasTapisHauteur.Image = Properties.Resources.virageArDr2;
+                btnBrasTapisPinceDroite.SetBounds(btnBrasTapisPinceDroite.Location.X - 55, btnBrasTapisPinceDroite.Location.Y - 25, btnBrasTapisPinceDroite.Width, btnBrasTapisPinceDroite.Height);
+                btnBrasTapisPinceGauche.SetBounds(btnBrasTapisPinceGauche.Location.X - 60, btnBrasTapisPinceGauche.Location.Y, btnBrasTapisPinceGauche.Width, btnBrasTapisPinceGauche.Height);
+                Actionneur.BrasTapis.Monter();
+            }
+            else
+            {
+                pictureBoxBrasTapis.Image = Properties.Resources.BrasTapisBas;
+                btnBrasTapisHauteur.Image = Properties.Resources.VirageAvGa;
+                btnBrasTapisPinceDroite.SetBounds(btnBrasTapisPinceDroite.Location.X + 55, btnBrasTapisPinceDroite.Location.Y + 25, btnBrasTapisPinceDroite.Width, btnBrasTapisPinceDroite.Height);
+                btnBrasTapisPinceGauche.SetBounds(btnBrasTapisPinceGauche.Location.X + 60, btnBrasTapisPinceGauche.Location.Y, btnBrasTapisPinceGauche.Width, btnBrasTapisPinceDroite.Height);
+                Actionneur.BrasTapis.Descendre();
+            }
+
+            ResumeLayout();
+        }
+
+        private void btnBrasTapisPinceGauche_Click(object sender, EventArgs e)
+        {
+            brasTapisGaucheFermee = !brasTapisGaucheFermee;
+
+            if (brasTapisGaucheFermee)
+            {
+                btnBrasTapisPinceGauche.Image = Properties.Resources.VirageAvGa;
+                Actionneur.BrasTapis.SerrerTapisGauche();
+            }
+            else
+            {
+                btnBrasTapisPinceGauche.Image = Properties.Resources.VirageAvDr;
+                Actionneur.BrasTapis.LacherTapisGauche();
+            }
+        }
+
+        private void btnBrasTapisPinceDroite_Click(object sender, EventArgs e)
+        {
+            brasTapisDroiteFermee = !brasTapisDroiteFermee;
+
+            if (brasTapisDroiteFermee)
+            {
+                btnBrasTapisPinceDroite.Image = Properties.Resources.VirageAvDr;
+                Actionneur.BrasTapis.SerrerTapisDroit();
+            }
+            else
+            {
+                btnBrasTapisPinceDroite.Image = Properties.Resources.VirageAvGa;
+                Actionneur.BrasTapis.LacherTapisDroit();
+            }
+        }
+
+        private void btnServoBlocageBalleGauche_Click(object sender, EventArgs e)
+        {
+            brasGaucheAmpouleBloquee = !brasGaucheAmpouleBloquee;
+            if (brasGaucheAmpouleBloquee)
+            {
+                Actionneur.BrasPiedsGauche.Verrouiller();
+                btnServoBlocageBalleGauche.Image = Properties.Resources.virageAvDr2;
+            }
+            else
+            {
+                Actionneur.BrasPiedsGauche.Deverrouiller();
+                btnServoBlocageBalleGauche.Image = Properties.Resources.VirageArGa;
+            }
+        }
+
+        private void btnServoBlocageBalleDroite_Click(object sender, EventArgs e)
+        {
+            brasDroitAmpouleBloquee = !brasDroitAmpouleBloquee;
+            if (brasDroitAmpouleBloquee)
+            {
+                Actionneur.BrasPiedsDroite.Verrouiller();
+                btnServoBlocageBalleDroite.Image = Properties.Resources.virageAvGa2;
+            }
+            else
+            {
+                Actionneur.BrasPiedsDroite.Deverrouiller();
+                btnServoBlocageBalleDroite.Image = Properties.Resources.VirageArDr;
+            }
         }
     }
 }

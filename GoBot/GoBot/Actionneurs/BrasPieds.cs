@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading;
 using GoBot.Communications;
+using GoBot.Devices;
 
 namespace GoBot.Actionneurs
 {
@@ -13,9 +14,19 @@ namespace GoBot.Actionneurs
 
         public int NbPieds
         {
-            get { return nbPieds; }
-            set { nbPieds = value; }
+            get 
+            { 
+                return nbPieds;
+            }
+            set 
+            { 
+                nbPieds = value;
+                NbPiedsChange(nbPieds);
+            }
         }
+
+        public delegate void NbPiedsChangeDelegate(int nbPieds);
+        public event NbPiedsChangeDelegate NbPiedsChange;
 
         public abstract int Minimum { get; }
         public abstract int Hauteur { get; }
@@ -145,43 +156,85 @@ namespace GoBot.Actionneurs
 
         public void Empiler()
         {
-            NbPieds++;
-
             if (NbPieds > 4)
-                NbPieds = 1;
-
-            OuvrirPinceBas();
-            Thread.Sleep(100);
-
-            if (NbPieds < 4)
-                AscenseurDescendre();
-            else
-                AscenseurHauteur(PositionHauteurBasse + DifferenceHauteurBas2);
-
-            Thread.Sleep(350);
-            FermerPinceBas();
-            Thread.Sleep(300);
-
-            if (NbPieds < 4)
             {
+
+                OuvrirPinceBas();
+                OuvrirPinceHaut();
+                Thread.Sleep(200);
+                LibererBalle();
+                Thread.Sleep(200);
+                Deverrouiller();
+
+                Thread.Sleep(1000);
+
+                NbPieds = 0;
+            }
+
+            else if (NbPieds == 0)
+            {
+                OuvrirPinceBas();
+                Thread.Sleep(100);
+                AscenseurDescendre();
+                Thread.Sleep(350);
+                FermerPinceBas();
+                Thread.Sleep(300);
                 OuvrirPinceHaut();
                 Thread.Sleep(100);
                 AscenseurMonter();
+                Thread.Sleep(800);
+            }
+            else if (NbPieds == 1)
+            {
+                OuvrirPinceBas();
+                Thread.Sleep(100);
+                AscenseurDescendre();
+                Thread.Sleep(350);
+                FermerPinceBas();
+                Thread.Sleep(300);
+                OuvrirPinceHaut();
+                Thread.Sleep(100);
+                AscenseurMonter();
+                Thread.Sleep(250);
+                FermerPinceHaut();
+                Thread.Sleep(800);
+            }
+            else if (NbPieds == 2)
+            {
+                OuvrirPinceBas();
+                Thread.Sleep(100);
+                AscenseurDescendre();
+                Thread.Sleep(350);
+                FermerPinceBas();
+                Thread.Sleep(300);
+                OuvrirPinceHaut();
+                Thread.Sleep(100);
+                AscenseurMonter();
+                Thread.Sleep(250);
+                FermerPinceHaut();
+                Thread.Sleep(800);
+            }
+            else if (NbPieds == 3)
+            {
+                OuvrirPinceBas();
+                Thread.Sleep(100);
+                AscenseurHauteur(PositionHauteurBasse + DifferenceHauteurBas2);
+                Thread.Sleep(350);
+                FermerPinceBas();
+                Thread.Sleep(300);
+                AscenseurHauteur(PositionHauteurBasse + DifferenceHauteurBas3);
+                Thread.Sleep(300);
             }
 
-            if (NbPieds >= 2)
-            {
-                Thread.Sleep(300);
-                FermerPinceHaut();
-            }
-            if (NbPieds == 4)
-                AscenseurHauteur(PositionHauteurBasse + DifferenceHauteurBas3);
+
+            NbPieds++;
+
         }
 
         public void AscenseurCalibration()
         {
             AscenseurVitesse = 10;
-            semSwitch = new Semaphore(0, 1);
+            semSwitch = new Semaphore(0, int.MaxValue);
             AscenseurHauteur(Minimum);
             semSwitch.WaitOne();
             int hauteur = Hauteur;
@@ -210,5 +263,31 @@ namespace GoBot.Actionneurs
                 Robots.GrosRobot.MoteurAcceleration(MoteurHauteur, value);
             }
         }
+
+        public abstract void Verrouiller();
+
+        public abstract void Deverrouiller();
+
+        public abstract void LibererBalle();
+
+        private bool piedPresent = false;
+        public bool PiedPresentAuSol 
+        { 
+            get
+            {
+                return piedPresent;
+            }
+            set
+            {
+                if(piedPresent != value)
+                {
+                    piedPresent = value;
+                    DetectionChange(piedPresent);
+                }
+            }
+        }
+
+        public delegate void DetectionChangeDelegate(bool detection);
+        public event DetectionChangeDelegate DetectionChange;
     }
 }

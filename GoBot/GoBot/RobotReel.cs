@@ -24,7 +24,7 @@ namespace GoBot
         Dictionary<FonctionMove, Semaphore> SemaphoresMove = new Dictionary<FonctionMove, Semaphore>();
 
         private DateTime DateRefreshPos { get; set; }
-
+        private bool positionRecue = false;
         public Connexion Connexion { get; set; }
 
         public override Position Position { get; set; }
@@ -167,7 +167,15 @@ namespace GoBot
                         y = -y;
                         x = -x;
 
-                        Position = new Position(new Angle(teta, AnglyeType.Degre), new PointReel(x, y));
+                        Position nouvellePosition = new Position(new Angle(teta, AnglyeType.Degre), new PointReel(x, y));
+
+                        if (Position.Coordonnees.Distance(nouvellePosition.Coordonnees) < 300 || !positionRecue)
+                            Position = nouvellePosition;
+                        else
+                            ReglerOffsetAsserv((int)Position.Coordonnees.X, (int)Position.Coordonnees.Y, -Position.Angle);
+
+                        positionRecue = true;
+
                         DateRefreshPos = DateTime.Now;
                         SemaphoresMove[FonctionMove.DemandePositionXYTeta].Release();
 
@@ -229,10 +237,9 @@ namespace GoBot
                         retourTestCharge[2].Add(chargePWMDroite);
                     }
                 }
-            }
-            else if (trameRecue[0] == (byte)Carte.RecIO)
-            {
-                if (trameRecue[1] == (byte)FonctionIO.RetourValeursAnalogiques)
+
+
+                if (trameRecue[1] == (byte)FonctionMove.RetourValeursAnalogiques)
                 {
                     double valeurAnalogique1 = (trameRecue[2] * 256 + trameRecue[3]);
                     double valeurAnalogique2 = (trameRecue[4] * 256 + trameRecue[5]);
@@ -249,6 +256,51 @@ namespace GoBot
                     double valeurAnalogique6V = valeurAnalogique6 * 0.0008056640625;
 
                     /*
+                        ??
+                        GP2 1
+                        GP2 2
+                        ??
+                        ??
+                        ??
+                    */
+
+                    ValeursAnalogiquesMove = new List<double>();
+                    ValeursAnalogiquesMove.Add(valeurAnalogique1);
+                    ValeursAnalogiquesMove.Add(valeurAnalogique2);
+                    ValeursAnalogiquesMove.Add(valeurAnalogique3);
+                    ValeursAnalogiquesMove.Add(valeurAnalogique4);
+                    ValeursAnalogiquesMove.Add(valeurAnalogique5);
+                    ValeursAnalogiquesMove.Add(valeurAnalogique6);
+
+                    if (SemaphoresMove[FonctionMove.RetourValeursAnalogiques] != null)
+                        SemaphoresMove[FonctionMove.RetourValeursAnalogiques].Release();
+                }
+            }
+            else if (trameRecue[0] == (byte)Carte.RecIO)
+            {
+                if (trameRecue[1] == (byte)FonctionIO.RetourValeursAnalogiques)
+                {
+                    double valeurAnalogique1 = (trameRecue[2] * 256 + trameRecue[3]);
+                    double valeurAnalogique2 = (trameRecue[4] * 256 + trameRecue[5]);
+                    double valeurAnalogique3 = (trameRecue[6] * 256 + trameRecue[7]);
+                    double valeurAnalogique4 = (trameRecue[8] * 256 + trameRecue[9]);
+                    double valeurAnalogique5 = (trameRecue[10] * 256 + trameRecue[11]);
+                    double valeurAnalogique6 = (trameRecue[12] * 256 + trameRecue[13]);
+                    double valeurAnalogique7 = (trameRecue[14] * 256 + trameRecue[15]);
+                    double valeurAnalogique8 = (trameRecue[16] * 256 + trameRecue[17]);
+                    double valeurAnalogique9 = (trameRecue[18] * 256 + trameRecue[19]);
+
+                    double valeurAnalogique1V = valeurAnalogique1 * 0.0008056640625;
+                    double valeurAnalogique2V = valeurAnalogique2 * 0.0008056640625;
+                    double valeurAnalogique3V = valeurAnalogique3 * 0.0008056640625;
+                    double valeurAnalogique4V = valeurAnalogique4 * 0.0008056640625;
+                    double valeurAnalogique5V = valeurAnalogique5 * 0.0008056640625;
+                    double valeurAnalogique6V = valeurAnalogique6 * 0.0008056640625;
+                    double valeurAnalogique7V = valeurAnalogique7 * 0.0008056640625;
+                    double valeurAnalogique8V = valeurAnalogique8 * 0.0008056640625;
+                    double valeurAnalogique9V = valeurAnalogique9 * 0.0008056640625;
+
+                    /*
                         Codeur effet hall Ascenseur Droite
                         VadcV2 (AN1)
                         Codeur effet hall Ascenseur Gauche
@@ -257,22 +309,19 @@ namespace GoBot
                         Switchs Bonus
                     */
 
-                    ValeursAnalogiques = new List<double>();
-                    ValeursAnalogiques.Add(valeurAnalogique1);
-                    ValeursAnalogiques.Add(valeurAnalogique2);
-                    ValeursAnalogiques.Add(valeurAnalogique3);
-                    ValeursAnalogiques.Add(valeurAnalogique4);
-                    ValeursAnalogiques.Add(valeurAnalogique5);
-                    ValeursAnalogiques.Add(valeurAnalogique6);
+                    ValeursAnalogiquesIO = new List<double>();
+                    ValeursAnalogiquesIO.Add(valeurAnalogique1);
+                    ValeursAnalogiquesIO.Add(valeurAnalogique2);
+                    ValeursAnalogiquesIO.Add(valeurAnalogique3);
+                    ValeursAnalogiquesIO.Add(valeurAnalogique4);
+                    ValeursAnalogiquesIO.Add(valeurAnalogique5);
+                    ValeursAnalogiquesIO.Add(valeurAnalogique6);
+                    ValeursAnalogiquesIO.Add(valeurAnalogique7);
+                    ValeursAnalogiquesIO.Add(valeurAnalogique8);
+                    ValeursAnalogiquesIO.Add(valeurAnalogique9);
 
                     if (SemaphoresIO[FonctionIO.RetourValeursAnalogiques] != null)
                         SemaphoresIO[FonctionIO.RetourValeursAnalogiques].Release();
-                }
-                if (trameRecue[1] == (byte)FonctionIO.AspirationPompe && AspirationAutomatique)
-                {
-                    VitesseDeplacement = Config.CurrentConfig.GRVitesseLigneLent;
-                    //BrasFeux.RangerFeu();
-                    VitesseDeplacement = Config.CurrentConfig.GRVitesseLigneRapide;
                 }
                 if (trameRecue[1] == (byte)FonctionIO.RetourCapteurOnOff)
                 {
@@ -310,9 +359,9 @@ namespace GoBot
 
                 if (trameRecue[1] == (byte)FonctionIO.ReponseCouleurEquipe)
                 {
-                    if (trameRecue[2] == 0)
+                    if (trameRecue[2] == 1)
                         couleurEquipe = Plateau.CouleurGaucheJaune;
-                    else if (trameRecue[2] == 1)
+                    else if (trameRecue[2] == 0)
                         couleurEquipe = Plateau.CouleurDroiteVert;
 
                     Plateau.NotreCouleur = couleurEquipe;
@@ -341,6 +390,18 @@ namespace GoBot
                         // Recomposition de la trame comme si elle venait d'une balise
                         String message = "B1 E5 01 " + trameRecue.ToString().Substring(9);
                         Plateau.Balise1.connexion_NouvelleTrame(new Trame(message));
+                    }
+                }
+
+                if (trameRecue[1] == (byte)FonctionIO.FrontCapteur)
+                {
+                    if (trameRecue[2] == 1)
+                    {
+                        Actionneur.BrasPiedsDroite.PiedPresentAuSol = (trameRecue[3] == 1 ? true : false);
+                    }
+                    else if (trameRecue[2] == 2)
+                    {
+                        Actionneur.BrasPiedsGauche.PiedPresentAuSol = (trameRecue[3] == 1 ? true : false);
                     }
                 }
             }
@@ -517,7 +578,7 @@ namespace GoBot
             Historique.AjouterAction(new ActionServo(this, position, servo));
         }
 
-        public override void DemandeValeursAnalogiques(bool attendre = true)
+        public override void DemandeValeursAnalogiquesIO(bool attendre = true)
         {
             if (!Connexions.ConnexionIO.ConnexionCheck.Connecte)
                 return;
@@ -530,6 +591,21 @@ namespace GoBot
 
             if (attendre)
                 SemaphoresIO[FonctionIO.RetourValeursAnalogiques].WaitOne(1000);
+        }
+
+        public override void DemandeValeursAnalogiquesMove(bool attendre = true)
+        {
+            if (!Connexions.ConnexionMove.ConnexionCheck.Connecte)
+                return;
+
+            if (attendre)
+                SemaphoresMove[FonctionMove.RetourValeursAnalogiques] = new Semaphore(0, int.MaxValue);
+
+            Trame trame = TrameFactory.DemandeValeursAnalogiques(Carte.RecMove);
+            Connexions.ConnexionMove.SendMessage(trame);
+
+            if (attendre)
+                SemaphoresMove[FonctionMove.RetourValeursAnalogiques].WaitOne(1000);
         }
 
         public override void ServoVitesse(ServomoteurID servo, int vitesse)
@@ -671,7 +747,7 @@ namespace GoBot
         public override bool GetJack(bool historique = true)
         {
             historiqueJack = historique;
-            SemaphoresIO[FonctionIO.ReponseJack] = new Semaphore(0, 1);
+            SemaphoresIO[FonctionIO.ReponseJack] = new Semaphore(0, int.MaxValue);
             Connexions.ConnexionIO.SendMessage(TrameFactory.DemandeJack());
             SemaphoresIO[FonctionIO.ReponseJack].WaitOne(50);
             return jackBranche;
@@ -682,7 +758,7 @@ namespace GoBot
         public override Color GetCouleurEquipe(bool historique = true)
         {
             historiqueCouleurEquipe = historique;
-            SemaphoresIO[FonctionIO.ReponseCouleurEquipe] = new Semaphore(0, 1);
+            SemaphoresIO[FonctionIO.ReponseCouleurEquipe] = new Semaphore(0, int.MaxValue);
             Connexions.ConnexionIO.SendMessage(TrameFactory.DemandeCouleurEquipe());
             SemaphoresIO[FonctionIO.ReponseCouleurEquipe].WaitOne(50);
             return couleurEquipe;

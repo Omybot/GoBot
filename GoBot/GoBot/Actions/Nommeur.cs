@@ -52,6 +52,8 @@ namespace GoBot.Actions
                     return "servo pince tapis droit";
                 case ServomoteurID.TapisPinceGauche:
                     return "servo pince tapis gauche";
+                case ServomoteurID.AspirateurTurbine:
+                    return "turbine aspiration";
                 default:
                     if (servo.ToString().Contains("zzLibre"))
                         return "servo n°" + (int)servo;

@@ -12,5 +12,12 @@ namespace GoBot.Logs
         {
             LogDebug = new Log(Config.PathData + "/LogsTraces/LogDebug.txt");
         }
+
+        static DateTime d = DateTime.Now;
+        public static void LogConsole(String text)
+        {
+            Console.Write(DateTime.Now.Hour + ":" + DateTime.Now.Minute + ":" + DateTime.Now.Second + "." + DateTime.Now.Millisecond + " : ");
+            Console.WriteLine(text);
+        }
     }
 }

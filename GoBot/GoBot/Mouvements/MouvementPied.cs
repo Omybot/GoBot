@@ -112,7 +112,7 @@ namespace GoBot.Mouvements
                 case 14:
                     break;
                 case 15:
-                    brasGauche = false;
+                    brasGauche = true;
                     Positions.Add(new Position(180 - (270 - 80.25), new PointReel(3000-297, 314)));
                     break;
             }

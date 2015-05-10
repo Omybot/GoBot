@@ -35,11 +35,17 @@
             this.btnDebutMatch = new System.Windows.Forms.Button();
             this.btnCleanBasGauche = new System.Windows.Forms.Button();
             this.btnEmpilerDroite = new System.Windows.Forms.Button();
+            this.btnDeposeTapisDroit = new System.Windows.Forms.Button();
+            this.btnDeposeTapisGauche = new System.Windows.Forms.Button();
+            this.btnEmpileTout = new System.Windows.Forms.Button();
             this.groupBoxSequences.SuspendLayout();
             this.SuspendLayout();
             // 
             // groupBoxSequences
             // 
+            this.groupBoxSequences.Controls.Add(this.btnEmpileTout);
+            this.groupBoxSequences.Controls.Add(this.btnDeposeTapisGauche);
+            this.groupBoxSequences.Controls.Add(this.btnDeposeTapisDroit);
             this.groupBoxSequences.Controls.Add(this.btnDebutMatchGauche);
             this.groupBoxSequences.Controls.Add(this.btnBasTableGauche);
             this.groupBoxSequences.Controls.Add(this.btnEmpilerGauche);
@@ -77,9 +83,9 @@
             // 
             // btnEmpilerGauche
             // 
-            this.btnEmpilerGauche.Location = new System.Drawing.Point(184, 58);
+            this.btnEmpilerGauche.Location = new System.Drawing.Point(173, 58);
             this.btnEmpilerGauche.Name = "btnEmpilerGauche";
-            this.btnEmpilerGauche.Size = new System.Drawing.Size(113, 23);
+            this.btnEmpilerGauche.Size = new System.Drawing.Size(124, 23);
             this.btnEmpilerGauche.TabIndex = 4;
             this.btnEmpilerGauche.Text = "Empiler pince gauche";
             this.btnEmpilerGauche.UseVisualStyleBackColor = true;
@@ -111,11 +117,41 @@
             // 
             this.btnEmpilerDroite.Location = new System.Drawing.Point(23, 58);
             this.btnEmpilerDroite.Name = "btnEmpilerDroite";
-            this.btnEmpilerDroite.Size = new System.Drawing.Size(113, 23);
+            this.btnEmpilerDroite.Size = new System.Drawing.Size(129, 23);
             this.btnEmpilerDroite.TabIndex = 1;
             this.btnEmpilerDroite.Text = "Empiler pince droite";
             this.btnEmpilerDroite.UseVisualStyleBackColor = true;
             this.btnEmpilerDroite.Click += new System.EventHandler(this.btnEmpilerDroite_Click);
+            // 
+            // btnDeposeTapisDroit
+            // 
+            this.btnDeposeTapisDroit.Location = new System.Drawing.Point(23, 183);
+            this.btnDeposeTapisDroit.Name = "btnDeposeTapisDroit";
+            this.btnDeposeTapisDroit.Size = new System.Drawing.Size(121, 23);
+            this.btnDeposeTapisDroit.TabIndex = 7;
+            this.btnDeposeTapisDroit.Text = "Dépose tapis droit";
+            this.btnDeposeTapisDroit.UseVisualStyleBackColor = true;
+            this.btnDeposeTapisDroit.Click += new System.EventHandler(this.btnDeposeTapisDroit_Click);
+            // 
+            // btnDeposeTapisGauche
+            // 
+            this.btnDeposeTapisGauche.Location = new System.Drawing.Point(176, 183);
+            this.btnDeposeTapisGauche.Name = "btnDeposeTapisGauche";
+            this.btnDeposeTapisGauche.Size = new System.Drawing.Size(121, 23);
+            this.btnDeposeTapisGauche.TabIndex = 8;
+            this.btnDeposeTapisGauche.Text = "Dépose tapis gauche";
+            this.btnDeposeTapisGauche.UseVisualStyleBackColor = true;
+            this.btnDeposeTapisGauche.Click += new System.EventHandler(this.btnDeposeTapisGauche_Click);
+            // 
+            // btnEmpileTout
+            // 
+            this.btnEmpileTout.Location = new System.Drawing.Point(123, 82);
+            this.btnEmpileTout.Name = "btnEmpileTout";
+            this.btnEmpileTout.Size = new System.Drawing.Size(75, 23);
+            this.btnEmpileTout.TabIndex = 9;
+            this.btnEmpileTout.Text = "Empile tout";
+            this.btnEmpileTout.UseVisualStyleBackColor = true;
+            this.btnEmpileTout.Click += new System.EventHandler(this.btnEmpileTout_Click);
             // 
             // PanelGrosRobotSequences
             // 
@@ -141,5 +177,8 @@
         private System.Windows.Forms.Button btnDebutMatchGauche;
         private System.Windows.Forms.Button btnBasTableGauche;
         private System.Windows.Forms.Button btnEmpilerGauche;
+        private System.Windows.Forms.Button btnDeposeTapisGauche;
+        private System.Windows.Forms.Button btnDeposeTapisDroit;
+        private System.Windows.Forms.Button btnEmpileTout;
     }
 }

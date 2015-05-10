@@ -74,9 +74,9 @@ namespace GoBot.IHM
             this.Invoke(new EventHandler(delegate
             {
                 if (Robots.GrosRobot.GetCouleurEquipe(false) == Plateau.CouleurDroiteVert)
-                    ledCouleurEquipe.CouleurJaune();
+                    ledCouleurEquipe.CouleurVert();
                 else
-                    ledCouleurEquipe.CouleurRouge();
+                    ledCouleurEquipe.CouleurJaune();
             }));
         }
 

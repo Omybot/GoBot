@@ -14,14 +14,24 @@ namespace GoBot
 
         static Servomoteur()
         {
-            servosPololu.Add(ServomoteurID.AscenseurDroitPinceBasDroite, 3);
-            servosPololu.Add(ServomoteurID.AscenseurDroitPinceBasGauche, 2);
-            servosPololu.Add(ServomoteurID.AscenseurDroitPinceHautDroite, 5);
-            servosPololu.Add(ServomoteurID.AscenseurDroitPinceHautGauche, 4);
-            servosPololu.Add(ServomoteurID.AscenseurGauchePinceBasDroite, 7);
-            servosPololu.Add(ServomoteurID.AscenseurGauchePinceBasGauche, 10);
-            servosPololu.Add(ServomoteurID.AscenseurGauchePinceHautDroite, 8);
-            servosPololu.Add(ServomoteurID.AscenseurGauchePinceHautGauche, 9);
+            // Association de l'identifiant interne du servo et de l'identifiant du servo sur la pololu
+
+            servosPololu.Add(ServomoteurID.AscenseurDroitPinceBasDroite, 1);
+            servosPololu.Add(ServomoteurID.AscenseurDroitPinceBasGauche, 0);
+            servosPololu.Add(ServomoteurID.AscenseurDroitPinceHautDroite, 3);
+            servosPololu.Add(ServomoteurID.AscenseurDroitPinceHautGauche, 2);
+            servosPololu.Add(ServomoteurID.AscenseurGauchePinceBasDroite, 11);
+            servosPololu.Add(ServomoteurID.AscenseurGauchePinceBasGauche, 8);
+            servosPololu.Add(ServomoteurID.AscenseurGauchePinceHautDroite, 6);
+            servosPololu.Add(ServomoteurID.AscenseurGauchePinceHautGauche, 7);
+
+            servosPololu.Add(ServomoteurID.AspirateurTurbine, 16);
+
+            servosPololu.Add(ServomoteurID.BalleVerouillageDroit, 13);
+            servosPololu.Add(ServomoteurID.BalleVerouillageGauche, 14);
+
+            servosPololu.Add(ServomoteurID.TapisPinceDroite, 12);
+            servosPololu.Add(ServomoteurID.TapisPinceGauche, 15);
         }
 
         public static short idServoPololu(ServomoteurID servo)
@@ -704,7 +714,16 @@ namespace GoBot
 
         public override string ToString()
         {
-            return ((ServomoteurID)id).ToString().Substring(2) + "\tID " + id + "\t" + baudrate.ToString().Substring(1);
+            ServomoteurID servo;
+            try
+            {
+                servo = (ServomoteurID)id;
+                return ((ServomoteurID)id).ToString() + "\tID " + id + "\t" + baudrate.ToString().Substring(1);
+            }
+            catch(Exception)
+            {
+                return "Inconnu\tID " + id + "\t" + baudrate.ToString().Substring(1);
+            }
         }
     }
 }

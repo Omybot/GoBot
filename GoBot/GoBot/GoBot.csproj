@@ -82,6 +82,7 @@
   <ItemGroup>
     <Compile Include="Actionneurs\Actionneur.cs" />
     <Compile Include="Actionneurs\BrasAmpoule.cs" />
+    <Compile Include="Actionneurs\BrasAspirateur.cs" />
     <Compile Include="Actionneurs\BrasPieds.cs" />
     <Compile Include="Actionneurs\BrasPiedsDroite.cs" />
     <Compile Include="Actionneurs\BrasPiedsGauche.cs" />
@@ -291,6 +292,8 @@
     <Compile Include="Logs\Log.cs" />
     <Compile Include="Logs\Logs.cs" />
     <Compile Include="Mouvements\Mouvement.cs" />
+    <Compile Include="Mouvements\MouvementClap.cs" />
+    <Compile Include="Mouvements\MouvementDistributeur.cs" />
     <Compile Include="Mouvements\MouvementPied.cs" />
     <Compile Include="Mouvements\MouvementTapis.cs" />
     <Compile Include="Mouvements\PositionsMouvements.cs" />
@@ -605,6 +608,8 @@
     <None Include="img\ClapVertOuvert.png" />
     <None Include="img\Fermee.png" />
     <None Include="img\FermerPince.png" />
+    <None Include="img\BrasTapisBas.png" />
+    <None Include="img\BrasTapisHaut.png" />
     <Content Include="img\IconeVitesse.png" />
     <None Include="img\Pompe.png" />
     <None Include="img\Recale.png" />
@@ -632,6 +637,9 @@
     <None Include="img\PinceFermeeHaut.png" />
     <None Include="img\PinceOuverteBas.png" />
     <None Include="img\PinceOuverteHaut.png" />
+    <None Include="img\virageArDr2.png" />
+    <None Include="img\virageAvGa2.png" />
+    <None Include="img\virageAvDr2.png" />
     <Content Include="robot.ico" />
   </ItemGroup>
   <ItemGroup>

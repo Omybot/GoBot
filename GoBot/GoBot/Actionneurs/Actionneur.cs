@@ -11,6 +11,7 @@ namespace GoBot.Actionneurs
         private static BrasPiedsGauche brasPiedsGauche;
         private static BrasAmpoule brasAmpoule;
         private static BrasTapis brasTapis;
+        private static BrasAspirateur brasAspirateur;
 
         static Actionneur()
         {
@@ -18,6 +19,7 @@ namespace GoBot.Actionneurs
             brasPiedsGauche = new BrasPiedsGauche();
             brasAmpoule = new BrasAmpoule();
             brasTapis = new BrasTapis();
+            brasAspirateur = new BrasAspirateur();
         }
 
         public static BrasPiedsDroite BrasPiedsDroite
@@ -42,6 +44,12 @@ namespace GoBot.Actionneurs
         {
             get { return brasTapis; }
             set { brasTapis = value; }
+        }
+
+        public static BrasAspirateur BrasAspirateur
+        {
+            get { return brasAspirateur; }
+            set { brasAspirateur = value; }
         }
     }
 }

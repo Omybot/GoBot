@@ -99,6 +99,15 @@ namespace GoBot.Communications
             return new Trame(tab);
         }
 
+        static public Trame CalibrationAscenseurAmpoule()
+        {
+            byte[] tab = new byte[2];
+            tab[0] = (byte)Carte.RecIO;
+            tab[1] = (byte)FonctionIO.CalibrationAscenseurAmpoule;
+
+            return new Trame(tab);
+        }
+
         static public Trame MoteurVitesse(MoteurID moteur, int vitesse)
         {
             byte[] tab = new byte[5];

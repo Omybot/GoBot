@@ -40,11 +40,17 @@ namespace GoBot
 
         public static void RecallageGrosRobot(bool attendrePetit)
         {
+            Actionneur.BrasAspirateur.Arreter();
+            Actionneur.BrasAmpoule.AscenseurCalibration();
+            Thread.Sleep(5000);
             Actionneur.BrasAmpoule.Monter();
-            Actionneur.BrasAmpoule.OuvrirAttrapage();
+            Thread.Sleep(1000);
 
+            Actionneur.BrasAspirateur.PositionRange();
             Actionneur.BrasPiedsDroite.AscenseurDescendre();
             Actionneur.BrasPiedsGauche.AscenseurDescendre();
+            Actionneur.BrasPiedsDroite.Verrouiller();
+            Actionneur.BrasPiedsGauche.Verrouiller();
             Actionneur.BrasPiedsDroite.FermerPinceBas();
             Actionneur.BrasPiedsGauche.FermerPinceBas();
             Actionneur.BrasPiedsDroite.FermerPinceHaut();
@@ -65,6 +71,8 @@ namespace GoBot
             Robots.GrosRobot.Lent();
             Robots.GrosRobot.Recallage(SensAR.Arriere);
             Robots.GrosRobot.Rapide();
+
+            Actionneur.BrasAmpoule.Descendre();
             Robots.GrosRobot.Avancer(450);
 
             if (Plateau.NotreCouleur == Plateau.CouleurDroiteVert)
@@ -78,8 +86,6 @@ namespace GoBot
                 semRecallagePetit = null;
             }
 
-            Actionneur.BrasAmpoule.Descendre();
-
             Robots.GrosRobot.Avancer(650 - Robots.GrosRobot.Longueur / 2);
 
             if (Plateau.NotreCouleur == Plateau.CouleurDroiteVert)
@@ -87,6 +93,7 @@ namespace GoBot
             else
                 Robots.GrosRobot.PivotDroite(90);
 
+            Actionneur.BrasAmpoule.Ouvrir();
             Robots.GrosRobot.Reculer(360);
 
             Thread.Sleep(3000);

@@ -228,7 +228,7 @@ namespace GoBot.IHM
                 for (int i = 0; i < Plateau.Claps.Count; i++)
                     if (Plateau.Claps[i].Hover)
                     {
-                        Plateau.Claps[i].Active = !Plateau.Claps[i].Active;
+                        move = new MouvementClap(i);
                         break;
                     }
 
@@ -242,7 +242,7 @@ namespace GoBot.IHM
                 for (int i = 0; i < Plateau.DistributeursPopCorn.Count; i++)
                     if (Plateau.DistributeursPopCorn[i].Hover)
                     {
-                        // action au clic
+                        move = new MouvementDistributeur(i);
                         break;
                     }
 
@@ -527,6 +527,49 @@ namespace GoBot.IHM
                 Dessinateur.AfficheHistoriqueCoordonneesGros = e.NewValue == CheckState.Checked;
             if (ligne == "Historique trajectoire petit")
                 Dessinateur.AfficheHistoriqueCoordonneesPetit = e.NewValue == CheckState.Checked;
+        }
+
+        private void btnZoneDepart_Click(object sender, EventArgs e)
+        {
+            Thread th = new Thread(GoToDepart);
+            th.Start();
+        }
+
+        public void GoToDepart()
+        {
+            Actionneur.BrasAspirateur.Arreter();
+            Actionneur.BrasAspirateur.PositionRange();
+
+            Actionneur.BrasPiedsDroite.AscenseurMonter();
+            Actionneur.BrasPiedsDroite.OuvrirPinceBas();
+            Actionneur.BrasPiedsDroite.OuvrirPinceHaut();
+
+            Actionneur.BrasPiedsGauche.AscenseurMonter();
+            Actionneur.BrasPiedsGauche.OuvrirPinceBas();
+            Actionneur.BrasPiedsGauche.OuvrirPinceHaut();
+
+            if (Plateau.NotreCouleur == Plateau.CouleurDroiteVert)
+                Robots.GrosRobot.GotoXYTeta(3000 - 240, 1000, 180);
+            else
+                Robots.GrosRobot.GotoXYTeta(240, 1000, 0);
+
+            Actionneur.BrasPiedsDroite.NbPieds = 0;
+            Actionneur.BrasPiedsDroite.FermerPinceBas();
+            Actionneur.BrasPiedsDroite.FermerPinceHaut();
+
+            Actionneur.BrasPiedsGauche.NbPieds = 0;
+            Actionneur.BrasPiedsGauche.FermerPinceBas();
+            Actionneur.BrasPiedsGauche.FermerPinceHaut();
+
+            Actionneur.BrasAmpoule.Descendre();
+            Actionneur.BrasAspirateur.PositionDepose();
+            Thread.Sleep(5000);
+            Actionneur.BrasAmpoule.Ouvrir();
+            Actionneur.BrasAspirateur.PositionRange();
+
+            Actionneur.BrasPiedsDroite.AscenseurDescendre();
+            Actionneur.BrasPiedsGauche.AscenseurDescendre();
+
         }
     }
 }

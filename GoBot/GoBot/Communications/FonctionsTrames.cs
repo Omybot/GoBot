@@ -20,7 +20,9 @@ namespace GoBot.Communications
         RetourCapteurOnOff = 0x75,
         DemandeValeursAnalogiques = 0x76,
         RetourValeursAnalogiques = 0x77,
-        AspirationPompe = 0x78,
+        FrontCapteur = 0x78,
+
+        CalibrationAscenseurAmpoule = 0x79,
 
         Alimentation = 0x80,
 
@@ -66,6 +68,9 @@ namespace GoBot.Communications
         AccelerationPivot = 0x35,
         CoeffAsservPID = 0x36,
         EnvoiPositionAbsolue = 0x37,
+
+        DemandeValeursAnalogiques = 0x76,
+        RetourValeursAnalogiques = 0x77,
 
         CommandeServo = 0x60,
 

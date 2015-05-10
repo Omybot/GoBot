@@ -21,16 +21,16 @@ namespace GoBot.Mouvements
             switch (numeroTapis)
             {
                 case 0:
-                    Positions.Add(new Position(45, new Calculs.Formes.PointReel(1039, 766)));
+                    Positions.Add(new Position(45, new Calculs.Formes.PointReel(1039, 810)));
                     break;
                 case 1:
-                    Positions.Add(new Position(45, new Calculs.Formes.PointReel(1439, 766)));
+                    Positions.Add(new Position(45, new Calculs.Formes.PointReel(1439, 810)));
                     break;
                 case 2:
-                    Positions.Add(new Position(45, new Calculs.Formes.PointReel(1561, 766)));
+                    Positions.Add(new Position(45, new Calculs.Formes.PointReel(1561, 810)));
                     break;
                 case 3:
-                    Positions.Add(new Position(45, new Calculs.Formes.PointReel(1961, 766)));
+                    Positions.Add(new Position(45, new Calculs.Formes.PointReel(1961, 810)));
                     break;
             }
         }
@@ -45,16 +45,12 @@ namespace GoBot.Mouvements
 
             if (position != null && Robots.GrosRobot.GotoXYTeta(position.Coordonnees.X, position.Coordonnees.Y, position.Angle.AngleDegres))
             {
-                Actionneur.BrasTapis.Descendre();
-                Thread.Sleep(350);
                 if(numeroTapis == 1 || numeroTapis == 3)
-                    Actionneur.BrasTapis.LacherTapis1();
+                    Actionneur.BrasTapis.PoserTapisDroit();
                 else
-                    Actionneur.BrasTapis.LacherTapis2();
-                Thread.Sleep(350);
-                Actionneur.BrasTapis.Monter();
+                    Actionneur.BrasTapis.PoserTapisGauche();
 
-                Robots.GrosRobot.Historique.Log("Fin tapis " + numeroTapis + (DateTime.Now - debut).TotalSeconds.ToString("#.#") + "s");
+                Robots.GrosRobot.Historique.Log("Fin tapis " + numeroTapis + " en " + (DateTime.Now - debut).TotalSeconds.ToString("#.#") + "s");
                 Plateau.ListeTapis[numeroTapis].Pose = true;
             }
             else

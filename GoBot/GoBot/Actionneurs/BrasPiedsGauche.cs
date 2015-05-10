@@ -14,8 +14,8 @@ namespace GoBot.Actionneurs
         {
             get
             {
-                Robots.GrosRobot.DemandeValeursAnalogiques(true);
-                return (int)Robots.GrosRobot.ValeursAnalogiques[2];
+                Robots.GrosRobot.DemandeValeursAnalogiquesIO(true);
+                return (int)Robots.GrosRobot.ValeursAnalogiquesIO[2];
             }
         }
 
@@ -88,7 +88,22 @@ namespace GoBot.Actionneurs
 
         public override int DifferenceHauteurSwitchBas { get { return 200; } }
         public override int DifferenceHauteurBasHaut { get { return 1800; } }
-        public override int DifferenceHauteurBas2 { get { return 200; } }
-        public override int DifferenceHauteurBas3 { get { return 270; } }
+        public override int DifferenceHauteurBas2 { get { return 300; } }
+        public override int DifferenceHauteurBas3 { get { return 330; } }
+
+        public override void Verrouiller()
+        {
+            Config.CurrentConfig.ServoBalleVerrouillageGauche.Positionner(Config.CurrentConfig.ServoBalleVerrouillageGauche.PositionFerme);
+        }
+
+        public override void Deverrouiller()
+        {
+            Config.CurrentConfig.ServoBalleVerrouillageGauche.Positionner(Config.CurrentConfig.ServoBalleVerrouillageGauche.PositionOuvert);
+        }
+
+        public override void LibererBalle()
+        {
+            Config.CurrentConfig.ServoBalleVerrouillageGauche.Positionner(Config.CurrentConfig.ServoBalleVerrouillageGauche.PositionLibere);
+        }
     }
 }

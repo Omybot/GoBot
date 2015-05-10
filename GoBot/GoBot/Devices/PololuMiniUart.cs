@@ -10,19 +10,6 @@ namespace GoBot.Devices
 {
     public static class PololuMiniUart
     {
-        static PololuMiniUart()
-        {
-            List<int> servos = new List<int>();
-            servos.Add(1);
-            servos.Add(0);
-            servos.Add(3);
-            servos.Add(2);
-            servos.Add(5);
-            servos.Add(8);
-            servos.Add(6);
-            servos.Add(7);
-        }
-
         public static void setTarget(byte channel, ushort target)
         {
             byte[] serialBytes = new byte[4];

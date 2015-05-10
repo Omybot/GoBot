@@ -720,7 +720,7 @@ namespace GoBot.Balises
         public int TestConnexionPing()
         {
             Trame t = TrameFactory.BaliseTestConnexion(Carte);
-            semTestConnexion = new Semaphore(0, 1);
+            semTestConnexion = new Semaphore(0, int.MaxValue);
             Connexion.SendMessage(t);
             DateTime debut = DateTime.Now;
             semTestConnexion.WaitOne(1000);

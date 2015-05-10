@@ -35,11 +35,9 @@ namespace GoBot.IHM
             groupBoxSequences.Deployer(Config.CurrentConfig.SequencesGROuvert, false);
         }
 
-        Thread thMove;
-
         private void btnEmpilerDroite_Click(object sender, EventArgs e)
         {
-            Actionneur.BrasPiedsGauche.Empiler();
+            Actionneur.BrasPiedsDroite.Empiler();
         }
 
         private void btnCleanBasGauche_Click(object sender, EventArgs e)
@@ -116,6 +114,8 @@ namespace GoBot.IHM
             Actionneur.BrasPiedsDroite.Empiler();
             Robots.GrosRobot.Rapide();
 
+            Mouvements.MouvementDistributeur move1 = new Mouvements.MouvementDistributeur(0);
+            move1.Executer();
             Mouvements.MouvementPied move = new Mouvements.MouvementPied(0);
             move.Executer();
             move = new Mouvements.MouvementPied(5);
@@ -127,14 +127,25 @@ namespace GoBot.IHM
             Actionneur.BrasPiedsDroite.OuvrirPinceHaut();
             Actionneur.BrasPiedsGauche.OuvrirPinceBas();
             Actionneur.BrasPiedsGauche.OuvrirPinceHaut();
+            Actionneur.BrasPiedsDroite.Deverrouiller();
+            Actionneur.BrasPiedsGauche.Deverrouiller();
 
             Thread.Sleep(500);
-            Robots.GrosRobot.Reculer(200);
+            Robots.GrosRobot.Reculer(280);
+            Actionneur.BrasAspirateur.Maintenir();
+            Robots.GrosRobot.PivotDroite(180);
+            Actionneur.BrasAspirateur.PositionDepose();
+            Robots.GrosRobot.PivotDroite(60);
+
+            Actionneur.BrasAspirateur.Arreter();
+
+            Actionneur.BrasPiedsDroite.Verrouiller();
+            Actionneur.BrasPiedsGauche.Verrouiller();
         }
 
         private void btnEmpilerGauche_Click(object sender, EventArgs e)
         {
-            Actionneur.BrasPiedsDroite.Empiler();
+            Actionneur.BrasPiedsGauche.Empiler();
         }
 
         private void btnDebutMatchGauche_Click(object sender, EventArgs e)
@@ -145,6 +156,66 @@ namespace GoBot.IHM
 
         private void DebutMatchGauche()
         {
+
+            Robots.GrosRobot.VitesseDeplacement = 1000;
+            Robots.GrosRobot.AccelerationDeplacement = 2000;
+
+            Actionneur.BrasAmpoule.Fermer();
+            Thread.Sleep(250);
+            Actionneur.BrasAmpoule.Monter();
+
+            Actionneur.BrasPiedsDroite.OuvrirPinceBas();
+            Actionneur.BrasPiedsGauche.OuvrirPinceBas();
+            Actionneur.BrasPiedsDroite.OuvrirPinceHaut();
+            //Actionneur.BrasPiedsGauche.OuvrirPinceHaut();
+
+            Robots.GrosRobot.PivotDroite(7.76);
+            Robots.GrosRobot.Avancer(500);
+            Robots.GrosRobot.Lent();
+            Robots.GrosRobot.Avancer(70);
+            Robots.GrosRobot.Rapide();
+            Actionneur.BrasPiedsDroite.FermerPinceBas();
+            Thread.Sleep(200);
+            Actionneur.BrasPiedsDroite.SouleverLegerement();
+            Thread.Sleep(50);
+
+            Robots.GrosRobot.GotoXYTeta(3000 - 772, 763, -90);
+            Robots.GrosRobot.Avancer(400);
+            Robots.GrosRobot.Lent();
+            Robots.GrosRobot.Avancer(60);
+            Actionneur.BrasPiedsGauche.Empiler();
+            Thread.Sleep(200);
+            Robots.GrosRobot.Avancer(90);
+            Actionneur.BrasPiedsGauche.Empiler();
+            Robots.GrosRobot.Rapide();
+
+            Mouvements.MouvementPied move = new Mouvements.MouvementPied(13);
+            move.Executer();
+            move = new Mouvements.MouvementPied(5);
+            move.Executer();
+
+            Robots.GrosRobot.GotoXYTeta(3000 - 355, 1001, 180);
+            Actionneur.BrasPiedsDroite.AscenseurDescendre();
+            Actionneur.BrasPiedsGauche.OuvrirPinceBas();
+            Actionneur.BrasPiedsGauche.OuvrirPinceHaut();
+            Actionneur.BrasPiedsDroite.OuvrirPinceBas();
+            Actionneur.BrasPiedsDroite.OuvrirPinceHaut();
+            Actionneur.BrasPiedsGauche.Deverrouiller();
+            Actionneur.BrasPiedsDroite.Deverrouiller();
+
+            Thread.Sleep(500);
+            Robots.GrosRobot.Reculer(280);
+            Actionneur.BrasAspirateur.Maintenir();
+            Robots.GrosRobot.PivotDroite(180);
+            Actionneur.BrasAspirateur.PositionDepose();
+            Robots.GrosRobot.PivotDroite(60);
+
+            Actionneur.BrasAspirateur.Arreter();
+
+            Actionneur.BrasPiedsGauche.Verrouiller();
+            Actionneur.BrasPiedsDroite.Verrouiller();
+
+            /*
             Actionneur.BrasPiedsDroite.OuvrirPinceBas();
             Actionneur.BrasPiedsGauche.OuvrirPinceBas();
             Actionneur.BrasPiedsDroite.OuvrirPinceHaut();
@@ -164,7 +235,7 @@ namespace GoBot.IHM
             Robots.GrosRobot.Avancer(50);
             Actionneur.BrasPiedsGauche.Empiler();
             Robots.GrosRobot.Avancer(100);
-            Actionneur.BrasPiedsGauche.Empiler();
+            Actionneur.BrasPiedsGauche.Empiler();*/
         }
 
         private void btnBasTableGauche_Click(object sender, EventArgs e)
@@ -188,6 +259,49 @@ namespace GoBot.IHM
 
             Robots.GrosRobot.PivotDroite(17.34);
             Robots.GrosRobot.Avancer(66);
+            Actionneur.BrasPiedsGauche.Empiler();
+        }
+
+        private void btnDeposeTapisDroit_Click(object sender, EventArgs e)
+        {
+            Actionneur.BrasTapis.PoserTapisDroit();
+        }
+
+        private void btnDeposeTapisGauche_Click(object sender, EventArgs e)
+        {
+            Actionneur.BrasTapis.PoserTapisGauche();
+        }
+
+        Thread thDroit;
+        Thread thGauche;
+        private void btnEmpileTout_Click(object sender, EventArgs e)
+        {
+            thDroit = new Thread(EmpileDroit);
+            thGauche = new Thread(EmpileGauche);
+
+            thDroit.Start();
+            thGauche.Start();
+        }
+
+        private void EmpileGauche()
+        {
+            Actionneur.BrasPiedsDroite.Empiler();
+            Actionneur.BrasPiedsDroite.Empiler();
+            Actionneur.BrasPiedsDroite.Empiler();
+            Actionneur.BrasPiedsDroite.Empiler();
+            Actionneur.BrasPiedsDroite.Empiler();
+
+            thDroit.Join();
+
+            Robots.GrosRobot.Reculer(100);
+        }
+
+        private void EmpileDroit()
+        {
+            Actionneur.BrasPiedsGauche.Empiler();
+            Actionneur.BrasPiedsGauche.Empiler();
+            Actionneur.BrasPiedsGauche.Empiler();
+            Actionneur.BrasPiedsGauche.Empiler();
             Actionneur.BrasPiedsGauche.Empiler();
         }
     }

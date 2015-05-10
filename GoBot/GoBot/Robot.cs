@@ -8,6 +8,7 @@ using AStarFolder;
 using GoBot.Calculs.Formes;
 using System.Drawing;
 using GoBot.Actions;
+using GoBot.Actionneurs;
 
 namespace GoBot
 {
@@ -65,7 +66,8 @@ namespace GoBot
         public abstract List<int>[] MesureTestPid(int consigne, SensAR sens, int nbValeurs);
         public abstract List<double>[] DiagnosticCpuPwm(int nbValeurs);
         public abstract bool DemandeCapteurOnOff(CapteurOnOffID capteur, bool attendre = true);
-        public abstract void DemandeValeursAnalogiques(bool attendre = true);
+        public abstract void DemandeValeursAnalogiquesIO(bool attendre = true);
+        public abstract void DemandeValeursAnalogiquesMove(bool attendre = true);
 
         public abstract void ActionneurOnOff(ActionneurOnOffID actionneur, bool on);
 
@@ -78,7 +80,8 @@ namespace GoBot
         public abstract Color GetCouleurEquipe(bool historique = true);
 
         public Dictionary<CapteurOnOffID, bool> CapteurActive { get; set; }
-        public List<double> ValeursAnalogiques { get; set; }
+        public List<double> ValeursAnalogiquesIO { get; set; }
+        public List<double> ValeursAnalogiquesMove { get; set; }
 
         //Déclaration du délégué pour l’évènement changement d'état d'un capteurOnOff
         public delegate void ChangementEtatCapteurOnOffDelegate(CapteurOnOffID capteur, bool etat);
@@ -106,13 +109,59 @@ namespace GoBot
         {
             if (this == Robots.GrosRobot)
             {
+                Actionneur.BrasAmpoule.Fermer();
+                Thread.Sleep(500);
+                Actionneur.BrasAmpoule.AscenseurCalibration();
+
                 Lent();
                 int tempsPause = 400;
                 Avancer(50);
                 Reculer(50);
                 PivotDroite(10);
                 PivotGauche(10);
-                // TODO
+                Actionneur.BrasPiedsDroite.OuvrirPinceBas();
+                Actionneur.BrasPiedsDroite.OuvrirPinceHaut();
+                Actionneur.BrasPiedsGauche.OuvrirPinceBas();
+                Actionneur.BrasPiedsGauche.OuvrirPinceHaut();
+
+                Thread.Sleep(500);
+                Actionneur.BrasPiedsDroite.FermerPinceBasDroite();
+                Thread.Sleep(200);
+                Actionneur.BrasPiedsDroite.OuvrirPinceBasDroite();
+                Actionneur.BrasPiedsDroite.FermerPinceBasGauche();
+                Thread.Sleep(200);
+                Actionneur.BrasPiedsDroite.OuvrirPinceBasGauche();
+                Actionneur.BrasPiedsDroite.FermerPinceHautGauche();
+                Thread.Sleep(200);
+                Actionneur.BrasPiedsDroite.OuvrirPinceHautGauche();
+                Actionneur.BrasPiedsDroite.FermerPinceHautDroite();
+                Thread.Sleep(200);
+                Actionneur.BrasPiedsDroite.OuvrirPinceHautDroite();
+                Actionneur.BrasPiedsGauche.FermerPinceHautGauche();
+                Thread.Sleep(200);
+                Actionneur.BrasPiedsGauche.OuvrirPinceHautGauche();
+                Actionneur.BrasPiedsGauche.FermerPinceHautDroite();
+                Thread.Sleep(200);
+                Actionneur.BrasPiedsGauche.OuvrirPinceHautDroite();
+                Actionneur.BrasPiedsGauche.FermerPinceBasDroite();
+                Thread.Sleep(200);
+                Actionneur.BrasPiedsGauche.OuvrirPinceBasDroite();
+                Actionneur.BrasPiedsGauche.FermerPinceBasGauche();
+                Thread.Sleep(200);
+                Actionneur.BrasPiedsGauche.OuvrirPinceBasGauche();
+                Thread.Sleep(500);
+                Actionneur.BrasAmpoule.Descendre();
+                Thread.Sleep(500);
+                Actionneur.BrasAmpoule.Ouvrir();
+                Thread.Sleep(100);
+                Actionneur.BrasAmpoule.Fermer();
+                Thread.Sleep(100);
+                Actionneur.BrasAmpoule.Ouvrir();
+                Thread.Sleep(100);
+                Actionneur.BrasAmpoule.Fermer();
+                Thread.Sleep(100);
+                Actionneur.BrasAmpoule.Ouvrir();
+
             }
         }
 
@@ -248,7 +297,7 @@ namespace GoBot
             if (destination.Distance(Position.Coordonnees) <= 10)
                 return true;
 
-            semTrajectoire = new Semaphore(0, 999);
+            semTrajectoire = new Semaphore(0, int.MaxValue);
 
             succesPathFinding = false;
 
@@ -391,6 +440,7 @@ namespace GoBot
                 }
             }
 
+
             Node finNode = Graph.ClosestNode(x, y, 0, out distance, false);
             if (distance != 0)
             {
@@ -497,6 +547,7 @@ namespace GoBot
             if (toutDroit)
             {
                 Historique.Log("Chemin trouvé : ligne droite", TypeLog.PathFinding);
+
                 CheminEnCoursNoeuds.Add(debutNode);
                 CheminEnCoursNoeuds.Add(finNode);
 
@@ -936,8 +987,7 @@ namespace GoBot
         public void MajGraphFranchissable()
         {
             SemGraph.WaitOne();
-
-            List<IForme> obstacles = CalculerObstacles();
+            List<IForme> obstacles = Plateau.ObstaclesTemporaires;
 
             foreach (Arc arc in Graph.Arcs)
                 arc.Passable = true;
@@ -1001,6 +1051,7 @@ namespace GoBot
         {
             List<IForme> obstacles = new List<IForme>();
             obstacles.AddRange(Plateau.ListeObstacles);
+            //obstacles.AddRange(Plateau.ObstaclesTemporaires);
             /*obstacles.Add(new Cercle(AutreRobot.Position.Coordonnees, AutreRobot.Rayon));
 
             if (AutreRobot.PositionCible != null)

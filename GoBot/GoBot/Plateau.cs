@@ -158,8 +158,8 @@ namespace GoBot
 
 
                 Random random = new Random();
-                
-                SemaphoreCollisions = new Semaphore(0, 999999999);
+
+                SemaphoreCollisions = new Semaphore(0, int.MaxValue);
                 thCollisions = new Thread(ThreadTestCollisions);
                 thCollisions.Start();
             }

@@ -65,7 +65,6 @@
             this.lblPetitRobotDeplacements = new Composants.LabelPlus();
             this.groupBox = new System.Windows.Forms.GroupBox();
             this.groupBoxDeplacements = new System.Windows.Forms.GroupBox();
-            this.toolTip = new System.Windows.Forms.ToolTip(this.components);
             this.btnPathRPCentre = new System.Windows.Forms.Button();
             this.btnPathRPFace = new System.Windows.Forms.Button();
             this.btnPathRSCentre = new System.Windows.Forms.Button();
@@ -74,10 +73,12 @@
             this.btnTeleportRPCentre = new System.Windows.Forms.Button();
             this.btnTeleportRSCentre = new System.Windows.Forms.Button();
             this.btnTeleportRPFace = new System.Windows.Forms.Button();
+            this.toolTip = new System.Windows.Forms.ToolTip(this.components);
             this.btnReset = new System.Windows.Forms.Button();
             this.btnAffichage = new System.Windows.Forms.Button();
             this.pictureBoxTable = new System.Windows.Forms.PictureBox();
             this.groupBoxAffichage = new System.Windows.Forms.GroupBox();
+            this.btnZoneDepart = new System.Windows.Forms.Button();
             this.groupBox.SuspendLayout();
             this.groupBoxDeplacements.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxTable)).BeginInit();
@@ -574,11 +575,22 @@
             this.groupBoxAffichage.TabStop = false;
             this.groupBoxAffichage.Text = "Affichage";
             // 
+            // btnZoneDepart
+            // 
+            this.btnZoneDepart.Location = new System.Drawing.Point(14, 381);
+            this.btnZoneDepart.Name = "btnZoneDepart";
+            this.btnZoneDepart.Size = new System.Drawing.Size(98, 23);
+            this.btnZoneDepart.TabIndex = 69;
+            this.btnZoneDepart.Text = "Retour départ";
+            this.btnZoneDepart.UseVisualStyleBackColor = true;
+            this.btnZoneDepart.Click += new System.EventHandler(this.btnZoneDepart_Click);
+            // 
             // PanelTable
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.Transparent;
+            this.Controls.Add(this.btnZoneDepart);
             this.Controls.Add(this.groupBoxAffichage);
             this.Controls.Add(this.groupBoxDeplacements);
             this.Controls.Add(this.groupBox);
@@ -678,5 +690,6 @@
         private System.Windows.Forms.GroupBox groupBoxDeplacements;
         private System.Windows.Forms.ToolTip toolTip;
         private System.Windows.Forms.GroupBox groupBoxAffichage;
+        private System.Windows.Forms.Button btnZoneDepart;
     }
 }
