@@ -64,6 +64,7 @@
             this.lblGrosRobotDeplacements = new Composants.LabelPlus();
             this.lblPetitRobotDeplacements = new Composants.LabelPlus();
             this.groupBox = new System.Windows.Forms.GroupBox();
+            this.btnStratTest = new System.Windows.Forms.Button();
             this.btnStratNul = new System.Windows.Forms.Button();
             this.groupBoxDeplacements = new System.Windows.Forms.GroupBox();
             this.btnPathRPCentre = new System.Windows.Forms.Button();
@@ -80,7 +81,7 @@
             this.pictureBoxTable = new System.Windows.Forms.PictureBox();
             this.groupBoxAffichage = new System.Windows.Forms.GroupBox();
             this.btnZoneDepart = new System.Windows.Forms.Button();
-            this.btnStratTest = new System.Windows.Forms.Button();
+            this.btnTestAsser = new System.Windows.Forms.Button();
             this.groupBox.SuspendLayout();
             this.groupBoxDeplacements.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxTable)).BeginInit();
@@ -430,6 +431,16 @@
             this.groupBox.TabStop = false;
             this.groupBox.Text = "Lancement";
             // 
+            // btnStratTest
+            // 
+            this.btnStratTest.Location = new System.Drawing.Point(151, 31);
+            this.btnStratTest.Name = "btnStratTest";
+            this.btnStratTest.Size = new System.Drawing.Size(36, 23);
+            this.btnStratTest.TabIndex = 50;
+            this.btnStratTest.Text = "Test";
+            this.btnStratTest.UseVisualStyleBackColor = true;
+            this.btnStratTest.Click += new System.EventHandler(this.btnStratTest_Click);
+            // 
             // btnStratNul
             // 
             this.btnStratNul.Location = new System.Drawing.Point(151, 60);
@@ -599,21 +610,22 @@
             this.btnZoneDepart.UseVisualStyleBackColor = true;
             this.btnZoneDepart.Click += new System.EventHandler(this.btnZoneDepart_Click);
             // 
-            // btnStratTest
+            // btnTestAsser
             // 
-            this.btnStratTest.Location = new System.Drawing.Point(151, 31);
-            this.btnStratTest.Name = "btnStratTest";
-            this.btnStratTest.Size = new System.Drawing.Size(36, 23);
-            this.btnStratTest.TabIndex = 50;
-            this.btnStratTest.Text = "Test";
-            this.btnStratTest.UseVisualStyleBackColor = true;
-            this.btnStratTest.Click += new System.EventHandler(this.btnStratTest_Click);
+            this.btnTestAsser.Location = new System.Drawing.Point(118, 366);
+            this.btnTestAsser.Name = "btnTestAsser";
+            this.btnTestAsser.Size = new System.Drawing.Size(75, 23);
+            this.btnTestAsser.TabIndex = 70;
+            this.btnTestAsser.Text = "Test asser";
+            this.btnTestAsser.UseVisualStyleBackColor = true;
+            this.btnTestAsser.Click += new System.EventHandler(this.btnTestAsser_Click);
             // 
             // PanelTable
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.Transparent;
+            this.Controls.Add(this.btnTestAsser);
             this.Controls.Add(this.btnZoneDepart);
             this.Controls.Add(this.groupBoxAffichage);
             this.Controls.Add(this.groupBoxDeplacements);
@@ -717,5 +729,6 @@
         private System.Windows.Forms.Button btnZoneDepart;
         private System.Windows.Forms.Button btnStratNul;
         private System.Windows.Forms.Button btnStratTest;
+        private System.Windows.Forms.Button btnTestAsser;
     }
 }

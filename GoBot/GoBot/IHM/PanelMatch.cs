@@ -82,6 +82,8 @@ namespace GoBot.IHM
                 ledRecallageGros.CouleurOrange();
             }));
 
+            Recallages.RecallageGrosRobot(false);
+
             this.Invoke(new EventHandler(delegate
             {
                 ledRecallageGros.CouleurVert();

@@ -46,6 +46,9 @@ namespace GoBot.Mouvements
 
             if (position != null && Robots.GrosRobot.GotoXYTeta(position.Coordonnees.X, position.Coordonnees.Y, position.Angle.AngleDegres))
             {
+                if (!Actionneur.BrasSpot.AmpouleSurSpot && Actionneur.BrasGobelet.AmpoulePrechargee)
+                    BrasPieds.TransfererBalle();
+
                 Robots.GrosRobot.Avancer(250);
                 brasGobelet.DeposeGobelet(false);
                 brasSpot.DeposeSpot();
@@ -84,14 +87,14 @@ namespace GoBot.Mouvements
                     return 0;
                 else
                 {
-                    int score = 0;
+                    double score = 0;
 
-                    score += Actionneur.BrasPiedsDroite.NbPieds == 4 && Actionneur.BrasPiedsGauche.Gobelet ? 25 : 0;
-                    score += Actionneur.BrasPiedsGauche.NbPieds == 4 && Actionneur.BrasPiedsDroite.Gobelet ? 25 : 0;
+                    score += Actionneur.BrasSpot.NbPieds == 4 ? 40 : 0;
+                    score += Actionneur.BrasGobelet.Gobelet ?  0.001 : 0;
 
                     // Triple l'importance de déposer dans les 20 dernières secondes
                     if (Plateau.Enchainement.TempsRestant.TotalSeconds < 20)
-                        score += Actionneur.BrasPiedsDroite.NbPieds * 5;
+                        score += Actionneur.BrasPiedsDroite.NbPieds * 30;
 
                     return score;
                 }

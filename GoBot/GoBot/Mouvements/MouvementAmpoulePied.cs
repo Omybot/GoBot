@@ -52,6 +52,7 @@ namespace GoBot.Mouvements
             switch (numeroPied)
             {
                 case 0:
+                    Positions.Add(new Position(21.53, new PointReel(355, 304)));
                     break;
                 case 1:
                     break;
@@ -62,49 +63,56 @@ namespace GoBot.Mouvements
                 case 4:
                     break;
                 case 5:
-                    /*Positions.Add(new Position(217.45, new PointReel(682, 1211)));
-                    Positions.Add(new Position(289.28, new PointReel(948, 1132)));
-                    Positions.Add(new Position(74.19, new PointReel(934, 1581)));
-                    Positions.Add(new Position(145.17, new PointReel(676, 1490)));
-                    Positions.Add(new Position(1.21, new PointReel(1106, 1360)));*/
+                    Positions.Add(new Position(241.1, new PointReel(732, 1106)));
+                    Positions.Add(new Position(293.73, new PointReel(984, 1095)));
+                    Positions.Add(new Position(333.94, new PointReel(1125, 1230)));
+                    Positions.Add(new Position(35.59, new PointReel(1101, 1520)));
+                    Positions.Add(new Position(118.89, new PointReel(733, 1604)));
 
-                    Positions.Add(new Position(221.54, new PointReel(657, 1167)));
-                    Positions.Add(new Position(146.22, new PointReel(634, 1513)));
-                    Positions.Add(new Position(97.73, new PointReel(832, 1637)));
-                    Positions.Add(new Position(32.80, new PointReel(1109, 1509)));
-                    Positions.Add(new Position(320.07, new PointReel(1088, 1173)));
                     break;
                 case 6:
-                    /*Positions.Add(new Position(296.13, new PointReel(1204, 1558)));
-                    Positions.Add(new Position(199.28, new PointReel(877, 1692)));*/
+                    Positions.Add(new Position(186.73, new PointReel(818, 1737)));
+                    Positions.Add(new Position(245.75, new PointReel(983, 1511)));
+                    Positions.Add(new Position(305.59, new PointReel(1265, 1539)));
 
-                    Positions.Add(new Position(195.44, new PointReel(873, 1707)));
                     break;
                 case 7:
-                    /*Positions.Add(new Position(217.45, new PointReel(1112, 1256)));
-                    Positions.Add(new Position(295.05, new PointReel(1400, 1186)));
-                    Positions.Add(new Position(73.25, new PointReel(1368, 1626)));
-                    Positions.Add(new Position(145.17, new PointReel(1106, 1535)));
-                    Positions.Add(new Position(1.21, new PointReel(1536, 1405)));*/
+                    Positions.Add(new Position(202.82, new PointReel(1037, 1290)));
+                    Positions.Add(new Position(129.6, new PointReel(1119, 1618)));
+                    Positions.Add(new Position(273.47, new PointReel(1317, 1117)));
+                    Positions.Add(new Position(6.31, new PointReel(1582, 1431)));
 
-                    Positions.Add(new Position(239.77, new PointReel(1157, 1155)));
-                    Positions.Add(new Position(202.79, new PointReel(1038, 1290)));
-                    Positions.Add(new Position(45.46, new PointReel(1499, 1602)));
-                    Positions.Add(new Position(336.12, new PointReel(1560, 1282)));
                     break;
 
                 // Pieds verts
                 case 8:
+                    Positions.Add(new Position(337.18, new PointReel(1963, 1290)));
+                    Positions.Add(new Position(50.4, new PointReel(1881, 1618)));
+                    Positions.Add(new Position(266.53, new PointReel(1683, 1117)));
+                    Positions.Add(new Position(173.69, new PointReel(1418, 1431)));
+
+
                     break;
                 case 9:
+                    Positions.Add(new Position(-6.73, new PointReel(2182, 1737)));
+                    Positions.Add(new Position(294.25, new PointReel(2017, 1511)));
+                    Positions.Add(new Position(234.41, new PointReel(1735, 1539)));
+
                     break;
                 case 10:
+                    Positions.Add(new Position(298.9, new PointReel(2268, 1106)));
+                    Positions.Add(new Position(246.27, new PointReel(2016, 1095)));
+                    Positions.Add(new Position(206.06, new PointReel(1875, 1230)));
+                    Positions.Add(new Position(144.41, new PointReel(1899, 1520)));
+                    Positions.Add(new Position(61.11, new PointReel(2267, 1604)));
+
                     break;
                 case 11:
                     break;
                 case 12:
                     break;
                 case 13:
+                    Positions.Add(new Position(-190.47, new PointReel(2645, 304)));
                     break;
                 case 14:
                     break;
@@ -129,15 +137,17 @@ namespace GoBot.Mouvements
 
             Position position = PositionProche;
 
+            Actionneur.BrasAmpoule.DescendrePosePied(1);
             if (position != null && Robots.GrosRobot.GotoXYTeta(position.Coordonnees.X, position.Coordonnees.Y, position.Angle.AngleDegres))
             {
-                Actionneur.BrasAmpoule.DescendrePosePied(2);
+                int diff = (int)(1000 - ((DateTime.Now - debut).TotalMilliseconds));
+                if (diff > 0 && diff <= 1000)
+                    Thread.Sleep(diff);
+
                 Robot.Lent();
                 Robot.Reculer(distanceAttrapage);
-                Actionneur.BrasAmpoule.DescendrePosePied(1);
-                Thread.Sleep(3000);
                 Actionneur.BrasAmpoule.Ouvrir();
-                Thread.Sleep(250);
+                Thread.Sleep(200);
                 Robot.Avancer(distanceAttrapage);
                 Robot.Rapide();
                 Plateau.Pieds[numeroPied].Ampoule = true;

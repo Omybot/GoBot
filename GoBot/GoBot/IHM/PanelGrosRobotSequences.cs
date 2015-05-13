@@ -405,5 +405,15 @@ namespace GoBot.IHM
             Actionneur.BrasPiedsGauche.OuvrirPinceBas();
             Actionneur.BrasPiedsGauche.OuvrirPinceHaut();
         }
+
+        private void btnTransfertBalle_Click(object sender, EventArgs e)
+        {
+            Actionneurs.BrasPieds.TransfererBalle();
+        }
+
+        private void btnBallePrechargee_Click(object sender, EventArgs e)
+        {
+            Actionneur.BrasGobelet.AmpoulePrechargee = true;
+        }
     }
 }

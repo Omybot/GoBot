@@ -15,7 +15,6 @@ namespace GoBot.Mouvements
     {
         private int numeroGobelet;
         private int distanceAttrapage = 150;
-        private BrasPieds bras;
 
         public override double Score
         {
@@ -26,19 +25,19 @@ namespace GoBot.Mouvements
                     return 0;
 
                 // On ne veut pas attraper avec le bras réservé aux spots
-                if (Plateau.NotreCouleur == Plateau.CouleurGaucheJaune && bras == Actionneur.BrasPiedsDroite)
+                if (Plateau.NotreCouleur == Plateau.CouleurGaucheJaune && Actionneur.BrasGobelet == Actionneur.BrasPiedsDroite)
                     return 0;
 
-                if (Plateau.NotreCouleur == Plateau.CouleurDroiteVert && bras == Actionneur.BrasPiedsGauche)
+                if (Plateau.NotreCouleur == Plateau.CouleurDroiteVert && Actionneur.BrasGobelet == Actionneur.BrasPiedsGauche)
                     return 0;
 
                 if (Element.Ramasse)
                     return 0;
 
-                if (bras.NbPieds > 0)
+                if (Actionneur.BrasGobelet.NbPieds > 0)
                     return 0;
 
-                if (bras.Gobelet)
+                if (Actionneur.BrasGobelet.Gobelet)
                     return 0;
                 
                 return 2;
@@ -50,12 +49,10 @@ namespace GoBot.Mouvements
             get { return Score; }
         }
 
-        public MouvementGobelet(int i, BrasPieds brasPieds)
+        public MouvementGobelet(int i, Color couleur)
         {
             numeroGobelet = i;
             Element = Plateau.Gobelets[i];
-
-            bras = brasPieds;
 
             PointReel point = new PointReel(Plateau.Gobelets[i].Position);
             List<Angle> anglesPossibles = new List<Angle>();
@@ -63,7 +60,7 @@ namespace GoBot.Mouvements
             switch(numeroGobelet)
             {
                 case 0:
-                    if(bras == Actionneur.BrasPiedsDroite)
+                    if (couleur == Plateau.CouleurDroiteVert)
                     {
 
                     }
@@ -73,7 +70,7 @@ namespace GoBot.Mouvements
                     }
                     break;
                 case 1:
-                    if (bras == Actionneur.BrasPiedsDroite)
+                    if (couleur == Plateau.CouleurDroiteVert)
                     {
                         Positions.Add(new Position(180-11.69, new PointReel(3000-1807, 851)));
                         Positions.Add(new Position(180-314.64, new PointReel(3000-1954, 1079)));
@@ -89,7 +86,7 @@ namespace GoBot.Mouvements
                     }
                     break;
                 case 2:
-                    if (bras == Actionneur.BrasPiedsDroite)
+                    if (couleur == Plateau.CouleurDroiteVert)
                     {
                         Positions.Add(new Position(180-29.97, new PointReel(3000-1224, 1581)));
                         Positions.Add(new Position(180 - 133.19, new PointReel(3000 - 1629, 1397)));
@@ -103,7 +100,7 @@ namespace GoBot.Mouvements
                     }
                     break;
                 case 3:
-                    if (bras == Actionneur.BrasPiedsDroite)
+                    if (couleur == Plateau.CouleurDroiteVert)
                     {
                         Positions.Add(new Position(180-339.16, new PointReel(3000-682, 1000)));
                         Positions.Add(new Position(180 - 236.16, new PointReel(3000 - 1125, 1016)));
@@ -119,7 +116,7 @@ namespace GoBot.Mouvements
                     }
                     break;
                 case 4:
-                    if (bras == Actionneur.BrasPiedsDroite)
+                    if (couleur == Plateau.CouleurDroiteVert)
                     {
 
                     }
@@ -149,20 +146,20 @@ namespace GoBot.Mouvements
 
             if (position != null && Robots.GrosRobot.GotoXYTeta(position.Coordonnees.X, position.Coordonnees.Y, position.Angle.AngleDegres))
             {
-                bras.AscenseurDescendre();
+                Actionneur.BrasGobelet.AscenseurDescendre();
 
                 Robot.Lent();
                 Robot.Avancer(distanceAttrapage);
                 Robot.Rapide();
 
-                bras.FermerPinceBas();
+                Actionneur.BrasGobelet.FermerPinceBas();
                 Thread.Sleep(250);
-                bras.SouleverLegerement();
+                Actionneur.BrasGobelet.SouleverLegerement();
                 Thread.Sleep(500);
 
                 Robots.GrosRobot.Historique.Log("Fin gobelet " + numeroGobelet + (DateTime.Now - debut).TotalSeconds.ToString("#.#") + "s");
                 Plateau.Gobelets[numeroGobelet].Ramasse = true;
-                bras.Gobelet = true;
+                Actionneur.BrasGobelet.Gobelet = true;
             }
             else
             {

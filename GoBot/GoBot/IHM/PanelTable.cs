@@ -236,7 +236,7 @@ namespace GoBot.IHM
                 for (int i = 0; i < Plateau.Pieds.Count; i++)
                     if (Plateau.Pieds[i].Hover)
                     {
-                        if (i == 3 || i == 4)
+                        /*if (i == 3 || i == 4)
                             move = new MouvementTas1(Plateau.CouleurGaucheJaune);
                         else if (i == 11 || i == 12)
                             move = new MouvementTas1(Plateau.CouleurDroiteVert);
@@ -244,7 +244,7 @@ namespace GoBot.IHM
                             move = new MouvementTas2(Plateau.CouleurGaucheJaune);
                         else if (i == 14 || i == 15)
                             move = new MouvementTas2(Plateau.CouleurDroiteVert);
-                        else
+                        else*/
                             move = new MouvementPied(i);
                         break;
                     }
@@ -593,9 +593,11 @@ namespace GoBot.IHM
             Actionneur.BrasPiedsGauche.OuvrirPinceHaut();
 
             if (Plateau.NotreCouleur == Plateau.CouleurDroiteVert)
-                Robots.GrosRobot.GotoXYTeta(3000 - 240, 1000, 180);
+                Robots.GrosRobot.GotoXYTeta(3000 - 555, 1000, 180);
             else
-                Robots.GrosRobot.GotoXYTeta(240, 1000, 0);
+                Robots.GrosRobot.GotoXYTeta(555, 1000, 0);
+
+            Robots.GrosRobot.Reculer(300);
 
             Actionneur.BrasPiedsDroite.NbPieds = 0;
             Actionneur.BrasPiedsDroite.FermerPinceBas();
@@ -626,6 +628,48 @@ namespace GoBot.IHM
         {
             Plateau.Enchainement = new EnchainementTest();
             Plateau.Enchainement.Executer();
+        }
+
+        private void btnTestAsser_Click(object sender, EventArgs e)
+        {
+            Thread thTest = new Thread(TestAsser);
+            thTest.Start();
+        }
+
+        private void TestAsser()
+        {
+
+            Robots.GrosRobot.Avancer(2000);
+            Robots.GrosRobot.PivotDroite(270);
+            Robots.GrosRobot.Avancer(200);
+            Robots.GrosRobot.PivotDroite(10);
+            Robots.GrosRobot.Avancer(100);
+            Robots.GrosRobot.PivotDroite(10);
+            Robots.GrosRobot.Avancer(100);
+            Robots.GrosRobot.PivotDroite(10);
+            Robots.GrosRobot.Avancer(100);
+            Robots.GrosRobot.Reculer(1000);
+            Robots.GrosRobot.PivotGauche(90);
+            Robots.GrosRobot.Reculer(500);
+            Robots.GrosRobot.PivotGauche(10);
+            Robots.GrosRobot.Avancer(1000);
+            Robots.GrosRobot.PivotGauche(10);
+            Robots.GrosRobot.Avancer(100);
+            Robots.GrosRobot.PivotGauche(10);
+            Robots.GrosRobot.Avancer(100);
+            Robots.GrosRobot.PivotGauche(10);
+            Robots.GrosRobot.Avancer(100);
+            Robots.GrosRobot.PivotGauche(10);
+            Robots.GrosRobot.Avancer(100);
+
+
+            if (Plateau.NotreCouleur == Plateau.CouleurDroiteVert)
+                Robots.GrosRobot.GotoXYTeta(3000 - 555, 1000, 180);
+            else
+                Robots.GrosRobot.GotoXYTeta(555, 1000, 0);
+
+            Robots.GrosRobot.Reculer(300);
+
         }
     }
 }

@@ -32,7 +32,6 @@ namespace GoBot.Mouvements
 
         private int numeroPied;
         private int distanceAttrapage = 150;
-        private BrasPieds bras;
 
         public override double Score
         {
@@ -42,7 +41,7 @@ namespace GoBot.Mouvements
                 if (Element.Ramasse)
                     return 0;
 
-                if (bras.NbPieds >= 4)
+                if (Actionneur.BrasSpot.NbPieds >= 4)
                     return 0;
 
                 if (!BonneCouleur())
@@ -51,8 +50,27 @@ namespace GoBot.Mouvements
                 if (Actionneur.BrasAmpoule.AmpouleChargee)
                     return 0;
 
+                if (numeroPied == 3 && !Plateau.Pieds[4].Ramasse)
+                    return 0;
+
+                if (numeroPied == 11 && !Plateau.Pieds[12].Ramasse)
+                    return 0;
+
+                if (numeroPied == 1 && !Plateau.Gobelets[0].Ramasse)
+                    return 0;
+
+                if (numeroPied == 15 && !Plateau.Gobelets[4].Ramasse)
+                    return 0;
+
+                if (numeroPied == 2 && (!Plateau.Pieds[1].Ramasse || !Plateau.Gobelets[0].Ramasse))
+                    return 0;
+
+                if (numeroPied == 15 && (!Plateau.Pieds[14].Ramasse || !Plateau.Gobelets[4].Ramasse))
+                    return 0;
+
                 if (Plateau.Pieds[numeroPied].Ampoule)
                     return 20;
+
                 else
                     return 4;
             }
@@ -68,97 +86,92 @@ namespace GoBot.Mouvements
             numeroPied = i;
             Element = Plateau.Pieds[i];
 
-            bras = Actionneur.BrasPiedsGauche;
-
             PointReel point = new PointReel(Plateau.Pieds[i].Position);
             List<Angle> anglesPossibles = new List<Angle>();
 
             switch (numeroPied)
             {
                 case 0:
-                    Positions.Add(new Position(270 - 80.25, new PointReel(297, 314)));
+                    Positions.Add(new Position(185.53, new PointReel(355, 304)));
                     break;
+
                 case 1:
                     break;
+
                 case 2:
                     break;
+
                 case 3:
+                    Positions.Add(new Position(270, new PointReel(772, 323)));
+                    distanceAttrapage = 100;
                     break;
+
                 case 4:
+                    Positions.Add(new Position(270, new PointReel(772, 473)));
                     break;
+
                 case 5:
-                    /*Positions.Add(new Position(18, new PointReel(682, 1211)));
-                    Positions.Add(new Position(90, new PointReel(948, 1132)));
-                    Positions.Add(new Position(234, new PointReel(934, 1581)));
-                    Positions.Add(new Position(306, new PointReel(676, 1490)));
-                    Positions.Add(new Position(162, new PointReel(1106, 1360)));*/
-
-                    Positions.Add(new Position(25.6, new PointReel(657, 1167)));
-                    Positions.Add(new Position(310.26, new PointReel(634, 1513)));
-                    Positions.Add(new Position(261.78, new PointReel(832, 1637)));
-                    Positions.Add(new Position(196.82, new PointReel(1109, 1509)));
-                    Positions.Add(new Position(124.13, new PointReel(1088, 1173)));
+                    Positions.Add(new Position(45.1, new PointReel(732, 1106)));
+                    Positions.Add(new Position(97.73, new PointReel(984, 1095)));
+                    Positions.Add(new Position(137.94, new PointReel(1125, 1230)));
+                    Positions.Add(new Position(199.59, new PointReel(1101, 1520)));
+                    Positions.Add(new Position(282.89, new PointReel(733, 1604)));
                     break;
+
                 case 6:
-                    /*Positions.Add(new Position(96.92, new PointReel(1204, 1558)));
-                    Positions.Add(new Position(0, new PointReel(877, 1692)));*/
-
-                    Positions.Add(new Position(358.43, new PointReel(843, 1699)));
+                    Positions.Add(new Position(350.73, new PointReel(818, 1737)));
+                    Positions.Add(new Position(49.75, new PointReel(983, 1511)));
+                    Positions.Add(new Position(109.59, new PointReel(1265, 1539)));
                     break;
-                case 7:
-                    /*Positions.Add(new Position(18, new PointReel(1112, 1256)));
-                    Positions.Add(new Position(95.86, new PointReel(1400, 1186)));
-                    Positions.Add(new Position(234, new PointReel(1368, 1626)));
-                    Positions.Add(new Position(306, new PointReel(1106, 1535)));
-                    Positions.Add(new Position(162, new PointReel(1536, 1405)));*/
 
-                    Positions.Add(new Position(43.82, new PointReel(1157, 1155)));
-                    Positions.Add(new Position(6.84, new PointReel(1038, 1290)));
-                    Positions.Add(new Position(209.52, new PointReel(1499, 1602)));
-                    Positions.Add(new Position(140.18, new PointReel(1560, 1282)));
+                case 7:
+                    Positions.Add(new Position(6.82, new PointReel(1037, 1290)));
+                    Positions.Add(new Position(293.6, new PointReel(1119, 1618)));
+                    Positions.Add(new Position(77.47, new PointReel(1317, 1117)));
+                    Positions.Add(new Position(170.31, new PointReel(1582, 1431)));
                     break;
 
                 // Pieds verts
                 case 8:
-                    Positions.Add(new Position(180 - 18, new PointReel(3000 - 1112, 1256)));
-                    Positions.Add(new Position(180 - 95.86, new PointReel(3000 - 1400, 1186)));
-                    Positions.Add(new Position(180 - 234, new PointReel(3000 - 1358, 1626)));
-                    Positions.Add(new Position(180 - 306, new PointReel(3000 - 1106, 1535)));
-                    Positions.Add(new Position(180 - 162, new PointReel(3000 - 1536, 1405)));
+                    Positions.Add(new Position(173.18, new PointReel(1963, 1290)));
+                    Positions.Add(new Position(-113.6, new PointReel(1881, 1616)));
+                    Positions.Add(new Position(102.53, new PointReel(1683, 1117)));
+                    Positions.Add(new Position(9.69, new PointReel(1418, 1431)));
                     break;
+
                 case 9:
-                    Positions.Add(new Position(180 - 96.92, new PointReel(3000 - 1204, 1558)));
-                    Positions.Add(new Position(180, new PointReel(3000 - 877, 1692)));
+                    Positions.Add(new Position(-170.73, new PointReel(2182, 1737)));
+                    Positions.Add(new Position(130.25, new PointReel(2017, 1511)));
+                    Positions.Add(new Position(70.41, new PointReel(1735, 1539)));
                     break;
+
                 case 10:
-                    Positions.Add(new Position(180 - 18, new PointReel(3000 - 682, 1211)));
-                    Positions.Add(new Position(180 - 90, new PointReel(3000 - 948, 1132)));
-                    Positions.Add(new Position(180 - 234, new PointReel(3000 - 934, 1581)));
-                    Positions.Add(new Position(180 - 306, new PointReel(3000 - 676, 1490)));
-                    Positions.Add(new Position(180 - 162, new PointReel(3000 - 1106, 1360)));
+                    Positions.Add(new Position(134.9, new PointReel(2268, 1106)));
+                    Positions.Add(new Position(82.27, new PointReel(2016, 1095)));
+                    Positions.Add(new Position(42.06, new PointReel(1875, 1230)));
+                    Positions.Add(new Position(-19.59, new PointReel(1899, 1520)));
+                    Positions.Add(new Position(-102.89, new PointReel(2267, 1604)));
                     break;
+
                 case 11:
+                    Positions.Add(new Position(270, new PointReel(3000 - 772, 473)));
                     break;
+
                 case 12:
+                    Positions.Add(new Position(270, new PointReel(3000-772, 323)));
+                    distanceAttrapage = 100;
                     break;
+
                 case 13:
+                    Positions.Add(new Position(-5.53, new PointReel(2645, 304)));
                     break;
+
                 case 14:
                     break;
+
                 case 15:
                     Positions.Add(new Position(180 - (270 - 80.25), new PointReel(3000 - 297, 314)));
                     break;
-            }
-
-            if (numeroPied < 8)
-            {
-                bras = Actionneur.BrasPiedsDroite;
-                Couleur = Plateau.CouleurGaucheJaune;
-            }
-            else
-            {
-                bras = Actionneur.BrasPiedsGauche;
-                Couleur = Plateau.CouleurDroiteVert;
             }
 
             foreach (Angle angle in anglesPossibles)
@@ -180,40 +193,49 @@ namespace GoBot.Mouvements
 
             if (position != null && Robots.GrosRobot.GotoXYTeta(position.Coordonnees.X, position.Coordonnees.Y, position.Angle.AngleDegres))
             {
-                if (bras.NbPieds == 0)
-                    bras.AscenseurDescendre();
+                if (Actionneur.BrasSpot.NbPieds == 0)
+                    Actionneur.BrasSpot.AscenseurDescendre();
 
                 Robot.Lent();
                 Robot.Avancer(distanceAttrapage);
 
                 Robots.GrosRobot.DemandeValeursAnalogiquesIO();
-                if (Robots.GrosRobot.ValeursAnalogiquesIO[bras.PortAnalogiqueCapteur] > 2300)
+                if (Robots.GrosRobot.ValeursAnalogiquesIO[Actionneur.BrasSpot.PortAnalogiqueCapteur] > 2300)
                 {
-                    Robots.GrosRobot.DemandeValeursAnalogiquesIO();
-                    if (Robots.GrosRobot.ValeursAnalogiquesIO[bras.PortAnalogiqueCapteur] < 3200)
+                    if (Robots.GrosRobot.ValeursAnalogiquesIO[Actionneur.BrasSpot.PortAnalogiqueCapteur] < 3200)
                         Robots.GrosRobot.Avancer(40);
                 }
                 else
                 {
                     Robots.GrosRobot.Historique.Log("Annulation pied " + numeroPied);
                     Plateau.Pieds[numeroPied].Ramasse = true;
+                    if (numeroPied == 0 || numeroPied == 13)
+                        Robot.Reculer(distanceAttrapage);
                     return false;
                 }
 
                 Robots.GrosRobot.DemandeValeursAnalogiquesIO();
 
-                if (Robots.GrosRobot.ValeursAnalogiquesIO[bras.PortAnalogiqueCapteur] < 3200)
+                if (Robots.GrosRobot.ValeursAnalogiquesIO[Actionneur.BrasSpot.PortAnalogiqueCapteur] < 3200)
                 {
                     Robots.GrosRobot.Historique.Log("Annulation pied " + numeroPied);
                     Plateau.Pieds[numeroPied].Ramasse = true;
+                    if (numeroPied == 0 || numeroPied == 13)
+                        Robot.Reculer(distanceAttrapage);
                     return false;
                 }
 
                 Robot.Rapide();
-                bras.Empiler();
+                Actionneur.BrasSpot.Empiler();
 
                 Robots.GrosRobot.Historique.Log("Fin pied " + numeroPied + (DateTime.Now - debut).TotalSeconds.ToString("#.#") + "s");
+
                 Plateau.Pieds[numeroPied].Ramasse = true;
+                if (Plateau.Pieds[numeroPied].Ampoule)
+                    Actionneur.BrasSpot.AmpouleSurSpot = true;
+
+                if (numeroPied == 0 || numeroPied == 13)
+                    Robot.Reculer(distanceAttrapage);
             }
             else
             {

@@ -9,9 +9,12 @@ namespace GoBot.Actionneurs
 {
     class BrasAmpoule
     {
+        public bool PinceFermee { get; set; }
+
         public BrasAmpoule()
         {
             AmpouleChargee = true;
+            PinceFermee = false;
         }
 
         public void Monter()
@@ -27,11 +30,13 @@ namespace GoBot.Actionneurs
         public void Ouvrir()
         {
             Robots.GrosRobot.BougeServo(ServomoteurID.PinceAmpoule, Config.CurrentConfig.ServoAttrapageAmpoule.PositionOuvert);
+            PinceFermee = false;
         }
 
         public void Fermer()
         {
             Robots.GrosRobot.BougeServo(ServomoteurID.PinceAmpoule, Config.CurrentConfig.ServoAttrapageAmpoule.PositionFerme);
+            PinceFermee = true;
         }
 
         public void Hauteur(int hauteur)
@@ -54,17 +59,14 @@ namespace GoBot.Actionneurs
             if (p == 1)
             {
                 Hauteur(Config.CurrentConfig.AscenseurAmpoule.PositionPoseSur1Pied);
-                Thread.Sleep(300);
             }
             if (p == 2)
             {
                 Hauteur(Config.CurrentConfig.AscenseurAmpoule.PositionPoseSur2Pied);
-                Thread.Sleep(1500);
             }
             if (p == 3)
             {
                 Hauteur(Config.CurrentConfig.AscenseurAmpoule.PositionPoseSur3Pied);
-                Thread.Sleep(500);
             }
         }
 

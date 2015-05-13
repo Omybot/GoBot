@@ -60,11 +60,11 @@ namespace GoBot.Enchainements
             ListeMouvementsGros.Add(new MouvementDeposeEstrade(Plateau.ZoneDeposeEstradeDroite));
             ListeMouvementsGros.Add(new MouvementDeposeEstrade(Plateau.ZoneDeposeEstradeGauche));
 
-            ListeMouvementsGros.Add(new MouvementTas1(Plateau.CouleurGaucheJaune));
+            /*ListeMouvementsGros.Add(new MouvementTas1(Plateau.CouleurGaucheJaune));
             ListeMouvementsGros.Add(new MouvementTas1(Plateau.CouleurDroiteVert));
 
             ListeMouvementsGros.Add(new MouvementTas2(Plateau.CouleurGaucheJaune));
-            ListeMouvementsGros.Add(new MouvementTas2(Plateau.CouleurDroiteVert));
+            ListeMouvementsGros.Add(new MouvementTas2(Plateau.CouleurDroiteVert));*/
         }
 
         public void Executer()

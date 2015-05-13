@@ -720,7 +720,7 @@ namespace GoBot
             // Teste si le noeud est franchissable avec la liste des obstacles
             foreach (IForme obstacle in Plateau.ObstaclesFixes)
             {
-                if (TropProche(obstacle, new PointReel(node.X, node.Y), -20))
+                if (TropProche(obstacle, new PointReel(node.X, node.Y)))
                 {
                     node.Passable = false;
                     return 0;

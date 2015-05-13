@@ -51,5 +51,27 @@ namespace GoBot.Actionneurs
             get { return brasAspirateur; }
             set { brasAspirateur = value; }
         }
+
+        public static BrasPieds BrasSpot
+        {
+            get
+            {
+                if (Plateau.NotreCouleur == Plateau.CouleurGaucheJaune)
+                    return BrasPiedsDroite;
+                else
+                    return BrasPiedsGauche;
+            }
+        }
+
+        public static BrasPieds BrasGobelet
+        {
+            get
+            {
+                if (Plateau.NotreCouleur == Plateau.CouleurGaucheJaune)
+                    return BrasPiedsGauche;
+                else
+                    return BrasPiedsDroite;
+            }
+        }
     }
 }

@@ -256,8 +256,8 @@ namespace GoBot
                         if (Robots.GrosRobot != null)
                             DessineRobot(Robots.GrosRobot, g);
 
-                        if (Robots.PetitRobot != null)
-                            DessineRobot(Robots.PetitRobot, g);
+                        //if (Robots.PetitRobot != null)
+                        //    DessineRobot(Robots.PetitRobot, g);
 
                         if (AfficheElementsJeu)
                             DessineElementsJeu(g);
@@ -525,35 +525,59 @@ namespace GoBot
 
             Bitmap bmpRobot = new Bitmap(RealToScreenDistance(robot.Taille * 3), RealToScreenDistance(robot.Taille * 3));
             Graphics gGros = Graphics.FromImage(bmpRobot);
-            gGros.FillRectangle(brushTransparent, 0, 0, RealToScreenDistance(robot.Taille * 2), RealToScreenDistance(robot.Taille * 2));
+            /*gGros.FillRectangle(brushTransparent, 0, 0, RealToScreenDistance(robot.Taille * 2), RealToScreenDistance(robot.Taille * 2));
 
             gGros.FillRectangle(brushBlanc, bmpRobot.Width / 2 - RealToScreenDistance(robot.Largeur / 2), bmpRobot.Height / 2 - RealToScreenDistance(robot.Longueur / 2), RealToScreenDistance(robot.Largeur), RealToScreenDistance(robot.Longueur));
             gGros.DrawRectangle(Plateau.NotreCouleur == Plateau.CouleurGaucheJaune ? penCouleurJ1R : penCouleurJ2J, bmpRobot.Width / 2 - RealToScreenDistance(robot.Largeur / 2), bmpRobot.Height / 2 - RealToScreenDistance(robot.Longueur / 2), RealToScreenDistance(robot.Largeur), RealToScreenDistance(robot.Longueur));
             gGros.DrawLine(Plateau.NotreCouleur == Plateau.CouleurGaucheJaune ? penCouleurJ1R : penCouleurJ2J, bmpRobot.Width / 2, bmpRobot.Height / 2, bmpRobot.Width / 2, bmpRobot.Height / 2 - RealToScreenDistance(robot.Longueur / 2));
+            */
+
+            gGros.DrawImage(Properties.Resources.Capot, bmpRobot.Width / 2 - Properties.Resources.Capot.Width / 2, bmpRobot.Height / 2 - Properties.Resources.Capot.Width / 2, Properties.Resources.Capot.Width, Properties.Resources.Capot.Height);
 
             // Dessiner les actionneurs ici
             if (robot == Robots.GrosRobot)
             {
-                gGros.FillEllipse(brushCouleurGaucheJauneTransparent, bmpRobot.Width / 2 - RealToScreenDistance(78 + 30), bmpRobot.Height / 2 - RealToScreenDistance(123 + 30), RealToScreenDistance(60), RealToScreenDistance(60));
+                //gGros.FillEllipse(brushCouleurGaucheJauneTransparent, bmpRobot.Width / 2 - RealToScreenDistance(78 + 30), bmpRobot.Height / 2 - RealToScreenDistance(123 + 30), RealToScreenDistance(60), RealToScreenDistance(60));
 
                 if (Actionneur.BrasPiedsGauche.Gobelet)
-                    gGros.DrawString("G", fontNbPieds, brushNoir, (float)(bmpRobot.Width / 2 - RealToScreenDistance(78 + 30)) + 3, (float)(bmpRobot.Height / 2 - RealToScreenDistance(123 + 30)));
+                {
+                    // Dessin gobelet
+                    Point p = new Point((int)(bmpRobot.Width / 2 - RealToScreenDistance(78) - RealToScreenDistance(94) / 2), (int)(bmpRobot.Height / 2 - RealToScreenDistance(123) - RealToScreenDistance(94) / 2));
+
+                    gGros.FillEllipse(brushBlanc, p.X, p.Y, RealToScreenDistance(94), RealToScreenDistance(94));
+                    gGros.DrawEllipse(penNoir, p.X, p.Y, RealToScreenDistance(94), RealToScreenDistance(94));
+                }
                 else if (Actionneur.BrasPiedsGauche.NbPieds > 0)
-                    gGros.DrawString(Actionneur.BrasPiedsGauche.NbPieds.ToString(), fontNbPieds, brushNoir, (float)(bmpRobot.Width / 2 - RealToScreenDistance(78 + 30)) + 3, (float)(bmpRobot.Height / 2 - RealToScreenDistance(123 + 30)));
-                else
-                    gGros.DrawString("-", fontNbPieds, brushNoir, (float)(bmpRobot.Width / 2 - RealToScreenDistance(78 + 30)) + 3, (float)(bmpRobot.Height / 2 - RealToScreenDistance(123 + 30)));
+                {
+                    Point p = new Point((int)(bmpRobot.Width / 2 - RealToScreenDistance(78) - RealToScreenDistance(60) / 2), (int)(bmpRobot.Height / 2 - RealToScreenDistance(123) - RealToScreenDistance(60) / 2));
 
+                    using(Brush brush = new SolidBrush(Plateau.NotreCouleur))
+                        gGros.FillEllipse(brush, p.X, p.Y, RealToScreenDistance(60), RealToScreenDistance(60));
+                    gGros.DrawEllipse(penNoir, p.X, p.Y, RealToScreenDistance(60), RealToScreenDistance(60));
 
-                gGros.FillEllipse(brushCouleurGaucheJauneTransparent, bmpRobot.Width / 2 + RealToScreenDistance(78 - 30), bmpRobot.Height / 2 - RealToScreenDistance(123 + 30), RealToScreenDistance(60), RealToScreenDistance(60));
+                    gGros.DrawString(Actionneur.BrasPiedsGauche.NbPieds.ToString(), fontNbPieds, brushNoir, (float)(bmpRobot.Width / 2 - RealToScreenDistance(78 + 30)) + 5, (float)(bmpRobot.Height / 2 - RealToScreenDistance(123 + 30)) + 2);
+                }
+
+                //gGros.FillEllipse(brushCouleurGaucheJauneTransparent, bmpRobot.Width / 2 + RealToScreenDistance(78 - 30), bmpRobot.Height / 2 - RealToScreenDistance(123 + 30), RealToScreenDistance(60), RealToScreenDistance(60));
 
 
                 if (Actionneur.BrasPiedsDroite.Gobelet)
-                    gGros.DrawString("G", fontNbPieds, brushNoir, (float)(bmpRobot.Width / 2 + RealToScreenDistance(78 - 30)) + 3, (float)(bmpRobot.Height / 2 - RealToScreenDistance(123 + 30)));
-                else if (Actionneur.BrasPiedsDroite.NbPieds > 0)
-                    gGros.DrawString(Actionneur.BrasPiedsDroite.NbPieds.ToString(), fontNbPieds, brushNoir, (float)(bmpRobot.Width / 2 + RealToScreenDistance(78 - 30)) + 3, (float)(bmpRobot.Height / 2 - RealToScreenDistance(123 + 30)));
-                else
-                    gGros.DrawString("-", fontNbPieds, brushNoir, (float)(bmpRobot.Width / 2 + RealToScreenDistance(78 - 30)) + 3, (float)(bmpRobot.Height / 2 - RealToScreenDistance(123 + 30)));
+                {
+                    Point p = new Point((int)(bmpRobot.Width / 2 + RealToScreenDistance(78) - RealToScreenDistance(94) / 2), (int)(bmpRobot.Height / 2 - RealToScreenDistance(123) - RealToScreenDistance(94) / 2));
 
+                    gGros.FillEllipse(brushBlanc, p.X, p.Y, RealToScreenDistance(94), RealToScreenDistance(94));
+                    gGros.DrawEllipse(penNoir, p.X, p.Y, RealToScreenDistance(94), RealToScreenDistance(94));
+                }
+                else if (Actionneur.BrasPiedsDroite.NbPieds > 0)
+                {
+                    Point p = new Point((int)(bmpRobot.Width / 2 + RealToScreenDistance(78) - RealToScreenDistance(60) / 2), (int)(bmpRobot.Height / 2 - RealToScreenDistance(123) - RealToScreenDistance(60) / 2));
+
+                    using (Brush brush = new SolidBrush(Plateau.NotreCouleur))
+                        gGros.FillEllipse(brush, p.X, p.Y, RealToScreenDistance(60), RealToScreenDistance(60));
+                    gGros.DrawEllipse(penNoir, p.X, p.Y, RealToScreenDistance(60), RealToScreenDistance(60));
+
+                    gGros.DrawString(Actionneur.BrasPiedsDroite.NbPieds.ToString(), fontNbPieds, brushNoir, (float)(bmpRobot.Width / 2 + RealToScreenDistance(78 - 30)) + 5, (float)(bmpRobot.Height / 2 - RealToScreenDistance(123 + 30)) + 2);
+                }
             }
 
             g.DrawImage(RotateImage(bmpRobot, robot.Position.Angle.AngleDegres + 90), positionRobot.X - bmpRobot.Width / 2, positionRobot.Y - bmpRobot.Height / 2);

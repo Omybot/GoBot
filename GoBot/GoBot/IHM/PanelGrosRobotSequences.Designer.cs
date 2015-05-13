@@ -29,6 +29,7 @@
         private void InitializeComponent()
         {
             this.groupBoxSequences = new Composants.GroupBoxRetractable();
+            this.btnToutOuvrir = new System.Windows.Forms.Button();
             this.btnVideDistributeur = new System.Windows.Forms.Button();
             this.btnTransfertVersGauche = new System.Windows.Forms.Button();
             this.btnTransfertVersDroite = new System.Windows.Forms.Button();
@@ -44,12 +45,15 @@
             this.btnDebutMatch = new System.Windows.Forms.Button();
             this.btnCleanBasGauche = new System.Windows.Forms.Button();
             this.btnEmpilerDroite = new System.Windows.Forms.Button();
-            this.btnToutOuvrir = new System.Windows.Forms.Button();
+            this.btnTransfertBalle = new System.Windows.Forms.Button();
+            this.btnBallePrechargee = new System.Windows.Forms.Button();
             this.groupBoxSequences.SuspendLayout();
             this.SuspendLayout();
             // 
             // groupBoxSequences
             // 
+            this.groupBoxSequences.Controls.Add(this.btnBallePrechargee);
+            this.groupBoxSequences.Controls.Add(this.btnTransfertBalle);
             this.groupBoxSequences.Controls.Add(this.btnToutOuvrir);
             this.groupBoxSequences.Controls.Add(this.btnVideDistributeur);
             this.groupBoxSequences.Controls.Add(this.btnTransfertVersGauche);
@@ -72,6 +76,16 @@
             this.groupBoxSequences.TabIndex = 1;
             this.groupBoxSequences.TabStop = false;
             this.groupBoxSequences.Text = "Séquences";
+            // 
+            // btnToutOuvrir
+            // 
+            this.btnToutOuvrir.Location = new System.Drawing.Point(104, 29);
+            this.btnToutOuvrir.Name = "btnToutOuvrir";
+            this.btnToutOuvrir.Size = new System.Drawing.Size(129, 23);
+            this.btnToutOuvrir.TabIndex = 16;
+            this.btnToutOuvrir.Text = "Tout ouvrir";
+            this.btnToutOuvrir.UseVisualStyleBackColor = true;
+            this.btnToutOuvrir.Click += new System.EventHandler(this.btnToutOuvrir_Click);
             // 
             // btnVideDistributeur
             // 
@@ -227,15 +241,25 @@
             this.btnEmpilerDroite.UseVisualStyleBackColor = true;
             this.btnEmpilerDroite.Click += new System.EventHandler(this.btnEmpilerDroite_Click);
             // 
-            // btnToutOuvrir
+            // btnTransfertBalle
             // 
-            this.btnToutOuvrir.Location = new System.Drawing.Point(104, 29);
-            this.btnToutOuvrir.Name = "btnToutOuvrir";
-            this.btnToutOuvrir.Size = new System.Drawing.Size(129, 23);
-            this.btnToutOuvrir.TabIndex = 16;
-            this.btnToutOuvrir.Text = "Tout ouvrir";
-            this.btnToutOuvrir.UseVisualStyleBackColor = true;
-            this.btnToutOuvrir.Click += new System.EventHandler(this.btnToutOuvrir_Click);
+            this.btnTransfertBalle.Location = new System.Drawing.Point(78, 299);
+            this.btnTransfertBalle.Name = "btnTransfertBalle";
+            this.btnTransfertBalle.Size = new System.Drawing.Size(155, 23);
+            this.btnTransfertBalle.TabIndex = 17;
+            this.btnTransfertBalle.Text = "Transfert de balle préchargée";
+            this.btnTransfertBalle.UseVisualStyleBackColor = true;
+            this.btnTransfertBalle.Click += new System.EventHandler(this.btnTransfertBalle_Click);
+            // 
+            // btnBallePrechargee
+            // 
+            this.btnBallePrechargee.Location = new System.Drawing.Point(204, 328);
+            this.btnBallePrechargee.Name = "btnBallePrechargee";
+            this.btnBallePrechargee.Size = new System.Drawing.Size(101, 23);
+            this.btnBallePrechargee.TabIndex = 18;
+            this.btnBallePrechargee.Text = "Balle préchargée";
+            this.btnBallePrechargee.UseVisualStyleBackColor = true;
+            this.btnBallePrechargee.Click += new System.EventHandler(this.btnBallePrechargee_Click);
             // 
             // PanelGrosRobotSequences
             // 
@@ -271,5 +295,7 @@
         private System.Windows.Forms.Button btnTransfertVersGauche;
         private System.Windows.Forms.Button btnVideDistributeur;
         private System.Windows.Forms.Button btnToutOuvrir;
+        private System.Windows.Forms.Button btnTransfertBalle;
+        private System.Windows.Forms.Button btnBallePrechargee;
     }
 }

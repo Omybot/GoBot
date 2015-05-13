@@ -6,6 +6,7 @@ using GoBot.Calculs.Formes;
 using AStarFolder;
 using System.Threading;
 using GoBot.Actionneurs;
+using GoBot.Mouvements;
 
 namespace GoBot.Enchainements
 {
@@ -13,7 +14,8 @@ namespace GoBot.Enchainements
     {
         protected override void ThreadGros()
         {
-            Robots.GrosRobot.Avancer(500);
+            Mouvement move = new Mouvements.MouvementAmpoulePied(5);
+            move.Executer();
         }
 
         protected override void ThreadPetit()
