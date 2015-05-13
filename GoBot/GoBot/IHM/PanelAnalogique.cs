@@ -42,7 +42,7 @@ namespace GoBot.IHM
             if (Config.Shutdown)
                 return;
 
-            if(Robots.GrosRobot.ValeursAnalogiquesIO != null)
+            if (Robots.GrosRobot.ValeursAnalogiquesIO != null)
 
             //lock (Robots.GrosRobot.ValeursAnalogiques)
             {
@@ -88,7 +88,7 @@ namespace GoBot.IHM
                 lblMoveAN5.Text = Robots.GrosRobot.ValeursAnalogiquesMove[4].ToString();
                 lblMoveAN6.Text = Robots.GrosRobot.ValeursAnalogiquesMove[5].ToString();
 
-                if(checkBox1.Checked)
+                if (boxIOAN1.Checked)
                     ctrlGraphiqueMove.AjouterPoint("AN1", Robots.GrosRobot.ValeursAnalogiquesMove[0], Color.Blue);
 
                 ctrlGraphiqueMove.AjouterPoint("AN2", Robots.GrosRobot.ValeursAnalogiquesMove[1], Color.Aqua);
@@ -111,6 +111,51 @@ namespace GoBot.IHM
         private void switchBoutonMove_ChangementEtat(object sender, EventArgs e)
         {
             timerTrameMove.Enabled = switchBoutonMove.Actif;
+        }
+
+        private void boxIOAN1_CheckedChanged(object sender, EventArgs e)
+        {
+            ctrlGraphiqueIO.MasquerCourbe("AN1", !boxIOAN1.Checked);
+        }
+
+        private void boxIOAN2_CheckedChanged(object sender, EventArgs e)
+        {
+            ctrlGraphiqueIO.MasquerCourbe("AN2", !boxIOAN2.Checked);
+        }
+
+        private void boxIOAN3_CheckedChanged(object sender, EventArgs e)
+        {
+            ctrlGraphiqueIO.MasquerCourbe("AN3", !boxIOAN3.Checked);
+        }
+
+        private void boxIOAN4_CheckedChanged(object sender, EventArgs e)
+        {
+            ctrlGraphiqueIO.MasquerCourbe("AN4", !boxIOAN4.Checked);
+        }
+
+        private void boxIOAN5_CheckedChanged(object sender, EventArgs e)
+        {
+            ctrlGraphiqueIO.MasquerCourbe("AN5", !boxIOAN5.Checked);
+        }
+
+        private void boxIOAN6_CheckedChanged(object sender, EventArgs e)
+        {
+            ctrlGraphiqueIO.MasquerCourbe("AN6", !boxIOAN6.Checked);
+        }
+
+        private void boxIOAN7_CheckedChanged(object sender, EventArgs e)
+        {
+            ctrlGraphiqueIO.MasquerCourbe("AN7", !boxIOAN7.Checked);
+        }
+
+        private void boxIOAN8_CheckedChanged(object sender, EventArgs e)
+        {
+            ctrlGraphiqueIO.MasquerCourbe("AN8", !boxIOAN8.Checked);
+        }
+
+        private void boxIOAN9_CheckedChanged(object sender, EventArgs e)
+        {
+            ctrlGraphiqueIO.MasquerCourbe("AN9", !boxIOAN9.Checked);
         }
     }
 }

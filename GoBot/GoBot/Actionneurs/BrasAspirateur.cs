@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
 
 namespace GoBot.Actionneurs
 {
@@ -10,6 +11,7 @@ namespace GoBot.Actionneurs
         public void PositionAspire()
         {
             Config.CurrentConfig.ServoAspirateurCoude.Positionner(Config.CurrentConfig.ServoAspirateurCoude.PositionAspiration);
+            Thread.Sleep(500);
             Config.CurrentConfig.ServoAspirateurEpaule.Positionner(Config.CurrentConfig.ServoAspirateurEpaule.PositionAspiration);
         }
 

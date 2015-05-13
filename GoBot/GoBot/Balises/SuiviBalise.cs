@@ -104,7 +104,8 @@ namespace GoBot.Balises
             }
 
             CalculVecteurs();*/
-            PositionEnnemisActualisee();
+            if (PositionEnnemisActualisee != null)
+                PositionEnnemisActualisee();
         }
 
         private static void CalculVecteurs()

@@ -23,7 +23,7 @@ namespace GoBot.Actions
 
         void IAction.Executer()
         {
-            robot.AccelerationDeplacement = vitesse;
+            robot.AccelerationDebutDeplacement = vitesse;
         }
 
         public System.Drawing.Image Image

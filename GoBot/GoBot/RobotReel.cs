@@ -88,6 +88,9 @@ namespace GoBot
 
             HistoriqueCoordonnees = new List<Position>();
             Connexion.SendMessage(TrameFactory.DemandePositionContinue(100, this));
+
+            Actionneur.BrasPiedsDroite.ElementPresentAuSol = false;
+            Actionneur.BrasPiedsGauche.ElementPresentAuSol = false;
         }
 
         public override bool DemandeCapteurOnOff(CapteurOnOffID capteur, bool attendre = true)
@@ -123,7 +126,7 @@ namespace GoBot
 
         public void ActivationAsserv()
         {
-            Thread.Sleep(1500);
+            Thread.Sleep(500);
             FailTrajectoire = true;
             Stop(StopMode.Abrupt);
             SemaphoresMove[FonctionMove.FinDeplacement].Release();
@@ -188,7 +191,8 @@ namespace GoBot
                             semHistoriquePosition.Release();
                         }
 
-                        Plateau.Balise1.Position = Position;
+                        if (Plateau.Balise1 != null)
+                            Plateau.Balise1.Position = Position;
                     }
                     catch (Exception)
                     {
@@ -375,21 +379,24 @@ namespace GoBot
                     {
                         // Recomposition de la trame comme si elle venait d'une balise
                         String message = "B1 E4 " + trameRecue.ToString().Substring(9);
-                        Plateau.Balise1.connexion_NouvelleTrame(new Trame(message));
+                        if (Plateau.Balise1 != null)
+                            Plateau.Balise1.connexion_NouvelleTrame(new Trame(message));
                     }
 
                     if (trameRecue[2] == (byte)CapteurID.BaliseRapide1)
                     {
                         // Recomposition de la trame comme si elle venait d'une balise
                         String message = "B1 E5 02 " + trameRecue.ToString().Substring(9);
-                        Plateau.Balise1.connexion_NouvelleTrame(new Trame(message));
+                        if (Plateau.Balise1 != null)
+                            Plateau.Balise1.connexion_NouvelleTrame(new Trame(message));
                     }
 
                     if (trameRecue[2] == (byte)CapteurID.BaliseRapide2)
                     {
                         // Recomposition de la trame comme si elle venait d'une balise
                         String message = "B1 E5 01 " + trameRecue.ToString().Substring(9);
-                        Plateau.Balise1.connexion_NouvelleTrame(new Trame(message));
+                        if (Plateau.Balise1 != null)
+                            Plateau.Balise1.connexion_NouvelleTrame(new Trame(message));
                     }
                 }
 
@@ -397,11 +404,11 @@ namespace GoBot
                 {
                     if (trameRecue[2] == 1)
                     {
-                        Actionneur.BrasPiedsDroite.PiedPresentAuSol = (trameRecue[3] == 1 ? true : false);
+                        Actionneur.BrasPiedsDroite.ElementPresentAuSol = (trameRecue[3] == 1 ? true : false);
                     }
                     else if (trameRecue[2] == 2)
                     {
-                        Actionneur.BrasPiedsGauche.PiedPresentAuSol = (trameRecue[3] == 1 ? true : false);
+                        Actionneur.BrasPiedsGauche.ElementPresentAuSol = (trameRecue[3] == 1 ? true : false);
                     }
                 }
             }
@@ -648,18 +655,34 @@ namespace GoBot
             }
         }
 
-        private int accelDeplacement;
-        public override int AccelerationDeplacement
+        private int accelDebutDeplacement;
+        public override int AccelerationDebutDeplacement
         {
             get
             {
-                return accelDeplacement;
+                return accelDebutDeplacement;
             }
             set
             {
-                Trame trame = TrameFactory.AccelLigne(value, this);
+                Trame trame = TrameFactory.AccelLigne(value, accelFinDeplacement, this);
                 Connexion.SendMessage(trame);
-                accelDeplacement = value;
+                accelDebutDeplacement = value;
+                Historique.AjouterAction(new ActionAccelerationLigne(this, value));
+            }
+        }
+
+        private int accelFinDeplacement;
+        public override int AccelerationFinDeplacement
+        {
+            get
+            {
+                return accelFinDeplacement;
+            }
+            set
+            {
+                Trame trame = TrameFactory.AccelLigne(accelDebutDeplacement, value, this);
+                Connexion.SendMessage(trame);
+                accelFinDeplacement = value;
                 Historique.AjouterAction(new ActionAccelerationLigne(this, value));
             }
         }

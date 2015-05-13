@@ -64,6 +64,7 @@
             this.lblGrosRobotDeplacements = new Composants.LabelPlus();
             this.lblPetitRobotDeplacements = new Composants.LabelPlus();
             this.groupBox = new System.Windows.Forms.GroupBox();
+            this.btnStratNul = new System.Windows.Forms.Button();
             this.groupBoxDeplacements = new System.Windows.Forms.GroupBox();
             this.btnPathRPCentre = new System.Windows.Forms.Button();
             this.btnPathRPFace = new System.Windows.Forms.Button();
@@ -79,6 +80,7 @@
             this.pictureBoxTable = new System.Windows.Forms.PictureBox();
             this.groupBoxAffichage = new System.Windows.Forms.GroupBox();
             this.btnZoneDepart = new System.Windows.Forms.Button();
+            this.btnStratTest = new System.Windows.Forms.Button();
             this.groupBox.SuspendLayout();
             this.groupBoxDeplacements.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxTable)).BeginInit();
@@ -126,7 +128,7 @@
             // 
             // btnGo
             // 
-            this.btnGo.Location = new System.Drawing.Point(32, 31);
+            this.btnGo.Location = new System.Drawing.Point(9, 31);
             this.btnGo.Name = "btnGo";
             this.btnGo.Size = new System.Drawing.Size(139, 23);
             this.btnGo.TabIndex = 16;
@@ -364,7 +366,7 @@
             // 
             // btnAleatoire
             // 
-            this.btnAleatoire.Location = new System.Drawing.Point(32, 60);
+            this.btnAleatoire.Location = new System.Drawing.Point(9, 60);
             this.btnAleatoire.Name = "btnAleatoire";
             this.btnAleatoire.Size = new System.Drawing.Size(139, 23);
             this.btnAleatoire.TabIndex = 48;
@@ -417,6 +419,8 @@
             // 
             // groupBox
             // 
+            this.groupBox.Controls.Add(this.btnStratTest);
+            this.groupBox.Controls.Add(this.btnStratNul);
             this.groupBox.Controls.Add(this.btnGo);
             this.groupBox.Controls.Add(this.btnAleatoire);
             this.groupBox.Location = new System.Drawing.Point(0, 415);
@@ -425,6 +429,16 @@
             this.groupBox.TabIndex = 66;
             this.groupBox.TabStop = false;
             this.groupBox.Text = "Lancement";
+            // 
+            // btnStratNul
+            // 
+            this.btnStratNul.Location = new System.Drawing.Point(151, 60);
+            this.btnStratNul.Name = "btnStratNul";
+            this.btnStratNul.Size = new System.Drawing.Size(36, 23);
+            this.btnStratNul.TabIndex = 49;
+            this.btnStratNul.Text = "Nul";
+            this.btnStratNul.UseVisualStyleBackColor = true;
+            this.btnStratNul.Click += new System.EventHandler(this.btnStratNul_Click);
             // 
             // groupBoxDeplacements
             // 
@@ -585,6 +599,16 @@
             this.btnZoneDepart.UseVisualStyleBackColor = true;
             this.btnZoneDepart.Click += new System.EventHandler(this.btnZoneDepart_Click);
             // 
+            // btnStratTest
+            // 
+            this.btnStratTest.Location = new System.Drawing.Point(151, 31);
+            this.btnStratTest.Name = "btnStratTest";
+            this.btnStratTest.Size = new System.Drawing.Size(36, 23);
+            this.btnStratTest.TabIndex = 50;
+            this.btnStratTest.Text = "Test";
+            this.btnStratTest.UseVisualStyleBackColor = true;
+            this.btnStratTest.Click += new System.EventHandler(this.btnStratTest_Click);
+            // 
             // PanelTable
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -691,5 +715,7 @@
         private System.Windows.Forms.ToolTip toolTip;
         private System.Windows.Forms.GroupBox groupBoxAffichage;
         private System.Windows.Forms.Button btnZoneDepart;
+        private System.Windows.Forms.Button btnStratNul;
+        private System.Windows.Forms.Button btnStratTest;
     }
 }

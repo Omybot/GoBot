@@ -44,6 +44,10 @@ namespace GoBot
         public static List<Gobelet> Gobelets { get; private set; }
         public static List<DistributeurPopCorn> DistributeursPopCorn { get; private set; }
         public static List<Tapis> ListeTapis { get; private set; }
+        public static ZoneInteret ZoneDepartJaune { get; private set; }
+        public static ZoneInteret ZoneDepartVert { get; private set; }
+        public static ZoneInteret ZoneDeposeEstradeGauche { get; private set; }
+        public static ZoneInteret ZoneDeposeEstradeDroite { get; private set; }
 
         public static List<ElementJeu> ElementsJeu { get; private set; }
 
@@ -146,16 +150,15 @@ namespace GoBot
                 ObstaclesTemporaires = new List<IForme>();
 
                 ChargerObstacles();
-                CreerSommets(150);
+                CreerSommets(110);
                 SauverGraph();
                 
                 //ChargerGraph();
 
                 InterpreteurBalise = new InterpreteurBalise();
-                //InterpreteurBalise.PositionEnnemisActualisee += new InterpreteurBalise.PositionEnnemisDelegate(interpreteBalise_PositionEnnemisActualisee);
-                SuiviBalise.PositionEnnemisActualisee += new Balises.SuiviBalise.PositionEnnemisDelegate(interpreteBalise_PositionEnnemisActualisee);
+                InterpreteurBalise.PositionEnnemisActualisee += new InterpreteurBalise.PositionEnnemisDelegate(interpreteBalise_PositionEnnemisActualisee);
+                //SuiviBalise.PositionEnnemisActualisee += new Balises.SuiviBalise.PositionEnnemisDelegate(interpreteBalise_PositionEnnemisActualisee);
                 InitElementsJeu();
-
 
                 Random random = new Random();
 
@@ -214,6 +217,11 @@ namespace GoBot
             ListeTapis.Add(new Tapis(new PointReel(1511 + Tapis.LARGEUR / 2, 300 + Tapis.LONGUEUR / 2)));
             ListeTapis.Add(new Tapis(new PointReel(1911 + Tapis.LARGEUR / 2, 300 + Tapis.LONGUEUR / 2)));
 
+            ZoneDepartJaune = new ZoneInteret(new Calculs.Formes.PointReel(355, 1001), CouleurGaucheJaune, 80);
+            ZoneDepartVert = new ZoneInteret(new Calculs.Formes.PointReel(3000 - 355, 1001), CouleurDroiteVert, 80);
+
+            ZoneDeposeEstradeGauche = new ZoneInteret(new Calculs.Formes.PointReel(1250, 1950), CouleurGaucheJaune, 60);
+            ZoneDeposeEstradeDroite = new ZoneInteret(new Calculs.Formes.PointReel(1750, 1950), CouleurDroiteVert, 60);
 
             ElementsJeu = new List<ElementJeu>();
 
@@ -227,6 +235,11 @@ namespace GoBot
                 ElementsJeu.Add(Gobelets[i]);
             for (int i = 0; i < ListeTapis.Count; i++)
                 ElementsJeu.Add(ListeTapis[i]);
+
+            ElementsJeu.Add(Plateau.ZoneDeposeEstradeDroite);
+            ElementsJeu.Add(Plateau.ZoneDeposeEstradeGauche);
+            ElementsJeu.Add(Plateau.ZoneDepartJaune);
+            ElementsJeu.Add(Plateau.ZoneDepartVert);
         }
 
         public static void Init()
@@ -273,16 +286,16 @@ namespace GoBot
             SemaphoreCollisions.Release();
         }
 
-        void interpreteBalise_PositionEnnemisActualisee()
+        void interpreteBalise_PositionEnnemisActualisee(InterpreteurBalise interpreteur)
         {
             // Position ennemie signalée
             ObstaclesTemporaires.Clear();
 
             int vitesseMax = Config.CurrentConfig.GRVitesseLigneRapide;
 
-            for (int i = 0; i < SuiviBalise.PositionsEnnemies.Count; i++)
+            for (int i = 0; i < interpreteur.PositionsEnnemies.Count; i++)
             {
-                PointReel coordonnees = new PointReel(SuiviBalise.PositionsEnnemies[i].X, SuiviBalise.PositionsEnnemies[i].Y);
+                PointReel coordonnees = new PointReel(interpreteur.PositionsEnnemies[i].X, interpreteur.PositionsEnnemies[i].Y);
                 AjouterObstacle(new Cercle(coordonnees, RayonAdversaire));
 
                 if (Plateau.Enchainement == null)
@@ -296,13 +309,16 @@ namespace GoBot
                     double distanceAdv = Robots.GrosRobot.Position.Coordonnees.Distance(coordonnees);
                     if (distanceAdv < 1500)
                     {
-                        vitesseMax = (int)(Math.Min(vitesseMax, (distanceAdv - 500) / 1000.0 * Config.CurrentConfig.GRVitesseLigneRapide));
+                        vitesseMax = (int)(Math.Min(vitesseMax, (distanceAdv - 300) / 1000.0 * Config.CurrentConfig.GRVitesseLigneRapide));
                     }
                 }
             }
 
             if (Plateau.Enchainement != null && (DateTime.Now - Plateau.Enchainement.DebutMatch).TotalSeconds > 10)
                 Robots.GrosRobot.VitesseDeplacement = vitesseMax;
+
+
+            Robots.GrosRobot.MajGraphFranchissable();
 
             SemaphoreCollisions.Release();
         }

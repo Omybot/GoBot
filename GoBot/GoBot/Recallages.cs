@@ -40,9 +40,9 @@ namespace GoBot
 
         public static void RecallageGrosRobot(bool attendrePetit)
         {
-            Actionneur.BrasAspirateur.Arreter();
+            Robots.GrosRobot.Stop();
             Actionneur.BrasAmpoule.AscenseurCalibration();
-            Thread.Sleep(5000);
+            Thread.Sleep(4000);
             Actionneur.BrasAmpoule.Monter();
             Thread.Sleep(1000);
 
@@ -55,6 +55,7 @@ namespace GoBot
             Actionneur.BrasPiedsGauche.FermerPinceBas();
             Actionneur.BrasPiedsDroite.FermerPinceHaut();
             Actionneur.BrasPiedsGauche.FermerPinceHaut();
+            Actionneur.BrasTapis.Monter();
 
             Robots.GrosRobot.Lent();
             Robots.GrosRobot.Avancer(10);
@@ -94,16 +95,28 @@ namespace GoBot
                 Robots.GrosRobot.PivotDroite(90);
 
             Actionneur.BrasAmpoule.Ouvrir();
-            Robots.GrosRobot.Reculer(360);
+            Robots.GrosRobot.Reculer(345);
+            Actionneur.BrasTapis.LacherTapisGauche();
+            Actionneur.BrasTapis.LacherTapisDroit();
 
-            Thread.Sleep(3000);
+            Thread.Sleep(5000);
 
             if (Plateau.NotreCouleur == Plateau.CouleurDroiteVert)
-                Robots.GrosRobot.ReglerOffsetAsserv(3000 - 240, 1000, 180);
+            {
+                Robots.GrosRobot.ReglerOffsetAsserv(3000 - 255, 1000, 180);
+                Actionneur.BrasPiedsGauche.AscenseurMonter();
+            }
             else
-                Robots.GrosRobot.ReglerOffsetAsserv(240, 1000, 0);
+            {
+                Robots.GrosRobot.ReglerOffsetAsserv(255, 1000, 0);
+                Actionneur.BrasPiedsDroite.AscenseurMonter();
+            }
 
             Robots.GrosRobot.ArmerJack();
+            Robots.GrosRobot.MoteurPosition(MoteurID.Balise, 2000);
+
+            Actionneur.BrasTapis.SerrerTapisDroit();
+            Actionneur.BrasTapis.SerrerTapisGauche();
         }
     }
 }

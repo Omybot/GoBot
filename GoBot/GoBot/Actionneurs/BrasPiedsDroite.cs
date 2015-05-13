@@ -79,6 +79,29 @@ namespace GoBot.Actionneurs
             set { Config.CurrentConfig.AscenseurDroit.PositionAttrapage = value; }
         }
 
+        public override int PositionHauteurApprocheEstrade
+        {
+            get { return Config.CurrentConfig.AscenseurDroit.PositionApprocheEstrade; }
+            set { Config.CurrentConfig.AscenseurDroit.PositionApprocheEstrade = value; }
+        }
+
+        public override int PositionHauteurDeposeEstrade
+        {
+            get { return Config.CurrentConfig.AscenseurDroit.PositionDeposeEstrade; }
+            set { Config.CurrentConfig.AscenseurDroit.PositionDeposeEstrade = value; }
+        }
+
+        public override int PositionHauteurPousseEstrade
+        {
+            get { return Config.CurrentConfig.AscenseurDroit.PositionPousseEstrade; }
+            set { Config.CurrentConfig.AscenseurDroit.PositionPousseEstrade = value; }
+        }
+
+        public override int PortAnalogiqueCapteur
+        {
+            get { return 7; }
+        }
+
         public override ServomoteurID ServoHautGauche { get { return ServomoteurID.AscenseurDroitPinceHautGauche; } }
         public override ServomoteurID ServoHautDroite { get { return ServomoteurID.AscenseurDroitPinceHautDroite; } }
         public override ServomoteurID ServoBasGauche { get { return ServomoteurID.AscenseurDroitPinceBasGauche; } }

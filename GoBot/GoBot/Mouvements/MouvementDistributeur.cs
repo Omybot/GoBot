@@ -17,8 +17,11 @@ namespace GoBot.Mouvements
             numeroDistributeur = i;
             Element = Plateau.DistributeursPopCorn[i];
 
-            if(i == 0)
-                Positions.Add(new Calculs.Position(-158, new Calculs.Formes.PointReel(398, 399)));
+            if (i == 0)
+                Positions.Add(new Calculs.Position(190, new Calculs.Formes.PointReel(504-300, 411)));
+
+            if (i == 1)
+                Positions.Add(new Calculs.Position(190, new Calculs.Formes.PointReel(504, 411)));
         }
 
         public override bool Executer(int timeOut = 0)
@@ -31,12 +34,31 @@ namespace GoBot.Mouvements
 
             if (position != null && Robots.GrosRobot.GotoXYTeta(position.Coordonnees.X, position.Coordonnees.Y, position.Angle.AngleDegres))
             {
-                Actionneur.BrasAspirateur.Aspirer();
+                /*Actionneur.BrasAspirateur.Aspirer();
                 Thread.Sleep(500);
                 Actionneur.BrasAspirateur.PositionAspire();
                 Thread.Sleep(2000);
                 Actionneur.BrasAspirateur.PositionRange();
-                Actionneur.BrasAspirateur.Arreter();
+                Actionneur.BrasAspirateur.Arreter();*/
+
+                /*Actionneur.BrasAspirateur.Aspirer();
+                Actionneur.BrasAspirateur.PositionDepose();
+                Robots.GrosRobot.VitesseDeplacement = 50;
+                Thread.Sleep(500);
+                Robots.GrosRobot.Avancer(80);
+                Robots.GrosRobot.Rapide();
+                Actionneur.BrasAspirateur.PositionRange();
+                Actionneur.BrasAspirateur.Maintenir();*/
+
+                Actionneur.BrasAspirateur.Aspirer();
+                Actionneur.BrasAspirateur.PositionDepose();
+                Robots.GrosRobot.VitessePivot = 15;
+                Thread.Sleep(500);
+                Robots.GrosRobot.PivotGauche(25);
+                Robots.GrosRobot.Rapide();
+                Actionneur.BrasAspirateur.PositionRange();
+                Actionneur.BrasAspirateur.Maintenir();
+
                 Plateau.DistributeursPopCorn[numeroDistributeur].Ramasse = true; 
                 Robots.GrosRobot.Historique.Log("Fin distributeur " + numeroDistributeur + " en " + (DateTime.Now - debut).TotalSeconds.ToString("#.#") + "s");
             }
@@ -48,7 +70,7 @@ namespace GoBot.Mouvements
             return true;
         }
 
-        public override int Score
+        public override double Score
         {
             get { return 2; }
         }

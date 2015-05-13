@@ -99,10 +99,13 @@ namespace GoBot.Balises
         /// </summary>
         void Balise1_PositionsChange()
         {
-            DetectionBalise1 = new List<DetectionBalise>(Plateau.Balise1.Detections);
+            if (Plateau.Balise1.Detections != null)
+            {
+                DetectionBalise1 = new List<DetectionBalise>(Plateau.Balise1.Detections);
 
-            // On calcule l'interpolation des positions
-            Actualisation();
+                // On calcule l'interpolation des positions
+                Actualisation();
+            }
         }
 
         /// <summary>
@@ -130,11 +133,54 @@ namespace GoBot.Balises
         /// <summary>
         /// Actualisation des positions détectées par les balises par interpolation selon la méthode choisie
         /// </summary>
-        void Actualisation()
+        public void Actualisation(bool balise = true, PointReel point = null)
         {
             try
             {
-                InterpreterDetection(ModeInterpretation.Intersections);
+                List<PointReel> ennemis = new List<PointReel>();
+                List<PointReel> ennemisReduits = new List<PointReel>();
+
+                if (balise)
+                {
+                    foreach (DetectionBalise detection in DetectionBalise1)
+                        ennemis.Add(detection.Position);
+                }
+                else
+                    ennemis.Add(point);
+
+                while(ennemis.Count > 0)
+                {
+                    List<int> detectionsSimilaires = new List<int>();
+
+                    for (int j = ennemis.Count - 1; j > 0; j--)
+                    {
+                        if (ennemis[0].Distance(ennemis[j]) < 150)
+                            detectionsSimilaires.Add(j);
+                    }
+                    detectionsSimilaires.Add(0);
+                    int coeff = 0;
+                    double x = 0, y = 0;
+                    for (int i = 0; i < detectionsSimilaires.Count; i++)
+                    {
+                        x += (ennemis[detectionsSimilaires[i]].X * (i + 1) * (i + 1));
+                        y += (ennemis[detectionsSimilaires[i]].Y * (i + 1) * (i + 1));
+
+                        ennemis.RemoveAt(detectionsSimilaires[i]);
+
+                        coeff += (i + 1) * (i + 1);
+                    }
+
+                    x /= coeff;
+                    y /= coeff;
+
+                    ennemisReduits.Add(new PointReel(x, y));
+                }
+
+                PositionsEnnemies = new List<PointReel>(ennemisReduits);
+
+                if (PositionEnnemisActualisee != null)
+                    PositionEnnemisActualisee(this);
+                //InterpreterDetection(ModeInterpretation.Intersections);
             }
             catch (Exception)
             {

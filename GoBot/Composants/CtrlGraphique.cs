@@ -13,6 +13,7 @@ namespace Composants
     public partial class CtrlGraphique : UserControl
     {
         private Dictionary<String, List<double>> Donnees { get; set; }
+        private Dictionary<String, bool> DonneesAffichees { get; set; }
         private Dictionary<String, Pen> Pens { get; set; }
         private Semaphore semaphore;
 
@@ -25,6 +26,8 @@ namespace Composants
         {
             InitializeComponent();
             Donnees = new Dictionary<string, List<double>>();
+            DonneesAffichees = new Dictionary<string, bool>();
+
             Pens = new Dictionary<string, Pen>();
             EchelleCommune = true;
             BackColor = Color.White;
@@ -56,6 +59,7 @@ namespace Composants
             {
                 liste = new List<double>();
                 Donnees.Add(courbe, liste);
+                DonneesAffichees.Add(courbe, true);
                 if(couleur != null)
                     Pens.Add(courbe, new Pen(couleur.Value));
                 else
@@ -97,14 +101,14 @@ namespace Composants
 
                 if (EchelleCommune)
                 {
-                    foreach (KeyValuePair<String, List<double>> courbe in Donnees)
-                    {
-                        if (courbe.Value.Count > 1)
+                        foreach (KeyValuePair<String, List<double>> courbe in Donnees)
                         {
-                            min = Math.Min(min, courbe.Value.Min());
-                            max = Math.Max(max, courbe.Value.Max());
+                            if (DonneesAffichees[courbe.Key] && courbe.Value.Count > 1)
+                            {
+                                min = Math.Min(min, courbe.Value.Min());
+                                max = Math.Max(max, courbe.Value.Max());
+                            }
                         }
-                    }
                 }
                 else
                 {
@@ -120,7 +124,7 @@ namespace Composants
 
             foreach (KeyValuePair<String, List<double>> courbe in Donnees)
             {
-                if (courbe.Value.Count > 1)
+                if (DonneesAffichees[courbe.Key] && courbe.Value.Count > 1)
                 {
                     if (!EchelleCommune)
                     {
@@ -138,9 +142,12 @@ namespace Composants
             int y = pictureBox.Height - 20;
             foreach (KeyValuePair<String, List<double>> courbe in Donnees)
             {
-                Font police = new System.Drawing.Font("Calibri", 9);
-                gTemp.DrawString(courbe.Key, police, new SolidBrush(Pens[courbe.Key].Color), 2, y);
-                y -= 10;
+                if (DonneesAffichees[courbe.Key])
+                {
+                    Font police = new System.Drawing.Font("Calibri", 9);
+                    gTemp.DrawString(courbe.Key, police, new SolidBrush(Pens[courbe.Key].Color), 2, y);
+                    y -= 10;
+                }
             }
 
             g.DrawImage(bmp, new Point(0, 0));
@@ -158,6 +165,18 @@ namespace Composants
             {
                 Donnees.Remove(nomCourbe);
                 Pens.Remove(nomCourbe);
+            }
+        }
+
+        /// <summary>
+        /// Masque ou affiche une courbe
+        /// </summary>
+        /// <param name="nomCourbe">Nom de la courbe à masquer ou afficher</param>
+        public void MasquerCourbe(String nomCourbe, bool masque = true)
+        {
+            if (DonneesAffichees.ContainsKey(nomCourbe))
+            {
+                DonneesAffichees[nomCourbe] = !masque;
             }
         }
 

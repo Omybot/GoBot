@@ -8,6 +8,7 @@ using GoBot.Calculs.Formes;
 using System.Threading;
 using GoBot.Actions;
 using System.Drawing;
+using GoBot.Actionneurs;
 
 namespace GoBot
 {
@@ -47,13 +48,24 @@ namespace GoBot
             }
         }
 
-        private int accelerationDeplacement;
-        public override int AccelerationDeplacement
+        private int accelerationDebutDeplacement;
+        public override int AccelerationDebutDeplacement
         {
-            get { return accelerationDeplacement; }
+            get { return accelerationDebutDeplacement; }
             set
             {
-                accelerationDeplacement = value;
+                accelerationDebutDeplacement = value;
+                Historique.AjouterAction(new ActionAccelerationLigne(this, value));
+            }
+        }
+
+        private int accelerationFinDeplacement;
+        public override int AccelerationFinDeplacement
+        {
+            get { return accelerationFinDeplacement; }
+            set
+            {
+                accelerationFinDeplacement = value;
                 Historique.AjouterAction(new ActionAccelerationLigne(this, value));
             }
         }
@@ -119,7 +131,7 @@ namespace GoBot
                 if (VitesseActuelle == 0)
                     return 0;
 
-                return (VitesseActuelle * VitesseActuelle) / (2 * AccelerationDeplacement);
+                return (VitesseActuelle * VitesseActuelle) / (2 * AccelerationDebutDeplacement);
             }
         }
 
@@ -167,9 +179,9 @@ namespace GoBot
             {
                 // Phase accélération ou déccélération
                 if (Position.Coordonnees.Distance(Destination.Coordonnees) > DistanceFreinageActuelle)
-                    VitesseActuelle = Math.Min(VitesseDeplacement, VitesseActuelle + AccelerationDeplacement / (1000.0 / intervalle));
+                    VitesseActuelle = Math.Min(VitesseDeplacement, VitesseActuelle + AccelerationDebutDeplacement / (1000.0 / intervalle));
                 else
-                    VitesseActuelle = VitesseActuelle - AccelerationDeplacement / (1000.0 / intervalle);
+                    VitesseActuelle = VitesseActuelle - AccelerationDebutDeplacement / (1000.0 / intervalle);
 
                 double distance = VitesseActuelle / (1000.0 / intervalle);
 
@@ -293,8 +305,8 @@ namespace GoBot
             RecallageEnCours = true;
             Historique.AjouterAction(new ActionRecallage(this, sens));
 
-            int accelTmp = AccelerationDeplacement;
-            AccelerationDeplacement = 4000;
+            int accelTmp = AccelerationDebutDeplacement;
+            AccelerationDebutDeplacement = 4000;
 
             while (Position.Coordonnees.X - Longueur / 2 > 0 &&
                 Position.Coordonnees.X + Longueur / 2 < Plateau.LongueurPlateau &&
@@ -315,7 +327,7 @@ namespace GoBot
             if (Position.Coordonnees.Y > Plateau.LargeurPlateau)
                 Position.Coordonnees.Y = Plateau.LargeurPlateau - Longueur / 2;
 
-            AccelerationDeplacement = accelTmp;
+            AccelerationDebutDeplacement = accelTmp;
 
             RecallageEnCours = false;
         }
@@ -340,6 +352,9 @@ namespace GoBot
             }
 
             PositionCible = null;
+
+            Actionneur.BrasPiedsDroite.ElementPresentAuSol = true;
+            Actionneur.BrasPiedsGauche.ElementPresentAuSol = true;
         }
 
         public override void BougeServo(ServomoteurID servo, int position)
@@ -441,7 +456,7 @@ namespace GoBot
 
         public override void DemandeValeursAnalogiquesIO(bool attendre)
         {
-            lock(ValeursAnalogiquesIO)
+            //lock(ValeursAnalogiquesIO)
             {
                 ValeursAnalogiquesIO = new List<double>();
                 ValeursAnalogiquesIO.Add(1);
@@ -450,6 +465,9 @@ namespace GoBot
                 ValeursAnalogiquesIO.Add(4);
                 ValeursAnalogiquesIO.Add(5);
                 ValeursAnalogiquesIO.Add(6);
+                ValeursAnalogiquesIO.Add(7);
+                ValeursAnalogiquesIO.Add(4000);
+                ValeursAnalogiquesIO.Add(4000);
             }
         }
 

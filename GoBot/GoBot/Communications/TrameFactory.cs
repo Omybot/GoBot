@@ -269,13 +269,15 @@ namespace GoBot.Communications
             return retour;
         }
 
-        static public Trame AccelLigne(int accel, Robot robot)
+        static public Trame AccelLigne(int accelDebut, int accelFin, Robot robot)
         {
-            byte[] tab = new byte[4];
+            byte[] tab = new byte[6];
             tab[0] = (byte)robot.Carte;
             tab[1] = (byte)FonctionMove.AccelerationLigne;
-            tab[2] = (byte)ByteDivide(accel, true);
-            tab[3] = (byte)ByteDivide(accel, false);
+            tab[2] = (byte)ByteDivide(accelDebut, true);
+            tab[3] = (byte)ByteDivide(accelDebut, false);
+            tab[4] = (byte)ByteDivide(accelFin, true);
+            tab[5] = (byte)ByteDivide(accelFin, false);
 
             Trame retour = new Trame(tab);
             return retour;

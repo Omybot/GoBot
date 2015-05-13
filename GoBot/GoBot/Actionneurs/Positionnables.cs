@@ -66,7 +66,7 @@ namespace GoBot.Actionneurs
             foreach (char c in typeName)
             {
                 char ch = c;
-                if (c <= 'Z')
+                if (c <= 'Z' && c >= 'A')
                     nom += " " + (char)(c + 32);
                 else
                     nom += c;
@@ -254,6 +254,9 @@ namespace GoBot.Actionneurs
         public int PositionHaute { get; set; }
         public int PositionAttrapage { get; set; }
         public int PositionSouleve { get; set; }
+        public int PositionApprocheEstrade { get; set; }
+        public int PositionDeposeEstrade { get; set; }
+        public int PositionPousseEstrade { get; set; }
     }
 
     public class AscenseurDroit : PositionnableMoteur
@@ -263,6 +266,9 @@ namespace GoBot.Actionneurs
         public int PositionHaute { get; set; }
         public int PositionAttrapage { get; set; }
         public int PositionSouleve { get; set; }
+        public int PositionApprocheEstrade { get; set; }
+        public int PositionDeposeEstrade { get; set; }
+        public int PositionPousseEstrade { get; set; }
     }
 
     public class AscenseurAmpoule : PositionnableMoteur
@@ -271,6 +277,9 @@ namespace GoBot.Actionneurs
 
         public int PositionHaute { get; set; }
         public int PositionAttrapage { get; set; }
+        public int PositionPoseSur1Pied { get; set; }
+        public int PositionPoseSur2Pied { get; set; }
+        public int PositionPoseSur3Pied { get; set; }
     }
 
     #endregion

@@ -34,6 +34,7 @@
             this.pictureBoxAngle = new System.Windows.Forms.PictureBox();
             this.label2 = new System.Windows.Forms.Label();
             this.lblToursSecondesActuel = new System.Windows.Forms.Label();
+            this.btnCalibration = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxAngle)).BeginInit();
             this.SuspendLayout();
             // 
@@ -98,11 +99,22 @@
             this.lblToursSecondesActuel.TabIndex = 13;
             this.lblToursSecondesActuel.Text = "0";
             // 
+            // btnCalibration
+            // 
+            this.btnCalibration.Location = new System.Drawing.Point(88, 171);
+            this.btnCalibration.Name = "btnCalibration";
+            this.btnCalibration.Size = new System.Drawing.Size(75, 23);
+            this.btnCalibration.TabIndex = 15;
+            this.btnCalibration.Text = "Calibration";
+            this.btnCalibration.UseVisualStyleBackColor = true;
+            this.btnCalibration.Click += new System.EventHandler(this.btnCalibration_Click);
+            // 
             // PanelBaliseUnique
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.White;
+            this.Controls.Add(this.btnCalibration);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.lblToursSecondesActuel);
             this.Controls.Add(this.boxAffichage);
@@ -125,5 +137,6 @@
         private System.Windows.Forms.PictureBox pictureBoxAngle;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label lblToursSecondesActuel;
+        private System.Windows.Forms.Button btnCalibration;
     }
 }

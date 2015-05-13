@@ -6,12 +6,13 @@ using System.Data;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
+using System.Threading;
 
 namespace Composants
 {
     public partial class Batterie : PictureBox
     {
-        Timer timer;
+        System.Windows.Forms.Timer timer;
         int compteur = 0;
         bool vide = false;
 
@@ -30,9 +31,17 @@ namespace Composants
                     else if (tension > TensionMid)
                         CouleurOrange();
                     else if (tension > TensionLow)
-                        CouleurRouge(true);
+                    {
+                        CouleurRouge();
+                        Thread bip = new Thread(Bip);
+                        bip.Start();
+                    }
                     else if (tension >= TensionNull)
+                    {
                         CouleurRougeCritique(true);
+                        Thread bip = new Thread(BipUrgent);
+                        bip.Start();
+                    }
                     else
                         CouleurGris();
                 }
@@ -43,6 +52,18 @@ namespace Composants
             }
         }
 
+        public void BipUrgent()
+        {
+            Console.Beep(7000, 100);
+            Thread.Sleep(20);
+            Console.Beep(7000, 100);
+        }
+
+        public void Bip()
+        {
+            Console.Beep(6000, 100);
+        }
+
         public double TensionMidHigh { get; set; }
         public double TensionMid { get; set; }
         public double TensionLow { get; set; }
@@ -51,7 +72,7 @@ namespace Composants
         public Batterie()
         {
             InitializeComponent();
-            timer = new Timer();
+            timer = new System.Windows.Forms.Timer();
             timer.Interval = 300;
             timer.Tick += new EventHandler(timer_Tick);
             Tension = -1;

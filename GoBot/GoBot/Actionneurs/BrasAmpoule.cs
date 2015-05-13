@@ -9,6 +9,11 @@ namespace GoBot.Actionneurs
 {
     class BrasAmpoule
     {
+        public BrasAmpoule()
+        {
+            AmpouleChargee = true;
+        }
+
         public void Monter()
         {
             Robots.GrosRobot.MoteurPosition(MoteurID.AscenseurAmpoule, Config.CurrentConfig.AscenseurAmpoule.PositionHaute);
@@ -43,5 +48,26 @@ namespace GoBot.Actionneurs
 
             Connexions.ConnexionIO.SendMessage(TrameFactory.CalibrationAscenseurAmpoule());
         }
+
+        public void DescendrePosePied(int p)
+        {
+            if (p == 1)
+            {
+                Hauteur(Config.CurrentConfig.AscenseurAmpoule.PositionPoseSur1Pied);
+                Thread.Sleep(300);
+            }
+            if (p == 2)
+            {
+                Hauteur(Config.CurrentConfig.AscenseurAmpoule.PositionPoseSur2Pied);
+                Thread.Sleep(1500);
+            }
+            if (p == 3)
+            {
+                Hauteur(Config.CurrentConfig.AscenseurAmpoule.PositionPoseSur3Pied);
+                Thread.Sleep(500);
+            }
+        }
+
+        public bool AmpouleChargee { get; set; }
     }
 }

@@ -117,5 +117,10 @@ namespace GoBot.IHM
 
             pictureBoxAngle.Image = bmp;
         }
+
+        private void btnCalibration_Click(object sender, EventArgs e)
+        {
+            balise.ReglerOffset(16);
+        }
     }
 }

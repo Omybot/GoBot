@@ -7,6 +7,7 @@ using System.Timers;
 using GoBot.Mouvements;
 using System.Threading;
 using GoBot.Ponderations;
+using GoBot.Actionneurs;
 
 namespace GoBot.Enchainements
 {
@@ -42,8 +43,28 @@ namespace GoBot.Enchainements
 
             for (int iPied = 0; iPied < Plateau.Pieds.Count; iPied++)
                 ListeMouvementsGros.Add(new MouvementPied(iPied));
+            for (int iPied = 0; iPied < Plateau.Pieds.Count; iPied++)
+                ListeMouvementsGros.Add(new MouvementAmpoulePied(iPied));
             for (int iTapis = 0; iTapis < Plateau.ListeTapis.Count; iTapis++)
                 ListeMouvementsGros.Add(new MouvementTapis(iTapis));
+            for (int iClap = 0; iClap < 6; iClap++)
+                ListeMouvementsGros.Add(new MouvementClap(iClap));
+            for (int iGobelet = 0; iGobelet < Plateau.Gobelets.Count; iGobelet++)
+                ListeMouvementsGros.Add(new MouvementGobelet(iGobelet, Actionneur.BrasPiedsDroite));
+            for (int iGobelet = 0; iGobelet < Plateau.Gobelets.Count; iGobelet++)
+                ListeMouvementsGros.Add(new MouvementGobelet(iGobelet, Actionneur.BrasPiedsGauche));
+
+            ListeMouvementsGros.Add(new MouvementDeposeDepart(Plateau.ZoneDepartJaune));
+            ListeMouvementsGros.Add(new MouvementDeposeDepart(Plateau.ZoneDepartVert));
+
+            ListeMouvementsGros.Add(new MouvementDeposeEstrade(Plateau.ZoneDeposeEstradeDroite));
+            ListeMouvementsGros.Add(new MouvementDeposeEstrade(Plateau.ZoneDeposeEstradeGauche));
+
+            ListeMouvementsGros.Add(new MouvementTas1(Plateau.CouleurGaucheJaune));
+            ListeMouvementsGros.Add(new MouvementTas1(Plateau.CouleurDroiteVert));
+
+            ListeMouvementsGros.Add(new MouvementTas2(Plateau.CouleurGaucheJaune));
+            ListeMouvementsGros.Add(new MouvementTas2(Plateau.CouleurDroiteVert));
         }
 
         public void Executer()
@@ -75,7 +96,30 @@ namespace GoBot.Enchainements
             timerFinMatch.Stop();
             thGrosRobot.Abort();
             Robots.GrosRobot.Stop(StopMode.Freely);
-            Robots.PetitRobot.Stop(StopMode.Freely);
+            //Robots.PetitRobot.Stop(StopMode.Freely);
+            Robots.GrosRobot.MoteurPosition(MoteurID.Balise, 0);
+            Actionneur.BrasAspirateur.Arreter();
+            Actionneur.BrasPiedsDroite.OuvrirPinceBas();
+            Actionneur.BrasPiedsDroite.OuvrirPinceHaut();
+            Actionneur.BrasPiedsDroite.AscenseurHauteur(0);
+            Actionneur.BrasPiedsGauche.OuvrirPinceBas();
+            Actionneur.BrasPiedsGauche.OuvrirPinceHaut();
+            Actionneur.BrasPiedsGauche.AscenseurHauteur(0);
+            Actionneur.BrasTapis.LacherTapisDroit();
+            Actionneur.BrasTapis.LacherTapisGauche();
+
+            Config.CurrentConfig.ServoAscenseurDroitBasDroit.Positionner(0);
+            Config.CurrentConfig.ServoAscenseurDroitBasGauche.Positionner(0);
+            Config.CurrentConfig.ServoAscenseurGaucheBasDroit.Positionner(0);
+            Config.CurrentConfig.ServoAscenseurDroitBasGauche.Positionner(0);
+
+            Config.CurrentConfig.ServoAscenseurDroitHautDroit.Positionner(0);
+            Config.CurrentConfig.ServoAscenseurDroitHautGauche.Positionner(0);
+            Config.CurrentConfig.ServoAscenseurGaucheHautDroit.Positionner(0);
+            Config.CurrentConfig.ServoAscenseurDroitHautGauche.Positionner(0);
+
+            Config.CurrentConfig.ServoBalleVerrouillageDroit.Positionner(0);
+            Config.CurrentConfig.ServoBalleVerrouillageGauche.Positionner(0);
 
             Thread.Sleep(100);
             Robots.GrosRobot.ActionneurOnOff(ActionneurOnOffID.Alimentation, false);

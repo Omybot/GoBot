@@ -59,7 +59,7 @@ namespace GoBot
             foreach (char c in typeName)
             {
                 char ch = c;
-                if (c <= 'Z')
+                if (c <= 'Z' && c>= 'A')
                     nom += " " + (char)(c + 32);
                 else
                     nom += c;
@@ -112,11 +112,13 @@ namespace GoBot
 
         public int GRVitesseLigneRapide { get; set; }
         public int GRAccelerationLigneRapide { get; set; }
+        public int GRAccelerationFinLigneRapide { get; set; }
         public int GRVitessePivotRapide { get; set; }
         public int GRAccelerationPivotRapide { get; set; }
 
         public int GRVitesseLigneLent { get; set; }
         public int GRAccelerationLigneLent { get; set; }
+        public int GRAccelerationFinLigneLent { get; set; }
         public int GRVitessePivotLent { get; set; }
         public int GRAccelerationPivotLent { get; set; }
 

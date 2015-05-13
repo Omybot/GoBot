@@ -5,18 +5,20 @@ using System.Text;
 using GoBot.Calculs;
 using GoBot.Calculs.Formes;
 using GoBot.ElementsJeu;
+using System.Drawing;
 
 namespace GoBot.Mouvements
 {
     public abstract class Mouvement
     {
         public abstract bool Executer(int timeOut = 0);
-        public abstract int Score { get; }
+        public abstract double Score { get; }
         public abstract double ScorePondere { get; }
         public List<Position> Positions { get; protected set; }
         public ElementJeu Element { get; protected set; }
         public Robot Robot { get; set; }
         public DateTime DateMinimum { get; set; }
+        public Color Couleur { get; set; }
 
         public Mouvement()
         {
@@ -26,6 +28,15 @@ namespace GoBot.Mouvements
         {
             Positions = new List<Position>();
         }
+
+        public bool BonneCouleur()
+        {
+            if (Couleur == null)
+                return true;
+            else
+                return Couleur == Plateau.NotreCouleur;
+        }
+
 
         public Position PositionProche
         {
@@ -84,6 +95,7 @@ namespace GoBot.Mouvements
 
                 double distance = Robot.Position.Coordonnees.Distance(position.Coordonnees) / 10;
                 double cout = distance / ScorePondere;
+                bool adversairePlusProche = false;
 
                 List<IForme> obstacles = new List<IForme>(Plateau.ObstaclesTemporaires);
                 foreach (Cercle c in obstacles)
@@ -93,7 +105,13 @@ namespace GoBot.Mouvements
                         cout = double.PositiveInfinity;
                     else
                         cout /= (distanceAdv * distanceAdv);
+
+                    if (distanceAdv < distance)
+                        adversairePlusProche = true;
                 }
+
+                if (adversairePlusProche)
+                    cout *= 2;
 
                 return cout * 10000;
             }

@@ -123,7 +123,9 @@
     <Compile Include="ElementsJeu\PopCorn.cs" />
     <Compile Include="ElementsJeu\Spot.cs" />
     <Compile Include="ElementsJeu\Tapis.cs" />
-    <Compile Include="Enchainements\Enchainement1Point.cs" />
+    <Compile Include="ElementsJeu\ZoneInteret.cs" />
+    <Compile Include="Enchainements\EnchainementTest.cs" />
+    <Compile Include="Enchainements\EnchainementNul.cs" />
     <Compile Include="Enchainements\EnchainementAleatoire.cs" />
     <Compile Include="Enchainements\EnchainementMatch.cs" />
     <Compile Include="EventsReplay.cs" />
@@ -291,9 +293,15 @@
     </Compile>
     <Compile Include="Logs\Log.cs" />
     <Compile Include="Logs\Logs.cs" />
+    <Compile Include="Mouvements\MouvementDeposeEstrade.cs" />
     <Compile Include="Mouvements\Mouvement.cs" />
     <Compile Include="Mouvements\MouvementClap.cs" />
+    <Compile Include="Mouvements\MouvementDeposeDepart.cs" />
     <Compile Include="Mouvements\MouvementDistributeur.cs" />
+    <Compile Include="Mouvements\MouvementGobelet.cs" />
+    <Compile Include="Mouvements\MouvementAmpoulePied.cs" />
+    <Compile Include="Mouvements\MouvementTas2.cs" />
+    <Compile Include="Mouvements\MouvementTas1.cs" />
     <Compile Include="Mouvements\MouvementPied.cs" />
     <Compile Include="Mouvements\MouvementTapis.cs" />
     <Compile Include="Mouvements\PositionsMouvements.cs" />

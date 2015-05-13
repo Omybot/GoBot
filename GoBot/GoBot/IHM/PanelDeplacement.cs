@@ -53,6 +53,7 @@ namespace GoBot.IHM
             {
                 trackBarVitesseLigne.SetValue(Config.CurrentConfig.GRVitesseLigneRapide, false);
                 trackBarAccelLigne.SetValue(Config.CurrentConfig.GRAccelerationLigneRapide, false);
+                trackBarAccelerationFinLigne.SetValue(Config.CurrentConfig.GRAccelerationFinLigneRapide, false);
                 trackBarVitessePivot.SetValue(Config.CurrentConfig.GRVitessePivotRapide, false);
                 trackBarAccelPivot.SetValue(Config.CurrentConfig.GRAccelerationPivotRapide, false);
 
@@ -223,7 +224,7 @@ namespace GoBot.IHM
 
         protected virtual void trackBarAccelLigne_TickValueChanged(object sender, EventArgs e)
         {
-            Robot.AccelerationDeplacement = (int)trackBarAccelLigne.Value;
+            Robot.AccelerationDebutDeplacement = (int)trackBarAccelLigne.Value;
         }
 
         private void trackBarAccelLigne_ValueChanged(object sender, EventArgs e)
@@ -323,13 +324,13 @@ namespace GoBot.IHM
         private void btnRecallage_Click(object sender, EventArgs e)
         {
             int vitesseTemp = Robot.VitesseDeplacement;
-            int accelerationTemp = Robot.AccelerationDeplacement;
+            int accelerationTemp = Robot.AccelerationDebutDeplacement;
             Robot.VitesseDeplacement = 150;
-            Robot.AccelerationDeplacement = 150;
+            Robot.AccelerationDebutDeplacement = 150;
             System.Threading.Thread.Sleep(200);
             Robot.Recallage(SensAR.Arriere);
             Robot.VitesseDeplacement = vitesseTemp;
-            Robot.AccelerationDeplacement = accelerationTemp;
+            Robot.AccelerationDebutDeplacement = accelerationTemp;
         }
 
         private void btnFreely_Click(object sender, EventArgs e)
@@ -401,6 +402,22 @@ namespace GoBot.IHM
         private void btnRapide_Click(object sender, EventArgs e)
         {
             Robot.Rapide();
+        }
+
+        private void trackBarAccelerationFinLigne_TickValueChanged(object sender, EventArgs e)
+        {
+            Robot.AccelerationFinDeplacement = (int)trackBarAccelerationFinLigne.Value;
+        }
+
+        private void trackBarAccelerationFinLigne_ValueChanged(object sender, EventArgs e)
+        {
+            numAccelerationFinLigne.Value = (int)trackBarAccelerationFinLigne.Value;
+        }
+
+        private void numAccelerationFinLigne_ValueChanged(object sender, EventArgs e)
+        {
+            if (numAccelerationFinLigne.Focused)
+                trackBarAccelerationFinLigne.SetValue((double)numAccelerationFinLigne.Value);
         }
     }
 }

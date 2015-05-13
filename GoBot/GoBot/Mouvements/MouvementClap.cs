@@ -17,6 +17,7 @@ namespace GoBot.Mouvements
         {
             numeroClap = i;
             Element = Plateau.Claps[i];
+            Robot = Robots.GrosRobot;
 
             if(i == 0)
                 Positions.Add(new Position(0, new PointReel(243, 1699)));
@@ -30,7 +31,11 @@ namespace GoBot.Mouvements
                 Positions.Add(new Position(0, new PointReel(2370, 1699)));
             else if (i == 5)
                 Positions.Add(new Position(0, new PointReel(2670, 1699)));
-            // TODO Samedi : Déterminer les angles d'attaque possibles / bras à utiliser pour chaque pied 
+
+            if (numeroClap % 2 == 0)
+                Couleur = Plateau.CouleurGaucheJaune;
+            else
+                Couleur = Plateau.CouleurDroiteVert;
         }
 
         public override bool Executer(int timeOut = 0)
@@ -80,9 +85,28 @@ namespace GoBot.Mouvements
             return true;
         }
 
-        public override int Score
+        public override double Score
         {
-            get { return (Plateau.NotreCouleur == Plateau.CouleurGaucheJaune && numeroClap % 2 == 0) ? 5 : 0; }
+            get
+            {
+                if (numeroClap == 0 && (!Plateau.Pieds[1].Ramasse || !Plateau.Pieds[2].Ramasse || !Plateau.Gobelets[0].Ramasse) && Plateau.Enchainement.TempsRestant.TotalSeconds > 10)
+                    return 0;
+
+                if (numeroClap == 5 && (!Plateau.Pieds[15].Ramasse || !Plateau.Pieds[14].Ramasse || !Plateau.Gobelets[4].Ramasse) && Plateau.Enchainement.TempsRestant.TotalSeconds > 10)
+                    return 0;
+
+                if (Plateau.Claps[numeroClap].Active)
+                    return 0;
+
+                if (!BonneCouleur())
+                    return 0;
+
+                // Claps coté adverse
+                if (numeroClap == 1 || numeroClap == 4)
+                    return 1;
+
+                return 5; 
+            }
         }
 
         public override double ScorePondere

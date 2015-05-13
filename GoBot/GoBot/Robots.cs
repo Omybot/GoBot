@@ -71,7 +71,8 @@ namespace GoBot
                 Robots.GrosRobot.Graph = graphGros;
 
             GrosRobot.VitesseDeplacement = Config.CurrentConfig.GRVitesseLigneRapide;
-            GrosRobot.AccelerationDeplacement = Config.CurrentConfig.GRAccelerationLigneRapide;
+            GrosRobot.AccelerationDebutDeplacement = Config.CurrentConfig.GRAccelerationLigneRapide;
+            GrosRobot.AccelerationFinDeplacement = Config.CurrentConfig.GRAccelerationFinLigneRapide;
             GrosRobot.VitessePivot = Config.CurrentConfig.GRVitessePivotRapide;
             GrosRobot.AccelerationPivot = Config.CurrentConfig.GRAccelerationPivotRapide;
 
@@ -83,7 +84,7 @@ namespace GoBot
                 Robots.PetitRobot.Graph = graphPetit;
 
             PetitRobot.VitesseDeplacement = Config.CurrentConfig.PRVitesseLigneRapide;
-            PetitRobot.AccelerationDeplacement = Config.CurrentConfig.PRVitesseLigneRapide;
+            PetitRobot.AccelerationDebutDeplacement = Config.CurrentConfig.PRVitesseLigneRapide;
             PetitRobot.VitessePivot = Config.CurrentConfig.PRVitessePivotRapide;
             PetitRobot.AccelerationPivot = Config.CurrentConfig.PRAccelerationPivotRapide;
         }

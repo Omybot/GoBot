@@ -22,7 +22,7 @@ namespace GoBot.IHM
     public partial class PanelTable : UserControl
     {
         public static Plateau Plateau { get; set; }
-        
+
         public PanelTable()
         {
             InitializeComponent();
@@ -85,7 +85,7 @@ namespace GoBot.IHM
                     if (p == null)
                         continue;
 
-                    double vitesse = Math.Round(Math.Sqrt(SuiviBalise.VecteursPositionsEnnemies[i].X * SuiviBalise.VecteursPositionsEnnemies[i].X + SuiviBalise.VecteursPositionsEnnemies[i].Y * SuiviBalise.VecteursPositionsEnnemies[i].Y));
+                    double vitesse = Math.Round(Math.Sqrt(p.X * p.X + p.Y * p.Y));
 
                     if (i == 0)
                     {
@@ -138,6 +138,7 @@ namespace GoBot.IHM
 
         DateTime dateCapture = DateTime.Now;
 
+        Random rand = new Random();
         private void pictureBoxTable_MouseMove(object sender, MouseEventArgs e)
         {
             Dessinateur.PositionCurseur = pictureBoxTable.PointToClient(MousePosition);
@@ -149,11 +150,11 @@ namespace GoBot.IHM
                     dateCapture = DateTime.Now;
 
                     Point p = Dessinateur.ScreenToRealPosition(pictureBoxTable.PointToClient(MousePosition));
-
                     List<PointReel> positions = new List<PointReel>();
 
                     positions.Add(Dessinateur.ScreenToRealPosition(pictureBoxTable.PointToClient(MousePosition)));
-                    SuiviBalise.MajPositions(positions, Plateau.Enchainement == null || Plateau.Enchainement.DebutMatch == null);
+                    Plateau.InterpreteurBalise.Actualisation(false, Dessinateur.ScreenToRealPosition(pictureBoxTable.PointToClient(MousePosition)));
+                    //SuiviBalise.MajPositions(positions, Plateau.Enchainement == null || Plateau.Enchainement.DebutMatch == null);
                 }
             }
             else
@@ -224,7 +225,7 @@ namespace GoBot.IHM
 
                 /* Todo Tester ici si le clic a été fait sur un élément de jeu dans le but de lancer un mouvement.
                    Si c'est le cas, lancer un thread pour effectuer le mouvement */
-                 
+
                 for (int i = 0; i < Plateau.Claps.Count; i++)
                     if (Plateau.Claps[i].Hover)
                     {
@@ -235,7 +236,16 @@ namespace GoBot.IHM
                 for (int i = 0; i < Plateau.Pieds.Count; i++)
                     if (Plateau.Pieds[i].Hover)
                     {
-                        move = new MouvementPied(i);
+                        if (i == 3 || i == 4)
+                            move = new MouvementTas1(Plateau.CouleurGaucheJaune);
+                        else if (i == 11 || i == 12)
+                            move = new MouvementTas1(Plateau.CouleurDroiteVert);
+                        else if (i == 0 || i == 1)
+                            move = new MouvementTas2(Plateau.CouleurGaucheJaune);
+                        else if (i == 14 || i == 15)
+                            move = new MouvementTas2(Plateau.CouleurDroiteVert);
+                        else
+                            move = new MouvementPied(i);
                         break;
                     }
 
@@ -249,7 +259,19 @@ namespace GoBot.IHM
                 for (int i = 0; i < Plateau.Gobelets.Count; i++)
                     if (Plateau.Gobelets[i].Hover)
                     {
-                        // action au clic
+                        if (i == 0)
+                            move = new MouvementTas2(Plateau.CouleurGaucheJaune);
+                        else if (i == 0)
+                            move = new MouvementTas2(Plateau.CouleurDroiteVert);
+                        else
+                        {
+                            BrasPieds bras;
+                            if(Plateau.NotreCouleur == Plateau.CouleurGaucheJaune)
+                                bras = Actionneur.BrasPiedsGauche;
+                            else
+                                bras = Actionneur.BrasPiedsDroite;
+                            move = new MouvementGobelet(i, bras);
+                        }
                         break;
                     }
 
@@ -259,6 +281,28 @@ namespace GoBot.IHM
                         move = new MouvementTapis(i);
                         break;
                     }
+
+                for (int i = 0; i < Plateau.Gobelets.Count; i++)
+                    if (Plateau.Gobelets[i].Hover)
+                    {
+                        if (Plateau.NotreCouleur == Plateau.CouleurDroiteVert)
+                            move = new MouvementGobelet(i, Actionneur.BrasPiedsDroite);
+                        else
+                            move = new MouvementGobelet(i, Actionneur.BrasPiedsGauche);
+                        break;
+                    }
+
+                if (Plateau.ZoneDeposeEstradeDroite.Hover)
+                    move = new MouvementDeposeEstrade(Plateau.ZoneDeposeEstradeDroite);
+
+                if (Plateau.ZoneDeposeEstradeGauche.Hover)
+                    move = new MouvementDeposeEstrade(Plateau.ZoneDeposeEstradeGauche);
+
+                if (Plateau.ZoneDepartJaune.Hover)
+                    move = new MouvementDeposeDepart(Plateau.ZoneDepartJaune);
+
+                if (Plateau.ZoneDepartVert.Hover)
+                    move = new MouvementDeposeDepart(Plateau.ZoneDepartVert);
 
                 if (move != null)
                 {
@@ -570,6 +614,18 @@ namespace GoBot.IHM
             Actionneur.BrasPiedsDroite.AscenseurDescendre();
             Actionneur.BrasPiedsGauche.AscenseurDescendre();
 
+        }
+
+        private void btnStratNul_Click(object sender, EventArgs e)
+        {
+            Plateau.Enchainement = new EnchainementNul();
+            Plateau.Enchainement.Executer();
+        }
+
+        private void btnStratTest_Click(object sender, EventArgs e)
+        {
+            Plateau.Enchainement = new EnchainementTest();
+            Plateau.Enchainement.Executer();
         }
     }
 }

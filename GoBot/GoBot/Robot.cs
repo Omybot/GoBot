@@ -26,7 +26,8 @@ namespace GoBot
         public PointReel PositionCible { get; set; }
 
         public abstract int VitesseDeplacement { get; set; }
-        public abstract int AccelerationDeplacement { get; set; }
+        public abstract int AccelerationDebutDeplacement { get; set; }
+        public abstract int AccelerationFinDeplacement { get; set; }
         public abstract int VitessePivot { get; set; }
         public abstract int AccelerationPivot { get; set; }
 
@@ -248,14 +249,15 @@ namespace GoBot
             if (this == Robots.GrosRobot)
             {
                 VitesseDeplacement = Config.CurrentConfig.GRVitesseLigneLent;
-                AccelerationDeplacement = Config.CurrentConfig.GRAccelerationLigneLent;
+                AccelerationDebutDeplacement = Config.CurrentConfig.GRAccelerationLigneLent;
+                AccelerationFinDeplacement = Config.CurrentConfig.GRAccelerationFinLigneLent;
                 VitessePivot = Config.CurrentConfig.GRVitessePivotLent;
                 AccelerationPivot = Config.CurrentConfig.GRAccelerationLigneLent;
             }
             else
             {
                 VitesseDeplacement = Config.CurrentConfig.PRVitesseLigneLent;
-                AccelerationDeplacement = Config.CurrentConfig.PRAccelerationLigneLent;
+                AccelerationDebutDeplacement = Config.CurrentConfig.PRAccelerationLigneLent;
                 VitessePivot = Config.CurrentConfig.PRVitessePivotLent;
                 AccelerationPivot = Config.CurrentConfig.PRAccelerationLigneLent;
             }
@@ -265,20 +267,16 @@ namespace GoBot
         {
             if (this == Robots.GrosRobot)
             {
-                /*VitesseDeplacement = Config.CurrentConfig.GRVitesseLigneRapide;
-                AccelerationDeplacement = Config.CurrentConfig.GRAccelerationLigneRapide;
+                VitesseDeplacement = Config.CurrentConfig.GRVitesseLigneRapide;
+                AccelerationDebutDeplacement = Config.CurrentConfig.GRAccelerationLigneRapide;
+                AccelerationFinDeplacement = Config.CurrentConfig.GRAccelerationFinLigneRapide;
                 VitessePivot = Config.CurrentConfig.GRVitessePivotRapide;
-                AccelerationPivot = Config.CurrentConfig.GRAccelerationPivotRapide;*/
-
-                VitesseDeplacement = 500;
-                AccelerationDeplacement = 1000;
-                VitessePivot = 600;
-                AccelerationPivot = 1000;
+                AccelerationPivot = Config.CurrentConfig.GRAccelerationPivotRapide;
             }
             else
             {
                 VitesseDeplacement = Config.CurrentConfig.PRVitesseLigneRapide;
-                AccelerationDeplacement = Config.CurrentConfig.PRAccelerationLigneRapide;
+                AccelerationDebutDeplacement = Config.CurrentConfig.PRAccelerationLigneRapide;
                 VitessePivot = Config.CurrentConfig.PRVitessePivotRapide;
                 AccelerationPivot = Config.CurrentConfig.PRAccelerationPivotRapide;
             }
@@ -295,7 +293,10 @@ namespace GoBot
             PointReel destination = new PointReel(x, y);
 
             if (destination.Distance(Position.Coordonnees) <= 10)
+            {
+                PositionerAngle(teta, 0.5);
                 return true;
+            }
 
             semTrajectoire = new Semaphore(0, int.MaxValue);
 
@@ -719,7 +720,7 @@ namespace GoBot
             // Teste si le noeud est franchissable avec la liste des obstacles
             foreach (IForme obstacle in Plateau.ObstaclesFixes)
             {
-                if (TropProche(obstacle, new PointReel(node.X, node.Y)))
+                if (TropProche(obstacle, new PointReel(node.X, node.Y), -20))
                 {
                     node.Passable = false;
                     return 0;
@@ -748,7 +749,7 @@ namespace GoBot
 
                         foreach (IForme obstacle in obstacles)
                         {
-                            if (TropProche(obstacle, new Segment(new PointReel(no.X, no.Y), new PointReel(node.X, node.Y))))
+                            if (TropProche(obstacle, new Segment(new PointReel(no.X, no.Y), new PointReel(node.X, node.Y)), -20))
                             {
                                 arc.Passable = false;
                                 arc2.Passable = false;
@@ -782,7 +783,7 @@ namespace GoBot
         /// <param name="forme1">Forme 1</param>
         /// <param name="forme2">Forme 2</param>
         /// <returns>Vrai si les deux formes sont trop proches</returns>
-        public bool TropProche(IForme forme1, IForme forme2)
+        public bool TropProche(IForme forme1, IForme forme2, int marge = 0)
         {
             Type typeForme1 = forme1.GetType();
             Type typeForme2 = forme2.GetType();
@@ -793,7 +794,7 @@ namespace GoBot
                 else
                     return ((Segment)forme1).Distance(forme2) < Rayon;
             else
-                return forme1.Distance(forme2) < Rayon;
+                return forme1.Distance(forme2) < Rayon + marge;
         }
 
         /// <summary>
@@ -963,7 +964,8 @@ namespace GoBot
                     {
                         foreach (Segment segment in segmentsTrajectoire)
                         {
-                            if (TropProche(seg, forme))
+                            // Marge de 30mm pour être plus permissif sur le passage te ne pas s'arreter dès que l'adversaire approche
+                            if (TropProche(seg, forme, - 30))
                             {
                                 // Demande de génération d'une nouvelle trajectoire
                                 Historique.Log("Trajectoire coupée, annulation", TypeLog.PathFinding);
@@ -987,7 +989,8 @@ namespace GoBot
         public void MajGraphFranchissable()
         {
             SemGraph.WaitOne();
-            List<IForme> obstacles = Plateau.ObstaclesTemporaires;
+            List<IForme> obstacles = new List<IForme>(Plateau.ObstaclesTemporaires);
+            Console.WriteLine(Plateau.ObstaclesTemporaires + " obstacles temporaires MajGraphFranchissable");
 
             foreach (Arc arc in Graph.Arcs)
                 arc.Passable = true;
@@ -1005,7 +1008,9 @@ namespace GoBot
                     if (arc.Passable)
                     {
                         Segment segment = new Segment(new PointReel(arc.StartNode.X, arc.StartNode.Y), new PointReel(arc.EndNode.X, arc.EndNode.Y));
-                        if (TropProche(obstacle, segment))
+
+                        // Marge de 20mm pour prévoir une trajectoire plus éloignée de l'adversaire
+                        if (TropProche(obstacle, segment, 20))
                         {
                             arc.Passable = false;
                         }
@@ -1051,7 +1056,7 @@ namespace GoBot
         {
             List<IForme> obstacles = new List<IForme>();
             obstacles.AddRange(Plateau.ListeObstacles);
-            //obstacles.AddRange(Plateau.ObstaclesTemporaires);
+            obstacles.AddRange(Plateau.ObstaclesTemporaires);
             /*obstacles.Add(new Cercle(AutreRobot.Position.Coordonnees, AutreRobot.Rayon));
 
             if (AutreRobot.PositionCible != null)

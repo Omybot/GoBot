@@ -329,12 +329,14 @@ namespace GoBot.Communications
                                 message = "Debug " + (int)trame[2];
                                 break;
                             case FonctionMove.AccelerationLigne:
-                                int valeurAccelLigne = trame[2] * 256 + trame[3];
-                                message = "Envoi accélération ligne : " + valeurAccelLigne;
+                                int valeurAccelDebutLigne = trame[2] * 256 + trame[3];
+                                int valeurAccelFinLigne = trame[4] * 256 + trame[5];
+                                message = "Envoi accélération ligne : " + valeurAccelDebutLigne + " / " + valeurAccelFinLigne;
                                 break;
                             case FonctionMove.AccelerationPivot:
-                                int valeurAccelPivot = trame[2] * 256 + trame[3];
-                                message = "Envoi accélération pivot : " + valeurAccelPivot;
+                                int valeurAccelDebutPivot = trame[2] * 256 + trame[3];
+                                int valeurAccelFinPivot = trame[4] * 256 + trame[5];
+                                message = "Envoi accélération pivot : " + valeurAccelDebutPivot + " / " + valeurAccelFinPivot;
                                 break;
                             case FonctionMove.Blocage:
                                 message = "Blocage détécté";

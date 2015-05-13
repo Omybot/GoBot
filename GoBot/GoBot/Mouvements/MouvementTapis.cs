@@ -22,15 +22,19 @@ namespace GoBot.Mouvements
             {
                 case 0:
                     Positions.Add(new Position(45, new Calculs.Formes.PointReel(1039, 810)));
+                    Couleur = Plateau.CouleurGaucheJaune;
                     break;
                 case 1:
                     Positions.Add(new Position(45, new Calculs.Formes.PointReel(1439, 810)));
+                    Couleur = Plateau.CouleurGaucheJaune;
                     break;
                 case 2:
                     Positions.Add(new Position(45, new Calculs.Formes.PointReel(1561, 810)));
+                    Couleur = Plateau.CouleurDroiteVert;
                     break;
                 case 3:
                     Positions.Add(new Position(45, new Calculs.Formes.PointReel(1961, 810)));
+                    Couleur = Plateau.CouleurDroiteVert;
                     break;
             }
         }
@@ -45,7 +49,7 @@ namespace GoBot.Mouvements
 
             if (position != null && Robots.GrosRobot.GotoXYTeta(position.Coordonnees.X, position.Coordonnees.Y, position.Angle.AngleDegres))
             {
-                if(numeroTapis == 1 || numeroTapis == 3)
+                if(numeroTapis == 0 || numeroTapis == 3)
                     Actionneur.BrasTapis.PoserTapisDroit();
                 else
                     Actionneur.BrasTapis.PoserTapisGauche();
@@ -61,12 +65,14 @@ namespace GoBot.Mouvements
             return true;
         }
 
-        public override int Score
+        public override double Score
         {
             get
             {
-                if ((Plateau.NotreCouleur == Plateau.CouleurGaucheJaune && (numeroTapis == 0 || numeroTapis == 1)) ||
-                    (Plateau.NotreCouleur == Plateau.CouleurDroiteVert && (numeroTapis == 2 || numeroTapis == 3)))
+                if (Plateau.ListeTapis[numeroTapis].Pose)
+                    return 0;
+
+                if (BonneCouleur())
                     return 12;
                 else 
                     return 0;

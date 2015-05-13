@@ -26,6 +26,8 @@ namespace GoBot.Communications
 
         Alimentation = 0x80,
 
+        BlocageAscenseur = 0x82,
+
         ActionneurOnOff = 0x65,
         MoteurPosition = 0x66,
         MoteurVitesse = 0x67,

@@ -184,7 +184,7 @@ namespace GoBot.Balises
             TimeSpan tempsEcoule = DateTime.Now - DateDernierMessage;
             DateDernierMessage = DateTime.Now;
 
-            if (Balise.Detections.Count > 0)
+            if (Balise.Detections != null && Balise.Detections.Count > 0)
             {
                 AnglesMesures1.Add(Balise.Detections[0].AngleCentral);
                 DistancesMesures1.Add(Balise.Detections[0].Distance);

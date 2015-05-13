@@ -7,7 +7,7 @@ using System.Drawing;
 
 namespace GoBot.ElementsJeu
 {
-    public class Pied : ElementJeu
+    public class ZoneInteret : ElementJeu
     {
         private Color couleur;
 
@@ -17,18 +17,20 @@ namespace GoBot.ElementsJeu
             set { couleur = value; }
         }
 
-        public Pied(PointReel position, Color couleur)
-            : base(position, 50)
+        private bool interet;
+
+        public bool Interet
         {
-            Couleur = couleur;
+            get { return interet; }
+            set { interet = value; }
         }
 
-        private bool ampoule;
-
-        public bool Ampoule
+        public ZoneInteret(PointReel position, Color couleur, int rayon)
+            : base(position, rayon)
         {
-            get { return ampoule; }
-            set { ampoule = value; }
+            Interet = true;
+            Hover = false;
+            Couleur = couleur;
         }
     }
 }

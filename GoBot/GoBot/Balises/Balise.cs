@@ -49,7 +49,7 @@ namespace GoBot.Balises
             }
             else
             {
-                
+
                 if (numCapteur == 1)
                 {
                     switch (Carte)
@@ -81,6 +81,8 @@ namespace GoBot.Balises
 
         public Angle AngleCentral()
         {
+            return 0;
+            /*
             if (Plateau.NotreCouleur == Plateau.CouleurGaucheJaune)
             {
                 // Les valeurs sont les angles que doivent retourner chaque balise pour un reflecteur placé au centre de la table
@@ -106,7 +108,7 @@ namespace GoBot.Balises
                     case GoBot.Carte.RecBoi:
                         return 1.527;
                 }
-            }
+            }*/
 
             return 0;
         }
@@ -288,7 +290,8 @@ namespace GoBot.Balises
 
             if (temp != EnRotation)
             {
-                RotationChange(EnRotation);
+                if(RotationChange != null)
+                    RotationChange(EnRotation);
             }
 
             if (!EnRotation && RotationDemandee)
@@ -326,311 +329,410 @@ namespace GoBot.Balises
 
                 if (trame[1] == (byte)FonctionBalise.DetectionRapide)
                 {
-                    int capteur = trame[2];
-
-                    double debut = 360 - ((trame[3] * 256 + trame[4]) / 100.0) + Config.CurrentConfig.GetOffsetBalise(Carte, Plateau.NotreCouleur, capteur);
-                    double fin = 360 - ((trame[5] * 256 + trame[6]) / 100.0) + Config.CurrentConfig.GetOffsetBalise(Carte, Plateau.NotreCouleur, capteur);
-
-                    debut = debut + Position.Angle;
-                    fin = fin + Position.Angle;
-
-                    if (this == Plateau.Balise3)
+                    if (Position != null)
                     {
-                        debut = (debut + 180) % 360;
-                        fin = (fin + 180) % 360;
+                        int capteur = trame[2];
+
+                        double debut = 360 - ((trame[3] * 256 + trame[4]) / 100.0) + Config.CurrentConfig.GetOffsetBalise(Carte, Plateau.NotreCouleur, capteur);
+                        double fin = 360 - ((trame[5] * 256 + trame[6]) / 100.0) + Config.CurrentConfig.GetOffsetBalise(Carte, Plateau.NotreCouleur, capteur);
+
+                        debut = debut + Position.Angle;
+                        fin = fin + Position.Angle;
+
+                        if (this == Plateau.Balise3)
+                        {
+                            debut = (debut + 180) % 360;
+                            fin = (fin + 180) % 360;
+                        }
+
+                        if (DetectionsRapides == null)
+                            DetectionsRapides = new List<DetectionBalise>();
+
+                        DetectionBalise detect = new DetectionBalise(this, debut, fin);
+
+                        bool recalcul = false;
+                        if (capteur == 2 && detect.Distance > 1250)
+                        {
+                            recalcul = true;
+                            detect.Distance = 1250;
+                        }
+                        else if (capteur == 2 && detect.Distance < 480)
+                        {
+                            recalcul = true;
+                            detect.Distance = 480;
+                        }
+                        else if (capteur == 3 && detect.Distance > 600)
+                        {
+                            recalcul = true;
+                            detect.Distance = 600;
+                        }
+                        else if (capteur == 3 && detect.Distance < 300)
+                        {
+                            recalcul = true;
+                            detect.Distance = 300;
+                        }
+
+                        if (recalcul)
+                        {
+                            // Un peu de trigo pas bien compliquée
+                            double xPoint = Position.Coordonnees.X + Math.Cos(Maths.DegreeToRadian(detect.AngleCentral)) * detect.Distance;
+                            double yPoint = Position.Coordonnees.Y + Math.Sin(Maths.DegreeToRadian(detect.AngleCentral)) * detect.Distance;
+
+                            detect.Position = new PointReel(xPoint, yPoint);
+                        }
+
+                        DetectionsRapides.Add(detect);
+
+                        nbDetectionsRapides++;
+
+                        PositionsChange();
                     }
-
-                    if (DetectionsRapides == null)
-                        DetectionsRapides = new List<DetectionBalise>();
-
-                    DetectionsRapides.Add(new DetectionBalise(this, debut, fin));
-                    nbDetectionsRapides++;
                 }
 
                 if (trame[1] == (byte)FonctionBalise.Detection)
                 {
-                    // Vide les détections rapides datant de plus d'un tour
-                    for (int i = 0; i < DetectionsRapides.Count - nbDetectionsRapides; i++ )
-                        DetectionsRapides.RemoveAt(0);
-
-                    nbDetectionsRapides = 0;
-
-                    // Réception d'une mesure sur un tour de rotation
-                    // Vérification checksum
-                    cptRotation++;
-
-                    // Calcul de la vitesse de rotation
-                    int nbTicks = trame[2] * 256 + trame[3];
-                    VitesseToursSecActuelle = 1 / (nbTicks * 0.0000064);
-
-                    int nouvelleVitesse = 0;
-                    if (ReglageVitesse)
-                        nouvelleVitesse = AsservissementVitesse();
-
-                    // Réception des données angulaires
-
-                    int nbMesures1 = trame[4];
-                    int nbMesures2 = trame[5];
-
-                    // Si on a un nombre impair de fronts on laisse tomber cette mesure, elle n'est pas bonne
-                    if (nbMesures1 % 2 != 0 || nbMesures2 % 2 != 0)
+                    if (Position != null)
                     {
-                        Console.WriteLine("Erreur de détection (fronts impairs)");
-                        return;
-                    }
-
-                    nbMesures1 = nbMesures1 / 2;
-                    nbMesures2 = nbMesures2 / 2;
-
-                    // Vérification de la taille de la trame
-                    if (trame.Length != 6 + nbMesures1 * 4 + nbMesures2 * 4)
-                    {
-                        Console.WriteLine("Erreur de taille de trame");
-                        return;
-                    }
-
-                    // Réception des mesures du capteur 1
-                    DetectionsCapteur1.Clear();
-                    List<int> tabAngle = new List<int>();
-
-                    long verif = 0;
-                    for (int i = 0; i < nbMesures1 * 4; i += 2)
-                    {
-                        int valeur = trame[6 + i] * 256 + trame[6 + i + 1];
-                        tabAngle.Add(valeur);
-                        verif += valeur * (i / 2 + 1);
-                    }
-
-                    tabAngle.Sort();
-
-                    for (int i = 0; i < nbMesures1 * 2; i++)
-                    {
-                        verif -= tabAngle[i] * (i + 1);
-                    }
-
-                    if (verif != 0)
-                    {
-                        Console.WriteLine("Inversion détectée capteur 1");
-                    }
-
-                    for (int i = 0; i < nbMesures1; i++)
-                    {
-                        double debut = 360 - (tabAngle[i * 2] / 100.0) + Config.CurrentConfig.GetOffsetBalise(Carte, Plateau.NotreCouleur, 1);
-                        double fin = 360 - (tabAngle[i * 2 + 1] / 100.0) + Config.CurrentConfig.GetOffsetBalise(Carte, Plateau.NotreCouleur, 1);
-
-                        debut = debut + Position.Angle;
-                        fin = fin + Position.Angle;
-
-                        if (this == Plateau.Balise3)
+                        if (DetectionsRapides != null)
                         {
-                            debut = (debut + 180) % 360;
-                            fin = (fin + 180) % 360;
+                            // Vide les détections rapides datant de plus d'un tour
+                            for (int i = 0; i < DetectionsRapides.Count - nbDetectionsRapides; i++)
+                                DetectionsRapides.RemoveAt(0);
                         }
 
-                        DetectionsCapteur1.Add(new DetectionBalise(this, debut, fin));
-                    }
+                        nbDetectionsRapides = 0;
 
-                    // Réception des mesures du capteur 2
+                        // Réception d'une mesure sur un tour de rotation
+                        // Vérification checksum
+                        cptRotation++;
 
-                    int offSet = nbMesures1 * 4 + 6;
+                        // Calcul de la vitesse de rotation
+                        int nbTicks = trame[2] * 256 + trame[3];
+                        VitesseToursSecActuelle = 1 / (nbTicks * 0.0000064);
 
-                    DetectionsCapteur2.Clear();
+                        int nouvelleVitesse = 0;
+                        if (ReglageVitesse)
+                            nouvelleVitesse = AsservissementVitesse();
 
-                    // tableau pour trier les angles ( correction logiciel )
-                    tabAngle.Clear();
+                        // Réception des données angulaires
 
-                    verif = 0;
-                    for (int i = 0; i < nbMesures2 * 4; i += 2)
-                    {
-                        int valeur = trame[offSet + i] * 256 + trame[offSet + i + 1];
-                        tabAngle.Add(valeur);
-                        verif += valeur * (i / 2 + 1);
-                    }
+                        int nbMesures1 = trame[4];
+                        int nbMesures2 = trame[5];
 
-                    tabAngle.Sort();
-
-                    for (int i = 0; i < nbMesures2 * 2; i++)
-                    {
-                        verif -= tabAngle[i] * (i + 1);
-                    }
-
-                    if (verif != 0)
-                    {
-                        Console.WriteLine("Inversion détectée capteur 2");
-                    }
-
-                    for (int i = 0; i < nbMesures2; i++)
-                    {
-                        double debut = 360 - (tabAngle[i * 2] / 100.0) + Config.CurrentConfig.GetOffsetBalise(Carte, Plateau.NotreCouleur, 2);
-                        double fin = 360 - (tabAngle[i * 2 + 1] / 100.0) + Config.CurrentConfig.GetOffsetBalise(Carte, Plateau.NotreCouleur, 2);
-
-                        debut = debut + Position.Angle;
-                        fin = fin + Position.Angle;
-
-                        if (this == Plateau.Balise3)
+                        // Si on a un nombre impair de fronts on laisse tomber cette mesure, elle n'est pas bonne
+                        if (nbMesures1 % 2 != 0 || nbMesures2 % 2 != 0)
                         {
-                            debut = (debut + 180) % 360;
-                            fin = (fin + 180) % 360;
+                            Console.WriteLine("Erreur de détection (fronts impairs)");
+                            return;
                         }
 
-                        DetectionsCapteur2.Add(new DetectionBalise(this, debut, fin));
-                    }
+                        nbMesures1 = nbMesures1 / 2;
+                        nbMesures2 = nbMesures2 / 2;
 
-                    // Réglage de l'offset d'angle des capteurs
-                    if (ReglageOffset)
-                    {
-                        // Si on a une mesure incorrecte (une mesure correcte demande 2 détections sur chaque balise : un reflecteur au "centre" et un autre en bas de la piste)
-                        // Le réglage est annulé
-                        if (DetectionsCapteur1.Count == 2 && DetectionsCapteur2.Count == 2)
+                        // Vérification de la taille de la trame
+                        if (trame.Length != 6 + nbMesures1 * 4 + nbMesures2 * 4)
                         {
-                            // 3 cas où on passe d'abord par la balise en bas de la piste avant celle du milieu (sens de rotation anti-horaire)
-                            if (Carte == GoBot.Carte.RecBun && Plateau.NotreCouleur == Plateau.CouleurGaucheJaune ||
-                                Carte == GoBot.Carte.RecBeu && Plateau.NotreCouleur == Plateau.CouleurGaucheJaune ||
-                                Carte == GoBot.Carte.RecBoi && Plateau.NotreCouleur == Plateau.CouleurDroiteVert)
+                            Console.WriteLine("Erreur de taille de trame");
+                            return;
+                        }
+
+                        // Réception des mesures du capteur 1
+                        DetectionsCapteur1.Clear();
+                        List<int> tabAngle = new List<int>();
+
+                        long verif = 0;
+                        for (int i = 0; i < nbMesures1 * 4; i += 2)
+                        {
+                            int valeur = trame[6 + i] * 256 + trame[6 + i + 1];
+                            tabAngle.Add(valeur);
+                            verif += valeur * (i / 2 + 1);
+                        }
+
+                        tabAngle.Sort();
+
+                        for (int i = 0; i < nbMesures1 * 2; i++)
+                        {
+                            verif -= tabAngle[i] * (i + 1);
+                        }
+
+                        if (verif != 0)
+                        {
+                            Console.WriteLine("Inversion détectée capteur 1");
+                        }
+
+                        for (int i = 0; i < nbMesures1; i++)
+                        {
+                            double debut = 360 - (tabAngle[i * 2] / 100.0) + Config.CurrentConfig.GetOffsetBalise(Carte, Plateau.NotreCouleur, 1);
+                            double fin = 360 - (tabAngle[i * 2 + 1] / 100.0) + Config.CurrentConfig.GetOffsetBalise(Carte, Plateau.NotreCouleur, 1);
+
+                            debut = debut + Position.Angle;
+                            fin = fin + Position.Angle;
+
+                            if (this == Plateau.Balise3)
                             {
-                                DetectionsCapteur1.RemoveAt(0);
-                                DetectionsCapteur2.RemoveAt(0);
+                                debut = (debut + 180) % 360;
+                                fin = (fin + 180) % 360;
                             }
 
-                            if (ReglageOffset)
+
+                            DetectionBalise detect = new DetectionBalise(this, debut, fin);
+
+                            bool recalcul = false;
+                            if (detect.Distance > 600)
+                            {
+                                recalcul = true;
+                                detect.Distance = 600;
+                            }
+                            else if (detect.Distance < 300)
+                            {
+                                recalcul = true;
+                                detect.Distance = 300;
+                            }
+
+                            if (recalcul)
+                            {
+                                // Un peu de trigo pas bien compliquée
+                                double xPoint = Position.Coordonnees.X + Math.Cos(Maths.DegreeToRadian(detect.AngleCentral)) * detect.Distance;
+                                double yPoint = Position.Coordonnees.Y + Math.Sin(Maths.DegreeToRadian(detect.AngleCentral)) * detect.Distance;
+
+                                detect.Position = new PointReel(xPoint, yPoint);
+                            }
+
+                            DetectionsCapteur1.Add(detect);
+                        }
+
+                        // Réception des mesures du capteur 2
+
+                        int offSet = nbMesures1 * 4 + 6;
+
+                        DetectionsCapteur2.Clear();
+
+                        // tableau pour trier les angles ( correction logiciel )
+                        tabAngle.Clear();
+
+                        verif = 0;
+                        for (int i = 0; i < nbMesures2 * 4; i += 2)
+                        {
+                            int valeur = trame[offSet + i] * 256 + trame[offSet + i + 1];
+                            tabAngle.Add(valeur);
+                            verif += valeur * (i / 2 + 1);
+                        }
+
+                        tabAngle.Sort();
+
+                        for (int i = 0; i < nbMesures2 * 2; i++)
+                        {
+                            verif -= tabAngle[i] * (i + 1);
+                        }
+
+                        if (verif != 0)
+                        {
+                            Console.WriteLine("Inversion détectée capteur 2");
+                        }
+
+                        for (int i = 0; i < nbMesures2; i++)
+                        {
+                            double debut = 360 - (tabAngle[i * 2] / 100.0) + Config.CurrentConfig.GetOffsetBalise(Carte, Plateau.NotreCouleur, 2);
+                            double fin = 360 - (tabAngle[i * 2 + 1] / 100.0) + Config.CurrentConfig.GetOffsetBalise(Carte, Plateau.NotreCouleur, 2);
+
+                            debut = debut + Position.Angle;
+                            fin = fin + Position.Angle;
+
+                            if (this == Plateau.Balise3)
+                            {
+                                debut = (debut + 180) % 360;
+                                fin = (fin + 180) % 360;
+                            } 
+                            
+                            DetectionBalise detect = new DetectionBalise(this, debut, fin);
+
+                            bool recalcul = false;
+                            if (detect.Distance > 1250)
+                            {
+                                recalcul = true;
+                                detect.Distance = 1250;
+                            }
+                            else if (detect.Distance < 480)
+                            {
+                                recalcul = true;
+                                detect.Distance = 480;
+                            }
+
+                            if (recalcul)
+                            {
+                                // Un peu de trigo pas bien compliquée
+                                double xPoint = Position.Coordonnees.X + Math.Cos(Maths.DegreeToRadian(detect.AngleCentral)) * detect.Distance;
+                                double yPoint = Position.Coordonnees.Y + Math.Sin(Maths.DegreeToRadian(detect.AngleCentral)) * detect.Distance;
+
+                                detect.Position = new PointReel(xPoint, yPoint);
+                            }
+
+                            DetectionsCapteur2.Add(detect);
+                        }
+
+                        // Réglage de l'offset d'angle des capteurs
+                        if (ReglageOffset)
+                        {
+                            // Si on a une mesure incorrecte (une mesure correcte demande 2 détections sur chaque balise : un reflecteur au "centre" et un autre en bas de la piste)
+                            // Le réglage est annulé
+                            /*if (DetectionsCapteur1.Count == 2 && DetectionsCapteur2.Count == 2)
+                            {
+                                // 3 cas où on passe d'abord par la balise en bas de la piste avant celle du milieu (sens de rotation anti-horaire)
+                                if (Carte == GoBot.Carte.RecBun && Plateau.NotreCouleur == Plateau.CouleurGaucheJaune ||
+                                    Carte == GoBot.Carte.RecBeu && Plateau.NotreCouleur == Plateau.CouleurGaucheJaune ||
+                                    Carte == GoBot.Carte.RecBoi && Plateau.NotreCouleur == Plateau.CouleurDroiteVert)
+                                {
+                                    DetectionsCapteur1.RemoveAt(0);
+                                    DetectionsCapteur2.RemoveAt(0);
+                                }
+
+                                if (ReglageOffset)
+                                {
+                                    compteurReglageOffset--;
+                                    // On ajoute les angles mesurés à l'historique
+                                    anglesMesuresPourOffsetCapteur2.Add(DetectionsCapteur2[0].AngleCentral);
+                                    anglesMesuresPourOffsetCapteur1.Add(DetectionsCapteur1[0].AngleCentral);
+                                }
+                            }*/
+                            if (DetectionsCapteur1.Count == 1 && DetectionsCapteur2.Count == 1)
                             {
                                 compteurReglageOffset--;
                                 // On ajoute les angles mesurés à l'historique
                                 anglesMesuresPourOffsetCapteur2.Add(DetectionsCapteur2[0].AngleCentral);
                                 anglesMesuresPourOffsetCapteur1.Add(DetectionsCapteur1[0].AngleCentral);
                             }
-                        }
 
-                        if (ReglageOffset && compteurReglageOffset == 0)
-                        {
-                            // Compteur arrivé à la fin, on calcule l'offset
-                            double moyenne = 0;
-
-                            foreach (double dv in anglesMesuresPourOffsetCapteur1)
-                                moyenne += dv;
-
-                            moyenne /= anglesMesuresPourOffsetCapteur1.Count;
-
-                            // Calcul l'offset en fonction de ce qu'il est censé mesurer au centre
-                            moyenne = AngleCentral() - moyenne;
-
-                            // On le sauve dans la config (haut)
-                            Config.CurrentConfig.SetOffsetBalise(Carte, Plateau.NotreCouleur, 1, moyenne + Config.CurrentConfig.GetOffsetBalise(Carte, Plateau.NotreCouleur, 1));
-
-                            moyenne = 0;
-
-                            foreach (double dv in anglesMesuresPourOffsetCapteur2)
-                                moyenne += dv;
-
-                            moyenne /= anglesMesuresPourOffsetCapteur2.Count;
-                            moyenne = AngleCentral() - moyenne;
-
-                            // On le sauve dans la config (bas)
-                            Config.CurrentConfig.SetOffsetBalise(Carte, Plateau.NotreCouleur, 2, moyenne + Config.CurrentConfig.GetOffsetBalise(Carte, Plateau.NotreCouleur, 2));
-                            Config.Save();
-                            // Réglage terminé
-                            ReglageOffset = false;
-                            CalibrationAngulaireTerminee();
-                        }
-                    }
-
-                    Detections = new List<DetectionBalise>();
-                    foreach (DetectionBalise d2 in DetectionsCapteur1)
-                        Detections.Add(d2);
-
-                    foreach (DetectionBalise d1 in DetectionsCapteur2)
-                        Detections.Add(d1);
-
-                    // Retire les détections correspondant à la position de robots alliés
-                    if (!ReglageOffset && Plateau.ReflecteursNosRobots)
-                    {
-                        foreach (Robot robot in Robots.DicRobots.Values)
-                        {
-                            for (int i = 0; i < Detections.Count; i++)
+                            if (ReglageOffset && compteurReglageOffset == 0)
                             {
-                                DetectionBalise detection = Detections[i];
-                                // Calcul du 3ème point du triangle rectangle Balise / Gros robot
-                                Droite droiteBalise0Degres = new Droite(Position.Coordonnees, new PointReel(Position.Coordonnees.X + 500, Position.Coordonnees.Y));
-                                Droite perpendiculaire = droiteBalise0Degres.getPerpendiculaire(robot.Position.Coordonnees);
-                                PointReel troisiemePoint = perpendiculaire.getCroisement(droiteBalise0Degres);
-                                double distanceBaliseTroisiemePoint = troisiemePoint.Distance(Position.Coordonnees);
-                                double distanceBaliseRobot = robot.Position.Coordonnees.Distance(Position.Coordonnees);
+                                // Compteur arrivé à la fin, on calcule l'offset
+                                double moyenne = 0;
 
-                                double a = Math.Acos(distanceBaliseTroisiemePoint / distanceBaliseRobot);
-                                Angle angleGrosRobot = new Angle(a, AnglyeType.Radian);
-                                Angle angleDetection = new Angle(detection.AngleCentral);
+                                foreach (double dv in anglesMesuresPourOffsetCapteur1)
+                                    moyenne += dv;
 
-                                double marge = 4;
+                                moyenne /= anglesMesuresPourOffsetCapteur1.Count;
 
-                                if (Carte == GoBot.Carte.RecBeu && Plateau.NotreCouleur == Plateau.CouleurDroiteVert)
+                                // Calcul l'offset en fonction de ce qu'il est censé mesurer au centre
+                                moyenne = AngleCentral() - moyenne;
+
+                                // On le sauve dans la config (haut)
+                                Config.CurrentConfig.SetOffsetBalise(Carte, Plateau.NotreCouleur, 1, moyenne + Config.CurrentConfig.GetOffsetBalise(Carte, Plateau.NotreCouleur, 1));
+
+                                moyenne = 0;
+
+                                foreach (double dv in anglesMesuresPourOffsetCapteur2)
+                                    moyenne += dv;
+
+                                moyenne /= anglesMesuresPourOffsetCapteur2.Count;
+                                moyenne = AngleCentral() - moyenne;
+
+                                // On le sauve dans la config (bas)
+                                Config.CurrentConfig.SetOffsetBalise(Carte, Plateau.NotreCouleur, 2, moyenne + Config.CurrentConfig.GetOffsetBalise(Carte, Plateau.NotreCouleur, 2));
+                                Config.Save();
+                                // Réglage terminé
+                                ReglageOffset = false;
+                                CalibrationAngulaireTerminee();
+                            }
+                        }
+
+                        Detections = new List<DetectionBalise>();
+                        foreach (DetectionBalise d2 in DetectionsCapteur1)
+                            Detections.Add(d2);
+
+                        foreach (DetectionBalise d1 in DetectionsCapteur2)
+                            Detections.Add(d1);
+
+                        // Retire les détections correspondant à la position de robots alliés
+                        if (!ReglageOffset && Plateau.ReflecteursNosRobots)
+                        {
+                            foreach (Robot robot in Robots.DicRobots.Values)
+                            {
+                                for (int i = 0; i < Detections.Count; i++)
                                 {
-                                    Angle diff = new Angle(180) - (angleGrosRobot + angleDetection);
-                                    if (Math.Abs((diff).AngleDegres) < marge)
+                                    DetectionBalise detection = Detections[i];
+                                    // Calcul du 3ème point du triangle rectangle Balise / Gros robot
+                                    Droite droiteBalise0Degres = new Droite(Position.Coordonnees, new PointReel(Position.Coordonnees.X + 500, Position.Coordonnees.Y));
+                                    Droite perpendiculaire = droiteBalise0Degres.getPerpendiculaire(robot.Position.Coordonnees);
+                                    PointReel troisiemePoint = perpendiculaire.getCroisement(droiteBalise0Degres);
+                                    double distanceBaliseTroisiemePoint = troisiemePoint.Distance(Position.Coordonnees);
+                                    double distanceBaliseRobot = robot.Position.Coordonnees.Distance(Position.Coordonnees);
+
+                                    double a = Math.Acos(distanceBaliseTroisiemePoint / distanceBaliseRobot);
+                                    Angle angleGrosRobot = new Angle(a, AnglyeType.Radian);
+                                    Angle angleDetection = new Angle(detection.AngleCentral);
+
+                                    double marge = 4;
+
+                                    if (Carte == GoBot.Carte.RecBeu && Plateau.NotreCouleur == Plateau.CouleurDroiteVert)
                                     {
-                                        // Robot repéré sur balise bun
-                                        Detections.RemoveAt(i);
-                                        i--;
+                                        Angle diff = new Angle(180) - (angleGrosRobot + angleDetection);
+                                        if (Math.Abs((diff).AngleDegres) < marge)
+                                        {
+                                            // Robot repéré sur balise bun
+                                            Detections.RemoveAt(i);
+                                            i--;
+                                        }
                                     }
-                                }
-                                else if (Carte == GoBot.Carte.RecBoi && Plateau.NotreCouleur == Plateau.CouleurDroiteVert)
-                                {
-                                    Angle diff = angleGrosRobot - angleDetection;
-                                    if (Math.Abs((diff).AngleDegres) < marge)
+                                    else if (Carte == GoBot.Carte.RecBoi && Plateau.NotreCouleur == Plateau.CouleurDroiteVert)
                                     {
-                                        // Robot repéré sur balise boi
-                                        Detections.RemoveAt(i);
-                                        i--;
+                                        Angle diff = angleGrosRobot - angleDetection;
+                                        if (Math.Abs((diff).AngleDegres) < marge)
+                                        {
+                                            // Robot repéré sur balise boi
+                                            Detections.RemoveAt(i);
+                                            i--;
+                                        }
                                     }
-                                }
-                                else if (Carte == GoBot.Carte.RecBun && Plateau.NotreCouleur == Plateau.CouleurDroiteVert)
-                                {
-                                    Angle diff = new Angle(180) - (angleDetection - angleGrosRobot);
-                                    if (Math.Abs((diff).AngleDegres) < marge)
+                                    else if (Carte == GoBot.Carte.RecBun && Plateau.NotreCouleur == Plateau.CouleurDroiteVert)
                                     {
-                                        // Robot repéré sur balise beu
-                                        Detections.RemoveAt(i);
-                                        i--;
+                                        Angle diff = new Angle(180) - (angleDetection - angleGrosRobot);
+                                        if (Math.Abs((diff).AngleDegres) < marge)
+                                        {
+                                            // Robot repéré sur balise beu
+                                            Detections.RemoveAt(i);
+                                            i--;
+                                        }
                                     }
-                                }
-                                else if (Carte == GoBot.Carte.RecBeu && Plateau.NotreCouleur == Plateau.CouleurGaucheJaune)
-                                {
-                                    Angle diff = angleDetection + angleGrosRobot;
-                                    if (Math.Abs((diff).AngleDegres) < marge)
+                                    else if (Carte == GoBot.Carte.RecBeu && Plateau.NotreCouleur == Plateau.CouleurGaucheJaune)
                                     {
-                                        // Robot repéré sur balise beu
-                                        Detections.RemoveAt(i);
-                                        i--;
+                                        Angle diff = angleDetection + angleGrosRobot;
+                                        if (Math.Abs((diff).AngleDegres) < marge)
+                                        {
+                                            // Robot repéré sur balise beu
+                                            Detections.RemoveAt(i);
+                                            i--;
+                                        }
                                     }
-                                }
-                                else if (Carte == GoBot.Carte.RecBoi && Plateau.NotreCouleur == Plateau.CouleurGaucheJaune)
-                                {
-                                    Angle diff = new Angle(180) + angleGrosRobot - angleDetection;
-                                    if (Math.Abs((diff).AngleDegres) < marge)
+                                    else if (Carte == GoBot.Carte.RecBoi && Plateau.NotreCouleur == Plateau.CouleurGaucheJaune)
                                     {
-                                        // Robot repéré sur balise boi
-                                        Detections.RemoveAt(i);
-                                        i--;
+                                        Angle diff = new Angle(180) + angleGrosRobot - angleDetection;
+                                        if (Math.Abs((diff).AngleDegres) < marge)
+                                        {
+                                            // Robot repéré sur balise boi
+                                            Detections.RemoveAt(i);
+                                            i--;
+                                        }
                                     }
-                                }
-                                else if (Carte == GoBot.Carte.RecBun && Plateau.NotreCouleur == Plateau.CouleurGaucheJaune)
-                                {
-                                    Angle diff = angleGrosRobot - angleDetection;
-                                    if (Math.Abs((diff).AngleDegres) < marge)
+                                    else if (Carte == GoBot.Carte.RecBun && Plateau.NotreCouleur == Plateau.CouleurGaucheJaune)
                                     {
-                                        // Robot repéré sur balise bun
-                                        Detections.RemoveAt(i);
-                                        i--;
+                                        Angle diff = angleGrosRobot - angleDetection;
+                                        if (Math.Abs((diff).AngleDegres) < marge)
+                                        {
+                                            // Robot repéré sur balise bun
+                                            Detections.RemoveAt(i);
+                                            i--;
+                                        }
                                     }
                                 }
                             }
                         }
+
+                        if (semReceptionBalise != null)
+                            semReceptionBalise.Release();
+
+                        // Génération de l'event de notification de détection
+                        PositionsChange();
                     }
-
-                    if (semReceptionBalise != null)
-                        semReceptionBalise.Release();
-
-                    // Génération de l'event de notification de détection
-                    PositionsChange();
                 }
                 else if (trame[1] == (byte)FonctionBalise.RetourTestConnexion)
                 {
@@ -669,7 +771,7 @@ namespace GoBot.Balises
                         }
                         dateBeep = DateTime.Now;
                     }
-                    
+
                 }
             }
             catch (Exception)

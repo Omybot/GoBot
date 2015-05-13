@@ -25,7 +25,9 @@ namespace GoBot.IHM
             if (!Config.DesignMode)
             {
                 numAccelerationLigneLent.Value = Config.CurrentConfig.GRAccelerationLigneLent;
+                numAccelerationFinLigneLent.Value = Config.CurrentConfig.GRAccelerationFinLigneLent;
                 numAccelerationLigneRapide.Value = Config.CurrentConfig.GRAccelerationLigneRapide;
+                numAccelerationFinLigneRapide.Value = Config.CurrentConfig.GRAccelerationFinLigneRapide;
                 numAccelerationPivotLent.Value = Config.CurrentConfig.GRAccelerationPivotLent;
                 numAccelerationPivotRapide.Value = Config.CurrentConfig.GRAccelerationPivotRapide;
 
@@ -64,7 +66,9 @@ namespace GoBot.IHM
                 return;
 
             Config.CurrentConfig.GRAccelerationLigneLent = (int)numAccelerationLigneLent.Value;
+            Config.CurrentConfig.GRAccelerationFinLigneLent = (int)numAccelerationFinLigneLent.Value;
             Config.CurrentConfig.GRAccelerationLigneRapide = (int)numAccelerationLigneRapide.Value;
+            Config.CurrentConfig.GRAccelerationFinLigneRapide = (int)numAccelerationFinLigneRapide.Value;
             Config.CurrentConfig.GRAccelerationPivotLent = (int)numAccelerationPivotLent.Value;
             Config.CurrentConfig.GRAccelerationPivotRapide = (int)numAccelerationPivotRapide.Value;
 
