@@ -16,7 +16,7 @@ namespace GoBot.Actions
             sens = s;
         }
 
-        String IAction.ToString()
+        public override String ToString()
         {
             return robot.Nom + " recallage " + sens.ToString().ToLower();
         }

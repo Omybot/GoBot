@@ -24,22 +24,12 @@ namespace GoBot.Enchainements
                 PointReel destination = new PointReel(((Node)Robots.GrosRobot.Graph.Nodes[next]).X, ((Node)Robots.GrosRobot.Graph.Nodes[next]).Y);
 
                 Robots.GrosRobot.Historique.Log("Nouvelle destination " + destination.X + ":" + destination.Y);
-                Robots.GrosRobot.PathFinding(destination.X, destination.Y, null, 0, true);
+                Robots.GrosRobot.PathFinding(destination.X, destination.Y, rand.Next(360), 0, true);
             }
         }
 
         protected override void ThreadPetit()
         {
-            while (true)
-            {
-                int next = rand.Next(Robots.PetitRobot.Graph.Nodes.Count);
-                if (!((Node)Robots.PetitRobot.Graph.Nodes[next]).Passable)
-                    continue;
-
-                PointReel destination = new PointReel(((Node)Robots.PetitRobot.Graph.Nodes[next]).X, ((Node)Robots.PetitRobot.Graph.Nodes[next]).Y);
-
-                Robots.PetitRobot.PathFinding(destination.X, destination.Y, null, 0, true);
-            }
         }
     }
 }

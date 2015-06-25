@@ -6,6 +6,7 @@ using GoBot.Calculs;
 using GoBot.Actionneurs;
 using GoBot.Calculs.Formes;
 using System.Threading;
+using GoBot.PathFinding;
 
 namespace GoBot.Mouvements
 {
@@ -20,17 +21,17 @@ namespace GoBot.Mouvements
             Robot = Robots.GrosRobot;
 
             if(i == 0)
-                Positions.Add(new Position(0, new PointReel(243, 1699)));
+                Positions.Add(new Position(0, new PointReel(747 - 300 - 230, 1757)));
             else if (i == 1)
-                Positions.Add(new Position(0, new PointReel(543, 1699)));
+                Positions.Add(new Position(0, new PointReel(747-230, 1757)));
             else if (i == 2)
-                Positions.Add(new Position(0, new PointReel(843, 1699)));
+                Positions.Add(new Position(0, new PointReel(747 + 300 - 230, 1757)));
             else if (i == 3)
-                Positions.Add(new Position(0, new PointReel(2070, 1699)));
+                Positions.Add(new Position(-90, new PointReel(2700-600, 1790)));
             else if (i == 4)
-                Positions.Add(new Position(0, new PointReel(2370, 1699)));
+                Positions.Add(new Position(-90, new PointReel(2700 - 300, 1790)));
             else if (i == 5)
-                Positions.Add(new Position(0, new PointReel(2670, 1699)));
+                Positions.Add(new Position(-90, new PointReel(2700, 1790)));
 
             if (numeroClap % 2 == 0)
                 Couleur = Plateau.CouleurGaucheJaune;
@@ -40,46 +41,39 @@ namespace GoBot.Mouvements
 
         public override bool Executer(int timeOut = 0)
         {
-            Robots.GrosRobot.Historique.Log("Début pied " + numeroClap);
+            Robots.GrosRobot.Historique.Log("Début clap " + numeroClap);
 
             DateTime debut = DateTime.Now;
 
             Position position = PositionProche;
 
-            if (position != null && Robots.GrosRobot.GotoXYTeta(position.Coordonnees.X, position.Coordonnees.Y, position.Angle.AngleDegres))
+            if (position != null && Robot.GotoXYTeta(position.Coordonnees.X, position.Coordonnees.Y, position.Angle))
             {
-                if (numeroClap < 3)
-                {
-                    Config.CurrentConfig.ServoAspirateurCoude.Positionner(Config.CurrentConfig.ServoAspirateurCoude.PositionAspiration);
-                    Thread.Sleep(200);
-                    Config.CurrentConfig.ServoAspirateurEpaule.Positionner(Config.CurrentConfig.ServoAspirateurEpaule.PositionAspiration);
-                    Thread.Sleep(100);
-                    Config.CurrentConfig.ServoAspirateurEpaule.Positionner(Config.CurrentConfig.ServoAspirateurEpaule.PositionRange);
-                    Thread.Sleep(100);
-                    Config.CurrentConfig.ServoAspirateurCoude.Positionner(Config.CurrentConfig.ServoAspirateurCoude.PositionRange);
-                }
-                else
-                {
-                    Config.CurrentConfig.ServoAspirateurEpaule.Positionner(509);
-                    Thread.Sleep(200);
-                    Config.CurrentConfig.ServoAspirateurCoude.Positionner(623);
-                    Thread.Sleep(200);
-                    Config.CurrentConfig.ServoAspirateurEpaule.Positionner(250);
-                    Thread.Sleep(200);
-                    Config.CurrentConfig.ServoAspirateurEpaule.Positionner(509);
-                    Thread.Sleep(200);
-                    Config.CurrentConfig.ServoAspirateurCoude.Positionner(Config.CurrentConfig.ServoAspirateurCoude.PositionRange);
-                    Thread.Sleep(200);
-                    Config.CurrentConfig.ServoAspirateurEpaule.Positionner(Config.CurrentConfig.ServoAspirateurEpaule.PositionRange);
-                }
+                    if (numeroClap < 3)
+                    {
+                        Config.CurrentConfig.ServoAspirateurEpaule.Positionner(Config.CurrentConfig.ServoAspirateurEpaule.PositionDepose);
+                        Robots.GrosRobot.Lent();
+                        Robots.GrosRobot.Avancer(120);
+                        Robots.GrosRobot.Rapide();
+                        Config.CurrentConfig.ServoAspirateurEpaule.Positionner(Config.CurrentConfig.ServoAspirateurEpaule.PositionRange);
+                    }
+                    else
+                    {
+                        Config.CurrentConfig.ServoAspirateurEpaule.Positionner(Config.CurrentConfig.ServoAspirateurEpaule.PositionDepose);
+                        //Thread.Sleep(200);
+                        Robots.GrosRobot.Lent();
+                        Robots.GrosRobot.PivotDroite(35 + 50);
+                        Robots.GrosRobot.Rapide();
+                        Config.CurrentConfig.ServoAspirateurEpaule.Positionner(Config.CurrentConfig.ServoAspirateurEpaule.PositionRange);
+                    }
 
-                Actionneur.BrasAspirateur.PositionRange();
-                Robots.GrosRobot.Historique.Log("Fin clap " + numeroClap + " en " + (DateTime.Now - debut).TotalSeconds.ToString("#.#") + "s");
-                Plateau.Claps[numeroClap].Active = true;
+                    Actionneur.BrasAspirateur.PositionRange();
+                    Robots.GrosRobot.Historique.Log("Fin clap " + numeroClap + " en " + (DateTime.Now - debut).TotalSeconds.ToString("#.#") + "s");
+                    Plateau.Claps[numeroClap].Active = true;
             }
             else
             {
-                Robots.GrosRobot.Historique.Log("Annulation clap " + numeroClap);
+                Robot.Historique.Log("Annulation clap " + numeroClap);
                 return false;
             }
             return true;
@@ -103,7 +97,7 @@ namespace GoBot.Mouvements
 
                 // Claps coté adverse
                 if (numeroClap == 1 || numeroClap == 4)
-                    return 1;
+                    return 0.1;
 
                 return 5; 
             }
@@ -112,6 +106,11 @@ namespace GoBot.Mouvements
         public override double ScorePondere
         {
             get { return Score; }
+        }
+
+        public override string ToString()
+        {
+            return "Clap " + numeroClap;
         }
     }
 }

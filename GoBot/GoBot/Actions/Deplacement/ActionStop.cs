@@ -16,7 +16,7 @@ namespace GoBot.Actions
             mode = m;
         }
 
-        String IAction.ToString()
+        public override string ToString()
         {
             return robot.Nom + " stop " + mode;
         }

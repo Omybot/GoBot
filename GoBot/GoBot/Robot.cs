@@ -9,6 +9,7 @@ using GoBot.Calculs.Formes;
 using System.Drawing;
 using GoBot.Actions;
 using GoBot.Actionneurs;
+using GoBot.PathFinding;
 
 namespace GoBot
 {
@@ -20,16 +21,21 @@ namespace GoBot
         public Historique Historique { get; protected set; }
         public bool DeplacementLigne { get; protected set; }
         public Graph Graph { get; set; }
-        public bool FailTrajectoire { get; set; }
+        public bool TrajectoireEchouee { get; set; }
+
+        private bool TrajectoireCoupee { get; set; }
 
         public abstract Position Position { get; set; }
         public PointReel PositionCible { get; set; }
 
+        public bool VitesseAdaptableEnnemi { get; set; }
         public abstract int VitesseDeplacement { get; set; }
         public abstract int AccelerationDebutDeplacement { get; set; }
         public abstract int AccelerationFinDeplacement { get; set; }
         public abstract int VitessePivot { get; set; }
         public abstract int AccelerationPivot { get; set; }
+        public int DistanceParcourue { get; set; }
+        public double AngleParcouru { get; set; }
 
         public int Taille { get { return Math.Max(Longueur, Largeur); } }
         public int Longueur { get; set; }
@@ -40,6 +46,7 @@ namespace GoBot
 
         public List<byte> ServomoteursConnectes { get; protected set; }
 
+
         public String Nom { get; set; }
 
         // Pathfinding
@@ -48,13 +55,11 @@ namespace GoBot
 
         public Semaphore semHistoriquePosition;
 
-        public bool AspirationAutomatique { get; set; }
-        public List<Arc> CheminTrouve { get; set; }
-        public List<Node> NodeTrouve { get; set; }
-        public Arc CheminTest { get; set; }
+        public Trajectoire TrajectoireEnCours = null;
+
+        /*public Arc CheminTest { get; set; }
         public IForme ObstacleTeste { get; set; }
-        public IForme ObstacleProbleme { get; set; }
-        private bool nouvelleTrajectoire = false;
+        public IForme ObstacleProbleme { get; set; }*/
         public abstract void Avancer(int distance, bool attendre = true);
         public abstract void Reculer(int distance, bool attendre = true);
         public abstract void PivotGauche(double angle, bool attendre = true);
@@ -213,21 +218,9 @@ namespace GoBot
             }
         }
 
-        /// <summary>
-        /// Liste des noeuds du chemin en cours de parcours
-        /// </summary>
-        public List<Node> CheminEnCoursNoeuds { get; set; }
-
-        /// <summary>
-        /// Liste des arcs du chemin en cours de parcours
-        /// </summary>
-        public List<Arc> CheminEnCoursArcs { get; set; }
-
         public Robot()
         {
-            CheminTrouve = new List<Arc>();
-            CheminEnCoursArcs = new List<Arc>();
-            NodeTrouve = new List<Node>();
+            VitesseAdaptableEnnemi = true;
             ServoActive = new Dictionary<ServomoteurID, bool>();
             foreach (ServomoteurID servo in Enum.GetValues(typeof(ServomoteurID)))
                 ServoActive.Add(servo, false);
@@ -238,8 +231,8 @@ namespace GoBot
             SemGraph = new Semaphore(1, 1);
 
             TensionPack1 = TensionPack2 = 0;
-            FailTrajectoire = false;
-            AspirationAutomatique = false;
+            TrajectoireEchouee = false;
+            TrajectoireCoupee = false;
 
             semHistoriquePosition = new Semaphore(1, int.MaxValue);
         }
@@ -261,6 +254,8 @@ namespace GoBot
                 VitessePivot = Config.CurrentConfig.PRVitessePivotLent;
                 AccelerationPivot = Config.CurrentConfig.PRAccelerationLigneLent;
             }
+
+            VitesseAdaptableEnnemi = false;
         }
 
         public void Rapide()
@@ -280,6 +275,8 @@ namespace GoBot
                 VitessePivot = Config.CurrentConfig.PRVitessePivotRapide;
                 AccelerationPivot = Config.CurrentConfig.PRAccelerationPivotRapide;
             }
+
+            VitesseAdaptableEnnemi = true;
         }
 
         public bool GotoXYTeta(double x, double y, Angle teta)
@@ -290,417 +287,23 @@ namespace GoBot
         public bool PathFinding(double x, double y, Angle teta = null, int timeOut = 0, bool attendre = false)
         {
             Historique.Log("Lancement pathfinding pour aller en " + x + " : " + y, TypeLog.PathFinding);
-            PointReel destination = new PointReel(x, y);
+            Position destination = new Position(teta, new PointReel(x, y));
 
-            if (destination.Distance(Position.Coordonnees) <= 10)
-            {
-                PositionerAngle(teta, 0.5);
-                return true;
-            }
+            Trajectoire traj = PathFinder.ChercheTrajectoire(Graph, Plateau.ListeObstacles, Position, destination, Rayon, 130);
+            Console.WriteLine(Plateau.ListeObstacles.Count + " obstacles");
+            if (traj == null)
+                return false;
 
             semTrajectoire = new Semaphore(0, int.MaxValue);
 
-            succesPathFinding = false;
-
-            ParcoursPathFinding(x, y, teta, timeOut, attendre);
+            threadTrajectoire = new Thread(ParcourirTrajectoire);
+            threadTrajectoire.Start(traj);
 
             if (attendre)
                 semTrajectoire.WaitOne();
 
-            return succesPathFinding;
+            return !TrajectoireCoupee && !TrajectoireEchouee;
         }
-
-        Angle angleFinal = null;
-        double distanceRestanteApresPF = 0;
-
-        private bool succesPathFinding;
-        protected void ParcoursPathFinding(double x, double y, Angle teta, int timeOut = 0, bool attendre = false)
-        {
-            MajGraphFranchissable();
-
-            angleFinal = teta;
-            CheminEnCoursNoeuds = new List<Node>();
-            CheminEnCoursArcs = new List<Arc>();
-
-            double distance;
-
-            SemGraph.WaitOne();
-
-            int nbPointsDepart = 0;
-            int nbPointsArrivee = 0;
-
-            List<IForme> obstacles = CalculerObstacles();
-            Node debutNode;
-            Node nodeProche = Graph.ClosestNode(Position.Coordonnees.X, Position.Coordonnees.Y, 0, out distance, false);
-            if (distance != 0)
-            {
-                debutNode = new Node(Position.Coordonnees.X, Position.Coordonnees.Y, 0);
-                nbPointsDepart = AddNode(Graph, debutNode, 600);
-            }
-            else
-                debutNode = nodeProche;
-
-            if (nbPointsDepart == 0)
-            {
-                // On ne peut pas partir de là où on est
-                DateTime debut = DateTime.Now;
-
-                Position positionActuelle = new Position(new Angle(Position.Angle), new PointReel(Position.Coordonnees.X, Position.Coordonnees.Y));
-                bool franchissable = true;
-
-                // Boucle jusqu'à trouver un point qui se connecte au graph jusqu'à 1m devant
-                int i;
-                for(i = 0; i < 100 && nbPointsDepart == 0; i += 1)
-                {
-                    positionActuelle.Avancer(10);
-                    nbPointsDepart = AddNode(Graph, new Node(positionActuelle.Coordonnees.X, positionActuelle.Coordonnees.Y, 0), 600);
-                    CleanNodesArcsAdd();
-                }
-
-                // Le point à i*10 mm devant nous est reliable au graph, on cherche à l'atteindre
-                if (nbPointsDepart > 0)
-                {
-                    Segment segmentTest = new Segment(new PointReel(positionActuelle.Coordonnees.X, positionActuelle.Coordonnees.Y), new PointReel(Position.Coordonnees.X, Position.Coordonnees.Y));
-
-                    // Test des obstacles
-                    foreach (IForme obstacle in obstacles)
-                    {
-                        if (obstacle.Distance(segmentTest) < Longueur / 2)
-                        {
-                            franchissable = false;
-
-                            // Si l'obstacle génant est un adversaire, on diminue petit à petit son rayon pour pouvoir s'échapper au bout d'un moment
-                            if (Plateau.ObstaclesTemporaires.Contains(obstacle) && Plateau.RayonAdversaire > 50)
-                            {
-                                Historique.Log("Adversaire au contact, impossible de s'enfuir, réduction du périmètre adverse", TypeLog.PathFinding);
-                                Plateau.RayonAdversaire -= 10;
-                            }
-                        }
-                    }
-
-                    // Si le semgent entre notre position et le graph relié au graph est parcourable on y va !
-                    if (franchissable)
-                    {
-                        if (i > 0)
-                            Avancer(i * 10);
-                        else
-                            Reculer(-i * 10);
-                        debutNode = new Node(positionActuelle.Coordonnees.X, positionActuelle.Coordonnees.Y, 0);
-                        nbPointsDepart = AddNode(Graph, debutNode, 600);
-                    }
-                }
-                else
-                    franchissable = false;
-
-                // Si toujours pas, on teste en marche arrière
-                if(!franchissable)
-                {
-                    franchissable = true;
-                    nbPointsDepart = 0;
-                    positionActuelle = new Position(new Angle(Position.Angle), new PointReel(Position.Coordonnees.X, Position.Coordonnees.Y));
-                    for (i = 0; i > - 100 && nbPointsDepart == 0; i--)
-                    {
-                        positionActuelle.Avancer(-10);
-                        nbPointsDepart = AddNode(Graph, new Node(positionActuelle.Coordonnees.X, positionActuelle.Coordonnees.Y, 0), 600);
-                        CleanNodesArcsAdd();
-                    }
-
-                    // Le point à i*10 mm derrière nous est reliable au graph, on cherche à l'atteindre
-                    if (nbPointsDepart > 0)
-                    {
-                        Segment segmentTest = new Segment(new PointReel(positionActuelle.Coordonnees.X, positionActuelle.Coordonnees.Y), new PointReel(Position.Coordonnees.X, Position.Coordonnees.Y));
-
-                        // Test des obstacles
-                        foreach (IForme obstacle in obstacles)
-                        {
-                            if (obstacle.Distance(segmentTest) < Longueur / 2)
-                            {
-                                franchissable = false;
-
-                                // Si l'obstacle génant est un adversaire, on diminue petit à petit son rayon pour pouvoir s'échapper au bout d'un moment
-                                if (Plateau.ObstaclesTemporaires.Contains(obstacle) && Plateau.RayonAdversaire > 50)
-                                {
-                                    Historique.Log("Adversaire au contact, impossible de s'enfuir, réduction du périmètre adverse", TypeLog.PathFinding);
-                                    Plateau.RayonAdversaire -= 10;
-                                }
-                            }
-                        }
-
-                        // Si le semgent entre notre position et le graph relié au graph est parcourable on y va !
-                        if (franchissable)
-                        {
-                            if(i > 0)
-                                Avancer(i * 10);
-                            else
-                                Reculer(-i * 10);
-
-                            debutNode = new Node(positionActuelle.Coordonnees.X, positionActuelle.Coordonnees.Y, 0);
-                            nbPointsDepart = AddNode(Graph, debutNode, 600);
-                        }
-                    }
-                }
-            }
-
-
-            Node finNode = Graph.ClosestNode(x, y, 0, out distance, false);
-            if (distance != 0)
-            {
-                finNode = new Node(x, y, 0);
-                nbPointsArrivee = AddNode(Graph, finNode, 600);
-            }
-            if (nbPointsArrivee == 0 && teta != null)
-            {
-                DateTime debut = DateTime.Now;
-
-                Console.WriteLine("Blocage arrivée : " + (DateTime.Now - debut).TotalMilliseconds + "ms");
-                // On ne peut pas arriver là où on souhaite aller
-                // On teste si on peut faire une approche en ligne 
-                // teta ne doit pas être nul sinon c'est qu'on ne maitrise pas l'angle d'arrivée et on ne connait pas l'angle d'approche
-
-                Position positionActuelle = new Position(teta, new PointReel(x, y));
-                bool franchissable = true;
-
-                // Boucle jusqu'à trouver un point qui se connecte au graph jusqu'à 1m devant
-                int i;
-                for (i = 0; i < 100 && nbPointsArrivee == 0; i++)
-                {
-                    debut = DateTime.Now;
-                    positionActuelle.Avancer(10);
-                    nbPointsArrivee = AddNode(Graph, new Node(positionActuelle.Coordonnees.X, positionActuelle.Coordonnees.Y, 0), 600);
-                    CleanNodesArcsAdd();
-
-                }
-
-                // Le point à i*10 mm devant nous est reliable au graph, on cherche à l'atteindre
-                if (nbPointsArrivee > 0)
-                {
-                    Segment segmentTest = new Segment(new PointReel(positionActuelle.Coordonnees.X, positionActuelle.Coordonnees.Y), new PointReel(x, y));
-
-                    // Test des obstacles
-                    foreach (IForme obstacle in obstacles)
-                    {
-                        if (obstacle.Distance(segmentTest) < Longueur / 2)
-                            franchissable = false;
-                    }
-
-                    // Si le semgent entre notre position et le graph relié au graph est parcourable on y va !
-                    /*if (franchissable)
-                    {
-                        finNode = new Node(positionActuelle.Coordonnees.X, positionActuelle.Coordonnees.Y, 0);
-                    }*/
-                }
-                else
-                    franchissable = false;
-
-                // Si toujours pas, on teste en marche arrière
-                if (!franchissable)
-                {
-                    positionActuelle = new Position(new Angle(teta), new PointReel(x, y));
-                    nbPointsArrivee = 0;
-
-                    for (i = 0; i > -100 && nbPointsArrivee == 0; i--)
-                    {
-                        positionActuelle.Avancer(-10);
-                        nbPointsArrivee = AddNode(Graph, new Node(positionActuelle.Coordonnees.X, positionActuelle.Coordonnees.Y, 0), 600);
-                        CleanNodesArcsAdd();
-                    }
-
-                    if (nbPointsArrivee > 0)
-                    {
-                        franchissable = true;
-                        Segment segmentTest = new Segment(new PointReel(positionActuelle.Coordonnees.X, positionActuelle.Coordonnees.Y), new PointReel(x, y));
-
-                        // Test des obstacles
-                        foreach (IForme obstacle in obstacles)
-                        {
-                            if (obstacle.Distance(segmentTest) < Longueur / 2)
-                                franchissable = false;
-                        }
-                    }
-                }
-
-                // Si le semgent entre notre position et le graph relié au graph est parcourable on y va !
-                if (franchissable)
-                {
-                    distanceRestanteApresPF = -i * 10;
-                    angleFinal = new Angle(teta);
-
-                    finNode = new Node(positionActuelle.Coordonnees.X, positionActuelle.Coordonnees.Y, 0);
-                    nbPointsArrivee = AddNode(Graph, finNode, 600);
-                    debutNode = new Node(Position.Coordonnees.X, Position.Coordonnees.Y, 0);
-                    nbPointsDepart = AddNode(Graph, debutNode, 600);
-                }
-            }
-
-            // Teste s'il est possible d'aller directement à la fin sans passer par le graph
-            bool toutDroit = true;
-            Segment segment = new Segment(new PointReel(debutNode.X, debutNode.Y), new PointReel(finNode.X, finNode.Y));
-
-            foreach (IForme forme in obstacles)
-            {
-                if (TropProche(segment, forme))
-                {
-                    toutDroit = false;
-                    break;
-                }
-            }
-
-            if (toutDroit)
-            {
-                Historique.Log("Chemin trouvé : ligne droite", TypeLog.PathFinding);
-
-                CheminEnCoursNoeuds.Add(debutNode);
-                CheminEnCoursNoeuds.Add(finNode);
-
-                Arc arcToutDroit = new Arc(debutNode, finNode);
-                arcToutDroit.Weight = 99999999;
-                CheminEnCoursArcs.Add(arcToutDroit);
-            }
-
-            // Sinon on passe par le graph
-            else
-            {
-                AStar aStar = new AStar(Graph);
-                aStar.DijkstraHeuristicBalance = 1;
-
-                if (aStar.SearchPath(debutNode, finNode))
-                {
-                    List<Node> nodes = aStar.PathByNodes.ToList<Node>();
-                    List<Arc> arcs = aStar.PathByArcs.ToList<Arc>();
-
-                    Historique.Log("Chemin trouvé : " + (nodes.Count - 2) + " noeud(s) intermédiaire(s)", TypeLog.PathFinding);
-
-                    CheminEnCoursNoeuds = new List<Node>();
-                    CheminEnCoursArcs = new List<Arc>();
-
-                    CheminTrouve = new List<Arc>(arcs);
-                    NodeTrouve = new List<Node>(nodes);
-
-                    // Simplification du chemin
-                    // On part du début et on essaie d'aller au point du plus éloigné au moins éloigné en testant si le passage est possible
-                    // Si c'est possible on zappe tous les points entre les deux
-                    for (int iNodeDepart = 0; iNodeDepart < nodes.Count - 1; iNodeDepart++)
-                    {
-                        CheminEnCoursNoeuds.Add(nodes[iNodeDepart]);
-
-                        bool raccourciPossible = true;
-                        for (int iNodeArrivee = nodes.Count - 1; iNodeArrivee > iNodeDepart; iNodeArrivee--)
-                        {
-                            raccourciPossible = true;
-
-                            Segment racourci = new Segment(new PointReel(nodes[iNodeDepart].X, nodes[iNodeDepart].Y), new PointReel(nodes[iNodeArrivee].X, nodes[iNodeArrivee].Y));
-                            Arc arcRacourci = new Arc(nodes[iNodeDepart], nodes[iNodeArrivee]);
-                            CheminTest = arcRacourci;
-                            arcRacourci.Passable = false;
-
-                            List<IForme> obstaclesPlateau = CalculerObstacles();
-
-                            for (int i = obstaclesPlateau.Count - 1; i >= 4; i--)
-                            {
-                                IForme forme = obstaclesPlateau[i];
-                                ObstacleTeste = forme;
-                                ObstacleProbleme = null;
-
-                                if (TropProche(racourci, forme))
-                                {
-                                    ObstacleProbleme = forme;
-                                    if(Config.CurrentConfig.AfficheDetailTraj > 0)
-                                        Thread.Sleep(Config.CurrentConfig.AfficheDetailTraj);
-                                    raccourciPossible = false;
-                                    break;
-                                }
-                                //else if(Config.CurrentConfig.AfficheDetailTraj > 0)
-                                //    Thread.Sleep(Config.CurrentConfig.AfficheDetailTraj);
-                            }
-                            if(Config.CurrentConfig.AfficheDetailTraj > 0)
-                                Thread.Sleep(Config.CurrentConfig.AfficheDetailTraj);
-                            ObstacleTeste = null;
-                            if (raccourciPossible)
-                            {
-                                CheminEnCoursArcs.Add(arcRacourci);
-                                iNodeDepart = iNodeArrivee - 1;
-                                break;
-                            }
-                        }
-                        CheminTest = null;
-                        if (!raccourciPossible)
-                        {
-                            Arc arc = new Arc(nodes[iNodeDepart], nodes[iNodeDepart + 1]);
-                            CheminEnCoursArcs.Add(arc);
-                        }
-                    }
-
-                    CheminEnCoursNoeuds.Add(nodes[nodes.Count - 1]);
-                    Historique.Log("Chemin optimisé : " + (CheminEnCoursNoeuds.Count - 2) + " noeud(s) intermédiaire(s)", TypeLog.PathFinding);
-                }
-                else
-                {
-                    CheminEnCoursNoeuds.Clear();
-                    CheminEnCoursArcs.Clear();
-                }
-            }
-
-            ObstacleProbleme = null;
-            ObstacleTeste = null;
-            NodeTrouve = new List<Node>();
-            CheminTrouve = new List<Arc>();
-
-            CleanNodesArcsAdd();
-
-            if (this == Robots.GrosRobot)
-                Plateau.ChargerGraphGros();
-            if (this == Robots.PetitRobot)
-                Plateau.ChargerGraphPetit();
-
-            SemGraph.Release();
-            MajGraphFranchissable();
-
-            PositionCible = new PointReel(x, y);
-            AutreRobot.MajGraphFranchissable();
-
-            /*List<IForme> obstacles = new List<IForme>(Plateau.ObstaclesTemporaires);
-            Plateau.ObstaclesTemporaires = new List<IForme>();
-            foreach (IForme f in obstacles)
-                Plateau.AjouterObstacle(f);*/
-
-            //MajGraphFranchissable();
-
-            //Console.WriteLine((DateTime.Now - debut).TotalMilliseconds + " ms");
-
-            if (CheminEnCoursArcs.Count == 0)
-            {
-                semTrajectoire.Release();
-                succesPathFinding = false;
-                Historique.Log("Chemin non trouvé", TypeLog.PathFinding);
-                return;
-            }
-            else
-            {
-                // Execution du parcours
-                // On lance le thread pour redonner son simatre à l'adversaire
-                if (Plateau.RayonAdversaire < Plateau.RayonAdversaireInitial)
-                {
-                    threadRAZRayonAdverse = new Thread(ThreadRAZRayonAdverse);
-                    threadRAZRayonAdverse.Start();
-                }
-                threadTrajectoire = new Thread(ThreadChemin);
-                threadTrajectoire.Start();
-                return;
-            }
-        }
-
-        private Thread threadRAZRayonAdverse;
-        private void ThreadRAZRayonAdverse()
-        {
-            Thread.Sleep(1000);
-            while (Plateau.RayonAdversaire < Plateau.RayonAdversaireInitial)
-            {
-                Plateau.RayonAdversaire++;
-                Thread.Sleep(50);
-            }
-        }
-
-
 
         /// <summary>
         /// Ajoute un noeud au graph en reliant tous les points à une distance maximale
@@ -797,169 +400,31 @@ namespace GoBot
                 return forme1.Distance(forme2) < Rayon + marge;
         }
 
-        /// <summary>
-        /// Parcours le chemin pour arriver au point de destination
-        /// </summary>
-        private void ThreadChemin()
-        {
-            nouvelleTrajectoire = false;
-            while (CheminEnCoursNoeuds.Count > 1)
-            {
-                PointReel c1 = new PointReel(CheminEnCoursNoeuds[0].X, CheminEnCoursNoeuds[0].Y);
-                PointReel c2 = new PointReel(CheminEnCoursNoeuds[1].X, CheminEnCoursNoeuds[1].Y);
-
-                Position p = new Position(Position.Angle, c1);
-                Direction traj = Maths.GetDirection(p, c2);
-
-                // Teste si il est plus rapide (moins d'angle à tourner) de se déplacer en marche arrière
-                bool inverse = false;
-                //Console.WriteLine("Angle positif :" + traj.angle.AnglePositif);
-                if (Math.Abs(traj.angle.AngleDegres) > 90)
-                {
-                    inverse = true;
-                    traj.angle = new Angle(traj.angle.AngleDegres - 180);
-                }
-
-                if (traj.angle.AngleDegres < 0)
-                    PivotDroite(-traj.angle.AngleDegres);
-                else
-                    PivotGauche(traj.angle.AngleDegres);
-
-                if (nouvelleTrajectoire)
-                    break;
-
-                if (FailTrajectoire)
-                    break;
-
-                /* TODO pour éviter l'autre robot de notre équipe : décommenter
-                bool boucler = false;
-                Bloque = false;
-                do
-                {
-                    boucler = false;
-                    Segment ligne = new Segment(c1, c2);
-
-                    if (AutreRobot.CheminEnCoursNoeuds != null && AutreRobot.CheminEnCoursNoeuds.Count >= 2)
-                    {
-                        PointReel c1g = new PointReel(AutreRobot.Position.Coordonnees.X, AutreRobot.Position.Coordonnees.Y);
-                        PointReel c2g = new PointReel(AutreRobot.CheminEnCoursNoeuds[1].X, AutreRobot.CheminEnCoursNoeuds[1].Y);
-                        Segment ligneAutre = new Segment(c1g, c2g);
-
-                        if (ligne.Distance(ligneAutre) < Robots.GrosRobot.Rayon + Robots.PetitRobot.Rayon)
-                            boucler = true;
-                    }
-
-                    if (boucler || AutreRobot.Position.Coordonnees.Distance(ligne) < Robots.GrosRobot.Rayon + Robots.PetitRobot.Rayon)
-                    {
-                        boucler = true;
-                        Thread.Sleep(100);
-                    }
-
-                    // Teste si l'autre robot est bloqué si on peut avancer sans problèmes
-                    // le sémaphore permet de ne pas lancer les deux robots sur ce déblocage en même temps
-                    if (boucler)
-                    {
-                        semDeblocage.WaitOne();
-
-                        if (AutreRobot.Bloque && ligne.Distance(AutreRobot.Position.Coordonnees) > Robots.GrosRobot.Rayon + Robots.PetitRobot.Rayon)
-                        {
-                            Console.WriteLine("Autorisation déblocage");
-                            boucler = false;
-                        }
-                        else
-                            Bloque = true;
-
-                        semDeblocage.Release();
-                    }
-
-                    if (Robots.PetitRobot.Bloque && Robots.GrosRobot.Bloque)
-                    {
-                        Console.WriteLine("Interblocage !");
-                        nouvelleTrajectoire = true;
-                        boucler = false;
-                    }
-                } while (boucler);*/
-
-                Bloque = false;
-
-                if (nouvelleTrajectoire)
-                    break;
-
-                if (inverse)
-                    Reculer((int)traj.distance);
-                else
-                    Avancer((int)traj.distance);
-
-                if(CheminEnCoursNoeuds.Count > 0)
-                    CheminEnCoursNoeuds.RemoveAt(0);
-                if (CheminEnCoursArcs.Count > 0)
-                    CheminEnCoursArcs.RemoveAt(0);
-
-                Historique.Log("Noeud atteint", TypeLog.PathFinding);
-            }
-
-            PositionCible = null;
-            if (nouvelleTrajectoire)
-            {
-                Historique.Log("Trajectoire interrompue, annulation", TypeLog.PathFinding);
-                succesPathFinding = false;
-            }
-            else if (FailTrajectoire)
-            {
-                Historique.Log("Trajectoire échouée", TypeLog.PathFinding);
-                succesPathFinding = false;
-            }
-            else
-            {
-                // Positionne sur l'angle destination
-                if (angleFinal != null)
-                {
-                    PositionerAngle(angleFinal, 0.2);
-                    angleFinal = null;
-                }
-                if(distanceRestanteApresPF != 0)
-                {
-                    if (distanceRestanteApresPF < 0)
-                        Reculer((int)-distanceRestanteApresPF);
-                    else
-                        Avancer((int)distanceRestanteApresPF);
-                    distanceRestanteApresPF = 0;
-                }
-                Historique.Log("Trajectoire terminée", TypeLog.PathFinding);
-                succesPathFinding = true;
-            }
-
-            FailTrajectoire = false;
-
-            if (semTrajectoire != null)
-                semTrajectoire.Release();
-        }
-
         public bool Bloque { get; set; }
         private static Semaphore semDeblocage = new Semaphore(1, 1);
 
         public bool ObstacleTest()
         {
-            if (nouvelleTrajectoire)
+            if (TrajectoireCoupee)
                 return false;
+
 
             try
             {
-                // Teste si le chemin en cours de parcous est toujours franchissable
-                if (CheminEnCoursNoeuds != null && CheminEnCoursNoeuds.Count > 1)
+                // Teste si le chemin en cours de parcours est toujours franchissable
+                if (TrajectoireEnCours != null && TrajectoireEnCours.Segments.Count > 0)
                 {
-                    List<IForme> obstacles = new List<IForme>(Plateau.ObstaclesTemporaires);
-
+                    Console.WriteLine("Test collision");
                     List<Segment> segmentsTrajectoire = new List<Segment>();
                     // Calcule le segment entre nous et notre destination (permet de ne pas considérer un obstacle sur un tronçon déjà franchi)
-                    Segment seg = new Segment(Position.Coordonnees, new PointReel(CheminEnCoursNoeuds[1].X, CheminEnCoursNoeuds[1].Y));
+                    Segment seg = new Segment(Position.Coordonnees, new PointReel(TrajectoireEnCours.Segments[0].Fin));
                     segmentsTrajectoire.Add(seg);
 
-                    for (int iArc = 1; iArc < CheminEnCoursArcs.Count; iArc++)
+                    for (int iSegment = 1; iSegment < TrajectoireEnCours.Segments.Count; iSegment++)
                     {
-                        Arc a = CheminEnCoursArcs[iArc];
-                        segmentsTrajectoire.Add(new Segment(new PointReel(a.StartNode.X, a.StartNode.Y), new PointReel(a.EndNode.X, a.EndNode.Y)));
+                        segmentsTrajectoire.Add(TrajectoireEnCours.Segments[iSegment]);
                     }
+                    Synchronizer.Lock(Plateau.ObstaclesTemporaires);
                     foreach (IForme forme in Plateau.ObstaclesTemporaires)
                     {
                         foreach (Segment segment in segmentsTrajectoire)
@@ -969,28 +434,34 @@ namespace GoBot
                             {
                                 // Demande de génération d'une nouvelle trajectoire
                                 Historique.Log("Trajectoire coupée, annulation", TypeLog.PathFinding);
-                                nouvelleTrajectoire = true;
+                                TrajectoireCoupee = true;
+                                TrajectoireEnCours = null;
+
+                                Console.WriteLine("Traj interrompue");
                                 if (DeplacementLigne)
                                     Stop();
+                                Synchronizer.Unlock(Plateau.ObstaclesTemporaires);
                                 return false;
                             }
                         }
                     }
+                    Synchronizer.Unlock(Plateau.ObstaclesTemporaires);
                 }
             }
             catch (Exception)
             {
                 return false;
             }
-
+            
             return true;
         }
 
         public void MajGraphFranchissable()
         {
-            SemGraph.WaitOne();
+            Synchronizer.Lock(Graph);
+
             List<IForme> obstacles = new List<IForme>(Plateau.ObstaclesTemporaires);
-            Console.WriteLine(Plateau.ObstaclesTemporaires + " obstacles temporaires MajGraphFranchissable");
+            obstacles.AddRange(Plateau.ObstaclesCrees);
 
             foreach (Arc arc in Graph.Arcs)
                 arc.Passable = true;
@@ -1033,7 +504,7 @@ namespace GoBot
                 }
             }
 
-            SemGraph.Release();
+            Synchronizer.Unlock(Graph);
         }
 
         public override string ToString()
@@ -1041,29 +512,12 @@ namespace GoBot
             return Nom;
         }
 
-        protected Robot AutreRobot
-        {
-            get
-            {
-                if (this == Robots.GrosRobot)
-                    return Robots.PetitRobot;
-                else
-                    return Robots.GrosRobot;
-            }
-        }
-
         public List<IForme> CalculerObstacles()
         {
             List<IForme> obstacles = new List<IForme>();
-            obstacles.AddRange(Plateau.ListeObstacles);
+            obstacles.AddRange(Plateau.ObstaclesFixes);
             obstacles.AddRange(Plateau.ObstaclesTemporaires);
-            /*obstacles.Add(new Cercle(AutreRobot.Position.Coordonnees, AutreRobot.Rayon));
-
-            if (AutreRobot.PositionCible != null)
-            {
-                Console.WriteLine(AutreRobot.Nom + " position cible non null");
-                obstacles.Add(new Cercle(AutreRobot.PositionCible, AutreRobot.Rayon));
-            }*/
+            obstacles.AddRange(Plateau.ObstaclesCrees);
 
             return obstacles;
         }
@@ -1077,6 +531,115 @@ namespace GoBot
             foreach (Node n in nodesAdd)
                 Graph.RemoveNode(n);
             nodesAdd.Clear();
+        }
+
+        public int CalculDureeLigne(int distance)
+        {
+            int duree = CalculDureeDeplacement(distance, AccelerationDebutDeplacement, VitesseDeplacement, AccelerationFinDeplacement);
+
+            return duree;
+        }
+
+        public int CalculDureePivot(Angle angle)
+        {
+            double entraxe = 272.1177476;
+            int duree = CalculDureeDeplacement((int)((Math.PI * entraxe) / 360 * angle.AngleDegresPositif), AccelerationPivot, VitessePivot, AccelerationPivot);
+
+            return duree;
+        }
+
+        private int CalculDureeDeplacement(int distance, int acceleration, int vitesseMax, int decceleration)
+        {
+            if (distance == 0)
+                return 0;
+
+            double dureeAcceleration, dureeCroisiere, dureeFreinage;
+            int distanceAcceleration, distanceCroisere, distanceFreinage;
+
+            distanceAcceleration = (vitesseMax * vitesseMax) / (2 * acceleration);
+            distanceFreinage = (vitesseMax * vitesseMax) / (2 * decceleration);
+
+            if (distanceAcceleration + distanceFreinage < distance)
+            {
+                distanceCroisere = distance - distanceAcceleration - distanceFreinage;
+
+                dureeAcceleration = vitesseMax / (double)acceleration;
+                dureeFreinage = vitesseMax / (double)decceleration;
+                dureeCroisiere = distanceCroisere / (double)vitesseMax;
+            }
+            else
+            {
+                distanceCroisere = 0;
+                dureeCroisiere = 0;
+
+                double rapport = decceleration / (double)acceleration;
+                distanceFreinage = (int)(distance / (rapport + 1));
+                distanceAcceleration = distance - distanceFreinage;
+
+                dureeAcceleration = Math.Sqrt((2 * distanceAcceleration) / (double)acceleration);
+                dureeFreinage = Math.Sqrt((2 * distanceFreinage) / (double)(decceleration));
+            }
+
+            int duree = (int)((dureeAcceleration + dureeCroisiere + dureeFreinage) * 1000);
+            return duree;
+        }
+
+        protected void ParcourirTrajectoire(Object traj)
+        { 
+            ParcourirTrajectoire((Trajectoire)traj);
+        }
+
+        public bool ParcourirTrajectoire(Trajectoire traj)
+        {
+            TrajectoireEnCours = traj;
+            DateTime debut = DateTime.Now;
+
+            Console.WriteLine("Lancement traj");
+            TrajectoireCoupee = false;
+            TrajectoireEchouee = false;
+
+            foreach (IAction action in traj.ToActions())
+            {
+                action.Executer();
+
+                if (TrajectoireCoupee || TrajectoireEchouee)
+                    break;
+
+                if ( action is ActionAvance || action is ActionRecule)
+                {
+                    Historique.Log("Noeud atteint " + TrajectoireEnCours.PointsPassage[0].X + ":" + TrajectoireEnCours.PointsPassage[0].Y, TypeLog.PathFinding);
+                    TrajectoireEnCours.PointsPassage.RemoveAt(0);
+                    TrajectoireEnCours.Segments.RemoveAt(0);
+                }
+            }
+            Console.WriteLine("Traj terminée");
+
+            if(!TrajectoireCoupee && !TrajectoireEchouee)
+            {
+                Historique.Log("Trajectoire parcourue en " + Math.Round((((DateTime.Now - debut).TotalMilliseconds) / 1000.0), 1) + "s", TypeLog.PathFinding);
+                Console.WriteLine("Temps prévu :" + traj.Duree + "ms / Temps effectif : " + (DateTime.Now - debut).TotalMilliseconds + "ms");
+
+                if(semTrajectoire != null)
+                    semTrajectoire.Release();
+                TrajectoireEnCours = null;
+                return true;
+            }
+
+            if(TrajectoireEchouee)
+            {
+                Historique.Log("Echec du parcours de la trajectoire (dérapage, blocage...)", TypeLog.PathFinding);
+
+                if (semTrajectoire != null)
+                    semTrajectoire.Release();
+                TrajectoireEnCours = null;
+                return true;
+            }
+            
+            TrajectoireEnCours = null;
+
+            if (semTrajectoire != null)
+                semTrajectoire.Release();
+            return false;
         }
     }
 }

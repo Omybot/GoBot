@@ -14,6 +14,9 @@ using System.Collections;
 using System.IO;
 using System.Xml.Serialization;
 using System.Collections.Generic;
+using GoBot;
+using GoBot.Calculs.Formes;
+using System.Threading;
 
 namespace AStarFolder
 {
@@ -82,6 +85,136 @@ namespace AStarFolder
         }
 
         /// <summary>
+        /// Ajoute un noeud (temporairement, jusqu'à l'appel de @CleanNodesArcsAdd) au graph en reliant tous les points à une distance maximale
+        /// </summary>
+        /// <param name="node">Noeud à ajouter</param>
+        /// <param name="distanceMax">Distance (mm) max de liaison avec les autres noeuds</param>
+        /// <returns>Nombre de points reliés au point ajouté</returns>
+        public int AddNode(Node node, List<IForme> obstacles, double distanceSecurite, double distanceMax)
+        {
+            double distanceNode;
+
+            // Si un noeud est deja présent à cet endroit on ne l'ajoute pas
+            ClosestNode(node.X, node.Y, node.Z, out distanceNode, true);
+            if (distanceNode == 0)
+                return 0;
+
+            // Teste si le noeud est franchissable avec la liste des obstacles
+            foreach (IForme obstacle in Plateau.ObstaclesFixes)
+            {
+                if (obstacle.Distance(new PointReel(node.X, node.Y)) < distanceSecurite)
+                {
+                    node.Passable = false;
+                    return 0;
+                }
+            }
+
+            Nodes.Add(node);
+            nodesAdd.Add(node);
+
+            int nbLiaisons = 0;
+
+            // Liaisons avec les autres noeuds du graph
+            foreach (Node no in Nodes)
+            {
+                if (node != no)
+                {
+                    double distance = Math.Sqrt((node.Position.X - no.Position.X) * (node.Position.X - no.Position.X) + (node.Position.Y - no.Position.Y) * (node.Position.Y - no.Position.Y));
+                    if (distance < distanceMax)
+                    {
+                        Arc arc = new Arc(no, node);
+                        arc.Weight = Math.Sqrt(distance);
+                        Arc arc2 = new Arc(node, no);
+                        arc2.Weight = Math.Sqrt(distance);
+
+                        foreach (IForme obstacle in obstacles)
+                        {
+                            if (obstacle.Distance(new Segment(new PointReel(no.X, no.Y), new PointReel(node.X, node.Y))) < distanceSecurite)
+                            {
+                                arc.Passable = false;
+                                arc2.Passable = false;
+                                break;
+                            }
+                        }
+
+                        if (arc.Passable)
+                        {
+                            AddArc(arc);
+                            AddArc(arc2);
+
+                            arcsAdd.Add(arc);
+                            arcsAdd.Add(arc2);
+
+                            nbLiaisons++;
+                        }
+                    }
+                }
+            }
+
+            return nbLiaisons;
+        }
+
+        /// <summary>
+        /// Retourne vrai si le noeud peut se lier avec au moins un autre noeud du graph
+        /// </summary>
+        /// <param name="node"></param>
+        /// <param name="obstacles"></param>
+        /// <param name="distanceSecurite"></param>
+        /// <param name="distanceMax"></param>
+        /// <returns></returns>
+        public bool Raccordable(Node node, List<IForme> obstacles, double distanceSecurite, double distanceMax)
+        {
+            foreach (Node no in Nodes)
+            {
+                if (node != no)
+                {
+                    double distance = Math.Sqrt((node.Position.X - no.Position.X) * (node.Position.X - no.Position.X) + (node.Position.Y - no.Position.Y) * (node.Position.Y - no.Position.Y));
+                    if (distance < distanceMax)
+                    {
+                        Arc arc = new Arc(no, node);
+                        arc.Weight = Math.Sqrt(distance);
+                        Arc arc2 = new Arc(node, no);
+                        arc2.Weight = Math.Sqrt(distance);
+
+                        foreach (IForme obstacle in obstacles)
+                        {
+                            if (obstacle.Distance(new Segment(new PointReel(no.X, no.Y), new PointReel(node.X, node.Y))) < distanceSecurite)
+                            {
+                                arc.Passable = false;
+                                arc2.Passable = false;
+                                break;
+                            }
+                        }
+
+                        if (arc.Passable)
+                        {
+                            return true;
+                        }
+                    }
+                }
+            }
+
+            return false;
+        }
+
+        List<Arc> arcsAdd = new List<Arc>();
+        List<Node> nodesAdd = new List<Node>();
+
+        /// <summary>
+        /// Nettoie les arcs et noeuds ajoutés temporairement
+        /// </summary>
+        public void CleanNodesArcsAdd()
+        {
+            foreach (Arc a in arcsAdd)
+                RemoveArc(a);
+            arcsAdd.Clear();
+
+            foreach (Node n in nodesAdd)
+                RemoveNode(n);
+            nodesAdd.Clear();
+        }
+
+        /// <summary>
         /// Directly Adds an arc to the graph.
         /// </summary>
         /// <exception cref="ArgumentException">Cannot add an arc if one of its extremity nodes does not belong to the graph.</exception>
@@ -91,6 +224,7 @@ namespace AStarFolder
         {
             //if ( NewArc==null || LA.Contains(NewArc) ) return false;
             if (NewArc == null) return false;
+
             if (!LN.Contains(NewArc.StartNode) || !LN.Contains(NewArc.EndNode))
                 throw new ArgumentException("Cannot add an arc if one of its extremity nodes does not belong to the graph.");
             LA.Add(NewArc);

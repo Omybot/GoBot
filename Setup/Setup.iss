@@ -2,7 +2,7 @@
 ; SEE THE DOCUMENTATION FOR DETAILS ON CREATING INNO SETUP SCRIPT FILES!
 
 #define MyAppName "GoBot"
-#define MyAppVersion "1.1.2"
+#define MyAppVersion "1.2.2"
 #define MyAppPublisher "Omybot"
 #define MyAppURL "www.omybot.com"
 #define MyAppExeName "GoBot.exe"

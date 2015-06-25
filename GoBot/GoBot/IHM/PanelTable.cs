@@ -15,6 +15,7 @@ using GoBot.Enchainements;
 using GoBot.Balises;
 using GoBot.ElementsJeu;
 using GoBot.Actionneurs;
+using GoBot.PathFinding;
 
 namespace GoBot.IHM
 {
@@ -31,7 +32,7 @@ namespace GoBot.IHM
             Dessinateur.TableDessinee += Dessinateur_TableDessinee;
 
             checkedListBox.SetItemChecked(0, true);
-            checkedListBox.SetItemChecked(2, true);
+            checkedListBox.SetItemChecked(1, true);
 
             toolTip.SetToolTip(btnTeleportRSFace, "Téléportation de face");
             toolTip.SetToolTip(btnTeleportRSCentre, "Téléportation du centre");
@@ -137,10 +138,12 @@ namespace GoBot.IHM
         }
 
         DateTime dateCapture = DateTime.Now;
+        Semaphore semMove = new Semaphore(1, 1);
 
         Random rand = new Random();
         private void pictureBoxTable_MouseMove(object sender, MouseEventArgs e)
         {
+            semMove.WaitOne();
             Dessinateur.PositionCurseur = pictureBoxTable.PointToClient(MousePosition);
 
             if (boxSourisObstacle.Checked)
@@ -182,6 +185,43 @@ namespace GoBot.IHM
                     this.Cursor = Cursors.Hand;
                 else
                     this.Cursor = Cursors.Arrow;
+                
+                System.Threading.Tasks.Task.Factory.StartNew(() => ChercheTraj(new Position(Robots.GrosRobot.Position)));
+            }
+
+            semMove.Release();
+        }
+
+        bool calculTraj = false;
+        public void ChercheTraj(Position depart)
+        {
+            if (!calculTraj)
+            {
+                calculTraj = true;
+
+                DateTime debut = DateTime.Now;
+
+                List<Trajectoire> trajs = new List<Trajectoire>();
+
+                /*foreach (Mouvement m in Plateau.Enchainement.ListeMouvementsGros)
+                {
+                    if (m.PositionProche != null && m.Score > 0)
+                    {
+                        //foreach (Position pt in m.Positions)
+                        {
+                            Trajectoire traj = PathFinder.ChercheTrajectoire(Robots.GrosRobot.Graph, Plateau.ListeObstacles, depart, m.PositionProche, Robots.GrosRobot.Rayon, 160);
+                            if (traj != null)
+                            {
+                                trajs.Add(traj);
+                                Console.WriteLine(m.ToString() + " -> " + traj.Duree + "ms");
+                            }
+                        }
+                    }
+                }
+                Dessinateur.Trajectoires = trajs;*/
+                calculTraj = false;
+
+                //Console.WriteLine("Temps calcul toutes possibilités : " + (DateTime.Now - debut).TotalMilliseconds + " ms");
             }
         }
 
@@ -236,16 +276,7 @@ namespace GoBot.IHM
                 for (int i = 0; i < Plateau.Pieds.Count; i++)
                     if (Plateau.Pieds[i].Hover)
                     {
-                        /*if (i == 3 || i == 4)
-                            move = new MouvementTas1(Plateau.CouleurGaucheJaune);
-                        else if (i == 11 || i == 12)
-                            move = new MouvementTas1(Plateau.CouleurDroiteVert);
-                        else if (i == 0 || i == 1)
-                            move = new MouvementTas2(Plateau.CouleurGaucheJaune);
-                        else if (i == 14 || i == 15)
-                            move = new MouvementTas2(Plateau.CouleurDroiteVert);
-                        else*/
-                            move = new MouvementPied(i);
+                        move = new MouvementPied(i);
                         break;
                     }
 
@@ -259,19 +290,7 @@ namespace GoBot.IHM
                 for (int i = 0; i < Plateau.Gobelets.Count; i++)
                     if (Plateau.Gobelets[i].Hover)
                     {
-                        if (i == 0)
-                            move = new MouvementTas2(Plateau.CouleurGaucheJaune);
-                        else if (i == 0)
-                            move = new MouvementTas2(Plateau.CouleurDroiteVert);
-                        else
-                        {
-                            BrasPieds bras;
-                            if(Plateau.NotreCouleur == Plateau.CouleurGaucheJaune)
-                                bras = Actionneur.BrasPiedsGauche;
-                            else
-                                bras = Actionneur.BrasPiedsDroite;
-                            move = new MouvementGobelet(i, bras);
-                        }
+                        move = new MouvementGobelet(i, Plateau.NotreCouleur);
                         break;
                     }
 
@@ -279,16 +298,6 @@ namespace GoBot.IHM
                     if (Plateau.ListeTapis[i].Hover)
                     {
                         move = new MouvementTapis(i);
-                        break;
-                    }
-
-                for (int i = 0; i < Plateau.Gobelets.Count; i++)
-                    if (Plateau.Gobelets[i].Hover)
-                    {
-                        if (Plateau.NotreCouleur == Plateau.CouleurDroiteVert)
-                            move = new MouvementGobelet(i, Actionneur.BrasPiedsDroite);
-                        else
-                            move = new MouvementGobelet(i, Actionneur.BrasPiedsGauche);
                         break;
                     }
 
@@ -331,7 +340,10 @@ namespace GoBot.IHM
         private void PanelTable_Load(object sender, EventArgs e)
         {
             if (!Config.DesignMode)
+            {
+                btnAffichage_Click(null, null);
                 ParentForm.FormClosing += new FormClosingEventHandler(ParentForm_FormClosing);
+            }
         }
 
         private void pictureBoxTable_MouseDown(object sender, MouseEventArgs e)
@@ -581,17 +593,6 @@ namespace GoBot.IHM
 
         public void GoToDepart()
         {
-            Actionneur.BrasAspirateur.Arreter();
-            Actionneur.BrasAspirateur.PositionRange();
-
-            Actionneur.BrasPiedsDroite.AscenseurMonter();
-            Actionneur.BrasPiedsDroite.OuvrirPinceBas();
-            Actionneur.BrasPiedsDroite.OuvrirPinceHaut();
-
-            Actionneur.BrasPiedsGauche.AscenseurMonter();
-            Actionneur.BrasPiedsGauche.OuvrirPinceBas();
-            Actionneur.BrasPiedsGauche.OuvrirPinceHaut();
-
             if (Plateau.NotreCouleur == Plateau.CouleurDroiteVert)
                 Robots.GrosRobot.GotoXYTeta(3000 - 555, 1000, 180);
             else
@@ -599,28 +600,11 @@ namespace GoBot.IHM
 
             Robots.GrosRobot.Reculer(300);
 
-            Actionneur.BrasPiedsDroite.NbPieds = 0;
-            Actionneur.BrasPiedsDroite.FermerPinceBas();
-            Actionneur.BrasPiedsDroite.FermerPinceHaut();
-
-            Actionneur.BrasPiedsGauche.NbPieds = 0;
-            Actionneur.BrasPiedsGauche.FermerPinceBas();
-            Actionneur.BrasPiedsGauche.FermerPinceHaut();
-
-            Actionneur.BrasAmpoule.Descendre();
-            Actionneur.BrasAspirateur.PositionDepose();
-            Thread.Sleep(5000);
-            Actionneur.BrasAmpoule.Ouvrir();
-            Actionneur.BrasAspirateur.PositionRange();
-
-            Actionneur.BrasPiedsDroite.AscenseurDescendre();
-            Actionneur.BrasPiedsGauche.AscenseurDescendre();
-
         }
 
         private void btnStratNul_Click(object sender, EventArgs e)
         {
-            Plateau.Enchainement = new EnchainementNul();
+            Plateau.Enchainement = new EnchainementMatchFixe();
             Plateau.Enchainement.Executer();
         }
 

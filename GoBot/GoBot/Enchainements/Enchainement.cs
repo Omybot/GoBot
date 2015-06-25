@@ -50,21 +50,15 @@ namespace GoBot.Enchainements
             for (int iClap = 0; iClap < 6; iClap++)
                 ListeMouvementsGros.Add(new MouvementClap(iClap));
             for (int iGobelet = 0; iGobelet < Plateau.Gobelets.Count; iGobelet++)
-                ListeMouvementsGros.Add(new MouvementGobelet(iGobelet, Actionneur.BrasPiedsDroite));
+                ListeMouvementsGros.Add(new MouvementGobelet(iGobelet, Plateau.CouleurDroiteVert));
             for (int iGobelet = 0; iGobelet < Plateau.Gobelets.Count; iGobelet++)
-                ListeMouvementsGros.Add(new MouvementGobelet(iGobelet, Actionneur.BrasPiedsGauche));
+                ListeMouvementsGros.Add(new MouvementGobelet(iGobelet, Plateau.CouleurGaucheJaune));
 
             ListeMouvementsGros.Add(new MouvementDeposeDepart(Plateau.ZoneDepartJaune));
             ListeMouvementsGros.Add(new MouvementDeposeDepart(Plateau.ZoneDepartVert));
 
             ListeMouvementsGros.Add(new MouvementDeposeEstrade(Plateau.ZoneDeposeEstradeDroite));
             ListeMouvementsGros.Add(new MouvementDeposeEstrade(Plateau.ZoneDeposeEstradeGauche));
-
-            /*ListeMouvementsGros.Add(new MouvementTas1(Plateau.CouleurGaucheJaune));
-            ListeMouvementsGros.Add(new MouvementTas1(Plateau.CouleurDroiteVert));
-
-            ListeMouvementsGros.Add(new MouvementTas2(Plateau.CouleurGaucheJaune));
-            ListeMouvementsGros.Add(new MouvementTas2(Plateau.CouleurDroiteVert));*/
         }
 
         public void Executer()
@@ -105,6 +99,8 @@ namespace GoBot.Enchainements
             Actionneur.BrasPiedsGauche.OuvrirPinceBas();
             Actionneur.BrasPiedsGauche.OuvrirPinceHaut();
             Actionneur.BrasPiedsGauche.AscenseurHauteur(0);
+            Actionneur.BrasPiedsDroite.Deverrouiller();
+            Actionneur.BrasPiedsGauche.Deverrouiller();
             Actionneur.BrasTapis.LacherTapisDroit();
             Actionneur.BrasTapis.LacherTapisGauche();
 

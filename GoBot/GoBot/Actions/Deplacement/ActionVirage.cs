@@ -22,7 +22,7 @@ namespace GoBot.Actions
             sensGD = gd;
         }
 
-        String IAction.ToString()
+        public override String ToString()
         {
             return robot.Nom + " tourne " + distance + "mm " + angle + "° " + sensAR.ToString().ToLower() + " " + sensGD.ToString().ToLower();
         }

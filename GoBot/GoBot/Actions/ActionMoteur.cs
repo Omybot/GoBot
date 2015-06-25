@@ -18,7 +18,7 @@ namespace GoBot.Actions
             moteur = mo;
         }
 
-        String IAction.ToString()
+        public override String ToString()
         {
             return robot + " tourne " + Nommeur.Nommer(moteur) + " à " + Nommeur.Nommer(vitesse, moteur);
         }

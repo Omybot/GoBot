@@ -8,6 +8,7 @@ using GoBot.Calculs.Formes;
 using GoBot.ElementsJeu;
 using System.Drawing;
 using System.Threading;
+using GoBot.PathFinding;
 
 namespace GoBot.Mouvements
 {
@@ -31,6 +32,12 @@ namespace GoBot.Mouvements
                 if (Plateau.NotreCouleur == Plateau.CouleurDroiteVert && Actionneur.BrasGobelet == Actionneur.BrasPiedsGauche)
                     return 0;
 
+                if (Plateau.NotreCouleur == Plateau.CouleurGaucheJaune && numeroGobelet >= 2)
+                    return 0;
+
+                if (Plateau.NotreCouleur == Plateau.CouleurDroiteVert && numeroGobelet <= 2)
+                    return 0;
+
                 if (Element.Ramasse)
                     return 0;
 
@@ -39,7 +46,7 @@ namespace GoBot.Mouvements
 
                 if (Actionneur.BrasGobelet.Gobelet)
                     return 0;
-                
+
                 return 2;
             }
         }
@@ -57,7 +64,9 @@ namespace GoBot.Mouvements
             PointReel point = new PointReel(Plateau.Gobelets[i].Position);
             List<Angle> anglesPossibles = new List<Angle>();
 
-            switch(numeroGobelet)
+            Couleur = couleur;
+
+            switch (numeroGobelet)
             {
                 case 0:
                     if (couleur == Plateau.CouleurDroiteVert)
@@ -66,15 +75,15 @@ namespace GoBot.Mouvements
                     }
                     else
                     {
-
+                        Positions.Add(new Position(123.58, new PointReel(325, 1496)));
+                        distanceAttrapage = 130;
                     }
                     break;
                 case 1:
                     if (couleur == Plateau.CouleurDroiteVert)
                     {
-                        Positions.Add(new Position(180-11.69, new PointReel(3000-1807, 851)));
-                        Positions.Add(new Position(180-314.64, new PointReel(3000-1954, 1079)));
-                        Couleur = Plateau.CouleurDroiteVert;
+                        Positions.Add(new Position(180 - 11.69, new PointReel(3000 - 1807, 851)));
+                        Positions.Add(new Position(180 - 314.64, new PointReel(3000 - 1954, 1079)));
                     }
                     else
                     {
@@ -82,52 +91,47 @@ namespace GoBot.Mouvements
                         Positions.Add(new Position(236.16, new PointReel(1125, 1016)));
                         Positions.Add(new Position(200, new PointReel(1193, 850)));
                         Positions.Add(new Position(48.14, new PointReel(670, 679)));
-                        Couleur = Plateau.CouleurGaucheJaune;
                     }
                     break;
                 case 2:
                     if (couleur == Plateau.CouleurDroiteVert)
                     {
-                        Positions.Add(new Position(180-29.97, new PointReel(3000-1224, 1581)));
+                        Positions.Add(new Position(180 - 29.97, new PointReel(3000 - 1224, 1581)));
                         Positions.Add(new Position(180 - 133.19, new PointReel(3000 - 1629, 1397)));
-                        Couleur = Plateau.CouleurDroiteVert;
                     }
                     else
                     {
                         Positions.Add(new Position(29.97, new PointReel(1224, 1581)));
                         Positions.Add(new Position(133.19, new PointReel(1629, 1397)));
-                        Couleur = Plateau.CouleurGaucheJaune;
                     }
                     break;
                 case 3:
                     if (couleur == Plateau.CouleurDroiteVert)
                     {
-                        Positions.Add(new Position(180-339.16, new PointReel(3000-682, 1000)));
+                        Positions.Add(new Position(180 - 339.16, new PointReel(3000 - 682, 1000)));
                         Positions.Add(new Position(180 - 236.16, new PointReel(3000 - 1125, 1016)));
                         Positions.Add(new Position(180 - 200, new PointReel(3000 - 1193, 850)));
                         Positions.Add(new Position(180 - 48.14, new PointReel(3000 - 670, 679)));
-                        Couleur = Plateau.CouleurDroiteVert;
                     }
                     else
                     {
                         Positions.Add(new Position(11.69, new PointReel(1807, 851)));
                         Positions.Add(new Position(314.64, new PointReel(1954, 1079)));
-                        Couleur = Plateau.CouleurGaucheJaune;
                     }
                     break;
                 case 4:
                     if (couleur == Plateau.CouleurDroiteVert)
                     {
-
+                        Positions.Add(new Position(180 - 123.58, new PointReel(3000 - 325, 1496)));
+                        distanceAttrapage = 130;
                     }
                     else
                     {
-
                     }
                     break;
             }
 
-            foreach(Angle angle in anglesPossibles)
+            foreach (Angle angle in anglesPossibles)
             {
                 // Calcul de la position à atteindre en fonction du décallage prévu
                 Positions.Add(new Position(angle, point));
@@ -144,29 +148,50 @@ namespace GoBot.Mouvements
 
             Position position = PositionProche;
 
-            if (position != null && Robots.GrosRobot.GotoXYTeta(position.Coordonnees.X, position.Coordonnees.Y, position.Angle.AngleDegres))
+            if (position != null)
             {
-                Actionneur.BrasGobelet.AscenseurDescendre();
+                Trajectoire traj = PathFinder.ChercheTrajectoire(Robot.Graph, Plateau.ListeObstacles, new Position(Robot.Position), position, Robot.Rayon, 160);
 
-                Robot.Lent();
-                Robot.Avancer(distanceAttrapage);
-                Robot.Rapide();
+                if (traj != null && Robot.ParcourirTrajectoire(traj))
+                {
+                    Actionneur.BrasGobelet.AscenseurDescendre();
 
-                Actionneur.BrasGobelet.FermerPinceBas();
-                Thread.Sleep(250);
-                Actionneur.BrasGobelet.SouleverLegerement();
-                Thread.Sleep(500);
+                    Robots.GrosRobot.VitesseAdaptableEnnemi = false;
+                    Robot.Lent();
+                    Robot.Avancer(distanceAttrapage - 5);
+                    Robot.Rapide();
+                    Robots.GrosRobot.VitesseAdaptableEnnemi = true;
 
-                Robots.GrosRobot.Historique.Log("Fin gobelet " + numeroGobelet + (DateTime.Now - debut).TotalSeconds.ToString("#.#") + "s");
-                Plateau.Gobelets[numeroGobelet].Ramasse = true;
-                Actionneur.BrasGobelet.Gobelet = true;
+                    //if (Robot.AttrapageAutomatique)
+                    {
+                        Actionneur.BrasGobelet.FermerPinceBas();
+                        Thread.Sleep(250);
+                    }
+
+                    Actionneur.BrasGobelet.SouleverLegerement();
+                    Thread.Sleep(500);
+
+                    Robots.GrosRobot.Historique.Log("Fin gobelet " + numeroGobelet + " en " + (DateTime.Now - debut).TotalSeconds.ToString("#.#") + "s");
+                    Plateau.Gobelets[numeroGobelet].Ramasse = true;
+                    Actionneur.BrasGobelet.Gobelet = true;
+                    return true;
+                }
+                else
+                {
+                    Robots.GrosRobot.Historique.Log("Annulation gobelet " + numeroGobelet + ", trajectoire échouée");
+                    return false;
+                }
             }
             else
             {
-                Robots.GrosRobot.Historique.Log("Annulation gobelet " + numeroGobelet);
+                Robots.GrosRobot.Historique.Log("Annulation gobelet " + numeroGobelet + ", trajectoire non trouvée");
                 return false;
             }
-            return true;
+        }
+
+        public override string ToString()
+        {
+            return "Gobelet " + numeroGobelet;
         }
     }
 }

@@ -18,7 +18,7 @@ namespace GoBot.Actions
             capteur = ca;
         }
 
-        String IAction.ToString()
+        public override String ToString()
         {
             return robot + " capteur " + Nommeur.Nommer(capteur) + " voit " + information;
         }

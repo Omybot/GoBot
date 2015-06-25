@@ -5,6 +5,7 @@ using System.Text;
 using GoBot.Calculs;
 using GoBot.Actionneurs;
 using System.Threading;
+using GoBot.PathFinding;
 
 namespace GoBot.Mouvements
 {
@@ -25,11 +26,11 @@ namespace GoBot.Mouvements
                     Couleur = Plateau.CouleurGaucheJaune;
                     break;
                 case 1:
-                    Positions.Add(new Position(45, new Calculs.Formes.PointReel(1439, 810)));
+                    Positions.Add(new Position(45, new Calculs.Formes.PointReel(1380, 810)));
                     Couleur = Plateau.CouleurGaucheJaune;
                     break;
                 case 2:
-                    Positions.Add(new Position(45, new Calculs.Formes.PointReel(1561, 810)));
+                    Positions.Add(new Position(45, new Calculs.Formes.PointReel(1580, 810)));
                     Couleur = Plateau.CouleurDroiteVert;
                     break;
                 case 3:
@@ -47,22 +48,32 @@ namespace GoBot.Mouvements
 
             Position position = PositionProche;
 
-            if (position != null && Robots.GrosRobot.GotoXYTeta(position.Coordonnees.X, position.Coordonnees.Y, position.Angle.AngleDegres))
+            if (position != null)
             {
-                if(numeroTapis == 0 || numeroTapis == 3)
-                    Actionneur.BrasTapis.PoserTapisDroit();
-                else
-                    Actionneur.BrasTapis.PoserTapisGauche();
+                Trajectoire traj = PathFinder.ChercheTrajectoire(Robot.Graph, Plateau.ListeObstacles, new Position(Robot.Position), position, Robot.Rayon, 160);
 
-                Robots.GrosRobot.Historique.Log("Fin tapis " + numeroTapis + " en " + (DateTime.Now - debut).TotalSeconds.ToString("#.#") + "s");
-                Plateau.ListeTapis[numeroTapis].Pose = true;
+                if (traj != null && Robot.ParcourirTrajectoire(traj))
+                {
+                    if (numeroTapis == 0 || numeroTapis == 2)
+                        Actionneur.BrasTapis.PoserTapisDroit();
+                    else
+                        Actionneur.BrasTapis.PoserTapisGauche();
+
+                    Robots.GrosRobot.Historique.Log("Fin tapis " + numeroTapis + " en " + (DateTime.Now - debut).TotalSeconds.ToString("#.#") + "s");
+                    Plateau.ListeTapis[numeroTapis].Pose = true;
+                    return true;
+                }
+                else
+                {
+                    Robots.GrosRobot.Historique.Log("Annulation tapis " + numeroTapis + ", trajectoire échouée");
+                    return false;
+                }
             }
             else
             {
-                Robots.GrosRobot.Historique.Log("Annulation tapis " + numeroTapis);
+                Robots.GrosRobot.Historique.Log("Annulation tapis " + numeroTapis + ", trajectoire non trouvée");
                 return false;
             }
-            return true;
         }
 
         public override double Score
@@ -74,7 +85,7 @@ namespace GoBot.Mouvements
 
                 if (BonneCouleur())
                     return 12;
-                else 
+                else
                     return 0;
             }
         }
@@ -82,6 +93,11 @@ namespace GoBot.Mouvements
         public override double ScorePondere
         {
             get { return Score; }
+        }
+
+        public override string ToString()
+        {
+            return "Tapis " + numeroTapis;
         }
     }
 }

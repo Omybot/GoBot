@@ -29,6 +29,16 @@
         private void InitializeComponent()
         {
             this.groupBoxSequences = new Composants.GroupBoxRetractable();
+            this.button7 = new System.Windows.Forms.Button();
+            this.button6 = new System.Windows.Forms.Button();
+            this.button4 = new System.Windows.Forms.Button();
+            this.button3 = new System.Windows.Forms.Button();
+            this.button2 = new System.Windows.Forms.Button();
+            this.button1 = new System.Windows.Forms.Button();
+            this.btn1Droite = new System.Windows.Forms.Button();
+            this.btnClicClicDroit = new System.Windows.Forms.Button();
+            this.btnBallePrechargee = new System.Windows.Forms.Button();
+            this.btnTransfertBalle = new System.Windows.Forms.Button();
             this.btnToutOuvrir = new System.Windows.Forms.Button();
             this.btnVideDistributeur = new System.Windows.Forms.Button();
             this.btnTransfertVersGauche = new System.Windows.Forms.Button();
@@ -45,13 +55,21 @@
             this.btnDebutMatch = new System.Windows.Forms.Button();
             this.btnCleanBasGauche = new System.Windows.Forms.Button();
             this.btnEmpilerDroite = new System.Windows.Forms.Button();
-            this.btnTransfertBalle = new System.Windows.Forms.Button();
-            this.btnBallePrechargee = new System.Windows.Forms.Button();
+            this.button5 = new System.Windows.Forms.Button();
             this.groupBoxSequences.SuspendLayout();
             this.SuspendLayout();
             // 
             // groupBoxSequences
             // 
+            this.groupBoxSequences.Controls.Add(this.button5);
+            this.groupBoxSequences.Controls.Add(this.button7);
+            this.groupBoxSequences.Controls.Add(this.button6);
+            this.groupBoxSequences.Controls.Add(this.button4);
+            this.groupBoxSequences.Controls.Add(this.button3);
+            this.groupBoxSequences.Controls.Add(this.button2);
+            this.groupBoxSequences.Controls.Add(this.button1);
+            this.groupBoxSequences.Controls.Add(this.btn1Droite);
+            this.groupBoxSequences.Controls.Add(this.btnClicClicDroit);
             this.groupBoxSequences.Controls.Add(this.btnBallePrechargee);
             this.groupBoxSequences.Controls.Add(this.btnTransfertBalle);
             this.groupBoxSequences.Controls.Add(this.btnToutOuvrir);
@@ -77,6 +95,106 @@
             this.groupBoxSequences.TabStop = false;
             this.groupBoxSequences.Text = "Séquences";
             // 
+            // button7
+            // 
+            this.button7.Location = new System.Drawing.Point(256, 277);
+            this.button7.Name = "button7";
+            this.button7.Size = new System.Drawing.Size(70, 23);
+            this.button7.TabIndex = 27;
+            this.button7.Text = "pas gob";
+            this.button7.UseVisualStyleBackColor = true;
+            this.button7.Click += new System.EventHandler(this.button7_Click);
+            // 
+            // button6
+            // 
+            this.button6.Location = new System.Drawing.Point(204, 277);
+            this.button6.Name = "button6";
+            this.button6.Size = new System.Drawing.Size(46, 23);
+            this.button6.TabIndex = 26;
+            this.button6.Text = "Gob";
+            this.button6.UseVisualStyleBackColor = true;
+            this.button6.Click += new System.EventHandler(this.button6_Click);
+            // 
+            // button4
+            // 
+            this.button4.Location = new System.Drawing.Point(147, 277);
+            this.button4.Name = "button4";
+            this.button4.Size = new System.Drawing.Size(24, 23);
+            this.button4.TabIndex = 24;
+            this.button4.Text = "4";
+            this.button4.UseVisualStyleBackColor = true;
+            this.button4.Click += new System.EventHandler(this.button4_Click);
+            // 
+            // button3
+            // 
+            this.button3.Location = new System.Drawing.Point(117, 277);
+            this.button3.Name = "button3";
+            this.button3.Size = new System.Drawing.Size(24, 23);
+            this.button3.TabIndex = 23;
+            this.button3.Text = "3";
+            this.button3.UseVisualStyleBackColor = true;
+            this.button3.Click += new System.EventHandler(this.button3_Click);
+            // 
+            // button2
+            // 
+            this.button2.Location = new System.Drawing.Point(87, 277);
+            this.button2.Name = "button2";
+            this.button2.Size = new System.Drawing.Size(24, 23);
+            this.button2.TabIndex = 22;
+            this.button2.Text = "2";
+            this.button2.UseVisualStyleBackColor = true;
+            this.button2.Click += new System.EventHandler(this.button2_Click);
+            // 
+            // button1
+            // 
+            this.button1.Location = new System.Drawing.Point(57, 277);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(24, 23);
+            this.button1.TabIndex = 21;
+            this.button1.Text = "1";
+            this.button1.UseVisualStyleBackColor = true;
+            this.button1.Click += new System.EventHandler(this.button1_Click);
+            // 
+            // btn1Droite
+            // 
+            this.btn1Droite.Location = new System.Drawing.Point(27, 277);
+            this.btn1Droite.Name = "btn1Droite";
+            this.btn1Droite.Size = new System.Drawing.Size(24, 23);
+            this.btn1Droite.TabIndex = 20;
+            this.btn1Droite.Text = "0";
+            this.btn1Droite.UseVisualStyleBackColor = true;
+            this.btn1Droite.Click += new System.EventHandler(this.btn1Droite_Click);
+            // 
+            // btnClicClicDroit
+            // 
+            this.btnClicClicDroit.Location = new System.Drawing.Point(55, 339);
+            this.btnClicClicDroit.Name = "btnClicClicDroit";
+            this.btnClicClicDroit.Size = new System.Drawing.Size(75, 23);
+            this.btnClicClicDroit.TabIndex = 19;
+            this.btnClicClicDroit.Text = "Clic clic droit";
+            this.btnClicClicDroit.UseVisualStyleBackColor = true;
+            this.btnClicClicDroit.Click += new System.EventHandler(this.btnClicClicDroit_Click);
+            // 
+            // btnBallePrechargee
+            // 
+            this.btnBallePrechargee.Location = new System.Drawing.Point(204, 328);
+            this.btnBallePrechargee.Name = "btnBallePrechargee";
+            this.btnBallePrechargee.Size = new System.Drawing.Size(101, 23);
+            this.btnBallePrechargee.TabIndex = 18;
+            this.btnBallePrechargee.Text = "Balle préchargée";
+            this.btnBallePrechargee.UseVisualStyleBackColor = true;
+            this.btnBallePrechargee.Click += new System.EventHandler(this.btnBallePrechargee_Click);
+            // 
+            // btnTransfertBalle
+            // 
+            this.btnTransfertBalle.Location = new System.Drawing.Point(150, 347);
+            this.btnTransfertBalle.Name = "btnTransfertBalle";
+            this.btnTransfertBalle.Size = new System.Drawing.Size(155, 23);
+            this.btnTransfertBalle.TabIndex = 17;
+            this.btnTransfertBalle.Text = "Transfert de balle préchargée";
+            this.btnTransfertBalle.UseVisualStyleBackColor = true;
+            this.btnTransfertBalle.Click += new System.EventHandler(this.btnTransfertBalle_Click);
+            // 
             // btnToutOuvrir
             // 
             this.btnToutOuvrir.Location = new System.Drawing.Point(104, 29);
@@ -89,7 +207,7 @@
             // 
             // btnVideDistributeur
             // 
-            this.btnVideDistributeur.Location = new System.Drawing.Point(123, 270);
+            this.btnVideDistributeur.Location = new System.Drawing.Point(123, 318);
             this.btnVideDistributeur.Name = "btnVideDistributeur";
             this.btnVideDistributeur.Size = new System.Drawing.Size(93, 23);
             this.btnVideDistributeur.TabIndex = 15;
@@ -241,25 +359,15 @@
             this.btnEmpilerDroite.UseVisualStyleBackColor = true;
             this.btnEmpilerDroite.Click += new System.EventHandler(this.btnEmpilerDroite_Click);
             // 
-            // btnTransfertBalle
+            // button5
             // 
-            this.btnTransfertBalle.Location = new System.Drawing.Point(78, 299);
-            this.btnTransfertBalle.Name = "btnTransfertBalle";
-            this.btnTransfertBalle.Size = new System.Drawing.Size(155, 23);
-            this.btnTransfertBalle.TabIndex = 17;
-            this.btnTransfertBalle.Text = "Transfert de balle préchargée";
-            this.btnTransfertBalle.UseVisualStyleBackColor = true;
-            this.btnTransfertBalle.Click += new System.EventHandler(this.btnTransfertBalle_Click);
-            // 
-            // btnBallePrechargee
-            // 
-            this.btnBallePrechargee.Location = new System.Drawing.Point(204, 328);
-            this.btnBallePrechargee.Name = "btnBallePrechargee";
-            this.btnBallePrechargee.Size = new System.Drawing.Size(101, 23);
-            this.btnBallePrechargee.TabIndex = 18;
-            this.btnBallePrechargee.Text = "Balle préchargée";
-            this.btnBallePrechargee.UseVisualStyleBackColor = true;
-            this.btnBallePrechargee.Click += new System.EventHandler(this.btnBallePrechargee_Click);
+            this.button5.Location = new System.Drawing.Point(23, 310);
+            this.button5.Name = "button5";
+            this.button5.Size = new System.Drawing.Size(94, 23);
+            this.button5.TabIndex = 28;
+            this.button5.Text = "Attrapage auto";
+            this.button5.UseVisualStyleBackColor = true;
+            this.button5.Click += new System.EventHandler(this.button5_Click);
             // 
             // PanelGrosRobotSequences
             // 
@@ -297,5 +405,14 @@
         private System.Windows.Forms.Button btnToutOuvrir;
         private System.Windows.Forms.Button btnTransfertBalle;
         private System.Windows.Forms.Button btnBallePrechargee;
+        private System.Windows.Forms.Button btnClicClicDroit;
+        private System.Windows.Forms.Button button7;
+        private System.Windows.Forms.Button button6;
+        private System.Windows.Forms.Button button4;
+        private System.Windows.Forms.Button button3;
+        private System.Windows.Forms.Button button2;
+        private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.Button btn1Droite;
+        private System.Windows.Forms.Button button5;
     }
 }

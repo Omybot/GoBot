@@ -18,7 +18,7 @@ namespace GoBot.Actions
             pince = pi;
         }
 
-        String IAction.ToString()
+        public override String ToString()
         {
             return robot + " bouge " + Nommeur.Nommer(pince) + " à " + Nommeur.Nommer(position, pince);
         }

@@ -36,6 +36,8 @@ namespace GoBot
 
         public RobotReel(IDRobot idRobot, Carte carte)
         {
+            AngleParcouru = 0;
+            DistanceParcourue = 0;
             Carte = carte;
             IDRobot = idRobot;
             ServomoteursConnectes = new List<byte>();
@@ -127,7 +129,7 @@ namespace GoBot
         public void ActivationAsserv()
         {
             Thread.Sleep(500);
-            FailTrajectoire = true;
+            TrajectoireEchouee = true;
             Stop(StopMode.Abrupt);
             SemaphoresMove[FonctionMove.FinDeplacement].Release();
         }
@@ -372,6 +374,10 @@ namespace GoBot
 
                     SemaphoresIO[FonctionIO.ReponseCouleurEquipe].Release();
                 }
+                if (trameRecue[1] == (byte)FonctionIO.BlocageAscenseur)
+                {
+                    Actionneur.BrasGobelet.AsserKO = true;
+                }
 
                 if (trameRecue[1] == (byte)FonctionIO.RetourValeurCapteur)
                 {
@@ -418,6 +424,8 @@ namespace GoBot
 
         public override void Avancer(int distance, bool attendre = true)
         {
+            DistanceParcourue += distance;
+
             if (attendre)
                 SemaphoresMove[FonctionMove.FinDeplacement] = new Semaphore(0, int.MaxValue);
 
@@ -427,8 +435,14 @@ namespace GoBot
 
             Historique.AjouterAction(new ActionAvance(this, distance));
 
+            int tempsParcours = CalculDureeLigne(distance);
+
             if (attendre)
-                SemaphoresMove[FonctionMove.FinDeplacement].WaitOne();
+                if (!SemaphoresMove[FonctionMove.FinDeplacement].WaitOne(tempsParcours + 1000))
+                {
+                    Stop(StopMode.Freely);
+                    Thread.Sleep(1000);
+                }
 
             DeplacementLigne = false;
         }
@@ -444,6 +458,8 @@ namespace GoBot
 
         public override void Reculer(int distance, bool attendre = true)
         {
+            DistanceParcourue += distance;
+
             if (attendre)
                 SemaphoresMove[FonctionMove.FinDeplacement] = new Semaphore(0, int.MaxValue);
 
@@ -453,14 +469,21 @@ namespace GoBot
 
             Historique.AjouterAction(new ActionRecule(this, distance));
 
+            int tempsParcours = CalculDureeLigne(distance);
+
             if (attendre)
-                SemaphoresMove[FonctionMove.FinDeplacement].WaitOne();
+                if (!SemaphoresMove[FonctionMove.FinDeplacement].WaitOne(tempsParcours + 1000))
+                {
+                    Stop(StopMode.Freely);
+                    Thread.Sleep(1000);
+                }
 
             DeplacementLigne = false;
         }
 
         public override void PivotGauche(double angle, bool attendre = true)
         {
+            AngleParcouru += angle;
             angle = Math.Round(angle, 2);
 
             if (attendre)
@@ -471,16 +494,20 @@ namespace GoBot
 
             Historique.AjouterAction(new ActionPivot(this, angle, SensGD.Gauche));
 
-            if (attendre)
-                SemaphoresMove[FonctionMove.FinDeplacement].WaitOne();
+            int tempsParcours = CalculDureePivot(angle);
 
+            if (attendre)
+                if (!SemaphoresMove[FonctionMove.FinDeplacement].WaitOne(tempsParcours + 1000))
+                {
+                    Stop(StopMode.Freely);
+                    Thread.Sleep(1000);
+                }
             DeplacementLigne = false;
         }
 
         public override void PivotDroite(double angle, bool attendre = true)
         {
-            angle = Math.Round(angle, 2);
-
+            AngleParcouru += angle;
             if (attendre)
                 SemaphoresMove[FonctionMove.FinDeplacement] = new Semaphore(0, int.MaxValue);
 
@@ -489,8 +516,14 @@ namespace GoBot
 
             Historique.AjouterAction(new ActionPivot(this, angle, SensGD.Droite));
 
+            int tempsParcours = CalculDureePivot(angle);
+
             if (attendre)
-                SemaphoresMove[FonctionMove.FinDeplacement].WaitOne();
+                if (!SemaphoresMove[FonctionMove.FinDeplacement].WaitOne(tempsParcours + 1000))
+                {
+                    Stop(StopMode.Freely);
+                    Thread.Sleep(1000);
+                }
         }
 
         public override void Stop(StopMode mode = StopMode.Smooth)

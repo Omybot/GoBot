@@ -7,6 +7,8 @@ using GoBot.Actionneurs;
 using System.Drawing;
 using GoBot.ElementsJeu;
 using GoBot.Calculs.Formes;
+using System.Threading;
+using GoBot.PathFinding;
 
 namespace GoBot.Mouvements
 {
@@ -44,37 +46,52 @@ namespace GoBot.Mouvements
 
             Position position = PositionProche;
 
-            if (position != null && Robots.GrosRobot.GotoXYTeta(position.Coordonnees.X, position.Coordonnees.Y, position.Angle.AngleDegres))
+            if (position != null)
             {
-                if (!Actionneur.BrasSpot.AmpouleSurSpot && Actionneur.BrasGobelet.AmpoulePrechargee)
-                    BrasPieds.TransfererBalle();
+                Trajectoire traj = PathFinder.ChercheTrajectoire(Robot.Graph, Plateau.ListeObstacles, new Position(Robot.Position), position, Robot.Rayon, 160);
 
-                Robots.GrosRobot.Avancer(250);
-                brasGobelet.DeposeGobelet(false);
-                brasSpot.DeposeSpot();
+                if (traj != null && Robot.ParcourirTrajectoire(traj))
+                {
+                    if (!Actionneur.BrasSpot.AmpouleSurSpot && Actionneur.BrasGobelet.AmpoulePrechargee)
+                        BrasPieds.TransfererBalle();
 
-                brasSpot.AscenseurMonter();
-                brasGobelet.AscenseurMonter();
+                    Robots.GrosRobot.Avancer(250);
+                    brasGobelet.DeposeGobelet(false);
+                    brasSpot.DeposeSpot();
 
-                Robots.GrosRobot.Reculer(250);
+                    Thread.Sleep(500);
 
-                // Verse les pop corn dans le gobelet
-                /*Robots.GrosRobot.Reculer(280);
-                Actionneur.BrasAspirateur.Maintenir();
-                Robots.GrosRobot.PivotDroite(180);
-                Actionneur.BrasAspirateur.PositionDepose();
-                Robots.GrosRobot.PivotDroite(60);
-                Thread.Sleep(4000);
-                Actionneur.BrasAspirateur.Arreter();
-                Actionneur.BrasAspirateur.PositionRange();*/
+                    Robots.GrosRobot.Lent();
+                    Robots.GrosRobot.VitesseDeplacement = 50;
+                    Robots.GrosRobot.Reculer(50);
+                    Robots.GrosRobot.Rapide();
+                    Robots.GrosRobot.Reculer(200);
+                    brasSpot.AscenseurMonter();
+                    brasGobelet.AscenseurMonter();
 
-                Robots.GrosRobot.Historique.Log("Fin zone dépose en " + (DateTime.Now - debut).TotalSeconds.ToString("#.#") + "s");
-                ((ZoneInteret)Element).Interet = false;
-                return true;
+                    // Verse les pop corn dans le gobelet
+                    /*Robots.GrosRobot.Reculer(280);
+                    Actionneur.BrasAspirateur.Maintenir();
+                    Robots.GrosRobot.PivotDroite(180);
+                    Actionneur.BrasAspirateur.PositionDepose();
+                    Robots.GrosRobot.PivotDroite(60);
+                    Thread.Sleep(4000);
+                    Actionneur.BrasAspirateur.Arreter();
+                    Actionneur.BrasAspirateur.PositionRange();*/
+
+                    Robots.GrosRobot.Historique.Log("Fin dépose zone départ en " + (DateTime.Now - debut).TotalSeconds.ToString("#.#") + "s");
+                    ((ZoneInteret)Element).Interet = false;
+                    return true;
+                }
+                else
+                {
+                    Robots.GrosRobot.Historique.Log("Annulation zone départ, trajectoire échouée");
+                    return false;
+                }
             }
             else
             {
-                Robots.GrosRobot.Historique.Log("Annulation zone dépose");
+                Robots.GrosRobot.Historique.Log("Annulation zone départ, trajectoire non trouvée");
                 return false;
             }
         }
@@ -107,6 +124,11 @@ namespace GoBot.Mouvements
             { 
                 return Score; 
             }
+        }
+
+        public override string ToString()
+        {
+            return "Dépose zone de départ";
         }
     }
 }

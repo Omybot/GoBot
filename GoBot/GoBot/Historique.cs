@@ -20,6 +20,9 @@ namespace GoBot
     [Serializable]
     public class HistoLigne : IComparable
     {
+        private static int idActuel = 0;
+
+        public int ID { get; set; }
         public String Message { get; set; }
         public DateTime Heure { get; set; }
         public TypeLog Type {get;set;}
@@ -27,6 +30,7 @@ namespace GoBot
 
         public HistoLigne(IDRobot robot, DateTime heure, String message, TypeLog type = TypeLog.Strat)
         {
+            ID = idActuel++;
             Robot = robot;
             Message = message;
             Heure = heure;
@@ -39,7 +43,10 @@ namespace GoBot
 
         public int CompareTo(object obj)
         {
-            return Heure.CompareTo(((HistoLigne)obj).Heure);
+            if (ID == ((HistoLigne)obj).ID)
+                return Heure.CompareTo(((HistoLigne)obj).Heure);
+            else
+                return ID.CompareTo(((HistoLigne)obj).ID);
         }
     }
 

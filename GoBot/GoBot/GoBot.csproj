@@ -95,6 +95,7 @@
     <Compile Include="Actions\ActionCapteur.cs" />
     <Compile Include="Actions\Deplacement\ActionRecallage.cs" />
     <Compile Include="Actions\ActionServo.cs" />
+    <Compile Include="Actions\IActionDuree.cs" />
     <Compile Include="Actions\Nommeur.cs" />
     <Compile Include="Actions\Asservissement\ActionAccelerationLigne.cs" />
     <Compile Include="Actions\Asservissement\ActionVitesseLigne.cs" />
@@ -124,6 +125,7 @@
     <Compile Include="ElementsJeu\Spot.cs" />
     <Compile Include="ElementsJeu\Tapis.cs" />
     <Compile Include="ElementsJeu\ZoneInteret.cs" />
+    <Compile Include="Enchainements\EnchainementMatchFixe.cs" />
     <Compile Include="Enchainements\EnchainementTest.cs" />
     <Compile Include="Enchainements\EnchainementNul.cs" />
     <Compile Include="Enchainements\EnchainementAleatoire.cs" />
@@ -300,11 +302,11 @@
     <Compile Include="Mouvements\MouvementDistributeur.cs" />
     <Compile Include="Mouvements\MouvementGobelet.cs" />
     <Compile Include="Mouvements\MouvementAmpoulePied.cs" />
-    <Compile Include="Mouvements\MouvementTas2.cs" />
-    <Compile Include="Mouvements\MouvementTas1.cs" />
     <Compile Include="Mouvements\MouvementPied.cs" />
     <Compile Include="Mouvements\MouvementTapis.cs" />
     <Compile Include="Mouvements\PositionsMouvements.cs" />
+    <Compile Include="PathFinding\PathFinder.cs" />
+    <Compile Include="PathFinding\Trajectoire.cs" />
     <Compile Include="Ponderations\PoidsTest.cs" />
     <Compile Include="Ponderations\Poids.cs" />
     <Compile Include="Ponderations\PoidsBase.cs" />
@@ -402,6 +404,7 @@
     <Compile Include="Communications\TrameFactory.cs" />
     <Compile Include="Communications\ConnexionUDP.cs" />
     <Compile Include="Communications\Trame.cs" />
+    <Compile Include="Synchronizer.cs" />
     <Compile Include="TestCode.cs" />
     <EmbeddedResource Include="IHM\PanelAnalogique.resx">
       <DependentUpon>PanelAnalogique.cs</DependentUpon>
@@ -609,17 +612,16 @@
     <None Include="img\Alertes.png" />
     <None Include="img\FondServo.png" />
     <None Include="img\Dossier.png" />
-    <None Include="img\Filet.png" />
     <None Include="img\ClapVert.png" />
     <None Include="img\ClapJaune.png" />
     <None Include="img\ClapJauneOuvert.png" />
     <None Include="img\ClapVertOuvert.png" />
-    <None Include="img\Fermee.png" />
     <None Include="img\FermerPince.png" />
     <None Include="img\BrasTapisBas.png" />
     <None Include="img\BrasTapisHaut.png" />
     <None Include="img\Capot.png" />
     <None Include="img\Ampoule.png" />
+    <None Include="img\CapotPinceFermee.png" />
     <Content Include="img\IconeVitesse.png" />
     <None Include="img\Pompe.png" />
     <None Include="img\Recale.png" />
@@ -628,8 +630,6 @@
     <None Include="img\Vumetre.png" />
     <None Include="img\Pause.png" />
     <None Include="img\Play.png" />
-    <None Include="img\PositionBalises1.png" />
-    <None Include="img\PositionBalises2.png" />
     <None Include="img\Splash.png" />
     <None Include="img\TablePlan.png" />
     <None Include="img\PathCentre.png" />

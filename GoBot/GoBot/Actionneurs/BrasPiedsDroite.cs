@@ -79,12 +79,6 @@ namespace GoBot.Actionneurs
             set { Config.CurrentConfig.AscenseurDroit.PositionAttrapage = value; }
         }
 
-        public override int PositionHauteurApprocheEstrade
-        {
-            get { return Config.CurrentConfig.AscenseurDroit.PositionApprocheEstrade; }
-            set { Config.CurrentConfig.AscenseurDroit.PositionApprocheEstrade = value; }
-        }
-
         public override int PositionHauteurDeposeEstrade
         {
             get { return Config.CurrentConfig.AscenseurDroit.PositionDeposeEstrade; }

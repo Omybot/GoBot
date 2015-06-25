@@ -133,6 +133,16 @@ namespace GoBot.Properties {
         /// <summary>
         ///   Recherche une ressource localisée de type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap CapotPinceFermee {
+            get {
+                object obj = ResourceManager.GetObject("CapotPinceFermee", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une ressource localisée de type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap Ciseaux {
             get {
                 object obj = ResourceManager.GetObject("Ciseaux", resourceCulture);
@@ -233,29 +243,9 @@ namespace GoBot.Properties {
         /// <summary>
         ///   Recherche une ressource localisée de type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap Fermee {
-            get {
-                object obj = ResourceManager.GetObject("Fermee", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Recherche une ressource localisée de type System.Drawing.Bitmap.
-        /// </summary>
         internal static System.Drawing.Bitmap FermerPince {
             get {
                 object obj = ResourceManager.GetObject("FermerPince", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Recherche une ressource localisée de type System.Drawing.Bitmap.
-        /// </summary>
-        internal static System.Drawing.Bitmap Filet {
-            get {
-                object obj = ResourceManager.GetObject("Filet", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -506,26 +496,6 @@ namespace GoBot.Properties {
         internal static System.Drawing.Bitmap Pompe {
             get {
                 object obj = ResourceManager.GetObject("Pompe", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Recherche une ressource localisée de type System.Drawing.Bitmap.
-        /// </summary>
-        internal static System.Drawing.Bitmap PositionBalises1 {
-            get {
-                object obj = ResourceManager.GetObject("PositionBalises1", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Recherche une ressource localisée de type System.Drawing.Bitmap.
-        /// </summary>
-        internal static System.Drawing.Bitmap PositionBalises2 {
-            get {
-                object obj = ResourceManager.GetObject("PositionBalises2", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

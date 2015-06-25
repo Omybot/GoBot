@@ -6,6 +6,7 @@ using GoBot.Calculs;
 using GoBot.Actionneurs;
 using GoBot.Calculs.Formes;
 using GoBot.ElementsJeu;
+using GoBot.PathFinding;
 
 namespace GoBot.Mouvements
 {
@@ -53,19 +54,19 @@ namespace GoBot.Mouvements
                 if (numeroPied == 3 && !Plateau.Pieds[4].Ramasse)
                     return 0;
 
-                if (numeroPied == 11 && !Plateau.Pieds[12].Ramasse)
+                if (numeroPied == 12 && !Plateau.Pieds[11].Ramasse)
                     return 0;
 
                 if (numeroPied == 1 && !Plateau.Gobelets[0].Ramasse)
                     return 0;
 
-                if (numeroPied == 15 && !Plateau.Gobelets[4].Ramasse)
+                if (numeroPied == 14 && !Plateau.Gobelets[4].Ramasse)
                     return 0;
 
                 if (numeroPied == 2 && (!Plateau.Pieds[1].Ramasse || !Plateau.Gobelets[0].Ramasse))
                     return 0;
 
-                if (numeroPied == 15 && (!Plateau.Pieds[14].Ramasse || !Plateau.Gobelets[4].Ramasse))
+                if (numeroPied == 13 && (!Plateau.Pieds[14].Ramasse || !Plateau.Gobelets[4].Ramasse))
                     return 0;
 
                 if (Plateau.Pieds[numeroPied].Ampoule)
@@ -85,20 +86,25 @@ namespace GoBot.Mouvements
         {
             numeroPied = i;
             Element = Plateau.Pieds[i];
+            Couleur = ((Pied)Element).Couleur;
 
             PointReel point = new PointReel(Plateau.Pieds[i].Position);
-            List<Angle> anglesPossibles = new List<Angle>();
 
             switch (numeroPied)
             {
                 case 0:
                     Positions.Add(new Position(185.53, new PointReel(355, 304)));
+                    distanceAttrapage = 160;
                     break;
 
                 case 1:
+                    Positions.Add(new Position(117.27, new PointReel(252, 1606)));
+                    distanceAttrapage = 85;
                     break;
 
                 case 2:
+                    Positions.Add(new Position(103.54, new PointReel(209, 1689)));
+                    distanceAttrapage = 70;
                     break;
 
                 case 3:
@@ -158,26 +164,24 @@ namespace GoBot.Mouvements
                     break;
 
                 case 12:
-                    Positions.Add(new Position(270, new PointReel(3000-772, 323)));
+                    Positions.Add(new Position(270, new PointReel(3000 - 772, 323)));
                     distanceAttrapage = 100;
                     break;
 
                 case 13:
-                    Positions.Add(new Position(-5.53, new PointReel(2645, 304)));
+                    Positions.Add(new Position(180 - 103.54, new PointReel(3000 - 209, 1689)));
+                    distanceAttrapage = 70;
                     break;
 
                 case 14:
+                    Positions.Add(new Position(180 - 117.27, new PointReel(3000 - 252, 1606)));
+                    distanceAttrapage = 85;
                     break;
 
                 case 15:
-                    Positions.Add(new Position(180 - (270 - 80.25), new PointReel(3000 - 297, 314)));
+                    Positions.Add(new Position(180 - 185.53, new PointReel(3000 - 355, 304)));
+                    distanceAttrapage = 160;
                     break;
-            }
-
-            foreach (Angle angle in anglesPossibles)
-            {
-                // Calcul de la position à atteindre en fonction du décallage prévu
-                Positions.Add(new Position(angle, point));
             }
 
             Robot = Robots.GrosRobot;
@@ -191,58 +195,67 @@ namespace GoBot.Mouvements
 
             Position position = PositionProche;
 
-            if (position != null && Robots.GrosRobot.GotoXYTeta(position.Coordonnees.X, position.Coordonnees.Y, position.Angle.AngleDegres))
+            if (position != null)
             {
-                if (Actionneur.BrasSpot.NbPieds == 0)
-                    Actionneur.BrasSpot.AscenseurDescendre();
+                Trajectoire traj = PathFinder.ChercheTrajectoire(Robot.Graph, Plateau.ListeObstacles, new Position(Robot.Position), position, Robot.Rayon, 160);
 
-                Robot.Lent();
-                Robot.Avancer(distanceAttrapage);
-
-                Robots.GrosRobot.DemandeValeursAnalogiquesIO();
-                if (Robots.GrosRobot.ValeursAnalogiquesIO[Actionneur.BrasSpot.PortAnalogiqueCapteur] > 2300)
+                if (traj != null && Robot.ParcourirTrajectoire(traj))
                 {
-                    if (Robots.GrosRobot.ValeursAnalogiquesIO[Actionneur.BrasSpot.PortAnalogiqueCapteur] < 3200)
-                        Robots.GrosRobot.Avancer(40);
+                    if (Actionneur.BrasSpot.NbPieds == 0)
+                        Actionneur.BrasSpot.AscenseurDescendre();
+
+                    Robots.GrosRobot.VitesseAdaptableEnnemi = false;
+                    Robot.Lent();
+                    Robot.Avancer(distanceAttrapage + 10);
+
+                    bool clicNecessaire = false;
+
+                    Robots.GrosRobot.DemandeValeursAnalogiquesIO();
+                    if (Robots.GrosRobot.ValeursAnalogiquesIO[Actionneur.BrasSpot.PortAnalogiqueCapteur] > 2000)
+                    {
+                        if (Robots.GrosRobot.ValeursAnalogiquesIO[Actionneur.BrasSpot.PortAnalogiqueCapteur] < 3200)
+                        {
+                            clicNecessaire = true;
+                        }
+                    }
+                    else
+                    {
+                        Robot.Rapide();
+                        Robots.GrosRobot.Historique.Log("Annulation pied " + numeroPied + " par capteur négatif");
+                        Plateau.Pieds[numeroPied].Ramasse = true;
+                        return false;
+                    }
+
+                    Robot.Rapide();
+                    Robots.GrosRobot.VitesseAdaptableEnnemi = true;
+                    Actionneur.BrasSpot.Empiler(clicNecessaire);
+
+                    Robots.GrosRobot.Historique.Log("Fin pied " + numeroPied + " en " + (DateTime.Now - debut).TotalSeconds.ToString("#.#") + "s");
+
+                    Plateau.Pieds[numeroPied].Ramasse = true;
+                    if (Plateau.Pieds[numeroPied].Ampoule)
+                        Actionneur.BrasSpot.AmpouleSurSpot = true;
+
+                    if (numeroPied == 0 || numeroPied == 13 || numeroPied == 2 || numeroPied == 15)
+                        Robot.Reculer(distanceAttrapage + 15);
+                    return true;
                 }
                 else
                 {
-                    Robots.GrosRobot.Historique.Log("Annulation pied " + numeroPied);
-                    Plateau.Pieds[numeroPied].Ramasse = true;
-                    if (numeroPied == 0 || numeroPied == 13)
-                        Robot.Reculer(distanceAttrapage);
+                    Robots.GrosRobot.Historique.Log("Annulation pied " + numeroPied + ", trajectoire échouée");
                     return false;
                 }
-
-                Robots.GrosRobot.DemandeValeursAnalogiquesIO();
-
-                if (Robots.GrosRobot.ValeursAnalogiquesIO[Actionneur.BrasSpot.PortAnalogiqueCapteur] < 3200)
-                {
-                    Robots.GrosRobot.Historique.Log("Annulation pied " + numeroPied);
-                    Plateau.Pieds[numeroPied].Ramasse = true;
-                    if (numeroPied == 0 || numeroPied == 13)
-                        Robot.Reculer(distanceAttrapage);
-                    return false;
-                }
-
-                Robot.Rapide();
-                Actionneur.BrasSpot.Empiler();
-
-                Robots.GrosRobot.Historique.Log("Fin pied " + numeroPied + (DateTime.Now - debut).TotalSeconds.ToString("#.#") + "s");
-
-                Plateau.Pieds[numeroPied].Ramasse = true;
-                if (Plateau.Pieds[numeroPied].Ampoule)
-                    Actionneur.BrasSpot.AmpouleSurSpot = true;
-
-                if (numeroPied == 0 || numeroPied == 13)
-                    Robot.Reculer(distanceAttrapage);
             }
             else
             {
-                Robots.GrosRobot.Historique.Log("Annulation pied " + numeroPied);
+                Robots.GrosRobot.Historique.Log("Annulation pied " + numeroPied + ", trajectoire non trouvée");
                 return false;
             }
-            return true;
+        }
+
+        public override string ToString()
+        {
+            return "Pied " + numeroPied;
         }
     }
 }

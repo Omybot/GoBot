@@ -18,7 +18,7 @@ namespace GoBot.Actions
             actionneur = ac;
         }
 
-        String IAction.ToString()
+        public override String ToString()
         {
             return robot + " change " + Nommeur.Nommer(actionneur) + " à " + (on ? "on" : "off");
         }

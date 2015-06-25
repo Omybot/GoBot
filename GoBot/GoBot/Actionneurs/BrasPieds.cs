@@ -39,7 +39,7 @@ namespace GoBot.Actionneurs
             }
             set
             {
-                ampoulePrechargeePosee = true;
+                ampoulePrechargeePosee = !value;
             }
         }
         public bool AmpouleSurSpot { get; set; }
@@ -74,7 +74,6 @@ namespace GoBot.Actionneurs
 
         public abstract int PositionHauteurHaute { get; set; }
         public abstract int PositionHauteurBasse { get; set; }
-        public abstract int PositionHauteurApprocheEstrade { get; set; }
         public abstract int PositionHauteurDeposeEstrade { get; set; }
         public abstract int PositionHauteurPousseEstrade { get; set; }
         public abstract int PortAnalogiqueCapteur { get; }
@@ -180,7 +179,7 @@ namespace GoBot.Actionneurs
             OuvrirPinceHautGauche();
         }
 
-        public void Empiler()
+        public void Empiler(bool clic = false)
         {
             if (NbPieds == 4)
             {
@@ -192,7 +191,10 @@ namespace GoBot.Actionneurs
                 Thread.Sleep(100);
                 AscenseurDescendre();
                 Thread.Sleep(350);
-                FermerPinceBas();
+                if (clic)
+                    ClicClic();
+                else
+                    FermerPinceBas();
                 Thread.Sleep(300);
                 OuvrirPinceHaut();
                 Thread.Sleep(100);
@@ -208,7 +210,10 @@ namespace GoBot.Actionneurs
                 Thread.Sleep(100);
                 AscenseurDescendre();
                 Thread.Sleep(350);
-                FermerPinceBas();
+                if (clic)
+                    ClicClic();
+                else
+                    FermerPinceBas();
                 Thread.Sleep(300);
                 OuvrirPinceHaut();
                 Thread.Sleep(100);
@@ -224,7 +229,10 @@ namespace GoBot.Actionneurs
                 Thread.Sleep(100);
                 AscenseurDescendre();
                 Thread.Sleep(350);
-                FermerPinceBas();
+                if (clic)
+                    ClicClic();
+                else
+                    FermerPinceBas();
                 Thread.Sleep(300);
                 OuvrirPinceHaut();
                 Thread.Sleep(100);
@@ -240,7 +248,10 @@ namespace GoBot.Actionneurs
                 Thread.Sleep(100);
                 AscenseurHauteur(PositionHauteurBasse + DifferenceHauteurBas2);
                 Thread.Sleep(350);
-                FermerPinceBas();
+                if (clic)
+                    ClicClic();
+                else
+                    FermerPinceBas();
                 Thread.Sleep(300);
                 AscenseurHauteur(PositionHauteurBasse + DifferenceHauteurBas3);
                 Thread.Sleep(300);
@@ -326,6 +337,7 @@ namespace GoBot.Actionneurs
                 {
                     LibererBalle();
                     Thread.Sleep(200);
+                    AmpoulePrechargee = false;
                 }
 
                 Deverrouiller();
@@ -340,6 +352,7 @@ namespace GoBot.Actionneurs
                 {
                     LibererBalle();
                     Thread.Sleep(300);
+                    AmpoulePrechargee = false;
                 }
 
                 OuvrirPinceHaut();
@@ -358,6 +371,7 @@ namespace GoBot.Actionneurs
                 {
                     LibererBalle();
                     Thread.Sleep(300);
+                    AmpoulePrechargee = false;
                 }
 
                 OuvrirPinceHaut();
@@ -376,11 +390,11 @@ namespace GoBot.Actionneurs
                 if (AmpoulePrechargee)
                 {
                     FermerPinceHaut();
-                    Thread.Sleep(300);
                     LibererBalle();
                     Thread.Sleep(300);
                     OuvrirPinceHaut();
                     Thread.Sleep(300);
+                    AmpoulePrechargee = false;
                 }
 
                 AscenseurDescendre();
@@ -417,22 +431,29 @@ namespace GoBot.Actionneurs
             Actionneur.BrasGobelet.OuvrirPinceHaut();
             Actionneur.BrasGobelet.AscenseurDescendre();
 
-            if (Actionneur.BrasSpot.NbPieds <= 4)
+            bool gobeletPose = Actionneur.BrasGobelet.Gobelet;
+            Actionneur.BrasGobelet.Gobelet = false;
+
+            if (Actionneur.BrasSpot.NbPieds < 4)
             {
                 Actionneur.BrasSpot.AscenseurDescendre();
-                Thread.Sleep(500);
+                Thread.Sleep(400);
             }
 
             Actionneur.BrasSpot.OuvrirPinceBas();
             Thread.Sleep(300);
 
             Robots.GrosRobot.Reculer(100);
+            Actionneur.BrasGobelet.FermerPinceBas();
+            if (gobeletPose)
+                Thread.Sleep(100);
 
             if(Actionneur.BrasGobelet == Actionneur.BrasPiedsDroite)
                 Robots.GrosRobot.PivotGauche(39);
             else
                 Robots.GrosRobot.PivotDroite(39);
 
+            Actionneur.BrasGobelet.OuvrirPinceBas();
             Robots.GrosRobot.Avancer(100);
 
             Actionneur.BrasGobelet.NbPieds = Actionneur.BrasSpot.NbPieds;
@@ -457,21 +478,36 @@ namespace GoBot.Actionneurs
             Actionneur.BrasGobelet.DeposeSpot();
 
             Robots.GrosRobot.Reculer(100);
+            Actionneur.BrasGobelet.FermerPinceBas();
 
             if (Actionneur.BrasGobelet == Actionneur.BrasPiedsDroite)
                 Robots.GrosRobot.PivotDroite(39);
             else
                 Robots.GrosRobot.PivotGauche(39);
 
+            Actionneur.BrasGobelet.OuvrirPinceBas();
+            if (gobeletPose)
+                Thread.Sleep(100);
             Robots.GrosRobot.Avancer(100);
 
             Actionneur.BrasSpot.NbPieds = nbSpots;
             Actionneur.BrasSpot.AmpouleSurSpot = true;
 
-            Actionneur.BrasGobelet.FermerPinceBas();
-            Actionneur.BrasGobelet.FermerPinceHaut();
-            Actionneur.BrasGobelet.Verrouiller();
-            Actionneur.BrasGobelet.AscenseurMonter();
+            if(gobeletPose)
+            {
+                Actionneur.BrasGobelet.FermerPinceBas();
+                Actionneur.BrasGobelet.Verrouiller();
+                Thread.Sleep(250);
+                Actionneur.BrasGobelet.SouleverLegerement();
+                Actionneur.BrasGobelet.Gobelet = true;
+            }
+            else
+            {
+                Actionneur.BrasGobelet.FermerPinceBas();
+                Actionneur.BrasGobelet.FermerPinceHaut();
+                Actionneur.BrasGobelet.Verrouiller();
+                Actionneur.BrasGobelet.AscenseurMonter();
+            }
 
             Actionneur.BrasSpot.FermerPinceBas();
 
@@ -483,7 +519,21 @@ namespace GoBot.Actionneurs
             Thread.Sleep(500);
 
             Actionneur.BrasSpot.FermerPinceHaut();
-            Thread.Sleep(500);
+            Actionneur.BrasSpot.LibererBalle();
         }
+
+        public void ClicClic()
+        {
+            FermerPinceBas();
+            Thread.Sleep(50);
+            Robots.GrosRobot.Reculer(20);
+            OuvrirPinceBas();
+            Thread.Sleep(20);
+            Robots.GrosRobot.Avancer(20);
+            FermerPinceBas();
+            Thread.Sleep(50);
+        }
+
+        public bool AsserKO { get; set; }
     }
 }

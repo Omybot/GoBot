@@ -252,7 +252,7 @@ namespace GoBot.Calculs.Formes
         /// </summary>
         /// <param name="forme">Forme testée</param>
         /// <returns>Distance minimale</returns>
-        new public double Distance(IForme forme)
+        public override double Distance(IForme forme)
         {
             Type typeForme = forme.GetType();
 
@@ -275,7 +275,7 @@ namespace GoBot.Calculs.Formes
         /// </summary>
         /// <param name="forme">Segment testé</param>
         /// <returns>Distance minimale</returns>
-        new private double Distance(Segment segment)
+        public override double Distance(Segment segment)
         {
             // Si les segments se croisent la distance est de 0
             if (croise(segment))
@@ -319,7 +319,7 @@ namespace GoBot.Calculs.Formes
         /// </summary>
         /// <param name="forme">Droite testée</param>
         /// <returns>Distance minimale</returns>
-        new private double Distance(Droite droite)
+        public override double Distance(Droite droite)
         {
             // Si la droite et le segment se croisent la distance est de 0
             if (croise(droite))
@@ -339,7 +339,7 @@ namespace GoBot.Calculs.Formes
         /// </summary>
         /// <param name="forme">Cercle testé</param>
         /// <returns>Distance minimale</returns>
-        new private double Distance(Cercle Cercle)
+        public override double Distance(Cercle Cercle)
         {
             if (croise(Cercle))
                 return 0;
@@ -353,7 +353,7 @@ namespace GoBot.Calculs.Formes
         /// </summary>
         /// <param name="forme">Polygone testé</param>
         /// <returns>Distance minimale</returns>
-        new private double Distance(Polygone polygone)
+        public override double Distance(Polygone polygone)
         {
             // Distance jusqu'au segment le plus proche
             double minDistance = double.MaxValue;
@@ -374,7 +374,7 @@ namespace GoBot.Calculs.Formes
         /// </summary>
         /// <param name="point">PointReel testé</param>
         /// <returns>Distance minimale</returns>
-        new private double Distance(PointReel point)
+        public override double Distance(PointReel point)
         {
             // Le raisonnement est le même que pour la droite cf Droite.Distance
 

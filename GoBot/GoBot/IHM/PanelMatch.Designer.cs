@@ -34,25 +34,24 @@
             this.btnRecallage = new System.Windows.Forms.Button();
             this.btnJoueurGauche = new System.Windows.Forms.Button();
             this.btnJoueurDroite = new System.Windows.Forms.Button();
-            this.pictureBoxTable = new System.Windows.Forms.PictureBox();
-            this.pictureBoxCouleur = new System.Windows.Forms.PictureBox();
             this.btnReset = new System.Windows.Forms.Button();
+            this.pictureBoxTable = new System.Windows.Forms.PictureBox();
             this.ledJackArme = new Composants.Led();
+            this.pictureBoxCouleur = new System.Windows.Forms.PictureBox();
             this.ledJackBranche = new Composants.Led();
             this.ledRecallageGros = new Composants.Led();
-            this.lblBunDroite = new System.Windows.Forms.Label();
-            this.lblBoiGauche = new System.Windows.Forms.Label();
-            this.lblBeuDroite = new System.Windows.Forms.Label();
+            this.btnTapis1 = new System.Windows.Forms.Button();
+            this.btnTapis2 = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxTable)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBoxCouleur)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.ledJackArme)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBoxCouleur)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.ledJackBranche)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.ledRecallageGros)).BeginInit();
             this.SuspendLayout();
             // 
             // btnArmerJack
             // 
-            this.btnArmerJack.Location = new System.Drawing.Point(61, 285);
+            this.btnArmerJack.Location = new System.Drawing.Point(61, 350);
             this.btnArmerJack.Name = "btnArmerJack";
             this.btnArmerJack.Size = new System.Drawing.Size(227, 23);
             this.btnArmerJack.TabIndex = 39;
@@ -101,6 +100,16 @@
             this.btnJoueurDroite.UseVisualStyleBackColor = false;
             this.btnJoueurDroite.Click += new System.EventHandler(this.btnCouleurJoueurDroite_Click);
             // 
+            // btnReset
+            // 
+            this.btnReset.Location = new System.Drawing.Point(136, 406);
+            this.btnReset.Name = "btnReset";
+            this.btnReset.Size = new System.Drawing.Size(75, 23);
+            this.btnReset.TabIndex = 63;
+            this.btnReset.Text = "Reset";
+            this.btnReset.UseVisualStyleBackColor = true;
+            this.btnReset.Click += new System.EventHandler(this.btnReset_Click);
+            // 
             // pictureBoxTable
             // 
             this.pictureBoxTable.Image = global::GoBot.Properties.Resources.TablePlan;
@@ -111,6 +120,17 @@
             this.pictureBoxTable.TabIndex = 56;
             this.pictureBoxTable.TabStop = false;
             // 
+            // ledJackArme
+            // 
+            this.ledJackArme.BackColor = System.Drawing.Color.Transparent;
+            this.ledJackArme.Etat = false;
+            this.ledJackArme.Image = ((System.Drawing.Image)(resources.GetObject("ledJackArme.Image")));
+            this.ledJackArme.Location = new System.Drawing.Point(294, 353);
+            this.ledJackArme.Name = "ledJackArme";
+            this.ledJackArme.Size = new System.Drawing.Size(16, 16);
+            this.ledJackArme.TabIndex = 42;
+            this.ledJackArme.TabStop = false;
+            // 
             // pictureBoxCouleur
             // 
             this.pictureBoxCouleur.Location = new System.Drawing.Point(142, 81);
@@ -118,27 +138,6 @@
             this.pictureBoxCouleur.Size = new System.Drawing.Size(88, 50);
             this.pictureBoxCouleur.TabIndex = 23;
             this.pictureBoxCouleur.TabStop = false;
-            // 
-            // btnReset
-            // 
-            this.btnReset.Location = new System.Drawing.Point(136, 341);
-            this.btnReset.Name = "btnReset";
-            this.btnReset.Size = new System.Drawing.Size(75, 23);
-            this.btnReset.TabIndex = 63;
-            this.btnReset.Text = "Reset";
-            this.btnReset.UseVisualStyleBackColor = true;
-            this.btnReset.Click += new System.EventHandler(this.btnReset_Click);
-            // 
-            // ledJackArme
-            // 
-            this.ledJackArme.BackColor = System.Drawing.Color.Transparent;
-            this.ledJackArme.Etat = false;
-            this.ledJackArme.Image = ((System.Drawing.Image)(resources.GetObject("ledJackArme.Image")));
-            this.ledJackArme.Location = new System.Drawing.Point(294, 288);
-            this.ledJackArme.Name = "ledJackArme";
-            this.ledJackArme.Size = new System.Drawing.Size(16, 16);
-            this.ledJackArme.TabIndex = 42;
-            this.ledJackArme.TabStop = false;
             // 
             // ledJackBranche
             // 
@@ -162,47 +161,33 @@
             this.ledRecallageGros.TabIndex = 35;
             this.ledRecallageGros.TabStop = false;
             // 
-            // lblBunDroite
+            // btnTapis1
             // 
-            this.lblBunDroite.AutoSize = true;
-            this.lblBunDroite.Font = new System.Drawing.Font("Jokerman", 24F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblBunDroite.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.lblBunDroite.Location = new System.Drawing.Point(1176, 37);
-            this.lblBunDroite.Name = "lblBunDroite";
-            this.lblBunDroite.Size = new System.Drawing.Size(107, 47);
-            this.lblBunDroite.TabIndex = 71;
-            this.lblBunDroite.Text = "1 Bun";
+            this.btnTapis1.Location = new System.Drawing.Point(61, 289);
+            this.btnTapis1.Name = "btnTapis1";
+            this.btnTapis1.Size = new System.Drawing.Size(113, 23);
+            this.btnTapis1.TabIndex = 64;
+            this.btnTapis1.Text = "Fermer tapis 1";
+            this.btnTapis1.UseVisualStyleBackColor = true;
+            this.btnTapis1.Click += new System.EventHandler(this.btnTapis1_Click);
             // 
-            // lblBoiGauche
+            // btnTapis2
             // 
-            this.lblBoiGauche.AutoSize = true;
-            this.lblBoiGauche.Font = new System.Drawing.Font("Jokerman", 24F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblBoiGauche.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.lblBoiGauche.Location = new System.Drawing.Point(1178, 305);
-            this.lblBoiGauche.Name = "lblBoiGauche";
-            this.lblBoiGauche.Size = new System.Drawing.Size(107, 47);
-            this.lblBoiGauche.TabIndex = 72;
-            this.lblBoiGauche.Text = "3 Boi";
-            // 
-            // lblBeuDroite
-            // 
-            this.lblBeuDroite.AutoSize = true;
-            this.lblBeuDroite.Font = new System.Drawing.Font("Jokerman", 24F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblBeuDroite.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.lblBeuDroite.Location = new System.Drawing.Point(1176, 572);
-            this.lblBeuDroite.Name = "lblBeuDroite";
-            this.lblBeuDroite.Size = new System.Drawing.Size(112, 47);
-            this.lblBeuDroite.TabIndex = 73;
-            this.lblBeuDroite.Text = "2 Beu";
+            this.btnTapis2.Location = new System.Drawing.Point(175, 289);
+            this.btnTapis2.Name = "btnTapis2";
+            this.btnTapis2.Size = new System.Drawing.Size(113, 23);
+            this.btnTapis2.TabIndex = 65;
+            this.btnTapis2.Text = "Fermer tapis 2";
+            this.btnTapis2.UseVisualStyleBackColor = true;
+            this.btnTapis2.Click += new System.EventHandler(this.btnTapis2_Click);
             // 
             // PanelMatch
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.White;
-            this.Controls.Add(this.lblBeuDroite);
-            this.Controls.Add(this.lblBoiGauche);
-            this.Controls.Add(this.lblBunDroite);
+            this.Controls.Add(this.btnTapis2);
+            this.Controls.Add(this.btnTapis1);
             this.Controls.Add(this.btnReset);
             this.Controls.Add(this.pictureBoxTable);
             this.Controls.Add(this.ledJackArme);
@@ -218,8 +203,8 @@
             this.Size = new System.Drawing.Size(1273, 669);
             this.Load += new System.EventHandler(this.PanelMatch_Load);
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxTable)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBoxCouleur)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.ledJackArme)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBoxCouleur)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.ledJackBranche)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.ledRecallageGros)).EndInit();
             this.ResumeLayout(false);
@@ -240,9 +225,8 @@
         private Composants.Led ledJackArme;
         private System.Windows.Forms.PictureBox pictureBoxTable;
         private System.Windows.Forms.Button btnReset;
-        private System.Windows.Forms.Label lblBunDroite;
-        private System.Windows.Forms.Label lblBoiGauche;
-        private System.Windows.Forms.Label lblBeuDroite;
+        private System.Windows.Forms.Button btnTapis1;
+        private System.Windows.Forms.Button btnTapis2;
 
     }
 }

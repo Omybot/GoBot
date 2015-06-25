@@ -11,6 +11,7 @@ using GoBot.Communications;
 using GoBot.Calculs;
 using GoBot.Calculs.Formes;
 using GoBot.Balises;
+using GoBot.Actionneurs;
 
 namespace GoBot.IHM
 {
@@ -131,6 +132,16 @@ namespace GoBot.IHM
                 else
                     CouleurGauche();
             }
+        }
+
+        private void btnTapis1_Click(object sender, EventArgs e)
+        {
+            Actionneur.BrasTapis.SerrerTapisGauche();
+        }
+
+        private void btnTapis2_Click(object sender, EventArgs e)
+        {
+            Actionneur.BrasTapis.SerrerTapisDroit();
         }
     }
 }

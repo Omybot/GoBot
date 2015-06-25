@@ -254,7 +254,6 @@ namespace GoBot.Actionneurs
         public int PositionHaute { get; set; }
         public int PositionAttrapage { get; set; }
         public int PositionSouleve { get; set; }
-        public int PositionApprocheEstrade { get; set; }
         public int PositionDeposeEstrade { get; set; }
         public int PositionPousseEstrade { get; set; }
     }
@@ -266,7 +265,6 @@ namespace GoBot.Actionneurs
         public int PositionHaute { get; set; }
         public int PositionAttrapage { get; set; }
         public int PositionSouleve { get; set; }
-        public int PositionApprocheEstrade { get; set; }
         public int PositionDeposeEstrade { get; set; }
         public int PositionPousseEstrade { get; set; }
     }

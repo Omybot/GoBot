@@ -6,6 +6,7 @@ using System.Threading;
 using GoBot.Actionneurs;
 using System.Windows.Forms;
 using GoBot.ElementsJeu;
+using GoBot.Mouvements;
 
 namespace GoBot.Enchainements
 {
@@ -18,45 +19,59 @@ namespace GoBot.Enchainements
             // Ajouter ici les actions fixes avant le lancement de l'IA
 
             Actionneur.BrasAmpoule.Fermer();
-            Thread.Sleep(350);
+            Thread.Sleep(450);
+            Actionneur.BrasAmpoule.AmpouleChargee = true;
+
             Actionneur.BrasAmpoule.Hauteur(Config.CurrentConfig.AscenseurAmpoule.PositionPoseSur2Pied);
 
-            Actionneur.BrasPiedsDroite.OuvrirPinceBas();
-            Actionneur.BrasPiedsGauche.OuvrirPinceBas();
-            Actionneur.BrasPiedsDroite.OuvrirPinceHaut();
-            Actionneur.BrasPiedsGauche.OuvrirPinceHaut();
-            Actionneur.BrasPiedsDroite.AscenseurDescendre();
-            Actionneur.BrasPiedsGauche.AscenseurDescendre();
+            Actionneur.BrasSpot.OuvrirPinceBas();
+            Actionneur.BrasSpot.OuvrirPinceHaut();
+            Actionneur.BrasSpot.AscenseurDescendre();
+            Actionneur.BrasSpot.LibererBalle();
 
-            Robots.GrosRobot.PivotGauche(7.93);
+            Actionneur.BrasGobelet.OuvrirPinceBas();
+            Actionneur.BrasGobelet.AscenseurDescendre();
+            Actionneur.BrasGobelet.FermerPinceHaut();
 
-            Robots.GrosRobot.AccelerationFinDeplacement /= 3;
-            Robots.GrosRobot.Avancer(570);
+            if(Plateau.NotreCouleur == Plateau.CouleurGaucheJaune)
+                Robots.GrosRobot.PivotGauche(7.93);
+            else
+                Robots.GrosRobot.PivotDroite(7.93);
+
+            Robots.GrosRobot.Avancer(520);
+
+            Robots.GrosRobot.Lent();
+            Robots.GrosRobot.VitesseDeplacement /= 4;
+            Robots.GrosRobot.Avancer(50);
+            Robots.GrosRobot.Rapide();
 
             //Robots.GrosRobot.Avancer(500);
             //Robots.GrosRobot.Lent();
             //Robots.GrosRobot.Avancer(70);
 
-            Robots.GrosRobot.Rapide();
+            Actionneur.BrasGobelet.FermerPinceBas();
+            Thread.Sleep(200);
+            Actionneur.BrasGobelet.Gobelet = true;
+
             if (Plateau.NotreCouleur == Plateau.CouleurGaucheJaune)
-            {
-                Actionneur.BrasPiedsGauche.FermerPinceBas();
-                Thread.Sleep(200);
-                Actionneur.BrasPiedsGauche.SouleverLegerement();
-                Thread.Sleep(50);
-                Actionneur.BrasPiedsGauche.Gobelet = true;
                 Plateau.Gobelets[1].Ramasse = true;
-                Actionneur.BrasPiedsDroite.Deverrouiller();
+            else
+                Plateau.Gobelets[3].Ramasse = true;
+
+            Actionneur.BrasGobelet.AscenseurMonter();
+            Thread.Sleep(500);
+            if (Actionneur.BrasGobelet.AsserKO)
+            {
+                Actionneur.BrasGobelet.AsserKO = false;
+                Actionneur.BrasGobelet.SouleverLegerement();
             }
             else
             {
-                Actionneur.BrasPiedsDroite.FermerPinceBas();
-                Thread.Sleep(200);
-                Actionneur.BrasPiedsDroite.SouleverLegerement();
-                Thread.Sleep(50);
-                Actionneur.BrasPiedsDroite.Gobelet = true;
-                Plateau.Gobelets[3].Ramasse = true;
-                Actionneur.BrasPiedsGauche.Deverrouiller();
+                Actionneur.BrasGobelet.OuvrirPinceBas();
+                Robots.GrosRobot.Avancer(50);
+                Robots.GrosRobot.Reculer(50);
+                Actionneur.BrasGobelet.AscenseurMonter();
+                Actionneur.BrasGobelet.Gobelet = false;
             }
 
             while (ListeMouvementsGros.Count > 0)
@@ -80,7 +95,7 @@ namespace GoBot.Enchainements
                 if (ListeMouvementsGros[iMeilleur].ScorePondere != 0)
                 {
                     if (!ListeMouvementsGros[iMeilleur].Executer())
-                        ListeMouvementsGros[iMeilleur].DateMinimum = DateTime.Now + new TimeSpan(0, 0, 10);
+                        ListeMouvementsGros[iMeilleur].DateMinimum = DateTime.Now + new TimeSpan(0, 0, 1);
                 }
                 else
                 {

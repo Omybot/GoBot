@@ -40,13 +40,15 @@ namespace GoBot
 
         public static void RecallageGrosRobot(bool attendrePetit)
         {
+            Robots.GrosRobot.EnvoyerPID(20, 0, 200);
             Robots.GrosRobot.Stop();
             Actionneur.BrasAmpoule.AscenseurCalibration();
             Thread.Sleep(4000);
             Actionneur.BrasAmpoule.Monter();
             Thread.Sleep(1000);
 
-            Actionneur.BrasAspirateur.PositionRange();
+            Config.CurrentConfig.ServoAspirateurEpaule.Positionner(Config.CurrentConfig.ServoAspirateurEpaule.PositionDepose);
+            //Actionneur.BrasAspirateur.PositionRange();
             Actionneur.BrasPiedsDroite.AscenseurDescendre();
             Actionneur.BrasPiedsGauche.AscenseurDescendre();
             Actionneur.BrasPiedsDroite.Verrouiller();
@@ -98,6 +100,7 @@ namespace GoBot
             Robots.GrosRobot.Reculer(345);
             Actionneur.BrasTapis.LacherTapisGauche();
             Actionneur.BrasTapis.LacherTapisDroit();
+            Config.CurrentConfig.ServoAspirateurEpaule.Positionner(Config.CurrentConfig.ServoAspirateurEpaule.PositionRange);
 
             Thread.Sleep(5000);
 
@@ -114,9 +117,6 @@ namespace GoBot
 
             Robots.GrosRobot.ArmerJack();
             Robots.GrosRobot.MoteurPosition(MoteurID.Balise, 2000);
-
-            Actionneur.BrasTapis.SerrerTapisDroit();
-            Actionneur.BrasTapis.SerrerTapisGauche();
         }
     }
 }

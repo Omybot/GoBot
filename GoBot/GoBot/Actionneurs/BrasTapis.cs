@@ -40,6 +40,7 @@ namespace GoBot.Actionneurs
 
         public void PoserTapisDroit()
         {
+            /*
             Descendre();
             Thread.Sleep(100);
             LacherTapisDroit();
@@ -49,12 +50,17 @@ namespace GoBot.Actionneurs
             Descendre();
             Thread.Sleep(50);
             Monter();
-            Thread.Sleep(200);
+            Thread.Sleep(200);*/
+            
+            Descendre();
+            LacherTapisDroit();
+            Thread.Sleep(250);
+            Monter();
         }
 
         public void PoserTapisGauche()
         {
-            Descendre();
+            /*Descendre();
             Thread.Sleep(100);
             LacherTapisGauche();
             Thread.Sleep(300);
@@ -63,7 +69,11 @@ namespace GoBot.Actionneurs
             Descendre();
             Thread.Sleep(50);
             Monter();
-            Thread.Sleep(200);
+            Thread.Sleep(200);*/
+            Descendre();
+            LacherTapisGauche();
+            Thread.Sleep(250);
+            Monter();
         }
     }
 }

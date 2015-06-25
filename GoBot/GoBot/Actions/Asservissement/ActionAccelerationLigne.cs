@@ -16,7 +16,7 @@ namespace GoBot.Actions
             vitesse = vit;
         }
 
-        String IAction.ToString()
+        public override String ToString()
         {
             return robot.Nom + " accélération ligne à " + vitesse;
         }

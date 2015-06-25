@@ -759,15 +759,15 @@ namespace GoBot.Calculs.Formes
 
         #endregion
 
-        public List<Point> Points
+        public List<PointReel> Points
         {
             get
             {
-                List<Point> points = new List<Point>();
+                List<PointReel> points = new List<PointReel>();
 
                 foreach (Segment s in Cotes)
                 {
-                    points.Add(new Point((int)s.Debut.X, (int)s.Debut.Y));
+                    points.Add(new PointReel((int)s.Debut.X, (int)s.Debut.Y));
                 }
 
                 return points;

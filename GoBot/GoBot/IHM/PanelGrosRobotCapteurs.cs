@@ -39,13 +39,10 @@ namespace GoBot.IHM
             timerJack.Elapsed += new System.Timers.ElapsedEventHandler(timerJack_Elapsed);
             timerCouleurEquipe = new System.Timers.Timer(100);
             timerCouleurEquipe.Elapsed += new System.Timers.ElapsedEventHandler(timerCouleurEquipe_Elapsed);
-            timerPresenceBouchon = new System.Timers.Timer(100);
         }
 
         System.Timers.Timer timerJack;
         System.Timers.Timer timerCouleurEquipe;
-        System.Timers.Timer timerPresenceBouchon;
-        System.Timers.Timer timerPresenceFeux;
 
         private void boxJack_CheckedChanged(object sender, EventArgs e)
         {

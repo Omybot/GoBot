@@ -38,8 +38,8 @@ namespace GoBot.IHM
 
         private void btnEmpilerDroite_Click(object sender, EventArgs e)
         {
-            Thread th = new Thread(Actionneur.BrasPiedsDroite.Empiler);
-            th.Start();
+            /*Thread th = new Thread(Actionneur.BrasPiedsDroite.Empiler);
+            th.Start();*/
         }
 
         private void btnCleanBasGauche_Click(object sender, EventArgs e)
@@ -152,8 +152,8 @@ namespace GoBot.IHM
 
         private void btnEmpilerGauche_Click(object sender, EventArgs e)
         {
-            Thread th = new Thread(Actionneur.BrasPiedsGauche.Empiler);
-            th.Start();
+            /*Thread th = new Thread(Actionneur.BrasPiedsGauche.Empiler);
+            th.Start();*/
         }
 
         private void btnDebutMatchGauche_Click(object sender, EventArgs e)
@@ -414,6 +414,50 @@ namespace GoBot.IHM
         private void btnBallePrechargee_Click(object sender, EventArgs e)
         {
             Actionneur.BrasGobelet.AmpoulePrechargee = true;
+        }
+
+        private void btnClicClicDroit_Click(object sender, EventArgs e)
+        {
+            Actionneur.BrasPiedsDroite.ClicClic();
+        }
+
+        private void btn1Droite_Click(object sender, EventArgs e)
+        {
+            Actionneur.BrasSpot.NbPieds = 0;
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            Actionneur.BrasSpot.NbPieds = 1;
+        }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            Actionneur.BrasSpot.NbPieds = 2;
+        }
+
+        private void button3_Click(object sender, EventArgs e)
+        {
+            Actionneur.BrasSpot.NbPieds = 3;
+        }
+
+        private void button4_Click(object sender, EventArgs e)
+        {
+            Actionneur.BrasSpot.NbPieds = 4;
+        }
+
+        private void button6_Click(object sender, EventArgs e)
+        {
+            Actionneur.BrasGobelet.Gobelet = true;
+        }
+
+        private void button7_Click(object sender, EventArgs e)
+        {
+            Actionneur.BrasGobelet.Gobelet = false;
+        }
+
+        private void button5_Click(object sender, EventArgs e)
+        {
         }
     }
 }

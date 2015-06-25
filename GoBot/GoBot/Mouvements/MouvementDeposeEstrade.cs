@@ -7,6 +7,8 @@ using GoBot.Actionneurs;
 using System.Drawing;
 using GoBot.ElementsJeu;
 using System.Threading;
+using GoBot.Calculs.Formes;
+using GoBot.PathFinding;
 
 namespace GoBot.Mouvements
 {
@@ -22,13 +24,13 @@ namespace GoBot.Mouvements
 
             if (zone.Couleur == Plateau.CouleurGaucheJaune)
             {
-                Positions.Add(new Position(180 - 139.12, new Calculs.Formes.PointReel(3000 - 1898, 1700)));
+                Positions.Add(new Position(45, new Calculs.Formes.PointReel(1099, 1689)));
                 brasSpot = Actionneur.BrasPiedsDroite;
                 Couleur = Plateau.CouleurGaucheJaune;
             }
             else
             {
-                Positions.Add(new Position(139.12, new Calculs.Formes.PointReel(1898, 1700)));
+                Positions.Add(new Position(180 - 45, new Calculs.Formes.PointReel(3000 - 1099, 1689)));
                 brasSpot = Actionneur.BrasPiedsGauche;
                 Couleur = Plateau.CouleurDroiteVert;
             }
@@ -42,56 +44,92 @@ namespace GoBot.Mouvements
 
             Position position = PositionProche;
 
-            if (position != null && Robots.GrosRobot.GotoXYTeta(position.Coordonnees.X, position.Coordonnees.Y, position.Angle.AngleDegres)
-                && Robots.GrosRobot.GotoXYTeta(position.Coordonnees.X, position.Coordonnees.Y, position.Angle.AngleDegres))
+            if (position != null)
             {
-                if (brasSpot.NbPieds == 4)
+                Trajectoire traj = PathFinder.ChercheTrajectoire(Robot.Graph, Plateau.ListeObstacles, new Position(Robot.Position), position, Robot.Rayon, 160);
+
+                if (traj != null && Robot.ParcourirTrajectoire(traj))
                 {
-                    brasSpot.OuvrirPinceBas();
-                    Thread.Sleep(200);
-                    brasSpot.AscenseurDescendre();
-                    brasSpot.LibererBalle();
-                    Thread.Sleep(500);
-                    brasSpot.FermerPinceBas();
-                    Thread.Sleep(200);
+                    if (!Actionneur.BrasSpot.AmpouleSurSpot && Actionneur.BrasGobelet.AmpoulePrechargee)
+                        BrasPieds.TransfererBalle();
+
+                    if (Plateau.Enchainement.TempsRestant.TotalSeconds < 20)
+                    {
+                        brasSpot.OuvrirPinceHaut();
+                        brasSpot.Deverrouiller();
+                        brasSpot.NbPieds = 0;
+                        brasSpot.AmpouleSurSpot = false;
+                        Thread.Sleep(300);
+                        Actionneur.BrasSpot.AscenseurDescendre();
+                        Thread.Sleep(500);
+                        brasSpot.OuvrirPinceBas();
+                        Thread.Sleep(1000);
+                        Robots.GrosRobot.Reculer(250);
+
+                        if (Plateau.NotreCouleur == Plateau.CouleurGaucheJaune)
+                            Plateau.ObstaclesCrees.Add(new Cercle(new PointReel(1250, 1950), 200));
+                        else
+                            Plateau.ObstaclesCrees.Add(new Cercle(new PointReel(1750, 1950), 200));
+                    }
+
+                    else
+                    {
+                        if (brasSpot.NbPieds == 4)
+                        {
+                            // Si on a 4 pieds, on reprend la tour depuis la base
+                            brasSpot.OuvrirPinceBas();
+                            Thread.Sleep(200);
+                            brasSpot.AscenseurDescendre();
+                            brasSpot.LibererBalle();
+                            Thread.Sleep(500);
+                            brasSpot.FermerPinceBas();
+                            Thread.Sleep(200);
+                        }
+
+                        brasSpot.OuvrirPinceHaut();
+                        Thread.Sleep(300);
+                        brasSpot.AscenseurMonter();
+                        Thread.Sleep(500);
+                        brasSpot.FermerPinceHaut();
+
+                        Robots.GrosRobot.VitesseAdaptableEnnemi = false;
+                        Robot.VitesseDeplacement = 200;
+                        Robot.Avancer(120);
+                        Robot.VitesseDeplacement = 100;
+                        brasSpot.AscenseurHauteur(brasSpot.PositionHauteurDeposeEstrade);
+                        brasSpot.DeposeSpot(true);
+                        Robot.Reculer(70);
+                        brasSpot.FermerPinceBas();
+                        brasSpot.AscenseurHauteur(brasSpot.PositionHauteurPousseEstrade);
+                        Robot.VitesseDeplacement = 50;
+                        Robot.Avancer(50);
+                        Robot.Reculer(10);
+                        Robot.Reculer(50);
+                        brasSpot.AscenseurMonter();
+                        Robot.Rapide();
+                        Robots.GrosRobot.VitesseAdaptableEnnemi = true;
+                    }
+
+                    Robots.GrosRobot.Historique.Log("Fin zone dépose estrade en " + (DateTime.Now - debut).TotalSeconds.ToString("#.#") + "s");
+                    ((ZoneInteret)Element).Interet = false;
+                    return true;
                 }
-
-                brasSpot.OuvrirPinceHaut();
-                Thread.Sleep(300);
-                brasSpot.AscenseurHauteur(brasSpot.PositionHauteurApprocheEstrade);
-                Thread.Sleep(500);
-                brasSpot.FermerPinceHaut();
-
-                Robot.VitesseDeplacement = 200;
-                Robot.Avancer(100);
-                brasSpot.AscenseurHauteur(brasSpot.PositionHauteurDeposeEstrade);
-                brasSpot.DeposeSpot(true);
-                Robot.Reculer(100);
-                brasSpot.FermerPinceBas();
-                brasSpot.AscenseurHauteur(brasSpot.PositionHauteurPousseEstrade);
-                Robot.VitesseDeplacement = 50;
-                Robot.AccelerationFinDeplacement /= 2;
-                Robot.Avancer(100);
-                Robot.AccelerationFinDeplacement *= 2;
-                Robot.Reculer(10);
-                brasSpot.AscenseurMonter();
-                Robot.Rapide();
-                Robot.Reculer(100);
-
-                Robots.GrosRobot.Historique.Log("Fin zone dépose estrade en " + (DateTime.Now - debut).TotalSeconds.ToString("#.#") + "s");
-                ((ZoneInteret)Element).Interet = false;
-                return true;
+                else
+                {
+                    Robots.GrosRobot.Historique.Log("Annulation zone estrade, trajectoire échouée");
+                    return false;
+                }
             }
             else
             {
-                Robots.GrosRobot.Historique.Log("Annulation zone dépose estrade");
+                Robots.GrosRobot.Historique.Log("Annulation zone estrade, trajectoire non trouvée");
                 return false;
             }
         }
 
         public override double Score
         {
-            get 
+            get
             {
                 if (!((ZoneInteret)Element).Interet || Plateau.NotreCouleur != ((ZoneInteret)Element).Couleur)
                     return 0;
@@ -115,10 +153,15 @@ namespace GoBot.Mouvements
 
         public override double ScorePondere
         {
-            get 
-            { 
-                return Score; 
+            get
+            {
+                return Score;
             }
+        }
+
+        public override string ToString()
+        {
+            return "Dépose sur estrade";
         }
     }
 }

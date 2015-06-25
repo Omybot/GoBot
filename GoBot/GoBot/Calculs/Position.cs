@@ -22,6 +22,15 @@ namespace GoBot.Calculs
         }
 
         /// <summary>
+        /// Constructeur par copie
+        /// </summary>
+        public Position(Position other)
+        {
+            Angle = new Angle(other.Angle.AngleDegres);
+            Coordonnees = new PointReel(other.Coordonnees);
+        }
+
+        /// <summary>
         /// Construit une position selon les paramètres
         /// </summary>
         /// <param name="a">Angle de départ</param>

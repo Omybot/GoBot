@@ -5,7 +5,7 @@ using System.Text;
 
 namespace GoBot.Actions
 {
-    class ActionAvance : IAction
+    class ActionAvance : IActionDuree
     {
         private int distance;
         private Robot robot;
@@ -16,7 +16,7 @@ namespace GoBot.Actions
             distance = dist;
         }
 
-        String IAction.ToString()
+        String ToString()
         {
             return robot.Nom + " avance de " + distance + "mm";
         }
@@ -31,6 +31,14 @@ namespace GoBot.Actions
             get 
             { 
                 return GoBot.Properties.Resources.Avance;  
+            }
+        }
+
+        int IActionDuree.Duree
+        {
+            get
+            {
+                return robot.CalculDureeLigne(distance);
             }
         }
     }

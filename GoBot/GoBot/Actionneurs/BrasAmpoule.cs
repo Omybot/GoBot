@@ -13,7 +13,7 @@ namespace GoBot.Actionneurs
 
         public BrasAmpoule()
         {
-            AmpouleChargee = true;
+            AmpouleChargee = false;
             PinceFermee = false;
         }
 

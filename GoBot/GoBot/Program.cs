@@ -38,51 +38,56 @@ namespace GoBot
 
             bool lancement = true;
 #if !DEBUG
-            SplashScreen.SetMessage("GoBot recherche\ndes mises à jour...", Color.Black);
-            String versionCourante = Application.ProductVersion.Substring(0, Application.ProductVersion.LastIndexOf('.'));
-            String derniereVersion;
 
-            try
+            String noUpdateFile = Application.StartupPath + "\\NoUpdate";
+            if(!File.Exists(noUpdateFile))
             {
-                HttpWebRequest r = (HttpWebRequest)WebRequest.Create("http://www.omybot.com/GoBot/version.txt");
-                HttpWebResponse rep = (HttpWebResponse)r.GetResponse();
-                StreamReader sr = new StreamReader(rep.GetResponseStream());
-                derniereVersion = sr.ReadLine();
-                sr.Close();
-            }
-            catch(Exception)
-            {
-                derniereVersion = versionCourante;
-                SplashScreen.SetMessage("Impossible de mettre\nà jour...", Color.Red);
-                Thread.Sleep(1000);
-            }
-
-            if (versionCourante != derniereVersion)
-            {
-                lancement = false;
-                SplashScreen.SetMessage("Une nouvelle version\n est disponible.", Color.Green);
-                Thread.Sleep(1000);
-                SplashScreen.SetMessage("Téléchargement de la\n dernière version...", Color.FromArgb(50, 50, 50));
-
-                WebClient wc = new WebClient();
-                String setup = System.IO.Path.GetTempPath() + "SetupGoBot.exe";
+                SplashScreen.SetMessage("GoBot recherche\ndes mises à jour...", Color.Black);
+                String versionCourante = Application.ProductVersion.Substring(0, Application.ProductVersion.LastIndexOf('.'));
+                String derniereVersion;
 
                 try
                 {
-                    wc.DownloadFile("http://www.omybot.com/GoBot/SetupGoBot.exe", System.IO.Path.GetTempPath() + "SetupGoBot.exe");
-
-                    SplashScreen.SetMessage("GoBot va se relancer...", Color.FromArgb(50, 50, 50));
-                    Thread.Sleep(1000);
-                    System.Diagnostics.ProcessStartInfo myInfo = new System.Diagnostics.ProcessStartInfo();
-                    myInfo.FileName = setup;
-                    myInfo.Arguments = "/SP- /VERYSILENT";
-                    System.Diagnostics.Process.Start(myInfo);
+                    HttpWebRequest r = (HttpWebRequest)WebRequest.Create("http://www.omybot.com/GoBot/version.txt");
+                    HttpWebResponse rep = (HttpWebResponse)r.GetResponse();
+                    StreamReader sr = new StreamReader(rep.GetResponseStream());
+                    derniereVersion = sr.ReadLine();
+                    sr.Close();
                 }
-                catch (Exception)
+                catch(Exception)
                 {
-                    SplashScreen.SetMessage("Erreur !" + Environment.NewLine + " Mise à jour échouée", Color.Red);
-                    Thread.Sleep(2000);
-                    lancement = true;
+                    derniereVersion = versionCourante;
+                    SplashScreen.SetMessage("Impossible de mettre\nà jour...", Color.Red);
+                    Thread.Sleep(1000);
+                }
+
+                if (versionCourante != derniereVersion)
+                {
+                    lancement = false;
+                    SplashScreen.SetMessage("Une nouvelle version\n est disponible.", Color.Green);
+                    Thread.Sleep(1000);
+                    SplashScreen.SetMessage("Téléchargement de la\n dernière version...", Color.FromArgb(50, 50, 50));
+
+                    WebClient wc = new WebClient();
+                    String setup = System.IO.Path.GetTempPath() + "SetupGoBot.exe";
+
+                    try
+                    {
+                        wc.DownloadFile("http://www.omybot.com/GoBot/SetupGoBot.exe", System.IO.Path.GetTempPath() + "SetupGoBot.exe");
+
+                        SplashScreen.SetMessage("GoBot va se relancer...", Color.FromArgb(50, 50, 50));
+                        Thread.Sleep(1000);
+                        System.Diagnostics.ProcessStartInfo myInfo = new System.Diagnostics.ProcessStartInfo();
+                        myInfo.FileName = setup;
+                        myInfo.Arguments = "/SP- /VERYSILENT";
+                        System.Diagnostics.Process.Start(myInfo);
+                    }
+                    catch (Exception)
+                    {
+                        SplashScreen.SetMessage("Erreur !" + Environment.NewLine + " Mise à jour échouée", Color.Red);
+                        Thread.Sleep(2000);
+                        lancement = true;
+                    }
                 }
             }
 #endif

@@ -382,8 +382,8 @@
             this.checkedListBox.FormattingEnabled = true;
             this.checkedListBox.Items.AddRange(new object[] {
             "Plateau",
-            "Obstacles",
             "Elements de jeu",
+            "Obstacles",
             "Graph gros robots (noeuds)",
             "Graph gros robot (arcs)",
             "Graph petit robots  (noeuds)",

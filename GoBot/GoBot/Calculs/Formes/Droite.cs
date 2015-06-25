@@ -339,7 +339,7 @@ namespace GoBot.Calculs.Formes
         /// </summary>
         /// <param name="forme">Forme testée</param>
         /// <returns>Distance minimale</returns>
-        public double Distance(IForme forme)
+        public virtual double Distance(IForme forme)
         {
             Type typeForme = forme.GetType();
 
@@ -362,7 +362,7 @@ namespace GoBot.Calculs.Formes
         /// </summary>
         /// <param name="forme">Segment testé</param>
         /// <returns>Distance minimale</returns>
-        public double Distance(Segment segment)
+        public virtual double Distance(Segment segment)
         {
             // Le segment sait le faire
             return segment.Distance(this);
@@ -373,7 +373,7 @@ namespace GoBot.Calculs.Formes
         /// </summary>
         /// <param name="forme">Droite testée</param>
         /// <returns>Distance minimale</returns>
-        public double Distance(Droite droite)
+        public virtual double Distance(Droite droite)
         {
             // Si les droites se croisent la distance est de 0
             if (croise(droite))
@@ -396,7 +396,7 @@ namespace GoBot.Calculs.Formes
         /// </summary>
         /// <param name="forme">Cercle testé</param>
         /// <returns>Distance minimale</returns>
-        public double Distance(Cercle Cercle)
+        public virtual double Distance(Cercle Cercle)
         {
             // Distance jusqu'au centre du cercle - son rayon
             return Distance(Cercle.Centre) - Cercle.Rayon;
@@ -407,7 +407,7 @@ namespace GoBot.Calculs.Formes
         /// </summary>
         /// <param name="forme">Polygone testé</param>
         /// <returns>Distance minimale</returns>
-        public double Distance(Polygone polygone)
+        public virtual double Distance(Polygone polygone)
         {
             // Distance jusqu'au segment le plus proche
             double minDistance = double.MaxValue;
@@ -423,7 +423,7 @@ namespace GoBot.Calculs.Formes
         /// </summary>
         /// <param name="forme">PointReel testé</param>
         /// <returns>Distance minimale</returns>
-        public double Distance(PointReel point)
+        public virtual double Distance(PointReel point)
         {
             // Pour calculer la distance, on calcule la droite perpendiculaire passant par ce point
             // Puis on calcule l'intersection de la droite et de sa perpendiculaire

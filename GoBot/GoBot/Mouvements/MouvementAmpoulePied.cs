@@ -7,6 +7,7 @@ using GoBot.Actionneurs;
 using GoBot.Calculs.Formes;
 using GoBot.ElementsJeu;
 using System.Threading;
+using GoBot.PathFinding;
 
 namespace GoBot.Mouvements
 {
@@ -112,11 +113,10 @@ namespace GoBot.Mouvements
                 case 12:
                     break;
                 case 13:
-                    Positions.Add(new Position(-190.47, new PointReel(2645, 304)));
-                    break;
                 case 14:
                     break;
                 case 15:
+                    Positions.Add(new Position(-190.47, new PointReel(2645, 304)));
                     break;
             }
 
@@ -134,33 +134,54 @@ namespace GoBot.Mouvements
             Robots.GrosRobot.Historique.Log("Début dépose ampoule sur pied " + numeroPied);
 
             DateTime debut = DateTime.Now;
-
+                        
             Position position = PositionProche;
 
-            Actionneur.BrasAmpoule.DescendrePosePied(1);
-            if (position != null && Robots.GrosRobot.GotoXYTeta(position.Coordonnees.X, position.Coordonnees.Y, position.Angle.AngleDegres))
+            if (position != null)
             {
-                int diff = (int)(1000 - ((DateTime.Now - debut).TotalMilliseconds));
-                if (diff > 0 && diff <= 1000)
-                    Thread.Sleep(diff);
+                Trajectoire traj = PathFinder.ChercheTrajectoire(Robot.Graph, Plateau.ListeObstacles, new Position(Robot.Position), position, Robot.Rayon, 160);
 
-                Robot.Lent();
-                Robot.Reculer(distanceAttrapage);
-                Actionneur.BrasAmpoule.Ouvrir();
-                Thread.Sleep(200);
-                Robot.Avancer(distanceAttrapage);
-                Robot.Rapide();
-                Plateau.Pieds[numeroPied].Ampoule = true;
-                Actionneur.BrasAmpoule.AmpouleChargee = false;
+                if (traj != null && Robot.ParcourirTrajectoire(traj))
+                {
+                    if (traj != null && Robot.ParcourirTrajectoire(traj))
+                    {
+                        int diff = (int)(1000 - ((DateTime.Now - debut).TotalMilliseconds));
+                        if (diff > 0 && diff <= 1000)
+                            Thread.Sleep(diff);
 
-                Robots.GrosRobot.Historique.Log("Fin dépose ampoule sur pied " + numeroPied + " en " + (DateTime.Now - debut).TotalSeconds.ToString("#.#") + "s");
+                        Robots.GrosRobot.VitesseAdaptableEnnemi = false;
+                        Robot.Lent();
+                        Robot.Reculer(distanceAttrapage);
+                        Actionneur.BrasAmpoule.Ouvrir();
+                        Actionneur.BrasAmpoule.AmpouleChargee = false;
+                        Thread.Sleep(200);
+                        Robot.Avancer(distanceAttrapage);
+                        Robot.Rapide();
+                        Robots.GrosRobot.VitesseAdaptableEnnemi = true;
+
+                        Plateau.Pieds[numeroPied].Ampoule = true;
+                        Actionneur.BrasAmpoule.AmpouleChargee = false;
+
+                        Robots.GrosRobot.Historique.Log("Fin dépose ampoule sur pied " + numeroPied + " en " + (DateTime.Now - debut).TotalSeconds.ToString("#.#") + "s");
+                    }
+                    return true;
+                }
+                else
+                {
+                    Robots.GrosRobot.Historique.Log("Annulation ampoule sur pied " + numeroPied + ", trajectoire échouée");
+                    return false;
+                }
             }
             else
             {
-                Robots.GrosRobot.Historique.Log("Annulation  dépose ampoule sur pied " + numeroPied);
+                Robots.GrosRobot.Historique.Log("Annulation ampoule sur pied " + numeroPied + ", trajectoire non trouvée");
                 return false;
             }
-            return true;
+        }
+
+        public override string ToString()
+        {
+            return "Pose ampoule sur pied " + numeroPied;
         }
     }
 }

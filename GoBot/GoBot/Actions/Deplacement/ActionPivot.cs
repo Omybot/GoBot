@@ -5,7 +5,7 @@ using System.Text;
 
 namespace GoBot.Actions
 {
-    class ActionPivot : IAction
+    class ActionPivot : IActionDuree
     {
         private double angle;
         private Robot robot;
@@ -29,7 +29,7 @@ namespace GoBot.Actions
             }
         }
 
-        string IAction.ToString()
+        public override String ToString()
         {
             return robot.Nom + " pivote de " + angle + "° " + sens.ToString().ToLower();
         }
@@ -40,6 +40,14 @@ namespace GoBot.Actions
                 robot.PivotDroite(angle);
             else
                 robot.PivotGauche(angle);
+        }
+
+        public int Duree
+        {
+            get
+            {
+                return robot.CalculDureePivot(angle);
+            }
         }
     }
 }

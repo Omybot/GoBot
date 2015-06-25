@@ -9,7 +9,6 @@ namespace GoBot.Actions
     public interface IAction
     {
         Image Image { get; }
-        String ToString();
         void Executer();
     }
 }

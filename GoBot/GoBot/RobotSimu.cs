@@ -94,6 +94,9 @@ namespace GoBot
 
         public RobotSimu(IDRobot idRobot)
         {
+
+            AngleParcouru = 0;
+            DistanceParcourue = 0;
             IDRobot = idRobot;
             timerDeplacement = new System.Timers.Timer(IntervalleRafraichissementPosition);
             timerDeplacement.Elapsed += new ElapsedEventHandler(timerDeplacement_Elapsed);
@@ -207,6 +210,8 @@ namespace GoBot
 
         public override void Avancer(int distance, bool attendre = true)
         {
+            DistanceParcourue += distance;
+
             DeplacementLigne = true;
 
             if (distance > 0)
@@ -235,11 +240,15 @@ namespace GoBot
 
         public override void Reculer(int distance, bool attendre = true)
         {
+            DistanceParcourue += distance;
+
             Avancer(-distance, attendre);
         }
 
         public override void PivotGauche(double angle, bool attendre = true)
         {
+            AngleParcouru += angle;
+
             angle = Math.Round(angle, 2);
             Historique.AjouterAction(new ActionPivot(this, angle, SensGD.Gauche));
             Destination = new Position(new Angle(Position.Angle.AngleDegres - angle, AnglyeType.Degre), new PointReel(Position.Coordonnees.X, Position.Coordonnees.Y));
@@ -252,6 +261,8 @@ namespace GoBot
 
         public override void PivotDroite(double angle, bool attendre = true)
         {
+            AngleParcouru += angle;
+
             angle = Math.Round(angle, 2);
             Historique.AjouterAction(new ActionPivot(this, angle, SensGD.Droite));
             Destination = new Position(new Angle(Position.Angle.AngleDegres + angle, AnglyeType.Degre), new PointReel(Position.Coordonnees.X, Position.Coordonnees.Y));

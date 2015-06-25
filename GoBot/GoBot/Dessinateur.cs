@@ -12,6 +12,7 @@ using GoBot.Balises;
 using GoBot.Actionneurs;
 using GoBot.ElementsJeu;
 using GoBot.Mouvements;
+using GoBot.PathFinding;
 
 namespace GoBot
 {
@@ -95,8 +96,7 @@ namespace GoBot
         public static bool AfficheLigneDetections;
         public static bool AfficheElementsJeu;
 
-        public static List<Arc> cheminArcs;
-        public static List<Node> cheminNodes;
+        public static List<Trajectoire> Trajectoires;
 
         public static Mode modeCourant;
 
@@ -183,6 +183,7 @@ namespace GoBot
             AfficheCoutsMouvementsPetit = false;
             AfficheLigneDetections = false;
             AfficheElementsJeu = true;
+            Trajectoires = new List<Trajectoire>();
         }
 
         private static Thread threadDessin;
@@ -246,7 +247,7 @@ namespace GoBot
                         DessineGraph(Robots.PetitRobot, g);
                         DessineGraph(Robots.GrosRobot, g);
 
-                        DessineTrajectoire(g);
+                        //DessineTrajectoire(g);
 
                         if (AfficheHistoriqueCoordonneesGros && Robots.GrosRobot.HistoriqueCoordonnees != null)
                             DessineHistoriqueTrajectoire(Robots.GrosRobot, g);
@@ -262,8 +263,7 @@ namespace GoBot
                         if (AfficheElementsJeu)
                             DessineElementsJeu(g);
 
-                        DessinePathFinding(Robots.GrosRobot, g);
-                        DessinePathFinding(Robots.PetitRobot, g);
+                        DessinePathFinding(g);
 
                         DessinePositionEnnemis(g);
 
@@ -376,6 +376,26 @@ namespace GoBot
 
                             g.DrawLine(penBlancFleche, (Point)RealToScreenPosition(positionDepart), positionFin);
                         }
+
+                        // Trajectoires
+
+                        foreach (Trajectoire traj in Trajectoires)
+                        {
+                            DessineTrajectoire(traj, g);
+                        }
+
+                        if (Robots.GrosRobot.TrajectoireEnCours != null)
+                        {
+                            Trajectoire traj = new Trajectoire();
+                            traj.AjouterPoint(Robots.GrosRobot.Position.Coordonnees);
+
+                            for (int iPoint = 1; iPoint < Robots.GrosRobot.TrajectoireEnCours.PointsPassage.Count; iPoint++)
+                                traj.AjouterPoint(Robots.GrosRobot.TrajectoireEnCours.PointsPassage[iPoint]);
+
+                            DessineTrajectoire(traj, g);
+                        }
+                        if (Robots.PetitRobot.TrajectoireEnCours != null)
+                            DessineTrajectoire(Robots.PetitRobot.TrajectoireEnCours, g);
 
                         TableDessinee(bmp);
                     }
@@ -523,7 +543,7 @@ namespace GoBot
         {
             Point positionRobot = RealToScreenPosition(robot.Position.Coordonnees);
 
-            Bitmap bmpRobot = new Bitmap(RealToScreenDistance(robot.Taille * 3), RealToScreenDistance(robot.Taille * 3));
+            Bitmap bmpRobot = new Bitmap(Properties.Resources.Capot.Width, Properties.Resources.Capot.Height);
             Graphics gGros = Graphics.FromImage(bmpRobot);
             /*gGros.FillRectangle(brushTransparent, 0, 0, RealToScreenDistance(robot.Taille * 2), RealToScreenDistance(robot.Taille * 2));
 
@@ -532,7 +552,7 @@ namespace GoBot
             gGros.DrawLine(Plateau.NotreCouleur == Plateau.CouleurGaucheJaune ? penCouleurJ1R : penCouleurJ2J, bmpRobot.Width / 2, bmpRobot.Height / 2, bmpRobot.Width / 2, bmpRobot.Height / 2 - RealToScreenDistance(robot.Longueur / 2));
             */
 
-            gGros.DrawImage(Properties.Resources.Capot, bmpRobot.Width / 2 - Properties.Resources.Capot.Width / 2, bmpRobot.Height / 2 - Properties.Resources.Capot.Width / 2, Properties.Resources.Capot.Width, Properties.Resources.Capot.Height);
+            gGros.DrawImage(Properties.Resources.Capot, 0, 0, Properties.Resources.Capot.Width, Properties.Resources.Capot.Height);
 
             // Dessiner les actionneurs ici
             if (robot == Robots.GrosRobot)
@@ -551,10 +571,19 @@ namespace GoBot
                 {
                     Point p = new Point((int)(bmpRobot.Width / 2 - RealToScreenDistance(78) - RealToScreenDistance(60) / 2), (int)(bmpRobot.Height / 2 - RealToScreenDistance(123) - RealToScreenDistance(60) / 2));
 
-                    using(Brush brush = new SolidBrush(Plateau.NotreCouleur))
+                    using (Brush brush = new SolidBrush(Plateau.NotreCouleur))
                         gGros.FillEllipse(brush, p.X, p.Y, RealToScreenDistance(60), RealToScreenDistance(60));
                     gGros.DrawEllipse(penNoir, p.X, p.Y, RealToScreenDistance(60), RealToScreenDistance(60));
+                }
 
+                if (Actionneur.BrasPiedsGauche.AmpoulePrechargee || Actionneur.BrasPiedsGauche.AmpouleSurSpot)
+                {
+                    Point p = new Point((int)(bmpRobot.Width / 2 - RealToScreenDistance(78) - RealToScreenDistance(70) / 2), (int)(bmpRobot.Height / 2 - RealToScreenDistance(123) - RealToScreenDistance(70) / 2));
+
+                    gGros.DrawImage(Properties.Resources.Ampoule, p.X, p.Y, Properties.Resources.Ampoule.Width, Properties.Resources.Ampoule.Height);
+                }
+                if (Actionneur.BrasPiedsGauche.NbPieds > 0)
+                {
                     gGros.DrawString(Actionneur.BrasPiedsGauche.NbPieds.ToString(), fontNbPieds, brushNoir, (float)(bmpRobot.Width / 2 - RealToScreenDistance(78 + 30)) + 5, (float)(bmpRobot.Height / 2 - RealToScreenDistance(123 + 30)) + 2);
                 }
 
@@ -575,8 +604,27 @@ namespace GoBot
                     using (Brush brush = new SolidBrush(Plateau.NotreCouleur))
                         gGros.FillEllipse(brush, p.X, p.Y, RealToScreenDistance(60), RealToScreenDistance(60));
                     gGros.DrawEllipse(penNoir, p.X, p.Y, RealToScreenDistance(60), RealToScreenDistance(60));
+                }
 
+                if (Actionneur.BrasPiedsDroite.AmpoulePrechargee || Actionneur.BrasPiedsDroite.AmpouleSurSpot)
+                {
+                    Point p = new Point((int)(bmpRobot.Width / 2 + RealToScreenDistance(78) - RealToScreenDistance(70) / 2), (int)(bmpRobot.Height / 2 - RealToScreenDistance(123) - RealToScreenDistance(70) / 2));
+
+                    gGros.DrawImage(Properties.Resources.Ampoule, p.X, p.Y, Properties.Resources.Ampoule.Width, Properties.Resources.Ampoule.Height);
+                }
+                if (Actionneur.BrasPiedsDroite.NbPieds > 0)
+                {
                     gGros.DrawString(Actionneur.BrasPiedsDroite.NbPieds.ToString(), fontNbPieds, brushNoir, (float)(bmpRobot.Width / 2 + RealToScreenDistance(78 - 30)) + 5, (float)(bmpRobot.Height / 2 - RealToScreenDistance(123 + 30)) + 2);
+                }
+
+                if (Actionneur.BrasAmpoule.PinceFermee)
+                {
+                    gGros.DrawImage(Properties.Resources.CapotPinceFermee, 0, 0, Properties.Resources.CapotPinceFermee.Width, Properties.Resources.CapotPinceFermee.Height);
+                }
+                if(Actionneur.BrasAmpoule.AmpouleChargee)
+                {
+                    Point p = new Point(88 - Properties.Resources.Ampoule.Width / 2, 148 - Properties.Resources.Ampoule.Height / 2);
+                    gGros.DrawImage(Properties.Resources.Ampoule, p.X, p.Y, Properties.Resources.Ampoule.Width, Properties.Resources.Ampoule.Height);
                 }
             }
 
@@ -675,19 +723,27 @@ namespace GoBot
             }
         }
 
-        private static void DessineTrajectoire(Graphics g)
+        private static void DessineTrajectoire(Trajectoire traj, Graphics g)
         {
-            // Dessin de la trajectoire en cours de recherche
-            if (modeCourant == Mode.FinTrajectoire && cheminArcs != null)
+            Point pointNodePrec = traj.PointsPassage[0];
+
+            using (Pen penR = new Pen(Color.Red, 2), penB = new Pen(Color.White, 4))
             {
-                foreach (Arc a in cheminArcs)
+                for (int i = 0; i < traj.PointsPassage.Count; i++)
                 {
-                    g.DrawLine(penBleuViolet, RealToScreenPosition(a.StartNode.X, a.StartNode.Y), RealToScreenPosition(a.EndNode.X, a.EndNode.Position.Y));
+                    Point pointNode = RealToScreenPosition(traj.PointsPassage[i].X, traj.PointsPassage[i].Y);
+                    if (i >= 1)
+                    {
+                        g.DrawLine(penB, pointNode, pointNodePrec);
+                        g.DrawLine(penR, pointNode, pointNodePrec);
+                    }
+                    pointNodePrec = pointNode;
                 }
-                foreach (Node n in cheminNodes)
+                for (int i = 0; i < traj.PointsPassage.Count; i++)
                 {
-                    Point pointNode = RealToScreenPosition(n.X, n.Y);
-                    g.DrawEllipse(penBleuViolet, new Rectangle(pointNode.X - 3, pointNode.Y - 3, 6, 6));
+                    Point pointNode = RealToScreenPosition(traj.PointsPassage[i].X, traj.PointsPassage[i].Y);
+                    g.FillEllipse(brushRouge, new Rectangle(pointNode.X - 4, pointNode.Y - 4, 8, 8));
+                    g.DrawEllipse(penBlanc, new Rectangle(pointNode.X - 4, pointNode.Y - 4, 8, 8));
                 }
             }
         }
@@ -770,6 +826,8 @@ namespace GoBot
             Pen pen = robot == Robots.GrosRobot ? penBleuFin : penBleuClairFin;
             Brush brush = robot == Robots.GrosRobot ? brushBleu : brushBleuClair;
 
+            Synchronizer.Lock(robot.Graph);
+
             // Dessin des arcs
             if ((robot == Robots.GrosRobot ? AfficheGraphArretesGros : AfficheGraphArretesPetit))
                 foreach (Arc a in robot.Graph.Arcs)
@@ -789,12 +847,14 @@ namespace GoBot
                     g.DrawEllipse(n.Passable ? penNoir : penRougeFin, new Rectangle(pointNode.X - 3, pointNode.Y - 3, 6, 6));
                 }
 
+            Synchronizer.Unlock(robot.Graph);
+
             //robot.SemGraph.Release();
         }
 
-        private static void DessinePathFinding(Robot robot, Graphics g)
+        private static void DessinePathFinding(Graphics g)
         {
-            foreach (Node n in robot.NodeTrouve)
+            /*foreach (Node n in robot.NodeTrouve)
             {
                 Point positionNode = RealToScreenPosition(n.Position);
                 g.FillEllipse(brushRouge, new Rectangle(positionNode.X - 4, positionNode.Y - 4, 8, 8));
@@ -803,34 +863,36 @@ namespace GoBot
             foreach (Arc a in robot.CheminTrouve)
             {
                 g.DrawLine(penOrangeEpais, RealToScreenPosition(a.StartNode.Position), RealToScreenPosition(a.EndNode.Position));
-            }
+            }*/
 
-            if (robot.CheminEnCoursNoeuds != null && robot.CheminEnCoursNoeuds.Count > 1)
+            List<PointReel> points = null;
+            if(PathFinder.PointsTrouves != null)
+                points = new List<PointReel>(PathFinder.PointsTrouves);
+            if (points != null && points.Count > 1)
             {
-                Segment seg = new Segment(new PointReel(robot.CheminEnCoursNoeuds[1].X, robot.CheminEnCoursNoeuds[1].Y), robot.Position.Coordonnees);
-                g.DrawLine(penVertEpais, RealToScreenPosition(robot.CheminEnCoursNoeuds[1].Position), RealToScreenPosition(robot.Position.Coordonnees));
-                for (int i = 1; i < robot.CheminEnCoursArcs.Count; i++)
+                for (int i = 1; i < points.Count; i++)
                 {
-                    Arc a = robot.CheminEnCoursArcs[i];
-                    g.DrawLine(penVertEpais, RealToScreenPosition(a.StartNode.Position), RealToScreenPosition(a.EndNode.Position));
+                    g.DrawLine(penVertEpais, RealToScreenPosition(points[i - 1]), RealToScreenPosition(points[i - 1]));
                 }
             }
 
-            if (robot.CheminTest != null)
-                g.DrawLine(penRougeEpais, RealToScreenPosition(robot.CheminTest.StartNode.Position), RealToScreenPosition(robot.CheminTest.EndNode.Position));
+            Arc cheminTest = PathFinder.CheminTest;
+            if (cheminTest != null)
+                g.DrawLine(penRougeEpais, RealToScreenPosition(cheminTest.StartNode.Position), RealToScreenPosition(cheminTest.EndNode.Position));
 
             //if (robot.ObstacleTeste != null)
             //    DessinerForme(g, Color.Green, 10, robot.ObstacleTeste);
 
-            if (robot.ObstacleProbleme != null)
-                DessinerForme(g, Color.Red, 10, robot.ObstacleProbleme);
+            IForme obstacleProbleme = PathFinder.ObstacleProbleme;
+            if (obstacleProbleme != null)
+                DessinerForme(g, Color.Red, 10, obstacleProbleme);
 
-            if (robot.CheminEnCoursNoeuds != null)
+            /*if (robot.CheminEnCoursNoeuds != null)
                 foreach (Node n in robot.CheminEnCoursNoeuds)
                 {
                     Point positionNode = RealToScreenPosition(n.Position);
                     g.FillEllipse(brushVert, new Rectangle(positionNode.X - 4, positionNode.Y - 4, 8, 8));
-                }
+                }*/
         }
 
         private static Bitmap RotateImage(Bitmap b, double angle)
