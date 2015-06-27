@@ -107,7 +107,9 @@
     <Compile Include="Actions\IAction.cs" />
     <Compile Include="Balises\BaliseStats.cs" />
     <Compile Include="Balises\SuiviBalise.cs" />
+    <Compile Include="Calculs\Formes\IForme.cs" />
     <Compile Include="Calculs\Formes\RectanglePolygone.cs" />
+    <Compile Include="Calculs\Formes\Triangle.cs" />
     <Compile Include="CameraIP.cs" />
     <Compile Include="Communications\ConnexionMiwi.cs" />
     <Compile Include="Communications\Connexion.cs" />
@@ -331,7 +333,6 @@
     <Compile Include="Balises\DetectionBalise.cs" />
     <Compile Include="Calculs\Formes\Cercle.cs" />
     <Compile Include="Calculs\Formes\Droite.cs" />
-    <Compile Include="Calculs\Formes\IForme.cs" />
     <Compile Include="Calculs\Formes\PointReel.cs" />
     <Compile Include="Calculs\Formes\Polygone.cs" />
     <Compile Include="Calculs\Formes\Segment.cs" />
@@ -406,6 +407,7 @@
     <Compile Include="Communications\Trame.cs" />
     <Compile Include="Synchronizer.cs" />
     <Compile Include="TestCode.cs" />
+    <Compile Include="Util.cs" />
     <EmbeddedResource Include="IHM\PanelAnalogique.resx">
       <DependentUpon>PanelAnalogique.cs</DependentUpon>
     </EmbeddedResource>

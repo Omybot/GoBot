@@ -16,7 +16,7 @@ namespace GoBot.Calculs.Formes
 
         #region Constructeurs
 
-        public Segment(PointReel debut, PointReel fin) 
+        public Segment(PointReel debut, PointReel fin)
         {
             pointDebut = debut;
             pointFin = fin;
@@ -24,9 +24,20 @@ namespace GoBot.Calculs.Formes
             calculEquation(Debut, Fin);
         }
 
+        public Segment(Segment segment)
+        {
+            pointDebut = new PointReel(segment.Debut);
+            pointFin = new PointReel(segment.Fin);
+
+            a = segment.A;
+            b = segment.B;
+            c = segment.C;
+            calculEquation(Debut, Fin);
+        }
+
         #endregion
 
-        #region Accesseurs
+        #region Propriétés
 
         public PointReel Debut
         {
@@ -54,151 +65,55 @@ namespace GoBot.Calculs.Formes
             }
         }
 
-        #endregion
-
-        #region Croisements
-
-        /// <summary>
-        /// Teste le croisement avec une autre forme. Renvoie vrai si la forme croise le Segment courant
-        /// </summary>
-        /// <param name="forme">Forme testée</param>
-        /// <returns>Vrai si la forme croise le Segment courant</returns>
-        new public bool croise(IForme forme)
+        public double Largeur
         {
-            Type typeForme = forme.GetType();
-            if (typeForme.IsAssignableFrom(typeof(Droite)))
-                return getCroisement((Droite)forme) != null;
-            else if (typeForme.IsAssignableFrom(typeof(Segment)))
-                return getCroisement((Segment)forme) != null;
-            else if (typeForme.IsAssignableFrom(typeof(Polygone)) || typeForme.IsSubclassOf(typeof(Polygone)))
-                return forme.croise(this);
-            else if (typeForme.IsAssignableFrom(typeof(Cercle)))
-                return forme.croise(this);
-            else
-                throw new NotImplementedException("Fonction inexistante : Croisement d'un(e) " + this.GetType().Name + " et d'un(e) " + typeForme.Name);
+            get
+            {
+                // TODOFORMES
+                return 0;
+            }
+        }
+
+        public double Hauteur
+        {
+            get
+            {
+                // TODOFORMES
+                return 0;
+            }
+        }
+
+        public double Longueur
+        {
+            get
+            {
+                // TODOFORMES
+                return 0;
+            }
         }
 
         /// <summary>
-        /// Retourne le croisement du Segment courant avec une Droite
+        /// Surface du Segment
         /// </summary>
-        /// <param name="autreDroite">Droite testée</param>
-        /// <returns>Le PointReel du croisement si la Droite testée croise le Segment courant, sinon null</returns>
-        new public PointReel getCroisement(Droite autreDroite)
+        public override double Surface
         {
-            // Il existe la fonction pour tester le croisement entre une droite et un segment, on l'utilise
-            return autreDroite.getCroisement(this);
+            get
+            {
+                // TODOFORMES
+                return 0;
+            }
         }
 
         /// <summary>
-        /// Retourne le croisement du Segment courant avec un autre Segment
+        /// Barycentre du Segment
         /// </summary>
-        /// <param name="autreDroite">Segment testé</param>
-        /// <returns>Le PointReel du croisement si le Segment testé croise le Segment courant, sinon null</returns>
-        new public PointReel getCroisement(Segment autreSegment)
+        public override PointReel BaryCentre
         {
-            // Pour ne pas réécrire du code existant, on récupère le croisement entre ce segment et l'autre en tant que droite
-            // Si l'autre segment contient ce point, c'est le croisement, sinon il n'en existe pas
-
-            PointReel croisement = getCroisement((Droite)autreSegment);
-            if (croisement != null && autreSegment.contient(croisement))
-                return croisement;
-
-            return null;
-        }
-
-        #endregion
-
-        #region Contient
-
-        /// <summary>
-        /// Teste si le Segment courant contient la Forme
-        /// </summary>
-        /// <param name="forme">Forme testée</param>
-        /// <returns>Vrai si le Segment courant contient la Forme</returns>
-        new public bool contient(IForme forme)
-        {
-            Type typeForme = forme.GetType();
-            
-            if (typeForme.IsAssignableFrom(typeof(Droite)))
-                return contient((Droite)forme);
-            else if (typeForme.IsAssignableFrom(typeof(Segment)))
-                return contient((Segment)forme);
-            else if (typeForme.IsAssignableFrom(typeof(Polygone)) || typeForme.IsSubclassOf(typeof(Polygone)))
-                return contient((Polygone)forme);
-            else if (typeForme.IsAssignableFrom(typeof(Cercle)))
-                return contient((Cercle)forme);
-            else if (typeForme.IsAssignableFrom(typeof(PointReel)))
-                return contient((PointReel)forme);
-            else
-                throw new NotImplementedException("Fonction inexistante : Contenance dans un(e) " + this.GetType().Name + " d'un(e) " + typeForme.Name);
-        }
-
-        /// <summary>
-        /// Teste si le Segment courant contient le PointReel donné
-        /// </summary>
-        /// <param name="point">PointReel testé</param>
-        /// <returns>Vrai si le Segment courant contient le PointReel donné</returns>
-        new protected bool contient(PointReel point)
-        {
-            // Vérifie que le point est situé sur la droite
-            if (!base.contient(point))
-                return false;
-            // Puis qu'il est entre les deux extrémités
-            if ((Math.Round(point.X, 2) > Math.Round(Math.Max(Debut.X, Fin.X), 2)) ||
-                (Math.Round(point.X, 2) < Math.Round(Math.Min(Debut.X, Fin.X), 2)) ||
-                (Math.Round(point.Y, 2) > Math.Round(Math.Max(Debut.Y, Fin.Y), 2)) ||
-                (Math.Round(point.Y, 2) < Math.Round(Math.Min(Debut.Y, Fin.Y), 2)))
-                return false;
-
-            return true;
-        }
-
-        /// <summary>
-        /// Teste si le Segment courant contient un autre Segment
-        /// </summary>
-        /// <param name="segment">Segment testé</param>
-        /// <returns>Vrai si le Segment courant contient le Segment testé</returns>
-        new protected bool contient(Segment segment)
-        {
-            // Il suffit de vérifier que le segment contient les deux extrémités
-            return contient(segment.Debut) && contient(segment.Fin);
-        }
-
-        /// <summary>
-        /// Teste si le Segment courant contient une Droite
-        /// </summary>
-        /// <param name="droite">Droite testée</param>
-        /// <returns>Vrai si le Segment courant contient la Droite testée</returns>
-        new protected bool contient(Droite droite)
-        {
-            // Un segment ne peut pas contenir de Droite
-            return false;
-        }
-
-        /// <summary>
-        /// Teste si le Segment courant contient un Polygone
-        /// </summary>
-        /// <param name="polygone">Polygone testé</param>
-        /// <returns>Vrai si le Segment courant contient le Polygone testé</returns>
-        new protected bool contient(Polygone polygone)
-        {
-            // Contenir un polygone revient à contenir tous les cotés du polygone
-            foreach (Segment s in polygone.Cotes)
-                if (!contient(s))
-                    return false;
-
-            return true;
-        }
-
-        /// <summary>
-        /// Teste si le Segment courant contient un Cercle
-        /// </summary>
-        /// <param name="Cercle">Cercle testé</param>
-        /// <returns>Vrai si le Segment courant contient le Cercle testé</returns>
-        new protected bool contient(Cercle Cercle)
-        {
-            // Contenir un Cercle revient à avoir un Cercle de rayon 0 dont le centre se trouve sur le segment
-            return contient(Cercle.Centre) && Cercle.Rayon == 0;
+            get
+            {
+                // TODOFORMES
+                return null;
+            }
         }
 
         #endregion
@@ -210,11 +125,11 @@ namespace GoBot.Calculs.Formes
             if ((object)a == null || (object)b == null)
                 return (object)a == null && (object)b == null;
             else
-            return a.A == b.A
-                && a.B == b.B
-                && a.C == a.C
-                && a.Debut == b.Debut
-                && a.Fin == b.Debut;
+                return a.A == b.A
+                    && a.B == b.B
+                    && a.C == a.C
+                    && a.Debut == b.Debut
+                    && a.Fin == b.Debut;
         }
 
         public static bool operator !=(Segment a, Segment b)
@@ -245,40 +160,187 @@ namespace GoBot.Calculs.Formes
 
         #endregion
 
-        #region Distance
+        #region Croisements
+
+        public override List<PointReel> Croisements(IForme forme)
+        {
+            // TODOFORMES
+            return null;
+        }
 
         /// <summary>
-        /// Retourne la distance minimale entre le Segment courant et la Forme donnée
+        /// Teste si le Segment contient la IForme donnée
         /// </summary>
-        /// <param name="forme">Forme testée</param>
-        /// <returns>Distance minimale</returns>
-        public override double Distance(IForme forme)
+        /// <param name="forme">IForme testé</param>
+        /// <returns>Vrai si le Segment contient la IForme donnée</returns>
+        public override bool Croise(IForme forme)
         {
-            Type typeForme = forme.GetType();
-
-            if (typeForme.IsAssignableFrom(typeof(Segment)))
-                return Distance((Segment)forme);
-            else if (typeForme.IsAssignableFrom(typeof(PointReel)))
-                return Distance((PointReel)forme);
-            else if (typeForme.IsAssignableFrom(typeof(Droite)))
-                return Distance((Droite)forme);
-            else if (typeForme.IsAssignableFrom(typeof(Polygone)) || typeForme.IsSubclassOf(typeof(Polygone)))
-                return Distance((Polygone)forme);
-            else if (typeForme.IsAssignableFrom(typeof(Cercle)))
-                return Distance((Cercle)forme);
-            else
-                throw new NotImplementedException();
+            return Croise(Util.ToRealType(forme));
         }
+
+        /// <summary>
+        /// Teste si la Droite contient le PointReel donné
+        /// </summary>
+        /// <param name="point">PointReel testé</param>
+        /// <returns>Vrai si la Droite contient le PointReel donné</returns>
+        protected override bool Croise(PointReel point)
+        {
+            return Contient(point);
+        }
+
+        /// <summary>
+        /// Teste si la Droite contient le Segment donné
+        /// </summary>
+        /// <param name="segment">Segment testé</param>
+        /// <returns>Vrai si la Droite contient le Segment donné</returns>
+        protected override bool Croise(Segment segment)
+        {
+            return getCroisement(segment) != null;
+        }
+
+        /// <summary>
+        /// Teste si la Droite contient la Droite donnée
+        /// </summary>
+        /// <param name="droite">Droite testée</param>
+        /// <returns>Vrai si la Droite contient la Droite donnée</returns>
+        protected override bool Croise(Droite droite)
+        {
+            return getCroisement(droite) != null;
+        }
+
+        /// <summary>
+        /// Teste si la Droite contient le Cercle donné
+        /// </summary>
+        /// <param name="cercle">Cercle testé</param>
+        /// <returns>Vrai si la Droite contient le Cercle donné</returns>
+        protected override bool Croise(Cercle cercle)
+        {
+            return cercle.Croise(this);
+        }
+
+        /// <summary>
+        /// Teste si le Polygone contient le Polygone donné
+        /// </summary>
+        /// <param name="polygone">Polygone testé</param>
+        /// <returns>Vrai si la Droite contient le Polygone donné</returns>
+        protected override bool Croise(Polygone polygone)
+        {
+            return polygone.Croise(this);
+        }
+
+        /// <summary>
+        /// Retourne le croisement du Segment courant avec une Droite
+        /// </summary>
+        /// <param name="autreDroite">Droite testée</param>
+        /// <returns>Le PointReel du croisement si la Droite testée croise le Segment courant, sinon null</returns>
+        new public PointReel getCroisement(Droite autreDroite)
+        {
+            // Il existe la fonction pour tester le croisement entre une droite et un segment, on l'utilise
+            return autreDroite.getCroisement(this);
+        }
+
+        /// <summary>
+        /// Retourne le croisement du Segment courant avec un autre Segment
+        /// </summary>
+        /// <param name="autreDroite">Segment testé</param>
+        /// <returns>Le PointReel du croisement si le Segment testé croise le Segment courant, sinon null</returns>
+        new public PointReel getCroisement(Segment autreSegment)
+        {
+            // Pour ne pas réécrire du code existant, on récupère le croisement entre ce segment et l'autre en tant que droite
+            // Si l'autre segment contient ce point, c'est le croisement, sinon il n'en existe pas
+
+            PointReel croisement = getCroisement((Droite)autreSegment);
+            if (croisement != null && autreSegment.Contient(croisement))
+                return croisement;
+
+            return null;
+        }
+
+        #endregion
+
+        #region Contient
+
+        /// <summary>
+        /// Teste si le Segment courant contient le PointReel donné
+        /// </summary>
+        /// <param name="point">PointReel testé</param>
+        /// <returns>Vrai si le Segment courant contient le PointReel donné</returns>
+        protected override bool Contient(PointReel point)
+        {
+            // Vérifie que le point est situé sur la droite
+            if (!base.Contient(point))
+                return false;
+            // Puis qu'il est entre les deux extrémités
+            if ((Math.Round(point.X, 2) > Math.Round(Math.Max(Debut.X, Fin.X), 2)) ||
+                (Math.Round(point.X, 2) < Math.Round(Math.Min(Debut.X, Fin.X), 2)) ||
+                (Math.Round(point.Y, 2) > Math.Round(Math.Max(Debut.Y, Fin.Y), 2)) ||
+                (Math.Round(point.Y, 2) < Math.Round(Math.Min(Debut.Y, Fin.Y), 2)))
+                return false;
+
+            return true;
+        }
+
+        /// <summary>
+        /// Teste si le Segment courant contient un autre Segment
+        /// </summary>
+        /// <param name="segment">Segment testé</param>
+        /// <returns>Vrai si le Segment courant contient le Segment testé</returns>
+        protected override bool Contient(Segment segment)
+        {
+            // Il suffit de vérifier que le segment contient les deux extrémités
+            return Contient(segment.Debut) && Contient(segment.Fin);
+        }
+
+        /// <summary>
+        /// Teste si le Segment courant contient une Droite
+        /// </summary>
+        /// <param name="droite">Droite testée</param>
+        /// <returns>Vrai si le Segment courant contient la Droite testée</returns>
+        protected override bool Contient(Droite droite)
+        {
+            // Un segment ne peut pas contenir de Droite
+            return false;
+        }
+
+        /// <summary>
+        /// Teste si le Segment courant contient un Polygone
+        /// </summary>
+        /// <param name="polygone">Polygone testé</param>
+        /// <returns>Vrai si le Segment courant contient le Polygone testé</returns>
+        protected override bool Contient(Polygone polygone)
+        {
+            // Contenir un polygone revient à contenir tous les cotés du polygone
+            foreach (Segment s in polygone.Cotes)
+                if (!Contient(s))
+                    return false;
+
+            return true;
+        }
+
+        /// <summary>
+        /// Teste si le Segment courant contient un Cercle
+        /// </summary>
+        /// <param name="Cercle">Cercle testé</param>
+        /// <returns>Vrai si le Segment courant contient le Cercle testé</returns>
+        protected override bool Contient(Cercle Cercle)
+        {
+            // Contenir un Cercle revient à avoir un Cercle de rayon 0 dont le centre se trouve sur le segment
+            return Contient(Cercle.Centre) && Cercle.Rayon == 0;
+        }
+
+        #endregion
+
+        #region Distance
 
         /// <summary>
         /// Retourne la distance minimale entre le Segment courant et le Segment donné
         /// </summary>
         /// <param name="forme">Segment testé</param>
         /// <returns>Distance minimale</returns>
-        public override double Distance(Segment segment)
+        protected override double Distance(Segment segment)
         {
             // Si les segments se croisent la distance est de 0
-            if (croise(segment))
+            if (Croise(segment))
                 return 0;
 
             // Sinon c'est la distance minimale entre (chaque extremité d'un segment) et (l'autre segment)
@@ -291,22 +353,22 @@ namespace GoBot.Calculs.Formes
             minDistance = Math.Min(minDistance, segment.Fin.Distance(Fin));
 
             // Le minimal est peut etre entre une extremité et le projeté hortogonal sur l'autre segment
-            Droite perpendiculaire = segment.getPerpendiculaire(Debut);
+            Droite perpendiculaire = segment.GetPerpendiculaire(Debut);
             PointReel croisement = segment.getCroisement(perpendiculaire);
             if(croisement != null)
                 minDistance = Math.Min(minDistance, croisement.Distance(Debut));
 
-            perpendiculaire = segment.getPerpendiculaire(Fin);
+            perpendiculaire = segment.GetPerpendiculaire(Fin);
             croisement = segment.getCroisement(perpendiculaire);
             if(croisement != null)
                 minDistance = Math.Min(minDistance, croisement.Distance(Fin));
 
-            perpendiculaire = getPerpendiculaire(segment.Debut);
+            perpendiculaire = GetPerpendiculaire(segment.Debut);
             croisement = getCroisement(perpendiculaire);
             if (croisement != null)
                 minDistance = Math.Min(minDistance, croisement.Distance(segment.Debut));
 
-            perpendiculaire = getPerpendiculaire(segment.Fin);
+            perpendiculaire = GetPerpendiculaire(segment.Fin);
             croisement = getCroisement(perpendiculaire);
             if (croisement != null)
                 minDistance = Math.Min(minDistance, croisement.Distance(segment.Fin));
@@ -319,10 +381,10 @@ namespace GoBot.Calculs.Formes
         /// </summary>
         /// <param name="forme">Droite testée</param>
         /// <returns>Distance minimale</returns>
-        public override double Distance(Droite droite)
+        protected override double Distance(Droite droite)
         {
             // Si la droite et le segment se croisent la distance est de 0
-            if (croise(droite))
+            if (Croise(droite))
                 return 0;
 
             // Sinon c'est la distance minimale entre chaque extremité du segment et la droite
@@ -339,9 +401,9 @@ namespace GoBot.Calculs.Formes
         /// </summary>
         /// <param name="forme">Cercle testé</param>
         /// <returns>Distance minimale</returns>
-        public override double Distance(Cercle Cercle)
+        protected override double Distance(Cercle Cercle)
         {
-            if (croise(Cercle))
+            if (Croise(Cercle))
                 return 0;
 
             // Distance jusqu'au centre du cercle - son rayon
@@ -353,14 +415,14 @@ namespace GoBot.Calculs.Formes
         /// </summary>
         /// <param name="forme">Polygone testé</param>
         /// <returns>Distance minimale</returns>
-        public override double Distance(Polygone polygone)
+        protected override double Distance(Polygone polygone)
         {
             // Distance jusqu'au segment le plus proche
             double minDistance = double.MaxValue;
 
             foreach (Segment s in polygone.Cotes)
             {
-                if (croise(s))
+                if (Croise(s))
                     return 0;
 
                 minDistance = Math.Min(s.Distance(this), minDistance);
@@ -374,11 +436,11 @@ namespace GoBot.Calculs.Formes
         /// </summary>
         /// <param name="point">PointReel testé</param>
         /// <returns>Distance minimale</returns>
-        public override double Distance(PointReel point)
+        protected override double Distance(PointReel point)
         {
             // Le raisonnement est le même que pour la droite cf Droite.Distance
 
-            Droite perpendiculaire = getPerpendiculaire(point);
+            Droite perpendiculaire = GetPerpendiculaire(point);
             PointReel pointProche = getCroisement(perpendiculaire);
 
             double distance;
@@ -400,5 +462,20 @@ namespace GoBot.Calculs.Formes
         }
 
         #endregion
+
+        #region Transformations
+
+        public override void Tourner(Angle angle, PointReel centreRotation = null)
+        {
+            // TODOFORMES
+        }
+
+        public override void Translater(double dx, double dy)
+        {
+            // TODOFORMES
+        }
+
+        #endregion
+        
     }
 }

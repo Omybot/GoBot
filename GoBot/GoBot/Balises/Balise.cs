@@ -652,7 +652,7 @@ namespace GoBot.Balises
                                     DetectionBalise detection = Detections[i];
                                     // Calcul du 3ème point du triangle rectangle Balise / Gros robot
                                     Droite droiteBalise0Degres = new Droite(Position.Coordonnees, new PointReel(Position.Coordonnees.X + 500, Position.Coordonnees.Y));
-                                    Droite perpendiculaire = droiteBalise0Degres.getPerpendiculaire(robot.Position.Coordonnees);
+                                    Droite perpendiculaire = droiteBalise0Degres.GetPerpendiculaire(robot.Position.Coordonnees);
                                     PointReel troisiemePoint = perpendiculaire.getCroisement(droiteBalise0Degres);
                                     double distanceBaliseTroisiemePoint = troisiemePoint.Distance(Position.Coordonnees);
                                     double distanceBaliseRobot = robot.Position.Coordonnees.Distance(Position.Coordonnees);

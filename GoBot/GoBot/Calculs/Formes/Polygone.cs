@@ -8,19 +8,6 @@ using System.Drawing;
 
 namespace GoBot.Calculs.Formes
 {
-    public class System
-    {
-        public static Out Out = new Out();
-    }
-
-    public class Out
-    {
-        public void println(String message)
-        {
-            MessageBox.Show(message + Environment.NewLine);
-        }
-    }
-
     public class Polygone : IForme
     {
         #region Attributs
@@ -56,6 +43,17 @@ namespace GoBot.Calculs.Formes
         protected Polygone()
         {
             cotes = new List<Segment>();
+        }
+
+        /// <summary>
+        /// Construit un Polygone depuis un autre Polygone
+        /// </summary>
+        protected Polygone(Polygone polygone)
+        {
+            cotes = new List<Segment>();
+
+            foreach(Segment s in polygone.Cotes)
+                cotes.Add(new Segment(s));
         }
 
         /// <summary>
@@ -108,7 +106,7 @@ namespace GoBot.Calculs.Formes
 
         #endregion
 
-        #region Accesseurs
+        #region Propriétés
 
         /// <summary>
         /// Obtient la liste des cotés du polygone
@@ -118,6 +116,45 @@ namespace GoBot.Calculs.Formes
             get
             {
                 return cotes;
+            }
+        }
+
+        public List<PointReel> Points
+        {
+            get
+            {
+                List<PointReel> points = new List<PointReel>();
+
+                foreach (Segment s in Cotes)
+                {
+                    points.Add(new PointReel((int)s.Debut.X, (int)s.Debut.Y));
+                }
+
+                return points;
+            }
+        }
+
+        /// <summary>
+        /// Surface du Polygone
+        /// </summary>
+        public virtual double Surface
+        {
+            get
+            {
+                // TODOFORMES
+                return 0;
+            }
+        }
+
+        /// <summary>
+        /// Barycentre du Polygone
+        /// </summary>
+        public virtual PointReel BaryCentre
+        {
+            get
+            {
+                // TODOFORMES
+                return null;
             }
         }
 
@@ -186,37 +223,114 @@ namespace GoBot.Calculs.Formes
 
         #endregion
 
-        #region Contient
-
+        #region Distance
+        
         /// <summary>
-        /// Teste si le Polygone courant contient la Forme donnée
+        /// Retourne la distance minimum entre le Polygone courant et la IForme donnée
         /// </summary>
-        /// <param name="forme">Forme testée</param>
-        /// <returns>Vrai si le Polygone courant contient la Forme testée</returns>
-        public bool contient(IForme forme)
+        /// <param name="forme">IForme testée</param>
+        /// <returns>Distance minimum entre le Polygone courant et la IForme testée</returns>
+        public double Distance(IForme forme)
         {
-            Type typeForme = forme.GetType();
-            
-            if (typeForme.IsAssignableFrom(typeof(Droite)))
-                return contient((Droite)forme);
-            else if (typeForme.IsAssignableFrom(typeof(Segment)))
-                return contient((Segment)forme);
-            else if (typeForme.IsAssignableFrom(typeof(Polygone)) || typeForme.IsSubclassOf(typeof(Polygone)))
-                return contient((Polygone)forme);
-            else if (typeForme.IsAssignableFrom(typeof(Cercle)))
-                return contient((Cercle)forme);
-            else if (typeForme.IsAssignableFrom(typeof(PointReel)))
-                return contient((PointReel)forme);
-            else
-                throw new NotImplementedException("Fonction inexistante : Contenance dans un(e) " + this.GetType().Name + " d'un(e) " + typeForme.Name);
+            return Distance(Util.ToRealType(forme));
         }
 
         /// <summary>
-        /// Retourne vrai si le Polygone courant contient le PointReel donné
+        /// Retourne la distance minimum entre le Polygone courant et le Segment donné
+        /// </summary>
+        /// <param name="segment">Segment testé</param>
+        /// <returns>Distance minimum entre le Polygone courant et le Segment testé</returns>
+        public double Distance(Segment segment)
+        {
+            // Le segment sait le faire
+            return segment.Distance(this);
+        }
+
+        /// <summary>
+        /// Retourne la distance minimum entre le Polygone courant et la Droite donnée
+        /// </summary>
+        /// <param name="droite">Droite testée</param>
+        /// <returns>Distance minimum entre le Polygone courant et la Droite testée</returns>
+        public double Distance(Droite droite)
+        {
+            return droite.Distance(this);
+        }
+
+        /// <summary>
+        /// Retourne la distance minimum entre le Polygone courant et le Cercle donné
+        /// </summary>
+        /// <param name="cercle">Cercle testé</param>
+        /// <returns>Distance minimum entre le Polygone courant et le Cercle testé</returns>
+        public double Distance(Cercle cercle)
+        {
+            double distanceMin = double.MaxValue;
+
+            foreach (Segment s in Cotes)
+                distanceMin = Math.Min(distanceMin, s.Distance(cercle));
+
+            return distanceMin;
+        }
+
+        /// <summary>
+        /// Retourne la distance minimum entre le Polygone courant et le Polygone donné
+        /// </summary>
+        /// <param name="polygone">Polygone testé</param>
+        /// <returns>Distance minimum entre le Polygone courant et le Polygone testé</returns>
+        public double Distance(Polygone polygone)
+        {
+            double minDistance = double.MaxValue;
+
+            foreach (Segment s1 in polygone.Cotes)
+                foreach (Segment s2 in Cotes)
+                {
+                    if (s1.Croise(s2))
+                        return 0;
+                    minDistance = Math.Min(minDistance, s1.Distance(s2));
+                }
+
+            return minDistance;
+        }
+
+        /// <summary>
+        /// Retourne la distance minimum entre le Polygone courant et le PointReel donné
         /// </summary>
         /// <param name="point">PointReel testé</param>
-        /// <returns>Vrai si le Polygone courant contient le PointReel testé</returns>
-        protected bool contient(PointReel point)
+        /// <returns>Distance minimum entre le Polygone courant et le PointReel testé</returns>
+        public double Distance(PointReel point)
+        {
+            // C'est la distance minimale entre le point et chaque segment
+
+            if (Contient(point))
+                return 0;
+
+            double distanceMin = double.MaxValue;
+
+            foreach (Segment s in cotes)
+                distanceMin = Math.Min(distanceMin, s.Distance(point));
+
+            return distanceMin;
+        }
+
+        #endregion
+
+        #region Contient
+        
+        /// <summary>
+        /// Teste si le Polygone contient la IForme donnée
+        /// </summary>
+        /// <param name="forme">IForme testé</param>
+        /// <returns>Vrai si le Polygone contient la IForme testée</returns>
+        public bool Contient(IForme forme)
+        {
+            return Contient(Util.ToRealType(forme));
+        }
+
+        /// <summary>
+        /// Teste si le Polygone courant contient le PointReel donné
+        /// </summary>
+        /// <param name="point">PointReel testé</param>
+        /// <returns>Vrai si le Polygone contient le PointReel testé</returns>
+        protected bool Contient(PointReel point)
         {
             // Pour savoir si le Polygone contient un poin on trace un segment entre ce point et un point très éloigné.
             // On compte combien de cotés du polygone croisent cette droite
@@ -226,10 +340,10 @@ namespace GoBot.Calculs.Formes
 
             foreach (Segment s in Cotes)
             {
-                if (s.contient(point))
+                if (s.Contient(point))
                     return true;
 
-                if (s.croise(segmentTest))
+                if (s.Croise(segmentTest))
                     nbCroisements++;
             }
 
@@ -237,16 +351,16 @@ namespace GoBot.Calculs.Formes
         }
 
         /// <summary>
-        /// Retourne vrai si le Polygone courant contient le Polygone donné
+        /// Teste si le Polygone contient le Polygone donné
         /// </summary>
-        /// <param name="point">Polygone testé</param>
-        /// <returns>Vrai si le Polygone courant contient le Polygone testé</returns>
-        protected bool contient(Polygone polygone)
+        /// <param name="polygone">Polygone testé</param>
+        /// <returns>Vrai si le Polygone contient le Polygone testé</returns>
+        protected bool Contient(Polygone polygone)
         {
             // Il suffit de contenir tous les segments du polygone testé
             foreach (Segment s in polygone.Cotes)
             {
-                if (!contient(s))
+                if (!Contient(s))
                     return false;
             }
 
@@ -254,15 +368,15 @@ namespace GoBot.Calculs.Formes
         }
 
         /// <summary>
-        /// Retourne vrai si le Polygone courant contient le Segment donné
+        /// Teste si le Polygone contient le Segment donné
         /// </summary>
-        /// <param name="point">Segment testé</param>
-        /// <returns>Vrai si le Polygone courant contient le Segment testé</returns>
-        protected bool contient(Segment segment)
+        /// <param name="segment">Segment testé</param>
+        /// <returns>Vrai si le Polygone contient le Segment testé</returns>
+        protected bool Contient(Segment segment)
         {
             // Il suffit de contenir les deux extrémités du segment et de ne jamais croiser le segment
-            bool result = contient(segment.Debut) && contient(segment.Fin);
-            if (croise(segment)) // si ça se croise : est ce que c'est sur un bout ? 
+            bool result = Contient(segment.Debut) && Contient(segment.Fin);
+            if (Croise(segment)) // si ça se croise : est ce que c'est sur un bout ? 
             {
                 List<PointReel> lpr = this.getCroisements(segment);
                 if (lpr.Count > 2)
@@ -276,7 +390,7 @@ namespace GoBot.Calculs.Formes
                     {
                         // test d'un point au milieux;
                         PointReel p = new PointReel((segment.Debut.X + segment.Fin.X) / 2, (segment.Debut.Y + segment.Fin.Y) / 2);
-                        if (this.contient(p))
+                        if (this.Contient(p))
                         {
                             return result;
                         }
@@ -304,39 +418,39 @@ namespace GoBot.Calculs.Formes
             }
             else // cas normal 
             {
-                return contient(segment.Debut) && contient(segment.Fin) && !croise(segment);
+                return Contient(segment.Debut) && Contient(segment.Fin) && !Croise(segment);
             }
 
            
         }
 
         /// <summary>
-        /// Retourne vrai si le Polygone courant contient la Droite donnée
+        /// Teste si le Polygone courant contient la Droite donnée
         /// </summary>
-        /// <param name="point">Droite testée</param>
-        /// <returns>Vrai si le Polygone courant contient la Droite testée</returns>
-        protected bool contient(Droite droite)
+        /// <param name="droite">Droite testée</param>
+        /// <returns>Vrai si le Polygone contient la Droite testée</returns>
+        protected bool Contient(Droite droite)
         {
             // Un polygone ne peut pas contenir de droite
             return false;
         }
 
         /// <summary>
-        /// Retourne vrai si le Polygone courant contient le Cercle donné
+        /// Teste si le Polygone contient le Cercle donné
         /// </summary>
-        /// <param name="point">Cercle testé</param>
-        /// <returns>Vrai si le Polygone courant contient le Cercle testé</returns>
-        protected bool contient(Cercle Cercle)
+        /// <param name="cercle">Cercle testé</param>
+        /// <returns>Vrai si le Polygone contient le Cercle testé</returns>
+        protected bool Contient(Cercle cercle)
         {
             // Pour contenir un Cercle, un polygone ne doit pas le croiser et contenir son centre
 
             foreach (Segment s in Cotes)
             {
-                if (s.croise(Cercle))
+                if (s.Croise(cercle))
                     return false;
             }
 
-            if (contient(Cercle.Centre))
+            if (Contient(cercle.Centre))
                 return true;
             else
                 return false;
@@ -345,39 +459,34 @@ namespace GoBot.Calculs.Formes
         #endregion
 
         #region Croisements
-        
-        /// <summary>
-        /// Retourne si le Polygone croise la Forme donnée
-        /// </summary>
-        /// <param name="forme">Forme testée</param>
-        /// <returns>Vrai si le Polygone croise la Forme testée</returns>
-        public bool croise(IForme forme)
+
+        public List<PointReel> Croisements(IForme forme)
         {
-            Type typeForme = forme.GetType();
-            
-            if (typeForme.IsAssignableFrom(typeof(Droite)))
-                return croise((Droite)forme);
-            else if (typeForme.IsAssignableFrom(typeof(Segment)))
-                return croise((Segment)forme);
-            else if (typeForme.IsAssignableFrom(typeof(Polygone)) || typeForme.IsSubclassOf(typeof(Polygone)))
-                return croise((Polygone)forme);
-            else if (typeForme.IsAssignableFrom(typeof(Cercle)))
-                return forme.croise(this);
-            else
-                throw new NotImplementedException("Fonction inexistante : Croisement d'un(e) " + this.GetType().Name + " et d'un(e) " + typeForme.Name);
+            // TODOFORMES
+            return null;
         }
 
         /// <summary>
-        /// Retourne si le Polygone croise le Segment donnée
+        /// Teste si le Polygone croise la IForme donnée
         /// </summary>
-        /// <param name="forme">Segment testé</param>
+        /// <param name="forme">IForme testée</param>
+        /// <returns>Vrai si le Polygone croise la IForme testée</returns>
+        public bool Croise(IForme forme)
+        {
+            return Croise(Util.ToRealType(forme));
+        }
+
+        /// <summary>
+        /// Teste si le Polygone croise le Segment donnée
+        /// </summary>
+        /// <param name="segment">Segment testé</param>
         /// <returns>Vrai si le Polygone croise le Segment testé</returns>
-        protected bool croise(Segment segment)
+        protected bool Croise(Segment segment)
         {
             // On teste si le segment croise un des cotés du polygone
             foreach (Segment cote in cotes)
             {
-                if (cote.croise(segment))
+                if (cote.Croise(segment))
                 {
                     return true;
                 }
@@ -388,31 +497,31 @@ namespace GoBot.Calculs.Formes
         }
 
         /// <summary>
-        /// Retourne si le Polygone croise la Droite donnée
+        /// Teste si le Polygone croise la Droite donnée
         /// </summary>
-        /// <param name="forme">Droite testée</param>
+        /// <param name="droite">Droite testée</param>
         /// <returns>Vrai si le Polygone croise la Droite testée</returns>
-        protected bool croise(Droite droite)
+        protected bool Croise(Droite droite)
         {
             // On teste si la droite croise un des cotés du polygone
             foreach (Segment cote in cotes)
-                if (cote.croise(droite))
+                if (cote.Croise(droite))
                     return true;
 
             return false;
         }
 
         /// <summary>
-        /// Retourne si le Polygone croise le Polygone donnée
+        /// Teste si le Polygone croise le Polygone donné
         /// </summary>
-        /// <param name="forme">Polygone testé</param>
+        /// <param name="polygone">Polygone testé</param>
         /// <returns>Vrai si le Polygone croise le Polygone testé</returns>
-        protected bool croise(Polygone polygone)
+        protected bool Croise(Polygone polygone)
         {
             // On teste si un des cotés du polygone croise un des cotés de l'autre polygone
             foreach (Segment cote in cotes)
                 foreach (Segment coteAutre in polygone.cotes)
-                    if (cote.croise(coteAutre))
+                    if (cote.Croise(coteAutre))
                         return true;
 
             return false;
@@ -430,109 +539,6 @@ namespace GoBot.Calculs.Formes
             }
 
             return retour;
-        }
-
-        #endregion
-
-        #region Distance
-
-        /// <summary>
-        /// Retourne la distance minimum entre le Polygone courant et la Forme donnée
-        /// </summary>
-        /// <param name="point">Forme testée</param>
-        /// <returns>Distance minimum entre le Polygone courant et la Forme testée</returns>
-        public double Distance(IForme forme)
-        {
-            Type typeForme = forme.GetType();
-
-            if (typeForme.IsAssignableFrom(typeof(Segment)))
-                return Distance((Segment)forme);
-            else if (typeForme.IsAssignableFrom(typeof(PointReel)))
-                return Distance((PointReel)forme);
-            else if (typeForme.IsAssignableFrom(typeof(Droite)))
-                return Distance((Droite)forme);
-            else if (typeForme.IsAssignableFrom(typeof(Polygone)) || typeForme.IsSubclassOf(typeof(Polygone)))
-                return Distance((Polygone)forme);
-            else if (typeForme.IsAssignableFrom(typeof(Cercle)))
-                return Distance((Cercle)forme);
-            else
-                throw new NotImplementedException();
-        }
-
-        /// <summary>
-        /// Retourne la distance minimum entre le Polygone courant et le Segment donné
-        /// </summary>
-        /// <param name="point">Segment testé</param>
-        /// <returns>Distance minimum entre le Polygone courant et le Segment testé</returns>
-        public double Distance(Segment segment)
-        {
-            // Le segment sait le faire
-            return segment.Distance(this);
-        }
-
-        /// <summary>
-        /// Retourne la distance minimum entre le Polygone courant et la Droite donnée
-        /// </summary>
-        /// <param name="point">Droite testée</param>
-        /// <returns>Distance minimum entre le Polygone courant et la Droite testée</returns>
-        public double Distance(Droite droite)
-        {
-            return droite.Distance(this);
-        }
-
-        /// <summary>
-        /// Retourne la distance minimum entre le Polygone courant et le Cercle donné
-        /// </summary>
-        /// <param name="point">Cercle testé</param>
-        /// <returns>Distance minimum entre le Polygone courant et le Cercle testé</returns>
-        public double Distance(Cercle Cercle)
-        {
-            double distanceMin = double.MaxValue;
-
-            foreach (Segment s in Cotes)
-                distanceMin = Math.Min(distanceMin, s.Distance(Cercle));
-
-            return distanceMin;
-        }
-
-        /// <summary>
-        /// Retourne la distance minimum entre le Polygone courant et le Polygone donné
-        /// </summary>
-        /// <param name="point">Polygone testé</param>
-        /// <returns>Distance minimum entre le Polygone courant et le Polygone testé</returns>
-        public double Distance(Polygone polygone)
-        {
-            double minDistance = double.MaxValue;
-
-            foreach (Segment s1 in polygone.Cotes)
-                foreach (Segment s2 in Cotes)
-                {
-                    if (s1.croise(s2))
-                        return 0;
-                    minDistance = Math.Min(minDistance, s1.Distance(s2));
-                }
-
-            return minDistance;
-        }
-
-        /// <summary>
-        /// Retourne la distance minimum entre le Polygone courant et le PointReel donné
-        /// </summary>
-        /// <param name="point">PointReel testé</param>
-        /// <returns>Distance minimum entre le Polygone courant et le PointReel testé</returns>
-        public double Distance(PointReel point)
-        {
-            // C'est la distance minimale entre le point et chaque segment
-
-            if (contient(point))
-                return 0;
-
-            double distanceMin = double.MaxValue;
-
-            foreach (Segment s in cotes)
-                distanceMin = Math.Min(distanceMin, s.Distance(point));
-
-            return distanceMin;
         }
 
         #endregion
@@ -625,7 +631,7 @@ namespace GoBot.Calculs.Formes
             for (int i = ListSegThis.Count - 1; i >= 0; i--)
             {
 
-                if (!p1.contient(ListSegThis[i]))
+                if (!p1.Contient(ListSegThis[i]))
                 {
                     // etragne : ListSegThis.Remove(ListSegThis[i]);
                     ListSegThis.RemoveAt(i);
@@ -638,7 +644,7 @@ namespace GoBot.Calculs.Formes
 
             for (int i = ListSegP1.Count - 1; i >= 0; i--)
             {
-                if (!this.contient(ListSegP1[i]))
+                if (!this.Contient(ListSegP1[i]))
                 {
 
                     ListSegP1.RemoveAt(i);// Remove(ListSegP1[i]);
@@ -759,19 +765,18 @@ namespace GoBot.Calculs.Formes
 
         #endregion
 
-        public List<PointReel> Points
+        #region Transformations
+
+        public void Tourner(Angle angle, PointReel centreRotation = null)
         {
-            get
-            {
-                List<PointReel> points = new List<PointReel>();
-
-                foreach (Segment s in Cotes)
-                {
-                    points.Add(new PointReel((int)s.Debut.X, (int)s.Debut.Y));
-                }
-
-                return points;
-            }
+            // TODOFORMES
         }
+
+        public void Translater(double dx, double dy)
+        {
+            // TODOFORMES
+        }
+
+        #endregion
     }
 }

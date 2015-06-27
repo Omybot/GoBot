@@ -54,6 +54,17 @@ namespace GoBot.Calculs.Formes
         }
 
         /// <summary>
+        /// Construit la Droite à partir d'une autre Droite
+        /// </summary>
+        /// <param name="droite">Droite à copier</param>
+        public Droite(Droite droite)
+        {
+            a = droite.A;
+            b = droite.B;
+            c = droite.C;
+        }
+
+        /// <summary>
         /// Calcule l'équation de la droite passant par deux points
         /// </summary>
         /// <param name="p1">Premier point</param>
@@ -76,7 +87,7 @@ namespace GoBot.Calculs.Formes
 
 #       endregion
 
-        #region Accesseurs
+        #region Propriétés
 
         /// <summary>
         /// Accesseur sur le paramètre A de la droite sous la forme cy = ax + b
@@ -108,6 +119,30 @@ namespace GoBot.Calculs.Formes
             get
             {
                 return c;
+            }
+        }
+
+        /// <summary>
+        /// Surface de la Droite
+        /// </summary>
+        public virtual double Surface
+        {
+            get
+            {
+                // TODOFORMES
+                return 0;
+            }
+        }
+
+        /// <summary>
+        /// Barycentre de la Droite
+        /// </summary>
+        public virtual PointReel BaryCentre
+        {
+            get
+            {
+                // TODOFORMES
+                return null;
             }
         }
 
@@ -169,31 +204,227 @@ namespace GoBot.Calculs.Formes
 
         #endregion
 
-        #region Croisement
+        #region Distance
 
         /// <summary>
-        /// Fonction testant si la forme donnée en paramètre croise la Droite actuelle
+        /// Retourne la distance minimale entre la Droite et la IForme donnée
+        /// </summary>
+        /// <param name="forme">IForme testée</param>
+        /// <returns>Distance minimale</returns>
+        public double Distance(IForme forme)
+        {
+            return Distance(Util.ToRealType(forme));
+        }
+
+        /// <summary>
+        /// Retourne la distance minimale entre la Droite et le Segment donné
+        /// </summary>
+        /// <param name="segment">Segment testé</param>
+        /// <returns>Distance minimale</returns>
+        protected virtual double Distance(Segment segment)
+        {
+            // Le segment sait le faire
+            return segment.Distance(this);
+        }
+
+        /// <summary>
+        /// Retourne la distance minimale entre la Droite et la Droite donnée
+        /// </summary>
+        /// <param name="droite">Droite testée</param>
+        /// <returns>Distance minimale</returns>
+        protected virtual double Distance(Droite droite)
+        {
+            // Si les droites se croisent la distance est de 0
+            if (Croise(droite))
+                return 0;
+
+            // Sinon elles sont parrallèles et la distance entre elles est la distance entre les deux interesections :
+            // - D'une perpendiculaire et la première droite
+            // - De la même perpendiculaire et la deuxième droite
+
+            Droite perpendiculaire = GetPerpendiculaire(new PointReel(0, 0));
+
+            PointReel p1 = getCroisement(perpendiculaire);
+            PointReel p2 = getCroisement(perpendiculaire);
+
+            return p1.Distance(p2);
+        }
+
+        /// <summary>
+        /// Retourne la distance minimale entre la Droite et le Cercle donné
+        /// </summary>
+        /// <param name="cercle">Cercle testé</param>
+        /// <returns>Distance minimale</returns>
+        protected virtual double Distance(Cercle cercle)
+        {
+            // Distance jusqu'au centre du cercle - son rayon
+            return Distance(cercle.Centre) - cercle.Rayon;
+        }
+
+        /// <summary>
+        /// Retourne la distance minimale entre la Droite et le Polygone donné
+        /// </summary>
+        /// <param name="polygone">Polygone testé</param>
+        /// <returns>Distance minimale</returns>
+        protected virtual double Distance(Polygone polygone)
+        {
+            // Distance jusqu'au segment le plus proche
+            double minDistance = double.MaxValue;
+
+            foreach (Segment s in polygone.Cotes)
+                minDistance = Math.Min(s.Distance(this), minDistance);
+
+            return minDistance;
+        }
+
+        /// <summary>
+        /// Retourne la distance minimale entre la Droite et le PointReel donné
+        /// </summary>
+        /// <param name="point">PointReel testé</param>
+        /// <returns>Distance minimale</returns>
+        protected virtual double Distance(PointReel point)
+        {
+            // Pour calculer la distance, on calcule la droite perpendiculaire passant par ce point
+            // Puis on calcule l'intersection de la droite et de sa perpendiculaire
+            // On obtient la de projection orthogonale du point, qui est le point de la droite le plus proche du point
+            // On retourne la distance entre ces deux points
+
+            Droite perpendiculaire = GetPerpendiculaire(point);
+            PointReel intersection = getCroisement(perpendiculaire);
+
+            double distance = point.Distance(intersection);
+
+            return distance;
+        }
+
+        #endregion
+        
+        #region Contient
+        
+        /// <summary>
+        /// Teste si la Droite contient la IForme donnée
+        /// </summary>
+        /// <param name="forme">IForme testée</param>
+        /// <returns>Vrai si la Droite contient la IForme donnée</returns>
+        public virtual bool Contient(IForme forme)
+        {
+            return Contient(Util.ToRealType(forme));
+        }
+
+        /// <summary>
+        /// Teste si la Droite contient le PointReel donné
+        /// </summary>
+        /// <param name="point">PointReel testé</param>
+        /// <returns>Vrai si la Droite contient le PointReel donné</returns>
+        protected virtual bool Contient(PointReel point)
+        {
+            // Vérifie si le point est sur la droite en vérifiant sa coordonnée Y pour sa coordonnée X par rapport à l'équation de la droite
+            // J'arrondi à deux décimales sinon la précision est trop grande et on rejette des points à cause des arrondis
+
+            double calc1 = point.X * A + B;
+            double calc2 = point.Y * C;
+            double difference = calc1 > calc2 ? calc1 - calc2 : calc2 - calc1;
+            if (difference <= PointReel.PRECISION)
+                return true;
+            else
+                return false;
+        }
+
+        /// <summary>
+        /// Teste si la Droite contient le Segment donné
+        /// </summary>
+        /// <param name="segment">Segment testé</param>
+        /// <returns>Vrai si la Droite contient le Segment donné</returns>
+        protected virtual bool Contient(Segment segment)
+        {
+            // Contenir un Segment revient à contenir la Droite sur laquelle se trouve le Segment
+            return Contient((Droite)segment);
+        }
+
+        /// <summary>
+        /// Teste si la Droite courante contient la Droite donnée
+        /// </summary>
+        /// <param name="droite">Droite testée</param>
+        /// <returns>Vrai si la Droite contient la Droite donnée</returns>
+        protected virtual bool Contient(Droite droite)
+        {
+            // Contenir une droite revient à avoir la même équation
+            if (droite == this)
+                return true;
+            else
+                return false;
+        }
+
+        /// <summary>
+        /// Teste si la Droite contient le Polygone donné
+        /// </summary>
+        /// <param name="polygone">Polygone testé</param>
+        /// <returns>Vrai si la Droite contient le Polygone donné</returns>
+        protected virtual bool Contient(Polygone polygone)
+        {
+            // Contenir un polygone revient à contenir tous les cotés du polygone
+            foreach (Segment s in polygone.Cotes)
+                if (!Contient(s))
+                    return false;
+
+            return true;
+        }
+
+        /// <summary>
+        /// Teste si la Droite contient le Cercle donné
+        /// </summary>
+        /// <param name="cercle">Cercle testé</param>
+        /// <returns>Vrai si la Droite contient le Cercle donné</returns>
+        protected virtual bool Contient(Cercle cercle)
+        {
+            // Une droite ne peut contenir un Cercle que si son centre est sur la Droite et que son rayon est de 0
+            return (cercle.Rayon == 0 && Contient(cercle.Centre));
+        }
+
+        #endregion
+
+        #region Croisement
+        public virtual List<PointReel> Croisements(IForme forme)
+        {
+            // TODOFORMES
+            return null;
+        }
+
+        /// <summary>
+        /// Teste si la Droite croise la IForme donnée
         /// </summary>
         /// <param name="forme">Forme testée</param>
-        /// <returns>Vrai si la forme croise la Droite courante</returns>
-        public bool croise(IForme forme)
+        /// <returns>Vrai si droite croise la IForme testée</returns>
+        public virtual bool Croise(IForme forme)
         {
-            Type typeForme = forme.GetType();
+            return Croise(Util.ToRealType(forme));
+        }
 
-            // Appel de la fonction en fonction du type
+        protected virtual bool Croise(Droite droite)
+        {
+            return getCroisement(droite) != null;
+        }
 
-            if (typeForme.IsAssignableFrom(typeof(Droite)))
-                return getCroisement((Droite)forme) != null;
-            else if (typeForme.IsAssignableFrom(typeof(Segment)))
-                return getCroisement((Segment)forme) != null;
-            else if (typeForme.IsAssignableFrom(typeof(Polygone)) || typeForme.IsSubclassOf(typeof(Polygone)))
-                return forme.croise(this);
-            else if (typeForme.IsAssignableFrom(typeof(Cercle)))
-                return forme.croise(this);
-            else if (typeForme.IsAssignableFrom(typeof(PointReel)))
-                return contient(forme);
-            else
-                throw new NotImplementedException("Fonction inexistante : Croisement d'un(e) " + this.GetType().Name + " et d'un(e) " + typeForme.Name);
+        protected virtual bool Croise(Segment segment)
+        {
+            return getCroisement(segment) != null;
+        }
+
+        protected virtual bool Croise(Polygone polygone)
+        {
+            // Le polygone sait faire ça
+            return polygone.Croise(this);
+        }
+
+        protected virtual bool Croise(Cercle cercle)
+        {
+            // Le cercle sait faire ça
+            return cercle.Croise(this);
+        }
+
+        protected virtual bool Croise(PointReel point)
+        {
+            return Contient(point);
         }
 
         /// <summary>
@@ -207,7 +438,7 @@ namespace GoBot.Calculs.Formes
 
             if (C == 0 && autreDroite.C == 0                             // Les deux droites sont verticales
                 || A == 0 && autreDroite.A == 0                            // Les deux droites sont horizontales
-                || (C == 1 && autreDroite.C == 1 && A == autreDroite.A))   // Les deux droites sont parrallèles
+                || (C == 1 && autreDroite.C == 1 && A == autreDroite.A))   // Les deux droites sont parallèles
                 return null;
 
             x = (autreDroite.B * C - autreDroite.C * B) / (autreDroite.C * A - autreDroite.A * C);
@@ -226,216 +457,24 @@ namespace GoBot.Calculs.Formes
             // Vérifie de la même manière qu'une droite mais vérifie ensuite que le point appartient au segment
             PointReel croisement = getCroisement((Droite)autreSegment);
 
-            if (croisement != null && autreSegment.contient(croisement))
+            if (croisement != null && autreSegment.Contient(croisement))
                 return croisement;
             else
                 return null;
         }
 
         #endregion
+        
+        #region Transformations
 
-        #region Contient
-
-        /// <summary>
-        /// Teste si la droite contient la forme donnée
-        /// </summary>
-        /// <param name="forme">Forme testés</param>
-        /// <returns>Vrai si la Droite contient la forme donnée</returns>
-        public bool contient(IForme forme)
+        public virtual void Tourner(Angle angle, PointReel centreRotation = null)
         {
-            Type typeForme = forme.GetType();
-
-            // Appel de la bonne fonciton en fonction du type
-            if (typeForme.IsAssignableFrom(typeof(Droite)))
-                return contient((Droite)forme);
-            else if (typeForme.IsAssignableFrom(typeof(Segment)))
-                return contient((Segment)forme);
-            else if (typeForme.IsAssignableFrom(typeof(Polygone)) || typeForme.IsSubclassOf(typeof(Polygone)))
-                return contient((Polygone)forme);
-            else if (typeForme.IsAssignableFrom(typeof(Cercle)))
-                return contient((Cercle)forme);
-            else if (typeForme.IsAssignableFrom(typeof(PointReel)))
-                return contient((PointReel)forme);
-            else
-                throw new NotImplementedException("Fonction inexistante : Contenance dans un(e) " + this.GetType().Name + " d'un(e) " + typeForme.Name);
+            // TODOFORMES
         }
 
-        /// <summary>
-        /// Teste si la Droite courante contient le PointReel donné
-        /// </summary>
-        /// <param name="point">PointReel testé</param>
-        /// <returns>Vrai si la Droite contient le PointReel donné</returns>
-        protected bool contient(PointReel point)
+        public virtual void Translater(double dx, double dy)
         {
-            // Vérifie si le point est sur la droite en vérifiant sa coordonnée Y pour sa coordonnée X par rapport à l'équation de la droite
-            // J'arrondi à deux décimales sinon la précision est trop grande et on rejette des points à cause des arrondis
-
-            double calc1 = point.X * A + B;
-            double calc2 = point.Y * C;
-            double difference = calc1 > calc2 ? calc1 - calc2 : calc2 - calc1;
-            if (difference <= PointReel.PRECISION)
-                return true;
-            else
-                return false;
-        }
-
-        /// <summary>
-        /// Teste si la Droite courante contient le Segment donné
-        /// </summary>
-        /// <param name="point">Segment testé</param>
-        /// <returns>Vrai si la Droite contient le Segment donné</returns>
-        protected bool contient(Segment segment)
-        {
-            // Contenir un Segment revient à contenir la Droite sur laquelle se trouve le Segment
-            return contient((Droite)segment);
-        }
-
-        /// <summary>
-        /// Teste si la Droite courante contient la Droite donnée
-        /// </summary>
-        /// <param name="point">Droite testée</param>
-        /// <returns>Vrai si la Droite contient le PointReel donné</returns>
-        protected bool contient(Droite droite)
-        {
-            // Contenir une droite revient à avoir la même équation
-            if (droite.A == A && droite.B == B && droite.C == C)
-                return true;
-            else
-                return false;
-        }
-
-        /// <summary>
-        /// Teste si la Droite courante contient le Polygone donné
-        /// </summary>
-        /// <param name="point">Polygone testé</param>
-        /// <returns>Vrai si la Droite contient le Polygone donné</returns>
-        protected bool contient(Polygone polygone)
-        {
-            // Contenir un polygone revient à contenir tous les cotés du polygone
-            foreach (Segment s in polygone.Cotes)
-                if (!contient(s))
-                    return false;
-
-            return true;
-        }
-
-        /// <summary>
-        /// Teste si la Droite courante contient le Cercle donné
-        /// </summary>
-        /// <param name="point">Cercle testé</param>
-        /// <returns>Vrai si la Droite contient le Cercle donné</returns>
-        protected bool contient(Cercle Cercle)
-        {
-            // Une droite ne peut contenir un Cercle que si son centre est sur la Droite et que son rayon est de 0
-            return (Cercle.Rayon == 0 && contient(Cercle.Centre));
-        }
-
-        #endregion
-
-        #region Distance
-
-        /// <summary>
-        /// Retourne la distance minimale entre la Droite courante et la Forme donnée
-        /// </summary>
-        /// <param name="forme">Forme testée</param>
-        /// <returns>Distance minimale</returns>
-        public virtual double Distance(IForme forme)
-        {
-            Type typeForme = forme.GetType();
-
-            if (typeForme.IsAssignableFrom(typeof(Segment)))
-                return Distance((Segment)forme);
-            else if (typeForme.IsAssignableFrom(typeof(PointReel)))
-                return Distance((PointReel)forme);
-            else if (typeForme.IsAssignableFrom(typeof(Droite)))
-                return Distance((Droite)forme);
-            else if (typeForme.IsAssignableFrom(typeof(Polygone)) || typeForme.IsSubclassOf(typeof(Polygone)))
-                return Distance((Polygone)forme);
-            else if (typeForme.IsAssignableFrom(typeof(Cercle)))
-                return Distance((Cercle)forme);
-            else
-                throw new NotImplementedException();
-        }
-
-        /// <summary>
-        /// Retourne la distance minimale entre la Droite courante et le Segment donné
-        /// </summary>
-        /// <param name="forme">Segment testé</param>
-        /// <returns>Distance minimale</returns>
-        public virtual double Distance(Segment segment)
-        {
-            // Le segment sait le faire
-            return segment.Distance(this);
-        }
-
-        /// <summary>
-        /// Retourne la distance minimale entre la Droite courante et la Droite donnée
-        /// </summary>
-        /// <param name="forme">Droite testée</param>
-        /// <returns>Distance minimale</returns>
-        public virtual double Distance(Droite droite)
-        {
-            // Si les droites se croisent la distance est de 0
-            if (croise(droite))
-                return 0;
-
-            // Sinon elles sont parrallèles et la distance entre elles est la distance entre les deux interesections :
-            // - D'une perpendiculaire et la première droite
-            // - De la même perpendiculaire et la deuxième droite
-
-            Droite perpendiculaire = getPerpendiculaire(new PointReel(0, 0));
-
-            PointReel p1 = getCroisement(perpendiculaire);
-            PointReel p2 = getCroisement(perpendiculaire);
-
-            return p1.Distance(p2);
-        }
-
-        /// <summary>
-        /// Retourne la distance minimale entre la Droite courante et le Cercle donné
-        /// </summary>
-        /// <param name="forme">Cercle testé</param>
-        /// <returns>Distance minimale</returns>
-        public virtual double Distance(Cercle Cercle)
-        {
-            // Distance jusqu'au centre du cercle - son rayon
-            return Distance(Cercle.Centre) - Cercle.Rayon;
-        }
-
-        /// <summary>
-        /// Retourne la distance minimale entre la Droite courante et le Polygone donné
-        /// </summary>
-        /// <param name="forme">Polygone testé</param>
-        /// <returns>Distance minimale</returns>
-        public virtual double Distance(Polygone polygone)
-        {
-            // Distance jusqu'au segment le plus proche
-            double minDistance = double.MaxValue;
-
-            foreach (Segment s in polygone.Cotes)
-                minDistance = Math.Min(s.Distance(this), minDistance);
-
-            return minDistance;
-        }
-
-        /// <summary>
-        /// Retourne la distance minimale entre la Droite courante et le PointReel donné
-        /// </summary>
-        /// <param name="forme">PointReel testé</param>
-        /// <returns>Distance minimale</returns>
-        public virtual double Distance(PointReel point)
-        {
-            // Pour calculer la distance, on calcule la droite perpendiculaire passant par ce point
-            // Puis on calcule l'intersection de la droite et de sa perpendiculaire
-            // On obtient la de projection orthogonale du point, qui est le point de la droite le plus proche du point
-            // On retourne la distance entre ces deux points
-
-            Droite perpendiculaire = getPerpendiculaire(point);
-            PointReel intersection = getCroisement(perpendiculaire);
-
-            double distance = point.Distance(intersection);
-
-            return distance;
+            // TODOFORMES
         }
 
         #endregion
@@ -445,7 +484,7 @@ namespace GoBot.Calculs.Formes
         /// </summary>
         /// <param name="point">Point contenu par la perpendiculaire recherchée</param>
         /// <returns>Equation de la droite perpendiculaire à celle-ci et passant par le point donné</returns>
-        public Droite getPerpendiculaire(PointReel point)
+        public Droite GetPerpendiculaire(PointReel point)
         {
             // Si je suis une droite verticale, je retourne l'horizontale qui passe par le point
             if (C == 0)

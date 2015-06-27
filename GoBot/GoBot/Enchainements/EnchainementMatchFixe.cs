@@ -107,9 +107,6 @@ namespace GoBot.Enchainements
             /*
             while (ListeMouvementsGros.Count > 0)
             {
-
-                DateTime debut = DateTime.Now;
-
                 double meilleurCout = double.MaxValue;
                 for (int j = 0; j < ListeMouvementsGros.Count; j++)
                 {
@@ -120,8 +117,6 @@ namespace GoBot.Enchainements
                         iMeilleur = j;
                     }
                 }
-
-                Console.WriteLine((DateTime.Now - debut).TotalMilliseconds + " ms de temps de décision");
 
                 if (ListeMouvementsGros[iMeilleur].ScorePondere != 0)
                 {

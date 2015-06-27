@@ -58,7 +58,7 @@ namespace GoBot.Calculs.Formes
 
         #endregion
 
-        #region Accesseurs
+        #region Propriétés
 
         /// <summary>
         /// Obtient la position sur l'axe des abscisses
@@ -87,6 +87,30 @@ namespace GoBot.Calculs.Formes
             set
             {
                 posY = value;
+            }
+        }
+
+        /// <summary>
+        /// Surface du PointReel
+        /// </summary>
+        public double Surface
+        {
+            get
+            {
+                // TODOFORMES
+                return 0;
+            }
+        }
+
+        /// <summary>
+        /// Barycentre du PointReel
+        /// </summary>
+        public PointReel BaryCentre
+        {
+            get
+            {
+                // TODOFORMES
+                return null;
             }
         }
 
@@ -133,198 +157,6 @@ namespace GoBot.Calculs.Formes
             return (int)X ^ (int)Y;
         }
 
-        #endregion
-
-        #region Distance
-
-        /// <summary>
-        /// Retourne la distance minimale entre le PointReel courant et la Forme donnée
-        /// </summary>
-        /// <param name="forme">Forme testée</param>
-        /// <returns>Distance minimale</returns>
-        public double Distance(IForme forme)
-        {
-            Type typeForme = forme.GetType();
-
-            if (typeForme.IsAssignableFrom(typeof(Segment)))
-                return Distance((Segment)forme);
-            else if (typeForme.IsAssignableFrom(typeof(PointReel)))
-                return Distance((PointReel)forme);
-            else if (typeForme.IsAssignableFrom(typeof(Droite)))
-                return Distance((Droite)forme);
-            else if (typeForme.IsAssignableFrom(typeof(Polygone)) || typeForme.IsSubclassOf(typeof(Polygone)))
-                return Distance((Polygone)forme);
-            else if (typeForme.IsAssignableFrom(typeof(Cercle)))
-                return Distance((Cercle)forme);
-            else
-                throw new NotImplementedException();
-        }
-
-        /// <summary>
-        /// Retourne la distance minimale entre le PointReel courant et le Segment donné
-        /// </summary>
-        /// <param name="forme">Segment testé</param>
-        /// <returns>Distance minimale</returns>
-        public double Distance(Segment segment)
-        {
-            // Le segment sait le faire
-            return segment.Distance(this);
-        }
-        
-        /// <summary>
-        /// Retourne la distance minimale entre le PointReel courant et la Droite donnée
-        /// </summary>
-        /// <param name="forme">Droite testée</param>
-        /// <returns>Distance minimale</returns>
-        public double Distance(Droite droite)
-        {
-            // La droite sait le faire
-            return droite.Distance(this);
-        }
-
-        /// <summary>
-        /// Retourne la distance minimale entre le PointReel courant et le Cercle donné
-        /// </summary>
-        /// <param name="forme">Cercle testé</param>
-        /// <returns>Distance minimale</returns>
-        public double Distance(Cercle Cercle)
-        {
-            // Distance jusqu'au centre du cercle - son rayon
-            return Distance(Cercle.Centre) - Cercle.Rayon;
-        }
-
-        /// <summary>
-        /// Retourne la distance minimale entre le PointReel courant et le Polygone donné
-        /// </summary>
-        /// <param name="forme">Polygone testé</param>
-        /// <returns>Distance minimale</returns>
-        public double Distance(Polygone polygone)
-        {
-            // Distance jusqu'au segment le plus proche
-            double minDistance = double.MaxValue;
-
-            foreach (Segment s in polygone.Cotes)
-                minDistance = Math.Min(s.Distance(this), minDistance);
-
-            return minDistance;
-        }
-
-        /// <summary>
-        /// Retourne la distance minimale entre le PointReel courant et le PointReel donné
-        /// </summary>
-        /// <param name="forme">PointReel testé</param>
-        /// <returns>Distance minimale</returns>
-        public double Distance(PointReel autrePoint)
-        {
-            // Formule de collège \o/
-            return Math.Sqrt((X - autrePoint.X) * (X - autrePoint.X) + (Y - autrePoint.Y) * (Y - autrePoint.Y));
-        }
-
-        #endregion
-
-        #region Croisement
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="forme"></param>
-        /// <returns></returns>
-        public bool croise(IForme forme)
-        {
-            Type typeForme = forme.GetType();
-
-            if (typeForme.IsAssignableFrom(typeof(Segment)))
-                return getCroisement((Segment)forme) != null;
-            else if (typeForme.IsAssignableFrom(typeof(PointReel)))
-                return getCroisement((PointReel)forme) != null;
-            else if (typeForme.IsAssignableFrom(typeof(Droite)))
-                return getCroisement((Droite)forme) != null;
-            else if (typeForme.IsAssignableFrom(typeof(Polygone)) || typeForme.IsSubclassOf(typeof(Polygone)))
-                return forme.croise(this);
-            else if (typeForme.IsAssignableFrom(typeof(Cercle)))
-                return forme.croise(this);
-            else
-                throw new NotImplementedException();
-        }
-
-        public PointReel getCroisement(Segment segment)
-        {
-            if (segment.contient(this))
-                return this;
-            else
-                return null;
-        }
-
-        public PointReel getCroisement(PointReel point)
-        {
-            if (point.X == X && point.Y == Y)
-                return this;
-            else
-                return null;
-        }
-
-        public PointReel getCroisement(Droite droite)
-        {
-            if (droite.contient(this))
-                return this;
-            else
-                return null;
-        }
-
-        public PointReel getCroisement(Polygone polygone)
-        {
-            if (polygone.contient(this))
-                return this;
-            else
-                return null;
-        }
-
-        public PointReel getCroisement(Cercle Cercle)
-        {
-            if (Cercle.contient(this))
-                return this;
-            else
-                return null;
-        }
-
-        #endregion
-
-        #region Contient
-
-        public bool contient(IForme forme)
-        {
-            Type typeForme = forme.GetType();
-
-            if (typeForme.IsAssignableFrom(typeof(PointReel)))
-                return (PointReel)forme == this;
-
-            return false;
-        }
-
-        #endregion
-
-        /// <summary>
-        /// Affecte les coordonnées passées en paramètre
-        /// </summary>
-        /// <param name="x">Abscisse</param>
-        /// <param name="y">Ordonnée</param>
-        public void allerA(double x, double y)
-        {
-            posX = x;
-            posY = y;
-        }
-
-        /// <summary>
-        /// Déplace les coordonnées par rapport aux anciennes coordonnées
-        /// </summary>
-        /// <param name="x">Déplacement sur l'axe des abscisses</param>
-        /// <param name="y">Déplacement sur l'axe des ordonnées</param>
-        public void deplacer(double x, double y)
-        {
-            posX += x;
-            posY += y;
-        }
-
         public static implicit operator Point(PointReel point)
         {
             return new Point((int)point.X, (int)point.Y);
@@ -339,5 +171,216 @@ namespace GoBot.Calculs.Formes
         {
             return new PointF((float)point.X, (float)point.Y);
         }
+
+        #endregion
+
+        #region Distance
+        
+        /// <summary>
+        /// Retourne la distance minimale entre le PointReel courant et la IForme donnée
+        /// </summary>
+        /// <param name="forme">IForme testée</param>
+        /// <returns>Distance minimale</returns>
+        public double Distance(IForme forme)
+        {
+            return Distance(Util.ToRealType(forme));
+        }
+
+        /// <summary>
+        /// Retourne la distance minimale entre le PointReel courant et le Segment donné
+        /// </summary>
+        /// <param name="segment">Segment testé</param>
+        /// <returns>Distance minimale</returns>
+        protected double Distance(Segment segment)
+        {
+            // Le segment sait le faire
+            return segment.Distance(this);
+        }
+        
+        /// <summary>
+        /// Retourne la distance minimale entre le PointReel courant et la Droite donnée
+        /// </summary>
+        /// <param name="droite">Droite testée</param>
+        /// <returns>Distance minimale</returns>
+        protected double Distance(Droite droite)
+        {
+            // La droite sait le faire
+            return droite.Distance(this);
+        }
+
+        /// <summary>
+        /// Retourne la distance minimale entre le PointReel courant et le Cercle donné
+        /// </summary>
+        /// <param name="cercle">Cercle testé</param>
+        /// <returns>Distance minimale</returns>
+        protected double Distance(Cercle cercle)
+        {
+            // Distance jusqu'au centre du cercle - son rayon
+            return Distance(cercle.Centre) - cercle.Rayon;
+        }
+
+        /// <summary>
+        /// Retourne la distance minimale entre le PointReel courant et le Polygone donné
+        /// </summary>
+        /// <param name="polygone">Polygone testé</param>
+        /// <returns>Distance minimale</returns>
+        protected double Distance(Polygone polygone)
+        {
+            // Distance jusqu'au segment le plus proche
+            double minDistance = double.MaxValue;
+
+            foreach (Segment s in polygone.Cotes)
+                minDistance = Math.Min(s.Distance(this), minDistance);
+
+            return minDistance;
+        }
+
+        /// <summary>
+        /// Retourne la distance minimale entre le PointReel courant et le PointReel donné
+        /// </summary>
+        /// <param name="point">PointReel testé</param>
+        /// <returns>Distance minimale</returns>
+        protected double Distance(PointReel point)
+        {
+            // Formule de collège \o/
+            return Math.Sqrt((X - point.X) * (X - point.X) + (Y - point.Y) * (Y - point.Y));
+        }
+
+        #endregion
+
+        #region Contient
+        
+        /// <summary>
+        /// Teste si le PointReel contient la IForme donnée
+        /// </summary>
+        /// <param name="forme">IForme testée</param>
+        /// <returns>Vrai si le PointReel contient la IForme testée</returns>
+        public bool Contient(IForme forme)
+        {
+            // La seule chose qu'un point peut contenir, c'est un point identique à lui même
+            if (forme is PointReel)
+                return (PointReel)forme == this;
+
+            return false;
+        }
+
+        #endregion
+
+        #region Croisement
+
+        /// <summary>
+        /// Teste si le PointReel courant croise la IForme donnée
+        /// Pour un PointReel, on dit qu'il croise s'il se trouve sur le contour de la forme avec une marge de <c>PRECISION</c>
+        /// </summary>
+        /// <param name="forme">IForme testés</param>
+        /// <returns>Vrai si le PointReel courant croise la IForme donnée</returns>
+        public bool Croise(IForme forme)
+        {
+            return getCroisement(Util.ToRealType(forme)) != null;
+        }
+
+        public List<PointReel> Croisements(IForme forme)
+        {
+            // TODOFORMES
+            return null;
+        }
+
+        /// <summary>
+        /// Retourne le PointReel si il est sur le Segment donné avec une marge de <c>PRECISION</c>, sinon null
+        /// </summary>
+        /// <param name="segment">Segment testé</param>
+        /// <returns>Le PointReel lui même si il est sur le Segment, sinon null</returns>
+        public PointReel getCroisement(Segment segment)
+        {
+            if (segment.Contient(this))
+                return this;
+            else
+                return null;
+        }
+
+        /// <summary>
+        /// Retourne le PointReel si il est sur le PointReel donné avec une marge de <c>PRECISION</c>, sinon null
+        /// </summary>
+        /// <param name="point">point testé</param>
+        /// <returns>Le PointReel lui même si il est sur le PointReel, sinon null</returns>
+        public PointReel getCroisement(PointReel point)
+        {
+            if (point.X == X && point.Y == Y)
+                return this;
+            else
+                return null;
+        }
+
+        /// <summary>
+        /// Retourne le PointReel si il est sur la Droite donnée avec une marge de <c>PRECISION</c>, sinon null
+        /// </summary>
+        /// <param name="droite">Droite testée</param>
+        /// <returns>Le PointReel lui même si il est sur la Droite, sinon null</returns>
+        public PointReel getCroisement(Droite droite)
+        {
+            if (droite.Contient(this))
+                return this;
+            else
+                return null;
+        }
+
+        /// <summary>
+        /// Retourne le PointReel si il est sur le Polygone donné avec une marge de <c>PRECISION</c>, sinon null
+        /// </summary>
+        /// <param name="polygone">Polygone testé</param>
+        /// <returns>Le PointReel lui même si il est sur le Polygone, sinon null</returns>
+        public PointReel getCroisement(Polygone polygone)
+        {
+            if (polygone.Contient(this))
+                return this;
+            else
+                return null;
+        }
+
+        /// <summary>
+        /// Retourne le PointReel si il est sur le Cercle donné avec une marge de <c>PRECISION</c>, sinon null
+        /// </summary>
+        /// <param name="cercle">Cercle testé</param>
+        /// <returns>Le PointReel lui même si il est sur le Cercle, sinon null</returns>
+        public PointReel getCroisement(Cercle cercle)
+        {
+            if (cercle.Contient(this))
+                return this;
+            else
+                return null;
+        }
+
+        #endregion
+
+        #region Transformations
+
+        /// <summary>
+        /// Affecte les coordonnées passées en paramètre
+        /// </summary>
+        /// <param name="x">Abscisse</param>
+        /// <param name="y">Ordonnée</param>
+        public void Placer(double x, double y)
+        {
+            posX = x;
+            posY = y;
+        }
+
+        public void Tourner(Angle angle, PointReel centreRotation = null)
+        {
+            // TODOFORMES
+        }
+
+        /// <summary>
+        /// Déplace les coordonnées par rapport aux anciennes coordonnées
+        /// </summary>
+        /// <param name="x">Déplacement sur l'axe des abscisses</param>
+        /// <param name="y">Déplacement sur l'axe des ordonnées</param>
+        public void Translater(double dx, double dy)
+        {
+            posX += dx;
+            posY += dy;
+        }
+
+        #endregion
     }
 }

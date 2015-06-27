@@ -48,7 +48,7 @@ namespace GoBot.Calculs
         /// <param name="y">Déplacement (mm) sur l'axe des ordonnées</param>
         public void Deplacer(double x, double y)
         {
-            Coordonnees.deplacer(x, y);
+            Coordonnees.Translater(x, y);
         }
 
         /// <summary>
@@ -78,7 +78,7 @@ namespace GoBot.Calculs
             double depX = distance * Math.Cos(Angle.AngleRadians);
             double depY = distance * Math.Sin(Angle.AngleRadians);
 
-            Coordonnees.deplacer(depX, depY);
+            Coordonnees.Translater(depX, depY);
         }
     }
 }
