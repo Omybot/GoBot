@@ -6,7 +6,7 @@ using System.Text;
 namespace GoBot.Calculs.Formes
 {
     // Un segment est une Droite avec deux extrémités
-    public class Segment : Droite
+    public class Segment : Droite, IModifiable<Segment>
     {
         #region Attributs
 
@@ -65,30 +65,11 @@ namespace GoBot.Calculs.Formes
             }
         }
 
-        public double Largeur
+        public Double Longueur
         {
             get
             {
-                // TODOFORMES
-                return 0;
-            }
-        }
-
-        public double Hauteur
-        {
-            get
-            {
-                // TODOFORMES
-                return 0;
-            }
-        }
-
-        public double Longueur
-        {
-            get
-            {
-                // TODOFORMES
-                return 0;
+                return Debut.Distance(Fin);
             }
         }
 
@@ -99,7 +80,6 @@ namespace GoBot.Calculs.Formes
         {
             get
             {
-                // TODOFORMES
                 return 0;
             }
         }
@@ -111,8 +91,7 @@ namespace GoBot.Calculs.Formes
         {
             get
             {
-                // TODOFORMES
-                return null;
+                return new PointReel((pointDebut.X + pointFin.X) / 2, (pointDebut.Y + pointFin.Y) / 2);
             }
         }
 
@@ -465,17 +444,19 @@ namespace GoBot.Calculs.Formes
 
         #region Transformations
 
-        public override void Tourner(Angle angle, PointReel centreRotation = null)
+        public new Segment Translation(double dx, double dy)
         {
-            // TODOFORMES
+            return new Segment(pointDebut.Translation(dx, dy), pointFin.Translation(dx, dy));
         }
 
-        public override void Translater(double dx, double dy)
+        public new Segment Rotation(Angle angle, PointReel centreRotation = null)
         {
-            // TODOFORMES
-        }
+            if (centreRotation == null)
+                centreRotation = BaryCentre;
 
+            return new Segment(pointDebut.Rotation(angle, centreRotation), pointFin.Rotation(angle, centreRotation));
+        }
         #endregion
-        
+
     }
 }

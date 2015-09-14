@@ -7,7 +7,7 @@ using System.Drawing;
 
 namespace GoBot.Calculs.Formes
 {
-    public class PointReel : GoBot.Calculs.Formes.IForme
+    public class PointReel : IForme, IModifiable<PointReel>
     {
         public const double PRECISION = 0.01;
 
@@ -97,7 +97,6 @@ namespace GoBot.Calculs.Formes
         {
             get
             {
-                // TODOFORMES
                 return 0;
             }
         }
@@ -109,8 +108,7 @@ namespace GoBot.Calculs.Formes
         {
             get
             {
-                // TODOFORMES
-                return null;
+                return new PointReel(this);
             }
         }
 
@@ -365,22 +363,20 @@ namespace GoBot.Calculs.Formes
             posY = y;
         }
 
-        public void Tourner(Angle angle, PointReel centreRotation = null)
+        public PointReel Translation(double dx, double dy)
         {
-            // TODOFORMES
+            return new PointReel(posX + dx, posY + dy);
         }
 
-        /// <summary>
-        /// Déplace les coordonnées par rapport aux anciennes coordonnées
-        /// </summary>
-        /// <param name="x">Déplacement sur l'axe des abscisses</param>
-        /// <param name="y">Déplacement sur l'axe des ordonnées</param>
-        public void Translater(double dx, double dy)
+        public PointReel Rotation(Angle angle, PointReel centreRotation = null)
         {
-            posX += dx;
-            posY += dy;
+            PointReel nouvelleCoordonnee = new PointReel();
+            nouvelleCoordonnee.X = centreRotation.X + Math.Cos(angle.AngleRadians) * (this.X - centreRotation.X) - Math.Sin(angle.AngleRadians) * (this.Y - centreRotation.Y);
+            nouvelleCoordonnee.Y = centreRotation.Y + Math.Cos(angle.AngleRadians) * (this.Y - centreRotation.Y) + Math.Sin(angle.AngleRadians) * (this.X - centreRotation.X);
+            return nouvelleCoordonnee;
         }
 
         #endregion
+
     }
 }

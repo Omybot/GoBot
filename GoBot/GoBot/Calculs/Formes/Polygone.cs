@@ -8,7 +8,7 @@ using System.Drawing;
 
 namespace GoBot.Calculs.Formes
 {
-    public class Polygone : IForme
+    public class Polygone : IForme, IModifiable<Polygone>
     {
         #region Attributs
 
@@ -141,8 +141,12 @@ namespace GoBot.Calculs.Formes
         {
             get
             {
-                // TODOFORMES
-                return 0;
+                double surface = 0;
+
+                foreach(Triangle t in this.ToTriangles())
+                    surface += t.Surface;
+
+                return surface;
             }
         }
 
@@ -153,8 +157,18 @@ namespace GoBot.Calculs.Formes
         {
             get
             {
-                // TODOFORMES
-                return null;
+                double x = 0;
+                double y = 0;
+                double surface = Surface;
+
+                foreach (Triangle t in this.ToTriangles())
+                {
+                    PointReel barycentreTriangle = t.BaryCentre;
+                    x += barycentreTriangle.X * t.Surface / surface;
+                    y += barycentreTriangle.Y * t.Surface / surface;
+                }
+
+                return new PointReel(x, y);
             }
         }
 
@@ -767,16 +781,61 @@ namespace GoBot.Calculs.Formes
 
         #region Transformations
 
-        public void Tourner(Angle angle, PointReel centreRotation = null)
+        public Polygone Translation(double dx, double dy)
         {
-            // TODOFORMES
+            List<PointReel> nouveauxPoints = new List<PointReel>();
+
+            foreach (PointReel point in Points)
+                nouveauxPoints.Add(point.Translation(dx, dy));
+
+            return new Polygone(nouveauxPoints);
         }
 
-        public void Translater(double dx, double dy)
+        public Polygone Rotation(Angle angle, PointReel centreRotation = null)
         {
-            // TODOFORMES
+            if (centreRotation == null)
+                centreRotation = BaryCentre;
+
+            List<PointReel> nouveauxPoints = new List<PointReel>();
+
+            foreach (PointReel point in Points)
+                nouveauxPoints.Add(point.Rotation(angle, centreRotation));
+
+            return new Polygone(nouveauxPoints);
+        }
+
+        public List<Triangle> ToTriangles()
+        {
+            List<Triangle> triangles = new List<Triangle>();
+            List<PointReel> points = new List<PointReel>(Points);
+            PointReel p1, p2, p3;
+
+            do
+            {
+                p1 = points[0];
+                p2 = points[1];
+                p3 = points[2];
+
+                Triangle triangle = new Triangle(p1, p2, p3);
+                if(this.Contient(triangle.BaryCentre))
+                {
+                    triangles.Add(triangle);
+                    points.Add(p1);
+                    points.RemoveAt(1);
+                    points.RemoveAt(0);
+                }
+                else
+                {
+                    points.Add(p1);
+                    points.RemoveAt(0);
+                }
+            } while (points.Count >= 3);
+            
+
+            return triangles;
         }
 
         #endregion
+
     }
 }

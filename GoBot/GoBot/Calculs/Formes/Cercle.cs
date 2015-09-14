@@ -5,7 +5,7 @@ using System.Text;
 
 namespace GoBot.Calculs.Formes
 {
-    public class Cercle : IForme
+    public class Cercle : IForme, IModifiable<Cercle>
     {
         #region Attributs
 
@@ -77,8 +77,7 @@ namespace GoBot.Calculs.Formes
         {
             get
             {
-                // TODOFORMES
-                return 0;
+                return rayon * rayon * Math.PI;
             }
         }
 
@@ -89,8 +88,7 @@ namespace GoBot.Calculs.Formes
         {
             get
             {
-                // TODOFORMES
-                return null;
+                return Centre;
             }
         }
 
@@ -377,17 +375,18 @@ namespace GoBot.Calculs.Formes
         #endregion
 
         #region Transformations
-
-        public void Tourner(Angle angle, PointReel centreRotation = null)
+        
+        public Cercle Translation(double dx, double dy)
         {
-            // TODOFORMES
+            return new Cercle(centre.Translation(dx, dy), rayon);
         }
 
-        public void Translater(double dx, double dy)
+        public Cercle Rotation(Angle angle, PointReel centreRotation = null)
         {
-            // TODOFORMES
+            return new Cercle(centre.Rotation(angle, centreRotation), rayon);
         }
 
         #endregion
+
     }
 }

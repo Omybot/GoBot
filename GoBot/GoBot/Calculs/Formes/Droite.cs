@@ -10,7 +10,7 @@ namespace GoBot.Calculs.Formes
     /// Pour une droite standard, c = 1
     /// Pour une droite verticale, c = 0 et a = 1
     /// </summary>
-    public class Droite : IForme
+    public class Droite : IForme, IModifiable<Droite>
     {
         #region Attributs
 
@@ -129,7 +129,6 @@ namespace GoBot.Calculs.Formes
         {
             get
             {
-                // TODOFORMES
                 return 0;
             }
         }
@@ -141,8 +140,7 @@ namespace GoBot.Calculs.Formes
         {
             get
             {
-                // TODOFORMES
-                return null;
+                return new PointReel(0, 0); // Arbitraire
             }
         }
 
@@ -467,14 +465,33 @@ namespace GoBot.Calculs.Formes
         
         #region Transformations
 
-        public virtual void Tourner(Angle angle, PointReel centreRotation = null)
+        public Droite Translation(double dx, double dy)
         {
-            // TODOFORMES
+            return new Droite(a, b + dx + dy, c);
         }
 
-        public virtual void Translater(double dx, double dy)
+        public Droite Rotation(Angle angle, PointReel centreRotation = null)
         {
-            // TODOFORMES
+            PointReel p1, p2;
+
+            if(centreRotation == null)
+                centreRotation = BaryCentre;
+
+            if(c == 1)
+            {
+                p1 = new PointReel(0, a * 0 + b);
+                p2 = new PointReel(1, a * 1 + b);
+
+                p1 = p1.Rotation(angle, centreRotation);
+                p2 = p2.Rotation(angle, centreRotation);
+            }
+            else
+            {
+                p1 = new PointReel(b, 0);
+                p2 = new PointReel(b, 1);
+            }
+
+            return new Droite(p1, p2);
         }
 
         #endregion

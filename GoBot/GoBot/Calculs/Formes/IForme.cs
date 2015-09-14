@@ -29,14 +29,23 @@ namespace GoBot.Calculs.Formes
         /// <returns>Distance entre la Forme actuelle et la Forme testée. Si les deux Formes se croisent la distance est de 0.</returns>
         double Distance(IForme forme);
 
-        void Tourner(Angle angle, PointReel centreRotation = null);
-
-        void Translater(double dx, double dy);
-
         List<PointReel> Croisements(IForme forme);
 
         double Surface { get; }
 
         PointReel BaryCentre { get; }
+    }
+    public static class IFormeExtension
+    {
+        public static IForme Translation(this IForme forme, double dx, double dy)
+        {
+            return ((IModifiable<IForme>)forme).Translation(dx, dy);
+        }
+    }
+
+    public interface IModifiable<out T>
+    {
+        T Translation(double dx, double dy);
+        T Rotation(Angle angle, PointReel centreRotation = null);
     }
 }
