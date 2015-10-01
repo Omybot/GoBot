@@ -19,7 +19,9 @@ namespace GoBot.IHM
             InitializeComponent();
             balise = Plateau.Balise1;
             font = new Font("Calibri", 8);
-            balise.PositionsChange += new Balise.PositionsChangeDelegate(MAJPosition);
+
+            if(!Config.DesignMode)
+                balise.PositionsChange += new Balise.PositionsChangeDelegate(MAJPosition);
         }
 
         private void trackBarVitesse_TickValueChanged(object sender, EventArgs e)

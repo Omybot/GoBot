@@ -15,9 +15,7 @@ namespace GoBot.Enchainements
         protected override void ThreadGros()
         {
             List<Mouvement> mouvements = new List<Mouvement>();
-            mouvements.Add(new MouvementAmpoulePied(5));
-            mouvements.Add(new MouvementAmpoulePied(9));
-            mouvements.Add(new MouvementAmpoulePied(10));
+            // Charger les mouvements à tester
 
 
             foreach (Mouvement move in mouvements)

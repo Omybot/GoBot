@@ -19,7 +19,7 @@ namespace GoBot
             Robots.PetitRobot.Rapide();
             Robots.PetitRobot.Avancer(100);
 
-            if (Plateau.NotreCouleur == Plateau.CouleurGaucheJaune)
+            if (Plateau.NotreCouleur == Plateau.CouleurGaucheViolet)
                 Robots.PetitRobot.PivotDroite(90);
             else
                 Robots.PetitRobot.PivotGauche(90);
@@ -28,7 +28,7 @@ namespace GoBot
             Robots.PetitRobot.Recallage(SensAR.Arriere);
             Robots.PetitRobot.Rapide();
 
-            if (Plateau.NotreCouleur == Plateau.CouleurGaucheJaune)
+            if (Plateau.NotreCouleur == Plateau.CouleurGaucheViolet)
                 Robots.PetitRobot.ReglerOffsetAsserv(191, 91, 270);
             else
                 Robots.PetitRobot.ReglerOffsetAsserv(3000 - 191, 91, 270);
@@ -42,78 +42,13 @@ namespace GoBot
         {
             Robots.GrosRobot.EnvoyerPID(20, 0, 200);
             Robots.GrosRobot.Stop();
-            Actionneur.BrasAmpoule.AscenseurCalibration();
-            Thread.Sleep(4000);
-            Actionneur.BrasAmpoule.Monter();
-            Thread.Sleep(1000);
-
-            Config.CurrentConfig.ServoAspirateurEpaule.Positionner(Config.CurrentConfig.ServoAspirateurEpaule.PositionDepose);
-            //Actionneur.BrasAspirateur.PositionRange();
-            Actionneur.BrasPiedsDroite.AscenseurDescendre();
-            Actionneur.BrasPiedsGauche.AscenseurDescendre();
-            Actionneur.BrasPiedsDroite.Verrouiller();
-            Actionneur.BrasPiedsGauche.Verrouiller();
-            Actionneur.BrasPiedsDroite.FermerPinceBas();
-            Actionneur.BrasPiedsGauche.FermerPinceBas();
-            Actionneur.BrasPiedsDroite.FermerPinceHaut();
-            Actionneur.BrasPiedsGauche.FermerPinceHaut();
-            Actionneur.BrasTapis.Monter();
-
+            
+            // TODO faire la procédure de calibration de début de match
             Robots.GrosRobot.Lent();
             Robots.GrosRobot.Avancer(10);
             Robots.GrosRobot.Recallage(SensAR.Arriere);
             Robots.GrosRobot.Rapide();
             Robots.GrosRobot.Avancer(350);
-
-            if (Plateau.NotreCouleur == Plateau.CouleurDroiteVert)
-                Robots.GrosRobot.PivotGauche(90);
-            else
-                Robots.GrosRobot.PivotDroite(90);
-
-            Robots.GrosRobot.Reculer(300);
-            Robots.GrosRobot.Lent();
-            Robots.GrosRobot.Recallage(SensAR.Arriere);
-            Robots.GrosRobot.Rapide();
-
-            Actionneur.BrasAmpoule.Descendre();
-            Robots.GrosRobot.Avancer(450);
-
-            if (Plateau.NotreCouleur == Plateau.CouleurDroiteVert)
-                Robots.GrosRobot.PivotDroite(90);
-            else
-                Robots.GrosRobot.PivotGauche(90);
-
-            if (attendrePetit && semRecallagePetit != null)
-            {
-                semRecallagePetit.WaitOne();
-                semRecallagePetit = null;
-            }
-
-            Robots.GrosRobot.Avancer(650 - Robots.GrosRobot.Longueur / 2);
-
-            if (Plateau.NotreCouleur == Plateau.CouleurDroiteVert)
-                Robots.GrosRobot.PivotGauche(90);
-            else
-                Robots.GrosRobot.PivotDroite(90);
-
-            Actionneur.BrasAmpoule.Ouvrir();
-            Robots.GrosRobot.Reculer(345);
-            Actionneur.BrasTapis.LacherTapisGauche();
-            Actionneur.BrasTapis.LacherTapisDroit();
-            Config.CurrentConfig.ServoAspirateurEpaule.Positionner(Config.CurrentConfig.ServoAspirateurEpaule.PositionRange);
-
-            Thread.Sleep(5000);
-
-            if (Plateau.NotreCouleur == Plateau.CouleurDroiteVert)
-            {
-                Robots.GrosRobot.ReglerOffsetAsserv(3000 - 255, 1000, 180);
-                Actionneur.BrasPiedsGauche.AscenseurMonter();
-            }
-            else
-            {
-                Robots.GrosRobot.ReglerOffsetAsserv(255, 1000, 0);
-                Actionneur.BrasPiedsDroite.AscenseurMonter();
-            }
 
             Robots.GrosRobot.ArmerJack();
             Robots.GrosRobot.MoteurPosition(MoteurID.Balise, 2000);

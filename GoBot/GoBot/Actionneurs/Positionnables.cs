@@ -10,30 +10,8 @@ namespace GoBot
 {
     public partial class Config
     {
-        public ServoAscenseurDroitBasDroit ServoAscenseurDroitBasDroit { get; set; }
-        public ServoAscenseurDroitBasGauche ServoAscenseurDroitBasGauche { get; set; }
-        public ServoAscenseurDroitHautDroit ServoAscenseurDroitHautDroit { get; set; }
-        public ServoAscenseurDroitHautGauche ServoAscenseurDroitHautGauche { get; set; }
-        public ServoAscenseurGaucheBasDroit ServoAscenseurGaucheBasDroit { get; set; }
-        public ServoAscenseurGaucheBasGauche ServoAscenseurGaucheBasGauche { get; set; }
-        public ServoAscenseurGaucheHautDroit ServoAscenseurGaucheHautDroit { get; set; }
-        public ServoAscenseurGaucheHautGauche ServoAscenseurGaucheHautGauche { get; set; }
-
-        public ServoBalleVerrouillageDroit ServoBalleVerrouillageDroit { get; set; }
-        public ServoBalleVerrouillageGauche ServoBalleVerrouillageGauche { get; set; }
-
-        public ServoAspirateurCoude ServoAspirateurCoude { get; set; }
-        public ServoAspirateurEpaule ServoAspirateurEpaule { get; set; }
-        public ServoAspirateurTurbine ServoAspirateurTurbine { get; set; }
-
-        public AscenseurAmpoule AscenseurAmpoule { get; set; }
-        public ServoAttrapageAmpoule ServoAttrapageAmpoule { get; set; }
-        public AscenseurDroit AscenseurDroit { get; set; }
-        public AscenseurGauche AscenseurGauche { get; set; }
-
-        public ServoTapisBras ServoTapisBras { get; set; }
-        public ServoTapisPinceDroite ServoTapisPinceDroite { get; set; }
-        public ServoTapisPinceGauche ServoTapisPinceGauche { get; set; }
+        // Exemple
+        // public ServoAscenseurDroitBasDroit ServoAscenseurDroitBasDroit { get; set; }
     }
 }
 
@@ -103,182 +81,22 @@ namespace GoBot.Actionneurs
 
     #region PositionnableServo
 
-    #region PincesPieds
+    // Exemple :
+    //public abstract class ServoAscenseurPince : PositionnableServo
+    //{
+    //    public int PositionOuvert { get; set; }
+    //    public int PositionFerme { get; set; }
+    //    public int PositionPousse { get; set; }
+    //}
 
-    public abstract class ServoAscenseurPince : PositionnableServo
-    {
-        public int PositionOuvert { get; set; }
-        public int PositionFerme { get; set; }
-        public int PositionPousse { get; set; }
-    }
-
-    public class ServoAscenseurDroitHautDroit : ServoAscenseurPince
-    {
-        public override ServomoteurID ID { get { return ServomoteurID.AscenseurDroitPinceHautDroite; } }
-    }
-
-    public class ServoAscenseurDroitHautGauche : ServoAscenseurPince
-    {
-        public override ServomoteurID ID { get { return ServomoteurID.AscenseurDroitPinceHautGauche; } }
-    }
-
-    public class ServoAscenseurDroitBasDroit : ServoAscenseurPince
-    {
-        public override ServomoteurID ID { get { return ServomoteurID.AscenseurDroitPinceBasDroite; } }
-    }
-
-    public class ServoAscenseurDroitBasGauche : ServoAscenseurPince
-    {
-        public override ServomoteurID ID { get { return ServomoteurID.AscenseurDroitPinceBasGauche; } }
-    }
-
-    public class ServoAscenseurGaucheHautDroit : ServoAscenseurPince
-    {
-        public override ServomoteurID ID { get { return ServomoteurID.AscenseurGauchePinceHautDroite; } }
-    }
-
-    public class ServoAscenseurGaucheHautGauche : ServoAscenseurPince
-    {
-        public override ServomoteurID ID { get { return ServomoteurID.AscenseurGauchePinceHautGauche; } }
-    }
-
-    public class ServoAscenseurGaucheBasDroit : ServoAscenseurPince
-    {
-        public override ServomoteurID ID { get { return ServomoteurID.AscenseurGauchePinceBasDroite; } }
-    }
-
-    public class ServoAscenseurGaucheBasGauche : ServoAscenseurPince
-    {
-        public override ServomoteurID ID { get { return ServomoteurID.AscenseurGauchePinceBasGauche; } }
-    }
-
-    #endregion
-
-    #region Verrouillage balles
-
-    public class ServoBalleVerrouillageDroit : PositionnableServo
-    {
-        public override ServomoteurID ID { get { return ServomoteurID.BalleVerouillageDroit; } }
-
-        public int PositionOuvert { get; set; }
-        public int PositionFerme { get; set; }
-        public int PositionLibere { get; set; }
-    }
-
-    public class ServoBalleVerrouillageGauche : PositionnableServo
-    {
-        public override ServomoteurID ID { get { return ServomoteurID.BalleVerouillageGauche; } }
-
-        public int PositionOuvert { get; set; }
-        public int PositionFerme { get; set; }
-        public int PositionLibere { get; set; }
-    }
-
-    #endregion
-
-    #region Aspirateur
-
-    public class ServoAspirateurCoude : PositionnableServo
-    {
-        public override ServomoteurID ID { get { return ServomoteurID.AspirateurCoude; } }
-
-        public int PositionRange { get; set; }
-        public int PositionAspiration { get; set; }
-        public int PositionDepose { get; set; }
-    }
-
-    public class ServoAspirateurEpaule : PositionnableServo
-    {
-        public override ServomoteurID ID { get { return ServomoteurID.AspirateurEpaule; } }
-
-        public int PositionRange { get; set; }
-        public int PositionAspiration { get; set; }
-        public int PositionDepose { get; set; }
-    }
-
-    public class ServoAspirateurTurbine : PositionnableServo
-    {
-        public override ServomoteurID ID { get { return ServomoteurID.AspirateurTurbine; } }
-
-        public int Aspiration { get; set; }
-        public int Maintien { get; set; }
-        public int Eteint { get; set; }
-    }
-
-    public class ServoAttrapageAmpoule : PositionnableServo
-    {
-        public override ServomoteurID ID { get { return ServomoteurID.PinceAmpoule; } }
-
-        public int PositionOuvert { get; set; }
-        public int PositionFerme { get; set; }
-    }
-
-    #endregion
-
-    #region Tapis
-
-    public class ServoTapisBras : PositionnableServo
-    {
-        public override ServomoteurID ID { get { return ServomoteurID.TapisBras; } }
-
-        public int PositionRange { get; set; }
-        public int PositionDepose { get; set; }
-    }
-
-    public class ServoTapisPinceDroite : PositionnableServo
-    {
-        public override ServomoteurID ID { get { return ServomoteurID.TapisPinceDroite; } }
-
-        public int PositionOuvert { get; set; }
-        public int PositionFerme { get; set; }
-    }
-
-    public class ServoTapisPinceGauche : PositionnableServo
-    {
-        public override ServomoteurID ID { get { return ServomoteurID.TapisPinceGauche; } }
-
-        public int PositionOuvert { get; set; }
-        public int PositionFerme { get; set; }
-    }
-
-    #endregion
-
+    //public class ServoAscenseurDroitHautDroit : ServoAscenseurPince
+    //{
+    //    public override ServomoteurID ID { get { return ServomoteurID.AscenseurDroitPinceHautDroite; } }
+    //}
     #endregion
 
     #region PositionnableMoteur
 
-    public class AscenseurGauche : PositionnableMoteur
-    {
-        public override MoteurID ID { get { return MoteurID.AscenseurGauche; } }
-
-        public int PositionHaute { get; set; }
-        public int PositionAttrapage { get; set; }
-        public int PositionSouleve { get; set; }
-        public int PositionDeposeEstrade { get; set; }
-        public int PositionPousseEstrade { get; set; }
-    }
-
-    public class AscenseurDroit : PositionnableMoteur
-    {
-        public override MoteurID ID { get { return MoteurID.AscenseurDroit; } }
-
-        public int PositionHaute { get; set; }
-        public int PositionAttrapage { get; set; }
-        public int PositionSouleve { get; set; }
-        public int PositionDeposeEstrade { get; set; }
-        public int PositionPousseEstrade { get; set; }
-    }
-
-    public class AscenseurAmpoule : PositionnableMoteur
-    {
-        public override MoteurID ID { get { return MoteurID.AscenseurAmpoule; } }
-
-        public int PositionHaute { get; set; }
-        public int PositionAttrapage { get; set; }
-        public int PositionPoseSur1Pied { get; set; }
-        public int PositionPoseSur2Pied { get; set; }
-        public int PositionPoseSur3Pied { get; set; }
-    }
 
     #endregion
 }

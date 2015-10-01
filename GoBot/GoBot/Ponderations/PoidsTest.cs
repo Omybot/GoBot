@@ -105,7 +105,7 @@ namespace GoBot.Ponderations
 
             // Assiettes
 
-            if (Plateau.NotreCouleur == Plateau.CouleurGaucheJaune)
+            if (Plateau.NotreCouleur == Plateau.CouleurGaucheViolet)
             {
                 PoidsGrosAssiette[0] = 0.7;
                 PoidsGrosAssiette[1] = 0.7;

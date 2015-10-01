@@ -264,54 +264,11 @@ namespace GoBot.IHM
                 PointReel point = new PointReel(positionReelle.X, positionReelle.Y);
 
                 /* Todo Tester ici si le clic a été fait sur un élément de jeu dans le but de lancer un mouvement.
-                   Si c'est le cas, lancer un thread pour effectuer le mouvement */
+                   Si c'est le cas, lancer un thread pour effectuer le mouvement 
 
-                for (int i = 0; i < Plateau.Claps.Count; i++)
-                    if (Plateau.Claps[i].Hover)
-                    {
-                        move = new MouvementClap(i);
-                        break;
-                    }
-
-                for (int i = 0; i < Plateau.Pieds.Count; i++)
-                    if (Plateau.Pieds[i].Hover)
-                    {
-                        move = new MouvementPied(i);
-                        break;
-                    }
-
-                for (int i = 0; i < Plateau.DistributeursPopCorn.Count; i++)
-                    if (Plateau.DistributeursPopCorn[i].Hover)
-                    {
-                        move = new MouvementDistributeur(i);
-                        break;
-                    }
-
-                for (int i = 0; i < Plateau.Gobelets.Count; i++)
-                    if (Plateau.Gobelets[i].Hover)
-                    {
-                        move = new MouvementGobelet(i, Plateau.NotreCouleur);
-                        break;
-                    }
-
-                for (int i = 0; i < Plateau.ListeTapis.Count; i++)
-                    if (Plateau.ListeTapis[i].Hover)
-                    {
-                        move = new MouvementTapis(i);
-                        break;
-                    }
-
-                if (Plateau.ZoneDeposeEstradeDroite.Hover)
-                    move = new MouvementDeposeEstrade(Plateau.ZoneDeposeEstradeDroite);
-
-                if (Plateau.ZoneDeposeEstradeGauche.Hover)
-                    move = new MouvementDeposeEstrade(Plateau.ZoneDeposeEstradeGauche);
-
-                if (Plateau.ZoneDepartJaune.Hover)
-                    move = new MouvementDeposeDepart(Plateau.ZoneDepartJaune);
-
+                exemple : 
                 if (Plateau.ZoneDepartVert.Hover)
-                    move = new MouvementDeposeDepart(Plateau.ZoneDepartVert);
+                    move = new MouvementDeposeDepart(Plateau.ZoneDepartVert);*/
 
                 if (move != null)
                 {

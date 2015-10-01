@@ -21,7 +21,7 @@ namespace GoBot.IHM
         {
             InitializeComponent();
             btnJoueurDroite.BackColor = Plateau.CouleurDroiteVert;
-            btnJoueurGauche.BackColor = Plateau.CouleurGaucheJaune;
+            btnJoueurGauche.BackColor = Plateau.CouleurGaucheViolet;
 
             if (!Config.DesignMode)
             {
@@ -45,12 +45,12 @@ namespace GoBot.IHM
 
         private void btnCouleurJoueurGauche_Click(object sender, EventArgs e)
         {
-            Plateau.NotreCouleur = Plateau.CouleurGaucheJaune;
+            Plateau.NotreCouleur = Plateau.CouleurGaucheViolet;
         }
 
         public void CouleurGauche()
         {
-            pictureBoxCouleur.BackColor = Plateau.CouleurGaucheJaune;
+            pictureBoxCouleur.BackColor = Plateau.CouleurGaucheViolet;
         }
 
         public void CouleurDroite()
@@ -95,7 +95,7 @@ namespace GoBot.IHM
         {
             this.Invoke(new EventHandler(delegate
             {
-                if (Plateau.NotreCouleur == Plateau.CouleurGaucheJaune)
+                if (Plateau.NotreCouleur == Plateau.CouleurGaucheViolet)
                     CouleurGauche();
                 else if (Plateau.NotreCouleur == Plateau.CouleurDroiteVert)
                     CouleurDroite();
@@ -132,16 +132,6 @@ namespace GoBot.IHM
                 else
                     CouleurGauche();
             }
-        }
-
-        private void btnTapis1_Click(object sender, EventArgs e)
-        {
-            Actionneur.BrasTapis.SerrerTapisGauche();
-        }
-
-        private void btnTapis2_Click(object sender, EventArgs e)
-        {
-            Actionneur.BrasTapis.SerrerTapisDroit();
         }
     }
 }

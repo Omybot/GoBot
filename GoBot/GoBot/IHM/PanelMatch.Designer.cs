@@ -40,8 +40,6 @@
             this.pictureBoxCouleur = new System.Windows.Forms.PictureBox();
             this.ledJackBranche = new Composants.Led();
             this.ledRecallageGros = new Composants.Led();
-            this.btnTapis1 = new System.Windows.Forms.Button();
-            this.btnTapis2 = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxTable)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.ledJackArme)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxCouleur)).BeginInit();
@@ -161,33 +159,11 @@
             this.ledRecallageGros.TabIndex = 35;
             this.ledRecallageGros.TabStop = false;
             // 
-            // btnTapis1
-            // 
-            this.btnTapis1.Location = new System.Drawing.Point(61, 289);
-            this.btnTapis1.Name = "btnTapis1";
-            this.btnTapis1.Size = new System.Drawing.Size(113, 23);
-            this.btnTapis1.TabIndex = 64;
-            this.btnTapis1.Text = "Fermer tapis 1";
-            this.btnTapis1.UseVisualStyleBackColor = true;
-            this.btnTapis1.Click += new System.EventHandler(this.btnTapis1_Click);
-            // 
-            // btnTapis2
-            // 
-            this.btnTapis2.Location = new System.Drawing.Point(175, 289);
-            this.btnTapis2.Name = "btnTapis2";
-            this.btnTapis2.Size = new System.Drawing.Size(113, 23);
-            this.btnTapis2.TabIndex = 65;
-            this.btnTapis2.Text = "Fermer tapis 2";
-            this.btnTapis2.UseVisualStyleBackColor = true;
-            this.btnTapis2.Click += new System.EventHandler(this.btnTapis2_Click);
-            // 
             // PanelMatch
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.White;
-            this.Controls.Add(this.btnTapis2);
-            this.Controls.Add(this.btnTapis1);
             this.Controls.Add(this.btnReset);
             this.Controls.Add(this.pictureBoxTable);
             this.Controls.Add(this.ledJackArme);
@@ -225,8 +201,6 @@
         private Composants.Led ledJackArme;
         private System.Windows.Forms.PictureBox pictureBoxTable;
         private System.Windows.Forms.Button btnReset;
-        private System.Windows.Forms.Button btnTapis1;
-        private System.Windows.Forms.Button btnTapis2;
 
     }
 }

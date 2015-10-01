@@ -195,7 +195,7 @@ namespace GoBot
 
         public double GetOffsetBalise(Carte carteBalise, Color couleur, int iCapteur)
         {
-            if (couleur == Plateau.CouleurGaucheJaune)
+            if (couleur == Plateau.CouleurGaucheViolet)
             {
                 if (iCapteur == 1)
                 {
@@ -353,7 +353,7 @@ namespace GoBot
 
         public void SetOffsetBalise(Carte carteBalise, Color couleur, int iCapteur, double offset)
         {
-            if (couleur == Plateau.CouleurGaucheJaune)
+            if (couleur == Plateau.CouleurGaucheViolet)
             {
                 if (iCapteur == 1)
                 {

@@ -115,59 +115,15 @@ namespace GoBot
         {
             if (this == Robots.GrosRobot)
             {
-                Actionneur.BrasAmpoule.Fermer();
-                Thread.Sleep(500);
-                Actionneur.BrasAmpoule.AscenseurCalibration();
-
+                
                 Lent();
                 int tempsPause = 400;
                 Avancer(50);
                 Reculer(50);
                 PivotDroite(10);
                 PivotGauche(10);
-                Actionneur.BrasPiedsDroite.OuvrirPinceBas();
-                Actionneur.BrasPiedsDroite.OuvrirPinceHaut();
-                Actionneur.BrasPiedsGauche.OuvrirPinceBas();
-                Actionneur.BrasPiedsGauche.OuvrirPinceHaut();
-
-                Thread.Sleep(500);
-                Actionneur.BrasPiedsDroite.FermerPinceBasDroite();
-                Thread.Sleep(200);
-                Actionneur.BrasPiedsDroite.OuvrirPinceBasDroite();
-                Actionneur.BrasPiedsDroite.FermerPinceBasGauche();
-                Thread.Sleep(200);
-                Actionneur.BrasPiedsDroite.OuvrirPinceBasGauche();
-                Actionneur.BrasPiedsDroite.FermerPinceHautGauche();
-                Thread.Sleep(200);
-                Actionneur.BrasPiedsDroite.OuvrirPinceHautGauche();
-                Actionneur.BrasPiedsDroite.FermerPinceHautDroite();
-                Thread.Sleep(200);
-                Actionneur.BrasPiedsDroite.OuvrirPinceHautDroite();
-                Actionneur.BrasPiedsGauche.FermerPinceHautGauche();
-                Thread.Sleep(200);
-                Actionneur.BrasPiedsGauche.OuvrirPinceHautGauche();
-                Actionneur.BrasPiedsGauche.FermerPinceHautDroite();
-                Thread.Sleep(200);
-                Actionneur.BrasPiedsGauche.OuvrirPinceHautDroite();
-                Actionneur.BrasPiedsGauche.FermerPinceBasDroite();
-                Thread.Sleep(200);
-                Actionneur.BrasPiedsGauche.OuvrirPinceBasDroite();
-                Actionneur.BrasPiedsGauche.FermerPinceBasGauche();
-                Thread.Sleep(200);
-                Actionneur.BrasPiedsGauche.OuvrirPinceBasGauche();
-                Thread.Sleep(500);
-                Actionneur.BrasAmpoule.Descendre();
-                Thread.Sleep(500);
-                Actionneur.BrasAmpoule.Ouvrir();
-                Thread.Sleep(100);
-                Actionneur.BrasAmpoule.Fermer();
-                Thread.Sleep(100);
-                Actionneur.BrasAmpoule.Ouvrir();
-                Thread.Sleep(100);
-                Actionneur.BrasAmpoule.Fermer();
-                Thread.Sleep(100);
-                Actionneur.BrasAmpoule.Ouvrir();
-
+                
+                // TODO procédure de diagnostic des actionneurs
             }
         }
 

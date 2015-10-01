@@ -81,12 +81,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Actionneurs\Actionneur.cs" />
-    <Compile Include="Actionneurs\BrasAmpoule.cs" />
-    <Compile Include="Actionneurs\BrasAspirateur.cs" />
-    <Compile Include="Actionneurs\BrasPieds.cs" />
-    <Compile Include="Actionneurs\BrasPiedsDroite.cs" />
-    <Compile Include="Actionneurs\BrasPiedsGauche.cs" />
-    <Compile Include="Actionneurs\BrasTapis.cs" />
     <Compile Include="Actionneurs\Positionnables.cs" />
     <Compile Include="Actions\Asservissement\ActionAccelerationPivot.cs" />
     <Compile Include="Actions\Asservissement\ActionVitessePivot.cs" />
@@ -118,14 +112,7 @@
     <Compile Include="Dessinateur.cs" />
     <Compile Include="Devices\PololuMiniUart.cs" />
     <Compile Include="Devices\PololuMiniUsb.cs" />
-    <Compile Include="ElementsJeu\Clap.cs" />
-    <Compile Include="ElementsJeu\DistributeurPopCorn.cs" />
     <Compile Include="ElementsJeu\ElementJeu.cs" />
-    <Compile Include="ElementsJeu\Gobelet.cs" />
-    <Compile Include="ElementsJeu\Pied.cs" />
-    <Compile Include="ElementsJeu\PopCorn.cs" />
-    <Compile Include="ElementsJeu\Spot.cs" />
-    <Compile Include="ElementsJeu\Tapis.cs" />
     <Compile Include="ElementsJeu\ZoneInteret.cs" />
     <Compile Include="Enchainements\EnchainementMatchFixe.cs" />
     <Compile Include="Enchainements\EnchainementTest.cs" />
@@ -297,15 +284,7 @@
     </Compile>
     <Compile Include="Logs\Log.cs" />
     <Compile Include="Logs\Logs.cs" />
-    <Compile Include="Mouvements\MouvementDeposeEstrade.cs" />
     <Compile Include="Mouvements\Mouvement.cs" />
-    <Compile Include="Mouvements\MouvementClap.cs" />
-    <Compile Include="Mouvements\MouvementDeposeDepart.cs" />
-    <Compile Include="Mouvements\MouvementDistributeur.cs" />
-    <Compile Include="Mouvements\MouvementGobelet.cs" />
-    <Compile Include="Mouvements\MouvementAmpoulePied.cs" />
-    <Compile Include="Mouvements\MouvementPied.cs" />
-    <Compile Include="Mouvements\MouvementTapis.cs" />
     <Compile Include="Mouvements\PositionsMouvements.cs" />
     <Compile Include="PathFinding\PathFinder.cs" />
     <Compile Include="PathFinding\Trajectoire.cs" />

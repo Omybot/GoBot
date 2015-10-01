@@ -73,14 +73,14 @@ namespace GoBot
 
             if (this == Robots.GrosRobot)
             {
-                if (Plateau.NotreCouleur == Plateau.CouleurGaucheJaune)
+                if (Plateau.NotreCouleur == Plateau.CouleurGaucheViolet)
                     Position = new Calculs.Position(new Angle(0, AnglyeType.Degre), new PointReel(240, 1000));
                 else
                     Position = new Calculs.Position(new Angle(180, AnglyeType.Degre), new PointReel(3000 - 240, 1000));
             }
             else
             {
-                if (Plateau.NotreCouleur == Plateau.CouleurGaucheJaune)
+                if (Plateau.NotreCouleur == Plateau.CouleurGaucheViolet)
                     Position = new Calculs.Position(new Angle(0, AnglyeType.Degre), new PointReel(480, 1000));
                 else
                     Position = new Calculs.Position(new Angle(180, AnglyeType.Degre), new PointReel(3000 - 480, 1000));
@@ -90,9 +90,6 @@ namespace GoBot
 
             HistoriqueCoordonnees = new List<Position>();
             Connexion.SendMessage(TrameFactory.DemandePositionContinue(100, this));
-
-            Actionneur.BrasPiedsDroite.ElementPresentAuSol = false;
-            Actionneur.BrasPiedsGauche.ElementPresentAuSol = false;
         }
 
         public override bool DemandeCapteurOnOff(CapteurOnOffID capteur, bool attendre = true)
@@ -366,17 +363,13 @@ namespace GoBot
                 if (trameRecue[1] == (byte)FonctionIO.ReponseCouleurEquipe)
                 {
                     if (trameRecue[2] == 1)
-                        couleurEquipe = Plateau.CouleurGaucheJaune;
+                        couleurEquipe = Plateau.CouleurGaucheViolet;
                     else if (trameRecue[2] == 0)
                         couleurEquipe = Plateau.CouleurDroiteVert;
 
                     Plateau.NotreCouleur = couleurEquipe;
 
                     SemaphoresIO[FonctionIO.ReponseCouleurEquipe].Release();
-                }
-                if (trameRecue[1] == (byte)FonctionIO.BlocageAscenseur)
-                {
-                    Actionneur.BrasGobelet.AsserKO = true;
                 }
 
                 if (trameRecue[1] == (byte)FonctionIO.RetourValeurCapteur)
@@ -408,14 +401,7 @@ namespace GoBot
 
                 if (trameRecue[1] == (byte)FonctionIO.FrontCapteur)
                 {
-                    if (trameRecue[2] == 1)
-                    {
-                        Actionneur.BrasPiedsDroite.ElementPresentAuSol = (trameRecue[3] == 1 ? true : false);
-                    }
-                    else if (trameRecue[2] == 2)
-                    {
-                        Actionneur.BrasPiedsGauche.ElementPresentAuSol = (trameRecue[3] == 1 ? true : false);
-                    }
+                    // Réception des changement d'état des capteurs
                 }
             }
         }

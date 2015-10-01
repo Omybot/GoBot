@@ -349,23 +349,20 @@ namespace GoBot
             HistoriqueCoordonnees = new List<Position>();
             if (this == Robots.GrosRobot)
             {
-                if (Plateau.NotreCouleur == Plateau.CouleurGaucheJaune)
+                if (Plateau.NotreCouleur == Plateau.CouleurGaucheViolet)
                     Position = new Calculs.Position(new Angle(0, AnglyeType.Degre), new PointReel(240, 1000));
                 else
                     Position = new Calculs.Position(new Angle(180, AnglyeType.Degre), new PointReel(3000 - 240, 1000));
             }
             else
             {
-                if (Plateau.NotreCouleur == Plateau.CouleurGaucheJaune)
+                if (Plateau.NotreCouleur == Plateau.CouleurGaucheViolet)
                     Position = new Calculs.Position(new Angle(0, AnglyeType.Degre), new PointReel(480, 1000));
                 else
                     Position = new Calculs.Position(new Angle(180, AnglyeType.Degre), new PointReel(3000 - 480, 1000));
             }
 
             PositionCible = null;
-
-            Actionneur.BrasPiedsDroite.ElementPresentAuSol = true;
-            Actionneur.BrasPiedsGauche.ElementPresentAuSol = true;
         }
 
         public override void BougeServo(ServomoteurID servo, int position)
