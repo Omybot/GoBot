@@ -363,27 +363,21 @@ namespace GoBot
             AjouterObstacle(new Segment(new PointReel(LongueurPlateau - 4, LargeurPlateau - 4), new PointReel(0, LargeurPlateau - 4)), true);
             AjouterObstacle(new Segment(new PointReel(0, LargeurPlateau - 4), new PointReel(0, 0)), true);
 
-            // Escaliers
-            AjouterObstacle(new RectanglePolygone(new PointReel(967, 0), 1066, 580), true);
+            // Tasseaux vers dune
+            AjouterObstacle(new RectanglePolygone(new PointReel(800, 0), 22, 200), true);
+            AjouterObstacle(new RectanglePolygone(new PointReel(3000 - 800 - 22, 0), 22, 200), true);
 
-            // Distributeurs
-            AjouterObstacle(new RectanglePolygone(new PointReel(300-35, 0), 70, 70), true);
-            AjouterObstacle(new RectanglePolygone(new PointReel(600-35, 0), 70, 70), true);
-            AjouterObstacle(new RectanglePolygone(new PointReel(3000-300-35, 0), 70, 70), true);
-            AjouterObstacle(new RectanglePolygone(new PointReel(3000 - 600 - 35, 0), 70, 70), true);
+            // Tasseaux au centre
+            AjouterObstacle(new RectanglePolygone(new PointReel(900, 750), 2100 - 900, 22), true);
+            AjouterObstacle(new RectanglePolygone(new PointReel(3000 / 2 - 22, 750), 44, 600), true);
 
-            // Zone départ jaune
-            AjouterObstacle(new Segment(new PointReel(0, 800 - 11), new PointReel(400, 800 - 11)), true);
-            AjouterObstacle(new Segment(new PointReel(0, 1211), new PointReel(400, 1211)), true);
-            AjouterObstacle(new Segment(new PointReel(70 - 11, 800), new PointReel(70 - 11, 1200)), true);
+            // Rochers
+            AjouterObstacle(new Cercle(new PointReel(0, 2000), 250), true);
+            AjouterObstacle(new Cercle(new PointReel(3000, 2000), 250), true);
 
-            // Zone départ verte
-            AjouterObstacle(new Segment(new PointReel(3000, 800 - 11), new PointReel(3000-400, 800 - 11)), true);
-            AjouterObstacle(new Segment(new PointReel(3000, 1211), new PointReel(3000 - 400, 1211)), true);
-            AjouterObstacle(new Segment(new PointReel(3000 - 70 + 11, 800), new PointReel(3000 - 70 + 11, 1200)), true);
-
-            // Dépose centrale
-            AjouterObstacle(new RectanglePolygone(new PointReel(1200, 1900), 600, 100), true);
+            // Support filet
+            AjouterObstacle(new RectanglePolygone(new PointReel(928, 2000 - 22), 22, 50), true);
+            AjouterObstacle(new RectanglePolygone(new PointReel(2072 - 22, 2000 - 22), 22, 50), true);
         }
 
         /// <summary>
