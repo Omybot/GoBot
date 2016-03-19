@@ -17,6 +17,8 @@ namespace Composants
         private bool reverse;
         private bool focus;
         private bool vertical;
+        private double value;
+
         public bool Vertical 
         { 
             get 
@@ -313,24 +315,24 @@ namespace Composants
             set;
         }
 
-        public void SetValue(double value, bool tickEvent = true)
+        public void SetValue(double val, bool tickEvent = true)
         {
-            if (value == value_)
+            if (value == val)
                 return;
 
             if (value < Min)
             {
-                value_ = Min;
+                value = Min;
                 DessineCurseur();
             }
             else if (value > Max)
             {
-                value_ = Max;
+                value = Max;
                 DessineCurseur();
             }
             else
             {
-                value_ = value;
+                value = val;
                 DessineCurseur();
             }
             
@@ -340,13 +342,11 @@ namespace Composants
             if (ValueChanged != null)
                 ValueChanged(this, null);
         }
-
-        private double value_;
         public double Value
         {
             get
             {
-                return value_;
+                return value;
             }
         }
         
@@ -379,9 +379,9 @@ namespace Composants
         {
             // les ticks suivants se font avec l'intervalle voulu
             timer.Interval = intervalTimer;
-            if (derniereValeurTick != value_)
+            if (derniereValeurTick != value)
             {
-                derniereValeurTick = value_;
+                derniereValeurTick = value;
                 if (TickValueChanged != null)
                     TickValueChanged(this, null);
             }
@@ -402,16 +402,16 @@ namespace Composants
             if (!Vertical)
             {
                 if (!reverse)
-                    imgCurseur.Location = new Point((int)(((value_ - Min) * (Width - imgCurseur.Width)) / (Max - Min)), imgCurseur.Location.Y);
+                    imgCurseur.Location = new Point((int)(((value - Min) * (Width - imgCurseur.Width)) / (Max - Min)), imgCurseur.Location.Y);
                 else
-                    imgCurseur.Location = new Point((int)(Width - imgCurseur.Width - (((value_ - Min) * (Width - imgCurseur.Width)) / (Max - Min))), imgCurseur.Location.Y);
+                    imgCurseur.Location = new Point((int)(Width - imgCurseur.Width - (((value - Min) * (Width - imgCurseur.Width)) / (Max - Min))), imgCurseur.Location.Y);
             }
             else
             {
                 if (!reverse)
-                    imgCurseur.Location = new Point(imgCurseur.Location.X, (int)(((value_ - Min) * (Height - imgCurseur.Height)) / (Max - Min)));
+                    imgCurseur.Location = new Point(imgCurseur.Location.X, (int)(((value - Min) * (Height - imgCurseur.Height)) / (Max - Min)));
                 else
-                    imgCurseur.Location = new Point(imgCurseur.Location.X, (int)(Height - imgCurseur.Height - ((value_ - Min) * (Height - imgCurseur.Height)) / (Max - Min)));
+                    imgCurseur.Location = new Point(imgCurseur.Location.X, (int)(Height - imgCurseur.Height - ((value - Min) * (Height - imgCurseur.Height)) / (Max - Min)));
             }
         }
 
@@ -423,18 +423,18 @@ namespace Composants
                 {
                     if (PointCentral(e).X <= 0)
                     {
-                        value_ = (reverse) ? Max : Min;
+                        value = (reverse) ? Max : Min;
                     }
                     else if (e.X >= this.Width - imgCurseur.Width / 2)
                     {
-                        value_ = (reverse) ? Min : Max;
+                        value = (reverse) ? Min : Max;
                     }
                     else
                     {
-                        value_ = Math.Round(Min + (Max - Min) * e.X / (float)Width, NombreDecimales);
+                        value = Math.Round(Min + (Max - Min) * e.X / (float)Width, NombreDecimales);
 
                         if (reverse)
-                            value_ = Max - Min - value_;
+                            value = Max - Min - value;
                     }
 
                     if (ValueChanged != null)
@@ -449,18 +449,18 @@ namespace Composants
                 {
                     if (PointCentral(e).Y <= 0)
                     {
-                        value_ = (reverse) ? Max : Min;
+                        value = (reverse) ? Max : Min;
                     }
                     else if (e.Y >= this.Height - imgCurseur.Height / 2)
                     {
-                        value_ = (reverse) ? Min : Max;
+                        value = (reverse) ? Min : Max;
                     }
                     else
                     {
-                        value_ = Math.Round(Min + (Max - Min) * e.Y / (float)Height);
+                        value = Math.Round(Min + (Max - Min) * e.Y / (float)Height);
 
                         if (reverse)
-                            value_ = Max - Min - value_;
+                            value = Max - Min - value;
                     }
 
                     if (ValueChanged != null)

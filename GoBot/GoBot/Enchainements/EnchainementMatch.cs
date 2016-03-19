@@ -58,9 +58,9 @@ namespace GoBot.Enchainements
 
         protected override void ThreadPetit()
         {
-            int iMeilleur = 0;
+            //int iMeilleur = 0;
             return;
-            ActionsFixesPetit();
+            //ActionsFixesPetit();
         }
 
         private void ActionsFixesPetit()

@@ -14,6 +14,7 @@ using GoBot.Actionneurs;
 using GoBot.Devices;
 using Pololu.Usc;
 using Pololu.UsbWrapper;
+using GoBot.Enchainements;
 
 namespace GoBot
 {
@@ -29,15 +30,13 @@ namespace GoBot
 
         public override Position Position { get; set; }
 
-        public bool Evitement;
-
-        public Enchainements.Enchainement Enchainement { get; set; }
+        public Enchainement Enchainement { get; set; }
         public Color Couleur;
 
         public RobotReel(IDRobot idRobot, Carte carte)
         {
-            AngleParcouru = 0;
-            DistanceParcourue = 0;
+            AngleTotalParcouru = 0;
+            DistanceTotaleParcourue = 0;
             Carte = carte;
             IDRobot = idRobot;
             ServomoteursConnectes = new List<byte>();
@@ -58,7 +57,6 @@ namespace GoBot
 
         public override void Init()
         {
-            Evitement = true;
             Couleur = Color.Purple;
 
             Historique = new Historique(IDRobot);
@@ -172,9 +170,12 @@ namespace GoBot
                         Position nouvellePosition = new Position(new Angle(teta, AnglyeType.Degre), new PointReel(x, y));
 
                         if (Position.Coordonnees.Distance(nouvellePosition.Coordonnees) < 300 || !positionRecue)
+                        {
                             Position = nouvellePosition;
-                        else
-                            ReglerOffsetAsserv((int)Position.Coordonnees.X, (int)Position.Coordonnees.Y, -Position.Angle);
+                            //Position.Coordonnees.Placer(nouvellePosition.Coordonnees.X, nouvellePosition.Coordonnees.Y);
+                        }
+                        //else
+                        //    ReglerOffsetAsserv((int)Position.Coordonnees.X, (int)Position.Coordonnees.Y, -Position.Angle);
 
                         positionRecue = true;
 
@@ -192,6 +193,8 @@ namespace GoBot
 
                         if (Plateau.Balise1 != null)
                             Plateau.Balise1.Position = Position;
+
+                        ChangerPosition(Position);
                     }
                     catch (Exception)
                     {
@@ -281,6 +284,20 @@ namespace GoBot
             }
             else if (trameRecue[0] == (byte)Carte.RecIO)
             {
+                if (trameRecue[1] == (byte)FonctionIO.ReponseLidar)
+                {
+                    int nbTrames = trameRecue[3];
+                    int numTrame = trameRecue[4];
+                    int tailleTrame = trameRecue[5];
+
+                    for(int i = 0; i < tailleTrame; i++)
+                    {
+                        mesureLidar += (char)trameRecue[6 + i];
+                    }
+
+                    if (nbTrames == numTrame)
+                        SemaphoresIO[FonctionIO.ReponseLidar].Release();
+                }
                 if (trameRecue[1] == (byte)FonctionIO.RetourValeursAnalogiques)
                 {
                     double valeurAnalogique1 = (trameRecue[2] * 256 + trameRecue[3]);
@@ -410,7 +427,7 @@ namespace GoBot
 
         public override void Avancer(int distance, bool attendre = true)
         {
-            DistanceParcourue += distance;
+            base.Avancer(distance, attendre);
 
             if (attendre)
                 SemaphoresMove[FonctionMove.FinDeplacement] = new Semaphore(0, int.MaxValue);
@@ -440,11 +457,12 @@ namespace GoBot
             Position.Coordonnees.Y = offsetY;
             Trame trame = TrameFactory.OffsetPos(offsetX, offsetY, offsetTeta, this);
             Connexion.SendMessage(trame);
+            ChangerPosition(Position);
         }
 
         public override void Reculer(int distance, bool attendre = true)
         {
-            DistanceParcourue += distance;
+            base.Reculer(distance, attendre);
 
             if (attendre)
                 SemaphoresMove[FonctionMove.FinDeplacement] = new Semaphore(0, int.MaxValue);
@@ -469,7 +487,8 @@ namespace GoBot
 
         public override void PivotGauche(double angle, bool attendre = true)
         {
-            AngleParcouru += angle;
+            base.PivotGauche(angle, attendre);
+
             angle = Math.Round(angle, 2);
 
             if (attendre)
@@ -493,7 +512,9 @@ namespace GoBot
 
         public override void PivotDroite(double angle, bool attendre = true)
         {
-            AngleParcouru += angle;
+            base.PivotDroite(angle, attendre);
+
+            AngleTotalParcouru += angle;
             if (attendre)
                 SemaphoresMove[FonctionMove.FinDeplacement] = new Semaphore(0, int.MaxValue);
 
@@ -536,6 +557,20 @@ namespace GoBot
                 SemaphoresMove[FonctionMove.FinDeplacement].WaitOne();
         }
 
+        public override void TrajectoirePolaire(SensAR sens, List<PointReel> points, bool attendre = true)
+        {
+            if (attendre)
+                SemaphoresMove[FonctionMove.FinDeplacement] = new Semaphore(0, int.MaxValue);
+
+            //Historique.AjouterAction(new ActionVirage(this, rayon, angle, sensAr, sensGd)); TODO
+
+            Trame trame = TrameFactory.TrajectoirePolaire(sens, points, this);
+            Connexion.SendMessage(trame);
+
+            if (attendre)
+                SemaphoresMove[FonctionMove.FinDeplacement].WaitOne();
+        }
+
         public override void Recallage(SensAR sens, bool attendre = true)
         {
             if (attendre)
@@ -554,6 +589,18 @@ namespace GoBot
         public override void EnvoyerPID(int p, int i, int d)
         {
             Trame trame = TrameFactory.CoeffAsserv(p, i, d, this);
+            Connexion.SendMessage(trame);
+        }
+
+        public override void EnvoyerPIDCap(int p, int i, int d)
+        {
+            Trame trame = TrameFactory.CoeffAsservCap(p, i, d, this);
+            Connexion.SendMessage(trame);
+        }
+
+        public override void EnvoyerPIDVitesse(int p, int i, int d)
+        {
+            Trame trame = TrameFactory.CoeffAsservVitesse(p, i, d, this);
             Connexion.SendMessage(trame);
         }
 
@@ -793,6 +840,16 @@ namespace GoBot
             Connexions.ConnexionIO.SendMessage(TrameFactory.DemandeJack());
             SemaphoresIO[FonctionIO.ReponseJack].WaitOne(50);
             return jackBranche;
+        }
+
+        private String mesureLidar;
+        public override String GetMesureLidar(LidarID lidar, int timeout)
+        {
+            mesureLidar = "";
+            SemaphoresIO[FonctionIO.ReponseLidar] = new Semaphore(0, int.MaxValue);
+            Connexions.ConnexionIO.SendMessage(TrameFactory.DemandeMesureLidar(lidar));
+            SemaphoresIO[FonctionIO.ReponseLidar].WaitOne(timeout);
+            return mesureLidar;
         }
 
         private Color couleurEquipe;

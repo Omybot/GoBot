@@ -122,6 +122,8 @@ namespace Composants
             
             double coef = max == min ? 1 : (float)(pictureBox.Height - 1) / (max - min);
 
+            g.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.AntiAlias;
+
             foreach (KeyValuePair<String, List<double>> courbe in Donnees)
             {
                 if (DonneesAffichees[courbe.Key] && courbe.Value.Count > 1)
@@ -139,6 +141,8 @@ namespace Composants
                 }
             }
 
+            g.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.None;
+
             int y = pictureBox.Height - 20;
             foreach (KeyValuePair<String, List<double>> courbe in Donnees)
             {
@@ -147,6 +151,7 @@ namespace Composants
                     Font police = new System.Drawing.Font("Calibri", 9);
                     gTemp.DrawString(courbe.Key, police, new SolidBrush(Pens[courbe.Key].Color), 2, y);
                     y -= 10;
+                    police.Dispose();
                 }
             }
 
@@ -165,6 +170,10 @@ namespace Composants
             {
                 Donnees.Remove(nomCourbe);
                 Pens.Remove(nomCourbe);
+            }
+            if (DonneesAffichees.ContainsKey(nomCourbe))
+            {
+                DonneesAffichees.Remove(nomCourbe);
             }
         }
 

@@ -118,68 +118,25 @@ namespace GoBot.IHM
 
         protected virtual void btnVirageAvDr_Click(object sender, EventArgs e)
         {
-            int distance = 0;
-            int angle = 0;
-
-            bool ok = true;
-            if (!Int32.TryParse(txtDistance.Text, out distance) || distance == 0)
-            {
-                txtDistance.ErrorMode = true;
-                ok = false;
-            }
-            if (!Int32.TryParse(txtAngle.Text, out angle) || angle == 0)
-            {
-                txtAngle.ErrorMode = true;
-                ok = false;
-            }
-
-            if (ok)
-                Robot.Virage(SensAR.Avant, SensGD.Droite, distance, angle, false);
+            Virage_Click(SensAR.Avant, SensGD.Droite);
         }
 
         protected virtual void btnVirageAvGa_Click(object sender, EventArgs e)
         {
-            int distance = 0;
-            int angle = 0;
-
-            bool ok = true;
-            if (!Int32.TryParse(txtDistance.Text, out distance) || distance == 0)
-            {
-                txtDistance.ErrorMode = true;
-                ok = false;
-            }
-            if (!Int32.TryParse(txtAngle.Text, out angle) || angle == 0)
-            {
-                txtAngle.ErrorMode = true;
-                ok = false;
-            }
-
-            if (ok)
-                Robot.Virage(SensAR.Avant, SensGD.Gauche, distance, angle, false);
+            Virage_Click(SensAR.Avant, SensGD.Gauche);
         }
 
         protected virtual void btnVirageArGa_Click(object sender, EventArgs e)
         {
-            int distance = 0;
-            int angle = 0;
-
-            bool ok = true;
-            if (!Int32.TryParse(txtDistance.Text, out distance) || distance == 0)
-            {
-                txtDistance.ErrorMode = true;
-                ok = false;
-            }
-            if (!Int32.TryParse(txtAngle.Text, out angle) || angle == 0)
-            {
-                txtAngle.ErrorMode = true;
-                ok = false;
-            }
-
-            if (ok)
-                Robot.Virage(SensAR.Arriere, SensGD.Gauche, distance, angle, false);
+            Virage_Click(SensAR.Arriere, SensGD.Gauche);
         }
 
         protected virtual void btnVirageArDr_Click(object sender, EventArgs e)
+        {
+            Virage_Click(SensAR.Arriere, SensGD.Droite);
+        }
+
+        protected void Virage_Click(SensAR sensAr, SensGD sensGd)
         {
             int distance = 0;
             int angle = 0;
@@ -197,7 +154,7 @@ namespace GoBot.IHM
             }
 
             if (ok)
-                Robot.Virage(SensAR.Arriere, SensGD.Droite, distance, angle, false);
+                Robot.Virage(sensAr, sensGd, distance, angle, false);
         }
 
         #region Vitesse ligne
@@ -418,6 +375,16 @@ namespace GoBot.IHM
         {
             if (numAccelerationFinLigne.Focused)
                 trackBarAccelerationFinLigne.SetValue((double)numAccelerationFinLigne.Value);
+        }
+
+        private void btnPIDPol_Click(object sender, EventArgs e)
+        {
+            Robots.GrosRobot.EnvoyerPIDCap((int)numCoeffP.Value, (int)numCoeffI.Value, (int)numCoeffD.Value);
+        }
+
+        private void btnPIDVit_Click(object sender, EventArgs e)
+        {
+            Robots.GrosRobot.EnvoyerPIDVitesse((int)numCoeffP.Value, (int)numCoeffI.Value, (int)numCoeffD.Value);
         }
     }
 }

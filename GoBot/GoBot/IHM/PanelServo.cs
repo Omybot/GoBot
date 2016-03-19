@@ -36,6 +36,8 @@ namespace GoBot.IHM
             {
                 cboBaudrate.Items.Add(baudrate);
             }
+
+            cboBaudrate.SelectedIndex = 0;
         }
 
         public void AfficherServo(Servomoteur servo)
@@ -47,10 +49,7 @@ namespace GoBot.IHM
 
         private void btnRefresh_Click(object sender, EventArgs e)
         {
-            if(numID.Value == 14 || numID.Value == 16)
-                servo = new Servomoteur(Carte.RecPi, (int)numID.Value, (ServoBaudrate)cboBaudrate.SelectedItem);
-            else
-                servo = new Servomoteur(Carte.RecIO, (int)numID.Value, (ServoBaudrate)cboBaudrate.SelectedItem);
+            servo = new Servomoteur(Carte.RecIO, (int)numID.Value, (ServoBaudrate)cboBaudrate.SelectedItem);
             Actualisation(true);
         }
 
@@ -503,7 +502,8 @@ namespace GoBot.IHM
         private void trackBarPosition_TickValueChanged(object sender, EventArgs e)
         {
             if (Servomoteur.servosPololu.ContainsKey((ServomoteurID)numID.Value))
-                Devices.PololuMiniUart.setTarget(Servomoteur.servosPololu[(ServomoteurID)numID.Value], (ushort)trackBarPosition.Value);
+            //    Devices.PololuMiniUart.setTarget(Servomoteur.servosPololu[(ServomoteurID)numID.Value], (ushort)trackBarPosition.Value);
+                Devices.PololuMiniUart.setTarget((byte)numID.Value, (ushort)trackBarPosition.Value);
             else
                 servo.PositionCible = (int)trackBarPosition.Value;
         }

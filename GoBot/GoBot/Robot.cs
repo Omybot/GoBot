@@ -10,65 +10,88 @@ using System.Drawing;
 using GoBot.Actions;
 using GoBot.Actionneurs;
 using GoBot.PathFinding;
+using GoBot.Communications;
 
 namespace GoBot
 {
     public abstract class Robot
     {
-        public IDRobot IDRobot { get; protected set; }
-        public Semaphore SemGraph { get; set; }
+        // Communication
         public Carte Carte { get; set; }
         public Historique Historique { get; protected set; }
-        public bool DeplacementLigne { get; protected set; }
-        public Graph Graph { get; set; }
-        public bool TrajectoireEchouee { get; set; }
+        public double TensionPack1 { get; protected set; }
+        public double TensionPack2 { get; protected set; }
+        
+        // Constitution
+        public IDRobot IDRobot { get; protected set; }
+        public String Nom { get; set; }
+        public int Taille { get { return Math.Max(Longueur, Largeur); } }
+        public int Longueur { get; set; }
+        public int Largeur { get; set; }
+        public int Rayon { get { return (int)Math.Sqrt(Longueur * Longueur + Largeur * Largeur) / 2 - 14; } } // -14 = valeur calculée pour l'année 2015 sur les biseaux
 
-        private bool TrajectoireCoupee { get; set; }
-
+        // Déplacement
         public abstract Position Position { get; set; }
         public PointReel PositionCible { get; set; }
-
+        public bool DeplacementLigne { get; protected set; }
         public bool VitesseAdaptableEnnemi { get; set; }
         public abstract int VitesseDeplacement { get; set; }
         public abstract int AccelerationDebutDeplacement { get; set; }
         public abstract int AccelerationFinDeplacement { get; set; }
         public abstract int VitessePivot { get; set; }
         public abstract int AccelerationPivot { get; set; }
-        public int DistanceParcourue { get; set; }
-        public double AngleParcouru { get; set; }
-
-        public int Taille { get { return Math.Max(Longueur, Largeur); } }
-        public int Longueur { get; set; }
-        public int Largeur { get; set; }
-        public int Rayon { get { return (int)Math.Sqrt(Longueur * Longueur + Largeur * Largeur) / 2 - 14; } } // -14 = valeur calculée pour l'année 2015 sur les biseaux
-
+        public int DistanceTotaleParcourue { get; set; }
+        public double AngleTotalParcouru { get; set; }
         public List<Position> HistoriqueCoordonnees { get; protected set; }
 
-        public List<byte> ServomoteursConnectes { get; protected set; }
+        // PathFinding
+        public Graph Graph { get; set; }
+        public Semaphore SemGraph { get; set; }
+        public bool TrajectoireEchouee { get; set; }
+        private bool TrajectoireCoupee { get; set; }
 
-
-        public String Nom { get; set; }
-
-        // Pathfinding
         private Thread threadTrajectoire;
         private Semaphore semTrajectoire;
 
         public Semaphore semHistoriquePosition;
 
         public Trajectoire TrajectoireEnCours = null;
+        
+        private static Semaphore semDeblocage = new Semaphore(1, 1);
 
-        /*public Arc CheminTest { get; set; }
-        public IForme ObstacleTeste { get; set; }
-        public IForme ObstacleProbleme { get; set; }*/
-        public abstract void Avancer(int distance, bool attendre = true);
-        public abstract void Reculer(int distance, bool attendre = true);
-        public abstract void PivotGauche(double angle, bool attendre = true);
-        public abstract void PivotDroite(double angle, bool attendre = true);
+
+        public List<byte> ServomoteursConnectes { get; protected set; }
+        public Dictionary<ServomoteurID, bool> ServoActive { get; set; }
+        public Dictionary<MoteurID, bool> MoteurTourne { get; set; }
+
+        public virtual void Avancer(int distance, bool attendre = true)
+        {
+            DistanceTotaleParcourue += distance;
+        }
+
+        public virtual void Reculer(int distance, bool attendre = true)
+        {
+            DistanceTotaleParcourue += distance;
+        }
+
+        public virtual void PivotGauche(double angle, bool attendre = true)
+        {
+            AngleTotalParcouru += angle;
+        }
+
+        public virtual void PivotDroite(double angle, bool attendre = true)
+        {
+            AngleTotalParcouru += angle;
+        }
+
+        public abstract void TrajectoirePolaire(SensAR sens, List<PointReel> points, bool attendre = true);
         public abstract void Stop(StopMode mode = StopMode.Smooth);
         public abstract void Virage(SensAR sensAr, SensGD sensGd, int rayon, int angle, bool attendre = true);
         public abstract void ReglerOffsetAsserv(int offsetX, int offsetY, double offsetTeta);
         public abstract void Recallage(SensAR sens, bool attendre = true);
         public abstract void EnvoyerPID(int p, int i, int d);
+        public abstract void EnvoyerPIDCap(int p, int i, int d);
+        public abstract void EnvoyerPIDVitesse(int p, int i, int d);
         public abstract List<int>[] MesureTestPid(int consigne, SensAR sens, int nbValeurs);
         public abstract List<double>[] DiagnosticCpuPwm(int nbValeurs);
         public abstract bool DemandeCapteurOnOff(CapteurOnOffID capteur, bool attendre = true);
@@ -83,19 +106,31 @@ namespace GoBot
 
         public abstract void ArmerJack();
         public abstract bool GetJack(bool historique = true);
+        public abstract String GetMesureLidar(LidarID lidar, int timeout);
         public abstract Color GetCouleurEquipe(bool historique = true);
 
         public Dictionary<CapteurOnOffID, bool> CapteurActive { get; set; }
         public List<double> ValeursAnalogiquesIO { get; set; }
         public List<double> ValeursAnalogiquesMove { get; set; }
 
-        //Déclaration du délégué pour l’évènement changement d'état d'un capteurOnOff
         public delegate void ChangementEtatCapteurOnOffDelegate(CapteurOnOffID capteur, bool etat);
-        //Déclaration de l’évènement utilisant le délégué pour le changement d'état d'un capteurOnOff
         public event ChangementEtatCapteurOnOffDelegate ChangementEtatCapteurOnOff;
 
+        public delegate void PositionChangeDelegate(Position position);
+        public event PositionChangeDelegate PositionChange;
+
         /// <summary>
-        /// Lance l'évènement de changement d'état d'un capteur
+        /// Génère l'évènement de changement de position
+        /// </summary>
+        /// <param name="position">Nouvelle position</param>
+        protected void ChangerPosition(Position position)
+        {
+            if (PositionChange != null)
+                PositionChange(position);
+        }
+
+        /// <summary>
+        /// Génère l'évènement de changement d'état d'un capteur
         /// </summary>
         /// <param name="capteur"></param>
         /// <param name="etat"></param>
@@ -105,19 +140,12 @@ namespace GoBot
             ChangementEtatCapteurOnOff(capteur, etat);
         }
 
-        public Dictionary<ServomoteurID, bool> ServoActive { get; set; }
-        public Dictionary<MoteurID, bool> MoteurTourne { get; set; }
-
-        public double TensionPack1 { get; protected set; }
-        public double TensionPack2 { get; protected set; }
-
         public void Diagnostic()
         {
             if (this == Robots.GrosRobot)
             {
                 
                 Lent();
-                int tempsPause = 400;
                 Avancer(50);
                 Reculer(50);
                 PivotDroite(10);
@@ -262,81 +290,6 @@ namespace GoBot
         }
 
         /// <summary>
-        /// Ajoute un noeud au graph en reliant tous les points à une distance maximale
-        /// </summary>
-        /// <param name="node">Noeud à ajouter</param>
-        /// <param name="distanceMax">Distance (mm) max de liaison avec les autres noeuds</param>
-        /// <returns>Nombre de points reliés au point ajouté</returns>
-        public int AddNode(Graph graph, Node node, double distanceMax = 400, bool ajouter = true)
-        {
-            double distanceNode;
-
-            // Si un noeud est deja présent à cet endroit on ne l'ajoute pas
-            graph.ClosestNode(node.X, node.Y, node.Z, out distanceNode, true);
-            if (distanceNode == 0)
-                return 0;
-
-            // Teste si le noeud est franchissable avec la liste des obstacles
-            foreach (IForme obstacle in Plateau.ObstaclesFixes)
-            {
-                if (TropProche(obstacle, new PointReel(node.X, node.Y)))
-                {
-                    node.Passable = false;
-                    return 0;
-                }
-            }
-
-            graph.Nodes.Add(node);
-            nodesAdd.Add(node);
-
-            int nbLiaisons = 0;
-
-            // Liaisons avec les autres noeuds du graph
-            foreach (Node no in graph.Nodes)
-            {
-                if (node != no)
-                {
-                    double distance = Math.Sqrt((node.Position.X - no.Position.X) * (node.Position.X - no.Position.X) + (node.Position.Y - no.Position.Y) * (node.Position.Y - no.Position.Y));
-                    if (distance < distanceMax)
-                    {
-                        Arc arc = new Arc(no, node);
-                        arc.Weight = Math.Sqrt(distance);
-                        Arc arc2 = new Arc(node, no);
-                        arc2.Weight = Math.Sqrt(distance);
-
-                        List<IForme> obstacles = CalculerObstacles();
-
-                        foreach (IForme obstacle in obstacles)
-                        {
-                            if (TropProche(obstacle, new Segment(new PointReel(no.X, no.Y), new PointReel(node.X, node.Y)), -20))
-                            {
-                                arc.Passable = false;
-                                arc2.Passable = false;
-                                break;
-                            }
-                        }
-
-                        if (arc.Passable)
-                        {
-                            graph.AddArc(arc);
-                            graph.AddArc(arc2);
-
-                            arcsAdd.Add(arc);
-                            arcsAdd.Add(arc2);
-
-                            nbLiaisons++;
-                        }
-                    }
-                }
-            }
-
-            return nbLiaisons;
-        }
-
-        List<Arc> arcsAdd = new List<Arc>();
-        List<Node> nodesAdd = new List<Node>();
-
-        /// <summary>
         /// Teste si deux formes sont trop proches pour envisager le passage du robot
         /// </summary>
         /// <param name="forme1">Forme 1</param>
@@ -356,9 +309,6 @@ namespace GoBot
                 return forme1.Distance(forme2) < Rayon + marge;
         }
 
-        public bool Bloque { get; set; }
-        private static Semaphore semDeblocage = new Semaphore(1, 1);
-
         public bool ObstacleTest()
         {
             if (TrajectoireCoupee)
@@ -370,7 +320,6 @@ namespace GoBot
                 // Teste si le chemin en cours de parcours est toujours franchissable
                 if (TrajectoireEnCours != null && TrajectoireEnCours.Segments.Count > 0)
                 {
-                    Console.WriteLine("Test collision");
                     List<Segment> segmentsTrajectoire = new List<Segment>();
                     // Calcule le segment entre nous et notre destination (permet de ne pas considérer un obstacle sur un tronçon déjà franchi)
                     Segment seg = new Segment(Position.Coordonnees, new PointReel(TrajectoireEnCours.Segments[0].Fin));
@@ -393,7 +342,6 @@ namespace GoBot
                                 TrajectoireCoupee = true;
                                 TrajectoireEnCours = null;
 
-                                Console.WriteLine("Traj interrompue");
                                 if (DeplacementLigne)
                                     Stop();
                                 Synchronizer.Unlock(Plateau.ObstaclesTemporaires);
@@ -466,27 +414,6 @@ namespace GoBot
         public override string ToString()
         {
             return Nom;
-        }
-
-        public List<IForme> CalculerObstacles()
-        {
-            List<IForme> obstacles = new List<IForme>();
-            obstacles.AddRange(Plateau.ObstaclesFixes);
-            obstacles.AddRange(Plateau.ObstaclesTemporaires);
-            obstacles.AddRange(Plateau.ObstaclesCrees);
-
-            return obstacles;
-        }
-
-        private void CleanNodesArcsAdd()
-        {
-            foreach (Arc a in arcsAdd)
-                Graph.RemoveArc(a);
-            arcsAdd.Clear();
-
-            foreach (Node n in nodesAdd)
-                Graph.RemoveNode(n);
-            nodesAdd.Clear();
         }
 
         public int CalculDureeLigne(int distance)

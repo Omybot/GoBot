@@ -516,7 +516,7 @@ namespace GoBot.IHM
                 if (sampGrabber == null) return;
                 int w = videoInfoHeader.BmiHeader.Width;
                 int h = videoInfoHeader.BmiHeader.Height;
-                int deltatime;
+                //int deltatime;
                 if (((w & 0x03) != 0) || (w < 32) || (w > 4096) || (h < 32) || (h > 4096)) return;
                 //get Image
                 int stride = w * 3;

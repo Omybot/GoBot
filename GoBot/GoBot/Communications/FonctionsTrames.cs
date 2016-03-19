@@ -7,6 +7,9 @@ namespace GoBot.Communications
 {
     public enum FonctionIO
     {
+        DemandeLidar = 0x10,
+        ReponseLidar = 0x11,
+
         CommandeServo = 0x60,
         ChangementBaudrateSerie = 0x61,
 
@@ -53,6 +56,8 @@ namespace GoBot.Communications
         FinDeplacement = 0x12,
         Blocage = 0x13,
 
+        TrajectoirePolaire = 0x20,
+
         DemandePositionsCodeurs = 0x43,
         RetourPositionCodeurs = 0x44,
         EnvoiConsigneBrute = 0x45,
@@ -70,6 +75,8 @@ namespace GoBot.Communications
         AccelerationPivot = 0x35,
         CoeffAsservPID = 0x36,
         EnvoiPositionAbsolue = 0x37,
+        PIDCap = 0x38,
+        PIDVitesse = 0x39,
 
         DemandeValeursAnalogiques = 0x76,
         RetourValeursAnalogiques = 0x77,

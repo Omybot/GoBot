@@ -16,6 +16,8 @@ using GoBot.Balises;
 using GoBot.ElementsJeu;
 using GoBot.Actionneurs;
 using GoBot.PathFinding;
+using Gobot.Calculs;
+using GoBot.Devices;
 
 namespace GoBot.IHM
 {
@@ -146,6 +148,15 @@ namespace GoBot.IHM
             semMove.WaitOne();
             Dessinateur.PositionCurseur = pictureBoxTable.PointToClient(MousePosition);
 
+            if (pSelected != -1)
+            {
+                pointsPolaires[pSelected] = Dessinateur.ScreenToRealPosition(e.Location);
+
+                trajectoirePolaire = BezierCurve.GetPoints(pointsPolaires, (int)(numNbPoints.Value));//((int)pointsPolaires[0].Distance(pointsPolaires[pointsPolaires.Count - 1])) / 50);
+                Dessinateur.TrajectoirePolaire = trajectoirePolaire;
+                Dessinateur.PointsPolaire = pointsPolaires;
+            }
+
             if (boxSourisObstacle.Checked)
             {
                 if ((DateTime.Now - dateCapture).TotalMilliseconds > 50)
@@ -252,10 +263,7 @@ namespace GoBot.IHM
             PointReel positionReelle = Dessinateur.ScreenToRealPosition(pictureBoxTable.PointToClient(MousePosition));
             if (Dessinateur.modeCourant == Dessinateur.Mode.FinTrajectoire)
             {
-                if (ev.Button == System.Windows.Forms.MouseButtons.Left)
-                    Robots.GrosRobot.PathFinding(positionReelle.X, positionReelle.Y);
-                else
-                    Robots.PetitRobot.PathFinding(positionReelle.X, positionReelle.Y);
+                Robots.GrosRobot.PathFinding(positionReelle.X, positionReelle.Y);
 
                 Dessinateur.modeCourant = Dessinateur.Mode.Visualisation;
             }
@@ -280,13 +288,7 @@ namespace GoBot.IHM
         Thread thAction;
 
         Thread thPath;
-        MouseEventArgs ev;
-        private void pictureBoxTable_MouseClick(object sender, MouseEventArgs e)
-        {
-            ev = e;
-            thPath = new Thread(PathFindingClick);
-            thPath.Start();
-        }
+        //MouseEventArgs ev;
 
         private void btnGo_Click(object sender, EventArgs e)
         {
@@ -303,16 +305,38 @@ namespace GoBot.IHM
             }
         }
 
+        private int pSelected = -1;
         private void pictureBoxTable_MouseDown(object sender, MouseEventArgs e)
         {
             Dessinateur.positionDepart = Dessinateur.ScreenToRealPosition(pictureBoxTable.PointToClient(MousePosition));
             Dessinateur.sourisClic = true;
+
+            if (Dessinateur.modeCourant == Dessinateur.Mode.TrajectoirePolaire)
+            {
+                moveMouse = false;
+                Point pClic = e.Location;
+                for(int i = 0; i < pointsPolaires.Count; i++)
+                {
+                    Point pPolaire = Dessinateur.RealToScreenPosition(pointsPolaires[i]);
+                    if (new PointReel(pClic).Distance(new PointReel(pPolaire)) <= 3)
+                    {
+                        moveMouse = true;
+                        pSelected = i;
+                    }
+                }
+            }
         }
 
         Thread thGoToRP;
         Thread thGoToRS;
+        List<PointReel> trajectoirePolaire;
+        List<PointReel> pointsPolaires;
+
         private void pictureBoxTable_MouseUp(object sender, MouseEventArgs e)
         {
+            if (pSelected != -1)
+                pSelected = -1;
+
             if (Dessinateur.modeCourant == Dessinateur.Mode.PositionRPCentre || Dessinateur.modeCourant == Dessinateur.Mode.TeleportRPCentre)
             {
                 Direction traj = Maths.GetDirection(Dessinateur.positionDepart, Dessinateur.ScreenToRealPosition(pictureBoxTable.PointToClient(MousePosition)));
@@ -611,6 +635,112 @@ namespace GoBot.IHM
 
             Robots.GrosRobot.Reculer(300);
 
+        }
+
+        Thread threadHokuyo;
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            //String mess = "MS000072500001";
+            String mess = "VV\n00P\n";
+
+            byte[] b = new Byte[mess.Length];
+
+            for (int i = 0; i < mess.Length; i++)
+            {
+                b[i] = (byte)mess[i];
+            }
+            GoBot.Communications.Connexions.ConnexionIO.SendMessage(GoBot.Communications.TrameFactory.EnvoyerUart(Carte.RecIO, new Communications.Trame(b)));
+
+            //threadHokuyo = new Thread(FonctionHokuyo);
+            //threadHokuyo.Start();
+
+            //PololuMiniUart.setTarget(15, 0);
+            //Thread.Sleep(1000);
+            //PololuMiniUart.setTarget(15, 500);
+        }
+
+        private void FonctionHokuyo()
+        {
+            GoBot.Devices.Hokuyo hokuyo = new Devices.Hokuyo("COM3");
+
+            while (true)
+            {
+                List<PointReel> points = hokuyo.GetMesure();
+                Plateau.ObstaclesFixes = new List<IForme>();
+                foreach (PointReel p in points)
+                {
+                    Plateau.ObstaclesFixes.Add(new Cercle(p, 4));
+                }
+            }
+        }
+
+        private void btnTrajCreer_Click(object sender, EventArgs e)
+        {
+            Dessinateur.modeCourant = Dessinateur.Mode.TrajectoirePolaire;
+            pSelected = -1;
+            pointsPolaires = new List<PointReel>();
+        }
+
+        private void btnTrajLancer_Click(object sender, EventArgs e)
+        {
+            Robots.GrosRobot.TrajectoirePolaire(SensAR.Avant, trajectoirePolaire, false);
+        }
+
+        private void pwet_Click(object sender, EventArgs e)
+        {
+            Robots.GrosRobot.ReglerOffsetAsserv(160, 850, 0);
+            //Robots.GrosRobot.ReglerOffsetAsserv(100, 700, 0);
+            Robots.GrosRobot.VitesseDeplacement = 800;
+            Robots.GrosRobot.AccelerationDebutDeplacement = 2000;
+            Robots.GrosRobot.AccelerationFinDeplacement = 2000;
+            Robots.GrosRobot.VitessePivot = 1000;
+            Robots.GrosRobot.AccelerationPivot = 1000;
+
+            //Robots.GrosRobot.EnvoyerPIDCap(20000, 0, 300);
+            Robots.GrosRobot.EnvoyerPIDCap(15000, 0, 100);
+            Robots.GrosRobot.EnvoyerPIDVitesse(20, 0, 200);
+
+            pointsPolaires = new List<PointReel>();
+            //for (int i = 0; i < 10; i++)
+             //   pointsPolaires.Add(new PointReel(i * 10, 0));
+
+            pointsPolaires.Add(new PointReel(160, 850));
+            pointsPolaires.Add(new PointReel(750, 850));
+            pointsPolaires.Add(new PointReel(550, 400));
+            pointsPolaires.Add(new PointReel(1200, 400));
+
+            trajectoirePolaire = BezierCurve.GetPoints(pointsPolaires, (int)numNbPoints.Value);
+            Dessinateur.modeCourant = Dessinateur.Mode.TrajectoirePolaire; 
+            Dessinateur.TrajectoirePolaire = trajectoirePolaire;
+            Dessinateur.PointsPolaire = pointsPolaires;
+
+            Robots.GrosRobot.TrajectoirePolaire(SensAR.Avant, trajectoirePolaire, false);
+        }
+
+        bool moveMouse = false;
+        private void pictureBoxTable_Click(object sender, EventArgs e)
+        {
+            if (!moveMouse && Dessinateur.modeCourant == Dessinateur.Mode.TrajectoirePolaire)
+            {
+                PointReel point = Dessinateur.ScreenToRealPosition(pictureBoxTable.PointToClient(MousePosition));
+                //if (pointsPolaires.Count >= 2 && pointsPolaires.Count < 4)
+                //    pointsPolaires.Insert(pointsPolaires.Count - 1, point);
+                //else if (pointsPolaires.Count < 4)
+                pointsPolaires.Add(point);
+
+                if (pointsPolaires.Count > 1)
+                {
+                    trajectoirePolaire = BezierCurve.GetPoints(pointsPolaires, (int)(numNbPoints.Value));//((int)pointsPolaires[0].Distance(pointsPolaires[pointsPolaires.Count - 1])) / 50);
+                    Dessinateur.TrajectoirePolaire = trajectoirePolaire;
+                    Dessinateur.PointsPolaire = pointsPolaires;
+                }
+            }
+            else
+            {
+                thPath = new Thread(PathFindingClick);
+                thPath.Start();
+            }
         }
     }
 }

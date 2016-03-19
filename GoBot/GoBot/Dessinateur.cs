@@ -13,6 +13,7 @@ using GoBot.Actionneurs;
 using GoBot.ElementsJeu;
 using GoBot.Mouvements;
 using GoBot.PathFinding;
+using System.Drawing.Drawing2D;
 
 namespace GoBot
 {
@@ -48,7 +49,7 @@ namespace GoBot
             return (int)(valeur / RAPPORT_SCREEN_REAL);
         }
 
-        public static Point RealToScreenPosition(Point valeur)
+        public static Point RealToScreenPosition(PointReel valeur)
         {
             return new Point(RealToScreenDistance(valeur.X) + OFFSET_IMAGE_X, RealToScreenDistance(valeur.Y) + OFFSET_IMAGE_Y);
         }
@@ -80,6 +81,28 @@ namespace GoBot
         }
         public static PointReel PositionCurseurTable { get; set; }
         public static PointReel positionDepart;
+
+        public static List<Point> trajectoirePolaireScreen;
+        public static List<PointReel> TrajectoirePolaire
+        {
+            set
+            {
+                trajectoirePolaireScreen = new List<Point>();
+                for (int i = 0; i < value.Count; i++)
+                    trajectoirePolaireScreen.Add(RealToScreenPosition(value[i]));
+            }
+        }
+
+        private static List<Point> pointsPolaireScreen;
+        public static List<PointReel> PointsPolaire
+        {
+            set
+            {
+                pointsPolaireScreen = new List<Point>();
+                for (int i = 0; i < value.Count; i++)
+                    pointsPolaireScreen.Add(RealToScreenPosition(value[i]));
+            }
+        }
         public static bool sourisClic;
 
         public static bool AfficheGraphPetit;
@@ -215,7 +238,8 @@ namespace GoBot
             TeleportRPCentre,
             TeleportRPFace,
             TeleportRSCentre,
-            TeleportRSFace
+            TeleportRSFace,
+            TrajectoirePolaire
         }
 
         private static DateTime prec = DateTime.Now;
@@ -241,21 +265,22 @@ namespace GoBot
                         if (AfficheTable)
                             DessinePlateau(g);
 
-                        if (AfficheObstacles)
-                            DessineObstacles(g);
-
                         DessineGraph(Robots.PetitRobot, g);
                         DessineGraph(Robots.GrosRobot, g);
 
                         //DessineTrajectoire(g);
+
+                        if (Robots.GrosRobot != null)
+                            DessineRobot(Robots.GrosRobot, g);
 
                         if (AfficheHistoriqueCoordonneesGros && Robots.GrosRobot.HistoriqueCoordonnees != null)
                             DessineHistoriqueTrajectoire(Robots.GrosRobot, g);
                         if (AfficheHistoriqueCoordonneesPetit && Robots.PetitRobot.HistoriqueCoordonnees != null)
                             DessineHistoriqueTrajectoire(Robots.PetitRobot, g);
 
-                        if (Robots.GrosRobot != null)
-                            DessineRobot(Robots.GrosRobot, g);
+
+                        if (AfficheObstacles)
+                            DessineObstacles(g);
 
                         //if (Robots.PetitRobot != null)
                         //    DessineRobot(Robots.PetitRobot, g);
@@ -396,6 +421,18 @@ namespace GoBot
                         }
                         if (Robots.PetitRobot.TrajectoireEnCours != null)
                             DessineTrajectoire(Robots.PetitRobot.TrajectoireEnCours, g);
+
+                        // Trajectoire polaire
+
+                        //if (modeCourant == Mode.TrajectoirePolaire)
+                        {
+                            if (trajectoirePolaireScreen !=null)
+                                foreach (Point p in trajectoirePolaireScreen)
+                                    g.FillEllipse(Brushes.Red, p.X - 1, p.Y - 1, 2, 2);
+                            if (pointsPolaireScreen != null)
+                                foreach (Point p in pointsPolaireScreen)
+                                    g.DrawEllipse(Pens.Black, p.X - 3, p.Y - 3, 6, 6);
+                        }
 
                         TableDessinee(bmp);
                     }
@@ -576,6 +613,35 @@ namespace GoBot
             DessinerForme(g, Color.White, 0, new RectanglePolygone(new PointReel(Plateau.LongueurPlateau, -1000), 1000, Plateau.LongueurPlateau + 2000), true);
             DessinerForme(g, Color.White, 0, new RectanglePolygone(new PointReel(-1000, -1000), Plateau.LargeurPlateau + 2000, 990), true);
             DessinerForme(g, Color.White, 0, new RectanglePolygone(new PointReel(-1000, Plateau.LargeurPlateau), Plateau.LongueurPlateau + 2000, 990), true);
+
+            DessineZoneMorte(g);
+        }
+
+        private static void DessineZoneMorte(Graphics g)
+        {
+            Angle milieuAngleMort = new Angle(-90);
+            Angle largeurAngleMort = new Angle(90);
+
+            Angle debutAngleMort = new Angle(Robots.GrosRobot.Position.Angle + milieuAngleMort - largeurAngleMort / 2);
+            Angle finAngleMort = new Angle(Robots.GrosRobot.Position.Angle + milieuAngleMort + largeurAngleMort / 2);
+
+            List<Point> points = new List<Point>();
+            points.Add(RealToScreenPosition(Robots.GrosRobot.Position.Coordonnees));
+            points.Add(RealToScreenPosition(new Point((int)(Robots.GrosRobot.Position.Coordonnees.X + Math.Cos(debutAngleMort.AngleRadians) * 3000), (int)(Robots.GrosRobot.Position.Coordonnees.Y + Math.Sin(debutAngleMort.AngleRadians) * 3000))));
+            points.Add(RealToScreenPosition(new Point((int)(Robots.GrosRobot.Position.Coordonnees.X + Math.Cos(finAngleMort.AngleRadians) * 3000), (int)(Robots.GrosRobot.Position.Coordonnees.Y + Math.Sin(finAngleMort.AngleRadians) * 3000))));
+            
+            Region regionTable = new Region(new Rectangle(RealToScreenPosition(new Point(0, 0)), new Size(RealToScreenDistance(Plateau.LongueurPlateau), RealToScreenDistance(Plateau.LargeurPlateau))));
+            GraphicsPath pathZoneMorte = new GraphicsPath();
+            pathZoneMorte.AddPolygon(points.ToArray());
+            Region regionZoneMorte = new Region(pathZoneMorte);
+            regionZoneMorte.Intersect(regionTable);
+
+            Brush brush = new SolidBrush(Color.FromArgb(50, Color.Black));
+            g.SmoothingMode = SmoothingMode.AntiAlias;
+            g.FillRegion(brush, regionZoneMorte);
+            brush.Dispose();
+            regionTable.Dispose();
+            regionZoneMorte.Dispose();
         }
 
         private static void DessinePlateau(Graphics g)
@@ -707,7 +773,7 @@ namespace GoBot
                 // Dessin des noeuds
                 foreach (Node n in robot.Graph.Nodes)
                 {
-                    Point pointNode = RealToScreenPosition(n.Position);
+                    Point pointNode = RealToScreenPosition(new PointReel(n.Position.X, n.Position.Y));
                     g.FillEllipse(brush, new Rectangle(pointNode.X - 3, pointNode.Y - 3, 6, 6));
                     g.DrawEllipse(n.Passable ? penNoir : penRougeFin, new Rectangle(pointNode.X - 3, pointNode.Y - 3, 6, 6));
                 }
@@ -743,7 +809,7 @@ namespace GoBot
 
             Arc cheminTest = PathFinder.CheminTest;
             if (cheminTest != null)
-                g.DrawLine(penRougeEpais, RealToScreenPosition(cheminTest.StartNode.Position), RealToScreenPosition(cheminTest.EndNode.Position));
+                g.DrawLine(penRougeEpais, RealToScreenPosition(new PointReel(cheminTest.StartNode.Position.X, cheminTest.StartNode.Position.Y)), RealToScreenPosition(new PointReel(cheminTest.EndNode.Position.X, cheminTest.EndNode.Position.Y)));
 
             //if (robot.ObstacleTeste != null)
             //    DessinerForme(g, Color.Green, 10, robot.ObstacleTeste);

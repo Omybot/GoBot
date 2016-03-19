@@ -16,7 +16,7 @@ namespace GoBot.Actions
             distance = dist;
         }
 
-        String ToString()
+        public override String ToString()
         {
             return robot.Nom + " avance de " + distance + "mm";
         }

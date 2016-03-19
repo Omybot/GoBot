@@ -322,6 +322,22 @@ namespace GoBot.Communications
                     case (byte)Carte.RecMove:
                         switch ((FonctionMove)trame[1])
                         {
+                            case FonctionMove.PIDCap:
+                                int valeurPCap = (trame[2] * 256 + trame[3])*100;
+                                int valeurICap = trame[4] * 256 + trame[5];
+                                int valeurDCap = (trame[6] * 256 + trame[7])*100;
+                                message = "Envoi PID Cap : P=" + valeurPCap + " I=" + valeurICap + " D=" + valeurDCap;
+                                break;
+                            case FonctionMove.TrajectoirePolaire:
+                                int nbPoints = trame[3] * 256 + trame[4];
+                                message = "Trajectoire polaire : " + nbPoints + " points";
+                                break;
+                            case FonctionMove.PIDVitesse:
+                                int valeurPVit = trame[2] * 256 + trame[3];
+                                int valeurIVit = trame[4] * 256 + trame[5];
+                                int valeurDVit = trame[6] * 256 + trame[7];
+                                message = "Envoi PID Vitesse : P=" + valeurPVit + " I=" + valeurIVit + " D=" + valeurDVit;
+                                break;
                             case FonctionMove.DemandePositionContinue:
                                 message = "Demande position continue toutes les " + (int)trame[2] * 10 + "ms";
                                 break;
@@ -335,8 +351,7 @@ namespace GoBot.Communications
                                 break;
                             case FonctionMove.AccelerationPivot:
                                 int valeurAccelDebutPivot = trame[2] * 256 + trame[3];
-                                int valeurAccelFinPivot = trame[4] * 256 + trame[5];
-                                message = "Envoi accélération pivot : " + valeurAccelDebutPivot + " / " + valeurAccelFinPivot;
+                                message = "Envoi accélération pivot : " + valeurAccelDebutPivot;
                                 break;
                             case FonctionMove.Blocage:
                                 message = "Blocage détécté";
@@ -392,10 +407,16 @@ namespace GoBot.Communications
                                 message = "Retour positions codeurs : " + valeurPositionsCodeursNombre + " valeurs";
                                 break;
                             case FonctionMove.RetourPositionXYTeta:
-                                double valeurPositionX = (double)(trame[2] * 256 + trame[3]) / 10.0;
-                                double valeurPositionY = (double)(trame[4] * 256 + trame[5]) / 10.0;
-                                double valeurPositionTeta = (double)(trame[6] * 256 + trame[7]) / 100.0;
-                                message = "Retour position X Y Teta : X=" + valeurPositionX + "mm Y=" + valeurPositionY + "mm Teta=" + valeurPositionTeta + "°";
+                                double y = (double)((short)(trame[2] << 8 | trame[3]) / 10.0);
+                                double x = (double)((short)(trame[4] << 8 | trame[5]) / 10.0);
+                                double teta = (trame[6] << 8 | trame[7]) / 100.0 - 180;
+                                teta = (-teta);
+                                y = -y;
+                                x = -x;
+                                //double valeurPositionX = (double)(trame[2] * 256 + trame[3]) / 10.0;
+                                //double valeurPositionY = (double)(trame[4] * 256 + trame[5]) / 10.0;
+                                //double valeurPositionTeta = (double)(trame[6] * 256 + trame[7]) / 100.0;
+                                message = "Retour position X Y Teta : X=" + x + "mm Y=" + y + " mm Teta=" + teta + "°";
                                 break;
                             case FonctionMove.Stop:
                                 String stopMode = ((StopMode)trame[2]).ToString();

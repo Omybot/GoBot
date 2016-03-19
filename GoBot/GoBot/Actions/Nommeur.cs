@@ -20,40 +20,7 @@ namespace GoBot.Actions
             {
                 case ServomoteurID.Tous:
                     return "tous les servomoteurs";
-                case ServomoteurID.AscenseurDroitPinceBasDroite:
-                    return "servo pince droite bas droit";
-                case ServomoteurID.AscenseurDroitPinceBasGauche:
-                    return "servo pince droite bas gauche";
-                case ServomoteurID.AscenseurDroitPinceHautDroite:
-                    return "servo pince droite haut droit";
-                case ServomoteurID.AscenseurDroitPinceHautGauche:
-                    return "servo pince droite haut gauche";
-                case ServomoteurID.AscenseurGauchePinceBasDroite:
-                    return "servo pince gauche bas droit";
-                case ServomoteurID.AscenseurGauchePinceBasGauche:
-                    return "servo pince gauche bas gauche";
-                case ServomoteurID.AscenseurGauchePinceHautDroite:
-                    return "servo pince gauche haut droit";
-                case ServomoteurID.AscenseurGauchePinceHautGauche:
-                    return "servo pince gauche haut gauche";
-                case ServomoteurID.PinceAmpoule:
-                    return "servo pince attrapage balle";
-                case ServomoteurID.AspirateurCoude:
-                    return "servo aspirateur coude";
-                case ServomoteurID.AspirateurEpaule:
-                    return "servo aspirateur épaule";
-                case ServomoteurID.BalleVerouillageDroit:
-                    return "servo verrouillage balle droit";
-                case ServomoteurID.BalleVerouillageGauche:
-                    return "servo verrouillage balle gauche";
-                case ServomoteurID.TapisBras:
-                    return "servo bras tapis";
-                case ServomoteurID.TapisPinceDroite:
-                    return "servo pince tapis droit";
-                case ServomoteurID.TapisPinceGauche:
-                    return "servo pince tapis gauche";
-                case ServomoteurID.AspirateurTurbine:
-                    return "turbine aspiration";
+                
                 default:
                     if (servo.ToString().Contains("zzLibre"))
                         return "servo n°" + (int)servo;
@@ -61,8 +28,6 @@ namespace GoBot.Actions
                         return servo.ToString();
             }
         }
-
-        private static Dictionary<ServomoteurID, PositionnableServo> PositionnableServos = null;
 
         /// <summary>
         /// Retourne le nom de la position en fonction du servomoteur (Ouvert, fermé, etc...)

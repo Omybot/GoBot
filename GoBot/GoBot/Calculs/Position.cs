@@ -80,5 +80,11 @@ namespace GoBot.Calculs
 
             Coordonnees = Coordonnees.Translation(depX, depY);
         }
+
+        public void Copie(Position position)
+        {
+            Angle.Set(position.Angle);
+            Coordonnees.Placer(position.Coordonnees.X, position.Coordonnees.Y);
+        }
     }
 }

@@ -342,14 +342,14 @@ namespace GoBot
             // Création des noeuds
             for (int x = resolution / 2; x < LongueurPlateau; x += resolution)
                 for (int y = resolution / 2; y < LargeurPlateau; y += resolution)
-                    Robots.GrosRobot.AddNode(Robots.GrosRobot.Graph, new Node(x, y, 0), Math.Sqrt(resolution * resolution * 2) + 1);
+                    Robots.GrosRobot.Graph.AddNode(new Node(x, y, 0), Plateau.ObstaclesFixes, Robots.GrosRobot.Rayon, Math.Sqrt(resolution * resolution * 2) + 1, true);
 
             Robots.PetitRobot.Graph = new Graph();
 
             // Création des noeuds
             for (int x = resolution / 2; x < LongueurPlateau; x += resolution)
                 for (int y = resolution / 2; y < LargeurPlateau; y += resolution)
-                    Robots.PetitRobot.AddNode(Robots.PetitRobot.Graph, new Node(x, y, 0), Math.Sqrt(resolution * resolution * 2) + 1);
+                    Robots.PetitRobot.Graph.AddNode(new Node(x, y, 0), Plateau.ObstaclesFixes, Robots.PetitRobot.Rayon, Math.Sqrt(resolution * resolution * 2) + 1, true);
         }
 
         public void ChargerObstacles()

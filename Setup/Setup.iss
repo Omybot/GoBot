@@ -2,7 +2,7 @@
 ; SEE THE DOCUMENTATION FOR DETAILS ON CREATING INNO SETUP SCRIPT FILES!
 
 #define MyAppName "GoBot"
-#define MyAppVersion "1.2.2"
+#define MyAppVersion "1.16.0"
 #define MyAppPublisher "Omybot"
 #define MyAppURL "www.omybot.com"
 #define MyAppExeName "GoBot.exe"
@@ -47,7 +47,7 @@ Source: "./Usc.dll"; DestDir: "{app}"; Flags: ignoreversion
 Source: "./Jokerman.TTF"; DestDir: "{fonts}"; FontInstall: "Jokerman"; Flags: onlyifdoesntexist uninsneveruninstall  
 ;Source: "C:\Users\Kryss\AppData\Local\GoBot\graphGros.bin"; DestDir: "{localappdata}\GoBot"; Flags: ignoreversion
 ;Source: "C:\Users\Kryss\AppData\Local\GoBot\graphPetit.bin"; DestDir: "{localappdata}\GoBot"; Flags: ignoreversion    
-Source: "C:\Users\Kryss\AppData\Local\GoBot\config.xml"; DestDir: "{localappdata}\GoBot"; Flags: ignoreversion  
+Source: "C:\Users\Christopher\AppData\Local\GoBot\config.xml"; DestDir: "{localappdata}\GoBot"; Flags: ignoreversion  
 
 ; NOTE: Don't use "Flags: ignoreversion" on any shared system files     
           

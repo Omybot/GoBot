@@ -36,15 +36,19 @@ namespace GoBot.IHM
                     Connexions.ConnexionIO.SendMessage(TrameFactory.ChangementBaudrate(baudrate));
                     Thread.Sleep(20);
 
-                    progressBarId.Value = 0;
-                    for (int i = 1; i <= 253; i++)
+                    //Servomoteur servoAll = new Servomoteur(Carte.RecIO, 254, 0);
+                    //if (servoAll.Connecte)
                     {
-                        progressBarId.Value++;
-                        lblScannId.Text = "ID : " + i.ToString();
-                        lblScannBaudrate.Text = "Baud : " + baudrate.ToString().Substring(1);
-                        Servomoteur servo = new Servomoteur(Carte.RecIO, i, 0);
-                        if (servo.Connecte)
-                            listBoxServos.Items.Add(new Servomoteur(Carte.RecIO, i, baudrate));
+                        progressBarId.Value = 0;
+                        for (int i = 1; i <= 253; i++)
+                        {
+                            progressBarId.Value++;
+                            lblScannId.Text = "ID : " + i.ToString();
+                            lblScannBaudrate.Text = "Baud : " + baudrate.ToString().Substring(1);
+                            Servomoteur servo = new Servomoteur(Carte.RecIO, i, 0);
+                            if (servo.Connecte)
+                                listBoxServos.Items.Add(new Servomoteur(Carte.RecIO, i, baudrate));
+                        }
                     }
                 }
 

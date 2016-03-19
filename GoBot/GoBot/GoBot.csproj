@@ -101,6 +101,7 @@
     <Compile Include="Actions\IAction.cs" />
     <Compile Include="Balises\BaliseStats.cs" />
     <Compile Include="Balises\SuiviBalise.cs" />
+    <Compile Include="Calculs\BezierCurve.cs" />
     <Compile Include="Calculs\Formes\IForme.cs" />
     <Compile Include="Calculs\Formes\RectanglePolygone.cs" />
     <Compile Include="Calculs\Formes\Triangle.cs" />
@@ -110,6 +111,8 @@
     <Compile Include="Communications\DecodeurTrames.cs" />
     <Compile Include="Communications\FonctionsTrames.cs" />
     <Compile Include="Dessinateur.cs" />
+    <Compile Include="Devices\HokuyoUart.cs" />
+    <Compile Include="Devices\HokuyoUsb.cs" />
     <Compile Include="Devices\PololuMiniUart.cs" />
     <Compile Include="Devices\PololuMiniUsb.cs" />
     <Compile Include="ElementsJeu\ElementJeu.cs" />
@@ -593,16 +596,8 @@
     <None Include="img\Alertes.png" />
     <None Include="img\FondServo.png" />
     <None Include="img\Dossier.png" />
-    <None Include="img\ClapVert.png" />
-    <None Include="img\ClapJaune.png" />
-    <None Include="img\ClapJauneOuvert.png" />
-    <None Include="img\ClapVertOuvert.png" />
     <None Include="img\FermerPince.png" />
-    <None Include="img\BrasTapisBas.png" />
-    <None Include="img\BrasTapisHaut.png" />
     <None Include="img\Capot.png" />
-    <None Include="img\Ampoule.png" />
-    <None Include="img\CapotPinceFermee.png" />
     <Content Include="img\IconeVitesse.png" />
     <None Include="img\Pompe.png" />
     <None Include="img\Recale.png" />
@@ -618,19 +613,12 @@
     <None Include="img\PathFace.png" />
     <None Include="img\TeleportFace.png" />
     <None Include="img\Refresh.png" />
-    <None Include="img\Rail.png" />
-    <None Include="img\PinceDroiteFermee.png" />
-    <None Include="img\PinceGaucheFermee.png" />
-    <None Include="img\PinceDroiteOuverte.png" />
-    <None Include="img\PinceGaucheOuverte.png" />
     <None Include="img\OuvrirPince.png" />
-    <None Include="img\PinceFermeeBas.png" />
-    <None Include="img\PinceFermeeHaut.png" />
-    <None Include="img\PinceOuverteBas.png" />
-    <None Include="img\PinceOuverteHaut.png" />
     <None Include="img\virageArDr2.png" />
     <None Include="img\virageAvGa2.png" />
     <None Include="img\virageAvDr2.png" />
+    <None Include="img\Turtle.png" />
+    <None Include="img\Rabbit.png" />
     <Content Include="robot.ico" />
   </ItemGroup>
   <ItemGroup>

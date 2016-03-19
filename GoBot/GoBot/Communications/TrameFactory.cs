@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using GoBot.Actions;
+using GoBot.Calculs.Formes;
 
 namespace GoBot.Communications
 {
@@ -104,6 +105,16 @@ namespace GoBot.Communications
             byte[] tab = new byte[2];
             tab[0] = (byte)Carte.RecIO;
             tab[1] = (byte)FonctionIO.CalibrationAscenseurAmpoule;
+
+            return new Trame(tab);
+        }
+
+        static public Trame DemandeMesureLidar(LidarID lidar)
+        {
+            byte[] tab = new byte[3];
+            tab[0] = (byte)Carte.RecIO;
+            tab[1] = (byte)FonctionIO.DemandeLidar;
+            tab[2] = (byte)lidar;
 
             return new Trame(tab);
         }
@@ -223,6 +234,38 @@ namespace GoBot.Communications
             return retour;
         }
 
+        static public Trame CoeffAsservCap(int p, int i, int d, Robot robot)
+        {
+            byte[] tab = new byte[8];
+            tab[0] = (byte)robot.Carte;
+            tab[1] = (byte)FonctionMove.PIDCap;
+            tab[2] = (byte)ByteDivide(p / 100, true);
+            tab[3] = (byte)ByteDivide(p / 100, false);
+            tab[4] = (byte)ByteDivide(i, true);
+            tab[5] = (byte)ByteDivide(i, false);
+            tab[6] = (byte)ByteDivide(d / 100, true);
+            tab[7] = (byte)ByteDivide(d / 100, false);
+
+            Trame retour = new Trame(tab);
+            return retour;
+        }
+
+        static public Trame CoeffAsservVitesse(int p, int i, int d, Robot robot)
+        {
+            byte[] tab = new byte[8];
+            tab[0] = (byte)robot.Carte;
+            tab[1] = (byte)FonctionMove.PIDVitesse;
+            tab[2] = (byte)ByteDivide(p, true);
+            tab[3] = (byte)ByteDivide(p, false);
+            tab[4] = (byte)ByteDivide(i, true);
+            tab[5] = (byte)ByteDivide(i, false);
+            tab[6] = (byte)ByteDivide(d, true);
+            tab[7] = (byte)ByteDivide(d, false);
+
+            Trame retour = new Trame(tab);
+            return retour;
+        }
+
         static public Trame Virage(SensAR sensAr, SensGD sensGd, int rayon, double angle, Robot robot)
         {
             byte[] tab = new byte[8];
@@ -234,6 +277,26 @@ namespace GoBot.Communications
             tab[5] = (byte)ByteDivide(rayon, false);
             tab[6] = (byte)ByteDivide((int)(angle * 100), true);
             tab[7] = (byte)ByteDivide((int)(angle * 100), false);
+
+            Trame retour = new Trame(tab);
+            return retour;
+        }
+
+        static public Trame TrajectoirePolaire(SensAR sensAr, List<PointReel> points, Robot robot)
+        {
+            byte[] tab = new byte[5 + points.Count * 2 * 2];
+            tab[0] = (byte)robot.Carte;
+            tab[1] = (byte)FonctionMove.TrajectoirePolaire;
+            tab[2] = (byte)sensAr;
+            tab[3] = (byte)ByteDivide(points.Count, true);
+            tab[4] = (byte)ByteDivide(points.Count, false);
+            for (int i = 0; i < points.Count; i++)
+            {
+                tab[5 + i * 4 + 0] = ByteDivide((int)(points[i].X * 10), true);
+                tab[5 + i * 4 + 1] = ByteDivide((int)(points[i].X * 10), false);
+                tab[5 + i * 4 + 2] = ByteDivide((int)(points[i].Y * 10), true);
+                tab[5 + i * 4 + 3] = ByteDivide((int)(points[i].Y * 10), false);
+            }
 
             Trame retour = new Trame(tab);
             return retour;

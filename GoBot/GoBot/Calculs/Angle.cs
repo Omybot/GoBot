@@ -123,6 +123,11 @@ namespace GoBot.Calculs
             return true;
         }
 
+        public void Set(Angle other)
+        {
+            angle = other.angle;
+        }
+
         #region Operateurs
 
         public static Angle operator +(Angle a1, Angle a2)

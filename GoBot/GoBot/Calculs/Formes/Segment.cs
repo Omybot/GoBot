@@ -143,12 +143,47 @@ namespace GoBot.Calculs.Formes
 
         public override List<PointReel> Croisements(IForme forme)
         {
-            // TODOFORMES
+            Cercle c = forme as Cercle;
+            if (c != null)
+                return Croisements(c);
+
             return null;
         }
 
+        public List<PointReel> Croisements(Cercle cercle)
+        {
+            List<PointReel> intersectsPoints = null;
+	        double dx = pointFin.X - pointDebut.X;
+            double dy = pointFin.Y - pointDebut.Y;
+            double Ox = pointDebut.X - cercle.Centre.X;
+            double Oy = pointDebut.Y - cercle.Centre.Y;
+            double A = dx * dx + dy * dy;
+            double B = 2 * (dx * Ox + dy * Oy);
+            double C = Ox * Ox + Oy * Oy - cercle.Rayon * cercle.Rayon;
+            double delta = B * B - 4 * A * C;
+
+	        if (delta < 0 + double.Epsilon && delta > 0 - double.Epsilon)
+	        {
+                intersectsPoints = new List<PointReel>();
+                double t = -B / (2 * A);
+		        if (t >= 0 && t <= 1)
+                    intersectsPoints.Add(new PointReel(pointDebut.X + t * dx, pointDebut.Y + t * dy));
+	        }
+	        if (delta > 0)
+	        {
+                intersectsPoints = new List<PointReel>();
+                double t1 = (double)((-B - Math.Sqrt(delta)) / (2 * A));
+                double t2 = (double)((-B + Math.Sqrt(delta)) / (2 * A));
+		        if (t1 >= 0 && t1 <= 1)
+                    intersectsPoints.Add(new PointReel(pointDebut.X + t1 * dx, pointDebut.Y + t1 * dy));
+		        if (t2 >= 0 && t2 <= 1)
+                    intersectsPoints.Add(new PointReel(pointDebut.X + t2 * dx, pointDebut.Y + t2 * dy));
+	        }
+	        return intersectsPoints;
+        }
+
         /// <summary>
-        /// Teste si le Segment contient la IForme donnée
+        /// Teste si le Segment croise la IForme donnée
         /// </summary>
         /// <param name="forme">IForme testé</param>
         /// <returns>Vrai si le Segment contient la IForme donnée</returns>
@@ -158,7 +193,7 @@ namespace GoBot.Calculs.Formes
         }
 
         /// <summary>
-        /// Teste si la Droite contient le PointReel donné
+        /// Teste si la Droite croise le PointReel donné
         /// </summary>
         /// <param name="point">PointReel testé</param>
         /// <returns>Vrai si la Droite contient le PointReel donné</returns>
@@ -168,7 +203,7 @@ namespace GoBot.Calculs.Formes
         }
 
         /// <summary>
-        /// Teste si la Droite contient le Segment donné
+        /// Teste si la Droite croise le Segment donné
         /// </summary>
         /// <param name="segment">Segment testé</param>
         /// <returns>Vrai si la Droite contient le Segment donné</returns>
@@ -178,7 +213,7 @@ namespace GoBot.Calculs.Formes
         }
 
         /// <summary>
-        /// Teste si la Droite contient la Droite donnée
+        /// Teste si la Droite croise la Droite donnée
         /// </summary>
         /// <param name="droite">Droite testée</param>
         /// <returns>Vrai si la Droite contient la Droite donnée</returns>
@@ -188,7 +223,7 @@ namespace GoBot.Calculs.Formes
         }
 
         /// <summary>
-        /// Teste si la Droite contient le Cercle donné
+        /// Teste si la Droite croise le Cercle donné
         /// </summary>
         /// <param name="cercle">Cercle testé</param>
         /// <returns>Vrai si la Droite contient le Cercle donné</returns>
@@ -198,7 +233,7 @@ namespace GoBot.Calculs.Formes
         }
 
         /// <summary>
-        /// Teste si le Polygone contient le Polygone donné
+        /// Teste si le Polygone croise le Polygone donné
         /// </summary>
         /// <param name="polygone">Polygone testé</param>
         /// <returns>Vrai si la Droite contient le Polygone donné</returns>

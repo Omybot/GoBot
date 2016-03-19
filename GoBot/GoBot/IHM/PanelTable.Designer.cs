@@ -67,6 +67,9 @@
             this.btnStratTest = new System.Windows.Forms.Button();
             this.btnStratNul = new System.Windows.Forms.Button();
             this.groupBoxDeplacements = new System.Windows.Forms.GroupBox();
+            this.btnTrajLancer = new System.Windows.Forms.Button();
+            this.labelPlus1 = new Composants.LabelPlus();
+            this.btnTrajCreer = new System.Windows.Forms.Button();
             this.btnPathRPCentre = new System.Windows.Forms.Button();
             this.btnPathRPFace = new System.Windows.Forms.Button();
             this.btnPathRSCentre = new System.Windows.Forms.Button();
@@ -82,10 +85,14 @@
             this.groupBoxAffichage = new System.Windows.Forms.GroupBox();
             this.btnZoneDepart = new System.Windows.Forms.Button();
             this.btnTestAsser = new System.Windows.Forms.Button();
+            this.button1 = new System.Windows.Forms.Button();
+            this.button2 = new System.Windows.Forms.Button();
+            this.numNbPoints = new System.Windows.Forms.NumericUpDown();
             this.groupBox.SuspendLayout();
             this.groupBoxDeplacements.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxTable)).BeginInit();
             this.groupBoxAffichage.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.numNbPoints)).BeginInit();
             this.SuspendLayout();
             // 
             // boxSourisObstacle
@@ -453,6 +460,10 @@
             // 
             // groupBoxDeplacements
             // 
+            this.groupBoxDeplacements.Controls.Add(this.numNbPoints);
+            this.groupBoxDeplacements.Controls.Add(this.btnTrajLancer);
+            this.groupBoxDeplacements.Controls.Add(this.labelPlus1);
+            this.groupBoxDeplacements.Controls.Add(this.btnTrajCreer);
             this.groupBoxDeplacements.Controls.Add(this.lblGrosRobotDeplacements);
             this.groupBoxDeplacements.Controls.Add(this.btnPathRPCentre);
             this.groupBoxDeplacements.Controls.Add(this.lblPetitRobotDeplacements);
@@ -463,12 +474,41 @@
             this.groupBoxDeplacements.Controls.Add(this.btnTeleportRPCentre);
             this.groupBoxDeplacements.Controls.Add(this.btnTeleportRSCentre);
             this.groupBoxDeplacements.Controls.Add(this.btnTeleportRPFace);
-            this.groupBoxDeplacements.Location = new System.Drawing.Point(0, 532);
+            this.groupBoxDeplacements.Location = new System.Drawing.Point(0, 521);
             this.groupBoxDeplacements.Name = "groupBoxDeplacements";
-            this.groupBoxDeplacements.Size = new System.Drawing.Size(200, 100);
+            this.groupBoxDeplacements.Size = new System.Drawing.Size(200, 145);
             this.groupBoxDeplacements.TabIndex = 67;
             this.groupBoxDeplacements.TabStop = false;
             this.groupBoxDeplacements.Text = "Déplacements";
+            // 
+            // btnTrajLancer
+            // 
+            this.btnTrajLancer.Location = new System.Drawing.Point(134, 88);
+            this.btnTrajLancer.Name = "btnTrajLancer";
+            this.btnTrajLancer.Size = new System.Drawing.Size(59, 23);
+            this.btnTrajLancer.TabIndex = 74;
+            this.btnTrajLancer.Text = "Lancer";
+            this.btnTrajLancer.UseVisualStyleBackColor = true;
+            this.btnTrajLancer.Click += new System.EventHandler(this.btnTrajLancer_Click);
+            // 
+            // labelPlus1
+            // 
+            this.labelPlus1.AutoSize = true;
+            this.labelPlus1.Location = new System.Drawing.Point(6, 93);
+            this.labelPlus1.Name = "labelPlus1";
+            this.labelPlus1.Size = new System.Drawing.Size(57, 13);
+            this.labelPlus1.TabIndex = 73;
+            this.labelPlus1.Text = "Trajectoire";
+            // 
+            // btnTrajCreer
+            // 
+            this.btnTrajCreer.Location = new System.Drawing.Point(86, 88);
+            this.btnTrajCreer.Name = "btnTrajCreer";
+            this.btnTrajCreer.Size = new System.Drawing.Size(42, 23);
+            this.btnTrajCreer.TabIndex = 72;
+            this.btnTrajCreer.Text = "Créer";
+            this.btnTrajCreer.UseVisualStyleBackColor = true;
+            this.btnTrajCreer.Click += new System.EventHandler(this.btnTrajCreer_Click);
             // 
             // btnPathRPCentre
             // 
@@ -585,7 +625,7 @@
             this.pictureBoxTable.Size = new System.Drawing.Size(945, 650);
             this.pictureBoxTable.TabIndex = 0;
             this.pictureBoxTable.TabStop = false;
-            this.pictureBoxTable.MouseClick += new System.Windows.Forms.MouseEventHandler(this.pictureBoxTable_MouseClick);
+            this.pictureBoxTable.Click += new System.EventHandler(this.pictureBoxTable_Click);
             this.pictureBoxTable.MouseDown += new System.Windows.Forms.MouseEventHandler(this.pictureBoxTable_MouseDown);
             this.pictureBoxTable.MouseMove += new System.Windows.Forms.MouseEventHandler(this.pictureBoxTable_MouseMove);
             this.pictureBoxTable.MouseUp += new System.Windows.Forms.MouseEventHandler(this.pictureBoxTable_MouseUp);
@@ -620,11 +660,45 @@
             this.btnTestAsser.UseVisualStyleBackColor = true;
             this.btnTestAsser.Click += new System.EventHandler(this.btnTestAsser_Click);
             // 
+            // button1
+            // 
+            this.button1.Location = new System.Drawing.Point(276, 628);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(75, 23);
+            this.button1.TabIndex = 71;
+            this.button1.Text = "HokuyoTest";
+            this.button1.UseVisualStyleBackColor = true;
+            this.button1.Click += new System.EventHandler(this.button1_Click);
+            // 
+            // button2
+            // 
+            this.button2.Location = new System.Drawing.Point(384, 628);
+            this.button2.Name = "button2";
+            this.button2.Size = new System.Drawing.Size(75, 23);
+            this.button2.TabIndex = 72;
+            this.button2.Text = "TestPolaire";
+            this.button2.UseVisualStyleBackColor = true;
+            this.button2.Click += new System.EventHandler(this.pwet_Click);
+            // 
+            // numNbPoints
+            // 
+            this.numNbPoints.Location = new System.Drawing.Point(41, 117);
+            this.numNbPoints.Maximum = new decimal(new int[] {
+            10000,
+            0,
+            0,
+            0});
+            this.numNbPoints.Name = "numNbPoints";
+            this.numNbPoints.Size = new System.Drawing.Size(120, 20);
+            this.numNbPoints.TabIndex = 75;
+            // 
             // PanelTable
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.Transparent;
+            this.Controls.Add(this.button2);
+            this.Controls.Add(this.button1);
             this.Controls.Add(this.btnTestAsser);
             this.Controls.Add(this.btnZoneDepart);
             this.Controls.Add(this.groupBoxAffichage);
@@ -670,6 +744,7 @@
             this.groupBoxDeplacements.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxTable)).EndInit();
             this.groupBoxAffichage.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.numNbPoints)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -730,5 +805,11 @@
         private System.Windows.Forms.Button btnStratNul;
         private System.Windows.Forms.Button btnStratTest;
         private System.Windows.Forms.Button btnTestAsser;
+        private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.Button btnTrajLancer;
+        private Composants.LabelPlus labelPlus1;
+        private System.Windows.Forms.Button btnTrajCreer;
+        private System.Windows.Forms.Button button2;
+        private System.Windows.Forms.NumericUpDown numNbPoints;
     }
 }

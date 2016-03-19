@@ -343,6 +343,16 @@ namespace GoBot.Properties {
         /// <summary>
         ///   Recherche une ressource localisée de type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap Rabbit {
+            get {
+                object obj = ResourceManager.GetObject("Rabbit", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une ressource localisée de type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap Recale {
             get {
                 object obj = ResourceManager.GetObject("Recale", resourceCulture);
@@ -436,6 +446,16 @@ namespace GoBot.Properties {
         internal static System.Drawing.Bitmap TeleportFace {
             get {
                 object obj = ResourceManager.GetObject("TeleportFace", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une ressource localisée de type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap Turtle {
+            get {
+                object obj = ResourceManager.GetObject("Turtle", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

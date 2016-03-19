@@ -12,6 +12,8 @@ namespace GoBot
     {
         // Exemple
         // public ServoAscenseurDroitBasDroit ServoAscenseurDroitBasDroit { get; set; }
+
+        public Servo2 Servo2 { get; set; }
     }
 }
 
@@ -93,6 +95,11 @@ namespace GoBot.Actionneurs
     //{
     //    public override ServomoteurID ID { get { return ServomoteurID.AscenseurDroitPinceHautDroite; } }
     //}
+
+    public class Servo2 : PositionnableServo
+    {
+            public override ServomoteurID ID { get { return ServomoteurID.Libre3; } }
+    }
     #endregion
 
     #region PositionnableMoteur

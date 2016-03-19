@@ -10,17 +10,19 @@ using System.Threading;
 
 namespace GoBot.PathFinding
 {
-    class PathFinder
+    static class PathFinder
     {
-        static List<Arc> CheminTrouve;
-        static List<Node> NodeTrouve;
-        static List<Node> CheminEnCoursNoeuds;
-        static List<Arc> CheminEnCoursArcs;
+        public static List<Arc> CheminTrouve { get; private set; }
+        public static List<Node> NodeTrouve { get; private set; }
+        public static List<Node> CheminEnCoursNoeuds { get; private set; }
+        public static List<Arc> CheminEnCoursArcs { get; private set; }
 
-        public static Arc CheminTest;
-        public static IForme ObstacleTeste;
-        public static IForme ObstacleProbleme;
-        public static List<PointReel> PointsTrouves;
+        public static Arc CheminTest { get; private set; }
+        public static IForme ObstacleTeste { get; private set; }
+        public static IForme ObstacleProbleme { get; private set; }
+        public static List<PointReel> PointsTrouves { get; private set; }
+
+        private static Thread threadRAZRayonAdverse;
 
         public static Trajectoire ChercheTrajectoire(Graph graph, List<IForme> obstacles, Position positionActuell, Position destination, double rayonSecurite, double distanceSecuriteCote)
         {
@@ -400,7 +402,6 @@ namespace GoBot.PathFinding
             }
         }
 
-        private static Thread threadRAZRayonAdverse;
         private static void ThreadRAZRayonAdverse()
         {
             Thread.Sleep(1000);

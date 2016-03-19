@@ -26,30 +26,20 @@ namespace GoBot
 
     public enum ServomoteurID
     {
-        PinceAmpoule = 4,
-
-        AspirateurEpaule = 5,
-        AspirateurCoude = 2,
-
-        TapisBras = 1,
-        TapisPinceGauche = 51,
-        TapisPinceDroite = 52,
-
-        BalleVerouillageGauche = 60,
-        BalleVerouillageDroit = 61,
-
-        AscenseurDroitPinceBasDroite = 10,
-        AscenseurDroitPinceBasGauche = 11,
-        AscenseurDroitPinceHautDroite = 12,
-        AscenseurDroitPinceHautGauche = 13,
-
-        AscenseurGauchePinceBasDroite = 14,
-        AscenseurGauchePinceBasGauche = 15,
-        AscenseurGauchePinceHautDroite = 16,
-        AscenseurGauchePinceHautGauche = 17,
-
-        AspirateurTurbine = 78,
-
+        Libre1 = 1,
+        Libre2 = 2,
+        Libre3 = 3,
+        Libre5 = 5,
+        Libre8 = 8,
+        Libre9 = 9,
+        Libre10 = 10,
+        Libre11 = 11,
+        Libre12 = 12,
+        Libre13 = 13,
+        Libre14 = 14,
+        Libre15 = 15,
+        Libre16 = 16,
+        Libre17 = 17,
         Tous = 254
     }
 
@@ -86,6 +76,11 @@ namespace GoBot
         
         SwitchBrasDroiteOrigine = 6,
         SwitchBrasGaucheOrigine = 7
+    }
+
+    public enum LidarID
+    {
+        LidarSol = 0
     }
 
     public enum Carte

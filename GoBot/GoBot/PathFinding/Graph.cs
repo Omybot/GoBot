@@ -85,12 +85,16 @@ namespace AStarFolder
         }
 
         /// <summary>
-        /// Ajoute un noeud (temporairement, jusqu'à l'appel de @CleanNodesArcsAdd) au graph en reliant tous les points à une distance maximale
+        /// Ajoute un noeud au graph en reliant tous les points à une distance maximale et en prenant en compte les obstacles à éviter
+        /// Si permanent == false, le point sera supprimé au prochain appel de @CleanNodesArcsAdd
         /// </summary>
         /// <param name="node">Noeud à ajouter</param>
+        /// <param name="obstacles">Obstacles à éviter</param>
+        /// <param name="distanceSecurite">Distance (mm) de sécurité auour des obstacles</param>
         /// <param name="distanceMax">Distance (mm) max de liaison avec les autres noeuds</param>
+        /// <param name="permnant">True si le point est ajouté de façon permanente et donc ne sera pas supprimé au prochain appel de @CleanNodesArcsAdd</param>
         /// <returns>Nombre de points reliés au point ajouté</returns>
-        public int AddNode(Node node, List<IForme> obstacles, double distanceSecurite, double distanceMax)
+        public int AddNode(Node node, List<IForme> obstacles, double distanceSecurite, double distanceMax, bool permanent = false)
         {
             double distanceNode;
 
@@ -110,7 +114,9 @@ namespace AStarFolder
             }
 
             Nodes.Add(node);
-            nodesAdd.Add(node);
+
+            if(!permanent)
+                nodesAdd.Add(node);
 
             int nbLiaisons = 0;
 
@@ -142,8 +148,11 @@ namespace AStarFolder
                             AddArc(arc);
                             AddArc(arc2);
 
-                            arcsAdd.Add(arc);
-                            arcsAdd.Add(arc2);
+                            if (!permanent)
+                            {
+                                arcsAdd.Add(arc);
+                                arcsAdd.Add(arc2);
+                            }
 
                             nbLiaisons++;
                         }

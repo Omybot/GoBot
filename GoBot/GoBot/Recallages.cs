@@ -48,7 +48,13 @@ namespace GoBot
             Robots.GrosRobot.Avancer(10);
             Robots.GrosRobot.Recallage(SensAR.Arriere);
             Robots.GrosRobot.Rapide();
-            Robots.GrosRobot.Avancer(350);
+            Robots.GrosRobot.Avancer(250);
+            Robots.GrosRobot.PivotDroite(90);
+            Robots.GrosRobot.Lent();
+            Robots.GrosRobot.Recallage(SensAR.Arriere);
+            Robots.GrosRobot.Rapide();
+
+            Robots.GrosRobot.ReglerOffsetAsserv(150, 1600, 0);
 
             Robots.GrosRobot.ArmerJack();
             Robots.GrosRobot.MoteurPosition(MoteurID.Balise, 2000);
