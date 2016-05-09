@@ -684,6 +684,7 @@
             // 
             // ledErreurInstruction
             // 
+            this.ledErreurInstruction.BackColor = System.Drawing.Color.Transparent;
             this.ledErreurInstruction.Etat = false;
             this.ledErreurInstruction.Image = ((System.Drawing.Image)(resources.GetObject("ledErreurInstruction.Image")));
             this.ledErreurInstruction.Location = new System.Drawing.Point(474, 445);
@@ -694,6 +695,7 @@
             // 
             // ledErreurOverload
             // 
+            this.ledErreurOverload.BackColor = System.Drawing.Color.Transparent;
             this.ledErreurOverload.Etat = false;
             this.ledErreurOverload.Image = ((System.Drawing.Image)(resources.GetObject("ledErreurOverload.Image")));
             this.ledErreurOverload.Location = new System.Drawing.Point(447, 445);
@@ -704,6 +706,7 @@
             // 
             // ledErreurChecksum
             // 
+            this.ledErreurChecksum.BackColor = System.Drawing.Color.Transparent;
             this.ledErreurChecksum.Etat = false;
             this.ledErreurChecksum.Image = ((System.Drawing.Image)(resources.GetObject("ledErreurChecksum.Image")));
             this.ledErreurChecksum.Location = new System.Drawing.Point(420, 445);
@@ -714,6 +717,7 @@
             // 
             // ledErreurRange
             // 
+            this.ledErreurRange.BackColor = System.Drawing.Color.Transparent;
             this.ledErreurRange.Etat = false;
             this.ledErreurRange.Image = ((System.Drawing.Image)(resources.GetObject("ledErreurRange.Image")));
             this.ledErreurRange.Location = new System.Drawing.Point(393, 445);
@@ -724,6 +728,7 @@
             // 
             // ledErreurOverheating
             // 
+            this.ledErreurOverheating.BackColor = System.Drawing.Color.Transparent;
             this.ledErreurOverheating.Etat = false;
             this.ledErreurOverheating.Image = ((System.Drawing.Image)(resources.GetObject("ledErreurOverheating.Image")));
             this.ledErreurOverheating.Location = new System.Drawing.Point(366, 445);
@@ -734,6 +739,7 @@
             // 
             // ledErreurAngleLimit
             // 
+            this.ledErreurAngleLimit.BackColor = System.Drawing.Color.Transparent;
             this.ledErreurAngleLimit.Etat = false;
             this.ledErreurAngleLimit.Image = ((System.Drawing.Image)(resources.GetObject("ledErreurAngleLimit.Image")));
             this.ledErreurAngleLimit.Location = new System.Drawing.Point(339, 445);
@@ -744,6 +750,7 @@
             // 
             // ledErreurInputVoltage
             // 
+            this.ledErreurInputVoltage.BackColor = System.Drawing.Color.Transparent;
             this.ledErreurInputVoltage.Etat = false;
             this.ledErreurInputVoltage.Image = ((System.Drawing.Image)(resources.GetObject("ledErreurInputVoltage.Image")));
             this.ledErreurInputVoltage.Location = new System.Drawing.Point(312, 445);
@@ -1139,6 +1146,7 @@
             // 
             // ledCouple
             // 
+            this.ledCouple.BackColor = System.Drawing.Color.Transparent;
             this.ledCouple.Etat = false;
             this.ledCouple.Image = ((System.Drawing.Image)(resources.GetObject("ledCouple.Image")));
             this.ledCouple.Location = new System.Drawing.Point(307, 196);
@@ -1149,6 +1157,7 @@
             // 
             // ledLed
             // 
+            this.ledLed.BackColor = System.Drawing.Color.Transparent;
             this.ledLed.Etat = false;
             this.ledLed.Image = ((System.Drawing.Image)(resources.GetObject("ledLed.Image")));
             this.ledLed.Location = new System.Drawing.Point(307, 174);
@@ -1257,6 +1266,7 @@
             // 
             // ledMouvement
             // 
+            this.ledMouvement.BackColor = System.Drawing.Color.Transparent;
             this.ledMouvement.Etat = false;
             this.ledMouvement.Image = ((System.Drawing.Image)(resources.GetObject("ledMouvement.Image")));
             this.ledMouvement.Location = new System.Drawing.Point(307, 218);
@@ -1377,7 +1387,7 @@
             this.trackBarPosition.BackColor = System.Drawing.Color.Transparent;
             this.trackBarPosition.IntervalTimer = 500;
             this.trackBarPosition.Location = new System.Drawing.Point(132, 107);
-            this.trackBarPosition.Max = 1500D;
+            this.trackBarPosition.Max = 1024D;
             this.trackBarPosition.MaximumSize = new System.Drawing.Size(3000, 15);
             this.trackBarPosition.Min = 0D;
             this.trackBarPosition.MinimumSize = new System.Drawing.Size(0, 15);

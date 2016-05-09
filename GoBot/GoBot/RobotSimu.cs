@@ -393,6 +393,9 @@ namespace GoBot
         {
             trajectoirePolaire = points;
             pointCourantTrajPolaire = 0;
+
+            while (pointCourantTrajPolaire != -1)
+                Thread.Sleep(10);
         }
 
         public override void ReglerOffsetAsserv(int offsetX, int offsetY, double offsetTeta)

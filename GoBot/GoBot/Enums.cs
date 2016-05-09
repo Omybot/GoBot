@@ -26,29 +26,27 @@ namespace GoBot
 
     public enum ServomoteurID
     {
-        Libre1 = 1,
-        Libre2 = 2,
-        Libre3 = 3,
-        Libre5 = 5,
-        Libre8 = 8,
-        Libre9 = 9,
-        Libre10 = 10,
-        Libre11 = 11,
-        Libre12 = 12,
-        Libre13 = 13,
-        Libre14 = 14,
-        Libre15 = 15,
-        Libre16 = 16,
-        Libre17 = 17,
+        PinceBasLateralGaucheAvant = 100,
+        PinceBasLateralGaucheArriere = 101,
+        PinceBasLateralDroiteAvant = 102,
+        PinceBasLateralDroiteArriere = 103,
+        PinceBasGauche = 4,
+        PinceBasDroite = 2,
+        BrasDroite = 3,
+        BrasGauche= 9,
+        MaintienDroite = 19,
+        MaintienGauche = 20,
+        VerrouGauche = 22,
+        VerrouDroite = 17,
         Tous = 254
     }
 
     public enum MoteurID
     {
-        AscenseurDroit = 1,
-        AscenseurGauche = 0,
+        BrasGauche = 1,
+        BrasDroite = 0,
         Balise = 2,
-        AscenseurAmpoule = 3
+        PompeBarre = 3
     }
 
     public enum CapteurID
@@ -66,16 +64,16 @@ namespace GoBot
 
     public enum CapteurOnOffID
     {
-        SwitchBrasDroitHaut = 0,
-        SwitchBrasDroitBas = 1,
-        OptiqueBrasDroit = 2,
+        //SwitchBrasDroitHaut = 0,
+        //SwitchBrasDroitBas = 1,
+        //OptiqueBrasDroit = 2,
 
-        SwitchBrasGaucheHaut = 3,
-        SwitchBrasGaucheBas = 4,
-        OptiqueBrasGauche = 5,
+        //SwitchBrasGaucheHaut = 3,
+        //SwitchBrasGaucheBas = 4,
+        //OptiqueBrasGauche = 5,
         
-        SwitchBrasDroiteOrigine = 6,
-        SwitchBrasGaucheOrigine = 7
+        //SwitchBrasDroiteOrigine = 6,
+        //SwitchBrasGaucheOrigine = 7
     }
 
     public enum LidarID

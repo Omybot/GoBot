@@ -63,7 +63,7 @@ namespace GoBot
             DicRobots.Add(IDRobot.PetitRobot, PetitRobot);
             DicRobots.Add(IDRobot.GrosRobot, GrosRobot);
 
-            GrosRobot.Largeur = 300;
+            GrosRobot.Largeur = 320;
             GrosRobot.Longueur = 300;
             GrosRobot.Nom = "Gros robot";
             GrosRobot.Init();

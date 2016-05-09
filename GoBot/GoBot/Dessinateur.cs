@@ -178,6 +178,9 @@ namespace GoBot
 
         private static Font fontNbPieds = new Font("Calibri", 9);
 
+        public static PointReel _PointBordRobot;
+        public static double _DistanceBordRobot;
+
         static Dessinateur()
         {
             penBlancPointille.DashStyle = System.Drawing.Drawing2D.DashStyle.Dot;
@@ -434,6 +437,14 @@ namespace GoBot
                                     g.DrawEllipse(Pens.Black, p.X - 3, p.Y - 3, 6, 6);
                         }
 
+                        if(_PointBordRobot != null)
+                        {
+                            Point p1 = RealToScreenPosition(_PointBordRobot);
+                            Point p2 = new Point(p1.X + RealToScreenDistance(_DistanceBordRobot), p1.Y);
+                            g.DrawLine(Pens.Green, p1, p2);
+                            g.DrawString(_DistanceBordRobot.ToString("0.0") + "mm", new Font("Arial", 13, FontStyle.Bold), Brushes.Green, new PointF(p1.X + 40, p1.Y - 20));
+                        }
+
                         TableDessinee(bmp);
                     }
                 }
@@ -619,29 +630,32 @@ namespace GoBot
 
         private static void DessineZoneMorte(Graphics g)
         {
-            Angle milieuAngleMort = new Angle(-90);
-            Angle largeurAngleMort = new Angle(90);
+            if (Actionneur.Hokuyo != null)
+            {
+                Angle milieuAngleMort = new Angle(-180);
+                Angle largeurAngleMort = Actionneur.Hokuyo.AngleMort;
 
-            Angle debutAngleMort = new Angle(Robots.GrosRobot.Position.Angle + milieuAngleMort - largeurAngleMort / 2);
-            Angle finAngleMort = new Angle(Robots.GrosRobot.Position.Angle + milieuAngleMort + largeurAngleMort / 2);
+                Angle debutAngleMort = new Angle(Actionneur.Hokuyo.Position.Angle + milieuAngleMort - largeurAngleMort / 2);
+                Angle finAngleMort = new Angle(Robots.GrosRobot.Position.Angle + milieuAngleMort + largeurAngleMort / 2);
 
-            List<Point> points = new List<Point>();
-            points.Add(RealToScreenPosition(Robots.GrosRobot.Position.Coordonnees));
-            points.Add(RealToScreenPosition(new Point((int)(Robots.GrosRobot.Position.Coordonnees.X + Math.Cos(debutAngleMort.AngleRadians) * 3000), (int)(Robots.GrosRobot.Position.Coordonnees.Y + Math.Sin(debutAngleMort.AngleRadians) * 3000))));
-            points.Add(RealToScreenPosition(new Point((int)(Robots.GrosRobot.Position.Coordonnees.X + Math.Cos(finAngleMort.AngleRadians) * 3000), (int)(Robots.GrosRobot.Position.Coordonnees.Y + Math.Sin(finAngleMort.AngleRadians) * 3000))));
-            
-            Region regionTable = new Region(new Rectangle(RealToScreenPosition(new Point(0, 0)), new Size(RealToScreenDistance(Plateau.LongueurPlateau), RealToScreenDistance(Plateau.LargeurPlateau))));
-            GraphicsPath pathZoneMorte = new GraphicsPath();
-            pathZoneMorte.AddPolygon(points.ToArray());
-            Region regionZoneMorte = new Region(pathZoneMorte);
-            regionZoneMorte.Intersect(regionTable);
+                List<Point> points = new List<Point>();
+                points.Add(RealToScreenPosition(Actionneur.Hokuyo.Position.Coordonnees));
+                points.Add(RealToScreenPosition(new Point((int)(Actionneur.Hokuyo.Position.Coordonnees.X + Math.Cos(debutAngleMort.AngleRadians) * 3000), (int)(Actionneur.Hokuyo.Position.Coordonnees.Y + Math.Sin(debutAngleMort.AngleRadians) * 3000))));
+                points.Add(RealToScreenPosition(new Point((int)(Actionneur.Hokuyo.Position.Coordonnees.X + Math.Cos(finAngleMort.AngleRadians) * 3000), (int)(Actionneur.Hokuyo.Position.Coordonnees.Y + Math.Sin(finAngleMort.AngleRadians) * 3000))));
 
-            Brush brush = new SolidBrush(Color.FromArgb(50, Color.Black));
-            g.SmoothingMode = SmoothingMode.AntiAlias;
-            g.FillRegion(brush, regionZoneMorte);
-            brush.Dispose();
-            regionTable.Dispose();
-            regionZoneMorte.Dispose();
+                Region regionTable = new Region(new Rectangle(RealToScreenPosition(new Point(0, 0)), new Size(RealToScreenDistance(Plateau.LongueurPlateau), RealToScreenDistance(Plateau.LargeurPlateau))));
+                GraphicsPath pathZoneMorte = new GraphicsPath();
+                pathZoneMorte.AddPolygon(points.ToArray());
+                Region regionZoneMorte = new Region(pathZoneMorte);
+                regionZoneMorte.Intersect(regionTable);
+
+                Brush brush = new SolidBrush(Color.FromArgb(50, Color.Black));
+                g.SmoothingMode = SmoothingMode.AntiAlias;
+                g.FillRegion(brush, regionZoneMorte);
+                brush.Dispose();
+                regionTable.Dispose();
+                regionZoneMorte.Dispose();
+            }
         }
 
         private static void DessinePlateau(Graphics g)
@@ -859,7 +873,9 @@ namespace GoBot
         {
             Type typeForme = inconnue.GetType();
 
-            if (typeForme.IsAssignableFrom(typeof(Segment)))
+            if (typeForme.IsAssignableFrom(typeof(Droite)))
+                DessinerForme(graphics, color, epaisseur, (Droite)inconnue);
+            else if (typeForme.IsAssignableFrom(typeof(Segment)))
                 DessinerForme(graphics, color, epaisseur, (Segment)inconnue);
             else if (typeForme.IsAssignableFrom(typeof(Cercle)))
                 DessinerForme(graphics, color, epaisseur, (Cercle)inconnue, plein);
@@ -889,6 +905,22 @@ namespace GoBot
 
             using (Pen pen = new Pen(color, epaisseur))
                 graphics.DrawLine(pen, positionEcranDepart.X, positionEcranDepart.Y, positionEcranFin.X, positionEcranFin.Y);
+        }
+
+        private static void DessinerForme(Graphics graphics, Color color, int epaisseur, Droite droite)
+        {
+            // Un peu douteux mais bon
+            PointReel p1 = droite.getCroisement(new Droite(new PointReel(-10000, -10000), new PointReel(-10001, 10000)));
+            PointReel p2 = droite.getCroisement(new Droite(new PointReel(10000, -10000), new PointReel(10001, 10000)));
+
+            if (p1 == null || p2 == null)
+            {
+                p1 = droite.getCroisement(new Droite(new PointReel(-10000, -10000), new PointReel(10000, -10001)));
+                p2 = droite.getCroisement(new Droite(new PointReel(10000, 10000), new PointReel(-10000, 10001)));
+            }
+
+            if (p1 != null && p2 != null)
+                DessinerForme(graphics, color, epaisseur, new Segment(p1, p2));
         }
 
         private static void DessinerForme(Graphics graphics, Color color, int epaisseur, Polygone polygone, bool plein = false, bool realToScreen = true)

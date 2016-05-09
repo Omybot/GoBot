@@ -23,6 +23,12 @@ namespace GoBot
 {
     public class Plateau
     {
+        public static bool AvantCharge { get; set; }
+        public static bool ArriereCharge { get; set; }
+        public static bool DroiteCharge { get; set; }
+        public static bool GaucheCharge { get; set; }
+        public static int EtapeDune { get; set; }
+
         public static int RayonAdversaireInitial { get; set; }
         public static int RayonAdversaire { get; set; }
 
@@ -125,6 +131,7 @@ namespace GoBot
         {
             if (!Config.DesignMode)
             {
+                EtapeDune = 0;
                 ObstaclesPieds = new IForme[0];
                 RayonAdversaireInitial = 200;
                 RayonAdversaire = RayonAdversaireInitial;

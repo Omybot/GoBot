@@ -59,7 +59,7 @@ namespace GoBot.Communications
 
             try
             {
-                if ((DateTime.Now - DerniereTentativePing).TotalSeconds > 10)
+                if ((DateTime.Now - DerniereTentativePing).TotalSeconds > 20)
                 {
                     Ping ping = new Ping();
                     PingReply pingReponse = ping.Send(AdresseIp, 50);

@@ -133,5 +133,32 @@ namespace GoBot.IHM
                     CouleurGauche();
             }
         }
+
+        private void boxHomologtion_CheckedChanged(object sender, EventArgs e)
+        {
+            if (boxHomologtion.Checked)
+            {
+                Plateau.Enchainement = new Enchainements.EnchainementHomologation();
+                Actionneur.BarreDePompes.Aspirer();
+                Actionneur.BrasDroite.Ranger();
+                Actionneur.BrasGauche.Ranger();
+                Actionneur.MaintienDune.Ranger();
+                Actionneur.PinceBas.Ranger();
+                Actionneur.PinceBasLateralDroite.Ranger();
+                Actionneur.PinceBasLateralGauche.Ranger();
+                Actionneur.PinceVerrou.Ranger();
+            }
+            else
+                Plateau.Enchainement = null;
+        }
+
+        private void boxAR_CheckedChanged(object sender, EventArgs e)
+        {
+            if (boxAR.Checked)
+                Plateau.Enchainement = new Enchainements.EnchainementAllerRetour();
+            else
+                Plateau.Enchainement = null;
+
+        }
     }
 }

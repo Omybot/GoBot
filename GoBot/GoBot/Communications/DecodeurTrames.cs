@@ -24,6 +24,14 @@ namespace GoBot.Communications
                     case (byte)Carte.RecIO:
                         switch ((FonctionIO)trame[1])
                         {
+                            case FonctionIO.EnvoiUart:
+                                int nbCharTx = trame[2];
+                                message = "Envoi message Uart " + nbCharTx + " caractères";
+                                break;
+                            case FonctionIO.RetourUart:
+                                int nbCharRx = trame[2];
+                                message = "Retour message Uart " + nbCharRx + " caractères";
+                                break;
                             case FonctionIO.DemandeCapteurOnOff:
                                 message = "Demande capteur " + Nommeur.Nommer((CapteurOnOffID)trame[2]);
                                 break;
@@ -452,6 +460,14 @@ namespace GoBot.Communications
                                 int pwmGauche = trame[5] * 256 + trame[6] - 4000;
                                 int pwmDroite = trame[7] * 256 + trame[8] - 4000;
                                 message = "Retour charge : " + nbValeurs + " valeurs (CPU " + cpu + "% - PWM Gauche " + pwmGauche + " - PWM Droite " + pwmDroite;
+                                break;
+                            case FonctionMove.EnvoiUart:
+                                int nbCharTx = trame[2];
+                                message = "Envoi message Uart " + nbCharTx + " caractères";
+                                break;
+                            case FonctionMove.RetourUart:
+                                int nbCharRx = trame[2];
+                                message = "Retour message Uart " + nbCharRx + " caractères";
                                 break;
                             default:
                                 message = ((FonctionMove)trame[1]).ToString();

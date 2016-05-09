@@ -40,6 +40,8 @@
             this.pictureBoxCouleur = new System.Windows.Forms.PictureBox();
             this.ledJackBranche = new Composants.Led();
             this.ledRecallageGros = new Composants.Led();
+            this.boxHomologtion = new System.Windows.Forms.CheckBox();
+            this.boxAR = new System.Windows.Forms.CheckBox();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxTable)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.ledJackArme)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxCouleur)).BeginInit();
@@ -159,11 +161,35 @@
             this.ledRecallageGros.TabIndex = 35;
             this.ledRecallageGros.TabStop = false;
             // 
+            // boxHomologtion
+            // 
+            this.boxHomologtion.AutoSize = true;
+            this.boxHomologtion.Location = new System.Drawing.Point(71, 237);
+            this.boxHomologtion.Name = "boxHomologtion";
+            this.boxHomologtion.Size = new System.Drawing.Size(91, 17);
+            this.boxHomologtion.TabIndex = 64;
+            this.boxHomologtion.Text = "Homologation";
+            this.boxHomologtion.UseVisualStyleBackColor = true;
+            this.boxHomologtion.CheckedChanged += new System.EventHandler(this.boxHomologtion_CheckedChanged);
+            // 
+            // boxAR
+            // 
+            this.boxAR.AutoSize = true;
+            this.boxAR.Location = new System.Drawing.Point(197, 237);
+            this.boxAR.Name = "boxAR";
+            this.boxAR.Size = new System.Drawing.Size(76, 17);
+            this.boxAR.TabIndex = 65;
+            this.boxAR.Text = "Aller retour";
+            this.boxAR.UseVisualStyleBackColor = true;
+            this.boxAR.CheckedChanged += new System.EventHandler(this.boxAR_CheckedChanged);
+            // 
             // PanelMatch
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.White;
+            this.Controls.Add(this.boxAR);
+            this.Controls.Add(this.boxHomologtion);
             this.Controls.Add(this.btnReset);
             this.Controls.Add(this.pictureBoxTable);
             this.Controls.Add(this.ledJackArme);
@@ -201,6 +227,8 @@
         private Composants.Led ledJackArme;
         private System.Windows.Forms.PictureBox pictureBoxTable;
         private System.Windows.Forms.Button btnReset;
+        private System.Windows.Forms.CheckBox boxHomologtion;
+        private System.Windows.Forms.CheckBox boxAR;
 
     }
 }

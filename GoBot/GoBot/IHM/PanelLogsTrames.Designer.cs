@@ -541,6 +541,8 @@
             // boxScroll
             // 
             this.boxScroll.AutoSize = true;
+            this.boxScroll.Checked = true;
+            this.boxScroll.CheckState = System.Windows.Forms.CheckState.Checked;
             this.boxScroll.Location = new System.Drawing.Point(278, 67);
             this.boxScroll.Name = "boxScroll";
             this.boxScroll.Size = new System.Drawing.Size(113, 17);

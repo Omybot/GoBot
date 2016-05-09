@@ -61,16 +61,17 @@
             this.label18 = new System.Windows.Forms.Label();
             this.btnAleatoire = new System.Windows.Forms.Button();
             this.checkedListBox = new System.Windows.Forms.CheckedListBox();
-            this.lblGrosRobotDeplacements = new Composants.LabelPlus();
-            this.lblPetitRobotDeplacements = new Composants.LabelPlus();
             this.groupBox = new System.Windows.Forms.GroupBox();
             this.btnStratTest = new System.Windows.Forms.Button();
             this.btnStratNul = new System.Windows.Forms.Button();
             this.groupBoxDeplacements = new System.Windows.Forms.GroupBox();
+            this.numNbPoints = new System.Windows.Forms.NumericUpDown();
             this.btnTrajLancer = new System.Windows.Forms.Button();
             this.labelPlus1 = new Composants.LabelPlus();
             this.btnTrajCreer = new System.Windows.Forms.Button();
+            this.lblGrosRobotDeplacements = new Composants.LabelPlus();
             this.btnPathRPCentre = new System.Windows.Forms.Button();
+            this.lblPetitRobotDeplacements = new Composants.LabelPlus();
             this.btnPathRPFace = new System.Windows.Forms.Button();
             this.btnPathRSCentre = new System.Windows.Forms.Button();
             this.btnPathRSFace = new System.Windows.Forms.Button();
@@ -87,12 +88,16 @@
             this.btnTestAsser = new System.Windows.Forms.Button();
             this.button1 = new System.Windows.Forms.Button();
             this.button2 = new System.Windows.Forms.Button();
-            this.numNbPoints = new System.Windows.Forms.NumericUpDown();
+            this.button3 = new System.Windows.Forms.Button();
+            this.btnHokuyoUart = new System.Windows.Forms.Button();
+            this.button4 = new System.Windows.Forms.Button();
+            this.button5 = new System.Windows.Forms.Button();
+            this.button6 = new System.Windows.Forms.Button();
             this.groupBox.SuspendLayout();
             this.groupBoxDeplacements.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.numNbPoints)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxTable)).BeginInit();
             this.groupBoxAffichage.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.numNbPoints)).BeginInit();
             this.SuspendLayout();
             // 
             // boxSourisObstacle
@@ -407,24 +412,6 @@
             this.checkedListBox.TabIndex = 63;
             this.checkedListBox.ItemCheck += new System.Windows.Forms.ItemCheckEventHandler(this.checkedListBox_ItemCheck);
             // 
-            // lblGrosRobotDeplacements
-            // 
-            this.lblGrosRobotDeplacements.AutoSize = true;
-            this.lblGrosRobotDeplacements.Location = new System.Drawing.Point(6, 35);
-            this.lblGrosRobotDeplacements.Name = "lblGrosRobotDeplacements";
-            this.lblGrosRobotDeplacements.Size = new System.Drawing.Size(56, 13);
-            this.lblGrosRobotDeplacements.TabIndex = 64;
-            this.lblGrosRobotDeplacements.Text = "Gros robot";
-            // 
-            // lblPetitRobotDeplacements
-            // 
-            this.lblPetitRobotDeplacements.AutoSize = true;
-            this.lblPetitRobotDeplacements.Location = new System.Drawing.Point(6, 64);
-            this.lblPetitRobotDeplacements.Name = "lblPetitRobotDeplacements";
-            this.lblPetitRobotDeplacements.Size = new System.Drawing.Size(55, 13);
-            this.lblPetitRobotDeplacements.TabIndex = 65;
-            this.lblPetitRobotDeplacements.Text = "Petit robot";
-            // 
             // groupBox
             // 
             this.groupBox.Controls.Add(this.btnStratTest);
@@ -481,6 +468,23 @@
             this.groupBoxDeplacements.TabStop = false;
             this.groupBoxDeplacements.Text = "Déplacements";
             // 
+            // numNbPoints
+            // 
+            this.numNbPoints.Location = new System.Drawing.Point(41, 117);
+            this.numNbPoints.Maximum = new decimal(new int[] {
+            10000,
+            0,
+            0,
+            0});
+            this.numNbPoints.Name = "numNbPoints";
+            this.numNbPoints.Size = new System.Drawing.Size(120, 20);
+            this.numNbPoints.TabIndex = 75;
+            this.numNbPoints.Value = new decimal(new int[] {
+            200,
+            0,
+            0,
+            0});
+            // 
             // btnTrajLancer
             // 
             this.btnTrajLancer.Location = new System.Drawing.Point(134, 88);
@@ -510,6 +514,15 @@
             this.btnTrajCreer.UseVisualStyleBackColor = true;
             this.btnTrajCreer.Click += new System.EventHandler(this.btnTrajCreer_Click);
             // 
+            // lblGrosRobotDeplacements
+            // 
+            this.lblGrosRobotDeplacements.AutoSize = true;
+            this.lblGrosRobotDeplacements.Location = new System.Drawing.Point(6, 35);
+            this.lblGrosRobotDeplacements.Name = "lblGrosRobotDeplacements";
+            this.lblGrosRobotDeplacements.Size = new System.Drawing.Size(56, 13);
+            this.lblGrosRobotDeplacements.TabIndex = 64;
+            this.lblGrosRobotDeplacements.Text = "Gros robot";
+            // 
             // btnPathRPCentre
             // 
             this.btnPathRPCentre.Image = global::GoBot.Properties.Resources.PathCentre;
@@ -519,6 +532,15 @@
             this.btnPathRPCentre.TabIndex = 49;
             this.btnPathRPCentre.UseVisualStyleBackColor = true;
             this.btnPathRPCentre.Click += new System.EventHandler(this.btnPathRPCentre_Click);
+            // 
+            // lblPetitRobotDeplacements
+            // 
+            this.lblPetitRobotDeplacements.AutoSize = true;
+            this.lblPetitRobotDeplacements.Location = new System.Drawing.Point(6, 64);
+            this.lblPetitRobotDeplacements.Name = "lblPetitRobotDeplacements";
+            this.lblPetitRobotDeplacements.Size = new System.Drawing.Size(55, 13);
+            this.lblPetitRobotDeplacements.TabIndex = 65;
+            this.lblPetitRobotDeplacements.Text = "Petit robot";
             // 
             // btnPathRPFace
             // 
@@ -662,7 +684,7 @@
             // 
             // button1
             // 
-            this.button1.Location = new System.Drawing.Point(276, 628);
+            this.button1.Location = new System.Drawing.Point(276, 637);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(75, 23);
             this.button1.TabIndex = 71;
@@ -680,23 +702,66 @@
             this.button2.UseVisualStyleBackColor = true;
             this.button2.Click += new System.EventHandler(this.pwet_Click);
             // 
-            // numNbPoints
+            // button3
             // 
-            this.numNbPoints.Location = new System.Drawing.Point(41, 117);
-            this.numNbPoints.Maximum = new decimal(new int[] {
-            10000,
-            0,
-            0,
-            0});
-            this.numNbPoints.Name = "numNbPoints";
-            this.numNbPoints.Size = new System.Drawing.Size(120, 20);
-            this.numNbPoints.TabIndex = 75;
+            this.button3.Location = new System.Drawing.Point(998, 259);
+            this.button3.Name = "button3";
+            this.button3.Size = new System.Drawing.Size(51, 45);
+            this.button3.TabIndex = 73;
+            this.button3.Text = "button3";
+            this.button3.UseVisualStyleBackColor = true;
+            this.button3.Click += new System.EventHandler(this.button3_Click);
+            // 
+            // btnHokuyoUart
+            // 
+            this.btnHokuyoUart.Location = new System.Drawing.Point(276, 610);
+            this.btnHokuyoUart.Name = "btnHokuyoUart";
+            this.btnHokuyoUart.Size = new System.Drawing.Size(75, 23);
+            this.btnHokuyoUart.TabIndex = 74;
+            this.btnHokuyoUart.Text = "HokuyoUart";
+            this.btnHokuyoUart.UseVisualStyleBackColor = true;
+            this.btnHokuyoUart.Click += new System.EventHandler(this.btnHokuyoUart_Click);
+            // 
+            // button4
+            // 
+            this.button4.Location = new System.Drawing.Point(576, 304);
+            this.button4.Name = "button4";
+            this.button4.Size = new System.Drawing.Size(75, 23);
+            this.button4.TabIndex = 75;
+            this.button4.Text = "button4";
+            this.button4.UseVisualStyleBackColor = true;
+            this.button4.Click += new System.EventHandler(this.button4_Click);
+            // 
+            // button5
+            // 
+            this.button5.Location = new System.Drawing.Point(206, 456);
+            this.button5.Name = "button5";
+            this.button5.Size = new System.Drawing.Size(65, 42);
+            this.button5.TabIndex = 76;
+            this.button5.Text = "Recalle bordure";
+            this.button5.UseVisualStyleBackColor = true;
+            this.button5.Click += new System.EventHandler(this.button5_Click);
+            // 
+            // button6
+            // 
+            this.button6.Location = new System.Drawing.Point(1034, 456);
+            this.button6.Name = "button6";
+            this.button6.Size = new System.Drawing.Size(65, 42);
+            this.button6.TabIndex = 77;
+            this.button6.Text = "Recalle bordure";
+            this.button6.UseVisualStyleBackColor = true;
+            this.button6.Click += new System.EventHandler(this.button6_Click);
             // 
             // PanelTable
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.Transparent;
+            this.Controls.Add(this.button6);
+            this.Controls.Add(this.button5);
+            this.Controls.Add(this.button4);
+            this.Controls.Add(this.btnHokuyoUart);
+            this.Controls.Add(this.button3);
             this.Controls.Add(this.button2);
             this.Controls.Add(this.button1);
             this.Controls.Add(this.btnTestAsser);
@@ -742,9 +807,9 @@
             this.groupBox.ResumeLayout(false);
             this.groupBoxDeplacements.ResumeLayout(false);
             this.groupBoxDeplacements.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.numNbPoints)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxTable)).EndInit();
             this.groupBoxAffichage.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.numNbPoints)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -811,5 +876,10 @@
         private System.Windows.Forms.Button btnTrajCreer;
         private System.Windows.Forms.Button button2;
         private System.Windows.Forms.NumericUpDown numNbPoints;
+        private System.Windows.Forms.Button button3;
+        private System.Windows.Forms.Button btnHokuyoUart;
+        private System.Windows.Forms.Button button4;
+        private System.Windows.Forms.Button button5;
+        private System.Windows.Forms.Button button6;
     }
 }

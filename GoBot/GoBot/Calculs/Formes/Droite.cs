@@ -65,6 +65,41 @@ namespace GoBot.Calculs.Formes
         }
 
         /// <summary>
+        /// Contruit la Droite à partir d'une liste de points en interpolation.
+        /// Régression linéaire par la méthode des moindres carrés.
+        /// </summary>
+        /// <param name="points">Liste des points qui génèrent la droite</param>
+        public Droite(List<PointReel> points)
+        {
+            double xMoy, yMoy, sum1, sum2;
+
+            sum1 = 0;
+            sum2 = 0;
+            xMoy = points.Average(p => p.X);
+            yMoy = points.Average(p => p.Y);
+
+            for (int i = 0; i < points.Count; i++)
+            {
+                sum1 += (points[i].X - xMoy) * (points[i].Y - yMoy);
+                sum2 += (points[i].X - xMoy) * (points[i].X - xMoy);
+            }
+
+            if (sum2 == 0)
+            {
+                // Droite verticale
+                a = 0;
+                b = -points[0].X;
+                c = 0;
+            }
+            else
+            {
+                a = sum1 / sum2;
+                b = yMoy - a * xMoy;
+                c = 1;
+            }
+        }
+
+        /// <summary>
         /// Calcule l'équation de la droite passant par deux points
         /// </summary>
         /// <param name="p1">Premier point</param>

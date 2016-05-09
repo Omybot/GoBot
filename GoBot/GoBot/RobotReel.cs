@@ -15,6 +15,7 @@ using GoBot.Devices;
 using Pololu.Usc;
 using Pololu.UsbWrapper;
 using GoBot.Enchainements;
+using System.Text.RegularExpressions;
 
 namespace GoBot
 {
@@ -286,16 +287,17 @@ namespace GoBot
             {
                 if (trameRecue[1] == (byte)FonctionIO.ReponseLidar)
                 {
-                    int nbTrames = trameRecue[3];
-                    int numTrame = trameRecue[4];
-                    int tailleTrame = trameRecue[5];
+                    int lidarID = trameRecue[2];
 
-                    for(int i = 0; i < tailleTrame; i++)
+                    if (mesureLidar == null)
+                        mesureLidar = "";
+
+                    for(int i = 3; i < trameRecue.Length; i++)
                     {
-                        mesureLidar += (char)trameRecue[6 + i];
+                        mesureLidar += (char)trameRecue[i];
                     }
 
-                    if (nbTrames == numTrame)
+                    if (Regex.Matches(mesureLidar, "\n\n").Count == 2)
                         SemaphoresIO[FonctionIO.ReponseLidar].Release();
                 }
                 if (trameRecue[1] == (byte)FonctionIO.RetourValeursAnalogiques)
@@ -373,15 +375,16 @@ namespace GoBot
 
                 if (trameRecue[1] == (byte)FonctionIO.DepartJack)
                 {
-                    Plateau.Enchainement = new GoBot.Enchainements.EnchainementMatch();
+                    if (Plateau.Enchainement == null)
+                        Plateau.Enchainement = new GoBot.Enchainements.EnchainementMatch();
                     Plateau.Enchainement.Executer();
                 }
 
                 if (trameRecue[1] == (byte)FonctionIO.ReponseCouleurEquipe)
                 {
-                    if (trameRecue[2] == 1)
+                    if (trameRecue[2] == 0)
                         couleurEquipe = Plateau.CouleurGaucheViolet;
-                    else if (trameRecue[2] == 0)
+                    else if (trameRecue[2] == 1)
                         couleurEquipe = Plateau.CouleurDroiteVert;
 
                     Plateau.NotreCouleur = couleurEquipe;

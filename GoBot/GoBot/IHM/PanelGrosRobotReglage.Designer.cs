@@ -158,6 +158,11 @@ namespace GoBot.IHM
             2328,
             0,
             0});
+            this.numValeurPosition.Minimum = new decimal(new int[] {
+            100000000,
+            0,
+            0,
+            -2147483648});
             this.numValeurPosition.Name = "numValeurPosition";
             this.numValeurPosition.Size = new System.Drawing.Size(112, 20);
             this.numValeurPosition.TabIndex = 37;

@@ -81,6 +81,12 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Actionneurs\Actionneur.cs" />
+    <Compile Include="Actionneurs\BarreDePompes.cs" />
+    <Compile Include="Actionneurs\Bras.cs" />
+    <Compile Include="Actionneurs\MaintienDune.cs" />
+    <Compile Include="Actionneurs\PinceBasLateral.cs" />
+    <Compile Include="Actionneurs\PinceBasAvant.cs" />
+    <Compile Include="Actionneurs\PinceVerrou.cs" />
     <Compile Include="Actionneurs\Positionnables.cs" />
     <Compile Include="Actions\Asservissement\ActionAccelerationPivot.cs" />
     <Compile Include="Actions\Asservissement\ActionVitessePivot.cs" />
@@ -111,13 +117,15 @@
     <Compile Include="Communications\DecodeurTrames.cs" />
     <Compile Include="Communications\FonctionsTrames.cs" />
     <Compile Include="Dessinateur.cs" />
+    <Compile Include="Devices\Hokuyo.cs" />
     <Compile Include="Devices\HokuyoUart.cs" />
     <Compile Include="Devices\HokuyoUsb.cs" />
     <Compile Include="Devices\PololuMiniUart.cs" />
     <Compile Include="Devices\PololuMiniUsb.cs" />
     <Compile Include="ElementsJeu\ElementJeu.cs" />
     <Compile Include="ElementsJeu\ZoneInteret.cs" />
-    <Compile Include="Enchainements\EnchainementMatchFixe.cs" />
+    <Compile Include="Enchainements\EnchainementAllerRetour.cs" />
+    <Compile Include="Enchainements\EnchainementHomologation.cs" />
     <Compile Include="Enchainements\EnchainementTest.cs" />
     <Compile Include="Enchainements\EnchainementNul.cs" />
     <Compile Include="Enchainements\EnchainementAleatoire.cs" />
@@ -287,6 +295,16 @@
     </Compile>
     <Compile Include="Logs\Log.cs" />
     <Compile Include="Logs\Logs.cs" />
+    <Compile Include="Mouvements\MouvementDeposeVert2.cs" />
+    <Compile Include="Mouvements\MouvementDeposeViolet2.cs" />
+    <Compile Include="Mouvements\MouvementDune4.cs" />
+    <Compile Include="Mouvements\MouvementDune3.cs" />
+    <Compile Include="Mouvements\MouvementDeposeVert.cs" />
+    <Compile Include="Mouvements\MouvementDeposeViolet.cs" />
+    <Compile Include="Mouvements\MouvementDune2.cs" />
+    <Compile Include="Mouvements\MouvementCube1.cs" />
+    <Compile Include="Mouvements\MouvementCube2.cs" />
+    <Compile Include="Mouvements\MouvementDune1.cs" />
     <Compile Include="Mouvements\Mouvement.cs" />
     <Compile Include="Mouvements\PositionsMouvements.cs" />
     <Compile Include="PathFinding\PathFinder.cs" />

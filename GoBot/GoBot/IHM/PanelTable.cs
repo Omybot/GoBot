@@ -18,6 +18,8 @@ using GoBot.Actionneurs;
 using GoBot.PathFinding;
 using Gobot.Calculs;
 using GoBot.Devices;
+using System.Diagnostics;
+using GoBot.Communications;
 
 namespace GoBot.IHM
 {
@@ -585,13 +587,13 @@ namespace GoBot.IHM
 
         private void btnStratNul_Click(object sender, EventArgs e)
         {
-            Plateau.Enchainement = new EnchainementMatchFixe();
+            Plateau.Enchainement = new EnchainementAllerRetour();
             Plateau.Enchainement.Executer();
         }
 
         private void btnStratTest_Click(object sender, EventArgs e)
         {
-            Plateau.Enchainement = new EnchainementTest();
+            Plateau.Enchainement = new EnchainementHomologation();
             Plateau.Enchainement.Executer();
         }
 
@@ -642,6 +644,9 @@ namespace GoBot.IHM
         private void button1_Click(object sender, EventArgs e)
         {
             //String mess = "MS000072500001";
+
+
+            /*
             String mess = "VV\n00P\n";
 
             byte[] b = new Byte[mess.Length];
@@ -650,27 +655,73 @@ namespace GoBot.IHM
             {
                 b[i] = (byte)mess[i];
             }
-            GoBot.Communications.Connexions.ConnexionIO.SendMessage(GoBot.Communications.TrameFactory.EnvoyerUart(Carte.RecIO, new Communications.Trame(b)));
 
-            //threadHokuyo = new Thread(FonctionHokuyo);
-            //threadHokuyo.Start();
+            Trame trameUart = new Trame(b);
+            Trame trameUdp = TrameFactory.EnvoyerUart(Carte.RecIO, trameUart);
+            Connexions.ConnexionIO.SendMessage(trameUdp);*/
+
+            threadHokuyo = new Thread(FonctionHokuyo);
+            threadHokuyo.Start();
 
             //PololuMiniUart.setTarget(15, 0);
             //Thread.Sleep(1000);
             //PololuMiniUart.setTarget(15, 500);
+
+            //HokuyoUart lidar = new HokuyoUart(LidarID.LidarSol);
+            //List<PointReel> pts = lidar.GetMesure();
+            //Plateau.ObstaclesFixes = new List<IForme>();
+            //foreach (PointReel p in pts)
+            //{
+            //    Plateau.ObstaclesFixes.Add(new Cercle(p, 4));
+            //}
+            //MessageBox.Show(pts.Count + " points");
         }
 
         private void FonctionHokuyo()
         {
-            GoBot.Devices.Hokuyo hokuyo = new Devices.Hokuyo("COM3");
-
             while (true)
             {
-                List<PointReel> points = hokuyo.GetMesure();
-                Plateau.ObstaclesFixes = new List<IForme>();
-                foreach (PointReel p in points)
+                List<PointReel> points = Actionneur.Hokuyo.GetMesure();
+
+                if (points.Count > 0)
                 {
-                    Plateau.ObstaclesFixes.Add(new Cercle(p, 4));
+                    Plateau.ObstaclesFixes = new List<IForme>();
+                    foreach (PointReel p in points)
+                    {
+                        Plateau.ObstaclesFixes.Add(new Cercle(p, 4));
+                    }
+
+                    //Segment seg = new Segment(new PointReel(0, 50), new PointReel(0, 900));
+                    //List<PointReel> pointsBordure = points.Where(p => p.Distance(seg) < 30).ToList();
+
+                    //Droite interpol = new Droite(pointsBordure);
+
+                    //Plateau.ObstaclesFixes.Add(interpol);
+
+                    //Console.WriteLine(new Angle(Math.Atan(interpol.A), AnglyeType.Radian).AngleDegresPositif - 270);
+
+                    //Droite interpol = new Droite(points.GetRange((int)(points.Count *0.8), (int)(points.Count * 0.1)+1));
+                    //Plateau.ObstaclesFixes.Add(interpol);
+
+                    // Cherche le point à droite du robot qui fait la bordure
+                    /*points = points.Where(p => p.X > Robots.GrosRobot.Position.Coordonnees.X).ToList();
+
+                    PointReel pointDroite = points[0];
+
+                    for (int i = 0; i < points.Count; i++)
+                    {
+                        if (Math.Abs(points[i].Y - Robots.GrosRobot.Position.Coordonnees.Y) < Math.Abs(pointDroite.Y - Robots.GrosRobot.Position.Coordonnees.Y))
+                            pointDroite = points[i];
+                    }
+
+                    double distanceDroite = pointDroite.X - Actionneur.Hokuyo.Position.Coordonnees.X;
+                    distanceDroite -= 76; // Pour avoir la distance par rapport au bord du robot
+
+                    PointReel p0 = new PointReel(Actionneur.Hokuyo.Position.Coordonnees);
+                    p0.X += 76;
+                    p0.Y += 100;
+                    Dessinateur._PointBordRobot = p0;
+                    Dessinateur._DistanceBordRobot = distanceDroite;*/
                 }
             }
         }
@@ -689,33 +740,59 @@ namespace GoBot.IHM
 
         private void pwet_Click(object sender, EventArgs e)
         {
-            Robots.GrosRobot.ReglerOffsetAsserv(160, 850, 0);
+            //Robots.GrosRobot.ReglerOffsetAsserv(160, 850, 0);
+            Robots.GrosRobot.ReglerOffsetAsserv(Robots.GrosRobot.Longueur / 2, 600 + 5 + Robots.GrosRobot.Largeur / 2, 0);
             //Robots.GrosRobot.ReglerOffsetAsserv(100, 700, 0);
-            Robots.GrosRobot.VitesseDeplacement = 800;
-            Robots.GrosRobot.AccelerationDebutDeplacement = 2000;
-            Robots.GrosRobot.AccelerationFinDeplacement = 2000;
+            Robots.GrosRobot.VitesseDeplacement = 1500;
+
+
+            // Trajectoire de drift
+            //Robots.GrosRobot.AccelerationDebutDeplacement = 4000;
+            //Robots.GrosRobot.AccelerationFinDeplacement = 4000;
+
+
+            // Trajectoire normale
+            Robots.GrosRobot.AccelerationDebutDeplacement = 1200;
+            Robots.GrosRobot.AccelerationFinDeplacement = 1700;
+
+
             Robots.GrosRobot.VitessePivot = 1000;
             Robots.GrosRobot.AccelerationPivot = 1000;
 
-            //Robots.GrosRobot.EnvoyerPIDCap(20000, 0, 300);
-            Robots.GrosRobot.EnvoyerPIDCap(15000, 0, 100);
+            Robots.GrosRobot.EnvoyerPIDCap(10000, 0, 300);
+            //Robots.GrosRobot.EnvoyerPIDCap(15000, 0, 100);
             Robots.GrosRobot.EnvoyerPIDVitesse(20, 0, 200);
 
             pointsPolaires = new List<PointReel>();
             //for (int i = 0; i < 10; i++)
              //   pointsPolaires.Add(new PointReel(i * 10, 0));
 
-            pointsPolaires.Add(new PointReel(160, 850));
-            pointsPolaires.Add(new PointReel(750, 850));
+            // Trajectoire normale de départ
+            //pointsPolaires.Add(new PointReel(Robots.GrosRobot.Position.Coordonnees.X, Robots.GrosRobot.Position.Coordonnees.Y));
+            //pointsPolaires.Add(new PointReel(700, Robots.GrosRobot.Position.Coordonnees.Y + 100));
+            //pointsPolaires.Add(new PointReel(550, 400));
+            //pointsPolaires.Add(new PointReel(1500, 400));
+
+            pointsPolaires.Add(new PointReel(Robots.GrosRobot.Position.Coordonnees.X, Robots.GrosRobot.Position.Coordonnees.Y));
+            pointsPolaires.Add(new PointReel(700, Robots.GrosRobot.Position.Coordonnees.Y + 80));
             pointsPolaires.Add(new PointReel(550, 400));
-            pointsPolaires.Add(new PointReel(1200, 400));
+            pointsPolaires.Add(new PointReel(1300, 500));
+
+            // Trajectoire de drift
+            //pointsPolaires.Add(new PointReel(Robots.GrosRobot.Position.Coordonnees.X, Robots.GrosRobot.Position.Coordonnees.Y));
+            //pointsPolaires.Add(new PointReel(700, Robots.GrosRobot.Position.Coordonnees.Y + 100));
+            //pointsPolaires.Add(new PointReel(550, 300));
+            //pointsPolaires.Add(new PointReel(1250, 600));
 
             trajectoirePolaire = BezierCurve.GetPoints(pointsPolaires, (int)numNbPoints.Value);
             Dessinateur.modeCourant = Dessinateur.Mode.TrajectoirePolaire; 
             Dessinateur.TrajectoirePolaire = trajectoirePolaire;
             Dessinateur.PointsPolaire = pointsPolaires;
 
-            Robots.GrosRobot.TrajectoirePolaire(SensAR.Avant, trajectoirePolaire, false);
+            Stopwatch watch = Stopwatch.StartNew();
+            Robots.GrosRobot.TrajectoirePolaire(SensAR.Avant, trajectoirePolaire, true);
+
+            ThreadHokuyoRecalViolet();
         }
 
         bool moveMouse = false;
@@ -741,6 +818,115 @@ namespace GoBot.IHM
                 thPath = new Thread(PathFindingClick);
                 thPath.Start();
             }
+        }
+
+        private void button3_Click(object sender, EventArgs e)
+        {
+            for (int i = 0; i < 20; i++)
+            {
+                Robots.GrosRobot.PivotGauche(1);
+                Robots.GrosRobot.Avancer(10);
+            }
+        }
+
+        private void btnHokuyoUart_Click(object sender, EventArgs e)
+        {
+            ////String mess = "MS000072500001";
+                        
+            //String mess = "VV\n00P\n";
+
+            //byte[] b = new Byte[mess.Length];
+
+            //for (int i = 0; i < mess.Length; i++)
+            //{
+            //    b[i] = (byte)mess[i];
+            //}
+
+            //Trame trameUart = new Trame(b);
+            //Trame trameUdp = TrameFactory.EnvoyerUart(Carte.RecIO, trameUart);
+            //Connexions.ConnexionIO.SendMessage(trameUdp);
+
+            HokuyoUart lidar = new HokuyoUart(LidarID.LidarSol);
+            List<PointReel> pts = lidar.GetMesure();
+            Plateau.ObstaclesFixes = new List<IForme>();
+            foreach (PointReel p in pts)
+            {
+                Plateau.ObstaclesFixes.Add(new Cercle(p, 4));
+            }
+            MessageBox.Show(pts.Count + " points");
+        }
+
+        Thread th;
+        private void button4_Click(object sender, EventArgs e)
+        {
+            th = new Thread(ThreadMouvement);
+            th.Start(new MouvementDeposeViolet());
+        }
+
+        private void ThreadMouvement(Object o)
+        {
+            Mouvement m = (Mouvement)o;
+            m.Executer();
+        }
+
+        private void ThreadEnchainement(Object o)
+        {
+            Enchainement m = (Enchainement)o;
+            Plateau.Enchainement = m;
+            Plateau.Enchainement.Executer();
+        }
+
+        private void ThreadHokuyoRecalViolet()
+        {
+            Robots.GrosRobot.PositionerAngle(180);
+
+            Angle a = Actionneur.Hokuyo.CalculAngle(new Segment(new PointReel(0, 50), new PointReel(0, 900)), 50, 10);
+            if (a.AngleDegresPositif > 180)
+                Robots.GrosRobot.PivotDroite(a.AngleDegresPositif - 270);
+            else
+                Robots.GrosRobot.PivotGauche((90 - a.AngleDegresPositif));
+
+            Robots.GrosRobot.ReglerOffsetAsserv((int)Robots.GrosRobot.Position.Coordonnees.X, (int)Robots.GrosRobot.Position.Coordonnees.Y, 180);
+
+            double distance = Actionneur.Hokuyo.CalculDistanceX(new Segment(new PointReel(0, 50), new PointReel(0, 900)), 50, 2);
+            Robots.GrosRobot.ReglerOffsetAsserv((int)(Robots.GrosRobot.Position.Coordonnees.X - distance), (int)Robots.GrosRobot.Position.Coordonnees.Y, 180);
+
+            distance = Actionneur.Hokuyo.CalculDistanceY(970, 1170, 150, 2);
+            Robots.GrosRobot.ReglerOffsetAsserv((int)(Robots.GrosRobot.Position.Coordonnees.X), (int)(Robots.GrosRobot.Position.Coordonnees.Y - distance), 180);
+        }
+
+        private void ThreadHokuyoRecalVert()
+        {
+            Robots.GrosRobot.PositionerAngle(0);
+
+            Angle a = Actionneur.Hokuyo.CalculAngle(new Segment(new PointReel(3000, 50), new PointReel(3000, 900)), 50, 10);
+            if (a.AngleDegresPositif > 180)
+                Robots.GrosRobot.PivotDroite(a.AngleDegresPositif - 270);
+            else
+                Robots.GrosRobot.PivotGauche((90 - a.AngleDegresPositif));
+
+            Robots.GrosRobot.ReglerOffsetAsserv((int)Robots.GrosRobot.Position.Coordonnees.X, (int)Robots.GrosRobot.Position.Coordonnees.Y, 0);
+
+            double distance = Actionneur.Hokuyo.CalculDistanceX(new Segment(new PointReel(3000, 50), new PointReel(3000, 900)), 50, 10);
+            Robots.GrosRobot.ReglerOffsetAsserv((int)(Robots.GrosRobot.Position.Coordonnees.X - (distance - 3000)), (int)Robots.GrosRobot.Position.Coordonnees.Y, 0);
+
+            Robots.GrosRobot.PositionerAngle(45);
+
+            distance = Actionneur.Hokuyo.CalculDistanceY(3000 - 1170, 3000 - 970, 150, 2);
+            Robots.GrosRobot.ReglerOffsetAsserv((int)(Robots.GrosRobot.Position.Coordonnees.X), (int)(Robots.GrosRobot.Position.Coordonnees.Y - distance), 0);
+        }
+
+        Thread thHok;
+        private void button5_Click(object sender, EventArgs e)
+        {
+            thHok = new Thread(ThreadHokuyoRecalViolet);
+            thHok.Start();
+        }
+
+        private void button6_Click(object sender, EventArgs e)
+        {
+            Angle a = Actionneur.Hokuyo.CalculAngle(new Segment(new PointReel(3000, 50), new PointReel(3000, 900)), 30, 10);
+            MessageBox.Show((270 - a.AngleDegresPositif).ToString());
         }
     }
 }

@@ -29,7 +29,7 @@ namespace GoBot.Communications
 
         Alimentation = 0x80,
 
-        BlocageAscenseur = 0x82,
+        LimitationCourant = 0x82,
 
         ActionneurOnOff = 0x65,
         MoteurPosition = 0x66,
@@ -38,6 +38,8 @@ namespace GoBot.Communications
 
         Debug = 0xEE,
 
+        EnvoiUart = 0xA0,
+        RetourUart = 0xA1,
         TestConnexion = 0xF0,
         RetourTestConnexion = 0xF5,
         Reset = 0xF1,

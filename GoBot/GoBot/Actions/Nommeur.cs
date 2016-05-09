@@ -20,6 +20,27 @@ namespace GoBot.Actions
             {
                 case ServomoteurID.Tous:
                     return "tous les servomoteurs";
+                case ServomoteurID.BrasDroite:
+                    return "bras droite";
+                case ServomoteurID.BrasGauche:
+                    return "bras gauche";
+                case ServomoteurID.PinceBasDroite:
+                    return "pince bas droite";
+                case ServomoteurID.PinceBasGauche:
+                    return "pince bas gauche";
+                case ServomoteurID.PinceBasLateralGaucheArriere:
+                    return "pince bas latéral gauche arrière";
+                case ServomoteurID.PinceBasLateralGaucheAvant:
+                    return "pince bas latéral gauche avant";
+                case ServomoteurID.PinceBasLateralDroiteArriere:
+                    return "pince bas latéral droite arrière";
+                case ServomoteurID.PinceBasLateralDroiteAvant:
+                    return "pince bas latéral droite avant";
+                case ServomoteurID.VerrouDroite:
+                    return "pince verrou droite";
+                case ServomoteurID.VerrouGauche:
+                    return "pince verrou gauche";
+
                 
                 default:
                     if (servo.ToString().Contains("zzLibre"))
@@ -93,22 +114,6 @@ namespace GoBot.Actions
         {
             switch (capteur)
             {
-                case CapteurOnOffID.SwitchBrasDroitBas:
-                    return "présence pied bras droit bas";
-                case CapteurOnOffID.SwitchBrasDroitHaut:
-                    return "présence pied bras droit haut";
-                case CapteurOnOffID.SwitchBrasGaucheBas:
-                    return "présence pied bras gauche bas";
-                case CapteurOnOffID.SwitchBrasGaucheHaut:
-                    return "présence pied bras gauche haut";
-                case CapteurOnOffID.OptiqueBrasDroit:
-                    return "présence pied bras droit au sol";
-                case CapteurOnOffID.OptiqueBrasGauche:
-                    return "présence pied bras gauche au sol";
-                case CapteurOnOffID.SwitchBrasDroiteOrigine:
-                    return "prise d'origine bras droite";
-                case CapteurOnOffID.SwitchBrasGaucheOrigine:
-                    return "prise d'origine bras gauche";
                 default :
                     return capteur.ToString();
             }
@@ -118,14 +123,14 @@ namespace GoBot.Actions
         {
             switch (moteur)
             {
-                case MoteurID.AscenseurDroit:
-                    return "ascenseur droite";
-                case MoteurID.AscenseurGauche:
-                    return "ascenseur gauche";
+                case MoteurID.BrasDroite:
+                    return "bras droite";
+                case MoteurID.BrasGauche:
+                    return "bras gauche";
+                case MoteurID.PompeBarre:
+                    return "pompes au sol";
                 case MoteurID.Balise:
                     return "balise";
-                case MoteurID.AscenseurAmpoule:
-                    return "ascenseur ampoule";
                 default:
                     return moteur.ToString();
             }

@@ -42,22 +42,42 @@ namespace GoBot
         {
             Robots.GrosRobot.EnvoyerPID(20, 0, 200);
             Robots.GrosRobot.Stop();
-            
-            // TODO faire la procédure de calibration de début de match
+
+            Actionneur.PinceVerrou.Ranger();
+            Actionneur.PinceBasLateralGauche.Ranger();
+            Actionneur.PinceBasLateralDroite.Ranger();
+            Actionneur.BrasDroite.Ranger();
+            Actionneur.BrasGauche.Ranger();
+            Actionneur.BrasDroite.Fermer();
+            Actionneur.BrasGauche.Fermer();
+            Actionneur.PinceBas.Ranger();
+            Actionneur.MaintienDune.Ouvrir();
+
             Robots.GrosRobot.Lent();
             Robots.GrosRobot.Avancer(10);
             Robots.GrosRobot.Recallage(SensAR.Arriere);
             Robots.GrosRobot.Rapide();
-            Robots.GrosRobot.Avancer(250);
-            Robots.GrosRobot.PivotDroite(90);
+            Robots.GrosRobot.Avancer(2000 - (600 + 5 + Robots.GrosRobot.Longueur / 2 + Robots.GrosRobot.Largeur / 2));
+
+            Actionneur.MaintienDune.Ranger();
+
+            if (Plateau.NotreCouleur == Plateau.CouleurGaucheViolet)
+                Robots.GrosRobot.PivotDroite(90);
+            else
+                Robots.GrosRobot.PivotGauche(90);
+
             Robots.GrosRobot.Lent();
             Robots.GrosRobot.Recallage(SensAR.Arriere);
             Robots.GrosRobot.Rapide();
 
-            Robots.GrosRobot.ReglerOffsetAsserv(150, 1600, 0);
+            if (Plateau.NotreCouleur == Plateau.CouleurGaucheViolet)
+                Robots.GrosRobot.ReglerOffsetAsserv(Robots.GrosRobot.Longueur / 2, 600 + 5 + Robots.GrosRobot.Largeur / 2, 0);
+            else
+                Robots.GrosRobot.ReglerOffsetAsserv(3000 - Robots.GrosRobot.Longueur / 2, 600 + 5 + Robots.GrosRobot.Largeur / 2, 180);
 
             Robots.GrosRobot.ArmerJack();
-            Robots.GrosRobot.MoteurPosition(MoteurID.Balise, 2000);
+            Robots.GrosRobot.MoteurPosition(MoteurID.Balise, 3000);
+            Actionneur.BarreDePompes.Maintien();
         }
     }
 }
