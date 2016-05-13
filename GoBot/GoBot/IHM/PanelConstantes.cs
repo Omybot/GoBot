@@ -41,22 +41,11 @@ namespace GoBot.IHM
                 numBatGrosRouge.Value = (decimal)Config.CurrentConfig.BatterieRobotRouge;
                 numBatGrosCritique.Value = (decimal)Config.CurrentConfig.BatterieRobotCritique;
 
-                numBaliseVert.Value = (decimal)Config.CurrentConfig.BatterieBaliseVert;
-                numBaliseOrange.Value = (decimal)Config.CurrentConfig.BatterieBaliseOrange;
-                numBaliseRouge.Value = (decimal)Config.CurrentConfig.BatterieBaliseRouge;
-                numBaliseCritique.Value = (decimal)Config.CurrentConfig.BatterieBaliseCritique;
-
                 batGrosCritique.CouleurRougeCritique();
                 batGrosOrange.CouleurOrange();
                 batGrosRouge.CouleurRouge();
                 batGrosVert.CouleurVert();
                 batGrosVide.CouleurGris();
-
-                batBaliseCritique.CouleurRougeCritique();
-                batBaliseOrange.CouleurOrange();
-                batBaliseRouge.CouleurRouge();
-                batBaliseVert.CouleurVert();
-                batBaliseVide.CouleurGris();
             }
         }
 
@@ -81,11 +70,6 @@ namespace GoBot.IHM
             Config.CurrentConfig.BatterieRobotOrange = (double)numBatGrosOrange.Value;
             Config.CurrentConfig.BatterieRobotRouge = (double)numBatGrosRouge.Value;
             Config.CurrentConfig.BatterieRobotCritique = (double)numBatGrosCritique.Value;
-
-            Config.CurrentConfig.BatterieBaliseVert = (double)numBaliseVert.Value;
-            Config.CurrentConfig.BatterieBaliseOrange = (double)numBaliseOrange.Value;
-            Config.CurrentConfig.BatterieBaliseRouge = (double)numBaliseRouge.Value;
-            Config.CurrentConfig.BatterieBaliseCritique = (double)numBaliseCritique.Value;
         }
     }
 }

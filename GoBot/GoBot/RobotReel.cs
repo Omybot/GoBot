@@ -192,8 +192,8 @@ namespace GoBot
                             semHistoriquePosition.Release();
                         }
 
-                        if (Plateau.Balise1 != null)
-                            Plateau.Balise1.Position = Position;
+                        if (Plateau.Balise != null)
+                            Plateau.Balise.Position = Position;
 
                         ChangerPosition(Position);
                     }
@@ -398,24 +398,24 @@ namespace GoBot
                     {
                         // Recomposition de la trame comme si elle venait d'une balise
                         String message = "B1 E4 " + trameRecue.ToString().Substring(9);
-                        if (Plateau.Balise1 != null)
-                            Plateau.Balise1.connexion_NouvelleTrame(new Trame(message));
+                        if (Plateau.Balise != null)
+                            Plateau.Balise.connexion_NouvelleTrame(new Trame(message));
                     }
 
                     if (trameRecue[2] == (byte)CapteurID.BaliseRapide1)
                     {
                         // Recomposition de la trame comme si elle venait d'une balise
                         String message = "B1 E5 02 " + trameRecue.ToString().Substring(9);
-                        if (Plateau.Balise1 != null)
-                            Plateau.Balise1.connexion_NouvelleTrame(new Trame(message));
+                        if (Plateau.Balise != null)
+                            Plateau.Balise.connexion_NouvelleTrame(new Trame(message));
                     }
 
                     if (trameRecue[2] == (byte)CapteurID.BaliseRapide2)
                     {
                         // Recomposition de la trame comme si elle venait d'une balise
                         String message = "B1 E5 01 " + trameRecue.ToString().Substring(9);
-                        if (Plateau.Balise1 != null)
-                            Plateau.Balise1.connexion_NouvelleTrame(new Trame(message));
+                        if (Plateau.Balise != null)
+                            Plateau.Balise.connexion_NouvelleTrame(new Trame(message));
                     }
                 }
 

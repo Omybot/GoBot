@@ -46,7 +46,7 @@ namespace GoBot
                 GrosRobot = grosRobot;
 
                 RobotReel petitRobot = new RobotReel(IDRobot.PetitRobot, Carte.RecPi);
-                petitRobot.Connexion = Connexions.ConnexionPi;
+                petitRobot.Connexion = Connexions.ConnexionIO;
                 PetitRobot = petitRobot;
             }
             else

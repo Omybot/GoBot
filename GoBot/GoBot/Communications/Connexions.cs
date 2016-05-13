@@ -11,10 +11,6 @@ namespace GoBot.Communications
         public static ConnexionUDP ConnexionMiwi { get; set; }
         public static ConnexionUDP ConnexionMove { get; set; }
         public static ConnexionUDP ConnexionIO { get; set; }
-        public static ConnexionMiwi ConnexionBun { get; set; }
-        public static ConnexionMiwi ConnexionBeu { get; set; }
-        public static ConnexionMiwi ConnexionBoi { get; set; }
-        public static ConnexionMiwi ConnexionPi { get; set; }
 
         public static Dictionary<Carte, Connexion> ConnexionParCarte { get; private set; }
         public static Dictionary<Carte, bool> ActivationConnexion { get; private set; }
@@ -22,9 +18,6 @@ namespace GoBot.Communications
         public static void Init()
         {
             ActivationConnexion = new Dictionary<Carte, bool>();
-            ActivationConnexion.Add(Carte.RecBun, true);
-            ActivationConnexion.Add(Carte.RecBeu, true);
-            ActivationConnexion.Add(Carte.RecBoi, true);
             ActivationConnexion.Add(Carte.RecIO, true);
             ActivationConnexion.Add(Carte.RecMiwi, true);
             ActivationConnexion.Add(Carte.RecMove, true);
@@ -42,23 +35,8 @@ namespace GoBot.Communications
             ConnexionIO.Connexion(System.Net.IPAddress.Parse("10.1.0.14"), 12314, 12324);
             ConnexionIO.ConnexionCheck.TestConnexion += new ConnexionCheck.TestConnexionDelegate(ConnexionIOCheck_TestConnexion);
 
-            ConnexionBun = new ConnexionMiwi(Carte.RecBun);
-            ConnexionBun.StartReception();
-            ConnexionBeu = new ConnexionMiwi(Carte.RecBeu);
-            ConnexionBeu.StartReception();
-            ConnexionBoi = new ConnexionMiwi(Carte.RecBoi);
-            ConnexionBoi.StartReception();
-
-            ConnexionPi = new ConnexionMiwi(Carte.RecPi);
-            ConnexionPi.StartReception();
-            ConnexionPi.ConnexionCheck.TestConnexion += new ConnexionCheck.TestConnexionDelegate(ConnexionPiCheck_TestConnexion);
-
             ConnexionParCarte = new Dictionary<Carte, Connexion>();
-            ConnexionParCarte.Add(Carte.RecBun, ConnexionBun);
-            ConnexionParCarte.Add(Carte.RecBeu, ConnexionBeu);
-            ConnexionParCarte.Add(Carte.RecBoi, ConnexionBoi);
             ConnexionParCarte.Add(Carte.RecMiwi, ConnexionMiwi);
-            ConnexionParCarte.Add(Carte.RecPi, ConnexionPi);
             ConnexionParCarte.Add(Carte.RecMove, ConnexionMove);
             ConnexionParCarte.Add(Carte.RecIO, ConnexionIO);
         }
@@ -76,11 +54,6 @@ namespace GoBot.Communications
         public static void ConnexionIOCheck_TestConnexion()
         {
             ConnexionIO.SendMessage(TrameFactory.TestConnexionIO());
-        }
-
-        public static void ConnexionPiCheck_TestConnexion()
-        {
-            //ConnexionPi.SendMessage(TrameFactory.TestConnexionPi(Robots.PetitRobot.TensionPack1 < 21 && Robots.PetitRobot.TensionPack2 < 21));
         }
     }
 }

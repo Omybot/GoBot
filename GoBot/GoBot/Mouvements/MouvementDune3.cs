@@ -19,9 +19,22 @@ namespace GoBot.Mouvements
         public MouvementDune3()
         {
             ramasse = false;
-            Robot = Robots.GrosRobot;
-            Element = new ZoneInteret(new PointReel(1500 + 58 * 3, 40), Color.White, 200);
             Positions.Add(new Position(90, new PointReel(1500 + 58 * 3, 400)));
+        }
+
+        public override Color Couleur
+        {
+            get { return Color.White; }
+        }
+
+        public override Robot Robot
+        {
+            get { return Robots.GrosRobot; }
+        }
+
+        public override ElementJeu Element
+        {
+            get { return Plateau.Elements.ZoneDune3; }
         }
 
         public override bool Executer(int timeOut = 0)
@@ -86,7 +99,7 @@ namespace GoBot.Mouvements
             get { return Plateau.EtapeDune == 3 ? 100000 : 0; }
         }
 
-        public override double ScorePondere
+        public override double ValeurAction
         {
             get { return Score; }
         }

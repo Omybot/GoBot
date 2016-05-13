@@ -34,11 +34,6 @@ namespace GoBot.Communications
                 case Carte.RecMiwi:
                     tab[1] = (byte)FonctionMiwi.Debug;
                     break;
-                case Carte.RecBun:
-                case Carte.RecBeu:
-                case Carte.RecBoi:
-                    tab[1] = (byte)FonctionBalise.Debug;
-                    break;
             }
             tab[2] = (byte)numDebug;
 
@@ -422,56 +417,6 @@ namespace GoBot.Communications
             tab[1] = (byte)FonctionIO.DemandeCouleurEquipe;
             return new Trame(tab);
         }
-
-        #region Balises
-
-        static public Trame BaliseVitesse(Carte balise, int vitesse)
-        {
-            byte[] tab = new byte[4];
-            tab[0] = (byte)balise;
-            tab[1] = (byte)FonctionBalise.Vitesse;
-            tab[2] = (byte)ByteDivide(vitesse, true);
-            tab[3] = (byte)ByteDivide(vitesse, false);
-            return new Trame(tab);
-        }
-
-        static public Trame BaliseReset(Carte balise)
-        {
-            byte[] tab = new byte[2];
-            tab[0] = (byte)balise;
-            tab[1] = (byte)FonctionBalise.Reset;
-            return new Trame(tab);
-        }
-
-        static public Trame BaliseTestConnexion(Carte balise)
-        {
-            byte[] tab = new byte[2];
-            tab[0] = (byte)balise;
-            tab[1] = (byte)FonctionBalise.TestConnexion;
-            return new Trame(tab);
-        }
-
-        static public Trame BaliseInclinaisonFace(Carte balise, int position)
-        {
-            byte[] tab = new byte[4];
-            tab[0] = (byte)balise;
-            tab[1] = (byte)FonctionBalise.InclinaisonFace;
-            tab[2] = ByteDivide(position, true);
-            tab[3] = ByteDivide(position, false);
-            return new Trame(tab);
-        }
-
-        static public Trame BaliseInclinaisonProfil(Carte balise, int position)
-        {
-            byte[] tab = new byte[4];
-            tab[0] = (byte)balise;
-            tab[1] = (byte)FonctionBalise.InclinaisonProfil;
-            tab[2] = ByteDivide(position, true);
-            tab[3] = ByteDivide(position, false);
-            return new Trame(tab);
-        }
-
-        #endregion
 
 
         static public Trame EnvoiConsigneBrute(int consigne, SensAR sens, Robot robot)

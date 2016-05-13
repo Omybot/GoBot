@@ -19,10 +19,22 @@ namespace GoBot.Mouvements
         public MouvementDeposeVert()
         {
             ramasse = false;
-            Robot = Robots.GrosRobot;
-            Element = new ZoneInteret(new PointReel(3000 - 1300, 1050), Plateau.CouleurDroiteVert, 90);
-            Couleur = Plateau.CouleurDroiteVert;
             Positions.Add(new Position(90, new PointReel(3000 - 300, 700)));
+        }
+
+        public override Color Couleur
+        {
+            get { return Plateau.CouleurDroiteVert; }
+        }
+
+        public override Robot Robot
+        {
+            get { return Robots.GrosRobot; }
+        }
+
+        public override ElementJeu Element
+        {
+            get { return Plateau.Elements.ZoneDeposeVert1; }
         }
 
         public override bool Executer(int timeOut = 0)
@@ -86,7 +98,7 @@ namespace GoBot.Mouvements
             get { return BonneCouleur() && Plateau.EtapeDune == 2 ? 100000 : 0; }
         }
 
-        public override double ScorePondere
+        public override double ValeurAction
         {
             get { return Score; }
         }

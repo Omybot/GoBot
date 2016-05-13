@@ -53,9 +53,6 @@
             this.label6 = new System.Windows.Forms.Label();
             this.btnSendTest = new System.Windows.Forms.Button();
             this.boxRecPi = new System.Windows.Forms.CheckBox();
-            this.boxRecBoi = new System.Windows.Forms.CheckBox();
-            this.boxRecBeu = new System.Windows.Forms.CheckBox();
-            this.boxRecBun = new System.Windows.Forms.CheckBox();
             this.btnDebug9 = new System.Windows.Forms.Button();
             this.btnDebug8 = new System.Windows.Forms.Button();
             this.btnDebug7 = new System.Windows.Forms.Button();
@@ -83,16 +80,10 @@
             this.switchBoutonIO = new Composants.SwitchBouton();
             this.switchBoutonMiwi = new Composants.SwitchBouton();
             this.switchBoutonPi = new Composants.SwitchBouton();
-            this.switchBoutonBun = new Composants.SwitchBouton();
-            this.switchBoutonBeu = new Composants.SwitchBouton();
             this.RecMove = new System.Windows.Forms.Label();
             this.label15 = new System.Windows.Forms.Label();
             this.label16 = new System.Windows.Forms.Label();
             this.label17 = new System.Windows.Forms.Label();
-            this.label18 = new System.Windows.Forms.Label();
-            this.label19 = new System.Windows.Forms.Label();
-            this.label20 = new System.Windows.Forms.Label();
-            this.switchBoutonBoi = new Composants.SwitchBouton();
             this.groupBox7 = new System.Windows.Forms.GroupBox();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
@@ -127,7 +118,7 @@
             // boxMiwi
             // 
             this.boxMiwi.AutoSize = true;
-            this.boxMiwi.Location = new System.Drawing.Point(95, 26);
+            this.boxMiwi.Location = new System.Drawing.Point(116, 26);
             this.boxMiwi.Name = "boxMiwi";
             this.boxMiwi.Size = new System.Drawing.Size(67, 17);
             this.boxMiwi.TabIndex = 4;
@@ -288,9 +279,6 @@
             // 
             this.groupBox3.Controls.Add(this.groupBox6);
             this.groupBox3.Controls.Add(this.boxRecPi);
-            this.groupBox3.Controls.Add(this.boxRecBoi);
-            this.groupBox3.Controls.Add(this.boxRecBeu);
-            this.groupBox3.Controls.Add(this.boxRecBun);
             this.groupBox3.Controls.Add(this.btnDebug9);
             this.groupBox3.Controls.Add(this.btnDebug8);
             this.groupBox3.Controls.Add(this.btnDebug7);
@@ -371,42 +359,12 @@
             // boxRecPi
             // 
             this.boxRecPi.AutoSize = true;
-            this.boxRecPi.Location = new System.Drawing.Point(225, 26);
+            this.boxRecPi.Location = new System.Drawing.Point(305, 26);
             this.boxRecPi.Name = "boxRecPi";
             this.boxRecPi.Size = new System.Drawing.Size(55, 17);
             this.boxRecPi.TabIndex = 30;
             this.boxRecPi.Text = "RecPi";
             this.boxRecPi.UseVisualStyleBackColor = true;
-            // 
-            // boxRecBoi
-            // 
-            this.boxRecBoi.AutoSize = true;
-            this.boxRecBoi.Location = new System.Drawing.Point(414, 26);
-            this.boxRecBoi.Name = "boxRecBoi";
-            this.boxRecBoi.Size = new System.Drawing.Size(61, 17);
-            this.boxRecBoi.TabIndex = 29;
-            this.boxRecBoi.Text = "RecBoi";
-            this.boxRecBoi.UseVisualStyleBackColor = true;
-            // 
-            // boxRecBeu
-            // 
-            this.boxRecBeu.AutoSize = true;
-            this.boxRecBeu.Location = new System.Drawing.Point(351, 26);
-            this.boxRecBeu.Name = "boxRecBeu";
-            this.boxRecBeu.Size = new System.Drawing.Size(65, 17);
-            this.boxRecBeu.TabIndex = 28;
-            this.boxRecBeu.Text = "RecBeu";
-            this.boxRecBeu.UseVisualStyleBackColor = true;
-            // 
-            // boxRecBun
-            // 
-            this.boxRecBun.AutoSize = true;
-            this.boxRecBun.Location = new System.Drawing.Point(288, 26);
-            this.boxRecBun.Name = "boxRecBun";
-            this.boxRecBun.Size = new System.Drawing.Size(65, 17);
-            this.boxRecBun.TabIndex = 27;
-            this.boxRecBun.Text = "RecBun";
-            this.boxRecBun.UseVisualStyleBackColor = true;
             // 
             // btnDebug9
             // 
@@ -530,7 +488,7 @@
             // boxIO
             // 
             this.boxIO.AutoSize = true;
-            this.boxIO.Location = new System.Drawing.Point(168, 26);
+            this.boxIO.Location = new System.Drawing.Point(221, 26);
             this.boxIO.Name = "boxIO";
             this.boxIO.Size = new System.Drawing.Size(57, 17);
             this.boxIO.TabIndex = 7;
@@ -685,26 +643,6 @@
             this.switchBoutonPi.TabIndex = 19;
             this.switchBoutonPi.ChangementEtat += new System.EventHandler(this.switchBoutonConnexion_ChangementEtat);
             // 
-            // switchBoutonBun
-            // 
-            this.switchBoutonBun.BackColor = System.Drawing.Color.Transparent;
-            this.switchBoutonBun.Location = new System.Drawing.Point(119, 117);
-            this.switchBoutonBun.Name = "switchBoutonBun";
-            this.switchBoutonBun.Size = new System.Drawing.Size(35, 15);
-            this.switchBoutonBun.Symetrique = true;
-            this.switchBoutonBun.TabIndex = 20;
-            this.switchBoutonBun.ChangementEtat += new System.EventHandler(this.switchBoutonConnexion_ChangementEtat);
-            // 
-            // switchBoutonBeu
-            // 
-            this.switchBoutonBeu.BackColor = System.Drawing.Color.Transparent;
-            this.switchBoutonBeu.Location = new System.Drawing.Point(119, 138);
-            this.switchBoutonBeu.Name = "switchBoutonBeu";
-            this.switchBoutonBeu.Size = new System.Drawing.Size(35, 15);
-            this.switchBoutonBeu.Symetrique = true;
-            this.switchBoutonBeu.TabIndex = 21;
-            this.switchBoutonBeu.ChangementEtat += new System.EventHandler(this.switchBoutonConnexion_ChangementEtat);
-            // 
             // RecMove
             // 
             this.RecMove.AutoSize = true;
@@ -741,62 +679,19 @@
             this.label17.TabIndex = 24;
             this.label17.Text = "RecPi";
             // 
-            // label18
-            // 
-            this.label18.AutoSize = true;
-            this.label18.Location = new System.Drawing.Point(42, 119);
-            this.label18.Name = "label18";
-            this.label18.Size = new System.Drawing.Size(46, 13);
-            this.label18.TabIndex = 25;
-            this.label18.Text = "RecBun";
-            // 
-            // label19
-            // 
-            this.label19.AutoSize = true;
-            this.label19.Location = new System.Drawing.Point(42, 140);
-            this.label19.Name = "label19";
-            this.label19.Size = new System.Drawing.Size(46, 13);
-            this.label19.TabIndex = 26;
-            this.label19.Text = "RecBeu";
-            // 
-            // label20
-            // 
-            this.label20.AutoSize = true;
-            this.label20.Location = new System.Drawing.Point(42, 161);
-            this.label20.Name = "label20";
-            this.label20.Size = new System.Drawing.Size(42, 13);
-            this.label20.TabIndex = 28;
-            this.label20.Text = "RecBoi";
-            // 
-            // switchBoutonBoi
-            // 
-            this.switchBoutonBoi.BackColor = System.Drawing.Color.Transparent;
-            this.switchBoutonBoi.Location = new System.Drawing.Point(119, 159);
-            this.switchBoutonBoi.Name = "switchBoutonBoi";
-            this.switchBoutonBoi.Size = new System.Drawing.Size(35, 15);
-            this.switchBoutonBoi.Symetrique = true;
-            this.switchBoutonBoi.TabIndex = 27;
-            this.switchBoutonBoi.ChangementEtat += new System.EventHandler(this.switchBoutonConnexion_ChangementEtat);
-            // 
             // groupBox7
             // 
             this.groupBox7.Controls.Add(this.switchBoutonMove);
-            this.groupBox7.Controls.Add(this.label20);
             this.groupBox7.Controls.Add(this.switchBoutonIO);
-            this.groupBox7.Controls.Add(this.switchBoutonBoi);
             this.groupBox7.Controls.Add(this.switchBoutonMiwi);
-            this.groupBox7.Controls.Add(this.label19);
             this.groupBox7.Controls.Add(this.switchBoutonPi);
-            this.groupBox7.Controls.Add(this.label18);
-            this.groupBox7.Controls.Add(this.switchBoutonBun);
             this.groupBox7.Controls.Add(this.label17);
-            this.groupBox7.Controls.Add(this.switchBoutonBeu);
             this.groupBox7.Controls.Add(this.label16);
             this.groupBox7.Controls.Add(this.RecMove);
             this.groupBox7.Controls.Add(this.label15);
             this.groupBox7.Location = new System.Drawing.Point(235, 233);
             this.groupBox7.Name = "groupBox7";
-            this.groupBox7.Size = new System.Drawing.Size(200, 199);
+            this.groupBox7.Size = new System.Drawing.Size(200, 134);
             this.groupBox7.TabIndex = 29;
             this.groupBox7.TabStop = false;
             this.groupBox7.Text = "Activation connexions";
@@ -878,9 +773,6 @@
         private System.Windows.Forms.Button btnDebug1;
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.Button btnDebug0;
-        private System.Windows.Forms.CheckBox boxRecBoi;
-        private System.Windows.Forms.CheckBox boxRecBeu;
-        private System.Windows.Forms.CheckBox boxRecBun;
         private System.Windows.Forms.CheckBox boxRecPi;
         private System.Windows.Forms.GroupBox groupBox6;
         private System.Windows.Forms.Label label10;
@@ -891,16 +783,10 @@
         private Composants.SwitchBouton switchBoutonIO;
         private Composants.SwitchBouton switchBoutonMiwi;
         private Composants.SwitchBouton switchBoutonPi;
-        private Composants.SwitchBouton switchBoutonBun;
-        private Composants.SwitchBouton switchBoutonBeu;
         private System.Windows.Forms.Label RecMove;
         private System.Windows.Forms.Label label15;
         private System.Windows.Forms.Label label16;
         private System.Windows.Forms.Label label17;
-        private System.Windows.Forms.Label label18;
-        private System.Windows.Forms.Label label19;
-        private System.Windows.Forms.Label label20;
-        private Composants.SwitchBouton switchBoutonBoi;
         private System.Windows.Forms.GroupBox groupBox7;
     }
 }

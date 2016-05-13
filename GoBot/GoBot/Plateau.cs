@@ -32,20 +32,18 @@ namespace GoBot
         public static int RayonAdversaireInitial { get; set; }
         public static int RayonAdversaire { get; set; }
 
-        public static Balise Balise1 { get; set; }
-        public static Balise Balise2 { get; set; }
-        public static Balise Balise3 { get; set; }
-        public static InterpreteurBalise InterpreteurBalise { get; set; }
+        public static Balise Balise { get; set; }
 
         public static Enchainement Enchainement { get; set; }
         public static Poids PoidActions { get; set; }
 
-        public static List<IForme> ObstaclesFixes { get; set; }
-        public static List<IForme> ObstaclesTemporaires { get; set; }
-        public static List<IForme> ObstaclesCrees { get; set; }
+        public static List<IForme> ObstaclesPlateau { get; set; }
+        public static List<IForme> ObstaclesBalise { get; set; }
+
         public static PointReel PositionCibleGros { get; set; }
         public static PointReel PositionCiblePetit { get; set; }
 
+        public static Elements Elements { get; protected set; }
 
         public static List<ElementJeu> ElementsJeu { get; private set; }
 
@@ -62,20 +60,6 @@ namespace GoBot
                     //Robots.PetitRobot.Init();
                     if (NotreCouleurChange != null)
                         NotreCouleurChange(null, null);
-
-
-                    if (Plateau.NotreCouleur == Plateau.CouleurDroiteVert)
-                    {
-                        Balise.GetBalise(Carte.RecBeu).Position = new Position(new Angle(90, AnglyeType.Degre), new PointReel(Plateau.LongueurPlateau + Balise.DISTANCE_LASER_TABLE, -Balise.DISTANCE_LASER_TABLE));
-                        Balise.GetBalise(Carte.RecBun).Position = new Position(new Angle(270, AnglyeType.Degre), new PointReel(Plateau.LongueurPlateau + Balise.DISTANCE_LASER_TABLE, Plateau.LargeurPlateau + Balise.DISTANCE_LASER_TABLE));
-                        Balise.GetBalise(Carte.RecBoi).Position = new Position(new Angle(0, AnglyeType.Degre), new PointReel(-Balise.DISTANCE_LASER_TABLE, Plateau.LargeurPlateau / 2));
-                    }
-                    else
-                    {
-                        Balise.GetBalise(Carte.RecBun).Position = new Position(new Angle(90, AnglyeType.Degre), new PointReel(-Balise.DISTANCE_LASER_TABLE, -Balise.DISTANCE_LASER_TABLE));
-                        Balise.GetBalise(Carte.RecBeu).Position = new Position(new Angle(270, AnglyeType.Degre), new PointReel(-Balise.DISTANCE_LASER_TABLE, Plateau.LargeurPlateau + Balise.DISTANCE_LASER_TABLE));
-                        Balise.GetBalise(Carte.RecBoi).Position = new Position(new Angle(180, AnglyeType.Degre), new PointReel(Plateau.LongueurPlateau + Balise.DISTANCE_LASER_TABLE, Plateau.LargeurPlateau / 2));
-                    }
                 }
             }
         }
@@ -120,8 +104,8 @@ namespace GoBot
             get
             {
                 List<IForme> toutObstacles = new List<IForme>();
-                toutObstacles.AddRange(ObstaclesFixes);
-                toutObstacles.AddRange(ObstaclesTemporaires);
+                toutObstacles.AddRange(ObstaclesPlateau);
+                toutObstacles.AddRange(ObstaclesBalise);
                 //toutObstacles.AddRange(ObstaclesPieds);
                 return toutObstacles;
             }
@@ -132,14 +116,14 @@ namespace GoBot
             if (!Config.DesignMode)
             {
                 EtapeDune = 0;
+                Elements = new Elements();
                 ObstaclesPieds = new IForme[0];
                 RayonAdversaireInitial = 200;
                 RayonAdversaire = RayonAdversaireInitial;
-                ObstaclesCrees = new List<IForme>();
 
                 ReflecteursNosRobots = true;
 
-                ObstaclesTemporaires = new List<IForme>();
+                ObstaclesBalise = new List<IForme>();
 
                 ChargerObstacles();
                 CreerSommets(110);
@@ -147,9 +131,8 @@ namespace GoBot
                 
                 //ChargerGraph();
 
-                InterpreteurBalise = new InterpreteurBalise();
-                InterpreteurBalise.PositionEnnemisActualisee += new InterpreteurBalise.PositionEnnemisDelegate(interpreteBalise_PositionEnnemisActualisee);
-                //SuiviBalise.PositionEnnemisActualisee += new Balises.SuiviBalise.PositionEnnemisDelegate(interpreteBalise_PositionEnnemisActualisee);
+                Balise.PositionEnnemisActualisee += Balise_PositionEnnemisActualisee;
+                    //SuiviBalise.PositionEnnemisActualisee += new Balises.SuiviBalise.PositionEnnemisDelegate(interpreteBalise_PositionEnnemisActualisee);
                 InitElementsJeu();
 
                 Random random = new Random();
@@ -158,6 +141,45 @@ namespace GoBot
                 thCollisions = new Thread(ThreadTestCollisions);
                 thCollisions.Start();
             }
+        }
+
+        void Balise_PositionEnnemisActualisee(List<PointReel> positions)
+        {
+            // Positions ennemies signalées par la balise
+
+            Synchronizer.Lock(ObstaclesBalise);
+            ObstaclesBalise.Clear();
+
+            int vitesseMax = Config.CurrentConfig.GRVitesseLigneRapide;
+
+            for (int i = 0; i < positions.Count; i++)
+            {
+                PointReel coordonnees = new PointReel(positions[i].X, positions[i].Y);
+                AjouterObstacle(new Cercle(coordonnees, RayonAdversaire));
+
+                if (Plateau.Enchainement == null)
+                {
+                    // Tester ici ce qu'il y a à tester en fonction de la position de l'ennemi AVANT de lancer le match
+                }
+                else
+                {
+                    // Tester ici ce qu'il y a à tester en fonction de la position de l'ennemi PENDANT le match
+
+                    if (Robots.GrosRobot.VitesseAdaptableEnnemi)
+                    {
+                        double distanceAdv = Robots.GrosRobot.Position.Coordonnees.Distance(coordonnees);
+                        if (distanceAdv < 1500)
+                        {
+                            vitesseMax = (int)(Math.Min(vitesseMax, (distanceAdv - 300) / 1000.0 * Config.CurrentConfig.GRVitesseLigneRapide));
+                        }
+                    }
+                }
+            }
+            Synchronizer.Unlock(ObstaclesBalise);
+
+            Robots.GrosRobot.MajGraphFranchissable();
+
+            SemaphoreCollisions.Release();
         }
 
         public static void InitElementsJeu()
@@ -172,9 +194,7 @@ namespace GoBot
 
         public static void Init()
         {
-            Balise1 = new Balise(Carte.RecBun);
-            Balise2 = new Balise(Carte.RecBeu);
-            Balise3 = new Balise(Carte.RecBoi);
+            Balise = new Balise();
 
             PositionCiblePetit = Robots.PetitRobot.Position.Coordonnees;
             PositionCibleGros = Robots.GrosRobot.Position.Coordonnees;
@@ -196,7 +216,7 @@ namespace GoBot
         public void ObstacleTest(int x, int y)
         {
             // Obstacle de simulation
-            ObstaclesTemporaires.Clear();
+            ObstaclesBalise.Clear();
             PointReel coordonnees = new PointReel(x, y);
 
             Console.Write(" Ajout obstacle");
@@ -210,49 +230,6 @@ namespace GoBot
             {
                 // Tester ici ce qu'il y a à tester en fonction de la position de l'ennemi PENDANT le match
             }
-
-            SemaphoreCollisions.Release();
-        }
-
-        void interpreteBalise_PositionEnnemisActualisee(InterpreteurBalise interpreteur)
-        {
-            // Position ennemie signalée
-
-            Synchronizer.Lock(ObstaclesTemporaires);
-            ObstaclesTemporaires.Clear();
-
-            int vitesseMax = Config.CurrentConfig.GRVitesseLigneRapide;
-
-            for (int i = 0; i < interpreteur.PositionsEnnemies.Count; i++)
-            {
-                PointReel coordonnees = new PointReel(interpreteur.PositionsEnnemies[i].X, interpreteur.PositionsEnnemies[i].Y);
-                AjouterObstacle(new Cercle(coordonnees, RayonAdversaire));
-
-                if (Plateau.Enchainement == null)
-                {
-                    // Tester ici ce qu'il y a à tester en fonction de la position de l'ennemi AVANT de lancer le match
-                }
-                else
-                {
-                    // Tester ici ce qu'il y a à tester en fonction de la position de l'ennemi PENDANT le match
-
-                    if (Robots.GrosRobot.VitesseAdaptableEnnemi)
-                    {
-                        double distanceAdv = Robots.GrosRobot.Position.Coordonnees.Distance(coordonnees);
-                        if (distanceAdv < 1500)
-                        {
-                            vitesseMax = (int)(Math.Min(vitesseMax, (distanceAdv - 300) / 1000.0 * Config.CurrentConfig.GRVitesseLigneRapide));
-                        }
-                    }
-                }
-            }
-            Synchronizer.Unlock(ObstaclesTemporaires);
-
-            //if (Plateau.Enchainement != null && (DateTime.Now - Plateau.Enchainement.DebutMatch).TotalSeconds > 10)
-            //    Robots.GrosRobot.VitesseDeplacement = vitesseMax;
-
-
-            Robots.GrosRobot.MajGraphFranchissable();
 
             SemaphoreCollisions.Release();
         }
@@ -279,12 +256,12 @@ namespace GoBot
         public static void AjouterObstacle(IForme obstacle, bool fixe = false, bool majGraph = false)
         {
             if (majGraph)
-                ObstaclesTemporaires.Clear();
+                ObstaclesBalise.Clear();
 
             if (fixe)
-                ObstaclesFixes.Add(obstacle);
+                ObstaclesPlateau.Add(obstacle);
             else
-                ObstaclesTemporaires.Add(obstacle);
+                ObstaclesBalise.Add(obstacle);
         }
 
         /// <summary>
@@ -349,19 +326,19 @@ namespace GoBot
             // Création des noeuds
             for (int x = resolution / 2; x < LongueurPlateau; x += resolution)
                 for (int y = resolution / 2; y < LargeurPlateau; y += resolution)
-                    Robots.GrosRobot.Graph.AddNode(new Node(x, y, 0), Plateau.ObstaclesFixes, Robots.GrosRobot.Rayon, Math.Sqrt(resolution * resolution * 2) + 1, true);
+                    Robots.GrosRobot.Graph.AddNode(new Node(x, y, 0), Plateau.ObstaclesPlateau, Robots.GrosRobot.Rayon, Math.Sqrt(resolution * resolution * 2) + 1, true);
 
             Robots.PetitRobot.Graph = new Graph();
 
             // Création des noeuds
             for (int x = resolution / 2; x < LongueurPlateau; x += resolution)
                 for (int y = resolution / 2; y < LargeurPlateau; y += resolution)
-                    Robots.PetitRobot.Graph.AddNode(new Node(x, y, 0), Plateau.ObstaclesFixes, Robots.PetitRobot.Rayon, Math.Sqrt(resolution * resolution * 2) + 1, true);
+                    Robots.PetitRobot.Graph.AddNode(new Node(x, y, 0), Plateau.ObstaclesPlateau, Robots.PetitRobot.Rayon, Math.Sqrt(resolution * resolution * 2) + 1, true);
         }
 
         public void ChargerObstacles()
         {
-            ObstaclesFixes = new List<IForme>();
+            ObstaclesPlateau = new List<IForme>();
             List<PointReel> points = new List<PointReel>();
 
             // Contours du plateau
@@ -413,19 +390,6 @@ namespace GoBot
                 return false;
 
             return true;
-        }
-
-        /// <summary>
-        /// Recalle les balises en angle. Necessite qu'un réflecteur à deux étages soit au milieu de la piste
-        /// </summary>
-        public static void RecallageBalises()
-        {
-            Balise1.ReglerOffset(12);
-            Balise2.ReglerOffset(12);
-            Balise3.ReglerOffset(12);
-
-            while (Balise1.ReglageOffset || Balise2.ReglageOffset || Balise3.ReglageOffset)
-                Thread.Sleep(100);
         }
     }
 }

@@ -19,9 +19,22 @@ namespace GoBot.Mouvements
         public MouvementCube1()
         {
             ramasse = false;
-            Robot = Robots.GrosRobot;
-            Element = new ZoneInteret(new PointReel(3000-902, 80), Color.White, 90);
             Positions.Add(new Position(180, new PointReel(446+1378, 298)));
+        }
+
+        public override Color Couleur
+        {
+            get { return Color.White; }
+        }
+
+        public override Robot Robot
+        {
+            get { return Robots.GrosRobot; }
+        }
+
+        public override ElementJeu Element
+        {
+            get { return Plateau.Elements.ZoneCubeGauche; }
         }
 
         public override bool Executer(int timeOut = 0)
@@ -82,7 +95,7 @@ namespace GoBot.Mouvements
             //get { return !ramasse && !Plateau.AvantCharge && !Plateau.ArriereCharge ? 100 : 0; }
         }
 
-        public override double ScorePondere
+        public override double ValeurAction
         {
             get { return Score; }
         }

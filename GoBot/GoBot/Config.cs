@@ -79,12 +79,6 @@ namespace GoBot
         public double BatterieRobotRouge { get; set; } // 21
         public double BatterieRobotCritique { get; set; } // 3
 
-
-        public double BatterieBaliseVert { get; set; } // 8
-        public double BatterieBaliseOrange { get; set; } // 7
-        public double BatterieBaliseRouge { get; set; } // 6
-        public double BatterieBaliseCritique { get; set; } // 3
-
         // Zone camera
 
         public int CameraXMin { get; set; }
@@ -144,44 +138,8 @@ namespace GoBot
 
         // Offset balises
 
-        public double OffsetBaliseGaucheRouge1Capteur1 { get; set; }
-        public double OffsetBaliseGaucheRouge2Capteur1 { get; set; }
-        public double OffsetBaliseGaucheRouge3Capteur1 { get; set; }
-
-        public double OffsetBaliseGaucheRouge1Capteur2 { get; set; }
-        public double OffsetBaliseGaucheRouge2Capteur2 { get; set; }
-        public double OffsetBaliseGaucheRouge3Capteur2 { get; set; }
-
-        public double OffsetBaliseDroiteJaune1Capteur1 { get; set; }
-        public double OffsetBaliseDroiteJaune2Capteur1 { get; set; }
-        public double OffsetBaliseDroiteJaune3Capteur1 { get; set; }
-
-        public double OffsetBaliseDroiteJaune1Capteur2 { get; set; }
-        public double OffsetBaliseDroiteJaune2Capteur2 { get; set; }
-        public double OffsetBaliseDroiteJaune3Capteur2 { get; set; }
-
-        // Servos balises
-
-        public int CourseBunFaceMin { get; set; }
-        public int CourseBunFaceMax { get; set; }
-        public int CourseBunFaceOpti { get; set; }
-        public int CourseBunProfilMin { get; set; }
-        public int CourseBunProfilMax { get; set; }
-        public int CourseBunProfilOpti { get; set; }
-
-        public int CourseBeuFaceMin { get; set; }
-        public int CourseBeuFaceMax { get; set; }
-        public int CourseBeuFaceOpti { get; set; }
-        public int CourseBeuProfilMin { get; set; }
-        public int CourseBeuProfilMax { get; set; }
-        public int CourseBeuProfilOpti { get; set; }
-
-        public int CourseBoiFaceMin { get; set; }
-        public int CourseBoiFaceMax { get; set; }
-        public int CourseBoiFaceOpti { get; set; }
-        public int CourseBoiProfilMin { get; set; }
-        public int CourseBoiProfilMax { get; set; }
-        public int CourseBoiProfilOpti { get; set; }
+        public double OffsetBaliseCapteur1 { get; set; }
+        public double OffsetBaliseCapteur2 { get; set; }
 
         // Parametres logs UDP
 
@@ -193,231 +151,29 @@ namespace GoBot
         public SerializableDictionary<Carte, bool> LogsExpediteurs { get; set; }
         public SerializableDictionary<Carte, bool> LogsDestinataires { get; set; }
 
-        public double GetOffsetBalise(Carte carteBalise, Color couleur, int iCapteur)
+        public double GetOffsetBalise(int iCapteur)
         {
-            if (couleur == Plateau.CouleurGaucheViolet)
+            if (iCapteur == 1)
             {
-                if (iCapteur == 1)
-                {
-                    switch (carteBalise)
-                    {
-                        case Carte.RecBun:
-                            return OffsetBaliseGaucheRouge1Capteur1;
-                        case Carte.RecBeu:
-                            return OffsetBaliseGaucheRouge2Capteur1;
-                        case Carte.RecBoi:
-                            return OffsetBaliseGaucheRouge3Capteur1;
-                        default:
-                            return 0;
-                    }
-                }
-                else if (iCapteur == 2)
-                {
-                    switch (carteBalise)
-                    {
-                        case Carte.RecBun:
-                            return OffsetBaliseGaucheRouge1Capteur2;
-                        case Carte.RecBeu:
-                            return OffsetBaliseGaucheRouge2Capteur2;
-                        case Carte.RecBoi:
-                            return OffsetBaliseGaucheRouge3Capteur2;
-                        default:
-                            return 0;
-                    }
-                }
+                return OffsetBaliseCapteur1;
             }
-            if (couleur == Plateau.CouleurDroiteVert)
+            else if (iCapteur == 2)
             {
-                if (iCapteur == 1)
-                {
-                    switch (carteBalise)
-                    {
-                        case Carte.RecBun:
-                            return OffsetBaliseDroiteJaune1Capteur1;
-                        case Carte.RecBeu:
-                            return OffsetBaliseDroiteJaune2Capteur1;
-                        case Carte.RecBoi:
-                            return OffsetBaliseDroiteJaune3Capteur1;
-                        default:
-                            return 0;
-                    }
-                }
-                else if (iCapteur == 2)
-                {
-                    switch (carteBalise)
-                    {
-                        case Carte.RecBun:
-                            return OffsetBaliseDroiteJaune1Capteur2;
-                        case Carte.RecBeu:
-                            return OffsetBaliseDroiteJaune2Capteur2;
-                        case Carte.RecBoi:
-                            return OffsetBaliseDroiteJaune3Capteur2;
-                        default:
-                            return 0;
-                    }
-                }
+                return OffsetBaliseCapteur2;
             }
 
             return 0;
         }
 
-        public int GetCourseFaceMin(Carte carteBalise)
+        public void SetOffsetBalise(int iCapteur, double offset)
         {
-            switch (carteBalise)
+            if (iCapteur == 1)
             {
-                case Carte.RecBun:
-                    return CourseBunFaceMin;
-                case Carte.RecBeu:
-                    return CourseBeuFaceMin;
-                case Carte.RecBoi:
-                    return CourseBoiFaceMin;
-                default:
-                    return 0;
+                OffsetBaliseCapteur1 = offset;
             }
-        }
-
-        public int GetCourseFaceMax(Carte carteBalise)
-        {
-            switch (carteBalise)
+            else if (iCapteur == 2)
             {
-                case Carte.RecBun:
-                    return CourseBunFaceMax;
-                case Carte.RecBeu:
-                    return CourseBeuFaceMax;
-                case Carte.RecBoi:
-                    return CourseBoiFaceMax;
-                default:
-                    return 0;
-            }
-        }
-
-        public int GetCourseFaceOpti(Carte carteBalise)
-        {
-            switch (carteBalise)
-            {
-                case Carte.RecBun:
-                    return CourseBunFaceOpti;
-                case Carte.RecBeu:
-                    return CourseBeuFaceOpti;
-                case Carte.RecBoi:
-                    return CourseBoiFaceOpti;
-                default:
-                    return 0;
-            }
-        }
-
-        public int GetCourseProfilMin(Carte carteBalise)
-        {
-            switch (carteBalise)
-            {
-                case Carte.RecBun:
-                    return CourseBunProfilMin;
-                case Carte.RecBeu:
-                    return CourseBeuProfilMin;
-                case Carte.RecBoi:
-                    return CourseBoiProfilMin;
-                default:
-                    return 0;
-            }
-        }
-
-        public int GetCourseProfilMax(Carte carteBalise)
-        {
-            switch (carteBalise)
-            {
-                case Carte.RecBun:
-                    return CourseBunProfilMax;
-                case Carte.RecBeu:
-                    return CourseBeuProfilMax;
-                case Carte.RecBoi:
-                    return CourseBoiProfilMax;
-                default:
-                    return 0;
-            }
-        }
-
-        public int GetCourseProfilOpti(Carte carteBalise)
-        {
-            switch (carteBalise)
-            {
-                case Carte.RecBun:
-                    return CourseBunProfilOpti;
-                case Carte.RecBeu:
-                    return CourseBeuProfilOpti;
-                case Carte.RecBoi:
-                    return CourseBoiProfilOpti;
-                default:
-                    return 0;
-            }
-        }
-
-        public void SetOffsetBalise(Carte carteBalise, Color couleur, int iCapteur, double offset)
-        {
-            if (couleur == Plateau.CouleurGaucheViolet)
-            {
-                if (iCapteur == 1)
-                {
-                    switch (carteBalise)
-                    {
-                        case Carte.RecBun:
-                            OffsetBaliseGaucheRouge1Capteur1 = offset;
-                            break;
-                        case Carte.RecBeu:
-                            OffsetBaliseGaucheRouge2Capteur1 = offset;
-                            break;
-                        case Carte.RecBoi:
-                            OffsetBaliseGaucheRouge3Capteur1 = offset;
-                            break;
-                    }
-                }
-                else if (iCapteur == 2)
-                {
-                    switch (carteBalise)
-                    {
-                        case Carte.RecBun:
-                            OffsetBaliseGaucheRouge1Capteur2 = offset;
-                            break;
-                        case Carte.RecBeu:
-                            OffsetBaliseGaucheRouge2Capteur2 = offset;
-                            break;
-                        case Carte.RecBoi:
-                            OffsetBaliseGaucheRouge3Capteur2 = offset;
-                            break;
-                    }
-                }
-            }
-            if (couleur == Plateau.CouleurDroiteVert)
-            {
-                if (iCapteur == 1)
-                {
-                    switch (carteBalise)
-                    {
-                        case Carte.RecBun:
-                            OffsetBaliseDroiteJaune1Capteur1 = offset;
-                            break;
-                        case Carte.RecBeu:
-                            OffsetBaliseDroiteJaune2Capteur1 = offset;
-                            break;
-                        case Carte.RecBoi:
-                            OffsetBaliseDroiteJaune3Capteur1 = offset;
-                            break;
-                    }
-                }
-                else if (iCapteur == 2)
-                {
-                    switch (carteBalise)
-                    {
-                        case Carte.RecBun:
-                            OffsetBaliseDroiteJaune1Capteur2 = offset;
-                            break;
-                        case Carte.RecBeu:
-                            OffsetBaliseDroiteJaune2Capteur2 = offset;
-                            break;
-                        case Carte.RecBoi:
-                            OffsetBaliseDroiteJaune3Capteur2 = offset;
-                            break;
-                    }
-                }
+                OffsetBaliseCapteur2 = offset;
             }
         }
 

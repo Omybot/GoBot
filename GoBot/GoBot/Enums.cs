@@ -88,9 +88,7 @@ namespace GoBot
         RecMiwi = 0xC2,
         RecPi = 0xC3,
         RecIO = 0xC4,
-        RecBun = 0xB1,
-        RecBeu = 0xB2,
-        RecBoi = 0xB3
+        Balise = 0xB1
     }
 
     public enum ServoBaudrate

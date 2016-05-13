@@ -185,7 +185,7 @@ namespace GoBot.Devices
 
                     Droite interpol = new Droite(pointsBordure);
 
-                    Plateau.ObstaclesFixes.Add(interpol);
+                    Plateau.ObstaclesPlateau.Add(interpol);
 
                     Console.WriteLine(new Angle(Math.Atan(interpol.A), AnglyeType.Radian).AngleDegresPositif - 270);
 

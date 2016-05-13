@@ -104,7 +104,7 @@ namespace AStarFolder
                 return 0;
 
             // Teste si le noeud est franchissable avec la liste des obstacles
-            foreach (IForme obstacle in Plateau.ObstaclesFixes)
+            foreach (IForme obstacle in Plateau.ObstaclesPlateau)
             {
                 if (obstacle.Distance(new PointReel(node.X, node.Y)) < distanceSecurite)
                 {

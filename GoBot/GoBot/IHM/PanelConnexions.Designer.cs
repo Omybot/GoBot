@@ -34,11 +34,11 @@
             this.lblRecMove = new System.Windows.Forms.Label();
             this.ledRecMove = new Composants.IndicateurConnexion();
             this.ledRecIO = new Composants.IndicateurConnexion();
-            this.ledRecBun = new Composants.IndicateurConnexion();
+            this.ledBalise = new Composants.IndicateurConnexion();
             this.batteriePack2 = new Composants.Batterie();
             ((System.ComponentModel.ISupportInitialize)(this.ledRecMove)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.ledRecIO)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.ledRecBun)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.ledBalise)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.batteriePack2)).BeginInit();
             this.SuspendLayout();
             // 
@@ -94,13 +94,13 @@
             // 
             // ledRecBun
             // 
-            this.ledRecBun.Etat = false;
-            this.ledRecBun.Image = ((System.Drawing.Image)(resources.GetObject("ledRecBun.Image")));
-            this.ledRecBun.Location = new System.Drawing.Point(310, 7);
-            this.ledRecBun.Name = "ledRecBun";
-            this.ledRecBun.Size = new System.Drawing.Size(16, 16);
-            this.ledRecBun.TabIndex = 93;
-            this.ledRecBun.TabStop = false;
+            this.ledBalise.Etat = false;
+            this.ledBalise.Image = ((System.Drawing.Image)(resources.GetObject("ledRecBun.Image")));
+            this.ledBalise.Location = new System.Drawing.Point(310, 7);
+            this.ledBalise.Name = "ledRecBun";
+            this.ledBalise.Size = new System.Drawing.Size(16, 16);
+            this.ledBalise.TabIndex = 93;
+            this.ledBalise.TabStop = false;
             // 
             // batteriePack2
             // 
@@ -124,7 +124,7 @@
             this.BackColor = System.Drawing.Color.White;
             this.Controls.Add(this.ledRecMove);
             this.Controls.Add(this.ledRecIO);
-            this.Controls.Add(this.ledRecBun);
+            this.Controls.Add(this.ledBalise);
             this.Controls.Add(this.batteriePack2);
             this.Controls.Add(this.lblBalise);
             this.Controls.Add(this.lblRecIO);
@@ -134,7 +134,7 @@
             this.Load += new System.EventHandler(this.PanelConnexions_Load);
             ((System.ComponentModel.ISupportInitialize)(this.ledRecMove)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.ledRecIO)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.ledRecBun)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.ledBalise)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.batteriePack2)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
@@ -147,7 +147,7 @@
         private System.Windows.Forms.Label lblRecIO;
         private System.Windows.Forms.Label lblRecMove;
         private Composants.Batterie batteriePack2;
-        private Composants.IndicateurConnexion ledRecBun;
+        private Composants.IndicateurConnexion ledBalise;
         private Composants.IndicateurConnexion ledRecIO;
         private Composants.IndicateurConnexion ledRecMove;
 

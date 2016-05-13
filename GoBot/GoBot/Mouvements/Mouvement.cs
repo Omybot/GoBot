@@ -13,12 +13,12 @@ namespace GoBot.Mouvements
     {
         public abstract bool Executer(int timeOut = 0);
         public abstract double Score { get; }
-        public abstract double ScorePondere { get; }
+        public abstract double ValeurAction { get; }
         public List<Position> Positions { get; protected set; }
-        public ElementJeu Element { get; protected set; }
-        public Robot Robot { get; set; }
+        public abstract ElementJeu Element { get; }
+        public abstract Robot Robot { get; }
         public DateTime DateMinimum { get; set; }
-        public Color Couleur { get; set; }
+        public abstract Color Couleur { get; }
 
         public Mouvement()
         {
@@ -56,7 +56,7 @@ namespace GoBot.Mouvements
                 {
                     double distancePosition = Robot.Position.Coordonnees.Distance(position.Coordonnees); 
                     
-                    List<IForme> obstacles = new List<IForme>(Plateau.ObstaclesTemporaires);
+                    List<IForme> obstacles = new List<IForme>(Plateau.ObstaclesBalise);
                     foreach (Cercle c in obstacles)
                     {
                         double distanceAdv = position.Coordonnees.Distance(c.Centre) / 10;
@@ -85,7 +85,7 @@ namespace GoBot.Mouvements
                 if (DateMinimum != null && DateMinimum > DateTime.Now)
                     return double.MaxValue;
 
-                if (ScorePondere <= 0 && Positions.Count < 1)
+                if (ValeurAction <= 0 && Positions.Count < 1)
                     return double.MaxValue;
 
                 Position position = PositionProche;
@@ -94,10 +94,10 @@ namespace GoBot.Mouvements
                     return double.MaxValue;
 
                 double distance = Robot.Position.Coordonnees.Distance(position.Coordonnees) / 10;
-                double cout = distance / ScorePondere;
+                double cout = distance / ValeurAction;
                 bool adversairePlusProche = false;
 
-                List<IForme> obstacles = new List<IForme>(Plateau.ObstaclesTemporaires);
+                List<IForme> obstacles = new List<IForme>(Plateau.ObstaclesBalise);
                 foreach (Cercle c in obstacles)
                 {
                     double distanceAdv = position.Coordonnees.Distance(c.Centre) / 10;

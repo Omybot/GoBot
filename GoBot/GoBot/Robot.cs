@@ -399,8 +399,8 @@ namespace GoBot
                     {
                         segmentsTrajectoire.Add(TrajectoireEnCours.Segments[iSegment]);
                     }
-                    Synchronizer.Lock(Plateau.ObstaclesTemporaires);
-                    foreach (IForme forme in Plateau.ObstaclesTemporaires)
+                    Synchronizer.Lock(Plateau.ObstaclesBalise);
+                    foreach (IForme forme in Plateau.ObstaclesBalise)
                     {
                         foreach (Segment segment in segmentsTrajectoire)
                         {
@@ -414,12 +414,12 @@ namespace GoBot
 
                                 if (DeplacementLigne)
                                     Stop();
-                                Synchronizer.Unlock(Plateau.ObstaclesTemporaires);
+                                Synchronizer.Unlock(Plateau.ObstaclesBalise);
                                 return false;
                             }
                         }
                     }
-                    Synchronizer.Unlock(Plateau.ObstaclesTemporaires);
+                    Synchronizer.Unlock(Plateau.ObstaclesBalise);
                 }
             }
             catch (Exception)
@@ -434,8 +434,7 @@ namespace GoBot
         {
             Synchronizer.Lock(Graph);
 
-            List<IForme> obstacles = new List<IForme>(Plateau.ObstaclesTemporaires);
-            obstacles.AddRange(Plateau.ObstaclesCrees);
+            List<IForme> obstacles = new List<IForme>(Plateau.ObstaclesBalise);
 
             foreach (Arc arc in Graph.Arcs)
                 arc.Passable = true;

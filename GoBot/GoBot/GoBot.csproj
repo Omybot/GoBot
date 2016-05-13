@@ -123,6 +123,7 @@
     <Compile Include="Devices\PololuMiniUart.cs" />
     <Compile Include="Devices\PololuMiniUsb.cs" />
     <Compile Include="ElementsJeu\ElementJeu.cs" />
+    <Compile Include="ElementsJeu\Elements.cs" />
     <Compile Include="ElementsJeu\ZoneInteret.cs" />
     <Compile Include="Enchainements\EnchainementAllerRetour.cs" />
     <Compile Include="Enchainements\EnchainementHomologation.cs" />
@@ -137,23 +138,11 @@
     <Compile Include="IHM\PanelAnalogique.Designer.cs">
       <DependentUpon>PanelAnalogique.cs</DependentUpon>
     </Compile>
-    <Compile Include="IHM\PanelBaliseUnique.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="IHM\PanelBaliseUnique.Designer.cs">
-      <DependentUpon>PanelBaliseUnique.cs</DependentUpon>
-    </Compile>
     <Compile Include="IHM\PanelConstantes.cs">
       <SubType>UserControl</SubType>
     </Compile>
     <Compile Include="IHM\PanelConstantes.Designer.cs">
       <DependentUpon>PanelConstantes.cs</DependentUpon>
-    </Compile>
-    <Compile Include="IHM\PanelBaliseInclinaison.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="IHM\PanelBaliseInclinaison.Designer.cs">
-      <DependentUpon>PanelBaliseInclinaison.cs</DependentUpon>
     </Compile>
     <Compile Include="IHM\PanelAlimentation.cs">
       <SubType>UserControl</SubType>
@@ -214,18 +203,6 @@
     </Compile>
     <Compile Include="IHM\PanelBaliseDiagnostic.Designer.cs">
       <DependentUpon>PanelBaliseDiagnostic.cs</DependentUpon>
-    </Compile>
-    <Compile Include="IHM\PanelBalisesImages.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="IHM\PanelBalisesImages.Designer.cs">
-      <DependentUpon>PanelBalisesImages.cs</DependentUpon>
-    </Compile>
-    <Compile Include="IHM\PanelBaliseImage.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="IHM\PanelBaliseImage.Designer.cs">
-      <DependentUpon>PanelBaliseImage.cs</DependentUpon>
     </Compile>
     <Compile Include="IHM\PanelPetitRobotUtilisation.cs">
       <SubType>UserControl</SubType>
@@ -373,7 +350,6 @@
     <Compile Include="IHM\PanelTable.Designer.cs">
       <DependentUpon>PanelTable.cs</DependentUpon>
     </Compile>
-    <Compile Include="Balises\InterpreteurBalise.cs" />
     <Compile Include="IHM\Fenetre.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -411,14 +387,8 @@
     <EmbeddedResource Include="IHM\PanelAnalogique.resx">
       <DependentUpon>PanelAnalogique.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="IHM\PanelBaliseUnique.resx">
-      <DependentUpon>PanelBaliseUnique.cs</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="IHM\PanelConstantes.resx">
       <DependentUpon>PanelConstantes.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="IHM\PanelBaliseInclinaison.resx">
-      <DependentUpon>PanelBaliseInclinaison.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="IHM\PanelAlimentation.resx">
       <DependentUpon>PanelAlimentation.cs</DependentUpon>
@@ -449,12 +419,6 @@
     </EmbeddedResource>
     <EmbeddedResource Include="IHM\PanelBaliseDiagnostic.resx">
       <DependentUpon>PanelBaliseDiagnostic.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="IHM\PanelBalisesImages.resx">
-      <DependentUpon>PanelBalisesImages.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="IHM\PanelBaliseImage.resx">
-      <DependentUpon>PanelBaliseImage.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="IHM\PanelPetitRobotUtilisation.resx">
       <DependentUpon>PanelPetitRobotUtilisation.cs</DependentUpon>

@@ -777,9 +777,7 @@ namespace GoBot.Communications
                                 break;
                         }
                         break;
-                    case (byte)Carte.RecBeu:
-                    case (byte)Carte.RecBoi:
-                    case (byte)Carte.RecBun:
+                    case (byte)Carte.Balise:
                         switch ((FonctionBalise)trame[1])
                         {
                             case FonctionBalise.Initialisation:

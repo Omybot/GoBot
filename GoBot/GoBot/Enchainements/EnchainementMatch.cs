@@ -33,7 +33,7 @@ namespace GoBot.Enchainements
                         iMeilleur = j;
                     }
                 }
-                if (ListeMouvementsGros[iMeilleur].ScorePondere != 0)
+                if (ListeMouvementsGros[iMeilleur].ValeurAction != 0)
                 {
                     if (!ListeMouvementsGros[iMeilleur].Executer())
                         ListeMouvementsGros[iMeilleur].DateMinimum = DateTime.Now + new TimeSpan(0, 0, 1);

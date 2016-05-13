@@ -44,7 +44,7 @@ namespace GoBot.IHM
 
         void ConnexionBunCheck_ConnexionChange(bool conn)
         {
-            Robot_ConnexionChange(Carte.RecBun, conn);
+            Robot_ConnexionChange(Carte.Balise, conn);
         }
 
         void ConnexionMoveCheck_ConnexionChange(bool conn)
@@ -70,8 +70,8 @@ namespace GoBot.IHM
                 case Carte.RecMove:
                     selectLed = ledRecMove;
                     break;
-                case Carte.RecBun:
-                    selectLed = ledRecBun;
+                case Carte.Balise:
+                    selectLed = ledBalise;
                     break;
                 case Carte.RecIO:
                     selectLed = ledRecIO;
@@ -96,23 +96,22 @@ namespace GoBot.IHM
         {
             if (!Config.DesignMode)
             {
-                ledRecBun.ConnexionNok();
+                ledBalise.ConnexionNok();
                 ledRecMove.ConnexionNok();
                 ledRecIO.ConnexionNok();
 
                 Connexions.ConnexionMove.ConnexionCheck.ConnexionChange += new ConnexionCheck.ConnexionChangeDelegate(ConnexionMoveCheck_ConnexionChange);
                 Connexions.ConnexionIO.ConnexionCheck.ConnexionChange += new ConnexionCheck.ConnexionChangeDelegate(ConnexionIoCheck_ConnexionChange);
-                Connexions.ConnexionPi.ConnexionCheck.ConnexionChange += new ConnexionCheck.ConnexionChangeDelegate(ConnexionPiCheck_ConnexionChange);
 
-                Balise.GetBalise(Carte.RecBun).Connexion.ConnexionCheck.ConnexionChange += new ConnexionCheck.ConnexionChangeDelegate(ConnexionBunCheck_ConnexionChange);
+                Plateau.Balise.Connexion.ConnexionCheck.ConnexionChange += new ConnexionCheck.ConnexionChangeDelegate(ConnexionBunCheck_ConnexionChange);
 
 
                 if (Connexions.ConnexionMove.ConnexionCheck.Connecte)
                     SetLed(ledRecMove, true);
                 if (Connexions.ConnexionIO.ConnexionCheck.Connecte)
                     SetLed(ledRecIO, true);
-                if (Balise.GetBalise(Carte.RecBun).Connexion.ConnexionCheck.Connecte)
-                    SetLed(ledRecBun, true);
+                if (Plateau.Balise.Connexion.ConnexionCheck.Connecte)
+                    SetLed(ledBalise, true);
 
                 batteriePack2.TensionMidHigh = Config.CurrentConfig.BatterieRobotVert;
                 batteriePack2.TensionMid = Config.CurrentConfig.BatterieRobotOrange;

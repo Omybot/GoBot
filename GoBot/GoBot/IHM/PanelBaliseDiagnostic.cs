@@ -13,6 +13,9 @@ namespace GoBot.IHM
 {
     public partial class PanelBaliseDiagnostic : UserControl
     {
+        private Balise balise;
+        private EventHandler eventGraphiques;
+
         public PanelBaliseDiagnostic()
         {
             InitializeComponent();
@@ -21,7 +24,6 @@ namespace GoBot.IHM
                 eventGraphiques = new EventHandler(MAJGraphiques);
         }
 
-        private Balise balise;
         public Balise Balise
         {
             get
@@ -30,11 +32,8 @@ namespace GoBot.IHM
             }
             set
             {
-                balise = value;
                 if (balise != null)
-                {
-                    groupBalise.Text = "Balise " + balise.Carte;
-                }
+                    balise = value;
             }
         }
 
@@ -78,8 +77,6 @@ namespace GoBot.IHM
 
             lblNbTrames.Text = Balise.Stats.NombreMessagesRecus + " messages";
         }
-
-        private EventHandler eventGraphiques;
 
         private void btnLancer_Click(object sender, EventArgs e)
         {

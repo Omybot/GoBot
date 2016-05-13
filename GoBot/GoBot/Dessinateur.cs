@@ -178,9 +178,6 @@ namespace GoBot
 
         private static Font fontNbPieds = new Font("Calibri", 9);
 
-        public static PointReel _PointBordRobot;
-        public static double _DistanceBordRobot;
-
         static Dessinateur()
         {
             penBlancPointille.DashStyle = System.Drawing.Drawing2D.DashStyle.Dot;
@@ -437,14 +434,6 @@ namespace GoBot
                                     g.DrawEllipse(Pens.Black, p.X - 3, p.Y - 3, 6, 6);
                         }
 
-                        if(_PointBordRobot != null)
-                        {
-                            Point p1 = RealToScreenPosition(_PointBordRobot);
-                            Point p2 = new Point(p1.X + RealToScreenDistance(_DistanceBordRobot), p1.Y);
-                            g.DrawLine(Pens.Green, p1, p2);
-                            g.DrawString(_DistanceBordRobot.ToString("0.0") + "mm", new Font("Arial", 13, FontStyle.Bold), Brushes.Green, new PointF(p1.X + 40, p1.Y - 20));
-                        }
-
                         TableDessinee(bmp);
                     }
                 }
@@ -477,11 +466,11 @@ namespace GoBot
                 g.DrawString(i + " - " + vitesse + "mm/s", new Font("Calibri", 9, FontStyle.Bold), brushBlanc, positionEcran.X, positionEcran.Y);
             }
 
-            if (Plateau.InterpreteurBalise != null && Plateau.InterpreteurBalise.PositionsEnnemies != null)
+            if (Plateau.Balise != null && Plateau.Balise.PositionsAdverses != null)
             {
-                for (int i = 0; i < Plateau.InterpreteurBalise.PositionsEnnemies.Count; i++)
+                for (int i = 0; i < Plateau.Balise.PositionsAdverses.Count; i++)
                 {
-                    PointReel p = Plateau.InterpreteurBalise.PositionsEnnemies[i];
+                    PointReel p = Plateau.Balise.PositionsAdverses[i];
                     Point positionEcran = RealToScreenPosition(p);
 
                     if (p == null)
@@ -501,9 +490,9 @@ namespace GoBot
 
         private static void DessineLignesDetection(Graphics g)
         {
-            if (Plateau.Balise1.Detections != null)
+            if (Plateau.Balise.Detections != null)
             {
-                List<DetectionBalise> detections = new List<DetectionBalise>(Plateau.Balise1.Detections);
+                List<DetectionBalise> detections = new List<DetectionBalise>(Plateau.Balise.Detections);
 
                 foreach (DetectionBalise detection in detections)
                 {
@@ -513,7 +502,7 @@ namespace GoBot
                         (RealToScreenPosition(detection.Position)));
 
                     // Dessin du polygone de détection
-                    Polygone polygone = InterpreteurBalise.DetectionToPolygone(detection);
+                    Polygone polygone = detection.ToPolygone();
                     List<Point> points = new List<Point>();
 
                     foreach (Segment s in polygone.Cotes)

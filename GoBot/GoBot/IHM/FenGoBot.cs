@@ -26,6 +26,19 @@ namespace GoBot
         public static FenGoBot Instance { get; private set; }
         private System.Windows.Forms.Timer timerSauvegarde;
 
+        /// <summary>
+        /// Anti scintillement
+        /// </summary>
+        protected override CreateParams CreateParams
+        {
+            get
+            {
+                CreateParams cp = base.CreateParams;
+                cp.ExStyle |= 0x02000000;  // Turn on WS_EX_COMPOSITED
+                return cp;
+            }
+        }
+
         public FenGoBot(string[] args)
         {
             InitializeComponent();
@@ -52,18 +65,6 @@ namespace GoBot
                     btnFenetre.Location = btnClose.Location;
                     btnClose.Visible = false;
                 }
-
-                panelBalise1.Balise = Plateau.Balise1;
-                panelBalise2.Balise = Plateau.Balise2;
-                panelBalise3.Balise = Plateau.Balise3;
-
-                panelDiagnosticBalise1.Balise = Plateau.Balise1;
-                panelDiagnosticBalise2.Balise = Plateau.Balise2;
-                panelDiagnosticBalise3.Balise = Plateau.Balise3;
-
-                panelBaliseInclinaison1.Balise = Plateau.Balise1;
-                panelBaliseInclinaison2.Balise = Plateau.Balise2;
-                panelBaliseInclinaison3.Balise = Plateau.Balise3;
 
                 switchBoutonSimu.SetActif(Robots.Simulation);
 
@@ -111,6 +112,9 @@ namespace GoBot
                 Plateau.NotreCouleur = Plateau.CouleurGaucheViolet;
                 
                 Connexions.ConnexionIO.SendMessage(TrameFactory.DemandeCouleurEquipe());
+
+                panelBalise.Balise = Plateau.Balise;
+                panelBaliseDiagnostic.Balise = Plateau.Balise;
             }
 
             SplashScreen.CloseSplash();
@@ -147,9 +151,7 @@ namespace GoBot
 
         private void FenGoBot_FormClosing(object sender, FormClosingEventArgs e)
         {
-            Balise.GetBalise(Carte.RecBun).VitesseRotation(0);
-            Balise.GetBalise(Carte.RecBeu).VitesseRotation(0);
-            Balise.GetBalise(Carte.RecBoi).VitesseRotation(0);
+            Plateau.Balise.Stop();
             panelCamera.ContinuerCamera = false;
             Config.Save();
             SauverLogs();
@@ -169,7 +171,6 @@ namespace GoBot
         {
             DateTime debut = DateTime.Now;
 
-            Connexions.ConnexionMiwi.Sauvegarde.Sauvegarder(Config.PathData + "/Logs/" + Config.DateLancementString + "/ConnexionMiwi.tlog");
             Connexions.ConnexionMove.Sauvegarde.Sauvegarder(Config.PathData + "/Logs/" + Config.DateLancementString + "/ConnexionMove.tlog");
             Connexions.ConnexionIO.Sauvegarde.Sauvegarder(Config.PathData + "/Logs/" + Config.DateLancementString + "/ConnexionIO.tlog");
 
@@ -197,13 +198,9 @@ namespace GoBot
                 Directory.CreateDirectory(Config.PathData + "/Logs/" + Config.DateLancementString);
 
                 Connexions.ConnexionMove.ConnexionCheck.Start();
-                Connexions.ConnexionMiwi.ConnexionCheck.Start();
                 Connexions.ConnexionIO.ConnexionCheck.Start();
-                Connexions.ConnexionPi.ConnexionCheck.Start();
 
-                Plateau.Balise1.Connexion.ConnexionCheck.Start();
-                Plateau.Balise2.Connexion.ConnexionCheck.Start();
-                Plateau.Balise3.Connexion.ConnexionCheck.Start();
+                Plateau.Balise.Connexion.ConnexionCheck.Start();
             }
             catch(Exception)
             {

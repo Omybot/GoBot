@@ -30,6 +30,9 @@
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(PanelConstantes));
             this.groupBoxDeplacement = new System.Windows.Forms.GroupBox();
+            this.numAccelerationFinLigneLent = new System.Windows.Forms.NumericUpDown();
+            this.label11 = new System.Windows.Forms.Label();
+            this.numAccelerationFinLigneRapide = new System.Windows.Forms.NumericUpDown();
             this.numAccelerationPivotLent = new System.Windows.Forms.NumericUpDown();
             this.numVitessePivotLent = new System.Windows.Forms.NumericUpDown();
             this.numAccelerationLigneLent = new System.Windows.Forms.NumericUpDown();
@@ -48,16 +51,6 @@
             this.label1 = new System.Windows.Forms.Label();
             this.btnSave = new System.Windows.Forms.Button();
             this.groupBoxBatteries = new System.Windows.Forms.GroupBox();
-            this.label10 = new System.Windows.Forms.Label();
-            this.batBaliseVide = new Composants.Batterie();
-            this.numBaliseCritique = new System.Windows.Forms.NumericUpDown();
-            this.batBaliseCritique = new Composants.Batterie();
-            this.numBaliseRouge = new System.Windows.Forms.NumericUpDown();
-            this.batBaliseRouge = new Composants.Batterie();
-            this.numBaliseOrange = new System.Windows.Forms.NumericUpDown();
-            this.batBaliseOrange = new Composants.Batterie();
-            this.batBaliseVert = new Composants.Batterie();
-            this.numBaliseVert = new System.Windows.Forms.NumericUpDown();
             this.label9 = new System.Windows.Forms.Label();
             this.batGrosVide = new Composants.Batterie();
             this.numBatGrosCritique = new System.Windows.Forms.NumericUpDown();
@@ -68,10 +61,9 @@
             this.batGrosOrange = new Composants.Batterie();
             this.batGrosVert = new Composants.Batterie();
             this.numBatGrosVert = new System.Windows.Forms.NumericUpDown();
-            this.numAccelerationFinLigneRapide = new System.Windows.Forms.NumericUpDown();
-            this.label11 = new System.Windows.Forms.Label();
-            this.numAccelerationFinLigneLent = new System.Windows.Forms.NumericUpDown();
             this.groupBoxDeplacement.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.numAccelerationFinLigneLent)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numAccelerationFinLigneRapide)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numAccelerationPivotLent)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numVitessePivotLent)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numAccelerationLigneLent)).BeginInit();
@@ -81,15 +73,6 @@
             ((System.ComponentModel.ISupportInitialize)(this.numAccelerationLigneRapide)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numVitesseLigneRapide)).BeginInit();
             this.groupBoxBatteries.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.batBaliseVide)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numBaliseCritique)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.batBaliseCritique)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numBaliseRouge)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.batBaliseRouge)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numBaliseOrange)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.batBaliseOrange)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.batBaliseVert)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numBaliseVert)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.batGrosVide)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numBatGrosCritique)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.batGrosCritique)).BeginInit();
@@ -99,8 +82,6 @@
             ((System.ComponentModel.ISupportInitialize)(this.batGrosOrange)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.batGrosVert)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numBatGrosVert)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numAccelerationFinLigneRapide)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numAccelerationFinLigneLent)).BeginInit();
             this.SuspendLayout();
             // 
             // groupBoxDeplacement
@@ -130,6 +111,49 @@
             this.groupBoxDeplacement.TabIndex = 0;
             this.groupBoxDeplacement.TabStop = false;
             this.groupBoxDeplacement.Text = "Déplacements";
+            // 
+            // numAccelerationFinLigneLent
+            // 
+            this.numAccelerationFinLigneLent.Increment = new decimal(new int[] {
+            100,
+            0,
+            0,
+            0});
+            this.numAccelerationFinLigneLent.Location = new System.Drawing.Point(264, 110);
+            this.numAccelerationFinLigneLent.Maximum = new decimal(new int[] {
+            10000,
+            0,
+            0,
+            0});
+            this.numAccelerationFinLigneLent.Name = "numAccelerationFinLigneLent";
+            this.numAccelerationFinLigneLent.Size = new System.Drawing.Size(71, 20);
+            this.numAccelerationFinLigneLent.TabIndex = 18;
+            // 
+            // label11
+            // 
+            this.label11.AutoSize = true;
+            this.label11.Location = new System.Drawing.Point(37, 112);
+            this.label11.Name = "label11";
+            this.label11.Size = new System.Drawing.Size(73, 13);
+            this.label11.TabIndex = 17;
+            this.label11.Text = "Décceleration";
+            // 
+            // numAccelerationFinLigneRapide
+            // 
+            this.numAccelerationFinLigneRapide.Increment = new decimal(new int[] {
+            100,
+            0,
+            0,
+            0});
+            this.numAccelerationFinLigneRapide.Location = new System.Drawing.Point(168, 110);
+            this.numAccelerationFinLigneRapide.Maximum = new decimal(new int[] {
+            10000,
+            0,
+            0,
+            0});
+            this.numAccelerationFinLigneRapide.Name = "numAccelerationFinLigneRapide";
+            this.numAccelerationFinLigneRapide.Size = new System.Drawing.Size(71, 20);
+            this.numAccelerationFinLigneRapide.TabIndex = 16;
             // 
             // numAccelerationPivotLent
             // 
@@ -354,16 +378,6 @@
             // 
             // groupBoxBatteries
             // 
-            this.groupBoxBatteries.Controls.Add(this.label10);
-            this.groupBoxBatteries.Controls.Add(this.batBaliseVide);
-            this.groupBoxBatteries.Controls.Add(this.numBaliseCritique);
-            this.groupBoxBatteries.Controls.Add(this.batBaliseCritique);
-            this.groupBoxBatteries.Controls.Add(this.numBaliseRouge);
-            this.groupBoxBatteries.Controls.Add(this.batBaliseRouge);
-            this.groupBoxBatteries.Controls.Add(this.numBaliseOrange);
-            this.groupBoxBatteries.Controls.Add(this.batBaliseOrange);
-            this.groupBoxBatteries.Controls.Add(this.batBaliseVert);
-            this.groupBoxBatteries.Controls.Add(this.numBaliseVert);
             this.groupBoxBatteries.Controls.Add(this.label9);
             this.groupBoxBatteries.Controls.Add(this.batGrosVide);
             this.groupBoxBatteries.Controls.Add(this.numBatGrosCritique);
@@ -376,146 +390,10 @@
             this.groupBoxBatteries.Controls.Add(this.numBatGrosVert);
             this.groupBoxBatteries.Location = new System.Drawing.Point(12, 293);
             this.groupBoxBatteries.Name = "groupBoxBatteries";
-            this.groupBoxBatteries.Size = new System.Drawing.Size(423, 107);
+            this.groupBoxBatteries.Size = new System.Drawing.Size(423, 69);
             this.groupBoxBatteries.TabIndex = 2;
             this.groupBoxBatteries.TabStop = false;
             this.groupBoxBatteries.Text = "Batteries";
-            // 
-            // label10
-            // 
-            this.label10.AutoSize = true;
-            this.label10.Location = new System.Drawing.Point(25, 66);
-            this.label10.Name = "label10";
-            this.label10.Size = new System.Drawing.Size(40, 13);
-            this.label10.TabIndex = 26;
-            this.label10.Text = "Balises";
-            // 
-            // batBaliseVide
-            // 
-            this.batBaliseVide.Afficher = false;
-            this.batBaliseVide.Image = ((System.Drawing.Image)(resources.GetObject("batBaliseVide.Image")));
-            this.batBaliseVide.Location = new System.Drawing.Point(389, 66);
-            this.batBaliseVide.Name = "batBaliseVide";
-            this.batBaliseVide.Size = new System.Drawing.Size(16, 16);
-            this.batBaliseVide.TabIndex = 35;
-            this.batBaliseVide.TabStop = false;
-            this.batBaliseVide.Tension = 0D;
-            this.batBaliseVide.TensionLow = 0D;
-            this.batBaliseVide.TensionMid = 0D;
-            this.batBaliseVide.TensionMidHigh = 0D;
-            this.batBaliseVide.TensionNull = 0D;
-            // 
-            // numBaliseCritique
-            // 
-            this.numBaliseCritique.DecimalPlaces = 2;
-            this.numBaliseCritique.Location = new System.Drawing.Point(333, 66);
-            this.numBaliseCritique.Maximum = new decimal(new int[] {
-            30,
-            0,
-            0,
-            0});
-            this.numBaliseCritique.Name = "numBaliseCritique";
-            this.numBaliseCritique.Size = new System.Drawing.Size(50, 20);
-            this.numBaliseCritique.TabIndex = 34;
-            // 
-            // batBaliseCritique
-            // 
-            this.batBaliseCritique.Afficher = false;
-            this.batBaliseCritique.Image = ((System.Drawing.Image)(resources.GetObject("batBaliseCritique.Image")));
-            this.batBaliseCritique.Location = new System.Drawing.Point(308, 66);
-            this.batBaliseCritique.Name = "batBaliseCritique";
-            this.batBaliseCritique.Size = new System.Drawing.Size(16, 16);
-            this.batBaliseCritique.TabIndex = 33;
-            this.batBaliseCritique.TabStop = false;
-            this.batBaliseCritique.Tension = 0D;
-            this.batBaliseCritique.TensionLow = 0D;
-            this.batBaliseCritique.TensionMid = 0D;
-            this.batBaliseCritique.TensionMidHigh = 0D;
-            this.batBaliseCritique.TensionNull = 0D;
-            // 
-            // numBaliseRouge
-            // 
-            this.numBaliseRouge.DecimalPlaces = 2;
-            this.numBaliseRouge.Location = new System.Drawing.Point(253, 66);
-            this.numBaliseRouge.Maximum = new decimal(new int[] {
-            30,
-            0,
-            0,
-            0});
-            this.numBaliseRouge.Name = "numBaliseRouge";
-            this.numBaliseRouge.Size = new System.Drawing.Size(50, 20);
-            this.numBaliseRouge.TabIndex = 32;
-            // 
-            // batBaliseRouge
-            // 
-            this.batBaliseRouge.Afficher = false;
-            this.batBaliseRouge.Image = ((System.Drawing.Image)(resources.GetObject("batBaliseRouge.Image")));
-            this.batBaliseRouge.Location = new System.Drawing.Point(231, 66);
-            this.batBaliseRouge.Name = "batBaliseRouge";
-            this.batBaliseRouge.Size = new System.Drawing.Size(16, 16);
-            this.batBaliseRouge.TabIndex = 31;
-            this.batBaliseRouge.TabStop = false;
-            this.batBaliseRouge.Tension = 0D;
-            this.batBaliseRouge.TensionLow = 0D;
-            this.batBaliseRouge.TensionMid = 0D;
-            this.batBaliseRouge.TensionMidHigh = 0D;
-            this.batBaliseRouge.TensionNull = 0D;
-            // 
-            // numBaliseOrange
-            // 
-            this.numBaliseOrange.DecimalPlaces = 2;
-            this.numBaliseOrange.Location = new System.Drawing.Point(175, 66);
-            this.numBaliseOrange.Maximum = new decimal(new int[] {
-            30,
-            0,
-            0,
-            0});
-            this.numBaliseOrange.Name = "numBaliseOrange";
-            this.numBaliseOrange.Size = new System.Drawing.Size(50, 20);
-            this.numBaliseOrange.TabIndex = 30;
-            // 
-            // batBaliseOrange
-            // 
-            this.batBaliseOrange.Afficher = false;
-            this.batBaliseOrange.Image = ((System.Drawing.Image)(resources.GetObject("batBaliseOrange.Image")));
-            this.batBaliseOrange.Location = new System.Drawing.Point(153, 66);
-            this.batBaliseOrange.Name = "batBaliseOrange";
-            this.batBaliseOrange.Size = new System.Drawing.Size(16, 16);
-            this.batBaliseOrange.TabIndex = 29;
-            this.batBaliseOrange.TabStop = false;
-            this.batBaliseOrange.Tension = 0D;
-            this.batBaliseOrange.TensionLow = 0D;
-            this.batBaliseOrange.TensionMid = 0D;
-            this.batBaliseOrange.TensionMidHigh = 0D;
-            this.batBaliseOrange.TensionNull = 0D;
-            // 
-            // batBaliseVert
-            // 
-            this.batBaliseVert.Afficher = false;
-            this.batBaliseVert.Image = ((System.Drawing.Image)(resources.GetObject("batBaliseVert.Image")));
-            this.batBaliseVert.Location = new System.Drawing.Point(75, 66);
-            this.batBaliseVert.Name = "batBaliseVert";
-            this.batBaliseVert.Size = new System.Drawing.Size(16, 16);
-            this.batBaliseVert.TabIndex = 28;
-            this.batBaliseVert.TabStop = false;
-            this.batBaliseVert.Tension = 0D;
-            this.batBaliseVert.TensionLow = 0D;
-            this.batBaliseVert.TensionMid = 0D;
-            this.batBaliseVert.TensionMidHigh = 0D;
-            this.batBaliseVert.TensionNull = 0D;
-            // 
-            // numBaliseVert
-            // 
-            this.numBaliseVert.DecimalPlaces = 2;
-            this.numBaliseVert.Location = new System.Drawing.Point(97, 66);
-            this.numBaliseVert.Maximum = new decimal(new int[] {
-            30,
-            0,
-            0,
-            0});
-            this.numBaliseVert.Name = "numBaliseVert";
-            this.numBaliseVert.Size = new System.Drawing.Size(50, 20);
-            this.numBaliseVert.TabIndex = 27;
             // 
             // label9
             // 
@@ -653,49 +531,6 @@
             this.numBatGrosVert.Size = new System.Drawing.Size(50, 20);
             this.numBatGrosVert.TabIndex = 17;
             // 
-            // numAccelerationFinLigneRapide
-            // 
-            this.numAccelerationFinLigneRapide.Increment = new decimal(new int[] {
-            100,
-            0,
-            0,
-            0});
-            this.numAccelerationFinLigneRapide.Location = new System.Drawing.Point(168, 110);
-            this.numAccelerationFinLigneRapide.Maximum = new decimal(new int[] {
-            10000,
-            0,
-            0,
-            0});
-            this.numAccelerationFinLigneRapide.Name = "numAccelerationFinLigneRapide";
-            this.numAccelerationFinLigneRapide.Size = new System.Drawing.Size(71, 20);
-            this.numAccelerationFinLigneRapide.TabIndex = 16;
-            // 
-            // label11
-            // 
-            this.label11.AutoSize = true;
-            this.label11.Location = new System.Drawing.Point(37, 112);
-            this.label11.Name = "label11";
-            this.label11.Size = new System.Drawing.Size(73, 13);
-            this.label11.TabIndex = 17;
-            this.label11.Text = "Décceleration";
-            // 
-            // numAccelerationFinLigneLent
-            // 
-            this.numAccelerationFinLigneLent.Increment = new decimal(new int[] {
-            100,
-            0,
-            0,
-            0});
-            this.numAccelerationFinLigneLent.Location = new System.Drawing.Point(264, 110);
-            this.numAccelerationFinLigneLent.Maximum = new decimal(new int[] {
-            10000,
-            0,
-            0,
-            0});
-            this.numAccelerationFinLigneLent.Name = "numAccelerationFinLigneLent";
-            this.numAccelerationFinLigneLent.Size = new System.Drawing.Size(71, 20);
-            this.numAccelerationFinLigneLent.TabIndex = 18;
-            // 
             // PanelConstantes
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -708,6 +543,8 @@
             this.Load += new System.EventHandler(this.PanelConstantes_Load);
             this.groupBoxDeplacement.ResumeLayout(false);
             this.groupBoxDeplacement.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.numAccelerationFinLigneLent)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numAccelerationFinLigneRapide)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.numAccelerationPivotLent)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.numVitessePivotLent)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.numAccelerationLigneLent)).EndInit();
@@ -718,15 +555,6 @@
             ((System.ComponentModel.ISupportInitialize)(this.numVitesseLigneRapide)).EndInit();
             this.groupBoxBatteries.ResumeLayout(false);
             this.groupBoxBatteries.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.batBaliseVide)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numBaliseCritique)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.batBaliseCritique)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numBaliseRouge)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.batBaliseRouge)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numBaliseOrange)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.batBaliseOrange)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.batBaliseVert)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numBaliseVert)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.batGrosVide)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.numBatGrosCritique)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.batGrosCritique)).EndInit();
@@ -736,8 +564,6 @@
             ((System.ComponentModel.ISupportInitialize)(this.batGrosOrange)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.batGrosVert)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.numBatGrosVert)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numAccelerationFinLigneRapide)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numAccelerationFinLigneLent)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -772,16 +598,6 @@
         private Composants.Batterie batGrosOrange;
         private Composants.Batterie batGrosVert;
         private System.Windows.Forms.NumericUpDown numBatGrosVert;
-        private System.Windows.Forms.Label label10;
-        private Composants.Batterie batBaliseVide;
-        private System.Windows.Forms.NumericUpDown numBaliseCritique;
-        private Composants.Batterie batBaliseCritique;
-        private System.Windows.Forms.NumericUpDown numBaliseRouge;
-        private Composants.Batterie batBaliseRouge;
-        private System.Windows.Forms.NumericUpDown numBaliseOrange;
-        private Composants.Batterie batBaliseOrange;
-        private Composants.Batterie batBaliseVert;
-        private System.Windows.Forms.NumericUpDown numBaliseVert;
         private System.Windows.Forms.Label label9;
         private System.Windows.Forms.NumericUpDown numAccelerationFinLigneLent;
         private System.Windows.Forms.Label label11;

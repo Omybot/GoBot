@@ -54,9 +54,6 @@ namespace GoBot.IHM
             couleurCarte.Add(Carte.PC, Color.FromArgb(180, 245, 245));
             couleurCarte.Add(Carte.RecMove, Color.FromArgb(143, 255, 143));
             couleurCarte.Add(Carte.RecPi, Color.FromArgb(255, 201, 201));
-            couleurCarte.Add(Carte.RecBun, Color.FromArgb(226, 226, 255));
-            couleurCarte.Add(Carte.RecBeu, Color.FromArgb(202, 202, 255));
-            couleurCarte.Add(Carte.RecBoi, Color.FromArgb(176, 176, 255));
             couleurCarte.Add(Carte.RecMiwi, Color.FromArgb(244, 247, 153));
             couleurCarte.Add(Carte.RecIO, Color.FromArgb(210, 254, 211));
 
@@ -230,14 +227,6 @@ namespace GoBot.IHM
                             checkedListBoxIO.Items.Add(fonction.ToString(), false);
                             Config.CurrentConfig.LogsFonctionsIO[fonction] = false;
                         }
-
-                        if (carte == Carte.RecBun || carte == Carte.RecBeu || carte == Carte.RecBoi)
-                        {
-                            FonctionBalise fonction = (FonctionBalise)trame[3];
-                            checkedListBoxBalise.Items.Remove(fonction.ToString());
-                            checkedListBoxBalise.Items.Add(fonction.ToString(), false);
-                            Config.CurrentConfig.LogsFonctionsBalise[fonction] = false;
-                        }
                     }
 
                     Afficher();
@@ -339,8 +328,6 @@ namespace GoBot.IHM
                     (carte == Carte.RecIO && Config.CurrentConfig.LogsFonctionsIO[(FonctionIO)trame[1]]) ||
                     (expediteur == Carte.RecPi && Config.CurrentConfig.LogsFonctionsPi[(FonctionPi)trame[1]]) ||
                     (destinataire == Carte.RecPi && Config.CurrentConfig.LogsFonctionsPi[(FonctionPi)trame[4]]) ||
-                    ((expediteur == Carte.RecBun || expediteur == Carte.RecBeu || expediteur == Carte.RecBoi) && Config.CurrentConfig.LogsFonctionsBalise[(FonctionBalise)trame[1]]) ||
-                    ((destinataire == Carte.RecBun || destinataire == Carte.RecBeu || destinataire == Carte.RecBoi) && Config.CurrentConfig.LogsFonctionsBalise[(FonctionBalise)trame[4]]) ||
                     (carte == Carte.RecMiwi))
                     fonctionAutorisee = true;
 

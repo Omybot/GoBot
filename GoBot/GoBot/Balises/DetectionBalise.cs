@@ -81,5 +81,44 @@ namespace GoBot.Balises
             // Formule calculée par expérimentations
             return 2784.6 * Math.Pow(largeurAngle, -0.96);
         }
+
+        /// <summary>
+        /// Transforme une détection de balise en triangle
+        /// </summary>
+        /// <returns>Triangle correspondant à la détection</returns>
+        public Polygone ToPolygone()
+        {
+            List<PointReel> listePoints = new List<PointReel>();
+
+            // Point de la balise
+
+            double xPoint1 = Balise.Position.Coordonnees.X;
+            double yPoint1 = Balise.Position.Coordonnees.Y;
+
+            PointReel point = new PointReel(xPoint1, yPoint1);
+
+            listePoints.Add(point);
+
+            // Point du côté du début de l'angle
+            // 5000 valeur arbitraire, assez grande pour dépasser de la table
+
+            xPoint1 = Balise.Position.Coordonnees.X + Math.Cos(Maths.DegreeToRadian(AngleDebut)) * 5000;
+            yPoint1 = Balise.Position.Coordonnees.Y + Math.Sin(Maths.DegreeToRadian(AngleDebut)) * 5000;
+            point = new PointReel(xPoint1, yPoint1);
+
+            listePoints.Add(point);
+
+            // Point du côté du début de l'angle
+
+            xPoint1 = Balise.Position.Coordonnees.X + Math.Cos(Maths.DegreeToRadian(AngleFin)) * 5000;
+            yPoint1 = Balise.Position.Coordonnees.Y + Math.Sin(Maths.DegreeToRadian(AngleFin)) * 5000;
+            point = new PointReel(xPoint1, yPoint1);
+
+            listePoints.Add(point);
+
+            Polygone polygone = new Polygone(listePoints);
+
+            return polygone;
+        }
     }
 }

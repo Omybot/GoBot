@@ -79,7 +79,7 @@ namespace GoBot.PathFinding
 
                     // Test des obstacles
 
-                    Synchronizer.Lock(Plateau.ObstaclesTemporaires);
+                    Synchronizer.Lock(Plateau.ObstaclesBalise);
                     foreach (IForme obstacle in obstacles)
                     {
                         if (obstacle.Distance(segmentTest) < distanceSecuriteCote)
@@ -87,14 +87,14 @@ namespace GoBot.PathFinding
                             franchissable = false;
 
                             // Si l'obstacle génant est un adversaire, on diminue petit à petit son rayon pour pouvoir s'échapper au bout d'un moment
-                            if (Plateau.ObstaclesTemporaires.Contains(obstacle) && Plateau.RayonAdversaire > 50)
+                            if (Plateau.ObstaclesBalise.Contains(obstacle) && Plateau.RayonAdversaire > 50)
                             {
                                 Robots.GrosRobot.Historique.Log("Adversaire au contact, impossible de s'enfuir, réduction du périmètre adverse", TypeLog.PathFinding);
                                 Plateau.RayonAdversaire -= 10;
                             }
                         }
                     }
-                    Synchronizer.Unlock(Plateau.ObstaclesTemporaires);
+                    Synchronizer.Unlock(Plateau.ObstaclesBalise);
 
                     // Si le semgent entre notre position et le graph relié au graph est parcourable on y va !
                     if (franchissable)
@@ -128,7 +128,7 @@ namespace GoBot.PathFinding
                     {
                         Segment segmentTest = new Segment(new PointReel(positionTestee.Coordonnees), new PointReel(destination.Coordonnees));
 
-                        Synchronizer.Lock(Plateau.ObstaclesTemporaires);
+                        Synchronizer.Lock(Plateau.ObstaclesBalise);
                         // Test des obstacles
                         foreach (IForme obstacle in obstacles)
                         {
@@ -137,14 +137,14 @@ namespace GoBot.PathFinding
                                 franchissable = false;
 
                                 // Si l'obstacle génant est un adversaire, on diminue petit à petit son rayon pour pouvoir s'échapper au bout d'un moment
-                                if (Plateau.ObstaclesTemporaires.Contains(obstacle) && Plateau.RayonAdversaire > 50)
+                                if (Plateau.ObstaclesBalise.Contains(obstacle) && Plateau.RayonAdversaire > 50)
                                 {
                                     Robots.GrosRobot.Historique.Log("Adversaire au contact, impossible de s'enfuir, réduction du périmètre adverse", TypeLog.PathFinding);
                                     Plateau.RayonAdversaire -= 10;
                                 }
                             }
                         }
-                        Synchronizer.Unlock(Plateau.ObstaclesTemporaires);
+                        Synchronizer.Unlock(Plateau.ObstaclesBalise);
 
                         // Si le semgent entre notre position et le graph relié au graph est parcourable on y va !
                         if (franchissable)

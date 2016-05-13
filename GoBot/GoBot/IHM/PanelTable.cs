@@ -50,7 +50,10 @@ namespace GoBot.IHM
 
         void Dessinateur_TableDessinee(Image img)
         {
-            pictureBoxTable.Image = img;
+            this.Invoke(new EventHandler(delegate
+            {
+                pictureBoxTable.Image = img;
+            }));
         }
 
         void ParentForm_FormClosing(object sender, FormClosingEventArgs e)
@@ -169,7 +172,7 @@ namespace GoBot.IHM
                     List<PointReel> positions = new List<PointReel>();
 
                     positions.Add(Dessinateur.ScreenToRealPosition(pictureBoxTable.PointToClient(MousePosition)));
-                    Plateau.InterpreteurBalise.Actualisation(false, Dessinateur.ScreenToRealPosition(pictureBoxTable.PointToClient(MousePosition)));
+                    Plateau.Balise.Actualisation(false, Dessinateur.ScreenToRealPosition(pictureBoxTable.PointToClient(MousePosition)));
                     //SuiviBalise.MajPositions(positions, Plateau.Enchainement == null || Plateau.Enchainement.DebutMatch == null);
                 }
             }
@@ -685,10 +688,10 @@ namespace GoBot.IHM
 
                 if (points.Count > 0)
                 {
-                    Plateau.ObstaclesFixes = new List<IForme>();
+                    Plateau.ObstaclesPlateau = new List<IForme>();
                     foreach (PointReel p in points)
                     {
-                        Plateau.ObstaclesFixes.Add(new Cercle(p, 4));
+                        Plateau.ObstaclesPlateau.Add(new Cercle(p, 4));
                     }
 
                     //Segment seg = new Segment(new PointReel(0, 50), new PointReel(0, 900));
@@ -848,10 +851,10 @@ namespace GoBot.IHM
 
             HokuyoUart lidar = new HokuyoUart(LidarID.LidarSol);
             List<PointReel> pts = lidar.GetMesure();
-            Plateau.ObstaclesFixes = new List<IForme>();
+            Plateau.ObstaclesPlateau = new List<IForme>();
             foreach (PointReel p in pts)
             {
-                Plateau.ObstaclesFixes.Add(new Cercle(p, 4));
+                Plateau.ObstaclesPlateau.Add(new Cercle(p, 4));
             }
             MessageBox.Show(pts.Count + " points");
         }

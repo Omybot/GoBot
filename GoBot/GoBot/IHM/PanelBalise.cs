@@ -14,6 +14,16 @@ namespace GoBot.IHM
     public partial class PanelBalise : UserControl
     {
         private Font font;
+        private Balise balise;
+        private int nbDetections;
+
+        private SolidBrush brushRouge = new SolidBrush(Color.Salmon);
+        private SolidBrush brushBlanc = new SolidBrush(Color.White);
+        private SolidBrush brushNoir = new SolidBrush(Color.Black);
+        private SolidBrush brushBleu = new SolidBrush(Color.LightBlue);
+        private Pen penRouge = new Pen(Color.Salmon);
+        private Pen penBleu = new Pen(Color.LightBlue);
+
         public PanelBalise()
         {
             InitializeComponent();
@@ -22,7 +32,6 @@ namespace GoBot.IHM
             pictureBoxAngle.Image = bmp;
         }
 
-        private Balise balise;
         public Balise Balise
         {
             get
@@ -33,10 +42,7 @@ namespace GoBot.IHM
             {
                 balise = value;
                 if (balise != null)
-                {
-                    groupBalise.Text = "Balise " + balise.Carte;
                     balise.PositionsChange += new Balise.PositionsChangeDelegate(MAJPosition);
-                }
             }
         }
 
@@ -48,7 +54,6 @@ namespace GoBot.IHM
             }));
         }
 
-        private int nbDetections;
         void balise_PositionsChange()
         {
             if (boxAffichage.Checked)
@@ -115,13 +120,6 @@ namespace GoBot.IHM
             }
             pictureBoxAngle.Refresh();
         }
-
-        private SolidBrush brushRouge = new SolidBrush(Color.Salmon);
-        private SolidBrush brushBlanc = new SolidBrush(Color.White);
-        private SolidBrush brushNoir = new SolidBrush(Color.Black);
-        private SolidBrush brushBleu = new SolidBrush(Color.LightBlue);
-        private Pen penRouge = new Pen(Color.Salmon);
-        private Pen penBleu = new Pen(Color.LightBlue);
         private void DessineAngle(double debut, double fin, bool ennemi)
         {
             Bitmap bmp;
@@ -185,16 +183,6 @@ namespace GoBot.IHM
         private void btnStop_Click(object sender, EventArgs e)
         {
             balise.Stop();
-        }
-
-        private void btnReset_Click(object sender, EventArgs e)
-        {
-            balise.Reset();
-        }
-
-        private void btnPing_Click(object sender, EventArgs e)
-        {
-            lblPing.Text = Balise.TestConnexionPing() + " ms";
         }
     }
 }
