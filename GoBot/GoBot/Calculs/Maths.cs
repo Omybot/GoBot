@@ -106,18 +106,23 @@ namespace GoBot.Calculs
 
         public static double EcartType(List<double> liste)
         {
-            double moyenne = liste.Average();
+            if (liste.Count > 0)
+            {
+                double moyenne = liste.Average();
 
-            double ecarts = 0;
+                double ecarts = 0;
 
-            foreach (double val in liste)
-                ecarts += (val - moyenne) * (val - moyenne);
+                foreach (double val in liste)
+                    ecarts += (val - moyenne) * (val - moyenne);
 
-            ecarts /= liste.Count;
+                ecarts /= liste.Count;
 
-            ecarts = Math.Sqrt(ecarts);
+                ecarts = Math.Sqrt(ecarts);
 
-            return ecarts;
+                return ecarts;
+            }
+            else
+                return 0;
         }
     }
 }

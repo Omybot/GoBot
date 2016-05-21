@@ -65,7 +65,10 @@ namespace GoBot.Balises
         {
             get
             {
-                return 100 - 100 * Maths.EcartType(AnglesMesures1) / AnglesMesures1.Average();
+                if (AnglesMesures1.Count > 0)
+                    return 100 - 100 * Maths.EcartType(AnglesMesures1) / AnglesMesures1.Average();
+                else
+                    return 0;
             }
         }
 
@@ -76,7 +79,10 @@ namespace GoBot.Balises
         {
             get
             {
-                return 100 - 100 * Maths.EcartType(AnglesMesures2) / AnglesMesures2.Average();
+                if (AnglesMesures2.Count > 0)
+                    return 100 - 100 * Maths.EcartType(AnglesMesures2) / AnglesMesures2.Average();
+                else
+                    return 0;
             }
         }
 
@@ -119,7 +125,10 @@ namespace GoBot.Balises
         {
             get
             {
-                return 100 - 100 * Maths.EcartType(DistancesMesures1) / DistancesMesures1.Average();
+                if (DistancesMesures1.Count > 0)
+                    return 100 - 100 * Maths.EcartType(DistancesMesures1) / DistancesMesures1.Average();
+                else
+                    return 0;
             }
         }
 
@@ -130,7 +139,10 @@ namespace GoBot.Balises
         {
             get
             {
-                return 100 - 100 * Maths.EcartType(DistancesMesures2) / DistancesMesures2.Average();
+                if (DistancesMesures2.Count > 0)
+                    return 100 - 100 * Maths.EcartType(DistancesMesures2) / DistancesMesures2.Average();
+                else
+                    return 0;
             }
         }
 
@@ -184,13 +196,13 @@ namespace GoBot.Balises
             TimeSpan tempsEcoule = DateTime.Now - DateDernierMessage;
             DateDernierMessage = DateTime.Now;
 
-            if (Balise.Detections != null && Balise.Detections.Count > 0)
+            if (Balise.Detections != null && Balise.Detections.Count == 2)
             {
                 AnglesMesures1.Add(Balise.Detections[0].AngleCentral);
                 DistancesMesures1.Add(Balise.Detections[0].Distance);
 
-                //AnglesMesures2.Add(Balise.Detections[1].AngleCentral);
-                //DistancesMesures2.Add(Balise.Detections[1].Distance);
+                AnglesMesures2.Add(Balise.Detections[1].AngleCentral);
+                DistancesMesures2.Add(Balise.Detections[1].Distance);
 
                 ValeursPWM.Add(Balise.ValeurConsigne);
 

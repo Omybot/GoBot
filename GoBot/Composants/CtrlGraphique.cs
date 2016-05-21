@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 using System.Threading;
+using System.Drawing.Drawing2D;
 
 namespace Composants
 {
@@ -86,6 +87,8 @@ namespace Composants
             Bitmap bmp = new Bitmap(pictureBox.Width, pictureBox.Height);
 
             Graphics gTemp = Graphics.FromImage(bmp);
+            g.SmoothingMode = SmoothingMode.AntiAlias;
+
             gTemp.Clear(BackColor);
 
             double min = double.MaxValue;

@@ -419,7 +419,7 @@ namespace GoBot.Balises
                                 Config.Save();
                                 // Réglage terminé
                                 ReglageOffset = false;
-                                CalibrationAngulaireTerminee();
+                                if (CalibrationAngulaireTerminee != null) CalibrationAngulaireTerminee();
                             }
                         }
 
@@ -472,6 +472,7 @@ namespace GoBot.Balises
 
                         // Génération de l'event de notification de détection
                         PositionsChange();
+                        Actualisation();
                     }
                 }
             }
@@ -495,7 +496,7 @@ namespace GoBot.Balises
             }
 
             ValeurConsigne = vitesse;
-            Trame t = TrameFactory.MoteurVitesse(MoteurID.Balise, vitesse);
+            Trame t = TrameFactory.MoteurPosition(MoteurID.Balise, vitesse); // TODOBALISE pourquoi moteur position ?
             Connexion.SendMessage(t);
         }
 

@@ -8,6 +8,7 @@ using System.Text;
 using System.Windows.Forms;
 using GoBot.Calculs;
 using GoBot.Balises;
+using System.Drawing.Drawing2D;
 
 namespace GoBot.IHM
 {
@@ -21,8 +22,8 @@ namespace GoBot.IHM
         private SolidBrush brushBlanc = new SolidBrush(Color.White);
         private SolidBrush brushNoir = new SolidBrush(Color.Black);
         private SolidBrush brushBleu = new SolidBrush(Color.LightBlue);
-        private Pen penRouge = new Pen(Color.Salmon);
-        private Pen penBleu = new Pen(Color.LightBlue);
+        private Pen penRouge = new Pen(Color.Red);
+        private Pen penBleu = new Pen(Color.Blue);
 
         public PanelBalise()
         {
@@ -131,6 +132,7 @@ namespace GoBot.IHM
                 bmp = (Bitmap)pictureBoxAngle.Image;
 
             g = Graphics.FromImage(bmp);
+            g.SmoothingMode = SmoothingMode.AntiAlias;
 
             if (ennemi)
             {

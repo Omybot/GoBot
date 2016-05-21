@@ -32,8 +32,7 @@ namespace GoBot.IHM
             }
             set
             {
-                if (balise != null)
-                    balise = value;
+                balise = value;
             }
         }
 
