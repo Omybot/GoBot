@@ -38,12 +38,8 @@ namespace GoBot.IHM
             checkedListBox.SetItemChecked(0, true);
             checkedListBox.SetItemChecked(1, true);
 
-            toolTip.SetToolTip(btnTeleportRSFace, "Téléportation de face");
-            toolTip.SetToolTip(btnTeleportRSCentre, "Téléportation du centre");
             toolTip.SetToolTip(btnTeleportRPFace, "Téléportation de face");
             toolTip.SetToolTip(btnTeleportRPCentre, "Téléportation de centre");
-            toolTip.SetToolTip(btnPathRSFace, "Path finding de face");
-            toolTip.SetToolTip(btnPathRSCentre, "Path finding du centre");
             toolTip.SetToolTip(btnPathRPFace, "Path finding de face");
             toolTip.SetToolTip(btnPathRPCentre, "Path finding du centre");
         }
@@ -79,29 +75,7 @@ namespace GoBot.IHM
                     lblPosGrosX.Text = Math.Round(Robots.GrosRobot.Position.Coordonnees.X, 2).ToString();
                     lblPosGrosY.Text = Math.Round(Robots.GrosRobot.Position.Coordonnees.Y, 2).ToString();
                     lblPosGrosTeta.Text = Robots.GrosRobot.Position.Angle.ToString();
-
-                    lblPosPetitX.Text = Math.Round(Robots.PetitRobot.Position.Coordonnees.X, 2).ToString();
-                    lblPosPetitY.Text = Math.Round(Robots.PetitRobot.Position.Coordonnees.Y, 2).ToString();
-                    lblPosPetitTeta.Text = Robots.PetitRobot.Position.Angle.ToString();
                 }));
-
-
-                for (int i = 0; i < SuiviBalise.PositionsEnnemies.Count; i++)
-                {
-                    PointReel p = SuiviBalise.PositionsEnnemies[i];
-
-                    if (p == null)
-                        continue;
-
-                    double vitesse = Math.Round(Math.Sqrt(p.X * p.X + p.Y * p.Y));
-
-                    if (i == 0)
-                    {
-                        lblXEnnemi1.Text = Math.Round(p.X).ToString();
-                        lblYEnnemi1.Text = Math.Round(p.Y).ToString();
-                        lblVitesseEnnemi1.Text = vitesse + " mm/s";
-                    }
-                }
 
                 if (Plateau.Enchainement != null)
                 {
@@ -382,44 +356,6 @@ namespace GoBot.IHM
 
                 Dessinateur.modeCourant = Dessinateur.Mode.Visualisation;
             }
-            else if (Dessinateur.modeCourant == Dessinateur.Mode.PositionRSCentre || Dessinateur.modeCourant == Dessinateur.Mode.TeleportRSCentre)
-            {
-                Direction traj = Maths.GetDirection(Dessinateur.positionDepart, Dessinateur.ScreenToRealPosition(pictureBoxTable.PointToClient(MousePosition)));
-
-                positionArrivee = new Position(traj.angle, Dessinateur.positionDepart);
-
-                if (Dessinateur.modeCourant == Dessinateur.Mode.PositionRSCentre)
-                {
-                    thGoToRS = new Thread(ThreadTrajectoirePetit);
-                    thGoToRS.Start();
-                }
-                else
-                    Robots.PetitRobot.ReglerOffsetAsserv((int)positionArrivee.Coordonnees.X, (int)positionArrivee.Coordonnees.Y, positionArrivee.Angle.AngleDegresPositif);
-
-                Dessinateur.modeCourant = Dessinateur.Mode.Visualisation;
-            }
-            else if (Dessinateur.modeCourant == Dessinateur.Mode.PositionRSFace || Dessinateur.modeCourant == Dessinateur.Mode.TeleportRSFace)
-            {
-                Point positionFin = pictureBoxTable.PointToClient(MousePosition);
-
-                Direction traj = Maths.GetDirection(Dessinateur.positionDepart, Dessinateur.ScreenToRealPosition(pictureBoxTable.PointToClient(MousePosition)));
-
-                Point pointOrigine = Dessinateur.positionDepart;
-                Position departRecule = new Position(360 - traj.angle, pointOrigine);
-                departRecule.Avancer(-Robots.PetitRobot.Longueur / 2);
-                departRecule = new Position(traj.angle, new PointReel(departRecule.Coordonnees.X, departRecule.Coordonnees.Y));
-                positionArrivee = departRecule;
-
-                if (Dessinateur.modeCourant == Dessinateur.Mode.PositionRSFace)
-                {
-                    thGoToRS = new Thread(ThreadTrajectoirePetit);
-                    thGoToRS.Start();
-                }
-                else
-                    Robots.PetitRobot.ReglerOffsetAsserv((int)positionArrivee.Coordonnees.X, (int)positionArrivee.Coordonnees.Y, positionArrivee.Angle.AngleDegresPositif);
-
-                Dessinateur.modeCourant = Dessinateur.Mode.Visualisation;
-            }
 
             Dessinateur.sourisClic = false;
         }
@@ -440,21 +376,6 @@ namespace GoBot.IHM
 
             Console.WriteLine("Path : " + Thread.CurrentThread.ManagedThreadId);
             Robots.GrosRobot.GotoXYTeta(positionArrivee.Coordonnees.X, positionArrivee.Coordonnees.Y, 360 - positionArrivee.Angle.AngleDegres);
-
-            this.Invoke(new EventHandler(delegate
-            {
-                btnPathRPCentre.Enabled = true;
-            }));
-        }
-
-        private void ThreadTrajectoirePetit()
-        {
-            this.Invoke(new EventHandler(delegate
-            {
-                btnPathRPCentre.Enabled = false;
-            }));
-
-            Robots.PetitRobot.GotoXYTeta(positionArrivee.Coordonnees.X, positionArrivee.Coordonnees.Y, 360 - positionArrivee.Angle.AngleDegres);
 
             this.Invoke(new EventHandler(delegate
             {

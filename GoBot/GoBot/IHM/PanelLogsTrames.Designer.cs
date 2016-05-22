@@ -63,9 +63,6 @@
             this.tabControlMessages = new System.Windows.Forms.TabControl();
             this.tabPageMove = new System.Windows.Forms.TabPage();
             this.tabPageIO = new System.Windows.Forms.TabPage();
-            this.tabPagePi = new System.Windows.Forms.TabPage();
-            this.checkedListBoxPi = new System.Windows.Forms.CheckedListBox();
-            this.tabPageMiwi = new System.Windows.Forms.TabPage();
             this.tabPageBalises = new System.Windows.Forms.TabPage();
             this.btnRejouerTout = new System.Windows.Forms.Button();
             this.btnRejouerSelection = new System.Windows.Forms.Button();
@@ -86,7 +83,6 @@
             this.tabControlMessages.SuspendLayout();
             this.tabPageMove.SuspendLayout();
             this.tabPageIO.SuspendLayout();
-            this.tabPagePi.SuspendLayout();
             this.tabPageBalises.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -440,8 +436,6 @@
             // 
             this.tabControlMessages.Controls.Add(this.tabPageMove);
             this.tabControlMessages.Controls.Add(this.tabPageIO);
-            this.tabControlMessages.Controls.Add(this.tabPagePi);
-            this.tabControlMessages.Controls.Add(this.tabPageMiwi);
             this.tabControlMessages.Controls.Add(this.tabPageBalises);
             this.tabControlMessages.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tabControlMessages.Location = new System.Drawing.Point(3, 3);
@@ -471,42 +465,6 @@
             this.tabPageIO.TabIndex = 1;
             this.tabPageIO.Text = "RecIO";
             this.tabPageIO.UseVisualStyleBackColor = true;
-            // 
-            // tabPagePi
-            // 
-            this.tabPagePi.Controls.Add(this.checkedListBoxPi);
-            this.tabPagePi.Location = new System.Drawing.Point(4, 22);
-            this.tabPagePi.Name = "tabPagePi";
-            this.tabPagePi.Size = new System.Drawing.Size(361, 304);
-            this.tabPagePi.TabIndex = 2;
-            this.tabPagePi.Text = "RecPi";
-            this.tabPagePi.UseVisualStyleBackColor = true;
-            // 
-            // checkedListBoxPi
-            // 
-            this.checkedListBoxPi.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.checkedListBoxPi.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.checkedListBoxPi.CheckOnClick = true;
-            this.checkedListBoxPi.ColumnWidth = 155;
-            this.checkedListBoxPi.FormattingEnabled = true;
-            this.checkedListBoxPi.Location = new System.Drawing.Point(3, 3);
-            this.checkedListBoxPi.MultiColumn = true;
-            this.checkedListBoxPi.Name = "checkedListBoxPi";
-            this.checkedListBoxPi.Size = new System.Drawing.Size(355, 285);
-            this.checkedListBoxPi.Sorted = true;
-            this.checkedListBoxPi.TabIndex = 22;
-            this.checkedListBoxPi.ItemCheck += new System.Windows.Forms.ItemCheckEventHandler(this.checkedListBoxPi_ItemCheck);
-            // 
-            // tabPageMiwi
-            // 
-            this.tabPageMiwi.Location = new System.Drawing.Point(4, 22);
-            this.tabPageMiwi.Name = "tabPageMiwi";
-            this.tabPageMiwi.Size = new System.Drawing.Size(361, 304);
-            this.tabPageMiwi.TabIndex = 3;
-            this.tabPageMiwi.Text = "RecMiwi";
-            this.tabPageMiwi.UseVisualStyleBackColor = true;
             // 
             // tabPageBalises
             // 
@@ -621,7 +579,6 @@
             this.tabControlMessages.ResumeLayout(false);
             this.tabPageMove.ResumeLayout(false);
             this.tabPageIO.ResumeLayout(false);
-            this.tabPagePi.ResumeLayout(false);
             this.tabPageBalises.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
@@ -662,15 +619,12 @@
         private System.Windows.Forms.ToolStripMenuItem nePlusAfficherDeMessagesDeCetteCarteToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem nePlusAfficherTousCesMessagesToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem copierLaTrameToolStripMenuItem;
-        private System.Windows.Forms.CheckedListBox checkedListBoxPi;
         private System.Windows.Forms.TabControl tabControlGestion;
         private System.Windows.Forms.TabPage tabPageCartes;
         private System.Windows.Forms.TabPage tabPageMessages;
         private System.Windows.Forms.TabControl tabControlMessages;
         private System.Windows.Forms.TabPage tabPageMove;
         private System.Windows.Forms.TabPage tabPageIO;
-        private System.Windows.Forms.TabPage tabPagePi;
-        private System.Windows.Forms.TabPage tabPageMiwi;
         private System.Windows.Forms.TabPage tabPageBalises;
         private System.Windows.Forms.Button btnDecocher;
         private System.Windows.Forms.Button btnCocher;

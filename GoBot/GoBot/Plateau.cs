@@ -196,7 +196,6 @@ namespace GoBot
         {
             Balise = new Balise();
 
-            PositionCiblePetit = Robots.PetitRobot.Position.Coordonnees;
             PositionCibleGros = Robots.GrosRobot.Position.Coordonnees;
         }
 
@@ -207,7 +206,6 @@ namespace GoBot
             {
                 // Le timeout sur le Thread permet de vérifier chaque seconde si on est en train d'éteindre l'application pour couper le Thread.
                 while (!SemaphoreCollisions.WaitOne(1000) && !Config.Shutdown) ;
-                Robots.PetitRobot.ObstacleTest();
                 Robots.GrosRobot.ObstacleTest();
             }
         }
@@ -239,7 +237,7 @@ namespace GoBot
         /// </summary>
         public static void ViderObstacles()
         {
-            foreach (Robot robot in new List<Robot> { Robots.GrosRobot, Robots.PetitRobot })
+            foreach (Robot robot in new List<Robot> { Robots.GrosRobot })
             {
                 for (int i = 0; i < robot.Graph.Arcs.Count; i++)
                     ((Arc)robot.Graph.Arcs[i]).Passable = true;
@@ -272,9 +270,6 @@ namespace GoBot
             IFormatter formatter = new BinaryFormatter();
             using (Stream stream = new FileStream(Config.PathData + "/graphGros.bin", FileMode.OpenOrCreate, FileAccess.Write, FileShare.None))
                 formatter.Serialize(stream, Robots.GrosRobot.Graph);
-
-            using (Stream stream = new FileStream(Config.PathData + "/graphPetit.bin", FileMode.OpenOrCreate, FileAccess.Write, FileShare.None))
-                formatter.Serialize(stream, Robots.PetitRobot.Graph);
         }
 
         /// <summary>
@@ -287,23 +282,6 @@ namespace GoBot
                 IFormatter formatter = new BinaryFormatter();
                 using (Stream stream = new FileStream(Config.PathData + "/graphGros.bin", FileMode.Open, FileAccess.Read, FileShare.Read))
                     Robots.GrosRobot.Graph = (Graph)formatter.Deserialize(stream);
-            }
-            catch (Exception e)
-            {
-                MessageBox.Show("Impossible de charger le graph." + Environment.NewLine + e.Message);
-            }
-        }
-
-        /// <summary>
-        /// Charge le dernier graph sauvegardé. Permet de gagner du temps par rapport à une génération du graph à chaque execution.
-        /// </summary>
-        public static void ChargerGraphPetit()
-        {
-            try
-            {
-                IFormatter formatter = new BinaryFormatter();
-                using (Stream stream = new FileStream(Config.PathData + "/graphPetit.bin", FileMode.Open, FileAccess.Read, FileShare.Read))
-                    Robots.PetitRobot.Graph = (Graph)formatter.Deserialize(stream);
             }
             catch (Exception e)
             {
@@ -327,13 +305,6 @@ namespace GoBot
             for (int x = resolution / 2; x < LongueurPlateau; x += resolution)
                 for (int y = resolution / 2; y < LargeurPlateau; y += resolution)
                     Robots.GrosRobot.Graph.AddNode(new Node(x, y, 0), Plateau.ObstaclesPlateau, Robots.GrosRobot.Rayon, Math.Sqrt(resolution * resolution * 2) + 1, true);
-
-            Robots.PetitRobot.Graph = new Graph();
-
-            // Création des noeuds
-            for (int x = resolution / 2; x < LongueurPlateau; x += resolution)
-                for (int y = resolution / 2; y < LargeurPlateau; y += resolution)
-                    Robots.PetitRobot.Graph.AddNode(new Node(x, y, 0), Plateau.ObstaclesPlateau, Robots.PetitRobot.Rayon, Math.Sqrt(resolution * resolution * 2) + 1, true);
         }
 
         public void ChargerObstacles()
@@ -362,21 +333,6 @@ namespace GoBot
             // Support filet
             AjouterObstacle(new RectanglePolygone(new PointReel(928, 2000 - 22), 22, 50), true);
             AjouterObstacle(new RectanglePolygone(new PointReel(2072 - 22, 2000 - 22), 22, 50), true);
-        }
-
-        /// <summary>
-        /// Rend traversables tous les noeuds et arcs du graph
-        /// </summary>
-        internal void SupprimerObstacles()
-        {
-            foreach (Robot robot in new List<Robot> { Robots.GrosRobot, Robots.PetitRobot })
-            {
-                for (int i = 0; i < robot.Graph.Nodes.Count; i++)
-                    ((Node)(robot.Graph.Nodes[i])).Passable = true;
-
-                for (int i = 0; i < robot.Graph.Arcs.Count; i++)
-                    ((Arc)(robot.Graph.Arcs[i])).Passable = true;
-            }
         }
 
         /// <summary>

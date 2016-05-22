@@ -112,7 +112,6 @@
     <Compile Include="Calculs\Formes\RectanglePolygone.cs" />
     <Compile Include="Calculs\Formes\Triangle.cs" />
     <Compile Include="CameraIP.cs" />
-    <Compile Include="Communications\ConnexionMiwi.cs" />
     <Compile Include="Communications\Connexion.cs" />
     <Compile Include="Communications\DecodeurTrames.cs" />
     <Compile Include="Communications\FonctionsTrames.cs" />
@@ -204,18 +203,6 @@
     <Compile Include="IHM\PanelBaliseDiagnostic.Designer.cs">
       <DependentUpon>PanelBaliseDiagnostic.cs</DependentUpon>
     </Compile>
-    <Compile Include="IHM\PanelPetitRobotUtilisation.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="IHM\PanelPetitRobotUtilisation.Designer.cs">
-      <DependentUpon>PanelPetitRobotUtilisation.cs</DependentUpon>
-    </Compile>
-    <Compile Include="IHM\PanelPetitRobotReglage.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="IHM\PanelPetitRobotReglage.Designer.cs">
-      <DependentUpon>PanelPetitRobotReglage.cs</DependentUpon>
-    </Compile>
     <Compile Include="IHM\PanelGrosRobotCapteurs.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -233,12 +220,6 @@
     </Compile>
     <Compile Include="IHM\PanelGrosRobotUtilisation.Designer.cs">
       <DependentUpon>PanelGrosRobotUtilisation.cs</DependentUpon>
-    </Compile>
-    <Compile Include="IHM\PanelPetitRobot.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="IHM\PanelPetitRobot.Designer.cs">
-      <DependentUpon>PanelPetitRobot.cs</DependentUpon>
     </Compile>
     <Compile Include="IHM\PanelCamera.cs">
       <SubType>UserControl</SubType>
@@ -315,7 +296,6 @@
     <Compile Include="Calculs\Formes\Segment.cs" />
     <Compile Include="Calculs\Maths.cs" />
     <Compile Include="Calculs\Position.cs" />
-    <Compile Include="Balises\CalibrateurBalise.cs" />
     <Compile Include="Config.cs" />
     <Compile Include="Enchainements\Enchainement.cs" />
     <Compile Include="Enums.cs" />
@@ -420,12 +400,6 @@
     <EmbeddedResource Include="IHM\PanelBaliseDiagnostic.resx">
       <DependentUpon>PanelBaliseDiagnostic.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="IHM\PanelPetitRobotUtilisation.resx">
-      <DependentUpon>PanelPetitRobotUtilisation.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="IHM\PanelPetitRobotReglage.resx">
-      <DependentUpon>PanelPetitRobotReglage.cs</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="IHM\PanelGrosRobotCapteurs.resx">
       <DependentUpon>PanelGrosRobotCapteurs.cs</DependentUpon>
     </EmbeddedResource>
@@ -434,9 +408,6 @@
     </EmbeddedResource>
     <EmbeddedResource Include="IHM\PanelGrosRobotUtilisation.resx">
       <DependentUpon>PanelGrosRobotUtilisation.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="IHM\PanelPetitRobot.resx">
-      <DependentUpon>PanelPetitRobot.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="IHM\PanelCamera.resx">
       <DependentUpon>PanelCamera.cs</DependentUpon>

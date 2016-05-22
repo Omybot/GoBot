@@ -27,9 +27,5 @@ namespace GoBot.Enchainements
                 Robots.GrosRobot.PathFinding(destination.X, destination.Y, rand.Next(360), 0, true);
             }
         }
-
-        protected override void ThreadPetit()
-        {
-        }
     }
 }

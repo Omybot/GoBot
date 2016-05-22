@@ -51,7 +51,6 @@ namespace GoBot
             {
                 CheckForIllegalCrossThreadCalls = false;
                 panelGrosRobot.Init();
-                panelPetitRobot.Init();
 
                 if (Screen.PrimaryScreen.Bounds.Width == 1024)
                 {
@@ -175,7 +174,6 @@ namespace GoBot
             Connexions.ConnexionIO.Sauvegarde.Sauvegarder(Config.PathData + "/Logs/" + Config.DateLancementString + "/ConnexionIO.tlog");
 
             Robots.GrosRobot.Historique.Sauvegarder(Config.PathData + "/Logs/" + Config.DateLancementString + "/ActionsGros.elog");
-            Robots.PetitRobot.Historique.Sauvegarder(Config.PathData + "/Logs/" + Config.DateLancementString + "/ActionsPetit.elog");
         }
 
         private void btnClose_Click(object sender, EventArgs e)
@@ -212,7 +210,6 @@ namespace GoBot
         {
             Robots.Simuler(switchBoutonSimu.Actif);
             panelGrosRobot.Init();
-            panelPetitRobot.Init();
             // todo
             //Robots.GrosRobot.Historique.NouvelleAction += new Historique.DelegateAction(HistoriqueGR_nouvelleAction);
             //Robots.PetitRobot.Historique.NouvelleAction += new Historique.DelegateAction(HistoriquePR_nouvelleAction);

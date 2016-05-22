@@ -43,9 +43,7 @@ namespace GoBot.IHM
             if (!Config.DesignMode)
             {
                 switchBoutonMove.SetActif(true, false);
-                switchBoutonMiwi.SetActif(true, false);
                 switchBoutonIO.SetActif(true, false);
-                switchBoutonPi.SetActif(true, false);
 
                 lblIpRecMove.Text = Connexions.ConnexionMove.AdresseIp.ToString();
                 lblEntreeRecMove.Text = Connexions.ConnexionMove.PortEntree.ToString();
@@ -135,9 +133,7 @@ namespace GoBot.IHM
         private void switchBoutonConnexion_ChangementEtat(object sender, EventArgs e)
         {
             Connexions.ActivationConnexion[Carte.RecMove] = switchBoutonMove.Actif;
-            Connexions.ActivationConnexion[Carte.RecMiwi] = switchBoutonMiwi.Actif;
             Connexions.ActivationConnexion[Carte.RecIO] = switchBoutonIO.Actif;
-            Connexions.ActivationConnexion[Carte.RecPi] = switchBoutonPi.Actif;
         }
     }
 }

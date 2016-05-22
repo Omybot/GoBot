@@ -85,8 +85,6 @@ namespace GoBot
     {
         PC = 0xA1,
         RecMove = 0xC1,
-        RecMiwi = 0xC2,
-        RecPi = 0xC3,
         RecIO = 0xC4,
         Balise = 0xB1
     }

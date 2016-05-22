@@ -147,18 +147,5 @@ namespace GoBot.Enchainements
             distance = Actionneur.Hokuyo.CalculDistanceY(3000 - 1170, 3000 - 970, 150, 2);
             Robots.GrosRobot.ReglerOffsetAsserv((int)(Robots.GrosRobot.Position.Coordonnees.X), (int)(Robots.GrosRobot.Position.Coordonnees.Y - distance), 0);
         }
-
-        protected override void ThreadPetit()
-        {
-            //int iMeilleur = 0;
-            return;
-            //ActionsFixesPetit();
-        }
-
-        private void ActionsFixesPetit()
-        {
-            // TODO Ajouter ici les actions fixes avant le lancement de l'IA
-
-        }
     }
 }

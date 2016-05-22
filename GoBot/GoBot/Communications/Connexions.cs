@@ -19,24 +19,17 @@ namespace GoBot.Communications
         {
             ActivationConnexion = new Dictionary<Carte, bool>();
             ActivationConnexion.Add(Carte.RecIO, true);
-            ActivationConnexion.Add(Carte.RecMiwi, true);
             ActivationConnexion.Add(Carte.RecMove, true);
-            ActivationConnexion.Add(Carte.RecPi, true);
 
             ConnexionMove = new ConnexionUDP();
             ConnexionMove.Connexion(System.Net.IPAddress.Parse("10.1.0.11"), 12311, 12321);
             ConnexionMove.ConnexionCheck.TestConnexion += new ConnexionCheck.TestConnexionDelegate(ConnexionMoveCheck_TestConnexion);
-
-            ConnexionMiwi = new ConnexionUDP();
-            ConnexionMiwi.Connexion(System.Net.IPAddress.Parse("10.1.0.12"), 12312, 12322);
-            ConnexionMiwi.ConnexionCheck.TestConnexion += new ConnexionCheck.TestConnexionDelegate(ConnexionMiwiCheck_TestConnexion);
 
             ConnexionIO = new ConnexionUDP();
             ConnexionIO.Connexion(System.Net.IPAddress.Parse("10.1.0.14"), 12314, 12324);
             ConnexionIO.ConnexionCheck.TestConnexion += new ConnexionCheck.TestConnexionDelegate(ConnexionIOCheck_TestConnexion);
 
             ConnexionParCarte = new Dictionary<Carte, Connexion>();
-            ConnexionParCarte.Add(Carte.RecMiwi, ConnexionMiwi);
             ConnexionParCarte.Add(Carte.RecMove, ConnexionMove);
             ConnexionParCarte.Add(Carte.RecIO, ConnexionIO);
         }
@@ -44,11 +37,6 @@ namespace GoBot.Communications
         public static void ConnexionMoveCheck_TestConnexion()
         {
             ConnexionMove.SendMessage(TrameFactory.TestConnexionMove(Robots.GrosRobot.TensionPack1 < 21 && Robots.GrosRobot.TensionPack2 < 21));
-        }
-
-        public static void ConnexionMiwiCheck_TestConnexion()
-        {
-            ConnexionMiwi.SendMessage(TrameFactory.TestConnexionMiwi());
         }
 
         public static void ConnexionIOCheck_TestConnexion()

@@ -28,8 +28,6 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.rdoGrosRobot = new System.Windows.Forms.RadioButton();
-            this.rdoPetitRobot = new System.Windows.Forms.RadioButton();
             this.btnOk = new System.Windows.Forms.Button();
             this.numCoeffD = new System.Windows.Forms.NumericUpDown();
             this.label6 = new System.Windows.Forms.Label();
@@ -67,29 +65,6 @@
             this.groupBox2.SuspendLayout();
             this.groupBoxValeurFinale.SuspendLayout();
             this.SuspendLayout();
-            // 
-            // rdoGrosRobot
-            // 
-            this.rdoGrosRobot.AutoSize = true;
-            this.rdoGrosRobot.Checked = true;
-            this.rdoGrosRobot.Location = new System.Drawing.Point(69, 9);
-            this.rdoGrosRobot.Name = "rdoGrosRobot";
-            this.rdoGrosRobot.Size = new System.Drawing.Size(74, 17);
-            this.rdoGrosRobot.TabIndex = 0;
-            this.rdoGrosRobot.TabStop = true;
-            this.rdoGrosRobot.Text = "Gros robot";
-            this.rdoGrosRobot.UseVisualStyleBackColor = true;
-            this.rdoGrosRobot.CheckedChanged += new System.EventHandler(this.rdoGrosRobot_CheckedChanged);
-            // 
-            // rdoPetitRobot
-            // 
-            this.rdoPetitRobot.AutoSize = true;
-            this.rdoPetitRobot.Location = new System.Drawing.Point(69, 32);
-            this.rdoPetitRobot.Name = "rdoPetitRobot";
-            this.rdoPetitRobot.Size = new System.Drawing.Size(73, 17);
-            this.rdoPetitRobot.TabIndex = 1;
-            this.rdoPetitRobot.Text = "Petit robot";
-            this.rdoPetitRobot.UseVisualStyleBackColor = true;
             // 
             // btnOk
             // 
@@ -422,8 +397,6 @@
             this.Controls.Add(this.label5);
             this.Controls.Add(this.numCoeffP);
             this.Controls.Add(this.label4);
-            this.Controls.Add(this.rdoPetitRobot);
-            this.Controls.Add(this.rdoGrosRobot);
             this.Name = "PanelReglageAsserv";
             this.Size = new System.Drawing.Size(1003, 550);
             ((System.ComponentModel.ISupportInitialize)(this.numCoeffD)).EndInit();
@@ -444,8 +417,6 @@
 
         #endregion
 
-        private System.Windows.Forms.RadioButton rdoGrosRobot;
-        private System.Windows.Forms.RadioButton rdoPetitRobot;
         private System.Windows.Forms.Button btnOk;
         private System.Windows.Forms.NumericUpDown numCoeffD;
         private System.Windows.Forms.Label label6;

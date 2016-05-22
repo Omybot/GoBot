@@ -34,11 +34,6 @@ namespace GoBot.IHM
                 batteriePack1.TensionLow = Config.CurrentConfig.BatterieRobotRouge;
                 batteriePack1.TensionNull = Config.CurrentConfig.BatterieRobotCritique;
 
-                batteriePack2.TensionMidHigh = Config.CurrentConfig.BatterieRobotVert;
-                batteriePack2.TensionMid = Config.CurrentConfig.BatterieRobotOrange;
-                batteriePack2.TensionLow = Config.CurrentConfig.BatterieRobotRouge;
-                batteriePack2.TensionNull = Config.CurrentConfig.BatterieRobotCritique;
-
             }
         }
 
@@ -48,26 +43,20 @@ namespace GoBot.IHM
                 return;
 
             lblTensionPack1.Text = Robots.GrosRobot.TensionPack1 + " V";
-            lblTensionPack2.Text = Robots.GrosRobot.TensionPack2 + " V";
 
             ctrlGraphique.AjouterPoint("Pack 1", Robots.GrosRobot.TensionPack1, Color.Blue);
-            ctrlGraphique.AjouterPoint("Pack 2", Robots.GrosRobot.TensionPack2, Color.LightBlue);
 
             ctrlGraphique.DessineCourbes();
             
             if (Connexions.ConnexionIO.ConnexionCheck.Connecte)
             {
                 batteriePack1.Afficher = true;
-                batteriePack2.Afficher = true;
                 batteriePack1.Tension = Robots.GrosRobot.TensionPack1;
-                batteriePack2.Tension = Robots.GrosRobot.TensionPack2;
             }
             else
             {
                 batteriePack1.Afficher = false;
-                batteriePack2.Afficher = false;
                 batteriePack1.CouleurGris();
-                batteriePack2.CouleurGris();
             }
         }
     }

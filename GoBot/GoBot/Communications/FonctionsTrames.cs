@@ -95,48 +95,6 @@ namespace GoBot.Communications
         Reset = 0xF1
     }
 
-    public enum FonctionPi
-    {
-        Deplace = 0x01,
-        Pivot = 0x03,
-        Virage = 0x04,
-        Stop = 0x05,
-        GoToXY = 0x06,
-        Recallage = 0x10,
-        FinRecallage = 0x11,
-        FinDeplacement = 0x12,
-        Blocage = 0x13,
-
-        DemandePositionsCodeurs = 0x43,
-        RetourPositionCodeurs = 0x44,
-        EnvoiConsigneBrute = 0x45,
-
-        ActionneurOnOff = 0x65,
-        Moteur = 0x66,
-
-        DemandeDiagnostic = 0x46,
-        RetourDiagnostic = 0x47,
-
-        DemandePositionContinue = 0x48,
-
-        DemandePositionXYTeta = 0x30,
-        RetourPositionXYTeta = 0x31,
-        VitesseLigne = 0x32,
-        AccelerationLigne = 0x33,
-        VitessePivot = 0x34,
-        AccelerationPivot = 0x35,
-        CoeffAsservPID = 0x36,
-        EnvoiPositionAbsolue = 0x37,
-
-        CommandeServo = 0x60,
-
-        Debug = 0xEE,
-
-        TestConnexion = 0xF0,
-        RetourTestConnexion = 0xF5,
-        Reset = 0xF1,
-    }
-
     public enum FonctionServo
     {
         DemandePositionCible = 0x01,
@@ -209,17 +167,6 @@ namespace GoBot.Communications
         EnvoiCoupleLimite = 0x73,
         DemandeCoupleLimite = 0x74,
         RetourCoupleLimite = 0x75
-    }
-
-    public enum FonctionMiwi
-    {
-        Transmettre = 0xA0,
-        Acquittement = 0xA1,
-
-        Debug = 0xEE,
-
-        TestConnexion = 0xF0,
-        RetourTestConnexion = 0xF5
     }
 
     public enum FonctionBalise

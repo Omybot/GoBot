@@ -101,10 +101,6 @@ namespace GoBot.Communications
                 try
                 {
                     Carte carte = (Carte)this[0];
-                    if (carte == GoBot.Carte.RecMiwi && this[1] == (byte)FonctionMiwi.Transmettre)
-                        carte = (Carte)this[3];
-                    if (carte == GoBot.Carte.RecMiwi && this[1] == (byte)FonctionMiwi.Acquittement)
-                        carte = (Carte)this[2];
 
                     return carte;
                 }

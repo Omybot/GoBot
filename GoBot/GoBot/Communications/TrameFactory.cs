@@ -31,9 +31,6 @@ namespace GoBot.Communications
                 case Carte.RecMove:
                     tab[1] = (byte)FonctionMove.Debug;
                     break;
-                case Carte.RecMiwi:
-                    tab[1] = (byte)FonctionMiwi.Debug;
-                    break;
             }
             tab[2] = (byte)numDebug;
 
@@ -50,19 +47,13 @@ namespace GoBot.Communications
             return new Trame(tab);
         }
 
-        static public Trame ActionneurOnOff(ActionneurOnOffID actionneur, bool onOff, bool petitRobot = false)
+        static public Trame ActionneurOnOff(ActionneurOnOffID actionneur, bool onOff)
         {
             byte[] tab = new byte[4];
             tab[0] = (byte)Carte.RecIO;
             tab[1] = (byte)FonctionIO.ActionneurOnOff;
             tab[2] = (byte)actionneur;
             tab[3] = (byte)(onOff ? 1 : 0);
-
-            if (petitRobot)
-            {
-                tab[0] = (byte)Carte.RecPi;
-                tab[1] = (byte)FonctionPi.ActionneurOnOff;
-            }
 
             return new Trame(tab);
         }
@@ -77,7 +68,7 @@ namespace GoBot.Communications
             return new Trame(tab);
         }
 
-        static public Trame MoteurPosition(MoteurID moteur, int position, bool petitRobot = false)
+        static public Trame MoteurPosition(MoteurID moteur, int position)
         {
             byte[] tab = new byte[5];
             tab[0] = (byte)Carte.RecIO;
@@ -85,13 +76,7 @@ namespace GoBot.Communications
             tab[2] = (byte)moteur;
             tab[3] = (byte)ByteDivide(position, true);
             tab[4] = (byte)ByteDivide(position, false);
-
-            if (petitRobot)
-            {
-                tab[0] = (byte)Carte.RecPi;
-                tab[1] = (byte)FonctionPi.Moteur;
-            }
-
+            
             return new Trame(tab);
         }
 
@@ -381,23 +366,6 @@ namespace GoBot.Communications
             byte[] tab = new byte[3];
             tab[0] = (byte)Carte.RecMove;
             tab[1] = (byte)FonctionMove.TestConnexion;
-            tab[2] = (byte)(bridageAsserv ? 1 : 0);
-            return new Trame(tab);
-        }
-
-        static public Trame TestConnexionMiwi()
-        {
-            byte[] tab = new byte[2];
-            tab[0] = (byte)Carte.RecMiwi;
-            tab[1] = (byte)FonctionMiwi.TestConnexion;
-            return new Trame(tab);
-        }
-
-        static public Trame TestConnexionPi(bool bridageAsserv)
-        {
-            byte[] tab = new byte[3];
-            tab[0] = (byte)Carte.RecPi;
-            tab[1] = (byte)FonctionPi.TestConnexion;
             tab[2] = (byte)(bridageAsserv ? 1 : 0);
             return new Trame(tab);
         }
@@ -969,14 +937,6 @@ namespace GoBot.Communications
             {
                 switch (trame[0])
                 {
-                    case (byte)Carte.RecMiwi:
-                        switch ((FonctionMiwi)trame[1])
-                        {
-                            case FonctionMiwi.Transmettre:
-                                return (Carte)trame[3];
-                            default:
-                                return Carte.RecMiwi;
-                        }
                     default:
                         return (Carte)trame[0];
                 }

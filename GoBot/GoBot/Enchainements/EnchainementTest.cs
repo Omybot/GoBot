@@ -28,9 +28,5 @@ namespace GoBot.Enchainements
                 }
             }
         }
-
-        protected override void ThreadPetit()
-        {
-        }
     }
 }

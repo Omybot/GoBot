@@ -146,8 +146,6 @@ namespace GoBot
         public SerializableDictionary<FonctionBalise, bool> LogsFonctionsBalise { get; set; }
         public SerializableDictionary<FonctionIO, bool> LogsFonctionsIO { get; set; }
         public SerializableDictionary<FonctionMove, bool> LogsFonctionsMove { get; set; }
-        public SerializableDictionary<FonctionMiwi, bool> LogsFonctionsMiwi { get; set; }
-        public SerializableDictionary<FonctionPi, bool> LogsFonctionsPi { get; set; }
         public SerializableDictionary<Carte, bool> LogsExpediteurs { get; set; }
         public SerializableDictionary<Carte, bool> LogsDestinataires { get; set; }
 

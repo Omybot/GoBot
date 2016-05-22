@@ -67,6 +67,7 @@ namespace GoBot
             //Enchainement = new Enchainements.HomologationEnchainement();
 
             Connexion.NouvelleTrameRecue += new ConnexionUDP.ReceptionDelegate(ReceptionMessage);
+
             if (this == Robots.GrosRobot)
                 Connexions.ConnexionIO.NouvelleTrameRecue += new ConnexionUDP.ReceptionDelegate(ReceptionMessage);
 
@@ -134,15 +135,10 @@ namespace GoBot
         {
             // Analyser la trame reçue
 
-            if ((trameRecue[0] == (byte)Carte.RecMove && this == Robots.GrosRobot) || (trameRecue[0] == (byte)Carte.RecPi && this == Robots.PetitRobot))
-            {
-                if (trameRecue[0] == (byte)Carte.RecPi && trameRecue[1] == (byte)FonctionPi.RetourTestConnexion)
-                {
-                    // Uniquement sur le petit robot : Retour de la tension sur RecPi
-                    TensionPack1 = (double)((trameRecue[2] * 256 + trameRecue[3]) / 100.0);
-                    TensionPack2 = (double)((trameRecue[4] * 256 + trameRecue[5]) / 100.0);
-                }
+            Console.WriteLine(trameRecue.ToString());
 
+            if ((trameRecue[0] == (byte)Carte.RecMove && this == Robots.GrosRobot))
+            {
                 if (trameRecue[1] == (byte)FonctionMove.Blocage)
                 {
                     thActivationAsser = new Thread(ActivationAsserv);
@@ -645,11 +641,6 @@ namespace GoBot
                     Trame trame = TrameFactory.ServoEnvoiPositionCible(servo, position);
                     Connexions.ConnexionIO.SendMessage(trame);
                 }
-                else
-                {
-                    Trame trame = TrameFactory.ServoEnvoiPositionCible(servo, position, GoBot.Carte.RecPi);
-                    Connexion.SendMessage(trame);
-                }
             }
             Historique.AjouterAction(new ActionServo(this, position, servo));
         }
@@ -692,16 +683,8 @@ namespace GoBot
 
         public override void ActionneurOnOff(ActionneurOnOffID actionneur, bool on)
         {
-            if (this == Robots.GrosRobot)
-            {
-                Trame trame = TrameFactory.ActionneurOnOff(actionneur, on);
-                Connexions.ConnexionIO.SendMessage(trame);
-            }
-            else
-            {
-                Trame trame = TrameFactory.ActionneurOnOff(actionneur, on, true);
-                Connexion.SendMessage(trame);
-            }
+            Trame trame = TrameFactory.ActionneurOnOff(actionneur, on);
+            Connexions.ConnexionIO.SendMessage(trame);
 
             Historique.AjouterAction(new ActionOnOff(this, actionneur, on));
         }
@@ -794,16 +777,8 @@ namespace GoBot
         {
             base.MoteurPosition(moteur, position);
 
-            if (this == Robots.GrosRobot)
-            {
-                Trame trame = TrameFactory.MoteurPosition(moteur, position);
-                Connexions.ConnexionIO.SendMessage(trame);
-            }
-            else
-            {
-                Trame trame = TrameFactory.MoteurPosition(moteur, position, true);
-                Connexion.SendMessage(trame);
-            }
+            Trame trame = TrameFactory.MoteurPosition(moteur, position);
+            Connexion.SendMessage(trame);
         }
 
         public override void MoteurVitesse(MoteurID moteur, int vitesse)

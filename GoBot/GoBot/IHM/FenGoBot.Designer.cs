@@ -55,8 +55,6 @@ namespace GoBot
             this.panelTable = new GoBot.IHM.PanelTable();
             this.tabMatch = new System.Windows.Forms.TabPage();
             this.panelMatch = new GoBot.IHM.PanelMatch();
-            this.tabPetitRobot = new System.Windows.Forms.TabPage();
-            this.panelPetitRobot = new GoBot.IHM.PanelPetitRobot();
             this.tabGrosRobot = new System.Windows.Forms.TabPage();
             this.panelGrosRobot = new GoBot.IHM.PanelGrosRobot();
             this.tabControl = new System.Windows.Forms.TabControl();
@@ -84,7 +82,6 @@ namespace GoBot
             this.tabCamera.SuspendLayout();
             this.tabTable.SuspendLayout();
             this.tabMatch.SuspendLayout();
-            this.tabPetitRobot.SuspendLayout();
             this.tabGrosRobot.SuspendLayout();
             this.tabControl.SuspendLayout();
             this.tabConstantes.SuspendLayout();
@@ -334,25 +331,6 @@ namespace GoBot
             this.panelMatch.Size = new System.Drawing.Size(1294, 706);
             this.panelMatch.TabIndex = 0;
             // 
-            // tabPetitRobot
-            // 
-            this.tabPetitRobot.Controls.Add(this.panelPetitRobot);
-            this.tabPetitRobot.Location = new System.Drawing.Point(4, 22);
-            this.tabPetitRobot.Name = "tabPetitRobot";
-            this.tabPetitRobot.Size = new System.Drawing.Size(1300, 712);
-            this.tabPetitRobot.TabIndex = 2;
-            this.tabPetitRobot.Text = "Petit Robot";
-            this.tabPetitRobot.UseVisualStyleBackColor = true;
-            // 
-            // panelPetitRobot
-            // 
-            this.panelPetitRobot.BackColor = System.Drawing.Color.Transparent;
-            this.panelPetitRobot.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panelPetitRobot.Location = new System.Drawing.Point(0, 0);
-            this.panelPetitRobot.Name = "panelPetitRobot";
-            this.panelPetitRobot.Size = new System.Drawing.Size(1300, 712);
-            this.panelPetitRobot.TabIndex = 0;
-            // 
             // tabGrosRobot
             // 
             this.tabGrosRobot.Controls.Add(this.panelGrosRobot);
@@ -379,7 +357,6 @@ namespace GoBot
             | System.Windows.Forms.AnchorStyles.Right)));
             this.tabControl.Controls.Add(this.tabTable);
             this.tabControl.Controls.Add(this.tabGrosRobot);
-            this.tabControl.Controls.Add(this.tabPetitRobot);
             this.tabControl.Controls.Add(this.tabMatch);
             this.tabControl.Controls.Add(this.tabCamera);
             this.tabControl.Controls.Add(this.tabLogs);
@@ -539,7 +516,6 @@ namespace GoBot
             this.tabCamera.ResumeLayout(false);
             this.tabTable.ResumeLayout(false);
             this.tabMatch.ResumeLayout(false);
-            this.tabPetitRobot.ResumeLayout(false);
             this.tabGrosRobot.ResumeLayout(false);
             this.tabControl.ResumeLayout(false);
             this.tabConstantes.ResumeLayout(false);
@@ -581,8 +557,6 @@ namespace GoBot
         private PanelTable panelTable;
         private System.Windows.Forms.TabPage tabMatch;
         private PanelMatch panelMatch;
-        private System.Windows.Forms.TabPage tabPetitRobot;
-        private PanelPetitRobot panelPetitRobot;
         private System.Windows.Forms.TabPage tabGrosRobot;
         private PanelGrosRobot panelGrosRobot;
         private System.Windows.Forms.TabControl tabControl;

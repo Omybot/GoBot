@@ -26,14 +26,6 @@ namespace GoBot.IHM
             Robot = Robots.GrosRobot;
         }
 
-        private void rdoGrosRobot_CheckedChanged(object sender, EventArgs e)
-        {
-            if (rdoGrosRobot.Checked)
-                Robot = Robots.GrosRobot;
-            else
-                Robot = Robots.PetitRobot;
-        }
-
         private void btnOk_Click(object sender, EventArgs e)
         {
             EnvoiTestPid();

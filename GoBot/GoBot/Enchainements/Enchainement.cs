@@ -56,7 +56,6 @@ namespace GoBot.Enchainements
         public void Executer()
         {
             Robots.GrosRobot.Historique.Log("DEBUT DU MATCH", TypeLog.Strat);
-            Robots.PetitRobot.Historique.Log("DEBUT DU MATCH", TypeLog.Strat);
 
             DebutMatch = DateTime.Now;
             timerFinMatch = new System.Timers.Timer();
@@ -66,18 +65,13 @@ namespace GoBot.Enchainements
 
             thGrosRobot = new Thread(ThreadGros);
             thGrosRobot.Start();
-
-            thPetitRobot = new Thread(ThreadPetit);
-            thPetitRobot.Start();
         }
 
         Thread thGrosRobot;
-        Thread thPetitRobot;
 
         private void timerFinMatch_Elapsed(object sender, ElapsedEventArgs e)
         {
             Robots.GrosRobot.Historique.Log("FIN DU MATCH", TypeLog.Strat);
-            Robots.PetitRobot.Historique.Log("FIN DU MATCH", TypeLog.Strat);
 
             timerFinMatch.Stop();
             thGrosRobot.Abort();
@@ -90,19 +84,15 @@ namespace GoBot.Enchainements
             Thread.Sleep(100);
 
             Thread.Sleep(4000);
-            thPetitRobot.Abort();
 
             // Todo Couper ici tous les actionneurs à la fin du match et lancer la Funny Action
         }
 
         protected abstract void ThreadGros();
-
-        protected abstract void ThreadPetit();
-
+        
         public void Stop()
         {
             thGrosRobot.Abort();
-            thPetitRobot.Abort();
         }
     }
 }

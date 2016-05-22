@@ -23,13 +23,5 @@ namespace GoBot.Enchainements
             Robots.GrosRobot.Avancer(1000);
             Robots.GrosRobot.Reculer(600);
         }
-
-        protected override void ThreadPetit()
-        {
-            int iMeilleur = 0;
-            return;
-            // Ajouter ici les actions fixes avant le lancement de l'IA
-
-        }
     }
 }

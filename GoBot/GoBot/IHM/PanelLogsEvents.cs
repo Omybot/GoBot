@@ -51,7 +51,6 @@ namespace GoBot.IHM
 
             couleurRobot = new Dictionary<IDRobot, Color>();
             couleurRobot.Add(IDRobot.GrosRobot, Color.LightBlue);
-            couleurRobot.Add(IDRobot.PetitRobot, Color.LightGreen);
 
             couleurTypeLog = new Dictionary<TypeLog, Color>();
             couleurTypeLog.Add(TypeLog.Action, Color.Lavender);
@@ -172,7 +171,6 @@ namespace GoBot.IHM
                 timerAffichage.Start();
 
                 Robots.GrosRobot.Historique.NouveauLog += Replay.AjouterEvent;
-                Robots.PetitRobot.Historique.NouveauLog += Replay.AjouterEvent;
                 
                 btnCharger.Enabled = false;
                 btnAfficher.Text = "Arrêter l'affichage";
@@ -183,7 +181,6 @@ namespace GoBot.IHM
                 timerAffichage.Stop();
 
                 Robots.GrosRobot.Historique.NouveauLog -= Replay.AjouterEvent;
-                Robots.PetitRobot.Historique.NouveauLog -= Replay.AjouterEvent;
 
                 btnCharger.Enabled = true;
                 btnAfficher.Text = "Afficher temps réel";

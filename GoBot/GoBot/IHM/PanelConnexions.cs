@@ -51,12 +51,7 @@ namespace GoBot.IHM
         {
             Robot_ConnexionChange(Carte.RecMove, conn);
         }
-
-        void ConnexionPiCheck_ConnexionChange(bool conn)
-        {
-            Robot_ConnexionChange(Carte.RecPi, conn);
-        }
-
+        
         void ConnexionIoCheck_ConnexionChange(bool conn)
         {
             Robot_ConnexionChange(Carte.RecIO, conn);

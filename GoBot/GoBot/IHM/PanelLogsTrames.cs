@@ -53,8 +53,6 @@ namespace GoBot.IHM
             couleurCarte = new Dictionary<Carte, Color>();
             couleurCarte.Add(Carte.PC, Color.FromArgb(180, 245, 245));
             couleurCarte.Add(Carte.RecMove, Color.FromArgb(143, 255, 143));
-            couleurCarte.Add(Carte.RecPi, Color.FromArgb(255, 201, 201));
-            couleurCarte.Add(Carte.RecMiwi, Color.FromArgb(244, 247, 153));
             couleurCarte.Add(Carte.RecIO, Color.FromArgb(210, 254, 211));
 
 
@@ -65,8 +63,6 @@ namespace GoBot.IHM
                 Config.CurrentConfig.LogsFonctionsBalise = new SerializableDictionary<FonctionBalise, bool>();
             if (Config.CurrentConfig.LogsFonctionsIO == null)
                 Config.CurrentConfig.LogsFonctionsIO = new SerializableDictionary<FonctionIO, bool>();
-            if (Config.CurrentConfig.LogsFonctionsPi == null)
-                Config.CurrentConfig.LogsFonctionsPi = new SerializableDictionary<FonctionPi, bool>();
             if (Config.CurrentConfig.LogsExpediteurs == null)
                 Config.CurrentConfig.LogsExpediteurs = new SerializableDictionary<Carte, bool>();
             if (Config.CurrentConfig.LogsDestinataires == null)
@@ -91,13 +87,6 @@ namespace GoBot.IHM
                     Config.CurrentConfig.LogsFonctionsBalise.Add(fonction, true);
 
                 checkedListBoxBalise.Items.Add(fonction.ToString(), Config.CurrentConfig.LogsFonctionsBalise[fonction]);
-            }
-            foreach (FonctionPi fonction in Enum.GetValues(typeof(FonctionPi)))
-            {
-                if (!Config.CurrentConfig.LogsFonctionsPi.ContainsKey(fonction))
-                    Config.CurrentConfig.LogsFonctionsPi.Add(fonction, true);
-
-                checkedListBoxPi.Items.Add(fonction.ToString(), Config.CurrentConfig.LogsFonctionsPi[fonction]);
             }
             foreach (Carte carte in Enum.GetValues(typeof(Carte)))
             {
@@ -212,14 +201,6 @@ namespace GoBot.IHM
                             Config.CurrentConfig.LogsFonctionsMove[fonction] = false;
                         }
 
-                        if (carte == Carte.RecPi)
-                        {
-                            FonctionPi fonction = (FonctionPi)trame[1];
-                            checkedListBoxPi.Items.Remove(fonction.ToString());
-                            checkedListBoxPi.Items.Add(fonction.ToString(), false);
-                            Config.CurrentConfig.LogsFonctionsPi[fonction] = false;
-                        }
-
                         if (carte == Carte.RecIO)
                         {
                             FonctionIO fonction = (FonctionIO)trame[1];
@@ -325,10 +306,7 @@ namespace GoBot.IHM
                 bool fonctionAutorisee = false;
                 if ((carte == Carte.RecMove && Config.CurrentConfig.LogsFonctionsMove[(FonctionMove)trame[1]]) ||
                     trame[1] == 0xA1 ||
-                    (carte == Carte.RecIO && Config.CurrentConfig.LogsFonctionsIO[(FonctionIO)trame[1]]) ||
-                    (expediteur == Carte.RecPi && Config.CurrentConfig.LogsFonctionsPi[(FonctionPi)trame[1]]) ||
-                    (destinataire == Carte.RecPi && Config.CurrentConfig.LogsFonctionsPi[(FonctionPi)trame[4]]) ||
-                    (carte == Carte.RecMiwi))
+                    (carte == Carte.RecIO && Config.CurrentConfig.LogsFonctionsIO[(FonctionIO)trame[1]]))
                     fonctionAutorisee = true;
 
 
@@ -537,17 +515,6 @@ namespace GoBot.IHM
             }
         }
 
-        private void checkedListBoxPi_ItemCheck(object sender, ItemCheckEventArgs e)
-        {
-            if (!Config.DesignMode && !chargement)
-            {
-                String fonctionString = (String)checkedListBoxPi.Items[e.Index];
-                FonctionPi fonction = (FonctionPi)Enum.Parse(typeof(FonctionPi), fonctionString);
-
-                Config.CurrentConfig.LogsFonctionsPi[fonction] = (e.NewValue == CheckState.Checked);
-            }
-        }
-
         private void btnCocher_Click(object sender, EventArgs e)
         {
             for (int i = 0; i < checkedListBoxBalise.Items.Count; i++)
@@ -560,8 +527,6 @@ namespace GoBot.IHM
                 checkedListBoxIO.SetItemChecked(i, true);
             for (int i = 0; i < checkedListBoxMove.Items.Count; i++)
                 checkedListBoxMove.SetItemChecked(i, true);
-            for (int i = 0; i < checkedListBoxPi.Items.Count; i++)
-                checkedListBoxPi.SetItemChecked(i, true);
         }
 
         private void btnDecocher_Click(object sender, EventArgs e)
@@ -576,8 +541,6 @@ namespace GoBot.IHM
                 checkedListBoxIO.SetItemChecked(i, false);
             for (int i = 0; i < checkedListBoxMove.Items.Count; i++)
                 checkedListBoxMove.SetItemChecked(i, false);
-            for (int i = 0; i < checkedListBoxPi.Items.Count; i++)
-                checkedListBoxPi.SetItemChecked(i, false);
         }
     }
 }

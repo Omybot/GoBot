@@ -250,7 +250,6 @@ namespace GoBot
                         if (AfficheTable)
                             DessinePlateau(g);
 
-                        DessineGraph(Robots.PetitRobot, g);
                         DessineGraph(Robots.GrosRobot, g);
 
                         //DessineTrajectoire(g);
@@ -260,8 +259,6 @@ namespace GoBot
 
                         if (AfficheHistoriqueCoordonneesGros && Robots.GrosRobot.HistoriqueCoordonnees != null)
                             DessineHistoriqueTrajectoire(Robots.GrosRobot, g);
-                        if (AfficheHistoriqueCoordonneesPetit && Robots.PetitRobot.HistoriqueCoordonnees != null)
-                            DessineHistoriqueTrajectoire(Robots.PetitRobot, g);
 
 
                         if (AfficheObstacles)
@@ -285,11 +282,6 @@ namespace GoBot
                             Point p = RealToScreenPosition(Robots.GrosRobot.PositionCible);
                             g.DrawEllipse(penRougeEpais, p.X - 5, p.Y - 5, 10, 10);
                         }
-                        if (Robots.PetitRobot.PositionCible != null)
-                        {
-                            Point p = RealToScreenPosition(Robots.PetitRobot.PositionCible);
-                            g.DrawEllipse(penBleuEpais, p.X - 5, p.Y - 5, 10, 10);
-                        }
 
                         // Dessin des coûts des mouvements
 
@@ -297,8 +289,6 @@ namespace GoBot
                         {
                             if (AfficheCoutsMouvementsGros)
                                 DessineCoutMouvements(Robots.GrosRobot, g);
-                            if (AfficheCoutsMouvementsPetit)
-                                DessineCoutMouvements(Robots.PetitRobot, g);
                         }
 
                         if ((modeCourant == Mode.PositionRPCentre || modeCourant == Mode.TeleportRPCentre) && positionDepart != null)
@@ -344,49 +334,6 @@ namespace GoBot
                             g.DrawLine(penBlancFleche, (Point)RealToScreenPosition(positionDepart), positionFin);
                         }
 
-                        if ((modeCourant == Mode.PositionRSCentre || modeCourant == Mode.TeleportRSCentre) && positionDepart != null)
-                        {
-                            Point positionFin = positionCurseur;
-
-                            Bitmap bmpPetitRobot = new Bitmap(RealToScreenDistance(Robots.PetitRobot.Taille * 3), RealToScreenDistance(Robots.PetitRobot.Taille * 3));
-                            Graphics gPetit = Graphics.FromImage(bmpPetitRobot);
-                            gPetit.FillRectangle(brushTransparent, 0, 0, RealToScreenDistance(Robots.PetitRobot.Taille * 2), RealToScreenDistance(Robots.PetitRobot.Taille * 2));
-
-                            Direction traj = Maths.GetDirection(positionDepart, PositionCurseurTable);
-
-                            gPetit.FillRectangle(brushNoirTresTransparent, bmpPetitRobot.Width / 2 - RealToScreenDistance(Robots.PetitRobot.Largeur / 2), bmpPetitRobot.Height / 2 - RealToScreenDistance(Robots.PetitRobot.Longueur / 2), RealToScreenDistance(Robots.PetitRobot.Largeur), RealToScreenDistance(Robots.PetitRobot.Longueur));
-                            gPetit.DrawRectangle(Plateau.NotreCouleur == Plateau.CouleurGaucheViolet ? penCouleurJ1 : penCouleurJ2, bmpPetitRobot.Width / 2 - RealToScreenDistance(Robots.PetitRobot.Largeur / 2), bmpPetitRobot.Height / 2 - RealToScreenDistance(Robots.PetitRobot.Longueur / 2), RealToScreenDistance(Robots.PetitRobot.Largeur), RealToScreenDistance(Robots.PetitRobot.Longueur));
-                            gPetit.DrawLine(Plateau.NotreCouleur == Plateau.CouleurGaucheViolet ? penCouleurJ1 : penCouleurJ2, bmpPetitRobot.Width / 2, bmpPetitRobot.Height / 2, bmpPetitRobot.Width / 2, bmpPetitRobot.Height / 2 - RealToScreenDistance(Robots.PetitRobot.Longueur / 2));
-
-                            Point pointOrigine = RealToScreenPosition(positionDepart);
-                            g.DrawImage(RotateImage(bmpPetitRobot, 360 - traj.angle.AngleDegres + 90), pointOrigine.X - bmpPetitRobot.Width / 2, pointOrigine.Y - bmpPetitRobot.Height / 2);
-
-                            g.DrawLine(penBlancFleche, (Point)RealToScreenPosition(positionDepart), positionFin);
-                        }
-
-                        else if ((modeCourant == Mode.PositionRSFace || modeCourant == Mode.TeleportRSFace) && positionDepart != null)
-                        {
-                            Point positionFin = positionCurseur;
-
-                            Bitmap bmpPetitRobot = new Bitmap(RealToScreenDistance(Robots.PetitRobot.Taille * 3), RealToScreenDistance(Robots.PetitRobot.Taille * 3));
-                            Graphics gPetit = Graphics.FromImage(bmpPetitRobot);
-                            gPetit.FillRectangle(brushTransparent, 0, 0, RealToScreenDistance(Robots.PetitRobot.Taille * 2), RealToScreenDistance(Robots.PetitRobot.Taille * 2));
-
-                            Direction traj = Maths.GetDirection(positionDepart, PositionCurseurTable);
-
-                            Point pointOrigine = RealToScreenPosition(positionDepart);
-                            Position departRecule = new Position(360 - traj.angle, pointOrigine);
-                            departRecule.Avancer(RealToScreenDistance(-Robots.PetitRobot.Longueur / 2));
-
-                            gPetit.FillRectangle(brushNoirTresTransparent, bmpPetitRobot.Width / 2 - RealToScreenDistance(Robots.PetitRobot.Largeur / 2), bmpPetitRobot.Height / 2 - RealToScreenDistance(Robots.PetitRobot.Longueur / 2), RealToScreenDistance(Robots.PetitRobot.Largeur), RealToScreenDistance(Robots.PetitRobot.Longueur));
-                            gPetit.DrawRectangle(Plateau.NotreCouleur == Plateau.CouleurGaucheViolet ? penCouleurJ1 : penCouleurJ2, bmpPetitRobot.Width / 2 - RealToScreenDistance(Robots.PetitRobot.Largeur / 2), bmpPetitRobot.Height / 2 - RealToScreenDistance(Robots.PetitRobot.Longueur / 2), RealToScreenDistance(Robots.PetitRobot.Largeur), RealToScreenDistance(Robots.PetitRobot.Longueur));
-                            gPetit.DrawLine(Plateau.NotreCouleur == Plateau.CouleurGaucheViolet ? penCouleurJ1 : penCouleurJ2, bmpPetitRobot.Width / 2, bmpPetitRobot.Height / 2, bmpPetitRobot.Width / 2, bmpPetitRobot.Height / 2 - RealToScreenDistance(Robots.PetitRobot.Longueur / 2));
-
-                            g.DrawImage(RotateImage(bmpPetitRobot, 360 - traj.angle.AngleDegres + 90), (int)(departRecule.Coordonnees.X) - bmpPetitRobot.Width / 2, (int)(departRecule.Coordonnees.Y) - bmpPetitRobot.Height / 2);
-
-                            g.DrawLine(penBlancFleche, (Point)RealToScreenPosition(positionDepart), positionFin);
-                        }
-
                         // Trajectoires
 
                         foreach (Trajectoire traj in Trajectoires)
@@ -404,8 +351,6 @@ namespace GoBot
 
                             DessineTrajectoire(traj, g);
                         }
-                        if (Robots.PetitRobot.TrajectoireEnCours != null)
-                            DessineTrajectoire(Robots.PetitRobot.TrajectoireEnCours, g);
 
                         // Trajectoire polaire
 
