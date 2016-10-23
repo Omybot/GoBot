@@ -318,21 +318,55 @@ namespace GoBot
             AjouterObstacle(new Segment(new PointReel(LongueurPlateau - 4, LargeurPlateau - 4), new PointReel(0, LargeurPlateau - 4)), true);
             AjouterObstacle(new Segment(new PointReel(0, LargeurPlateau - 4), new PointReel(0, 0)), true);
 
-            // Tasseaux vers dune
-            AjouterObstacle(new RectanglePolygone(new PointReel(800, 0), 22, 200), true);
-            AjouterObstacle(new RectanglePolygone(new PointReel(3000 - 800 - 22, 0), 22, 200), true);
+            // Zones de départ
+            AjouterObstacle(new RectanglePolygone(new PointReel(0, 0), 710, 360 + 22), true);
+            AjouterObstacle(new RectanglePolygone(new PointReel(3000 - 710, 0), 710, 360 + 22), true);
 
-            // Tasseaux au centre
-            AjouterObstacle(new RectanglePolygone(new PointReel(900, 750), 2100 - 900, 22), true);
-            AjouterObstacle(new RectanglePolygone(new PointReel(3000 / 2 - 22, 750), 44, 600), true);
+            // Zones de départ
+            AjouterObstacle(new RectanglePolygone(new PointReel(0, 0), 710, 360 + 22), true);
+            AjouterObstacle(new RectanglePolygone(new PointReel(3000 - 710, 0), 710, 360 + 22), true);
 
-            // Rochers
-            AjouterObstacle(new Cercle(new PointReel(0, 2000), 250), true);
-            AjouterObstacle(new Cercle(new PointReel(3000, 2000), 250), true);
+            // Zones latérales
+            AjouterObstacle(new RectanglePolygone(new PointReel(0, 700 - 22), 80 + 22, 1150 - 700 + 22 + 22), true);
+            AjouterObstacle(new RectanglePolygone(new PointReel(3000 - 80 - 22, 700 - 22), 80 + 22, 1150 - 700 + 22 + 22), true);
+            
+            // Petits cratères
+            AjouterObstacle(new Cercle(new PointReel(650, 540), 126), true);
+            AjouterObstacle(new Cercle(new PointReel(3000 - 650, 540), 126), true);
 
-            // Support filet
-            AjouterObstacle(new RectanglePolygone(new PointReel(928, 2000 - 22), 22, 50), true);
-            AjouterObstacle(new RectanglePolygone(new PointReel(2072 - 22, 2000 - 22), 22, 50), true);
+            AjouterObstacle(new Cercle(new PointReel(1070, 1870), 126), true);
+            AjouterObstacle(new Cercle(new PointReel(3000 - 1070, 1870), 126), true);
+
+            // Grands cratères
+            AjouterObstacle(new Cercle(new PointReel(0, 2000), 510 + 30), true);
+            AjouterObstacle(new Cercle(new PointReel(3000, 2000), 510 + 30), true);
+
+            // Base de lancement
+            AjouterObstacle(new Cercle(new PointReel(1500, 2000), 200), true);
+            AjouterObstacle(new RectanglePolygone(new PointReel(1500 - 40 - 28, 2000 - 200 - 600), 28 * 2 + 80, 600), true);
+
+            double cos45 = Math.Cos(45.0 / 180 * Math.PI);
+            points.Clear();
+            points.Add(new PointReel(1500 + cos45 * 800 - cos45 * 68, 2000 - cos45 * 800 - cos45 * 68));
+            points.Add(new PointReel(1500 + cos45 * 200 - cos45 * 68, 2000 - cos45 * 200 - cos45 * 68));
+            points.Add(new PointReel(1500 + cos45 * 200 + cos45 * 68, 2000 - cos45 * 200 + cos45 * 68));
+            points.Add(new PointReel(1500 + cos45 * 800 + cos45 * 68, 2000 - cos45 * 800 + cos45 * 68));
+            AjouterObstacle(new Polygone(points), true);
+
+            points.Clear();
+            points.Add(new PointReel(1500 - cos45 * 800 + cos45 * 68, 2000 - cos45 * 800 - cos45 * 68));
+            points.Add(new PointReel(1500 - cos45 * 200 + cos45 * 68, 2000 - cos45 * 200 - cos45 * 68));
+            points.Add(new PointReel(1500 - cos45 * 200 - cos45 * 68, 2000 - cos45 * 200 + cos45 * 68));
+            points.Add(new PointReel(1500 - cos45 * 800 - cos45 * 68, 2000 - cos45 * 800 + cos45 * 68));
+            AjouterObstacle(new Polygone(points), true);
+
+            // Fusées
+            AjouterObstacle(new Cercle(new PointReel(1150, 40), 40), true);
+            AjouterObstacle(new Cercle(new PointReel(3000 - 1150, 40), 40), true);
+
+            AjouterObstacle(new Cercle(new PointReel(40, 1350), 40), true);
+            AjouterObstacle(new Cercle(new PointReel(3000 - 40, 1350), 40), true);
+
         }
 
         /// <summary>

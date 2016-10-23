@@ -744,15 +744,6 @@ namespace GoBot.IHM
             }
         }
 
-        private void button3_Click(object sender, EventArgs e)
-        {
-            for (int i = 0; i < 20; i++)
-            {
-                Robots.GrosRobot.PivotGauche(1);
-                Robots.GrosRobot.Avancer(10);
-            }
-        }
-
         private void btnHokuyoUart_Click(object sender, EventArgs e)
         {
             ////String mess = "MS000072500001";
@@ -778,13 +769,6 @@ namespace GoBot.IHM
                 Plateau.ObstaclesPlateau.Add(new Cercle(p, 4));
             }
             MessageBox.Show(pts.Count + " points");
-        }
-
-        Thread th;
-        private void button4_Click(object sender, EventArgs e)
-        {
-            th = new Thread(ThreadMouvement);
-            th.Start(new MouvementDeposeViolet());
         }
 
         private void ThreadMouvement(Object o)
@@ -838,19 +822,6 @@ namespace GoBot.IHM
 
             distance = Actionneur.Hokuyo.CalculDistanceY(3000 - 1170, 3000 - 970, 150, 2);
             Robots.GrosRobot.ReglerOffsetAsserv((int)(Robots.GrosRobot.Position.Coordonnees.X), (int)(Robots.GrosRobot.Position.Coordonnees.Y - distance), 0);
-        }
-
-        Thread thHok;
-        private void button5_Click(object sender, EventArgs e)
-        {
-            thHok = new Thread(ThreadHokuyoRecalViolet);
-            thHok.Start();
-        }
-
-        private void button6_Click(object sender, EventArgs e)
-        {
-            Angle a = Actionneur.Hokuyo.CalculAngle(new Segment(new PointReel(3000, 50), new PointReel(3000, 900)), 30, 10);
-            MessageBox.Show((270 - a.AngleDegresPositif).ToString());
         }
     }
 }

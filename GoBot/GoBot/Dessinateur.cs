@@ -21,9 +21,9 @@ namespace GoBot
     {
         #region Conversion coordonnées réelles / écran
 
-        private const double RAPPORT_SCREEN_REAL = 3.613372416;
-        private const int OFFSET_IMAGE_X = 30;
-        private const int OFFSET_IMAGE_Y = 30;
+        private const double RAPPORT_SCREEN_REAL = 3.605769230769231;
+        private const int OFFSET_IMAGE_X = 29;
+        private const int OFFSET_IMAGE_Y = 62;
 
         // Ecran vers réel
 

@@ -67,11 +67,7 @@
             this.btnTestAsser = new System.Windows.Forms.Button();
             this.button1 = new System.Windows.Forms.Button();
             this.button2 = new System.Windows.Forms.Button();
-            this.button3 = new System.Windows.Forms.Button();
             this.btnHokuyoUart = new System.Windows.Forms.Button();
-            this.button4 = new System.Windows.Forms.Button();
-            this.button5 = new System.Windows.Forms.Button();
-            this.button6 = new System.Windows.Forms.Button();
             this.groupBox.SuspendLayout();
             this.groupBoxDeplacements.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numNbPoints)).BeginInit();
@@ -461,7 +457,7 @@
             // 
             // button1
             // 
-            this.button1.Location = new System.Drawing.Point(276, 637);
+            this.button1.Location = new System.Drawing.Point(0, 624);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(75, 23);
             this.button1.TabIndex = 71;
@@ -471,7 +467,7 @@
             // 
             // button2
             // 
-            this.button2.Location = new System.Drawing.Point(384, 628);
+            this.button2.Location = new System.Drawing.Point(81, 608);
             this.button2.Name = "button2";
             this.button2.Size = new System.Drawing.Size(75, 23);
             this.button2.TabIndex = 72;
@@ -479,19 +475,9 @@
             this.button2.UseVisualStyleBackColor = true;
             this.button2.Click += new System.EventHandler(this.pwet_Click);
             // 
-            // button3
-            // 
-            this.button3.Location = new System.Drawing.Point(998, 259);
-            this.button3.Name = "button3";
-            this.button3.Size = new System.Drawing.Size(51, 45);
-            this.button3.TabIndex = 73;
-            this.button3.Text = "button3";
-            this.button3.UseVisualStyleBackColor = true;
-            this.button3.Click += new System.EventHandler(this.button3_Click);
-            // 
             // btnHokuyoUart
             // 
-            this.btnHokuyoUart.Location = new System.Drawing.Point(276, 610);
+            this.btnHokuyoUart.Location = new System.Drawing.Point(0, 595);
             this.btnHokuyoUart.Name = "btnHokuyoUart";
             this.btnHokuyoUart.Size = new System.Drawing.Size(75, 23);
             this.btnHokuyoUart.TabIndex = 74;
@@ -499,46 +485,12 @@
             this.btnHokuyoUart.UseVisualStyleBackColor = true;
             this.btnHokuyoUart.Click += new System.EventHandler(this.btnHokuyoUart_Click);
             // 
-            // button4
-            // 
-            this.button4.Location = new System.Drawing.Point(576, 304);
-            this.button4.Name = "button4";
-            this.button4.Size = new System.Drawing.Size(75, 23);
-            this.button4.TabIndex = 75;
-            this.button4.Text = "button4";
-            this.button4.UseVisualStyleBackColor = true;
-            this.button4.Click += new System.EventHandler(this.button4_Click);
-            // 
-            // button5
-            // 
-            this.button5.Location = new System.Drawing.Point(206, 456);
-            this.button5.Name = "button5";
-            this.button5.Size = new System.Drawing.Size(65, 42);
-            this.button5.TabIndex = 76;
-            this.button5.Text = "Recalle bordure";
-            this.button5.UseVisualStyleBackColor = true;
-            this.button5.Click += new System.EventHandler(this.button5_Click);
-            // 
-            // button6
-            // 
-            this.button6.Location = new System.Drawing.Point(1034, 456);
-            this.button6.Name = "button6";
-            this.button6.Size = new System.Drawing.Size(65, 42);
-            this.button6.TabIndex = 77;
-            this.button6.Text = "Recalle bordure";
-            this.button6.UseVisualStyleBackColor = true;
-            this.button6.Click += new System.EventHandler(this.button6_Click);
-            // 
             // PanelTable
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.Transparent;
-            this.Controls.Add(this.button6);
-            this.Controls.Add(this.button5);
-            this.Controls.Add(this.button4);
             this.Controls.Add(this.btnHokuyoUart);
-            this.Controls.Add(this.button3);
             this.Controls.Add(this.button2);
             this.Controls.Add(this.button1);
             this.Controls.Add(this.btnTestAsser);
@@ -616,10 +568,6 @@
         private System.Windows.Forms.Button btnTrajCreer;
         private System.Windows.Forms.Button button2;
         private System.Windows.Forms.NumericUpDown numNbPoints;
-        private System.Windows.Forms.Button button3;
         private System.Windows.Forms.Button btnHokuyoUart;
-        private System.Windows.Forms.Button button4;
-        private System.Windows.Forms.Button button5;
-        private System.Windows.Forms.Button button6;
     }
 }
