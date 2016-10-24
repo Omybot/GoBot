@@ -13,11 +13,11 @@ namespace GoBot.Actionneurs
         private static BarreDePompes barrePompes;
         private static BrasDroite brasDroite;
         private static BrasGauche brasGauche;
-        private static PinceBasLateralGauche pinceBasLateralGauche;
         private static PinceBasLateralDroite pinceBasLateralDroite;
         private static PinceVerrou pinceVerrou;
         private static MaintienDune maintienDune;
         private static Hokuyo hokuyo;
+        private static BrasLunaire brasLunaire;
 
         static Actionneur()
         {
@@ -25,10 +25,10 @@ namespace GoBot.Actionneurs
             barrePompes = new BarreDePompes();
             brasDroite = new BrasDroite();
             brasGauche = new BrasGauche();
-            pinceBasLateralGauche = new PinceBasLateralGauche();
             pinceBasLateralDroite = new PinceBasLateralDroite();
             pinceVerrou = new PinceVerrou();
             maintienDune = new MaintienDune();
+            brasLunaire = new BrasLunaire();
             hokuyo = CreateHokuyo("COM3", LidarID.LidarSol);
         }
 
@@ -74,12 +74,6 @@ namespace GoBot.Actionneurs
             set { pinceVerrou = value; }
         }
 
-        public static PinceBasLateralGauche PinceBasLateralGauche
-        {
-            get { return pinceBasLateralGauche; }
-            set { pinceBasLateralGauche = value; }
-        }
-
         public static PinceBasLateralDroite PinceBasLateralDroite
         {
             get { return pinceBasLateralDroite; }
@@ -108,6 +102,12 @@ namespace GoBot.Actionneurs
         {
             get { return brasGauche; }
             set { brasGauche = value; }
+        }
+
+        public static BrasLunaire BrasLunaire
+        {
+            get { return brasLunaire; }
+            set { brasLunaire = value; }
         }
     }
 }

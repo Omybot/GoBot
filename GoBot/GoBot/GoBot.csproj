@@ -83,6 +83,7 @@
     <Compile Include="Actionneurs\Actionneur.cs" />
     <Compile Include="Actionneurs\BarreDePompes.cs" />
     <Compile Include="Actionneurs\Bras.cs" />
+    <Compile Include="Actionneurs\BrasLunaire.cs" />
     <Compile Include="Actionneurs\MaintienDune.cs" />
     <Compile Include="Actionneurs\PinceBasLateral.cs" />
     <Compile Include="Actionneurs\PinceBasAvant.cs" />

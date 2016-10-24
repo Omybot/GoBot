@@ -5,26 +5,6 @@ using System.Text;
 
 namespace GoBot.Actionneurs
 {
-    class PinceBasLateralGauche
-    {
-        public void Ouvrir()
-        {
-            Config.CurrentConfig.ServoPinceBasLateralGaucheAvant.Positionner(Config.CurrentConfig.ServoPinceBasLateralGaucheAvant.PositionOuvert);
-            Config.CurrentConfig.ServoPinceBasLateralGaucheArriere.Positionner(Config.CurrentConfig.ServoPinceBasLateralGaucheArriere.PositionOuvert);
-        }
-
-        public void Fermer()
-        {
-            Config.CurrentConfig.ServoPinceBasLateralGaucheAvant.Positionner(Config.CurrentConfig.ServoPinceBasLateralGaucheAvant.PositionFerme);
-            Config.CurrentConfig.ServoPinceBasLateralGaucheArriere.Positionner(Config.CurrentConfig.ServoPinceBasLateralGaucheArriere.PositionFerme);
-        }
-
-        public void Ranger()
-        {
-            Config.CurrentConfig.ServoPinceBasLateralGaucheAvant.Positionner(Config.CurrentConfig.ServoPinceBasLateralGaucheAvant.PositionRange);
-            Config.CurrentConfig.ServoPinceBasLateralGaucheArriere.Positionner(Config.CurrentConfig.ServoPinceBasLateralGaucheArriere.PositionRange);
-        }
-    }
 
     class PinceBasLateralDroite
     {

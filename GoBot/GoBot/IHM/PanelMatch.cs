@@ -145,7 +145,6 @@ namespace GoBot.IHM
                 Actionneur.MaintienDune.Ranger();
                 Actionneur.PinceBas.Ranger();
                 Actionneur.PinceBasLateralDroite.Ranger();
-                Actionneur.PinceBasLateralGauche.Ranger();
                 Actionneur.PinceVerrou.Ranger();
             }
             else

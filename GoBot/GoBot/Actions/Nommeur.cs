@@ -28,9 +28,9 @@ namespace GoBot.Actions
                     return "pince bas droite";
                 case ServomoteurID.PinceBasGauche:
                     return "pince bas gauche";
-                case ServomoteurID.PinceBasLateralGaucheArriere:
+                case ServomoteurID.ServoLunaireSerrageDroit:
                     return "pince bas latéral gauche arrière";
-                case ServomoteurID.PinceBasLateralGaucheAvant:
+                case ServomoteurID.ServoLunaireSerrageGauche:
                     return "pince bas latéral gauche avant";
                 case ServomoteurID.PinceBasLateralDroiteArriere:
                     return "pince bas latéral droite arrière";

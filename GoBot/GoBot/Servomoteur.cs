@@ -16,8 +16,8 @@ namespace GoBot
         {
             // Association de l'identifiant interne du servo et de l'identifiant du servo sur la pololu
 
-            servosPololu.Add(ServomoteurID.PinceBasLateralGaucheAvant, 0);
-            servosPololu.Add(ServomoteurID.PinceBasLateralGaucheArriere, 1);
+            servosPololu.Add(ServomoteurID.ServoLunaireSerrageGauche, 0);
+            servosPololu.Add(ServomoteurID.ServoLunaireSerrageDroit, 1);
             servosPololu.Add(ServomoteurID.PinceBasLateralDroiteAvant, 2);
             servosPololu.Add(ServomoteurID.PinceBasLateralDroiteArriere, 3);
         }

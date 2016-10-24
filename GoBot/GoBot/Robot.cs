@@ -191,15 +191,6 @@ namespace GoBot
                 Config.CurrentConfig.ServoPinceBasLateralDroiteAvant.Positionner(Config.CurrentConfig.ServoPinceBasLateralDroiteAvant.PositionRange);
                 Thread.Sleep(tempo);
 
-                Config.CurrentConfig.ServoPinceBasLateralGaucheArriere.Positionner(Config.CurrentConfig.ServoPinceBasLateralGaucheArriere.PositionOuvert);
-                Thread.Sleep(tempo);
-                Config.CurrentConfig.ServoPinceBasLateralGaucheArriere.Positionner(Config.CurrentConfig.ServoPinceBasLateralGaucheArriere.PositionRange);
-                Thread.Sleep(tempo);
-                Config.CurrentConfig.ServoPinceBasLateralGaucheAvant.Positionner(Config.CurrentConfig.ServoPinceBasLateralGaucheAvant.PositionOuvert);
-                Thread.Sleep(tempo);
-                Config.CurrentConfig.ServoPinceBasLateralGaucheAvant.Positionner(Config.CurrentConfig.ServoPinceBasLateralGaucheAvant.PositionRange);
-                Thread.Sleep(tempo);
-
                 Config.CurrentConfig.ServoVerrouDroite.Positionner(Config.CurrentConfig.ServoVerrouDroite.PositionFerme);
                 Thread.Sleep(tempo);
                 Config.CurrentConfig.ServoVerrouDroite.Positionner(Config.CurrentConfig.ServoVerrouDroite.PositionOuvert);

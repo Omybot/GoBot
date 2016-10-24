@@ -26,8 +26,8 @@ namespace GoBot
 
     public enum ServomoteurID
     {
-        PinceBasLateralGaucheAvant = 100,
-        PinceBasLateralGaucheArriere = 101,
+        ServoLunaireSerrageGauche = 100,
+        ServoLunaireSerrageDroit = 101,
         PinceBasLateralDroiteAvant = 102,
         PinceBasLateralDroiteArriere = 103,
         PinceBasGauche = 4,
@@ -35,9 +35,11 @@ namespace GoBot
         BrasDroite = 3,
         BrasGauche= 9,
         MaintienDroite = 19,
-        MaintienGauche = 20,
+        MaintienGauche = 28,
         VerrouGauche = 22,
         VerrouDroite = 17,
+        BrasLunaireAvance = 1,
+        BrasLunaireMonte = 20,
         Tous = 254
     }
 

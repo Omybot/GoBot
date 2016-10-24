@@ -15,7 +15,6 @@ namespace GoBot
             Robots.GrosRobot.Stop();
 
             Actionneur.PinceVerrou.Ranger();
-            Actionneur.PinceBasLateralGauche.Ranger();
             Actionneur.PinceBasLateralDroite.Ranger();
             Actionneur.BrasDroite.Ranger();
             Actionneur.BrasGauche.Ranger();

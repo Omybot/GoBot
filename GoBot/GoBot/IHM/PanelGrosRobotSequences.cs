@@ -138,21 +138,6 @@ namespace GoBot.IHM
             m.Executer();
         }
 
-        private void button17_Click(object sender, EventArgs e)
-        {
-            Actionneur.PinceBasLateralGauche.Ranger();
-        }
-
-        private void button16_Click(object sender, EventArgs e)
-        {
-            Actionneur.PinceBasLateralGauche.Ouvrir();
-        }
-
-        private void button15_Click(object sender, EventArgs e)
-        {
-            Actionneur.PinceBasLateralGauche.Fermer();
-        }
-
         private void button20_Click(object sender, EventArgs e)
         {
             Actionneur.PinceBasLateralDroite.Ranger();
@@ -210,8 +195,57 @@ namespace GoBot.IHM
             Actionneur.MaintienDune.Ranger();
             Actionneur.PinceBas.Ranger();
             Actionneur.PinceBasLateralDroite.Ranger();
-            Actionneur.PinceBasLateralGauche.Ranger();
             Actionneur.PinceVerrou.Ranger();
+        }
+
+        private void groupBoxSequences_Enter(object sender, EventArgs e)
+        {
+
+        }
+
+        private void btnLunaireRange_Click(object sender, EventArgs e)
+        {
+            Actionneur.BrasLunaire.Rentrer();
+        }
+
+        private void btnLunaireSorti_Click(object sender, EventArgs e)
+        {
+            Actionneur.BrasLunaire.Sortir();
+        }
+
+        private void btnLunaireBas_Click(object sender, EventArgs e)
+        {
+            Actionneur.BrasLunaire.Descendre();
+        }
+
+        private void btnLunaireHaut_Click(object sender, EventArgs e)
+        {
+            Actionneur.BrasLunaire.Monter();
+        }
+
+        private void btnLunaireOuvrir_Click(object sender, EventArgs e)
+        {
+            Actionneur.BrasLunaire.Ouvrir();
+        }
+
+        private void btnLunaireFermer_Click(object sender, EventArgs e)
+        {
+            Actionneur.BrasLunaire.Fermer();
+        }
+
+        private void btnLunaireSemiOuvert_Click(object sender, EventArgs e)
+        {
+            Actionneur.BrasLunaire.SemiOuvrir();
+        }
+
+        private void btnLunaireSequence_Click(object sender, EventArgs e)
+        {
+            Actionneur.BrasLunaire.AttrapageFusee();
+        }
+
+        private void btnLunaireSemiSorti_Click(object sender, EventArgs e)
+        {
+            Actionneur.BrasLunaire.SemiSortir();
         }
     }
 }
