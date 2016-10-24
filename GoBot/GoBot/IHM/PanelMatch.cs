@@ -139,13 +139,6 @@ namespace GoBot.IHM
             if (boxHomologtion.Checked)
             {
                 Plateau.Enchainement = new Enchainements.EnchainementHomologation();
-                Actionneur.BarreDePompes.Aspirer();
-                Actionneur.BrasDroite.Ranger();
-                Actionneur.BrasGauche.Ranger();
-                Actionneur.MaintienDune.Ranger();
-                Actionneur.PinceBas.Ranger();
-                Actionneur.PinceBasLateralDroite.Ranger();
-                Actionneur.PinceVerrou.Ranger();
             }
             else
                 Plateau.Enchainement = null;
@@ -157,7 +150,6 @@ namespace GoBot.IHM
                 Plateau.Enchainement = new Enchainements.EnchainementAllerRetour();
             else
                 Plateau.Enchainement = null;
-
         }
     }
 }

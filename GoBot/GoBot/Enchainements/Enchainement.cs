@@ -41,15 +41,6 @@ namespace GoBot.Enchainements
 
             // Todo Charger dans les listes ListeMouvementsGros et ListeMouvementsPetit les mouvements possibles
             //ListeMouvementsGros.Add(new MouvementCube1());
-            ListeMouvementsGros.Add(new MouvementCube2());
-            ListeMouvementsGros.Add(new MouvementDune1());
-            ListeMouvementsGros.Add(new MouvementDune2());
-            ListeMouvementsGros.Add(new MouvementDune3());
-            ListeMouvementsGros.Add(new MouvementDune4());
-            ListeMouvementsGros.Add(new MouvementDeposeViolet());
-            ListeMouvementsGros.Add(new MouvementDeposeViolet2());
-            ListeMouvementsGros.Add(new MouvementDeposeVert());
-            ListeMouvementsGros.Add(new MouvementDeposeVert2());
 
         }
 

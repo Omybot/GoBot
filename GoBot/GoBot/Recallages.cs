@@ -14,22 +14,15 @@ namespace GoBot
             Robots.GrosRobot.EnvoyerPID(20, 0, 200);
             Robots.GrosRobot.Stop();
 
-            Actionneur.PinceVerrou.Ranger();
-            Actionneur.PinceBasLateralDroite.Ranger();
-            Actionneur.BrasDroite.Ranger();
-            Actionneur.BrasGauche.Ranger();
-            Actionneur.BrasDroite.Fermer();
-            Actionneur.BrasGauche.Fermer();
-            Actionneur.PinceBas.Ranger();
-            Actionneur.MaintienDune.Ouvrir();
+            Actionneur.BrasLunaire.Rentrer();
+            Actionneur.BrasLunaire.SemiOuvrir();
+            Actionneur.BrasLunaire.Monter();
 
             Robots.GrosRobot.Lent();
             Robots.GrosRobot.Avancer(10);
             Robots.GrosRobot.Recallage(SensAR.Arriere);
             Robots.GrosRobot.Rapide();
             Robots.GrosRobot.Avancer(2000 - (600 + 5 + Robots.GrosRobot.Longueur / 2 + Robots.GrosRobot.Largeur / 2));
-
-            Actionneur.MaintienDune.Ranger();
 
             if (Plateau.NotreCouleur == Plateau.CouleurGaucheViolet)
                 Robots.GrosRobot.PivotDroite(90);
@@ -47,7 +40,6 @@ namespace GoBot
 
             Robots.GrosRobot.ArmerJack();
             Robots.GrosRobot.MoteurPosition(MoteurID.Balise, 3000);
-            Actionneur.BarreDePompes.Maintien();
         }
     }
 }

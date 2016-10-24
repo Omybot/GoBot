@@ -154,65 +154,6 @@ namespace GoBot
                 
                 // TODO procédure de diagnostic des actionneurs
 
-                Config.CurrentConfig.ServoBrasDroite.Positionner(Config.CurrentConfig.ServoBrasDroite.PositionDeploye);
-                Thread.Sleep(tempo);
-                Config.CurrentConfig.SerrageBrasDroite.Positionner(Config.CurrentConfig.SerrageBrasDroite.ValeurOuverture);
-                Thread.Sleep(tempo);
-                Config.CurrentConfig.SerrageBrasDroite.Positionner(Config.CurrentConfig.SerrageBrasDroite.ValeurFermeture);
-                Thread.Sleep(tempo);
-                Config.CurrentConfig.ServoBrasDroite.Positionner(Config.CurrentConfig.ServoBrasDroite.PositionRange);
-                Thread.Sleep(tempo);
-
-
-                Config.CurrentConfig.ServoBrasGauche.Positionner(Config.CurrentConfig.ServoBrasGauche.PositionDeploye);
-                Thread.Sleep(tempo);
-                Config.CurrentConfig.SerrageBrasGauche.Positionner(Config.CurrentConfig.SerrageBrasGauche.ValeurOuverture);
-                Thread.Sleep(tempo);
-                Config.CurrentConfig.SerrageBrasGauche.Positionner(Config.CurrentConfig.SerrageBrasGauche.ValeurFermeture);
-                Thread.Sleep(tempo);
-                Config.CurrentConfig.ServoBrasGauche.Positionner(Config.CurrentConfig.ServoBrasGauche.PositionRange);
-                Thread.Sleep(tempo);
-
-                Config.CurrentConfig.ServoPinceBasAvantDroite.Positionner(Config.CurrentConfig.ServoPinceBasAvantDroite.PositionOuvert);
-                Thread.Sleep(tempo);
-                Config.CurrentConfig.ServoPinceBasAvantDroite.Positionner(Config.CurrentConfig.ServoPinceBasAvantDroite.PositionRange);
-                Thread.Sleep(tempo);
-                Config.CurrentConfig.ServoPinceBasAvantGauche.Positionner(Config.CurrentConfig.ServoPinceBasAvantGauche.PositionOuvert);
-                Thread.Sleep(tempo);
-                Config.CurrentConfig.ServoPinceBasAvantGauche.Positionner(Config.CurrentConfig.ServoPinceBasAvantGauche.PositionRange);
-                Thread.Sleep(tempo);
-
-                Config.CurrentConfig.ServoPinceBasLateralDroiteArriere.Positionner(Config.CurrentConfig.ServoPinceBasLateralDroiteArriere.PositionOuvert);
-                Thread.Sleep(tempo);
-                Config.CurrentConfig.ServoPinceBasLateralDroiteArriere.Positionner(Config.CurrentConfig.ServoPinceBasLateralDroiteArriere.PositionRange);
-                Thread.Sleep(tempo);
-                Config.CurrentConfig.ServoPinceBasLateralDroiteAvant.Positionner(Config.CurrentConfig.ServoPinceBasLateralDroiteAvant.PositionOuvert);
-                Thread.Sleep(tempo);
-                Config.CurrentConfig.ServoPinceBasLateralDroiteAvant.Positionner(Config.CurrentConfig.ServoPinceBasLateralDroiteAvant.PositionRange);
-                Thread.Sleep(tempo);
-
-                Config.CurrentConfig.ServoVerrouDroite.Positionner(Config.CurrentConfig.ServoVerrouDroite.PositionFerme);
-                Thread.Sleep(tempo);
-                Config.CurrentConfig.ServoVerrouDroite.Positionner(Config.CurrentConfig.ServoVerrouDroite.PositionOuvert);
-                Thread.Sleep(tempo);
-                Config.CurrentConfig.ServoVerrouGauche.Positionner(Config.CurrentConfig.ServoVerrouGauche.PositionFerme);
-                Thread.Sleep(tempo);
-                Config.CurrentConfig.ServoVerrouGauche.Positionner(Config.CurrentConfig.ServoVerrouGauche.PositionOuvert);
-                Thread.Sleep(tempo);
-
-                Config.CurrentConfig.ServoMaintienGauche.Positionner(Config.CurrentConfig.ServoMaintienGauche.PositionFerme);
-                Thread.Sleep(tempo);
-                Config.CurrentConfig.ServoMaintienGauche.Positionner(Config.CurrentConfig.ServoMaintienGauche.PositionRange);
-                Thread.Sleep(tempo);
-                Config.CurrentConfig.ServoMaintienDroite.Positionner(Config.CurrentConfig.ServoMaintienDroite.PositionFerme);
-                Thread.Sleep(tempo);
-                Config.CurrentConfig.ServoMaintienDroite.Positionner(Config.CurrentConfig.ServoMaintienDroite.PositionRange);
-                Thread.Sleep(tempo);
-
-                Config.CurrentConfig.PompeBarre.Positionner(Config.CurrentConfig.PompeBarre.ValeurAspiration);
-                Thread.Sleep(tempo);
-                Config.CurrentConfig.PompeBarre.Positionner(Config.CurrentConfig.PompeBarre.ValeurStop);
-                Thread.Sleep(tempo);
             }
         }
 

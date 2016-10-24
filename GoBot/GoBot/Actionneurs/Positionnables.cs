@@ -13,31 +13,11 @@ namespace GoBot
         // Exemple
         // public ServoAscenseurDroitBasDroit ServoAscenseurDroitBasDroit { get; set; }
 
-        public ServoPinceBasAvantDroite ServoPinceBasAvantDroite { get; set; }
-        public ServoPinceBasAvantGauche ServoPinceBasAvantGauche { get; set; }
-
         public ServoPinceLunaireSerrageGauche ServoPinceLunaireSerrageGauche { get; set; }
         public ServoPinceLunaireSerrageDroit ServoPinceLunaireSerrageDroit { get; set; }
 
-        public ServoPinceBasLateralDroiteAvant ServoPinceBasLateralDroiteAvant { get; set; }
-        public ServoPinceBasLateralDroiteArriere ServoPinceBasLateralDroiteArriere { get; set; }
-
-        public SerrageBrasDroite SerrageBrasDroite { get; set; }
-        public SerrageBrasGauche SerrageBrasGauche { get; set; }
-
-        public ServoBrasDroite ServoBrasDroite { get; set; }
-        public ServoBrasGauche ServoBrasGauche { get; set; }
-
-        public ServoVerrouDroite ServoVerrouDroite { get; set; }
-        public ServoVerrouGauche ServoVerrouGauche { get; set; }
-
-        public ServoMaintienDroite ServoMaintienDroite { get; set; }
-        public ServoMaintienGauche ServoMaintienGauche { get; set; }
-
         public ServoLunaireAvance ServoLunaireAvance { get; set; }
         public ServoLunaireMonte ServoLunaireMonte { get; set; }
-
-        public PompeBarre PompeBarre { get; set; }
     }
 }
 
@@ -145,40 +125,7 @@ namespace GoBot.Actionneurs
         public override ServomoteurID ID { get { return ServomoteurID.BrasLunaireMonte; } }
     }
 
-    public abstract class ServoPinceBasAvant : PositionnableServo
-    {
-        public int PositionOuvert { get; set; }
-        public int PositionFerme { get; set; }
-        public int PositionRange { get; set; }
-    }
-
-    public class ServoPinceBasAvantDroite : ServoPinceBasAvant
-    {
-        public override ServomoteurID ID { get { return ServomoteurID.PinceBasDroite; } }
-    }
-
-    public class ServoPinceBasAvantGauche : ServoPinceBasAvant
-    {
-        public override ServomoteurID ID { get { return ServomoteurID.PinceBasGauche; } }
-    }
-
-    public abstract class ServoPinceBras : PositionnableServo
-    {
-        public int PositionDeploye { get; set; }
-        public int PositionRange { get; set; }
-    }
-
-    public class ServoBrasDroite : ServoPinceBras
-    {
-        public override ServomoteurID ID { get { return ServomoteurID.BrasDroite; } }
-    }
-
-    public class ServoBrasGauche : ServoPinceBras
-    {
-        public override ServomoteurID ID { get { return ServomoteurID.BrasGauche; } }
-    }
-
-    public abstract class ServoPinceBasLateral : PositionnableServo
+    public abstract class ServoPinceLunaire : PositionnableServo
     {
         public int PositionOuvert { get; set; }
         public int PositionSemiOuvert { get; set; }
@@ -186,41 +133,14 @@ namespace GoBot.Actionneurs
         public int PositionRange { get; set; }
     }
 
-    public class ServoPinceLunaireSerrageGauche : ServoPinceBasLateral
+    public class ServoPinceLunaireSerrageGauche : ServoPinceLunaire
     {
         public override ServomoteurID ID { get { return ServomoteurID.ServoLunaireSerrageGauche; } }
     }
 
-    public class ServoPinceLunaireSerrageDroit : ServoPinceBasLateral
+    public class ServoPinceLunaireSerrageDroit : ServoPinceLunaire
     {
         public override ServomoteurID ID { get { return ServomoteurID.ServoLunaireSerrageDroit; } }
-    }
-
-    public class ServoPinceBasLateralDroiteAvant : ServoPinceBasLateral
-    {
-        public override ServomoteurID ID { get { return ServomoteurID.PinceBasLateralDroiteAvant; } }
-    }
-
-    public class ServoPinceBasLateralDroiteArriere : ServoPinceBasLateral
-    {
-        public override ServomoteurID ID { get { return ServomoteurID.PinceBasLateralDroiteArriere; } }
-    }
-
-    public abstract class ServoVerrou : PositionnableServo
-    {
-        public int PositionOuvert { get; set; }
-        public int PositionFerme { get; set; }
-        public int PositionRange { get; set; }
-    }
-
-    public class ServoVerrouGauche : ServoVerrou
-    {
-        public override ServomoteurID ID { get { return ServomoteurID.VerrouGauche; } }
-    }
-
-    public class ServoVerrouDroite : ServoVerrou
-    {
-        public override ServomoteurID ID { get { return ServomoteurID.VerrouDroite; } }
     }
 
     public abstract class ServoMaintien : PositionnableServo
@@ -228,16 +148,6 @@ namespace GoBot.Actionneurs
         public int PositionOuvert { get; set; }
         public int PositionFerme { get; set; }
         public int PositionRange { get; set; }
-    }
-
-    public class ServoMaintienDroite : ServoMaintien
-    {
-        public override ServomoteurID ID { get { return ServomoteurID.MaintienDroite; } }
-    }
-
-    public class ServoMaintienGauche : ServoMaintien
-    {
-        public override ServomoteurID ID { get { return ServomoteurID.MaintienGauche; } }
     }
 
     #endregion

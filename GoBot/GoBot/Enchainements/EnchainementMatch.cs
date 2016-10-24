@@ -58,7 +58,6 @@ namespace GoBot.Enchainements
             List<PointReel> trajectoirePolaire;
             List<PointReel> pointsPolaires;
 
-            Actionneur.BarreDePompes.Stop();
             Robots.GrosRobot.Avancer(210);
             //// Trajectoire normale
             //Robots.GrosRobot.AccelerationDebutDeplacement = 1200;

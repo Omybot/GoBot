@@ -18,10 +18,6 @@ namespace GoBot.Enchainements
 
             // Ajouter ici les actions fixes avant le lancement de l'IA
 
-            Robots.GrosRobot.VitesseDeplacement = 500;
-            Actionneur.BarreDePompes.Stop();
-            Robots.GrosRobot.Avancer(1000);
-            Robots.GrosRobot.Reculer(600);
         }
     }
 }

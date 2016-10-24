@@ -61,8 +61,7 @@ namespace GoBot.Actionneurs
         {
             Stopwatch sw = Stopwatch.StartNew();
 
-
-            for (int i = 0; i < 5; i++)
+            for (int i = 0; i < 4; i++)
             {
                 Actionneur.BrasLunaire.Sortir();
                 Actionneur.BrasLunaire.Ouvrir();

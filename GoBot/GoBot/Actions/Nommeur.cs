@@ -20,26 +20,14 @@ namespace GoBot.Actions
             {
                 case ServomoteurID.Tous:
                     return "tous les servomoteurs";
-                case ServomoteurID.BrasDroite:
-                    return "bras droite";
-                case ServomoteurID.BrasGauche:
-                    return "bras gauche";
-                case ServomoteurID.PinceBasDroite:
-                    return "pince bas droite";
-                case ServomoteurID.PinceBasGauche:
-                    return "pince bas gauche";
+                case ServomoteurID.BrasLunaireAvance:
+                    return "bras lunaire linéaire";
+                case ServomoteurID.BrasLunaireMonte:
+                    return "bras lunaire rotation";
                 case ServomoteurID.ServoLunaireSerrageDroit:
-                    return "pince bas latéral gauche arrière";
+                    return "bras lunaire serrage droit";
                 case ServomoteurID.ServoLunaireSerrageGauche:
-                    return "pince bas latéral gauche avant";
-                case ServomoteurID.PinceBasLateralDroiteArriere:
-                    return "pince bas latéral droite arrière";
-                case ServomoteurID.PinceBasLateralDroiteAvant:
-                    return "pince bas latéral droite avant";
-                case ServomoteurID.VerrouDroite:
-                    return "pince verrou droite";
-                case ServomoteurID.VerrouGauche:
-                    return "pince verrou gauche";
+                    return "bras lunaire serrage gauche";
 
                 
                 default:
