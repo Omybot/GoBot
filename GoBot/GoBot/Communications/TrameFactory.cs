@@ -4,6 +4,8 @@ using System.Linq;
 using System.Text;
 using GoBot.Actions;
 using GoBot.Calculs.Formes;
+using GoBot.Devices;
+using System.Drawing;
 
 namespace GoBot.Communications
 {
@@ -33,6 +35,38 @@ namespace GoBot.Communications
                     break;
             }
             tab[2] = (byte)numDebug;
+
+            return new Trame(tab);
+        }
+
+        static public Trame SetLed(RecGoBot.Leds led, Boolean on)
+        {
+            byte[] tab = new byte[3];
+            tab[0] = (byte)Carte.RecGB;
+            tab[1] = (byte)FonctionGB.SetLed;
+            tab[2] = (byte)(on ? 1 : 0);
+
+            return new Trame(tab);
+        }
+
+        static public Trame SetLedColor(Color color)
+        {
+            byte[] tab = new byte[5];
+            tab[0] = (byte)Carte.RecGB;
+            tab[1] = (byte)FonctionGB.SetLedColor;
+            tab[2] = (byte)color.R;
+            tab[3] = (byte)color.G;
+            tab[4] = (byte)color.B;
+
+            return new Trame(tab);
+        }
+
+        static public Trame Buzz(byte volume)
+        {
+            byte[] tab = new byte[3];
+            tab[0] = (byte)Carte.RecGB;
+            tab[1] = (byte)FonctionGB.Buzzer;
+            tab[2] = (byte)volume;
 
             return new Trame(tab);
         }
@@ -92,8 +126,8 @@ namespace GoBot.Communications
         static public Trame DemandeMesureLidar(LidarID lidar)
         {
             byte[] tab = new byte[3];
-            tab[0] = (byte)Carte.RecIO;
-            tab[1] = (byte)FonctionIO.DemandeLidar;
+            tab[0] = (byte)Carte.RecMove;
+            tab[1] = (byte)FonctionMove.DemandeLidar;
             tab[2] = (byte)lidar;
 
             return new Trame(tab);
@@ -374,6 +408,14 @@ namespace GoBot.Communications
         {
             byte[] tab = new byte[2];
             tab[0] = (byte)Carte.RecIO;
+            tab[1] = (byte)FonctionIO.TestConnexion;
+            return new Trame(tab);
+        }
+
+        static public Trame TestConnexionGB()
+        {
+            byte[] tab = new byte[2];
+            tab[0] = (byte)Carte.RecGB;
             tab[1] = (byte)FonctionIO.TestConnexion;
             return new Trame(tab);
         }

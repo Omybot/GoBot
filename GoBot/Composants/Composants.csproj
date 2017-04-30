@@ -48,6 +48,12 @@
     <Compile Include="Batterie.Designer.cs">
       <DependentUpon>Batterie.cs</DependentUpon>
     </Compile>
+    <Compile Include="Button3D.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Button3D.Designer.cs">
+      <DependentUpon>Button3D.cs</DependentUpon>
+    </Compile>
     <Compile Include="IndicateurConnexion.cs">
       <SubType>Component</SubType>
     </Compile>
@@ -118,6 +124,9 @@
   <ItemGroup>
     <EmbeddedResource Include="Batterie.resx">
       <DependentUpon>Batterie.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Button3D.resx">
+      <DependentUpon>Button3D.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="IndicateurConnexion.resx">
       <DependentUpon>IndicateurConnexion.cs</DependentUpon>
@@ -214,6 +223,12 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Resources\" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="img\btnOff.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="img\btnOn.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

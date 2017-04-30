@@ -10,6 +10,7 @@ namespace GoBot.Communications
     {
         public static ConnexionUDP ConnexionMove { get; set; }
         public static ConnexionUDP ConnexionIO { get; set; }
+        public static ConnexionUDP ConnexionGB { get; set; }
 
         public static Dictionary<Carte, Connexion> ConnexionParCarte { get; private set; }
         public static Dictionary<Carte, bool> ActivationConnexion { get; private set; }
@@ -19,6 +20,7 @@ namespace GoBot.Communications
             ActivationConnexion = new Dictionary<Carte, bool>();
             ActivationConnexion.Add(Carte.RecIO, true);
             ActivationConnexion.Add(Carte.RecMove, true);
+            ActivationConnexion.Add(Carte.RecGB, true);
 
             ConnexionMove = new ConnexionUDP();
             ConnexionMove.Connexion(System.Net.IPAddress.Parse("10.1.0.11"), 12311, 12321);
@@ -28,9 +30,14 @@ namespace GoBot.Communications
             ConnexionIO.Connexion(System.Net.IPAddress.Parse("10.1.0.14"), 12314, 12324);
             ConnexionIO.ConnexionCheck.TestConnexion += new ConnexionCheck.TestConnexionDelegate(ConnexionIOCheck_TestConnexion);
 
+            ConnexionGB = new ConnexionUDP();
+            ConnexionGB.Connexion(System.Net.IPAddress.Parse("10.1.0.12"), 12312, 12322);
+            ConnexionGB.ConnexionCheck.TestConnexion += new ConnexionCheck.TestConnexionDelegate(ConnexionGBCheck_TestConnexion);
+
             ConnexionParCarte = new Dictionary<Carte, Connexion>();
             ConnexionParCarte.Add(Carte.RecMove, ConnexionMove);
             ConnexionParCarte.Add(Carte.RecIO, ConnexionIO);
+            ConnexionParCarte.Add(Carte.RecGB, ConnexionGB);
         }
 
         public static void ConnexionMoveCheck_TestConnexion()
@@ -41,6 +48,11 @@ namespace GoBot.Communications
         public static void ConnexionIOCheck_TestConnexion()
         {
             ConnexionIO.SendMessage(TrameFactory.TestConnexionIO());
+        }
+
+        public static void ConnexionGBCheck_TestConnexion()
+        {
+            ConnexionGB.SendMessage(TrameFactory.TestConnexionGB());
         }
     }
 }

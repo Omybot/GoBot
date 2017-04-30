@@ -117,48 +117,7 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
-  <data name="ledRecMove.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
-    <value>
-        iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAIAAACQkWg2AAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAL
-        DAAACwwBP0AiyAAAAJ9JREFUOE+VjtENxDAIQ9np1sli95VROYOJS9uL1FqNghs/wPylEjCLz33OGfav
-        VibO95PGbIyRjzfla8RqQmNoT2rpcDjYBL3FwEpKRy0AafjOoIaULisAgmcPMUozIB3+zjCtZahTg5rL
-        KIe0RtR1onrvmALg49dK04pBLaaAWGalUUsX5gCULtskhjavfRrqu8EWsEtD3KSYAp7L/QczoSD/De4/
-        twAAAABJRU5ErkJggg==
-</value>
-  </data>
-  <data name="ledRecIO.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
-    <value>
-        iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAIAAACQkWg2AAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAL
-        DAAACwwBP0AiyAAAAJ9JREFUOE+VjtENxDAIQ9np1sli95VROYOJS9uL1FqNghs/wPylEjCLz33OGfav
-        VibO95PGbIyRjzfla8RqQmNoT2rpcDjYBL3FwEpKRy0AafjOoIaULisAgmcPMUozIB3+zjCtZahTg5rL
-        KIe0RtR1onrvmALg49dK04pBLaaAWGalUUsX5gCULtskhjavfRrqu8EWsEtD3KSYAp7L/QczoSD/De4/
-        twAAAABJRU5ErkJggg==
-</value>
-  </data>
-  <data name="ledBalise.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
-    <value>
-        iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAIAAACQkWg2AAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAL
-        DAAACwwBP0AiyAAAAJ9JREFUOE+VjtENxDAIQ9np1sli95VROYOJS9uL1FqNghs/wPylEjCLz33OGfav
-        VibO95PGbIyRjzfla8RqQmNoT2rpcDjYBL3FwEpKRy0AafjOoIaULisAgmcPMUozIB3+zjCtZahTg5rL
-        KIe0RtR1onrvmALg49dK04pBLaaAWGalUUsX5gCULtskhjavfRrqu8EWsEtD3KSYAp7L/QczoSD/De4/
-        twAAAABJRU5ErkJggg==
-</value>
-  </data>
-  <data name="batteriePack2.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
-    <value>
-        iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8
-        YQUAAABDSURBVDhPY/iPAwIBiIBjZDlkiMREhWQZgK4JF0bRg8IBcs+cOYMXE2VAQ0MDVjxqwKgBIEw/
-        A/BhggYQgxE6/jMAAND4GsNXwUK+AAAAAElFTkSuQmCC
-</value>
-  </data>
-  <data name="ledRecGB.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
-    <value>
-        iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAIAAACQkWg2AAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAL
-        DAAACwwBP0AiyAAAAJ9JREFUOE+VjtENxDAIQ9np1sli95VROYOJS9uL1FqNghs/wPylEjCLz33OGfav
-        VibO95PGbIyRjzfla8RqQmNoT2rpcDjYBL3FwEpKRy0AafjOoIaULisAgmcPMUozIB3+zjCtZahTg5rL
-        KIe0RtR1onrvmALg49dK04pBLaaAWGalUUsX5gCULtskhjavfRrqu8EWsEtD3KSYAp7L/QczoSD/De4/
-        twAAAABJRU5ErkJggg==
-</value>
-  </data>
+  <metadata name="$this.TrayLargeIcon" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+    <value>False</value>
+  </metadata>
 </root>

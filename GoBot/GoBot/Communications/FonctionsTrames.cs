@@ -5,11 +5,24 @@ using System.Text;
 
 namespace GoBot.Communications
 {
+
+    public enum FonctionGB
+    {
+        SetLed = 0x01,
+        AppuiBouton = 0x02,
+        SetLedColor = 0x03,
+
+        ClignotementLedColor = 0x04,
+        Buzzer = 0x05,
+        FrequenceBuzzer = 0x06,
+
+        TestConnexion = 0xF0,
+        RetourTestConnexion = 0xF5,
+        Reset = 0xF1,
+    }
+
     public enum FonctionIO
     {
-        DemandeLidar = 0x10,
-        ReponseLidar = 0x11,
-
         CommandeServo = 0x60,
         ChangementBaudrateSerie = 0x61,
 
@@ -57,6 +70,9 @@ namespace GoBot.Communications
         FinRecallage = 0x11,
         FinDeplacement = 0x12,
         Blocage = 0x13,
+
+        DemandeLidar = 0xA2,
+        ReponseLidar = 0xA3,
 
         TrajectoirePolaire = 0x20,
 
@@ -174,9 +190,6 @@ namespace GoBot.Communications
         Vitesse = 0x01,
         Detection = 0xE4,
         DetectionRapide = 0xE5,
-
-        InclinaisonFace = 0x11,
-        InclinaisonProfil = 0x10,
 
         Debug = 0xEE,
 

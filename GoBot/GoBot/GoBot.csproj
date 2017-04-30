@@ -119,6 +119,7 @@
     <Compile Include="Devices\HokuyoUsb.cs" />
     <Compile Include="Devices\PololuMiniUart.cs" />
     <Compile Include="Devices\PololuMiniUsb.cs" />
+    <Compile Include="Devices\RecGoBot.cs" />
     <Compile Include="ElementsJeu\ElementJeu.cs" />
     <Compile Include="ElementsJeu\Elements.cs" />
     <Compile Include="ElementsJeu\ZoneInteret.cs" />
@@ -146,6 +147,12 @@
     </Compile>
     <Compile Include="IHM\PanelAlimentation.Designer.cs">
       <DependentUpon>PanelAlimentation.cs</DependentUpon>
+    </Compile>
+    <Compile Include="IHM\PanelRecGoBot.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="IHM\PanelRecGoBot.designer.cs">
+      <DependentUpon>PanelRecGoBot.cs</DependentUpon>
     </Compile>
     <Compile Include="IHM\PanelTestServos.cs">
       <SubType>UserControl</SubType>
@@ -361,6 +368,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="IHM\PanelAlimentation.resx">
       <DependentUpon>PanelAlimentation.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="IHM\PanelRecGoBot.resx">
+      <DependentUpon>PanelRecGoBot.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="IHM\PanelTestServos.resx">
       <DependentUpon>PanelTestServos.cs</DependentUpon>

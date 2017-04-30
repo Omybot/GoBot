@@ -281,7 +281,7 @@ namespace GoBot
             }
             else if (trameRecue[0] == (byte)Carte.RecIO)
             {
-                if (trameRecue[1] == (byte)FonctionIO.ReponseLidar)
+                if (trameRecue[1] == (byte)FonctionMove.ReponseLidar)
                 {
                     int lidarID = trameRecue[2];
 
@@ -294,7 +294,7 @@ namespace GoBot
                     }
 
                     if (Regex.Matches(mesureLidar, "\n\n").Count == 2)
-                        SemaphoresIO[FonctionIO.ReponseLidar].Release();
+                        SemaphoresMove[FonctionMove.ReponseLidar].Release();
                 }
                 if (trameRecue[1] == (byte)FonctionIO.RetourValeursAnalogiques)
                 {
@@ -824,9 +824,9 @@ namespace GoBot
         public override String GetMesureLidar(LidarID lidar, int timeout)
         {
             mesureLidar = "";
-            SemaphoresIO[FonctionIO.ReponseLidar] = new Semaphore(0, int.MaxValue);
-            Connexions.ConnexionIO.SendMessage(TrameFactory.DemandeMesureLidar(lidar));
-            SemaphoresIO[FonctionIO.ReponseLidar].WaitOne(timeout);
+            SemaphoresMove[FonctionMove.ReponseLidar] = new Semaphore(0, int.MaxValue);
+            Connexions.ConnexionMove.SendMessage(TrameFactory.DemandeMesureLidar(lidar));
+            SemaphoresMove[FonctionMove.ReponseLidar].WaitOne(timeout);
             return mesureLidar;
         }
 

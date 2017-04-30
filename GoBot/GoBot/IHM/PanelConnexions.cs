@@ -51,10 +51,15 @@ namespace GoBot.IHM
         {
             Robot_ConnexionChange(Carte.RecMove, conn);
         }
-        
+
         void ConnexionIoCheck_ConnexionChange(bool conn)
         {
             Robot_ConnexionChange(Carte.RecIO, conn);
+        }
+
+        void ConnexionGbCheck_ConnexionChange(bool conn)
+        {
+            Robot_ConnexionChange(Carte.RecGB, conn);
         }
 
         void Robot_ConnexionChange(Carte carte, bool connecte)
@@ -70,6 +75,9 @@ namespace GoBot.IHM
                     break;
                 case Carte.RecIO:
                     selectLed = ledRecIO;
+                    break;
+                case Carte.RecGB:
+                    selectLed = ledRecGB;
                     break;
             }
 
@@ -97,6 +105,7 @@ namespace GoBot.IHM
 
                 Connexions.ConnexionMove.ConnexionCheck.ConnexionChange += new ConnexionCheck.ConnexionChangeDelegate(ConnexionMoveCheck_ConnexionChange);
                 Connexions.ConnexionIO.ConnexionCheck.ConnexionChange += new ConnexionCheck.ConnexionChangeDelegate(ConnexionIoCheck_ConnexionChange);
+                Connexions.ConnexionGB.ConnexionCheck.ConnexionChange += new ConnexionCheck.ConnexionChangeDelegate(ConnexionGbCheck_ConnexionChange);
 
                 Plateau.Balise.Connexion.ConnexionCheck.ConnexionChange += new ConnexionCheck.ConnexionChangeDelegate(ConnexionBunCheck_ConnexionChange);
 
@@ -107,6 +116,8 @@ namespace GoBot.IHM
                     SetLed(ledRecIO, true);
                 if (Plateau.Balise.Connexion.ConnexionCheck.Connecte)
                     SetLed(ledBalise, true);
+                if (Connexions.ConnexionGB.ConnexionCheck.Connecte)
+                    SetLed(ledRecGB, true);
 
                 batteriePack2.TensionMidHigh = Config.CurrentConfig.BatterieRobotVert;
                 batteriePack2.TensionMid = Config.CurrentConfig.BatterieRobotOrange;

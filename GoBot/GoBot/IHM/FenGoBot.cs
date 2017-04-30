@@ -197,6 +197,7 @@ namespace GoBot
 
                 Connexions.ConnexionMove.ConnexionCheck.Start();
                 Connexions.ConnexionIO.ConnexionCheck.Start();
+                Connexions.ConnexionGB.ConnexionCheck.Start();
 
                 Plateau.Balise.Connexion.ConnexionCheck.Start();
             }

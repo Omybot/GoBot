@@ -87,6 +87,7 @@ namespace GoBot
         PC = 0xA1,
         RecMove = 0xC1,
         RecIO = 0xC4,
+        RecGB = 0xC2,
         Balise = 0xB1
     }
 

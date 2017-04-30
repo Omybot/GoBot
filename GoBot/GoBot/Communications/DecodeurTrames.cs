@@ -480,12 +480,6 @@ namespace GoBot.Communications
                             case FonctionBalise.Initialisation:
                                 message = "Initialisation";
                                 break;
-                            case FonctionBalise.InclinaisonFace:
-                                message = "Inclinaison face " + (int)(trame[2] * 256 + trame[3]);
-                                break;
-                            case FonctionBalise.InclinaisonProfil:
-                                message = "Inclinaison profil " + (int)(trame[2] * 256 + trame[3]);
-                                break;
                             case FonctionBalise.Debug:
                                 message = "Debug " + (int)trame[2];
                                 break;
