@@ -96,6 +96,8 @@ namespace GoBot.Communications
         PIDCap = 0x38,
         PIDVitesse = 0x39,
 
+        MoteurPosition = 0x66,
+
         DemandeValeursAnalogiques = 0x76,
         RetourValeursAnalogiques = 0x77,
 
@@ -187,7 +189,6 @@ namespace GoBot.Communications
 
     public enum FonctionBalise
     {
-        Vitesse = 0x01,
         Detection = 0xE4,
         DetectionRapide = 0xE5,
 

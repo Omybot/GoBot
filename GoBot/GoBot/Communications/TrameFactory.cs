@@ -110,7 +110,19 @@ namespace GoBot.Communications
             tab[2] = (byte)moteur;
             tab[3] = (byte)ByteDivide(position, true);
             tab[4] = (byte)ByteDivide(position, false);
-            
+
+            return new Trame(tab);
+        }
+
+        static public Trame BaliseVitesse(int vitesse)
+        {
+            byte[] tab = new byte[5];
+            tab[0] = (byte)Carte.RecMove;
+            tab[1] = (byte)FonctionMove.MoteurPosition;
+            tab[2] = (byte)MoteurID.Balise;
+            tab[3] = (byte)ByteDivide(vitesse, true);
+            tab[4] = (byte)ByteDivide(vitesse, false);
+
             return new Trame(tab);
         }
 

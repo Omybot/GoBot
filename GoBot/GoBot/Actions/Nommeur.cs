@@ -28,6 +28,16 @@ namespace GoBot.Actions
                     return "bras lunaire serrage droit";
                 case ServomoteurID.ServoLunaireSerrageGauche:
                     return "bras lunaire serrage gauche";
+                case ServomoteurID.BloqueurBas:
+                    return "bloqueur bas";
+                case ServomoteurID.BloqueurHaut:
+                    return "bloqueur haut";
+                case ServomoteurID.Chariot:
+                    return "chariot";
+                case ServomoteurID.Ejecteur:
+                    return "éjecteur";
+                case ServomoteurID.Rehausseur:
+                    return "réhausseur";
 
                 
                 default:
@@ -113,6 +123,10 @@ namespace GoBot.Actions
             {
                 case MoteurID.Balise:
                     return "balise";
+                case MoteurID.Orienteur:
+                    return "orienteur";
+                case MoteurID.Transfert:
+                    return "transfert de module";
                 default:
                     return moteur.ToString();
             }

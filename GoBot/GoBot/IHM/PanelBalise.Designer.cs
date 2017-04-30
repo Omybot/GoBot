@@ -65,7 +65,7 @@
             this.trackBarVitesse.BackColor = System.Drawing.Color.Transparent;
             this.trackBarVitesse.IntervalTimer = 500;
             this.trackBarVitesse.Location = new System.Drawing.Point(65, 37);
-            this.trackBarVitesse.Max = 4000D;
+            this.trackBarVitesse.Max = 312D;
             this.trackBarVitesse.MaximumSize = new System.Drawing.Size(3000, 15);
             this.trackBarVitesse.Min = 0D;
             this.trackBarVitesse.MinimumSize = new System.Drawing.Size(0, 15);

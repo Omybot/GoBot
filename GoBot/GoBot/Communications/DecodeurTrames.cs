@@ -500,10 +500,6 @@ namespace GoBot.Communications
                             case FonctionBalise.TestConnexion:
                                 message = "Test connexion";
                                 break;
-                            case FonctionBalise.Vitesse:
-                                int vitesse = trame[2] * 256 + trame[3];
-                                message = "Envoi vitesse pwm " + vitesse;
-                                break;
                             default:
                                 message = ((FonctionBalise)trame[1]).ToString();
                                 break;

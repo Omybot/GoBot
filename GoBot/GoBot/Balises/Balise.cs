@@ -112,7 +112,7 @@ namespace GoBot.Balises
             DetectionsCapteur1 = new List<DetectionBalise>();
             DetectionsCapteur2 = new List<DetectionBalise>();
 
-            Connexion = Connexions.ConnexionIO;
+            Connexion = Connexions.ConnexionMove;
             Connexion.NouvelleTrameRecue += new ConnexionUDP.ReceptionDelegate(connexion_NouvelleTrame);
 
             Stats = new BaliseStats(this);
@@ -488,15 +488,15 @@ namespace GoBot.Balises
         /// <param name="vitesse">Valeur pwm à appliquer au moteur</param>
         public void VitesseRotation(int vitesse)
         {
-            // Les valeurs correctes sont entre 0 et 4000
-            if (vitesse > 4000 || vitesse < 0)
+            // Les valeurs correctes sont entre 0 et 312
+            if (vitesse > 312 || vitesse < 0)
             {
-                vitesse = 4000;
+                vitesse = 312;
                 Console.WriteLine("Erreur d'affectation de vitesse");
             }
 
             ValeurConsigne = vitesse;
-            Trame t = TrameFactory.MoteurPosition(MoteurID.Balise, vitesse); // TODOBALISE pourquoi moteur position ?
+            Trame t = TrameFactory.BaliseVitesse(vitesse);
             Connexion.SendMessage(t);
         }
 
@@ -544,7 +544,7 @@ namespace GoBot.Balises
 
             // Asservissement de la vitesse en fonction de l'erreur mesurée au tour précédent
             // 150 est un coefficient modifiable pour la réactivité de l'asservissement
-            int nouvelleVitesse = (int)Math.Min((ValeurConsigne + (VitesseConsigne - VitesseToursSecActuelle) * 70.0), 4000);
+            int nouvelleVitesse = (int)Math.Min((ValeurConsigne + (VitesseConsigne - VitesseToursSecActuelle) * 70.0), 312);
             VitesseRotation(nouvelleVitesse);
 
             if (!ReglageVitessePermanent && VitesseConsigne < VitesseToursSecActuelle * 1.01 && VitesseConsigne > VitesseToursSecActuelle * 0.99)
