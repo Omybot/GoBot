@@ -18,6 +18,10 @@ namespace GoBot
 
             servosPololu.Add(ServomoteurID.ServoLunaireSerrageGauche, 0);
             servosPololu.Add(ServomoteurID.ServoLunaireSerrageDroit, 1);
+            servosPololu.Add(ServomoteurID.Chariot, 2);
+            servosPololu.Add(ServomoteurID.BloqueurBas, 6);
+            servosPololu.Add(ServomoteurID.BloqueurHaut, 7);
+            servosPololu.Add(ServomoteurID.Ejecteur, 8);
         }
 
         public static short idServoPololu(ServomoteurID servo)

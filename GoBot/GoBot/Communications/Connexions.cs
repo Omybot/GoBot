@@ -8,7 +8,6 @@ namespace GoBot.Communications
 {
     static class Connexions
     {
-        public static ConnexionUDP ConnexionMiwi { get; set; }
         public static ConnexionUDP ConnexionMove { get; set; }
         public static ConnexionUDP ConnexionIO { get; set; }
 

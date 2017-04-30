@@ -11,11 +11,17 @@ namespace GoBot.Actionneurs
     {
         private static Hokuyo hokuyo;
         private static BrasLunaire brasLunaire;
+        private static Convoyeur convoyeur;
+        private static Stockeur stockeur;
+        private static Ejecteur ejecteur;
 
         static Actionneur()
         {
             brasLunaire = new BrasLunaire();
             hokuyo = CreateHokuyo("COM3", LidarID.LidarSol);
+            convoyeur = new Convoyeur();
+            stockeur = new Stockeur();
+            ejecteur = new Ejecteur();
         }
 
         public static Hokuyo CreateHokuyo(String portCom, LidarID id)
@@ -52,6 +58,24 @@ namespace GoBot.Actionneurs
         {
             get { return brasLunaire; }
             set { brasLunaire = value; }
+        }
+
+        public static Ejecteur Ejecteur
+        {
+            get { return ejecteur; }
+            set { ejecteur = value; }
+        }
+
+        public static Convoyeur Convoyeur
+        {
+            get { return convoyeur; }
+            set { convoyeur = value; }
+        }
+
+        public static Stockeur Stockeur
+        {
+            get { return stockeur; }
+            set { stockeur = value; }
         }
     }
 }

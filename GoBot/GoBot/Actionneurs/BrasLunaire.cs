@@ -12,21 +12,22 @@ namespace GoBot.Actionneurs
     {
         public void Sortir()
         {
-            Config.CurrentConfig.ServoLunaireAvance.Positionner(Config.CurrentConfig.ServoLunaireAvance.PositionSortie);
-        }
-        public void SemiSortir()
-        {
-            Config.CurrentConfig.ServoLunaireAvance.Positionner(Config.CurrentConfig.ServoLunaireAvance.PositionSemiSortie);
+            Config.CurrentConfig.ServoLunaireChariot.Positionner(Config.CurrentConfig.ServoLunaireChariot.PositionSortie);
         }
 
         public void Rentrer()
         {
-            Config.CurrentConfig.ServoLunaireAvance.Positionner(Config.CurrentConfig.ServoLunaireAvance.PositionRange);
+            Config.CurrentConfig.ServoLunaireChariot.Positionner(Config.CurrentConfig.ServoLunaireChariot.PositionRange);
         }
 
         public void Monter()
         {
             Config.CurrentConfig.ServoLunaireMonte.Positionner(Config.CurrentConfig.ServoLunaireMonte.PositionHaut);
+        }
+
+        public void SemiMonter()
+        {
+            Config.CurrentConfig.ServoLunaireMonte.Positionner(Config.CurrentConfig.ServoLunaireMonte.PositionMoyenne);
         }
 
         public void Descendre()
@@ -40,21 +41,16 @@ namespace GoBot.Actionneurs
             Config.CurrentConfig.ServoPinceLunaireSerrageGauche.Positionner(Config.CurrentConfig.ServoPinceLunaireSerrageGauche.PositionOuvert);
         }
 
+        public void Ranger()
+        {
+            Config.CurrentConfig.ServoPinceLunaireSerrageDroit.Positionner(Config.CurrentConfig.ServoPinceLunaireSerrageDroit.PositionRange);
+            Config.CurrentConfig.ServoPinceLunaireSerrageGauche.Positionner(Config.CurrentConfig.ServoPinceLunaireSerrageGauche.PositionRange);
+        }
+
         public void Fermer()
         {
             Config.CurrentConfig.ServoPinceLunaireSerrageDroit.Positionner(Config.CurrentConfig.ServoPinceLunaireSerrageDroit.PositionFerme);
             Config.CurrentConfig.ServoPinceLunaireSerrageGauche.Positionner(Config.CurrentConfig.ServoPinceLunaireSerrageGauche.PositionFerme);
-        }
-
-        public void SemiOuvrir()
-        {
-            Config.CurrentConfig.ServoPinceLunaireSerrageDroit.Positionner(Config.CurrentConfig.ServoPinceLunaireSerrageDroit.PositionSemiOuvert);
-            Config.CurrentConfig.ServoPinceLunaireSerrageGauche.Positionner(Config.CurrentConfig.ServoPinceLunaireSerrageGauche.PositionSemiOuvert);
-        }
-
-        public void SemiFermer()
-        {
-            SemiOuvrir();
         }
 
         public void AttrapageFusee()
@@ -68,15 +64,13 @@ namespace GoBot.Actionneurs
                 Actionneur.BrasLunaire.Descendre();
                 Thread.Sleep(200);
                 Robots.GrosRobot.Reculer(50);
-                Actionneur.BrasLunaire.SemiFermer();
-                Thread.Sleep(200);
-                Actionneur.BrasLunaire.SemiSortir();
+                Actionneur.BrasLunaire.Fermer();
                 Thread.Sleep(200);
                 Actionneur.BrasLunaire.Ouvrir();
                 Thread.Sleep(100);
                 Actionneur.BrasLunaire.Sortir();
                 Thread.Sleep(200);
-                Actionneur.BrasLunaire.Fermer();
+                Actionneur.BrasLunaire.Ranger();
                 Thread.Sleep(200);
                 Robots.GrosRobot.Avancer(50);
                 Actionneur.BrasLunaire.Rentrer();

@@ -111,12 +111,6 @@ namespace GoBot.Actions
         {
             switch (moteur)
             {
-                case MoteurID.BrasDroite:
-                    return "bras droite";
-                case MoteurID.BrasGauche:
-                    return "bras gauche";
-                case MoteurID.PompeBarre:
-                    return "pompes au sol";
                 case MoteurID.Balise:
                     return "balise";
                 default:

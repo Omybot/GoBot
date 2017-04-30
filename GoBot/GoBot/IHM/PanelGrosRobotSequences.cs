@@ -40,7 +40,7 @@ namespace GoBot.IHM
         {
             Actionneur.BrasLunaire.Rentrer();
             Actionneur.BrasLunaire.Monter();
-            Actionneur.BrasLunaire.SemiOuvrir();
+            Actionneur.BrasLunaire.Fermer();
         }
 
         private void groupBoxSequences_Enter(object sender, EventArgs e)
@@ -75,12 +75,12 @@ namespace GoBot.IHM
 
         private void btnLunaireFermer_Click(object sender, EventArgs e)
         {
-            Actionneur.BrasLunaire.Fermer();
+            Actionneur.BrasLunaire.Ranger();
         }
 
         private void btnLunaireSemiOuvert_Click(object sender, EventArgs e)
         {
-            Actionneur.BrasLunaire.SemiOuvrir();
+            Actionneur.BrasLunaire.Fermer();
         }
 
         private void btnLunaireSequence_Click(object sender, EventArgs e)
@@ -90,7 +90,76 @@ namespace GoBot.IHM
 
         private void btnLunaireSemiSorti_Click(object sender, EventArgs e)
         {
-            Actionneur.BrasLunaire.SemiSortir();
+            Actionneur.BrasLunaire.Fermer();
+        }
+
+        private void btnEjecter_Click(object sender, EventArgs e)
+        {
+            Actionneur.Ejecteur.Ejecter();
+        }
+
+        private void btnTourneGauche_Click(object sender, EventArgs e)
+        {
+            Actionneur.Ejecteur.TournerGauche();
+            Thread.Sleep(500);
+            Actionneur.Ejecteur.TournerStop();
+        }
+
+        private void btnTourneDroite_Click(object sender, EventArgs e)
+        {
+            Actionneur.Ejecteur.TournerDroite();
+            Thread.Sleep(500);
+            Actionneur.Ejecteur.TournerStop();
+        }
+
+        private void btnBloqueHaut_Click(object sender, EventArgs e)
+        {
+            Actionneur.Stockeur.BloqueHaut();
+        }
+
+        private void btnDebloqueHaut_Click(object sender, EventArgs e)
+        {
+            Actionneur.Stockeur.RelacheHaut();
+        }
+
+        private void btnBloqueBas_Click(object sender, EventArgs e)
+        {
+            Actionneur.Stockeur.BloqueBas();
+        }
+
+        private void btnRelacheBas_Click(object sender, EventArgs e)
+        {
+            Actionneur.Stockeur.RelacheBas();
+        }
+
+        private void btnRehausseurMonter_Click(object sender, EventArgs e)
+        {
+            Actionneur.Stockeur.MonterRehausseur();
+        }
+
+        private void btnRehausseurPreparer_Click(object sender, EventArgs e)
+        {
+            Actionneur.Stockeur.PreparerRehausseur();
+        }
+
+        private void btnRehausseRanger_Click(object sender, EventArgs e)
+        {
+            Actionneur.Stockeur.RangerRehausseur();
+        }
+
+        private void btnVidage_Click(object sender, EventArgs e)
+        {
+            Actionneur.Ejecteur.Ejecter();
+            Actionneur.Stockeur.RelacheBas();
+            Thread.Sleep(300);
+            Actionneur.Ejecteur.Ejecter();
+            Actionneur.Stockeur.MonterRehausseur();
+            Thread.Sleep(350);
+            Actionneur.Stockeur.RelacheHaut();
+            Thread.Sleep(200);
+            Actionneur.Stockeur.RangerRehausseur();
+            Thread.Sleep(450);
+            Actionneur.Ejecteur.Ejecter();
         }
     }
 }

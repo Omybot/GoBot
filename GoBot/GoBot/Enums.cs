@@ -32,15 +32,22 @@ namespace GoBot
         BrasLunaireAvance = 1,
         BrasLunaireMonte = 20,
 
+        Chariot = 50,
+
+        BloqueurBas = 60,
+        BloqueurHaut = 61,
+        Rehausseur = 3,
+
+        Ejecteur = 70,
+
         Tous = 254
     }
 
     public enum MoteurID
     {
-        BrasGauche = 1,
-        BrasDroite = 0,
+        Orienteur = 0,
+        Transfert = 1,
         Balise = 2,
-        PompeBarre = 3
     }
 
     public enum CapteurID

@@ -15,7 +15,7 @@ namespace GoBot
             Robots.GrosRobot.Stop();
 
             Actionneur.BrasLunaire.Rentrer();
-            Actionneur.BrasLunaire.SemiOuvrir();
+            Actionneur.BrasLunaire.Fermer();
             Actionneur.BrasLunaire.Monter();
 
             Robots.GrosRobot.Lent();
