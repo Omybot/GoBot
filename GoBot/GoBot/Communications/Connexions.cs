@@ -42,7 +42,7 @@ namespace GoBot.Communications
 
         public static void ConnexionMoveCheck_TestConnexion()
         {
-            ConnexionMove.SendMessage(TrameFactory.TestConnexionMove(Robots.GrosRobot.TensionPack1 < 21 && Robots.GrosRobot.TensionPack2 < 21));
+            ConnexionMove.SendMessage(TrameFactory.TestConnexionMove(Robots.GrosRobot.BatterieVoltage < 21));
         }
 
         public static void ConnexionIOCheck_TestConnexion()

@@ -11,10 +11,10 @@ namespace GoBot.ElementsJeu
     {
         public Elements()
         {
-            ZoneDeposeViolet1 = new ZoneInteret(new PointReel(1300, 1050), Plateau.CouleurGaucheViolet, 90);
-            ZoneDeposeViolet2 = new ZoneInteret(new PointReel(1300, 1050), Plateau.CouleurGaucheViolet, 90);
-            ZoneDeposeVert1 = new ZoneInteret(new PointReel(3000 - 1300, 1050), Plateau.CouleurDroiteVert, 90);
-            ZoneDeposeVert2 = new ZoneInteret(new PointReel(3000 - 1300, 1050), Plateau.CouleurDroiteVert, 90);
+            ZoneDeposeViolet1 = new ZoneInteret(new PointReel(1300, 1050), Plateau.CouleurGaucheBleu, 90);
+            ZoneDeposeViolet2 = new ZoneInteret(new PointReel(1300, 1050), Plateau.CouleurGaucheBleu, 90);
+            ZoneDeposeVert1 = new ZoneInteret(new PointReel(3000 - 1300, 1050), Plateau.CouleurDroiteJaune, 90);
+            ZoneDeposeVert2 = new ZoneInteret(new PointReel(3000 - 1300, 1050), Plateau.CouleurDroiteJaune, 90);
             ZoneCubeGauche = new ZoneInteret(new PointReel(902, 80), Color.White, 90);
             ZoneCubeDroite = new ZoneInteret(new PointReel(3000 - 902, 80), Color.White, 90);
             ZoneDune1 = new ZoneInteret(new PointReel(1500, 160), Color.White, 200);

@@ -42,16 +42,16 @@ namespace GoBot.IHM
             if (Config.Shutdown)
                 return;
 
-            lblTensionPack1.Text = Robots.GrosRobot.TensionPack1 + " V";
+            lblTensionPack1.Text = Robots.GrosRobot.BatterieVoltage + " V";
 
-            ctrlGraphique.AjouterPoint("Pack 1", Robots.GrosRobot.TensionPack1, Color.Blue);
+            ctrlGraphique.AjouterPoint("Pack 1", Robots.GrosRobot.BatterieVoltage, Color.Blue);
 
             ctrlGraphique.DessineCourbes();
             
             if (Connexions.ConnexionIO.ConnexionCheck.Connecte)
             {
                 batteriePack1.Afficher = true;
-                batteriePack1.Tension = Robots.GrosRobot.TensionPack1;
+                batteriePack1.Tension = Robots.GrosRobot.BatterieVoltage;
             }
             else
             {

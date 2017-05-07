@@ -100,6 +100,7 @@ namespace GoBot
                 Config.Load();
                 Robots.Init();
                 Plateau.Init();
+                Devices.Devices.Init();
 
 
                 IPAddress[] adresses = Dns.GetHostAddresses(Dns.GetHostName());

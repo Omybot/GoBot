@@ -180,7 +180,7 @@
             // 
             this.numID.Location = new System.Drawing.Point(42, 32);
             this.numID.Maximum = new decimal(new int[] {
-            255,
+            2000,
             0,
             0,
             0});

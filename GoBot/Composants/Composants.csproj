@@ -54,6 +54,12 @@
     <Compile Include="Button3D.Designer.cs">
       <DependentUpon>Button3D.cs</DependentUpon>
     </Compile>
+    <Compile Include="ColorPickup.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="ColorPickup.Designer.cs">
+      <DependentUpon>ColorPickup.cs</DependentUpon>
+    </Compile>
     <Compile Include="IndicateurConnexion.cs">
       <SubType>Component</SubType>
     </Compile>
@@ -229,6 +235,12 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="img\btnOn.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="img\rainbow.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="img\rainbow2.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

@@ -500,7 +500,7 @@ namespace GoBot.IHM
 
         public void GoToDepart()
         {
-            if (Plateau.NotreCouleur == Plateau.CouleurDroiteVert)
+            if (Plateau.NotreCouleur == Plateau.CouleurDroiteJaune)
                 Robots.GrosRobot.GotoXYTeta(3000 - 555, 1000, 180);
             else
                 Robots.GrosRobot.GotoXYTeta(555, 1000, 0);
@@ -554,7 +554,7 @@ namespace GoBot.IHM
             Robots.GrosRobot.Avancer(100);
 
 
-            if (Plateau.NotreCouleur == Plateau.CouleurDroiteVert)
+            if (Plateau.NotreCouleur == Plateau.CouleurDroiteJaune)
                 Robots.GrosRobot.GotoXYTeta(3000 - 555, 1000, 180);
             else
                 Robots.GrosRobot.GotoXYTeta(555, 1000, 0);

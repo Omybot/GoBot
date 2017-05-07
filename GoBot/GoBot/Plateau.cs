@@ -18,6 +18,7 @@ using GoBot.Mouvements;
 using GoBot.Balises;
 using GoBot.Communications;
 using GoBot.ElementsJeu;
+using GoBot.Devices;
 
 namespace GoBot
 {
@@ -56,6 +57,7 @@ namespace GoBot
                 if (notreCouleur != value)
                 {
                     notreCouleur = value;
+                    Devices.Devices.RecGoBot.SetLedColor(NotreCouleur);
                     //Robots.GrosRobot.Init();
                     //Robots.PetitRobot.Init();
                     if (NotreCouleurChange != null)
@@ -83,8 +85,8 @@ namespace GoBot
         //public static Graph GraphGros { get; private set; }
         //public static Graph GraphPetit { get; private set; }
 
-        public static Color CouleurGaucheViolet { get { return Color.FromArgb(140, 86, 138); } }
-        public static Color CouleurDroiteVert { get { return Color.FromArgb(33, 111, 46); } }
+        public static Color CouleurGaucheBleu { get { return Color.Blue; } }
+        public static Color CouleurDroiteJaune { get { return Color.Yellow; } }
 
         /// <summary>
         /// Longueur de la table (mm)

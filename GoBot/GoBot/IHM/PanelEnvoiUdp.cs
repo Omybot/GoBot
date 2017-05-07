@@ -36,6 +36,8 @@ namespace GoBot.IHM
                 Connexions.ConnexionMove.SendMessage(trame);
             if (boxIO.Checked)
                 Connexions.ConnexionIO.SendMessage(trame);
+            if (boxGB.Checked)
+                Connexions.ConnexionGB.SendMessage(trame);
         }
 
         private void PanelEnvoiUdp_Load(object sender, EventArgs e)
@@ -44,6 +46,7 @@ namespace GoBot.IHM
             {
                 switchBoutonMove.SetActif(true, false);
                 switchBoutonIO.SetActif(true, false);
+                switchBoutonGB.SetActif(true, false);
 
                 lblIpRecMove.Text = Connexions.ConnexionMove.AdresseIp.ToString();
                 lblEntreeRecMove.Text = Connexions.ConnexionMove.PortEntree.ToString();
@@ -52,6 +55,10 @@ namespace GoBot.IHM
                 lblIpRecIO.Text = Connexions.ConnexionIO.AdresseIp.ToString();
                 lblEntreeRecIO.Text = Connexions.ConnexionIO.PortEntree.ToString();
                 lblSortieRecIO.Text = Connexions.ConnexionIO.PortSortie.ToString();
+
+                lblIpRecGB.Text = Connexions.ConnexionGB.AdresseIp.ToString();
+                lbEntreeRecGB.Text = Connexions.ConnexionGB.PortEntree.ToString();
+                lblSortieRecGB.Text = Connexions.ConnexionGB.PortSortie.ToString();
 
                 IPAddress[] adresses = Dns.GetHostAddresses(Dns.GetHostName());
 
@@ -120,7 +127,7 @@ namespace GoBot.IHM
         {
             if (boxMove.Checked)
             {
-                Trame trame = TrameFactory.TestConnexionMove(Robots.GrosRobot.TensionPack1 < Config.CurrentConfig.BatterieRobotOrange && Robots.GrosRobot.TensionPack2 < Config.CurrentConfig.BatterieRobotOrange);
+                Trame trame = TrameFactory.TestConnexionMove(Robots.GrosRobot.BatterieVoltage < Config.CurrentConfig.BatterieRobotOrange && Robots.GrosRobot.BatterieVoltage < Config.CurrentConfig.BatterieRobotOrange);
                 Connexions.ConnexionMove.SendMessage(trame);
             }
             if (boxIO.Checked)
@@ -134,6 +141,7 @@ namespace GoBot.IHM
         {
             Connexions.ActivationConnexion[Carte.RecMove] = switchBoutonMove.Actif;
             Connexions.ActivationConnexion[Carte.RecIO] = switchBoutonIO.Actif;
+            Connexions.ActivationConnexion[Carte.RecGB] = switchBoutonGB.Actif;
         }
     }
 }

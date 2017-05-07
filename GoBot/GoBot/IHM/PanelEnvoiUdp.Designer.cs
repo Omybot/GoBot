@@ -30,7 +30,6 @@
         {
             this.btnEnvoyer = new System.Windows.Forms.Button();
             this.boxMove = new System.Windows.Forms.CheckBox();
-            this.txtTrame = new Composants.TextBoxPlus();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.lblSortieRecMove = new System.Windows.Forms.Label();
             this.lblEntreeRecMove = new System.Windows.Forms.Label();
@@ -67,11 +66,22 @@
             this.label11 = new System.Windows.Forms.Label();
             this.label12 = new System.Windows.Forms.Label();
             this.label14 = new System.Windows.Forms.Label();
-            this.switchBoutonMove = new Composants.SwitchBouton();
-            this.switchBoutonIO = new Composants.SwitchBouton();
             this.RecMove = new System.Windows.Forms.Label();
             this.label15 = new System.Windows.Forms.Label();
             this.groupBox7 = new System.Windows.Forms.GroupBox();
+            this.label7 = new System.Windows.Forms.Label();
+            this.groupBox2 = new System.Windows.Forms.GroupBox();
+            this.lblSortieRecGB = new System.Windows.Forms.Label();
+            this.lbEntreeRecGB = new System.Windows.Forms.Label();
+            this.lblIpRecGB = new System.Windows.Forms.Label();
+            this.label16 = new System.Windows.Forms.Label();
+            this.label17 = new System.Windows.Forms.Label();
+            this.label18 = new System.Windows.Forms.Label();
+            this.switchBoutonGB = new Composants.SwitchBouton();
+            this.switchBoutonMove = new Composants.SwitchBouton();
+            this.switchBoutonIO = new Composants.SwitchBouton();
+            this.txtTrame = new Composants.TextBoxPlus();
+            this.boxGB = new System.Windows.Forms.CheckBox();
             this.groupBox1.SuspendLayout();
             this.groupBox3.SuspendLayout();
             this.groupBox6.SuspendLayout();
@@ -79,6 +89,7 @@
             this.groupBox4.SuspendLayout();
             this.groupBox5.SuspendLayout();
             this.groupBox7.SuspendLayout();
+            this.groupBox2.SuspendLayout();
             this.SuspendLayout();
             // 
             // btnEnvoyer
@@ -100,18 +111,6 @@
             this.boxMove.TabIndex = 2;
             this.boxMove.Text = "RecMove";
             this.boxMove.UseVisualStyleBackColor = true;
-            // 
-            // txtTrame
-            // 
-            this.txtTrame.BackColor = System.Drawing.Color.White;
-            this.txtTrame.DefaultText = "";
-            this.txtTrame.ErrorMode = false;
-            this.txtTrame.ForeColor = System.Drawing.Color.LightGray;
-            this.txtTrame.Location = new System.Drawing.Point(16, 49);
-            this.txtTrame.Name = "txtTrame";
-            this.txtTrame.Size = new System.Drawing.Size(313, 20);
-            this.txtTrame.TabIndex = 5;
-            this.txtTrame.TextMode = Composants.TextBoxPlus.TextModeEnum.Text;
             // 
             // groupBox1
             // 
@@ -184,6 +183,7 @@
             // 
             // groupBox3
             // 
+            this.groupBox3.Controls.Add(this.boxGB);
             this.groupBox3.Controls.Add(this.groupBox6);
             this.groupBox3.Controls.Add(this.btnDebug9);
             this.groupBox3.Controls.Add(this.btnDebug8);
@@ -498,26 +498,6 @@
             this.label14.TabIndex = 8;
             this.label14.Text = "IP carte :";
             // 
-            // switchBoutonMove
-            // 
-            this.switchBoutonMove.BackColor = System.Drawing.Color.Transparent;
-            this.switchBoutonMove.Location = new System.Drawing.Point(119, 33);
-            this.switchBoutonMove.Name = "switchBoutonMove";
-            this.switchBoutonMove.Size = new System.Drawing.Size(35, 15);
-            this.switchBoutonMove.Symetrique = true;
-            this.switchBoutonMove.TabIndex = 16;
-            this.switchBoutonMove.ChangementEtat += new System.EventHandler(this.switchBoutonConnexion_ChangementEtat);
-            // 
-            // switchBoutonIO
-            // 
-            this.switchBoutonIO.BackColor = System.Drawing.Color.Transparent;
-            this.switchBoutonIO.Location = new System.Drawing.Point(119, 54);
-            this.switchBoutonIO.Name = "switchBoutonIO";
-            this.switchBoutonIO.Size = new System.Drawing.Size(35, 15);
-            this.switchBoutonIO.Symetrique = true;
-            this.switchBoutonIO.TabIndex = 17;
-            this.switchBoutonIO.ChangementEtat += new System.EventHandler(this.switchBoutonConnexion_ChangementEtat);
-            // 
             // RecMove
             // 
             this.RecMove.AutoSize = true;
@@ -538,22 +518,155 @@
             // 
             // groupBox7
             // 
+            this.groupBox7.Controls.Add(this.switchBoutonGB);
+            this.groupBox7.Controls.Add(this.label7);
             this.groupBox7.Controls.Add(this.switchBoutonMove);
             this.groupBox7.Controls.Add(this.switchBoutonIO);
             this.groupBox7.Controls.Add(this.RecMove);
             this.groupBox7.Controls.Add(this.label15);
             this.groupBox7.Location = new System.Drawing.Point(235, 233);
             this.groupBox7.Name = "groupBox7";
-            this.groupBox7.Size = new System.Drawing.Size(200, 86);
+            this.groupBox7.Size = new System.Drawing.Size(200, 110);
             this.groupBox7.TabIndex = 29;
             this.groupBox7.TabStop = false;
             this.groupBox7.Text = "Activation connexions";
+            // 
+            // label7
+            // 
+            this.label7.AutoSize = true;
+            this.label7.Location = new System.Drawing.Point(42, 77);
+            this.label7.Name = "label7";
+            this.label7.Size = new System.Drawing.Size(42, 13);
+            this.label7.TabIndex = 24;
+            this.label7.Text = "RecGB";
+            // 
+            // groupBox2
+            // 
+            this.groupBox2.Controls.Add(this.lblSortieRecGB);
+            this.groupBox2.Controls.Add(this.lbEntreeRecGB);
+            this.groupBox2.Controls.Add(this.lblIpRecGB);
+            this.groupBox2.Controls.Add(this.label16);
+            this.groupBox2.Controls.Add(this.label17);
+            this.groupBox2.Controls.Add(this.label18);
+            this.groupBox2.Location = new System.Drawing.Point(3, 281);
+            this.groupBox2.Name = "groupBox2";
+            this.groupBox2.Size = new System.Drawing.Size(200, 102);
+            this.groupBox2.TabIndex = 16;
+            this.groupBox2.TabStop = false;
+            this.groupBox2.Text = "RecGoBot";
+            // 
+            // lblSortieRecGB
+            // 
+            this.lblSortieRecGB.AutoSize = true;
+            this.lblSortieRecGB.Location = new System.Drawing.Point(88, 73);
+            this.lblSortieRecGB.Name = "lblSortieRecGB";
+            this.lblSortieRecGB.Size = new System.Drawing.Size(10, 13);
+            this.lblSortieRecGB.TabIndex = 13;
+            this.lblSortieRecGB.Text = "-";
+            // 
+            // lbEntreeRecGB
+            // 
+            this.lbEntreeRecGB.AutoSize = true;
+            this.lbEntreeRecGB.Location = new System.Drawing.Point(88, 49);
+            this.lbEntreeRecGB.Name = "lbEntreeRecGB";
+            this.lbEntreeRecGB.Size = new System.Drawing.Size(10, 13);
+            this.lbEntreeRecGB.TabIndex = 12;
+            this.lbEntreeRecGB.Text = "-";
+            // 
+            // lblIpRecGB
+            // 
+            this.lblIpRecGB.AutoSize = true;
+            this.lblIpRecGB.Location = new System.Drawing.Point(88, 25);
+            this.lblIpRecGB.Name = "lblIpRecGB";
+            this.lblIpRecGB.Size = new System.Drawing.Size(10, 13);
+            this.lblIpRecGB.TabIndex = 11;
+            this.lblIpRecGB.Text = "-";
+            // 
+            // label16
+            // 
+            this.label16.AutoSize = true;
+            this.label16.Location = new System.Drawing.Point(15, 73);
+            this.label16.Name = "label16";
+            this.label16.Size = new System.Drawing.Size(60, 13);
+            this.label16.TabIndex = 10;
+            this.label16.Text = "Port sortie :";
+            // 
+            // label17
+            // 
+            this.label17.AutoSize = true;
+            this.label17.Location = new System.Drawing.Point(15, 49);
+            this.label17.Name = "label17";
+            this.label17.Size = new System.Drawing.Size(65, 13);
+            this.label17.TabIndex = 9;
+            this.label17.Text = "Port entrée :";
+            // 
+            // label18
+            // 
+            this.label18.AutoSize = true;
+            this.label18.Location = new System.Drawing.Point(15, 25);
+            this.label18.Name = "label18";
+            this.label18.Size = new System.Drawing.Size(50, 13);
+            this.label18.TabIndex = 8;
+            this.label18.Text = "IP carte :";
+            // 
+            // switchBoutonGB
+            // 
+            this.switchBoutonGB.BackColor = System.Drawing.Color.Transparent;
+            this.switchBoutonGB.Location = new System.Drawing.Point(119, 75);
+            this.switchBoutonGB.Name = "switchBoutonGB";
+            this.switchBoutonGB.Size = new System.Drawing.Size(35, 15);
+            this.switchBoutonGB.Symetrique = true;
+            this.switchBoutonGB.TabIndex = 23;
+            this.switchBoutonGB.ChangementEtat += new System.EventHandler(this.switchBoutonConnexion_ChangementEtat);
+            // 
+            // switchBoutonMove
+            // 
+            this.switchBoutonMove.BackColor = System.Drawing.Color.Transparent;
+            this.switchBoutonMove.Location = new System.Drawing.Point(119, 33);
+            this.switchBoutonMove.Name = "switchBoutonMove";
+            this.switchBoutonMove.Size = new System.Drawing.Size(35, 15);
+            this.switchBoutonMove.Symetrique = true;
+            this.switchBoutonMove.TabIndex = 16;
+            this.switchBoutonMove.ChangementEtat += new System.EventHandler(this.switchBoutonConnexion_ChangementEtat);
+            // 
+            // switchBoutonIO
+            // 
+            this.switchBoutonIO.BackColor = System.Drawing.Color.Transparent;
+            this.switchBoutonIO.Location = new System.Drawing.Point(119, 54);
+            this.switchBoutonIO.Name = "switchBoutonIO";
+            this.switchBoutonIO.Size = new System.Drawing.Size(35, 15);
+            this.switchBoutonIO.Symetrique = true;
+            this.switchBoutonIO.TabIndex = 17;
+            this.switchBoutonIO.ChangementEtat += new System.EventHandler(this.switchBoutonConnexion_ChangementEtat);
+            // 
+            // txtTrame
+            // 
+            this.txtTrame.BackColor = System.Drawing.Color.White;
+            this.txtTrame.DefaultText = "";
+            this.txtTrame.ErrorMode = false;
+            this.txtTrame.ForeColor = System.Drawing.Color.LightGray;
+            this.txtTrame.Location = new System.Drawing.Point(16, 49);
+            this.txtTrame.Name = "txtTrame";
+            this.txtTrame.Size = new System.Drawing.Size(313, 20);
+            this.txtTrame.TabIndex = 5;
+            this.txtTrame.TextMode = Composants.TextBoxPlus.TextModeEnum.Text;
+            // 
+            // boxGB
+            // 
+            this.boxGB.AutoSize = true;
+            this.boxGB.Location = new System.Drawing.Point(167, 26);
+            this.boxGB.Name = "boxGB";
+            this.boxGB.Size = new System.Drawing.Size(76, 17);
+            this.boxGB.TabIndex = 27;
+            this.boxGB.Text = "RecGoBot";
+            this.boxGB.UseVisualStyleBackColor = true;
             // 
             // PanelEnvoiUdp
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.White;
+            this.Controls.Add(this.groupBox2);
             this.Controls.Add(this.groupBox7);
             this.Controls.Add(this.groupBox5);
             this.Controls.Add(this.groupBox4);
@@ -575,6 +688,8 @@
             this.groupBox5.PerformLayout();
             this.groupBox7.ResumeLayout(false);
             this.groupBox7.PerformLayout();
+            this.groupBox2.ResumeLayout(false);
+            this.groupBox2.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -625,5 +740,15 @@
         private System.Windows.Forms.Label RecMove;
         private System.Windows.Forms.Label label15;
         private System.Windows.Forms.GroupBox groupBox7;
+        private System.Windows.Forms.GroupBox groupBox2;
+        private System.Windows.Forms.Label lblSortieRecGB;
+        private System.Windows.Forms.Label lbEntreeRecGB;
+        private System.Windows.Forms.Label lblIpRecGB;
+        private System.Windows.Forms.Label label16;
+        private System.Windows.Forms.Label label17;
+        private System.Windows.Forms.Label label18;
+        private Composants.SwitchBouton switchBoutonGB;
+        private System.Windows.Forms.Label label7;
+        private System.Windows.Forms.CheckBox boxGB;
     }
 }

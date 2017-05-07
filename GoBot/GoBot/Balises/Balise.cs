@@ -448,7 +448,7 @@ namespace GoBot.Balises
 
                                     double marge = 4;
 
-                                    if (Plateau.NotreCouleur == Plateau.CouleurDroiteVert)
+                                    if (Plateau.NotreCouleur == Plateau.CouleurDroiteJaune)
                                     {
                                         Angle diff = new Angle(180) - (angleDetection - angleGrosRobot);
                                         if (Math.Abs((diff).AngleDegres) < marge)
@@ -457,7 +457,7 @@ namespace GoBot.Balises
                                             i--;
                                         }
                                     }
-                                    else if (Plateau.NotreCouleur == Plateau.CouleurGaucheViolet)
+                                    else if (Plateau.NotreCouleur == Plateau.CouleurGaucheBleu)
                                     {
                                         Angle diff = angleGrosRobot - angleDetection;
                                         if (Math.Abs((diff).AngleDegres) < marge)

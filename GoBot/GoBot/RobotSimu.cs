@@ -443,14 +443,14 @@ namespace GoBot
             HistoriqueCoordonnees = new List<Position>();
             if (this == Robots.GrosRobot)
             {
-                if (Plateau.NotreCouleur == Plateau.CouleurGaucheViolet)
+                if (Plateau.NotreCouleur == Plateau.CouleurGaucheBleu)
                     Position = new Calculs.Position(new Angle(0, AnglyeType.Degre), new PointReel(240, 1000));
                 else
                     Position = new Calculs.Position(new Angle(180, AnglyeType.Degre), new PointReel(3000 - 240, 1000));
             }
             else
             {
-                if (Plateau.NotreCouleur == Plateau.CouleurGaucheViolet)
+                if (Plateau.NotreCouleur == Plateau.CouleurGaucheBleu)
                     Position = new Calculs.Position(new Angle(0, AnglyeType.Degre), new PointReel(480, 1000));
                 else
                     Position = new Calculs.Position(new Angle(180, AnglyeType.Degre), new PointReel(3000 - 480, 1000));
@@ -469,6 +469,12 @@ namespace GoBot
         {
             // TODO
             return true;
+        }
+
+        public override Color DemandeCapteurCouleur(CapteurCouleur capteur, bool attendre = true)
+        {
+            // TODO
+            return Color.Black;
         }
 
         public override void ServoVitesse(ServomoteurID servo, int vitesse)
@@ -548,7 +554,7 @@ namespace GoBot
 
         public override Color GetCouleurEquipe(bool historique = true)
         {
-            return Plateau.CouleurDroiteVert;
+            return Plateau.CouleurDroiteJaune;
         }
 
         public override List<int>[] MesureTestPid(int consigne, SensAR sens, int nbValeurs)

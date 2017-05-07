@@ -205,88 +205,91 @@ namespace GoBot.IHM
                 worker.ReportProgress((int)(currentLog * 100 / nbLogs));
             }
 
-            foreach (String dossier in Directory.EnumerateDirectories(Config.PathData + "/Archives/"))
+            if (Directory.Exists(Config.PathData + "/Archives/"))
             {
-                if (Config.Shutdown)
-                    return;
-
-                currentLog++;
-                String dossier1 = Path.GetFileName(dossier);
-                DateTime date;
-
-                try
+                foreach (String dossier in Directory.EnumerateDirectories(Config.PathData + "/Archives/"))
                 {
-                    String[] tab = dossier1.Split(new char[5] { '.', ' ', 'h', 'm', 's' });
-                    date = new DateTime(Convert.ToInt16(tab[0]), Convert.ToInt16(tab[1]), Convert.ToInt16(tab[2]), Convert.ToInt16(tab[3]), Convert.ToInt16(tab[4]), Convert.ToInt16(tab[5]));
+                    if (Config.Shutdown)
+                        return;
 
-                    if (date < plusVieux)
-                        plusVieux = date;
+                    currentLog++;
+                    String dossier1 = Path.GetFileName(dossier);
+                    DateTime date;
 
-                    long taille = FolderSize(dossier);
-
-                    Object[] datas = new Object[8];
-
-                    datas[1] = date;
-                    datas[2] = new TailleDossier(taille);
-
-                    foreach (String fichier in Directory.EnumerateFiles(dossier))
+                    try
                     {
-                        if (Path.GetFileName(fichier) == "ActionsGros.elog")
+                        String[] tab = dossier1.Split(new char[5] { '.', ' ', 'h', 'm', 's' });
+                        date = new DateTime(Convert.ToInt16(tab[0]), Convert.ToInt16(tab[1]), Convert.ToInt16(tab[2]), Convert.ToInt16(tab[3]), Convert.ToInt16(tab[4]), Convert.ToInt16(tab[5]));
+
+                        if (date < plusVieux)
+                            plusVieux = date;
+
+                        long taille = FolderSize(dossier);
+
+                        Object[] datas = new Object[8];
+
+                        datas[1] = date;
+                        datas[2] = new TailleDossier(taille);
+
+                        foreach (String fichier in Directory.EnumerateFiles(dossier))
                         {
-                            EventsReplay r = new EventsReplay();
-                            if (r.Charger(fichier))
-                                datas[6] = r.Events.Count;
-                            else
-                                datas[6] = -1;
+                            if (Path.GetFileName(fichier) == "ActionsGros.elog")
+                            {
+                                EventsReplay r = new EventsReplay();
+                                if (r.Charger(fichier))
+                                    datas[6] = r.Events.Count;
+                                else
+                                    datas[6] = -1;
+                            }
+                            else if (Path.GetFileName(fichier) == "ActionsPetit.elog")
+                            {
+                                EventsReplay r = new EventsReplay();
+                                r.Charger(fichier);
+                                if (r.Charger(fichier))
+                                    datas[7] = r.Events.Count;
+                                else
+                                    datas[7] = -1;
+                            }
+                            else if (Path.GetFileName(fichier) == "ConnexionPi.tlog")
+                            {
+                                Replay r = new Replay();
+                                r.Charger(fichier);
+                                if (r.Charger(fichier))
+                                    datas[4] = r.Trames.Count;
+                                else
+                                    datas[4] = -1;
+                            }
+                            else if (Path.GetFileName(fichier) == "ConnexionMove.tlog")
+                            {
+                                Replay r = new Replay();
+                                r.Charger(fichier);
+                                if (r.Charger(fichier))
+                                    datas[3] = r.Trames.Count;
+                                else
+                                    datas[3] = -1;
+                            }
+                            else if (Path.GetFileName(fichier) == "ConnexionMiwi.tlog")
+                            {
+                                Replay r = new Replay();
+                                r.Charger(fichier);
+                                if (r.Charger(fichier))
+                                    datas[5] = r.Trames.Count;
+                                else
+                                    datas[5] = -1;
+                            }
+                            else if (Path.GetFileName(fichier) == "Archivage")
+                            {
+                                StreamReader reader = new StreamReader(fichier);
+                                datas[0] = reader.ReadLine();
+                                reader.Close();
+                            }
                         }
-                        else if (Path.GetFileName(fichier) == "ActionsPetit.elog")
-                        {
-                            EventsReplay r = new EventsReplay();
-                            r.Charger(fichier);
-                            if (r.Charger(fichier))
-                                datas[7] = r.Events.Count;
-                            else
-                                datas[7] = -1;
-                        }
-                        else if (Path.GetFileName(fichier) == "ConnexionPi.tlog")
-                        {
-                            Replay r = new Replay();
-                            r.Charger(fichier);
-                            if (r.Charger(fichier))
-                                datas[4] = r.Trames.Count;
-                            else
-                                datas[4] = -1;
-                        }
-                        else if (Path.GetFileName(fichier) == "ConnexionMove.tlog")
-                        {
-                            Replay r = new Replay();
-                            r.Charger(fichier);
-                            if (r.Charger(fichier))
-                                datas[3] = r.Trames.Count;
-                            else
-                                datas[3] = -1;
-                        }
-                        else if (Path.GetFileName(fichier) == "ConnexionMiwi.tlog")
-                        {
-                            Replay r = new Replay();
-                            r.Charger(fichier);
-                            if (r.Charger(fichier))
-                                datas[5] = r.Trames.Count;
-                            else
-                                datas[5] = -1;
-                        }
-                        else if (Path.GetFileName(fichier) == "Archivage")
-                        {
-                            StreamReader reader = new StreamReader(fichier);
-                            datas[0] = reader.ReadLine();
-                            reader.Close();
-                        }
+
+                        dataSetArchivage.Tables[0].Rows.Add(datas);
                     }
-                       
-                    dataSetArchivage.Tables[0].Rows.Add(datas);
-                }
-                catch (Exception)
-                {
+                    catch (Exception)
+                    {
+                    }
                 }
             }
         }

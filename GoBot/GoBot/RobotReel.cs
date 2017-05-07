@@ -23,6 +23,7 @@ namespace GoBot
     {
         Dictionary<FonctionIO, Semaphore> SemaphoresIO = new Dictionary<FonctionIO, Semaphore>();
         Dictionary<CapteurOnOffID, Semaphore> SemaphoresCapteurs = new Dictionary<CapteurOnOffID, Semaphore>();
+        Dictionary<CapteurCouleur, Semaphore> SemaphoresCouleur = new Dictionary<CapteurCouleur, Semaphore>();
         Dictionary<FonctionMove, Semaphore> SemaphoresMove = new Dictionary<FonctionMove, Semaphore>();
 
         private DateTime DateRefreshPos { get; set; }
@@ -42,6 +43,7 @@ namespace GoBot
             IDRobot = idRobot;
             ServomoteursConnectes = new List<byte>();
             CapteurActive = new Dictionary<CapteurOnOffID, bool>();
+            CapteursCouleur = new Dictionary<CapteurCouleur, Color>();
 
             foreach (FonctionIO fonction in Enum.GetValues(typeof(FonctionIO)))
                 SemaphoresIO.Add(fonction, new Semaphore(0, int.MaxValue));
@@ -53,6 +55,12 @@ namespace GoBot
             {
                 SemaphoresCapteurs.Add(fonction, new Semaphore(0, int.MaxValue));
                 CapteurActive.Add(fonction, false);
+            }
+
+            foreach (CapteurCouleur fonction in Enum.GetValues(typeof(CapteurCouleur)))
+            {
+                SemaphoresCouleur.Add(fonction, new Semaphore(0, int.MaxValue));
+                CapteursCouleur.Add(fonction, Color.Black);
             }
         }
 
@@ -73,14 +81,14 @@ namespace GoBot
 
             if (this == Robots.GrosRobot)
             {
-                if (Plateau.NotreCouleur == Plateau.CouleurGaucheViolet)
+                if (Plateau.NotreCouleur == Plateau.CouleurGaucheBleu)
                     Position = new Calculs.Position(new Angle(0, AnglyeType.Degre), new PointReel(240, 1000));
                 else
                     Position = new Calculs.Position(new Angle(180, AnglyeType.Degre), new PointReel(3000 - 240, 1000));
             }
             else
             {
-                if (Plateau.NotreCouleur == Plateau.CouleurGaucheViolet)
+                if (Plateau.NotreCouleur == Plateau.CouleurGaucheBleu)
                     Position = new Calculs.Position(new Angle(0, AnglyeType.Degre), new PointReel(480, 1000));
                 else
                     Position = new Calculs.Position(new Angle(180, AnglyeType.Degre), new PointReel(3000 - 480, 1000));
@@ -90,6 +98,20 @@ namespace GoBot
 
             HistoriqueCoordonnees = new List<Position>();
             Connexion.SendMessage(TrameFactory.DemandePositionContinue(100, this));
+        }
+
+        public override Color DemandeCapteurCouleur(CapteurCouleur capteur, bool attendre = true)
+        {
+            if (attendre)
+                SemaphoresCouleur[capteur] = new Semaphore(0, int.MaxValue);
+
+            Trame t = TrameFactory.DemandeCapteurCouleur(capteur);
+            Connexions.ConnexionIO.SendMessage(t);
+
+            if (attendre)
+                SemaphoresCouleur[capteur].WaitOne(100);
+
+            return CapteursCouleur[capteur];
         }
 
         public override bool DemandeCapteurOnOff(CapteurOnOffID capteur, bool attendre = true)
@@ -281,6 +303,10 @@ namespace GoBot
             }
             else if (trameRecue[0] == (byte)Carte.RecIO)
             {
+                if (trameRecue[1] == (byte)FonctionIO.ReponseCapteurCouleur)
+                {
+                    ChangeCouleurCapteur((CapteurCouleur)trameRecue[2], Color.FromArgb(trameRecue[3], trameRecue[4], trameRecue[5]));
+                }
                 if (trameRecue[1] == (byte)FonctionMove.ReponseLidar)
                 {
                     int lidarID = trameRecue[2];
@@ -355,8 +381,8 @@ namespace GoBot
 
                 if (trameRecue[1] == (byte)FonctionIO.RetourTestConnexion)
                 {
-                    TensionPack1 = (double)(trameRecue[2] * 256 + trameRecue[3]) / 100.0;
-                    TensionPack2 = (double)(trameRecue[4] * 256 + trameRecue[5]) / 100.0;
+                    BatterieVoltage = (double)(trameRecue[2] * 256 + trameRecue[3]) / 100.0;
+                    //BatterieVoltage = (double)(trameRecue[4] * 256 + trameRecue[5]) / 100.0;
                 }
 
                 if (trameRecue[1] == (byte)FonctionIO.ReponseJack)
@@ -379,9 +405,9 @@ namespace GoBot
                 if (trameRecue[1] == (byte)FonctionIO.ReponseCouleurEquipe)
                 {
                     if (trameRecue[2] == 0)
-                        couleurEquipe = Plateau.CouleurGaucheViolet;
+                        couleurEquipe = Plateau.CouleurGaucheBleu;
                     else if (trameRecue[2] == 1)
-                        couleurEquipe = Plateau.CouleurDroiteVert;
+                        couleurEquipe = Plateau.CouleurDroiteJaune;
 
                     Plateau.NotreCouleur = couleurEquipe;
 

@@ -77,6 +77,11 @@ namespace GoBot
         //SwitchBrasGaucheOrigine = 7
     }
 
+    public enum CapteurCouleur
+    {
+        CouleurTube = 0
+    }
+
     public enum LidarID
     {
         LidarSol = 0

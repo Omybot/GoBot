@@ -19,8 +19,7 @@ namespace GoBot
         // Communication
         public Carte Carte { get; set; }
         public Historique Historique { get; protected set; }
-        public double TensionPack1 { get; protected set; }
-        public double TensionPack2 { get; protected set; }
+        public double BatterieVoltage { get; protected set; }
         
         // Constitution
         public IDRobot IDRobot { get; protected set; }
@@ -59,6 +58,7 @@ namespace GoBot
         
         private static Semaphore semDeblocage = new Semaphore(1, 1);
 
+        // Actionneurs / Capteurs
 
         public List<byte> ServomoteursConnectes { get; protected set; }
         public Dictionary<ServomoteurID, bool> ServoActive { get; set; }
@@ -95,6 +95,7 @@ namespace GoBot
         public abstract List<int>[] MesureTestPid(int consigne, SensAR sens, int nbValeurs);
         public abstract List<double>[] DiagnosticCpuPwm(int nbValeurs);
         public abstract bool DemandeCapteurOnOff(CapteurOnOffID capteur, bool attendre = true);
+        public abstract Color DemandeCapteurCouleur(CapteurCouleur capteur, bool attendre = true);
         public abstract void DemandeValeursAnalogiquesIO(bool attendre = true);
         public abstract void DemandeValeursAnalogiquesMove(bool attendre = true);
 
@@ -110,6 +111,7 @@ namespace GoBot
         public abstract Color GetCouleurEquipe(bool historique = true);
 
         public Dictionary<CapteurOnOffID, bool> CapteurActive { get; set; }
+        public Dictionary<CapteurCouleur, Color> CapteursCouleur { get; set; }
         public List<double> ValeursAnalogiquesIO { get; set; }
         public List<double> ValeursAnalogiquesMove { get; set; }
 
@@ -118,6 +120,9 @@ namespace GoBot
 
         public delegate void PositionChangeDelegate(Position position);
         public event PositionChangeDelegate PositionChange;
+
+        public delegate void CapteurCouleurDelegate(CapteurCouleur capteur, Color couleur);
+        public event CapteurCouleurDelegate CapteurCouleurChange;
 
         /// <summary>
         /// Génère l'évènement de changement de position
@@ -137,7 +142,14 @@ namespace GoBot
         protected void ChangerEtatCapteurOnOff(CapteurOnOffID capteur, bool etat)
         {
             CapteurActive[capteur] = etat;
-            ChangementEtatCapteurOnOff(capteur, etat);
+            if (ChangementEtatCapteurOnOff != null)
+                ChangementEtatCapteurOnOff(capteur, etat);
+        }
+
+        protected void ChangeCouleurCapteur(CapteurCouleur capteur, Color couleur)
+        {
+            if (CapteurCouleurChange != null)
+                CapteurCouleurChange(capteur, couleur);
         }
 
         public void Diagnostic()
@@ -216,7 +228,7 @@ namespace GoBot
 
             SemGraph = new Semaphore(1, 1);
 
-            TensionPack1 = TensionPack2 = 0;
+            BatterieVoltage = 0;
             TrajectoireEchouee = false;
             TrajectoireCoupee = false;
 

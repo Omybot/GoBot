@@ -49,6 +49,16 @@ namespace GoBot.Communications
             return new Trame(tab);
         }
 
+        static public Trame DemandeCapteurCouleur(CapteurCouleur capteur)
+        {
+            byte[] tab = new byte[3];
+            tab[0] = (byte)Carte.RecIO;
+            tab[1] = (byte)FonctionIO.DemandeCapteurCouleur;
+            tab[2] = (byte)capteur;
+
+            return new Trame(tab);
+        }
+
         static public Trame SetLedColor(Color color)
         {
             byte[] tab = new byte[5];
@@ -504,7 +514,7 @@ namespace GoBot.Communications
         {
             byte[] tab = new byte[3 + trame.Length];
             tab[0] = (byte)carte;
-            tab[1] = (byte)FonctionMove.EnvoiUart;
+            tab[1] = (byte)FonctionIO.EnvoiUart;
             tab[2] = (byte)trame.Length;
             for (int i = 0; i < trame.Length; i++)
                 tab[3 + i] = trame[i];

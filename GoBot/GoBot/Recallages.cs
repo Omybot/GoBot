@@ -24,7 +24,7 @@ namespace GoBot
             Robots.GrosRobot.Rapide();
             Robots.GrosRobot.Avancer(2000 - (600 + 5 + Robots.GrosRobot.Longueur / 2 + Robots.GrosRobot.Largeur / 2));
 
-            if (Plateau.NotreCouleur == Plateau.CouleurGaucheViolet)
+            if (Plateau.NotreCouleur == Plateau.CouleurGaucheBleu)
                 Robots.GrosRobot.PivotDroite(90);
             else
                 Robots.GrosRobot.PivotGauche(90);
@@ -33,7 +33,7 @@ namespace GoBot
             Robots.GrosRobot.Recallage(SensAR.Arriere);
             Robots.GrosRobot.Rapide();
 
-            if (Plateau.NotreCouleur == Plateau.CouleurGaucheViolet)
+            if (Plateau.NotreCouleur == Plateau.CouleurGaucheBleu)
                 Robots.GrosRobot.ReglerOffsetAsserv(Robots.GrosRobot.Longueur / 2, 600 + 5 + Robots.GrosRobot.Largeur / 2, 0);
             else
                 Robots.GrosRobot.ReglerOffsetAsserv(3000 - Robots.GrosRobot.Longueur / 2, 600 + 5 + Robots.GrosRobot.Largeur / 2, 180);

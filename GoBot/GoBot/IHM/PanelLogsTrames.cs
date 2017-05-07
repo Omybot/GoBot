@@ -234,6 +234,9 @@ namespace GoBot.IHM
                 Connexions.ConnexionIO.NouvelleTrameRecue += new ConnexionUDP.ReceptionDelegate(replay.AjouterTrameEntrante);
                 Connexions.ConnexionIO.NouvelleTrameEnvoyee += new ConnexionUDP.ReceptionDelegate(replay.AjouterTrameSortante);
 
+                Connexions.ConnexionGB.NouvelleTrameRecue += new ConnexionUDP.ReceptionDelegate(replay.AjouterTrameEntrante);
+                Connexions.ConnexionGB.NouvelleTrameEnvoyee += new ConnexionUDP.ReceptionDelegate(replay.AjouterTrameSortante);
+
                 btnRejouerTout.Enabled = false;
                 btnRejouerSelection.Enabled = false;
                 btnCharger.Enabled = false;
@@ -250,6 +253,9 @@ namespace GoBot.IHM
 
                 Connexions.ConnexionIO.NouvelleTrameRecue -= new ConnexionUDP.ReceptionDelegate(replay.AjouterTrameEntrante);
                 Connexions.ConnexionIO.NouvelleTrameEnvoyee -= new ConnexionUDP.ReceptionDelegate(replay.AjouterTrameSortante);
+
+                Connexions.ConnexionGB.NouvelleTrameRecue -= new ConnexionUDP.ReceptionDelegate(replay.AjouterTrameEntrante);
+                Connexions.ConnexionGB.NouvelleTrameEnvoyee -= new ConnexionUDP.ReceptionDelegate(replay.AjouterTrameSortante);
 
                 btnRejouerTout.Enabled = true;
                 btnRejouerSelection.Enabled = true;

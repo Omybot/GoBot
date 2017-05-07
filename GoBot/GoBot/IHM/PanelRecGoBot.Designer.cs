@@ -29,6 +29,8 @@
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(PanelRecGoBot));
+            this.picLedColor = new System.Windows.Forms.PictureBox();
+            this.btnBuzz = new System.Windows.Forms.Button();
             this.btn10 = new Composants.Button3D();
             this.btn9 = new Composants.Button3D();
             this.btn8 = new Composants.Button3D();
@@ -55,8 +57,8 @@
             this.ledA3 = new Composants.Led();
             this.ledA2 = new Composants.Led();
             this.ledA1 = new Composants.Led();
-            this.picLedColor = new System.Windows.Forms.PictureBox();
-            this.btnBuzz = new System.Windows.Forms.Button();
+            this.colorPickup1 = new Composants.ColorPickup();
+            ((System.ComponentModel.ISupportInitialize)(this.picLedColor)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.btn10)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.btn9)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.btn8)).BeginInit();
@@ -83,14 +85,33 @@
             ((System.ComponentModel.ISupportInitialize)(this.ledA3)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.ledA2)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.ledA1)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.picLedColor)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.colorPickup1)).BeginInit();
             this.SuspendLayout();
+            // 
+            // picLedColor
+            // 
+            this.picLedColor.Location = new System.Drawing.Point(25, 117);
+            this.picLedColor.Name = "picLedColor";
+            this.picLedColor.Size = new System.Drawing.Size(32, 94);
+            this.picLedColor.TabIndex = 26;
+            this.picLedColor.TabStop = false;
+            this.picLedColor.Click += new System.EventHandler(this.picLedColor_Click);
+            // 
+            // btnBuzz
+            // 
+            this.btnBuzz.Location = new System.Drawing.Point(136, 145);
+            this.btnBuzz.Name = "btnBuzz";
+            this.btnBuzz.Size = new System.Drawing.Size(75, 23);
+            this.btnBuzz.TabIndex = 27;
+            this.btnBuzz.Text = "Buzz !";
+            this.btnBuzz.UseVisualStyleBackColor = true;
+            this.btnBuzz.Click += new System.EventHandler(this.btnBuzz_Click);
             // 
             // btn10
             // 
             this.btn10.BackColor = System.Drawing.Color.Transparent;
             this.btn10.Image = ((System.Drawing.Image)(resources.GetObject("btn10.Image")));
-            this.btn10.Location = new System.Drawing.Point(339, 340);
+            this.btn10.Location = new System.Drawing.Point(47, 293);
             this.btn10.Name = "btn10";
             this.btn10.Size = new System.Drawing.Size(32, 32);
             this.btn10.State = false;
@@ -101,7 +122,7 @@
             // 
             this.btn9.BackColor = System.Drawing.Color.Transparent;
             this.btn9.Image = ((System.Drawing.Image)(resources.GetObject("btn9.Image")));
-            this.btn9.Location = new System.Drawing.Point(295, 340);
+            this.btn9.Location = new System.Drawing.Point(3, 293);
             this.btn9.Name = "btn9";
             this.btn9.Size = new System.Drawing.Size(32, 32);
             this.btn9.State = false;
@@ -112,7 +133,7 @@
             // 
             this.btn8.BackColor = System.Drawing.Color.Transparent;
             this.btn8.Image = ((System.Drawing.Image)(resources.GetObject("btn8.Image")));
-            this.btn8.Location = new System.Drawing.Point(339, 302);
+            this.btn8.Location = new System.Drawing.Point(47, 255);
             this.btn8.Name = "btn8";
             this.btn8.Size = new System.Drawing.Size(32, 32);
             this.btn8.State = false;
@@ -123,7 +144,7 @@
             // 
             this.btn7.BackColor = System.Drawing.Color.Transparent;
             this.btn7.Image = ((System.Drawing.Image)(resources.GetObject("btn7.Image")));
-            this.btn7.Location = new System.Drawing.Point(295, 302);
+            this.btn7.Location = new System.Drawing.Point(3, 255);
             this.btn7.Name = "btn7";
             this.btn7.Size = new System.Drawing.Size(32, 32);
             this.btn7.State = false;
@@ -134,7 +155,7 @@
             // 
             this.btn6.BackColor = System.Drawing.Color.Transparent;
             this.btn6.Image = ((System.Drawing.Image)(resources.GetObject("btn6.Image")));
-            this.btn6.Location = new System.Drawing.Point(317, 264);
+            this.btn6.Location = new System.Drawing.Point(25, 217);
             this.btn6.Name = "btn6";
             this.btn6.Size = new System.Drawing.Size(32, 32);
             this.btn6.State = false;
@@ -145,7 +166,7 @@
             // 
             this.btn5.BackColor = System.Drawing.Color.Transparent;
             this.btn5.Image = ((System.Drawing.Image)(resources.GetObject("btn5.Image")));
-            this.btn5.Location = new System.Drawing.Point(317, 126);
+            this.btn5.Location = new System.Drawing.Point(25, 79);
             this.btn5.Name = "btn5";
             this.btn5.Size = new System.Drawing.Size(32, 32);
             this.btn5.State = false;
@@ -156,7 +177,7 @@
             // 
             this.btn4.BackColor = System.Drawing.Color.Transparent;
             this.btn4.Image = ((System.Drawing.Image)(resources.GetObject("btn4.Image")));
-            this.btn4.Location = new System.Drawing.Point(339, 88);
+            this.btn4.Location = new System.Drawing.Point(47, 41);
             this.btn4.Name = "btn4";
             this.btn4.Size = new System.Drawing.Size(32, 32);
             this.btn4.State = false;
@@ -169,7 +190,7 @@
             // 
             this.btn3.BackColor = System.Drawing.Color.Transparent;
             this.btn3.Image = ((System.Drawing.Image)(resources.GetObject("btn3.Image")));
-            this.btn3.Location = new System.Drawing.Point(295, 88);
+            this.btn3.Location = new System.Drawing.Point(3, 41);
             this.btn3.Name = "btn3";
             this.btn3.Size = new System.Drawing.Size(32, 32);
             this.btn3.State = false;
@@ -180,7 +201,7 @@
             // 
             this.btn2.BackColor = System.Drawing.Color.Transparent;
             this.btn2.Image = ((System.Drawing.Image)(resources.GetObject("btn2.Image")));
-            this.btn2.Location = new System.Drawing.Point(339, 50);
+            this.btn2.Location = new System.Drawing.Point(47, 3);
             this.btn2.Name = "btn2";
             this.btn2.Size = new System.Drawing.Size(32, 32);
             this.btn2.State = false;
@@ -191,7 +212,7 @@
             // 
             this.btn1.BackColor = System.Drawing.Color.Transparent;
             this.btn1.Image = ((System.Drawing.Image)(resources.GetObject("btn1.Image")));
-            this.btn1.Location = new System.Drawing.Point(295, 50);
+            this.btn1.Location = new System.Drawing.Point(3, 3);
             this.btn1.Name = "btn1";
             this.btn1.Size = new System.Drawing.Size(32, 32);
             this.btn1.State = false;
@@ -204,7 +225,7 @@
             this.ledB8.Cursor = System.Windows.Forms.Cursors.Hand;
             this.ledB8.Etat = false;
             this.ledB8.Image = ((System.Drawing.Image)(resources.GetObject("ledB8.Image")));
-            this.ledB8.Location = new System.Drawing.Point(355, 280);
+            this.ledB8.Location = new System.Drawing.Point(63, 233);
             this.ledB8.Name = "ledB8";
             this.ledB8.Size = new System.Drawing.Size(16, 16);
             this.ledB8.TabIndex = 15;
@@ -217,7 +238,7 @@
             this.ledB7.Cursor = System.Windows.Forms.Cursors.Hand;
             this.ledB7.Etat = false;
             this.ledB7.Image = ((System.Drawing.Image)(resources.GetObject("ledB7.Image")));
-            this.ledB7.Location = new System.Drawing.Point(355, 258);
+            this.ledB7.Location = new System.Drawing.Point(63, 211);
             this.ledB7.Name = "ledB7";
             this.ledB7.Size = new System.Drawing.Size(16, 16);
             this.ledB7.TabIndex = 14;
@@ -230,7 +251,7 @@
             this.ledB6.Cursor = System.Windows.Forms.Cursors.Hand;
             this.ledB6.Etat = false;
             this.ledB6.Image = ((System.Drawing.Image)(resources.GetObject("ledB6.Image")));
-            this.ledB6.Location = new System.Drawing.Point(355, 236);
+            this.ledB6.Location = new System.Drawing.Point(63, 189);
             this.ledB6.Name = "ledB6";
             this.ledB6.Size = new System.Drawing.Size(16, 16);
             this.ledB6.TabIndex = 13;
@@ -243,7 +264,7 @@
             this.ledB5.Cursor = System.Windows.Forms.Cursors.Hand;
             this.ledB5.Etat = false;
             this.ledB5.Image = ((System.Drawing.Image)(resources.GetObject("ledB5.Image")));
-            this.ledB5.Location = new System.Drawing.Point(355, 214);
+            this.ledB5.Location = new System.Drawing.Point(63, 167);
             this.ledB5.Name = "ledB5";
             this.ledB5.Size = new System.Drawing.Size(16, 16);
             this.ledB5.TabIndex = 12;
@@ -256,7 +277,7 @@
             this.ledB4.Cursor = System.Windows.Forms.Cursors.Hand;
             this.ledB4.Etat = false;
             this.ledB4.Image = ((System.Drawing.Image)(resources.GetObject("ledB4.Image")));
-            this.ledB4.Location = new System.Drawing.Point(355, 192);
+            this.ledB4.Location = new System.Drawing.Point(63, 145);
             this.ledB4.Name = "ledB4";
             this.ledB4.Size = new System.Drawing.Size(16, 16);
             this.ledB4.TabIndex = 11;
@@ -269,7 +290,7 @@
             this.ledB3.Cursor = System.Windows.Forms.Cursors.Hand;
             this.ledB3.Etat = false;
             this.ledB3.Image = ((System.Drawing.Image)(resources.GetObject("ledB3.Image")));
-            this.ledB3.Location = new System.Drawing.Point(355, 170);
+            this.ledB3.Location = new System.Drawing.Point(63, 123);
             this.ledB3.Name = "ledB3";
             this.ledB3.Size = new System.Drawing.Size(16, 16);
             this.ledB3.TabIndex = 10;
@@ -282,7 +303,7 @@
             this.ledB2.Cursor = System.Windows.Forms.Cursors.Hand;
             this.ledB2.Etat = false;
             this.ledB2.Image = ((System.Drawing.Image)(resources.GetObject("ledB2.Image")));
-            this.ledB2.Location = new System.Drawing.Point(355, 148);
+            this.ledB2.Location = new System.Drawing.Point(63, 101);
             this.ledB2.Name = "ledB2";
             this.ledB2.Size = new System.Drawing.Size(16, 16);
             this.ledB2.TabIndex = 9;
@@ -295,7 +316,7 @@
             this.ledB1.Cursor = System.Windows.Forms.Cursors.Hand;
             this.ledB1.Etat = false;
             this.ledB1.Image = ((System.Drawing.Image)(resources.GetObject("ledB1.Image")));
-            this.ledB1.Location = new System.Drawing.Point(355, 126);
+            this.ledB1.Location = new System.Drawing.Point(63, 79);
             this.ledB1.Name = "ledB1";
             this.ledB1.Size = new System.Drawing.Size(16, 16);
             this.ledB1.TabIndex = 8;
@@ -308,7 +329,7 @@
             this.ledA8.Cursor = System.Windows.Forms.Cursors.Hand;
             this.ledA8.Etat = false;
             this.ledA8.Image = ((System.Drawing.Image)(resources.GetObject("ledA8.Image")));
-            this.ledA8.Location = new System.Drawing.Point(295, 280);
+            this.ledA8.Location = new System.Drawing.Point(3, 233);
             this.ledA8.Name = "ledA8";
             this.ledA8.Size = new System.Drawing.Size(16, 16);
             this.ledA8.TabIndex = 7;
@@ -321,7 +342,7 @@
             this.ledA7.Cursor = System.Windows.Forms.Cursors.Hand;
             this.ledA7.Etat = false;
             this.ledA7.Image = ((System.Drawing.Image)(resources.GetObject("ledA7.Image")));
-            this.ledA7.Location = new System.Drawing.Point(295, 258);
+            this.ledA7.Location = new System.Drawing.Point(3, 211);
             this.ledA7.Name = "ledA7";
             this.ledA7.Size = new System.Drawing.Size(16, 16);
             this.ledA7.TabIndex = 6;
@@ -334,7 +355,7 @@
             this.ledA6.Cursor = System.Windows.Forms.Cursors.Hand;
             this.ledA6.Etat = false;
             this.ledA6.Image = ((System.Drawing.Image)(resources.GetObject("ledA6.Image")));
-            this.ledA6.Location = new System.Drawing.Point(295, 236);
+            this.ledA6.Location = new System.Drawing.Point(3, 189);
             this.ledA6.Name = "ledA6";
             this.ledA6.Size = new System.Drawing.Size(16, 16);
             this.ledA6.TabIndex = 5;
@@ -347,7 +368,7 @@
             this.ledA5.Cursor = System.Windows.Forms.Cursors.Hand;
             this.ledA5.Etat = false;
             this.ledA5.Image = ((System.Drawing.Image)(resources.GetObject("ledA5.Image")));
-            this.ledA5.Location = new System.Drawing.Point(295, 214);
+            this.ledA5.Location = new System.Drawing.Point(3, 167);
             this.ledA5.Name = "ledA5";
             this.ledA5.Size = new System.Drawing.Size(16, 16);
             this.ledA5.TabIndex = 4;
@@ -360,7 +381,7 @@
             this.ledA4.Cursor = System.Windows.Forms.Cursors.Hand;
             this.ledA4.Etat = false;
             this.ledA4.Image = ((System.Drawing.Image)(resources.GetObject("ledA4.Image")));
-            this.ledA4.Location = new System.Drawing.Point(295, 192);
+            this.ledA4.Location = new System.Drawing.Point(3, 145);
             this.ledA4.Name = "ledA4";
             this.ledA4.Size = new System.Drawing.Size(16, 16);
             this.ledA4.TabIndex = 3;
@@ -373,7 +394,7 @@
             this.ledA3.Cursor = System.Windows.Forms.Cursors.Hand;
             this.ledA3.Etat = false;
             this.ledA3.Image = ((System.Drawing.Image)(resources.GetObject("ledA3.Image")));
-            this.ledA3.Location = new System.Drawing.Point(295, 170);
+            this.ledA3.Location = new System.Drawing.Point(3, 123);
             this.ledA3.Name = "ledA3";
             this.ledA3.Size = new System.Drawing.Size(16, 16);
             this.ledA3.TabIndex = 2;
@@ -386,7 +407,7 @@
             this.ledA2.Cursor = System.Windows.Forms.Cursors.Hand;
             this.ledA2.Etat = false;
             this.ledA2.Image = ((System.Drawing.Image)(resources.GetObject("ledA2.Image")));
-            this.ledA2.Location = new System.Drawing.Point(295, 148);
+            this.ledA2.Location = new System.Drawing.Point(3, 101);
             this.ledA2.Name = "ledA2";
             this.ledA2.Size = new System.Drawing.Size(16, 16);
             this.ledA2.TabIndex = 1;
@@ -399,36 +420,28 @@
             this.ledA1.Cursor = System.Windows.Forms.Cursors.Hand;
             this.ledA1.Etat = false;
             this.ledA1.Image = ((System.Drawing.Image)(resources.GetObject("ledA1.Image")));
-            this.ledA1.Location = new System.Drawing.Point(295, 126);
+            this.ledA1.Location = new System.Drawing.Point(3, 79);
             this.ledA1.Name = "ledA1";
             this.ledA1.Size = new System.Drawing.Size(16, 16);
             this.ledA1.TabIndex = 0;
             this.ledA1.TabStop = false;
             this.ledA1.MouseClick += new System.Windows.Forms.MouseEventHandler(this.leds_MouseClick);
             // 
-            // picLedColor
+            // colorPickup1
             // 
-            this.picLedColor.Location = new System.Drawing.Point(317, 164);
-            this.picLedColor.Name = "picLedColor";
-            this.picLedColor.Size = new System.Drawing.Size(32, 94);
-            this.picLedColor.TabIndex = 26;
-            this.picLedColor.TabStop = false;
-            this.picLedColor.Click += new System.EventHandler(this.picLedColor_Click);
-            // 
-            // btnBuzz
-            // 
-            this.btnBuzz.Location = new System.Drawing.Point(428, 192);
-            this.btnBuzz.Name = "btnBuzz";
-            this.btnBuzz.Size = new System.Drawing.Size(75, 23);
-            this.btnBuzz.TabIndex = 27;
-            this.btnBuzz.Text = "Buzz !";
-            this.btnBuzz.UseVisualStyleBackColor = true;
-            this.btnBuzz.Click += new System.EventHandler(this.btnBuzz_Click);
+            this.colorPickup1.Image = ((System.Drawing.Image)(resources.GetObject("colorPickup1.Image")));
+            this.colorPickup1.Location = new System.Drawing.Point(97, 189);
+            this.colorPickup1.Name = "colorPickup1";
+            this.colorPickup1.Size = new System.Drawing.Size(175, 175);
+            this.colorPickup1.TabIndex = 28;
+            this.colorPickup1.TabStop = false;
+            this.colorPickup1.Visible = false;
             // 
             // PanelRecGoBot
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.Controls.Add(this.colorPickup1);
             this.Controls.Add(this.btnBuzz);
             this.Controls.Add(this.picLedColor);
             this.Controls.Add(this.btn10);
@@ -459,9 +472,9 @@
             this.Controls.Add(this.ledA1);
             this.Cursor = System.Windows.Forms.Cursors.Arrow;
             this.Name = "PanelRecGoBot";
-            this.Size = new System.Drawing.Size(1025, 501);
+            this.Size = new System.Drawing.Size(221, 332);
             this.Load += new System.EventHandler(this.PanelConstantes_Load);
-            this.MouseClick += new System.Windows.Forms.MouseEventHandler(this.leds_MouseClick);
+            ((System.ComponentModel.ISupportInitialize)(this.picLedColor)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.btn10)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.btn9)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.btn8)).EndInit();
@@ -488,7 +501,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.ledA3)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.ledA2)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.ledA1)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.picLedColor)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.colorPickup1)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -523,6 +536,7 @@
         private Composants.Button3D btn7;
         private System.Windows.Forms.PictureBox picLedColor;
         private System.Windows.Forms.Button btnBuzz;
+        private Composants.ColorPickup colorPickup1;
 
 
 

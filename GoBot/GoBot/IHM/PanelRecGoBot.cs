@@ -17,8 +17,6 @@ namespace GoBot.IHM
 {
     public partial class PanelRecGoBot : UserControl
     {
-        RecGoBot carte;
-
         List<Button3D> boutons;
         List<Led> leds;
         Dictionary<Led, Boolean> ledActive;
@@ -26,28 +24,52 @@ namespace GoBot.IHM
         public PanelRecGoBot()
         {
             InitializeComponent();
-            
-            boutons = new List<Button3D> {btn1, btn2, btn3, btn4, btn5, btn6, btn7, btn8, btn9, btn10};
-            leds = new List<Led> {ledA1, ledA2, ledA3, ledA4, ledA5, ledA6, ledA7, ledA8, ledB1, ledB2, ledB3, ledB4, ledB5, ledB6, ledB7, ledB8};
+
+            boutons = new List<Button3D> { btn1, btn2, btn3, btn4, btn5, btn6, btn7, btn8, btn9, btn10 };
+            leds = new List<Led> { ledA1, ledA2, ledA3, ledA4, ledA5, ledA6, ledA7, ledA8, ledB1, ledB2, ledB3, ledB4, ledB5, ledB6, ledB7, ledB8 };
             ledActive = new Dictionary<Led, bool>();
             leds.ForEach(led => ledActive.Add(led, false));
 
             if (!Config.DesignMode)
             {
-                this.carte = new RecGoBot(Connexions.ConnexionGB);
-                carte.ButtonChange += new RecGoBot.ButtonChangeDelegate(carte_ButtonChange);
+                Devices.Devices.RecGoBot.ButtonChange += new RecGoBot.ButtonChangeDelegate(carte_ButtonChange);
             }
+            colorPickup1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            colorPickup1.ColorHover += colorPickup1_ColorHover;
+            colorPickup1.ColorClick += colorPickup1_ColorClick;
+        }
+
+        void colorPickup1_ColorClick(Color color)
+        {
+            SetColor(color);
+            colorPickup1.Visible = false;
+        }
+
+        void colorPickup1_ColorHover(Color color)
+        {
+            SetColor(color);
         }
 
         void carte_ButtonChange(RecGoBot.Buttons btn, bool state)
         {
-            if (state)
+            if (this.InvokeRequired)
             {
-                boutons[(int)btn].On();
+                this.Invoke(new EventHandler(delegate
+                {
+                    carte_ButtonChange(btn, state);
+                }));
             }
             else
             {
-                boutons[(int)btn].Off();
+                if (state)
+                {
+                    boutons[(int)btn].On();
+                }
+                else
+                {
+                    boutons[(int)btn].Off();
+                }
+
             }
         }
 
@@ -70,26 +92,34 @@ namespace GoBot.IHM
 
         private void leds_MouseClick(object sender, MouseEventArgs e)
         {
-            int ledNo = leds.IndexOf((Led)sender);
-            ledActive[(Led)sender] = !ledActive[(Led)sender];
-            carte.SetLed((RecGoBot.Leds)ledNo, ledActive[(Led)sender]);
+            Led ledSender = (Led)sender;
+            int ledNo = leds.IndexOf(ledSender);
+            ledActive[ledSender] = !ledActive[ledSender];
+            Devices.Devices.RecGoBot.SetLed((RecGoBot.Leds)ledNo, ledActive[ledSender]);
+            if (ledActive[ledSender] == true)
+                ledSender.CouleurVert();
+            else
+                ledSender.CouleurRouge();
         }
 
         private void picLedColor_Click(object sender, EventArgs e)
         {
-            ColorDialog dlg = new ColorDialog();
-            if (dlg.ShowDialog() == DialogResult.OK)
-            {
-                picLedColor.BackColor = dlg.Color;
-                carte.SetLedColor(dlg.Color);
-            }
+            colorPickup1.Visible = true;
+            colorPickup1.BringToFront();
+            colorPickup1.Location = this.PointToClient(MousePosition);
         }
 
         private void btnBuzz_Click(object sender, EventArgs e)
         {
-            carte.Buzz(200);
+            Devices.Devices.RecGoBot.Buzz(200);
             Thread.Sleep(1000);
-            carte.Buzz(0);
+            Devices.Devices.RecGoBot.Buzz(0);
+        }
+
+        private void SetColor(Color color)
+        {
+            picLedColor.BackColor = color;
+            Devices.Devices.RecGoBot.SetLedColor(color);
         }
     }
 }

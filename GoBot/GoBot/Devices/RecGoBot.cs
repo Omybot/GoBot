@@ -60,7 +60,20 @@ namespace GoBot.Devices
             {
                 if (trameRecue[1] == (byte)FonctionGB.AppuiBouton)
                 {
-                    Buttons but = (Buttons)trameRecue[2];
+                    Buttons but;
+                    if (trameRecue[2] == (byte)11)
+                        but = (Buttons)Buttons.B2;
+                    else if (trameRecue[2] == 2)
+                        but = (Buttons)Buttons.B4;
+                    else if (trameRecue[2] == 3)
+                        but = (Buttons)Buttons.B1;
+                    else if (trameRecue[2] == 6)
+                        but = (Buttons)Buttons.B8;
+                    else if (trameRecue[2] == 7)
+                        but = (Buttons)Buttons.B9;
+                    else
+                        but = (Buttons)trameRecue[2];
+
                     bool pushed = trameRecue[3] > 0;
                     if (ButtonChange != null)
                         ButtonChange(but, pushed);

@@ -28,6 +28,8 @@ namespace GoBot.Communications
 
         DemandeValeurCapteur = 0x50,
         RetourValeurCapteur = 0x51,
+        DemandeCapteurCouleur = 0x52,
+        ReponseCapteurCouleur = 0x53,
         ArmerJack = 0x70,
         DepartJack = 0x71,
         DemandeCouleurEquipe = 0x72,

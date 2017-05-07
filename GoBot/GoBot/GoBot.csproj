@@ -114,6 +114,7 @@
     <Compile Include="Communications\DecodeurTrames.cs" />
     <Compile Include="Communications\FonctionsTrames.cs" />
     <Compile Include="Dessinateur.cs" />
+    <Compile Include="Devices\Devices.cs" />
     <Compile Include="Devices\Hokuyo.cs" />
     <Compile Include="Devices\HokuyoUart.cs" />
     <Compile Include="Devices\HokuyoUsb.cs" />
@@ -136,6 +137,12 @@
     <Compile Include="IHM\PanelAnalogique.Designer.cs">
       <DependentUpon>PanelAnalogique.cs</DependentUpon>
     </Compile>
+    <Compile Include="IHM\PanelCapteurs.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="IHM\PanelCapteurs.Designer.cs">
+      <DependentUpon>PanelCapteurs.cs</DependentUpon>
+    </Compile>
     <Compile Include="IHM\PanelConstantes.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -147,6 +154,12 @@
     </Compile>
     <Compile Include="IHM\PanelAlimentation.Designer.cs">
       <DependentUpon>PanelAlimentation.cs</DependentUpon>
+    </Compile>
+    <Compile Include="IHM\PanelPololu.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="IHM\PanelPololu.Designer.cs">
+      <DependentUpon>PanelPololu.cs</DependentUpon>
     </Compile>
     <Compile Include="IHM\PanelRecGoBot.cs">
       <SubType>UserControl</SubType>
@@ -363,11 +376,17 @@
     <EmbeddedResource Include="IHM\PanelAnalogique.resx">
       <DependentUpon>PanelAnalogique.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="IHM\PanelCapteurs.resx">
+      <DependentUpon>PanelCapteurs.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="IHM\PanelConstantes.resx">
       <DependentUpon>PanelConstantes.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="IHM\PanelAlimentation.resx">
       <DependentUpon>PanelAlimentation.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="IHM\PanelPololu.resx">
+      <DependentUpon>PanelPololu.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="IHM\PanelRecGoBot.resx">
       <DependentUpon>PanelRecGoBot.cs</DependentUpon>
