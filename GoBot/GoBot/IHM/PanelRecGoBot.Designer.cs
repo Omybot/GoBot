@@ -31,6 +31,7 @@
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(PanelRecGoBot));
             this.picLedColor = new System.Windows.Forms.PictureBox();
             this.btnBuzz = new System.Windows.Forms.Button();
+            this.colorPickup1 = new Composants.ColorPickup();
             this.btn10 = new Composants.Button3D();
             this.btn9 = new Composants.Button3D();
             this.btn8 = new Composants.Button3D();
@@ -57,8 +58,8 @@
             this.ledA3 = new Composants.Led();
             this.ledA2 = new Composants.Led();
             this.ledA1 = new Composants.Led();
-            this.colorPickup1 = new Composants.ColorPickup();
             ((System.ComponentModel.ISupportInitialize)(this.picLedColor)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.colorPickup1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.btn10)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.btn9)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.btn8)).BeginInit();
@@ -85,7 +86,6 @@
             ((System.ComponentModel.ISupportInitialize)(this.ledA3)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.ledA2)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.ledA1)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.colorPickup1)).BeginInit();
             this.SuspendLayout();
             // 
             // picLedColor
@@ -106,6 +106,16 @@
             this.btnBuzz.Text = "Buzz !";
             this.btnBuzz.UseVisualStyleBackColor = true;
             this.btnBuzz.Click += new System.EventHandler(this.btnBuzz_Click);
+            // 
+            // colorPickup1
+            // 
+            this.colorPickup1.Image = ((System.Drawing.Image)(resources.GetObject("colorPickup1.Image")));
+            this.colorPickup1.Location = new System.Drawing.Point(97, 189);
+            this.colorPickup1.Name = "colorPickup1";
+            this.colorPickup1.Size = new System.Drawing.Size(175, 175);
+            this.colorPickup1.TabIndex = 28;
+            this.colorPickup1.TabStop = false;
+            this.colorPickup1.Visible = false;
             // 
             // btn10
             // 
@@ -427,16 +437,6 @@
             this.ledA1.TabStop = false;
             this.ledA1.MouseClick += new System.Windows.Forms.MouseEventHandler(this.leds_MouseClick);
             // 
-            // colorPickup1
-            // 
-            this.colorPickup1.Image = ((System.Drawing.Image)(resources.GetObject("colorPickup1.Image")));
-            this.colorPickup1.Location = new System.Drawing.Point(97, 189);
-            this.colorPickup1.Name = "colorPickup1";
-            this.colorPickup1.Size = new System.Drawing.Size(175, 175);
-            this.colorPickup1.TabIndex = 28;
-            this.colorPickup1.TabStop = false;
-            this.colorPickup1.Visible = false;
-            // 
             // PanelRecGoBot
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -475,6 +475,7 @@
             this.Size = new System.Drawing.Size(221, 332);
             this.Load += new System.EventHandler(this.PanelConstantes_Load);
             ((System.ComponentModel.ISupportInitialize)(this.picLedColor)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.colorPickup1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.btn10)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.btn9)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.btn8)).EndInit();
@@ -501,7 +502,6 @@
             ((System.ComponentModel.ISupportInitialize)(this.ledA3)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.ledA2)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.ledA1)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.colorPickup1)).EndInit();
             this.ResumeLayout(false);
 
         }

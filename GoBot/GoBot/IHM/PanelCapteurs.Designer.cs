@@ -28,11 +28,19 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.btnColor = new Composants.SwitchBouton();
-            this.picColor = new System.Windows.Forms.PictureBox();
             this.lblCapteurCouleurTxt = new System.Windows.Forms.Label();
-            ((System.ComponentModel.ISupportInitialize)(this.picColor)).BeginInit();
+            this.btnColor = new Composants.SwitchBouton();
+            this.picColor = new Composants.ColorDisplay();
             this.SuspendLayout();
+            // 
+            // lblCapteurCouleurTxt
+            // 
+            this.lblCapteurCouleurTxt.AutoSize = true;
+            this.lblCapteurCouleurTxt.Location = new System.Drawing.Point(25, 20);
+            this.lblCapteurCouleurTxt.Name = "lblCapteurCouleurTxt";
+            this.lblCapteurCouleurTxt.Size = new System.Drawing.Size(88, 13);
+            this.lblCapteurCouleurTxt.TabIndex = 2;
+            this.lblCapteurCouleurTxt.Text = "Capteur couleur :";
             // 
             // btnColor
             // 
@@ -46,32 +54,21 @@
             // 
             // picColor
             // 
-            this.picColor.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.picColor.Location = new System.Drawing.Point(28, 41);
+            this.picColor.Location = new System.Drawing.Point(19, 41);
             this.picColor.Name = "picColor";
-            this.picColor.Size = new System.Drawing.Size(126, 62);
-            this.picColor.TabIndex = 1;
-            this.picColor.TabStop = false;
-            // 
-            // lblCapteurCouleurTxt
-            // 
-            this.lblCapteurCouleurTxt.AutoSize = true;
-            this.lblCapteurCouleurTxt.Location = new System.Drawing.Point(25, 20);
-            this.lblCapteurCouleurTxt.Name = "lblCapteurCouleurTxt";
-            this.lblCapteurCouleurTxt.Size = new System.Drawing.Size(88, 13);
-            this.lblCapteurCouleurTxt.TabIndex = 2;
-            this.lblCapteurCouleurTxt.Text = "Capteur couleur :";
+            this.picColor.Size = new System.Drawing.Size(150, 77);
+            this.picColor.TabIndex = 3;
             // 
             // PanelCapteurs
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.Controls.Add(this.lblCapteurCouleurTxt);
             this.Controls.Add(this.picColor);
+            this.Controls.Add(this.lblCapteurCouleurTxt);
             this.Controls.Add(this.btnColor);
             this.Name = "PanelCapteurs";
             this.Size = new System.Drawing.Size(213, 140);
-            ((System.ComponentModel.ISupportInitialize)(this.picColor)).EndInit();
+            this.Load += new System.EventHandler(this.PanelCapteurs_Load);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -80,7 +77,7 @@
         #endregion
 
         private Composants.SwitchBouton btnColor;
-        private System.Windows.Forms.PictureBox picColor;
         private System.Windows.Forms.Label lblCapteurCouleurTxt;
+        private Composants.ColorDisplay picColor;
     }
 }

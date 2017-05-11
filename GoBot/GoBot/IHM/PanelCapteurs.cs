@@ -53,8 +53,13 @@ namespace GoBot.IHM
             else
             {
                 if (capteur == CapteurCouleur.CouleurTube)
-                    picColor.BackColor = couleur;
+                    picColor.SetColor(couleur);
             }
+        }
+
+        private void PanelCapteurs_Load(object sender, EventArgs e)
+        {
+            picColor.SetColor(Color.Black);
         }
     }
 }
