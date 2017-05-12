@@ -21,10 +21,9 @@ namespace GoBot
 {
     class RobotReel : Robot
     {
-        Dictionary<FonctionIO, Semaphore> SemaphoresIO = new Dictionary<FonctionIO, Semaphore>();
         Dictionary<CapteurOnOffID, Semaphore> SemaphoresCapteurs = new Dictionary<CapteurOnOffID, Semaphore>();
         Dictionary<CapteurCouleur, Semaphore> SemaphoresCouleur = new Dictionary<CapteurCouleur, Semaphore>();
-        Dictionary<FonctionMove, Semaphore> SemaphoresMove = new Dictionary<FonctionMove, Semaphore>();
+        Dictionary<FonctionTrame, Semaphore> SemaphoresTrame = new Dictionary<FonctionTrame, Semaphore>();
 
         private DateTime DateRefreshPos { get; set; }
         private bool positionRecue = false;
@@ -45,11 +44,8 @@ namespace GoBot
             CapteurActive = new Dictionary<CapteurOnOffID, bool>();
             CapteursCouleur = new Dictionary<CapteurCouleur, Color>();
 
-            foreach (FonctionIO fonction in Enum.GetValues(typeof(FonctionIO)))
-                SemaphoresIO.Add(fonction, new Semaphore(0, int.MaxValue));
-
-            foreach (FonctionMove fonction in Enum.GetValues(typeof(FonctionMove)))
-                SemaphoresMove.Add(fonction, new Semaphore(0, int.MaxValue));
+            foreach (FonctionTrame fonction in Enum.GetValues(typeof(FonctionTrame)))
+                SemaphoresTrame.Add(fonction, new Semaphore(0, int.MaxValue));
 
             foreach (CapteurOnOffID fonction in Enum.GetValues(typeof(CapteurOnOffID)))
             {
@@ -150,7 +146,7 @@ namespace GoBot
             Thread.Sleep(500);
             TrajectoireEchouee = true;
             Stop(StopMode.Abrupt);
-            SemaphoresMove[FonctionMove.FinDeplacement].Release();
+            SemaphoresTrame[FonctionTrame.FinDeplacement].Release();
         }
 
         public void ReceptionMessage(Trame trameRecue)
@@ -161,20 +157,20 @@ namespace GoBot
 
             if ((trameRecue[0] == (byte)Carte.RecMove && this == Robots.GrosRobot))
             {
-                if (trameRecue[1] == (byte)FonctionMove.Blocage)
+                if (trameRecue[1] == (byte)FonctionTrame.Blocage)
                 {
                     thActivationAsser = new Thread(ActivationAsserv);
                     thActivationAsser.Start();
                 }
 
-                if (trameRecue[1] == (byte)FonctionMove.FinDeplacement
-                    || trameRecue[1] == (byte)FonctionMove.FinRecallage)
+                if (trameRecue[1] == (byte)FonctionTrame.FinDeplacement
+                    || trameRecue[1] == (byte)FonctionTrame.FinRecallage)
                 {
                     Console.WriteLine("Déblocage déplacement " + DateTime.Now.Hour + ":" + DateTime.Now.Minute + ":" + DateTime.Now.Second + ":" + DateTime.Now.Millisecond);
-                    SemaphoresMove[FonctionMove.FinDeplacement].Release();
+                    SemaphoresTrame[FonctionTrame.FinDeplacement].Release();
                 }
 
-                if (trameRecue[1] == (byte)FonctionMove.RetourPositionXYTeta)
+                if (trameRecue[1] == (byte)FonctionTrame.AsserRetourPositionXYTeta)
                 {
                     // Réception de la position mesurée par l'asservissement
                     try
@@ -199,7 +195,7 @@ namespace GoBot
                         positionRecue = true;
 
                         DateRefreshPos = DateTime.Now;
-                        SemaphoresMove[FonctionMove.DemandePositionXYTeta].Release();
+                        SemaphoresTrame[FonctionTrame.AsserDemandePositionXYTeta].Release();
 
                         HistoriqueCoordonnees.Add(new Position(teta, new PointReel(x, y)));
                         if (HistoriqueCoordonnees.Count > 1200)
@@ -221,7 +217,7 @@ namespace GoBot
                     }
                 }
 
-                if (trameRecue[1] == (byte)FonctionMove.RetourPositionCodeurs)
+                if (trameRecue[1] == (byte)FonctionTrame.AsserRetourPositionCodeurs)
                 {
                     int nbPositions = trameRecue[2];
 
@@ -246,7 +242,7 @@ namespace GoBot
                     }
                 }
 
-                if (trameRecue[1] == (byte)FonctionMove.RetourDiagnostic)
+                if (trameRecue[1] == (byte)FonctionTrame.RetourChargeCPU_PWM)
                 {
                     int nbValeurs = trameRecue[2];
 
@@ -264,7 +260,7 @@ namespace GoBot
                 }
 
 
-                if (trameRecue[1] == (byte)FonctionMove.RetourValeursAnalogiques)
+                if (trameRecue[1] == (byte)FonctionTrame.RetourValeursAnalogiques)
                 {
                     double valeurAnalogique1 = (trameRecue[2] * 256 + trameRecue[3]);
                     double valeurAnalogique2 = (trameRecue[4] * 256 + trameRecue[5]);
@@ -297,17 +293,17 @@ namespace GoBot
                     ValeursAnalogiquesMove.Add(valeurAnalogique5);
                     ValeursAnalogiquesMove.Add(valeurAnalogique6);
 
-                    if (SemaphoresMove[FonctionMove.RetourValeursAnalogiques] != null)
-                        SemaphoresMove[FonctionMove.RetourValeursAnalogiques].Release();
+                    if (SemaphoresTrame[FonctionTrame.RetourValeursAnalogiques] != null)
+                        SemaphoresTrame[FonctionTrame.RetourValeursAnalogiques].Release();
                 }
             }
             else if (trameRecue[0] == (byte)Carte.RecIO)
             {
-                if (trameRecue[1] == (byte)FonctionIO.ReponseCapteurCouleur)
+                if (trameRecue[1] == (byte)FonctionTrame.RetourCapteurCouleur)
                 {
                     ChangeCouleurCapteur((CapteurCouleur)trameRecue[2], Color.FromArgb(trameRecue[3], trameRecue[4], trameRecue[5]));
                 }
-                if (trameRecue[1] == (byte)FonctionMove.ReponseLidar)
+                if (trameRecue[1] == (byte)FonctionTrame.ReponseLidar)
                 {
                     int lidarID = trameRecue[2];
 
@@ -320,9 +316,9 @@ namespace GoBot
                     }
 
                     if (Regex.Matches(mesureLidar, "\n\n").Count == 2)
-                        SemaphoresMove[FonctionMove.ReponseLidar].Release();
+                        SemaphoresTrame[FonctionTrame.ReponseLidar].Release();
                 }
-                if (trameRecue[1] == (byte)FonctionIO.RetourValeursAnalogiques)
+                if (trameRecue[1] == (byte)FonctionTrame.RetourValeursAnalogiques)
                 {
                     double valeurAnalogique1 = (trameRecue[2] * 256 + trameRecue[3]);
                     double valeurAnalogique2 = (trameRecue[4] * 256 + trameRecue[5]);
@@ -344,15 +340,6 @@ namespace GoBot
                     double valeurAnalogique8V = valeurAnalogique8 * 0.0008056640625;
                     double valeurAnalogique9V = valeurAnalogique9 * 0.0008056640625;
 
-                    /*
-                        Codeur effet hall Ascenseur Droite
-                        VadcV2 (AN1)
-                        Codeur effet hall Ascenseur Gauche
-                        Switchs Ascenseur Gauche
-                        Switchs Ascenseur Droite
-                        Switchs Bonus
-                    */
-
                     ValeursAnalogiquesIO = new List<double>();
                     ValeursAnalogiquesIO.Add(valeurAnalogique1);
                     ValeursAnalogiquesIO.Add(valeurAnalogique2);
@@ -364,10 +351,10 @@ namespace GoBot
                     ValeursAnalogiquesIO.Add(valeurAnalogique8);
                     ValeursAnalogiquesIO.Add(valeurAnalogique9);
 
-                    if (SemaphoresIO[FonctionIO.RetourValeursAnalogiques] != null)
-                        SemaphoresIO[FonctionIO.RetourValeursAnalogiques].Release();
+                    if (SemaphoresTrame[FonctionTrame.RetourValeursAnalogiques] != null)
+                        SemaphoresTrame[FonctionTrame.RetourValeursAnalogiques].Release();
                 }
-                if (trameRecue[1] == (byte)FonctionIO.RetourCapteurOnOff)
+                if (trameRecue[1] == (byte)FonctionTrame.RetourCapteurOnOff)
                 {
                     CapteurOnOffID capteur = (CapteurOnOffID)trameRecue[2];
                     bool nouvelEtat = trameRecue[3] > 0 ? true : false;
@@ -379,30 +366,21 @@ namespace GoBot
                         SemaphoresCapteurs[capteur].Release();
                 }
 
-                if (trameRecue[1] == (byte)FonctionIO.RetourTestConnexion)
+                if (trameRecue[1] == (byte)FonctionTrame.TestConnexion)
                 {
-                    BatterieVoltage = (double)(trameRecue[2] * 256 + trameRecue[3]) / 100.0;
+                    if (trameRecue.Length > 2)
+                        BatterieVoltage = (double)(trameRecue[2] * 256 + trameRecue[3]) / 100.0;
                     //BatterieVoltage = (double)(trameRecue[4] * 256 + trameRecue[5]) / 100.0;
                 }
 
-                if (trameRecue[1] == (byte)FonctionIO.ReponseJack)
-                {
-                    jackBranche = trameRecue[2] == 1 ? true : false;
-
-                    if (historiqueJack)
-                        Historique.AjouterAction(new ActionCapteur(this, CapteurID.Jack, jackBranche ? "branché" : "absent"));
-
-                    SemaphoresIO[FonctionIO.ReponseJack].Release();
-                }
-
-                if (trameRecue[1] == (byte)FonctionIO.DepartJack)
+                if (trameRecue[1] == (byte)FonctionTrame.DepartJack)
                 {
                     if (Plateau.Enchainement == null)
                         Plateau.Enchainement = new GoBot.Enchainements.EnchainementMatch();
                     Plateau.Enchainement.Executer();
                 }
 
-                if (trameRecue[1] == (byte)FonctionIO.ReponseCouleurEquipe)
+                if (trameRecue[1] == (byte)FonctionTrame.RetourCouleurEquipe)
                 {
                     if (trameRecue[2] == 0)
                         couleurEquipe = Plateau.CouleurGaucheBleu;
@@ -411,10 +389,10 @@ namespace GoBot
 
                     Plateau.NotreCouleur = couleurEquipe;
 
-                    SemaphoresIO[FonctionIO.ReponseCouleurEquipe].Release();
+                    SemaphoresTrame[FonctionTrame.RetourCouleurEquipe].Release();
                 }
 
-                if (trameRecue[1] == (byte)FonctionIO.RetourValeurCapteur)
+                if (trameRecue[1] == (byte)FonctionTrame.RetourCapteurOnOff) //TODO mieux
                 {
                     if (trameRecue[2] == (byte)CapteurID.Balise)
                     {
@@ -440,11 +418,6 @@ namespace GoBot
                             Plateau.Balise.connexion_NouvelleTrame(new Trame(message));
                     }
                 }
-
-                if (trameRecue[1] == (byte)FonctionIO.FrontCapteur)
-                {
-                    // Réception des changement d'état des capteurs
-                }
             }
         }
 
@@ -455,7 +428,7 @@ namespace GoBot
             base.Avancer(distance, attendre);
 
             if (attendre)
-                SemaphoresMove[FonctionMove.FinDeplacement] = new Semaphore(0, int.MaxValue);
+                SemaphoresTrame[FonctionTrame.FinDeplacement] = new Semaphore(0, int.MaxValue);
 
             DeplacementLigne = true;
             Trame trame = TrameFactory.Deplacer(SensAR.Avant, distance, this);
@@ -466,7 +439,7 @@ namespace GoBot
             int tempsParcours = CalculDureeLigne(distance);
 
             if (attendre)
-                if (!SemaphoresMove[FonctionMove.FinDeplacement].WaitOne(tempsParcours + 1000))
+                if (!SemaphoresTrame[FonctionTrame.FinDeplacement].WaitOne(tempsParcours + 1000))
                 {
                     Stop(StopMode.Freely);
                     Thread.Sleep(1000);
@@ -490,7 +463,7 @@ namespace GoBot
             base.Reculer(distance, attendre);
 
             if (attendre)
-                SemaphoresMove[FonctionMove.FinDeplacement] = new Semaphore(0, int.MaxValue);
+                SemaphoresTrame[FonctionTrame.FinDeplacement] = new Semaphore(0, int.MaxValue);
 
             DeplacementLigne = true;
             Trame trame = TrameFactory.Deplacer(SensAR.Arriere, distance, this);
@@ -501,7 +474,7 @@ namespace GoBot
             int tempsParcours = CalculDureeLigne(distance);
 
             if (attendre)
-                if (!SemaphoresMove[FonctionMove.FinDeplacement].WaitOne(tempsParcours + 1000))
+                if (!SemaphoresTrame[FonctionTrame.FinDeplacement].WaitOne(tempsParcours + 1000))
                 {
                     Stop(StopMode.Freely);
                     Thread.Sleep(1000);
@@ -517,7 +490,7 @@ namespace GoBot
             angle = Math.Round(angle, 2);
 
             if (attendre)
-                SemaphoresMove[FonctionMove.FinDeplacement] = new Semaphore(0, int.MaxValue);
+                SemaphoresTrame[FonctionTrame.FinDeplacement] = new Semaphore(0, int.MaxValue);
 
             Trame trame = TrameFactory.Pivot(SensGD.Gauche, angle, this);
             Connexion.SendMessage(trame);
@@ -527,7 +500,7 @@ namespace GoBot
             int tempsParcours = CalculDureePivot(angle);
 
             if (attendre)
-                if (!SemaphoresMove[FonctionMove.FinDeplacement].WaitOne(tempsParcours + 1000))
+                if (!SemaphoresTrame[FonctionTrame.FinDeplacement].WaitOne(tempsParcours + 1000))
                 {
                     Stop(StopMode.Freely);
                     Thread.Sleep(1000);
@@ -541,7 +514,7 @@ namespace GoBot
 
             AngleTotalParcouru += angle;
             if (attendre)
-                SemaphoresMove[FonctionMove.FinDeplacement] = new Semaphore(0, int.MaxValue);
+                SemaphoresTrame[FonctionTrame.FinDeplacement] = new Semaphore(0, int.MaxValue);
 
             Trame trame = TrameFactory.Pivot(SensGD.Droite, angle, this);
             Connexion.SendMessage(trame);
@@ -551,7 +524,7 @@ namespace GoBot
             int tempsParcours = CalculDureePivot(angle);
 
             if (attendre)
-                if (!SemaphoresMove[FonctionMove.FinDeplacement].WaitOne(tempsParcours + 1000))
+                if (!SemaphoresTrame[FonctionTrame.FinDeplacement].WaitOne(tempsParcours + 1000))
                 {
                     Stop(StopMode.Freely);
                     Thread.Sleep(1000);
@@ -571,7 +544,7 @@ namespace GoBot
         public override void Virage(SensAR sensAr, SensGD sensGd, int rayon, int angle, bool attendre = true)
         {
             if (attendre)
-                SemaphoresMove[FonctionMove.FinDeplacement] = new Semaphore(0, int.MaxValue);
+                SemaphoresTrame[FonctionTrame.FinDeplacement] = new Semaphore(0, int.MaxValue);
 
             Historique.AjouterAction(new ActionVirage(this, rayon, angle, sensAr, sensGd));
 
@@ -579,13 +552,13 @@ namespace GoBot
             Connexion.SendMessage(trame);
 
             if (attendre)
-                SemaphoresMove[FonctionMove.FinDeplacement].WaitOne();
+                SemaphoresTrame[FonctionTrame.FinDeplacement].WaitOne();
         }
 
         public override void TrajectoirePolaire(SensAR sens, List<PointReel> points, bool attendre = true)
         {
             if (attendre)
-                SemaphoresMove[FonctionMove.FinDeplacement] = new Semaphore(0, int.MaxValue);
+                SemaphoresTrame[FonctionTrame.FinDeplacement] = new Semaphore(0, int.MaxValue);
 
             //Historique.AjouterAction(new ActionVirage(this, rayon, angle, sensAr, sensGd)); TODO
 
@@ -593,20 +566,20 @@ namespace GoBot
             Connexion.SendMessage(trame);
 
             if (attendre)
-                SemaphoresMove[FonctionMove.FinDeplacement].WaitOne();
+                SemaphoresTrame[FonctionTrame.FinDeplacement].WaitOne();
         }
 
         public override void Recallage(SensAR sens, bool attendre = true)
         {
             if (attendre)
-                SemaphoresMove[FonctionMove.FinDeplacement] = new Semaphore(0, int.MaxValue);
+                SemaphoresTrame[FonctionTrame.FinDeplacement] = new Semaphore(0, int.MaxValue);
 
             Historique.AjouterAction(new ActionRecallage(this, sens));
             Trame trame = TrameFactory.Recallage(sens, this);
             Connexion.SendMessage(trame);
 
             if (attendre)
-                SemaphoresMove[FonctionMove.FinDeplacement].WaitOne();
+                SemaphoresTrame[FonctionTrame.FinDeplacement].WaitOne();
         }
 
         #endregion
@@ -640,13 +613,13 @@ namespace GoBot
                 return false;
 
             if (attendre)
-                SemaphoresMove[FonctionMove.RetourPositionCodeurs] = new Semaphore(0, int.MaxValue);
+                SemaphoresTrame[FonctionTrame.AsserRetourPositionCodeurs] = new Semaphore(0, int.MaxValue);
 
             Trame t = TrameFactory.DemandePosition(this);
             Connexion.SendMessage(t);
 
             if (attendre)
-                return SemaphoresMove[FonctionMove.RetourPositionXYTeta].WaitOne(1000);// semPosition.WaitOne(1000);
+                return SemaphoresTrame[FonctionTrame.AsserRetourPositionXYTeta].WaitOne(1000);// semPosition.WaitOne(1000);
             else
                 return true;
         }
@@ -677,13 +650,13 @@ namespace GoBot
                 return;
 
             if (attendre)
-                SemaphoresIO[FonctionIO.RetourValeursAnalogiques] = new Semaphore(0, int.MaxValue);
+                SemaphoresTrame[FonctionTrame.RetourValeursAnalogiques] = new Semaphore(0, int.MaxValue);
 
             Trame trame = TrameFactory.DemandeValeursAnalogiques(Carte.RecIO);
             Connexions.ConnexionIO.SendMessage(trame);
 
             if (attendre)
-                SemaphoresIO[FonctionIO.RetourValeursAnalogiques].WaitOne(1000);
+                SemaphoresTrame[FonctionTrame.RetourValeursAnalogiques].WaitOne(1000);
         }
 
         public override void DemandeValeursAnalogiquesMove(bool attendre = true)
@@ -692,13 +665,13 @@ namespace GoBot
                 return;
 
             if (attendre)
-                SemaphoresMove[FonctionMove.RetourValeursAnalogiques] = new Semaphore(0, int.MaxValue);
+                SemaphoresTrame[FonctionTrame.RetourValeursAnalogiques] = new Semaphore(0, int.MaxValue);
 
             Trame trame = TrameFactory.DemandeValeursAnalogiques(Carte.RecMove);
             Connexions.ConnexionMove.SendMessage(trame);
 
             if (attendre)
-                SemaphoresMove[FonctionMove.RetourValeursAnalogiques].WaitOne(1000);
+                SemaphoresTrame[FonctionTrame.RetourValeursAnalogiques].WaitOne(1000);
         }
 
         public override void ServoVitesse(ServomoteurID servo, int vitesse)
@@ -825,8 +798,8 @@ namespace GoBot
 
         public override void AlimentationPuissance(bool on)
         {
-            Trame trame = TrameFactory.CoupureAlim(on);
-            Connexion.SendMessage(trame);
+            // TODO : couper tout manuellement
+            Stop(StopMode.Freely);
         }
 
         public override void Reset()
@@ -835,24 +808,18 @@ namespace GoBot
             Thread.Sleep(1500);
         }
 
-        private bool jackBranche;
-        private bool historiqueJack;
-        public override bool GetJack(bool historique = true)
+        public override bool GetJack()
         {
-            historiqueJack = historique;
-            SemaphoresIO[FonctionIO.ReponseJack] = new Semaphore(0, int.MaxValue);
-            Connexions.ConnexionIO.SendMessage(TrameFactory.DemandeJack());
-            SemaphoresIO[FonctionIO.ReponseJack].WaitOne(50);
-            return jackBranche;
+            return DemandeCapteurOnOff(CapteurOnOffID.Jack, true);
         }
 
         private String mesureLidar;
         public override String GetMesureLidar(LidarID lidar, int timeout)
         {
             mesureLidar = "";
-            SemaphoresMove[FonctionMove.ReponseLidar] = new Semaphore(0, int.MaxValue);
+            SemaphoresTrame[FonctionTrame.ReponseLidar] = new Semaphore(0, int.MaxValue);
             Connexions.ConnexionMove.SendMessage(TrameFactory.DemandeMesureLidar(lidar));
-            SemaphoresMove[FonctionMove.ReponseLidar].WaitOne(timeout);
+            SemaphoresTrame[FonctionTrame.ReponseLidar].WaitOne(timeout);
             return mesureLidar;
         }
 
@@ -861,9 +828,9 @@ namespace GoBot
         public override Color GetCouleurEquipe(bool historique = true)
         {
             historiqueCouleurEquipe = historique;
-            SemaphoresIO[FonctionIO.ReponseCouleurEquipe] = new Semaphore(0, int.MaxValue);
+            SemaphoresTrame[FonctionTrame.RetourCouleurEquipe] = new Semaphore(0, int.MaxValue);
             Connexions.ConnexionIO.SendMessage(TrameFactory.DemandeCouleurEquipe());
-            SemaphoresIO[FonctionIO.ReponseCouleurEquipe].WaitOne(50);
+            SemaphoresTrame[FonctionTrame.RetourCouleurEquipe].WaitOne(50);
             return couleurEquipe;
         }
 

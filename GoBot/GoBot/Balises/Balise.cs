@@ -135,7 +135,7 @@ namespace GoBot.Balises
                 if (trame[0] != (byte)0xB1)
                     return;
 
-                if (trame[1] == (byte)FonctionBalise.DetectionRapide)
+                if (trame[1] == (byte)FonctionTrame.DetectionBaliseRapide)
                 {
                     if (Position != null)
                     {
@@ -191,7 +191,7 @@ namespace GoBot.Balises
                     }
                 }
 
-                if (trame[1] == (byte)FonctionBalise.Detection)
+                if (trame[1] == (byte)FonctionTrame.DetectionBalise)
                 {
                     if (Position != null)
                     {

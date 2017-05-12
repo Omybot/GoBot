@@ -495,7 +495,7 @@ namespace GoBot
         void connexion_NouvelleTrame(Trame trame)
         {
             // Test trame de type configuration servomoteur
-            if (trame[1] == (byte)FonctionMove.CommandeServo)
+            if (trame[1] == (byte)FonctionTrame.CommandeServo)
             {
                 // Test trame pour ce servo
                 if (trame[3] == id)

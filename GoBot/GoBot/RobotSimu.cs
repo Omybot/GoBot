@@ -542,7 +542,7 @@ namespace GoBot
             // TODO
         }
 
-        public override bool GetJack(bool historique = true)
+        public override bool GetJack()
         {
             return true;
         }

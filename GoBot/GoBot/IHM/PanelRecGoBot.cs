@@ -19,7 +19,7 @@ namespace GoBot.IHM
     {
         List<Button3D> boutons;
         List<Led> leds;
-        Dictionary<Led, Boolean> ledActive;
+        Dictionary<Led, RecGoBot.LedStatus> ledActive;
 
         public PanelRecGoBot()
         {
@@ -27,8 +27,9 @@ namespace GoBot.IHM
 
             boutons = new List<Button3D> { btn1, btn2, btn3, btn4, btn5, btn6, btn7, btn8, btn9, btn10 };
             leds = new List<Led> { ledA1, ledA2, ledA3, ledA4, ledA5, ledA6, ledA7, ledA8, ledB1, ledB2, ledB3, ledB4, ledB5, ledB6, ledB7, ledB8 };
-            ledActive = new Dictionary<Led, bool>();
-            leds.ForEach(led => ledActive.Add(led, false));
+            ledActive = new Dictionary<Led, RecGoBot.LedStatus>();
+            leds.ForEach(led => ledActive.Add(led, RecGoBot.LedStatus.Off));
+            leds.ForEach(led => led.CouleurGris());
 
             if (!Config.DesignMode)
             {
@@ -94,12 +95,28 @@ namespace GoBot.IHM
         {
             Led ledSender = (Led)sender;
             int ledNo = leds.IndexOf(ledSender);
-            ledActive[ledSender] = !ledActive[ledSender];
+
+            switch (ledActive[ledSender])
+            {
+                case RecGoBot.LedStatus.Off:
+                    ledActive[ledSender] = RecGoBot.LedStatus.Rouge;
+                    ledSender.CouleurRouge();
+                    break;
+                case RecGoBot.LedStatus.Rouge:
+                    ledActive[ledSender] = RecGoBot.LedStatus.Orange;
+                    ledSender.CouleurOrange();
+                    break;
+                case RecGoBot.LedStatus.Orange:
+                    ledActive[ledSender] = RecGoBot.LedStatus.Vert;
+                    ledSender.CouleurVert();
+                    break;
+                case RecGoBot.LedStatus.Vert:
+                    ledActive[ledSender] = RecGoBot.LedStatus.Off;
+                    ledSender.CouleurGris();
+                    break;
+            }
+
             Devices.Devices.RecGoBot.SetLed((RecGoBot.Leds)ledNo, ledActive[ledSender]);
-            if (ledActive[ledSender] == true)
-                ledSender.CouleurVert();
-            else
-                ledSender.CouleurRouge();
         }
 
         private void picLedColor_Click(object sender, EventArgs e)

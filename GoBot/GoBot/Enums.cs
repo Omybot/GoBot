@@ -52,10 +52,9 @@ namespace GoBot
 
     public enum CapteurID
     {
-        Jack = 0,
         Balise = 1,
         BaliseRapide1 = 2,
-        BaliseRapide2 = 3,
+        BaliseRapide2 = 3
     }
 
     public enum ActionneurOnOffID
@@ -63,18 +62,14 @@ namespace GoBot
         Alimentation = 1
     }
 
+    public enum ActionneurValeur
+    {
+        Alimentation = 1
+    }
+
     public enum CapteurOnOffID
     {
-        //SwitchBrasDroitHaut = 0,
-        //SwitchBrasDroitBas = 1,
-        //OptiqueBrasDroit = 2,
-
-        //SwitchBrasGaucheHaut = 3,
-        //SwitchBrasGaucheBas = 4,
-        //OptiqueBrasGauche = 5,
-        
-        //SwitchBrasDroiteOrigine = 6,
-        //SwitchBrasGaucheOrigine = 7
+        Jack = 0
     }
 
     public enum CapteurCouleur

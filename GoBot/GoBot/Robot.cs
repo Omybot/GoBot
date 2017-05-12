@@ -106,7 +106,7 @@ namespace GoBot
         public abstract void Reset();
 
         public abstract void ArmerJack();
-        public abstract bool GetJack(bool historique = true);
+        public abstract bool GetJack();
         public abstract String GetMesureLidar(LidarID lidar, int timeout);
         public abstract Color GetCouleurEquipe(bool historique = true);
 

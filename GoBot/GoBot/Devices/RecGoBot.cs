@@ -32,6 +32,14 @@ namespace GoBot.Devices
             B8
         }
 
+        public enum LedStatus
+        {
+            Off,
+            Rouge,
+            Orange,
+            Vert
+        }
+
         public enum Buttons
         {
             B1,
@@ -56,32 +64,30 @@ namespace GoBot.Devices
 
         void connexion_NouvelleTrameRecue(Trame trameRecue)
         {
-            if (trameRecue[0] == (byte)Carte.RecGB)
+            if (trameRecue[1] == (byte)FonctionTrame.RetourCapteurOnOff)
             {
-                if (trameRecue[1] == (byte)FonctionGB.AppuiBouton)
-                {
-                    Buttons but;
-                    if (trameRecue[2] == (byte)11)
-                        but = (Buttons)Buttons.B2;
-                    else if (trameRecue[2] == 2)
-                        but = (Buttons)Buttons.B4;
-                    else if (trameRecue[2] == 3)
-                        but = (Buttons)Buttons.B1;
-                    else if (trameRecue[2] == 6)
-                        but = (Buttons)Buttons.B8;
-                    else if (trameRecue[2] == 7)
-                        but = (Buttons)Buttons.B9;
-                    else
-                        but = (Buttons)trameRecue[2];
+                Buttons but;
+                if (trameRecue[2] == (byte)11)
+                    but = (Buttons)Buttons.B2;
+                else if (trameRecue[2] == 2)
+                    but = (Buttons)Buttons.B4;
+                else if (trameRecue[2] == 3)
+                    but = (Buttons)Buttons.B1;
+                else if (trameRecue[2] == 6)
+                    but = (Buttons)Buttons.B8;
+                else if (trameRecue[2] == 7)
+                    but = (Buttons)Buttons.B9;
+                else
+                    but = (Buttons)trameRecue[2];
 
-                    bool pushed = trameRecue[3] > 0;
-                    if (ButtonChange != null)
-                        ButtonChange(but, pushed);
-                }
+                bool pushed = trameRecue[3] > 0;
+
+                if (ButtonChange != null)
+                    ButtonChange(but, pushed);
             }
         }
 
-        public void SetLed(Leds led, Boolean state)
+        public void SetLed(Leds led, LedStatus state)
         {
             connexion.SendMessage(TrameFactory.SetLed(led, state));
         }

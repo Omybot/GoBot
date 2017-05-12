@@ -57,37 +57,36 @@ namespace GoBot.IHM
 
 
             // L'ajout de champs déclenche le SetCheck event qui ajoute les éléments automatiquement dans le dictionnaire
+            // TODO historique RecGoBot
             if (Config.CurrentConfig.LogsFonctionsMove == null)
-                Config.CurrentConfig.LogsFonctionsMove = new SerializableDictionary<FonctionMove, bool>();
+                Config.CurrentConfig.LogsFonctionsMove = new SerializableDictionary<FonctionTrame, bool>();
             if (Config.CurrentConfig.LogsFonctionsBalise == null)
-                Config.CurrentConfig.LogsFonctionsBalise = new SerializableDictionary<FonctionBalise, bool>();
+                Config.CurrentConfig.LogsFonctionsBalise = new SerializableDictionary<FonctionTrame, bool>();
             if (Config.CurrentConfig.LogsFonctionsIO == null)
-                Config.CurrentConfig.LogsFonctionsIO = new SerializableDictionary<FonctionIO, bool>();
+                Config.CurrentConfig.LogsFonctionsIO = new SerializableDictionary<FonctionTrame, bool>();
             if (Config.CurrentConfig.LogsExpediteurs == null)
                 Config.CurrentConfig.LogsExpediteurs = new SerializableDictionary<Carte, bool>();
             if (Config.CurrentConfig.LogsDestinataires == null)
                 Config.CurrentConfig.LogsDestinataires = new SerializableDictionary<Carte, bool>();
-            foreach (FonctionMove fonction in Enum.GetValues(typeof(FonctionMove)))
+            
+            foreach (FonctionTrame fonction in Enum.GetValues(typeof(FonctionTrame)))
             {
                 if (!Config.CurrentConfig.LogsFonctionsMove.ContainsKey(fonction))
                     Config.CurrentConfig.LogsFonctionsMove.Add(fonction, true);
 
                 checkedListBoxMove.Items.Add(fonction.ToString(), Config.CurrentConfig.LogsFonctionsMove[fonction]);
-            }
-            foreach (FonctionIO fonction in Enum.GetValues(typeof(FonctionIO)))
-            {
+
                 if (!Config.CurrentConfig.LogsFonctionsIO.ContainsKey(fonction))
                     Config.CurrentConfig.LogsFonctionsIO.Add(fonction, true);
 
                 checkedListBoxIO.Items.Add(fonction.ToString(), Config.CurrentConfig.LogsFonctionsIO[fonction]);
-            }
-            foreach (FonctionBalise fonction in Enum.GetValues(typeof(FonctionBalise)))
-            {
+
                 if (!Config.CurrentConfig.LogsFonctionsBalise.ContainsKey(fonction))
                     Config.CurrentConfig.LogsFonctionsBalise.Add(fonction, true);
 
                 checkedListBoxBalise.Items.Add(fonction.ToString(), Config.CurrentConfig.LogsFonctionsBalise[fonction]);
             }
+            
             foreach (Carte carte in Enum.GetValues(typeof(Carte)))
             {
                 if (!Config.CurrentConfig.LogsExpediteurs.ContainsKey(carte))
@@ -167,7 +166,7 @@ namespace GoBot.IHM
             if (!Config.DesignMode && !chargement)
             {
                 String fonctionString = (String)checkedListBoxMove.Items[e.Index];
-                FonctionMove fonction = (FonctionMove)Enum.Parse(typeof(FonctionMove), fonctionString);
+                FonctionTrame fonction = (FonctionTrame)Enum.Parse(typeof(FonctionTrame), fonctionString);
 
                 Config.CurrentConfig.LogsFonctionsMove[fonction] = (e.NewValue == CheckState.Checked);
             }
@@ -195,7 +194,7 @@ namespace GoBot.IHM
 
                         if (carte == Carte.RecMove)
                         {
-                            FonctionMove fonction = (FonctionMove)trame[1];
+                            FonctionTrame fonction = (FonctionTrame)trame[1];
                             checkedListBoxMove.Items.Remove(fonction.ToString());
                             checkedListBoxMove.Items.Add(fonction.ToString(), false);
                             Config.CurrentConfig.LogsFonctionsMove[fonction] = false;
@@ -203,7 +202,7 @@ namespace GoBot.IHM
 
                         if (carte == Carte.RecIO)
                         {
-                            FonctionIO fonction = (FonctionIO)trame[1];
+                            FonctionTrame fonction = (FonctionTrame)trame[1];
                             checkedListBoxIO.Items.Remove(fonction.ToString());
                             checkedListBoxIO.Items.Add(fonction.ToString(), false);
                             Config.CurrentConfig.LogsFonctionsIO[fonction] = false;
@@ -304,9 +303,9 @@ namespace GoBot.IHM
                     cartesAutorisees = true;
 
                 bool fonctionAutorisee = false;
-                if ((carte == Carte.RecMove && Config.CurrentConfig.LogsFonctionsMove[(FonctionMove)trame[1]]) ||
+                if ((carte == Carte.RecMove && Config.CurrentConfig.LogsFonctionsMove[(FonctionTrame)trame[1]]) ||
                     trame[1] == 0xA1 ||
-                    (carte == Carte.RecIO && Config.CurrentConfig.LogsFonctionsIO[(FonctionIO)trame[1]]))
+                    (carte == Carte.RecIO && Config.CurrentConfig.LogsFonctionsIO[(FonctionTrame)trame[1]]))
                     fonctionAutorisee = true;
 
 
@@ -395,7 +394,7 @@ namespace GoBot.IHM
             if (!Config.DesignMode && !chargement)
             {
                 String fonctionString = (String)checkedListBoxBalise.Items[e.Index];
-                FonctionBalise fonction = (FonctionBalise)Enum.Parse(typeof(FonctionBalise), fonctionString);
+                FonctionTrame fonction = (FonctionTrame)Enum.Parse(typeof(FonctionTrame), fonctionString);
 
                 Config.CurrentConfig.LogsFonctionsBalise[fonction] = (e.NewValue == CheckState.Checked);
             }
@@ -406,7 +405,7 @@ namespace GoBot.IHM
             if (!Config.DesignMode && !chargement)
             {
                 String fonctionString = (String)checkedListBoxIO.Items[e.Index];
-                FonctionIO fonction = (FonctionIO)Enum.Parse(typeof(FonctionIO), fonctionString);
+                FonctionTrame fonction = (FonctionTrame)Enum.Parse(typeof(FonctionTrame), fonctionString);
 
                 Config.CurrentConfig.LogsFonctionsIO[fonction] = (e.NewValue == CheckState.Checked);
             }

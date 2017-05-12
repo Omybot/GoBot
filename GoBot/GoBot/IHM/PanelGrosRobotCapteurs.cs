@@ -59,7 +59,7 @@ namespace GoBot.IHM
         {
             this.Invoke(new EventHandler(delegate
             {
-                if (Robots.GrosRobot.GetJack(false))
+                if (Robots.GrosRobot.GetJack())
                     ledJack.CouleurVert();
                 else
                     ledJack.CouleurRouge();

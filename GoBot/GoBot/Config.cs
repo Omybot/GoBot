@@ -143,9 +143,10 @@ namespace GoBot
 
         // Parametres logs UDP
 
-        public SerializableDictionary<FonctionBalise, bool> LogsFonctionsBalise { get; set; }
-        public SerializableDictionary<FonctionIO, bool> LogsFonctionsIO { get; set; }
-        public SerializableDictionary<FonctionMove, bool> LogsFonctionsMove { get; set; }
+        public SerializableDictionary<FonctionTrame, bool> LogsFonctionsBalise { get; set; }
+        public SerializableDictionary<FonctionTrame, bool> LogsFonctionsIO { get; set; }
+        public SerializableDictionary<FonctionTrame, bool> LogsFonctionsMove { get; set; }        
+        
         public SerializableDictionary<Carte, bool> LogsExpediteurs { get; set; }
         public SerializableDictionary<Carte, bool> LogsDestinataires { get; set; }
 

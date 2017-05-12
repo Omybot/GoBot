@@ -147,8 +147,6 @@ namespace GoBot.Actions
         {
             switch (capteur)
             {
-                case CapteurID.Jack:
-                    return "jack";
                 case CapteurID.Balise:
                     return "balise";
                 case CapteurID.BaliseRapide1:

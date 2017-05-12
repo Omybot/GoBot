@@ -21,7 +21,7 @@ namespace Composants
             timer = new Timer();
             timer.Interval = 100;
             timer.Tick += new EventHandler(timer_Tick);
-            CouleurRouge();
+            CouleurGris();
         }
 
         void timer_Tick(object sender, EventArgs e)

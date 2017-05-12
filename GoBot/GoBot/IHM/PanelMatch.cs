@@ -61,7 +61,7 @@ namespace GoBot.IHM
         Thread thRecallageGros;
         private void btnRecallage_Click(object sender, EventArgs e)
         {
-            if (!Robots.GrosRobot.GetJack(false))
+            if (!Robots.GrosRobot.GetJack())
             {
                 MessageBox.Show("Jack absent !" + Environment.NewLine + "Jack nécessaire avant de commencer à recaller.", "Attention", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 return;
