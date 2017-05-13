@@ -43,27 +43,27 @@
             // 
             // lblR
             // 
-            this.lblR.Location = new System.Drawing.Point(60, 56);
+            this.lblR.Location = new System.Drawing.Point(109, 105);
             this.lblR.Name = "lblR";
-            this.lblR.Size = new System.Drawing.Size(25, 13);
+            this.lblR.Size = new System.Drawing.Size(35, 13);
             this.lblR.TabIndex = 1;
             this.lblR.Text = "255";
             this.lblR.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // lblG
             // 
-            this.lblG.Location = new System.Drawing.Point(91, 56);
+            this.lblG.Location = new System.Drawing.Point(150, 105);
             this.lblG.Name = "lblG";
-            this.lblG.Size = new System.Drawing.Size(25, 13);
+            this.lblG.Size = new System.Drawing.Size(35, 13);
             this.lblG.TabIndex = 2;
             this.lblG.Text = "255";
             this.lblG.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // lblB
             // 
-            this.lblB.Location = new System.Drawing.Point(122, 56);
+            this.lblB.Location = new System.Drawing.Point(191, 105);
             this.lblB.Name = "lblB";
-            this.lblB.Size = new System.Drawing.Size(25, 13);
+            this.lblB.Size = new System.Drawing.Size(35, 13);
             this.lblB.TabIndex = 3;
             this.lblB.Text = "255";
             this.lblB.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -72,31 +72,31 @@
             // 
             this.picColor.Location = new System.Drawing.Point(3, 3);
             this.picColor.Name = "picColor";
-            this.picColor.Size = new System.Drawing.Size(50, 50);
+            this.picColor.Size = new System.Drawing.Size(100, 100);
             this.picColor.TabIndex = 0;
             this.picColor.TabStop = false;
             // 
             // picR
             // 
-            this.picR.Location = new System.Drawing.Point(59, 3);
+            this.picR.Location = new System.Drawing.Point(109, 3);
             this.picR.Name = "picR";
-            this.picR.Size = new System.Drawing.Size(26, 50);
+            this.picR.Size = new System.Drawing.Size(35, 99);
             this.picR.TabIndex = 4;
             this.picR.TabStop = false;
             // 
             // picG
             // 
-            this.picG.Location = new System.Drawing.Point(90, 3);
+            this.picG.Location = new System.Drawing.Point(150, 3);
             this.picG.Name = "picG";
-            this.picG.Size = new System.Drawing.Size(26, 50);
+            this.picG.Size = new System.Drawing.Size(35, 99);
             this.picG.TabIndex = 5;
             this.picG.TabStop = false;
             // 
             // picB
             // 
-            this.picB.Location = new System.Drawing.Point(121, 3);
+            this.picB.Location = new System.Drawing.Point(191, 3);
             this.picB.Name = "picB";
-            this.picB.Size = new System.Drawing.Size(26, 50);
+            this.picB.Size = new System.Drawing.Size(35, 99);
             this.picB.TabIndex = 6;
             this.picB.TabStop = false;
             // 
@@ -112,7 +112,7 @@
             this.Controls.Add(this.lblR);
             this.Controls.Add(this.picColor);
             this.Name = "ColorDisplay";
-            this.Size = new System.Drawing.Size(150, 77);
+            this.Size = new System.Drawing.Size(232, 121);
             ((System.ComponentModel.ISupportInitialize)(this.picColor)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.picR)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.picG)).EndInit();

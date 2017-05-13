@@ -200,6 +200,11 @@ namespace GoBot
                 Connexions.ConnexionGB.ConnexionCheck.Start();
 
                 Plateau.Balise.Connexion.ConnexionCheck.Start();
+
+                panelAnalogiqueMove.Carte = Carte.RecMove;
+                panelAnalogiqueIO.Carte = Carte.RecIO;
+                panelAnalogiqueGB.Carte = Carte.RecGB;
+
             }
             catch(Exception)
             {

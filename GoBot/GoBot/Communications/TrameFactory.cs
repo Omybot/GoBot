@@ -62,13 +62,13 @@ namespace GoBot.Communications
 
         static public Trame SetLedColor(Color color)
         {
-            byte[] tab = new byte[5];
+            byte[] tab = new byte[6];
             tab[0] = (byte)Carte.RecGB;
             tab[1] = (byte)FonctionTrame.CouleurLedRGB;
-            // TODO octet en plus
-            tab[2] = (byte)color.R;
-            tab[3] = (byte)color.G;
-            tab[4] = (byte)color.B;
+            tab[2] = (byte)0;
+            tab[3] = (byte)color.R;
+            tab[4] = (byte)color.G;
+            tab[5] = (byte)color.B;
 
             return new Trame(tab);
         }

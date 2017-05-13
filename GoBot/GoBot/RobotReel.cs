@@ -58,6 +58,11 @@ namespace GoBot
                 SemaphoresCouleur.Add(fonction, new Semaphore(0, int.MaxValue));
                 CapteursCouleur.Add(fonction, Color.Black);
             }
+
+            ValeursAnalogiques = new Dictionary<Carte, List<double>>();
+            ValeursAnalogiques.Add(Carte.RecIO, null);
+            ValeursAnalogiques.Add(Carte.RecGB, null);
+            ValeursAnalogiques.Add(Carte.RecMove, null);
         }
 
         public override void Init()
@@ -74,6 +79,8 @@ namespace GoBot
 
             if (this == Robots.GrosRobot)
                 Connexions.ConnexionIO.NouvelleTrameRecue += new ConnexionUDP.ReceptionDelegate(ReceptionMessage);
+
+            Connexions.ConnexionGB.NouvelleTrameRecue += new ConnexionUDP.ReceptionDelegate(ReceptionMessage);
 
             if (this == Robots.GrosRobot)
             {
@@ -153,7 +160,7 @@ namespace GoBot
         {
             // Analyser la trame reçue
 
-            Console.WriteLine(trameRecue.ToString());
+            //Console.WriteLine(trameRecue.ToString());
 
             if ((trameRecue[0] == (byte)Carte.RecMove && this == Robots.GrosRobot))
             {
@@ -260,42 +267,7 @@ namespace GoBot
                 }
 
 
-                if (trameRecue[1] == (byte)FonctionTrame.RetourValeursAnalogiques)
-                {
-                    double valeurAnalogique1 = (trameRecue[2] * 256 + trameRecue[3]);
-                    double valeurAnalogique2 = (trameRecue[4] * 256 + trameRecue[5]);
-                    double valeurAnalogique3 = (trameRecue[6] * 256 + trameRecue[7]);
-                    double valeurAnalogique4 = (trameRecue[8] * 256 + trameRecue[9]);
-                    double valeurAnalogique5 = (trameRecue[10] * 256 + trameRecue[11]);
-                    double valeurAnalogique6 = (trameRecue[12] * 256 + trameRecue[13]);
-
-                    double valeurAnalogique1V = valeurAnalogique1 * 0.0008056640625;
-                    double valeurAnalogique2V = valeurAnalogique2 * 0.0008056640625;
-                    double valeurAnalogique3V = valeurAnalogique3 * 0.0008056640625;
-                    double valeurAnalogique4V = valeurAnalogique4 * 0.0008056640625;
-                    double valeurAnalogique5V = valeurAnalogique5 * 0.0008056640625;
-                    double valeurAnalogique6V = valeurAnalogique6 * 0.0008056640625;
-
-                    /*
-                        ??
-                        GP2 1
-                        GP2 2
-                        ??
-                        ??
-                        ??
-                    */
-
-                    ValeursAnalogiquesMove = new List<double>();
-                    ValeursAnalogiquesMove.Add(valeurAnalogique1);
-                    ValeursAnalogiquesMove.Add(valeurAnalogique2);
-                    ValeursAnalogiquesMove.Add(valeurAnalogique3);
-                    ValeursAnalogiquesMove.Add(valeurAnalogique4);
-                    ValeursAnalogiquesMove.Add(valeurAnalogique5);
-                    ValeursAnalogiquesMove.Add(valeurAnalogique6);
-
-                    if (SemaphoresTrame[FonctionTrame.RetourValeursAnalogiques] != null)
-                        SemaphoresTrame[FonctionTrame.RetourValeursAnalogiques].Release();
-                }
+                
             }
             else if (trameRecue[0] == (byte)Carte.RecIO)
             {
@@ -318,42 +290,7 @@ namespace GoBot
                     if (Regex.Matches(mesureLidar, "\n\n").Count == 2)
                         SemaphoresTrame[FonctionTrame.ReponseLidar].Release();
                 }
-                if (trameRecue[1] == (byte)FonctionTrame.RetourValeursAnalogiques)
-                {
-                    double valeurAnalogique1 = (trameRecue[2] * 256 + trameRecue[3]);
-                    double valeurAnalogique2 = (trameRecue[4] * 256 + trameRecue[5]);
-                    double valeurAnalogique3 = (trameRecue[6] * 256 + trameRecue[7]);
-                    double valeurAnalogique4 = (trameRecue[8] * 256 + trameRecue[9]);
-                    double valeurAnalogique5 = (trameRecue[10] * 256 + trameRecue[11]);
-                    double valeurAnalogique6 = (trameRecue[12] * 256 + trameRecue[13]);
-                    double valeurAnalogique7 = (trameRecue[14] * 256 + trameRecue[15]);
-                    double valeurAnalogique8 = (trameRecue[16] * 256 + trameRecue[17]);
-                    double valeurAnalogique9 = (trameRecue[18] * 256 + trameRecue[19]);
-
-                    double valeurAnalogique1V = valeurAnalogique1 * 0.0008056640625;
-                    double valeurAnalogique2V = valeurAnalogique2 * 0.0008056640625;
-                    double valeurAnalogique3V = valeurAnalogique3 * 0.0008056640625;
-                    double valeurAnalogique4V = valeurAnalogique4 * 0.0008056640625;
-                    double valeurAnalogique5V = valeurAnalogique5 * 0.0008056640625;
-                    double valeurAnalogique6V = valeurAnalogique6 * 0.0008056640625;
-                    double valeurAnalogique7V = valeurAnalogique7 * 0.0008056640625;
-                    double valeurAnalogique8V = valeurAnalogique8 * 0.0008056640625;
-                    double valeurAnalogique9V = valeurAnalogique9 * 0.0008056640625;
-
-                    ValeursAnalogiquesIO = new List<double>();
-                    ValeursAnalogiquesIO.Add(valeurAnalogique1);
-                    ValeursAnalogiquesIO.Add(valeurAnalogique2);
-                    ValeursAnalogiquesIO.Add(valeurAnalogique3);
-                    ValeursAnalogiquesIO.Add(valeurAnalogique4);
-                    ValeursAnalogiquesIO.Add(valeurAnalogique5);
-                    ValeursAnalogiquesIO.Add(valeurAnalogique6);
-                    ValeursAnalogiquesIO.Add(valeurAnalogique7);
-                    ValeursAnalogiquesIO.Add(valeurAnalogique8);
-                    ValeursAnalogiquesIO.Add(valeurAnalogique9);
-
-                    if (SemaphoresTrame[FonctionTrame.RetourValeursAnalogiques] != null)
-                        SemaphoresTrame[FonctionTrame.RetourValeursAnalogiques].Release();
-                }
+                
                 if (trameRecue[1] == (byte)FonctionTrame.RetourCapteurOnOff)
                 {
                     CapteurOnOffID capteur = (CapteurOnOffID)trameRecue[2];
@@ -418,6 +355,46 @@ namespace GoBot
                             Plateau.Balise.connexion_NouvelleTrame(new Trame(message));
                     }
                 }
+            }
+
+            if (trameRecue[1] == (byte)FonctionTrame.RetourValeursAnalogiques)
+            {
+                Carte carte = (Carte)trameRecue[0];
+
+                double valeurAnalogique1 = (trameRecue[2] * 256 + trameRecue[3]);
+                double valeurAnalogique2 = (trameRecue[4] * 256 + trameRecue[5]);
+                double valeurAnalogique3 = (trameRecue[6] * 256 + trameRecue[7]);
+                double valeurAnalogique4 = (trameRecue[8] * 256 + trameRecue[9]);
+                double valeurAnalogique5 = (trameRecue[10] * 256 + trameRecue[11]);
+                double valeurAnalogique6 = (trameRecue[12] * 256 + trameRecue[13]);
+                double valeurAnalogique7 = (trameRecue[14] * 256 + trameRecue[15]);
+                double valeurAnalogique8 = (trameRecue[16] * 256 + trameRecue[17]);
+                double valeurAnalogique9 = (trameRecue[18] * 256 + trameRecue[19]);
+
+                double valeurAnalogique1V = valeurAnalogique1 * 0.0008056640625;
+                double valeurAnalogique2V = valeurAnalogique2 * 0.0008056640625;
+                double valeurAnalogique3V = valeurAnalogique3 * 0.0008056640625;
+                double valeurAnalogique4V = valeurAnalogique4 * 0.0008056640625;
+                double valeurAnalogique5V = valeurAnalogique5 * 0.0008056640625;
+                double valeurAnalogique6V = valeurAnalogique6 * 0.0008056640625;
+                double valeurAnalogique7V = valeurAnalogique7 * 0.0008056640625;
+                double valeurAnalogique8V = valeurAnalogique8 * 0.0008056640625;
+                double valeurAnalogique9V = valeurAnalogique9 * 0.0008056640625;
+
+                List<double> values = new List<double>();
+                values.Add(valeurAnalogique1V);
+                values.Add(valeurAnalogique2V);
+                values.Add(valeurAnalogique3V);
+                values.Add(valeurAnalogique4V);
+                values.Add(valeurAnalogique5V);
+                values.Add(valeurAnalogique6V);
+                values.Add(valeurAnalogique7V);
+                values.Add(valeurAnalogique8V);
+                values.Add(valeurAnalogique9V);
+                ValeursAnalogiques[carte] = values;
+
+                if (SemaphoresTrame[FonctionTrame.RetourValeursAnalogiques] != null)
+                    SemaphoresTrame[FonctionTrame.RetourValeursAnalogiques].Release();
             }
         }
 
@@ -644,31 +621,16 @@ namespace GoBot
             Historique.AjouterAction(new ActionServo(this, position, servo));
         }
 
-        public override void DemandeValeursAnalogiquesIO(bool attendre = true)
+        public override void DemandeValeursAnalogiques(Carte carte, bool attendre = true)
         {
-            if (!Connexions.ConnexionIO.ConnexionCheck.Connecte)
+            if (!Connexions.ConnexionParCarte[carte].ConnexionCheck.Connecte)
                 return;
 
             if (attendre)
                 SemaphoresTrame[FonctionTrame.RetourValeursAnalogiques] = new Semaphore(0, int.MaxValue);
 
-            Trame trame = TrameFactory.DemandeValeursAnalogiques(Carte.RecIO);
-            Connexions.ConnexionIO.SendMessage(trame);
-
-            if (attendre)
-                SemaphoresTrame[FonctionTrame.RetourValeursAnalogiques].WaitOne(1000);
-        }
-
-        public override void DemandeValeursAnalogiquesMove(bool attendre = true)
-        {
-            if (!Connexions.ConnexionMove.ConnexionCheck.Connecte)
-                return;
-
-            if (attendre)
-                SemaphoresTrame[FonctionTrame.RetourValeursAnalogiques] = new Semaphore(0, int.MaxValue);
-
-            Trame trame = TrameFactory.DemandeValeursAnalogiques(Carte.RecMove);
-            Connexions.ConnexionMove.SendMessage(trame);
+            Trame trame = TrameFactory.DemandeValeursAnalogiques(carte);
+            Connexions.ConnexionParCarte[carte].SendMessage(trame);
 
             if (attendre)
                 SemaphoresTrame[FonctionTrame.RetourValeursAnalogiques].WaitOne(1000);

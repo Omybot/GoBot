@@ -14,148 +14,108 @@ namespace GoBot.IHM
 {
     public partial class PanelAnalogique : UserControl
     {
-        private System.Timers.Timer timerTrameIO;
-        private System.Timers.Timer timerTrameMove;
+        private System.Timers.Timer timerTrame;
 
         public PanelAnalogique()
         {
             InitializeComponent();
         }
 
+        public Carte Carte { get; set; }
+
         private void PanelAnalogique_Load(object sender, EventArgs e)
         {
             if (!Config.DesignMode)
             {
-                timerTrameIO = new System.Timers.Timer();
-                timerTrameIO.Elapsed += new ElapsedEventHandler(timerTrameIO_Elapsed);
-                timerTrameIO.Start();
-                timerTrameIO.Enabled = false;
-                timerTrameMove = new System.Timers.Timer();
-                timerTrameMove.Elapsed += new ElapsedEventHandler(timerTrameMove_Elapsed);
-                timerTrameMove.Start();
-                timerTrameMove.Enabled = false;
+                timerTrame = new System.Timers.Timer();
+                timerTrame.Elapsed += new ElapsedEventHandler(timerTrame_Elapsed);
+                timerTrame.Start();
+                timerTrame.Enabled = false;
             }
         }
 
-        void timerTrameIO_Elapsed(object sender, ElapsedEventArgs e)
+        void timerTrame_Elapsed(object sender, ElapsedEventArgs e)
         {
             if (Config.Shutdown)
                 return;
 
-            if (Robots.GrosRobot.ValeursAnalogiquesIO != null)
-
-            //lock (Robots.GrosRobot.ValeursAnalogiques)
+            if (Robots.GrosRobot.ValeursAnalogiques[Carte] != null)
             {
-                lblAN1.Text = Robots.GrosRobot.ValeursAnalogiquesIO[0].ToString();
-                lblAN2.Text = Robots.GrosRobot.ValeursAnalogiquesIO[1].ToString();
-                lblAN3.Text = Robots.GrosRobot.ValeursAnalogiquesIO[2].ToString();
-                lblAN4.Text = Robots.GrosRobot.ValeursAnalogiquesIO[3].ToString();
-                lblAN5.Text = Robots.GrosRobot.ValeursAnalogiquesIO[4].ToString();
-                lblAN6.Text = Robots.GrosRobot.ValeursAnalogiquesIO[5].ToString();
-                lblAN7.Text = Robots.GrosRobot.ValeursAnalogiquesIO[6].ToString();
-                lblAN8.Text = Robots.GrosRobot.ValeursAnalogiquesIO[7].ToString();
-                lblAN9.Text = Robots.GrosRobot.ValeursAnalogiquesIO[8].ToString();
+                List<double> values = Robots.GrosRobot.ValeursAnalogiques[Carte];
+                lblAN1.Text = values[0].ToString("0.0000") + " V";
+                lblAN2.Text = values[1].ToString("0.0000") + " V";
+                lblAN3.Text = values[2].ToString("0.0000") + " V";
+                lblAN4.Text = values[3].ToString("0.0000") + " V";
+                lblAN5.Text = values[4].ToString("0.0000") + " V";
+                lblAN6.Text = values[5].ToString("0.0000") + " V";
+                lblAN7.Text = values[6].ToString("0.0000") + " V";
+                lblAN8.Text = values[7].ToString("0.0000") + " V";
+                lblAN9.Text = values[8].ToString("0.0000") + " V";
 
-                ctrlGraphiqueIO.AjouterPoint("AN1", Robots.GrosRobot.ValeursAnalogiquesIO[0], Color.Blue);
-                ctrlGraphiqueIO.AjouterPoint("AN2", Robots.GrosRobot.ValeursAnalogiquesIO[1], Color.Aqua);
-                ctrlGraphiqueIO.AjouterPoint("AN3", Robots.GrosRobot.ValeursAnalogiquesIO[2], Color.Red);
-                ctrlGraphiqueIO.AjouterPoint("AN4", Robots.GrosRobot.ValeursAnalogiquesIO[3], Color.Magenta);
-                ctrlGraphiqueIO.AjouterPoint("AN5", Robots.GrosRobot.ValeursAnalogiquesIO[4], Color.Green);
-                ctrlGraphiqueIO.AjouterPoint("AN6", Robots.GrosRobot.ValeursAnalogiquesIO[5], Color.Orange);
-                ctrlGraphiqueIO.AjouterPoint("AN7", Robots.GrosRobot.ValeursAnalogiquesIO[6], Color.Black);
-                ctrlGraphiqueIO.AjouterPoint("AN8", Robots.GrosRobot.ValeursAnalogiquesIO[7], Color.Coral);
-                ctrlGraphiqueIO.AjouterPoint("AN9", Robots.GrosRobot.ValeursAnalogiquesIO[8], Color.DeepPink);
+                ctrlGraphique.AjouterPoint("AN1", values[0], Color.Blue);
+                ctrlGraphique.AjouterPoint("AN2", values[1], Color.Aqua);
+                ctrlGraphique.AjouterPoint("AN3", values[2], Color.Red);
+                ctrlGraphique.AjouterPoint("AN4", values[3], Color.Magenta);
+                ctrlGraphique.AjouterPoint("AN5", values[4], Color.Green);
+                ctrlGraphique.AjouterPoint("AN6", values[5], Color.Orange);
+                ctrlGraphique.AjouterPoint("AN7", values[6], Color.Black);
+                ctrlGraphique.AjouterPoint("AN8", values[7], Color.Coral);
+                ctrlGraphique.AjouterPoint("AN9", values[8], Color.DeepPink);
             }
 
-            ctrlGraphiqueIO.DessineCourbes();
+            ctrlGraphique.DessineCourbes();
 
-            Robots.GrosRobot.DemandeValeursAnalogiquesIO();
+            Robots.GrosRobot.DemandeValeursAnalogiques(Carte);
         }
 
-        void timerTrameMove_Elapsed(object sender, ElapsedEventArgs e)
+        private void switchBouton_ChangementEtat(object sender, EventArgs e)
         {
-            if (Config.Shutdown)
-                return;
-
-            if (Robots.GrosRobot.ValeursAnalogiquesMove != null)
-
-            //lock (Robots.GrosRobot.ValeursAnalogiques)
-            {
-                lblMoveAN1.Text = Robots.GrosRobot.ValeursAnalogiquesMove[0].ToString();
-                lblMoveAN2.Text = Robots.GrosRobot.ValeursAnalogiquesMove[1].ToString();
-                lblMoveAN3.Text = Robots.GrosRobot.ValeursAnalogiquesMove[2].ToString();
-                lblMoveAN4.Text = Robots.GrosRobot.ValeursAnalogiquesMove[3].ToString();
-                lblMoveAN5.Text = Robots.GrosRobot.ValeursAnalogiquesMove[4].ToString();
-                lblMoveAN6.Text = Robots.GrosRobot.ValeursAnalogiquesMove[5].ToString();
-
-                if (boxIOAN1.Checked)
-                    ctrlGraphiqueMove.AjouterPoint("AN1", Robots.GrosRobot.ValeursAnalogiquesMove[0], Color.Blue);
-
-                ctrlGraphiqueMove.AjouterPoint("AN2", Robots.GrosRobot.ValeursAnalogiquesMove[1], Color.Aqua);
-                ctrlGraphiqueMove.AjouterPoint("AN3", Robots.GrosRobot.ValeursAnalogiquesMove[2], Color.Red);
-                ctrlGraphiqueMove.AjouterPoint("AN4", Robots.GrosRobot.ValeursAnalogiquesMove[3], Color.Magenta);
-                ctrlGraphiqueMove.AjouterPoint("AN5", Robots.GrosRobot.ValeursAnalogiquesMove[4], Color.Green);
-                ctrlGraphiqueMove.AjouterPoint("AN6", Robots.GrosRobot.ValeursAnalogiquesMove[5], Color.Orange);
-            }
-
-            ctrlGraphiqueMove.DessineCourbes();
-
-            Robots.GrosRobot.DemandeValeursAnalogiquesMove();
+            timerTrame.Enabled = switchOnOff.Actif;
         }
 
-        private void switchBoutonIO_ChangementEtat(object sender, EventArgs e)
+        private void boxAN1_CheckedChanged(object sender, EventArgs e)
         {
-            timerTrameIO.Enabled = switchBoutonIO.Actif;
+            ctrlGraphique.MasquerCourbe("AN1", !boxIOAN1.Checked);
         }
 
-        private void switchBoutonMove_ChangementEtat(object sender, EventArgs e)
+        private void boxAN2_CheckedChanged(object sender, EventArgs e)
         {
-            timerTrameMove.Enabled = switchBoutonMove.Actif;
+            ctrlGraphique.MasquerCourbe("AN2", !boxIOAN2.Checked);
         }
 
-        private void boxIOAN1_CheckedChanged(object sender, EventArgs e)
+        private void boxAN3_CheckedChanged(object sender, EventArgs e)
         {
-            ctrlGraphiqueIO.MasquerCourbe("AN1", !boxIOAN1.Checked);
+            ctrlGraphique.MasquerCourbe("AN3", !boxIOAN3.Checked);
         }
 
-        private void boxIOAN2_CheckedChanged(object sender, EventArgs e)
+        private void boxAN4_CheckedChanged(object sender, EventArgs e)
         {
-            ctrlGraphiqueIO.MasquerCourbe("AN2", !boxIOAN2.Checked);
+            ctrlGraphique.MasquerCourbe("AN4", !boxIOAN4.Checked);
         }
 
-        private void boxIOAN3_CheckedChanged(object sender, EventArgs e)
+        private void boxAN5_CheckedChanged(object sender, EventArgs e)
         {
-            ctrlGraphiqueIO.MasquerCourbe("AN3", !boxIOAN3.Checked);
+            ctrlGraphique.MasquerCourbe("AN5", !boxIOAN5.Checked);
         }
 
-        private void boxIOAN4_CheckedChanged(object sender, EventArgs e)
+        private void boxAN6_CheckedChanged(object sender, EventArgs e)
         {
-            ctrlGraphiqueIO.MasquerCourbe("AN4", !boxIOAN4.Checked);
+            ctrlGraphique.MasquerCourbe("AN6", !boxIOAN6.Checked);
         }
 
-        private void boxIOAN5_CheckedChanged(object sender, EventArgs e)
+        private void boxAN7_CheckedChanged(object sender, EventArgs e)
         {
-            ctrlGraphiqueIO.MasquerCourbe("AN5", !boxIOAN5.Checked);
+            ctrlGraphique.MasquerCourbe("AN7", !boxIOAN7.Checked);
         }
 
-        private void boxIOAN6_CheckedChanged(object sender, EventArgs e)
+        private void boxAN8_CheckedChanged(object sender, EventArgs e)
         {
-            ctrlGraphiqueIO.MasquerCourbe("AN6", !boxIOAN6.Checked);
+            ctrlGraphique.MasquerCourbe("AN8", !boxIOAN8.Checked);
         }
 
-        private void boxIOAN7_CheckedChanged(object sender, EventArgs e)
+        private void boxAN9_CheckedChanged(object sender, EventArgs e)
         {
-            ctrlGraphiqueIO.MasquerCourbe("AN7", !boxIOAN7.Checked);
-        }
-
-        private void boxIOAN8_CheckedChanged(object sender, EventArgs e)
-        {
-            ctrlGraphiqueIO.MasquerCourbe("AN8", !boxIOAN8.Checked);
-        }
-
-        private void boxIOAN9_CheckedChanged(object sender, EventArgs e)
-        {
-            ctrlGraphiqueIO.MasquerCourbe("AN9", !boxIOAN9.Checked);
+            ctrlGraphique.MasquerCourbe("AN9", !boxIOAN9.Checked);
         }
     }
 }

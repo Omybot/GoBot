@@ -51,7 +51,9 @@ namespace GoBot.Devices
             B7,
             B8,
             B9,
-            B10
+            B10,
+            Jack,
+            Couleur
         }
 
         private ConnexionUDP connexion;
@@ -67,18 +69,51 @@ namespace GoBot.Devices
             if (trameRecue[1] == (byte)FonctionTrame.RetourCapteurOnOff)
             {
                 Buttons but;
-                if (trameRecue[2] == (byte)11)
-                    but = (Buttons)Buttons.B2;
-                else if (trameRecue[2] == 2)
-                    but = (Buttons)Buttons.B4;
-                else if (trameRecue[2] == 3)
-                    but = (Buttons)Buttons.B1;
-                else if (trameRecue[2] == 6)
-                    but = (Buttons)Buttons.B8;
-                else if (trameRecue[2] == 7)
-                    but = (Buttons)Buttons.B9;
-                else
-                    but = (Buttons)trameRecue[2];
+
+                Console.WriteLine(trameRecue[2] + (trameRecue[3]>0 ? " On" : " Off"));
+
+                switch(trameRecue[2])
+                {
+                    case 0:
+                        but = Buttons.B2;
+                        break;
+                    case 1:
+                        but = Buttons.B4;
+                        break;
+                    case 2:
+                        but = Buttons.B1;
+                        break;
+                    case 3:
+                        but = Buttons.B3;
+                        break;
+                    case 4:
+                        but = Buttons.B10;
+                        break;
+                    case 5:
+                        but = Buttons.B8;
+                        break;
+                    case 6:
+                        but = Buttons.B9;
+                        break;
+                    case 7:
+                        but = Buttons.B7;
+                        break;
+                    case 8:
+                        but = Buttons.B6;
+                        break;
+                    case 9:
+                        but = Buttons.Couleur;
+                        break;
+                    case 10:
+                        but = Buttons.Jack;
+                        break;
+                    case 11:
+                        but = Buttons.B5;
+                        break;
+                    default :
+                        but = Buttons.B1;
+                        break;
+                }
 
                 bool pushed = trameRecue[3] > 0;
 

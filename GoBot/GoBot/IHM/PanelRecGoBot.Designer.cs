@@ -58,6 +58,10 @@
             this.ledA3 = new Composants.Led();
             this.ledA2 = new Composants.Led();
             this.ledA1 = new Composants.Led();
+            this.btnJack = new Composants.Button3D();
+            this.btnCouleur = new Composants.Button3D();
+            this.label1 = new System.Windows.Forms.Label();
+            this.lblCouleurTxt = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.picLedColor)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.colorPickup1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.btn10)).BeginInit();
@@ -86,6 +90,8 @@
             ((System.ComponentModel.ISupportInitialize)(this.ledA3)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.ledA2)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.ledA1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.btnJack)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.btnCouleur)).BeginInit();
             this.SuspendLayout();
             // 
             // picLedColor
@@ -437,10 +443,54 @@
             this.ledA1.TabStop = false;
             this.ledA1.MouseClick += new System.Windows.Forms.MouseEventHandler(this.leds_MouseClick);
             // 
+            // btnJack
+            // 
+            this.btnJack.BackColor = System.Drawing.Color.Transparent;
+            this.btnJack.Image = ((System.Drawing.Image)(resources.GetObject("btnJack.Image")));
+            this.btnJack.Location = new System.Drawing.Point(172, 39);
+            this.btnJack.Name = "btnJack";
+            this.btnJack.Size = new System.Drawing.Size(32, 32);
+            this.btnJack.State = false;
+            this.btnJack.TabIndex = 29;
+            this.btnJack.TabStop = false;
+            // 
+            // btnCouleur
+            // 
+            this.btnCouleur.BackColor = System.Drawing.Color.Transparent;
+            this.btnCouleur.Image = ((System.Drawing.Image)(resources.GetObject("btnCouleur.Image")));
+            this.btnCouleur.Location = new System.Drawing.Point(172, 79);
+            this.btnCouleur.Name = "btnCouleur";
+            this.btnCouleur.Size = new System.Drawing.Size(32, 32);
+            this.btnCouleur.State = false;
+            this.btnCouleur.TabIndex = 30;
+            this.btnCouleur.TabStop = false;
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(105, 52);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(30, 13);
+            this.label1.TabIndex = 31;
+            this.label1.Text = "Jack";
+            // 
+            // lblCouleurTxt
+            // 
+            this.lblCouleurTxt.AutoSize = true;
+            this.lblCouleurTxt.Location = new System.Drawing.Point(105, 98);
+            this.lblCouleurTxt.Name = "lblCouleurTxt";
+            this.lblCouleurTxt.Size = new System.Drawing.Size(43, 13);
+            this.lblCouleurTxt.TabIndex = 32;
+            this.lblCouleurTxt.Text = "Couleur";
+            // 
             // PanelRecGoBot
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.Controls.Add(this.lblCouleurTxt);
+            this.Controls.Add(this.label1);
+            this.Controls.Add(this.btnCouleur);
+            this.Controls.Add(this.btnJack);
             this.Controls.Add(this.colorPickup1);
             this.Controls.Add(this.btnBuzz);
             this.Controls.Add(this.picLedColor);
@@ -502,7 +552,10 @@
             ((System.ComponentModel.ISupportInitialize)(this.ledA3)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.ledA2)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.ledA1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.btnJack)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.btnCouleur)).EndInit();
             this.ResumeLayout(false);
+            this.PerformLayout();
 
         }
 
@@ -537,6 +590,10 @@
         private System.Windows.Forms.PictureBox picLedColor;
         private System.Windows.Forms.Button btnBuzz;
         private Composants.ColorPickup colorPickup1;
+        private Composants.Button3D btnJack;
+        private Composants.Button3D btnCouleur;
+        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Label lblCouleurTxt;
 
 
 

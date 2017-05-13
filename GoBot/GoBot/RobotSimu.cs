@@ -577,35 +577,10 @@ namespace GoBot
             return null;
         }
 
-        public override void DemandeValeursAnalogiquesIO(bool attendre)
+        public override void DemandeValeursAnalogiques(Carte carte, bool attendre)
         {
-            //lock(ValeursAnalogiquesIO)
-            {
-                ValeursAnalogiquesIO = new List<double>();
-                ValeursAnalogiquesIO.Add(1);
-                ValeursAnalogiquesIO.Add(2);
-                ValeursAnalogiquesIO.Add(3);
-                ValeursAnalogiquesIO.Add(4);
-                ValeursAnalogiquesIO.Add(5);
-                ValeursAnalogiquesIO.Add(6);
-                ValeursAnalogiquesIO.Add(7);
-                ValeursAnalogiquesIO.Add(4000);
-                ValeursAnalogiquesIO.Add(4000);
-            }
-        }
-
-        public override void DemandeValeursAnalogiquesMove(bool attendre = true)
-        {
-            lock (ValeursAnalogiquesMove)
-            {
-                ValeursAnalogiquesMove = new List<double>();
-                ValeursAnalogiquesMove.Add(1);
-                ValeursAnalogiquesMove.Add(2);
-                ValeursAnalogiquesMove.Add(3);
-                ValeursAnalogiquesMove.Add(4);
-                ValeursAnalogiquesMove.Add(5);
-                ValeursAnalogiquesMove.Add(6);
-            }
+            List<double> values = Enumerable.Range(1, 9).Select(o => (double)o).ToList();
+            ValeursAnalogiques[carte] = values;
         }
     }
 }

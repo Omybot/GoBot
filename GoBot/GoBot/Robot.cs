@@ -96,8 +96,7 @@ namespace GoBot
         public abstract List<double>[] DiagnosticCpuPwm(int nbValeurs);
         public abstract bool DemandeCapteurOnOff(CapteurOnOffID capteur, bool attendre = true);
         public abstract Color DemandeCapteurCouleur(CapteurCouleur capteur, bool attendre = true);
-        public abstract void DemandeValeursAnalogiquesIO(bool attendre = true);
-        public abstract void DemandeValeursAnalogiquesMove(bool attendre = true);
+        public abstract void DemandeValeursAnalogiques(Carte carte, bool attendre = true);
 
         public abstract void ActionneurOnOff(ActionneurOnOffID actionneur, bool on);
 
@@ -112,8 +111,7 @@ namespace GoBot
 
         public Dictionary<CapteurOnOffID, bool> CapteurActive { get; set; }
         public Dictionary<CapteurCouleur, Color> CapteursCouleur { get; set; }
-        public List<double> ValeursAnalogiquesIO { get; set; }
-        public List<double> ValeursAnalogiquesMove { get; set; }
+        public Dictionary<Carte, List<double>> ValeursAnalogiques { get; set; }
 
         public delegate void ChangementEtatCapteurOnOffDelegate(CapteurOnOffID capteur, bool etat);
         public event ChangementEtatCapteurOnOffDelegate ChangementEtatCapteurOnOff;

@@ -10,24 +10,15 @@ namespace GoBot
 {
     public class Servomoteur
     {
-        public static Dictionary<ServomoteurID, byte> servosPololu = new Dictionary<ServomoteurID, byte>();
-
         static Servomoteur()
         {
-            // Association de l'identifiant interne du servo et de l'identifiant du servo sur la pololu
-
-            servosPololu.Add(ServomoteurID.ServoLunaireSerrageGauche, 0);
-            servosPololu.Add(ServomoteurID.ServoLunaireSerrageDroit, 1);
-            servosPololu.Add(ServomoteurID.Chariot, 2);
-            servosPololu.Add(ServomoteurID.BloqueurBas, 6);
-            servosPololu.Add(ServomoteurID.BloqueurHaut, 7);
-            servosPololu.Add(ServomoteurID.Ejecteur, 8);
+            // Les servos >= 100 sont pour la pololu avec identifiant = ID - 100
         }
 
         public static short idServoPololu(ServomoteurID servo)
         {
-            if (servosPololu.ContainsKey(servo))
-                return servosPololu[servo];
+            if ((int)servo >= 100)
+                return (short)(servo - 100);
             else
                 return -1;
         }

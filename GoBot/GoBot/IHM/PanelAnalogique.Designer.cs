@@ -34,20 +34,7 @@
             this.lblAN6 = new System.Windows.Forms.Label();
             this.lblAN4 = new System.Windows.Forms.Label();
             this.lblAN3 = new System.Windows.Forms.Label();
-            this.lblMoveAN4 = new System.Windows.Forms.Label();
-            this.lblMoveAN3 = new System.Windows.Forms.Label();
-            this.label7 = new System.Windows.Forms.Label();
-            this.lblMoveAN6 = new System.Windows.Forms.Label();
-            this.label9 = new System.Windows.Forms.Label();
-            this.label11 = new System.Windows.Forms.Label();
-            this.lblMoveAN5 = new System.Windows.Forms.Label();
-            this.lblMoveAN2 = new System.Windows.Forms.Label();
-            this.lblMoveAN1 = new System.Windows.Forms.Label();
-            this.label15 = new System.Windows.Forms.Label();
-            this.label16 = new System.Windows.Forms.Label();
-            this.label17 = new System.Windows.Forms.Label();
-            this.label18 = new System.Windows.Forms.Label();
-            this.label19 = new System.Windows.Forms.Label();
+            this.lblEnable = new System.Windows.Forms.Label();
             this.boxIOAN1 = new System.Windows.Forms.CheckBox();
             this.lblAN7 = new System.Windows.Forms.Label();
             this.lblAN8 = new System.Windows.Forms.Label();
@@ -60,10 +47,8 @@
             this.boxIOAN7 = new System.Windows.Forms.CheckBox();
             this.boxIOAN8 = new System.Windows.Forms.CheckBox();
             this.boxIOAN9 = new System.Windows.Forms.CheckBox();
-            this.switchBoutonMove = new Composants.SwitchBouton();
-            this.ctrlGraphiqueMove = new Composants.CtrlGraphique();
-            this.switchBoutonIO = new Composants.SwitchBouton();
-            this.ctrlGraphiqueIO = new Composants.CtrlGraphique();
+            this.switchOnOff = new Composants.SwitchBouton();
+            this.ctrlGraphique = new Composants.CtrlGraphique();
             this.SuspendLayout();
             // 
             // lblAN1
@@ -120,131 +105,14 @@
             this.lblAN3.TabIndex = 33;
             this.lblAN3.Text = "0 V";
             // 
-            // lblMoveAN4
+            // lblEnable
             // 
-            this.lblMoveAN4.AutoSize = true;
-            this.lblMoveAN4.Location = new System.Drawing.Point(103, 434);
-            this.lblMoveAN4.Name = "lblMoveAN4";
-            this.lblMoveAN4.Size = new System.Drawing.Size(23, 13);
-            this.lblMoveAN4.TabIndex = 48;
-            this.lblMoveAN4.Text = "0 V";
-            // 
-            // lblMoveAN3
-            // 
-            this.lblMoveAN3.AutoSize = true;
-            this.lblMoveAN3.Location = new System.Drawing.Point(103, 412);
-            this.lblMoveAN3.Name = "lblMoveAN3";
-            this.lblMoveAN3.Size = new System.Drawing.Size(23, 13);
-            this.lblMoveAN3.TabIndex = 47;
-            this.lblMoveAN3.Text = "0 V";
-            // 
-            // label7
-            // 
-            this.label7.AutoSize = true;
-            this.label7.Location = new System.Drawing.Point(44, 390);
-            this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(34, 13);
-            this.label7.TabIndex = 46;
-            this.label7.Text = "AN2 :";
-            // 
-            // lblMoveAN6
-            // 
-            this.lblMoveAN6.AutoSize = true;
-            this.lblMoveAN6.Location = new System.Drawing.Point(103, 478);
-            this.lblMoveAN6.Name = "lblMoveAN6";
-            this.lblMoveAN6.Size = new System.Drawing.Size(23, 13);
-            this.lblMoveAN6.TabIndex = 45;
-            this.lblMoveAN6.Text = "0 V";
-            // 
-            // label9
-            // 
-            this.label9.AutoSize = true;
-            this.label9.Location = new System.Drawing.Point(44, 456);
-            this.label9.Name = "label9";
-            this.label9.Size = new System.Drawing.Size(34, 13);
-            this.label9.TabIndex = 43;
-            this.label9.Text = "AN5 :";
-            // 
-            // label11
-            // 
-            this.label11.AutoSize = true;
-            this.label11.Location = new System.Drawing.Point(44, 478);
-            this.label11.Name = "label11";
-            this.label11.Size = new System.Drawing.Size(34, 13);
-            this.label11.TabIndex = 42;
-            this.label11.Text = "AN6 :";
-            // 
-            // lblMoveAN5
-            // 
-            this.lblMoveAN5.AutoSize = true;
-            this.lblMoveAN5.Location = new System.Drawing.Point(103, 456);
-            this.lblMoveAN5.Name = "lblMoveAN5";
-            this.lblMoveAN5.Size = new System.Drawing.Size(23, 13);
-            this.lblMoveAN5.TabIndex = 41;
-            this.lblMoveAN5.Text = "0 V";
-            // 
-            // lblMoveAN2
-            // 
-            this.lblMoveAN2.AutoSize = true;
-            this.lblMoveAN2.Location = new System.Drawing.Point(103, 390);
-            this.lblMoveAN2.Name = "lblMoveAN2";
-            this.lblMoveAN2.Size = new System.Drawing.Size(23, 13);
-            this.lblMoveAN2.TabIndex = 40;
-            this.lblMoveAN2.Text = "0 V";
-            // 
-            // lblMoveAN1
-            // 
-            this.lblMoveAN1.AutoSize = true;
-            this.lblMoveAN1.Location = new System.Drawing.Point(103, 368);
-            this.lblMoveAN1.Name = "lblMoveAN1";
-            this.lblMoveAN1.Size = new System.Drawing.Size(23, 13);
-            this.lblMoveAN1.TabIndex = 39;
-            this.lblMoveAN1.Text = "0 V";
-            // 
-            // label15
-            // 
-            this.label15.AutoSize = true;
-            this.label15.Location = new System.Drawing.Point(44, 434);
-            this.label15.Name = "label15";
-            this.label15.Size = new System.Drawing.Size(34, 13);
-            this.label15.TabIndex = 38;
-            this.label15.Text = "AN4 :";
-            // 
-            // label16
-            // 
-            this.label16.AutoSize = true;
-            this.label16.Location = new System.Drawing.Point(44, 412);
-            this.label16.Name = "label16";
-            this.label16.Size = new System.Drawing.Size(34, 13);
-            this.label16.TabIndex = 37;
-            this.label16.Text = "AN3 :";
-            // 
-            // label17
-            // 
-            this.label17.AutoSize = true;
-            this.label17.Location = new System.Drawing.Point(44, 368);
-            this.label17.Name = "label17";
-            this.label17.Size = new System.Drawing.Size(34, 13);
-            this.label17.TabIndex = 36;
-            this.label17.Text = "AN1 :";
-            // 
-            // label18
-            // 
-            this.label18.AutoSize = true;
-            this.label18.Location = new System.Drawing.Point(44, 25);
-            this.label18.Name = "label18";
-            this.label18.Size = new System.Drawing.Size(38, 13);
-            this.label18.TabIndex = 49;
-            this.label18.Text = "RecIO";
-            // 
-            // label19
-            // 
-            this.label19.AutoSize = true;
-            this.label19.Location = new System.Drawing.Point(28, 329);
-            this.label19.Name = "label19";
-            this.label19.Size = new System.Drawing.Size(54, 13);
-            this.label19.TabIndex = 51;
-            this.label19.Text = "RecMove";
+            this.lblEnable.AutoSize = true;
+            this.lblEnable.Location = new System.Drawing.Point(44, 25);
+            this.lblEnable.Name = "lblEnable";
+            this.lblEnable.Size = new System.Drawing.Size(28, 13);
+            this.lblEnable.TabIndex = 49;
+            this.lblEnable.Text = "Actif";
             // 
             // boxIOAN1
             // 
@@ -257,7 +125,7 @@
             this.boxIOAN1.TabIndex = 52;
             this.boxIOAN1.Text = "AN1";
             this.boxIOAN1.UseVisualStyleBackColor = true;
-            this.boxIOAN1.CheckedChanged += new System.EventHandler(this.boxIOAN1_CheckedChanged);
+            this.boxIOAN1.CheckedChanged += new System.EventHandler(this.boxAN1_CheckedChanged);
             // 
             // lblAN7
             // 
@@ -297,7 +165,7 @@
             this.boxIOAN2.TabIndex = 59;
             this.boxIOAN2.Text = "AN2";
             this.boxIOAN2.UseVisualStyleBackColor = true;
-            this.boxIOAN2.CheckedChanged += new System.EventHandler(this.boxIOAN2_CheckedChanged);
+            this.boxIOAN2.CheckedChanged += new System.EventHandler(this.boxAN2_CheckedChanged);
             // 
             // boxIOAN3
             // 
@@ -310,7 +178,7 @@
             this.boxIOAN3.TabIndex = 60;
             this.boxIOAN3.Text = "AN3";
             this.boxIOAN3.UseVisualStyleBackColor = true;
-            this.boxIOAN3.CheckedChanged += new System.EventHandler(this.boxIOAN3_CheckedChanged);
+            this.boxIOAN3.CheckedChanged += new System.EventHandler(this.boxAN3_CheckedChanged);
             // 
             // boxIOAN4
             // 
@@ -323,7 +191,7 @@
             this.boxIOAN4.TabIndex = 61;
             this.boxIOAN4.Text = "AN4";
             this.boxIOAN4.UseVisualStyleBackColor = true;
-            this.boxIOAN4.CheckedChanged += new System.EventHandler(this.boxIOAN4_CheckedChanged);
+            this.boxIOAN4.CheckedChanged += new System.EventHandler(this.boxAN4_CheckedChanged);
             // 
             // boxIOAN5
             // 
@@ -336,7 +204,7 @@
             this.boxIOAN5.TabIndex = 62;
             this.boxIOAN5.Text = "AN5";
             this.boxIOAN5.UseVisualStyleBackColor = true;
-            this.boxIOAN5.CheckedChanged += new System.EventHandler(this.boxIOAN5_CheckedChanged);
+            this.boxIOAN5.CheckedChanged += new System.EventHandler(this.boxAN5_CheckedChanged);
             // 
             // boxIOAN6
             // 
@@ -349,7 +217,7 @@
             this.boxIOAN6.TabIndex = 63;
             this.boxIOAN6.Text = "AN6";
             this.boxIOAN6.UseVisualStyleBackColor = true;
-            this.boxIOAN6.CheckedChanged += new System.EventHandler(this.boxIOAN6_CheckedChanged);
+            this.boxIOAN6.CheckedChanged += new System.EventHandler(this.boxAN6_CheckedChanged);
             // 
             // boxIOAN7
             // 
@@ -362,7 +230,7 @@
             this.boxIOAN7.TabIndex = 64;
             this.boxIOAN7.Text = "AN7";
             this.boxIOAN7.UseVisualStyleBackColor = true;
-            this.boxIOAN7.CheckedChanged += new System.EventHandler(this.boxIOAN7_CheckedChanged);
+            this.boxIOAN7.CheckedChanged += new System.EventHandler(this.boxAN7_CheckedChanged);
             // 
             // boxIOAN8
             // 
@@ -375,7 +243,7 @@
             this.boxIOAN8.TabIndex = 65;
             this.boxIOAN8.Text = "AN8";
             this.boxIOAN8.UseVisualStyleBackColor = true;
-            this.boxIOAN8.CheckedChanged += new System.EventHandler(this.boxIOAN8_CheckedChanged);
+            this.boxIOAN8.CheckedChanged += new System.EventHandler(this.boxAN8_CheckedChanged);
             // 
             // boxIOAN9
             // 
@@ -388,51 +256,29 @@
             this.boxIOAN9.TabIndex = 66;
             this.boxIOAN9.Text = "AN9";
             this.boxIOAN9.UseVisualStyleBackColor = true;
-            this.boxIOAN9.CheckedChanged += new System.EventHandler(this.boxIOAN9_CheckedChanged);
+            this.boxIOAN9.CheckedChanged += new System.EventHandler(this.boxAN9_CheckedChanged);
             // 
-            // switchBoutonMove
+            // switchOnOff
             // 
-            this.switchBoutonMove.BackColor = System.Drawing.Color.Transparent;
-            this.switchBoutonMove.Location = new System.Drawing.Point(88, 329);
-            this.switchBoutonMove.Name = "switchBoutonMove";
-            this.switchBoutonMove.Size = new System.Drawing.Size(35, 15);
-            this.switchBoutonMove.Symetrique = true;
-            this.switchBoutonMove.TabIndex = 50;
-            this.switchBoutonMove.ChangementEtat += new System.EventHandler(this.switchBoutonMove_ChangementEtat);
+            this.switchOnOff.BackColor = System.Drawing.Color.Transparent;
+            this.switchOnOff.Location = new System.Drawing.Point(88, 25);
+            this.switchOnOff.Name = "switchOnOff";
+            this.switchOnOff.Size = new System.Drawing.Size(35, 15);
+            this.switchOnOff.Symetrique = true;
+            this.switchOnOff.TabIndex = 35;
+            this.switchOnOff.ChangementEtat += new System.EventHandler(this.switchBouton_ChangementEtat);
             // 
-            // ctrlGraphiqueMove
+            // ctrlGraphique
             // 
-            this.ctrlGraphiqueMove.BackColor = System.Drawing.Color.White;
-            this.ctrlGraphiqueMove.EchelleCommune = true;
-            this.ctrlGraphiqueMove.EchelleFixe = false;
-            this.ctrlGraphiqueMove.EchelleMax = 1D;
-            this.ctrlGraphiqueMove.EchelleMin = 0D;
-            this.ctrlGraphiqueMove.Location = new System.Drawing.Point(210, 329);
-            this.ctrlGraphiqueMove.Name = "ctrlGraphiqueMove";
-            this.ctrlGraphiqueMove.Size = new System.Drawing.Size(981, 289);
-            this.ctrlGraphiqueMove.TabIndex = 44;
-            // 
-            // switchBoutonIO
-            // 
-            this.switchBoutonIO.BackColor = System.Drawing.Color.Transparent;
-            this.switchBoutonIO.Location = new System.Drawing.Point(88, 25);
-            this.switchBoutonIO.Name = "switchBoutonIO";
-            this.switchBoutonIO.Size = new System.Drawing.Size(35, 15);
-            this.switchBoutonIO.Symetrique = true;
-            this.switchBoutonIO.TabIndex = 35;
-            this.switchBoutonIO.ChangementEtat += new System.EventHandler(this.switchBoutonIO_ChangementEtat);
-            // 
-            // ctrlGraphiqueIO
-            // 
-            this.ctrlGraphiqueIO.BackColor = System.Drawing.Color.White;
-            this.ctrlGraphiqueIO.EchelleCommune = true;
-            this.ctrlGraphiqueIO.EchelleFixe = false;
-            this.ctrlGraphiqueIO.EchelleMax = 1D;
-            this.ctrlGraphiqueIO.EchelleMin = 0D;
-            this.ctrlGraphiqueIO.Location = new System.Drawing.Point(210, 25);
-            this.ctrlGraphiqueIO.Name = "ctrlGraphiqueIO";
-            this.ctrlGraphiqueIO.Size = new System.Drawing.Size(981, 289);
-            this.ctrlGraphiqueIO.TabIndex = 15;
+            this.ctrlGraphique.BackColor = System.Drawing.Color.White;
+            this.ctrlGraphique.EchelleCommune = true;
+            this.ctrlGraphique.EchelleFixe = false;
+            this.ctrlGraphique.EchelleMax = 1D;
+            this.ctrlGraphique.EchelleMin = 0D;
+            this.ctrlGraphique.Location = new System.Drawing.Point(210, 25);
+            this.ctrlGraphique.Name = "ctrlGraphique";
+            this.ctrlGraphique.Size = new System.Drawing.Size(981, 470);
+            this.ctrlGraphique.TabIndex = 15;
             // 
             // PanelAnalogique
             // 
@@ -450,27 +296,12 @@
             this.Controls.Add(this.lblAN8);
             this.Controls.Add(this.lblAN7);
             this.Controls.Add(this.boxIOAN1);
-            this.Controls.Add(this.label19);
-            this.Controls.Add(this.switchBoutonMove);
-            this.Controls.Add(this.label18);
-            this.Controls.Add(this.lblMoveAN4);
-            this.Controls.Add(this.lblMoveAN3);
-            this.Controls.Add(this.label7);
-            this.Controls.Add(this.lblMoveAN6);
-            this.Controls.Add(this.ctrlGraphiqueMove);
-            this.Controls.Add(this.label9);
-            this.Controls.Add(this.label11);
-            this.Controls.Add(this.lblMoveAN5);
-            this.Controls.Add(this.lblMoveAN2);
-            this.Controls.Add(this.lblMoveAN1);
-            this.Controls.Add(this.label15);
-            this.Controls.Add(this.label16);
-            this.Controls.Add(this.label17);
-            this.Controls.Add(this.switchBoutonIO);
+            this.Controls.Add(this.lblEnable);
+            this.Controls.Add(this.switchOnOff);
             this.Controls.Add(this.lblAN4);
             this.Controls.Add(this.lblAN3);
             this.Controls.Add(this.lblAN6);
-            this.Controls.Add(this.ctrlGraphiqueIO);
+            this.Controls.Add(this.ctrlGraphique);
             this.Controls.Add(this.lblAN5);
             this.Controls.Add(this.lblAN2);
             this.Controls.Add(this.lblAN1);
@@ -487,27 +318,12 @@
         private System.Windows.Forms.Label lblAN1;
         private System.Windows.Forms.Label lblAN2;
         private System.Windows.Forms.Label lblAN5;
-        private Composants.CtrlGraphique ctrlGraphiqueIO;
+        private Composants.CtrlGraphique ctrlGraphique;
         private System.Windows.Forms.Label lblAN6;
         private System.Windows.Forms.Label lblAN4;
         private System.Windows.Forms.Label lblAN3;
-        private Composants.SwitchBouton switchBoutonIO;
-        private System.Windows.Forms.Label lblMoveAN4;
-        private System.Windows.Forms.Label lblMoveAN3;
-        private System.Windows.Forms.Label label7;
-        private System.Windows.Forms.Label lblMoveAN6;
-        private Composants.CtrlGraphique ctrlGraphiqueMove;
-        private System.Windows.Forms.Label label9;
-        private System.Windows.Forms.Label label11;
-        private System.Windows.Forms.Label lblMoveAN5;
-        private System.Windows.Forms.Label lblMoveAN2;
-        private System.Windows.Forms.Label lblMoveAN1;
-        private System.Windows.Forms.Label label15;
-        private System.Windows.Forms.Label label16;
-        private System.Windows.Forms.Label label17;
-        private System.Windows.Forms.Label label18;
-        private System.Windows.Forms.Label label19;
-        private Composants.SwitchBouton switchBoutonMove;
+        private Composants.SwitchBouton switchOnOff;
+        private System.Windows.Forms.Label lblEnable;
         private System.Windows.Forms.CheckBox boxIOAN1;
         private System.Windows.Forms.Label lblAN7;
         private System.Windows.Forms.Label lblAN8;
