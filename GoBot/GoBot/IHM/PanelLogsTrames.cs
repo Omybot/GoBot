@@ -84,7 +84,7 @@ namespace GoBot.IHM
                 if (!Config.CurrentConfig.LogsFonctionsBalise.ContainsKey(fonction))
                     Config.CurrentConfig.LogsFonctionsBalise.Add(fonction, true);
 
-                checkedListBoxBalise.Items.Add(fonction.ToString(), Config.CurrentConfig.LogsFonctionsBalise[fonction]);
+                checkedListBoxGB.Items.Add(fonction.ToString(), Config.CurrentConfig.LogsFonctionsBalise[fonction]);
             }
             
             foreach (Carte carte in Enum.GetValues(typeof(Carte)))
@@ -389,11 +389,11 @@ namespace GoBot.IHM
             }
         }
 
-        private void checkedListBoxBalise_ItemCheck(object sender, ItemCheckEventArgs e)
+        private void checkedListBoxGB_ItemCheck(object sender, ItemCheckEventArgs e)
         {
             if (!Config.DesignMode && !chargement)
             {
-                String fonctionString = (String)checkedListBoxBalise.Items[e.Index];
+                String fonctionString = (String)checkedListBoxGB.Items[e.Index];
                 FonctionTrame fonction = (FonctionTrame)Enum.Parse(typeof(FonctionTrame), fonctionString);
 
                 Config.CurrentConfig.LogsFonctionsBalise[fonction] = (e.NewValue == CheckState.Checked);
@@ -516,8 +516,8 @@ namespace GoBot.IHM
 
         private void btnCocher_Click(object sender, EventArgs e)
         {
-            for (int i = 0; i < checkedListBoxBalise.Items.Count; i++)
-                checkedListBoxBalise.SetItemChecked(i, true);
+            for (int i = 0; i < checkedListBoxGB.Items.Count; i++)
+                checkedListBoxGB.SetItemChecked(i, true);
             for (int i = 0; i < checkedListBoxDestinataire.Items.Count; i++)
                 checkedListBoxDestinataire.SetItemChecked(i, true);
             for (int i = 0; i < checkedListBoxExpediteur.Items.Count; i++)
@@ -530,8 +530,8 @@ namespace GoBot.IHM
 
         private void btnDecocher_Click(object sender, EventArgs e)
         {
-            for (int i = 0; i < checkedListBoxBalise.Items.Count; i++)
-                checkedListBoxBalise.SetItemChecked(i, false);
+            for (int i = 0; i < checkedListBoxGB.Items.Count; i++)
+                checkedListBoxGB.SetItemChecked(i, false);
             for (int i = 0; i < checkedListBoxDestinataire.Items.Count; i++)
                 checkedListBoxDestinataire.SetItemChecked(i, false);
             for (int i = 0; i < checkedListBoxExpediteur.Items.Count; i++)

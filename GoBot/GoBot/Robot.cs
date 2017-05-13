@@ -95,7 +95,7 @@ namespace GoBot
         public abstract List<int>[] MesureTestPid(int consigne, SensAR sens, int nbValeurs);
         public abstract List<double>[] DiagnosticCpuPwm(int nbValeurs);
         public abstract bool DemandeCapteurOnOff(CapteurOnOffID capteur, bool attendre = true);
-        public abstract Color DemandeCapteurCouleur(CapteurCouleur capteur, bool attendre = true);
+        public abstract Color DemandeCapteurCouleur(CapteurCouleurID capteur, bool attendre = true);
         public abstract void DemandeValeursAnalogiques(Carte carte, bool attendre = true);
 
         public abstract void ActionneurOnOff(ActionneurOnOffID actionneur, bool on);
@@ -110,7 +110,7 @@ namespace GoBot
         public abstract Color GetCouleurEquipe(bool historique = true);
 
         public Dictionary<CapteurOnOffID, bool> CapteurActive { get; set; }
-        public Dictionary<CapteurCouleur, Color> CapteursCouleur { get; set; }
+        public Dictionary<CapteurCouleurID, Color> CapteursCouleur { get; set; }
         public Dictionary<Carte, List<double>> ValeursAnalogiques { get; set; }
 
         public delegate void ChangementEtatCapteurOnOffDelegate(CapteurOnOffID capteur, bool etat);
@@ -119,7 +119,7 @@ namespace GoBot
         public delegate void PositionChangeDelegate(Position position);
         public event PositionChangeDelegate PositionChange;
 
-        public delegate void CapteurCouleurDelegate(CapteurCouleur capteur, Color couleur);
+        public delegate void CapteurCouleurDelegate(CapteurCouleurID capteur, Color couleur);
         public event CapteurCouleurDelegate CapteurCouleurChange;
 
         /// <summary>
@@ -144,7 +144,7 @@ namespace GoBot
                 ChangementEtatCapteurOnOff(capteur, etat);
         }
 
-        protected void ChangeCouleurCapteur(CapteurCouleur capteur, Color couleur)
+        protected void ChangeCouleurCapteur(CapteurCouleurID capteur, Color couleur)
         {
             if (CapteurCouleurChange != null)
                 CapteurCouleurChange(capteur, couleur);

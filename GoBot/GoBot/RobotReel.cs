@@ -22,7 +22,7 @@ namespace GoBot
     class RobotReel : Robot
     {
         Dictionary<CapteurOnOffID, Semaphore> SemaphoresCapteurs = new Dictionary<CapteurOnOffID, Semaphore>();
-        Dictionary<CapteurCouleur, Semaphore> SemaphoresCouleur = new Dictionary<CapteurCouleur, Semaphore>();
+        Dictionary<CapteurCouleurID, Semaphore> SemaphoresCouleur = new Dictionary<CapteurCouleurID, Semaphore>();
         Dictionary<FonctionTrame, Semaphore> SemaphoresTrame = new Dictionary<FonctionTrame, Semaphore>();
 
         private DateTime DateRefreshPos { get; set; }
@@ -42,7 +42,7 @@ namespace GoBot
             IDRobot = idRobot;
             ServomoteursConnectes = new List<byte>();
             CapteurActive = new Dictionary<CapteurOnOffID, bool>();
-            CapteursCouleur = new Dictionary<CapteurCouleur, Color>();
+            CapteursCouleur = new Dictionary<CapteurCouleurID, Color>();
 
             foreach (FonctionTrame fonction in Enum.GetValues(typeof(FonctionTrame)))
                 SemaphoresTrame.Add(fonction, new Semaphore(0, int.MaxValue));
@@ -53,7 +53,7 @@ namespace GoBot
                 CapteurActive.Add(fonction, false);
             }
 
-            foreach (CapteurCouleur fonction in Enum.GetValues(typeof(CapteurCouleur)))
+            foreach (CapteurCouleurID fonction in Enum.GetValues(typeof(CapteurCouleurID)))
             {
                 SemaphoresCouleur.Add(fonction, new Semaphore(0, int.MaxValue));
                 CapteursCouleur.Add(fonction, Color.Black);
@@ -103,7 +103,7 @@ namespace GoBot
             Connexion.SendMessage(TrameFactory.DemandePositionContinue(100, this));
         }
 
-        public override Color DemandeCapteurCouleur(CapteurCouleur capteur, bool attendre = true)
+        public override Color DemandeCapteurCouleur(CapteurCouleurID capteur, bool attendre = true)
         {
             if (attendre)
                 SemaphoresCouleur[capteur] = new Semaphore(0, int.MaxValue);
@@ -162,23 +162,18 @@ namespace GoBot
 
             //Console.WriteLine(trameRecue.ToString());
 
-            if ((trameRecue[0] == (byte)Carte.RecMove && this == Robots.GrosRobot))
+            switch ((FonctionTrame)trameRecue[1])
             {
-                if (trameRecue[1] == (byte)FonctionTrame.Blocage)
-                {
+                case FonctionTrame.Blocage:
                     thActivationAsser = new Thread(ActivationAsserv);
                     thActivationAsser.Start();
-                }
-
-                if (trameRecue[1] == (byte)FonctionTrame.FinDeplacement
-                    || trameRecue[1] == (byte)FonctionTrame.FinRecallage)
-                {
+                    break;
+                case FonctionTrame.FinDeplacement:
+                case FonctionTrame.FinRecallage:        // Idem
                     Console.WriteLine("Déblocage déplacement " + DateTime.Now.Hour + ":" + DateTime.Now.Minute + ":" + DateTime.Now.Second + ":" + DateTime.Now.Millisecond);
                     SemaphoresTrame[FonctionTrame.FinDeplacement].Release();
-                }
-
-                if (trameRecue[1] == (byte)FonctionTrame.AsserRetourPositionXYTeta)
-                {
+                    break;
+                case FonctionTrame.AsserRetourPositionXYTeta:
                     // Réception de la position mesurée par l'asservissement
                     try
                     {
@@ -222,10 +217,8 @@ namespace GoBot
                     {
                         Console.WriteLine("Erreur dans le retour de position asservissement.");
                     }
-                }
-
-                if (trameRecue[1] == (byte)FonctionTrame.AsserRetourPositionCodeurs)
-                {
+                    break;
+                case FonctionTrame.AsserRetourPositionCodeurs:
                     int nbPositions = trameRecue[2];
 
                     for (int i = 0; i < nbPositions; i++)
@@ -247,10 +240,8 @@ namespace GoBot
                         retourTestPid[0].Add(codeurGauche);
                         retourTestPid[1].Add(codeurDroit);
                     }
-                }
-
-                if (trameRecue[1] == (byte)FonctionTrame.RetourChargeCPU_PWM)
-                {
+                    break;
+                case FonctionTrame.RetourChargeCPU_PWM:
                     int nbValeurs = trameRecue[2];
 
                     for (int i = 0; i < nbValeurs; i++)
@@ -264,19 +255,11 @@ namespace GoBot
                         retourTestCharge[1].Add(chargePWMGauche);
                         retourTestCharge[2].Add(chargePWMDroite);
                     }
-                }
-
-
-                
-            }
-            else if (trameRecue[0] == (byte)Carte.RecIO)
-            {
-                if (trameRecue[1] == (byte)FonctionTrame.RetourCapteurCouleur)
-                {
-                    ChangeCouleurCapteur((CapteurCouleur)trameRecue[2], Color.FromArgb(trameRecue[3], trameRecue[4], trameRecue[5]));
-                }
-                if (trameRecue[1] == (byte)FonctionTrame.ReponseLidar)
-                {
+                    break;
+                case FonctionTrame.RetourCapteurCouleur:
+                    ChangeCouleurCapteur((CapteurCouleurID)trameRecue[2], Color.FromArgb(trameRecue[3], trameRecue[4], trameRecue[5]));
+                    break;
+                case FonctionTrame.ReponseLidar:
                     int lidarID = trameRecue[2];
 
                     if (mesureLidar == null)
@@ -289,48 +272,11 @@ namespace GoBot
 
                     if (Regex.Matches(mesureLidar, "\n\n").Count == 2)
                         SemaphoresTrame[FonctionTrame.ReponseLidar].Release();
-                }
-                
-                if (trameRecue[1] == (byte)FonctionTrame.RetourCapteurOnOff)
-                {
+                    break;
+                case FonctionTrame.RetourCapteurOnOff:
                     CapteurOnOffID capteur = (CapteurOnOffID)trameRecue[2];
-                    bool nouvelEtat = trameRecue[3] > 0 ? true : false;
-                    if (nouvelEtat != CapteurActive[capteur])
-                    {
-                        ChangerEtatCapteurOnOff(capteur, nouvelEtat);
-                    }
-                    if (SemaphoresCapteurs[capteur] != null)
-                        SemaphoresCapteurs[capteur].Release();
-                }
 
-                if (trameRecue[1] == (byte)FonctionTrame.TestConnexion)
-                {
-                    if (trameRecue.Length > 2)
-                        BatterieVoltage = (double)(trameRecue[2] * 256 + trameRecue[3]) / 100.0;
-                    //BatterieVoltage = (double)(trameRecue[4] * 256 + trameRecue[5]) / 100.0;
-                }
-
-                if (trameRecue[1] == (byte)FonctionTrame.DepartJack)
-                {
-                    if (Plateau.Enchainement == null)
-                        Plateau.Enchainement = new GoBot.Enchainements.EnchainementMatch();
-                    Plateau.Enchainement.Executer();
-                }
-
-                if (trameRecue[1] == (byte)FonctionTrame.RetourCouleurEquipe)
-                {
-                    if (trameRecue[2] == 0)
-                        couleurEquipe = Plateau.CouleurGaucheBleu;
-                    else if (trameRecue[2] == 1)
-                        couleurEquipe = Plateau.CouleurDroiteJaune;
-
-                    Plateau.NotreCouleur = couleurEquipe;
-
-                    SemaphoresTrame[FonctionTrame.RetourCouleurEquipe].Release();
-                }
-
-                if (trameRecue[1] == (byte)FonctionTrame.RetourCapteurOnOff) //TODO mieux
-                {
+                    
                     if (trameRecue[2] == (byte)CapteurID.Balise)
                     {
                         // Recomposition de la trame comme si elle venait d'une balise
@@ -339,7 +285,7 @@ namespace GoBot
                             Plateau.Balise.connexion_NouvelleTrame(new Trame(message));
                     }
 
-                    if (trameRecue[2] == (byte)CapteurID.BaliseRapide1)
+                    else if (trameRecue[2] == (byte)CapteurID.BaliseRapide1)
                     {
                         // Recomposition de la trame comme si elle venait d'une balise
                         String message = "B1 E5 02 " + trameRecue.ToString().Substring(9);
@@ -347,19 +293,45 @@ namespace GoBot
                             Plateau.Balise.connexion_NouvelleTrame(new Trame(message));
                     }
 
-                    if (trameRecue[2] == (byte)CapteurID.BaliseRapide2)
+                    else if (trameRecue[2] == (byte)CapteurID.BaliseRapide2)
                     {
                         // Recomposition de la trame comme si elle venait d'une balise
                         String message = "B1 E5 01 " + trameRecue.ToString().Substring(9);
                         if (Plateau.Balise != null)
                             Plateau.Balise.connexion_NouvelleTrame(new Trame(message));
                     }
-                }
-            }
 
-            if (trameRecue[1] == (byte)FonctionTrame.RetourValeursAnalogiques)
-            {
-                Carte carte = (Carte)trameRecue[0];
+                    else
+                    {
+                        bool nouvelEtat = trameRecue[3] > 0 ? true : false;
+                        if (nouvelEtat != CapteurActive[capteur])
+                        {
+                            ChangerEtatCapteurOnOff(capteur, nouvelEtat);
+                        }
+                        if (SemaphoresCapteurs[capteur] != null)
+                            SemaphoresCapteurs[capteur].Release();
+                    }
+                    break;
+                case FonctionTrame.TensionBatteries:
+                    BatterieVoltage = (double)(trameRecue[2] * 256 + trameRecue[3]) / 100.0;
+                    break;
+                case FonctionTrame.DepartJack:
+                    if (Plateau.Enchainement == null)
+                        Plateau.Enchainement = new GoBot.Enchainements.EnchainementMatch();
+                    Plateau.Enchainement.Executer();
+                    break;
+                case FonctionTrame.RetourCouleurEquipe:
+                    if (trameRecue[2] == 0)
+                        couleurEquipe = Plateau.CouleurGaucheBleu;
+                    else if (trameRecue[2] == 1)
+                        couleurEquipe = Plateau.CouleurDroiteJaune;
+
+                    Plateau.NotreCouleur = couleurEquipe;
+
+                    SemaphoresTrame[FonctionTrame.RetourCouleurEquipe].Release();
+                    break;
+                case FonctionTrame.RetourValeursAnalogiques:
+                    Carte carte = (Carte)trameRecue[0];
 
                 double valeurAnalogique1 = (trameRecue[2] * 256 + trameRecue[3]);
                 double valeurAnalogique2 = (trameRecue[4] * 256 + trameRecue[5]);
@@ -395,6 +367,7 @@ namespace GoBot
 
                 if (SemaphoresTrame[FonctionTrame.RetourValeursAnalogiques] != null)
                     SemaphoresTrame[FonctionTrame.RetourValeursAnalogiques].Release();
+                break;
             }
         }
 

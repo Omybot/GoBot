@@ -29,16 +29,16 @@ namespace GoBot
         ServoLunaireSerrageGauche = 100,
         ServoLunaireSerrageDroit = 101,
 
-        BrasLunaireAvance = 1,
+        BrasLunaireAvance = 108,
         BrasLunaireMonte = 20,
 
         Chariot = 50,
 
-        BloqueurBas = 60,
-        BloqueurHaut = 61,
+        BloqueurBas = 106,
+        BloqueurHaut = 107,
         Rehausseur = 3,
 
-        Ejecteur = 70,
+        Ejecteur = 102,
 
         Tous = 254
     }
@@ -69,10 +69,21 @@ namespace GoBot
 
     public enum CapteurOnOffID
     {
-        Jack = 0
+        Bouton1,
+        Bouton2,
+        Bouton3,
+        Bouton4,
+        Bouton5,
+        Bouton6,
+        Bouton7,
+        Bouton8,
+        Bouton9,
+        Bouton10,
+        Jack,
+        CouleurEquipe
     }
 
-    public enum CapteurCouleur
+    public enum CapteurCouleurID
     {
         CouleurTube = 0
     }

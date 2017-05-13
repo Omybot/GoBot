@@ -500,5 +500,202 @@ namespace GoBot.Communications
 
             return message;
         }
+
+        public static String GetMessage(FonctionTrame function, List<int> parameters = null)
+        {
+            String output = function.ToString();
+
+            switch (function)
+            {
+                case FonctionTrame.Debug:
+                    break;
+                case FonctionTrame.TestConnexion:
+                    break;
+                case FonctionTrame.TensionBatteries:
+                    break;
+                case FonctionTrame.Reset:
+                    break;
+                case FonctionTrame.Buzzer:
+                    break;
+                case FonctionTrame.DepartJack:
+                    break;
+                case FonctionTrame.DemandeCouleurEquipe:
+                    break;
+                case FonctionTrame.RetourCouleurEquipe:
+                    break;
+                case FonctionTrame.DemandeCapteurOnOff: 
+                    output = "Demande capteur {0}";
+                    if (parameters != null)
+                    {
+                        output = output.Replace("{0}", Nommeur.Nommer((CapteurOnOffID)parameters[0]));
+                    }
+                    break;
+                case FonctionTrame.RetourCapteurOnOff:
+                    output = "Retour capteur {0} : {1}";
+                    if (parameters != null)
+                    {
+                        output = output.Replace("{0}", Nommeur.Nommer((CapteurOnOffID)parameters[0]));
+                        output = output.Replace("{1}", Nommeur.Nommer(parameters[1] > 0));
+                    }
+                    break;
+                case FonctionTrame.DemandeValeursAnalogiques:
+                    output = "Demande valeurs analogiques";
+                    break;
+                case FonctionTrame.RetourValeursAnalogiques:
+                    output = "Retour valeurs analogiques : {0}V / {1}V / {2}V / {3}V / {4}V / {5}V / {6}V / {7}V / {8}V";
+                    if (parameters != null)
+                    {
+                        for (int i = 0; i < 8; i++)
+                        {
+                            output = output.Replace("{" + i.ToString() + "}", (parameters[i] * 0.0008056640625).ToString("0.0000") + "V");
+                        }
+                    }
+                    break;
+                case FonctionTrame.DemandeCapteurCouleur:
+                    output = "Demande capteur couleur {0}";
+                    if (parameters != null)
+                    {
+                        output = output.Replace("{0}", Nommeur.Nommer((CapteurCouleurID)parameters[0]));
+                    }
+                    break;
+                case FonctionTrame.RetourCapteurCouleur:
+                    break;
+                case FonctionTrame.DemandePositionCodeur:
+                    break;
+                case FonctionTrame.RetourPositionCodeur:
+                    break;
+                case FonctionTrame.ArmerJack:
+                    break;
+                case FonctionTrame.PilotageOnOff:
+                    break;
+                case FonctionTrame.Led:
+                    break;
+                case FonctionTrame.MoteurPosition:
+                    break;
+                case FonctionTrame.MoteurVitesse:
+                    break;
+                case FonctionTrame.MoteurAccel:
+                    break;
+                case FonctionTrame.CommandeServo:
+                    break;
+                case FonctionTrame.Deplace:
+                    break;
+                case FonctionTrame.Pivot:
+                    break;
+                case FonctionTrame.Virage:
+                    break;
+                case FonctionTrame.Stop:
+                    break;
+                case FonctionTrame.Recallage:
+                    break;
+                case FonctionTrame.TrajectoirePolaire:
+                    break;
+                case FonctionTrame.FinRecallage:
+                    break;
+                case FonctionTrame.FinDeplacement:
+                    break;
+                case FonctionTrame.Blocage:
+                    break;
+                case FonctionTrame.AsserDemandePositionCodeurs:
+                    break;
+                case FonctionTrame.AsserRetourPositionCodeurs:
+                    break;
+                case FonctionTrame.AsserEnvoiConsigneBrutePosition:
+                    break;
+                case FonctionTrame.DemandeChargeCPU_PWM:
+                    break;
+                case FonctionTrame.RetourChargeCPU_PWM:
+                    break;
+                case FonctionTrame.AsserIntervalleRetourPosition:
+                    break;
+                case FonctionTrame.AsserDemandePositionXYTeta:
+                    break;
+                case FonctionTrame.AsserRetourPositionXYTeta:
+                    break;
+                case FonctionTrame.AsserVitesseDeplacement:
+                    break;
+                case FonctionTrame.AsserAccelerationDeplacement:
+                    break;
+                case FonctionTrame.AsserVitessePivot:
+                    break;
+                case FonctionTrame.AsserAccelerationPivot:
+                    break;
+                case FonctionTrame.AsserPID:
+                    break;
+                case FonctionTrame.AsserEnvoiPositionAbsolue:
+                    break;
+                case FonctionTrame.AsserPIDCap:
+                    break;
+                case FonctionTrame.AsserPIDVitesse:
+                    break;
+                case FonctionTrame.EnvoiUart:
+                    break;
+                case FonctionTrame.RetourUart:
+                    break;
+                case FonctionTrame.DemandeLidar:
+                    break;
+                case FonctionTrame.ReponseLidar:
+                    break;
+                case FonctionTrame.ChangementBaudrateUART:
+                    break;
+                case FonctionTrame.AffichageLCD:
+                    break;
+                case FonctionTrame.CouleurLedRGB:
+                    break;
+                case FonctionTrame.DetectionBalise:
+                    break;
+                case FonctionTrame.DetectionBaliseRapide:
+                    break;
+                default:
+                    break;
+            }
+
+            return output;
+        }
+
+        public static String GetMessage(Trame trame)
+        {
+            String output = "???";
+
+            switch (trame[0])
+            {
+                case (byte)Carte.RecIO:
+                    output = GetMessage((FonctionTrame)trame[1]);
+                    output = GetMessage((FonctionTrame)trame[1], GetParameters(output, trame));
+                    break;
+            }
+
+            return output;
+        }
+
+        public static List<int> GetParameters(String format, Trame trame)
+        {
+            List<int> parameters = new List<int>();
+            String subParameter;
+
+            for (int iChar = 0; iChar < format.Length; iChar++)
+            {
+                if (format[iChar] == '{')
+                {
+                    iChar++;
+                    parameters.Add(0);
+
+                    while (format[iChar] != '}')
+                    {
+                        subParameter = "";
+                        while (format[iChar] != '-' && format[iChar] != '}')
+                        {
+                            subParameter += format[iChar];
+                            iChar++;
+                        }
+                        parameters[parameters.Count - 1] = parameters[parameters.Count - 1] * 256 + trame[int.Parse(subParameter) + 2];
+                        if (format[iChar] == '-')
+                            iChar++;
+                    }
+                }
+            }
+
+            return parameters;
+        }
     }
 }

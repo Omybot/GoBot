@@ -471,7 +471,7 @@ namespace GoBot
             return true;
         }
 
-        public override Color DemandeCapteurCouleur(CapteurCouleur capteur, bool attendre = true)
+        public override Color DemandeCapteurCouleur(CapteurCouleurID capteur, bool attendre = true)
         {
             // TODO
             return Color.Black;

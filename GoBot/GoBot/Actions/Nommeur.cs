@@ -117,6 +117,11 @@ namespace GoBot.Actions
             }
         }
 
+        public static String Nommer(bool val)
+        {
+            return val ? "On" : "Off";
+        }
+
         public static String Nommer(MoteurID moteur)
         {
             switch (moteur)
@@ -158,6 +163,17 @@ namespace GoBot.Actions
             }
         }
 
+        public static String Nommer(CapteurCouleurID capteur)
+        {
+            switch(capteur)
+            {
+                case CapteurCouleurID.CouleurTube:
+                    return "module lunaire";
+                default :
+                    return capteur.ToString();
+            }
+        }
+
         public static String Nommer(object o)
         {
             if (o is CapteurID)
@@ -170,6 +186,8 @@ namespace GoBot.Actions
                 return Nommer((ServomoteurID)o);
             else if (o is MoteurID)
                 return Nommer((MoteurID)o);
+            else if (o is CapteurCouleurID)
+                return Nommer((CapteurCouleurID)o);
             else
                 return "";
         }

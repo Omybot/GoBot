@@ -50,7 +50,7 @@ namespace GoBot.Communications
             return new Trame(tab);
         }
 
-        static public Trame DemandeCapteurCouleur(CapteurCouleur capteur)
+        static public Trame DemandeCapteurCouleur(CapteurCouleurID capteur)
         {
             byte[] tab = new byte[3];
             tab[0] = (byte)Carte.RecIO;

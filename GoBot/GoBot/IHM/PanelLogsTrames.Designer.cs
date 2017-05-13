@@ -49,7 +49,6 @@
             this.rdoTempsPrecAff = new System.Windows.Forms.RadioButton();
             this.rdoTempsPrec = new System.Windows.Forms.RadioButton();
             this.checkedListBoxIO = new System.Windows.Forms.CheckedListBox();
-            this.checkedListBoxBalise = new System.Windows.Forms.CheckedListBox();
             this.groupBoxMessages = new System.Windows.Forms.GroupBox();
             this.btnDecocher = new System.Windows.Forms.Button();
             this.btnCocher = new System.Windows.Forms.Button();
@@ -63,13 +62,14 @@
             this.tabControlMessages = new System.Windows.Forms.TabControl();
             this.tabPageMove = new System.Windows.Forms.TabPage();
             this.tabPageIO = new System.Windows.Forms.TabPage();
-            this.tabPageBalises = new System.Windows.Forms.TabPage();
             this.btnRejouerTout = new System.Windows.Forms.Button();
             this.btnRejouerSelection = new System.Windows.Forms.Button();
             this.boxScroll = new System.Windows.Forms.CheckBox();
             this.btnAfficher = new System.Windows.Forms.Button();
             this.btnRefresh = new System.Windows.Forms.Button();
             this.btnCharger = new System.Windows.Forms.Button();
+            this.tabGB = new System.Windows.Forms.TabPage();
+            this.checkedListBoxGB = new System.Windows.Forms.CheckedListBox();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewLog)).BeginInit();
             this.contextMenuStripRow.SuspendLayout();
             this.groupBox2.SuspendLayout();
@@ -83,7 +83,7 @@
             this.tabControlMessages.SuspendLayout();
             this.tabPageMove.SuspendLayout();
             this.tabPageIO.SuspendLayout();
-            this.tabPageBalises.SuspendLayout();
+            this.tabGB.SuspendLayout();
             this.SuspendLayout();
             // 
             // dataGridViewLog
@@ -300,23 +300,6 @@
             this.checkedListBoxIO.TabIndex = 17;
             this.checkedListBoxIO.ItemCheck += new System.Windows.Forms.ItemCheckEventHandler(this.checkedListBoxIO_ItemCheck);
             // 
-            // checkedListBoxBalise
-            // 
-            this.checkedListBoxBalise.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.checkedListBoxBalise.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.checkedListBoxBalise.CheckOnClick = true;
-            this.checkedListBoxBalise.ColumnWidth = 155;
-            this.checkedListBoxBalise.FormattingEnabled = true;
-            this.checkedListBoxBalise.Location = new System.Drawing.Point(3, 3);
-            this.checkedListBoxBalise.MultiColumn = true;
-            this.checkedListBoxBalise.Name = "checkedListBoxBalise";
-            this.checkedListBoxBalise.Size = new System.Drawing.Size(355, 285);
-            this.checkedListBoxBalise.Sorted = true;
-            this.checkedListBoxBalise.TabIndex = 18;
-            this.checkedListBoxBalise.ItemCheck += new System.Windows.Forms.ItemCheckEventHandler(this.checkedListBoxBalise_ItemCheck);
-            // 
             // groupBoxMessages
             // 
             this.groupBoxMessages.Controls.Add(this.btnDecocher);
@@ -436,7 +419,7 @@
             // 
             this.tabControlMessages.Controls.Add(this.tabPageMove);
             this.tabControlMessages.Controls.Add(this.tabPageIO);
-            this.tabControlMessages.Controls.Add(this.tabPageBalises);
+            this.tabControlMessages.Controls.Add(this.tabGB);
             this.tabControlMessages.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tabControlMessages.Location = new System.Drawing.Point(3, 3);
             this.tabControlMessages.Name = "tabControlMessages";
@@ -465,16 +448,6 @@
             this.tabPageIO.TabIndex = 1;
             this.tabPageIO.Text = "RecIO";
             this.tabPageIO.UseVisualStyleBackColor = true;
-            // 
-            // tabPageBalises
-            // 
-            this.tabPageBalises.Controls.Add(this.checkedListBoxBalise);
-            this.tabPageBalises.Location = new System.Drawing.Point(4, 22);
-            this.tabPageBalises.Name = "tabPageBalises";
-            this.tabPageBalises.Size = new System.Drawing.Size(361, 304);
-            this.tabPageBalises.TabIndex = 4;
-            this.tabPageBalises.Text = "Balises";
-            this.tabPageBalises.UseVisualStyleBackColor = true;
             // 
             // btnRejouerTout
             // 
@@ -547,6 +520,32 @@
             this.btnCharger.UseVisualStyleBackColor = true;
             this.btnCharger.Click += new System.EventHandler(this.btnCharger_Click);
             // 
+            // tabGB
+            // 
+            this.tabGB.Controls.Add(this.checkedListBoxGB);
+            this.tabGB.Location = new System.Drawing.Point(4, 22);
+            this.tabGB.Name = "tabGB";
+            this.tabGB.Padding = new System.Windows.Forms.Padding(3);
+            this.tabGB.Size = new System.Drawing.Size(361, 304);
+            this.tabGB.TabIndex = 5;
+            this.tabGB.Text = "RecGoBot";
+            this.tabGB.UseVisualStyleBackColor = true;
+            // 
+            // checkedListBoxGB
+            // 
+            this.checkedListBoxGB.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.checkedListBoxGB.CheckOnClick = true;
+            this.checkedListBoxGB.ColumnWidth = 150;
+            this.checkedListBoxGB.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.checkedListBoxGB.FormattingEnabled = true;
+            this.checkedListBoxGB.Location = new System.Drawing.Point(3, 3);
+            this.checkedListBoxGB.MultiColumn = true;
+            this.checkedListBoxGB.Name = "checkedListBoxGB";
+            this.checkedListBoxGB.Size = new System.Drawing.Size(355, 298);
+            this.checkedListBoxGB.Sorted = true;
+            this.checkedListBoxGB.TabIndex = 18;
+            this.checkedListBoxGB.ItemCheck += new System.Windows.Forms.ItemCheckEventHandler(this.checkedListBoxGB_ItemCheck);
+            // 
             // PanelLogsTrames
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -579,7 +578,7 @@
             this.tabControlMessages.ResumeLayout(false);
             this.tabPageMove.ResumeLayout(false);
             this.tabPageIO.ResumeLayout(false);
-            this.tabPageBalises.ResumeLayout(false);
+            this.tabGB.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -602,7 +601,6 @@
         private System.Windows.Forms.RadioButton rdoTempsPrecAff;
         private System.Windows.Forms.RadioButton rdoTempsPrec;
         private System.Windows.Forms.CheckedListBox checkedListBoxIO;
-        private System.Windows.Forms.CheckedListBox checkedListBoxBalise;
         private System.Windows.Forms.GroupBox groupBoxMessages;
         private System.Windows.Forms.ContextMenuStrip contextMenuStripRow;
         private System.Windows.Forms.ToolStripMenuItem nePlusAfficherCeTypeDeMessagesToolStripMenuItem;
@@ -625,9 +623,10 @@
         private System.Windows.Forms.TabControl tabControlMessages;
         private System.Windows.Forms.TabPage tabPageMove;
         private System.Windows.Forms.TabPage tabPageIO;
-        private System.Windows.Forms.TabPage tabPageBalises;
         private System.Windows.Forms.Button btnDecocher;
         private System.Windows.Forms.Button btnCocher;
+        private System.Windows.Forms.TabPage tabGB;
+        private System.Windows.Forms.CheckedListBox checkedListBoxGB;
 
     }
 }

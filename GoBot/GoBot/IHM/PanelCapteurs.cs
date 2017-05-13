@@ -38,10 +38,10 @@ namespace GoBot.IHM
 
         void tCouleur_Tick(object sender, EventArgs e)
         {
-            Robots.GrosRobot.DemandeCapteurCouleur(CapteurCouleur.CouleurTube, false);
+            Robots.GrosRobot.DemandeCapteurCouleur(CapteurCouleurID.CouleurTube, false);
         }
 
-        void GrosRobot_CapteurCouleurChange(CapteurCouleur capteur, Color couleur)
+        void GrosRobot_CapteurCouleurChange(CapteurCouleurID capteur, Color couleur)
         {
             if (this.InvokeRequired)
             {
@@ -52,7 +52,7 @@ namespace GoBot.IHM
             }
             else
             {
-                if (capteur == CapteurCouleur.CouleurTube)
+                if (capteur == CapteurCouleurID.CouleurTube)
                     picColor.SetColor(couleur);
             }
         }
