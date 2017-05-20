@@ -62,6 +62,10 @@
             this.btnCouleur = new Composants.Button3D();
             this.label1 = new System.Windows.Forms.Label();
             this.lblCouleurTxt = new System.Windows.Forms.Label();
+            this.swi1 = new Composants.Button3D();
+            this.swi2 = new Composants.Button3D();
+            this.swi3 = new Composants.Button3D();
+            this.swi4 = new Composants.Button3D();
             ((System.ComponentModel.ISupportInitialize)(this.picLedColor)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.colorPickup1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.btn10)).BeginInit();
@@ -92,6 +96,10 @@
             ((System.ComponentModel.ISupportInitialize)(this.ledA1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.btnJack)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.btnCouleur)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.swi1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.swi2)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.swi3)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.swi4)).BeginInit();
             this.SuspendLayout();
             // 
             // picLedColor
@@ -105,7 +113,7 @@
             // 
             // btnBuzz
             // 
-            this.btnBuzz.Location = new System.Drawing.Point(136, 145);
+            this.btnBuzz.Location = new System.Drawing.Point(118, 302);
             this.btnBuzz.Name = "btnBuzz";
             this.btnBuzz.Size = new System.Drawing.Size(75, 23);
             this.btnBuzz.TabIndex = 27;
@@ -116,7 +124,7 @@
             // colorPickup1
             // 
             this.colorPickup1.Image = ((System.Drawing.Image)(resources.GetObject("colorPickup1.Image")));
-            this.colorPickup1.Location = new System.Drawing.Point(97, 189);
+            this.colorPickup1.Location = new System.Drawing.Point(201, 8);
             this.colorPickup1.Name = "colorPickup1";
             this.colorPickup1.Size = new System.Drawing.Size(175, 175);
             this.colorPickup1.TabIndex = 28;
@@ -447,7 +455,7 @@
             // 
             this.btnJack.BackColor = System.Drawing.Color.Transparent;
             this.btnJack.Image = ((System.Drawing.Image)(resources.GetObject("btnJack.Image")));
-            this.btnJack.Location = new System.Drawing.Point(172, 39);
+            this.btnJack.Location = new System.Drawing.Point(170, 9);
             this.btnJack.Name = "btnJack";
             this.btnJack.Size = new System.Drawing.Size(32, 32);
             this.btnJack.State = false;
@@ -458,7 +466,7 @@
             // 
             this.btnCouleur.BackColor = System.Drawing.Color.Transparent;
             this.btnCouleur.Image = ((System.Drawing.Image)(resources.GetObject("btnCouleur.Image")));
-            this.btnCouleur.Location = new System.Drawing.Point(172, 79);
+            this.btnCouleur.Location = new System.Drawing.Point(170, 49);
             this.btnCouleur.Name = "btnCouleur";
             this.btnCouleur.Size = new System.Drawing.Size(32, 32);
             this.btnCouleur.State = false;
@@ -468,7 +476,7 @@
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(105, 52);
+            this.label1.Location = new System.Drawing.Point(103, 22);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(30, 13);
             this.label1.TabIndex = 31;
@@ -477,16 +485,64 @@
             // lblCouleurTxt
             // 
             this.lblCouleurTxt.AutoSize = true;
-            this.lblCouleurTxt.Location = new System.Drawing.Point(105, 98);
+            this.lblCouleurTxt.Location = new System.Drawing.Point(103, 60);
             this.lblCouleurTxt.Name = "lblCouleurTxt";
             this.lblCouleurTxt.Size = new System.Drawing.Size(43, 13);
             this.lblCouleurTxt.TabIndex = 32;
             this.lblCouleurTxt.Text = "Couleur";
             // 
+            // swi1
+            // 
+            this.swi1.BackColor = System.Drawing.Color.Transparent;
+            this.swi1.Image = ((System.Drawing.Image)(resources.GetObject("swi1.Image")));
+            this.swi1.Location = new System.Drawing.Point(130, 211);
+            this.swi1.Name = "swi1";
+            this.swi1.Size = new System.Drawing.Size(32, 32);
+            this.swi1.State = false;
+            this.swi1.TabIndex = 33;
+            this.swi1.TabStop = false;
+            // 
+            // swi2
+            // 
+            this.swi2.BackColor = System.Drawing.Color.Transparent;
+            this.swi2.Image = ((System.Drawing.Image)(resources.GetObject("swi2.Image")));
+            this.swi2.Location = new System.Drawing.Point(130, 173);
+            this.swi2.Name = "swi2";
+            this.swi2.Size = new System.Drawing.Size(32, 32);
+            this.swi2.State = false;
+            this.swi2.TabIndex = 34;
+            this.swi2.TabStop = false;
+            // 
+            // swi3
+            // 
+            this.swi3.BackColor = System.Drawing.Color.Transparent;
+            this.swi3.Image = ((System.Drawing.Image)(resources.GetObject("swi3.Image")));
+            this.swi3.Location = new System.Drawing.Point(130, 135);
+            this.swi3.Name = "swi3";
+            this.swi3.Size = new System.Drawing.Size(32, 32);
+            this.swi3.State = false;
+            this.swi3.TabIndex = 35;
+            this.swi3.TabStop = false;
+            // 
+            // swi4
+            // 
+            this.swi4.BackColor = System.Drawing.Color.Transparent;
+            this.swi4.Image = ((System.Drawing.Image)(resources.GetObject("swi4.Image")));
+            this.swi4.Location = new System.Drawing.Point(130, 97);
+            this.swi4.Name = "swi4";
+            this.swi4.Size = new System.Drawing.Size(32, 32);
+            this.swi4.State = false;
+            this.swi4.TabIndex = 36;
+            this.swi4.TabStop = false;
+            // 
             // PanelRecGoBot
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.Controls.Add(this.swi4);
+            this.Controls.Add(this.swi3);
+            this.Controls.Add(this.swi2);
+            this.Controls.Add(this.swi1);
             this.Controls.Add(this.lblCouleurTxt);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.btnCouleur);
@@ -554,6 +610,10 @@
             ((System.ComponentModel.ISupportInitialize)(this.ledA1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.btnJack)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.btnCouleur)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.swi1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.swi2)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.swi3)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.swi4)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -594,6 +654,10 @@
         private Composants.Button3D btnCouleur;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label lblCouleurTxt;
+        private Composants.Button3D swi1;
+        private Composants.Button3D swi2;
+        private Composants.Button3D swi3;
+        private Composants.Button3D swi4;
 
 
 

@@ -9,8 +9,14 @@ namespace GoBot.Devices
 {
     public class RecGoBot
     {
-        public delegate void ButtonChangeDelegate(Buttons btn, Boolean state);
+        public delegate void ButtonChangeDelegate(CapteurOnOffID btn, Boolean state);
         public event ButtonChangeDelegate ButtonChange;
+
+        public delegate void JackChangeDelegate(Boolean state);
+        public event JackChangeDelegate JackChange;
+
+        public delegate void ColorChangeDelegate(MatchColor state);
+        public event ColorChangeDelegate ColorChange;
 
         public enum Leds
         {
@@ -40,22 +46,6 @@ namespace GoBot.Devices
             Vert
         }
 
-        public enum Buttons
-        {
-            B1,
-            B2,
-            B3,
-            B4,
-            B5,
-            B6,
-            B7,
-            B8,
-            B9,
-            B10,
-            Jack,
-            Couleur
-        }
-
         private ConnexionUDP connexion;
 
         public RecGoBot(ConnexionUDP conn)
@@ -68,56 +58,74 @@ namespace GoBot.Devices
         {
             if (trameRecue[1] == (byte)FonctionTrame.RetourCapteurOnOff)
             {
-                Buttons but;
+                CapteurOnOffID but;
 
                 Console.WriteLine(trameRecue[2] + (trameRecue[3]>0 ? " On" : " Off"));
 
                 switch(trameRecue[2])
                 {
                     case 0:
-                        but = Buttons.B2;
+                        but = CapteurOnOffID.Bouton2;
                         break;
                     case 1:
-                        but = Buttons.B4;
+                        but = CapteurOnOffID.Bouton4;
                         break;
                     case 2:
-                        but = Buttons.B1;
+                        but = CapteurOnOffID.Bouton1;
                         break;
                     case 3:
-                        but = Buttons.B3;
+                        but = CapteurOnOffID.Bouton3;
                         break;
                     case 4:
-                        but = Buttons.B10;
+                        but = CapteurOnOffID.Bouton10;
                         break;
                     case 5:
-                        but = Buttons.B8;
+                        but = CapteurOnOffID.Bouton8;
                         break;
                     case 6:
-                        but = Buttons.B9;
+                        but = CapteurOnOffID.Bouton9;
                         break;
                     case 7:
-                        but = Buttons.B7;
+                        but = CapteurOnOffID.Bouton7;
                         break;
                     case 8:
-                        but = Buttons.B6;
+                        but = CapteurOnOffID.Bouton6;
                         break;
                     case 9:
-                        but = Buttons.Couleur;
+                        but = CapteurOnOffID.CouleurEquipe;
                         break;
                     case 10:
-                        but = Buttons.Jack;
+                        but = CapteurOnOffID.Jack;
                         break;
                     case 11:
-                        but = Buttons.B5;
+                        but = CapteurOnOffID.Bouton5;
+                        break;
+                    case 12:
+                        but = CapteurOnOffID.LSwitch1;
+                        break;
+                    case 13:
+                        but = CapteurOnOffID.LSwitch2;
+                        break;
+                    case 14:
+                        but = CapteurOnOffID.LSwitch3;
+                        break;
+                    case 15:
+                        but = CapteurOnOffID.LSwitch4;
                         break;
                     default :
-                        but = Buttons.B1;
+                        but = CapteurOnOffID.Bouton1;
                         break;
                 }
 
                 bool pushed = trameRecue[3] > 0;
 
-                if (ButtonChange != null)
+                if (but == CapteurOnOffID.CouleurEquipe && ColorChange != null)
+                    ColorChange((MatchColor)trameRecue[3]);
+
+                else if (but == CapteurOnOffID.Jack && JackChange != null)
+                    JackChange(pushed);
+
+                else if (ButtonChange != null)
                     ButtonChange(but, pushed);
             }
         }
@@ -132,9 +140,9 @@ namespace GoBot.Devices
             connexion.SendMessage(TrameFactory.SetLedColor(color));
         }
 
-        public void Buzz(byte volume)
+        public void Buzz(int frequency, byte volume)
         {
-            connexion.SendMessage(TrameFactory.Buzz(volume));
+            connexion.SendMessage(TrameFactory.Buzz(frequency, volume));
         }
     }
 }

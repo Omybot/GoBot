@@ -14,7 +14,6 @@ namespace GoBot.Communications
         Reset = 0xF1,
         Buzzer = 0xF3,
 
-        DepartJack = 0x71,
         DemandeCouleurEquipe = 0x72,
         RetourCouleurEquipe = 0x73,
         DemandeCapteurOnOff = 0x74,
@@ -26,7 +25,6 @@ namespace GoBot.Communications
         DemandePositionCodeur = 0x21,
         RetourPositionCodeur = 0x22,
 
-        ArmerJack = 0x70,
         PilotageOnOff = 0x65,
         Led = 0x62,
         MoteurPosition = 0x66,

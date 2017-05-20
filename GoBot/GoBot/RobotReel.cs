@@ -34,8 +34,11 @@ namespace GoBot
         public Enchainement Enchainement { get; set; }
         public Color Couleur;
 
+        private bool jackArme;
+
         public RobotReel(IDRobot idRobot, Carte carte)
         {
+            jackArme = false;
             AngleTotalParcouru = 0;
             DistanceTotaleParcourue = 0;
             Carte = carte;
@@ -63,6 +66,31 @@ namespace GoBot
             ValeursAnalogiques.Add(Carte.RecIO, null);
             ValeursAnalogiques.Add(Carte.RecGB, null);
             ValeursAnalogiques.Add(Carte.RecMove, null);
+        }
+
+        void RecGoBot_JackChange(bool state)
+        {
+            if (!state && jackArme)
+            {
+                jackArme = false;
+                if (Plateau.Enchainement == null)
+                    Plateau.Enchainement = new GoBot.Enchainements.EnchainementMatch();
+                Plateau.Enchainement.Executer();
+            }
+        }
+
+        void RecGoBot_ColorChange(MatchColor state)
+        {
+            if (state == MatchColor.LeftBlue)
+                couleurEquipe = Plateau.CouleurGaucheBleu;
+            else if (state == MatchColor.RightYellow)
+                couleurEquipe = Plateau.CouleurDroiteJaune;
+
+            Plateau.NotreCouleur = couleurEquipe;
+
+            Devices.Devices.RecGoBot.SetLedColor(Plateau.NotreCouleur);
+
+            SemaphoresTrame[FonctionTrame.RetourCouleurEquipe].Release();
         }
 
         public override void Init()
@@ -101,6 +129,9 @@ namespace GoBot
 
             HistoriqueCoordonnees = new List<Position>();
             Connexion.SendMessage(TrameFactory.DemandePositionContinue(100, this));
+
+            Devices.Devices.RecGoBot.ColorChange += RecGoBot_ColorChange;
+            Devices.Devices.RecGoBot.JackChange += RecGoBot_JackChange;
         }
 
         public override Color DemandeCapteurCouleur(CapteurCouleurID capteur, bool attendre = true)
@@ -314,21 +345,6 @@ namespace GoBot
                     break;
                 case FonctionTrame.TensionBatteries:
                     BatterieVoltage = (double)(trameRecue[2] * 256 + trameRecue[3]) / 100.0;
-                    break;
-                case FonctionTrame.DepartJack:
-                    if (Plateau.Enchainement == null)
-                        Plateau.Enchainement = new GoBot.Enchainements.EnchainementMatch();
-                    Plateau.Enchainement.Executer();
-                    break;
-                case FonctionTrame.RetourCouleurEquipe:
-                    if (trameRecue[2] == 0)
-                        couleurEquipe = Plateau.CouleurGaucheBleu;
-                    else if (trameRecue[2] == 1)
-                        couleurEquipe = Plateau.CouleurDroiteJaune;
-
-                    Plateau.NotreCouleur = couleurEquipe;
-
-                    SemaphoresTrame[FonctionTrame.RetourCouleurEquipe].Release();
                     break;
                 case FonctionTrame.RetourValeursAnalogiques:
                     Carte carte = (Carte)trameRecue[0];
@@ -554,7 +570,7 @@ namespace GoBot
 
         public override void ArmerJack()
         {
-            Connexions.ConnexionIO.SendMessage(TrameFactory.ArmerJack());
+            jackArme = true;
         }
 
         public bool DemandePosition(bool attendre = true)

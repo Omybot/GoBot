@@ -520,10 +520,10 @@ namespace GoBot.Communications
                     output = "Test connexion";
                     break;
                 case FonctionTrame.TensionBatteries:
-                    output = "Tension batteries = {0}V";
+                    output = "Tension batteries = {0-1}V";
                     if (parameters != null)
                     {
-                        output = output.Replace("{0}", (parameters[0] / 100.0).ToString("0.00"));
+                        output = output.Replace("{0-1}", (parameters[0] / 100.0).ToString("0.00"));
                     }
                     break;
                 case FonctionTrame.Reset:
@@ -536,9 +536,6 @@ namespace GoBot.Communications
                         output = output.Replace("{0-1}", parameters[0].ToString());
                         output = output.Replace("{2}", parameters[1].ToString());
                     }
-                    break;
-                case FonctionTrame.DepartJack:
-                    output = "Départ jack";
                     break;
                 case FonctionTrame.DemandeCouleurEquipe:
                     output = "Demande couleur équipe";
@@ -609,9 +606,6 @@ namespace GoBot.Communications
                         output = output.Replace("{0}", Nommeur.Nommer((CodeurID)parameters[0]));
                         output = output.Replace("{1-2-3-4}", parameters[1].ToString());
                     }
-                    break;
-                case FonctionTrame.ArmerJack:
-                    output = "Armer le jack";
                     break;
                 case FonctionTrame.PilotageOnOff:
                     output = "Pilote actionneur on off {0} : {1}";
@@ -899,13 +893,8 @@ namespace GoBot.Communications
         {
             String output = "";
 
-            switch (trame[0])
-            {
-                case (byte)Carte.RecIO:
-                    output = GetMessage((FonctionTrame)trame[1]);
-                    output = GetMessage((FonctionTrame)trame[1], GetParameters(output, trame));
-                    break;
-            }
+            output = GetMessage((FonctionTrame)trame[1]);
+            output = GetMessage((FonctionTrame)trame[1], GetParameters(output, trame));
 
             return output;
         }

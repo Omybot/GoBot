@@ -73,12 +73,14 @@ namespace GoBot.Communications
             return new Trame(tab);
         }
 
-        static public Trame Buzz(byte volume)
+        static public Trame Buzz(int frequency, byte volume)
         {
-            byte[] tab = new byte[3];
+            byte[] tab = new byte[5];
             tab[0] = (byte)Carte.RecGB;
             tab[1] = (byte)FonctionTrame.Buzzer;
-            tab[2] = (byte)volume;
+            tab[2] = (byte)ByteDivide(frequency, true);
+            tab[3] = (byte)ByteDivide(frequency, false);
+            tab[4] = (byte)volume;
 
             return new Trame(tab);
         }
@@ -399,28 +401,11 @@ namespace GoBot.Communications
             Trame retour = new Trame(tab);
             return retour;
         }
-        
-        static public Trame TestConnexionMove(bool bridageAsserv)
-        {
-            byte[] tab = new byte[3];
-            tab[0] = (byte)Carte.RecMove;
-            tab[1] = (byte)FonctionTrame.TestConnexion;
-            tab[2] = (byte)(bridageAsserv ? 1 : 0);
-            return new Trame(tab);
-        }
 
-        static public Trame TestConnexionIO()
+        static public Trame TestConnexion(Carte carte)
         {
             byte[] tab = new byte[2];
-            tab[0] = (byte)Carte.RecIO;
-            tab[1] = (byte)FonctionTrame.TestConnexion;
-            return new Trame(tab);
-        }
-
-        static public Trame TestConnexionGB()
-        {
-            byte[] tab = new byte[2];
-            tab[0] = (byte)Carte.RecGB;
+            tab[0] = (byte)carte;
             tab[1] = (byte)FonctionTrame.TestConnexion;
             return new Trame(tab);
         }
@@ -465,14 +450,6 @@ namespace GoBot.Communications
 
             Trame retour = new Trame(tab);
             return retour;
-        }
-
-        static public Trame ArmerJack()
-        {
-            byte[] tab = new byte[2];
-            tab[0] = (byte)Carte.RecIO;
-            tab[1] = (byte)FonctionTrame.ArmerJack;
-            return new Trame(tab);
         }
 
         static public Trame DemandeCpuPwm(Robot robot)

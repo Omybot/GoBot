@@ -25,7 +25,7 @@ namespace GoBot.IHM
         {
             InitializeComponent();
 
-            boutons = new List<Button3D> { btn1, btn2, btn3, btn4, btn5, btn6, btn7, btn8, btn9, btn10, btnJack, btnCouleur };
+            boutons = new List<Button3D> { btn1, btn2, btn3, btn4, btn5, btn6, btn7, btn8, btn9, btn10, btnJack, btnCouleur, swi1, swi2, swi3, swi4 };
             leds = new List<Led> { ledA1, ledA2, ledA3, ledA4, ledA5, ledA6, ledA7, ledA8, ledB1, ledB2, ledB3, ledB4, ledB5, ledB6, ledB7, ledB8 };
             ledActive = new Dictionary<Led, RecGoBot.LedStatus>();
             leds.ForEach(led => ledActive.Add(led, RecGoBot.LedStatus.Off));
@@ -33,11 +33,23 @@ namespace GoBot.IHM
 
             if (!Config.DesignMode)
             {
-                Devices.Devices.RecGoBot.ButtonChange += new RecGoBot.ButtonChangeDelegate(carte_ButtonChange);
+                Devices.Devices.RecGoBot.ButtonChange += RecGoBot_ButtonChange;
+                Devices.Devices.RecGoBot.ColorChange += RecGoBot_ColorChange;
+                Devices.Devices.RecGoBot.JackChange += RecGoBot_JackChange;
             }
             colorPickup1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             colorPickup1.ColorHover += colorPickup1_ColorHover;
             colorPickup1.ColorClick += colorPickup1_ColorClick;
+        }
+
+        void RecGoBot_JackChange(bool state)
+        {
+            btnJack.State = state;
+        }
+
+        void RecGoBot_ColorChange(MatchColor state)
+        {
+            btnCouleur.State = state == MatchColor.LeftBlue ? true : false;
         }
 
         void colorPickup1_ColorClick(Color color)
@@ -51,20 +63,20 @@ namespace GoBot.IHM
             SetColor(color);
         }
 
-        void carte_ButtonChange(RecGoBot.Buttons btn, bool state)
+        void RecGoBot_ButtonChange(CapteurOnOffID btn, bool state)
         {
             if (this.InvokeRequired)
             {
                 this.Invoke(new EventHandler(delegate
                 {
-                    carte_ButtonChange(btn, state);
+                    RecGoBot_ButtonChange(btn, state);
                 }));
             }
             else
             {
                 if (state)
                 {
-                    boutons[(int)btn].On();
+                    boutons[(int)btn].On(); // Fonctionne pare que l'ordre est respecté, ça va pas durer éternellement
                 }
                 else
                 {
@@ -128,9 +140,9 @@ namespace GoBot.IHM
 
         private void btnBuzz_Click(object sender, EventArgs e)
         {
-            Devices.Devices.RecGoBot.Buzz(200);
+            Devices.Devices.RecGoBot.Buzz(8000, 200);
             Thread.Sleep(1000);
-            Devices.Devices.RecGoBot.Buzz(0);
+            Devices.Devices.RecGoBot.Buzz(0, 0);
         }
 
         private void SetColor(Color color)

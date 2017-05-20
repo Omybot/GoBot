@@ -98,9 +98,9 @@ namespace GoBot
 
                 Connexions.Init();
                 Config.Load();
+                Devices.Devices.Init();
                 Robots.Init();
                 Plateau.Init();
-                Devices.Devices.Init();
 
 
                 IPAddress[] adresses = Dns.GetHostAddresses(Dns.GetHostName());

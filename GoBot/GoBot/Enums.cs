@@ -40,13 +40,30 @@ namespace GoBot
 
         Ejecteur = 102,
 
+        BrasLunaireGauche = 199, // TODO bon ID
+        BrasLunaireDroit = 198, // TODO bon ID
+
+        ServoLunaireGaucheSerrageGauche = 197, // TODO bon ID
+        ServoLunaireGaucheSerrageDroit = 196, // TODO bon ID
+
+        ServoLunaireDroitSerrageGauche = 195, // TODO bon ID
+        ServoLunaireDroitSerrageDroit = 194, // TODO bon ID
+
+        Plaqueur = 193, // TODO bon ID
+
         Tous = 254
+    }
+
+    public enum MatchColor
+    {
+        LeftBlue,
+        RightYellow
     }
 
     public enum MoteurID
     {
-        Orienteur = 0,
-        Transfert = 1,
+        Orienteur = 4,
+        Transfert = 3,
         Balise = 2,
     }
 
@@ -74,7 +91,11 @@ namespace GoBot
         Bouton9,
         Bouton10,
         Jack,
-        CouleurEquipe
+        CouleurEquipe,
+        LSwitch1,
+        LSwitch2,
+        LSwitch3,
+        LSwitch4,
     }
 
     public enum CapteurCouleurID
