@@ -131,10 +131,6 @@ namespace GoBot.Balises
 
             try
             {
-                // On ne traite que les messages qui nous sont adressés
-                if (trame[0] != (byte)0xB1)
-                    return;
-
                 if (trame[1] == (byte)FonctionTrame.DetectionBaliseRapide)
                 {
                     if (Position != null)
@@ -204,11 +200,13 @@ namespace GoBot.Balises
 
                         nbDetectionsRapides = 0;
 
+                        int noCapteur = trame[2];
+
                         // Réception d'une mesure sur un tour de rotation
                         // Vérification checksum
 
                         // Calcul de la vitesse de rotation
-                        int nbTicks = trame[2] * 256 + trame[3];
+                        int nbTicks = trame[3] * 256 + trame[4];
                         VitesseToursSecActuelle = 1 / (nbTicks * 0.0000064);
 
                         int nouvelleVitesse = 0;
@@ -217,8 +215,8 @@ namespace GoBot.Balises
 
                         // Réception des données angulaires
 
-                        int nbMesures1 = trame[4];
-                        int nbMesures2 = trame[5];
+                        int nbMesures1 = trame[5];
+                        int nbMesures2 = trame[6];
 
                         // Si on a un nombre impair de fronts on laisse tomber cette mesure, elle n'est pas bonne
                         if (nbMesures1 % 2 != 0 || nbMesures2 % 2 != 0)
@@ -231,7 +229,7 @@ namespace GoBot.Balises
                         nbMesures2 = nbMesures2 / 2;
 
                         // Vérification de la taille de la trame
-                        if (trame.Length != 6 + nbMesures1 * 4 + nbMesures2 * 4)
+                        if (trame.Length != 7 + nbMesures1 * 4 + nbMesures2 * 4)
                         {
                             Console.WriteLine("Erreur de taille de trame");
                             return;
@@ -244,7 +242,7 @@ namespace GoBot.Balises
                         long verif = 0;
                         for (int i = 0; i < nbMesures1 * 4; i += 2)
                         {
-                            int valeur = trame[6 + i] * 256 + trame[6 + i + 1];
+                            int valeur = trame[7 + i] * 256 + trame[7 + i + 1];
                             tabAngle.Add(valeur);
                             verif += valeur * (i / 2 + 1);
                         }
@@ -297,7 +295,7 @@ namespace GoBot.Balises
 
                         // Réception des mesures du capteur 2
 
-                        int offSet = nbMesures1 * 4 + 6;
+                        int offSet = nbMesures1 * 4 + 7;
 
                         DetectionsCapteur2.Clear();
 

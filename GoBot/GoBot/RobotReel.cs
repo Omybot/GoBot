@@ -277,31 +277,31 @@ namespace GoBot
                     CapteurOnOffID capteur = (CapteurOnOffID)trameRecue[2];
 
                     
-                    if (trameRecue[2] == (byte)CapteurID.Balise)
-                    {
-                        // Recomposition de la trame comme si elle venait d'une balise
-                        String message = "B1 E4 " + trameRecue.ToString().Substring(9);
-                        if (Plateau.Balise != null)
-                            Plateau.Balise.connexion_NouvelleTrame(new Trame(message));
-                    }
+                    //if (trameRecue[2] == (byte)CapteurID.Balise)
+                    //{
+                    //    // Recomposition de la trame comme si elle venait d'une balise
+                    //    String message = "B1 E4 " + trameRecue.ToString().Substring(9);
+                    //    if (Plateau.Balise != null)
+                    //        Plateau.Balise.connexion_NouvelleTrame(new Trame(message));
+                    //}
 
-                    else if (trameRecue[2] == (byte)CapteurID.BaliseRapide1)
-                    {
-                        // Recomposition de la trame comme si elle venait d'une balise
-                        String message = "B1 E5 02 " + trameRecue.ToString().Substring(9);
-                        if (Plateau.Balise != null)
-                            Plateau.Balise.connexion_NouvelleTrame(new Trame(message));
-                    }
+                    //else if (trameRecue[2] == (byte)CapteurID.BaliseRapide1)
+                    //{
+                    //    // Recomposition de la trame comme si elle venait d'une balise
+                    //    String message = "B1 E5 02 " + trameRecue.ToString().Substring(9);
+                    //    if (Plateau.Balise != null)
+                    //        Plateau.Balise.connexion_NouvelleTrame(new Trame(message));
+                    //}
 
-                    else if (trameRecue[2] == (byte)CapteurID.BaliseRapide2)
-                    {
-                        // Recomposition de la trame comme si elle venait d'une balise
-                        String message = "B1 E5 01 " + trameRecue.ToString().Substring(9);
-                        if (Plateau.Balise != null)
-                            Plateau.Balise.connexion_NouvelleTrame(new Trame(message));
-                    }
+                    //else if (trameRecue[2] == (byte)CapteurID.BaliseRapide2)
+                    //{
+                    //    // Recomposition de la trame comme si elle venait d'une balise
+                    //    String message = "B1 E5 01 " + trameRecue.ToString().Substring(9);
+                    //    if (Plateau.Balise != null)
+                    //        Plateau.Balise.connexion_NouvelleTrame(new Trame(message));
+                    //}
 
-                    else
+                    //else
                     {
                         bool nouvelEtat = trameRecue[3] > 0 ? true : false;
                         if (nouvelEtat != CapteurActive[capteur])
