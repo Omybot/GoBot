@@ -71,8 +71,6 @@ namespace GoBot.Enchainements
             Robots.GrosRobot.MoteurPosition(MoteurID.Balise, 0);
             // TODO eteindre ici les actionneurs du robot
             Thread.Sleep(100);
-            Robots.GrosRobot.ActionneurOnOff(ActionneurOnOffID.Alimentation, false);
-            Thread.Sleep(100);
 
             Thread.Sleep(4000);
 

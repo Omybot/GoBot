@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using GoBot.Actions;
 using System.Windows.Forms;
+using GoBot.Communications;
 
 namespace GoBot
 {
@@ -21,13 +22,20 @@ namespace GoBot
             typesEnum.Add(typeof(ActionneurOnOffID));
             typesEnum.Add(typeof(ServomoteurID));
             typesEnum.Add(typeof(MoteurID));
+            typesEnum.Add(typeof(CodeurID));
+            typesEnum.Add(typeof(CapteurCouleurID));
+            typesEnum.Add(typeof(BaliseID));
+            typesEnum.Add(typeof(LedID));
+            typesEnum.Add(typeof(LedRgbID));
+            typesEnum.Add(typeof(LidarID));
+            typesEnum.Add(typeof(FonctionTrame));
             
             foreach (Type type in typesEnum)
             {
                 foreach (var valeur in Enum.GetValues(type))
                 {
-                    String resultat = Nommeur.Nommer((Convert.ChangeType(valeur, type)));
-                    if (resultat == (Convert.ChangeType(valeur, type).ToString()) || resultat == "")
+                    String resultat = Nommeur.NommerInconnu((Convert.ChangeType(valeur, type)));
+                    if (resultat == (Convert.ChangeType(valeur, type).ToString()) || resultat == "" || resultat == "Inconnu")
                     {
                         erreurs.Append("\t");
                         erreurs.Append(type.ToString());
@@ -40,6 +48,7 @@ namespace GoBot
 
             if (erreur)
                 MessageBox.Show(erreurs.ToString(), "Attention", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+
         }
     }
 }

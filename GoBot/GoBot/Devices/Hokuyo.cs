@@ -33,7 +33,7 @@ namespace GoBot.Devices
 
             switch (lidar)
             {
-                case LidarID.LidarSol: model = "URG-04LX-UG01"; break;
+                case LidarID.ScanSol: model = "URG-04LX-UG01"; break;
             }
 
             if (model.Contains("UBG-04LX-F01"))//Hokuyo bleu 

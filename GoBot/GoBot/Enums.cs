@@ -59,12 +59,6 @@ namespace GoBot
 
     public enum ActionneurOnOffID
     {
-        Alimentation = 1
-    }
-
-    public enum ActionneurValeur
-    {
-        Alimentation = 1
     }
 
     public enum CapteurOnOffID
@@ -88,9 +82,44 @@ namespace GoBot
         CouleurTube = 0
     }
 
+    public enum CodeurID
+    {
+        Manuel = 0
+    }
+
+    public enum LedRgbID
+    {
+        CouleurMatch = 0
+    }
+
+    public enum BaliseID
+    {
+        Principale = 0
+    }
+
+    public enum LedID
+    {
+        Debug1 = 1,
+        Debug2 = 2,
+        Debug3 = 3,
+        Debug4 = 4,
+        Debug5 = 5,
+        Debug6 = 6,
+        Debug7 = 7,
+        Debug8 = 8,
+        Debug9 = 9,
+        Debug10 = 10,
+        Debug11 = 11,
+        Debug12 = 12,
+        Debug13 = 13,
+        Debug14 = 14,
+        Debug15 = 15,
+        Debug16 = 16
+    }
+
     public enum LidarID
     {
-        LidarSol = 0
+        ScanSol = 0
     }
 
     public enum Carte

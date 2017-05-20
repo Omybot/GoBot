@@ -761,7 +761,7 @@ namespace GoBot.IHM
             //Trame trameUdp = TrameFactory.EnvoyerUart(Carte.RecIO, trameUart);
             //Connexions.ConnexionIO.SendMessage(trameUdp);
 
-            HokuyoUart lidar = new HokuyoUart(LidarID.LidarSol);
+            HokuyoUart lidar = new HokuyoUart(LidarID.ScanSol);
             List<PointReel> pts = lidar.GetMesure();
             Plateau.ObstaclesPlateau = new List<IForme>();
             foreach (PointReel p in pts)

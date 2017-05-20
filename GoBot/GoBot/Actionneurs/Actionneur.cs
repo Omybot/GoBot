@@ -18,7 +18,7 @@ namespace GoBot.Actionneurs
         static Actionneur()
         {
             brasLunaire = new BrasLunaire();
-            hokuyo = CreateHokuyo("COM3", LidarID.LidarSol);
+            hokuyo = CreateHokuyo("COM3", LidarID.ScanSol);
             convoyeur = new Convoyeur();
             stockeur = new Stockeur();
             ejecteur = new Ejecteur();
