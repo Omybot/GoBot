@@ -18,26 +18,6 @@ namespace GoBot.Devices
         public delegate void ColorChangeDelegate(MatchColor state);
         public event ColorChangeDelegate ColorChange;
 
-        public enum Leds
-        {
-            A1,
-            A2,
-            A3,
-            A4,
-            A5,
-            A6,
-            A7,
-            A8,
-            B1,
-            B2,
-            B3,
-            B4,
-            B5,
-            B6,
-            B7,
-            B8
-        }
-
         public enum LedStatus
         {
             Off,
@@ -47,11 +27,53 @@ namespace GoBot.Devices
         }
 
         private ConnexionUDP connexion;
+        private Dictionary<LedID, LedStatus> ledsStatus;
 
         public RecGoBot(ConnexionUDP conn)
         {
             connexion = conn;
             connexion.NouvelleTrameRecue += new Connexion.ReceptionDelegate(connexion_NouvelleTrameRecue);
+
+            Connexions.ConnexionIO.ConnexionCheck.TestConnexion += ConnexionCheck_TestConnexionIO;
+            Connexions.ConnexionMove.ConnexionCheck.TestConnexion += ConnexionCheck_TestConnexionMove;
+            Connexions.ConnexionGB.ConnexionCheck.TestConnexion += ConnexionCheck_TestConnexionGB;
+
+            ledsStatus = new Dictionary<LedID, LedStatus>();
+            for (LedID i = LedID.DebugB1; i < LedID.DebugA1; i++)
+                ledsStatus.Add(i, LedStatus.Off);
+
+            ButtonChange += RecGoBot_ButtonChange;
+        }
+
+        void RecGoBot_ButtonChange(CapteurOnOffID btn, bool state)
+        {
+            if (btn == CapteurOnOffID.Bouton1 && state)
+                Robots.GrosRobot.Stop(Robots.GrosRobot.AsserActif ? StopMode.Freely : StopMode.Abrupt);
+            if (btn == CapteurOnOffID.Bouton3 && state)
+                Robots.GrosRobot.Avancer(50);
+        }
+
+        void ChangeLedConnection(ConnexionUDP conn, LedID led)
+        {
+            if (ledsStatus[led] == RecGoBot.LedStatus.Off)
+                SetLed(led, conn.ConnexionCheck.Connecte ? RecGoBot.LedStatus.Vert : RecGoBot.LedStatus.Rouge);
+            else
+                SetLed(led, RecGoBot.LedStatus.Off);
+        }
+
+        void ConnexionCheck_TestConnexionIO()
+        {
+            ChangeLedConnection(Connexions.ConnexionIO, LedID.DebugA1);
+        }
+
+        void ConnexionCheck_TestConnexionMove()
+        {
+            ChangeLedConnection(Connexions.ConnexionMove, LedID.DebugA2);
+        }
+
+        void ConnexionCheck_TestConnexionGB()
+        {
+            ChangeLedConnection(Connexions.ConnexionGB, LedID.DebugA3);
         }
 
         void connexion_NouvelleTrameRecue(Trame trameRecue)
@@ -130,8 +152,9 @@ namespace GoBot.Devices
             }
         }
 
-        public void SetLed(Leds led, LedStatus state)
+        public void SetLed(LedID led, LedStatus state)
         {
+            ledsStatus[led] = state;
             connexion.SendMessage(TrameFactory.SetLed(led, state));
         }
 

@@ -56,7 +56,7 @@ namespace GoBot.IHM
             {
                 if (property.Name != "ID")
                 {
-                    noms.Add(Config.PropertyNameToScreen(property) + " - " + property.GetValue(positionnable, null));
+                    noms.Add(Config.PropertyNameToScreen(property) + " : " + property.GetValue(positionnable, null));
                     dicProperties.Add(noms[noms.Count - 1], property);
                 }
             }
@@ -70,7 +70,7 @@ namespace GoBot.IHM
 
         private void comboBoxPosition_SelectedValueChanged(object sender, EventArgs e)
         {
-            String[] tab = ((String)(comboBoxPosition.SelectedItem)).Split(new char[] { '-' });
+            String[] tab = ((String)(comboBoxPosition.SelectedItem)).Split(new char[]{':'});
 
             String position = tab[0].Trim();
             int valeur = Convert.ToInt32(tab[1].Trim());
@@ -80,12 +80,11 @@ namespace GoBot.IHM
 
         private void btnSauvegarderPosition_Click(object sender, EventArgs e)
         {
-            String[] tab = ((String)(comboBoxPosition.SelectedItem)).Split(new char[] { '-' });
+            String[] tab = ((String)(comboBoxPosition.SelectedItem)).Split(new char[] { ':' });
 
             String position = tab[0].Trim().ToLower();
             int valeur = Convert.ToInt32(tab[1].Trim());
-
-
+            
             if (MessageBox.Show("Êtes vous certain de vouloir sauvegarder la position " + position + " de l'actionneur " + comboBoxPositionnables.Text.ToLower() + " à " + numValeurPosition.Value + " (anciennement " + valeur + ") ?", "Confirmation", MessageBoxButtons.OKCancel, MessageBoxIcon.Question) == DialogResult.OK)
             {
                 int index = comboBoxPosition.SelectedIndex;
@@ -94,6 +93,8 @@ namespace GoBot.IHM
                 comboBoxPositionnables_SelectedValueChanged(null, null);
 
                 comboBoxPosition.SelectedIndex = index;
+
+                Config.Save();
             }
         }
 

@@ -512,14 +512,13 @@ namespace GoBot
 
             Bitmap bmpRobot = new Bitmap(Properties.Resources.Capot.Width, Properties.Resources.Capot.Height);
             Graphics gGros = Graphics.FromImage(bmpRobot);
-            /*gGros.FillRectangle(brushTransparent, 0, 0, RealToScreenDistance(robot.Taille * 2), RealToScreenDistance(robot.Taille * 2));
+            gGros.FillRectangle(brushTransparent, 0, 0, RealToScreenDistance(robot.Taille * 2), RealToScreenDistance(robot.Taille * 2));
 
             gGros.FillRectangle(brushBlanc, bmpRobot.Width / 2 - RealToScreenDistance(robot.Largeur / 2), bmpRobot.Height / 2 - RealToScreenDistance(robot.Longueur / 2), RealToScreenDistance(robot.Largeur), RealToScreenDistance(robot.Longueur));
-            gGros.DrawRectangle(Plateau.NotreCouleur == Plateau.CouleurGaucheJaune ? penCouleurJ1R : penCouleurJ2J, bmpRobot.Width / 2 - RealToScreenDistance(robot.Largeur / 2), bmpRobot.Height / 2 - RealToScreenDistance(robot.Longueur / 2), RealToScreenDistance(robot.Largeur), RealToScreenDistance(robot.Longueur));
-            gGros.DrawLine(Plateau.NotreCouleur == Plateau.CouleurGaucheJaune ? penCouleurJ1R : penCouleurJ2J, bmpRobot.Width / 2, bmpRobot.Height / 2, bmpRobot.Width / 2, bmpRobot.Height / 2 - RealToScreenDistance(robot.Longueur / 2));
-            */
-
-            gGros.DrawImage(Properties.Resources.Capot, 0, 0, Properties.Resources.Capot.Width, Properties.Resources.Capot.Height);
+            gGros.DrawRectangle(Plateau.NotreCouleur == Plateau.CouleurDroiteJaune ? penCouleurJ1 : penCouleurJ2, bmpRobot.Width / 2 - RealToScreenDistance(robot.Largeur / 2), bmpRobot.Height / 2 - RealToScreenDistance(robot.Longueur / 2), RealToScreenDistance(robot.Largeur), RealToScreenDistance(robot.Longueur));
+            gGros.DrawLine(Plateau.NotreCouleur == Plateau.CouleurDroiteJaune ? penCouleurJ1 : penCouleurJ2, bmpRobot.Width / 2, bmpRobot.Height / 2, bmpRobot.Width / 2, bmpRobot.Height / 2 - RealToScreenDistance(robot.Longueur / 2));
+            
+            //gGros.DrawImage(Properties.Resources.Capot, 0, 0, Properties.Resources.Capot.Width, Properties.Resources.Capot.Height);
 
             // Dessiner les actionneurs ici
             if (robot == Robots.GrosRobot)

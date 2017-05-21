@@ -48,6 +48,21 @@ namespace GoBot.IHM
 
         }
 
+        private enum BrasLunaireID
+        {
+            Central,
+            Gauche,
+            Droite
+        }
+
+        private BrasLunaireID BrasActuel
+        {
+            get
+            {
+                return (BrasLunaireID)(cboArmSelection.SelectedIndex);
+            }
+        }
+
         private void btnLunaireRange_Click(object sender, EventArgs e)
         {
             Actionneur.BrasLunaire.Rentrer();
@@ -60,22 +75,66 @@ namespace GoBot.IHM
 
         private void btnLunaireBas_Click(object sender, EventArgs e)
         {
-            Actionneur.BrasLunaire.Descendre();
+            switch (BrasActuel)
+            {
+                case BrasLunaireID.Central:
+                    Actionneur.BrasLunaire.Descendre();
+                    break;
+                case BrasLunaireID.Droite:
+                    Actionneur.BrasLunaireDroite.Descendre();
+                    break;
+                case BrasLunaireID.Gauche:
+                    Actionneur.BrasLunaireGauche.Descendre();
+                    break;
+            }
         }
 
         private void btnLunaireHaut_Click(object sender, EventArgs e)
         {
-            Actionneur.BrasLunaire.Monter();
+            switch (BrasActuel)
+            {
+                case BrasLunaireID.Central:
+                    Actionneur.BrasLunaire.Monter();
+                    break;
+                case BrasLunaireID.Droite:
+                    Actionneur.BrasLunaireDroite.Ranger();
+                    break;
+                case BrasLunaireID.Gauche:
+                    Actionneur.BrasLunaireGauche.Monter();
+                    break;
+            }
         }
 
         private void btnLunaireOuvrir_Click(object sender, EventArgs e)
         {
-            Actionneur.BrasLunaire.Ouvrir();
+            switch (BrasActuel)
+            {
+                case BrasLunaireID.Central:
+                    Actionneur.BrasLunaire.Ouvrir();
+                    break;
+                case BrasLunaireID.Droite:
+                    Actionneur.BrasLunaireDroite.Ouvrir();
+                    break;
+                case BrasLunaireID.Gauche:
+                    Actionneur.BrasLunaireGauche.Ouvrir();
+                    break;
+            }
         }
 
         private void btnLunaireFermer_Click(object sender, EventArgs e)
         {
-            Actionneur.BrasLunaire.Ranger();
+            switch (BrasActuel)
+            {
+                case BrasLunaireID.Central:
+                    Actionneur.BrasLunaire.Fermer();
+                    break;
+                case BrasLunaireID.Droite:
+                    Actionneur.BrasLunaireDroite.Fermer();
+                    break;
+                case BrasLunaireID.Gauche:
+                    Actionneur.BrasLunaireGauche.Fermer();
+                    break;
+            }
         }
 
         private void btnLunaireSemiOuvert_Click(object sender, EventArgs e)
@@ -160,6 +219,50 @@ namespace GoBot.IHM
             Actionneur.Stockeur.RangerRehausseur();
             Thread.Sleep(450);
             Actionneur.Ejecteur.Ejecter();
+        }
+
+        private void btnAvale_Click(object sender, EventArgs e)
+        {
+            Actionneur.Convoyeur.Bloque();
+            Thread.Sleep(500);
+            Actionneur.Convoyeur.Avaler();
+            Thread.Sleep(1300);
+            Actionneur.Convoyeur.Arreter();
+            Actionneur.Convoyeur.Libere();
+        }
+
+        private void btnFindColor_Click(object sender, EventArgs e)
+        {
+            Actionneur.Ejecteur.PositionneCouleur();
+            Thread.Sleep(100);
+            Actionneur.Ejecteur.Ejecter();
+        }
+
+        private void btnAttrape_Click(object sender, EventArgs e)
+        {
+            Robots.GrosRobot.ActionneurOnOff(ActionneurOnOffID.AlimCapteurCouleur, true);
+            Actionneur.BrasLunaire.AttrapeModule();
+            Actionneur.Convoyeur.AvaleModule();
+            Actionneur.Stockeur.RelacheBas();
+            Actionneur.Ejecteur.PositionneCouleur();
+            Actionneur.Stockeur.BloqueBas();
+            Actionneur.Ejecteur.Ejecter();
+        }
+
+        private void btnStockModule_Click(object sender, EventArgs e)
+        {
+            switch (BrasActuel)
+            {
+                case BrasLunaireID.Central:
+                    Actionneur.BrasLunaire.Stocker();
+                    break;
+                case BrasLunaireID.Droite:
+                    Actionneur.BrasLunaireDroite.Monter();
+                    break;
+                case BrasLunaireID.Gauche:
+                    Actionneur.BrasLunaireGauche.Stocker();
+                    break;
+            }
         }
     }
 }

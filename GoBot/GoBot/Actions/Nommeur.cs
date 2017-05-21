@@ -43,9 +43,9 @@ namespace GoBot.Actions
                 case ServomoteurID.Tous:
                     return "tous les servomoteurs";
                 case ServomoteurID.BrasLunaireAvance:
-                    return "bras lunaire linéaire";
+                    return "bras lunaire sort";
                 case ServomoteurID.BrasLunaireMonte:
-                    return "bras lunaire rotation";
+                    return "bras lunaire central";
                 case ServomoteurID.ServoLunaireSerrageDroit:
                     return "bras lunaire serrage droit";
                 case ServomoteurID.ServoLunaireSerrageGauche:
@@ -60,7 +60,20 @@ namespace GoBot.Actions
                     return "éjecteur";
                 case ServomoteurID.Rehausseur:
                     return "réhausseur";
-
+                case ServomoteurID.BrasLunaireGauche:
+                    return "bras lunaire gauche";
+                case ServomoteurID.ServoLunaireGaucheSerrageDroit:
+                    return "serrage droit du bras lunaire gauche";
+                case ServomoteurID.ServoLunaireGaucheSerrageGauche:
+                    return "serrage gauche du bras lunaire gauche";
+                case ServomoteurID.BrasLunaireDroit:
+                    return "bras lunaire droit";
+                case ServomoteurID.ServoLunaireDroitSerrageDroit:
+                    return "serrage droit du bras lunaire droit";
+                case ServomoteurID.ServoLunaireDroitSerrageGauche:
+                    return "serrage gauche du bras lunaire droit";
+                case ServomoteurID.Plaqueur:
+                    return "plaqueur de modules";
                 
                 default:
                     if (servo.ToString().Contains("zzLibre"))
@@ -223,6 +236,8 @@ namespace GoBot.Actions
         {
             switch (actionneur)
             {
+                case ActionneurOnOffID.AlimCapteurCouleur:
+                    return "alimentation capteur couleur";
                 default:
                     return actionneur.ToString();
             }
@@ -332,38 +347,38 @@ namespace GoBot.Actions
         {
             switch (led)
             {
-                case LedID.Debug1:
-                    return "debug 1";
-                case LedID.Debug2:
-                    return "debug 2";
-                case LedID.Debug3:
-                    return "debug 3";
-                case LedID.Debug4:
-                    return "debug 4";
-                case LedID.Debug5:
-                    return "debug 5";
-                case LedID.Debug6:
-                    return "debug 6";
-                case LedID.Debug7:
-                    return "debug 7";
-                case LedID.Debug8:
-                    return "debug 8";
-                case LedID.Debug9:
-                    return "debug 9";
-                case LedID.Debug10:
-                    return "debug 10";
-                case LedID.Debug11:
-                    return "debug 11";
-                case LedID.Debug12:
-                    return "debug 12";
-                case LedID.Debug13:
-                    return "debug 13";
-                case LedID.Debug14:
-                    return "debug 14";
-                case LedID.Debug15:
-                    return "debug 15";
-                case LedID.Debug16:
-                    return "debug 16";
+                case LedID.DebugA1:
+                    return "debug A1";
+                case LedID.DebugA2:
+                    return "debug A2";
+                case LedID.DebugA3:
+                    return "debug A3";
+                case LedID.DebugA4:
+                    return "debug A4";
+                case LedID.DebugA5:
+                    return "debug A5";
+                case LedID.DebugA6:
+                    return "debug A6";
+                case LedID.DebugA7:
+                    return "debug A7";
+                case LedID.DebugA8:
+                    return "debug A8";
+                case LedID.DebugB8:
+                    return "debug B8";
+                case LedID.DebugB7:
+                    return "debug B7";
+                case LedID.DebugB6:
+                    return "debug B6";
+                case LedID.DebugB5:
+                    return "debug B5";
+                case LedID.DebugB4:
+                    return "debug B4";
+                case LedID.DebugB3:
+                    return "debug B3";
+                case LedID.DebugB2:
+                    return "debug B2";
+                case LedID.DebugB1:
+                    return "debug B1";
                 default:
                     return led.ToString();
             }

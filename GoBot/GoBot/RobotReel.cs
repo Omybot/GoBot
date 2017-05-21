@@ -40,11 +40,13 @@ namespace GoBot
         {
             jackArme = false;
             AngleTotalParcouru = 0;
+            AsserActif = true;
             DistanceTotaleParcourue = 0;
             Carte = carte;
             IDRobot = idRobot;
             ServomoteursConnectes = new List<byte>();
             CapteurActive = new Dictionary<CapteurOnOffID, bool>();
+            ActionneurActive = new Dictionary<ActionneurOnOffID, bool>();
             CapteursCouleur = new Dictionary<CapteurCouleurID, Color>();
 
             foreach (FonctionTrame fonction in Enum.GetValues(typeof(FonctionTrame)))
@@ -54,6 +56,11 @@ namespace GoBot
             {
                 SemaphoresCapteurs.Add(fonction, new Semaphore(0, int.MaxValue));
                 CapteurActive.Add(fonction, false);
+            }
+
+            foreach (ActionneurOnOffID fonction in Enum.GetValues(typeof(ActionneurOnOffID)))
+            {
+                ActionneurActive.Add(fonction, false);
             }
 
             foreach (CapteurCouleurID fonction in Enum.GetValues(typeof(CapteurCouleurID)))
@@ -181,10 +188,20 @@ namespace GoBot
 
         public void ActivationAsserv()
         {
+            for (LedID i = LedID.DebugB1; i <= LedID.DebugA1; i++)
+                Devices.Devices.RecGoBot.SetLed((LedID)i, RecGoBot.LedStatus.Rouge);
+
+            Devices.Devices.RecGoBot.Buzz(7000, 200);
+
             Thread.Sleep(500);
             TrajectoireEchouee = true;
             Stop(StopMode.Abrupt);
             SemaphoresTrame[FonctionTrame.FinDeplacement].Release();
+
+            Devices.Devices.RecGoBot.Buzz(0, 200);
+
+            for (LedID i = LedID.DebugB1; i <= LedID.DebugA1; i++)
+                Devices.Devices.RecGoBot.SetLed((LedID)i, RecGoBot.LedStatus.Off);
         }
 
         public void ReceptionMessage(Trame trameRecue)
@@ -289,6 +306,9 @@ namespace GoBot
                     break;
                 case FonctionTrame.RetourCapteurCouleur:
                     ChangeCouleurCapteur((CapteurCouleurID)trameRecue[2], Color.FromArgb(trameRecue[3], trameRecue[4], trameRecue[5]));
+                    CapteursCouleur[(CapteurCouleurID)trameRecue[2]] = Color.FromArgb(trameRecue[3], trameRecue[4], trameRecue[5]);
+                    if (SemaphoresCouleur[(CapteurCouleurID)trameRecue[2]] != null)
+                        SemaphoresCouleur[(CapteurCouleurID)trameRecue[2]].Release();
                     break;
                 case FonctionTrame.ReponseLidar:
                     int lidarID = trameRecue[2];
@@ -296,13 +316,31 @@ namespace GoBot
                     if (mesureLidar == null)
                         mesureLidar = "";
 
-                    for(int i = 3; i < trameRecue.Length; i++)
+                    String mess = "";
+                    int decallageEntete = 3;
+
+                    if (mesureLidar.Length == 0)
+                    {
+                        // C'est le début de la trame à recomposer, et au début y'a la position de la prise de mesure à lire !
+
+                        double y = (double)((short)(trameRecue[3] << 8 | trameRecue[4]) / 10.0);
+                        double x = (double)((short)(trameRecue[5] << 8 | trameRecue[6]) / 10.0);
+                        double teta = (trameRecue[7] << 8 | trameRecue[8]) / 100.0 - 180;
+
+                        positionMesureLidar = new Position(teta, new PointReel(x, y));
+                        decallageEntete += 6;
+                    }
+
+                    for (int i = decallageEntete; i < trameRecue.Length; i++)
                     {
                         mesureLidar += (char)trameRecue[i];
+                        mess += (char)trameRecue[i];
                     }
 
                     if (Regex.Matches(mesureLidar, "\n\n").Count == 2)
+                    {
                         SemaphoresTrame[FonctionTrame.ReponseLidar].Release();
+                    }
                     break;
                 case FonctionTrame.RetourCapteurOnOff:
                     CapteurOnOffID capteur = (CapteurOnOffID)trameRecue[2];
@@ -499,6 +537,8 @@ namespace GoBot
 
         public override void Stop(StopMode mode = StopMode.Smooth)
         {
+            AsserActif = (mode !=StopMode.Freely);
+
             Trame trame = TrameFactory.Stop(mode, this);
             DeplacementLigne = false;
 
@@ -633,6 +673,7 @@ namespace GoBot
 
         public override void ActionneurOnOff(ActionneurOnOffID actionneur, bool on)
         {
+            ActionneurActive[actionneur] = on;
             Trame trame = TrameFactory.ActionneurOnOff(actionneur, on);
             Connexions.ConnexionIO.SendMessage(trame);
 
@@ -731,11 +772,11 @@ namespace GoBot
             Connexion.SendMessage(trame);
         }
 
-        public override void MoteurVitesse(MoteurID moteur, int vitesse)
+        public override void MoteurVitesse(MoteurID moteur, SensGD sens, int vitesse)
         {
-            base.MoteurVitesse(moteur, vitesse);
+            base.MoteurVitesse(moteur, sens, vitesse);
 
-            Trame trame = TrameFactory.MoteurVitesse(moteur, vitesse);
+            Trame trame = TrameFactory.MoteurVitesse(moteur, sens, vitesse);
             Connexions.ConnexionIO.SendMessage(trame);
         }
 
@@ -765,12 +806,15 @@ namespace GoBot
         }
 
         private String mesureLidar;
-        public override String GetMesureLidar(LidarID lidar, int timeout)
+        private Position positionMesureLidar;
+
+        public override String GetMesureLidar(LidarID lidar, int timeout, out Position refPosition)
         {
             mesureLidar = "";
             SemaphoresTrame[FonctionTrame.ReponseLidar] = new Semaphore(0, int.MaxValue);
             Connexions.ConnexionMove.SendMessage(TrameFactory.DemandeMesureLidar(lidar));
             SemaphoresTrame[FonctionTrame.ReponseLidar].WaitOne(timeout);
+            refPosition = positionMesureLidar;
             return mesureLidar;
         }
 

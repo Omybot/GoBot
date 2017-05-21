@@ -47,7 +47,7 @@ namespace GoBot.Devices
             //}
         }
 
-        protected override String GetResultat(int timeout = 500)
+        protected override String GetResultat(out Position refPosition, int timeout = 500)
         {
             port.WriteLine(trameMesure);
 
@@ -58,6 +58,8 @@ namespace GoBot.Devices
             {
                 reponse += port.ReadExisting();
             } while (Regex.Matches(reponse, "\n\n").Count < 2 && chrono.ElapsedMilliseconds < timeout);
+
+            refPosition = PositionDepuisRobot(Robots.GrosRobot.Position);
 
             if (chrono.ElapsedMilliseconds > timeout)
                 return "";

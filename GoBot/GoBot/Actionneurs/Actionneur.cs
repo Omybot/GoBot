@@ -14,6 +14,9 @@ namespace GoBot.Actionneurs
         private static Convoyeur convoyeur;
         private static Stockeur stockeur;
         private static Ejecteur ejecteur;
+        private static BrasLunaireDroite brasLunaireDroite;
+        private static BrasLunaireGauche brasLunaireGauche;
+
 
         static Actionneur()
         {
@@ -22,6 +25,8 @@ namespace GoBot.Actionneurs
             convoyeur = new Convoyeur();
             stockeur = new Stockeur();
             ejecteur = new Ejecteur();
+            brasLunaireDroite = new BrasLunaireDroite();
+            brasLunaireGauche = new BrasLunaireGauche();
         }
 
         public static Hokuyo CreateHokuyo(String portCom, LidarID id)
@@ -76,6 +81,18 @@ namespace GoBot.Actionneurs
         {
             get { return stockeur; }
             set { stockeur = value; }
+        }
+
+        public static BrasLunaireDroite BrasLunaireDroite
+        {
+            get { return Actionneur.brasLunaireDroite; }
+            set { Actionneur.brasLunaireDroite = value; }
+        }
+
+        public static BrasLunaireGauche BrasLunaireGauche
+        {
+            get { return Actionneur.brasLunaireGauche; }
+            set { Actionneur.brasLunaireGauche = value; }
         }
     }
 }

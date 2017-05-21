@@ -15,15 +15,16 @@ namespace GoBot.Devices
     abstract class Hokuyo
     {
         private const int offsetX = 115;
-        private const int offsetY = 87;
+        private const int offsetY = -87;
 
         protected int nbPoints;
         protected LidarID lidar;
 
         private Angle angleMesurable;
-        private Position position;
         private int offsetPoints;
         private String model;
+
+        public Position Position;
 
         public Hokuyo(LidarID lidar)
         {
@@ -55,14 +56,7 @@ namespace GoBot.Devices
                 offsetPoints = 0;
             }
 
-            position = Robots.GrosRobot.Position;
-
-            Robots.GrosRobot.PositionChange += GrosRobot_PositionChange;
-        }
-
-        public Position Position
-        {
-            get { return position; }
+            Position = new Position();
         }
 
         public Angle AngleMort
@@ -70,12 +64,7 @@ namespace GoBot.Devices
             get { return new Angle(360 - angleMesurable); }
         }
 
-        void GrosRobot_PositionChange(Position robotPosition)
-        {
-            position = PositionDepuisRobot(robotPosition);
-        }
-
-        private Position PositionDepuisRobot(Position robotPosition)
+        protected Position PositionDepuisRobot(Position robotPosition)
         {
             return new Position(robotPosition.Angle, new PointReel(robotPosition.Coordonnees.X + offsetX, robotPosition.Coordonnees.Y + offsetY).Rotation(robotPosition.Angle, robotPosition.Coordonnees));
         }
@@ -88,9 +77,11 @@ namespace GoBot.Devices
             semLock.WaitOne();
             DateTime debut = DateTime.Now;
 
-            String reponse = GetResultat();
+            Position refPosition;
+            String reponse = GetResultat(out refPosition);
+            Position = refPosition;
 
-            Console.WriteLine((DateTime.Now - debut).Milliseconds.ToString() + "ms");
+            //Console.WriteLine((DateTime.Now - debut).Milliseconds.ToString() + "ms");
 
             try
             {
@@ -98,7 +89,7 @@ namespace GoBot.Devices
                 {
                     List<int> mesures = DecodeMessage(reponse);
                     mesures.RemoveRange(0, offsetPoints);
-                    points = ValeursToPositions(mesures, false);
+                    points = ValeursToPositions(mesures, false, refPosition);
                 }
             }
             catch (Exception) { }
@@ -108,7 +99,7 @@ namespace GoBot.Devices
             return points;
         }
 
-        protected List<PointReel> ValeursToPositions(List<int> mesures, bool limiteTable = true)
+        protected List<PointReel> ValeursToPositions(List<int> mesures, bool limiteTable, Position refPosition)
         {
             List<PointReel> positions = new List<PointReel>();
             double stepAngular = angleMesurable.AngleRadiansPositif / (double)mesures.Count;
@@ -118,10 +109,10 @@ namespace GoBot.Devices
                 if (mesures[i] > 100) // SUpprime tous les points à moins de 10cm
                 {
                     double angle = stepAngular * i;
-                    double sin = Math.Sin(angle - position.Angle.AngleRadiansPositif - angleMesurable.AngleRadiansPositif / 2 - Math.PI / 2) * mesures[i];
-                    double cos = Math.Cos(angle - position.Angle.AngleRadiansPositif - angleMesurable.AngleRadiansPositif / 2 - Math.PI / 2) * mesures[i];
+                    double sin = Math.Sin(angle - refPosition.Angle.AngleRadiansPositif - angleMesurable.AngleRadiansPositif / 2 - Math.PI / 2) * mesures[i];
+                    double cos = Math.Cos(angle - refPosition.Angle.AngleRadiansPositif - angleMesurable.AngleRadiansPositif / 2 - Math.PI / 2) * mesures[i];
 
-                    PointReel pos = new PointReel(position.Coordonnees.X - sin, position.Coordonnees.Y - cos);
+                    PointReel pos = new PointReel(refPosition.Coordonnees.X - sin, refPosition.Coordonnees.Y - cos);
 
                     int marge = 20; // Marge en mm de distance de detection à l'exterieur de la table (pour ne pas jeter les mesures de la bordure qui ne collent pas parfaitement)
                     if (!limiteTable || (pos.X > -marge && pos.X < Plateau.LongueurPlateau + marge && pos.Y > -marge && pos.Y < Plateau.LargeurPlateau + marge))
@@ -132,7 +123,7 @@ namespace GoBot.Devices
             return positions;
         }
 
-        protected abstract String GetResultat(int timeout = 500);
+        protected abstract String GetResultat(out Position refPosition, int timeout = 500);
 
         protected List<int> DecodeMessage(String message)
         {

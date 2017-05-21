@@ -30,6 +30,7 @@ namespace GoBot
         public int Rayon { get { return (int)Math.Sqrt(Longueur * Longueur + Largeur * Largeur) / 2 - 14; } } // -14 = valeur calculée pour l'année 2015 sur les biseaux
 
         // Déplacement
+        public bool AsserActif { get; set; }
         public abstract Position Position { get; set; }
         public PointReel PositionCible { get; set; }
         public bool DeplacementLigne { get; protected set; }
@@ -106,11 +107,12 @@ namespace GoBot
 
         public abstract void ArmerJack();
         public abstract bool GetJack();
-        public abstract String GetMesureLidar(LidarID lidar, int timeout);
+        public abstract String GetMesureLidar(LidarID lidar, int timeout, out Position refPosition);
         public abstract Color GetCouleurEquipe(bool historique = true);
 
         public Dictionary<CapteurOnOffID, bool> CapteurActive { get; set; }
         public Dictionary<CapteurCouleurID, Color> CapteursCouleur { get; set; }
+        public Dictionary<ActionneurOnOffID, bool> ActionneurActive { get; set; }
         public Dictionary<Carte, List<double>> ValeursAnalogiques { get; set; }
 
         public delegate void ChangementEtatCapteurOnOffDelegate(CapteurOnOffID capteur, bool etat);
@@ -190,7 +192,7 @@ namespace GoBot
             Historique.AjouterAction(new ActionMoteur(this, position, moteur));
         }
 
-        public virtual void MoteurVitesse(MoteurID moteur, int vitesse)
+        public virtual void MoteurVitesse(MoteurID moteur, SensGD sens, int vitesse)
         {
             if (MoteurTourne.ContainsKey(moteur))
                 MoteurTourne[moteur] = vitesse == 0 ? false : true;

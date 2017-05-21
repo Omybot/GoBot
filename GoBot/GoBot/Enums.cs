@@ -29,7 +29,7 @@ namespace GoBot
         ServoLunaireSerrageGauche = 100,
         ServoLunaireSerrageDroit = 101,
 
-        BrasLunaireAvance = 108,
+        BrasLunaireAvance = 112,
         BrasLunaireMonte = 20,
 
         Chariot = 50,
@@ -38,18 +38,18 @@ namespace GoBot
         BloqueurHaut = 107,
         Rehausseur = 3,
 
-        Ejecteur = 102,
+        Ejecteur = 114,
 
-        BrasLunaireGauche = 199, // TODO bon ID
-        BrasLunaireDroit = 198, // TODO bon ID
+        BrasLunaireGauche = 26,
+        BrasLunaireDroit = 24,
 
-        ServoLunaireGaucheSerrageGauche = 197, // TODO bon ID
-        ServoLunaireGaucheSerrageDroit = 196, // TODO bon ID
+        ServoLunaireGaucheSerrageGauche = 102,
+        ServoLunaireGaucheSerrageDroit = 103,
 
-        ServoLunaireDroitSerrageGauche = 195, // TODO bon ID
-        ServoLunaireDroitSerrageDroit = 194, // TODO bon ID
+        ServoLunaireDroitSerrageGauche = 108,
+        ServoLunaireDroitSerrageDroit = 111,
 
-        Plaqueur = 193, // TODO bon ID
+        Plaqueur = 23,
 
         Tous = 254
     }
@@ -76,6 +76,7 @@ namespace GoBot
 
     public enum ActionneurOnOffID
     {
+        AlimCapteurCouleur = 1
     }
 
     public enum CapteurOnOffID
@@ -120,22 +121,22 @@ namespace GoBot
 
     public enum LedID
     {
-        Debug1 = 1,
-        Debug2 = 2,
-        Debug3 = 3,
-        Debug4 = 4,
-        Debug5 = 5,
-        Debug6 = 6,
-        Debug7 = 7,
-        Debug8 = 8,
-        Debug9 = 9,
-        Debug10 = 10,
-        Debug11 = 11,
-        Debug12 = 12,
-        Debug13 = 13,
-        Debug14 = 14,
-        Debug15 = 15,
-        Debug16 = 16
+        DebugA1 = 15,
+        DebugA2 = 14,
+        DebugA3 = 13,
+        DebugA4 = 12,
+        DebugA5 = 11,
+        DebugA6 = 10,
+        DebugA7 = 9,
+        DebugA8 = 8,
+        DebugB8 = 7,
+        DebugB7 = 6,
+        DebugB6 = 5,
+        DebugB5 = 4,
+        DebugB4 = 3,
+        DebugB3 = 2,
+        DebugB2 = 1,
+        DebugB1 = 0
     }
 
     public enum LidarID

@@ -632,11 +632,12 @@ namespace GoBot.Communications
                     }
                     break;
                 case FonctionTrame.MoteurVitesse:
-                    output = "Pilote moteur {0} vitesse {1-2}";
+                    output = "Pilote moteur {0} vitesse {2-3} vers la {1}";
                     if (parameters != null)
                     {
                         output = output.Replace("{0}", Nommeur.Nommer((MoteurID)parameters[0]));
-                        output = output.Replace("{1}", parameters[1].ToString());
+                        output = output.Replace("{2-3}", parameters[1].ToString());
+                        output = output.Replace("{1}", ((SensGD)parameters[2]).ToString().ToLower());
                     }
                     break;
                 case FonctionTrame.MoteurAccel:

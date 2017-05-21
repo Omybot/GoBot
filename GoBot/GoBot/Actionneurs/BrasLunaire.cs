@@ -10,6 +10,11 @@ namespace GoBot.Actionneurs
 {
     class BrasLunaire
     {
+        public void Stocker()
+        {
+            Config.CurrentConfig.ServoLunaireMonte.Positionner(Config.CurrentConfig.ServoLunaireMonte.PositionMoyenne);
+        }
+
         public void Sortir()
         {
             Config.CurrentConfig.ServoLunaireChariot.Positionner(Config.CurrentConfig.ServoLunaireChariot.PositionSortie);
@@ -81,6 +86,22 @@ namespace GoBot.Actionneurs
             }
 
             MessageBox.Show(sw.ElapsedMilliseconds + "ms");
+        }
+
+        public void AttrapeModule()
+        {
+            Ouvrir();
+            Descendre();
+            Thread.Sleep(300);
+            Sortir();
+            Thread.Sleep(400);
+            Fermer();
+            Thread.Sleep(400);
+            Monter();
+            Rentrer();
+            Thread.Sleep(400);
+            Ouvrir();
+            Thread.Sleep(100);
         }
     }
 }

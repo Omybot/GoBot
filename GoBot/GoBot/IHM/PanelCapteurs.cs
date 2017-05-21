@@ -22,6 +22,7 @@ namespace GoBot.IHM
         {
             if (btnColor.Actif)
             {
+                Robots.GrosRobot.ActionneurOnOff(ActionneurOnOffID.AlimCapteurCouleur, true);
                 Robots.GrosRobot.CapteurCouleurChange += GrosRobot_CapteurCouleurChange;
                 tCouleur = new Timer();
                 tCouleur.Tick += tCouleur_Tick;
@@ -30,6 +31,7 @@ namespace GoBot.IHM
             }
             else
             {
+                Robots.GrosRobot.ActionneurOnOff(ActionneurOnOffID.AlimCapteurCouleur, false);
                 Robots.GrosRobot.CapteurCouleurChange -= GrosRobot_CapteurCouleurChange;
                 tCouleur.Stop();
                 tCouleur.Dispose();

@@ -34,7 +34,7 @@ namespace GoBot.IHM
                 if (checkedListBoxBaudrates.CheckedIndices.Contains(iBaudrate))
                 {
                     Connexions.ConnexionIO.SendMessage(TrameFactory.ChangementBaudrate(baudrate));
-                    Thread.Sleep(20);
+                    Thread.Sleep(100);
 
                     //Servomoteur servoAll = new Servomoteur(Carte.RecIO, 254, 0);
                     //if (servoAll.Connecte)

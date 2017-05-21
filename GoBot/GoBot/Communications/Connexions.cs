@@ -42,17 +42,17 @@ namespace GoBot.Communications
 
         public static void ConnexionMoveCheck_TestConnexion()
         {
-            ConnexionMove.SendMessage(TrameFactory.TestConnexionMove(Robots.GrosRobot.BatterieVoltage < 21));
+            ConnexionMove.SendMessage(TrameFactory.TestConnexion(Carte.RecMove));
         }
 
         public static void ConnexionIOCheck_TestConnexion()
         {
-            ConnexionIO.SendMessage(TrameFactory.TestConnexionIO());
+            ConnexionIO.SendMessage(TrameFactory.TestConnexion(Carte.RecIO));
         }
 
         public static void ConnexionGBCheck_TestConnexion()
         {
-            ConnexionGB.SendMessage(TrameFactory.TestConnexionGB());
+            ConnexionGB.SendMessage(TrameFactory.TestConnexion(Carte.RecGB));
         }
     }
 }

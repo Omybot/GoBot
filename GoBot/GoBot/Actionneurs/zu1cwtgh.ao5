@@ -32,7 +32,7 @@ namespace GoBot.Actionneurs
         public void Ejecter()
         {
             SortirEjecteur();
-            Thread.Sleep(275);
+            Thread.Sleep(350);
             RentrerEjecteur();
             CouleurPositionnee = false;
         }
@@ -52,29 +52,51 @@ namespace GoBot.Actionneurs
             Config.CurrentConfig.MoteurOrientation.Positionner(Config.CurrentConfig.MoteurOrientation.ValeurStop);
         }
 
-        private delegate bool FindColorDelegate();
-
         public void PositionneCouleur()
         {
             if (Plateau.NotreCouleur == Plateau.CouleurDroiteJaune)
-                Positionne(IsYellow);
+                PositionneJaune();
             else
-                Positionne(IsBlue);
+                PositionneBleu();
         }
 
-        private void Positionne(FindColorDelegate CheckColor)
+        private void PositionneBleu()
         {
-            DemarrerCapteurCouleur();
+            Robots.GrosRobot.ActionneurOnOff(ActionneurOnOffID.AlimCapteurCouleur, true);
+
+            Thread.Sleep(120);
 
             TournerGauche();
             for (int i = 0; i < 3; i++) //On veut plusieurs mesures bonnes histoire d'etre un peu plus sur
             {
                 Thread.Sleep(10);
-                while (!CheckColor())
+                while (!IsBlue())
                     Thread.Sleep(10);
             }
             Thread.Sleep(300);
             TournerStop();
+
+            Robots.GrosRobot.ActionneurOnOff(ActionneurOnOffID.AlimCapteurCouleur, false);
+
+            CouleurPositionnee = true;
+        }
+
+        private void PositionneJaune()
+        {
+            Robots.GrosRobot.ActionneurOnOff(ActionneurOnOffID.AlimCapteurCouleur, true);
+
+            Thread.Sleep(200);
+
+            TournerGauche();
+            for (int i = 0; i < 3; i++) //On veut plusieurs mesures bonnes histoire d'etre un peu plus sur
+            {
+                Thread.Sleep(10);
+                while (!IsYellow())
+                    Thread.Sleep(10);
+            }
+            Thread.Sleep(300);
+            TournerStop();
+            Robots.GrosRobot.ActionneurOnOff(ActionneurOnOffID.AlimCapteurCouleur, false);
 
             CouleurPositionnee = true;
         }
@@ -96,7 +118,7 @@ namespace GoBot.Actionneurs
         {
             if (!Robots.GrosRobot.ActionneurActive[ActionneurOnOffID.AlimCapteurCouleur])
             {
-                Robots.GrosRobot.ActionneurOnOff(ActionneurOnOffID.AlimCapteurCouleur, true);
+                Robots.GrosRobot.ActionneurOnOff(ActionneurOnOffID.AlimCapteurCouleur, on);
                 Thread.Sleep(200);
             }
         }

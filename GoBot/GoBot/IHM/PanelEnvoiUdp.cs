@@ -101,6 +101,11 @@ namespace GoBot.IHM
                 Trame trame = TrameFactory.Debug(Carte.RecIO, val);
                 Connexions.ConnexionIO.SendMessage(trame);
             }
+            if (boxGB.Checked)
+            {
+                Trame trame = TrameFactory.Debug(Carte.RecGB, val);
+                Connexions.ConnexionGB.SendMessage(trame);
+            }
         }
 
         private System.Windows.Forms.Timer timerTestConnexion;
@@ -127,13 +132,18 @@ namespace GoBot.IHM
         {
             if (boxMove.Checked)
             {
-                Trame trame = TrameFactory.TestConnexionMove(Robots.GrosRobot.BatterieVoltage < Config.CurrentConfig.BatterieRobotOrange && Robots.GrosRobot.BatterieVoltage < Config.CurrentConfig.BatterieRobotOrange);
+                Trame trame = TrameFactory.TestConnexion(Carte.RecMove);
                 Connexions.ConnexionMove.SendMessage(trame);
             }
             if (boxIO.Checked)
             {
-                Trame trame = TrameFactory.TestConnexionIO();
+                Trame trame = TrameFactory.TestConnexion(Carte.RecIO);
                 Connexions.ConnexionIO.SendMessage(trame);
+            }
+            if (boxGB.Checked)
+            {
+                Trame trame = TrameFactory.TestConnexion(Carte.RecGB);
+                Connexions.ConnexionGB.SendMessage(trame);
             }
         }
 

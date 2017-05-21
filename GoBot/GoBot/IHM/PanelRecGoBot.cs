@@ -12,7 +12,7 @@ using GoBot.Communications;
 using System.Reflection;
 using GoBot.Devices;
 using Composants;
-
+using GoBot.Actionneurs;
 namespace GoBot.IHM
 {
     public partial class PanelRecGoBot : UserControl
@@ -31,25 +31,51 @@ namespace GoBot.IHM
             leds.ForEach(led => ledActive.Add(led, RecGoBot.LedStatus.Off));
             leds.ForEach(led => led.CouleurGris());
 
-            if (!Config.DesignMode)
-            {
-                Devices.Devices.RecGoBot.ButtonChange += RecGoBot_ButtonChange;
-                Devices.Devices.RecGoBot.ColorChange += RecGoBot_ColorChange;
-                Devices.Devices.RecGoBot.JackChange += RecGoBot_JackChange;
-            }
             colorPickup1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             colorPickup1.ColorHover += colorPickup1_ColorHover;
             colorPickup1.ColorClick += colorPickup1_ColorClick;
         }
 
+        private void PanelConstantes_Load(object sender, EventArgs e)
+        {
+            if (!Config.DesignMode)
+            {
+                // TODO déplacer en dehors de la fenetre
+                Devices.Devices.RecGoBot.ButtonChange += RecGoBot_ButtonChange;
+                Devices.Devices.RecGoBot.ColorChange += RecGoBot_ColorChange;
+                Devices.Devices.RecGoBot.JackChange += RecGoBot_JackChange;
+            }
+        }
+
         void RecGoBot_JackChange(bool state)
         {
-            btnJack.State = state;
+            if (this.InvokeRequired)
+            {
+                this.Invoke(new EventHandler(delegate
+                {
+                    RecGoBot_JackChange(state);
+                }));
+            }
+            else
+            {
+                btnJack.State = state;
+                Devices.Devices.RecGoBot.SetLed(LedID.DebugB1, state ? RecGoBot.LedStatus.Vert : RecGoBot.LedStatus.Rouge);
+            }
         }
 
         void RecGoBot_ColorChange(MatchColor state)
         {
-            btnCouleur.State = state == MatchColor.LeftBlue ? true : false;
+            if (this.InvokeRequired)
+            {
+                this.Invoke(new EventHandler(delegate
+                {
+                    RecGoBot_ColorChange(state);
+                }));
+            }
+            else
+            {
+                btnCouleur.State = state == MatchColor.LeftBlue ? true : false;
+            }
         }
 
         void colorPickup1_ColorClick(Color color)
@@ -86,23 +112,6 @@ namespace GoBot.IHM
             }
         }
 
-        private void PanelConstantes_Load(object sender, EventArgs e)
-        {
-            if (!Config.DesignMode)
-            {
-            }
-        }
-
-        private void button3D4_MouseEnter(object sender, EventArgs e)
-        {
-            btn4.On();
-        }
-
-        private void button3D4_MouseLeave(object sender, EventArgs e)
-        {
-            btn4.Off();
-        }
-
         private void leds_MouseClick(object sender, MouseEventArgs e)
         {
             Led ledSender = (Led)sender;
@@ -128,7 +137,7 @@ namespace GoBot.IHM
                     break;
             }
 
-            Devices.Devices.RecGoBot.SetLed((RecGoBot.Leds)ledNo, ledActive[ledSender]);
+            Devices.Devices.RecGoBot.SetLed((LedID)ledNo, ledActive[ledSender]);
         }
 
         private void picLedColor_Click(object sender, EventArgs e)

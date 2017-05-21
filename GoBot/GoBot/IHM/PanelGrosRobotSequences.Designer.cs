@@ -29,6 +29,10 @@
         private void InitializeComponent()
         {
             this.groupBoxSequences = new Composants.GroupBoxRetractable();
+            this.btnAttrape = new System.Windows.Forms.Button();
+            this.btnFindColor = new System.Windows.Forms.Button();
+            this.btnAvale = new System.Windows.Forms.Button();
+            this.btnVidage = new System.Windows.Forms.Button();
             this.label4 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
             this.btnRehausseurMonter = new System.Windows.Forms.Button();
@@ -53,12 +57,18 @@
             this.btnLunaireSorti = new System.Windows.Forms.Button();
             this.btnLunaireRange = new System.Windows.Forms.Button();
             this.button28 = new System.Windows.Forms.Button();
-            this.btnVidage = new System.Windows.Forms.Button();
+            this.cboArmSelection = new System.Windows.Forms.ComboBox();
+            this.btnStockModule = new System.Windows.Forms.Button();
             this.groupBoxSequences.SuspendLayout();
             this.SuspendLayout();
             // 
             // groupBoxSequences
             // 
+            this.groupBoxSequences.Controls.Add(this.btnStockModule);
+            this.groupBoxSequences.Controls.Add(this.cboArmSelection);
+            this.groupBoxSequences.Controls.Add(this.btnAttrape);
+            this.groupBoxSequences.Controls.Add(this.btnFindColor);
+            this.groupBoxSequences.Controls.Add(this.btnAvale);
             this.groupBoxSequences.Controls.Add(this.btnVidage);
             this.groupBoxSequences.Controls.Add(this.label4);
             this.groupBoxSequences.Controls.Add(this.label3);
@@ -91,6 +101,46 @@
             this.groupBoxSequences.TabStop = false;
             this.groupBoxSequences.Text = "Séquences";
             this.groupBoxSequences.Enter += new System.EventHandler(this.groupBoxSequences_Enter);
+            // 
+            // btnAttrape
+            // 
+            this.btnAttrape.Location = new System.Drawing.Point(6, 388);
+            this.btnAttrape.Name = "btnAttrape";
+            this.btnAttrape.Size = new System.Drawing.Size(75, 23);
+            this.btnAttrape.TabIndex = 65;
+            this.btnAttrape.Text = "Attrape";
+            this.btnAttrape.UseVisualStyleBackColor = true;
+            this.btnAttrape.Click += new System.EventHandler(this.btnAttrape_Click);
+            // 
+            // btnFindColor
+            // 
+            this.btnFindColor.Location = new System.Drawing.Point(212, 400);
+            this.btnFindColor.Name = "btnFindColor";
+            this.btnFindColor.Size = new System.Drawing.Size(114, 23);
+            this.btnFindColor.TabIndex = 64;
+            this.btnFindColor.Text = "Positionne couleur";
+            this.btnFindColor.UseVisualStyleBackColor = true;
+            this.btnFindColor.Click += new System.EventHandler(this.btnFindColor_Click);
+            // 
+            // btnAvale
+            // 
+            this.btnAvale.Location = new System.Drawing.Point(92, 400);
+            this.btnAvale.Name = "btnAvale";
+            this.btnAvale.Size = new System.Drawing.Size(60, 23);
+            this.btnAvale.TabIndex = 63;
+            this.btnAvale.Text = "Avale";
+            this.btnAvale.UseVisualStyleBackColor = true;
+            this.btnAvale.Click += new System.EventHandler(this.btnAvale_Click);
+            // 
+            // btnVidage
+            // 
+            this.btnVidage.Location = new System.Drawing.Point(251, 243);
+            this.btnVidage.Name = "btnVidage";
+            this.btnVidage.Size = new System.Drawing.Size(75, 23);
+            this.btnVidage.TabIndex = 62;
+            this.btnVidage.Text = "Vidage";
+            this.btnVidage.UseVisualStyleBackColor = true;
+            this.btnVidage.Click += new System.EventHandler(this.btnVidage_Click);
             // 
             // label4
             // 
@@ -222,7 +272,7 @@
             // 
             // btnLunaireSequence
             // 
-            this.btnLunaireSequence.Location = new System.Drawing.Point(137, 75);
+            this.btnLunaireSequence.Location = new System.Drawing.Point(150, 34);
             this.btnLunaireSequence.Name = "btnLunaireSequence";
             this.btnLunaireSequence.Size = new System.Drawing.Size(75, 23);
             this.btnLunaireSequence.TabIndex = 48;
@@ -280,9 +330,9 @@
             // 
             // btnLunaireHaut
             // 
-            this.btnLunaireHaut.Location = new System.Drawing.Point(173, 142);
+            this.btnLunaireHaut.Location = new System.Drawing.Point(200, 142);
             this.btnLunaireHaut.Name = "btnLunaireHaut";
-            this.btnLunaireHaut.Size = new System.Drawing.Size(75, 23);
+            this.btnLunaireHaut.Size = new System.Drawing.Size(48, 23);
             this.btnLunaireHaut.TabIndex = 42;
             this.btnLunaireHaut.Text = "Haut";
             this.btnLunaireHaut.UseVisualStyleBackColor = true;
@@ -292,7 +342,7 @@
             // 
             this.btnLunaireBas.Location = new System.Drawing.Point(92, 142);
             this.btnLunaireBas.Name = "btnLunaireBas";
-            this.btnLunaireBas.Size = new System.Drawing.Size(75, 23);
+            this.btnLunaireBas.Size = new System.Drawing.Size(48, 23);
             this.btnLunaireBas.TabIndex = 41;
             this.btnLunaireBas.Text = "Bas";
             this.btnLunaireBas.UseVisualStyleBackColor = true;
@@ -328,15 +378,28 @@
             this.button28.UseVisualStyleBackColor = true;
             this.button28.Click += new System.EventHandler(this.button28_Click);
             // 
-            // btnVidage
+            // cboArmSelection
             // 
-            this.btnVidage.Location = new System.Drawing.Point(251, 243);
-            this.btnVidage.Name = "btnVidage";
-            this.btnVidage.Size = new System.Drawing.Size(75, 23);
-            this.btnVidage.TabIndex = 62;
-            this.btnVidage.Text = "Vidage";
-            this.btnVidage.UseVisualStyleBackColor = true;
-            this.btnVidage.Click += new System.EventHandler(this.btnVidage_Click);
+            this.cboArmSelection.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cboArmSelection.FormattingEnabled = true;
+            this.cboArmSelection.Items.AddRange(new object[] {
+            "Central",
+            "Gauche",
+            "Droite"});
+            this.cboArmSelection.Location = new System.Drawing.Point(11, 171);
+            this.cboArmSelection.Name = "cboArmSelection";
+            this.cboArmSelection.Size = new System.Drawing.Size(75, 21);
+            this.cboArmSelection.TabIndex = 66;
+            // 
+            // btnStockModule
+            // 
+            this.btnStockModule.Location = new System.Drawing.Point(146, 142);
+            this.btnStockModule.Name = "btnStockModule";
+            this.btnStockModule.Size = new System.Drawing.Size(48, 23);
+            this.btnStockModule.TabIndex = 67;
+            this.btnStockModule.Text = "Stock";
+            this.btnStockModule.UseVisualStyleBackColor = true;
+            this.btnStockModule.Click += new System.EventHandler(this.btnStockModule_Click);
             // 
             // PanelGrosRobotSequences
             // 
@@ -382,5 +445,10 @@
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Button btnVidage;
+        private System.Windows.Forms.Button btnAvale;
+        private System.Windows.Forms.Button btnFindColor;
+        private System.Windows.Forms.Button btnAttrape;
+        private System.Windows.Forms.ComboBox cboArmSelection;
+        private System.Windows.Forms.Button btnStockModule;
     }
 }

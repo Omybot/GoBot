@@ -510,9 +510,9 @@ namespace GoBot
             base.MoteurPosition(moteur, vitesse);
         }
 
-        public override void MoteurVitesse(MoteurID moteur, int vitesse)
+        public override void MoteurVitesse(MoteurID moteur, SensGD sens, int vitesse)
         {
-            base.MoteurVitesse(moteur, vitesse);
+            base.MoteurVitesse(moteur, sens, vitesse);
         }
 
         public override void MoteurAcceleration(MoteurID moteur, int acceleration)
@@ -547,8 +547,9 @@ namespace GoBot
             return true;
         }
 
-        public override String GetMesureLidar(LidarID lidar, int timeout)
+        public override String GetMesureLidar(LidarID lidar, int timeout, out Position refPosition)
         {
+            refPosition = new Position(position);
             return "";
         }
 

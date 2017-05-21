@@ -54,16 +54,18 @@ namespace GoBot.IHM
             couleurCarte.Add(Carte.PC, Color.FromArgb(180, 245, 245));
             couleurCarte.Add(Carte.RecMove, Color.FromArgb(143, 255, 143));
             couleurCarte.Add(Carte.RecIO, Color.FromArgb(210, 254, 211));
+            couleurCarte.Add(Carte.RecGB, Color.FromArgb(219, 209, 233));
 
 
             // L'ajout de champs déclenche le SetCheck event qui ajoute les éléments automatiquement dans le dictionnaire
-            // TODO historique RecGoBot
             if (Config.CurrentConfig.LogsFonctionsMove == null)
                 Config.CurrentConfig.LogsFonctionsMove = new SerializableDictionary<FonctionTrame, bool>();
             if (Config.CurrentConfig.LogsFonctionsBalise == null)
                 Config.CurrentConfig.LogsFonctionsBalise = new SerializableDictionary<FonctionTrame, bool>();
             if (Config.CurrentConfig.LogsFonctionsIO == null)
                 Config.CurrentConfig.LogsFonctionsIO = new SerializableDictionary<FonctionTrame, bool>();
+            if (Config.CurrentConfig.LogsFonctionsGB == null)
+                Config.CurrentConfig.LogsFonctionsGB = new SerializableDictionary<FonctionTrame, bool>();
             if (Config.CurrentConfig.LogsExpediteurs == null)
                 Config.CurrentConfig.LogsExpediteurs = new SerializableDictionary<Carte, bool>();
             if (Config.CurrentConfig.LogsDestinataires == null)
@@ -81,10 +83,11 @@ namespace GoBot.IHM
 
                 checkedListBoxIO.Items.Add(fonction.ToString(), Config.CurrentConfig.LogsFonctionsIO[fonction]);
 
-                if (!Config.CurrentConfig.LogsFonctionsBalise.ContainsKey(fonction))
-                    Config.CurrentConfig.LogsFonctionsBalise.Add(fonction, true);
+                if (!Config.CurrentConfig.LogsFonctionsGB.ContainsKey(fonction))
+                    Config.CurrentConfig.LogsFonctionsGB.Add(fonction, true);
 
-                checkedListBoxGB.Items.Add(fonction.ToString(), Config.CurrentConfig.LogsFonctionsBalise[fonction]);
+                checkedListBoxGB.Items.Add(fonction.ToString(), Config.CurrentConfig.LogsFonctionsGB[fonction]);
+
             }
             
             foreach (Carte carte in Enum.GetValues(typeof(Carte)))
@@ -305,7 +308,8 @@ namespace GoBot.IHM
                 bool fonctionAutorisee = false;
                 if ((carte == Carte.RecMove && Config.CurrentConfig.LogsFonctionsMove[(FonctionTrame)trame[1]]) ||
                     trame[1] == 0xA1 ||
-                    (carte == Carte.RecIO && Config.CurrentConfig.LogsFonctionsIO[(FonctionTrame)trame[1]]))
+                    (carte == Carte.RecIO && Config.CurrentConfig.LogsFonctionsIO[(FonctionTrame)trame[1]]) ||
+                    (carte == Carte.RecGB && Config.CurrentConfig.LogsFonctionsGB[(FonctionTrame)trame[1]]))
                     fonctionAutorisee = true;
 
 
@@ -396,7 +400,7 @@ namespace GoBot.IHM
                 String fonctionString = (String)checkedListBoxGB.Items[e.Index];
                 FonctionTrame fonction = (FonctionTrame)Enum.Parse(typeof(FonctionTrame), fonctionString);
 
-                Config.CurrentConfig.LogsFonctionsBalise[fonction] = (e.NewValue == CheckState.Checked);
+                Config.CurrentConfig.LogsFonctionsGB[fonction] = (e.NewValue == CheckState.Checked);
             }
         }
 

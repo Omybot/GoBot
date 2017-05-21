@@ -15,6 +15,16 @@ namespace GoBot.Actionneurs
             Arreter();
         }
 
+        public void Bloque()
+        {
+            Config.CurrentConfig.ServoPlaqueur.Positionner(Config.CurrentConfig.ServoPlaqueur.PositionPlaque);
+        }
+
+        public void Libere()
+        {
+            Config.CurrentConfig.ServoPlaqueur.Positionner(Config.CurrentConfig.ServoPlaqueur.PositionRange);
+        }
+
         public void Avaler()
         {
             Config.CurrentConfig.MoteurConvoyeur.Positionner(Config.CurrentConfig.MoteurConvoyeur.ValeurAvale);
@@ -28,6 +38,16 @@ namespace GoBot.Actionneurs
         public void Arreter()
         {
             Config.CurrentConfig.MoteurConvoyeur.Positionner(Config.CurrentConfig.MoteurConvoyeur.ValeurStop);
+        }
+
+        public void AvaleModule()
+        {
+            Bloque();
+            Thread.Sleep(300);
+            Avaler();
+            Thread.Sleep(1300);
+            Libere();
+            Arreter();
         }
     }
 }

@@ -74,13 +74,15 @@ namespace GoBot
             this.panelBalise = new GoBot.IHM.PanelBalise();
             this.tabRecGoBot = new System.Windows.Forms.TabPage();
             this.grpCapteurs = new System.Windows.Forms.GroupBox();
+            this.panelCapteurs1 = new GoBot.IHM.PanelCapteurs();
             this.grpRecGB = new System.Windows.Forms.GroupBox();
             this.panelRecGoBot1 = new GoBot.IHM.PanelRecGoBot();
+            this.tabActionneurs = new System.Windows.Forms.TabPage();
+            this.panelGenerics1 = new GoBot.IHM.PanelGenerics();
             this.btnClose = new System.Windows.Forms.Button();
             this.btnFenetre = new System.Windows.Forms.Button();
             this.switchBoutonSimu = new Composants.SwitchBouton();
             this.panelConnexions = new GoBot.IHM.PanelConnexions();
-            this.panelCapteurs1 = new GoBot.IHM.PanelCapteurs();
             this.tabAlimentation.SuspendLayout();
             this.tabServomoteurs.SuspendLayout();
             this.tabConnexions.SuspendLayout();
@@ -106,6 +108,7 @@ namespace GoBot
             this.tabRecGoBot.SuspendLayout();
             this.grpCapteurs.SuspendLayout();
             this.grpRecGB.SuspendLayout();
+            this.tabActionneurs.SuspendLayout();
             this.SuspendLayout();
             // 
             // lblSimulation
@@ -396,6 +399,7 @@ namespace GoBot
             this.tabControl.Controls.Add(this.tabPortsAnalogiques);
             this.tabControl.Controls.Add(this.tabBaliseUnique);
             this.tabControl.Controls.Add(this.tabRecGoBot);
+            this.tabControl.Controls.Add(this.tabActionneurs);
             this.tabControl.HotTrack = true;
             this.tabControl.Location = new System.Drawing.Point(0, 0);
             this.tabControl.Name = "tabControl";
@@ -553,6 +557,13 @@ namespace GoBot
             this.grpCapteurs.TabStop = false;
             this.grpCapteurs.Text = "Capteurs";
             // 
+            // panelCapteurs1
+            // 
+            this.panelCapteurs1.Location = new System.Drawing.Point(6, 19);
+            this.panelCapteurs1.Name = "panelCapteurs1";
+            this.panelCapteurs1.Size = new System.Drawing.Size(261, 172);
+            this.panelCapteurs1.TabIndex = 1;
+            // 
             // grpRecGB
             // 
             this.grpRecGB.Controls.Add(this.panelRecGoBot1);
@@ -570,6 +581,26 @@ namespace GoBot
             this.panelRecGoBot1.Name = "panelRecGoBot1";
             this.panelRecGoBot1.Size = new System.Drawing.Size(221, 332);
             this.panelRecGoBot1.TabIndex = 2;
+            // 
+            // tabActionneurs
+            // 
+            this.tabActionneurs.Controls.Add(this.panelGenerics1);
+            this.tabActionneurs.Location = new System.Drawing.Point(4, 22);
+            this.tabActionneurs.Name = "tabActionneurs";
+            this.tabActionneurs.Padding = new System.Windows.Forms.Padding(3);
+            this.tabActionneurs.Size = new System.Drawing.Size(1300, 712);
+            this.tabActionneurs.TabIndex = 27;
+            this.tabActionneurs.Text = "Actionneurs";
+            this.tabActionneurs.UseVisualStyleBackColor = true;
+            // 
+            // panelGenerics1
+            // 
+            this.panelGenerics1.AutoSize = true;
+            this.panelGenerics1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.panelGenerics1.Location = new System.Drawing.Point(3, 3);
+            this.panelGenerics1.Name = "panelGenerics1";
+            this.panelGenerics1.Size = new System.Drawing.Size(1294, 706);
+            this.panelGenerics1.TabIndex = 0;
             // 
             // btnClose
             // 
@@ -612,13 +643,6 @@ namespace GoBot
             this.panelConnexions.Name = "panelConnexions";
             this.panelConnexions.Size = new System.Drawing.Size(980, 27);
             this.panelConnexions.TabIndex = 74;
-            // 
-            // panelCapteurs1
-            // 
-            this.panelCapteurs1.Location = new System.Drawing.Point(6, 19);
-            this.panelCapteurs1.Name = "panelCapteurs1";
-            this.panelCapteurs1.Size = new System.Drawing.Size(261, 172);
-            this.panelCapteurs1.TabIndex = 1;
             // 
             // FenGoBot
             // 
@@ -665,6 +689,8 @@ namespace GoBot
             this.tabRecGoBot.ResumeLayout(false);
             this.grpCapteurs.ResumeLayout(false);
             this.grpRecGB.ResumeLayout(false);
+            this.tabActionneurs.ResumeLayout(false);
+            this.tabActionneurs.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -723,6 +749,8 @@ namespace GoBot
         private PanelAnalogique panelAnalogiqueMove;
         private PanelAnalogique panelAnalogiqueGB;
         private PanelCapteurs panelCapteurs1;
+        private System.Windows.Forms.TabPage tabActionneurs;
+        private PanelGenerics panelGenerics1;
     }
 }
 

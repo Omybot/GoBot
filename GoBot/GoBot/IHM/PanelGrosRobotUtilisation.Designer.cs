@@ -29,17 +29,15 @@
         private void InitializeComponent()
         {
             this.groupBoxUtilisation = new Composants.GroupBoxRetractable();
-            this.label12 = new System.Windows.Forms.Label();
             this.btnDiagnostic = new System.Windows.Forms.Button();
-            this.switchBoutonPuissance = new Composants.SwitchBouton();
+            this.panelActionneursOnOff1 = new GoBot.IHM.PanelActionneursOnOff();
             this.groupBoxUtilisation.SuspendLayout();
             this.SuspendLayout();
             // 
             // groupBoxUtilisation
             // 
-            this.groupBoxUtilisation.Controls.Add(this.label12);
+            this.groupBoxUtilisation.Controls.Add(this.panelActionneursOnOff1);
             this.groupBoxUtilisation.Controls.Add(this.btnDiagnostic);
-            this.groupBoxUtilisation.Controls.Add(this.switchBoutonPuissance);
             this.groupBoxUtilisation.Location = new System.Drawing.Point(3, 3);
             this.groupBoxUtilisation.Name = "groupBoxUtilisation";
             this.groupBoxUtilisation.Size = new System.Drawing.Size(332, 196);
@@ -47,18 +45,9 @@
             this.groupBoxUtilisation.TabStop = false;
             this.groupBoxUtilisation.Text = "Utilisation";
             // 
-            // label12
-            // 
-            this.label12.AutoSize = true;
-            this.label12.Location = new System.Drawing.Point(26, 36);
-            this.label12.Name = "label12";
-            this.label12.Size = new System.Drawing.Size(115, 13);
-            this.label12.TabIndex = 199;
-            this.label12.Text = "Alimentation puissance";
-            // 
             // btnDiagnostic
             // 
-            this.btnDiagnostic.Location = new System.Drawing.Point(211, 30);
+            this.btnDiagnostic.Location = new System.Drawing.Point(130, 11);
             this.btnDiagnostic.Name = "btnDiagnostic";
             this.btnDiagnostic.Size = new System.Drawing.Size(75, 23);
             this.btnDiagnostic.TabIndex = 201;
@@ -66,15 +55,12 @@
             this.btnDiagnostic.UseVisualStyleBackColor = true;
             this.btnDiagnostic.Click += new System.EventHandler(this.btnDiagnostic_Click);
             // 
-            // switchBoutonPuissance
+            // panelActionneursOnOff1
             // 
-            this.switchBoutonPuissance.BackColor = System.Drawing.Color.Transparent;
-            this.switchBoutonPuissance.Location = new System.Drawing.Point(145, 36);
-            this.switchBoutonPuissance.Name = "switchBoutonPuissance";
-            this.switchBoutonPuissance.Size = new System.Drawing.Size(35, 15);
-            this.switchBoutonPuissance.Symetrique = false;
-            this.switchBoutonPuissance.TabIndex = 200;
-            this.switchBoutonPuissance.ChangementEtat += new System.EventHandler(this.switchBoutonPuissance_ChangementEtat);
+            this.panelActionneursOnOff1.Location = new System.Drawing.Point(6, 40);
+            this.panelActionneursOnOff1.Name = "panelActionneursOnOff1";
+            this.panelActionneursOnOff1.Size = new System.Drawing.Size(320, 150);
+            this.panelActionneursOnOff1.TabIndex = 202;
             // 
             // PanelGrosRobotUtilisation
             // 
@@ -87,16 +73,14 @@
             this.Size = new System.Drawing.Size(341, 202);
             this.Load += new System.EventHandler(this.PanelUtilGros_Load);
             this.groupBoxUtilisation.ResumeLayout(false);
-            this.groupBoxUtilisation.PerformLayout();
             this.ResumeLayout(false);
 
         }
 
         #endregion
 
-        private Composants.SwitchBouton switchBoutonPuissance;
-        private System.Windows.Forms.Label label12;
         private System.Windows.Forms.Button btnDiagnostic;
         private Composants.GroupBoxRetractable groupBoxUtilisation;
+        private PanelActionneursOnOff panelActionneursOnOff1;
     }
 }

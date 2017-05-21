@@ -82,6 +82,8 @@
   <ItemGroup>
     <Compile Include="Actionneurs\Actionneur.cs" />
     <Compile Include="Actionneurs\BrasLunaire.cs" />
+    <Compile Include="Actionneurs\BrasLunaireDroite.cs" />
+    <Compile Include="Actionneurs\BrasLunaireGauche.cs" />
     <Compile Include="Actionneurs\Convoyeur.cs" />
     <Compile Include="Actionneurs\Ejecteur.cs" />
     <Compile Include="Actionneurs\Positionnables.cs" />
@@ -131,6 +133,24 @@
     <Compile Include="Enchainements\EnchainementAleatoire.cs" />
     <Compile Include="Enchainements\EnchainementMatch.cs" />
     <Compile Include="EventsReplay.cs" />
+    <Compile Include="IHM\PanelActionneurGeneric.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="IHM\PanelActionneurGeneric.Designer.cs">
+      <DependentUpon>PanelActionneurGeneric.cs</DependentUpon>
+    </Compile>
+    <Compile Include="IHM\PanelActionneurOnOff.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="IHM\PanelActionneurOnOff.Designer.cs">
+      <DependentUpon>PanelActionneurOnOff.cs</DependentUpon>
+    </Compile>
+    <Compile Include="IHM\PanelActionneursOnOff.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="IHM\PanelActionneursOnOff.Designer.cs">
+      <DependentUpon>PanelActionneursOnOff.cs</DependentUpon>
+    </Compile>
     <Compile Include="IHM\PanelAnalogique.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -154,6 +174,12 @@
     </Compile>
     <Compile Include="IHM\PanelAlimentation.Designer.cs">
       <DependentUpon>PanelAlimentation.cs</DependentUpon>
+    </Compile>
+    <Compile Include="IHM\PanelGenerics.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="IHM\PanelGenerics.Designer.cs">
+      <DependentUpon>PanelGenerics.cs</DependentUpon>
     </Compile>
     <Compile Include="IHM\PanelPololu.cs">
       <SubType>UserControl</SubType>
@@ -373,6 +399,15 @@
     <Compile Include="Synchronizer.cs" />
     <Compile Include="TestCode.cs" />
     <Compile Include="Util.cs" />
+    <EmbeddedResource Include="IHM\PanelActionneurGeneric.resx">
+      <DependentUpon>PanelActionneurGeneric.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="IHM\PanelActionneurOnOff.resx">
+      <DependentUpon>PanelActionneurOnOff.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="IHM\PanelActionneursOnOff.resx">
+      <DependentUpon>PanelActionneursOnOff.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="IHM\PanelAnalogique.resx">
       <DependentUpon>PanelAnalogique.cs</DependentUpon>
     </EmbeddedResource>
@@ -384,6 +419,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="IHM\PanelAlimentation.resx">
       <DependentUpon>PanelAlimentation.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="IHM\PanelGenerics.resx">
+      <DependentUpon>PanelGenerics.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="IHM\PanelPololu.resx">
       <DependentUpon>PanelPololu.cs</DependentUpon>

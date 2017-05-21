@@ -17,9 +17,11 @@ namespace GoBot.Devices
         {
         }
 
-        protected override String GetResultat(int timeout = 5000)
+        protected override String GetResultat(out Position refPosition, int timeout = 5000)
         {
-            return Robots.GrosRobot.GetMesureLidar(lidar, timeout);
+            String mesure = Robots.GrosRobot.GetMesureLidar(lidar, timeout, out refPosition);
+            refPosition = PositionDepuisRobot(Robots.GrosRobot.Position);
+            return mesure;
         }
     }
 }

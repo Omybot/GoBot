@@ -43,13 +43,8 @@ namespace GoBot.IHM
 
         private void PanelUtilGros_Load(object sender, EventArgs e)
         {
-            groupBoxUtilisation.Deployer(Config.CurrentConfig.UtilisationGROuvert, false);
-            switchBoutonPuissance.SetActif(true, false);
-        }
-
-        private void switchBoutonPuissance_ChangementEtat(object sender, EventArgs e)
-        {
-            Robots.GrosRobot.AlimentationPuissance(switchBoutonPuissance.Actif);
+            if (!Config.DesignMode)
+                groupBoxUtilisation.Deployer(Config.CurrentConfig.UtilisationGROuvert, false);
         }
 
         private void btnDiagnostic_Click(object sender, EventArgs e)

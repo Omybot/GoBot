@@ -39,7 +39,7 @@ namespace GoBot.Communications
             return new Trame(tab);
         }
 
-        static public Trame SetLed(RecGoBot.Leds led, RecGoBot.LedStatus status)
+        static public Trame SetLed(LedID led, RecGoBot.LedStatus status)
         {
             byte[] tab = new byte[4];
             tab[0] = (byte)Carte.RecGB;
@@ -140,14 +140,15 @@ namespace GoBot.Communications
             return new Trame(tab);
         }
 
-        static public Trame MoteurVitesse(MoteurID moteur, int vitesse)
+        static public Trame MoteurVitesse(MoteurID moteur, SensGD sens, int vitesse)
         {
-            byte[] tab = new byte[5];
+            byte[] tab = new byte[6];
             tab[0] = (byte)Carte.RecIO;
             tab[1] = (byte)FonctionTrame.MoteurVitesse;
             tab[2] = (byte)moteur;
-            tab[3] = (byte)ByteDivide(vitesse, true);
-            tab[4] = (byte)ByteDivide(vitesse, false);
+            tab[3] = (byte)sens;
+            tab[4] = (byte)ByteDivide(vitesse, true);
+            tab[5] = (byte)ByteDivide(vitesse, false);
 
             return new Trame(tab);
         }

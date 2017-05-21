@@ -36,7 +36,7 @@ namespace GoBot.Communications
 
         public ConnexionUDP()
         {
-            ConnexionCheck = new ConnexionCheck(2000);
+            ConnexionCheck = new ConnexionCheck(500);
             Sauvegarde = new Replay();
             DerniereTentativePing = new DateTime(1, 1, 1);
         }
