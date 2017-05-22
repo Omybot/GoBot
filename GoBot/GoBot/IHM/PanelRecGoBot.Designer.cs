@@ -207,8 +207,6 @@
             this.btn4.State = false;
             this.btn4.TabIndex = 19;
             this.btn4.TabStop = false;
-            this.btn4.MouseEnter += new System.EventHandler(this.button3D4_MouseEnter);
-            this.btn4.MouseLeave += new System.EventHandler(this.button3D4_MouseLeave);
             // 
             // btn3
             // 

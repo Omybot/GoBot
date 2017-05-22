@@ -11,27 +11,35 @@ namespace GoBot.ElementsJeu
     {
         public Elements()
         {
-            ZoneDeposeViolet1 = new ZoneInteret(new PointReel(1300, 1050), Plateau.CouleurGaucheBleu, 90);
-            ZoneDeposeViolet2 = new ZoneInteret(new PointReel(1300, 1050), Plateau.CouleurGaucheBleu, 90);
-            ZoneDeposeVert1 = new ZoneInteret(new PointReel(3000 - 1300, 1050), Plateau.CouleurDroiteJaune, 90);
-            ZoneDeposeVert2 = new ZoneInteret(new PointReel(3000 - 1300, 1050), Plateau.CouleurDroiteJaune, 90);
-            ZoneCubeGauche = new ZoneInteret(new PointReel(902, 80), Color.White, 90);
-            ZoneCubeDroite = new ZoneInteret(new PointReel(3000 - 902, 80), Color.White, 90);
-            ZoneDune1 = new ZoneInteret(new PointReel(1500, 160), Color.White, 200);
-            ZoneDune2 = new ZoneInteret(new PointReel(1500, 40), Color.White, 200);
-            ZoneDune3 = new ZoneInteret(new PointReel(1500 + 58 * 3, 40), Color.White, 200);
-            ZoneDune4 = new ZoneInteret(new PointReel(1538 - 58 * 3, 40), Color.White, 200);
+            Fusees = new List<Fusee>();
+            Fusees.Add(new Fusee(1, new PointReel(40, 1350), Plateau.CouleurGaucheBleu, 40));
+            Fusees.Add(new Fusee(2, new PointReel(1150, 40), Color.White, 40));
+            Fusees.Add(new Fusee(3, new PointReel(1850, 40), Color.White, 40));
+            Fusees.Add(new Fusee(4, new PointReel(2960, 1350), Plateau.CouleurDroiteJaune, 40));
+
+            Modules = new List<Module>();
+            Modules.Add(new Module(new PointReel(200, 600), Plateau.CouleurGaucheBleu, 31));
+            Modules.Add(new Module(new PointReel(500, 1100), Color.White, 31));
+            Modules.Add(new Module(new PointReel(800, 1850), Plateau.CouleurGaucheBleu, 31));
+            Modules.Add(new Module(new PointReel(900, 1400), Color.White, 31));
+            Modules.Add(new Module(new PointReel(950, 200), Plateau.CouleurGaucheBleu, 31));
+            Modules.Add(new Module(new PointReel(1000, 600), Color.White, 31));
+
+            Modules.Add(new Module(new PointReel(2000, 600), Color.White, 31));
+            Modules.Add(new Module(new PointReel(2050, 200), Plateau.CouleurDroiteJaune, 31));
+            Modules.Add(new Module(new PointReel(2100, 1400), Color.White, 31));
+            Modules.Add(new Module(new PointReel(2200, 1850), Plateau.CouleurDroiteJaune, 31));
+            Modules.Add(new Module(new PointReel(2500, 1100), Color.White, 31));
+            Modules.Add(new Module(new PointReel(2800, 600), Plateau.CouleurDroiteJaune, 31));
+
+            ZonesDepose = new List<ZoneInteret>();
+            ZonesDepose.Add(new ZoneInteret(new PointReel(1000, 1500), Color.White, 100));
+            ZonesDepose.Add(new ZoneInteret(new PointReel(1500, 1300), Color.White, 100));
+            ZonesDepose.Add(new ZoneInteret(new PointReel(2000, 1500), Color.White, 100));
         }
 
-        public ZoneInteret ZoneDeposeViolet1 { get; protected set; }
-        public ZoneInteret ZoneDeposeViolet2 { get; protected set; }
-        public ZoneInteret ZoneDeposeVert1 { get; protected set; }
-        public ZoneInteret ZoneDeposeVert2 { get; protected set; }
-        public ZoneInteret ZoneCubeGauche { get; protected set; }
-        public ZoneInteret ZoneCubeDroite { get; protected set; }
-        public ZoneInteret ZoneDune1 { get; protected set; }
-        public ZoneInteret ZoneDune2 { get; protected set; }
-        public ZoneInteret ZoneDune3 { get; protected set; }
-        public ZoneInteret ZoneDune4 { get; protected set; }
+        public List<Fusee> Fusees { get; protected set; }
+        public List<Module> Modules { get; protected set; }
+        public List<ZoneInteret> ZonesDepose { get; protected set; }
     }
 }

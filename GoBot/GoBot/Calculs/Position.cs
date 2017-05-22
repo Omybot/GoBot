@@ -86,5 +86,10 @@ namespace GoBot.Calculs
             Angle.Set(position.Angle);
             Coordonnees.Placer(position.Coordonnees.X, position.Coordonnees.Y);
         }
+
+        public override string ToString()
+        {
+            return Coordonnees.ToString() + " " + Angle.ToString();
+        }
     }
 }

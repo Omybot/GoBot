@@ -356,7 +356,7 @@ namespace GoBot
 
                         //if (modeCourant == Mode.TrajectoirePolaire)
                         {
-                            if (trajectoirePolaireScreen !=null)
+                            if (trajectoirePolaireScreen != null)
                                 foreach (Point p in trajectoirePolaireScreen)
                                     g.FillEllipse(Brushes.Red, p.X - 1, p.Y - 1, 2, 2);
                             if (pointsPolaireScreen != null)
@@ -515,9 +515,9 @@ namespace GoBot
             gGros.FillRectangle(brushTransparent, 0, 0, RealToScreenDistance(robot.Taille * 2), RealToScreenDistance(robot.Taille * 2));
 
             gGros.FillRectangle(brushBlanc, bmpRobot.Width / 2 - RealToScreenDistance(robot.Largeur / 2), bmpRobot.Height / 2 - RealToScreenDistance(robot.Longueur / 2), RealToScreenDistance(robot.Largeur), RealToScreenDistance(robot.Longueur));
-            gGros.DrawRectangle(Plateau.NotreCouleur == Plateau.CouleurDroiteJaune ? penCouleurJ1 : penCouleurJ2, bmpRobot.Width / 2 - RealToScreenDistance(robot.Largeur / 2), bmpRobot.Height / 2 - RealToScreenDistance(robot.Longueur / 2), RealToScreenDistance(robot.Largeur), RealToScreenDistance(robot.Longueur));
-            gGros.DrawLine(Plateau.NotreCouleur == Plateau.CouleurDroiteJaune ? penCouleurJ1 : penCouleurJ2, bmpRobot.Width / 2, bmpRobot.Height / 2, bmpRobot.Width / 2, bmpRobot.Height / 2 - RealToScreenDistance(robot.Longueur / 2));
-            
+            gGros.DrawRectangle(Plateau.NotreCouleur == Plateau.CouleurDroiteJaune ? penCouleurJ2 : penCouleurJ1, bmpRobot.Width / 2 - RealToScreenDistance(robot.Largeur / 2), bmpRobot.Height / 2 - RealToScreenDistance(robot.Longueur / 2), RealToScreenDistance(robot.Largeur), RealToScreenDistance(robot.Longueur));
+            gGros.DrawLine(Plateau.NotreCouleur == Plateau.CouleurDroiteJaune ? penCouleurJ2 : penCouleurJ1, bmpRobot.Width / 2, bmpRobot.Height / 2, bmpRobot.Width / 2, bmpRobot.Height / 2 - RealToScreenDistance(robot.Longueur / 2));
+
             //gGros.DrawImage(Properties.Resources.Capot, 0, 0, Properties.Resources.Capot.Width, Properties.Resources.Capot.Height);
 
             // Dessiner les actionneurs ici
@@ -584,6 +584,72 @@ namespace GoBot
         private static void DessineElementsJeu(Graphics g)
         {
             // Todo dessinner les éléments de jeu
+
+            foreach (Fusee fusee in Plateau.Elements.Fusees)
+                DessineFusee(g, fusee);
+            foreach (Module module in Plateau.Elements.Modules)
+                DessineModule(g, module);
+
+        }
+
+        private static void DessineModule(Graphics g, Module module)
+        {
+            if (!module.Ramasse)
+            {
+                Point center = RealToScreenPosition(module.Position);
+                Size size = new Size(RealToScreenDistance(module.RayonHover) * 2, RealToScreenDistance(module.RayonHover) * 2);
+                Rectangle rect = new Rectangle(center.X - size.Width / 2, center.Y - size.Height / 2, size.Width, size.Height);
+                Brush b;
+
+                if (module.Couleur == Color.White)
+                {
+                    g.FillEllipse(Brushes.White, rect);
+                    b = new SolidBrush(Plateau.CouleurGaucheBleu);
+                    g.FillPie(b, rect, -135, 90);
+                    b.Dispose();
+                    b = new SolidBrush(Plateau.CouleurDroiteJaune);
+                    g.FillPie(b, rect, +45, 90);
+                    b.Dispose();
+                }
+                else
+                {
+                    b = new SolidBrush(module.Couleur);
+                    g.FillEllipse(b, rect);
+                    b.Dispose();
+                }
+
+                g.DrawEllipse(Pens.Black, rect);
+            }
+        }
+
+        private static void DessineFusee(Graphics g, Fusee fusee)
+        {
+            if (fusee.ModulesRestants > 0)
+            {
+                Point center = RealToScreenPosition(fusee.Position);
+                Size size = new Size(RealToScreenDistance(fusee.RayonHover) * 2, RealToScreenDistance(fusee.RayonHover) * 2);
+                Rectangle rect = new Rectangle(center.X - size.Width / 2, center.Y - size.Height / 2, size.Width, size.Height);
+                Brush b;
+
+                if (fusee.Couleur == Color.White)
+                {
+                    g.FillEllipse(Brushes.White, rect);
+                    b = new SolidBrush(Plateau.CouleurGaucheBleu);
+                    g.FillPie(b, rect, -135, 90);
+                    b.Dispose();
+                    b = new SolidBrush(Plateau.CouleurDroiteJaune);
+                    g.FillPie(b, rect, +45, 90);
+                    b.Dispose();
+                }
+                else
+                {
+                    b = new SolidBrush(fusee.Couleur);
+                    g.FillEllipse(b, rect);
+                    b.Dispose();
+                }
+
+                g.DrawEllipse(Pens.Black, rect);
+            }
         }
 
         private static void DessineTrajectoire(Trajectoire traj, Graphics g)
@@ -729,7 +795,7 @@ namespace GoBot
             }*/
 
             List<PointReel> points = null;
-            if(PathFinder.PointsTrouves != null)
+            if (PathFinder.PointsTrouves != null)
                 points = new List<PointReel>(PathFinder.PointsTrouves);
             if (points != null && points.Count > 1)
             {

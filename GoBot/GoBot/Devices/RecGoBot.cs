@@ -39,7 +39,7 @@ namespace GoBot.Devices
             Connexions.ConnexionGB.ConnexionCheck.TestConnexion += ConnexionCheck_TestConnexionGB;
 
             ledsStatus = new Dictionary<LedID, LedStatus>();
-            for (LedID i = LedID.DebugB1; i < LedID.DebugA1; i++)
+            for (LedID i = LedID.DebugB1; i <= LedID.DebugA1; i++)
                 ledsStatus.Add(i, LedStatus.Off);
 
             ButtonChange += RecGoBot_ButtonChange;

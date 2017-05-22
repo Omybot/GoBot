@@ -8,11 +8,29 @@ namespace GoBot.Actionneurs
 {
     class Convoyeur
     {
+        public bool ModuleCharge { get; private set; }
+
+        public Convoyeur()
+        {
+            ModuleCharge = false;
+        }
+
         public void AvalerUnModule()
+        {
+            Bloque();
+            Avaler();
+            Thread.Sleep(500);
+            Arreter();
+            ModuleCharge = true;
+        }
+
+        public void RecracherUnModule()
         {
             Avaler();
             Thread.Sleep(500);
             Arreter();
+            Libere();
+            ModuleCharge = false;
         }
 
         public void Bloque()
