@@ -19,11 +19,11 @@ namespace GoBot
         public ServoLunaireMonte ServoLunaireMonte { get; set; }
         public ServoBloqueurBas ServoBloqueurBas { get; set; }
         public ServoBloqueurHaut ServoBloqueurHaut { get; set; }
-        public ServoChariot ServoChariot { get; set; }
         public ServoEjecteur ServoEjecteur { get; set; }
         public ServoRehausseur ServoRehausseur { get; set; }
         public MoteurOrientation MoteurOrientation { get; set; }
         public MoteurConvoyeur MoteurConvoyeur { get; set; }
+        public ServoCalleur ServoCalleur { get; set; }
 
         public ServoBrasLunaireGauche ServoBrasLunaireGauche { get; set; }
         public ServoLunaireGaucheSerrageDroit ServoLunaireGaucheSerrageDroit { get; set; }
@@ -33,7 +33,8 @@ namespace GoBot
         public ServoLunaireDroitSerrageDroit ServoLunaireDroitSerrageDroit { get; set; }
         public ServoLunaireDroitSerrageGauche ServoLunaireDroitSerrageGauche { get; set; }
 
-        public ServoPlaqueur ServoPlaqueur { get; set; } 
+        public ServoPlaqueur ServoPlaqueur { get; set; }
+        public ServoFusee ServoFusee { get; set; } 
 
     }
 }
@@ -127,6 +128,20 @@ namespace GoBot.Actionneurs
     //    public override ServomoteurID ID { get { return ServomoteurID.AscenseurDroitPinceHautDroite; } }
     //}
 
+    public class ServoCalleur : PositionnableServo
+    {
+        public int PositionCalle { get; set; }
+        public int PositionRange { get; set; }
+        public override ServomoteurID ID { get { return ServomoteurID.Calleur; } }
+    }
+
+    public class ServoFusee : PositionnableServo
+    {
+        public int PositionArme { get; set; }
+        public int PositionFeu { get; set; }
+        public override ServomoteurID ID { get { return ServomoteurID.Fusee; } }
+    }
+
     public class ServoPlaqueur : PositionnableServo
     {
         public int PositionPlaque { get; set; }
@@ -137,6 +152,7 @@ namespace GoBot.Actionneurs
     public abstract class ServoBrasLunaire : PositionnableServo
     {
         public int PositionSortie { get; set; }
+        public int PositionSortieSafe { get; set; }
         public int PositionRange { get; set; }
         public int PositionStockage { get; set; }
     }
@@ -154,6 +170,7 @@ namespace GoBot.Actionneurs
     public class ServoLunaireChariot : PositionnableServo
     {
         public int PositionSortie { get; set; }
+        public int PositionStockage { get; set; }
         public int PositionRange { get; set; }
         public override ServomoteurID ID { get { return ServomoteurID.BrasLunaireAvance; } }
     }
@@ -170,15 +187,7 @@ namespace GoBot.Actionneurs
     {
         public int PositionOuvert { get; set; }
         public int PositionFerme { get; set; }
-        public int PositionRange { get; set; }
-    }
-
-    public class ServoChariot : PositionnableServo
-    {
-        public override ServomoteurID ID { get { return ServomoteurID.Chariot; } }
-        public int PositionRentre { get; set; }
-        public int PositionSemiSorti { get; set; }
-        public int PositionSorti { get; set; }
+        public int PositionSemiFerme { get; set; }
     }
 
     public abstract class ServoBloqueur : PositionnableServo

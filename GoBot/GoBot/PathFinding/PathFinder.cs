@@ -55,6 +55,7 @@ namespace GoBot.PathFinding
             else
                 debutNode = nodeProche;
 
+            //TODO2018 phase d'approche finale pourrie, l'angle final peut se faire à la fin au lieu de à la fin du path finding avant l'approche finale
             if (nbPointsDepart == 0)
             {
                 // On ne peut pas partir de là où on est

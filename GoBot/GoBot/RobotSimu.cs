@@ -115,6 +115,31 @@ namespace GoBot
             Nom = "GrosRobot";
             RecallageEnCours = false;
             Rand = new Random(DateTime.Now.Millisecond);
+
+            IDRobot = idRobot;
+            CapteurActive = new Dictionary<CapteurOnOffID, bool>();
+            ActionneurActive = new Dictionary<ActionneurOnOffID, bool>();
+            CapteursCouleur = new Dictionary<CapteurCouleurID, Color>();
+
+            foreach (CapteurOnOffID fonction in Enum.GetValues(typeof(CapteurOnOffID)))
+            {
+                CapteurActive.Add(fonction, false);
+            }
+
+            foreach (ActionneurOnOffID fonction in Enum.GetValues(typeof(ActionneurOnOffID)))
+            {
+                ActionneurActive.Add(fonction, false);
+            }
+
+            foreach (CapteurCouleurID fonction in Enum.GetValues(typeof(CapteurCouleurID)))
+            {
+                CapteursCouleur.Add(fonction, Color.Black);
+            }
+
+            ValeursAnalogiques = new Dictionary<Carte, List<double>>();
+            ValeursAnalogiques.Add(Carte.RecIO, null);
+            ValeursAnalogiques.Add(Carte.RecGB, null);
+            ValeursAnalogiques.Add(Carte.RecMove, null);
         }
 
         void timerPositions_Elapsed(object sender, ElapsedEventArgs e)

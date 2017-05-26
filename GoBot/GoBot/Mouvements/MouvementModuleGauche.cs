@@ -15,10 +15,12 @@ namespace GoBot.Mouvements
     class MouvementModuleGauche : Mouvement
     {
         private Module module;
+        private int num;
 
         public MouvementModuleGauche(int numero)
         {
             module = Plateau.Elements.Modules[numero];
+            num = numero;
 
             Positions.Add(PositionsMouvements.PositionsApprocheModuleGauche[numero]);
         }
@@ -40,7 +42,15 @@ namespace GoBot.Mouvements
 
         protected override void ActionApresDeplacement()
         {
-            // TODO attrapage module gauche
+            Actionneur.BrasLunaireGauche.DescendreSafe();
+            Thread.Sleep(400);
+            Actionneur.BrasLunaireGauche.Ouvrir();
+            Thread.Sleep(400);
+            Robots.GrosRobot.Lent();
+            Robots.GrosRobot.Avancer(200);
+            Robots.GrosRobot.Rapide();
+            Actionneur.BrasLunaireGauche.Attraper();
+            Thread.Sleep(200);
             module.Ramasse = true;
         }
 
@@ -73,13 +83,21 @@ namespace GoBot.Mouvements
                 double facteurCouleur;
 
                 if (module.Couleur == Color.White)
-                    facteurCouleur = 1.5;
+                    facteurCouleur = 3;
                 else if (module.Couleur == Plateau.NotreCouleur)
                     facteurCouleur = 1;
                 else
                     facteurCouleur = 0;
 
-                return 0.9 * facteurTemps * 5 * facteurCouleur; // 0.9 pour que ce soit moins interessant qu'à l'avant par défaut
+
+                double facteurCote = 1;
+
+                if (Plateau.NotreCouleur == Plateau.CouleurGaucheBleu && num > 6)
+                    facteurCote = 0.5;
+                if (Plateau.NotreCouleur == Plateau.CouleurDroiteJaune && num <= 6)
+                    facteurCote = 0.5;
+
+                return 0.9 * facteurTemps * 5 * facteurCouleur * facteurCote; // 0.9 pour que ce soit moins interessant qu'à l'avant par défaut
             }
         }
 

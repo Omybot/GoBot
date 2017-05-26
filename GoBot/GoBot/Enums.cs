@@ -32,13 +32,11 @@ namespace GoBot
         BrasLunaireAvance = 112,
         BrasLunaireMonte = 20,
 
-        Chariot = 50,
-
-        BloqueurBas = 106,
-        BloqueurHaut = 107,
+        BloqueurBas = 107,
+        BloqueurHaut = 106,
         Rehausseur = 3,
 
-        Ejecteur = 114,
+        Ejecteur = 117,
 
         BrasLunaireGauche = 26,
         BrasLunaireDroit = 24,
@@ -46,10 +44,14 @@ namespace GoBot
         ServoLunaireGaucheSerrageGauche = 102,
         ServoLunaireGaucheSerrageDroit = 103,
 
-        ServoLunaireDroitSerrageGauche = 108,
-        ServoLunaireDroitSerrageDroit = 111,
+        ServoLunaireDroitSerrageGauche = 104,
+        ServoLunaireDroitSerrageDroit = 105,
 
         Plaqueur = 23,
+
+        Calleur = 110,
+
+        Fusee = 116,
 
         Tous = 254
     }
@@ -97,6 +99,12 @@ namespace GoBot
         LSwitch2,
         LSwitch3,
         LSwitch4,
+        ChaiPas,
+        ChaiPlus,
+        PresenceDroite,
+        PresenceGauche,
+        PresenceCentre = 0x51,
+        PresenceOnSaitPasOu = 0x52
     }
 
     public enum CapteurCouleurID
@@ -106,7 +114,7 @@ namespace GoBot
 
     public enum CodeurID
     {
-        Manuel = 0
+        Manuel = 1
     }
 
     public enum LedRgbID

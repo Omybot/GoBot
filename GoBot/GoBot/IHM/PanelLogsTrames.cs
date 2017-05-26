@@ -210,6 +210,14 @@ namespace GoBot.IHM
                             checkedListBoxIO.Items.Add(fonction.ToString(), false);
                             Config.CurrentConfig.LogsFonctionsIO[fonction] = false;
                         }
+
+                        if (carte == Carte.RecGB)
+                        {
+                            FonctionTrame fonction = (FonctionTrame)trame[1];
+                            checkedListBoxGB.Items.Remove(fonction.ToString());
+                            checkedListBoxGB.Items.Add(fonction.ToString(), false);
+                            Config.CurrentConfig.LogsFonctionsGB[fonction] = false;
+                        }
                     }
 
                     Afficher();

@@ -8,6 +8,21 @@ namespace GoBot.Actionneurs
 {
     class BrasLunaireDroite
     {
+        public bool Charge { get; protected set; }
+
+        public bool PresenceModule { get; private set; }
+
+        public BrasLunaireDroite()
+        {
+            Devices.Devices.RecGoBot.ButtonChange += RecGoBot_ButtonChange;
+        }
+
+        void RecGoBot_ButtonChange(CapteurOnOffID btn, bool state)
+        {
+            if (btn == CapteurOnOffID.PresenceDroite)
+                PresenceModule = state;
+        }
+
         public void Ranger()
         {
             Config.CurrentConfig.ServoBrasLunaireDroit.Positionner(Config.CurrentConfig.ServoBrasLunaireDroit.PositionRange);
@@ -23,6 +38,11 @@ namespace GoBot.Actionneurs
             Config.CurrentConfig.ServoBrasLunaireDroit.Positionner(Config.CurrentConfig.ServoBrasLunaireDroit.PositionSortie);
         }
 
+        public void DescendreSafe()
+        {
+            Config.CurrentConfig.ServoBrasLunaireDroit.Positionner(Config.CurrentConfig.ServoBrasLunaireDroit.PositionSortieSafe);
+        }
+
         public void Ouvrir()
         {
             Config.CurrentConfig.ServoLunaireDroitSerrageDroit.Positionner(Config.CurrentConfig.ServoLunaireDroitSerrageDroit.PositionOuvert);
@@ -35,33 +55,57 @@ namespace GoBot.Actionneurs
             Config.CurrentConfig.ServoLunaireDroitSerrageGauche.Positionner(Config.CurrentConfig.ServoLunaireDroitSerrageGauche.PositionFerme);
         }
 
+        private void LacheSiYaRien(object useless)
+        {
+            Thread.Sleep(1000);
+            if (!PresenceModule)
+            {
+                Ouvrir();
+                Descendre();
+                Thread.Sleep(1000);
+
+                Fermer();
+                Ranger();
+                Charge = false;
+            }
+        }
+
         public void Attraper()
         {
             Fermer();
+            Thread.Sleep(100);
             Monter();
+            Charge = true;
+
+            //ThreadPool.QueueUserWorkItem(new WaitCallback(LacheSiYaRien));
         }
 
-        public void Depose()
+        public void Deposer()
         {
             Descendre();
             Thread.Sleep(300);
             Ouvrir();
             Thread.Sleep(50);
+            Charge = false;
         }
 
         public void TransfertAvant()
         {
             int accelTmp = Robots.GrosRobot.AccelerationFinDeplacement;
 
-            Depose();
+            for (int i = 0; i < 3; i++)
+                Actionneur.BrasLunaire.Descendre();
+            for (int i = 0; i < 3; i++)
+                Actionneur.BrasLunaire.Ouvrir();
+            Deposer();
             Robots.GrosRobot.Reculer(200);
             Fermer();
             Ranger();
             Robots.GrosRobot.PivotDroite(43);
             Robots.GrosRobot.AccelerationFinDeplacement = 300;
+            Actionneur.BrasLunaire.Avancer();
             Robots.GrosRobot.Avancer(100);
             Robots.GrosRobot.AccelerationFinDeplacement = accelTmp;
-            Actionneur.BrasLunaire.Fermer();
         }
     }
 }

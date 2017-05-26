@@ -38,7 +38,7 @@ namespace GoBot.IHM
 
         private void button28_Click(object sender, EventArgs e)
         {
-            Actionneur.BrasLunaire.Rentrer();
+            Actionneur.BrasLunaire.Reculer();
             Actionneur.BrasLunaire.Monter();
             Actionneur.BrasLunaire.Fermer();
         }
@@ -65,12 +65,12 @@ namespace GoBot.IHM
 
         private void btnLunaireRange_Click(object sender, EventArgs e)
         {
-            Actionneur.BrasLunaire.Rentrer();
+            Actionneur.BrasLunaire.Reculer();
         }
 
         private void btnLunaireSorti_Click(object sender, EventArgs e)
         {
-            Actionneur.BrasLunaire.Sortir();
+            Actionneur.BrasLunaire.Avancer();
         }
 
         private void btnLunaireBas_Click(object sender, EventArgs e)
@@ -78,7 +78,7 @@ namespace GoBot.IHM
             switch (BrasActuel)
             {
                 case BrasLunaireID.Central:
-                    Actionneur.BrasLunaire.Descendre();
+                    Actionneur.BrasLunaire.Avancer();
                     break;
                 case BrasLunaireID.Droite:
                     Actionneur.BrasLunaireDroite.Descendre();
@@ -100,7 +100,7 @@ namespace GoBot.IHM
                     Actionneur.BrasLunaireDroite.Ranger();
                     break;
                 case BrasLunaireID.Gauche:
-                    Actionneur.BrasLunaireGauche.Monter();
+                    Actionneur.BrasLunaireGauche.Ranger();
                     break;
             }
         }
@@ -140,11 +140,6 @@ namespace GoBot.IHM
         private void btnLunaireSemiOuvert_Click(object sender, EventArgs e)
         {
             Actionneur.BrasLunaire.Fermer();
-        }
-
-        private void btnLunaireSequence_Click(object sender, EventArgs e)
-        {
-            Actionneur.BrasLunaire.AttrapageFusee();
         }
 
         private void btnLunaireSemiSorti_Click(object sender, EventArgs e)
@@ -233,7 +228,7 @@ namespace GoBot.IHM
 
         private void btnFindColor_Click(object sender, EventArgs e)
         {
-            Actionneur.Ejecteur.PositionneCouleur();
+            Actionneur.Ejecteur.PositionnerCouleur();
             Thread.Sleep(100);
             Actionneur.Ejecteur.Ejecter();
         }
@@ -241,10 +236,10 @@ namespace GoBot.IHM
         private void btnAttrape_Click(object sender, EventArgs e)
         {
             Robots.GrosRobot.ActionneurOnOff(ActionneurOnOffID.AlimCapteurCouleur, true);
-            Actionneur.BrasLunaire.AttrapeModule();
+            Actionneur.BrasLunaire.AttraperModuleEtTransferer();
             Actionneur.Convoyeur.AvaleModule();
             Actionneur.Stockeur.RelacheBas();
-            Actionneur.Ejecteur.PositionneCouleur();
+            Actionneur.Ejecteur.PositionnerCouleur();
             Actionneur.Stockeur.BloqueBas();
             Actionneur.Ejecteur.Ejecter();
         }
@@ -254,14 +249,52 @@ namespace GoBot.IHM
             switch (BrasActuel)
             {
                 case BrasLunaireID.Central:
-                    Actionneur.BrasLunaire.Stocker();
+                    Actionneur.BrasLunaire.MonterStockage();
                     break;
                 case BrasLunaireID.Droite:
                     Actionneur.BrasLunaireDroite.Monter();
                     break;
                 case BrasLunaireID.Gauche:
-                    Actionneur.BrasLunaireGauche.Stocker();
+                    Actionneur.BrasLunaireGauche.Monter();
                     break;
+            }
+        }
+
+        private void btnVideTout_Click(object sender, EventArgs e)
+        {
+            Actionneur.Ejecteur.Ejecter();
+            Thread.Sleep(500);
+            Actionneur.Stockeur.RelacheBas();
+            Thread.Sleep(500);
+            Actionneur.Ejecteur.Ejecter();
+            Thread.Sleep(500);
+            Actionneur.Stockeur.RelacheHaut();
+            Thread.Sleep(500);
+            Actionneur.Ejecteur.Ejecter();
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            ThreadPool.QueueUserWorkItem(new WaitCallback(zAvantArriere));
+            ThreadPool.QueueUserWorkItem(new WaitCallback(zOuvreFerme));
+        }
+
+        private void zAvantArriere(object useless)
+        {
+            while(true)
+            {
+                Robots.GrosRobot.Avancer(400);
+                Robots.GrosRobot.Reculer(400);
+            }
+        }
+        private void zOuvreFerme(object useless)
+        {
+            while (true)
+            {
+                Robots.GrosRobot.RangerActionneurs();
+                Thread.Sleep(750);
+                Robots.GrosRobot.DeployerActionnneurs();
+                Thread.Sleep(750);
             }
         }
     }

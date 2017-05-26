@@ -27,7 +27,7 @@ namespace GoBot.Actionneurs
         public void RecracherUnModule()
         {
             Avaler();
-            Thread.Sleep(500);
+            Thread.Sleep(1000);
             Arreter();
             Libere();
             ModuleCharge = false;

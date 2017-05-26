@@ -20,7 +20,7 @@ namespace GoBot
         public Carte Carte { get; set; }
         public Historique Historique { get; protected set; }
         public double BatterieVoltage { get; protected set; }
-        
+
         // Constitution
         public IDRobot IDRobot { get; protected set; }
         public String Nom { get; set; }
@@ -56,7 +56,7 @@ namespace GoBot
         public Semaphore semHistoriquePosition;
 
         public Trajectoire TrajectoireEnCours = null;
-        
+
         private static Semaphore semDeblocage = new Semaphore(1, 1);
 
         // Actionneurs / Capteurs
@@ -157,15 +157,83 @@ namespace GoBot
             if (this == Robots.GrosRobot)
             {
                 int tempo = 200;
-                
+
                 Lent();
                 Avancer(50);
                 Reculer(50);
                 PivotDroite(10);
                 PivotGauche(10);
-                
-                // TODO procédure de diagnostic des actionneurs
 
+                // TODO procédure de diagnostic des actionneurs
+                Plateau.Balise.VitesseRotation(150);
+                Actionneur.BrasLunaire.Avancer();
+                Thread.Sleep(tempo);
+                Actionneur.BrasLunaire.Reculer();
+                Thread.Sleep(tempo);
+                Actionneur.BrasLunaire.Descendre();
+                Thread.Sleep(tempo);
+                Actionneur.BrasLunaire.Monter();
+                Thread.Sleep(tempo);
+                Actionneur.BrasLunaire.Ouvrir();
+                Thread.Sleep(tempo);
+                Actionneur.BrasLunaire.Fermer();
+                Thread.Sleep(tempo);
+                Actionneur.BrasLunaire.Reculer();
+                Thread.Sleep(tempo);
+                Actionneur.BrasLunaire.Monter();
+                Thread.Sleep(tempo);
+                Actionneur.BrasLunaire.Monter();
+                Thread.Sleep(tempo);
+                Actionneur.BrasLunaireGauche.Descendre();
+                Thread.Sleep(tempo);
+                Actionneur.BrasLunaireGauche.Ouvrir();
+                Thread.Sleep(tempo);
+                Actionneur.BrasLunaireGauche.Fermer();
+                Thread.Sleep(tempo);
+                Actionneur.BrasLunaireGauche.Ranger();
+                Thread.Sleep(tempo);
+                Actionneur.BrasLunaireDroite.Descendre();
+                Thread.Sleep(tempo);
+                Actionneur.BrasLunaireDroite.Ouvrir();
+                Thread.Sleep(tempo);
+                Actionneur.BrasLunaireDroite.Fermer();
+                Thread.Sleep(tempo);
+                Actionneur.BrasLunaireDroite.Monter();
+                Thread.Sleep(tempo);
+                Actionneur.Convoyeur.Avaler();
+                Thread.Sleep(tempo * 4);
+                Actionneur.Convoyeur.Arreter();
+                Thread.Sleep(tempo);
+                Actionneur.Convoyeur.Bloque();
+                Thread.Sleep(tempo);
+                Actionneur.Convoyeur.Libere();
+                Thread.Sleep(tempo);
+                Actionneur.Ejecteur.SortirEjecteur();
+                Thread.Sleep(tempo);
+                Actionneur.Ejecteur.RentrerEjecteur();
+                Thread.Sleep(tempo);
+                Actionneur.Ejecteur.TournerDroite();
+                Thread.Sleep(tempo * 4);
+                Actionneur.Ejecteur.TournerGauche();
+                Thread.Sleep(tempo * 4);
+                Actionneur.Ejecteur.TournerStop();
+                Thread.Sleep(tempo);
+                Actionneur.Stockeur.RelacheBas();
+                Thread.Sleep(tempo);
+                Actionneur.Stockeur.BloqueBas();
+                Thread.Sleep(tempo);
+                Actionneur.Stockeur.RelacheHaut();
+                Thread.Sleep(tempo);
+                Actionneur.Stockeur.BloqueHaut();
+                Thread.Sleep(tempo);
+                Actionneur.Stockeur.MonterRehausseur();
+                Thread.Sleep(tempo);
+                Actionneur.Stockeur.RangerRehausseur();
+                Thread.Sleep(tempo);
+                Devices.Devices.RecGoBot.Buzz(5000, 200);
+                Thread.Sleep(tempo * 4);
+                Devices.Devices.RecGoBot.Buzz(0, 200);
+                Plateau.Balise.VitesseRotation(0);
             }
         }
 
@@ -349,7 +417,7 @@ namespace GoBot
                         foreach (Segment segment in segmentsTrajectoire)
                         {
                             // Marge de 30mm pour être plus permissif sur le passage te ne pas s'arreter dès que l'adversaire approche
-                            if (TropProche(seg, forme, - 30))
+                            if (TropProche(seg, forme, -30))
                             {
                                 // Demande de génération d'une nouvelle trajectoire
                                 Historique.Log("Trajectoire coupée, annulation", TypeLog.PathFinding);
@@ -370,7 +438,7 @@ namespace GoBot
             {
                 return false;
             }
-            
+
             return true;
         }
 
@@ -481,7 +549,7 @@ namespace GoBot
         }
 
         protected void ParcourirTrajectoire(Object traj)
-        { 
+        {
             ParcourirTrajectoire((Trajectoire)traj);
         }
 
@@ -501,7 +569,7 @@ namespace GoBot
                 if (TrajectoireCoupee || TrajectoireEchouee)
                     break;
 
-                if ( action is ActionAvance || action is ActionRecule)
+                if (action is ActionAvance || action is ActionRecule)
                 {
                     Historique.Log("Noeud atteint " + TrajectoireEnCours.PointsPassage[0].X + ":" + TrajectoireEnCours.PointsPassage[0].Y, TypeLog.PathFinding);
                     TrajectoireEnCours.PointsPassage.RemoveAt(0);
@@ -510,18 +578,18 @@ namespace GoBot
             }
             Console.WriteLine("Traj terminée");
 
-            if(!TrajectoireCoupee && !TrajectoireEchouee)
+            if (!TrajectoireCoupee && !TrajectoireEchouee)
             {
                 Historique.Log("Trajectoire parcourue en " + Math.Round((((DateTime.Now - debut).TotalMilliseconds) / 1000.0), 1) + "s", TypeLog.PathFinding);
                 Console.WriteLine("Temps prévu :" + traj.Duree + "ms / Temps effectif : " + (DateTime.Now - debut).TotalMilliseconds + "ms");
 
-                if(semTrajectoire != null)
+                if (semTrajectoire != null)
                     semTrajectoire.Release();
                 TrajectoireEnCours = null;
                 return true;
             }
 
-            if(TrajectoireEchouee)
+            if (TrajectoireEchouee)
             {
                 Historique.Log("Echec du parcours de la trajectoire (dérapage, blocage...)", TypeLog.PathFinding);
 
@@ -530,12 +598,47 @@ namespace GoBot
                 TrajectoireEnCours = null;
                 return true;
             }
-            
+
             TrajectoireEnCours = null;
 
             if (semTrajectoire != null)
                 semTrajectoire.Release();
             return false;
+        }
+
+        public void RangerActionneurs()
+        {
+            Actionneur.BrasLunaire.Fermer();
+            Actionneur.BrasLunaire.Monter();
+            Actionneur.BrasLunaire.Reculer();
+            Actionneur.BrasLunaireDroite.Fermer();
+            Actionneur.BrasLunaireDroite.Ranger();
+            Actionneur.BrasLunaireGauche.Fermer();
+            Actionneur.BrasLunaireGauche.Ranger();
+            Actionneur.Stockeur.RangerRehausseur();
+            Actionneur.Stockeur.BloqueBas();
+            Actionneur.Stockeur.BloqueHaut();
+            Actionneur.Ejecteur.RentrerEjecteur();
+            Actionneur.Ejecteur.TournerStop();
+            Actionneur.Convoyeur.Arreter();
+            Actionneur.Convoyeur.Libere();
+            Actionneur.Stockeur.RangerCalleur();
+        }
+
+        public void DeployerActionnneurs()
+        {
+            Actionneur.BrasLunaire.Fermer();
+            Actionneur.BrasLunaire.Descendre();
+            Actionneur.BrasLunaire.Avancer();
+            Actionneur.BrasLunaireDroite.Fermer();
+            Actionneur.BrasLunaireDroite.Descendre();
+            Actionneur.BrasLunaireGauche.Fermer();
+            Actionneur.BrasLunaireGauche.Descendre();
+            Actionneur.Stockeur.MonterRehausseur();
+            Actionneur.Stockeur.RelacheBas();
+            Actionneur.Stockeur.RelacheHaut();
+            Actionneur.Convoyeur.Bloque();
+            Actionneur.Stockeur.RangerCalleur();
         }
     }
 }

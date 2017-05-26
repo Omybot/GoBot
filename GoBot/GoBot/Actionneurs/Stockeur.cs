@@ -13,24 +13,38 @@ namespace GoBot.Actionneurs
             get
             {
                 int count = 0;
-                count += StockBas ? 1 : 0;
-                count += StockMilieu ? 1 : 0;
-                count += StockHaut ? 1 : 0;
+                count += stockBas ? 1 : 0;
+                count += stockMilieu ? 1 : 0;
+                count += stockHaut ? 1 : 0;
 
                 return count;
             }
         }
 
-        private bool StockBas;
-        private bool StockMilieu;
-        private bool StockHaut;
+        private bool stockBas;
+        private bool stockMilieu;
+        private bool stockHaut;
 
         public bool Ejectable
         {
             get
             {
-                return StockBas;
+                return ModulesCount > 0;
             }
+        }
+
+        public bool Stockable
+        {
+            get
+            {
+                return !stockMilieu;
+            }
+        }
+
+        public void Ejecter()
+        {
+            stockBas = false;
+            Actionneur.Ejecteur.Charge = true;
         }
 
 
@@ -44,62 +58,90 @@ namespace GoBot.Actionneurs
 
         private void Ranger(object o)
         {
-            if (StockMilieu && !StockBas)
-            {
-                RelacheBas();
-                Thread.Sleep(400);
-                BloqueBas();
-                StockMilieu = false;
-                StockBas = true;
-                Actionneur.Ejecteur.PositionneCouleur();
-            }
-            if (StockMilieu && !StockHaut)
+            if (stockMilieu && !stockHaut)
             {
                 RelacheHaut();
-                PreparerRehausseur();
-                Thread.Sleep(300);
-                RelacheBas();
                 MonterRehausseur();
                 Thread.Sleep(400);
                 BloqueHaut();
                 BloqueBas();
                 Thread.Sleep(300);
                 RangerRehausseur();
-                StockMilieu = false;
-                StockHaut = true;
+                stockMilieu = false;
+                stockHaut = true;
+                Actionneur.Ejecteur.Charge = true;
+            }
+            if (stockMilieu && !stockBas)
+            {
+                Actionneur.Ejecteur.RentrerEjecteur(false);
+                RangerRehausseur();
+                RelacheBas();
+                Thread.Sleep(200);
+                BloqueBas();
+                stockMilieu = false;
+                stockBas = true;
+                Actionneur.Ejecteur.PositionnerCouleur();
+                Actionneur.Ejecteur.Charge = true;
+                Actionneur.Ejecteur.CouperEjecteur();
             }
         }
 
         public void Descendre()
         {
-            if(StockBas)
+            if(stockBas)
             {
                 return;
             }
-            else if(StockMilieu)
+            else if(stockMilieu)
             {
+                Actionneur.Ejecteur.RentrerEjecteur(false);
                 PreparerRehausseur();
                 Thread.Sleep(200);
                 RelacheBas();
-                Thread.Sleep(100);
-                RangerRehausseur();
-                Thread.Sleep(400);
-                BloqueBas();
-                StockMilieu = false;
-                StockBas = true;
-            }
-            else if (StockHaut)
-            {
-                RelacheBas();
-                MonterRehausseur();
-                Thread.Sleep(600);
-                RelacheHaut();
                 Thread.Sleep(200);
                 RangerRehausseur();
-                Thread.Sleep(600);
-                StockHaut = false;
-                StockBas = true;
+                Thread.Sleep(200);
+                BloqueBas();
+                stockMilieu = false;
+                stockBas = true;
+                BloqueHaut();
+                Actionneur.Ejecteur.CouperEjecteur();
             }
+            else if (stockHaut)
+            {
+                Actionneur.Ejecteur.RentrerEjecteur(false);
+                RelacheBas();
+                MonterRehausseur();
+                Thread.Sleep(400);
+                RelacheHaut();
+                Thread.Sleep(75);
+                RangerRehausseur();
+                Thread.Sleep(500);
+                stockHaut = false;
+                stockBas = true;
+                BloqueBas();
+                BloqueHaut();
+                Actionneur.Ejecteur.CouperEjecteur();
+            }
+        }
+
+        public void RangerCalleur()
+        {
+            Config.CurrentConfig.ServoCalleur.Positionner(Config.CurrentConfig.ServoCalleur.PositionRange);
+        
+}
+
+        public void CallerCalleur()
+        {
+            Config.CurrentConfig.ServoCalleur.Positionner(Config.CurrentConfig.ServoCalleur.PositionCalle);
+        }
+
+        public void Avaler()
+        {
+            if (!stockBas)
+                PreparerRehausseur();
+            BloqueBas();
+            stockMilieu = true;
         }
 
         public void BloqueHaut()
@@ -137,33 +179,21 @@ namespace GoBot.Actionneurs
             Config.CurrentConfig.ServoRehausseur.Positionner(Config.CurrentConfig.ServoRehausseur.PositionHaute);
         }
 
-        public void StockerPremierModule()
+        public void Caller()
         {
-            BloqueBas();
-            Thread.Sleep(500);
-            RelacheHaut();
-            Thread.Sleep(500);
-            PreparerRehausseur();
-            Thread.Sleep(500);
-            MonterRehausseur();
-            Thread.Sleep(500);
-            BloqueHaut();
-            Thread.Sleep(500);
+            CallerCalleur();
+            Thread.Sleep(400);
+            RangerCalleur();
+        }
+
+        public void MilieuVersBas()
+        {
+            RelacheBas();
             RangerRehausseur();
-        }
-
-        public void StockerDeuxiemeModule()
-        {
-            RelacheBas();
-            Thread.Sleep(500);
+            Thread.Sleep(200);
             BloqueBas();
-        }
-
-        public void StockerTroisiemeModule()
-        {
-            RelacheBas();
-            Thread.Sleep(500);
-            BloqueBas();
+            stockMilieu = false;
+            stockBas = true;
         }
     }
 }

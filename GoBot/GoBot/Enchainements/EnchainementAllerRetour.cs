@@ -16,13 +16,17 @@ namespace GoBot.Enchainements
             Robots.GrosRobot.AccelerationDebutDeplacement = 2000;
             Robots.GrosRobot.AccelerationFinDeplacement = 2000;
 
-            Robots.GrosRobot.Avancer(300);
+            Plateau.Balise.VitesseRotation(150);
 
-            Thread.Sleep(200);
+            if (Plateau.NotreCouleur == Plateau.CouleurGaucheBleu)
+                Robots.GrosRobot.Virage(SensAR.Avant, SensGD.Gauche, 232, 70);
+            else
+                Robots.GrosRobot.Virage(SensAR.Avant, SensGD.Droite, 232, 70);
+
             while (true)
             {
-                Robots.GrosRobot.PathFinding(300, 1000, 0, 0, true);
-                Robots.GrosRobot.PathFinding(2700, 1000, 18, 0, true);
+                Robots.GrosRobot.PathFinding(399, 1287, 170, 0, true);
+                Robots.GrosRobot.PathFinding(3000-399, 1287, 10, 0, true);
             }
         }
     }

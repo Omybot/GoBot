@@ -57,7 +57,11 @@ namespace GoBot
                 if (notreCouleur != value)
                 {
                     notreCouleur = value;
-                    Devices.Devices.RecGoBot.SetLedColor(NotreCouleur);
+                    if(Plateau.NotreCouleur == Plateau.CouleurGaucheBleu)
+                        Devices.Devices.RecGoBot.SetLedColor(Color.Blue);
+                    else
+                        Devices.Devices.RecGoBot.SetLedColor(Color.Yellow);
+
                     //Robots.GrosRobot.Init();
                     //Robots.PetitRobot.Init();
                     if (NotreCouleurChange != null)
@@ -192,6 +196,10 @@ namespace GoBot
             ElementsJeu = new List<ElementJeu>();
 
             // Les ajouters à ElementsJeu
+
+            ElementsJeu.AddRange(Elements.Fusees);
+            ElementsJeu.AddRange(Elements.Modules);
+            ElementsJeu.AddRange(Elements.ZonesDepose);
         }
 
         public static void Init()

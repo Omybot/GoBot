@@ -14,10 +14,12 @@ namespace GoBot.Mouvements
 {
     class MouvementDeposeModules : Mouvement
     {
-        private ZoneInteret zone;
+        private ZoneDeposeModules zone;
+        private int num;
 
         public MouvementDeposeModules(int numero)
         {
+            num = numero;
             zone = Plateau.Elements.ZonesDepose[numero];
 
             Positions.Add(PositionsMouvements.PositionsApprocheDepose[numero]);
@@ -40,7 +42,17 @@ namespace GoBot.Mouvements
 
         protected override void ActionApresDeplacement()
         {
-            // TODO vidage modules
+            Robot.Reculer(80);
+
+            while (Actionneur.Stockeur.Ejectable && zone.PlacesLibres > 0)
+            { 
+                Actionneur.GestionModules.EjecterUnModuleEtRanger();
+                zone.ModulesPlaces++;
+            }
+
+            Actionneur.Ejecteur.CouperEjecteur();
+
+            Robot.Avancer(80);
         }
 
         protected override void ActionAvantDeplacement()
@@ -69,7 +81,18 @@ namespace GoBot.Mouvements
                 if (Plateau.Enchainement.TempsRestant < new TimeSpan(0, 0, 60))
                     facteurTemps++;
 
-                return facteurTemps * 5 * (Actionneur.Stockeur.ModulesCount + (Actionneur.Convoyeur.ModuleCharge ? 1 : 0)); 
+                int facteurModulesCharges = Actionneur.Stockeur.ModulesCount + (Actionneur.Convoyeur.ModuleCharge ? 1 : 0) + (Actionneur.BrasLunaire.ModuleCharge ? 1 : 0);
+
+                int facteurPlaceRestante = zone.PlacesLibres;
+
+                double facteurCote = 1;
+
+                if (Plateau.NotreCouleur == Plateau.CouleurGaucheBleu && num > 1)
+                    facteurCote = 0.5;
+                if (Plateau.NotreCouleur == Plateau.CouleurDroiteJaune && num < 1)
+                    facteurCote = 0.5;
+
+                return facteurTemps * 4 * Math.Min(facteurModulesCharges, facteurPlaceRestante) * facteurCote; 
             }
         }
 

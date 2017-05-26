@@ -17,6 +17,8 @@ namespace GoBot.Enchainements
         public Color Couleur { get; set; }
         public static TimeSpan DureeMatch { get; set; }
 
+        public bool Started { get; private set; }
+
         public DateTime DebutMatch { get; set; }
         public TimeSpan TempsRestant
         {
@@ -36,23 +38,23 @@ namespace GoBot.Enchainements
 
         public Enchainement()
         {
+            Started = false;
             Plateau.PoidActions = new PoidsTest();
             Couleur = Color.Purple;
 
             // Todo Charger dans les listes ListeMouvementsGros et ListeMouvementsPetit les mouvements possibles
-            //ListeMouvementsGros.Add(new MouvementCube1());
-
-            for (int i = 0; i < Plateau.Elements.Fusees.Count; i++ )
-                ListeMouvementsGros.Add(new MouvementFusee(i));
 
             for (int i = 0; i < Plateau.Elements.Fusees.Count; i++)
+                ListeMouvementsGros.Add(new MouvementFusee(i));
+
+            for (int i = 0; i < Plateau.Elements.Modules.Count; i++)
             {
                 if (PositionsMouvements.PositionsApprocheModuleFace[i] != null)
                     ListeMouvementsGros.Add(new MouvementModuleAvant(i));
-                if (PositionsMouvements.PositionsApprocheModuleGauche[i] != null)
-                    ListeMouvementsGros.Add(new MouvementModuleGauche(i));
-                if (PositionsMouvements.PositionsApprocheModuleDroite[i] != null)
-                    ListeMouvementsGros.Add(new MouvementModuleDroite(i));
+                //if (PositionsMouvements.PositionsApprocheModuleGauche[i] != null)
+                //    ListeMouvementsGros.Add(new MouvementModuleGauche(i));
+                //if (PositionsMouvements.PositionsApprocheModuleDroite[i] != null)
+                //    ListeMouvementsGros.Add(new MouvementModuleDroite(i));
             }
 
             for (int i = 0; i < Plateau.Elements.ZonesDepose.Count; i++)
@@ -61,12 +63,18 @@ namespace GoBot.Enchainements
 
         public void Executer()
         {
+            Started = true;
+
             Robots.GrosRobot.Historique.Log("DEBUT DU MATCH", TypeLog.Strat);
 
             DebutMatch = DateTime.Now;
             timerFinMatch = new System.Timers.Timer();
             timerFinMatch.Elapsed += new ElapsedEventHandler(timerFinMatch_Elapsed);
+//#if DEBUG
+//           timerFinMatch.Interval = DureeMatch.TotalMilliseconds * 100;
+//#else
             timerFinMatch.Interval = DureeMatch.TotalMilliseconds;
+//#endif
             timerFinMatch.Start();
 
             thGrosRobot = new Thread(ThreadGros);
@@ -83,12 +91,20 @@ namespace GoBot.Enchainements
             thGrosRobot.Abort();
             Robots.GrosRobot.Stop(StopMode.Freely);
             //Robots.PetitRobot.Stop(StopMode.Freely);
-            Robots.GrosRobot.MoteurPosition(MoteurID.Balise, 0);
+            Plateau.Balise.VitesseRotation(0);
+            Actionneur.Convoyeur.Arreter();
+            Actionneur.Ejecteur.TournerStop();
+            Actionneur.BrasLunaire.Ouvrir();
+            Actionneur.BrasLunaireDroite.Ouvrir();
+            Actionneur.BrasLunaireGauche.Ouvrir();
+            Actionneur.Stockeur.RelacheBas();
+            Actionneur.Stockeur.RelacheHaut();
+            Actionneur.Ejecteur.CouperEjecteur();
             // TODO eteindre ici les actionneurs du robot
-            Thread.Sleep(100);
 
-            Thread.Sleep(4000);
+            Thread.Sleep(2500);
 
+            Actionneur.Fusee.LancerLaFusee();
             // Todo Couper ici tous les actionneurs à la fin du match et lancer la Funny Action
         }
 

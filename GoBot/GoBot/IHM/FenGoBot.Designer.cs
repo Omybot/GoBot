@@ -83,6 +83,7 @@ namespace GoBot
             this.btnFenetre = new System.Windows.Forms.Button();
             this.switchBoutonSimu = new Composants.SwitchBouton();
             this.panelConnexions = new GoBot.IHM.PanelConnexions();
+            this.potarControl1 = new GoBot.IHM.PotarControl();
             this.tabAlimentation.SuspendLayout();
             this.tabServomoteurs.SuspendLayout();
             this.tabConnexions.SuspendLayout();
@@ -537,6 +538,7 @@ namespace GoBot
             // 
             // tabRecGoBot
             // 
+            this.tabRecGoBot.Controls.Add(this.potarControl1);
             this.tabRecGoBot.Controls.Add(this.grpCapteurs);
             this.tabRecGoBot.Controls.Add(this.grpRecGB);
             this.tabRecGoBot.Location = new System.Drawing.Point(4, 22);
@@ -643,6 +645,13 @@ namespace GoBot
             this.panelConnexions.Name = "panelConnexions";
             this.panelConnexions.Size = new System.Drawing.Size(980, 27);
             this.panelConnexions.TabIndex = 74;
+            // 
+            // potarControl1
+            // 
+            this.potarControl1.Location = new System.Drawing.Point(298, 267);
+            this.potarControl1.Name = "potarControl1";
+            this.potarControl1.Size = new System.Drawing.Size(351, 98);
+            this.potarControl1.TabIndex = 5;
             // 
             // FenGoBot
             // 
@@ -751,6 +760,7 @@ namespace GoBot
         private PanelCapteurs panelCapteurs1;
         private System.Windows.Forms.TabPage tabActionneurs;
         private PanelGenerics panelGenerics1;
+        private PotarControl potarControl1;
     }
 }
 

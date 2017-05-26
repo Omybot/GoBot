@@ -503,7 +503,7 @@ namespace GoBot.Communications
             return GetMessage(trame);
         }
 
-        public static String GetMessage(FonctionTrame function, List<int> parameters = null)
+        public static String GetMessage(FonctionTrame function, List<uint> parameters = null)
         {
             String output = "";
 
@@ -900,9 +900,9 @@ namespace GoBot.Communications
             return output;
         }
 
-        private static List<int> GetParameters(String format, Trame trame)
+        private static List<uint> GetParameters(String format, Trame trame)
         {
-            List<int> parameters = new List<int>();
+            List<uint> parameters = new List<uint>();
             String subParameter;
 
             for (int iChar = 0; iChar < format.Length; iChar++)

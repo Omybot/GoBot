@@ -176,7 +176,7 @@ namespace GoBot.IHM
                 else
                     this.Cursor = Cursors.Arrow;
                 
-                System.Threading.Tasks.Task.Factory.StartNew(() => ChercheTraj(new Position(Robots.GrosRobot.Position)));
+                //System.Threading.Tasks.Task.Factory.StartNew(() => ChercheTraj(new Position(Robots.GrosRobot.Position)));
             }
 
             semMove.Release();
@@ -257,11 +257,21 @@ namespace GoBot.IHM
                 if (Plateau.ZoneDepartVert.Hover)
                     move = new MouvementDeposeDepart(Plateau.ZoneDepartVert);*/
 
-                if (move != null)
-                {
-                    thAction = new Thread(ThreadAction);
-                    thAction.Start();
-                }
+                for (int i = 0; i < Plateau.Elements.Fusees.Count; i++)
+                    if (Plateau.Elements.Fusees[i].Hover)
+                        move = new MouvementFusee(i);
+                for (int i = 0; i < Plateau.Elements.Modules.Count; i++)
+                    if (Plateau.Elements.Modules[i].Hover)
+                        move = new MouvementModuleAvant(i);
+                for (int i = 0; i < Plateau.Elements.ZonesDepose.Count; i++)
+                    if (Plateau.Elements.ZonesDepose[i].Hover)
+                        move = new MouvementDeposeModules(i);
+
+                    if (move != null)
+                    {
+                        thAction = new Thread(ThreadAction);
+                        thAction.Start();
+                    }
             }
         }
         Thread thAction;

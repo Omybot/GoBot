@@ -10,29 +10,31 @@ namespace GoBot.Actionneurs
 {
     class BrasLunaire
     {
-        public void Stocker()
+        public bool ModuleCharge { get; protected set; }
+
+        public void MonterStockage()
         {
             Config.CurrentConfig.ServoLunaireMonte.Positionner(Config.CurrentConfig.ServoLunaireMonte.PositionMoyenne);
         }
 
-        public void Sortir()
+        public void Avancer()
         {
             Config.CurrentConfig.ServoLunaireChariot.Positionner(Config.CurrentConfig.ServoLunaireChariot.PositionSortie);
         }
 
-        public void Rentrer()
+        public void Reculer()
         {
             Config.CurrentConfig.ServoLunaireChariot.Positionner(Config.CurrentConfig.ServoLunaireChariot.PositionRange);
+        }
+
+        public void ReculerStockage()
+        {
+            Config.CurrentConfig.ServoLunaireChariot.Positionner(Config.CurrentConfig.ServoLunaireChariot.PositionStockage);
         }
 
         public void Monter()
         {
             Config.CurrentConfig.ServoLunaireMonte.Positionner(Config.CurrentConfig.ServoLunaireMonte.PositionHaut);
-        }
-
-        public void SemiMonter()
-        {
-            Config.CurrentConfig.ServoLunaireMonte.Positionner(Config.CurrentConfig.ServoLunaireMonte.PositionMoyenne);
         }
 
         public void Descendre()
@@ -46,10 +48,10 @@ namespace GoBot.Actionneurs
             Config.CurrentConfig.ServoPinceLunaireSerrageGauche.Positionner(Config.CurrentConfig.ServoPinceLunaireSerrageGauche.PositionOuvert);
         }
 
-        public void Ranger()
+        public void SemiFermer()
         {
-            Config.CurrentConfig.ServoPinceLunaireSerrageDroit.Positionner(Config.CurrentConfig.ServoPinceLunaireSerrageDroit.PositionRange);
-            Config.CurrentConfig.ServoPinceLunaireSerrageGauche.Positionner(Config.CurrentConfig.ServoPinceLunaireSerrageGauche.PositionRange);
+            Config.CurrentConfig.ServoPinceLunaireSerrageDroit.Positionner(Config.CurrentConfig.ServoPinceLunaireSerrageDroit.PositionSemiFerme);
+            Config.CurrentConfig.ServoPinceLunaireSerrageGauche.Positionner(Config.CurrentConfig.ServoPinceLunaireSerrageGauche.PositionSemiFerme);
         }
 
         public void Fermer()
@@ -58,50 +60,47 @@ namespace GoBot.Actionneurs
             Config.CurrentConfig.ServoPinceLunaireSerrageGauche.Positionner(Config.CurrentConfig.ServoPinceLunaireSerrageGauche.PositionFerme);
         }
 
-        public void AttrapageFusee()
+        /// <summary>
+        /// Le module doit être déjà présenté dans la pince
+        /// </summary>
+        public bool AttraperModuleEtTransferer()
         {
-            Stopwatch sw = Stopwatch.StartNew();
+            Fermer();
+            Thread.Sleep(150);
+            for (int i = 0; i < 3; i++)
+                Monter();
+            Reculer();
+            Thread.Sleep(500);
+            Ouvrir();
+            ModuleCharge = false;
 
-            for (int i = 0; i < 4; i++)
-            {
-                Actionneur.BrasLunaire.Sortir();
-                Actionneur.BrasLunaire.Ouvrir();
-                Actionneur.BrasLunaire.Descendre();
-                Thread.Sleep(200);
-                Robots.GrosRobot.Reculer(50);
-                Actionneur.BrasLunaire.Fermer();
-                Thread.Sleep(200);
-                Actionneur.BrasLunaire.Ouvrir();
-                Thread.Sleep(100);
-                Actionneur.BrasLunaire.Sortir();
-                Thread.Sleep(200);
-                Actionneur.BrasLunaire.Ranger();
-                Thread.Sleep(200);
-                Robots.GrosRobot.Avancer(50);
-                Actionneur.BrasLunaire.Rentrer();
-                Actionneur.BrasLunaire.Monter();
-                Thread.Sleep(500);
-                Actionneur.BrasLunaire.Ouvrir();
-                Thread.Sleep(1000);
-            }
-
-            MessageBox.Show(sw.ElapsedMilliseconds + "ms");
+            bool capteur = Robots.GrosRobot.DemandeCapteurOnOff(CapteurOnOffID.PresenceCentre);
+            Console.WriteLine("LE CAPTEUR A DIT " + capteur.ToString());
+            return capteur;
         }
 
-        public void AttrapeModule()
+        /// <summary>
+        /// Le module doit être déjà présenté dans la pince
+        /// </summary>
+        public void AttraperModuleEtStocker()
         {
-            Ouvrir();
-            Descendre();
-            Thread.Sleep(300);
-            Sortir();
-            Thread.Sleep(400);
             Fermer();
-            Thread.Sleep(400);
+            Thread.Sleep(200);
+            Avancer();
             Monter();
-            Rentrer();
-            Thread.Sleep(400);
-            Ouvrir();
             Thread.Sleep(100);
+            ModuleCharge = Robots.GrosRobot.DemandeCapteurOnOff(CapteurOnOffID.PresenceCentre);
+
+            if (!ModuleCharge)
+                Reculer();
+        }
+
+        public void TransfererStock()
+        {
+            Actionneur.BrasLunaire.Reculer();
+            Thread.Sleep(250);
+            Actionneur.BrasLunaire.Ouvrir();
+            ModuleCharge = false;
         }
     }
 }

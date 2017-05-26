@@ -54,8 +54,6 @@ namespace GoBot.Actions
                     return "bloqueur bas";
                 case ServomoteurID.BloqueurHaut:
                     return "bloqueur haut";
-                case ServomoteurID.Chariot:
-                    return "chariot";
                 case ServomoteurID.Ejecteur:
                     return "éjecteur";
                 case ServomoteurID.Rehausseur:
@@ -74,11 +72,11 @@ namespace GoBot.Actions
                     return "serrage gauche du bras lunaire droit";
                 case ServomoteurID.Plaqueur:
                     return "plaqueur de modules";
-                
+                case ServomoteurID.Calleur:
+                    return "calleur de modules";
+                case ServomoteurID.Fusee:
+                    return "lanceur de fusée";
                 default:
-                    if (servo.ToString().Contains("zzLibre"))
-                        return "servo n°" + (int)servo;
-                    else
                         return servo.ToString();
             }
         }
@@ -176,6 +174,26 @@ namespace GoBot.Actions
                     return "jack";
                 case CapteurOnOffID.CouleurEquipe:
                     return "couleur d'equipe";
+                case CapteurOnOffID.LSwitch1:
+                    return "switch linéaire 1";
+                case CapteurOnOffID.LSwitch2:
+                    return "switch linéaire 2";
+                case CapteurOnOffID.LSwitch3:
+                    return "switch linéaire 3";
+                case CapteurOnOffID.LSwitch4:
+                    return "switch linéaire 4";
+                case CapteurOnOffID.ChaiPas:
+                    return "on sait pas";
+                case CapteurOnOffID.ChaiPlus:
+                    return "on sait plus";
+                case CapteurOnOffID.PresenceDroite:
+                    return "présence module à droite";
+                case CapteurOnOffID.PresenceGauche:
+                    return "présence module à gauche";
+                case CapteurOnOffID.PresenceCentre:
+                    return "présence module au centre";
+                case CapteurOnOffID.PresenceOnSaitPasOu:
+                    return "présence pas cablé";
                 default:
                     return capteur.ToString();
             }

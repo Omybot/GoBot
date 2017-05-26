@@ -23,34 +23,56 @@ namespace GoBot.Mouvements
             // Créer les positions des actions de jeu
 
             PositionsApprocheFusee = new List<Position>();
-            PositionsApprocheFusee.Add(new Position(120, new PointReel(370, 1200)));
-            PositionsApprocheFusee.Add(new Position(-90, new PointReel(1140, 300)));
-            PositionsApprocheFusee.Add(new Position(-90, new PointReel(3000-1140, 300)));
-            PositionsApprocheFusee.Add(new Position(60, new PointReel(3000-370, 1200)));
+            //PositionsApprocheFusee.Add(new Position(170, new PointReel(399, 1287)));
+            //PositionsApprocheFusee.Add(new Position(-112, new PointReel(1289, 377)));
+            //PositionsApprocheFusee.Add(new Position(180 +112, new PointReel(3000 - 1289, 377)));
+            //PositionsApprocheFusee.Add(new Position(10, new PointReel(3000 - 399, 1287)));
+            PositionsApprocheFusee.Add(new Position(170, new PointReel(399, 1287)));
+            PositionsApprocheFusee.Add(new Position(-90, new PointReel(1150, 405)));
+            PositionsApprocheFusee.Add(new Position(-90, new PointReel(3000 - 1150, 405)));
+            PositionsApprocheFusee.Add(new Position(10, new PointReel(3000 - 399, 1287)));
 
             // TODO2017 bonnes valeurs
             PositionsApprocheModuleFace = new List<Position>();
-            PositionsApprocheModuleFace.Add(null);
-            PositionsApprocheModuleFace.Add(null);
-            PositionsApprocheModuleFace.Add(null);
-            PositionsApprocheModuleFace.Add(null);
-            PositionsApprocheModuleFace.Add(null);
-            PositionsApprocheModuleFace.Add(null);
-            PositionsApprocheModuleFace.Add(null);
-            PositionsApprocheModuleFace.Add(null);
-            PositionsApprocheModuleFace.Add(null);
-            PositionsApprocheModuleFace.Add(null);
-            PositionsApprocheModuleFace.Add(null);
-            PositionsApprocheModuleFace.Add(null);
+            //PositionsApprocheModuleFace.Add(new Position(-127, new PointReel(420, 891)));
+            //PositionsApprocheModuleFace.Add(new Position(170, new PointReel(859, 1036)));
+            //PositionsApprocheModuleFace.Add(new Position(-296, new PointReel(640, 1522)));
+            //PositionsApprocheModuleFace.Add(new Position(45, new PointReel(642, 1142)));
+            //PositionsApprocheModuleFace.Add(null);
+            //PositionsApprocheModuleFace.Add(new Position(-217, new PointReel(1289, 377)));
 
+            //PositionsApprocheModuleFace.Add(new Position(180 + 217, new PointReel(3000 - 1289, 377)));
+            //PositionsApprocheModuleFace.Add(null);
+            //PositionsApprocheModuleFace.Add(new Position(180 - 45, new PointReel(3000 - 642, 1142)));
+            //PositionsApprocheModuleFace.Add(new Position(180 + 296, new PointReel(3000 - 640, 1522)));
+            //PositionsApprocheModuleFace.Add(new Position(180 - 170, new PointReel(3000 - 859, 1036)));
+            //PositionsApprocheModuleFace.Add(new Position(180+127, new PointReel(3000-420, 891)));
+
+
+            PositionsApprocheModuleFace.Add(new Position(-127, new PointReel(420, 891)));
+            PositionsApprocheModuleFace.Add(new Position(170, new PointReel(800, 1046))); //ok
+            PositionsApprocheModuleFace.Add(new Position(-296, new PointReel(640, 1522)));
+            //PositionsApprocheModuleFace.Add(new Position(45, new PointReel(642, 1142)));
+            PositionsApprocheModuleFace.Add(null);
+            PositionsApprocheModuleFace.Add(null);
+            PositionsApprocheModuleFace.Add(new Position(-217, new PointReel(1289, 377)));
+
+            PositionsApprocheModuleFace.Add(new Position(180 + 217, new PointReel(3000 - 1289, 377)));
+            PositionsApprocheModuleFace.Add(null);
+            PositionsApprocheModuleFace.Add(null);
+            //PositionsApprocheModuleFace.Add(new Position(180 - 45, new PointReel(3000 - 642, 1142)));
+            PositionsApprocheModuleFace.Add(new Position(180 + 296, new PointReel(3000 - 640, 1522)));
+            PositionsApprocheModuleFace.Add(new Position(180 - 170, new PointReel(3000 - 859, 1036)));
+            PositionsApprocheModuleFace.Add(new Position(180 + 127, new PointReel(3000 - 420, 891)));
+            
             PositionsApprocheModuleGauche = new List<Position>();
             PositionsApprocheModuleGauche.Add(null);
             PositionsApprocheModuleGauche.Add(null);
             PositionsApprocheModuleGauche.Add(null);
+            PositionsApprocheModuleGauche.Add(new Position(135, new PointReel(833, 1163)));
             PositionsApprocheModuleGauche.Add(null);
             PositionsApprocheModuleGauche.Add(null);
-            PositionsApprocheModuleGauche.Add(null);
-            PositionsApprocheModuleGauche.Add(null);
+            PositionsApprocheModuleGauche.Add(new Position(-230, new PointReel(1886, 400))); // 30 1823 746
             PositionsApprocheModuleGauche.Add(null);
             PositionsApprocheModuleGauche.Add(null);
             PositionsApprocheModuleGauche.Add(null);
@@ -63,19 +85,18 @@ namespace GoBot.Mouvements
             PositionsApprocheModuleDroite.Add(null);
             PositionsApprocheModuleDroite.Add(null);
             PositionsApprocheModuleDroite.Add(null);
+            PositionsApprocheModuleDroite.Add(new Position(310, new PointReel(1113, 400))); // 210 1177 746
             PositionsApprocheModuleDroite.Add(null);
             PositionsApprocheModuleDroite.Add(null);
-            PositionsApprocheModuleDroite.Add(null);
-            PositionsApprocheModuleDroite.Add(null);
+            PositionsApprocheModuleDroite.Add(new Position(180 - 135, new PointReel(3000 - 833, 1163)));
             PositionsApprocheModuleDroite.Add(null);
             PositionsApprocheModuleDroite.Add(null);
             PositionsApprocheModuleDroite.Add(null);
 
-            // TODO2017 bonnes valeurs
             PositionsApprocheDepose = new List<Position>();
-            PositionsApprocheDepose.Add(new Position(60, new PointReel(720, 1200)));
-            PositionsApprocheDepose.Add(new Position(60, new PointReel(1500, 950)));
-            PositionsApprocheDepose.Add(new Position(60, new PointReel(3000 - 720, 1200)));
+            PositionsApprocheDepose.Add(new Position(-135, new PointReel(757, 1257))); // 80mm à reculer
+            PositionsApprocheDepose.Add(new Position(-90, new PointReel(1500, 940)));
+            PositionsApprocheDepose.Add(new Position(-135+90, new PointReel(3000 - 757, 1257)));
         }
     }
 }

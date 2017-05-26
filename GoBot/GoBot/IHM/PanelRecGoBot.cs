@@ -59,7 +59,6 @@ namespace GoBot.IHM
             else
             {
                 btnJack.State = state;
-                Devices.Devices.RecGoBot.SetLed(LedID.DebugB1, state ? RecGoBot.LedStatus.Vert : RecGoBot.LedStatus.Rouge);
             }
         }
 
@@ -100,13 +99,20 @@ namespace GoBot.IHM
             }
             else
             {
-                if (state)
+                try
                 {
-                    boutons[(int)btn].On(); // Fonctionne pare que l'ordre est respecté, ça va pas durer éternellement
+                    if (state)
+                    {
+                        boutons[(int)btn].On(); // Fonctionne pare que l'ordre est respecté, ça va pas durer éternellement
+                    }
+                    else
+                    {
+                        boutons[(int)btn].Off();
+                    }
                 }
-                else
+                catch (Exception)
                 {
-                    boutons[(int)btn].Off();
+                    Console.WriteLine("Bouton inconnu");
                 }
 
             }

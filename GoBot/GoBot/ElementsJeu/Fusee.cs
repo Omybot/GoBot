@@ -20,7 +20,7 @@ namespace GoBot.ElementsJeu
             numero = num;
             Hover = false;
             Couleur = couleur;
-            ModulesRestants = 4;
+            ModulesRestants = 3;
         }
 
         public Color Couleur

@@ -4,6 +4,8 @@ using System.Linq;
 using System.Text;
 using GoBot.Communications;
 using System.Drawing;
+using System.Threading;
+using GoBot.Actionneurs;
 
 namespace GoBot.Devices
 {
@@ -17,6 +19,9 @@ namespace GoBot.Devices
 
         public delegate void ColorChangeDelegate(MatchColor state);
         public event ColorChangeDelegate ColorChange;
+
+        private Semaphore semCodeur;
+        public int PositionCodeur { get; protected set; }
 
         public enum LedStatus
         {
@@ -47,10 +52,41 @@ namespace GoBot.Devices
 
         void RecGoBot_ButtonChange(CapteurOnOffID btn, bool state)
         {
-            if (btn == CapteurOnOffID.Bouton1 && state)
-                Robots.GrosRobot.Stop(Robots.GrosRobot.AsserActif ? StopMode.Freely : StopMode.Abrupt);
-            if (btn == CapteurOnOffID.Bouton3 && state)
-                Robots.GrosRobot.Avancer(50);
+            if (Plateau.Enchainement == null || ( Plateau.Enchainement != null && !Plateau.Enchainement.Started))
+            {
+                if (btn == CapteurOnOffID.Bouton1 && state)
+                    Robots.GrosRobot.Stop(Robots.GrosRobot.AsserActif ? StopMode.Freely : StopMode.Abrupt);
+                if (btn == CapteurOnOffID.Bouton3 && state)
+                    Robots.GrosRobot.DeployerActionnneurs();
+                if (btn == CapteurOnOffID.Bouton9 && state)
+                    Robots.GrosRobot.RangerActionneurs();
+                if (btn == CapteurOnOffID.Bouton8 && state)
+                {
+                    Actionneurs.Actionneur.BrasLunaire.Descendre();
+                    Actionneurs.Actionneur.BrasLunaire.Ouvrir();
+                    Actionneurs.Actionneur.BrasLunaire.Avancer();
+                }
+                if (btn == CapteurOnOffID.Bouton7 && state)
+                    ThreadPool.QueueUserWorkItem(new WaitCallback(AttraperUnModuleEtRangerParallel));
+                if (btn == CapteurOnOffID.Bouton6 && state)
+                    Actionneurs.Actionneur.GestionModules.EjecterUnModuleEtRanger();
+                if (btn == CapteurOnOffID.Bouton5 && state)
+                    Recallages.RecallageGrosRobot();
+                if (btn == CapteurOnOffID.Bouton4 && state)
+                    Robots.GrosRobot.Diagnostic();
+                if (btn == CapteurOnOffID.Bouton2 && state)
+                {
+                    if (Actionneur.Fusee.Armed)
+                        Actionneur.Fusee.LancerLaFusee();
+                    else
+                        Actionneur.Fusee.Armer();
+                }
+            }
+        }
+
+        private void AttraperUnModuleEtRangerParallel(object useless)
+        {
+            Actionneurs.Actionneur.GestionModules.AttraperUnModuleEtRanger();
         }
 
         void ChangeLedConnection(ConnexionUDP conn, LedID led)
@@ -134,9 +170,20 @@ namespace GoBot.Devices
                     case 15:
                         but = CapteurOnOffID.LSwitch4;
                         break;
-                    default :
-                        but = CapteurOnOffID.Bouton1;
+                    case 16:
+                        but = CapteurOnOffID.ChaiPas;
                         break;
+                    case 17:
+                        but = CapteurOnOffID.ChaiPlus;
+                        break;
+                    case 18:
+                        but = CapteurOnOffID.PresenceDroite;
+                        break;
+                    case 19:
+                        but = CapteurOnOffID.PresenceGauche;
+                        break;
+                    default :
+                        return;
                 }
 
                 bool pushed = trameRecue[3] > 0;
@@ -149,6 +196,23 @@ namespace GoBot.Devices
 
                 else if (ButtonChange != null)
                     ButtonChange(but, pushed);
+            }
+
+            if(trameRecue[1] == (byte)FonctionTrame.RetourPositionCodeur)
+            {
+                if (trameRecue[2] == (byte)CodeurID.Manuel)
+                {
+                    PositionCodeur = trameRecue[3];
+                    PositionCodeur *= 256;
+                    PositionCodeur = trameRecue[4];
+                    PositionCodeur *= 256;
+                    PositionCodeur = trameRecue[5];
+                    PositionCodeur *= 256;
+                    PositionCodeur = trameRecue[6];
+
+                    if (semCodeur != null)
+                        semCodeur.Release();
+                }
             }
         }
 
@@ -166,6 +230,19 @@ namespace GoBot.Devices
         public void Buzz(int frequency, byte volume)
         {
             connexion.SendMessage(TrameFactory.Buzz(frequency, volume));
+        }
+
+        public int GetCodeurPosition()
+        {
+            Trame t = TrameFactory.CodeurPosition(Carte.RecGB, CodeurID.Manuel);
+            semCodeur = new Semaphore(0, int.MaxValue);
+            Connexions.ConnexionGB.SendMessage(t);
+
+            semCodeur.WaitOne(100);
+            semCodeur.Dispose();
+            semCodeur = null;
+
+            return PositionCodeur;
         }
     }
 }

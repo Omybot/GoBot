@@ -77,6 +77,8 @@ namespace GoBot
 
         void RecGoBot_JackChange(bool state)
         {
+            Devices.Devices.RecGoBot.SetLed(LedID.DebugB1, state ? RecGoBot.LedStatus.Vert : RecGoBot.LedStatus.Rouge);
+
             if (!state && jackArme)
             {
                 jackArme = false;
@@ -161,11 +163,11 @@ namespace GoBot
                 SemaphoresCapteurs[capteur] = new Semaphore(0, int.MaxValue);
 
             Trame t = TrameFactory.DemandeCapteurOnOff(capteur);
-            Connexions.ConnexionIO.SendMessage(t);
+            Connexions.ConnexionGB.SendMessage(t);
 
             if (attendre)
-                SemaphoresCapteurs[capteur].WaitOne(100);
-
+                SemaphoresCapteurs[capteur].WaitOne(1000);
+            Console.WriteLine("Retour " + CapteurActive[capteur].ToString());
             return CapteurActive[capteur];
         }
 
@@ -218,6 +220,7 @@ namespace GoBot
                     break;
                 case FonctionTrame.FinDeplacement:
                 case FonctionTrame.FinRecallage:        // Idem
+                    Thread.Sleep(40); // TODO2018 ceci est une tempo ajoutée au pif de pwet parce qu'on avant envie alors voilà
                     Console.WriteLine("Déblocage déplacement " + DateTime.Now.Hour + ":" + DateTime.Now.Minute + ":" + DateTime.Now.Second + ":" + DateTime.Now.Millisecond);
                     SemaphoresTrame[FonctionTrame.FinDeplacement].Release();
                     break;
@@ -372,11 +375,14 @@ namespace GoBot
 
                     //else
                     {
+
+                        Console.WriteLine("Reception ");
                         bool nouvelEtat = trameRecue[3] > 0 ? true : false;
                         if (nouvelEtat != CapteurActive[capteur])
                         {
                             ChangerEtatCapteurOnOff(capteur, nouvelEtat);
                         }
+                        Console.WriteLine("Liberation " + CapteurActive[capteur].ToString());
                         if (SemaphoresCapteurs[capteur] != null)
                             SemaphoresCapteurs[capteur].Release();
                     }
@@ -445,7 +451,7 @@ namespace GoBot
             if (attendre)
                 if (!SemaphoresTrame[FonctionTrame.FinDeplacement].WaitOne(tempsParcours + 1000))
                 {
-                    Stop(StopMode.Freely);
+                    //Stop(StopMode.Freely);
                     Thread.Sleep(1000);
                 }
 
@@ -480,7 +486,7 @@ namespace GoBot
             if (attendre)
                 if (!SemaphoresTrame[FonctionTrame.FinDeplacement].WaitOne(tempsParcours + 1000))
                 {
-                    Stop(StopMode.Freely);
+                    //Stop(StopMode.Freely);
                     Thread.Sleep(1000);
                 }
 
@@ -506,7 +512,7 @@ namespace GoBot
             if (attendre)
                 if (!SemaphoresTrame[FonctionTrame.FinDeplacement].WaitOne(tempsParcours + 1000))
                 {
-                    Stop(StopMode.Freely);
+                    //Stop(StopMode.Freely);
                     Thread.Sleep(1000);
                 }
             DeplacementLigne = false;
@@ -530,7 +536,7 @@ namespace GoBot
             if (attendre)
                 if (!SemaphoresTrame[FonctionTrame.FinDeplacement].WaitOne(tempsParcours + 1000))
                 {
-                    Stop(StopMode.Freely);
+                    //Stop(StopMode.Freely);
                     Thread.Sleep(1000);
                 }
         }

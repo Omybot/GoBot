@@ -86,6 +86,8 @@
     <Compile Include="Actionneurs\BrasLunaireGauche.cs" />
     <Compile Include="Actionneurs\Convoyeur.cs" />
     <Compile Include="Actionneurs\Ejecteur.cs" />
+    <Compile Include="Actionneurs\LanceurFusee.cs" />
+    <Compile Include="Actionneurs\GestionModules.cs" />
     <Compile Include="Actionneurs\Positionnables.cs" />
     <Compile Include="Actionneurs\Stockeur.cs" />
     <Compile Include="Actions\Asservissement\ActionAccelerationPivot.cs" />
@@ -127,6 +129,7 @@
     <Compile Include="ElementsJeu\ElementJeu.cs" />
     <Compile Include="ElementsJeu\Elements.cs" />
     <Compile Include="ElementsJeu\Fusee.cs" />
+    <Compile Include="ElementsJeu\ZoneDeposeModules.cs" />
     <Compile Include="ElementsJeu\ZoneInteret.cs" />
     <Compile Include="Enchainements\EnchainementAllerRetour.cs" />
     <Compile Include="Enchainements\EnchainementHomologation.cs" />
@@ -290,6 +293,12 @@
     </Compile>
     <Compile Include="IHM\PanelLogsTrames.Designer.cs">
       <DependentUpon>PanelLogsTrames.cs</DependentUpon>
+    </Compile>
+    <Compile Include="IHM\PotarControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="IHM\PotarControl.Designer.cs">
+      <DependentUpon>PotarControl.cs</DependentUpon>
     </Compile>
     <Compile Include="IHM\SplashScreen.cs">
       <SubType>Form</SubType>
@@ -506,6 +515,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="IHM\PanelTable.resx">
       <DependentUpon>PanelTable.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="IHM\PotarControl.resx">
+      <DependentUpon>PotarControl.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="IHM\SplashScreen.resx">
       <DependentUpon>SplashScreen.cs</DependentUpon>

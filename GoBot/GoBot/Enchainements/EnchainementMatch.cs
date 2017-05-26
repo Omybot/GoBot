@@ -21,6 +21,36 @@ namespace GoBot.Enchainements
 
             ActionsFixesGros();
 
+            List<Mouvement> stratFixe = new List<Mouvement>();
+
+            if (Plateau.NotreCouleur == Plateau.CouleurGaucheBleu)
+            {
+                stratFixe.Add(new MouvementFusee(1));
+                stratFixe.Add(new MouvementModuleAvant(1));
+                stratFixe.Add(new MouvementModuleGauche(3));
+                stratFixe.Add(new MouvementDeposeModules(0));
+                stratFixe.Add(new MouvementFusee(0));
+                stratFixe.Add(new MouvementModuleAvant(0));
+                stratFixe.Add(new MouvementModuleAvant(2));
+                stratFixe.Add(new MouvementDeposeModules(1));
+            }
+            else
+            {
+                stratFixe.Add(new MouvementFusee(2));
+                stratFixe.Add(new MouvementModuleAvant(10));
+                stratFixe.Add(new MouvementModuleDroite(8));
+                stratFixe.Add(new MouvementDeposeModules(2));
+                stratFixe.Add(new MouvementFusee(3));
+                stratFixe.Add(new MouvementModuleAvant(11));
+                stratFixe.Add(new MouvementModuleAvant(9));
+                stratFixe.Add(new MouvementDeposeModules(1));
+            }
+
+            int iMouv = 0;
+
+            while(iMouv < stratFixe.Count && stratFixe[iMouv].Executer())
+                iMouv++;
+
             while (ListeMouvementsGros.Count > 0)
             {
                 double meilleurCout = double.MaxValue;
@@ -33,7 +63,7 @@ namespace GoBot.Enchainements
                         iMeilleur = j;
                     }
                 }
-                if (ListeMouvementsGros[iMeilleur].ValeurAction != 0)
+                if (ListeMouvementsGros[iMeilleur].Cout != double.MaxValue && ListeMouvementsGros[iMeilleur].ValeurAction != 0)
                 {
                     if (!ListeMouvementsGros[iMeilleur].Executer())
                         ListeMouvementsGros[iMeilleur].DateMinimum = DateTime.Now + new TimeSpan(0, 0, 1);
@@ -53,12 +83,61 @@ namespace GoBot.Enchainements
             
         }
 
+        private void ArmePince(object useless)
+        {
+            if (Plateau.NotreCouleur == Plateau.CouleurGaucheBleu)
+            {
+                Thread.Sleep(200);
+                Actionneur.BrasLunaireDroite.Descendre();
+                Thread.Sleep(250);
+                Actionneur.BrasLunaireDroite.Ouvrir();
+            }
+            else
+            {
+                Thread.Sleep(200);
+                Actionneur.BrasLunaireGauche.Descendre();
+                Thread.Sleep(250);
+                Actionneur.BrasLunaireGauche.Ouvrir();
+            }
+        }
+
         private void ActionsFixesGros()
         {
             List<PointReel> trajectoirePolaire;
             List<PointReel> pointsPolaires;
 
-            Robots.GrosRobot.Avancer(210);
+            Robots.GrosRobot.Rapide();
+
+            Actionneur.Ejecteur.DemarrerCapteurCouleur();
+
+            if (Plateau.NotreCouleur == Plateau.CouleurGaucheBleu)
+                Robots.GrosRobot.PivotGauche(3);
+            else
+                Robots.GrosRobot.PivotDroite(3);
+
+            ThreadPool.QueueUserWorkItem(new WaitCallback(ArmePince));
+
+            Robots.GrosRobot.VitesseDeplacement = 500;
+            Robots.GrosRobot.AccelerationDebutDeplacement = 1500;
+            Robots.GrosRobot.AccelerationFinDeplacement = 1500;
+
+            if (Plateau.NotreCouleur == Plateau.CouleurGaucheBleu)
+            {
+                Robots.GrosRobot.Virage(SensAR.Avant, SensGD.Gauche, 200, 73);
+                Plateau.Elements.Modules[5].Ramasse = true;
+                Actionneur.BrasLunaireDroite.Attraper();
+            }
+            else
+            {
+                Robots.GrosRobot.Virage(SensAR.Avant, SensGD.Droite, 200, 73);
+                Plateau.Elements.Modules[6].Ramasse = true;
+                Actionneur.BrasLunaireGauche.Attraper();
+            }
+
+            Robots.GrosRobot.Rapide();
+
+            Thread.Sleep(200);
+
             //// Trajectoire normale
             //Robots.GrosRobot.AccelerationDebutDeplacement = 1200;
             //Robots.GrosRobot.AccelerationFinDeplacement = 1700;

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Drawing;
 using System.Linq;
 using System.Text;
@@ -9,19 +10,34 @@ namespace GoBot.Actionneurs
 {
     class Ejecteur
     {
+        public bool Charge { get; set; }
+
         public bool CouleurPositionnee { get; private set; }
 
-        public void RentrerEjecteur()
+        public Ejecteur()
+        {
+            Charge = false;
+        }
+
+        public void CouperEjecteur()
+        {
+            Config.CurrentConfig.ServoEjecteur.Positionner(0);
+        }
+
+
+        public void RentrerEjecteur(bool autoReset = true)
         {
             Config.CurrentConfig.ServoEjecteur.Positionner(Config.CurrentConfig.ServoEjecteur.PositionRentre);
-            ThreadPool.QueueUserWorkItem(new WaitCallback(ResetServoEjecteur), null);
+            if (autoReset)
+            //    ResetServoEjecteur(null);
+                ThreadPool.QueueUserWorkItem(new WaitCallback(ResetServoEjecteur), null);
         }
 
         private void ResetServoEjecteur(Object o)
         {
             // Pour pas qu'il grésille
             Thread.Sleep(500);
-            Config.CurrentConfig.ServoEjecteur.Positionner(0);
+            CouperEjecteur();
         }
 
         public void SortirEjecteur()
@@ -32,9 +48,19 @@ namespace GoBot.Actionneurs
         public void Ejecter()
         {
             SortirEjecteur();
-            Thread.Sleep(275);
+            Thread.Sleep(500);
             RentrerEjecteur();
             CouleurPositionnee = false;
+            Charge = false;
+        }
+
+        public void EjecterBonneCouleur()
+        {
+            if (Charge)
+            {
+                PositionnerCouleur();
+                Ejecter();
+            }
         }
 
         public void TournerGauche()
@@ -54,8 +80,10 @@ namespace GoBot.Actionneurs
 
         private delegate bool FindColorDelegate();
 
-        public void PositionneCouleur()
+        public void PositionnerCouleur()
         {
+            Thread.Sleep(200);
+
             if (Plateau.NotreCouleur == Plateau.CouleurDroiteJaune)
                 Positionne(IsYellow);
             else
@@ -64,35 +92,42 @@ namespace GoBot.Actionneurs
 
         private void Positionne(FindColorDelegate CheckColor)
         {
-            DemarrerCapteurCouleur();
-
-            TournerGauche();
-            for (int i = 0; i < 3; i++) //On veut plusieurs mesures bonnes histoire d'etre un peu plus sur
+            if (!CouleurPositionnee)
             {
-                Thread.Sleep(10);
-                while (!CheckColor())
-                    Thread.Sleep(10);
-            }
-            Thread.Sleep(300);
-            TournerStop();
+                DemarrerCapteurCouleur();
 
-            CouleurPositionnee = true;
+                TournerGauche();
+
+                int detections = 0;
+                Stopwatch sw = Stopwatch.StartNew();
+
+                while (detections < 3 && sw.ElapsedMilliseconds < 2000)
+                { 
+                    Thread.Sleep(10);
+                    if (CheckColor())
+                        detections++;
+                }
+
+                Thread.Sleep(300);
+                TournerStop();
+
+                CouleurPositionnee = true;
+            } 
         }
 
         private bool IsBlue()
         {
             Color col = Robots.GrosRobot.DemandeCapteurCouleur(CapteurCouleurID.CouleurTube);
-            Console.WriteLine(col);
             return col.B > col.R * 2;
         }
 
         private bool IsYellow()
         {
             Color col = Robots.GrosRobot.DemandeCapteurCouleur(CapteurCouleurID.CouleurTube);
-            return col.R > col.B;
+            return col.R > col.B * 2;
         }
 
-        private void DemarrerCapteurCouleur()
+        public void DemarrerCapteurCouleur()
         {
             if (!Robots.GrosRobot.ActionneurActive[ActionneurOnOffID.AlimCapteurCouleur])
             {

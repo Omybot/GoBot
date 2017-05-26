@@ -523,7 +523,14 @@ namespace GoBot
             // Dessiner les actionneurs ici
             if (robot == Robots.GrosRobot)
             {
-
+                Brush b = new SolidBrush(Plateau.NotreCouleur);
+                for (int i = 0; i < Actionneur.Stockeur.ModulesCount; i++)
+                {
+                    Rectangle rect = new Rectangle(bmpRobot.Width / 2 - RealToScreenDistance(robot.Largeur / 2) + 5 + i * 10, bmpRobot.Height / 2 - RealToScreenDistance(robot.Longueur / 2) + 5, 5, 18);
+                    gGros.FillRectangle(b, rect);
+                    gGros.DrawRectangle(Pens.Black, rect);
+                }
+                b.Dispose();
             }
 
             g.DrawImage(RotateImage(bmpRobot, robot.Position.Angle.AngleDegres + 90), positionRobot.X - bmpRobot.Width / 2, positionRobot.Y - bmpRobot.Height / 2);
@@ -618,7 +625,10 @@ namespace GoBot
                     b.Dispose();
                 }
 
-                g.DrawEllipse(Pens.Black, rect);
+                if(module.Hover)
+                    g.DrawEllipse(Pens.White, rect);
+                else
+                    g.DrawEllipse(Pens.Black, rect);
             }
         }
 
@@ -648,7 +658,10 @@ namespace GoBot
                     b.Dispose();
                 }
 
-                g.DrawEllipse(Pens.Black, rect);
+                if (fusee.Hover)
+                    g.DrawEllipse(Pens.White, rect);
+                else
+                    g.DrawEllipse(Pens.Black, rect);
             }
         }
 
@@ -704,44 +717,48 @@ namespace GoBot
             foreach (Mouvement m in mouvements)
             {
                 Point point;
-                Point pointElement = RealToScreenPosition(m.Element.Position);
 
-                if (m.Cout != double.MaxValue && !double.IsInfinity(m.Cout))
+                if (m.Element != null)
                 {
-                    Point pointProche = RealToScreenPosition(m.PositionProche.Coordonnees);
+                    Point pointElement = RealToScreenPosition(m.Element.Position);
 
-                    foreach (Position p in m.Positions)
+                    if (m.Cout != double.MaxValue && !double.IsInfinity(m.Cout))
                     {
-                        point = RealToScreenPosition(p.Coordonnees);
-                        if (point != pointProche)
-                        {
-                            g.FillEllipse(brushRouge, point.X - 2, point.Y - 2, 4, 4);
-                            g.DrawLine(penRougePointille, point, pointElement);
-                        }
-                    }
+                        Point pointProche = RealToScreenPosition(m.PositionProche.Coordonnees);
 
-                    g.FillEllipse(brushBlanc, pointProche.X - 2, pointProche.Y - 2, 4, 4);
-                    g.DrawLine(penBlanc, pointProche, pointElement);
-                    g.DrawString(Math.Round(m.Cout) + "", police, brushBlanc, pointProche);
-                }
-                else
-                {
-                    if (!m.BonneCouleur())
-                    {
                         foreach (Position p in m.Positions)
                         {
                             point = RealToScreenPosition(p.Coordonnees);
-                            g.FillEllipse(brushBlancTransparent, point.X - 2, point.Y - 2, 4, 4);
-                            g.DrawLine(penBlancTransparent, point, pointElement);
+                            if (point != pointProche)
+                            {
+                                g.FillEllipse(brushRouge, point.X - 2, point.Y - 2, 4, 4);
+                                g.DrawLine(penRougePointille, point, pointElement);
+                            }
                         }
+
+                        g.FillEllipse(brushBlanc, pointProche.X - 2, pointProche.Y - 2, 4, 4);
+                        g.DrawLine(penBlanc, pointProche, pointElement);
+                        g.DrawString(Math.Round(m.Cout) + "", police, brushBlanc, pointProche);
                     }
                     else
                     {
-                        foreach (Position p in m.Positions)
+                        if (!m.BonneCouleur())
                         {
-                            point = RealToScreenPosition(p.Coordonnees);
-                            g.FillEllipse(brushNoir, point.X - 2, point.Y - 2, 4, 4);
-                            g.DrawLine(penNoirPointille, point, pointElement);
+                            foreach (Position p in m.Positions)
+                            {
+                                point = RealToScreenPosition(p.Coordonnees);
+                                g.FillEllipse(brushBlancTransparent, point.X - 2, point.Y - 2, 4, 4);
+                                g.DrawLine(penBlancTransparent, point, pointElement);
+                            }
+                        }
+                        else
+                        {
+                            foreach (Position p in m.Positions)
+                            {
+                                point = RealToScreenPosition(p.Coordonnees);
+                                g.FillEllipse(brushNoir, point.X - 2, point.Y - 2, 4, 4);
+                                g.DrawLine(penNoirPointille, point, pointElement);
+                            }
                         }
                     }
                 }

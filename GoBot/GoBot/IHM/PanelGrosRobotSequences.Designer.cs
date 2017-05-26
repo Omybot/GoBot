@@ -29,6 +29,9 @@
         private void InitializeComponent()
         {
             this.groupBoxSequences = new Composants.GroupBoxRetractable();
+            this.btnVideTout = new System.Windows.Forms.Button();
+            this.btnStockModule = new System.Windows.Forms.Button();
+            this.cboArmSelection = new System.Windows.Forms.ComboBox();
             this.btnAttrape = new System.Windows.Forms.Button();
             this.btnFindColor = new System.Windows.Forms.Button();
             this.btnAvale = new System.Windows.Forms.Button();
@@ -57,13 +60,14 @@
             this.btnLunaireSorti = new System.Windows.Forms.Button();
             this.btnLunaireRange = new System.Windows.Forms.Button();
             this.button28 = new System.Windows.Forms.Button();
-            this.cboArmSelection = new System.Windows.Forms.ComboBox();
-            this.btnStockModule = new System.Windows.Forms.Button();
+            this.button1 = new System.Windows.Forms.Button();
             this.groupBoxSequences.SuspendLayout();
             this.SuspendLayout();
             // 
             // groupBoxSequences
             // 
+            this.groupBoxSequences.Controls.Add(this.button1);
+            this.groupBoxSequences.Controls.Add(this.btnVideTout);
             this.groupBoxSequences.Controls.Add(this.btnStockModule);
             this.groupBoxSequences.Controls.Add(this.cboArmSelection);
             this.groupBoxSequences.Controls.Add(this.btnAttrape);
@@ -101,6 +105,39 @@
             this.groupBoxSequences.TabStop = false;
             this.groupBoxSequences.Text = "Séquences";
             this.groupBoxSequences.Enter += new System.EventHandler(this.groupBoxSequences_Enter);
+            // 
+            // btnVideTout
+            // 
+            this.btnVideTout.Location = new System.Drawing.Point(92, 72);
+            this.btnVideTout.Name = "btnVideTout";
+            this.btnVideTout.Size = new System.Drawing.Size(156, 23);
+            this.btnVideTout.TabIndex = 68;
+            this.btnVideTout.Text = "Vide moi cette merde";
+            this.btnVideTout.UseVisualStyleBackColor = true;
+            this.btnVideTout.Click += new System.EventHandler(this.btnVideTout_Click);
+            // 
+            // btnStockModule
+            // 
+            this.btnStockModule.Location = new System.Drawing.Point(146, 142);
+            this.btnStockModule.Name = "btnStockModule";
+            this.btnStockModule.Size = new System.Drawing.Size(48, 23);
+            this.btnStockModule.TabIndex = 67;
+            this.btnStockModule.Text = "Stock";
+            this.btnStockModule.UseVisualStyleBackColor = true;
+            this.btnStockModule.Click += new System.EventHandler(this.btnStockModule_Click);
+            // 
+            // cboArmSelection
+            // 
+            this.cboArmSelection.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cboArmSelection.FormattingEnabled = true;
+            this.cboArmSelection.Items.AddRange(new object[] {
+            "Central",
+            "Gauche",
+            "Droite"});
+            this.cboArmSelection.Location = new System.Drawing.Point(11, 171);
+            this.cboArmSelection.Name = "cboArmSelection";
+            this.cboArmSelection.Size = new System.Drawing.Size(75, 21);
+            this.cboArmSelection.TabIndex = 66;
             // 
             // btnAttrape
             // 
@@ -278,7 +315,6 @@
             this.btnLunaireSequence.TabIndex = 48;
             this.btnLunaireSequence.Text = "Séquence";
             this.btnLunaireSequence.UseVisualStyleBackColor = true;
-            this.btnLunaireSequence.Click += new System.EventHandler(this.btnLunaireSequence_Click);
             // 
             // btnLunaireSemiOuvert
             // 
@@ -378,28 +414,15 @@
             this.button28.UseVisualStyleBackColor = true;
             this.button28.Click += new System.EventHandler(this.button28_Click);
             // 
-            // cboArmSelection
+            // button1
             // 
-            this.cboArmSelection.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cboArmSelection.FormattingEnabled = true;
-            this.cboArmSelection.Items.AddRange(new object[] {
-            "Central",
-            "Gauche",
-            "Droite"});
-            this.cboArmSelection.Location = new System.Drawing.Point(11, 171);
-            this.cboArmSelection.Name = "cboArmSelection";
-            this.cboArmSelection.Size = new System.Drawing.Size(75, 21);
-            this.cboArmSelection.TabIndex = 66;
-            // 
-            // btnStockModule
-            // 
-            this.btnStockModule.Location = new System.Drawing.Point(146, 142);
-            this.btnStockModule.Name = "btnStockModule";
-            this.btnStockModule.Size = new System.Drawing.Size(48, 23);
-            this.btnStockModule.TabIndex = 67;
-            this.btnStockModule.Text = "Stock";
-            this.btnStockModule.UseVisualStyleBackColor = true;
-            this.btnStockModule.Click += new System.EventHandler(this.btnStockModule_Click);
+            this.button1.Location = new System.Drawing.Point(282, 87);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(75, 23);
+            this.button1.TabIndex = 69;
+            this.button1.Text = "button1";
+            this.button1.UseVisualStyleBackColor = true;
+            this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
             // PanelGrosRobotSequences
             // 
@@ -450,5 +473,7 @@
         private System.Windows.Forms.Button btnAttrape;
         private System.Windows.Forms.ComboBox cboArmSelection;
         private System.Windows.Forms.Button btnStockModule;
+        private System.Windows.Forms.Button btnVideTout;
+        private System.Windows.Forms.Button button1;
     }
 }

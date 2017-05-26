@@ -99,7 +99,7 @@ namespace GoBot.Communications
         static public Trame DemandeCapteurOnOff(CapteurOnOffID capteur)
         {
             byte[] tab = new byte[3];
-            tab[0] = (byte)Carte.RecIO;
+            tab[0] = (byte)Carte.RecGB;
             tab[1] = (byte)FonctionTrame.DemandeCapteurOnOff;
             tab[2] = (byte)capteur;
 
@@ -471,6 +471,17 @@ namespace GoBot.Communications
             tab[2] = (byte)trame.Length;
             for (int i = 0; i < trame.Length; i++)
                 tab[3 + i] = trame[i];
+
+            Trame retour = new Trame(tab);
+            return retour;
+        }
+
+        static public Trame CodeurPosition(Carte carte, CodeurID codeur)
+        {
+            byte[] tab = new byte[3];
+            tab[0] = (byte)carte;
+            tab[1] = (byte)FonctionTrame.DemandePositionCodeur;
+            tab[2] = (byte)codeur;
 
             Trame retour = new Trame(tab);
             return retour;
