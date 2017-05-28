@@ -44,10 +44,32 @@ namespace GoBot.Mouvements
         {
             Robot.Reculer(80);
 
-            while (Actionneur.Stockeur.Ejectable && zone.PlacesLibres > 0)
-            { 
-                Actionneur.GestionModules.EjecterUnModuleEtRanger();
+            while (Actionneur.GestionModuleSupervisee.NombreModules > 0 && zone.PlacesLibres > 0)
+            {
+                Actionneur.GestionModuleSupervisee.DeposerModule();
                 zone.ModulesPlaces++;
+
+                if (Actionneur.GestionModuleSupervisee.NombreModules == 0 && !Actionneur.BrasLunaire.ModuleCharge && Actionneur.BrasLunaireDroite.Charge)
+                {
+                    Robots.GrosRobot.Avancer(250); // Besoin de 20cm derriere pour la manoeuvre
+                    Actionneur.BrasLunaireDroite.TransfertAvant();
+                    Actionneur.GestionModuleSupervisee.AvaleModuleEnBas();
+                    Robots.GrosRobot.Reculer(100); // Rattrape le décallage de la manoeuvre
+                    Robots.GrosRobot.PivotGauche(43);
+                    Robots.GrosRobot.Reculer(50);
+                    Robots.GrosRobot.Historique.Log("Chargement module du bras droit " + Actionneur.GestionModuleSupervisee.NombreModules + " modules dans le robot");
+                }
+
+                else if (Actionneur.GestionModuleSupervisee.NombreModules == 0 && !Actionneur.BrasLunaire.ModuleCharge && Actionneur.BrasLunaireGauche.Charge)
+                {
+                    Robots.GrosRobot.Avancer(250); // Besoin de 20cm derriere pour la manoeuvre
+                    Actionneur.BrasLunaireGauche.TransfertAvant();
+                    Actionneur.GestionModuleSupervisee.AvaleModuleEnBas();
+                    Robots.GrosRobot.Reculer(100); // Rattrape le décallage de la manoeuvre
+                    Robots.GrosRobot.PivotDroite(43);
+                    Robots.GrosRobot.Reculer(50);
+                    Robots.GrosRobot.Historique.Log("Chargement module du bras gauche " + Actionneur.GestionModuleSupervisee.NombreModules + " modules dans le robot");
+                }
             }
 
             Actionneur.Ejecteur.CouperEjecteur();
@@ -62,16 +84,16 @@ namespace GoBot.Mouvements
 
         public override double Score
         {
-            get 
-            { 
-                return 10 * Actionneur.Stockeur.ModulesCount; 
+            get
+            {
+                return 10 * Actionneur.Stockeur.ModulesCount;
             }
         }
 
         public override double ValeurAction
         {
-            get 
-            { 
+            get
+            {
                 int facteurTemps = 1;
 
                 if (Plateau.Enchainement.TempsRestant < new TimeSpan(0, 0, 30))
@@ -81,7 +103,7 @@ namespace GoBot.Mouvements
                 if (Plateau.Enchainement.TempsRestant < new TimeSpan(0, 0, 60))
                     facteurTemps++;
 
-                int facteurModulesCharges = Actionneur.Stockeur.ModulesCount + (Actionneur.Convoyeur.ModuleCharge ? 1 : 0) + (Actionneur.BrasLunaire.ModuleCharge ? 1 : 0);
+                int facteurModulesCharges = Actionneur.GestionModuleSupervisee.NombreModules;
 
                 int facteurPlaceRestante = zone.PlacesLibres;
 
@@ -92,13 +114,13 @@ namespace GoBot.Mouvements
                 if (Plateau.NotreCouleur == Plateau.CouleurDroiteJaune && num < 1)
                     facteurCote = 0.5;
 
-                return facteurTemps * 4 * Math.Min(facteurModulesCharges, facteurPlaceRestante) * facteurCote; 
+                return facteurTemps * 4 * Math.Min(facteurModulesCharges, facteurPlaceRestante) * facteurCote;
             }
         }
 
         public override string ToString()
         {
-            return "Dépose modules " + zone.ToString();
+            return "Dépose modules zone " + num.ToString();
         }
     }
 }

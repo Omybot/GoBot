@@ -45,10 +45,9 @@ namespace GoBot.Mouvements
         {
             Robots.GrosRobot.Avancer(80);
 
-            while (fusee.ModulesRestants > 0 && Actionneur.GestionModules.PlacesLibres > 0)
+            while (fusee.ModulesRestants > 0 && Actionneur.GestionModuleSupervisee.PlacesLibres > 0)
             {
-                for (int j = 0; j < 5; j++)
-                    Actionneurs.Actionneur.BrasLunaire.Descendre();
+                Actionneurs.Actionneur.BrasLunaire.Descendre();
                 Actionneurs.Actionneur.BrasLunaire.Ouvrir();
                 Thread.Sleep(120);
                 Actionneurs.Actionneur.BrasLunaire.Avancer();
@@ -56,21 +55,43 @@ namespace GoBot.Mouvements
                 Actionneurs.Actionneur.BrasLunaire.Fermer();
                 Thread.Sleep(180);
                 Actionneurs.Actionneur.BrasLunaire.Reculer();
-                Robots.GrosRobot.Reculer(50);
+                Robots.GrosRobot.Reculer(80);
                 Actionneurs.Actionneur.BrasLunaire.Ouvrir();
                 Thread.Sleep(50);
                 Robots.GrosRobot.Lent();
-                Robots.GrosRobot.Avancer(30);
+                Robots.GrosRobot.Avancer(40);
                 Robots.GrosRobot.Rapide();
                 Actionneurs.Actionneur.BrasLunaire.Fermer();
 
-                Actionneur.GestionModules.AttraperUnModuleEtRanger();
-
-                if(fusee.ModulesRestants > 0 && Actionneur.GestionModules.PlacesLibres > 0)
+                if (!Actionneur.BrasLunaire.CapteurPresence)
+                {
+                    Actionneurs.Actionneur.BrasLunaire.Ouvrir();
+                    Thread.Sleep(200);
+                    Robots.GrosRobot.Lent();
                     Robots.GrosRobot.Avancer(20);
+                    Actionneurs.Actionneur.BrasLunaire.Fermer();
+                    Thread.Sleep(300);
+                    Actionneurs.Actionneur.BrasLunaire.Reculer();
+                    Robots.GrosRobot.Rapide();
+                    Robots.GrosRobot.Reculer(60);
+                    Actionneurs.Actionneur.BrasLunaire.Ouvrir();
+                    Robots.GrosRobot.Lent();
+                    Robots.GrosRobot.Avancer(40);
+                    Actionneurs.Actionneur.BrasLunaire.Fermer();
+                    Thread.Sleep(300);
+                }
 
                 fusee.ModulesRestants--;
-                Robots.GrosRobot.Historique.Log("Chargement module " + fusee.ToString() + ", " + fusee.ModulesRestants + " modules restants");
+
+                bool attrapageReussi = Actionneur.GestionModuleSupervisee.AvalerModule();
+
+                if (!attrapageReussi)
+                    fusee.ModulesRestants = 0;
+
+                if (fusee.ModulesRestants > 0 && Actionneur.GestionModuleSupervisee.PlacesLibres > 0)
+                    Robots.GrosRobot.Avancer(40);
+
+                Robots.GrosRobot.Historique.Log("Chargement module de la fusée " + fusee.ToString() + (attrapageReussi ? " réussi" : "fail") + ", " + fusee.ModulesRestants + " modules restants");
             }
 
             Robots.GrosRobot.Reculer(60);

@@ -93,10 +93,8 @@ namespace GoBot.Actionneurs
         {
             int accelTmp = Robots.GrosRobot.AccelerationFinDeplacement;
 
-            for (int i = 0; i < 3; i++)
-                Actionneur.BrasLunaire.Descendre();
-            for (int i = 0; i < 3; i++)
-                Actionneur.BrasLunaire.Ouvrir();
+            Actionneur.BrasLunaire.Descendre();
+            Actionneur.BrasLunaire.Ouvrir();
             Deposer();
             Robots.GrosRobot.Reculer(200);
             Fermer();
@@ -106,6 +104,8 @@ namespace GoBot.Actionneurs
             Actionneur.BrasLunaire.Avancer();
             Robots.GrosRobot.Avancer(100);
             Robots.GrosRobot.AccelerationFinDeplacement = accelTmp;
+            Actionneur.BrasLunaire.Fermer();
+            Thread.Sleep(180);
         }
     }
 }

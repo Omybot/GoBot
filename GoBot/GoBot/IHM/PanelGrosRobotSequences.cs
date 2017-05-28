@@ -168,7 +168,7 @@ namespace GoBot.IHM
 
         private void btnBloqueHaut_Click(object sender, EventArgs e)
         {
-            Actionneur.Stockeur.BloqueHaut();
+            Actionneur.Stockeur.BloquerHaut();
         }
 
         private void btnDebloqueHaut_Click(object sender, EventArgs e)
@@ -275,8 +275,47 @@ namespace GoBot.IHM
 
         private void button1_Click(object sender, EventArgs e)
         {
-            ThreadPool.QueueUserWorkItem(new WaitCallback(zAvantArriere));
-            ThreadPool.QueueUserWorkItem(new WaitCallback(zOuvreFerme));
+            Actionneurs.Actionneur.BrasLunaire.Descendre();
+            Actionneurs.Actionneur.BrasLunaire.Ouvrir();
+            Thread.Sleep(120);
+            Actionneurs.Actionneur.BrasLunaire.Avancer();
+            Thread.Sleep(180);
+            Actionneurs.Actionneur.BrasLunaire.Fermer();
+            Thread.Sleep(180);
+            Actionneurs.Actionneur.BrasLunaire.Reculer();
+            Robots.GrosRobot.Reculer(80);
+            Actionneurs.Actionneur.BrasLunaire.Ouvrir();
+            Thread.Sleep(50);
+            Robots.GrosRobot.Lent();
+            Robots.GrosRobot.Avancer(40);
+            Robots.GrosRobot.Rapide();
+            Actionneurs.Actionneur.BrasLunaire.Fermer();
+            Thread.Sleep(150);
+
+            if (!Actionneur.BrasLunaire.CapteurPresence)
+            {
+                Actionneurs.Actionneur.BrasLunaire.Ouvrir();
+                Thread.Sleep(200);
+                Robots.GrosRobot.Lent();
+                Robots.GrosRobot.Avancer(20);
+                Actionneurs.Actionneur.BrasLunaire.Fermer();
+                Thread.Sleep(300);
+                Actionneurs.Actionneur.BrasLunaire.Reculer();
+                Robots.GrosRobot.Rapide();
+                Robots.GrosRobot.Reculer(60);
+                Actionneurs.Actionneur.BrasLunaire.Ouvrir();
+                Robots.GrosRobot.Lent();
+                Robots.GrosRobot.Avancer(40);
+                Actionneurs.Actionneur.BrasLunaire.Fermer();
+                Thread.Sleep(300);
+            }
+
+                Robots.GrosRobot.Avancer(40);
+
+
+                if (!Actionneur.BrasLunaire.CapteurPresence)
+                    Actionneur.BrasLunaire.Ouvrir();
+
         }
 
         private void zAvantArriere(object useless)

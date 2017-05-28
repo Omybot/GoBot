@@ -82,8 +82,6 @@ namespace GoBot.Actionneurs
 
         public void PositionnerCouleur()
         {
-            Thread.Sleep(200);
-
             if (Plateau.NotreCouleur == Plateau.CouleurDroiteJaune)
                 Positionne(IsYellow);
             else
@@ -92,27 +90,22 @@ namespace GoBot.Actionneurs
 
         private void Positionne(FindColorDelegate CheckColor)
         {
-            if (!CouleurPositionnee)
-            {
-                DemarrerCapteurCouleur();
+            DemarrerCapteurCouleur();
 
-                TournerGauche();
+            TournerGauche();
 
-                int detections = 0;
-                Stopwatch sw = Stopwatch.StartNew();
+            int detections = 0;
+            Stopwatch sw = Stopwatch.StartNew();
 
-                while (detections < 3 && sw.ElapsedMilliseconds < 2000)
-                { 
-                    Thread.Sleep(10);
-                    if (CheckColor())
-                        detections++;
-                }
+            while (detections < 3 && sw.ElapsedMilliseconds < 2000)
+            { 
+                Thread.Sleep(10);
+                if (CheckColor())
+                    detections++;
+            }
 
-                Thread.Sleep(300);
-                TournerStop();
-
-                CouleurPositionnee = true;
-            } 
+            Thread.Sleep(300);
+            TournerStop();
         }
 
         private bool IsBlue()

@@ -60,7 +60,7 @@ namespace GoBot.Mouvements
             Robots.GrosRobot.Rapide();
             Actionneurs.Actionneur.BrasLunaire.Fermer();
 
-            Actionneur.GestionModules.AttraperUnModuleEtRanger();
+            Actionneur.GestionModuleSupervisee.AvalerModule();
             module.Ramasse = true;
 
             if (num == 2) // Gros patch déblocage
@@ -81,7 +81,7 @@ namespace GoBot.Mouvements
         {
             get
             {
-                if (module.Ramasse || Actionneur.GestionModules.PlacesLibres == 0)
+                if (module.Ramasse || Actionneur.GestionModuleSupervisee.PlacesLibres == 0)
                     return 0;
 
                 double facteurTemps = 1;

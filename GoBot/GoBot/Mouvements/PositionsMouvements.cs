@@ -50,7 +50,7 @@ namespace GoBot.Mouvements
 
 
             PositionsApprocheModuleFace.Add(new Position(-127, new PointReel(420, 891)));
-            PositionsApprocheModuleFace.Add(new Position(170, new PointReel(800, 1046))); //ok
+            PositionsApprocheModuleFace.Add(new Position(170, new PointReel(860, 1036)));
             PositionsApprocheModuleFace.Add(new Position(-296, new PointReel(640, 1522)));
             //PositionsApprocheModuleFace.Add(new Position(45, new PointReel(642, 1142)));
             PositionsApprocheModuleFace.Add(null);

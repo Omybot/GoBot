@@ -25,13 +25,6 @@ namespace GoBot.Actionneurs
         private bool stockMilieu;
         private bool stockHaut;
 
-        public bool Ejectable
-        {
-            get
-            {
-                return ModulesCount > 0;
-            }
-        }
 
         public bool Stockable
         {
@@ -63,7 +56,7 @@ namespace GoBot.Actionneurs
                 RelacheHaut();
                 MonterRehausseur();
                 Thread.Sleep(400);
-                BloqueHaut();
+                BloquerHaut();
                 BloqueBas();
                 Thread.Sleep(300);
                 RangerRehausseur();
@@ -104,7 +97,7 @@ namespace GoBot.Actionneurs
                 BloqueBas();
                 stockMilieu = false;
                 stockBas = true;
-                BloqueHaut();
+                BloquerHaut();
                 Actionneur.Ejecteur.CouperEjecteur();
             }
             else if (stockHaut)
@@ -120,7 +113,7 @@ namespace GoBot.Actionneurs
                 stockHaut = false;
                 stockBas = true;
                 BloqueBas();
-                BloqueHaut();
+                BloquerHaut();
                 Actionneur.Ejecteur.CouperEjecteur();
             }
         }
@@ -144,7 +137,7 @@ namespace GoBot.Actionneurs
             stockMilieu = true;
         }
 
-        public void BloqueHaut()
+        public void BloquerHaut()
         {
             Config.CurrentConfig.ServoBloqueurHaut.Positionner(Config.CurrentConfig.ServoBloqueurHaut.PositionSorti);
         }

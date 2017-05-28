@@ -224,7 +224,7 @@ namespace GoBot
                 Thread.Sleep(tempo);
                 Actionneur.Stockeur.RelacheHaut();
                 Thread.Sleep(tempo);
-                Actionneur.Stockeur.BloqueHaut();
+                Actionneur.Stockeur.BloquerHaut();
                 Thread.Sleep(tempo);
                 Actionneur.Stockeur.MonterRehausseur();
                 Thread.Sleep(tempo);
@@ -617,7 +617,7 @@ namespace GoBot
             Actionneur.BrasLunaireGauche.Ranger();
             Actionneur.Stockeur.RangerRehausseur();
             Actionneur.Stockeur.BloqueBas();
-            Actionneur.Stockeur.BloqueHaut();
+            Actionneur.Stockeur.BloquerHaut();
             Actionneur.Ejecteur.RentrerEjecteur();
             Actionneur.Ejecteur.TournerStop();
             Actionneur.Convoyeur.Arreter();

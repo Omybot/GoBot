@@ -73,12 +73,17 @@ namespace GoBot.IHM
 
                 if (ticksCurrent > ticksMin + ticksRange)
                     ticksMin = ticksCurrent - ticksRange;
+                else if (ticksCurrent < ticksMin)
+                    ticksMin = ticksCurrent;
 
                 posValue = (ticksCurrent - ticksMin) / ticksRange * (positionnable.Maximum - positionnable.Minimum) + positionnable.Minimum;
 
+                posValue = Math.Min(posValue, positionnable.Maximum);
+                posValue = Math.Max(posValue, positionnable.Minimum);
+
                 trackBar.Invoke(new EventHandler(delegate
                 {
-                    trackBar.SetValue(posValue);
+                    trackBar.SetValue((int)posValue);
                 }));
             }
         }

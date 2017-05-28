@@ -105,6 +105,8 @@ namespace GoBot.Actionneurs
             Actionneur.BrasLunaire.Avancer();
             Robots.GrosRobot.Avancer(100);
             Robots.GrosRobot.AccelerationFinDeplacement = accelTmp;
+            Actionneur.BrasLunaire.Fermer();
+            Thread.Sleep(180);
         }
     }
 }

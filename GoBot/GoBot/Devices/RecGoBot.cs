@@ -21,7 +21,7 @@ namespace GoBot.Devices
         public event ColorChangeDelegate ColorChange;
 
         private Semaphore semCodeur;
-        public int PositionCodeur { get; protected set; }
+        public uint PositionCodeur { get; protected set; }
 
         public enum LedStatus
         {
@@ -69,7 +69,7 @@ namespace GoBot.Devices
                 if (btn == CapteurOnOffID.Bouton7 && state)
                     ThreadPool.QueueUserWorkItem(new WaitCallback(AttraperUnModuleEtRangerParallel));
                 if (btn == CapteurOnOffID.Bouton6 && state)
-                    Actionneurs.Actionneur.GestionModules.EjecterUnModuleEtRanger();
+                    ThreadPool.QueueUserWorkItem(new WaitCallback(EjecterUnModuleEtRangerParallel));
                 if (btn == CapteurOnOffID.Bouton5 && state)
                     Recallages.RecallageGrosRobot();
                 if (btn == CapteurOnOffID.Bouton4 && state)
@@ -81,12 +81,25 @@ namespace GoBot.Devices
                     else
                         Actionneur.Fusee.Armer();
                 }
+                if (btn == CapteurOnOffID.Bouton10 && state)
+                {
+                    Actionneur.GestionModuleSupervisee.Reset();
+                }
             }
         }
 
         private void AttraperUnModuleEtRangerParallel(object useless)
         {
-            Actionneurs.Actionneur.GestionModules.AttraperUnModuleEtRanger();
+            //Actionneurs.Actionneur.GestionModules.AttraperUnModuleEtRanger();
+            Actionneur.BrasLunaire.Fermer();
+            Thread.Sleep(250);
+            Actionneur.GestionModuleSupervisee.AvalerModule();
+        }
+
+        private void EjecterUnModuleEtRangerParallel(object useless)
+        {
+            //Actionneurs.Actionneur.GestionModules.EjecterUnModuleEtRanger();
+            Actionneur.GestionModuleSupervisee.DeposerModule();
         }
 
         void ChangeLedConnection(ConnexionUDP conn, LedID led)
@@ -204,11 +217,11 @@ namespace GoBot.Devices
                 {
                     PositionCodeur = trameRecue[3];
                     PositionCodeur *= 256;
-                    PositionCodeur = trameRecue[4];
+                    PositionCodeur += trameRecue[4];
                     PositionCodeur *= 256;
-                    PositionCodeur = trameRecue[5];
+                    PositionCodeur += trameRecue[5];
                     PositionCodeur *= 256;
-                    PositionCodeur = trameRecue[6];
+                    PositionCodeur += trameRecue[6];
 
                     if (semCodeur != null)
                         semCodeur.Release();
@@ -232,7 +245,7 @@ namespace GoBot.Devices
             connexion.SendMessage(TrameFactory.Buzz(frequency, volume));
         }
 
-        public int GetCodeurPosition()
+        public uint GetCodeurPosition()
         {
             Trame t = TrameFactory.CodeurPosition(Carte.RecGB, CodeurID.Manuel);
             semCodeur = new Semaphore(0, int.MaxValue);

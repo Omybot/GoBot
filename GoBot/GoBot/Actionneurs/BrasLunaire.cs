@@ -12,6 +12,14 @@ namespace GoBot.Actionneurs
     {
         public bool ModuleCharge { get; protected set; }
 
+        public bool CapteurPresence
+        {
+            get
+            {
+                return Robots.GrosRobot.DemandeCapteurOnOff(CapteurOnOffID.PresenceCentre);
+            }
+        }
+
         public void MonterStockage()
         {
             Config.CurrentConfig.ServoLunaireMonte.Positionner(Config.CurrentConfig.ServoLunaireMonte.PositionMoyenne);

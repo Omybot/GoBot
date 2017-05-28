@@ -16,7 +16,8 @@ namespace GoBot.Actionneurs
         private static Ejecteur ejecteur;
         private static BrasLunaireDroite brasLunaireDroite;
         private static BrasLunaireGauche brasLunaireGauche;
-        private static GestionModules gestionModules;
+        //private static GestionModules gestionModules;
+        private static GestionModuleSupervisee gestionModulesSupervisee;
         private static LanceurFusee fusee;
 
 
@@ -29,7 +30,8 @@ namespace GoBot.Actionneurs
             ejecteur = new Ejecteur();
             brasLunaireDroite = new BrasLunaireDroite();
             brasLunaireGauche = new BrasLunaireGauche();
-            gestionModules = new GestionModules();
+            //gestionModules = new GestionModules();
+            gestionModulesSupervisee = new GestionModuleSupervisee();
             fusee = new LanceurFusee();
         }
 
@@ -99,10 +101,16 @@ namespace GoBot.Actionneurs
             set { brasLunaireGauche = value; }
         }
 
-        public static GestionModules GestionModules
+        //public static GestionModules GestionModules
+        //{
+        //    get { return gestionModules; }
+        //    set { gestionModules = value; }
+        //}
+
+        public static GestionModuleSupervisee GestionModuleSupervisee
         {
-            get { return gestionModules; }
-            set { gestionModules = value; }
+            get { return gestionModulesSupervisee; }
+            set { gestionModulesSupervisee = value; }
         }
 
         public static LanceurFusee Fusee

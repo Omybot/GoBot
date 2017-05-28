@@ -43,9 +43,8 @@ namespace GoBot.Mouvements
         protected override void ActionApresDeplacement()
         {
             Actionneur.BrasLunaireGauche.DescendreSafe();
-            Thread.Sleep(400);
             Actionneur.BrasLunaireGauche.Ouvrir();
-            Thread.Sleep(400);
+            Thread.Sleep(250);
             Robots.GrosRobot.Lent();
             Robots.GrosRobot.Avancer(200);
             Robots.GrosRobot.Rapide();
@@ -103,7 +102,7 @@ namespace GoBot.Mouvements
 
         public override string ToString()
         {
-            return "Attrape gauche " + module.ToString();
+            return "Attrape gauche " + num.ToString();
         }
     }
 }

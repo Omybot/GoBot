@@ -97,8 +97,6 @@ namespace GoBot
 
             Plateau.NotreCouleur = couleurEquipe;
 
-            Devices.Devices.RecGoBot.SetLedColor(Plateau.NotreCouleur);
-
             SemaphoresTrame[FonctionTrame.RetourCouleurEquipe].Release();
         }
 

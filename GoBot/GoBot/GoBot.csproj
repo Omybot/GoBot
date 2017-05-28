@@ -86,6 +86,7 @@
     <Compile Include="Actionneurs\BrasLunaireGauche.cs" />
     <Compile Include="Actionneurs\Convoyeur.cs" />
     <Compile Include="Actionneurs\Ejecteur.cs" />
+    <Compile Include="Actionneurs\GestionModuleSupervisee.cs" />
     <Compile Include="Actionneurs\LanceurFusee.cs" />
     <Compile Include="Actionneurs\GestionModules.cs" />
     <Compile Include="Actionneurs\Positionnables.cs" />
