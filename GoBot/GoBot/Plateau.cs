@@ -24,12 +24,6 @@ namespace GoBot
 {
     public class Plateau
     {
-        public static bool AvantCharge { get; set; }
-        public static bool ArriereCharge { get; set; }
-        public static bool DroiteCharge { get; set; }
-        public static bool GaucheCharge { get; set; }
-        public static int EtapeDune { get; set; }
-
         public static int RayonAdversaireInitial { get; set; }
         public static int RayonAdversaire { get; set; }
 
@@ -64,8 +58,7 @@ namespace GoBot
 
                     //Robots.GrosRobot.Init();
                     //Robots.PetitRobot.Init();
-                    if (NotreCouleurChange != null)
-                        NotreCouleurChange(null, null);
+                    NotreCouleurChange?.Invoke(null, null);
                 }
             }
         }
@@ -79,7 +72,7 @@ namespace GoBot
         public static int Score
         {
             get { return score; }
-            set { score = value; if (ScoreChange != null) ScoreChange(null, null); }
+            set { score = value; ScoreChange?.Invoke(null, null); }
         }
         public static event EventHandler ScoreChange;
 
@@ -112,7 +105,6 @@ namespace GoBot
                 List<IForme> toutObstacles = new List<IForme>();
                 toutObstacles.AddRange(ObstaclesPlateau);
                 toutObstacles.AddRange(ObstaclesBalise);
-                //toutObstacles.AddRange(ObstaclesPieds);
                 return toutObstacles;
             }
         }
@@ -121,7 +113,6 @@ namespace GoBot
         {
             if (!Config.DesignMode)
             {
-                EtapeDune = 0;
                 Elements = new Elements();
                 ObstaclesPieds = new IForme[0];
                 RayonAdversaireInitial = 200;
@@ -134,15 +125,10 @@ namespace GoBot
                 ChargerObstacles();
                 CreerSommets(110);
                 SauverGraph();
-                
-                //ChargerGraph();
 
                 Balise.PositionEnnemisActualisee += Balise_PositionEnnemisActualisee;
-                    //SuiviBalise.PositionEnnemisActualisee += new Balises.SuiviBalise.PositionEnnemisDelegate(interpreteBalise_PositionEnnemisActualisee);
                 InitElementsJeu();
-
-                Random random = new Random();
-
+                
                 SemaphoreCollisions = new Semaphore(0, int.MaxValue);
                 thCollisions = new Thread(ThreadTestCollisions);
                 thCollisions.Start();
