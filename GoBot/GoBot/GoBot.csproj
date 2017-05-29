@@ -316,6 +316,7 @@
     <Compile Include="Mouvements\MouvementModuleGauche.cs" />
     <Compile Include="Mouvements\MouvementModuleAvant.cs" />
     <Compile Include="Mouvements\PositionsMouvements.cs" />
+    <Compile Include="PaintScale.cs" />
     <Compile Include="PathFinding\PathFinder.cs" />
     <Compile Include="PathFinding\Trajectoire.cs" />
     <Compile Include="Ponderations\PoidsTest.cs" />
