@@ -34,7 +34,7 @@ namespace GoBot.Actions
             }
         }
 
-        int IActionDuree.Duree
+        public int Duree
         {
             get
             {

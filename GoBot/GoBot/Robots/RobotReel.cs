@@ -36,7 +36,7 @@ namespace GoBot
 
         private bool jackArme;
 
-        public RobotReel(IDRobot idRobot, Carte carte)
+        public RobotReel(IDRobot idRobot, Carte carte) : base()
         {
             jackArme = false;
             AsserActif = true;

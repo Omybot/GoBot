@@ -70,7 +70,7 @@
             this.trackBar.Size = new System.Drawing.Size(305, 15);
             this.trackBar.TabIndex = 2;
             this.trackBar.Vertical = false;
-            this.trackBar.TickValueChanged += new System.EventHandler(this.trackBar_TickValueChanged);
+            this.trackBar.TickValueChanged += new System.EventHandler(this.TrackBar_TickValueChanged);
             // 
             // switchBouton
             // 

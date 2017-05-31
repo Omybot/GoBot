@@ -52,6 +52,7 @@ namespace GoBot
 
             GrosRobot.Largeur = 320;
             GrosRobot.Longueur = 300;
+            GrosRobot.Entraxe = 291.95;
             GrosRobot.Nom = "Gros robot";
             GrosRobot.Init();
             if (graphGros != null)

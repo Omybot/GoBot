@@ -383,8 +383,7 @@ namespace GoBot.IHM
             {
                 btnPathRPCentre.Enabled = false;
             }));
-
-            Console.WriteLine("Path : " + Thread.CurrentThread.ManagedThreadId);
+            
             Robots.GrosRobot.GotoXYTeta(positionArrivee.Coordonnees.X, positionArrivee.Coordonnees.Y, 360 - positionArrivee.Angle.AngleDegres);
 
             this.Invoke(new EventHandler(delegate
@@ -675,7 +674,7 @@ namespace GoBot.IHM
         private void pwet_Click(object sender, EventArgs e)
         {
             //Robots.GrosRobot.ReglerOffsetAsserv(160, 850, 0);
-            Robots.GrosRobot.ReglerOffsetAsserv(Robots.GrosRobot.Longueur / 2, 600 + 5 + Robots.GrosRobot.Largeur / 2, 0);
+            Robots.GrosRobot.ReglerOffsetAsserv((int)(Robots.GrosRobot.Longueur / 2), (int)(600 + 5 + Robots.GrosRobot.Largeur / 2), 0);
             //Robots.GrosRobot.ReglerOffsetAsserv(100, 700, 0);
             Robots.GrosRobot.VitesseDeplacement = 1500;
 

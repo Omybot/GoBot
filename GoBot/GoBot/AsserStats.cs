@@ -28,6 +28,12 @@ namespace GoBot
         /// </summary>
         public List<double> RightsRotations { get; protected set; }
 
-
+        public AsserStats()
+        {
+            ForwardMoves = new List<int>();
+            BackwardMoves = new List<int>();
+            LeftRotations = new List<double>();
+            RightsRotations = new List<double>();
+        }
     }
 }

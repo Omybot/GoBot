@@ -29,9 +29,6 @@ namespace GoBot
 
         private bool RecallageEnCours { get; set; }
 
-        // Distance entre les deux roues en mm
-        private double Entraxe { get; set; }
-
         private Position position;
         public override Position Position
         {
@@ -94,7 +91,7 @@ namespace GoBot
             }
         }
 
-        public RobotSimu(IDRobot idRobot)
+        public RobotSimu(IDRobot idRobot) : base()
         {
             IDRobot = idRobot;
             timerDeplacement = new System.Timers.Timer(IntervalleRafraichissementPosition);
@@ -108,7 +105,6 @@ namespace GoBot
             SemDeplacement = new Semaphore(1, 1);
             SensDep = SensAR.Avant;
             
-            Entraxe = 306.11; // TODO2018 : dans les parametres du robot
             Nom = "GrosRobot";
             RecallageEnCours = false;
             Rand = new Random(DateTime.Now.Millisecond);
@@ -155,10 +151,7 @@ namespace GoBot
         {
             get
             {
-                if (VitesseActuelle == 0)
-                    return 0;
-
-                return (VitesseActuelle * VitesseActuelle) / (2 * AccelerationDebutDeplacement);
+                return (VitesseActuelle * VitesseActuelle) / (2 * AccelerationFinDeplacement);
             }
         }
 
@@ -174,7 +167,7 @@ namespace GoBot
         {
             double distance = 0;
 
-            for(int i = from + 1; i <= to; i++)
+            for (int i = from + 1; i <= to; i++)
                 distance += points[i - 1].Distance(points[i]);
 
             return distance;
@@ -182,7 +175,8 @@ namespace GoBot
 
         Stopwatch watch = null;
         int pointCourantTrajPolaire = -1;
-        //DateTime prec = DateTime.Now;
+
+        List<double> inter = new List<double>();
         void timerDeplacement_Elapsed(object sender, ElapsedEventArgs e)
         {
             // Calcul du temps écoulé depuis la dernière mise à jour de la position
@@ -191,12 +185,11 @@ namespace GoBot
             if (watch != null)
             {
                 intervalle = watch.ElapsedMilliseconds;
+                inter.Add(intervalle);
                 watch.Restart();
             }
             else
                 watch = Stopwatch.StartNew();
-
-            //prec = DateTime.Now;
 
             SemDeplacement.WaitOne();
 
@@ -227,8 +220,8 @@ namespace GoBot
                 Segment seg = null;
                 Cercle cer = null;
 
-                if(changePoint)
-                { 
+                if (changePoint)
+                {
                     seg = new Segment(trajectoirePolaire[pointCourantTrajPolaire - 1], trajectoirePolaire[pointCourantTrajPolaire]);
                     cer = new Cercle(trajectoirePolaire[pointCourantTrajPolaire - 1], distanceAParcourir - (distanceTestee - trajectoirePolaire[pointCourantTrajPolaire - 1].Distance(trajectoirePolaire[pointCourantTrajPolaire])));
                 }
@@ -251,10 +244,9 @@ namespace GoBot
             }
             else
             {
-
                 double difference = Destination.Coordonnees.Distance(Position.Coordonnees);
                 Angle adifference = Position.Angle - Destination.Angle;
-                if (Math.Abs(adifference.AngleDegres) > 0.01)// Math.Round(Position.Angle.AngleDegres, 2) != Math.Round(Destination.Angle.AngleDegres, 2))
+                if (Math.Abs(adifference.AngleDegres) > 0.01)
                 {
                     Angle diff = Destination.Angle - Position.Angle;
                     int coeff = 1;
@@ -264,39 +256,37 @@ namespace GoBot
 
                     double distance = Math.Abs(adifference.AngleDegres) / 360.0 * Entraxe * Math.PI;
 
+                    double distParcourue = VitesseActuelle / (1000.0 / intervalle);
+                    Angle angleParcouru = (360 * distParcourue) / (Math.PI * Entraxe);
+
                     if (distance > AngleFreinageActuel)
                         VitesseActuelle = Math.Min(VitessePivot, VitesseActuelle + AccelerationPivot / (1000.0 / intervalle));
                     else
                         VitesseActuelle = VitesseActuelle - AccelerationPivot / (1000.0 / intervalle);
 
-                    if (Math.Abs(diff.AngleDegres) >= VitesseActuelle / (1000.0 / intervalle))
-                        Position.Angle.Tourner(coeff * VitesseActuelle / (1000.0 / intervalle));
-                    else if (Math.Abs(diff.AngleDegres) <= -VitesseActuelle / (1000.0 / intervalle))
-                        Position.Angle.Tourner(coeff * VitesseActuelle / (1000.0 / intervalle));
+                    if (Math.Abs(diff.AngleDegres) >= angleParcouru)
+                        Position.Angle.Tourner(coeff * angleParcouru);
                     else
+                    {
                         Position.Angle.Tourner(diff.AngleDegres);
+                        intervalle = 0;
+                    }
 
                     ChangerPosition(Position);
                 }
                 else if (difference > 0)
                 {
+                    double distance = VitesseActuelle / (1000.0 / intervalle);
+
                     // Phase accélération ou déccélération
                     if (Position.Coordonnees.Distance(Destination.Coordonnees) > DistanceFreinageActuelle)
                         VitesseActuelle = Math.Min(VitesseDeplacement, VitesseActuelle + AccelerationDebutDeplacement / (1000.0 / intervalle));
                     else
-                        VitesseActuelle = VitesseActuelle - AccelerationDebutDeplacement / (1000.0 / intervalle);
-
-                    double distance = VitesseActuelle / (1000.0 / intervalle);
-
-                    //VitesseActuelle += AccellerationDeplacement / (1000 / IntervalleRafraichissementPosition);
+                        VitesseActuelle = VitesseActuelle - AccelerationFinDeplacement / (1000.0 / intervalle);
+                    
                     if (Destination.Coordonnees.Distance(Position.Coordonnees) <= distance)
                     {
                         VitesseActuelle = 0;
-                        //Position = Destination;//.Avancer(Destination.Coordonnees.Distance(Position.Coordonnees));
-                        //Position.Coordonnees.X = Destination.Coordonnees.X;
-                        //Position.Coordonnees.Y = Destination.Coordonnees.Y;
-                        //Position.Angle.Set(Destination.Angle);
-                        //Position.Coordonnees.Placer(Destination.Coordonnees.X, Destination.Coordonnees.Y);
                         Position.Copie(Destination);
                         DeplacementLigne = false;
                     }
@@ -336,9 +326,10 @@ namespace GoBot
 
             double depX = distance * Math.Cos(Position.Angle.AngleRadians);
             double depY = distance * Math.Sin(Position.Angle.AngleRadians);
-
+            
             Destination = new Position(Position.Angle, new PointReel(Position.Coordonnees.X + depX, Position.Coordonnees.Y + depY));
 
+            // TODO2018 attente avec un sémaphore ?
             if (attendre)
                 while (Position.Coordonnees.X != Destination.Coordonnees.X ||
                     Position.Coordonnees.Y != Destination.Coordonnees.Y)
@@ -353,7 +344,7 @@ namespace GoBot
         public override void PivotGauche(Angle angle, bool attendre = true)
         {
             base.PivotGauche(angle, attendre);
-
+            
             angle = Math.Round(angle, 2);
             Historique.AjouterAction(new ActionPivot(this, angle, SensGD.Gauche));
             Destination = new Position(new Angle(Position.Angle.AngleDegres - angle, AnglyeType.Degre), new PointReel(Position.Coordonnees.X, Position.Coordonnees.Y));
@@ -361,13 +352,13 @@ namespace GoBot
 
             if (attendre)
                 while (Position.Angle != Destination.Angle)
-                    Thread.Sleep(50);
+                    Thread.Sleep(10);
         }
 
         public override void PivotDroite(Angle angle, bool attendre = true)
         {
             base.PivotDroite(angle, attendre);
-
+            
             angle = Math.Round(angle, 2);
             Historique.AjouterAction(new ActionPivot(this, angle, SensGD.Droite));
             Destination = new Position(new Angle(Position.Angle.AngleDegres + angle, AnglyeType.Degre), new PointReel(Position.Coordonnees.X, Position.Coordonnees.Y));
@@ -375,7 +366,7 @@ namespace GoBot
 
             if (attendre)
                 while (Position.Angle != Destination.Angle)
-                    Thread.Sleep(50);
+                    Thread.Sleep(10);
         }
 
         public override void Stop(StopMode mode)
@@ -407,7 +398,7 @@ namespace GoBot
 
         public override void Virage(SensAR sensAr, SensGD sensGd, int rayon, Angle angle, bool attendre = true)
         {
-            // TODO
+            // TODO2018
         }
 
         private List<PointReel> trajectoirePolaire;

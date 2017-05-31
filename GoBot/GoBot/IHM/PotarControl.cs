@@ -88,7 +88,7 @@ namespace GoBot.IHM
             }
         }
 
-        private void trackBar_TickValueChanged(object sender, EventArgs e)
+        private void TrackBar_TickValueChanged(object sender, EventArgs e)
         {
             if (positionnable != null)
             {

@@ -11,6 +11,7 @@ using GoBot.Actions;
 using GoBot.Actionneurs;
 using GoBot.PathFinding;
 using GoBot.Communications;
+using System.Diagnostics;
 
 namespace GoBot
 {
@@ -24,10 +25,11 @@ namespace GoBot
         // Constitution
         public IDRobot IDRobot { get; protected set; }
         public String Nom { get; set; }
-        public int Taille { get { return Math.Max(Longueur, Largeur); } }
-        public int Longueur { get; set; }
-        public int Largeur { get; set; }
-        public int Rayon { get { return (int)Math.Sqrt(Longueur * Longueur + Largeur * Largeur) / 2 - 14; } } // -14 = valeur calculée pour l'année 2015 sur les biseaux
+        public double Taille { get { return Math.Max(Longueur, Largeur); } }
+        public double Longueur { get; set; }
+        public double Largeur { get; set; }
+        public double Rayon { get { return (int)Math.Sqrt(Longueur * Longueur + Largeur * Largeur) / 2 - 14; } } // -14 = valeur calculée pour l'année 2015 sur les biseaux
+        public double Entraxe { get; set; }// Distance entre les deux roues en mm
 
         // Déplacement
         public bool AsserActif { get; set; }
@@ -67,12 +69,18 @@ namespace GoBot
 
         public virtual void Avancer(int distance, bool attendre = true)
         {
-            AsserStats.ForwardMoves.Add(distance);
+            if(distance > 0)
+                AsserStats.ForwardMoves.Add(distance);
+            else
+                AsserStats.BackwardMoves.Add(-distance);
         }
 
         public virtual void Reculer(int distance, bool attendre = true)
         {
-            AsserStats.BackwardMoves.Add(distance);
+            if (distance < 0)
+                AsserStats.ForwardMoves.Add(distance);
+            else
+                AsserStats.BackwardMoves.Add(-distance);
         }
 
         public virtual void PivotGauche(Angle angle, bool attendre = true)
@@ -507,8 +515,7 @@ namespace GoBot
 
         public int CalculDureePivot(Angle angle)
         {
-            double entraxe = 272.1177476;
-            int duree = CalculDureeDeplacement((int)((Math.PI * entraxe) / 360 * angle.AngleDegresPositif), AccelerationPivot, VitessePivot, AccelerationPivot);
+            int duree = CalculDureeDeplacement((int)((Math.PI * Entraxe) / 360 * angle.AngleDegresPositif), AccelerationPivot, VitessePivot, AccelerationPivot);
 
             return duree;
         }
@@ -557,9 +564,9 @@ namespace GoBot
         public bool ParcourirTrajectoire(Trajectoire traj)
         {
             TrajectoireEnCours = traj;
-            DateTime debut = DateTime.Now;
-
-            Console.WriteLine("Lancement traj");
+            int dureeEstimee = traj.Duree;
+            Stopwatch sw = Stopwatch.StartNew();
+            
             TrajectoireCoupee = false;
             TrajectoireEchouee = false;
 
@@ -577,12 +584,10 @@ namespace GoBot
                     TrajectoireEnCours.Segments.RemoveAt(0);
                 }
             }
-            Console.WriteLine("Traj terminée");
 
             if (!TrajectoireCoupee && !TrajectoireEchouee)
             {
-                Historique.Log("Trajectoire parcourue en " + Math.Round((((DateTime.Now - debut).TotalMilliseconds) / 1000.0), 1) + "s", TypeLog.PathFinding);
-                Console.WriteLine("Temps prévu :" + traj.Duree + "ms / Temps effectif : " + (DateTime.Now - debut).TotalMilliseconds + "ms");
+                Historique.Log("Trajectoire parcourue en " + (sw.ElapsedMilliseconds / 1000.0).ToString("0.0") + "s (durée théorique : " + (dureeEstimee / 1000.0).ToString("0.0") + "s)", TypeLog.PathFinding);
 
                 if (semTrajectoire != null)
                     semTrajectoire.Release();
