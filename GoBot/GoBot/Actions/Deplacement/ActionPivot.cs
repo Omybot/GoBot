@@ -1,4 +1,5 @@
-﻿using System;
+﻿using GoBot.Calculs;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -7,11 +8,11 @@ namespace GoBot.Actions
 {
     class ActionPivot : IActionDuree
     {
-        private double angle;
+        private Angle angle;
         private Robot robot;
         private SensGD sens;
 
-        public ActionPivot(Robot r, double a, SensGD s)
+        public ActionPivot(Robot r, Angle a, SensGD s)
         {
             robot = r;
             angle = a;

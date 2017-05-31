@@ -6,6 +6,7 @@ using GoBot.Actions;
 using GoBot.Calculs.Formes;
 using GoBot.Devices;
 using System.Drawing;
+using GoBot.Calculs;
 
 namespace GoBot.Communications
 {
@@ -188,7 +189,7 @@ namespace GoBot.Communications
             return retour;
         }
 
-        static public Trame OffsetPos(int offsetX, int offsetY, double offsetTeta, Robot robot)
+        static public Trame OffsetPos(int offsetX, int offsetY, Angle offsetTeta, Robot robot)
         {
             byte[] tab = new byte[8];
             tab[0] = (byte)robot.Carte;
@@ -197,16 +198,15 @@ namespace GoBot.Communications
             tab[3] = ByteDivide(offsetX, false);
             tab[4] = ByteDivide(offsetY, true);
             tab[5] = ByteDivide(offsetY, false);
-            tab[6] = ByteDivide((int)(offsetTeta * 100), true);
-            tab[7] = ByteDivide((int)(offsetTeta * 100), false);
+            tab[6] = ByteDivide((int)(offsetTeta.AngleDegres * 100), true);
+            tab[7] = ByteDivide((int)(offsetTeta.AngleDegres * 100), false);
 
             Trame retour = new Trame(tab);
             return retour;
         }
 
-        static public Trame Pivot(SensGD sens, double angle, Robot robot)
+        static public Trame Pivot(SensGD sens, Angle angle, Robot robot)
         {
-            //angle = angle * Math.PI * 268.471260977282 / 2.0 / 180.0;
             byte[] tab = new byte[7];
             tab[0] = (byte)robot.Carte;
             tab[1] = (byte)FonctionTrame.Pivot;
@@ -288,7 +288,7 @@ namespace GoBot.Communications
             return retour;
         }
 
-        static public Trame Virage(SensAR sensAr, SensGD sensGd, int rayon, double angle, Robot robot)
+        static public Trame Virage(SensAR sensAr, SensGD sensGd, int rayon, Angle angle, Robot robot)
         {
             byte[] tab = new byte[8];
             tab[0] = (byte)robot.Carte;

@@ -15,6 +15,8 @@ namespace GoBot.Calculs
     {
         private double angle { get; set; }
 
+        private const double KDelta = 0.001;
+
         /// <summary>
         /// Retourne l'angle en degrés (-180 à +180)
         /// </summary>
@@ -178,7 +180,7 @@ namespace GoBot.Calculs
         {
             try
             {
-                return ((Angle)obj).AngleDegres == AngleDegres;
+                return Math.Abs(((Angle)obj).AngleDegres - AngleDegres) < KDelta;
             }
             catch
             {

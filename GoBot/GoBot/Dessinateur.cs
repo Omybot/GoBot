@@ -801,7 +801,7 @@ namespace GoBot
                 }*/
         }
 
-        private static Bitmap RotateImage(Bitmap b, double angle)
+        private static Bitmap RotateImage(Bitmap b, Angle angle)
         {
             //create a new empty bitmap to hold rotated image
             Bitmap returnBitmap = new Bitmap(b.Width, b.Height);
@@ -813,7 +813,7 @@ namespace GoBot
                 //move rotation point to center of image
                 g.TranslateTransform((float)b.Width / 2, (float)b.Height / 2);
                 //rotate
-                g.RotateTransform((float)angle);
+                g.RotateTransform((float)angle.AngleDegres);
                 //move image back
                 g.TranslateTransform(-(float)b.Width / 2, -(float)b.Height / 2);
                 //draw passed in image onto graphics object

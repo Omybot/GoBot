@@ -21,17 +21,17 @@ namespace GoBot.Balises
         /// <summary>
         /// Angle du début de la détection
         /// </summary>
-        public double AngleDebut { get; set; }
+        public Angle AngleDebut { get; set; }
 
         /// <summary>
         /// Angle de la fin de la détection
         /// </summary>
-        public double AngleFin { get; set; }
+        public Angle AngleFin { get; set; }
 
         /// <summary>
         /// Angle médian de la détection
         /// </summary>
-        public double AngleCentral { get; set; }
+        public Angle AngleCentral { get; set; }
 
         /// <summary>
         /// Distance de détection en mm
@@ -49,7 +49,7 @@ namespace GoBot.Balises
         /// <param name="balise">Balise ayant émis cette mesure</param>
         /// <param name="angleDebut">Début de l'angle mesuré</param>
         /// <param name="angleFin">Fin de l'angle mesuré</param>
-        public DetectionBalise(Balise balise, double angleDebut, double angleFin)
+        public DetectionBalise(Balise balise, Angle angleDebut, Angle angleFin)
         {
             AngleDebut = angleDebut;
             AngleFin = angleFin;
@@ -63,8 +63,8 @@ namespace GoBot.Balises
                 Distance = 1;
 
             // Un peu de trigo pas bien compliquée
-            double xPoint = balise.Position.Coordonnees.X + Math.Cos(Maths.DegreeToRadian(AngleCentral)) * Distance;
-            double yPoint = balise.Position.Coordonnees.Y + Math.Sin(Maths.DegreeToRadian(AngleCentral)) * Distance;
+            double xPoint = balise.Position.Coordonnees.X + Math.Cos(AngleCentral.AngleRadians) * Distance;
+            double yPoint = balise.Position.Coordonnees.Y + Math.Sin(AngleCentral.AngleRadians) * Distance;
 
             Position = new PointReel(xPoint, yPoint);
 
@@ -76,7 +76,7 @@ namespace GoBot.Balises
         /// </summary>
         /// <param name="largeurAngle">Largeur de l'angle de détection</param>
         /// <returns>Distance calculée</returns>
-        private double AngleVisibleToDistance(double largeurAngle)
+        private double AngleVisibleToDistance(Angle largeurAngle)
         {
             // Formule calculée par expérimentations
             return 2784.6 * Math.Pow(largeurAngle, -0.96);
@@ -102,16 +102,16 @@ namespace GoBot.Balises
             // Point du côté du début de l'angle
             // 5000 valeur arbitraire, assez grande pour dépasser de la table
 
-            xPoint1 = Balise.Position.Coordonnees.X + Math.Cos(Maths.DegreeToRadian(AngleDebut)) * 5000;
-            yPoint1 = Balise.Position.Coordonnees.Y + Math.Sin(Maths.DegreeToRadian(AngleDebut)) * 5000;
+            xPoint1 = Balise.Position.Coordonnees.X + Math.Cos(AngleDebut.AngleRadians) * 5000;
+            yPoint1 = Balise.Position.Coordonnees.Y + Math.Sin(AngleDebut.AngleRadians) * 5000;
             point = new PointReel(xPoint1, yPoint1);
 
             listePoints.Add(point);
 
             // Point du côté du début de l'angle
 
-            xPoint1 = Balise.Position.Coordonnees.X + Math.Cos(Maths.DegreeToRadian(AngleFin)) * 5000;
-            yPoint1 = Balise.Position.Coordonnees.Y + Math.Sin(Maths.DegreeToRadian(AngleFin)) * 5000;
+            xPoint1 = Balise.Position.Coordonnees.X + Math.Cos(AngleFin.AngleRadians) * 5000;
+            yPoint1 = Balise.Position.Coordonnees.Y + Math.Sin(AngleFin.AngleRadians) * 5000;
             point = new PointReel(xPoint1, yPoint1);
 
             listePoints.Add(point);

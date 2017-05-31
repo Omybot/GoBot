@@ -19,16 +19,6 @@ namespace GoBot.Calculs
             return (int)(Math.Round(nombre));
         }
 
-        public static double RadianToDegree(double angle)
-        {
-            return angle * (180.0 / Math.PI);
-        }
-
-        public static double DegreeToRadian(double angle)
-        {
-            return Math.PI * angle / 180.0;
-        }
-
         public static Direction GetDirection(PointReel depart, PointReel arrivee)
         {
             Position positionDepart = new Position(0, depart);

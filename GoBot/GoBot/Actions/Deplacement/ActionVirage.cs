@@ -1,4 +1,5 @@
-﻿using System;
+﻿using GoBot.Calculs;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,12 +9,12 @@ namespace GoBot.Actions
     class ActionVirage : IAction
     {
         private int distance;
-        private int angle;
+        private Angle angle;
         private Robot robot;
         private SensGD sensGD;
         private SensAR sensAR;
 
-        public ActionVirage(Robot r, int dist, int a, SensAR ar, SensGD gd)
+        public ActionVirage(Robot r, int dist, Angle a, SensAR ar, SensGD gd)
         {
             robot = r;
             distance = dist;

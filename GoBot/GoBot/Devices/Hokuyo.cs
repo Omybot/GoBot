@@ -108,7 +108,7 @@ namespace GoBot.Devices
             {
                 if (mesures[i] > 100) // SUpprime tous les points à moins de 10cm
                 {
-                    double angle = stepAngular * i;
+                    Angle angle = stepAngular * i;
                     double sin = Math.Sin(angle - refPosition.Angle.AngleRadiansPositif - angleMesurable.AngleRadiansPositif / 2 - Math.PI / 2) * mesures[i];
                     double cos = Math.Cos(angle - refPosition.Angle.AngleRadiansPositif - angleMesurable.AngleRadiansPositif / 2 - Math.PI / 2) * mesures[i];
 

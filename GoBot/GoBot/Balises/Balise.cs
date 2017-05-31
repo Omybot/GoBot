@@ -173,8 +173,8 @@ namespace GoBot.Balises
                         if (recalcul)
                         {
                             // Un peu de trigo pas bien compliquée
-                            double xPoint = Position.Coordonnees.X + Math.Cos(Maths.DegreeToRadian(detect.AngleCentral)) * detect.Distance;
-                            double yPoint = Position.Coordonnees.Y + Math.Sin(Maths.DegreeToRadian(detect.AngleCentral)) * detect.Distance;
+                            double xPoint = Position.Coordonnees.X + Math.Cos(detect.AngleCentral.AngleRadians) * detect.Distance;
+                            double yPoint = Position.Coordonnees.Y + Math.Sin(detect.AngleCentral.AngleRadians) * detect.Distance;
 
                             detect.Position = new PointReel(xPoint, yPoint);
                         }
@@ -284,8 +284,8 @@ namespace GoBot.Balises
                             if (recalcul)
                             {
                                 // Un peu de trigo pas bien compliquée
-                                double xPoint = Position.Coordonnees.X + Math.Cos(Maths.DegreeToRadian(detect.AngleCentral)) * detect.Distance;
-                                double yPoint = Position.Coordonnees.Y + Math.Sin(Maths.DegreeToRadian(detect.AngleCentral)) * detect.Distance;
+                                double xPoint = Position.Coordonnees.X + Math.Cos(detect.AngleCentral.AngleRadians) * detect.Distance;
+                                double yPoint = Position.Coordonnees.Y + Math.Sin(detect.AngleCentral.AngleRadians) * detect.Distance;
 
                                 detect.Position = new PointReel(xPoint, yPoint);
                             }
@@ -347,8 +347,8 @@ namespace GoBot.Balises
                             if (recalcul)
                             {
                                 // Un peu de trigo pas bien compliquée
-                                double xPoint = Position.Coordonnees.X + Math.Cos(Maths.DegreeToRadian(detect.AngleCentral)) * detect.Distance;
-                                double yPoint = Position.Coordonnees.Y + Math.Sin(Maths.DegreeToRadian(detect.AngleCentral)) * detect.Distance;
+                                double xPoint = Position.Coordonnees.X + Math.Cos(detect.AngleCentral.AngleRadians) * detect.Distance;
+                                double yPoint = Position.Coordonnees.Y + Math.Sin(detect.AngleCentral.AngleRadians) * detect.Distance;
 
                                 detect.Position = new PointReel(xPoint, yPoint);
                             }
