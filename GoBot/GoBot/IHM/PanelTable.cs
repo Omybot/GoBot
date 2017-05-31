@@ -129,7 +129,7 @@ namespace GoBot.IHM
 
             if (pSelected != -1)
             {
-                pointsPolaires[pSelected] = Dessinateur.ScreenToRealPosition(e.Location);
+                pointsPolaires[pSelected] = Dessinateur.Scale.ScreenToRealPosition(e.Location);
 
                 trajectoirePolaire = BezierCurve.GetPoints(pointsPolaires, (int)(numNbPoints.Value));//((int)pointsPolaires[0].Distance(pointsPolaires[pointsPolaires.Count - 1])) / 50);
                 Dessinateur.TrajectoirePolaire = trajectoirePolaire;
@@ -142,17 +142,17 @@ namespace GoBot.IHM
                 {
                     dateCapture = DateTime.Now;
 
-                    Point p = Dessinateur.ScreenToRealPosition(pictureBoxTable.PointToClient(MousePosition));
+                    Point p = Dessinateur.Scale.ScreenToRealPosition(pictureBoxTable.PointToClient(MousePosition));
                     List<PointReel> positions = new List<PointReel>();
 
-                    positions.Add(Dessinateur.ScreenToRealPosition(pictureBoxTable.PointToClient(MousePosition)));
-                    Plateau.Balise.Actualisation(false, Dessinateur.ScreenToRealPosition(pictureBoxTable.PointToClient(MousePosition)));
+                    positions.Add(Dessinateur.Scale.ScreenToRealPosition(pictureBoxTable.PointToClient(MousePosition)));
+                    Plateau.Balise.Actualisation(false, Dessinateur.Scale.ScreenToRealPosition(pictureBoxTable.PointToClient(MousePosition)));
                     //SuiviBalise.MajPositions(positions, Plateau.Enchainement == null || Plateau.Enchainement.DebutMatch == null);
                 }
             }
             else
             {
-                Point positionSurTable = Dessinateur.ScreenToRealPosition(pictureBoxTable.PointToClient(MousePosition));
+                Point positionSurTable = Dessinateur.Scale.ScreenToRealPosition(pictureBoxTable.PointToClient(MousePosition));
                 lblPos.Text = positionSurTable.X + " : " + positionSurTable.Y;
 
                 bool hoverElement = false;
@@ -239,7 +239,7 @@ namespace GoBot.IHM
 
         private void PathFindingClick()
         {
-            PointReel positionReelle = Dessinateur.ScreenToRealPosition(pictureBoxTable.PointToClient(MousePosition));
+            PointReel positionReelle = Dessinateur.Scale.ScreenToRealPosition(pictureBoxTable.PointToClient(MousePosition));
             if (Dessinateur.modeCourant == Dessinateur.Mode.FinTrajectoire)
             {
                 Robots.GrosRobot.PathFinding(positionReelle.X, positionReelle.Y);
@@ -297,7 +297,7 @@ namespace GoBot.IHM
         private int pSelected = -1;
         private void pictureBoxTable_MouseDown(object sender, MouseEventArgs e)
         {
-            Dessinateur.positionDepart = Dessinateur.ScreenToRealPosition(pictureBoxTable.PointToClient(MousePosition));
+            Dessinateur.positionDepart = Dessinateur.Scale.ScreenToRealPosition(pictureBoxTable.PointToClient(MousePosition));
             Dessinateur.sourisClic = true;
 
             if (Dessinateur.modeCourant == Dessinateur.Mode.TrajectoirePolaire)
@@ -306,7 +306,7 @@ namespace GoBot.IHM
                 Point pClic = e.Location;
                 for(int i = 0; i < pointsPolaires.Count; i++)
                 {
-                    Point pPolaire = Dessinateur.RealToScreenPosition(pointsPolaires[i]);
+                    Point pPolaire = Dessinateur.Scale.RealToScreenPosition(pointsPolaires[i]);
                     if (new PointReel(pClic).Distance(new PointReel(pPolaire)) <= 3)
                     {
                         moveMouse = true;
@@ -328,7 +328,7 @@ namespace GoBot.IHM
 
             if (Dessinateur.modeCourant == Dessinateur.Mode.PositionRPCentre || Dessinateur.modeCourant == Dessinateur.Mode.TeleportRPCentre)
             {
-                Direction traj = Maths.GetDirection(Dessinateur.positionDepart, Dessinateur.ScreenToRealPosition(pictureBoxTable.PointToClient(MousePosition)));
+                Direction traj = Maths.GetDirection(Dessinateur.positionDepart, Dessinateur.Scale.ScreenToRealPosition(pictureBoxTable.PointToClient(MousePosition)));
 
                 positionArrivee = new Position(traj.angle, Dessinateur.positionDepart);
 
@@ -346,7 +346,7 @@ namespace GoBot.IHM
             {
                 Point positionFin = pictureBoxTable.PointToClient(MousePosition);
 
-                Direction traj = Maths.GetDirection(Dessinateur.positionDepart, Dessinateur.ScreenToRealPosition(pictureBoxTable.PointToClient(MousePosition)));
+                Direction traj = Maths.GetDirection(Dessinateur.positionDepart, Dessinateur.Scale.ScreenToRealPosition(pictureBoxTable.PointToClient(MousePosition)));
 
                 Point pointOrigine = Dessinateur.positionDepart;
                 Position departRecule = new Position(360 - traj.angle, pointOrigine);
@@ -734,7 +734,7 @@ namespace GoBot.IHM
         {
             if (!moveMouse && Dessinateur.modeCourant == Dessinateur.Mode.TrajectoirePolaire)
             {
-                PointReel point = Dessinateur.ScreenToRealPosition(pictureBoxTable.PointToClient(MousePosition));
+                PointReel point = Dessinateur.Scale.ScreenToRealPosition(pictureBoxTable.PointToClient(MousePosition));
                 //if (pointsPolaires.Count >= 2 && pointsPolaires.Count < 4)
                 //    pointsPolaires.Insert(pointsPolaires.Count - 1, point);
                 //else if (pointsPolaires.Count < 4)
