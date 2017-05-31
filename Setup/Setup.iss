@@ -40,18 +40,14 @@ Source: "..\GoBot\GoBot\bin\Release\GoBot.exe"; DestDir: "{app}"; Flags: ignorev
 Source: "..\GoBot\GoBot\bin\Release\Composants.dll"; DestDir: "{app}"; Flags: ignoreversion
 Source: "./iconeTlog.ico"; DestDir: "{app}"; Flags: ignoreversion
 Source: "./iconeElog.ico"; DestDir: "{app}"; Flags: ignoreversion    
-Source: "./DShowNET.dll"; DestDir: "{app}"; Flags: ignoreversion
-Source: "./Bytecode.dll"; DestDir: "{app}"; Flags: ignoreversion
-Source: "./Sequencer.dll"; DestDir: "{app}"; Flags: ignoreversion
-Source: "./UsbWrapper.dll"; DestDir: "{app}"; Flags: ignoreversion
-Source: "./Usc.dll"; DestDir: "{app}"; Flags: ignoreversion
+Source: "..\GoBot\GoBot\Librairies\DShowNET.dll"; DestDir: "{app}"; Flags: ignoreversion
+Source: "..\GoBot\GoBot\Librairies\Bytecode.dll"; DestDir: "{app}"; Flags: ignoreversion
+Source: "..\GoBot\GoBot\Librairies\Sequencer.dll"; DestDir: "{app}"; Flags: ignoreversion
+Source: "..\GoBot\GoBot\Librairies\UsbWrapper.dll"; DestDir: "{app}"; Flags: ignoreversion
+Source: "..\GoBot\GoBot\Librairies\Usc.dll"; DestDir: "{app}"; Flags: ignoreversion
 Source: "./Jokerman.TTF"; DestDir: "{fonts}"; FontInstall: "Jokerman"; Flags: onlyifdoesntexist uninsneveruninstall  
-;Source: "C:\Users\Kryss\AppData\Local\GoBot\graphGros.bin"; DestDir: "{localappdata}\GoBot"; Flags: ignoreversion
-;Source: "C:\Users\Kryss\AppData\Local\GoBot\graphPetit.bin"; DestDir: "{localappdata}\GoBot"; Flags: ignoreversion    
 Source: "C:\Users\Kryss\AppData\Local\GoBot\config.xml"; DestDir: "{localappdata}\GoBot"; Flags: ignoreversion  
-
-; NOTE: Don't use "Flags: ignoreversion" on any shared system files     
-          
+        
 [Registry]  
 Root: HKCR; Subkey: ".tlog"; ValueType: string; ValueName: ""; ValueData: "Fichier archivage trames"; Flags: uninsdeletevalue
 Root: HKCR; Subkey: "Fichier archivage trames"; ValueType: string; ValueName: ""; ValueData: "GoBot"; Flags: uninsdeletekey

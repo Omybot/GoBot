@@ -1,0 +1,14 @@
+*.cache
+*.pdb
+*.exe
+*.suo
+*.resources
+*.manifest
+*.tlog
+*.dll
+*.TMP
+*.user
+/GoBot/GoBot/bin
+/GoBot/GoBot/obj
+/GoBot/Composants/bin
+/GoBot/Composants/obj

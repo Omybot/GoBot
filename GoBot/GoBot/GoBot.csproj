@@ -57,7 +57,7 @@
       <HintPath>Librairies\Bytecode.dll</HintPath>
     </Reference>
     <Reference Include="DShowNET">
-      <HintPath>.\DShowNET.dll</HintPath>
+      <HintPath>Librairies\DShowNET.dll</HintPath>
     </Reference>
     <Reference Include="Sequencer">
       <HintPath>Librairies\Sequencer.dll</HintPath>
