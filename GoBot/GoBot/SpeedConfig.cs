@@ -159,10 +159,10 @@ namespace GoBot
                 return 0;
 
             double durationAccel, durationMaxSpeed, durationBraking;
-            int distanceAccel, distanceMaxSpeed, distanceBraking;
+            double distanceAccel, distanceMaxSpeed, distanceBraking;
 
-            distanceAccel = (maxSpeed * maxSpeed) / (2 * acceleration);
-            distanceBraking = (maxSpeed * maxSpeed) / (2 * decceleration);
+            distanceAccel = (maxSpeed * maxSpeed) / (double)(2 * acceleration);
+            distanceBraking = (maxSpeed * maxSpeed) / (double)(2 * decceleration);
 
             if (distanceAccel + distanceBraking < distance)
             {
