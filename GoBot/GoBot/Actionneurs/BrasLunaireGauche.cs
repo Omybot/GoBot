@@ -92,7 +92,7 @@ namespace GoBot.Actionneurs
 
         public void TransfertAvant()
         {
-            int accelTmp = Robots.GrosRobot.AccelerationFinDeplacement;
+            int accelTmp = Robots.GrosRobot.SpeedConfig.LineDeceleration;
 
             Actionneur.BrasLunaire.Descendre();
             Actionneur.BrasLunaire.Ouvrir();
@@ -101,10 +101,10 @@ namespace GoBot.Actionneurs
             Fermer();
             Ranger();
             Robots.GrosRobot.PivotGauche(43);
-            Robots.GrosRobot.AccelerationFinDeplacement = 300;
+            Robots.GrosRobot.SpeedConfig.LineDeceleration = 300;
             Actionneur.BrasLunaire.Avancer();
             Robots.GrosRobot.Avancer(100);
-            Robots.GrosRobot.AccelerationFinDeplacement = accelTmp;
+            Robots.GrosRobot.SpeedConfig.LineDeceleration = accelTmp;
             Actionneur.BrasLunaire.Fermer();
             Thread.Sleep(180);
         }

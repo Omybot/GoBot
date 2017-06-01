@@ -71,6 +71,37 @@ namespace GoBot
             ValeursAnalogiques.Add(Carte.RecIO, null);
             ValeursAnalogiques.Add(Carte.RecGB, null);
             ValeursAnalogiques.Add(Carte.RecMove, null);
+
+            SpeedConfig.ParamChange += SpeedConfig_ParamChange;
+        }
+
+        private void SpeedConfig_ParamChange(bool lineAccelChange, bool lineDecelChange, bool lineSpeedChange, bool pivotAccelChange, bool pivotDecelChange, bool pivotSpeedChange)
+        {
+            if (lineSpeedChange)
+            {
+                Trame trame = TrameFactory.VitesseLigne(SpeedConfig.LineSpeed, this);
+                Connexion.SendMessage(trame);
+                Historique.AjouterAction(new ActionVitesseLigne(this, SpeedConfig.LineSpeed));
+            }
+            if (lineAccelChange || lineDecelChange)
+            {
+                Trame trame = TrameFactory.AccelLigne(SpeedConfig.LineAcceleration, SpeedConfig.LineDeceleration, this);
+                Connexion.SendMessage(trame);
+                Historique.AjouterAction(new ActionAccelerationLigne(this, SpeedConfig.LineAcceleration, SpeedConfig.LineDeceleration));
+            }
+            if (pivotSpeedChange)
+            {
+                Trame trame = TrameFactory.VitessePivot(SpeedConfig.PivotSpeed, this);
+                Connexion.SendMessage(trame);
+                Historique.AjouterAction(new ActionVitessePivot(this, SpeedConfig.PivotSpeed));
+            }
+            if (pivotAccelChange)// || pivotDecelChange)
+            {
+                // TODO2018 : décélération en pivot =/= accélération
+                Trame trame = TrameFactory.AccelPivot(SpeedConfig.PivotAcceleration, this);
+                Connexion.SendMessage(trame);
+                Historique.AjouterAction(new ActionAccelerationPivot(this, SpeedConfig.PivotAcceleration, SpeedConfig.PivotDeceleration));
+            }
         }
 
         void RecGoBot_JackChange(bool state)
@@ -344,7 +375,7 @@ namespace GoBot
                 case FonctionTrame.RetourCapteurOnOff:
                     CapteurOnOffID capteur = (CapteurOnOffID)trameRecue[2];
 
-                    
+
                     //if (trameRecue[2] == (byte)CapteurID.Balise)
                     //{
                     //    // Recomposition de la trame comme si elle venait d'une balise
@@ -389,41 +420,41 @@ namespace GoBot
                 case FonctionTrame.RetourValeursAnalogiques:
                     Carte carte = (Carte)trameRecue[0];
 
-                double valeurAnalogique1 = (trameRecue[2] * 256 + trameRecue[3]);
-                double valeurAnalogique2 = (trameRecue[4] * 256 + trameRecue[5]);
-                double valeurAnalogique3 = (trameRecue[6] * 256 + trameRecue[7]);
-                double valeurAnalogique4 = (trameRecue[8] * 256 + trameRecue[9]);
-                double valeurAnalogique5 = (trameRecue[10] * 256 + trameRecue[11]);
-                double valeurAnalogique6 = (trameRecue[12] * 256 + trameRecue[13]);
-                double valeurAnalogique7 = (trameRecue[14] * 256 + trameRecue[15]);
-                double valeurAnalogique8 = (trameRecue[16] * 256 + trameRecue[17]);
-                double valeurAnalogique9 = (trameRecue[18] * 256 + trameRecue[19]);
+                    double valeurAnalogique1 = (trameRecue[2] * 256 + trameRecue[3]);
+                    double valeurAnalogique2 = (trameRecue[4] * 256 + trameRecue[5]);
+                    double valeurAnalogique3 = (trameRecue[6] * 256 + trameRecue[7]);
+                    double valeurAnalogique4 = (trameRecue[8] * 256 + trameRecue[9]);
+                    double valeurAnalogique5 = (trameRecue[10] * 256 + trameRecue[11]);
+                    double valeurAnalogique6 = (trameRecue[12] * 256 + trameRecue[13]);
+                    double valeurAnalogique7 = (trameRecue[14] * 256 + trameRecue[15]);
+                    double valeurAnalogique8 = (trameRecue[16] * 256 + trameRecue[17]);
+                    double valeurAnalogique9 = (trameRecue[18] * 256 + trameRecue[19]);
 
-                double valeurAnalogique1V = valeurAnalogique1 * 0.0008056640625;
-                double valeurAnalogique2V = valeurAnalogique2 * 0.0008056640625;
-                double valeurAnalogique3V = valeurAnalogique3 * 0.0008056640625;
-                double valeurAnalogique4V = valeurAnalogique4 * 0.0008056640625;
-                double valeurAnalogique5V = valeurAnalogique5 * 0.0008056640625;
-                double valeurAnalogique6V = valeurAnalogique6 * 0.0008056640625;
-                double valeurAnalogique7V = valeurAnalogique7 * 0.0008056640625;
-                double valeurAnalogique8V = valeurAnalogique8 * 0.0008056640625;
-                double valeurAnalogique9V = valeurAnalogique9 * 0.0008056640625;
+                    double valeurAnalogique1V = valeurAnalogique1 * 0.0008056640625;
+                    double valeurAnalogique2V = valeurAnalogique2 * 0.0008056640625;
+                    double valeurAnalogique3V = valeurAnalogique3 * 0.0008056640625;
+                    double valeurAnalogique4V = valeurAnalogique4 * 0.0008056640625;
+                    double valeurAnalogique5V = valeurAnalogique5 * 0.0008056640625;
+                    double valeurAnalogique6V = valeurAnalogique6 * 0.0008056640625;
+                    double valeurAnalogique7V = valeurAnalogique7 * 0.0008056640625;
+                    double valeurAnalogique8V = valeurAnalogique8 * 0.0008056640625;
+                    double valeurAnalogique9V = valeurAnalogique9 * 0.0008056640625;
 
-                List<double> values = new List<double>();
-                values.Add(valeurAnalogique1V);
-                values.Add(valeurAnalogique2V);
-                values.Add(valeurAnalogique3V);
-                values.Add(valeurAnalogique4V);
-                values.Add(valeurAnalogique5V);
-                values.Add(valeurAnalogique6V);
-                values.Add(valeurAnalogique7V);
-                values.Add(valeurAnalogique8V);
-                values.Add(valeurAnalogique9V);
-                ValeursAnalogiques[carte] = values;
+                    List<double> values = new List<double>();
+                    values.Add(valeurAnalogique1V);
+                    values.Add(valeurAnalogique2V);
+                    values.Add(valeurAnalogique3V);
+                    values.Add(valeurAnalogique4V);
+                    values.Add(valeurAnalogique5V);
+                    values.Add(valeurAnalogique6V);
+                    values.Add(valeurAnalogique7V);
+                    values.Add(valeurAnalogique8V);
+                    values.Add(valeurAnalogique9V);
+                    ValeursAnalogiques[carte] = values;
 
-                if (SemaphoresTrame[FonctionTrame.RetourValeursAnalogiques] != null)
-                    SemaphoresTrame[FonctionTrame.RetourValeursAnalogiques].Release();
-                break;
+                    if (SemaphoresTrame[FonctionTrame.RetourValeursAnalogiques] != null)
+                        SemaphoresTrame[FonctionTrame.RetourValeursAnalogiques].Release();
+                    break;
             }
         }
 
@@ -442,7 +473,7 @@ namespace GoBot
 
             Historique.AjouterAction(new ActionAvance(this, distance));
 
-            int tempsParcours = CalculDureeLigne(distance);
+            int tempsParcours = SpeedConfig.LineDuration(distance);
 
             if (attendre)
                 if (!SemaphoresTrame[FonctionTrame.FinDeplacement].WaitOne(tempsParcours + 1000))
@@ -477,7 +508,7 @@ namespace GoBot
 
             Historique.AjouterAction(new ActionRecule(this, distance));
 
-            int tempsParcours = CalculDureeLigne(distance);
+            int tempsParcours = SpeedConfig.LineDuration(distance);
 
             if (attendre)
                 if (!SemaphoresTrame[FonctionTrame.FinDeplacement].WaitOne(tempsParcours + 1000))
@@ -503,7 +534,7 @@ namespace GoBot
 
             Historique.AjouterAction(new ActionPivot(this, angle, SensGD.Gauche));
 
-            int tempsParcours = CalculDureePivot(angle);
+            int tempsParcours = SpeedConfig.PivotDuration(angle, Entraxe);
 
             if (attendre)
                 if (!SemaphoresTrame[FonctionTrame.FinDeplacement].WaitOne(tempsParcours + 1000))
@@ -517,7 +548,7 @@ namespace GoBot
         public override void PivotDroite(Angle angle, bool attendre = true)
         {
             base.PivotDroite(angle, attendre);
-            
+
             if (attendre)
                 SemaphoresTrame[FonctionTrame.FinDeplacement] = new Semaphore(0, int.MaxValue);
 
@@ -526,7 +557,7 @@ namespace GoBot
 
             Historique.AjouterAction(new ActionPivot(this, angle, SensGD.Droite));
 
-            int tempsParcours = CalculDureePivot(angle);
+            int tempsParcours = SpeedConfig.PivotDuration(angle, Entraxe);
 
             if (attendre)
                 if (!SemaphoresTrame[FonctionTrame.FinDeplacement].WaitOne(tempsParcours + 1000))
@@ -538,7 +569,7 @@ namespace GoBot
 
         public override void Stop(StopMode mode = StopMode.Smooth)
         {
-            AsserActif = (mode !=StopMode.Freely);
+            AsserActif = (mode != StopMode.Freely);
 
             Trame trame = TrameFactory.Stop(mode, this);
             DeplacementLigne = false;
@@ -680,90 +711,6 @@ namespace GoBot
 
             Historique.AjouterAction(new ActionOnOff(this, actionneur, on));
         }
-
-        #region Parametres deplacement
-
-        private int vitesseDeplacement;
-        public override int VitesseDeplacement
-        {
-            get
-            {
-                return vitesseDeplacement;
-            }
-            set
-            {
-                Trame trame = TrameFactory.VitesseLigne(value, this);
-                Connexion.SendMessage(trame);
-                vitesseDeplacement = value;
-                Historique.AjouterAction(new ActionVitesseLigne(this, value));
-            }
-        }
-
-        private int accelDebutDeplacement;
-        public override int AccelerationDebutDeplacement
-        {
-            get
-            {
-                return accelDebutDeplacement;
-            }
-            set
-            {
-                Trame trame = TrameFactory.AccelLigne(value, accelFinDeplacement, this);
-                Connexion.SendMessage(trame);
-                accelDebutDeplacement = value;
-                Historique.AjouterAction(new ActionAccelerationLigne(this, value));
-            }
-        }
-
-        private int accelFinDeplacement;
-        public override int AccelerationFinDeplacement
-        {
-            get
-            {
-                return accelFinDeplacement;
-            }
-            set
-            {
-                Trame trame = TrameFactory.AccelLigne(accelDebutDeplacement, value, this);
-                Connexion.SendMessage(trame);
-                accelFinDeplacement = value;
-                Historique.AjouterAction(new ActionAccelerationLigne(this, value));
-            }
-        }
-
-        private int vitessePivot;
-        public override int VitessePivot
-        {
-            get
-            {
-                return vitessePivot;
-            }
-            set
-            {
-                Trame trame = TrameFactory.VitessePivot(value, this);
-                Connexion.SendMessage(trame);
-                vitessePivot = value;
-                Historique.AjouterAction(new ActionVitessePivot(this, value));
-            }
-        }
-
-        private int accelPivot;
-        public override int AccelerationPivot
-        {
-            get
-            {
-                return accelPivot;
-            }
-            set
-            {
-                Trame trame = TrameFactory.AccelPivot(value, this);
-                Connexion.SendMessage(trame);
-                accelPivot = value;
-                Historique.AjouterAction(new ActionAccelerationPivot(this, value));
-            }
-        }
-
-        #endregion
 
         public override void MoteurPosition(MoteurID moteur, int position)
         {

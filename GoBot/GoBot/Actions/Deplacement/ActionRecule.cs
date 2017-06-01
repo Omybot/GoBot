@@ -35,7 +35,7 @@ namespace GoBot.Actions
         {
             get
             {
-                return robot.CalculDureeLigne(distance);
+                return robot.SpeedConfig.LineDuration(distance);
             }
         }
     }

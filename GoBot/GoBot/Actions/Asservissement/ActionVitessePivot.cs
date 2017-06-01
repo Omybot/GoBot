@@ -7,23 +7,23 @@ namespace GoBot.Actions
 {
     class ActionVitessePivot : IAction
     {
-        private int vitesse;
-        private Robot robot;
+        private int _speed;
+        private Robot _robot;
 
-        public ActionVitessePivot(Robot r, int vit)
+        public ActionVitessePivot(Robot r, int speed)
         {
-            robot = r;
-            vitesse = vit;
+            _robot = r;
+            _speed = speed;
         }
 
         public override String ToString()
         {
-            return robot.Nom + " vitesse pivot à " + vitesse;
+            return _robot.Nom + " vitesse pivot à " + _speed;
         }
 
         void IAction.Executer()
         {
-            robot.VitessePivot = vitesse;
+            _robot.SpeedConfig.PivotSpeed = _speed;
         }
 
         public System.Drawing.Image Image

@@ -35,62 +35,7 @@ namespace GoBot
             get { return position; }
             set { position = value; Destination = value; }
         }
-
-        private int vitesseDeplacement;
-        public override int VitesseDeplacement
-        {
-            get { return vitesseDeplacement; }
-            set
-            {
-                vitesseDeplacement = value;
-                Historique.AjouterAction(new ActionVitesseLigne(this, value));
-            }
-        }
-
-        private int accelerationDebutDeplacement;
-        public override int AccelerationDebutDeplacement
-        {
-            get { return accelerationDebutDeplacement; }
-            set
-            {
-                accelerationDebutDeplacement = value;
-                Historique.AjouterAction(new ActionAccelerationLigne(this, value));
-            }
-        }
-
-        private int accelerationFinDeplacement;
-        public override int AccelerationFinDeplacement
-        {
-            get { return accelerationFinDeplacement; }
-            set
-            {
-                accelerationFinDeplacement = value;
-                Historique.AjouterAction(new ActionAccelerationLigne(this, value));
-            }
-        }
-
-        private int vitessePivot;
-        public override int VitessePivot
-        {
-            get { return vitessePivot; }
-            set
-            {
-                vitessePivot = value;
-                Historique.AjouterAction(new ActionVitessePivot(this, value));
-            }
-        }
-
-        private int accelerationPivot;
-        public override int AccelerationPivot
-        {
-            get { return accelerationPivot; }
-            set
-            {
-                accelerationPivot = value;
-                Historique.AjouterAction(new ActionAccelerationPivot(this, value));
-            }
-        }
-
+        
         public RobotSimu(IDRobot idRobot) : base()
         {
             IDRobot = idRobot;
@@ -151,7 +96,7 @@ namespace GoBot
         {
             get
             {
-                return (VitesseActuelle * VitesseActuelle) / (2 * AccelerationFinDeplacement);
+                return (VitesseActuelle * VitesseActuelle) / (2 * SpeedConfig.LineDeceleration);
             }
         }
 
@@ -159,7 +104,7 @@ namespace GoBot
         {
             get
             {
-                return (VitesseActuelle * VitesseActuelle) / (2 * AccelerationPivot);
+                return (VitesseActuelle * VitesseActuelle) / (2 * SpeedConfig.PivotDeceleration);
             }
         }
 
@@ -201,9 +146,9 @@ namespace GoBot
                 distanceTotaleRestante += DistanceParcours(trajectoirePolaire, pointCourantTrajPolaire, trajectoirePolaire.Count - 1);
 
                 if (distanceTotaleRestante > DistanceFreinageActuelle)
-                    VitesseActuelle = Math.Min(VitesseDeplacement, VitesseActuelle + AccelerationDebutDeplacement / (1000.0 / intervalle));
+                    VitesseActuelle = Math.Min(SpeedConfig.LineSpeed, VitesseActuelle + SpeedConfig.LineAcceleration / (1000.0 / intervalle));
                 else
-                    VitesseActuelle = VitesseActuelle - AccelerationDebutDeplacement / (1000.0 / intervalle);
+                    VitesseActuelle = VitesseActuelle - SpeedConfig.LineDeceleration / (1000.0 / intervalle);
 
                 double distanceAParcourir = VitesseActuelle / (1000.0 / intervalle);
 
@@ -260,9 +205,9 @@ namespace GoBot
                     Angle angleParcouru = (360 * distParcourue) / (Math.PI * Entraxe);
 
                     if (distance > AngleFreinageActuel)
-                        VitesseActuelle = Math.Min(VitessePivot, VitesseActuelle + AccelerationPivot / (1000.0 / intervalle));
+                        VitesseActuelle = Math.Min(SpeedConfig.PivotSpeed, VitesseActuelle + SpeedConfig.PivotAcceleration / (1000.0 / intervalle));
                     else
-                        VitesseActuelle = VitesseActuelle - AccelerationPivot / (1000.0 / intervalle);
+                        VitesseActuelle = VitesseActuelle - SpeedConfig.PivotDeceleration / (1000.0 / intervalle);
 
                     if (Math.Abs(diff.AngleDegres) >= angleParcouru)
                         Position.Angle.Tourner(coeff * angleParcouru);
@@ -280,9 +225,9 @@ namespace GoBot
 
                     // Phase accélération ou déccélération
                     if (Position.Coordonnees.Distance(Destination.Coordonnees) > DistanceFreinageActuelle)
-                        VitesseActuelle = Math.Min(VitesseDeplacement, VitesseActuelle + AccelerationDebutDeplacement / (1000.0 / intervalle));
+                        VitesseActuelle = Math.Min(SpeedConfig.LineSpeed, VitesseActuelle + SpeedConfig.LineAcceleration / (1000.0 / intervalle));
                     else
-                        VitesseActuelle = VitesseActuelle - AccelerationFinDeplacement / (1000.0 / intervalle);
+                        VitesseActuelle = VitesseActuelle - SpeedConfig.LineDeceleration / (1000.0 / intervalle);
                     
                     if (Destination.Coordonnees.Distance(Position.Coordonnees) <= distance)
                     {
@@ -422,10 +367,7 @@ namespace GoBot
         {
             RecallageEnCours = true;
             Historique.AjouterAction(new ActionRecallage(this, sens));
-
-            int accelTmp = AccelerationDebutDeplacement;
-            AccelerationDebutDeplacement = 4000;
-
+            
             while (Position.Coordonnees.X - Longueur / 2 > 0 &&
                 Position.Coordonnees.X + Longueur / 2 < Plateau.LongueurPlateau &&
                 Position.Coordonnees.Y - Longueur / 2 > 0 &&
@@ -444,8 +386,6 @@ namespace GoBot
                 Position.Coordonnees.Y = Longueur / 2;
             if (Position.Coordonnees.Y > Plateau.LargeurPlateau)
                 Position.Coordonnees.Y = Plateau.LargeurPlateau - Longueur / 2;
-
-            AccelerationDebutDeplacement = accelTmp;
 
             RecallageEnCours = false;
         }

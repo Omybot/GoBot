@@ -58,11 +58,12 @@ namespace GoBot
             if (graphGros != null)
                 Robots.GrosRobot.Graph = graphGros;
 
-            GrosRobot.VitesseDeplacement = Config.CurrentConfig.GRVitesseLigneRapide;
-            GrosRobot.AccelerationDebutDeplacement = Config.CurrentConfig.GRAccelerationLigneRapide;
-            GrosRobot.AccelerationFinDeplacement = Config.CurrentConfig.GRAccelerationFinLigneRapide;
-            GrosRobot.VitessePivot = Config.CurrentConfig.GRVitessePivotRapide;
-            GrosRobot.AccelerationPivot = Config.CurrentConfig.GRAccelerationPivotRapide;
+            GrosRobot.SpeedConfig.SetParams(Config.CurrentConfig.GRVitesseLigneRapide,
+                Config.CurrentConfig.GRAccelerationLigneRapide,
+                Config.CurrentConfig.GRAccelerationFinLigneRapide,
+                Config.CurrentConfig.GRVitessePivotRapide,
+                Config.CurrentConfig.GRAccelerationPivotRapide,
+                Config.CurrentConfig.GRAccelerationPivotRapide);
         }
 
         public static void Simuler(bool simu)

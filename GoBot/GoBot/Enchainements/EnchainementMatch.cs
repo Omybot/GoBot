@@ -103,9 +103,6 @@ namespace GoBot.Enchainements
 
         private void ActionsFixesGros()
         {
-            List<PointReel> trajectoirePolaire;
-            List<PointReel> pointsPolaires;
-
             Robots.GrosRobot.Rapide();
 
             Actionneur.Ejecteur.DemarrerCapteurCouleur();
@@ -117,9 +114,7 @@ namespace GoBot.Enchainements
 
             ThreadPool.QueueUserWorkItem(new WaitCallback(ArmePince));
 
-            Robots.GrosRobot.VitesseDeplacement = 500;
-            Robots.GrosRobot.AccelerationDebutDeplacement = 1500;
-            Robots.GrosRobot.AccelerationFinDeplacement = 1500;
+            Robots.GrosRobot.SpeedConfig.SetParams(500, 1500, 1500, 800, 2000, 2000);
 
             if (Plateau.NotreCouleur == Plateau.CouleurGaucheBleu)
             {
@@ -137,49 +132,6 @@ namespace GoBot.Enchainements
             Robots.GrosRobot.Rapide();
 
             Thread.Sleep(200);
-
-            //// Trajectoire normale
-            //Robots.GrosRobot.AccelerationDebutDeplacement = 1200;
-            //Robots.GrosRobot.AccelerationFinDeplacement = 1700;
-
-            //Robots.GrosRobot.VitessePivot = 1000;
-            //Robots.GrosRobot.AccelerationPivot = 1000;
-
-            //Robots.GrosRobot.EnvoyerPIDCap(10000, 0, 300);
-            //Robots.GrosRobot.EnvoyerPIDVitesse(20, 0, 200);
-
-            //pointsPolaires = new List<PointReel>();
-
-            //if (Plateau.NotreCouleur == Plateau.CouleurGaucheViolet)
-            //{
-            //    pointsPolaires.Add(new PointReel(Robots.GrosRobot.Position.Coordonnees.X + 10, Robots.GrosRobot.Position.Coordonnees.Y));
-            //    //pointsPolaires.Add(new PointReel(700, Robots.GrosRobot.Position.Coordonnees.Y + 80));
-            //    pointsPolaires.Add(new PointReel(600, Robots.GrosRobot.Position.Coordonnees.Y + 70));
-            //    pointsPolaires.Add(new PointReel(550, 400));
-            //    pointsPolaires.Add(new PointReel(1300, 500));
-            //}
-            //else
-            //{
-            //    pointsPolaires.Add(new PointReel(Robots.GrosRobot.Position.Coordonnees.X - 10, Robots.GrosRobot.Position.Coordonnees.Y));
-            //    //pointsPolaires.Add(new PointReel(700, Robots.GrosRobot.Position.Coordonnees.Y + 80));
-            //    pointsPolaires.Add(new PointReel(3000 - 600, Robots.GrosRobot.Position.Coordonnees.Y + 70));
-            //    pointsPolaires.Add(new PointReel(3000 - 550, 400));
-            //    pointsPolaires.Add(new PointReel(3000 - 1300, 500));
-            //}
-
-            //trajectoirePolaire = BezierCurve.GetPoints(pointsPolaires, 200);
-            //Dessinateur.modeCourant = Dessinateur.Mode.TrajectoirePolaire;
-            //Dessinateur.TrajectoirePolaire = trajectoirePolaire;
-            //Dessinateur.PointsPolaire = pointsPolaires;
-
-            //Robots.GrosRobot.TrajectoirePolaire(SensAR.Avant, trajectoirePolaire, true);
-
-            //Thread.Sleep(200);
-
-            //if (Plateau.NotreCouleur == Plateau.CouleurGaucheViolet)
-            //    HokuyoRecalViolet();
-            //else
-            //    ThreadHokuyoRecalVert();
         }
 
         private void HokuyoRecalViolet()

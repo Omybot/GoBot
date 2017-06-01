@@ -46,7 +46,7 @@ namespace GoBot.Mouvements
             Actionneurs.Actionneur.BrasLunaire.Ouvrir();
             Thread.Sleep(200);
             Actionneurs.Actionneur.BrasLunaire.Avancer();
-            Robots.GrosRobot.AccelerationFinDeplacement = 300;
+            Robots.GrosRobot.SpeedConfig.LineDeceleration = 300;
             Robots.GrosRobot.Avancer(100);
             Actionneurs.Actionneur.BrasLunaire.Fermer();
             Thread.Sleep(200);
@@ -55,7 +55,7 @@ namespace GoBot.Mouvements
             Robots.GrosRobot.Reculer(30);
             Actionneurs.Actionneur.BrasLunaire.Ouvrir();
             Thread.Sleep(50);
-            Robots.GrosRobot.AccelerationFinDeplacement = 300;
+            Robots.GrosRobot.SpeedConfig.LineDeceleration = 300;
             Robots.GrosRobot.Avancer(30);
             Robots.GrosRobot.Rapide();
             Actionneurs.Actionneur.BrasLunaire.Fermer();

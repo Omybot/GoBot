@@ -95,13 +95,6 @@ namespace GoBot
         public bool SequencesGROuvert { get; set; }
         public bool CapteursGROuvert { get; set; }
 
-        // Fenêtres petit robot
-
-        public bool DeplacementPROuvert { get; set; }
-        public bool HistoriquePROuvert { get; set; }
-        public bool ReglagePROuvert { get; set; }
-        public bool UtilisationPROuvert { get; set; }
-
         // Déplacement gros robot
 
         public int GRVitesseLigneRapide { get; set; }
@@ -119,22 +112,6 @@ namespace GoBot
         public int GRCoeffP { get; set; }
         public int GRCoeffI { get; set; }
         public int GRCoeffD { get; set; }
-
-        // Déplacement petit robot
-
-        public int PRVitesseLigneRapide { get; set; }
-        public int PRAccelerationLigneRapide { get; set; }
-        public int PRVitessePivotRapide { get; set; }
-        public int PRAccelerationPivotRapide { get; set; }
-
-        public int PRVitesseLigneLent { get; set; }
-        public int PRAccelerationLigneLent { get; set; }
-        public int PRVitessePivotLent { get; set; }
-        public int PRAccelerationPivotLent { get; set; }
-
-        public int PRCoeffP { get; set; }
-        public int PRCoeffI { get; set; }
-        public int PRCoeffD { get; set; }
 
         // Offset balises
 

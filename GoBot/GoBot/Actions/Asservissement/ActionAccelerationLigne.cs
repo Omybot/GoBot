@@ -7,23 +7,26 @@ namespace GoBot.Actions
 {
     class ActionAccelerationLigne : IAction
     {
-        private int vitesse;
-        private Robot robot;
+        private int _accel;
+        private int _decel;
+        private Robot _robot;
 
-        public ActionAccelerationLigne(Robot r, int vit)
+        public ActionAccelerationLigne(Robot r, int accel, int decel)
         {
-            robot = r;
-            vitesse = vit;
+            _robot = r;
+            _accel = accel;
+            _decel = decel;
         }
 
         public override String ToString()
         {
-            return robot.Nom + " accélération ligne à " + vitesse;
+            return _robot.Nom + " accélération ligne à " + _accel + " / " + _decel;
         }
 
         void IAction.Executer()
         {
-            robot.AccelerationDebutDeplacement = vitesse;
+            _robot.SpeedConfig.LineAcceleration = _accel;
+            _robot.SpeedConfig.LineDeceleration = _decel;
         }
 
         public System.Drawing.Image Image

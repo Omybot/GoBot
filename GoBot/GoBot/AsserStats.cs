@@ -35,5 +35,17 @@ namespace GoBot
             LeftRotations = new List<double>();
             RightsRotations = new List<double>();
         }
+
+        public int CalculDuration(SpeedConfig config, Robot robot)
+        {
+            int totalDuration = 0;
+
+            foreach (int dist in ForwardMoves.Union(BackwardMoves))
+                totalDuration += config.LineDuration(dist);
+            foreach (Angle ang in LeftRotations.Union(RightsRotations))
+                totalDuration += config.PivotDuration(ang, robot.Entraxe);
+
+            return totalDuration;
+        }
     }
 }

@@ -72,7 +72,6 @@ namespace GoBot.IHM
         void groupBoxHisto_Deploiement(bool deploye)
         {
             Config.CurrentConfig.HistoriqueGROuvert = deploye;
-            Config.CurrentConfig.HistoriquePROuvert = deploye;
         }
 
         private void MAJHistoriqueDel(IAction action)

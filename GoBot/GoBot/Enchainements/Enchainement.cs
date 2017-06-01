@@ -87,6 +87,20 @@ namespace GoBot.Enchainements
         {
             Robots.GrosRobot.Historique.Log("FIN DU MATCH", TypeLog.Strat);
 
+            SpeedConfig s1, s2, s3, s4, s5;
+
+            s1 = new SpeedConfig(800, 2000, 2000, 800, 2000, 2000);
+            s2 = new SpeedConfig(800, 3000, 3000, 800, 3000, 3000);
+            s3 = new SpeedConfig(1000, 2000, 2000, 1000, 2000, 2000);
+            s4 = new SpeedConfig(1000, 2500, 2500, 1000, 2500, 2500);
+            s5 = new SpeedConfig(1200, 3000, 3000, 1200, 3000, 3000);
+
+            Console.WriteLine("800 / 2000 : " + Robots.GrosRobot.AsserStats.CalculDuration(s1, Robots.GrosRobot) + " ms");
+            Console.WriteLine("800 / 3000 : " + Robots.GrosRobot.AsserStats.CalculDuration(s2, Robots.GrosRobot) + " ms");
+            Console.WriteLine("1000 / 2000 : " + Robots.GrosRobot.AsserStats.CalculDuration(s3, Robots.GrosRobot) + " ms");
+            Console.WriteLine("1000 / 2500 : " + Robots.GrosRobot.AsserStats.CalculDuration(s4, Robots.GrosRobot) + " ms");
+            Console.WriteLine("1200 / 3000 : " + Robots.GrosRobot.AsserStats.CalculDuration(s5, Robots.GrosRobot) + " ms");
+
             timerFinMatch.Stop();
             thGrosRobot.Abort();
             Robots.GrosRobot.Stop(StopMode.Freely);

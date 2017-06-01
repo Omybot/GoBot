@@ -37,11 +37,14 @@ namespace GoBot
         public PointReel PositionCible { get; set; }
         public bool DeplacementLigne { get; protected set; }
         public bool VitesseAdaptableEnnemi { get; set; }
-        public abstract int VitesseDeplacement { get; set; }
-        public abstract int AccelerationDebutDeplacement { get; set; }
-        public abstract int AccelerationFinDeplacement { get; set; }
-        public abstract int VitessePivot { get; set; }
-        public abstract int AccelerationPivot { get; set; }
+
+        public SpeedConfig SpeedConfig { get; protected set; }
+
+        //public abstract int VitesseDeplacement { get; set; }
+        //public abstract int AccelerationDebutDeplacement { get; set; }
+        //public abstract int AccelerationFinDeplacement { get; set; }
+        //public abstract int VitessePivot { get; set; }
+        //public abstract int AccelerationPivot { get; set; }
         public List<Position> HistoriqueCoordonnees { get; protected set; }
 
         public AsserStats AsserStats { get; protected set; }
@@ -294,6 +297,7 @@ namespace GoBot
 
         public Robot()
         {
+            SpeedConfig = new SpeedConfig(500, 1000, 1000, 500, 1000, 1000);
             AsserStats = new AsserStats();
             VitesseAdaptableEnnemi = true;
             ServoActive = new Dictionary<ServomoteurID, bool>();
@@ -316,18 +320,12 @@ namespace GoBot
         {
             if (this == Robots.GrosRobot)
             {
-                VitesseDeplacement = Config.CurrentConfig.GRVitesseLigneLent;
-                AccelerationDebutDeplacement = Config.CurrentConfig.GRAccelerationLigneLent;
-                AccelerationFinDeplacement = Config.CurrentConfig.GRAccelerationFinLigneLent;
-                VitessePivot = Config.CurrentConfig.GRVitessePivotLent;
-                AccelerationPivot = Config.CurrentConfig.GRAccelerationLigneLent;
-            }
-            else
-            {
-                VitesseDeplacement = Config.CurrentConfig.PRVitesseLigneLent;
-                AccelerationDebutDeplacement = Config.CurrentConfig.PRAccelerationLigneLent;
-                VitessePivot = Config.CurrentConfig.PRVitessePivotLent;
-                AccelerationPivot = Config.CurrentConfig.PRAccelerationLigneLent;
+                SpeedConfig.SetParams(Config.CurrentConfig.GRVitesseLigneLent,
+                    Config.CurrentConfig.GRAccelerationLigneLent,
+                    Config.CurrentConfig.GRAccelerationFinLigneLent,
+                    Config.CurrentConfig.GRVitessePivotLent,
+                    Config.CurrentConfig.GRAccelerationPivotLent,
+                    Config.CurrentConfig.GRAccelerationPivotLent);
             }
 
             VitesseAdaptableEnnemi = false;
@@ -337,18 +335,12 @@ namespace GoBot
         {
             if (this == Robots.GrosRobot)
             {
-                VitesseDeplacement = Config.CurrentConfig.GRVitesseLigneRapide;
-                AccelerationDebutDeplacement = Config.CurrentConfig.GRAccelerationLigneRapide;
-                AccelerationFinDeplacement = Config.CurrentConfig.GRAccelerationFinLigneRapide;
-                VitessePivot = Config.CurrentConfig.GRVitessePivotRapide;
-                AccelerationPivot = Config.CurrentConfig.GRAccelerationPivotRapide;
-            }
-            else
-            {
-                VitesseDeplacement = Config.CurrentConfig.PRVitesseLigneRapide;
-                AccelerationDebutDeplacement = Config.CurrentConfig.PRAccelerationLigneRapide;
-                VitessePivot = Config.CurrentConfig.PRVitessePivotRapide;
-                AccelerationPivot = Config.CurrentConfig.PRAccelerationPivotRapide;
+                SpeedConfig.SetParams(Config.CurrentConfig.GRVitesseLigneRapide,
+                    Config.CurrentConfig.GRAccelerationLigneRapide,
+                    Config.CurrentConfig.GRAccelerationFinLigneRapide,
+                    Config.CurrentConfig.GRVitessePivotRapide,
+                    Config.CurrentConfig.GRAccelerationPivotRapide,
+                    Config.CurrentConfig.GRAccelerationPivotRapide);
             }
 
             VitesseAdaptableEnnemi = true;
@@ -504,56 +496,6 @@ namespace GoBot
         public override string ToString()
         {
             return Nom;
-        }
-
-        public int CalculDureeLigne(int distance)
-        {
-            int duree = CalculDureeDeplacement(distance, AccelerationDebutDeplacement, VitesseDeplacement, AccelerationFinDeplacement);
-
-            return duree;
-        }
-
-        public int CalculDureePivot(Angle angle)
-        {
-            int duree = CalculDureeDeplacement((int)((Math.PI * Entraxe) / 360 * angle.AngleDegresPositif), AccelerationPivot, VitessePivot, AccelerationPivot);
-
-            return duree;
-        }
-
-        private int CalculDureeDeplacement(int distance, int acceleration, int vitesseMax, int decceleration)
-        {
-            if (distance == 0)
-                return 0;
-
-            double dureeAcceleration, dureeCroisiere, dureeFreinage;
-            int distanceAcceleration, distanceCroisere, distanceFreinage;
-
-            distanceAcceleration = (vitesseMax * vitesseMax) / (2 * acceleration);
-            distanceFreinage = (vitesseMax * vitesseMax) / (2 * decceleration);
-
-            if (distanceAcceleration + distanceFreinage < distance)
-            {
-                distanceCroisere = distance - distanceAcceleration - distanceFreinage;
-
-                dureeAcceleration = vitesseMax / (double)acceleration;
-                dureeFreinage = vitesseMax / (double)decceleration;
-                dureeCroisiere = distanceCroisere / (double)vitesseMax;
-            }
-            else
-            {
-                distanceCroisere = 0;
-                dureeCroisiere = 0;
-
-                double rapport = decceleration / (double)acceleration;
-                distanceFreinage = (int)(distance / (rapport + 1));
-                distanceAcceleration = distance - distanceFreinage;
-
-                dureeAcceleration = Math.Sqrt((2 * distanceAcceleration) / (double)acceleration);
-                dureeFreinage = Math.Sqrt((2 * distanceFreinage) / (double)(decceleration));
-            }
-
-            int duree = (int)((dureeAcceleration + dureeCroisiere + dureeFreinage) * 1000);
-            return duree;
         }
 
         protected void ParcourirTrajectoire(Object traj)

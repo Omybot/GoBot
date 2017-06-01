@@ -7,23 +7,26 @@ namespace GoBot.Actions
 {
     class ActionAccelerationPivot : IAction
     {
-        private int vitesse;
-        private Robot robot;
+        private int _accel;
+        private int _decel;
+        private Robot _robot;
 
-        public ActionAccelerationPivot(Robot r, int vit)
+        public ActionAccelerationPivot(Robot r, int accel, int decel)
         {
-            robot = r;
-            vitesse = vit;
+            _robot = r;
+            _accel = accel;
+            _decel = decel;
         }
 
         public override String ToString()
         {
-            return robot.Nom + " accélération pivot à " + vitesse;
+            return _robot.Nom + " accélération pivot à " + _accel + " / " + _decel;
         }
 
         void IAction.Executer()
         {
-            robot.AccelerationPivot = vitesse;
+            _robot.SpeedConfig.PivotAcceleration = _accel;
+            _robot.SpeedConfig.PivotDeceleration = _decel;
         }
 
         public System.Drawing.Image Image

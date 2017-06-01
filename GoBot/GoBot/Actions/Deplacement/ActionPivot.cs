@@ -47,7 +47,7 @@ namespace GoBot.Actions
         {
             get
             {
-                return robot.CalculDureePivot(angle);
+                return robot.SpeedConfig.PivotDuration(angle, robot.Entraxe);
             }
         }
     }

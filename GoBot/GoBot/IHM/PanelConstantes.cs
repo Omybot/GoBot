@@ -54,18 +54,18 @@ namespace GoBot.IHM
             if (MessageBox.Show("Êtes vous certain de vouloir enregistrer ces valeurs dans le fichier de configuration ?", "Attention", MessageBoxButtons.OKCancel, MessageBoxIcon.Question) != DialogResult.OK)
                 return;
 
-            Config.CurrentConfig.GRAccelerationLigneLent = (int)numAccelerationLigneLent.Value;
-            Config.CurrentConfig.GRAccelerationFinLigneLent = (int)numAccelerationFinLigneLent.Value;
+            Config.CurrentConfig.GRVitesseLigneRapide = (int)numVitesseLigneRapide.Value;
             Config.CurrentConfig.GRAccelerationLigneRapide = (int)numAccelerationLigneRapide.Value;
             Config.CurrentConfig.GRAccelerationFinLigneRapide = (int)numAccelerationFinLigneRapide.Value;
-            Config.CurrentConfig.GRAccelerationPivotLent = (int)numAccelerationPivotLent.Value;
+            Config.CurrentConfig.GRVitessePivotRapide = (int)numVitessePivotRapide.Value;
             Config.CurrentConfig.GRAccelerationPivotRapide = (int)numAccelerationPivotRapide.Value;
 
             Config.CurrentConfig.GRVitesseLigneLent = (int)numVitesseLigneLent.Value;
-            Config.CurrentConfig.GRVitesseLigneRapide = (int)numVitesseLigneRapide.Value;
+            Config.CurrentConfig.GRAccelerationLigneLent = (int)numAccelerationLigneLent.Value;
+            Config.CurrentConfig.GRAccelerationFinLigneLent = (int)numAccelerationFinLigneLent.Value;
             Config.CurrentConfig.GRVitessePivotLent = (int)numVitessePivotLent.Value;
-            Config.CurrentConfig.GRVitessePivotRapide = (int)numVitessePivotRapide.Value;
-
+            Config.CurrentConfig.GRAccelerationPivotLent = (int)numAccelerationPivotLent.Value;
+            
             Config.CurrentConfig.BatterieRobotVert = (double)numBatGrosVert.Value;
             Config.CurrentConfig.BatterieRobotOrange = (double)numBatGrosOrange.Value;
             Config.CurrentConfig.BatterieRobotRouge = (double)numBatGrosRouge.Value;

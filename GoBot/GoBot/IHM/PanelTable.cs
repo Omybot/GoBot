@@ -673,59 +673,59 @@ namespace GoBot.IHM
 
         private void pwet_Click(object sender, EventArgs e)
         {
-            //Robots.GrosRobot.ReglerOffsetAsserv(160, 850, 0);
-            Robots.GrosRobot.ReglerOffsetAsserv((int)(Robots.GrosRobot.Longueur / 2), (int)(600 + 5 + Robots.GrosRobot.Largeur / 2), 0);
-            //Robots.GrosRobot.ReglerOffsetAsserv(100, 700, 0);
-            Robots.GrosRobot.VitesseDeplacement = 1500;
+            ////Robots.GrosRobot.ReglerOffsetAsserv(160, 850, 0);
+            //Robots.GrosRobot.ReglerOffsetAsserv((int)(Robots.GrosRobot.Longueur / 2), (int)(600 + 5 + Robots.GrosRobot.Largeur / 2), 0);
+            ////Robots.GrosRobot.ReglerOffsetAsserv(100, 700, 0);
+            //Robots.GrosRobot.VitesseDeplacement = 1500;
 
 
-            // Trajectoire de drift
-            //Robots.GrosRobot.AccelerationDebutDeplacement = 4000;
-            //Robots.GrosRobot.AccelerationFinDeplacement = 4000;
+            //// Trajectoire de drift
+            ////Robots.GrosRobot.AccelerationDebutDeplacement = 4000;
+            ////Robots.GrosRobot.AccelerationFinDeplacement = 4000;
 
 
-            // Trajectoire normale
-            Robots.GrosRobot.AccelerationDebutDeplacement = 1200;
-            Robots.GrosRobot.AccelerationFinDeplacement = 1700;
+            //// Trajectoire normale
+            //Robots.GrosRobot.AccelerationDebutDeplacement = 1200;
+            //Robots.GrosRobot.AccelerationFinDeplacement = 1700;
 
 
-            Robots.GrosRobot.VitessePivot = 1000;
-            Robots.GrosRobot.AccelerationPivot = 1000;
+            //Robots.GrosRobot.VitessePivot = 1000;
+            //Robots.GrosRobot.AccelerationPivot = 1000;
 
-            Robots.GrosRobot.EnvoyerPIDCap(10000, 0, 300);
-            //Robots.GrosRobot.EnvoyerPIDCap(15000, 0, 100);
-            Robots.GrosRobot.EnvoyerPIDVitesse(20, 0, 200);
+            //Robots.GrosRobot.EnvoyerPIDCap(10000, 0, 300);
+            ////Robots.GrosRobot.EnvoyerPIDCap(15000, 0, 100);
+            //Robots.GrosRobot.EnvoyerPIDVitesse(20, 0, 200);
 
-            pointsPolaires = new List<PointReel>();
-            //for (int i = 0; i < 10; i++)
-             //   pointsPolaires.Add(new PointReel(i * 10, 0));
+            //pointsPolaires = new List<PointReel>();
+            ////for (int i = 0; i < 10; i++)
+            // //   pointsPolaires.Add(new PointReel(i * 10, 0));
 
-            // Trajectoire normale de départ
+            //// Trajectoire normale de départ
+            ////pointsPolaires.Add(new PointReel(Robots.GrosRobot.Position.Coordonnees.X, Robots.GrosRobot.Position.Coordonnees.Y));
+            ////pointsPolaires.Add(new PointReel(700, Robots.GrosRobot.Position.Coordonnees.Y + 100));
+            ////pointsPolaires.Add(new PointReel(550, 400));
+            ////pointsPolaires.Add(new PointReel(1500, 400));
+
             //pointsPolaires.Add(new PointReel(Robots.GrosRobot.Position.Coordonnees.X, Robots.GrosRobot.Position.Coordonnees.Y));
-            //pointsPolaires.Add(new PointReel(700, Robots.GrosRobot.Position.Coordonnees.Y + 100));
+            //pointsPolaires.Add(new PointReel(700, Robots.GrosRobot.Position.Coordonnees.Y + 80));
             //pointsPolaires.Add(new PointReel(550, 400));
-            //pointsPolaires.Add(new PointReel(1500, 400));
+            //pointsPolaires.Add(new PointReel(1300, 500));
 
-            pointsPolaires.Add(new PointReel(Robots.GrosRobot.Position.Coordonnees.X, Robots.GrosRobot.Position.Coordonnees.Y));
-            pointsPolaires.Add(new PointReel(700, Robots.GrosRobot.Position.Coordonnees.Y + 80));
-            pointsPolaires.Add(new PointReel(550, 400));
-            pointsPolaires.Add(new PointReel(1300, 500));
+            //// Trajectoire de drift
+            ////pointsPolaires.Add(new PointReel(Robots.GrosRobot.Position.Coordonnees.X, Robots.GrosRobot.Position.Coordonnees.Y));
+            ////pointsPolaires.Add(new PointReel(700, Robots.GrosRobot.Position.Coordonnees.Y + 100));
+            ////pointsPolaires.Add(new PointReel(550, 300));
+            ////pointsPolaires.Add(new PointReel(1250, 600));
 
-            // Trajectoire de drift
-            //pointsPolaires.Add(new PointReel(Robots.GrosRobot.Position.Coordonnees.X, Robots.GrosRobot.Position.Coordonnees.Y));
-            //pointsPolaires.Add(new PointReel(700, Robots.GrosRobot.Position.Coordonnees.Y + 100));
-            //pointsPolaires.Add(new PointReel(550, 300));
-            //pointsPolaires.Add(new PointReel(1250, 600));
+            //trajectoirePolaire = BezierCurve.GetPoints(pointsPolaires, (int)numNbPoints.Value);
+            //Dessinateur.modeCourant = Dessinateur.Mode.TrajectoirePolaire; 
+            //Dessinateur.TrajectoirePolaire = trajectoirePolaire;
+            //Dessinateur.PointsPolaire = pointsPolaires;
 
-            trajectoirePolaire = BezierCurve.GetPoints(pointsPolaires, (int)numNbPoints.Value);
-            Dessinateur.modeCourant = Dessinateur.Mode.TrajectoirePolaire; 
-            Dessinateur.TrajectoirePolaire = trajectoirePolaire;
-            Dessinateur.PointsPolaire = pointsPolaires;
+            //Stopwatch watch = Stopwatch.StartNew();
+            //Robots.GrosRobot.TrajectoirePolaire(SensAR.Avant, trajectoirePolaire, true);
 
-            Stopwatch watch = Stopwatch.StartNew();
-            Robots.GrosRobot.TrajectoirePolaire(SensAR.Avant, trajectoirePolaire, true);
-
-            ThreadHokuyoRecalViolet();
+            //ThreadHokuyoRecalViolet();
         }
 
         bool moveMouse = false;

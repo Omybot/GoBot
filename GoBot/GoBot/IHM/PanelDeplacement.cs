@@ -41,8 +41,6 @@ namespace GoBot.IHM
         {
             if (Robot == Robots.GrosRobot)
                 Config.CurrentConfig.DeplacementGROuvert = deploye;
-            else
-                Config.CurrentConfig.DeplacementPROuvert = deploye;
         }
 
         public virtual void Init()
@@ -63,20 +61,6 @@ namespace GoBot.IHM
                 Robot.EnvoyerPID(Config.CurrentConfig.GRCoeffP, Config.CurrentConfig.GRCoeffI, Config.CurrentConfig.GRCoeffD);
 
                 groupBoxDep.Deployer(Config.CurrentConfig.DeplacementGROuvert, false);
-            }
-            else
-            {
-                trackBarVitesseLigne.SetValue(Config.CurrentConfig.PRVitesseLigneRapide, false);
-                trackBarAccelLigne.SetValue(Config.CurrentConfig.PRAccelerationLigneRapide, false);
-                trackBarVitessePivot.SetValue(Config.CurrentConfig.PRVitessePivotRapide, false);
-                trackBarAccelPivot.SetValue(Config.CurrentConfig.PRAccelerationPivotRapide, false);
-
-                numCoeffP.Value = Config.CurrentConfig.PRCoeffP;
-                numCoeffI.Value = Config.CurrentConfig.PRCoeffI;
-                numCoeffD.Value = Config.CurrentConfig.PRCoeffD;
-                Robot.EnvoyerPID(Config.CurrentConfig.PRCoeffP, Config.CurrentConfig.PRCoeffI, Config.CurrentConfig.PRCoeffD);
-
-                groupBoxDep.Deployer(Config.CurrentConfig.DeplacementPROuvert, false);
             }
         }
 
@@ -161,7 +145,7 @@ namespace GoBot.IHM
 
         protected virtual void trackBarVitesseLigne_TickValueChanged(object sender, EventArgs e)
         {
-            Robot.VitesseDeplacement = (int)trackBarVitesseLigne.Value;
+            Robot.SpeedConfig.LineSpeed = (int)trackBarVitesseLigne.Value;
         }
 
         private void trackBarVitesseLigne_ValueChanged(object sender, EventArgs e)
@@ -181,7 +165,7 @@ namespace GoBot.IHM
 
         protected virtual void trackBarAccelLigne_TickValueChanged(object sender, EventArgs e)
         {
-            Robot.AccelerationDebutDeplacement = (int)trackBarAccelLigne.Value;
+            Robot.SpeedConfig.LineAcceleration = (int)trackBarAccelLigne.Value;
         }
 
         private void trackBarAccelLigne_ValueChanged(object sender, EventArgs e)
@@ -201,7 +185,7 @@ namespace GoBot.IHM
 
         private void trackBarVitessePivot_TickValueChanged(object sender, EventArgs e)
         {
-            Robot.VitessePivot = (int)trackBarVitessePivot.Value;
+            Robot.SpeedConfig.PivotSpeed = (int)trackBarVitessePivot.Value;
         }
 
         private void trackBarVitessePivot_ValueChanged(object sender, EventArgs e)
@@ -221,7 +205,8 @@ namespace GoBot.IHM
 
         private void trackBarAccelPivot_TickValueChanged(object sender, EventArgs e)
         {
-            Robot.AccelerationPivot = (int)trackBarAccelPivot.Value;
+            Robot.SpeedConfig.PivotAcceleration = (int)trackBarAccelPivot.Value;
+            Robot.SpeedConfig.PivotDeceleration = (int)trackBarAccelPivot.Value;
         }
 
         private void trackBarAccelPivot_ValueChanged(object sender, EventArgs e)
@@ -266,28 +251,14 @@ namespace GoBot.IHM
                 // Pivot droit
                 Robot.PivotDroite(90, false);
             }
-            else if (e.KeyCode == Keys.Add)
-            {
-                // Augmenter vitesse
-                Robot.VitesseDeplacement += 50;
-            }
-            else if (e.KeyCode == Keys.Subtract)
-            {
-                // Diminuer vitesse
-                Robot.VitesseDeplacement -= 50;
-            }
         }
 
         private void btnRecallage_Click(object sender, EventArgs e)
         {
-            int vitesseTemp = Robot.VitesseDeplacement;
-            int accelerationTemp = Robot.AccelerationDebutDeplacement;
-            Robot.VitesseDeplacement = 150;
-            Robot.AccelerationDebutDeplacement = 150;
-            System.Threading.Thread.Sleep(200);
+            Robot.Avancer(10);
+            Robot.Lent();
             Robot.Recallage(SensAR.Arriere);
-            Robot.VitesseDeplacement = vitesseTemp;
-            Robot.AccelerationDebutDeplacement = accelerationTemp;
+            Robot.Rapide();
         }
 
         private void btnFreely_Click(object sender, EventArgs e)
@@ -304,12 +275,6 @@ namespace GoBot.IHM
                 Config.CurrentConfig.GRCoeffP = (int)numCoeffP.Value;
                 Config.CurrentConfig.GRCoeffI = (int)numCoeffI.Value;
                 Config.CurrentConfig.GRCoeffD = (int)numCoeffD.Value;
-            }
-            else
-            {
-                Config.CurrentConfig.PRCoeffP = (int)numCoeffP.Value;
-                Config.CurrentConfig.PRCoeffI = (int)numCoeffI.Value;
-                Config.CurrentConfig.PRCoeffD = (int)numCoeffD.Value;
             }
 
             btnPID.Enabled = false;
@@ -363,7 +328,7 @@ namespace GoBot.IHM
 
         private void trackBarAccelerationFinLigne_TickValueChanged(object sender, EventArgs e)
         {
-            Robot.AccelerationFinDeplacement = (int)trackBarAccelerationFinLigne.Value;
+            Robot.SpeedConfig.LineDeceleration = (int)trackBarAccelerationFinLigne.Value;
         }
 
         private void trackBarAccelerationFinLigne_ValueChanged(object sender, EventArgs e)

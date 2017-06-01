@@ -12,9 +12,7 @@ namespace GoBot.Enchainements
     {
         protected override void ThreadGros()
         {
-            Robots.GrosRobot.VitesseDeplacement = 500;
-            Robots.GrosRobot.AccelerationDebutDeplacement = 2000;
-            Robots.GrosRobot.AccelerationFinDeplacement = 2000;
+            Robots.GrosRobot.SpeedConfig.SetParams(500, 2000, 2000, 800, 2000, 2000);
 
             Plateau.Balise.VitesseRotation(150);
 
