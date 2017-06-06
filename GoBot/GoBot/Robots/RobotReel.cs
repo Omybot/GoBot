@@ -42,7 +42,7 @@ namespace GoBot
             AsserActif = true;
             Carte = carte;
             IDRobot = idRobot;
-            ServomoteursConnectes = new List<byte>();
+
             CapteurActive = new Dictionary<CapteurOnOffID, bool>();
             ActionneurActive = new Dictionary<ActionneurOnOffID, bool>();
             CapteursCouleur = new Dictionary<CapteurCouleurID, Color>();
@@ -201,16 +201,6 @@ namespace GoBot
         public void Delete()
         {
             //timerPosition.Stop();
-        }
-
-        public void DebutMatch()
-        {
-            Console.WriteLine("Goooooo");
-
-            /*Enchainement = new Enchainements.Gerome4Enchainement();
-
-            Enchainement.Couleur = Couleur;
-            Enchainement.Executer();*/
         }
 
         Thread thActivationAsser;
@@ -485,12 +475,10 @@ namespace GoBot
             DeplacementLigne = false;
         }
 
-        public override void ReglerOffsetAsserv(int offsetX, int offsetY, Angle offsetTeta)
+        public override void ReglerOffsetAsserv(Position newPosition)
         {
-            //PositionCible = new PointReel(offsetX, offsetY);
-            Position.Coordonnees.X = offsetX;
-            Position.Coordonnees.Y = offsetY;
-            Trame trame = TrameFactory.OffsetPos(offsetX, offsetY, offsetTeta, this);
+            Position.Copie(newPosition);
+            Trame trame = TrameFactory.OffsetPos((int)Position.Coordonnees.X, (int)Position.Coordonnees.Y, Position.Angle, this);
             Connexion.SendMessage(trame);
             ChangerPosition(Position);
         }

@@ -356,10 +356,10 @@ namespace GoBot
                 Thread.Sleep(10);
         }
 
-        public override void ReglerOffsetAsserv(int offsetX, int offsetY, Angle offsetTeta)
+        public override void ReglerOffsetAsserv(Position newPosition)
         {
-            Position = new Position(new Angle(-offsetTeta, AnglyeType.Degre), new PointReel(offsetX, offsetY));
-            PositionCible = new PointReel(offsetX, offsetY);
+            Position = new Position(-newPosition.Angle, newPosition.Coordonnees); // TODO2018 Hum, pouruqoi c'est pas le meme repere ?
+            PositionCible?.Placer(Position.Coordonnees);
             ChangerPosition(Position);
         }
 

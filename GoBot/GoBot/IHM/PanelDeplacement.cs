@@ -8,6 +8,8 @@ using System.Text;
 using System.Windows.Forms;
 using GoBot.Actions;
 using System.Threading;
+using GoBot.Calculs;
+using GoBot.Calculs.Formes;
 
 namespace GoBot.IHM
 {
@@ -313,7 +315,7 @@ namespace GoBot.IHM
         Thread thGoto;
         private void ThreadGoTo()
         {
-            Robot.GotoXYTeta((double)numX.Value, (double)numY.Value, (double)numTeta.Value);
+            Robot.GotoXYTeta(new Position((double)numTeta.Value, new PointReel((double)numX.Value, (double)numY.Value)));
         }
 
         private void btnLent_Click(object sender, EventArgs e)

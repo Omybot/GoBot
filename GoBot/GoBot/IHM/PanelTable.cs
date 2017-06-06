@@ -182,39 +182,6 @@ namespace GoBot.IHM
             semMove.Release();
         }
 
-        bool calculTraj = false;
-        public void ChercheTraj(Position depart)
-        {
-            if (!calculTraj)
-            {
-                calculTraj = true;
-
-                DateTime debut = DateTime.Now;
-
-                List<Trajectoire> trajs = new List<Trajectoire>();
-
-                /*foreach (Mouvement m in Plateau.Enchainement.ListeMouvementsGros)
-                {
-                    if (m.PositionProche != null && m.Score > 0)
-                    {
-                        //foreach (Position pt in m.Positions)
-                        {
-                            Trajectoire traj = PathFinder.ChercheTrajectoire(Robots.GrosRobot.Graph, Plateau.ListeObstacles, depart, m.PositionProche, Robots.GrosRobot.Rayon, 160);
-                            if (traj != null)
-                            {
-                                trajs.Add(traj);
-                                Console.WriteLine(m.ToString() + " -> " + traj.Duree + "ms");
-                            }
-                        }
-                    }
-                }
-                Dessinateur.Trajectoires = trajs;*/
-                calculTraj = false;
-
-                //Console.WriteLine("Temps calcul toutes possibilités : " + (DateTime.Now - debut).TotalMilliseconds + " ms");
-            }
-        }
-
         public void ThreadAction()
         {
             if (!move.Executer())
@@ -256,6 +223,8 @@ namespace GoBot.IHM
                 exemple : 
                 if (Plateau.ZoneDepartVert.Hover)
                     move = new MouvementDeposeDepart(Plateau.ZoneDepartVert);*/
+
+                // TODO2018 link automatique des lancements d'action sur les éléments
 
                 for (int i = 0; i < Plateau.Elements.Fusees.Count; i++)
                     if (Plateau.Elements.Fusees[i].Hover)
@@ -317,7 +286,6 @@ namespace GoBot.IHM
         }
 
         Thread thGoToRP;
-        Thread thGoToRS;
         List<PointReel> trajectoirePolaire;
         List<PointReel> pointsPolaires;
 
@@ -338,7 +306,7 @@ namespace GoBot.IHM
                     thGoToRP.Start();
                 }
                 else
-                    Robots.GrosRobot.ReglerOffsetAsserv((int)positionArrivee.Coordonnees.X, (int)positionArrivee.Coordonnees.Y, positionArrivee.Angle.AngleDegresPositif);
+                    Robots.GrosRobot.ReglerOffsetAsserv(positionArrivee);
 
                 Dessinateur.modeCourant = Dessinateur.Mode.Visualisation;
             }
@@ -361,7 +329,7 @@ namespace GoBot.IHM
                 }
                 else
                 {
-                    Robots.GrosRobot.ReglerOffsetAsserv((int)positionArrivee.Coordonnees.X, (int)positionArrivee.Coordonnees.Y, positionArrivee.Angle.AngleDegresPositif);
+                    Robots.GrosRobot.ReglerOffsetAsserv(positionArrivee);
                 }
 
                 Dessinateur.modeCourant = Dessinateur.Mode.Visualisation;
@@ -384,7 +352,7 @@ namespace GoBot.IHM
                 btnPathRPCentre.Enabled = false;
             }));
             
-            Robots.GrosRobot.GotoXYTeta(positionArrivee.Coordonnees.X, positionArrivee.Coordonnees.Y, 360 - positionArrivee.Angle.AngleDegres);
+            Robots.GrosRobot.GotoXYTeta(new Position(360 - positionArrivee.Angle.AngleDegres, positionArrivee.Coordonnees)); // TODO2018 pourquoi on change de repère ?
 
             this.Invoke(new EventHandler(delegate
             {
@@ -509,13 +477,7 @@ namespace GoBot.IHM
 
         public void GoToDepart()
         {
-            if (Plateau.NotreCouleur == Plateau.CouleurDroiteJaune)
-                Robots.GrosRobot.GotoXYTeta(3000 - 555, 1000, 180);
-            else
-                Robots.GrosRobot.GotoXYTeta(555, 1000, 0);
-
-            Robots.GrosRobot.Reculer(300);
-
+            Robots.GrosRobot.GotoXYTeta(Recallages.PositionDepart);
         }
 
         private void btnStratNul_Click(object sender, EventArgs e)
@@ -561,12 +523,8 @@ namespace GoBot.IHM
             Robots.GrosRobot.Avancer(100);
             Robots.GrosRobot.PivotGauche(10);
             Robots.GrosRobot.Avancer(100);
-
-
-            if (Plateau.NotreCouleur == Plateau.CouleurDroiteJaune)
-                Robots.GrosRobot.GotoXYTeta(3000 - 555, 1000, 180);
-            else
-                Robots.GrosRobot.GotoXYTeta(555, 1000, 0);
+            
+            Robots.GrosRobot.GotoXYTeta(Recallages.PositionDepart);
 
             Robots.GrosRobot.Reculer(300);
 
@@ -803,13 +761,13 @@ namespace GoBot.IHM
             else
                 Robots.GrosRobot.PivotGauche((90 - a.AngleDegresPositif));
 
-            Robots.GrosRobot.ReglerOffsetAsserv((int)Robots.GrosRobot.Position.Coordonnees.X, (int)Robots.GrosRobot.Position.Coordonnees.Y, 180);
+            Robots.GrosRobot.ReglerOffsetAsserv(new Position(180, Robots.GrosRobot.Position.Coordonnees));
 
             double distance = Actionneur.Hokuyo.CalculDistanceX(new Segment(new PointReel(0, 50), new PointReel(0, 900)), 50, 2);
-            Robots.GrosRobot.ReglerOffsetAsserv((int)(Robots.GrosRobot.Position.Coordonnees.X - distance), (int)Robots.GrosRobot.Position.Coordonnees.Y, 180);
+            Robots.GrosRobot.ReglerOffsetAsserv(new Position(180, Robots.GrosRobot.Position.Coordonnees.Translation(-distance, 0)));
 
             distance = Actionneur.Hokuyo.CalculDistanceY(970, 1170, 150, 2);
-            Robots.GrosRobot.ReglerOffsetAsserv((int)(Robots.GrosRobot.Position.Coordonnees.X), (int)(Robots.GrosRobot.Position.Coordonnees.Y - distance), 180);
+            Robots.GrosRobot.ReglerOffsetAsserv(new Position(180, Robots.GrosRobot.Position.Coordonnees.Translation(0, -distance)));
         }
 
         private void ThreadHokuyoRecalVert()
@@ -822,15 +780,15 @@ namespace GoBot.IHM
             else
                 Robots.GrosRobot.PivotGauche((90 - a.AngleDegresPositif));
 
-            Robots.GrosRobot.ReglerOffsetAsserv((int)Robots.GrosRobot.Position.Coordonnees.X, (int)Robots.GrosRobot.Position.Coordonnees.Y, 0);
+            Robots.GrosRobot.ReglerOffsetAsserv(new Position(0, Robots.GrosRobot.Position.Coordonnees));
 
             double distance = Actionneur.Hokuyo.CalculDistanceX(new Segment(new PointReel(3000, 50), new PointReel(3000, 900)), 50, 10);
-            Robots.GrosRobot.ReglerOffsetAsserv((int)(Robots.GrosRobot.Position.Coordonnees.X - (distance - 3000)), (int)Robots.GrosRobot.Position.Coordonnees.Y, 0);
+            Robots.GrosRobot.ReglerOffsetAsserv(new Position(0, Robots.GrosRobot.Position.Coordonnees.Translation(-(distance-3000), 0)));
 
             Robots.GrosRobot.PositionerAngle(45);
 
             distance = Actionneur.Hokuyo.CalculDistanceY(3000 - 1170, 3000 - 970, 150, 2);
-            Robots.GrosRobot.ReglerOffsetAsserv((int)(Robots.GrosRobot.Position.Coordonnees.X), (int)(Robots.GrosRobot.Position.Coordonnees.Y - distance), 0);
+            Robots.GrosRobot.ReglerOffsetAsserv(new Position(0, Robots.GrosRobot.Position.Coordonnees.Translation(0, -distance)));
         }
     }
 }

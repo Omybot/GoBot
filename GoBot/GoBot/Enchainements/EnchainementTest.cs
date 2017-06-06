@@ -7,6 +7,7 @@ using AStarFolder;
 using System.Threading;
 using GoBot.Actionneurs;
 using GoBot.Mouvements;
+using GoBot.Calculs;
 
 namespace GoBot.Enchainements
 {
@@ -22,7 +23,7 @@ namespace GoBot.Enchainements
             {
                 for (int i = 0; i < move.Positions.Count; i++)
                 {
-                    Robots.GrosRobot.ReglerOffsetAsserv((int)move.Positions[i].Coordonnees.X, (int)move.Positions[i].Coordonnees.Y, move.Positions[i].Angle);
+                    Robots.GrosRobot.ReglerOffsetAsserv(move.Positions[i]);
                     Thread.Sleep(500);
                     move.Executer();
                 }

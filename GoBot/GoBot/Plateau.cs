@@ -325,7 +325,7 @@ namespace GoBot
             // Zones latérales
             AjouterObstacle(new RectanglePolygone(new PointReel(0, 700 - 22), 80 + 22, 1150 - 700 + 22 + 22), true);
             AjouterObstacle(new RectanglePolygone(new PointReel(3000 - 80 - 22, 700 - 22), 80 + 22, 1150 - 700 + 22 + 22), true);
-            
+
             // Petits cratères
             AjouterObstacle(new Cercle(new PointReel(650, 540), 126), true);
             AjouterObstacle(new Cercle(new PointReel(3000 - 650, 540), 126), true);
@@ -372,10 +372,7 @@ namespace GoBot
         /// <returns></returns>
         public static bool Contient(PointReel point)
         {
-            if (point.X < 0 || point.Y < 0 || point.X > LongueurPlateau || point.Y > LargeurPlateau)
-                return false;
-
-            return true;
+            return new RectanglePolygone(new PointReel(0, 0), LargeurPlateau, LongueurPlateau).Contient(point);
         }
     }
 }

@@ -1,4 +1,6 @@
 ﻿using GoBot.Actionneurs;
+using GoBot.Calculs;
+using GoBot.Calculs.Formes;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,6 +11,23 @@ namespace GoBot
 {
     public static class Recallages
     {
+        private static Position PositionDepartGauche { get; set; }
+        private static Position PositionDepartDroite { get; set; }
+
+        public static Position PositionDepart
+        {
+            get
+            {
+                return Plateau.NotreCouleur == Plateau.CouleurGaucheBleu ? PositionDepartGauche : PositionDepartDroite;
+            }
+        }
+
+        static Recallages()
+        {
+            PositionDepartGauche = new Position(90 + 90 + 90, new PointReel(902, 200));
+            PositionDepartDroite = new Position(180 - PositionDepartGauche.Angle, new PointReel(3000 - PositionDepartGauche.Coordonnees.X, PositionDepartGauche.Coordonnees.Y));
+        }
+        
         public static void RecallageGrosRobot()
         {
             Robots.GrosRobot.EnvoyerPID(40, 0, 600);
@@ -45,10 +64,7 @@ namespace GoBot
 
             Robots.GrosRobot.Avancer(50);
 
-            if (Plateau.NotreCouleur == Plateau.CouleurGaucheBleu)
-                Robots.GrosRobot.ReglerOffsetAsserv(902,200,90+90+90);
-            else
-                Robots.GrosRobot.ReglerOffsetAsserv(3000 - 902, 200, 180+90);
+            Robots.GrosRobot.ReglerOffsetAsserv(PositionDepart);
 
             Robots.GrosRobot.ArmerJack();
             Plateau.Balise.VitesseRotation(150);

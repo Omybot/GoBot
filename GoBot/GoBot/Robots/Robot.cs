@@ -39,12 +39,6 @@ namespace GoBot
         public bool VitesseAdaptableEnnemi { get; set; }
 
         public SpeedConfig SpeedConfig { get; protected set; }
-
-        //public abstract int VitesseDeplacement { get; set; }
-        //public abstract int AccelerationDebutDeplacement { get; set; }
-        //public abstract int AccelerationFinDeplacement { get; set; }
-        //public abstract int VitessePivot { get; set; }
-        //public abstract int AccelerationPivot { get; set; }
         public List<Position> HistoriqueCoordonnees { get; protected set; }
 
         public AsserStats AsserStats { get; protected set; }
@@ -65,8 +59,7 @@ namespace GoBot
         private static Semaphore semDeblocage = new Semaphore(1, 1);
 
         // Actionneurs / Capteurs
-
-        public List<byte> ServomoteursConnectes { get; protected set; }
+        
         public Dictionary<ServomoteurID, bool> ServoActive { get; set; }
         public Dictionary<MoteurID, bool> MoteurTourne { get; set; }
 
@@ -99,7 +92,7 @@ namespace GoBot
         public abstract void TrajectoirePolaire(SensAR sens, List<PointReel> points, bool attendre = true);
         public abstract void Stop(StopMode mode = StopMode.Smooth);
         public abstract void Virage(SensAR sensAr, SensGD sensGd, int rayon, Angle angle, bool attendre = true);
-        public abstract void ReglerOffsetAsserv(int offsetX, int offsetY, Angle offsetTeta);
+        public abstract void ReglerOffsetAsserv(Position newPosition);
         public abstract void Recallage(SensAR sens, bool attendre = true);
         public abstract void EnvoyerPID(int p, int i, int d);
         public abstract void EnvoyerPIDCap(int p, int i, int d);
@@ -141,8 +134,7 @@ namespace GoBot
         /// <param name="position">Nouvelle position</param>
         protected void ChangerPosition(Position position)
         {
-            if (PositionChange != null)
-                PositionChange(position);
+            PositionChange?.Invoke(position);
         }
 
         /// <summary>
@@ -153,14 +145,12 @@ namespace GoBot
         protected void ChangerEtatCapteurOnOff(CapteurOnOffID capteur, bool etat)
         {
             CapteurActive[capteur] = etat;
-            if (ChangementEtatCapteurOnOff != null)
-                ChangementEtatCapteurOnOff(capteur, etat);
+            ChangementEtatCapteurOnOff?.Invoke(capteur, etat);
         }
 
         protected void ChangeCouleurCapteur(CapteurCouleurID capteur, Color couleur)
         {
-            if (CapteurCouleurChange != null)
-                CapteurCouleurChange(capteur, couleur);
+            CapteurCouleurChange?.Invoke(capteur, couleur);
         }
 
         public void Diagnostic()
@@ -346,9 +336,9 @@ namespace GoBot
             VitesseAdaptableEnnemi = true;
         }
 
-        public bool GotoXYTeta(double x, double y, Angle teta)
+        public bool GotoXYTeta(Position dest)
         {
-            return PathFinding(x, y, teta, 0, true);
+            return PathFinding(dest.Coordonnees.X, dest.Coordonnees.Y, dest.Angle, 0, true);
         }
 
         public bool PathFinding(double x, double y, Angle teta = null, int timeOut = 0, bool attendre = false)

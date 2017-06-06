@@ -51,22 +51,22 @@ namespace GoBot.Enchainements
             while(iMouv < stratFixe.Count && stratFixe[iMouv].Executer())
                 iMouv++;
 
-            while (ListeMouvementsGros.Count > 0)
+            while (ListeMouvements.Count > 0)
             {
                 double meilleurCout = double.MaxValue;
-                for (int j = 0; j < ListeMouvementsGros.Count; j++)
+                for (int j = 0; j < ListeMouvements.Count; j++)
                 {
-                    double cout = ListeMouvementsGros[j].Cout;
+                    double cout = ListeMouvements[j].Cout;
                     if (meilleurCout > cout)
                     {
                         meilleurCout = cout;
                         iMeilleur = j;
                     }
                 }
-                if (ListeMouvementsGros[iMeilleur].Cout != double.MaxValue && ListeMouvementsGros[iMeilleur].ValeurAction != 0)
+                if (ListeMouvements[iMeilleur].Cout != double.MaxValue && ListeMouvements[iMeilleur].ValeurAction != 0)
                 {
-                    if (!ListeMouvementsGros[iMeilleur].Executer())
-                        ListeMouvementsGros[iMeilleur].DateMinimum = DateTime.Now + new TimeSpan(0, 0, 1);
+                    if (!ListeMouvements[iMeilleur].Executer())
+                        ListeMouvements[iMeilleur].DateMinimum = DateTime.Now + new TimeSpan(0, 0, 1);
                 }
                 else
                 {
@@ -146,13 +146,13 @@ namespace GoBot.Enchainements
             else
                 Robots.GrosRobot.PivotGauche((90 - a.AngleDegresPositif));
 
-            Robots.GrosRobot.ReglerOffsetAsserv((int)Robots.GrosRobot.Position.Coordonnees.X, (int)Robots.GrosRobot.Position.Coordonnees.Y, 180);
+            Robots.GrosRobot.ReglerOffsetAsserv(new Position(180, Robots.GrosRobot.Position.Coordonnees));
 
             double distance = Actionneur.Hokuyo.CalculDistanceX(new Segment(new PointReel(0, 50), new PointReel(0, 900)), 50, 2);
-            Robots.GrosRobot.ReglerOffsetAsserv((int)(Robots.GrosRobot.Position.Coordonnees.X - distance), (int)Robots.GrosRobot.Position.Coordonnees.Y, 180);
+            Robots.GrosRobot.ReglerOffsetAsserv(new Position(180, Robots.GrosRobot.Position.Coordonnees.Translation(-distance, 0)));
 
             distance = Actionneur.Hokuyo.CalculDistanceY(970, 1170, 150, 2);
-            Robots.GrosRobot.ReglerOffsetAsserv((int)(Robots.GrosRobot.Position.Coordonnees.X), (int)(Robots.GrosRobot.Position.Coordonnees.Y - distance), 180);
+            Robots.GrosRobot.ReglerOffsetAsserv(new Position(180, Robots.GrosRobot.Position.Coordonnees.Translation(0, -distance)));
         }
 
         private void ThreadHokuyoRecalVert()
@@ -167,15 +167,15 @@ namespace GoBot.Enchainements
             else
                 Robots.GrosRobot.PivotGauche((90 - a.AngleDegresPositif));
 
-            Robots.GrosRobot.ReglerOffsetAsserv((int)Robots.GrosRobot.Position.Coordonnees.X, (int)Robots.GrosRobot.Position.Coordonnees.Y, 0);
+            Robots.GrosRobot.ReglerOffsetAsserv(new Position(0, Robots.GrosRobot.Position.Coordonnees));
 
             double distance = Actionneur.Hokuyo.CalculDistanceX(new Segment(new PointReel(3000, 50), new PointReel(3000, 900)), 50, 10);
-            Robots.GrosRobot.ReglerOffsetAsserv((int)(Robots.GrosRobot.Position.Coordonnees.X - (distance - 3000)), (int)Robots.GrosRobot.Position.Coordonnees.Y, 0);
+            Robots.GrosRobot.ReglerOffsetAsserv(new Position(0, Robots.GrosRobot.Position.Coordonnees.Translation(-(distance-3000), 0)));
 
             Robots.GrosRobot.PositionerAngle(45);
 
             distance = Actionneur.Hokuyo.CalculDistanceY(3000 - 1170, 3000 - 970, 150, 2);
-            Robots.GrosRobot.ReglerOffsetAsserv((int)(Robots.GrosRobot.Position.Coordonnees.X), (int)(Robots.GrosRobot.Position.Coordonnees.Y - distance), 0);
+            Robots.GrosRobot.ReglerOffsetAsserv(new Position(0, Robots.GrosRobot.Position.Coordonnees.Translation(0, -distance)));
         }
     }
 }

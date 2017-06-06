@@ -672,7 +672,7 @@ namespace GoBot
         private static void DessineCoutMouvements(Robot robot, Graphics g)
         {
             Font police = new Font("Calibri", 8);
-            List<Mouvements.Mouvement> mouvements = robot == Robots.GrosRobot ? Plateau.Enchainement.ListeMouvementsGros : Plateau.Enchainement.ListeMouvementsPetit;
+            List<Mouvements.Mouvement> mouvements = Plateau.Enchainement.ListeMouvements;
 
             foreach (Mouvement m in mouvements)
             {

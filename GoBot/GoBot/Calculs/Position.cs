@@ -37,8 +37,8 @@ namespace GoBot.Calculs
         /// <param name="c">Coordonnées de départ</param>
         public Position(Angle a, PointReel c)
         {
-            Angle = a;
-            Coordonnees = c;
+            Angle = new Angle(a);
+            Coordonnees = new PointReel(c);
         }
 
         /// <summary>

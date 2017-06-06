@@ -14,11 +14,12 @@ namespace GoBot.Calculs
 
     class Maths
     {
-        public static int Arrondi(double nombre)
-        {
-            return (int)(Math.Round(nombre));
-        }
-
+        /// <summary>
+        /// Retourne la direction (angle et distance) à suivre pour arriver à un point donné en partant d'une corrdonnée précise (et par défaut, angle de 0°)
+        /// </summary>
+        /// <param name="depart">Coordonnées de départ</param>
+        /// <param name="arrivee">Coordonnées d'arrivée</param>
+        /// <returns></returns>
         public static Direction GetDirection(PointReel depart, PointReel arrivee)
         {
             Position positionDepart = new Position(0, depart);
@@ -94,6 +95,11 @@ namespace GoBot.Calculs
             return positionAdv;
         }
 
+        /// <summary>
+        /// Retourne l'écart-type d'une liste de valeurs décimales
+        /// </summary>
+        /// <param name="liste">Valeurs décimales</param>
+        /// <returns>Ecart-type</returns>
         public static double EcartType(List<double> liste)
         {
             if (liste.Count > 0)

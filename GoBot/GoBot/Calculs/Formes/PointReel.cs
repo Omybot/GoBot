@@ -363,6 +363,17 @@ namespace GoBot.Calculs.Formes
             posY = y;
         }
 
+        /// <summary>
+        /// Affecte les coordonnées passées en paramètre
+        /// </summary>
+        /// <param name="x">Abscisse</param>
+        /// <param name="y">Ordonnée</param>
+        public void Placer(PointReel pos)
+        {
+            posX = pos.X;
+            posY = pos.Y;
+        }
+
         public PointReel Translation(double dx, double dy)
         {
             return new PointReel(posX + dx, posY + dy);
