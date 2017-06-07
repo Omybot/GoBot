@@ -73,12 +73,6 @@ namespace GoBot
         }
         public static event EventHandler ScoreChange;
 
-        /// <summary>
-        /// Graph des noeuds et arcs pour le pathfinding
-        /// </summary>
-        //public static Graph GraphGros { get; private set; }
-        //public static Graph GraphPetit { get; private set; }
-
         public static Color CouleurGaucheBleu { get { return Color.FromArgb(40, 81, 174);} }
         public static Color CouleurDroiteJaune { get { return Color.FromArgb(238, 198, 27); } }
 

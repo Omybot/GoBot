@@ -20,6 +20,26 @@ namespace GoBot
 {
     static class Dessinateur
     {
+
+        #region Conversion coordonnées réelles / écran
+        
+        /// <summary>
+        /// Nombre de pixels par mm du terrain
+        /// </summary>
+        private const double RAPPORT_SCREEN_REAL = 3.605769230769231;
+
+        /// <summary>
+        /// Position en pixel sur l'image de l'abscisse 0 de la table
+        /// </summary>
+        private const int OFFSET_IMAGE_X = 29;
+
+        /// <summary>
+        /// Position en pixel sur l'image de l'ordonnée 0 de la table
+        /// </summary>
+        private const int OFFSET_IMAGE_Y = 62;
+
+        #endregion
+
         //Déclaration du délégué pour l’évènement détection de positions
         public delegate void TableDessineeDelegate(Image img);
         //Déclaration de l’évènement utilisant le délégué
@@ -73,7 +93,7 @@ namespace GoBot
                                     brushCouleurDroiteTransparent = new SolidBrush(Color.FromArgb(110, Plateau.CouleurDroiteJaune)),
                                     brushCouleurDroiteTresTransparent = new SolidBrush(Color.FromArgb(35, Plateau.CouleurDroiteJaune));
 
-        public static PaintScale Scale { get; } = new PaintScale();
+        public static PaintScale Scale { get; } = new PaintScale(RAPPORT_SCREEN_REAL, OFFSET_IMAGE_X, OFFSET_IMAGE_Y);
 
         public static PointReel PositionCurseur
         {

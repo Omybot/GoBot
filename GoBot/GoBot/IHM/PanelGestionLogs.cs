@@ -14,6 +14,16 @@ namespace GoBot.IHM
 {
     public partial class PanelGestionLog : UserControl
     {
+        private enum Columns : int
+        {
+            Date,
+            Taille,
+            TramesMove,
+            TramesIO,
+            TramesGB,
+            Events
+        }
+
         public PanelGestionLog()
         {
             InitializeComponent();
@@ -23,10 +33,9 @@ namespace GoBot.IHM
             dataSet.Tables[0].Columns.Add("Date", typeof(DateTime));
             dataSet.Tables[0].Columns.Add("Taille", typeof(TailleDossier));
             dataSet.Tables[0].Columns.Add("Trames Move", typeof(int));
-            dataSet.Tables[0].Columns.Add("Trames Pi", typeof(int));
-            dataSet.Tables[0].Columns.Add("Trames Miwi", typeof(int));
-            dataSet.Tables[0].Columns.Add("Event gros", typeof(int));
-            dataSet.Tables[0].Columns.Add("Event petit", typeof(int));
+            dataSet.Tables[0].Columns.Add("Trames IO", typeof(int));
+            dataSet.Tables[0].Columns.Add("Trames GoBot", typeof(int));
+            dataSet.Tables[0].Columns.Add("Events", typeof(int));
 
             dataSetArchivage = new DataSet();
             dataSetArchivage.Tables.Add();
@@ -34,10 +43,9 @@ namespace GoBot.IHM
             dataSetArchivage.Tables[0].Columns.Add("Date", typeof(DateTime));
             dataSetArchivage.Tables[0].Columns.Add("Taille", typeof(TailleDossier));
             dataSetArchivage.Tables[0].Columns.Add("Trames Move", typeof(int));
-            dataSetArchivage.Tables[0].Columns.Add("Trames Pi", typeof(int));
-            dataSetArchivage.Tables[0].Columns.Add("Trames Miwi", typeof(int));
-            dataSetArchivage.Tables[0].Columns.Add("Event gros", typeof(int));
-            dataSetArchivage.Tables[0].Columns.Add("Event petit", typeof(int));
+            dataSetArchivage.Tables[0].Columns.Add("Trames IO", typeof(int));
+            dataSetArchivage.Tables[0].Columns.Add("Trames GoBot", typeof(int));
+            dataSetArchivage.Tables[0].Columns.Add("Events", typeof(int));
         }
 
         DataSet dataSet = null;
@@ -124,10 +132,10 @@ namespace GoBot.IHM
 
                     long taille = FolderSize(dossier);
 
-                    Object[] datas = new Object[7];
+                    Object[] datas = new Object[Enum.GetValues(typeof(Columns)).Length];
 
-                    datas[0] = date;
-                    datas[1] = new TailleDossier(taille);
+                    datas[(int)Columns.Date] = date;
+                    datas[(int)Columns.Taille] = new TailleDossier(taille);
 
                     foreach (String fichier in Directory.EnumerateFiles(dossier))
                     {
@@ -136,35 +144,23 @@ namespace GoBot.IHM
                             EventsReplay r = new EventsReplay();
                             if (r.Charger(fichier))
                             {
-                                datas[5] = r.Events.Count;
+                                datas[(int)Columns.Events] = r.Events.Count;
                                 nbElements += r.Events.Count;
                             }
                             else
-                                datas[5] = -1;
+                                datas[(int)Columns.Events] = -1;
                         }
-                        else if (Path.GetFileName(fichier) == "ActionsPetit.elog")
-                        {
-                            EventsReplay r = new EventsReplay();
-                            r.Charger(fichier);
-                            if (r.Charger(fichier))
-                            {
-                                datas[6] = r.Events.Count;
-                                nbElements += r.Events.Count;
-                            }
-                            else
-                                datas[6] = -1;
-                        }
-                        else if (Path.GetFileName(fichier) == "ConnexionPi.tlog")
+                        else if (Path.GetFileName(fichier) == "ConnexionGB.tlog")
                         {
                             Replay r = new Replay();
                             r.Charger(fichier);
                             if (r.Charger(fichier))
                             {
-                                datas[3] = r.Trames.Count;
+                                datas[(int)Columns.TramesGB] = r.Trames.Count;
                                 nbElements += r.Trames.Count;
                             }
                             else
-                                datas[3] = -1;
+                                datas[(int)Columns.TramesGB] = -1;
                         }
                         else if (Path.GetFileName(fichier) == "ConnexionMove.tlog")
                         {
@@ -172,23 +168,23 @@ namespace GoBot.IHM
                             r.Charger(fichier);
                             if (r.Charger(fichier))
                             {
-                                datas[2] = r.Trames.Count;
+                                datas[(int)Columns.TramesMove] = r.Trames.Count;
                                 nbElements += r.Trames.Count;
                             }
                             else
-                                datas[2] = -1;
+                                datas[(int)Columns.TramesMove] = -1;
                         }
-                        else if (Path.GetFileName(fichier) == "ConnexionMiwi.tlog")
+                        else if (Path.GetFileName(fichier) == "ConnexionIO.tlog")
                         {
                             Replay r = new Replay();
                             r.Charger(fichier);
                             if (r.Charger(fichier))
                             {
-                                datas[4] = r.Trames.Count;
+                                datas[(int)Columns.TramesIO] = r.Trames.Count;
                                 nbElements += r.Trames.Count;
                             }
                             else
-                                datas[4] = -1;
+                                datas[(int)Columns.TramesIO] = -1;
                         }
                     }
 
@@ -226,10 +222,10 @@ namespace GoBot.IHM
 
                         long taille = FolderSize(dossier);
 
-                        Object[] datas = new Object[8];
+                        Object[] datas = new Object[Enum.GetValues(typeof(Columns)).Length+1];
 
-                        datas[1] = date;
-                        datas[2] = new TailleDossier(taille);
+                        datas[(int)Columns.Date + 1] = date;
+                        datas[(int)Columns.Taille + 1] = new TailleDossier(taille);
 
                         foreach (String fichier in Directory.EnumerateFiles(dossier))
                         {
@@ -237,45 +233,36 @@ namespace GoBot.IHM
                             {
                                 EventsReplay r = new EventsReplay();
                                 if (r.Charger(fichier))
-                                    datas[6] = r.Events.Count;
+                                    datas[(int)Columns.Events + 1] = r.Events.Count;
                                 else
-                                    datas[6] = -1;
+                                    datas[(int)Columns.Events + 1] = -1;
                             }
-                            else if (Path.GetFileName(fichier) == "ActionsPetit.elog")
-                            {
-                                EventsReplay r = new EventsReplay();
-                                r.Charger(fichier);
-                                if (r.Charger(fichier))
-                                    datas[7] = r.Events.Count;
-                                else
-                                    datas[7] = -1;
-                            }
-                            else if (Path.GetFileName(fichier) == "ConnexionPi.tlog")
+                            else if (Path.GetFileName(fichier) == "ConnexionGB.tlog")
                             {
                                 Replay r = new Replay();
                                 r.Charger(fichier);
                                 if (r.Charger(fichier))
-                                    datas[4] = r.Trames.Count;
+                                    datas[(int)Columns.TramesGB + 1] = r.Trames.Count;
                                 else
-                                    datas[4] = -1;
+                                    datas[(int)Columns.TramesGB + 1] = -1;
                             }
                             else if (Path.GetFileName(fichier) == "ConnexionMove.tlog")
                             {
                                 Replay r = new Replay();
                                 r.Charger(fichier);
                                 if (r.Charger(fichier))
-                                    datas[3] = r.Trames.Count;
+                                    datas[(int)Columns.TramesMove + 1] = r.Trames.Count;
                                 else
-                                    datas[3] = -1;
+                                    datas[(int)Columns.TramesMove + 1] = -1;
                             }
-                            else if (Path.GetFileName(fichier) == "ConnexionMiwi.tlog")
+                            else if (Path.GetFileName(fichier) == "ConnexionIO.tlog")
                             {
                                 Replay r = new Replay();
                                 r.Charger(fichier);
                                 if (r.Charger(fichier))
-                                    datas[5] = r.Trames.Count;
+                                    datas[(int)Columns.TramesIO + 1] = r.Trames.Count;
                                 else
-                                    datas[5] = -1;
+                                    datas[(int)Columns.TramesIO + 1] = -1;
                             }
                             else if (Path.GetFileName(fichier) == "Archivage")
                             {
@@ -294,7 +281,7 @@ namespace GoBot.IHM
             }
         }
 
-        private int OrdreAlphabetiqueInverse (String a, String b)
+        private int OrdreAlphabetiqueInverse(String a, String b)
         {
             return a.CompareTo(b) * -1;
         }
@@ -389,16 +376,12 @@ namespace GoBot.IHM
                 writer.Write(fen.Nom);
                 writer.Close();
 
-                Object[] datas = new Object[8];
+                Object[] datas = new Object[Enum.GetValues(typeof(Columns)).Length + 1];
 
                 datas[0] = fen.Nom;
-                datas[1] = dataGridViewHistoLog.SelectedRows[0].Cells[0].Value;
-                datas[2] = dataGridViewHistoLog.SelectedRows[0].Cells[1].Value;
-                datas[3] = dataGridViewHistoLog.SelectedRows[0].Cells[2].Value;
-                datas[4] = dataGridViewHistoLog.SelectedRows[0].Cells[3].Value;
-                datas[5] = dataGridViewHistoLog.SelectedRows[0].Cells[4].Value;
-                datas[6] = dataGridViewHistoLog.SelectedRows[0].Cells[5].Value;
-                datas[7] = dataGridViewHistoLog.SelectedRows[0].Cells[6].Value;
+
+                for (int i = 0; i < Enum.GetValues(typeof(Columns)).Length; i++)
+                    datas[i + 1] = dataGridViewHistoLog.SelectedRows[0].Cells[i].Value;
 
                 dataGridViewHistoLog.Rows.RemoveAt(dataGridViewHistoLog.SelectedRows[0].Index);
 

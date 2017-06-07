@@ -4,52 +4,57 @@ using System.Drawing;
 namespace GoBot
 {
     /// <summary>
-    /// CLasse permettant de convertir des coordonnées réelles (sur l'aire de jeu) en coordonnées écran (sur l'image de l'aire de jeu)
+    /// Classe permettant de convertir des coordonnées réelles (sur l'aire de jeu) en coordonnées écran (sur l'image de l'aire de jeu)
     /// </summary>
     public class PaintScale
     {
-        #region Conversion coordonnées réelles / écran
+        double _factor;
+        int _offsetX, _offsetY;
 
         /// <summary>
-        /// Nombre de pixels par mm du terrain
+        /// Crée un PaintScale à partir des mesures fournies
         /// </summary>
-        private const double RAPPORT_SCREEN_REAL = 3.605769230769231;
+        /// <param name="factor">Nombre de pixels par mm réels</param>
+        /// <param name="offsetX">Position en pixel l'abscisse 0</param>
+        /// <param name="offsetY">Position en pixel l'ordonnéee 0</param>
+        public PaintScale(double factor, int offsetX, int offsetY)
+        {
+            _factor = factor;
+            _offsetX = offsetX;
+            _offsetY = offsetY;
+        }
 
         /// <summary>
-        /// Position en pixel sur l'image de l'abscisse 0 de la table
+        /// Retourne une échelle par défaut (par de transformation)
         /// </summary>
-        private const int OFFSET_IMAGE_X = 29;
-
-        /// <summary>
-        /// Position en pixel sur l'image de l'ordonnée 0 de la table
-        /// </summary>
-        private const int OFFSET_IMAGE_Y = 62;
-
-        #endregion
-
+        /// <returns></returns>
+        public static PaintScale Default()
+        {
+            return new PaintScale(1, 0, 0);
+        }
 
         // Ecran vers réel
 
         public int ScreenToRealDistance(double value)
         {
-            return (int)(value * RAPPORT_SCREEN_REAL);
+            return (int)(value * _factor);
         }
 
         public PointReel ScreenToRealPosition(Point value)
         {
-            return new PointReel(ScreenToRealDistance(value.X - OFFSET_IMAGE_X), ScreenToRealDistance(value.Y - OFFSET_IMAGE_Y));
+            return new PointReel(ScreenToRealDistance(value.X - _offsetX), ScreenToRealDistance(value.Y - _offsetY));
         }
 
         // Réel vers écran
 
         public int RealToScreenDistance(double value)
         {
-            return (int)(value / RAPPORT_SCREEN_REAL);
+            return (int)(value / _factor);
         }
 
         public Point RealToScreenPosition(PointReel value)
         {
-            return new Point(RealToScreenDistance(value.X) + OFFSET_IMAGE_X, RealToScreenDistance(value.Y) + OFFSET_IMAGE_Y);
+            return new Point(RealToScreenDistance(value.X) + _offsetX, RealToScreenDistance(value.Y) + _offsetY);
         }
 
         public Point RealToScreenPosition(PointF value)

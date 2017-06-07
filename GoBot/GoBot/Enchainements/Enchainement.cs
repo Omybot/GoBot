@@ -89,7 +89,6 @@ namespace GoBot.Enchainements
             timerFinMatch.Stop();
             thGrosRobot.Abort();
             Robots.GrosRobot.Stop(StopMode.Freely);
-            //Robots.PetitRobot.Stop(StopMode.Freely);
             Plateau.Balise.VitesseRotation(0);
             Actionneur.Convoyeur.Arreter();
             Actionneur.Ejecteur.TournerStop();
