@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Linq;
 using System.Text;
 
@@ -493,5 +494,22 @@ namespace GoBot.Calculs.Formes
         }
         #endregion
 
+        #region Peinture
+
+        public override void Paint(Graphics g, Color outlineColor, int outlineWidth, Color fillColor, PaintScale scale)
+        {
+            Point startPoint = scale.RealToScreenPosition(Debut);
+            Point endPoint = scale.RealToScreenPosition(Fin);
+            
+            if (outlineColor != Color.Transparent)
+                using (Pen pen = new Pen(outlineColor, outlineWidth))
+                    g.DrawLine(pen, startPoint.X, startPoint.Y, endPoint.X, endPoint.Y);
+
+            if (fillColor != Color.Transparent)
+                using (Pen pen = new Pen(fillColor, outlineWidth - 2))
+                    g.DrawLine(pen, startPoint.X, startPoint.Y, endPoint.X, endPoint.Y);
+        }
+
+        #endregion
     }
 }

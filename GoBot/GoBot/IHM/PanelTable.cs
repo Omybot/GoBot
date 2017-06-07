@@ -175,7 +175,7 @@ namespace GoBot.IHM
                     this.Cursor = Cursors.Hand;
                 else
                     this.Cursor = Cursors.Arrow;
-                
+
                 //System.Threading.Tasks.Task.Factory.StartNew(() => ChercheTraj(new Position(Robots.GrosRobot.Position)));
             }
 
@@ -207,40 +207,32 @@ namespace GoBot.IHM
         private void PathFindingClick()
         {
             PointReel positionReelle = Dessinateur.Scale.ScreenToRealPosition(pictureBoxTable.PointToClient(MousePosition));
-            if (Dessinateur.modeCourant == Dessinateur.Mode.FinTrajectoire)
+
+            PointReel point = new PointReel(positionReelle.X, positionReelle.Y);
+
+            /* Todo Tester ici si le clic a été fait sur un élément de jeu dans le but de lancer un mouvement.
+               Si c'est le cas, lancer un thread pour effectuer le mouvement 
+
+            exemple : 
+            if (Plateau.ZoneDepartVert.Hover)
+                move = new MouvementDeposeDepart(Plateau.ZoneDepartVert);*/
+
+            // TODO2018 link automatique des lancements d'action sur les éléments
+
+            for (int i = 0; i < Plateau.Elements.Fusees.Count; i++)
+                if (Plateau.Elements.Fusees[i].Hover)
+                    move = new MouvementFusee(i);
+            for (int i = 0; i < Plateau.Elements.Modules.Count; i++)
+                if (Plateau.Elements.Modules[i].Hover)
+                    move = new MouvementModuleAvant(i);
+            for (int i = 0; i < Plateau.Elements.ZonesDepose.Count; i++)
+                if (Plateau.Elements.ZonesDepose[i].Hover)
+                    move = new MouvementDeposeModules(i);
+
+            if (move != null)
             {
-                Robots.GrosRobot.PathFinding(positionReelle.X, positionReelle.Y);
-
-                Dessinateur.modeCourant = Dessinateur.Mode.Visualisation;
-            }
-            else
-            {
-                PointReel point = new PointReel(positionReelle.X, positionReelle.Y);
-
-                /* Todo Tester ici si le clic a été fait sur un élément de jeu dans le but de lancer un mouvement.
-                   Si c'est le cas, lancer un thread pour effectuer le mouvement 
-
-                exemple : 
-                if (Plateau.ZoneDepartVert.Hover)
-                    move = new MouvementDeposeDepart(Plateau.ZoneDepartVert);*/
-
-                // TODO2018 link automatique des lancements d'action sur les éléments
-
-                for (int i = 0; i < Plateau.Elements.Fusees.Count; i++)
-                    if (Plateau.Elements.Fusees[i].Hover)
-                        move = new MouvementFusee(i);
-                for (int i = 0; i < Plateau.Elements.Modules.Count; i++)
-                    if (Plateau.Elements.Modules[i].Hover)
-                        move = new MouvementModuleAvant(i);
-                for (int i = 0; i < Plateau.Elements.ZonesDepose.Count; i++)
-                    if (Plateau.Elements.ZonesDepose[i].Hover)
-                        move = new MouvementDeposeModules(i);
-
-                    if (move != null)
-                    {
-                        thAction = new Thread(ThreadAction);
-                        thAction.Start();
-                    }
+                thAction = new Thread(ThreadAction);
+                thAction.Start();
             }
         }
         Thread thAction;
@@ -267,13 +259,13 @@ namespace GoBot.IHM
         private void pictureBoxTable_MouseDown(object sender, MouseEventArgs e)
         {
             Dessinateur.positionDepart = Dessinateur.Scale.ScreenToRealPosition(pictureBoxTable.PointToClient(MousePosition));
-            Dessinateur.sourisClic = true;
+            Dessinateur.MouseClicked = true;
 
-            if (Dessinateur.modeCourant == Dessinateur.Mode.TrajectoirePolaire)
+            if (Dessinateur.modeCourant == Dessinateur.MouseMode.TrajectoirePolaire)
             {
                 moveMouse = false;
                 Point pClic = e.Location;
-                for(int i = 0; i < pointsPolaires.Count; i++)
+                for (int i = 0; i < pointsPolaires.Count; i++)
                 {
                     Point pPolaire = Dessinateur.Scale.RealToScreenPosition(pointsPolaires[i]);
                     if (new PointReel(pClic).Distance(new PointReel(pPolaire)) <= 3)
@@ -294,13 +286,13 @@ namespace GoBot.IHM
             if (pSelected != -1)
                 pSelected = -1;
 
-            if (Dessinateur.modeCourant == Dessinateur.Mode.PositionRPCentre || Dessinateur.modeCourant == Dessinateur.Mode.TeleportRPCentre)
+            if (Dessinateur.modeCourant == Dessinateur.MouseMode.PositionCentre || Dessinateur.modeCourant == Dessinateur.MouseMode.TeleportCentre)
             {
                 Direction traj = Maths.GetDirection(Dessinateur.positionDepart, Dessinateur.Scale.ScreenToRealPosition(pictureBoxTable.PointToClient(MousePosition)));
 
                 positionArrivee = new Position(traj.angle, Dessinateur.positionDepart);
 
-                if (Dessinateur.modeCourant == Dessinateur.Mode.PositionRPCentre)
+                if (Dessinateur.modeCourant == Dessinateur.MouseMode.PositionCentre)
                 {
                     thGoToRP = new Thread(ThreadTrajectoireGros);
                     thGoToRP.Start();
@@ -308,9 +300,9 @@ namespace GoBot.IHM
                 else
                     Robots.GrosRobot.ReglerOffsetAsserv(positionArrivee);
 
-                Dessinateur.modeCourant = Dessinateur.Mode.Visualisation;
+                Dessinateur.modeCourant = Dessinateur.MouseMode.None;
             }
-            else if (Dessinateur.modeCourant == Dessinateur.Mode.PositionRPFace || Dessinateur.modeCourant == Dessinateur.Mode.TeleportRPFace)
+            else if (Dessinateur.modeCourant == Dessinateur.MouseMode.PositionFace || Dessinateur.modeCourant == Dessinateur.MouseMode.TeleportFace)
             {
                 Point positionFin = pictureBoxTable.PointToClient(MousePosition);
 
@@ -322,7 +314,7 @@ namespace GoBot.IHM
                 departRecule = new Position(traj.angle, new PointReel(departRecule.Coordonnees.X, departRecule.Coordonnees.Y));
                 positionArrivee = departRecule;
 
-                if (Dessinateur.modeCourant == Dessinateur.Mode.PositionRPFace)
+                if (Dessinateur.modeCourant == Dessinateur.MouseMode.PositionFace)
                 {
                     thGoToRP = new Thread(ThreadTrajectoireGros);
                     thGoToRP.Start();
@@ -332,10 +324,10 @@ namespace GoBot.IHM
                     Robots.GrosRobot.ReglerOffsetAsserv(positionArrivee);
                 }
 
-                Dessinateur.modeCourant = Dessinateur.Mode.Visualisation;
+                Dessinateur.modeCourant = Dessinateur.MouseMode.None;
             }
 
-            Dessinateur.sourisClic = false;
+            Dessinateur.MouseClicked = false;
         }
 
         private void btnAleatoire_Click(object sender, EventArgs e)
@@ -351,7 +343,7 @@ namespace GoBot.IHM
             {
                 btnPathRPCentre.Enabled = false;
             }));
-            
+
             Robots.GrosRobot.GotoXYTeta(new Position(360 - positionArrivee.Angle.AngleDegres, positionArrivee.Coordonnees)); // TODO2018 pourquoi on change de repère ?
 
             this.Invoke(new EventHandler(delegate
@@ -365,73 +357,37 @@ namespace GoBot.IHM
         private void btnPathRPCentre_Click(object sender, EventArgs e)
         {
             Dessinateur.positionDepart = null;
-            if (Dessinateur.modeCourant != Dessinateur.Mode.PositionRPCentre)
-                Dessinateur.modeCourant = Dessinateur.Mode.PositionRPCentre;
+            if (Dessinateur.modeCourant != Dessinateur.MouseMode.PositionCentre)
+                Dessinateur.modeCourant = Dessinateur.MouseMode.PositionCentre;
             else
-                Dessinateur.modeCourant = Dessinateur.Mode.Visualisation;
+                Dessinateur.modeCourant = Dessinateur.MouseMode.None;
         }
 
         private void btnPathRPFace_Click(object sender, EventArgs e)
         {
             Dessinateur.positionDepart = null;
-            if (Dessinateur.modeCourant != Dessinateur.Mode.PositionRPFace)
-                Dessinateur.modeCourant = Dessinateur.Mode.PositionRPFace;
+            if (Dessinateur.modeCourant != Dessinateur.MouseMode.PositionFace)
+                Dessinateur.modeCourant = Dessinateur.MouseMode.PositionFace;
             else
-                Dessinateur.modeCourant = Dessinateur.Mode.Visualisation;
-        }
-
-        private void btnPathRSCentre_Click(object sender, EventArgs e)
-        {
-            Dessinateur.positionDepart = null;
-            if (Dessinateur.modeCourant != Dessinateur.Mode.PositionRSCentre)
-                Dessinateur.modeCourant = Dessinateur.Mode.PositionRSCentre;
-            else
-                Dessinateur.modeCourant = Dessinateur.Mode.Visualisation;
-        }
-
-        private void btnPathRSFace_Click(object sender, EventArgs e)
-        {
-            Dessinateur.positionDepart = null;
-            if (Dessinateur.modeCourant != Dessinateur.Mode.PositionRSFace)
-                Dessinateur.modeCourant = Dessinateur.Mode.PositionRSFace;
-            else
-                Dessinateur.modeCourant = Dessinateur.Mode.Visualisation;
+                Dessinateur.modeCourant = Dessinateur.MouseMode.None;
         }
 
         private void btnTeleportRPCentre_Click(object sender, EventArgs e)
         {
             Dessinateur.positionDepart = null;
-            if (Dessinateur.modeCourant != Dessinateur.Mode.TeleportRPCentre)
-                Dessinateur.modeCourant = Dessinateur.Mode.TeleportRPCentre;
+            if (Dessinateur.modeCourant != Dessinateur.MouseMode.TeleportCentre)
+                Dessinateur.modeCourant = Dessinateur.MouseMode.TeleportCentre;
             else
-                Dessinateur.modeCourant = Dessinateur.Mode.Visualisation;
+                Dessinateur.modeCourant = Dessinateur.MouseMode.None;
         }
 
         private void btnTeleportRPFace_Click(object sender, EventArgs e)
         {
             Dessinateur.positionDepart = null;
-            if (Dessinateur.modeCourant != Dessinateur.Mode.TeleportRPFace)
-                Dessinateur.modeCourant = Dessinateur.Mode.TeleportRPFace;
+            if (Dessinateur.modeCourant != Dessinateur.MouseMode.TeleportFace)
+                Dessinateur.modeCourant = Dessinateur.MouseMode.TeleportFace;
             else
-                Dessinateur.modeCourant = Dessinateur.Mode.Visualisation;
-        }
-
-        private void btnTeleportRSCentre_Click(object sender, EventArgs e)
-        {
-            Dessinateur.positionDepart = null;
-            if (Dessinateur.modeCourant != Dessinateur.Mode.TeleportRSCentre)
-                Dessinateur.modeCourant = Dessinateur.Mode.TeleportRSCentre;
-            else
-                Dessinateur.modeCourant = Dessinateur.Mode.Visualisation;
-        }
-
-        private void btnTeleportRSFace_Click(object sender, EventArgs e)
-        {
-            Dessinateur.positionDepart = null;
-            if (Dessinateur.modeCourant != Dessinateur.Mode.TeleportRSFace)
-                Dessinateur.modeCourant = Dessinateur.Mode.TeleportRSFace;
-            else
-                Dessinateur.modeCourant = Dessinateur.Mode.Visualisation;
+                Dessinateur.modeCourant = Dessinateur.MouseMode.None;
         }
 
         #endregion
@@ -447,26 +403,18 @@ namespace GoBot.IHM
                 Dessinateur.AfficheObstacles = e.NewValue == CheckState.Checked;
             if (ligne == "Elements de jeu")
                 Dessinateur.AfficheElementsJeu = e.NewValue == CheckState.Checked;
-            if (ligne == "Graph gros robots (noeuds)")
-                Dessinateur.AfficheGraphGros = e.NewValue == CheckState.Checked;
-            if (ligne == "Graph gros robot (arcs)")
-                Dessinateur.AfficheGraphArretesGros = e.NewValue == CheckState.Checked;
-            if (ligne == "Graph petit robots  (noeuds)")
-                Dessinateur.AfficheGraphPetit = e.NewValue == CheckState.Checked;
-            if (ligne == "Graph petit robot (arcs)")
-                Dessinateur.AfficheGraphArretesPetit = e.NewValue == CheckState.Checked;
-            if (ligne == "Coûts gros robot")
-                Dessinateur.AfficheCoutsMouvementsGros = e.NewValue == CheckState.Checked;
-            if (ligne == "Coûts petit robot")
-                Dessinateur.AfficheCoutsMouvementsPetit = e.NewValue == CheckState.Checked;
+            if (ligne == "Graph (noeuds)")
+                Dessinateur.AfficheGraph = e.NewValue == CheckState.Checked;
+            if (ligne == "Graph (arcs)")
+                Dessinateur.AfficheGraphArretes = e.NewValue == CheckState.Checked;
+            if (ligne == "Coûts mouvements")
+                Dessinateur.AfficheCoutsMouvements = e.NewValue == CheckState.Checked;
             if (ligne == "Détections balises")
                 Dessinateur.AfficheLigneDetections = e.NewValue == CheckState.Checked;
             if (ligne == "Calcul path finding")
                 Config.CurrentConfig.AfficheDetailTraj = e.NewValue == CheckState.Checked ? 200 : 0;
-            if (ligne == "Historique trajectoire gros")
-                Dessinateur.AfficheHistoriqueCoordonneesGros = e.NewValue == CheckState.Checked;
-            if (ligne == "Historique trajectoire petit")
-                Dessinateur.AfficheHistoriqueCoordonneesPetit = e.NewValue == CheckState.Checked;
+            if (ligne == "Historique trajectoire")
+                Dessinateur.AfficheHistoriqueCoordonnees = e.NewValue == CheckState.Checked;
         }
 
         private void btnZoneDepart_Click(object sender, EventArgs e)
@@ -523,7 +471,7 @@ namespace GoBot.IHM
             Robots.GrosRobot.Avancer(100);
             Robots.GrosRobot.PivotGauche(10);
             Robots.GrosRobot.Avancer(100);
-            
+
             Robots.GrosRobot.GotoXYTeta(Recallages.PositionDepart);
 
             Robots.GrosRobot.Reculer(300);
@@ -619,7 +567,7 @@ namespace GoBot.IHM
 
         private void btnTrajCreer_Click(object sender, EventArgs e)
         {
-            Dessinateur.modeCourant = Dessinateur.Mode.TrajectoirePolaire;
+            Dessinateur.modeCourant = Dessinateur.MouseMode.TrajectoirePolaire;
             pSelected = -1;
             pointsPolaires = new List<PointReel>();
         }
@@ -689,7 +637,7 @@ namespace GoBot.IHM
         bool moveMouse = false;
         private void pictureBoxTable_Click(object sender, EventArgs e)
         {
-            if (!moveMouse && Dessinateur.modeCourant == Dessinateur.Mode.TrajectoirePolaire)
+            if (!moveMouse && Dessinateur.modeCourant == Dessinateur.MouseMode.TrajectoirePolaire)
             {
                 PointReel point = Dessinateur.Scale.ScreenToRealPosition(pictureBoxTable.PointToClient(MousePosition));
                 //if (pointsPolaires.Count >= 2 && pointsPolaires.Count < 4)
@@ -714,7 +662,7 @@ namespace GoBot.IHM
         private void btnHokuyoUart_Click(object sender, EventArgs e)
         {
             ////String mess = "MS000072500001";
-                        
+
             //String mess = "VV\n00P\n";
 
             //byte[] b = new Byte[mess.Length];
@@ -783,7 +731,7 @@ namespace GoBot.IHM
             Robots.GrosRobot.ReglerOffsetAsserv(new Position(0, Robots.GrosRobot.Position.Coordonnees));
 
             double distance = Actionneur.Hokuyo.CalculDistanceX(new Segment(new PointReel(3000, 50), new PointReel(3000, 900)), 50, 10);
-            Robots.GrosRobot.ReglerOffsetAsserv(new Position(0, Robots.GrosRobot.Position.Coordonnees.Translation(-(distance-3000), 0)));
+            Robots.GrosRobot.ReglerOffsetAsserv(new Position(0, Robots.GrosRobot.Position.Coordonnees.Translation(-(distance - 3000), 0)));
 
             Robots.GrosRobot.PositionerAngle(45);
 

@@ -35,8 +35,7 @@ namespace GoBot
         public static List<IForme> ObstaclesPlateau { get; set; }
         public static List<IForme> ObstaclesBalise { get; set; }
 
-        public static PointReel PositionCibleGros { get; set; }
-        public static PointReel PositionCiblePetit { get; set; }
+        public static PointReel PositionCibleRobot { get; set; }
 
         public static Elements Elements { get; protected set; }
 
@@ -55,9 +54,7 @@ namespace GoBot
                         Devices.Devices.RecGoBot.SetLedColor(Color.Blue);
                     else
                         Devices.Devices.RecGoBot.SetLedColor(Color.Yellow);
-
-                    //Robots.GrosRobot.Init();
-                    //Robots.PetitRobot.Init();
+                    
                     NotreCouleurChange?.Invoke(null, null);
                 }
             }
@@ -86,14 +83,19 @@ namespace GoBot
         public static Color CouleurDroiteJaune { get { return Color.FromArgb(238, 198, 27); } }
 
         /// <summary>
-        /// Longueur de la table (mm)
-        /// </summary>
-        public static int LongueurPlateau { get { return 3000; } }
-
-        /// <summary>
         /// Largeur de la table (mm)
         /// </summary>
-        public static int LargeurPlateau { get { return 2000; } }
+        public static int Largeur { get { return 3000; } }
+
+        /// <summary>
+        /// Hauteur de la table (mm)
+        /// </summary>
+        public static int Hauteur { get { return 2000; } }
+
+        /// <summary>
+        /// Largeur de la bordure de la table (mm)
+        /// </summary>
+        public static int BorderWidth { get { return 22; } }
 
         /// <summary>
         /// Liste complète des obstacles fixes et temporaires
@@ -192,7 +194,7 @@ namespace GoBot
         {
             Balise = new Balise();
 
-            PositionCibleGros = Robots.GrosRobot.Position.Coordonnees;
+            PositionCibleRobot = Robots.GrosRobot.Position.Coordonnees;
         }
 
         private Semaphore SemaphoreCollisions { get; set; }
@@ -298,8 +300,8 @@ namespace GoBot
             Robots.GrosRobot.Graph = new Graph();
 
             // Création des noeuds
-            for (int x = resolution / 2; x < LongueurPlateau; x += resolution)
-                for (int y = resolution / 2; y < LargeurPlateau; y += resolution)
+            for (int x = resolution / 2; x < Largeur; x += resolution)
+                for (int y = resolution / 2; y < Hauteur; y += resolution)
                     Robots.GrosRobot.Graph.AddNode(new Node(x, y, 0), Plateau.ObstaclesPlateau, Robots.GrosRobot.Rayon, Math.Sqrt(resolution * resolution * 2) + 1, true);
         }
 
@@ -309,10 +311,10 @@ namespace GoBot
             List<PointReel> points = new List<PointReel>();
 
             // Contours du plateau
-            AjouterObstacle(new Segment(new PointReel(0, 0), new PointReel(LongueurPlateau - 4, 0)), true);
-            AjouterObstacle(new Segment(new PointReel(LongueurPlateau - 4, 0), new PointReel(LongueurPlateau - 4, LargeurPlateau - 4)), true);
-            AjouterObstacle(new Segment(new PointReel(LongueurPlateau - 4, LargeurPlateau - 4), new PointReel(0, LargeurPlateau - 4)), true);
-            AjouterObstacle(new Segment(new PointReel(0, LargeurPlateau - 4), new PointReel(0, 0)), true);
+            AjouterObstacle(new Segment(new PointReel(0, 0), new PointReel(Largeur - 4, 0)), true);
+            AjouterObstacle(new Segment(new PointReel(Largeur - 4, 0), new PointReel(Largeur - 4, Hauteur - 4)), true);
+            AjouterObstacle(new Segment(new PointReel(Largeur - 4, Hauteur - 4), new PointReel(0, Hauteur - 4)), true);
+            AjouterObstacle(new Segment(new PointReel(0, Hauteur - 4), new PointReel(0, 0)), true);
 
             // Zones de départ
             AjouterObstacle(new RectanglePolygone(new PointReel(0, 0), 710, 360 + 22), true);
@@ -372,7 +374,7 @@ namespace GoBot
         /// <returns></returns>
         public static bool Contient(PointReel point)
         {
-            return new RectanglePolygone(new PointReel(0, 0), LargeurPlateau, LongueurPlateau).Contient(point);
+            return new RectanglePolygone(new PointReel(0, 0), Hauteur, Largeur).Contient(point);
         }
     }
 }

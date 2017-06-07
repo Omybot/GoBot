@@ -369,9 +369,9 @@ namespace GoBot
             Historique.AjouterAction(new ActionRecallage(this, sens));
             
             while (Position.Coordonnees.X - Longueur / 2 > 0 &&
-                Position.Coordonnees.X + Longueur / 2 < Plateau.LongueurPlateau &&
+                Position.Coordonnees.X + Longueur / 2 < Plateau.Largeur &&
                 Position.Coordonnees.Y - Longueur / 2 > 0 &&
-                Position.Coordonnees.Y + Longueur / 2 < Plateau.LargeurPlateau)
+                Position.Coordonnees.Y + Longueur / 2 < Plateau.Hauteur)
             {
                 if (sens == SensAR.Arriere)
                     Reculer(5);
@@ -380,12 +380,12 @@ namespace GoBot
             }
             if (Position.Coordonnees.X < 0)
                 Position.Coordonnees.X = Longueur / 2;
-            if (Position.Coordonnees.X > Plateau.LongueurPlateau)
-                Position.Coordonnees.X = Plateau.LongueurPlateau - Longueur / 2;
+            if (Position.Coordonnees.X > Plateau.Largeur)
+                Position.Coordonnees.X = Plateau.Largeur - Longueur / 2;
             if (Position.Coordonnees.Y < 0)
                 Position.Coordonnees.Y = Longueur / 2;
-            if (Position.Coordonnees.Y > Plateau.LargeurPlateau)
-                Position.Coordonnees.Y = Plateau.LargeurPlateau - Longueur / 2;
+            if (Position.Coordonnees.Y > Plateau.Hauteur)
+                Position.Coordonnees.Y = Plateau.Hauteur - Longueur / 2;
 
             RecallageEnCours = false;
         }

@@ -389,5 +389,24 @@ namespace GoBot.Calculs.Formes
 
         #endregion
 
+        #region Peinture
+
+        public void Paint(Graphics g, Color outlineColor, int outlineWidth, Color fillColor, PaintScale scale)
+        {
+            Point screenPos = scale.RealToScreenPosition(this);
+
+            Rectangle rect = new Rectangle(screenPos.X - outlineWidth, screenPos.Y - outlineWidth, outlineWidth*2, outlineWidth*2);
+
+            if (fillColor != Color.Transparent)
+                using (SolidBrush brush = new SolidBrush(fillColor))
+                    g.FillEllipse(brush, rect);
+
+            if (outlineColor != Color.Transparent)
+                using (Pen pen = new Pen(outlineColor))
+                    g.DrawEllipse(pen, rect);
+
+        }
+
+        #endregion
     }
 }

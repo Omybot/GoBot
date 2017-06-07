@@ -57,8 +57,8 @@ namespace GoBot.Balises
             Distance = AngleVisibleToDistance(Math.Abs(AngleFin - AngleDebut));
 
             // Bornes
-            if (Distance > Plateau.LongueurPlateau)
-                Distance = Plateau.LongueurPlateau;
+            if (Distance > Plateau.Largeur)
+                Distance = Plateau.Largeur;
             if (Distance < 1)
                 Distance = 1;
 

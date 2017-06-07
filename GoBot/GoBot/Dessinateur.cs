@@ -14,6 +14,7 @@ using GoBot.ElementsJeu;
 using GoBot.Mouvements;
 using GoBot.PathFinding;
 using System.Drawing.Drawing2D;
+using System.Diagnostics;
 
 namespace GoBot
 {
@@ -32,68 +33,45 @@ namespace GoBot
 
         public static List<Point> trajectoirePolaireScreen;
         private static List<Point> pointsPolaireScreen;
-        public static bool sourisClic;
+        public static bool MouseClicked { get; set; }
+        
+        public static bool AfficheGraphArretes { get; set; } = false;
+        public static bool AfficheGraph { get; set; } = false;
+        public static bool AfficheObstacles { get; set; } = false;
+        public static bool AfficheTable { get; set; } = true;
+        public static bool AfficheTableRelief { get; set; } = false;
+        public static bool AfficheHistoriqueCoordonnees { get; set; } = false;
+        public static bool AfficheCoutsMouvements { get; set; } = false;
+        public static bool AfficheLigneDetections { get; set; } = false;
+        public static bool AfficheElementsJeu { get; set; } = true;
 
-        public static bool AfficheGraphPetit;
-        public static bool AfficheGraphArretesGros;
-        public static bool AfficheGraphArretesPetit;
-        public static bool AfficheGraphGros;
-        public static bool AfficheObstacles;
-        public static bool AfficheTable;
-        public static bool AfficheTableRelief;
-        public static bool AfficheHistoriqueCoordonneesGros;
-        public static bool AfficheHistoriqueCoordonneesPetit;
-        public static bool AfficheCoutsMouvementsGros;
-        public static bool AfficheCoutsMouvementsPetit;
-        public static bool AfficheLigneDetections;
-        public static bool AfficheElementsJeu;
-
-        public static List<Trajectoire> Trajectoires;
-
-        public static Mode modeCourant;
+        public static MouseMode modeCourant;
 
         private static Pen penRougePointille = new Pen(Color.Red),
                             penNoirPointille = new Pen(Color.Black),
                             penBleuClairPointille = new Pen(Color.LightBlue),
 
-                            penBlanc = new Pen(Color.White),
                             penBlancTransparent = new Pen(Color.FromArgb(40, Color.Black)),
                             penBlancFleche = new Pen(Color.White, 3),
-                            penNoir = new Pen(Color.Black),
-                            penRougeFin = new Pen(Color.Red),
-                            penBleuFin = new Pen(Color.Blue),
-                            penBleuClairFin = new Pen(Color.LightBlue),
-                            penCouleurJ1 = new Pen(Plateau.CouleurGaucheBleu),
-                            penCouleurJ1Fleche = new Pen(Plateau.CouleurGaucheBleu, 3),
-                            penCouleurJ1Epais = new Pen(Color.FromArgb(35, Plateau.CouleurGaucheBleu), 3),
-                            penCouleurJ2 = new Pen(Plateau.CouleurDroiteJaune),
-                            penCouleurJ2Fleche = new Pen(Plateau.CouleurDroiteJaune, 3),
-                            penCouleurJ2Epais = new Pen(Color.FromArgb(35, Plateau.CouleurDroiteJaune), 3),
+                            penCouleurGauche = new Pen(Plateau.CouleurGaucheBleu),
+                            penCouleurGaucheFleche = new Pen(Plateau.CouleurGaucheBleu, 3),
+                            penCouleurGaucheEpais = new Pen(Color.FromArgb(35, Plateau.CouleurGaucheBleu), 3),
+                            penCouleurDroite = new Pen(Plateau.CouleurDroiteJaune),
+                            penCouleurDroiteFleche = new Pen(Plateau.CouleurDroiteJaune, 3),
+                            penCouleurDroiteEpais = new Pen(Color.FromArgb(35, Plateau.CouleurDroiteJaune), 3),
 
                             penRougeEpais = new Pen(Color.Red, 3),
                             penBleuEpais = new Pen(Plateau.CouleurDroiteJaune, 3),
                             penVertEpais = new Pen(Color.Green, 3);
 
         private static SolidBrush brushNoir = new SolidBrush(Color.Black),
-                                    brushBlancTransparent = new SolidBrush(Color.FromArgb(40, Color.Black)),
-                                    brushNoirTransparent = new SolidBrush(Color.FromArgb(110, Color.Black)),
                                     brushNoirTresTransparent = new SolidBrush(Color.FromArgb(35, Color.Black)),
-                                    brushBlanc = new SolidBrush(Color.White),
-                                    brushCouleurGaucheJaune = new SolidBrush(Plateau.CouleurGaucheBleu),
-                                    brushCouleurGaucheJauneTransparent = new SolidBrush(Color.FromArgb(110, Plateau.CouleurGaucheBleu)),
-                                    brushCouleurGaucheJauneTresTransparent = new SolidBrush(Color.FromArgb(35, Plateau.CouleurGaucheBleu)),
-                                    brushCouleurDroiteVert = new SolidBrush(Plateau.CouleurDroiteJaune),
-                                    brushCouleurDroiteVertTransparent = new SolidBrush(Color.FromArgb(110, Plateau.CouleurDroiteJaune)),
-                                    brushCouleurDroiteVertTresTransparent = new SolidBrush(Color.FromArgb(35, Plateau.CouleurDroiteJaune)),
-                                    brushVertFonce = new SolidBrush(Color.DarkGreen),
-                                    brushRouge = new SolidBrush(Color.Red),
-                                    brushVert = new SolidBrush(Color.Green),
-                                    brushTransparent = new SolidBrush(Color.Transparent),
-                                    brushViolet = new SolidBrush(Color.Purple),
-                                    brushBleuClair = new SolidBrush(Color.LightBlue),
-                                    brushBleu = new SolidBrush(Color.Blue);
-
-        private static Font fontNbPieds = new Font("Calibri", 9);
+                                    brushCouleurGauche = new SolidBrush(Plateau.CouleurGaucheBleu),
+                                    brushCouleurGaucheTransparent = new SolidBrush(Color.FromArgb(110, Plateau.CouleurGaucheBleu)),
+                                    brushCouleurGaucheTresTransparent = new SolidBrush(Color.FromArgb(35, Plateau.CouleurGaucheBleu)),
+                                    brushCouleurDroite = new SolidBrush(Plateau.CouleurDroiteJaune),
+                                    brushCouleurDroiteTransparent = new SolidBrush(Color.FromArgb(110, Plateau.CouleurDroiteJaune)),
+                                    brushCouleurDroiteTresTransparent = new SolidBrush(Color.FromArgb(35, Plateau.CouleurDroiteJaune));
 
         public static PaintScale Scale { get; } = new PaintScale();
 
@@ -131,29 +109,14 @@ namespace GoBot
 
         static Dessinateur()
         {
-            penRougePointille.DashStyle = System.Drawing.Drawing2D.DashStyle.Dot;
-            penBleuClairPointille.DashStyle = System.Drawing.Drawing2D.DashStyle.Dot;
-            penNoirPointille.DashStyle = System.Drawing.Drawing2D.DashStyle.Dot;
+            penRougePointille.DashStyle = DashStyle.Dot;
+            penBleuClairPointille.DashStyle = DashStyle.Dot;
+            penNoirPointille.DashStyle = DashStyle.Dot;
 
-            penCouleurJ1Fleche.StartCap = System.Drawing.Drawing2D.LineCap.Round;
-            penCouleurJ1Fleche.EndCap = System.Drawing.Drawing2D.LineCap.ArrowAnchor;
-            penBlancFleche.StartCap = System.Drawing.Drawing2D.LineCap.Round;
-            penBlancFleche.EndCap = System.Drawing.Drawing2D.LineCap.ArrowAnchor;
-
-            AfficheGraphPetit = false;
-            AfficheGraphArretesGros = false;
-            AfficheGraphArretesPetit = false;
-            AfficheGraphGros = false;
-            AfficheObstacles = false;
-            AfficheTable = true;
-            AfficheTableRelief = false;
-            AfficheHistoriqueCoordonneesGros = false;
-            AfficheHistoriqueCoordonneesPetit = false;
-            AfficheCoutsMouvementsGros = false;
-            AfficheCoutsMouvementsPetit = false;
-            AfficheLigneDetections = false;
-            AfficheElementsJeu = true;
-            Trajectoires = new List<Trajectoire>();
+            penCouleurGaucheFleche.StartCap = LineCap.Round;
+            penCouleurGaucheFleche.EndCap = LineCap.ArrowAnchor;
+            penBlancFleche.StartCap = LineCap.Round;
+            penBlancFleche.EndCap = LineCap.ArrowAnchor;
         }
 
         public static void Start()
@@ -167,45 +130,36 @@ namespace GoBot
             threadDessin.Abort();
         }
 
-        public enum Mode
+        public enum MouseMode
         {
-            Visualisation,
-            Graph,
-            Trajectoires,
-            Intersection,
-            AjoutPolygone,
-            DebutTrajectoire,
-            FinTrajectoire,
-            PositionRPCentre,
-            PositionRPFace,
-            PositionRSCentre,
-            PositionRSFace,
-            TeleportRPCentre,
-            TeleportRPFace,
-            TeleportRSCentre,
-            TeleportRSFace,
+            None,
+            PositionCentre,
+            PositionFace,
+            TeleportCentre,
+            TeleportFace,
             TrajectoirePolaire
         }
 
         public static void Dessine()
         {
-            DateTime prec = DateTime.Now;
+            Stopwatch sw = Stopwatch.StartNew();
 
             PositionCurseur = new PointReel();
             while (Thread.CurrentThread.IsAlive && !Config.Shutdown)
             {
                 // Limitation à 30FPS
-                int sleep = 33 - (DateTime.Now - prec).Milliseconds - 1;
+                long sleep = 33 - sw.ElapsedMilliseconds - 1;
                 if (sleep > 0)
-                    Thread.Sleep(sleep);
+                    Thread.Sleep((int)sleep);
 
-                prec = DateTime.Now;
+                sw.Restart();
+
                 try
                 {
                     Bitmap bmp = new Bitmap(Properties.Resources.TablePlan.Width, Properties.Resources.TablePlan.Height);
                     {
                         Graphics g = Graphics.FromImage(bmp);
-                        g.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.AntiAlias;
+                        g.SmoothingMode = SmoothingMode.AntiAlias;
 
                         if (AfficheTable)
                             DessinePlateau(g);
@@ -217,18 +171,16 @@ namespace GoBot
                         if (Robots.GrosRobot != null)
                             DessineRobot(Robots.GrosRobot, g);
 
-                        if (AfficheHistoriqueCoordonneesGros && Robots.GrosRobot.HistoriqueCoordonnees != null)
+                        if (AfficheHistoriqueCoordonnees && Robots.GrosRobot.HistoriqueCoordonnees != null)
                             DessineHistoriqueTrajectoire(Robots.GrosRobot, g);
-
 
                         if (AfficheObstacles)
                             DessineObstacles(g);
-
-                        //if (Robots.PetitRobot != null)
-                        //    DessineRobot(Robots.PetitRobot, g);
-
+                        
+                        // Elements de jeu
                         if (AfficheElementsJeu)
-                            DessineElementsJeu(g);
+                            foreach (ElementJeu element in Plateau.Elements)
+                                element.Paint(g, Scale);
 
                         DessinePathFinding(g);
 
@@ -244,26 +196,22 @@ namespace GoBot
                         }
 
                         // Dessin des coûts des mouvements
+                        if (AfficheCoutsMouvements)
+                            Plateau.Enchainement?.ListeMouvements?.ForEach(mouv => mouv.Paint(g, Scale));
 
-                        if (Plateau.Enchainement != null)
-                        {
-                            if (AfficheCoutsMouvementsGros)
-                                DessineCoutMouvements(Robots.GrosRobot, g);
-                        }
-
-                        if ((modeCourant == Mode.PositionRPCentre || modeCourant == Mode.TeleportRPCentre) && positionDepart != null)
+                        if ((modeCourant == MouseMode.PositionCentre || modeCourant == MouseMode.TeleportCentre) && positionDepart != null)
                         {
                             Point positionFin = positionCurseur;
 
                             Bitmap bmpGrosRobot = new Bitmap(Scale.RealToScreenDistance(Robots.GrosRobot.Taille * 3), Scale.RealToScreenDistance(Robots.GrosRobot.Taille * 3));
                             Graphics gGros = Graphics.FromImage(bmpGrosRobot);
-                            gGros.FillRectangle(brushTransparent, 0, 0, Scale.RealToScreenDistance(Robots.GrosRobot.Taille * 2), Scale.RealToScreenDistance(Robots.GrosRobot.Taille * 2));
+                            gGros.FillRectangle(Brushes.Transparent, 0, 0, Scale.RealToScreenDistance(Robots.GrosRobot.Taille * 2), Scale.RealToScreenDistance(Robots.GrosRobot.Taille * 2));
 
                             Direction traj = Maths.GetDirection(positionDepart, PositionCurseurTable);
 
                             gGros.FillRectangle(brushNoirTresTransparent, bmpGrosRobot.Width / 2 - Scale.RealToScreenDistance(Robots.GrosRobot.Largeur / 2), bmpGrosRobot.Height / 2 - Scale.RealToScreenDistance(Robots.GrosRobot.Longueur / 2), Scale.RealToScreenDistance(Robots.GrosRobot.Largeur), Scale.RealToScreenDistance(Robots.GrosRobot.Longueur));
-                            gGros.DrawRectangle(Plateau.NotreCouleur == Plateau.CouleurGaucheBleu ? penCouleurJ1 : penCouleurJ2, bmpGrosRobot.Width / 2 - Scale.RealToScreenDistance(Robots.GrosRobot.Largeur / 2), bmpGrosRobot.Height / 2 - Scale.RealToScreenDistance(Robots.GrosRobot.Longueur / 2), Scale.RealToScreenDistance(Robots.GrosRobot.Largeur), Scale.RealToScreenDistance(Robots.GrosRobot.Longueur));
-                            gGros.DrawLine(Plateau.NotreCouleur == Plateau.CouleurGaucheBleu ? penCouleurJ1 : penCouleurJ2, bmpGrosRobot.Width / 2, bmpGrosRobot.Height / 2, bmpGrosRobot.Width / 2, bmpGrosRobot.Height / 2 - Scale.RealToScreenDistance(Robots.GrosRobot.Longueur / 2));
+                            gGros.DrawRectangle(Plateau.NotreCouleur == Plateau.CouleurGaucheBleu ? penCouleurGauche : penCouleurDroite, bmpGrosRobot.Width / 2 - Scale.RealToScreenDistance(Robots.GrosRobot.Largeur / 2), bmpGrosRobot.Height / 2 - Scale.RealToScreenDistance(Robots.GrosRobot.Longueur / 2), Scale.RealToScreenDistance(Robots.GrosRobot.Largeur), Scale.RealToScreenDistance(Robots.GrosRobot.Longueur));
+                            gGros.DrawLine(Plateau.NotreCouleur == Plateau.CouleurGaucheBleu ? penCouleurGauche : penCouleurDroite, bmpGrosRobot.Width / 2, bmpGrosRobot.Height / 2, bmpGrosRobot.Width / 2, bmpGrosRobot.Height / 2 - Scale.RealToScreenDistance(Robots.GrosRobot.Longueur / 2));
 
                             Point pointOrigine = Scale.RealToScreenPosition(positionDepart);
                             g.DrawImage(RotateImage(bmpGrosRobot, 360 - traj.angle.AngleDegres + 90), pointOrigine.X - bmpGrosRobot.Width / 2, pointOrigine.Y - bmpGrosRobot.Height / 2);
@@ -271,13 +219,13 @@ namespace GoBot
                             g.DrawLine(penBlancFleche, (Point)Scale.RealToScreenPosition(positionDepart), positionFin);
                         }
 
-                        else if ((modeCourant == Mode.PositionRPFace || modeCourant == Mode.TeleportRPFace) && positionDepart != null)
+                        else if ((modeCourant == MouseMode.PositionFace || modeCourant == MouseMode.TeleportFace) && positionDepart != null)
                         {
                             Point positionFin = positionCurseur;
 
                             Bitmap bmpGrosRobot = new Bitmap(Scale.RealToScreenDistance(Robots.GrosRobot.Taille * 3), Scale.RealToScreenDistance(Robots.GrosRobot.Taille * 3));
                             Graphics gGros = Graphics.FromImage(bmpGrosRobot);
-                            gGros.FillRectangle(brushTransparent, 0, 0, Scale.RealToScreenDistance(Robots.GrosRobot.Taille * 2), Scale.RealToScreenDistance(Robots.GrosRobot.Taille * 2));
+                            gGros.FillRectangle(Brushes.Transparent, 0, 0, Scale.RealToScreenDistance(Robots.GrosRobot.Taille * 2), Scale.RealToScreenDistance(Robots.GrosRobot.Taille * 2));
 
                             Direction traj = Maths.GetDirection(positionDepart, PositionCurseurTable);
 
@@ -286,19 +234,12 @@ namespace GoBot
                             departRecule.Avancer(Scale.RealToScreenDistance(-Robots.GrosRobot.Longueur / 2));
 
                             gGros.FillRectangle(brushNoirTresTransparent, bmpGrosRobot.Width / 2 - Scale.RealToScreenDistance(Robots.GrosRobot.Largeur / 2), bmpGrosRobot.Height / 2 - Scale.RealToScreenDistance(Robots.GrosRobot.Longueur / 2), Scale.RealToScreenDistance(Robots.GrosRobot.Largeur), Scale.RealToScreenDistance(Robots.GrosRobot.Longueur));
-                            gGros.DrawRectangle(Plateau.NotreCouleur == Plateau.CouleurGaucheBleu ? penCouleurJ1 : penCouleurJ2, bmpGrosRobot.Width / 2 - Scale.RealToScreenDistance(Robots.GrosRobot.Largeur / 2), bmpGrosRobot.Height / 2 - Scale.RealToScreenDistance(Robots.GrosRobot.Longueur / 2), Scale.RealToScreenDistance(Robots.GrosRobot.Largeur), Scale.RealToScreenDistance(Robots.GrosRobot.Longueur));
-                            gGros.DrawLine(Plateau.NotreCouleur == Plateau.CouleurGaucheBleu ? penCouleurJ1 : penCouleurJ2, bmpGrosRobot.Width / 2, bmpGrosRobot.Height / 2, bmpGrosRobot.Width / 2, bmpGrosRobot.Height / 2 - Scale.RealToScreenDistance(Robots.GrosRobot.Longueur / 2));
+                            gGros.DrawRectangle(Plateau.NotreCouleur == Plateau.CouleurGaucheBleu ? penCouleurGauche : penCouleurDroite, bmpGrosRobot.Width / 2 - Scale.RealToScreenDistance(Robots.GrosRobot.Largeur / 2), bmpGrosRobot.Height / 2 - Scale.RealToScreenDistance(Robots.GrosRobot.Longueur / 2), Scale.RealToScreenDistance(Robots.GrosRobot.Largeur), Scale.RealToScreenDistance(Robots.GrosRobot.Longueur));
+                            gGros.DrawLine(Plateau.NotreCouleur == Plateau.CouleurGaucheBleu ? penCouleurGauche : penCouleurDroite, bmpGrosRobot.Width / 2, bmpGrosRobot.Height / 2, bmpGrosRobot.Width / 2, bmpGrosRobot.Height / 2 - Scale.RealToScreenDistance(Robots.GrosRobot.Longueur / 2));
 
                             g.DrawImage(RotateImage(bmpGrosRobot, 360 - traj.angle.AngleDegres + 90), (int)(departRecule.Coordonnees.X) - bmpGrosRobot.Width / 2, (int)(departRecule.Coordonnees.Y) - bmpGrosRobot.Height / 2);
 
                             g.DrawLine(penBlancFleche, (Point)Scale.RealToScreenPosition(positionDepart), positionFin);
-                        }
-
-                        // Trajectoires
-
-                        foreach (Trajectoire traj in Trajectoires)
-                        {
-                            DessineTrajectoire(traj, g);
                         }
 
                         if (Robots.GrosRobot.TrajectoireEnCours != null)
@@ -309,7 +250,7 @@ namespace GoBot
                             for (int iPoint = 1; iPoint < Robots.GrosRobot.TrajectoireEnCours.PointsPassage.Count; iPoint++)
                                 traj.AjouterPoint(Robots.GrosRobot.TrajectoireEnCours.PointsPassage[iPoint]);
 
-                            DessineTrajectoire(traj, g);
+                            traj.Paint(g, Scale);
                         }
 
                         // Trajectoire polaire
@@ -348,12 +289,12 @@ namespace GoBot
 
                 //if (vitesse < 50)
                 //    g.DrawImage(Properties.Resources.Stop, positionEcran.X - Properties.Resources.Stop.Width / 2, positionEcran.Y - Properties.Resources.Stop.Height / 2, Properties.Resources.Stop.Width, Properties.Resources.Stop.Height);
-                g.FillEllipse(Plateau.NotreCouleur == Plateau.CouleurDroiteJaune ? brushCouleurGaucheJauneTransparent : brushCouleurDroiteVertTransparent, positionEcran.X - Scale.RealToScreenDistance(Plateau.RayonAdversaire), positionEcran.Y - Scale.RealToScreenDistance(Plateau.RayonAdversaire), Scale.RealToScreenDistance(Plateau.RayonAdversaire * 2), Scale.RealToScreenDistance(Plateau.RayonAdversaire * 2));
-                g.DrawEllipse(Plateau.NotreCouleur == Plateau.CouleurDroiteJaune ? penCouleurJ1 : penCouleurJ2, positionEcran.X - Scale.RealToScreenDistance(Plateau.RayonAdversaire), positionEcran.Y - Scale.RealToScreenDistance(Plateau.RayonAdversaire), Scale.RealToScreenDistance(Plateau.RayonAdversaire * 2), Scale.RealToScreenDistance(Plateau.RayonAdversaire * 2));
-                g.DrawLine(Plateau.NotreCouleur == Plateau.CouleurDroiteJaune ? penCouleurJ1Epais : penCouleurJ2Epais, new Point(positionEcran.X - 7, positionEcran.Y - 7), new Point(positionEcran.X + 7, positionEcran.Y + 7));
-                g.DrawLine(Plateau.NotreCouleur == Plateau.CouleurDroiteJaune ? penCouleurJ1Epais : penCouleurJ2Epais, new Point(positionEcran.X - 7, positionEcran.Y + 7), new Point(positionEcran.X + 7, positionEcran.Y - 7));
-                g.DrawLine(Plateau.NotreCouleur == Plateau.CouleurDroiteJaune ? penCouleurJ1Fleche : penCouleurJ2Fleche, positionEcran.X, positionEcran.Y, positionEcran.X + Scale.RealToScreenDistance(SuiviBalise.VecteursPositionsEnnemies[i].X / 3), positionEcran.Y + Scale.RealToScreenDistance(SuiviBalise.VecteursPositionsEnnemies[i].Y / 3));
-                g.DrawString(i + " - " + vitesse + "mm/s", new Font("Calibri", 9, FontStyle.Bold), brushBlanc, positionEcran.X, positionEcran.Y);
+                g.FillEllipse(Plateau.NotreCouleur == Plateau.CouleurDroiteJaune ? brushCouleurGaucheTransparent : brushCouleurDroiteTransparent, positionEcran.X - Scale.RealToScreenDistance(Plateau.RayonAdversaire), positionEcran.Y - Scale.RealToScreenDistance(Plateau.RayonAdversaire), Scale.RealToScreenDistance(Plateau.RayonAdversaire * 2), Scale.RealToScreenDistance(Plateau.RayonAdversaire * 2));
+                g.DrawEllipse(Plateau.NotreCouleur == Plateau.CouleurDroiteJaune ? penCouleurGauche : penCouleurDroite, positionEcran.X - Scale.RealToScreenDistance(Plateau.RayonAdversaire), positionEcran.Y - Scale.RealToScreenDistance(Plateau.RayonAdversaire), Scale.RealToScreenDistance(Plateau.RayonAdversaire * 2), Scale.RealToScreenDistance(Plateau.RayonAdversaire * 2));
+                g.DrawLine(Plateau.NotreCouleur == Plateau.CouleurDroiteJaune ? penCouleurGaucheEpais : penCouleurDroiteEpais, new Point(positionEcran.X - 7, positionEcran.Y - 7), new Point(positionEcran.X + 7, positionEcran.Y + 7));
+                g.DrawLine(Plateau.NotreCouleur == Plateau.CouleurDroiteJaune ? penCouleurGaucheEpais : penCouleurDroiteEpais, new Point(positionEcran.X - 7, positionEcran.Y + 7), new Point(positionEcran.X + 7, positionEcran.Y - 7));
+                g.DrawLine(Plateau.NotreCouleur == Plateau.CouleurDroiteJaune ? penCouleurGaucheFleche : penCouleurDroiteFleche, positionEcran.X, positionEcran.Y, positionEcran.X + Scale.RealToScreenDistance(SuiviBalise.VecteursPositionsEnnemies[i].X / 3), positionEcran.Y + Scale.RealToScreenDistance(SuiviBalise.VecteursPositionsEnnemies[i].Y / 3));
+                g.DrawString(i + " - " + vitesse + "mm/s", new Font("Calibri", 9, FontStyle.Bold), Brushes.White, positionEcran.X, positionEcran.Y);
             }
 
             if (Plateau.Balise != null && Plateau.Balise.PositionsAdverses != null)
@@ -368,8 +309,8 @@ namespace GoBot
 
                     //if (vitesse < 50)
                     //    g.DrawImage(Properties.Resources.Stop, positionEcran.X - Properties.Resources.Stop.Width / 2, positionEcran.Y - Properties.Resources.Stop.Height / 2, Properties.Resources.Stop.Width, Properties.Resources.Stop.Height);
-                    g.FillEllipse(Plateau.NotreCouleur == Plateau.CouleurDroiteJaune ? brushCouleurGaucheJauneTransparent : brushCouleurDroiteVertTransparent, positionEcran.X - Scale.RealToScreenDistance(Plateau.RayonAdversaire), positionEcran.Y - Scale.RealToScreenDistance(Plateau.RayonAdversaire), Scale.RealToScreenDistance(Plateau.RayonAdversaire * 2), Scale.RealToScreenDistance(Plateau.RayonAdversaire * 2));
-                    g.DrawEllipse(Plateau.NotreCouleur == Plateau.CouleurDroiteJaune ? penCouleurJ1 : penCouleurJ2, positionEcran.X - Scale.RealToScreenDistance(Plateau.RayonAdversaire), positionEcran.Y - Scale.RealToScreenDistance(Plateau.RayonAdversaire), Scale.RealToScreenDistance(Plateau.RayonAdversaire * 2), Scale.RealToScreenDistance(Plateau.RayonAdversaire * 2));
+                    g.FillEllipse(Plateau.NotreCouleur == Plateau.CouleurDroiteJaune ? brushCouleurGaucheTransparent : brushCouleurDroiteTransparent, positionEcran.X - Scale.RealToScreenDistance(Plateau.RayonAdversaire), positionEcran.Y - Scale.RealToScreenDistance(Plateau.RayonAdversaire), Scale.RealToScreenDistance(Plateau.RayonAdversaire * 2), Scale.RealToScreenDistance(Plateau.RayonAdversaire * 2));
+                    g.DrawEllipse(Plateau.NotreCouleur == Plateau.CouleurDroiteJaune ? penCouleurGauche : penCouleurDroite, positionEcran.X - Scale.RealToScreenDistance(Plateau.RayonAdversaire), positionEcran.Y - Scale.RealToScreenDistance(Plateau.RayonAdversaire), Scale.RealToScreenDistance(Plateau.RayonAdversaire * 2), Scale.RealToScreenDistance(Plateau.RayonAdversaire * 2));
                     //g.DrawLine(Plateau.NotreCouleur == Plateau.CouleurDroiteVert ? penCouleurJ1REpais : penCouleurJ2JEpais, new Point(positionEcran.X - 7, positionEcran.Y - 7), new Point(positionEcran.X + 7, positionEcran.Y + 7));
                     //g.DrawLine(Plateau.NotreCouleur == Plateau.CouleurDroiteVert ? penCouleurJ1REpais : penCouleurJ2JEpais, new Point(positionEcran.X - 7, positionEcran.Y + 7), new Point(positionEcran.X + 7, positionEcran.Y - 7));
                     //g.DrawLine(Plateau.NotreCouleur == Plateau.CouleurDroiteVert ? penCouleurJ1RFleche : penCouleurJ2JFleche, positionEcran.X, positionEcran.Y, positionEcran.X + scale.RealToScreenDistance(SuiviBalise.VecteursPositionsEnnemies[i].X / 3), positionEcran.Y + scale.RealToScreenDistance(SuiviBalise.VecteursPositionsEnnemies[i].Y / 3));
@@ -402,10 +343,10 @@ namespace GoBot
                     }
 
                     Point positionEcran = Scale.RealToScreenPosition(detection.Position);
-                    g.DrawPolygon(penBleuFin, points.ToArray());
-                    g.FillPolygon(brushCouleurGaucheJauneTresTransparent, points.ToArray());
-                    g.DrawLine(penRougeFin, new Point(positionEcran.X - 4, positionEcran.Y - 4), new Point(positionEcran.X + 4, positionEcran.Y + 4));
-                    g.DrawLine(penRougeFin, new Point(positionEcran.X - 4, positionEcran.Y + 4), new Point(positionEcran.X + 4, positionEcran.Y - 4));
+                    g.DrawPolygon(Pens.Blue, points.ToArray());
+                    g.FillPolygon(brushCouleurGaucheTresTransparent, points.ToArray());
+                    g.DrawLine(Pens.Red, new Point(positionEcran.X - 4, positionEcran.Y - 4), new Point(positionEcran.X + 4, positionEcran.Y + 4));
+                    g.DrawLine(Pens.Red, new Point(positionEcran.X - 4, positionEcran.Y + 4), new Point(positionEcran.X + 4, positionEcran.Y - 4));
                 }
             }
 
@@ -471,12 +412,12 @@ namespace GoBot
             Point positionRobot = Scale.RealToScreenPosition(robot.Position.Coordonnees);
 
             Bitmap bmpRobot = new Bitmap(Properties.Resources.Capot.Width, Properties.Resources.Capot.Height);
-            Graphics gGros = Graphics.FromImage(bmpRobot);
-            gGros.FillRectangle(brushTransparent, 0, 0, Scale.RealToScreenDistance(robot.Taille * 2), Scale.RealToScreenDistance(robot.Taille * 2));
+            Graphics gRobot = Graphics.FromImage(bmpRobot);
+            gRobot.FillRectangle(Brushes.Transparent, 0, 0, Scale.RealToScreenDistance(robot.Taille * 2), Scale.RealToScreenDistance(robot.Taille * 2));
 
-            gGros.FillRectangle(brushBlanc, bmpRobot.Width / 2 - Scale.RealToScreenDistance(robot.Largeur / 2), bmpRobot.Height / 2 - Scale.RealToScreenDistance(robot.Longueur / 2), Scale.RealToScreenDistance(robot.Largeur), Scale.RealToScreenDistance(robot.Longueur));
-            gGros.DrawRectangle(Plateau.NotreCouleur == Plateau.CouleurDroiteJaune ? penCouleurJ2 : penCouleurJ1, bmpRobot.Width / 2 - Scale.RealToScreenDistance(robot.Largeur / 2), bmpRobot.Height / 2 - Scale.RealToScreenDistance(robot.Longueur / 2), Scale.RealToScreenDistance(robot.Largeur), Scale.RealToScreenDistance(robot.Longueur));
-            gGros.DrawLine(Plateau.NotreCouleur == Plateau.CouleurDroiteJaune ? penCouleurJ2 : penCouleurJ1, bmpRobot.Width / 2, bmpRobot.Height / 2, bmpRobot.Width / 2, bmpRobot.Height / 2 - Scale.RealToScreenDistance(robot.Longueur / 2));
+            gRobot.FillRectangle(Brushes.White, bmpRobot.Width / 2 - Scale.RealToScreenDistance(robot.Largeur / 2), bmpRobot.Height / 2 - Scale.RealToScreenDistance(robot.Longueur / 2), Scale.RealToScreenDistance(robot.Largeur), Scale.RealToScreenDistance(robot.Longueur));
+            gRobot.DrawRectangle(Plateau.NotreCouleur == Plateau.CouleurDroiteJaune ? penCouleurDroite : penCouleurGauche, bmpRobot.Width / 2 - Scale.RealToScreenDistance(robot.Largeur / 2), bmpRobot.Height / 2 - Scale.RealToScreenDistance(robot.Longueur / 2), Scale.RealToScreenDistance(robot.Largeur), Scale.RealToScreenDistance(robot.Longueur));
+            gRobot.DrawLine(Plateau.NotreCouleur == Plateau.CouleurDroiteJaune ? penCouleurDroite : penCouleurGauche, bmpRobot.Width / 2, bmpRobot.Height / 2, bmpRobot.Width / 2, bmpRobot.Height / 2 - Scale.RealToScreenDistance(robot.Longueur / 2));
 
             //gGros.DrawImage(Properties.Resources.Capot, 0, 0, Properties.Resources.Capot.Width, Properties.Resources.Capot.Height);
 
@@ -487,8 +428,8 @@ namespace GoBot
                 for (int i = 0; i < Actionneur.Stockeur.ModulesCount; i++)
                 {
                     Rectangle rect = new Rectangle(bmpRobot.Width / 2 - Scale.RealToScreenDistance(robot.Largeur / 2) + 5 + i * 10, bmpRobot.Height / 2 - Scale.RealToScreenDistance(robot.Longueur / 2) + 5, 5, 18);
-                    gGros.FillRectangle(b, rect);
-                    gGros.DrawRectangle(Pens.Black, rect);
+                    gRobot.FillRectangle(b, rect);
+                    gRobot.DrawRectangle(Pens.Black, rect);
                 }
                 b.Dispose();
             }
@@ -498,19 +439,14 @@ namespace GoBot
 
         private static void DessineObstacles(Graphics g)
         {
-            // Dessin des obstacles
-            //g.FillRectangle(brushBlanc, 0, 0, 3000, 2000);
+            g.SetClip(Scale.RealToScreenRect(new RectangleF(-Plateau.BorderWidth, -Plateau.BorderWidth, Plateau.Largeur+ Plateau.BorderWidth*2, Plateau.Hauteur+ Plateau.BorderWidth*2)));
 
             foreach (IForme forme in Plateau.ListeObstacles)
-                DessinerForme(g, Color.Red, 5, forme);
-
-            // Efface ce qui sort de la zone
-            DessinerForme(g, Color.White, 0, new RectanglePolygone(new PointReel(-1000, -1000), 990, Plateau.LongueurPlateau + 2000), true);
-            DessinerForme(g, Color.White, 0, new RectanglePolygone(new PointReel(Plateau.LongueurPlateau, -1000), 1000, Plateau.LongueurPlateau + 2000), true);
-            DessinerForme(g, Color.White, 0, new RectanglePolygone(new PointReel(-1000, -1000), Plateau.LargeurPlateau + 2000, 990), true);
-            DessinerForme(g, Color.White, 0, new RectanglePolygone(new PointReel(-1000, Plateau.LargeurPlateau), Plateau.LongueurPlateau + 2000, 990), true);
+                forme.Paint(g, Color.Red, 5, Color.Transparent, Scale);
 
             DessineZoneMorte(g);
+
+            g.ResetClip();
         }
 
         private static void DessineZoneMorte(Graphics g)
@@ -528,7 +464,7 @@ namespace GoBot
                 points.Add(Scale.RealToScreenPosition(new Point((int)(Actionneur.Hokuyo.Position.Coordonnees.X + Math.Cos(debutAngleMort.AngleRadians) * 3000), (int)(Actionneur.Hokuyo.Position.Coordonnees.Y + Math.Sin(debutAngleMort.AngleRadians) * 3000))));
                 points.Add(Scale.RealToScreenPosition(new Point((int)(Actionneur.Hokuyo.Position.Coordonnees.X + Math.Cos(finAngleMort.AngleRadians) * 3000), (int)(Actionneur.Hokuyo.Position.Coordonnees.Y + Math.Sin(finAngleMort.AngleRadians) * 3000))));
 
-                Region regionTable = new Region(new Rectangle(Scale.RealToScreenPosition(new Point(0, 0)), new Size(Scale.RealToScreenDistance(Plateau.LongueurPlateau), Scale.RealToScreenDistance(Plateau.LargeurPlateau))));
+                Region regionTable = new Region(new Rectangle(Scale.RealToScreenPosition(new Point(0, 0)), new Size(Scale.RealToScreenDistance(Plateau.Largeur), Scale.RealToScreenDistance(Plateau.Hauteur))));
                 GraphicsPath pathZoneMorte = new GraphicsPath();
                 pathZoneMorte.AddPolygon(points.ToArray());
                 Region regionZoneMorte = new Region(pathZoneMorte);
@@ -548,180 +484,18 @@ namespace GoBot
             g.DrawImage(Properties.Resources.TablePlan, 0, 0, Properties.Resources.TablePlan.Width, Properties.Resources.TablePlan.Height);
         }
 
-        private static void DessineElementsJeu(Graphics g)
-        {
-            // Todo dessinner les éléments de jeu
-
-            foreach (Fusee fusee in Plateau.Elements.Fusees)
-                DessineFusee(g, fusee);
-            foreach (Module module in Plateau.Elements.Modules)
-                DessineModule(g, module);
-
-        }
-
-        private static void DessineModule(Graphics g, Module module)
-        {
-            if (!module.Ramasse)
-            {
-                Point center = Scale.RealToScreenPosition(module.Position);
-                Size size = new Size(Scale.RealToScreenDistance(module.RayonHover) * 2, Scale.RealToScreenDistance(module.RayonHover) * 2);
-                Rectangle rect = new Rectangle(center.X - size.Width / 2, center.Y - size.Height / 2, size.Width, size.Height);
-                Brush b;
-
-                if (module.Couleur == Color.White)
-                {
-                    g.FillEllipse(Brushes.White, rect);
-                    b = new SolidBrush(Plateau.CouleurGaucheBleu);
-                    g.FillPie(b, rect, -135, 90);
-                    b.Dispose();
-                    b = new SolidBrush(Plateau.CouleurDroiteJaune);
-                    g.FillPie(b, rect, +45, 90);
-                    b.Dispose();
-                }
-                else
-                {
-                    b = new SolidBrush(module.Couleur);
-                    g.FillEllipse(b, rect);
-                    b.Dispose();
-                }
-
-                if(module.Hover)
-                    g.DrawEllipse(Pens.White, rect);
-                else
-                    g.DrawEllipse(Pens.Black, rect);
-            }
-        }
-
-        private static void DessineFusee(Graphics g, Fusee fusee)
-        {
-            if (fusee.ModulesRestants > 0)
-            {
-                Point center = Scale.RealToScreenPosition(fusee.Position);
-                Size size = new Size(Scale.RealToScreenDistance(fusee.RayonHover) * 2, Scale.RealToScreenDistance(fusee.RayonHover) * 2);
-                Rectangle rect = new Rectangle(center.X - size.Width / 2, center.Y - size.Height / 2, size.Width, size.Height);
-                Brush b;
-
-                if (fusee.Couleur == Color.White)
-                {
-                    g.FillEllipse(Brushes.White, rect);
-                    b = new SolidBrush(Plateau.CouleurGaucheBleu);
-                    g.FillPie(b, rect, -135, 90);
-                    b.Dispose();
-                    b = new SolidBrush(Plateau.CouleurDroiteJaune);
-                    g.FillPie(b, rect, +45, 90);
-                    b.Dispose();
-                }
-                else
-                {
-                    b = new SolidBrush(fusee.Couleur);
-                    g.FillEllipse(b, rect);
-                    b.Dispose();
-                }
-
-                if (fusee.Hover)
-                    g.DrawEllipse(Pens.White, rect);
-                else
-                    g.DrawEllipse(Pens.Black, rect);
-            }
-        }
-
-        private static void DessineTrajectoire(Trajectoire traj, Graphics g)
-        {
-            Point pointNodePrec = traj.PointsPassage[0];
-
-            using (Pen penR = new Pen(Color.Red, 2), penB = new Pen(Color.White, 4))
-            {
-                for (int i = 0; i < traj.PointsPassage.Count; i++)
-                {
-                    Point pointNode = Scale.RealToScreenPosition(traj.PointsPassage[i]);
-                    if (i >= 1)
-                    {
-                        g.DrawLine(penB, pointNode, pointNodePrec);
-                        g.DrawLine(penR, pointNode, pointNodePrec);
-                    }
-                    pointNodePrec = pointNode;
-                }
-                for (int i = 0; i < traj.PointsPassage.Count; i++)
-                {
-                    Point pointNode = Scale.RealToScreenPosition(traj.PointsPassage[i]);
-                    g.FillEllipse(brushRouge, new Rectangle(pointNode.X - 4, pointNode.Y - 4, 8, 8));
-                    g.DrawEllipse(penBlanc, new Rectangle(pointNode.X - 4, pointNode.Y - 4, 8, 8));
-                }
-            }
-        }
-
         private static void DessineHistoriqueTrajectoire(Robot robot, Graphics g)
         {
             for (int i = 1; i < Robots.GrosRobot.HistoriqueCoordonnees.Count; i++)
             {
                 int couleur = (int)(i * 1200 / robot.HistoriqueCoordonnees.Count * 255 / 1200);
-                PointReel point = Scale.RealToScreenPosition(robot.HistoriqueCoordonnees[i].Coordonnees);
-                PointReel pointPrec = Scale.RealToScreenPosition(robot.HistoriqueCoordonnees[i - 1].Coordonnees);
-                using (Pen p = new Pen(Color.FromArgb(couleur, couleur, couleur)))
-                {
-                    g.DrawLine(p, (int)point.X, (int)point.Y, (int)pointPrec.X, (int)pointPrec.Y);
-                }
-                using (Brush b = new SolidBrush(Color.FromArgb(couleur, couleur, couleur)))
-                {
-                    g.FillEllipse(b, (int)point.X - 3, (int)point.Y - 3, 6, 6);
-                    g.DrawEllipse(penNoir, (int)point.X - 3, (int)point.Y - 3, 6, 6);
-                }
-            }
-        }
+                Color pointColor = Color.FromArgb(couleur, couleur, couleur);
 
-        private static void DessineCoutMouvements(Robot robot, Graphics g)
-        {
-            Font police = new Font("Calibri", 8);
-            List<Mouvements.Mouvement> mouvements = Plateau.Enchainement.ListeMouvements;
+                PointReel point = robot.HistoriqueCoordonnees[i].Coordonnees;
+                PointReel pointPrec = robot.HistoriqueCoordonnees[i - 1].Coordonnees;
 
-            foreach (Mouvement m in mouvements)
-            {
-                Point point;
-
-                if (m.Element != null)
-                {
-                    Point pointElement = Scale.RealToScreenPosition(m.Element.Position);
-
-                    if (m.Cout != double.MaxValue && !double.IsInfinity(m.Cout))
-                    {
-                        Point pointProche = Scale.RealToScreenPosition(m.PositionProche.Coordonnees);
-
-                        foreach (Position p in m.Positions)
-                        {
-                            point = Scale.RealToScreenPosition(p.Coordonnees);
-                            if (point != pointProche)
-                            {
-                                g.FillEllipse(brushRouge, point.X - 2, point.Y - 2, 4, 4);
-                                g.DrawLine(penRougePointille, point, pointElement);
-                            }
-                        }
-
-                        g.FillEllipse(brushBlanc, pointProche.X - 2, pointProche.Y - 2, 4, 4);
-                        g.DrawLine(penBlanc, pointProche, pointElement);
-                        g.DrawString(Math.Round(m.Cout) + "", police, brushBlanc, pointProche);
-                    }
-                    else
-                    {
-                        if (!m.BonneCouleur())
-                        {
-                            foreach (Position p in m.Positions)
-                            {
-                                point = Scale.RealToScreenPosition(p.Coordonnees);
-                                g.FillEllipse(brushBlancTransparent, point.X - 2, point.Y - 2, 4, 4);
-                                g.DrawLine(penBlancTransparent, point, pointElement);
-                            }
-                        }
-                        else
-                        {
-                            foreach (Position p in m.Positions)
-                            {
-                                point = Scale.RealToScreenPosition(p.Coordonnees);
-                                g.FillEllipse(brushNoir, point.X - 2, point.Y - 2, 4, 4);
-                                g.DrawLine(penNoirPointille, point, pointElement);
-                            }
-                        }
-                    }
-                }
+                new Segment(point, pointPrec).Paint(g, pointColor, 1, Color.Transparent, Scale);
+                point.Paint(g, Color.Black, 3, pointColor, Scale);
             }
         }
 
@@ -729,13 +503,13 @@ namespace GoBot
         {
             // Dessin du graph
             //robot.SemGraph.WaitOne();
-            Pen pen = robot == Robots.GrosRobot ? penBleuFin : penBleuClairFin;
-            Brush brush = robot == Robots.GrosRobot ? brushBleu : brushBleuClair;
+            Pen pen = robot == Robots.GrosRobot ? Pens.Blue : Pens.LightBlue;
+            Brush brush = robot == Robots.GrosRobot ? Brushes.Blue : Brushes.LightBlue;
 
             Synchronizer.Lock(robot.Graph);
 
             // Dessin des arcs
-            if ((robot == Robots.GrosRobot ? AfficheGraphArretesGros : AfficheGraphArretesPetit))
+            if (AfficheGraphArretes)
                 foreach (Arc a in robot.Graph.Arcs)
                 {
                     if (a.Passable != false)
@@ -744,13 +518,13 @@ namespace GoBot
                     }
                 }
 
-            if ((robot == Robots.GrosRobot ? AfficheGraphGros : AfficheGraphPetit))
+            if (AfficheGraph)
                 // Dessin des noeuds
                 foreach (Node n in robot.Graph.Nodes)
                 {
                     Point pointNode = Scale.RealToScreenPosition(new PointReel(n.Position.X, n.Position.Y));
                     g.FillEllipse(brush, new Rectangle(pointNode.X - 3, pointNode.Y - 3, 6, 6));
-                    g.DrawEllipse(n.Passable ? penNoir : penRougeFin, new Rectangle(pointNode.X - 3, pointNode.Y - 3, 6, 6));
+                    g.DrawEllipse(n.Passable ? Pens.Black : Pens.Red, new Rectangle(pointNode.X - 3, pointNode.Y - 3, 6, 6));
                 }
 
             Synchronizer.Unlock(robot.Graph);
@@ -791,7 +565,7 @@ namespace GoBot
 
             IForme obstacleProbleme = PathFinder.ObstacleProbleme;
             if (obstacleProbleme != null)
-                DessinerForme(g, Color.Red, 10, obstacleProbleme);
+                obstacleProbleme.Paint(g, Color.Red, 10, Color.Transparent, Scale);
 
             /*if (robot.CheminEnCoursNoeuds != null)
                 foreach (Node n in robot.CheminEnCoursNoeuds)
@@ -827,88 +601,5 @@ namespace GoBot
 
             return returnBitmap;
         }
-
-        #region Dessin des formes
-
-        public static void DessinerForme(Graphics graphics, Color color, int epaisseur, IForme inconnue, bool plein = false)
-        {
-            Type typeForme = inconnue.GetType();
-
-            if (typeForme.IsAssignableFrom(typeof(Droite)))
-                DessinerForme(graphics, color, epaisseur, (Droite)inconnue);
-            else if (typeForme.IsAssignableFrom(typeof(Segment)))
-                DessinerForme(graphics, color, epaisseur, (Segment)inconnue);
-            else if (typeForme.IsAssignableFrom(typeof(Cercle)))
-                DessinerForme(graphics, color, epaisseur, (Cercle)inconnue, plein);
-            else if (typeForme.IsAssignableFrom(typeof(Polygone)) || typeForme.IsSubclassOf(typeof(Polygone)))
-                DessinerForme(graphics, color, epaisseur, (Polygone)inconnue);
-            else
-                throw new NotImplementedException("Je ne sais pas dessiner cette forme : " + inconnue.GetType().ToString());
-        }
-
-        private static void DessinerForme(Graphics graphics, Color color, int epaisseur, Cercle Cercle, bool plein = false)
-        {
-            Point positionEcran = Scale.RealToScreenPosition(Cercle.Centre);
-            int rayonEcran = Scale.RealToScreenDistance(Cercle.Rayon);
-
-            if (!plein)
-                using (Pen pen = new Pen(color, epaisseur))
-                    graphics.DrawEllipse(pen, new Rectangle(positionEcran.X - rayonEcran, positionEcran.Y - rayonEcran, rayonEcran * 2, rayonEcran * 2));
-            else
-                using (SolidBrush brush = new SolidBrush(color))
-                    graphics.FillEllipse(brush, new Rectangle(positionEcran.X - rayonEcran, positionEcran.Y - rayonEcran, rayonEcran * 2, rayonEcran * 2));
-        }
-
-        private static void DessinerForme(Graphics graphics, Color color, int epaisseur, Segment segment)
-        {
-            Point positionEcranDepart = Scale.RealToScreenPosition(segment.Debut);
-            Point positionEcranFin = Scale.RealToScreenPosition(segment.Fin);
-
-            using (Pen pen = new Pen(color, epaisseur))
-                graphics.DrawLine(pen, positionEcranDepart.X, positionEcranDepart.Y, positionEcranFin.X, positionEcranFin.Y);
-        }
-
-        private static void DessinerForme(Graphics graphics, Color color, int epaisseur, Droite droite)
-        {
-            // Un peu douteux mais bon
-            PointReel p1 = droite.getCroisement(new Droite(new PointReel(-10000, -10000), new PointReel(-10001, 10000)));
-            PointReel p2 = droite.getCroisement(new Droite(new PointReel(10000, -10000), new PointReel(10001, 10000)));
-
-            if (p1 == null || p2 == null)
-            {
-                p1 = droite.getCroisement(new Droite(new PointReel(-10000, -10000), new PointReel(10000, -10001)));
-                p2 = droite.getCroisement(new Droite(new PointReel(10000, 10000), new PointReel(-10000, 10001)));
-            }
-
-            if (p1 != null && p2 != null)
-                DessinerForme(graphics, color, epaisseur, new Segment(p1, p2));
-        }
-
-        private static void DessinerForme(Graphics graphics, Color color, int epaisseur, Polygone polygone, bool plein = false, bool realToScreen = true)
-        {
-            if (polygone.Cotes.Count == 0)
-                return;
-
-            Point[] listePoints = new Point[polygone.Cotes.Count + 1];
-
-            listePoints[0] = realToScreen ? Scale.RealToScreenPosition(polygone.Cotes[0].Debut) : (Point)polygone.Cotes[0].Debut;
-
-            for (int i = 0; i < polygone.Cotes.Count; i++)
-            {
-                Segment s = polygone.Cotes[i];
-                listePoints[i] = realToScreen ? Scale.RealToScreenPosition(s.Fin) : (Point)s.Fin;
-            }
-
-            listePoints[listePoints.Length - 1] = listePoints[0];
-
-            if (!plein)
-                using (Pen pen = new Pen(color, epaisseur))
-                    graphics.DrawPolygon(pen, listePoints);
-            else
-                using (SolidBrush brush = new SolidBrush(color))
-                    graphics.FillPolygon(brush, listePoints, System.Drawing.Drawing2D.FillMode.Winding);
-        }
-
-        #endregion
     }
 }

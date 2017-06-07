@@ -7,6 +7,7 @@ using GoBot.Calculs.Formes;
 using GoBot.ElementsJeu;
 using System.Drawing;
 using GoBot.PathFinding;
+using System.Drawing.Drawing2D;
 
 namespace GoBot.Mouvements
 {
@@ -153,6 +154,74 @@ namespace GoBot.Mouvements
 
                 return cout * 10000;
             }
+        }
+
+        public void Paint(Graphics g, PaintScale scale)
+        {
+            Font font = new Font("Calibri", 8);
+
+            Pen penRedDot = new Pen(Color.Red);
+            penRedDot.DashStyle = DashStyle.Dot;
+
+            Pen penBlackDot = new Pen(Color.Black);
+            penBlackDot.DashStyle = DashStyle.Dot;
+
+            Pen penTransparent = new Pen(Color.FromArgb(40, Color.Black));
+
+            Brush brushTransparent = new SolidBrush(Color.FromArgb(40, Color.Black));
+
+            Point point;
+
+            if (Element != null)
+            {
+                Point pointElement = scale.RealToScreenPosition(Element.Position);
+
+                if (Cout != double.MaxValue && !double.IsInfinity(Cout))
+                {
+                    Point pointProche = scale.RealToScreenPosition(PositionProche.Coordonnees);
+
+                    foreach (Position p in Positions)
+                    {
+                        point = scale.RealToScreenPosition(p.Coordonnees);
+                        if (point != pointProche)
+                        {
+                            g.FillEllipse(Brushes.Red, point.X - 2, point.Y - 2, 4, 4);
+                            g.DrawLine(penRedDot, point, pointElement);
+                        }
+                    }
+
+                    g.FillEllipse(Brushes.White, pointProche.X - 2, pointProche.Y - 2, 4, 4);
+                    g.DrawLine(Pens.White, pointProche, pointElement);
+                    g.DrawString(Math.Round(Cout) + "", font, Brushes.White, pointProche);
+                }
+                else
+                {
+                    if (!BonneCouleur())
+                    {
+                        foreach (Position p in Positions)
+                        {
+                            point = scale.RealToScreenPosition(p.Coordonnees);
+                            g.FillEllipse(brushTransparent, point.X - 2, point.Y - 2, 4, 4);
+                            g.DrawLine(penTransparent, point, pointElement);
+                        }
+                    }
+                    else
+                    {
+                        foreach (Position p in Positions)
+                        {
+                            point = scale.RealToScreenPosition(p.Coordonnees);
+                            g.FillEllipse(Brushes.Black, point.X - 2, point.Y - 2, 4, 4);
+                            g.DrawLine(penBlackDot, point, pointElement);
+                        }
+                    }
+                }
+            }
+
+            brushTransparent.Dispose();
+            penTransparent.Dispose();
+            penBlackDot.Dispose();
+            penRedDot.Dispose();
+            font.Dispose();
         }
     }
 }

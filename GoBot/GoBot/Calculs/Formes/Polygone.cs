@@ -837,5 +837,34 @@ namespace GoBot.Calculs.Formes
 
         #endregion
 
+        #region Peinture
+
+        public void Paint(Graphics g, Color outlineColor, int outlineWidth, Color fillColor, PaintScale scale)
+        {
+            if (Cotes.Count == 0)
+                return;
+
+            Point[] listePoints = new Point[Cotes.Count + 1];
+
+            listePoints[0] = scale.RealToScreenPosition(Cotes[0].Debut);
+
+            for (int i = 0; i < Cotes.Count; i++)
+            {
+                Segment s = Cotes[i];
+                listePoints[i] = scale.RealToScreenPosition(s.Fin);
+            }
+
+            listePoints[listePoints.Length - 1] = listePoints[0];
+            
+            if (outlineColor != Color.Transparent)
+                using (Pen pen = new Pen(outlineColor, outlineWidth))
+                    g.DrawPolygon(pen, listePoints);
+
+            if (fillColor != Color.Transparent)
+                using (SolidBrush brush = new SolidBrush(fillColor))
+                    g.FillPolygon(brush, listePoints, System.Drawing.Drawing2D.FillMode.Winding);
+        }
+
+        #endregion
     }
 }

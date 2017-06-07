@@ -28,7 +28,7 @@ namespace GoBot.Enchainements
             }
         }
 
-        public List<Mouvement> ListeMouvements = new List<Mouvement>();
+        public List<Mouvement> ListeMouvements { get; protected set; } = new List<Mouvement>();
 
         static Enchainement()
         {

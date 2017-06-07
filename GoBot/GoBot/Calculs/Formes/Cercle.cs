@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Linq;
 using System.Text;
 
@@ -134,7 +135,7 @@ namespace GoBot.Calculs.Formes
         #endregion
 
         #region Distance
-        
+
         /// <summary>
         /// Retourne la distance minimale entre le Cercle courant et la IForme donnée
         /// </summary>
@@ -203,9 +204,9 @@ namespace GoBot.Calculs.Formes
         }
 
         #endregion
-    
+
         #region Contient
-        
+
         /// <summary>
         /// Teste si le Cercle courant contient la IForme donnée
         /// </summary>
@@ -375,7 +376,7 @@ namespace GoBot.Calculs.Formes
         #endregion
 
         #region Transformations
-        
+
         public Cercle Translation(double dx, double dy)
         {
             return new Cercle(centre.Translation(dx, dy), rayon);
@@ -388,5 +389,22 @@ namespace GoBot.Calculs.Formes
 
         #endregion
 
+        #region Peinture
+
+        public void Paint(Graphics g, Color outlineColor, int outlineWidth, Color fillColor, PaintScale scale)
+        {
+            Point positionEcran = scale.RealToScreenPosition(Centre);
+            int rayonEcran = scale.RealToScreenDistance(Rayon);
+
+            if (outlineColor != Color.Transparent)
+                using (Pen pen = new Pen(outlineColor, outlineWidth))
+                    g.DrawEllipse(pen, new Rectangle(positionEcran.X - rayonEcran, positionEcran.Y - rayonEcran, rayonEcran * 2, rayonEcran * 2));
+
+            if (fillColor != Color.Transparent)
+                using (SolidBrush brush = new SolidBrush(fillColor))
+                    g.FillEllipse(brush, new Rectangle(positionEcran.X - rayonEcran, positionEcran.Y - rayonEcran, rayonEcran * 2, rayonEcran * 2));
+        }
+
+        #endregion
     }
 }

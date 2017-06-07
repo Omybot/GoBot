@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
@@ -34,7 +35,10 @@ namespace GoBot.Calculs.Formes
         double Surface { get; }
 
         PointReel BaryCentre { get; }
+
+        void Paint(Graphics g, Color outlineColor, int outlineWidth, Color fillColor, PaintScale scale);
     }
+
     public static class IFormeExtension
     {
         public static IForme Translation(this IForme forme, double dx, double dy)

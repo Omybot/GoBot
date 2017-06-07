@@ -4,10 +4,11 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
 using System.Text;
+using System.Collections;
 
 namespace GoBot.ElementsJeu
 {
-    public class Elements
+    public class Elements : IEnumerable<ElementJeu>
     {
         public Elements()
         {
@@ -39,7 +40,32 @@ namespace GoBot.ElementsJeu
         }
 
         public List<Fusee> Fusees { get; protected set; }
+
         public List<Module> Modules { get; protected set; }
+
         public List<ZoneDeposeModules> ZonesDepose { get; protected set; }
+
+        public IEnumerable<ElementJeu> AllElements
+        {
+            get
+            {
+                IEnumerable<ElementJeu> elements = Enumerable.Empty<ElementJeu>();
+                elements = elements.Concat(Fusees);
+                elements = elements.Concat(Modules);
+                elements = elements.Concat(ZonesDepose);
+
+                return elements;
+            }
+        }
+
+        public IEnumerator<ElementJeu> GetEnumerator()
+        {
+            return AllElements.GetEnumerator();
+        }
+
+        IEnumerator IEnumerable.GetEnumerator()
+        {
+            return AllElements.GetEnumerator();
+        }
     }
 }

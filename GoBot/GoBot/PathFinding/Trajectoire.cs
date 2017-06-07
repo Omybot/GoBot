@@ -3,6 +3,7 @@ using GoBot.Calculs;
 using GoBot.Calculs.Formes;
 using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Linq;
 using System.Text;
 
@@ -91,6 +92,31 @@ namespace GoBot.PathFinding
                     duree += action.Duree;
 
                 return duree;
+            }
+        }
+
+        public void Paint(Graphics g, PaintScale scale)
+        {
+            Point pointNodePrec = PointsPassage[0];
+
+            using (Pen penR = new Pen(Color.Red, 2), penB = new Pen(Color.White, 4))
+            {
+                for (int i = 0; i < PointsPassage.Count; i++)
+                {
+                    Point pointNode = scale.RealToScreenPosition(PointsPassage[i]);
+                    if (i >= 1)
+                    {
+                        g.DrawLine(penB, pointNode, pointNodePrec);
+                        g.DrawLine(penR, pointNode, pointNodePrec);
+                    }
+                    pointNodePrec = pointNode;
+                }
+                for (int i = 0; i < PointsPassage.Count; i++)
+                {
+                    Point pointNode = scale.RealToScreenPosition(PointsPassage[i]);
+                    g.FillEllipse(Brushes.Red, new Rectangle(pointNode.X - 4, pointNode.Y - 4, 8, 8));
+                    g.DrawEllipse(Pens.White, new Rectangle(pointNode.X - 4, pointNode.Y - 4, 8, 8));
+                }
             }
         }
     }

@@ -24,5 +24,10 @@ namespace GoBot.ElementsJeu
                 return 6 - ModulesPlaces;
             }
         }
+
+        //public override void Paint(Graphics g, PaintScale scale)
+        //{
+        //    // TODO2017 dessiner les modules posés
+        //}
     }
 }

@@ -115,7 +115,7 @@ namespace GoBot.Devices
                     PointReel pos = new PointReel(refPosition.Coordonnees.X - sin, refPosition.Coordonnees.Y - cos);
 
                     int marge = 20; // Marge en mm de distance de detection à l'exterieur de la table (pour ne pas jeter les mesures de la bordure qui ne collent pas parfaitement)
-                    if (!limiteTable || (pos.X > -marge && pos.X < Plateau.LongueurPlateau + marge && pos.Y > -marge && pos.Y < Plateau.LargeurPlateau + marge))
+                    if (!limiteTable || (pos.X > -marge && pos.X < Plateau.Largeur + marge && pos.Y > -marge && pos.Y < Plateau.Hauteur + marge))
                         positions.Add(pos);
                 }
             }

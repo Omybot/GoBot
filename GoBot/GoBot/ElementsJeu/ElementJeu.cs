@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using GoBot.Calculs.Formes;
+using System.Drawing;
 
 namespace GoBot.ElementsJeu
 {
@@ -45,5 +46,7 @@ namespace GoBot.ElementsJeu
             Position = position;
             Ramasse = false;
         }
+
+        public abstract void Paint(Graphics g, PaintScale scale);
     }
 }

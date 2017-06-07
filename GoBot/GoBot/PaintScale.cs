@@ -6,7 +6,7 @@ namespace GoBot
     /// <summary>
     /// CLasse permettant de convertir des coordonnées réelles (sur l'aire de jeu) en coordonnées écran (sur l'image de l'aire de jeu)
     /// </summary>
-    class PaintScale
+    public class PaintScale
     {
         #region Conversion coordonnées réelles / écran
 
@@ -54,7 +54,7 @@ namespace GoBot
 
         public Point RealToScreenPosition(PointF value)
         {
-            return ScreenToRealPosition(new PointReel(value.X, value.Y));
+            return RealToScreenPosition(new PointReel(value.X, value.Y));
         }
 
         public Size RealToScreenSize(SizeF sz)

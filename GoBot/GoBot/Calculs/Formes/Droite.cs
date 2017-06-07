@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Linq;
 using System.Text;
 
@@ -555,5 +556,26 @@ namespace GoBot.Calculs.Formes
                 return new Droite(newA, newB);
             }
         }
+
+
+        #region Peinture
+
+        public virtual void Paint(Graphics g, Color outlineColor, int outlineWidth, Color fillColor, PaintScale scale)
+        {
+            // Un peu douteux mais bon
+            PointReel p1 = getCroisement(new Droite(new PointReel(-10000, -10000), new PointReel(-10001, 10000)));
+            PointReel p2 = getCroisement(new Droite(new PointReel(10000, -10000), new PointReel(10001, 10000)));
+
+            if (p1 == null || p2 == null)
+            {
+                p1 = getCroisement(new Droite(new PointReel(-10000, -10000), new PointReel(10000, -10001)));
+                p2 = getCroisement(new Droite(new PointReel(10000, 10000), new PointReel(-10000, 10001)));
+            }
+
+            if (p1 != null && p2 != null)
+                new Segment(p1, p2).Paint(g, outlineColor, outlineWidth, fillColor, scale);
+        }
+
+        #endregion
     }
 }
