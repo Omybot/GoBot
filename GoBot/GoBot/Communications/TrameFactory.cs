@@ -189,17 +189,17 @@ namespace GoBot.Communications
             return retour;
         }
 
-        static public Trame OffsetPos(int offsetX, int offsetY, Angle offsetTeta, Robot robot)
+        static public Trame OffsetPos(Position pos, Robot robot)
         {
             byte[] tab = new byte[8];
             tab[0] = (byte)robot.Carte;
             tab[1] = (byte)FonctionTrame.AsserEnvoiPositionAbsolue;
-            tab[2] = ByteDivide(offsetX, true);
-            tab[3] = ByteDivide(offsetX, false);
-            tab[4] = ByteDivide(offsetY, true);
-            tab[5] = ByteDivide(offsetY, false);
-            tab[6] = ByteDivide((int)(offsetTeta.AngleDegres * 100), true);
-            tab[7] = ByteDivide((int)(offsetTeta.AngleDegres * 100), false);
+            tab[2] = ByteDivide((int)pos.Coordonnees.X, true);
+            tab[3] = ByteDivide((int)pos.Coordonnees.X, false);
+            tab[4] = ByteDivide((int)pos.Coordonnees.Y, true);
+            tab[5] = ByteDivide((int)pos.Coordonnees.Y, false);
+            tab[6] = ByteDivide((int)(pos.Angle.AngleDegresPositif * 100), true);
+            tab[7] = ByteDivide((int)(pos.Angle.AngleDegresPositif * 100), false);
 
             Trame retour = new Trame(tab);
             return retour;

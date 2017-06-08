@@ -457,7 +457,7 @@ namespace GoBot
         public override void ReglerOffsetAsserv(Position newPosition)
         {
             Position.Copie(newPosition);
-            Trame trame = TrameFactory.OffsetPos((int)Position.Coordonnees.X, (int)Position.Coordonnees.Y, Position.Angle, this);
+            Trame trame = TrameFactory.OffsetPos(newPosition, this);
             Connexion.SendMessage(trame);
             ChangerPosition(Position);
         }
