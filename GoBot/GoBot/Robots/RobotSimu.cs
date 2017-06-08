@@ -411,12 +411,6 @@ namespace GoBot
             PositionCible = null;
         }
 
-        public override void BougeServo(ServomoteurID servo, int position)
-        {
-            base.BougeServo(servo, position);
-            Historique.AjouterAction(new ActionServo(this, position, servo));
-        }
-
         public override bool DemandeCapteurOnOff(CapteurOnOffID capteur, bool attendre = true)
         {
             // TODO

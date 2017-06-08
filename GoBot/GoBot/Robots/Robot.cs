@@ -238,8 +238,17 @@ namespace GoBot
             }
         }
 
+        private MinimumDelay _delayServo = new MinimumDelay(10);
+
         public virtual void BougeServo(ServomoteurID servo, int position)
         {
+            //TODO2018 : améliorer cette tempo ?
+            // Testé sur AX12 et sur pololu, c'est vraiment nécessaire
+            // Attention sur pololu ca dépend des servos, desfois ca mache sans tempo...
+            _delayServo.Wait();
+
+            Historique.AjouterAction(new ActionServo(this, position, servo));
+
             if (ServoActive.ContainsKey(servo))
             {
                 /*
@@ -249,9 +258,8 @@ namespace GoBot
                     ServoActive[servo] = true;
                 else
                     ServoActive[servo] = false;*/
-            }
 
-            Thread.Sleep(10); // TODO2018 DEHORS !
+            }
         }
 
         public abstract void ServoVitesse(ServomoteurID servo, int vitesse);

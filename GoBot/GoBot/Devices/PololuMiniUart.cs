@@ -6,6 +6,7 @@ using Pololu.Usc;
 using Pololu.UsbWrapper;
 using GoBot.Communications;
 using System.Threading;
+using System.Diagnostics;
 
 namespace GoBot.Devices
 {
@@ -19,8 +20,6 @@ namespace GoBot.Devices
             serialBytes[2] = (byte)(target & 0x7F); // Second byte holds the lower 7 bits of target.
             serialBytes[3] = (byte)((target >> 7) & 0x7F);   // Third data byte holds the bits 7-13 of target.
 
-            Connexions.ConnexionIO.SendMessage(TrameFactory.EnvoyerUart(Carte.RecIO, new Trame(serialBytes)));
-            Thread.Sleep(2);
             Connexions.ConnexionIO.SendMessage(TrameFactory.EnvoyerUart(Carte.RecIO, new Trame(serialBytes)));
         }
 

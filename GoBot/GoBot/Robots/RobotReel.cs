@@ -308,8 +308,11 @@ namespace GoBot
                     }
                     break;
                 case FonctionTrame.RetourCapteurCouleur:
-                    ChangeCouleurCapteur((CapteurCouleurID)trameRecue[2], Color.FromArgb(trameRecue[3], trameRecue[4], trameRecue[5]));
-                    CapteursCouleur[(CapteurCouleurID)trameRecue[2]] = Color.FromArgb(trameRecue[3], trameRecue[4], trameRecue[5]);
+                    //TODO2018 : multiplier par 2 pour obtenir de belles couleurs ?
+                    Color couleur = Color.FromArgb(Math.Min(255, trameRecue[3]*1), Math.Min(255, trameRecue[4]*1), Math.Min(255, trameRecue[5] * 1));
+
+                    ChangeCouleurCapteur((CapteurCouleurID)trameRecue[2], couleur);
+                    CapteursCouleur[(CapteurCouleurID)trameRecue[2]] = couleur;
                     if (SemaphoresCouleur[(CapteurCouleurID)trameRecue[2]] != null)
                         SemaphoresCouleur[(CapteurCouleurID)trameRecue[2]].Release();
                     break;
@@ -629,7 +632,6 @@ namespace GoBot
                 Trame trame = TrameFactory.ServoEnvoiPositionCible(servo, position);
                 Connexions.ConnexionIO.SendMessage(trame);
             }
-            Historique.AjouterAction(new ActionServo(this, position, servo));
         }
 
         public override void DemandeValeursAnalogiques(Carte carte, bool attendre = true)
