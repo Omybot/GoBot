@@ -496,16 +496,19 @@ namespace GoBot
 
         private static void DessineHistoriqueTrajectoire(Robot robot, Graphics g)
         {
-            for (int i = 1; i < Robots.GrosRobot.HistoriqueCoordonnees.Count; i++)
+            lock (Robots.GrosRobot.HistoriqueCoordonnees)
             {
-                int couleur = (int)(i * 1200 / robot.HistoriqueCoordonnees.Count * 255 / 1200);
-                Color pointColor = Color.FromArgb(couleur, couleur, couleur);
+                for (int i = 1; i < Robots.GrosRobot.HistoriqueCoordonnees.Count; i++)
+                {
+                    int couleur = (int)(i * 1200 / robot.HistoriqueCoordonnees.Count * 255 / 1200);
+                    Color pointColor = Color.FromArgb(couleur, couleur, couleur);
 
-                PointReel point = robot.HistoriqueCoordonnees[i].Coordonnees;
-                PointReel pointPrec = robot.HistoriqueCoordonnees[i - 1].Coordonnees;
+                    PointReel point = robot.HistoriqueCoordonnees[i].Coordonnees;
+                    PointReel pointPrec = robot.HistoriqueCoordonnees[i - 1].Coordonnees;
 
-                new Segment(point, pointPrec).Paint(g, pointColor, 1, Color.Transparent, Scale);
-                point.Paint(g, Color.Black, 3, pointColor, Scale);
+                    new Segment(point, pointPrec).Paint(g, pointColor, 1, Color.Transparent, Scale);
+                    point.Paint(g, Color.Black, 3, pointColor, Scale);
+                }
             }
         }
 

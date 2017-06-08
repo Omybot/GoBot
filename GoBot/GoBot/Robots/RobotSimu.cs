@@ -35,7 +35,7 @@ namespace GoBot
             get { return position; }
             set { position = value; Destination = value; }
         }
-        
+
         public RobotSimu(IDRobot idRobot) : base()
         {
             IDRobot = idRobot;
@@ -49,7 +49,7 @@ namespace GoBot
 
             SemDeplacement = new Semaphore(1, 1);
             SensDep = SensAR.Avant;
-            
+
             Nom = "GrosRobot";
             RecallageEnCours = false;
             Rand = new Random(DateTime.Now.Millisecond);
@@ -82,13 +82,12 @@ namespace GoBot
 
         void timerPositions_Elapsed(object sender, ElapsedEventArgs e)
         {
-            HistoriqueCoordonnees.Add(new Position(new Angle(Position.Angle), new PointReel(Position.Coordonnees.X, Position.Coordonnees.Y)));
-            if (HistoriqueCoordonnees.Count > 1200)
+            lock (HistoriqueCoordonnees)
             {
-                semHistoriquePosition.WaitOne();
+                HistoriqueCoordonnees.Add(new Position(new Angle(Position.Angle), new PointReel(Position.Coordonnees.X, Position.Coordonnees.Y)));
+
                 while (HistoriqueCoordonnees.Count > 1200)
                     HistoriqueCoordonnees.RemoveAt(0);
-                semHistoriquePosition.Release();
             }
         }
 
@@ -228,7 +227,7 @@ namespace GoBot
                         VitesseActuelle = Math.Min(SpeedConfig.LineSpeed, VitesseActuelle + SpeedConfig.LineAcceleration / (1000.0 / intervalle));
                     else
                         VitesseActuelle = VitesseActuelle - SpeedConfig.LineDeceleration / (1000.0 / intervalle);
-                    
+
                     if (Destination.Coordonnees.Distance(Position.Coordonnees) <= distance)
                     {
                         VitesseActuelle = 0;
@@ -271,7 +270,7 @@ namespace GoBot
 
             double depX = distance * Math.Cos(Position.Angle.AngleRadians);
             double depY = distance * Math.Sin(Position.Angle.AngleRadians);
-            
+
             Destination = new Position(Position.Angle, new PointReel(Position.Coordonnees.X + depX, Position.Coordonnees.Y + depY));
 
             // TODO2018 attente avec un sémaphore ?
@@ -289,7 +288,7 @@ namespace GoBot
         public override void PivotGauche(Angle angle, bool attendre = true)
         {
             base.PivotGauche(angle, attendre);
-            
+
             angle = Math.Round(angle, 2);
             Historique.AjouterAction(new ActionPivot(this, angle, SensGD.Gauche));
             Destination = new Position(new Angle(Position.Angle.AngleDegres - angle, AnglyeType.Degre), new PointReel(Position.Coordonnees.X, Position.Coordonnees.Y));
@@ -303,7 +302,7 @@ namespace GoBot
         public override void PivotDroite(Angle angle, bool attendre = true)
         {
             base.PivotDroite(angle, attendre);
-            
+
             angle = Math.Round(angle, 2);
             Historique.AjouterAction(new ActionPivot(this, angle, SensGD.Droite));
             Destination = new Position(new Angle(Position.Angle.AngleDegres + angle, AnglyeType.Degre), new PointReel(Position.Coordonnees.X, Position.Coordonnees.Y));
@@ -367,7 +366,7 @@ namespace GoBot
         {
             RecallageEnCours = true;
             Historique.AjouterAction(new ActionRecallage(this, sens));
-            
+
             while (Position.Coordonnees.X - Longueur / 2 > 0 &&
                 Position.Coordonnees.X + Longueur / 2 < Plateau.Largeur &&
                 Position.Coordonnees.Y - Longueur / 2 > 0 &&
@@ -486,11 +485,6 @@ namespace GoBot
         }
 
         public override void Reset()
-        {
-            // TODO
-        }
-
-        public override void ArmerJack()
         {
             // TODO
         }

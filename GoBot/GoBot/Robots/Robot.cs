@@ -45,21 +45,17 @@ namespace GoBot
 
         // PathFinding
         public Graph Graph { get; set; }
-        public Semaphore SemGraph { get; set; }
         public bool TrajectoireEchouee { get; set; }
         private bool TrajectoireCoupee { get; set; }
 
         private Thread threadTrajectoire;
         private Semaphore semTrajectoire;
 
-        public Semaphore semHistoriquePosition;
-
         public Trajectoire TrajectoireEnCours = null;
 
-        private static Semaphore semDeblocage = new Semaphore(1, 1);
-
         // Actionneurs / Capteurs
-        
+
+        public bool JackArme { get; protected set; } = false;
         public Dictionary<ServomoteurID, bool> ServoActive { get; set; }
         public Dictionary<MoteurID, bool> MoteurTourne { get; set; }
 
@@ -109,7 +105,11 @@ namespace GoBot
         public abstract void AlimentationPuissance(bool on);
         public abstract void Reset();
 
-        public abstract void ArmerJack();
+        public void ArmerJack()
+        {
+            JackArme = true;
+        }
+
         public abstract bool GetJack();
         public abstract String GetMesureLidar(LidarID lidar, int timeout, out Position refPosition);
         public abstract Color GetCouleurEquipe(bool historique = true);
@@ -251,7 +251,7 @@ namespace GoBot
                     ServoActive[servo] = false;*/
             }
 
-            Thread.Sleep(10);
+            Thread.Sleep(10); // TODO2018 DEHORS !
         }
 
         public abstract void ServoVitesse(ServomoteurID servo, int vitesse);
@@ -297,13 +297,9 @@ namespace GoBot
             foreach (MoteurID moteur in Enum.GetValues(typeof(MoteurID)))
                 MoteurTourne.Add(moteur, false);
 
-            SemGraph = new Semaphore(1, 1);
-
             BatterieVoltage = 0;
             TrajectoireEchouee = false;
             TrajectoireCoupee = false;
-
-            semHistoriquePosition = new Semaphore(1, int.MaxValue);
         }
 
         public void Lent()
@@ -347,7 +343,7 @@ namespace GoBot
             Position destination = new Position(teta, new PointReel(x, y));
 
             Trajectoire traj = PathFinder.ChercheTrajectoire(Graph, Plateau.ListeObstacles, Position, destination, Rayon, 130);
-            Console.WriteLine(Plateau.ListeObstacles.Count + " obstacles");
+
             if (traj == null)
                 return false;
 

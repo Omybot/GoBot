@@ -1,21 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Timers;
-using GoBot.Actions;
-using System.Threading;
+﻿using GoBot.Actions;
 using GoBot.Calculs;
 using GoBot.Calculs.Formes;
-using System.Drawing;
-using System.Windows.Forms;
 using GoBot.Communications;
-using GoBot.Actionneurs;
 using GoBot.Devices;
-using Pololu.Usc;
-using Pololu.UsbWrapper;
-using GoBot.Enchainements;
+using System;
+using System.Collections.Generic;
+using System.Drawing;
 using System.Text.RegularExpressions;
+using System.Threading;
 
 namespace GoBot
 {
@@ -31,14 +23,8 @@ namespace GoBot
 
         public override Position Position { get; set; }
 
-        public Enchainement Enchainement { get; set; }
-        public Color Couleur;
-
-        private bool jackArme;
-
         public RobotReel(IDRobot idRobot, Carte carte) : base()
         {
-            jackArme = false;
             AsserActif = true;
             Carte = carte;
             IDRobot = idRobot;
@@ -108,9 +94,9 @@ namespace GoBot
         {
             Devices.Devices.RecGoBot.SetLed(LedID.DebugB1, state ? RecGoBot.LedStatus.Vert : RecGoBot.LedStatus.Rouge);
 
-            if (!state && jackArme)
+            if (!state && JackArme)
             {
-                jackArme = false;
+                JackArme = false;
                 if (Plateau.Enchainement == null)
                     Plateau.Enchainement = new GoBot.Enchainements.EnchainementMatch();
                 Plateau.Enchainement.Executer();
@@ -131,14 +117,10 @@ namespace GoBot
 
         public override void Init()
         {
-            Couleur = Color.Purple;
-
             Historique = new Historique(IDRobot);
 
             DateRefreshPos = DateTime.Now;
-
-            //Enchainement = new Enchainements.HomologationEnchainement();
-
+            
             Connexion.NouvelleTrameRecue += new ConnexionUDP.ReceptionDelegate(ReceptionMessage);
 
             if (this == Robots.GrosRobot)
@@ -161,7 +143,7 @@ namespace GoBot
                     Position = new Calculs.Position(new Angle(180, AnglyeType.Degre), new PointReel(3000 - 480, 1000));
             }
 
-            PositionCible = null;
+            PositionCible = null; //TODO2018 Init commun à la simu
 
             HistoriqueCoordonnees = new List<Position>();
             Connexion.SendMessage(TrameFactory.DemandePositionContinue(100, this));
@@ -200,12 +182,13 @@ namespace GoBot
 
         public void Delete()
         {
+            // TODO2018 utile ?
             //timerPosition.Stop();
         }
 
         Thread thActivationAsser;
 
-        public void ActivationAsserv()
+        public void ReactivationAsserv()
         {
             for (LedID i = LedID.DebugB1; i <= LedID.DebugA1; i++)
                 Devices.Devices.RecGoBot.SetLed((LedID)i, RecGoBot.LedStatus.Rouge);
@@ -232,7 +215,7 @@ namespace GoBot
             switch ((FonctionTrame)trameRecue[1])
             {
                 case FonctionTrame.Blocage:
-                    thActivationAsser = new Thread(ActivationAsserv);
+                    thActivationAsser = new Thread(ReactivationAsserv);
                     thActivationAsser.Start();
                     break;
                 case FonctionTrame.FinDeplacement:
@@ -257,7 +240,7 @@ namespace GoBot
                         if (Position.Coordonnees.Distance(nouvellePosition.Coordonnees) < 300 || !positionRecue)
                         {
                             Position = nouvellePosition;
-                            //Position.Coordonnees.Placer(nouvellePosition.Coordonnees.X, nouvellePosition.Coordonnees.Y);
+                            //Position.Coordonnees.Placer(nouvellePosition.Coordonnees.X, nouvellePosition.Coordonnees.Y); //TODO2018 ca servait pas à réenvoyer la position au robot ça ?
                         }
                         //else
                         //    ReglerOffsetAsserv((int)Position.Coordonnees.X, (int)Position.Coordonnees.Y, -Position.Angle);
@@ -267,13 +250,12 @@ namespace GoBot
                         DateRefreshPos = DateTime.Now;
                         SemaphoresTrame[FonctionTrame.AsserDemandePositionXYTeta].Release();
 
-                        HistoriqueCoordonnees.Add(new Position(teta, new PointReel(x, y)));
-                        if (HistoriqueCoordonnees.Count > 1200)
+                        lock (HistoriqueCoordonnees)
                         {
-                            semHistoriquePosition.WaitOne();
+                            HistoriqueCoordonnees.Add(new Position(teta, new PointReel(x, y)));
+
                             while (HistoriqueCoordonnees.Count > 1200)
                                 HistoriqueCoordonnees.RemoveAt(0);
-                            semHistoriquePosition.Release();
                         }
 
                         if (Plateau.Balise != null)
@@ -291,6 +273,7 @@ namespace GoBot
 
                     for (int i = 0; i < nbPositions; i++)
                     {
+                        // TODO2018 peut mieux faire, décaller les bits
                         int gauche1 = trameRecue[3 + i * 8];
                         int gauche2 = trameRecue[4 + i * 8];
                         int gauche3 = trameRecue[5 + i * 8];
@@ -392,16 +375,13 @@ namespace GoBot
 
                     //else
                     {
-
-                        Console.WriteLine("Reception ");
+                        
                         bool nouvelEtat = trameRecue[3] > 0 ? true : false;
+
                         if (nouvelEtat != CapteurActive[capteur])
-                        {
                             ChangerEtatCapteurOnOff(capteur, nouvelEtat);
-                        }
-                        Console.WriteLine("Liberation " + CapteurActive[capteur].ToString());
-                        if (SemaphoresCapteurs[capteur] != null)
-                            SemaphoresCapteurs[capteur].Release();
+                        
+                        SemaphoresCapteurs[capteur]?.Release();
                     }
                     break;
                 case FonctionTrame.TensionBatteries:
@@ -452,6 +432,8 @@ namespace GoBot
 
         public override void Avancer(int distance, bool attendre = true)
         {
+            //TODO2018 : FOnction de déplacement communes avec Simu sur l'historique etc, à voir, le recallage de Simu se fait en avancant...
+            //TODO2018 : En finir avec Avancer Reculer PivotGauche PivotDroite et se contenter de Move & Turn avec des négatifs qui font le job
             base.Avancer(distance, attendre);
 
             if (attendre)
@@ -467,10 +449,7 @@ namespace GoBot
 
             if (attendre)
                 if (!SemaphoresTrame[FonctionTrame.FinDeplacement].WaitOne(tempsParcours + 1000))
-                {
-                    //Stop(StopMode.Freely);
-                    Thread.Sleep(1000);
-                }
+                    Thread.Sleep(1000); // Tempo de secours, on a jamais reçu la fin de trajectoire après la fin du délai théorique
 
             DeplacementLigne = false;
         }
@@ -500,10 +479,7 @@ namespace GoBot
 
             if (attendre)
                 if (!SemaphoresTrame[FonctionTrame.FinDeplacement].WaitOne(tempsParcours + 1000))
-                {
-                    //Stop(StopMode.Freely);
-                    Thread.Sleep(1000);
-                }
+                    Thread.Sleep(1000); // Tempo de secours, on a jamais reçu la fin de trajectoire après la fin du délai théorique
 
             DeplacementLigne = false;
         }
@@ -526,10 +502,7 @@ namespace GoBot
 
             if (attendre)
                 if (!SemaphoresTrame[FonctionTrame.FinDeplacement].WaitOne(tempsParcours + 1000))
-                {
-                    //Stop(StopMode.Freely);
-                    Thread.Sleep(1000);
-                }
+                    Thread.Sleep(1000); // Tempo de secours, on a jamais reçu la fin de trajectoire après la fin du délai théorique
             DeplacementLigne = false;
         }
 
@@ -549,10 +522,7 @@ namespace GoBot
 
             if (attendre)
                 if (!SemaphoresTrame[FonctionTrame.FinDeplacement].WaitOne(tempsParcours + 1000))
-                {
-                    //Stop(StopMode.Freely);
-                    Thread.Sleep(1000);
-                }
+                    Thread.Sleep(1000); // Tempo de secours, on a jamais reçu la fin de trajectoire après la fin du délai théorique
         }
 
         public override void Stop(StopMode mode = StopMode.Smooth)
@@ -628,11 +598,6 @@ namespace GoBot
             Connexion.SendMessage(trame);
         }
 
-        public override void ArmerJack()
-        {
-            jackArme = true;
-        }
-
         public bool DemandePosition(bool attendre = true)
         {
             if (!Connexion.ConnexionCheck.Connecte)
@@ -661,11 +626,8 @@ namespace GoBot
             // Sinon en UDP aux cartes elecs
             else
             {
-                if (this == Robots.GrosRobot)
-                {
-                    Trame trame = TrameFactory.ServoEnvoiPositionCible(servo, position);
-                    Connexions.ConnexionIO.SendMessage(trame);
-                }
+                Trame trame = TrameFactory.ServoEnvoiPositionCible(servo, position);
+                Connexions.ConnexionIO.SendMessage(trame);
             }
             Historique.AjouterAction(new ActionServo(this, position, servo));
         }
