@@ -184,10 +184,9 @@ namespace GoBot
                         if (AfficheTable)
                             DessinePlateau(g);
 
-                        DessineGraph(Robots.GrosRobot, g);
-
-                        //DessineTrajectoire(g);
-
+                        if (AfficheGraph || AfficheGraphArretes)
+                            DessineGraph(Robots.GrosRobot, g, AfficheGraph, AfficheGraphArretes);
+                        
                         if (Robots.GrosRobot != null)
                             DessineRobot(Robots.GrosRobot, g);
 
@@ -197,10 +196,8 @@ namespace GoBot
                         if (AfficheObstacles)
                             DessineObstacles(g);
                         
-                        // Elements de jeu
                         if (AfficheElementsJeu)
-                            foreach (ElementJeu element in Plateau.Elements)
-                                element.Paint(g, Scale);
+                            DessineElementsJeu(g, Plateau.Elements);
 
                         DessinePathFinding(g);
 
@@ -208,14 +205,9 @@ namespace GoBot
 
                         if (AfficheLigneDetections)
                             DessineLignesDetection(g);
-
-                        if (Robots.GrosRobot.PositionCible != null)
-                        {
-                            Point p = Scale.RealToScreenPosition(Robots.GrosRobot.PositionCible);
-                            g.DrawEllipse(penRougeEpais, p.X - 5, p.Y - 5, 10, 10);
-                        }
-
-                        // Dessin des coûts des mouvements
+                        
+                        Robots.GrosRobot.PositionCible?.Paint(g, Color.Red, 5, Color.Red, Scale);
+                        
                         if (AfficheCoutsMouvements)
                             Plateau.Enchainement?.ListeMouvements?.ForEach(mouv => mouv.Paint(g, Scale));
 
@@ -295,6 +287,12 @@ namespace GoBot
             }
         }
 
+        private static void DessineElementsJeu(Graphics g, IEnumerable<ElementJeu> elements)
+        {
+            foreach (ElementJeu element in elements)
+                element.Paint(g, Scale);
+        }
+
         private static void DessinePositionEnnemis(Graphics g)
         {
             for (int i = 0; i < SuiviBalise.PositionsEnnemies.Count; i++)
@@ -353,18 +351,10 @@ namespace GoBot
                         (Scale.RealToScreenPosition(detection.Position)));
 
                     // Dessin du polygone de détection
-                    Polygone polygone = detection.ToPolygone();
-                    List<Point> points = new List<Point>();
-
-                    foreach (Segment s in polygone.Cotes)
-                    {
-                        points.Add(Scale.RealToScreenPosition(s.Debut));
-                        points.Add(Scale.RealToScreenPosition(s.Fin));
-                    }
+                    detection.ToPolygone().Paint(g, Color.Red, 1, Color.FromArgb(35, Color.Red), Scale);
 
                     Point positionEcran = Scale.RealToScreenPosition(detection.Position);
-                    g.DrawPolygon(Pens.Blue, points.ToArray());
-                    g.FillPolygon(brushCouleurGaucheTresTransparent, points.ToArray());
+                    
                     g.DrawLine(Pens.Red, new Point(positionEcran.X - 4, positionEcran.Y - 4), new Point(positionEcran.X + 4, positionEcran.Y + 4));
                     g.DrawLine(Pens.Red, new Point(positionEcran.X - 4, positionEcran.Y + 4), new Point(positionEcran.X + 4, positionEcran.Y - 4));
                 }
@@ -519,33 +509,25 @@ namespace GoBot
             }
         }
 
-        private static void DessineGraph(Robot robot, Graphics g)
+        private static void DessineGraph(Robot robot, Graphics g, bool graph, bool arretes)
         {
             // Dessin du graph
             //robot.SemGraph.WaitOne();
-            Pen pen = robot == Robots.GrosRobot ? Pens.Blue : Pens.LightBlue;
-            Brush brush = robot == Robots.GrosRobot ? Brushes.Blue : Brushes.LightBlue;
 
             Synchronizer.Lock(robot.Graph);
 
             // Dessin des arcs
-            if (AfficheGraphArretes)
+            if (arretes)
                 foreach (Arc a in robot.Graph.Arcs)
                 {
-                    if (a.Passable != false)
-                    {
-                        g.DrawLine(pen, Scale.RealToScreenPosition(new PointReel(a.StartNode.X, a.StartNode.Y)), Scale.RealToScreenPosition(new PointReel(a.EndNode.X, a.EndNode.Y)));
-                    }
+                    if (a.Passable)
+                        new Segment(new PointReel(a.StartNode.X, a.StartNode.Y), new PointReel(a.EndNode.X, a.EndNode.Y)).Paint(g, Color.Blue, 1, Color.Transparent, Scale);
                 }
 
-            if (AfficheGraph)
+            if (graph)
                 // Dessin des noeuds
                 foreach (Node n in robot.Graph.Nodes)
-                {
-                    Point pointNode = Scale.RealToScreenPosition(new PointReel(n.Position.X, n.Position.Y));
-                    g.FillEllipse(brush, new Rectangle(pointNode.X - 3, pointNode.Y - 3, 6, 6));
-                    g.DrawEllipse(n.Passable ? Pens.Black : Pens.Red, new Rectangle(pointNode.X - 3, pointNode.Y - 3, 6, 6));
-                }
+                    new PointReel(n.Position.X, n.Position.Y).Paint(g, n.Passable ? Color.Black : Color.Red, 3, Color.Blue, Scale);
 
             Synchronizer.Unlock(robot.Graph);
 
