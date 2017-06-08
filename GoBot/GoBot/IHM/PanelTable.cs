@@ -204,40 +204,18 @@ namespace GoBot.IHM
             Plateau.Score = 0;
         }
 
-        private void PathFindingClick()
+        private void CheckElementClick()
         {
-            PointReel positionReelle = Dessinateur.Scale.ScreenToRealPosition(pictureBoxTable.PointToClient(MousePosition));
-
-            PointReel point = new PointReel(positionReelle.X, positionReelle.Y);
-
-            /* Todo Tester ici si le clic a été fait sur un élément de jeu dans le but de lancer un mouvement.
-               Si c'est le cas, lancer un thread pour effectuer le mouvement 
-
-            exemple : 
-            if (Plateau.ZoneDepartVert.Hover)
-                move = new MouvementDeposeDepart(Plateau.ZoneDepartVert);*/
-
-            // TODO2018 link automatique des lancements d'action sur les éléments
-
-            for (int i = 0; i < Plateau.Elements.Fusees.Count; i++)
-                if (Plateau.Elements.Fusees[i].Hover)
-                    move = new MouvementFusee(i);
-            for (int i = 0; i < Plateau.Elements.Modules.Count; i++)
-                if (Plateau.Elements.Modules[i].Hover)
-                    move = new MouvementModuleAvant(i);
-            for (int i = 0; i < Plateau.Elements.ZonesDepose.Count; i++)
-                if (Plateau.Elements.ZonesDepose[i].Hover)
-                    move = new MouvementDeposeModules(i);
-
-            if (move != null)
-            {
-                thAction = new Thread(ThreadAction);
-                thAction.Start();
-            }
+            foreach (ElementJeu element in Plateau.Elements)
+                if (element.Hover)
+                    ThreadPool.QueueUserWorkItem(new WaitCallback(StartElementMouvement), element);
         }
-        Thread thAction;
 
-        Thread thPath;
+        private void StartElementMouvement(Object element)
+        {
+            ((ElementJeu)element).ClickAction();
+        }
+        
         //MouseEventArgs ev;
 
         private void btnGo_Click(object sender, EventArgs e)
@@ -654,8 +632,7 @@ namespace GoBot.IHM
             }
             else
             {
-                thPath = new Thread(PathFindingClick);
-                thPath.Start();
+                CheckElementClick();
             }
         }
 

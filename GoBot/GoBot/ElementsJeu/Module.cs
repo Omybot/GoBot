@@ -10,10 +10,12 @@ namespace GoBot.ElementsJeu
     public class Module : ElementJeu
     {
         private Color couleur;
+        private int numero;
 
-        public Module(PointReel position, Color couleur, int rayon)
+        public Module(int num, PointReel position, Color couleur, int rayon)
             : base(position, rayon)
         {
+            numero = num;
             Hover = false;
             Couleur = couleur;
         }
@@ -55,6 +57,11 @@ namespace GoBot.ElementsJeu
                 else
                     g.DrawEllipse(Pens.Black, rect);
             }
+        }
+
+        public override bool ClickAction()
+        {
+            return new Mouvements.MouvementModuleAvant(numero).Executer();
         }
     }
 }

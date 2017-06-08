@@ -48,5 +48,7 @@ namespace GoBot.ElementsJeu
         }
 
         public abstract void Paint(Graphics g, PaintScale scale);
+
+        public abstract bool ClickAction();
     }
 }

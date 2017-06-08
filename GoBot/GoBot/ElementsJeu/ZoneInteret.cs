@@ -58,5 +58,10 @@ namespace GoBot.ElementsJeu
             pWhite.Dispose();
             pWhiteBold.Dispose();
         }
+
+        public override bool ClickAction()
+        {
+            return true;
+        }
     }
 }

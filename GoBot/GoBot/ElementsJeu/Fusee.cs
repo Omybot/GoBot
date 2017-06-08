@@ -66,5 +66,10 @@ namespace GoBot.ElementsJeu
                     g.DrawEllipse(Pens.Black, rect);
             }
         }
+
+        public override bool ClickAction()
+        {
+            return new Mouvements.MouvementFusee(numero).Executer();
+        }
     }
 }

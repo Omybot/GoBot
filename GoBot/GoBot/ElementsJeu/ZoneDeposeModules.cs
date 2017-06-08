@@ -10,9 +10,11 @@ namespace GoBot.ElementsJeu
 {
     public class ZoneDeposeModules : ZoneInteret
     {
-        public ZoneDeposeModules(PointReel pos, Color col, int ray) : base(pos, col, ray)
-        {
+        int numero;
 
+        public ZoneDeposeModules(int num, PointReel pos, Color col, int ray) : base(pos, col, ray)
+        {
+            numero = num;
         }
 
         public int ModulesPlaces { get; set; }
@@ -29,5 +31,10 @@ namespace GoBot.ElementsJeu
         //{
         //    // TODO2017 dessiner les modules posés
         //}
+
+        public override bool ClickAction()
+        {
+            return new Mouvements.MouvementDeposeModules(numero).Executer();
+        }
     }
 }
