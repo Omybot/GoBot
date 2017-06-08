@@ -513,6 +513,7 @@ namespace GoBot.Communications
                     output = "Debug {0}";
                     if (parameters != null)
                     {
+                        //TODO2018 remplacement automatique des parametres
                         output = ReplaceParam(output, parameters[0].ToString());
                     }
                     break;
@@ -792,7 +793,7 @@ namespace GoBot.Communications
                     {
                         output = output.Replace("{0-1}", parameters[0].ToString());
                         output = output.Replace("{2-3}", parameters[1].ToString());
-                        output = output.Replace("{4-5}", parameters[1].ToString());
+                        output = output.Replace("{4-5}", parameters[2].ToString());
                     }
                     break;
                 case FonctionTrame.AsserEnvoiPositionAbsolue:

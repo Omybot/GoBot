@@ -6,6 +6,7 @@ using System.Data;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
+using System.Threading;
 
 namespace GoBot.IHM
 {
@@ -28,7 +29,7 @@ namespace GoBot.IHM
 
         private void btnOk_Click(object sender, EventArgs e)
         {
-            EnvoiTestPid();
+            ThreadPool.QueueUserWorkItem(f => EnvoiTestPid());
         }
 
         private void EnvoiTestPid()
