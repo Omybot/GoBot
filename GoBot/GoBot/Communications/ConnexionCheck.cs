@@ -28,6 +28,7 @@ namespace GoBot.Communications
             connexionOffTimer = new Timer();
             connexionOffTimer.Interval = intervalle;
             connexionOffTimer.Elapsed += new ElapsedEventHandler(connexionOffTimer_Elapsed);
+            TickAction();
 
             Connecte = false;
         }
@@ -46,9 +47,13 @@ namespace GoBot.Communications
         /// <param name="e"></param>
         private void connexionOffTimer_Elapsed(object sender, ElapsedEventArgs e)
         {
+            TickAction();
+        }
+
+        private void TickAction()
+        {
             // Si on nous a donné une fonction de test de connexion on la réalise pour mettre à jour.
-            if (TestConnexion != null)
-                TestConnexion();
+            TestConnexion?.Invoke();
 
             MajStatut();
         }
@@ -80,16 +85,14 @@ namespace GoBot.Communications
             if (Connecte && intervalleEcoule > intervalleAutorise)
             {
                 Connecte = false;
-                if (ConnexionChange != null)
-                    ConnexionChange(false);
+                ConnexionChange?.Invoke(false);
             }
 
             else if (!Connecte && intervalleEcoule < intervalleAutorise)
             {
                 Console.WriteLine("Connection");
                 Connecte = true;
-                if (ConnexionChange != null)
-                    ConnexionChange(true);
+                ConnexionChange?.Invoke(true);
             }
 
             dernierTest = DateTime.Now;
