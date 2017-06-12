@@ -44,7 +44,7 @@ namespace GoBot.Devices
             Connexions.ConnexionGB.ConnexionCheck.TestConnexion += ConnexionCheck_TestConnexionGB;
 
             ledsStatus = new Dictionary<LedID, LedStatus>();
-            for (LedID i = LedID.DebugB1; i <= LedID.DebugA1; i++)
+            for (LedID i = 0; i <= (LedID)15; i++)
                 ledsStatus.Add(i, LedStatus.Off);
 
             ButtonChange += RecGoBot_ButtonChange;
@@ -52,7 +52,7 @@ namespace GoBot.Devices
 
         void RecGoBot_ButtonChange(CapteurOnOffID btn, bool state)
         {
-            if (Plateau.Enchainement == null || ( Plateau.Enchainement != null && !Plateau.Enchainement.Started))
+            if (Plateau.Enchainement == null || (Plateau.Enchainement != null && !Plateau.Enchainement.Started))
             {
                 if (btn == CapteurOnOffID.Bouton1 && state)
                     Robots.GrosRobot.Stop(Robots.GrosRobot.AsserActif ? StopMode.Freely : StopMode.Abrupt);
@@ -130,9 +130,7 @@ namespace GoBot.Devices
             if (trameRecue[1] == (byte)FonctionTrame.RetourCapteurOnOff)
             {
                 CapteurOnOffID but;
-
-                Console.WriteLine(trameRecue[2] + (trameRecue[3]>0 ? " On" : " Off"));
-
+                
                 switch(trameRecue[2])
                 {
                     case 0:
@@ -207,8 +205,7 @@ namespace GoBot.Devices
                 else if (but == CapteurOnOffID.Jack && JackChange != null)
                     JackChange(pushed);
 
-                else if (ButtonChange != null)
-                    ButtonChange(but, pushed);
+                else ButtonChange?.Invoke(but, pushed);
             }
 
             if(trameRecue[1] == (byte)FonctionTrame.RetourPositionCodeur)

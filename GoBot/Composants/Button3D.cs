@@ -33,6 +33,14 @@ namespace Composants
             state = true;
         }
 
+        public void Power(bool on)
+        {
+            if (on)
+                On();
+            else
+                Off();
+        }
+
         public bool State
         {
             get

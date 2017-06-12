@@ -34,6 +34,41 @@ namespace GoBot.IHM
             colorPickup1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             colorPickup1.ColorHover += colorPickup1_ColorHover;
             colorPickup1.ColorClick += colorPickup1_ColorClick;
+
+            btn1.Tag = CapteurOnOffID.Bouton1;
+            btn2.Tag = CapteurOnOffID.Bouton2;
+            btn3.Tag = CapteurOnOffID.Bouton3;
+            btn4.Tag = CapteurOnOffID.Bouton4;
+            btn5.Tag = CapteurOnOffID.Bouton5;
+            btn6.Tag = CapteurOnOffID.Bouton6;
+            btn7.Tag = CapteurOnOffID.Bouton7;
+            btn8.Tag = CapteurOnOffID.Bouton8;
+            btn9.Tag = CapteurOnOffID.Bouton9;
+            btn10.Tag = CapteurOnOffID.Bouton10;
+            btnJack.Tag = CapteurOnOffID.Jack;
+            btnCouleur.Tag = CapteurOnOffID.CouleurEquipe;
+            swi1.Tag = CapteurOnOffID.LSwitch1;
+            swi2.Tag = CapteurOnOffID.LSwitch2;
+            swi3.Tag = CapteurOnOffID.LSwitch3;
+            swi4.Tag = CapteurOnOffID.LSwitch4;
+
+            ledA1.Tag = LedID.DebugA1;
+            ledA2.Tag = LedID.DebugA2;
+            ledA3.Tag = LedID.DebugA3;
+            ledA4.Tag = LedID.DebugA4;
+            ledA5.Tag = LedID.DebugA5;
+            ledA6.Tag = LedID.DebugA6;
+            ledA7.Tag = LedID.DebugA7;
+            ledA8.Tag = LedID.DebugA8;
+
+            ledB1.Tag = LedID.DebugB1;
+            ledB2.Tag = LedID.DebugB2;
+            ledB3.Tag = LedID.DebugB3;
+            ledB4.Tag = LedID.DebugB4;
+            ledB5.Tag = LedID.DebugB5;
+            ledB6.Tag = LedID.DebugB6;
+            ledB7.Tag = LedID.DebugB7;
+            ledB8.Tag = LedID.DebugB8;
         }
 
         private void PanelConstantes_Load(object sender, EventArgs e)
@@ -101,14 +136,7 @@ namespace GoBot.IHM
             {
                 try
                 {
-                    if (state)
-                    {
-                        boutons[(int)btn].On(); // Fonctionne pare que l'ordre est respecté, ça va pas durer éternellement
-                    }
-                    else
-                    {
-                        boutons[(int)btn].Off();
-                    }
+                    boutons.Find(b => (CapteurOnOffID)b.Tag == btn).Power(state);
                 }
                 catch (Exception)
                 {
@@ -121,7 +149,7 @@ namespace GoBot.IHM
         private void leds_MouseClick(object sender, MouseEventArgs e)
         {
             Led ledSender = (Led)sender;
-            int ledNo = leds.IndexOf(ledSender);
+            LedID ledNo = (LedID)ledSender.Tag;
 
             switch (ledActive[ledSender])
             {
