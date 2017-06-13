@@ -30,7 +30,7 @@ namespace GoBot.IHM
                 {
                     _conIndicator.SetConnectionState(_connection.ConnexionCheck.Connected, false);
                     _connection.ConnexionCheck.ConnectionStatusChange += ConnexionCheck_ConnectionStatusChange;
-                    _lblName.Text = Connexions.GetBoardByConnection(_connection).ToString();
+                    _lblName.Text = Connections.GetBoardByConnection(_connection).ToString();
                 }
             }
         }

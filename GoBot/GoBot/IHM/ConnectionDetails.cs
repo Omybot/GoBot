@@ -23,7 +23,7 @@ namespace GoBot.IHM
                 _connection = value;
                 if(_connection != null)
                 {
-                    _grpConnection.Text = Connexions.GetBoardByConnection(_connection).ToString();
+                    _grpConnection.Text = Connections.GetBoardByConnection(_connection).ToString();
                     _lblIP.Text = _connection.AdresseIp.ToString();
                     _lblInputPort.Text = _connection.PortEntree.ToString();
                     _lblOutputPort.Text = _connection.PortSortie.ToString();

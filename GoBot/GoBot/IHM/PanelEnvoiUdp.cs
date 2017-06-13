@@ -33,11 +33,11 @@ namespace GoBot.IHM
             }
 
             if (boxMove.Checked)
-                Connexions.ConnexionMove.SendMessage(trame);
+                Connections.ConnectionMove.SendMessage(trame);
             if (boxIO.Checked)
-                Connexions.ConnexionIO.SendMessage(trame);
+                Connections.ConnectionIO.SendMessage(trame);
             if (boxGB.Checked)
-                Connexions.ConnexionGB.SendMessage(trame);
+                Connections.ConnectionGB.SendMessage(trame);
         }
 
         private void PanelEnvoiUdp_Load(object sender, EventArgs e)
@@ -48,7 +48,7 @@ namespace GoBot.IHM
                 switchBoutonIO.SetActif(true, false);
                 switchBoutonGB.SetActif(true, false);
 
-                foreach (ConnexionUDP conn in Connexions.AllConnections)
+                foreach (ConnexionUDP conn in Connections.AllConnections)
                 {
                     ConnectionDetails details = new ConnectionDetails();
                     details.Connection = conn;
@@ -87,17 +87,17 @@ namespace GoBot.IHM
             if (boxMove.Checked)
             {
                 Trame trame = TrameFactory.Debug(Carte.RecMove, val);
-                Connexions.ConnexionMove.SendMessage(trame);
+                Connections.ConnectionMove.SendMessage(trame);
             }
             if (boxIO.Checked)
             {
                 Trame trame = TrameFactory.Debug(Carte.RecIO, val);
-                Connexions.ConnexionIO.SendMessage(trame);
+                Connections.ConnectionIO.SendMessage(trame);
             }
             if (boxGB.Checked)
             {
                 Trame trame = TrameFactory.Debug(Carte.RecGB, val);
-                Connexions.ConnexionGB.SendMessage(trame);
+                Connections.ConnectionGB.SendMessage(trame);
             }
         }
 
@@ -126,25 +126,25 @@ namespace GoBot.IHM
             if (boxMove.Checked)
             {
                 Trame trame = TrameFactory.TestConnexion(Carte.RecMove);
-                Connexions.ConnexionMove.SendMessage(trame);
+                Connections.ConnectionMove.SendMessage(trame);
             }
             if (boxIO.Checked)
             {
                 Trame trame = TrameFactory.TestConnexion(Carte.RecIO);
-                Connexions.ConnexionIO.SendMessage(trame);
+                Connections.ConnectionIO.SendMessage(trame);
             }
             if (boxGB.Checked)
             {
                 Trame trame = TrameFactory.TestConnexion(Carte.RecGB);
-                Connexions.ConnexionGB.SendMessage(trame);
+                Connections.ConnectionGB.SendMessage(trame);
             }
         }
 
         private void switchBoutonConnexion_ChangementEtat(object sender, EventArgs e)
         {
-            Connexions.ActivationConnexion[Carte.RecMove] = switchBoutonMove.Actif;
-            Connexions.ActivationConnexion[Carte.RecIO] = switchBoutonIO.Actif;
-            Connexions.ActivationConnexion[Carte.RecGB] = switchBoutonGB.Actif;
+            Connections.EnableConnection[Carte.RecMove] = switchBoutonMove.Actif;
+            Connections.EnableConnection[Carte.RecIO] = switchBoutonIO.Actif;
+            Connections.EnableConnection[Carte.RecGB] = switchBoutonGB.Actif;
         }
     }
 }

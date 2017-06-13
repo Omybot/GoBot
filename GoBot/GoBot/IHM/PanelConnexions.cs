@@ -22,7 +22,7 @@ namespace GoBot.IHM
             }
             else
             {
-                if (Connexions.ConnexionIO.ConnexionCheck.Connected)
+                if (Connections.ConnectionIO.ConnexionCheck.Connected)
                 {
                     batteriePack.Afficher = true;
                     batteriePack.Tension = Robots.GrosRobot.BatterieVoltage;
@@ -46,7 +46,7 @@ namespace GoBot.IHM
         {
             if (!Config.DesignMode)
             {
-                foreach (Connexion conn in Connexions.AllConnections)
+                foreach (Connexion conn in Connections.AllConnections)
                 {
                     ConnectionStatus status = new ConnectionStatus();
                     status.Connection = conn;

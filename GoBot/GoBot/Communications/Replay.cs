@@ -144,7 +144,7 @@ namespace GoBot.Communications
                 Trame trame = new Trame(Trames[i].Trame);
 
                 if (Trames[i].Entrant)
-                    Connexions.ConnexionParCarte[trame.Carte].TrameRecue(trame);
+                    Connections.BoardConnection[trame.Carte].TrameRecue(trame);
                 //else
                 //    Connexions.ConnexionParCarte[trame.Carte].SendMessage(trame);
 

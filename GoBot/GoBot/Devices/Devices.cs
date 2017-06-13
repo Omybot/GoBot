@@ -12,7 +12,7 @@ namespace GoBot.Devices
 
         public static void Init()
         {
-            recGoBot = new RecGoBot(Connexions.ConnexionGB);
+            recGoBot = new RecGoBot(Connections.ConnectionGB);
         }
 
         public static RecGoBot RecGoBot

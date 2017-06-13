@@ -112,7 +112,7 @@ namespace GoBot.Balises
             DetectionsCapteur1 = new List<DetectionBalise>();
             DetectionsCapteur2 = new List<DetectionBalise>();
 
-            Connexion = Connexions.ConnexionMove;
+            Connexion = Connections.ConnectionMove;
             Connexion.NouvelleTrameRecue += new ConnexionUDP.ReceptionDelegate(connexion_NouvelleTrame);
 
             Stats = new BaliseStats(this);
@@ -476,8 +476,6 @@ namespace GoBot.Balises
             }
             catch (Exception)
             { }
-
-            Connexion.ConnexionCheck.NotifyAlive();
         }
 
         /// <summary>

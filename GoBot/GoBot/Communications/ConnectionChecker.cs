@@ -95,9 +95,6 @@ namespace GoBot.Communications
         /// </summary>
         public void UpdateStatus()
         {
-            if (!Started)
-                return;
-
             TimeSpan authorizedDelay = new TimeSpan(0, 0, 0, 0, (int)(CheckTimer.Interval * 0.5));
             TimeSpan effectiveDelay = LastTestDate - LastAliveDate;
 

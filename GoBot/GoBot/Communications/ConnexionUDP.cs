@@ -94,7 +94,7 @@ namespace GoBot.Communications
         /// <returns>Nombre de caractères envoyés</returns>
         public override int SendMessage(Trame message, bool bloquant = false)
         {
-            if (!Connexions.ActivationConnexion[message.Carte])
+            if (!Connections.EnableConnection[message.Carte])
                 return 0;
 
             // TODO attente acquittement
@@ -154,9 +154,13 @@ namespace GoBot.Communications
 
                 Byte[] receiveBytes = u.EndReceive(ar, ref e);
 
+                Trame trameRecue = new Trame(receiveBytes);
+
+                if (trameRecue[0] == 0xC2)
+                    Console.WriteLine("NotifyAlive");
+
                 ConnexionCheck.NotifyAlive();
 
-                Trame trameRecue = new Trame(receiveBytes);
                 if (trameRecue.ToString() == "C2 A1 C5") // TODO2018 Hum... Bof.
                     trameRecue = new Trame("C2 A1 C3");
                 TrameRecue(trameRecue);

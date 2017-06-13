@@ -110,7 +110,7 @@ namespace GoBot
 
                 Plateau.NotreCouleur = Plateau.CouleurGaucheBleu;
                 
-                Connexions.ConnexionIO.SendMessage(TrameFactory.DemandeCouleurEquipe());
+                Connections.ConnectionIO.SendMessage(TrameFactory.DemandeCouleurEquipe());
 
                 panelBalise.Balise = Plateau.Balise;
                 panelBaliseDiagnostic.Balise = Plateau.Balise;
@@ -170,9 +170,9 @@ namespace GoBot
         {
             DateTime debut = DateTime.Now;
 
-            Connexions.ConnexionMove.Sauvegarde.Sauvegarder(Config.PathData + "/Logs/" + Config.DateLancementString + "/ConnexionMove.tlog");
-            Connexions.ConnexionIO.Sauvegarde.Sauvegarder(Config.PathData + "/Logs/" + Config.DateLancementString + "/ConnexionIO.tlog");
-            Connexions.ConnexionGB.Sauvegarde.Sauvegarder(Config.PathData + "/Logs/" + Config.DateLancementString + "/ConnexionGB.tlog");
+            Connections.ConnectionMove.Sauvegarde.Sauvegarder(Config.PathData + "/Logs/" + Config.DateLancementString + "/ConnexionMove.tlog");
+            Connections.ConnectionIO.Sauvegarde.Sauvegarder(Config.PathData + "/Logs/" + Config.DateLancementString + "/ConnexionIO.tlog");
+            Connections.ConnectionGB.Sauvegarde.Sauvegarder(Config.PathData + "/Logs/" + Config.DateLancementString + "/ConnexionGB.tlog");
 
             Robots.GrosRobot.Historique.Sauvegarder(Config.PathData + "/Logs/" + Config.DateLancementString + "/ActionsGros.elog");
         }
@@ -195,10 +195,6 @@ namespace GoBot
                     Directory.CreateDirectory(Config.PathData + "/LogsTraces/");
 
                 Directory.CreateDirectory(Config.PathData + "/Logs/" + Config.DateLancementString);
-
-                Connexions.ConnexionMove.ConnexionCheck.Start();
-                Connexions.ConnexionIO.ConnexionCheck.Start();
-                Connexions.ConnexionGB.ConnexionCheck.Start();
 
                 panelAnalogiqueMove.Carte = Carte.RecMove;
                 panelAnalogiqueIO.Carte = Carte.RecIO;

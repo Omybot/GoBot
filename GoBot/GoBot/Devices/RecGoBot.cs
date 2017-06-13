@@ -42,14 +42,15 @@ namespace GoBot.Devices
             connexion.NouvelleTrameRecue += new Connexion.ReceptionDelegate(connexion_NouvelleTrameRecue);
 
             ledConnexionState = new Dictionary<Connexion, LedID>();
-            ledConnexionState.Add(Connexions.ConnexionIO, LedID.DebugA1);
-            ledConnexionState.Add(Connexions.ConnexionMove, LedID.DebugA2);
-            ledConnexionState.Add(Connexions.ConnexionGB, LedID.DebugA3);
 
-            Connexions.ConnexionIO.ConnexionCheck.SendConnectionTest += ConnexionCheck_SendConnectionTest;
-            Connexions.ConnexionMove.ConnexionCheck.SendConnectionTest += ConnexionCheck_SendConnectionTest;
-            Connexions.ConnexionGB.ConnexionCheck.SendConnectionTest += ConnexionCheck_SendConnectionTest;
-
+            LedID led = LedID.DebugA1;
+            foreach (ConnexionUDP conLed in Connections.AllConnections.OrderBy(c => Connections.GetBoardByConnection(c).ToString()))
+            {
+                ledConnexionState.Add(conLed, led);
+                conLed.ConnexionCheck.SendConnectionTest += ConnexionCheck_SendConnectionTest;
+                led++;
+            }
+            
             ledsStatus = new Dictionary<LedID, LedStatus>();
             for (LedID i = 0; i <= (LedID)15; i++)
                 ledsStatus.Add(i, LedStatus.Off);
@@ -226,6 +227,7 @@ namespace GoBot.Devices
         
         public void SetLed(LedID led, LedStatus state)
         {
+            Console.WriteLine(DateTime.Now.ToShortTimeString() + ":" + DateTime.Now.Millisecond.ToString("000") +  led.ToString() + " - " + state.ToString());
             ledsStatus[led] = state;
             connexion.SendMessage(TrameFactory.SetLed(led, state));
         }
@@ -244,7 +246,7 @@ namespace GoBot.Devices
         {
             Trame t = TrameFactory.CodeurPosition(Carte.RecGB, CodeurID.Manuel);
             semCodeur = new Semaphore(0, int.MaxValue);
-            Connexions.ConnexionGB.SendMessage(t);
+            Connections.ConnectionGB.SendMessage(t);
 
             semCodeur.WaitOne(100);
             semCodeur.Dispose();

@@ -343,7 +343,7 @@
     </Compile>
     <Compile Include="Recallages.cs" />
     <Compile Include="Robots\Robots.cs" />
-    <Compile Include="Communications\Connexions.cs" />
+    <Compile Include="Communications\Connections.cs" />
     <Compile Include="PathFinding\Arc.cs" />
     <Compile Include="PathFinding\AStar.cs" />
     <Compile Include="PathFinding\Graph.cs" />

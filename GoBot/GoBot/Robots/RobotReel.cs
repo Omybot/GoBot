@@ -124,9 +124,9 @@ namespace GoBot
             Connexion.NouvelleTrameRecue += new ConnexionUDP.ReceptionDelegate(ReceptionMessage);
 
             if (this == Robots.GrosRobot)
-                Connexions.ConnexionIO.NouvelleTrameRecue += new ConnexionUDP.ReceptionDelegate(ReceptionMessage);
+                Connections.ConnectionIO.NouvelleTrameRecue += new ConnexionUDP.ReceptionDelegate(ReceptionMessage);
 
-            Connexions.ConnexionGB.NouvelleTrameRecue += new ConnexionUDP.ReceptionDelegate(ReceptionMessage);
+            Connections.ConnectionGB.NouvelleTrameRecue += new ConnexionUDP.ReceptionDelegate(ReceptionMessage);
 
             if (this == Robots.GrosRobot)
             {
@@ -158,7 +158,7 @@ namespace GoBot
                 SemaphoresCouleur[capteur] = new Semaphore(0, int.MaxValue);
 
             Trame t = TrameFactory.DemandeCapteurCouleur(capteur);
-            Connexions.ConnexionIO.SendMessage(t);
+            Connections.ConnectionIO.SendMessage(t);
 
             if (attendre)
                 SemaphoresCouleur[capteur].WaitOne(100);
@@ -172,7 +172,7 @@ namespace GoBot
                 SemaphoresCapteurs[capteur] = new Semaphore(0, int.MaxValue);
 
             Trame t = TrameFactory.DemandeCapteurOnOff(capteur);
-            Connexions.ConnexionGB.SendMessage(t);
+            Connections.ConnectionGB.SendMessage(t);
 
             if (attendre)
                 SemaphoresCapteurs[capteur].WaitOne(1000);
@@ -630,20 +630,20 @@ namespace GoBot
             else
             {
                 Trame trame = TrameFactory.ServoEnvoiPositionCible(servo, position);
-                Connexions.ConnexionIO.SendMessage(trame);
+                Connections.ConnectionIO.SendMessage(trame);
             }
         }
 
         public override void DemandeValeursAnalogiques(Carte carte, bool attendre = true)
         {
-            if (!Connexions.ConnexionParCarte[carte].ConnexionCheck.Connected)
+            if (!Connections.BoardConnection[carte].ConnexionCheck.Connected)
                 return;
 
             if (attendre)
                 SemaphoresTrame[FonctionTrame.RetourValeursAnalogiques] = new Semaphore(0, int.MaxValue);
 
             Trame trame = TrameFactory.DemandeValeursAnalogiques(carte);
-            Connexions.ConnexionParCarte[carte].SendMessage(trame);
+            Connections.BoardConnection[carte].SendMessage(trame);
 
             if (attendre)
                 SemaphoresTrame[FonctionTrame.RetourValeursAnalogiques].WaitOne(1000);
@@ -652,14 +652,14 @@ namespace GoBot
         public override void ServoVitesse(ServomoteurID servo, int vitesse)
         {
             Trame trame = TrameFactory.ServoEnvoiVitesseMax(servo, vitesse);
-            Connexions.ConnexionIO.SendMessage(trame);
+            Connections.ConnectionIO.SendMessage(trame);
         }
 
         public override void ActionneurOnOff(ActionneurOnOffID actionneur, bool on)
         {
             ActionneurActive[actionneur] = on;
             Trame trame = TrameFactory.ActionneurOnOff(actionneur, on);
-            Connexions.ConnexionIO.SendMessage(trame);
+            Connections.ConnectionIO.SendMessage(trame);
 
             Historique.AjouterAction(new ActionOnOff(this, actionneur, on));
         }
@@ -677,7 +677,7 @@ namespace GoBot
             base.MoteurVitesse(moteur, sens, vitesse);
 
             Trame trame = TrameFactory.MoteurVitesse(moteur, sens, vitesse);
-            Connexions.ConnexionIO.SendMessage(trame);
+            Connections.ConnectionIO.SendMessage(trame);
         }
 
         public override void MoteurAcceleration(MoteurID moteur, int acceleration)
@@ -685,7 +685,7 @@ namespace GoBot
             base.MoteurAcceleration(moteur, acceleration);
 
             Trame trame = TrameFactory.MoteurAcceleration(moteur, acceleration);
-            Connexions.ConnexionIO.SendMessage(trame);
+            Connections.ConnectionIO.SendMessage(trame);
         }
 
         public override void AlimentationPuissance(bool on)
@@ -712,7 +712,7 @@ namespace GoBot
         {
             mesureLidar = "";
             SemaphoresTrame[FonctionTrame.ReponseLidar] = new Semaphore(0, int.MaxValue);
-            Connexions.ConnexionMove.SendMessage(TrameFactory.DemandeMesureLidar(lidar));
+            Connections.ConnectionMove.SendMessage(TrameFactory.DemandeMesureLidar(lidar));
             SemaphoresTrame[FonctionTrame.ReponseLidar].WaitOne(timeout);
             refPosition = positionMesureLidar;
             return mesureLidar;
@@ -724,7 +724,7 @@ namespace GoBot
         {
             historiqueCouleurEquipe = historique;
             SemaphoresTrame[FonctionTrame.RetourCouleurEquipe] = new Semaphore(0, int.MaxValue);
-            Connexions.ConnexionIO.SendMessage(TrameFactory.DemandeCouleurEquipe());
+            Connections.ConnectionIO.SendMessage(TrameFactory.DemandeCouleurEquipe());
             SemaphoresTrame[FonctionTrame.RetourCouleurEquipe].WaitOne(50);
             return couleurEquipe;
         }
@@ -787,7 +787,7 @@ namespace GoBot
         public void EnvoyerUart(Carte carte, Trame trame)
         {
             Trame trameUart = TrameFactory.EnvoyerUart(carte, trame);
-            Connexions.ConnexionParCarte[carte].SendMessage(trameUart);
+            Connections.BoardConnection[carte].SendMessage(trameUart);
         }
     }
 }
