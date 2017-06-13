@@ -170,9 +170,9 @@ namespace GoBot
         {
             DateTime debut = DateTime.Now;
 
-            Connections.ConnectionMove.Sauvegarde.Sauvegarder(Config.PathData + "/Logs/" + Config.DateLancementString + "/ConnexionMove.tlog");
-            Connections.ConnectionIO.Sauvegarde.Sauvegarder(Config.PathData + "/Logs/" + Config.DateLancementString + "/ConnexionIO.tlog");
-            Connections.ConnectionGB.Sauvegarde.Sauvegarder(Config.PathData + "/Logs/" + Config.DateLancementString + "/ConnexionGB.tlog");
+            Connections.ConnectionMove.Save.Sauvegarder(Config.PathData + "/Logs/" + Config.DateLancementString + "/ConnexionMove.tlog");
+            Connections.ConnectionIO.Save.Sauvegarder(Config.PathData + "/Logs/" + Config.DateLancementString + "/ConnexionIO.tlog");
+            Connections.ConnectionGB.Save.Sauvegarder(Config.PathData + "/Logs/" + Config.DateLancementString + "/ConnexionGB.tlog");
 
             Robots.GrosRobot.Historique.Sauvegarder(Config.PathData + "/Logs/" + Config.DateLancementString + "/ActionsGros.elog");
         }

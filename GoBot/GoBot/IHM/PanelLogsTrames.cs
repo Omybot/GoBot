@@ -191,9 +191,9 @@ namespace GoBot.IHM
                     {
                         int index = ligne.Index;
                         TrameReplay trameReplay = replay.Trames[Convert.ToInt32(dataGridViewLog["Id", index].Value)];
-                        Trame trame = new Trame(trameReplay.Trame);
+                        Frame trame = new Frame(trameReplay.Trame);
 
-                        Carte carte = trame.Carte;
+                        Carte carte = trame.Board;
 
                         if (carte == Carte.RecMove)
                         {
@@ -238,14 +238,14 @@ namespace GoBot.IHM
                 timerAffichage.Tick += timerAffichage_Tick;
                 timerAffichage.Start();
 
-                Connections.ConnectionMove.NouvelleTrameRecue += new ConnexionUDP.ReceptionDelegate(replay.AjouterTrameEntrante);
-                Connections.ConnectionMove.NouvelleTrameEnvoyee += new ConnexionUDP.ReceptionDelegate(replay.AjouterTrameSortante);
+                Connections.ConnectionMove.FrameReceived += new UDPConnection.ReceptionDelegate(replay.AjouterTrameEntrante);
+                Connections.ConnectionMove.FrameSend += new UDPConnection.ReceptionDelegate(replay.AjouterTrameSortante);
 
-                Connections.ConnectionIO.NouvelleTrameRecue += new ConnexionUDP.ReceptionDelegate(replay.AjouterTrameEntrante);
-                Connections.ConnectionIO.NouvelleTrameEnvoyee += new ConnexionUDP.ReceptionDelegate(replay.AjouterTrameSortante);
+                Connections.ConnectionIO.FrameReceived += new UDPConnection.ReceptionDelegate(replay.AjouterTrameEntrante);
+                Connections.ConnectionIO.FrameSend += new UDPConnection.ReceptionDelegate(replay.AjouterTrameSortante);
 
-                Connections.ConnectionGB.NouvelleTrameRecue += new ConnexionUDP.ReceptionDelegate(replay.AjouterTrameEntrante);
-                Connections.ConnectionGB.NouvelleTrameEnvoyee += new ConnexionUDP.ReceptionDelegate(replay.AjouterTrameSortante);
+                Connections.ConnectionGB.FrameReceived += new UDPConnection.ReceptionDelegate(replay.AjouterTrameEntrante);
+                Connections.ConnectionGB.FrameSend += new UDPConnection.ReceptionDelegate(replay.AjouterTrameSortante);
 
                 btnRejouerTout.Enabled = false;
                 btnRejouerSelection.Enabled = false;
@@ -258,14 +258,14 @@ namespace GoBot.IHM
             {
                 timerAffichage.Stop();
 
-                Connections.ConnectionMove.NouvelleTrameRecue -= new ConnexionUDP.ReceptionDelegate(replay.AjouterTrameEntrante);
-                Connections.ConnectionMove.NouvelleTrameEnvoyee -= new ConnexionUDP.ReceptionDelegate(replay.AjouterTrameSortante);
+                Connections.ConnectionMove.FrameReceived -= new UDPConnection.ReceptionDelegate(replay.AjouterTrameEntrante);
+                Connections.ConnectionMove.FrameSend -= new UDPConnection.ReceptionDelegate(replay.AjouterTrameSortante);
 
-                Connections.ConnectionIO.NouvelleTrameRecue -= new ConnexionUDP.ReceptionDelegate(replay.AjouterTrameEntrante);
-                Connections.ConnectionIO.NouvelleTrameEnvoyee -= new ConnexionUDP.ReceptionDelegate(replay.AjouterTrameSortante);
+                Connections.ConnectionIO.FrameReceived -= new UDPConnection.ReceptionDelegate(replay.AjouterTrameEntrante);
+                Connections.ConnectionIO.FrameSend -= new UDPConnection.ReceptionDelegate(replay.AjouterTrameSortante);
 
-                Connections.ConnectionGB.NouvelleTrameRecue -= new ConnexionUDP.ReceptionDelegate(replay.AjouterTrameEntrante);
-                Connections.ConnectionGB.NouvelleTrameEnvoyee -= new ConnexionUDP.ReceptionDelegate(replay.AjouterTrameSortante);
+                Connections.ConnectionGB.FrameReceived -= new UDPConnection.ReceptionDelegate(replay.AjouterTrameEntrante);
+                Connections.ConnectionGB.FrameSend -= new UDPConnection.ReceptionDelegate(replay.AjouterTrameSortante);
 
                 btnRejouerTout.Enabled = true;
                 btnRejouerSelection.Enabled = true;
@@ -291,7 +291,7 @@ namespace GoBot.IHM
             String heure = "";
             try
             {
-                Trame trame = new Trame(trameReplay.Trame);
+                Frame trame = new Frame(trameReplay.Trame);
 
                 if (rdoHeure.Checked)
                     heure = trameReplay.Date.ToString("hh:mm:ss:fff");
@@ -304,7 +304,7 @@ namespace GoBot.IHM
 
                 Carte destinataire = trameReplay.Entrant ? Carte.PC : TrameFactory.Identifiant(trame);
                 Carte expediteur = trameReplay.Entrant ? TrameFactory.Identifiant(trame) : Carte.PC;
-                Carte carte = trame.Carte;
+                Carte carte = trame.Board;
 
                 if (carte == Carte.PC)
                     throw new Exception();
@@ -364,9 +364,9 @@ namespace GoBot.IHM
                         int index = ligne.Index;
                         TrameReplay trameReplay = replay.Trames[Convert.ToInt32(dataGridViewLog["Id", index].Value)];
                         if (trameReplay.Entrant)
-                            replaySelection.AjouterTrameEntrante(new Trame(trameReplay.Trame), trameReplay.Date);
+                            replaySelection.AjouterTrameEntrante(new Frame(trameReplay.Trame), trameReplay.Date);
                         else
-                            replaySelection.AjouterTrameSortante(new Trame(trameReplay.Trame), trameReplay.Date);
+                            replaySelection.AjouterTrameSortante(new Frame(trameReplay.Trame), trameReplay.Date);
                     }
 
                     replaySelection.Trier();
@@ -433,7 +433,7 @@ namespace GoBot.IHM
                     {
                         int index = ligne.Index;
                         TrameReplay trameReplay = replay.Trames[Convert.ToInt32(dataGridViewLog["Id", index].Value)];
-                        Trame trame = new Trame(trameReplay.Trame);
+                        Frame trame = new Frame(trameReplay.Trame);
 
                         Carte expediteur = trameReplay.Entrant ? TrameFactory.Identifiant(trame) : Carte.PC;
 
@@ -460,7 +460,7 @@ namespace GoBot.IHM
                     {
                         int index = ligne.Index;
                         TrameReplay trameReplay = replay.Trames[Convert.ToInt32(dataGridViewLog["Id", index].Value)];
-                        Trame trame = new Trame(trameReplay.Trame);
+                        Frame trame = new Frame(trameReplay.Trame);
 
                         Carte destinataire = trameReplay.Entrant ? Carte.PC : TrameFactory.Identifiant(trame);
 
@@ -487,9 +487,9 @@ namespace GoBot.IHM
                     {
                         int index = ligne.Index;
                         TrameReplay trameReplay = replay.Trames[Convert.ToInt32(dataGridViewLog["Id", index].Value)];
-                        Trame trame = new Trame(trameReplay.Trame);
+                        Frame trame = new Frame(trameReplay.Trame);
 
-                        Carte carte = trame.Carte;
+                        Carte carte = trame.Board;
 
                         checkedListBoxExpediteur.Items.Remove(carte.ToString());
                         checkedListBoxExpediteur.Items.Add(carte.ToString(), false);

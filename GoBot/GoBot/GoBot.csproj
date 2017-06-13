@@ -129,7 +129,7 @@
     <Compile Include="Calculs\Formes\RectanglePolygone.cs" />
     <Compile Include="Calculs\Formes\Triangle.cs" />
     <Compile Include="CameraIP.cs" />
-    <Compile Include="Communications\Connexion.cs" />
+    <Compile Include="Communications\Connection.cs" />
     <Compile Include="Communications\DecodeurTrames.cs" />
     <Compile Include="Communications\FonctionsTrames.cs" />
     <Compile Include="Dessinateur.cs" />
@@ -425,8 +425,8 @@
     <Compile Include="SerializableDictionnary.cs" />
     <Compile Include="Servomoteur.cs" />
     <Compile Include="Communications\TrameFactory.cs" />
-    <Compile Include="Communications\ConnexionUDP.cs" />
-    <Compile Include="Communications\Trame.cs" />
+    <Compile Include="Communications\UDPConnection.cs" />
+    <Compile Include="Communications\Frame.cs" />
     <Compile Include="Synchronizer.cs" />
     <Compile Include="TestCode.cs" />
     <Compile Include="Util.cs" />

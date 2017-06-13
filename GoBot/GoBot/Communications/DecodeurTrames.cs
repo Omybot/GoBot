@@ -10,10 +10,10 @@ namespace GoBot.Communications
     {
         public static String Decode(String trame)
         {
-            return Decode(new Trame(trame));
+            return Decode(new Frame(trame));
         }
 
-        public static String Decode(Trame trame)
+        public static String Decode(Frame trame)
         {
            
             //                case FonctionTrame.CommandeServo:
@@ -638,7 +638,7 @@ namespace GoBot.Communications
             return output;
         }
 
-        public static String GetMessage(Trame trame)
+        public static String GetMessage(Frame trame)
         {
             String output = "";
 
@@ -648,7 +648,7 @@ namespace GoBot.Communications
             return output;
         }
 
-        private static List<uint> GetParameters(String format, Trame trame)
+        private static List<uint> GetParameters(String format, Frame trame)
         {
             List<uint> parameters = new List<uint>();
             String subParameter;

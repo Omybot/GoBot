@@ -19,7 +19,7 @@ namespace GoBot.Communications
         public DateTime Date { get; set; }
         public bool Entrant { get; set; }
 
-        public TrameReplay(Trame trame, DateTime date, bool entrant = true)
+        public TrameReplay(Frame trame, DateTime date, bool entrant = true)
         {
             Trame = trame.ToString();
             Date = date;
@@ -56,7 +56,7 @@ namespace GoBot.Communications
         /// Ajoute une trame reçue avec l'heure actuelle
         /// </summary>
         /// <param name="trame">Trame à ajouter</param>
-        public void AjouterTrameEntrante(Trame trame)
+        public void AjouterTrameEntrante(Frame trame)
         {
             AjouterTrameEntrante(trame, DateTime.Now);
         }
@@ -65,7 +65,7 @@ namespace GoBot.Communications
         /// Ajoute une trame envoyée avec l'heure actuelle
         /// </summary>
         /// <param name="trame">Trame à ajouter</param>
-        public void AjouterTrameSortante(Trame trame)
+        public void AjouterTrameSortante(Frame trame)
         {
             AjouterTrameSortante(trame, DateTime.Now);
         }
@@ -75,7 +75,7 @@ namespace GoBot.Communications
         /// </summary>
         /// <param name="trame">Trame à ajouter</param>
         /// <param name="date">Heure de réception de la trame</param>
-        public void AjouterTrameEntrante(Trame trame, DateTime date)
+        public void AjouterTrameEntrante(Frame trame, DateTime date)
         {
             lock (Trames)
                 Trames.Add(new TrameReplay(trame, date, true));
@@ -86,7 +86,7 @@ namespace GoBot.Communications
         /// </summary>
         /// <param name="trame">Trame à ajouter</param>
         /// <param name="date">Heure de réception de la trame</param>
-        public void AjouterTrameSortante(Trame trame, DateTime date)
+        public void AjouterTrameSortante(Frame trame, DateTime date)
         {
             lock (Trames)
                 Trames.Add(new TrameReplay(trame, date, false));
@@ -141,10 +141,10 @@ namespace GoBot.Communications
         {
             for (int i = 0; i < Trames.Count;i++)
             {
-                Trame trame = new Trame(Trames[i].Trame);
+                Frame trame = new Frame(Trames[i].Trame);
 
                 if (Trames[i].Entrant)
-                    Connections.BoardConnection[trame.Carte].TrameRecue(trame);
+                    Connections.BoardConnection[trame.Board].OnFrameReceived(trame);
                 //else
                 //    Connexions.ConnexionParCarte[trame.Carte].SendMessage(trame);
 

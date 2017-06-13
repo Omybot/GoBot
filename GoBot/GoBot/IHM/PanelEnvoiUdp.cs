@@ -21,10 +21,10 @@ namespace GoBot.IHM
 
         private void btnEnvoyer_Click(object sender, EventArgs e)
         {
-            Trame trame = null;
+            Frame trame = null;
             try
             {
-                trame = new Trame(txtTrame.Text);
+                trame = new Frame(txtTrame.Text);
             }
             catch (Exception)
             {
@@ -48,7 +48,7 @@ namespace GoBot.IHM
                 switchBoutonIO.SetActif(true, false);
                 switchBoutonGB.SetActif(true, false);
 
-                foreach (ConnexionUDP conn in Connections.AllConnections)
+                foreach (UDPConnection conn in Connections.AllConnections)
                 {
                     ConnectionDetails details = new ConnectionDetails();
                     details.Connection = conn;
@@ -86,17 +86,17 @@ namespace GoBot.IHM
 
             if (boxMove.Checked)
             {
-                Trame trame = TrameFactory.Debug(Carte.RecMove, val);
+                Frame trame = TrameFactory.Debug(Carte.RecMove, val);
                 Connections.ConnectionMove.SendMessage(trame);
             }
             if (boxIO.Checked)
             {
-                Trame trame = TrameFactory.Debug(Carte.RecIO, val);
+                Frame trame = TrameFactory.Debug(Carte.RecIO, val);
                 Connections.ConnectionIO.SendMessage(trame);
             }
             if (boxGB.Checked)
             {
-                Trame trame = TrameFactory.Debug(Carte.RecGB, val);
+                Frame trame = TrameFactory.Debug(Carte.RecGB, val);
                 Connections.ConnectionGB.SendMessage(trame);
             }
         }
@@ -125,17 +125,17 @@ namespace GoBot.IHM
         {
             if (boxMove.Checked)
             {
-                Trame trame = TrameFactory.TestConnexion(Carte.RecMove);
+                Frame trame = TrameFactory.TestConnexion(Carte.RecMove);
                 Connections.ConnectionMove.SendMessage(trame);
             }
             if (boxIO.Checked)
             {
-                Trame trame = TrameFactory.TestConnexion(Carte.RecIO);
+                Frame trame = TrameFactory.TestConnexion(Carte.RecIO);
                 Connections.ConnectionIO.SendMessage(trame);
             }
             if (boxGB.Checked)
             {
-                Trame trame = TrameFactory.TestConnexion(Carte.RecGB);
+                Frame trame = TrameFactory.TestConnexion(Carte.RecGB);
                 Connections.ConnectionGB.SendMessage(trame);
             }
         }

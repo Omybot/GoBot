@@ -31,23 +31,23 @@ namespace GoBot.Devices
             Vert
         }
 
-        private ConnexionUDP connexion;
+        private UDPConnection connexion;
         private Dictionary<LedID, LedStatus> ledsStatus;
 
-        private Dictionary<Connexion, LedID> ledConnexionState;
+        private Dictionary<Connection, LedID> ledConnexionState;
 
-        public RecGoBot(ConnexionUDP conn)
+        public RecGoBot(UDPConnection conn)
         {
             connexion = conn;
-            connexion.NouvelleTrameRecue += new Connexion.ReceptionDelegate(connexion_NouvelleTrameRecue);
+            connexion.FrameReceived += new Connection.ReceptionDelegate(connexion_NouvelleTrameRecue);
 
-            ledConnexionState = new Dictionary<Connexion, LedID>();
+            ledConnexionState = new Dictionary<Connection, LedID>();
 
             LedID led = LedID.DebugA1;
-            foreach (ConnexionUDP conLed in Connections.AllConnections.OrderBy(c => Connections.GetBoardByConnection(c).ToString()))
+            foreach (UDPConnection conLed in Connections.AllConnections.OrderBy(c => Connections.GetBoardByConnection(c).ToString()))
             {
                 ledConnexionState.Add(conLed, led);
-                conLed.ConnexionCheck.SendConnectionTest += ConnexionCheck_SendConnectionTest;
+                conLed.ConnectionChecker.SendConnectionTest += ConnexionCheck_SendConnectionTest;
                 led++;
             }
             
@@ -119,12 +119,12 @@ namespace GoBot.Devices
                 SetLed(led, RecGoBot.LedStatus.Off);
         }
 
-        void ConnexionCheck_SendConnectionTest(Connexion sender)
+        void ConnexionCheck_SendConnectionTest(Connection sender)
         {
-            ChangeLedConnection(sender.ConnexionCheck.Connected, ledConnexionState[sender]);
+            ChangeLedConnection(sender.ConnectionChecker.Connected, ledConnexionState[sender]);
         }
 
-        void connexion_NouvelleTrameRecue(Trame trameRecue)
+        void connexion_NouvelleTrameRecue(Frame trameRecue)
         {
             if (trameRecue[1] == (byte)FonctionTrame.RetourCapteurOnOff)
             {
@@ -244,7 +244,7 @@ namespace GoBot.Devices
 
         public uint GetCodeurPosition()
         {
-            Trame t = TrameFactory.CodeurPosition(Carte.RecGB, CodeurID.Manuel);
+            Frame t = TrameFactory.CodeurPosition(Carte.RecGB, CodeurID.Manuel);
             semCodeur = new Semaphore(0, int.MaxValue);
             Connections.ConnectionGB.SendMessage(t);
 

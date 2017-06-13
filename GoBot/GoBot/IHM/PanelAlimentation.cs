@@ -48,7 +48,7 @@ namespace GoBot.IHM
 
             ctrlGraphique.DessineCourbes();
             
-            if (Connections.ConnectionIO.ConnexionCheck.Connected)
+            if (Connections.ConnectionIO.ConnectionChecker.Connected)
             {
                 batteriePack1.Afficher = true;
                 batteriePack1.Tension = Robots.GrosRobot.BatterieVoltage;

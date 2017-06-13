@@ -6,14 +6,14 @@ namespace GoBot.IHM
 {
     public partial class ConnectionStatus : UserControl
     {
-        private Connexion _connection;
+        private Connection _connection;
         
         public ConnectionStatus()
         {
             InitializeComponent();
         }
 
-        public Connexion Connection
+        public Connection Connection
         {
             get
             {
@@ -21,21 +21,21 @@ namespace GoBot.IHM
             }
             set
             {
-                if (_connection != null && _connection.ConnexionCheck != null)
-                    _connection.ConnexionCheck.ConnectionStatusChange -= ConnexionCheck_ConnectionStatusChange;
+                if (_connection != null && _connection.ConnectionChecker != null)
+                    _connection.ConnectionChecker.ConnectionStatusChange -= ConnexionCheck_ConnectionStatusChange;
 
                 _connection = value;
 
-                if (_connection != null && _connection.ConnexionCheck != null)
+                if (_connection != null && _connection.ConnectionChecker != null)
                 {
-                    _conIndicator.SetConnectionState(_connection.ConnexionCheck.Connected, false);
-                    _connection.ConnexionCheck.ConnectionStatusChange += ConnexionCheck_ConnectionStatusChange;
+                    _conIndicator.SetConnectionState(_connection.ConnectionChecker.Connected, false);
+                    _connection.ConnectionChecker.ConnectionStatusChange += ConnexionCheck_ConnectionStatusChange;
                     _lblName.Text = Connections.GetBoardByConnection(_connection).ToString();
                 }
             }
         }
         
-        private void ConnexionCheck_ConnectionStatusChange(Connexion sender, bool connected)
+        private void ConnexionCheck_ConnectionStatusChange(Connection sender, bool connected)
         {
             this.InvokeAuto(() => _conIndicator.SetConnectionState(connected, true));
         }

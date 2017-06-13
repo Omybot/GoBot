@@ -5,14 +5,14 @@ namespace GoBot.IHM
 {
     public partial class ConnectionDetails : UserControl
     {
-        private ConnexionUDP _connection;
+        private UDPConnection _connection;
 
         public ConnectionDetails()
         {
             InitializeComponent();
         }
 
-        public ConnexionUDP Connection
+        public UDPConnection Connection
         {
             get
             {
@@ -24,9 +24,9 @@ namespace GoBot.IHM
                 if(_connection != null)
                 {
                     _grpConnection.Text = Connections.GetBoardByConnection(_connection).ToString();
-                    _lblIP.Text = _connection.AdresseIp.ToString();
-                    _lblInputPort.Text = _connection.PortEntree.ToString();
-                    _lblOutputPort.Text = _connection.PortSortie.ToString();
+                    _lblIP.Text = _connection.IPAddress.ToString();
+                    _lblInputPort.Text = _connection.InputPort.ToString();
+                    _lblOutputPort.Text = _connection.OutputPort.ToString();
                 }
             }
         }

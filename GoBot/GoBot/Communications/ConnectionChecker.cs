@@ -25,7 +25,7 @@ namespace GoBot.Communications
         /// <summary>
         /// Connexion surveillée
         /// </summary>
-        public Connexion AttachedConnection { get; protected set; }
+        public Connection AttachedConnection { get; protected set; }
         /// <summary>
         /// Vrai si la connexion est actuellement établie
         /// </summary>
@@ -40,13 +40,13 @@ namespace GoBot.Communications
             set { CheckTimer.Interval = value; }
         }
 
-        public delegate void ConnectionChangeDelegate(Connexion sender, bool connected);
+        public delegate void ConnectionChangeDelegate(Connection sender, bool connected);
         /// <summary>
         /// Event appelé quand la connexion est trouvée ou perdue.
         /// </summary>
         public event ConnectionChangeDelegate ConnectionStatusChange;
 
-        public delegate void SendConnectionTestDelegate(Connexion sender);
+        public delegate void SendConnectionTestDelegate(Connection sender);
         /// <summary>
         /// Event appelé à chaque tick pour actualiser la connexion. Abonner à cet event une fonction qui aura pour conséquence un appel à NotifyAlive si la connexion est établie.
         /// </summary>
@@ -55,7 +55,7 @@ namespace GoBot.Communications
         /// <summary>
         /// Crée un ConnectionChecker en spécifiant la connexion surveillée et l'intervalle entre chaque vérification.
         /// </summary>
-        public ConnectionChecker(Connexion conn, int interval = 2000)
+        public ConnectionChecker(Connection conn, int interval = 2000)
         {
             AttachedConnection = conn;
             LastAliveDate = DateTime.Now - new TimeSpan(0, 1, 0);

@@ -24,7 +24,7 @@ namespace GoBot
         }
 
         private Carte carte;
-        private Connexion connexion;
+        private Connection connexion;
 
         private int id;
         public int ID
@@ -420,7 +420,7 @@ namespace GoBot
 
             connexion = Connections.BoardConnection[carte];
 
-            connexion.NouvelleTrameRecue += new ConnexionUDP.ReceptionDelegate(connexion_NouvelleTrame);
+            connexion.FrameReceived += new UDPConnection.ReceptionDelegate(connexion_NouvelleTrame);
         }
 
         public void DemandeActualisation(bool complete)
@@ -483,7 +483,7 @@ namespace GoBot
             connexion.SendMessage(TrameFactory.ServoDemandeAllIn((ServomoteurID)id, carte));
         }
 
-        void connexion_NouvelleTrame(Trame trame)
+        void connexion_NouvelleTrame(Frame trame)
         {
             // Test trame de type configuration servomoteur
             if (trame[1] == (byte)FonctionTrame.CommandeServo)

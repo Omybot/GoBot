@@ -97,7 +97,7 @@ namespace GoBot.Balises
         /// </summary>
         public BaliseStats Stats { get; private set; }
 
-        public Connexion Connexion { get; private set; }
+        public Connection Connexion { get; private set; }
 
         public List<PointReel> PositionsAdverses { get; private set; }
 
@@ -113,7 +113,7 @@ namespace GoBot.Balises
             DetectionsCapteur2 = new List<DetectionBalise>();
 
             Connexion = Connections.ConnectionMove;
-            Connexion.NouvelleTrameRecue += new ConnexionUDP.ReceptionDelegate(connexion_NouvelleTrame);
+            Connexion.FrameReceived += new UDPConnection.ReceptionDelegate(connexion_NouvelleTrame);
 
             Stats = new BaliseStats(this);
         }
@@ -124,7 +124,7 @@ namespace GoBot.Balises
         /// Réception d'un message envoyé par la carte de la balise
         /// </summary>
         /// <param name="trame">Message reçu</param>
-        public void connexion_NouvelleTrame(Trame trame)
+        public void connexion_NouvelleTrame(Frame trame)
         {
             if (trame == null)
                 return;
@@ -492,7 +492,7 @@ namespace GoBot.Balises
             }
 
             ValeurConsigne = vitesse;
-            Trame t = TrameFactory.BaliseVitesse(vitesse);
+            Frame t = TrameFactory.BaliseVitesse(vitesse);
             Connexion.SendMessage(t);
         }
 
