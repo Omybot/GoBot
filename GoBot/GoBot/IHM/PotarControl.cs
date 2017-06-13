@@ -49,13 +49,12 @@ namespace GoBot.IHM
             else
             {
                 pollingEnable = false;
-                threadPolling.Join();
             }
         }
 
         private void ThreadPollingCodeur()
         {
-            double exValue, value, posValue;
+            double posValue;
             double ticksMin, ticksCurrent, ticksRange;
             int pointsParTour = 4096;
             int toursRange = 5;
