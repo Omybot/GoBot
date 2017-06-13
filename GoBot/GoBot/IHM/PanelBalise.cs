@@ -49,10 +49,7 @@ namespace GoBot.IHM
 
         private void MAJPosition()
         {
-            this.Invoke(new EventHandler(delegate
-            {
-                balise_PositionsChange();
-            }));
+            this.InvokeAuto(() => balise_PositionsChange());
         }
 
         void balise_PositionsChange()

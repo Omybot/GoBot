@@ -1,25 +1,16 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Drawing;
-using System.Data;
-using System.Linq;
-using System.Text;
-using System.Windows.Forms;
-using GoBot.Calculs.Formes;
-using GoBot.Calculs;
-using AStarFolder;
-using System.Threading;
-using GoBot.Mouvements;
-using GoBot.Enchainements;
-using GoBot.Balises;
-using GoBot.ElementsJeu;
+﻿using Gobot.Calculs;
 using GoBot.Actionneurs;
-using GoBot.PathFinding;
-using Gobot.Calculs;
+using GoBot.Calculs;
+using GoBot.Calculs.Formes;
 using GoBot.Devices;
-using System.Diagnostics;
-using GoBot.Communications;
+using GoBot.ElementsJeu;
+using GoBot.Enchainements;
+using GoBot.Mouvements;
+using System;
+using System.Collections.Generic;
+using System.Drawing;
+using System.Threading;
+using System.Windows.Forms;
 
 namespace GoBot.IHM
 {
@@ -46,10 +37,7 @@ namespace GoBot.IHM
 
         void Dessinateur_TableDessinee(Image img)
         {
-            this.Invoke(new EventHandler(delegate
-            {
-                pictureBoxTable.Image = img;
-            }));
+            this.InvokeAuto(() => pictureBoxTable.Image = img);
         }
 
         void ParentForm_FormClosing(object sender, FormClosingEventArgs e)
@@ -60,22 +48,19 @@ namespace GoBot.IHM
 
         void Plateau_ScoreChange(object sender, EventArgs e)
         {
-            this.Invoke(new EventHandler(delegate
-                {
-                    lblScore.Text = Plateau.Score + "";
-                }));
+            this.InvokeAuto(() => lblScore.Text = Plateau.Score.ToString());
         }
 
         void MAJAffichage()
         {
             while (!Config.Shutdown && Thread.CurrentThread.IsAlive)
             {
-                this.Invoke(new EventHandler(delegate
-                {
+                this.InvokeAuto(() =>
+                { 
                     lblPosGrosX.Text = Math.Round(Robots.GrosRobot.Position.Coordonnees.X, 2).ToString();
                     lblPosGrosY.Text = Math.Round(Robots.GrosRobot.Position.Coordonnees.Y, 2).ToString();
                     lblPosGrosTeta.Text = Robots.GrosRobot.Position.Angle.ToString();
-                }));
+                });
 
                 if (Plateau.Enchainement != null)
                 {
@@ -83,17 +68,20 @@ namespace GoBot.IHM
                     if (tempsRestant.TotalMilliseconds <= 0)
                         tempsRestant = new TimeSpan(0);
 
-                    lblSecondes.Text = (int)tempsRestant.TotalSeconds + "";
-                    lblMilli.Text = tempsRestant.Milliseconds + "";
-
                     Color couleur;
                     if (tempsRestant.TotalSeconds > Enchainement.DureeMatch.TotalSeconds / 2)
                         couleur = Color.FromArgb((int)((Enchainement.DureeMatch.TotalSeconds - tempsRestant.TotalSeconds) * (150.0 / (Enchainement.DureeMatch.TotalSeconds / 2.0))), 150, 0);
                     else
                         couleur = Color.FromArgb(150, 150 - (int)((Enchainement.DureeMatch.TotalSeconds / 2.0 - tempsRestant.TotalSeconds) * (150.0 / (Enchainement.DureeMatch.TotalSeconds / 2.0))), 0);
 
-                    lblSecondes.ForeColor = couleur;
-                    lblMilli.ForeColor = couleur;
+                    this.InvokeAuto(() =>
+                    {
+                        lblSecondes.Text = (int)tempsRestant.TotalSeconds + "";
+                        lblMilli.Text = tempsRestant.Milliseconds + "";
+
+                        lblSecondes.ForeColor = couleur;
+                        lblMilli.ForeColor = couleur;
+                    });
                 }
             }
         }
@@ -317,17 +305,11 @@ namespace GoBot.IHM
 
         private void ThreadTrajectoireGros()
         {
-            this.Invoke(new EventHandler(delegate
-            {
-                btnPathRPCentre.Enabled = false;
-            }));
+            this.InvokeAuto(() => btnPathRPCentre.Enabled = false);
 
             Robots.GrosRobot.GotoXYTeta(new Position(360 - positionArrivee.Angle.AngleDegres, positionArrivee.Coordonnees)); // TODO2018 pourquoi on change de repère ?
 
-            this.Invoke(new EventHandler(delegate
-            {
-                btnPathRPCentre.Enabled = true;
-            }));
+            this.InvokeAuto(() => btnPathRPCentre.Enabled = true);
         }
 
         #region GroupBox Déplacements

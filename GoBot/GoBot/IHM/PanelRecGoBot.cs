@@ -84,32 +84,12 @@ namespace GoBot.IHM
 
         void RecGoBot_JackChange(bool state)
         {
-            if (this.InvokeRequired)
-            {
-                this.Invoke(new EventHandler(delegate
-                {
-                    RecGoBot_JackChange(state);
-                }));
-            }
-            else
-            {
-                btnJack.State = state;
-            }
+            this.InvokeAuto(() => btnJack.State = state);
         }
 
         void RecGoBot_ColorChange(MatchColor state)
         {
-            if (this.InvokeRequired)
-            {
-                this.Invoke(new EventHandler(delegate
-                {
-                    RecGoBot_ColorChange(state);
-                }));
-            }
-            else
-            {
-                btnCouleur.State = state == MatchColor.LeftBlue ? true : false;
-            }
+            this.InvokeAuto(() => btnCouleur.State = state == MatchColor.LeftBlue ? true : false);
         }
 
         void colorPickup1_ColorClick(Color color)
@@ -125,14 +105,7 @@ namespace GoBot.IHM
 
         void RecGoBot_ButtonChange(CapteurOnOffID btn, bool state)
         {
-            if (this.InvokeRequired)
-            {
-                this.Invoke(new EventHandler(delegate
-                {
-                    RecGoBot_ButtonChange(btn, state);
-                }));
-            }
-            else
+            this.InvokeAuto(() =>
             {
                 try
                 {
@@ -142,8 +115,7 @@ namespace GoBot.IHM
                 {
                     Console.WriteLine("Bouton inconnu");
                 }
-
-            }
+            });
         }
 
         private void leds_MouseClick(object sender, MouseEventArgs e)

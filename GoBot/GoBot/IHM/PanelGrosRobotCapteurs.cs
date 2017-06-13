@@ -57,24 +57,24 @@ namespace GoBot.IHM
 
         void timerJack_Elapsed(object sender, System.Timers.ElapsedEventArgs e)
         {
-            this.Invoke(new EventHandler(delegate
-            {
+            this.InvokeAuto(() =>
+            { 
                 if (Robots.GrosRobot.GetJack())
                     ledJack.CouleurVert();
                 else
                     ledJack.CouleurRouge();
-            }));
+            });
         }
 
         void timerCouleurEquipe_Elapsed(object sender, System.Timers.ElapsedEventArgs e)
         {
-            this.Invoke(new EventHandler(delegate
+            this.InvokeAuto(() =>
             {
                 if (Robots.GrosRobot.GetCouleurEquipe(false) == Plateau.CouleurDroiteJaune)
                     ledCouleurEquipe.CouleurVert();
                 else
                     ledCouleurEquipe.CouleurJaune();
-            }));
+            });
         }
 
         private void boxCouleurEquipe_CheckedChanged(object sender, EventArgs e)

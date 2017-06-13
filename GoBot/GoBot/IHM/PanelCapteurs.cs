@@ -45,18 +45,11 @@ namespace GoBot.IHM
 
         void GrosRobot_CapteurCouleurChange(CapteurCouleurID capteur, Color couleur)
         {
-            if (this.InvokeRequired)
-            {
-                this.Invoke(new EventHandler(delegate
-                {
-                    GrosRobot_CapteurCouleurChange(capteur, couleur);
-                }));
-            }
-            else
+            this.InvokeAuto(() =>
             {
                 if (capteur == CapteurCouleurID.CouleurTube)
                     picColor.SetColor(couleur);
-            }
+            });
         }
 
         private void PanelCapteurs_Load(object sender, EventArgs e)

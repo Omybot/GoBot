@@ -81,10 +81,7 @@ namespace GoBot.IHM
                 posValue = Math.Min(posValue, positionnable.Maximum);
                 posValue = Math.Max(posValue, positionnable.Minimum);
 
-                trackBar.Invoke(new EventHandler(delegate
-                {
-                    trackBar.SetValue((int)posValue);
-                }));
+                this.InvokeAuto(() => trackBar.SetValue((int)posValue));
             }
         }
 

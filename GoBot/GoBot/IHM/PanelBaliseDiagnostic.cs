@@ -14,14 +14,10 @@ namespace GoBot.IHM
     public partial class PanelBaliseDiagnostic : UserControl
     {
         private Balise balise;
-        private EventHandler eventGraphiques;
 
         public PanelBaliseDiagnostic()
         {
             InitializeComponent();
-
-            if(!Config.DesignMode)
-                eventGraphiques = new EventHandler(MAJGraphiques);
         }
 
         public Balise Balise
@@ -47,7 +43,7 @@ namespace GoBot.IHM
             ctrlGraphiqueTemps.AjouterPoint("Temps(ms)", temps.TotalMilliseconds, Color.Blue);
             ctrlGraphiquePWM.AjouterPoint("PWM", pwm, Color.DarkSalmon);
 
-            this.Invoke(eventGraphiques);
+            this.InvokeAuto(() => MAJGraphiques());
         }
 
         private void btnReset_Click(object sender, EventArgs e)
@@ -59,7 +55,7 @@ namespace GoBot.IHM
             ctrlGraphiqueDistance2.SupprimerCourbe("Distance 2");
         }
 
-        private void MAJGraphiques(object sender, EventArgs e)
+        private void MAJGraphiques()
         {
             ctrlGraphiqueAngle1.DessineCourbes();
             ctrlGraphiqueDistance1.DessineCourbes();

@@ -19,14 +19,7 @@ namespace Composants
 
         public void SetColor(Color color)
         {
-            if(this.InvokeRequired)
-            {
-                this.Invoke(new EventHandler(delegate
-                {
-                    SetColor(color);
-                }));
-            }
-            else
+            this.InvokeAuto(() =>
             {
                 lblR.Text = color.R.ToString();
                 lblG.Text = color.G.ToString();
@@ -37,7 +30,7 @@ namespace Composants
                 picR.Image = MakeColorBar(picR.Size, Color.Red, color.R);
                 picG.Image = MakeColorBar(picG.Size, Color.FromArgb(44, 208, 0), color.G);
                 picB.Image = MakeColorBar(picB.Size, Color.FromArgb(10, 104, 199), color.B);
-            }
+            });
         }
 
         private Image MakeColorZone(Size sz, Color color)

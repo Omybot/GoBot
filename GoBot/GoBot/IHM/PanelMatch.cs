@@ -1,17 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
 using System.Drawing;
-using System.Data;
-using System.Linq;
-using System.Text;
-using System.Windows.Forms;
 using System.Threading;
-using GoBot.Communications;
-using GoBot.Calculs;
-using GoBot.Calculs.Formes;
-using GoBot.Balises;
-using GoBot.Actionneurs;
+using System.Windows.Forms;
 
 namespace GoBot.IHM
 {
@@ -78,28 +68,22 @@ namespace GoBot.IHM
         {
             // Recallage du gros robot
 
-            this.Invoke(new EventHandler(delegate
-            {
-                ledRecallageGros.CouleurOrange();
-            }));
+            this.InvokeAuto(() => ledRecallageGros.CouleurOrange());
 
             Recallages.RecallageGrosRobot();
 
-            this.Invoke(new EventHandler(delegate
-            {
-                ledRecallageGros.CouleurVert();
-            }));
+            this.InvokeAuto(() => ledRecallageGros.CouleurVert());
         }
 
         void Plateau_NotreCouleurChange(object sender, EventArgs e)
         {
-            this.Invoke(new EventHandler(delegate
+            this.InvokeAuto(() =>
             {
                 if (Plateau.NotreCouleur == Plateau.CouleurGaucheBleu)
                     CouleurGauche();
                 else if (Plateau.NotreCouleur == Plateau.CouleurDroiteJaune)
                     CouleurDroite();
-            }));
+            });
         }
 
         private void btnArmerJack_Click(object sender, EventArgs e)

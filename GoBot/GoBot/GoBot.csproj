@@ -107,7 +107,6 @@
     <Compile Include="Actions\Deplacement\ActionAvance.cs" />
     <Compile Include="Actions\Deplacement\ActionRecule.cs" />
     <Compile Include="Actions\IAction.cs" />
-    <Compile Include="Extensions\ControlExtensions.cs" />
     <Compile Include="IHM\ConnectionStatus.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -671,6 +670,7 @@
       <Name>Composants</Name>
     </ProjectReference>
   </ItemGroup>
+  <Import Project="..\Extensions\Extensions.projitems" Label="Shared" />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
     <PostBuildEvent>
