@@ -42,7 +42,7 @@ namespace GoBot.Communications
         /// <param name="_adresseIP">Adresse Ip du client</param>
         /// <param name="_portSortie">Port  de destination du message</param>
         /// <returns>Etat de la connexion</returns>
-        public Etat Connexion(IPAddress _adresseIP, int _portSortie, int _portEntree)
+        public Etat Connexion(IPAddress _adresseIP, int _portEntree, int _portSortie)
         {
             Etat retour = Etat.Erreur;
 

@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using GoBot.Communications;
 using System.Threading;
+using System.Net;
 
 namespace GoBot.Communications
 {
@@ -13,15 +14,7 @@ namespace GoBot.Communications
         public static ConnexionUDP ConnexionIO { get; set; }
         public static ConnexionUDP ConnexionGB { get; set; }
 
-        public static IEnumerable<Connexion> AllConnections
-        {
-            get
-            {
-                yield return ConnexionMove;
-                yield return ConnexionIO;
-                yield return ConnexionGB;
-            }
-        }
+        public static List<Connexion> AllConnections { get; set; }
         
         public static Dictionary<Carte, Connexion> ConnexionParCarte { get; private set; }
         public static Dictionary<Carte, bool> ActivationConnexion { get; private set; }
@@ -29,25 +22,25 @@ namespace GoBot.Communications
         public static void Init()
         {
             ActivationConnexion = new Dictionary<Carte, bool>();
-            ActivationConnexion.Add(Carte.RecIO, true);
-            ActivationConnexion.Add(Carte.RecMove, true);
-            ActivationConnexion.Add(Carte.RecGB, true);
-
-            ConnexionMove = new ConnexionUDP();
-            ConnexionMove.Connexion(System.Net.IPAddress.Parse("10.1.0.11"), 12311, 12321);
-
-            ConnexionIO = new ConnexionUDP();
-            ConnexionIO.Connexion(System.Net.IPAddress.Parse("10.1.0.14"), 12314, 12324);
-
-            ConnexionGB = new ConnexionUDP();
-            ConnexionGB.Connexion(System.Net.IPAddress.Parse("10.1.0.12"), 12312, 12322);
-
             ConnexionParCarte = new Dictionary<Carte, Connexion>();
-            ConnexionParCarte.Add(Carte.RecMove, ConnexionMove);
-            ConnexionParCarte.Add(Carte.RecIO, ConnexionIO);
-            ConnexionParCarte.Add(Carte.RecGB, ConnexionGB);
+            AllConnections = new List<Connexion>();
+
+            ConnexionMove = AddUDPConnection(Carte.RecMove, IPAddress.Parse("10.1.0.11"), 12321, 12311);
+            ConnexionIO = AddUDPConnection(Carte.RecIO, IPAddress.Parse("10.1.0.14"), 12324, 12314);
+            ConnexionGB = AddUDPConnection(Carte.RecGB, IPAddress.Parse("10.1.0.12"), 12322, 12312);
 
             ThreadPool.QueueUserWorkItem(f => TestConnectionsLoop()); // En remplacement des tests de connexion des ConnexionCheck, pour les syncroniser
+        }
+
+        private static ConnexionUDP AddUDPConnection(Carte board, IPAddress ip, int inPort, int outPort)
+        {
+            ConnexionUDP output = new ConnexionUDP();
+            output.Connexion(ip, inPort, outPort);
+            ConnexionParCarte.Add(board, output);
+            ActivationConnexion.Add(board, true);
+            AllConnections.Add(output);
+
+            return output;
         }
 
         private static void TestConnectionsLoop()

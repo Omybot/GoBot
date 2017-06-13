@@ -107,6 +107,12 @@
     <Compile Include="Actions\Deplacement\ActionAvance.cs" />
     <Compile Include="Actions\Deplacement\ActionRecule.cs" />
     <Compile Include="Actions\IAction.cs" />
+    <Compile Include="IHM\ConnectionDetails.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="IHM\ConnectionDetails.Designer.cs">
+      <DependentUpon>ConnectionDetails.cs</DependentUpon>
+    </Compile>
     <Compile Include="IHM\ConnectionStatus.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -424,6 +430,9 @@
     <Compile Include="Synchronizer.cs" />
     <Compile Include="TestCode.cs" />
     <Compile Include="Util.cs" />
+    <EmbeddedResource Include="IHM\ConnectionDetails.resx">
+      <DependentUpon>ConnectionDetails.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="IHM\ConnectionStatus.resx">
       <DependentUpon>ConnectionStatus.cs</DependentUpon>
     </EmbeddedResource>

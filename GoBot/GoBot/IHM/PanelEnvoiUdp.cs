@@ -48,17 +48,12 @@ namespace GoBot.IHM
                 switchBoutonIO.SetActif(true, false);
                 switchBoutonGB.SetActif(true, false);
 
-                lblIpRecMove.Text = Connexions.ConnexionMove.AdresseIp.ToString();
-                lblEntreeRecMove.Text = Connexions.ConnexionMove.PortEntree.ToString();
-                lblSortieRecMove.Text = Connexions.ConnexionMove.PortSortie.ToString();
-
-                lblIpRecIO.Text = Connexions.ConnexionIO.AdresseIp.ToString();
-                lblEntreeRecIO.Text = Connexions.ConnexionIO.PortEntree.ToString();
-                lblSortieRecIO.Text = Connexions.ConnexionIO.PortSortie.ToString();
-
-                lblIpRecGB.Text = Connexions.ConnexionGB.AdresseIp.ToString();
-                lbEntreeRecGB.Text = Connexions.ConnexionGB.PortEntree.ToString();
-                lblSortieRecGB.Text = Connexions.ConnexionGB.PortSortie.ToString();
+                foreach (ConnexionUDP conn in Connexions.AllConnections)
+                {
+                    ConnectionDetails details = new ConnectionDetails();
+                    details.Connection = conn;
+                    _pnlConnections.Controls.Add(details);
+                }
 
                 IPAddress[] adresses = Dns.GetHostAddresses(Dns.GetHostName());
 
@@ -83,9 +78,7 @@ namespace GoBot.IHM
                 }
             }
         }
-
-        Thread thTrames;
-
+        
         private void btnDebug_Click(object sender, EventArgs e)
         {
             Button btn = (Button)sender;

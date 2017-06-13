@@ -30,14 +30,8 @@
         {
             this.btnEnvoyer = new System.Windows.Forms.Button();
             this.boxMove = new System.Windows.Forms.CheckBox();
-            this.groupBox1 = new System.Windows.Forms.GroupBox();
-            this.lblSortieRecMove = new System.Windows.Forms.Label();
-            this.lblEntreeRecMove = new System.Windows.Forms.Label();
-            this.lblIpRecMove = new System.Windows.Forms.Label();
-            this.label3 = new System.Windows.Forms.Label();
-            this.label2 = new System.Windows.Forms.Label();
-            this.label1 = new System.Windows.Forms.Label();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
+            this.boxGB = new System.Windows.Forms.CheckBox();
             this.groupBox6 = new System.Windows.Forms.GroupBox();
             this.label10 = new System.Windows.Forms.Label();
             this.numIntervalleTest = new System.Windows.Forms.NumericUpDown();
@@ -56,40 +50,24 @@
             this.btnDebug0 = new System.Windows.Forms.Button();
             this.boxIO = new System.Windows.Forms.CheckBox();
             this.label4 = new System.Windows.Forms.Label();
+            this.txtTrame = new Composants.TextBoxPlus();
             this.groupBox4 = new System.Windows.Forms.GroupBox();
             this.lblMonIP = new System.Windows.Forms.Label();
             this.label13 = new System.Windows.Forms.Label();
-            this.groupBox5 = new System.Windows.Forms.GroupBox();
-            this.lblSortieRecIO = new System.Windows.Forms.Label();
-            this.lblEntreeRecIO = new System.Windows.Forms.Label();
-            this.lblIpRecIO = new System.Windows.Forms.Label();
-            this.label11 = new System.Windows.Forms.Label();
-            this.label12 = new System.Windows.Forms.Label();
-            this.label14 = new System.Windows.Forms.Label();
             this.RecMove = new System.Windows.Forms.Label();
             this.label15 = new System.Windows.Forms.Label();
             this.groupBox7 = new System.Windows.Forms.GroupBox();
-            this.label7 = new System.Windows.Forms.Label();
-            this.groupBox2 = new System.Windows.Forms.GroupBox();
-            this.lblSortieRecGB = new System.Windows.Forms.Label();
-            this.lbEntreeRecGB = new System.Windows.Forms.Label();
-            this.lblIpRecGB = new System.Windows.Forms.Label();
-            this.label16 = new System.Windows.Forms.Label();
-            this.label17 = new System.Windows.Forms.Label();
-            this.label18 = new System.Windows.Forms.Label();
             this.switchBoutonGB = new Composants.SwitchBouton();
+            this.label7 = new System.Windows.Forms.Label();
             this.switchBoutonMove = new Composants.SwitchBouton();
             this.switchBoutonIO = new Composants.SwitchBouton();
-            this.txtTrame = new Composants.TextBoxPlus();
-            this.boxGB = new System.Windows.Forms.CheckBox();
-            this.groupBox1.SuspendLayout();
+            this._pnlConnections = new System.Windows.Forms.FlowLayoutPanel();
             this.groupBox3.SuspendLayout();
             this.groupBox6.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numIntervalleTest)).BeginInit();
             this.groupBox4.SuspendLayout();
-            this.groupBox5.SuspendLayout();
             this.groupBox7.SuspendLayout();
-            this.groupBox2.SuspendLayout();
+            this._pnlConnections.SuspendLayout();
             this.SuspendLayout();
             // 
             // btnEnvoyer
@@ -111,75 +89,6 @@
             this.boxMove.TabIndex = 2;
             this.boxMove.Text = "RecMove";
             this.boxMove.UseVisualStyleBackColor = true;
-            // 
-            // groupBox1
-            // 
-            this.groupBox1.Controls.Add(this.lblSortieRecMove);
-            this.groupBox1.Controls.Add(this.lblEntreeRecMove);
-            this.groupBox1.Controls.Add(this.lblIpRecMove);
-            this.groupBox1.Controls.Add(this.label3);
-            this.groupBox1.Controls.Add(this.label2);
-            this.groupBox1.Controls.Add(this.label1);
-            this.groupBox1.Location = new System.Drawing.Point(3, 65);
-            this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(200, 102);
-            this.groupBox1.TabIndex = 7;
-            this.groupBox1.TabStop = false;
-            this.groupBox1.Text = "RecMove";
-            // 
-            // lblSortieRecMove
-            // 
-            this.lblSortieRecMove.AutoSize = true;
-            this.lblSortieRecMove.Location = new System.Drawing.Point(88, 73);
-            this.lblSortieRecMove.Name = "lblSortieRecMove";
-            this.lblSortieRecMove.Size = new System.Drawing.Size(10, 13);
-            this.lblSortieRecMove.TabIndex = 13;
-            this.lblSortieRecMove.Text = "-";
-            // 
-            // lblEntreeRecMove
-            // 
-            this.lblEntreeRecMove.AutoSize = true;
-            this.lblEntreeRecMove.Location = new System.Drawing.Point(88, 49);
-            this.lblEntreeRecMove.Name = "lblEntreeRecMove";
-            this.lblEntreeRecMove.Size = new System.Drawing.Size(10, 13);
-            this.lblEntreeRecMove.TabIndex = 12;
-            this.lblEntreeRecMove.Text = "-";
-            // 
-            // lblIpRecMove
-            // 
-            this.lblIpRecMove.AutoSize = true;
-            this.lblIpRecMove.Location = new System.Drawing.Point(88, 25);
-            this.lblIpRecMove.Name = "lblIpRecMove";
-            this.lblIpRecMove.Size = new System.Drawing.Size(10, 13);
-            this.lblIpRecMove.TabIndex = 11;
-            this.lblIpRecMove.Text = "-";
-            // 
-            // label3
-            // 
-            this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(15, 73);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(60, 13);
-            this.label3.TabIndex = 10;
-            this.label3.Text = "Port sortie :";
-            // 
-            // label2
-            // 
-            this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(15, 49);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(65, 13);
-            this.label2.TabIndex = 9;
-            this.label2.Text = "Port entrée :";
-            // 
-            // label1
-            // 
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(15, 25);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(50, 13);
-            this.label1.TabIndex = 8;
-            this.label1.Text = "IP carte :";
             // 
             // groupBox3
             // 
@@ -207,6 +116,16 @@
             this.groupBox3.TabIndex = 15;
             this.groupBox3.TabStop = false;
             this.groupBox3.Text = "Envoi rapide trame";
+            // 
+            // boxGB
+            // 
+            this.boxGB.AutoSize = true;
+            this.boxGB.Location = new System.Drawing.Point(167, 26);
+            this.boxGB.Name = "boxGB";
+            this.boxGB.Size = new System.Drawing.Size(76, 17);
+            this.boxGB.TabIndex = 27;
+            this.boxGB.Text = "RecGoBot";
+            this.boxGB.UseVisualStyleBackColor = true;
             // 
             // groupBox6
             // 
@@ -400,6 +319,18 @@
             this.label4.TabIndex = 6;
             this.label4.Text = "Forme : 01 23 45 67 89 AB CD EF";
             // 
+            // txtTrame
+            // 
+            this.txtTrame.BackColor = System.Drawing.Color.White;
+            this.txtTrame.DefaultText = "";
+            this.txtTrame.ErrorMode = false;
+            this.txtTrame.ForeColor = System.Drawing.Color.LightGray;
+            this.txtTrame.Location = new System.Drawing.Point(16, 49);
+            this.txtTrame.Name = "txtTrame";
+            this.txtTrame.Size = new System.Drawing.Size(313, 20);
+            this.txtTrame.TabIndex = 5;
+            this.txtTrame.TextMode = Composants.TextBoxPlus.TextModeEnum.Text;
+            // 
             // groupBox4
             // 
             this.groupBox4.Controls.Add(this.lblMonIP);
@@ -428,75 +359,6 @@
             this.label13.Size = new System.Drawing.Size(47, 13);
             this.label13.TabIndex = 8;
             this.label13.Text = "Mon IP :";
-            // 
-            // groupBox5
-            // 
-            this.groupBox5.Controls.Add(this.lblSortieRecIO);
-            this.groupBox5.Controls.Add(this.lblEntreeRecIO);
-            this.groupBox5.Controls.Add(this.lblIpRecIO);
-            this.groupBox5.Controls.Add(this.label11);
-            this.groupBox5.Controls.Add(this.label12);
-            this.groupBox5.Controls.Add(this.label14);
-            this.groupBox5.Location = new System.Drawing.Point(3, 173);
-            this.groupBox5.Name = "groupBox5";
-            this.groupBox5.Size = new System.Drawing.Size(200, 102);
-            this.groupBox5.TabIndex = 15;
-            this.groupBox5.TabStop = false;
-            this.groupBox5.Text = "RecIo";
-            // 
-            // lblSortieRecIO
-            // 
-            this.lblSortieRecIO.AutoSize = true;
-            this.lblSortieRecIO.Location = new System.Drawing.Point(88, 73);
-            this.lblSortieRecIO.Name = "lblSortieRecIO";
-            this.lblSortieRecIO.Size = new System.Drawing.Size(10, 13);
-            this.lblSortieRecIO.TabIndex = 13;
-            this.lblSortieRecIO.Text = "-";
-            // 
-            // lblEntreeRecIO
-            // 
-            this.lblEntreeRecIO.AutoSize = true;
-            this.lblEntreeRecIO.Location = new System.Drawing.Point(88, 49);
-            this.lblEntreeRecIO.Name = "lblEntreeRecIO";
-            this.lblEntreeRecIO.Size = new System.Drawing.Size(10, 13);
-            this.lblEntreeRecIO.TabIndex = 12;
-            this.lblEntreeRecIO.Text = "-";
-            // 
-            // lblIpRecIO
-            // 
-            this.lblIpRecIO.AutoSize = true;
-            this.lblIpRecIO.Location = new System.Drawing.Point(88, 25);
-            this.lblIpRecIO.Name = "lblIpRecIO";
-            this.lblIpRecIO.Size = new System.Drawing.Size(10, 13);
-            this.lblIpRecIO.TabIndex = 11;
-            this.lblIpRecIO.Text = "-";
-            // 
-            // label11
-            // 
-            this.label11.AutoSize = true;
-            this.label11.Location = new System.Drawing.Point(15, 73);
-            this.label11.Name = "label11";
-            this.label11.Size = new System.Drawing.Size(60, 13);
-            this.label11.TabIndex = 10;
-            this.label11.Text = "Port sortie :";
-            // 
-            // label12
-            // 
-            this.label12.AutoSize = true;
-            this.label12.Location = new System.Drawing.Point(15, 49);
-            this.label12.Name = "label12";
-            this.label12.Size = new System.Drawing.Size(65, 13);
-            this.label12.TabIndex = 9;
-            this.label12.Text = "Port entrée :";
-            // 
-            // label14
-            // 
-            this.label14.AutoSize = true;
-            this.label14.Location = new System.Drawing.Point(15, 25);
-            this.label14.Name = "label14";
-            this.label14.Size = new System.Drawing.Size(50, 13);
-            this.label14.TabIndex = 8;
-            this.label14.Text = "IP carte :";
             // 
             // RecMove
             // 
@@ -531,84 +393,6 @@
             this.groupBox7.TabStop = false;
             this.groupBox7.Text = "Activation connexions";
             // 
-            // label7
-            // 
-            this.label7.AutoSize = true;
-            this.label7.Location = new System.Drawing.Point(42, 77);
-            this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(42, 13);
-            this.label7.TabIndex = 24;
-            this.label7.Text = "RecGB";
-            // 
-            // groupBox2
-            // 
-            this.groupBox2.Controls.Add(this.lblSortieRecGB);
-            this.groupBox2.Controls.Add(this.lbEntreeRecGB);
-            this.groupBox2.Controls.Add(this.lblIpRecGB);
-            this.groupBox2.Controls.Add(this.label16);
-            this.groupBox2.Controls.Add(this.label17);
-            this.groupBox2.Controls.Add(this.label18);
-            this.groupBox2.Location = new System.Drawing.Point(3, 281);
-            this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(200, 102);
-            this.groupBox2.TabIndex = 16;
-            this.groupBox2.TabStop = false;
-            this.groupBox2.Text = "RecGoBot";
-            // 
-            // lblSortieRecGB
-            // 
-            this.lblSortieRecGB.AutoSize = true;
-            this.lblSortieRecGB.Location = new System.Drawing.Point(88, 73);
-            this.lblSortieRecGB.Name = "lblSortieRecGB";
-            this.lblSortieRecGB.Size = new System.Drawing.Size(10, 13);
-            this.lblSortieRecGB.TabIndex = 13;
-            this.lblSortieRecGB.Text = "-";
-            // 
-            // lbEntreeRecGB
-            // 
-            this.lbEntreeRecGB.AutoSize = true;
-            this.lbEntreeRecGB.Location = new System.Drawing.Point(88, 49);
-            this.lbEntreeRecGB.Name = "lbEntreeRecGB";
-            this.lbEntreeRecGB.Size = new System.Drawing.Size(10, 13);
-            this.lbEntreeRecGB.TabIndex = 12;
-            this.lbEntreeRecGB.Text = "-";
-            // 
-            // lblIpRecGB
-            // 
-            this.lblIpRecGB.AutoSize = true;
-            this.lblIpRecGB.Location = new System.Drawing.Point(88, 25);
-            this.lblIpRecGB.Name = "lblIpRecGB";
-            this.lblIpRecGB.Size = new System.Drawing.Size(10, 13);
-            this.lblIpRecGB.TabIndex = 11;
-            this.lblIpRecGB.Text = "-";
-            // 
-            // label16
-            // 
-            this.label16.AutoSize = true;
-            this.label16.Location = new System.Drawing.Point(15, 73);
-            this.label16.Name = "label16";
-            this.label16.Size = new System.Drawing.Size(60, 13);
-            this.label16.TabIndex = 10;
-            this.label16.Text = "Port sortie :";
-            // 
-            // label17
-            // 
-            this.label17.AutoSize = true;
-            this.label17.Location = new System.Drawing.Point(15, 49);
-            this.label17.Name = "label17";
-            this.label17.Size = new System.Drawing.Size(65, 13);
-            this.label17.TabIndex = 9;
-            this.label17.Text = "Port entrée :";
-            // 
-            // label18
-            // 
-            this.label18.AutoSize = true;
-            this.label18.Location = new System.Drawing.Point(15, 25);
-            this.label18.Name = "label18";
-            this.label18.Size = new System.Drawing.Size(50, 13);
-            this.label18.TabIndex = 8;
-            this.label18.Text = "IP carte :";
-            // 
             // switchBoutonGB
             // 
             this.switchBoutonGB.BackColor = System.Drawing.Color.Transparent;
@@ -618,6 +402,15 @@
             this.switchBoutonGB.Symetrique = true;
             this.switchBoutonGB.TabIndex = 23;
             this.switchBoutonGB.ChangementEtat += new System.EventHandler(this.switchBoutonConnexion_ChangementEtat);
+            // 
+            // label7
+            // 
+            this.label7.AutoSize = true;
+            this.label7.Location = new System.Drawing.Point(42, 77);
+            this.label7.Name = "label7";
+            this.label7.Size = new System.Drawing.Size(42, 13);
+            this.label7.TabIndex = 24;
+            this.label7.Text = "RecGB";
             // 
             // switchBoutonMove
             // 
@@ -639,44 +432,26 @@
             this.switchBoutonIO.TabIndex = 17;
             this.switchBoutonIO.ChangementEtat += new System.EventHandler(this.switchBoutonConnexion_ChangementEtat);
             // 
-            // txtTrame
+            // _pnlConnections
             // 
-            this.txtTrame.BackColor = System.Drawing.Color.White;
-            this.txtTrame.DefaultText = "";
-            this.txtTrame.ErrorMode = false;
-            this.txtTrame.ForeColor = System.Drawing.Color.LightGray;
-            this.txtTrame.Location = new System.Drawing.Point(16, 49);
-            this.txtTrame.Name = "txtTrame";
-            this.txtTrame.Size = new System.Drawing.Size(313, 20);
-            this.txtTrame.TabIndex = 5;
-            this.txtTrame.TextMode = Composants.TextBoxPlus.TextModeEnum.Text;
-            // 
-            // boxGB
-            // 
-            this.boxGB.AutoSize = true;
-            this.boxGB.Location = new System.Drawing.Point(167, 26);
-            this.boxGB.Name = "boxGB";
-            this.boxGB.Size = new System.Drawing.Size(76, 17);
-            this.boxGB.TabIndex = 27;
-            this.boxGB.Text = "RecGoBot";
-            this.boxGB.UseVisualStyleBackColor = true;
+            this._pnlConnections.Controls.Add(this.groupBox4);
+            this._pnlConnections.FlowDirection = System.Windows.Forms.FlowDirection.TopDown;
+            this._pnlConnections.Location = new System.Drawing.Point(17, 0);
+            this._pnlConnections.Name = "_pnlConnections";
+            this._pnlConnections.Size = new System.Drawing.Size(212, 596);
+            this._pnlConnections.TabIndex = 30;
             // 
             // PanelEnvoiUdp
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.White;
-            this.Controls.Add(this.groupBox2);
+            this.Controls.Add(this._pnlConnections);
             this.Controls.Add(this.groupBox7);
-            this.Controls.Add(this.groupBox5);
-            this.Controls.Add(this.groupBox4);
             this.Controls.Add(this.groupBox3);
-            this.Controls.Add(this.groupBox1);
             this.Name = "PanelEnvoiUdp";
-            this.Size = new System.Drawing.Size(850, 509);
+            this.Size = new System.Drawing.Size(916, 608);
             this.Load += new System.EventHandler(this.PanelEnvoiUdp_Load);
-            this.groupBox1.ResumeLayout(false);
-            this.groupBox1.PerformLayout();
             this.groupBox3.ResumeLayout(false);
             this.groupBox3.PerformLayout();
             this.groupBox6.ResumeLayout(false);
@@ -684,12 +459,9 @@
             ((System.ComponentModel.ISupportInitialize)(this.numIntervalleTest)).EndInit();
             this.groupBox4.ResumeLayout(false);
             this.groupBox4.PerformLayout();
-            this.groupBox5.ResumeLayout(false);
-            this.groupBox5.PerformLayout();
             this.groupBox7.ResumeLayout(false);
             this.groupBox7.PerformLayout();
-            this.groupBox2.ResumeLayout(false);
-            this.groupBox2.PerformLayout();
+            this._pnlConnections.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -699,26 +471,12 @@
         private System.Windows.Forms.Button btnEnvoyer;
         private System.Windows.Forms.CheckBox boxMove;
         private Composants.TextBoxPlus txtTrame;
-        private System.Windows.Forms.GroupBox groupBox1;
-        private System.Windows.Forms.Label lblSortieRecMove;
-        private System.Windows.Forms.Label lblEntreeRecMove;
-        private System.Windows.Forms.Label lblIpRecMove;
-        private System.Windows.Forms.Label label3;
-        private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.Label label1;
         private System.Windows.Forms.GroupBox groupBox3;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.GroupBox groupBox4;
         private System.Windows.Forms.Label lblMonIP;
         private System.Windows.Forms.Label label13;
         private System.Windows.Forms.CheckBox boxIO;
-        private System.Windows.Forms.GroupBox groupBox5;
-        private System.Windows.Forms.Label lblSortieRecIO;
-        private System.Windows.Forms.Label lblEntreeRecIO;
-        private System.Windows.Forms.Label lblIpRecIO;
-        private System.Windows.Forms.Label label11;
-        private System.Windows.Forms.Label label12;
-        private System.Windows.Forms.Label label14;
         private System.Windows.Forms.Button btnDebug9;
         private System.Windows.Forms.Button btnDebug8;
         private System.Windows.Forms.Button btnDebug7;
@@ -740,15 +498,9 @@
         private System.Windows.Forms.Label RecMove;
         private System.Windows.Forms.Label label15;
         private System.Windows.Forms.GroupBox groupBox7;
-        private System.Windows.Forms.GroupBox groupBox2;
-        private System.Windows.Forms.Label lblSortieRecGB;
-        private System.Windows.Forms.Label lbEntreeRecGB;
-        private System.Windows.Forms.Label lblIpRecGB;
-        private System.Windows.Forms.Label label16;
-        private System.Windows.Forms.Label label17;
-        private System.Windows.Forms.Label label18;
         private Composants.SwitchBouton switchBoutonGB;
         private System.Windows.Forms.Label label7;
         private System.Windows.Forms.CheckBox boxGB;
+        private System.Windows.Forms.FlowLayoutPanel _pnlConnections;
     }
 }
