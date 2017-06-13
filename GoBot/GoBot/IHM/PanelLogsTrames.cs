@@ -20,7 +20,7 @@ namespace GoBot.IHM
 {
     public partial class PanelLogsTrames : UserControl
     {
-        private Replay replay;
+        private ConnectionReplay replay;
         private Dictionary<Carte, Color> couleurCarte;
 
         private DateTime dateDebut;
@@ -102,14 +102,14 @@ namespace GoBot.IHM
             }
 
             chargement = false;
-            replay = new Replay();
+            replay = new ConnectionReplay();
         }
         bool chargement;
 
         private void btnCharger_Click(object sender, EventArgs e)
         {
             OpenFileDialog open = new OpenFileDialog();
-            open.Filter = "Fichiers replay trames (*.tlog)|*.tlog";
+            open.Filter = "Fichiers replay trames (*" + ConnectionReplay.FileExtension + ")| *" + ConnectionReplay.FileExtension + "";
             open.Multiselect = true;
             if (open.ShowDialog() == DialogResult.OK)
             {
@@ -118,23 +118,23 @@ namespace GoBot.IHM
                 {
                     ChargerLog(fichier);
                 }
-                replay.Trier();
+                replay.Sort();
                 Afficher();
             }
         }
 
         public void Clear()
         {
-            replay = new Replay();
+            replay = new ConnectionReplay();
         }
 
         public void ChargerLog(String fichier)
         {
-            Replay replayTemp = new Replay();
-            replayTemp.Charger(fichier);
+            ConnectionReplay replayTemp = new ConnectionReplay();
+            replayTemp.Import(fichier);
 
-            foreach (TrameReplay t in replayTemp.Trames)
-                replay.Trames.Add(t);
+            foreach (ReplayFrame t in replayTemp.Frames)
+                replay.Frames.Add(t);
         }
 
         public void Afficher()
@@ -143,14 +143,14 @@ namespace GoBot.IHM
             {
                 dataGridViewLog.Rows.Clear();
 
-                dateDebut = replay.Trames[0].Date;
-                datePrec = replay.Trames[0].Date;
-                datePrecAff = replay.Trames[0].Date;
+                dateDebut = replay.Frames[0].Date;
+                datePrec = replay.Frames[0].Date;
+                datePrecAff = replay.Frames[0].Date;
                 compteur = 0;
 
-                for (int iTrame = 0; iTrame < replay.Trames.Count; iTrame++)
+                for (int iTrame = 0; iTrame < replay.Frames.Count; iTrame++)
                 {
-                    AfficherTrame(replay.Trames[iTrame]);
+                    AfficherTrame(replay.Frames[iTrame]);
                 }
             }
             catch (Exception)
@@ -190,14 +190,13 @@ namespace GoBot.IHM
                     foreach (DataGridViewRow ligne in dataGridViewLog.SelectedRows)
                     {
                         int index = ligne.Index;
-                        TrameReplay trameReplay = replay.Trames[Convert.ToInt32(dataGridViewLog["Id", index].Value)];
-                        Frame trame = new Frame(trameReplay.Trame);
+                        ReplayFrame trameReplay = replay.Frames[Convert.ToInt32(dataGridViewLog["Id", index].Value)];
 
-                        Carte carte = trame.Board;
+                        Carte carte = trameReplay.Frame.Board;
 
                         if (carte == Carte.RecMove)
                         {
-                            FonctionTrame fonction = (FonctionTrame)trame[1];
+                            FonctionTrame fonction = (FonctionTrame)trameReplay.Frame[1];
                             checkedListBoxMove.Items.Remove(fonction.ToString());
                             checkedListBoxMove.Items.Add(fonction.ToString(), false);
                             Config.CurrentConfig.LogsFonctionsMove[fonction] = false;
@@ -205,7 +204,7 @@ namespace GoBot.IHM
 
                         if (carte == Carte.RecIO)
                         {
-                            FonctionTrame fonction = (FonctionTrame)trame[1];
+                            FonctionTrame fonction = (FonctionTrame)trameReplay.Frame[1];
                             checkedListBoxIO.Items.Remove(fonction.ToString());
                             checkedListBoxIO.Items.Add(fonction.ToString(), false);
                             Config.CurrentConfig.LogsFonctionsIO[fonction] = false;
@@ -213,7 +212,7 @@ namespace GoBot.IHM
 
                         if (carte == Carte.RecGB)
                         {
-                            FonctionTrame fonction = (FonctionTrame)trame[1];
+                            FonctionTrame fonction = (FonctionTrame)trameReplay.Frame[1];
                             checkedListBoxGB.Items.Remove(fonction.ToString());
                             checkedListBoxGB.Items.Add(fonction.ToString(), false);
                             Config.CurrentConfig.LogsFonctionsGB[fonction] = false;
@@ -232,20 +231,20 @@ namespace GoBot.IHM
         {
             if (!affichageTempsReel)
             {
-                replay = new Replay();
+                replay = new ConnectionReplay();
                 timerAffichage = new System.Windows.Forms.Timer();
                 timerAffichage.Interval = 1000;
                 timerAffichage.Tick += timerAffichage_Tick;
                 timerAffichage.Start();
 
-                Connections.ConnectionMove.FrameReceived += new UDPConnection.ReceptionDelegate(replay.AjouterTrameEntrante);
-                Connections.ConnectionMove.FrameSend += new UDPConnection.ReceptionDelegate(replay.AjouterTrameSortante);
+                Connections.ConnectionMove.FrameReceived += new UDPConnection.NewFrameDelegate((frame) => replay.AddFrame(frame, true));
+                Connections.ConnectionMove.FrameSend += new UDPConnection.NewFrameDelegate((frame) => replay.AddFrame(frame, false));
 
-                Connections.ConnectionIO.FrameReceived += new UDPConnection.ReceptionDelegate(replay.AjouterTrameEntrante);
-                Connections.ConnectionIO.FrameSend += new UDPConnection.ReceptionDelegate(replay.AjouterTrameSortante);
+                Connections.ConnectionIO.FrameReceived += new UDPConnection.NewFrameDelegate((frame) => replay.AddFrame(frame, true));
+                Connections.ConnectionIO.FrameSend += new UDPConnection.NewFrameDelegate((frame) => replay.AddFrame(frame, false));
 
-                Connections.ConnectionGB.FrameReceived += new UDPConnection.ReceptionDelegate(replay.AjouterTrameEntrante);
-                Connections.ConnectionGB.FrameSend += new UDPConnection.ReceptionDelegate(replay.AjouterTrameSortante);
+                Connections.ConnectionGB.FrameReceived += new UDPConnection.NewFrameDelegate((frame) => replay.AddFrame(frame, true));
+                Connections.ConnectionGB.FrameSend += new UDPConnection.NewFrameDelegate((frame) => replay.AddFrame(frame, false));
 
                 btnRejouerTout.Enabled = false;
                 btnRejouerSelection.Enabled = false;
@@ -258,14 +257,14 @@ namespace GoBot.IHM
             {
                 timerAffichage.Stop();
 
-                Connections.ConnectionMove.FrameReceived -= new UDPConnection.ReceptionDelegate(replay.AjouterTrameEntrante);
-                Connections.ConnectionMove.FrameSend -= new UDPConnection.ReceptionDelegate(replay.AjouterTrameSortante);
+                Connections.ConnectionMove.FrameReceived -= new UDPConnection.NewFrameDelegate((frame) => replay.AddFrame(frame, true));
+                Connections.ConnectionMove.FrameSend -= new UDPConnection.NewFrameDelegate((frame) => replay.AddFrame(frame, false));
 
-                Connections.ConnectionIO.FrameReceived -= new UDPConnection.ReceptionDelegate(replay.AjouterTrameEntrante);
-                Connections.ConnectionIO.FrameSend -= new UDPConnection.ReceptionDelegate(replay.AjouterTrameSortante);
+                Connections.ConnectionIO.FrameReceived -= new UDPConnection.NewFrameDelegate((frame) => replay.AddFrame(frame, true));
+                Connections.ConnectionIO.FrameSend -= new UDPConnection.NewFrameDelegate((frame) => replay.AddFrame(frame, false));
 
-                Connections.ConnectionGB.FrameReceived -= new UDPConnection.ReceptionDelegate(replay.AjouterTrameEntrante);
-                Connections.ConnectionGB.FrameSend -= new UDPConnection.ReceptionDelegate(replay.AjouterTrameSortante);
+                Connections.ConnectionGB.FrameReceived -= new UDPConnection.NewFrameDelegate((frame) => replay.AddFrame(frame, true));
+                Connections.ConnectionGB.FrameSend -= new UDPConnection.NewFrameDelegate((frame) => replay.AddFrame(frame, false));
 
                 btnRejouerTout.Enabled = true;
                 btnRejouerSelection.Enabled = true;
@@ -278,20 +277,20 @@ namespace GoBot.IHM
 
         void timerAffichage_Tick(object sender, EventArgs e)
         {
-            int nbTrames = replay.Trames.Count;
+            int nbTrames = replay.Frames.Count;
             for (int i = compteur; i < nbTrames; i++)
-                AfficherTrame(replay.Trames[i]);
+                AfficherTrame(replay.Frames[i]);
 
             if (boxScroll.Checked && dataGridViewLog.Rows.Count > 10)
                 dataGridViewLog.FirstDisplayedScrollingRowIndex = dataGridViewLog.RowCount - 1;
         }
 
-        private void AfficherTrame(TrameReplay trameReplay)
+        private void AfficherTrame(ReplayFrame trameReplay)
         {
             String heure = "";
             try
             {
-                Frame trame = new Frame(trameReplay.Trame);
+                Frame trame = trameReplay.Frame;
 
                 if (rdoHeure.Checked)
                     heure = trameReplay.Date.ToString("hh:mm:ss:fff");
@@ -302,8 +301,8 @@ namespace GoBot.IHM
                 if (rdoTempsPrecAff.Checked)
                     heure = ((int)(trameReplay.Date - datePrecAff).TotalMilliseconds).ToString() + " ms";
 
-                Carte destinataire = trameReplay.Entrant ? Carte.PC : TrameFactory.Identifiant(trame);
-                Carte expediteur = trameReplay.Entrant ? TrameFactory.Identifiant(trame) : Carte.PC;
+                Carte destinataire = trameReplay.IsInputFrame ? Carte.PC : trame.Board;
+                Carte expediteur = trameReplay.IsInputFrame ? trame.Board : Carte.PC;
                 Carte carte = trame.Board;
 
                 if (carte == Carte.PC)
@@ -336,7 +335,7 @@ namespace GoBot.IHM
             }
             catch (Exception)
             {
-                dataGridViewLog.Rows.Add(compteur, "?", "?", heure, "Inconnu !", trameReplay.Trame.ToString());
+                dataGridViewLog.Rows.Add(compteur, "?", "?", heure, "Inconnu !", trameReplay.Frame.ToString());
                 dataGridViewLog.Rows[dataGridViewLog.Rows.Count - 1].DefaultCellStyle.BackColor = Color.Red;
             }
 
@@ -347,13 +346,13 @@ namespace GoBot.IHM
 
         private void btnRejouerTout_Click(object sender, EventArgs e)
         {
-            threadReplay = new Thread(replay.Rejouer);
+            threadReplay = new Thread(replay.ReplayInputFrames);
             threadReplay.Start();
         }
 
         private void btnRejouerSelection_Click(object sender, EventArgs e)
         {
-            Replay replaySelection = new Replay();
+            ConnectionReplay replaySelection = new ConnectionReplay();
 
             if (dataGridViewLog.SelectedRows.Count >= 1)
             {
@@ -362,15 +361,12 @@ namespace GoBot.IHM
                     foreach (DataGridViewRow ligne in dataGridViewLog.SelectedRows)
                     {
                         int index = ligne.Index;
-                        TrameReplay trameReplay = replay.Trames[Convert.ToInt32(dataGridViewLog["Id", index].Value)];
-                        if (trameReplay.Entrant)
-                            replaySelection.AjouterTrameEntrante(new Frame(trameReplay.Trame), trameReplay.Date);
-                        else
-                            replaySelection.AjouterTrameSortante(new Frame(trameReplay.Trame), trameReplay.Date);
+                        ReplayFrame trameReplay = replay.Frames[Convert.ToInt32(dataGridViewLog["Id", index].Value)];
+                        replaySelection.AddFrame(trameReplay.Frame, trameReplay.IsInputFrame, trameReplay.Date);
                     }
 
-                    replaySelection.Trier();
-                    threadReplay = new Thread(replaySelection.Rejouer);
+                    replaySelection.Sort();
+                    threadReplay = new Thread(replaySelection.ReplayInputFrames);
                     threadReplay.Start();
                 }
                 catch (Exception)
@@ -432,10 +428,10 @@ namespace GoBot.IHM
                     foreach (DataGridViewRow ligne in dataGridViewLog.SelectedRows)
                     {
                         int index = ligne.Index;
-                        TrameReplay trameReplay = replay.Trames[Convert.ToInt32(dataGridViewLog["Id", index].Value)];
-                        Frame trame = new Frame(trameReplay.Trame);
+                        ReplayFrame trameReplay = replay.Frames[Convert.ToInt32(dataGridViewLog["Id", index].Value)];
+                        Frame trame = trameReplay.Frame;
 
-                        Carte expediteur = trameReplay.Entrant ? TrameFactory.Identifiant(trame) : Carte.PC;
+                        Carte expediteur = trameReplay.IsInputFrame ? trameReplay.Frame.Board : Carte.PC;
 
                         checkedListBoxExpediteur.Items.Remove(expediteur.ToString());
                         checkedListBoxExpediteur.Items.Add(expediteur.ToString(), false);
@@ -459,10 +455,9 @@ namespace GoBot.IHM
                     foreach (DataGridViewRow ligne in dataGridViewLog.SelectedRows)
                     {
                         int index = ligne.Index;
-                        TrameReplay trameReplay = replay.Trames[Convert.ToInt32(dataGridViewLog["Id", index].Value)];
-                        Frame trame = new Frame(trameReplay.Trame);
+                        ReplayFrame trameReplay = replay.Frames[Convert.ToInt32(dataGridViewLog["Id", index].Value)];
 
-                        Carte destinataire = trameReplay.Entrant ? Carte.PC : TrameFactory.Identifiant(trame);
+                        Carte destinataire = trameReplay.IsInputFrame ? Carte.PC : trameReplay.Frame.Board;
 
                         checkedListBoxDestinataire.Items.Remove(destinataire.ToString());
                         checkedListBoxDestinataire.Items.Add(destinataire.ToString(), false);
@@ -486,10 +481,9 @@ namespace GoBot.IHM
                     foreach (DataGridViewRow ligne in dataGridViewLog.SelectedRows)
                     {
                         int index = ligne.Index;
-                        TrameReplay trameReplay = replay.Trames[Convert.ToInt32(dataGridViewLog["Id", index].Value)];
-                        Frame trame = new Frame(trameReplay.Trame);
+                        ReplayFrame trameReplay = replay.Frames[Convert.ToInt32(dataGridViewLog["Id", index].Value)];
 
-                        Carte carte = trame.Board;
+                        Carte carte = trameReplay.Frame.Board;
 
                         checkedListBoxExpediteur.Items.Remove(carte.ToString());
                         checkedListBoxExpediteur.Items.Add(carte.ToString(), false);

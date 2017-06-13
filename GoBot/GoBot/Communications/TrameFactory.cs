@@ -958,21 +958,6 @@ namespace GoBot.Communications
         }
 
         #endregion
-
-        public static Carte Identifiant(Frame trame)
-        {
-            try
-            {
-                switch (trame[0])
-                {
-                    default:
-                        return (Carte)trame[0];
-                }
-            }
-            catch (Exception)
-            {
-                return Carte.PC;
-            }
-        }
+        
     }
 }

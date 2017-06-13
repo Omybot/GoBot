@@ -420,7 +420,7 @@ namespace GoBot
 
             connexion = Connections.BoardConnection[carte];
 
-            connexion.FrameReceived += new UDPConnection.ReceptionDelegate(connexion_NouvelleTrame);
+            connexion.FrameReceived += new UDPConnection.NewFrameDelegate(connexion_NouvelleTrame);
         }
 
         public void DemandeActualisation(bool complete)

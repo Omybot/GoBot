@@ -39,7 +39,7 @@ namespace GoBot.Devices
         public RecGoBot(UDPConnection conn)
         {
             connexion = conn;
-            connexion.FrameReceived += new Connection.ReceptionDelegate(connexion_NouvelleTrameRecue);
+            connexion.FrameReceived += new Connection.NewFrameDelegate(connexion_NouvelleTrameRecue);
 
             ledConnexionState = new Dictionary<Connection, LedID>();
 

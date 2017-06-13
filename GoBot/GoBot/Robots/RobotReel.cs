@@ -121,12 +121,12 @@ namespace GoBot
 
             DateRefreshPos = DateTime.Now;
             
-            Connexion.FrameReceived += new UDPConnection.ReceptionDelegate(ReceptionMessage);
+            Connexion.FrameReceived += new UDPConnection.NewFrameDelegate(ReceptionMessage);
 
             if (this == Robots.GrosRobot)
-                Connections.ConnectionIO.FrameReceived += new UDPConnection.ReceptionDelegate(ReceptionMessage);
+                Connections.ConnectionIO.FrameReceived += new UDPConnection.NewFrameDelegate(ReceptionMessage);
 
-            Connections.ConnectionGB.FrameReceived += new UDPConnection.ReceptionDelegate(ReceptionMessage);
+            Connections.ConnectionGB.FrameReceived += new UDPConnection.NewFrameDelegate(ReceptionMessage);
 
             if (this == Robots.GrosRobot)
             {

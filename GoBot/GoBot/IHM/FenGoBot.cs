@@ -79,7 +79,7 @@ namespace GoBot
                 {
                     if (Path.GetExtension(chaine) == ".elog")
                         fichiersElog.Add(chaine);
-                    if (Path.GetExtension(chaine) == ".tlog")
+                    if (Path.GetExtension(chaine) == ConnectionReplay.FileExtension)
                         fichiersTlog.Add(chaine);
                 }
 
@@ -125,7 +125,7 @@ namespace GoBot
 
         public void ChargerReplay(String fichier)
         {
-            if (Path.GetExtension(fichier) == ".tlog")
+            if (Path.GetExtension(fichier) == ConnectionReplay.FileExtension)
             {
                 panelLogTrames.Clear();
                 panelLogTrames.ChargerLog(fichier);
@@ -170,10 +170,9 @@ namespace GoBot
         {
             DateTime debut = DateTime.Now;
 
-            Connections.ConnectionMove.Save.Sauvegarder(Config.PathData + "/Logs/" + Config.DateLancementString + "/ConnexionMove.tlog");
-            Connections.ConnectionIO.Save.Sauvegarder(Config.PathData + "/Logs/" + Config.DateLancementString + "/ConnexionIO.tlog");
-            Connections.ConnectionGB.Save.Sauvegarder(Config.PathData + "/Logs/" + Config.DateLancementString + "/ConnexionGB.tlog");
-
+            foreach (Connection conn in Connections.AllConnections)
+                conn.Archives.Export(Config.PathData + "/Logs/" + Config.DateLancementString + "/" + Connections.GetBoardByConnection(conn).ToString() + ConnectionReplay.FileExtension);
+            
             Robots.GrosRobot.Historique.Sauvegarder(Config.PathData + "/Logs/" + Config.DateLancementString + "/ActionsGros.elog");
         }
 

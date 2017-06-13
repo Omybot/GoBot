@@ -113,7 +113,7 @@ namespace GoBot.Balises
             DetectionsCapteur2 = new List<DetectionBalise>();
 
             Connexion = Connections.ConnectionMove;
-            Connexion.FrameReceived += new UDPConnection.ReceptionDelegate(connexion_NouvelleTrame);
+            Connexion.FrameReceived += new UDPConnection.NewFrameDelegate(connexion_NouvelleTrame);
 
             Stats = new BaliseStats(this);
         }

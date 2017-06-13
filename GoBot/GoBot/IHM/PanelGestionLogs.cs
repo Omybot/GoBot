@@ -136,7 +136,7 @@ namespace GoBot.IHM
 
                     datas[(int)Columns.Date] = date;
                     datas[(int)Columns.Taille] = new TailleDossier(taille);
-
+                    //TODO2018 ca marche plus ça avec les nouveaux fichiers
                     foreach (String fichier in Directory.EnumerateFiles(dossier))
                     {
                         if (Path.GetFileName(fichier) == "ActionsGros.elog")
@@ -152,36 +152,36 @@ namespace GoBot.IHM
                         }
                         else if (Path.GetFileName(fichier) == "ConnexionGB.tlog")
                         {
-                            Replay r = new Replay();
-                            r.Charger(fichier);
-                            if (r.Charger(fichier))
+                            ConnectionReplay r = new ConnectionReplay();
+                            r.Import(fichier);
+                            if (r.Import(fichier))
                             {
-                                datas[(int)Columns.TramesGB] = r.Trames.Count;
-                                nbElements += r.Trames.Count;
+                                datas[(int)Columns.TramesGB] = r.Frames.Count;
+                                nbElements += r.Frames.Count;
                             }
                             else
                                 datas[(int)Columns.TramesGB] = -1;
                         }
                         else if (Path.GetFileName(fichier) == "ConnexionMove.tlog")
                         {
-                            Replay r = new Replay();
-                            r.Charger(fichier);
-                            if (r.Charger(fichier))
+                            ConnectionReplay r = new ConnectionReplay();
+                            r.Import(fichier);
+                            if (r.Import(fichier))
                             {
-                                datas[(int)Columns.TramesMove] = r.Trames.Count;
-                                nbElements += r.Trames.Count;
+                                datas[(int)Columns.TramesMove] = r.Frames.Count;
+                                nbElements += r.Frames.Count;
                             }
                             else
                                 datas[(int)Columns.TramesMove] = -1;
                         }
                         else if (Path.GetFileName(fichier) == "ConnexionIO.tlog")
                         {
-                            Replay r = new Replay();
-                            r.Charger(fichier);
-                            if (r.Charger(fichier))
+                            ConnectionReplay r = new ConnectionReplay();
+                            r.Import(fichier);
+                            if (r.Import(fichier))
                             {
-                                datas[(int)Columns.TramesIO] = r.Trames.Count;
-                                nbElements += r.Trames.Count;
+                                datas[(int)Columns.TramesIO] = r.Frames.Count;
+                                nbElements += r.Frames.Count;
                             }
                             else
                                 datas[(int)Columns.TramesIO] = -1;
@@ -239,28 +239,28 @@ namespace GoBot.IHM
                             }
                             else if (Path.GetFileName(fichier) == "ConnexionGB.tlog")
                             {
-                                Replay r = new Replay();
-                                r.Charger(fichier);
-                                if (r.Charger(fichier))
-                                    datas[(int)Columns.TramesGB + 1] = r.Trames.Count;
+                                ConnectionReplay r = new ConnectionReplay();
+                                r.Import(fichier);
+                                if (r.Import(fichier))
+                                    datas[(int)Columns.TramesGB + 1] = r.Frames.Count;
                                 else
                                     datas[(int)Columns.TramesGB + 1] = -1;
                             }
                             else if (Path.GetFileName(fichier) == "ConnexionMove.tlog")
                             {
-                                Replay r = new Replay();
-                                r.Charger(fichier);
-                                if (r.Charger(fichier))
-                                    datas[(int)Columns.TramesMove + 1] = r.Trames.Count;
+                                ConnectionReplay r = new ConnectionReplay();
+                                r.Import(fichier);
+                                if (r.Import(fichier))
+                                    datas[(int)Columns.TramesMove + 1] = r.Frames.Count;
                                 else
                                     datas[(int)Columns.TramesMove + 1] = -1;
                             }
                             else if (Path.GetFileName(fichier) == "ConnexionIO.tlog")
                             {
-                                Replay r = new Replay();
-                                r.Charger(fichier);
-                                if (r.Charger(fichier))
-                                    datas[(int)Columns.TramesIO + 1] = r.Trames.Count;
+                                ConnectionReplay r = new ConnectionReplay();
+                                r.Import(fichier);
+                                if (r.Import(fichier))
+                                    datas[(int)Columns.TramesIO + 1] = r.Frames.Count;
                                 else
                                     datas[(int)Columns.TramesIO + 1] = -1;
                             }
@@ -339,7 +339,7 @@ namespace GoBot.IHM
                     foreach (String fichier in Directory.EnumerateFiles(dossier))
                     {
                         String extension = Path.GetExtension(fichier);
-                        if (extension == ".tlog" || extension == ".elog")
+                        if (extension == ConnectionReplay.FileExtension || extension == ".elog")
                         {
                             dataGridViewFichiersLog.Rows.Add(Path.GetFileName(fichier), fichier);
                         }
@@ -405,7 +405,7 @@ namespace GoBot.IHM
                     foreach (String fichier in Directory.EnumerateFiles(dossier))
                     {
                         String extension = Path.GetExtension(fichier);
-                        if (extension == ".tlog" || extension == ".elog")
+                        if (extension == ConnectionReplay.FileExtension || extension == ".elog")
                         {
                             dataGridViewFichiersLog.Rows.Add(Path.GetFileName(fichier), fichier);
                         }

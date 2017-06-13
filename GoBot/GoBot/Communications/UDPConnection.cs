@@ -59,7 +59,7 @@ namespace GoBot.Communications
         public UDPConnection()
         {
             ConnectionChecker = new ConnectionChecker(this, 500);
-            Save = new Replay();
+            Archives = new ConnectionReplay();
             LastPingTry = new DateTime(1, 1, 1);
         }
 

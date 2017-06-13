@@ -3,9 +3,9 @@
     public abstract class Connection
     {
         /// <summary>
-        /// Sauvegarde les trames transitées par la connexion
+        /// Sauvegarde des trames transitées par la connexion
         /// </summary>
-        public Replay Save { get; protected set; }
+        public ConnectionReplay Archives { get; protected set; }
 
         /// <summary>
         /// Verificateur de connexion
@@ -19,12 +19,12 @@
         /// <returns>Nombre de caractères envoyés</returns>
         abstract public int SendMessage(Frame message);
 
-        //Déclaration du délégué pour l’évènement réception de message
-        public delegate void ReceptionDelegate(Frame frame);
+        //Déclaration du délégué pour l’évènement réception ou émission de message
+        public delegate void NewFrameDelegate(Frame frame);
         //Déclaration de l’évènement utilisant le délégué pour la réception d'une trame
-        public event ReceptionDelegate FrameReceived;
+        public event NewFrameDelegate FrameReceived;
         //Déclaration de l’évènement utilisant le délégué pour l'émission d'une trame
-        public event ReceptionDelegate FrameSend;
+        public event NewFrameDelegate FrameSend;
 
         /// <summary>
         /// Lance la réception de trames sur la configuration actuelle
@@ -42,7 +42,7 @@
         /// <param name="frame">Trame reçue</param>
         public void OnFrameReceived(Frame frame)
         {
-            Save.AjouterTrameEntrante(frame);
+            Archives.AddFrame(frame, true);
 
             FrameReceived?.Invoke(frame);
         }
@@ -53,7 +53,7 @@
         /// <param name="frame">Trame envoyée</param>
         public void OnFrameSend(Frame frame)
         {
-            Save.AjouterTrameSortante(frame);
+            Archives.AddFrame(frame, false);
 
             FrameSend?.Invoke(frame);
         }
