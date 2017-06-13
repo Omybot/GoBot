@@ -64,7 +64,7 @@ namespace GoBot.Communications
             }
         }
 
-        public static Carte GetBoardByConnection(ConnexionUDP conn)
+        public static Carte GetBoardByConnection(Connexion conn)
         {
             Carte output = Carte.RecMove;
 

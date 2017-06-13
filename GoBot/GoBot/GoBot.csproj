@@ -353,7 +353,7 @@
     <Compile Include="Config.cs" />
     <Compile Include="Enchainements\Enchainement.cs" />
     <Compile Include="Enums.cs" />
-    <Compile Include="Communications\ConnexionCheck.cs" />
+    <Compile Include="Communications\ConnectionChecker.cs" />
     <Compile Include="IHM\PanelBalise.cs">
       <SubType>UserControl</SubType>
     </Compile>

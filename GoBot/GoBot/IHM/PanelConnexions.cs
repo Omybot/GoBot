@@ -50,9 +50,6 @@ namespace GoBot.IHM
                 case Carte.RecMove:
                     selectLed = ledRecMove;
                     break;
-                case Carte.Balise:
-                    selectLed = ledBalise;
-                    break;
                 case Carte.RecIO:
                     selectLed = ledRecIO;
                     break;
@@ -79,22 +76,18 @@ namespace GoBot.IHM
         {
             if (!Config.DesignMode)
             {
-                ledBalise.ConnexionNok();
                 ledRecMove.ConnexionNok();
                 ledRecIO.ConnexionNok();
+                ledRecGB.ConnexionNok();
 
                 Connexions.ConnexionMove.ConnexionCheck.ConnectionStatusChange += new ConnectionChecker.ConnectionChangeDelegate(Connections_ConnectionStatusChange);
                 Connexions.ConnexionIO.ConnexionCheck.ConnectionStatusChange += new ConnectionChecker.ConnectionChangeDelegate(Connections_ConnectionStatusChange);
                 Connexions.ConnexionGB.ConnexionCheck.ConnectionStatusChange += new ConnectionChecker.ConnectionChangeDelegate(Connections_ConnectionStatusChange);
-
-                Plateau.Balise.Connexion.ConnexionCheck.ConnectionStatusChange += new ConnectionChecker.ConnectionChangeDelegate(Connections_ConnectionStatusChange);
                 
                 if (Connexions.ConnexionMove.ConnexionCheck.Connected)
                     SetLed(ledRecMove, true);
                 if (Connexions.ConnexionIO.ConnexionCheck.Connected)
                     SetLed(ledRecIO, true);
-                if (Plateau.Balise.Connexion.ConnexionCheck.Connected)
-                    SetLed(ledBalise, true);
                 if (Connexions.ConnexionGB.ConnexionCheck.Connected)
                     SetLed(ledRecGB, true);
 

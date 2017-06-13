@@ -121,44 +121,35 @@
   <data name="ledRecGB.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAIAAACQkWg2AAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAL
-        DAAACwwBP0AiyAAAAKVJREFUOE+VklEawBAMg3unXcfF9uSolkpVUQ/z7QX5JWLSfg5RvYh+rdVar/jQ
-        qO59OiBSSsmBvqsyHE6FMwkQ1AYgCc52BlMfdMaWp1UHqDcGKxpvqG3a3S0SmSXbmsSjGuA+keEtt+om
-        QIYtxw7cnCYL4G8C4MYYwFpiJ5jG3txnXnrrhM1sTIh06eR80/kvsZNzxGzDYfwnKcDqLFvSUgqFxQ8z
-        oSD/IO1p/gAAAABJRU5ErkJggg==
+        DAAACwwBP0AiyAAAAJ9JREFUOE+VjtENxDAIQ9np1sli95VROYOJS9uL1FqNghs/wPylEjCLz33OGfav
+        VibO95PGbIyRjzfla8RqQmNoT2rpcDjYBL3FwEpKRy0AafjOoIaULisAgmcPMUozIB3+zjCtZahTg5rL
+        KIe0RtR1onrvmALg49dK04pBLaaAWGalUUsX5gCULtskhjavfRrqu8EWsEtD3KSYAp7L/QczoSD/De4/
+        twAAAABJRU5ErkJggg==
 </value>
   </data>
   <data name="ledRecMove.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAIAAACQkWg2AAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAL
-        DAAACwwBP0AiyAAAAKVJREFUOE+VklEawBAMg3unXcfF9uSolkpVUQ/z7QX5JWLSfg5RvYh+rdVar/jQ
-        qO59OiBSSsmBvqsyHE6FMwkQ1AYgCc52BlMfdMaWp1UHqDcGKxpvqG3a3S0SmSXbmsSjGuA+keEtt+om
-        QIYtxw7cnCYL4G8C4MYYwFpiJ5jG3txnXnrrhM1sTIh06eR80/kvsZNzxGzDYfwnKcDqLFvSUgqFxQ8z
-        oSD/IO1p/gAAAABJRU5ErkJggg==
+        DAAACwwBP0AiyAAAAJ9JREFUOE+VjtENxDAIQ9np1sli95VROYOJS9uL1FqNghs/wPylEjCLz33OGfav
+        VibO95PGbIyRjzfla8RqQmNoT2rpcDjYBL3FwEpKRy0AafjOoIaULisAgmcPMUozIB3+zjCtZahTg5rL
+        KIe0RtR1onrvmALg49dK04pBLaaAWGalUUsX5gCULtskhjavfRrqu8EWsEtD3KSYAp7L/QczoSD/De4/
+        twAAAABJRU5ErkJggg==
 </value>
   </data>
   <data name="ledRecIO.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAIAAACQkWg2AAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAL
-        DAAACwwBP0AiyAAAAKVJREFUOE+VklEawBAMg3unXcfF9uSolkpVUQ/z7QX5JWLSfg5RvYh+rdVar/jQ
-        qO59OiBSSsmBvqsyHE6FMwkQ1AYgCc52BlMfdMaWp1UHqDcGKxpvqG3a3S0SmSXbmsSjGuA+keEtt+om
-        QIYtxw7cnCYL4G8C4MYYwFpiJ5jG3txnXnrrhM1sTIh06eR80/kvsZNzxGzDYfwnKcDqLFvSUgqFxQ8z
-        oSD/IO1p/gAAAABJRU5ErkJggg==
-</value>
-  </data>
-  <data name="ledBalise.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
-    <value>
-        iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAIAAACQkWg2AAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAL
-        DAAACwwBP0AiyAAAAKVJREFUOE+VklEawBAMg3unXcfF9uSolkpVUQ/z7QX5JWLSfg5RvYh+rdVar/jQ
-        qO59OiBSSsmBvqsyHE6FMwkQ1AYgCc52BlMfdMaWp1UHqDcGKxpvqG3a3S0SmSXbmsSjGuA+keEtt+om
-        QIYtxw7cnCYL4G8C4MYYwFpiJ5jG3txnXnrrhM1sTIh06eR80/kvsZNzxGzDYfwnKcDqLFvSUgqFxQ8z
-        oSD/IO1p/gAAAABJRU5ErkJggg==
+        DAAACwwBP0AiyAAAAJ9JREFUOE+VjtENxDAIQ9np1sli95VROYOJS9uL1FqNghs/wPylEjCLz33OGfav
+        VibO95PGbIyRjzfla8RqQmNoT2rpcDjYBL3FwEpKRy0AafjOoIaULisAgmcPMUozIB3+zjCtZahTg5rL
+        KIe0RtR1onrvmALg49dK04pBLaaAWGalUUsX5gCULtskhjavfRrqu8EWsEtD3KSYAp7L/QczoSD/De4/
+        twAAAABJRU5ErkJggg==
 </value>
   </data>
   <data name="batteriePack.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
-        iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8
-        YQUAAABGSURBVDhPY/jPgB0yMAAlkDBOdVQ1AN1WXHxkS1E8ANJw5swZvBikhqABDQ0N/7FhkOGjBoyG
-        Af3SAb7kTDAlEpOhkPMCAND4GsPFRA1CAAAAAElFTkSuQmCC
+        iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABGdBTUEAALGPC/xhBQAAAENJREFUOE9j
+        +I8DAgGIgGNkOWSIxESFZBmArgkXRtGDwgFyz5w5gxcTZUBDQwNWPGrAqAEgTD8D8GGCBhCDETr+MwAA
+        0Pgaw1fBQr4AAAAASUVORK5CYII=
 </value>
   </data>
 </root>
