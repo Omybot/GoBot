@@ -16,7 +16,7 @@ namespace GoBot.Communications
         /// <summary>
         /// Verificateur de connexion
         /// </summary>
-        public ConnexionCheck ConnexionCheck { get; set; }
+        public ConnectionChecker ConnexionCheck { get; set; }
 
         /// <summary>
         /// Sémaphore bloquant pour l'attente de réception d'acquittement

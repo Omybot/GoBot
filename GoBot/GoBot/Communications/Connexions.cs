@@ -22,7 +22,7 @@ namespace GoBot.Communications
                 yield return ConnexionGB;
             }
         }
-
+        
         public static Dictionary<Carte, Connexion> ConnexionParCarte { get; private set; }
         public static Dictionary<Carte, bool> ActivationConnexion { get; private set; }
 
@@ -64,7 +64,7 @@ namespace GoBot.Communications
             }
         }
 
-        private static Carte GetBoardByConnection(ConnexionUDP conn)
+        public static Carte GetBoardByConnection(ConnexionUDP conn)
         {
             Carte output = Carte.RecMove;
 

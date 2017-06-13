@@ -1,21 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Drawing;
-using System.Data;
-using System.Linq;
-using System.Text;
-using System.Windows.Forms;
-using Composants;
+﻿using Composants;
 using GoBot.Communications;
-using GoBot.Balises;
-using System.Threading;
+using System;
+using System.Windows.Forms;
 
 namespace GoBot.IHM
 {
     public partial class PanelConnexions : UserControl
     {
-        private System.Windows.Forms.Timer timerBatteries;
+        private Timer timerBatteries;
 
         public PanelConnexions()
         {
@@ -27,41 +19,27 @@ namespace GoBot.IHM
             if (Robots.Simulation)
             {
                 batteriePack.CouleurGris();
-                return;
-            }
-
-            if (Connexions.ConnexionIO.ConnexionCheck.Connecte)
-            {
-                batteriePack.Afficher = true;
-                batteriePack.Tension = Robots.GrosRobot.BatterieVoltage;
-                lblVoltage.Text = Robots.GrosRobot.BatterieVoltage.ToString() + "V";
             }
             else
             {
-                batteriePack.Afficher = false;
-                batteriePack.CouleurGris();
-                lblVoltage.Text = "-";
+                if (Connexions.ConnexionIO.ConnexionCheck.Connected)
+                {
+                    batteriePack.Afficher = true;
+                    batteriePack.Tension = Robots.GrosRobot.BatterieVoltage;
+                    lblVoltage.Text = Robots.GrosRobot.BatterieVoltage.ToString() + "V";
+                }
+                else
+                {
+                    batteriePack.Afficher = false;
+                    batteriePack.CouleurGris();
+                    lblVoltage.Text = "-";
+                }
             }
         }
 
-        void ConnexionBunCheck_ConnexionChange(bool conn)
+        void Connections_ConnectionStatusChange(Connexion sender, bool connected)
         {
-            Robot_ConnexionChange(Carte.Balise, conn);
-        }
-
-        void ConnexionMoveCheck_ConnexionChange(bool conn)
-        {
-            Robot_ConnexionChange(Carte.RecMove, conn);
-        }
-
-        void ConnexionIoCheck_ConnexionChange(bool conn)
-        {
-            Robot_ConnexionChange(Carte.RecIO, conn);
-        }
-
-        void ConnexionGbCheck_ConnexionChange(bool conn)
-        {
-            Robot_ConnexionChange(Carte.RecGB, conn);
+            Robot_ConnexionChange(Connexions.GetBoardByConnection(sender), connected);
         }
 
         void Robot_ConnexionChange(Carte carte, bool connecte)
@@ -105,20 +83,19 @@ namespace GoBot.IHM
                 ledRecMove.ConnexionNok();
                 ledRecIO.ConnexionNok();
 
-                Connexions.ConnexionMove.ConnexionCheck.ConnexionChange += new ConnexionCheck.ConnexionChangeDelegate(ConnexionMoveCheck_ConnexionChange);
-                Connexions.ConnexionIO.ConnexionCheck.ConnexionChange += new ConnexionCheck.ConnexionChangeDelegate(ConnexionIoCheck_ConnexionChange);
-                Connexions.ConnexionGB.ConnexionCheck.ConnexionChange += new ConnexionCheck.ConnexionChangeDelegate(ConnexionGbCheck_ConnexionChange);
+                Connexions.ConnexionMove.ConnexionCheck.ConnectionStatusChange += new ConnectionChecker.ConnectionChangeDelegate(Connections_ConnectionStatusChange);
+                Connexions.ConnexionIO.ConnexionCheck.ConnectionStatusChange += new ConnectionChecker.ConnectionChangeDelegate(Connections_ConnectionStatusChange);
+                Connexions.ConnexionGB.ConnexionCheck.ConnectionStatusChange += new ConnectionChecker.ConnectionChangeDelegate(Connections_ConnectionStatusChange);
 
-                Plateau.Balise.Connexion.ConnexionCheck.ConnexionChange += new ConnexionCheck.ConnexionChangeDelegate(ConnexionBunCheck_ConnexionChange);
-
-
-                if (Connexions.ConnexionMove.ConnexionCheck.Connecte)
+                Plateau.Balise.Connexion.ConnexionCheck.ConnectionStatusChange += new ConnectionChecker.ConnectionChangeDelegate(Connections_ConnectionStatusChange);
+                
+                if (Connexions.ConnexionMove.ConnexionCheck.Connected)
                     SetLed(ledRecMove, true);
-                if (Connexions.ConnexionIO.ConnexionCheck.Connecte)
+                if (Connexions.ConnexionIO.ConnexionCheck.Connected)
                     SetLed(ledRecIO, true);
-                if (Plateau.Balise.Connexion.ConnexionCheck.Connecte)
+                if (Plateau.Balise.Connexion.ConnexionCheck.Connected)
                     SetLed(ledBalise, true);
-                if (Connexions.ConnexionGB.ConnexionCheck.Connecte)
+                if (Connexions.ConnexionGB.ConnexionCheck.Connected)
                     SetLed(ledRecGB, true);
 
                 batteriePack.TensionMidHigh = Config.CurrentConfig.BatterieRobotVert;

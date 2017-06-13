@@ -477,7 +477,7 @@ namespace GoBot.Balises
             catch (Exception)
             { }
 
-            Connexion.ConnexionCheck.MajConnexion();
+            Connexion.ConnexionCheck.NotifyAlive();
         }
 
         /// <summary>

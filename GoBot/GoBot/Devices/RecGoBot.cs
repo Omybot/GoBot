@@ -34,20 +34,28 @@ namespace GoBot.Devices
         private ConnexionUDP connexion;
         private Dictionary<LedID, LedStatus> ledsStatus;
 
+        private Dictionary<Connexion, LedID> ledConnexionState;
+
         public RecGoBot(ConnexionUDP conn)
         {
             connexion = conn;
             connexion.NouvelleTrameRecue += new Connexion.ReceptionDelegate(connexion_NouvelleTrameRecue);
 
-            Connexions.ConnexionIO.ConnexionCheck.TestConnexion += ConnexionCheck_TestConnexionIO;
-            Connexions.ConnexionMove.ConnexionCheck.TestConnexion += ConnexionCheck_TestConnexionMove;
-            Connexions.ConnexionGB.ConnexionCheck.TestConnexion += ConnexionCheck_TestConnexionGB;
+            ledConnexionState = new Dictionary<Connexion, LedID>();
+            ledConnexionState.Add(Connexions.ConnexionIO, LedID.DebugA1);
+            ledConnexionState.Add(Connexions.ConnexionMove, LedID.DebugA2);
+            ledConnexionState.Add(Connexions.ConnexionGB, LedID.DebugA3);
+
+            Connexions.ConnexionIO.ConnexionCheck.SendConnectionTest += ConnexionCheck_SendConnectionTest;
+            Connexions.ConnexionMove.ConnexionCheck.SendConnectionTest += ConnexionCheck_SendConnectionTest;
+            Connexions.ConnexionGB.ConnexionCheck.SendConnectionTest += ConnexionCheck_SendConnectionTest;
 
             ledsStatus = new Dictionary<LedID, LedStatus>();
             for (LedID i = 0; i <= (LedID)15; i++)
                 ledsStatus.Add(i, LedStatus.Off);
 
             ButtonChange += RecGoBot_ButtonChange;
+
         }
 
         void RecGoBot_ButtonChange(CapteurOnOffID btn, bool state)
@@ -102,27 +110,17 @@ namespace GoBot.Devices
             Actionneur.GestionModuleSupervisee.DeposerModule();
         }
 
-        void ChangeLedConnection(ConnexionUDP conn, LedID led)
+        void ChangeLedConnection(bool connected, LedID led)
         {
             if (ledsStatus[led] == RecGoBot.LedStatus.Off)
-                SetLed(led, conn.ConnexionCheck.Connecte ? RecGoBot.LedStatus.Vert : RecGoBot.LedStatus.Rouge);
+                SetLed(led, connected ? RecGoBot.LedStatus.Vert : RecGoBot.LedStatus.Rouge);
             else
                 SetLed(led, RecGoBot.LedStatus.Off);
         }
 
-        void ConnexionCheck_TestConnexionIO()
+        void ConnexionCheck_SendConnectionTest(Connexion sender)
         {
-            ChangeLedConnection(Connexions.ConnexionIO, LedID.DebugA1);
-        }
-
-        void ConnexionCheck_TestConnexionMove()
-        {
-            ChangeLedConnection(Connexions.ConnexionMove, LedID.DebugA2);
-        }
-
-        void ConnexionCheck_TestConnexionGB()
-        {
-            ChangeLedConnection(Connexions.ConnexionGB, LedID.DebugA3);
+            ChangeLedConnection(sender.ConnexionCheck.Connected, ledConnexionState[sender]);
         }
 
         void connexion_NouvelleTrameRecue(Trame trameRecue)

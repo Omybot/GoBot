@@ -29,7 +29,7 @@ namespace GoBot.Communications
 
         public ConnexionUDP()
         {
-            ConnexionCheck = new ConnexionCheck(500);
+            ConnexionCheck = new ConnectionChecker(this, 500);
             Sauvegarde = new Replay();
             DerniereTentativePing = new DateTime(1, 1, 1);
         }
@@ -154,7 +154,7 @@ namespace GoBot.Communications
 
                 Byte[] receiveBytes = u.EndReceive(ar, ref e);
 
-                ConnexionCheck.MajConnexion();
+                ConnexionCheck.NotifyAlive();
 
                 Trame trameRecue = new Trame(receiveBytes);
                 if (trameRecue.ToString() == "C2 A1 C5") // TODO2018 Hum... Bof.

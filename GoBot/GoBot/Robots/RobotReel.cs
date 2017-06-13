@@ -603,7 +603,7 @@ namespace GoBot
 
         public bool DemandePosition(bool attendre = true)
         {
-            if (!Connexion.ConnexionCheck.Connecte)
+            if (!Connexion.ConnexionCheck.Connected)
                 return false;
 
             if (attendre)
@@ -636,7 +636,7 @@ namespace GoBot
 
         public override void DemandeValeursAnalogiques(Carte carte, bool attendre = true)
         {
-            if (!Connexions.ConnexionParCarte[carte].ConnexionCheck.Connecte)
+            if (!Connexions.ConnexionParCarte[carte].ConnexionCheck.Connected)
                 return;
 
             if (attendre)
