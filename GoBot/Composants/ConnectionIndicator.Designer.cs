@@ -1,6 +1,6 @@
 ﻿namespace Composants
 {
-    partial class IndicateurConnexion
+    partial class ConnectionIndicator
     {
         /// <summary> 
         /// Variable nécessaire au concepteur.

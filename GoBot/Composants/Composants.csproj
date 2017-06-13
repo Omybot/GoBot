@@ -66,11 +66,11 @@
     <Compile Include="ColorPickup.Designer.cs">
       <DependentUpon>ColorPickup.cs</DependentUpon>
     </Compile>
-    <Compile Include="IndicateurConnexion.cs">
+    <Compile Include="ConnectionIndicator.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="IndicateurConnexion.Designer.cs">
-      <DependentUpon>IndicateurConnexion.cs</DependentUpon>
+    <Compile Include="ConnectionIndicator.Designer.cs">
+      <DependentUpon>ConnectionIndicator.cs</DependentUpon>
     </Compile>
     <Compile Include="CtrlGraphique.cs">
       <SubType>UserControl</SubType>
@@ -143,8 +143,8 @@
     <EmbeddedResource Include="ColorDisplay.resx">
       <DependentUpon>ColorDisplay.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="IndicateurConnexion.resx">
-      <DependentUpon>IndicateurConnexion.cs</DependentUpon>
+    <EmbeddedResource Include="ConnectionIndicator.resx">
+      <DependentUpon>ConnectionIndicator.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="CtrlGraphique.resx">
       <DependentUpon>CtrlGraphique.cs</DependentUpon>

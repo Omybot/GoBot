@@ -107,6 +107,13 @@
     <Compile Include="Actions\Deplacement\ActionAvance.cs" />
     <Compile Include="Actions\Deplacement\ActionRecule.cs" />
     <Compile Include="Actions\IAction.cs" />
+    <Compile Include="Extensions\ControlExtensions.cs" />
+    <Compile Include="IHM\ConnectionStatus.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="IHM\ConnectionStatus.Designer.cs">
+      <DependentUpon>ConnectionStatus.cs</DependentUpon>
+    </Compile>
     <Compile Include="MinimumDelay.cs" />
     <Compile Include="SpeedConfig.cs" />
     <Compile Include="AsserStats.cs" />
@@ -418,6 +425,9 @@
     <Compile Include="Synchronizer.cs" />
     <Compile Include="TestCode.cs" />
     <Compile Include="Util.cs" />
+    <EmbeddedResource Include="IHM\ConnectionStatus.resx">
+      <DependentUpon>ConnectionStatus.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="IHM\PanelActionneurGeneric.resx">
       <DependentUpon>PanelActionneurGeneric.cs</DependentUpon>
     </EmbeddedResource>

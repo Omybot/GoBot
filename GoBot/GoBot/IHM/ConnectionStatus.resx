@@ -118,11 +118,13 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
-  <data name="batteriePack.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+  <data name="conIndicator.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
-        iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABGdBTUEAALGPC/xhBQAAAENJREFUOE9j
-        +I8DAgGIgGNkOWSIxESFZBmArgkXRtGDwgFyz5w5gxcTZUBDQwNWPGrAqAEgTD8D8GGCBhCDETr+MwAA
-        0Pgaw1fBQr4AAAAASUVORK5CYII=
+        iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAIAAACQkWg2AAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAL
+        EgAACxIB0t1+/AAAAJ9JREFUOE+VjtENxDAIQ9np1sli95VROYOJS9uL1FqNghs/wPylEjCLz33OGfav
+        VibO95PGbIyRjzfla8RqQmNoT2rpcDjYBL3FwEpKRy0AafjOoIaULisAgmcPMUozIB3+zjCtZahTg5rL
+        KIe0RtR1onrvmALg49dK04pBLaaAWGalUUsX5gCULtskhjavfRrqu8EWsEtD3KSYAp7L/QczoSD/De4/
+        twAAAABJRU5ErkJggg==
 </value>
   </data>
 </root>

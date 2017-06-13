@@ -70,7 +70,7 @@ namespace GoBot.Communications
 
             foreach (Carte c in Enum.GetValues(typeof(Carte)))
             {
-                if (ConnexionParCarte[c] == conn)
+                if (ConnexionParCarte.ContainsKey(c) && ConnexionParCarte[c] == conn)
                     output = c;
             }
 

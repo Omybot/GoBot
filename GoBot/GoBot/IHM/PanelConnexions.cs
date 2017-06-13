@@ -37,60 +37,22 @@ namespace GoBot.IHM
             }
         }
 
-        void Connections_ConnectionStatusChange(Connexion sender, bool connected)
+        private void SetLed(ConnectionIndicator led, bool on)
         {
-            Robot_ConnexionChange(Connexions.GetBoardByConnection(sender), connected);
-        }
-
-        void Robot_ConnexionChange(Carte carte, bool connecte)
-        {
-            IndicateurConnexion selectLed = null;
-            switch (carte)
-            {
-                case Carte.RecMove:
-                    selectLed = ledRecMove;
-                    break;
-                case Carte.RecIO:
-                    selectLed = ledRecIO;
-                    break;
-                case Carte.RecGB:
-                    selectLed = ledRecGB;
-                    break;
-            }
-
-            this.Invoke(new EventHandler(delegate
-            {
-                SetLed(selectLed, connecte);
-            }));
-        }
-
-        private void SetLed(IndicateurConnexion led, bool on)
-        {
-            if (on)
-                led.ConnexionOk(true);
-            else
-                led.ConnexionNok(true);
+            led.SetConnectionState(on, true);
         }
 
         private void PanelConnexions_Load(object sender, EventArgs e)
         {
             if (!Config.DesignMode)
             {
-                ledRecMove.ConnexionNok();
-                ledRecIO.ConnexionNok();
-                ledRecGB.ConnexionNok();
-
-                Connexions.ConnexionMove.ConnexionCheck.ConnectionStatusChange += new ConnectionChecker.ConnectionChangeDelegate(Connections_ConnectionStatusChange);
-                Connexions.ConnexionIO.ConnexionCheck.ConnectionStatusChange += new ConnectionChecker.ConnectionChangeDelegate(Connections_ConnectionStatusChange);
-                Connexions.ConnexionGB.ConnexionCheck.ConnectionStatusChange += new ConnectionChecker.ConnectionChangeDelegate(Connections_ConnectionStatusChange);
+                foreach (Connexion conn in Connexions.AllConnections)
+                {
+                    ConnectionStatus status = new ConnectionStatus();
+                    status.Connection = conn;
+                    _ledsPanel.Controls.Add(status);
+                }
                 
-                if (Connexions.ConnexionMove.ConnexionCheck.Connected)
-                    SetLed(ledRecMove, true);
-                if (Connexions.ConnexionIO.ConnexionCheck.Connected)
-                    SetLed(ledRecIO, true);
-                if (Connexions.ConnexionGB.ConnexionCheck.Connected)
-                    SetLed(ledRecGB, true);
-
                 batteriePack.TensionMidHigh = Config.CurrentConfig.BatterieRobotVert;
                 batteriePack.TensionMid = Config.CurrentConfig.BatterieRobotOrange;
                 batteriePack.TensionLow = Config.CurrentConfig.BatterieRobotRouge;
