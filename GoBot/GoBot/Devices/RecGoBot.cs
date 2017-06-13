@@ -227,7 +227,6 @@ namespace GoBot.Devices
         
         public void SetLed(LedID led, LedStatus state)
         {
-            Console.WriteLine(DateTime.Now.ToShortTimeString() + ":" + DateTime.Now.Millisecond.ToString("000") +  led.ToString() + " - " + state.ToString());
             ledsStatus[led] = state;
             connexion.SendMessage(TrameFactory.SetLed(led, state));
         }

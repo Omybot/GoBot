@@ -83,12 +83,13 @@ namespace GoBot.Communications
         private static void TestConnectionsLoop()
         {
             int interval = IntervalLoopTests / AllConnections.Count();
-            
+
+            Thread.Sleep(1000); // Pour attendre que tout soit cablé
+
             while (!Config.Shutdown)
             {
                 foreach (UDPConnection conn in AllConnections.OrderBy(c => Connections.GetBoardByConnection(c).ToString()))
                 {
-                    Console.WriteLine("Test " + Connections.GetBoardByConnection(conn).ToString());
                     conn.ConnectionChecker.CheckConnection();
                     Thread.Sleep(interval);
                 }
