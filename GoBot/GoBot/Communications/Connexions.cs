@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using GoBot.Communications;
+using System.Threading;
 
 namespace GoBot.Communications
 {
@@ -11,6 +12,16 @@ namespace GoBot.Communications
         public static ConnexionUDP ConnexionMove { get; set; }
         public static ConnexionUDP ConnexionIO { get; set; }
         public static ConnexionUDP ConnexionGB { get; set; }
+
+        public static IEnumerable<Connexion> AllConnections
+        {
+            get
+            {
+                yield return ConnexionMove;
+                yield return ConnexionIO;
+                yield return ConnexionGB;
+            }
+        }
 
         public static Dictionary<Carte, Connexion> ConnexionParCarte { get; private set; }
         public static Dictionary<Carte, bool> ActivationConnexion { get; private set; }
@@ -24,35 +35,46 @@ namespace GoBot.Communications
 
             ConnexionMove = new ConnexionUDP();
             ConnexionMove.Connexion(System.Net.IPAddress.Parse("10.1.0.11"), 12311, 12321);
-            ConnexionMove.ConnexionCheck.TestConnexion += new ConnexionCheck.TestConnexionDelegate(ConnexionMoveCheck_TestConnexion);
 
             ConnexionIO = new ConnexionUDP();
             ConnexionIO.Connexion(System.Net.IPAddress.Parse("10.1.0.14"), 12314, 12324);
-            ConnexionIO.ConnexionCheck.TestConnexion += new ConnexionCheck.TestConnexionDelegate(ConnexionIOCheck_TestConnexion);
 
             ConnexionGB = new ConnexionUDP();
             ConnexionGB.Connexion(System.Net.IPAddress.Parse("10.1.0.12"), 12312, 12322);
-            ConnexionGB.ConnexionCheck.TestConnexion += new ConnexionCheck.TestConnexionDelegate(ConnexionGBCheck_TestConnexion);
 
             ConnexionParCarte = new Dictionary<Carte, Connexion>();
             ConnexionParCarte.Add(Carte.RecMove, ConnexionMove);
             ConnexionParCarte.Add(Carte.RecIO, ConnexionIO);
             ConnexionParCarte.Add(Carte.RecGB, ConnexionGB);
+
+            ThreadPool.QueueUserWorkItem(f => TestConnectionsLoop()); // En remplacement des tests de connexion des ConnexionCheck, pour les syncroniser
         }
 
-        public static void ConnexionMoveCheck_TestConnexion()
+        private static void TestConnectionsLoop()
         {
-            ConnexionMove.SendMessage(TrameFactory.TestConnexion(Carte.RecMove));
+            int interval = 500;
+
+            while(!Config.Shutdown)
+            {
+                foreach (ConnexionUDP conn in AllConnections)
+                {
+                    conn.SendMessage(TrameFactory.TestConnexion(GetBoardByConnection(conn)));
+                    Thread.Sleep(interval / AllConnections.Count());
+                }
+            }
         }
 
-        public static void ConnexionIOCheck_TestConnexion()
+        private static Carte GetBoardByConnection(ConnexionUDP conn)
         {
-            ConnexionIO.SendMessage(TrameFactory.TestConnexion(Carte.RecIO));
-        }
+            Carte output = Carte.RecMove;
 
-        public static void ConnexionGBCheck_TestConnexion()
-        {
-            ConnexionGB.SendMessage(TrameFactory.TestConnexion(Carte.RecGB));
+            foreach (Carte c in Enum.GetValues(typeof(Carte)))
+            {
+                if (ConnexionParCarte[c] == conn)
+                    output = c;
+            }
+
+            return output;
         }
     }
 }

@@ -1,14 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Net;
-using System.Net.Sockets;
-using GoBot;
-using GoBot.Communications;
 using System.Net.NetworkInformation;
-using System.ComponentModel;
-using System.Threading;
+using System.Net.Sockets;
 
 namespace GoBot.Communications
 {
@@ -164,7 +157,7 @@ namespace GoBot.Communications
                 ConnexionCheck.MajConnexion();
 
                 Trame trameRecue = new Trame(receiveBytes);
-                if (trameRecue.ToString() == "C2 A1 C5")
+                if (trameRecue.ToString() == "C2 A1 C5") // TODO2018 Hum... Bof.
                     trameRecue = new Trame("C2 A1 C3");
                 TrameRecue(trameRecue);
 

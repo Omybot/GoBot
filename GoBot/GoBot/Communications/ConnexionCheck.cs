@@ -1,7 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Timers;
 
 namespace GoBot.Communications
@@ -10,10 +7,11 @@ namespace GoBot.Communications
     {
         private DateTime derniereReception;
         private DateTime dernierTest;
-        public bool Connecte { get; private set; }
         private Timer connexionOffTimer;
         private int interval;
         private bool start;
+
+        public bool Connecte { get; private set; }
 
         /// <summary>
         /// Permet de lancer le test de connexion en continu
@@ -25,10 +23,10 @@ namespace GoBot.Communications
 
             start = false;
             interval = intervalle;
+            
             connexionOffTimer = new Timer();
             connexionOffTimer.Interval = intervalle;
             connexionOffTimer.Elapsed += new ElapsedEventHandler(connexionOffTimer_Elapsed);
-            TickAction();
 
             Connecte = false;
         }
@@ -36,7 +34,7 @@ namespace GoBot.Communications
         public void Start()
         {
             start = true;
-            connexionOffTimer_Elapsed(null, null);
+            CheckConnection();
             connexionOffTimer.Start();
         }
 
@@ -47,15 +45,15 @@ namespace GoBot.Communications
         /// <param name="e"></param>
         private void connexionOffTimer_Elapsed(object sender, ElapsedEventArgs e)
         {
-            TickAction();
+            CheckConnection();
         }
 
-        private void TickAction()
+        public void CheckConnection()
         {
-            // Si on nous a donné une fonction de test de connexion on la réalise pour mettre à jour.
-            TestConnexion?.Invoke();
-
+            // Met à jour par rapport au dernier tour
             MajStatut();
+            // Si on nous a donné une fonction de test de connexion on la réalise pour se préparer au prochain tour
+            TestConnexion?.Invoke();
         }
 
         /// <summary>
@@ -85,14 +83,13 @@ namespace GoBot.Communications
             if (Connecte && intervalleEcoule > intervalleAutorise)
             {
                 Connecte = false;
-                ConnexionChange?.Invoke(false);
+                ConnexionChange?.Invoke(Connecte);
             }
 
             else if (!Connecte && intervalleEcoule < intervalleAutorise)
             {
-                Console.WriteLine("Connection");
                 Connecte = true;
-                ConnexionChange?.Invoke(true);
+                ConnexionChange?.Invoke(Connecte);
             }
 
             dernierTest = DateTime.Now;
