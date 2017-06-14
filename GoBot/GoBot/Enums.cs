@@ -153,7 +153,7 @@ namespace GoBot
         ScanSol = 0
     }
 
-    public enum Carte
+    public enum Board
     {
         PC = 0xA1,
         RecMove = 0xC1,

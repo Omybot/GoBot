@@ -33,7 +33,7 @@ namespace GoBot.IHM
             {
                 if (checkedListBoxBaudrates.CheckedIndices.Contains(iBaudrate))
                 {
-                    Connections.ConnectionIO.SendMessage(TrameFactory.ChangementBaudrate(baudrate));
+                    Connections.ConnectionIO.SendMessage(FrameFactory.ChangementBaudrate(baudrate));
                     Thread.Sleep(100);
 
                     //Servomoteur servoAll = new Servomoteur(Carte.RecIO, 254, 0);
@@ -45,9 +45,9 @@ namespace GoBot.IHM
                             progressBarId.Value++;
                             lblScannId.Text = "ID : " + i.ToString();
                             lblScannBaudrate.Text = "Baud : " + baudrate.ToString().Substring(1);
-                            Servomoteur servo = new Servomoteur(Carte.RecIO, i, 0);
+                            Servomoteur servo = new Servomoteur(Board.RecIO, i, 0);
                             if (servo.Connecte)
-                                listBoxServos.Items.Add(new Servomoteur(Carte.RecIO, i, baudrate));
+                                listBoxServos.Items.Add(new Servomoteur(Board.RecIO, i, baudrate));
                         }
                     }
                 }
@@ -80,7 +80,7 @@ namespace GoBot.IHM
         private void listBoxServos_SelectedValueChanged(object sender, EventArgs e)
         {
             Servomoteur servo = (Servomoteur)listBoxServos.SelectedItem;
-            Connections.ConnectionIO.SendMessage(TrameFactory.ChangementBaudrate(servo.Baudrate));
+            Connections.ConnectionIO.SendMessage(FrameFactory.ChangementBaudrate(servo.Baudrate));
             panelServo.AfficherServo(servo);
         }
     }

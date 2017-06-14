@@ -74,10 +74,10 @@ namespace GoBot
                 CapteursCouleur.Add(fonction, Color.Black);
             }
 
-            ValeursAnalogiques = new Dictionary<Carte, List<double>>();
-            ValeursAnalogiques.Add(Carte.RecIO, null);
-            ValeursAnalogiques.Add(Carte.RecGB, null);
-            ValeursAnalogiques.Add(Carte.RecMove, null);
+            ValeursAnalogiques = new Dictionary<Board, List<double>>();
+            ValeursAnalogiques.Add(Board.RecIO, null);
+            ValeursAnalogiques.Add(Board.RecGB, null);
+            ValeursAnalogiques.Add(Board.RecMove, null);
         }
 
         void timerPositions_Elapsed(object sender, ElapsedEventArgs e)
@@ -519,7 +519,7 @@ namespace GoBot
             return null;
         }
 
-        public override void DemandeValeursAnalogiques(Carte carte, bool attendre)
+        public override void DemandeValeursAnalogiques(Board carte, bool attendre)
         {
             List<double> values = Enumerable.Range(1, 9).Select(o => (double)o).ToList();
             ValeursAnalogiques[carte] = values;

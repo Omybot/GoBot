@@ -131,7 +131,7 @@ namespace GoBot.Balises
 
             try
             {
-                if (trame[1] == (byte)FonctionTrame.DetectionBaliseRapide)
+                if (trame[1] == (byte)FrameFunction.DetectionBaliseRapide)
                 {
                     if (Position != null)
                     {
@@ -187,7 +187,7 @@ namespace GoBot.Balises
                     }
                 }
 
-                if (trame[1] == (byte)FonctionTrame.DetectionBalise)
+                if (trame[1] == (byte)FrameFunction.DetectionBalise)
                 {
                     if (Position != null)
                     {
@@ -492,7 +492,7 @@ namespace GoBot.Balises
             }
 
             ValeurConsigne = vitesse;
-            Frame t = TrameFactory.BaliseVitesse(vitesse);
+            Frame t = FrameFactory.BaliseVitesse(vitesse);
             Connexion.SendMessage(t);
         }
 

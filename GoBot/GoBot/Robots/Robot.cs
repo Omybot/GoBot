@@ -18,7 +18,7 @@ namespace GoBot
     public abstract class Robot
     {
         // Communication
-        public Carte Carte { get; set; }
+        public Board Carte { get; set; }
         public Historique Historique { get; protected set; }
         public double BatterieVoltage { get; protected set; }
 
@@ -97,7 +97,7 @@ namespace GoBot
         public abstract List<double>[] DiagnosticCpuPwm(int nbValeurs);
         public abstract bool DemandeCapteurOnOff(CapteurOnOffID capteur, bool attendre = true);
         public abstract Color DemandeCapteurCouleur(CapteurCouleurID capteur, bool attendre = true);
-        public abstract void DemandeValeursAnalogiques(Carte carte, bool attendre = true);
+        public abstract void DemandeValeursAnalogiques(Board carte, bool attendre = true);
 
         public abstract void ActionneurOnOff(ActionneurOnOffID actionneur, bool on);
 
@@ -117,7 +117,7 @@ namespace GoBot
         public Dictionary<CapteurOnOffID, bool> CapteurActive { get; set; }
         public Dictionary<CapteurCouleurID, Color> CapteursCouleur { get; set; }
         public Dictionary<ActionneurOnOffID, bool> ActionneurActive { get; set; }
-        public Dictionary<Carte, List<double>> ValeursAnalogiques { get; set; }
+        public Dictionary<Board, List<double>> ValeursAnalogiques { get; set; }
 
         public delegate void ChangementEtatCapteurOnOffDelegate(CapteurOnOffID capteur, bool etat);
         public event ChangementEtatCapteurOnOffDelegate ChangementEtatCapteurOnOff;

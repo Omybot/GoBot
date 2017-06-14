@@ -1,7 +1,7 @@
 ﻿namespace GoBot.Communications
 {
 
-    public enum FonctionTrame
+    public enum FrameFunction
     {
         Debug = 0xEE,
         TestConnexion = 0xF0,
@@ -68,7 +68,7 @@
         DetectionBaliseRapide = 0xE5
     }
 
-    public enum FonctionServo
+    public enum ServoFunction
     {
         DemandePositionCible = 0x01,
         RetourPositionCible = 0x02,

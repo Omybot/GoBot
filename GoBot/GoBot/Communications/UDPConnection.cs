@@ -45,11 +45,6 @@ namespace GoBot.Communications
         /// Client connecté
         /// </summary>
         private UdpClient Client { get; set; }
-
-        /// <summary>
-        /// Vrai si le client est connecté et répond aux pings
-        /// </summary>
-        private bool IsConnected { get; set; } = false;
         
         private DateTime LastPingTry { get; set; }
 
@@ -80,35 +75,35 @@ namespace GoBot.Communications
 
             try
             {
-                if ((DateTime.Now - LastPingTry).TotalSeconds > 20)
+                if ((DateTime.Now - LastPingTry).TotalSeconds > 1)
                 {
                     Ping ping = new Ping();
-                    PingReply pingReponse = ping.Send(IPAddress, 50);
+                    PingReply pingReponse = ping.Send(IPAddress, 10);
                     LastPingTry = DateTime.Now;
 
                     if (pingReponse.Status == IPStatus.Success)
                     {
                         Client = new UdpClient();
                         Client.Connect(IPAddress, OutputPort);
-                        IsConnected = true;
+                        Connected = true;
                         retour = ConnectionState.Ok;
                         StartReception();
                     }
                     else
                     {
                         retour = ConnectionState.Error;
-                        IsConnected = false;
+                        Connected = false;
                     }
                 }
                 else
                 {
                     retour = ConnectionState.Error;
-                    IsConnected = false;
+                    Connected = false;
                 }
             }
             catch (Exception)
             {
-                IsConnected = false;
+                Connected = false;
             }
 
             return retour;
@@ -127,7 +122,7 @@ namespace GoBot.Communications
             {
                 try
                 {
-                    if (!IsConnected)
+                    if (!Connected)
                         if (Connexion(IPAddress, OutputPort, InputPort) != ConnectionState.Ok)
                             return -1;
 
@@ -138,7 +133,7 @@ namespace GoBot.Communications
                 }
                 catch (SocketException)
                 {
-                    IsConnected = false;
+                    Connected = false;
                 }
             }
 

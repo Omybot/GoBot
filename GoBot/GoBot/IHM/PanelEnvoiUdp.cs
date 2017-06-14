@@ -86,17 +86,17 @@ namespace GoBot.IHM
 
             if (boxMove.Checked)
             {
-                Frame trame = TrameFactory.Debug(Carte.RecMove, val);
+                Frame trame = FrameFactory.Debug(Board.RecMove, val);
                 Connections.ConnectionMove.SendMessage(trame);
             }
             if (boxIO.Checked)
             {
-                Frame trame = TrameFactory.Debug(Carte.RecIO, val);
+                Frame trame = FrameFactory.Debug(Board.RecIO, val);
                 Connections.ConnectionIO.SendMessage(trame);
             }
             if (boxGB.Checked)
             {
-                Frame trame = TrameFactory.Debug(Carte.RecGB, val);
+                Frame trame = FrameFactory.Debug(Board.RecGB, val);
                 Connections.ConnectionGB.SendMessage(trame);
             }
         }
@@ -125,26 +125,26 @@ namespace GoBot.IHM
         {
             if (boxMove.Checked)
             {
-                Frame trame = TrameFactory.TestConnexion(Carte.RecMove);
+                Frame trame = FrameFactory.TestConnexion(Board.RecMove);
                 Connections.ConnectionMove.SendMessage(trame);
             }
             if (boxIO.Checked)
             {
-                Frame trame = TrameFactory.TestConnexion(Carte.RecIO);
+                Frame trame = FrameFactory.TestConnexion(Board.RecIO);
                 Connections.ConnectionIO.SendMessage(trame);
             }
             if (boxGB.Checked)
             {
-                Frame trame = TrameFactory.TestConnexion(Carte.RecGB);
+                Frame trame = FrameFactory.TestConnexion(Board.RecGB);
                 Connections.ConnectionGB.SendMessage(trame);
             }
         }
 
         private void switchBoutonConnexion_ChangementEtat(object sender, EventArgs e)
         {
-            Connections.EnableConnection[Carte.RecMove] = switchBoutonMove.Actif;
-            Connections.EnableConnection[Carte.RecIO] = switchBoutonIO.Actif;
-            Connections.EnableConnection[Carte.RecGB] = switchBoutonGB.Actif;
+            Connections.EnableConnection[Board.RecMove] = switchBoutonMove.Actif;
+            Connections.EnableConnection[Board.RecIO] = switchBoutonIO.Actif;
+            Connections.EnableConnection[Board.RecGB] = switchBoutonGB.Actif;
         }
     }
 }

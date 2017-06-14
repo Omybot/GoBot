@@ -128,17 +128,17 @@ namespace GoBot.Communications
         /// <summary>
         /// Carte concernée par la trame (Information contenue dans le premier octet de la trale)
         /// </summary>
-        public Carte Board
+        public Board Board
         {
             get
             {
                 try
                 {
-                    return (Carte)this[0];
+                    return (Board)this[0];
                 }
                 catch (Exception)
                 {
-                    return Carte.PC;
+                    return Board.PC;
                 }
             }
         }
@@ -149,7 +149,7 @@ namespace GoBot.Communications
         /// <returns>Message de la trame décodée</returns>
         public String Decode()
         {
-            return DecodeurTrames.Decode(this);
+            return FrameDecoder.Decode(this);
         }
     }
 }

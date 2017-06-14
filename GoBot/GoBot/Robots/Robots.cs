@@ -32,7 +32,7 @@ namespace GoBot
 
             if (!Simulation)
             {
-                RobotReel grosRobot = new RobotReel(IDRobot.GrosRobot, Carte.RecMove);
+                RobotReel grosRobot = new RobotReel(IDRobot.GrosRobot, Board.RecMove);
                 grosRobot.Connexion = Connections.ConnectionMove;
                 GrosRobot = grosRobot;
             }

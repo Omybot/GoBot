@@ -21,7 +21,7 @@ namespace GoBot.IHM
     public partial class PanelLogsTrames : UserControl
     {
         private ConnectionReplay replay;
-        private Dictionary<Carte, Color> couleurCarte;
+        private Dictionary<Board, Color> couleurCarte;
 
         private DateTime dateDebut;
         private DateTime datePrec;
@@ -50,28 +50,28 @@ namespace GoBot.IHM
             dataGridViewLog.Columns.Add("Trame", "Trame");
             dataGridViewLog.Columns[5].Width = dataGridViewLog.Width - 18 - dataGridViewLog.Columns[0].Width - dataGridViewLog.Columns[1].Width - dataGridViewLog.Columns[2].Width - dataGridViewLog.Columns[3].Width - dataGridViewLog.Columns[4].Width;
 
-            couleurCarte = new Dictionary<Carte, Color>();
-            couleurCarte.Add(Carte.PC, Color.FromArgb(180, 245, 245));
-            couleurCarte.Add(Carte.RecMove, Color.FromArgb(143, 255, 143));
-            couleurCarte.Add(Carte.RecIO, Color.FromArgb(210, 254, 211));
-            couleurCarte.Add(Carte.RecGB, Color.FromArgb(219, 209, 233));
+            couleurCarte = new Dictionary<Board, Color>();
+            couleurCarte.Add(Board.PC, Color.FromArgb(180, 245, 245));
+            couleurCarte.Add(Board.RecMove, Color.FromArgb(143, 255, 143));
+            couleurCarte.Add(Board.RecIO, Color.FromArgb(210, 254, 211));
+            couleurCarte.Add(Board.RecGB, Color.FromArgb(219, 209, 233));
 
 
             // L'ajout de champs déclenche le SetCheck event qui ajoute les éléments automatiquement dans le dictionnaire
             if (Config.CurrentConfig.LogsFonctionsMove == null)
-                Config.CurrentConfig.LogsFonctionsMove = new SerializableDictionary<FonctionTrame, bool>();
+                Config.CurrentConfig.LogsFonctionsMove = new SerializableDictionary<FrameFunction, bool>();
             if (Config.CurrentConfig.LogsFonctionsBalise == null)
-                Config.CurrentConfig.LogsFonctionsBalise = new SerializableDictionary<FonctionTrame, bool>();
+                Config.CurrentConfig.LogsFonctionsBalise = new SerializableDictionary<FrameFunction, bool>();
             if (Config.CurrentConfig.LogsFonctionsIO == null)
-                Config.CurrentConfig.LogsFonctionsIO = new SerializableDictionary<FonctionTrame, bool>();
+                Config.CurrentConfig.LogsFonctionsIO = new SerializableDictionary<FrameFunction, bool>();
             if (Config.CurrentConfig.LogsFonctionsGB == null)
-                Config.CurrentConfig.LogsFonctionsGB = new SerializableDictionary<FonctionTrame, bool>();
+                Config.CurrentConfig.LogsFonctionsGB = new SerializableDictionary<FrameFunction, bool>();
             if (Config.CurrentConfig.LogsExpediteurs == null)
-                Config.CurrentConfig.LogsExpediteurs = new SerializableDictionary<Carte, bool>();
+                Config.CurrentConfig.LogsExpediteurs = new SerializableDictionary<Board, bool>();
             if (Config.CurrentConfig.LogsDestinataires == null)
-                Config.CurrentConfig.LogsDestinataires = new SerializableDictionary<Carte, bool>();
+                Config.CurrentConfig.LogsDestinataires = new SerializableDictionary<Board, bool>();
             
-            foreach (FonctionTrame fonction in Enum.GetValues(typeof(FonctionTrame)))
+            foreach (FrameFunction fonction in Enum.GetValues(typeof(FrameFunction)))
             {
                 if (!Config.CurrentConfig.LogsFonctionsMove.ContainsKey(fonction))
                     Config.CurrentConfig.LogsFonctionsMove.Add(fonction, true);
@@ -90,7 +90,7 @@ namespace GoBot.IHM
 
             }
             
-            foreach (Carte carte in Enum.GetValues(typeof(Carte)))
+            foreach (Board carte in Enum.GetValues(typeof(Board)))
             {
                 if (!Config.CurrentConfig.LogsExpediteurs.ContainsKey(carte))
                     Config.CurrentConfig.LogsExpediteurs.Add(carte, true);
@@ -169,7 +169,7 @@ namespace GoBot.IHM
             if (!Config.DesignMode && !chargement)
             {
                 String fonctionString = (String)checkedListBoxMove.Items[e.Index];
-                FonctionTrame fonction = (FonctionTrame)Enum.Parse(typeof(FonctionTrame), fonctionString);
+                FrameFunction fonction = (FrameFunction)Enum.Parse(typeof(FrameFunction), fonctionString);
 
                 Config.CurrentConfig.LogsFonctionsMove[fonction] = (e.NewValue == CheckState.Checked);
             }
@@ -192,27 +192,27 @@ namespace GoBot.IHM
                         int index = ligne.Index;
                         ReplayFrame trameReplay = replay.Frames[Convert.ToInt32(dataGridViewLog["Id", index].Value)];
 
-                        Carte carte = trameReplay.Frame.Board;
+                        Board carte = trameReplay.Frame.Board;
 
-                        if (carte == Carte.RecMove)
+                        if (carte == Board.RecMove)
                         {
-                            FonctionTrame fonction = (FonctionTrame)trameReplay.Frame[1];
+                            FrameFunction fonction = (FrameFunction)trameReplay.Frame[1];
                             checkedListBoxMove.Items.Remove(fonction.ToString());
                             checkedListBoxMove.Items.Add(fonction.ToString(), false);
                             Config.CurrentConfig.LogsFonctionsMove[fonction] = false;
                         }
 
-                        if (carte == Carte.RecIO)
+                        if (carte == Board.RecIO)
                         {
-                            FonctionTrame fonction = (FonctionTrame)trameReplay.Frame[1];
+                            FrameFunction fonction = (FrameFunction)trameReplay.Frame[1];
                             checkedListBoxIO.Items.Remove(fonction.ToString());
                             checkedListBoxIO.Items.Add(fonction.ToString(), false);
                             Config.CurrentConfig.LogsFonctionsIO[fonction] = false;
                         }
 
-                        if (carte == Carte.RecGB)
+                        if (carte == Board.RecGB)
                         {
-                            FonctionTrame fonction = (FonctionTrame)trameReplay.Frame[1];
+                            FrameFunction fonction = (FrameFunction)trameReplay.Frame[1];
                             checkedListBoxGB.Items.Remove(fonction.ToString());
                             checkedListBoxGB.Items.Add(fonction.ToString(), false);
                             Config.CurrentConfig.LogsFonctionsGB[fonction] = false;
@@ -301,11 +301,11 @@ namespace GoBot.IHM
                 if (rdoTempsPrecAff.Checked)
                     heure = ((int)(trameReplay.Date - datePrecAff).TotalMilliseconds).ToString() + " ms";
 
-                Carte destinataire = trameReplay.IsInputFrame ? Carte.PC : trame.Board;
-                Carte expediteur = trameReplay.IsInputFrame ? trame.Board : Carte.PC;
-                Carte carte = trame.Board;
+                Board destinataire = trameReplay.IsInputFrame ? Board.PC : trame.Board;
+                Board expediteur = trameReplay.IsInputFrame ? trame.Board : Board.PC;
+                Board carte = trame.Board;
 
-                if (carte == Carte.PC)
+                if (carte == Board.PC)
                     throw new Exception();
 
                 bool cartesAutorisees = false;
@@ -313,16 +313,16 @@ namespace GoBot.IHM
                     cartesAutorisees = true;
 
                 bool fonctionAutorisee = false;
-                if ((carte == Carte.RecMove && Config.CurrentConfig.LogsFonctionsMove[(FonctionTrame)trame[1]]) ||
+                if ((carte == Board.RecMove && Config.CurrentConfig.LogsFonctionsMove[(FrameFunction)trame[1]]) ||
                     trame[1] == 0xA1 ||
-                    (carte == Carte.RecIO && Config.CurrentConfig.LogsFonctionsIO[(FonctionTrame)trame[1]]) ||
-                    (carte == Carte.RecGB && Config.CurrentConfig.LogsFonctionsGB[(FonctionTrame)trame[1]]))
+                    (carte == Board.RecIO && Config.CurrentConfig.LogsFonctionsIO[(FrameFunction)trame[1]]) ||
+                    (carte == Board.RecGB && Config.CurrentConfig.LogsFonctionsGB[(FrameFunction)trame[1]]))
                     fonctionAutorisee = true;
 
 
                 if (cartesAutorisees && fonctionAutorisee)
                 {
-                    dataGridViewLog.Rows.Add(compteur, expediteur.ToString(), destinataire.ToString(), heure, DecodeurTrames.Decode(trame), trame.ToString());
+                    dataGridViewLog.Rows.Add(compteur, expediteur.ToString(), destinataire.ToString(), heure, FrameDecoder.Decode(trame), trame.ToString());
                     datePrecAff = trameReplay.Date;
 
                     if (rdoCarte.Checked)
@@ -380,7 +380,7 @@ namespace GoBot.IHM
             if (!Config.DesignMode && !chargement)
             {
                 String carteString = (String)checkedListBoxExpediteur.Items[e.Index];
-                Carte carte = (Carte)Enum.Parse(typeof(Carte), carteString);
+                Board carte = (Board)Enum.Parse(typeof(Board), carteString);
 
                 Config.CurrentConfig.LogsExpediteurs[carte] = (e.NewValue == CheckState.Checked);
             }
@@ -391,7 +391,7 @@ namespace GoBot.IHM
             if (!Config.DesignMode && !chargement)
             {
                 String carteString = (String)checkedListBoxDestinataire.Items[e.Index];
-                Carte carte = (Carte)Enum.Parse(typeof(Carte), carteString);
+                Board carte = (Board)Enum.Parse(typeof(Board), carteString);
 
                 Config.CurrentConfig.LogsDestinataires[carte] = (e.NewValue == CheckState.Checked);
             }
@@ -402,7 +402,7 @@ namespace GoBot.IHM
             if (!Config.DesignMode && !chargement)
             {
                 String fonctionString = (String)checkedListBoxGB.Items[e.Index];
-                FonctionTrame fonction = (FonctionTrame)Enum.Parse(typeof(FonctionTrame), fonctionString);
+                FrameFunction fonction = (FrameFunction)Enum.Parse(typeof(FrameFunction), fonctionString);
 
                 Config.CurrentConfig.LogsFonctionsGB[fonction] = (e.NewValue == CheckState.Checked);
             }
@@ -413,7 +413,7 @@ namespace GoBot.IHM
             if (!Config.DesignMode && !chargement)
             {
                 String fonctionString = (String)checkedListBoxIO.Items[e.Index];
-                FonctionTrame fonction = (FonctionTrame)Enum.Parse(typeof(FonctionTrame), fonctionString);
+                FrameFunction fonction = (FrameFunction)Enum.Parse(typeof(FrameFunction), fonctionString);
 
                 Config.CurrentConfig.LogsFonctionsIO[fonction] = (e.NewValue == CheckState.Checked);
             }
@@ -431,7 +431,7 @@ namespace GoBot.IHM
                         ReplayFrame trameReplay = replay.Frames[Convert.ToInt32(dataGridViewLog["Id", index].Value)];
                         Frame trame = trameReplay.Frame;
 
-                        Carte expediteur = trameReplay.IsInputFrame ? trameReplay.Frame.Board : Carte.PC;
+                        Board expediteur = trameReplay.IsInputFrame ? trameReplay.Frame.Board : Board.PC;
 
                         checkedListBoxExpediteur.Items.Remove(expediteur.ToString());
                         checkedListBoxExpediteur.Items.Add(expediteur.ToString(), false);
@@ -457,7 +457,7 @@ namespace GoBot.IHM
                         int index = ligne.Index;
                         ReplayFrame trameReplay = replay.Frames[Convert.ToInt32(dataGridViewLog["Id", index].Value)];
 
-                        Carte destinataire = trameReplay.IsInputFrame ? Carte.PC : trameReplay.Frame.Board;
+                        Board destinataire = trameReplay.IsInputFrame ? Board.PC : trameReplay.Frame.Board;
 
                         checkedListBoxDestinataire.Items.Remove(destinataire.ToString());
                         checkedListBoxDestinataire.Items.Add(destinataire.ToString(), false);
@@ -483,7 +483,7 @@ namespace GoBot.IHM
                         int index = ligne.Index;
                         ReplayFrame trameReplay = replay.Frames[Convert.ToInt32(dataGridViewLog["Id", index].Value)];
 
-                        Carte carte = trameReplay.Frame.Board;
+                        Board carte = trameReplay.Frame.Board;
 
                         checkedListBoxExpediteur.Items.Remove(carte.ToString());
                         checkedListBoxExpediteur.Items.Add(carte.ToString(), false);

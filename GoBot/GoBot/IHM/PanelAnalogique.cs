@@ -21,7 +21,7 @@ namespace GoBot.IHM
             InitializeComponent();
         }
 
-        public Carte Carte { get; set; }
+        public Board Carte { get; set; }
 
         private void PanelAnalogique_Load(object sender, EventArgs e)
         {

@@ -110,7 +110,7 @@ namespace GoBot
 
                 Plateau.NotreCouleur = Plateau.CouleurGaucheBleu;
                 
-                Connections.ConnectionIO.SendMessage(TrameFactory.DemandeCouleurEquipe());
+                Connections.ConnectionIO.SendMessage(FrameFactory.DemandeCouleurEquipe());
 
                 panelBalise.Balise = Plateau.Balise;
                 panelBaliseDiagnostic.Balise = Plateau.Balise;
@@ -195,9 +195,9 @@ namespace GoBot
 
                 Directory.CreateDirectory(Config.PathData + "/Logs/" + Config.DateLancementString);
 
-                panelAnalogiqueMove.Carte = Carte.RecMove;
-                panelAnalogiqueIO.Carte = Carte.RecIO;
-                panelAnalogiqueGB.Carte = Carte.RecGB;
+                panelAnalogiqueMove.Carte = Board.RecMove;
+                panelAnalogiqueIO.Carte = Board.RecIO;
+                panelAnalogiqueGB.Carte = Board.RecGB;
 
             }
             catch(Exception)

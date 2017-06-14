@@ -351,9 +351,9 @@ namespace GoBot.Actions
         /// </summary>
         /// <param name="capteur">Fonction à décoder</param>
         /// <returns>Template de décodage</returns>
-        public static String Nommer(FonctionTrame trame)
+        public static String Nommer(FrameFunction trame)
         {
-            return DecodeurTrames.GetMessage(trame);
+            return FrameDecoder.GetMessage(trame);
         }
 
         /// <summary>

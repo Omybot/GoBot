@@ -28,7 +28,7 @@ namespace GoBot
             typesEnum.Add(typeof(LedID));
             typesEnum.Add(typeof(LedRgbID));
             typesEnum.Add(typeof(LidarID));
-            typesEnum.Add(typeof(FonctionTrame));
+            typesEnum.Add(typeof(FrameFunction));
             
             foreach (Type type in typesEnum)
             {

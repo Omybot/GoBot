@@ -49,7 +49,7 @@ namespace GoBot.IHM
 
         private void btnRefresh_Click(object sender, EventArgs e)
         {
-            servo = new Servomoteur(Carte.RecIO, (int)numID.Value, (ServoBaudrate)cboBaudrate.SelectedItem);
+            servo = new Servomoteur(Board.RecIO, (int)numID.Value, (ServoBaudrate)cboBaudrate.SelectedItem);
             Actualisation(true);
         }
 

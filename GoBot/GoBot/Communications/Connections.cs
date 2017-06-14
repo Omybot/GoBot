@@ -20,12 +20,12 @@ namespace GoBot.Communications
         /// <summary>
         /// Association de la connexion avec la carte
         /// </summary>
-        public static Dictionary<Carte, Connection> BoardConnection { get; private set; }
+        public static Dictionary<Board, Connection> BoardConnection { get; private set; }
 
         /// <summary>
         /// Activation ou désactivation de la connexion
         /// </summary>
-        public static Dictionary<Carte, bool> EnableConnection { get; private set; }
+        public static Dictionary<Board, bool> EnableConnection { get; private set; }
 
         /// <summary>
         /// Intervalle entre les vérifications de connexion
@@ -37,13 +37,13 @@ namespace GoBot.Communications
         /// </summary>
         public static void Init()
         {
-            EnableConnection = new Dictionary<Carte, bool>();
-            BoardConnection = new Dictionary<Carte, Connection>();
+            EnableConnection = new Dictionary<Board, bool>();
+            BoardConnection = new Dictionary<Board, Connection>();
             AllConnections = new List<Connection>();
 
-            ConnectionIO = AddUDPConnection(Carte.RecIO, IPAddress.Parse("10.1.0.14"), 12324, 12314);
-            ConnectionMove = AddUDPConnection(Carte.RecMove, IPAddress.Parse("10.1.0.11"), 12321, 12311);
-            ConnectionGB = AddUDPConnection(Carte.RecGB, IPAddress.Parse("10.1.0.12"), 12322, 12312);
+            ConnectionIO = AddUDPConnection(Board.RecIO, IPAddress.Parse("10.1.0.14"), 12324, 12314);
+            ConnectionMove = AddUDPConnection(Board.RecMove, IPAddress.Parse("10.1.0.11"), 12321, 12311);
+            ConnectionGB = AddUDPConnection(Board.RecGB, IPAddress.Parse("10.1.0.12"), 12322, 12312);
 
             ThreadPool.QueueUserWorkItem(f => TestConnectionsLoop()); // En remplacement des tests de connexion des ConnexionCheck, pour les syncroniser
         }
@@ -56,7 +56,7 @@ namespace GoBot.Communications
         /// <param name="inPort">Port d'entrée pour le PC</param>
         /// <param name="outPort">Port de sortie pour le PC</param>
         /// <returns>La connexion créée</returns>
-        private static UDPConnection AddUDPConnection(Carte board, IPAddress ip, int inPort, int outPort)
+        private static UDPConnection AddUDPConnection(Board board, IPAddress ip, int inPort, int outPort)
         {
             UDPConnection output = new UDPConnection();
             output.Connexion(ip, inPort, outPort);
@@ -74,7 +74,7 @@ namespace GoBot.Communications
         /// <param name="sender">Connexion à laquelle envoyer le test</param>
         private static void ConnexionCheck_SendConnectionTestUDP(Connection sender)
         {
-            sender.SendMessage(TrameFactory.TestConnexion(GetBoardByConnection(sender)));
+            sender.SendMessage(FrameFactory.TestConnexion(GetBoardByConnection(sender)));
         }
 
         /// <summary>
@@ -101,11 +101,11 @@ namespace GoBot.Communications
         /// </summary>
         /// <param name="conn">Connexion dont on veut la carte</param>
         /// <returns>La carte concernée par la connexion donnée</returns>
-        public static Carte GetBoardByConnection(Connection conn)
+        public static Board GetBoardByConnection(Connection conn)
         {
-            Carte output = Carte.RecMove;
+            Board output = Board.RecMove;
 
-            foreach (Carte c in Enum.GetValues(typeof(Carte)))
+            foreach (Board c in Enum.GetValues(typeof(Board)))
             {
                 if (BoardConnection.ContainsKey(c) && BoardConnection[c] == conn)
                     output = c;

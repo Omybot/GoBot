@@ -11,7 +11,12 @@
         /// Verificateur de connexion
         /// </summary>
         public ConnectionChecker ConnectionChecker { get; set; }
-        
+
+        /// <summary>
+        /// Vrai si le client est connecté (dans le sens où la liaison est établie, mais pas forcément que le protocole répond)
+        /// </summary>
+        public bool Connected { get; set; }
+
         /// <summary>
         /// Envoi le message au client actuellement connecté
         /// </summary>

@@ -126,7 +126,7 @@ namespace GoBot.Devices
 
         void connexion_NouvelleTrameRecue(Frame trameRecue)
         {
-            if (trameRecue[1] == (byte)FonctionTrame.RetourCapteurOnOff)
+            if (trameRecue[1] == (byte)FrameFunction.RetourCapteurOnOff)
             {
                 CapteurOnOffID but;
                 
@@ -207,7 +207,7 @@ namespace GoBot.Devices
                 else ButtonChange?.Invoke(but, pushed);
             }
 
-            if(trameRecue[1] == (byte)FonctionTrame.RetourPositionCodeur)
+            if(trameRecue[1] == (byte)FrameFunction.RetourPositionCodeur)
             {
                 if (trameRecue[2] == (byte)CodeurID.Manuel)
                 {
@@ -228,22 +228,22 @@ namespace GoBot.Devices
         public void SetLed(LedID led, LedStatus state)
         {
             ledsStatus[led] = state;
-            connexion.SendMessage(TrameFactory.SetLed(led, state));
+            connexion.SendMessage(FrameFactory.SetLed(led, state));
         }
 
         public void SetLedColor(Color color)
         {
-            connexion.SendMessage(TrameFactory.SetLedColor(color));
+            connexion.SendMessage(FrameFactory.SetLedColor(color));
         }
 
         public void Buzz(int frequency, byte volume)
         {
-            connexion.SendMessage(TrameFactory.Buzz(frequency, volume));
+            connexion.SendMessage(FrameFactory.Buzz(frequency, volume));
         }
 
         public uint GetCodeurPosition()
         {
-            Frame t = TrameFactory.CodeurPosition(Carte.RecGB, CodeurID.Manuel);
+            Frame t = FrameFactory.CodeurPosition(Board.RecGB, CodeurID.Manuel);
             semCodeur = new Semaphore(0, int.MaxValue);
             Connections.ConnectionGB.SendMessage(t);
 

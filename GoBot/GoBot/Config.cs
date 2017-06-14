@@ -120,13 +120,13 @@ namespace GoBot
 
         // Parametres logs UDP
 
-        public SerializableDictionary<FonctionTrame, bool> LogsFonctionsBalise { get; set; }
-        public SerializableDictionary<FonctionTrame, bool> LogsFonctionsIO { get; set; }
-        public SerializableDictionary<FonctionTrame, bool> LogsFonctionsMove { get; set; }
-        public SerializableDictionary<FonctionTrame, bool> LogsFonctionsGB { get; set; }        
+        public SerializableDictionary<FrameFunction, bool> LogsFonctionsBalise { get; set; }
+        public SerializableDictionary<FrameFunction, bool> LogsFonctionsIO { get; set; }
+        public SerializableDictionary<FrameFunction, bool> LogsFonctionsMove { get; set; }
+        public SerializableDictionary<FrameFunction, bool> LogsFonctionsGB { get; set; }        
         
-        public SerializableDictionary<Carte, bool> LogsExpediteurs { get; set; }
-        public SerializableDictionary<Carte, bool> LogsDestinataires { get; set; }
+        public SerializableDictionary<Board, bool> LogsExpediteurs { get; set; }
+        public SerializableDictionary<Board, bool> LogsDestinataires { get; set; }
 
         public double GetOffsetBalise(int iCapteur)
         {

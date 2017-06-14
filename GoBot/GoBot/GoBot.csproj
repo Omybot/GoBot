@@ -10,8 +10,9 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>GoBot</RootNamespace>
     <AssemblyName>GoBot</AssemblyName>
-    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
-    <TargetFrameworkProfile>Client</TargetFrameworkProfile>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <TargetFrameworkProfile>
+    </TargetFrameworkProfile>
     <FileAlignment>512</FileAlignment>
     <IsWebBootstrapper>false</IsWebBootstrapper>
     <PublishUrl>publish\</PublishUrl>
@@ -38,6 +39,7 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|x86' ">
     <PlatformTarget>x86</PlatformTarget>
@@ -48,6 +50,7 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+    <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <PropertyGroup>
     <ApplicationIcon>robot.ico</ApplicationIcon>
@@ -130,8 +133,8 @@
     <Compile Include="Calculs\Formes\Triangle.cs" />
     <Compile Include="CameraIP.cs" />
     <Compile Include="Communications\Connection.cs" />
-    <Compile Include="Communications\DecodeurTrames.cs" />
-    <Compile Include="Communications\FonctionsTrames.cs" />
+    <Compile Include="Communications\FrameDecoder.cs" />
+    <Compile Include="Communications\FrameFunctions.cs" />
     <Compile Include="Dessinateur.cs" />
     <Compile Include="Devices\Devices.cs" />
     <Compile Include="Devices\Hokuyo.cs" />
@@ -424,7 +427,7 @@
     <Compile Include="Robots\RobotSimu.cs" />
     <Compile Include="SerializableDictionnary.cs" />
     <Compile Include="Servomoteur.cs" />
-    <Compile Include="Communications\TrameFactory.cs" />
+    <Compile Include="Communications\FrameFactory.cs" />
     <Compile Include="Communications\UDPConnection.cs" />
     <Compile Include="Communications\Frame.cs" />
     <Compile Include="Synchronizer.cs" />
