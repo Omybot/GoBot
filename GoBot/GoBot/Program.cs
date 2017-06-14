@@ -97,7 +97,7 @@ namespace GoBot
                 SplashScreen.SetMessage("Initialisation...", Color.Black);
 
                 Connections.Init();
-                Config.Load();
+                //Config.Load();
                 Devices.Devices.Init();
                 Robots.Init();
                 Plateau.Init();

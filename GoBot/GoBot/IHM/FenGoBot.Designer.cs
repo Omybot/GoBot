@@ -73,6 +73,7 @@ namespace GoBot
             this.panelBaliseDiagnostic = new GoBot.IHM.PanelBaliseDiagnostic();
             this.panelBalise = new GoBot.IHM.PanelBalise();
             this.tabRecGoBot = new System.Windows.Forms.TabPage();
+            this.potarControl1 = new GoBot.IHM.PotarControl();
             this.grpCapteurs = new System.Windows.Forms.GroupBox();
             this.panelCapteurs1 = new GoBot.IHM.PanelCapteurs();
             this.grpRecGB = new System.Windows.Forms.GroupBox();
@@ -83,7 +84,8 @@ namespace GoBot
             this.btnFenetre = new System.Windows.Forms.Button();
             this.switchBoutonSimu = new Composants.SwitchBouton();
             this.panelConnexions = new GoBot.IHM.PanelConnexions();
-            this.potarControl1 = new GoBot.IHM.PotarControl();
+            this.tabHokuyo = new System.Windows.Forms.TabPage();
+            this.panelHokuyo1 = new GoBot.IHM.PanelHokuyo();
             this.tabAlimentation.SuspendLayout();
             this.tabServomoteurs.SuspendLayout();
             this.tabConnexions.SuspendLayout();
@@ -110,6 +112,7 @@ namespace GoBot
             this.grpCapteurs.SuspendLayout();
             this.grpRecGB.SuspendLayout();
             this.tabActionneurs.SuspendLayout();
+            this.tabHokuyo.SuspendLayout();
             this.SuspendLayout();
             // 
             // lblSimulation
@@ -401,6 +404,7 @@ namespace GoBot
             this.tabControl.Controls.Add(this.tabBaliseUnique);
             this.tabControl.Controls.Add(this.tabRecGoBot);
             this.tabControl.Controls.Add(this.tabActionneurs);
+            this.tabControl.Controls.Add(this.tabHokuyo);
             this.tabControl.HotTrack = true;
             this.tabControl.Location = new System.Drawing.Point(0, 0);
             this.tabControl.Name = "tabControl";
@@ -549,6 +553,13 @@ namespace GoBot
             this.tabRecGoBot.Text = "RecGoBot";
             this.tabRecGoBot.UseVisualStyleBackColor = true;
             // 
+            // potarControl1
+            // 
+            this.potarControl1.Location = new System.Drawing.Point(298, 267);
+            this.potarControl1.Name = "potarControl1";
+            this.potarControl1.Size = new System.Drawing.Size(351, 98);
+            this.potarControl1.TabIndex = 5;
+            // 
             // grpCapteurs
             // 
             this.grpCapteurs.Controls.Add(this.panelCapteurs1);
@@ -646,12 +657,24 @@ namespace GoBot
             this.panelConnexions.Size = new System.Drawing.Size(980, 27);
             this.panelConnexions.TabIndex = 74;
             // 
-            // potarControl1
+            // tabHokuyo
             // 
-            this.potarControl1.Location = new System.Drawing.Point(298, 267);
-            this.potarControl1.Name = "potarControl1";
-            this.potarControl1.Size = new System.Drawing.Size(351, 98);
-            this.potarControl1.TabIndex = 5;
+            this.tabHokuyo.Controls.Add(this.panelHokuyo1);
+            this.tabHokuyo.Location = new System.Drawing.Point(4, 22);
+            this.tabHokuyo.Name = "tabHokuyo";
+            this.tabHokuyo.Padding = new System.Windows.Forms.Padding(3);
+            this.tabHokuyo.Size = new System.Drawing.Size(1300, 712);
+            this.tabHokuyo.TabIndex = 28;
+            this.tabHokuyo.Text = "Hokuyo";
+            this.tabHokuyo.UseVisualStyleBackColor = true;
+            // 
+            // panelHokuyo1
+            // 
+            this.panelHokuyo1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.panelHokuyo1.Location = new System.Drawing.Point(3, 3);
+            this.panelHokuyo1.Name = "panelHokuyo1";
+            this.panelHokuyo1.Size = new System.Drawing.Size(1294, 706);
+            this.panelHokuyo1.TabIndex = 0;
             // 
             // FenGoBot
             // 
@@ -700,6 +723,7 @@ namespace GoBot
             this.grpRecGB.ResumeLayout(false);
             this.tabActionneurs.ResumeLayout(false);
             this.tabActionneurs.PerformLayout();
+            this.tabHokuyo.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -761,6 +785,8 @@ namespace GoBot
         private System.Windows.Forms.TabPage tabActionneurs;
         private PanelGenerics panelGenerics1;
         private PotarControl potarControl1;
+        private System.Windows.Forms.TabPage tabHokuyo;
+        private PanelHokuyo panelHokuyo1;
     }
 }
 

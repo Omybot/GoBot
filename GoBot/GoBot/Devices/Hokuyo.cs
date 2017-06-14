@@ -89,7 +89,7 @@ namespace GoBot.Devices
                 {
                     List<int> mesures = DecodeMessage(reponse);
                     mesures.RemoveRange(0, offsetPoints);
-                    points = ValeursToPositions(mesures, false, refPosition);
+                    points = ValeursToPositions(mesures, false, 10, -1, refPosition);
                 }
             }
             catch (Exception) { }
@@ -99,21 +99,47 @@ namespace GoBot.Devices
             return points;
         }
 
-        protected List<PointReel> ValeursToPositions(List<int> mesures, bool limiteTable, Position refPosition)
+        public List<PointReel> GetRawMesure()
+        {
+            List<PointReel> points = new List<PointReel>();
+
+            semLock.WaitOne();
+            DateTime debut = DateTime.Now;
+
+            Position refPosition;
+            String reponse = GetResultat(out refPosition);
+            
+            try
+            {
+                if (reponse != "")
+                {
+                    List<int> mesures = DecodeMessage(reponse);
+                    mesures.RemoveRange(0, offsetPoints);
+                    points = ValeursToPositions(mesures, false, 200, 3000, new Position());
+                }
+            }
+            catch (Exception) { }
+
+            semLock.Release();
+
+            return points;
+        }
+
+        protected List<PointReel> ValeursToPositions(List<int> mesures, bool limiteTable, int minDistance, int maxDistance, Position refPosition)
         {
             List<PointReel> positions = new List<PointReel>();
             double stepAngular = angleMesurable.AngleRadiansPositif / (double)mesures.Count;
 
             for (int i = 0; i < mesures.Count; i++)
             {
-                if (mesures[i] > 100) // SUpprime tous les points à moins de 10cm
+                if (mesures[i] > minDistance && (mesures[i] < maxDistance || maxDistance == -1))
                 {
                     Angle angle = stepAngular * i;
                     double sin = Math.Sin(angle - refPosition.Angle.AngleRadiansPositif - angleMesurable.AngleRadiansPositif / 2 - Math.PI / 2) * mesures[i];
                     double cos = Math.Cos(angle - refPosition.Angle.AngleRadiansPositif - angleMesurable.AngleRadiansPositif / 2 - Math.PI / 2) * mesures[i];
 
                     PointReel pos = new PointReel(refPosition.Coordonnees.X - sin, refPosition.Coordonnees.Y - cos);
-
+                    
                     int marge = 20; // Marge en mm de distance de detection à l'exterieur de la table (pour ne pas jeter les mesures de la bordure qui ne collent pas parfaitement)
                     if (!limiteTable || (pos.X > -marge && pos.X < Plateau.Largeur + marge && pos.Y > -marge && pos.Y < Plateau.Hauteur + marge))
                         positions.Add(pos);

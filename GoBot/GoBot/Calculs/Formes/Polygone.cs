@@ -856,13 +856,13 @@ namespace GoBot.Calculs.Formes
 
             listePoints[listePoints.Length - 1] = listePoints[0];
             
-            if (outlineColor != Color.Transparent)
-                using (Pen pen = new Pen(outlineColor, outlineWidth))
-                    g.DrawPolygon(pen, listePoints);
-
             if (fillColor != Color.Transparent)
                 using (SolidBrush brush = new SolidBrush(fillColor))
                     g.FillPolygon(brush, listePoints, System.Drawing.Drawing2D.FillMode.Winding);
+
+            if (outlineColor != Color.Transparent)
+                using (Pen pen = new Pen(outlineColor, outlineWidth))
+                    g.DrawPolygon(pen, listePoints);
         }
 
         #endregion

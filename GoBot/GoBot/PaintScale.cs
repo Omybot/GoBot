@@ -14,7 +14,7 @@ namespace GoBot
         /// <summary>
         /// Crée un PaintScale à partir des mesures fournies
         /// </summary>
-        /// <param name="factor">Nombre de pixels par mm réels</param>
+        /// <param name="factor">Nombre de mm par pixels</param>
         /// <param name="offsetX">Position en pixel l'abscisse 0</param>
         /// <param name="offsetY">Position en pixel l'ordonnéee 0</param>
         public PaintScale(double factor, int offsetX, int offsetY)

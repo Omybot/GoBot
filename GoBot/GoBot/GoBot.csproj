@@ -122,6 +122,12 @@
     <Compile Include="IHM\ConnectionStatus.Designer.cs">
       <DependentUpon>ConnectionStatus.cs</DependentUpon>
     </Compile>
+    <Compile Include="IHM\PanelHokuyo.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="IHM\PanelHokuyo.Designer.cs">
+      <DependentUpon>PanelHokuyo.cs</DependentUpon>
+    </Compile>
     <Compile Include="MinimumDelay.cs" />
     <Compile Include="SpeedConfig.cs" />
     <Compile Include="AsserStats.cs" />
@@ -462,6 +468,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="IHM\PanelGenerics.resx">
       <DependentUpon>PanelGenerics.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="IHM\PanelHokuyo.resx">
+      <DependentUpon>PanelHokuyo.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="IHM\PanelPololu.resx">
       <DependentUpon>PanelPololu.cs</DependentUpon>
