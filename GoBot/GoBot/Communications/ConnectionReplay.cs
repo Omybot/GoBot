@@ -103,8 +103,11 @@ namespace GoBot.Communications
 
                 int version = int.Parse(reader.ReadLine().Split(':')[1]);
 
-                while (!reader.EndOfStream)
-                    Frames.Add(ReplayFrame.Import(reader));
+                lock (Frames)
+                {
+                    while (!reader.EndOfStream)
+                        Frames.Add(ReplayFrame.Import(reader));
+                }
 
                 reader.Close();
 
@@ -130,8 +133,11 @@ namespace GoBot.Communications
 
                 writer.WriteLine("Format:1");
 
-                foreach(ReplayFrame frame in Frames)
-                    frame.Export(writer);
+                lock (Frames)
+                {
+                    foreach (ReplayFrame frame in Frames)
+                        frame.Export(writer);
+                }
 
                 writer.Close();
 
@@ -164,7 +170,10 @@ namespace GoBot.Communications
         /// </summary>
         public void Sort()
         {
-            Frames.Sort();
+            lock (Frames)
+            {
+                Frames.Sort();
+            }
         }
     }
 }
