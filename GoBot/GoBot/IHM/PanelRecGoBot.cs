@@ -73,7 +73,7 @@ namespace GoBot.IHM
 
         private void PanelConstantes_Load(object sender, EventArgs e)
         {
-            if (!Config.DesignMode)
+            if (!Execution.DesignMode)
             {
                 // TODO déplacer en dehors de la fenetre
                 Devices.Devices.RecGoBot.ButtonChange += RecGoBot_ButtonChange;

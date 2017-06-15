@@ -1,10 +1,12 @@
 ﻿using GoBot.Calculs;
+using GoBot.Files;
 using GoBot.PathFinding;
 using System;
+using System.IO;
 
 namespace GoBot
 {
-    public class SpeedConfig
+    public class SpeedConfig : IExportable
     {
         #region Core
 
@@ -155,7 +157,7 @@ namespace GoBot
 
         private int DistanceDuration(int distance, int acceleration, int maxSpeed, int decceleration)
         {
-            if (distance == 0)
+            if (distance == 0 || acceleration == 0 || decceleration == 0 || maxSpeed == 0)
                 return 0;
 
             double durationAccel, durationMaxSpeed, durationBraking;
@@ -186,6 +188,44 @@ namespace GoBot
             }
 
             return (int)((durationAccel + durationMaxSpeed + durationBraking) * 1000);
+        }
+
+        #endregion
+
+        #region IExportable
+        
+        public void Export(StreamWriter file)
+        {
+            file.WriteLine(GetType().Name + "-Format:1");
+            file.WriteLine(_lineAcceleration.ToString());
+            file.WriteLine(_lineDeceleration.ToString());
+            file.WriteLine(_lineSpeed.ToString());
+            file.WriteLine(_pivotAcceleration.ToString());
+            file.WriteLine(_pivotDeceleration.ToString());
+            file.WriteLine(_pivotSpeed.ToString());
+        }
+
+        public bool Import(StreamReader file)
+        {
+            bool ok = false;
+
+            try
+            {
+                int format = int.Parse(file.ReadLine().Split(':')[1]);
+                _lineAcceleration = int.Parse(file.ReadLine());
+                _lineDeceleration = int.Parse(file.ReadLine());
+                _lineSpeed = int.Parse(file.ReadLine());
+                _pivotAcceleration = int.Parse(file.ReadLine());
+                _pivotDeceleration = int.Parse(file.ReadLine());
+                _pivotSpeed = int.Parse(file.ReadLine());
+                ok = true;
+            }
+            catch(Exception ex)
+            {
+                Console.WriteLine("Erreur lors de l'import de " + GetType().Name + " : " + ex.Message);
+            }
+
+            return ok;
         }
 
         #endregion

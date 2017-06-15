@@ -67,7 +67,7 @@ namespace GoBot.IHM
         private BackgroundWorker worker = new BackgroundWorker();
         private void PanelGestionLog_Load(object sender, EventArgs e)
         {
-            if (!Config.DesignMode)
+            if (!Execution.DesignMode)
             {
                 worker.DoWork += new DoWorkEventHandler(worker_DoWork);
                 worker.ProgressChanged += new ProgressChangedEventHandler(worker_ProgressChanged);
@@ -113,7 +113,7 @@ namespace GoBot.IHM
 
             foreach (String dossier in dossiers)
             {
-                if (Config.Shutdown)
+                if (Execution.Shutdown)
                     return;
 
                 currentLog++;
@@ -205,7 +205,7 @@ namespace GoBot.IHM
             {
                 foreach (String dossier in Directory.EnumerateDirectories(Config.PathData + "/Archives/"))
                 {
-                    if (Config.Shutdown)
+                    if (Execution.Shutdown)
                         return;
 
                     currentLog++;

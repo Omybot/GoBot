@@ -44,7 +44,7 @@ namespace GoBot.IHM
 
         private void PanelConnexions_Load(object sender, EventArgs e)
         {
-            if (!Config.DesignMode)
+            if (!Execution.DesignMode)
             {
                 foreach (Connection conn in Connections.AllConnections)
                 {

@@ -19,7 +19,7 @@ namespace GoBot.IHM
         {
             InitializeComponent();
             
-            if(!Config.DesignMode)
+            if(!Execution.DesignMode)
                 Robots.GrosRobot.ChangementEtatCapteurOnOff += new Robot.ChangementEtatCapteurOnOffDelegate(GrosRobot_ChangementEtatCapteurOnOff);
 
             tooltip = new ToolTip();
@@ -43,7 +43,7 @@ namespace GoBot.IHM
 
         private void PanelUtilGros_Load(object sender, EventArgs e)
         {
-            if (!Config.DesignMode)
+            if (!Execution.DesignMode)
                 groupBoxUtilisation.Deployer(Config.CurrentConfig.UtilisationGROuvert, false);
         }
 

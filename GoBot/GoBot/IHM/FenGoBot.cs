@@ -47,7 +47,7 @@ namespace GoBot
             timerSauvegarde.Tick += timerSauvegarde_Tick;
             timerSauvegarde.Start();
 
-            if (!Config.DesignMode)
+            if (!Execution.DesignMode)
             {
                 CheckForIllegalCrossThreadCalls = false;
                 panelGrosRobot.Init();
@@ -156,7 +156,7 @@ namespace GoBot
             SauverLogs();
 
             Robots.Delete();
-            Config.Shutdown = true;
+            Execution.Shutdown = true;
 
             if(Plateau.Enchainement != null)
                 Plateau.Enchainement.Stop();
@@ -171,9 +171,9 @@ namespace GoBot
             DateTime debut = DateTime.Now;
 
             foreach (Connection conn in Connections.AllConnections)
-                conn.Archives.Export(Config.PathData + "/Logs/" + Config.DateLancementString + "/" + Connections.GetBoardByConnection(conn).ToString() + ConnectionReplay.FileExtension);
+                conn.Archives.Export(Config.PathData + "/Logs/" + Execution.DateLancementString + "/" + Connections.GetBoardByConnection(conn).ToString() + ConnectionReplay.FileExtension);
             
-            Robots.GrosRobot.Historique.Sauvegarder(Config.PathData + "/Logs/" + Config.DateLancementString + "/ActionsGros.elog");
+            Robots.GrosRobot.Historique.Sauvegarder(Config.PathData + "/Logs/" + Execution.DateLancementString + "/ActionsGros.elog");
         }
 
         private void btnClose_Click(object sender, EventArgs e)
@@ -193,7 +193,7 @@ namespace GoBot
                 if (!Directory.Exists(Config.PathData + "/LogsTraces/"))
                     Directory.CreateDirectory(Config.PathData + "/LogsTraces/");
 
-                Directory.CreateDirectory(Config.PathData + "/Logs/" + Config.DateLancementString);
+                Directory.CreateDirectory(Config.PathData + "/Logs/" + Execution.DateLancementString);
 
                 panelAnalogiqueMove.Carte = Board.RecMove;
                 panelAnalogiqueIO.Carte = Board.RecIO;

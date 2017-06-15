@@ -22,7 +22,7 @@ namespace GoBot.IHM
         {
             int x = 0;
 
-            if (!Config.DesignMode)
+            if (!Execution.DesignMode)
             {
                 Type t = typeof(Actionneurs.Actionneur);
 

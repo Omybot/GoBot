@@ -21,8 +21,8 @@ namespace GoBot
         [STAThread]
         static void Main(string[] args)
         {
-            Config.DesignMode = false;
-            Config.DateLancement = DateTime.Now;
+            Execution.DesignMode = false;
+            Execution.DateLancement = DateTime.Now;
 
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
@@ -97,12 +97,11 @@ namespace GoBot
                 SplashScreen.SetMessage("Initialisation...", Color.Black);
 
                 Connections.Init();
-                //Config.Load();
+                Config.Load();
                 Devices.Devices.Init();
                 Robots.Init();
                 Plateau.Init();
-
-
+                
                 IPAddress[] adresses = Dns.GetHostAddresses(Dns.GetHostName());
 
                 bool ipTrouvee = false;

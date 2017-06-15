@@ -86,7 +86,7 @@ namespace GoBot.Communications
 
             Thread.Sleep(1000); // Pour attendre que tout soit cablé
 
-            while (!Config.Shutdown)
+            while (!Execution.Shutdown)
             {
                 foreach (UDPConnection conn in AllConnections.OrderBy(c => Connections.GetBoardByConnection(c).ToString()))
                 {

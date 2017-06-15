@@ -13,7 +13,7 @@ namespace GoBot.IHM
             btnJoueurDroite.BackColor = Plateau.CouleurDroiteJaune;
             btnJoueurGauche.BackColor = Plateau.CouleurGaucheBleu;
 
-            if (!Config.DesignMode)
+            if (!Execution.DesignMode)
             {
                 Dessinateur.TableDessinee += Dessinateur_TableDessinee;
             }
@@ -107,7 +107,7 @@ namespace GoBot.IHM
 
         private void PanelMatch_Load(object sender, EventArgs e)
         {
-            if (!Config.DesignMode)
+            if (!Execution.DesignMode)
             {
                 Plateau.NotreCouleurChange += new EventHandler(Plateau_NotreCouleurChange);
 

@@ -18,7 +18,7 @@ namespace GoBot.IHM
 
         private void PanelActionneursOnOff_Load(object sender, EventArgs e)
         {
-            if (!Config.DesignMode)
+            if (!Execution.DesignMode)
             {
                 int y = 20;
 

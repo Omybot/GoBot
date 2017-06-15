@@ -25,7 +25,7 @@ namespace GoBot.IHM
 
         private void PanelAnalogique_Load(object sender, EventArgs e)
         {
-            if (!Config.DesignMode)
+            if (!Execution.DesignMode)
             {
                 timerTrame = new System.Timers.Timer();
                 timerTrame.Elapsed += new ElapsedEventHandler(timerTrame_Elapsed);
@@ -36,7 +36,7 @@ namespace GoBot.IHM
 
         void timerTrame_Elapsed(object sender, ElapsedEventArgs e)
         {
-            if (Config.Shutdown)
+            if (Execution.Shutdown)
                 return;
 
             if (Robots.GrosRobot.ValeursAnalogiques[Carte] != null)

@@ -42,7 +42,7 @@ namespace GoBot.IHM
 
         private void PanelEnvoiUdp_Load(object sender, EventArgs e)
         {
-            if (!Config.DesignMode)
+            if (!Execution.DesignMode)
             {
                 switchBoutonMove.SetActif(true, false);
                 switchBoutonIO.SetActif(true, false);

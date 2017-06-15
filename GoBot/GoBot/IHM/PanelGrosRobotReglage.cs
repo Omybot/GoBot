@@ -33,7 +33,7 @@ namespace GoBot.IHM
 
         private void PanelReglageGros_Load(object sender, EventArgs e)
         {
-            if (!Config.DesignMode)
+            if (!Execution.DesignMode)
             {
                 groupBoxReglage.Deployer(Config.CurrentConfig.ReglageGROuvert, false);
 

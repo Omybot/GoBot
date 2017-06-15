@@ -165,7 +165,7 @@ namespace GoBot
             Stopwatch sw = Stopwatch.StartNew();
 
             PositionCurseur = new PointReel();
-            while (Thread.CurrentThread.IsAlive && !Config.Shutdown)
+            while (Thread.CurrentThread.IsAlive && !Execution.Shutdown)
             {
                 // Limitation à 30FPS
                 long sleep = 33 - sw.ElapsedMilliseconds - 1;

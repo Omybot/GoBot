@@ -107,7 +107,7 @@ namespace GoBot
 
         public Plateau()
         {
-            if (!Config.DesignMode)
+            if (!Execution.DesignMode)
             {
                 Elements = new Elements();
                 ObstaclesPieds = new IForme[0];
@@ -194,10 +194,10 @@ namespace GoBot
         private Semaphore SemaphoreCollisions { get; set; }
         private void ThreadTestCollisions()
         {
-            while (!Config.Shutdown)
+            while (!Execution.Shutdown)
             {
                 // Le timeout sur le Thread permet de vérifier chaque seconde si on est en train d'éteindre l'application pour couper le Thread.
-                while (!SemaphoreCollisions.WaitOne(1000) && !Config.Shutdown) ;
+                while (!SemaphoreCollisions.WaitOne(1000) && !Execution.Shutdown) ;
                 Robots.GrosRobot.ObstacleTest();
             }
         }

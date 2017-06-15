@@ -53,7 +53,7 @@ namespace GoBot.IHM
 
         void MAJAffichage()
         {
-            while (!Config.Shutdown && Thread.CurrentThread.IsAlive)
+            while (!Execution.Shutdown && Thread.CurrentThread.IsAlive)
             {
                 this.InvokeAuto(() =>
                 { 
@@ -214,7 +214,7 @@ namespace GoBot.IHM
 
         private void PanelTable_Load(object sender, EventArgs e)
         {
-            if (!Config.DesignMode)
+            if (!Execution.DesignMode)
             {
                 btnAffichage_Click(null, null);
                 ParentForm.FormClosing += new FormClosingEventHandler(ParentForm_FormClosing);

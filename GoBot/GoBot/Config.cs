@@ -14,22 +14,8 @@ using System.Reflection;
 
 namespace GoBot
 {
-    [Serializable]
     public partial class Config
     {
-        /// <summary>
-        /// Permet de savoir si l'application est mode Design (concepteur graphique) ou en cours d'execution
-        /// Le DesignMode de base :
-        ///     - Ne fonctionne pas dans les contructeurs
-        ///     - Ne fonctionne pas pour les contrôles imbriqués
-        /// </summary>
-        public static bool DesignMode { get { return designMode; } set { designMode = value; } }
-        private static bool designMode = true;
-        public static bool Shutdown { get { return shutdown; } set { shutdown = value; } }
-        private static bool shutdown = false;
-
-        public static DateTime DateLancement { get; set; }
-        public static String DateLancementString { get { return Config.DateLancement.Year.ToString("0000") + "." + Config.DateLancement.Month.ToString("00") + "." + Config.DateLancement.Day.ToString("00") + " " + Config.DateLancement.Hour.ToString("00") + "h" + Config.DateLancement.Minute.ToString("00") + "m" + Config.DateLancement.Second.ToString("00") + "s"; } }
 
         private static Config config = null;
 
@@ -191,7 +177,7 @@ namespace GoBot
             XmlSerializer mySerializer = new XmlSerializer(typeof(Config));
             using (StreamWriter myWriter = new StreamWriter(PathData + "/config.xml"))
                 mySerializer.Serialize(myWriter, CurrentConfig);
-            using (StreamWriter myWriter = new StreamWriter(PathData + "/Configs/config" + Config.DateLancementString + ".xml"))
+            using (StreamWriter myWriter = new StreamWriter(PathData + "/Configs/config" + Execution.DateLancementString + ".xml"))
                 mySerializer.Serialize(myWriter, CurrentConfig);
         }
 

@@ -166,7 +166,7 @@ namespace GoBot.IHM
 
         private void checkedListBoxGros_ItemCheck(object sender, ItemCheckEventArgs e)
         {
-            if (!Config.DesignMode && !chargement)
+            if (!Execution.DesignMode && !chargement)
             {
                 String fonctionString = (String)checkedListBoxMove.Items[e.Index];
                 FrameFunction fonction = (FrameFunction)Enum.Parse(typeof(FrameFunction), fonctionString);
@@ -377,7 +377,7 @@ namespace GoBot.IHM
 
         private void checkedListBoxExpediteur_ItemCheck(object sender, ItemCheckEventArgs e)
         {
-            if (!Config.DesignMode && !chargement)
+            if (!Execution.DesignMode && !chargement)
             {
                 String carteString = (String)checkedListBoxExpediteur.Items[e.Index];
                 Board carte = (Board)Enum.Parse(typeof(Board), carteString);
@@ -388,7 +388,7 @@ namespace GoBot.IHM
 
         private void checkedListBoxDestinataire_ItemCheck(object sender, ItemCheckEventArgs e)
         {
-            if (!Config.DesignMode && !chargement)
+            if (!Execution.DesignMode && !chargement)
             {
                 String carteString = (String)checkedListBoxDestinataire.Items[e.Index];
                 Board carte = (Board)Enum.Parse(typeof(Board), carteString);
@@ -399,7 +399,7 @@ namespace GoBot.IHM
 
         private void checkedListBoxGB_ItemCheck(object sender, ItemCheckEventArgs e)
         {
-            if (!Config.DesignMode && !chargement)
+            if (!Execution.DesignMode && !chargement)
             {
                 String fonctionString = (String)checkedListBoxGB.Items[e.Index];
                 FrameFunction fonction = (FrameFunction)Enum.Parse(typeof(FrameFunction), fonctionString);
@@ -410,7 +410,7 @@ namespace GoBot.IHM
 
         private void checkedListBoxIO_ItemCheck(object sender, ItemCheckEventArgs e)
         {
-            if (!Config.DesignMode && !chargement)
+            if (!Execution.DesignMode && !chargement)
             {
                 String fonctionString = (String)checkedListBoxIO.Items[e.Index];
                 FrameFunction fonction = (FrameFunction)Enum.Parse(typeof(FrameFunction), fonctionString);

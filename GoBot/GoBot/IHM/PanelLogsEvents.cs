@@ -134,7 +134,7 @@ namespace GoBot.IHM
 
         private void checkedListBoxRobots_ItemCheck(object sender, ItemCheckEventArgs e)
         {
-            if (!Config.DesignMode)
+            if (!Execution.DesignMode)
             {
                 String robotString = (String)checkedListBoxRobots.Items[e.Index];
                 IDRobot robot = (IDRobot)Enum.Parse(typeof(IDRobot), robotString);
@@ -145,7 +145,7 @@ namespace GoBot.IHM
 
         private void checkedListBoxEvents_ItemCheck(object sender, ItemCheckEventArgs e)
         {
-            if (!Config.DesignMode)
+            if (!Execution.DesignMode)
             {
                 String typeString = (String)checkedListBoxEvents.Items[e.Index];
                 TypeLog type = (TypeLog)Enum.Parse(typeof(TypeLog), typeString);

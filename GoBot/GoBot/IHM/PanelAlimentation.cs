@@ -23,7 +23,7 @@ namespace GoBot.IHM
 
         private void PanelAlimentation_Load(object sender, EventArgs e)
         {
-            if (!Config.DesignMode)
+            if (!Execution.DesignMode)
             {
                 timerTension = new System.Timers.Timer(1000);
                 timerTension.Elapsed += new ElapsedEventHandler(timerTension_Elapsed);
@@ -39,7 +39,7 @@ namespace GoBot.IHM
 
         void timerTension_Elapsed(object sender, ElapsedEventArgs e)
         {
-            if (Config.Shutdown)
+            if (Execution.Shutdown)
                 return;
 
             lblTensionPack1.Text = Robots.GrosRobot.BatterieVoltage + " V";

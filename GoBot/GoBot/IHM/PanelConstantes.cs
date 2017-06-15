@@ -22,7 +22,7 @@ namespace GoBot.IHM
 
         private void PanelConstantes_Load(object sender, EventArgs e)
         {
-            if (!Config.DesignMode)
+            if (!Execution.DesignMode)
             {
                 numAccelerationLigneLent.Value = Config.CurrentConfig.GRAccelerationLigneLent;
                 numAccelerationFinLigneLent.Value = Config.CurrentConfig.GRAccelerationFinLigneLent;

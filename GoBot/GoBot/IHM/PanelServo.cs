@@ -526,7 +526,7 @@ namespace GoBot.IHM
 
         private void PanelServo_Load(object sender, EventArgs e)
         {
-            if (!Config.DesignMode)
+            if (!Execution.DesignMode)
             {
                 penPositionActuelle = new Pen(Color.Red, 2);
                 penPositionActuelleFond = new Pen(Color.Black, 4);

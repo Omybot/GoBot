@@ -25,7 +25,7 @@ namespace GoBot.IHM
 
         private void PotarControl_Load(object sender, EventArgs e)
         {
-            if (!Config.DesignMode)
+            if (!Execution.DesignMode)
             {
                 cboPositionnable.Items.AddRange(Config.Positionnables.ToArray());
             }
