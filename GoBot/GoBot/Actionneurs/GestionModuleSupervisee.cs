@@ -1,4 +1,5 @@
-﻿using System;
+﻿using GoBot.Calculs.Formes;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -467,5 +468,39 @@ namespace GoBot.Actionneurs
             }
         }
 
+        public void AttraperModule(PointReel pos)
+        {
+            Robots.GrosRobot.SpeedConfig.LineAcceleration = 500;
+            Robots.GrosRobot.SpeedConfig.LineDeceleration = 500;
+            Robots.GrosRobot.SpeedConfig.LineSpeed = 500;
+            Robots.GrosRobot.SpeedConfig.PivotAcceleration = 500;
+            Robots.GrosRobot.SpeedConfig.PivotDeceleration = 500;
+            Robots.GrosRobot.SpeedConfig.PivotSpeed = 500;
+
+            Robots.GrosRobot.Stop();
+            Robots.GrosRobot.GotoXYTeta(new Calculs.Position(0, pos.Translation(-80, 0)));
+
+            Actionneurs.Actionneur.BrasLunaire.Descendre();
+            Actionneurs.Actionneur.BrasLunaire.Ouvrir();
+            Thread.Sleep(200);
+            Actionneurs.Actionneur.BrasLunaire.Avancer();
+            Robots.GrosRobot.SpeedConfig.LineDeceleration = 300;
+            Robots.GrosRobot.Avancer(100);
+            Actionneurs.Actionneur.BrasLunaire.Fermer();
+            Thread.Sleep(200);
+            Actionneurs.Actionneur.BrasLunaire.Reculer();
+            Robots.GrosRobot.Rapide();
+            Robots.GrosRobot.Reculer(30);
+            Actionneurs.Actionneur.BrasLunaire.Ouvrir();
+            Thread.Sleep(50);
+            Robots.GrosRobot.SpeedConfig.LineDeceleration = 300;
+            Robots.GrosRobot.Avancer(30);
+            Robots.GrosRobot.Rapide();
+            Actionneurs.Actionneur.BrasLunaire.Fermer();
+
+            Actionneur.GestionModuleSupervisee.AvalerModule();
+
+            AvalerModule();
+        }
     }
 }

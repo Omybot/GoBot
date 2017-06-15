@@ -21,6 +21,8 @@ namespace GoBot.Devices
         protected LidarID lidar;
 
         private Angle angleMesurable;
+        private Angle debutAngleVisible;
+        private Angle finAngleVisible;
         private int offsetPoints;
         private String model;
 
@@ -57,6 +59,9 @@ namespace GoBot.Devices
             }
 
             Position = new Position();
+
+            debutAngleVisible = 45;
+            finAngleVisible = 180;
         }
 
         public Angle AngleMort
@@ -132,17 +137,21 @@ namespace GoBot.Devices
 
             for (int i = 0; i < mesures.Count; i++)
             {
+                Angle angle = new Angle(stepAngular * i, AnglyeType.Radian);
+
                 if (mesures[i] > minDistance && (mesures[i] < maxDistance || maxDistance == -1))
                 {
-                    Angle angle = stepAngular * i;
-                    double sin = Math.Sin(angle - refPosition.Angle.AngleRadiansPositif - angleMesurable.AngleRadiansPositif / 2 - Math.PI / 2) * mesures[i];
-                    double cos = Math.Cos(angle - refPosition.Angle.AngleRadiansPositif - angleMesurable.AngleRadiansPositif / 2 - Math.PI / 2) * mesures[i];
+                    if (angle.ComprisEntre(debutAngleVisible, finAngleVisible))
+                    {
+                        double sin = Math.Sin(angle.AngleRadiansPositif - refPosition.Angle.AngleRadiansPositif - angleMesurable.AngleRadiansPositif / 2 - Math.PI / 2) * mesures[i];
+                        double cos = Math.Cos(angle.AngleRadiansPositif - refPosition.Angle.AngleRadiansPositif - angleMesurable.AngleRadiansPositif / 2 - Math.PI / 2) * mesures[i];
 
-                    PointReel pos = new PointReel(refPosition.Coordonnees.X - sin, refPosition.Coordonnees.Y - cos);
-                    
-                    int marge = 20; // Marge en mm de distance de detection à l'exterieur de la table (pour ne pas jeter les mesures de la bordure qui ne collent pas parfaitement)
-                    if (!limiteTable || (pos.X > -marge && pos.X < Plateau.Largeur + marge && pos.Y > -marge && pos.Y < Plateau.Hauteur + marge))
-                        positions.Add(pos);
+                        PointReel pos = new PointReel(refPosition.Coordonnees.X - sin, refPosition.Coordonnees.Y - cos);
+
+                        int marge = 20; // Marge en mm de distance de detection à l'exterieur de la table (pour ne pas jeter les mesures de la bordure qui ne collent pas parfaitement)
+                        if (!limiteTable || (pos.X > -marge && pos.X < Plateau.Largeur + marge && pos.Y > -marge && pos.Y < Plateau.Hauteur + marge))
+                            positions.Add(pos);
+                    }
                 }
             }
 

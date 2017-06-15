@@ -44,6 +44,14 @@ namespace GoBot.IHM
             while (true)
             {
                 List<PointReel> points = Actionneur.Hokuyo.GetRawMesure();
+                List<Color> colors = new List<Color>();
+                colors.Add(Color.Red);
+                colors.Add(Color.Blue);
+                colors.Add(Color.Green);
+                colors.Add(Color.Pink);
+                colors.Add(Color.Orange);
+                colors.Add(Color.Purple);
+                colors.Add(Color.White);
 
                 if (points.Count > 0)
                 {
@@ -53,24 +61,36 @@ namespace GoBot.IHM
                     g.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.AntiAlias;
 
                     g.DrawRectangle(Pens.Gray, 0, 0, bmp.Width - 1, bmp.Height - 1);
+                    
+                    if (boxScale.Checked)
+                    {
+                        for (int i = 100; i < 5000; i += 100)
+                        {
+                            new Cercle(new PointReel(), i).Paint(g, Color.Gray, 1, Color.Transparent, scale);
+                        }
+                    }
 
                     if (rdoOutline.Checked)
                     {
+                        points.Add(new PointReel());
                         Polygone poly = new Polygone(points);
+                        points.RemoveAt(points.Count - 1);
                         poly.Paint(g, Color.Red, 1, Color.LightGray, scale);
                     }
                     else if (rdoShadows.Checked)
                     {
+                        points.Add(new PointReel());
                         Polygone poly = new Polygone(points);
+                        points.RemoveAt(points.Count - 1);
                         g.FillRectangle(Brushes.LightGray, 0, 0, bmp.Width, bmp.Height);
                         poly.Paint(g, Color.Red, 1, Color.White, scale);
                     }
                     else if (rdoObjects.Checked)
                     {
-                        foreach (PointReel p in points)
-                        {
-                            p.Paint(g, Color.Black, 3, Color.Red, scale);
-                        }
+                            foreach (PointReel p in points)
+                            {
+                                p.Paint(g, Color.Black, 3, Color.Red, scale);
+                            }
                     }
                     else
                     {
@@ -81,17 +101,47 @@ namespace GoBot.IHM
                         }
                     }
 
-                    if(boxScale.Checked)
+                    if (boxGroup.Checked)
                     {
-                        for(int i = 100; i<5000; i+=100)
+                        List<List<PointReel>> groups = points.GroupByDistance(50);
+                        for (int i = 0; i < groups.Count; i++)
                         {
-                            new Cercle(new PointReel(), i).Paint(g, Color.Gray, 1, Color.Transparent, scale);
+                            Cercle circle = groups[i].GetContainingCircle();
+                            circle.Paint(g, Color.Black, 1, Color.Transparent, scale);
+                            g.DrawString((circle.Rayon * 2).ToString("0"), new Font("Calibri", 9), Brushes.Black, scale.RealToScreenPosition(circle.Centre.Translation(circle.Rayon, 0)));
                         }
                     }
                     
                     picDraw.InvokeAuto(() => picDraw.Image = bmp);
                 }
             }
+        }
+
+        private void PanelHokuyo_Load(object sender, EventArgs e)
+        {
+            if (!Execution.DesignMode)
+            {
+                trackZoom.SetValue(1000);
+            }
+        }
+
+        private void btnGo_Click(object sender, EventArgs e)
+        {
+            List<Cercle> cercles;
+            do
+            {
+                List<PointReel> points = Actionneur.Hokuyo.GetRawMesure();
+
+                List<List<PointReel>> groups = points.GroupByDistance(50);
+
+                cercles = groups.Select(g => g.GetContainingCircle()).ToList();
+                cercles = cercles.Where(c => c.Rayon > 20 && c.Rayon < 40).ToList();
+            } while (cercles.Count == 0);
+
+            PointReel nearest = cercles.OrderBy(c => c.Distance(new PointReel())).ToList()[0].Centre;
+
+            Plateau.ObstaclesPlateau.Clear();
+            Actionneur.GestionModuleSupervisee.AttraperModule(nearest);
         }
     }
 }
