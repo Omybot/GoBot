@@ -138,7 +138,7 @@ namespace GoBot
             Synchronizer.Lock(ObstaclesBalise);
             ObstaclesBalise.Clear();
 
-            int vitesseMax = Config.CurrentConfig.GRVitesseLigneRapide;
+            int vitesseMax = Config.CurrentConfig.ConfigRapide.LineSpeed;
 
             for (int i = 0; i < positions.Count; i++)
             {
@@ -158,7 +158,7 @@ namespace GoBot
                         double distanceAdv = Robots.GrosRobot.Position.Coordonnees.Distance(coordonnees);
                         if (distanceAdv < 1500)
                         {
-                            vitesseMax = (int)(Math.Min(vitesseMax, (distanceAdv - 300) / 1000.0 * Config.CurrentConfig.GRVitesseLigneRapide));
+                            vitesseMax = (int)(Math.Min(vitesseMax, (distanceAdv - 300) / 1000.0 * Config.CurrentConfig.ConfigRapide.LineSpeed));
                         }
                     }
                 }

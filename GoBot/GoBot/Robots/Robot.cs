@@ -312,30 +312,14 @@ namespace GoBot
 
         public void Lent()
         {
-            if (this == Robots.GrosRobot)
-            {
-                SpeedConfig.SetParams(Config.CurrentConfig.GRVitesseLigneLent,
-                    Config.CurrentConfig.GRAccelerationLigneLent,
-                    Config.CurrentConfig.GRAccelerationFinLigneLent,
-                    Config.CurrentConfig.GRVitessePivotLent,
-                    Config.CurrentConfig.GRAccelerationPivotLent,
-                    Config.CurrentConfig.GRAccelerationPivotLent);
-            }
+            SpeedConfig.SetParams(Config.CurrentConfig.ConfigLent);
 
             VitesseAdaptableEnnemi = false;
         }
 
         public void Rapide()
         {
-            if (this == Robots.GrosRobot)
-            {
-                SpeedConfig.SetParams(Config.CurrentConfig.GRVitesseLigneRapide,
-                    Config.CurrentConfig.GRAccelerationLigneRapide,
-                    Config.CurrentConfig.GRAccelerationFinLigneRapide,
-                    Config.CurrentConfig.GRVitessePivotRapide,
-                    Config.CurrentConfig.GRAccelerationPivotRapide,
-                    Config.CurrentConfig.GRAccelerationPivotRapide);
-            }
+            SpeedConfig.SetParams(Config.CurrentConfig.ConfigRapide);
 
             VitesseAdaptableEnnemi = true;
         }

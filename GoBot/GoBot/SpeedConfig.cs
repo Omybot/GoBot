@@ -151,6 +151,18 @@ namespace GoBot
             OnParamChange(true, true, true, true, true, true);
         }
 
+        public void SetParams(SpeedConfig config)
+        {
+            _lineSpeed = config.LineSpeed;
+            _lineAcceleration = config.LineAcceleration;
+            _lineDeceleration = config.LineDeceleration;
+            _pivotSpeed = config.PivotSpeed;
+            _pivotAcceleration = config.PivotAcceleration;
+            _pivotDeceleration = config.PivotDeceleration;
+
+            OnParamChange(true, true, true, true, true, true);
+        }
+
         #endregion
 
         #region Private

@@ -51,11 +51,11 @@ namespace GoBot.IHM
 
             if (Robot == Robots.GrosRobot)
             {
-                trackBarVitesseLigne.SetValue(Config.CurrentConfig.GRVitesseLigneRapide, false);
-                trackBarAccelLigne.SetValue(Config.CurrentConfig.GRAccelerationLigneRapide, false);
-                trackBarAccelerationFinLigne.SetValue(Config.CurrentConfig.GRAccelerationFinLigneRapide, false);
-                trackBarVitessePivot.SetValue(Config.CurrentConfig.GRVitessePivotRapide, false);
-                trackBarAccelPivot.SetValue(Config.CurrentConfig.GRAccelerationPivotRapide, false);
+                trackBarVitesseLigne.SetValue(Config.CurrentConfig.ConfigRapide.LineSpeed, false);
+                trackBarAccelLigne.SetValue(Config.CurrentConfig.ConfigRapide.LineAcceleration, false);
+                trackBarAccelerationFinLigne.SetValue(Config.CurrentConfig.ConfigRapide.LineDeceleration, false);
+                trackBarVitessePivot.SetValue(Config.CurrentConfig.ConfigRapide.PivotSpeed, false);
+                trackBarAccelPivot.SetValue(Config.CurrentConfig.ConfigRapide.PivotAcceleration, false);
 
                 numCoeffP.Value = Config.CurrentConfig.GRCoeffP;
                 numCoeffI.Value = Config.CurrentConfig.GRCoeffI;

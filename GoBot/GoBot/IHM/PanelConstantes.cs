@@ -24,17 +24,20 @@ namespace GoBot.IHM
         {
             if (!Execution.DesignMode)
             {
-                numAccelerationLigneLent.Value = Config.CurrentConfig.GRAccelerationLigneLent;
-                numAccelerationFinLigneLent.Value = Config.CurrentConfig.GRAccelerationFinLigneLent;
-                numAccelerationLigneRapide.Value = Config.CurrentConfig.GRAccelerationLigneRapide;
-                numAccelerationFinLigneRapide.Value = Config.CurrentConfig.GRAccelerationFinLigneRapide;
-                numAccelerationPivotLent.Value = Config.CurrentConfig.GRAccelerationPivotLent;
-                numAccelerationPivotRapide.Value = Config.CurrentConfig.GRAccelerationPivotRapide;
+                numAccelerationLigneLent.Value = Config.CurrentConfig.ConfigLent.LineAcceleration;
+                numAccelerationFinLigneLent.Value = Config.CurrentConfig.ConfigLent.LineDeceleration;
+                numVitesseLigneLent.Value = Config.CurrentConfig.ConfigLent.LineSpeed;
+                numAccelerationPivotLent.Value = Config.CurrentConfig.ConfigLent.PivotAcceleration;
+                numVitessePivotLent.Value = Config.CurrentConfig.ConfigLent.PivotSpeed;
 
-                numVitesseLigneLent.Value = Config.CurrentConfig.GRVitesseLigneLent;
-                numVitesseLigneRapide.Value = Config.CurrentConfig.GRVitesseLigneRapide;
-                numVitessePivotLent.Value = Config.CurrentConfig.GRVitessePivotLent;
-                numVitessePivotRapide.Value = Config.CurrentConfig.GRVitessePivotRapide;
+                numAccelerationLigneRapide.Value = Config.CurrentConfig.ConfigRapide.LineAcceleration;
+                numAccelerationFinLigneRapide.Value = Config.CurrentConfig.ConfigRapide.LineDeceleration;
+                numVitesseLigneRapide.Value = Config.CurrentConfig.ConfigRapide.LineSpeed;
+                numAccelerationPivotRapide.Value = Config.CurrentConfig.ConfigRapide.PivotAcceleration;
+                numVitessePivotRapide.Value = Config.CurrentConfig.ConfigRapide.PivotSpeed;
+
+
+
 
                 numBatGrosVert.Value = (decimal)Config.CurrentConfig.BatterieRobotVert;
                 numBatGrosOrange.Value = (decimal)Config.CurrentConfig.BatterieRobotOrange;
@@ -54,17 +57,21 @@ namespace GoBot.IHM
             if (MessageBox.Show("Êtes vous certain de vouloir enregistrer ces valeurs dans le fichier de configuration ?", "Attention", MessageBoxButtons.OKCancel, MessageBoxIcon.Question) != DialogResult.OK)
                 return;
 
-            Config.CurrentConfig.GRVitesseLigneRapide = (int)numVitesseLigneRapide.Value;
-            Config.CurrentConfig.GRAccelerationLigneRapide = (int)numAccelerationLigneRapide.Value;
-            Config.CurrentConfig.GRAccelerationFinLigneRapide = (int)numAccelerationFinLigneRapide.Value;
-            Config.CurrentConfig.GRVitessePivotRapide = (int)numVitessePivotRapide.Value;
-            Config.CurrentConfig.GRAccelerationPivotRapide = (int)numAccelerationPivotRapide.Value;
+            Config.CurrentConfig.ConfigRapide.SetParams(
+                (int)numVitesseLigneRapide.Value,
+                (int)numAccelerationLigneRapide.Value,
+                (int)numAccelerationFinLigneRapide.Value,
+                (int)numVitessePivotRapide.Value,
+                (int)numAccelerationPivotRapide.Value,
+                (int)numAccelerationPivotRapide.Value);
 
-            Config.CurrentConfig.GRVitesseLigneLent = (int)numVitesseLigneLent.Value;
-            Config.CurrentConfig.GRAccelerationLigneLent = (int)numAccelerationLigneLent.Value;
-            Config.CurrentConfig.GRAccelerationFinLigneLent = (int)numAccelerationFinLigneLent.Value;
-            Config.CurrentConfig.GRVitessePivotLent = (int)numVitessePivotLent.Value;
-            Config.CurrentConfig.GRAccelerationPivotLent = (int)numAccelerationPivotLent.Value;
+            Config.CurrentConfig.ConfigLent.SetParams(
+                (int)numVitesseLigneLent.Value,
+                (int)numAccelerationLigneLent.Value,
+                (int)numAccelerationFinLigneLent.Value,
+                (int)numVitessePivotLent.Value,
+                (int)numAccelerationPivotLent.Value,
+                (int)numAccelerationPivotLent.Value);
             
             Config.CurrentConfig.BatterieRobotVert = (double)numBatGrosVert.Value;
             Config.CurrentConfig.BatterieRobotOrange = (double)numBatGrosOrange.Value;

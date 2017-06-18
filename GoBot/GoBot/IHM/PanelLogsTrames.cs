@@ -60,8 +60,6 @@ namespace GoBot.IHM
             // L'ajout de champs déclenche le SetCheck event qui ajoute les éléments automatiquement dans le dictionnaire
             if (Config.CurrentConfig.LogsFonctionsMove == null)
                 Config.CurrentConfig.LogsFonctionsMove = new SerializableDictionary<FrameFunction, bool>();
-            if (Config.CurrentConfig.LogsFonctionsBalise == null)
-                Config.CurrentConfig.LogsFonctionsBalise = new SerializableDictionary<FrameFunction, bool>();
             if (Config.CurrentConfig.LogsFonctionsIO == null)
                 Config.CurrentConfig.LogsFonctionsIO = new SerializableDictionary<FrameFunction, bool>();
             if (Config.CurrentConfig.LogsFonctionsGB == null)

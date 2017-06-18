@@ -14,6 +14,7 @@ using System.Reflection;
 
 namespace GoBot
 {
+    [Serializable]
     public partial class Config
     {
 
@@ -82,18 +83,9 @@ namespace GoBot
         public bool CapteursGROuvert { get; set; }
 
         // Déplacement gros robot
-
-        public int GRVitesseLigneRapide { get; set; }
-        public int GRAccelerationLigneRapide { get; set; }
-        public int GRAccelerationFinLigneRapide { get; set; }
-        public int GRVitessePivotRapide { get; set; }
-        public int GRAccelerationPivotRapide { get; set; }
-
-        public int GRVitesseLigneLent { get; set; }
-        public int GRAccelerationLigneLent { get; set; }
-        public int GRAccelerationFinLigneLent { get; set; }
-        public int GRVitessePivotLent { get; set; }
-        public int GRAccelerationPivotLent { get; set; }
+        
+        public SpeedConfig ConfigRapide { get; set; }
+        public SpeedConfig ConfigLent { get; set; }
 
         public int GRCoeffP { get; set; }
         public int GRCoeffI { get; set; }
