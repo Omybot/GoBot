@@ -112,7 +112,6 @@
     <Compile Include="Actions\IAction.cs" />
     <Compile Include="Calculs\ListRealPoints.cs" />
     <Compile Include="Execution.cs" />
-    <Compile Include="Files\IExportable.cs" />
     <Compile Include="IHM\ConnectionDetails.cs">
       <SubType>UserControl</SubType>
     </Compile>

@@ -57,6 +57,12 @@ namespace GoBot
             return nom;
         }
 
+        public Config()
+        {
+            ConfigLent = new SpeedConfig();
+            ConfigRapide = new SpeedConfig();
+        }
+
         public int AfficheDetailTraj { get; set; }
 
         // Batteries
@@ -166,11 +172,14 @@ namespace GoBot
 
         public static void Save()
         {
+            XmlSerializerNamespaces ns = new XmlSerializerNamespaces();
+            ns.Add("", "");
+
             XmlSerializer mySerializer = new XmlSerializer(typeof(Config));
             using (StreamWriter myWriter = new StreamWriter(PathData + "/config.xml"))
-                mySerializer.Serialize(myWriter, CurrentConfig);
-            using (StreamWriter myWriter = new StreamWriter(PathData + "/Configs/config" + Execution.DateLancementString + ".xml"))
-                mySerializer.Serialize(myWriter, CurrentConfig);
+                mySerializer.Serialize(myWriter, CurrentConfig, ns);
+
+            File.Copy(PathData + "/config.xml", PathData + "/Configs/config" + Execution.DateLancementString + ".xml");
         }
 
         public static String PathData

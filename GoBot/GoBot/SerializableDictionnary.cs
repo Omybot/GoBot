@@ -28,24 +28,43 @@ namespace GoBot
 
             while (reader.NodeType != System.Xml.XmlNodeType.EndElement)
             {
+                TKey key = default(TKey);
+                TValue value = default(TValue);
+                bool success = true;
+
+                reader.ReadStartElement("Item");
+
+                reader.ReadStartElement("Key");
+
                 try
                 {
-                    reader.ReadStartElement("Item");
+                    key = (TKey)keySerializer.Deserialize(reader);
+                }
+                catch (Exception)
+                {
+                    reader.Skip();
+                    success = false;
+                }
 
-                    reader.ReadStartElement("Key");
-                    TKey key = (TKey)keySerializer.Deserialize(reader);
-                    reader.ReadEndElement();
+                reader.ReadEndElement();
 
-                    reader.ReadStartElement("Value");
-                    TValue value = (TValue)valueSerializer.Deserialize(reader);
-                    reader.ReadEndElement();
+                reader.ReadStartElement("Value");
+                try
+                {
+                    value = (TValue)valueSerializer.Deserialize(reader);
+                }
+                catch (Exception)
+                {
+                    reader.Skip();
+                    success = false;
+                }
+                reader.ReadEndElement();
 
+                if(success)
                     this.Add(key, value);
 
-                    reader.ReadEndElement();
-                    reader.MoveToContent();
-                }
-                catch (Exception) { }
+                reader.ReadEndElement();
+                reader.MoveToContent();
             }
             reader.ReadEndElement();
         }
