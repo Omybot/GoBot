@@ -43,7 +43,7 @@ namespace GoBot.ElementsJeu
             Ramasse = false;
         }
 
-        public abstract void Paint(Graphics g, PaintScale scale);
+        public abstract void Paint(Graphics g, WorldScale scale);
 
         public abstract bool ClickAction();
     }

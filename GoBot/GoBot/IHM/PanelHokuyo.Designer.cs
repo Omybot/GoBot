@@ -28,8 +28,8 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             this.switchBouton1 = new Composants.SwitchBouton();
-            this.picDraw = new System.Windows.Forms.PictureBox();
             this.rdoOutline = new System.Windows.Forms.RadioButton();
             this.rdoRays = new System.Windows.Forms.RadioButton();
             this.rdoShadows = new System.Windows.Forms.RadioButton();
@@ -38,7 +38,10 @@
             this.rdoObjects = new System.Windows.Forms.RadioButton();
             this.boxGroup = new System.Windows.Forms.CheckBox();
             this.btnGo = new System.Windows.Forms.Button();
-            ((System.ComponentModel.ISupportInitialize)(this.picDraw)).BeginInit();
+            this.picWorld = new GoBot.IHM.WorldPanel(this.components);
+            this.lblMousePosition = new System.Windows.Forms.Label();
+            this.lblMousePositionTxt = new System.Windows.Forms.Label();
+            ((System.ComponentModel.ISupportInitialize)(this.picWorld)).BeginInit();
             this.SuspendLayout();
             // 
             // switchBouton1
@@ -50,17 +53,6 @@
             this.switchBouton1.Symetrique = true;
             this.switchBouton1.TabIndex = 2;
             this.switchBouton1.ChangementEtat += new System.EventHandler(this.switchEnable_ChangementEtat);
-            // 
-            // picDraw
-            // 
-            this.picDraw.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.picDraw.Location = new System.Drawing.Point(99, 16);
-            this.picDraw.Name = "picDraw";
-            this.picDraw.Size = new System.Drawing.Size(722, 431);
-            this.picDraw.TabIndex = 0;
-            this.picDraw.TabStop = false;
             // 
             // rdoOutline
             // 
@@ -97,16 +89,17 @@
             this.trackZoom.BackColor = System.Drawing.Color.Transparent;
             this.trackZoom.IntervalTimer = 1;
             this.trackZoom.Location = new System.Drawing.Point(3, 180);
-            this.trackZoom.Max = 3000D;
+            this.trackZoom.Max = 10D;
             this.trackZoom.MaximumSize = new System.Drawing.Size(3000, 15);
-            this.trackZoom.Min = 300D;
+            this.trackZoom.Min = 0.1D;
             this.trackZoom.MinimumSize = new System.Drawing.Size(0, 15);
             this.trackZoom.Name = "trackZoom";
-            this.trackZoom.NombreDecimales = 0;
+            this.trackZoom.NombreDecimales = 1;
             this.trackZoom.Reverse = false;
             this.trackZoom.Size = new System.Drawing.Size(90, 15);
             this.trackZoom.TabIndex = 6;
             this.trackZoom.Vertical = false;
+            this.trackZoom.ValueChanged += new System.EventHandler(this.trackZoom_ValueChanged);
             // 
             // boxScale
             // 
@@ -152,8 +145,43 @@
             this.btnGo.UseVisualStyleBackColor = true;
             this.btnGo.Click += new System.EventHandler(this.btnGo_Click);
             // 
+            // picWorld
+            // 
+            this.picWorld.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.picWorld.Location = new System.Drawing.Point(110, 16);
+            this.picWorld.Name = "picWorld";
+            this.picWorld.Size = new System.Drawing.Size(727, 429);
+            this.picWorld.TabIndex = 11;
+            this.picWorld.TabStop = false;
+            this.picWorld.WorldChange += new GoBot.IHM.WorldPanel.WorldChangeDelegate(this.picWorld_WorldChange);
+            this.picWorld.Paint += new System.Windows.Forms.PaintEventHandler(this.picWorld_Paint);
+            this.picWorld.MouseMove += new System.Windows.Forms.MouseEventHandler(this.picWorld_MouseMove);
+            // 
+            // lblMousePosition
+            // 
+            this.lblMousePosition.Location = new System.Drawing.Point(0, 381);
+            this.lblMousePosition.Name = "lblMousePosition";
+            this.lblMousePosition.Size = new System.Drawing.Size(100, 23);
+            this.lblMousePosition.TabIndex = 12;
+            this.lblMousePosition.Text = "-";
+            this.lblMousePosition.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // lblMousePositionTxt
+            // 
+            this.lblMousePositionTxt.AutoSize = true;
+            this.lblMousePositionTxt.Location = new System.Drawing.Point(10, 368);
+            this.lblMousePositionTxt.Name = "lblMousePositionTxt";
+            this.lblMousePositionTxt.Size = new System.Drawing.Size(74, 13);
+            this.lblMousePositionTxt.TabIndex = 13;
+            this.lblMousePositionTxt.Text = "Position souris";
+            // 
             // PanelHokuyo
             // 
+            this.Controls.Add(this.lblMousePositionTxt);
+            this.Controls.Add(this.lblMousePosition);
+            this.Controls.Add(this.picWorld);
             this.Controls.Add(this.btnGo);
             this.Controls.Add(this.boxGroup);
             this.Controls.Add(this.rdoObjects);
@@ -163,19 +191,16 @@
             this.Controls.Add(this.rdoRays);
             this.Controls.Add(this.rdoOutline);
             this.Controls.Add(this.switchBouton1);
-            this.Controls.Add(this.picDraw);
             this.Name = "PanelHokuyo";
             this.Size = new System.Drawing.Size(851, 461);
             this.Load += new System.EventHandler(this.PanelHokuyo_Load);
-            ((System.ComponentModel.ISupportInitialize)(this.picDraw)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.picWorld)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
         }
 
         #endregion
-
-        private System.Windows.Forms.PictureBox picDraw;
         private Composants.SwitchBouton switchBouton1;
         private System.Windows.Forms.RadioButton rdoOutline;
         private System.Windows.Forms.RadioButton rdoRays;
@@ -185,5 +210,8 @@
         private System.Windows.Forms.RadioButton rdoObjects;
         private System.Windows.Forms.CheckBox boxGroup;
         private System.Windows.Forms.Button btnGo;
+        private WorldPanel picWorld;
+        private System.Windows.Forms.Label lblMousePosition;
+        private System.Windows.Forms.Label lblMousePositionTxt;
     }
 }

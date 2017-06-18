@@ -93,7 +93,7 @@ namespace GoBot
                                     brushCouleurDroiteTransparent = new SolidBrush(Color.FromArgb(110, Plateau.CouleurDroiteJaune)),
                                     brushCouleurDroiteTresTransparent = new SolidBrush(Color.FromArgb(35, Plateau.CouleurDroiteJaune));
 
-        public static PaintScale Scale { get; } = new PaintScale(RAPPORT_SCREEN_REAL, OFFSET_IMAGE_X, OFFSET_IMAGE_Y);
+        public static WorldScale Scale { get; } = new WorldScale(RAPPORT_SCREEN_REAL, OFFSET_IMAGE_X, OFFSET_IMAGE_Y);
 
         public static PointReel PositionCurseur
         {

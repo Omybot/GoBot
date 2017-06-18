@@ -156,7 +156,7 @@ namespace GoBot.Mouvements
             }
         }
 
-        public void Paint(Graphics g, PaintScale scale)
+        public void Paint(Graphics g, WorldScale scale)
         {
             Font font = new Font("Calibri", 8);
 

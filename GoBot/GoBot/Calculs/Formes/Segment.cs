@@ -496,7 +496,7 @@ namespace GoBot.Calculs.Formes
 
         #region Peinture
 
-        public override void Paint(Graphics g, Color outlineColor, int outlineWidth, Color fillColor, PaintScale scale)
+        public override void Paint(Graphics g, Color outlineColor, int outlineWidth, Color fillColor, WorldScale scale)
         {
             Point startPoint = scale.RealToScreenPosition(Debut);
             Point endPoint = scale.RealToScreenPosition(Fin);

@@ -130,6 +130,12 @@
     <Compile Include="IHM\PanelHokuyo.Designer.cs">
       <DependentUpon>PanelHokuyo.cs</DependentUpon>
     </Compile>
+    <Compile Include="IHM\WorldPanel.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="IHM\WorldPanel.Designer.cs">
+      <DependentUpon>WorldPanel.cs</DependentUpon>
+    </Compile>
     <Compile Include="MinimumDelay.cs" />
     <Compile Include="SpeedConfig.cs" />
     <Compile Include="AsserStats.cs" />
@@ -341,7 +347,7 @@
     <Compile Include="Mouvements\MouvementModuleGauche.cs" />
     <Compile Include="Mouvements\MouvementModuleAvant.cs" />
     <Compile Include="Mouvements\PositionsMouvements.cs" />
-    <Compile Include="PaintScale.cs" />
+    <Compile Include="WorldScale.cs" />
     <Compile Include="PathFinding\PathFinder.cs" />
     <Compile Include="PathFinding\Trajectoire.cs" />
     <Compile Include="Ponderations\PoidsTest.cs" />
@@ -441,6 +447,7 @@
     <Compile Include="Synchronizer.cs" />
     <Compile Include="TestCode.cs" />
     <Compile Include="Util.cs" />
+    <Compile Include="WorldRect.cs" />
     <EmbeddedResource Include="IHM\ConnectionDetails.resx">
       <DependentUpon>ConnectionDetails.cs</DependentUpon>
     </EmbeddedResource>
@@ -557,6 +564,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="IHM\SplashScreen.resx">
       <DependentUpon>SplashScreen.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="IHM\WorldPanel.resx">
+      <DependentUpon>WorldPanel.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>

@@ -95,7 +95,7 @@ namespace GoBot.PathFinding
             }
         }
 
-        public void Paint(Graphics g, PaintScale scale)
+        public void Paint(Graphics g, WorldScale scale)
         {
             Point pointNodePrec = PointsPassage[0];
 

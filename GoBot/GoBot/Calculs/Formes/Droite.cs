@@ -560,7 +560,7 @@ namespace GoBot.Calculs.Formes
 
         #region Peinture
 
-        public virtual void Paint(Graphics g, Color outlineColor, int outlineWidth, Color fillColor, PaintScale scale)
+        public virtual void Paint(Graphics g, Color outlineColor, int outlineWidth, Color fillColor, WorldScale scale)
         {
             // Un peu douteux mais bon
             PointReel p1 = getCroisement(new Droite(new PointReel(-10000, -10000), new PointReel(-10001, 10000)));

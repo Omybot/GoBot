@@ -33,7 +33,7 @@ namespace GoBot.ElementsJeu
             Couleur = couleur;
         }
 
-        public override void Paint(Graphics g, PaintScale scale)
+        public override void Paint(Graphics g, WorldScale scale)
         {
             Pen pBlack = new Pen(Color.Black);
             Pen pWhite = new Pen(Color.White);

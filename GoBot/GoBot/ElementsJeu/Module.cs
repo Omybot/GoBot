@@ -26,7 +26,7 @@ namespace GoBot.ElementsJeu
             set { couleur = value; }
         }
         
-        public override void Paint(Graphics g, PaintScale scale)
+        public override void Paint(Graphics g, WorldScale scale)
         {
             if (!Ramasse)
             {

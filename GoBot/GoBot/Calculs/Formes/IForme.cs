@@ -36,7 +36,7 @@ namespace GoBot.Calculs.Formes
 
         PointReel BaryCentre { get; }
 
-        void Paint(Graphics g, Color outlineColor, int outlineWidth, Color fillColor, PaintScale scale);
+        void Paint(Graphics g, Color outlineColor, int outlineWidth, Color fillColor, WorldScale scale);
     }
 
     public static class IFormeExtension

@@ -134,6 +134,16 @@ namespace GoBot.Calculs.Formes
             return !(a == b);
         }
 
+        public static PointReel operator -(PointReel a, PointReel b)
+        {
+            return new PointReel(a.X - b.X, a.Y - b.Y);
+        }
+
+        public static PointReel operator +(PointReel a, PointReel b)
+        {
+            return new PointReel(a.X + b.X, a.Y + b.Y);
+        }
+
         public override string ToString()
         {
             return "{" + Math.Round(X, 2) + " : " + Math.Round(Y, 2) + "}";
@@ -170,10 +180,15 @@ namespace GoBot.Calculs.Formes
             return new PointF((float)point.X, (float)point.Y);
         }
 
+        public static implicit operator PointReel(PointF point)
+        {
+            return new PointReel(point.X, point.Y);
+        }
+
         #endregion
 
         #region Distance
-        
+
         /// <summary>
         /// Retourne la distance minimale entre le PointReel courant et la IForme donnée
         /// </summary>
@@ -391,7 +406,7 @@ namespace GoBot.Calculs.Formes
 
         #region Peinture
 
-        public void Paint(Graphics g, Color outlineColor, int outlineWidth, Color fillColor, PaintScale scale)
+        public void Paint(Graphics g, Color outlineColor, int outlineWidth, Color fillColor, WorldScale scale)
         {
             Point screenPos = scale.RealToScreenPosition(this);
 

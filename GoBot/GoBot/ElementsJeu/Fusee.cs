@@ -34,7 +34,7 @@ namespace GoBot.ElementsJeu
             return "fusée " + numero.ToString();
         }
 
-        public override void Paint(Graphics g, PaintScale scale)
+        public override void Paint(Graphics g, WorldScale scale)
         {
             if (ModulesRestants > 0)
             {

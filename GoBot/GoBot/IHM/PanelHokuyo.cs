@@ -14,14 +14,17 @@ namespace GoBot.IHM
 {
     public partial class PanelHokuyo : UserControl
     {
+        private List<PointReel> _lastMeasure;
+
         public PanelHokuyo()
         {
             InitializeComponent();
+            _lastMeasure = null;
         }
 
         protected override void OnMouseWheel(MouseEventArgs e)
         {
-            if (!picDraw.RectangleToScreen(picDraw.ClientRectangle).Contains(MousePosition))
+            if (!picWorld.RectangleToScreen(picWorld.ClientRectangle).Contains(MousePosition))
             {
                 base.OnMouseWheel(e);
             }
@@ -43,77 +46,9 @@ namespace GoBot.IHM
         {
             while (true)
             {
-                List<PointReel> points = Actionneur.Hokuyo.GetRawMesure();
-                List<Color> colors = new List<Color>();
-                colors.Add(Color.Red);
-                colors.Add(Color.Blue);
-                colors.Add(Color.Green);
-                colors.Add(Color.Pink);
-                colors.Add(Color.Orange);
-                colors.Add(Color.Purple);
-                colors.Add(Color.White);
+                _lastMeasure = Actionneur.Hokuyo.GetRawMesure();
 
-                if (points.Count > 0)
-                {
-                    Bitmap bmp = new Bitmap(picDraw.Width, picDraw.Height);
-                    Graphics g = Graphics.FromImage(bmp);
-                    PaintScale scale = new PaintScale(trackZoom.Value / bmp.Height, bmp.Width / 2, bmp.Height / 2);
-                    g.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.AntiAlias;
-
-                    g.DrawRectangle(Pens.Gray, 0, 0, bmp.Width - 1, bmp.Height - 1);
-                    
-                    if (boxScale.Checked)
-                    {
-                        for (int i = 100; i < 5000; i += 100)
-                        {
-                            new Cercle(new PointReel(), i).Paint(g, Color.Gray, 1, Color.Transparent, scale);
-                        }
-                    }
-
-                    if (rdoOutline.Checked)
-                    {
-                        points.Add(new PointReel());
-                        Polygone poly = new Polygone(points);
-                        points.RemoveAt(points.Count - 1);
-                        poly.Paint(g, Color.Red, 1, Color.LightGray, scale);
-                    }
-                    else if (rdoShadows.Checked)
-                    {
-                        points.Add(new PointReel());
-                        Polygone poly = new Polygone(points);
-                        points.RemoveAt(points.Count - 1);
-                        g.FillRectangle(Brushes.LightGray, 0, 0, bmp.Width, bmp.Height);
-                        poly.Paint(g, Color.Red, 1, Color.White, scale);
-                    }
-                    else if (rdoObjects.Checked)
-                    {
-                            foreach (PointReel p in points)
-                            {
-                                p.Paint(g, Color.Black, 3, Color.Red, scale);
-                            }
-                    }
-                    else
-                    {
-                        foreach (PointReel p in points)
-                        {
-                            Segment s = new Segment(new PointReel(), p);
-                            s.Paint(g, Color.Red, 1, Color.Transparent, scale);
-                        }
-                    }
-
-                    if (boxGroup.Checked)
-                    {
-                        List<List<PointReel>> groups = points.GroupByDistance(50);
-                        for (int i = 0; i < groups.Count; i++)
-                        {
-                            Cercle circle = groups[i].GetContainingCircle();
-                            circle.Paint(g, Color.Black, 1, Color.Transparent, scale);
-                            g.DrawString((circle.Rayon * 2).ToString("0"), new Font("Calibri", 9), Brushes.Black, scale.RealToScreenPosition(circle.Centre.Translation(circle.Rayon, 0)));
-                        }
-                    }
-                    
-                    picDraw.InvokeAuto(() => picDraw.Image = bmp);
-                }
+                picWorld.Invalidate();
             }
         }
 
@@ -121,7 +56,7 @@ namespace GoBot.IHM
         {
             if (!Execution.DesignMode)
             {
-                trackZoom.SetValue(1000);
+                trackZoom.SetValue(1);
             }
         }
 
@@ -142,6 +77,99 @@ namespace GoBot.IHM
 
             Plateau.ObstaclesPlateau.Clear();
             Actionneur.GestionModuleSupervisee.AttraperModule(nearest);
+        }
+
+        private void trackZoom_ValueChanged(object sender, EventArgs e)
+        {
+            picWorld.Dimensions.SetZoomFactor(trackZoom.Value);
+        }
+
+        private void picWorld_WorldChange()
+        {
+            picWorld.Invalidate();
+        }
+
+        private void picWorld_Paint(object sender, PaintEventArgs e)
+        {
+            List<PointReel> points = _lastMeasure;
+            Graphics g = e.Graphics;
+
+            if (picWorld.Width > 0 && picWorld.Height > 0)
+            {
+                g.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.AntiAlias;
+
+                g.DrawRectangle(Pens.Gray, 0, 0, picWorld.Width - 1, picWorld.Height - 1);
+
+
+                if (boxScale.Checked)
+                {
+                    for (int i = 100; i < 5000; i += 100)
+                    {
+                        new Cercle(new PointReel(), i).Paint(g, Color.Gray, picWorld.Dimensions.WorldScale.Factor < 1 ? 2 : 1, Color.Transparent, picWorld.Dimensions.WorldScale);
+                    }
+
+                    if(picWorld.Dimensions.WorldScale.Factor < 1)
+                    {
+                        for (int i = 10; i < 5000; i += 10)
+                        {
+                            if (i % 100 != 0)
+                            {
+                                new Cercle(new PointReel(), i).Paint(g, Color.LightGray, 1, Color.Transparent, picWorld.Dimensions.WorldScale);
+                            }
+                        }
+                    }
+                }
+
+                if (points?.Count > 0)
+                {
+                    if (rdoOutline.Checked)
+                    {
+                        points.Add(new PointReel());
+                        Polygone poly = new Polygone(points);
+                        points.RemoveAt(points.Count - 1);
+                        poly.Paint(g, Color.Red, 1, Color.LightGray, picWorld.Dimensions.WorldScale);
+                    }
+                    else if (rdoShadows.Checked)
+                    {
+                        points.Add(new PointReel());
+                        Polygone poly = new Polygone(points);
+                        points.RemoveAt(points.Count - 1);
+                        g.FillRectangle(Brushes.LightGray, 0, 0, picWorld.Width, picWorld.Height);
+                        poly.Paint(g, Color.Red, 1, Color.White, picWorld.Dimensions.WorldScale);
+                    }
+                    else if (rdoObjects.Checked)
+                    {
+                        foreach (PointReel p in points)
+                        {
+                            p.Paint(g, Color.Black, 3, Color.Red, picWorld.Dimensions.WorldScale);
+                        }
+                    }
+                    else
+                    {
+                        foreach (PointReel p in points)
+                        {
+                            Segment s = new Segment(new PointReel(), p);
+                            s.Paint(g, Color.Red, 1, Color.Transparent, picWorld.Dimensions.WorldScale);
+                        }
+                    }
+
+                    if (boxGroup.Checked)
+                    {
+                        List<List<PointReel>> groups = points.GroupByDistance(50);
+                        for (int i = 0; i < groups.Count; i++)
+                        {
+                            Cercle circle = groups[i].GetContainingCircle();
+                            circle.Paint(g, Color.Black, 1, Color.Transparent, picWorld.Dimensions.WorldScale);
+                            g.DrawString((circle.Rayon * 2).ToString("0"), new Font("Calibri", 9), Brushes.Black, picWorld.Dimensions.WorldScale.RealToScreenPosition(circle.Centre.Translation(circle.Rayon, 0)));
+                        }
+                    }
+                }
+            }
+        }
+
+        private void picWorld_MouseMove(object sender, MouseEventArgs e)
+        {
+            lblMousePosition.Text = picWorld.Dimensions.WorldScale.ScreenToRealPosition(e.Location).ToString();
         }
     }
 }

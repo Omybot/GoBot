@@ -10,5 +10,6 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="$(MSBuildThisFileDirectory)ControlExtensions.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)RectangleExtensions.cs" />
   </ItemGroup>
 </Project>

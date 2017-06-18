@@ -839,7 +839,7 @@ namespace GoBot.Calculs.Formes
 
         #region Peinture
 
-        public void Paint(Graphics g, Color outlineColor, int outlineWidth, Color fillColor, PaintScale scale)
+        public void Paint(Graphics g, Color outlineColor, int outlineWidth, Color fillColor, WorldScale scale)
         {
             if (Cotes.Count == 0)
                 return;

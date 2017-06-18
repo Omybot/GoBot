@@ -1,5 +1,4 @@
 ﻿using GoBot.Calculs;
-using GoBot.Files;
 using GoBot.PathFinding;
 using System;
 using System.IO;
