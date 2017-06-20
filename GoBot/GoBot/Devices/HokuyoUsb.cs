@@ -19,7 +19,7 @@ namespace GoBot.Devices
         {
             port = new SerialPort(portCom, 115200);
             port.Open();
-            trameMesure = "MS0000" + nbPoints.ToString("0000") + "00001";
+            trameMesure = "MS0000" + PointsCount.ToString("0000") + "00001";
 
             //trameDetails = "VV\n00P\n";
             //port.WriteLine(trameDetails);

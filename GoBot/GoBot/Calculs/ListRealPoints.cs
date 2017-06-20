@@ -60,5 +60,20 @@ namespace GoBot.Calculs.Formes
 
             return groups;
         }
+
+        public static void Shift(this List<PointReel> pts, double deltaX, double deltaY)
+        {
+            pts.ForEach(p => p.Placer(p.X + deltaX, p.Y + deltaY));
+        }
+
+        public static List<PointReel> GetPointsNearFrom(this List<PointReel> pts, IForme shape, double maxDistance)
+        {
+            return pts.Where(p => p.Distance(shape) <= maxDistance).ToList();
+        }
+
+        public static List<PointReel> GetPointsInside(this List<PointReel> pts, IForme shape)
+        {
+            return pts.Where(p => shape.Contient(p)).ToList();
+        }
     }
 }

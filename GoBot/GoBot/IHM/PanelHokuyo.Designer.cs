@@ -41,6 +41,7 @@
             this.picWorld = new GoBot.IHM.WorldPanel(this.components);
             this.lblMousePosition = new System.Windows.Forms.Label();
             this.lblMousePositionTxt = new System.Windows.Forms.Label();
+            this.lblMeasuresPerSecond = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.picWorld)).BeginInit();
             this.SuspendLayout();
             // 
@@ -177,8 +178,18 @@
             this.lblMousePositionTxt.TabIndex = 13;
             this.lblMousePositionTxt.Text = "Position souris";
             // 
+            // lblMeasuresPerSecond
+            // 
+            this.lblMeasuresPerSecond.Location = new System.Drawing.Point(0, 404);
+            this.lblMeasuresPerSecond.Name = "lblMeasuresPerSecond";
+            this.lblMeasuresPerSecond.Size = new System.Drawing.Size(100, 23);
+            this.lblMeasuresPerSecond.TabIndex = 14;
+            this.lblMeasuresPerSecond.Text = "-";
+            this.lblMeasuresPerSecond.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
             // PanelHokuyo
             // 
+            this.Controls.Add(this.lblMeasuresPerSecond);
             this.Controls.Add(this.lblMousePositionTxt);
             this.Controls.Add(this.lblMousePosition);
             this.Controls.Add(this.picWorld);
@@ -213,5 +224,6 @@
         private WorldPanel picWorld;
         private System.Windows.Forms.Label lblMousePosition;
         private System.Windows.Forms.Label lblMousePositionTxt;
+        private System.Windows.Forms.Label lblMeasuresPerSecond;
     }
 }

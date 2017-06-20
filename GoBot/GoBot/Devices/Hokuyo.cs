@@ -2,71 +2,144 @@
 using GoBot.Calculs.Formes;
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
-using System.IO.Ports;
 using System.Linq;
-using System.Text;
-using System.Text.RegularExpressions;
-using GoBot.Communications;
 using System.Threading;
 
 namespace GoBot.Devices
 {
     abstract class Hokuyo
     {
-        private const int offsetX = 115;
-        private const int offsetY = -87;
+        protected const int offsetX = 115;
+        protected const int offsetY = -87;
 
-        protected int nbPoints;
-        protected LidarID lidar;
+        protected bool _measureEnable = false;
 
-        private Angle angleMesurable;
-        private Angle debutAngleVisible;
-        private Angle finAngleVisible;
-        private int offsetPoints;
-        private String model;
+        protected TicksPerSecond _measuresPerSecond { get; set; }
+
+        public LidarID ID { get; protected set; }
+
+        public Angle ScanRange { get; protected set; }
+
+        public Angle AnalyzedAngleStart { get; set; }
+
+        public Angle AnalyzedAngleEnd { get; set; }
+
+        public Angle AnalyzedAngle
+        {
+            get
+            {
+                return AnalyzedAngleEnd - AnalyzedAngleStart;
+            }
+        }
+
+        public int PointsCount { get; protected set; }
+
+        public Angle InterPointsAngle
+        {
+            get
+            {
+                return ScanRange / PointsCount;
+            }
+        }
+
+        public int AnalyzedPointsCount
+        {
+            get
+            {
+                return (int)(AnalyzedAngle / InterPointsAngle);
+            }
+        }
+
+        private int OffsetPoints { get; set; }
+
+        public String Model { get; protected set; }
 
         public Position Position;
+
+        public List<PointReel> LastMeasure { get; protected set; }
+
+        public delegate void NewMeasureDelegate(List<PointReel> measure);
+        public event NewMeasureDelegate NewMeasure;
+
+        public delegate void FrequencyChangeDelegate(double value);
+        public event FrequencyChangeDelegate FrequencyChange;
 
         public Hokuyo(LidarID lidar)
         {
             //trameDetails = "VV\n00P\n";
-            this.lidar = lidar;
+            this.ID = lidar;
             semLock = new Semaphore(1, 1);
 
             switch (lidar)
             {
-                case LidarID.ScanSol: model = "URG-04LX-UG01"; break;
+                case LidarID.ScanSol: Model = "URG-04LX-UG01"; break;
             }
 
-            if (model.Contains("UBG-04LX-F01"))//Hokuyo bleu 
+            if (Model.Contains("UBG-04LX-F01"))//Hokuyo bleu 
             {
-                nbPoints = 725;
-                angleMesurable = new Angle(240, AnglyeType.Degre);
-                offsetPoints = 44;
+                PointsCount = 725;
+                ScanRange = 240;
+                OffsetPoints = 44;
             }
-            else if (model.Contains("URG-04LX-UG01")) //Petit hokuyo
+            else if (Model.Contains("URG-04LX-UG01")) //Petit hokuyo
             {
-                nbPoints = 725;
-                angleMesurable = new Angle(240, AnglyeType.Degre);
-                offsetPoints = 44;
+                PointsCount = 725;
+                ScanRange = 240;
+                OffsetPoints = 44;
             }
-            else if (model.Contains("BTM-75LX")) // Grand hokuyo
+            else if (Model.Contains("BTM-75LX")) // Grand hokuyo
             {
-                nbPoints = 1080;
-                angleMesurable = new Angle(270, AnglyeType.Degre);
-                offsetPoints = 0;
+                PointsCount = 1080;
+                ScanRange = 270;
+                OffsetPoints = 0;
             }
 
             Position = new Position();
 
-            debutAngleVisible = 45;
-            finAngleVisible = 180;
+            AnalyzedAngleStart = 45;
+            AnalyzedAngleEnd = 180;
+
+            LastMeasure = null;
+            _measuresPerSecond = new TicksPerSecond();
+            _measuresPerSecond.ValueChange += _measuresPerSecond_ValueChange;
+        }
+
+        private void _measuresPerSecond_ValueChange(double value)
+        {
+            FrequencyChange?.Invoke(value);
         }
 
         public Angle AngleMort
         {
-            get { return new Angle(360 - angleMesurable); }
+            get { return new Angle(360 - ScanRange); }
+        }
+
+        public void StartLoopMeasure()
+        {
+            _measuresPerSecond.Start();
+            _measureEnable = true;
+
+            ThreadPool.QueueUserWorkItem(f =>
+            {
+                while (_measureEnable)
+                {
+                    LastMeasure = GetMesure();
+                    if(_measureEnable)
+                        OnNewMeasure();
+                }
+            });
+        }
+
+        public void StopLoopMeasure()
+        {
+            _measureEnable = false;
+            _measuresPerSecond.Stop();
+        }
+
+        protected void OnNewMeasure()
+        {
+            _measuresPerSecond.AddTick();
+            NewMeasure?.Invoke(LastMeasure);
         }
 
         protected Position PositionDepuisRobot(Position robotPosition)
@@ -80,7 +153,6 @@ namespace GoBot.Devices
             List<PointReel> points = new List<PointReel>();
 
             semLock.WaitOne();
-            DateTime debut = DateTime.Now;
 
             Position refPosition;
             String reponse = GetResultat(out refPosition);
@@ -93,7 +165,7 @@ namespace GoBot.Devices
                 if (reponse != "")
                 {
                     List<int> mesures = DecodeMessage(reponse);
-                    mesures.RemoveRange(0, offsetPoints);
+                    mesures.RemoveRange(0, OffsetPoints);
                     points = ValeursToPositions(mesures, false, 10, -1, refPosition);
                 }
             }
@@ -109,7 +181,6 @@ namespace GoBot.Devices
             List<PointReel> points = new List<PointReel>();
 
             semLock.WaitOne();
-            DateTime debut = DateTime.Now;
 
             Position refPosition;
             String reponse = GetResultat(out refPosition);
@@ -119,7 +190,7 @@ namespace GoBot.Devices
                 if (reponse != "")
                 {
                     List<int> mesures = DecodeMessage(reponse);
-                    mesures.RemoveRange(0, offsetPoints);
+                    mesures.RemoveRange(0, OffsetPoints);
                     points = ValeursToPositions(mesures, false, 200, 3000, new Position());
                 }
             }
@@ -133,7 +204,7 @@ namespace GoBot.Devices
         protected List<PointReel> ValeursToPositions(List<int> mesures, bool limiteTable, int minDistance, int maxDistance, Position refPosition)
         {
             List<PointReel> positions = new List<PointReel>();
-            double stepAngular = angleMesurable.AngleRadiansPositif / (double)mesures.Count;
+            double stepAngular = ScanRange.AngleRadiansPositif / (double)mesures.Count;
 
             for (int i = 0; i < mesures.Count; i++)
             {
@@ -141,10 +212,10 @@ namespace GoBot.Devices
 
                 if (mesures[i] > minDistance && (mesures[i] < maxDistance || maxDistance == -1))
                 {
-                    if (angle.ComprisEntre(debutAngleVisible, finAngleVisible))
+                    if (angle.ComprisEntre(AnalyzedAngleStart, AnalyzedAngleEnd))
                     {
-                        double sin = Math.Sin(angle.AngleRadiansPositif - refPosition.Angle.AngleRadiansPositif - angleMesurable.AngleRadiansPositif / 2 - Math.PI / 2) * mesures[i];
-                        double cos = Math.Cos(angle.AngleRadiansPositif - refPosition.Angle.AngleRadiansPositif - angleMesurable.AngleRadiansPositif / 2 - Math.PI / 2) * mesures[i];
+                        double sin = Math.Sin(angle.AngleRadiansPositif - refPosition.Angle.AngleRadiansPositif - ScanRange.AngleRadiansPositif / 2 - Math.PI / 2) * mesures[i];
+                        double cos = Math.Cos(angle.AngleRadiansPositif - refPosition.Angle.AngleRadiansPositif - ScanRange.AngleRadiansPositif / 2 - Math.PI / 2) * mesures[i];
 
                         PointReel pos = new PointReel(refPosition.Coordonnees.X - sin, refPosition.Coordonnees.Y - cos);
 
@@ -223,7 +294,7 @@ namespace GoBot.Devices
             return new Angle(angleSomme / nb, AnglyeType.Radian);
         }
 
-        public Angle CalculDistanceX(Segment segmentPointsProches, double distanceMaxSegment, int nombreMesures)
+        public double CalculDistanceX(Segment segmentPointsProches, double distanceMaxSegment, int nombreMesures)
         {
             double distanceSomme = 0;
             int nb = 0;
@@ -247,7 +318,7 @@ namespace GoBot.Devices
             return distanceSomme / nb;
         }
 
-        public Angle CalculDistanceY(int minX, int maxX, int maxY, int nombreMesures)
+        public double CalculDistanceY(int minX, int maxX, int maxY, int nombreMesures)
         {
             double distanceSomme = 0;
 

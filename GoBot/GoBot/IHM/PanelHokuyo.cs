@@ -39,17 +39,22 @@ namespace GoBot.IHM
 
         private void switchEnable_ChangementEtat(object sender, EventArgs e)
         {
-            ThreadPool.QueueUserWorkItem(f => ThreadHokuyo());
+            if (switchBouton1.Actif)
+            {
+                Actionneur.Hokuyo.StartLoopMeasure();
+                Actionneur.Hokuyo.NewMeasure += Hokuyo_NewMeasure;
+            }
+            else
+            {
+                Actionneur.Hokuyo.StopLoopMeasure();
+                Actionneur.Hokuyo.NewMeasure -= Hokuyo_NewMeasure;
+            }
         }
 
-        private void ThreadHokuyo()
+        private void Hokuyo_NewMeasure(List<PointReel> measure)
         {
-            while (true)
-            {
-                _lastMeasure = Actionneur.Hokuyo.GetRawMesure();
-
-                picWorld.Invalidate();
-            }
+            _lastMeasure = measure;
+            picWorld.Invalidate();
         }
 
         private void PanelHokuyo_Load(object sender, EventArgs e)
@@ -57,7 +62,13 @@ namespace GoBot.IHM
             if (!Execution.DesignMode)
             {
                 trackZoom.SetValue(1);
+                Actionneur.Hokuyo.FrequencyChange += Hokuyo_FrequencyChange;
             }
+        }
+
+        private void Hokuyo_FrequencyChange(double value)
+        {
+            lblMeasuresPerSecond.InvokeAuto(() => lblMeasuresPerSecond.Text = value.ToString("0.00") + " mesures/s");
         }
 
         private void btnGo_Click(object sender, EventArgs e)
