@@ -48,6 +48,12 @@
     <Compile Include="Batterie.Designer.cs">
       <DependentUpon>Batterie.cs</DependentUpon>
     </Compile>
+    <Compile Include="BinaryGraph.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="BinaryGraph.Designer.cs">
+      <DependentUpon>BinaryGraph.cs</DependentUpon>
+    </Compile>
     <Compile Include="Button3D.cs">
       <SubType>Component</SubType>
     </Compile>
@@ -136,6 +142,9 @@
   <ItemGroup>
     <EmbeddedResource Include="Batterie.resx">
       <DependentUpon>Batterie.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="BinaryGraph.resx">
+      <DependentUpon>BinaryGraph.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Button3D.resx">
       <DependentUpon>Button3D.cs</DependentUpon>

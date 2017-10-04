@@ -50,10 +50,10 @@ namespace Composants
             semaphore.WaitOne();
 
             List<double> liste;
-            if(Donnees.ContainsKey(courbe))
+            if (Donnees.ContainsKey(courbe))
             {
                 liste = Donnees[courbe];
-                if(couleur != null)
+                if (couleur != null)
                     Pens[courbe] = new Pen(couleur.Value);
             }
             else
@@ -61,7 +61,7 @@ namespace Composants
                 liste = new List<double>();
                 Donnees.Add(courbe, liste);
                 DonneesAffichees.Add(courbe, true);
-                if(couleur != null)
+                if (couleur != null)
                     Pens.Add(courbe, new Pen(couleur.Value));
                 else
                     Pens.Add(courbe, new Pen(Color.Black));
@@ -82,12 +82,9 @@ namespace Composants
         {
             semaphore.WaitOne();
 
-            Graphics g = pictureBox.CreateGraphics();
-
             Bitmap bmp = new Bitmap(pictureBox.Width, pictureBox.Height);
 
             Graphics gTemp = Graphics.FromImage(bmp);
-            g.SmoothingMode = SmoothingMode.AntiAlias;
 
             gTemp.Clear(BackColor);
 
@@ -98,20 +95,24 @@ namespace Composants
             {
                 min = EchelleMin;
                 max = EchelleMax;
+                lblMax.Visible = MaxVisible;
+                lblMin.Visible = MinVisible;
             }
             else
             {
-
                 if (EchelleCommune)
                 {
-                        foreach (KeyValuePair<String, List<double>> courbe in Donnees)
+                    lblMax.Visible = MaxVisible;
+                    lblMin.Visible = MinVisible;
+
+                    foreach (KeyValuePair<String, List<double>> courbe in Donnees)
+                    {
+                        if (DonneesAffichees[courbe.Key] && courbe.Value.Count > 1)
                         {
-                            if (DonneesAffichees[courbe.Key] && courbe.Value.Count > 1)
-                            {
-                                min = Math.Min(min, courbe.Value.Min());
-                                max = Math.Max(max, courbe.Value.Max());
-                            }
+                            min = Math.Min(min, courbe.Value.Min());
+                            max = Math.Max(max, courbe.Value.Max());
                         }
+                    }
                 }
                 else
                 {
@@ -122,10 +123,10 @@ namespace Composants
 
             lblMax.Text = max.ToString();
             lblMin.Text = min.ToString();
-            
+
             double coef = max == min ? 1 : (float)(pictureBox.Height - 1) / (max - min);
 
-            g.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.AntiAlias;
+            gTemp.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.AntiAlias;
 
             foreach (KeyValuePair<String, List<double>> courbe in Donnees)
             {
@@ -144,21 +145,24 @@ namespace Composants
                 }
             }
 
-            g.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.None;
+            gTemp.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.None;
 
-            int y = pictureBox.Height - 20;
-            foreach (KeyValuePair<String, List<double>> courbe in Donnees)
+            if (NamesVisible)
             {
-                if (DonneesAffichees[courbe.Key])
+                int y = pictureBox.Height - 20;
+                foreach (KeyValuePair<String, List<double>> courbe in Donnees)
                 {
-                    Font police = new System.Drawing.Font("Calibri", 9);
-                    gTemp.DrawString(courbe.Key, police, new SolidBrush(Pens[courbe.Key].Color), 2, y);
-                    y -= 10;
-                    police.Dispose();
+                    if (DonneesAffichees[courbe.Key])
+                    {
+                        Font police = new System.Drawing.Font("Calibri", 9);
+                        gTemp.DrawString(courbe.Key, police, new SolidBrush(Pens[courbe.Key].Color), 2, y);
+                        y -= 10;
+                        police.Dispose();
+                    }
                 }
             }
 
-            g.DrawImage(bmp, new Point(0, 0));
+            pictureBox.Image = bmp;
 
             semaphore.Release();
         }
@@ -195,5 +199,8 @@ namespace Composants
         public bool EchelleFixe { get; set; }
         public double EchelleMin { get; set; }
         public double EchelleMax { get; set; }
+        public bool NamesVisible { get; set; }
+        public bool MinVisible { get; set; }
+        public bool MaxVisible { get; set; }
     }
 }
