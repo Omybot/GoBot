@@ -78,6 +78,11 @@ namespace GoBot
             ValeursAnalogiques.Add(Board.RecIO, null);
             ValeursAnalogiques.Add(Board.RecGB, null);
             ValeursAnalogiques.Add(Board.RecMove, null);
+
+            ValeursNumeriques = new Dictionary<Board, List<Byte>>();
+            ValeursNumeriques.Add(Board.RecIO, null);
+            ValeursNumeriques.Add(Board.RecGB, null);
+            ValeursNumeriques.Add(Board.RecMove, null);
         }
 
         void timerPositions_Elapsed(object sender, ElapsedEventArgs e)
@@ -523,6 +528,14 @@ namespace GoBot
         {
             List<double> values = Enumerable.Range(1, 9).Select(o => (double)o).ToList();
             ValeursAnalogiques[carte] = values;
+        }
+
+        public override void DemandeValeursNumeriques(Board carte, bool attendre)
+        {
+            Random r = new Random();
+
+            List<Byte> values = new List<Byte>() { (Byte)r.Next(), (Byte)r.Next() };
+            ValeursNumeriques[carte] = values;
         }
     }
 }

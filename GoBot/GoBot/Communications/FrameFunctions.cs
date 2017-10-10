@@ -15,6 +15,8 @@
         RetourCapteurOnOff = 0x75,
         DemandeValeursAnalogiques = 0x76,
         RetourValeursAnalogiques = 0x77,
+        DemandeValeursNumeriques = 0x78,
+        RetourValeursNumeriques = 0x79,
         DemandeCapteurCouleur = 0x52,
         RetourCapteurCouleur = 0x53,
         DemandePositionCodeur = 0x21,

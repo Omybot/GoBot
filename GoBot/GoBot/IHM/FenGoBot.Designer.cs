@@ -69,6 +69,7 @@ namespace GoBot
             this.panelAnalogiqueMove = new GoBot.IHM.PanelAnalogique();
             this.tabGB = new System.Windows.Forms.TabPage();
             this.panelAnalogiqueGB = new GoBot.IHM.PanelAnalogique();
+            this.tabPortsNumeriques = new System.Windows.Forms.TabPage();
             this.tabBaliseUnique = new System.Windows.Forms.TabPage();
             this.panelBaliseDiagnostic = new GoBot.IHM.PanelBaliseDiagnostic();
             this.panelBalise = new GoBot.IHM.PanelBalise();
@@ -80,12 +81,15 @@ namespace GoBot
             this.panelRecGoBot1 = new GoBot.IHM.PanelRecGoBot();
             this.tabActionneurs = new System.Windows.Forms.TabPage();
             this.panelGenerics1 = new GoBot.IHM.PanelGenerics();
+            this.tabHokuyo = new System.Windows.Forms.TabPage();
+            this.panelHokuyo1 = new GoBot.IHM.PanelHokuyo();
             this.btnClose = new System.Windows.Forms.Button();
             this.btnFenetre = new System.Windows.Forms.Button();
             this.switchBoutonSimu = new Composants.SwitchBouton();
             this.panelConnexions = new GoBot.IHM.PanelConnexions();
-            this.tabHokuyo = new System.Windows.Forms.TabPage();
-            this.panelHokuyo1 = new GoBot.IHM.PanelHokuyo();
+            this.panelNumerique1 = new GoBot.IHM.PanelNumerique();
+            this.panelNumerique2 = new GoBot.IHM.PanelNumerique();
+            this.panelNumerique3 = new GoBot.IHM.PanelNumerique();
             this.tabAlimentation.SuspendLayout();
             this.tabServomoteurs.SuspendLayout();
             this.tabConnexions.SuspendLayout();
@@ -107,6 +111,7 @@ namespace GoBot
             this.tabIO.SuspendLayout();
             this.tabMove.SuspendLayout();
             this.tabGB.SuspendLayout();
+            this.tabPortsNumeriques.SuspendLayout();
             this.tabBaliseUnique.SuspendLayout();
             this.tabRecGoBot.SuspendLayout();
             this.grpCapteurs.SuspendLayout();
@@ -401,6 +406,7 @@ namespace GoBot
             this.tabControl.Controls.Add(this.tabAlimentation);
             this.tabControl.Controls.Add(this.tabConstantes);
             this.tabControl.Controls.Add(this.tabPortsAnalogiques);
+            this.tabControl.Controls.Add(this.tabPortsNumeriques);
             this.tabControl.Controls.Add(this.tabBaliseUnique);
             this.tabControl.Controls.Add(this.tabRecGoBot);
             this.tabControl.Controls.Add(this.tabActionneurs);
@@ -466,6 +472,7 @@ namespace GoBot
             // 
             // panelAnalogiqueIO
             // 
+            this.panelAnalogiqueIO.Carte = GoBot.Board.RecIO;
             this.panelAnalogiqueIO.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panelAnalogiqueIO.Location = new System.Drawing.Point(3, 3);
             this.panelAnalogiqueIO.Name = "panelAnalogiqueIO";
@@ -485,6 +492,7 @@ namespace GoBot
             // 
             // panelAnalogiqueMove
             // 
+            this.panelAnalogiqueMove.Carte = GoBot.Board.RecMove;
             this.panelAnalogiqueMove.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panelAnalogiqueMove.Location = new System.Drawing.Point(3, 3);
             this.panelAnalogiqueMove.Name = "panelAnalogiqueMove";
@@ -504,11 +512,24 @@ namespace GoBot
             // 
             // panelAnalogiqueGB
             // 
+            this.panelAnalogiqueGB.Carte = GoBot.Board.RecGB;
             this.panelAnalogiqueGB.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panelAnalogiqueGB.Location = new System.Drawing.Point(3, 3);
             this.panelAnalogiqueGB.Name = "panelAnalogiqueGB";
             this.panelAnalogiqueGB.Size = new System.Drawing.Size(1270, 668);
             this.panelAnalogiqueGB.TabIndex = 0;
+            // 
+            // tabPortsNumeriques
+            // 
+            this.tabPortsNumeriques.Controls.Add(this.panelNumerique3);
+            this.tabPortsNumeriques.Controls.Add(this.panelNumerique2);
+            this.tabPortsNumeriques.Controls.Add(this.panelNumerique1);
+            this.tabPortsNumeriques.Location = new System.Drawing.Point(4, 22);
+            this.tabPortsNumeriques.Name = "tabPortsNumeriques";
+            this.tabPortsNumeriques.Size = new System.Drawing.Size(1300, 712);
+            this.tabPortsNumeriques.TabIndex = 29;
+            this.tabPortsNumeriques.Text = "Ports numériques";
+            this.tabPortsNumeriques.UseVisualStyleBackColor = true;
             // 
             // tabBaliseUnique
             // 
@@ -615,6 +636,25 @@ namespace GoBot
             this.panelGenerics1.Size = new System.Drawing.Size(1294, 706);
             this.panelGenerics1.TabIndex = 0;
             // 
+            // tabHokuyo
+            // 
+            this.tabHokuyo.Controls.Add(this.panelHokuyo1);
+            this.tabHokuyo.Location = new System.Drawing.Point(4, 22);
+            this.tabHokuyo.Name = "tabHokuyo";
+            this.tabHokuyo.Padding = new System.Windows.Forms.Padding(3);
+            this.tabHokuyo.Size = new System.Drawing.Size(1300, 712);
+            this.tabHokuyo.TabIndex = 28;
+            this.tabHokuyo.Text = "Hokuyo";
+            this.tabHokuyo.UseVisualStyleBackColor = true;
+            // 
+            // panelHokuyo1
+            // 
+            this.panelHokuyo1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.panelHokuyo1.Location = new System.Drawing.Point(3, 3);
+            this.panelHokuyo1.Name = "panelHokuyo1";
+            this.panelHokuyo1.Size = new System.Drawing.Size(1294, 706);
+            this.panelHokuyo1.TabIndex = 0;
+            // 
             // btnClose
             // 
             this.btnClose.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
@@ -657,24 +697,29 @@ namespace GoBot
             this.panelConnexions.Size = new System.Drawing.Size(980, 27);
             this.panelConnexions.TabIndex = 74;
             // 
-            // tabHokuyo
+            // panelNumerique1
             // 
-            this.tabHokuyo.Controls.Add(this.panelHokuyo1);
-            this.tabHokuyo.Location = new System.Drawing.Point(4, 22);
-            this.tabHokuyo.Name = "tabHokuyo";
-            this.tabHokuyo.Padding = new System.Windows.Forms.Padding(3);
-            this.tabHokuyo.Size = new System.Drawing.Size(1300, 712);
-            this.tabHokuyo.TabIndex = 28;
-            this.tabHokuyo.Text = "Hokuyo";
-            this.tabHokuyo.UseVisualStyleBackColor = true;
+            this.panelNumerique1.Carte = GoBot.Board.RecMove;
+            this.panelNumerique1.Location = new System.Drawing.Point(59, 92);
+            this.panelNumerique1.Name = "panelNumerique1";
+            this.panelNumerique1.Size = new System.Drawing.Size(327, 533);
+            this.panelNumerique1.TabIndex = 0;
             // 
-            // panelHokuyo1
+            // panelNumerique2
             // 
-            this.panelHokuyo1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panelHokuyo1.Location = new System.Drawing.Point(3, 3);
-            this.panelHokuyo1.Name = "panelHokuyo1";
-            this.panelHokuyo1.Size = new System.Drawing.Size(1294, 706);
-            this.panelHokuyo1.TabIndex = 0;
+            this.panelNumerique2.Carte = GoBot.Board.RecIO;
+            this.panelNumerique2.Location = new System.Drawing.Point(443, 92);
+            this.panelNumerique2.Name = "panelNumerique2";
+            this.panelNumerique2.Size = new System.Drawing.Size(327, 533);
+            this.panelNumerique2.TabIndex = 1;
+            // 
+            // panelNumerique3
+            // 
+            this.panelNumerique3.Carte = GoBot.Board.RecGB;
+            this.panelNumerique3.Location = new System.Drawing.Point(827, 92);
+            this.panelNumerique3.Name = "panelNumerique3";
+            this.panelNumerique3.Size = new System.Drawing.Size(327, 533);
+            this.panelNumerique3.TabIndex = 2;
             // 
             // FenGoBot
             // 
@@ -717,6 +762,7 @@ namespace GoBot
             this.tabIO.ResumeLayout(false);
             this.tabMove.ResumeLayout(false);
             this.tabGB.ResumeLayout(false);
+            this.tabPortsNumeriques.ResumeLayout(false);
             this.tabBaliseUnique.ResumeLayout(false);
             this.tabRecGoBot.ResumeLayout(false);
             this.grpCapteurs.ResumeLayout(false);
@@ -787,6 +833,10 @@ namespace GoBot
         private PotarControl potarControl1;
         private System.Windows.Forms.TabPage tabHokuyo;
         private PanelHokuyo panelHokuyo1;
+        private System.Windows.Forms.TabPage tabPortsNumeriques;
+        private PanelNumerique panelNumerique3;
+        private PanelNumerique panelNumerique2;
+        private PanelNumerique panelNumerique1;
     }
 }
 

@@ -112,6 +112,12 @@
     <Compile Include="Actions\IAction.cs" />
     <Compile Include="Calculs\ListRealPoints.cs" />
     <Compile Include="Execution.cs" />
+    <Compile Include="IHM\PanelNumerique.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="IHM\PanelNumerique.Designer.cs">
+      <DependentUpon>PanelNumerique.cs</DependentUpon>
+    </Compile>
     <Compile Include="TicksPerSecond.cs" />
     <Compile Include="IHM\ConnectionDetails.cs">
       <SubType>UserControl</SubType>
@@ -463,6 +469,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="IHM\PanelActionneursOnOff.resx">
       <DependentUpon>PanelActionneursOnOff.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="IHM\PanelNumerique.resx">
+      <DependentUpon>PanelNumerique.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="IHM\PanelAnalogique.resx">
       <DependentUpon>PanelAnalogique.cs</DependentUpon>

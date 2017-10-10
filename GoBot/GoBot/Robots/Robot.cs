@@ -98,6 +98,7 @@ namespace GoBot
         public abstract bool DemandeCapteurOnOff(CapteurOnOffID capteur, bool attendre = true);
         public abstract Color DemandeCapteurCouleur(CapteurCouleurID capteur, bool attendre = true);
         public abstract void DemandeValeursAnalogiques(Board carte, bool attendre = true);
+        public abstract void DemandeValeursNumeriques(Board carte, bool attendre = true);
 
         public abstract void ActionneurOnOff(ActionneurOnOffID actionneur, bool on);
 
@@ -118,6 +119,7 @@ namespace GoBot
         public Dictionary<CapteurCouleurID, Color> CapteursCouleur { get; set; }
         public Dictionary<ActionneurOnOffID, bool> ActionneurActive { get; set; }
         public Dictionary<Board, List<double>> ValeursAnalogiques { get; set; }
+        public Dictionary<Board, List<Byte>> ValeursNumeriques { get; set; }
 
         public delegate void ChangementEtatCapteurOnOffDelegate(CapteurOnOffID capteur, bool etat);
         public event ChangementEtatCapteurOnOffDelegate ChangementEtatCapteurOnOff;

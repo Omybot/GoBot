@@ -449,6 +449,16 @@ namespace GoBot.Communications
             return retour;
         }
 
+        static public Frame DemandeValeursNumeriques(Board carte)
+        {
+            byte[] tab = new byte[2];
+            tab[0] = (byte)carte;
+            tab[1] = (byte)FrameFunction.DemandeValeursNumeriques;
+
+            Frame retour = new Frame(tab);
+            return retour;
+        }
+
         static public Frame DemandeCpuPwm(Robot robot)
         {
             byte[] tab = new byte[2];

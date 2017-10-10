@@ -58,6 +58,11 @@ namespace GoBot
             ValeursAnalogiques.Add(Board.RecGB, null);
             ValeursAnalogiques.Add(Board.RecMove, null);
 
+            ValeursNumeriques = new Dictionary<Board, List<Byte>>();
+            ValeursNumeriques.Add(Board.RecIO, null);
+            ValeursNumeriques.Add(Board.RecGB, null);
+            ValeursNumeriques.Add(Board.RecMove, null);
+
             SpeedConfig.ParamChange += SpeedConfig_ParamChange;
         }
 
@@ -647,6 +652,21 @@ namespace GoBot
 
             if (attendre)
                 SemaphoresTrame[FrameFunction.RetourValeursAnalogiques].WaitOne(1000);
+        }
+
+        public override void DemandeValeursNumeriques(Board carte, bool attendre = true)
+        {
+            if (!Connections.BoardConnection[carte].ConnectionChecker.Connected)
+                return;
+
+            if (attendre)
+                SemaphoresTrame[FrameFunction.RetourValeursNumeriques] = new Semaphore(0, int.MaxValue);
+
+            Frame trame = FrameFactory.DemandeValeursNumeriques(carte);
+            Connections.BoardConnection[carte].SendMessage(trame);
+
+            if (attendre)
+                SemaphoresTrame[FrameFunction.RetourValeursNumeriques].WaitOne(1000);
         }
 
         public override void ServoVitesse(ServomoteurID servo, int vitesse)
