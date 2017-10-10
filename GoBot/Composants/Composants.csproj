@@ -60,6 +60,12 @@
     <Compile Include="Button3D.Designer.cs">
       <DependentUpon>Button3D.cs</DependentUpon>
     </Compile>
+    <Compile Include="ByteBinaryGraph.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="ByteBinaryGraph.Designer.cs">
+      <DependentUpon>ByteBinaryGraph.cs</DependentUpon>
+    </Compile>
     <Compile Include="ColorDisplay.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -148,6 +154,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Button3D.resx">
       <DependentUpon>Button3D.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ByteBinaryGraph.resx">
+      <DependentUpon>ByteBinaryGraph.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="ColorDisplay.resx">
       <DependentUpon>ColorDisplay.cs</DependentUpon>
