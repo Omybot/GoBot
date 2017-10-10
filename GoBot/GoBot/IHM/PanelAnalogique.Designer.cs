@@ -48,7 +48,7 @@
             this.boxIOAN8 = new System.Windows.Forms.CheckBox();
             this.boxIOAN9 = new System.Windows.Forms.CheckBox();
             this.switchOnOff = new Composants.SwitchBouton();
-            this.ctrlGraphique = new Composants.CtrlGraphique();
+            this.ctrlGraphique = new Composants.GraphPanel();
             this.SuspendLayout();
             // 
             // lblAN1
@@ -271,10 +271,9 @@
             // ctrlGraphique
             // 
             this.ctrlGraphique.BackColor = System.Drawing.Color.White;
-            this.ctrlGraphique.EchelleCommune = true;
-            this.ctrlGraphique.EchelleFixe = false;
-            this.ctrlGraphique.EchelleMax = 1D;
-            this.ctrlGraphique.EchelleMin = 0D;
+            this.ctrlGraphique.GraphScale = Composants.GraphPanel.ScaleType.DynamicGlobal;
+            this.ctrlGraphique.MaxLimit = 1D;
+            this.ctrlGraphique.MinLimit = 0D;
             this.ctrlGraphique.Location = new System.Drawing.Point(210, 25);
             this.ctrlGraphique.Name = "ctrlGraphique";
             this.ctrlGraphique.Size = new System.Drawing.Size(981, 470);
@@ -318,7 +317,7 @@
         private System.Windows.Forms.Label lblAN1;
         private System.Windows.Forms.Label lblAN2;
         private System.Windows.Forms.Label lblAN5;
-        private Composants.CtrlGraphique ctrlGraphique;
+        private Composants.GraphPanel ctrlGraphique;
         private System.Windows.Forms.Label lblAN6;
         private System.Windows.Forms.Label lblAN4;
         private System.Windows.Forms.Label lblAN3;

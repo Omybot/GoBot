@@ -31,7 +31,7 @@
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(PanelAlimentation));
             this.label1 = new System.Windows.Forms.Label();
             this.lblTensionPack1 = new System.Windows.Forms.Label();
-            this.ctrlGraphique = new Composants.CtrlGraphique();
+            this.ctrlGraphique = new Composants.GraphPanel();
             this.batteriePack1 = new Composants.Batterie();
             ((System.ComponentModel.ISupportInitialize)(this.batteriePack1)).BeginInit();
             this.SuspendLayout();
@@ -57,10 +57,9 @@
             // ctrlGraphique
             // 
             this.ctrlGraphique.BackColor = System.Drawing.Color.White;
-            this.ctrlGraphique.EchelleCommune = true;
-            this.ctrlGraphique.EchelleFixe = false;
-            this.ctrlGraphique.EchelleMax = 1D;
-            this.ctrlGraphique.EchelleMin = 0D;
+            this.ctrlGraphique.GraphScale = Composants.GraphPanel.ScaleType.DynamicGlobal;
+            this.ctrlGraphique.MaxLimit = 1D;
+            this.ctrlGraphique.MinLimit = 0D;
             this.ctrlGraphique.Location = new System.Drawing.Point(210, 25);
             this.ctrlGraphique.Name = "ctrlGraphique";
             this.ctrlGraphique.Size = new System.Drawing.Size(719, 446);
@@ -102,7 +101,7 @@
 
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label lblTensionPack1;
-        private Composants.CtrlGraphique ctrlGraphique;
+        private Composants.GraphPanel ctrlGraphique;
         private Composants.Batterie batteriePack1;
 
     }

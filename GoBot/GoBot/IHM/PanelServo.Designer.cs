@@ -60,12 +60,12 @@
             this.numTensionMin = new System.Windows.Forms.NumericUpDown();
             this.btnOkTensionMin = new System.Windows.Forms.Button();
             this.lblTxtTensionMin = new System.Windows.Forms.Label();
-            this.ctrlGraphiqueCouple = new Composants.CtrlGraphique();
+            this.ctrlGraphiqueCouple = new Composants.GraphPanel();
             this.lblCoupleActuel = new System.Windows.Forms.Label();
             this.lblTxtCoupleActuel = new System.Windows.Forms.Label();
-            this.ctrlGraphiquePosition = new Composants.CtrlGraphique();
-            this.ctrlGraphiqueVitesse = new Composants.CtrlGraphique();
-            this.ctrlGraphiqueTemperature = new Composants.CtrlGraphique();
+            this.ctrlGraphiquePosition = new Composants.GraphPanel();
+            this.ctrlGraphiqueVitesse = new Composants.GraphPanel();
+            this.ctrlGraphiqueTemperature = new Composants.GraphPanel();
             this.pictureBoxAngles = new System.Windows.Forms.PictureBox();
             this.ledErreurInstruction = new Composants.Led();
             this.ledErreurOverload = new Composants.Led();
@@ -610,10 +610,9 @@
             // ctrlGraphiqueCouple
             // 
             this.ctrlGraphiqueCouple.BackColor = System.Drawing.Color.White;
-            this.ctrlGraphiqueCouple.EchelleCommune = true;
-            this.ctrlGraphiqueCouple.EchelleFixe = false;
-            this.ctrlGraphiqueCouple.EchelleMax = 1D;
-            this.ctrlGraphiqueCouple.EchelleMin = 0D;
+            this.ctrlGraphiqueCouple.GraphScale = Composants.GraphPanel.ScaleType.DynamicGlobal;
+            this.ctrlGraphiqueCouple.MaxLimit = 1D;
+            this.ctrlGraphiqueCouple.MinLimit = 0D;
             this.ctrlGraphiqueCouple.Location = new System.Drawing.Point(795, 363);
             this.ctrlGraphiqueCouple.Name = "ctrlGraphiqueCouple";
             this.ctrlGraphiqueCouple.Size = new System.Drawing.Size(218, 140);
@@ -640,10 +639,9 @@
             // ctrlGraphiquePosition
             // 
             this.ctrlGraphiquePosition.BackColor = System.Drawing.Color.White;
-            this.ctrlGraphiquePosition.EchelleCommune = true;
-            this.ctrlGraphiquePosition.EchelleFixe = false;
-            this.ctrlGraphiquePosition.EchelleMax = 1D;
-            this.ctrlGraphiquePosition.EchelleMin = 0D;
+            this.ctrlGraphiquePosition.GraphScale = Composants.GraphPanel.ScaleType.DynamicGlobal;
+            this.ctrlGraphiquePosition.MaxLimit = 1D;
+            this.ctrlGraphiquePosition.MinLimit = 0D;
             this.ctrlGraphiquePosition.Location = new System.Drawing.Point(795, 210);
             this.ctrlGraphiquePosition.Name = "ctrlGraphiquePosition";
             this.ctrlGraphiquePosition.Size = new System.Drawing.Size(218, 140);
@@ -652,10 +650,9 @@
             // ctrlGraphiqueVitesse
             // 
             this.ctrlGraphiqueVitesse.BackColor = System.Drawing.Color.White;
-            this.ctrlGraphiqueVitesse.EchelleCommune = true;
-            this.ctrlGraphiqueVitesse.EchelleFixe = false;
-            this.ctrlGraphiqueVitesse.EchelleMax = 1D;
-            this.ctrlGraphiqueVitesse.EchelleMin = 0D;
+            this.ctrlGraphiqueVitesse.GraphScale = Composants.GraphPanel.ScaleType.DynamicGlobal;
+            this.ctrlGraphiqueVitesse.MaxLimit = 1D;
+            this.ctrlGraphiqueVitesse.MinLimit = 0D;
             this.ctrlGraphiqueVitesse.Location = new System.Drawing.Point(795, 57);
             this.ctrlGraphiqueVitesse.Name = "ctrlGraphiqueVitesse";
             this.ctrlGraphiqueVitesse.Size = new System.Drawing.Size(218, 140);
@@ -664,10 +661,9 @@
             // ctrlGraphiqueTemperature
             // 
             this.ctrlGraphiqueTemperature.BackColor = System.Drawing.Color.White;
-            this.ctrlGraphiqueTemperature.EchelleCommune = true;
-            this.ctrlGraphiqueTemperature.EchelleFixe = false;
-            this.ctrlGraphiqueTemperature.EchelleMax = 1D;
-            this.ctrlGraphiqueTemperature.EchelleMin = 0D;
+            this.ctrlGraphiqueTemperature.GraphScale = Composants.GraphPanel.ScaleType.DynamicGlobal;
+            this.ctrlGraphiqueTemperature.MaxLimit = 1D;
+            this.ctrlGraphiqueTemperature.MinLimit = 0D;
             this.ctrlGraphiqueTemperature.Location = new System.Drawing.Point(564, 363);
             this.ctrlGraphiqueTemperature.Name = "ctrlGraphiqueTemperature";
             this.ctrlGraphiqueTemperature.Size = new System.Drawing.Size(218, 140);
@@ -1546,12 +1542,12 @@
         private Composants.Led ledErreurAngleLimit;
         private Composants.Led ledErreurInputVoltage;
         private System.Windows.Forms.PictureBox pictureBoxAngles;
-        private Composants.CtrlGraphique ctrlGraphiqueTemperature;
-        private Composants.CtrlGraphique ctrlGraphiquePosition;
-        private Composants.CtrlGraphique ctrlGraphiqueVitesse;
+        private Composants.GraphPanel ctrlGraphiqueTemperature;
+        private Composants.GraphPanel ctrlGraphiquePosition;
+        private Composants.GraphPanel ctrlGraphiqueVitesse;
         private System.Windows.Forms.Label lblCoupleActuel;
         private System.Windows.Forms.Label lblTxtCoupleActuel;
-        private Composants.CtrlGraphique ctrlGraphiqueCouple;
+        private Composants.GraphPanel ctrlGraphiqueCouple;
         private System.Windows.Forms.NumericUpDown numTensionMax;
         private System.Windows.Forms.Button btnOkTensionMax;
         private System.Windows.Forms.Label lblTxtTensionMax;

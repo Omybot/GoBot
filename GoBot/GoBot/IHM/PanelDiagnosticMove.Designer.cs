@@ -28,10 +28,10 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.ctrlGraphique = new Composants.CtrlGraphique();
+            this.ctrlGraphique = new Composants.GraphPanel();
             this.btnDemandeCharge = new System.Windows.Forms.Button();
-            this.ctrlGraphique1 = new Composants.CtrlGraphique();
-            this.ctrlGraphique2 = new Composants.CtrlGraphique();
+            this.ctrlGraphique1 = new Composants.GraphPanel();
+            this.ctrlGraphique2 = new Composants.GraphPanel();
             this.lblChargeCPU = new System.Windows.Forms.Label();
             this.pictureBoxVumetreCPU = new System.Windows.Forms.PictureBox();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxVumetreCPU)).BeginInit();
@@ -40,12 +40,13 @@
             // ctrlGraphique
             // 
             this.ctrlGraphique.BackColor = System.Drawing.Color.White;
-            this.ctrlGraphique.EchelleCommune = true;
-            this.ctrlGraphique.EchelleFixe = false;
-            this.ctrlGraphique.EchelleMax = 1D;
-            this.ctrlGraphique.EchelleMin = 0D;
+            this.ctrlGraphique.GraphScale = Composants.GraphPanel.ScaleType.Fixed;
+            this.ctrlGraphique.LimitsVisible = false;
             this.ctrlGraphique.Location = new System.Drawing.Point(199, 64);
+            this.ctrlGraphique.MaxLimit = 1D;
+            this.ctrlGraphique.MinLimit = 0D;
             this.ctrlGraphique.Name = "ctrlGraphique";
+            this.ctrlGraphique.NamesVisible = false;
             this.ctrlGraphique.Size = new System.Drawing.Size(773, 170);
             this.ctrlGraphique.TabIndex = 123;
             // 
@@ -62,24 +63,26 @@
             // ctrlGraphique1
             // 
             this.ctrlGraphique1.BackColor = System.Drawing.Color.White;
-            this.ctrlGraphique1.EchelleCommune = true;
-            this.ctrlGraphique1.EchelleFixe = false;
-            this.ctrlGraphique1.EchelleMax = 1D;
-            this.ctrlGraphique1.EchelleMin = 0D;
+            this.ctrlGraphique1.GraphScale = Composants.GraphPanel.ScaleType.Fixed;
+            this.ctrlGraphique1.LimitsVisible = false;
             this.ctrlGraphique1.Location = new System.Drawing.Point(199, 240);
+            this.ctrlGraphique1.MaxLimit = 4000D;
+            this.ctrlGraphique1.MinLimit = -4000D;
             this.ctrlGraphique1.Name = "ctrlGraphique1";
+            this.ctrlGraphique1.NamesVisible = false;
             this.ctrlGraphique1.Size = new System.Drawing.Size(773, 170);
             this.ctrlGraphique1.TabIndex = 125;
             // 
             // ctrlGraphique2
             // 
             this.ctrlGraphique2.BackColor = System.Drawing.Color.White;
-            this.ctrlGraphique2.EchelleCommune = true;
-            this.ctrlGraphique2.EchelleFixe = false;
-            this.ctrlGraphique2.EchelleMax = 1D;
-            this.ctrlGraphique2.EchelleMin = 0D;
+            this.ctrlGraphique2.GraphScale = Composants.GraphPanel.ScaleType.Fixed;
+            this.ctrlGraphique2.LimitsVisible = false;
             this.ctrlGraphique2.Location = new System.Drawing.Point(199, 416);
+            this.ctrlGraphique2.MaxLimit = 4000D;
+            this.ctrlGraphique2.MinLimit = -4000D;
             this.ctrlGraphique2.Name = "ctrlGraphique2";
+            this.ctrlGraphique2.NamesVisible = false;
             this.ctrlGraphique2.Size = new System.Drawing.Size(773, 170);
             this.ctrlGraphique2.TabIndex = 126;
             // 
@@ -121,10 +124,10 @@
 
         #endregion
 
-        private Composants.CtrlGraphique ctrlGraphique;
+        private Composants.GraphPanel ctrlGraphique;
         private System.Windows.Forms.Button btnDemandeCharge;
-        private Composants.CtrlGraphique ctrlGraphique1;
-        private Composants.CtrlGraphique ctrlGraphique2;
+        private Composants.GraphPanel ctrlGraphique1;
+        private Composants.GraphPanel ctrlGraphique2;
         private System.Windows.Forms.Label lblChargeCPU;
         private System.Windows.Forms.PictureBox pictureBoxVumetreCPU;
     }

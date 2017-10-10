@@ -52,18 +52,18 @@ namespace GoBot.IHM
                 lblAN8.Text = values[7].ToString("0.0000") + " V";
                 lblAN9.Text = values[8].ToString("0.0000") + " V";
 
-                ctrlGraphique.AjouterPoint("AN1", values[0], Color.Blue);
-                ctrlGraphique.AjouterPoint("AN2", values[1], Color.Aqua);
-                ctrlGraphique.AjouterPoint("AN3", values[2], Color.Red);
-                ctrlGraphique.AjouterPoint("AN4", values[3], Color.Magenta);
-                ctrlGraphique.AjouterPoint("AN5", values[4], Color.Green);
-                ctrlGraphique.AjouterPoint("AN6", values[5], Color.Orange);
-                ctrlGraphique.AjouterPoint("AN7", values[6], Color.Black);
-                ctrlGraphique.AjouterPoint("AN8", values[7], Color.Coral);
-                ctrlGraphique.AjouterPoint("AN9", values[8], Color.DeepPink);
+                ctrlGraphique.AddPoint("AN1", values[0], Color.Blue);
+                ctrlGraphique.AddPoint("AN2", values[1], Color.Aqua);
+                ctrlGraphique.AddPoint("AN3", values[2], Color.Red);
+                ctrlGraphique.AddPoint("AN4", values[3], Color.Magenta);
+                ctrlGraphique.AddPoint("AN5", values[4], Color.Green);
+                ctrlGraphique.AddPoint("AN6", values[5], Color.Orange);
+                ctrlGraphique.AddPoint("AN7", values[6], Color.Black);
+                ctrlGraphique.AddPoint("AN8", values[7], Color.Coral);
+                ctrlGraphique.AddPoint("AN9", values[8], Color.DeepPink);
             }
 
-            ctrlGraphique.DessineCourbes();
+            ctrlGraphique.DrawCurves();
 
             Robots.GrosRobot.DemandeValeursAnalogiques(Carte);
         }
@@ -75,47 +75,47 @@ namespace GoBot.IHM
 
         private void boxAN1_CheckedChanged(object sender, EventArgs e)
         {
-            ctrlGraphique.MasquerCourbe("AN1", !boxIOAN1.Checked);
+            ctrlGraphique.ShowCurve("AN1", boxIOAN1.Checked);
         }
 
         private void boxAN2_CheckedChanged(object sender, EventArgs e)
         {
-            ctrlGraphique.MasquerCourbe("AN2", !boxIOAN2.Checked);
+            ctrlGraphique.ShowCurve("AN2", boxIOAN2.Checked);
         }
 
         private void boxAN3_CheckedChanged(object sender, EventArgs e)
         {
-            ctrlGraphique.MasquerCourbe("AN3", !boxIOAN3.Checked);
+            ctrlGraphique.ShowCurve("AN3", boxIOAN3.Checked);
         }
 
         private void boxAN4_CheckedChanged(object sender, EventArgs e)
         {
-            ctrlGraphique.MasquerCourbe("AN4", !boxIOAN4.Checked);
+            ctrlGraphique.ShowCurve("AN4", boxIOAN4.Checked);
         }
 
         private void boxAN5_CheckedChanged(object sender, EventArgs e)
         {
-            ctrlGraphique.MasquerCourbe("AN5", !boxIOAN5.Checked);
+            ctrlGraphique.ShowCurve("AN5", boxIOAN5.Checked);
         }
 
         private void boxAN6_CheckedChanged(object sender, EventArgs e)
         {
-            ctrlGraphique.MasquerCourbe("AN6", !boxIOAN6.Checked);
+            ctrlGraphique.ShowCurve("AN6", boxIOAN6.Checked);
         }
 
         private void boxAN7_CheckedChanged(object sender, EventArgs e)
         {
-            ctrlGraphique.MasquerCourbe("AN7", !boxIOAN7.Checked);
+            ctrlGraphique.ShowCurve("AN7", boxIOAN7.Checked);
         }
 
         private void boxAN8_CheckedChanged(object sender, EventArgs e)
         {
-            ctrlGraphique.MasquerCourbe("AN8", !boxIOAN8.Checked);
+            ctrlGraphique.ShowCurve("AN8", boxIOAN8.Checked);
         }
 
         private void boxAN9_CheckedChanged(object sender, EventArgs e)
         {
-            ctrlGraphique.MasquerCourbe("AN9", !boxIOAN9.Checked);
+            ctrlGraphique.ShowCurve("AN9", boxIOAN9.Checked);
         }
     }
 }

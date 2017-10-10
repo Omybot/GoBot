@@ -44,9 +44,9 @@ namespace GoBot.IHM
 
             lblTensionPack1.Text = Robots.GrosRobot.BatterieVoltage + " V";
 
-            ctrlGraphique.AjouterPoint("Pack 1", Robots.GrosRobot.BatterieVoltage, Color.Blue);
+            ctrlGraphique.AddPoint("Pack 1", Robots.GrosRobot.BatterieVoltage, Color.Blue);
 
-            ctrlGraphique.DessineCourbes();
+            ctrlGraphique.DrawCurves();
             
             if (Connections.ConnectionIO.ConnectionChecker.Connected)
             {

@@ -49,7 +49,7 @@
             this.lblOvershootGauche = new System.Windows.Forms.Label();
             this.label10 = new System.Windows.Forms.Label();
             this.label11 = new System.Windows.Forms.Label();
-            this.ctrlGraphique = new Composants.CtrlGraphique();
+            this.ctrlGraphique = new Composants.GraphPanel();
             this.boxMoyenne = new System.Windows.Forms.CheckBox();
             this.groupBoxValeurFinale = new System.Windows.Forms.GroupBox();
             this.lblValeurFinDroite = new System.Windows.Forms.Label();
@@ -307,10 +307,9 @@
             // ctrlGraphique
             // 
             this.ctrlGraphique.BackColor = System.Drawing.Color.White;
-            this.ctrlGraphique.EchelleCommune = true;
-            this.ctrlGraphique.EchelleFixe = false;
-            this.ctrlGraphique.EchelleMax = 1D;
-            this.ctrlGraphique.EchelleMin = 0D;
+            this.ctrlGraphique.GraphScale = Composants.GraphPanel.ScaleType.DynamicGlobal;
+            this.ctrlGraphique.MaxLimit = 1D;
+            this.ctrlGraphique.MinLimit = 0D;
             this.ctrlGraphique.Location = new System.Drawing.Point(199, 64);
             this.ctrlGraphique.Name = "ctrlGraphique";
             this.ctrlGraphique.Size = new System.Drawing.Size(773, 424);
@@ -438,7 +437,7 @@
         private System.Windows.Forms.Label lblOvershootGauche;
         private System.Windows.Forms.Label label10;
         private System.Windows.Forms.Label label11;
-        private Composants.CtrlGraphique ctrlGraphique;
+        private Composants.GraphPanel ctrlGraphique;
         private System.Windows.Forms.CheckBox boxMoyenne;
         private System.Windows.Forms.GroupBox groupBoxValeurFinale;
         private System.Windows.Forms.Label lblValeurFinDroite;

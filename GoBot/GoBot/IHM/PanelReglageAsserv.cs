@@ -75,8 +75,8 @@ namespace GoBot.IHM
             lblValeurFinGauche.Text = mesures[0][mesures[0].Count - 1].ToString();
             lblValeurFinDroite.Text = mesures[1][mesures[1].Count - 1].ToString();
 
-            ctrlGraphique.SupprimerCourbe("Roue droite");
-            ctrlGraphique.SupprimerCourbe("Roue gauche");
+            ctrlGraphique.DeleteCurve("Roue droite");
+            ctrlGraphique.DeleteCurve("Roue gauche");
 
 
             for (int i = 0; i < mesures[0].Count; i++)
@@ -84,10 +84,10 @@ namespace GoBot.IHM
                 if(boxMoyenne.Checked && i > 1 && i < mesures[0].Count - 2)
                 {
                     double valeur = (mesures[0][i - 2] + mesures[0][i - 1] + mesures[0][i] + mesures[0][i + 1] + mesures[0][i + 2]) / 5.0;
-                    ctrlGraphique.AjouterPoint("Roue gauche", valeur, Color.Blue);
+                    ctrlGraphique.AddPoint("Roue gauche", valeur, Color.Blue);
                 }
                 else
-                    ctrlGraphique.AjouterPoint("Roue gauche", mesures[0][i], Color.Blue);
+                    ctrlGraphique.AddPoint("Roue gauche", mesures[0][i], Color.Blue);
             }
 
             for (int i = 0; i < mesures[1].Count; i++)
@@ -95,13 +95,13 @@ namespace GoBot.IHM
                 if (boxMoyenne.Checked && i > 1 && i < mesures[1].Count - 2)
                 {
                     double valeur = (mesures[1][i - 2] + mesures[1][i - 1] + mesures[1][i] + mesures[1][i + 1] + mesures[1][i + 2]) / 5.0;
-                    ctrlGraphique.AjouterPoint("Roue droite", valeur, Color.Green);
+                    ctrlGraphique.AddPoint("Roue droite", valeur, Color.Green);
                 }
                 else
-                    ctrlGraphique.AjouterPoint("Roue droite", mesures[1][i], Color.Green);
+                    ctrlGraphique.AddPoint("Roue droite", mesures[1][i], Color.Green);
             }
 
-            ctrlGraphique.DessineCourbes();
+            ctrlGraphique.DrawCurves();
 
             Robot.MesureTestPid((int)numPasCodeurs.Value, SensAR.Arriere, (int)numNbPoints.Value);
         }

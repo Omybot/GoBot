@@ -23,8 +23,8 @@ namespace Composants
             else
                 led.CouleurRouge();
 
-            graph.AjouterPoint("Bin", val ? 1 : 0, Color.DodgerBlue);
-            graph.DessineCourbes();
+            graph.AddPoint("Bin", val ? 1 : 0, Color.DodgerBlue);
+            graph.DrawCurves();
         }
     }
 }

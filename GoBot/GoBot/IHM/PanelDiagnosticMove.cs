@@ -16,14 +16,6 @@ namespace GoBot.IHM
         public PanelDiagnosticMove()
         {
             InitializeComponent();
-            ctrlGraphique.EchelleFixe = true;
-            ctrlGraphique1.EchelleFixe = true;
-            ctrlGraphique2.EchelleFixe = true;
-
-            ctrlGraphique1.EchelleMax = 4000;
-            ctrlGraphique2.EchelleMax = 4000;
-            ctrlGraphique1.EchelleMin = -4000;
-            ctrlGraphique2.EchelleMin = -4000;
         }
 
         private void btnDemandeCharge_Click(object sender, EventArgs e)
@@ -58,9 +50,9 @@ namespace GoBot.IHM
             while (true)
             {
                 lblChargeCPU.Text = (moyenne * 100).ToString("#.##") + "%";
-                ctrlGraphique.DessineCourbes();
-                ctrlGraphique1.DessineCourbes();
-                ctrlGraphique2.DessineCourbes();
+                ctrlGraphique.DrawCurves();
+                ctrlGraphique1.DrawCurves();
+                ctrlGraphique2.DrawCurves();
 
                 Color c = Color.FromArgb(230, Color.White);
                 Image img = new Bitmap(global::GoBot.Properties.Resources.Vumetre);
@@ -85,10 +77,10 @@ namespace GoBot.IHM
 
                 for (int i = 0; i < min; i++)
                 {
-                    ctrlGraphique.AjouterPoint("CPU", valeurs[0][i], Color.Green);
+                    ctrlGraphique.AddPoint("CPU", valeurs[0][i], Color.Green);
 
-                    ctrlGraphique2.AjouterPoint("PWM gauche", valeurs[1][i], Color.Blue);
-                    ctrlGraphique1.AjouterPoint("PWM droite", valeurs[2][i], Color.Red);
+                    ctrlGraphique2.AddPoint("PWM gauche", valeurs[1][i], Color.Blue);
+                    ctrlGraphique1.AddPoint("PWM droite", valeurs[2][i], Color.Red);
                 }
             }
         }

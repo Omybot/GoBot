@@ -29,13 +29,13 @@
         private void InitializeComponent()
         {
             this.groupBalise = new System.Windows.Forms.GroupBox();
-            this.ctrlGraphiqueAngle2 = new Composants.CtrlGraphique();
-            this.ctrlGraphiqueDistance2 = new Composants.CtrlGraphique();
-            this.ctrlGraphiqueDistance1 = new Composants.CtrlGraphique();
-            this.ctrlGraphiqueAngle1 = new Composants.CtrlGraphique();
+            this.ctrlGraphiqueAngle2 = new Composants.GraphPanel();
+            this.ctrlGraphiqueDistance2 = new Composants.GraphPanel();
+            this.ctrlGraphiqueDistance1 = new Composants.GraphPanel();
+            this.ctrlGraphiqueAngle1 = new Composants.GraphPanel();
             this.lblStabiliteDistance2 = new System.Windows.Forms.Label();
             this.lblStabiliteAngle2 = new System.Windows.Forms.Label();
-            this.ctrlGraphiquePWM = new Composants.CtrlGraphique();
+            this.ctrlGraphiquePWM = new Composants.GraphPanel();
             this.lblNbTrames = new System.Windows.Forms.Label();
             this.btnLancer = new System.Windows.Forms.Button();
             this.lblStabiliteDistance1 = new System.Windows.Forms.Label();
@@ -43,7 +43,7 @@
             this.label5 = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
             this.btnReset = new System.Windows.Forms.Button();
-            this.ctrlGraphiqueTemps = new Composants.CtrlGraphique();
+            this.ctrlGraphiqueTemps = new Composants.GraphPanel();
             this.groupBalise.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -76,10 +76,9 @@
             // ctrlGraphiqueAngle2
             // 
             this.ctrlGraphiqueAngle2.BackColor = System.Drawing.Color.White;
-            this.ctrlGraphiqueAngle2.EchelleCommune = true;
-            this.ctrlGraphiqueAngle2.EchelleFixe = false;
-            this.ctrlGraphiqueAngle2.EchelleMax = 1D;
-            this.ctrlGraphiqueAngle2.EchelleMin = 0D;
+            this.ctrlGraphiqueAngle2.GraphScale = Composants.GraphPanel.ScaleType.DynamicGlobal;
+            this.ctrlGraphiqueAngle2.MaxLimit = 1D;
+            this.ctrlGraphiqueAngle2.MinLimit = 0D;
             this.ctrlGraphiqueAngle2.Location = new System.Drawing.Point(167, 270);
             this.ctrlGraphiqueAngle2.Name = "ctrlGraphiqueAngle2";
             this.ctrlGraphiqueAngle2.Size = new System.Drawing.Size(160, 120);
@@ -88,10 +87,9 @@
             // ctrlGraphiqueDistance2
             // 
             this.ctrlGraphiqueDistance2.BackColor = System.Drawing.Color.White;
-            this.ctrlGraphiqueDistance2.EchelleCommune = true;
-            this.ctrlGraphiqueDistance2.EchelleFixe = false;
-            this.ctrlGraphiqueDistance2.EchelleMax = 1D;
-            this.ctrlGraphiqueDistance2.EchelleMin = 0D;
+            this.ctrlGraphiqueDistance2.GraphScale = Composants.GraphPanel.ScaleType.DynamicGlobal;
+            this.ctrlGraphiqueDistance2.MaxLimit = 1D;
+            this.ctrlGraphiqueDistance2.MinLimit = 0D;
             this.ctrlGraphiqueDistance2.Location = new System.Drawing.Point(167, 396);
             this.ctrlGraphiqueDistance2.Name = "ctrlGraphiqueDistance2";
             this.ctrlGraphiqueDistance2.Size = new System.Drawing.Size(160, 120);
@@ -100,10 +98,9 @@
             // ctrlGraphiqueDistance1
             // 
             this.ctrlGraphiqueDistance1.BackColor = System.Drawing.Color.White;
-            this.ctrlGraphiqueDistance1.EchelleCommune = true;
-            this.ctrlGraphiqueDistance1.EchelleFixe = false;
-            this.ctrlGraphiqueDistance1.EchelleMax = 1D;
-            this.ctrlGraphiqueDistance1.EchelleMin = 0D;
+            this.ctrlGraphiqueDistance1.GraphScale = Composants.GraphPanel.ScaleType.DynamicGlobal;
+            this.ctrlGraphiqueDistance1.MaxLimit = 1D;
+            this.ctrlGraphiqueDistance1.MinLimit = 0D;
             this.ctrlGraphiqueDistance1.Location = new System.Drawing.Point(3, 396);
             this.ctrlGraphiqueDistance1.Name = "ctrlGraphiqueDistance1";
             this.ctrlGraphiqueDistance1.Size = new System.Drawing.Size(160, 120);
@@ -112,10 +109,9 @@
             // ctrlGraphiqueAngle1
             // 
             this.ctrlGraphiqueAngle1.BackColor = System.Drawing.Color.White;
-            this.ctrlGraphiqueAngle1.EchelleCommune = true;
-            this.ctrlGraphiqueAngle1.EchelleFixe = false;
-            this.ctrlGraphiqueAngle1.EchelleMax = 1D;
-            this.ctrlGraphiqueAngle1.EchelleMin = 0D;
+            this.ctrlGraphiqueAngle1.GraphScale = Composants.GraphPanel.ScaleType.DynamicGlobal;
+            this.ctrlGraphiqueAngle1.MaxLimit = 1D;
+            this.ctrlGraphiqueAngle1.MinLimit = 0D;
             this.ctrlGraphiqueAngle1.Location = new System.Drawing.Point(3, 270);
             this.ctrlGraphiqueAngle1.Name = "ctrlGraphiqueAngle1";
             this.ctrlGraphiqueAngle1.Size = new System.Drawing.Size(160, 120);
@@ -142,10 +138,9 @@
             // ctrlGraphiquePWM
             // 
             this.ctrlGraphiquePWM.BackColor = System.Drawing.Color.White;
-            this.ctrlGraphiquePWM.EchelleCommune = true;
-            this.ctrlGraphiquePWM.EchelleFixe = false;
-            this.ctrlGraphiquePWM.EchelleMax = 1D;
-            this.ctrlGraphiquePWM.EchelleMin = 0D;
+            this.ctrlGraphiquePWM.GraphScale = Composants.GraphPanel.ScaleType.DynamicGlobal;
+            this.ctrlGraphiquePWM.MaxLimit = 1D;
+            this.ctrlGraphiquePWM.MinLimit = 0D;
             this.ctrlGraphiquePWM.Location = new System.Drawing.Point(3, 144);
             this.ctrlGraphiquePWM.Name = "ctrlGraphiquePWM";
             this.ctrlGraphiquePWM.Size = new System.Drawing.Size(324, 120);
@@ -219,10 +214,9 @@
             // ctrlGraphiqueTemps
             // 
             this.ctrlGraphiqueTemps.BackColor = System.Drawing.Color.White;
-            this.ctrlGraphiqueTemps.EchelleCommune = true;
-            this.ctrlGraphiqueTemps.EchelleFixe = false;
-            this.ctrlGraphiqueTemps.EchelleMax = 1D;
-            this.ctrlGraphiqueTemps.EchelleMin = 0D;
+            this.ctrlGraphiqueTemps.GraphScale = Composants.GraphPanel.ScaleType.DynamicGlobal;
+            this.ctrlGraphiqueTemps.MaxLimit = 1D;
+            this.ctrlGraphiqueTemps.MinLimit = 0D;
             this.ctrlGraphiqueTemps.Location = new System.Drawing.Point(6, 18);
             this.ctrlGraphiqueTemps.Name = "ctrlGraphiqueTemps";
             this.ctrlGraphiqueTemps.Size = new System.Drawing.Size(321, 120);
@@ -250,15 +244,15 @@
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.Button btnReset;
-        private Composants.CtrlGraphique ctrlGraphiqueTemps;
+        private Composants.GraphPanel ctrlGraphiqueTemps;
         private System.Windows.Forms.Button btnLancer;
         private System.Windows.Forms.Label lblNbTrames;
-        private Composants.CtrlGraphique ctrlGraphiquePWM;
+        private Composants.GraphPanel ctrlGraphiquePWM;
         private System.Windows.Forms.Label lblStabiliteDistance2;
         private System.Windows.Forms.Label lblStabiliteAngle2;
-        private Composants.CtrlGraphique ctrlGraphiqueAngle2;
-        private Composants.CtrlGraphique ctrlGraphiqueDistance2;
-        private Composants.CtrlGraphique ctrlGraphiqueDistance1;
-        private Composants.CtrlGraphique ctrlGraphiqueAngle1;
+        private Composants.GraphPanel ctrlGraphiqueAngle2;
+        private Composants.GraphPanel ctrlGraphiqueDistance2;
+        private Composants.GraphPanel ctrlGraphiqueDistance1;
+        private Composants.GraphPanel ctrlGraphiqueAngle1;
     }
 }

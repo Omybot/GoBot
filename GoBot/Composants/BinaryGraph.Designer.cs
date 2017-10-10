@@ -29,7 +29,7 @@
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(BinaryGraph));
-            this.graph = new Composants.CtrlGraphique();
+            this.graph = new Composants.GraphPanel();
             this.led = new Composants.Led();
             ((System.ComponentModel.ISupportInitialize)(this.led)).BeginInit();
             this.SuspendLayout();
@@ -40,13 +40,11 @@
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.graph.BackColor = System.Drawing.Color.Gainsboro;
-            this.graph.EchelleCommune = true;
-            this.graph.EchelleFixe = true;
-            this.graph.EchelleMax = 1.3D;
-            this.graph.EchelleMin = -0.3D;
+            this.graph.MaxLimit = 1.3D;
+            this.graph.MinLimit = -0.3D;
             this.graph.Location = new System.Drawing.Point(26, 1);
-            this.graph.MaxVisible = false;
-            this.graph.MinVisible = false;
+            this.graph.GraphScale = GraphPanel.ScaleType.Fixed;
+            this.graph.LimitsVisible = false;
             this.graph.Name = "graph";
             this.graph.NamesVisible = false;
             this.graph.Size = new System.Drawing.Size(187, 25);
@@ -80,6 +78,6 @@
         #endregion
 
         private Led led;
-        private CtrlGraphique graph;
+        private GraphPanel graph;
     }
 }

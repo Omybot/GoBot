@@ -78,11 +78,11 @@
     <Compile Include="ConnectionIndicator.Designer.cs">
       <DependentUpon>ConnectionIndicator.cs</DependentUpon>
     </Compile>
-    <Compile Include="CtrlGraphique.cs">
+    <Compile Include="GraphPanel.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="CtrlGraphique.Designer.cs">
-      <DependentUpon>CtrlGraphique.cs</DependentUpon>
+    <Compile Include="GraphPanel.Designer.cs">
+      <DependentUpon>GraphPanel.cs</DependentUpon>
     </Compile>
     <Compile Include="FocusablePanel.cs">
       <SubType>UserControl</SubType>
@@ -155,8 +155,8 @@
     <EmbeddedResource Include="ConnectionIndicator.resx">
       <DependentUpon>ConnectionIndicator.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="CtrlGraphique.resx">
-      <DependentUpon>CtrlGraphique.cs</DependentUpon>
+    <EmbeddedResource Include="GraphPanel.resx">
+      <DependentUpon>GraphPanel.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="GroupBoxRetractable.resx">
       <DependentUpon>GroupBoxRetractable.cs</DependentUpon>

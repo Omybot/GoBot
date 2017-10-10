@@ -58,18 +58,18 @@ namespace GoBot.IHM
         {
             cptTemp++;
 
-            ctrlGraphiquePosition.AjouterPoint("Position", servo.PositionActuelle, Color.DarkOrchid);
-            ctrlGraphiquePosition.DessineCourbes();
+            ctrlGraphiquePosition.AddPoint("Position", servo.PositionActuelle, Color.DarkOrchid);
+            ctrlGraphiquePosition.DrawCurves();
             if(cptTemp == 10)
             {
-                ctrlGraphiqueTemperature.AjouterPoint("Temperature", servo.Temperature, Color.DarkBlue);
-                ctrlGraphiqueTemperature.DessineCourbes();
+                ctrlGraphiqueTemperature.AddPoint("Temperature", servo.Temperature, Color.DarkBlue);
+                ctrlGraphiqueTemperature.DrawCurves();
                 cptTemp = 0;
             }
-            ctrlGraphiqueVitesse.AjouterPoint("Vitesse", servo.VitesseActuelle, Color.DarkGreen);
-            ctrlGraphiqueVitesse.DessineCourbes();
-            ctrlGraphiqueCouple.AjouterPoint("Couple", servo.CoupleActuel, Color.DarkRed);
-            ctrlGraphiqueCouple.DessineCourbes();
+            ctrlGraphiqueVitesse.AddPoint("Vitesse", servo.VitesseActuelle, Color.DarkGreen);
+            ctrlGraphiqueVitesse.DrawCurves();
+            ctrlGraphiqueCouple.AddPoint("Couple", servo.CoupleActuel, Color.DarkRed);
+            ctrlGraphiqueCouple.DrawCurves();
 
             Bitmap bmp = new Bitmap(160, 160);
             Graphics g = Graphics.FromImage(bmp);
