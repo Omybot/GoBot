@@ -52,14 +52,14 @@
             this.btnSave = new System.Windows.Forms.Button();
             this.groupBoxBatteries = new System.Windows.Forms.GroupBox();
             this.label9 = new System.Windows.Forms.Label();
-            this.batGrosVide = new Composants.Batterie();
+            this.batGrosVide = new Composants.Battery();
             this.numBatGrosCritique = new System.Windows.Forms.NumericUpDown();
-            this.batGrosCritique = new Composants.Batterie();
+            this.batGrosCritique = new Composants.Battery();
             this.numBatGrosRouge = new System.Windows.Forms.NumericUpDown();
-            this.batGrosRouge = new Composants.Batterie();
+            this.batGrosRouge = new Composants.Battery();
             this.numBatGrosOrange = new System.Windows.Forms.NumericUpDown();
-            this.batGrosOrange = new Composants.Batterie();
-            this.batGrosVert = new Composants.Batterie();
+            this.batGrosOrange = new Composants.Battery();
+            this.batGrosVert = new Composants.Battery();
             this.numBatGrosVert = new System.Windows.Forms.NumericUpDown();
             this.groupBoxDeplacement.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numAccelerationFinLigneLent)).BeginInit();
@@ -406,18 +406,18 @@
             // 
             // batGrosVide
             // 
-            this.batGrosVide.Afficher = false;
+            this.batGrosVide.CurrentState = Composants.Battery.State.Absent;
+            this.batGrosVide.CurrentVoltage = 0D;
             this.batGrosVide.Image = ((System.Drawing.Image)(resources.GetObject("batGrosVide.Image")));
             this.batGrosVide.Location = new System.Drawing.Point(389, 27);
             this.batGrosVide.Name = "batGrosVide";
             this.batGrosVide.Size = new System.Drawing.Size(16, 16);
             this.batGrosVide.TabIndex = 25;
             this.batGrosVide.TabStop = false;
-            this.batGrosVide.Tension = 0D;
-            this.batGrosVide.TensionLow = 0D;
-            this.batGrosVide.TensionMid = 0D;
-            this.batGrosVide.TensionMidHigh = 0D;
-            this.batGrosVide.TensionNull = 0D;
+            this.batGrosVide.VoltageAverage = 0D;
+            this.batGrosVide.VoltageHigh = 0D;
+            this.batGrosVide.VoltageLow = 0D;
+            this.batGrosVide.VoltageVeryLow = 0D;
             // 
             // numBatGrosCritique
             // 
@@ -434,18 +434,18 @@
             // 
             // batGrosCritique
             // 
-            this.batGrosCritique.Afficher = false;
+            this.batGrosCritique.CurrentState = Composants.Battery.State.VeryLow;
+            this.batGrosCritique.CurrentVoltage = 0D;
             this.batGrosCritique.Image = ((System.Drawing.Image)(resources.GetObject("batGrosCritique.Image")));
             this.batGrosCritique.Location = new System.Drawing.Point(308, 27);
             this.batGrosCritique.Name = "batGrosCritique";
             this.batGrosCritique.Size = new System.Drawing.Size(16, 16);
             this.batGrosCritique.TabIndex = 23;
             this.batGrosCritique.TabStop = false;
-            this.batGrosCritique.Tension = 0D;
-            this.batGrosCritique.TensionLow = 0D;
-            this.batGrosCritique.TensionMid = 0D;
-            this.batGrosCritique.TensionMidHigh = 0D;
-            this.batGrosCritique.TensionNull = 0D;
+            this.batGrosCritique.VoltageAverage = 0D;
+            this.batGrosCritique.VoltageHigh = 0D;
+            this.batGrosCritique.VoltageLow = 0D;
+            this.batGrosCritique.VoltageVeryLow = 0D;
             // 
             // numBatGrosRouge
             // 
@@ -462,18 +462,18 @@
             // 
             // batGrosRouge
             // 
-            this.batGrosRouge.Afficher = false;
+            this.batGrosRouge.CurrentState = Composants.Battery.State.Low;
+            this.batGrosRouge.CurrentVoltage = 0D;
             this.batGrosRouge.Image = ((System.Drawing.Image)(resources.GetObject("batGrosRouge.Image")));
             this.batGrosRouge.Location = new System.Drawing.Point(231, 27);
             this.batGrosRouge.Name = "batGrosRouge";
             this.batGrosRouge.Size = new System.Drawing.Size(16, 16);
             this.batGrosRouge.TabIndex = 21;
             this.batGrosRouge.TabStop = false;
-            this.batGrosRouge.Tension = 0D;
-            this.batGrosRouge.TensionLow = 0D;
-            this.batGrosRouge.TensionMid = 0D;
-            this.batGrosRouge.TensionMidHigh = 0D;
-            this.batGrosRouge.TensionNull = 0D;
+            this.batGrosRouge.VoltageAverage = 0D;
+            this.batGrosRouge.VoltageHigh = 0D;
+            this.batGrosRouge.VoltageLow = 0D;
+            this.batGrosRouge.VoltageVeryLow = 0D;
             // 
             // numBatGrosOrange
             // 
@@ -490,33 +490,33 @@
             // 
             // batGrosOrange
             // 
-            this.batGrosOrange.Afficher = false;
+            this.batGrosOrange.CurrentState = Composants.Battery.State.Average;
+            this.batGrosOrange.CurrentVoltage = 0D;
             this.batGrosOrange.Image = ((System.Drawing.Image)(resources.GetObject("batGrosOrange.Image")));
             this.batGrosOrange.Location = new System.Drawing.Point(153, 27);
             this.batGrosOrange.Name = "batGrosOrange";
             this.batGrosOrange.Size = new System.Drawing.Size(16, 16);
             this.batGrosOrange.TabIndex = 19;
             this.batGrosOrange.TabStop = false;
-            this.batGrosOrange.Tension = 0D;
-            this.batGrosOrange.TensionLow = 0D;
-            this.batGrosOrange.TensionMid = 0D;
-            this.batGrosOrange.TensionMidHigh = 0D;
-            this.batGrosOrange.TensionNull = 0D;
+            this.batGrosOrange.VoltageAverage = 0D;
+            this.batGrosOrange.VoltageHigh = 0D;
+            this.batGrosOrange.VoltageLow = 0D;
+            this.batGrosOrange.VoltageVeryLow = 0D;
             // 
             // batGrosVert
             // 
-            this.batGrosVert.Afficher = false;
+            this.batGrosVert.CurrentState = Composants.Battery.State.High;
+            this.batGrosVert.CurrentVoltage = 0D;
             this.batGrosVert.Image = ((System.Drawing.Image)(resources.GetObject("batGrosVert.Image")));
             this.batGrosVert.Location = new System.Drawing.Point(75, 27);
             this.batGrosVert.Name = "batGrosVert";
             this.batGrosVert.Size = new System.Drawing.Size(16, 16);
             this.batGrosVert.TabIndex = 18;
             this.batGrosVert.TabStop = false;
-            this.batGrosVert.Tension = 0D;
-            this.batGrosVert.TensionLow = 0D;
-            this.batGrosVert.TensionMid = 0D;
-            this.batGrosVert.TensionMidHigh = 0D;
-            this.batGrosVert.TensionNull = 0D;
+            this.batGrosVert.VoltageAverage = 0D;
+            this.batGrosVert.VoltageHigh = 0D;
+            this.batGrosVert.VoltageLow = 0D;
+            this.batGrosVert.VoltageVeryLow = 0D;
             // 
             // numBatGrosVert
             // 
@@ -589,14 +589,14 @@
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Button btnSave;
         private System.Windows.Forms.GroupBox groupBoxBatteries;
-        private Composants.Batterie batGrosVide;
+        private Composants.Battery batGrosVide;
         private System.Windows.Forms.NumericUpDown numBatGrosCritique;
-        private Composants.Batterie batGrosCritique;
+        private Composants.Battery batGrosCritique;
         private System.Windows.Forms.NumericUpDown numBatGrosRouge;
-        private Composants.Batterie batGrosRouge;
+        private Composants.Battery batGrosRouge;
         private System.Windows.Forms.NumericUpDown numBatGrosOrange;
-        private Composants.Batterie batGrosOrange;
-        private Composants.Batterie batGrosVert;
+        private Composants.Battery batGrosOrange;
+        private Composants.Battery batGrosVert;
         private System.Windows.Forms.NumericUpDown numBatGrosVert;
         private System.Windows.Forms.Label label9;
         private System.Windows.Forms.NumericUpDown numAccelerationFinLigneLent;

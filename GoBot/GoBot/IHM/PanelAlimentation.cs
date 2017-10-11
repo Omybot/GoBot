@@ -29,10 +29,10 @@ namespace GoBot.IHM
                 timerTension.Elapsed += new ElapsedEventHandler(timerTension_Elapsed);
                 timerTension.Start();
 
-                batteriePack1.TensionMidHigh = Config.CurrentConfig.BatterieRobotVert;
-                batteriePack1.TensionMid = Config.CurrentConfig.BatterieRobotOrange;
-                batteriePack1.TensionLow = Config.CurrentConfig.BatterieRobotRouge;
-                batteriePack1.TensionNull = Config.CurrentConfig.BatterieRobotCritique;
+                batteriePack1.VoltageHigh = Config.CurrentConfig.BatterieRobotVert;
+                batteriePack1.VoltageAverage = Config.CurrentConfig.BatterieRobotOrange;
+                batteriePack1.VoltageLow = Config.CurrentConfig.BatterieRobotRouge;
+                batteriePack1.VoltageVeryLow = Config.CurrentConfig.BatterieRobotCritique;
 
             }
         }
@@ -50,13 +50,13 @@ namespace GoBot.IHM
             
             if (Connections.ConnectionIO.ConnectionChecker.Connected)
             {
-                batteriePack1.Afficher = true;
-                batteriePack1.Tension = Robots.GrosRobot.BatterieVoltage;
+                batteriePack1.Enabled = true;
+                batteriePack1.CurrentVoltage = Robots.GrosRobot.BatterieVoltage;
             }
             else
             {
-                batteriePack1.Afficher = false;
-                batteriePack1.CouleurGris();
+                batteriePack1.Enabled = false;
+                batteriePack1.CurrentState = Composants.Battery.State.Absent;
             }
         }
     }

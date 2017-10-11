@@ -1,6 +1,6 @@
 ﻿namespace Composants
 {
-    partial class Batterie
+    partial class Battery
     {
         /// <summary> 
         /// Variable nécessaire au concepteur.

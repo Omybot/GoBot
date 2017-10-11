@@ -18,20 +18,19 @@ namespace GoBot.IHM
         {
             if (Robots.Simulation)
             {
-                batteriePack.CouleurGris();
+                batteriePack.Enabled = false;
             }
             else
             {
                 if (Connections.ConnectionIO.ConnectionChecker.Connected)
                 {
-                    batteriePack.Afficher = true;
-                    batteriePack.Tension = Robots.GrosRobot.BatterieVoltage;
+                    batteriePack.Enabled = true;
+                    batteriePack.CurrentVoltage = Robots.GrosRobot.BatterieVoltage;
                     lblVoltage.Text = Robots.GrosRobot.BatterieVoltage.ToString() + "V";
                 }
                 else
                 {
-                    batteriePack.Afficher = false;
-                    batteriePack.CouleurGris();
+                    batteriePack.Enabled = false;
                     lblVoltage.Text = "-";
                 }
             }
@@ -53,10 +52,10 @@ namespace GoBot.IHM
                     _ledsPanel.Controls.Add(status);
                 }
                 
-                batteriePack.TensionMidHigh = Config.CurrentConfig.BatterieRobotVert;
-                batteriePack.TensionMid = Config.CurrentConfig.BatterieRobotOrange;
-                batteriePack.TensionLow = Config.CurrentConfig.BatterieRobotRouge;
-                batteriePack.TensionNull = Config.CurrentConfig.BatterieRobotCritique;
+                batteriePack.VoltageHigh = Config.CurrentConfig.BatterieRobotVert;
+                batteriePack.VoltageAverage = Config.CurrentConfig.BatterieRobotOrange;
+                batteriePack.VoltageLow = Config.CurrentConfig.BatterieRobotRouge;
+                batteriePack.VoltageVeryLow = Config.CurrentConfig.BatterieRobotCritique;
 
                 timerBatteries = new System.Windows.Forms.Timer();
                 timerBatteries.Interval = 1000;

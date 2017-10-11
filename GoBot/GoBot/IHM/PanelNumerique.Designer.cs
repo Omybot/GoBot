@@ -56,17 +56,17 @@
             // graph1
             // 
             this.graph1.BackColor = System.Drawing.Color.Transparent;
-            this.graph1.Location = new System.Drawing.Point(26, 82);
+            this.graph1.Location = new System.Drawing.Point(3, 76);
             this.graph1.Name = "graph1";
-            this.graph1.Size = new System.Drawing.Size(259, 208);
+            this.graph1.Size = new System.Drawing.Size(321, 208);
             this.graph1.TabIndex = 50;
             // 
             // graph2
             // 
             this.graph2.BackColor = System.Drawing.Color.Transparent;
-            this.graph2.Location = new System.Drawing.Point(26, 290);
+            this.graph2.Location = new System.Drawing.Point(3, 284);
             this.graph2.Name = "graph2";
-            this.graph2.Size = new System.Drawing.Size(259, 208);
+            this.graph2.Size = new System.Drawing.Size(321, 208);
             this.graph2.TabIndex = 51;
             // 
             // PanelNumerique

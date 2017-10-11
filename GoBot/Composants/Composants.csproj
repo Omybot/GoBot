@@ -42,11 +42,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Batterie.cs">
+    <Compile Include="Battery.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="Batterie.Designer.cs">
-      <DependentUpon>Batterie.cs</DependentUpon>
+    <Compile Include="Battery.Designer.cs">
+      <DependentUpon>Battery.cs</DependentUpon>
     </Compile>
     <Compile Include="BinaryGraph.cs">
       <SubType>UserControl</SubType>
@@ -146,8 +146,8 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Batterie.resx">
-      <DependentUpon>Batterie.cs</DependentUpon>
+    <EmbeddedResource Include="Battery.resx">
+      <DependentUpon>Battery.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="BinaryGraph.resx">
       <DependentUpon>BinaryGraph.cs</DependentUpon>

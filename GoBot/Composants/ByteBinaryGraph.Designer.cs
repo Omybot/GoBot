@@ -48,6 +48,7 @@
             // 
             // binaryGraph1
             // 
+            this.binaryGraph1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
             this.binaryGraph1.BackColor = System.Drawing.Color.Transparent;
             this.binaryGraph1.Location = new System.Drawing.Point(45, -1);
             this.binaryGraph1.Name = "binaryGraph1";
@@ -56,6 +57,7 @@
             // 
             // binaryGraph2
             // 
+            this.binaryGraph2.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
             this.binaryGraph2.BackColor = System.Drawing.Color.Transparent;
             this.binaryGraph2.Location = new System.Drawing.Point(45, 25);
             this.binaryGraph2.Name = "binaryGraph2";
@@ -64,6 +66,7 @@
             // 
             // binaryGraph3
             // 
+            this.binaryGraph3.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
             this.binaryGraph3.BackColor = System.Drawing.Color.Transparent;
             this.binaryGraph3.Location = new System.Drawing.Point(45, 51);
             this.binaryGraph3.Name = "binaryGraph3";
@@ -72,6 +75,7 @@
             // 
             // binaryGraph4
             // 
+            this.binaryGraph4.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
             this.binaryGraph4.BackColor = System.Drawing.Color.Transparent;
             this.binaryGraph4.Location = new System.Drawing.Point(45, 77);
             this.binaryGraph4.Name = "binaryGraph4";
@@ -80,6 +84,7 @@
             // 
             // binaryGraph5
             // 
+            this.binaryGraph5.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
             this.binaryGraph5.BackColor = System.Drawing.Color.Transparent;
             this.binaryGraph5.Location = new System.Drawing.Point(45, 103);
             this.binaryGraph5.Name = "binaryGraph5";
@@ -88,6 +93,7 @@
             // 
             // binaryGraph6
             // 
+            this.binaryGraph6.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
             this.binaryGraph6.BackColor = System.Drawing.Color.Transparent;
             this.binaryGraph6.Location = new System.Drawing.Point(45, 129);
             this.binaryGraph6.Name = "binaryGraph6";
@@ -96,6 +102,7 @@
             // 
             // binaryGraph7
             // 
+            this.binaryGraph7.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
             this.binaryGraph7.BackColor = System.Drawing.Color.Transparent;
             this.binaryGraph7.Location = new System.Drawing.Point(45, 155);
             this.binaryGraph7.Name = "binaryGraph7";
@@ -104,6 +111,7 @@
             // 
             // binaryGraph8
             // 
+            this.binaryGraph8.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
             this.binaryGraph8.BackColor = System.Drawing.Color.Transparent;
             this.binaryGraph8.Location = new System.Drawing.Point(45, 181);
             this.binaryGraph8.Name = "binaryGraph8";

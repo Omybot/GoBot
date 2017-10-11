@@ -30,7 +30,7 @@
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(PanelConnexions));
             this.lblVoltage = new System.Windows.Forms.Label();
-            this.batteriePack = new Composants.Batterie();
+            this.batteriePack = new Composants.Battery();
             this._ledsPanel = new System.Windows.Forms.FlowLayoutPanel();
             ((System.ComponentModel.ISupportInitialize)(this.batteriePack)).BeginInit();
             this.SuspendLayout();
@@ -47,18 +47,17 @@
             // 
             // batteriePack
             // 
-            this.batteriePack.Afficher = false;
             this.batteriePack.Image = ((System.Drawing.Image)(resources.GetObject("batteriePack.Image")));
             this.batteriePack.Location = new System.Drawing.Point(14, 6);
             this.batteriePack.Name = "batteriePack";
             this.batteriePack.Size = new System.Drawing.Size(16, 16);
             this.batteriePack.TabIndex = 89;
             this.batteriePack.TabStop = false;
-            this.batteriePack.Tension = 0D;
-            this.batteriePack.TensionLow = 0D;
-            this.batteriePack.TensionMid = 0D;
-            this.batteriePack.TensionMidHigh = 0D;
-            this.batteriePack.TensionNull = 0D;
+            this.batteriePack.CurrentVoltage = 0D;
+            this.batteriePack.VoltageLow = 0D;
+            this.batteriePack.VoltageAverage = 0D;
+            this.batteriePack.VoltageHigh = 0D;
+            this.batteriePack.VoltageVeryLow = 0D;
             // 
             // _ledsPanel
             // 
@@ -85,7 +84,7 @@
         }
 
         #endregion
-        private Composants.Batterie batteriePack;
+        private Composants.Battery batteriePack;
         private System.Windows.Forms.Label lblVoltage;
         private System.Windows.Forms.FlowLayoutPanel _ledsPanel;
     }

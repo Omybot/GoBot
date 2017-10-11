@@ -32,7 +32,7 @@
             this.label1 = new System.Windows.Forms.Label();
             this.lblTensionPack1 = new System.Windows.Forms.Label();
             this.ctrlGraphique = new Composants.GraphPanel();
-            this.batteriePack1 = new Composants.Batterie();
+            this.batteriePack1 = new Composants.Battery();
             ((System.ComponentModel.ISupportInitialize)(this.batteriePack1)).BeginInit();
             this.SuspendLayout();
             // 
@@ -67,18 +67,17 @@
             // 
             // batteriePack1
             // 
-            this.batteriePack1.Afficher = false;
             this.batteriePack1.Image = ((System.Drawing.Image)(resources.GetObject("batteriePack1.Image")));
             this.batteriePack1.Location = new System.Drawing.Point(104, 67);
             this.batteriePack1.Name = "batteriePack1";
             this.batteriePack1.Size = new System.Drawing.Size(16, 16);
             this.batteriePack1.TabIndex = 21;
             this.batteriePack1.TabStop = false;
-            this.batteriePack1.Tension = 0D;
-            this.batteriePack1.TensionLow = 0D;
-            this.batteriePack1.TensionMid = 0D;
-            this.batteriePack1.TensionMidHigh = 0D;
-            this.batteriePack1.TensionNull = 0D;
+            this.batteriePack1.CurrentVoltage = 0D;
+            this.batteriePack1.VoltageLow = 0D;
+            this.batteriePack1.VoltageAverage = 0D;
+            this.batteriePack1.VoltageHigh = 0D;
+            this.batteriePack1.VoltageVeryLow = 0D;
             // 
             // PanelAlimentation
             // 
@@ -102,7 +101,7 @@
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label lblTensionPack1;
         private Composants.GraphPanel ctrlGraphique;
-        private Composants.Batterie batteriePack1;
+        private Composants.Battery batteriePack1;
 
     }
 }
