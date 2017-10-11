@@ -21,17 +21,17 @@ namespace GoBot.IHM
             InitializeComponent();
 
             servo = null;
-
-            ledErreurAngleLimit.CouleurGris();
-            ledErreurChecksum.CouleurGris();
-            ledErreurInputVoltage.CouleurGris();
-            ledErreurInstruction.CouleurGris();
-            ledErreurOverheating.CouleurGris();
-            ledErreurOverload.CouleurGris();
-            ledErreurRange.CouleurGris();
-            ledLed.CouleurGris();
-            ledMouvement.CouleurGris();
-
+            
+            ledErreurAngleLimit.Color = Color.Gray;
+            ledErreurChecksum.Color = Color.Gray;
+            ledErreurInputVoltage.Color = Color.Gray;
+            ledErreurInstruction.Color = Color.Gray;
+            ledErreurOverheating.Color = Color.Gray;
+            ledErreurOverload.Color = Color.Gray;
+            ledErreurRange.Color = Color.Gray;
+            ledLed.Color = Color.Gray;
+            ledMouvement.Color = Color.Gray;
+            
             foreach (ServoBaudrate baudrate in Enum.GetValues(typeof(ServoBaudrate)))
             {
                 cboBaudrate.Items.Add(baudrate);
@@ -241,30 +241,30 @@ namespace GoBot.IHM
 
                 if (servo.LedAllumee)
                 {
-                    ledLed.CouleurRouge();
+                    ledLed.Color = Color.Red; 
                     switchLed.SetActif(true, false);
                 }
                 else
                 {
-                    ledLed.CouleurGris();
+                    ledLed.Color = Color.Gray; 
                     switchLed.SetActif(false, false);
                 }
 
                 if (servo.CoupleActive)
                 {
-                    ledCouple.CouleurVert();
+                    ledCouple.Color = Color.LimeGreen;
                     switchCouple.SetActif(true, false);
                 }
                 else
                 {
-                    ledCouple.CouleurGris();
+                    ledCouple.Color = Color.Gray;
                     switchCouple.SetActif(false, false);
                 }
 
                 if (servo.EnMouvement)
-                    ledMouvement.CouleurVert();
+                    ledMouvement.Color = Color.LimeGreen;
                 else
-                    ledMouvement.CouleurGris();
+                    ledMouvement.Color = Color.Gray;
 
                 lblTemperature.Text = servo.Temperature + " °C";
                 lblTension.Text = servo.Tension + " V";
@@ -289,39 +289,39 @@ namespace GoBot.IHM
                 boxShutdownRange.Checked = servo.AlarmeShutdownRange;
 
                 if (servo.ErreurAngleLimit)
-                    ledErreurAngleLimit.CouleurRouge();
+                    ledErreurAngleLimit.Color = Color.Red;
                 else
-                    ledErreurAngleLimit.CouleurGris();
+                    ledErreurAngleLimit.Color = Color.Gray;
 
                 if (servo.ErreurChecksum)
-                    ledErreurChecksum.CouleurRouge();
+                    ledErreurChecksum.Color = Color.Red;
                 else
-                    ledErreurChecksum.CouleurGris();
+                    ledErreurChecksum.Color = Color.Gray;
 
                 if (servo.ErreurInputVoltage)
-                    ledErreurInputVoltage.CouleurRouge();
+                    ledErreurInputVoltage.Color = Color.Red;
                 else
-                    ledErreurInputVoltage.CouleurGris();
+                    ledErreurInputVoltage.Color = Color.Gray;
 
                 if (servo.ErreurInstruction)
-                    ledErreurInstruction.CouleurRouge();
+                    ledErreurInstruction.Color = Color.Red;
                 else
-                    ledErreurInstruction.CouleurGris();
+                    ledErreurInstruction.Color = Color.Gray;
 
                 if (servo.ErreurOverheating)
-                    ledErreurOverheating.CouleurRouge();
+                    ledErreurOverheating.Color = Color.Red;
                 else
-                    ledErreurOverheating.CouleurGris();
+                    ledErreurOverheating.Color = Color.Gray;
 
                 if (servo.ErreurOverload)
-                    ledErreurOverload.CouleurRouge();
+                    ledErreurOverload.Color = Color.Red;
                 else
-                    ledErreurOverload.CouleurGris();
+                    ledErreurOverload.Color = Color.Gray;
 
                 if (servo.ErreurRange)
-                    ledErreurRange.CouleurRouge();
+                    ledErreurRange.Color = Color.Red;
                 else
-                    ledErreurRange.CouleurGris();
+                    ledErreurRange.Color = Color.Gray;
 
                 DessinePosition();
                 DessineCompliance();

@@ -180,7 +180,6 @@
             // ledAsserv
             // 
             this.ledAsserv.BackColor = System.Drawing.Color.Transparent;
-            this.ledAsserv.Etat = false;
             this.ledAsserv.Image = ((System.Drawing.Image)(resources.GetObject("ledAsserv.Image")));
             this.ledAsserv.Location = new System.Drawing.Point(84, 320);
             this.ledAsserv.Name = "ledAsserv";
@@ -201,7 +200,6 @@
             // ledOffset
             // 
             this.ledOffset.BackColor = System.Drawing.Color.Transparent;
-            this.ledOffset.Etat = false;
             this.ledOffset.Image = ((System.Drawing.Image)(resources.GetObject("ledOffset.Image")));
             this.ledOffset.Location = new System.Drawing.Point(84, 349);
             this.ledOffset.Name = "ledOffset";

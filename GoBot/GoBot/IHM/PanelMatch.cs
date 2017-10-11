@@ -68,11 +68,11 @@ namespace GoBot.IHM
         {
             // Recallage du gros robot
 
-            this.InvokeAuto(() => ledRecallageGros.CouleurOrange());
+            this.InvokeAuto(() => ledRecallageGros.Color = Color.DarkOrange);
 
             Recallages.RecallageGrosRobot();
 
-            this.InvokeAuto(() => ledRecallageGros.CouleurVert());
+            this.InvokeAuto(() => ledRecallageGros.Color = Color.LimeGreen);
         }
 
         void Plateau_NotreCouleurChange(object sender, EventArgs e)
@@ -89,14 +89,14 @@ namespace GoBot.IHM
         private void btnArmerJack_Click(object sender, EventArgs e)
         {
             Robots.GrosRobot.ArmerJack();
-            ledJackArme.CouleurVert();
+            ledJackArme.Color = Color.LimeGreen;
         }
 
         private void btnReset_Click(object sender, EventArgs e)
         {
             // Repasser toutes les leds à rouge et couper tous les threads en train de tourner
 
-            ledRecallageGros.CouleurRouge();
+            ledRecallageGros.Color = Color.Red;
 
             if (thRecallageGros != null && thRecallageGros.IsAlive)
                 thRecallageGros.Abort();

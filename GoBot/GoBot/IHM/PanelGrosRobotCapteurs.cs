@@ -30,8 +30,8 @@ namespace GoBot.IHM
 
         private void PanelSequencesGros_Load(object sender, EventArgs e)
         {
-            ledJack.CouleurGris();
-            ledCouleurEquipe.CouleurGris();
+            ledJack.Color = Color.Gray;
+            ledCouleurEquipe.Color = Color.Gray;
 
             groupBoxCapteurs.Deployer(Config.CurrentConfig.CapteursGROuvert, false);
 
@@ -51,7 +51,7 @@ namespace GoBot.IHM
             else
             {
                 timerJack.Stop();
-                ledJack.CouleurGris();
+                ledJack.Color = Color.Gray;
             }
         }
 
@@ -60,9 +60,9 @@ namespace GoBot.IHM
             this.InvokeAuto(() =>
             { 
                 if (Robots.GrosRobot.GetJack())
-                    ledJack.CouleurVert();
+                    ledJack.Color = Color.LimeGreen;
                 else
-                    ledJack.CouleurRouge();
+                    ledJack.Color = Color.Red;
             });
         }
 
@@ -71,9 +71,9 @@ namespace GoBot.IHM
             this.InvokeAuto(() =>
             {
                 if (Robots.GrosRobot.GetCouleurEquipe(false) == Plateau.CouleurDroiteJaune)
-                    ledCouleurEquipe.CouleurVert();
+                    ledCouleurEquipe.Color = Color.LimeGreen;
                 else
-                    ledCouleurEquipe.CouleurJaune();
+                    ledCouleurEquipe.Color = Color.Yellow;
             });
         }
 
@@ -84,7 +84,7 @@ namespace GoBot.IHM
             else
             {
                 timerCouleurEquipe.Stop();
-                ledCouleurEquipe.CouleurGris();
+                ledCouleurEquipe.Color = Color.Gray;
             }
         }
     }

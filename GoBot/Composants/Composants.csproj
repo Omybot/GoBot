@@ -272,6 +272,9 @@
   <ItemGroup>
     <None Include="img\ConnexionUnilateral.png" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="img\RedLed.png" />
+  </ItemGroup>
   <Import Project="..\Extensions\Extensions.projitems" Label="Shared" />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

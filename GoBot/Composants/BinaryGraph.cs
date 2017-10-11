@@ -19,9 +19,9 @@ namespace Composants
         public void AddPoint(bool val)
         {
             if (val)
-                led.CouleurVert();
+                led.Color = Color.LimeGreen;
             else
-                led.CouleurRouge();
+                led.Color = Color.Red;
 
             graph.AddPoint("Bin", val ? 1 : 0, Color.DodgerBlue);
             graph.DrawCurves();

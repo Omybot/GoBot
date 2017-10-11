@@ -611,10 +611,12 @@
             // 
             this.ctrlGraphiqueCouple.BackColor = System.Drawing.Color.White;
             this.ctrlGraphiqueCouple.GraphScale = Composants.GraphPanel.ScaleType.DynamicGlobal;
+            this.ctrlGraphiqueCouple.LimitsVisible = false;
+            this.ctrlGraphiqueCouple.Location = new System.Drawing.Point(795, 363);
             this.ctrlGraphiqueCouple.MaxLimit = 1D;
             this.ctrlGraphiqueCouple.MinLimit = 0D;
-            this.ctrlGraphiqueCouple.Location = new System.Drawing.Point(795, 363);
             this.ctrlGraphiqueCouple.Name = "ctrlGraphiqueCouple";
+            this.ctrlGraphiqueCouple.NamesVisible = false;
             this.ctrlGraphiqueCouple.Size = new System.Drawing.Size(218, 140);
             this.ctrlGraphiqueCouple.TabIndex = 128;
             // 
@@ -640,10 +642,12 @@
             // 
             this.ctrlGraphiquePosition.BackColor = System.Drawing.Color.White;
             this.ctrlGraphiquePosition.GraphScale = Composants.GraphPanel.ScaleType.DynamicGlobal;
+            this.ctrlGraphiquePosition.LimitsVisible = false;
+            this.ctrlGraphiquePosition.Location = new System.Drawing.Point(795, 210);
             this.ctrlGraphiquePosition.MaxLimit = 1D;
             this.ctrlGraphiquePosition.MinLimit = 0D;
-            this.ctrlGraphiquePosition.Location = new System.Drawing.Point(795, 210);
             this.ctrlGraphiquePosition.Name = "ctrlGraphiquePosition";
+            this.ctrlGraphiquePosition.NamesVisible = false;
             this.ctrlGraphiquePosition.Size = new System.Drawing.Size(218, 140);
             this.ctrlGraphiquePosition.TabIndex = 125;
             // 
@@ -651,10 +655,12 @@
             // 
             this.ctrlGraphiqueVitesse.BackColor = System.Drawing.Color.White;
             this.ctrlGraphiqueVitesse.GraphScale = Composants.GraphPanel.ScaleType.DynamicGlobal;
+            this.ctrlGraphiqueVitesse.LimitsVisible = false;
+            this.ctrlGraphiqueVitesse.Location = new System.Drawing.Point(795, 57);
             this.ctrlGraphiqueVitesse.MaxLimit = 1D;
             this.ctrlGraphiqueVitesse.MinLimit = 0D;
-            this.ctrlGraphiqueVitesse.Location = new System.Drawing.Point(795, 57);
             this.ctrlGraphiqueVitesse.Name = "ctrlGraphiqueVitesse";
+            this.ctrlGraphiqueVitesse.NamesVisible = false;
             this.ctrlGraphiqueVitesse.Size = new System.Drawing.Size(218, 140);
             this.ctrlGraphiqueVitesse.TabIndex = 124;
             // 
@@ -662,10 +668,12 @@
             // 
             this.ctrlGraphiqueTemperature.BackColor = System.Drawing.Color.White;
             this.ctrlGraphiqueTemperature.GraphScale = Composants.GraphPanel.ScaleType.DynamicGlobal;
+            this.ctrlGraphiqueTemperature.LimitsVisible = false;
+            this.ctrlGraphiqueTemperature.Location = new System.Drawing.Point(564, 363);
             this.ctrlGraphiqueTemperature.MaxLimit = 1D;
             this.ctrlGraphiqueTemperature.MinLimit = 0D;
-            this.ctrlGraphiqueTemperature.Location = new System.Drawing.Point(564, 363);
             this.ctrlGraphiqueTemperature.Name = "ctrlGraphiqueTemperature";
+            this.ctrlGraphiqueTemperature.NamesVisible = false;
             this.ctrlGraphiqueTemperature.Size = new System.Drawing.Size(218, 140);
             this.ctrlGraphiqueTemperature.TabIndex = 123;
             // 
@@ -681,7 +689,7 @@
             // ledErreurInstruction
             // 
             this.ledErreurInstruction.BackColor = System.Drawing.Color.Transparent;
-            this.ledErreurInstruction.Etat = false;
+            this.ledErreurInstruction.Color = System.Drawing.Color.Empty;
             this.ledErreurInstruction.Image = ((System.Drawing.Image)(resources.GetObject("ledErreurInstruction.Image")));
             this.ledErreurInstruction.Location = new System.Drawing.Point(474, 445);
             this.ledErreurInstruction.Name = "ledErreurInstruction";
@@ -692,7 +700,7 @@
             // ledErreurOverload
             // 
             this.ledErreurOverload.BackColor = System.Drawing.Color.Transparent;
-            this.ledErreurOverload.Etat = false;
+            this.ledErreurOverload.Color = System.Drawing.Color.Empty;
             this.ledErreurOverload.Image = ((System.Drawing.Image)(resources.GetObject("ledErreurOverload.Image")));
             this.ledErreurOverload.Location = new System.Drawing.Point(447, 445);
             this.ledErreurOverload.Name = "ledErreurOverload";
@@ -703,7 +711,7 @@
             // ledErreurChecksum
             // 
             this.ledErreurChecksum.BackColor = System.Drawing.Color.Transparent;
-            this.ledErreurChecksum.Etat = false;
+            this.ledErreurChecksum.Color = System.Drawing.Color.Empty;
             this.ledErreurChecksum.Image = ((System.Drawing.Image)(resources.GetObject("ledErreurChecksum.Image")));
             this.ledErreurChecksum.Location = new System.Drawing.Point(420, 445);
             this.ledErreurChecksum.Name = "ledErreurChecksum";
@@ -714,7 +722,7 @@
             // ledErreurRange
             // 
             this.ledErreurRange.BackColor = System.Drawing.Color.Transparent;
-            this.ledErreurRange.Etat = false;
+            this.ledErreurRange.Color = System.Drawing.Color.Empty;
             this.ledErreurRange.Image = ((System.Drawing.Image)(resources.GetObject("ledErreurRange.Image")));
             this.ledErreurRange.Location = new System.Drawing.Point(393, 445);
             this.ledErreurRange.Name = "ledErreurRange";
@@ -725,7 +733,7 @@
             // ledErreurOverheating
             // 
             this.ledErreurOverheating.BackColor = System.Drawing.Color.Transparent;
-            this.ledErreurOverheating.Etat = false;
+            this.ledErreurOverheating.Color = System.Drawing.Color.Empty;
             this.ledErreurOverheating.Image = ((System.Drawing.Image)(resources.GetObject("ledErreurOverheating.Image")));
             this.ledErreurOverheating.Location = new System.Drawing.Point(366, 445);
             this.ledErreurOverheating.Name = "ledErreurOverheating";
@@ -736,7 +744,7 @@
             // ledErreurAngleLimit
             // 
             this.ledErreurAngleLimit.BackColor = System.Drawing.Color.Transparent;
-            this.ledErreurAngleLimit.Etat = false;
+            this.ledErreurAngleLimit.Color = System.Drawing.Color.Empty;
             this.ledErreurAngleLimit.Image = ((System.Drawing.Image)(resources.GetObject("ledErreurAngleLimit.Image")));
             this.ledErreurAngleLimit.Location = new System.Drawing.Point(339, 445);
             this.ledErreurAngleLimit.Name = "ledErreurAngleLimit";
@@ -747,7 +755,7 @@
             // ledErreurInputVoltage
             // 
             this.ledErreurInputVoltage.BackColor = System.Drawing.Color.Transparent;
-            this.ledErreurInputVoltage.Etat = false;
+            this.ledErreurInputVoltage.Color = System.Drawing.Color.Empty;
             this.ledErreurInputVoltage.Image = ((System.Drawing.Image)(resources.GetObject("ledErreurInputVoltage.Image")));
             this.ledErreurInputVoltage.Location = new System.Drawing.Point(312, 445);
             this.ledErreurInputVoltage.Name = "ledErreurInputVoltage";
@@ -1143,7 +1151,7 @@
             // ledCouple
             // 
             this.ledCouple.BackColor = System.Drawing.Color.Transparent;
-            this.ledCouple.Etat = false;
+            this.ledCouple.Color = System.Drawing.Color.Gray;
             this.ledCouple.Image = ((System.Drawing.Image)(resources.GetObject("ledCouple.Image")));
             this.ledCouple.Location = new System.Drawing.Point(307, 196);
             this.ledCouple.Name = "ledCouple";
@@ -1154,7 +1162,7 @@
             // ledLed
             // 
             this.ledLed.BackColor = System.Drawing.Color.Transparent;
-            this.ledLed.Etat = false;
+            this.ledLed.Color = System.Drawing.Color.Empty;
             this.ledLed.Image = ((System.Drawing.Image)(resources.GetObject("ledLed.Image")));
             this.ledLed.Location = new System.Drawing.Point(307, 174);
             this.ledLed.Name = "ledLed";
@@ -1263,7 +1271,7 @@
             // ledMouvement
             // 
             this.ledMouvement.BackColor = System.Drawing.Color.Transparent;
-            this.ledMouvement.Etat = false;
+            this.ledMouvement.Color = System.Drawing.Color.Empty;
             this.ledMouvement.Image = ((System.Drawing.Image)(resources.GetObject("ledMouvement.Image")));
             this.ledMouvement.Location = new System.Drawing.Point(307, 218);
             this.ledMouvement.Name = "ledMouvement";

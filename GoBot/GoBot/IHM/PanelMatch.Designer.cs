@@ -123,7 +123,6 @@
             // ledJackArme
             // 
             this.ledJackArme.BackColor = System.Drawing.Color.Transparent;
-            this.ledJackArme.Etat = false;
             this.ledJackArme.Image = ((System.Drawing.Image)(resources.GetObject("ledJackArme.Image")));
             this.ledJackArme.Location = new System.Drawing.Point(294, 353);
             this.ledJackArme.Name = "ledJackArme";
@@ -142,7 +141,6 @@
             // ledJackBranche
             // 
             this.ledJackBranche.BackColor = System.Drawing.Color.Transparent;
-            this.ledJackBranche.Etat = false;
             this.ledJackBranche.Image = ((System.Drawing.Image)(resources.GetObject("ledJackBranche.Image")));
             this.ledJackBranche.Location = new System.Drawing.Point(217, 198);
             this.ledJackBranche.Name = "ledJackBranche";
@@ -153,7 +151,6 @@
             // ledRecallageGros
             // 
             this.ledRecallageGros.BackColor = System.Drawing.Color.Transparent;
-            this.ledRecallageGros.Etat = false;
             this.ledRecallageGros.Image = ((System.Drawing.Image)(resources.GetObject("ledRecallageGros.Image")));
             this.ledRecallageGros.Location = new System.Drawing.Point(294, 263);
             this.ledRecallageGros.Name = "ledRecallageGros";

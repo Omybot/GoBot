@@ -29,7 +29,7 @@ namespace GoBot.IHM
             leds = new List<Led> { ledA1, ledA2, ledA3, ledA4, ledA5, ledA6, ledA7, ledA8, ledB1, ledB2, ledB3, ledB4, ledB5, ledB6, ledB7, ledB8 };
             ledActive = new Dictionary<Led, RecGoBot.LedStatus>();
             leds.ForEach(led => ledActive.Add(led, RecGoBot.LedStatus.Off));
-            leds.ForEach(led => led.CouleurGris());
+            leds.ForEach(led => led.Color = Color.Gray);
 
             colorPickup1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             colorPickup1.ColorHover += colorPickup1_ColorHover;
@@ -127,19 +127,19 @@ namespace GoBot.IHM
             {
                 case RecGoBot.LedStatus.Off:
                     ledActive[ledSender] = RecGoBot.LedStatus.Rouge;
-                    ledSender.CouleurRouge();
+                    ledSender.Color = Color.Red;
                     break;
                 case RecGoBot.LedStatus.Rouge:
                     ledActive[ledSender] = RecGoBot.LedStatus.Orange;
-                    ledSender.CouleurOrange();
+                    ledSender.Color = Color.DarkOrange;
                     break;
                 case RecGoBot.LedStatus.Orange:
                     ledActive[ledSender] = RecGoBot.LedStatus.Vert;
-                    ledSender.CouleurVert();
+                    ledSender.Color = Color.LimeGreen;
                     break;
                 case RecGoBot.LedStatus.Vert:
                     ledActive[ledSender] = RecGoBot.LedStatus.Off;
-                    ledSender.CouleurGris();
+                    ledSender.Color = Color.Gray;
                     break;
             }
 

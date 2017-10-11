@@ -11,7 +11,7 @@ namespace Composants
 {
     public partial class TrackBarPlus : UserControl
     {
-        private bool enDeplacement;
+        private bool moving;
         private int intervalTimer;
         private Timer timer;
         private bool reverse;
@@ -68,7 +68,7 @@ namespace Composants
                 SetBackGround();
             }
         }
-        private double derniereValeurTick = -1;
+        private double lastTickedValue = -1;
 
         public int NombreDecimales { get; set; }
 
@@ -89,7 +89,7 @@ namespace Composants
             Min = 0;
             Max = 100;
             focus = false;
-            enDeplacement = false;
+            moving = false;
 
             imgCurseur.MouseDown += new MouseEventHandler(imgCurseur_MouseDown);
             imgCurseur.MouseUp += new MouseEventHandler(imgCurseur_MouseUp);
@@ -177,14 +177,14 @@ namespace Composants
 
         void imgBarre_MouseMove(object sender, MouseEventArgs e)
         {
-            Deplacement(this.PointToClient(Cursor.Position));
+            MoveTo(this.PointToClient(Cursor.Position));
         }
 
         void imgBarre_MouseUp(object sender, MouseEventArgs e)
         {
             if (e.Button == System.Windows.Forms.MouseButtons.Left)
             {
-                FinDeplacement();
+                EndMoving();
             }
         }
 
@@ -193,19 +193,19 @@ namespace Composants
             Focus();
             if (e.Button == System.Windows.Forms.MouseButtons.Left)
             {
-                DebutDeplacement();
+                StartMoving();
                 imgCurseur.Location = PointCentral(e.Location);
             }
         }
 
         void imgCurseur_MouseMove(object sender, MouseEventArgs e)
         {
-            Deplacement(this.PointToClient(Cursor.Position));
+            MoveTo(this.PointToClient(Cursor.Position));
         }
 
         void imgCurseur_MouseUp(object sender, MouseEventArgs e)
         {
-            FinDeplacement();
+            EndMoving();
         }
 
         void imgCurseur_MouseDown(object sender, MouseEventArgs e)
@@ -214,7 +214,7 @@ namespace Composants
             if (e.Button == System.Windows.Forms.MouseButtons.Left)
             {
                 imgCurseur.Location = PointCentral(this.PointToClient(Cursor.Position));
-                DebutDeplacement();
+                StartMoving();
             }
         }
 
@@ -223,7 +223,7 @@ namespace Composants
             Focus();
             if (e.Button == System.Windows.Forms.MouseButtons.Left)
             {
-                DebutDeplacement();
+                StartMoving();
                 imgCurseur.Location = PointCentral(e.Location);
             }
             base.OnMouseDown(e);
@@ -233,14 +233,14 @@ namespace Composants
         {
             if (e.Button == System.Windows.Forms.MouseButtons.Left)
             {
-                FinDeplacement();
+                EndMoving();
             }
             base.OnMouseDown(e);
         }
 
         protected override void OnMouseMove(MouseEventArgs e)
         {
-            Deplacement(e.Location);
+            MoveTo(e.Location);
             base.OnMouseMove(e);
         }
 
@@ -293,7 +293,7 @@ namespace Composants
 
                 imgCurseur.Image = global::Composants.Properties.Resources.TrackBarCurseurSelect;
 
-                if(enDeplacement)
+                if(moving)
                     imgCurseur.Image.RotateFlip(RotateFlipType.Rotate180FlipNone);
             }
 
@@ -323,17 +323,17 @@ namespace Composants
             if (value < Min)
             {
                 value = Min;
-                DessineCurseur();
+                DrawImage();
             }
             else if (value > Max)
             {
                 value = Max;
-                DessineCurseur();
+                DrawImage();
             }
             else
             {
                 value = val;
-                DessineCurseur();
+                DrawImage();
             }
             
             if (tickEvent && TickValueChanged != null)
@@ -356,21 +356,22 @@ namespace Composants
             set { if (value > 0) { intervalTimer = value; } }
         }
 
-        private void DebutDeplacement()
+        private void StartMoving()
         {
-            enDeplacement = true;
+            moving = true;
 
             Focus();
 
             // Le premier tick se fait un 1 milliseconde, les autres suivant l'intervalle
             timer.Interval = 1;
             timer.Start();
+
             SetBackGround();
         }
 
-        private void FinDeplacement()
+        private void EndMoving()
         {
-            enDeplacement = false;
+            moving = false;
 
             SetBackGround();
         }
@@ -379,13 +380,14 @@ namespace Composants
         {
             // les ticks suivants se font avec l'intervalle voulu
             timer.Interval = intervalTimer;
-            if (derniereValeurTick != value)
+
+            if (lastTickedValue != value)
             {
-                derniereValeurTick = value;
-                if (TickValueChanged != null)
-                    TickValueChanged(this, null);
+                lastTickedValue = value;
+                TickValueChanged?.Invoke(this, null);
             }
-            if (!enDeplacement)
+
+            if (!moving)
                 timer.Stop();
         }
 
@@ -397,7 +399,7 @@ namespace Composants
                 return new Point(imgCurseur.Location.X, gauche.Y - (imgCurseur.Height / 2));
         }
 
-        private void DessineCurseur()
+        private void DrawImage()
         {
             if (!Vertical)
             {
@@ -415,11 +417,11 @@ namespace Composants
             }
         }
 
-        private void Deplacement(Point e)
+        private void MoveTo(Point e)
         {
             if (!Vertical)
             {
-                if (enDeplacement)
+                if (moving)
                 {
                     if (PointCentral(e).X <= 0)
                     {
@@ -436,16 +438,15 @@ namespace Composants
                         if (reverse)
                             value = Max - Min - value;
                     }
+                    
+                    ValueChanged?.Invoke(this, null);
 
-                    if (ValueChanged != null)
-                        ValueChanged(this, null);
-
-                    DessineCurseur();
+                    DrawImage();
                 }
             }
             else
             {
-                if (enDeplacement)
+                if (moving)
                 {
                     if (PointCentral(e).Y <= 0)
                     {
@@ -462,11 +463,10 @@ namespace Composants
                         if (reverse)
                             value = Max - Min - value;
                     }
+                    
+                    ValueChanged?.Invoke(this, null);
 
-                    if (ValueChanged != null)
-                        ValueChanged(this, null);
-
-                    DessineCurseur();
+                    DrawImage();
                 }
             }
         }

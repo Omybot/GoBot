@@ -245,7 +245,6 @@
             // 
             this.ledB8.BackColor = System.Drawing.Color.Transparent;
             this.ledB8.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.ledB8.Etat = false;
             this.ledB8.Image = ((System.Drawing.Image)(resources.GetObject("ledB8.Image")));
             this.ledB8.Location = new System.Drawing.Point(63, 233);
             this.ledB8.Name = "ledB8";
@@ -258,7 +257,6 @@
             // 
             this.ledB7.BackColor = System.Drawing.Color.Transparent;
             this.ledB7.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.ledB7.Etat = false;
             this.ledB7.Image = ((System.Drawing.Image)(resources.GetObject("ledB7.Image")));
             this.ledB7.Location = new System.Drawing.Point(63, 211);
             this.ledB7.Name = "ledB7";
@@ -271,7 +269,6 @@
             // 
             this.ledB6.BackColor = System.Drawing.Color.Transparent;
             this.ledB6.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.ledB6.Etat = false;
             this.ledB6.Image = ((System.Drawing.Image)(resources.GetObject("ledB6.Image")));
             this.ledB6.Location = new System.Drawing.Point(63, 189);
             this.ledB6.Name = "ledB6";
@@ -284,7 +281,6 @@
             // 
             this.ledB5.BackColor = System.Drawing.Color.Transparent;
             this.ledB5.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.ledB5.Etat = false;
             this.ledB5.Image = ((System.Drawing.Image)(resources.GetObject("ledB5.Image")));
             this.ledB5.Location = new System.Drawing.Point(63, 167);
             this.ledB5.Name = "ledB5";
@@ -297,7 +293,6 @@
             // 
             this.ledB4.BackColor = System.Drawing.Color.Transparent;
             this.ledB4.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.ledB4.Etat = false;
             this.ledB4.Image = ((System.Drawing.Image)(resources.GetObject("ledB4.Image")));
             this.ledB4.Location = new System.Drawing.Point(63, 145);
             this.ledB4.Name = "ledB4";
@@ -310,7 +305,6 @@
             // 
             this.ledB3.BackColor = System.Drawing.Color.Transparent;
             this.ledB3.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.ledB3.Etat = false;
             this.ledB3.Image = ((System.Drawing.Image)(resources.GetObject("ledB3.Image")));
             this.ledB3.Location = new System.Drawing.Point(63, 123);
             this.ledB3.Name = "ledB3";
@@ -323,7 +317,6 @@
             // 
             this.ledB2.BackColor = System.Drawing.Color.Transparent;
             this.ledB2.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.ledB2.Etat = false;
             this.ledB2.Image = ((System.Drawing.Image)(resources.GetObject("ledB2.Image")));
             this.ledB2.Location = new System.Drawing.Point(63, 101);
             this.ledB2.Name = "ledB2";
@@ -336,7 +329,6 @@
             // 
             this.ledB1.BackColor = System.Drawing.Color.Transparent;
             this.ledB1.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.ledB1.Etat = false;
             this.ledB1.Image = ((System.Drawing.Image)(resources.GetObject("ledB1.Image")));
             this.ledB1.Location = new System.Drawing.Point(63, 79);
             this.ledB1.Name = "ledB1";
@@ -349,7 +341,6 @@
             // 
             this.ledA8.BackColor = System.Drawing.Color.Transparent;
             this.ledA8.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.ledA8.Etat = false;
             this.ledA8.Image = ((System.Drawing.Image)(resources.GetObject("ledA8.Image")));
             this.ledA8.Location = new System.Drawing.Point(3, 233);
             this.ledA8.Name = "ledA8";
@@ -362,7 +353,6 @@
             // 
             this.ledA7.BackColor = System.Drawing.Color.Transparent;
             this.ledA7.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.ledA7.Etat = false;
             this.ledA7.Image = ((System.Drawing.Image)(resources.GetObject("ledA7.Image")));
             this.ledA7.Location = new System.Drawing.Point(3, 211);
             this.ledA7.Name = "ledA7";
@@ -375,7 +365,6 @@
             // 
             this.ledA6.BackColor = System.Drawing.Color.Transparent;
             this.ledA6.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.ledA6.Etat = false;
             this.ledA6.Image = ((System.Drawing.Image)(resources.GetObject("ledA6.Image")));
             this.ledA6.Location = new System.Drawing.Point(3, 189);
             this.ledA6.Name = "ledA6";
@@ -388,7 +377,6 @@
             // 
             this.ledA5.BackColor = System.Drawing.Color.Transparent;
             this.ledA5.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.ledA5.Etat = false;
             this.ledA5.Image = ((System.Drawing.Image)(resources.GetObject("ledA5.Image")));
             this.ledA5.Location = new System.Drawing.Point(3, 167);
             this.ledA5.Name = "ledA5";
@@ -401,7 +389,6 @@
             // 
             this.ledA4.BackColor = System.Drawing.Color.Transparent;
             this.ledA4.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.ledA4.Etat = false;
             this.ledA4.Image = ((System.Drawing.Image)(resources.GetObject("ledA4.Image")));
             this.ledA4.Location = new System.Drawing.Point(3, 145);
             this.ledA4.Name = "ledA4";
@@ -414,7 +401,6 @@
             // 
             this.ledA3.BackColor = System.Drawing.Color.Transparent;
             this.ledA3.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.ledA3.Etat = false;
             this.ledA3.Image = ((System.Drawing.Image)(resources.GetObject("ledA3.Image")));
             this.ledA3.Location = new System.Drawing.Point(3, 123);
             this.ledA3.Name = "ledA3";
@@ -427,7 +413,6 @@
             // 
             this.ledA2.BackColor = System.Drawing.Color.Transparent;
             this.ledA2.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.ledA2.Etat = false;
             this.ledA2.Image = ((System.Drawing.Image)(resources.GetObject("ledA2.Image")));
             this.ledA2.Location = new System.Drawing.Point(3, 101);
             this.ledA2.Name = "ledA2";
@@ -440,7 +425,6 @@
             // 
             this.ledA1.BackColor = System.Drawing.Color.Transparent;
             this.ledA1.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.ledA1.Etat = false;
             this.ledA1.Image = ((System.Drawing.Image)(resources.GetObject("ledA1.Image")));
             this.ledA1.Location = new System.Drawing.Point(3, 79);
             this.ledA1.Name = "ledA1";

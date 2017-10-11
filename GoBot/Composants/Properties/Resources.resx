@@ -121,14 +121,8 @@
   <data name="rainbow2" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\img\rainbow2.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="LedRouge" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\img\LedRouge.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
   <data name="BatLow" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\img\BatLow.PNG;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="LedOrange" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\img\LedOrange.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="SwitchOn" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\img\SwitchOn.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
@@ -151,9 +145,6 @@
   <data name="ConnexionOk" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\img\ConnexionOk.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="LedGris" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\img\LedGris.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
   <data name="BatHigh" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\img\BatHigh.PNG;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
@@ -162,9 +153,6 @@
   </data>
   <data name="BatMidHigh" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\img\BatMidHigh.PNG;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="LedBleu" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\img\LedBleu.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="BatNo" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\img\BatNo.PNG;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
@@ -184,12 +172,6 @@
   <data name="rainbow" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\img\rainbow.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="LedJaune" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\img\LedJaune.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="LedVert" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\img\LedVert.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
   <data name="BatCrit" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\img\BatCrit.PNG;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
@@ -198,5 +180,8 @@
   </data>
   <data name="ConnexionUnilateral" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\img\ConnexionUnilateral.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="RedLed" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\img\RedLed.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
 </root>

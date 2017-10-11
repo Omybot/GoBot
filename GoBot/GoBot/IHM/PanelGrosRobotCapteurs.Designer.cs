@@ -41,7 +41,6 @@
             // 
             // ledJack
             // 
-            this.ledJack.Etat = false;
             this.ledJack.Image = ((System.Drawing.Image)(resources.GetObject("ledJack.Image")));
             this.ledJack.Location = new System.Drawing.Point(147, 40);
             this.ledJack.Name = "ledJack";
@@ -86,7 +85,6 @@
             // 
             // ledCouleurEquipe
             // 
-            this.ledCouleurEquipe.Etat = false;
             this.ledCouleurEquipe.Image = ((System.Drawing.Image)(resources.GetObject("ledCouleurEquipe.Image")));
             this.ledCouleurEquipe.Location = new System.Drawing.Point(147, 63);
             this.ledCouleurEquipe.Name = "ledCouleurEquipe";

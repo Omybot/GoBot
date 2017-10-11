@@ -53,7 +53,6 @@
             // led
             // 
             this.led.BackColor = System.Drawing.Color.Transparent;
-            this.led.Etat = false;
             this.led.Image = ((System.Drawing.Image)(resources.GetObject("led.Image")));
             this.led.Location = new System.Drawing.Point(5, 5);
             this.led.Name = "led";
