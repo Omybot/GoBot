@@ -128,12 +128,12 @@
             this.trackBarPosition.Min = 0D;
             this.trackBarPosition.MinimumSize = new System.Drawing.Size(0, 15);
             this.trackBarPosition.Name = "trackBarPosition";
-            this.trackBarPosition.NombreDecimales = 0;
+            this.trackBarPosition.DecimalPlaces = 0;
             this.trackBarPosition.Reverse = false;
             this.trackBarPosition.Size = new System.Drawing.Size(416, 15);
             this.trackBarPosition.TabIndex = 7;
             this.trackBarPosition.Vertical = false;
-            this.trackBarPosition.TickValueChanged += new System.EventHandler(this.trackBarPosition_TickValueChanged);
+            this.trackBarPosition.TickValueChanged += new Composants.TrackBarPlus.ValueChangedDelegate(this.trackBarPosition_TickValueChanged);
             // 
             // lblPosition
             // 

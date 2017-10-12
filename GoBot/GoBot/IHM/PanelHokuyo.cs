@@ -90,9 +90,9 @@ namespace GoBot.IHM
             Actionneur.GestionModuleSupervisee.AttraperModule(nearest);
         }
 
-        private void trackZoom_ValueChanged(object sender, EventArgs e)
+        private void trackZoom_ValueChanged(object sender, double value)
         {
-            picWorld.Dimensions.SetZoomFactor(trackZoom.Value);
+            picWorld.Dimensions.SetZoomFactor(value);
         }
 
         private void picWorld_WorldChange()

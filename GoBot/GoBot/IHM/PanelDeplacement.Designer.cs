@@ -217,13 +217,13 @@
             this.trackBarAccelerationFinLigne.Min = 0D;
             this.trackBarAccelerationFinLigne.MinimumSize = new System.Drawing.Size(0, 15);
             this.trackBarAccelerationFinLigne.Name = "trackBarAccelerationFinLigne";
-            this.trackBarAccelerationFinLigne.NombreDecimales = 0;
+            this.trackBarAccelerationFinLigne.DecimalPlaces = 0;
             this.trackBarAccelerationFinLigne.Reverse = false;
             this.trackBarAccelerationFinLigne.Size = new System.Drawing.Size(249, 15);
             this.trackBarAccelerationFinLigne.TabIndex = 120;
             this.trackBarAccelerationFinLigne.Vertical = false;
-            this.trackBarAccelerationFinLigne.TickValueChanged += new System.EventHandler(this.trackBarAccelerationFinLigne_TickValueChanged);
-            this.trackBarAccelerationFinLigne.ValueChanged += new System.EventHandler(this.trackBarAccelerationFinLigne_ValueChanged);
+            this.trackBarAccelerationFinLigne.TickValueChanged += new Composants.TrackBarPlus.ValueChangedDelegate(this.trackBarAccelerationFinLigne_TickValueChanged);
+            this.trackBarAccelerationFinLigne.ValueChanged += new Composants.TrackBarPlus.ValueChangedDelegate(this.trackBarAccelerationFinLigne_ValueChanged);
             // 
             // numAccelerationFinLigne
             // 
@@ -404,13 +404,13 @@
             this.trackBarAccelLigne.Min = 0D;
             this.trackBarAccelLigne.MinimumSize = new System.Drawing.Size(0, 15);
             this.trackBarAccelLigne.Name = "trackBarAccelLigne";
-            this.trackBarAccelLigne.NombreDecimales = 0;
+            this.trackBarAccelLigne.DecimalPlaces = 0;
             this.trackBarAccelLigne.Reverse = false;
             this.trackBarAccelLigne.Size = new System.Drawing.Size(249, 15);
             this.trackBarAccelLigne.TabIndex = 88;
             this.trackBarAccelLigne.Vertical = false;
-            this.trackBarAccelLigne.TickValueChanged += new System.EventHandler(this.trackBarAccelLigne_TickValueChanged);
-            this.trackBarAccelLigne.ValueChanged += new System.EventHandler(this.trackBarAccelLigne_ValueChanged);
+            this.trackBarAccelLigne.TickValueChanged += new Composants.TrackBarPlus.ValueChangedDelegate(this.trackBarAccelLigne_TickValueChanged);
+            this.trackBarAccelLigne.ValueChanged += new Composants.TrackBarPlus.ValueChangedDelegate(this.trackBarAccelLigne_ValueChanged);
             // 
             // label6
             // 
@@ -431,13 +431,13 @@
             this.trackBarVitesseLigne.Min = 0D;
             this.trackBarVitesseLigne.MinimumSize = new System.Drawing.Size(0, 15);
             this.trackBarVitesseLigne.Name = "trackBarVitesseLigne";
-            this.trackBarVitesseLigne.NombreDecimales = 0;
+            this.trackBarVitesseLigne.DecimalPlaces = 0;
             this.trackBarVitesseLigne.Reverse = false;
             this.trackBarVitesseLigne.Size = new System.Drawing.Size(249, 15);
             this.trackBarVitesseLigne.TabIndex = 87;
             this.trackBarVitesseLigne.Vertical = false;
-            this.trackBarVitesseLigne.TickValueChanged += new System.EventHandler(this.trackBarVitesseLigne_TickValueChanged);
-            this.trackBarVitesseLigne.ValueChanged += new System.EventHandler(this.trackBarVitesseLigne_ValueChanged);
+            this.trackBarVitesseLigne.TickValueChanged += new Composants.TrackBarPlus.ValueChangedDelegate(this.trackBarVitesseLigne_TickValueChanged);
+            this.trackBarVitesseLigne.ValueChanged += new Composants.TrackBarPlus.ValueChangedDelegate(this.trackBarVitesseLigne_ValueChanged);
             // 
             // txtDistance
             // 
@@ -567,13 +567,13 @@
             this.trackBarVitessePivot.Min = 0D;
             this.trackBarVitessePivot.MinimumSize = new System.Drawing.Size(0, 15);
             this.trackBarVitessePivot.Name = "trackBarVitessePivot";
-            this.trackBarVitessePivot.NombreDecimales = 0;
+            this.trackBarVitessePivot.DecimalPlaces = 0;
             this.trackBarVitessePivot.Reverse = false;
             this.trackBarVitessePivot.Size = new System.Drawing.Size(249, 15);
             this.trackBarVitessePivot.TabIndex = 99;
             this.trackBarVitessePivot.Vertical = false;
-            this.trackBarVitessePivot.TickValueChanged += new System.EventHandler(this.trackBarVitessePivot_TickValueChanged);
-            this.trackBarVitessePivot.ValueChanged += new System.EventHandler(this.trackBarVitessePivot_ValueChanged);
+            this.trackBarVitessePivot.TickValueChanged += new Composants.TrackBarPlus.ValueChangedDelegate(this.trackBarVitessePivot_TickValueChanged);
+            this.trackBarVitessePivot.ValueChanged += new Composants.TrackBarPlus.ValueChangedDelegate(this.trackBarVitessePivot_ValueChanged);
             // 
             // lblAcceleration
             // 
@@ -612,13 +612,13 @@
             this.trackBarAccelPivot.Min = 0D;
             this.trackBarAccelPivot.MinimumSize = new System.Drawing.Size(0, 15);
             this.trackBarAccelPivot.Name = "trackBarAccelPivot";
-            this.trackBarAccelPivot.NombreDecimales = 0;
+            this.trackBarAccelPivot.DecimalPlaces = 0;
             this.trackBarAccelPivot.Reverse = false;
             this.trackBarAccelPivot.Size = new System.Drawing.Size(249, 15);
             this.trackBarAccelPivot.TabIndex = 100;
             this.trackBarAccelPivot.Vertical = false;
-            this.trackBarAccelPivot.TickValueChanged += new System.EventHandler(this.trackBarAccelPivot_TickValueChanged);
-            this.trackBarAccelPivot.ValueChanged += new System.EventHandler(this.trackBarAccelPivot_ValueChanged);
+            this.trackBarAccelPivot.TickValueChanged += new Composants.TrackBarPlus.ValueChangedDelegate(this.trackBarAccelPivot_TickValueChanged);
+            this.trackBarAccelPivot.ValueChanged += new Composants.TrackBarPlus.ValueChangedDelegate(this.trackBarAccelPivot_ValueChanged);
             // 
             // lblVitesse
             // 

@@ -65,12 +65,12 @@
             this.trackBar.Min = 0D;
             this.trackBar.MinimumSize = new System.Drawing.Size(0, 15);
             this.trackBar.Name = "trackBar";
-            this.trackBar.NombreDecimales = 0;
+            this.trackBar.DecimalPlaces = 0;
             this.trackBar.Reverse = false;
             this.trackBar.Size = new System.Drawing.Size(305, 15);
             this.trackBar.TabIndex = 2;
             this.trackBar.Vertical = false;
-            this.trackBar.TickValueChanged += new System.EventHandler(this.TrackBar_TickValueChanged);
+            this.trackBar.TickValueChanged += new Composants.TrackBarPlus.ValueChangedDelegate(this.TrackBar_TickValueChanged);
             // 
             // switchBouton
             // 

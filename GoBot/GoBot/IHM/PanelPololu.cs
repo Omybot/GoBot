@@ -24,9 +24,9 @@ namespace GoBot.IHM
             trackBarPosition.Min = (double)numMin.Value;
         }
 
-        private void trackBarPosition_TickValueChanged(object sender, EventArgs e)
+        private void trackBarPosition_TickValueChanged(object sender, double value)
         {
-            PololuMiniUart.setTarget((byte)numId.Value, (ushort)trackBarPosition.Value);
+            PololuMiniUart.setTarget((byte)numId.Value, (ushort)value);
             lblPosition.Text = trackBarPosition.Value.ToString("0");
         }
 

@@ -98,9 +98,9 @@ namespace GoBot.IHM
             }
         }
 
-        private void trackBarValeurPosition_TickValueChanged(object sender, EventArgs e)
+        private void trackBarValeurPosition_TickValueChanged(object sender, double value)
         {
-            numValeurPosition.Value = (decimal)trackBarValeurPosition.Value;
+            numValeurPosition.Value = (decimal)value;
             btnEnvoyerValeurPosition_Click(null, null);
         }
 

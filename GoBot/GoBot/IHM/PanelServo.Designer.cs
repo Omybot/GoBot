@@ -1396,13 +1396,13 @@
             this.trackBarPosition.Min = 0D;
             this.trackBarPosition.MinimumSize = new System.Drawing.Size(0, 15);
             this.trackBarPosition.Name = "trackBarPosition";
-            this.trackBarPosition.NombreDecimales = 0;
+            this.trackBarPosition.DecimalPlaces = 0;
             this.trackBarPosition.Reverse = false;
             this.trackBarPosition.Size = new System.Drawing.Size(318, 15);
             this.trackBarPosition.TabIndex = 6;
             this.trackBarPosition.Vertical = false;
-            this.trackBarPosition.TickValueChanged += new System.EventHandler(this.trackBarPosition_TickValueChanged);
-            this.trackBarPosition.ValueChanged += new System.EventHandler(this.trackBarPosition_ValueChanged);
+            this.trackBarPosition.TickValueChanged += new Composants.TrackBarPlus.ValueChangedDelegate(this.trackBarPosition_TickValueChanged);
+            this.trackBarPosition.ValueChanged += new Composants.TrackBarPlus.ValueChangedDelegate(this.trackBarPosition_ValueChanged);
             // 
             // trackBarVitesse
             // 
@@ -1414,13 +1414,13 @@
             this.trackBarVitesse.Min = 0D;
             this.trackBarVitesse.MinimumSize = new System.Drawing.Size(0, 15);
             this.trackBarVitesse.Name = "trackBarVitesse";
-            this.trackBarVitesse.NombreDecimales = 0;
+            this.trackBarVitesse.DecimalPlaces = 0;
             this.trackBarVitesse.Reverse = false;
             this.trackBarVitesse.Size = new System.Drawing.Size(318, 15);
             this.trackBarVitesse.TabIndex = 9;
             this.trackBarVitesse.Vertical = false;
-            this.trackBarVitesse.TickValueChanged += new System.EventHandler(this.trackBarVitesse_TickValueChanged);
-            this.trackBarVitesse.ValueChanged += new System.EventHandler(this.trackBarVitesse_ValueChanged);
+            this.trackBarVitesse.TickValueChanged += new Composants.TrackBarPlus.ValueChangedDelegate(this.trackBarVitesse_TickValueChanged);
+            this.trackBarVitesse.ValueChanged += new Composants.TrackBarPlus.ValueChangedDelegate(this.trackBarVitesse_ValueChanged);
             // 
             // PanelServo
             // 

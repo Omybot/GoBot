@@ -89,14 +89,14 @@ namespace GoBot.IHM
             }
         }
 
-        private void trackBarVitesse_TickValueChanged(object sender, EventArgs e)
+        private void trackBarVitesse_TickValueChanged(object sender, double value)
         {
-            balise.VitesseRotation((int)trackBarVitesse.Value);
+            balise.VitesseRotation((int)value);
         }
 
-        private void trackBarVitesse_ValueChanged(object sender, EventArgs e)
+        private void trackBarVitesse_ValueChanged(object sender, double value)
         {
-            lblVitesse.Text = trackBarVitesse.Value + "";
+            lblVitesse.Text = value.ToString();
         }
 
         private void VideAngles()
@@ -147,15 +147,15 @@ namespace GoBot.IHM
             pictureBoxAngle.Image = bmp;
         }
 
-        private void trackBarConsigne_TickValueChanged(object sender, EventArgs e)
+        private void trackBarConsigne_TickValueChanged(object sender, double value)
         {
-            balise.VitesseConsigne = trackBarConsigne.Value / 10.0;
+            balise.VitesseConsigne = value / 10.0;
             balise.ReglageVitesse = true;
         }
 
-        private void trackBarConsigne_ValueChanged(object sender, EventArgs e)
+        private void trackBarConsigne_ValueChanged(object sender, double value)
         {
-            lblConsigne.Text = trackBarConsigne.Value / 10.0 + "";
+            lblConsigne.Text = (value / 10.0).ToString();
         }
 
         private void boxAsservContinu_CheckedChanged(object sender, EventArgs e)

@@ -489,24 +489,24 @@ namespace GoBot.IHM
                 timer.Stop();
         }
 
-        private void trackBarPosition_ValueChanged(object sender, EventArgs e)
+        private void trackBarPosition_ValueChanged(object sender, double value)
         {
-            lblPosition.Text = trackBarPosition.Value.ToString();
+            lblPosition.Text = value.ToString();
         }
 
-        private void trackBarVitesse_ValueChanged(object sender, EventArgs e)
+        private void trackBarVitesse_ValueChanged(object sender, double value)
         {
-            lblVitesse.Text = trackBarVitesse.Value.ToString();
+            lblVitesse.Text = value.ToString();
         }
 
-        private void trackBarPosition_TickValueChanged(object sender, EventArgs e)
+        private void trackBarPosition_TickValueChanged(object sender, double value)
         {
-            servo.PositionCible = (int)trackBarPosition.Value;
+            servo.PositionCible = (int)value;
         }
 
-        private void trackBarVitesse_TickValueChanged(object sender, EventArgs e)
+        private void trackBarVitesse_TickValueChanged(object sender, double value)
         {
-            servo.VitesseMax = (int)trackBarVitesse.Value;
+            servo.VitesseMax = (int)value;
         }
 
         private void switchLed_ChangementEtat(object sender, EventArgs e)

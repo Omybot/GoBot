@@ -95,12 +95,12 @@
             this.trackZoom.Min = 0.1D;
             this.trackZoom.MinimumSize = new System.Drawing.Size(0, 15);
             this.trackZoom.Name = "trackZoom";
-            this.trackZoom.NombreDecimales = 1;
+            this.trackZoom.DecimalPlaces = 1;
             this.trackZoom.Reverse = false;
             this.trackZoom.Size = new System.Drawing.Size(90, 15);
             this.trackZoom.TabIndex = 6;
             this.trackZoom.Vertical = false;
-            this.trackZoom.ValueChanged += new System.EventHandler(this.trackZoom_ValueChanged);
+            this.trackZoom.ValueChanged += new Composants.TrackBarPlus.ValueChangedDelegate(this.trackZoom_ValueChanged);
             // 
             // boxScale
             // 

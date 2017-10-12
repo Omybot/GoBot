@@ -145,14 +145,14 @@ namespace GoBot.IHM
 
         #region Vitesse ligne
 
-        protected virtual void trackBarVitesseLigne_TickValueChanged(object sender, EventArgs e)
+        protected virtual void trackBarVitesseLigne_TickValueChanged(object sender, double value)
         {
-            Robot.SpeedConfig.LineSpeed = (int)trackBarVitesseLigne.Value;
+            Robot.SpeedConfig.LineSpeed = (int)value;
         }
 
-        private void trackBarVitesseLigne_ValueChanged(object sender, EventArgs e)
+        private void trackBarVitesseLigne_ValueChanged(object sender, double value)
         {
-            numVitesseLigne.Value = (int)trackBarVitesseLigne.Value;
+            numVitesseLigne.Value = (int)value;
         }
 
         private void numVitesseLigne_ValueChanged(object sender, EventArgs e)
@@ -165,14 +165,14 @@ namespace GoBot.IHM
 
         #region Accélération ligne
 
-        protected virtual void trackBarAccelLigne_TickValueChanged(object sender, EventArgs e)
+        protected virtual void trackBarAccelLigne_TickValueChanged(object sender, double value)
         {
-            Robot.SpeedConfig.LineAcceleration = (int)trackBarAccelLigne.Value;
+            Robot.SpeedConfig.LineAcceleration = (int)value;
         }
 
-        private void trackBarAccelLigne_ValueChanged(object sender, EventArgs e)
+        private void trackBarAccelLigne_ValueChanged(object sender, double value)
         {
-            numAccelLigne.Value = (int)trackBarAccelLigne.Value;
+            numAccelLigne.Value = (int)value;
         }
 
         private void numAccelLigne_ValueChanged(object sender, EventArgs e)
@@ -185,14 +185,14 @@ namespace GoBot.IHM
 
         #region Vitesse pivot
 
-        private void trackBarVitessePivot_TickValueChanged(object sender, EventArgs e)
+        private void trackBarVitessePivot_TickValueChanged(object sender, double value)
         {
-            Robot.SpeedConfig.PivotSpeed = (int)trackBarVitessePivot.Value;
+            Robot.SpeedConfig.PivotSpeed = (int)value;
         }
 
-        private void trackBarVitessePivot_ValueChanged(object sender, EventArgs e)
+        private void trackBarVitessePivot_ValueChanged(object sender, double value)
         {
-            numVitessePivot.Value = (int)trackBarVitessePivot.Value;
+            numVitessePivot.Value = (int)value;
         }
 
         private void numVitessePivot_ValueChanged(object sender, EventArgs e)
@@ -205,15 +205,15 @@ namespace GoBot.IHM
 
         #region Acceleration pivot
 
-        private void trackBarAccelPivot_TickValueChanged(object sender, EventArgs e)
+        private void trackBarAccelPivot_TickValueChanged(object sender, double value)
         {
-            Robot.SpeedConfig.PivotAcceleration = (int)trackBarAccelPivot.Value;
-            Robot.SpeedConfig.PivotDeceleration = (int)trackBarAccelPivot.Value;
+            Robot.SpeedConfig.PivotAcceleration = (int)value;
+            Robot.SpeedConfig.PivotDeceleration = (int)value;
         }
 
-        private void trackBarAccelPivot_ValueChanged(object sender, EventArgs e)
+        private void trackBarAccelPivot_ValueChanged(object sender, double value)
         {
-            numAccelPivot.Value = (int)trackBarAccelPivot.Value;
+            numAccelPivot.Value = (int)value;
         }
 
         private void numAccelPivot_ValueChanged(object sender, EventArgs e)
@@ -328,14 +328,14 @@ namespace GoBot.IHM
             Robot.Rapide();
         }
 
-        private void trackBarAccelerationFinLigne_TickValueChanged(object sender, EventArgs e)
+        private void trackBarAccelerationFinLigne_TickValueChanged(object sender, double value)
         {
-            Robot.SpeedConfig.LineDeceleration = (int)trackBarAccelerationFinLigne.Value;
+            Robot.SpeedConfig.LineDeceleration = (int)value;
         }
 
-        private void trackBarAccelerationFinLigne_ValueChanged(object sender, EventArgs e)
+        private void trackBarAccelerationFinLigne_ValueChanged(object sender, double value)
         {
-            numAccelerationFinLigne.Value = (int)trackBarAccelerationFinLigne.Value;
+            numAccelerationFinLigne.Value = (int)value;
         }
 
         private void numAccelerationFinLigne_ValueChanged(object sender, EventArgs e)

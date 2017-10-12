@@ -70,13 +70,13 @@
             this.trackBarVitesse.Min = 0D;
             this.trackBarVitesse.MinimumSize = new System.Drawing.Size(0, 15);
             this.trackBarVitesse.Name = "trackBarVitesse";
-            this.trackBarVitesse.NombreDecimales = 0;
+            this.trackBarVitesse.DecimalPlaces = 0;
             this.trackBarVitesse.Reverse = false;
             this.trackBarVitesse.Size = new System.Drawing.Size(246, 15);
             this.trackBarVitesse.TabIndex = 2;
             this.trackBarVitesse.Vertical = false;
-            this.trackBarVitesse.TickValueChanged += new System.EventHandler(this.trackBarVitesse_TickValueChanged);
-            this.trackBarVitesse.ValueChanged += new System.EventHandler(this.trackBarVitesse_ValueChanged);
+            this.trackBarVitesse.TickValueChanged += new Composants.TrackBarPlus.ValueChangedDelegate(this.trackBarVitesse_TickValueChanged);
+            this.trackBarVitesse.ValueChanged += new Composants.TrackBarPlus.ValueChangedDelegate(this.trackBarVitesse_ValueChanged);
             // 
             // lblVitesse
             // 
@@ -123,13 +123,13 @@
             this.trackBarConsigne.Min = 0D;
             this.trackBarConsigne.MinimumSize = new System.Drawing.Size(0, 15);
             this.trackBarConsigne.Name = "trackBarConsigne";
-            this.trackBarConsigne.NombreDecimales = 0;
+            this.trackBarConsigne.DecimalPlaces = 0;
             this.trackBarConsigne.Reverse = false;
             this.trackBarConsigne.Size = new System.Drawing.Size(246, 15);
             this.trackBarConsigne.TabIndex = 8;
             this.trackBarConsigne.Vertical = false;
-            this.trackBarConsigne.TickValueChanged += new System.EventHandler(this.trackBarConsigne_TickValueChanged);
-            this.trackBarConsigne.ValueChanged += new System.EventHandler(this.trackBarConsigne_ValueChanged);
+            this.trackBarConsigne.TickValueChanged += new Composants.TrackBarPlus.ValueChangedDelegate(this.trackBarConsigne_TickValueChanged);
+            this.trackBarConsigne.ValueChanged += new Composants.TrackBarPlus.ValueChangedDelegate(this.trackBarConsigne_ValueChanged);
             // 
             // lblConsigne
             // 

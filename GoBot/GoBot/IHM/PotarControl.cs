@@ -84,11 +84,11 @@ namespace GoBot.IHM
             }
         }
 
-        private void TrackBar_TickValueChanged(object sender, EventArgs e)
+        private void TrackBar_TickValueChanged(object sender, double value)
         {
             if (positionnable != null)
             {
-                positionnable.Positionner((int)trackBar.Value);
+                positionnable.Positionner((int)value);
                 lblValue.Text = trackBar.Value.ToString();
             }
         }

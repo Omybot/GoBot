@@ -97,12 +97,12 @@ namespace GoBot.IHM
             this.trackBarValeurPosition.Min = 0D;
             this.trackBarValeurPosition.MinimumSize = new System.Drawing.Size(0, 15);
             this.trackBarValeurPosition.Name = "trackBarValeurPosition";
-            this.trackBarValeurPosition.NombreDecimales = 0;
+            this.trackBarValeurPosition.DecimalPlaces = 0;
             this.trackBarValeurPosition.Reverse = false;
             this.trackBarValeurPosition.Size = new System.Drawing.Size(294, 15);
             this.trackBarValeurPosition.TabIndex = 40;
             this.trackBarValeurPosition.Vertical = false;
-            this.trackBarValeurPosition.TickValueChanged += new System.EventHandler(this.trackBarValeurPosition_TickValueChanged);
+            this.trackBarValeurPosition.TickValueChanged += new TrackBarPlus.ValueChangedDelegate(this.trackBarValeurPosition_TickValueChanged);
             // 
             // btnSauvegarderPosition
             // 
