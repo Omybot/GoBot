@@ -24,6 +24,7 @@ namespace Composants
 
         private Timer TimerTickValue { get; set; }
         private bool Moving { get; set; }
+        private bool FocusedImage { get; set; }
 
         public double Value { get; private set; }
         public uint IntervalTimer { get; set; }
@@ -90,7 +91,7 @@ namespace Composants
                 }
 
                 vertical = value;
-                SetBackGround();
+                ChangeImages();
             }
         }
 
@@ -128,7 +129,7 @@ namespace Composants
             {
                 reverse = value;
 
-                SetBackGround();
+                ChangeImages();
             }
         }
 
@@ -185,6 +186,19 @@ namespace Composants
         {
             OnMouseDown(e);
         }
+        protected override void OnEnter(EventArgs e)
+        {
+            FocusedImage = true;
+            ChangeImages();
+            base.OnEnter(e);
+        }
+
+        protected override void OnLeave(EventArgs e)
+        {
+            FocusedImage = false;
+            ChangeImages();
+            base.OnLeave(e);
+        }
 
         protected override void OnMouseDown(MouseEventArgs e)
         {
@@ -215,12 +229,12 @@ namespace Composants
 
         private void TrackBarPlus_Leave(object sender, EventArgs e)
         {
-            SetBackGround();
+            ChangeImages();
         }
 
         private void TrackBarPlus_Enter(object sender, EventArgs e)
         {
-            SetBackGround();
+            ChangeImages();
         }
 
         private void TrackBarPlus_KeyDown(object sender, KeyEventArgs e)
@@ -246,9 +260,9 @@ namespace Composants
 
         #endregion
 
-        public void SetBackGround()
+        public void ChangeImages()
         {
-            if (!Focused)
+            if (!FocusedImage)
             {
                 imgBarre.BackgroundImage = Properties.Resources.TrackBarFond;
                 imgCurseur.Image = Properties.Resources.TrackBarCurseurNormal;
@@ -295,14 +309,14 @@ namespace Composants
             TimerTickValue.Interval = 1;
             TimerTickValue.Start();
 
-            SetBackGround();
+            ChangeImages();
         }
 
         private void EndMoving()
         {
             Moving = false;
 
-            SetBackGround();
+            ChangeImages();
         }
 
         void timer_Tick(object sender, EventArgs e)

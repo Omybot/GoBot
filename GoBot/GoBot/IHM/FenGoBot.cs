@@ -65,7 +65,7 @@ namespace GoBot
                     btnClose.Visible = false;
                 }
 
-                switchBoutonSimu.SetActif(Robots.Simulation);
+                switchBoutonSimu.Value = Robots.Simulation;
 
                 tabPrecedent = new Dictionary<TabPage, TabPage>();
                 tabPrecedent.Add(tabControl.TabPages[0], null);
@@ -206,9 +206,9 @@ namespace GoBot
             }
         }
 
-        private void switchBoutonSimu_ChangementEtat(object sender, EventArgs e)
+        private void switchBoutonSimu_ValueChanged(object sender, bool value)
         {
-            Robots.Simuler(switchBoutonSimu.Actif);
+            Robots.Simuler(value);
             panelGrosRobot.Init();
             // todo
             //Robots.GrosRobot.Historique.NouvelleAction += new Historique.DelegateAction(HistoriqueGR_nouvelleAction);

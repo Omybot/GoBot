@@ -38,9 +38,9 @@ namespace GoBot.IHM
             trackBar.Max = positionnable.Maximum;
         }
 
-        private void switchBouton_ChangementEtat(object sender, EventArgs e)
+        private void switchBouton_ValueChanged(object sender, bool value)
         {
-            if(switchBouton.Actif)
+            if(value)
             {
                 pollingEnable = true;
                 threadPolling = new Thread(ThreadPollingCodeur);

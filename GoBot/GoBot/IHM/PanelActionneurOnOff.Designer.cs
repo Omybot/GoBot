@@ -28,7 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.btnOnOff = new Composants.SwitchBouton();
+            this.btnOnOff = new Composants.SwitchButton();
             this.lblName = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
@@ -38,9 +38,9 @@
             this.btnOnOff.Location = new System.Drawing.Point(23, 9);
             this.btnOnOff.Name = "btnOnOff";
             this.btnOnOff.Size = new System.Drawing.Size(35, 15);
-            this.btnOnOff.Symetrique = false;
+            this.btnOnOff.Mirrored = false;
             this.btnOnOff.TabIndex = 0;
-            this.btnOnOff.ChangementEtat += new System.EventHandler(this.btnOnOff_ChangementEtat);
+            this.btnOnOff.ValueChanged += new Composants.SwitchButton.ValueChangedDelegate(this.btnOnOff_ValueChanged);
             // 
             // lblName
             // 
@@ -66,7 +66,7 @@
 
         #endregion
 
-        private Composants.SwitchBouton btnOnOff;
+        private Composants.SwitchButton btnOnOff;
         private System.Windows.Forms.Label lblName;
     }
 }

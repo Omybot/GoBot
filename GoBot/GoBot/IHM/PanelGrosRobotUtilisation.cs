@@ -20,7 +20,7 @@ namespace GoBot.IHM
             InitializeComponent();
             
             if(!Execution.DesignMode)
-                Robots.GrosRobot.ChangementEtatCapteurOnOff += new Robot.ChangementEtatCapteurOnOffDelegate(GrosRobot_ChangementEtatCapteurOnOff);
+                Robots.GrosRobot.ChangementEtatCapteurOnOff += new Robot.ChangementEtatCapteurOnOffDelegate(GrosRobot_ValueChangedCapteurOnOff);
 
             tooltip = new ToolTip();
             tooltip.InitialDelay = 1500;
@@ -28,7 +28,7 @@ namespace GoBot.IHM
             groupBoxUtilisation.DeploiementChange += new Composants.GroupBoxRetractable.DeploiementDelegate(groupBoxUtilisation_Deploiement);
         }
         
-        void GrosRobot_ChangementEtatCapteurOnOff(CapteurOnOffID capteur, bool etat)
+        void GrosRobot_ValueChangedCapteurOnOff(CapteurOnOffID capteur, bool etat)
         {
             switch (capteur)
             {

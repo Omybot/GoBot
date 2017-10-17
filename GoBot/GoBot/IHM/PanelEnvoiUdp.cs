@@ -44,9 +44,9 @@ namespace GoBot.IHM
         {
             if (!Execution.DesignMode)
             {
-                switchBoutonMove.SetActif(true, false);
-                switchBoutonIO.SetActif(true, false);
-                switchBoutonGB.SetActif(true, false);
+                switchBoutonMove.Value = true;
+                switchBoutonIO.Value = true;
+                switchBoutonGB.Value = true;
 
                 foreach (UDPConnection conn in Connections.AllConnections)
                 {
@@ -140,11 +140,11 @@ namespace GoBot.IHM
             }
         }
 
-        private void switchBoutonConnexion_ChangementEtat(object sender, EventArgs e)
+        private void switchBoutonConnexion_ValueChanged(object sender, bool value)
         {
-            Connections.EnableConnection[Board.RecMove] = switchBoutonMove.Actif;
-            Connections.EnableConnection[Board.RecIO] = switchBoutonIO.Actif;
-            Connections.EnableConnection[Board.RecGB] = switchBoutonGB.Actif;
+            Connections.EnableConnection[Board.RecMove] = switchBoutonMove.Value;
+            Connections.EnableConnection[Board.RecIO] = switchBoutonIO.Value;
+            Connections.EnableConnection[Board.RecGB] = switchBoutonGB.Value;
         }
     }
 }

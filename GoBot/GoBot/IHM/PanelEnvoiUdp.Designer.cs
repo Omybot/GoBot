@@ -57,10 +57,10 @@
             this.RecMove = new System.Windows.Forms.Label();
             this.label15 = new System.Windows.Forms.Label();
             this.groupBox7 = new System.Windows.Forms.GroupBox();
-            this.switchBoutonGB = new Composants.SwitchBouton();
+            this.switchBoutonGB = new Composants.SwitchButton();
             this.label7 = new System.Windows.Forms.Label();
-            this.switchBoutonMove = new Composants.SwitchBouton();
-            this.switchBoutonIO = new Composants.SwitchBouton();
+            this.switchBoutonMove = new Composants.SwitchButton();
+            this.switchBoutonIO = new Composants.SwitchButton();
             this._pnlConnections = new System.Windows.Forms.FlowLayoutPanel();
             this.groupBox3.SuspendLayout();
             this.groupBox6.SuspendLayout();
@@ -399,9 +399,9 @@
             this.switchBoutonGB.Location = new System.Drawing.Point(119, 75);
             this.switchBoutonGB.Name = "switchBoutonGB";
             this.switchBoutonGB.Size = new System.Drawing.Size(35, 15);
-            this.switchBoutonGB.Symetrique = true;
+            this.switchBoutonGB.Mirrored = true;
             this.switchBoutonGB.TabIndex = 23;
-            this.switchBoutonGB.ChangementEtat += new System.EventHandler(this.switchBoutonConnexion_ChangementEtat);
+            this.switchBoutonGB.ValueChanged += new Composants.SwitchButton.ValueChangedDelegate(this.switchBoutonConnexion_ValueChanged);
             // 
             // label7
             // 
@@ -418,9 +418,9 @@
             this.switchBoutonMove.Location = new System.Drawing.Point(119, 33);
             this.switchBoutonMove.Name = "switchBoutonMove";
             this.switchBoutonMove.Size = new System.Drawing.Size(35, 15);
-            this.switchBoutonMove.Symetrique = true;
+            this.switchBoutonMove.Mirrored = true;
             this.switchBoutonMove.TabIndex = 16;
-            this.switchBoutonMove.ChangementEtat += new System.EventHandler(this.switchBoutonConnexion_ChangementEtat);
+            this.switchBoutonMove.ValueChanged += new Composants.SwitchButton.ValueChangedDelegate(this.switchBoutonConnexion_ValueChanged);
             // 
             // switchBoutonIO
             // 
@@ -428,9 +428,9 @@
             this.switchBoutonIO.Location = new System.Drawing.Point(119, 54);
             this.switchBoutonIO.Name = "switchBoutonIO";
             this.switchBoutonIO.Size = new System.Drawing.Size(35, 15);
-            this.switchBoutonIO.Symetrique = true;
+            this.switchBoutonIO.Mirrored = true;
             this.switchBoutonIO.TabIndex = 17;
-            this.switchBoutonIO.ChangementEtat += new System.EventHandler(this.switchBoutonConnexion_ChangementEtat);
+            this.switchBoutonIO.ValueChanged += new Composants.SwitchButton.ValueChangedDelegate(this.switchBoutonConnexion_ValueChanged);
             // 
             // _pnlConnections
             // 
@@ -493,12 +493,12 @@
         private System.Windows.Forms.NumericUpDown numIntervalleTest;
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.Button btnSendTest;
-        private Composants.SwitchBouton switchBoutonMove;
-        private Composants.SwitchBouton switchBoutonIO;
+        private Composants.SwitchButton switchBoutonMove;
+        private Composants.SwitchButton switchBoutonIO;
         private System.Windows.Forms.Label RecMove;
         private System.Windows.Forms.Label label15;
         private System.Windows.Forms.GroupBox groupBox7;
-        private Composants.SwitchBouton switchBoutonGB;
+        private Composants.SwitchButton switchBoutonGB;
         private System.Windows.Forms.Label label7;
         private System.Windows.Forms.CheckBox boxGB;
         private System.Windows.Forms.FlowLayoutPanel _pnlConnections;

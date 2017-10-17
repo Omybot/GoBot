@@ -25,9 +25,9 @@ namespace GoBot.IHM
             lblName.Text = Nommeur.Nommer(act).Substring(0, 1).ToUpper() + Nommeur.Nommer(act).Substring(1);
         }
 
-        private void btnOnOff_ChangementEtat(object sender, EventArgs e)
+        private void btnOnOff_ValueChanged(object sender, bool value)
         {
-            Robots.GrosRobot.ActionneurOnOff(actionneur, btnOnOff.Actif);
+            Robots.GrosRobot.ActionneurOnOff(actionneur, value);
         }
     }
 }

@@ -242,23 +242,23 @@ namespace GoBot.IHM
                 if (servo.LedAllumee)
                 {
                     ledLed.Color = Color.Red; 
-                    switchLed.SetActif(true, false);
+                    switchLed.Value = true;
                 }
                 else
                 {
                     ledLed.Color = Color.Gray; 
-                    switchLed.SetActif(false, false);
+                    switchLed.Value = false;
                 }
 
                 if (servo.CoupleActive)
                 {
                     ledCouple.Color = Color.LimeGreen;
-                    switchCouple.SetActif(true, false);
+                    switchCouple.Value= true;
                 }
                 else
                 {
                     ledCouple.Color = Color.Gray;
-                    switchCouple.SetActif(false, false);
+                    switchCouple.Value = false;
                 }
 
                 if (servo.EnMouvement)
@@ -476,9 +476,9 @@ namespace GoBot.IHM
             Actualisation(false);
         }
 
-        private void switchSurveillance_ChangementEtat(object sender, EventArgs e)
+        private void switchSurveillance_ValueChanged(object sender, bool value)
         {
-            if (switchSurveillance.Actif)
+            if (value)
             {
                 timer = new System.Windows.Forms.Timer();
                 timer.Interval = (int)numIntervalle.Value;
@@ -509,14 +509,14 @@ namespace GoBot.IHM
             servo.VitesseMax = (int)value;
         }
 
-        private void switchLed_ChangementEtat(object sender, EventArgs e)
+        private void switchLed_ValueChanged(object sender, bool value)
         {
-            servo.LedAllumee = switchLed.Actif;
+            servo.LedAllumee = value;
         }
 
-        private void switchCouple_ChangementEtat(object sender, EventArgs e)
+        private void switchCouple_ValueChanged(object sender, bool value)
         {
-            servo.CoupleActive = switchCouple.Actif;
+            servo.CoupleActive = value;
         }
 
         private Pen penPositionActuelle;

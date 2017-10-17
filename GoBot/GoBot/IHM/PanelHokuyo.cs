@@ -37,9 +37,9 @@ namespace GoBot.IHM
             }
         }
 
-        private void switchEnable_ChangementEtat(object sender, EventArgs e)
+        private void switchEnable_ValueChanged(object sender, bool value)
         {
-            if (switchBouton1.Actif)
+            if (value)
             {
                 Actionneur.Hokuyo.StartLoopMeasure();
                 Actionneur.Hokuyo.NewMeasure += Hokuyo_NewMeasure;

@@ -47,7 +47,7 @@
             this.boxIOAN7 = new System.Windows.Forms.CheckBox();
             this.boxIOAN8 = new System.Windows.Forms.CheckBox();
             this.boxIOAN9 = new System.Windows.Forms.CheckBox();
-            this.switchOnOff = new Composants.SwitchBouton();
+            this.switchOnOff = new Composants.SwitchButton();
             this.ctrlGraphique = new Composants.GraphPanel();
             this.SuspendLayout();
             // 
@@ -264,9 +264,9 @@
             this.switchOnOff.Location = new System.Drawing.Point(88, 25);
             this.switchOnOff.Name = "switchOnOff";
             this.switchOnOff.Size = new System.Drawing.Size(35, 15);
-            this.switchOnOff.Symetrique = true;
+            this.switchOnOff.Mirrored = true;
             this.switchOnOff.TabIndex = 35;
-            this.switchOnOff.ChangementEtat += new System.EventHandler(this.switchBouton_ChangementEtat);
+            this.switchOnOff.ValueChanged += new Composants.SwitchButton.ValueChangedDelegate(this.switchBouton_ValueChanged);
             // 
             // ctrlGraphique
             // 
@@ -321,7 +321,7 @@
         private System.Windows.Forms.Label lblAN6;
         private System.Windows.Forms.Label lblAN4;
         private System.Windows.Forms.Label lblAN3;
-        private Composants.SwitchBouton switchOnOff;
+        private Composants.SwitchButton switchOnOff;
         private System.Windows.Forms.Label lblEnable;
         private System.Windows.Forms.CheckBox boxIOAN1;
         private System.Windows.Forms.Label lblAN7;

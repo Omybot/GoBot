@@ -126,11 +126,11 @@
     <Compile Include="RichTextBoxPlus.Designer.cs">
       <DependentUpon>RichTextBoxPlus.cs</DependentUpon>
     </Compile>
-    <Compile Include="SwitchBouton.cs">
+    <Compile Include="SwitchButton.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="SwitchBouton.Designer.cs">
-      <DependentUpon>SwitchBouton.cs</DependentUpon>
+    <Compile Include="SwitchButton.Designer.cs">
+      <DependentUpon>SwitchButton.cs</DependentUpon>
     </Compile>
     <Compile Include="TextBoxPlus.cs">
       <SubType>Component</SubType>
@@ -178,8 +178,8 @@
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
       <SubType>Designer</SubType>
     </EmbeddedResource>
-    <EmbeddedResource Include="SwitchBouton.resx">
-      <DependentUpon>SwitchBouton.cs</DependentUpon>
+    <EmbeddedResource Include="SwitchButton.resx">
+      <DependentUpon>SwitchButton.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="TextBoxPlus.resx">
       <DependentUpon>TextBoxPlus.cs</DependentUpon>

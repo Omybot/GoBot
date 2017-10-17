@@ -85,7 +85,7 @@ namespace GoBot
             this.panelHokuyo1 = new GoBot.IHM.PanelHokuyo();
             this.btnClose = new System.Windows.Forms.Button();
             this.btnFenetre = new System.Windows.Forms.Button();
-            this.switchBoutonSimu = new Composants.SwitchBouton();
+            this.switchBoutonSimu = new Composants.SwitchButton();
             this.panelConnexions = new GoBot.IHM.PanelConnexions();
             this.panelNumerique1 = new GoBot.IHM.PanelNumerique();
             this.panelNumerique2 = new GoBot.IHM.PanelNumerique();
@@ -684,9 +684,9 @@ namespace GoBot
             this.switchBoutonSimu.Location = new System.Drawing.Point(1208, 742);
             this.switchBoutonSimu.Name = "switchBoutonSimu";
             this.switchBoutonSimu.Size = new System.Drawing.Size(35, 15);
-            this.switchBoutonSimu.Symetrique = true;
+            this.switchBoutonSimu.Mirrored = true;
             this.switchBoutonSimu.TabIndex = 73;
-            this.switchBoutonSimu.ChangementEtat += new System.EventHandler(this.switchBoutonSimu_ChangementEtat);
+            this.switchBoutonSimu.ValueChanged += new Composants.SwitchButton.ValueChangedDelegate(this.switchBoutonSimu_ValueChanged);
             // 
             // panelConnexions
             // 
@@ -779,7 +779,7 @@ namespace GoBot
 
         private System.Windows.Forms.Button btnClose;
         private System.Windows.Forms.Label lblSimulation;
-        private Composants.SwitchBouton switchBoutonSimu;
+        private Composants.SwitchButton switchBoutonSimu;
         private PanelConnexions panelConnexions;
         private System.Windows.Forms.Button btnFenetre;
         private System.Windows.Forms.TabPage tabAlimentation;

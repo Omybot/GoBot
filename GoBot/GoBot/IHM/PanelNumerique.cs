@@ -51,9 +51,9 @@ namespace GoBot.IHM
             Robots.GrosRobot.DemandeValeursNumeriques(Carte, false);
         }
 
-        private void switchBouton_ChangementEtat(object sender, EventArgs e)
+        private void switchBouton_ValueChanged(object sender, bool value)
         {
-            timerTrame.Enabled = switchOnOff.Actif;
+            timerTrame.Enabled = value;
         }
     }
 }

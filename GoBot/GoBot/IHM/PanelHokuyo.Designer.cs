@@ -29,7 +29,7 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            this.switchBouton1 = new Composants.SwitchBouton();
+            this.switchBouton1 = new Composants.SwitchButton();
             this.rdoOutline = new System.Windows.Forms.RadioButton();
             this.rdoRays = new System.Windows.Forms.RadioButton();
             this.rdoShadows = new System.Windows.Forms.RadioButton();
@@ -51,9 +51,9 @@
             this.switchBouton1.Location = new System.Drawing.Point(29, 16);
             this.switchBouton1.Name = "switchBouton1";
             this.switchBouton1.Size = new System.Drawing.Size(35, 15);
-            this.switchBouton1.Symetrique = true;
+            this.switchBouton1.Mirrored = true;
             this.switchBouton1.TabIndex = 2;
-            this.switchBouton1.ChangementEtat += new System.EventHandler(this.switchEnable_ChangementEtat);
+            this.switchBouton1.ValueChanged += new Composants.SwitchButton.ValueChangedDelegate(this.switchEnable_ValueChanged);
             // 
             // rdoOutline
             // 
@@ -212,7 +212,7 @@
         }
 
         #endregion
-        private Composants.SwitchBouton switchBouton1;
+        private Composants.SwitchButton switchBouton1;
         private System.Windows.Forms.RadioButton rdoOutline;
         private System.Windows.Forms.RadioButton rdoRays;
         private System.Windows.Forms.RadioButton rdoShadows;

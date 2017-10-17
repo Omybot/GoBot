@@ -23,17 +23,17 @@ namespace Composants
             InitializeComponent();
         }
 
-        public void AjouterLigne(String texte, Color couleur, bool afficheHeure = true)
+        public void AddLine(String text, Color color, bool withDate = true)
         {
-            texte = afficheHeure ? DateTime.Now.ToLongTimeString() + " > " + texte + Environment.NewLine : texte + Environment.NewLine;
+            text = withDate ? DateTime.Now.ToLongTimeString() + " > " + text + Environment.NewLine : text + Environment.NewLine;
             SuspendLayout();
 
             SelectionStart = TextLength;
-            SelectedText = texte;
+            SelectedText = text;
 
-            SelectionStart = TextLength - texte.Length + 1;
-            SelectionLength = texte.Length;
-            SelectionColor = couleur;
+            SelectionStart = TextLength - text.Length + 1;
+            SelectionLength = text.Length;
+            SelectionColor = color;
 
             ResumeLayout();
 

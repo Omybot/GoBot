@@ -29,7 +29,7 @@
         private void InitializeComponent()
         {
             this.lblEnable = new System.Windows.Forms.Label();
-            this.switchOnOff = new Composants.SwitchBouton();
+            this.switchOnOff = new Composants.SwitchButton();
             this.graph1 = new Composants.ByteBinaryGraph();
             this.graph2 = new Composants.ByteBinaryGraph();
             this.SuspendLayout();
@@ -49,9 +49,9 @@
             this.switchOnOff.Location = new System.Drawing.Point(162, 36);
             this.switchOnOff.Name = "switchOnOff";
             this.switchOnOff.Size = new System.Drawing.Size(35, 15);
-            this.switchOnOff.Symetrique = true;
+            this.switchOnOff.Mirrored = true;
             this.switchOnOff.TabIndex = 35;
-            this.switchOnOff.ChangementEtat += new System.EventHandler(this.switchBouton_ChangementEtat);
+            this.switchOnOff.ValueChanged += new Composants.SwitchButton.ValueChangedDelegate(this.switchBouton_ValueChanged);
             // 
             // graph1
             // 
@@ -86,7 +86,7 @@
         }
 
         #endregion
-        private Composants.SwitchBouton switchOnOff;
+        private Composants.SwitchButton switchOnOff;
         private System.Windows.Forms.Label lblEnable;
         private Composants.ByteBinaryGraph graph1;
         private Composants.ByteBinaryGraph graph2;

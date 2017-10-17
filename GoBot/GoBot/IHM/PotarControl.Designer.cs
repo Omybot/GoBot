@@ -31,7 +31,7 @@
             this.cboPositionnable = new System.Windows.Forms.ComboBox();
             this.lblName = new System.Windows.Forms.Label();
             this.trackBar = new Composants.TrackBarPlus();
-            this.switchBouton = new Composants.SwitchBouton();
+            this.switchBouton = new Composants.SwitchButton();
             this.lblValue = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
@@ -78,9 +78,9 @@
             this.switchBouton.Location = new System.Drawing.Point(252, 24);
             this.switchBouton.Name = "switchBouton";
             this.switchBouton.Size = new System.Drawing.Size(35, 15);
-            this.switchBouton.Symetrique = true;
+            this.switchBouton.Mirrored = true;
             this.switchBouton.TabIndex = 3;
-            this.switchBouton.ChangementEtat += new System.EventHandler(this.switchBouton_ChangementEtat);
+            this.switchBouton.ValueChanged += new Composants.SwitchButton.ValueChangedDelegate(this.switchBouton_ValueChanged);
             // 
             // lblValue
             // 
@@ -113,7 +113,7 @@
         private System.Windows.Forms.ComboBox cboPositionnable;
         private System.Windows.Forms.Label lblName;
         private Composants.TrackBarPlus trackBar;
-        private Composants.SwitchBouton switchBouton;
+        private Composants.SwitchButton switchBouton;
         private System.Windows.Forms.Label lblValue;
     }
 }

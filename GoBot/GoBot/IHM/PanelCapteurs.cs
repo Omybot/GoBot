@@ -18,9 +18,9 @@ namespace GoBot.IHM
             InitializeComponent();
         }
 
-        private void btnColor_ChangementEtat(object sender, EventArgs e)
+        private void btnColor_ValueChanged(object sender, bool value)
         {
-            if (btnColor.Actif)
+            if (value)
             {
                 Robots.GrosRobot.ActionneurOnOff(ActionneurOnOffID.AlimCapteurCouleur, true);
                 Robots.GrosRobot.CapteurCouleurChange += GrosRobot_CapteurCouleurChange;

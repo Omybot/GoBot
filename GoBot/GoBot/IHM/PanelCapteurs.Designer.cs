@@ -29,7 +29,7 @@
         private void InitializeComponent()
         {
             this.lblCapteurCouleurTxt = new System.Windows.Forms.Label();
-            this.btnColor = new Composants.SwitchBouton();
+            this.btnColor = new Composants.SwitchButton();
             this.picColor = new Composants.ColorDisplay();
             this.SuspendLayout();
             // 
@@ -48,9 +48,9 @@
             this.btnColor.Location = new System.Drawing.Point(163, 20);
             this.btnColor.Name = "btnColor";
             this.btnColor.Size = new System.Drawing.Size(35, 15);
-            this.btnColor.Symetrique = true;
+            this.btnColor.Mirrored = true;
             this.btnColor.TabIndex = 0;
-            this.btnColor.ChangementEtat += new System.EventHandler(this.btnColor_ChangementEtat);
+            this.btnColor.ValueChanged += new Composants.SwitchButton.ValueChangedDelegate(this.btnColor_ValueChanged);
             // 
             // picColor
             // 
@@ -76,7 +76,7 @@
 
         #endregion
 
-        private Composants.SwitchBouton btnColor;
+        private Composants.SwitchButton btnColor;
         private System.Windows.Forms.Label lblCapteurCouleurTxt;
         private Composants.ColorDisplay picColor;
     }

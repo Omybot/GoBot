@@ -125,15 +125,15 @@
             this.lblTxtPositionMin = new System.Windows.Forms.Label();
             this.ledMouvement = new Composants.Led();
             this.lblTxtMouvement = new System.Windows.Forms.Label();
-            this.switchCouple = new Composants.SwitchBouton();
+            this.switchCouple = new Composants.SwitchButton();
             this.lblTxtCouple = new System.Windows.Forms.Label();
             this.numCouple = new System.Windows.Forms.NumericUpDown();
             this.btnOkCoupleMax = new System.Windows.Forms.Button();
             this.lblTxtCoupleMax = new System.Windows.Forms.Label();
             this.btnReset = new System.Windows.Forms.Button();
             this.lblLed = new System.Windows.Forms.Label();
-            this.switchLed = new Composants.SwitchBouton();
-            this.switchSurveillance = new Composants.SwitchBouton();
+            this.switchLed = new Composants.SwitchButton();
+            this.switchSurveillance = new Composants.SwitchButton();
             this.lblTxtSurveillance = new System.Windows.Forms.Label();
             this.trackBarPosition = new Composants.TrackBarPlus();
             this.trackBarVitesse = new Composants.TrackBarPlus();
@@ -1294,9 +1294,9 @@
             this.switchCouple.Location = new System.Drawing.Point(329, 197);
             this.switchCouple.Name = "switchCouple";
             this.switchCouple.Size = new System.Drawing.Size(35, 15);
-            this.switchCouple.Symetrique = false;
+            this.switchCouple.Mirrored = false;
             this.switchCouple.TabIndex = 59;
-            this.switchCouple.ChangementEtat += new System.EventHandler(this.switchCouple_ChangementEtat);
+            this.switchCouple.ValueChanged += new Composants.SwitchButton.ValueChangedDelegate(this.switchCouple_ValueChanged);
             // 
             // lblTxtCouple
             // 
@@ -1363,9 +1363,9 @@
             this.switchLed.Location = new System.Drawing.Point(329, 174);
             this.switchLed.Name = "switchLed";
             this.switchLed.Size = new System.Drawing.Size(35, 15);
-            this.switchLed.Symetrique = false;
+            this.switchLed.Mirrored = false;
             this.switchLed.TabIndex = 52;
-            this.switchLed.ChangementEtat += new System.EventHandler(this.switchLed_ChangementEtat);
+            this.switchLed.ValueChanged += new Composants.SwitchButton.ValueChangedDelegate(this.switchLed_ValueChanged);
             // 
             // switchSurveillance
             // 
@@ -1373,9 +1373,9 @@
             this.switchSurveillance.Location = new System.Drawing.Point(308, 56);
             this.switchSurveillance.Name = "switchSurveillance";
             this.switchSurveillance.Size = new System.Drawing.Size(35, 15);
-            this.switchSurveillance.Symetrique = false;
+            this.switchSurveillance.Mirrored = false;
             this.switchSurveillance.TabIndex = 51;
-            this.switchSurveillance.ChangementEtat += new System.EventHandler(this.switchSurveillance_ChangementEtat);
+            this.switchSurveillance.ValueChanged += new Composants.SwitchButton.ValueChangedDelegate(this.switchSurveillance_ValueChanged);
             // 
             // lblTxtSurveillance
             // 
@@ -1481,10 +1481,10 @@
         private System.Windows.Forms.Button btnOkBaudrate;
         private System.Windows.Forms.Label lblTxtBaudrate;
         private System.Windows.Forms.GroupBox groupServo;
-        private Composants.SwitchBouton switchSurveillance;
+        private Composants.SwitchButton switchSurveillance;
         private System.Windows.Forms.Label lblTxtSurveillance;
         private System.Windows.Forms.Label lblLed;
-        private Composants.SwitchBouton switchLed;
+        private Composants.SwitchButton switchLed;
         private System.Windows.Forms.NumericUpDown numCWMargin;
         private System.Windows.Forms.Button btnOkCWMargin;
         private System.Windows.Forms.Label lblTxtCWMargin;
@@ -1533,7 +1533,7 @@
         private System.Windows.Forms.Label lblTxtPositionMin;
         private Composants.Led ledMouvement;
         private System.Windows.Forms.Label lblTxtMouvement;
-        private Composants.SwitchBouton switchCouple;
+        private Composants.SwitchButton switchCouple;
         private System.Windows.Forms.Label lblTxtCouple;
         private System.Windows.Forms.NumericUpDown numCouple;
         private System.Windows.Forms.Button btnOkCoupleMax;

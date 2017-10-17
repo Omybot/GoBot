@@ -1,9 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Diagnostics;
-using System.Linq;
-using System.Text;
 using System.Windows.Forms;
 using System.Drawing;
 
@@ -17,38 +12,46 @@ namespace Composants
         //      - Afficher un texte pendant une certaine durée
         //              Fonction TextDuring(texte, durée)
 
-        private Timer timer;
-        private Color couleurPrec;
+        private Timer TimerDisplay;
+        private Color PreviousColor;
+        private String PreviousText;
 
         public LabelPlus()
         {
             InitializeComponent();
         }
 
-        public void TextDuring(String texte, int millis = 2000, Color? couleur = null)
+        public void ShowText(String text, int during = 2000, Color? color = null)
         {
-            couleurPrec = ForeColor;
+            PreviousColor = ForeColor;
+            PreviousText = Text;
 
-            if (couleur.HasValue)
+            if (color.HasValue)
+                ForeColor = color.Value;
+
+            Text = text;
+
+            if (TimerDisplay != null)
             {
-                ForeColor = couleur.Value;
+                if (TimerDisplay.Enabled)
+                {
+                    TimerDisplay.Stop();
+                }
+                TimerDisplay.Dispose();
             }
 
-            Text = texte;
-
-            if (timer != null && timer.Enabled)
-                timer.Stop();
-            timer = new Timer();
-            timer.Interval = millis;
-            timer.Tick += new EventHandler(timer_Tick);
-            timer.Enabled = true;
-            timer.Start();
+            TimerDisplay = new Timer();
+            TimerDisplay.Interval = during;
+            TimerDisplay.Tick += new EventHandler(TimerDisplay_Tick);
+            TimerDisplay.Enabled = true;
+            TimerDisplay.Start();
         }
 
-        void  timer_Tick(object sender, EventArgs e)
+        void TimerDisplay_Tick(object sender, EventArgs e)
         {
-            ForeColor = couleurPrec;
-            timer.Stop();
+            ForeColor = PreviousColor;
+            Text = PreviousText;
+            TimerDisplay.Stop();
             Text = "";
         }
     }
