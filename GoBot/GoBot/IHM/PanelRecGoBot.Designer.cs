@@ -138,7 +138,7 @@
             this.btn10.Location = new System.Drawing.Point(47, 293);
             this.btn10.Name = "btn10";
             this.btn10.Size = new System.Drawing.Size(32, 32);
-            this.btn10.State = false;
+            this.btn10.Value = false;
             this.btn10.TabIndex = 25;
             this.btn10.TabStop = false;
             // 
@@ -149,7 +149,7 @@
             this.btn9.Location = new System.Drawing.Point(3, 293);
             this.btn9.Name = "btn9";
             this.btn9.Size = new System.Drawing.Size(32, 32);
-            this.btn9.State = false;
+            this.btn9.Value = false;
             this.btn9.TabIndex = 24;
             this.btn9.TabStop = false;
             // 
@@ -160,7 +160,7 @@
             this.btn8.Location = new System.Drawing.Point(47, 255);
             this.btn8.Name = "btn8";
             this.btn8.Size = new System.Drawing.Size(32, 32);
-            this.btn8.State = false;
+            this.btn8.Value = false;
             this.btn8.TabIndex = 23;
             this.btn8.TabStop = false;
             // 
@@ -171,7 +171,7 @@
             this.btn7.Location = new System.Drawing.Point(3, 255);
             this.btn7.Name = "btn7";
             this.btn7.Size = new System.Drawing.Size(32, 32);
-            this.btn7.State = false;
+            this.btn7.Value = false;
             this.btn7.TabIndex = 22;
             this.btn7.TabStop = false;
             // 
@@ -182,7 +182,7 @@
             this.btn6.Location = new System.Drawing.Point(25, 217);
             this.btn6.Name = "btn6";
             this.btn6.Size = new System.Drawing.Size(32, 32);
-            this.btn6.State = false;
+            this.btn6.Value = false;
             this.btn6.TabIndex = 21;
             this.btn6.TabStop = false;
             // 
@@ -193,7 +193,7 @@
             this.btn5.Location = new System.Drawing.Point(25, 79);
             this.btn5.Name = "btn5";
             this.btn5.Size = new System.Drawing.Size(32, 32);
-            this.btn5.State = false;
+            this.btn5.Value = false;
             this.btn5.TabIndex = 20;
             this.btn5.TabStop = false;
             // 
@@ -204,7 +204,7 @@
             this.btn4.Location = new System.Drawing.Point(47, 41);
             this.btn4.Name = "btn4";
             this.btn4.Size = new System.Drawing.Size(32, 32);
-            this.btn4.State = false;
+            this.btn4.Value = false;
             this.btn4.TabIndex = 19;
             this.btn4.TabStop = false;
             // 
@@ -215,7 +215,7 @@
             this.btn3.Location = new System.Drawing.Point(3, 41);
             this.btn3.Name = "btn3";
             this.btn3.Size = new System.Drawing.Size(32, 32);
-            this.btn3.State = false;
+            this.btn3.Value = false;
             this.btn3.TabIndex = 18;
             this.btn3.TabStop = false;
             // 
@@ -226,7 +226,7 @@
             this.btn2.Location = new System.Drawing.Point(47, 3);
             this.btn2.Name = "btn2";
             this.btn2.Size = new System.Drawing.Size(32, 32);
-            this.btn2.State = false;
+            this.btn2.Value = false;
             this.btn2.TabIndex = 17;
             this.btn2.TabStop = false;
             // 
@@ -237,7 +237,7 @@
             this.btn1.Location = new System.Drawing.Point(3, 3);
             this.btn1.Name = "btn1";
             this.btn1.Size = new System.Drawing.Size(32, 32);
-            this.btn1.State = false;
+            this.btn1.Value = false;
             this.btn1.TabIndex = 16;
             this.btn1.TabStop = false;
             // 
@@ -440,7 +440,7 @@
             this.btnJack.Location = new System.Drawing.Point(170, 9);
             this.btnJack.Name = "btnJack";
             this.btnJack.Size = new System.Drawing.Size(32, 32);
-            this.btnJack.State = false;
+            this.btnJack.Value = false;
             this.btnJack.TabIndex = 29;
             this.btnJack.TabStop = false;
             // 
@@ -451,7 +451,7 @@
             this.btnCouleur.Location = new System.Drawing.Point(170, 49);
             this.btnCouleur.Name = "btnCouleur";
             this.btnCouleur.Size = new System.Drawing.Size(32, 32);
-            this.btnCouleur.State = false;
+            this.btnCouleur.Value = false;
             this.btnCouleur.TabIndex = 30;
             this.btnCouleur.TabStop = false;
             // 
@@ -480,7 +480,7 @@
             this.swi1.Location = new System.Drawing.Point(130, 211);
             this.swi1.Name = "swi1";
             this.swi1.Size = new System.Drawing.Size(32, 32);
-            this.swi1.State = false;
+            this.swi1.Value = false;
             this.swi1.TabIndex = 33;
             this.swi1.TabStop = false;
             // 
@@ -491,7 +491,7 @@
             this.swi2.Location = new System.Drawing.Point(130, 173);
             this.swi2.Name = "swi2";
             this.swi2.Size = new System.Drawing.Size(32, 32);
-            this.swi2.State = false;
+            this.swi2.Value = false;
             this.swi2.TabIndex = 34;
             this.swi2.TabStop = false;
             // 
@@ -502,7 +502,7 @@
             this.swi3.Location = new System.Drawing.Point(130, 135);
             this.swi3.Name = "swi3";
             this.swi3.Size = new System.Drawing.Size(32, 32);
-            this.swi3.State = false;
+            this.swi3.Value = false;
             this.swi3.TabIndex = 35;
             this.swi3.TabStop = false;
             // 
@@ -513,7 +513,7 @@
             this.swi4.Location = new System.Drawing.Point(130, 97);
             this.swi4.Name = "swi4";
             this.swi4.Size = new System.Drawing.Size(32, 32);
-            this.swi4.State = false;
+            this.swi4.Value = false;
             this.swi4.TabIndex = 36;
             this.swi4.TabStop = false;
             // 

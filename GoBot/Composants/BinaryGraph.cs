@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Drawing;
-using System.Data;
-using System.Linq;
-using System.Text;
+﻿using System.Drawing;
 using System.Windows.Forms;
 
 namespace Composants
@@ -16,14 +10,18 @@ namespace Composants
             InitializeComponent();
         }
 
-        public void AddPoint(bool val)
+        /// <summary>
+        /// Ajoute un point au graph
+        /// </summary>
+        /// <param name="value">Valeur binaire à ajouter</param>
+        public void AddPoint(bool value)
         {
-            if (val)
+            if (value)
                 led.Color = Color.LimeGreen;
             else
                 led.Color = Color.Red;
 
-            graph.AddPoint("Bin", val ? 1 : 0, Color.DodgerBlue);
+            graph.AddPoint("Bin", value ? 1 : 0, Color.DodgerBlue);
             graph.DrawCurves();
         }
     }

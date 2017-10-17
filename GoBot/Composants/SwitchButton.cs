@@ -15,6 +15,10 @@ namespace Composants
         }
         
         public delegate void ValueChangedDelegate(object sender, bool value);
+
+        /// <summary>
+        /// Se produit lorsque l'état du bouton change
+        /// </summary>
         public event ValueChangedDelegate ValueChanged;
         
         private bool value;
@@ -102,9 +106,9 @@ namespace Composants
             Bitmap bouton;
 
             if(FocusedImage)
-                bouton = Properties.Resources.TrackBarCurseurSelect;
+                bouton = Properties.Resources.CursorFocused;
             else
-                bouton = Properties.Resources.TrackBarCurseurNormal;
+                bouton = Properties.Resources.Cursor;
 
             Graphics.FromImage(pictureBox.Image).DrawImage(bouton, x, 0);
         }

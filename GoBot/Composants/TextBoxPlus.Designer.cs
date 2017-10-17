@@ -32,9 +32,9 @@
             // 
             // BetterTextBox
             // 
-            this.Enter += new System.EventHandler(this.BetterTextBox_Enter);
-            this.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.BetterTextBox_KeyPress);
-            this.Leave += new System.EventHandler(this.BetterTextBox_Leave);
+            this.Enter += new System.EventHandler(this.TextBoxPlus_Enter);
+            this.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.TextBoxPlus_KeyPress);
+            this.Leave += new System.EventHandler(this.TextBoxPlus_Leave);
             this.ResumeLayout(false);
 
         }

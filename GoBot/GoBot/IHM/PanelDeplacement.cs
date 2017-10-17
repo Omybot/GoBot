@@ -26,7 +26,7 @@ namespace GoBot.IHM
             tooltip = new ToolTip();
             tooltip.InitialDelay = 1500;
 
-            groupBoxDep.DeploiementChange += new Composants.GroupBoxRetractable.DeploiementDelegate(groupBoxDep_Deploiement);
+            groupBoxDep.DeployedChanged += new Composants.GroupBoxPlus.DeployedChangedDelegate(groupBoxDep_Deploiement);
 
             tooltip.SetToolTip(btnAvance, "Avancer");
             tooltip.SetToolTip(btnRecule, "Reculer");
@@ -62,7 +62,7 @@ namespace GoBot.IHM
                 numCoeffD.Value = Config.CurrentConfig.GRCoeffD;
                 Robot.EnvoyerPID(Config.CurrentConfig.GRCoeffP, Config.CurrentConfig.GRCoeffI, Config.CurrentConfig.GRCoeffD);
 
-                groupBoxDep.Deployer(Config.CurrentConfig.DeplacementGROuvert, false);
+                groupBoxDep.Deploy(Config.CurrentConfig.DeplacementGROuvert, false);
             }
         }
 

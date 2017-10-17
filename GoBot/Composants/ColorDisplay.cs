@@ -1,10 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Drawing;
-using System.Data;
-using System.Linq;
-using System.Text;
 using System.Windows.Forms;
 using System.Drawing.Drawing2D;
 
@@ -17,6 +13,10 @@ namespace Composants
             InitializeComponent();
         }
 
+        /// <summary>
+        /// Détermine la couleur actuellement affichée
+        /// </summary>
+        /// <param name="color">Couleur affichée</param>
         public void SetColor(Color color)
         {
             this.InvokeAuto(() =>

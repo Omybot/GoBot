@@ -20,16 +20,34 @@ namespace Composants
         public delegate void ValueChangedDelegate(object sender, double value);
 
         public event ValueChangedDelegate TickValueChanged;
+
+        /// <summary>
+        /// Se produit lorsque la valeur sélectionnée change
+        /// </summary>
         public event ValueChangedDelegate ValueChanged;
 
         private Timer TimerTickValue { get; set; }
         private bool Moving { get; set; }
         private bool FocusedImage { get; set; }
 
+        /// <summary>
+        /// Obtient la valeur actuellement sélectionnée
+        /// </summary>
         public double Value { get; private set; }
+
+        /// <summary>
+        /// Obtient ou définit l'intervalle entre deux evenements TickValueChanged
+        /// </summary>
         public uint IntervalTimer { get; set; }
+
+        /// <summary>
+        /// Obtient ou définit le nombre de chiffres après la virgule
+        /// </summary>
         public int DecimalPlaces { get; set; }
 
+        /// <summary>
+        /// Obtient ou définit la valeur minimum sélectionnable
+        /// </summary>
         public double Min
         {
             get { return min; }
@@ -40,6 +58,9 @@ namespace Composants
             }
         }
 
+        /// <summary>
+        /// Obtient ou définit la valeur maximum sélectionnable
+        /// </summary>
         public double Max
         {
             get { return max; }
@@ -50,6 +71,9 @@ namespace Composants
             }
         }
 
+        /// <summary>
+        /// Obtient ou définit si le control est dessiné à la vertical ou non
+        /// </summary>
         public bool Vertical
         {
             get
@@ -95,6 +119,23 @@ namespace Composants
             }
         }
 
+        /// <summary>
+        /// Obtient ou définit si le control est inversé (= minimum à droite)
+        /// </summary>
+        public bool Reverse
+        {
+            get
+            {
+                return reverse;
+            }
+            set
+            {
+                reverse = value;
+
+                ChangeImages();
+            }
+        }
+
         public TrackBarPlus()
         {
             InitializeComponent();
@@ -119,18 +160,26 @@ namespace Composants
             imgBarre.MouseMove += new MouseEventHandler(img_MouseMove);
         }
 
-        public bool Reverse
+        /// <summary>
+        /// Définit la valeur actuellement sélectionnée
+        /// </summary>
+        /// <param name="val">Valeur à sélectionner</param>
+        /// <param name="tickEvent">Vrai si l'évenement TickValueChanged doit être déclenché</param>
+        public void SetValue(double val, bool tickEvent = true)
         {
-            get
-            {
-                return reverse;
-            }
-            set
-            {
-                reverse = value;
+            val = Math.Max(Min, Math.Min(Max, val));
 
-                ChangeImages();
+            if (Value != val)
+            {
+                Value = Math.Round(val, DecimalPlaces);
+
+                if (tickEvent)
+                    TickValueChanged?.Invoke(this, Value);
+
+                ValueChanged?.Invoke(this, Value);
             }
+
+            DrawImage();
         }
 
         #region Events
@@ -260,17 +309,17 @@ namespace Composants
 
         #endregion
 
-        public void ChangeImages()
+        private void ChangeImages()
         {
             if (!FocusedImage)
             {
-                imgBarre.BackgroundImage = Properties.Resources.TrackBarFond;
-                imgCurseur.Image = Properties.Resources.TrackBarCurseurNormal;
+                imgBarre.BackgroundImage = Properties.Resources.TrackBar;
+                imgCurseur.Image = Properties.Resources.Cursor;
             }
             else
             {
-                imgBarre.BackgroundImage = Properties.Resources.TrackBarFondSelected;
-                imgCurseur.Image = Properties.Resources.TrackBarCurseurSelect;
+                imgBarre.BackgroundImage = Properties.Resources.TrackBarFocused;
+                imgCurseur.Image = Properties.Resources.CursorFocused;
 
                 if (Moving)
                     imgCurseur.Image.RotateFlip(RotateFlipType.Rotate180FlipNone);
@@ -280,23 +329,6 @@ namespace Composants
                 imgBarre.BackgroundImage.RotateFlip(RotateFlipType.Rotate180FlipY);
             if (Vertical)
                 imgBarre.BackgroundImage.RotateFlip(RotateFlipType.Rotate270FlipNone);
-        }
-
-        public void SetValue(double val, bool tickEvent = true)
-        {
-            val = Math.Max(Min, Math.Min(Max, val));
-
-            if (Value != val)
-            {
-                Value = Math.Round(val, DecimalPlaces);
-
-                if (tickEvent)
-                    TickValueChanged?.Invoke(this, Value);
-
-                ValueChanged?.Invoke(this, Value);
-            }
-
-            DrawImage();
         }
 
         private void StartMoving()

@@ -28,7 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.groupBoxUtilisation = new Composants.GroupBoxRetractable();
+            this.groupBoxUtilisation = new Composants.GroupBoxPlus();
             this.btnDiagnostic = new System.Windows.Forms.Button();
             this.panelActionneursOnOff1 = new GoBot.IHM.PanelActionneursOnOff();
             this.groupBoxUtilisation.SuspendLayout();
@@ -80,7 +80,7 @@
         #endregion
 
         private System.Windows.Forms.Button btnDiagnostic;
-        private Composants.GroupBoxRetractable groupBoxUtilisation;
+        private Composants.GroupBoxPlus groupBoxUtilisation;
         private PanelActionneursOnOff panelActionneursOnOff1;
     }
 }

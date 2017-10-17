@@ -12,15 +12,21 @@ namespace Composants
         //      - Afficher un texte pendant une certaine durée
         //              Fonction TextDuring(texte, durée)
 
-        private Timer TimerDisplay;
-        private Color PreviousColor;
-        private String PreviousText;
+        private Timer TimerDisplay { get; set; }
+        private Color PreviousColor { get; set; }
+        private String PreviousText { get; set; }
 
         public LabelPlus()
         {
             InitializeComponent();
         }
 
+        /// <summary>
+        /// Permet d'afficher un texte donné dans une couleur donnée pendant un temps donné. Après quoi le texte et la couelru d'origine seront rétablis.
+        /// </summary>
+        /// <param name="text">Texte à afficher momentanément</param>
+        /// <param name="during">Durée d'affichage du texte (ms)</param>
+        /// <param name="color">Couleur du texte affiché momentanément</param>
         public void ShowText(String text, int during = 2000, Color? color = null)
         {
             PreviousColor = ForeColor;

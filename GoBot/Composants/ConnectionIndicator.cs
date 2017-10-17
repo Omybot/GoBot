@@ -9,7 +9,14 @@ namespace Composants
         private Timer BlinkTimer { get; set; }
         private int BlinkCounter { get; set; } = 0;
 
+        /// <summary>
+        /// Obtient l'état actuel de la connexion entrante
+        /// </summary>
         public bool StateIn { get; protected set; }
+
+        /// <summary>
+        /// Obtient l'état actuel de la connexion sortante
+        /// </summary>
         public bool StateOut { get; protected set; }
 
         public ConnectionIndicator()
@@ -29,6 +36,12 @@ namespace Composants
                 BlinkTimer.Stop();
         }
 
+        /// <summary>
+        /// Permet de déterminer l'état des connexions
+        /// </summary>
+        /// <param name="stateIn">Etat de la connexion entrante</param>
+        /// <param name="stateOut">Etat de la connexion sortante</param>
+        /// <param name="blink">Si vrai, clignotement si changement d'état</param>
         public void SetConnectionState(bool stateIn, bool stateOut, bool blink = false)
         {
             if (stateIn != StateIn || stateOut != StateOut)
@@ -37,11 +50,11 @@ namespace Composants
                 StateOut = stateOut;
 
                 if (StateIn && StateOut)
-                    SetImage(Properties.Resources.ConnexionOk, blink);
+                    SetImage(Properties.Resources.ConnectionOk, blink);
                 else if (!StateIn && !StateOut)
-                    SetImage(Properties.Resources.ConnexionNok, blink);
+                    SetImage(Properties.Resources.ConnectionNok, blink);
                 else
-                    SetImage(Properties.Resources.ConnexionUnilateral, blink);
+                    SetImage(Properties.Resources.ConnectionHalf, blink);
             }
         }
 

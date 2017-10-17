@@ -33,7 +33,7 @@
             this.freelyToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.smoothToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.abruptToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.groupBoxDep = new Composants.GroupBoxRetractable();
+            this.groupBoxDep = new Composants.GroupBoxPlus();
             this.btnPIDVit = new System.Windows.Forms.Button();
             this.btnPIDPol = new System.Windows.Forms.Button();
             this.trackBarAccelerationFinLigne = new Composants.TrackBarPlus();
@@ -364,7 +364,7 @@
             this.panelControleManuel.Name = "panelControleManuel";
             this.panelControleManuel.Size = new System.Drawing.Size(65, 22);
             this.panelControleManuel.TabIndex = 91;
-            this.panelControleManuel.ToucheEnfoncee += new Composants.FocusablePanel.ToucheEnfonceeDelegate(this.panelControleManuel_ToucheEnfoncee);
+            this.panelControleManuel.KeyPressed += new Composants.FocusablePanel.KeyPressedDelegate(this.panelControleManuel_ToucheEnfoncee);
             this.panelControleManuel.KeyUp += new System.Windows.Forms.KeyEventHandler(this.panelControleManuel_KeyUp);
             // 
             // label1
@@ -864,7 +864,7 @@
         private System.Windows.Forms.ToolStripMenuItem freelyToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem smoothToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem abruptToolStripMenuItem;
-        private Composants.GroupBoxRetractable groupBoxDep;
+        private Composants.GroupBoxPlus groupBoxDep;
         private System.Windows.Forms.Button btnGoCoordonnees;
         private System.Windows.Forms.NumericUpDown numTeta;
         private System.Windows.Forms.Label label7;

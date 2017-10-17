@@ -40,7 +40,7 @@
             this.btnHistorique2 = new System.Windows.Forms.Button();
             this.btnHistorique1 = new System.Windows.Forms.Button();
             this.btnHistorique0 = new System.Windows.Forms.Button();
-            this.groupBoxHisto = new Composants.GroupBoxRetractable();
+            this.groupBoxHisto = new Composants.GroupBoxPlus();
             this.groupBoxHisto.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -203,6 +203,6 @@
         private System.Windows.Forms.Button btnHistorique2;
         private System.Windows.Forms.Button btnHistorique1;
         private System.Windows.Forms.Button btnHistorique0;
-        private Composants.GroupBoxRetractable groupBoxHisto;
+        private Composants.GroupBoxPlus groupBoxHisto;
     }
 }

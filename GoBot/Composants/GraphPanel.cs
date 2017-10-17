@@ -20,7 +20,10 @@ namespace Composants
         private Dictionary<String, List<double>> CurvesData { get; set; }
         private Dictionary<String, bool> CurvesDisplayed { get; set; }
         private Dictionary<String, Pen> CurvesPen { get; set; }
-        
+
+        /// <summary>
+        /// Définit le type d'échelle utilisée par le graph
+        /// </summary>
         public ScaleType GraphScale {get;set;}
         
         /// <summary>

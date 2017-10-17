@@ -1,58 +1,41 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Drawing;
-using System.Data;
-using System.Linq;
-using System.Text;
+﻿using System.Drawing;
 using System.Windows.Forms;
 
 namespace Composants
 {
     public partial class Button3D : PictureBox
     {
-        private bool state;
+        private bool value;
 
         public Button3D()
         {
             InitializeComponent();
             BackColor = Color.Transparent;
-            Image = global::Composants.Properties.Resources.btnOff;
-            state = false;
+            Image = Properties.Resources.Button3DOff;
+            value = false;
         }
 
-        public void Off()
-        {
-            Image = global::Composants.Properties.Resources.btnOff;
-            state = false;
-        }
-
-        public void On()
-        {
-            Image = global::Composants.Properties.Resources.btnOn;
-            state = true;
-        }
-
-        public void Power(bool on)
-        {
-            if (on)
-                On();
-            else
-                Off();
-        }
-
-        public bool State
+        /// <summary>
+        /// Obtient ou détermine si le bouton est enfoncé ou non
+        /// </summary>
+        public bool Value
         {
             get
             {
-                return state;
+                return value;
             }
             set
             {
                 if (value)
-                    On();
+                {
+                    Image = Properties.Resources.Button3DOn;
+                    this.value = true;
+                }
                 else
-                    Off();
+                {
+                    Image = Properties.Resources.Button3DOn;
+                    this.value = true;
+                }
             }
         }
     }

@@ -32,7 +32,7 @@ namespace GoBot.IHM
             tooltip = new ToolTip();
             tooltip.InitialDelay = 1500;
             tooltip.SetToolTip(btnCopierHistorique, "Copier dans le presse-papiers");
-            groupBoxHisto.DeploiementChange += new Composants.GroupBoxRetractable.DeploiementDelegate(groupBoxHisto_Deploiement);
+            groupBoxHisto.DeployedChanged += new Composants.GroupBoxPlus.DeployedChangedDelegate(groupBoxHisto_Deploiement);
 
             listBtnHistorique = new List<Button>();
             listBtnHistorique.Add(btnHistorique0);
@@ -135,7 +135,7 @@ namespace GoBot.IHM
 
         private void PanelHistorique_Load(object sender, EventArgs e)
         {
-            groupBoxHisto.Deployer(Config.CurrentConfig.HistoriqueGROuvert, false);
+            groupBoxHisto.Deploy(Config.CurrentConfig.HistoriqueGROuvert, false);
         }
     }
 }

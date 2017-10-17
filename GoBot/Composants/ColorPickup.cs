@@ -1,25 +1,26 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Drawing;
-using System.Data;
-using System.Linq;
-using System.Text;
+﻿using System.Drawing;
 using System.Windows.Forms;
 
 namespace Composants
 {
     public partial class ColorPickup : PictureBox
     {
-
         public delegate void ColorDelegate(Color color);
+
+        /// <summary>
+        /// Se produit lorsque la souris passe sur une nouvelle couleur
+        /// </summary>
         public event ColorDelegate ColorHover;
+
+        /// <summary>
+        /// Se produit lorsque la souris clique sur une couleur
+        /// </summary>
         public event ColorDelegate ColorClick;
 
         public ColorPickup()
         {
             InitializeComponent();
-            this.Image = global::Composants.Properties.Resources.rainbow2;
+            this.Image = Properties.Resources.Rainbow2D;
             this.Width = this.Image.Width;
             this.Height = this.Image.Height;
             this.MouseMove += ColorPickup_MouseMove;
@@ -28,19 +29,17 @@ namespace Composants
 
         void ColorPickup_MouseClick(object sender, MouseEventArgs e)
         {
-            if (ColorClick != null)
-                ColorClick(GetColor(new Point(e.X, e.Y)));
+            ColorClick?.Invoke(GetColor(new Point(e.X, e.Y)));
         }
 
         void ColorPickup_MouseMove(object sender, MouseEventArgs e)
         {
-            if (ColorHover != null)
-                ColorHover(GetColor(new Point(e.X, e.Y)));
+            ColorHover?.Invoke(GetColor(new Point(e.X, e.Y)));
         }
 
         private Color GetColor(Point pos)
         {
-            return global::Composants.Properties.Resources.rainbow2.GetPixel(pos.X, pos.Y);
+            return Properties.Resources.Rainbow2D.GetPixel(pos.X, pos.Y);
         }
     }
 }

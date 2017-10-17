@@ -84,12 +84,12 @@ namespace GoBot.IHM
 
         void RecGoBot_JackChange(bool state)
         {
-            this.InvokeAuto(() => btnJack.State = state);
+            this.InvokeAuto(() => btnJack.Value = state);
         }
 
         void RecGoBot_ColorChange(MatchColor state)
         {
-            this.InvokeAuto(() => btnCouleur.State = state == MatchColor.LeftBlue ? true : false);
+            this.InvokeAuto(() => btnCouleur.Value = state == MatchColor.LeftBlue ? true : false);
         }
 
         void colorPickup1_ColorClick(Color color)
@@ -109,7 +109,7 @@ namespace GoBot.IHM
             {
                 try
                 {
-                    boutons.Find(b => (CapteurOnOffID)b.Tag == btn).Power(state);
+                    boutons.Find(b => (CapteurOnOffID)b.Tag == btn).Value = state;
                 }
                 catch (Exception)
                 {

@@ -36,7 +36,7 @@
             // 
             // imgCurseur
             // 
-            this.imgCurseur.Image = global::Composants.Properties.Resources.TrackBarCurseurNormal;
+            this.imgCurseur.Image = global::Composants.Properties.Resources.Cursor;
             this.imgCurseur.Location = new System.Drawing.Point(0, 0);
             this.imgCurseur.Name = "imgCurseur";
             this.imgCurseur.Size = new System.Drawing.Size(15, 15);
@@ -46,7 +46,7 @@
             // imgBarre
             // 
             this.imgBarre.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
-            this.imgBarre.BackgroundImage = global::Composants.Properties.Resources.TrackBarFond;
+            this.imgBarre.BackgroundImage = global::Composants.Properties.Resources.TrackBar;
             this.imgBarre.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.imgBarre.ErrorImage = null;
             this.imgBarre.ImageLocation = " ";

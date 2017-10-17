@@ -20,7 +20,7 @@ namespace GoBot.IHM
 
             tooltip = new ToolTip();
             tooltip.InitialDelay = 1500;
-            groupBoxCapteurs.DeploiementChange += new Composants.GroupBoxRetractable.DeploiementDelegate(groupBoxCapteurs_Deploiement);
+            groupBoxCapteurs.DeployedChanged += new Composants.GroupBoxPlus.DeployedChangedDelegate(groupBoxCapteurs_Deploiement);
         }
 
         void groupBoxCapteurs_Deploiement(bool deploye)
@@ -33,7 +33,7 @@ namespace GoBot.IHM
             ledJack.Color = Color.Gray;
             ledCouleurEquipe.Color = Color.Gray;
 
-            groupBoxCapteurs.Deployer(Config.CurrentConfig.CapteursGROuvert, false);
+            groupBoxCapteurs.Deploy(Config.CurrentConfig.CapteursGROuvert, false);
 
             timerJack = new System.Timers.Timer(100);
             timerJack.Elapsed += new System.Timers.ElapsedEventHandler(timerJack_Elapsed);

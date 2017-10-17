@@ -28,7 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.groupBoxSequences = new Composants.GroupBoxRetractable();
+            this.groupBoxSequences = new Composants.GroupBoxPlus();
             this.btnVideTout = new System.Windows.Forms.Button();
             this.btnStockModule = new System.Windows.Forms.Button();
             this.cboArmSelection = new System.Windows.Forms.ComboBox();
@@ -442,7 +442,7 @@
 
         #endregion
 
-        private Composants.GroupBoxRetractable groupBoxSequences;
+        private Composants.GroupBoxPlus groupBoxSequences;
         private System.Windows.Forms.Button button28;
         private System.Windows.Forms.Button btnLunaireSorti;
         private System.Windows.Forms.Button btnLunaireRange;

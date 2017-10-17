@@ -96,11 +96,11 @@
     <Compile Include="FocusablePanel.Designer.cs">
       <DependentUpon>FocusablePanel.cs</DependentUpon>
     </Compile>
-    <Compile Include="GroupBoxRetractable.cs">
+    <Compile Include="GroupBoxPlus.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="GroupBoxRetractable.designer.cs">
-      <DependentUpon>GroupBoxRetractable.cs</DependentUpon>
+    <Compile Include="GroupBoxPlus.designer.cs">
+      <DependentUpon>GroupBoxPlus.cs</DependentUpon>
     </Compile>
     <Compile Include="LabelPlus.cs">
       <SubType>Component</SubType>
@@ -167,16 +167,16 @@
     <EmbeddedResource Include="GraphPanel.resx">
       <DependentUpon>GraphPanel.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="GroupBoxRetractable.resx">
-      <DependentUpon>GroupBoxRetractable.cs</DependentUpon>
+    <EmbeddedResource Include="GroupBoxPlus.resx">
+      <DependentUpon>GroupBoxPlus.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Led.resx">
       <DependentUpon>Led.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
-      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
       <SubType>Designer</SubType>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Include="SwitchButton.resx">
       <DependentUpon>SwitchButton.cs</DependentUpon>
@@ -189,40 +189,10 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
-    <None Include="img\LedBleu.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="img\LedGris.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="img\LedJaune.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="img\LedOrange.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="img\LedRouge.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="img\LedVert.png" />
-  </ItemGroup>
-  <ItemGroup>
     <None Include="img\SwitchOff.png" />
   </ItemGroup>
   <ItemGroup>
     <None Include="img\SwitchOn.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="img\TrackBarCurseurNormal.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="img\TrackBarCurseurSelect.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="img\TrackBarFond.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="img\TrackBarFondSelected.png" />
   </ItemGroup>
   <ItemGroup>
     <None Include="img\FlecheBasGris.png" />
@@ -246,34 +216,52 @@
     <None Include="img\BatMidHigh.PNG" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="img\ConnexionNok.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="img\ConnexionOk.png" />
-  </ItemGroup>
-  <ItemGroup>
     <None Include="img\BatCrit.PNG" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Resources\" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="img\btnOff.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="img\btnOn.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="img\rainbow.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="img\rainbow2.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="img\ConnexionUnilateral.png" />
-  </ItemGroup>
-  <ItemGroup>
     <None Include="img\RedLed.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="img\Button3DOff.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="img\Button3DOn.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="img\ConnectionHalf.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="img\ConnectionNok.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="img\ConnectionOk.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="img\Cursor.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="img\CursorFocused.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="img\Rainbow.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="img\Rainbow2D.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="img\TrackBar.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="img\TrackBarFocused.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="img\ArrowBottom.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="img\ArrowUp.png" />
   </ItemGroup>
   <Import Project="..\Extensions\Extensions.projitems" Label="Shared" />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

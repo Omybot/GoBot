@@ -1,10 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
 using System.Drawing;
-using System.Data;
-using System.Linq;
-using System.Text;
 using System.Windows.Forms;
 
 namespace Composants
@@ -23,7 +18,8 @@ namespace Composants
 
         private String defaultText = "";
         private bool errorMode = false;
-        public TextModeEnum textMode = TextModeEnum.Text;
+
+        public TextModeEnum TextMode { get; set; } = TextModeEnum.Text;
 
         public enum TextModeEnum
         {
@@ -32,18 +28,9 @@ namespace Composants
             Decimal
         }
 
-        public TextModeEnum TextMode
-        {
-            get
-            {
-                return textMode;
-            }
-            set
-            {
-                textMode = value;
-            }
-        }
-
+        /// <summary>
+        /// Texte affiché par défaut si aucun autre texte n'est saisi
+        /// </summary>
         public String DefaultText 
         {
             get
@@ -66,6 +53,9 @@ namespace Composants
             InitializeComponent();
         }
 
+        /// <summary>
+        /// Obtient ou définit si le mode erreur est activé
+        /// </summary>
         public bool ErrorMode
         {
             get 
@@ -92,7 +82,7 @@ namespace Composants
             }
         }
 
-        private void BetterTextBox_Enter(object sender, EventArgs e)
+        private void TextBoxPlus_Enter(object sender, EventArgs e)
         {
             ErrorMode = false;
             if (Text == DefaultText)
@@ -102,7 +92,7 @@ namespace Composants
             }
         }
 
-        private void BetterTextBox_Leave(object sender, EventArgs e)
+        private void TextBoxPlus_Leave(object sender, EventArgs e)
         {
             if (Text == "")
             {
@@ -111,7 +101,7 @@ namespace Composants
             }
         }
 
-        private void BetterTextBox_KeyPress(object sender, KeyPressEventArgs e)
+        private void TextBoxPlus_KeyPress(object sender, KeyPressEventArgs e)
         {
             if (TextMode == TextModeEnum.Text)
                 return;

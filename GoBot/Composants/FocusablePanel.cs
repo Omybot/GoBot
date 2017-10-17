@@ -1,23 +1,25 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
 using System.Drawing;
-using System.Data;
-using System.Linq;
-using System.Text;
 using System.Windows.Forms;
 
 namespace Composants
 {
     public partial class FocusablePanel : UserControl
     {
-        private bool ecoute;
+        private bool Listening { get; set; }
+
+        public delegate void KeyPressedDelegate(PreviewKeyDownEventArgs e);
+
+        /// <summary>
+        /// Se produit lorsque qu'une touche est appuyée
+        /// </summary>
+        public event KeyPressedDelegate KeyPressed;
 
         public FocusablePanel()
         {
             BackColor = Color.LightGray;
             InitializeComponent();
-            ecoute = true;
+            Listening = true;
         }
 
         protected override void OnEnter(EventArgs e)
@@ -32,21 +34,19 @@ namespace Composants
             base.OnLeave(e);
         }
 
-        public delegate void ToucheEnfonceeDelegate(PreviewKeyDownEventArgs e);
-        public event ToucheEnfonceeDelegate ToucheEnfoncee;
         protected override void  OnPreviewKeyDown(PreviewKeyDownEventArgs e)
         {
             e.IsInputKey = true;
-            if (ecoute)
+            if (Listening)
             {
-                ecoute = false;
-                ToucheEnfoncee(e);
+                Listening = false;
+                KeyPressed(e);
             }
         }
 
         protected override void OnKeyUp(KeyEventArgs e)
         {
-            ecoute = true;
+            Listening = true;
             base.OnKeyUp(e);
         }
     }

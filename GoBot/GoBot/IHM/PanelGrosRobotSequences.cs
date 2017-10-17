@@ -23,7 +23,7 @@ namespace GoBot.IHM
             tooltip = new ToolTip();
             tooltip.InitialDelay = 1500;
 
-            groupBoxSequences.DeploiementChange += new Composants.GroupBoxRetractable.DeploiementDelegate(groupBoxSequences_Deploiement);
+            groupBoxSequences.DeployedChanged += new Composants.GroupBoxPlus.DeployedChangedDelegate(groupBoxSequences_Deploiement);
         }
 
         void groupBoxSequences_Deploiement(bool deploye)
@@ -33,7 +33,7 @@ namespace GoBot.IHM
 
         private void PanelSequencesGros_Load(object sender, EventArgs e)
         {
-            groupBoxSequences.Deployer(Config.CurrentConfig.SequencesGROuvert, false);
+            groupBoxSequences.Deploy(Config.CurrentConfig.SequencesGROuvert, false);
         }
 
         private void button28_Click(object sender, EventArgs e)

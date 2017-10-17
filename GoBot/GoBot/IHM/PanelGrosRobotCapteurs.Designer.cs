@@ -31,7 +31,7 @@
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(PanelGrosRobotCapteurs));
             this.ledJack = new Composants.Led();
             this.boxJack = new System.Windows.Forms.CheckBox();
-            this.groupBoxCapteurs = new Composants.GroupBoxRetractable();
+            this.groupBoxCapteurs = new Composants.GroupBoxPlus();
             this.boxCouleurEquipe = new System.Windows.Forms.CheckBox();
             this.ledCouleurEquipe = new Composants.Led();
             ((System.ComponentModel.ISupportInitialize)(this.ledJack)).BeginInit();
@@ -114,7 +114,7 @@
 
         private Composants.Led ledJack;
         private System.Windows.Forms.CheckBox boxJack;
-        private Composants.GroupBoxRetractable groupBoxCapteurs;
+        private Composants.GroupBoxPlus groupBoxCapteurs;
         private System.Windows.Forms.CheckBox boxCouleurEquipe;
         private Composants.Led ledCouleurEquipe;
     }

@@ -23,7 +23,7 @@ namespace GoBot.IHM
             tooltip = new ToolTip();
             tooltip.InitialDelay = 1500;
 
-            groupBoxReglage.DeploiementChange += new Composants.GroupBoxRetractable.DeploiementDelegate(groupBoxReglage_Deploiement);
+            groupBoxReglage.DeployedChanged += new Composants.GroupBoxPlus.DeployedChangedDelegate(groupBoxReglage_Deploiement);
         }
 
         void groupBoxReglage_Deploiement(bool deploye)
@@ -35,7 +35,7 @@ namespace GoBot.IHM
         {
             if (!Execution.DesignMode)
             {
-                groupBoxReglage.Deployer(Config.CurrentConfig.ReglageGROuvert, false);
+                groupBoxReglage.Deploy(Config.CurrentConfig.ReglageGROuvert, false);
 
                 comboBoxPositionnables.Items.AddRange(Config.Positionnables.ToArray());
             }

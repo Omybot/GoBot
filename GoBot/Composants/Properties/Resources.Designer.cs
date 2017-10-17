@@ -63,6 +63,26 @@ namespace Composants.Properties {
         /// <summary>
         ///   Recherche une ressource localisée de type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap ArrowBottom {
+            get {
+                object obj = ResourceManager.GetObject("ArrowBottom", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une ressource localisée de type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap ArrowUp {
+            get {
+                object obj = ResourceManager.GetObject("ArrowUp", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une ressource localisée de type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap BatCrit {
             get {
                 object obj = ResourceManager.GetObject("BatCrit", resourceCulture);
@@ -123,9 +143,9 @@ namespace Composants.Properties {
         /// <summary>
         ///   Recherche une ressource localisée de type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap btnOff {
+        internal static System.Drawing.Bitmap Button3DOff {
             get {
-                object obj = ResourceManager.GetObject("btnOff", resourceCulture);
+                object obj = ResourceManager.GetObject("Button3DOff", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -133,9 +153,9 @@ namespace Composants.Properties {
         /// <summary>
         ///   Recherche une ressource localisée de type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap btnOn {
+        internal static System.Drawing.Bitmap Button3DOn {
             get {
-                object obj = ResourceManager.GetObject("btnOn", resourceCulture);
+                object obj = ResourceManager.GetObject("Button3DOn", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -143,9 +163,9 @@ namespace Composants.Properties {
         /// <summary>
         ///   Recherche une ressource localisée de type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap ConnexionNok {
+        internal static System.Drawing.Bitmap ConnectionHalf {
             get {
-                object obj = ResourceManager.GetObject("ConnexionNok", resourceCulture);
+                object obj = ResourceManager.GetObject("ConnectionHalf", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -153,9 +173,9 @@ namespace Composants.Properties {
         /// <summary>
         ///   Recherche une ressource localisée de type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap ConnexionOk {
+        internal static System.Drawing.Bitmap ConnectionNok {
             get {
-                object obj = ResourceManager.GetObject("ConnexionOk", resourceCulture);
+                object obj = ResourceManager.GetObject("ConnectionNok", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -163,9 +183,9 @@ namespace Composants.Properties {
         /// <summary>
         ///   Recherche une ressource localisée de type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap ConnexionUnilateral {
+        internal static System.Drawing.Bitmap ConnectionOk {
             get {
-                object obj = ResourceManager.GetObject("ConnexionUnilateral", resourceCulture);
+                object obj = ResourceManager.GetObject("ConnectionOk", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -173,9 +193,9 @@ namespace Composants.Properties {
         /// <summary>
         ///   Recherche une ressource localisée de type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap FlecheBasGris {
+        internal static System.Drawing.Bitmap Cursor {
             get {
-                object obj = ResourceManager.GetObject("FlecheBasGris", resourceCulture);
+                object obj = ResourceManager.GetObject("Cursor", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -183,9 +203,9 @@ namespace Composants.Properties {
         /// <summary>
         ///   Recherche une ressource localisée de type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap FlecheHautGris {
+        internal static System.Drawing.Bitmap CursorFocused {
             get {
-                object obj = ResourceManager.GetObject("FlecheHautGris", resourceCulture);
+                object obj = ResourceManager.GetObject("CursorFocused", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -193,9 +213,9 @@ namespace Composants.Properties {
         /// <summary>
         ///   Recherche une ressource localisée de type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap rainbow {
+        internal static System.Drawing.Bitmap Rainbow {
             get {
-                object obj = ResourceManager.GetObject("rainbow", resourceCulture);
+                object obj = ResourceManager.GetObject("Rainbow", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -203,9 +223,9 @@ namespace Composants.Properties {
         /// <summary>
         ///   Recherche une ressource localisée de type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap rainbow2 {
+        internal static System.Drawing.Bitmap Rainbow2D {
             get {
-                object obj = ResourceManager.GetObject("rainbow2", resourceCulture);
+                object obj = ResourceManager.GetObject("Rainbow2D", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -243,9 +263,9 @@ namespace Composants.Properties {
         /// <summary>
         ///   Recherche une ressource localisée de type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap TrackBarCurseurNormal {
+        internal static System.Drawing.Bitmap TrackBar {
             get {
-                object obj = ResourceManager.GetObject("TrackBarCurseurNormal", resourceCulture);
+                object obj = ResourceManager.GetObject("TrackBar", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -253,29 +273,9 @@ namespace Composants.Properties {
         /// <summary>
         ///   Recherche une ressource localisée de type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap TrackBarCurseurSelect {
+        internal static System.Drawing.Bitmap TrackBarFocused {
             get {
-                object obj = ResourceManager.GetObject("TrackBarCurseurSelect", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Recherche une ressource localisée de type System.Drawing.Bitmap.
-        /// </summary>
-        internal static System.Drawing.Bitmap TrackBarFond {
-            get {
-                object obj = ResourceManager.GetObject("TrackBarFond", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Recherche une ressource localisée de type System.Drawing.Bitmap.
-        /// </summary>
-        internal static System.Drawing.Bitmap TrackBarFondSelected {
-            get {
-                object obj = ResourceManager.GetObject("TrackBarFondSelected", resourceCulture);
+                object obj = ResourceManager.GetObject("TrackBarFocused", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

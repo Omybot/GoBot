@@ -29,7 +29,7 @@ namespace GoBot.IHM
         /// </summary>
         private void InitializeComponent()
         {
-            this.groupBoxReglage = new Composants.GroupBoxRetractable();
+            this.groupBoxReglage = new Composants.GroupBoxPlus();
             this.flowLayoutPanel = new System.Windows.Forms.FlowLayoutPanel();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.panel1 = new System.Windows.Forms.Panel();
@@ -188,7 +188,7 @@ namespace GoBot.IHM
 
         #endregion
 
-        private Composants.GroupBoxRetractable groupBoxReglage;
+        private Composants.GroupBoxPlus groupBoxReglage;
         private System.Windows.Forms.FlowLayoutPanel flowLayoutPanel;
         private System.Windows.Forms.Panel panel1;
         private TrackBarPlus trackBarValeurPosition;

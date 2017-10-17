@@ -25,7 +25,7 @@ namespace GoBot.IHM
             tooltip = new ToolTip();
             tooltip.InitialDelay = 1500;
 
-            groupBoxUtilisation.DeploiementChange += new Composants.GroupBoxRetractable.DeploiementDelegate(groupBoxUtilisation_Deploiement);
+            groupBoxUtilisation.DeployedChanged += new Composants.GroupBoxPlus.DeployedChangedDelegate(groupBoxUtilisation_Deploiement);
         }
         
         void GrosRobot_ValueChangedCapteurOnOff(CapteurOnOffID capteur, bool etat)
@@ -44,7 +44,7 @@ namespace GoBot.IHM
         private void PanelUtilGros_Load(object sender, EventArgs e)
         {
             if (!Execution.DesignMode)
-                groupBoxUtilisation.Deployer(Config.CurrentConfig.UtilisationGROuvert, false);
+                groupBoxUtilisation.Deploy(Config.CurrentConfig.UtilisationGROuvert, false);
         }
 
         private void btnDiagnostic_Click(object sender, EventArgs e)
