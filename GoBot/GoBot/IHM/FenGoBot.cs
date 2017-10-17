@@ -119,7 +119,7 @@ namespace GoBot
             SplashScreen.CloseSplash();
 
 #if DEBUG
-            TestCode.VerificationEnums();
+            TestCode.TestEnums();
 #endif
         }
 
@@ -171,9 +171,9 @@ namespace GoBot
             DateTime debut = DateTime.Now;
 
             foreach (Connection conn in Connections.AllConnections)
-                conn.Archives.Export(Config.PathData + "/Logs/" + Execution.DateLancementString + "/" + Connections.GetBoardByConnection(conn).ToString() + ConnectionReplay.FileExtension);
+                conn.Archives.Export(Config.PathData + "/Logs/" + Execution.LaunchStartString + "/" + Connections.GetBoardByConnection(conn).ToString() + ConnectionReplay.FileExtension);
             
-            Robots.GrosRobot.Historique.Sauvegarder(Config.PathData + "/Logs/" + Execution.DateLancementString + "/ActionsGros.elog");
+            Robots.GrosRobot.Historique.Sauvegarder(Config.PathData + "/Logs/" + Execution.LaunchStartString + "/ActionsGros.elog");
         }
 
         private void btnClose_Click(object sender, EventArgs e)
@@ -193,7 +193,7 @@ namespace GoBot
                 if (!Directory.Exists(Config.PathData + "/LogsTraces/"))
                     Directory.CreateDirectory(Config.PathData + "/LogsTraces/");
 
-                Directory.CreateDirectory(Config.PathData + "/Logs/" + Execution.DateLancementString);
+                Directory.CreateDirectory(Config.PathData + "/Logs/" + Execution.LaunchStartString);
 
                 panelAnalogiqueMove.Carte = Board.RecMove;
                 panelAnalogiqueIO.Carte = Board.RecIO;

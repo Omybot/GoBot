@@ -20,7 +20,7 @@ namespace GoBot.Actions
 
         public override String ToString()
         {
-            return robot + " capteur " + Nommeur.Nommer(capteur) + " voit " + information;
+            return robot + " capteur " + NameFinder.GetName(capteur) + " voit " + information;
         }
 
         void IAction.Executer()

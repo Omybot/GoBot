@@ -101,7 +101,7 @@
     <Compile Include="Actions\Deplacement\ActionRecallage.cs" />
     <Compile Include="Actions\ActionServo.cs" />
     <Compile Include="Actions\IActionDuree.cs" />
-    <Compile Include="Actions\Nommeur.cs" />
+    <Compile Include="Actions\NameFinder.cs" />
     <Compile Include="Actions\Asservissement\ActionAccelerationLigne.cs" />
     <Compile Include="Actions\Asservissement\ActionVitesseLigne.cs" />
     <Compile Include="Actions\Deplacement\ActionStop.cs" />
@@ -118,6 +118,8 @@
     <Compile Include="IHM\PanelNumerique.Designer.cs">
       <DependentUpon>PanelNumerique.cs</DependentUpon>
     </Compile>
+    <Compile Include="Logs\ILog.cs" />
+    <Compile Include="Logs\LogConsole.cs" />
     <Compile Include="TicksPerSecond.cs" />
     <Compile Include="IHM\ConnectionDetails.cs">
       <SubType>UserControl</SubType>
@@ -345,7 +347,7 @@
     <Compile Include="IHM\SplashScreen.designer.cs">
       <DependentUpon>SplashScreen.cs</DependentUpon>
     </Compile>
-    <Compile Include="Logs\Log.cs" />
+    <Compile Include="Logs\LogFile.cs" />
     <Compile Include="Logs\Logs.cs" />
     <Compile Include="Mouvements\MouvementDeposeModules.cs" />
     <Compile Include="Mouvements\MouvementFusee.cs" />

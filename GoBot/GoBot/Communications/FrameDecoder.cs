@@ -300,15 +300,15 @@ namespace GoBot.Communications
                     output = "Demande capteur {0}";
                     if (parameters != null)
                     {
-                        output = ReplaceParam(output, Nommeur.Nommer((CapteurOnOffID)parameters[0]));
+                        output = ReplaceParam(output, NameFinder.GetName((CapteurOnOffID)parameters[0]));
                     }
                     break;
                 case FrameFunction.RetourCapteurOnOff:
                     output = "Retour capteur {0} : {1}";
                     if (parameters != null)
                     {
-                        output = ReplaceParam(output, Nommeur.Nommer((CapteurOnOffID)parameters[0]));
-                        output = ReplaceParam(output, Nommeur.Nommer(parameters[1] > 0));
+                        output = ReplaceParam(output, NameFinder.GetName((CapteurOnOffID)parameters[0]));
+                        output = ReplaceParam(output, NameFinder.GetName(parameters[1] > 0));
                     }
                     break;
                 case FrameFunction.DemandeValeursAnalogiques:
@@ -328,14 +328,14 @@ namespace GoBot.Communications
                     output = "Demande capteur couleur {0}";
                     if (parameters != null)
                     {
-                        output = ReplaceParam(output, Nommeur.Nommer((CapteurCouleurID)parameters[0]));
+                        output = ReplaceParam(output, NameFinder.GetName((CapteurCouleurID)parameters[0]));
                     }
                     break;
                 case FrameFunction.RetourCapteurCouleur:
                     output = "Retour capteur couleur {0} : {1}-{2}-{3}";
                     if (parameters != null)
                     {
-                        output = ReplaceParam(output, Nommeur.Nommer((CapteurCouleurID)parameters[0]));
+                        output = ReplaceParam(output, NameFinder.GetName((CapteurCouleurID)parameters[0]));
                         output = ReplaceParam(output, parameters[1].ToString("000"));
                         output = ReplaceParam(output, parameters[2].ToString("000"));
                         output = ReplaceParam(output, parameters[3].ToString("000"));
@@ -345,14 +345,14 @@ namespace GoBot.Communications
                     output = "Demande position codeur {0}";
                     if (parameters != null)
                     {
-                        output = ReplaceParam(output, Nommeur.Nommer((CodeurID)parameters[0]));
+                        output = ReplaceParam(output, NameFinder.GetName((CodeurID)parameters[0]));
                     }
                     break;
                 case FrameFunction.RetourPositionCodeur:
                     output = "Retour position codeur {0} : {1-2-3-4}";
                     if (parameters != null)
                     {
-                        output = ReplaceParam(output, Nommeur.Nommer((CodeurID)parameters[0]));
+                        output = ReplaceParam(output, NameFinder.GetName((CodeurID)parameters[0]));
                         output = ReplaceParam(output, parameters[1].ToString());
                     }
                     break;
@@ -360,15 +360,15 @@ namespace GoBot.Communications
                     output = "Pilote actionneur on off {0} : {1}";
                     if (parameters != null)
                     {
-                        output = ReplaceParam(output, Nommeur.Nommer((ActionneurOnOffID)parameters[0]));
-                        output = ReplaceParam(output, Nommeur.Nommer(parameters[1] > 0));
+                        output = ReplaceParam(output, NameFinder.GetName((ActionneurOnOffID)parameters[0]));
+                        output = ReplaceParam(output, NameFinder.GetName(parameters[1] > 0));
                     }
                     break;
                 case FrameFunction.Led:
                     output = "Pilote led {0} : {1}";
                     if (parameters != null)
                     {
-                        output = ReplaceParam(output, Nommeur.Nommer((LedID)parameters[0]));
+                        output = ReplaceParam(output, NameFinder.GetName((LedID)parameters[0]));
                         output = ReplaceParam(output, ((Devices.RecGoBot.LedStatus)parameters[1]).ToString());
                     }
                     break;
@@ -376,7 +376,7 @@ namespace GoBot.Communications
                     output = "Pilote moteur {0} position {1-2}";
                     if (parameters != null)
                     {
-                        output = ReplaceParam(output, Nommeur.Nommer((MoteurID)parameters[0]));
+                        output = ReplaceParam(output, NameFinder.GetName((MoteurID)parameters[0]));
                         output = ReplaceParam(output, parameters[1].ToString());
                     }
                     break;
@@ -384,7 +384,7 @@ namespace GoBot.Communications
                     output = "Pilote moteur {0} vitesse {2-3} vers la {1}";
                     if (parameters != null)
                     {
-                        output = ReplaceParam(output, Nommeur.Nommer((MoteurID)parameters[0]));
+                        output = ReplaceParam(output, NameFinder.GetName((MoteurID)parameters[0]));
                         output = ReplaceParam(output, parameters[1].ToString());
                         output = ReplaceParam(output, ((SensGD)parameters[2]).ToString().ToLower());
                     }
@@ -393,7 +393,7 @@ namespace GoBot.Communications
                     output = "Pilote moteur {0} accélération {1-2}";
                     if (parameters != null)
                     {
-                        output = ReplaceParam(output, Nommeur.Nommer((MoteurID)parameters[0]));
+                        output = ReplaceParam(output, NameFinder.GetName((MoteurID)parameters[0]));
                         output = ReplaceParam(output, parameters[1].ToString());
                     }
                     break;
@@ -612,7 +612,7 @@ namespace GoBot.Communications
                     output = "Envoi couleur LED {0}: {1}-{2}-{3}";
                     if (parameters != null)
                     {
-                        output = ReplaceParam(output, Nommeur.Nommer((LedRgbID)parameters[0]));
+                        output = ReplaceParam(output, NameFinder.GetName((LedRgbID)parameters[0]));
                         output = ReplaceParam(output, parameters[1].ToString("000"));
                         output = ReplaceParam(output, parameters[2].ToString("000"));
                         output = ReplaceParam(output, parameters[3].ToString("000"));
@@ -622,7 +622,7 @@ namespace GoBot.Communications
                     output = "Détection balise {0} : Tour de {1-2} ticks, {3} détections en haut, {4} détections en bas";
                     if (parameters != null)
                     {
-                        output = ReplaceParam(output, Nommeur.Nommer((BaliseID)parameters[0]));
+                        output = ReplaceParam(output, NameFinder.GetName((BaliseID)parameters[0]));
                         output = ReplaceParam(output, parameters[1].ToString());
                         output = ReplaceParam(output, parameters[2].ToString());
                         output = ReplaceParam(output, parameters[3].ToString());

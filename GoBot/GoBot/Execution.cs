@@ -13,8 +13,8 @@ namespace GoBot
         public static bool DesignMode { get; set; } = true;
         public static bool Shutdown { get; set; } = false;
 
-        public static DateTime DateLancement { get; set; }
-        public static String DateLancementString { get { return Execution.DateLancement.ToString("yyyy.MM.dd hh\\hmm\\mss\\s"); } }
+        public static DateTime LaunchStart { get; set; }
+        public static String LaunchStartString { get { return Execution.LaunchStart.ToString("yyyy.MM.dd hh\\hmm\\mss\\s"); } }
 
     }
 }

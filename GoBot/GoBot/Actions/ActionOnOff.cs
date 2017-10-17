@@ -20,7 +20,7 @@ namespace GoBot.Actions
 
         public override String ToString()
         {
-            return robot + " change " + Nommeur.Nommer(actionneur) + " à " + (on ? "on" : "off");
+            return robot + " change " + NameFinder.GetName(actionneur) + " à " + (on ? "on" : "off");
         }
 
         void IAction.Executer()

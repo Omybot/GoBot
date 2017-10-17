@@ -20,7 +20,7 @@ namespace GoBot.Actions
 
         public override String ToString()
         {
-            return robot + " tourne " + Nommeur.Nommer(moteur) + " à " + Nommeur.Nommer(vitesse, moteur);
+            return robot + " tourne " + NameFinder.GetName(moteur) + " à " + NameFinder.GetName(vitesse, moteur);
         }
 
         void IAction.Executer()

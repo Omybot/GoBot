@@ -22,7 +22,7 @@ namespace GoBot
         static void Main(string[] args)
         {
             Execution.DesignMode = false;
-            Execution.DateLancement = DateTime.Now;
+            Execution.LaunchStart = DateTime.Now;
 
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);

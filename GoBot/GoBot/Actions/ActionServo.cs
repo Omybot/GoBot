@@ -20,7 +20,7 @@ namespace GoBot.Actions
 
         public override String ToString()
         {
-            return robot + " bouge " + Nommeur.Nommer(pince) + " à " + Nommeur.Nommer(position, pince);
+            return robot + " bouge " + NameFinder.GetName(pince) + " à " + NameFinder.GetName(position, pince);
         }
 
         void IAction.Executer()

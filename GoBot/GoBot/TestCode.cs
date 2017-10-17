@@ -10,11 +10,11 @@ namespace GoBot
 {
     public static class TestCode
     {
-        public static void VerificationEnums()
+        public static void TestEnums()
         {
-            StringBuilder erreurs = new StringBuilder();
-            erreurs.AppendLine("Les valeurs d'énumerations suivantes n'ont pas de traduction litéralle dans le nommeur :");
-            bool erreur = false;
+            StringBuilder errors = new StringBuilder();
+            errors.AppendLine("Les valeurs d'énumerations suivantes n'ont pas de traduction litéralle dans le nommeur :");
+            bool error = false;
 
             List<Type> typesEnum = new List<Type>();
             typesEnum.Add(typeof(CapteurID));
@@ -32,22 +32,22 @@ namespace GoBot
             
             foreach (Type type in typesEnum)
             {
-                foreach (var valeur in Enum.GetValues(type))
+                foreach (var value in Enum.GetValues(type))
                 {
-                    String resultat = Nommeur.NommerInconnu((Convert.ChangeType(valeur, type)));
-                    if (resultat == (Convert.ChangeType(valeur, type).ToString()) || resultat == "" || resultat == "Inconnu")
+                    String result = NameFinder.GetNameUnknow((Convert.ChangeType(value, type)));
+                    if (result == (Convert.ChangeType(value, type).ToString()) || result == "" || result == "Inconnu")
                     {
-                        erreurs.Append("\t");
-                        erreurs.Append(type.ToString());
-                        erreurs.Append(".");
-                        erreurs.AppendLine(Convert.ChangeType(valeur, type).ToString());
-                        erreur = true;
+                        errors.Append("\t");
+                        errors.Append(type.ToString());
+                        errors.Append(".");
+                        errors.AppendLine(Convert.ChangeType(value, type).ToString());
+                        error = true;
                     }
                 }
             }
 
-            if (erreur)
-                MessageBox.Show(erreurs.ToString(), "Attention", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            if (error)
+                MessageBox.Show(errors.ToString(), "Attention", MessageBoxButtons.OK, MessageBoxIcon.Warning);
 
         }
     }
