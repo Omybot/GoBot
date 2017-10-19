@@ -5,7 +5,7 @@ using System.Text;
 
 namespace GoBot.Actions
 {
-    class ActionRecule : IActionDuree
+    class ActionRecule : ITimeableAction
     {
         private int distance;
         private Robot robot;
@@ -31,7 +31,7 @@ namespace GoBot.Actions
             robot.Reculer(distance);
         }
 
-        public int Duree
+        public TimeSpan Duration
         {
             get
             {

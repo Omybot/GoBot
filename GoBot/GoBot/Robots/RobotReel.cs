@@ -452,11 +452,9 @@ namespace GoBot
             Connexion.SendMessage(trame);
 
             Historique.AjouterAction(new ActionAvance(this, distance));
-
-            int tempsParcours = SpeedConfig.LineDuration(distance);
-
+            
             if (attendre)
-                if (!SemaphoresTrame[FrameFunction.FinDeplacement].WaitOne(tempsParcours + 1000))
+                if (!SemaphoresTrame[FrameFunction.FinDeplacement].WaitOne((int)SpeedConfig.LineDuration(distance).TotalMilliseconds))
                     Thread.Sleep(1000); // Tempo de secours, on a jamais reçu la fin de trajectoire après la fin du délai théorique
 
             DeplacementLigne = false;
@@ -482,11 +480,9 @@ namespace GoBot
             Connexion.SendMessage(trame);
 
             Historique.AjouterAction(new ActionRecule(this, distance));
-
-            int tempsParcours = SpeedConfig.LineDuration(distance);
-
+            
             if (attendre)
-                if (!SemaphoresTrame[FrameFunction.FinDeplacement].WaitOne(tempsParcours + 1000))
+                if (!SemaphoresTrame[FrameFunction.FinDeplacement].WaitOne((int)SpeedConfig.LineDuration(distance).TotalMilliseconds))
                     Thread.Sleep(1000); // Tempo de secours, on a jamais reçu la fin de trajectoire après la fin du délai théorique
 
             DeplacementLigne = false;
@@ -505,11 +501,9 @@ namespace GoBot
             Connexion.SendMessage(trame);
 
             Historique.AjouterAction(new ActionPivot(this, angle, SensGD.Gauche));
-
-            int tempsParcours = SpeedConfig.PivotDuration(angle, Entraxe);
-
+            
             if (attendre)
-                if (!SemaphoresTrame[FrameFunction.FinDeplacement].WaitOne(tempsParcours + 1000))
+                if (!SemaphoresTrame[FrameFunction.FinDeplacement].WaitOne((int)SpeedConfig.PivotDuration(angle, Entraxe).TotalMilliseconds))
                     Thread.Sleep(1000); // Tempo de secours, on a jamais reçu la fin de trajectoire après la fin du délai théorique
             DeplacementLigne = false;
         }
@@ -525,11 +519,9 @@ namespace GoBot
             Connexion.SendMessage(trame);
 
             Historique.AjouterAction(new ActionPivot(this, angle, SensGD.Droite));
-
-            int tempsParcours = SpeedConfig.PivotDuration(angle, Entraxe);
-
+            
             if (attendre)
-                if (!SemaphoresTrame[FrameFunction.FinDeplacement].WaitOne(tempsParcours + 1000))
+                if (!SemaphoresTrame[FrameFunction.FinDeplacement].WaitOne((int)SpeedConfig.PivotDuration(angle, Entraxe).TotalMilliseconds))
                     Thread.Sleep(1000); // Tempo de secours, on a jamais reçu la fin de trajectoire après la fin du délai théorique
         }
 

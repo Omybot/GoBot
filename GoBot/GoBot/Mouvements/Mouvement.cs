@@ -25,7 +25,7 @@ namespace GoBot.Mouvements
             {
                 ActionAvantDeplacement();
 
-                Trajectoire traj = PathFinder.ChercheTrajectoire(Robot.Graph, Plateau.ListeObstacles, new Position(Robot.Position), position, Robot.Rayon, Robot.Largeur / 2);
+                Trajectory traj = PathFinder.ChercheTrajectoire(Robot.Graph, Plateau.ListeObstacles, new Position(Robot.Position), position, Robot.Rayon, Robot.Largeur / 2);
 
                 if (traj != null && Robot.ParcourirTrajectoire(traj))
                 {

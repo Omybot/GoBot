@@ -101,7 +101,7 @@
     <Compile Include="Actions\ActionCapteur.cs" />
     <Compile Include="Actions\Deplacement\ActionRecallage.cs" />
     <Compile Include="Actions\ActionServo.cs" />
-    <Compile Include="Actions\IActionDuree.cs" />
+    <Compile Include="Actions\ITimeableAction.cs" />
     <Compile Include="NameFinder.cs" />
     <Compile Include="Actions\Asservissement\ActionAccelerationLigne.cs" />
     <Compile Include="Actions\Asservissement\ActionVitesseLigne.cs" />
@@ -359,7 +359,7 @@
     <Compile Include="Mouvements\PositionsMouvements.cs" />
     <Compile Include="WorldScale.cs" />
     <Compile Include="PathFinding\PathFinder.cs" />
-    <Compile Include="PathFinding\Trajectoire.cs" />
+    <Compile Include="PathFinding\Trajectory.cs" />
     <Compile Include="Ponderations\PoidsTest.cs" />
     <Compile Include="Ponderations\Poids.cs" />
     <Compile Include="Ponderations\PoidsBase.cs" />

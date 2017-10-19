@@ -24,7 +24,7 @@ namespace GoBot.PathFinding
 
         private static Thread threadRAZRayonAdverse;
 
-        public static Trajectoire ChercheTrajectoire(Graph graph, List<IForme> obstacles, Position positionActuell, Position destination, double rayonSecurite, double distanceSecuriteCote)
+        public static Trajectory ChercheTrajectoire(Graph graph, List<IForme> obstacles, Position positionActuell, Position destination, double rayonSecurite, double distanceSecuriteCote)
         {
             DateTime debut = DateTime.Now;
 
@@ -32,13 +32,13 @@ namespace GoBot.PathFinding
             double distance;
             bool cheminTrouve = false;
             bool raccordable = false;
-            Trajectoire trajectoire = new Trajectoire();
-            trajectoire.AngleDepart = new Angle(positionActuell.Angle);
-            trajectoire.AngleFinal = new Angle(destination.Angle);
+            Trajectory trajectoire = new Trajectory();
+            trajectoire.StartAngle = new Angle(positionActuell.Angle);
+            trajectoire.EndAngle = new Angle(destination.Angle);
 
             PointsTrouves = new List<PointReel>();
             PointsTrouves.Add(new PointReel(positionActuell.Coordonnees));
-            trajectoire.AjouterPoint(new PointReel(positionActuell.Coordonnees));
+            trajectoire.AddPoint(new PointReel(positionActuell.Coordonnees));
 
             lock (graph)
             {
@@ -102,7 +102,7 @@ namespace GoBot.PathFinding
                         if (franchissable)
                         {
                             PointsTrouves.Add(new PointReel(positionTestee.Coordonnees));
-                            trajectoire.AjouterPoint(new PointReel(positionTestee.Coordonnees));
+                            trajectoire.AddPoint(new PointReel(positionTestee.Coordonnees));
 
                             debutNode = new Node(positionTestee.Coordonnees.X, positionTestee.Coordonnees.Y, 0);
                             nbPointsDepart = graph.AddNode(debutNode, obstacles, rayonSecurite, distanceRaccordable);
@@ -153,7 +153,7 @@ namespace GoBot.PathFinding
                             if (franchissable)
                             {
                                 PointsTrouves.Add(new PointReel(positionTestee.Coordonnees));
-                                trajectoire.AjouterPoint(new PointReel(positionTestee.Coordonnees));
+                                trajectoire.AddPoint(new PointReel(positionTestee.Coordonnees));
 
                                 debutNode = new Node(positionTestee.Coordonnees.X, positionTestee.Coordonnees.Y, 0);
                                 nbPointsDepart = graph.AddNode(debutNode, obstacles, rayonSecurite, distanceRaccordable);
@@ -254,11 +254,11 @@ namespace GoBot.PathFinding
                     cheminTrouve = true;
 
                     PointsTrouves.Add(new PointReel(finNode.X, finNode.Y));
-                    trajectoire.AjouterPoint(new PointReel(finNode.X, finNode.Y));
+                    trajectoire.AddPoint(new PointReel(finNode.X, finNode.Y));
                     if (destination.Coordonnees.Distance(new PointReel(finNode.X, finNode.Y)) > 1)
                     {
                         PointsTrouves.Add(new PointReel(destination.Coordonnees));
-                        trajectoire.AjouterPoint(new PointReel(destination.Coordonnees));
+                        trajectoire.AddPoint(new PointReel(destination.Coordonnees));
                     }
                 }
 
@@ -297,7 +297,7 @@ namespace GoBot.PathFinding
                             if (iNodeDepart != 0)
                             {
                                 PointsTrouves.Add(new PointReel(nodes[iNodeDepart].X, nodes[iNodeDepart].Y));
-                                trajectoire.AjouterPoint(new PointReel(nodes[iNodeDepart].X, nodes[iNodeDepart].Y));
+                                trajectoire.AddPoint(new PointReel(nodes[iNodeDepart].X, nodes[iNodeDepart].Y));
                             }
 
                             CheminEnCoursNoeuds.Add(nodes[iNodeDepart]);
@@ -354,14 +354,14 @@ namespace GoBot.PathFinding
 
                         CheminEnCoursNoeuds.Add(nodes[nodes.Count - 1]);
                         PointsTrouves.Add(new PointReel(nodes[nodes.Count - 1].X, nodes[nodes.Count - 1].Y));
-                        trajectoire.AjouterPoint(new PointReel(nodes[nodes.Count - 1].X, nodes[nodes.Count - 1].Y));
+                        trajectoire.AddPoint(new PointReel(nodes[nodes.Count - 1].X, nodes[nodes.Count - 1].Y));
                         Robots.GrosRobot.Historique.Log("Chemin optimisé : " + (CheminEnCoursNoeuds.Count - 2) + " noeud(s) intermédiaire(s)", TypeLog.PathFinding);
                         cheminTrouve = true;
 
                         if (destination.Coordonnees.Distance(new PointReel(finNode.X, finNode.Y)) > 1)
                         {
                             PointsTrouves.Add(new PointReel(destination.Coordonnees));
-                            trajectoire.AjouterPoint(new PointReel(destination.Coordonnees));
+                            trajectoire.AddPoint(new PointReel(destination.Coordonnees));
                         }
                     }
                     else

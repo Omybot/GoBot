@@ -129,19 +129,14 @@ namespace GoBot
 
         #region Public
 
-        public int LineDuration(int distance)
+        public TimeSpan LineDuration(int distance)
         {
             return DistanceDuration(distance, LineAcceleration, LineSpeed, LineDeceleration);
         }
 
-        public int PivotDuration(Angle angle, double axialDistance)
+        public TimeSpan PivotDuration(Angle angle, double axialDistance)
         {
             return DistanceDuration((int)((Math.PI * axialDistance) / 360 * angle.AngleDegresPositif), PivotAcceleration, PivotSpeed, PivotDeceleration);
-        }
-
-        public int TrajectoryDuration(Trajectoire traj)
-        {
-            return traj.Duree;
         }
 
         public void SetParams(int lineSpeed, int lineAccel, int lineDecel, int pivotSpeed, int pivotAccel, int pivotDecel)
@@ -172,10 +167,10 @@ namespace GoBot
 
         #region Private
 
-        private int DistanceDuration(int distance, int acceleration, int maxSpeed, int decceleration)
+        private TimeSpan DistanceDuration(int distance, int acceleration, int maxSpeed, int decceleration)
         {
             if (distance == 0 || acceleration == 0 || decceleration == 0 || maxSpeed == 0)
-                return 0;
+                return new TimeSpan(0);
 
             double durationAccel, durationMaxSpeed, durationBraking;
             double distanceAccel, distanceMaxSpeed, distanceBraking;
@@ -204,7 +199,7 @@ namespace GoBot
                 durationBraking = Math.Sqrt((2 * distanceBraking) / (double)(decceleration));
             }
 
-            return (int)((durationAccel + durationMaxSpeed + durationBraking) * 1000);
+            return new TimeSpan(0, 0, (int)((durationAccel + durationMaxSpeed + durationBraking)));
         }
 
         #endregion

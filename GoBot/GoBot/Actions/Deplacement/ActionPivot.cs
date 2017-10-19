@@ -6,7 +6,7 @@ using System.Text;
 
 namespace GoBot.Actions
 {
-    class ActionPivot : IActionDuree
+    class ActionPivot : ITimeableAction
     {
         private Angle angle;
         private Robot robot;
@@ -43,7 +43,7 @@ namespace GoBot.Actions
                 robot.PivotGauche(angle);
         }
 
-        public int Duree
+        public TimeSpan Duration
         {
             get
             {

@@ -256,11 +256,11 @@ namespace GoBot
 
                         if (Robots.GrosRobot.TrajectoireEnCours != null)
                         {
-                            Trajectoire traj = new Trajectoire();
-                            traj.AjouterPoint(Robots.GrosRobot.Position.Coordonnees);
+                            Trajectory traj = new Trajectory();
+                            traj.AddPoint(Robots.GrosRobot.Position.Coordonnees);
 
-                            for (int iPoint = 1; iPoint < Robots.GrosRobot.TrajectoireEnCours.PointsPassage.Count; iPoint++)
-                                traj.AjouterPoint(Robots.GrosRobot.TrajectoireEnCours.PointsPassage[iPoint]);
+                            for (int iPoint = 1; iPoint < Robots.GrosRobot.TrajectoireEnCours.Points.Count; iPoint++)
+                                traj.AddPoint(Robots.GrosRobot.TrajectoireEnCours.Points[iPoint]);
 
                             traj.Paint(g, Scale);
                         }

@@ -36,9 +36,9 @@ namespace GoBot
             RightsRotations = new List<double>();
         }
 
-        public int CalculDuration(SpeedConfig config, Robot robot)
+        public TimeSpan CalculDuration(SpeedConfig config, Robot robot)
         {
-            int totalDuration = 0;
+            TimeSpan totalDuration = new TimeSpan();
 
             foreach (int dist in ForwardMoves.Union(BackwardMoves))
                 totalDuration += config.LineDuration(dist);

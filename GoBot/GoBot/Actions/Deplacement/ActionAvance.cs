@@ -5,7 +5,7 @@ using System.Text;
 
 namespace GoBot.Actions
 {
-    class ActionAvance : IActionDuree
+    class ActionAvance : ITimeableAction
     {
         private int distance;
         private Robot robot;
@@ -34,7 +34,7 @@ namespace GoBot.Actions
             }
         }
 
-        public int Duree
+        public TimeSpan Duration
         {
             get
             {

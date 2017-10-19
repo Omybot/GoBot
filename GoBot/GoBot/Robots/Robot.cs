@@ -51,7 +51,7 @@ namespace GoBot
         private Thread threadTrajectoire;
         private Semaphore semTrajectoire;
 
-        public Trajectoire TrajectoireEnCours = null;
+        public Trajectory TrajectoireEnCours = null;
 
         // Actionneurs / Capteurs
 
@@ -336,7 +336,7 @@ namespace GoBot
             Historique.Log("Lancement pathfinding pour aller en " + x + " : " + y, TypeLog.PathFinding);
             Position destination = new Position(teta, new PointReel(x, y));
 
-            Trajectoire traj = PathFinder.ChercheTrajectoire(Graph, Plateau.ListeObstacles, Position, destination, Rayon, 130);
+            Trajectory traj = PathFinder.ChercheTrajectoire(Graph, Plateau.ListeObstacles, Position, destination, Rayon, 130);
 
             if (traj == null)
                 return false;
@@ -384,16 +384,16 @@ namespace GoBot
                 try
                 {
                     // Teste si le chemin en cours de parcours est toujours franchissable
-                    if (TrajectoireEnCours != null && TrajectoireEnCours.Segments.Count > 0)
+                    if (TrajectoireEnCours != null && TrajectoireEnCours.Lines.Count > 0)
                     {
                         List<Segment> segmentsTrajectoire = new List<Segment>();
                         // Calcule le segment entre nous et notre destination (permet de ne pas considérer un obstacle sur un tronçon déjà franchi)
-                        Segment seg = new Segment(Position.Coordonnees, new PointReel(TrajectoireEnCours.Segments[0].Fin));
+                        Segment seg = new Segment(Position.Coordonnees, new PointReel(TrajectoireEnCours.Lines[0].Fin));
                         segmentsTrajectoire.Add(seg);
 
-                        for (int iSegment = 1; iSegment < TrajectoireEnCours.Segments.Count; iSegment++)
+                        for (int iSegment = 1; iSegment < TrajectoireEnCours.Lines.Count; iSegment++)
                         {
-                            segmentsTrajectoire.Add(TrajectoireEnCours.Segments[iSegment]);
+                            segmentsTrajectoire.Add(TrajectoireEnCours.Lines[iSegment]);
                         }
 
                         lock (Plateau.ObstaclesBalise)
@@ -488,19 +488,19 @@ namespace GoBot
 
         protected void ParcourirTrajectoire(Object traj)
         {
-            ParcourirTrajectoire((Trajectoire)traj);
+            ParcourirTrajectoire((Trajectory)traj);
         }
 
-        public bool ParcourirTrajectoire(Trajectoire traj)
+        public bool ParcourirTrajectoire(Trajectory traj)
         {
             TrajectoireEnCours = traj;
-            int dureeEstimee = traj.Duree;
+            TimeSpan dureeEstimee = traj.GetDuration(this);
             Stopwatch sw = Stopwatch.StartNew();
 
             TrajectoireCoupee = false;
             TrajectoireEchouee = false;
 
-            foreach (IAction action in traj.ToActions())
+            foreach (IAction action in traj.ConvertToActions(this))
             {
                 action.Executer();
 
@@ -509,15 +509,14 @@ namespace GoBot
 
                 if (action is ActionAvance || action is ActionRecule)
                 {
-                    Historique.Log("Noeud atteint " + TrajectoireEnCours.PointsPassage[0].X + ":" + TrajectoireEnCours.PointsPassage[0].Y, TypeLog.PathFinding);
-                    TrajectoireEnCours.PointsPassage.RemoveAt(0);
-                    TrajectoireEnCours.Segments.RemoveAt(0);
+                    Historique.Log("Noeud atteint " + TrajectoireEnCours.Points[0].X + ":" + TrajectoireEnCours.Points[0].Y, TypeLog.PathFinding);
+                    TrajectoireEnCours.RemoveFirst();
                 }
             }
 
             if (!TrajectoireCoupee && !TrajectoireEchouee)
             {
-                Historique.Log("Trajectoire parcourue en " + (sw.ElapsedMilliseconds / 1000.0).ToString("0.0") + "s (durée théorique : " + (dureeEstimee / 1000.0).ToString("0.0") + "s)", TypeLog.PathFinding);
+                Historique.Log("Trajectoire parcourue en " + (sw.ElapsedMilliseconds / 1000.0).ToString("0.0") + "s (durée théorique : " + (dureeEstimee.TotalSeconds).ToString("0.0") + "s)", TypeLog.PathFinding);
 
                 if (semTrajectoire != null)
                     semTrajectoire.Release();
