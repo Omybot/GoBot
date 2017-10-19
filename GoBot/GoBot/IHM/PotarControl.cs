@@ -15,7 +15,7 @@ namespace GoBot.IHM
     {
         private Thread threadPolling;
         private bool pollingEnable;
-        private Positionnable positionnable;
+        private Positionable positionnable;
 
         public PotarControl()
         {
@@ -33,7 +33,7 @@ namespace GoBot.IHM
 
         private void cboPositionnable_SelectedIndexChanged(object sender, EventArgs e)
         {
-            positionnable = (Positionnable)cboPositionnable.SelectedItem;
+            positionnable = (Positionable)cboPositionnable.SelectedItem;
             trackBar.Min = positionnable.Minimum;
             trackBar.Max = positionnable.Maximum;
         }
@@ -88,7 +88,7 @@ namespace GoBot.IHM
         {
             if (positionnable != null)
             {
-                positionnable.Positionner((int)value);
+                positionnable.SendPosition((int)value);
                 lblValue.Text = trackBar.Value.ToString();
             }
         }

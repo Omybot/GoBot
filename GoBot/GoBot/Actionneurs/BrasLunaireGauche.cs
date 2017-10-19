@@ -25,34 +25,34 @@ namespace GoBot.Actionneurs
 
         public void Ranger()
         {
-            Config.CurrentConfig.ServoBrasLunaireGauche.Positionner(Config.CurrentConfig.ServoBrasLunaireGauche.PositionRange);
+            Config.CurrentConfig.ServoBrasLunaireGauche.SendPosition(Config.CurrentConfig.ServoBrasLunaireGauche.PositionRange);
         }
 
         public void Monter()
         {
-            Config.CurrentConfig.ServoBrasLunaireGauche.Positionner(Config.CurrentConfig.ServoBrasLunaireGauche.PositionStockage);
+            Config.CurrentConfig.ServoBrasLunaireGauche.SendPosition(Config.CurrentConfig.ServoBrasLunaireGauche.PositionStockage);
         }
 
         public void Descendre()
         {
-            Config.CurrentConfig.ServoBrasLunaireGauche.Positionner(Config.CurrentConfig.ServoBrasLunaireGauche.PositionSortie);
+            Config.CurrentConfig.ServoBrasLunaireGauche.SendPosition(Config.CurrentConfig.ServoBrasLunaireGauche.PositionSortie);
         }
 
         public void DescendreSafe()
         {
-            Config.CurrentConfig.ServoBrasLunaireGauche.Positionner(Config.CurrentConfig.ServoBrasLunaireGauche.PositionSortieSafe);
+            Config.CurrentConfig.ServoBrasLunaireGauche.SendPosition(Config.CurrentConfig.ServoBrasLunaireGauche.PositionSortieSafe);
         }
 
         public void Ouvrir()
         {
-            Config.CurrentConfig.ServoLunaireGaucheSerrageDroit.Positionner(Config.CurrentConfig.ServoLunaireGaucheSerrageDroit.PositionOuvert);
-            Config.CurrentConfig.ServoLunaireGaucheSerrageGauche.Positionner(Config.CurrentConfig.ServoLunaireGaucheSerrageGauche.PositionOuvert);
+            Config.CurrentConfig.ServoLunaireGaucheSerrageDroit.SendPosition(Config.CurrentConfig.ServoLunaireGaucheSerrageDroit.PositionOuvert);
+            Config.CurrentConfig.ServoLunaireGaucheSerrageGauche.SendPosition(Config.CurrentConfig.ServoLunaireGaucheSerrageGauche.PositionOuvert);
         }
 
         public void Fermer()
         {
-            Config.CurrentConfig.ServoLunaireGaucheSerrageDroit.Positionner(Config.CurrentConfig.ServoLunaireGaucheSerrageDroit.PositionFerme);
-            Config.CurrentConfig.ServoLunaireGaucheSerrageGauche.Positionner(Config.CurrentConfig.ServoLunaireGaucheSerrageGauche.PositionFerme);
+            Config.CurrentConfig.ServoLunaireGaucheSerrageDroit.SendPosition(Config.CurrentConfig.ServoLunaireGaucheSerrageDroit.PositionFerme);
+            Config.CurrentConfig.ServoLunaireGaucheSerrageGauche.SendPosition(Config.CurrentConfig.ServoLunaireGaucheSerrageGauche.PositionFerme);
         }
 
         private void LacheSiYaRien(object useless)

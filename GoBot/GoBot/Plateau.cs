@@ -135,35 +135,36 @@ namespace GoBot
         {
             // Positions ennemies signalées par la balise
 
-            Synchronizer.Lock(ObstaclesBalise);
-            ObstaclesBalise.Clear();
-
-            int vitesseMax = Config.CurrentConfig.ConfigRapide.LineSpeed;
-
-            for (int i = 0; i < positions.Count; i++)
+            lock (ObstaclesBalise)
             {
-                PointReel coordonnees = new PointReel(positions[i].X, positions[i].Y);
-                AjouterObstacle(new Cercle(coordonnees, RayonAdversaire));
+                ObstaclesBalise.Clear();
 
-                if (Plateau.Enchainement == null)
-                {
-                    // Tester ici ce qu'il y a à tester en fonction de la position de l'ennemi AVANT de lancer le match
-                }
-                else
-                {
-                    // Tester ici ce qu'il y a à tester en fonction de la position de l'ennemi PENDANT le match
+                int vitesseMax = Config.CurrentConfig.ConfigRapide.LineSpeed;
 
-                    if (Robots.GrosRobot.VitesseAdaptableEnnemi)
+                for (int i = 0; i < positions.Count; i++)
+                {
+                    PointReel coordonnees = new PointReel(positions[i].X, positions[i].Y);
+                    AjouterObstacle(new Cercle(coordonnees, RayonAdversaire));
+
+                    if (Plateau.Enchainement == null)
                     {
-                        double distanceAdv = Robots.GrosRobot.Position.Coordonnees.Distance(coordonnees);
-                        if (distanceAdv < 1500)
+                        // Tester ici ce qu'il y a à tester en fonction de la position de l'ennemi AVANT de lancer le match
+                    }
+                    else
+                    {
+                        // Tester ici ce qu'il y a à tester en fonction de la position de l'ennemi PENDANT le match
+
+                        if (Robots.GrosRobot.VitesseAdaptableEnnemi)
                         {
-                            vitesseMax = (int)(Math.Min(vitesseMax, (distanceAdv - 300) / 1000.0 * Config.CurrentConfig.ConfigRapide.LineSpeed));
+                            double distanceAdv = Robots.GrosRobot.Position.Coordonnees.Distance(coordonnees);
+                            if (distanceAdv < 1500)
+                            {
+                                vitesseMax = (int)(Math.Min(vitesseMax, (distanceAdv - 300) / 1000.0 * Config.CurrentConfig.ConfigRapide.LineSpeed));
+                            }
                         }
                     }
                 }
             }
-            Synchronizer.Unlock(ObstaclesBalise);
 
             Robots.GrosRobot.MajGraphFranchissable();
 

@@ -21,13 +21,13 @@ namespace GoBot.Actionneurs
 
         public void CouperEjecteur()
         {
-            Config.CurrentConfig.ServoEjecteur.Positionner(0);
+            Config.CurrentConfig.ServoEjecteur.SendPosition(0);
         }
 
 
         public void RentrerEjecteur(bool autoReset = true)
         {
-            Config.CurrentConfig.ServoEjecteur.Positionner(Config.CurrentConfig.ServoEjecteur.PositionRentre);
+            Config.CurrentConfig.ServoEjecteur.SendPosition(Config.CurrentConfig.ServoEjecteur.PositionRentre);
             if (autoReset)
             //    ResetServoEjecteur(null);
                 ThreadPool.QueueUserWorkItem(new WaitCallback(ResetServoEjecteur), null);
@@ -42,7 +42,7 @@ namespace GoBot.Actionneurs
 
         public void SortirEjecteur()
         {
-            Config.CurrentConfig.ServoEjecteur.Positionner(Config.CurrentConfig.ServoEjecteur.PositionSorti);
+            Config.CurrentConfig.ServoEjecteur.SendPosition(Config.CurrentConfig.ServoEjecteur.PositionSorti);
         }
 
         public void Ejecter()
@@ -65,17 +65,17 @@ namespace GoBot.Actionneurs
 
         public void TournerGauche()
         {
-            Config.CurrentConfig.MoteurOrientation.Positionner(Config.CurrentConfig.MoteurOrientation.ValeurTourneGauche);
+            Config.CurrentConfig.MoteurOrientation.SendPosition(Config.CurrentConfig.MoteurOrientation.ValeurTourneGauche);
         }
 
         public void TournerDroite()
         {
-            Config.CurrentConfig.MoteurOrientation.Positionner(Config.CurrentConfig.MoteurOrientation.ValeurTourneDroite);
+            Config.CurrentConfig.MoteurOrientation.SendPosition(Config.CurrentConfig.MoteurOrientation.ValeurTourneDroite);
         }
 
         public void TournerStop()
         {
-            Config.CurrentConfig.MoteurOrientation.Positionner(Config.CurrentConfig.MoteurOrientation.ValeurStop);
+            Config.CurrentConfig.MoteurOrientation.SendPosition(Config.CurrentConfig.MoteurOrientation.ValeurStop);
         }
 
         private delegate bool FindColorDelegate();

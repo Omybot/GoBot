@@ -35,27 +35,27 @@ namespace GoBot.Actionneurs
 
         public void Bloque()
         {
-            Config.CurrentConfig.ServoPlaqueur.Positionner(Config.CurrentConfig.ServoPlaqueur.PositionPlaque);
+            Config.CurrentConfig.ServoPlaqueur.SendPosition(Config.CurrentConfig.ServoPlaqueur.PositionPlaque);
         }
 
         public void Libere()
         {
-            Config.CurrentConfig.ServoPlaqueur.Positionner(Config.CurrentConfig.ServoPlaqueur.PositionRange);
+            Config.CurrentConfig.ServoPlaqueur.SendPosition(Config.CurrentConfig.ServoPlaqueur.PositionRange);
         }
 
         public void Avaler()
         {
-            Config.CurrentConfig.MoteurConvoyeur.Positionner(Config.CurrentConfig.MoteurConvoyeur.ValeurAvale);
+            Config.CurrentConfig.MoteurConvoyeur.SendPosition(Config.CurrentConfig.MoteurConvoyeur.ValeurAvale);
         }
 
         public void Recracher()
         {
-            Config.CurrentConfig.MoteurConvoyeur.Positionner(Config.CurrentConfig.MoteurConvoyeur.ValeurRecrache);
+            Config.CurrentConfig.MoteurConvoyeur.SendPosition(Config.CurrentConfig.MoteurConvoyeur.ValeurRecrache);
         }
 
         public void Arreter()
         {
-            Config.CurrentConfig.MoteurConvoyeur.Positionner(Config.CurrentConfig.MoteurConvoyeur.ValeurStop);
+            Config.CurrentConfig.MoteurConvoyeur.SendPosition(Config.CurrentConfig.MoteurConvoyeur.ValeurStop);
         }
 
         public void AvaleModule()

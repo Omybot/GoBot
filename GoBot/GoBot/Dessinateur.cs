@@ -517,22 +517,22 @@ namespace GoBot
             // Dessin du graph
             //robot.SemGraph.WaitOne();
 
-            Synchronizer.Lock(robot.Graph);
+            lock (robot.Graph)
+            {
 
-            // Dessin des arcs
-            if (arretes)
-                foreach (Arc a in robot.Graph.Arcs)
-                {
-                    if (a.Passable)
-                        new Segment(new PointReel(a.StartNode.X, a.StartNode.Y), new PointReel(a.EndNode.X, a.EndNode.Y)).Paint(g, Color.Blue, 1, Color.Transparent, Scale);
-                }
+                // Dessin des arcs
+                if (arretes)
+                    foreach (Arc a in robot.Graph.Arcs)
+                    {
+                        if (a.Passable)
+                            new Segment(new PointReel(a.StartNode.X, a.StartNode.Y), new PointReel(a.EndNode.X, a.EndNode.Y)).Paint(g, Color.Blue, 1, Color.Transparent, Scale);
+                    }
 
-            if (graph)
-                // Dessin des noeuds
-                foreach (Node n in robot.Graph.Nodes)
-                    new PointReel(n.Position.X, n.Position.Y).Paint(g, n.Passable ? Color.Black : Color.Red, 3, Color.Blue, Scale);
-
-            Synchronizer.Unlock(robot.Graph);
+                if (graph)
+                    // Dessin des noeuds
+                    foreach (Node n in robot.Graph.Nodes)
+                        new PointReel(n.Position.X, n.Position.Y).Paint(g, n.Passable ? Color.Black : Color.Red, 3, Color.Blue, Scale);
+            }
 
             //robot.SemGraph.Release();
         }

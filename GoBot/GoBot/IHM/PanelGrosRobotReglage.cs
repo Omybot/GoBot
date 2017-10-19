@@ -45,7 +45,7 @@ namespace GoBot.IHM
 
         private void comboBoxPositionnables_SelectedValueChanged(object sender, EventArgs e)
         {
-            Positionnable positionnable = (Positionnable)comboBoxPositionnables.SelectedItem;
+            Positionable positionnable = (Positionable)comboBoxPositionnables.SelectedItem;
 
             PropertyInfo[] properties = positionnable.GetType().GetProperties();
 
@@ -89,7 +89,7 @@ namespace GoBot.IHM
             {
                 int index = comboBoxPosition.SelectedIndex;
 
-                dicProperties[(String)comboBoxPosition.SelectedItem].SetValue((Positionnable)comboBoxPositionnables.SelectedItem, (int)numValeurPosition.Value, null);
+                dicProperties[(String)comboBoxPosition.SelectedItem].SetValue((Positionable)comboBoxPositionnables.SelectedItem, (int)numValeurPosition.Value, null);
                 comboBoxPositionnables_SelectedValueChanged(null, null);
 
                 comboBoxPosition.SelectedIndex = index;
@@ -106,8 +106,8 @@ namespace GoBot.IHM
 
         private void btnEnvoyerValeurPosition_Click(object sender, EventArgs e)
         {
-            Positionnable positionnable = (Positionnable)comboBoxPositionnables.SelectedItem;
-            positionnable.Positionner((int)numValeurPosition.Value);
+            Positionable positionnable = (Positionable)comboBoxPositionnables.SelectedItem;
+            positionnable.SendPosition((int)numValeurPosition.Value);
         }
     }
 }

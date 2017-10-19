@@ -120,13 +120,13 @@ namespace GoBot.Actionneurs
 
         public void RangerCalleur()
         {
-            Config.CurrentConfig.ServoCalleur.Positionner(Config.CurrentConfig.ServoCalleur.PositionRange);
+            Config.CurrentConfig.ServoCalleur.SendPosition(Config.CurrentConfig.ServoCalleur.PositionRange);
         
 }
 
         public void CallerCalleur()
         {
-            Config.CurrentConfig.ServoCalleur.Positionner(Config.CurrentConfig.ServoCalleur.PositionCalle);
+            Config.CurrentConfig.ServoCalleur.SendPosition(Config.CurrentConfig.ServoCalleur.PositionCalle);
         }
 
         public void Avaler()
@@ -139,37 +139,37 @@ namespace GoBot.Actionneurs
 
         public void BloquerHaut()
         {
-            Config.CurrentConfig.ServoBloqueurHaut.Positionner(Config.CurrentConfig.ServoBloqueurHaut.PositionSorti);
+            Config.CurrentConfig.ServoBloqueurHaut.SendPosition(Config.CurrentConfig.ServoBloqueurHaut.PositionSorti);
         }
 
         public void BloqueBas()
         {
-            Config.CurrentConfig.ServoBloqueurBas.Positionner(Config.CurrentConfig.ServoBloqueurBas.PositionSorti);
+            Config.CurrentConfig.ServoBloqueurBas.SendPosition(Config.CurrentConfig.ServoBloqueurBas.PositionSorti);
         }
 
         public void RelacheHaut()
         {
-            Config.CurrentConfig.ServoBloqueurHaut.Positionner(Config.CurrentConfig.ServoBloqueurHaut.PositionRentre);
+            Config.CurrentConfig.ServoBloqueurHaut.SendPosition(Config.CurrentConfig.ServoBloqueurHaut.PositionRentre);
         }
 
         public void RelacheBas()
         {
-            Config.CurrentConfig.ServoBloqueurBas.Positionner(Config.CurrentConfig.ServoBloqueurBas.PositionRentre);
+            Config.CurrentConfig.ServoBloqueurBas.SendPosition(Config.CurrentConfig.ServoBloqueurBas.PositionRentre);
         }
 
         public void RangerRehausseur()
         {
-            Config.CurrentConfig.ServoRehausseur.Positionner(Config.CurrentConfig.ServoRehausseur.PositionRange);
+            Config.CurrentConfig.ServoRehausseur.SendPosition(Config.CurrentConfig.ServoRehausseur.PositionRange);
         }
 
         public void PreparerRehausseur()
         {
-            Config.CurrentConfig.ServoRehausseur.Positionner(Config.CurrentConfig.ServoRehausseur.PositionBasse);
+            Config.CurrentConfig.ServoRehausseur.SendPosition(Config.CurrentConfig.ServoRehausseur.PositionBasse);
         }
 
         public void MonterRehausseur()
         {
-            Config.CurrentConfig.ServoRehausseur.Positionner(Config.CurrentConfig.ServoRehausseur.PositionHaute);
+            Config.CurrentConfig.ServoRehausseur.SendPosition(Config.CurrentConfig.ServoRehausseur.PositionHaute);
         }
 
         public void Caller()

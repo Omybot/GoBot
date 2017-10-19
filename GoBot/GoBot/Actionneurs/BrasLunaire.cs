@@ -22,50 +22,50 @@ namespace GoBot.Actionneurs
 
         public void MonterStockage()
         {
-            Config.CurrentConfig.ServoLunaireMonte.Positionner(Config.CurrentConfig.ServoLunaireMonte.PositionMoyenne);
+            Config.CurrentConfig.ServoLunaireMonte.SendPosition(Config.CurrentConfig.ServoLunaireMonte.PositionMoyenne);
         }
 
         public void Avancer()
         {
-            Config.CurrentConfig.ServoLunaireChariot.Positionner(Config.CurrentConfig.ServoLunaireChariot.PositionSortie);
+            Config.CurrentConfig.ServoLunaireChariot.SendPosition(Config.CurrentConfig.ServoLunaireChariot.PositionSortie);
         }
 
         public void Reculer()
         {
-            Config.CurrentConfig.ServoLunaireChariot.Positionner(Config.CurrentConfig.ServoLunaireChariot.PositionRange);
+            Config.CurrentConfig.ServoLunaireChariot.SendPosition(Config.CurrentConfig.ServoLunaireChariot.PositionRange);
         }
 
         public void ReculerStockage()
         {
-            Config.CurrentConfig.ServoLunaireChariot.Positionner(Config.CurrentConfig.ServoLunaireChariot.PositionStockage);
+            Config.CurrentConfig.ServoLunaireChariot.SendPosition(Config.CurrentConfig.ServoLunaireChariot.PositionStockage);
         }
 
         public void Monter()
         {
-            Config.CurrentConfig.ServoLunaireMonte.Positionner(Config.CurrentConfig.ServoLunaireMonte.PositionHaut);
+            Config.CurrentConfig.ServoLunaireMonte.SendPosition(Config.CurrentConfig.ServoLunaireMonte.PositionHaut);
         }
 
         public void Descendre()
         {
-            Config.CurrentConfig.ServoLunaireMonte.Positionner(Config.CurrentConfig.ServoLunaireMonte.PositionBas);
+            Config.CurrentConfig.ServoLunaireMonte.SendPosition(Config.CurrentConfig.ServoLunaireMonte.PositionBas);
         }
 
         public void Ouvrir()
         {
-            Config.CurrentConfig.ServoPinceLunaireSerrageDroit.Positionner(Config.CurrentConfig.ServoPinceLunaireSerrageDroit.PositionOuvert);
-            Config.CurrentConfig.ServoPinceLunaireSerrageGauche.Positionner(Config.CurrentConfig.ServoPinceLunaireSerrageGauche.PositionOuvert);
+            Config.CurrentConfig.ServoPinceLunaireSerrageDroit.SendPosition(Config.CurrentConfig.ServoPinceLunaireSerrageDroit.PositionOuvert);
+            Config.CurrentConfig.ServoPinceLunaireSerrageGauche.SendPosition(Config.CurrentConfig.ServoPinceLunaireSerrageGauche.PositionOuvert);
         }
 
         public void SemiFermer()
         {
-            Config.CurrentConfig.ServoPinceLunaireSerrageDroit.Positionner(Config.CurrentConfig.ServoPinceLunaireSerrageDroit.PositionSemiFerme);
-            Config.CurrentConfig.ServoPinceLunaireSerrageGauche.Positionner(Config.CurrentConfig.ServoPinceLunaireSerrageGauche.PositionSemiFerme);
+            Config.CurrentConfig.ServoPinceLunaireSerrageDroit.SendPosition(Config.CurrentConfig.ServoPinceLunaireSerrageDroit.PositionSemiFerme);
+            Config.CurrentConfig.ServoPinceLunaireSerrageGauche.SendPosition(Config.CurrentConfig.ServoPinceLunaireSerrageGauche.PositionSemiFerme);
         }
 
         public void Fermer()
         {
-            Config.CurrentConfig.ServoPinceLunaireSerrageDroit.Positionner(Config.CurrentConfig.ServoPinceLunaireSerrageDroit.PositionFerme);
-            Config.CurrentConfig.ServoPinceLunaireSerrageGauche.Positionner(Config.CurrentConfig.ServoPinceLunaireSerrageGauche.PositionFerme);
+            Config.CurrentConfig.ServoPinceLunaireSerrageDroit.SendPosition(Config.CurrentConfig.ServoPinceLunaireSerrageDroit.PositionFerme);
+            Config.CurrentConfig.ServoPinceLunaireSerrageGauche.SendPosition(Config.CurrentConfig.ServoPinceLunaireSerrageGauche.PositionFerme);
         }
 
         /// <summary>

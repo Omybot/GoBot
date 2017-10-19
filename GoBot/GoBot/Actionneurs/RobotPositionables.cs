@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Xml.Serialization;
-using System.Reflection;
-using GoBot.Actionneurs;
+﻿using GoBot.Actionneurs;
 
 namespace GoBot
 {
@@ -34,86 +28,13 @@ namespace GoBot
         public ServoLunaireDroitSerrageGauche ServoLunaireDroitSerrageGauche { get; set; }
 
         public ServoPlaqueur ServoPlaqueur { get; set; }
-        public ServoFusee ServoFusee { get; set; } 
-
+        public ServoFusee ServoFusee { get; set; }
     }
 }
 
 namespace GoBot.Actionneurs
 {
-    public abstract class Positionnable
-    {
-        public List<String> Positions()
-        {
-            PropertyInfo[] proprietes = this.GetType().GetProperties();
-            List<String> nomProprietes = new List<string>();
-            foreach (PropertyInfo p in proprietes)
-                nomProprietes.Add(p.Name);
-
-            return nomProprietes;
-        }
-
-        public void SetValue(String nom, int valeur)
-        {
-            this.GetType().GetProperty(nom).SetValue(this, (object)valeur, null);
-        }
-
-        public abstract void Positionner(int position);
-
-        public override string ToString()
-        {
-            String typeName = this.GetType().Name;
-            String nom = "";
-
-            foreach (char c in typeName)
-            {
-                char ch = c;
-                if (c <= 'Z' && c >= 'A')
-                    nom += " " + (char)(c + 32);
-                else
-                    nom += c;
-            }
-
-            nom = typeName.Substring(0, 1) + nom.Substring(2);
-
-            return nom;
-        }
-
-        public int Minimum { get; set; }
-        public int Maximum { get; set; }
-    }
-
-    public abstract class PositionnableServo : Positionnable
-    {
-        public abstract ServomoteurID ID { get; }
-
-        public override void Positionner(int position)
-        {
-            Robots.GrosRobot.BougeServo(ID, position);
-        }
-    }
-
-    public abstract class PositionnableMoteur : Positionnable
-    {
-        public abstract MoteurID ID { get; }
-
-        public override void Positionner(int position)
-        {
-            Robots.GrosRobot.MoteurPosition(ID, position);
-        }
-    }
-
-    public abstract class PositionnableMoteurVitesse : Positionnable
-    {
-        public abstract MoteurID ID { get; }
-
-        public override void Positionner(int position)
-        {
-            Robots.GrosRobot.MoteurVitesse(ID, position > 0 ? SensGD.Gauche : SensGD.Droite, Math.Abs(position));
-        }
-    }
-
-    #region PositionnableServo
+    #region PositionableServo
 
     // Exemple :
     //public abstract class ServoAscenseurPince : PositionnableServo
@@ -128,28 +49,28 @@ namespace GoBot.Actionneurs
     //    public override ServomoteurID ID { get { return ServomoteurID.AscenseurDroitPinceHautDroite; } }
     //}
 
-    public class ServoCalleur : PositionnableServo
+    public class ServoCalleur : PositionableServo
     {
         public int PositionCalle { get; set; }
         public int PositionRange { get; set; }
         public override ServomoteurID ID { get { return ServomoteurID.Calleur; } }
     }
 
-    public class ServoFusee : PositionnableServo
+    public class ServoFusee : PositionableServo
     {
         public int PositionArme { get; set; }
         public int PositionFeu { get; set; }
         public override ServomoteurID ID { get { return ServomoteurID.Fusee; } }
     }
 
-    public class ServoPlaqueur : PositionnableServo
+    public class ServoPlaqueur : PositionableServo
     {
         public int PositionPlaque { get; set; }
         public int PositionRange { get; set; }
         public override ServomoteurID ID { get { return ServomoteurID.Plaqueur; } }
     }
 
-    public abstract class ServoBrasLunaire : PositionnableServo
+    public abstract class ServoBrasLunaire : PositionableServo
     {
         public int PositionSortie { get; set; }
         public int PositionSortieSafe { get; set; }
@@ -167,7 +88,7 @@ namespace GoBot.Actionneurs
         public override ServomoteurID ID { get { return ServomoteurID.BrasLunaireDroit; } }
     }
 
-    public class ServoLunaireChariot : PositionnableServo
+    public class ServoLunaireChariot : PositionableServo
     {
         public int PositionSortie { get; set; }
         public int PositionStockage { get; set; }
@@ -175,7 +96,7 @@ namespace GoBot.Actionneurs
         public override ServomoteurID ID { get { return ServomoteurID.BrasLunaireAvance; } }
     }
 
-    public class ServoLunaireMonte : PositionnableServo
+    public class ServoLunaireMonte : PositionableServo
     {
         public int PositionBas { get; set; }
         public int PositionMoyenne { get; set; }
@@ -183,14 +104,14 @@ namespace GoBot.Actionneurs
         public override ServomoteurID ID { get { return ServomoteurID.BrasLunaireMonte; } }
     }
 
-    public abstract class ServoPinceLunaire : PositionnableServo
+    public abstract class ServoPinceLunaire : PositionableServo
     {
         public int PositionOuvert { get; set; }
         public int PositionFerme { get; set; }
         public int PositionSemiFerme { get; set; }
     }
 
-    public abstract class ServoBloqueur : PositionnableServo
+    public abstract class ServoBloqueur : PositionableServo
     {
         public int PositionRentre { get; set; }
         public int PositionSorti { get; set; }
@@ -206,7 +127,7 @@ namespace GoBot.Actionneurs
         public override ServomoteurID ID { get { return ServomoteurID.BloqueurBas; } }
     }
 
-    public class ServoRehausseur : PositionnableServo
+    public class ServoRehausseur : PositionableServo
     {
         public override ServomoteurID ID { get { return ServomoteurID.Rehausseur; } }
         public int PositionRange { get; set; }
@@ -214,7 +135,7 @@ namespace GoBot.Actionneurs
         public int PositionHaute { get; set; }
     }
 
-    public class ServoEjecteur : PositionnableServo
+    public class ServoEjecteur : PositionableServo
     {
         public override ServomoteurID ID { get { return ServomoteurID.Ejecteur; } }
         public int PositionRentre { get; set; }
@@ -253,9 +174,9 @@ namespace GoBot.Actionneurs
 
     #endregion
 
-    #region PositionnableMoteur
+    #region PositionableMotorSpeed
 
-    public class MoteurOrientation : PositionnableMoteurVitesse
+    public class MoteurOrientation : PositionableMotorSpeed
     {
         public int ValeurTourneGauche { get; set; }
         public int ValeurTourneDroite { get; set; }
@@ -264,7 +185,7 @@ namespace GoBot.Actionneurs
         public override MoteurID ID { get { return MoteurID.Orienteur; } }
     }
 
-    public class MoteurConvoyeur : PositionnableMoteurVitesse
+    public class MoteurConvoyeur : PositionableMotorSpeed
     {
         public int ValeurAvale { get; set; }
         public int ValeurRecrache { get; set; }

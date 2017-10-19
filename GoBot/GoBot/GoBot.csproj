@@ -91,7 +91,8 @@
     <Compile Include="Actionneurs\Ejecteur.cs" />
     <Compile Include="Actionneurs\GestionModuleSupervisee.cs" />
     <Compile Include="Actionneurs\LanceurFusee.cs" />
-    <Compile Include="Actionneurs\Positionnables.cs" />
+    <Compile Include="Actionneurs\Positionables.cs" />
+    <Compile Include="Actionneurs\RobotPositionables.cs" />
     <Compile Include="Actionneurs\Stockeur.cs" />
     <Compile Include="Actions\Asservissement\ActionAccelerationPivot.cs" />
     <Compile Include="Actions\Asservissement\ActionVitessePivot.cs" />
@@ -101,7 +102,7 @@
     <Compile Include="Actions\Deplacement\ActionRecallage.cs" />
     <Compile Include="Actions\ActionServo.cs" />
     <Compile Include="Actions\IActionDuree.cs" />
-    <Compile Include="Actions\NameFinder.cs" />
+    <Compile Include="NameFinder.cs" />
     <Compile Include="Actions\Asservissement\ActionAccelerationLigne.cs" />
     <Compile Include="Actions\Asservissement\ActionVitesseLigne.cs" />
     <Compile Include="Actions\Deplacement\ActionStop.cs" />
@@ -453,7 +454,6 @@
     <Compile Include="Communications\FrameFactory.cs" />
     <Compile Include="Communications\UDPConnection.cs" />
     <Compile Include="Communications\Frame.cs" />
-    <Compile Include="Synchronizer.cs" />
     <Compile Include="TestCode.cs" />
     <Compile Include="Util.cs" />
     <Compile Include="WorldRect.cs" />

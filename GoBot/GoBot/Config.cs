@@ -20,20 +20,20 @@ namespace GoBot
 
         private static Config config = null;
 
-        public static List<Positionnable> Positionnables { get; set; }
+        public static List<Positionable> Positionnables { get; set; }
 
         public static void ChargerPositionnables()
         {
-            Positionnables = new List<Positionnable>();
+            Positionnables = new List<Positionable>();
             PropertyInfo[] proprietes = typeof(Config).GetProperties();
             foreach (PropertyInfo p in proprietes)
             {
-                if (p.PropertyType.IsSubclassOf(typeof(Positionnable)))
+                if (p.PropertyType.IsSubclassOf(typeof(Positionable)))
                 {
                     if (p.GetValue(Config.CurrentConfig, null) == null)
                         p.SetValue(Config.CurrentConfig, Activator.CreateInstance(p.PropertyType), null);
 
-                    Positionnables.Add((Positionnable)(p.GetValue(Config.CurrentConfig, null)));
+                    Positionnables.Add((Positionable)(p.GetValue(Config.CurrentConfig, null)));
                 }
             }
         }

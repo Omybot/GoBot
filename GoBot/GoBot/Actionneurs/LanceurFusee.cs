@@ -11,13 +11,13 @@ namespace GoBot.Actionneurs
 
         public void Armer()
         {
-            Config.CurrentConfig.ServoFusee.Positionner(Config.CurrentConfig.ServoFusee.PositionArme);
+            Config.CurrentConfig.ServoFusee.SendPosition(Config.CurrentConfig.ServoFusee.PositionArme);
             Armed = true;
         }
 
         public void LancerLaFusee()
         {
-            Config.CurrentConfig.ServoFusee.Positionner(Config.CurrentConfig.ServoFusee.PositionFeu);
+            Config.CurrentConfig.ServoFusee.SendPosition(Config.CurrentConfig.ServoFusee.PositionFeu);
             Armed = false;
         }
     }

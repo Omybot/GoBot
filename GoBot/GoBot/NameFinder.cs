@@ -1,12 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Reflection;
 using GoBot.Actionneurs;
 using GoBot.Communications;
 
-namespace GoBot.Actions
+namespace GoBot
 {
     static class NameFinder
     {
@@ -92,9 +89,9 @@ namespace GoBot.Actions
             PropertyInfo[] properties = typeof(Config).GetProperties();
             foreach (PropertyInfo p in properties)
             {
-                if (p.PropertyType.IsSubclassOf(typeof(PositionnableServo)))
+                if (p.PropertyType.IsSubclassOf(typeof(PositionableServo)))
                 {
-                    PositionnableServo positionnableServo = (PositionnableServo)(p.GetValue(Config.CurrentConfig, null));
+                    PositionableServo positionnableServo = (PositionableServo)(p.GetValue(Config.CurrentConfig, null));
 
                     if (positionnableServo.ID == servo)
                     {
@@ -122,9 +119,9 @@ namespace GoBot.Actions
             PropertyInfo[] properties = typeof(Config).GetProperties();
             foreach (PropertyInfo p in properties)
             {
-                if (p.PropertyType.IsSubclassOf(typeof(PositionnableMoteur)))
+                if (p.PropertyType.IsSubclassOf(typeof(PositionableMotorPosition)))
                 {
-                    PositionnableMoteur positionnableMoteur = (PositionnableMoteur)(p.GetValue(Config.CurrentConfig, null));
+                    PositionableMotorPosition positionnableMoteur = (PositionableMotorPosition)(p.GetValue(Config.CurrentConfig, null));
 
                     if (positionnableMoteur.ID == moteur)
                     {
