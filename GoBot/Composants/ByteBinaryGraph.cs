@@ -35,9 +35,9 @@ namespace Composants
         /// <param name="value">Masque des valeurs à ajouter aux graphes</param>
         public void SetValue(Byte value)
         {
-            for(int i = 0; i < Graphs.Count; i++)
+            for(int i = 0; i < 8; i++)
             {
-                Graphs[i].AddPoint((value & 0x1) > 0);
+                Graphs[(8-1) - i].AddPoint((value & 0x1) > 0);
                 value = (Byte)(value >> 1);
             }
         }

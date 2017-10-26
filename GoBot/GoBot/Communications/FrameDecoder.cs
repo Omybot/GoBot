@@ -258,6 +258,18 @@ namespace GoBot.Communications
 
             switch (function)
             {
+                case FrameFunction.DemandeValeursNumeriques:
+                    output = "Demande valeurs des ports numériques";
+                    break;
+                case FrameFunction.RetourValeursNumeriques:
+                    output = "Retour ports numériques : {0}_{1} / {2}_{3} / {4}_{5}";
+                    if(parameters != null)
+                    {
+                        for(int i = 0; i < 6; i++)
+                            output = ReplaceParam(output, Convert.ToString(parameters[i], 2));
+                    }
+                    break;
+
                 case FrameFunction.Debug:
                     output = "Debug {0}";
                     if (parameters != null)
