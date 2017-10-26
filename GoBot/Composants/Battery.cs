@@ -84,12 +84,10 @@ namespace Composants
                             break;
                         case State.Low:
                             img = Properties.Resources.BatLow;
-                            ThreadPool.QueueUserWorkItem(new WaitCallback(Alert), 1);
                             ChangeImage(Properties.Resources.BatLow, true);
                             break;
                         case State.VeryLow:
                             img = Properties.Resources.BatCrit;
-                            ThreadPool.QueueUserWorkItem(new WaitCallback(Alert), 2);
                             ChangeImage(Properties.Resources.BatCrit, true);
                             break;
                         case State.Absent:
@@ -123,18 +121,6 @@ namespace Composants
                 else if (value >= VoltageVeryLow)
                     CurrentState = State.VeryLow;
             }
-        }
-
-        private void Alert(Object level)
-        {
-            if ((int)level > 1)
-            {
-                Console.Beep(7000, 100);
-                Thread.Sleep(20);
-                Console.Beep(7000, 100);
-            }
-            else
-                Console.Beep(6000, 100);
         }
 
         private void ChangeImage(Image img, bool blink = false)

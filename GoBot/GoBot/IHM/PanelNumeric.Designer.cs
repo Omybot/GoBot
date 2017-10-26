@@ -1,6 +1,6 @@
 ﻿namespace GoBot.IHM
 {
-    partial class PanelNumerique
+    partial class PanelNumeric
     {
         /// <summary> 
         /// Variable nécessaire au concepteur.
@@ -51,7 +51,6 @@
             this.switchOnOff.Size = new System.Drawing.Size(35, 15);
             this.switchOnOff.Mirrored = true;
             this.switchOnOff.TabIndex = 35;
-            this.switchOnOff.ValueChanged += new Composants.SwitchButton.ValueChangedDelegate(this.switchBouton_ValueChanged);
             // 
             // graph1
             // 
@@ -79,7 +78,6 @@
             this.Controls.Add(this.switchOnOff);
             this.Name = "PanelNumerique";
             this.Size = new System.Drawing.Size(327, 533);
-            this.Load += new System.EventHandler(this.PanelNumerique_Load);
             this.ResumeLayout(false);
             this.PerformLayout();
 

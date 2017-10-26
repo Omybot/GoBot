@@ -70,6 +70,10 @@ namespace GoBot
             this.tabGB = new System.Windows.Forms.TabPage();
             this.panelAnalogiqueGB = new GoBot.IHM.PanelAnalogique();
             this.tabPortsNumeriques = new System.Windows.Forms.TabPage();
+            this.tabControl2 = new System.Windows.Forms.TabControl();
+            this.tabIONumeric = new System.Windows.Forms.TabPage();
+            this.tabMoveNumeric = new System.Windows.Forms.TabPage();
+            this.tabGBNumeric = new System.Windows.Forms.TabPage();
             this.tabBaliseUnique = new System.Windows.Forms.TabPage();
             this.panelBaliseDiagnostic = new GoBot.IHM.PanelBaliseDiagnostic();
             this.panelBalise = new GoBot.IHM.PanelBalise();
@@ -83,13 +87,13 @@ namespace GoBot
             this.panelGenerics1 = new GoBot.IHM.PanelGenerics();
             this.tabHokuyo = new System.Windows.Forms.TabPage();
             this.panelHokuyo1 = new GoBot.IHM.PanelHokuyo();
-            this.btnClose = new System.Windows.Forms.Button();
-            this.btnFenetre = new System.Windows.Forms.Button();
             this.switchBoutonSimu = new Composants.SwitchButton();
             this.panelConnexions = new GoBot.IHM.PanelConnexions();
-            this.panelNumerique1 = new GoBot.IHM.PanelNumerique();
-            this.panelNumerique2 = new GoBot.IHM.PanelNumerique();
-            this.panelNumerique3 = new GoBot.IHM.PanelNumerique();
+            this.btnClose = new System.Windows.Forms.Button();
+            this.btnFenetre = new System.Windows.Forms.Button();
+            this.panelBoardNumericMove = new GoBot.IHM.PanelBoardNumeric();
+            this.panelBoardNumericGB = new GoBot.IHM.PanelBoardNumeric();
+            this.panelBoardNumericIO = new GoBot.IHM.PanelBoardNumeric();
             this.tabAlimentation.SuspendLayout();
             this.tabServomoteurs.SuspendLayout();
             this.tabConnexions.SuspendLayout();
@@ -112,6 +116,10 @@ namespace GoBot
             this.tabMove.SuspendLayout();
             this.tabGB.SuspendLayout();
             this.tabPortsNumeriques.SuspendLayout();
+            this.tabControl2.SuspendLayout();
+            this.tabIONumeric.SuspendLayout();
+            this.tabMoveNumeric.SuspendLayout();
+            this.tabGBNumeric.SuspendLayout();
             this.tabBaliseUnique.SuspendLayout();
             this.tabRecGoBot.SuspendLayout();
             this.grpCapteurs.SuspendLayout();
@@ -521,15 +529,58 @@ namespace GoBot
             // 
             // tabPortsNumeriques
             // 
-            this.tabPortsNumeriques.Controls.Add(this.panelNumerique3);
-            this.tabPortsNumeriques.Controls.Add(this.panelNumerique2);
-            this.tabPortsNumeriques.Controls.Add(this.panelNumerique1);
+            this.tabPortsNumeriques.Controls.Add(this.tabControl2);
             this.tabPortsNumeriques.Location = new System.Drawing.Point(4, 22);
             this.tabPortsNumeriques.Name = "tabPortsNumeriques";
             this.tabPortsNumeriques.Size = new System.Drawing.Size(1300, 712);
             this.tabPortsNumeriques.TabIndex = 29;
             this.tabPortsNumeriques.Text = "Ports numériques";
             this.tabPortsNumeriques.UseVisualStyleBackColor = true;
+            // 
+            // tabControl2
+            // 
+            this.tabControl2.Controls.Add(this.tabIONumeric);
+            this.tabControl2.Controls.Add(this.tabMoveNumeric);
+            this.tabControl2.Controls.Add(this.tabGBNumeric);
+            this.tabControl2.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tabControl2.Location = new System.Drawing.Point(0, 0);
+            this.tabControl2.Name = "tabControl2";
+            this.tabControl2.SelectedIndex = 0;
+            this.tabControl2.Size = new System.Drawing.Size(1300, 712);
+            this.tabControl2.TabIndex = 3;
+            // 
+            // tabIONumeric
+            // 
+            this.tabIONumeric.Controls.Add(this.panelBoardNumericIO);
+            this.tabIONumeric.Location = new System.Drawing.Point(4, 22);
+            this.tabIONumeric.Name = "tabIONumeric";
+            this.tabIONumeric.Padding = new System.Windows.Forms.Padding(3);
+            this.tabIONumeric.Size = new System.Drawing.Size(1292, 686);
+            this.tabIONumeric.TabIndex = 1;
+            this.tabIONumeric.Text = "RecIO";
+            this.tabIONumeric.UseVisualStyleBackColor = true;
+            // 
+            // tabMoveNumeric
+            // 
+            this.tabMoveNumeric.Controls.Add(this.panelBoardNumericMove);
+            this.tabMoveNumeric.Location = new System.Drawing.Point(4, 22);
+            this.tabMoveNumeric.Name = "tabMoveNumeric";
+            this.tabMoveNumeric.Padding = new System.Windows.Forms.Padding(3);
+            this.tabMoveNumeric.Size = new System.Drawing.Size(1292, 686);
+            this.tabMoveNumeric.TabIndex = 0;
+            this.tabMoveNumeric.Text = "RecMove";
+            this.tabMoveNumeric.UseVisualStyleBackColor = true;
+            // 
+            // tabGBNumeric
+            // 
+            this.tabGBNumeric.Controls.Add(this.panelBoardNumericGB);
+            this.tabGBNumeric.Location = new System.Drawing.Point(4, 22);
+            this.tabGBNumeric.Name = "tabGBNumeric";
+            this.tabGBNumeric.Padding = new System.Windows.Forms.Padding(3);
+            this.tabGBNumeric.Size = new System.Drawing.Size(1292, 686);
+            this.tabGBNumeric.TabIndex = 2;
+            this.tabGBNumeric.Text = "RecGoBot";
+            this.tabGBNumeric.UseVisualStyleBackColor = true;
             // 
             // tabBaliseUnique
             // 
@@ -655,6 +706,30 @@ namespace GoBot
             this.panelHokuyo1.Size = new System.Drawing.Size(1294, 706);
             this.panelHokuyo1.TabIndex = 0;
             // 
+            // switchBoutonSimu
+            // 
+            this.switchBoutonSimu.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.switchBoutonSimu.AutoSize = true;
+            this.switchBoutonSimu.BackColor = System.Drawing.Color.Transparent;
+            this.switchBoutonSimu.Location = new System.Drawing.Point(1208, 742);
+            this.switchBoutonSimu.MaximumSize = new System.Drawing.Size(35, 15);
+            this.switchBoutonSimu.MinimumSize = new System.Drawing.Size(35, 15);
+            this.switchBoutonSimu.Mirrored = true;
+            this.switchBoutonSimu.Name = "switchBoutonSimu";
+            this.switchBoutonSimu.Size = new System.Drawing.Size(35, 15);
+            this.switchBoutonSimu.TabIndex = 73;
+            this.switchBoutonSimu.Value = false;
+            this.switchBoutonSimu.ValueChanged += new Composants.SwitchButton.ValueChangedDelegate(this.switchBoutonSimu_ValueChanged);
+            // 
+            // panelConnexions
+            // 
+            this.panelConnexions.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.panelConnexions.BackColor = System.Drawing.Color.White;
+            this.panelConnexions.Location = new System.Drawing.Point(0, 735);
+            this.panelConnexions.Name = "panelConnexions";
+            this.panelConnexions.Size = new System.Drawing.Size(980, 27);
+            this.panelConnexions.TabIndex = 74;
+            // 
             // btnClose
             // 
             this.btnClose.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
@@ -677,49 +752,32 @@ namespace GoBot
             this.btnFenetre.UseVisualStyleBackColor = true;
             this.btnFenetre.Click += new System.EventHandler(this.buttonFenetre_Click);
             // 
-            // switchBoutonSimu
+            // panelBoardNumericMove
             // 
-            this.switchBoutonSimu.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.switchBoutonSimu.BackColor = System.Drawing.Color.Transparent;
-            this.switchBoutonSimu.Location = new System.Drawing.Point(1208, 742);
-            this.switchBoutonSimu.Name = "switchBoutonSimu";
-            this.switchBoutonSimu.Size = new System.Drawing.Size(35, 15);
-            this.switchBoutonSimu.Mirrored = true;
-            this.switchBoutonSimu.TabIndex = 73;
-            this.switchBoutonSimu.ValueChanged += new Composants.SwitchButton.ValueChangedDelegate(this.switchBoutonSimu_ValueChanged);
+            this.panelBoardNumericMove.Board = GoBot.Board.RecMove;
+            this.panelBoardNumericMove.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.panelBoardNumericMove.Location = new System.Drawing.Point(3, 3);
+            this.panelBoardNumericMove.Name = "panelBoardNumericMove";
+            this.panelBoardNumericMove.Size = new System.Drawing.Size(1286, 680);
+            this.panelBoardNumericMove.TabIndex = 1;
             // 
-            // panelConnexions
+            // panelBoardNumericGB
             // 
-            this.panelConnexions.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.panelConnexions.BackColor = System.Drawing.Color.White;
-            this.panelConnexions.Location = new System.Drawing.Point(0, 735);
-            this.panelConnexions.Name = "panelConnexions";
-            this.panelConnexions.Size = new System.Drawing.Size(980, 27);
-            this.panelConnexions.TabIndex = 74;
+            this.panelBoardNumericGB.Board = GoBot.Board.RecGB;
+            this.panelBoardNumericGB.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.panelBoardNumericGB.Location = new System.Drawing.Point(3, 3);
+            this.panelBoardNumericGB.Name = "panelBoardNumericGB";
+            this.panelBoardNumericGB.Size = new System.Drawing.Size(1286, 680);
+            this.panelBoardNumericGB.TabIndex = 1;
             // 
-            // panelNumerique1
+            // panelBoardNumericIO
             // 
-            this.panelNumerique1.Carte = GoBot.Board.RecMove;
-            this.panelNumerique1.Location = new System.Drawing.Point(59, 92);
-            this.panelNumerique1.Name = "panelNumerique1";
-            this.panelNumerique1.Size = new System.Drawing.Size(327, 533);
-            this.panelNumerique1.TabIndex = 0;
-            // 
-            // panelNumerique2
-            // 
-            this.panelNumerique2.Carte = GoBot.Board.RecIO;
-            this.panelNumerique2.Location = new System.Drawing.Point(443, 92);
-            this.panelNumerique2.Name = "panelNumerique2";
-            this.panelNumerique2.Size = new System.Drawing.Size(327, 533);
-            this.panelNumerique2.TabIndex = 1;
-            // 
-            // panelNumerique3
-            // 
-            this.panelNumerique3.Carte = GoBot.Board.RecGB;
-            this.panelNumerique3.Location = new System.Drawing.Point(827, 92);
-            this.panelNumerique3.Name = "panelNumerique3";
-            this.panelNumerique3.Size = new System.Drawing.Size(327, 533);
-            this.panelNumerique3.TabIndex = 2;
+            this.panelBoardNumericIO.Board = GoBot.Board.RecIO;
+            this.panelBoardNumericIO.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.panelBoardNumericIO.Location = new System.Drawing.Point(3, 3);
+            this.panelBoardNumericIO.Name = "panelBoardNumericIO";
+            this.panelBoardNumericIO.Size = new System.Drawing.Size(1286, 680);
+            this.panelBoardNumericIO.TabIndex = 1;
             // 
             // FenGoBot
             // 
@@ -763,6 +821,10 @@ namespace GoBot
             this.tabMove.ResumeLayout(false);
             this.tabGB.ResumeLayout(false);
             this.tabPortsNumeriques.ResumeLayout(false);
+            this.tabControl2.ResumeLayout(false);
+            this.tabIONumeric.ResumeLayout(false);
+            this.tabMoveNumeric.ResumeLayout(false);
+            this.tabGBNumeric.ResumeLayout(false);
             this.tabBaliseUnique.ResumeLayout(false);
             this.tabRecGoBot.ResumeLayout(false);
             this.grpCapteurs.ResumeLayout(false);
@@ -834,9 +896,13 @@ namespace GoBot
         private System.Windows.Forms.TabPage tabHokuyo;
         private PanelHokuyo panelHokuyo1;
         private System.Windows.Forms.TabPage tabPortsNumeriques;
-        private PanelNumerique panelNumerique3;
-        private PanelNumerique panelNumerique2;
-        private PanelNumerique panelNumerique1;
+        private System.Windows.Forms.TabControl tabControl2;
+        private System.Windows.Forms.TabPage tabIONumeric;
+        private System.Windows.Forms.TabPage tabMoveNumeric;
+        private System.Windows.Forms.TabPage tabGBNumeric;
+        private PanelBoardNumeric panelBoardNumericMove;
+        private PanelBoardNumeric panelBoardNumericGB;
+        private PanelBoardNumeric panelBoardNumericIO;
     }
 }
 

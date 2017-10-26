@@ -102,6 +102,12 @@
     <Compile Include="Actions\Deplacement\ActionRecallage.cs" />
     <Compile Include="Actions\ActionServo.cs" />
     <Compile Include="Actions\ITimeableAction.cs" />
+    <Compile Include="IHM\PanelBoardNumeric.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="IHM\PanelBoardNumeric.Designer.cs">
+      <DependentUpon>PanelBoardNumeric.cs</DependentUpon>
+    </Compile>
     <Compile Include="NameFinder.cs" />
     <Compile Include="Actions\Asservissement\ActionAccelerationLigne.cs" />
     <Compile Include="Actions\Asservissement\ActionVitesseLigne.cs" />
@@ -113,11 +119,11 @@
     <Compile Include="Actions\IAction.cs" />
     <Compile Include="Calculs\ListRealPoints.cs" />
     <Compile Include="Execution.cs" />
-    <Compile Include="IHM\PanelNumerique.cs">
+    <Compile Include="IHM\PanelNumeric.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="IHM\PanelNumerique.Designer.cs">
-      <DependentUpon>PanelNumerique.cs</DependentUpon>
+    <Compile Include="IHM\PanelNumeric.Designer.cs">
+      <DependentUpon>PanelNumeric.cs</DependentUpon>
     </Compile>
     <Compile Include="Logs\ILog.cs" />
     <Compile Include="Logs\LogConsole.cs" />
@@ -472,8 +478,11 @@
     <EmbeddedResource Include="IHM\PanelActionneursOnOff.resx">
       <DependentUpon>PanelActionneursOnOff.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="IHM\PanelNumerique.resx">
-      <DependentUpon>PanelNumerique.cs</DependentUpon>
+    <EmbeddedResource Include="IHM\PanelBoardNumeric.resx">
+      <DependentUpon>PanelBoardNumeric.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="IHM\PanelNumeric.resx">
+      <DependentUpon>PanelNumeric.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="IHM\PanelAnalogique.resx">
       <DependentUpon>PanelAnalogique.cs</DependentUpon>
@@ -711,7 +720,7 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Composants\Composants.csproj">
-      <Project>{665AB15C-9620-4FAB-9DA7-10428A2B53AC}</Project>
+      <Project>{665ab15c-9620-4fab-9da7-10428a2b53ac}</Project>
       <Name>Composants</Name>
     </ProjectReference>
   </ItemGroup>

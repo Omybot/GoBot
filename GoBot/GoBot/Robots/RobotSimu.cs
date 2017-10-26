@@ -80,9 +80,16 @@ namespace GoBot
             ValeursAnalogiques.Add(Board.RecMove, null);
 
             ValeursNumeriques = new Dictionary<Board, List<Byte>>();
-            ValeursNumeriques.Add(Board.RecIO, null);
-            ValeursNumeriques.Add(Board.RecGB, null);
-            ValeursNumeriques.Add(Board.RecMove, null);
+            ValeursNumeriques.Add(Board.RecIO, new List<byte>());
+            ValeursNumeriques.Add(Board.RecGB, new List<byte>());
+            ValeursNumeriques.Add(Board.RecMove, new List<byte>());
+
+            for(int i = 0; i < 3 * 2; i++)
+            {
+                ValeursNumeriques[Board.RecIO].Add(0);
+                ValeursNumeriques[Board.RecGB].Add(0);
+                ValeursNumeriques[Board.RecMove].Add(0);
+            }
         }
 
         void timerPositions_Elapsed(object sender, ElapsedEventArgs e)
@@ -533,9 +540,9 @@ namespace GoBot
         public override void DemandeValeursNumeriques(Board carte, bool attendre)
         {
             Random r = new Random();
-
-            List<Byte> values = new List<Byte>() { (Byte)r.Next(), (Byte)r.Next() };
-            ValeursNumeriques[carte] = values;
+            
+            for (int i = 0; i < 3*2; i++)
+                ValeursNumeriques[carte][i] = (Byte)r.Next();
         }
     }
 }

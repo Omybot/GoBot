@@ -54,14 +54,28 @@ namespace GoBot
             }
 
             ValeursAnalogiques = new Dictionary<Board, List<double>>();
-            ValeursAnalogiques.Add(Board.RecIO, null);
-            ValeursAnalogiques.Add(Board.RecGB, null);
-            ValeursAnalogiques.Add(Board.RecMove, null);
+            ValeursAnalogiques.Add(Board.RecIO, new List<double>());
+            ValeursAnalogiques.Add(Board.RecGB, new List<double>());
+            ValeursAnalogiques.Add(Board.RecMove, new List<double>());
+
+            for (int i = 0; i < 9; i++)
+            {
+                ValeursAnalogiques[Board.RecIO].Add(0);
+                ValeursAnalogiques[Board.RecGB].Add(0);
+                ValeursAnalogiques[Board.RecMove].Add(0);
+            }
 
             ValeursNumeriques = new Dictionary<Board, List<Byte>>();
-            ValeursNumeriques.Add(Board.RecIO, null);
-            ValeursNumeriques.Add(Board.RecGB, null);
-            ValeursNumeriques.Add(Board.RecMove, null);
+            ValeursNumeriques.Add(Board.RecIO, new List<byte>());
+            ValeursNumeriques.Add(Board.RecGB, new List<byte>());
+            ValeursNumeriques.Add(Board.RecMove, new List<byte>());
+
+            for (int i = 0; i < 3 * 2; i++)
+            {
+                ValeursNumeriques[Board.RecIO].Add(0);
+                ValeursNumeriques[Board.RecGB].Add(0);
+                ValeursNumeriques[Board.RecMove].Add(0);
+            }
 
             SpeedConfig.ParamChange += SpeedConfig_ParamChange;
         }
@@ -117,7 +131,7 @@ namespace GoBot
 
             Plateau.NotreCouleur = couleurEquipe;
 
-            SemaphoresTrame[FrameFunction.RetourCouleurEquipe].Release();
+            SemaphoresTrame[FrameFunction.RetourCouleurEquipe]?.Release();
         }
 
         public override void Init()
@@ -203,7 +217,7 @@ namespace GoBot
             Thread.Sleep(500);
             TrajectoireEchouee = true;
             Stop(StopMode.Abrupt);
-            SemaphoresTrame[FrameFunction.FinDeplacement].Release();
+            SemaphoresTrame[FrameFunction.FinDeplacement]?.Release();
 
             Devices.Devices.RecGoBot.Buzz(0, 200);
 
@@ -227,7 +241,7 @@ namespace GoBot
                 case FrameFunction.FinRecallage:        // Idem
                     Thread.Sleep(40); // TODO2018 ceci est une tempo ajoutée au pif de pwet parce qu'on avant envie alors voilà
                     Console.WriteLine("Déblocage déplacement " + DateTime.Now.Hour + ":" + DateTime.Now.Minute + ":" + DateTime.Now.Second + ":" + DateTime.Now.Millisecond);
-                    SemaphoresTrame[FrameFunction.FinDeplacement].Release();
+                    SemaphoresTrame[FrameFunction.FinDeplacement]?.Release();
                     break;
                 case FrameFunction.AsserRetourPositionXYTeta:
                     // Réception de la position mesurée par l'asservissement
@@ -253,7 +267,7 @@ namespace GoBot
                         positionRecue = true;
 
                         DateRefreshPos = DateTime.Now;
-                        SemaphoresTrame[FrameFunction.AsserDemandePositionXYTeta].Release();
+                        SemaphoresTrame[FrameFunction.AsserDemandePositionXYTeta]?.Release();
 
                         lock (HistoriqueCoordonnees)
                         {
@@ -318,8 +332,8 @@ namespace GoBot
 
                     ChangeCouleurCapteur((CapteurCouleurID)trameRecue[2], couleur);
                     CapteursCouleur[(CapteurCouleurID)trameRecue[2]] = couleur;
-                    if (SemaphoresCouleur[(CapteurCouleurID)trameRecue[2]] != null)
-                        SemaphoresCouleur[(CapteurCouleurID)trameRecue[2]].Release();
+
+                    SemaphoresCouleur[(CapteurCouleurID)trameRecue[2]]?.Release();
                     break;
                 case FrameFunction.ReponseLidar:
                     int lidarID = trameRecue[2];
@@ -350,7 +364,7 @@ namespace GoBot
 
                     if (Regex.Matches(mesureLidar, "\n\n").Count == 2)
                     {
-                        SemaphoresTrame[FrameFunction.ReponseLidar].Release();
+                        SemaphoresTrame[FrameFunction.ReponseLidar]?.Release();
                     }
                     break;
                 case FrameFunction.RetourCapteurOnOff:
@@ -395,43 +409,36 @@ namespace GoBot
                 case FrameFunction.TensionBatteries:
                     BatterieVoltage = (double)(trameRecue[2] * 256 + trameRecue[3]) / 100.0;
                     break;
+                case FrameFunction.RetourValeursNumeriques:
+                    Board numericBoard = (Board)trameRecue[0];
+
+                    ValeursNumeriques[numericBoard][0] = (Byte)trameRecue[1];
+                    ValeursNumeriques[numericBoard][1] = (Byte)trameRecue[2];
+                    ValeursNumeriques[numericBoard][2] = (Byte)trameRecue[3];
+                    ValeursNumeriques[numericBoard][3] = (Byte)trameRecue[4];
+                    ValeursNumeriques[numericBoard][4] = (Byte)trameRecue[5];
+                    ValeursNumeriques[numericBoard][5] = (Byte)trameRecue[6];
+                    
+                    SemaphoresTrame[FrameFunction.RetourValeursNumeriques]?.Release();
+                    break;
+
                 case FrameFunction.RetourValeursAnalogiques:
-                    Board carte = (Board)trameRecue[0];
-
-                    double valeurAnalogique1 = (trameRecue[2] * 256 + trameRecue[3]);
-                    double valeurAnalogique2 = (trameRecue[4] * 256 + trameRecue[5]);
-                    double valeurAnalogique3 = (trameRecue[6] * 256 + trameRecue[7]);
-                    double valeurAnalogique4 = (trameRecue[8] * 256 + trameRecue[9]);
-                    double valeurAnalogique5 = (trameRecue[10] * 256 + trameRecue[11]);
-                    double valeurAnalogique6 = (trameRecue[12] * 256 + trameRecue[13]);
-                    double valeurAnalogique7 = (trameRecue[14] * 256 + trameRecue[15]);
-                    double valeurAnalogique8 = (trameRecue[16] * 256 + trameRecue[17]);
-                    double valeurAnalogique9 = (trameRecue[18] * 256 + trameRecue[19]);
-
-                    double valeurAnalogique1V = valeurAnalogique1 * 0.0008056640625;
-                    double valeurAnalogique2V = valeurAnalogique2 * 0.0008056640625;
-                    double valeurAnalogique3V = valeurAnalogique3 * 0.0008056640625;
-                    double valeurAnalogique4V = valeurAnalogique4 * 0.0008056640625;
-                    double valeurAnalogique5V = valeurAnalogique5 * 0.0008056640625;
-                    double valeurAnalogique6V = valeurAnalogique6 * 0.0008056640625;
-                    double valeurAnalogique7V = valeurAnalogique7 * 0.0008056640625;
-                    double valeurAnalogique8V = valeurAnalogique8 * 0.0008056640625;
-                    double valeurAnalogique9V = valeurAnalogique9 * 0.0008056640625;
+                    Board analogBoard = (Board)trameRecue[0];
+                    
+                    const double toVolts = 0.0008056640625;
 
                     List<double> values = new List<double>();
-                    values.Add(valeurAnalogique1V);
-                    values.Add(valeurAnalogique2V);
-                    values.Add(valeurAnalogique3V);
-                    values.Add(valeurAnalogique4V);
-                    values.Add(valeurAnalogique5V);
-                    values.Add(valeurAnalogique6V);
-                    values.Add(valeurAnalogique7V);
-                    values.Add(valeurAnalogique8V);
-                    values.Add(valeurAnalogique9V);
-                    ValeursAnalogiques[carte] = values;
-
-                    if (SemaphoresTrame[FrameFunction.RetourValeursAnalogiques] != null)
-                        SemaphoresTrame[FrameFunction.RetourValeursAnalogiques].Release();
+                    ValeursAnalogiques[analogBoard][0] = ((trameRecue[2] * 256 + trameRecue[3]) * toVolts);
+                    ValeursAnalogiques[analogBoard][1] = ((trameRecue[4] * 256 + trameRecue[5]) * toVolts);
+                    ValeursAnalogiques[analogBoard][2] = ((trameRecue[6] * 256 + trameRecue[7]) * toVolts);
+                    ValeursAnalogiques[analogBoard][3] = ((trameRecue[8] * 256 + trameRecue[9]) * toVolts);
+                    ValeursAnalogiques[analogBoard][4] = ((trameRecue[10] * 256 + trameRecue[11]) * toVolts);
+                    ValeursAnalogiques[analogBoard][5] = ((trameRecue[12] * 256 + trameRecue[13]) * toVolts);
+                    ValeursAnalogiques[analogBoard][6] = ((trameRecue[14] * 256 + trameRecue[15]) * toVolts);
+                    ValeursAnalogiques[analogBoard][7] = ((trameRecue[16] * 256 + trameRecue[17]) * toVolts);
+                    ValeursAnalogiques[analogBoard][8] = ((trameRecue[18] * 256 + trameRecue[19]) * toVolts);
+                    
+                    SemaphoresTrame[FrameFunction.RetourValeursAnalogiques]?.Release();
                     break;
             }
         }

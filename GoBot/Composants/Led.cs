@@ -42,10 +42,13 @@ namespace Composants
             {
                 color = value;
 
-                if (!LedsBitmap.ContainsKey(color))
-                    GenerateLed(color);
+                lock (LedsBitmap)
+                {
+                    if (!LedsBitmap.ContainsKey(color))
+                        GenerateLed(color);
 
-                this.Image = LedsBitmap[color];
+                    this.Image = (Image)LedsBitmap[color].Clone();
+                }
 
             }
         }
@@ -85,12 +88,13 @@ namespace Composants
 
             // Création des LEDs de différentes couleurs à partir du modèle rouge
             bmp = new Bitmap(Properties.Resources.RedLed);
+            
             for (int i = 0; i <= bmp.Width - 1; i++)
             {
                 for (int j = 0; j <= bmp.Height - 1; j++)
                 {
                     ex = bmp.GetPixel(i, j);
-                    bmp.SetPixel(i, j, Color.FromArgb(ex.A, ex.B + (ex.R - ex.B) / 255 * col.R, ex.B + (ex.R - ex.B) / 255 * col.G, ex.B + (ex.R - ex.B) / 255 * col.B));
+                    bmp.SetPixel(i, j, Color.FromArgb(ex.A, (int)(ex.B + (ex.R - ex.B) / 255.0 * col.R), (int)(ex.B + (ex.R - ex.B) / 255.0 * col.G), (int)(ex.B + (ex.R - ex.B) / 255.0 * col.B)));
                 }
             }
 
