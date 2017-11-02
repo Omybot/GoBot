@@ -136,7 +136,7 @@ namespace GoBot
 
         public TimeSpan PivotDuration(Angle angle, double axialDistance)
         {
-            return DistanceDuration((int)((Math.PI * axialDistance) / 360 * angle.AngleDegresPositif), PivotAcceleration, PivotSpeed, PivotDeceleration);
+            return DistanceDuration((int)((Math.PI * axialDistance) / 360 * angle.InPositiveDegrees), PivotAcceleration, PivotSpeed, PivotDeceleration);
         }
 
         public void SetParams(int lineSpeed, int lineAccel, int lineDecel, int pivotSpeed, int pivotAccel, int pivotDecel)

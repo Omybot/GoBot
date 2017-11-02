@@ -66,7 +66,7 @@ namespace GoBot.Balises
             get
             {
                 if (AnglesMesures1.Count > 0)
-                    return 100 - 100 * Maths.EcartType(AnglesMesures1) / AnglesMesures1.Average();
+                    return 100 - 100 * AnglesMesures1.StandardDeviation() / AnglesMesures1.Average();
                 else
                     return 0;
             }
@@ -80,7 +80,7 @@ namespace GoBot.Balises
             get
             {
                 if (AnglesMesures2.Count > 0)
-                    return 100 - 100 * Maths.EcartType(AnglesMesures2) / AnglesMesures2.Average();
+                    return 100 - 100 * AnglesMesures2.StandardDeviation() / AnglesMesures2.Average();
                 else
                     return 0;
             }
@@ -93,7 +93,7 @@ namespace GoBot.Balises
         {
             get
             {
-                return Maths.EcartType(AnglesMesures1);
+                return AnglesMesures1.StandardDeviation();
             }
         }
 
@@ -104,7 +104,7 @@ namespace GoBot.Balises
         {
             get
             {
-                return Maths.EcartType(AnglesMesures2);
+                return AnglesMesures2.StandardDeviation();
             }
         }
 
@@ -126,7 +126,7 @@ namespace GoBot.Balises
             get
             {
                 if (DistancesMesures1.Count > 0)
-                    return 100 - 100 * Maths.EcartType(DistancesMesures1) / DistancesMesures1.Average();
+                    return 100 - 100 * DistancesMesures1.StandardDeviation() / DistancesMesures1.Average();
                 else
                     return 0;
             }
@@ -140,7 +140,7 @@ namespace GoBot.Balises
             get
             {
                 if (DistancesMesures2.Count > 0)
-                    return 100 - 100 * Maths.EcartType(DistancesMesures2) / DistancesMesures2.Average();
+                    return 100 - 100 * DistancesMesures2.StandardDeviation() / DistancesMesures2.Average();
                 else
                     return 0;
             }
@@ -153,7 +153,7 @@ namespace GoBot.Balises
         {
             get
             {
-                return Maths.EcartType(DistancesMesures1);
+                return DistancesMesures1.StandardDeviation();
             }
         }
 
@@ -164,7 +164,7 @@ namespace GoBot.Balises
         {
             get
             {
-                return Maths.EcartType(DistancesMesures2);
+                return DistancesMesures2.StandardDeviation();
             }
         }
 

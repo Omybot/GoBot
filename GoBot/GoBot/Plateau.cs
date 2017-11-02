@@ -156,7 +156,7 @@ namespace GoBot
 
                         if (Robots.GrosRobot.VitesseAdaptableEnnemi)
                         {
-                            double distanceAdv = Robots.GrosRobot.Position.Coordonnees.Distance(coordonnees);
+                            double distanceAdv = Robots.GrosRobot.Position.Coordinates.Distance(coordonnees);
                             if (distanceAdv < 1500)
                             {
                                 vitesseMax = (int)(Math.Min(vitesseMax, (distanceAdv - 300) / 1000.0 * Config.CurrentConfig.ConfigRapide.LineSpeed));
@@ -189,7 +189,7 @@ namespace GoBot
         {
             Balise = new Balise();
 
-            PositionCibleRobot = Robots.GrosRobot.Position.Coordonnees;
+            PositionCibleRobot = Robots.GrosRobot.Position.Coordinates;
         }
 
         private Semaphore SemaphoreCollisions { get; set; }

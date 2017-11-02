@@ -141,18 +141,18 @@ namespace GoBot.Enchainements
             Thread.Sleep(500);
 
             Angle a = Actionneur.Hokuyo.CalculAngle(new Segment(new PointReel(0, 50), new PointReel(0, 900)), 50, 10);
-            if (a.AngleDegresPositif > 180)
-                Robots.GrosRobot.PivotDroite(a.AngleDegresPositif - 270);
+            if (a.InPositiveDegrees > 180)
+                Robots.GrosRobot.PivotDroite(a.InPositiveDegrees - 270);
             else
-                Robots.GrosRobot.PivotGauche((90 - a.AngleDegresPositif));
+                Robots.GrosRobot.PivotGauche((90 - a.InPositiveDegrees));
 
-            Robots.GrosRobot.ReglerOffsetAsserv(new Position(180, Robots.GrosRobot.Position.Coordonnees));
+            Robots.GrosRobot.ReglerOffsetAsserv(new Position(180, Robots.GrosRobot.Position.Coordinates));
 
             double distance = Actionneur.Hokuyo.CalculDistanceX(new Segment(new PointReel(0, 50), new PointReel(0, 900)), 50, 2);
-            Robots.GrosRobot.ReglerOffsetAsserv(new Position(180, Robots.GrosRobot.Position.Coordonnees.Translation(-distance, 0)));
+            Robots.GrosRobot.ReglerOffsetAsserv(new Position(180, Robots.GrosRobot.Position.Coordinates.Translation(-distance, 0)));
 
             distance = Actionneur.Hokuyo.CalculDistanceY(970, 1170, 150, 2);
-            Robots.GrosRobot.ReglerOffsetAsserv(new Position(180, Robots.GrosRobot.Position.Coordonnees.Translation(0, -distance)));
+            Robots.GrosRobot.ReglerOffsetAsserv(new Position(180, Robots.GrosRobot.Position.Coordinates.Translation(0, -distance)));
         }
 
         private void ThreadHokuyoRecalVert()
@@ -162,20 +162,20 @@ namespace GoBot.Enchainements
             Thread.Sleep(500);
 
             Angle a = Actionneur.Hokuyo.CalculAngle(new Segment(new PointReel(3000, 50), new PointReel(3000, 900)), 50, 10);
-            if (a.AngleDegresPositif > 180)
-                Robots.GrosRobot.PivotDroite(a.AngleDegresPositif - 270);
+            if (a.InPositiveDegrees > 180)
+                Robots.GrosRobot.PivotDroite(a.InPositiveDegrees - 270);
             else
-                Robots.GrosRobot.PivotGauche((90 - a.AngleDegresPositif));
+                Robots.GrosRobot.PivotGauche((90 - a.InPositiveDegrees));
 
-            Robots.GrosRobot.ReglerOffsetAsserv(new Position(0, Robots.GrosRobot.Position.Coordonnees));
+            Robots.GrosRobot.ReglerOffsetAsserv(new Position(0, Robots.GrosRobot.Position.Coordinates));
 
             double distance = Actionneur.Hokuyo.CalculDistanceX(new Segment(new PointReel(3000, 50), new PointReel(3000, 900)), 50, 10);
-            Robots.GrosRobot.ReglerOffsetAsserv(new Position(0, Robots.GrosRobot.Position.Coordonnees.Translation(-(distance-3000), 0)));
+            Robots.GrosRobot.ReglerOffsetAsserv(new Position(0, Robots.GrosRobot.Position.Coordinates.Translation(-(distance-3000), 0)));
 
             Robots.GrosRobot.PositionerAngle(45);
 
             distance = Actionneur.Hokuyo.CalculDistanceY(3000 - 1170, 3000 - 970, 150, 2);
-            Robots.GrosRobot.ReglerOffsetAsserv(new Position(0, Robots.GrosRobot.Position.Coordonnees.Translation(0, -distance)));
+            Robots.GrosRobot.ReglerOffsetAsserv(new Position(0, Robots.GrosRobot.Position.Coordinates.Translation(0, -distance)));
         }
     }
 }

@@ -286,12 +286,12 @@ namespace GoBot
         public void PositionerAngle(Angle angle, double marge = 0)
         {
             Angle diff = angle - Position.Angle;
-            if (Math.Abs(diff.AngleDegres) > marge)
+            if (Math.Abs(diff.InDegrees) > marge)
             {
-                if (diff.AngleDegres > 0)
-                    PivotDroite(diff.AngleDegres);
+                if (diff.InDegrees > 0)
+                    PivotDroite(diff.InDegrees);
                 else
-                    PivotGauche(-diff.AngleDegres);
+                    PivotGauche(-diff.InDegrees);
             }
         }
 
@@ -328,7 +328,7 @@ namespace GoBot
 
         public bool GotoXYTeta(Position dest)
         {
-            return PathFinding(dest.Coordonnees.X, dest.Coordonnees.Y, dest.Angle, 0, true);
+            return PathFinding(dest.Coordinates.X, dest.Coordinates.Y, dest.Angle, 0, true);
         }
 
         public bool PathFinding(double x, double y, Angle teta = null, int timeOut = 0, bool attendre = false)
@@ -388,7 +388,7 @@ namespace GoBot
                     {
                         List<Segment> segmentsTrajectoire = new List<Segment>();
                         // Calcule le segment entre nous et notre destination (permet de ne pas considérer un obstacle sur un tronçon déjà franchi)
-                        Segment seg = new Segment(Position.Coordonnees, new PointReel(TrajectoireEnCours.Lines[0].Fin));
+                        Segment seg = new Segment(Position.Coordinates, new PointReel(TrajectoireEnCours.Lines[0].Fin));
                         segmentsTrajectoire.Add(seg);
 
                         for (int iSegment = 1; iSegment < TrajectoireEnCours.Lines.Count; iSegment++)

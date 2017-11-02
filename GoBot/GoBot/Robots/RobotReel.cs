@@ -150,16 +150,16 @@ namespace GoBot
             if (this == Robots.GrosRobot)
             {
                 if (Plateau.NotreCouleur == Plateau.CouleurGaucheBleu)
-                    Position = new Calculs.Position(new Angle(0, AnglyeType.Degre), new PointReel(240, 1000));
+                    Position = new Calculs.Position(new Angle(0, AnglyeType.Degre), new RealPoint(240, 1000));
                 else
-                    Position = new Calculs.Position(new Angle(180, AnglyeType.Degre), new PointReel(3000 - 240, 1000));
+                    Position = new Calculs.Position(new Angle(180, AnglyeType.Degre), new RealPoint(3000 - 240, 1000));
             }
             else
             {
                 if (Plateau.NotreCouleur == Plateau.CouleurGaucheBleu)
-                    Position = new Calculs.Position(new Angle(0, AnglyeType.Degre), new PointReel(480, 1000));
+                    Position = new Calculs.Position(new Angle(0, AnglyeType.Degre), new RealPoint(480, 1000));
                 else
-                    Position = new Calculs.Position(new Angle(180, AnglyeType.Degre), new PointReel(3000 - 480, 1000));
+                    Position = new Calculs.Position(new Angle(180, AnglyeType.Degre), new RealPoint(3000 - 480, 1000));
             }
 
             PositionCible = null; //TODO2018 Init commun à la simu
@@ -254,9 +254,9 @@ namespace GoBot
                         y = -y;
                         x = -x;
 
-                        Position nouvellePosition = new Position(new Angle(teta, AnglyeType.Degre), new PointReel(x, y));
+                        Position nouvellePosition = new Position(new Angle(teta, AnglyeType.Degre), new RealPoint(x, y));
 
-                        if (Position.Coordonnees.Distance(nouvellePosition.Coordonnees) < 300 || !positionRecue)
+                        if (Position.Coordinates.Distance(nouvellePosition.Coordinates) < 300 || !positionRecue)
                         {
                             Position = nouvellePosition;
                             //Position.Coordonnees.Placer(nouvellePosition.Coordonnees.X, nouvellePosition.Coordonnees.Y); //TODO2018 ca servait pas à réenvoyer la position au robot ça ?
@@ -271,7 +271,7 @@ namespace GoBot
 
                         lock (HistoriqueCoordonnees)
                         {
-                            HistoriqueCoordonnees.Add(new Position(teta, new PointReel(x, y)));
+                            HistoriqueCoordonnees.Add(new Position(teta, new RealPoint(x, y)));
 
                             while (HistoriqueCoordonnees.Count > 1200)
                                 HistoriqueCoordonnees.RemoveAt(0);
@@ -352,7 +352,7 @@ namespace GoBot
                         double x = (double)((short)(trameRecue[5] << 8 | trameRecue[6]) / 10.0);
                         double teta = (trameRecue[7] << 8 | trameRecue[8]) / 100.0 - 180;
 
-                        positionMesureLidar = new Position(teta, new PointReel(x, y));
+                        positionMesureLidar = new Position(teta, new RealPoint(x, y));
                         decallageEntete += 6;
                     }
 
@@ -469,7 +469,7 @@ namespace GoBot
 
         public override void ReglerOffsetAsserv(Position newPosition)
         {
-            Position.Copie(newPosition);
+            Position.Copy(newPosition);
             Frame trame = FrameFactory.OffsetPos(newPosition, this);
             Connexion.SendMessage(trame);
             ChangerPosition(Position);
@@ -558,7 +558,7 @@ namespace GoBot
                 SemaphoresTrame[FrameFunction.FinDeplacement].WaitOne();
         }
 
-        public override void TrajectoirePolaire(SensAR sens, List<PointReel> points, bool attendre = true)
+        public override void TrajectoirePolaire(SensAR sens, List<RealPoint> points, bool attendre = true)
         {
             if (attendre)
                 SemaphoresTrame[FrameFunction.FinDeplacement] = new Semaphore(0, int.MaxValue);

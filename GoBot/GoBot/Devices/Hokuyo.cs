@@ -144,7 +144,7 @@ namespace GoBot.Devices
 
         protected Position PositionDepuisRobot(Position robotPosition)
         {
-            return new Position(robotPosition.Angle, new PointReel(robotPosition.Coordonnees.X + offsetX, robotPosition.Coordonnees.Y + offsetY).Rotation(robotPosition.Angle, robotPosition.Coordonnees));
+            return new Position(robotPosition.Angle, new PointReel(robotPosition.Coordinates.X + offsetX, robotPosition.Coordinates.Y + offsetY).Rotation(robotPosition.Angle, robotPosition.Coordinates));
         }
 
         private Semaphore semLock;
@@ -204,7 +204,7 @@ namespace GoBot.Devices
         protected List<PointReel> ValeursToPositions(List<int> mesures, bool limiteTable, int minDistance, int maxDistance, Position refPosition)
         {
             List<PointReel> positions = new List<PointReel>();
-            double stepAngular = ScanRange.AngleRadiansPositif / (double)mesures.Count;
+            double stepAngular = ScanRange.InPositiveRadians / (double)mesures.Count;
 
             for (int i = 0; i < mesures.Count; i++)
             {
@@ -212,12 +212,12 @@ namespace GoBot.Devices
 
                 if (mesures[i] > minDistance && (mesures[i] < maxDistance || maxDistance == -1))
                 {
-                    if (angle.ComprisEntre(AnalyzedAngleStart, AnalyzedAngleEnd))
+                    if (angle.IsBetween(AnalyzedAngleStart, AnalyzedAngleEnd))
                     {
-                        double sin = Math.Sin(angle.AngleRadiansPositif - refPosition.Angle.AngleRadiansPositif - ScanRange.AngleRadiansPositif / 2 - Math.PI / 2) * mesures[i];
-                        double cos = Math.Cos(angle.AngleRadiansPositif - refPosition.Angle.AngleRadiansPositif - ScanRange.AngleRadiansPositif / 2 - Math.PI / 2) * mesures[i];
+                        double sin = Math.Sin(angle.InPositiveRadians - refPosition.Angle.InPositiveRadians - ScanRange.InPositiveRadians / 2 - Math.PI / 2) * mesures[i];
+                        double cos = Math.Cos(angle.InPositiveRadians - refPosition.Angle.InPositiveRadians - ScanRange.InPositiveRadians / 2 - Math.PI / 2) * mesures[i];
 
-                        PointReel pos = new PointReel(refPosition.Coordonnees.X - sin, refPosition.Coordonnees.Y - cos);
+                        PointReel pos = new PointReel(refPosition.Coordinates.X - sin, refPosition.Coordinates.Y - cos);
 
                         int marge = 20; // Marge en mm de distance de detection à l'exterieur de la table (pour ne pas jeter les mesures de la bordure qui ne collent pas parfaitement)
                         if (!limiteTable || (pos.X > -marge && pos.X < Plateau.Largeur + marge && pos.Y > -marge && pos.Y < Plateau.Hauteur + marge))
@@ -284,7 +284,7 @@ namespace GoBot.Devices
 
                     Plateau.ObstaclesPlateau.Add(interpol);
 
-                    Console.WriteLine(new Angle(Math.Atan(interpol.A), AnglyeType.Radian).AngleDegresPositif - 270);
+                    Console.WriteLine(new Angle(Math.Atan(interpol.A), AnglyeType.Radian).InPositiveDegrees - 270);
 
                     angleSomme += Math.Atan(interpol.A);
                     nb++;

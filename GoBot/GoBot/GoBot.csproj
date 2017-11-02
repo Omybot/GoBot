@@ -390,7 +390,7 @@
     <Compile Include="Balises\DetectionBalise.cs" />
     <Compile Include="Calculs\Formes\Cercle.cs" />
     <Compile Include="Calculs\Formes\Droite.cs" />
-    <Compile Include="Calculs\Formes\PointReel.cs" />
+    <Compile Include="Calculs\Formes\RealPoint.cs" />
     <Compile Include="Calculs\Formes\Polygone.cs" />
     <Compile Include="Calculs\Formes\Segment.cs" />
     <Compile Include="Calculs\Maths.cs" />

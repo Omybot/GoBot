@@ -15,12 +15,12 @@ namespace GoBot.Calculs
     {
         private double angle { get; set; }
 
-        private const double KDelta = 0.001;
+        private const double PRECISION = 0.01;
 
         /// <summary>
         /// Retourne l'angle en degrés (-180 à +180)
         /// </summary>
-        public double AngleDegres
+        public double InDegrees
         {
             get
             {
@@ -31,7 +31,7 @@ namespace GoBot.Calculs
         /// <summary>
         /// Retourne l'angle en degrés positif (0 à 360 au lieu de -180 à +180)
         /// </summary>
-        public double AngleDegresPositif
+        public double InPositiveDegrees
         {
             get
             {
@@ -45,7 +45,7 @@ namespace GoBot.Calculs
         /// <summary>
         /// Retourne l'angle en radians
         /// </summary>
-        public double AngleRadians
+        public double InRadians
         {
             get
             {
@@ -56,11 +56,11 @@ namespace GoBot.Calculs
         /// <summary>
         /// Retourne l'angle en radians positif
         /// </summary>
-        public double AngleRadiansPositif
+        public double InPositiveRadians
         {
             get
             {
-                return (double)(AngleDegresPositif / 180 * Math.PI);
+                return (double)(InPositiveDegrees / 180 * Math.PI);
             }
         }
 
@@ -68,15 +68,15 @@ namespace GoBot.Calculs
         /// Construit un angle avec la valeur passée en paramètre
         /// </summary>
         /// <param name="angle">Angle de départ</param>
-        public Angle(double angleDepart, AnglyeType type = AnglyeType.Degre)
+        public Angle(double angle, AnglyeType type = AnglyeType.Degre)
         {
             if (type == AnglyeType.Degre)
-                angle = angleDepart;
+                this.angle = angle;
             else if (type == AnglyeType.Radian)
-                angle = (double)(180 * angleDepart / Math.PI);
+                this.angle = (double)(180 * angle / Math.PI);
 
-            angle = angle % 360;
-            angle = AngleOptimal(this);
+            this.angle = this.angle % 360;
+            this.angle = OptimalAngle(this);
         }
 
         /// <summary>
@@ -90,41 +90,54 @@ namespace GoBot.Calculs
         /// <summary>
         /// Fait tourner l'angle de l'angle (objet) choisi
         /// </summary>
-        /// <param name="angleTourne">Angle à tourner</param>
-        public void Tourner(Angle angleTourne)
+        /// <param name="turnAngle">Angle à tourner</param>
+        public void Turn(Angle turnAngle)
         {
-            angle += angleTourne;
-            angle = AngleOptimal(this);
+            angle += turnAngle;
+            angle = OptimalAngle(this);
         }
 
         /// <summary>
-        /// Retourne l'angle le plus rapide en fonction d'un angle passé en paramètre.
-        /// Il est par exemple plus facile de tourner de -15° que de tourner de 345°
+        /// Retourne l'angle le plus proche de 0 correspondant à l'angle passé en paramètre.
+        /// Par exemple pour 345°, l'angle optimal est -15°
         /// </summary>
-        /// <param name="a">Angle à tester</param>
+        /// <param name="a">Angle à convertir</param>
         /// <returns>Angle optimal (en degrés)</returns>
-        private static double AngleOptimal(Angle a)
+        private static Angle OptimalAngle(Angle a)
         {
-            double retour = a.AngleDegres;
+            double newAngle = a.InDegrees;
 
-            while (retour > 180)
-                retour = retour - 360;
-            while (retour < -180)
-                retour = retour + 360;
+            while (newAngle > 180)
+                newAngle = newAngle - 360;
+            while (newAngle < -180)
+                newAngle = newAngle + 360;
 
-            return retour;
+            return new Angle(newAngle);
         }
 
-        public bool ComprisEntre(Angle a1, Angle a2)
+        /// <summary>
+        /// Retourne si l'angle est compris entre les angles données, c'est à dire qu'i lse situe dans l'arc de cercle le plus petit formé par les deux angles
+        /// Exemples : 
+        /// 150° est entre 130° et 160°
+        /// 10° est entre 350° et 50°
+        /// </summary>
+        /// <param name="a1">Premier angle</param>
+        /// <param name="a2">Deuxième angle</param>
+        /// <returns>Vrai si l'angle est compris entre les deux angles</returns>
+        public bool IsBetween(Angle a1, Angle a2)
         {
-            if (a1.AngleDegresPositif < a2.AngleDegresPositif)
-                return AngleDegresPositif > a1.AngleDegresPositif && AngleDegresPositif < a2.AngleDegresPositif;
-            else if (a1.AngleDegresPositif > a2.AngleDegresPositif)
-                return (AngleDegresPositif < a1.AngleDegresPositif && AngleDegresPositif > 0) || (AngleDegresPositif > a2.AngleDegresPositif && AngleDegresPositif < 0);
+            if (a1.InPositiveDegrees < a2.InPositiveDegrees)
+                return InPositiveDegrees > a1.InPositiveDegrees && InPositiveDegrees < a2.InPositiveDegrees;
+            else if (a1.InPositiveDegrees > a2.InPositiveDegrees)
+                return (InPositiveDegrees < a1.InPositiveDegrees && InPositiveDegrees > 0) || (InPositiveDegrees > a2.InPositiveDegrees && InPositiveDegrees < 0);
 
             return true;
         }
 
+        /// <summary>
+        /// Affecte un nouvel angle
+        /// </summary>
+        /// <param name="other">Nouvel angle</param>
         public void Set(Angle other)
         {
             angle = other.angle;
@@ -134,12 +147,12 @@ namespace GoBot.Calculs
 
         public static Angle operator +(Angle a1, Angle a2)
         {
-            return new Angle(a1.AngleDegres + a2.AngleDegres, AnglyeType.Degre);
+            return new Angle(a1.InDegrees + a2.InDegrees, AnglyeType.Degre);
         }
 
         public static Angle operator -(Angle a1, Angle a2)
         {
-            return new Angle(a1.AngleDegresPositif - a2.AngleDegresPositif, AnglyeType.Degre);
+            return new Angle(a1.InPositiveDegrees - a2.InPositiveDegrees, AnglyeType.Degre);
         }
 
         public static bool operator ==(Angle a1, Angle a2)
@@ -149,7 +162,8 @@ namespace GoBot.Calculs
 
             if ((!(a1 is Angle) && a2 is Angle) || (a1 is Angle && !(a2 is Angle)))
                 return false;
-            return Math.Abs((a1 - a2).AngleDegres) <= 0.01;
+
+            return Math.Abs((a1 - a2).InDegrees) <= PRECISION;
         }
 
         public static bool operator !=(Angle a1, Angle a2)
@@ -166,7 +180,7 @@ namespace GoBot.Calculs
 
         public static implicit operator double(Angle angle)
         {
-            return angle.AngleDegres;
+            return angle.InDegrees;
         }
 
         #endregion
@@ -180,7 +194,7 @@ namespace GoBot.Calculs
         {
             try
             {
-                return Math.Abs(((Angle)obj).AngleDegres - AngleDegres) < KDelta;
+                return (Angle)obj == this;
             }
             catch
             {
@@ -190,7 +204,7 @@ namespace GoBot.Calculs
 
         public override int GetHashCode()
         {
-            return (int)(AngleDegres * 1000);
+            return (int)(InDegrees * 1000);
         }
     }
 }

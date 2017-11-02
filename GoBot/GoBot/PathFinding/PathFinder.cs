@@ -37,8 +37,8 @@ namespace GoBot.PathFinding
             trajectoire.EndAngle = new Angle(destination.Angle);
 
             PointsTrouves = new List<PointReel>();
-            PointsTrouves.Add(new PointReel(positionActuell.Coordonnees));
-            trajectoire.AddPoint(new PointReel(positionActuell.Coordonnees));
+            PointsTrouves.Add(new PointReel(positionActuell.Coordinates));
+            trajectoire.AddPoint(new PointReel(positionActuell.Coordinates));
 
             lock (graph)
             {
@@ -46,10 +46,10 @@ namespace GoBot.PathFinding
                 int nbPointsArrivee = 0;
 
                 Node debutNode;
-                Node nodeProche = graph.ClosestNode(positionActuell.Coordonnees.X, positionActuell.Coordonnees.Y, 0, out distance, false);
+                Node nodeProche = graph.ClosestNode(positionActuell.Coordinates.X, positionActuell.Coordinates.Y, 0, out distance, false);
                 if (distance != 0)
                 {
-                    debutNode = new Node(positionActuell.Coordonnees.X, positionActuell.Coordonnees.Y, 0);
+                    debutNode = new Node(positionActuell.Coordinates.X, positionActuell.Coordinates.Y, 0);
                     nbPointsDepart = graph.AddNode(debutNode, obstacles, rayonSecurite, distanceRaccordable);
                 }
                 else
@@ -67,16 +67,16 @@ namespace GoBot.PathFinding
                     int i;
                     for (i = 0; i < 100 && !raccordable; i += 1)
                     {
-                        positionTestee.Avancer(10);
+                        positionTestee.Move(10);
 
-                        debutNode = new Node(positionTestee.Coordonnees.X, positionTestee.Coordonnees.Y, 0);
+                        debutNode = new Node(positionTestee.Coordinates.X, positionTestee.Coordinates.Y, 0);
                         raccordable = graph.Raccordable(debutNode, obstacles, rayonSecurite, distanceRaccordable);
                     }
 
                     // Le point à i*10 mm devant nous est reliable au graph, on cherche à l'atteindre
                     if (raccordable)
                     {
-                        Segment segmentTest = new Segment(new PointReel(positionTestee.Coordonnees), new PointReel(positionActuell.Coordonnees));
+                        Segment segmentTest = new Segment(new PointReel(positionTestee.Coordinates), new PointReel(positionActuell.Coordinates));
 
                         // Test des obstacles
 
@@ -101,10 +101,10 @@ namespace GoBot.PathFinding
                         // Si le semgent entre notre position et le graph relié au graph est parcourable on y va !
                         if (franchissable)
                         {
-                            PointsTrouves.Add(new PointReel(positionTestee.Coordonnees));
-                            trajectoire.AddPoint(new PointReel(positionTestee.Coordonnees));
+                            PointsTrouves.Add(new PointReel(positionTestee.Coordinates));
+                            trajectoire.AddPoint(new PointReel(positionTestee.Coordinates));
 
-                            debutNode = new Node(positionTestee.Coordonnees.X, positionTestee.Coordonnees.Y, 0);
+                            debutNode = new Node(positionTestee.Coordinates.X, positionTestee.Coordinates.Y, 0);
                             nbPointsDepart = graph.AddNode(debutNode, obstacles, rayonSecurite, distanceRaccordable);
                         }
                     }
@@ -119,16 +119,16 @@ namespace GoBot.PathFinding
                         positionTestee = new Position(positionActuell);
                         for (i = 0; i > -100 && !raccordable; i--)
                         {
-                            positionTestee.Avancer(-10);
+                            positionTestee.Move(-10);
 
-                            debutNode = new Node(positionTestee.Coordonnees.X, positionTestee.Coordonnees.Y, 0);
+                            debutNode = new Node(positionTestee.Coordinates.X, positionTestee.Coordinates.Y, 0);
                             raccordable = graph.Raccordable(debutNode, obstacles, rayonSecurite, distanceRaccordable);
                         }
 
                         // Le point à i*10 mm derrière nous est reliable au graph, on cherche à l'atteindre
                         if (raccordable)
                         {
-                            Segment segmentTest = new Segment(new PointReel(positionTestee.Coordonnees), new PointReel(destination.Coordonnees));
+                            Segment segmentTest = new Segment(new PointReel(positionTestee.Coordinates), new PointReel(destination.Coordinates));
 
                             lock (Plateau.ObstaclesBalise)
                             {
@@ -152,20 +152,20 @@ namespace GoBot.PathFinding
                             // Si le semgent entre notre position et le graph relié au graph est parcourable on y va !
                             if (franchissable)
                             {
-                                PointsTrouves.Add(new PointReel(positionTestee.Coordonnees));
-                                trajectoire.AddPoint(new PointReel(positionTestee.Coordonnees));
+                                PointsTrouves.Add(new PointReel(positionTestee.Coordinates));
+                                trajectoire.AddPoint(new PointReel(positionTestee.Coordinates));
 
-                                debutNode = new Node(positionTestee.Coordonnees.X, positionTestee.Coordonnees.Y, 0);
+                                debutNode = new Node(positionTestee.Coordinates.X, positionTestee.Coordinates.Y, 0);
                                 nbPointsDepart = graph.AddNode(debutNode, obstacles, rayonSecurite, distanceRaccordable);
                             }
                         }
                     }
                 }
 
-                Node finNode = graph.ClosestNode(destination.Coordonnees.X, destination.Coordonnees.Y, 0, out distance, false);
+                Node finNode = graph.ClosestNode(destination.Coordinates.X, destination.Coordinates.Y, 0, out distance, false);
                 if (distance != 0)
                 {
-                    finNode = new Node(destination.Coordonnees.X, destination.Coordonnees.Y, 0);
+                    finNode = new Node(destination.Coordinates.X, destination.Coordinates.Y, 0);
                     nbPointsArrivee = graph.AddNode(finNode, obstacles, rayonSecurite, distanceRaccordable);
                 }
                 if (nbPointsArrivee == 0)
@@ -182,14 +182,14 @@ namespace GoBot.PathFinding
                     int i;
                     for (i = 0; i < 100 && !raccordable; i++)
                     {
-                        positionTestee.Avancer(10);
-                        raccordable = graph.Raccordable(new Node(positionTestee.Coordonnees.X, positionTestee.Coordonnees.Y, 0), obstacles, rayonSecurite, distanceRaccordable);
+                        positionTestee.Move(10);
+                        raccordable = graph.Raccordable(new Node(positionTestee.Coordinates.X, positionTestee.Coordinates.Y, 0), obstacles, rayonSecurite, distanceRaccordable);
                     }
 
                     // Le point à i*10 mm devant nous est reliable au graph, on cherche à l'atteindre
                     if (raccordable)
                     {
-                        Segment segmentTest = new Segment(new PointReel(positionTestee.Coordonnees), new PointReel(positionActuell.Coordonnees));
+                        Segment segmentTest = new Segment(new PointReel(positionTestee.Coordinates), new PointReel(positionActuell.Coordinates));
 
                         // Test des obstacles
                         foreach (IForme obstacle in obstacles)
@@ -209,14 +209,14 @@ namespace GoBot.PathFinding
 
                         for (i = 0; i > -100 && !raccordable; i--)
                         {
-                            positionTestee.Avancer(-10);
-                            raccordable = graph.Raccordable(new Node(positionTestee.Coordonnees.X, positionTestee.Coordonnees.Y, 0), obstacles, rayonSecurite, distanceRaccordable);
+                            positionTestee.Move(-10);
+                            raccordable = graph.Raccordable(new Node(positionTestee.Coordinates.X, positionTestee.Coordinates.Y, 0), obstacles, rayonSecurite, distanceRaccordable);
                         }
 
                         if (raccordable)
                         {
                             franchissable = true;
-                            Segment segmentTest = new Segment(new PointReel(positionTestee.Coordonnees), new PointReel(destination.Coordonnees));
+                            Segment segmentTest = new Segment(new PointReel(positionTestee.Coordinates), new PointReel(destination.Coordinates));
 
                             // Test des obstacles
                             foreach (IForme obstacle in obstacles)
@@ -230,7 +230,7 @@ namespace GoBot.PathFinding
                     // Si le semgent entre notre position et le node relié au graph est parcourable on y va !
                     if (franchissable)
                     {
-                        finNode = new Node(positionTestee.Coordonnees.X, positionTestee.Coordonnees.Y, 0);
+                        finNode = new Node(positionTestee.Coordinates.X, positionTestee.Coordinates.Y, 0);
                         nbPointsArrivee = graph.AddNode(finNode, obstacles, rayonSecurite, distanceRaccordable);
                     }
                 }
@@ -255,10 +255,10 @@ namespace GoBot.PathFinding
 
                     PointsTrouves.Add(new PointReel(finNode.X, finNode.Y));
                     trajectoire.AddPoint(new PointReel(finNode.X, finNode.Y));
-                    if (destination.Coordonnees.Distance(new PointReel(finNode.X, finNode.Y)) > 1)
+                    if (destination.Coordinates.Distance(new PointReel(finNode.X, finNode.Y)) > 1)
                     {
-                        PointsTrouves.Add(new PointReel(destination.Coordonnees));
-                        trajectoire.AddPoint(new PointReel(destination.Coordonnees));
+                        PointsTrouves.Add(new PointReel(destination.Coordinates));
+                        trajectoire.AddPoint(new PointReel(destination.Coordinates));
                     }
                 }
 
@@ -358,10 +358,10 @@ namespace GoBot.PathFinding
                         Robots.GrosRobot.Historique.Log("Chemin optimisé : " + (CheminEnCoursNoeuds.Count - 2) + " noeud(s) intermédiaire(s)", TypeLog.PathFinding);
                         cheminTrouve = true;
 
-                        if (destination.Coordonnees.Distance(new PointReel(finNode.X, finNode.Y)) > 1)
+                        if (destination.Coordinates.Distance(new PointReel(finNode.X, finNode.Y)) > 1)
                         {
-                            PointsTrouves.Add(new PointReel(destination.Coordonnees));
-                            trajectoire.AddPoint(new PointReel(destination.Coordonnees));
+                            PointsTrouves.Add(new PointReel(destination.Coordinates));
+                            trajectoire.AddPoint(new PointReel(destination.Coordinates));
                         }
                     }
                     else

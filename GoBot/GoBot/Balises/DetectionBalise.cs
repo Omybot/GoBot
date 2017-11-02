@@ -63,8 +63,8 @@ namespace GoBot.Balises
                 Distance = 1;
 
             // Un peu de trigo pas bien compliquée
-            double xPoint = balise.Position.Coordonnees.X + Math.Cos(AngleCentral.AngleRadians) * Distance;
-            double yPoint = balise.Position.Coordonnees.Y + Math.Sin(AngleCentral.AngleRadians) * Distance;
+            double xPoint = balise.Position.Coordinates.X + Math.Cos(AngleCentral.InRadians) * Distance;
+            double yPoint = balise.Position.Coordinates.Y + Math.Sin(AngleCentral.InRadians) * Distance;
 
             Position = new PointReel(xPoint, yPoint);
 
@@ -92,8 +92,8 @@ namespace GoBot.Balises
 
             // Point de la balise
 
-            double xPoint1 = Balise.Position.Coordonnees.X;
-            double yPoint1 = Balise.Position.Coordonnees.Y;
+            double xPoint1 = Balise.Position.Coordinates.X;
+            double yPoint1 = Balise.Position.Coordinates.Y;
 
             PointReel point = new PointReel(xPoint1, yPoint1);
 
@@ -102,16 +102,16 @@ namespace GoBot.Balises
             // Point du côté du début de l'angle
             // 5000 valeur arbitraire, assez grande pour dépasser de la table
 
-            xPoint1 = Balise.Position.Coordonnees.X + Math.Cos(AngleDebut.AngleRadians) * 5000;
-            yPoint1 = Balise.Position.Coordonnees.Y + Math.Sin(AngleDebut.AngleRadians) * 5000;
+            xPoint1 = Balise.Position.Coordinates.X + Math.Cos(AngleDebut.InRadians) * 5000;
+            yPoint1 = Balise.Position.Coordinates.Y + Math.Sin(AngleDebut.InRadians) * 5000;
             point = new PointReel(xPoint1, yPoint1);
 
             listePoints.Add(point);
 
             // Point du côté du début de l'angle
 
-            xPoint1 = Balise.Position.Coordonnees.X + Math.Cos(AngleFin.AngleRadians) * 5000;
-            yPoint1 = Balise.Position.Coordonnees.Y + Math.Sin(AngleFin.AngleRadians) * 5000;
+            xPoint1 = Balise.Position.Coordinates.X + Math.Cos(AngleFin.InRadians) * 5000;
+            yPoint1 = Balise.Position.Coordinates.Y + Math.Sin(AngleFin.InRadians) * 5000;
             point = new PointReel(xPoint1, yPoint1);
 
             listePoints.Add(point);

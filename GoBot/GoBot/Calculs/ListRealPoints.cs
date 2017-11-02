@@ -3,50 +3,87 @@ using System.Linq;
 
 namespace GoBot.Calculs.Formes
 {
-    internal static class ListRealPointsExtensions
+    public static class ListRealPointsExtensions
     {
-        public static PointReel AveragePoint(this List<PointReel> pts)
+        /// <summary>
+        /// Retourne le barycentre des points
+        /// </summary>
+        /// <param name="pts">Liste des points</param>
+        /// <returns>Barycentre des points</returns>
+        public static RealPoint GetBarycenter(this List<RealPoint> pts)
         {
-            return new PointReel(pts.Average(p => p.X), pts.Average(p => p.Y));
+            return new RealPoint(pts.Average(p => p.X), pts.Average(p => p.Y));
         }
 
-        public static List<PointReel> GetPointsIn(this List<PointReel> pts, IForme shape)
+        /// <summary>
+        /// Retourne la liste des points contenus dans la forme
+        /// </summary>
+        /// <param name="pts">Liste des points d'origine</param>
+        /// <param name="shape">Forme qui doit contenir les points</param>
+        /// <returns>Points contenus par la forme</returns>
+        public static List<RealPoint> GetPointsIn(this List<RealPoint> pts, IForme shape)
         {
             return pts.Where(p => shape.Contient(p)).ToList();
         }
 
-        public static Droite ToLine(this List<PointReel> pts)
+        /// <summary>
+        /// Retourne une droite approximant la liste de points par la méthode des moindres carrés
+        /// </summary>
+        /// <param name="pts">Liste de points à approximer</param>
+        /// <returns>Droite estimée</returns>
+        public static Droite ToLine(this List<RealPoint> pts)
         {
             return new Droite(pts);
         }
 
-        public static Cercle GetContainingCircle(this List<PointReel> pts)
+        /// <summary>
+        /// Retourne le plus petit cercle contenant tous les points et dont le centre est le barycentre des points
+        /// </summary>
+        /// <param name="pts">Liste des points à contenir</param>
+        /// <returns>Cercle obtenu</returns>
+        public static Cercle GetContainingCircle(this List<RealPoint> pts)
         {
-            PointReel center = pts.AveragePoint();
+            RealPoint center = pts.GetBarycenter();
             double ray = pts.Max(p => p.Distance(center));
 
             return new Cercle(center, ray);
         }
 
-        public static double MaxDistance(this List<PointReel> pts)
+        /// <summary>
+        /// Retourne la distance entre les deux points les plus éloignés de la liste
+        /// </summary>
+        /// <param name="pts">Liste de points</param>
+        /// <returns>Distance maximale</returns>
+        public static double MaxDistance(this List<RealPoint> pts)
         {
             return pts.Max(p1 => pts.Max(p2 => p1.Distance(p2)));
         }
 
-        public static double MinDistance(this List<PointReel> pts)
+        /// <summary>
+        /// Retourne la distance entre les deux points les plus proches de la liste
+        /// </summary>
+        /// <param name="pts">Liste de points</param>
+        /// <returns>Distance minimale</returns>
+        public static double MinDistance(this List<RealPoint> pts)
         {
             return pts.Min(p1 => pts.Min(p2 => p1.Distance(p2)));
         }
 
-        public static List<List<PointReel>> GroupByDistance(this List<PointReel> pts, double maxDistance)
+        /// <summary>
+        /// Regroupe les points en différents groupes suivant leur proximité et une distance maximale de regroupement
+        /// </summary>
+        /// <param name="pts">Liste de points à regrouper</param>
+        /// <param name="maxDistance">Distance maximale pour accrocher un point à un groupe. Représente donc également la distance minimale entre deux groupes.</param>
+        /// <returns>Liste des listes de points pour chaque regroupement</returns>
+        public static List<List<RealPoint>> GroupByDistance(this List<RealPoint> pts, double maxDistance)
         {
-            List<PointReel> pool = new List<PointReel>(pts);
+            List<RealPoint> pool = new List<RealPoint>(pts);
 
-            List<List<PointReel>> groups = new List<List<PointReel>>();
+            List<List<RealPoint>> groups = new List<List<RealPoint>>();
 
             while (pool.Count > 0)
             {
-                List<PointReel> group = new List<PointReel>();
+                List<RealPoint> group = new List<RealPoint>();
                 groups.Add(group);
                 group.Add(pool[0]);
                 pool.RemoveAt(0);
@@ -61,17 +98,36 @@ namespace GoBot.Calculs.Formes
             return groups;
         }
 
-        public static void Shift(this List<PointReel> pts, double deltaX, double deltaY)
+        /// <summary>
+        /// Décalle tous les points dans une certaine direction
+        /// </summary>
+        /// <param name="pts">Points à décaller</param>
+        /// <param name="deltaX">Delta sur l'axe des abscisses</param>
+        /// <param name="deltaY">Delta sur l'axe des ordonnées</param>
+        public static void Shift(this List<RealPoint> pts, double deltaX, double deltaY)
         {
             pts.ForEach(p => p.Placer(p.X + deltaX, p.Y + deltaY));
         }
 
-        public static List<PointReel> GetPointsNearFrom(this List<PointReel> pts, IForme shape, double maxDistance)
+        /// <summary>
+        /// Retourne les points qui sont proches d'une forme
+        /// </summary>
+        /// <param name="pts">Liste de points</param>
+        /// <param name="shape">Forme dont les points doivent être proche</param>
+        /// <param name="maxDistance">Distance maximale à la forme pour être sélectionné</param>
+        /// <returns></returns>
+        public static List<RealPoint> GetPointsNearFrom(this List<RealPoint> pts, IForme shape, double maxDistance)
         {
             return pts.Where(p => p.Distance(shape) <= maxDistance).ToList();
         }
 
-        public static List<PointReel> GetPointsInside(this List<PointReel> pts, IForme shape)
+        /// <summary>
+        /// Retourne les points contenus dans une forme
+        /// </summary>
+        /// <param name="pts">Liste de points</param>
+        /// <param name="shape">Forme qui doit contenir les points</param>
+        /// <returns>Points contenus par la forme</returns>
+        public static List<RealPoint> GetPointsInside(this List<RealPoint> pts, IForme shape)
         {
             return pts.Where(p => shape.Contient(p)).ToList();
         }

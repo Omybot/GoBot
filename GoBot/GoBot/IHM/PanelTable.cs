@@ -57,8 +57,8 @@ namespace GoBot.IHM
             {
                 this.InvokeAuto(() =>
                 { 
-                    lblPosGrosX.Text = Math.Round(Robots.GrosRobot.Position.Coordonnees.X, 2).ToString();
-                    lblPosGrosY.Text = Math.Round(Robots.GrosRobot.Position.Coordonnees.Y, 2).ToString();
+                    lblPosGrosX.Text = Math.Round(Robots.GrosRobot.Position.Coordinates.X, 2).ToString();
+                    lblPosGrosY.Text = Math.Round(Robots.GrosRobot.Position.Coordinates.Y, 2).ToString();
                     lblPosGrosTeta.Text = Robots.GrosRobot.Position.Angle.ToString();
                 });
 
@@ -276,8 +276,8 @@ namespace GoBot.IHM
 
                 Point pointOrigine = Dessinateur.positionDepart;
                 Position departRecule = new Position(360 - traj.angle, pointOrigine);
-                departRecule.Avancer(-Robots.GrosRobot.Longueur / 2);
-                departRecule = new Position(traj.angle, new PointReel(departRecule.Coordonnees.X, departRecule.Coordonnees.Y));
+                departRecule.Move(-Robots.GrosRobot.Longueur / 2);
+                departRecule = new Position(traj.angle, new PointReel(departRecule.Coordinates.X, departRecule.Coordinates.Y));
                 positionArrivee = departRecule;
 
                 if (Dessinateur.modeCourant == Dessinateur.MouseMode.PositionFace)
@@ -307,7 +307,7 @@ namespace GoBot.IHM
         {
             this.InvokeAuto(() => btnPathRPCentre.Enabled = false);
 
-            Robots.GrosRobot.GotoXYTeta(new Position(360 - positionArrivee.Angle.AngleDegres, positionArrivee.Coordonnees)); // TODO2018 pourquoi on change de repère ?
+            Robots.GrosRobot.GotoXYTeta(new Position(360 - positionArrivee.Angle.InDegrees, positionArrivee.Coordinates)); // TODO2018 pourquoi on change de repère ?
 
             this.InvokeAuto(() => btnPathRPCentre.Enabled = true);
         }
@@ -663,18 +663,18 @@ namespace GoBot.IHM
             Robots.GrosRobot.PositionerAngle(180);
 
             Angle a = Actionneur.Hokuyo.CalculAngle(new Segment(new PointReel(0, 50), new PointReel(0, 900)), 50, 10);
-            if (a.AngleDegresPositif > 180)
-                Robots.GrosRobot.PivotDroite(a.AngleDegresPositif - 270);
+            if (a.InPositiveDegrees > 180)
+                Robots.GrosRobot.PivotDroite(a.InPositiveDegrees - 270);
             else
-                Robots.GrosRobot.PivotGauche((90 - a.AngleDegresPositif));
+                Robots.GrosRobot.PivotGauche((90 - a.InPositiveDegrees));
 
-            Robots.GrosRobot.ReglerOffsetAsserv(new Position(180, Robots.GrosRobot.Position.Coordonnees));
+            Robots.GrosRobot.ReglerOffsetAsserv(new Position(180, Robots.GrosRobot.Position.Coordinates));
 
             double distance = Actionneur.Hokuyo.CalculDistanceX(new Segment(new PointReel(0, 50), new PointReel(0, 900)), 50, 2);
-            Robots.GrosRobot.ReglerOffsetAsserv(new Position(180, Robots.GrosRobot.Position.Coordonnees.Translation(-distance, 0)));
+            Robots.GrosRobot.ReglerOffsetAsserv(new Position(180, Robots.GrosRobot.Position.Coordinates.Translation(-distance, 0)));
 
             distance = Actionneur.Hokuyo.CalculDistanceY(970, 1170, 150, 2);
-            Robots.GrosRobot.ReglerOffsetAsserv(new Position(180, Robots.GrosRobot.Position.Coordonnees.Translation(0, -distance)));
+            Robots.GrosRobot.ReglerOffsetAsserv(new Position(180, Robots.GrosRobot.Position.Coordinates.Translation(0, -distance)));
         }
 
         private void ThreadHokuyoRecalVert()
@@ -682,20 +682,20 @@ namespace GoBot.IHM
             Robots.GrosRobot.PositionerAngle(0);
 
             Angle a = Actionneur.Hokuyo.CalculAngle(new Segment(new PointReel(3000, 50), new PointReel(3000, 900)), 50, 10);
-            if (a.AngleDegresPositif > 180)
-                Robots.GrosRobot.PivotDroite(a.AngleDegresPositif - 270);
+            if (a.InPositiveDegrees > 180)
+                Robots.GrosRobot.PivotDroite(a.InPositiveDegrees - 270);
             else
-                Robots.GrosRobot.PivotGauche((90 - a.AngleDegresPositif));
+                Robots.GrosRobot.PivotGauche((90 - a.InPositiveDegrees));
 
-            Robots.GrosRobot.ReglerOffsetAsserv(new Position(0, Robots.GrosRobot.Position.Coordonnees));
+            Robots.GrosRobot.ReglerOffsetAsserv(new Position(0, Robots.GrosRobot.Position.Coordinates));
 
             double distance = Actionneur.Hokuyo.CalculDistanceX(new Segment(new PointReel(3000, 50), new PointReel(3000, 900)), 50, 10);
-            Robots.GrosRobot.ReglerOffsetAsserv(new Position(0, Robots.GrosRobot.Position.Coordonnees.Translation(-(distance - 3000), 0)));
+            Robots.GrosRobot.ReglerOffsetAsserv(new Position(0, Robots.GrosRobot.Position.Coordinates.Translation(-(distance - 3000), 0)));
 
             Robots.GrosRobot.PositionerAngle(45);
 
             distance = Actionneur.Hokuyo.CalculDistanceY(3000 - 1170, 3000 - 970, 150, 2);
-            Robots.GrosRobot.ReglerOffsetAsserv(new Position(0, Robots.GrosRobot.Position.Coordonnees.Translation(0, -distance)));
+            Robots.GrosRobot.ReglerOffsetAsserv(new Position(0, Robots.GrosRobot.Position.Coordinates.Translation(0, -distance)));
         }
     }
 }

@@ -93,12 +93,12 @@ namespace GoBot.Mouvements
 
                 foreach (Position position in Positions)
                 {
-                    double distancePosition = Robot.Position.Coordonnees.Distance(position.Coordonnees); 
+                    double distancePosition = Robot.Position.Coordinates.Distance(position.Coordinates); 
                     
                     List<IForme> obstacles = new List<IForme>(Plateau.ObstaclesBalise);
                     foreach (Cercle c in obstacles)
                     {
-                        double distanceAdv = position.Coordonnees.Distance(c.Centre) / 10;
+                        double distanceAdv = position.Coordinates.Distance(c.Centre) / 10;
                         if (distanceAdv < 45)
                             distancePosition = double.PositiveInfinity;
                         else
@@ -132,14 +132,14 @@ namespace GoBot.Mouvements
                 if (position == null) 
                     return double.MaxValue;
 
-                double distance = Robot.Position.Coordonnees.Distance(position.Coordonnees) / 10;
+                double distance = Robot.Position.Coordinates.Distance(position.Coordinates) / 10;
                 double cout = distance / ValeurAction;
                 bool adversairePlusProche = false;
 
                 List<IForme> obstacles = new List<IForme>(Plateau.ObstaclesBalise);
                 foreach (Cercle c in obstacles)
                 {
-                    double distanceAdv = position.Coordonnees.Distance(c.Centre) / 10;
+                    double distanceAdv = position.Coordinates.Distance(c.Centre) / 10;
                     if (distanceAdv < 45)
                         cout = double.PositiveInfinity;
                     else
@@ -178,11 +178,11 @@ namespace GoBot.Mouvements
 
                 if (Cout != double.MaxValue && !double.IsInfinity(Cout))
                 {
-                    Point pointProche = scale.RealToScreenPosition(PositionProche.Coordonnees);
+                    Point pointProche = scale.RealToScreenPosition(PositionProche.Coordinates);
 
                     foreach (Position p in Positions)
                     {
-                        point = scale.RealToScreenPosition(p.Coordonnees);
+                        point = scale.RealToScreenPosition(p.Coordinates);
                         if (point != pointProche)
                         {
                             g.FillEllipse(Brushes.Red, point.X - 2, point.Y - 2, 4, 4);
@@ -200,7 +200,7 @@ namespace GoBot.Mouvements
                     {
                         foreach (Position p in Positions)
                         {
-                            point = scale.RealToScreenPosition(p.Coordonnees);
+                            point = scale.RealToScreenPosition(p.Coordinates);
                             g.FillEllipse(brushTransparent, point.X - 2, point.Y - 2, 4, 4);
                             g.DrawLine(penTransparent, point, pointElement);
                         }
@@ -209,7 +209,7 @@ namespace GoBot.Mouvements
                     {
                         foreach (Position p in Positions)
                         {
-                            point = scale.RealToScreenPosition(p.Coordonnees);
+                            point = scale.RealToScreenPosition(p.Coordinates);
                             g.FillEllipse(Brushes.Black, point.X - 2, point.Y - 2, 4, 4);
                             g.DrawLine(penBlackDot, point, pointElement);
                         }

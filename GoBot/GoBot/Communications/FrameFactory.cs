@@ -190,12 +190,12 @@ namespace GoBot.Communications
             byte[] tab = new byte[8];
             tab[0] = (byte)robot.Carte;
             tab[1] = (byte)FrameFunction.AsserEnvoiPositionAbsolue;
-            tab[2] = ByteDivide((int)pos.Coordonnees.X, true);
-            tab[3] = ByteDivide((int)pos.Coordonnees.X, false);
-            tab[4] = ByteDivide((int)pos.Coordonnees.Y, true);
-            tab[5] = ByteDivide((int)pos.Coordonnees.Y, false);
-            tab[6] = ByteDivide((int)(pos.Angle.AngleDegresPositif * 100), true);
-            tab[7] = ByteDivide((int)(pos.Angle.AngleDegresPositif * 100), false);
+            tab[2] = ByteDivide((int)pos.Coordinates.X, true);
+            tab[3] = ByteDivide((int)pos.Coordinates.X, false);
+            tab[4] = ByteDivide((int)pos.Coordinates.Y, true);
+            tab[5] = ByteDivide((int)pos.Coordinates.Y, false);
+            tab[6] = ByteDivide((int)(pos.Angle.InPositiveDegrees * 100), true);
+            tab[7] = ByteDivide((int)(pos.Angle.InPositiveDegrees * 100), false);
 
             Frame retour = new Frame(tab);
             return retour;
@@ -300,7 +300,7 @@ namespace GoBot.Communications
             return retour;
         }
 
-        static public Frame TrajectoirePolaire(SensAR sensAr, List<PointReel> points, Robot robot)
+        static public Frame TrajectoirePolaire(SensAR sensAr, List<RealPoint> points, Robot robot)
         {
             byte[] tab = new byte[5 + points.Count * 2 * 2];
             tab[0] = (byte)robot.Carte;

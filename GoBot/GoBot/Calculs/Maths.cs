@@ -17,60 +17,55 @@ namespace GoBot.Calculs
         /// <summary>
         /// Retourne la direction (angle et distance) à suivre pour arriver à un point donné en partant d'une corrdonnée précise (et par défaut, angle de 0°)
         /// </summary>
-        /// <param name="depart">Coordonnées de départ</param>
-        /// <param name="arrivee">Coordonnées d'arrivée</param>
-        /// <returns></returns>
-        public static Direction GetDirection(PointReel depart, PointReel arrivee)
+        /// <param name="startPoint">Coordonnées de départ</param>
+        /// <param name="endPoint">Coordonnées d'arrivée</param>
+        /// <returns>Direction à suivre</returns>
+        public static Direction GetDirection(RealPoint startPoint, RealPoint endPoint)
         {
-            Position positionDepart = new Position(0, depart);
-            return GetDirection(positionDepart, arrivee);
+            Position startPosition = new Position(0, startPoint);
+            return GetDirection(startPosition, endPoint);
         }
 
         /// <summary>
         ///  Retourne la direction (angle et distance) à suivre pour arriver à un point donné en partant d'une position précise (coordonnées et angle)
         /// </summary>
-        /// <param name="depart">Position de départ</param>
-        /// <param name="arrivee">Coordonnées d'arrivée</param>
-        /// <returns>Direction à prendre</returns>
-        public static Direction GetDirection(Position depart, PointReel arrivee)
+        /// <param name="startPosition">Position de départ</param>
+        /// <param name="endPoint">Coordonnées d'arrivée</param>
+        /// <returns>Direction à suivre</returns>
+        public static Direction GetDirection(Position startPosition, RealPoint endPoint)
         {
             Direction result = new Direction();
 
-            double distance = depart.Coordonnees.Distance(arrivee);
-            result.distance = distance;
-
-            PointReel devantRobot = new PointReel(depart.Coordonnees.X + Math.Cos(depart.Angle.AngleRadians) * 100, depart.Coordonnees.Y + Math.Sin(depart.Angle.AngleRadians) * 100);
-
-            Angle angle;
+            result.distance = startPosition.Coordinates.Distance(endPoint);
 
             double angleCalc = 0;
 
             // Deux points sur le même axe vertical : 90° ou -90° selon le point le plus haut
-            if (arrivee.X == depart.Coordonnees.X)
+            if (endPoint.X == startPosition.Coordinates.X)
             {
                 angleCalc = Math.PI / 2;
-                if (arrivee.Y > depart.Coordonnees.Y)
+                if (endPoint.Y > startPosition.Coordinates.Y)
                     angleCalc = -angleCalc;
             }
             // Deux points sur le même axe horizontal : 0° ou 180° selon le point le plus à gauche
-            else if (arrivee.Y == depart.Coordonnees.Y)
+            else if (endPoint.Y == startPosition.Coordinates.Y)
             {
                 angleCalc = Math.PI;
-                if (arrivee.X > depart.Coordonnees.X)
+                if (endPoint.X > startPosition.Coordinates.X)
                     angleCalc = 0;
             }
             // Cas général : Calcul de l'angle
             else
             {
-                angleCalc = Math.Acos((arrivee.X - depart.Coordonnees.X) / distance);
+                angleCalc = Math.Acos((endPoint.X - startPosition.Coordinates.X) / result.distance);
 
-                if (arrivee.Y > depart.Coordonnees.Y)
+                if (endPoint.Y > startPosition.Coordinates.Y)
                     angleCalc = -angleCalc;
             }
 
-            // Prendre en compte l'angle initial du robot
-            angle = new Angle(angleCalc, AnglyeType.Radian);
-            angle = angle + depart.Angle;
+            // Prendre en compte l'angle initial
+            Angle angle = new Angle(angleCalc, AnglyeType.Radian);
+            angle = angle + startPosition.Angle;
 
             result.angle = angle;
 
@@ -78,47 +73,19 @@ namespace GoBot.Calculs
         }
 
         /// <summary>
-        /// Retourneles coordonnées d'un point en fonction d'une position de départ et d'une direction
+        /// Retourne les coordonnées d'une position initiale modifiée par une prise de direction
         /// </summary>
-        /// <param name="depart">Point de départ</param>
-        /// <param name="direction">Direction</param>
+        /// <param name="startPosition">Position de départ</param>
+        /// <param name="direction">Direction suivie</param>
         /// <returns>Coordonnées du point</returns>
-        public static PointReel GetCoordonnees(Position depart, Direction direction)
+        public static Position GetCoordonnees(Position startPosition, Direction direction)
         {
-            Angle angleAdverse = direction.angle + depart.Angle;
+            Angle endAngle = direction.angle + startPosition.Angle;
 
-            double x = depart.Coordonnees.X + Math.Cos(angleAdverse.AngleRadians) * direction.distance;
-            double y = depart.Coordonnees.Y + Math.Sin(angleAdverse.AngleRadians) * direction.distance;
+            double x = startPosition.Coordinates.X + Math.Cos(endAngle.InRadians) * direction.distance;
+            double y = startPosition.Coordinates.Y + Math.Sin(endAngle.InRadians) * direction.distance;
 
-            PointReel positionAdv = new PointReel(x, y);
-
-            return positionAdv;
-        }
-
-        /// <summary>
-        /// Retourne l'écart-type d'une liste de valeurs décimales
-        /// </summary>
-        /// <param name="liste">Valeurs décimales</param>
-        /// <returns>Ecart-type</returns>
-        public static double EcartType(List<double> liste)
-        {
-            if (liste.Count > 0)
-            {
-                double moyenne = liste.Average();
-
-                double ecarts = 0;
-
-                foreach (double val in liste)
-                    ecarts += (val - moyenne) * (val - moyenne);
-
-                ecarts /= liste.Count;
-
-                ecarts = Math.Sqrt(ecarts);
-
-                return ecarts;
-            }
-            else
-                return 0;
+            return new Position(endAngle, new RealPoint(x, y));
         }
     }
 }

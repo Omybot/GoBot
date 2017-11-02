@@ -7,7 +7,7 @@ using System.Drawing;
 
 namespace GoBot.Calculs.Formes
 {
-    public class PointReel : IForme, IModifiable<PointReel>
+    public class RealPoint : IForme, IModifiable<RealPoint>
     {
         public const double PRECISION = 0.01;
 
@@ -30,7 +30,7 @@ namespace GoBot.Calculs.Formes
         /// <summary>
         /// Constructeur par défaut, les coordonnées seront (0, 0)
         /// </summary>
-        public PointReel()
+        public RealPoint()
         {
             posX = 0;
             posY = 0;
@@ -39,7 +39,7 @@ namespace GoBot.Calculs.Formes
         /// <summary>
         /// Constructeur par copie
         /// </summary>
-        public PointReel(PointReel other)
+        public RealPoint(RealPoint other)
         {
             posX = other.posX;
             posY = other.posY;
@@ -50,7 +50,7 @@ namespace GoBot.Calculs.Formes
         /// </summary>
         /// <param name="x">Abscisse</param>
         /// <param name="y">Ordonnée</param>
-        public PointReel(double x, double y)
+        public RealPoint(double x, double y)
         {
             posX = x;
             posY = y;
@@ -104,11 +104,11 @@ namespace GoBot.Calculs.Formes
         /// <summary>
         /// Barycentre du PointReel
         /// </summary>
-        public PointReel BaryCentre
+        public RealPoint BaryCentre
         {
             get
             {
-                return new PointReel(this);
+                return new RealPoint(this);
             }
         }
 
@@ -116,7 +116,7 @@ namespace GoBot.Calculs.Formes
 
         #region Opérateurs & Surcharges
 
-        public static bool operator ==(PointReel a, PointReel b)
+        public static bool operator ==(RealPoint a, RealPoint b)
         {
             if ((object)a == null || (object)b == null)
                 return (object)a == null && (object)b == null;
@@ -129,19 +129,19 @@ namespace GoBot.Calculs.Formes
             }
         }
 
-        public static bool operator !=(PointReel a, PointReel b)
+        public static bool operator !=(RealPoint a, RealPoint b)
         {
             return !(a == b);
         }
 
-        public static PointReel operator -(PointReel a, PointReel b)
+        public static RealPoint operator -(RealPoint a, RealPoint b)
         {
-            return new PointReel(a.X - b.X, a.Y - b.Y);
+            return new RealPoint(a.X - b.X, a.Y - b.Y);
         }
 
-        public static PointReel operator +(PointReel a, PointReel b)
+        public static RealPoint operator +(RealPoint a, RealPoint b)
         {
-            return new PointReel(a.X + b.X, a.Y + b.Y);
+            return new RealPoint(a.X + b.X, a.Y + b.Y);
         }
 
         public override string ToString()
@@ -151,13 +151,13 @@ namespace GoBot.Calculs.Formes
 
         public override bool Equals(object obj)
         {
-            PointReel p = obj as PointReel;
+            RealPoint p = obj as RealPoint;
             if ((Object)p == null)
             {
                 return false;
             }
 
-            return (PointReel)obj == this;
+            return (RealPoint)obj == this;
         }
 
         public override int GetHashCode()
@@ -165,24 +165,24 @@ namespace GoBot.Calculs.Formes
             return (int)X ^ (int)Y;
         }
 
-        public static implicit operator Point(PointReel point)
+        public static implicit operator Point(RealPoint point)
         {
             return new Point((int)point.X, (int)point.Y);
         }
 
-        public static implicit operator PointReel(Point point)
+        public static implicit operator RealPoint(Point point)
         {
-            return new PointReel(point.X, point.Y);
+            return new RealPoint(point.X, point.Y);
         }
 
-        public static implicit operator PointF(PointReel point)
+        public static implicit operator PointF(RealPoint point)
         {
             return new PointF((float)point.X, (float)point.Y);
         }
 
-        public static implicit operator PointReel(PointF point)
+        public static implicit operator RealPoint(PointF point)
         {
-            return new PointReel(point.X, point.Y);
+            return new RealPoint(point.X, point.Y);
         }
 
         #endregion
@@ -253,7 +253,7 @@ namespace GoBot.Calculs.Formes
         /// </summary>
         /// <param name="point">PointReel testé</param>
         /// <returns>Distance minimale</returns>
-        protected double Distance(PointReel point)
+        protected double Distance(RealPoint point)
         {
             // Formule de collège \o/
             return Math.Sqrt((X - point.X) * (X - point.X) + (Y - point.Y) * (Y - point.Y));
@@ -271,8 +271,8 @@ namespace GoBot.Calculs.Formes
         public bool Contient(IForme forme)
         {
             // La seule chose qu'un point peut contenir, c'est un point identique à lui même
-            if (forme is PointReel)
-                return (PointReel)forme == this;
+            if (forme is RealPoint)
+                return (RealPoint)forme == this;
 
             return false;
         }
@@ -292,7 +292,7 @@ namespace GoBot.Calculs.Formes
             return getCroisement(Util.ToRealType(forme)) != null;
         }
 
-        public List<PointReel> Croisements(IForme forme)
+        public List<RealPoint> Croisements(IForme forme)
         {
             // TODOFORMES
             return null;
@@ -303,7 +303,7 @@ namespace GoBot.Calculs.Formes
         /// </summary>
         /// <param name="segment">Segment testé</param>
         /// <returns>Le PointReel lui même si il est sur le Segment, sinon null</returns>
-        public PointReel getCroisement(Segment segment)
+        public RealPoint getCroisement(Segment segment)
         {
             if (segment.Contient(this))
                 return this;
@@ -316,7 +316,7 @@ namespace GoBot.Calculs.Formes
         /// </summary>
         /// <param name="point">point testé</param>
         /// <returns>Le PointReel lui même si il est sur le PointReel, sinon null</returns>
-        public PointReel getCroisement(PointReel point)
+        public RealPoint getCroisement(RealPoint point)
         {
             if (point.X == X && point.Y == Y)
                 return this;
@@ -329,7 +329,7 @@ namespace GoBot.Calculs.Formes
         /// </summary>
         /// <param name="droite">Droite testée</param>
         /// <returns>Le PointReel lui même si il est sur la Droite, sinon null</returns>
-        public PointReel getCroisement(Droite droite)
+        public RealPoint getCroisement(Droite droite)
         {
             if (droite.Contient(this))
                 return this;
@@ -342,7 +342,7 @@ namespace GoBot.Calculs.Formes
         /// </summary>
         /// <param name="polygone">Polygone testé</param>
         /// <returns>Le PointReel lui même si il est sur le Polygone, sinon null</returns>
-        public PointReel getCroisement(Polygone polygone)
+        public RealPoint getCroisement(Polygone polygone)
         {
             if (polygone.Contient(this))
                 return this;
@@ -355,7 +355,7 @@ namespace GoBot.Calculs.Formes
         /// </summary>
         /// <param name="cercle">Cercle testé</param>
         /// <returns>Le PointReel lui même si il est sur le Cercle, sinon null</returns>
-        public PointReel getCroisement(Cercle cercle)
+        public RealPoint getCroisement(Cercle cercle)
         {
             if (cercle.Contient(this))
                 return this;
@@ -383,22 +383,22 @@ namespace GoBot.Calculs.Formes
         /// </summary>
         /// <param name="x">Abscisse</param>
         /// <param name="y">Ordonnée</param>
-        public void Placer(PointReel pos)
+        public void Placer(RealPoint pos)
         {
             posX = pos.X;
             posY = pos.Y;
         }
 
-        public PointReel Translation(double dx, double dy)
+        public RealPoint Translation(double dx, double dy)
         {
-            return new PointReel(posX + dx, posY + dy);
+            return new RealPoint(posX + dx, posY + dy);
         }
 
-        public PointReel Rotation(Angle angle, PointReel centreRotation = null)
+        public RealPoint Rotation(Angle angle, RealPoint centreRotation = null)
         {
-            PointReel nouvelleCoordonnee = new PointReel();
-            nouvelleCoordonnee.X = centreRotation.X + Math.Cos(angle.AngleRadians) * (this.X - centreRotation.X) - Math.Sin(angle.AngleRadians) * (this.Y - centreRotation.Y);
-            nouvelleCoordonnee.Y = centreRotation.Y + Math.Cos(angle.AngleRadians) * (this.Y - centreRotation.Y) + Math.Sin(angle.AngleRadians) * (this.X - centreRotation.X);
+            RealPoint nouvelleCoordonnee = new RealPoint();
+            nouvelleCoordonnee.X = centreRotation.X + Math.Cos(angle.InRadians) * (this.X - centreRotation.X) - Math.Sin(angle.InRadians) * (this.Y - centreRotation.Y);
+            nouvelleCoordonnee.Y = centreRotation.Y + Math.Cos(angle.InRadians) * (this.Y - centreRotation.Y) + Math.Sin(angle.InRadians) * (this.X - centreRotation.X);
             return nouvelleCoordonnee;
         }
 

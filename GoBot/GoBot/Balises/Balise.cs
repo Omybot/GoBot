@@ -173,8 +173,8 @@ namespace GoBot.Balises
                         if (recalcul)
                         {
                             // Un peu de trigo pas bien compliquée
-                            double xPoint = Position.Coordonnees.X + Math.Cos(detect.AngleCentral.AngleRadians) * detect.Distance;
-                            double yPoint = Position.Coordonnees.Y + Math.Sin(detect.AngleCentral.AngleRadians) * detect.Distance;
+                            double xPoint = Position.Coordinates.X + Math.Cos(detect.AngleCentral.InRadians) * detect.Distance;
+                            double yPoint = Position.Coordinates.Y + Math.Sin(detect.AngleCentral.InRadians) * detect.Distance;
 
                             detect.Position = new PointReel(xPoint, yPoint);
                         }
@@ -284,8 +284,8 @@ namespace GoBot.Balises
                             if (recalcul)
                             {
                                 // Un peu de trigo pas bien compliquée
-                                double xPoint = Position.Coordonnees.X + Math.Cos(detect.AngleCentral.AngleRadians) * detect.Distance;
-                                double yPoint = Position.Coordonnees.Y + Math.Sin(detect.AngleCentral.AngleRadians) * detect.Distance;
+                                double xPoint = Position.Coordinates.X + Math.Cos(detect.AngleCentral.InRadians) * detect.Distance;
+                                double yPoint = Position.Coordinates.Y + Math.Sin(detect.AngleCentral.InRadians) * detect.Distance;
 
                                 detect.Position = new PointReel(xPoint, yPoint);
                             }
@@ -347,8 +347,8 @@ namespace GoBot.Balises
                             if (recalcul)
                             {
                                 // Un peu de trigo pas bien compliquée
-                                double xPoint = Position.Coordonnees.X + Math.Cos(detect.AngleCentral.AngleRadians) * detect.Distance;
-                                double yPoint = Position.Coordonnees.Y + Math.Sin(detect.AngleCentral.AngleRadians) * detect.Distance;
+                                double xPoint = Position.Coordinates.X + Math.Cos(detect.AngleCentral.InRadians) * detect.Distance;
+                                double yPoint = Position.Coordinates.Y + Math.Sin(detect.AngleCentral.InRadians) * detect.Distance;
 
                                 detect.Position = new PointReel(xPoint, yPoint);
                             }
@@ -434,11 +434,11 @@ namespace GoBot.Balises
                                 {
                                     DetectionBalise detection = Detections[i];
                                     // Calcul du 3ème point du triangle rectangle Balise / Gros robot
-                                    Droite droiteBalise0Degres = new Droite(Position.Coordonnees, new PointReel(Position.Coordonnees.X + 500, Position.Coordonnees.Y));
-                                    Droite perpendiculaire = droiteBalise0Degres.GetPerpendiculaire(robot.Position.Coordonnees);
+                                    Droite droiteBalise0Degres = new Droite(Position.Coordinates, new PointReel(Position.Coordinates.X + 500, Position.Coordinates.Y));
+                                    Droite perpendiculaire = droiteBalise0Degres.GetPerpendiculaire(robot.Position.Coordinates);
                                     PointReel troisiemePoint = perpendiculaire.getCroisement(droiteBalise0Degres);
-                                    double distanceBaliseTroisiemePoint = troisiemePoint.Distance(Position.Coordonnees);
-                                    double distanceBaliseRobot = robot.Position.Coordonnees.Distance(Position.Coordonnees);
+                                    double distanceBaliseTroisiemePoint = troisiemePoint.Distance(Position.Coordinates);
+                                    double distanceBaliseRobot = robot.Position.Coordinates.Distance(Position.Coordinates);
 
                                     double a = Math.Acos(distanceBaliseTroisiemePoint / distanceBaliseRobot);
                                     Angle angleGrosRobot = new Angle(a, AnglyeType.Radian);
@@ -449,7 +449,7 @@ namespace GoBot.Balises
                                     if (Plateau.NotreCouleur == Plateau.CouleurDroiteJaune)
                                     {
                                         Angle diff = new Angle(180) - (angleDetection - angleGrosRobot);
-                                        if (Math.Abs((diff).AngleDegres) < marge)
+                                        if (Math.Abs((diff).InDegrees) < marge)
                                         {
                                             Detections.RemoveAt(i);
                                             i--;
@@ -458,7 +458,7 @@ namespace GoBot.Balises
                                     else if (Plateau.NotreCouleur == Plateau.CouleurGaucheBleu)
                                     {
                                         Angle diff = angleGrosRobot - angleDetection;
-                                        if (Math.Abs((diff).AngleDegres) < marge)
+                                        if (Math.Abs((diff).InDegrees) < marge)
                                         {
                                             Detections.RemoveAt(i);
                                             i--;

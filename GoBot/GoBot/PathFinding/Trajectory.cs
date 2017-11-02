@@ -76,18 +76,18 @@ namespace GoBot.PathFinding
 
                 // Teste si il est plus rapide (moins d'angle à tourner) de se déplacer en marche arrière
                 bool inverse = false;
-                if (Math.Abs(traj.angle.AngleDegres) > 90)
+                if (Math.Abs(traj.angle.InDegrees) > 90)
                 {
                     inverse = true;
-                    traj.angle = new Angle(traj.angle.AngleDegres - 180);
+                    traj.angle = new Angle(traj.angle.InDegrees - 180);
                 }
 
-                if (traj.angle.AngleDegres < 0)
+                if (traj.angle.InDegrees < 0)
                 {
                     actions.Add(new ActionPivot(robot, -traj.angle, SensGD.Droite));
                     angle -= traj.angle;
                 }
-                else if (traj.angle.AngleDegres > 0)
+                else if (traj.angle.InDegrees > 0)
                 {
                     actions.Add(new ActionPivot(robot, traj.angle, SensGD.Gauche));
                     angle -= traj.angle;
@@ -100,9 +100,9 @@ namespace GoBot.PathFinding
             }
 
             Angle diff = angle - EndAngle;
-            if (Math.Abs(diff.AngleDegres) > 0.2)
+            if (Math.Abs(diff.InDegrees) > 0.2)
             {
-                if (diff.AngleDegres < 0)
+                if (diff.InDegrees < 0)
                     actions.Add(new ActionPivot(robot, -diff, SensGD.Droite));
                 else
                     actions.Add(new ActionPivot(robot, diff, SensGD.Gauche));

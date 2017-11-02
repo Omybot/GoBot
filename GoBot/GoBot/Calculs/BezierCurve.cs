@@ -8,19 +8,25 @@ namespace Gobot.Calculs
 {
     class BezierCurve
     {
-        private static double[] FactorialLookup;
+        private static double[] factorialLookup;
 
         static BezierCurve()
         {
             CreateFactorialTable();
         }
 
-        public static List<PointReel> GetPoints(List<PointReel> points, int nbPoints)
+        /// <summary>
+        /// Retourne une liste de points correspondant à une courbe de Bézier suivant des points donnés en entrée
+        /// </summary>
+        /// <param name="points">Points à suivre pour créer la courbe de Bézier</param>
+        /// <param name="pointsCnt">Nombre de points à générer</param>
+        /// <returns>Liste de points suivant la courbe de Bezier générée</returns>
+        public static List<RealPoint> GetPoints(List<RealPoint> points, int pointsCnt)
         {
-            List<PointReel> retour = new List<PointReel>();
+            List<RealPoint> pts = new List<RealPoint>();
 
             double[] ptsIn = new double[points.Count * 2];
-            double[] ptsOut = new double[nbPoints * 2];
+            double[] ptsOut = new double[pointsCnt * 2];
 
             for (int i = 0; i < points.Count; i++)
             {
@@ -28,29 +34,29 @@ namespace Gobot.Calculs
                 ptsIn[i * 2 + 1] = points[i].Y;
             }
 
-            Bezier2D(ptsIn, nbPoints, ptsOut);
+            Bezier2D(ptsIn, pointsCnt, ptsOut);
 
-            for (int i = 0; i < nbPoints * 2; i += 2)
+            for (int i = 0; i < pointsCnt * 2; i += 2)
             {
-                retour.Add(new PointReel(ptsOut[i], ptsOut[i + 1]));
+                pts.Add(new RealPoint(ptsOut[i], ptsOut[i + 1]));
             }
 
-            return retour;
+            return pts;
         }
 
-        // just check if n is appropriate, then return the result
         private static double factorial(int n)
         {
+            // Just check if n is appropriate, then return the result
             if (n < 0) { throw new Exception("n is less than 0"); }
             if (n > 32) { throw new Exception("n is greater than 32"); }
 
-            return FactorialLookup[n]; /* returns the value n! as a SUMORealing point number */
+            return factorialLookup[n]; /* returns the value n! as a SUMORealing point number */
         }
 
-        // create lookup table for fast factorial calculation
         private static void CreateFactorialTable()
         {
-            // fill untill n=32. The rest is too high to represent
+            // Create lookup table for fast factorial calculation
+            // Fill untill n=32. The rest is too high to represent
             double[] a = new double[33];
             a[0] = 1.0;
             a[1] = 1.0;
@@ -85,7 +91,7 @@ namespace Gobot.Calculs
             a[30] = 265252859812191058636308480000000.0;
             a[31] = 8222838654177922817725562880000000.0;
             a[32] = 263130836933693530167218012160000000.0;
-            FactorialLookup = a;
+            factorialLookup = a;
         }
 
         private static double Ni(int n, int i)
@@ -98,9 +104,10 @@ namespace Gobot.Calculs
             return ni;
         }
 
-        // Calculate Bernstein basis
         private static double Bernstein(int n, int i, double t)
         {
+            // Calculate Bernstein basis
+
             double basis;
             double ti; /* t^i */
             double tni; /* (1 - t)^i */

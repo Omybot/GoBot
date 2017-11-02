@@ -8,7 +8,7 @@ namespace GoBot.Calculs
 {
     public class Position
     {
-        public PointReel Coordonnees { get; private set; }
+        public RealPoint Coordinates { get; private set; }
         public Angle Angle { get; private set; }
 
         /// <summary>
@@ -18,78 +18,74 @@ namespace GoBot.Calculs
         public Position()
         {
             Angle = new Angle();
-            Coordonnees = new PointReel();
+            Coordinates = new RealPoint();
         }
-
+        
         /// <summary>
         /// Constructeur par copie
         /// </summary>
+        /// <param name="other">Position à copier</param>
         public Position(Position other)
         {
-            Angle = new Angle(other.Angle.AngleDegres);
-            Coordonnees = new PointReel(other.Coordonnees);
+            Angle = new Angle(other.Angle);
+            Coordinates = new RealPoint(other.Coordinates);
         }
 
         /// <summary>
         /// Construit une position selon les paramètres
         /// </summary>
-        /// <param name="a">Angle de départ</param>
-        /// <param name="c">Coordonnées de départ</param>
-        public Position(Angle a, PointReel c)
+        /// <param name="angle">Angle de départ</param>
+        /// <param name="coordinates">Coordonnées de départ</param>
+        public Position(Angle angle, RealPoint coordinates)
         {
-            Angle = new Angle(a);
-            Coordonnees = new PointReel(c);
+            Angle = new Angle(angle);
+            Coordinates = new RealPoint(coordinates);
         }
 
         /// <summary>
         /// Déplace les coordonnées par rapport aux anciennes coordonnées
         /// </summary>
-        /// <param name="x">Déplacement (mm) sur l'axe des abscisses</param>
-        /// <param name="y">Déplacement (mm) sur l'axe des ordonnées</param>
-        public void Deplacer(double x, double y)
+        /// <param name="x">Déplacement sur l'axe des abscisses</param>
+        /// <param name="y">Déplacement sur l'axe des ordonnées</param>
+        public void Shift(double x, double y)
         {
-            Coordonnees = Coordonnees.Translation(x, y);
+            Coordinates = Coordinates.Translation(x, y);
         }
 
         /// <summary>
-        /// Fait tourner l'angle de l'angle (en degrés) choisi
+        /// Fait tourner l'angle de l'angle choisi
         /// </summary>
-        /// <param name="a">Angle à tourner</param>
-        public void Tourner(double a)
+        /// <param name="angle">Angle à tourner</param>
+        public void Turn(Angle angle)
         {
-            Angle.Tourner(a);
-        }
-
-        /// <summary>
-        /// Fait tourner l'angle de l'angle (objet) choisi
-        /// </summary>
-        /// <param name="a">Angle à tourner</param>
-        public void Tourner(Angle a)
-        {
-            Angle.Tourner(a);
+            Angle.Turn(angle);
         }
 
         /// <summary>
         /// Avance de la distance spécifiée suivant l'angle actuel
         /// </summary>
-        /// <param name="distance">Distance à avancer (mm)</param>
-        public void Avancer(double distance)
+        /// <param name="distance">Distance à avancer</param>
+        public void Move(double distance)
         {
-            double depX = distance * Math.Cos(Angle.AngleRadians);
-            double depY = distance * Math.Sin(Angle.AngleRadians);
+            double depX = distance * Math.Cos(Angle.InRadians);
+            double depY = distance * Math.Sin(Angle.InRadians);
 
-            Coordonnees = Coordonnees.Translation(depX, depY);
+            Coordinates = Coordinates.Translation(depX, depY);
         }
 
-        public void Copie(Position position)
+        /// <summary>
+        /// Copie une autre position
+        /// </summary>
+        /// <param name="position">Position à copier</param>
+        public void Copy(Position position)
         {
             Angle.Set(position.Angle);
-            Coordonnees.Placer(position.Coordonnees.X, position.Coordonnees.Y);
+            Coordinates.Placer(position.Coordinates.X, position.Coordinates.Y);
         }
 
         public override string ToString()
         {
-            return Coordonnees.ToString() + " " + Angle.ToString();
+            return Coordinates.ToString() + " " + Angle.ToString();
         }
     }
 }

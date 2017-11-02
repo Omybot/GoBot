@@ -226,7 +226,7 @@ namespace GoBot
                             gGros.DrawLine(Plateau.NotreCouleur == Plateau.CouleurGaucheBleu ? penCouleurGauche : penCouleurDroite, bmpGrosRobot.Width / 2, bmpGrosRobot.Height / 2, bmpGrosRobot.Width / 2, bmpGrosRobot.Height / 2 - Scale.RealToScreenDistance(Robots.GrosRobot.Longueur / 2));
 
                             Point pointOrigine = Scale.RealToScreenPosition(positionDepart);
-                            g.DrawImage(RotateImage(bmpGrosRobot, 360 - traj.angle.AngleDegres + 90), pointOrigine.X - bmpGrosRobot.Width / 2, pointOrigine.Y - bmpGrosRobot.Height / 2);
+                            g.DrawImage(RotateImage(bmpGrosRobot, 360 - traj.angle.InDegrees + 90), pointOrigine.X - bmpGrosRobot.Width / 2, pointOrigine.Y - bmpGrosRobot.Height / 2);
 
                             g.DrawLine(penBlancFleche, (Point)Scale.RealToScreenPosition(positionDepart), positionFin);
                         }
@@ -243,13 +243,13 @@ namespace GoBot
 
                             Point pointOrigine = Scale.RealToScreenPosition(positionDepart);
                             Position departRecule = new Position(360 - traj.angle, pointOrigine);
-                            departRecule.Avancer(Scale.RealToScreenDistance(-Robots.GrosRobot.Longueur / 2));
+                            departRecule.Move(Scale.RealToScreenDistance(-Robots.GrosRobot.Longueur / 2));
 
                             gGros.FillRectangle(brushNoirTresTransparent, bmpGrosRobot.Width / 2 - Scale.RealToScreenDistance(Robots.GrosRobot.Largeur / 2), bmpGrosRobot.Height / 2 - Scale.RealToScreenDistance(Robots.GrosRobot.Longueur / 2), Scale.RealToScreenDistance(Robots.GrosRobot.Largeur), Scale.RealToScreenDistance(Robots.GrosRobot.Longueur));
                             gGros.DrawRectangle(Plateau.NotreCouleur == Plateau.CouleurGaucheBleu ? penCouleurGauche : penCouleurDroite, bmpGrosRobot.Width / 2 - Scale.RealToScreenDistance(Robots.GrosRobot.Largeur / 2), bmpGrosRobot.Height / 2 - Scale.RealToScreenDistance(Robots.GrosRobot.Longueur / 2), Scale.RealToScreenDistance(Robots.GrosRobot.Largeur), Scale.RealToScreenDistance(Robots.GrosRobot.Longueur));
                             gGros.DrawLine(Plateau.NotreCouleur == Plateau.CouleurGaucheBleu ? penCouleurGauche : penCouleurDroite, bmpGrosRobot.Width / 2, bmpGrosRobot.Height / 2, bmpGrosRobot.Width / 2, bmpGrosRobot.Height / 2 - Scale.RealToScreenDistance(Robots.GrosRobot.Longueur / 2));
 
-                            g.DrawImage(RotateImage(bmpGrosRobot, 360 - traj.angle.AngleDegres + 90), (int)(departRecule.Coordonnees.X) - bmpGrosRobot.Width / 2, (int)(departRecule.Coordonnees.Y) - bmpGrosRobot.Height / 2);
+                            g.DrawImage(RotateImage(bmpGrosRobot, 360 - traj.angle.InDegrees + 90), (int)(departRecule.Coordinates.X) - bmpGrosRobot.Width / 2, (int)(departRecule.Coordinates.Y) - bmpGrosRobot.Height / 2);
 
                             g.DrawLine(penBlancFleche, (Point)Scale.RealToScreenPosition(positionDepart), positionFin);
                         }
@@ -257,7 +257,7 @@ namespace GoBot
                         if (Robots.GrosRobot.TrajectoireEnCours != null)
                         {
                             Trajectory traj = new Trajectory();
-                            traj.AddPoint(Robots.GrosRobot.Position.Coordonnees);
+                            traj.AddPoint(Robots.GrosRobot.Position.Coordinates);
 
                             for (int iPoint = 1; iPoint < Robots.GrosRobot.TrajectoireEnCours.Points.Count; iPoint++)
                                 traj.AddPoint(Robots.GrosRobot.TrajectoireEnCours.Points[iPoint]);
@@ -347,7 +347,7 @@ namespace GoBot
                 {
                     // Ligne médiane
                     g.DrawLine(penBleuClairPointille,
-                        Scale.RealToScreenPosition(detection.Balise.Position.Coordonnees),
+                        Scale.RealToScreenPosition(detection.Balise.Position.Coordinates),
                         (Scale.RealToScreenPosition(detection.Position)));
 
                     // Dessin du polygone de détection
@@ -419,7 +419,7 @@ namespace GoBot
 
         private static void DessineRobot(Robot robot, Graphics g)
         {
-            Point positionRobot = Scale.RealToScreenPosition(robot.Position.Coordonnees);
+            Point positionRobot = Scale.RealToScreenPosition(robot.Position.Coordinates);
 
             Bitmap bmpRobot = new Bitmap(Properties.Resources.Capot.Width, Properties.Resources.Capot.Height);
             Graphics gRobot = Graphics.FromImage(bmpRobot);
@@ -444,7 +444,7 @@ namespace GoBot
                 b.Dispose();
             }
 
-            g.DrawImage(RotateImage(bmpRobot, robot.Position.Angle.AngleDegres + 90), positionRobot.X - bmpRobot.Width / 2, positionRobot.Y - bmpRobot.Height / 2);
+            g.DrawImage(RotateImage(bmpRobot, robot.Position.Angle.InDegrees + 90), positionRobot.X - bmpRobot.Width / 2, positionRobot.Y - bmpRobot.Height / 2);
         }
 
         private static void DessineObstacles(Graphics g)
@@ -470,9 +470,9 @@ namespace GoBot
                 Angle finAngleMort = new Angle(Robots.GrosRobot.Position.Angle + milieuAngleMort + largeurAngleMort / 2);
 
                 List<Point> points = new List<Point>();
-                points.Add(Scale.RealToScreenPosition(Actionneur.Hokuyo.Position.Coordonnees));
-                points.Add(Scale.RealToScreenPosition(new Point((int)(Actionneur.Hokuyo.Position.Coordonnees.X + Math.Cos(debutAngleMort.AngleRadians) * 3000), (int)(Actionneur.Hokuyo.Position.Coordonnees.Y + Math.Sin(debutAngleMort.AngleRadians) * 3000))));
-                points.Add(Scale.RealToScreenPosition(new Point((int)(Actionneur.Hokuyo.Position.Coordonnees.X + Math.Cos(finAngleMort.AngleRadians) * 3000), (int)(Actionneur.Hokuyo.Position.Coordonnees.Y + Math.Sin(finAngleMort.AngleRadians) * 3000))));
+                points.Add(Scale.RealToScreenPosition(Actionneur.Hokuyo.Position.Coordinates));
+                points.Add(Scale.RealToScreenPosition(new Point((int)(Actionneur.Hokuyo.Position.Coordinates.X + Math.Cos(debutAngleMort.InRadians) * 3000), (int)(Actionneur.Hokuyo.Position.Coordinates.Y + Math.Sin(debutAngleMort.InRadians) * 3000))));
+                points.Add(Scale.RealToScreenPosition(new Point((int)(Actionneur.Hokuyo.Position.Coordinates.X + Math.Cos(finAngleMort.InRadians) * 3000), (int)(Actionneur.Hokuyo.Position.Coordinates.Y + Math.Sin(finAngleMort.InRadians) * 3000))));
 
                 Region regionTable = new Region(new Rectangle(Scale.RealToScreenPosition(new Point(0, 0)), new Size(Scale.RealToScreenDistance(Plateau.Largeur), Scale.RealToScreenDistance(Plateau.Hauteur))));
                 GraphicsPath pathZoneMorte = new GraphicsPath();
@@ -503,8 +503,8 @@ namespace GoBot
                     int couleur = (int)(i * 1200 / robot.HistoriqueCoordonnees.Count * 255 / 1200);
                     Color pointColor = Color.FromArgb(couleur, couleur, couleur);
 
-                    PointReel point = robot.HistoriqueCoordonnees[i].Coordonnees;
-                    PointReel pointPrec = robot.HistoriqueCoordonnees[i - 1].Coordonnees;
+                    PointReel point = robot.HistoriqueCoordonnees[i].Coordinates;
+                    PointReel pointPrec = robot.HistoriqueCoordonnees[i - 1].Coordinates;
 
                     new Segment(point, pointPrec).Paint(g, pointColor, 1, Color.Transparent, Scale);
                     point.Paint(g, Color.Black, 3, pointColor, Scale);
@@ -592,7 +592,7 @@ namespace GoBot
                 //move rotation point to center of image
                 g.TranslateTransform((float)b.Width / 2, (float)b.Height / 2);
                 //rotate
-                g.RotateTransform((float)angle.AngleDegres);
+                g.RotateTransform((float)angle.InDegrees);
                 //move image back
                 g.TranslateTransform(-(float)b.Width / 2, -(float)b.Height / 2);
                 //draw passed in image onto graphics object

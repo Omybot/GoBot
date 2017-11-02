@@ -96,7 +96,7 @@ namespace GoBot
         {
             lock (HistoriqueCoordonnees)
             {
-                HistoriqueCoordonnees.Add(new Position(new Angle(Position.Angle), new PointReel(Position.Coordonnees.X, Position.Coordonnees.Y)));
+                HistoriqueCoordonnees.Add(new Position(new Angle(Position.Angle), new PointReel(Position.Coordinates.X, Position.Coordinates.Y)));
 
                 while (HistoriqueCoordonnees.Count > 1200)
                     HistoriqueCoordonnees.RemoveAt(0);
@@ -151,7 +151,7 @@ namespace GoBot
 
             if (pointCourantTrajPolaire >= 0)
             {
-                double distanceAvantProchainPoint = Position.Coordonnees.Distance(trajectoirePolaire[pointCourantTrajPolaire]);
+                double distanceAvantProchainPoint = Position.Coordinates.Distance(trajectoirePolaire[pointCourantTrajPolaire]);
                 double distanceTotaleRestante = distanceAvantProchainPoint;
 
                 distanceTotaleRestante += DistanceParcours(trajectoirePolaire, pointCourantTrajPolaire, trajectoirePolaire.Count - 1);
@@ -183,8 +183,8 @@ namespace GoBot
                 }
                 else
                 {
-                    seg = new Segment(Position.Coordonnees, trajectoirePolaire[pointCourantTrajPolaire]);
-                    cer = new Cercle(Position.Coordonnees, distanceAParcourir);
+                    seg = new Segment(Position.Coordinates, trajectoirePolaire[pointCourantTrajPolaire]);
+                    cer = new Cercle(Position.Coordinates, distanceAParcourir);
                 }
 
                 PointReel newPos = seg.Croisements(cer)[0];
@@ -195,14 +195,14 @@ namespace GoBot
                 if (pointCourantTrajPolaire == trajectoirePolaire.Count - 1)
                 {
                     pointCourantTrajPolaire = -1;
-                    Destination.Copie(Position);
+                    Destination.Copy(Position);
                 }
             }
             else
             {
-                double difference = Destination.Coordonnees.Distance(Position.Coordonnees);
+                double difference = Destination.Coordinates.Distance(Position.Coordinates);
                 Angle adifference = Position.Angle - Destination.Angle;
-                if (Math.Abs(adifference.AngleDegres) > 0.01)
+                if (Math.Abs(adifference.InDegrees) > 0.01)
                 {
                     Angle diff = Destination.Angle - Position.Angle;
                     int coeff = 1;
@@ -210,7 +210,7 @@ namespace GoBot
                     if (SensPivot == SensGD.Gauche)
                         coeff = -1;
 
-                    double distance = Math.Abs(adifference.AngleDegres) / 360.0 * Entraxe * Math.PI;
+                    double distance = Math.Abs(adifference.InDegrees) / 360.0 * Entraxe * Math.PI;
 
                     double distParcourue = VitesseActuelle / (1000.0 / intervalle);
                     Angle angleParcouru = (360 * distParcourue) / (Math.PI * Entraxe);
@@ -220,11 +220,11 @@ namespace GoBot
                     else
                         VitesseActuelle = VitesseActuelle - SpeedConfig.PivotDeceleration / (1000.0 / intervalle);
 
-                    if (Math.Abs(diff.AngleDegres) >= angleParcouru)
-                        Position.Angle.Tourner(coeff * angleParcouru);
+                    if (Math.Abs(diff.InDegrees) >= angleParcouru)
+                        Position.Angle.Turn(coeff * angleParcouru);
                     else
                     {
-                        Position.Angle.Tourner(diff.AngleDegres);
+                        Position.Angle.Turn(diff.InDegrees);
                         intervalle = 0;
                     }
 
@@ -235,23 +235,23 @@ namespace GoBot
                     double distance = VitesseActuelle / (1000.0 / intervalle);
 
                     // Phase accélération ou déccélération
-                    if (Position.Coordonnees.Distance(Destination.Coordonnees) > DistanceFreinageActuelle)
+                    if (Position.Coordinates.Distance(Destination.Coordinates) > DistanceFreinageActuelle)
                         VitesseActuelle = Math.Min(SpeedConfig.LineSpeed, VitesseActuelle + SpeedConfig.LineAcceleration / (1000.0 / intervalle));
                     else
                         VitesseActuelle = VitesseActuelle - SpeedConfig.LineDeceleration / (1000.0 / intervalle);
 
-                    if (Destination.Coordonnees.Distance(Position.Coordonnees) <= distance)
+                    if (Destination.Coordinates.Distance(Position.Coordinates) <= distance)
                     {
                         VitesseActuelle = 0;
-                        Position.Copie(Destination);
+                        Position.Copy(Destination);
                         DeplacementLigne = false;
                     }
                     else
                     {
                         if (SensDep == SensAR.Avant)
-                            Position.Avancer(distance);
+                            Position.Move(distance);
                         else
-                            Position.Avancer(-distance);
+                            Position.Move(-distance);
                     }
 
                     ChangerPosition(Position);
@@ -280,15 +280,15 @@ namespace GoBot
                 SensDep = SensAR.Arriere;
             }
 
-            double depX = distance * Math.Cos(Position.Angle.AngleRadians);
-            double depY = distance * Math.Sin(Position.Angle.AngleRadians);
+            double depX = distance * Math.Cos(Position.Angle.InRadians);
+            double depY = distance * Math.Sin(Position.Angle.InRadians);
 
-            Destination = new Position(Position.Angle, new PointReel(Position.Coordonnees.X + depX, Position.Coordonnees.Y + depY));
+            Destination = new Position(Position.Angle, new PointReel(Position.Coordinates.X + depX, Position.Coordinates.Y + depY));
 
             // TODO2018 attente avec un sémaphore ?
             if (attendre)
-                while (Position.Coordonnees.X != Destination.Coordonnees.X ||
-                    Position.Coordonnees.Y != Destination.Coordonnees.Y)
+                while (Position.Coordinates.X != Destination.Coordinates.X ||
+                    Position.Coordinates.Y != Destination.Coordinates.Y)
                     Thread.Sleep(10);
         }
 
@@ -303,7 +303,7 @@ namespace GoBot
 
             angle = Math.Round(angle, 2);
             Historique.AjouterAction(new ActionPivot(this, angle, SensGD.Gauche));
-            Destination = new Position(new Angle(Position.Angle.AngleDegres - angle, AnglyeType.Degre), new PointReel(Position.Coordonnees.X, Position.Coordonnees.Y));
+            Destination = new Position(new Angle(Position.Angle.InDegrees - angle, AnglyeType.Degre), new PointReel(Position.Coordinates.X, Position.Coordinates.Y));
             SensPivot = SensGD.Gauche;
 
             if (attendre)
@@ -317,7 +317,7 @@ namespace GoBot
 
             angle = Math.Round(angle, 2);
             Historique.AjouterAction(new ActionPivot(this, angle, SensGD.Droite));
-            Destination = new Position(new Angle(Position.Angle.AngleDegres + angle, AnglyeType.Degre), new PointReel(Position.Coordonnees.X, Position.Coordonnees.Y));
+            Destination = new Position(new Angle(Position.Angle.InDegrees + angle, AnglyeType.Degre), new PointReel(Position.Coordinates.X, Position.Coordinates.Y));
             SensPivot = SensGD.Droite;
 
             if (attendre)
@@ -332,14 +332,14 @@ namespace GoBot
 
             if (mode == StopMode.Smooth)
             {
-                Position nouvelleDestination = new Calculs.Position(new Angle(Position.Angle.AngleDegres), new PointReel(position.Coordonnees.X, position.Coordonnees.Y));
+                Position nouvelleDestination = new Calculs.Position(new Angle(Position.Angle.InDegrees), new PointReel(position.Coordinates.X, position.Coordinates.Y));
 
                 if (DeplacementLigne)
                 {
                     if (SensDep == SensAR.Avant)
-                        nouvelleDestination.Avancer(DistanceFreinageActuelle);
+                        nouvelleDestination.Move(DistanceFreinageActuelle);
                     else
-                        nouvelleDestination.Avancer(-DistanceFreinageActuelle);
+                        nouvelleDestination.Move(-DistanceFreinageActuelle);
                 }
 
                 Destination = nouvelleDestination;
@@ -369,8 +369,8 @@ namespace GoBot
 
         public override void ReglerOffsetAsserv(Position newPosition)
         {
-            Position = new Position(-newPosition.Angle, newPosition.Coordonnees); // TODO2018 Hum, pouruqoi c'est pas le meme repere ?
-            PositionCible?.Placer(Position.Coordonnees);
+            Position = new Position(-newPosition.Angle, newPosition.Coordinates); // TODO2018 Hum, pouruqoi c'est pas le meme repere ?
+            PositionCible?.Placer(Position.Coordinates);
             ChangerPosition(Position);
         }
 
@@ -379,24 +379,24 @@ namespace GoBot
             RecallageEnCours = true;
             Historique.AjouterAction(new ActionRecallage(this, sens));
 
-            while (Position.Coordonnees.X - Longueur / 2 > 0 &&
-                Position.Coordonnees.X + Longueur / 2 < Plateau.Largeur &&
-                Position.Coordonnees.Y - Longueur / 2 > 0 &&
-                Position.Coordonnees.Y + Longueur / 2 < Plateau.Hauteur)
+            while (Position.Coordinates.X - Longueur / 2 > 0 &&
+                Position.Coordinates.X + Longueur / 2 < Plateau.Largeur &&
+                Position.Coordinates.Y - Longueur / 2 > 0 &&
+                Position.Coordinates.Y + Longueur / 2 < Plateau.Hauteur)
             {
                 if (sens == SensAR.Arriere)
                     Reculer(5);
                 else
                     Avancer(5);
             }
-            if (Position.Coordonnees.X < 0)
-                Position.Coordonnees.X = Longueur / 2;
-            if (Position.Coordonnees.X > Plateau.Largeur)
-                Position.Coordonnees.X = Plateau.Largeur - Longueur / 2;
-            if (Position.Coordonnees.Y < 0)
-                Position.Coordonnees.Y = Longueur / 2;
-            if (Position.Coordonnees.Y > Plateau.Hauteur)
-                Position.Coordonnees.Y = Plateau.Hauteur - Longueur / 2;
+            if (Position.Coordinates.X < 0)
+                Position.Coordinates.X = Longueur / 2;
+            if (Position.Coordinates.X > Plateau.Largeur)
+                Position.Coordinates.X = Plateau.Largeur - Longueur / 2;
+            if (Position.Coordinates.Y < 0)
+                Position.Coordinates.Y = Longueur / 2;
+            if (Position.Coordinates.Y > Plateau.Hauteur)
+                Position.Coordinates.Y = Plateau.Hauteur - Longueur / 2;
 
             RecallageEnCours = false;
         }
