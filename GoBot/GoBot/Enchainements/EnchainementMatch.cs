@@ -140,7 +140,7 @@ namespace GoBot.Enchainements
 
             Thread.Sleep(500);
 
-            Angle a = Actionneur.Hokuyo.CalculAngle(new Segment(new PointReel(0, 50), new PointReel(0, 900)), 50, 10);
+            Angle a = Actionneur.Hokuyo.CalculAngle(new Segment(new RealPoint(0, 50), new RealPoint(0, 900)), 50, 10);
             if (a.InPositiveDegrees > 180)
                 Robots.GrosRobot.PivotDroite(a.InPositiveDegrees - 270);
             else
@@ -148,7 +148,7 @@ namespace GoBot.Enchainements
 
             Robots.GrosRobot.ReglerOffsetAsserv(new Position(180, Robots.GrosRobot.Position.Coordinates));
 
-            double distance = Actionneur.Hokuyo.CalculDistanceX(new Segment(new PointReel(0, 50), new PointReel(0, 900)), 50, 2);
+            double distance = Actionneur.Hokuyo.CalculDistanceX(new Segment(new RealPoint(0, 50), new RealPoint(0, 900)), 50, 2);
             Robots.GrosRobot.ReglerOffsetAsserv(new Position(180, Robots.GrosRobot.Position.Coordinates.Translation(-distance, 0)));
 
             distance = Actionneur.Hokuyo.CalculDistanceY(970, 1170, 150, 2);
@@ -161,7 +161,7 @@ namespace GoBot.Enchainements
 
             Thread.Sleep(500);
 
-            Angle a = Actionneur.Hokuyo.CalculAngle(new Segment(new PointReel(3000, 50), new PointReel(3000, 900)), 50, 10);
+            Angle a = Actionneur.Hokuyo.CalculAngle(new Segment(new RealPoint(3000, 50), new RealPoint(3000, 900)), 50, 10);
             if (a.InPositiveDegrees > 180)
                 Robots.GrosRobot.PivotDroite(a.InPositiveDegrees - 270);
             else
@@ -169,7 +169,7 @@ namespace GoBot.Enchainements
 
             Robots.GrosRobot.ReglerOffsetAsserv(new Position(0, Robots.GrosRobot.Position.Coordinates));
 
-            double distance = Actionneur.Hokuyo.CalculDistanceX(new Segment(new PointReel(3000, 50), new PointReel(3000, 900)), 50, 10);
+            double distance = Actionneur.Hokuyo.CalculDistanceX(new Segment(new RealPoint(3000, 50), new RealPoint(3000, 900)), 50, 10);
             Robots.GrosRobot.ReglerOffsetAsserv(new Position(0, Robots.GrosRobot.Position.Coordinates.Translation(-(distance-3000), 0)));
 
             Robots.GrosRobot.PositionerAngle(45);

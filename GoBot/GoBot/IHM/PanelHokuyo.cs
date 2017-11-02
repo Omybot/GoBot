@@ -14,7 +14,7 @@ namespace GoBot.IHM
 {
     public partial class PanelHokuyo : UserControl
     {
-        private List<PointReel> _lastMeasure;
+        private List<RealPoint> _lastMeasure;
 
         public PanelHokuyo()
         {
@@ -51,7 +51,7 @@ namespace GoBot.IHM
             }
         }
 
-        private void Hokuyo_NewMeasure(List<PointReel> measure)
+        private void Hokuyo_NewMeasure(List<RealPoint> measure)
         {
             _lastMeasure = measure;
             picWorld.Invalidate();
@@ -76,15 +76,15 @@ namespace GoBot.IHM
             List<Cercle> cercles;
             do
             {
-                List<PointReel> points = Actionneur.Hokuyo.GetRawMesure();
+                List<RealPoint> points = Actionneur.Hokuyo.GetRawMesure();
 
-                List<List<PointReel>> groups = points.GroupByDistance(50);
+                List<List<RealPoint>> groups = points.GroupByDistance(50);
 
                 cercles = groups.Select(g => g.GetContainingCircle()).ToList();
                 cercles = cercles.Where(c => c.Rayon > 20 && c.Rayon < 40).ToList();
             } while (cercles.Count == 0);
 
-            PointReel nearest = cercles.OrderBy(c => c.Distance(new PointReel())).ToList()[0].Centre;
+            RealPoint nearest = cercles.OrderBy(c => c.Distance(new RealPoint())).ToList()[0].Centre;
 
             Plateau.ObstaclesPlateau.Clear();
             Actionneur.GestionModuleSupervisee.AttraperModule(nearest);
@@ -102,7 +102,7 @@ namespace GoBot.IHM
 
         private void picWorld_Paint(object sender, PaintEventArgs e)
         {
-            List<PointReel> points = _lastMeasure;
+            List<RealPoint> points = _lastMeasure;
             Graphics g = e.Graphics;
 
             if (picWorld.Width > 0 && picWorld.Height > 0)
@@ -116,7 +116,7 @@ namespace GoBot.IHM
                 {
                     for (int i = 100; i < 5000; i += 100)
                     {
-                        new Cercle(new PointReel(), i).Paint(g, Color.Gray, picWorld.Dimensions.WorldScale.Factor < 1 ? 2 : 1, Color.Transparent, picWorld.Dimensions.WorldScale);
+                        new Cercle(new RealPoint(), i).Paint(g, Color.Gray, picWorld.Dimensions.WorldScale.Factor < 1 ? 2 : 1, Color.Transparent, picWorld.Dimensions.WorldScale);
                     }
 
                     if(picWorld.Dimensions.WorldScale.Factor < 1)
@@ -125,7 +125,7 @@ namespace GoBot.IHM
                         {
                             if (i % 100 != 0)
                             {
-                                new Cercle(new PointReel(), i).Paint(g, Color.LightGray, 1, Color.Transparent, picWorld.Dimensions.WorldScale);
+                                new Cercle(new RealPoint(), i).Paint(g, Color.LightGray, 1, Color.Transparent, picWorld.Dimensions.WorldScale);
                             }
                         }
                     }
@@ -135,14 +135,14 @@ namespace GoBot.IHM
                 {
                     if (rdoOutline.Checked)
                     {
-                        points.Add(new PointReel());
+                        points.Add(new RealPoint());
                         Polygone poly = new Polygone(points);
                         points.RemoveAt(points.Count - 1);
                         poly.Paint(g, Color.Red, 1, Color.LightGray, picWorld.Dimensions.WorldScale);
                     }
                     else if (rdoShadows.Checked)
                     {
-                        points.Add(new PointReel());
+                        points.Add(new RealPoint());
                         Polygone poly = new Polygone(points);
                         points.RemoveAt(points.Count - 1);
                         g.FillRectangle(Brushes.LightGray, 0, 0, picWorld.Width, picWorld.Height);
@@ -150,23 +150,23 @@ namespace GoBot.IHM
                     }
                     else if (rdoObjects.Checked)
                     {
-                        foreach (PointReel p in points)
+                        foreach (RealPoint p in points)
                         {
                             p.Paint(g, Color.Black, 3, Color.Red, picWorld.Dimensions.WorldScale);
                         }
                     }
                     else
                     {
-                        foreach (PointReel p in points)
+                        foreach (RealPoint p in points)
                         {
-                            Segment s = new Segment(new PointReel(), p);
+                            Segment s = new Segment(new RealPoint(), p);
                             s.Paint(g, Color.Red, 1, Color.Transparent, picWorld.Dimensions.WorldScale);
                         }
                     }
 
                     if (boxGroup.Checked)
                     {
-                        List<List<PointReel>> groups = points.GroupByDistance(50);
+                        List<List<RealPoint>> groups = points.GroupByDistance(50);
                         for (int i = 0; i < groups.Count; i++)
                         {
                             Cercle circle = groups[i].GetContainingCircle();

@@ -35,7 +35,7 @@ namespace GoBot
         public static List<IForme> ObstaclesPlateau { get; set; }
         public static List<IForme> ObstaclesBalise { get; set; }
 
-        public static PointReel PositionCibleRobot { get; set; }
+        public static RealPoint PositionCibleRobot { get; set; }
 
         public static Elements Elements { get; protected set; }
 
@@ -131,7 +131,7 @@ namespace GoBot
             }
         }
 
-        void Balise_PositionEnnemisActualisee(List<PointReel> positions)
+        void Balise_PositionEnnemisActualisee(List<RealPoint> positions)
         {
             // Positions ennemies signalées par la balise
 
@@ -143,7 +143,7 @@ namespace GoBot
 
                 for (int i = 0; i < positions.Count; i++)
                 {
-                    PointReel coordonnees = new PointReel(positions[i].X, positions[i].Y);
+                    RealPoint coordonnees = new RealPoint(positions[i].X, positions[i].Y);
                     AjouterObstacle(new Cercle(coordonnees, RayonAdversaire));
 
                     if (Plateau.Enchainement == null)
@@ -208,7 +208,7 @@ namespace GoBot
         {
             // Obstacle de simulation
             ObstaclesBalise.Clear();
-            PointReel coordonnees = new PointReel(x, y);
+            RealPoint coordonnees = new RealPoint(x, y);
 
             Console.Write(" Ajout obstacle");
             AjouterObstacle(new Cercle(coordonnees, 200));
@@ -303,62 +303,62 @@ namespace GoBot
         public void ChargerObstacles()
         {
             ObstaclesPlateau = new List<IForme>();
-            List<PointReel> points = new List<PointReel>();
+            List<RealPoint> points = new List<RealPoint>();
 
             // Contours du plateau
-            AjouterObstacle(new Segment(new PointReel(0, 0), new PointReel(Largeur - 4, 0)), true);
-            AjouterObstacle(new Segment(new PointReel(Largeur - 4, 0), new PointReel(Largeur - 4, Hauteur - 4)), true);
-            AjouterObstacle(new Segment(new PointReel(Largeur - 4, Hauteur - 4), new PointReel(0, Hauteur - 4)), true);
-            AjouterObstacle(new Segment(new PointReel(0, Hauteur - 4), new PointReel(0, 0)), true);
+            AjouterObstacle(new Segment(new RealPoint(0, 0), new RealPoint(Largeur - 4, 0)), true);
+            AjouterObstacle(new Segment(new RealPoint(Largeur - 4, 0), new RealPoint(Largeur - 4, Hauteur - 4)), true);
+            AjouterObstacle(new Segment(new RealPoint(Largeur - 4, Hauteur - 4), new RealPoint(0, Hauteur - 4)), true);
+            AjouterObstacle(new Segment(new RealPoint(0, Hauteur - 4), new RealPoint(0, 0)), true);
 
             // Zones de départ
-            AjouterObstacle(new RectanglePolygone(new PointReel(0, 0), 710, 360 + 22), true);
-            AjouterObstacle(new RectanglePolygone(new PointReel(3000 - 710, 0), 710, 360 + 22), true);
+            AjouterObstacle(new RectanglePolygone(new RealPoint(0, 0), 710, 360 + 22), true);
+            AjouterObstacle(new RectanglePolygone(new RealPoint(3000 - 710, 0), 710, 360 + 22), true);
 
             // Zones de départ
-            AjouterObstacle(new RectanglePolygone(new PointReel(0, 0), 710, 360 + 22), true);
-            AjouterObstacle(new RectanglePolygone(new PointReel(3000 - 710, 0), 710, 360 + 22), true);
+            AjouterObstacle(new RectanglePolygone(new RealPoint(0, 0), 710, 360 + 22), true);
+            AjouterObstacle(new RectanglePolygone(new RealPoint(3000 - 710, 0), 710, 360 + 22), true);
 
             // Zones latérales
-            AjouterObstacle(new RectanglePolygone(new PointReel(0, 700 - 22), 80 + 22, 1150 - 700 + 22 + 22), true);
-            AjouterObstacle(new RectanglePolygone(new PointReel(3000 - 80 - 22, 700 - 22), 80 + 22, 1150 - 700 + 22 + 22), true);
+            AjouterObstacle(new RectanglePolygone(new RealPoint(0, 700 - 22), 80 + 22, 1150 - 700 + 22 + 22), true);
+            AjouterObstacle(new RectanglePolygone(new RealPoint(3000 - 80 - 22, 700 - 22), 80 + 22, 1150 - 700 + 22 + 22), true);
 
             // Petits cratères
-            AjouterObstacle(new Cercle(new PointReel(650, 540), 126), true);
-            AjouterObstacle(new Cercle(new PointReel(3000 - 650, 540), 126), true);
+            AjouterObstacle(new Cercle(new RealPoint(650, 540), 126), true);
+            AjouterObstacle(new Cercle(new RealPoint(3000 - 650, 540), 126), true);
 
-            AjouterObstacle(new Cercle(new PointReel(1070, 1870), 126), true);
-            AjouterObstacle(new Cercle(new PointReel(3000 - 1070, 1870), 126), true);
+            AjouterObstacle(new Cercle(new RealPoint(1070, 1870), 126), true);
+            AjouterObstacle(new Cercle(new RealPoint(3000 - 1070, 1870), 126), true);
 
             // Grands cratères
-            AjouterObstacle(new Cercle(new PointReel(0, 2000), 510 + 30), true);
-            AjouterObstacle(new Cercle(new PointReel(3000, 2000), 510 + 30), true);
+            AjouterObstacle(new Cercle(new RealPoint(0, 2000), 510 + 30), true);
+            AjouterObstacle(new Cercle(new RealPoint(3000, 2000), 510 + 30), true);
 
             // Base de lancement
-            AjouterObstacle(new Cercle(new PointReel(1500, 2000), 200), true);
-            AjouterObstacle(new RectanglePolygone(new PointReel(1500 - 40 - 28, 2000 - 200 - 600), 28 * 2 + 80, 600), true);
+            AjouterObstacle(new Cercle(new RealPoint(1500, 2000), 200), true);
+            AjouterObstacle(new RectanglePolygone(new RealPoint(1500 - 40 - 28, 2000 - 200 - 600), 28 * 2 + 80, 600), true);
 
             double cos45 = Math.Cos(45.0 / 180 * Math.PI);
             points.Clear();
-            points.Add(new PointReel(1500 + cos45 * 800 - cos45 * 68, 2000 - cos45 * 800 - cos45 * 68));
-            points.Add(new PointReel(1500 + cos45 * 200 - cos45 * 68, 2000 - cos45 * 200 - cos45 * 68));
-            points.Add(new PointReel(1500 + cos45 * 200 + cos45 * 68, 2000 - cos45 * 200 + cos45 * 68));
-            points.Add(new PointReel(1500 + cos45 * 800 + cos45 * 68, 2000 - cos45 * 800 + cos45 * 68));
+            points.Add(new RealPoint(1500 + cos45 * 800 - cos45 * 68, 2000 - cos45 * 800 - cos45 * 68));
+            points.Add(new RealPoint(1500 + cos45 * 200 - cos45 * 68, 2000 - cos45 * 200 - cos45 * 68));
+            points.Add(new RealPoint(1500 + cos45 * 200 + cos45 * 68, 2000 - cos45 * 200 + cos45 * 68));
+            points.Add(new RealPoint(1500 + cos45 * 800 + cos45 * 68, 2000 - cos45 * 800 + cos45 * 68));
             AjouterObstacle(new Polygone(points), true);
 
             points.Clear();
-            points.Add(new PointReel(1500 - cos45 * 800 + cos45 * 68, 2000 - cos45 * 800 - cos45 * 68));
-            points.Add(new PointReel(1500 - cos45 * 200 + cos45 * 68, 2000 - cos45 * 200 - cos45 * 68));
-            points.Add(new PointReel(1500 - cos45 * 200 - cos45 * 68, 2000 - cos45 * 200 + cos45 * 68));
-            points.Add(new PointReel(1500 - cos45 * 800 - cos45 * 68, 2000 - cos45 * 800 + cos45 * 68));
+            points.Add(new RealPoint(1500 - cos45 * 800 + cos45 * 68, 2000 - cos45 * 800 - cos45 * 68));
+            points.Add(new RealPoint(1500 - cos45 * 200 + cos45 * 68, 2000 - cos45 * 200 - cos45 * 68));
+            points.Add(new RealPoint(1500 - cos45 * 200 - cos45 * 68, 2000 - cos45 * 200 + cos45 * 68));
+            points.Add(new RealPoint(1500 - cos45 * 800 - cos45 * 68, 2000 - cos45 * 800 + cos45 * 68));
             AjouterObstacle(new Polygone(points), true);
 
             // Fusées
-            AjouterObstacle(new Cercle(new PointReel(1150, 40), 40), true);
-            AjouterObstacle(new Cercle(new PointReel(3000 - 1150, 40), 40), true);
+            AjouterObstacle(new Cercle(new RealPoint(1150, 40), 40), true);
+            AjouterObstacle(new Cercle(new RealPoint(3000 - 1150, 40), 40), true);
 
-            AjouterObstacle(new Cercle(new PointReel(40, 1350), 40), true);
-            AjouterObstacle(new Cercle(new PointReel(3000 - 40, 1350), 40), true);
+            AjouterObstacle(new Cercle(new RealPoint(40, 1350), 40), true);
+            AjouterObstacle(new Cercle(new RealPoint(3000 - 40, 1350), 40), true);
 
         }
 
@@ -367,9 +367,9 @@ namespace GoBot
         /// </summary>
         /// <param name="croisement">Point à tester</param>
         /// <returns></returns>
-        public static bool Contient(PointReel point)
+        public static bool Contient(RealPoint point)
         {
-            return new RectanglePolygone(new PointReel(0, 0), Hauteur, Largeur).Contient(point);
+            return new RectanglePolygone(new RealPoint(0, 0), Hauteur, Largeur).Contient(point);
         }
     }
 }

@@ -12,7 +12,7 @@ namespace GoBot.ElementsJeu
     {
         int numero;
 
-        public ZoneDeposeModules(int num, PointReel pos, Color col, int ray) : base(pos, col, ray)
+        public ZoneDeposeModules(int num, RealPoint pos, Color col, int ray) : base(pos, col, ray)
         {
             numero = num;
         }

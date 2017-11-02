@@ -7,7 +7,7 @@ namespace GoBot.IHM
 {
     public partial class WorldPanel : PictureBox
     {
-        private PointReel _pointClicked, _centerAtStart;
+        private RealPoint _pointClicked, _centerAtStart;
         private WorldScale _scaleAtStart;
 
         public WorldDimensions Dimensions { get; protected set; }
@@ -49,9 +49,9 @@ namespace GoBot.IHM
         {
             if (_pointClicked != null)
             {
-                PointReel newMousePosition = _scaleAtStart.ScreenToRealPosition(e.Location);
+                RealPoint newMousePosition = _scaleAtStart.ScreenToRealPosition(e.Location);
 
-                PointReel delta = _pointClicked - newMousePosition;
+                RealPoint delta = _pointClicked - newMousePosition;
                 
                 Dimensions.SetWorldCenter(_centerAtStart + delta);
             }

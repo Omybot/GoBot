@@ -25,7 +25,7 @@ namespace GoBot.ElementsJeu
             set { interet = value; }
         }
 
-        public ZoneInteret(PointReel position, Color couleur, int rayon)
+        public ZoneInteret(RealPoint position, Color couleur, int rayon)
             : base(position, rayon)
         {
             Interet = true;

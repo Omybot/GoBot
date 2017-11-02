@@ -102,6 +102,7 @@
     <Compile Include="Actions\Deplacement\ActionRecallage.cs" />
     <Compile Include="Actions\ActionServo.cs" />
     <Compile Include="Actions\ITimeableAction.cs" />
+    <Compile Include="Calculs\ListDouble.cs" />
     <Compile Include="IHM\PanelBoardNumeric.cs">
       <SubType>UserControl</SubType>
     </Compile>

@@ -41,7 +41,7 @@ namespace GoBot.Balises
         /// <summary>
         /// Position du point détectée en mm
         /// </summary>
-        public PointReel Position { get; set; }
+        public RealPoint Position { get; set; }
 
         /// <summary>
         /// Constructeur
@@ -66,7 +66,7 @@ namespace GoBot.Balises
             double xPoint = balise.Position.Coordinates.X + Math.Cos(AngleCentral.InRadians) * Distance;
             double yPoint = balise.Position.Coordinates.Y + Math.Sin(AngleCentral.InRadians) * Distance;
 
-            Position = new PointReel(xPoint, yPoint);
+            Position = new RealPoint(xPoint, yPoint);
 
             Balise = balise;
         }
@@ -88,14 +88,14 @@ namespace GoBot.Balises
         /// <returns>Triangle correspondant à la détection</returns>
         public Polygone ToPolygone()
         {
-            List<PointReel> listePoints = new List<PointReel>();
+            List<RealPoint> listePoints = new List<RealPoint>();
 
             // Point de la balise
 
             double xPoint1 = Balise.Position.Coordinates.X;
             double yPoint1 = Balise.Position.Coordinates.Y;
 
-            PointReel point = new PointReel(xPoint1, yPoint1);
+            RealPoint point = new RealPoint(xPoint1, yPoint1);
 
             listePoints.Add(point);
 
@@ -104,7 +104,7 @@ namespace GoBot.Balises
 
             xPoint1 = Balise.Position.Coordinates.X + Math.Cos(AngleDebut.InRadians) * 5000;
             yPoint1 = Balise.Position.Coordinates.Y + Math.Sin(AngleDebut.InRadians) * 5000;
-            point = new PointReel(xPoint1, yPoint1);
+            point = new RealPoint(xPoint1, yPoint1);
 
             listePoints.Add(point);
 
@@ -112,7 +112,7 @@ namespace GoBot.Balises
 
             xPoint1 = Balise.Position.Coordinates.X + Math.Cos(AngleFin.InRadians) * 5000;
             yPoint1 = Balise.Position.Coordinates.Y + Math.Sin(AngleFin.InRadians) * 5000;
-            point = new PointReel(xPoint1, yPoint1);
+            point = new RealPoint(xPoint1, yPoint1);
 
             listePoints.Add(point);
 

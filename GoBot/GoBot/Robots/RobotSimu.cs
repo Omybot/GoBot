@@ -96,7 +96,7 @@ namespace GoBot
         {
             lock (HistoriqueCoordonnees)
             {
-                HistoriqueCoordonnees.Add(new Position(new Angle(Position.Angle), new PointReel(Position.Coordinates.X, Position.Coordinates.Y)));
+                HistoriqueCoordonnees.Add(new Position(new Angle(Position.Angle), new RealPoint(Position.Coordinates.X, Position.Coordinates.Y)));
 
                 while (HistoriqueCoordonnees.Count > 1200)
                     HistoriqueCoordonnees.RemoveAt(0);
@@ -119,7 +119,7 @@ namespace GoBot
             }
         }
 
-        double DistanceParcours(List<PointReel> points, int from, int to)
+        double DistanceParcours(List<RealPoint> points, int from, int to)
         {
             double distance = 0;
 
@@ -187,7 +187,7 @@ namespace GoBot
                     cer = new Cercle(Position.Coordinates, distanceAParcourir);
                 }
 
-                PointReel newPos = seg.Croisements(cer)[0];
+                RealPoint newPos = seg.Croisements(cer)[0];
                 Angle a = -Maths.GetDirection(newPos, trajectoirePolaire[pointCourantTrajPolaire]).angle;
                 position = new Position(a, newPos);
                 ChangerPosition(Position);
@@ -283,7 +283,7 @@ namespace GoBot
             double depX = distance * Math.Cos(Position.Angle.InRadians);
             double depY = distance * Math.Sin(Position.Angle.InRadians);
 
-            Destination = new Position(Position.Angle, new PointReel(Position.Coordinates.X + depX, Position.Coordinates.Y + depY));
+            Destination = new Position(Position.Angle, new RealPoint(Position.Coordinates.X + depX, Position.Coordinates.Y + depY));
 
             // TODO2018 attente avec un sémaphore ?
             if (attendre)
@@ -303,7 +303,7 @@ namespace GoBot
 
             angle = Math.Round(angle, 2);
             Historique.AjouterAction(new ActionPivot(this, angle, SensGD.Gauche));
-            Destination = new Position(new Angle(Position.Angle.InDegrees - angle, AnglyeType.Degre), new PointReel(Position.Coordinates.X, Position.Coordinates.Y));
+            Destination = new Position(new Angle(Position.Angle.InDegrees - angle, AnglyeType.Degre), new RealPoint(Position.Coordinates.X, Position.Coordinates.Y));
             SensPivot = SensGD.Gauche;
 
             if (attendre)
@@ -317,7 +317,7 @@ namespace GoBot
 
             angle = Math.Round(angle, 2);
             Historique.AjouterAction(new ActionPivot(this, angle, SensGD.Droite));
-            Destination = new Position(new Angle(Position.Angle.InDegrees + angle, AnglyeType.Degre), new PointReel(Position.Coordinates.X, Position.Coordinates.Y));
+            Destination = new Position(new Angle(Position.Angle.InDegrees + angle, AnglyeType.Degre), new RealPoint(Position.Coordinates.X, Position.Coordinates.Y));
             SensPivot = SensGD.Droite;
 
             if (attendre)
@@ -332,7 +332,7 @@ namespace GoBot
 
             if (mode == StopMode.Smooth)
             {
-                Position nouvelleDestination = new Calculs.Position(new Angle(Position.Angle.InDegrees), new PointReel(position.Coordinates.X, position.Coordinates.Y));
+                Position nouvelleDestination = new Calculs.Position(new Angle(Position.Angle.InDegrees), new RealPoint(position.Coordinates.X, position.Coordinates.Y));
 
                 if (DeplacementLigne)
                 {
@@ -357,8 +357,8 @@ namespace GoBot
             // TODO2018
         }
 
-        private List<PointReel> trajectoirePolaire;
-        public override void TrajectoirePolaire(SensAR sens, List<PointReel> points, bool attendre = true)
+        private List<RealPoint> trajectoirePolaire;
+        public override void TrajectoirePolaire(SensAR sens, List<RealPoint> points, bool attendre = true)
         {
             trajectoirePolaire = points;
             pointCourantTrajPolaire = 0;
@@ -408,16 +408,16 @@ namespace GoBot
             if (this == Robots.GrosRobot)
             {
                 if (Plateau.NotreCouleur == Plateau.CouleurGaucheBleu)
-                    Position = new Calculs.Position(new Angle(0, AnglyeType.Degre), new PointReel(240, 1000));
+                    Position = new Calculs.Position(new Angle(0, AnglyeType.Degre), new RealPoint(240, 1000));
                 else
-                    Position = new Calculs.Position(new Angle(180, AnglyeType.Degre), new PointReel(3000 - 240, 1000));
+                    Position = new Calculs.Position(new Angle(180, AnglyeType.Degre), new RealPoint(3000 - 240, 1000));
             }
             else
             {
                 if (Plateau.NotreCouleur == Plateau.CouleurGaucheBleu)
-                    Position = new Calculs.Position(new Angle(0, AnglyeType.Degre), new PointReel(480, 1000));
+                    Position = new Calculs.Position(new Angle(0, AnglyeType.Degre), new RealPoint(480, 1000));
                 else
-                    Position = new Calculs.Position(new Angle(180, AnglyeType.Degre), new PointReel(3000 - 480, 1000));
+                    Position = new Calculs.Position(new Angle(180, AnglyeType.Degre), new RealPoint(3000 - 480, 1000));
             }
 
             PositionCible = null;

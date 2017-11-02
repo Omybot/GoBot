@@ -61,7 +61,7 @@ namespace GoBot.Calculs.Formes
         /// Si le polygone n'est pas fermé le premier et le dernier point sont reliés
         /// </summary>
         /// <param name="points">Liste des points du polygone dans l'ordre où ils sont reliés</param>
-        public Polygone(List<PointReel> points)
+        public Polygone(List<RealPoint> points)
         {
             cotes = new List<Segment>();
 
@@ -98,7 +98,7 @@ namespace GoBot.Calculs.Formes
                 foreach (Segment s2 in cotes)
                     if (s1 != s2)
                     {
-                        PointReel croisement = s1.getCroisement(s2);
+                        RealPoint croisement = s1.getCroisement(s2);
                         if(croisement != null && croisement != s1.Debut && croisement != s1.Fin)
                             throw new ArgumentException("Le polygone construit a un ou plusieurs côtés qui se croisent. Création impossible.");
                     }
@@ -119,15 +119,15 @@ namespace GoBot.Calculs.Formes
             }
         }
 
-        public List<PointReel> Points
+        public List<RealPoint> Points
         {
             get
             {
-                List<PointReel> points = new List<PointReel>();
+                List<RealPoint> points = new List<RealPoint>();
 
                 foreach (Segment s in Cotes)
                 {
-                    points.Add(new PointReel((int)s.Debut.X, (int)s.Debut.Y));
+                    points.Add(new RealPoint((int)s.Debut.X, (int)s.Debut.Y));
                 }
 
                 return points;
@@ -153,7 +153,7 @@ namespace GoBot.Calculs.Formes
         /// <summary>
         /// Barycentre du Polygone
         /// </summary>
-        public virtual PointReel BaryCentre
+        public virtual RealPoint BaryCentre
         {
             get
             {
@@ -163,12 +163,12 @@ namespace GoBot.Calculs.Formes
 
                 foreach (Triangle t in this.ToTriangles())
                 {
-                    PointReel barycentreTriangle = t.BaryCentre;
+                    RealPoint barycentreTriangle = t.BaryCentre;
                     x += barycentreTriangle.X * t.Surface / surface;
                     y += barycentreTriangle.Y * t.Surface / surface;
                 }
 
-                return new PointReel(x, y);
+                return new RealPoint(x, y);
             }
         }
 
@@ -310,7 +310,7 @@ namespace GoBot.Calculs.Formes
         /// </summary>
         /// <param name="point">PointReel testé</param>
         /// <returns>Distance minimum entre le Polygone courant et le PointReel testé</returns>
-        public double Distance(PointReel point)
+        public double Distance(RealPoint point)
         {
             // C'est la distance minimale entre le point et chaque segment
 
@@ -344,13 +344,13 @@ namespace GoBot.Calculs.Formes
         /// </summary>
         /// <param name="point">PointReel testé</param>
         /// <returns>Vrai si le Polygone contient le PointReel testé</returns>
-        protected bool Contient(PointReel point)
+        protected bool Contient(RealPoint point)
         {
             // Pour savoir si le Polygone contient un poin on trace un segment entre ce point et un point très éloigné.
             // On compte combien de cotés du polygone croisent cette droite
             // Si ce nombre est impair alors le point est contenu dans le polygone
             int nbCroisements = 0;
-            Segment segmentTest = new Segment(point, new PointReel(-100000, -100000));
+            Segment segmentTest = new Segment(point, new RealPoint(-100000, -100000));
 
             foreach (Segment s in Cotes)
             {
@@ -392,7 +392,7 @@ namespace GoBot.Calculs.Formes
             bool result = Contient(segment.Debut) && Contient(segment.Fin);
             if (Croise(segment)) // si ça se croise : est ce que c'est sur un bout ? 
             {
-                List<PointReel> lpr = this.getCroisements(segment);
+                List<RealPoint> lpr = this.getCroisements(segment);
                 if (lpr.Count > 2)
                 {
                     return false; 
@@ -403,7 +403,7 @@ namespace GoBot.Calculs.Formes
                     if ((lpr[0] == segment.Debut || lpr[0] == segment.Fin) && (lpr[1] == segment.Debut || lpr[1] == segment.Fin))
                     {
                         // test d'un point au milieux;
-                        PointReel p = new PointReel((segment.Debut.X + segment.Fin.X) / 2, (segment.Debut.Y + segment.Fin.Y) / 2);
+                        RealPoint p = new RealPoint((segment.Debut.X + segment.Fin.X) / 2, (segment.Debut.Y + segment.Fin.Y) / 2);
                         if (this.Contient(p))
                         {
                             return result;
@@ -474,7 +474,7 @@ namespace GoBot.Calculs.Formes
 
         #region Croisements
 
-        public List<PointReel> Croisements(IForme forme)
+        public List<RealPoint> Croisements(IForme forme)
         {
             // TODOFORMES
             return null;
@@ -541,13 +541,13 @@ namespace GoBot.Calculs.Formes
             return false;
         }
 
-        public List<PointReel> getCroisements(Segment segment)
+        public List<RealPoint> getCroisements(Segment segment)
         {
-            List<PointReel> retour = new List<PointReel>();
+            List<RealPoint> retour = new List<RealPoint>();
 
             foreach (Segment s in Cotes)
             {
-                PointReel croisement = segment.getCroisement(s);
+                RealPoint croisement = segment.getCroisement(s);
                 if (croisement != null)
                     retour.Add(croisement);
             }
@@ -559,9 +559,9 @@ namespace GoBot.Calculs.Formes
 
         #region Intersection
 
-        private List<PointReel> triListPointAuPlusProche(PointReel reff, List<PointReel> lpr)
+        private List<RealPoint> triListPointAuPlusProche(RealPoint reff, List<RealPoint> lpr)
         {
-            List<PointReel> lprReturn = new List<PointReel>();
+            List<RealPoint> lprReturn = new List<RealPoint>();
             int min = 0;
             double distanceMin = double.MaxValue;
             double distance;
@@ -594,7 +594,7 @@ namespace GoBot.Calculs.Formes
 
             foreach (Segment seg in p2.Cotes)
             {
-                List<PointReel> lpr = p1.getCroisements(seg);
+                List<RealPoint> lpr = p1.getCroisements(seg);
                 lpr = this.triListPointAuPlusProche(seg.Debut, lpr);
                 // decoupege de chaque coté, en sous segement 
                 if (lpr.Count != 0)
@@ -622,7 +622,7 @@ namespace GoBot.Calculs.Formes
         }
 
         // ajoute a la liste que si le point n''est pas null
-        private void addSegList(List<Segment> list, PointReel p, PointReel p2)
+        private void addSegList(List<Segment> list, RealPoint p, RealPoint p2)
         {
             if (p.X != p2.X || p.Y != p2.Y)
             {
@@ -783,22 +783,22 @@ namespace GoBot.Calculs.Formes
 
         public Polygone Translation(double dx, double dy)
         {
-            List<PointReel> nouveauxPoints = new List<PointReel>();
+            List<RealPoint> nouveauxPoints = new List<RealPoint>();
 
-            foreach (PointReel point in Points)
+            foreach (RealPoint point in Points)
                 nouveauxPoints.Add(point.Translation(dx, dy));
 
             return new Polygone(nouveauxPoints);
         }
 
-        public Polygone Rotation(Angle angle, PointReel centreRotation = null)
+        public Polygone Rotation(Angle angle, RealPoint centreRotation = null)
         {
             if (centreRotation == null)
                 centreRotation = BaryCentre;
 
-            List<PointReel> nouveauxPoints = new List<PointReel>();
+            List<RealPoint> nouveauxPoints = new List<RealPoint>();
 
-            foreach (PointReel point in Points)
+            foreach (RealPoint point in Points)
                 nouveauxPoints.Add(point.Rotation(angle, centreRotation));
 
             return new Polygone(nouveauxPoints);
@@ -807,8 +807,8 @@ namespace GoBot.Calculs.Formes
         public List<Triangle> ToTriangles()
         {
             List<Triangle> triangles = new List<Triangle>();
-            List<PointReel> points = new List<PointReel>(Points);
-            PointReel p1, p2, p3;
+            List<RealPoint> points = new List<RealPoint>(Points);
+            RealPoint p1, p2, p3;
 
             do
             {

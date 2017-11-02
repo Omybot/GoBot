@@ -106,7 +106,7 @@ namespace AStarFolder
             // Teste si le noeud est franchissable avec la liste des obstacles
             foreach (IForme obstacle in Plateau.ObstaclesPlateau)
             {
-                if (obstacle.Distance(new PointReel(node.X, node.Y)) < distanceSecurite)
+                if (obstacle.Distance(new RealPoint(node.X, node.Y)) < distanceSecurite)
                 {
                     node.Passable = false;
                     return 0;
@@ -135,7 +135,7 @@ namespace AStarFolder
 
                         foreach (IForme obstacle in obstacles)
                         {
-                            if (obstacle.Distance(new Segment(new PointReel(no.X, no.Y), new PointReel(node.X, node.Y))) < distanceSecurite)
+                            if (obstacle.Distance(new Segment(new RealPoint(no.X, no.Y), new RealPoint(node.X, node.Y))) < distanceSecurite)
                             {
                                 arc.Passable = false;
                                 arc2.Passable = false;
@@ -187,7 +187,7 @@ namespace AStarFolder
 
                         foreach (IForme obstacle in obstacles)
                         {
-                            if (obstacle.Distance(new Segment(new PointReel(no.X, no.Y), new PointReel(node.X, node.Y))) < distanceSecurite)
+                            if (obstacle.Distance(new Segment(new RealPoint(no.X, no.Y), new RealPoint(node.X, node.Y))) < distanceSecurite)
                             {
                                 arc.Passable = false;
                                 arc2.Passable = false;

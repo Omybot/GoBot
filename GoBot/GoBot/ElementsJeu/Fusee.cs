@@ -14,7 +14,7 @@ namespace GoBot.ElementsJeu
 
         public int ModulesRestants { get; set; }
 
-        public Fusee(int num, PointReel position, Color couleur, int rayon)
+        public Fusee(int num, RealPoint position, Color couleur, int rayon)
             : base(position, rayon)
         {
             numero = num;

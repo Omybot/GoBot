@@ -99,7 +99,7 @@ namespace GoBot.Balises
 
         public Connection Connexion { get; private set; }
 
-        public List<PointReel> PositionsAdverses { get; private set; }
+        public List<RealPoint> PositionsAdverses { get; private set; }
 
         /// <summary>
         /// Constructeur
@@ -176,7 +176,7 @@ namespace GoBot.Balises
                             double xPoint = Position.Coordinates.X + Math.Cos(detect.AngleCentral.InRadians) * detect.Distance;
                             double yPoint = Position.Coordinates.Y + Math.Sin(detect.AngleCentral.InRadians) * detect.Distance;
 
-                            detect.Position = new PointReel(xPoint, yPoint);
+                            detect.Position = new RealPoint(xPoint, yPoint);
                         }
 
                         DetectionsRapides.Add(detect);
@@ -287,7 +287,7 @@ namespace GoBot.Balises
                                 double xPoint = Position.Coordinates.X + Math.Cos(detect.AngleCentral.InRadians) * detect.Distance;
                                 double yPoint = Position.Coordinates.Y + Math.Sin(detect.AngleCentral.InRadians) * detect.Distance;
 
-                                detect.Position = new PointReel(xPoint, yPoint);
+                                detect.Position = new RealPoint(xPoint, yPoint);
                             }
 
                             DetectionsCapteur1.Add(detect);
@@ -350,7 +350,7 @@ namespace GoBot.Balises
                                 double xPoint = Position.Coordinates.X + Math.Cos(detect.AngleCentral.InRadians) * detect.Distance;
                                 double yPoint = Position.Coordinates.Y + Math.Sin(detect.AngleCentral.InRadians) * detect.Distance;
 
-                                detect.Position = new PointReel(xPoint, yPoint);
+                                detect.Position = new RealPoint(xPoint, yPoint);
                             }
 
                             DetectionsCapteur2.Add(detect);
@@ -434,9 +434,9 @@ namespace GoBot.Balises
                                 {
                                     DetectionBalise detection = Detections[i];
                                     // Calcul du 3ème point du triangle rectangle Balise / Gros robot
-                                    Droite droiteBalise0Degres = new Droite(Position.Coordinates, new PointReel(Position.Coordinates.X + 500, Position.Coordinates.Y));
+                                    Droite droiteBalise0Degres = new Droite(Position.Coordinates, new RealPoint(Position.Coordinates.X + 500, Position.Coordinates.Y));
                                     Droite perpendiculaire = droiteBalise0Degres.GetPerpendiculaire(robot.Position.Coordinates);
-                                    PointReel troisiemePoint = perpendiculaire.getCroisement(droiteBalise0Degres);
+                                    RealPoint troisiemePoint = perpendiculaire.getCroisement(droiteBalise0Degres);
                                     double distanceBaliseTroisiemePoint = troisiemePoint.Distance(Position.Coordinates);
                                     double distanceBaliseRobot = robot.Position.Coordinates.Distance(Position.Coordinates);
 
@@ -593,12 +593,12 @@ namespace GoBot.Balises
         /// <summary>
         /// Actualisation des positions détectées par les balises par interpolation selon la méthode choisie
         /// </summary>
-        public void Actualisation(bool balise = true, PointReel point = null)
+        public void Actualisation(bool balise = true, RealPoint point = null)
         {
             try
             {
-                List<PointReel> ennemis = new List<PointReel>();
-                List<PointReel> ennemisReduits = new List<PointReel>();
+                List<RealPoint> ennemis = new List<RealPoint>();
+                List<RealPoint> ennemisReduits = new List<RealPoint>();
 
                 if (balise)
                     ennemis.AddRange(Detections.Select(f => f.Position));
@@ -630,10 +630,10 @@ namespace GoBot.Balises
                     x /= coeff;
                     y /= coeff;
 
-                    ennemisReduits.Add(new PointReel(x, y));
+                    ennemisReduits.Add(new RealPoint(x, y));
                 }
 
-                PositionsAdverses = new List<PointReel>(ennemisReduits);
+                PositionsAdverses = new List<RealPoint>(ennemisReduits);
 
                 if (PositionEnnemisActualisee != null)
                     PositionEnnemisActualisee(PositionsAdverses);
@@ -645,7 +645,7 @@ namespace GoBot.Balises
         }
 
         //Déclaration du délégué pour l’évènement de position des ennemis
-        public delegate void PositionEnnemisDelegate(List<PointReel> positions);
+        public delegate void PositionEnnemisDelegate(List<RealPoint> positions);
         //Déclaration de l’évènement utilisant le délégué
         public event PositionEnnemisDelegate PositionEnnemisActualisee;
     }

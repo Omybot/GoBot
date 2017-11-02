@@ -49,7 +49,7 @@ namespace GoBot.Calculs.Formes
         /// </summary>
         /// <param name="p1">Premier point</param>
         /// <param name="p2">Deuxième point</param>
-        public Droite(PointReel p1, PointReel p2)
+        public Droite(RealPoint p1, RealPoint p2)
         {
             calculEquation(p1, p2);
         }
@@ -70,7 +70,7 @@ namespace GoBot.Calculs.Formes
         /// Régression linéaire par la méthode des moindres carrés.
         /// </summary>
         /// <param name="points">Liste des points qui génèrent la droite</param>
-        public Droite(List<PointReel> points)
+        public Droite(List<RealPoint> points)
         {
             double xMoy, yMoy, sum1, sum2;
 
@@ -105,7 +105,7 @@ namespace GoBot.Calculs.Formes
         /// </summary>
         /// <param name="p1">Premier point</param>
         /// <param name="p2">Deuxième point</param>
-        protected void calculEquation(PointReel p1, PointReel p2)
+        protected void calculEquation(RealPoint p1, RealPoint p2)
         {
             if (p2.X - p1.X == 0)
             {
@@ -172,11 +172,11 @@ namespace GoBot.Calculs.Formes
         /// <summary>
         /// Barycentre de la Droite
         /// </summary>
-        public virtual PointReel BaryCentre
+        public virtual RealPoint BaryCentre
         {
             get
             {
-                return new PointReel(0, 0); // Arbitraire
+                return new RealPoint(0, 0); // Arbitraire
             }
         }
 
@@ -276,10 +276,10 @@ namespace GoBot.Calculs.Formes
             // - D'une perpendiculaire et la première droite
             // - De la même perpendiculaire et la deuxième droite
 
-            Droite perpendiculaire = GetPerpendiculaire(new PointReel(0, 0));
+            Droite perpendiculaire = GetPerpendiculaire(new RealPoint(0, 0));
 
-            PointReel p1 = getCroisement(perpendiculaire);
-            PointReel p2 = getCroisement(perpendiculaire);
+            RealPoint p1 = getCroisement(perpendiculaire);
+            RealPoint p2 = getCroisement(perpendiculaire);
 
             return p1.Distance(p2);
         }
@@ -316,7 +316,7 @@ namespace GoBot.Calculs.Formes
         /// </summary>
         /// <param name="point">PointReel testé</param>
         /// <returns>Distance minimale</returns>
-        protected virtual double Distance(PointReel point)
+        protected virtual double Distance(RealPoint point)
         {
             // Pour calculer la distance, on calcule la droite perpendiculaire passant par ce point
             // Puis on calcule l'intersection de la droite et de sa perpendiculaire
@@ -324,7 +324,7 @@ namespace GoBot.Calculs.Formes
             // On retourne la distance entre ces deux points
 
             Droite perpendiculaire = GetPerpendiculaire(point);
-            PointReel intersection = getCroisement(perpendiculaire);
+            RealPoint intersection = getCroisement(perpendiculaire);
 
             double distance = point.Distance(intersection);
 
@@ -350,7 +350,7 @@ namespace GoBot.Calculs.Formes
         /// </summary>
         /// <param name="point">PointReel testé</param>
         /// <returns>Vrai si la Droite contient le PointReel donné</returns>
-        protected virtual bool Contient(PointReel point)
+        protected virtual bool Contient(RealPoint point)
         {
             // Vérifie si le point est sur la droite en vérifiant sa coordonnée Y pour sa coordonnée X par rapport à l'équation de la droite
             // J'arrondi à deux décimales sinon la précision est trop grande et on rejette des points à cause des arrondis
@@ -358,7 +358,7 @@ namespace GoBot.Calculs.Formes
             double calc1 = point.X * A + B;
             double calc2 = point.Y * C;
             double difference = calc1 > calc2 ? calc1 - calc2 : calc2 - calc1;
-            if (difference <= PointReel.PRECISION)
+            if (difference <= RealPoint.PRECISION)
                 return true;
             else
                 return false;
@@ -418,7 +418,7 @@ namespace GoBot.Calculs.Formes
         #endregion
 
         #region Croisement
-        public virtual List<PointReel> Croisements(IForme forme)
+        public virtual List<RealPoint> Croisements(IForme forme)
         {
             // TODOFORMES
             return null;
@@ -456,7 +456,7 @@ namespace GoBot.Calculs.Formes
             return cercle.Croise(this);
         }
 
-        protected virtual bool Croise(PointReel point)
+        protected virtual bool Croise(RealPoint point)
         {
             return Contient(point);
         }
@@ -466,7 +466,7 @@ namespace GoBot.Calculs.Formes
         /// </summary>
         /// <param name="autreDroite">Droite croisant la droite actuelle</param>
         /// <returns>Point de croisement</returns>
-        public PointReel getCroisement(Droite autreDroite)
+        public RealPoint getCroisement(Droite autreDroite)
         {
             double x, y;
 
@@ -478,7 +478,7 @@ namespace GoBot.Calculs.Formes
             x = (autreDroite.B * C - autreDroite.C * B) / (autreDroite.C * A - autreDroite.A * C);
             y = (autreDroite.A * B - autreDroite.B * A) / (autreDroite.A * C - autreDroite.C * A);
 
-            return new PointReel(x, y);
+            return new RealPoint(x, y);
         }
 
         /// <summary>
@@ -486,10 +486,10 @@ namespace GoBot.Calculs.Formes
         /// </summary>
         /// <param name="autreSegment"></param>
         /// <returns></returns>
-        public PointReel getCroisement(Segment autreSegment)
+        public RealPoint getCroisement(Segment autreSegment)
         {
             // Vérifie de la même manière qu'une droite mais vérifie ensuite que le point appartient au segment
-            PointReel croisement = getCroisement((Droite)autreSegment);
+            RealPoint croisement = getCroisement((Droite)autreSegment);
 
             if (croisement != null && autreSegment.Contient(croisement))
                 return croisement;
@@ -506,25 +506,25 @@ namespace GoBot.Calculs.Formes
             return new Droite(a, b + dx + dy, c);
         }
 
-        public Droite Rotation(Angle angle, PointReel centreRotation = null)
+        public Droite Rotation(Angle angle, RealPoint centreRotation = null)
         {
-            PointReel p1, p2;
+            RealPoint p1, p2;
 
             if(centreRotation == null)
                 centreRotation = BaryCentre;
 
             if(c == 1)
             {
-                p1 = new PointReel(0, a * 0 + b);
-                p2 = new PointReel(1, a * 1 + b);
+                p1 = new RealPoint(0, a * 0 + b);
+                p2 = new RealPoint(1, a * 1 + b);
 
                 p1 = p1.Rotation(angle, centreRotation);
                 p2 = p2.Rotation(angle, centreRotation);
             }
             else
             {
-                p1 = new PointReel(b, 0);
-                p2 = new PointReel(b, 1);
+                p1 = new RealPoint(b, 0);
+                p2 = new RealPoint(b, 1);
             }
 
             return new Droite(p1, p2);
@@ -537,7 +537,7 @@ namespace GoBot.Calculs.Formes
         /// </summary>
         /// <param name="point">Point contenu par la perpendiculaire recherchée</param>
         /// <returns>Equation de la droite perpendiculaire à celle-ci et passant par le point donné</returns>
-        public Droite GetPerpendiculaire(PointReel point)
+        public Droite GetPerpendiculaire(RealPoint point)
         {
             // Si je suis une droite verticale, je retourne l'horizontale qui passe par le point
             if (C == 0)
@@ -563,13 +563,13 @@ namespace GoBot.Calculs.Formes
         public virtual void Paint(Graphics g, Color outlineColor, int outlineWidth, Color fillColor, WorldScale scale)
         {
             // Un peu douteux mais bon
-            PointReel p1 = getCroisement(new Droite(new PointReel(-10000, -10000), new PointReel(-10001, 10000)));
-            PointReel p2 = getCroisement(new Droite(new PointReel(10000, -10000), new PointReel(10001, 10000)));
+            RealPoint p1 = getCroisement(new Droite(new RealPoint(-10000, -10000), new RealPoint(-10001, 10000)));
+            RealPoint p2 = getCroisement(new Droite(new RealPoint(10000, -10000), new RealPoint(10001, 10000)));
 
             if (p1 == null || p2 == null)
             {
-                p1 = getCroisement(new Droite(new PointReel(-10000, -10000), new PointReel(10000, -10001)));
-                p2 = getCroisement(new Droite(new PointReel(10000, 10000), new PointReel(-10000, 10001)));
+                p1 = getCroisement(new Droite(new RealPoint(-10000, -10000), new RealPoint(10000, -10001)));
+                p2 = getCroisement(new Droite(new RealPoint(10000, 10000), new RealPoint(-10000, 10001)));
             }
 
             if (p1 != null && p2 != null)

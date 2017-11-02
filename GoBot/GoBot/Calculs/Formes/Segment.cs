@@ -11,13 +11,13 @@ namespace GoBot.Calculs.Formes
     {
         #region Attributs
 
-        protected PointReel pointDebut, pointFin;
+        protected RealPoint pointDebut, pointFin;
 
         #endregion
 
         #region Constructeurs
 
-        public Segment(PointReel debut, PointReel fin)
+        public Segment(RealPoint debut, RealPoint fin)
         {
             pointDebut = debut;
             pointFin = fin;
@@ -27,8 +27,8 @@ namespace GoBot.Calculs.Formes
 
         public Segment(Segment segment)
         {
-            pointDebut = new PointReel(segment.Debut);
-            pointFin = new PointReel(segment.Fin);
+            pointDebut = new RealPoint(segment.Debut);
+            pointFin = new RealPoint(segment.Fin);
 
             a = segment.A;
             b = segment.B;
@@ -40,7 +40,7 @@ namespace GoBot.Calculs.Formes
 
         #region Propriétés
 
-        public PointReel Debut
+        public RealPoint Debut
         {
             get
             {
@@ -53,7 +53,7 @@ namespace GoBot.Calculs.Formes
             }
         }
 
-        public PointReel Fin
+        public RealPoint Fin
         {
             get
             {
@@ -88,11 +88,11 @@ namespace GoBot.Calculs.Formes
         /// <summary>
         /// Barycentre du Segment
         /// </summary>
-        public override PointReel BaryCentre
+        public override RealPoint BaryCentre
         {
             get
             {
-                return new PointReel((pointDebut.X + pointFin.X) / 2, (pointDebut.Y + pointFin.Y) / 2);
+                return new RealPoint((pointDebut.X + pointFin.X) / 2, (pointDebut.Y + pointFin.Y) / 2);
             }
         }
 
@@ -142,7 +142,7 @@ namespace GoBot.Calculs.Formes
 
         #region Croisements
 
-        public override List<PointReel> Croisements(IForme forme)
+        public override List<RealPoint> Croisements(IForme forme)
         {
             Cercle c = forme as Cercle;
             if (c != null)
@@ -151,9 +151,9 @@ namespace GoBot.Calculs.Formes
             return null;
         }
 
-        public List<PointReel> Croisements(Cercle cercle)
+        public List<RealPoint> Croisements(Cercle cercle)
         {
-            List<PointReel> intersectsPoints = null;
+            List<RealPoint> intersectsPoints = null;
 	        double dx = pointFin.X - pointDebut.X;
             double dy = pointFin.Y - pointDebut.Y;
             double Ox = pointDebut.X - cercle.Centre.X;
@@ -165,20 +165,20 @@ namespace GoBot.Calculs.Formes
 
 	        if (delta < 0 + double.Epsilon && delta > 0 - double.Epsilon)
 	        {
-                intersectsPoints = new List<PointReel>();
+                intersectsPoints = new List<RealPoint>();
                 double t = -B / (2 * A);
 		        if (t >= 0 && t <= 1)
-                    intersectsPoints.Add(new PointReel(pointDebut.X + t * dx, pointDebut.Y + t * dy));
+                    intersectsPoints.Add(new RealPoint(pointDebut.X + t * dx, pointDebut.Y + t * dy));
 	        }
 	        if (delta > 0)
 	        {
-                intersectsPoints = new List<PointReel>();
+                intersectsPoints = new List<RealPoint>();
                 double t1 = (double)((-B - Math.Sqrt(delta)) / (2 * A));
                 double t2 = (double)((-B + Math.Sqrt(delta)) / (2 * A));
 		        if (t1 >= 0 && t1 <= 1)
-                    intersectsPoints.Add(new PointReel(pointDebut.X + t1 * dx, pointDebut.Y + t1 * dy));
+                    intersectsPoints.Add(new RealPoint(pointDebut.X + t1 * dx, pointDebut.Y + t1 * dy));
 		        if (t2 >= 0 && t2 <= 1)
-                    intersectsPoints.Add(new PointReel(pointDebut.X + t2 * dx, pointDebut.Y + t2 * dy));
+                    intersectsPoints.Add(new RealPoint(pointDebut.X + t2 * dx, pointDebut.Y + t2 * dy));
 	        }
 	        return intersectsPoints;
         }
@@ -198,7 +198,7 @@ namespace GoBot.Calculs.Formes
         /// </summary>
         /// <param name="point">PointReel testé</param>
         /// <returns>Vrai si la Droite contient le PointReel donné</returns>
-        protected override bool Croise(PointReel point)
+        protected override bool Croise(RealPoint point)
         {
             return Contient(point);
         }
@@ -248,7 +248,7 @@ namespace GoBot.Calculs.Formes
         /// </summary>
         /// <param name="autreDroite">Droite testée</param>
         /// <returns>Le PointReel du croisement si la Droite testée croise le Segment courant, sinon null</returns>
-        new public PointReel getCroisement(Droite autreDroite)
+        new public RealPoint getCroisement(Droite autreDroite)
         {
             // Il existe la fonction pour tester le croisement entre une droite et un segment, on l'utilise
             return autreDroite.getCroisement(this);
@@ -259,12 +259,12 @@ namespace GoBot.Calculs.Formes
         /// </summary>
         /// <param name="autreDroite">Segment testé</param>
         /// <returns>Le PointReel du croisement si le Segment testé croise le Segment courant, sinon null</returns>
-        new public PointReel getCroisement(Segment autreSegment)
+        new public RealPoint getCroisement(Segment autreSegment)
         {
             // Pour ne pas réécrire du code existant, on récupère le croisement entre ce segment et l'autre en tant que droite
             // Si l'autre segment contient ce point, c'est le croisement, sinon il n'en existe pas
 
-            PointReel croisement = getCroisement((Droite)autreSegment);
+            RealPoint croisement = getCroisement((Droite)autreSegment);
             if (croisement != null && autreSegment.Contient(croisement))
                 return croisement;
 
@@ -280,7 +280,7 @@ namespace GoBot.Calculs.Formes
         /// </summary>
         /// <param name="point">PointReel testé</param>
         /// <returns>Vrai si le Segment courant contient le PointReel donné</returns>
-        protected override bool Contient(PointReel point)
+        protected override bool Contient(RealPoint point)
         {
             // Vérifie que le point est situé sur la droite
             if (!base.Contient(point))
@@ -369,7 +369,7 @@ namespace GoBot.Calculs.Formes
 
             // Le minimal est peut etre entre une extremité et le projeté hortogonal sur l'autre segment
             Droite perpendiculaire = segment.GetPerpendiculaire(Debut);
-            PointReel croisement = segment.getCroisement(perpendiculaire);
+            RealPoint croisement = segment.getCroisement(perpendiculaire);
             if(croisement != null)
                 minDistance = Math.Min(minDistance, croisement.Distance(Debut));
 
@@ -451,12 +451,12 @@ namespace GoBot.Calculs.Formes
         /// </summary>
         /// <param name="point">PointReel testé</param>
         /// <returns>Distance minimale</returns>
-        protected override double Distance(PointReel point)
+        protected override double Distance(RealPoint point)
         {
             // Le raisonnement est le même que pour la droite cf Droite.Distance
 
             Droite perpendiculaire = GetPerpendiculaire(point);
-            PointReel pointProche = getCroisement(perpendiculaire);
+            RealPoint pointProche = getCroisement(perpendiculaire);
 
             double distance;
 
@@ -485,7 +485,7 @@ namespace GoBot.Calculs.Formes
             return new Segment(pointDebut.Translation(dx, dy), pointFin.Translation(dx, dy));
         }
 
-        public new Segment Rotation(Angle angle, PointReel centreRotation = null)
+        public new Segment Rotation(Angle angle, RealPoint centreRotation = null)
         {
             if (centreRotation == null)
                 centreRotation = BaryCentre;

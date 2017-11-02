@@ -5,7 +5,7 @@ namespace GoBot.ElementsJeu
 {
     public abstract class ElementJeu
     {
-        private PointReel position;
+        private RealPoint position;
         private bool ramasse;
 
         public bool Ramasse
@@ -14,7 +14,7 @@ namespace GoBot.ElementsJeu
             set { ramasse = value; }
         }
 
-        public PointReel Position
+        public RealPoint Position
         {
             get { return position; }
             set { position = value; }
@@ -36,7 +36,7 @@ namespace GoBot.ElementsJeu
             set { rayonHover = value; }
         }
 
-        public ElementJeu(PointReel position, int rayonHover)
+        public ElementJeu(RealPoint position, int rayonHover)
         {
             RayonHover = rayonHover;
             Position = position;

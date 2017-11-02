@@ -56,9 +56,9 @@ namespace GoBot.Devices
 
         public Position Position;
 
-        public List<PointReel> LastMeasure { get; protected set; }
+        public List<RealPoint> LastMeasure { get; protected set; }
 
-        public delegate void NewMeasureDelegate(List<PointReel> measure);
+        public delegate void NewMeasureDelegate(List<RealPoint> measure);
         public event NewMeasureDelegate NewMeasure;
 
         public delegate void FrequencyChangeDelegate(double value);
@@ -144,13 +144,13 @@ namespace GoBot.Devices
 
         protected Position PositionDepuisRobot(Position robotPosition)
         {
-            return new Position(robotPosition.Angle, new PointReel(robotPosition.Coordinates.X + offsetX, robotPosition.Coordinates.Y + offsetY).Rotation(robotPosition.Angle, robotPosition.Coordinates));
+            return new Position(robotPosition.Angle, new RealPoint(robotPosition.Coordinates.X + offsetX, robotPosition.Coordinates.Y + offsetY).Rotation(robotPosition.Angle, robotPosition.Coordinates));
         }
 
         private Semaphore semLock;
-        public List<PointReel> GetMesure()
+        public List<RealPoint> GetMesure()
         {
-            List<PointReel> points = new List<PointReel>();
+            List<RealPoint> points = new List<RealPoint>();
 
             semLock.WaitOne();
 
@@ -176,9 +176,9 @@ namespace GoBot.Devices
             return points;
         }
 
-        public List<PointReel> GetRawMesure()
+        public List<RealPoint> GetRawMesure()
         {
-            List<PointReel> points = new List<PointReel>();
+            List<RealPoint> points = new List<RealPoint>();
 
             semLock.WaitOne();
 
@@ -201,9 +201,9 @@ namespace GoBot.Devices
             return points;
         }
 
-        protected List<PointReel> ValeursToPositions(List<int> mesures, bool limiteTable, int minDistance, int maxDistance, Position refPosition)
+        protected List<RealPoint> ValeursToPositions(List<int> mesures, bool limiteTable, int minDistance, int maxDistance, Position refPosition)
         {
-            List<PointReel> positions = new List<PointReel>();
+            List<RealPoint> positions = new List<RealPoint>();
             double stepAngular = ScanRange.InPositiveRadians / (double)mesures.Count;
 
             for (int i = 0; i < mesures.Count; i++)
@@ -217,7 +217,7 @@ namespace GoBot.Devices
                         double sin = Math.Sin(angle.InPositiveRadians - refPosition.Angle.InPositiveRadians - ScanRange.InPositiveRadians / 2 - Math.PI / 2) * mesures[i];
                         double cos = Math.Cos(angle.InPositiveRadians - refPosition.Angle.InPositiveRadians - ScanRange.InPositiveRadians / 2 - Math.PI / 2) * mesures[i];
 
-                        PointReel pos = new PointReel(refPosition.Coordinates.X - sin, refPosition.Coordinates.Y - cos);
+                        RealPoint pos = new RealPoint(refPosition.Coordinates.X - sin, refPosition.Coordinates.Y - cos);
 
                         int marge = 20; // Marge en mm de distance de detection à l'exterieur de la table (pour ne pas jeter les mesures de la bordure qui ne collent pas parfaitement)
                         if (!limiteTable || (pos.X > -marge && pos.X < Plateau.Largeur + marge && pos.Y > -marge && pos.Y < Plateau.Hauteur + marge))
@@ -274,11 +274,11 @@ namespace GoBot.Devices
 
             for (int i = 0; i < nombreMesures; i++)
             {
-                List<PointReel> points = GetMesure();
+                List<RealPoint> points = GetMesure();
 
                 if (points.Count > 0)
                 {
-                    List<PointReel> pointsBordure = points.Where(p => p.Distance(segmentPointsProches) < distanceMaxSegment).ToList();
+                    List<RealPoint> pointsBordure = points.Where(p => p.Distance(segmentPointsProches) < distanceMaxSegment).ToList();
 
                     Droite interpol = new Droite(pointsBordure);
 
@@ -301,11 +301,11 @@ namespace GoBot.Devices
 
             for (int i = 0; i < nombreMesures; i++)
             {
-                List<PointReel> points = GetMesure();
+                List<RealPoint> points = GetMesure();
 
                 if (points.Count > 0)
                 {
-                    List<PointReel> pointsBordure = points.Where(p => p.Distance(segmentPointsProches) < distanceMaxSegment).ToList();
+                    List<RealPoint> pointsBordure = points.Where(p => p.Distance(segmentPointsProches) < distanceMaxSegment).ToList();
 
                     if (pointsBordure.Count > 0)
                     {
@@ -324,11 +324,11 @@ namespace GoBot.Devices
 
             for (int i = 0; i < nombreMesures; i++)
             {
-                List<PointReel> points = GetMesure();
+                List<RealPoint> points = GetMesure();
 
                 if (points.Count > 0)
                 {
-                    List<PointReel> pointsBordure = points.Where(p => p.X > minX && p.X < maxX && p.Y < maxY).ToList();
+                    List<RealPoint> pointsBordure = points.Where(p => p.X > minX && p.X < maxX && p.Y < maxY).ToList();
 
                     if (pointsBordure.Count > 0)
                         distanceSomme += pointsBordure.Average(p => p.Y);

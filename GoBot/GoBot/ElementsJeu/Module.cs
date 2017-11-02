@@ -12,7 +12,7 @@ namespace GoBot.ElementsJeu
         private Color couleur;
         private int numero;
 
-        public Module(int num, PointReel position, Color couleur, int rayon)
+        public Module(int num, RealPoint position, Color couleur, int rayon)
             : base(position, rayon)
         {
             numero = num;

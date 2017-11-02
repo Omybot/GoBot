@@ -48,9 +48,9 @@ namespace GoBot
             return (int)(value * Factor);
         }
 
-        public PointReel ScreenToRealPosition(Point value)
+        public RealPoint ScreenToRealPosition(Point value)
         {
-            return new PointReel(ScreenToRealDistance(value.X - OffsetX), ScreenToRealDistance(value.Y - OffsetY));
+            return new RealPoint(ScreenToRealDistance(value.X - OffsetX), ScreenToRealDistance(value.Y - OffsetY));
         }
 
         public SizeF ScreenToRealSize(Size sz)
@@ -70,7 +70,7 @@ namespace GoBot
             return (int)(value / Factor);
         }
 
-        public Point RealToScreenPosition(PointReel value)
+        public Point RealToScreenPosition(RealPoint value)
         {
             return new Point(RealToScreenDistance(value.X) + OffsetX, RealToScreenDistance(value.Y) + OffsetY);
         }

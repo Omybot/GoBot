@@ -468,7 +468,7 @@ namespace GoBot.Actionneurs
             }
         }
 
-        public void AttraperModule(PointReel pos)
+        public void AttraperModule(RealPoint pos)
         {
             Robots.GrosRobot.SpeedConfig.LineAcceleration = 500;
             Robots.GrosRobot.SpeedConfig.LineDeceleration = 500;

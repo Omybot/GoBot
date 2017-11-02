@@ -315,7 +315,7 @@ namespace GoBot.IHM
         Thread thGoto;
         private void ThreadGoTo()
         {
-            Robot.GotoXYTeta(new Position((double)numTeta.Value, new PointReel((double)numX.Value, (double)numY.Value)));
+            Robot.GotoXYTeta(new Position((double)numTeta.Value, new RealPoint((double)numX.Value, (double)numY.Value)));
         }
 
         private void btnLent_Click(object sender, EventArgs e)

@@ -7,8 +7,8 @@ namespace GoBot.Calculs.Formes
 {
     public class Triangle : Polygone
     {
-        public Triangle(PointReel p1, PointReel p2, PointReel p3)
-            : base(new List<PointReel>() { p1, p2, p3 })
+        public Triangle(RealPoint p1, RealPoint p2, RealPoint p3)
+            : base(new List<RealPoint>() { p1, p2, p3 })
         {
         }
 
@@ -36,7 +36,7 @@ namespace GoBot.Calculs.Formes
         /// <summary>
         /// Barycentre du Triangle
         /// </summary>
-        public override PointReel BaryCentre
+        public override RealPoint BaryCentre
         {
             get
             {

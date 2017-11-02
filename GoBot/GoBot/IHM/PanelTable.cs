@@ -131,7 +131,7 @@ namespace GoBot.IHM
                     dateCapture = DateTime.Now;
 
                     Point p = Dessinateur.Scale.ScreenToRealPosition(pictureBoxTable.PointToClient(MousePosition));
-                    List<PointReel> positions = new List<PointReel>();
+                    List<RealPoint> positions = new List<RealPoint>();
 
                     positions.Add(Dessinateur.Scale.ScreenToRealPosition(pictureBoxTable.PointToClient(MousePosition)));
                     Plateau.Balise.Actualisation(false, Dessinateur.Scale.ScreenToRealPosition(pictureBoxTable.PointToClient(MousePosition)));
@@ -145,7 +145,7 @@ namespace GoBot.IHM
 
                 bool hoverElement = false;
 
-                PointReel positionRelle = new PointReel(positionSurTable.X, positionSurTable.Y);
+                RealPoint positionRelle = new RealPoint(positionSurTable.X, positionSurTable.Y);
 
 
                 for (int i = 0; i < Plateau.ElementsJeu.Count; i++)
@@ -234,7 +234,7 @@ namespace GoBot.IHM
                 for (int i = 0; i < pointsPolaires.Count; i++)
                 {
                     Point pPolaire = Dessinateur.Scale.RealToScreenPosition(pointsPolaires[i]);
-                    if (new PointReel(pClic).Distance(new PointReel(pPolaire)) <= 3)
+                    if (new RealPoint(pClic).Distance(new RealPoint(pPolaire)) <= 3)
                     {
                         moveMouse = true;
                         pSelected = i;
@@ -244,8 +244,8 @@ namespace GoBot.IHM
         }
 
         Thread thGoToRP;
-        List<PointReel> trajectoirePolaire;
-        List<PointReel> pointsPolaires;
+        List<RealPoint> trajectoirePolaire;
+        List<RealPoint> pointsPolaires;
 
         private void pictureBoxTable_MouseUp(object sender, MouseEventArgs e)
         {
@@ -277,7 +277,7 @@ namespace GoBot.IHM
                 Point pointOrigine = Dessinateur.positionDepart;
                 Position departRecule = new Position(360 - traj.angle, pointOrigine);
                 departRecule.Move(-Robots.GrosRobot.Longueur / 2);
-                departRecule = new Position(traj.angle, new PointReel(departRecule.Coordinates.X, departRecule.Coordinates.Y));
+                departRecule = new Position(traj.angle, new RealPoint(departRecule.Coordinates.X, departRecule.Coordinates.Y));
                 positionArrivee = departRecule;
 
                 if (Dessinateur.modeCourant == Dessinateur.MouseMode.PositionFace)
@@ -480,12 +480,12 @@ namespace GoBot.IHM
         {
             while (true)
             {
-                List<PointReel> points = Actionneur.Hokuyo.GetMesure();
+                List<RealPoint> points = Actionneur.Hokuyo.GetMesure();
 
                 if (points.Count > 0)
                 {
                     Plateau.ObstaclesPlateau = new List<IForme>();
-                    foreach (PointReel p in points)
+                    foreach (RealPoint p in points)
                     {
                         Plateau.ObstaclesPlateau.Add(new Cercle(p, 4));
                     }
@@ -529,7 +529,7 @@ namespace GoBot.IHM
         {
             Dessinateur.modeCourant = Dessinateur.MouseMode.TrajectoirePolaire;
             pSelected = -1;
-            pointsPolaires = new List<PointReel>();
+            pointsPolaires = new List<RealPoint>();
         }
 
         private void btnTrajLancer_Click(object sender, EventArgs e)
@@ -599,7 +599,7 @@ namespace GoBot.IHM
         {
             if (!moveMouse && Dessinateur.modeCourant == Dessinateur.MouseMode.TrajectoirePolaire)
             {
-                PointReel point = Dessinateur.Scale.ScreenToRealPosition(pictureBoxTable.PointToClient(MousePosition));
+                RealPoint point = Dessinateur.Scale.ScreenToRealPosition(pictureBoxTable.PointToClient(MousePosition));
                 //if (pointsPolaires.Count >= 2 && pointsPolaires.Count < 4)
                 //    pointsPolaires.Insert(pointsPolaires.Count - 1, point);
                 //else if (pointsPolaires.Count < 4)
@@ -636,9 +636,9 @@ namespace GoBot.IHM
             //Connexions.ConnexionIO.SendMessage(trameUdp);
 
             HokuyoUart lidar = new HokuyoUart(LidarID.ScanSol);
-            List<PointReel> pts = lidar.GetMesure();
+            List<RealPoint> pts = lidar.GetMesure();
             Plateau.ObstaclesPlateau = new List<IForme>();
-            foreach (PointReel p in pts)
+            foreach (RealPoint p in pts)
             {
                 Plateau.ObstaclesPlateau.Add(new Cercle(p, 4));
             }
@@ -662,7 +662,7 @@ namespace GoBot.IHM
         {
             Robots.GrosRobot.PositionerAngle(180);
 
-            Angle a = Actionneur.Hokuyo.CalculAngle(new Segment(new PointReel(0, 50), new PointReel(0, 900)), 50, 10);
+            Angle a = Actionneur.Hokuyo.CalculAngle(new Segment(new RealPoint(0, 50), new RealPoint(0, 900)), 50, 10);
             if (a.InPositiveDegrees > 180)
                 Robots.GrosRobot.PivotDroite(a.InPositiveDegrees - 270);
             else
@@ -670,7 +670,7 @@ namespace GoBot.IHM
 
             Robots.GrosRobot.ReglerOffsetAsserv(new Position(180, Robots.GrosRobot.Position.Coordinates));
 
-            double distance = Actionneur.Hokuyo.CalculDistanceX(new Segment(new PointReel(0, 50), new PointReel(0, 900)), 50, 2);
+            double distance = Actionneur.Hokuyo.CalculDistanceX(new Segment(new RealPoint(0, 50), new RealPoint(0, 900)), 50, 2);
             Robots.GrosRobot.ReglerOffsetAsserv(new Position(180, Robots.GrosRobot.Position.Coordinates.Translation(-distance, 0)));
 
             distance = Actionneur.Hokuyo.CalculDistanceY(970, 1170, 150, 2);
@@ -681,7 +681,7 @@ namespace GoBot.IHM
         {
             Robots.GrosRobot.PositionerAngle(0);
 
-            Angle a = Actionneur.Hokuyo.CalculAngle(new Segment(new PointReel(3000, 50), new PointReel(3000, 900)), 50, 10);
+            Angle a = Actionneur.Hokuyo.CalculAngle(new Segment(new RealPoint(3000, 50), new RealPoint(3000, 900)), 50, 10);
             if (a.InPositiveDegrees > 180)
                 Robots.GrosRobot.PivotDroite(a.InPositiveDegrees - 270);
             else
@@ -689,7 +689,7 @@ namespace GoBot.IHM
 
             Robots.GrosRobot.ReglerOffsetAsserv(new Position(0, Robots.GrosRobot.Position.Coordinates));
 
-            double distance = Actionneur.Hokuyo.CalculDistanceX(new Segment(new PointReel(3000, 50), new PointReel(3000, 900)), 50, 10);
+            double distance = Actionneur.Hokuyo.CalculDistanceX(new Segment(new RealPoint(3000, 50), new RealPoint(3000, 900)), 50, 10);
             Robots.GrosRobot.ReglerOffsetAsserv(new Position(0, Robots.GrosRobot.Position.Coordinates.Translation(-(distance - 3000), 0)));
 
             Robots.GrosRobot.PositionerAngle(45);

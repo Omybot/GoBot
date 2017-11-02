@@ -35,7 +35,7 @@ namespace GoBot
 
         public void SetZoomFactor(double mmPerPixel)
         {
-            PointReel center = WorldRect.Center();
+            RealPoint center = WorldRect.Center();
 
             WorldRect = WorldRect.ExpandWidth(WorldRect.Width * (mmPerPixel / WorldScale.Factor));
             WorldRect = WorldRect.ExpandHeight(WorldRect.Height * (mmPerPixel / WorldScale.Factor));
@@ -45,7 +45,7 @@ namespace GoBot
             WorldChange?.Invoke();
         }
 
-        public void SetWorldCenter(PointReel center)
+        public void SetWorldCenter(RealPoint center)
         {
             WorldRect = WorldRect.SetCenter(center);
             WorldScale = new WorldScale(WorldScale.Factor, -WorldScale.RealToScreenDistance(WorldRect.X), -WorldScale.RealToScreenDistance(WorldRect.Y));

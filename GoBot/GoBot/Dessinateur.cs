@@ -47,9 +47,9 @@ namespace GoBot
 
         private static Thread threadDessin;
 
-        private static PointReel positionCurseur;
-        public static PointReel PositionCurseurTable { get; set; }
-        public static PointReel positionDepart;
+        private static RealPoint positionCurseur;
+        public static RealPoint PositionCurseurTable { get; set; }
+        public static RealPoint positionDepart;
 
         public static List<Point> trajectoirePolaireScreen;
         private static List<Point> pointsPolaireScreen;
@@ -95,7 +95,7 @@ namespace GoBot
 
         public static WorldScale Scale { get; } = new WorldScale(RAPPORT_SCREEN_REAL, OFFSET_IMAGE_X, OFFSET_IMAGE_Y);
 
-        public static PointReel PositionCurseur
+        public static RealPoint PositionCurseur
         {
             get
             {
@@ -107,7 +107,7 @@ namespace GoBot
                 PositionCurseurTable = Scale.ScreenToRealPosition(value);
             }
         }
-        public static List<PointReel> TrajectoirePolaire
+        public static List<RealPoint> TrajectoirePolaire
         {
             set
             {
@@ -117,7 +117,7 @@ namespace GoBot
             }
         }
 
-        public static List<PointReel> PointsPolaire
+        public static List<RealPoint> PointsPolaire
         {
             set
             {
@@ -164,7 +164,7 @@ namespace GoBot
         {
             Stopwatch sw = Stopwatch.StartNew();
 
-            PositionCurseur = new PointReel();
+            PositionCurseur = new RealPoint();
             while (Thread.CurrentThread.IsAlive && !Execution.Shutdown)
             {
                 // Limitation à 30FPS
@@ -297,7 +297,7 @@ namespace GoBot
         {
             for (int i = 0; i < SuiviBalise.PositionsEnnemies.Count; i++)
             {
-                PointReel p = SuiviBalise.PositionsEnnemies[i];
+                RealPoint p = SuiviBalise.PositionsEnnemies[i];
                 Point positionEcran = Scale.RealToScreenPosition(p);
 
                 if (p == null)
@@ -319,7 +319,7 @@ namespace GoBot
             {
                 for (int i = 0; i < Plateau.Balise.PositionsAdverses.Count; i++)
                 {
-                    PointReel p = Plateau.Balise.PositionsAdverses[i];
+                    RealPoint p = Plateau.Balise.PositionsAdverses[i];
                     Point positionEcran = Scale.RealToScreenPosition(p);
 
                     if (p == null)
@@ -503,8 +503,8 @@ namespace GoBot
                     int couleur = (int)(i * 1200 / robot.HistoriqueCoordonnees.Count * 255 / 1200);
                     Color pointColor = Color.FromArgb(couleur, couleur, couleur);
 
-                    PointReel point = robot.HistoriqueCoordonnees[i].Coordinates;
-                    PointReel pointPrec = robot.HistoriqueCoordonnees[i - 1].Coordinates;
+                    RealPoint point = robot.HistoriqueCoordonnees[i].Coordinates;
+                    RealPoint pointPrec = robot.HistoriqueCoordonnees[i - 1].Coordinates;
 
                     new Segment(point, pointPrec).Paint(g, pointColor, 1, Color.Transparent, Scale);
                     point.Paint(g, Color.Black, 3, pointColor, Scale);
@@ -525,13 +525,13 @@ namespace GoBot
                     foreach (Arc a in robot.Graph.Arcs)
                     {
                         if (a.Passable)
-                            new Segment(new PointReel(a.StartNode.X, a.StartNode.Y), new PointReel(a.EndNode.X, a.EndNode.Y)).Paint(g, Color.Blue, 1, Color.Transparent, Scale);
+                            new Segment(new RealPoint(a.StartNode.X, a.StartNode.Y), new RealPoint(a.EndNode.X, a.EndNode.Y)).Paint(g, Color.Blue, 1, Color.Transparent, Scale);
                     }
 
                 if (graph)
                     // Dessin des noeuds
                     foreach (Node n in robot.Graph.Nodes)
-                        new PointReel(n.Position.X, n.Position.Y).Paint(g, n.Passable ? Color.Black : Color.Red, 3, Color.Blue, Scale);
+                        new RealPoint(n.Position.X, n.Position.Y).Paint(g, n.Passable ? Color.Black : Color.Red, 3, Color.Blue, Scale);
             }
 
             //robot.SemGraph.Release();
@@ -550,9 +550,9 @@ namespace GoBot
                 g.DrawLine(penOrangeEpais, scale.RealToScreenPosition(a.StartNode.Position), scale.RealToScreenPosition(a.EndNode.Position));
             }*/
 
-            List<PointReel> points = null;
+            List<RealPoint> points = null;
             if (PathFinder.PointsTrouves != null)
-                points = new List<PointReel>(PathFinder.PointsTrouves);
+                points = new List<RealPoint>(PathFinder.PointsTrouves);
             if (points != null && points.Count > 1)
             {
                 for (int i = 1; i < points.Count; i++)
@@ -563,7 +563,7 @@ namespace GoBot
 
             Arc cheminTest = PathFinder.CheminTest;
             if (cheminTest != null)
-                g.DrawLine(penRougeEpais, Scale.RealToScreenPosition(new PointReel(cheminTest.StartNode.Position.X, cheminTest.StartNode.Position.Y)), Scale.RealToScreenPosition(new PointReel(cheminTest.EndNode.Position.X, cheminTest.EndNode.Position.Y)));
+                g.DrawLine(penRougeEpais, Scale.RealToScreenPosition(new RealPoint(cheminTest.StartNode.Position.X, cheminTest.StartNode.Position.Y)), Scale.RealToScreenPosition(new RealPoint(cheminTest.EndNode.Position.X, cheminTest.EndNode.Position.Y)));
 
             //if (robot.ObstacleTeste != null)
             //    DessinerForme(g, Color.Green, 10, robot.ObstacleTeste);

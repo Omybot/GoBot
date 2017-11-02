@@ -34,7 +34,7 @@ namespace GoBot
         // Déplacement
         public bool AsserActif { get; set; }
         public abstract Position Position { get; set; }
-        public PointReel PositionCible { get; set; }
+        public RealPoint PositionCible { get; set; }
         public bool DeplacementLigne { get; protected set; }
         public bool VitesseAdaptableEnnemi { get; set; }
 
@@ -85,7 +85,7 @@ namespace GoBot
             AsserStats.RightsRotations.Add(angle);
         }
 
-        public abstract void TrajectoirePolaire(SensAR sens, List<PointReel> points, bool attendre = true);
+        public abstract void TrajectoirePolaire(SensAR sens, List<RealPoint> points, bool attendre = true);
         public abstract void Stop(StopMode mode = StopMode.Smooth);
         public abstract void Virage(SensAR sensAr, SensGD sensGd, int rayon, Angle angle, bool attendre = true);
         public abstract void ReglerOffsetAsserv(Position newPosition);
@@ -334,7 +334,7 @@ namespace GoBot
         public bool PathFinding(double x, double y, Angle teta = null, int timeOut = 0, bool attendre = false)
         {
             Historique.Log("Lancement pathfinding pour aller en " + x + " : " + y, TypeLog.PathFinding);
-            Position destination = new Position(teta, new PointReel(x, y));
+            Position destination = new Position(teta, new RealPoint(x, y));
 
             Trajectory traj = PathFinder.ChercheTrajectoire(Graph, Plateau.ListeObstacles, Position, destination, Rayon, 130);
 
@@ -388,7 +388,7 @@ namespace GoBot
                     {
                         List<Segment> segmentsTrajectoire = new List<Segment>();
                         // Calcule le segment entre nous et notre destination (permet de ne pas considérer un obstacle sur un tronçon déjà franchi)
-                        Segment seg = new Segment(Position.Coordinates, new PointReel(TrajectoireEnCours.Lines[0].Fin));
+                        Segment seg = new Segment(Position.Coordinates, new RealPoint(TrajectoireEnCours.Lines[0].Fin));
                         segmentsTrajectoire.Add(seg);
 
                         for (int iSegment = 1; iSegment < TrajectoireEnCours.Lines.Count; iSegment++)
@@ -453,7 +453,7 @@ namespace GoBot
 
                         if (arc.Passable)
                         {
-                            Segment segment = new Segment(new PointReel(arc.StartNode.X, arc.StartNode.Y), new PointReel(arc.EndNode.X, arc.EndNode.Y));
+                            Segment segment = new Segment(new RealPoint(arc.StartNode.X, arc.StartNode.Y), new RealPoint(arc.EndNode.X, arc.EndNode.Y));
 
                             // Marge de 20mm pour prévoir une trajectoire plus éloignée de l'adversaire
                             if (TropProche(obstacle, segment, 20))
@@ -470,7 +470,7 @@ namespace GoBot
 
                         if (n.Passable)
                         {
-                            PointReel noeud = new PointReel(n.X, n.Y);
+                            RealPoint noeud = new RealPoint(n.X, n.Y);
                             if (TropProche(obstacle, noeud))
                             {
                                 n.Passable = false;

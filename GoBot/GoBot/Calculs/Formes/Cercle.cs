@@ -13,7 +13,7 @@ namespace GoBot.Calculs.Formes
         /// <summary>
         /// Centre du Cercle
         /// </summary>
-        private PointReel centre;
+        private RealPoint centre;
 
         /// <summary>
         /// Rayon du Cercle
@@ -29,7 +29,7 @@ namespace GoBot.Calculs.Formes
         /// </summary>
         /// <param name="centre">Point central du Cercle</param>
         /// <param name="rayon">Rayon du Cercle</param>
-        public Cercle(PointReel centre, double rayon)
+        public Cercle(RealPoint centre, double rayon)
         {
             this.centre = centre;
             this.rayon = rayon;
@@ -52,7 +52,7 @@ namespace GoBot.Calculs.Formes
         /// <summary>
         /// Obtient le centre du Cercle
         /// </summary>
-        public PointReel Centre
+        public RealPoint Centre
         {
             get
             {
@@ -85,7 +85,7 @@ namespace GoBot.Calculs.Formes
         /// <summary>
         /// Barycentre du Cercle
         /// </summary>
-        public PointReel BaryCentre
+        public RealPoint BaryCentre
         {
             get
             {
@@ -197,7 +197,7 @@ namespace GoBot.Calculs.Formes
         /// </summary>
         /// <param name="point">PointReel testé</param>
         /// <returns>Distance calculée</returns>
-        public double Distance(PointReel point)
+        public double Distance(RealPoint point)
         {
             // C'est la distance entre le centre du Cercle et le point moins le rayon du cercle
             return point.Distance(Centre) - Rayon;
@@ -222,7 +222,7 @@ namespace GoBot.Calculs.Formes
         /// </summary>
         /// <param name="point">PointReel testé</param>
         /// <returns>Vrai si le Cercle contient le PointReel testé</returns>
-        protected bool Contient(PointReel point)
+        protected bool Contient(RealPoint point)
         {
             // Pour contenir un point, celui si se trouve à une distance inférieure au rayon du centre
             return point.Distance(centre) <= rayon;
@@ -282,7 +282,7 @@ namespace GoBot.Calculs.Formes
 
         #region Croise
 
-        public List<PointReel> Croisements(IForme forme)
+        public List<RealPoint> Croisements(IForme forme)
         {
             // TODOFORMES
             return null;
@@ -361,13 +361,13 @@ namespace GoBot.Calculs.Formes
         /// </summary>
         /// <param name=" point">PointReel testé</param>
         /// <returns>Vrai si le Cercle courant croise le Cercle testé</returns>
-        protected bool Croise(PointReel point)
+        protected bool Croise(RealPoint point)
         {
             // Pour croiser un Cercle il suffit que son centre soit éloigné de notre centre de moins que la somme de nos 2 rayons
 
             double distanceCentre = centre.Distance(point);
 
-            if (distanceCentre <= rayon + PointReel.PRECISION && distanceCentre >= rayon - PointReel.PRECISION)
+            if (distanceCentre <= rayon + RealPoint.PRECISION && distanceCentre >= rayon - RealPoint.PRECISION)
                 return true;
 
             return false;
@@ -382,7 +382,7 @@ namespace GoBot.Calculs.Formes
             return new Cercle(centre.Translation(dx, dy), rayon);
         }
 
-        public Cercle Rotation(Angle angle, PointReel centreRotation = null)
+        public Cercle Rotation(Angle angle, RealPoint centreRotation = null)
         {
             return new Cercle(centre.Rotation(angle, centreRotation), rayon);
         }

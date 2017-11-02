@@ -30,11 +30,11 @@ namespace GoBot.Calculs.Formes
         /// <returns>Distance entre la Forme actuelle et la Forme testée. Si les deux Formes se croisent la distance est de 0.</returns>
         double Distance(IForme forme);
 
-        List<PointReel> Croisements(IForme forme);
+        List<RealPoint> Croisements(IForme forme);
 
         double Surface { get; }
 
-        PointReel BaryCentre { get; }
+        RealPoint BaryCentre { get; }
 
         void Paint(Graphics g, Color outlineColor, int outlineWidth, Color fillColor, WorldScale scale);
     }
@@ -50,6 +50,6 @@ namespace GoBot.Calculs.Formes
     public interface IModifiable<out T>
     {
         T Translation(double dx, double dy);
-        T Rotation(Angle angle, PointReel centreRotation = null);
+        T Rotation(Angle angle, RealPoint centreRotation = null);
     }
 }

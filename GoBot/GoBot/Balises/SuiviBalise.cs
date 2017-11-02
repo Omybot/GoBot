@@ -19,14 +19,14 @@ namespace GoBot.Balises
         /// <summary>
         /// Position mesurée
         /// </summary>
-        public PointReel Position { get; set; }
+        public RealPoint Position { get; set; }
 
         /// <summary>
         /// Constructeur
         /// </summary>
         /// <param name="date">Date d'acquisition de la position</param>
         /// <param name="position">Position mesurée</param>
-        public PositionTemporelle(DateTime date, PointReel position)
+        public PositionTemporelle(DateTime date, RealPoint position)
         {
             Date = date;
             Position = position;
@@ -41,8 +41,8 @@ namespace GoBot.Balises
         // Nombre de balises à suivre
         public static int NombreMaxBalises { get; set; }
 
-        public static List<PointReel> PositionsEnnemies { get; set; }
-        public static List<PointReel> VecteursPositionsEnnemies { get; set; }
+        public static List<RealPoint> PositionsEnnemies { get; set; }
+        public static List<RealPoint> VecteursPositionsEnnemies { get; set; }
         private static List<List<PositionTemporelle>> PositionsTemporelles { get; set; }
         private static List<DateTime> DatePositionsBalises { get; set; }
         private const double deplacementMaxSeconde = 4000;
@@ -50,12 +50,12 @@ namespace GoBot.Balises
         static SuiviBalise()
         {
             NombreMaxBalises = 2;
-            PositionsEnnemies = new List<PointReel>();
+            PositionsEnnemies = new List<RealPoint>();
             PositionsTemporelles = new List<List<PositionTemporelle>>();
-            VecteursPositionsEnnemies = new List<PointReel>();
+            VecteursPositionsEnnemies = new List<RealPoint>();
         }
 
-        public static void MajPositions(List<PointReel> detections, bool force = false)
+        public static void MajPositions(List<RealPoint> detections, bool force = false)
         {
             //if (detections.Count < NombreMaxBalises && (detections.Count == 0 || detections.Count < PositionsEnnemies.Count))
             //    return;
@@ -73,7 +73,7 @@ namespace GoBot.Balises
                     DatePositionsBalises.Add(DateTime.Now);
                     PositionsTemporelles.Add(new List<PositionTemporelle>());
                     PositionsTemporelles[i].Add(new PositionTemporelle(DateTime.Now, PositionsEnnemies[i]));
-                    VecteursPositionsEnnemies.Add(new PointReel());
+                    VecteursPositionsEnnemies.Add(new RealPoint());
                 }
             }
             /*else
@@ -112,7 +112,7 @@ namespace GoBot.Balises
         {
             for(int i = 0; i < PositionsEnnemies.Count; i++)
             {
-                List<PointReel> deplacements = new List<PointReel>();
+                List<RealPoint> deplacements = new List<RealPoint>();
 
                 for (int j = 1; j < PositionsTemporelles[i].Count; j++)
                 {
@@ -121,11 +121,11 @@ namespace GoBot.Balises
 
                     TimeSpan t = PositionsTemporelles[i][j].Date - PositionsTemporelles[i][j - 1].Date;
                     if(t.TotalMilliseconds > 0)
-                        deplacements.Add(new PointReel(dx * 1000.0 / t.TotalMilliseconds, dy * 1000.0 / t.TotalMilliseconds));
+                        deplacements.Add(new RealPoint(dx * 1000.0 / t.TotalMilliseconds, dy * 1000.0 / t.TotalMilliseconds));
                 }
 
                 double x = 0, y = 0;
-                foreach (PointReel p in deplacements)
+                foreach (RealPoint p in deplacements)
                 {
                     x += p.X;
                     y += p.Y;
@@ -137,7 +137,7 @@ namespace GoBot.Balises
                     y /= deplacements.Count;
                 }
 
-                VecteursPositionsEnnemies[i] = new PointReel(x, y);
+                VecteursPositionsEnnemies[i] = new RealPoint(x, y);
             }
         }
 

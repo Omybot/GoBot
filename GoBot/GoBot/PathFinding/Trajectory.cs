@@ -11,13 +11,13 @@ namespace GoBot.PathFinding
 {
     public class Trajectory
     {
-        List<PointReel> points;
+        List<RealPoint> points;
         List<Segment> lines;
 
         /// <summary>
         /// Liste des points de passage de la trajectoire
         /// </summary>
-        public ReadOnlyCollection<PointReel> Points
+        public ReadOnlyCollection<RealPoint> Points
         {
             get
             {
@@ -41,7 +41,7 @@ namespace GoBot.PathFinding
 
         public Trajectory()
         {
-            points = new List<PointReel>();
+            points = new List<RealPoint>();
             lines = new List<Segment>();
         }
 
@@ -49,7 +49,7 @@ namespace GoBot.PathFinding
         /// Ajoute un point de passage à la trajectoire
         /// </summary>
         /// <param name="point">Point à ajouter à la trajectoire</param>
-        public void AddPoint(PointReel point)
+        public void AddPoint(RealPoint point)
         {
             points.Add(point);
 
@@ -68,8 +68,8 @@ namespace GoBot.PathFinding
 
             for (int i = 0; i < Points.Count - 1; i++)
             {
-                PointReel c1 = new PointReel(Points[i].X, Points[i].Y);
-                PointReel c2 = new PointReel(Points[i + 1].X, Points[i + 1].Y);
+                RealPoint c1 = new RealPoint(Points[i].X, Points[i].Y);
+                RealPoint c2 = new RealPoint(Points[i + 1].X, Points[i + 1].Y);
 
                 Position p = new Position(angle, c1);
                 Direction traj = Maths.GetDirection(p, c2);
