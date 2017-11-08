@@ -284,7 +284,7 @@ namespace GoBot.Geometry.Shapes
             // Si l'autre segment contient ce point, c'est le croisement, sinon il n'en existe pas
 
             RealPoint crossingPoint = GetCrossingPoint((Line)segment);
-            if (crossingPoint != null && segment.Contains(crossingPoint))
+            if (crossingPoint != null && segment.Contains(crossingPoint) && this.Contains(crossingPoint))
                 return crossingPoint;
 
             return null;

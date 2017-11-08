@@ -364,7 +364,11 @@ namespace GoBot.Geometry.Shapes
                     return true;
 
                 if (s.Cross(testSeg))
-                    crossCount++;
+                {
+                    RealPoint crossingPoint = testSeg.GetCrossingPoint(s);
+                    if(crossingPoint != s.EndPoint) // Pour ne pas compter 2 fois un croisement sur un sommet, il sera déjà compté sur le Begin d'un autre
+                        crossCount++;
+                }
             }
 
             return (crossCount % 2 == 1);
