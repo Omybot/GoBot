@@ -1,5 +1,5 @@
 ﻿using GoBot.Actionneurs;
-using GoBot.Calculs.Formes;
+using GoBot.Geometry.Shapes;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -73,7 +73,7 @@ namespace GoBot.IHM
 
         private void btnGo_Click(object sender, EventArgs e)
         {
-            List<Cercle> cercles;
+            List<Circle> cercles;
             do
             {
                 List<RealPoint> points = Actionneur.Hokuyo.GetRawMesure();
@@ -81,10 +81,10 @@ namespace GoBot.IHM
                 List<List<RealPoint>> groups = points.GroupByDistance(50);
 
                 cercles = groups.Select(g => g.GetContainingCircle()).ToList();
-                cercles = cercles.Where(c => c.Rayon > 20 && c.Rayon < 40).ToList();
+                cercles = cercles.Where(c => c.Radius > 20 && c.Radius < 40).ToList();
             } while (cercles.Count == 0);
 
-            RealPoint nearest = cercles.OrderBy(c => c.Distance(new RealPoint())).ToList()[0].Centre;
+            RealPoint nearest = cercles.OrderBy(c => c.Distance(new RealPoint())).ToList()[0].Center;
 
             Plateau.ObstaclesPlateau.Clear();
             Actionneur.GestionModuleSupervisee.AttraperModule(nearest);
@@ -116,7 +116,7 @@ namespace GoBot.IHM
                 {
                     for (int i = 100; i < 5000; i += 100)
                     {
-                        new Cercle(new RealPoint(), i).Paint(g, Color.Gray, picWorld.Dimensions.WorldScale.Factor < 1 ? 2 : 1, Color.Transparent, picWorld.Dimensions.WorldScale);
+                        new Circle(new RealPoint(), i).Paint(g, Color.Gray, picWorld.Dimensions.WorldScale.Factor < 1 ? 2 : 1, Color.Transparent, picWorld.Dimensions.WorldScale);
                     }
 
                     if(picWorld.Dimensions.WorldScale.Factor < 1)
@@ -125,7 +125,7 @@ namespace GoBot.IHM
                         {
                             if (i % 100 != 0)
                             {
-                                new Cercle(new RealPoint(), i).Paint(g, Color.LightGray, 1, Color.Transparent, picWorld.Dimensions.WorldScale);
+                                new Circle(new RealPoint(), i).Paint(g, Color.LightGray, 1, Color.Transparent, picWorld.Dimensions.WorldScale);
                             }
                         }
                     }
@@ -136,14 +136,14 @@ namespace GoBot.IHM
                     if (rdoOutline.Checked)
                     {
                         points.Add(new RealPoint());
-                        Polygone poly = new Polygone(points);
+                        Polygon poly = new Polygon(points);
                         points.RemoveAt(points.Count - 1);
                         poly.Paint(g, Color.Red, 1, Color.LightGray, picWorld.Dimensions.WorldScale);
                     }
                     else if (rdoShadows.Checked)
                     {
                         points.Add(new RealPoint());
-                        Polygone poly = new Polygone(points);
+                        Polygon poly = new Polygon(points);
                         points.RemoveAt(points.Count - 1);
                         g.FillRectangle(Brushes.LightGray, 0, 0, picWorld.Width, picWorld.Height);
                         poly.Paint(g, Color.Red, 1, Color.White, picWorld.Dimensions.WorldScale);
@@ -169,9 +169,9 @@ namespace GoBot.IHM
                         List<List<RealPoint>> groups = points.GroupByDistance(50);
                         for (int i = 0; i < groups.Count; i++)
                         {
-                            Cercle circle = groups[i].GetContainingCircle();
+                            Circle circle = groups[i].GetContainingCircle();
                             circle.Paint(g, Color.Black, 1, Color.Transparent, picWorld.Dimensions.WorldScale);
-                            g.DrawString((circle.Rayon * 2).ToString("0"), new Font("Calibri", 9), Brushes.Black, picWorld.Dimensions.WorldScale.RealToScreenPosition(circle.Centre.Translation(circle.Rayon, 0)));
+                            g.DrawString((circle.Radius * 2).ToString("0"), new Font("Calibri", 9), Brushes.Black, picWorld.Dimensions.WorldScale.RealToScreenPosition(circle.Center.Translation(circle.Radius, 0)));
                         }
                     }
                 }

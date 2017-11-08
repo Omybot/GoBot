@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using GoBot.Calculs;
+using GoBot.Geometry;
 using System.Timers;
-using GoBot.Calculs.Formes;
+using GoBot.Geometry.Shapes;
 using System.Threading;
 using GoBot.Actions;
 using System.Drawing;
@@ -174,20 +174,20 @@ namespace GoBot
                 }
 
                 Segment seg = null;
-                Cercle cer = null;
+                Circle cer = null;
 
                 if (changePoint)
                 {
                     seg = new Segment(trajectoirePolaire[pointCourantTrajPolaire - 1], trajectoirePolaire[pointCourantTrajPolaire]);
-                    cer = new Cercle(trajectoirePolaire[pointCourantTrajPolaire - 1], distanceAParcourir - (distanceTestee - trajectoirePolaire[pointCourantTrajPolaire - 1].Distance(trajectoirePolaire[pointCourantTrajPolaire])));
+                    cer = new Circle(trajectoirePolaire[pointCourantTrajPolaire - 1], distanceAParcourir - (distanceTestee - trajectoirePolaire[pointCourantTrajPolaire - 1].Distance(trajectoirePolaire[pointCourantTrajPolaire])));
                 }
                 else
                 {
                     seg = new Segment(Position.Coordinates, trajectoirePolaire[pointCourantTrajPolaire]);
-                    cer = new Cercle(Position.Coordinates, distanceAParcourir);
+                    cer = new Circle(Position.Coordinates, distanceAParcourir);
                 }
 
-                RealPoint newPos = seg.Croisements(cer)[0];
+                RealPoint newPos = seg.GetCrossingPoints(cer)[0];
                 Angle a = -Maths.GetDirection(newPos, trajectoirePolaire[pointCourantTrajPolaire]).angle;
                 position = new Position(a, newPos);
                 ChangerPosition(Position);
@@ -332,7 +332,7 @@ namespace GoBot
 
             if (mode == StopMode.Smooth)
             {
-                Position nouvelleDestination = new Calculs.Position(new Angle(Position.Angle.InDegrees), new RealPoint(position.Coordinates.X, position.Coordinates.Y));
+                Position nouvelleDestination = new Position(new Angle(Position.Angle.InDegrees), new RealPoint(position.Coordinates.X, position.Coordinates.Y));
 
                 if (DeplacementLigne)
                 {
@@ -370,7 +370,7 @@ namespace GoBot
         public override void ReglerOffsetAsserv(Position newPosition)
         {
             Position = new Position(-newPosition.Angle, newPosition.Coordinates); // TODO2018 Hum, pouruqoi c'est pas le meme repere ?
-            PositionCible?.Placer(Position.Coordinates);
+            PositionCible?.Set(Position.Coordinates);
             ChangerPosition(Position);
         }
 
@@ -408,16 +408,16 @@ namespace GoBot
             if (this == Robots.GrosRobot)
             {
                 if (Plateau.NotreCouleur == Plateau.CouleurGaucheBleu)
-                    Position = new Calculs.Position(new Angle(0, AnglyeType.Degre), new RealPoint(240, 1000));
+                    Position = new Position(new Angle(0, AnglyeType.Degre), new RealPoint(240, 1000));
                 else
-                    Position = new Calculs.Position(new Angle(180, AnglyeType.Degre), new RealPoint(3000 - 240, 1000));
+                    Position = new Position(new Angle(180, AnglyeType.Degre), new RealPoint(3000 - 240, 1000));
             }
             else
             {
                 if (Plateau.NotreCouleur == Plateau.CouleurGaucheBleu)
-                    Position = new Calculs.Position(new Angle(0, AnglyeType.Degre), new RealPoint(480, 1000));
+                    Position = new Position(new Angle(0, AnglyeType.Degre), new RealPoint(480, 1000));
                 else
-                    Position = new Calculs.Position(new Angle(180, AnglyeType.Degre), new RealPoint(3000 - 480, 1000));
+                    Position = new Position(new Angle(180, AnglyeType.Degre), new RealPoint(3000 - 480, 1000));
             }
 
             PositionCible = null;

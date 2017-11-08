@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 
-namespace GoBot.Calculs.Formes
+namespace GoBot.Geometry.Shapes
 {
     public static class ListRealPointsExtensions
     {
@@ -21,9 +21,9 @@ namespace GoBot.Calculs.Formes
         /// <param name="pts">Liste des points d'origine</param>
         /// <param name="shape">Forme qui doit contenir les points</param>
         /// <returns>Points contenus par la forme</returns>
-        public static List<RealPoint> GetPointsIn(this List<RealPoint> pts, IForme shape)
+        public static List<RealPoint> GetPointsIn(this List<RealPoint> pts, IShape shape)
         {
-            return pts.Where(p => shape.Contient(p)).ToList();
+            return pts.Where(p => shape.Contains(p)).ToList();
         }
 
         /// <summary>
@@ -31,9 +31,9 @@ namespace GoBot.Calculs.Formes
         /// </summary>
         /// <param name="pts">Liste de points à approximer</param>
         /// <returns>Droite estimée</returns>
-        public static Droite ToLine(this List<RealPoint> pts)
+        public static Line ToLine(this List<RealPoint> pts)
         {
-            return new Droite(pts);
+            return new Line(pts);
         }
 
         /// <summary>
@@ -41,12 +41,12 @@ namespace GoBot.Calculs.Formes
         /// </summary>
         /// <param name="pts">Liste des points à contenir</param>
         /// <returns>Cercle obtenu</returns>
-        public static Cercle GetContainingCircle(this List<RealPoint> pts)
+        public static Circle GetContainingCircle(this List<RealPoint> pts)
         {
             RealPoint center = pts.GetBarycenter();
             double ray = pts.Max(p => p.Distance(center));
 
-            return new Cercle(center, ray);
+            return new Circle(center, ray);
         }
 
         /// <summary>
@@ -106,7 +106,7 @@ namespace GoBot.Calculs.Formes
         /// <param name="deltaY">Delta sur l'axe des ordonnées</param>
         public static void Shift(this List<RealPoint> pts, double deltaX, double deltaY)
         {
-            pts.ForEach(p => p.Placer(p.X + deltaX, p.Y + deltaY));
+            pts.ForEach(p => p.Set(p.X + deltaX, p.Y + deltaY));
         }
 
         /// <summary>
@@ -116,7 +116,7 @@ namespace GoBot.Calculs.Formes
         /// <param name="shape">Forme dont les points doivent être proche</param>
         /// <param name="maxDistance">Distance maximale à la forme pour être sélectionné</param>
         /// <returns></returns>
-        public static List<RealPoint> GetPointsNearFrom(this List<RealPoint> pts, IForme shape, double maxDistance)
+        public static List<RealPoint> GetPointsNearFrom(this List<RealPoint> pts, IShape shape, double maxDistance)
         {
             return pts.Where(p => p.Distance(shape) <= maxDistance).ToList();
         }
@@ -127,9 +127,9 @@ namespace GoBot.Calculs.Formes
         /// <param name="pts">Liste de points</param>
         /// <param name="shape">Forme qui doit contenir les points</param>
         /// <returns>Points contenus par la forme</returns>
-        public static List<RealPoint> GetPointsInside(this List<RealPoint> pts, IForme shape)
+        public static List<RealPoint> GetPointsInside(this List<RealPoint> pts, IShape shape)
         {
-            return pts.Where(p => shape.Contient(p)).ToList();
+            return pts.Where(p => shape.Contains(p)).ToList();
         }
     }
 }

@@ -2,12 +2,12 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using GoBot.Calculs.Formes;
+using GoBot.Geometry.Shapes;
 using System.Drawing;
 
-namespace GoBot.Calculs.Formes
+namespace GoBot.Geometry.Shapes
 {
-    public class RealPoint : IForme, IModifiable<RealPoint>
+    public class RealPoint : IShape, IShapeModifiable<RealPoint>
     {
         public const double PRECISION = 0.01;
 
@@ -16,12 +16,12 @@ namespace GoBot.Calculs.Formes
         /// <summary>
         /// Position sur l'axe des abscisses
         /// </summary>
-        private double posX;
+        private double xPosition;
 
         /// <summary>
         /// Position sur l'axe des ordonnées
         /// </summary>
-        private double posY;
+        private double yPosition;
 
         #endregion
 
@@ -32,8 +32,8 @@ namespace GoBot.Calculs.Formes
         /// </summary>
         public RealPoint()
         {
-            posX = 0;
-            posY = 0;
+            xPosition = 0;
+            yPosition = 0;
         }
 
         /// <summary>
@@ -41,8 +41,8 @@ namespace GoBot.Calculs.Formes
         /// </summary>
         public RealPoint(RealPoint other)
         {
-            posX = other.posX;
-            posY = other.posY;
+            xPosition = other.xPosition;
+            yPosition = other.yPosition;
         }
 
         /// <summary>
@@ -52,8 +52,8 @@ namespace GoBot.Calculs.Formes
         /// <param name="y">Ordonnée</param>
         public RealPoint(double x, double y)
         {
-            posX = x;
-            posY = y;
+            xPosition = x;
+            yPosition = y;
         }
 
         #endregion
@@ -67,11 +67,11 @@ namespace GoBot.Calculs.Formes
         {
             get
             {
-                return posX;
+                return xPosition;
             }
             set
             {
-                posX = value;
+                xPosition = value;
             }
         }
 
@@ -82,11 +82,11 @@ namespace GoBot.Calculs.Formes
         {
             get
             {
-                return posY;
+                return yPosition;
             }
             set
             {
-                posY = value;
+                yPosition = value;
             }
         }
 
@@ -104,7 +104,7 @@ namespace GoBot.Calculs.Formes
         /// <summary>
         /// Barycentre du PointReel
         /// </summary>
-        public RealPoint BaryCentre
+        public RealPoint Barycenter
         {
             get
             {
@@ -192,11 +192,11 @@ namespace GoBot.Calculs.Formes
         /// <summary>
         /// Retourne la distance minimale entre le PointReel courant et la IForme donnée
         /// </summary>
-        /// <param name="forme">IForme testée</param>
+        /// <param name="shape">IForme testée</param>
         /// <returns>Distance minimale</returns>
-        public double Distance(IForme forme)
+        public double Distance(IShape shape)
         {
-            return Distance(Util.ToRealType(forme));
+            return Distance(Util.ToRealType(shape));
         }
 
         /// <summary>
@@ -213,36 +213,36 @@ namespace GoBot.Calculs.Formes
         /// <summary>
         /// Retourne la distance minimale entre le PointReel courant et la Droite donnée
         /// </summary>
-        /// <param name="droite">Droite testée</param>
+        /// <param name="line">Droite testée</param>
         /// <returns>Distance minimale</returns>
-        protected double Distance(Droite droite)
+        protected double Distance(Line line)
         {
             // La droite sait le faire
-            return droite.Distance(this);
+            return line.Distance(this);
         }
 
         /// <summary>
         /// Retourne la distance minimale entre le PointReel courant et le Cercle donné
         /// </summary>
-        /// <param name="cercle">Cercle testé</param>
+        /// <param name="circle">Cercle testé</param>
         /// <returns>Distance minimale</returns>
-        protected double Distance(Cercle cercle)
+        protected double Distance(Circle circle)
         {
             // Distance jusqu'au centre du cercle - son rayon
-            return Distance(cercle.Centre) - cercle.Rayon;
+            return Distance(circle.Center) - circle.Radius;
         }
 
         /// <summary>
         /// Retourne la distance minimale entre le PointReel courant et le Polygone donné
         /// </summary>
-        /// <param name="polygone">Polygone testé</param>
+        /// <param name="polygon">Polygone testé</param>
         /// <returns>Distance minimale</returns>
-        protected double Distance(Polygone polygone)
+        protected double Distance(Polygon polygon)
         {
             // Distance jusqu'au segment le plus proche
             double minDistance = double.MaxValue;
 
-            foreach (Segment s in polygone.Cotes)
+            foreach (Segment s in polygon.Sides)
                 minDistance = Math.Min(s.Distance(this), minDistance);
 
             return minDistance;
@@ -266,13 +266,13 @@ namespace GoBot.Calculs.Formes
         /// <summary>
         /// Teste si le PointReel contient la IForme donnée
         /// </summary>
-        /// <param name="forme">IForme testée</param>
+        /// <param name="shape">IForme testée</param>
         /// <returns>Vrai si le PointReel contient la IForme testée</returns>
-        public bool Contient(IForme forme)
+        public bool Contains(IShape shape)
         {
             // La seule chose qu'un point peut contenir, c'est un point identique à lui même
-            if (forme is RealPoint)
-                return (RealPoint)forme == this;
+            if (shape is RealPoint)
+                return (RealPoint)shape == this;
 
             return false;
         }
@@ -285,17 +285,27 @@ namespace GoBot.Calculs.Formes
         /// Teste si le PointReel courant croise la IForme donnée
         /// Pour un PointReel, on dit qu'il croise s'il se trouve sur le contour de la forme avec une marge de <c>PRECISION</c>
         /// </summary>
-        /// <param name="forme">IForme testés</param>
+        /// <param name="shape">IForme testés</param>
         /// <returns>Vrai si le PointReel courant croise la IForme donnée</returns>
-        public bool Croise(IForme forme)
+        public bool Cross(IShape shape)
         {
-            return getCroisement(Util.ToRealType(forme)) != null;
+            return GetCrossingPoints(Util.ToRealType(shape)) != null;
         }
 
-        public List<RealPoint> Croisements(IForme forme)
+        /// <summary>
+        /// Retourne les points de croisements entre ce point et la forme donnée. Le croisement ne peut au mieux qu'être le point lui même.
+        /// </summary>
+        /// <param name="shape">Forme avec laquelle tester les croisements</param>
+        /// <returns>Points de croisement</returns>
+        public List<RealPoint> GetCrossingPoints(IShape shape)
         {
-            // TODOFORMES
-            return null;
+            RealPoint crossPoint = GetCrossingPoint(Util.ToRealType(shape));
+            List<RealPoint> crossPoints = new List<RealPoint>();
+
+            if (crossPoint != null)
+                crossPoints.Add(crossPoint);
+
+            return crossPoints;
         }
 
         /// <summary>
@@ -303,10 +313,10 @@ namespace GoBot.Calculs.Formes
         /// </summary>
         /// <param name="segment">Segment testé</param>
         /// <returns>Le PointReel lui même si il est sur le Segment, sinon null</returns>
-        public RealPoint getCroisement(Segment segment)
+        protected RealPoint GetCrossingPoint(Segment segment)
         {
-            if (segment.Contient(this))
-                return this;
+            if (segment.Contains(this))
+                return new RealPoint(this);
             else
                 return null;
         }
@@ -316,10 +326,10 @@ namespace GoBot.Calculs.Formes
         /// </summary>
         /// <param name="point">point testé</param>
         /// <returns>Le PointReel lui même si il est sur le PointReel, sinon null</returns>
-        public RealPoint getCroisement(RealPoint point)
+        protected RealPoint GetCrossingPoints(RealPoint point)
         {
             if (point.X == X && point.Y == Y)
-                return this;
+                return new RealPoint(this);
             else
                 return null;
         }
@@ -329,10 +339,10 @@ namespace GoBot.Calculs.Formes
         /// </summary>
         /// <param name="droite">Droite testée</param>
         /// <returns>Le PointReel lui même si il est sur la Droite, sinon null</returns>
-        public RealPoint getCroisement(Droite droite)
+        protected RealPoint GetCrossingPoints(Line droite)
         {
-            if (droite.Contient(this))
-                return this;
+            if (droite.Contains(this))
+                return new RealPoint(this);
             else
                 return null;
         }
@@ -342,10 +352,10 @@ namespace GoBot.Calculs.Formes
         /// </summary>
         /// <param name="polygone">Polygone testé</param>
         /// <returns>Le PointReel lui même si il est sur le Polygone, sinon null</returns>
-        public RealPoint getCroisement(Polygone polygone)
+        protected RealPoint GetCrossingPoints(Polygon polygone)
         {
-            if (polygone.Contient(this))
-                return this;
+            if (polygone.Contains(this))
+                return new RealPoint(this);
             else
                 return null;
         }
@@ -355,10 +365,10 @@ namespace GoBot.Calculs.Formes
         /// </summary>
         /// <param name="cercle">Cercle testé</param>
         /// <returns>Le PointReel lui même si il est sur le Cercle, sinon null</returns>
-        public RealPoint getCroisement(Cercle cercle)
+        protected RealPoint GetCrossingPoints(Circle cercle)
         {
-            if (cercle.Contient(this))
-                return this;
+            if (cercle.Contains(this))
+                return new RealPoint(this);
             else
                 return null;
         }
@@ -372,10 +382,10 @@ namespace GoBot.Calculs.Formes
         /// </summary>
         /// <param name="x">Abscisse</param>
         /// <param name="y">Ordonnée</param>
-        public void Placer(double x, double y)
+        public void Set(double x, double y)
         {
-            posX = x;
-            posY = y;
+            xPosition = x;
+            yPosition = y;
         }
 
         /// <summary>
@@ -383,34 +393,54 @@ namespace GoBot.Calculs.Formes
         /// </summary>
         /// <param name="x">Abscisse</param>
         /// <param name="y">Ordonnée</param>
-        public void Placer(RealPoint pos)
+        public void Set(RealPoint pos)
         {
-            posX = pos.X;
-            posY = pos.Y;
+            xPosition = pos.X;
+            yPosition = pos.Y;
         }
 
+        /// <summary>
+        /// Retourne un point translaté des distances données
+        /// </summary>
+        /// <param name="dx">Déplacement sur l'axe X</param>
+        /// <param name="dy">Déplacement sur l'axe Y</param>
+        /// <returns>Point translaté</returns>
         public RealPoint Translation(double dx, double dy)
         {
-            return new RealPoint(posX + dx, posY + dy);
+            return new RealPoint(xPosition + dx, yPosition + dy);
         }
 
-        public RealPoint Rotation(Angle angle, RealPoint centreRotation = null)
+        /// <summary>
+        /// Retourne un point qui a subit une rotation selon l'angle et le centre donné
+        /// </summary>
+        /// <param name="angle">Angle de rotation</param>
+        /// <param name="rotationCenter">Centre de la rotation</param>
+        /// <returns>Point ayant subit la rotation donnée</returns>
+        public RealPoint Rotation(Angle angle, RealPoint rotationCenter = null)
         {
-            RealPoint nouvelleCoordonnee = new RealPoint();
-            nouvelleCoordonnee.X = centreRotation.X + Math.Cos(angle.InRadians) * (this.X - centreRotation.X) - Math.Sin(angle.InRadians) * (this.Y - centreRotation.Y);
-            nouvelleCoordonnee.Y = centreRotation.Y + Math.Cos(angle.InRadians) * (this.Y - centreRotation.Y) + Math.Sin(angle.InRadians) * (this.X - centreRotation.X);
-            return nouvelleCoordonnee;
+            RealPoint newPoint = new RealPoint();
+            newPoint.X = rotationCenter.X + Math.Cos(angle.InRadians) * (this.X - rotationCenter.X) - Math.Sin(angle.InRadians) * (this.Y - rotationCenter.Y);
+            newPoint.Y = rotationCenter.Y + Math.Cos(angle.InRadians) * (this.Y - rotationCenter.Y) + Math.Sin(angle.InRadians) * (this.X - rotationCenter.X);
+            return newPoint;
         }
 
         #endregion
 
         #region Peinture
 
+        /// <summary>
+        /// Dessine le point sur un Graphic
+        /// </summary>
+        /// <param name="g">Graphic sur lequel dessiner</param>
+        /// <param name="outlineColor">Couleur du contour du point</param>
+        /// <param name="outlineWidth">Rayon du point</param>
+        /// <param name="fillColor">Couleur de remplissage du point</param>
+        /// <param name="scale">Echelle de conversion</param>
         public void Paint(Graphics g, Color outlineColor, int outlineWidth, Color fillColor, WorldScale scale)
         {
-            Point screenPos = scale.RealToScreenPosition(this);
+            Point screenPosition = scale.RealToScreenPosition(this);
 
-            Rectangle rect = new Rectangle(screenPos.X - outlineWidth, screenPos.Y - outlineWidth, outlineWidth*2, outlineWidth*2);
+            Rectangle rect = new Rectangle(screenPosition.X - outlineWidth, screenPosition.Y - outlineWidth, outlineWidth * 2, outlineWidth * 2);
 
             if (fillColor != Color.Transparent)
                 using (SolidBrush brush = new SolidBrush(fillColor))

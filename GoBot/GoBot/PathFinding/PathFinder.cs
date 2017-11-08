@@ -1,7 +1,7 @@
 ﻿using AStarFolder;
 using GoBot.Actions;
-using GoBot.Calculs;
-using GoBot.Calculs.Formes;
+using GoBot.Geometry;
+using GoBot.Geometry.Shapes;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -18,13 +18,13 @@ namespace GoBot.PathFinding
         public static List<Arc> CheminEnCoursArcs { get; private set; }
 
         public static Arc CheminTest { get; private set; }
-        public static IForme ObstacleTeste { get; private set; }
-        public static IForme ObstacleProbleme { get; private set; }
+        public static IShape ObstacleTeste { get; private set; }
+        public static IShape ObstacleProbleme { get; private set; }
         public static List<RealPoint> PointsTrouves { get; private set; }
 
         private static Thread threadRAZRayonAdverse;
 
-        public static Trajectory ChercheTrajectoire(Graph graph, List<IForme> obstacles, Position positionActuell, Position destination, double rayonSecurite, double distanceSecuriteCote)
+        public static Trajectory ChercheTrajectoire(Graph graph, List<IShape> obstacles, Position positionActuell, Position destination, double rayonSecurite, double distanceSecuriteCote)
         {
             DateTime debut = DateTime.Now;
 
@@ -82,7 +82,7 @@ namespace GoBot.PathFinding
 
                         lock (Plateau.ObstaclesBalise)
                         {
-                            foreach (IForme obstacle in obstacles)
+                            foreach (IShape obstacle in obstacles)
                             {
                                 if (obstacle.Distance(segmentTest) < distanceSecuriteCote)
                                 {
@@ -133,7 +133,7 @@ namespace GoBot.PathFinding
                             lock (Plateau.ObstaclesBalise)
                             {
                                 // Test des obstacles
-                                foreach (IForme obstacle in obstacles)
+                                foreach (IShape obstacle in obstacles)
                                 {
                                     if (obstacle.Distance(segmentTest) < distanceSecuriteCote)
                                     {
@@ -192,7 +192,7 @@ namespace GoBot.PathFinding
                         Segment segmentTest = new Segment(new RealPoint(positionTestee.Coordinates), new RealPoint(positionActuell.Coordinates));
 
                         // Test des obstacles
-                        foreach (IForme obstacle in obstacles)
+                        foreach (IShape obstacle in obstacles)
                         {
                             if (obstacle.Distance(segmentTest) < distanceSecuriteCote)
                                 franchissable = false;
@@ -219,7 +219,7 @@ namespace GoBot.PathFinding
                             Segment segmentTest = new Segment(new RealPoint(positionTestee.Coordinates), new RealPoint(destination.Coordinates));
 
                             // Test des obstacles
-                            foreach (IForme obstacle in obstacles)
+                            foreach (IShape obstacle in obstacles)
                             {
                                 if (obstacle.Distance(segmentTest) < distanceSecuriteCote)
                                     franchissable = false;
@@ -239,7 +239,7 @@ namespace GoBot.PathFinding
                 bool toutDroit = true;
                 Segment segment = new Segment(new RealPoint(debutNode.X, debutNode.Y), new RealPoint(finNode.X, finNode.Y));
 
-                foreach (IForme forme in obstacles)
+                foreach (IShape forme in obstacles)
                 {
                     if (segment.Distance(forme) < rayonSecurite)
                     {
@@ -314,7 +314,7 @@ namespace GoBot.PathFinding
 
                                 for (int i = obstacles.Count - 1; i >= 4; i--) // > 4 pour ne pas tester les bordures
                                 {
-                                    IForme forme = obstacles[i];
+                                    IShape forme = obstacles[i];
                                     ObstacleTeste = forme;
                                     ObstacleProbleme = null;
 

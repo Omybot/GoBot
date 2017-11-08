@@ -7,9 +7,9 @@ using GoBot.Actionneurs;
 using System.Windows.Forms;
 using GoBot.ElementsJeu;
 using GoBot.Mouvements;
-using Gobot.Calculs;
-using GoBot.Calculs.Formes;
-using GoBot.Calculs;
+using GoBot.Geometry;
+using GoBot.Geometry.Shapes;
+using GoBot.Geometry;
 
 namespace GoBot.Enchainements
 {

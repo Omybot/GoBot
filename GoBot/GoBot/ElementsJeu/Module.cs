@@ -1,4 +1,4 @@
-﻿using GoBot.Calculs.Formes;
+﻿using GoBot.Geometry.Shapes;
 using System;
 using System.Collections.Generic;
 using System.Drawing;

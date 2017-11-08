@@ -1,4 +1,5 @@
-﻿using GoBot.Calculs.Formes;
+﻿using GoBot.Geometry;
+using GoBot.Geometry.Shapes;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -478,7 +479,7 @@ namespace GoBot.Actionneurs
             Robots.GrosRobot.SpeedConfig.PivotSpeed = 500;
 
             Robots.GrosRobot.Stop();
-            Robots.GrosRobot.GotoXYTeta(new Calculs.Position(0, pos.Translation(-80, 0)));
+            Robots.GrosRobot.GotoXYTeta(new Position(0, pos.Translation(-80, 0)));
 
             Actionneurs.Actionneur.BrasLunaire.Descendre();
             Actionneurs.Actionneur.BrasLunaire.Ouvrir();

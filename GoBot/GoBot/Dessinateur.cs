@@ -4,10 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Drawing;
 using System.Threading;
-using GoBot.Calculs.Formes;
+using GoBot.Geometry.Shapes;
 using AStarFolder;
 using GoBot.Enchainements;
-using GoBot.Calculs;
+using GoBot.Geometry;
 using GoBot.Balises;
 using GoBot.Actionneurs;
 using GoBot.ElementsJeu;
@@ -451,7 +451,7 @@ namespace GoBot
         {
             g.SetClip(Scale.RealToScreenRect(new RectangleF(-Plateau.BorderWidth, -Plateau.BorderWidth, Plateau.Largeur+ Plateau.BorderWidth*2, Plateau.Hauteur+ Plateau.BorderWidth*2)));
 
-            foreach (IForme forme in Plateau.ListeObstacles)
+            foreach (IShape forme in Plateau.ListeObstacles)
                 forme.Paint(g, Color.Red, 5, Color.Transparent, Scale);
 
             DessineZoneMorte(g);
@@ -568,7 +568,7 @@ namespace GoBot
             //if (robot.ObstacleTeste != null)
             //    DessinerForme(g, Color.Green, 10, robot.ObstacleTeste);
 
-            IForme obstacleProbleme = PathFinder.ObstacleProbleme;
+            IShape obstacleProbleme = PathFinder.ObstacleProbleme;
             if (obstacleProbleme != null)
                 obstacleProbleme.Paint(g, Color.Red, 10, Color.Transparent, Scale);
 

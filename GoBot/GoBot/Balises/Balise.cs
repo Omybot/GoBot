@@ -5,8 +5,8 @@ using System.Text;
 using System.Drawing;
 using System.Windows.Forms;
 using System.IO;
-using GoBot.Calculs;
-using GoBot.Calculs.Formes;
+using GoBot.Geometry;
+using GoBot.Geometry.Shapes;
 using GoBot.Communications;
 using System.Threading;
 
@@ -434,9 +434,9 @@ namespace GoBot.Balises
                                 {
                                     DetectionBalise detection = Detections[i];
                                     // Calcul du 3ème point du triangle rectangle Balise / Gros robot
-                                    Droite droiteBalise0Degres = new Droite(Position.Coordinates, new RealPoint(Position.Coordinates.X + 500, Position.Coordinates.Y));
-                                    Droite perpendiculaire = droiteBalise0Degres.GetPerpendiculaire(robot.Position.Coordinates);
-                                    RealPoint troisiemePoint = perpendiculaire.getCroisement(droiteBalise0Degres);
+                                    Line droiteBalise0Degres = new Line(Position.Coordinates, new RealPoint(Position.Coordinates.X + 500, Position.Coordinates.Y));
+                                    Line perpendiculaire = droiteBalise0Degres.GetPerpendicular(robot.Position.Coordinates);
+                                    RealPoint troisiemePoint = perpendiculaire.GetCrossingPoint(droiteBalise0Degres);
                                     double distanceBaliseTroisiemePoint = troisiemePoint.Distance(Position.Coordinates);
                                     double distanceBaliseRobot = robot.Position.Coordinates.Distance(Position.Coordinates);
 

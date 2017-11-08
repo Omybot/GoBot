@@ -5,13 +5,13 @@ using System.Text;
 using System.Drawing;
 using System.Threading;
 using AStarFolder;
-using GoBot.Calculs.Formes;
+using GoBot.Geometry.Shapes;
 using System.IO;
 using System.Collections;
 using System.Windows.Forms;
 using System.Runtime.Serialization;
 using System.Runtime.Serialization.Formatters.Binary;
-using GoBot.Calculs;
+using GoBot.Geometry;
 using GoBot.Ponderations;
 using GoBot.Enchainements;
 using GoBot.Mouvements;
@@ -32,8 +32,8 @@ namespace GoBot
         public static Enchainement Enchainement { get; set; }
         public static Poids PoidActions { get; set; }
 
-        public static List<IForme> ObstaclesPlateau { get; set; }
-        public static List<IForme> ObstaclesBalise { get; set; }
+        public static List<IShape> ObstaclesPlateau { get; set; }
+        public static List<IShape> ObstaclesBalise { get; set; }
 
         public static RealPoint PositionCibleRobot { get; set; }
 
@@ -63,7 +63,7 @@ namespace GoBot
 
         public static bool ReflecteursNosRobots { get; set; }
 
-        public static IForme[] ObstaclesPieds { get; set; }
+        public static IShape[] ObstaclesPieds { get; set; }
 
         private static int score;
         public static int Score
@@ -94,11 +94,11 @@ namespace GoBot
         /// <summary>
         /// Liste complète des obstacles fixes et temporaires
         /// </summary>
-        public static List<IForme> ListeObstacles
+        public static List<IShape> ListeObstacles
         {
             get
             {
-                List<IForme> toutObstacles = new List<IForme>();
+                List<IShape> toutObstacles = new List<IShape>();
                 toutObstacles.AddRange(ObstaclesPlateau);
                 toutObstacles.AddRange(ObstaclesBalise);
                 return toutObstacles;
@@ -110,13 +110,13 @@ namespace GoBot
             if (!Execution.DesignMode)
             {
                 Elements = new Elements();
-                ObstaclesPieds = new IForme[0];
+                ObstaclesPieds = new IShape[0];
                 RayonAdversaireInitial = 200;
                 RayonAdversaire = RayonAdversaireInitial;
 
                 ReflecteursNosRobots = true;
 
-                ObstaclesBalise = new List<IForme>();
+                ObstaclesBalise = new List<IShape>();
 
                 ChargerObstacles();
                 CreerSommets(110);
@@ -144,7 +144,7 @@ namespace GoBot
                 for (int i = 0; i < positions.Count; i++)
                 {
                     RealPoint coordonnees = new RealPoint(positions[i].X, positions[i].Y);
-                    AjouterObstacle(new Cercle(coordonnees, RayonAdversaire));
+                    AjouterObstacle(new Circle(coordonnees, RayonAdversaire));
 
                     if (Plateau.Enchainement == null)
                     {
@@ -211,7 +211,7 @@ namespace GoBot
             RealPoint coordonnees = new RealPoint(x, y);
 
             Console.Write(" Ajout obstacle");
-            AjouterObstacle(new Cercle(coordonnees, 200));
+            AjouterObstacle(new Circle(coordonnees, 200));
 
             if (Plateau.Enchainement == null)
             {
@@ -244,7 +244,7 @@ namespace GoBot
         /// </summary>
         /// <param name="obstacle">Forme de l'obstacle</param>
         /// <param name="fixe">Si l'obstacle est fixe, on supprime complètement les noeuds et arcs non franchissables. Sinon on les rends non franchissables temporairement.</param>
-        public static void AjouterObstacle(IForme obstacle, bool fixe = false, bool majGraph = false)
+        public static void AjouterObstacle(IShape obstacle, bool fixe = false, bool majGraph = false)
         {
             if (majGraph)
                 ObstaclesBalise.Clear();
@@ -302,7 +302,7 @@ namespace GoBot
 
         public void ChargerObstacles()
         {
-            ObstaclesPlateau = new List<IForme>();
+            ObstaclesPlateau = new List<IShape>();
             List<RealPoint> points = new List<RealPoint>();
 
             // Contours du plateau
@@ -312,31 +312,31 @@ namespace GoBot
             AjouterObstacle(new Segment(new RealPoint(0, Hauteur - 4), new RealPoint(0, 0)), true);
 
             // Zones de départ
-            AjouterObstacle(new RectanglePolygone(new RealPoint(0, 0), 710, 360 + 22), true);
-            AjouterObstacle(new RectanglePolygone(new RealPoint(3000 - 710, 0), 710, 360 + 22), true);
+            AjouterObstacle(new PolygonRectangle(new RealPoint(0, 0), 710, 360 + 22), true);
+            AjouterObstacle(new PolygonRectangle(new RealPoint(3000 - 710, 0), 710, 360 + 22), true);
 
             // Zones de départ
-            AjouterObstacle(new RectanglePolygone(new RealPoint(0, 0), 710, 360 + 22), true);
-            AjouterObstacle(new RectanglePolygone(new RealPoint(3000 - 710, 0), 710, 360 + 22), true);
+            AjouterObstacle(new PolygonRectangle(new RealPoint(0, 0), 710, 360 + 22), true);
+            AjouterObstacle(new PolygonRectangle(new RealPoint(3000 - 710, 0), 710, 360 + 22), true);
 
             // Zones latérales
-            AjouterObstacle(new RectanglePolygone(new RealPoint(0, 700 - 22), 80 + 22, 1150 - 700 + 22 + 22), true);
-            AjouterObstacle(new RectanglePolygone(new RealPoint(3000 - 80 - 22, 700 - 22), 80 + 22, 1150 - 700 + 22 + 22), true);
+            AjouterObstacle(new PolygonRectangle(new RealPoint(0, 700 - 22), 80 + 22, 1150 - 700 + 22 + 22), true);
+            AjouterObstacle(new PolygonRectangle(new RealPoint(3000 - 80 - 22, 700 - 22), 80 + 22, 1150 - 700 + 22 + 22), true);
 
             // Petits cratères
-            AjouterObstacle(new Cercle(new RealPoint(650, 540), 126), true);
-            AjouterObstacle(new Cercle(new RealPoint(3000 - 650, 540), 126), true);
+            AjouterObstacle(new Circle(new RealPoint(650, 540), 126), true);
+            AjouterObstacle(new Circle(new RealPoint(3000 - 650, 540), 126), true);
 
-            AjouterObstacle(new Cercle(new RealPoint(1070, 1870), 126), true);
-            AjouterObstacle(new Cercle(new RealPoint(3000 - 1070, 1870), 126), true);
+            AjouterObstacle(new Circle(new RealPoint(1070, 1870), 126), true);
+            AjouterObstacle(new Circle(new RealPoint(3000 - 1070, 1870), 126), true);
 
             // Grands cratères
-            AjouterObstacle(new Cercle(new RealPoint(0, 2000), 510 + 30), true);
-            AjouterObstacle(new Cercle(new RealPoint(3000, 2000), 510 + 30), true);
+            AjouterObstacle(new Circle(new RealPoint(0, 2000), 510 + 30), true);
+            AjouterObstacle(new Circle(new RealPoint(3000, 2000), 510 + 30), true);
 
             // Base de lancement
-            AjouterObstacle(new Cercle(new RealPoint(1500, 2000), 200), true);
-            AjouterObstacle(new RectanglePolygone(new RealPoint(1500 - 40 - 28, 2000 - 200 - 600), 28 * 2 + 80, 600), true);
+            AjouterObstacle(new Circle(new RealPoint(1500, 2000), 200), true);
+            AjouterObstacle(new PolygonRectangle(new RealPoint(1500 - 40 - 28, 2000 - 200 - 600), 28 * 2 + 80, 600), true);
 
             double cos45 = Math.Cos(45.0 / 180 * Math.PI);
             points.Clear();
@@ -344,21 +344,21 @@ namespace GoBot
             points.Add(new RealPoint(1500 + cos45 * 200 - cos45 * 68, 2000 - cos45 * 200 - cos45 * 68));
             points.Add(new RealPoint(1500 + cos45 * 200 + cos45 * 68, 2000 - cos45 * 200 + cos45 * 68));
             points.Add(new RealPoint(1500 + cos45 * 800 + cos45 * 68, 2000 - cos45 * 800 + cos45 * 68));
-            AjouterObstacle(new Polygone(points), true);
+            AjouterObstacle(new Polygon(points), true);
 
             points.Clear();
             points.Add(new RealPoint(1500 - cos45 * 800 + cos45 * 68, 2000 - cos45 * 800 - cos45 * 68));
             points.Add(new RealPoint(1500 - cos45 * 200 + cos45 * 68, 2000 - cos45 * 200 - cos45 * 68));
             points.Add(new RealPoint(1500 - cos45 * 200 - cos45 * 68, 2000 - cos45 * 200 + cos45 * 68));
             points.Add(new RealPoint(1500 - cos45 * 800 - cos45 * 68, 2000 - cos45 * 800 + cos45 * 68));
-            AjouterObstacle(new Polygone(points), true);
+            AjouterObstacle(new Polygon(points), true);
 
             // Fusées
-            AjouterObstacle(new Cercle(new RealPoint(1150, 40), 40), true);
-            AjouterObstacle(new Cercle(new RealPoint(3000 - 1150, 40), 40), true);
+            AjouterObstacle(new Circle(new RealPoint(1150, 40), 40), true);
+            AjouterObstacle(new Circle(new RealPoint(3000 - 1150, 40), 40), true);
 
-            AjouterObstacle(new Cercle(new RealPoint(40, 1350), 40), true);
-            AjouterObstacle(new Cercle(new RealPoint(3000 - 40, 1350), 40), true);
+            AjouterObstacle(new Circle(new RealPoint(40, 1350), 40), true);
+            AjouterObstacle(new Circle(new RealPoint(3000 - 40, 1350), 40), true);
 
         }
 
@@ -369,7 +369,7 @@ namespace GoBot
         /// <returns></returns>
         public static bool Contient(RealPoint point)
         {
-            return new RectanglePolygone(new RealPoint(0, 0), Hauteur, Largeur).Contient(point);
+            return new PolygonRectangle(new RealPoint(0, 0), Hauteur, Largeur).Contains(point);
         }
     }
 }

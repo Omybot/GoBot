@@ -2,8 +2,8 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using GoBot.Calculs;
-using GoBot.Calculs.Formes;
+using GoBot.Geometry;
+using GoBot.Geometry.Shapes;
 using GoBot.ElementsJeu;
 using System.Drawing;
 using GoBot.PathFinding;
@@ -95,10 +95,10 @@ namespace GoBot.Mouvements
                 {
                     double distancePosition = Robot.Position.Coordinates.Distance(position.Coordinates); 
                     
-                    List<IForme> obstacles = new List<IForme>(Plateau.ObstaclesBalise);
-                    foreach (Cercle c in obstacles)
+                    List<IShape> obstacles = new List<IShape>(Plateau.ObstaclesBalise);
+                    foreach (Circle c in obstacles)
                     {
-                        double distanceAdv = position.Coordinates.Distance(c.Centre) / 10;
+                        double distanceAdv = position.Coordinates.Distance(c.Center) / 10;
                         if (distanceAdv < 45)
                             distancePosition = double.PositiveInfinity;
                         else
@@ -136,10 +136,10 @@ namespace GoBot.Mouvements
                 double cout = distance / ValeurAction;
                 bool adversairePlusProche = false;
 
-                List<IForme> obstacles = new List<IForme>(Plateau.ObstaclesBalise);
-                foreach (Cercle c in obstacles)
+                List<IShape> obstacles = new List<IShape>(Plateau.ObstaclesBalise);
+                foreach (Circle c in obstacles)
                 {
-                    double distanceAdv = position.Coordinates.Distance(c.Centre) / 10;
+                    double distanceAdv = position.Coordinates.Distance(c.Center) / 10;
                     if (distanceAdv < 45)
                         cout = double.PositiveInfinity;
                     else

@@ -3,7 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using GoBot.Calculs.Formes;
+using GoBot.Geometry.Shapes;
 
 namespace GoBot.Actionneurs
 {

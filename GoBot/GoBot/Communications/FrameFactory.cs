@@ -1,5 +1,5 @@
-﻿using GoBot.Calculs;
-using GoBot.Calculs.Formes;
+﻿using GoBot.Geometry;
+using GoBot.Geometry.Shapes;
 using GoBot.Devices;
 using System.Collections.Generic;
 using System.Drawing;

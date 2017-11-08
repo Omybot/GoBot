@@ -2,8 +2,8 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using GoBot.Calculs;
-using GoBot.Calculs.Formes;
+using GoBot.Geometry;
+using GoBot.Geometry.Shapes;
 using System.Drawing;
 
 namespace GoBot.Mouvements

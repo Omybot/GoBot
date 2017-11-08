@@ -87,7 +87,7 @@
             // 
             // lblScore
             // 
-            this.lblScore.Font = new System.Drawing.Font("Century Gothic", 26.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblScore.Font = new System.Drawing.Font("Microsoft Sans Serif", 26.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblScore.Location = new System.Drawing.Point(1164, 521);
             this.lblScore.Name = "lblScore";
             this.lblScore.Size = new System.Drawing.Size(84, 41);
@@ -98,10 +98,10 @@
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Font = new System.Drawing.Font("Century Gothic", 8.25F);
+            this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
             this.label1.Location = new System.Drawing.Point(1168, 499);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(44, 16);
+            this.label1.Size = new System.Drawing.Size(41, 13);
             this.label1.TabIndex = 14;
             this.label1.Text = "Score :";
             // 
@@ -189,7 +189,7 @@
             // 
             // lblSecondes
             // 
-            this.lblSecondes.Font = new System.Drawing.Font("Century Gothic", 26.25F);
+            this.lblSecondes.Font = new System.Drawing.Font("Microsoft Sans Serif", 26.25F);
             this.lblSecondes.Location = new System.Drawing.Point(1152, 375);
             this.lblSecondes.Margin = new System.Windows.Forms.Padding(0);
             this.lblSecondes.Name = "lblSecondes";
@@ -201,10 +201,10 @@
             // lblMilli
             // 
             this.lblMilli.AutoSize = true;
-            this.lblMilli.Font = new System.Drawing.Font("Century Gothic", 10.25F);
+            this.lblMilli.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.25F);
             this.lblMilli.Location = new System.Drawing.Point(1211, 394);
             this.lblMilli.Name = "lblMilli";
-            this.lblMilli.Size = new System.Drawing.Size(33, 19);
+            this.lblMilli.Size = new System.Drawing.Size(32, 17);
             this.lblMilli.TabIndex = 35;
             this.lblMilli.Text = "000";
             // 
@@ -227,12 +227,12 @@
             "Plateau",
             "Elements de jeu",
             "Obstacles",
-            "Graph gros robots (noeuds)",
-            "Graph gros robot (arcs)",
-            "Coûts gros robot",
+            "Graph (noeuds)",
+            "Graph (arcs)",
+            "Coûts mouvements",
             "Calcul path finding",
             "Détections balises",
-            "Historique trajectoire gros"});
+            "Historique trajectoire"});
             this.checkedListBox.Location = new System.Drawing.Point(3, 19);
             this.checkedListBox.Name = "checkedListBox";
             this.checkedListBox.Size = new System.Drawing.Size(184, 135);

@@ -2,12 +2,12 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using GoBot.Calculs.Formes;
+using GoBot.Geometry.Shapes;
 using AStarFolder;
 using System.Threading;
 using GoBot.Actionneurs;
 using GoBot.Mouvements;
-using GoBot.Calculs;
+using GoBot.Geometry;
 
 namespace GoBot.Enchainements
 {

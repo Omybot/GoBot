@@ -2,10 +2,10 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using GoBot.Calculs;
+using GoBot.Geometry;
 using System.Threading;
 using AStarFolder;
-using GoBot.Calculs.Formes;
+using GoBot.Geometry.Shapes;
 using System.Drawing;
 using GoBot.Actions;
 using GoBot.Actionneurs;
@@ -358,7 +358,7 @@ namespace GoBot
         /// <param name="forme1">Forme 1</param>
         /// <param name="forme2">Forme 2</param>
         /// <returns>Vrai si les deux formes sont trop proches</returns>
-        public bool TropProche(IForme forme1, IForme forme2, int marge = 0)
+        public bool TropProche(IShape forme1, IShape forme2, int marge = 0)
         {
             Type typeForme1 = forme1.GetType();
             Type typeForme2 = forme2.GetType();
@@ -388,7 +388,7 @@ namespace GoBot
                     {
                         List<Segment> segmentsTrajectoire = new List<Segment>();
                         // Calcule le segment entre nous et notre destination (permet de ne pas considérer un obstacle sur un tronçon déjà franchi)
-                        Segment seg = new Segment(Position.Coordinates, new RealPoint(TrajectoireEnCours.Lines[0].Fin));
+                        Segment seg = new Segment(Position.Coordinates, new RealPoint(TrajectoireEnCours.Lines[0].EndPoint));
                         segmentsTrajectoire.Add(seg);
 
                         for (int iSegment = 1; iSegment < TrajectoireEnCours.Lines.Count; iSegment++)
@@ -398,7 +398,7 @@ namespace GoBot
 
                         lock (Plateau.ObstaclesBalise)
                         {
-                            foreach (IForme forme in Plateau.ObstaclesBalise)
+                            foreach (IShape forme in Plateau.ObstaclesBalise)
                             {
                                 foreach (Segment segment in segmentsTrajectoire)
                                 {
@@ -436,7 +436,7 @@ namespace GoBot
         {
             lock (Graph)
             {
-                List<IForme> obstacles = new List<IForme>(Plateau.ObstaclesBalise);
+                List<IShape> obstacles = new List<IShape>(Plateau.ObstaclesBalise);
 
                 foreach (Arc arc in Graph.Arcs)
                     arc.Passable = true;
@@ -444,7 +444,7 @@ namespace GoBot
                 foreach (Node node in Graph.Nodes)
                     node.Passable = true;
 
-                foreach (IForme obstacle in obstacles)
+                foreach (IShape obstacle in obstacles)
                 {
                     // Teste les arcs non franchissables
                     for (int i = 0; i < Graph.Arcs.Count; i++)

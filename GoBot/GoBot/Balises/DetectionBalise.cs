@@ -3,8 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Drawing;
-using GoBot.Calculs.Formes;
-using GoBot.Calculs;
+using GoBot.Geometry.Shapes;
+using GoBot.Geometry;
 
 namespace GoBot.Balises
 {
@@ -86,7 +86,7 @@ namespace GoBot.Balises
         /// Transforme une détection de balise en triangle
         /// </summary>
         /// <returns>Triangle correspondant à la détection</returns>
-        public Polygone ToPolygone()
+        public Polygon ToPolygone()
         {
             List<RealPoint> listePoints = new List<RealPoint>();
 
@@ -116,7 +116,7 @@ namespace GoBot.Balises
 
             listePoints.Add(point);
 
-            Polygone polygone = new Polygone(listePoints);
+            Polygon polygone = new Polygon(listePoints);
 
             return polygone;
         }

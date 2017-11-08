@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Windows.Forms;
-using GoBot.Calculs;
+using GoBot.Geometry;
 using GoBot.Communications;
 using GoBot.IHM;
 using System.Drawing;

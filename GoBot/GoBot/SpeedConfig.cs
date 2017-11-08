@@ -1,4 +1,4 @@
-﻿using GoBot.Calculs;
+﻿using GoBot.Geometry;
 using GoBot.PathFinding;
 using System;
 using System.IO;

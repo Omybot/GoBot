@@ -1,7 +1,7 @@
-﻿using Gobot.Calculs;
+﻿using GoBot.Geometry;
 using GoBot.Actionneurs;
-using GoBot.Calculs;
-using GoBot.Calculs.Formes;
+using GoBot.Geometry;
+using GoBot.Geometry.Shapes;
 using GoBot.Devices;
 using GoBot.ElementsJeu;
 using GoBot.Enchainements;
@@ -484,10 +484,10 @@ namespace GoBot.IHM
 
                 if (points.Count > 0)
                 {
-                    Plateau.ObstaclesPlateau = new List<IForme>();
+                    Plateau.ObstaclesPlateau = new List<IShape>();
                     foreach (RealPoint p in points)
                     {
-                        Plateau.ObstaclesPlateau.Add(new Cercle(p, 4));
+                        Plateau.ObstaclesPlateau.Add(new Circle(p, 4));
                     }
 
                     //Segment seg = new Segment(new PointReel(0, 50), new PointReel(0, 900));
@@ -637,10 +637,10 @@ namespace GoBot.IHM
 
             HokuyoUart lidar = new HokuyoUart(LidarID.ScanSol);
             List<RealPoint> pts = lidar.GetMesure();
-            Plateau.ObstaclesPlateau = new List<IForme>();
+            Plateau.ObstaclesPlateau = new List<IShape>();
             foreach (RealPoint p in pts)
             {
-                Plateau.ObstaclesPlateau.Add(new Cercle(p, 4));
+                Plateau.ObstaclesPlateau.Add(new Circle(p, 4));
             }
             MessageBox.Show(pts.Count + " points");
         }

@@ -2,9 +2,9 @@
 using System.Drawing;
 using System.Collections.Generic;
 using System.Text;
-using GoBot.Calculs.Formes;
+using GoBot.Geometry.Shapes;
 
-namespace Gobot.Calculs
+namespace GoBot.Geometry
 {
     class BezierCurve
     {

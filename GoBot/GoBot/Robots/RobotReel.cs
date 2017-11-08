@@ -1,6 +1,6 @@
 ﻿using GoBot.Actions;
-using GoBot.Calculs;
-using GoBot.Calculs.Formes;
+using GoBot.Geometry;
+using GoBot.Geometry.Shapes;
 using GoBot.Communications;
 using GoBot.Devices;
 using System;
@@ -150,16 +150,16 @@ namespace GoBot
             if (this == Robots.GrosRobot)
             {
                 if (Plateau.NotreCouleur == Plateau.CouleurGaucheBleu)
-                    Position = new Calculs.Position(new Angle(0, AnglyeType.Degre), new RealPoint(240, 1000));
+                    Position = new Position(new Angle(0, AnglyeType.Degre), new RealPoint(240, 1000));
                 else
-                    Position = new Calculs.Position(new Angle(180, AnglyeType.Degre), new RealPoint(3000 - 240, 1000));
+                    Position = new Position(new Angle(180, AnglyeType.Degre), new RealPoint(3000 - 240, 1000));
             }
             else
             {
                 if (Plateau.NotreCouleur == Plateau.CouleurGaucheBleu)
-                    Position = new Calculs.Position(new Angle(0, AnglyeType.Degre), new RealPoint(480, 1000));
+                    Position = new Position(new Angle(0, AnglyeType.Degre), new RealPoint(480, 1000));
                 else
-                    Position = new Calculs.Position(new Angle(180, AnglyeType.Degre), new RealPoint(3000 - 480, 1000));
+                    Position = new Position(new Angle(180, AnglyeType.Degre), new RealPoint(3000 - 480, 1000));
             }
 
             PositionCible = null; //TODO2018 Init commun à la simu

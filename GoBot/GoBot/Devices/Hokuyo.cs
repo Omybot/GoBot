@@ -1,5 +1,5 @@
-﻿using GoBot.Calculs;
-using GoBot.Calculs.Formes;
+﻿using GoBot.Geometry;
+using GoBot.Geometry.Shapes;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -280,7 +280,7 @@ namespace GoBot.Devices
                 {
                     List<RealPoint> pointsBordure = points.Where(p => p.Distance(segmentPointsProches) < distanceMaxSegment).ToList();
 
-                    Droite interpol = new Droite(pointsBordure);
+                    Line interpol = new Line(pointsBordure);
 
                     Plateau.ObstaclesPlateau.Add(interpol);
 
