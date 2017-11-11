@@ -37,7 +37,7 @@ namespace Composants
         {
             for(int i = 0; i < 8; i++)
             {
-                Graphs[(8-1) - i].AddPoint((value & 0x1) > 0);
+                Graphs[i].AddPoint((value & 0x1) > 0);
                 value = (Byte)(value >> 1);
             }
         }

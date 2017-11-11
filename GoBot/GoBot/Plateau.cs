@@ -119,7 +119,7 @@ namespace GoBot
                 ObstaclesBalise = new List<IShape>();
 
                 ChargerObstacles();
-                CreerSommets(110);
+                CreerSommets(100);
                 SauverGraph();
 
                 Balise.PositionEnnemisActualisee += Balise_PositionEnnemisActualisee;

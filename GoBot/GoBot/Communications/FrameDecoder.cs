@@ -266,7 +266,7 @@ namespace GoBot.Communications
                     if(parameters != null)
                     {
                         for(int i = 0; i < 6; i++)
-                            output = ReplaceParam(output, Convert.ToString(parameters[i], 2));
+                            output = ReplaceParam(output, Convert.ToString(parameters[i], 2).PadLeft(8, '0'));
                     }
                     break;
 

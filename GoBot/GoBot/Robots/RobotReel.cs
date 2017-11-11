@@ -412,12 +412,15 @@ namespace GoBot
                 case FrameFunction.RetourValeursNumeriques:
                     Board numericBoard = (Board)trameRecue[0];
 
-                    ValeursNumeriques[numericBoard][0] = (Byte)trameRecue[1];
-                    ValeursNumeriques[numericBoard][1] = (Byte)trameRecue[2];
-                    ValeursNumeriques[numericBoard][2] = (Byte)trameRecue[3];
-                    ValeursNumeriques[numericBoard][3] = (Byte)trameRecue[4];
-                    ValeursNumeriques[numericBoard][4] = (Byte)trameRecue[5];
-                    ValeursNumeriques[numericBoard][5] = (Byte)trameRecue[6];
+                    lock (ValeursNumeriques)
+                    {
+                        ValeursNumeriques[numericBoard][0] = (Byte)trameRecue[2];
+                        ValeursNumeriques[numericBoard][1] = (Byte)trameRecue[3];
+                        ValeursNumeriques[numericBoard][2] = (Byte)trameRecue[4];
+                        ValeursNumeriques[numericBoard][3] = (Byte)trameRecue[5];
+                        ValeursNumeriques[numericBoard][4] = (Byte)trameRecue[6];
+                        ValeursNumeriques[numericBoard][5] = (Byte)trameRecue[7];
+                    }
                     
                     SemaphoresTrame[FrameFunction.RetourValeursNumeriques]?.Release();
                     break;
