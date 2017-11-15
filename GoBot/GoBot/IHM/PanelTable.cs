@@ -146,17 +146,16 @@ namespace GoBot.IHM
                 bool hoverElement = false;
 
                 RealPoint positionRelle = new RealPoint(positionSurTable.X, positionSurTable.Y);
-
-
-                for (int i = 0; i < Plateau.ElementsJeu.Count; i++)
+                
+                foreach (GameElement element in Plateau.Elements)
                 {
-                    if (positionRelle.Distance(Plateau.ElementsJeu[i].Position) < Plateau.ElementsJeu[i].HoverRadius)
+                    if (positionRelle.Distance(element.Position) < element.HoverRadius)
                     {
-                        Plateau.ElementsJeu[i].IsHover = true;
+                        element.IsHover = true;
                         hoverElement = true;
                     }
                     else
-                        Plateau.ElementsJeu[i].IsHover = false;
+                        element.IsHover = false;
                 }
 
                 if (hoverElement)
@@ -186,9 +185,7 @@ namespace GoBot.IHM
         private void btnReset_Click(object sender, EventArgs e)
         {
             // Todo
-
-            Plateau.InitElementsJeu();
-
+            
             Plateau.Score = 0;
         }
 

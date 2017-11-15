@@ -407,14 +407,14 @@ namespace GoBot
             HistoriqueCoordonnees = new List<Position>();
             if (this == Robots.GrosRobot)
             {
-                if (Plateau.NotreCouleur == Plateau.CouleurGaucheBleu)
+                if (Plateau.NotreCouleur == Plateau.CouleurGaucheVert)
                     Position = new Position(new Angle(0, AnglyeType.Degre), new RealPoint(240, 1000));
                 else
                     Position = new Position(new Angle(180, AnglyeType.Degre), new RealPoint(3000 - 240, 1000));
             }
             else
             {
-                if (Plateau.NotreCouleur == Plateau.CouleurGaucheBleu)
+                if (Plateau.NotreCouleur == Plateau.CouleurGaucheVert)
                     Position = new Position(new Angle(0, AnglyeType.Degre), new RealPoint(480, 1000));
                 else
                     Position = new Position(new Angle(180, AnglyeType.Degre), new RealPoint(3000 - 480, 1000));
@@ -508,7 +508,7 @@ namespace GoBot
 
         public override Color GetCouleurEquipe(bool historique = true)
         {
-            return Plateau.CouleurDroiteJaune;
+            return Plateau.CouleurDroiteOrange;
         }
 
         public override List<int>[] MesureTestPid(int consigne, SensAR sens, int nbValeurs)

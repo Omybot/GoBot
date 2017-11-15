@@ -174,12 +174,10 @@
     <Compile Include="Devices\PololuMiniUart.cs" />
     <Compile Include="Devices\PololuMiniUsb.cs" />
     <Compile Include="Devices\RecGoBot.cs" />
-    <Compile Include="ElementsJeu\Module.cs" />
-    <Compile Include="ElementsJeu\GameElement.cs" />
-    <Compile Include="ElementsJeu\Elements.cs" />
-    <Compile Include="ElementsJeu\Fusee.cs" />
-    <Compile Include="ElementsJeu\ZoneDeposeModules.cs" />
-    <Compile Include="ElementsJeu\GameElementZone.cs" />
+    <Compile Include="GameElements\GameElement.cs" />
+    <Compile Include="GameElements\GameElements.cs" />
+    <Compile Include="GameElements\CubesCross.cs" />
+    <Compile Include="GameElements\GameElementZone.cs" />
     <Compile Include="Enchainements\EnchainementAllerRetour.cs" />
     <Compile Include="Enchainements\EnchainementHomologation.cs" />
     <Compile Include="Enchainements\EnchainementTest.cs" />
@@ -357,12 +355,7 @@
     </Compile>
     <Compile Include="Logs\LogFile.cs" />
     <Compile Include="Logs\Logs.cs" />
-    <Compile Include="Mouvements\MouvementDeposeModules.cs" />
-    <Compile Include="Mouvements\MouvementFusee.cs" />
     <Compile Include="Mouvements\Mouvement.cs" />
-    <Compile Include="Mouvements\MouvementModuleDroite.cs" />
-    <Compile Include="Mouvements\MouvementModuleGauche.cs" />
-    <Compile Include="Mouvements\MouvementModuleAvant.cs" />
     <Compile Include="Mouvements\PositionsMouvements.cs" />
     <Compile Include="WorldScale.cs" />
     <Compile Include="PathFinding\PathFinder.cs" />

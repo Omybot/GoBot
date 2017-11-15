@@ -41,23 +41,10 @@ namespace GoBot.Enchainements
             Plateau.PoidActions = new PoidsTest();
             Couleur = Color.Purple;
 
-            // Todo Charger dans les listes ListeMouvementsGros et ListeMouvementsPetit les mouvements possibles
+            // Charger ICI dans les listes ListeMouvementsGros et ListeMouvementsPetit les mouvements possibles
 
-            for (int i = 0; i < Plateau.Elements.Fusees.Count; i++)
-                ListeMouvements.Add(new MouvementFusee(i));
-
-            for (int i = 0; i < Plateau.Elements.Modules.Count; i++)
-            {
-                if (PositionsMouvements.PositionsApprocheModuleFace[i] != null)
-                    ListeMouvements.Add(new MouvementModuleAvant(i));
-                if (PositionsMouvements.PositionsApprocheModuleGauche[i] != null)
-                    ListeMouvements.Add(new MouvementModuleGauche(i));
-                if (PositionsMouvements.PositionsApprocheModuleDroite[i] != null)
-                    ListeMouvements.Add(new MouvementModuleDroite(i));
-            }
-
-            for (int i = 0; i < Plateau.Elements.ZonesDepose.Count; i++)
-                ListeMouvements.Add(new MouvementDeposeModules(i));
+            //for (int i = 0; i < Plateau.Elements.CubesCrosses.Count; i++)
+            //    ListeMouvements.Add(new MouvementFusee(i));
         }
 
         public void Executer()

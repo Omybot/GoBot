@@ -70,7 +70,7 @@ namespace GoBot.IHM
         {
             this.InvokeAuto(() =>
             {
-                if (Robots.GrosRobot.GetCouleurEquipe(false) == Plateau.CouleurDroiteJaune)
+                if (Robots.GrosRobot.GetCouleurEquipe(false) == Plateau.CouleurDroiteOrange)
                     ledCouleurEquipe.Color = Color.LimeGreen;
                 else
                     ledCouleurEquipe.Color = Color.Yellow;

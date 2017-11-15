@@ -23,27 +23,15 @@ namespace GoBot.Enchainements
 
             List<Mouvement> stratFixe = new List<Mouvement>();
 
-            if (Plateau.NotreCouleur == Plateau.CouleurGaucheBleu)
+            // Ajouter ICI l'ordre de la strat fixe avant détection d'adversaire
+
+            if (Plateau.NotreCouleur == Plateau.CouleurGaucheVert)
             {
-                stratFixe.Add(new MouvementFusee(1));
-                stratFixe.Add(new MouvementModuleAvant(1));
-                stratFixe.Add(new MouvementModuleGauche(3));
-                stratFixe.Add(new MouvementDeposeModules(0));
-                stratFixe.Add(new MouvementFusee(0));
-                stratFixe.Add(new MouvementModuleAvant(0));
-                stratFixe.Add(new MouvementModuleAvant(2));
-                stratFixe.Add(new MouvementDeposeModules(1));
+                //stratFixe.Add(new MouvementFusee(1));
             }
             else
             {
-                stratFixe.Add(new MouvementFusee(2));
-                stratFixe.Add(new MouvementModuleAvant(10));
-                stratFixe.Add(new MouvementModuleDroite(8));
-                stratFixe.Add(new MouvementDeposeModules(2));
-                stratFixe.Add(new MouvementFusee(3));
-                stratFixe.Add(new MouvementModuleAvant(11));
-                stratFixe.Add(new MouvementModuleAvant(9));
-                stratFixe.Add(new MouvementDeposeModules(1));
+                //stratFixe.Add(new MouvementFusee(2));
             }
 
             int iMouv = 0;
@@ -85,7 +73,7 @@ namespace GoBot.Enchainements
 
         private void ArmePince(object useless)
         {
-            if (Plateau.NotreCouleur == Plateau.CouleurGaucheBleu)
+            if (Plateau.NotreCouleur == Plateau.CouleurGaucheVert)
             {
                 Thread.Sleep(200);
                 Actionneur.BrasLunaireDroite.Descendre();
@@ -103,35 +91,7 @@ namespace GoBot.Enchainements
 
         private void ActionsFixesGros()
         {
-            Robots.GrosRobot.Rapide();
-
-            Actionneur.Ejecteur.DemarrerCapteurCouleur();
-
-            if (Plateau.NotreCouleur == Plateau.CouleurGaucheBleu)
-                Robots.GrosRobot.PivotGauche(3);
-            else
-                Robots.GrosRobot.PivotDroite(3);
-
-            ThreadPool.QueueUserWorkItem(new WaitCallback(ArmePince));
-
-            Robots.GrosRobot.SpeedConfig.SetParams(500, 1500, 1500, 800, 2000, 2000);
-
-            if (Plateau.NotreCouleur == Plateau.CouleurGaucheBleu)
-            {
-                Robots.GrosRobot.Virage(SensAR.Avant, SensGD.Gauche, 200, 73);
-                Plateau.Elements.Modules[5].IsAvailable = false;
-                Actionneur.BrasLunaireDroite.Attraper();
-            }
-            else
-            {
-                Robots.GrosRobot.Virage(SensAR.Avant, SensGD.Droite, 200, 73);
-                Plateau.Elements.Modules[6].IsAvailable = false;
-                Actionneur.BrasLunaireGauche.Attraper();
-            }
-
-            Robots.GrosRobot.Rapide();
-
-            Thread.Sleep(200);
+            // Coder ICI les actions fixe au départ du match
         }
 
         private void HokuyoRecalViolet()

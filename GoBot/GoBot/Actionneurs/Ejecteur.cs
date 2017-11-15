@@ -82,7 +82,7 @@ namespace GoBot.Actionneurs
 
         public void PositionnerCouleur()
         {
-            if (Plateau.NotreCouleur == Plateau.CouleurDroiteJaune)
+            if (Plateau.NotreCouleur == Plateau.CouleurDroiteOrange)
                 Positionne(IsYellow);
             else
                 Positionne(IsBlue);

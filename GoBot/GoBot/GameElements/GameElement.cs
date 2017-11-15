@@ -5,11 +5,11 @@ namespace GoBot.ElementsJeu
 {
     public abstract class GameElement
     {
-        private RealPoint position;
-        private bool isAvailable;
-        private bool isHover;
-        private int hoverRadius;
-        private Color color;
+        protected RealPoint position;
+        protected bool isAvailable;
+        protected bool isHover;
+        protected int hoverRadius;
+        protected Color color;
 
         /// <summary>
         /// Obtient ou définit si l'élement de jeu est parti et donc n'est plus disponible
@@ -67,7 +67,7 @@ namespace GoBot.ElementsJeu
             this.hoverRadius = hoverRadius;
             this.position = position;
             this.color = color;
-            this.isAvailable = false;
+            this.isAvailable = true;
         }
 
         /// <summary>

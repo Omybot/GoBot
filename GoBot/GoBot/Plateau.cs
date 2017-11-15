@@ -37,10 +37,8 @@ namespace GoBot
 
         public static RealPoint PositionCibleRobot { get; set; }
 
-        public static Elements Elements { get; protected set; }
-
-        public static List<GameElement> ElementsJeu { get; private set; }
-
+        public static GameElements Elements { get; protected set; }
+        
         private static Color notreCouleur;
         public static Color NotreCouleur
         {
@@ -50,7 +48,7 @@ namespace GoBot
                 if (notreCouleur != value)
                 {
                     notreCouleur = value;
-                    if(Plateau.NotreCouleur == Plateau.CouleurGaucheBleu)
+                    if(Plateau.NotreCouleur == Plateau.CouleurGaucheVert)
                         Devices.Devices.RecGoBot.SetLedColor(Color.Blue);
                     else
                         Devices.Devices.RecGoBot.SetLedColor(Color.Yellow);
@@ -73,8 +71,8 @@ namespace GoBot
         }
         public static event EventHandler ScoreChange;
 
-        public static Color CouleurGaucheBleu { get { return Color.FromArgb(40, 81, 174);} }
-        public static Color CouleurDroiteJaune { get { return Color.FromArgb(238, 198, 27); } }
+        public static Color CouleurGaucheVert { get { return Color.FromArgb(96, 153, 58); } }
+        public static Color CouleurDroiteOrange { get { return Color.FromArgb(219, 114, 52); } }
 
         /// <summary>
         /// Largeur de la table (mm)
@@ -109,7 +107,7 @@ namespace GoBot
         {
             if (!Execution.DesignMode)
             {
-                Elements = new Elements();
+                Elements = new GameElements();
                 ObstaclesPieds = new IShape[0];
                 RayonAdversaireInitial = 200;
                 RayonAdversaire = RayonAdversaireInitial;
@@ -123,7 +121,6 @@ namespace GoBot
                 SauverGraph();
 
                 Balise.PositionEnnemisActualisee += Balise_PositionEnnemisActualisee;
-                InitElementsJeu();
                 
                 SemaphoreCollisions = new Semaphore(0, int.MaxValue);
                 thCollisions = new Thread(ThreadTestCollisions);
@@ -169,20 +166,6 @@ namespace GoBot
             Robots.GrosRobot.MajGraphFranchissable();
 
             SemaphoreCollisions.Release();
-        }
-
-        public static void InitElementsJeu()
-        {
-            // Initialiser les elements de jeu ici
-
-
-            ElementsJeu = new List<GameElement>();
-
-            // Les ajouters à ElementsJeu
-
-            ElementsJeu.AddRange(Elements.Fusees);
-            ElementsJeu.AddRange(Elements.Modules);
-            ElementsJeu.AddRange(Elements.ZonesDepose);
         }
 
         public static void Init()

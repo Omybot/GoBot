@@ -18,7 +18,7 @@ namespace GoBot
         {
             get
             {
-                return Plateau.NotreCouleur == Plateau.CouleurGaucheBleu ? PositionDepartGauche : PositionDepartDroite;
+                return Plateau.NotreCouleur == Plateau.CouleurGaucheVert ? PositionDepartGauche : PositionDepartDroite;
             }
         }
 
@@ -40,21 +40,21 @@ namespace GoBot
 
             Robots.GrosRobot.Avancer(898-160); // 160 = taille calle
 
-            if (Plateau.NotreCouleur == Plateau.CouleurGaucheBleu)
+            if (Plateau.NotreCouleur == Plateau.CouleurGaucheVert)
                 Robots.GrosRobot.PivotDroite(90-6-7);
             else
                 Robots.GrosRobot.PivotGauche(90-6-7);
 
             Robots.GrosRobot.Reculer(540);
 
-            if (Plateau.NotreCouleur == Plateau.CouleurGaucheBleu)
+            if (Plateau.NotreCouleur == Plateau.CouleurGaucheVert)
                 Robots.GrosRobot.PivotDroite(6);
             else
                 Robots.GrosRobot.PivotGauche(6);
 
             Robots.GrosRobot.Reculer(150);
 
-            if (Plateau.NotreCouleur == Plateau.CouleurGaucheBleu)
+            if (Plateau.NotreCouleur == Plateau.CouleurGaucheVert)
                 Robots.GrosRobot.PivotDroite(7);
             else
                 Robots.GrosRobot.PivotGauche(7);

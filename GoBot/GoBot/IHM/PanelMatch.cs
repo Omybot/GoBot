@@ -10,8 +10,8 @@ namespace GoBot.IHM
         public PanelMatch()
         {
             InitializeComponent();
-            btnJoueurDroite.BackColor = Plateau.CouleurDroiteJaune;
-            btnJoueurGauche.BackColor = Plateau.CouleurGaucheBleu;
+            btnJoueurDroite.BackColor = Plateau.CouleurDroiteOrange;
+            btnJoueurGauche.BackColor = Plateau.CouleurGaucheVert;
 
             if (!Execution.DesignMode)
             {
@@ -30,22 +30,22 @@ namespace GoBot.IHM
 
         private void btnCouleurJoueurDroite_Click(object sender, EventArgs e)
         {
-            Plateau.NotreCouleur = Plateau.CouleurDroiteJaune;
+            Plateau.NotreCouleur = Plateau.CouleurDroiteOrange;
         }
 
         private void btnCouleurJoueurGauche_Click(object sender, EventArgs e)
         {
-            Plateau.NotreCouleur = Plateau.CouleurGaucheBleu;
+            Plateau.NotreCouleur = Plateau.CouleurGaucheVert;
         }
 
         public void CouleurGauche()
         {
-            pictureBoxCouleur.BackColor = Plateau.CouleurGaucheBleu;
+            pictureBoxCouleur.BackColor = Plateau.CouleurGaucheVert;
         }
 
         public void CouleurDroite()
         {
-            pictureBoxCouleur.BackColor = Plateau.CouleurDroiteJaune;
+            pictureBoxCouleur.BackColor = Plateau.CouleurDroiteOrange;
         }
 
         Thread thRecallageGros;
@@ -79,9 +79,9 @@ namespace GoBot.IHM
         {
             this.InvokeAuto(() =>
             {
-                if (Plateau.NotreCouleur == Plateau.CouleurGaucheBleu)
+                if (Plateau.NotreCouleur == Plateau.CouleurGaucheVert)
                     CouleurGauche();
-                else if (Plateau.NotreCouleur == Plateau.CouleurDroiteJaune)
+                else if (Plateau.NotreCouleur == Plateau.CouleurDroiteOrange)
                     CouleurDroite();
             });
         }
@@ -111,7 +111,7 @@ namespace GoBot.IHM
             {
                 Plateau.NotreCouleurChange += new EventHandler(Plateau_NotreCouleurChange);
 
-                if (Plateau.NotreCouleur == Plateau.CouleurDroiteJaune)
+                if (Plateau.NotreCouleur == Plateau.CouleurDroiteOrange)
                     CouleurDroite();
                 else
                     CouleurGauche();

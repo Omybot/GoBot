@@ -16,7 +16,7 @@ namespace GoBot.Enchainements
 
             Plateau.Balise.VitesseRotation(150);
 
-            if (Plateau.NotreCouleur == Plateau.CouleurGaucheBleu)
+            if (Plateau.NotreCouleur == Plateau.CouleurGaucheVert)
                 Robots.GrosRobot.Virage(SensAR.Avant, SensGD.Gauche, 232, 70);
             else
                 Robots.GrosRobot.Virage(SensAR.Avant, SensGD.Droite, 232, 70);
