@@ -61,8 +61,6 @@ namespace GoBot
 
         public static bool ReflecteursNosRobots { get; set; }
 
-        public static IShape[] ObstaclesPieds { get; set; }
-
         private static int score;
         public static int Score
         {
@@ -108,7 +106,6 @@ namespace GoBot
             if (!Execution.DesignMode)
             {
                 Elements = new GameElements();
-                ObstaclesPieds = new IShape[0];
                 RayonAdversaireInitial = 200;
                 RayonAdversaire = RayonAdversaireInitial;
 
@@ -294,55 +291,14 @@ namespace GoBot
             AjouterObstacle(new Segment(new RealPoint(Largeur - 4, Hauteur - 4), new RealPoint(0, Hauteur - 4)), true);
             AjouterObstacle(new Segment(new RealPoint(0, Hauteur - 4), new RealPoint(0, 0)), true);
 
-            // Zones de départ
-            AjouterObstacle(new PolygonRectangle(new RealPoint(0, 0), 710, 360 + 22), true);
-            AjouterObstacle(new PolygonRectangle(new RealPoint(3000 - 710, 0), 710, 360 + 22), true);
+            // Distributeurs
+            AjouterObstacle(new Circle(new RealPoint(0, 840), 110), true);
+            AjouterObstacle(new Circle(new RealPoint(610, 2000), 110), true);
+            AjouterObstacle(new Circle(new RealPoint(2390, 2000), 110), true);
+            AjouterObstacle(new Circle(new RealPoint(3000, 840), 110), true);
 
-            // Zones de départ
-            AjouterObstacle(new PolygonRectangle(new RealPoint(0, 0), 710, 360 + 22), true);
-            AjouterObstacle(new PolygonRectangle(new RealPoint(3000 - 710, 0), 710, 360 + 22), true);
-
-            // Zones latérales
-            AjouterObstacle(new PolygonRectangle(new RealPoint(0, 700 - 22), 80 + 22, 1150 - 700 + 22 + 22), true);
-            AjouterObstacle(new PolygonRectangle(new RealPoint(3000 - 80 - 22, 700 - 22), 80 + 22, 1150 - 700 + 22 + 22), true);
-
-            // Petits cratères
-            AjouterObstacle(new Circle(new RealPoint(650, 540), 126), true);
-            AjouterObstacle(new Circle(new RealPoint(3000 - 650, 540), 126), true);
-
-            AjouterObstacle(new Circle(new RealPoint(1070, 1870), 126), true);
-            AjouterObstacle(new Circle(new RealPoint(3000 - 1070, 1870), 126), true);
-
-            // Grands cratères
-            AjouterObstacle(new Circle(new RealPoint(0, 2000), 510 + 30), true);
-            AjouterObstacle(new Circle(new RealPoint(3000, 2000), 510 + 30), true);
-
-            // Base de lancement
-            AjouterObstacle(new Circle(new RealPoint(1500, 2000), 200), true);
-            AjouterObstacle(new PolygonRectangle(new RealPoint(1500 - 40 - 28, 2000 - 200 - 600), 28 * 2 + 80, 600), true);
-
-            double cos45 = Math.Cos(45.0 / 180 * Math.PI);
-            points.Clear();
-            points.Add(new RealPoint(1500 + cos45 * 800 - cos45 * 68, 2000 - cos45 * 800 - cos45 * 68));
-            points.Add(new RealPoint(1500 + cos45 * 200 - cos45 * 68, 2000 - cos45 * 200 - cos45 * 68));
-            points.Add(new RealPoint(1500 + cos45 * 200 + cos45 * 68, 2000 - cos45 * 200 + cos45 * 68));
-            points.Add(new RealPoint(1500 + cos45 * 800 + cos45 * 68, 2000 - cos45 * 800 + cos45 * 68));
-            AjouterObstacle(new Polygon(points), true);
-
-            points.Clear();
-            points.Add(new RealPoint(1500 - cos45 * 800 + cos45 * 68, 2000 - cos45 * 800 - cos45 * 68));
-            points.Add(new RealPoint(1500 - cos45 * 200 + cos45 * 68, 2000 - cos45 * 200 - cos45 * 68));
-            points.Add(new RealPoint(1500 - cos45 * 200 - cos45 * 68, 2000 - cos45 * 200 + cos45 * 68));
-            points.Add(new RealPoint(1500 - cos45 * 800 - cos45 * 68, 2000 - cos45 * 800 + cos45 * 68));
-            AjouterObstacle(new Polygon(points), true);
-
-            // Fusées
-            AjouterObstacle(new Circle(new RealPoint(1150, 40), 40), true);
-            AjouterObstacle(new Circle(new RealPoint(3000 - 1150, 40), 40), true);
-
-            AjouterObstacle(new Circle(new RealPoint(40, 1350), 40), true);
-            AjouterObstacle(new Circle(new RealPoint(3000 - 40, 1350), 40), true);
-
+            // Stations dépuration
+            AjouterObstacle(new PolygonRectangle(new RealPoint(894, 1750), 1200, 250), true);
         }
 
         /// <summary>
