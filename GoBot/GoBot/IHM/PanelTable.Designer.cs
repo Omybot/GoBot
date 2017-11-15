@@ -51,28 +51,28 @@
             this.groupBoxDeplacements = new System.Windows.Forms.GroupBox();
             this.numNbPoints = new System.Windows.Forms.NumericUpDown();
             this.btnTrajLancer = new System.Windows.Forms.Button();
-            this.labelPlus1 = new Composants.LabelPlus();
             this.btnTrajCreer = new System.Windows.Forms.Button();
-            this.lblGrosRobotDeplacements = new Composants.LabelPlus();
-            this.btnPathRPCentre = new System.Windows.Forms.Button();
-            this.btnPathRPFace = new System.Windows.Forms.Button();
-            this.btnTeleportRPCentre = new System.Windows.Forms.Button();
-            this.btnTeleportRPFace = new System.Windows.Forms.Button();
             this.toolTip = new System.Windows.Forms.ToolTip(this.components);
-            this.btnReset = new System.Windows.Forms.Button();
-            this.btnAffichage = new System.Windows.Forms.Button();
-            this.pictureBoxTable = new System.Windows.Forms.PictureBox();
             this.groupBoxAffichage = new System.Windows.Forms.GroupBox();
             this.btnZoneDepart = new System.Windows.Forms.Button();
             this.btnTestAsser = new System.Windows.Forms.Button();
             this.button1 = new System.Windows.Forms.Button();
             this.button2 = new System.Windows.Forms.Button();
             this.btnHokuyoUart = new System.Windows.Forms.Button();
+            this.btnPathRPCentre = new System.Windows.Forms.Button();
+            this.btnPathRPFace = new System.Windows.Forms.Button();
+            this.btnTeleportRPCentre = new System.Windows.Forms.Button();
+            this.btnTeleportRPFace = new System.Windows.Forms.Button();
+            this.btnReset = new System.Windows.Forms.Button();
+            this.btnAffichage = new System.Windows.Forms.Button();
+            this.pictureBoxTable = new System.Windows.Forms.PictureBox();
+            this.labelPlus1 = new Composants.LabelPlus();
+            this.lblGrosRobotDeplacements = new Composants.LabelPlus();
             this.groupBox.SuspendLayout();
             this.groupBoxDeplacements.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numNbPoints)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBoxTable)).BeginInit();
             this.groupBoxAffichage.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBoxTable)).BeginInit();
             this.SuspendLayout();
             // 
             // boxSourisObstacle
@@ -317,15 +317,6 @@
             this.btnTrajLancer.UseVisualStyleBackColor = true;
             this.btnTrajLancer.Click += new System.EventHandler(this.btnTrajLancer_Click);
             // 
-            // labelPlus1
-            // 
-            this.labelPlus1.AutoSize = true;
-            this.labelPlus1.Location = new System.Drawing.Point(6, 65);
-            this.labelPlus1.Name = "labelPlus1";
-            this.labelPlus1.Size = new System.Drawing.Size(57, 13);
-            this.labelPlus1.TabIndex = 73;
-            this.labelPlus1.Text = "Trajectoire";
-            // 
             // btnTrajCreer
             // 
             this.btnTrajCreer.Location = new System.Drawing.Point(86, 60);
@@ -336,14 +327,65 @@
             this.btnTrajCreer.UseVisualStyleBackColor = true;
             this.btnTrajCreer.Click += new System.EventHandler(this.btnTrajCreer_Click);
             // 
-            // lblGrosRobotDeplacements
+            // groupBoxAffichage
             // 
-            this.lblGrosRobotDeplacements.AutoSize = true;
-            this.lblGrosRobotDeplacements.Location = new System.Drawing.Point(6, 29);
-            this.lblGrosRobotDeplacements.Name = "lblGrosRobotDeplacements";
-            this.lblGrosRobotDeplacements.Size = new System.Drawing.Size(56, 13);
-            this.lblGrosRobotDeplacements.TabIndex = 64;
-            this.lblGrosRobotDeplacements.Text = "Gros robot";
+            this.groupBoxAffichage.Controls.Add(this.checkedListBox);
+            this.groupBoxAffichage.Location = new System.Drawing.Point(0, 71);
+            this.groupBoxAffichage.Name = "groupBoxAffichage";
+            this.groupBoxAffichage.Size = new System.Drawing.Size(200, 164);
+            this.groupBoxAffichage.TabIndex = 68;
+            this.groupBoxAffichage.TabStop = false;
+            this.groupBoxAffichage.Text = "Affichage";
+            // 
+            // btnZoneDepart
+            // 
+            this.btnZoneDepart.Location = new System.Drawing.Point(14, 319);
+            this.btnZoneDepart.Name = "btnZoneDepart";
+            this.btnZoneDepart.Size = new System.Drawing.Size(98, 23);
+            this.btnZoneDepart.TabIndex = 69;
+            this.btnZoneDepart.Text = "Retour départ";
+            this.btnZoneDepart.UseVisualStyleBackColor = true;
+            this.btnZoneDepart.Click += new System.EventHandler(this.btnZoneDepart_Click);
+            // 
+            // btnTestAsser
+            // 
+            this.btnTestAsser.Location = new System.Drawing.Point(118, 304);
+            this.btnTestAsser.Name = "btnTestAsser";
+            this.btnTestAsser.Size = new System.Drawing.Size(75, 23);
+            this.btnTestAsser.TabIndex = 70;
+            this.btnTestAsser.Text = "Test asser";
+            this.btnTestAsser.UseVisualStyleBackColor = true;
+            this.btnTestAsser.Click += new System.EventHandler(this.btnTestAsser_Click);
+            // 
+            // button1
+            // 
+            this.button1.Location = new System.Drawing.Point(0, 624);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(75, 23);
+            this.button1.TabIndex = 71;
+            this.button1.Text = "HokuyoTest";
+            this.button1.UseVisualStyleBackColor = true;
+            this.button1.Click += new System.EventHandler(this.button1_Click);
+            // 
+            // button2
+            // 
+            this.button2.Location = new System.Drawing.Point(81, 608);
+            this.button2.Name = "button2";
+            this.button2.Size = new System.Drawing.Size(75, 23);
+            this.button2.TabIndex = 72;
+            this.button2.Text = "TestPolaire";
+            this.button2.UseVisualStyleBackColor = true;
+            this.button2.Click += new System.EventHandler(this.pwet_Click);
+            // 
+            // btnHokuyoUart
+            // 
+            this.btnHokuyoUart.Location = new System.Drawing.Point(0, 595);
+            this.btnHokuyoUart.Name = "btnHokuyoUart";
+            this.btnHokuyoUart.Size = new System.Drawing.Size(75, 23);
+            this.btnHokuyoUart.TabIndex = 74;
+            this.btnHokuyoUart.Text = "HokuyoUart";
+            this.btnHokuyoUart.UseVisualStyleBackColor = true;
+            this.btnHokuyoUart.Click += new System.EventHandler(this.btnHokuyoUart_Click);
             // 
             // btnPathRPCentre
             // 
@@ -415,9 +457,9 @@
             // 
             this.pictureBoxTable.BackColor = System.Drawing.Color.Transparent;
             this.pictureBoxTable.Image = global::GoBot.Properties.Resources.TablePlan;
-            this.pictureBoxTable.Location = new System.Drawing.Point(204, 16);
+            this.pictureBoxTable.Location = new System.Drawing.Point(273, 16);
             this.pictureBoxTable.Name = "pictureBoxTable";
-            this.pictureBoxTable.Size = new System.Drawing.Size(945, 650);
+            this.pictureBoxTable.Size = new System.Drawing.Size(876, 650);
             this.pictureBoxTable.TabIndex = 0;
             this.pictureBoxTable.TabStop = false;
             this.pictureBoxTable.Click += new System.EventHandler(this.pictureBoxTable_Click);
@@ -425,65 +467,23 @@
             this.pictureBoxTable.MouseMove += new System.Windows.Forms.MouseEventHandler(this.pictureBoxTable_MouseMove);
             this.pictureBoxTable.MouseUp += new System.Windows.Forms.MouseEventHandler(this.pictureBoxTable_MouseUp);
             // 
-            // groupBoxAffichage
+            // labelPlus1
             // 
-            this.groupBoxAffichage.Controls.Add(this.checkedListBox);
-            this.groupBoxAffichage.Location = new System.Drawing.Point(0, 71);
-            this.groupBoxAffichage.Name = "groupBoxAffichage";
-            this.groupBoxAffichage.Size = new System.Drawing.Size(200, 164);
-            this.groupBoxAffichage.TabIndex = 68;
-            this.groupBoxAffichage.TabStop = false;
-            this.groupBoxAffichage.Text = "Affichage";
+            this.labelPlus1.AutoSize = true;
+            this.labelPlus1.Location = new System.Drawing.Point(6, 65);
+            this.labelPlus1.Name = "labelPlus1";
+            this.labelPlus1.Size = new System.Drawing.Size(57, 13);
+            this.labelPlus1.TabIndex = 73;
+            this.labelPlus1.Text = "Trajectoire";
             // 
-            // btnZoneDepart
+            // lblGrosRobotDeplacements
             // 
-            this.btnZoneDepart.Location = new System.Drawing.Point(14, 319);
-            this.btnZoneDepart.Name = "btnZoneDepart";
-            this.btnZoneDepart.Size = new System.Drawing.Size(98, 23);
-            this.btnZoneDepart.TabIndex = 69;
-            this.btnZoneDepart.Text = "Retour départ";
-            this.btnZoneDepart.UseVisualStyleBackColor = true;
-            this.btnZoneDepart.Click += new System.EventHandler(this.btnZoneDepart_Click);
-            // 
-            // btnTestAsser
-            // 
-            this.btnTestAsser.Location = new System.Drawing.Point(118, 304);
-            this.btnTestAsser.Name = "btnTestAsser";
-            this.btnTestAsser.Size = new System.Drawing.Size(75, 23);
-            this.btnTestAsser.TabIndex = 70;
-            this.btnTestAsser.Text = "Test asser";
-            this.btnTestAsser.UseVisualStyleBackColor = true;
-            this.btnTestAsser.Click += new System.EventHandler(this.btnTestAsser_Click);
-            // 
-            // button1
-            // 
-            this.button1.Location = new System.Drawing.Point(0, 624);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(75, 23);
-            this.button1.TabIndex = 71;
-            this.button1.Text = "HokuyoTest";
-            this.button1.UseVisualStyleBackColor = true;
-            this.button1.Click += new System.EventHandler(this.button1_Click);
-            // 
-            // button2
-            // 
-            this.button2.Location = new System.Drawing.Point(81, 608);
-            this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(75, 23);
-            this.button2.TabIndex = 72;
-            this.button2.Text = "TestPolaire";
-            this.button2.UseVisualStyleBackColor = true;
-            this.button2.Click += new System.EventHandler(this.pwet_Click);
-            // 
-            // btnHokuyoUart
-            // 
-            this.btnHokuyoUart.Location = new System.Drawing.Point(0, 595);
-            this.btnHokuyoUart.Name = "btnHokuyoUart";
-            this.btnHokuyoUart.Size = new System.Drawing.Size(75, 23);
-            this.btnHokuyoUart.TabIndex = 74;
-            this.btnHokuyoUart.Text = "HokuyoUart";
-            this.btnHokuyoUart.UseVisualStyleBackColor = true;
-            this.btnHokuyoUart.Click += new System.EventHandler(this.btnHokuyoUart_Click);
+            this.lblGrosRobotDeplacements.AutoSize = true;
+            this.lblGrosRobotDeplacements.Location = new System.Drawing.Point(6, 29);
+            this.lblGrosRobotDeplacements.Name = "lblGrosRobotDeplacements";
+            this.lblGrosRobotDeplacements.Size = new System.Drawing.Size(56, 13);
+            this.lblGrosRobotDeplacements.TabIndex = 64;
+            this.lblGrosRobotDeplacements.Text = "Gros robot";
             // 
             // PanelTable
             // 
@@ -521,8 +521,8 @@
             this.groupBoxDeplacements.ResumeLayout(false);
             this.groupBoxDeplacements.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numNbPoints)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBoxTable)).EndInit();
             this.groupBoxAffichage.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBoxTable)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
