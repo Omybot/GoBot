@@ -7,16 +7,16 @@ using System.Text;
 
 namespace GoBot.ElementsJeu
 {
-    public class Module : ElementJeu
+    public class Module : GameElement
     {
         private Color couleur;
         private int numero;
 
         public Module(int num, RealPoint position, Color couleur, int rayon)
-            : base(position, rayon)
+            : base(position, couleur, rayon)
         {
             numero = num;
-            Hover = false;
+            IsHover = false;
             Couleur = couleur;
         }
 
@@ -28,10 +28,10 @@ namespace GoBot.ElementsJeu
         
         public override void Paint(Graphics g, WorldScale scale)
         {
-            if (!Ramasse)
+            if (IsAvailable)
             {
                 Point center = scale.RealToScreenPosition(Position);
-                Size size = new Size(scale.RealToScreenDistance(RayonHover) * 2, scale.RealToScreenDistance(RayonHover) * 2);
+                Size size = new Size(scale.RealToScreenDistance(HoverRadius) * 2, scale.RealToScreenDistance(HoverRadius) * 2);
                 Rectangle rect = new Rectangle(center.X - size.Width / 2, center.Y - size.Height / 2, size.Width, size.Height);
                 Brush b;
 
@@ -52,7 +52,7 @@ namespace GoBot.ElementsJeu
                     b.Dispose();
                 }
 
-                if (Hover)
+                if (IsHover)
                     g.DrawEllipse(Pens.White, rect);
                 else
                     g.DrawEllipse(Pens.Black, rect);

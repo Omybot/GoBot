@@ -150,13 +150,13 @@ namespace GoBot.IHM
 
                 for (int i = 0; i < Plateau.ElementsJeu.Count; i++)
                 {
-                    if (positionRelle.Distance(Plateau.ElementsJeu[i].Position) < Plateau.ElementsJeu[i].RayonHover)
+                    if (positionRelle.Distance(Plateau.ElementsJeu[i].Position) < Plateau.ElementsJeu[i].HoverRadius)
                     {
-                        Plateau.ElementsJeu[i].Hover = true;
+                        Plateau.ElementsJeu[i].IsHover = true;
                         hoverElement = true;
                     }
                     else
-                        Plateau.ElementsJeu[i].Hover = false;
+                        Plateau.ElementsJeu[i].IsHover = false;
                 }
 
                 if (hoverElement)
@@ -194,14 +194,14 @@ namespace GoBot.IHM
 
         private void CheckElementClick()
         {
-            foreach (ElementJeu element in Plateau.Elements)
-                if (element.Hover)
+            foreach (GameElement element in Plateau.Elements)
+                if (element.IsHover)
                     ThreadPool.QueueUserWorkItem(new WaitCallback(StartElementMouvement), element);
         }
 
         private void StartElementMouvement(Object element)
         {
-            ((ElementJeu)element).ClickAction();
+            ((GameElement)element).ClickAction();
         }
         
         //MouseEventArgs ev;

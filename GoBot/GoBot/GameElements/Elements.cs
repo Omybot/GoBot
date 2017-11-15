@@ -8,7 +8,7 @@ using System.Collections;
 
 namespace GoBot.ElementsJeu
 {
-    public class Elements : IEnumerable<ElementJeu>
+    public class Elements : IEnumerable<GameElement>
     {
         public Elements()
         {
@@ -45,11 +45,11 @@ namespace GoBot.ElementsJeu
 
         public List<ZoneDeposeModules> ZonesDepose { get; protected set; }
 
-        public IEnumerable<ElementJeu> AllElements
+        public IEnumerable<GameElement> AllElements
         {
             get
             {
-                IEnumerable<ElementJeu> elements = Enumerable.Empty<ElementJeu>();
+                IEnumerable<GameElement> elements = Enumerable.Empty<GameElement>();
                 elements = elements.Concat(Fusees);
                 elements = elements.Concat(Modules);
                 elements = elements.Concat(ZonesDepose);
@@ -58,7 +58,7 @@ namespace GoBot.ElementsJeu
             }
         }
 
-        public IEnumerator<ElementJeu> GetEnumerator()
+        public IEnumerator<GameElement> GetEnumerator()
         {
             return AllElements.GetEnumerator();
         }

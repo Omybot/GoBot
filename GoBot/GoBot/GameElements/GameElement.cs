@@ -1,0 +1,86 @@
+﻿using GoBot.Geometry.Shapes;
+using System.Drawing;
+
+namespace GoBot.ElementsJeu
+{
+    public abstract class GameElement
+    {
+        private RealPoint position;
+        private bool isAvailable;
+        private bool isHover;
+        private int hoverRadius;
+        private Color color;
+
+        /// <summary>
+        /// Obtient ou définit si l'élement de jeu est parti et donc n'est plus disponible
+        /// </summary>
+        public bool IsAvailable
+        {
+            get { return isAvailable; }
+            set { isAvailable = value; }
+        }
+
+        /// <summary>
+        /// Obtient ou définir la couleur de l'action (joueur propriétaire ou blanc)
+        /// </summary>
+        public Color Color
+        {
+            get { return color; }
+            set { color = value; }
+        }
+
+        /// <summary>
+        /// Position du centre de l'action
+        /// </summary>
+        public RealPoint Position
+        {
+            get { return position; }
+            set { position = value; }
+        }
+        
+        /// <summary>
+        /// Obtient ou définit si l'action est actuellement survolée par la souris
+        /// </summary>
+        public bool IsHover
+        {
+            get { return isHover; }
+            set { isHover = value; }
+        }
+        
+        /// <summary>
+        /// Obtient ou définit le rayon du srvol de la souris
+        /// </summary>
+        public int HoverRadius
+        {
+            get { return hoverRadius; }
+            set { hoverRadius = value; }
+        }
+
+        /// <summary>
+        /// Constructeur
+        /// </summary>
+        /// <param name="position">Position de l'élément</param>
+        /// <param name="color">Couleur d'appartenance de l'élément</param>
+        /// <param name="hoverRadius">Rayon de survol de l'élément</param>
+        public GameElement(RealPoint position, Color color, int hoverRadius)
+        {
+            this.hoverRadius = hoverRadius;
+            this.position = position;
+            this.color = color;
+            this.isAvailable = false;
+        }
+
+        /// <summary>
+        /// Peint l'élément sur le Graphic donné à l'échelle donnée
+        /// </summary>
+        /// <param name="g">Graphic sur lequel peindre</param>
+        /// <param name="scale">Echelle de peinture</param>
+        public abstract void Paint(Graphics g, WorldScale scale);
+
+        /// <summary>
+        /// Action à executer au clic de la souris
+        /// </summary>
+        /// <returns>Vrai si l'éction a été correctement executée</returns>
+        public abstract bool ClickAction();
+    }
+}

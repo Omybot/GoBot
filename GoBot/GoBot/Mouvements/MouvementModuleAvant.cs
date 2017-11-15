@@ -35,7 +35,7 @@ namespace GoBot.Mouvements
             get { return Robots.GrosRobot; }
         }
 
-        public override ElementJeu Element
+        public override GameElement Element
         {
             get { return module; }
         }
@@ -61,7 +61,7 @@ namespace GoBot.Mouvements
             Actionneurs.Actionneur.BrasLunaire.Fermer();
 
             Actionneur.GestionModuleSupervisee.AvalerModule();
-            module.Ramasse = true;
+            module.IsAvailable = false;
 
             if (num == 2) // Gros patch déblocage
                 Robots.GrosRobot.Reculer(250);
@@ -81,7 +81,7 @@ namespace GoBot.Mouvements
         {
             get
             {
-                if (module.Ramasse || Actionneur.GestionModuleSupervisee.PlacesLibres == 0)
+                if (!module.IsAvailable || Actionneur.GestionModuleSupervisee.PlacesLibres == 0)
                     return 0;
 
                 double facteurTemps = 1;

@@ -36,7 +36,7 @@ namespace GoBot.Mouvements
             get { return Robots.GrosRobot; }
         }
 
-        public override ElementJeu Element
+        public override GameElement Element
         {
             get { return fusee; }
         }

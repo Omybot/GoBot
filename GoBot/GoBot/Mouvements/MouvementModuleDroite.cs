@@ -35,7 +35,7 @@ namespace GoBot.Mouvements
             get { return Robots.GrosRobot; }
         }
 
-        public override ElementJeu Element
+        public override GameElement Element
         {
             get { return module; }
         }
@@ -50,7 +50,7 @@ namespace GoBot.Mouvements
             Robots.GrosRobot.Rapide();
             Actionneur.BrasLunaireDroite.Attraper();
             Thread.Sleep(200);
-            module.Ramasse = true;
+            module.IsAvailable = false;
         }
 
         protected override void ActionAvantDeplacement()
@@ -67,7 +67,7 @@ namespace GoBot.Mouvements
         {
             get
             {
-                if (module.Ramasse)
+                if (!module.IsAvailable)
                     return 0;
 
                 int facteurTemps = 1;

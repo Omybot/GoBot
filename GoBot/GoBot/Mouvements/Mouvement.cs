@@ -54,7 +54,7 @@ namespace GoBot.Mouvements
         public abstract double Score { get; }
         public abstract double ValeurAction { get; }
         public List<Position> Positions { get; protected set; }
-        public abstract ElementJeu Element { get; }
+        public abstract GameElement Element { get; }
         public abstract Robot Robot { get; }
         public DateTime DateMinimum { get; set; }
         public abstract Color Couleur { get; }

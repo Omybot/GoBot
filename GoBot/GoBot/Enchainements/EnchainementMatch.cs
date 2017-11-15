@@ -119,13 +119,13 @@ namespace GoBot.Enchainements
             if (Plateau.NotreCouleur == Plateau.CouleurGaucheBleu)
             {
                 Robots.GrosRobot.Virage(SensAR.Avant, SensGD.Gauche, 200, 73);
-                Plateau.Elements.Modules[5].Ramasse = true;
+                Plateau.Elements.Modules[5].IsAvailable = false;
                 Actionneur.BrasLunaireDroite.Attraper();
             }
             else
             {
                 Robots.GrosRobot.Virage(SensAR.Avant, SensGD.Droite, 200, 73);
-                Plateau.Elements.Modules[6].Ramasse = true;
+                Plateau.Elements.Modules[6].IsAvailable = false;
                 Actionneur.BrasLunaireGauche.Attraper();
             }
 

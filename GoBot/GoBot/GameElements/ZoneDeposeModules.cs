@@ -8,7 +8,7 @@ using System.Text;
 
 namespace GoBot.ElementsJeu
 {
-    public class ZoneDeposeModules : ZoneInteret
+    public class ZoneDeposeModules : GameElementZone
     {
         int numero;
 

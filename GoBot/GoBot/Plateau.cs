@@ -39,7 +39,7 @@ namespace GoBot
 
         public static Elements Elements { get; protected set; }
 
-        public static List<ElementJeu> ElementsJeu { get; private set; }
+        public static List<GameElement> ElementsJeu { get; private set; }
 
         private static Color notreCouleur;
         public static Color NotreCouleur
@@ -176,7 +176,7 @@ namespace GoBot
             // Initialiser les elements de jeu ici
 
 
-            ElementsJeu = new List<ElementJeu>();
+            ElementsJeu = new List<GameElement>();
 
             // Les ajouters à ElementsJeu
 

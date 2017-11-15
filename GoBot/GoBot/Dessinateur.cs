@@ -287,9 +287,9 @@ namespace GoBot
             }
         }
 
-        private static void DessineElementsJeu(Graphics g, IEnumerable<ElementJeu> elements)
+        private static void DessineElementsJeu(Graphics g, IEnumerable<GameElement> elements)
         {
-            foreach (ElementJeu element in elements)
+            foreach (GameElement element in elements)
                 element.Paint(g, Scale);
         }
 
