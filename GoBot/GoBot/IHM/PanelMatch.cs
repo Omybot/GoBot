@@ -122,18 +122,18 @@ namespace GoBot.IHM
         {
             if (boxHomologtion.Checked)
             {
-                Plateau.Enchainement = new Enchainements.EnchainementHomologation();
+                Plateau.Strategy = new Strategies.EnchainementHomologation();
             }
             else
-                Plateau.Enchainement = null;
+                Plateau.Strategy = null;
         }
 
         private void boxAR_CheckedChanged(object sender, EventArgs e)
         {
             if (boxAR.Checked)
-                Plateau.Enchainement = new Enchainements.EnchainementAllerRetour();
+                Plateau.Strategy = new Strategies.StrategyRoundTrip();
             else
-                Plateau.Enchainement = null;
+                Plateau.Strategy = null;
         }
     }
 }

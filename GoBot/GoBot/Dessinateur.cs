@@ -6,7 +6,7 @@ using System.Drawing;
 using System.Threading;
 using GoBot.Geometry.Shapes;
 using AStarFolder;
-using GoBot.Enchainements;
+using GoBot.Strategies;
 using GoBot.Geometry;
 using GoBot.Balises;
 using GoBot.Actionneurs;
@@ -209,7 +209,7 @@ namespace GoBot
                         Robots.GrosRobot.PositionCible?.Paint(g, Color.Red, 5, Color.Red, Scale);
                         
                         if (AfficheCoutsMouvements)
-                            Plateau.Enchainement?.ListeMouvements?.ForEach(mouv => mouv.Paint(g, Scale));
+                            Plateau.Strategy?.Mouvements?.ForEach(mouv => mouv.Paint(g, Scale));
 
                         if ((modeCourant == MouseMode.PositionCentre || modeCourant == MouseMode.TeleportCentre) && positionDepart != null)
                         {

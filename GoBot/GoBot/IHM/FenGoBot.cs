@@ -9,7 +9,7 @@ using System.Windows.Forms;
 using GoBot.IHM;
 using Composants;
 using System.Net;
-using GoBot.Enchainements;
+using GoBot.Strategies;
 using GoBot.Geometry;
 using GoBot.Geometry.Shapes;
 using System.Threading;
@@ -158,8 +158,8 @@ namespace GoBot
             Robots.Delete();
             Execution.Shutdown = true;
 
-            if(Plateau.Enchainement != null)
-                Plateau.Enchainement.Stop();
+            if(Plateau.Strategy != null)
+                Plateau.Strategy.Stop();
 
             Process[] proc = Process.GetProcessesByName("GoBot");
             foreach(Process p in proc)

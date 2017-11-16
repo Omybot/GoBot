@@ -4,7 +4,7 @@ using GoBot.Geometry;
 using GoBot.Geometry.Shapes;
 using GoBot.Devices;
 using GoBot.ElementsJeu;
-using GoBot.Enchainements;
+using GoBot.Strategies;
 using GoBot.Mouvements;
 using System;
 using System.Collections.Generic;
@@ -62,17 +62,17 @@ namespace GoBot.IHM
                     lblPosGrosTeta.Text = Robots.GrosRobot.Position.Angle.ToString();
                 });
 
-                if (Plateau.Enchainement != null)
+                if (Plateau.Strategy != null)
                 {
-                    TimeSpan tempsRestant = Plateau.Enchainement.TempsRestant;
+                    TimeSpan tempsRestant = Plateau.Strategy.TimeBeforeEnd;
                     if (tempsRestant.TotalMilliseconds <= 0)
                         tempsRestant = new TimeSpan(0);
 
                     Color couleur;
-                    if (tempsRestant.TotalSeconds > Enchainement.DureeMatch.TotalSeconds / 2)
-                        couleur = Color.FromArgb((int)((Enchainement.DureeMatch.TotalSeconds - tempsRestant.TotalSeconds) * (150.0 / (Enchainement.DureeMatch.TotalSeconds / 2.0))), 150, 0);
+                    if (tempsRestant.TotalSeconds > Plateau.Strategy.MatchDuration.TotalSeconds / 2)
+                        couleur = Color.FromArgb((int)((Plateau.Strategy.MatchDuration.TotalSeconds - tempsRestant.TotalSeconds) * (150.0 / (Plateau.Strategy.MatchDuration.TotalSeconds / 2.0))), 150, 0);
                     else
-                        couleur = Color.FromArgb(150, 150 - (int)((Enchainement.DureeMatch.TotalSeconds / 2.0 - tempsRestant.TotalSeconds) * (150.0 / (Enchainement.DureeMatch.TotalSeconds / 2.0))), 0);
+                        couleur = Color.FromArgb(150, 150 - (int)((Plateau.Strategy.MatchDuration.TotalSeconds / 2.0 - tempsRestant.TotalSeconds) * (150.0 / (Plateau.Strategy.MatchDuration.TotalSeconds / 2.0))), 0);
 
                     this.InvokeAuto(() =>
                     {
@@ -205,8 +205,8 @@ namespace GoBot.IHM
 
         private void btnGo_Click(object sender, EventArgs e)
         {
-            Plateau.Enchainement = new EnchainementMatch();
-            Plateau.Enchainement.Executer();
+            Plateau.Strategy = new StrategyMatch();
+            Plateau.Strategy.Execute();
         }
 
         private void PanelTable_Load(object sender, EventArgs e)
@@ -295,8 +295,8 @@ namespace GoBot.IHM
 
         private void btnAleatoire_Click(object sender, EventArgs e)
         {
-            Plateau.Enchainement = new EnchainementAleatoire();
-            Plateau.Enchainement.Executer();
+            Plateau.Strategy = new StrategyRandomMoves();
+            Plateau.Strategy.Execute();
         }
         Position positionArrivee;
 
@@ -387,14 +387,14 @@ namespace GoBot.IHM
 
         private void btnStratNul_Click(object sender, EventArgs e)
         {
-            Plateau.Enchainement = new EnchainementAllerRetour();
-            Plateau.Enchainement.Executer();
+            Plateau.Strategy = new StrategyRoundTrip();
+            Plateau.Strategy.Execute();
         }
 
         private void btnStratTest_Click(object sender, EventArgs e)
         {
-            Plateau.Enchainement = new EnchainementHomologation();
-            Plateau.Enchainement.Executer();
+            Plateau.Strategy = new StrategyMinimumScore();
+            Plateau.Strategy.Execute();
         }
 
         private void btnTestAsser_Click(object sender, EventArgs e)
@@ -650,9 +650,9 @@ namespace GoBot.IHM
 
         private void ThreadEnchainement(Object o)
         {
-            Enchainement m = (Enchainement)o;
-            Plateau.Enchainement = m;
-            Plateau.Enchainement.Executer();
+            Strategy m = (Strategy)o;
+            Plateau.Strategy = m;
+            Plateau.Strategy.Execute();
         }
 
         private void ThreadHokuyoRecalViolet()

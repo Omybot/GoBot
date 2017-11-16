@@ -337,5 +337,51 @@ namespace GoBot.Devices
 
             return distanceSomme / nombreMesures;
         }
+        
+        private void HokuyoRecalViolet()
+        {
+            // A ranger
+            Robots.GrosRobot.PositionerAngle(180);
+
+            Thread.Sleep(500);
+
+            Angle a = CalculAngle(new Segment(new RealPoint(0, 50), new RealPoint(0, 900)), 50, 10);
+            if (a.InPositiveDegrees > 180)
+                Robots.GrosRobot.PivotDroite(a.InPositiveDegrees - 270);
+            else
+                Robots.GrosRobot.PivotGauche((90 - a.InPositiveDegrees));
+
+            Robots.GrosRobot.ReglerOffsetAsserv(new Position(180, Robots.GrosRobot.Position.Coordinates));
+
+            double distance = CalculDistanceX(new Segment(new RealPoint(0, 50), new RealPoint(0, 900)), 50, 2);
+            Robots.GrosRobot.ReglerOffsetAsserv(new Position(180, Robots.GrosRobot.Position.Coordinates.Translation(-distance, 0)));
+
+            distance = CalculDistanceY(970, 1170, 150, 2);
+            Robots.GrosRobot.ReglerOffsetAsserv(new Position(180, Robots.GrosRobot.Position.Coordinates.Translation(0, -distance)));
+        }
+
+        private void ThreadHokuyoRecalVert()
+        {
+            // A ranger
+            Robots.GrosRobot.PositionerAngle(0);
+
+            Thread.Sleep(500);
+
+            Angle a = CalculAngle(new Segment(new RealPoint(3000, 50), new RealPoint(3000, 900)), 50, 10);
+            if (a.InPositiveDegrees > 180)
+                Robots.GrosRobot.PivotDroite(a.InPositiveDegrees - 270);
+            else
+                Robots.GrosRobot.PivotGauche((90 - a.InPositiveDegrees));
+
+            Robots.GrosRobot.ReglerOffsetAsserv(new Position(0, Robots.GrosRobot.Position.Coordinates));
+
+            double distance = CalculDistanceX(new Segment(new RealPoint(3000, 50), new RealPoint(3000, 900)), 50, 10);
+            Robots.GrosRobot.ReglerOffsetAsserv(new Position(0, Robots.GrosRobot.Position.Coordinates.Translation(-(distance - 3000), 0)));
+
+            Robots.GrosRobot.PositionerAngle(45);
+
+            distance = CalculDistanceY(3000 - 1170, 3000 - 970, 150, 2);
+            Robots.GrosRobot.ReglerOffsetAsserv(new Position(0, Robots.GrosRobot.Position.Coordinates.Translation(0, -distance)));
+        }
     }
 }

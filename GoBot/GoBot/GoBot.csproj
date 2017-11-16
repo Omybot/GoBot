@@ -178,12 +178,11 @@
     <Compile Include="GameElements\GameElements.cs" />
     <Compile Include="GameElements\CubesCross.cs" />
     <Compile Include="GameElements\GameElementZone.cs" />
-    <Compile Include="Enchainements\EnchainementAllerRetour.cs" />
-    <Compile Include="Enchainements\EnchainementHomologation.cs" />
-    <Compile Include="Enchainements\EnchainementTest.cs" />
-    <Compile Include="Enchainements\EnchainementNul.cs" />
-    <Compile Include="Enchainements\EnchainementAleatoire.cs" />
-    <Compile Include="Enchainements\EnchainementMatch.cs" />
+    <Compile Include="Strategies\StrategyRoundTrip.cs" />
+    <Compile Include="Strategies\StrategyMinimumScore.cs" />
+    <Compile Include="Strategies\StrategyTest.cs" />
+    <Compile Include="Strategies\StrategyRandomMoves.cs" />
+    <Compile Include="Strategies\StrategyMatch.cs" />
     <Compile Include="EventsReplay.cs" />
     <Compile Include="IHM\PanelActionneurGeneric.cs">
       <SubType>UserControl</SubType>
@@ -390,7 +389,7 @@
     <Compile Include="Geometry\Maths.cs" />
     <Compile Include="Geometry\Position.cs" />
     <Compile Include="Config.cs" />
-    <Compile Include="Enchainements\Enchainement.cs" />
+    <Compile Include="Strategies\Strategy.cs" />
     <Compile Include="Enums.cs" />
     <Compile Include="Communications\ConnectionChecker.cs" />
     <Compile Include="IHM\PanelBalise.cs">

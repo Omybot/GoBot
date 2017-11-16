@@ -11,7 +11,7 @@ using GoBot.Geometry;
 using AStarFolder;
 using System.Threading;
 using GoBot.Mouvements;
-using GoBot.Enchainements;
+using GoBot.Strategies;
 using GoBot.Balises;
 using GoBot.ElementsJeu;
 using GoBot.Communications;

@@ -2,23 +2,26 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using GoBot.Geometry.Shapes;
-using AStarFolder;
 using System.Threading;
-using GoBot.Actionneurs;
-using GoBot.Mouvements;
-using GoBot.Geometry;
 
-namespace GoBot.Enchainements
+using GoBot.Mouvements;
+
+namespace GoBot.Strategies
 {
-    class EnchainementTest : Enchainement
+    class StrategyTest : Strategy
     {
-        protected override void ThreadGros()
+        List<Mouvement> mouvements;
+
+        protected override void SequenceBegin()
         {
             List<Mouvement> mouvements = new List<Mouvement>();
-            // Charger les mouvements à tester
 
+            // Charger ICI les mouvements à tester
 
+        }
+
+        protected override void SequenceCore()
+        {
             foreach (Mouvement move in mouvements)
             {
                 for (int i = 0; i < move.Positions.Count; i++)

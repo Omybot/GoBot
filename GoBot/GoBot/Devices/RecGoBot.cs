@@ -61,7 +61,7 @@ namespace GoBot.Devices
 
         void RecGoBot_ButtonChange(CapteurOnOffID btn, bool state)
         {
-            if (Plateau.Enchainement == null || (Plateau.Enchainement != null && !Plateau.Enchainement.Started))
+            if (Plateau.Strategy == null || (Plateau.Strategy != null && !Plateau.Strategy.IsRunning))
             {
                 if (btn == CapteurOnOffID.Bouton1 && state)
                     Robots.GrosRobot.Stop(Robots.GrosRobot.AsserActif ? StopMode.Freely : StopMode.Abrupt);

@@ -13,7 +13,7 @@ using System.Runtime.Serialization;
 using System.Runtime.Serialization.Formatters.Binary;
 using GoBot.Geometry;
 using GoBot.Ponderations;
-using GoBot.Enchainements;
+using GoBot.Strategies;
 using GoBot.Mouvements;
 using GoBot.Balises;
 using GoBot.Communications;
@@ -29,7 +29,7 @@ namespace GoBot
 
         public static Balise Balise { get; set; }
 
-        public static Enchainement Enchainement { get; set; }
+        public static Strategy Strategy { get; set; }
         public static Poids PoidActions { get; set; }
 
         public static List<IShape> ObstaclesPlateau { get; set; }
@@ -140,7 +140,7 @@ namespace GoBot
                     RealPoint coordonnees = new RealPoint(positions[i].X, positions[i].Y);
                     AjouterObstacle(new Circle(coordonnees, RayonAdversaire));
 
-                    if (Plateau.Enchainement == null)
+                    if (Plateau.Strategy == null)
                     {
                         // Tester ici ce qu'il y a à tester en fonction de la position de l'ennemi AVANT de lancer le match
                     }
@@ -193,7 +193,7 @@ namespace GoBot
             Console.Write(" Ajout obstacle");
             AjouterObstacle(new Circle(coordonnees, 200));
 
-            if (Plateau.Enchainement == null)
+            if (Plateau.Strategy == null)
             {
                 // Tester ici ce qu'il y a à tester en fonction de la position de l'ennemi AVANT de lancer le match
             }

@@ -116,9 +116,9 @@ namespace GoBot
             if (!state && JackArme)
             {
                 JackArme = false;
-                if (Plateau.Enchainement == null)
-                    Plateau.Enchainement = new GoBot.Enchainements.EnchainementMatch();
-                Plateau.Enchainement.Executer();
+                if (Plateau.Strategy == null)
+                    Plateau.Strategy = new GoBot.Strategies.StrategyMatch();
+                Plateau.Strategy.Execute();
             }
         }
 

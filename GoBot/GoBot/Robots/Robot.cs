@@ -328,15 +328,9 @@ namespace GoBot
 
         public bool GotoXYTeta(Position dest)
         {
-            return PathFinding(dest.Coordinates.X, dest.Coordinates.Y, dest.Angle, 0, true);
-        }
+            Historique.Log("Lancement pathfinding pour aller en " + dest.ToString(), TypeLog.PathFinding);
 
-        public bool PathFinding(double x, double y, Angle teta = null, int timeOut = 0, bool attendre = false)
-        {
-            Historique.Log("Lancement pathfinding pour aller en " + x + " : " + y, TypeLog.PathFinding);
-            Position destination = new Position(teta, new RealPoint(x, y));
-
-            Trajectory traj = PathFinder.ChercheTrajectoire(Graph, Plateau.ListeObstacles, Position, destination, Rayon, 130);
+            Trajectory traj = PathFinder.ChercheTrajectoire(Graph, Plateau.ListeObstacles, Position, dest, Rayon, 130);
 
             if (traj == null)
                 return false;
@@ -345,9 +339,8 @@ namespace GoBot
 
             threadTrajectoire = new Thread(ParcourirTrajectoire);
             threadTrajectoire.Start(traj);
-
-            if (attendre)
-                semTrajectoire.WaitOne();
+            
+            semTrajectoire.WaitOne();
 
             return !TrajectoireCoupee && !TrajectoireEchouee;
         }
