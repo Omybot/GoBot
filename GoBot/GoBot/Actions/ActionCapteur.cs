@@ -32,7 +32,7 @@ namespace GoBot.Actions
         {
             get 
             { 
-                return GoBot.Properties.Resources.Moteur;  
+                return GoBot.Properties.Resources.Motor16;  
             }
         }
     }

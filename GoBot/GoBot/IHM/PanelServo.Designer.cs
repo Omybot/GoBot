@@ -679,7 +679,7 @@
             // 
             // pictureBoxAngles
             // 
-            this.pictureBoxAngles.Image = global::GoBot.Properties.Resources.FondServo;
+            this.pictureBoxAngles.Image = global::GoBot.Properties.Resources.Pacman;
             this.pictureBoxAngles.Location = new System.Drawing.Point(585, 19);
             this.pictureBoxAngles.Name = "pictureBoxAngles";
             this.pictureBoxAngles.Size = new System.Drawing.Size(160, 160);
@@ -785,7 +785,7 @@
             // 
             // imgAlarmes
             // 
-            this.imgAlarmes.Image = global::GoBot.Properties.Resources.Alertes;
+            this.imgAlarmes.Image = global::GoBot.Properties.Resources.Alerts;
             this.imgAlarmes.Location = new System.Drawing.Point(314, 391);
             this.imgAlarmes.Name = "imgAlarmes";
             this.imgAlarmes.Size = new System.Drawing.Size(218, 50);

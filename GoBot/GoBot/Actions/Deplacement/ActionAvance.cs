@@ -30,7 +30,7 @@ namespace GoBot.Actions
         {
             get 
             { 
-                return GoBot.Properties.Resources.Avance;  
+                return GoBot.Properties.Resources.UpGreen16;  
             }
         }
 

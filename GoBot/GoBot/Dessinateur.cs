@@ -421,7 +421,7 @@ namespace GoBot
         {
             Point positionRobot = Scale.RealToScreenPosition(robot.Position.Coordinates);
 
-            Bitmap bmpRobot = new Bitmap(Properties.Resources.Capot.Width, Properties.Resources.Capot.Height);
+            Bitmap bmpRobot = new Bitmap(Properties.Resources.Robot.Width, Properties.Resources.Robot.Height);
             Graphics gRobot = Graphics.FromImage(bmpRobot);
             gRobot.FillRectangle(Brushes.Transparent, 0, 0, Scale.RealToScreenDistance(robot.Taille * 2), Scale.RealToScreenDistance(robot.Taille * 2));
 

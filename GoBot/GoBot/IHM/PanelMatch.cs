@@ -122,7 +122,7 @@ namespace GoBot.IHM
         {
             if (boxHomologtion.Checked)
             {
-                Plateau.Strategy = new Strategies.EnchainementHomologation();
+                Plateau.Strategy = new Strategies.StrategyMinimumScore();
             }
             else
                 Plateau.Strategy = null;

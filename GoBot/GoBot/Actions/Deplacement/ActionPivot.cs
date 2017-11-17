@@ -24,9 +24,9 @@ namespace GoBot.Actions
             get 
             {
                 if (sens == SensGD.Droite)
-                    return GoBot.Properties.Resources.PivotDroite;
+                    return GoBot.Properties.Resources.TurnRigth16;
                 else
-                    return GoBot.Properties.Resources.PivotGauche;
+                    return GoBot.Properties.Resources.TurnLeft16;
             }
         }
 

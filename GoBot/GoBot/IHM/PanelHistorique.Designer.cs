@@ -46,7 +46,7 @@
             // 
             // btnCopierHistorique
             // 
-            this.btnCopierHistorique.Image = global::GoBot.Properties.Resources.Disquette;
+            this.btnCopierHistorique.Image = global::GoBot.Properties.Resources.Save16;
             this.btnCopierHistorique.Location = new System.Drawing.Point(301, 39);
             this.btnCopierHistorique.Name = "btnCopierHistorique";
             this.btnCopierHistorique.Size = new System.Drawing.Size(23, 23);

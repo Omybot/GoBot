@@ -709,7 +709,7 @@
             // 
             // btnAvance
             // 
-            this.btnAvance.Image = global::GoBot.Properties.Resources.Avance;
+            this.btnAvance.Image = global::GoBot.Properties.Resources.UpGreen16;
             this.btnAvance.Location = new System.Drawing.Point(166, 24);
             this.btnAvance.Name = "btnAvance";
             this.btnAvance.Size = new System.Drawing.Size(67, 23);
@@ -719,7 +719,7 @@
             // 
             // btnRecallage
             // 
-            this.btnRecallage.Image = global::GoBot.Properties.Resources.Recale;
+            this.btnRecallage.Image = global::GoBot.Properties.Resources.BottomLine16;
             this.btnRecallage.Location = new System.Drawing.Point(187, 128);
             this.btnRecallage.Name = "btnRecallage";
             this.btnRecallage.Size = new System.Drawing.Size(23, 23);
@@ -729,7 +729,7 @@
             // 
             // btnVirageArDr
             // 
-            this.btnVirageArDr.Image = global::GoBot.Properties.Resources.VirageArDr;
+            this.btnVirageArDr.Image = global::GoBot.Properties.Resources.TopToRigth16;
             this.btnVirageArDr.Location = new System.Drawing.Point(239, 103);
             this.btnVirageArDr.Name = "btnVirageArDr";
             this.btnVirageArDr.Size = new System.Drawing.Size(32, 23);
@@ -739,7 +739,7 @@
             // 
             // btnRecule
             // 
-            this.btnRecule.Image = global::GoBot.Properties.Resources.Recule;
+            this.btnRecule.Image = global::GoBot.Properties.Resources.DownGreen16;
             this.btnRecule.Location = new System.Drawing.Point(166, 103);
             this.btnRecule.Name = "btnRecule";
             this.btnRecule.Size = new System.Drawing.Size(67, 23);
@@ -750,7 +750,7 @@
             // btnPivotGauche
             // 
             this.btnPivotGauche.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnPivotGauche.Image = global::GoBot.Properties.Resources.PivotGauche;
+            this.btnPivotGauche.Image = global::GoBot.Properties.Resources.TurnLeft16;
             this.btnPivotGauche.Location = new System.Drawing.Point(128, 51);
             this.btnPivotGauche.Name = "btnPivotGauche";
             this.btnPivotGauche.Size = new System.Drawing.Size(32, 48);
@@ -760,7 +760,7 @@
             // 
             // btnVirageAvDr
             // 
-            this.btnVirageAvDr.Image = global::GoBot.Properties.Resources.VirageAvDr;
+            this.btnVirageAvDr.Image = global::GoBot.Properties.Resources.BottomToRigth16;
             this.btnVirageAvDr.Location = new System.Drawing.Point(239, 24);
             this.btnVirageAvDr.Name = "btnVirageAvDr";
             this.btnVirageAvDr.Size = new System.Drawing.Size(32, 23);
@@ -770,7 +770,7 @@
             // 
             // btnVirageArGa
             // 
-            this.btnVirageArGa.Image = global::GoBot.Properties.Resources.VirageArGa;
+            this.btnVirageArGa.Image = global::GoBot.Properties.Resources.TopToLeft16;
             this.btnVirageArGa.Location = new System.Drawing.Point(128, 103);
             this.btnVirageArGa.Name = "btnVirageArGa";
             this.btnVirageArGa.Size = new System.Drawing.Size(32, 23);
@@ -780,7 +780,7 @@
             // 
             // btnVirageAvGa
             // 
-            this.btnVirageAvGa.Image = global::GoBot.Properties.Resources.VirageAvGa;
+            this.btnVirageAvGa.Image = global::GoBot.Properties.Resources.BottomToLeft16;
             this.btnVirageAvGa.Location = new System.Drawing.Point(128, 24);
             this.btnVirageAvGa.Name = "btnVirageAvGa";
             this.btnVirageAvGa.Size = new System.Drawing.Size(32, 23);
@@ -790,7 +790,7 @@
             // 
             // btnPivotDroite
             // 
-            this.btnPivotDroite.Image = global::GoBot.Properties.Resources.PivotDroite;
+            this.btnPivotDroite.Image = global::GoBot.Properties.Resources.TurnRigth16;
             this.btnPivotDroite.Location = new System.Drawing.Point(239, 51);
             this.btnPivotDroite.Name = "btnPivotDroite";
             this.btnPivotDroite.Size = new System.Drawing.Size(32, 48);

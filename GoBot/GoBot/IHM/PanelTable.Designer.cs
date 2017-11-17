@@ -389,7 +389,7 @@
             // 
             // btnPathRPCentre
             // 
-            this.btnPathRPCentre.Image = global::GoBot.Properties.Resources.PathCentre;
+            this.btnPathRPCentre.Image = global::GoBot.Properties.Resources.PathCenter16;
             this.btnPathRPCentre.Location = new System.Drawing.Point(68, 24);
             this.btnPathRPCentre.Name = "btnPathRPCentre";
             this.btnPathRPCentre.Size = new System.Drawing.Size(27, 23);
@@ -399,7 +399,7 @@
             // 
             // btnPathRPFace
             // 
-            this.btnPathRPFace.Image = global::GoBot.Properties.Resources.PathFace;
+            this.btnPathRPFace.Image = global::GoBot.Properties.Resources.PathFront16;
             this.btnPathRPFace.Location = new System.Drawing.Point(134, 24);
             this.btnPathRPFace.Name = "btnPathRPFace";
             this.btnPathRPFace.Size = new System.Drawing.Size(27, 23);
@@ -409,7 +409,7 @@
             // 
             // btnTeleportRPCentre
             // 
-            this.btnTeleportRPCentre.Image = global::GoBot.Properties.Resources.TeleportCentre;
+            this.btnTeleportRPCentre.Image = global::GoBot.Properties.Resources.TeleportCenter16;
             this.btnTeleportRPCentre.Location = new System.Drawing.Point(101, 24);
             this.btnTeleportRPCentre.Name = "btnTeleportRPCentre";
             this.btnTeleportRPCentre.Size = new System.Drawing.Size(27, 23);
@@ -419,7 +419,7 @@
             // 
             // btnTeleportRPFace
             // 
-            this.btnTeleportRPFace.Image = global::GoBot.Properties.Resources.TeleportFace;
+            this.btnTeleportRPFace.Image = global::GoBot.Properties.Resources.TeleportFront16;
             this.btnTeleportRPFace.Location = new System.Drawing.Point(167, 24);
             this.btnTeleportRPFace.Name = "btnTeleportRPFace";
             this.btnTeleportRPFace.Size = new System.Drawing.Size(27, 23);
@@ -429,7 +429,7 @@
             // 
             // btnReset
             // 
-            this.btnReset.Image = global::GoBot.Properties.Resources.Refresh;
+            this.btnReset.Image = global::GoBot.Properties.Resources.Refresh16;
             this.btnReset.Location = new System.Drawing.Point(14, 288);
             this.btnReset.Name = "btnReset";
             this.btnReset.Size = new System.Drawing.Size(98, 25);
@@ -442,7 +442,7 @@
             // 
             // btnAffichage
             // 
-            this.btnAffichage.Image = global::GoBot.Properties.Resources.Play;
+            this.btnAffichage.Image = global::GoBot.Properties.Resources.Play16;
             this.btnAffichage.Location = new System.Drawing.Point(31, 31);
             this.btnAffichage.Name = "btnAffichage";
             this.btnAffichage.Size = new System.Drawing.Size(130, 25);

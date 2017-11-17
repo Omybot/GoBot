@@ -483,7 +483,7 @@
             // 
             // btnAfficher
             // 
-            this.btnAfficher.Image = global::GoBot.Properties.Resources.Play;
+            this.btnAfficher.Image = global::GoBot.Properties.Resources.Play16;
             this.btnAfficher.Location = new System.Drawing.Point(270, 33);
             this.btnAfficher.Name = "btnAfficher";
             this.btnAfficher.Size = new System.Drawing.Size(129, 23);
@@ -496,7 +496,7 @@
             // 
             // btnRefresh
             // 
-            this.btnRefresh.Image = global::GoBot.Properties.Resources.PivotDroite;
+            this.btnRefresh.Image = global::GoBot.Properties.Resources.Refresh16;
             this.btnRefresh.Location = new System.Drawing.Point(11, 62);
             this.btnRefresh.Name = "btnRefresh";
             this.btnRefresh.Size = new System.Drawing.Size(104, 23);
@@ -509,7 +509,7 @@
             // 
             // btnCharger
             // 
-            this.btnCharger.Image = global::GoBot.Properties.Resources.Dossier;
+            this.btnCharger.Image = global::GoBot.Properties.Resources.Folder16;
             this.btnCharger.Location = new System.Drawing.Point(11, 33);
             this.btnCharger.Name = "btnCharger";
             this.btnCharger.Size = new System.Drawing.Size(104, 23);

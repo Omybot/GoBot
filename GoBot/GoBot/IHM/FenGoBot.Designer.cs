@@ -733,7 +733,7 @@ namespace GoBot
             // btnClose
             // 
             this.btnClose.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnClose.Image = global::GoBot.Properties.Resources.Close;
+            this.btnClose.Image = global::GoBot.Properties.Resources.Close16;
             this.btnClose.Location = new System.Drawing.Point(1286, 0);
             this.btnClose.Name = "btnClose";
             this.btnClose.Size = new System.Drawing.Size(20, 20);
@@ -744,7 +744,7 @@ namespace GoBot
             // btnFenetre
             // 
             this.btnFenetre.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnFenetre.Image = global::GoBot.Properties.Resources.Fenetre;
+            this.btnFenetre.Image = global::GoBot.Properties.Resources.Windows16;
             this.btnFenetre.Location = new System.Drawing.Point(1262, 0);
             this.btnFenetre.Name = "btnFenetre";
             this.btnFenetre.Size = new System.Drawing.Size(20, 20);

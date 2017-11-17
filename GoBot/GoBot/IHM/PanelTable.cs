@@ -95,14 +95,14 @@ namespace GoBot.IHM
                 thAffichage.Start();
                 Dessinateur.Start();
                 btnAffichage.Text = "Stopper l'affichage";
-                btnAffichage.Image = GoBot.Properties.Resources.Pause;
+                btnAffichage.Image = GoBot.Properties.Resources.Pause16;
             }
             else
             {
                 thAffichage.Abort();
                 Dessinateur.Stop();
                 btnAffichage.Text = "Lancer l'affichage";
-                btnAffichage.Image = GoBot.Properties.Resources.Play;
+                btnAffichage.Image = GoBot.Properties.Resources.Play16;
             }
         }
 

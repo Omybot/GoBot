@@ -106,7 +106,7 @@ namespace GoBot.IHM
             // 
             // btnSauvegarderPosition
             // 
-            this.btnSauvegarderPosition.Image = global::GoBot.Properties.Resources.Disquette;
+            this.btnSauvegarderPosition.Image = global::GoBot.Properties.Resources.Save16;
             this.btnSauvegarderPosition.Location = new System.Drawing.Point(11, 74);
             this.btnSauvegarderPosition.Name = "btnSauvegarderPosition";
             this.btnSauvegarderPosition.Size = new System.Drawing.Size(102, 23);
@@ -119,7 +119,7 @@ namespace GoBot.IHM
             // 
             // btnEnvoyerValeurPosition
             // 
-            this.btnEnvoyerValeurPosition.Image = global::GoBot.Properties.Resources.Play;
+            this.btnEnvoyerValeurPosition.Image = global::GoBot.Properties.Resources.Play16;
             this.btnEnvoyerValeurPosition.Location = new System.Drawing.Point(230, 74);
             this.btnEnvoyerValeurPosition.Name = "btnEnvoyerValeurPosition";
             this.btnEnvoyerValeurPosition.Size = new System.Drawing.Size(75, 23);

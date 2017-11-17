@@ -365,7 +365,7 @@
             // 
             // btnSave
             // 
-            this.btnSave.Image = global::GoBot.Properties.Resources.Disquette;
+            this.btnSave.Image = global::GoBot.Properties.Resources.Save16;
             this.btnSave.Location = new System.Drawing.Point(12, 9);
             this.btnSave.Name = "btnSave";
             this.btnSave.Size = new System.Drawing.Size(103, 23);

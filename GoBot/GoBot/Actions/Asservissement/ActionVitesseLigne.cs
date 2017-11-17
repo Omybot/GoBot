@@ -30,7 +30,7 @@ namespace GoBot.Actions
         {
             get 
             { 
-                return GoBot.Properties.Resources.IconeVitesse;  
+                return GoBot.Properties.Resources.Speed16;  
             }
         }
     }

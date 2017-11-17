@@ -18,7 +18,7 @@ namespace GoBot.Actions
 
         System.Drawing.Image IAction.Image
         {
-            get { return GoBot.Properties.Resources.Recule; }
+            get { return GoBot.Properties.Resources.DownGreen16; }
         }
 
         public override String ToString()

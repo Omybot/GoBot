@@ -40,16 +40,16 @@ namespace GoBot.Actions
                 if (sensAR == SensAR.Avant)
                 {
                     if (sensGD == SensGD.Droite)
-                        return GoBot.Properties.Resources.VirageAvDr;
+                        return GoBot.Properties.Resources.BottomToRigth16;
                     else
-                        return GoBot.Properties.Resources.VirageAvGa;
+                        return GoBot.Properties.Resources.BottomToLeft16;
                 }
                 else
                 {
                     if (sensGD == SensGD.Droite)
-                        return GoBot.Properties.Resources.VirageArDr;
+                        return GoBot.Properties.Resources.TopToRigth16;
                     else
-                        return GoBot.Properties.Resources.VirageArGa;
+                        return GoBot.Properties.Resources.TopToLeft16;
                 }
             }
         }
