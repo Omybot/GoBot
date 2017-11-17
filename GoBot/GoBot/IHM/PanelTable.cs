@@ -3,7 +3,7 @@ using GoBot.Actionneurs;
 using GoBot.Geometry;
 using GoBot.Geometry.Shapes;
 using GoBot.Devices;
-using GoBot.ElementsJeu;
+using GoBot.GameElements;
 using GoBot.Strategies;
 using GoBot.Mouvements;
 using System;

@@ -10,7 +10,7 @@ using GoBot.Strategies;
 using GoBot.Geometry;
 using GoBot.Balises;
 using GoBot.Actionneurs;
-using GoBot.ElementsJeu;
+using GoBot.GameElements;
 using GoBot.Mouvements;
 using GoBot.PathFinding;
 using System.Drawing.Drawing2D;

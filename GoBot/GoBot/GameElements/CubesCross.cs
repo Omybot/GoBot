@@ -5,7 +5,7 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 
-namespace GoBot.ElementsJeu
+namespace GoBot.GameElements
 {
     public class CubesCross : GameElement
     {

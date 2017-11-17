@@ -5,7 +5,7 @@ using System.Text;
 using GoBot.Geometry.Shapes;
 using System.Drawing;
 
-namespace GoBot.ElementsJeu
+namespace GoBot.GameElements
 {
     public class GameElementZone : GameElement
     {

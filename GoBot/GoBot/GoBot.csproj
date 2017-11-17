@@ -359,8 +359,8 @@
     </Compile>
     <Compile Include="Logs\LogFile.cs" />
     <Compile Include="Logs\Logs.cs" />
-    <Compile Include="Mouvements\Mouvement.cs" />
-    <Compile Include="Mouvements\PositionsMouvements.cs" />
+    <Compile Include="Movements\Mouvement.cs" />
+    <Compile Include="Movements\PositionsMouvements.cs" />
     <Compile Include="WorldScale.cs" />
     <Compile Include="PathFinding\PathFinder.cs" />
     <Compile Include="PathFinding\Trajectory.cs" />

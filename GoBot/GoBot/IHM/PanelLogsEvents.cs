@@ -13,7 +13,7 @@ using System.Threading;
 using GoBot.Mouvements;
 using GoBot.Strategies;
 using GoBot.Balises;
-using GoBot.ElementsJeu;
+using GoBot.GameElements;
 using GoBot.Communications;
 
 namespace GoBot.IHM

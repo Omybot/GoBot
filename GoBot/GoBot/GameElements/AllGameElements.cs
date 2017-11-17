@@ -1,16 +1,17 @@
-﻿using GoBot.Geometry.Shapes;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Collections;
 
-namespace GoBot.ElementsJeu
+using GoBot.Geometry.Shapes;
+
+namespace GoBot.GameElements
 {
-    public class GameElements : IEnumerable<GameElement>
+    public class AllGameElements : IEnumerable<GameElement>
     {
-        public GameElements()
+        public AllGameElements()
         {
             CubesCrosses = new List<CubesCross>();
             CubesCrosses.Add(new CubesCross(CubesCrosses.Count, new RealPoint(300, 1190), true));

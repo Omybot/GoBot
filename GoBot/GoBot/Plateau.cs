@@ -17,7 +17,7 @@ using GoBot.Strategies;
 using GoBot.Mouvements;
 using GoBot.Balises;
 using GoBot.Communications;
-using GoBot.ElementsJeu;
+using GoBot.GameElements;
 using GoBot.Devices;
 
 namespace GoBot
@@ -37,7 +37,7 @@ namespace GoBot
 
         public static RealPoint PositionCibleRobot { get; set; }
 
-        public static GameElements Elements { get; protected set; }
+        public static AllGameElements Elements { get; protected set; }
         
         private static Color notreCouleur;
         public static Color NotreCouleur
@@ -105,7 +105,7 @@ namespace GoBot
         {
             if (!Execution.DesignMode)
             {
-                Elements = new GameElements();
+                Elements = new GameElements.AllGameElements();
                 RayonAdversaireInitial = 200;
                 RayonAdversaire = RayonAdversaireInitial;
 

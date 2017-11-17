@@ -1,7 +1,7 @@
 ﻿using GoBot.Geometry.Shapes;
 using System.Drawing;
 
-namespace GoBot.ElementsJeu
+namespace GoBot.GameElements
 {
     public abstract class GameElement
     {
