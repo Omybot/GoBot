@@ -13,7 +13,7 @@ using GoBot.Strategies;
 using GoBot.Geometry;
 using GoBot.Geometry.Shapes;
 using System.Threading;
-using GoBot.Mouvements;
+using GoBot.Movements;
 using System.Diagnostics;
 using GoBot.Balises;
 using GoBot.Communications;

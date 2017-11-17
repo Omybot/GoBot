@@ -6,7 +6,7 @@ using System.Drawing;
 using System.Timers;
 using System.Threading;
 
-using GoBot.Mouvements;
+using GoBot.Movements;
 using GoBot.Ponderations;
 using GoBot.Actionneurs;
 
@@ -46,7 +46,7 @@ namespace GoBot.Strategies
         /// <summary>
         /// Contient la liste de tous les mouvements du match
         /// </summary>
-        public List<Mouvement> Mouvements { get; protected set; }
+        public List<Movement> Mouvements { get; protected set; }
         
         /// <summary>
         /// Constructeur
@@ -56,7 +56,7 @@ namespace GoBot.Strategies
             MatchDuration = new TimeSpan(0, 0, 100);
             IsRunning = false;
             Plateau.PoidActions = new PoidsTest();
-            Mouvements = new List<Mouvement>();
+            Mouvements = new List<Movement>();
 
             // Charger ICI dans les listes ListeMouvementsGros et ListeMouvementsPetit les mouvements possibles
 

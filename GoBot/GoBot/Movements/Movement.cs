@@ -2,36 +2,82 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Drawing;
+using System.Drawing.Drawing2D;
+
 using GoBot.Geometry;
 using GoBot.Geometry.Shapes;
 using GoBot.GameElements;
-using System.Drawing;
 using GoBot.PathFinding;
-using System.Drawing.Drawing2D;
 
-namespace GoBot.Mouvements
+namespace GoBot.Movements
 {
-    public abstract class Mouvement
+    public abstract class Movement
     {
-        public bool Executer(int timeOut = 0)
+        protected DateTime dateMinimum { get; set; }
+        protected DateTime startTime { get; set; }
+        protected int minimumOpponentDistance { get; set; }
+
+        /// <summary>
+        /// Obtient le score rapporté par l'execution de l'action
+        /// </summary>
+        public abstract double Score { get; }
+
+        /// <summary>
+        /// Obtient la valeur de l'action, c'est à dire l'interet qu'il existe à la réaliser
+        /// </summary>
+        public abstract double Value { get; }
+
+        /// <summary>
+        /// Obtient la liste des positions à laquelle le mouvement est réalisable
+        /// </summary>
+        public List<Position> Positions { get; protected set; }
+
+        /// <summary>
+        /// Obtient l'élément en relation avec le mouvement (optionnel)
+        /// </summary>
+        public abstract GameElement Element { get; }
+
+        /// <summary>
+        /// Obtient le robot qui doit executer ce mouvement
+        /// </summary>
+        public abstract Robot Robot { get; }
+
+        /// <summary>
+        /// Obtient la couleur d'appartenance de l'action (ou blanc)
+        /// </summary>
+        public abstract Color Color { get; }
+        
+        public Movement()
+        {
+            Positions = new List<Position>();
+
+            dateMinimum = DateTime.Now;
+            minimumOpponentDistance = 450;
+        }
+        
+        /// <summary>
+        /// Execute le mouvement en enchainant l'action de début de mouvement, le pathfinding vers la position d'approche puis le mouvement lui même
+        /// </summary>
+        /// <returns>Retourne vrai si le mouvement a pu s'executer intégralement sans problème</returns>
+        public bool Execute()
         {
             Robots.GrosRobot.Historique.Log("Début " + this.ToString());
 
-            DateTime debut = DateTime.Now;
+            startTime = DateTime.Now;
 
-            Position position = PositionProche;
+            Position position = BestPosition;
 
             if (position != null)
             {
-                ActionAvantDeplacement();
+                MovementBegin();
 
                 Trajectory traj = PathFinder.ChercheTrajectoire(Robot.Graph, Plateau.ListeObstacles, new Position(Robot.Position), position, Robot.Rayon, Robot.Largeur / 2);
 
                 if (traj != null && Robot.ParcourirTrajectoire(traj))
                 {
-                    ActionApresDeplacement();
-                    Robots.GrosRobot.Historique.Log("Fin " + this.ToString() + " en " + (DateTime.Now - debut).TotalSeconds.ToString("#.#") + "s");
-
+                    MovementCore();
+                    Robots.GrosRobot.Historique.Log("Fin " + this.ToString() + " en " + (DateTime.Now - startTime).TotalSeconds.ToString("#.#") + "s");
                     return true;
                 }
                 else
@@ -47,48 +93,40 @@ namespace GoBot.Mouvements
             }
         }
         
-        protected abstract void ActionAvantDeplacement();
-        protected abstract void ActionApresDeplacement();
+        /// <summary>
+        /// Représente les actions à effectuer avant de se rendre à la position d'approche du mouvement
+        /// </summary>
+        protected abstract void MovementBegin();
 
+        /// <summary>
+        /// Représente les actions à effectuer une fois arrivé à la position d'approche du mouvement
+        /// </summary>
+        protected abstract void MovementCore();
 
-        public abstract double Score { get; }
-        public abstract double ValeurAction { get; }
-        public List<Position> Positions { get; protected set; }
-        public abstract GameElement Element { get; }
-        public abstract Robot Robot { get; }
-        public DateTime DateMinimum { get; set; }
-        public abstract Color Couleur { get; }
-
-        public Mouvement()
+        /// <summary>
+        /// Retourne vrai si la couleur de l'action correspond à la couleur du robot qui peut la réaliser
+        /// </summary>
+        /// <returns></returns>
+        protected bool IsCorrectColor()
         {
-            Positions = new List<Position>();
-        }
-        public Mouvement(int i)
-        {
-            Positions = new List<Position>();
+            return (Color == null) || (Color == Plateau.NotreCouleur) || (Color == Color.White);
         }
 
-        public bool BonneCouleur()
-        {
-            if (Couleur == null)
-                return true;
-            else
-                return Couleur == Plateau.NotreCouleur;
-        }
-
-
-        public Position PositionProche
+        /// <summary>
+        /// Obtient la meilleure position d'approche pour aborder le mouvement.
+        /// Cette position est la plus proche de nous tout en étant à laa distance minimale réglementaire de tout adversaire
+        /// </summary>
+        public Position BestPosition
         {
             get
             {
+                if (Positions.Count < 1)
+                    return null;
                 if (Positions.Count == 1)
                     return Positions[0];
 
                 double distance = double.MaxValue;
-
-                if (Positions.Count < 1)
-                    return null;
-
+                
                 Position proche = Positions[0];
 
                 foreach (Position position in Positions)
@@ -98,8 +136,8 @@ namespace GoBot.Mouvements
                     List<IShape> obstacles = new List<IShape>(Plateau.ObstaclesBalise);
                     foreach (Circle c in obstacles)
                     {
-                        double distanceAdv = position.Coordinates.Distance(c.Center) / 10;
-                        if (distanceAdv < 45)
+                        double distanceAdv = position.Coordinates.Distance(c.Center);
+                        if (distanceAdv < minimumOpponentDistance)
                             distancePosition = double.PositiveInfinity;
                         else
                             distancePosition -= distanceAdv;
@@ -116,24 +154,26 @@ namespace GoBot.Mouvements
             }
         }
 
-        public double Cout
+        /// <summary>
+        /// Coût global de l'action prenant en compte la valeur de l'action mais également le temps de trajectoire pour s'y rendre ou la proximité des adversaires
+        /// </summary>
+        public double GlobalCost
         {
             get
             {
-                // Si il faut attendre avant de faire cette action
-                if (DateMinimum != null && DateMinimum > DateTime.Now)
+                if (!IsAvailable)
                     return double.MaxValue;
 
-                if (ValeurAction <= 0 && Positions.Count < 1)
+                if (Value <= 0 && Positions.Count < 1)
                     return double.MaxValue;
 
-                Position position = PositionProche;
+                Position position = BestPosition;
 
                 if (position == null) 
                     return double.MaxValue;
 
                 double distance = Robot.Position.Coordinates.Distance(position.Coordinates) / 10;
-                double cout = distance / ValeurAction;
+                double cout = distance / Value;
                 bool adversairePlusProche = false;
 
                 List<IShape> obstacles = new List<IShape>(Plateau.ObstaclesBalise);
@@ -156,6 +196,11 @@ namespace GoBot.Mouvements
             }
         }
 
+        /// <summary>
+        /// Peint le mouvement en indiquant les différentes positions d'approche, la meilleure, et l'élément concerné
+        /// </summary>
+        /// <param name="g">Graphique sur lequel peindre</param>
+        /// <param name="scale">Echelle de conversion</param>
         public void Paint(Graphics g, WorldScale scale)
         {
             Font font = new Font("Calibri", 8);
@@ -176,9 +221,9 @@ namespace GoBot.Mouvements
             {
                 Point pointElement = scale.RealToScreenPosition(Element.Position);
 
-                if (Cout != double.MaxValue && !double.IsInfinity(Cout))
+                if (GlobalCost != double.MaxValue && !double.IsInfinity(GlobalCost))
                 {
-                    Point pointProche = scale.RealToScreenPosition(PositionProche.Coordinates);
+                    Point pointProche = scale.RealToScreenPosition(BestPosition.Coordinates);
 
                     foreach (Position p in Positions)
                     {
@@ -192,11 +237,11 @@ namespace GoBot.Mouvements
 
                     g.FillEllipse(Brushes.White, pointProche.X - 2, pointProche.Y - 2, 4, 4);
                     g.DrawLine(Pens.White, pointProche, pointElement);
-                    g.DrawString(Math.Round(Cout) + "", font, Brushes.White, pointProche);
+                    g.DrawString(Math.Round(GlobalCost) + "", font, Brushes.White, pointProche);
                 }
                 else
                 {
-                    if (!BonneCouleur())
+                    if (!IsCorrectColor())
                     {
                         foreach (Position p in Positions)
                         {
@@ -222,6 +267,36 @@ namespace GoBot.Mouvements
             penBlackDot.Dispose();
             penRedDot.Dispose();
             font.Dispose();
+        }
+
+        /// <summary>
+        /// Désactive le mouvement pendant une durée determinée.
+        /// Le mouvement aura une valeur nulle jusqu'à sa réactivation.
+        /// </summary>
+        /// <param name="duration">Durée de désactivation du mouvement</param>
+        public void Deactivate(TimeSpan duration)
+        {
+            dateMinimum = DateTime.Now + duration;
+        }
+
+        /// <summary>
+        /// Réactive le mouvement avant la fin de l'attente de la durée de désactivation
+        /// </summary>
+        public void Reactivate()
+        {
+            dateMinimum = DateTime.Now;
+        }
+
+        /// <summary>
+        /// Retourne vrai si l'action n'est pas désactivée
+        /// </summary>
+        public Boolean IsAvailable
+        {
+            get
+            {
+                // Si il faut attendre avant de faire cette action
+                return DateTime.Now >= dateMinimum;
+            }
         }
     }
 }

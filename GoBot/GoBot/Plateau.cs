@@ -14,7 +14,7 @@ using System.Runtime.Serialization.Formatters.Binary;
 using GoBot.Geometry;
 using GoBot.Ponderations;
 using GoBot.Strategies;
-using GoBot.Mouvements;
+using GoBot.Movements;
 using GoBot.Balises;
 using GoBot.Communications;
 using GoBot.GameElements;

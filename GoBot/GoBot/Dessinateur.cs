@@ -11,7 +11,7 @@ using GoBot.Geometry;
 using GoBot.Balises;
 using GoBot.Actionneurs;
 using GoBot.GameElements;
-using GoBot.Mouvements;
+using GoBot.Movements;
 using GoBot.PathFinding;
 using System.Drawing.Drawing2D;
 using System.Diagnostics;

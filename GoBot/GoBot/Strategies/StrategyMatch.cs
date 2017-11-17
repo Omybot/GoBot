@@ -5,17 +5,17 @@ using System.Text;
 using System.Threading;
 using System.Windows.Forms;
 
-using GoBot.Mouvements;
+using GoBot.Movements;
 
 namespace GoBot.Strategies
 {
     class StrategyMatch : Strategy
     {
-        private List<Mouvement> fixedMovements;
+        private List<Movement> fixedMovements;
 
         protected override void SequenceBegin()
         {
-            fixedMovements = new List<Mouvement>();
+            fixedMovements = new List<Movement>();
 
             // Ajouter ICI l'ordre de la strat fixe avant détection d'adversaire
 
@@ -33,23 +33,23 @@ namespace GoBot.Strategies
 
         protected override void SequenceCore()
         {
-            Mouvement bestMovement;
+            Movement bestMovement;
 
             int iMovement = 0;
 
             // Execution de la strat fixe tant que rien n'échoue
-            while (iMovement < fixedMovements.Count && fixedMovements[iMovement].Executer())
+            while (iMovement < fixedMovements.Count && fixedMovements[iMovement].Execute())
                 iMovement++;
 
             // Passage en mode recherche de la meilleure action
             while (IsRunning)
             {
-                bestMovement = Mouvements.OrderBy(m => m.Cout).ElementAt(0);
+                bestMovement = Mouvements.OrderBy(m => m.GlobalCost).ElementAt(0);
 
-                if (bestMovement.Cout != double.MaxValue && bestMovement.ValeurAction != 0)
+                if (bestMovement.GlobalCost != double.MaxValue && bestMovement.Value != 0)
                 {
-                    if (!bestMovement.Executer())
-                        bestMovement.DateMinimum = DateTime.Now + new TimeSpan(0, 0, 1);
+                    if (!bestMovement.Execute())
+                        bestMovement.dateMinimum = DateTime.Now + new TimeSpan(0, 0, 1);
                 }
                 else
                 {

@@ -5,7 +5,7 @@ using GoBot.Geometry.Shapes;
 using GoBot.Devices;
 using GoBot.GameElements;
 using GoBot.Strategies;
-using GoBot.Mouvements;
+using GoBot.Movements;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
@@ -171,7 +171,7 @@ namespace GoBot.IHM
 
         public void ThreadAction()
         {
-            if (!move.Executer())
+            if (!move.Execute())
             {
 #if DEBUG
                 MessageBox.Show("Echec");
@@ -180,7 +180,7 @@ namespace GoBot.IHM
             move = null;
         }
 
-        Mouvement move;
+        Movement move;
 
         private void btnReset_Click(object sender, EventArgs e)
         {
@@ -644,8 +644,8 @@ namespace GoBot.IHM
 
         private void ThreadMouvement(Object o)
         {
-            Mouvement m = (Mouvement)o;
-            m.Executer();
+            Movement m = (Movement)o;
+            m.Execute();
         }
 
         private void ThreadEnchainement(Object o)

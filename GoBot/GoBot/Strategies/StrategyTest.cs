@@ -4,17 +4,17 @@ using System.Linq;
 using System.Text;
 using System.Threading;
 
-using GoBot.Mouvements;
+using GoBot.Movements;
 
 namespace GoBot.Strategies
 {
     class StrategyTest : Strategy
     {
-        List<Mouvement> mouvements;
+        List<Movement> mouvements;
 
         protected override void SequenceBegin()
         {
-            List<Mouvement> mouvements = new List<Mouvement>();
+            List<Movement> mouvements = new List<Movement>();
 
             // Charger ICI les mouvements à tester
 
@@ -22,13 +22,13 @@ namespace GoBot.Strategies
 
         protected override void SequenceCore()
         {
-            foreach (Mouvement move in mouvements)
+            foreach (Movement move in mouvements)
             {
                 for (int i = 0; i < move.Positions.Count; i++)
                 {
                     Robots.GrosRobot.ReglerOffsetAsserv(move.Positions[i]);
                     Thread.Sleep(500);
-                    move.Executer();
+                    move.Execute();
                 }
             }
         }

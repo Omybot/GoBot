@@ -180,7 +180,7 @@
     <Compile Include="Devices\PololuMiniUsb.cs" />
     <Compile Include="Devices\RecGoBot.cs" />
     <Compile Include="GameElements\GameElement.cs" />
-    <Compile Include="GameElements\GameElements.cs" />
+    <Compile Include="GameElements\AllGameElements.cs" />
     <Compile Include="GameElements\CubesCross.cs" />
     <Compile Include="GameElements\GameElementZone.cs" />
     <Compile Include="Strategies\StrategyRoundTrip.cs" />
@@ -359,8 +359,7 @@
     </Compile>
     <Compile Include="Logs\LogFile.cs" />
     <Compile Include="Logs\Logs.cs" />
-    <Compile Include="Movements\Mouvement.cs" />
-    <Compile Include="Movements\PositionsMouvements.cs" />
+    <Compile Include="Movements\Movement.cs" />
     <Compile Include="WorldScale.cs" />
     <Compile Include="PathFinding\PathFinder.cs" />
     <Compile Include="PathFinding\Trajectory.cs" />

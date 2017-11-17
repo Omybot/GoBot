@@ -8,7 +8,7 @@ using System.Text;
 using System.Windows.Forms;
 using System.Threading;
 using GoBot.Actionneurs;
-using GoBot.Mouvements;
+using GoBot.Movements;
 
 namespace GoBot.IHM
 {

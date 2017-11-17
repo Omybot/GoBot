@@ -10,7 +10,7 @@ using GoBot.Geometry.Shapes;
 using GoBot.Geometry;
 using AStarFolder;
 using System.Threading;
-using GoBot.Mouvements;
+using GoBot.Movements;
 using GoBot.Strategies;
 using GoBot.Balises;
 using GoBot.GameElements;
