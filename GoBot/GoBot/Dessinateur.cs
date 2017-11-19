@@ -8,7 +8,7 @@ using GoBot.Geometry.Shapes;
 using AStarFolder;
 using GoBot.Strategies;
 using GoBot.Geometry;
-using GoBot.Balises;
+using GoBot.Beacons;
 using GoBot.Actionneurs;
 using GoBot.GameElements;
 using GoBot.Movements;
@@ -31,7 +31,7 @@ namespace GoBot
         /// <summary>
         /// Position en pixel sur l'image de l'abscisse 0 de la table
         /// </summary>
-        private const int OFFSET_IMAGE_X = 12;
+        private const int OFFSET_IMAGE_X = 32;
 
         /// <summary>
         /// Position en pixel sur l'image de l'ordonnée 0 de la table
@@ -341,9 +341,9 @@ namespace GoBot
         {
             if (Plateau.Balise.Detections != null)
             {
-                List<DetectionBalise> detections = new List<DetectionBalise>(Plateau.Balise.Detections);
+                List<BeaconDetection> detections = new List<BeaconDetection>(Plateau.Balise.Detections);
 
-                foreach (DetectionBalise detection in detections)
+                foreach (BeaconDetection detection in detections)
                 {
                     // Ligne médiane
                     g.DrawLine(penBleuClairPointille,

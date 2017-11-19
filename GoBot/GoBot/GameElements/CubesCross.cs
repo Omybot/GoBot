@@ -32,12 +32,13 @@ namespace GoBot.GameElements
         }
 
         private int numero;
+        private static int nextNumero;
         public Dictionary<CubePlace, CubeColor> colors;
 
-        public CubesCross(int numero, RealPoint position, bool greenAtLeft)
+        public CubesCross(RealPoint position, bool greenAtLeft)
             : base(position, Color.White, 184/2)
         {
-            this.numero = numero;
+            this.numero = nextNumero++;
 
             colors = new Dictionary<CubePlace, CubeColor>();
 
@@ -59,7 +60,7 @@ namespace GoBot.GameElements
 
         public override string ToString()
         {
-            return "croix de cubes " + numero.ToString();
+            return "croix de cubes n°" + (numero+1).ToString();
         }
 
         public override void Paint(Graphics g, WorldScale scale)
