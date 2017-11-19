@@ -7,20 +7,20 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 using GoBot.Geometry;
-using GoBot.Balises;
+using GoBot.Beacons;
 
 namespace GoBot.IHM
 {
     public partial class PanelBaliseDiagnostic : UserControl
     {
-        private Balise balise;
+        private Beacon balise;
 
         public PanelBaliseDiagnostic()
         {
             InitializeComponent();
         }
 
-        public Balise Balise
+        public Beacon Balise
         {
             get
             {
@@ -32,7 +32,7 @@ namespace GoBot.IHM
             }
         }
 
-        void Stats_NouvelleDonnee(TimeSpan temps, int pwm, DetectionBalise detection1, DetectionBalise detection2)
+        void Stats_NouvelleDonnee(TimeSpan temps, int pwm, BeaconDetection detection1, BeaconDetection detection2)
         {
             ctrlGraphiqueAngle1.AddPoint("Angle 1", detection1.AngleCentral, Color.Green);
             ctrlGraphiqueDistance1.AddPoint("Distance 1", detection1.Distance, Color.Red);
@@ -75,10 +75,10 @@ namespace GoBot.IHM
 
         private void btnLancer_Click(object sender, EventArgs e)
         {
-            balise.Stats.NouvelleDonnee -= new BaliseStats.NouvelleDonneeDelegate(Stats_NouvelleDonnee);
+            balise.Stats.NouvelleDonnee -= new BeaconStats.NouvelleDonneeDelegate(Stats_NouvelleDonnee);
             if (btnLancer.Text == "Lancer")
             {
-                balise.Stats.NouvelleDonnee += new BaliseStats.NouvelleDonneeDelegate(Stats_NouvelleDonnee);
+                balise.Stats.NouvelleDonnee += new BeaconStats.NouvelleDonneeDelegate(Stats_NouvelleDonnee);
                 btnLancer.Text = "Stop";
             }
             else

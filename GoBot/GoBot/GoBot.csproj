@@ -102,6 +102,7 @@
     <Compile Include="Actions\Deplacement\ActionRecallage.cs" />
     <Compile Include="Actions\ActionServo.cs" />
     <Compile Include="Actions\ITimeableAction.cs" />
+    <Compile Include="GameElements\Distributor.cs" />
     <Compile Include="Geometry\ListDouble.cs" />
     <Compile Include="IHM\PanelBoardNumeric.cs">
       <SubType>UserControl</SubType>
@@ -161,8 +162,8 @@
     <Compile Include="MinimumDelay.cs" />
     <Compile Include="SpeedConfig.cs" />
     <Compile Include="AsserStats.cs" />
-    <Compile Include="Balises\BaliseStats.cs" />
-    <Compile Include="Balises\SuiviBalise.cs" />
+    <Compile Include="Beacons\BaliseStats.cs" />
+    <Compile Include="Beacons\SuiviBalise.cs" />
     <Compile Include="Geometry\BezierCurve.cs" />
     <Compile Include="Geometry\Shapes\IShape.cs" />
     <Compile Include="Geometry\Shapes\PolygonRectangle.cs" />
@@ -377,9 +378,9 @@
     <Compile Include="PathFinding\SortableList.cs" />
     <Compile Include="PathFinding\Track.cs" />
     <Compile Include="PathFinding\Vector3D.cs" />
-    <Compile Include="Balises\Balise.cs" />
+    <Compile Include="Beacons\Balise.cs" />
     <Compile Include="Geometry\Angle.cs" />
-    <Compile Include="Balises\DetectionBalise.cs" />
+    <Compile Include="Beacons\DetectionBalise.cs" />
     <Compile Include="Geometry\Shapes\Circle.cs" />
     <Compile Include="Geometry\Shapes\Line.cs" />
     <Compile Include="Geometry\Shapes\RealPoint.cs" />

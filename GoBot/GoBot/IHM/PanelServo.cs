@@ -73,7 +73,7 @@ namespace GoBot.IHM
 
             Bitmap bmp = new Bitmap(160, 160);
             Graphics g = Graphics.FromImage(bmp);
-            g.DrawImage(GoBot.Properties.Resources.FondServo, 0, 0, 160, 160);
+            g.DrawImage(GoBot.Properties.Resources.Pacman, 0, 0, 160, 160);
             g.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.AntiAlias;
 
             double angleTotal = 120 / 360.0 * 2.0 * Math.PI;

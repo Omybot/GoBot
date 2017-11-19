@@ -7,7 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 using GoBot.Geometry;
-using GoBot.Balises;
+using GoBot.Beacons;
 using System.Drawing.Drawing2D;
 
 namespace GoBot.IHM
@@ -15,7 +15,7 @@ namespace GoBot.IHM
     public partial class PanelBalise : UserControl
     {
         private Font font;
-        private Balise balise;
+        private Beacon balise;
         private int nbDetections;
 
         private SolidBrush brushRouge = new SolidBrush(Color.Salmon);
@@ -33,7 +33,7 @@ namespace GoBot.IHM
             pictureBoxAngle.Image = bmp;
         }
 
-        public Balise Balise
+        public Beacon Balise
         {
             get
             {
@@ -43,7 +43,7 @@ namespace GoBot.IHM
             {
                 balise = value;
                 if (balise != null)
-                    balise.PositionsChange += new Balise.PositionsChangeDelegate(MAJPosition);
+                    balise.PositionsChange += new Beacon.PositionsChangeDelegate(MAJPosition);
             }
         }
 
@@ -59,14 +59,14 @@ namespace GoBot.IHM
                 VideAngles();
 
                 nbDetections = 0;
-                foreach (DetectionBalise detection in balise.DetectionsCapteur2)
+                foreach (BeaconDetection detection in balise.DetectionsCapteur2)
                 {
                     DessineAngle(detection.AngleDebut, detection.AngleFin, false);
                     nbDetections++;
                 }
 
                 nbDetections = 0;
-                foreach (DetectionBalise detection in balise.DetectionsCapteur1)
+                foreach (BeaconDetection detection in balise.DetectionsCapteur1)
                 {
                     DessineAngle(detection.AngleDebut, detection.AngleFin, true);
                     nbDetections++;

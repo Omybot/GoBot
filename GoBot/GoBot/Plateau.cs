@@ -15,7 +15,7 @@ using GoBot.Geometry;
 using GoBot.Ponderations;
 using GoBot.Strategies;
 using GoBot.Movements;
-using GoBot.Balises;
+using GoBot.Beacons;
 using GoBot.Communications;
 using GoBot.GameElements;
 using GoBot.Devices;
@@ -27,7 +27,7 @@ namespace GoBot
         public static int RayonAdversaireInitial { get; set; }
         public static int RayonAdversaire { get; set; }
 
-        public static Balise Balise { get; set; }
+        public static Beacon Balise { get; set; }
 
         public static Strategy Strategy { get; set; }
         public static Poids PoidActions { get; set; }
@@ -167,7 +167,7 @@ namespace GoBot
 
         public static void Init()
         {
-            Balise = new Balise();
+            Balise = new Beacon();
 
             PositionCibleRobot = Robots.GrosRobot.Position.Coordinates;
         }

@@ -15,7 +15,7 @@ using GoBot.Geometry.Shapes;
 using System.Threading;
 using GoBot.Movements;
 using System.Diagnostics;
-using GoBot.Balises;
+using GoBot.Beacons;
 using GoBot.Communications;
 using System.IO;
 

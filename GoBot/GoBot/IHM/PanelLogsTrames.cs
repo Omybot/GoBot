@@ -12,7 +12,7 @@ using AStarFolder;
 using System.Threading;
 using GoBot.Movements;
 using GoBot.Strategies;
-using GoBot.Balises;
+using GoBot.Beacons;
 using GoBot.GameElements;
 using GoBot.Communications;
 

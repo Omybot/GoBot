@@ -49,7 +49,7 @@ namespace GoBot.Strategies
                 if (bestMovement.GlobalCost != double.MaxValue && bestMovement.Value != 0)
                 {
                     if (!bestMovement.Execute())
-                        bestMovement.dateMinimum = DateTime.Now + new TimeSpan(0, 0, 1);
+                        bestMovement.Deactivate(new TimeSpan(0, 0, 1));
                 }
                 else
                 {
