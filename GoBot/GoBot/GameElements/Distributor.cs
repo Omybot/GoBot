@@ -21,7 +21,7 @@ namespace GoBot.GameElements
         public Distributor(RealPoint position, Color owner, bool alternate) : base(position, owner, 50)
         {
             isOpen = false;
-            numero = ++nextNumero;
+            numero = nextNumero++;
 
             if (!alternate)
                 balls = Enumerable.Repeat(owner, 8).ToList();
@@ -78,16 +78,16 @@ namespace GoBot.GameElements
 
             switch (numero)
             {
-                case 1:
+                case 0:
                     vect = new Point(-interBallSize, 0);
+                    break;
+                case 1:
+                    vect = new Point(0, interBallSize);
                     break;
                 case 2:
                     vect = new Point(0, interBallSize);
                     break;
                 case 3:
-                    vect = new Point(0, interBallSize);
-                    break;
-                case 4:
                     vect = new Point(interBallSize, 0);
                     break;
             }

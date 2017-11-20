@@ -43,7 +43,7 @@ namespace GoBot.GameElements
             colors = new Dictionary<CubePlace, CubeColor>();
 
             colors.Add(CubePlace.Bottom, CubeColor.Blue);
-            colors.Add(CubePlace.Center, CubeColor.Yellow);
+            colors.Add(CubePlace.Center, CubeColor.Joker);
             colors.Add(CubePlace.Top, CubeColor.Black);
 
             if (greenAtLeft)
@@ -69,54 +69,14 @@ namespace GoBot.GameElements
             {
                 Point topLeft = scale.RealToScreenPosition(new RealPoint(position.X - KCubeSize * 1.5, position.Y - KCubeSize * 1.5));
                 Size size = new Size(scale.RealToScreenDistance(KCubeSize), scale.RealToScreenDistance(KCubeSize));
-                Rectangle rect;
-                Pen pen = isHover ? Pens.White : Pens.Black;
 
-                if (colors[CubePlace.Top] != CubeColor.Empty)
-                {
-                    rect = new Rectangle(topLeft.X + size.Width, topLeft.Y, size.Width, size.Height);
-                    using (SolidBrush brush = new SolidBrush(CubeColorToColor(colors[CubePlace.Top])))
-                    {
-                        g.FillRectangle(brush, rect);
-                        g.DrawRectangle(pen, rect);
-                    }
-                }
-                if (colors[CubePlace.Bottom] != CubeColor.Empty)
-                {
-                    rect = new Rectangle(topLeft.X + size.Width, topLeft.Y + size.Width * 2, size.Width, size.Height);
-                    using (SolidBrush brush = new SolidBrush(CubeColorToColor(colors[CubePlace.Bottom])))
-                    {
-                        g.FillRectangle(brush, rect);
-                        g.DrawRectangle(pen, rect);
-                    }
-                }
-                if (colors[CubePlace.Left] != CubeColor.Empty)
-                {
-                    rect = new Rectangle(topLeft.X, topLeft.Y + size.Width, size.Width, size.Height);
-                    using (SolidBrush brush = new SolidBrush(CubeColorToColor(colors[CubePlace.Left])))
-                    {
-                        g.FillRectangle(brush, rect);
-                        g.DrawRectangle(pen, rect);
-                    }
-                }
-                if (colors[CubePlace.Center] != CubeColor.Empty)
-                {
-                    rect = new Rectangle(topLeft.X + size.Width, topLeft.Y + size.Width, size.Width, size.Height);
-                    using (SolidBrush brush = new SolidBrush(CubeColorToColor(colors[CubePlace.Center])))
-                    {
-                        g.FillRectangle(brush, rect);
-                        g.DrawRectangle(pen, rect);
-                    }
-                }
-                if (colors[CubePlace.Rigth] != CubeColor.Empty)
-                {
-                    rect = new Rectangle(topLeft.X + size.Width * 2, topLeft.Y + size.Width, size.Width, size.Height);
-                    using (SolidBrush brush = new SolidBrush(CubeColorToColor(colors[CubePlace.Rigth])))
-                    {
-                        g.FillRectangle(brush, rect);
-                        g.DrawRectangle(pen, rect);
-                    }
-                }
+                Color outlineColor = isHover ? Color.White : Color.Black;
+
+                PaintCube(g, colors[CubePlace.Top], new Point(topLeft.X + size.Width, topLeft.Y), size, outlineColor);
+                PaintCube(g, colors[CubePlace.Bottom], new Point(topLeft.X + size.Width, topLeft.Y + size.Height * 2), size, outlineColor);
+                PaintCube(g, colors[CubePlace.Left], new Point(topLeft.X, topLeft.Y + size.Height), size, outlineColor);
+                PaintCube(g, colors[CubePlace.Center], new Point(topLeft.X + size.Width, topLeft.Y + size.Height), size, outlineColor);
+                PaintCube(g, colors[CubePlace.Rigth], new Point(topLeft.X + size.Width * 2, topLeft.Y + size.Height), size, outlineColor);
             }
         }
 
@@ -125,7 +85,7 @@ namespace GoBot.GameElements
             return true;
         }
 
-        private Color CubeColorToColor(CubeColor color)
+        private static Color CubeColorToColor(CubeColor color)
         {
             Color output = Color.Transparent;
 
@@ -146,9 +106,40 @@ namespace GoBot.GameElements
                 case CubeColor.Yellow:
                     output = Color.FromArgb(246, 181, 0);
                     break;
+                case CubeColor.Joker:
+                    output = Color.White;
+                    break;
+                case CubeColor.Empty:
+                    output = Color.Transparent;
+                    break;
             }
 
             return output;
+        }
+
+        public static void PaintCube(Graphics g, CubeColor color, Point topLeft, Size size, Color outlineColor)
+        {
+            Rectangle rect = new Rectangle(topLeft, size);
+            
+            if (color != CubeColor.Empty)
+            {
+                using (SolidBrush brush = new SolidBrush(CubeColorToColor(color)))
+                {
+                    g.FillRectangle(brush, rect);
+                }
+                using (Pen pen = new Pen(outlineColor))
+                {
+                    g.DrawRectangle(pen, rect);
+                }
+            }
+            
+            if(color == CubeColor.Joker)
+            {
+                topLeft.X += (size.Width - Properties.Resources.Star16.Width) / 2;
+                topLeft.Y += (size.Height - Properties.Resources.Star16.Height) / 2;
+
+                g.DrawImage(Properties.Resources.Star16, new Rectangle(topLeft, Properties.Resources.Star16.Size));
+            }
         }
     }
 }

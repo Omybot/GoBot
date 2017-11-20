@@ -67,7 +67,7 @@ namespace GoBot
 
         public int RealToScreenDistance(double value)
         {
-            return (int)(value / Factor);
+            return (int)System.Math.Round(value / Factor, 0);
         }
 
         public Point RealToScreenPosition(RealPoint value)

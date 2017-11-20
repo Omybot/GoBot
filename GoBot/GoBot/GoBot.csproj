@@ -102,6 +102,9 @@
     <Compile Include="Actions\Deplacement\ActionRecallage.cs" />
     <Compile Include="Actions\ActionServo.cs" />
     <Compile Include="Actions\ITimeableAction.cs" />
+    <Compile Include="GameElements\ConstructionZone.cs" />
+    <Compile Include="GameElements\CubesPattern.cs" />
+    <Compile Include="GameElements\CubesTower.cs" />
     <Compile Include="GameElements\Distributor.cs" />
     <Compile Include="GameElements\Flower.cs" />
     <Compile Include="Geometry\ListDouble.cs" />
@@ -671,6 +674,7 @@
     <None Include="Images\Robot.png" />
     <None Include="Images\Pacman.png" />
     <None Include="Images\Explode.png" />
+    <None Include="Images\Star16.png" />
     <Content Include="robot.ico" />
   </ItemGroup>
   <ItemGroup>
