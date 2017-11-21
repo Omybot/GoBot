@@ -11,7 +11,6 @@ namespace GoBot.GameElements
     public class CubesTower : GameElement
     {
         private List<CubesCross.CubeColor> cubes;
-        private const int KCubeSize = 58;
 
         public CubesTower(RealPoint position) : base(position, Color.White, 0)
         {
@@ -31,8 +30,8 @@ namespace GoBot.GameElements
 
         public override void Paint(Graphics g, WorldScale scale)
         {
-            Point topLeft = scale.RealToScreenPosition(new RealPoint(position.X - KCubeSize * 0.5, position.Y - KCubeSize * 0.5));
-            Size size = new Size(scale.RealToScreenDistance(KCubeSize), scale.RealToScreenDistance(KCubeSize));
+            Point topLeft = scale.RealToScreenPosition(new RealPoint(position.X - CubesCross.KCubeSize * 0.5, position.Y - CubesCross.KCubeSize * 0.5));
+            Size size = new Size(scale.RealToScreenDistance(CubesCross.KCubeSize), scale.RealToScreenDistance(CubesCross.KCubeSize));
             Point cubePosition = topLeft;
 
             for (int iCube = 0; iCube < cubes.Count; iCube++)

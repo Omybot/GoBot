@@ -9,7 +9,7 @@ namespace GoBot.GameElements
 {
     public class CubesCross : GameElement
     {
-        private const int KCubeSize = 58;
+        public const int KCubeSize = 58;
 
         public enum CubePlace : byte
         {
