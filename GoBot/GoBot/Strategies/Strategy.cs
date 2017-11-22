@@ -47,7 +47,7 @@ namespace GoBot.Strategies
         /// Contient la liste de tous les mouvements du match
         /// </summary>
         public List<Movement> Mouvements { get; protected set; }
-        
+
         /// <summary>
         /// Constructeur
         /// </summary>
@@ -67,6 +67,7 @@ namespace GoBot.Strategies
                 Mouvements.Add(new MovementsCubesFromLeft(Plateau.Elements.CubesCrosses[i]));
                 Mouvements.Add(new MovementsCubesFromRigth(Plateau.Elements.CubesCrosses[i]));
             }
+        }
 
         /// <summary>
         /// Execute le match

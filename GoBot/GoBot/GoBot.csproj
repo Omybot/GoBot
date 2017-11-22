@@ -84,16 +84,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Actionneurs\Actionneur.cs" />
-    <Compile Include="Actionneurs\BrasLunaire.cs" />
-    <Compile Include="Actionneurs\BrasLunaireDroite.cs" />
-    <Compile Include="Actionneurs\BrasLunaireGauche.cs" />
-    <Compile Include="Actionneurs\Convoyeur.cs" />
-    <Compile Include="Actionneurs\Ejecteur.cs" />
-    <Compile Include="Actionneurs\GestionModuleSupervisee.cs" />
-    <Compile Include="Actionneurs\LanceurFusee.cs" />
     <Compile Include="Actionneurs\Positionables.cs" />
     <Compile Include="Actionneurs\RobotPositionables.cs" />
-    <Compile Include="Actionneurs\Stockeur.cs" />
     <Compile Include="Actions\Asservissement\ActionAccelerationPivot.cs" />
     <Compile Include="Actions\Asservissement\ActionVitessePivot.cs" />
     <Compile Include="Actions\ActionMoteur.cs" />

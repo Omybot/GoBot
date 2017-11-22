@@ -169,69 +169,6 @@ namespace GoBot
 
                 // TODO procédure de diagnostic des actionneurs
                 Plateau.Balise.VitesseRotation(150);
-                Actionneur.BrasLunaire.Avancer();
-                Thread.Sleep(tempo);
-                Actionneur.BrasLunaire.Reculer();
-                Thread.Sleep(tempo);
-                Actionneur.BrasLunaire.Descendre();
-                Thread.Sleep(tempo);
-                Actionneur.BrasLunaire.Monter();
-                Thread.Sleep(tempo);
-                Actionneur.BrasLunaire.Ouvrir();
-                Thread.Sleep(tempo);
-                Actionneur.BrasLunaire.Fermer();
-                Thread.Sleep(tempo);
-                Actionneur.BrasLunaire.Reculer();
-                Thread.Sleep(tempo);
-                Actionneur.BrasLunaire.Monter();
-                Thread.Sleep(tempo);
-                Actionneur.BrasLunaire.Monter();
-                Thread.Sleep(tempo);
-                Actionneur.BrasLunaireGauche.Descendre();
-                Thread.Sleep(tempo);
-                Actionneur.BrasLunaireGauche.Ouvrir();
-                Thread.Sleep(tempo);
-                Actionneur.BrasLunaireGauche.Fermer();
-                Thread.Sleep(tempo);
-                Actionneur.BrasLunaireGauche.Ranger();
-                Thread.Sleep(tempo);
-                Actionneur.BrasLunaireDroite.Descendre();
-                Thread.Sleep(tempo);
-                Actionneur.BrasLunaireDroite.Ouvrir();
-                Thread.Sleep(tempo);
-                Actionneur.BrasLunaireDroite.Fermer();
-                Thread.Sleep(tempo);
-                Actionneur.BrasLunaireDroite.Monter();
-                Thread.Sleep(tempo);
-                Actionneur.Convoyeur.Avaler();
-                Thread.Sleep(tempo * 4);
-                Actionneur.Convoyeur.Arreter();
-                Thread.Sleep(tempo);
-                Actionneur.Convoyeur.Bloque();
-                Thread.Sleep(tempo);
-                Actionneur.Convoyeur.Libere();
-                Thread.Sleep(tempo);
-                Actionneur.Ejecteur.SortirEjecteur();
-                Thread.Sleep(tempo);
-                Actionneur.Ejecteur.RentrerEjecteur();
-                Thread.Sleep(tempo);
-                Actionneur.Ejecteur.TournerDroite();
-                Thread.Sleep(tempo * 4);
-                Actionneur.Ejecteur.TournerGauche();
-                Thread.Sleep(tempo * 4);
-                Actionneur.Ejecteur.TournerStop();
-                Thread.Sleep(tempo);
-                Actionneur.Stockeur.RelacheBas();
-                Thread.Sleep(tempo);
-                Actionneur.Stockeur.BloqueBas();
-                Thread.Sleep(tempo);
-                Actionneur.Stockeur.RelacheHaut();
-                Thread.Sleep(tempo);
-                Actionneur.Stockeur.BloquerHaut();
-                Thread.Sleep(tempo);
-                Actionneur.Stockeur.MonterRehausseur();
-                Thread.Sleep(tempo);
-                Actionneur.Stockeur.RangerRehausseur();
                 Thread.Sleep(tempo);
                 Devices.Devices.RecGoBot.Buzz(5000, 200);
                 Thread.Sleep(tempo * 4);
@@ -536,37 +473,12 @@ namespace GoBot
 
         public void RangerActionneurs()
         {
-            Actionneur.BrasLunaire.Fermer();
-            Actionneur.BrasLunaire.Monter();
-            Actionneur.BrasLunaire.Reculer();
-            Actionneur.BrasLunaireDroite.Fermer();
-            Actionneur.BrasLunaireDroite.Ranger();
-            Actionneur.BrasLunaireGauche.Fermer();
-            Actionneur.BrasLunaireGauche.Ranger();
-            Actionneur.Stockeur.RangerRehausseur();
-            Actionneur.Stockeur.BloqueBas();
-            Actionneur.Stockeur.BloquerHaut();
-            Actionneur.Ejecteur.RentrerEjecteur();
-            Actionneur.Ejecteur.TournerStop();
-            Actionneur.Convoyeur.Arreter();
-            Actionneur.Convoyeur.Libere();
-            Actionneur.Stockeur.RangerCalleur();
+
         }
 
         public void DeployerActionnneurs()
         {
-            Actionneur.BrasLunaire.Fermer();
-            Actionneur.BrasLunaire.Descendre();
-            Actionneur.BrasLunaire.Avancer();
-            Actionneur.BrasLunaireDroite.Fermer();
-            Actionneur.BrasLunaireDroite.Descendre();
-            Actionneur.BrasLunaireGauche.Fermer();
-            Actionneur.BrasLunaireGauche.Descendre();
-            Actionneur.Stockeur.MonterRehausseur();
-            Actionneur.Stockeur.RelacheBas();
-            Actionneur.Stockeur.RelacheHaut();
-            Actionneur.Convoyeur.Bloque();
-            Actionneur.Stockeur.RangerCalleur();
+
         }
     }
 }

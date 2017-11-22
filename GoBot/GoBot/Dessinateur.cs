@@ -441,14 +441,7 @@ namespace GoBot
             // Dessiner les actionneurs ici
             if (robot == Robots.GrosRobot)
             {
-                Brush b = new SolidBrush(Plateau.NotreCouleur);
-                for (int i = 0; i < Actionneur.Stockeur.ModulesCount; i++)
-                {
-                    Rectangle rect = new Rectangle(bmpRobot.Width / 2 - Scale.RealToScreenDistance(robot.Largeur / 2) + 5 + i * 10, bmpRobot.Height / 2 - Scale.RealToScreenDistance(robot.Longueur / 2) + 5, 5, 18);
-                    gRobot.FillRectangle(b, rect);
-                    gRobot.DrawRectangle(Pens.Black, rect);
-                }
-                b.Dispose();
+                
             }
 
             g.DrawImage(RotateImage(bmpRobot, robot.Position.Angle.InDegrees + 90), positionRobot.X - bmpRobot.Width / 2, positionRobot.Y - bmpRobot.Height / 2);

@@ -59,56 +59,88 @@ namespace GoBot.Devices
 
         }
 
+        private void Button1Click()
+        {
+            Robots.GrosRobot.Stop(Robots.GrosRobot.AsserActif ? StopMode.Freely : StopMode.Abrupt);
+        }
+        private void Button2Click()
+        {
+
+        }
+        private void Button3Click()
+        {
+            Robots.GrosRobot.DeployerActionnneurs();
+        }
+        private void Button4Click()
+        {
+            Robots.GrosRobot.Diagnostic();
+        }
+        private void Button5Click()
+        {
+            Recallages.RecallageGrosRobot();
+        }
+        private void Button6Click()
+        {
+
+        }
+        private void Button7Click()
+        {
+
+        }
+        private void Button8Click()
+        {
+
+        }
+        private void Button9Click()
+        {
+            Robots.GrosRobot.RangerActionneurs();
+        }
+        private void Button10Click()
+        {
+
+        }
+
         void RecGoBot_ButtonChange(CapteurOnOffID btn, bool state)
         {
             if (Plateau.Strategy == null || (Plateau.Strategy != null && !Plateau.Strategy.IsRunning))
             {
-                if (btn == CapteurOnOffID.Bouton1 && state)
-                    Robots.GrosRobot.Stop(Robots.GrosRobot.AsserActif ? StopMode.Freely : StopMode.Abrupt);
-                if (btn == CapteurOnOffID.Bouton3 && state)
-                    Robots.GrosRobot.DeployerActionnneurs();
-                if (btn == CapteurOnOffID.Bouton9 && state)
-                    Robots.GrosRobot.RangerActionneurs();
-                if (btn == CapteurOnOffID.Bouton8 && state)
+                if (state)
                 {
-                    Actionneurs.Actionneur.BrasLunaire.Descendre();
-                    Actionneurs.Actionneur.BrasLunaire.Ouvrir();
-                    Actionneurs.Actionneur.BrasLunaire.Avancer();
-                }
-                if (btn == CapteurOnOffID.Bouton7 && state)
-                    ThreadPool.QueueUserWorkItem(new WaitCallback(AttraperUnModuleEtRangerParallel));
-                if (btn == CapteurOnOffID.Bouton6 && state)
-                    ThreadPool.QueueUserWorkItem(new WaitCallback(EjecterUnModuleEtRangerParallel));
-                if (btn == CapteurOnOffID.Bouton5 && state)
-                    Recallages.RecallageGrosRobot();
-                if (btn == CapteurOnOffID.Bouton4 && state)
-                    Robots.GrosRobot.Diagnostic();
-                if (btn == CapteurOnOffID.Bouton2 && state)
-                {
-                    if (Actionneur.Fusee.Armed)
-                        Actionneur.Fusee.LancerLaFusee();
-                    else
-                        Actionneur.Fusee.Armer();
-                }
-                if (btn == CapteurOnOffID.Bouton10 && state)
-                {
-                    Actionneur.GestionModuleSupervisee.Reset();
+                    switch (btn)
+                    {
+                        case CapteurOnOffID.Bouton1:
+                            Button1Click();
+                            break;
+                        case CapteurOnOffID.Bouton2:
+                            Button2Click();
+                            break;
+                        case CapteurOnOffID.Bouton3:
+                            Button3Click();
+                            break;
+                        case CapteurOnOffID.Bouton4:
+                            Button4Click();
+                            break;
+                        case CapteurOnOffID.Bouton5:
+                            Button5Click();
+                            break;
+                        case CapteurOnOffID.Bouton6:
+                            Button6Click();
+                            break;
+                        case CapteurOnOffID.Bouton7:
+                            Button7Click();
+                            break;
+                        case CapteurOnOffID.Bouton8:
+                            Button8Click();
+                            break;
+                        case CapteurOnOffID.Bouton9:
+                            Button9Click();
+                            break;
+                        case CapteurOnOffID.Bouton10:
+                            Button10Click();
+                            break;
+                    }
                 }
             }
-        }
-
-        private void AttraperUnModuleEtRangerParallel(object useless)
-        {
-            //Actionneurs.Actionneur.GestionModules.AttraperUnModuleEtRanger();
-            Actionneur.BrasLunaire.Fermer();
-            Thread.Sleep(250);
-            Actionneur.GestionModuleSupervisee.AvalerModule();
-        }
-
-        private void EjecterUnModuleEtRangerParallel(object useless)
-        {
-            //Actionneurs.Actionneur.GestionModules.EjecterUnModuleEtRanger();
-            Actionneur.GestionModuleSupervisee.DeposerModule();
         }
 
         void ChangeLedConnection(bool connected, LedID led)
