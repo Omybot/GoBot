@@ -209,7 +209,7 @@ namespace GoBot
                         Robots.GrosRobot.PositionCible?.Paint(g, Color.Red, 5, Color.Red, Scale);
                         
                         if (AfficheCoutsMouvements)
-                            Plateau.Strategy?.Mouvements?.ForEach(mouv => mouv.Paint(g, Scale));
+                            Plateau.Strategy?.Movements?.ForEach(mouv => mouv.Paint(g, Scale));
 
                         if ((modeCourant == MouseMode.PositionCentre || modeCourant == MouseMode.TeleportCentre) && positionDepart != null)
                         {

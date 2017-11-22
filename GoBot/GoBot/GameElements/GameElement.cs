@@ -1,5 +1,8 @@
 ﻿using GoBot.Geometry.Shapes;
+using GoBot.Movements;
+using System.Collections.Generic;
 using System.Drawing;
+using System.Linq;
 
 namespace GoBot.GameElements
 {
@@ -81,6 +84,17 @@ namespace GoBot.GameElements
         /// Action à executer au clic de la souris
         /// </summary>
         /// <returns>Vrai si l'éction a été correctement executée</returns>
-        public abstract bool ClickAction();
+        public virtual bool ClickAction()
+        {
+            IEnumerable<Movement> movements = Plateau.Strategy.Movements.Where(m => m.Element == this);
+
+            if(movements.Count() > 0)
+            {
+                Movement move = movements.OrderBy(m => m.GlobalCost).First();
+                return move.Execute();
+            }
+
+            return false;
+        }
     }
 }

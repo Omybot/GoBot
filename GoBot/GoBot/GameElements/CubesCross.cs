@@ -44,7 +44,7 @@ namespace GoBot.GameElements
             colors = new Dictionary<CubePlace, CubeColor>();
 
             colors.Add(CubePlace.Bottom, CubeColor.Blue);
-            colors.Add(CubePlace.Center, CubeColor.Joker);
+            colors.Add(CubePlace.Center, CubeColor.Yellow);
             colors.Add(CubePlace.Top, CubeColor.Black);
 
             if (greenAtLeft)
@@ -79,11 +79,6 @@ namespace GoBot.GameElements
                 PaintCube(g, colors[CubePlace.Center], new Point(topLeft.X + size.Width, topLeft.Y + size.Height), size, outlineColor);
                 PaintCube(g, colors[CubePlace.Rigth], new Point(topLeft.X + size.Width * 2, topLeft.Y + size.Height), size, outlineColor);
             }
-        }
-
-        public override bool ClickAction()
-        {
-            return new MovementsCubesFromTop(this).Execute();
         }
 
         private static Color CubeColorToColor(CubeColor color)

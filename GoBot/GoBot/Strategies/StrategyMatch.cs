@@ -44,12 +44,22 @@ namespace GoBot.Strategies
             // Passage en mode recherche de la meilleure action
             while (IsRunning)
             {
-                bestMovement = Mouvements.Where(m => m.CanExecute).OrderBy(m => m.GlobalCost).ElementAt(0);
+                List<Movement> sorted = Movements.Where(m => m.CanExecute).OrderBy(m => m.GlobalCost).ToList();
 
-                if (bestMovement.GlobalCost != double.MaxValue && bestMovement.Value != 0)
+                if (sorted.Count > 0)
                 {
-                    if (!bestMovement.Execute())
-                        bestMovement.Deactivate(new TimeSpan(0, 0, 1));
+                    bestMovement = sorted[0];
+
+                    if (bestMovement.GlobalCost != double.MaxValue && bestMovement.Value != 0)
+                    {
+                        if (!bestMovement.Execute())
+                            bestMovement.Deactivate(new TimeSpan(0, 0, 1));
+                    }
+                    else
+                    {
+                        Robots.GrosRobot.Historique.Log("Aucune action à effectuer");
+                        Thread.Sleep(500);
+                    }
                 }
                 else
                 {

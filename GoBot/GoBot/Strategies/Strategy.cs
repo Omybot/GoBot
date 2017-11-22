@@ -9,6 +9,8 @@ using System.Threading;
 using GoBot.Movements;
 using GoBot.Ponderations;
 using GoBot.Actionneurs;
+using GoBot.Geometry;
+using AStarFolder;
 
 namespace GoBot.Strategies
 {
@@ -46,7 +48,7 @@ namespace GoBot.Strategies
         /// <summary>
         /// Contient la liste de tous les mouvements du match
         /// </summary>
-        public List<Movement> Mouvements { get; protected set; }
+        public List<Movement> Movements { get; protected set; }
 
         /// <summary>
         /// Constructeur
@@ -56,16 +58,31 @@ namespace GoBot.Strategies
             MatchDuration = new TimeSpan(0, 0, 100);
             IsRunning = false;
             Plateau.PoidActions = new PoidsTest();
-            Mouvements = new List<Movement>();
+            Movements = new List<Movement>();
 
             // Charger ICI dans les listes ListeMouvementsGros et ListeMouvementsPetit les mouvements possibles
 
             for (int i = 0; i < Plateau.Elements.CubesCrosses.Count; i++)
             {
-                Mouvements.Add(new MovementsCubesFromTop(Plateau.Elements.CubesCrosses[i]));
-                Mouvements.Add(new MovementsCubesFromBottom(Plateau.Elements.CubesCrosses[i]));
-                Mouvements.Add(new MovementsCubesFromLeft(Plateau.Elements.CubesCrosses[i]));
-                Mouvements.Add(new MovementsCubesFromRigth(Plateau.Elements.CubesCrosses[i]));
+                Movements.Add(new MovementsCubesFromBottom(Plateau.Elements.CubesCrosses[i]));
+                Movements.Add(new MovementsCubesFromTop(Plateau.Elements.CubesCrosses[i]));
+                Movements.Add(new MovementsCubesFromLeft(Plateau.Elements.CubesCrosses[i]));
+                Movements.Add(new MovementsCubesFromRigth(Plateau.Elements.CubesCrosses[i]));
+            }
+
+            for(int iMov = 0; iMov < Movements.Count; iMov++)
+            {
+                for(int iPos = 0; iPos < Movements[iMov].Positions.Count; iPos++)
+                {
+                    if(!Movements[iMov].Robot.Graph.Raccordable(new Node(Movements[iMov].Positions[iPos].Coordinates.X, Movements[iMov].Positions[iPos].Coordinates.Y, 0),
+                        Plateau.ObstaclesPlateau,
+                        Movements[iMov].Robot.Rayon,
+                        200))
+                    {
+                        Movements[iMov].Positions.RemoveAt(iPos);
+                        iPos--;
+                    }
+                }
             }
         }
 

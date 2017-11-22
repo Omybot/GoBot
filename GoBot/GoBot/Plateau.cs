@@ -122,6 +122,8 @@ namespace GoBot
                 SemaphoreCollisions = new Semaphore(0, int.MaxValue);
                 thCollisions = new Thread(ThreadTestCollisions);
                 thCollisions.Start();
+
+                Strategy = new StrategyMatch();
             }
         }
 

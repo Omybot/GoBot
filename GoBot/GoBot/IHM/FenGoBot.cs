@@ -158,7 +158,7 @@ namespace GoBot
             Robots.Delete();
             Execution.Shutdown = true;
 
-            if(Plateau.Strategy != null)
+            if(Plateau.Strategy != null && Plateau.Strategy.IsRunning)
                 Plateau.Strategy.Stop();
 
             Process[] proc = Process.GetProcessesByName("GoBot");
