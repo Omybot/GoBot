@@ -28,10 +28,10 @@ namespace GoBot.GameElements
             CubesCrosses.Add(new CubesCross(new RealPoint(2700, 1190), false));
 
             Distributors = new List<Distributor>();
-            Distributors.Add(new Distributor(new RealPoint(78, 840), Plateau.CouleurGaucheVert, false));
-            Distributors.Add(new Distributor(new RealPoint(610, 2000 - 78), Plateau.CouleurDroiteOrange, true));
-            Distributors.Add(new Distributor(new RealPoint(3000 - 610, 2000 - 78), Plateau.CouleurGaucheVert, true));
-            Distributors.Add(new Distributor(new RealPoint(3000 - 78, 840), Plateau.CouleurDroiteOrange, false));
+            Distributors.Add(new Distributor(new RealPoint(78, 840), Plateau.CouleurGaucheVert, false, 180));
+            Distributors.Add(new Distributor(new RealPoint(610, 2000 - 78), Plateau.CouleurDroiteOrange, true, 90));
+            Distributors.Add(new Distributor(new RealPoint(3000 - 610, 2000 - 78), Plateau.CouleurGaucheVert, true, 90));
+            Distributors.Add(new Distributor(new RealPoint(3000 - 78, 840), Plateau.CouleurDroiteOrange, false, 0));
 
             Flowers = new List<Flower>();
             Flowers.Add(new Flower(new RealPoint(1385, 2115), Plateau.CouleurGaucheVert));
