@@ -60,9 +60,13 @@ namespace GoBot.Strategies
 
             // Charger ICI dans les listes ListeMouvementsGros et ListeMouvementsPetit les mouvements possibles
 
-            //for (int i = 0; i < Plateau.Elements.CubesCrosses.Count; i++)
-            //    ListeMouvements.Add(new MouvementFusee(i));
-        }
+            for (int i = 0; i < Plateau.Elements.CubesCrosses.Count; i++)
+            {
+                Mouvements.Add(new MovementsCubesFromTop(Plateau.Elements.CubesCrosses[i]));
+                Mouvements.Add(new MovementsCubesFromBottom(Plateau.Elements.CubesCrosses[i]));
+                Mouvements.Add(new MovementsCubesFromLeft(Plateau.Elements.CubesCrosses[i]));
+                Mouvements.Add(new MovementsCubesFromRigth(Plateau.Elements.CubesCrosses[i]));
+            }
 
         /// <summary>
         /// Execute le match

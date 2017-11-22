@@ -44,7 +44,7 @@ namespace GoBot.Strategies
             // Passage en mode recherche de la meilleure action
             while (IsRunning)
             {
-                bestMovement = Mouvements.OrderBy(m => m.GlobalCost).ElementAt(0);
+                bestMovement = Mouvements.Where(m => m.CanExecute).OrderBy(m => m.GlobalCost).ElementAt(0);
 
                 if (bestMovement.GlobalCost != double.MaxValue && bestMovement.Value != 0)
                 {

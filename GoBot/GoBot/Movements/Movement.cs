@@ -19,6 +19,11 @@ namespace GoBot.Movements
         protected int minimumOpponentDistance { get; set; }
 
         /// <summary>
+        /// Obtient si le mouvement est réalisable (par exemple stock pas plein)
+        /// </summary>
+        public abstract bool CanExecute { get; }
+
+        /// <summary>
         /// Obtient le score rapporté par l'execution de l'action
         /// </summary>
         public abstract double Score { get; }
@@ -161,7 +166,7 @@ namespace GoBot.Movements
         {
             get
             {
-                if (!IsAvailable)
+                if (!IsAvailable || !CanExecute)
                     return double.MaxValue;
 
                 if (Value <= 0 && Positions.Count < 1)
@@ -172,18 +177,18 @@ namespace GoBot.Movements
                 if (position == null) 
                     return double.MaxValue;
 
-                double distance = Robot.Position.Coordinates.Distance(position.Coordinates) / 10;
-                double cout = distance / Value;
+                double distance = Robot.Position.Coordinates.Distance(position.Coordinates);
+                double cout = (distance / 10) / Value;
                 bool adversairePlusProche = false;
 
                 List<IShape> obstacles = new List<IShape>(Plateau.ObstaclesBalise);
                 foreach (Circle c in obstacles)
                 {
-                    double distanceAdv = position.Coordinates.Distance(c.Center) / 10;
-                    if (distanceAdv < 45)
+                    double distanceAdv = position.Coordinates.Distance(c.Center);
+                    if (distanceAdv < minimumOpponentDistance)
                         cout = double.PositiveInfinity;
                     else
-                        cout /= (distanceAdv * distanceAdv);
+                        cout /= ((distanceAdv / 10) * (distanceAdv / 10));
 
                     if (distanceAdv < distance)
                         adversairePlusProche = true;

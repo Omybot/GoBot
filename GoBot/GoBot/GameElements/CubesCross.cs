@@ -1,4 +1,5 @@
 ﻿using GoBot.Geometry.Shapes;
+using GoBot.Movements;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
@@ -82,7 +83,7 @@ namespace GoBot.GameElements
 
         public override bool ClickAction()
         {
-            return true;
+            return new MovementsCubesFromTop(this).Execute();
         }
 
         private static Color CubeColorToColor(CubeColor color)

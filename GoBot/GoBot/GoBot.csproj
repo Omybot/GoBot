@@ -114,6 +114,7 @@
     <Compile Include="IHM\PanelBoardNumeric.Designer.cs">
       <DependentUpon>PanelBoardNumeric.cs</DependentUpon>
     </Compile>
+    <Compile Include="Movements\MovementCubes.cs" />
     <Compile Include="NameFinder.cs" />
     <Compile Include="Actions\Asservissement\ActionAccelerationLigne.cs" />
     <Compile Include="Actions\Asservissement\ActionVitesseLigne.cs" />
