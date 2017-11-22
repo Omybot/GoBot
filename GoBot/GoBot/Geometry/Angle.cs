@@ -17,6 +17,54 @@ namespace GoBot.Geometry
 
         private const double PRECISION = 0.01;
 
+        public double Cos
+        {
+            get
+            {
+                return Math.Cos(InRadians);
+            }
+        }
+
+        public double Acos
+        {
+            get
+            {
+                return Math.Acos(InRadians);
+            }
+        }
+
+        public double Sin
+        {
+            get
+            {
+                return Math.Sin(InRadians);
+            }
+        }
+
+        public double Asin
+        {
+            get
+            {
+                return Math.Asin(InRadians);
+            }
+        }
+
+        public double Tan
+        {
+            get
+            {
+                return Math.Tan(InRadians);
+            }
+        }
+
+        public double Atan
+        {
+            get
+            {
+                return Math.Atan(InRadians);
+            }
+        }
+
         /// <summary>
         /// Retourne l'angle en degrés (-180 à +180)
         /// </summary>
