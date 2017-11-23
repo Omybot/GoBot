@@ -115,6 +115,7 @@ namespace GoBot.PathFinding
                     if (!franchissable)
                     {
                         franchissable = true;
+                        raccordable = false;
                         nbPointsDepart = 0;
                         positionTestee = new Position(positionActuell);
                         for (i = 0; i > -100 && !raccordable; i--)
@@ -177,6 +178,7 @@ namespace GoBot.PathFinding
 
                     Position positionTestee = new Position(destination);
                     bool franchissable = true;
+                    raccordable = false;
 
                     // Boucle jusqu'à trouver un point qui se connecte au graph jusqu'à 1m devant
                     int i;
