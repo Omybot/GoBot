@@ -74,13 +74,22 @@ namespace GoBot.PathFinding
                 Position p = new Position(angle, c1);
                 Direction traj = Maths.GetDirection(p, c2);
 
-                // Teste si il est plus rapide (moins d'angle à tourner) de se déplacer en marche arrière
+                // Teste si il est plus rapide (moins d'angle à tourner) de se déplacer en marche arrière avant la fin
                 bool inverse = false;
-                if (Math.Abs(traj.angle.InDegrees) > 90)
+
+                if (i < Points.Count - 2)
                 {
-                    inverse = true;
-                    traj.angle = new Angle(traj.angle.InDegrees - 180);
+                    inverse = Math.Abs(traj.angle.InDegrees) > 90;
                 }
+                else
+                {
+                    // On cherche à minimiser le tout dernier angle quand on fait l'avant dernier
+                    Angle finalAngle = angle - traj.angle;
+                    inverse = Math.Abs(finalAngle - EndAngle) > 90;
+                }
+
+                if(inverse)
+                    traj.angle = new Angle(traj.angle.InDegrees - 180);
 
                 if (traj.angle.InDegrees < 0)
                 {
