@@ -19,6 +19,11 @@ namespace GoBot.Movements
         protected int minimumOpponentDistance { get; set; }
 
         /// <summary>
+        /// Facteur pour la normalisation du cout de l'action affiché à 1 pour la moins chère de toutes
+        /// </summary>
+        public double DisplayCostFactor { get; set; }
+
+        /// <summary>
         /// Obtient si le mouvement est réalisable (par exemple stock pas plein)
         /// </summary>
         public abstract bool CanExecute { get; }
@@ -56,6 +61,7 @@ namespace GoBot.Movements
         public Movement()
         {
             Positions = new List<Position>();
+            DisplayCostFactor = 1;
 
             dateMinimum = DateTime.Now;
             minimumOpponentDistance = 450;
@@ -242,7 +248,7 @@ namespace GoBot.Movements
 
                     g.FillEllipse(Brushes.White, pointProche.X - 2, pointProche.Y - 2, 4, 4);
                     g.DrawLine(Pens.White, pointProche, pointElement);
-                    g.DrawString(Math.Round(GlobalCost) + "", font, Brushes.White, pointProche);
+                    g.DrawString((GlobalCost / DisplayCostFactor).ToString("0.00"), font, Brushes.White, pointProche);
                 }
                 else
                 {
