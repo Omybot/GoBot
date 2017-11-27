@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Drawing;
+using System.Drawing.Drawing2D;
 
 namespace GoBot.GameElements
 {
@@ -41,7 +42,7 @@ namespace GoBot.GameElements
             }
 
             // TODO aller chercher le bon pattern
-            CubesPattern pattern = new CubesPattern(CubesCross.CubeColor.Black, CubesCross.CubeColor.Yellow, CubesCross.CubeColor.Green);
+            CubesPattern pattern = new CubesPattern(CubesCross.CubeColor.Green, CubesCross.CubeColor.Yellow, CubesCross.CubeColor.Orange);
 
             int patternIndex = pattern.PatternPosition(cubes);
 
@@ -49,7 +50,9 @@ namespace GoBot.GameElements
             {
                 using (Pen pen = new Pen(Color.Lime))
                 {
-                    g.DrawRectangle(pen, new Rectangle(topLeft.X+1, topLeft.Y - (patternIndex + 2) * size.Height+1, size.Width-2, size.Height * 3-2));
+                    Rectangle rct = new Rectangle(topLeft.X + 1, topLeft.Y - (patternIndex + 2) * size.Height + 1, size.Width - 2, size.Height * 3 - 2);
+                    g.DrawRectangle(pen, rct);
+                    g.FillRectangle(new HatchBrush(HatchStyle.BackwardDiagonal, Color.Lime, Color.Transparent), rct);
                 }
             }
         }

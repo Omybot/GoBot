@@ -29,9 +29,18 @@ namespace GoBot.GameElements
         {
             bool exploding = DateTime.Now - explodeTime < new TimeSpan(0, 0, 1);
 
-            if (isAvailable || exploding)
+            if (isAvailable)
+            {
+                Rectangle rct = scale.RealToScreenRect(new RectangleF((float)position.X - 150 / 2, (float)position.Y - 150 / 2, 150, 150));
                 using (Brush brush = new SolidBrush(color))
-                    g.FillEllipse(brush, scale.RealToScreenRect(new RectangleF((float)position.X - 150 / 2, (float)position.Y - 150 / 2, 150, 150)));
+                    g.FillEllipse(brush, rct);
+
+                if (isHover)
+                    g.DrawEllipse(Pens.White, rct);
+                else
+                    g.DrawEllipse(Pens.Black, rct);
+
+            }
 
             if (exploding)
             {
