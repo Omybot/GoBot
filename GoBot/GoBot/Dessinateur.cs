@@ -210,9 +210,15 @@ namespace GoBot
                             DessineLignesDetection(g);
                         
                         Robots.GrosRobot.PositionCible?.Paint(g, Color.Red, 5, Color.Red, Scale);
-                        
+
                         if (AfficheCoutsMouvements)
-                            Plateau.Strategy?.Movements?.ForEach(mouv => mouv.Paint(g, Scale));
+                        {
+                            if (Plateau.Strategy != null && Plateau.Strategy.Movements != null)
+                            {
+                                Plateau.Strategy.Movements.ForEach(mouv => mouv.DisplayCostFactor = Plateau.Strategy.Movements.Min(m => m.GlobalCost));
+                                Plateau.Strategy.Movements.ForEach(mouv => mouv.Paint(g, Scale));
+                            }
+                        }
 
                         if ((modeCourant == MouseMode.PositionCentre || modeCourant == MouseMode.TeleportCentre) && positionDepart != null)
                         {
