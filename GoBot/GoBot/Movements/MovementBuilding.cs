@@ -6,8 +6,8 @@ using System.Text;
 using System.Threading.Tasks;
 using GoBot.GameElements;
 using GoBot.Actionneurs;
-using static GoBot.GameElements.CubesCross;
 using GoBot.Geometry;
+using System.Threading;
 
 namespace GoBot.Movements
 {
@@ -18,11 +18,11 @@ namespace GoBot.Movements
         public MovementBuilding(ConstructionZone zone)
         {
             constructionZone = zone;
-
-            Positions.Add(new Position(90, zone.Position.Translation(0, 100)));
+            
+            Positions.Add(new Position(90, zone.Position.Translation(0, 170)));
         }
 
-        public override bool CanExecute => Actionneur.Dumper.CanBuildTower;
+        public override bool CanExecute => Actionneur.Dumper.CanBuildTower && constructionZone.TowersCount == 0;
 
         public override double Score
         {
@@ -42,7 +42,27 @@ namespace GoBot.Movements
         {
             get
             {
-                return Score;
+                if (Color == Plateau.NotreCouleur)
+                {
+                    double value = Score / 100;
+
+                    if (Plateau.Strategy.TimeBeforeEnd.TotalSeconds < 90)
+                        value *= 2;
+                    if (Plateau.Strategy.TimeBeforeEnd.TotalSeconds < 80)
+                        value *= 2;
+                    if (Plateau.Strategy.TimeBeforeEnd.TotalSeconds < 70)
+                        value *= 2;
+                    if (Plateau.Strategy.TimeBeforeEnd.TotalSeconds < 60)
+                        value *= 2;
+                    if (Plateau.Strategy.TimeBeforeEnd.TotalSeconds < 50)
+                        value *= 2;
+
+                    return value;
+                }
+                else
+                {
+                    return 0;
+                }
             }
         }
 
@@ -61,6 +81,9 @@ namespace GoBot.Movements
         {
             // TODO Décharger
 
+            Robot.Lent();
+            Robot.Reculer(50);
+
             foreach (Dumper.Slot slot in Enum.GetValues(typeof(Dumper.Slot)))
             {
                 CubesTower tower = new CubesTower(Actionneur.Dumper.GetCubes(slot));
@@ -69,6 +92,11 @@ namespace GoBot.Movements
             }
 
             Actionneur.Dumper.Clear();
+
+            Thread.Sleep(500);
+            Robot.Lent();
+            Robot.Avancer(175);
+            Robot.Rapide();
         }
     }
 }

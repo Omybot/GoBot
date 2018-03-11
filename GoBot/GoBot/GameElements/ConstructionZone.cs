@@ -21,6 +21,8 @@ namespace GoBot.GameElements
             towers = new List<CubesTower>();
         }
 
+        public int TowersCount => towers.Count;
+
         public void AddTower(CubesTower tower)
         {
             tower.Position = nextTowerPosition;

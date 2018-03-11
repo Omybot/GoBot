@@ -44,7 +44,7 @@ namespace GoBot.Strategies
             // Passage en mode recherche de la meilleure action
             while (IsRunning)
             {
-                List<Movement> sorted = Movements.Where(m => m.CanExecute).OrderBy(m => m.GlobalCost).ToList();
+                List<Movement> sorted = Movements.Where(m => m.IsCorrectColor() && m.CanExecute).OrderBy(m => m.GlobalCost).ToList();
 
                 if (sorted.Count > 0)
                 {

@@ -43,7 +43,7 @@ namespace GoBot.GameElements
 
             for (int iCube = 0; iCube < cubes.Count; iCube++)
             {
-                CubesCross.PaintCube(g, cubes[iCube], cubePosition, size, Color.Black);
+                CubesCross.PaintCube(g, cubes[iCube], cubePosition, size, Color.Black, true);
                 cubePosition.Y -= size.Height;
             }
             

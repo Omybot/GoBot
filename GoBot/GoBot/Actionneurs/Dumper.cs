@@ -39,22 +39,47 @@ namespace GoBot.Actionneurs
         {
             // TODO construction d'une tour
             Slot slot = filling.GetFreeSlot().Value;
+            CubesCross.CubeColor color;
 
-            filling.LoadCube(cross.GetColor(CubesCross.CubePlace.Bottom), slot);
-            cross.RemoveCube(CubesCross.CubePlace.Bottom);
-            Thread.Sleep(500);
+            color = cross.GetColor(CubesCross.CubePlace.Bottom);
+            if(filling.CanLoadInSlot(slot) && color != CubesCross.CubeColor.Empty)
+            {
+                filling.LoadCube(color, slot);
+                cross.RemoveCube(CubesCross.CubePlace.Bottom);
+                Thread.Sleep(500);
+            }
 
-            filling.LoadCube(cross.GetColor(CubesCross.CubePlace.Left), slot);
-            cross.RemoveCube(CubesCross.CubePlace.Left);
-            Thread.Sleep(500);
+            color = cross.GetColor(CubesCross.CubePlace.Left);
+            if (filling.CanLoadInSlot(slot) && color != CubesCross.CubeColor.Empty)
+            {
+                filling.LoadCube(color, slot);
+                cross.RemoveCube(CubesCross.CubePlace.Left);
+                Thread.Sleep(500);
+            }
 
-            filling.LoadCube(cross.GetColor(CubesCross.CubePlace.Rigth), slot);
-            cross.RemoveCube(CubesCross.CubePlace.Rigth);
-            Thread.Sleep(500);
+            color = cross.GetColor(CubesCross.CubePlace.Rigth);
+            if (filling.CanLoadInSlot(slot) && color != CubesCross.CubeColor.Empty)
+            {
+                filling.LoadCube(color, slot);
+                cross.RemoveCube(CubesCross.CubePlace.Rigth);
+                Thread.Sleep(500);
+            }
 
-            filling.LoadCube(cross.GetColor(CubesCross.CubePlace.Top), slot);
-            cross.RemoveCube(CubesCross.CubePlace.Top);
-            Thread.Sleep(500);
+            color = cross.GetColor(CubesCross.CubePlace.Top);
+            if (filling.CanLoadInSlot(slot) && color != CubesCross.CubeColor.Empty)
+            {
+                filling.LoadCube(color, slot);
+                cross.RemoveCube(CubesCross.CubePlace.Top);
+                Thread.Sleep(500);
+            }
+
+            color = cross.GetColor(CubesCross.CubePlace.Center);
+            if (filling.CanLoadInSlot(slot) && color != CubesCross.CubeColor.Empty)
+            {
+                filling.LoadCube(color, slot);
+                cross.RemoveCube(CubesCross.CubePlace.Center);
+                Thread.Sleep(500);
+            }
         }
 
         public void Clear()
@@ -160,6 +185,15 @@ namespace GoBot.Actionneurs
                     freeSlot = slot;
             }
 
+            if(freeSlot == null)
+            {
+                foreach (Dumper.Slot slot in Enum.GetValues(typeof(Dumper.Slot)))
+                {
+                    if (filling[slot].Count < 4)
+                        freeSlot = slot;
+                }
+            }
+
             return freeSlot;
         }
 
@@ -171,6 +205,11 @@ namespace GoBot.Actionneurs
         public List<CubesCross.CubeColor> GetCubes(Dumper.Slot slot)
         {
             return filling[slot];
+        }
+
+        public bool CanLoadInSlot(Dumper.Slot slot)
+        {
+            return filling[slot].Count < 4;
         }
     }
 }

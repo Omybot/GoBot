@@ -39,7 +39,7 @@ namespace GoBot.Movements
         {
             get
             {
-                return Element.IsAvailable && Actionneur.Dumper.CanPickupCubes;
+                return cubes.IsAvailable && Actionneur.Dumper.CanPickupCubes;
             }
         }
 
@@ -76,6 +76,17 @@ namespace GoBot.Movements
                 if (Plateau.Strategy.TimeBeforeEnd.TotalSeconds > 50)
                     value *= 2;
 
+                if (cubes.CubesCount < 5)
+                    value /= 10;
+                if (cubes.CubesCount < 4)
+                    value /= 2;
+                if (cubes.CubesCount < 3)
+                    value /= 2;
+                if (cubes.CubesCount < 2)
+                    value /= 2;
+                if (cubes.CubesCount < 1)
+                    value = 0;
+
                 return value;
             }
         }
@@ -90,6 +101,7 @@ namespace GoBot.Movements
             if (Actionneur.Dumper.CanPickupCubes)
             {
                 Actionneur.Dumper.PickupCubes((CubesCross)Element, Actionneur.PatternReader.Pattern);
+                //Element.IsAvailable = false;
             }
             //Element.IsAvailable = false;
         }

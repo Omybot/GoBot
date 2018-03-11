@@ -112,7 +112,7 @@ namespace GoBot.Movements
         /// Retourne vrai si la couleur de l'action correspond à la couleur du robot qui peut la réaliser
         /// </summary>
         /// <returns></returns>
-        protected bool IsCorrectColor()
+        public bool IsCorrectColor()
         {
             return (Color == null) || (Color == Plateau.NotreCouleur) || (Color == Color.White);
         }
@@ -177,8 +177,8 @@ namespace GoBot.Movements
                 if (position == null) 
                     return double.MaxValue;
 
-                double distance = Robot.Position.Coordinates.Distance(position.Coordinates);
-                double cout = (distance / 10) / Value;
+                double distance = Math.Max(50, Robot.Position.Coordinates.Distance(position.Coordinates)); // En dessous de 5cm de distance, tout se vaut
+                double cout = (Math.Sqrt(distance)) / Value;
                 bool adversairePlusProche = false;
 
                 List<IShape> obstacles = new List<IShape>(Plateau.ObstaclesBalise);
@@ -197,7 +197,7 @@ namespace GoBot.Movements
                 if (adversairePlusProche)
                     cout *= 2;
 
-                return cout * 10000;
+                return cout;
             }
         }
 

@@ -76,6 +76,8 @@ namespace GoBot.GameElements
             return "croix de cubes n°" + (numero+1).ToString();
         }
 
+        public int CubesCount => colors.Where(o => o.Value != CubeColor.Empty).Count();
+
         public override void Paint(Graphics g, WorldScale scale)
         {
             if (isAvailable)
@@ -125,7 +127,7 @@ namespace GoBot.GameElements
             return output;
         }
 
-        public static void PaintCube(Graphics g, CubeColor color, Point topLeft, Size size, Color outlineColor)
+        public static void PaintCube(Graphics g, CubeColor color, Point topLeft, Size size, Color outlineColor, bool drawEmptyCubes = false)
         {
             Rectangle rect = new Rectangle(topLeft, size);
 
@@ -148,6 +150,14 @@ namespace GoBot.GameElements
 
                 g.DrawImage(Properties.Resources.Star16, new Rectangle(topLeft, Properties.Resources.Star16.Size));
             }
+
+            if (drawEmptyCubes && color == CubeColor.Empty)
+            {
+                topLeft.X += (size.Width - Properties.Resources.Star16.Width) / 2;
+                topLeft.Y += (size.Height - Properties.Resources.Star16.Height) / 2;
+
+                g.DrawImage(Properties.Resources.Close16, new Rectangle(topLeft, Properties.Resources.Close16.Size));
+            }
         }
 
         public static void PaintCubesInRow(Graphics g, List<CubeColor> cubes, RealPoint bottomMiddle, WorldScale scale, bool markPattern)
@@ -158,7 +168,7 @@ namespace GoBot.GameElements
 
             for (int iCube = 0; iCube < cubes.Count; iCube++)
             {
-                CubesCross.PaintCube(g, cubes[iCube], cubePosition, size, Color.Black);
+                CubesCross.PaintCube(g, cubes[iCube], cubePosition, size, Color.Black, true);
                 cubePosition.X += size.Width;
             }
 
