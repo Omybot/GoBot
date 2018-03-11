@@ -31,6 +31,8 @@ namespace GoBot.Actionneurs
         public Dumper()
         {
             filling = new CubesFilling();
+            filling.LoadCube(CubesCross.CubeColor.Joker, Slot.Left);
+            filling.LoadCube(CubesCross.CubeColor.Joker, Slot.Rigth);
         }
 
         public void PickupCubes(CubesCross cross, CubesPattern pattern)
@@ -114,11 +116,16 @@ namespace GoBot.Actionneurs
                 bool freeSlot = false;
                 foreach (Dumper.Slot slot in Enum.GetValues(typeof(Dumper.Slot)))
                 {
-                    freeSlot = freeSlot || filling[slot].Count == 0;
+                    freeSlot = freeSlot || IsFreeSlot(slot);
                 }
 
                 return freeSlot;
             }
+        }
+
+        public bool IsFreeSlot(Dumper.Slot slot)
+        {
+            return filling[slot].Count == 0 || (filling[slot].Count == 1 && filling[slot][0] == CubesCross.CubeColor.Joker);
         }
 
         public bool HasFullSlot
@@ -128,7 +135,7 @@ namespace GoBot.Actionneurs
                 bool fullSlot = false;
                 foreach (Dumper.Slot slot in Enum.GetValues(typeof(Dumper.Slot)))
                 {
-                    fullSlot = fullSlot || filling[slot].Count == 4;
+                    fullSlot = fullSlot || filling[slot].Count >= 4;
                 }
 
                 return fullSlot;
@@ -149,7 +156,7 @@ namespace GoBot.Actionneurs
 
             foreach (Dumper.Slot slot in Enum.GetValues(typeof(Dumper.Slot)))
             {
-                if (filling[slot].Count == 0)
+                if (IsFreeSlot(slot))
                     freeSlot = slot;
             }
 
