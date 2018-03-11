@@ -7,8 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
-using static GoBot.Actionneurs.Dumper;
-using static GoBot.GameElements.CubesCross;
+using GoBot.Actionneurs;
 
 namespace GoBot.Actionneurs
 {
@@ -39,20 +38,20 @@ namespace GoBot.Actionneurs
             // TODO construction d'une tour
             Slot slot = filling.GetFreeSlot().Value;
 
-            filling.LoadCube(cross.GetColor(CubePlace.Bottom), slot);
-            cross.RemoveCube(CubePlace.Bottom);
+            filling.LoadCube(cross.GetColor(CubesCross.CubePlace.Bottom), slot);
+            cross.RemoveCube(CubesCross.CubePlace.Bottom);
             Thread.Sleep(500);
 
-            filling.LoadCube(cross.GetColor(CubePlace.Left), slot);
-            cross.RemoveCube(CubePlace.Left);
+            filling.LoadCube(cross.GetColor(CubesCross.CubePlace.Left), slot);
+            cross.RemoveCube(CubesCross.CubePlace.Left);
             Thread.Sleep(500);
 
-            filling.LoadCube(cross.GetColor(CubePlace.Rigth), slot);
-            cross.RemoveCube(CubePlace.Rigth);
+            filling.LoadCube(cross.GetColor(CubesCross.CubePlace.Rigth), slot);
+            cross.RemoveCube(CubesCross.CubePlace.Rigth);
             Thread.Sleep(500);
 
-            filling.LoadCube(cross.GetColor(CubePlace.Top), slot);
-            cross.RemoveCube(CubePlace.Top);
+            filling.LoadCube(cross.GetColor(CubesCross.CubePlace.Top), slot);
+            cross.RemoveCube(CubesCross.CubePlace.Top);
             Thread.Sleep(500);
         }
 
@@ -77,7 +76,7 @@ namespace GoBot.Actionneurs
             }
         }
 
-        public List<CubeColor> GetCubes(Slot slot)
+        public List<CubesCross.CubeColor> GetCubes(Dumper.Slot slot)
         {
             return filling.GetCubes(slot);
         }
@@ -88,7 +87,7 @@ namespace GoBot.Actionneurs
             
             foreach (Dumper.Slot slot in Enum.GetValues(typeof(Dumper.Slot)))
             {
-                CubesCross.PaintCubesInRow(g, filling.GetCubes(slot), robotCenter.Translation(-Robots.GrosRobot.Longueur / 2, -75 + offset), scale);
+                CubesCross.PaintCubesInRow(g, filling.GetCubes(slot), robotCenter.Translation(-Robots.GrosRobot.Longueur / 2, -75 + offset), scale, true);
                 offset += 75;
             }
         }
@@ -96,15 +95,15 @@ namespace GoBot.Actionneurs
 
     class CubesFilling
     {
-        private Dictionary<Slot, List<CubeColor>> filling;
+        private Dictionary<Dumper.Slot, List<CubesCross.CubeColor>> filling;
 
         public CubesFilling()
         {
-            filling = new Dictionary<Slot, List<CubeColor>>();
+            filling = new Dictionary<Dumper.Slot, List<CubesCross.CubeColor>>();
 
-            foreach (Slot slot in Enum.GetValues(typeof(Slot)))
+            foreach (Dumper.Slot slot in Enum.GetValues(typeof(Dumper.Slot)))
             {
-                filling.Add(slot, new List<CubeColor>());
+                filling.Add(slot, new List<CubesCross.CubeColor>());
             }
         }
 
@@ -113,7 +112,7 @@ namespace GoBot.Actionneurs
             get
             {
                 bool freeSlot = false;
-                foreach (Slot slot in Enum.GetValues(typeof(Slot)))
+                foreach (Dumper.Slot slot in Enum.GetValues(typeof(Dumper.Slot)))
                 {
                     freeSlot = freeSlot || filling[slot].Count == 0;
                 }
@@ -127,7 +126,7 @@ namespace GoBot.Actionneurs
             get
             {
                 bool fullSlot = false;
-                foreach (Slot slot in Enum.GetValues(typeof(Slot)))
+                foreach (Dumper.Slot slot in Enum.GetValues(typeof(Dumper.Slot)))
                 {
                     fullSlot = fullSlot || filling[slot].Count == 4;
                 }
@@ -138,17 +137,17 @@ namespace GoBot.Actionneurs
 
         public void Clear()
         {
-            foreach (Slot slot in Enum.GetValues(typeof(Slot)))
+            foreach (Dumper.Slot slot in Enum.GetValues(typeof(Dumper.Slot)))
             {
                 filling[slot].Clear();
             }
         }
 
-        public Slot? GetFreeSlot()
+        public Dumper.Slot? GetFreeSlot()
         {
-            Slot? freeSlot = null;
+            Dumper.Slot? freeSlot = null;
 
-            foreach (Slot slot in Enum.GetValues(typeof(Slot)))
+            foreach (Dumper.Slot slot in Enum.GetValues(typeof(Dumper.Slot)))
             {
                 if (filling[slot].Count == 0)
                     freeSlot = slot;
@@ -157,12 +156,12 @@ namespace GoBot.Actionneurs
             return freeSlot;
         }
 
-        public void LoadCube(CubeColor cube, Slot slot)
+        public void LoadCube(CubesCross.CubeColor cube, Dumper.Slot slot)
         {
             filling[slot].Add(cube);
         }
 
-        public List<CubeColor> GetCubes(Slot slot)
+        public List<CubesCross.CubeColor> GetCubes(Dumper.Slot slot)
         {
             return filling[slot];
         }

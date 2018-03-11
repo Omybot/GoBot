@@ -1,5 +1,7 @@
-﻿using System;
+﻿using GoBot.Geometry.Shapes;
+using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -48,6 +50,12 @@ namespace GoBot.GameElements
                 return true;
 
             return false;
+        }
+
+
+        public void Paint(Graphics g, RealPoint pos, WorldScale scale)
+        {
+            CubesCross.PaintCubesInRow(g, colors, pos, scale, false);
         }
     }
 }

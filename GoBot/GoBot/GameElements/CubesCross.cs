@@ -150,9 +150,9 @@ namespace GoBot.GameElements
             }
         }
 
-        public static void PaintCubesInRow(Graphics g, List<CubeColor> cubes, Point bottomMiddle, WorldScale scale)
+        public static void PaintCubesInRow(Graphics g, List<CubeColor> cubes, RealPoint bottomMiddle, WorldScale scale, bool markPattern)
         {
-            Point topLeft = scale.RealToScreenPosition(new RealPoint(bottomMiddle.X, bottomMiddle.Y - CubesCross.KCubeSize * 0.5));
+            Point topLeft = scale.RealToScreenPosition(bottomMiddle.Translation(0, - CubesCross.KCubeSize * 0.5));
             Size size = new Size(scale.RealToScreenDistance(CubesCross.KCubeSize), scale.RealToScreenDistance(CubesCross.KCubeSize));
             Point cubePosition = topLeft;
 
@@ -162,15 +162,18 @@ namespace GoBot.GameElements
                 cubePosition.X += size.Width;
             }
 
-            int patternIndex = Actionneur.PatternReader.Pattern.PatternPosition(cubes);
-
-            if (patternIndex != -1)
+            if (markPattern)
             {
-                using (Pen pen = new Pen(Color.Lime))
+                int patternIndex = Actionneur.PatternReader.Pattern.PatternPosition(cubes);
+
+                if (patternIndex != -1)
                 {
-                    Rectangle rct = new Rectangle(topLeft.X + patternIndex * size.Width + 1, topLeft.Y + 1, size.Width * 3 - 2, size.Height - 2);
-                    g.DrawRectangle(pen, rct);
-                    g.FillRectangle(new HatchBrush(HatchStyle.BackwardDiagonal, Color.Lime, Color.Transparent), rct);
+                    using (Pen pen = new Pen(Color.Lime))
+                    {
+                        Rectangle rct = new Rectangle(topLeft.X + patternIndex * size.Width + 1, topLeft.Y + 1, size.Width * 3 - 2, size.Height - 2);
+                        g.DrawRectangle(pen, rct);
+                        g.FillRectangle(new HatchBrush(HatchStyle.BackwardDiagonal, Color.Lime, Color.Transparent), rct);
+                    }
                 }
             }
         }

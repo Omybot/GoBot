@@ -195,9 +195,12 @@ namespace GoBot
 
                         if (AfficheObstacles)
                             DessineObstacles(g);
-                        
+
                         if (AfficheElementsJeu)
+                        {
                             DessineElementsJeu(g, Plateau.Elements);
+                            Actionneur.PatternReader.Paint(g, Scale);
+                        }
 
                         DessinePathFinding(g);
 
