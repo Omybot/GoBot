@@ -38,7 +38,7 @@ namespace GoBot
         public static RealPoint PositionCibleRobot { get; set; }
 
         public static AllGameElements Elements { get; protected set; }
-        
+
         private static Color notreCouleur;
         public static Color NotreCouleur
         {

@@ -14,32 +14,25 @@ namespace GoBot.GameElements
         private RealPoint nextTowerPosition;
         private double interTowerSpace;
 
-        public ConstructionZone(RealPoint position, Color owner, double interTowerSpace) : base(position, owner, 80)
+        public ConstructionZone(RealPoint position, Color owner) : base(position, owner, 80)
         {
-            this.nextTowerPosition = position.Translation(-(interTowerSpace / Math.Abs(interTowerSpace)) * 220, 20);
-            this.interTowerSpace = interTowerSpace;
+            this.interTowerSpace = 75;
+            this.nextTowerPosition = position.Translation(-interTowerSpace, 0);
             towers = new List<CubesTower>();
         }
 
         public void AddTower(CubesTower tower)
         {
             tower.Position = nextTowerPosition;
-            nextTowerPosition = nextTowerPosition.Translation(interTowerSpace + (interTowerSpace / Math.Abs(interTowerSpace)) * CubesCross.KCubeSize, 0);
+            nextTowerPosition = nextTowerPosition.Translation(interTowerSpace, 0);
             towers.Add(tower);
         }
 
         public override bool ClickAction()
         {
-            CubesTower t1 = new CubesTower(new RealPoint());
-            t1.AddCube(CubesCross.CubeColor.Black);
-            t1.AddCube(CubesCross.CubeColor.Blue);
-            t1.AddCube(CubesCross.CubeColor.Green);
-            t1.AddCube(CubesCross.CubeColor.Joker);
-            t1.AddCube(CubesCross.CubeColor.Orange);
+            Movements.MovementBuilding move = new Movements.MovementBuilding(this);
 
-            AddTower(t1);
-
-            return true;
+            return move.Execute();
         }
 
         public override void Paint(Graphics g, WorldScale scale)

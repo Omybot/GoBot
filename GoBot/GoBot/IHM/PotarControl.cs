@@ -57,7 +57,7 @@ namespace GoBot.IHM
             double posValue;
             double ticksMin, ticksCurrent, ticksRange;
             int pointsParTour = 4096;
-            int toursRange = 5;
+            double toursRange = 5;
 
             ticksCurrent = Devices.Devices.RecGoBot.GetCodeurPosition();
             ticksMin = ticksCurrent;
@@ -67,6 +67,8 @@ namespace GoBot.IHM
 
             while(pollingEnable)
             {
+                toursRange = trackBarSpeed.Value;
+                ticksRange = pointsParTour * toursRange;
                 Thread.Sleep(50);
                 ticksCurrent = Devices.Devices.RecGoBot.GetCodeurPosition();
 
@@ -91,6 +93,11 @@ namespace GoBot.IHM
                 positionnable.SendPosition((int)value);
                 lblValue.Text = trackBar.Value.ToString();
             }
+        }
+
+        private void trackBarSpeed_ValueChanged(object sender, double value)
+        {
+            lblSpeed.Text = "Rapport " + value.ToString();
         }
     }
 }

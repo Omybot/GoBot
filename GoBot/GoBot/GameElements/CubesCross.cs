@@ -1,8 +1,10 @@
-﻿using GoBot.Geometry.Shapes;
+﻿using GoBot.Actionneurs;
+using GoBot.Geometry.Shapes;
 using GoBot.Movements;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
+using System.Drawing.Drawing2D;
 using System.Linq;
 using System.Text;
 
@@ -34,7 +36,7 @@ namespace GoBot.GameElements
 
         private int numero;
         private static int nextNumero;
-        public Dictionary<CubePlace, CubeColor> colors;
+        private Dictionary<CubePlace, CubeColor> colors;
 
         public CubesCross(RealPoint position, bool greenAtLeft)
             : base(position, Color.White, 184/2)
@@ -57,6 +59,16 @@ namespace GoBot.GameElements
                 colors.Add(CubePlace.Left, CubeColor.Orange);
                 colors.Add(CubePlace.Rigth, CubeColor.Green);
             }
+        }
+
+        public CubeColor GetColor(CubePlace place)
+        {
+            return colors[place];
+        }
+
+        public void RemoveCube(CubePlace place)
+        {
+            colors[place] = CubeColor.Empty;
         }
 
         public override string ToString()
@@ -116,7 +128,7 @@ namespace GoBot.GameElements
         public static void PaintCube(Graphics g, CubeColor color, Point topLeft, Size size, Color outlineColor)
         {
             Rectangle rect = new Rectangle(topLeft, size);
-            
+
             if (color != CubeColor.Empty)
             {
                 using (SolidBrush brush = new SolidBrush(CubeColorToColor(color)))
@@ -128,13 +140,38 @@ namespace GoBot.GameElements
                     g.DrawRectangle(pen, rect);
                 }
             }
-            
-            if(color == CubeColor.Joker)
+
+            if (color == CubeColor.Joker)
             {
                 topLeft.X += (size.Width - Properties.Resources.Star16.Width) / 2;
                 topLeft.Y += (size.Height - Properties.Resources.Star16.Height) / 2;
 
                 g.DrawImage(Properties.Resources.Star16, new Rectangle(topLeft, Properties.Resources.Star16.Size));
+            }
+        }
+
+        public static void PaintCubesInRow(Graphics g, List<CubeColor> cubes, Point bottomMiddle, WorldScale scale)
+        {
+            Point topLeft = scale.RealToScreenPosition(new RealPoint(bottomMiddle.X, bottomMiddle.Y - CubesCross.KCubeSize * 0.5));
+            Size size = new Size(scale.RealToScreenDistance(CubesCross.KCubeSize), scale.RealToScreenDistance(CubesCross.KCubeSize));
+            Point cubePosition = topLeft;
+
+            for (int iCube = 0; iCube < cubes.Count; iCube++)
+            {
+                CubesCross.PaintCube(g, cubes[iCube], cubePosition, size, Color.Black);
+                cubePosition.X += size.Width;
+            }
+
+            int patternIndex = Actionneur.PatternReader.Pattern.PatternPosition(cubes);
+
+            if (patternIndex != -1)
+            {
+                using (Pen pen = new Pen(Color.Lime))
+                {
+                    Rectangle rct = new Rectangle(topLeft.X + patternIndex * size.Width + 1, topLeft.Y + 1, size.Width * 3 - 2, size.Height - 2);
+                    g.DrawRectangle(pen, rct);
+                    g.FillRectangle(new HatchBrush(HatchStyle.BackwardDiagonal, Color.Lime, Color.Transparent), rct);
+                }
             }
         }
     }

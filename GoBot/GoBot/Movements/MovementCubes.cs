@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using GoBot.GameElements;
 using GoBot.Geometry;
+using GoBot.Actionneurs;
 
 namespace GoBot.Movements
 {
@@ -38,8 +39,7 @@ namespace GoBot.Movements
         {
             get
             {
-                // TODO tester si il y a de la place dans le stockage
-                return Element.IsAvailable;
+                return Element.IsAvailable && Actionneur.Dumper.CanPickupCubes;
             }
         }
 
@@ -87,8 +87,11 @@ namespace GoBot.Movements
 
         protected override void MovementCore()
         {
-            // TODO avaler la croix
-            Element.IsAvailable = false;
+            if (Actionneur.Dumper.CanPickupCubes)
+            {
+                Actionneur.Dumper.PickupCubes((CubesCross)Element, Actionneur.PatternReader.Pattern);
+            }
+            //Element.IsAvailable = false;
         }
     }
 

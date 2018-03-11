@@ -179,7 +179,7 @@ namespace GoBot
             using (StreamWriter myWriter = new StreamWriter(PathData + "/config.xml"))
                 mySerializer.Serialize(myWriter, CurrentConfig, ns);
 
-            File.Copy(PathData + "/config.xml", PathData + "/Configs/config" + Execution.LaunchStartString + ".xml");
+            File.Copy(PathData + "/config.xml", PathData + "/Configs/config" + Execution.LaunchStartString + ".xml", true);
         }
 
         public static String PathData

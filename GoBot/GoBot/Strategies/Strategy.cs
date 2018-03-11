@@ -70,7 +70,12 @@ namespace GoBot.Strategies
                 Movements.Add(new MovementsCubesFromRigth(Plateau.Elements.CubesCrosses[i]));
             }
 
-            for(int iMov = 0; iMov < Movements.Count; iMov++)
+            for (int i = 0; i < Plateau.Elements.ConstructionZones.Count; i++)
+            {
+                Movements.Add(new MovementBuilding(Plateau.Elements.ConstructionZones[i]));
+            }
+
+            for (int iMov = 0; iMov < Movements.Count; iMov++)
             {
                 for(int iPos = 0; iPos < Movements[iMov].Positions.Count; iPos++)
                 {

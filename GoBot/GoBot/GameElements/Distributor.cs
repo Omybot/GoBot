@@ -67,7 +67,10 @@ namespace GoBot.GameElements
                 using (Brush brush = new SolidBrush(ball))
                     g.FillEllipse(brush, ballRect);
 
-                g.DrawEllipse(Pens.Black, ballRect);
+                if (isHover)
+                    g.DrawEllipse(Pens.White, ballRect);
+                else
+                    g.DrawEllipse(Pens.Black, ballRect);
                 
                 ballPos.X += (int)(angle.Cos * scale.RealToScreenDistance(20));
                 ballPos.Y += (int)(angle.Sin * scale.RealToScreenDistance(20));
@@ -95,6 +98,7 @@ namespace GoBot.GameElements
             g.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.AntiAlias;
 
             g.FillEllipse(Brushes.White, start.X - 4, start.Y - 4, 8, 8);
+            
             g.DrawEllipse(Pens.Black, start.X - 4, start.Y - 4, 8, 8);
         }
 

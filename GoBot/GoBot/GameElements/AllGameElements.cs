@@ -38,8 +38,10 @@ namespace GoBot.GameElements
             Flowers.Add(new Flower(new RealPoint(3000 - 1385, 2115), Plateau.CouleurDroiteOrange));
 
             ConstructionZones = new List<ConstructionZone>();
-            ConstructionZones.Add(new ConstructionZone(new RealPoint(675, 80), Plateau.CouleurGaucheVert, 30));
-            ConstructionZones.Add(new ConstructionZone(new RealPoint(3000 - 675, 80), Plateau.CouleurDroiteOrange, -30));
+            ConstructionZones.Add(new ConstructionZone(new RealPoint(675-130, 80), Plateau.CouleurGaucheVert));
+            ConstructionZones.Add(new ConstructionZone(new RealPoint(675+150, 80), Plateau.CouleurGaucheVert));
+            ConstructionZones.Add(new ConstructionZone(new RealPoint(3000 - 675 - 150, 80), Plateau.CouleurDroiteOrange));
+            ConstructionZones.Add(new ConstructionZone(new RealPoint(3000 - 675 + 130, 80), Plateau.CouleurDroiteOrange));
 
             CubesTowers = new List<CubesTower>();
         }

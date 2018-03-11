@@ -420,31 +420,24 @@ namespace GoBot
         private static void DessineRobot(Robot robot, Graphics g)
         {
             Point positionRobot = Scale.RealToScreenPosition(robot.Position.Coordinates);
+            
+            g.TranslateTransform(positionRobot.X, positionRobot.Y);
+            g.RotateTransform((float)(robot.Position.Angle.InDegrees));
+            g.TranslateTransform(-positionRobot.X, -positionRobot.Y);
 
-            Bitmap bmpRobot = new Bitmap(Properties.Resources.Robot.Width, Properties.Resources.Robot.Height);
-            Graphics gRobot = Graphics.FromImage(bmpRobot);
-            gRobot.FillRectangle(Brushes.Transparent, 0, 0, Scale.RealToScreenDistance(robot.Taille * 2), Scale.RealToScreenDistance(robot.Taille * 2));
+            Rectangle robotRect = new Rectangle(positionRobot.X - Scale.RealToScreenDistance(robot.Largeur / 2), positionRobot.Y - Scale.RealToScreenDistance(robot.Longueur / 2), Scale.RealToScreenDistance(robot.Largeur), Scale.RealToScreenDistance(robot.Longueur));
 
-            Rectangle robotRect = new Rectangle(bmpRobot.Width / 2 - Scale.RealToScreenDistance(robot.Largeur / 2), bmpRobot.Height / 2 - Scale.RealToScreenDistance(robot.Longueur / 2), Scale.RealToScreenDistance(robot.Largeur), Scale.RealToScreenDistance(robot.Longueur));
-
-            gRobot.FillRectangle(Brushes.White, robotRect);
-
+            g.FillRectangle(Brushes.White, robotRect);
             using (SolidBrush brush = new SolidBrush(Color.FromArgb(50, Plateau.NotreCouleur)))
-                gRobot.FillRectangle(brush, robotRect);
+                g.FillRectangle(brush, robotRect);
+            g.DrawRectangle(Plateau.NotreCouleur == Plateau.CouleurDroiteOrange ? penCouleurDroite : penCouleurGauche, robotRect);
+            g.DrawLine(Plateau.NotreCouleur == Plateau.CouleurDroiteOrange ? penCouleurDroite : penCouleurGauche, robotRect.Center(), new Point(robotRect.Right, (int)robotRect.Center().Y));
 
-            gRobot.DrawRectangle(Plateau.NotreCouleur == Plateau.CouleurDroiteOrange ? penCouleurDroite : penCouleurGauche, robotRect);
+            // Dessiner ici les actionneurs pour qu'ils prennent l'inclinaison du robot
 
-            gRobot.DrawLine(Plateau.NotreCouleur == Plateau.CouleurDroiteOrange ? penCouleurDroite : penCouleurGauche, bmpRobot.Width / 2, bmpRobot.Height / 2, bmpRobot.Width / 2, bmpRobot.Height / 2 - Scale.RealToScreenDistance(robot.Longueur / 2));
+            Actionneur.Dumper.Paint(g, Scale, robot.Position.Coordinates);
 
-            //gGros.DrawImage(Properties.Resources.Capot, 0, 0, Properties.Resources.Capot.Width, Properties.Resources.Capot.Height);
-
-            // Dessiner les actionneurs ici
-            if (robot == Robots.GrosRobot)
-            {
-                
-            }
-
-            g.DrawImage(RotateImage(bmpRobot, robot.Position.Angle.InDegrees + 90), positionRobot.X - bmpRobot.Width / 2, positionRobot.Y - bmpRobot.Height / 2);
+            g.ResetTransform();
         }
 
         private static void DessineObstacles(Graphics g)
