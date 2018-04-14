@@ -26,16 +26,8 @@ namespace Composants
             }
             set
             {
-                if (value)
-                {
-                    Image = Properties.Resources.Button3DOn;
-                    this.value = true;
-                }
-                else
-                {
-                    Image = Properties.Resources.Button3DOn;
-                    this.value = true;
-                }
+                Image = value ? Properties.Resources.Button3DOn : Properties.Resources.Button3DOff;
+                this.value = value;
             }
         }
     }
