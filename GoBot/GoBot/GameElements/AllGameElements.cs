@@ -17,6 +17,8 @@ namespace GoBot.GameElements
         public List<ConstructionZone> ConstructionZones { get; protected set; }
         public List<CubesTower> CubesTowers { get; protected set; }
 
+        private Dictionary<CubesCross, int> cubesProximityCounter;
+
         public AllGameElements()
         {
             CubesCrosses = new List<CubesCross>();
@@ -44,6 +46,8 @@ namespace GoBot.GameElements
             ConstructionZones.Add(new ConstructionZone(new RealPoint(3000 - 675 + 130, 80), Plateau.CouleurDroiteOrange));
 
             CubesTowers = new List<CubesTower>();
+
+            cubesProximityCounter = new Dictionary<CubesCross, int>();
         }
         
         public IEnumerable<GameElement> AllElements
@@ -86,6 +90,38 @@ namespace GoBot.GameElements
                 }
 
                 return obstacles;
+            }
+        }
+
+        public void SetOpponents(List<RealPoint> positions)
+        {
+            // Mettre à jour ICI les éléments en fonction de la position des adversaires
+
+            int opRadius = 150;
+            int crossRadius = 85;
+
+            foreach (CubesCross cross in CubesCrosses)
+            {
+                if(cross.IsAvailable && positions.Exists(p => p.Distance(cross.Position) < opRadius + crossRadius))
+                {
+                    if (!cubesProximityCounter.ContainsKey(cross))
+                        cubesProximityCounter.Add(cross, 0);
+
+                    cubesProximityCounter[cross] += 3;
+                }
+            }
+
+            foreach (CubesCross cross in cubesProximityCounter.Keys)
+            {
+                cubesProximityCounter[cross] -= 1;
+
+                if (cubesProximityCounter[cross] <= 0)
+                    cubesProximityCounter.Remove(cross);
+                else if (cubesProximityCounter[cross] > 20)
+                {
+                    cubesProximityCounter.Remove(cross);
+                    cross.IsAvailable = false;
+                }
             }
         }
     }

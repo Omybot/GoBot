@@ -145,11 +145,13 @@ namespace GoBot
 
                     if (Plateau.Strategy == null)
                     {
-                        // Tester ici ce qu'il y a à tester en fonction de la position de l'ennemi AVANT de lancer le match
+                        // Tester ICI ce qu'il y a à tester en fonction de la position de l'ennemi AVANT de lancer le match
                     }
                     else
                     {
-                        // Tester ici ce qu'il y a à tester en fonction de la position de l'ennemi PENDANT le match
+                        // Tester ICI ce qu'il y a à tester en fonction de la position de l'ennemi PENDANT le match
+
+                        Elements.SetOpponents(positions);
 
                         if (Robots.GrosRobot.VitesseAdaptableEnnemi)
                         {
