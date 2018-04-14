@@ -255,8 +255,7 @@ namespace GoBot.Geometry.Shapes
         /// <returns>Distance minimale</returns>
         protected double Distance(RealPoint point)
         {
-            // Formule de collège \o/
-            return Math.Sqrt((X - point.X) * (X - point.X) + (Y - point.Y) * (Y - point.Y));
+            return Maths.Hypothenuse((X - point.X), (Y - point.Y));
         }
 
         #endregion

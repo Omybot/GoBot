@@ -78,7 +78,7 @@ namespace GoBot.Geometry
         /// <param name="startPosition">Position de départ</param>
         /// <param name="direction">Direction suivie</param>
         /// <returns>Coordonnées du point</returns>
-        public static Position GetCoordonnees(Position startPosition, Direction direction)
+        public static Position GetDestination(Position startPosition, Direction direction)
         {
             Angle endAngle = direction.angle + startPosition.Angle;
 
@@ -86,6 +86,17 @@ namespace GoBot.Geometry
             double y = startPosition.Coordinates.Y + Math.Sin(endAngle.InRadians) * direction.distance;
 
             return new Position(endAngle, new RealPoint(x, y));
+        }
+
+        /// <summary>
+        /// Retourne la longueur de l'hypothenuse d'un triangle rectangle à partir des longueur des 2 autres côtés.
+        /// </summary>
+        /// <param name="side1">Longueur du 1er côté</param>
+        /// <param name="side2">Longueur du 2ème côté</param>
+        /// <returns>Longueur de l'hypothenuse</returns>
+        public static double Hypothenuse(double side1, double side2)
+        {
+            return Math.Sqrt(side1 * side1 + side2 * side2);
         }
     }
 }

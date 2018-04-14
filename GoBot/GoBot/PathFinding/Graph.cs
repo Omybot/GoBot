@@ -125,7 +125,7 @@ namespace AStarFolder
             {
                 if (node != no)
                 {
-                    double distance = Math.Sqrt((node.Position.X - no.Position.X) * (node.Position.X - no.Position.X) + (node.Position.Y - no.Position.Y) * (node.Position.Y - no.Position.Y));
+                    double distance = new RealPoint(node.Position.X, node.Position.Y).Distance(new RealPoint(no.Position.X, no.Position.Y));
                     if (distance < distanceMax)
                     {
                         Arc arc = new Arc(no, node);
@@ -177,7 +177,7 @@ namespace AStarFolder
             {
                 if (node != no)
                 {
-                    double distance = Math.Sqrt((node.Position.X - no.Position.X) * (node.Position.X - no.Position.X) + (node.Position.Y - no.Position.Y) * (node.Position.Y - no.Position.Y));
+                    double distance = new RealPoint(node.Position.X, node.Position.Y).Distance(new RealPoint(no.Position.X, no.Position.Y));
                     if (distance < distanceMax)
                     {
                         Arc arc = new Arc(no, node);
