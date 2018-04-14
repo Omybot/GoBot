@@ -14,7 +14,7 @@ namespace GoBot
         public static bool Shutdown { get; set; } = false;
 
         public static DateTime LaunchStart { get; set; }
-        public static String LaunchStartString { get { return Execution.LaunchStart.ToString("yyyy.MM.dd hh\\hmm\\mss\\s"); } }
+        public static String LaunchStartString { get { return Execution.LaunchStart.ToString("yyyy.MM.dd HH\\hmm\\mss\\s"); } }
 
     }
 }
