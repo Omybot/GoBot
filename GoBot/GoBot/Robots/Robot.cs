@@ -366,7 +366,7 @@ namespace GoBot
         {
             lock (Graph)
             {
-                List<IShape> obstacles = new List<IShape>(Plateau.ObstaclesBalise);
+                List<IShape> obstacles = new List<IShape>(Plateau.ObstaclesBalise.Concat(Plateau.Elements.AsObstacles));
 
                 foreach (Arc arc in Graph.Arcs)
                     arc.Passable = true;

@@ -97,6 +97,7 @@ namespace GoBot
                 List<IShape> toutObstacles = new List<IShape>();
                 toutObstacles.AddRange(ObstaclesPlateau);
                 toutObstacles.AddRange(ObstaclesBalise);
+                toutObstacles.AddRange(Elements.AsObstacles);
                 return toutObstacles;
             }
         }

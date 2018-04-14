@@ -111,28 +111,28 @@ namespace GoBot.Movements
     {
         public MovementsCubesFromLeft(CubesCross cubes) : base(cubes)
         {
-            Positions.Add(new Position(0, cubes.Position.Translation(-300, 0)));
+            Positions.Add(new Position(0, cubes.Position.Translation(-350, 0)));
         }
     }
     class MovementsCubesFromRigth : MovementCubes
     {
         public MovementsCubesFromRigth(CubesCross cubes) : base(cubes)
         {
-            Positions.Add(new Position(180, cubes.Position.Translation(300, 0)));
+            Positions.Add(new Position(180, cubes.Position.Translation(350, 0)));
         }
     }
     class MovementsCubesFromTop : MovementCubes
     {
         public MovementsCubesFromTop(CubesCross cubes) : base(cubes)
         {
-            Positions.Add(new Position(90, cubes.Position.Translation(0, -300)));
+            Positions.Add(new Position(90, cubes.Position.Translation(0, -350)));
         }
     }
     class MovementsCubesFromBottom : MovementCubes
     {
         public MovementsCubesFromBottom(CubesCross cubes) : base(cubes)
         {
-            Positions.Add(new Position(-90, cubes.Position.Translation(0, 300)));
+            Positions.Add(new Position(-90, cubes.Position.Translation(0, 350)));
         }
     }
 }

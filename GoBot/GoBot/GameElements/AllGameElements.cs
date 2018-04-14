@@ -70,5 +70,23 @@ namespace GoBot.GameElements
         {
             return AllElements.GetEnumerator();
         }
+
+        public IEnumerable<IShape> AsObstacles
+        {
+            get
+            {
+                List<IShape> obstacles = new List<IShape>();
+
+                foreach (CubesCross cross in CubesCrosses)
+                {
+                    if(cross.IsAvailable && cross.CubesCount > 2)
+                    {
+                        obstacles.Add(cross.AsObstacle);
+                    }
+                }
+
+                return obstacles;
+            }
+        }
     }
 }

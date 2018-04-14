@@ -61,6 +61,14 @@ namespace GoBot.GameElements
             }
         }
 
+        public IShape AsObstacle
+        {
+            get
+            {
+                return new Circle(position, 184 / 2);
+            }
+        }
+
         public CubeColor GetColor(CubePlace place)
         {
             return colors[place];
