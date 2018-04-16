@@ -205,8 +205,6 @@ namespace GoBot
             //timerPosition.Stop();
         }
 
-        Thread thActivationAsser;
-
         public void ReactivationAsserv()
         {
             for (LedID i = LedID.DebugB1; i <= LedID.DebugA1; i++)
@@ -234,8 +232,7 @@ namespace GoBot
             switch ((FrameFunction)trameRecue[1])
             {
                 case FrameFunction.Blocage:
-                    thActivationAsser = new Thread(ReactivationAsserv);
-                    thActivationAsser.Start();
+                    ThreadPool.QueueUserWorkItem(f => ReactivationAsserv());
                     break;
                 case FrameFunction.FinDeplacement:
                 case FrameFunction.FinRecallage:        // Idem

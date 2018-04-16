@@ -44,9 +44,7 @@ namespace GoBot
         public delegate void TableDessineeDelegate(Image img);
         //Déclaration de l’évènement utilisant le délégué
         public static event TableDessineeDelegate TableDessinee;
-
-        private static Thread threadDessin;
-
+        
         private static RealPoint positionCurseur;
         public static RealPoint PositionCurseurTable { get; set; }
         public static RealPoint positionDepart;
@@ -66,6 +64,8 @@ namespace GoBot
         public static bool AfficheElementsJeu { get; set; } = true;
 
         public static MouseMode modeCourant;
+
+        private static bool displayEnable;
 
         private static Pen penRougePointille = new Pen(Color.Red),
                             penNoirPointille = new Pen(Color.Black),
@@ -141,13 +141,14 @@ namespace GoBot
 
         public static void Start()
         {
-            threadDessin = new Thread(Dessine);
-            threadDessin.Start();
+            PositionCurseur = new RealPoint();
+            displayEnable = true;
+            ThreadPool.QueueUserWorkItem(f => DisplayLoop());
         }
 
         public static void Stop()
         {
-            threadDessin.Abort();
+            displayEnable = false;
         }
 
         public enum MouseMode
@@ -160,12 +161,11 @@ namespace GoBot
             TrajectoirePolaire
         }
 
-        public static void Dessine()
+        public static void DisplayLoop()
         {
             Stopwatch sw = Stopwatch.StartNew();
 
-            PositionCurseur = new RealPoint();
-            while (Thread.CurrentThread.IsAlive && !Execution.Shutdown)
+            while (displayEnable && !Execution.Shutdown)
             {
                 // Limitation à 30FPS
                 long sleep = 33 - sw.ElapsedMilliseconds - 1;

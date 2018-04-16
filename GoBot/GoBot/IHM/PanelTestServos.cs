@@ -19,10 +19,10 @@ namespace GoBot.IHM
             foreach (ServoBaudrate baudrate in Enum.GetValues(typeof(ServoBaudrate)))
                 checkedListBoxBaudrates.Items.Add(baudrate.ToString().Substring(1), true);
         }
+        
+        bool searching;
 
-        Thread thRechercheServo;
-
-        private void RechercheServos()
+        private void SearchLoop()
         {
             btnChercher.Text = "Stop";
             listBoxServos.Items.Clear();
@@ -31,7 +31,7 @@ namespace GoBot.IHM
             int iBaudrate = 0;
             foreach (ServoBaudrate baudrate in Enum.GetValues(typeof(ServoBaudrate)))
             {
-                if (checkedListBoxBaudrates.CheckedIndices.Contains(iBaudrate))
+                if (searching && checkedListBoxBaudrates.CheckedIndices.Contains(iBaudrate))
                 {
                     Connections.ConnectionIO.SendMessage(FrameFactory.ChangementBaudrate(baudrate));
                     Thread.Sleep(100);
@@ -63,17 +63,14 @@ namespace GoBot.IHM
 
         private void btnChercher_Click(object sender, EventArgs e)
         {
-            if (thRechercheServo != null && thRechercheServo.IsAlive)
+            if (searching)
             {
-                btnChercher.Text = "Chercher servomoteurs";
-                thRechercheServo.Abort();
-                progressBarId.Value = 0;
-                progressBarBaudrate.Value = 0;
+                searching = false;
             }
             else
             {
-                thRechercheServo = new Thread(RechercheServos);
-                thRechercheServo.Start();
+                searching = true;
+                ThreadPool.QueueUserWorkItem(f => SearchLoop());
             }
         }
 

@@ -47,8 +47,7 @@ namespace GoBot
         public Graph Graph { get; set; }
         public bool TrajectoireEchouee { get; set; }
         private bool TrajectoireCoupee { get; set; }
-
-        private Thread threadTrajectoire;
+        
         private Semaphore semTrajectoire;
 
         public Trajectory TrajectoireEnCours = null;
@@ -274,8 +273,7 @@ namespace GoBot
 
             semTrajectoire = new Semaphore(0, int.MaxValue);
 
-            threadTrajectoire = new Thread(ParcourirTrajectoire);
-            threadTrajectoire.Start(traj);
+            ThreadPool.QueueUserWorkItem(f => ParcourirTrajectoire(traj));
             
             semTrajectoire.WaitOne();
 

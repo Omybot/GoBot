@@ -13,7 +13,6 @@ namespace GoBot.IHM
 {
     public partial class PotarControl : UserControl
     {
-        private Thread threadPolling;
         private bool pollingEnable;
         private Positionable positionnable;
 
@@ -41,18 +40,12 @@ namespace GoBot.IHM
         private void switchBouton_ValueChanged(object sender, bool value)
         {
             if(value)
-            {
-                pollingEnable = true;
-                threadPolling = new Thread(ThreadPollingCodeur);
-                threadPolling.Start();
-            }
+                ThreadPool.QueueUserWorkItem(f => PollingLoop());
             else
-            {
                 pollingEnable = false;
-            }
         }
 
-        private void ThreadPollingCodeur()
+        private void PollingLoop()
         {
             double posValue;
             double ticksMin, ticksCurrent, ticksRange;
@@ -64,8 +57,9 @@ namespace GoBot.IHM
             ticksRange = pointsParTour * toursRange;
 
             posValue = positionnable.Minimum;
+            pollingEnable = true;
 
-            while(pollingEnable)
+            while (!Execution.Shutdown && pollingEnable)
             {
                 toursRange = trackBarSpeed.Value;
                 ticksRange = pointsParTour * toursRange;

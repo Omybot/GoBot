@@ -22,8 +22,6 @@ namespace GoBot.PathFinding
         public static IShape ObstacleProbleme { get; private set; }
         public static List<RealPoint> PointsTrouves { get; private set; }
 
-        private static Thread threadRAZRayonAdverse;
-
         public static Trajectory ChercheTrajectoire(Graph graph, List<IShape> obstacles, Position positionActuell, Position destination, double rayonSecurite, double distanceSecuriteCote)
         {
             DateTime debut = DateTime.Now;
@@ -394,18 +392,17 @@ namespace GoBot.PathFinding
             {
                 if (Plateau.RayonAdversaire < Plateau.RayonAdversaireInitial)
                 {
-                    threadRAZRayonAdverse = new Thread(ThreadRAZRayonAdverse);
-                    threadRAZRayonAdverse.Start();
+                    ThreadPool.QueueUserWorkItem(f => ResetOpponentRadiusLoop());
                 }
 
                 return trajectoire;
             }
         }
 
-        private static void ThreadRAZRayonAdverse()
+        private static void ResetOpponentRadiusLoop()
         {
             Thread.Sleep(1000);
-            while (Plateau.RayonAdversaire < Plateau.RayonAdversaireInitial)
+            while (!Execution.Shutdown && Plateau.RayonAdversaire < Plateau.RayonAdversaireInitial)
             {
                 Plateau.RayonAdversaire++;
                 Thread.Sleep(50);

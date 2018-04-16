@@ -35,8 +35,6 @@ namespace GoBot
         public static List<IShape> ObstaclesPlateau { get; set; }
         public static List<IShape> ObstaclesBalise { get; set; }
 
-        public static RealPoint PositionCibleRobot { get; set; }
-
         public static AllGameElements Elements { get; protected set; }
 
         private static Color notreCouleur;
@@ -101,7 +99,7 @@ namespace GoBot
                 return toutObstacles;
             }
         }
-
+        
         public Plateau()
         {
             if (!Execution.DesignMode)
@@ -121,8 +119,7 @@ namespace GoBot
                 Balise.PositionEnnemisActualisee += Balise_PositionEnnemisActualisee;
                 
                 SemaphoreCollisions = new Semaphore(0, int.MaxValue);
-                thCollisions = new Thread(ThreadTestCollisions);
-                thCollisions.Start();
+                ThreadPool.QueueUserWorkItem(f => ThreadTestCollisions());
 
                 Strategy = new StrategyMatch();
             }
@@ -173,8 +170,6 @@ namespace GoBot
         public static void Init()
         {
             Balise = new Beacon();
-
-            PositionCibleRobot = Robots.GrosRobot.Position.Coordinates;
         }
 
         private Semaphore SemaphoreCollisions { get; set; }
@@ -188,7 +183,6 @@ namespace GoBot
             }
         }
 
-        Thread thCollisions;
         public void ObstacleTest(int x, int y)
         {
             // Obstacle de simulation

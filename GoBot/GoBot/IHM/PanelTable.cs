@@ -1,6 +1,5 @@
 ﻿using GoBot.Geometry;
 using GoBot.Actionneurs;
-using GoBot.Geometry;
 using GoBot.Geometry.Shapes;
 using GoBot.Devices;
 using GoBot.GameElements;
@@ -18,6 +17,8 @@ namespace GoBot.IHM
     public partial class PanelTable : UserControl
     {
         public static Plateau Plateau { get; set; }
+
+        private bool displayEnable;
 
         public PanelTable()
         {
@@ -42,8 +43,8 @@ namespace GoBot.IHM
 
         void ParentForm_FormClosing(object sender, FormClosingEventArgs e)
         {
-            if (thAffichage != null)
-                thAffichage.Abort();
+            displayEnable = false;
+            Dessinateur.Stop();
         }
 
         void Plateau_ScoreChange(object sender, EventArgs e)
@@ -51,9 +52,9 @@ namespace GoBot.IHM
             this.InvokeAuto(() => lblScore.Text = Plateau.Score.ToString());
         }
 
-        void MAJAffichage()
+        void DisplayLoop()
         {
-            while (!Execution.Shutdown && Thread.CurrentThread.IsAlive)
+            while (!Execution.Shutdown && displayEnable)
             {
                 this.InvokeAuto(() =>
                 { 
@@ -86,20 +87,19 @@ namespace GoBot.IHM
             }
         }
 
-        Thread thAffichage;
         private void btnAffichage_Click(object sender, EventArgs e)
         {
             if (btnAffichage.Text == "Lancer l'affichage")
             {
-                thAffichage = new Thread(MAJAffichage);
-                thAffichage.Start();
+                displayEnable = true;
+                ThreadPool.QueueUserWorkItem(f => DisplayLoop());
                 Dessinateur.Start();
                 btnAffichage.Text = "Stopper l'affichage";
                 btnAffichage.Image = GoBot.Properties.Resources.Pause16;
             }
             else
             {
-                thAffichage.Abort();
+                displayEnable = false;
                 Dessinateur.Stop();
                 btnAffichage.Text = "Lancer l'affichage";
                 btnAffichage.Image = GoBot.Properties.Resources.Play16;
@@ -239,8 +239,7 @@ namespace GoBot.IHM
                 }
             }
         }
-
-        Thread thGoToRP;
+        
         List<RealPoint> trajectoirePolaire;
         List<RealPoint> pointsPolaires;
 
@@ -256,10 +255,7 @@ namespace GoBot.IHM
                 positionArrivee = new Position(traj.angle, Dessinateur.positionDepart);
 
                 if (Dessinateur.modeCourant == Dessinateur.MouseMode.PositionCentre)
-                {
-                    thGoToRP = new Thread(ThreadTrajectoireGros);
-                    thGoToRP.Start();
-                }
+                    ThreadPool.QueueUserWorkItem(f => ThreadTrajectoireGros());
                 else
                     Robots.GrosRobot.ReglerOffsetAsserv(positionArrivee);
 
@@ -278,14 +274,9 @@ namespace GoBot.IHM
                 positionArrivee = departRecule;
 
                 if (Dessinateur.modeCourant == Dessinateur.MouseMode.PositionFace)
-                {
-                    thGoToRP = new Thread(ThreadTrajectoireGros);
-                    thGoToRP.Start();
-                }
+                    ThreadPool.QueueUserWorkItem(f => ThreadTrajectoireGros());
                 else
-                {
                     Robots.GrosRobot.ReglerOffsetAsserv(positionArrivee);
-                }
 
                 Dessinateur.modeCourant = Dessinateur.MouseMode.None;
             }
@@ -376,8 +367,7 @@ namespace GoBot.IHM
 
         private void btnZoneDepart_Click(object sender, EventArgs e)
         {
-            Thread th = new Thread(GoToDepart);
-            th.Start();
+            ThreadPool.QueueUserWorkItem(f => GoToDepart());
         }
 
         public void GoToDepart()
