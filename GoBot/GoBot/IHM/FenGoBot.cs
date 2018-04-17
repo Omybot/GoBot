@@ -117,11 +117,8 @@ namespace GoBot
                 panelBaliseDiagnostic.Balise = Plateau.Balise;
             }
 
+            SplashScreen.SetMessage("Youhou !", Color.Green);
             SplashScreen.CloseSplash();
-
-#if DEBUG
-            TestCode.TestEnums();
-#endif
         }
 
         public void ChargerReplay(String fichier)
@@ -153,7 +150,12 @@ namespace GoBot
         {
             this.Hide();
 
-            ThreadManager.ExitAll();
+            if (!ThreadManager.ExitAll())
+            {
+                Console.WriteLine("Tous les threads ne se sont pas terminés : suicide de l'application.");
+                Environment.Exit(0);
+            }
+
             Execution.Shutdown = true;
 
             Plateau.Balise.Stop();

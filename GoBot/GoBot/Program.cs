@@ -27,9 +27,10 @@ namespace GoBot
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
 
-            SplashScreen.ShowSplash();
+            SplashScreen.ShowSplash(Properties.Resources.Splash, new Rectangle(230, 30, 255, 75));
 
             CheckAlreadyLaunched();
+            DebugChecks();
             Update();
             CheckIP();
 
@@ -56,6 +57,14 @@ namespace GoBot
             Application.Run(new FenGoBot(args));
         }
 
+        static void DebugChecks()
+        {
+            if (Debugger.IsAttached)
+            {
+                TestCode.TestEnums();
+            }
+        }
+
         static void CheckIP()
         {
             if(!Dns.GetHostAddresses(Dns.GetHostName()).ToList().Exists(ip => ip.ToString().StartsWith("10.1.0.")))
@@ -67,19 +76,33 @@ namespace GoBot
 
         static void CheckAlreadyLaunched()
         {
-            Process[] proc = Process.GetProcessesByName("GoBot");
-            if (proc.Length > 1)
+            int tryCount = 0;
+            int tryMax = 5;
+            bool ok = false;
+            String messageWait = "Execution de GoBot\nen attente";
+            
+            Process[] proc;
+            do
             {
-                // On attend pour vérifier qu'il s'en va pas l'autre
-                Thread.Sleep(1000);
                 proc = Process.GetProcessesByName("GoBot");
+                ok = (proc.Length <= 1);
 
-                if (proc.Length > 1)
+                if(!ok)
                 {
-                    SplashScreen.SetMessage("GoBot est déjà lancé...", Color.Red);
+                    messageWait += ".";
+                    SplashScreen.SetMessage(messageWait, Color.Orange);
                     Thread.Sleep(1000);
-                    return;
                 }
+                    
+                tryCount++;
+
+            } while (!ok && tryCount < tryMax);
+
+            if (!ok)
+            {
+                SplashScreen.SetMessage("GoBot est déjà lancé...", Color.Red);
+                Thread.Sleep(1000);
+                Environment.Exit(0);
             }
         }
 

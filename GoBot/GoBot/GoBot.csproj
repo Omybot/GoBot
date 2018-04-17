@@ -108,6 +108,7 @@
     <Compile Include="IHM\PanelBoardNumeric.Designer.cs">
       <DependentUpon>PanelBoardNumeric.cs</DependentUpon>
     </Compile>
+    <Compile Include="IHM\SplashScreen.cs" />
     <Compile Include="Movements\MovementBuilding.cs" />
     <Compile Include="Movements\MovementCubes.cs" />
     <Compile Include="NameFinder.cs" />
@@ -354,12 +355,6 @@
     <Compile Include="IHM\PotarControl.Designer.cs">
       <DependentUpon>PotarControl.cs</DependentUpon>
     </Compile>
-    <Compile Include="IHM\SplashScreen.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="IHM\SplashScreen.designer.cs">
-      <DependentUpon>SplashScreen.cs</DependentUpon>
-    </Compile>
     <Compile Include="Logs\LogFile.cs" />
     <Compile Include="Logs\Logs.cs" />
     <Compile Include="Movements\Movement.cs" />
@@ -577,9 +572,6 @@
     </EmbeddedResource>
     <EmbeddedResource Include="IHM\PotarControl.resx">
       <DependentUpon>PotarControl.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="IHM\SplashScreen.resx">
-      <DependentUpon>SplashScreen.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="IHM\WorldPanel.resx">
       <DependentUpon>WorldPanel.cs</DependentUpon>
