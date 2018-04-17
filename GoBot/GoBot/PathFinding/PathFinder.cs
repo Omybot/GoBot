@@ -2,6 +2,7 @@
 using GoBot.Actions;
 using GoBot.Geometry;
 using GoBot.Geometry.Shapes;
+using GoBot.Threading;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,6 +13,8 @@ namespace GoBot.PathFinding
 {
     static class PathFinder
     {
+        private static ThreadLink _linkResetRadius;
+
         public static List<Arc> CheminTrouve { get; private set; }
         public static List<Node> NodeTrouve { get; private set; }
         public static List<Node> CheminEnCoursNoeuds { get; private set; }
@@ -25,6 +28,8 @@ namespace GoBot.PathFinding
         public static Trajectory ChercheTrajectoire(Graph graph, List<IShape> obstacles, Position positionActuell, Position destination, double rayonSecurite, double distanceSecuriteCote)
         {
             DateTime debut = DateTime.Now;
+
+            _linkResetRadius = null;
 
             double distanceRaccordable = 150;
             double distance;
@@ -91,6 +96,7 @@ namespace GoBot.PathFinding
                                     {
                                         Robots.GrosRobot.Historique.Log("Adversaire au contact, impossible de s'enfuir, réduction du périmètre adverse", TypeLog.PathFinding);
                                         Plateau.RayonAdversaire -= 10;
+                                        _linkResetRadius?.Cancel();
                                     }
                                 }
                             }
@@ -143,6 +149,7 @@ namespace GoBot.PathFinding
                                         {
                                             Robots.GrosRobot.Historique.Log("Adversaire au contact, impossible de s'enfuir, réduction du périmètre adverse", TypeLog.PathFinding);
                                             Plateau.RayonAdversaire -= 10;
+                                            _linkResetRadius?.Cancel();
                                         }
                                     }
                                 }
@@ -392,7 +399,7 @@ namespace GoBot.PathFinding
             {
                 if (Plateau.RayonAdversaire < Plateau.RayonAdversaireInitial)
                 {
-                    ThreadPool.QueueUserWorkItem(f => ResetOpponentRadiusLoop());
+                    _linkResetRadius = ThreadManager.StartThread(link => ResetOpponentRadiusLoop());
                 }
 
                 return trajectoire;
@@ -401,8 +408,10 @@ namespace GoBot.PathFinding
 
         private static void ResetOpponentRadiusLoop()
         {
+            _linkResetRadius.RegisterName();
+
             Thread.Sleep(1000);
-            while (!Execution.Shutdown && Plateau.RayonAdversaire < Plateau.RayonAdversaireInitial)
+            while (!_linkResetRadius.Cancelled)
             {
                 Plateau.RayonAdversaire++;
                 Thread.Sleep(50);

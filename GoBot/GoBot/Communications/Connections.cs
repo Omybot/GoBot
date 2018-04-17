@@ -1,4 +1,5 @@
-﻿using System;
+﻿using GoBot.Threading;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
@@ -8,6 +9,8 @@ namespace GoBot.Communications
 {
     static class Connections
     {
+        private static ThreadLink _linkTestConnections;
+
         public static UDPConnection ConnectionMove { get; set; }
         public static UDPConnection ConnectionIO { get; set; }
         public static UDPConnection ConnectionGB { get; set; }
@@ -16,7 +19,7 @@ namespace GoBot.Communications
         /// Liste de toutes les connexions suivies par Connections
         /// </summary>
         public static List<Connection> AllConnections { get; set; }
-        
+
         /// <summary>
         /// Association de la connexion avec la carte
         /// </summary>
@@ -45,7 +48,8 @@ namespace GoBot.Communications
             ConnectionMove = AddUDPConnection(Board.RecMove, IPAddress.Parse("10.1.0.11"), 12321, 12311);
             ConnectionGB = AddUDPConnection(Board.RecGB, IPAddress.Parse("10.1.0.12"), 12322, 12312);
 
-            ThreadPool.QueueUserWorkItem(f => TestConnectionsLoop()); // En remplacement des tests de connexion des ConnexionCheck, pour les syncroniser
+            // En remplacement des tests de connexion des ConnexionCheck, pour les syncroniser
+            _linkTestConnections = ThreadManager.StartInfiniteLoop(link => TestConnections(), new TimeSpan(0, 0, 1));
         }
 
         /// <summary>
@@ -80,15 +84,15 @@ namespace GoBot.Communications
         /// <summary>
         /// Boucle de tests de connexions pour maintenir les vérification à intervalle régulier
         /// </summary>
-        private static void TestConnectionsLoop()
+        private static void TestConnections()
         {
+            _linkTestConnections.RegisterName();
+
             int interval = IntervalLoopTests / AllConnections.Count();
 
-            Thread.Sleep(1000); // Pour attendre que tout soit cablé
-
-            while (!Execution.Shutdown)
+            foreach (UDPConnection conn in AllConnections.OrderBy(c => Connections.GetBoardByConnection(c).ToString()))
             {
-                foreach (UDPConnection conn in AllConnections.OrderBy(c => Connections.GetBoardByConnection(c).ToString()))
+                if (!_linkTestConnections.Cancelled)
                 {
                     conn.ConnectionChecker.CheckConnection();
                     Thread.Sleep(interval);

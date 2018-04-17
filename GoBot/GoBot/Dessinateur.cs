@@ -15,11 +15,14 @@ using GoBot.Movements;
 using GoBot.PathFinding;
 using System.Drawing.Drawing2D;
 using System.Diagnostics;
+using GoBot.Threading;
 
 namespace GoBot
 {
     static class Dessinateur
     {
+
+        private static ThreadLink _linkDisplay;
 
         #region Conversion coordonnées réelles / écran
         
@@ -64,8 +67,6 @@ namespace GoBot
         public static bool AfficheElementsJeu { get; set; } = true;
 
         public static MouseMode modeCourant;
-
-        private static bool displayEnable;
 
         private static Pen penRougePointille = new Pen(Color.Red),
                             penNoirPointille = new Pen(Color.Black),
@@ -142,13 +143,17 @@ namespace GoBot
         public static void Start()
         {
             PositionCurseur = new RealPoint();
-            displayEnable = true;
-            ThreadPool.QueueUserWorkItem(f => DisplayLoop());
+
+            _linkDisplay = ThreadManager.StartThread(link => DisplayLoop());
         }
 
         public static void Stop()
         {
-            displayEnable = false;
+            Console.WriteLine("Arrete stp");
+            _linkDisplay?.Cancel();
+            if (!(_linkDisplay?.WaitEnd()).Value)
+                Console.WriteLine("Niop");
+            _linkDisplay = null;
         }
 
         public enum MouseMode
@@ -163,12 +168,16 @@ namespace GoBot
 
         public static void DisplayLoop()
         {
-            Stopwatch sw = Stopwatch.StartNew();
+            _linkDisplay.RegisterName();
 
-            while (displayEnable && !Execution.Shutdown)
+            Stopwatch sw = Stopwatch.StartNew();
+            
+            while (!_linkDisplay.Cancelled)
             {
-                // Limitation à 30FPS
-                long sleep = 33 - sw.ElapsedMilliseconds - 1;
+                _linkDisplay.LoopsCount++;
+
+                // Limitation à 20FPS
+                long sleep = 50 - sw.ElapsedMilliseconds - 1;
                 if (sleep > 0)
                     Thread.Sleep((int)sleep);
 
@@ -176,17 +185,20 @@ namespace GoBot
 
                 try
                 {
-                    Bitmap bmp = new Bitmap(Properties.Resources.TablePlan.Width, Properties.Resources.TablePlan.Height);
+                    Bitmap bmp;
+
+                    if (AfficheTable)
+                        bmp = new Bitmap(Properties.Resources.TablePlan);
+                    else
+                        bmp = new Bitmap(Properties.Resources.TablePlan.Width, Properties.Resources.TablePlan.Height);
+                    
                     {
                         Graphics g = Graphics.FromImage(bmp);
                         g.SmoothingMode = SmoothingMode.AntiAlias;
-
-                        if (AfficheTable)
-                            DessinePlateau(g);
-
+                        
                         if (AfficheGraph || AfficheGraphArretes)
                             DessineGraph(Robots.GrosRobot, g, AfficheGraph, AfficheGraphArretes);
-                        
+
                         if (Robots.GrosRobot != null)
                             DessineRobot(Robots.GrosRobot, g);
 
@@ -208,7 +220,7 @@ namespace GoBot
 
                         if (AfficheLigneDetections)
                             DessineLignesDetection(g);
-                        
+
                         Robots.GrosRobot.PositionCible?.Paint(g, Color.Red, 5, Color.Red, Scale);
 
                         if (AfficheCoutsMouvements)
@@ -285,8 +297,8 @@ namespace GoBot
                                 foreach (Point p in pointsPolaireScreen)
                                     g.DrawEllipse(Pens.Black, p.X - 3, p.Y - 3, 6, 6);
                         }
-
-                        TableDessinee(bmp);
+                        
+                        TableDessinee?.Invoke(bmp);
                     }
                 }
                 catch (Exception ex)

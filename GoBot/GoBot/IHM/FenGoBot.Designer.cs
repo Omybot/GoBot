@@ -797,7 +797,6 @@ namespace GoBot
             this.Name = "FenGoBot";
             this.Text = "GoBot";
             this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
-            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.FenGoBot_FormClosing);
             this.Load += new System.EventHandler(this.FenGoBot_Load);
             this.tabAlimentation.ResumeLayout(false);
             this.tabServomoteurs.ResumeLayout(false);

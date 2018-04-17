@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 using System.Threading;
+using GoBot.Threading;
 
 namespace GoBot.IHM
 {
@@ -29,11 +30,13 @@ namespace GoBot.IHM
 
         private void btnOk_Click(object sender, EventArgs e)
         {
-            ThreadPool.QueueUserWorkItem(f => EnvoiTestPid());
+            ThreadManager.StartThread(link => EnvoiTestPid(link));
         }
 
-        private void EnvoiTestPid()
+        private void EnvoiTestPid(ThreadLink link)
         {
+            link.RegisterName();
+
             Robot.EnvoyerPID((int)numCoeffP.Value, (int)numCoeffI.Value, (int)numCoeffD.Value);
             List<int>[] mesures = Robot.MesureTestPid((int)numPasCodeurs.Value, SensAR.Avant, (int)numNbPoints.Value);
             // Afficher les courbes

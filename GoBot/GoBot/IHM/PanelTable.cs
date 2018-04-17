@@ -10,15 +10,16 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.Threading;
 using System.Windows.Forms;
+using GoBot.Threading;
 
 namespace GoBot.IHM
 {
 
     public partial class PanelTable : UserControl
     {
-        public static Plateau Plateau { get; set; }
+        private static ThreadLink _linkDisplay;
 
-        private bool displayEnable;
+        public static Plateau Plateau { get; set; }
 
         public PanelTable()
         {
@@ -41,49 +42,42 @@ namespace GoBot.IHM
             this.InvokeAuto(() => pictureBoxTable.Image = img);
         }
 
-        void ParentForm_FormClosing(object sender, FormClosingEventArgs e)
-        {
-            displayEnable = false;
-            Dessinateur.Stop();
-        }
-
         void Plateau_ScoreChange(object sender, EventArgs e)
         {
             this.InvokeAuto(() => lblScore.Text = Plateau.Score.ToString());
         }
 
-        void DisplayLoop()
+        void DisplayInfos()
         {
-            while (!Execution.Shutdown && displayEnable)
+            _linkDisplay.RegisterName();
+
+            this.InvokeAuto(() =>
+            { 
+                lblPosGrosX.Text = Math.Round(Robots.GrosRobot.Position.Coordinates.X, 2).ToString();
+                lblPosGrosY.Text = Math.Round(Robots.GrosRobot.Position.Coordinates.Y, 2).ToString();
+                lblPosGrosTeta.Text = Robots.GrosRobot.Position.Angle.ToString();
+            });
+
+            if (Plateau.Strategy != null)
             {
+                TimeSpan tempsRestant = Plateau.Strategy.TimeBeforeEnd;
+                if (tempsRestant.TotalMilliseconds <= 0)
+                    tempsRestant = new TimeSpan(0);
+
+                Color couleur;
+                if (tempsRestant.TotalSeconds > Plateau.Strategy.MatchDuration.TotalSeconds / 2)
+                    couleur = Color.FromArgb((int)((Plateau.Strategy.MatchDuration.TotalSeconds - tempsRestant.TotalSeconds) * (150.0 / (Plateau.Strategy.MatchDuration.TotalSeconds / 2.0))), 150, 0);
+                else
+                    couleur = Color.FromArgb(150, 150 - (int)((Plateau.Strategy.MatchDuration.TotalSeconds / 2.0 - tempsRestant.TotalSeconds) * (150.0 / (Plateau.Strategy.MatchDuration.TotalSeconds / 2.0))), 0);
+
                 this.InvokeAuto(() =>
-                { 
-                    lblPosGrosX.Text = Math.Round(Robots.GrosRobot.Position.Coordinates.X, 2).ToString();
-                    lblPosGrosY.Text = Math.Round(Robots.GrosRobot.Position.Coordinates.Y, 2).ToString();
-                    lblPosGrosTeta.Text = Robots.GrosRobot.Position.Angle.ToString();
-                });
-
-                if (Plateau.Strategy != null)
                 {
-                    TimeSpan tempsRestant = Plateau.Strategy.TimeBeforeEnd;
-                    if (tempsRestant.TotalMilliseconds <= 0)
-                        tempsRestant = new TimeSpan(0);
+                    lblSecondes.Text = (int)tempsRestant.TotalSeconds + "";
+                    lblMilli.Text = tempsRestant.Milliseconds + "";
 
-                    Color couleur;
-                    if (tempsRestant.TotalSeconds > Plateau.Strategy.MatchDuration.TotalSeconds / 2)
-                        couleur = Color.FromArgb((int)((Plateau.Strategy.MatchDuration.TotalSeconds - tempsRestant.TotalSeconds) * (150.0 / (Plateau.Strategy.MatchDuration.TotalSeconds / 2.0))), 150, 0);
-                    else
-                        couleur = Color.FromArgb(150, 150 - (int)((Plateau.Strategy.MatchDuration.TotalSeconds / 2.0 - tempsRestant.TotalSeconds) * (150.0 / (Plateau.Strategy.MatchDuration.TotalSeconds / 2.0))), 0);
-
-                    this.InvokeAuto(() =>
-                    {
-                        lblSecondes.Text = (int)tempsRestant.TotalSeconds + "";
-                        lblMilli.Text = tempsRestant.Milliseconds + "";
-
-                        lblSecondes.ForeColor = couleur;
-                        lblMilli.ForeColor = couleur;
-                    });
-                }
+                    lblSecondes.ForeColor = couleur;
+                    lblMilli.ForeColor = couleur;
+                });
             }
         }
 
@@ -91,16 +85,21 @@ namespace GoBot.IHM
         {
             if (btnAffichage.Text == "Lancer l'affichage")
             {
-                displayEnable = true;
-                ThreadPool.QueueUserWorkItem(f => DisplayLoop());
+                _linkDisplay = ThreadManager.StartInfiniteLoop(link => DisplayInfos(), new TimeSpan(0, 0, 0, 0, 100));
+
                 Dessinateur.Start();
+
                 btnAffichage.Text = "Stopper l'affichage";
                 btnAffichage.Image = GoBot.Properties.Resources.Pause16;
             }
             else
             {
-                displayEnable = false;
+                _linkDisplay?.Cancel();
+                _linkDisplay?.WaitEnd();
+                _linkDisplay = null;
+
                 Dessinateur.Stop();
+
                 btnAffichage.Text = "Lancer l'affichage";
                 btnAffichage.Image = GoBot.Properties.Resources.Play16;
             }
@@ -193,12 +192,11 @@ namespace GoBot.IHM
         {
             foreach (GameElement element in Plateau.Elements)
                 if (element.IsHover)
-                    ThreadPool.QueueUserWorkItem(new WaitCallback(StartElementMouvement), element);
-        }
-
-        private void StartElementMouvement(Object element)
-        {
-            ((GameElement)element).ClickAction();
+                    ThreadManager.StartThread(link =>
+                    {
+                        link.Name = "Action " + element.ToString();
+                        element.ClickAction();
+                    } );
         }
         
         //MouseEventArgs ev;
@@ -206,7 +204,7 @@ namespace GoBot.IHM
         private void btnGo_Click(object sender, EventArgs e)
         {
             Plateau.Strategy = new StrategyMatch();
-            Plateau.Strategy.Execute();
+            Plateau.Strategy.ExecuteMatch();
         }
 
         private void PanelTable_Load(object sender, EventArgs e)
@@ -214,7 +212,6 @@ namespace GoBot.IHM
             if (!Execution.DesignMode)
             {
                 btnAffichage_Click(null, null);
-                ParentForm.FormClosing += new FormClosingEventHandler(ParentForm_FormClosing);
             }
         }
 
@@ -255,7 +252,7 @@ namespace GoBot.IHM
                 positionArrivee = new Position(traj.angle, Dessinateur.positionDepart);
 
                 if (Dessinateur.modeCourant == Dessinateur.MouseMode.PositionCentre)
-                    ThreadPool.QueueUserWorkItem(f => ThreadTrajectoireGros());
+                    ThreadManager.StartThread(link => ThreadTrajectory(link));
                 else
                     Robots.GrosRobot.ReglerOffsetAsserv(positionArrivee);
 
@@ -274,7 +271,7 @@ namespace GoBot.IHM
                 positionArrivee = departRecule;
 
                 if (Dessinateur.modeCourant == Dessinateur.MouseMode.PositionFace)
-                    ThreadPool.QueueUserWorkItem(f => ThreadTrajectoireGros());
+                    ThreadManager.StartThread(link => ThreadTrajectory(link));
                 else
                     Robots.GrosRobot.ReglerOffsetAsserv(positionArrivee);
 
@@ -287,12 +284,14 @@ namespace GoBot.IHM
         private void btnAleatoire_Click(object sender, EventArgs e)
         {
             Plateau.Strategy = new StrategyRandomMoves();
-            Plateau.Strategy.Execute();
+            Plateau.Strategy.ExecuteMatch();
         }
         Position positionArrivee;
 
-        private void ThreadTrajectoireGros()
+        private void ThreadTrajectory(ThreadLink link)
         {
+            link.RegisterName();
+
             this.InvokeAuto(() => btnPathRPCentre.Enabled = false);
 
             Robots.GrosRobot.GotoXYTeta(new Position(360 - positionArrivee.Angle.InDegrees, positionArrivee.Coordinates)); // TODO2018 pourquoi on change de repère ?
@@ -367,34 +366,35 @@ namespace GoBot.IHM
 
         private void btnZoneDepart_Click(object sender, EventArgs e)
         {
-            ThreadPool.QueueUserWorkItem(f => GoToDepart());
+            ThreadManager.StartThread(link => GoToDepart(link));
         }
 
-        public void GoToDepart()
+        public void GoToDepart(ThreadLink link)
         {
+            link.RegisterName();
             Robots.GrosRobot.GotoXYTeta(Recallages.PositionDepart);
         }
 
         private void btnStratNul_Click(object sender, EventArgs e)
         {
             Plateau.Strategy = new StrategyRoundTrip();
-            Plateau.Strategy.Execute();
+            Plateau.Strategy.ExecuteMatch();
         }
 
         private void btnStratTest_Click(object sender, EventArgs e)
         {
             Plateau.Strategy = new StrategyMinimumScore();
-            Plateau.Strategy.Execute();
+            Plateau.Strategy.ExecuteMatch();
         }
 
         private void btnTestAsser_Click(object sender, EventArgs e)
         {
-            Thread thTest = new Thread(TestAsser);
-            thTest.Start();
+            ThreadManager.StartThread(link => TestAsser(link));
         }
 
-        private void TestAsser()
+        private void TestAsser(ThreadLink link)
         {
+            link.RegisterName();
 
             Robots.GrosRobot.Avancer(2000);
             Robots.GrosRobot.PivotDroite(270);
@@ -642,7 +642,7 @@ namespace GoBot.IHM
         {
             Strategy m = (Strategy)o;
             Plateau.Strategy = m;
-            Plateau.Strategy.Execute();
+            Plateau.Strategy.ExecuteMatch();
         }
 
         private void ThreadHokuyoRecalViolet()

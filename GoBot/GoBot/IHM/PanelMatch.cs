@@ -1,4 +1,5 @@
-﻿using System;
+﻿using GoBot.Threading;
+using System;
 using System.Drawing;
 using System.Threading;
 using System.Windows.Forms;
@@ -7,6 +8,8 @@ namespace GoBot.IHM
 {
     public partial class PanelMatch : UserControl
     {
+        private ThreadLink _linkCalibration;
+
         public PanelMatch()
         {
             InitializeComponent();
@@ -47,26 +50,27 @@ namespace GoBot.IHM
         {
             pictureBoxCouleur.BackColor = Plateau.CouleurDroiteOrange;
         }
-
-        Thread thRecallageGros;
+        
         private void btnRecallage_Click(object sender, EventArgs e)
         {
             if (!Robots.GrosRobot.GetJack())
             {
                 MessageBox.Show("Jack absent !" + Environment.NewLine + "Jack nécessaire avant de commencer à recaller.", "Attention", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                return;
             }
-
-            thRecallageGros = new Thread(RecallageGros);
-            thRecallageGros.Start();
+            else
+            {
+                _linkCalibration = ThreadManager.StartThread(link => PositionCalibration());
+            }
         }
 
         /// <summary>
         /// Première partie du recallage : Le robot doit terminer dans une position connue pour la calibration des balises
         /// </summary>
-        public void RecallageGros()
+        public void PositionCalibration()
         {
             // Recallage du gros robot
+
+            _linkCalibration.RegisterName();
 
             this.InvokeAuto(() => ledRecallageGros.Color = Color.DarkOrange);
 
@@ -98,8 +102,8 @@ namespace GoBot.IHM
 
             ledRecallageGros.Color = Color.Red;
 
-            if (thRecallageGros != null && thRecallageGros.IsAlive)
-                thRecallageGros.Abort();
+            if (_linkCalibration != null && _linkCalibration.Running)
+                _linkCalibration.Kill();
 
             Thread.Sleep(100);
             Robots.GrosRobot.Stop(StopMode.Smooth);

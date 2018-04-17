@@ -12,6 +12,7 @@ using GoBot.Actionneurs;
 using GoBot.PathFinding;
 using GoBot.Communications;
 using System.Diagnostics;
+using GoBot.Threading;
 
 namespace GoBot
 {
@@ -270,13 +271,9 @@ namespace GoBot
 
             if (traj == null)
                 return false;
-
-            semTrajectoire = new Semaphore(0, int.MaxValue);
-
-            ThreadPool.QueueUserWorkItem(f => ParcourirTrajectoire(traj));
             
-            semTrajectoire.WaitOne();
-
+            ParcourirTrajectoire(traj);
+            
             return !TrajectoireCoupee && !TrajectoireEchouee;
         }
 
@@ -414,11 +411,6 @@ namespace GoBot
             return Nom;
         }
 
-        protected void ParcourirTrajectoire(Object traj)
-        {
-            ParcourirTrajectoire((Trajectory)traj);
-        }
-
         public bool ParcourirTrajectoire(Trajectory traj)
         {
             TrajectoireEnCours = traj;
@@ -430,42 +422,46 @@ namespace GoBot
 
             foreach (IAction action in traj.ConvertToActions(this))
             {
-                action.Executer();
-
-                if (TrajectoireCoupee || TrajectoireEchouee)
-                    break;
-
-                if (action is ActionAvance || action is ActionRecule)
+                if (!Execution.Shutdown)
                 {
-                    Historique.Log("Noeud atteint " + TrajectoireEnCours.Points[0].X + ":" + TrajectoireEnCours.Points[0].Y, TypeLog.PathFinding);
-                    TrajectoireEnCours.RemoveFirst();
+                    action.Executer();
+
+                    if (TrajectoireCoupee || TrajectoireEchouee)
+                        break;
+
+                    if (action is ActionAvance || action is ActionRecule)
+                    {
+                        Historique.Log("Noeud atteint " + TrajectoireEnCours.Points[0].X + ":" + TrajectoireEnCours.Points[0].Y, TypeLog.PathFinding);
+                        TrajectoireEnCours.RemoveFirst();
+                    }
                 }
             }
 
-            if (!TrajectoireCoupee && !TrajectoireEchouee)
+            if (!Execution.Shutdown)
             {
-                Historique.Log("Trajectoire parcourue en " + (sw.ElapsedMilliseconds / 1000.0).ToString("0.0") + "s (durée théorique : " + (dureeEstimee.TotalSeconds).ToString("0.0") + "s)", TypeLog.PathFinding);
-
-                if (semTrajectoire != null)
-                    semTrajectoire.Release();
                 TrajectoireEnCours = null;
-                return true;
+
+                if (!TrajectoireCoupee && !TrajectoireEchouee)
+                {
+                    Historique.Log("Trajectoire parcourue en " + (sw.ElapsedMilliseconds / 1000.0).ToString("0.0") + "s (durée théorique : " + (dureeEstimee.TotalSeconds).ToString("0.0") + "s)", TypeLog.PathFinding);
+
+                    semTrajectoire?.Release();
+
+                    return true;
+                }
+
+                if (TrajectoireEchouee)
+                {
+                    Historique.Log("Echec du parcours de la trajectoire (dérapage, blocage...)", TypeLog.PathFinding);
+
+                    semTrajectoire?.Release();
+
+                    return true;
+                }
             }
 
-            if (TrajectoireEchouee)
-            {
-                Historique.Log("Echec du parcours de la trajectoire (dérapage, blocage...)", TypeLog.PathFinding);
+            semTrajectoire?.Release();
 
-                if (semTrajectoire != null)
-                    semTrajectoire.Release();
-                TrajectoireEnCours = null;
-                return true;
-            }
-
-            TrajectoireEnCours = null;
-
-            if (semTrajectoire != null)
-                semTrajectoire.Release();
             return false;
         }
 

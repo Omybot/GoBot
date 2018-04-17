@@ -11,13 +11,14 @@ using GoBot.Ponderations;
 using GoBot.Actionneurs;
 using GoBot.Geometry;
 using AStarFolder;
+using GoBot.Threading;
 
 namespace GoBot.Strategies
 {
     public abstract class Strategy
     {
         private System.Timers.Timer endMatchTimer;
-        private Thread sequenceThread;
+        private ThreadLink _linkMatch;
 
         /// <summary>
         /// Obtient ou définit la durée d'un match
@@ -27,7 +28,13 @@ namespace GoBot.Strategies
         /// <summary>
         /// Retourne vrai si le match est en cours d'execution
         /// </summary>
-        public bool IsRunning { get; protected set; }
+        public bool IsRunning
+        {
+            get
+            {
+                return _linkMatch != null && _linkMatch.Running;
+            }
+        }
 
         /// <summary>
         /// Retourne l'heure de début du match
@@ -56,7 +63,7 @@ namespace GoBot.Strategies
         public Strategy()
         {
             MatchDuration = new TimeSpan(0, 0, 100);
-            IsRunning = false;
+
             Plateau.PoidActions = new PoidsTest();
             Movements = new List<Movement>();
 
@@ -94,10 +101,8 @@ namespace GoBot.Strategies
         /// <summary>
         /// Execute le match
         /// </summary>
-        public void Execute()
+        public void ExecuteMatch()
         {
-            IsRunning = true;
-
             Robots.GrosRobot.Historique.Log("DEBUT DU MATCH", TypeLog.Strat);
 
             StartingDateTime = DateTime.Now;
@@ -107,8 +112,7 @@ namespace GoBot.Strategies
             endMatchTimer.Interval = MatchDuration.TotalMilliseconds;
             endMatchTimer.Start();
 
-            sequenceThread = new Thread(Sequence);
-            sequenceThread.Start();
+            _linkMatch = ThreadManager.StartThread(link => Execute(link));
         }
 
         /// <summary>
@@ -116,23 +120,25 @@ namespace GoBot.Strategies
         /// </summary>
         public void Stop()
         {
-            IsRunning = false;
-            sequenceThread.Abort();
+            _linkMatch.Kill();
+
+            SequenceEnd();
         }
 
         private void endMatchTimer_Elapsed(object sender, ElapsedEventArgs e)
         {
-            IsRunning = false;
-
             Robots.GrosRobot.Historique.Log("FIN DU MATCH", TypeLog.Strat);
             
             endMatchTimer.Stop();
-            sequenceThread.Abort();
+            _linkMatch.Kill();
 
+            SequenceEnd();
         }
 
-        private void Sequence()
+        private void Execute(ThreadLink link)
         {
+            link.RegisterName();
+
             SequenceBegin();
             SequenceCore();
         }

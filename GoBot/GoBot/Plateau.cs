@@ -19,6 +19,7 @@ using GoBot.Beacons;
 using GoBot.Communications;
 using GoBot.GameElements;
 using GoBot.Devices;
+using GoBot.Threading;
 
 namespace GoBot
 {
@@ -119,7 +120,7 @@ namespace GoBot
                 Balise.PositionEnnemisActualisee += Balise_PositionEnnemisActualisee;
                 
                 SemaphoreCollisions = new Semaphore(0, int.MaxValue);
-                ThreadPool.QueueUserWorkItem(f => ThreadTestCollisions());
+                ThreadManager.StartThread(link => ThreadTestCollisions(link));
 
                 Strategy = new StrategyMatch();
             }
@@ -173,13 +174,18 @@ namespace GoBot
         }
 
         private Semaphore SemaphoreCollisions { get; set; }
-        private void ThreadTestCollisions()
+        private void ThreadTestCollisions(ThreadLink link)
         {
-            while (!Execution.Shutdown)
+            link.RegisterName();
+
+            while (!link.Cancelled)
             {
                 // Le timeout sur le Thread permet de vérifier chaque seconde si on est en train d'éteindre l'application pour couper le Thread.
-                while (!SemaphoreCollisions.WaitOne(1000) && !Execution.Shutdown) ;
-                Robots.GrosRobot.ObstacleTest();
+                if (SemaphoreCollisions.WaitOne(1000))
+                {
+                    link.LoopsCount++;
+                    Robots.GrosRobot.ObstacleTest();
+                }
             }
         }
 

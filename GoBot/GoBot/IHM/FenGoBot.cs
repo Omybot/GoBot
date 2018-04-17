@@ -18,6 +18,7 @@ using System.Diagnostics;
 using GoBot.Beacons;
 using GoBot.Communications;
 using System.IO;
+using GoBot.Threading;
 
 namespace GoBot
 {
@@ -60,16 +61,16 @@ namespace GoBot
                 else
                 {
                     WindowState = FormWindowState.Normal;
-                    FormBorderStyle = System.Windows.Forms.FormBorderStyle.Sizable;
+                    FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
                     btnFenetre.Location = btnClose.Location;
-                    btnClose.Visible = false;
+                    btnClose.Visible = true;
                 }
 
                 switchBoutonSimu.Value = Robots.Simulation;
 
                 tabPrecedent = new Dictionary<TabPage, TabPage>();
                 tabPrecedent.Add(tabControl.TabPages[0], null);
-                for(int i = 1; i < tabControl.Controls.Count; i++)
+                for (int i = 1; i < tabControl.Controls.Count; i++)
                     tabPrecedent.Add(tabControl.TabPages[i], (tabControl.TabPages[i - 1]));
 
                 List<String> fichiersElog = new List<string>();
@@ -109,7 +110,7 @@ namespace GoBot
                 Instance = this;
 
                 Plateau.NotreCouleur = Plateau.CouleurGaucheVert;
-                
+
                 Connections.ConnectionIO.SendMessage(FrameFactory.DemandeCouleurEquipe());
 
                 panelBalise.Balise = Plateau.Balise;
@@ -148,22 +149,21 @@ namespace GoBot
             SauverLogs();
         }
 
-        private void FenGoBot_FormClosing(object sender, FormClosingEventArgs e)
+        protected override void OnClosing(CancelEventArgs e)
         {
+            this.Hide();
+
+            ThreadManager.ExitAll();
+            Execution.Shutdown = true;
+
             Plateau.Balise.Stop();
-            panelCamera.ContinuerCamera = false;
             Config.Save();
             SauverLogs();
 
-            Robots.Delete();
-            Execution.Shutdown = true;
-
-            if(Plateau.Strategy != null && Plateau.Strategy.IsRunning)
+            if (Plateau.Strategy != null && Plateau.Strategy.IsRunning)
                 Plateau.Strategy.Stop();
-
-            Process[] proc = Process.GetProcessesByName("GoBot");
-            foreach(Process p in proc)
-                p.Kill();
+                
+            base.OnClosing(e);
         }
 
         private void SauverLogs()
@@ -172,14 +172,13 @@ namespace GoBot
 
             foreach (Connection conn in Connections.AllConnections)
                 conn.Archives.Export(Config.PathData + "/Logs/" + Execution.LaunchStartString + "/" + Connections.GetBoardByConnection(conn).ToString() + ConnectionReplay.FileExtension);
-            
+
             Robots.GrosRobot.Historique.Sauvegarder(Config.PathData + "/Logs/" + Execution.LaunchStartString + "/ActionsGros.elog");
         }
 
         private void btnClose_Click(object sender, EventArgs e)
         {
-            FenGoBot_FormClosing(null, null);
-            Process.Start(Config.PathData + "/KillGoBot.exe");
+            this.Close();
         }
 
         private void FenGoBot_Load(object sender, EventArgs e)
@@ -217,14 +216,14 @@ namespace GoBot
 
             TabPage tabPrec = tabPrecedent[page];
             bool trouve = false;
-            if(tabPrec == null)
+            if (tabPrec == null)
                 tabControl.TabPages.Insert(0, page);
             else
             {
-                while(!trouve && tabPrec != null)
+                while (!trouve && tabPrec != null)
                 {
-                    for(int i = 0; i < tabControl.TabPages.Count; i++)
-                        if(tabControl.TabPages[i] == tabPrec)
+                    for (int i = 0; i < tabControl.TabPages.Count; i++)
+                        if (tabControl.TabPages[i] == tabPrec)
                         {
                             trouve = true;
                             tabControl.TabPages.Insert(i + 1, page);

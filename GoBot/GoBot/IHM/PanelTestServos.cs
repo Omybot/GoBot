@@ -8,11 +8,14 @@ using System.Text;
 using System.Windows.Forms;
 using GoBot.Communications;
 using System.Threading;
+using GoBot.Threading;
 
 namespace GoBot.IHM
 {
     public partial class PanelTestServos : UserControl
     {
+        private ThreadLink _linkSearch;
+
         public PanelTestServos()
         {
             InitializeComponent();
@@ -20,18 +23,20 @@ namespace GoBot.IHM
                 checkedListBoxBaudrates.Items.Add(baudrate.ToString().Substring(1), true);
         }
         
-        bool searching;
-
         private void SearchLoop()
         {
-            btnChercher.Text = "Stop";
-            listBoxServos.Items.Clear();
+            this.InvokeAuto(() =>
+            {
+                btnChercher.Text = "Stop";
+                listBoxServos.Items.Clear();
+                progressBarBaudrate.Value = 0;
+            });
 
-            progressBarBaudrate.Value = 0;
             int iBaudrate = 0;
+
             foreach (ServoBaudrate baudrate in Enum.GetValues(typeof(ServoBaudrate)))
             {
-                if (searching && checkedListBoxBaudrates.CheckedIndices.Contains(iBaudrate))
+                if (!_linkSearch.Cancelled && checkedListBoxBaudrates.CheckedIndices.Contains(iBaudrate))
                 {
                     Connections.ConnectionIO.SendMessage(FrameFactory.ChangementBaudrate(baudrate));
                     Thread.Sleep(100);
@@ -39,38 +44,49 @@ namespace GoBot.IHM
                     //Servomoteur servoAll = new Servomoteur(Carte.RecIO, 254, 0);
                     //if (servoAll.Connecte)
                     {
-                        progressBarId.Value = 0;
+                        this.InvokeAuto(() => progressBarId.Value = 0);
+
                         for (int i = 1; i <= 253; i++)
                         {
-                            progressBarId.Value++;
-                            lblScannId.Text = "ID : " + i.ToString();
-                            lblScannBaudrate.Text = "Baud : " + baudrate.ToString().Substring(1);
-                            Servomoteur servo = new Servomoteur(Board.RecIO, i, 0);
-                            if (servo.Connecte)
-                                listBoxServos.Items.Add(new Servomoteur(Board.RecIO, i, baudrate));
+                            this.InvokeAuto(() =>
+                            {
+                                progressBarId.Value++;
+                                lblScannId.Text = "ID : " + i.ToString();
+                                lblScannBaudrate.Text = "Baud : " + baudrate.ToString().Substring(1);
+                                Servomoteur servo = new Servomoteur(Board.RecIO, i, 0);
+                                if (servo.Connecte)
+                                    listBoxServos.Items.Add(new Servomoteur(Board.RecIO, i, baudrate));
+                            });
                         }
                     }
                 }
 
-                progressBarBaudrate.Value++;
-                iBaudrate++;
+                this.InvokeAuto(() =>
+                {
+                    progressBarBaudrate.Value++;
+                    iBaudrate++;
+                });
             }
 
-            progressBarId.Value = 0;
-            progressBarBaudrate.Value = 0;
-            btnChercher.Text = "Chercher servomoteurs";
+            this.InvokeAuto(() =>
+            {
+                progressBarId.Value = 0;
+                progressBarBaudrate.Value = 0;
+                btnChercher.Text = "Chercher servomoteurs";
+            });
         }
 
         private void btnChercher_Click(object sender, EventArgs e)
         {
-            if (searching)
+            if(_linkSearch != null)
             {
-                searching = false;
+                _linkSearch.Cancel();
+                _linkSearch.WaitEnd();
+                _linkSearch = null;
             }
             else
             {
-                searching = true;
-                ThreadPool.QueueUserWorkItem(f => SearchLoop());
+                _linkSearch = ThreadManager.StartThread(link => SearchLoop());
             }
         }
 

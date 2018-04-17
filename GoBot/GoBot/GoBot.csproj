@@ -134,6 +134,8 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
+    <Compile Include="Threading\ThreadLink.cs" />
+    <Compile Include="Threading\ThreadManager.cs" />
     <Compile Include="TicksPerSecond.cs" />
     <Compile Include="IHM\ConnectionDetails.cs">
       <SubType>UserControl</SubType>

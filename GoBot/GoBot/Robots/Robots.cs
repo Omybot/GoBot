@@ -38,8 +38,6 @@ namespace GoBot
             }
             else
             {
-                if (GrosRobot != null)
-                    ((RobotReel)GrosRobot).Delete();
                 GrosRobot = new RobotSimu(IDRobot.GrosRobot);
             }
 
@@ -65,15 +63,6 @@ namespace GoBot
             Simulation = simu;
 
             CreerRobots();
-        }
-
-        public static void Delete()
-        {
-            if (!Simulation)
-            {
-                if (GrosRobot != null)
-                    ((RobotReel)GrosRobot).Delete();
-            }
         }
     }
 }

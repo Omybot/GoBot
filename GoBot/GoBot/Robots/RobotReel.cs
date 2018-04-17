@@ -8,6 +8,7 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.Text.RegularExpressions;
 using System.Threading;
+using GoBot.Threading;
 
 namespace GoBot
 {
@@ -118,7 +119,7 @@ namespace GoBot
                 JackArme = false;
                 if (Plateau.Strategy == null)
                     Plateau.Strategy = new GoBot.Strategies.StrategyMatch();
-                Plateau.Strategy.Execute();
+                Plateau.Strategy.ExecuteMatch();
             }
         }
 
@@ -199,14 +200,10 @@ namespace GoBot
             return CapteurActive[capteur];
         }
 
-        public void Delete()
+        public void ReactivationAsserv(ThreadLink link)
         {
-            // TODO2018 utile ?
-            //timerPosition.Stop();
-        }
+            link.RegisterName();
 
-        public void ReactivationAsserv()
-        {
             for (LedID i = LedID.DebugB1; i <= LedID.DebugA1; i++)
                 Devices.Devices.RecGoBot.SetLed((LedID)i, RecGoBot.LedStatus.Rouge);
 
@@ -232,7 +229,7 @@ namespace GoBot
             switch ((FrameFunction)trameRecue[1])
             {
                 case FrameFunction.Blocage:
-                    ThreadPool.QueueUserWorkItem(f => ReactivationAsserv());
+                    ThreadManager.StartThread(link => ReactivationAsserv(link));
                     break;
                 case FrameFunction.FinDeplacement:
                 case FrameFunction.FinRecallage:        // Idem

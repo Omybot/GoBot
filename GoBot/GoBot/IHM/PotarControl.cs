@@ -8,18 +8,19 @@ using System.Text;
 using System.Windows.Forms;
 using GoBot.Actionneurs;
 using System.Threading;
+using GoBot.Threading;
 
 namespace GoBot.IHM
 {
     public partial class PotarControl : UserControl
     {
-        private bool pollingEnable;
+        private ThreadLink _linkPolling;
         private Positionable positionnable;
 
         public PotarControl()
         {
             InitializeComponent();
-            pollingEnable = false;
+            _linkPolling = null;
         }
 
         private void PotarControl_Load(object sender, EventArgs e)
@@ -39,10 +40,12 @@ namespace GoBot.IHM
 
         private void switchBouton_ValueChanged(object sender, bool value)
         {
-            if(value)
-                ThreadPool.QueueUserWorkItem(f => PollingLoop());
+            if (value)
+                _linkPolling = ThreadManager.StartThread(link => PollingLoop());
             else
-                pollingEnable = false;
+            {
+                _linkPolling.Cancel();
+            }
         }
 
         private void PollingLoop()
@@ -52,14 +55,15 @@ namespace GoBot.IHM
             int pointsParTour = 4096;
             double toursRange = 5;
 
+            _linkPolling.RegisterName();
+
             ticksCurrent = Devices.Devices.RecGoBot.GetCodeurPosition();
             ticksMin = ticksCurrent;
             ticksRange = pointsParTour * toursRange;
 
             posValue = positionnable.Minimum;
-            pollingEnable = true;
 
-            while (!Execution.Shutdown && pollingEnable)
+            while (!_linkPolling.Cancelled)
             {
                 toursRange = trackBarSpeed.Value;
                 ticksRange = pointsParTour * toursRange;
@@ -78,6 +82,8 @@ namespace GoBot.IHM
 
                 this.InvokeAuto(() => trackBar.SetValue((int)posValue));
             }
+
+            _linkPolling = null;
         }
 
         private void TrackBar_TickValueChanged(object sender, double value)

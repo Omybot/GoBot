@@ -10,6 +10,7 @@ using GoBot.Actions;
 using System.Threading;
 using GoBot.Geometry;
 using GoBot.Geometry.Shapes;
+using GoBot.Threading;
 
 namespace GoBot.IHM
 {
@@ -308,13 +309,12 @@ namespace GoBot.IHM
 
         private void btnGoCoordonnees_Click(object sender, EventArgs e)
         {
-            thGoto = new Thread(ThreadGoTo);
-            thGoto.Start();
+            ThreadManager.StartThread(link => ThreadGoTo(link));
         }
-
-        Thread thGoto;
-        private void ThreadGoTo()
+        
+        private void ThreadGoTo(ThreadLink link)
         {
+            link.RegisterName();
             Robot.GotoXYTeta(new Position((double)numTeta.Value, new RealPoint((double)numX.Value, (double)numY.Value)));
         }
 
