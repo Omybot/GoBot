@@ -96,6 +96,7 @@
     <Compile Include="Actions\Deplacement\ActionRecallage.cs" />
     <Compile Include="Actions\ActionServo.cs" />
     <Compile Include="Actions\ITimeableAction.cs" />
+    <Compile Include="ColorPlus.cs" />
     <Compile Include="GameElements\ConstructionZone.cs" />
     <Compile Include="GameElements\CubesPattern.cs" />
     <Compile Include="GameElements\CubesTower.cs" />
