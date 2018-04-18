@@ -166,7 +166,7 @@ namespace GoBot.IHM
                 {
                     _timerOpacity.Stop();
                     _oppacity = 0;
-                    this.Close();
+                    this.InvokeAuto(() => this.Close());
                 }
                 else if (_oppacity > 255)
                 {
@@ -181,8 +181,6 @@ namespace GoBot.IHM
             private void SetBitmap(Bitmap bitmap, byte opacity)
             {
                 Console.WriteLine(bitmap.PixelFormat.ToString());
-                if (bitmap.PixelFormat != PixelFormat.Format32bppArgb)
-                    throw new ApplicationException("The bitmap must be 32ppp with alpha-channel.");
 
                 // The idea of this is very simple,
                 // 1. Create a compatible DC with screen;

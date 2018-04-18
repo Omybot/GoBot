@@ -50,7 +50,6 @@ namespace GoBot
 
             if (!Execution.DesignMode)
             {
-                CheckForIllegalCrossThreadCalls = false;
                 panelGrosRobot.Init();
 
                 if (Screen.PrimaryScreen.Bounds.Width == 1024)
