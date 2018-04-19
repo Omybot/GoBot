@@ -136,7 +136,9 @@ namespace GoBot
 
         public TimeSpan PivotDuration(Angle angle, double axialDistance)
         {
-            return DistanceDuration((int)((Math.PI * axialDistance) / 360 * angle.InPositiveDegrees), PivotAcceleration, PivotSpeed, PivotDeceleration);
+            double dist = (Math.PI * axialDistance) / 360 * angle.InPositiveDegrees;
+
+            return DistanceDuration((int)dist, PivotAcceleration, PivotSpeed, PivotDeceleration);
         }
 
         public void SetParams(int lineSpeed, int lineAccel, int lineDecel, int pivotSpeed, int pivotAccel, int pivotDecel)
@@ -199,7 +201,7 @@ namespace GoBot
                 durationBraking = Math.Sqrt((2 * distanceBraking) / (double)(decceleration));
             }
 
-            return new TimeSpan(0, 0, (int)((durationAccel + durationMaxSpeed + durationBraking)));
+            return new TimeSpan(0, 0, 0, 0, (int)(1000 * ((durationAccel + durationMaxSpeed + durationBraking))));
         }
 
         #endregion
