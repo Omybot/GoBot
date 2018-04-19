@@ -129,9 +129,11 @@ namespace GoBot.IHM
                 g.DrawString(text, new Font("Jokerman", 16, FontStyle.Bold), new SolidBrush(color), _messageRect, fmt);
                 g.Dispose();
 
-                _currentBitmap = newBitmap;
-
-                this.SetBitmap(_currentBitmap, (byte)_oppacity);
+                lock (_originalBitmap)
+                {
+                    _currentBitmap = newBitmap;
+                    this.SetBitmap(_currentBitmap, (byte)_oppacity);
+                }
             }
 
             public void StartTimer()
@@ -172,10 +174,18 @@ namespace GoBot.IHM
                 {
                     _timerOpacity.Stop();
                     _oppacity = 255;
-                    this.SetBitmap(_currentBitmap, (byte)(_oppacity));
+                    lock (_originalBitmap)
+                    {
+                        this.SetBitmap(_currentBitmap, (byte)(_oppacity));
+                    }
                 }
                 else
-                    this.SetBitmap(_currentBitmap, (byte)(_oppacity));
+                {
+                    lock (_originalBitmap)
+                    {
+                        this.SetBitmap(new Bitmap(_currentBitmap), (byte)(_oppacity));
+                    }
+                }
             }
 
             private void SetBitmap(Bitmap bitmap, byte opacity)

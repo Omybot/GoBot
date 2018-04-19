@@ -42,22 +42,25 @@ namespace GoBot.IHM
             if (Execution.Shutdown)
                 return;
 
-            lblTensionPack1.Text = Robots.GrosRobot.BatterieVoltage + " V";
-
-            ctrlGraphique.AddPoint("Pack 1", Robots.GrosRobot.BatterieVoltage, Color.Blue);
-
-            ctrlGraphique.DrawCurves();
-            
-            if (Connections.ConnectionIO.ConnectionChecker.Connected)
+            this.InvokeAuto(() =>
             {
-                batteriePack1.Enabled = true;
-                batteriePack1.CurrentVoltage = Robots.GrosRobot.BatterieVoltage;
-            }
-            else
-            {
-                batteriePack1.Enabled = false;
-                batteriePack1.CurrentState = Composants.Battery.State.Absent;
-            }
+                lblTensionPack1.Text = Robots.GrosRobot.BatterieVoltage + " V";
+
+                ctrlGraphique.AddPoint("Pack 1", Robots.GrosRobot.BatterieVoltage, Color.Blue);
+
+                ctrlGraphique.DrawCurves();
+
+                if (Connections.ConnectionIO.ConnectionChecker.Connected)
+                {
+                    batteriePack1.Enabled = true;
+                    batteriePack1.CurrentVoltage = Robots.GrosRobot.BatterieVoltage;
+                }
+                else
+                {
+                    batteriePack1.Enabled = false;
+                    batteriePack1.CurrentState = Composants.Battery.State.Absent;
+                }
+            });
         }
     }
 }
