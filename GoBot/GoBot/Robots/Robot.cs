@@ -30,7 +30,7 @@ namespace GoBot
 
         public double Longueur { get; set; }
         public double Largeur { get; set; }
-        public double Rayon { get { return Maths.Hypothenuse(Longueur, Largeur) / 2 - 14; } } // -14 = valeur calculée pour l'année 2015 sur les biseaux
+        public double Rayon { get { return Maths.Hypothenuse(Longueur, Largeur) / 2 - 16; } } // -16 = valeur calculée par Nico en 2018
         public double Entraxe { get; set; }// Distance entre les deux roues en mm
 
         // Déplacement
