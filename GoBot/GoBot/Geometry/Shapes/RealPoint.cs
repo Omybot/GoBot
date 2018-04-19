@@ -146,7 +146,7 @@ namespace GoBot.Geometry.Shapes
 
         public override string ToString()
         {
-            return "{" + Math.Round(X, 2) + " : " + Math.Round(Y, 2) + "}";
+            return "{" + X.ToString("0.00") + " : " + Y.ToString("0.00") + "}";
         }
 
         public override bool Equals(object obj)

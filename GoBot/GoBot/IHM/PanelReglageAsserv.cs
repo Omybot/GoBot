@@ -72,8 +72,8 @@ namespace GoBot.IHM
             lblTpsStabilisationGauche.Text = tempsGaucheStable + "ms";
             lblTpsStabilisationDroite.Text = tempsDroiteStable + "ms";
 
-            lblOvershootGauche.Text = Math.Round(depassementGauchePositif, 2) + "%";
-            lblOvershootDroite.Text = Math.Round(depassementDroitePositif, 2) + "%";
+            lblOvershootGauche.Text = depassementGauchePositif.ToString("0.00") + "%";
+            lblOvershootDroite.Text = depassementDroitePositif.ToString("0.00") + "%";
 
             lblValeurFinGauche.Text = mesures[0][mesures[0].Count - 1].ToString();
             lblValeurFinDroite.Text = mesures[1][mesures[1].Count - 1].ToString();

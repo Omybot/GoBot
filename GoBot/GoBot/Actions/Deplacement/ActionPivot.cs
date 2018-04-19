@@ -32,7 +32,7 @@ namespace GoBot.Actions
 
         public override String ToString()
         {
-            return robot.Nom + " pivote de " + angle + "° " + sens.ToString().ToLower();
+            return robot.Nom + " pivote de " + angle + " " + sens.ToString().ToLower();
         }
 
         void IAction.Executer()

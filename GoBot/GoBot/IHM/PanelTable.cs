@@ -53,8 +53,8 @@ namespace GoBot.IHM
 
             this.InvokeAuto(() =>
             { 
-                lblPosGrosX.Text = Math.Round(Robots.GrosRobot.Position.Coordinates.X, 2).ToString();
-                lblPosGrosY.Text = Math.Round(Robots.GrosRobot.Position.Coordinates.Y, 2).ToString();
+                lblPosGrosX.Text = Robots.GrosRobot.Position.Coordinates.X.ToString("0.00");
+                lblPosGrosY.Text = Robots.GrosRobot.Position.Coordinates.Y.ToString("0.00");
                 lblPosGrosTeta.Text = Robots.GrosRobot.Position.Angle.ToString();
             });
 

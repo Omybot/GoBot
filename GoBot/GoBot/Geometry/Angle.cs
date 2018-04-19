@@ -235,7 +235,7 @@ namespace GoBot.Geometry
 
         public override string ToString()
         {
-            return Math.Round(angle, 2) + "°";
+            return angle.ToString("0.00") + "°";
         }
 
         public override bool Equals(object obj)

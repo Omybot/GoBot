@@ -76,7 +76,7 @@ namespace GoBot.IHM
 
                 trackBarVitesse.SetValue(balise.ValeurConsigne, false);
                 lblVitesse.Text = balise.ValeurConsigne + "";
-                lblToursSecondesActuel.Text = Math.Round(balise.VitesseToursSecActuelle, 2) + "";
+                lblToursSecondesActuel.Text = balise.VitesseToursSecActuelle.ToString("0.00");
                 if (balise.ReglageVitesse)
                     ledAsserv.Color = Color.LimeGreen;
                 else
@@ -135,13 +135,13 @@ namespace GoBot.IHM
             {
                 g.FillPie(brushRouge, 5, 5, 190, 190, (int)debut, (int)(fin - debut));
                 g.DrawPie(penRouge, 5, 5, 190, 190, (int)debut, (int)(fin - debut));
-                g.DrawString(Math.Round((fin + debut) / 2.0, 2) + "°", font, brushNoir, 2, 5 + 8 * nbDetections);
+                g.DrawString(((fin + debut) / 2.0).ToString("0.00") + "°", font, brushNoir, 2, 5 + 8 * nbDetections);
             }
             else
             {
                 g.FillPie(brushBleu, 5, 180, 190, 190, (int)debut, (int)(fin - debut));
                 g.DrawPie(penBleu, 5, 180, 190, 190, (int)debut, (int)(fin - debut));
-                g.DrawString(Math.Round((fin + debut) / 2.0, 2) + "°", font, brushNoir, 2, 185 + 10 * nbDetections);
+                g.DrawString(((fin + debut) / 2.0).ToString("0.00") + "°", font, brushNoir, 2, 185 + 10 * nbDetections);
             }
 
             pictureBoxAngle.Image = bmp;
