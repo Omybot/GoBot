@@ -11,6 +11,7 @@ using System.Drawing;
 using GoBot.Actionneurs;
 using System.Diagnostics;
 using GoBot.Communications;
+using GoBot.Threading;
 
 namespace GoBot
 {
@@ -20,7 +21,7 @@ namespace GoBot
 
         public double VitesseActuelle { get; set; }
 
-        private double IntervalleRafraichissementPosition = 10;
+        private bool HighResolutionAsservissement = true;
 
         private Position Destination { get; set; }
         private SensGD SensPivot { get; set; }
@@ -35,12 +36,13 @@ namespace GoBot
             set { position = value; Destination = value; }
         }
 
+        private ThreadLink _linkAsserv;
+
         public RobotSimu(IDRobot idRobot) : base()
         {
             IDRobot = idRobot;
-            timerDeplacement = new System.Timers.Timer(IntervalleRafraichissementPosition);
-            timerDeplacement.Elapsed += new ElapsedEventHandler(timerDeplacement_Elapsed);
-            timerDeplacement.Start();
+
+            _linkAsserv = ThreadManager.StartInfiniteLoop(link => Asservissement(), new TimeSpan(0, 0, 0, 0, HighResolutionAsservissement ? 1 : 16));
 
             timerPositions = new System.Timers.Timer(100);
             timerPositions.Elapsed += new ElapsedEventHandler(timerPositions_Elapsed);
@@ -90,6 +92,12 @@ namespace GoBot
             }
         }
 
+        public override void Delete()
+        {
+            _linkAsserv.Cancel();
+            _linkAsserv.WaitEnd();
+        }
+
         void timerPositions_Elapsed(object sender, ElapsedEventArgs e)
         {
             lock (HistoriqueCoordonnees)
@@ -131,146 +139,151 @@ namespace GoBot
         int pointCourantTrajPolaire = -1;
 
         private long _lastTimerTick;
-        
-        void timerDeplacement_Elapsed(object sender, ElapsedEventArgs e)
+
+        void Asservissement()
         {
+            _linkAsserv.RegisterName();
+
             // Calcul du temps écoulé depuis la dernière mise à jour de la position
-            double intervalle = 0;
+            double interval = 0;
 
             long currentTick = 0;
 
             if (watch != null)
             {
                 currentTick = watch.ElapsedMilliseconds;
-                intervalle = currentTick - _lastTimerTick;
+                interval = currentTick - _lastTimerTick;
                 _lastTimerTick = currentTick;
             }
             else
                 watch = Stopwatch.StartNew();
 
-            SemDeplacement.WaitOne();
-
-            if (pointCourantTrajPolaire >= 0)
+            if (interval > 0)
             {
-                double distanceAvantProchainPoint = Position.Coordinates.Distance(trajectoirePolaire[pointCourantTrajPolaire]);
-                double distanceTotaleRestante = distanceAvantProchainPoint;
+                SemDeplacement.WaitOne();
 
-                distanceTotaleRestante += DistanceParcours(trajectoirePolaire, pointCourantTrajPolaire, trajectoirePolaire.Count - 1);
-
-                if (distanceTotaleRestante > DistanceFreinageActuelle)
-                    VitesseActuelle = Math.Min(SpeedConfig.LineSpeed, VitesseActuelle + SpeedConfig.LineAcceleration / (1000.0 / intervalle));
-                else
-                    VitesseActuelle = VitesseActuelle - SpeedConfig.LineDeceleration / (1000.0 / intervalle);
-
-                double distanceAParcourir = VitesseActuelle / (1000.0 / intervalle);
-
-                double distanceTestee = distanceAvantProchainPoint;
-
-                bool changePoint = false;
-                while (distanceTestee < distanceAParcourir && pointCourantTrajPolaire < trajectoirePolaire.Count - 1)
+                if (pointCourantTrajPolaire >= 0)
                 {
-                    pointCourantTrajPolaire++;
-                    distanceTestee += trajectoirePolaire[pointCourantTrajPolaire - 1].Distance(trajectoirePolaire[pointCourantTrajPolaire]);
-                    changePoint = true;
-                }
+                    double distanceAvantProchainPoint = Position.Coordinates.Distance(trajectoirePolaire[pointCourantTrajPolaire]);
+                    double distanceTotaleRestante = distanceAvantProchainPoint;
 
-                Segment seg = null;
-                Circle cer = null;
+                    distanceTotaleRestante += DistanceParcours(trajectoirePolaire, pointCourantTrajPolaire, trajectoirePolaire.Count - 1);
 
-                if (changePoint)
-                {
-                    seg = new Segment(trajectoirePolaire[pointCourantTrajPolaire - 1], trajectoirePolaire[pointCourantTrajPolaire]);
-                    cer = new Circle(trajectoirePolaire[pointCourantTrajPolaire - 1], distanceAParcourir - (distanceTestee - trajectoirePolaire[pointCourantTrajPolaire - 1].Distance(trajectoirePolaire[pointCourantTrajPolaire])));
-                }
-                else
-                {
-                    seg = new Segment(Position.Coordinates, trajectoirePolaire[pointCourantTrajPolaire]);
-                    cer = new Circle(Position.Coordinates, distanceAParcourir);
-                }
+                    if (distanceTotaleRestante > DistanceFreinageActuelle)
+                        VitesseActuelle = Math.Min(SpeedConfig.LineSpeed, VitesseActuelle + SpeedConfig.LineAcceleration / (1000.0 / interval));
+                    else
+                        VitesseActuelle = VitesseActuelle - SpeedConfig.LineDeceleration / (1000.0 / interval);
 
-                RealPoint newPos = seg.GetCrossingPoints(cer)[0];
-                Angle a = -Maths.GetDirection(newPos, trajectoirePolaire[pointCourantTrajPolaire]).angle;
-                position = new Position(a, newPos);
-                OnPositionChange(Position);
+                    double distanceAParcourir = VitesseActuelle / (1000.0 / interval);
 
-                if (pointCourantTrajPolaire == trajectoirePolaire.Count - 1)
-                {
-                    pointCourantTrajPolaire = -1;
-                    Destination.Copy(Position);
-                }
-            }
-            else
-            {
-                bool needLine = Destination.Coordinates.Distance(Position.Coordinates) > 0;
-                bool needAngle = Math.Abs(Destination.Angle - Position.Angle) > 0.01;
+                    double distanceTestee = distanceAvantProchainPoint;
 
-                if (needAngle)
-                {
-                    Angle diff = Math.Abs(Destination.Angle - Position.Angle);
-                    
-                    double speedWithAcceleration = Math.Min(SpeedConfig.PivotSpeed, VitesseActuelle + SpeedConfig.PivotAcceleration / (1000.0 / intervalle));
-                    double remainingDistanceWithAcceleration = CircleArcLenght(Entraxe, diff) - (VitesseActuelle + speedWithAcceleration) / 2 / (1000.0 / intervalle);
-                    
-                    if (remainingDistanceWithAcceleration > DistanceFreinage(speedWithAcceleration))
+                    bool changePoint = false;
+                    while (distanceTestee < distanceAParcourir && pointCourantTrajPolaire < trajectoirePolaire.Count - 1)
                     {
-                        double distParcourue = (VitesseActuelle + speedWithAcceleration) / 2 / (1000.0 / intervalle);
-                        Angle angleParcouru = (360 * distParcourue) / (Math.PI * Entraxe);
-
-                        VitesseActuelle = speedWithAcceleration;
-
-                        Position.Angle.Turn(SensPivot.Factor() * angleParcouru);
+                        pointCourantTrajPolaire++;
+                        distanceTestee += trajectoirePolaire[pointCourantTrajPolaire - 1].Distance(trajectoirePolaire[pointCourantTrajPolaire]);
+                        changePoint = true;
                     }
-                    else if(VitesseActuelle > 0)
+
+                    Segment seg = null;
+                    Circle cer = null;
+
+                    if (changePoint)
                     {
-                        double speedWithDeceleration = Math.Max(0, VitesseActuelle - SpeedConfig.PivotDeceleration / (1000.0 / intervalle));
-                        double distParcourue = (VitesseActuelle + speedWithDeceleration) / 2 / (1000.0 / intervalle);
-                        Angle angleParcouru = (360 * distParcourue) / (Math.PI * Entraxe);
-
-                        VitesseActuelle = speedWithDeceleration;
-
-                        Position.Angle.Turn(SensPivot.Factor() * angleParcouru);
+                        seg = new Segment(trajectoirePolaire[pointCourantTrajPolaire - 1], trajectoirePolaire[pointCourantTrajPolaire]);
+                        cer = new Circle(trajectoirePolaire[pointCourantTrajPolaire - 1], distanceAParcourir - (distanceTestee - trajectoirePolaire[pointCourantTrajPolaire - 1].Distance(trajectoirePolaire[pointCourantTrajPolaire])));
                     }
                     else
                     {
-                        Position.Angle.Turn(diff);
+                        seg = new Segment(Position.Coordinates, trajectoirePolaire[pointCourantTrajPolaire]);
+                        cer = new Circle(Position.Coordinates, distanceAParcourir);
                     }
 
+                    RealPoint newPos = seg.GetCrossingPoints(cer)[0];
+                    Angle a = -Maths.GetDirection(newPos, trajectoirePolaire[pointCourantTrajPolaire]).angle;
+                    position = new Position(a, newPos);
                     OnPositionChange(Position);
+
+                    if (pointCourantTrajPolaire == trajectoirePolaire.Count - 1)
+                    {
+                        pointCourantTrajPolaire = -1;
+                        Destination.Copy(Position);
+                    }
                 }
-                else if (needLine)
+                else
                 {
-                    double speedWithAcceleration = Math.Min(SpeedConfig.LineSpeed, VitesseActuelle + SpeedConfig.LineAcceleration / (1000.0 / intervalle));
-                    double remainingDistanceWithAcceleration = Position.Coordinates.Distance(Destination.Coordinates) - (VitesseActuelle + speedWithAcceleration) / 2 / (1000.0 / intervalle);
+                    bool needLine = Destination.Coordinates.Distance(Position.Coordinates) > 0;
+                    bool needAngle = Math.Abs(Destination.Angle - Position.Angle) > 0.01;
 
-                    // Phase accélération ou déccélération
-                    if (remainingDistanceWithAcceleration > DistanceFreinage(speedWithAcceleration))
+                    if (needAngle)
                     {
-                        double distance = (VitesseActuelle + speedWithAcceleration) / 2 / (1000.0 / intervalle);
-                        VitesseActuelle = speedWithAcceleration;
+                        Angle diff = Math.Abs(Destination.Angle - Position.Angle);
 
-                        Position.Move(distance * SensDep.Factor());
+                        double speedWithAcceleration = Math.Min(SpeedConfig.PivotSpeed, VitesseActuelle + SpeedConfig.PivotAcceleration / (1000.0 / interval));
+                        double remainingDistanceWithAcceleration = CircleArcLenght(Entraxe, diff) - (VitesseActuelle + speedWithAcceleration) / 2 / (1000.0 / interval);
+
+                        if (remainingDistanceWithAcceleration > DistanceFreinage(speedWithAcceleration))
+                        {
+                            double distParcourue = (VitesseActuelle + speedWithAcceleration) / 2 / (1000.0 / interval);
+                            Angle angleParcouru = (360 * distParcourue) / (Math.PI * Entraxe);
+
+                            VitesseActuelle = speedWithAcceleration;
+
+                            Position.Angle.Turn(SensPivot.Factor() * angleParcouru);
+                        }
+                        else if (VitesseActuelle > 0)
+                        {
+                            double speedWithDeceleration = Math.Max(0, VitesseActuelle - SpeedConfig.PivotDeceleration / (1000.0 / interval));
+                            double distParcourue = (VitesseActuelle + speedWithDeceleration) / 2 / (1000.0 / interval);
+                            Angle angleParcouru = (360 * distParcourue) / (Math.PI * Entraxe);
+
+                            VitesseActuelle = speedWithDeceleration;
+
+                            Position.Angle.Turn(SensPivot.Factor() * angleParcouru);
+                        }
+                        else
+                        {
+                            Position.Angle.Turn(diff);
+                        }
+
+                        OnPositionChange(Position);
                     }
-                    else if(VitesseActuelle > 0)
+                    else if (needLine)
                     {
-                        double speedWithDeceleration = Math.Max(0, VitesseActuelle - SpeedConfig.LineDeceleration / (1000.0 / intervalle));
-                        double distance = (VitesseActuelle + speedWithDeceleration) / 2 / (1000.0 / intervalle);
-                        VitesseActuelle = speedWithDeceleration;
+                        double speedWithAcceleration = Math.Min(SpeedConfig.LineSpeed, VitesseActuelle + SpeedConfig.LineAcceleration / (1000.0 / interval));
+                        double remainingDistanceWithAcceleration = Position.Coordinates.Distance(Destination.Coordinates) - (VitesseActuelle + speedWithAcceleration) / 2 / (1000.0 / interval);
 
-                        Position.Move(distance * SensDep.Factor());
+                        // Phase accélération ou déccélération
+                        if (remainingDistanceWithAcceleration > DistanceFreinage(speedWithAcceleration))
+                        {
+                            double distance = (VitesseActuelle + speedWithAcceleration) / 2 / (1000.0 / interval);
+                            VitesseActuelle = speedWithAcceleration;
+
+                            Position.Move(distance * SensDep.Factor());
+                        }
+                        else if (VitesseActuelle > 0)
+                        {
+                            double speedWithDeceleration = Math.Max(0, VitesseActuelle - SpeedConfig.LineDeceleration / (1000.0 / interval));
+                            double distance = (VitesseActuelle + speedWithDeceleration) / 2 / (1000.0 / interval);
+                            VitesseActuelle = speedWithDeceleration;
+
+                            Position.Move(distance * SensDep.Factor());
+                        }
+                        else
+                        {
+                            // Si on est déjà à l'arrêt on force l'équivalence de la position avec la destination.
+
+                            Position.Copy(Destination);
+                            DeplacementLigne = false;
+                        }
+
+                        OnPositionChange(Position);
                     }
-                    else
-                    {
-                        // Si on est déjà à l'arrêt on force l'équivalence de la position avec la destination.
-
-                        Position.Copy(Destination);
-                        DeplacementLigne = false;
-                    }
-
-                    OnPositionChange(Position);
                 }
-            }
 
-            SemDeplacement.Release();
+                SemDeplacement.Release();
+            }
         }
 
         private double DistanceFreinage(Double speed)
@@ -481,8 +494,7 @@ namespace GoBot
             // TODO
             Historique.AjouterAction(new ActionOnOff(this, actionneur, on));
         }
-
-        System.Timers.Timer timerDeplacement;
+        
         System.Timers.Timer timerPositions;
 
         public override void MoteurPosition(MoteurID moteur, int vitesse)

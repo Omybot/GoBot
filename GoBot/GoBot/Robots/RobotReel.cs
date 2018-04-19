@@ -81,6 +81,11 @@ namespace GoBot
             SpeedConfig.ParamChange += SpeedConfig_ParamChange;
         }
 
+        public override void Delete()
+        {
+            
+        }
+
         private void SpeedConfig_ParamChange(bool lineAccelChange, bool lineDecelChange, bool lineSpeedChange, bool pivotAccelChange, bool pivotDecelChange, bool pivotSpeedChange)
         {
             if (lineSpeedChange)

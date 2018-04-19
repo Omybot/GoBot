@@ -30,6 +30,8 @@ namespace GoBot
             if (Robots.GrosRobot != null && Robots.GrosRobot.Graph != null)
                 graphGros = Robots.GrosRobot.Graph;
 
+            Robots.GrosRobot?.Delete();
+
             if (!Simulation)
             {
                 RobotReel grosRobot = new RobotReel(IDRobot.GrosRobot, Board.RecMove);

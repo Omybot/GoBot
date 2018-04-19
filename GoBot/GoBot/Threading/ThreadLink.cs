@@ -402,7 +402,13 @@ namespace GoBot.Threading
                 _loopsCount++;
                 _innerCallback.Invoke(this);
 
-                if(interval.TotalMilliseconds > 0) Thread.Sleep(interval);
+                if(interval.TotalMilliseconds > 15)
+                    Thread.Sleep(interval);
+                else
+                {
+                    Stopwatch chrono = Stopwatch.StartNew();
+                    while (chrono.Elapsed < interval) ;
+                }
             }
 
             _ended = true;

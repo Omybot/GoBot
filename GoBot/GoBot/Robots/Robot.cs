@@ -27,6 +27,7 @@ namespace GoBot
         public IDRobot IDRobot { get; protected set; }
         public String Nom { get; set; }
         public double Taille { get { return Math.Max(Longueur, Largeur); } }
+
         public double Longueur { get; set; }
         public double Largeur { get; set; }
         public double Rayon { get { return Maths.Hypothenuse(Longueur, Largeur) / 2 - 14; } } // -14 = valeur calculée pour l'année 2015 sur les biseaux
@@ -58,6 +59,8 @@ namespace GoBot
         public bool JackArme { get; protected set; } = false;
         public Dictionary<ServomoteurID, bool> ServoActive { get; set; }
         public Dictionary<MoteurID, bool> MoteurTourne { get; set; }
+
+        public abstract void Delete();
 
         public virtual void Avancer(int distance, bool attendre = true)
         {
