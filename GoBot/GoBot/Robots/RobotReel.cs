@@ -274,7 +274,7 @@ namespace GoBot
                         if (Plateau.Balise != null)
                             Plateau.Balise.Position = Position;
 
-                        ChangerPosition(Position);
+                        OnPositionChange(Position);
                     }
                     catch (Exception)
                     {
@@ -469,7 +469,7 @@ namespace GoBot
             Position.Copy(newPosition);
             Frame trame = FrameFactory.OffsetPos(newPosition, this);
             Connexion.SendMessage(trame);
-            ChangerPosition(Position);
+            OnPositionChange(Position);
         }
 
         public override void Reculer(int distance, bool attendre = true)

@@ -134,7 +134,7 @@ namespace GoBot
         /// Génère l'évènement de changement de position
         /// </summary>
         /// <param name="position">Nouvelle position</param>
-        protected void ChangerPosition(Position position)
+        protected void OnPositionChange(Position position)
         {
             PositionChange?.Invoke(position);
         }

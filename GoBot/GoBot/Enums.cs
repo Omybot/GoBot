@@ -174,4 +174,17 @@ namespace GoBot
         b19200 = 103,
         b9600 = 207
     }
+
+    public static class EnumExtensions
+    {
+        public static int Factor(this SensAR sens)
+        {
+            return sens == SensAR.Avant ? 1 : -1;
+        }
+
+        public static int Factor(this SensGD sens)
+        {
+            return sens == SensGD.Droite ? 1 : -1;
+        }
+    }
 }

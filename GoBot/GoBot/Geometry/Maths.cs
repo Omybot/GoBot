@@ -98,5 +98,15 @@ namespace GoBot.Geometry
         {
             return Math.Sqrt(side1 * side1 + side2 * side2);
         }
+
+        public static double Scale(double value, double oldMax, double newMax)
+        {
+            return value / oldMax * newMax;
+        }
+
+        public static double Scale(double value, double oldMin, double oldMax, double newMin, double newMax)
+        {
+            return (value - oldMin) / (oldMax - oldMin) * (newMax - newMin) + newMin;
+        }
     }
 }
