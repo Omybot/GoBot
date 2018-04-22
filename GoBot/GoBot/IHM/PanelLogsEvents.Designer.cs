@@ -59,11 +59,14 @@
             // 
             // btnCharger
             // 
-            this.btnCharger.Location = new System.Drawing.Point(29, 24);
+            this.btnCharger.Image = global::GoBot.Properties.Resources.Folder16;
+            this.btnCharger.Location = new System.Drawing.Point(11, 33);
             this.btnCharger.Name = "btnCharger";
             this.btnCharger.Size = new System.Drawing.Size(104, 23);
             this.btnCharger.TabIndex = 0;
             this.btnCharger.Text = "Charger un log";
+            this.btnCharger.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.btnCharger.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
             this.btnCharger.UseVisualStyleBackColor = true;
             this.btnCharger.Click += new System.EventHandler(this.btnCharger_Click);
             // 
@@ -77,12 +80,12 @@
             this.dataGridViewLog.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.dataGridViewLog.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dataGridViewLog.ContextMenuStrip = this.contextMenuStripRow;
-            this.dataGridViewLog.Location = new System.Drawing.Point(300, 9);
+            this.dataGridViewLog.Location = new System.Drawing.Point(416, 9);
             this.dataGridViewLog.Name = "dataGridViewLog";
             this.dataGridViewLog.ReadOnly = true;
             this.dataGridViewLog.RowHeadersVisible = false;
             this.dataGridViewLog.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.dataGridViewLog.Size = new System.Drawing.Size(829, 629);
+            this.dataGridViewLog.Size = new System.Drawing.Size(835, 624);
             this.dataGridViewLog.TabIndex = 1;
             this.dataGridViewLog.CellMouseDown += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.dataGridViewLog_CellMouseDown);
             // 
@@ -103,7 +106,7 @@
             this.groupBox2.Controls.Add(this.rdoAucun);
             this.groupBox2.Controls.Add(this.rdoRobot);
             this.groupBox2.Controls.Add(this.rdoType);
-            this.groupBox2.Location = new System.Drawing.Point(170, 3);
+            this.groupBox2.Location = new System.Drawing.Point(293, 114);
             this.groupBox2.Name = "groupBox2";
             this.groupBox2.Size = new System.Drawing.Size(117, 119);
             this.groupBox2.TabIndex = 14;
@@ -144,11 +147,14 @@
             // 
             // btnRefresh
             // 
-            this.btnRefresh.Location = new System.Drawing.Point(45, 70);
+            this.btnRefresh.Image = global::GoBot.Properties.Resources.Refresh16;
+            this.btnRefresh.Location = new System.Drawing.Point(11, 62);
             this.btnRefresh.Name = "btnRefresh";
-            this.btnRefresh.Size = new System.Drawing.Size(75, 23);
+            this.btnRefresh.Size = new System.Drawing.Size(104, 23);
             this.btnRefresh.TabIndex = 16;
             this.btnRefresh.Text = "Refresh";
+            this.btnRefresh.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.btnRefresh.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
             this.btnRefresh.UseVisualStyleBackColor = true;
             this.btnRefresh.Click += new System.EventHandler(this.btnRefresh_Click);
             // 
@@ -158,12 +164,12 @@
             this.groupBox1.Controls.Add(this.rdoTempsDebut);
             this.groupBox1.Controls.Add(this.rdoTempsPrecAff);
             this.groupBox1.Controls.Add(this.rdoTempsPrec);
-            this.groupBox1.Location = new System.Drawing.Point(3, 128);
+            this.groupBox1.Location = new System.Drawing.Point(3, 114);
             this.groupBox1.Name = "groupBox1";
             this.groupBox1.Size = new System.Drawing.Size(284, 120);
             this.groupBox1.TabIndex = 15;
             this.groupBox1.TabStop = false;
-            this.groupBox1.Text = "Heure";
+            this.groupBox1.Text = "Affichage heure";
             // 
             // rdoHeure
             // 
@@ -213,17 +219,17 @@
             this.groupBoxMessages.Controls.Add(this.lblGrosRobot);
             this.groupBoxMessages.Controls.Add(this.checkedListBoxRobots);
             this.groupBoxMessages.Controls.Add(this.checkedListBoxEvents);
-            this.groupBoxMessages.Location = new System.Drawing.Point(3, 254);
+            this.groupBoxMessages.Location = new System.Drawing.Point(3, 240);
             this.groupBoxMessages.Name = "groupBoxMessages";
-            this.groupBoxMessages.Size = new System.Drawing.Size(281, 180);
+            this.groupBoxMessages.Size = new System.Drawing.Size(407, 167);
             this.groupBoxMessages.TabIndex = 19;
             this.groupBoxMessages.TabStop = false;
-            this.groupBoxMessages.Text = "Afficher les messages suivants";
+            this.groupBoxMessages.Text = "Filtre sur les messages";
             // 
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(24, 123);
+            this.label1.Location = new System.Drawing.Point(53, 112);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(61, 13);
             this.label1.TabIndex = 20;
@@ -232,7 +238,7 @@
             // lblGrosRobot
             // 
             this.lblGrosRobot.AutoSize = true;
-            this.lblGrosRobot.Location = new System.Drawing.Point(14, 60);
+            this.lblGrosRobot.Location = new System.Drawing.Point(43, 49);
             this.lblGrosRobot.Name = "lblGrosRobot";
             this.lblGrosRobot.Size = new System.Drawing.Size(71, 13);
             this.lblGrosRobot.TabIndex = 19;
@@ -242,7 +248,7 @@
             // 
             this.checkedListBoxRobots.CheckOnClick = true;
             this.checkedListBoxRobots.FormattingEnabled = true;
-            this.checkedListBoxRobots.Location = new System.Drawing.Point(98, 42);
+            this.checkedListBoxRobots.Location = new System.Drawing.Point(127, 31);
             this.checkedListBoxRobots.Name = "checkedListBoxRobots";
             this.checkedListBoxRobots.Size = new System.Drawing.Size(177, 49);
             this.checkedListBoxRobots.Sorted = true;
@@ -253,7 +259,7 @@
             // 
             this.checkedListBoxEvents.CheckOnClick = true;
             this.checkedListBoxEvents.FormattingEnabled = true;
-            this.checkedListBoxEvents.Location = new System.Drawing.Point(98, 97);
+            this.checkedListBoxEvents.Location = new System.Drawing.Point(127, 86);
             this.checkedListBoxEvents.Name = "checkedListBoxEvents";
             this.checkedListBoxEvents.Size = new System.Drawing.Size(177, 64);
             this.checkedListBoxEvents.Sorted = true;
@@ -262,22 +268,27 @@
             // 
             // btnAfficher
             // 
-            this.btnAfficher.Location = new System.Drawing.Point(1135, 9);
+            this.btnAfficher.Image = global::GoBot.Properties.Resources.Play16;
+            this.btnAfficher.Location = new System.Drawing.Point(270, 33);
             this.btnAfficher.Name = "btnAfficher";
-            this.btnAfficher.Size = new System.Drawing.Size(106, 23);
+            this.btnAfficher.Size = new System.Drawing.Size(129, 23);
             this.btnAfficher.TabIndex = 20;
             this.btnAfficher.Text = "Afficher temps réel";
+            this.btnAfficher.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.btnAfficher.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
             this.btnAfficher.UseVisualStyleBackColor = true;
             this.btnAfficher.Click += new System.EventHandler(this.btnAfficher_Click);
             // 
             // boxScroll
             // 
             this.boxScroll.AutoSize = true;
-            this.boxScroll.Location = new System.Drawing.Point(1145, 38);
+            this.boxScroll.Checked = true;
+            this.boxScroll.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.boxScroll.Location = new System.Drawing.Point(278, 67);
             this.boxScroll.Name = "boxScroll";
-            this.boxScroll.Size = new System.Drawing.Size(76, 17);
+            this.boxScroll.Size = new System.Drawing.Size(113, 17);
             this.boxScroll.TabIndex = 23;
-            this.boxScroll.Text = "Scroll auto";
+            this.boxScroll.Text = "Scroll automatique";
             this.boxScroll.UseVisualStyleBackColor = true;
             // 
             // PanelLogsEvents

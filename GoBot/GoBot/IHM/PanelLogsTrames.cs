@@ -6,14 +6,7 @@ using System.Data;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
-using GoBot.Geometry.Shapes;
-using GoBot.Geometry;
-using AStarFolder;
 using System.Threading;
-using GoBot.Movements;
-using GoBot.Strategies;
-using GoBot.Beacons;
-using GoBot.GameElements;
 using GoBot.Communications;
 
 namespace GoBot.IHM
@@ -27,7 +20,6 @@ namespace GoBot.IHM
         private DateTime datePrec;
         private DateTime datePrecAff;
         private System.Windows.Forms.Timer timerAffichage;
-        private bool affichageTempsReel = false;
         private int compteur = 0;
         private Thread threadReplay;
 
@@ -39,12 +31,12 @@ namespace GoBot.IHM
 
             dataGridViewLog.Columns.Add("Id", "Id");
             dataGridViewLog.Columns[0].Width = 40;
-            dataGridViewLog.Columns.Add("Expediteur", "Expediteur");
-            dataGridViewLog.Columns[1].Width = 60;
-            dataGridViewLog.Columns.Add("Destinataire", "Destinataire");
-            dataGridViewLog.Columns[2].Width = 60;
             dataGridViewLog.Columns.Add("Heure", "Heure");
-            dataGridViewLog.Columns[3].Width = 80;
+            dataGridViewLog.Columns[1].Width = 80;
+            dataGridViewLog.Columns.Add("Expediteur", "Expediteur");
+            dataGridViewLog.Columns[2].Width = 60;
+            dataGridViewLog.Columns.Add("Destinataire", "Destinataire");
+            dataGridViewLog.Columns[3].Width = 60;
             dataGridViewLog.Columns.Add("Message", "Message");
             dataGridViewLog.Columns[4].Width = 320;
             dataGridViewLog.Columns.Add("Trame", "Trame");
@@ -55,8 +47,7 @@ namespace GoBot.IHM
             couleurCarte.Add(Board.RecMove, Color.FromArgb(143, 255, 143));
             couleurCarte.Add(Board.RecIO, Color.FromArgb(210, 254, 211));
             couleurCarte.Add(Board.RecGB, Color.FromArgb(219, 209, 233));
-
-
+            
             // L'ajout de champs déclenche le SetCheck event qui ajoute les éléments automatiquement dans le dictionnaire
             if (Config.CurrentConfig.LogsFonctionsMove == null)
                 Config.CurrentConfig.LogsFonctionsMove = new SerializableDictionary<FrameFunction, bool>();
@@ -227,7 +218,7 @@ namespace GoBot.IHM
 
         private void btnAfficher_Click(object sender, EventArgs e)
         {
-            if (!affichageTempsReel)
+            if (timerAffichage == null || !timerAffichage.Enabled)
             {
                 replay = new ConnectionReplay();
                 timerAffichage = new System.Windows.Forms.Timer();
@@ -249,7 +240,6 @@ namespace GoBot.IHM
                 btnCharger.Enabled = false;
                 btnAfficher.Text = "Arrêter l'affichage";
                 btnAfficher.Image = GoBot.Properties.Resources.Pause16;
-                affichageTempsReel = true;
             }
             else
             {
@@ -269,7 +259,6 @@ namespace GoBot.IHM
                 btnCharger.Enabled = true;
                 btnAfficher.Text = "Afficher temps réel";
                 btnAfficher.Image = GoBot.Properties.Resources.Play16;
-                affichageTempsReel = false;
             }
         }
 
@@ -320,7 +309,7 @@ namespace GoBot.IHM
 
                 if (cartesAutorisees && fonctionAutorisee)
                 {
-                    dataGridViewLog.Rows.Add(compteur, expediteur.ToString(), destinataire.ToString(), heure, FrameDecoder.Decode(trame), trame.ToString());
+                    dataGridViewLog.Rows.Add(compteur, heure, expediteur.ToString(), destinataire.ToString(), FrameDecoder.Decode(trame), trame.ToString());
                     datePrecAff = trameReplay.Date;
 
                     if (rdoCarte.Checked)
@@ -333,7 +322,7 @@ namespace GoBot.IHM
             }
             catch (Exception)
             {
-                dataGridViewLog.Rows.Add(compteur, "?", "?", heure, "Inconnu !", trameReplay.Frame.ToString());
+                dataGridViewLog.Rows.Add(compteur, heure, "?", "?", "Inconnu !", trameReplay.Frame.ToString());
                 dataGridViewLog.Rows[dataGridViewLog.Rows.Count - 1].DefaultCellStyle.BackColor = Color.Red;
             }
 

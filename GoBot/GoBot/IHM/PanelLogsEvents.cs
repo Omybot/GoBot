@@ -6,15 +6,6 @@ using System.Data;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
-using GoBot.Geometry.Shapes;
-using GoBot.Geometry;
-using AStarFolder;
-using System.Threading;
-using GoBot.Movements;
-using GoBot.Strategies;
-using GoBot.Beacons;
-using GoBot.GameElements;
-using GoBot.Communications;
 
 namespace GoBot.IHM
 {
@@ -174,6 +165,7 @@ namespace GoBot.IHM
                 
                 btnCharger.Enabled = false;
                 btnAfficher.Text = "Arrêter l'affichage";
+                btnAfficher.Image = Properties.Resources.Pause16;
                 affichageTempsReel = true;
             }
             else
@@ -184,6 +176,7 @@ namespace GoBot.IHM
 
                 btnCharger.Enabled = true;
                 btnAfficher.Text = "Afficher temps réel";
+                btnAfficher.Image = Properties.Resources.Play16;
                 affichageTempsReel = false;
             }
         }
