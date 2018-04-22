@@ -20,7 +20,7 @@ namespace GoBot.Threading
         #region Properties
 
         /// <summary>
-        /// Obtient la liste des threads actuellements suivis.
+        /// Obtient une copie de la liste des threads actuellements suivis.
         /// </summary>
         public static ReadOnlyCollection<ThreadLink> ThreadsLink
         {

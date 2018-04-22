@@ -109,6 +109,12 @@
     <Compile Include="IHM\PanelBoardNumeric.Designer.cs">
       <DependentUpon>PanelBoardNumeric.cs</DependentUpon>
     </Compile>
+    <Compile Include="IHM\PanelLogThreads.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="IHM\PanelLogThreads.Designer.cs">
+      <DependentUpon>PanelLogThreads.cs</DependentUpon>
+    </Compile>
     <Compile Include="IHM\SplashScreen.cs" />
     <Compile Include="Movements\MovementBuilding.cs" />
     <Compile Include="Movements\MovementCubes.cs" />
@@ -471,6 +477,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="IHM\PanelBoardNumeric.resx">
       <DependentUpon>PanelBoardNumeric.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="IHM\PanelLogThreads.resx">
+      <DependentUpon>PanelLogThreads.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="IHM\PanelNumeric.resx">
       <DependentUpon>PanelNumeric.cs</DependentUpon>

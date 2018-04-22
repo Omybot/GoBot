@@ -62,7 +62,7 @@ namespace GoBot
                     WindowState = FormWindowState.Normal;
                     FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
                     btnFenetre.Location = btnClose.Location;
-                    btnClose.Visible = true;
+                    btnClose.Visible = false;
                 }
 
                 switchBoutonSimu.Value = Robots.Simulation;
