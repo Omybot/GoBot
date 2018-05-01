@@ -1,4 +1,5 @@
-﻿using GoBot.GameElements;
+﻿using GoBot.Communications;
+using GoBot.GameElements;
 using GoBot.Geometry.Shapes;
 using GoBot.Threading;
 using GoBot.Utils;
@@ -94,7 +95,7 @@ namespace GoBot.Actionneurs
             else
             {
                 _errors++;
-                Console.WriteLine(_errors + " erreurs");
+                //Console.WriteLine(_errors + " erreurs");
             }
 
         }
@@ -142,6 +143,22 @@ namespace GoBot.Actionneurs
             }
 
             return output;
+        }
+
+        public void DoMoveLeft()
+        {
+            Actionneur.ServosCan.SetPosition(0, 30000);
+        }
+
+        public void DoMoveRight()
+        {
+            Actionneur.ServosCan.SetPosition(0, 8000);
+        }
+
+        public void DoGetPosition()
+        {
+            int position = Actionneur.ServosCan.GetPosition(0);
+            System.Windows.Forms.MessageBox.Show(position.ToString());
         }
     }
 }

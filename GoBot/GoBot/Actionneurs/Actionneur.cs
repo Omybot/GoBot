@@ -12,6 +12,7 @@ namespace GoBot.Actionneurs
         private static Hokuyo hokuyo;
         private static Dumper dumper;
         private static PatternReader patternReader;
+        private static ServosCan servosCan;
 
 
         static Actionneur()
@@ -19,6 +20,7 @@ namespace GoBot.Actionneurs
             hokuyo = CreateHokuyo("COM3", LidarID.ScanSol);
             dumper = new Dumper();
             patternReader = new PatternReader();
+            servosCan = new ServosCan(Board.RecIO);
         }
 
         public static Hokuyo CreateHokuyo(String portCom, LidarID id)
@@ -61,6 +63,12 @@ namespace GoBot.Actionneurs
         {
             get { return patternReader; }
             set { patternReader = value; }
+        }
+
+        public static ServosCan ServosCan
+        {
+            get { return servosCan; }
+            set { servosCan = value; }
         }
     }
 }

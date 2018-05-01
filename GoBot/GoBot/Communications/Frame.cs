@@ -21,7 +21,7 @@ namespace GoBot.Communications
         /// Construit une trame à partir d'un tableau d'octets
         /// </summary>
         /// <param name="message">Octets à convertir</param>
-        public Frame(Byte[] message)
+        public Frame(IEnumerable<Byte> message)
         {
             Bytes = new List<Byte>();
 

@@ -258,6 +258,12 @@ namespace GoBot.Communications
 
             switch (function)
             {
+                case FrameFunction.EnvoiUart2:
+                    output = "Envoi UART2";
+                    break;
+                case FrameFunction.RetourUart2:
+                    output = "Retour UART2";
+                    break;
                 case FrameFunction.DemandeCapteurPattern:
                     output = "Demande periode capteur pattern";
                     break;
@@ -589,14 +595,14 @@ namespace GoBot.Communications
                         output = ReplaceParam(output, parameters[1].ToString());
                     }
                     break;
-                case FrameFunction.EnvoiUart:
+                case FrameFunction.EnvoiUart1:
                     output = "Envoi UART {0} caractères";
                     if (parameters != null)
                     {
                         output = ReplaceParam(output, parameters[0].ToString());
                     }
                     break;
-                case FrameFunction.RetourUart:
+                case FrameFunction.RetourUart1:
                     output = "Réception UART {0} caractères";
                     if (parameters != null)
                     {

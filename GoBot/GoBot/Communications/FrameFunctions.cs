@@ -59,10 +59,12 @@
         AsserPIDCap = 0x38,
         AsserPIDVitesse = 0x39,
 
-        EnvoiUart = 0xA0,
-        RetourUart = 0xA1,
+        EnvoiUart1 = 0xA0,
+        RetourUart1 = 0xA1,
         DemandeLidar = 0xA2,
         ReponseLidar = 0xA3,
+        EnvoiUart2 = 0xA4,
+        RetourUart2 = 0xA5,
         ChangementBaudrateUART = 0x61,
 
         AffichageLCD = 0xB0,

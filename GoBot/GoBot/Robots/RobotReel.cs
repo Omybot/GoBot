@@ -828,7 +828,7 @@ namespace GoBot
 
         public void EnvoyerUart(Board carte, Frame trame)
         {
-            Frame trameUart = FrameFactory.EnvoyerUart(carte, trame);
+            Frame trameUart = FrameFactory.EnvoyerUart1(carte, trame);
             Connections.BoardConnection[carte].SendMessage(trameUart);
         }
     }

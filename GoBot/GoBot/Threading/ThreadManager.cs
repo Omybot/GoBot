@@ -47,6 +47,19 @@ namespace GoBot.Threading
         #region Public methods
         
         /// <summary>
+        /// Crée un thread et retourne le lien.
+        /// </summary>
+        /// <param name="call">Appel à executer par le thread.</param>
+        /// <returns>Lien vers le thread créé.</returns>
+        public static ThreadLink CreateThread(ThreadLink.CallBack call)
+        {
+            ThreadLink link = new ThreadLink(call);
+            _threadsLink.Add(link);
+
+            return link;
+        }
+
+        /// <summary>
         /// Lance un thread sur un appel unique.
         /// </summary>
         /// <param name="call">Appel à executer.</param>

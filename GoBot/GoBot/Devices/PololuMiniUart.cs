@@ -20,7 +20,7 @@ namespace GoBot.Devices
             serialBytes[2] = (byte)(target & 0x7F); // Second byte holds the lower 7 bits of target.
             serialBytes[3] = (byte)((target >> 7) & 0x7F);   // Third data byte holds the bits 7-13 of target.
 
-            Connections.ConnectionIO.SendMessage(FrameFactory.EnvoyerUart(Board.RecIO, new Frame(serialBytes)));
+            Connections.ConnectionIO.SendMessage(FrameFactory.EnvoyerUart1(Board.RecIO, new Frame(serialBytes)));
         }
 
         public static void setSpeed(byte channel, ushort target)
@@ -31,7 +31,7 @@ namespace GoBot.Devices
             serialBytes[2] = (byte)(target & 0x7F); // Second byte holds the lower 7 bits of target.
             serialBytes[3] = (byte)((target >> 7) & 0x7F);   // Third data byte holds the bits 7-13 of target.
 
-            Connections.ConnectionMove.SendMessage(FrameFactory.EnvoyerUart(Board.RecMove, new Frame(serialBytes)));
+            Connections.ConnectionMove.SendMessage(FrameFactory.EnvoyerUart1(Board.RecMove, new Frame(serialBytes)));
         }
 
         public static void setAcceleration(byte channel, ushort target)
@@ -42,7 +42,7 @@ namespace GoBot.Devices
             serialBytes[2] = (byte)(target & 0x7F); // Second byte holds the lower 7 bits of target.
             serialBytes[3] = (byte)((target >> 7) & 0x7F);   // Third data byte holds the bits 7-13 of target.
 
-            Connections.ConnectionMove.SendMessage(FrameFactory.EnvoyerUart(Board.RecMove, new Frame(serialBytes)));
+            Connections.ConnectionMove.SendMessage(FrameFactory.EnvoyerUart1(Board.RecMove, new Frame(serialBytes)));
         }
 
         public static void setPWM(byte channel, ushort target)
@@ -53,7 +53,7 @@ namespace GoBot.Devices
             serialBytes[2] = (byte)(target & 0x7F); // Second byte holds the lower 7 bits of target.
             serialBytes[3] = (byte)((target >> 7) & 0x7F);   // Third data byte holds the bits 7-13 of target.
 
-            Connections.ConnectionMove.SendMessage(FrameFactory.EnvoyerUart(Board.RecMove, new Frame(serialBytes)));
+            Connections.ConnectionMove.SendMessage(FrameFactory.EnvoyerUart1(Board.RecMove, new Frame(serialBytes)));
         }
     }
 }
