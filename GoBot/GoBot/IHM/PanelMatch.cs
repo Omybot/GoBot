@@ -70,7 +70,7 @@ namespace GoBot.IHM
         {
             // Recallage du gros robot
 
-            _linkCalibration.RegisterName();
+            _linkCalibration?.RegisterName();
 
             this.InvokeAuto(() => ledRecallageGros.Color = Color.DarkOrange);
 

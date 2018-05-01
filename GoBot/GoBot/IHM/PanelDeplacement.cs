@@ -314,7 +314,7 @@ namespace GoBot.IHM
         
         private void ThreadGoTo(ThreadLink link)
         {
-            link.RegisterName();
+            link?.RegisterName();
             Robot.GotoXYTeta(new Position((double)numTeta.Value, new RealPoint((double)numX.Value, (double)numY.Value)));
         }
 

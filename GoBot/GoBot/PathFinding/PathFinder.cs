@@ -408,7 +408,7 @@ namespace GoBot.PathFinding
 
         private static void ResetOpponentRadiusLoop()
         {
-            _linkResetRadius.RegisterName();
+            _linkResetRadius?.RegisterName();
 
             Thread.Sleep(1000);
             while (!_linkResetRadius.Cancelled)

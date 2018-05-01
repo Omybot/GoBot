@@ -86,7 +86,7 @@ namespace GoBot.Communications
         /// </summary>
         private static void TestConnections()
         {
-            _linkTestConnections.RegisterName();
+            _linkTestConnections?.RegisterName();
 
             int interval = IntervalLoopTests / AllConnections.Count();
 

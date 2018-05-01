@@ -222,7 +222,7 @@ namespace GoBot
 
         public void ReactivationAsserv(ThreadLink link)
         {
-            link.RegisterName();
+            link?.RegisterName();
 
             for (LedID i = LedID.DebugB1; i <= LedID.DebugA1; i++)
                 Devices.Devices.RecGoBot.SetLed((LedID)i, RecGoBot.LedStatus.Rouge);

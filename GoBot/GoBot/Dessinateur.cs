@@ -168,7 +168,7 @@ namespace GoBot
 
         public static void DisplayLoop()
         {
-            _linkDisplay.RegisterName();
+            _linkDisplay?.RegisterName();
 
             Stopwatch sw = Stopwatch.StartNew();
             

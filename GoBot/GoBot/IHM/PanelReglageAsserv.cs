@@ -35,7 +35,7 @@ namespace GoBot.IHM
 
         private void EnvoiTestPid(ThreadLink link)
         {
-            link.RegisterName();
+            link?.RegisterName();
 
             Robot.EnvoyerPID((int)numCoeffP.Value, (int)numCoeffI.Value, (int)numCoeffD.Value);
             List<int>[] mesures = Robot.MesureTestPid((int)numPasCodeurs.Value, SensAR.Avant, (int)numNbPoints.Value);

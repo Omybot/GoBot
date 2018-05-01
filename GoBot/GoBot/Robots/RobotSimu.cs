@@ -143,7 +143,7 @@ namespace GoBot
 
         void Asservissement()
         {
-            _linkAsserv.RegisterName();
+            _linkAsserv?.RegisterName();
 
             // Calcul du temps écoulé depuis la dernière mise à jour de la position
             double interval = 0;

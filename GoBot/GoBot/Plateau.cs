@@ -176,7 +176,7 @@ namespace GoBot
         private Semaphore SemaphoreCollisions { get; set; }
         private void ThreadTestCollisions(ThreadLink link)
         {
-            link.RegisterName();
+            link?.RegisterName();
 
             while (!link.Cancelled)
             {

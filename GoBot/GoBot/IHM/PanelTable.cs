@@ -49,7 +49,7 @@ namespace GoBot.IHM
 
         void DisplayInfos()
         {
-            _linkDisplay.RegisterName();
+            _linkDisplay?.RegisterName();
 
             this.InvokeAuto(() =>
             { 
@@ -290,7 +290,7 @@ namespace GoBot.IHM
 
         private void ThreadTrajectory(ThreadLink link)
         {
-            link.RegisterName();
+            link?.RegisterName();
 
             this.InvokeAuto(() => btnPathRPCentre.Enabled = false);
 
@@ -371,7 +371,7 @@ namespace GoBot.IHM
 
         public void GoToDepart(ThreadLink link)
         {
-            link.RegisterName();
+            link?.RegisterName();
             Robots.GrosRobot.GotoXYTeta(Recallages.PositionDepart);
         }
 
@@ -394,7 +394,7 @@ namespace GoBot.IHM
 
         private void TestAsser(ThreadLink link)
         {
-            link.RegisterName();
+            link?.RegisterName();
 
             Robots.GrosRobot.Avancer(2000);
             Robots.GrosRobot.PivotDroite(270);

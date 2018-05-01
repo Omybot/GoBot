@@ -360,6 +360,8 @@ namespace GoBot.Threading
 
         private void ThreadCall(CallBack call)
         {
+            Thread.Sleep(0); // Permet d'executer la fin d'appel de lancement avant de commencer
+
             _startDate = DateTime.Now;
             _started = true;
 
@@ -372,6 +374,8 @@ namespace GoBot.Threading
 
         private void ThreadLoop(TimeSpan interval, int executions)
         {
+            Thread.Sleep(0); // Permet d'executer la fin d'appel de lancement avant de commencer
+
             _startDate = DateTime.Now;
             _started = true;
 
@@ -391,6 +395,8 @@ namespace GoBot.Threading
 
         private void ThreadInfiniteLoop(TimeSpan interval)
         {
+            Thread.Sleep(0); // Permet d'executer la fin d'appel de lancement avant de commencer
+
             _startDate = DateTime.Now;
             _started = true;
 

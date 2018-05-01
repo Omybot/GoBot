@@ -139,7 +139,7 @@ namespace GoBot.Strategies
 
         private void Execute(ThreadLink link)
         {
-            link.RegisterName();
+            link?.RegisterName();
 
             SequenceBegin();
             SequenceCore();

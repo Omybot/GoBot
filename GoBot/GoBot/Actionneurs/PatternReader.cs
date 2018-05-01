@@ -65,7 +65,7 @@ namespace GoBot.Actionneurs
         
         private void AskRefresh()
         {
-            _linkPolling.RegisterName();
+            _linkPolling?.RegisterName();
             Robots.GrosRobot.DemandeCapteurPattern(false);
         }
 

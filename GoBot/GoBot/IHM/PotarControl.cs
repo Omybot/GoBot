@@ -55,7 +55,7 @@ namespace GoBot.IHM
             int pointsParTour = 4096;
             double toursRange = 5;
 
-            _linkPolling.RegisterName();
+            _linkPolling?.RegisterName();
 
             ticksCurrent = Devices.Devices.RecGoBot.GetCodeurPosition();
             ticksMin = ticksCurrent;

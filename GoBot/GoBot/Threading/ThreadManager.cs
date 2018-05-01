@@ -121,7 +121,7 @@ namespace GoBot.Threading
         /// </summary>
         private static void CleanDeads()
         {
-            _linkCleanDeads.RegisterName();
+            _linkCleanDeads?.RegisterName();
             _threadsLink.RemoveAll(t => t.Ended && t.EndDate < (DateTime.Now - new TimeSpan(0, 1, 0)));
         }
 
