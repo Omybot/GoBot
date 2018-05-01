@@ -112,6 +112,8 @@ namespace GoBot
 
                 Connections.ConnectionIO.SendMessage(FrameFactory.DemandeCouleurEquipe());
 
+                Actionneurs.Actionneur.PatternReader.StartPolling();
+
                 panelBalise.Balise = Plateau.Balise;
                 panelBaliseDiagnostic.Balise = Plateau.Balise;
             }

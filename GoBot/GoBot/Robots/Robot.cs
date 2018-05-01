@@ -13,6 +13,7 @@ using GoBot.PathFinding;
 using GoBot.Communications;
 using System.Diagnostics;
 using GoBot.Threading;
+using GoBot.GameElements;
 
 namespace GoBot
 {
@@ -100,6 +101,7 @@ namespace GoBot
         public abstract List<double>[] DiagnosticCpuPwm(int nbValeurs);
         public abstract bool DemandeCapteurOnOff(CapteurOnOffID capteur, bool attendre = true);
         public abstract Color DemandeCapteurCouleur(CapteurCouleurID capteur, bool attendre = true);
+        public abstract CubesPattern DemandeCapteurPattern(bool attendre = true);
         public abstract void DemandeValeursAnalogiques(Board carte, bool attendre = true);
         public abstract void DemandeValeursNumeriques(Board carte, bool attendre = true);
 

@@ -175,8 +175,8 @@ namespace Composants
                     SizeF minSize = gTemp.MeasureString(minText, myFont);
                     SizeF maxSize = gTemp.MeasureString(maxText, myFont);
 
-                    gTemp.DrawString(minText, myFont, Brushes.Black, 2 - minSize.Width, 2);
-                    gTemp.DrawString(maxText, myFont, Brushes.Black, 2 - maxSize.Width, bmp.Height - maxSize.Height - 2);
+                    gTemp.DrawString(minText, myFont, Brushes.Black, this.Width - 2 - minSize.Width, bmp.Height - maxSize.Height - 2);
+                    gTemp.DrawString(maxText, myFont, Brushes.Black, this.Width - 2 - maxSize.Width, 2);
                 }
 
                 pictureBox.Image = bmp;

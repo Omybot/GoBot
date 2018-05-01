@@ -57,6 +57,15 @@ namespace GoBot.Communications
             return new Frame(tab);
         }
 
+        static public Frame DemandeCapteurPattern()
+        {
+            byte[] tab = new byte[3];
+            tab[0] = (byte)Board.RecMove;
+            tab[1] = (byte)FrameFunction.DemandeCapteurPattern;
+
+            return new Frame(tab);
+        }
+
         static public Frame SetLedColor(Color color)
         {
             byte[] tab = new byte[6];

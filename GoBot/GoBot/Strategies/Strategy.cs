@@ -103,6 +103,8 @@ namespace GoBot.Strategies
         /// </summary>
         public void ExecuteMatch()
         {
+            Actionneurs.Actionneur.PatternReader.StopPolling();
+
             Robots.GrosRobot.Historique.Log("DEBUT DU MATCH", TypeLog.Strat);
 
             StartingDateTime = DateTime.Now;

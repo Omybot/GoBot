@@ -258,6 +258,12 @@ namespace GoBot.Communications
 
             switch (function)
             {
+                case FrameFunction.DemandeCapteurPattern:
+                    output = "Demande periode capteur pattern";
+                    break;
+                case FrameFunction.RetourCapteurPattern:
+                    output = "Retour periode capteur pattern {0-1}";
+                    break;
                 case FrameFunction.DemandeValeursNumeriques:
                     output = "Demande valeurs des ports numériques";
                     break;

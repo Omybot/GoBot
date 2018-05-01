@@ -70,6 +70,7 @@ namespace GoBot
             if(!Dns.GetHostAddresses(Dns.GetHostName()).ToList().Exists(ip => ip.ToString().StartsWith("10.1.0.")))
             {
                 SplashScreen.SetMessage("Attention !\nIP non configurée...", Color.Red);
+
                 Thread.Sleep(1000);
             }
         }

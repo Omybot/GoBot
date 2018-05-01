@@ -8,9 +8,18 @@ using System.Threading.Tasks;
 
 namespace GoBot.GameElements
 {
-    class CubesPattern
+    public class CubesPattern
     {
         private List<CubesCross.CubeColor> colors;
+
+
+        public CubesPattern()
+        {
+            colors = new List<CubesCross.CubeColor>();
+            colors.Add(CubesCross.CubeColor.Joker);
+            colors.Add(CubesCross.CubeColor.Joker);
+            colors.Add(CubesCross.CubeColor.Joker);
+        }
 
         public CubesPattern(CubesCross.CubeColor color1, CubesCross.CubeColor color2, CubesCross.CubeColor color3)
         {
@@ -56,6 +65,11 @@ namespace GoBot.GameElements
         public void Paint(Graphics g, RealPoint pos, WorldScale scale)
         {
             CubesCross.PaintCubesInRow(g, colors, pos, scale, false);
+        }
+
+        public bool IsSame(CubesPattern pattern)
+        {
+            return (pattern.colors[0] == colors[0] && pattern.colors[1] == colors[1] && pattern.colors[2] == colors[2]);
         }
     }
 }

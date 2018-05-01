@@ -21,6 +21,8 @@
         RetourCapteurCouleur = 0x53,
         DemandePositionCodeur = 0x21,
         RetourPositionCodeur = 0x22,
+        DemandeCapteurPattern = 0x23,
+        RetourCapteurPattern = 0x24,
 
         PilotageOnOff = 0x65,
         Led = 0x62,

@@ -35,6 +35,26 @@ namespace GoBot.Actionneurs
             filling.LoadCube(CubesCross.CubeColor.Joker, Slot.Rigth);
         }
 
+        public void DoOpenGates()
+        {
+
+        }
+
+        public void DoCloseGates()
+        {
+
+        }
+
+        public void DoDeploy()
+        {
+
+        }
+
+        public void DoStore()
+        {
+
+        }
+
         public void PickupCubes(CubesCross cross, CubesPattern pattern)
         {
             // TODO construction d'une tour

@@ -12,17 +12,10 @@ namespace GoBot.IHM
 {
     public partial class PanelActionneurGeneric : UserControl
     {
-        private List<String> disabled;
-
         private object obj;
 
         public PanelActionneurGeneric()
         {
-            disabled = new List<string>();
-            disabled.Add("ToString");
-            disabled.Add("GetHashCode");
-            disabled.Add("Equals");
-            disabled.Add("GetType");
             InitializeComponent();
         }
 
@@ -34,7 +27,7 @@ namespace GoBot.IHM
 
             lblName.Text = t.Name;
 
-            foreach (MethodInfo method in t.GetMethods().Where(m => !disabled.Contains(m.Name) && !m.Name.Contains("_")))
+            foreach (MethodInfo method in t.GetMethods().Where(m => m.Name.StartsWith("Do")))
             {
                 Button b = new Button();
                 b.SetBounds(5, i, 120, 22);

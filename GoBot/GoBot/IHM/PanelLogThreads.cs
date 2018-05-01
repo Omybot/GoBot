@@ -106,11 +106,14 @@ namespace GoBot.IHM
                 _timerDisplay.Start();
 
                 btnStart.Text = "Stop";
+                btnStart.Image = Properties.Resources.Pause16;
             }
             else
             {
-                btnStart.Text = "Afficher";
                 _timerDisplay.Stop();
+
+                btnStart.Text = "Afficher";
+                btnStart.Image = Properties.Resources.Play16;
             }
         }
     }

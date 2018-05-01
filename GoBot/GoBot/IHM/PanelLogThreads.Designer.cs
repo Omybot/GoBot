@@ -52,11 +52,14 @@
             // 
             // btnStart
             // 
-            this.btnStart.Location = new System.Drawing.Point(276, 43);
+            this.btnStart.Image = global::GoBot.Properties.Resources.Play16;
+            this.btnStart.Location = new System.Drawing.Point(270, 33);
             this.btnStart.Name = "btnStart";
-            this.btnStart.Size = new System.Drawing.Size(75, 23);
+            this.btnStart.Size = new System.Drawing.Size(122, 23);
             this.btnStart.TabIndex = 3;
-            this.btnStart.Text = "Afficher";
+            this.btnStart.Text = "Afficher les threads";
+            this.btnStart.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.btnStart.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
             this.btnStart.UseVisualStyleBackColor = true;
             this.btnStart.Click += new System.EventHandler(this.btnStart_Click);
             // 

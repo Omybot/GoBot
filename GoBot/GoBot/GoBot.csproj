@@ -109,6 +109,12 @@
     <Compile Include="IHM\PanelBoardNumeric.Designer.cs">
       <DependentUpon>PanelBoardNumeric.cs</DependentUpon>
     </Compile>
+    <Compile Include="IHM\PanelColorPattern.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="IHM\PanelColorPattern.Designer.cs">
+      <DependentUpon>PanelColorPattern.cs</DependentUpon>
+    </Compile>
     <Compile Include="IHM\PanelLogThreads.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -365,6 +371,7 @@
     <Compile Include="Logs\LogFile.cs" />
     <Compile Include="Logs\Logs.cs" />
     <Compile Include="Movements\Movement.cs" />
+    <Compile Include="Utils\LimitedQueue.cs" />
     <Compile Include="WorldScale.cs" />
     <Compile Include="PathFinding\PathFinder.cs" />
     <Compile Include="PathFinding\Trajectory.cs" />
@@ -477,6 +484,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="IHM\PanelBoardNumeric.resx">
       <DependentUpon>PanelBoardNumeric.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="IHM\PanelColorPattern.resx">
+      <DependentUpon>PanelColorPattern.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="IHM\PanelLogThreads.resx">
       <DependentUpon>PanelLogThreads.cs</DependentUpon>

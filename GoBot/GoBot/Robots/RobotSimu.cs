@@ -12,6 +12,7 @@ using GoBot.Actionneurs;
 using System.Diagnostics;
 using GoBot.Communications;
 using GoBot.Threading;
+using GoBot.GameElements;
 
 namespace GoBot
 {
@@ -468,6 +469,14 @@ namespace GoBot
         {
             // TODO
             return Color.Black;
+        }
+
+
+        public override CubesPattern DemandeCapteurPattern(bool attendre = true)
+        {
+            // TODO
+
+            return new CubesPattern(CubesCross.CubeColor.Black, CubesCross.CubeColor.Orange, CubesCross.CubeColor.Green);
         }
 
         public override void ServoVitesse(ServomoteurID servo, int vitesse)

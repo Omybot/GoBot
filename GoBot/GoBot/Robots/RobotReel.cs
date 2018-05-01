@@ -9,6 +9,7 @@ using System.Drawing;
 using System.Text.RegularExpressions;
 using System.Threading;
 using GoBot.Threading;
+using GoBot.GameElements;
 
 namespace GoBot
 {
@@ -191,6 +192,20 @@ namespace GoBot
             return CapteursCouleur[capteur];
         }
 
+        public override CubesPattern DemandeCapteurPattern(bool attendre = true)
+        {
+            if (attendre)
+                SemaphoresTrame[FrameFunction.DemandeCapteurPattern] = new Semaphore(0, int.MaxValue);
+
+            Frame t = FrameFactory.DemandeCapteurPattern();
+            Connections.ConnectionMove.SendMessage(t);
+
+            if (attendre)
+                SemaphoresTrame[FrameFunction.DemandeCapteurPattern].WaitOne(100);
+
+            return Actionneurs.Actionneur.PatternReader.Pattern;
+        }
+
         public override bool DemandeCapteurOnOff(CapteurOnOffID capteur, bool attendre = true)
         {
             if (attendre)
@@ -333,6 +348,12 @@ namespace GoBot
                     CapteursCouleur[(CapteurCouleurID)trameRecue[2]] = couleur;
 
                     SemaphoresCouleur[(CapteurCouleurID)trameRecue[2]]?.Release();
+                    break;
+                case FrameFunction.RetourCapteurPattern:
+                    
+                    Actionneurs.Actionneur.PatternReader.SetPeriod(trameRecue[2] * 256 + trameRecue[3]);
+
+                    SemaphoresTrame[FrameFunction.DemandeCapteurPattern]?.Release();
                     break;
                 case FrameFunction.ReponseLidar:
                     int lidarID = trameRecue[2];
