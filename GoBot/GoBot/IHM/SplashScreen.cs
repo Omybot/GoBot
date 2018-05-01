@@ -30,7 +30,6 @@ namespace GoBot.IHM
             _messageRect = messageRect;
 
             _formThread = new Thread(Open);
-            _formThread.IsBackground = true;
             _formThread.SetApartmentState(ApartmentState.STA);
             _formThread.Start(speed);
 
@@ -75,7 +74,7 @@ namespace GoBot.IHM
 
             private Rectangle _messageRect;
 
-            private System.Windows.Forms.Timer _timerOpacity;
+            private System.Timers.Timer _timerOpacity;
 
             public int Speed
             {
@@ -111,9 +110,9 @@ namespace GoBot.IHM
                 _originalBitmap = img;
 
                 _currentBitmap = new Bitmap(_originalBitmap);
-                
-                _timerOpacity = new System.Windows.Forms.Timer();
-                _timerOpacity.Tick += new System.EventHandler(this.timerOpacity_Tick);
+
+                _timerOpacity = new System.Timers.Timer(15);
+                _timerOpacity.Elapsed += _timerOpacity_Elapsed;
                 _timerOpacity.Interval = 15;
 
                 this.StartTimer();
@@ -129,7 +128,7 @@ namespace GoBot.IHM
                 g.DrawString(text, new Font("Jokerman", 16, FontStyle.Bold), new SolidBrush(color), _messageRect, fmt);
                 g.Dispose();
 
-                lock (_originalBitmap)
+                lock (this)
                 {
                     _currentBitmap = newBitmap;
                     this.SetBitmap(_currentBitmap, (byte)_oppacity);
@@ -152,15 +151,7 @@ namespace GoBot.IHM
                 this.ResumeLayout(false);
             }
 
-            private Bitmap WriteVersion(Bitmap img)
-            {
-                Graphics g = Graphics.FromImage(img);
-                g.DrawString(Application.ProductVersion.Substring(0, Application.ProductVersion.LastIndexOf('.')), new Font("Calibri", 16, FontStyle.Bold), new SolidBrush(Color.FromArgb(67, 78, 84)), new PointF(82, 212));
-
-                return img;
-            }
-
-            private void timerOpacity_Tick(object sender, EventArgs e)
+            private void _timerOpacity_Elapsed(object sender, System.Timers.ElapsedEventArgs e)
             {
                 _oppacity += _speed;
 
@@ -174,24 +165,30 @@ namespace GoBot.IHM
                 {
                     _timerOpacity.Stop();
                     _oppacity = 255;
-                    lock (_originalBitmap)
+                    lock (this)
                     {
                         this.SetBitmap(_currentBitmap, (byte)(_oppacity));
                     }
                 }
                 else
                 {
-                    lock (_originalBitmap)
+                    lock (this)
                     {
                         this.SetBitmap(new Bitmap(_currentBitmap), (byte)(_oppacity));
                     }
                 }
             }
 
+            private Bitmap WriteVersion(Bitmap img)
+            {
+                Graphics g = Graphics.FromImage(img);
+                g.DrawString(Application.ProductVersion.Substring(0, Application.ProductVersion.LastIndexOf('.')), new Font("Calibri", 16, FontStyle.Bold), new SolidBrush(Color.FromArgb(67, 78, 84)), new PointF(82, 212));
+
+                return img;
+            }
+
             private void SetBitmap(Bitmap bitmap, byte opacity)
             {
-                Console.WriteLine(bitmap.PixelFormat.ToString());
-
                 // The idea of this is very simple,
                 // 1. Create a compatible DC with screen;
                 // 2. Select the bitmap with 32bpp with alpha-channel in the compatible DC;

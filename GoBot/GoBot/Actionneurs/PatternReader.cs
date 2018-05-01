@@ -19,6 +19,8 @@ namespace GoBot.Actionneurs
         private LimitedQueue<double> _measures;
         private double _period;
 
+        private int _errors;
+
         private ThreadLink _linkPolling;
         
         public delegate void PatternChangedDelegate(CubesPattern pattern);
@@ -39,6 +41,8 @@ namespace GoBot.Actionneurs
             _pattern = new CubesPattern();
 
             _measures = new LimitedQueue<double>(10);
+
+            _errors = 0;
         }
 
         public CubesPattern ReadPattern()
@@ -49,7 +53,7 @@ namespace GoBot.Actionneurs
 
         public void StartPolling()
         {
-            _linkPolling = ThreadManager.StartInfiniteLoop(f => AskRefresh(), new TimeSpan(0, 0, 0, 0, 500));
+            _linkPolling = ThreadManager.StartInfiniteLoop(f => AskRefresh(), new TimeSpan(0, 0, 0, 0, 100));
         }
 
         public void StopPolling()
@@ -58,15 +62,10 @@ namespace GoBot.Actionneurs
             _linkPolling.WaitEnd();
             _linkPolling = null;
         }
-
-        private Random rand;
-
+        
         private void AskRefresh()
         {
-            if (rand == null) rand = new Random();
-
             _linkPolling.RegisterName();
-            SetPeriod((int)((9 + rand.Next(10) - 5) / 0.0016));
             Robots.GrosRobot.DemandeCapteurPattern(false);
         }
 
@@ -77,16 +76,27 @@ namespace GoBot.Actionneurs
 
         public void SetPeriod(int rawPeriod)
         {
-            _period = rawPeriod * 0.0016;
-            
-            _measures.Enqueue(_period);
+            double newPeriod = rawPeriod * 0.0016;
 
-            CubesPattern newPattern = GuessPattern();
-            if(!newPattern.IsSame(_pattern))
+            if (newPeriod > 8.5 && newPeriod < 20.5)
             {
-                _pattern = newPattern;
-                OnPatternChanged();
+                _period = newPeriod;
+                _measures.Enqueue(_period);
+
+                CubesPattern newPattern = GuessPattern();
+                if (!newPattern.IsSame(_pattern))
+                {
+                    _pattern = newPattern;
+                    OnPatternChanged();
+
+                }
             }
+            else
+            {
+                _errors++;
+                Console.WriteLine(_errors + " erreurs");
+            }
+
         }
 
         protected void OnPatternChanged()
