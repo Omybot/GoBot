@@ -38,8 +38,8 @@ namespace GoBot.Threading
         {
             _threadsLink = new List<ThreadLink>();
 
-            _linkCleanDeads = StartInfiniteLoop(link => CleanDeads(), new TimeSpan(0, 0, 1));
-            //StartInfiniteLoop(link => PrintThreads(), new TimeSpan(0, 0, 1));
+            _linkCleanDeads = CreateThread(link => CleanDeads());
+            _linkCleanDeads.StartInfiniteLoop(new TimeSpan(0, 0, 1));
         }
 
         #endregion
@@ -59,50 +59,50 @@ namespace GoBot.Threading
             return link;
         }
 
-        /// <summary>
-        /// Lance un thread sur un appel unique.
-        /// </summary>
-        /// <param name="call">Appel à executer.</param>
-        /// <returns>Lien vers le thread d'execution.</returns>
-        public static ThreadLink StartThread(ThreadLink.CallBack call)
-        {
-            ThreadLink link = new ThreadLink(call);
-            _threadsLink.Add(link);
-            link.StartThread();
+        ///// <summary>
+        ///// Lance un thread sur un appel unique.
+        ///// </summary>
+        ///// <param name="call">Appel à executer.</param>
+        ///// <returns>Lien vers le thread d'execution.</returns>
+        //public static ThreadLink StartThread(ThreadLink.CallBack call)
+        //{
+        //    ThreadLink link = new ThreadLink(call);
+        //    _threadsLink.Add(link);
+        //    link.StartThread();
 
-            return link;
-        }
+        //    return link;
+        //}
 
-        /// <summary>
-        /// Lance un thread sur un nombre déterminé d'appels en boucle.
-        /// </summary>
-        /// <param name="call">Appel à executer.</param>
-        /// <param name="interval">Intervalle passif entre chaque appel.</param>
-        /// <param name="executions">Nombre d'executions à effectuer.</param>
-        /// <returns>Lien vers le thread d'execution.</returns>
-        public static ThreadLink StartLoop(ThreadLink.CallBack call, TimeSpan interval, int executions)
-        {
-            ThreadLink link = new ThreadLink(call);
-            _threadsLink.Add(link);
-            link.StartLoop(interval, executions);
+        ///// <summary>
+        ///// Lance un thread sur un nombre déterminé d'appels en boucle.
+        ///// </summary>
+        ///// <param name="call">Appel à executer.</param>
+        ///// <param name="interval">Intervalle passif entre chaque appel.</param>
+        ///// <param name="executions">Nombre d'executions à effectuer.</param>
+        ///// <returns>Lien vers le thread d'execution.</returns>
+        //public static ThreadLink StartLoop(ThreadLink.CallBack call, TimeSpan interval, int executions)
+        //{
+        //    ThreadLink link = new ThreadLink(call);
+        //    _threadsLink.Add(link);
+        //    link.StartLoop(interval, executions);
 
-            return link;
-        }
+        //    return link;
+        //}
 
-        /// <summary>
-        /// Lance un thread sur un nombre indéterminé d'appels en boucle.
-        /// </summary>
-        /// <param name="call">Appel à executer.</param>
-        /// <param name="interval">Intervalle passif entre chaque appel.</param>
-        /// <returns>Lien vers le thread d'execution.</returns>
-        public static ThreadLink StartInfiniteLoop(ThreadLink.CallBack call, TimeSpan interval)
-        {
-            ThreadLink link = new ThreadLink(call);
-            _threadsLink.Add(link);
-            link.StartInfiniteLoop(interval);
+        ///// <summary>
+        ///// Lance un thread sur un nombre indéterminé d'appels en boucle.
+        ///// </summary>
+        ///// <param name="call">Appel à executer.</param>
+        ///// <param name="interval">Intervalle passif entre chaque appel.</param>
+        ///// <returns>Lien vers le thread d'execution.</returns>
+        //public static ThreadLink StartInfiniteLoop(ThreadLink.CallBack call, TimeSpan interval)
+        //{
+        //    ThreadLink link = new ThreadLink(call);
+        //    _threadsLink.Add(link);
+        //    link.StartInfiniteLoop(interval);
 
-            return link;
-        }
+        //    return link;
+        //}
 
 
         /// <summary>
@@ -134,7 +134,7 @@ namespace GoBot.Threading
         /// </summary>
         private static void CleanDeads()
         {
-            _linkCleanDeads?.RegisterName();
+            _linkCleanDeads.RegisterName();
             _threadsLink.RemoveAll(t => t.Ended && t.EndDate < (DateTime.Now - new TimeSpan(0, 1, 0)));
         }
 

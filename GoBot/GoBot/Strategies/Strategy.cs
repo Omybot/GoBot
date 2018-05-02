@@ -114,7 +114,8 @@ namespace GoBot.Strategies
             endMatchTimer.Interval = MatchDuration.TotalMilliseconds;
             endMatchTimer.Start();
 
-            _linkMatch = ThreadManager.StartThread(link => Execute(link));
+            _linkMatch = ThreadManager.CreateThread(link => Execute());
+            _linkMatch.StartThread();
         }
 
         /// <summary>
@@ -137,9 +138,9 @@ namespace GoBot.Strategies
             SequenceEnd();
         }
 
-        private void Execute(ThreadLink link)
+        private void Execute()
         {
-            link?.RegisterName();
+            _linkMatch.RegisterName();
 
             SequenceBegin();
             SequenceCore();

@@ -144,7 +144,8 @@ namespace GoBot
         {
             PositionCurseur = new RealPoint();
 
-            _linkDisplay = ThreadManager.StartThread(link => DisplayLoop());
+            _linkDisplay = ThreadManager.CreateThread(link => DisplayLoop());
+            _linkDisplay.StartThread();
         }
 
         public static void Stop()
@@ -168,7 +169,7 @@ namespace GoBot
 
         public static void DisplayLoop()
         {
-            _linkDisplay?.RegisterName();
+            _linkDisplay.RegisterName();
 
             Stopwatch sw = Stopwatch.StartNew();
             

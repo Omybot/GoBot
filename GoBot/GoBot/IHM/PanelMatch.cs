@@ -59,7 +59,8 @@ namespace GoBot.IHM
             }
             else
             {
-                _linkCalibration = ThreadManager.StartThread(link => PositionCalibration());
+                _linkCalibration = ThreadManager.CreateThread(link => PositionCalibration());
+                _linkCalibration.StartThread();
             }
         }
 
@@ -70,7 +71,7 @@ namespace GoBot.IHM
         {
             // Recallage du gros robot
 
-            _linkCalibration?.RegisterName();
+            _linkCalibration.RegisterName();
 
             this.InvokeAuto(() => ledRecallageGros.Color = Color.DarkOrange);
 

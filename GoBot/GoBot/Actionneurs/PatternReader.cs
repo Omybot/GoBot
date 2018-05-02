@@ -54,7 +54,8 @@ namespace GoBot.Actionneurs
 
         public void StartPolling()
         {
-            _linkPolling = ThreadManager.StartInfiniteLoop(f => AskRefresh(), new TimeSpan(0, 0, 0, 0, 100));
+            _linkPolling = ThreadManager.CreateThread(f => AskRefresh());
+            _linkPolling.StartInfiniteLoop(new TimeSpan(0, 0, 0, 0, 100));
         }
 
         public void StopPolling()
@@ -66,7 +67,7 @@ namespace GoBot.Actionneurs
         
         private void AskRefresh()
         {
-            _linkPolling?.RegisterName();
+            _linkPolling.RegisterName();
             Robots.GrosRobot.DemandeCapteurPattern(false);
         }
 

@@ -49,7 +49,7 @@ namespace GoBot.IHM
 
         void DisplayInfos()
         {
-            _linkDisplay?.RegisterName();
+            _linkDisplay.RegisterName();
 
             this.InvokeAuto(() =>
             { 
@@ -85,7 +85,8 @@ namespace GoBot.IHM
         {
             if (btnAffichage.Text == "Lancer l'affichage")
             {
-                _linkDisplay = ThreadManager.StartInfiniteLoop(link => DisplayInfos(), new TimeSpan(0, 0, 0, 0, 100));
+                _linkDisplay = ThreadManager.CreateThread(link => DisplayInfos());
+                _linkDisplay.StartInfiniteLoop(new TimeSpan(0, 0, 0, 0, 100));
 
                 Dessinateur.Start();
 
@@ -192,11 +193,11 @@ namespace GoBot.IHM
         {
             foreach (GameElement element in Plateau.Elements)
                 if (element.IsHover)
-                    ThreadManager.StartThread(link =>
+                    ThreadManager.CreateThread(link =>
                     {
                         link.Name = "Action " + element.ToString();
                         element.ClickAction();
-                    } );
+                    }).StartThread();
         }
         
         //MouseEventArgs ev;
@@ -252,7 +253,7 @@ namespace GoBot.IHM
                 positionArrivee = new Position(traj.angle, Dessinateur.positionDepart);
 
                 if (Dessinateur.modeCourant == Dessinateur.MouseMode.PositionCentre)
-                    ThreadManager.StartThread(link => ThreadTrajectory(link));
+                    ThreadManager.CreateThread(link => ThreadTrajectory(link)).StartThread();
                 else
                     Robots.GrosRobot.ReglerOffsetAsserv(positionArrivee);
 
@@ -271,7 +272,7 @@ namespace GoBot.IHM
                 positionArrivee = departRecule;
 
                 if (Dessinateur.modeCourant == Dessinateur.MouseMode.PositionFace)
-                    ThreadManager.StartThread(link => ThreadTrajectory(link));
+                    ThreadManager.CreateThread(link => ThreadTrajectory(link)).StartThread();
                 else
                     Robots.GrosRobot.ReglerOffsetAsserv(positionArrivee);
 
@@ -290,7 +291,7 @@ namespace GoBot.IHM
 
         private void ThreadTrajectory(ThreadLink link)
         {
-            link?.RegisterName();
+            link.RegisterName();
 
             this.InvokeAuto(() => btnPathRPCentre.Enabled = false);
 
@@ -366,12 +367,12 @@ namespace GoBot.IHM
 
         private void btnZoneDepart_Click(object sender, EventArgs e)
         {
-            ThreadManager.StartThread(link => GoToDepart(link));
+            ThreadManager.CreateThread(link => GoToDepart(link)).StartThread();
         }
 
         public void GoToDepart(ThreadLink link)
         {
-            link?.RegisterName();
+            link.RegisterName();
             Robots.GrosRobot.GotoXYTeta(Recallages.PositionDepart);
         }
 
@@ -389,12 +390,13 @@ namespace GoBot.IHM
 
         private void btnTestAsser_Click(object sender, EventArgs e)
         {
-            ThreadManager.StartThread(link => TestAsser(link));
+            ThreadLink th = ThreadManager.CreateThread(link => TestAsser(link));
+            th.StartThread();
         }
 
         private void TestAsser(ThreadLink link)
         {
-            link?.RegisterName();
+            link.RegisterName();
 
             Robots.GrosRobot.Avancer(2000);
             Robots.GrosRobot.PivotDroite(270);
