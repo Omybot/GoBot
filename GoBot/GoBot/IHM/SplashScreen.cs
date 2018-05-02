@@ -128,11 +128,16 @@ namespace GoBot.IHM
                 g.DrawString(text, new Font("Jokerman", 16, FontStyle.Bold), new SolidBrush(color), _messageRect, fmt);
                 g.Dispose();
 
-                lock (this)
+                Bitmap lastImage;
+
+                lock (_originalBitmap)
                 {
+                    _currentBitmap.Dispose();
                     _currentBitmap = newBitmap;
-                    this.SetBitmap(_currentBitmap, (byte)_oppacity);
+                    lastImage = _currentBitmap;
                 }
+
+                this.ShowBitmap(lastImage, (byte)_oppacity);
             }
 
             public void StartTimer()
@@ -153,6 +158,8 @@ namespace GoBot.IHM
 
             private void _timerOpacity_Elapsed(object sender, System.Timers.ElapsedEventArgs e)
             {
+                Bitmap lastImg;
+
                 _oppacity += _speed;
 
                 if (_oppacity < 0)
@@ -165,17 +172,18 @@ namespace GoBot.IHM
                 {
                     _timerOpacity.Stop();
                     _oppacity = 255;
-                    lock (this)
-                    {
-                        this.SetBitmap(_currentBitmap, (byte)(_oppacity));
-                    }
+
+                    lock (_originalBitmap)
+                        lastImg = _currentBitmap;
+
+                    this.ShowBitmap(lastImg, (byte)(_oppacity));
                 }
                 else
                 {
-                    lock (this)
-                    {
-                        this.SetBitmap(new Bitmap(_currentBitmap), (byte)(_oppacity));
-                    }
+                    lock (_originalBitmap)
+                        lastImg = _currentBitmap;
+
+                    this.ShowBitmap(lastImg, (byte)(_oppacity));
                 }
             }
 
@@ -187,12 +195,20 @@ namespace GoBot.IHM
                 return img;
             }
 
-            private void SetBitmap(Bitmap bitmap, byte opacity)
+            private void ShowBitmap(Bitmap bitmap, byte opacity)
             {
+                Bitmap copyBmp;
+
                 // The idea of this is very simple,
                 // 1. Create a compatible DC with screen;
                 // 2. Select the bitmap with 32bpp with alpha-channel in the compatible DC;
                 // 3. Call the UpdateLayeredWindow.
+
+                lock(_originalBitmap)
+                {
+                    // On copie l'image parce qu'avec l'invocation on sait pas trop quand ça va être executé et l'image aura peut être été détruite.
+                    copyBmp = new Bitmap(bitmap);
+                }
 
                 IntPtr screenDc = Win32.GetDC(IntPtr.Zero);
                 IntPtr memDc = Win32.CreateCompatibleDC(screenDc);
@@ -201,10 +217,10 @@ namespace GoBot.IHM
 
                 try
                 {
-                    hBitmap = bitmap.GetHbitmap(Color.FromArgb(0));  // grab a GDI handle from this GDI+ bitmap
+                    hBitmap = copyBmp.GetHbitmap(Color.FromArgb(0));  // grab a GDI handle from this GDI+ bitmap
                     oldBitmap = Win32.SelectObject(memDc, hBitmap);
 
-                    Win32.Size size = new Win32.Size(bitmap.Width, bitmap.Height);
+                    Win32.Size size = new Win32.Size(copyBmp.Width, copyBmp.Height);
                     Win32.Point pointSource = new Win32.Point(0, 0);
                     Win32.Point topPos = new Win32.Point(Left, Top);
                     Win32.BLENDFUNCTION blend = new Win32.BLENDFUNCTION();
@@ -224,6 +240,8 @@ namespace GoBot.IHM
                         Win32.DeleteObject(hBitmap);
                     }
                     Win32.DeleteDC(memDc);
+
+                    copyBmp.Dispose();
                 }
             }
 
