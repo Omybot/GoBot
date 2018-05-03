@@ -649,13 +649,22 @@ namespace GoBot
         {
             base.BougeServo(servo, position);
 
-            // Envoi à la pololu si c'est un servo géré par la carte
             int idPololu = Servomoteur.idServoPololu(servo);
+            int idCan = Servomoteur.idServoCAN(servo);
+
             if (idPololu != -1)
+            {
+                // Envoi à la pololu si c'est un servo géré par la carte
                 PololuMiniUart.setTarget((byte)idPololu, (ushort)position);
-            // Sinon en UDP aux cartes elecs
+            }
+            else if(idCan != -1)
+            {
+                // Envoi en bus can si c'est un servo géré par CAN
+                Devices.Devices.ServosCan.SetPosition(idCan, position);
+            }
             else
             {
+                // Sinon en UDP à RecIO
                 Frame trame = FrameFactory.ServoEnvoiPositionCible(servo, position);
                 Connections.ConnectionIO.SendMessage(trame);
             }

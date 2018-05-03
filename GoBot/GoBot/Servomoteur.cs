@@ -13,12 +13,21 @@ namespace GoBot
         static Servomoteur()
         {
             // Les servos >= 100 sont pour la pololu avec identifiant = ID - 100
+            // Les servos >= 200 sont pour les servos en bus CAN avec identifiant = ID - 200
         }
 
         public static short idServoPololu(ServomoteurID servo)
         {
             if ((int)servo >= 100)
                 return (short)(servo - 100);
+            else
+                return -1;
+        }
+
+        public static short idServoCAN(ServomoteurID servo)
+        {
+            if ((int)servo >= 200)
+                return (short)(servo - 200);
             else
                 return -1;
         }

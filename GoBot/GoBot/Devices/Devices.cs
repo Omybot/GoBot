@@ -8,18 +8,28 @@ namespace GoBot.Devices
 {
     static class Devices
     {
-        private static RecGoBot recGoBot;
+        private static RecGoBot _recGoBot;
+        private static ServosCan _servosCan;
 
         public static void Init()
         {
-            recGoBot = new RecGoBot(Connections.ConnectionGB);
+            _recGoBot = new RecGoBot(Connections.ConnectionGB);
+            _servosCan = new ServosCan(Board.RecIO);
         }
 
         public static RecGoBot RecGoBot
         {
             get
             {
-                return recGoBot;
+                return _recGoBot;
+            }
+        }
+
+        public static ServosCan ServosCan
+        {
+            get
+            {
+                return _servosCan;
             }
         }
     }
