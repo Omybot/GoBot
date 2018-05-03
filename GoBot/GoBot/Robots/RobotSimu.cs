@@ -43,7 +43,8 @@ namespace GoBot
         {
             IDRobot = idRobot;
 
-            _linkAsserv = ThreadManager.StartInfiniteLoop(link => Asservissement(), new TimeSpan(0, 0, 0, 0, HighResolutionAsservissement ? 1 : 16));
+            _linkAsserv = ThreadManager.CreateThread(link => Asservissement());
+            _linkAsserv.StartInfiniteLoop(new TimeSpan(0, 0, 0, 0, HighResolutionAsservissement ? 1 : 16));
 
             timerPositions = new System.Timers.Timer(100);
             timerPositions.Elapsed += new ElapsedEventHandler(timerPositions_Elapsed);
@@ -143,7 +144,7 @@ namespace GoBot
 
         void Asservissement()
         {
-            _linkAsserv?.RegisterName();
+            _linkAsserv.RegisterName();
 
             // Calcul du temps écoulé depuis la dernière mise à jour de la position
             double interval = 0;

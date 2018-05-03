@@ -399,7 +399,8 @@ namespace GoBot.PathFinding
             {
                 if (Plateau.RayonAdversaire < Plateau.RayonAdversaireInitial)
                 {
-                    _linkResetRadius = ThreadManager.StartThread(link => ResetOpponentRadiusLoop());
+                    _linkResetRadius = ThreadManager.CreateThread(link => ResetOpponentRadiusLoop());
+                    _linkResetRadius.StartThread();
                 }
 
                 return trajectoire;
@@ -408,7 +409,7 @@ namespace GoBot.PathFinding
 
         private static void ResetOpponentRadiusLoop()
         {
-            _linkResetRadius?.RegisterName();
+            _linkResetRadius.RegisterName();
 
             Thread.Sleep(1000);
             while (!_linkResetRadius.Cancelled)

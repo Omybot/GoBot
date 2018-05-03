@@ -27,8 +27,12 @@ namespace GoBot.IHM
             if (_linkPolling != null)
             {
                 btnDemandeCharge.Text = "Stopper";
-                _linkPolling = ThreadManager.StartInfiniteLoop(link => DemandeValeurs(), new TimeSpan(0));
-                _linkDrawing = ThreadManager.StartInfiniteLoop(link => Dessine(), new TimeSpan(0, 0, 0, 0, 50));
+
+                _linkPolling = ThreadManager.CreateThread(link => DemandeValeurs());
+                _linkPolling.StartInfiniteLoop(new TimeSpan(0));
+
+                _linkDrawing = ThreadManager.CreateThread(link => Dessine());
+                _linkDrawing.StartInfiniteLoop(new TimeSpan(0, 0, 0, 0, 50));
             }
             else
             {
@@ -43,10 +47,7 @@ namespace GoBot.IHM
                 _linkDrawing = null;
             }
         }
-
-        Thread thDemandeValeurs;
-        Thread thDessine;
-
+        
         void Dessine()
         {
             lblChargeCPU.Text = (moyenne * 100).ToString("#.##") + "%";

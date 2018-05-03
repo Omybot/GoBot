@@ -41,7 +41,10 @@ namespace GoBot.IHM
         private void switchBouton_ValueChanged(object sender, bool value)
         {
             if (value)
-                _linkPolling = ThreadManager.StartThread(link => PollingLoop());
+            {
+                _linkPolling = ThreadManager.CreateThread(link => PollingLoop());
+                _linkPolling.StartThread();
+            }
             else
             {
                 _linkPolling.Cancel();
@@ -55,7 +58,7 @@ namespace GoBot.IHM
             int pointsParTour = 4096;
             double toursRange = 5;
 
-            _linkPolling?.RegisterName();
+            _linkPolling.RegisterName();
 
             ticksCurrent = Devices.Devices.RecGoBot.GetCodeurPosition();
             ticksMin = ticksCurrent;

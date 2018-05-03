@@ -120,7 +120,7 @@ namespace GoBot
                 Balise.PositionEnnemisActualisee += Balise_PositionEnnemisActualisee;
                 
                 SemaphoreCollisions = new Semaphore(0, int.MaxValue);
-                ThreadManager.StartThread(link => ThreadTestCollisions(link));
+                ThreadManager.CreateThread(ThreadTestCollisions).StartThread();
 
                 Strategy = new StrategyMatch();
             }
@@ -176,7 +176,7 @@ namespace GoBot
         private Semaphore SemaphoreCollisions { get; set; }
         private void ThreadTestCollisions(ThreadLink link)
         {
-            link?.RegisterName();
+            link.RegisterName();
 
             while (!link.Cancelled)
             {

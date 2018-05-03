@@ -309,12 +309,12 @@ namespace GoBot.IHM
 
         private void btnGoCoordonnees_Click(object sender, EventArgs e)
         {
-            ThreadManager.StartThread(link => ThreadGoTo(link));
+            ThreadManager.CreateThread(link => ThreadGoTo(link)).StartThread();
         }
         
         private void ThreadGoTo(ThreadLink link)
         {
-            link?.RegisterName();
+            link.RegisterName();
             Robot.GotoXYTeta(new Position((double)numTeta.Value, new RealPoint((double)numX.Value, (double)numY.Value)));
         }
 

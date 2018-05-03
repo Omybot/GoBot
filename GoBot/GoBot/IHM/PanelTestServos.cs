@@ -86,7 +86,8 @@ namespace GoBot.IHM
             }
             else
             {
-                _linkSearch = ThreadManager.StartThread(link => SearchLoop());
+                _linkSearch = ThreadManager.CreateThread(link => SearchLoop());
+                _linkSearch.StartThread();
             }
         }
 

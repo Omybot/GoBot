@@ -222,7 +222,7 @@ namespace GoBot
 
         public void ReactivationAsserv(ThreadLink link)
         {
-            link?.RegisterName();
+            link.RegisterName();
 
             for (LedID i = LedID.DebugB1; i <= LedID.DebugA1; i++)
                 Devices.Devices.RecGoBot.SetLed((LedID)i, RecGoBot.LedStatus.Rouge);
@@ -249,7 +249,7 @@ namespace GoBot
             switch ((FrameFunction)trameRecue[1])
             {
                 case FrameFunction.Blocage:
-                    ThreadManager.StartThread(link => ReactivationAsserv(link));
+                    ThreadManager.CreateThread(ReactivationAsserv).StartThread();
                     break;
                 case FrameFunction.FinDeplacement:
                 case FrameFunction.FinRecallage:        // Idem

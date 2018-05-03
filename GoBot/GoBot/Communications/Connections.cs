@@ -49,7 +49,8 @@ namespace GoBot.Communications
             ConnectionGB = AddUDPConnection(Board.RecGB, IPAddress.Parse("10.1.0.12"), 12322, 12312);
 
             // En remplacement des tests de connexion des ConnexionCheck, pour les syncroniser
-            _linkTestConnections = ThreadManager.StartInfiniteLoop(link => TestConnections(), new TimeSpan(0, 0, 1));
+            _linkTestConnections = ThreadManager.CreateThread(link => TestConnections());
+            _linkTestConnections.StartInfiniteLoop(new TimeSpan(0, 0, 1));
         }
 
         /// <summary>
@@ -86,7 +87,7 @@ namespace GoBot.Communications
         /// </summary>
         private static void TestConnections()
         {
-            _linkTestConnections?.RegisterName();
+            _linkTestConnections.RegisterName();
 
             int interval = IntervalLoopTests / AllConnections.Count();
 
