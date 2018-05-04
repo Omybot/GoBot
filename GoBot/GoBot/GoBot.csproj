@@ -122,6 +122,12 @@
     <Compile Include="IHM\PanelLogThreads.Designer.cs">
       <DependentUpon>PanelLogThreads.cs</DependentUpon>
     </Compile>
+    <Compile Include="IHM\PanelServoCAN.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="IHM\PanelServoCAN.Designer.cs">
+      <DependentUpon>PanelServoCAN.cs</DependentUpon>
+    </Compile>
     <Compile Include="IHM\SplashScreen.cs" />
     <Compile Include="Movements\MovementBuilding.cs" />
     <Compile Include="Movements\MovementCubes.cs" />
@@ -518,6 +524,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="IHM\PanelRecGoBot.resx">
       <DependentUpon>PanelRecGoBot.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="IHM\PanelServoCAN.resx">
+      <DependentUpon>PanelServoCAN.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="IHM\PanelTestServos.resx">
       <DependentUpon>PanelTestServos.cs</DependentUpon>

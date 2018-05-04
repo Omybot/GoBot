@@ -61,7 +61,10 @@ namespace GoBot.Devices
             _receivedBuffer = new List<byte>();
             _lockAsk = new Semaphore(1, 1);
 
-            Connections.BoardConnection[_board].FrameReceived += board_FrameReceived;
+            if (!Execution.DesignMode)
+            {
+                Connections.BoardConnection[_board].FrameReceived += board_FrameReceived;
+            }
         }
 
         private void board_FrameReceived(Frame frame)
@@ -141,7 +144,7 @@ namespace GoBot.Devices
 
             SendFrame(new Frame(tab), true);
 
-            return _position[id];
+            return _position.ContainsKey(id) ? _position[id] : 0;
         }
 
         public int GetPositionMin(int id)
@@ -161,7 +164,7 @@ namespace GoBot.Devices
 
             SendFrame(new Frame(tab), true);
 
-            return _position[id];
+            return _positionMin.ContainsKey(id) ? _positionMin[id] : 0;
         }
 
         public int GetPositionMax(int id)
@@ -181,7 +184,7 @@ namespace GoBot.Devices
 
             SendFrame(new Frame(tab), true);
 
-            return _position[id];
+            return _positionMax.ContainsKey(id) ? _positionMax[id] : 0;
         }
 
         public int GetSpeed(int id)
@@ -201,7 +204,7 @@ namespace GoBot.Devices
 
             SendFrame(new Frame(tab), true);
 
-            return _position[id];
+            return _speed.ContainsKey(id) ? _speed[id] : 0;
         }
 
         public int GetTorqueCurrent(int id)
@@ -221,7 +224,7 @@ namespace GoBot.Devices
 
             SendFrame(new Frame(tab), true);
 
-            return _position[id];
+            return _torqueCurrent.ContainsKey(id) ? _torqueCurrent[id] : 0;
         }
 
         public int GetTorqueMax(int id)
@@ -241,7 +244,7 @@ namespace GoBot.Devices
 
             SendFrame(new Frame(tab), true);
 
-            return _position[id];
+            return _torqueMax.ContainsKey(id) ? _torqueMax[id] : 0;
         }
 
         public void SetPosition(int id, int position)

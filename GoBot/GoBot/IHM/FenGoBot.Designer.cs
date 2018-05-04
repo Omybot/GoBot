@@ -81,7 +81,9 @@ namespace GoBot
             this.panelBaliseDiagnostic = new GoBot.IHM.PanelBaliseDiagnostic();
             this.panelBalise = new GoBot.IHM.PanelBalise();
             this.tabRecGoBot = new System.Windows.Forms.TabPage();
+            this.panelServoCAN1 = new GoBot.IHM.PanelServoCAN();
             this.grpPattern = new System.Windows.Forms.GroupBox();
+            this.panelColorPattern = new GoBot.IHM.PanelColorPattern();
             this.potarControl1 = new GoBot.IHM.PotarControl();
             this.grpCapteurs = new System.Windows.Forms.GroupBox();
             this.panelCapteurs1 = new GoBot.IHM.PanelCapteurs();
@@ -95,7 +97,8 @@ namespace GoBot
             this.btnClose = new System.Windows.Forms.Button();
             this.btnFenetre = new System.Windows.Forms.Button();
             this.panelConnexions = new GoBot.IHM.PanelConnexions();
-            this.panelColorPattern = new GoBot.IHM.PanelColorPattern();
+            this.grpServoCodeur = new System.Windows.Forms.GroupBox();
+            this.grpServoCAN = new System.Windows.Forms.GroupBox();
             this.tabAlimentation.SuspendLayout();
             this.tabServomoteurs.SuspendLayout();
             this.tabConnexions.SuspendLayout();
@@ -129,6 +132,8 @@ namespace GoBot
             this.grpRecGB.SuspendLayout();
             this.tabActionneurs.SuspendLayout();
             this.tabHokuyo.SuspendLayout();
+            this.grpServoCodeur.SuspendLayout();
+            this.grpServoCAN.SuspendLayout();
             this.SuspendLayout();
             // 
             // lblSimulation
@@ -644,8 +649,9 @@ namespace GoBot
             // 
             // tabRecGoBot
             // 
+            this.tabRecGoBot.Controls.Add(this.grpServoCAN);
+            this.tabRecGoBot.Controls.Add(this.grpServoCodeur);
             this.tabRecGoBot.Controls.Add(this.grpPattern);
-            this.tabRecGoBot.Controls.Add(this.potarControl1);
             this.tabRecGoBot.Controls.Add(this.grpCapteurs);
             this.tabRecGoBot.Controls.Add(this.grpRecGB);
             this.tabRecGoBot.Location = new System.Drawing.Point(4, 22);
@@ -656,19 +662,33 @@ namespace GoBot
             this.tabRecGoBot.Text = "RecGoBot";
             this.tabRecGoBot.UseVisualStyleBackColor = true;
             // 
+            // panelServoCAN1
+            // 
+            this.panelServoCAN1.Location = new System.Drawing.Point(6, 19);
+            this.panelServoCAN1.Name = "panelServoCAN1";
+            this.panelServoCAN1.Size = new System.Drawing.Size(407, 213);
+            this.panelServoCAN1.TabIndex = 7;
+            // 
             // grpPattern
             // 
             this.grpPattern.Controls.Add(this.panelColorPattern);
             this.grpPattern.Location = new System.Drawing.Point(571, 54);
             this.grpPattern.Name = "grpPattern";
-            this.grpPattern.Size = new System.Drawing.Size(198, 116);
+            this.grpPattern.Size = new System.Drawing.Size(198, 122);
             this.grpPattern.TabIndex = 6;
             this.grpPattern.TabStop = false;
             this.grpPattern.Text = "Plan de construction";
             // 
+            // panelColorPattern
+            // 
+            this.panelColorPattern.Location = new System.Drawing.Point(8, 29);
+            this.panelColorPattern.Name = "panelColorPattern";
+            this.panelColorPattern.Size = new System.Drawing.Size(179, 63);
+            this.panelColorPattern.TabIndex = 0;
+            // 
             // potarControl1
             // 
-            this.potarControl1.Location = new System.Drawing.Point(298, 267);
+            this.potarControl1.Location = new System.Drawing.Point(6, 18);
             this.potarControl1.Name = "potarControl1";
             this.potarControl1.Size = new System.Drawing.Size(385, 98);
             this.potarControl1.TabIndex = 5;
@@ -793,12 +813,25 @@ namespace GoBot
             this.panelConnexions.Size = new System.Drawing.Size(980, 27);
             this.panelConnexions.TabIndex = 74;
             // 
-            // panelColorPattern
+            // grpServoCodeur
             // 
-            this.panelColorPattern.Location = new System.Drawing.Point(8, 29);
-            this.panelColorPattern.Name = "panelColorPattern";
-            this.panelColorPattern.Size = new System.Drawing.Size(179, 63);
-            this.panelColorPattern.TabIndex = 0;
+            this.grpServoCodeur.Controls.Add(this.potarControl1);
+            this.grpServoCodeur.Location = new System.Drawing.Point(776, 54);
+            this.grpServoCodeur.Name = "grpServoCodeur";
+            this.grpServoCodeur.Size = new System.Drawing.Size(400, 122);
+            this.grpServoCodeur.TabIndex = 8;
+            this.grpServoCodeur.TabStop = false;
+            this.grpServoCodeur.Text = "Pilotage de servo avec codeur";
+            // 
+            // grpServoCAN
+            // 
+            this.grpServoCAN.Controls.Add(this.panelServoCAN1);
+            this.grpServoCAN.Location = new System.Drawing.Point(579, 182);
+            this.grpServoCAN.Name = "grpServoCAN";
+            this.grpServoCAN.Size = new System.Drawing.Size(397, 184);
+            this.grpServoCAN.TabIndex = 9;
+            this.grpServoCAN.TabStop = false;
+            this.grpServoCAN.Text = "Pilotage des servos bus CAN";
             // 
             // FenGoBot
             // 
@@ -853,6 +886,8 @@ namespace GoBot
             this.tabActionneurs.ResumeLayout(false);
             this.tabActionneurs.PerformLayout();
             this.tabHokuyo.ResumeLayout(false);
+            this.grpServoCodeur.ResumeLayout(false);
+            this.grpServoCAN.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -926,6 +961,9 @@ namespace GoBot
         private PanelLogThreads panelLogThreads1;
         private System.Windows.Forms.GroupBox grpPattern;
         private PanelColorPattern panelColorPattern;
+        private PanelServoCAN panelServoCAN1;
+        private System.Windows.Forms.GroupBox grpServoCAN;
+        private System.Windows.Forms.GroupBox grpServoCodeur;
     }
 }
 
