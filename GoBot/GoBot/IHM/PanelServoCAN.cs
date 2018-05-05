@@ -13,7 +13,7 @@ namespace GoBot.IHM
 {
     public partial class PanelServoCAN : UserControl
     {
-        private ThreadLink _linkPolling;
+        private ThreadLink _linkPolling, _linkDrawing;
         private int _id;
 
         public PanelServoCAN()
@@ -48,6 +48,9 @@ namespace GoBot.IHM
             {
                 _linkPolling = ThreadManager.CreateThread(link => GetServoTorque());
                 _linkPolling.StartInfiniteLoop(new TimeSpan(0, 0, 0, 0, 100));
+
+                _linkDrawing = ThreadManager.CreateThread(link => DrawTorqueCurve());
+                _linkDrawing.StartInfiniteLoop(new TimeSpan(0, 0, 0, 0, 100));
             }
             else
             {
@@ -61,6 +64,10 @@ namespace GoBot.IHM
         {
             _linkPolling.Name = "PanelServoCAN.GetServoTorque : " + _id.ToString();
             graphTorque.AddPoint("Couple", Devices.Devices.ServosCan.GetTorqueCurrent(_id), Color.RoyalBlue);
+        }
+
+        private void DrawTorqueCurve()
+        {
             this.InvokeAuto(() => graphTorque.DrawCurves());
         }
 

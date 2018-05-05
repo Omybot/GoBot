@@ -32,7 +32,7 @@ namespace GoBot.IHM
                 Button b = new Button();
                 b.SetBounds(5, i, 120, 22);
                 b.Tag = method;
-                b.Text = method.Name;
+                b.Text = method.Name.Substring(2);
                 b.Click += b_Click;
                 Controls.Add(b);
                 i += 26;

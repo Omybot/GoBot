@@ -35,6 +35,9 @@
             this.lblValue = new System.Windows.Forms.Label();
             this.trackBarSpeed = new Composants.TrackBarPlus();
             this.lblSpeed = new System.Windows.Forms.Label();
+            this.lblPositionTxt = new System.Windows.Forms.Label();
+            this.cboPositions = new System.Windows.Forms.ComboBox();
+            this.btnSave = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // cboPositionnable
@@ -42,16 +45,16 @@
             this.cboPositionnable.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cboPositionnable.DropDownWidth = 220;
             this.cboPositionnable.FormattingEnabled = true;
-            this.cboPositionnable.Location = new System.Drawing.Point(125, 21);
+            this.cboPositionnable.Location = new System.Drawing.Point(112, 12);
             this.cboPositionnable.Name = "cboPositionnable";
-            this.cboPositionnable.Size = new System.Drawing.Size(121, 21);
+            this.cboPositionnable.Size = new System.Drawing.Size(152, 21);
             this.cboPositionnable.TabIndex = 0;
             this.cboPositionnable.SelectedIndexChanged += new System.EventHandler(this.cboPositionnable_SelectedIndexChanged);
             // 
             // lblName
             // 
             this.lblName.AutoSize = true;
-            this.lblName.Location = new System.Drawing.Point(43, 24);
+            this.lblName.Location = new System.Drawing.Point(30, 15);
             this.lblName.Name = "lblName";
             this.lblName.Size = new System.Drawing.Size(76, 13);
             this.lblName.TabIndex = 1;
@@ -62,7 +65,7 @@
             this.trackBar.BackColor = System.Drawing.Color.Transparent;
             this.trackBar.DecimalPlaces = 0;
             this.trackBar.IntervalTimer = ((uint)(1u));
-            this.trackBar.Location = new System.Drawing.Point(28, 60);
+            this.trackBar.Location = new System.Drawing.Point(28, 65);
             this.trackBar.Max = 100D;
             this.trackBar.MaximumSize = new System.Drawing.Size(3000, 15);
             this.trackBar.Min = 0D;
@@ -78,7 +81,7 @@
             // 
             this.switchBouton.AutoSize = true;
             this.switchBouton.BackColor = System.Drawing.Color.Transparent;
-            this.switchBouton.Location = new System.Drawing.Point(252, 24);
+            this.switchBouton.Location = new System.Drawing.Point(279, 15);
             this.switchBouton.MaximumSize = new System.Drawing.Size(35, 15);
             this.switchBouton.MinimumSize = new System.Drawing.Size(35, 15);
             this.switchBouton.Mirrored = true;
@@ -116,24 +119,58 @@
             // 
             // lblSpeed
             // 
-            this.lblSpeed.Location = new System.Drawing.Point(337, 3);
+            this.lblSpeed.Location = new System.Drawing.Point(329, 3);
             this.lblSpeed.Name = "lblSpeed";
             this.lblSpeed.Size = new System.Drawing.Size(66, 18);
             this.lblSpeed.TabIndex = 6;
             this.lblSpeed.Text = "Rapport : ?";
             this.lblSpeed.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
+            // lblPositionTxt
+            // 
+            this.lblPositionTxt.AutoSize = true;
+            this.lblPositionTxt.Location = new System.Drawing.Point(30, 42);
+            this.lblPositionTxt.Name = "lblPositionTxt";
+            this.lblPositionTxt.Size = new System.Drawing.Size(50, 13);
+            this.lblPositionTxt.TabIndex = 8;
+            this.lblPositionTxt.Text = "Position :";
+            // 
+            // cboPositions
+            // 
+            this.cboPositions.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cboPositions.DropDownWidth = 220;
+            this.cboPositions.FormattingEnabled = true;
+            this.cboPositions.Location = new System.Drawing.Point(112, 39);
+            this.cboPositions.Name = "cboPositions";
+            this.cboPositions.Size = new System.Drawing.Size(152, 21);
+            this.cboPositions.TabIndex = 7;
+            this.cboPositions.SelectedIndexChanged += new System.EventHandler(this.cboPositions_SelectedIndexChanged);
+            // 
+            // btnSave
+            // 
+            this.btnSave.Enabled = false;
+            this.btnSave.Image = global::GoBot.Properties.Resources.Save16;
+            this.btnSave.Location = new System.Drawing.Point(283, 38);
+            this.btnSave.Name = "btnSave";
+            this.btnSave.Size = new System.Drawing.Size(23, 23);
+            this.btnSave.TabIndex = 9;
+            this.btnSave.UseVisualStyleBackColor = true;
+            this.btnSave.Click += new System.EventHandler(this.btnSave_Click);
+            // 
             // PotarControl
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.Controls.Add(this.btnSave);
+            this.Controls.Add(this.lblPositionTxt);
+            this.Controls.Add(this.cboPositions);
             this.Controls.Add(this.lblSpeed);
             this.Controls.Add(this.trackBarSpeed);
-            this.Controls.Add(this.lblValue);
             this.Controls.Add(this.switchBouton);
             this.Controls.Add(this.trackBar);
             this.Controls.Add(this.lblName);
             this.Controls.Add(this.cboPositionnable);
+            this.Controls.Add(this.lblValue);
             this.Name = "PotarControl";
             this.Size = new System.Drawing.Size(406, 98);
             this.Load += new System.EventHandler(this.PotarControl_Load);
@@ -151,5 +188,8 @@
         private System.Windows.Forms.Label lblValue;
         private Composants.TrackBarPlus trackBarSpeed;
         private System.Windows.Forms.Label lblSpeed;
+        private System.Windows.Forms.Label lblPositionTxt;
+        private System.Windows.Forms.ComboBox cboPositions;
+        private System.Windows.Forms.Button btnSave;
     }
 }

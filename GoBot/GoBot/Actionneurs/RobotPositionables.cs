@@ -1,4 +1,5 @@
-﻿using GoBot.Actionneurs;
+﻿using System;
+using GoBot.Actionneurs;
 
 namespace GoBot
 {
@@ -6,29 +7,26 @@ namespace GoBot
     {
         // Exemple
         // public ServoAscenseurDroitBasDroit ServoAscenseurDroitBasDroit { get; set; }
+        
+        public MoteurPompeDroite MoteurPompeDroite { get; set; }
+        public ValveDroite ValveDroite { get; set; }
+        public ServoCoudeDroite ServoCoudeDroite { get; set; }
+        public ServoPoignetDroite ServoPoignetDroite { get; set; }
+        public ServoLateralDroite ServoLateralDroite { get; set; }
 
-        public ServoPinceLunaireSerrageGauche ServoPinceLunaireSerrageGauche { get; set; }
-        public ServoPinceLunaireSerrageDroit ServoPinceLunaireSerrageDroit { get; set; }
-        public ServoLunaireChariot ServoLunaireChariot { get; set; }
-        public ServoLunaireMonte ServoLunaireMonte { get; set; }
-        public ServoBloqueurBas ServoBloqueurBas { get; set; }
-        public ServoBloqueurHaut ServoBloqueurHaut { get; set; }
-        public ServoEjecteur ServoEjecteur { get; set; }
-        public ServoRehausseur ServoRehausseur { get; set; }
-        public MoteurOrientation MoteurOrientation { get; set; }
-        public MoteurConvoyeur MoteurConvoyeur { get; set; }
-        public ServoCalleur ServoCalleur { get; set; }
+        public MoteurPompeGauche MoteurPompeGauche { get; set; }
+        public ValveGauche ValveGauche { get; set; }
+        public ServoCoudeGauche ServoCoudeGauche { get; set; }
+        public ServoPoignetGauche ServoPoignetGauche { get; set; }
+        public ServoLateralGauche ServoLateralGauche { get; set; }
 
-        public ServoBrasLunaireGauche ServoBrasLunaireGauche { get; set; }
-        public ServoLunaireGaucheSerrageDroit ServoLunaireGaucheSerrageDroit { get; set; }
-        public ServoLunaireGaucheSerrageGauche ServoLunaireGaucheSerrageGauche { get; set; }
+        public ServoConvoyeurGauche ServoConvoyeurGauche { get; set; }
+        public ServoConvoyeurCentre ServoConvoyeurCentre { get; set; }
+        public ServoConvoyeurDroite ServoConvoyeurDroite { get; set; }
 
-        public ServoBrasLunaireDroit ServoBrasLunaireDroit { get; set; }
-        public ServoLunaireDroitSerrageDroit ServoLunaireDroitSerrageDroit { get; set; }
-        public ServoLunaireDroitSerrageGauche ServoLunaireDroitSerrageGauche { get; set; }
+        public ServoBenneLiberation ServoBenneLiberation { get; set; }
 
-        public ServoPlaqueur ServoPlaqueur { get; set; }
-        public ServoFusee ServoFusee { get; set; }
+        public MoteurElevation MoteurElevation { get; set; }
     }
 }
 
@@ -49,149 +47,123 @@ namespace GoBot.Actionneurs
     //    public override ServomoteurID ID { get { return ServomoteurID.AscenseurDroitPinceHautDroite; } }
     //}
 
-    public class ServoCalleur : PositionableServo
+    public abstract class ServoConvoyeur : PositionableServo
     {
-        public int PositionCalle { get; set; }
-        public int PositionRange { get; set; }
-        public override ServomoteurID ID { get { return ServomoteurID.Calleur; } }
+        public int PositionAvant { get; set; }
+        public int PositionArriere { get; set; }
     }
 
-    public class ServoFusee : PositionableServo
+    public abstract class ServoCoude : PositionableServo
     {
-        public int PositionArme { get; set; }
-        public int PositionFeu { get; set; }
-        public override ServomoteurID ID { get { return ServomoteurID.Fusee; } }
+        public int PositionExtension { get; set; }
+        public int PositionFlexion { get; set; }
     }
 
-    public class ServoPlaqueur : PositionableServo
+    public abstract class ServoPoignet : PositionableServo
     {
-        public int PositionPlaque { get; set; }
-        public int PositionRange { get; set; }
-        public override ServomoteurID ID { get { return ServomoteurID.Plaqueur; } }
+        public int PositionAttrapage { get; set; }
+        public int PositionDepose { get; set; }
     }
 
-    public abstract class ServoBrasLunaire : PositionableServo
+    public abstract class ServoLateral : PositionableServo
     {
-        public int PositionSortie { get; set; }
-        public int PositionSortieSafe { get; set; }
-        public int PositionRange { get; set; }
+        public int PositionGauche { get; set; }
+        public int PositionCentre { get; set; }
+        public int PositionDroite { get; set; }
         public int PositionStockage { get; set; }
     }
 
-    public class ServoBrasLunaireGauche : ServoBrasLunaire
+    public class ServoConvoyeurGauche : ServoConvoyeur
     {
-        public override ServomoteurID ID { get { return ServomoteurID.BrasLunaireGauche; } }
+        public override ServomoteurID ID => ServomoteurID.ConvoyeurGauche;
     }
 
-    public class ServoBrasLunaireDroit : ServoBrasLunaire
+    public class ServoConvoyeurDroite : ServoConvoyeur
     {
-        public override ServomoteurID ID { get { return ServomoteurID.BrasLunaireDroit; } }
+        public override ServomoteurID ID => ServomoteurID.ConvoyeurDroite;
     }
 
-    public class ServoLunaireChariot : PositionableServo
+    public class ServoConvoyeurCentre : ServoConvoyeur
     {
-        public int PositionSortie { get; set; }
-        public int PositionStockage { get; set; }
-        public int PositionRange { get; set; }
-        public override ServomoteurID ID { get { return ServomoteurID.BrasLunaireAvance; } }
+        public override ServomoteurID ID => ServomoteurID.ConvoyeurCentre;
     }
 
-    public class ServoLunaireMonte : PositionableServo
+    public class ServoCoudeGauche : ServoCoude
     {
-        public int PositionBas { get; set; }
-        public int PositionMoyenne { get; set; }
-        public int PositionHaut { get; set; }
-        public override ServomoteurID ID { get { return ServomoteurID.BrasLunaireMonte; } }
+        public override ServomoteurID ID => ServomoteurID.CoudeGauche;
     }
 
-    public abstract class ServoPinceLunaire : PositionableServo
+    public class ServoCoudeDroite : ServoCoude
+    {
+        public override ServomoteurID ID => ServomoteurID.CoudeDroite;
+    }
+
+    public class ServoPoignetGauche : ServoPoignet
+    {
+        public override ServomoteurID ID => ServomoteurID.PoignetGauche;
+    }
+
+    public class ServoPoignetDroite : ServoPoignet
+    {
+        public override ServomoteurID ID => ServomoteurID.PoignetDroite;
+    }
+
+    public class ServoLateralGauche : ServoLateral
+    {
+        public override ServomoteurID ID => ServomoteurID.LateralGauche;
+    }
+
+    public class ServoLateralDroite : ServoLateral
+    {
+        public override ServomoteurID ID => ServomoteurID.LateralDroite;
+    }
+
+    public class ValveGauche : PositionnableValve
+    {
+        public override MoteurID ID => MoteurID.ValveLeft;
+    }
+
+    public class ValveDroite : PositionnableValve
+    {
+        public override MoteurID ID => MoteurID.ValveRight;
+    }
+
+    public class ServoBenneLiberation : PositionableServo
+    {
+        public int PositionLiberation { get; set; }
+        public int PositionMaintien { get; set; }
+
+        public override ServomoteurID ID => ServomoteurID.BenneLiberation;
+    }
+
+    public class ServoBenneOuverture : PositionableServo
     {
         public int PositionOuvert { get; set; }
         public int PositionFerme { get; set; }
-        public int PositionSemiFerme { get; set; }
-    }
 
-    public abstract class ServoBloqueur : PositionableServo
-    {
-        public int PositionRentre { get; set; }
-        public int PositionSorti { get; set; }
-    }
-
-    public class ServoBloqueurHaut : ServoBloqueur
-    {
-        public override ServomoteurID ID { get { return ServomoteurID.BloqueurHaut; } }
-    }
-
-    public class ServoBloqueurBas : ServoBloqueur
-    {
-        public override ServomoteurID ID { get { return ServomoteurID.BloqueurBas; } }
-    }
-
-    public class ServoRehausseur : PositionableServo
-    {
-        public override ServomoteurID ID { get { return ServomoteurID.Rehausseur; } }
-        public int PositionRange { get; set; }
-        public int PositionBasse { get; set; }
-        public int PositionHaute { get; set; }
-    }
-
-    public class ServoEjecteur : PositionableServo
-    {
-        public override ServomoteurID ID { get { return ServomoteurID.Ejecteur; } }
-        public int PositionRentre { get; set; }
-        public int PositionSorti { get; set; }
-    }
-
-    public class ServoPinceLunaireSerrageGauche : ServoPinceLunaire
-    {
-        public override ServomoteurID ID { get { return ServomoteurID.ServoLunaireSerrageGauche; } }
-    }
-
-    public class ServoPinceLunaireSerrageDroit : ServoPinceLunaire
-    {
-        public override ServomoteurID ID { get { return ServomoteurID.ServoLunaireSerrageDroit; } }
-    }
-
-    public class ServoLunaireDroitSerrageDroit : ServoPinceLunaire
-    {
-        public override ServomoteurID ID { get { return ServomoteurID.ServoLunaireDroitSerrageDroit; } }
-    }
-
-    public class ServoLunaireDroitSerrageGauche : ServoPinceLunaire
-    {
-        public override ServomoteurID ID { get { return ServomoteurID.ServoLunaireDroitSerrageGauche; } }
-    }
-
-    public class ServoLunaireGaucheSerrageDroit : ServoPinceLunaire
-    {
-        public override ServomoteurID ID { get { return ServomoteurID.ServoLunaireGaucheSerrageDroit; } }
-    }
-
-    public class ServoLunaireGaucheSerrageGauche : ServoPinceLunaire
-    {
-        public override ServomoteurID ID { get { return ServomoteurID.ServoLunaireGaucheSerrageGauche; } }
+        public override ServomoteurID ID => ServomoteurID.BenneOuverture;
     }
 
     #endregion
 
     #region PositionableMotorSpeed
 
-    public class MoteurOrientation : PositionableMotorSpeed
+    public class MoteurPompeDroite : PositionnablePump
     {
-        public int ValeurTourneGauche { get; set; }
-        public int ValeurTourneDroite { get; set; }
-        public int ValeurStop { get; set; }
-
-        public override MoteurID ID { get { return MoteurID.Orienteur; } }
+        public override MoteurID ID { get { return MoteurID.PumpRight; } }
     }
 
-    public class MoteurConvoyeur : PositionableMotorSpeed
+    public class MoteurPompeGauche : PositionnablePump
     {
-        public int ValeurAvale { get; set; }
-        public int ValeurRecrache { get; set; }
-        public int ValeurStop { get; set; }
+        public override MoteurID ID { get { return MoteurID.PumpLeft; } }
+    }
 
-        public override MoteurID ID { get { return MoteurID.Transfert; } }
+    public class MoteurElevation : PositionableMotorSpeed
+    {
+        public override MoteurID ID { get { return MoteurID.Elevation; } }
+
+        public int PositionDepose { get; set; }
+        public int PositionRange { get; set; }
     }
 
     #endregion

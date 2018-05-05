@@ -39,40 +39,18 @@ namespace GoBot
             {
                 case ServomoteurID.Tous:
                     return "tous les servomoteurs";
-                case ServomoteurID.BrasLunaireAvance:
-                    return "bras lunaire sort";
-                case ServomoteurID.BrasLunaireMonte:
-                    return "bras lunaire central";
-                case ServomoteurID.ServoLunaireSerrageDroit:
-                    return "bras lunaire serrage droit";
-                case ServomoteurID.ServoLunaireSerrageGauche:
-                    return "bras lunaire serrage gauche";
-                case ServomoteurID.BloqueurBas:
-                    return "bloqueur bas";
-                case ServomoteurID.BloqueurHaut:
-                    return "bloqueur haut";
-                case ServomoteurID.Ejecteur:
-                    return "éjecteur";
-                case ServomoteurID.Rehausseur:
-                    return "réhausseur";
-                case ServomoteurID.BrasLunaireGauche:
-                    return "bras lunaire gauche";
-                case ServomoteurID.ServoLunaireGaucheSerrageDroit:
-                    return "serrage droit du bras lunaire gauche";
-                case ServomoteurID.ServoLunaireGaucheSerrageGauche:
-                    return "serrage gauche du bras lunaire gauche";
-                case ServomoteurID.BrasLunaireDroit:
-                    return "bras lunaire droit";
-                case ServomoteurID.ServoLunaireDroitSerrageDroit:
-                    return "serrage droit du bras lunaire droit";
-                case ServomoteurID.ServoLunaireDroitSerrageGauche:
-                    return "serrage gauche du bras lunaire droit";
-                case ServomoteurID.Plaqueur:
-                    return "plaqueur de modules";
-                case ServomoteurID.Calleur:
-                    return "calleur de modules";
-                case ServomoteurID.Fusee:
-                    return "lanceur de fusée";
+                case ServomoteurID.CoudeDroite:
+                    return "coude du bras droit";
+                case ServomoteurID.CoudeGauche:
+                    return "coude du bras gauche";
+                case ServomoteurID.LateralDroite:
+                    return "latéral du bras droit";
+                case ServomoteurID.LateralGauche:
+                    return "latéral du bras gauche";
+                case ServomoteurID.PoignetDroite:
+                    return "poignet du bras droit";
+                case ServomoteurID.PoignetGauche:
+                    return "poignet du bras gauche";
                 default:
                         return servo.ToString();
             }
@@ -231,12 +209,16 @@ namespace GoBot
         {
             switch (motor)
             {
-                case MoteurID.Balise:
+                case MoteurID.Beacon:
                     return "balise";
-                case MoteurID.Orienteur:
-                    return "orienteur";
-                case MoteurID.Transfert:
-                    return "transfert de module";
+                case MoteurID.PumpRight:
+                    return "aspiration bras droit";
+                case MoteurID.PumpLeft:
+                    return "aspiration bras gauche";
+                case MoteurID.ValveRight:
+                    return "electrovanne bras droit";
+                case MoteurID.ValveLeft:
+                    return "electrovanne bras gauche";
                 default:
                     return motor.ToString();
             }

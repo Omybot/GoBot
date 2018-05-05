@@ -129,7 +129,7 @@ namespace GoBot.Communications
             byte[] tab = new byte[5];
             tab[0] = (byte)Board.RecMove;
             tab[1] = (byte)FrameFunction.MoteurPosition;
-            tab[2] = (byte)MoteurID.Balise;
+            tab[2] = (byte)MoteurID.Beacon;
             tab[3] = (byte)ByteDivide(vitesse, true);
             tab[4] = (byte)ByteDivide(vitesse, false);
 

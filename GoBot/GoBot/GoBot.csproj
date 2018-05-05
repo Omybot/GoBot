@@ -85,6 +85,7 @@
   <ItemGroup>
     <Compile Include="Actionneurs\Actionneur.cs" />
     <Compile Include="Actionneurs\Dumper.cs" />
+    <Compile Include="Actionneurs\Harvester.cs" />
     <Compile Include="Actionneurs\PatternReader.cs" />
     <Compile Include="Actionneurs\Positionables.cs" />
     <Compile Include="Actionneurs\RobotPositionables.cs" />

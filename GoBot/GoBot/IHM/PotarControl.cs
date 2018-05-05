@@ -9,13 +9,17 @@ using System.Windows.Forms;
 using GoBot.Actionneurs;
 using System.Threading;
 using GoBot.Threading;
+using System.Reflection;
 
 namespace GoBot.IHM
 {
     public partial class PotarControl : UserControl
     {
         private ThreadLink _linkPolling;
-        private Positionable positionnable;
+        private Positionable _currentPositionnable;
+        private int _currentPosition;
+        public Dictionary<String, PropertyInfo> _positionsProp;
+
 
         public PotarControl()
         {
@@ -33,9 +37,11 @@ namespace GoBot.IHM
 
         private void cboPositionnable_SelectedIndexChanged(object sender, EventArgs e)
         {
-            positionnable = (Positionable)cboPositionnable.SelectedItem;
-            trackBar.Min = positionnable.Minimum;
-            trackBar.Max = positionnable.Maximum;
+            _currentPositionnable = (Positionable)cboPositionnable.SelectedItem;
+            trackBar.Min = _currentPositionnable.Minimum;
+            trackBar.Max = _currentPositionnable.Maximum;
+
+            SetPositions(_currentPositionnable);
         }
 
         private void switchBouton_ValueChanged(object sender, bool value)
@@ -64,10 +70,12 @@ namespace GoBot.IHM
             ticksMin = ticksCurrent;
             ticksRange = pointsParTour * toursRange;
 
-            posValue = positionnable.Minimum;
+            posValue = _currentPositionnable.Minimum;
 
             while (!_linkPolling.Cancelled)
             {
+                _linkPolling.LoopsCount++;
+
                 toursRange = trackBarSpeed.Value;
                 ticksRange = pointsParTour * toursRange;
                 Thread.Sleep(50);
@@ -78,10 +86,10 @@ namespace GoBot.IHM
                 else if (ticksCurrent < ticksMin)
                     ticksMin = ticksCurrent;
 
-                posValue = (ticksCurrent - ticksMin) / ticksRange * (positionnable.Maximum - positionnable.Minimum) + positionnable.Minimum;
+                posValue = (ticksCurrent - ticksMin) / ticksRange * (_currentPositionnable.Maximum - _currentPositionnable.Minimum) + _currentPositionnable.Minimum;
 
-                posValue = Math.Min(posValue, positionnable.Maximum);
-                posValue = Math.Max(posValue, positionnable.Minimum);
+                posValue = Math.Min(posValue, _currentPositionnable.Maximum);
+                posValue = Math.Max(posValue, _currentPositionnable.Minimum);
 
                 this.InvokeAuto(() => trackBar.SetValue((int)posValue));
             }
@@ -91,16 +99,63 @@ namespace GoBot.IHM
 
         private void TrackBar_TickValueChanged(object sender, double value)
         {
-            if (positionnable != null)
+            if (_currentPositionnable != null)
             {
-                positionnable.SendPosition((int)value);
+                _currentPositionnable.SendPosition((int)value);
                 lblValue.Text = trackBar.Value.ToString();
+                _currentPosition = (int)value;
             }
         }
 
         private void trackBarSpeed_ValueChanged(object sender, double value)
         {
             lblSpeed.Text = "Rapport " + value.ToString();
+        }
+
+        private void btnSave_Click(object sender, EventArgs e)
+        {
+            String[] tab = ((String)(cboPositions.SelectedItem)).Split(new char[] { ':' });
+
+            String position = tab[0].Trim().ToLower();
+            int valeur = Convert.ToInt32(tab[1].Trim());
+
+            int index = cboPositions.SelectedIndex;
+
+            _positionsProp[(String)cboPositions.SelectedItem].SetValue((Positionable)cboPositionnable.SelectedItem, _currentPosition, null);
+            trackBar.Min = _currentPositionnable.Minimum;
+            trackBar.Max = _currentPositionnable.Maximum;
+
+            SetPositions(_currentPositionnable);
+            cboPositions.SelectedIndex = index;
+            
+            Config.Save();
+        }
+
+        private void SetPositions(Positionable pos)
+        {
+            PropertyInfo[] properties = _currentPositionnable.GetType().GetProperties();
+
+            List<String> noms = new List<string>();
+            _positionsProp = new Dictionary<string, PropertyInfo>();
+
+            foreach (PropertyInfo property in properties)
+            {
+                if (property.Name != "ID")
+                {
+                    noms.Add(Config.PropertyNameToScreen(property) + " : " + property.GetValue(_currentPositionnable, null));
+                    _positionsProp.Add(noms[noms.Count - 1], property);
+                }
+            }
+
+            cboPositions.Items.Clear();
+            cboPositions.Items.AddRange(noms.ToArray());
+            btnSave.Enabled = false;
+        }
+
+        private void cboPositions_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            btnSave.Enabled = true;
+            _currentPosition = (int)_positionsProp[(String)cboPositions.SelectedItem].GetValue(cboPositionnable.SelectedItem);
         }
     }
 }

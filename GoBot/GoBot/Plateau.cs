@@ -47,11 +47,11 @@ namespace GoBot
                 if (notreCouleur != value)
                 {
                     notreCouleur = value;
-                    if(Plateau.NotreCouleur == Plateau.CouleurGaucheVert)
-                        Devices.Devices.RecGoBot.SetLedColor(Color.Blue);
+                    if (Plateau.NotreCouleur == Plateau.CouleurGaucheVert)
+                        Devices.Devices.RecGoBot.SetLedColor(Color.Green);
                     else
-                        Devices.Devices.RecGoBot.SetLedColor(Color.Yellow);
-                    
+                        Devices.Devices.RecGoBot.SetLedColor(Color.Orange);
+
                     NotreCouleurChange?.Invoke(null, null);
                 }
             }

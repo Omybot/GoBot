@@ -70,4 +70,16 @@ namespace GoBot.Actionneurs
             Robots.GrosRobot.MoteurVitesse(ID, position > 0 ? SensGD.Gauche : SensGD.Droite, Math.Abs(position));
         }
     }
+
+    public abstract class PositionnablePump : PositionableMotorSpeed
+    {
+        public int PositionAspire { get; set; }
+        public int PositionStop { get; set; }
+    }
+
+    public abstract class PositionnableValve : PositionableMotorSpeed
+    {
+        public int PositionOuvert { get; set; }
+        public int PositionFerme { get; set; }
+    }
 }

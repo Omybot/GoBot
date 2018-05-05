@@ -14,13 +14,7 @@ namespace GoBot.Actionneurs
     class Dumper
     {
         private CubesFilling filling;
-
-        public enum Arm : byte
-        {
-            Left,
-            Rigth
-        }
-
+        
         public enum Slot : byte
         {
             Left,
@@ -53,6 +47,20 @@ namespace GoBot.Actionneurs
         public void DoStore()
         {
 
+        }
+
+        public void DoForward()
+        {
+            Config.CurrentConfig.ServoConvoyeurGauche.SendPosition(Config.CurrentConfig.ServoConvoyeurGauche.PositionAvant);
+            Config.CurrentConfig.ServoConvoyeurCentre.SendPosition(Config.CurrentConfig.ServoConvoyeurCentre.PositionAvant);
+            Config.CurrentConfig.ServoConvoyeurDroite.SendPosition(Config.CurrentConfig.ServoConvoyeurDroite.PositionAvant);
+        }
+
+        public void DoBackward()
+        {
+            Config.CurrentConfig.ServoConvoyeurGauche.SendPosition(Config.CurrentConfig.ServoConvoyeurGauche.PositionArriere);
+            Config.CurrentConfig.ServoConvoyeurCentre.SendPosition(Config.CurrentConfig.ServoConvoyeurCentre.PositionArriere);
+            Config.CurrentConfig.ServoConvoyeurDroite.SendPosition(Config.CurrentConfig.ServoConvoyeurDroite.PositionArriere);
         }
 
         public void PickupCubes(CubesCross cross, CubesPattern pattern)
@@ -138,6 +146,7 @@ namespace GoBot.Actionneurs
                 offset += 75;
             }
         }
+        
     }
 
     class CubesFilling

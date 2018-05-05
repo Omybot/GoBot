@@ -204,45 +204,50 @@ namespace GoBot.IHM
                 // 2. Select the bitmap with 32bpp with alpha-channel in the compatible DC;
                 // 3. Call the UpdateLayeredWindow.
 
-                lock(_originalBitmap)
-                {
-                    // On copie l'image parce qu'avec l'invocation on sait pas trop quand ça va être executé et l'image aura peut être été détruite.
-                    copyBmp = new Bitmap(bitmap);
-                }
-
-                IntPtr screenDc = Win32.GetDC(IntPtr.Zero);
-                IntPtr memDc = Win32.CreateCompatibleDC(screenDc);
-                IntPtr hBitmap = IntPtr.Zero;
-                IntPtr oldBitmap = IntPtr.Zero;
-
                 try
                 {
-                    hBitmap = copyBmp.GetHbitmap(Color.FromArgb(0));  // grab a GDI handle from this GDI+ bitmap
-                    oldBitmap = Win32.SelectObject(memDc, hBitmap);
 
-                    Win32.Size size = new Win32.Size(copyBmp.Width, copyBmp.Height);
-                    Win32.Point pointSource = new Win32.Point(0, 0);
-                    Win32.Point topPos = new Win32.Point(Left, Top);
-                    Win32.BLENDFUNCTION blend = new Win32.BLENDFUNCTION();
-                    blend.BlendOp = Win32.AC_SRC_OVER;
-                    blend.BlendFlags = 0;
-                    blend.SourceConstantAlpha = opacity;
-                    blend.AlphaFormat = Win32.AC_SRC_ALPHA;
-
-                    this.InvokeAuto(() => Win32.UpdateLayeredWindow(Handle, screenDc, ref topPos, ref size, memDc, ref pointSource, 0, ref blend, Win32.ULW_ALPHA));
-                }
-                finally
-                {
-                    Win32.ReleaseDC(IntPtr.Zero, screenDc);
-                    if (hBitmap != IntPtr.Zero)
+                    lock (_originalBitmap)
                     {
-                        Win32.SelectObject(memDc, oldBitmap);
-                        Win32.DeleteObject(hBitmap);
+                        // On copie l'image parce qu'avec l'invocation on sait pas trop quand ça va être executé et l'image aura peut être été détruite.
+                        copyBmp = new Bitmap(bitmap);
                     }
-                    Win32.DeleteDC(memDc);
 
-                    copyBmp.Dispose();
+                    IntPtr screenDc = Win32.GetDC(IntPtr.Zero);
+                    IntPtr memDc = Win32.CreateCompatibleDC(screenDc);
+                    IntPtr hBitmap = IntPtr.Zero;
+                    IntPtr oldBitmap = IntPtr.Zero;
+
+                    try
+                    {
+                        hBitmap = copyBmp.GetHbitmap(Color.FromArgb(0));  // grab a GDI handle from this GDI+ bitmap
+                        oldBitmap = Win32.SelectObject(memDc, hBitmap);
+
+                        Win32.Size size = new Win32.Size(copyBmp.Width, copyBmp.Height);
+                        Win32.Point pointSource = new Win32.Point(0, 0);
+                        Win32.Point topPos = new Win32.Point(Left, Top);
+                        Win32.BLENDFUNCTION blend = new Win32.BLENDFUNCTION();
+                        blend.BlendOp = Win32.AC_SRC_OVER;
+                        blend.BlendFlags = 0;
+                        blend.SourceConstantAlpha = opacity;
+                        blend.AlphaFormat = Win32.AC_SRC_ALPHA;
+
+                        this.InvokeAuto(() => Win32.UpdateLayeredWindow(Handle, screenDc, ref topPos, ref size, memDc, ref pointSource, 0, ref blend, Win32.ULW_ALPHA));
+                    }
+                    finally
+                    {
+                        Win32.ReleaseDC(IntPtr.Zero, screenDc);
+                        if (hBitmap != IntPtr.Zero)
+                        {
+                            Win32.SelectObject(memDc, oldBitmap);
+                            Win32.DeleteObject(hBitmap);
+                        }
+                        Win32.DeleteDC(memDc);
+
+                        copyBmp.Dispose();
+                    }
                 }
+                catch { }
             }
 
             protected override CreateParams CreateParams

@@ -652,7 +652,7 @@ namespace GoBot
             int idPololu = Servomoteur.idServoPololu(servo);
             int idCan = Servomoteur.idServoCAN(servo);
 
-            if (idPololu != -1)
+            if (idPololu != -1 && idPololu < 100)
             {
                 // Envoi à la pololu si c'est un servo géré par la carte
                 PololuMiniUart.setTarget((byte)idPololu, (ushort)position);

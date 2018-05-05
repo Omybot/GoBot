@@ -9,18 +9,20 @@ namespace GoBot.Actionneurs
 {
     static class Actionneur
     {
-        private static Hokuyo hokuyo;
-        private static Dumper dumper;
-        private static PatternReader patternReader;
-        private static ServosCan servosCan;
+        private static Hokuyo _hokuyo;
+        private static Dumper _dumper;
+        private static PatternReader _patternReader;
+        private static ServosCan _servosCan;
+        private static Harvester _harvester;
 
 
         static Actionneur()
         {
-            hokuyo = CreateHokuyo("COM3", LidarID.ScanSol);
-            dumper = new Dumper();
-            patternReader = new PatternReader();
-            servosCan = new ServosCan(Board.RecIO);
+            _hokuyo = CreateHokuyo("COM3", LidarID.ScanSol);
+            _dumper = new Dumper();
+            _patternReader = new PatternReader();
+            _servosCan = new ServosCan(Board.RecIO);
+            _harvester = new Harvester();
         }
 
         public static Hokuyo CreateHokuyo(String portCom, LidarID id)
@@ -49,26 +51,32 @@ namespace GoBot.Actionneurs
 
         public static Hokuyo Hokuyo
         {
-            get { return hokuyo; }
-            set { hokuyo = value; }
+            get { return _hokuyo; }
+            set { _hokuyo = value; }
         }
 
         public static Dumper Dumper
         {
-            get { return dumper; }
-            set { dumper = value; }
+            get { return _dumper; }
+            set { _dumper = value; }
         }
 
         public static PatternReader PatternReader
         {
-            get { return patternReader; }
-            set { patternReader = value; }
+            get { return _patternReader; }
+            set { _patternReader = value; }
         }
 
         public static ServosCan ServosCan
         {
-            get { return servosCan; }
-            set { servosCan = value; }
+            get { return _servosCan; }
+            set { _servosCan = value; }
+        }
+
+        public static Harvester Harvester
+        {
+            get { return _harvester; }
+            set { _harvester = value; }
         }
     }
 }

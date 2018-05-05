@@ -88,42 +88,50 @@ namespace GoBot.Devices
             int idCan = frame[0] * 256 + frame[1];
             int idServo = frame[4];
 
-            int globalId = (idCan - 1) * 4 + idServo;
-
-            ServosCanFunctions function = (ServosCanFunctions)frame[3];
-
-            switch(function)
+            try
             {
-                case ServosCanFunctions.PositionResponse:
-                    if (!_position.ContainsKey(globalId)) _position.Add(globalId, 0);
-                    _position[globalId] = frame[5] * 256 + frame[6];
-                    _lockWaitResponse.Release();
-                    break;
-                case ServosCanFunctions.PositionMaxResponse:
-                    if (!_positionMax.ContainsKey(globalId)) _positionMax.Add(globalId, 0);
-                    _positionMax[globalId] = frame[5] * 256 + frame[6];
-                    _lockWaitResponse.Release();
-                    break;
-                case ServosCanFunctions.PositionMinResponse:
-                    if (!_positionMin.ContainsKey(globalId)) _positionMin.Add(globalId, 0);
-                    _positionMin[globalId] = frame[5] * 256 + frame[6];
-                    _lockWaitResponse.Release();
-                    break;
-                case ServosCanFunctions.SpeedResponse:
-                    if (!_speed.ContainsKey(globalId)) _speed.Add(globalId, 0);
-                    _speed[globalId] = frame[5] * 256 + frame[6];
-                    _lockWaitResponse.Release();
-                    break;
-                case ServosCanFunctions.TorqueCurrentResponse:
-                    if (!_torqueCurrent.ContainsKey(globalId)) _torqueCurrent.Add(globalId, 0);
-                    _torqueCurrent[globalId] = frame[5] * 256 + frame[6];
-                    _lockWaitResponse.Release();
-                    break;
-                case ServosCanFunctions.TorqueMaxResponse:
-                    if (!_torqueMax.ContainsKey(globalId)) _torqueMax.Add(globalId, 0);
-                    _torqueMax[globalId] = frame[5] * 256 + frame[6];
-                    _lockWaitResponse.Release();
-                    break;
+
+                int globalId = idCan * 4 + idServo;
+
+                ServosCanFunctions function = (ServosCanFunctions)frame[3];
+
+                switch (function)
+                {
+                    case ServosCanFunctions.PositionResponse:
+                        if (!_position.ContainsKey(globalId)) _position.Add(globalId, 0);
+                        _position[globalId] = frame[5] * 256 + frame[6];
+                        _lockWaitResponse?.Release();
+                        break;
+                    case ServosCanFunctions.PositionMaxResponse:
+                        if (!_positionMax.ContainsKey(globalId)) _positionMax.Add(globalId, 0);
+                        _positionMax[globalId] = frame[5] * 256 + frame[6];
+                        _lockWaitResponse?.Release();
+                        break;
+                    case ServosCanFunctions.PositionMinResponse:
+                        if (!_positionMin.ContainsKey(globalId)) _positionMin.Add(globalId, 0);
+                        _positionMin[globalId] = frame[5] * 256 + frame[6];
+                        _lockWaitResponse?.Release();
+                        break;
+                    case ServosCanFunctions.SpeedResponse:
+                        if (!_speed.ContainsKey(globalId)) _speed.Add(globalId, 0);
+                        _speed[globalId] = frame[5] * 256 + frame[6];
+                        _lockWaitResponse?.Release();
+                        break;
+                    case ServosCanFunctions.TorqueCurrentResponse:
+                        if (!_torqueCurrent.ContainsKey(globalId)) _torqueCurrent.Add(globalId, 0);
+                        _torqueCurrent[globalId] = frame[5] * 256 + frame[6];
+                        _lockWaitResponse?.Release();
+                        break;
+                    case ServosCanFunctions.TorqueMaxResponse:
+                        if (!_torqueMax.ContainsKey(globalId)) _torqueMax.Add(globalId, 0);
+                        _torqueMax[globalId] = frame[5] * 256 + frame[6];
+                        _lockWaitResponse?.Release();
+                        break;
+                }
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(DateTime.Now.ToLongTimeString() + ":" + DateTime.Now.Millisecond.ToString("000") + " : Erreur servo CAN : " + e.Message);
             }
         }
 

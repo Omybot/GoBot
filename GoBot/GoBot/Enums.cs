@@ -26,32 +26,20 @@ namespace GoBot
 
     public enum ServomoteurID
     {
-        ServoLunaireSerrageGauche = 100,
-        ServoLunaireSerrageDroit = 101,
+        LateralGauche = 212,
+        CoudeGauche = 213,
+        PoignetGauche = 214,
 
-        BrasLunaireAvance = 112,
-        BrasLunaireMonte = 20,
+        CoudeDroite = 206,
+        PoignetDroite = 205,
+        LateralDroite = 204,
+        
+        BenneLiberation = 208,
+        BenneOuverture = 209,
 
-        BloqueurBas = 107,
-        BloqueurHaut = 106,
-        Rehausseur = 3,
-
-        Ejecteur = 117,
-
-        BrasLunaireGauche = 26,
-        BrasLunaireDroit = 24,
-
-        ServoLunaireGaucheSerrageGauche = 102,
-        ServoLunaireGaucheSerrageDroit = 103,
-
-        ServoLunaireDroitSerrageGauche = 104,
-        ServoLunaireDroitSerrageDroit = 105,
-
-        Plaqueur = 23,
-
-        Calleur = 110,
-
-        Fusee = 116,
+        ConvoyeurGauche = 215,
+        ConvoyeurCentre = 211,
+        ConvoyeurDroite = 207,
 
         Tous = 254
     }
@@ -64,9 +52,13 @@ namespace GoBot
 
     public enum MoteurID
     {
-        Orienteur = 4,
-        Transfert = 3,
-        Balise = 2,
+        PumpRight = 4,
+        PumpLeft = 3,
+        ValveRight = 2,
+        ValveLeft = 1,
+
+        Beacon = 0x10,
+        Elevation = 11
     }
 
     public enum CapteurID
