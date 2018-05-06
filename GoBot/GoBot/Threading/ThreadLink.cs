@@ -269,6 +269,17 @@ namespace GoBot.Threading
         }
 
         /// <summary>
+        /// Execute un thread après l'attente spécifiée.
+        /// </summary>
+        /// <param name="delay">Délai avant l'execution.</param>
+        public void StartDelayedThread(TimeSpan delay)
+        {
+            _innerThread = new Thread(f => ThreadCallDelayed(delay, _innerCallback));
+            _innerThread.IsBackground = true;
+            _innerThread.Start();
+        }
+
+        /// <summary>
         /// Lance le thread sur une execution à intervalle régulier pour un certain nombre de fois.
         /// </summary>
         /// <param name="interval">Intervalle entre les executions. (De la fin d'une execution au début de la suivante)</param>
@@ -360,11 +371,22 @@ namespace GoBot.Threading
 
         private void ThreadCall(CallBack call)
         {
-            Thread.Sleep(0); // Permet d'executer la fin d'appel de lancement avant de commencer
-
             _startDate = DateTime.Now;
             _started = true;
 
+            call.Invoke(this);
+
+            _ended = true;
+            _endDate = DateTime.Now;
+        }
+
+        private void ThreadCallDelayed(TimeSpan delay, CallBack call)
+        {
+            _startDate = DateTime.Now;
+            _started = true;
+
+            Thread.Sleep(delay);
+            
             call.Invoke(this);
 
             _ended = true;

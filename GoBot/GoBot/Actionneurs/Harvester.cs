@@ -26,11 +26,7 @@ namespace GoBot.Actionneurs
         {
             Config.CurrentConfig.MoteurPompeGauche.SendPosition(Config.CurrentConfig.MoteurPompeGauche.PositionStop);
             Config.CurrentConfig.ValveGauche.SendPosition(Config.CurrentConfig.ValveGauche.PositionOuvert);
-            ThreadManager.CreateThread(link =>
-            {
-                Thread.Sleep(500);
-                Config.CurrentConfig.ValveGauche.SendPosition(Config.CurrentConfig.ValveGauche.PositionFerme);
-            }).StartThread();
+            ThreadManager.CreateThread(link => Config.CurrentConfig.ValveGauche.SendPosition(Config.CurrentConfig.ValveGauche.PositionFerme)).StartDelayedThread(new TimeSpan(0, 0, 0, 0, 500));
         }
 
         public void DoRightPumpEnable()
@@ -42,11 +38,8 @@ namespace GoBot.Actionneurs
         public void DoRightPumpDisable()
         {
             Config.CurrentConfig.MoteurPompeDroite.SendPosition(Config.CurrentConfig.MoteurPompeDroite.PositionStop);
-            Config.CurrentConfig.ValveDroite.SendPosition(Config.CurrentConfig.ValveDroite.PositionOuvert); ThreadManager.CreateThread(link =>
-            {
-                Thread.Sleep(500);
-                Config.CurrentConfig.ValveDroite.SendPosition(Config.CurrentConfig.ValveDroite.PositionFerme);
-            }).StartThread();
+            Config.CurrentConfig.ValveDroite.SendPosition(Config.CurrentConfig.ValveDroite.PositionOuvert);
+            ThreadManager.CreateThread(link => Config.CurrentConfig.ValveDroite.SendPosition(Config.CurrentConfig.ValveDroite.PositionFerme)).StartDelayedThread(new TimeSpan(0, 0, 0, 0, 500));
         }
 
         public void DoLeftArmOnLeftCube()

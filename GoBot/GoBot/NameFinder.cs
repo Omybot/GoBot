@@ -51,6 +51,16 @@ namespace GoBot
                     return "poignet du bras droit";
                 case ServomoteurID.PoignetGauche:
                     return "poignet du bras gauche";
+                case ServomoteurID.BenneLiberation:
+                    return "plancher de la benne";
+                case ServomoteurID.BenneOuverture:
+                    return "porte de la benne";
+                case ServomoteurID.ConvoyeurCentre:
+                    return "convoyeur centre";
+                case ServomoteurID.ConvoyeurDroite:
+                    return "convoyeur droite";
+                case ServomoteurID.ConvoyeurGauche:
+                    return "convoyeur gauche";
                 default:
                         return servo.ToString();
             }
@@ -219,6 +229,8 @@ namespace GoBot
                     return "electrovanne bras droit";
                 case MoteurID.ValveLeft:
                     return "electrovanne bras gauche";
+                case MoteurID.Elevation:
+                    return "benne";
                 default:
                     return motor.ToString();
             }
