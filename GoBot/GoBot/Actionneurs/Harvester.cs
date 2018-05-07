@@ -42,7 +42,28 @@ namespace GoBot.Actionneurs
             ThreadManager.CreateThread(link => Config.CurrentConfig.ValveDroite.SendPosition(Config.CurrentConfig.ValveDroite.PositionFerme)).StartDelayedThread(new TimeSpan(0, 0, 0, 0, 500));
         }
 
+        public void DoInitLeftArm()
+        {
+            Config.CurrentConfig.ServoCoudeGauche.SendPosition(Config.CurrentConfig.ServoCoudeGauche.PositionApprocheHaute);
+            Config.CurrentConfig.ServoPoignetGauche.SendPosition(Config.CurrentConfig.ServoPoignetGauche.PositionPrise);
+            Thread.Sleep(500);
+            Config.CurrentConfig.ServoCoudeGauche.SendPosition(Config.CurrentConfig.ServoCoudeGauche.PositionRange);
+        }
+
+        public void DoStoreLeftArm()
+        {
+            Config.CurrentConfig.ServoCoudeGauche.SendPosition(Config.CurrentConfig.ServoCoudeGauche.PositionApprocheHaute);
+            Config.CurrentConfig.ServoPoignetGauche.SendPosition(Config.CurrentConfig.ServoPoignetGauche.PositionRange);
+            Thread.Sleep(500);
+            Config.CurrentConfig.ServoCoudeGauche.SendPosition(Config.CurrentConfig.ServoCoudeGauche.PositionRange);
+        }
+
         public void DoLeftArmOnLeftCube()
+        {
+
+        }
+
+        public void DoLeftArmOnRightCube()
         {
 
         }
@@ -93,6 +114,11 @@ namespace GoBot.Actionneurs
         }
 
         public void DoLeftArmInCenterSlot()
+        {
+
+        }
+
+        public void DoLeftArmInRightSlot()
         {
 
         }

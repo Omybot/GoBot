@@ -24,7 +24,7 @@ namespace GoBot
 
         static Recallages()
         {
-            PositionDepartGauche = new Position(90 + 90 + 90, new RealPoint(902, 200));
+            PositionDepartGauche = new Position(0, new RealPoint(Robots.GrosRobot.Longueur / 2, Robots.GrosRobot.Largeur / 2 + 70));
             PositionDepartDroite = new Position(180 - PositionDepartGauche.Angle, new RealPoint(3000 - PositionDepartGauche.Coordinates.X, PositionDepartGauche.Coordinates.Y));
         }
         
@@ -38,32 +38,15 @@ namespace GoBot
             Robots.GrosRobot.Avancer(10);
             Robots.GrosRobot.Recallage(SensAR.Arriere);
 
-            Robots.GrosRobot.Avancer(898-160); // 160 = taille calle
+            Robots.GrosRobot.Avancer((int)(70 + Robots.GrosRobot.Largeur / 2 - Robots.GrosRobot.Longueur / 2)); // 70mm du bord une fois en place
 
             if (Plateau.NotreCouleur == Plateau.CouleurGaucheVert)
-                Robots.GrosRobot.PivotDroite(90-6-7);
+                Robots.GrosRobot.PivotGauche(90);
             else
-                Robots.GrosRobot.PivotGauche(90-6-7);
+                Robots.GrosRobot.PivotDroite(90);
 
-            Robots.GrosRobot.Reculer(540);
-
-            if (Plateau.NotreCouleur == Plateau.CouleurGaucheVert)
-                Robots.GrosRobot.PivotDroite(6);
-            else
-                Robots.GrosRobot.PivotGauche(6);
-
-            Robots.GrosRobot.Reculer(150);
-
-            if (Plateau.NotreCouleur == Plateau.CouleurGaucheVert)
-                Robots.GrosRobot.PivotDroite(7);
-            else
-                Robots.GrosRobot.PivotGauche(7);
-
-            Robots.GrosRobot.Lent();
             Robots.GrosRobot.Recallage(SensAR.Arriere);
-
-            Robots.GrosRobot.Avancer(50);
-
+            
             Robots.GrosRobot.ReglerOffsetAsserv(PositionDepart);
 
             Robots.GrosRobot.ArmerJack();

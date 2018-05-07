@@ -58,7 +58,7 @@ namespace GoBot
         ValveLeft = 1,
 
         Beacon = 0x10,
-        Elevation = 11
+        Elevation = 12
     }
 
     public enum CapteurID

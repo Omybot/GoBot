@@ -18,6 +18,7 @@ namespace GoBot.IHM
         private ThreadLink _linkPolling;
         private Positionable _currentPositionnable;
         private int _currentPosition;
+
         public Dictionary<String, PropertyInfo> _positionsProp;
 
 
@@ -37,11 +38,14 @@ namespace GoBot.IHM
 
         private void cboPositionnable_SelectedIndexChanged(object sender, EventArgs e)
         {
-            _currentPositionnable = (Positionable)cboPositionnable.SelectedItem;
-            trackBar.Min = _currentPositionnable.Minimum;
-            trackBar.Max = _currentPositionnable.Maximum;
+            lock (this)
+            {
+                _currentPositionnable = (Positionable)cboPositionnable.SelectedItem;
+                trackBar.Min = _currentPositionnable.Minimum;
+                trackBar.Max = _currentPositionnable.Maximum;
 
-            SetPositions(_currentPositionnable);
+                SetPositions(_currentPositionnable);
+            }
         }
 
         private void switchBouton_ValueChanged(object sender, bool value)
@@ -60,7 +64,7 @@ namespace GoBot.IHM
         private void PollingLoop()
         {
             double posValue;
-            double ticksMin, ticksCurrent, ticksRange;
+            double ticksCurrent, ticksMin, ticksRange;
             int pointsParTour = 4096;
             double toursRange = 5;
 
@@ -74,36 +78,44 @@ namespace GoBot.IHM
 
             while (!_linkPolling.Cancelled)
             {
-                _linkPolling.LoopsCount++;
+                lock (this)
+                {
+                    _linkPolling.LoopsCount++;
 
-                toursRange = trackBarSpeed.Value;
-                ticksRange = pointsParTour * toursRange;
-                Thread.Sleep(50);
-                ticksCurrent = Devices.Devices.RecGoBot.GetCodeurPosition();
+                    toursRange = trackBarSpeed.Value;
+                    ticksRange = pointsParTour * toursRange;
+                    Thread.Sleep(50);
+                    ticksCurrent = Devices.Devices.RecGoBot.GetCodeurPosition();
 
-                if (ticksCurrent > ticksMin + ticksRange)
-                    ticksMin = ticksCurrent - ticksRange;
-                else if (ticksCurrent < ticksMin)
-                    ticksMin = ticksCurrent;
+                    if (ticksCurrent > ticksMin + ticksRange)
+                        ticksMin = ticksCurrent - ticksRange;
+                    else if (ticksCurrent < ticksMin)
+                        ticksMin = ticksCurrent;
 
-                posValue = (ticksCurrent - ticksMin) / ticksRange * (_currentPositionnable.Maximum - _currentPositionnable.Minimum) + _currentPositionnable.Minimum;
+                    posValue = (ticksCurrent - ticksMin) / ticksRange * (_currentPositionnable.Maximum - _currentPositionnable.Minimum) + _currentPositionnable.Minimum;
 
-                posValue = Math.Min(posValue, _currentPositionnable.Maximum);
-                posValue = Math.Max(posValue, _currentPositionnable.Minimum);
+                    posValue = Math.Min(posValue, _currentPositionnable.Maximum);
+                    posValue = Math.Max(posValue, _currentPositionnable.Minimum);
 
-                this.InvokeAuto(() => trackBar.SetValue((int)posValue));
+                }
+
+                SetPosition((int)posValue);
             }
 
             _linkPolling = null;
         }
 
-        private void TrackBar_TickValueChanged(object sender, double value)
+        private void SetPosition(int position)
         {
-            if (_currentPositionnable != null)
+            if (position != _currentPosition)
             {
-                _currentPositionnable.SendPosition((int)value);
-                lblValue.Text = trackBar.Value.ToString();
-                _currentPosition = (int)value;
+                _currentPosition = position;
+                _currentPositionnable.SendPosition((int)_currentPosition);
+                this.InvokeAuto(() =>
+                {
+                    trackBar.SetValue(_currentPosition);
+                    lblValue.Text = _currentPosition.ToString();
+                });
             }
         }
 

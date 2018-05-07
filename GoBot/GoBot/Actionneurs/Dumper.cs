@@ -28,7 +28,7 @@ namespace GoBot.Actionneurs
             filling.LoadCube(CubesCross.CubeColor.Joker, Slot.Left);
             filling.LoadCube(CubesCross.CubeColor.Joker, Slot.Rigth);
         }
-
+        
         public void DoOpenGates()
         {
 
@@ -61,6 +61,43 @@ namespace GoBot.Actionneurs
             Config.CurrentConfig.ServoConvoyeurGauche.SendPosition(Config.CurrentConfig.ServoConvoyeurGauche.PositionArriere);
             Config.CurrentConfig.ServoConvoyeurCentre.SendPosition(Config.CurrentConfig.ServoConvoyeurCentre.PositionArriere);
             Config.CurrentConfig.ServoConvoyeurDroite.SendPosition(Config.CurrentConfig.ServoConvoyeurDroite.PositionArriere);
+        }
+
+        public void DoDepose()
+        {
+            Config.CurrentConfig.MoteurElevation.SendPosition(Config.CurrentConfig.MoteurElevation.DeplacementDepose);
+            Thread.Sleep(2000);
+            Robots.GrosRobot.Reculer(100);
+            Config.CurrentConfig.MoteurElevation.SendPosition(Config.CurrentConfig.MoteurElevation.Neutre);
+            Config.CurrentConfig.ServoBenneOuverture.SendPosition(Config.CurrentConfig.ServoBenneOuverture.PositionDeblocage);
+            Thread.Sleep(500);
+            Config.CurrentConfig.ServoBenneLiberation.SendPosition(Config.CurrentConfig.ServoBenneLiberation.PositionLiberation);
+            Thread.Sleep(500);
+            Config.CurrentConfig.ServoBenneOuverture.SendPosition(Config.CurrentConfig.ServoBenneOuverture.PositionOuvert);
+            Thread.Sleep(1000);
+            Robots.GrosRobot.Avancer(250);
+            Config.CurrentConfig.ServoBenneOuverture.SendPosition(Config.CurrentConfig.ServoBenneOuverture.PositionFerme);
+            Config.CurrentConfig.ServoBenneLiberation.SendPosition(Config.CurrentConfig.ServoBenneLiberation.PositionMaintien);
+            Config.CurrentConfig.MoteurElevation.SendPosition(Config.CurrentConfig.MoteurElevation.DeplacementRange);
+            Thread.Sleep(2000);
+            Config.CurrentConfig.MoteurElevation.SendPosition(Config.CurrentConfig.MoteurElevation.PositionRange);
+        }
+
+        public void DoConvoyeurLoop()
+        {
+            for(int i = 0; i < 6; i++)
+            {
+                Config.CurrentConfig.ServoBenneOuverture.SendPosition(Config.CurrentConfig.ServoBenneOuverture.PositionFerme);
+                Thread.Sleep(200);
+                Config.CurrentConfig.ServoConvoyeurCentre.SendPosition(Config.CurrentConfig.ServoConvoyeurCentre.PositionAvant);
+                Thread.Sleep(400);
+                Config.CurrentConfig.ServoBenneOuverture.SendPosition(Config.CurrentConfig.ServoBenneOuverture.PositionDeblocage);
+                Thread.Sleep(200);
+                Config.CurrentConfig.ServoConvoyeurCentre.SendPosition(Config.CurrentConfig.ServoConvoyeurCentre.PositionArriere);
+                Thread.Sleep(400);
+            }
+
+            Config.CurrentConfig.ServoBenneOuverture.SendPosition(Config.CurrentConfig.ServoBenneOuverture.PositionDeblocage);
         }
 
         public void PickupCubes(CubesCross cross, CubesPattern pattern)

@@ -25,6 +25,7 @@ namespace GoBot
         public ServoConvoyeurDroite ServoConvoyeurDroite { get; set; }
 
         public ServoBenneLiberation ServoBenneLiberation { get; set; }
+        public ServoBenneOuverture ServoBenneOuverture { get; set; }
 
         public MoteurElevation MoteurElevation { get; set; }
     }
@@ -46,6 +47,7 @@ namespace GoBot.Actionneurs
     //{
     //    public override ServomoteurID ID { get { return ServomoteurID.AscenseurDroitPinceHautDroite; } }
     //}
+    
 
     public abstract class ServoConvoyeur : PositionableServo
     {
@@ -55,14 +57,17 @@ namespace GoBot.Actionneurs
 
     public abstract class ServoCoude : PositionableServo
     {
-        public int PositionExtension { get; set; }
-        public int PositionFlexion { get; set; }
+        public int PositionRange { get; set; }
+        public int PositionApprocheHaute { get; set; }
+        public int PositionApprocheBasse { get; set; }
+        public int PositionPrise { get; set; }
+        public int PositionTampon { get; set; }
     }
 
     public abstract class ServoPoignet : PositionableServo
     {
-        public int PositionAttrapage { get; set; }
-        public int PositionDepose { get; set; }
+        public int PositionRange { get; set; }
+        public int PositionPrise { get; set; }
     }
 
     public abstract class ServoLateral : PositionableServo
@@ -139,6 +144,7 @@ namespace GoBot.Actionneurs
     public class ServoBenneOuverture : PositionableServo
     {
         public int PositionOuvert { get; set; }
+        public int PositionDeblocage { get; set; }
         public int PositionFerme { get; set; }
 
         public override ServomoteurID ID => ServomoteurID.BenneOuverture;
@@ -161,6 +167,11 @@ namespace GoBot.Actionneurs
     public class MoteurElevation : PositionableMotorSpeed
     {
         public override MoteurID ID { get { return MoteurID.Elevation; } }
+
+        public int DeplacementDepose { get; set; }
+        public int DeplacementRange { get; set; }
+
+        public int Neutre { get; set; }
 
         public int PositionDepose { get; set; }
         public int PositionRange { get; set; }

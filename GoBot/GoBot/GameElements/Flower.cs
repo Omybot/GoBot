@@ -19,6 +19,8 @@ namespace GoBot.GameElements
 
         public override bool ClickAction()
         {
+            base.ClickAction();
+
             isAvailable = false;
             explodeTime = DateTime.Now;
 

@@ -146,10 +146,10 @@ namespace GoBot.Communications
             return new Frame(tab);
         }
 
-        static public Frame MoteurVitesse(MoteurID moteur, SensGD sens, int vitesse)
+        static public Frame MoteurVitesse(Board board, MoteurID moteur, SensGD sens, int vitesse)
         {
             byte[] tab = new byte[6];
-            tab[0] = (byte)Board.RecIO;
+            tab[0] = (byte)board;
             tab[1] = (byte)FrameFunction.MoteurVitesse;
             tab[2] = (byte)moteur;
             tab[3] = (byte)sens;

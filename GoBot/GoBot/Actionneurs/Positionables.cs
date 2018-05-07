@@ -6,6 +6,8 @@ namespace GoBot.Actionneurs
 {
     public abstract class Positionable
     {
+        private int? _lastPosition;
+
         public List<String> PositionsName()
         {
             PropertyInfo[] properties = this.GetType().GetProperties();
@@ -16,7 +18,18 @@ namespace GoBot.Actionneurs
             return propertiesName;
         }
 
-        public abstract void SendPosition(int position);
+        public int GetLastPosition()
+        {
+            return _lastPosition.HasValue ? _lastPosition.Value : (Minimum + Maximum) / 2;
+        }
+
+        public void SendPosition(int position)
+        {
+            _lastPosition = position;
+            SendPositionSpecific(position);
+        }
+
+        protected abstract void SendPositionSpecific(int position);
 
         public override string ToString()
         {
@@ -45,7 +58,7 @@ namespace GoBot.Actionneurs
     {
         public abstract ServomoteurID ID { get; }
 
-        public override void SendPosition(int position)
+        protected override void SendPositionSpecific(int position)
         {
             Robots.GrosRobot.BougeServo(ID, position);
         }
@@ -55,7 +68,7 @@ namespace GoBot.Actionneurs
     {
         public abstract MoteurID ID { get; }
 
-        public override void SendPosition(int position)
+        protected override void SendPositionSpecific(int position)
         {
             Robots.GrosRobot.MoteurPosition(ID, position);
         }
@@ -65,7 +78,7 @@ namespace GoBot.Actionneurs
     {
         public abstract MoteurID ID { get; }
 
-        public override void SendPosition(int position)
+        protected override void SendPositionSpecific(int position)
         {
             Robots.GrosRobot.MoteurVitesse(ID, position > 0 ? SensGD.Gauche : SensGD.Droite, Math.Abs(position));
         }

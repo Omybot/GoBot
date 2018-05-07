@@ -84,7 +84,7 @@ namespace GoBot
 
         public override void Delete()
         {
-            
+
         }
 
         private void SpeedConfig_ParamChange(bool lineAccelChange, bool lineDecelChange, bool lineSpeedChange, bool pivotAccelChange, bool pivotDecelChange, bool pivotSpeedChange)
@@ -146,7 +146,7 @@ namespace GoBot
             Historique = new Historique(IDRobot);
 
             DateRefreshPos = DateTime.Now;
-            
+
             Connexion.FrameReceived += new UDPConnection.NewFrameDelegate(ReceptionMessage);
 
             if (this == Robots.GrosRobot)
@@ -342,7 +342,7 @@ namespace GoBot
                     break;
                 case FrameFunction.RetourCapteurCouleur:
                     //TODO2018 : multiplier par 2 pour obtenir de belles couleurs ?
-                    Color couleur = Color.FromArgb(Math.Min(255, trameRecue[3]*1), Math.Min(255, trameRecue[4]*1), Math.Min(255, trameRecue[5] * 1));
+                    Color couleur = Color.FromArgb(Math.Min(255, trameRecue[3] * 1), Math.Min(255, trameRecue[4] * 1), Math.Min(255, trameRecue[5] * 1));
 
                     ChangeCouleurCapteur((CapteurCouleurID)trameRecue[2], couleur);
                     CapteursCouleur[(CapteurCouleurID)trameRecue[2]] = couleur;
@@ -350,7 +350,7 @@ namespace GoBot
                     SemaphoresCouleur[(CapteurCouleurID)trameRecue[2]]?.Release();
                     break;
                 case FrameFunction.RetourCapteurPattern:
-                    
+
                     Actionneurs.Actionneur.PatternReader.SetPeriod(trameRecue[2] * 256 + trameRecue[3]);
 
                     SemaphoresTrame[FrameFunction.DemandeCapteurPattern]?.Release();
@@ -417,12 +417,12 @@ namespace GoBot
 
                     //else
                     {
-                        
+
                         bool nouvelEtat = trameRecue[3] > 0 ? true : false;
 
                         if (nouvelEtat != CapteurActive[capteur])
                             ChangerEtatCapteurOnOff(capteur, nouvelEtat);
-                        
+
                         SemaphoresCapteurs[capteur]?.Release();
                     }
                     break;
@@ -441,13 +441,13 @@ namespace GoBot
                         ValeursNumeriques[numericBoard][4] = (Byte)trameRecue[6];
                         ValeursNumeriques[numericBoard][5] = (Byte)trameRecue[7];
                     }
-                    
+
                     SemaphoresTrame[FrameFunction.RetourValeursNumeriques]?.Release();
                     break;
 
                 case FrameFunction.RetourValeursAnalogiques:
                     Board analogBoard = (Board)trameRecue[0];
-                    
+
                     const double toVolts = 0.0008056640625;
 
                     List<double> values = new List<double>();
@@ -460,7 +460,7 @@ namespace GoBot
                     ValeursAnalogiques[analogBoard][6] = ((trameRecue[14] * 256 + trameRecue[15]) * toVolts);
                     ValeursAnalogiques[analogBoard][7] = ((trameRecue[16] * 256 + trameRecue[17]) * toVolts);
                     ValeursAnalogiques[analogBoard][8] = ((trameRecue[18] * 256 + trameRecue[19]) * toVolts);
-                    
+
                     SemaphoresTrame[FrameFunction.RetourValeursAnalogiques]?.Release();
                     break;
             }
@@ -482,7 +482,7 @@ namespace GoBot
             Connexion.SendMessage(trame);
 
             Historique.AjouterAction(new ActionAvance(this, distance));
-            
+
             if (attendre)
                 if (!SemaphoresTrame[FrameFunction.FinDeplacement].WaitOne((int)SpeedConfig.LineDuration(distance).TotalMilliseconds))
                     Thread.Sleep(1000); // Tempo de secours, on a jamais reçu la fin de trajectoire après la fin du délai théorique
@@ -510,7 +510,7 @@ namespace GoBot
             Connexion.SendMessage(trame);
 
             Historique.AjouterAction(new ActionRecule(this, distance));
-            
+
             if (attendre)
                 if (!SemaphoresTrame[FrameFunction.FinDeplacement].WaitOne((int)SpeedConfig.LineDuration(distance).TotalMilliseconds))
                     Thread.Sleep(1000); // Tempo de secours, on a jamais reçu la fin de trajectoire après la fin du délai théorique
@@ -531,7 +531,7 @@ namespace GoBot
             Connexion.SendMessage(trame);
 
             Historique.AjouterAction(new ActionPivot(this, angle, SensGD.Gauche));
-            
+
             if (attendre)
                 if (!SemaphoresTrame[FrameFunction.FinDeplacement].WaitOne((int)SpeedConfig.PivotDuration(angle, Entraxe).TotalMilliseconds))
                     Thread.Sleep(1000); // Tempo de secours, on a jamais reçu la fin de trajectoire après la fin du délai théorique
@@ -549,7 +549,7 @@ namespace GoBot
             Connexion.SendMessage(trame);
 
             Historique.AjouterAction(new ActionPivot(this, angle, SensGD.Droite));
-            
+
             if (attendre)
                 if (!SemaphoresTrame[FrameFunction.FinDeplacement].WaitOne((int)SpeedConfig.PivotDuration(angle, Entraxe).TotalMilliseconds))
                     Thread.Sleep(1000); // Tempo de secours, on a jamais reçu la fin de trajectoire après la fin du délai théorique
@@ -657,7 +657,7 @@ namespace GoBot
                 // Envoi à la pololu si c'est un servo géré par la carte
                 PololuMiniUart.setTarget((byte)idPololu, (ushort)position);
             }
-            else if(idCan != -1)
+            else if (idCan != -1)
             {
                 // Envoi en bus can si c'est un servo géré par CAN
                 Devices.Devices.ServosCan.SetPosition(idCan, position);
@@ -727,8 +727,16 @@ namespace GoBot
         {
             base.MoteurVitesse(moteur, sens, vitesse);
 
-            Frame trame = FrameFactory.MoteurVitesse(moteur, sens, vitesse);
-            Connections.ConnectionIO.SendMessage(trame);
+            if (moteur == MoteurID.Elevation)
+            {
+                Frame trame = FrameFactory.MoteurVitesse(Board.RecMove, moteur, sens, vitesse);
+                Connections.ConnectionMove.SendMessage(trame);
+            }
+            else
+            {
+                Frame trame = FrameFactory.MoteurVitesse(Board.RecIO, moteur, sens, vitesse);
+                Connections.ConnectionIO.SendMessage(trame);
+            }
         }
 
         public override void MoteurAcceleration(MoteurID moteur, int acceleration)

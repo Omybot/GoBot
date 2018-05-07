@@ -82,6 +82,11 @@ namespace GoBot.Strategies
                 Movements.Add(new MovementBuilding(Plateau.Elements.ConstructionZones[i]));
             }
 
+            for(int i = 0; i < Plateau.Elements.Flowers.Count; i++)
+            {
+                Movements.Add(new MovementBee(Plateau.Elements.Flowers[i]));
+            }
+
             for (int iMov = 0; iMov < Movements.Count; iMov++)
             {
                 for(int iPos = 0; iPos < Movements[iMov].Positions.Count; iPos++)

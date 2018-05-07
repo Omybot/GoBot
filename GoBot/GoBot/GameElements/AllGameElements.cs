@@ -16,6 +16,7 @@ namespace GoBot.GameElements
         public List<Flower> Flowers { get; protected set; }
         public List<ConstructionZone> ConstructionZones { get; protected set; }
         public List<CubesTower> CubesTowers { get; protected set; }
+        public List<DomoticBoard> DomoticBoards { get; protected set; }
 
         private Dictionary<CubesCross, int> cubesProximityCounter;
 
@@ -47,6 +48,10 @@ namespace GoBot.GameElements
 
             CubesTowers = new List<CubesTower>();
 
+            DomoticBoards = new List<DomoticBoard>();
+            DomoticBoards.Add(new DomoticBoard(new RealPoint(170, -120), Plateau.CouleurGaucheVert));
+            DomoticBoards.Add(new DomoticBoard(new RealPoint(3000-170, -120), Plateau.CouleurDroiteOrange));
+
             cubesProximityCounter = new Dictionary<CubesCross, int>();
         }
         
@@ -60,6 +65,7 @@ namespace GoBot.GameElements
                 elements = elements.Concat(Flowers);
                 elements = elements.Concat(ConstructionZones);
                 elements = elements.Concat(CubesTowers);
+                elements = elements.Concat(DomoticBoards);
 
                 return elements;
             }

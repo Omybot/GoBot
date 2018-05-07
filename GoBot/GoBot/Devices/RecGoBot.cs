@@ -61,7 +61,6 @@ namespace GoBot.Devices
 
         private void Button1Click()
         {
-            Robots.GrosRobot.Stop(Robots.GrosRobot.AsserActif ? StopMode.Freely : StopMode.Abrupt);
         }
         private void Button2Click()
         {
@@ -69,35 +68,36 @@ namespace GoBot.Devices
         }
         private void Button3Click()
         {
-            Robots.GrosRobot.DeployerActionnneurs();
         }
         private void Button4Click()
         {
-            Robots.GrosRobot.Diagnostic();
         }
         private void Button5Click()
         {
-            Recallages.RecallageGrosRobot();
         }
         private void Button6Click()
         {
-
         }
         private void Button7Click()
         {
-
         }
         private void Button8Click()
         {
-
         }
+
+        private bool _toggleBtn9;
         private void Button9Click()
         {
-            Robots.GrosRobot.RangerActionneurs();
+            if(_toggleBtn9)
+                Actionneur.Harvester.DoLeftPumpDisable();
+            else
+                Actionneur.Harvester.DoLeftPumpEnable();
+
+            _toggleBtn9 = !_toggleBtn9;
         }
         private void Button10Click()
         {
-
+            Robots.GrosRobot.Stop(Robots.GrosRobot.AsserActif ? StopMode.Freely : StopMode.Abrupt);
         }
 
         void RecGoBot_ButtonChange(CapteurOnOffID btn, bool state)
@@ -145,10 +145,17 @@ namespace GoBot.Devices
 
         void ChangeLedConnection(bool connected, LedID led)
         {
-            if (ledsStatus[led] == RecGoBot.LedStatus.Off)
-                SetLed(led, connected ? RecGoBot.LedStatus.Vert : RecGoBot.LedStatus.Rouge);
-            else
-                SetLed(led, RecGoBot.LedStatus.Off);
+            try
+            {
+                if (ledsStatus[led] == RecGoBot.LedStatus.Off)
+                    SetLed(led, connected ? RecGoBot.LedStatus.Vert : RecGoBot.LedStatus.Rouge);
+                else
+                    SetLed(led, RecGoBot.LedStatus.Off);
+            }
+            catch (Exception e)
+            {
+
+            }
         }
 
         void ConnexionCheck_SendConnectionTest(Connection sender)
