@@ -43,12 +43,5 @@ namespace GoBot.GameElements
                 pen.Dispose();
             }
         }
-
-        public override bool ClickAction()
-        {
-            isAvailable = false;
-
-            return base.ClickAction();
-        }
     }
 }
