@@ -117,7 +117,7 @@
             this.trackBarPosition.DecimalPlaces = 0;
             this.trackBarPosition.IntervalTimer = ((uint)(100u));
             this.trackBarPosition.Location = new System.Drawing.Point(233, 51);
-            this.trackBarPosition.Max = 32000D;
+            this.trackBarPosition.Max = 40000D;
             this.trackBarPosition.MaximumSize = new System.Drawing.Size(3000, 15);
             this.trackBarPosition.Min = 0D;
             this.trackBarPosition.MinimumSize = new System.Drawing.Size(30, 15);

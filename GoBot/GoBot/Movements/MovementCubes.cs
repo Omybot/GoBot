@@ -150,6 +150,8 @@ namespace GoBot.Movements
 
                     Actionneur.Harvester.DoTakeCubeInSlot(cross, CubesCross.CubePlace.Rigth, Dumper.Slot.Rigth);
 
+                    Actionneur.Harvester.DoBuffer(cross, CubesCross.CubePlace.Left);
+
                     Config.CurrentConfig.ServoCoudeDroite.SendPosition(Config.CurrentConfig.ServoCoudeDroite.PositionApprocheHaute);
                     Thread.Sleep(500);
                     Config.CurrentConfig.ServoCoudeDroite.SendPosition(Config.CurrentConfig.ServoLateralGauche.PositionDroite);

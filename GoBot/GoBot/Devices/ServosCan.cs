@@ -44,7 +44,7 @@ namespace GoBot.Devices
             TorqueMaxSet = 0x0F,
             TorqueCurrentAsk = 0x10,
             TorqueCurrentResponse = 0x11,
-            TrajectorySet = 0x15,
+            TrajectorySet = 0x16,
 
             SetScore = 0xA0
         }
@@ -100,7 +100,6 @@ namespace GoBot.Devices
 
             try
             {
-
                 int globalId = idCan * 4 + idServo;
 
                 ServosCanFunctions function = (ServosCanFunctions)frame[3];

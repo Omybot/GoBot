@@ -66,6 +66,7 @@ namespace GoBot.Actionneurs
         public int PositionPrise { get; set; }
         public int PositionTampon { get; set; }
         public int PositionFinStockage { get; set; }
+        public int PositionAbeille { get; set; }
     }
 
     public abstract class ServoPoignet : PositionableServo
@@ -74,6 +75,7 @@ namespace GoBot.Actionneurs
         public int PositionPrise { get; set; }
         public int PositionStockage { get; set; }
         public int PositionFinStockage { get; set; }
+        public int PositionAbeille { get; set; }
     }
 
     public abstract class ServoLateral : PositionableServo
