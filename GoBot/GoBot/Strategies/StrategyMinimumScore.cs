@@ -70,7 +70,7 @@ namespace GoBot.Strategies
             {
                 _avoidElements = true;
                 Robots.GrosRobot.MajGraphFranchissable();
-                while (!new MovementBee(Plateau.Elements.Flowers[0]).Execute()) ;
+                //while (!new MovementBee(Plateau.Elements.Flowers[0]).Execute()) ;
                 while (!new MovementsCubesFromBottom(Plateau.Elements.CubesCrosses[0]).Execute());
                 while (!new MovementsCubesFromBottom(Plateau.Elements.CubesCrosses[1]).Execute());
                 while (!new MovementBuilding(Plateau.Elements.ConstructionZones[1]).Execute());
@@ -82,7 +82,7 @@ namespace GoBot.Strategies
             {
                 _avoidElements = true;
                 Robots.GrosRobot.MajGraphFranchissable();
-                while (!new MovementBee(Plateau.Elements.Flowers[1]).Execute()) ;
+                //while (!new MovementBee(Plateau.Elements.Flowers[1]).Execute()) ;
                 while (!new MovementsCubesFromBottom(Plateau.Elements.CubesCrosses[5]).Execute()) ;
                 while (!new MovementsCubesFromBottom(Plateau.Elements.CubesCrosses[4]).Execute()) ;
                 while (!new MovementBuilding(Plateau.Elements.ConstructionZones[2]).Execute()) ;

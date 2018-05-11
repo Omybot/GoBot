@@ -30,6 +30,8 @@ namespace GoBot
         
         public static void RecallageGrosRobot()
         {
+            Plateau.FreezeColor();
+
             Robots.GrosRobot.EnvoyerPID(40, 0, 400);
             Robots.GrosRobot.Stop();
 

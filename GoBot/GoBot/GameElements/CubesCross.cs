@@ -19,7 +19,7 @@ namespace GoBot.GameElements
             Bottom,
             Left,
             Center,
-            Rigth,
+            Right,
             Top
         }
 
@@ -52,12 +52,12 @@ namespace GoBot.GameElements
             if (greenAtLeft)
             {
                 colors.Add(CubePlace.Left, CubeColor.Green);
-                colors.Add(CubePlace.Rigth, CubeColor.Orange);
+                colors.Add(CubePlace.Right, CubeColor.Orange);
             }
             else
             {
                 colors.Add(CubePlace.Left, CubeColor.Orange);
-                colors.Add(CubePlace.Rigth, CubeColor.Green);
+                colors.Add(CubePlace.Right, CubeColor.Green);
             }
         }
 
@@ -99,7 +99,7 @@ namespace GoBot.GameElements
                 PaintCube(g, colors[CubePlace.Bottom], new Point(topLeft.X + size.Width, topLeft.Y + size.Height * 2), size, outlineColor);
                 PaintCube(g, colors[CubePlace.Left], new Point(topLeft.X, topLeft.Y + size.Height), size, outlineColor);
                 PaintCube(g, colors[CubePlace.Center], new Point(topLeft.X + size.Width, topLeft.Y + size.Height), size, outlineColor);
-                PaintCube(g, colors[CubePlace.Rigth], new Point(topLeft.X + size.Width * 2, topLeft.Y + size.Height), size, outlineColor);
+                PaintCube(g, colors[CubePlace.Right], new Point(topLeft.X + size.Width * 2, topLeft.Y + size.Height), size, outlineColor);
             }
         }
 

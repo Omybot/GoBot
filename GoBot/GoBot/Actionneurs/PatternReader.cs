@@ -40,7 +40,7 @@ namespace GoBot.Actionneurs
 
         public CubesPattern Pattern
         {
-            get { return _pattern; }
+            get { return JVN; }// _pattern; }
         }
 
         public double Period

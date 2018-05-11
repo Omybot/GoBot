@@ -58,6 +58,13 @@ namespace GoBot
             }
         }
 
+        private static bool _colorFreezed = false;
+
+        internal static void FreezeColor()
+        {
+            _colorFreezed = true;
+        }
+
         public static AllGameElements Elements { get; protected set; }
 
         private static Color notreCouleur;
@@ -66,16 +73,19 @@ namespace GoBot
             get { return notreCouleur; }
             set 
             {
-                if (notreCouleur != value)
+                if (!_colorFreezed)
                 {
-                    notreCouleur = value;
-                    if (Plateau.NotreCouleur == Plateau.CouleurGaucheVert)
-                        Devices.Devices.RecGoBot.SetLedColor(Color.Green);
-                    else
-                        Devices.Devices.RecGoBot.SetLedColor(Color.Orange);
+                    if (notreCouleur != value)
+                    {
+                        notreCouleur = value;
+                        if (Plateau.NotreCouleur == Plateau.CouleurGaucheVert)
+                            Devices.Devices.RecGoBot.SetLedColor(Color.Green);
+                        else
+                            Devices.Devices.RecGoBot.SetLedColor(Color.Orange);
 
-                    NotreCouleurChange?.Invoke(null, null);
-                    Robots.GrosRobot.MajGraphFranchissable();
+                        NotreCouleurChange?.Invoke(null, null);
+                        Robots.GrosRobot.MajGraphFranchissable();
+                    }
                 }
             }
         }

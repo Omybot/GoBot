@@ -82,11 +82,11 @@ namespace GoBot.Movements
         {
             // TODO Décharger
             
-            Config.CurrentConfig.ServoCoudeDroite.SendPosition(Config.CurrentConfig.ServoCoudeDroite.PositionPrise);
-            Config.CurrentConfig.ServoCoudeGauche.SendPosition(Config.CurrentConfig.ServoCoudeGauche.PositionPrise);
-
             Thread.Sleep(500);
 
+            Config.CurrentConfig.ServoCoudeDroite.SendPosition(Config.CurrentConfig.ServoCoudeDroite.PositionPrise);
+            Config.CurrentConfig.ServoCoudeGauche.SendPosition(Config.CurrentConfig.ServoCoudeGauche.PositionPrise);
+            Thread.Sleep(100);
             Actionneur.Harvester.DoLeftPumpDisable();
             Actionneur.Harvester.DoRightPumpDisable();
 

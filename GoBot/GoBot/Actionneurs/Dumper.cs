@@ -20,14 +20,14 @@ namespace GoBot.Actionneurs
         {
             Left,
             Middle,
-            Rigth
+            Right
         }
 
         public Dumper()
         {
             filling = new CubesFilling();
             filling.LoadCube(CubesCross.CubeColor.Joker, Slot.Middle);
-            filling.LoadCube(CubesCross.CubeColor.Joker, Slot.Rigth);
+            filling.LoadCube(CubesCross.CubeColor.Joker, Slot.Right);
         }
 
         public void DoOpenGates()
@@ -57,6 +57,8 @@ namespace GoBot.Actionneurs
 
         public void DoDeploy()
         {
+            DoForward();
+
             Config.CurrentConfig.MoteurElevation.SendPosition(Config.CurrentConfig.MoteurElevation.DeplacementDepose);
             Thread.Sleep(2000);
             Config.CurrentConfig.MoteurElevation.SendPosition(Config.CurrentConfig.MoteurElevation.PositionDepose);
@@ -185,7 +187,7 @@ namespace GoBot.Actionneurs
             }
 
             Config.CurrentConfig.ServoBenneOuverture.SendPosition(Config.CurrentConfig.ServoBenneOuverture.PositionDeblocage);
-            Config.CurrentConfig.ServoConvoyeurGauche.SendPosition(Config.CurrentConfig.ServoConvoyeurGauche.PositionAvant);
+            Config.CurrentConfig.ServoConvoyeurGauche.SendPosition((Config.CurrentConfig.ServoConvoyeurGauche.PositionAvant + Config.CurrentConfig.ServoConvoyeurGauche.PositionArriere) / 2);
         }
 
         public void DoConvoyeurLoopDroite()
@@ -228,11 +230,11 @@ namespace GoBot.Actionneurs
                 Thread.Sleep(500);
             }
 
-            color = cross.GetColor(CubesCross.CubePlace.Rigth);
+            color = cross.GetColor(CubesCross.CubePlace.Right);
             if (filling.CanLoadInSlot(slot) && color != CubesCross.CubeColor.Empty)
             {
                 filling.LoadCube(color, slot);
-                cross.RemoveCube(CubesCross.CubePlace.Rigth);
+                cross.RemoveCube(CubesCross.CubePlace.Right);
                 Thread.Sleep(500);
             }
 
