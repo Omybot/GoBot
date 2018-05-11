@@ -1,4 +1,5 @@
-﻿using GoBot.Threading;
+﻿using GoBot.GameElements;
+using GoBot.Threading;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -233,7 +234,7 @@ namespace GoBot.Actionneurs
             Thread.Sleep(800);
         }
 
-        public void DoTakeCube()
+        public void DoTakeCube(Dumper.Slot slot)
         {
             Actionneur.Harvester.DoRightPumpEnable();
 
@@ -249,7 +250,18 @@ namespace GoBot.Actionneurs
             // On remonte
             Config.CurrentConfig.ServoCoudeDroite.SendPosition(Config.CurrentConfig.ServoCoudeDroite.PositionApprocheHaute);
             Thread.Sleep(400);
-            SetOnFreeSpace();
+            switch(slot)
+            {
+                case Dumper.Slot.Rigth:
+                    Config.CurrentConfig.ServoLateralDroite.SendPosition(Config.CurrentConfig.ServoLateralDroite.PositionDroite);
+                    break;
+                case Dumper.Slot.Middle:
+                    Config.CurrentConfig.ServoLateralDroite.SendPosition(Config.CurrentConfig.ServoLateralDroite.PositionCentre);
+                    break;
+                case Dumper.Slot.Left:
+                    Config.CurrentConfig.ServoLateralDroite.SendPosition(Config.CurrentConfig.ServoLateralDroite.PositionGauche);
+                    break;
+            }
             Thread.Sleep(400);
         }
 
@@ -276,27 +288,67 @@ namespace GoBot.Actionneurs
             Config.CurrentConfig.ServoCoudeDroite.SendPosition(Config.CurrentConfig.ServoCoudeDroite.PositionApprocheStockage);
         }
 
-        public void DoTakeCenterCube()
+        public void DoTakeCubeInSlot(CubesCross cross, CubesCross.CubePlace place, Dumper.Slot slot)
+        {
+            switch(place)
+            {
+                case CubesCross.CubePlace.Bottom:
+                case CubesCross.CubePlace.Center:
+                case CubesCross.CubePlace.Top:
+                    DoTakeCenterCube(slot);
+                    break;
+                case CubesCross.CubePlace.Left:
+                    DoTakeLeftCube(slot);
+                    break;
+                case CubesCross.CubePlace.Rigth:
+                    DoTakeRightCube(slot);
+                    break;
+            }
+
+            Actionneur.Dumper.AddCube(slot, cross.GetColor(place));
+            cross.RemoveCube(place);
+        }
+
+        public void ConvoyeurStuff(Dumper.Slot slot)
+        {
+            switch(slot)
+            {
+                case Dumper.Slot.Left:
+                    ThreadManager.CreateThread(link => Actionneur.Dumper.DoConvoyeurLoopGauche()).StartThread();
+                    break;
+                case Dumper.Slot.Middle:
+                    ThreadManager.CreateThread(link => Actionneur.Dumper.DoConvoyeurLoopCentre()).StartThread();
+                    break;
+                case Dumper.Slot.Rigth:
+                    ThreadManager.CreateThread(link => Actionneur.Dumper.DoConvoyeurLoopDroite()).StartThread();
+                    break;
+            }
+        }
+
+        public void DoTakeCenterCube(Dumper.Slot slot)
         {
             DoArmOnCenterCube();
-            DoTakeCube();
+            DoTakeCube(slot);
             DoStoreCube();
+            ConvoyeurStuff(slot);
             Actionneur.Harvester.DoThreadShaking(new TimeSpan(0, 0, 2));
         }
 
-        public void DoTakeRightCube()
+        public void DoTakeRightCube(Dumper.Slot slot)
         {
             DoArmOnRightCube();
-            DoTakeCube();
+            DoTakeCube(slot);
             DoStoreCube();
+            ConvoyeurStuff(slot);
             Actionneur.Harvester.DoThreadShaking(new TimeSpan(0, 0, 2));
         }
 
-        public void DoTakeLeftCube()
+        public void DoTakeLeftCube(Dumper.Slot slot)
         {
             DoArmOnLeftCube();
-            DoTakeCube();
+            DoTakeCube(slot);
             DoStoreCube();
+            ConvoyeurStuff(slot);
             Actionneur.Harvester.DoThreadShaking(new TimeSpan(0, 0, 2));
         }
 

@@ -353,7 +353,7 @@ namespace GoBot.Actionneurs
         {
             foreach (Dumper.Slot slot in Enum.GetValues(typeof(Dumper.Slot)))
             {
-                filling[slot].Clear();
+                filling[slot].RemoveRange(0, Math.Min(filling[slot].Count, 5));
             }
         }
 

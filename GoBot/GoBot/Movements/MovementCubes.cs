@@ -108,55 +108,30 @@ namespace GoBot.Movements
 
             if (_firstCube)
             {
-                Actionneur.Harvester.DoTakeCenterCube();
-                ThreadManager.CreateThread(link => Actionneur.Dumper.DoConvoyeurLoopCentre()).StartThread();
-                Actionneur.Dumper.AddCube(Dumper.Slot.Middle, cross.GetColor(CubesCross.CubePlace.Bottom));
-                cross.RemoveCube(CubesCross.CubePlace.Bottom);
+                Actionneur.Harvester.DoTakeCubeInSlot(cross, CubesCross.CubePlace.Bottom, Dumper.Slot.Middle);
 
                 Robots.GrosRobot.Avancer(58);
 
-                Actionneur.Harvester.DoTakeCenterCube();
-                ThreadManager.CreateThread(link => Actionneur.Dumper.DoConvoyeurLoopCentre()).StartThread();
-                Actionneur.Dumper.AddCube(Dumper.Slot.Middle, cross.GetColor(CubesCross.CubePlace.Center));
-                cross.RemoveCube(CubesCross.CubePlace.Center);
-
-                Actionneur.Harvester.DoTakeRightCube();
-                ThreadManager.CreateThread(link => Actionneur.Dumper.DoConvoyeurLoopCentre()).StartThread();
-                Actionneur.Dumper.AddCube(Dumper.Slot.Middle, cross.GetColor(CubesCross.CubePlace.Rigth));
-                cross.RemoveCube(CubesCross.CubePlace.Rigth);
-
-                Actionneur.Harvester.DoTakeLeftCube();
-                ThreadManager.CreateThread(link => Actionneur.Dumper.DoConvoyeurLoopCentre()).StartThread();
-                Actionneur.Dumper.AddCube(Dumper.Slot.Middle, cross.GetColor(CubesCross.CubePlace.Left));
-                cross.RemoveCube(CubesCross.CubePlace.Left);
+                Actionneur.Harvester.DoTakeCubeInSlot(cross, CubesCross.CubePlace.Center, Dumper.Slot.Middle);
+                Actionneur.Harvester.DoTakeCubeInSlot(cross, CubesCross.CubePlace.Rigth, Dumper.Slot.Middle);
+                Actionneur.Harvester.DoTakeCubeInSlot(cross, CubesCross.CubePlace.Left, Dumper.Slot.Middle);
 
                 Robots.GrosRobot.Avancer(58);
-                Actionneur.Harvester.DoTakeCenterCube();
-                ThreadManager.CreateThread(link => Actionneur.Dumper.DoConvoyeurLoopDroite()).StartThread();
-                Actionneur.Dumper.AddCube(Dumper.Slot.Rigth, cross.GetColor(CubesCross.CubePlace.Top));
-                cross.RemoveCube(CubesCross.CubePlace.Top);
 
+                Actionneur.Harvester.DoTakeCubeInSlot(cross, CubesCross.CubePlace.Top, Dumper.Slot.Rigth);
+                
                 _firstCube = false;
             }
             else
             {
-                Actionneur.Harvester.DoTakeCenterCube();
-                ThreadManager.CreateThread(link => Actionneur.Dumper.DoConvoyeurLoopDroite()).StartThread();
-                Actionneur.Dumper.AddCube(Dumper.Slot.Rigth, cross.GetColor(CubesCross.CubePlace.Bottom));
-                cross.RemoveCube(CubesCross.CubePlace.Bottom);
-
+                Actionneur.Harvester.DoTakeCubeInSlot(cross, CubesCross.CubePlace.Bottom, Dumper.Slot.Rigth);
+                
                 Robots.GrosRobot.Avancer(58);
 
-                Actionneur.Harvester.DoTakeCenterCube();
-                ThreadManager.CreateThread(link => Actionneur.Dumper.DoConvoyeurLoopDroite()).StartThread();
-                Actionneur.Dumper.AddCube(Dumper.Slot.Rigth, cross.GetColor(CubesCross.CubePlace.Center));
-                cross.RemoveCube(CubesCross.CubePlace.Center);
+                Actionneur.Harvester.DoTakeCubeInSlot(cross, CubesCross.CubePlace.Center, Dumper.Slot.Rigth);
 
-                Actionneur.Harvester.DoTakeRightCube();
-                ThreadManager.CreateThread(link => Actionneur.Dumper.DoConvoyeurLoopDroite()).StartThread();
-                Actionneur.Dumper.AddCube(Dumper.Slot.Rigth, cross.GetColor(CubesCross.CubePlace.Rigth));
-                cross.RemoveCube(CubesCross.CubePlace.Rigth);
-
+                Actionneur.Harvester.DoTakeCubeInSlot(cross, CubesCross.CubePlace.Rigth, Dumper.Slot.Rigth);
+                
                 Config.CurrentConfig.ServoCoudeDroite.SendPosition(Config.CurrentConfig.ServoCoudeDroite.PositionApprocheHaute);
                 Thread.Sleep(500);
                 Config.CurrentConfig.ServoCoudeDroite.SendPosition(Config.CurrentConfig.ServoLateralGauche.PositionDroite);
@@ -189,14 +164,12 @@ namespace GoBot.Movements
 
             Element.IsAvailable = false;
         }
-
-
-            //if (Actionneur.Dumper.CanPickupCubes)
-            //{
-            //    Actionneur.Dumper.PickupCubes((CubesCross)Element, Actionneur.PatternReader.Pattern);
-            //    //Element.IsAvailable = false;
-            //}
         
+        //if (Actionneur.Dumper.CanPickupCubes)
+        //{
+        //    Actionneur.Dumper.PickupCubes((CubesCross)Element, Actionneur.PatternReader.Pattern);
+        //    //Element.IsAvailable = false;
+        //}
     }
 
     class MovementsCubesFromLeft : MovementCubes

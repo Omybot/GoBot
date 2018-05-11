@@ -169,37 +169,22 @@ namespace GoBot.IHM
 
         private void button1_Click(object sender, EventArgs e)
         {
-            ThreadManager.CreateThread(link => Actionneur.Harvester.DoTakeCenterCube()).StartThread();
         }
 
         private void button4_Click(object sender, EventArgs e)
         {
-            ThreadManager.CreateThread(link =>
-            {
-                Robots.GrosRobot.Avancer(58);
-                Actionneur.Harvester.DoTakeCenterCube();
-                }).StartThread();
         }
 
         private void button5_Click(object sender, EventArgs e)
         {
-            ThreadManager.CreateThread(link =>
-            Actionneur.Harvester.DoTakeRightCube()).StartThread();
         }
 
         private void button3_Click(object sender, EventArgs e)
         {
-            ThreadManager.CreateThread(link =>
-            Actionneur.Harvester.DoTakeLeftCube()).StartThread();
         }
 
         private void button2_Click(object sender, EventArgs e)
         {
-            ThreadManager.CreateThread(link =>
-            {
-                Robots.GrosRobot.Avancer(58);
-                Actionneur.Harvester.DoTakeCenterCube();
-            }).StartThread();
         }
     }
 }

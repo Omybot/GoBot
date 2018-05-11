@@ -21,7 +21,7 @@ namespace GoBot.GameElements
 
         public CubesTower(List<CubesCross.CubeColor> cubes) : base(new RealPoint(0, 0), Color.White, 0)
         {
-            this.cubes = new List<CubesCross.CubeColor>(cubes);
+            this.cubes = new List<CubesCross.CubeColor>(cubes.GetRange(0, Math.Min(cubes.Count, 5)));
         }
 
         public void AddCube(CubesCross.CubeColor cube)
