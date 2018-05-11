@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using GoBot.GameElements;
+using System.Threading;
 
 namespace GoBot.Movements
 {
@@ -16,12 +17,15 @@ namespace GoBot.Movements
         {
             _flower = flower;
 
-            Positions.Add(new Geometry.Position(90, flower.Position.Translation(_flower.Color == Plateau.CouleurGaucheVert ? -1100 : 1200, -115 - 350)));
+            if (flower.Color == Plateau.CouleurGaucheVert)
+                Positions.Add(new Geometry.Position(90, new Geometry.Shapes.RealPoint(250, 1750)));
+            else
+                Positions.Add(new Geometry.Position(90, new Geometry.Shapes.RealPoint(3000 - 250, 1750)));
         }
 
         public override bool CanExecute => _flower.IsAvailable;
 
-        public override double Score => 50;
+        public override int Score => 50;
 
         public override double Value => Score;
 
@@ -34,17 +38,103 @@ namespace GoBot.Movements
         protected override void MovementBegin()
         {
             // Préparer le bras pour pousser l'abeille mais sans géner le déplacement
+
         }
 
         protected override void MovementCore()
         {
             // Finir d'ouvrir le bras (on est face à l'abeille)
 
-            Robot.Avancer(150);
+            Robot.PivotDroite(180);
+            Robot.Reculer(60);
+            Robot.Lent();
+
+            Robot.Recallage(SensAR.Arriere);
+
+            Robot.Rapide();
+            Robot.Avancer(100);
+            Robot.PivotDroite(180);
+
+            if (_flower.Color == Plateau.CouleurGaucheVert)
+            {
+
+                Config.CurrentConfig.ServoCoudeDroite.SendPosition(Config.CurrentConfig.ServoCoudeDroite.PositionApprocheHaute);
+                Thread.Sleep(500);
+                Config.CurrentConfig.ServoLateralDroite.SendPosition(Config.CurrentConfig.ServoLateralDroite.PositionDroite);
+
+                Config.CurrentConfig.ServoCoudeGauche.SendPosition(Config.CurrentConfig.ServoCoudeGauche.PositionApprocheBasse);
+                Thread.Sleep(500);
+                Config.CurrentConfig.ServoPoignetGauche.SendPosition(Config.CurrentConfig.ServoPoignetGauche.PositionPrise);
+                Thread.Sleep(500);
+                Config.CurrentConfig.ServoLateralGauche.SendPosition(Config.CurrentConfig.ServoLateralGauche.PositionStockage);
+                Thread.Sleep(500);
+                Config.CurrentConfig.ServoCoudeGauche.SendPosition(Config.CurrentConfig.ServoCoudeGauche.PositionRange);
+            }
+            else
+            {
+                Config.CurrentConfig.ServoCoudeGauche.SendPosition(Config.CurrentConfig.ServoCoudeGauche.PositionApprocheHaute);
+                Thread.Sleep(500);
+                Config.CurrentConfig.ServoLateralGauche.SendPosition(Config.CurrentConfig.ServoLateralGauche.PositionStockage);
+
+                Config.CurrentConfig.ServoCoudeDroite.SendPosition(Config.CurrentConfig.ServoCoudeDroite.PositionApprocheBasse);
+                Thread.Sleep(500);
+                Config.CurrentConfig.ServoPoignetDroite.SendPosition(Config.CurrentConfig.ServoPoignetDroite.PositionPrise);
+                Thread.Sleep(500);
+                Config.CurrentConfig.ServoLateralDroite.SendPosition(Config.CurrentConfig.ServoLateralDroite.PositionDroite);
+                Thread.Sleep(500);
+                Config.CurrentConfig.ServoCoudeDroite.SendPosition(Config.CurrentConfig.ServoCoudeDroite.PositionRange);
+            }
+
+            if (_flower.Color == Plateau.CouleurGaucheVert) Robot.PivotDroite(45); else Robot.PivotGauche(45);
+            Robot.Avancer(50);
+            if (_flower.Color == Plateau.CouleurGaucheVert) Robot.PivotGauche(45); else Robot.PivotDroite(45);
+            
+            if (_flower.Color == Plateau.CouleurGaucheVert)
+            {
+                Config.CurrentConfig.ServoCoudeDroite.SendPosition(Config.CurrentConfig.ServoCoudeDroite.PositionApprocheBasse);
+                Thread.Sleep(600);
+
+                Config.CurrentConfig.ServoPoignetDroite.SendPosition((Config.CurrentConfig.ServoPoignetDroite.Minimum + Config.CurrentConfig.ServoPoignetDroite.Maximum) / 2);
+                Thread.Sleep(600);
+
+                Config.CurrentConfig.ServoLateralDroite.SendPosition(Config.CurrentConfig.ServoLateralDroite.PositionGauche);
+                Thread.Sleep(600);
+
+                Config.CurrentConfig.ServoPoignetDroite.SendPosition(Config.CurrentConfig.ServoPoignetDroite.PositionPrise);
+                Config.CurrentConfig.ServoCoudeDroite.SendPosition(Config.CurrentConfig.ServoCoudeDroite.PositionRange);
+                Thread.Sleep(600);
+            }
+            else
+            {
+
+                Config.CurrentConfig.ServoCoudeGauche.SendPosition(Config.CurrentConfig.ServoCoudeGauche.PositionApprocheBasse);
+                Thread.Sleep(600);
+
+                Config.CurrentConfig.ServoPoignetGauche.SendPosition((Config.CurrentConfig.ServoPoignetGauche.Minimum + Config.CurrentConfig.ServoPoignetGauche.Maximum) / 2);
+                Thread.Sleep(600);
+
+                Config.CurrentConfig.ServoLateralGauche.SendPosition(Config.CurrentConfig.ServoLateralGauche.PositionCentre);
+                Thread.Sleep(600);
+
+                Config.CurrentConfig.ServoPoignetGauche.SendPosition(Config.CurrentConfig.ServoPoignetGauche.PositionPrise);
+                Config.CurrentConfig.ServoCoudeGauche.SendPosition(Config.CurrentConfig.ServoCoudeGauche.PositionRange);
+                Thread.Sleep(600);
+            }
+
+            Robot.Rapide();
+
+            Robot.Reculer(200);
+            if (_flower.Color == Plateau.CouleurGaucheVert) Robot.PivotGauche(90); else Robot.PivotDroite(90);
+            Robot.Avancer(100);
+
 
             // Pousser l'abeille
 
-            Robot.Reculer(150);
+            Plateau.Score += Score;
+
+            //Robot.Reculer(150);
+
+            Robot.Rapide();
 
             _flower.IsAvailable = false;
         }

@@ -272,7 +272,7 @@ namespace GoBot
         {
             Historique.Log("Lancement pathfinding pour aller en " + dest.ToString(), TypeLog.PathFinding);
 
-            Trajectory traj = PathFinder.ChercheTrajectoire(Graph, Plateau.ListeObstacles, Position, dest, Rayon, 130);
+            Trajectory traj = PathFinder.ChercheTrajectoire(Graph, Plateau.ListeObstacles, Position, dest, Rayon, Robots.GrosRobot.Largeur / 2);
 
             if (traj == null)
                 return false;
@@ -472,7 +472,12 @@ namespace GoBot
 
         public void RangerActionneurs()
         {
+            Config.CurrentConfig.ServoBenneLiberation.SendPosition(Config.CurrentConfig.ServoBenneLiberation.PositionMaintien);
+            Config.CurrentConfig.ServoBenneOuverture.SendPosition(Config.CurrentConfig.ServoBenneOuverture.PositionFerme);
 
+            Config.CurrentConfig.MoteurElevation.SendPosition(Config.CurrentConfig.MoteurElevation.DeplacementRange);
+            Actionneur.Harvester.DoStoreArms();
+            Config.CurrentConfig.MoteurElevation.SendPosition(Config.CurrentConfig.MoteurElevation.PositionRange);
         }
 
         public void DeployerActionnneurs()

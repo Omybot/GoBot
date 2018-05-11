@@ -175,7 +175,7 @@ namespace AStarFolder
         {
             foreach (Node no in Nodes)
             {
-                if (node != no)
+                if (!node.Equals(no))
                 {
                     double distance = new RealPoint(node.Position.X, node.Position.Y).Distance(new RealPoint(no.Position.X, no.Position.Y));
                     if (distance < distanceMax)

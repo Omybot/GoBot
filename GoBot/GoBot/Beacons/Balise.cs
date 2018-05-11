@@ -267,20 +267,26 @@ namespace GoBot.Beacons
 
                             debut = debut + Position.Angle;
                             fin = fin + Position.Angle;
-                            
+
+                            Console.WriteLine(debut.ToString() + " / " + fin.ToString());
+
                             BeaconDetection detect = new BeaconDetection(this, debut, fin);
 
                             bool recalcul = false;
-                            if (detect.Distance > 600)
-                            {
-                                recalcul = true;
-                                detect.Distance = 600;
-                            }
-                            else if (detect.Distance < 300)
-                            {
-                                recalcul = true;
-                                detect.Distance = 300;
-                            }
+                            //if (detect.Distance > 1650)
+                            //{
+                            //    recalcul = true;
+                            //    detect.Distance = 1650;
+                            //}
+                            //else if (detect.Distance < 600)
+                            //{
+                            //    recalcul = true;
+                            //    detect.Distance = 600;
+                            //}
+
+                            recalcul = true;
+
+                            detect.Distance = 1200;
 
                             if (recalcul)
                             {
@@ -331,18 +337,20 @@ namespace GoBot.Beacons
                             debut = debut + Position.Angle;
                             fin = fin + Position.Angle;
 
+                            Console.WriteLine(debut.ToString() + " / " + fin.ToString());
+
                             BeaconDetection detect = new BeaconDetection(this, debut, fin);
 
                             bool recalcul = false;
-                            if (detect.Distance > 1250)
+                            if (detect.Distance > 650)
                             {
                                 recalcul = true;
-                                detect.Distance = 1250;
+                                detect.Distance = 650;
                             }
-                            else if (detect.Distance < 480)
+                            else if (detect.Distance < 300)
                             {
                                 recalcul = true;
-                                detect.Distance = 480;
+                                detect.Distance = 300;
                             }
 
                             if (recalcul)

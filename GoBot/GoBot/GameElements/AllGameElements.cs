@@ -87,11 +87,14 @@ namespace GoBot.GameElements
             {
                 List<IShape> obstacles = new List<IShape>();
 
-                foreach (CubesCross cross in CubesCrosses)
+                if (Plateau.Strategy != null && Plateau.Strategy.AvoidElements)
                 {
-                    if(cross.IsAvailable && cross.CubesCount > 2)
+                    foreach (CubesCross cross in CubesCrosses)
                     {
-                        obstacles.Add(cross.AsObstacle);
+                        if (cross.IsAvailable && cross.CubesCount > 2)
+                        {
+                            obstacles.Add(cross.AsObstacle);
+                        }
                     }
                 }
 

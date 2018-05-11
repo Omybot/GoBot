@@ -30,12 +30,12 @@
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(PanelGrosRobotUtilisation));
             this.groupBoxUtilisation = new Composants.GroupBoxPlus();
+            this.button5 = new System.Windows.Forms.Button();
+            this.button4 = new System.Windows.Forms.Button();
+            this.button3 = new System.Windows.Forms.Button();
+            this.button2 = new System.Windows.Forms.Button();
+            this.button1 = new System.Windows.Forms.Button();
             this.grpBenne = new System.Windows.Forms.GroupBox();
-            this.groupBox1 = new System.Windows.Forms.GroupBox();
-            this.grpArmLeft = new System.Windows.Forms.GroupBox();
-            this.grpConv = new System.Windows.Forms.GroupBox();
-            this.panelActionneursOnOff1 = new GoBot.IHM.PanelActionneursOnOff();
-            this.btnDiagnostic = new System.Windows.Forms.Button();
             this.btnBenneHandle = new System.Windows.Forms.Button();
             this.btnBenneLiberation = new System.Windows.Forms.Button();
             this.btnGateClose = new System.Windows.Forms.Button();
@@ -46,23 +46,13 @@
             this.btnBenneBuild = new System.Windows.Forms.Button();
             this.btnBenneKeepStored = new System.Windows.Forms.Button();
             this.btnBenneStore = new System.Windows.Forms.Button();
+            this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.btnLeftPumpEnable = new System.Windows.Forms.Button();
             this.btnLeftPumDisable = new System.Windows.Forms.Button();
-            this.btnLeftArmStorage = new System.Windows.Forms.Button();
-            this.btnLeftArmLeftCube = new System.Windows.Forms.Button();
-            this.btnLeftArmCenterCube = new System.Windows.Forms.Button();
-            this.btnLeftArmRightCube = new System.Windows.Forms.Button();
-            this.btnLeftArmLeftSlot = new System.Windows.Forms.Button();
-            this.btnLeftArmCenterSlot = new System.Windows.Forms.Button();
-            this.btnLeftArmRightSlot = new System.Windows.Forms.Button();
+            this.grpArmLeft = new System.Windows.Forms.GroupBox();
             this.btnRightPumpOff = new System.Windows.Forms.Button();
             this.btnRightPumpOn = new System.Windows.Forms.Button();
-            this.btnRightArmLeftCube = new System.Windows.Forms.Button();
-            this.btnRightArmCenterCube = new System.Windows.Forms.Button();
-            this.btnRightArmRightCube = new System.Windows.Forms.Button();
-            this.btnRightArmLeftSlot = new System.Windows.Forms.Button();
-            this.btnRightArmCenterSlot = new System.Windows.Forms.Button();
-            this.btnRightArmRightSLot = new System.Windows.Forms.Button();
+            this.grpConv = new System.Windows.Forms.GroupBox();
             this.btnConvAllOut = new System.Windows.Forms.Button();
             this.btnConvAllIn = new System.Windows.Forms.Button();
             this.btnConvLeftOut = new System.Windows.Forms.Button();
@@ -71,6 +61,8 @@
             this.btnConvCenterOut = new System.Windows.Forms.Button();
             this.btnConvRightOut = new System.Windows.Forms.Button();
             this.btnConvCenterIn = new System.Windows.Forms.Button();
+            this.panelActionneursOnOff1 = new GoBot.IHM.PanelActionneursOnOff();
+            this.btnDiagnostic = new System.Windows.Forms.Button();
             this.groupBoxUtilisation.SuspendLayout();
             this.grpBenne.SuspendLayout();
             this.groupBox1.SuspendLayout();
@@ -80,6 +72,11 @@
             // 
             // groupBoxUtilisation
             // 
+            this.groupBoxUtilisation.Controls.Add(this.button5);
+            this.groupBoxUtilisation.Controls.Add(this.button4);
+            this.groupBoxUtilisation.Controls.Add(this.button3);
+            this.groupBoxUtilisation.Controls.Add(this.button2);
+            this.groupBoxUtilisation.Controls.Add(this.button1);
             this.groupBoxUtilisation.Controls.Add(this.grpBenne);
             this.groupBoxUtilisation.Controls.Add(this.groupBox1);
             this.groupBoxUtilisation.Controls.Add(this.grpArmLeft);
@@ -92,6 +89,56 @@
             this.groupBoxUtilisation.TabIndex = 1;
             this.groupBoxUtilisation.TabStop = false;
             this.groupBoxUtilisation.Text = "Utilisation";
+            // 
+            // button5
+            // 
+            this.button5.Location = new System.Drawing.Point(284, 242);
+            this.button5.Name = "button5";
+            this.button5.Size = new System.Drawing.Size(23, 23);
+            this.button5.TabIndex = 224;
+            this.button5.Text = "3";
+            this.button5.UseVisualStyleBackColor = true;
+            this.button5.Click += new System.EventHandler(this.button5_Click);
+            // 
+            // button4
+            // 
+            this.button4.Location = new System.Drawing.Point(284, 217);
+            this.button4.Name = "button4";
+            this.button4.Size = new System.Drawing.Size(23, 23);
+            this.button4.TabIndex = 223;
+            this.button4.Text = "2";
+            this.button4.UseVisualStyleBackColor = true;
+            this.button4.Click += new System.EventHandler(this.button4_Click);
+            // 
+            // button3
+            // 
+            this.button3.Location = new System.Drawing.Point(284, 191);
+            this.button3.Name = "button3";
+            this.button3.Size = new System.Drawing.Size(23, 23);
+            this.button3.TabIndex = 222;
+            this.button3.Text = "4";
+            this.button3.UseVisualStyleBackColor = true;
+            this.button3.Click += new System.EventHandler(this.button3_Click);
+            // 
+            // button2
+            // 
+            this.button2.Location = new System.Drawing.Point(309, 217);
+            this.button2.Name = "button2";
+            this.button2.Size = new System.Drawing.Size(23, 23);
+            this.button2.TabIndex = 221;
+            this.button2.Text = "5";
+            this.button2.UseVisualStyleBackColor = true;
+            this.button2.Click += new System.EventHandler(this.button2_Click);
+            // 
+            // button1
+            // 
+            this.button1.Location = new System.Drawing.Point(260, 217);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(23, 23);
+            this.button1.TabIndex = 220;
+            this.button1.Text = "1";
+            this.button1.UseVisualStyleBackColor = true;
+            this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
             // grpBenne
             // 
@@ -111,75 +158,6 @@
             this.grpBenne.TabIndex = 219;
             this.grpBenne.TabStop = false;
             this.grpBenne.Text = "Benne";
-            // 
-            // groupBox1
-            // 
-            this.groupBox1.Controls.Add(this.btnLeftPumpEnable);
-            this.groupBox1.Controls.Add(this.btnLeftPumDisable);
-            this.groupBox1.Controls.Add(this.btnLeftArmStorage);
-            this.groupBox1.Controls.Add(this.btnLeftArmLeftCube);
-            this.groupBox1.Controls.Add(this.btnLeftArmCenterCube);
-            this.groupBox1.Controls.Add(this.btnLeftArmRightCube);
-            this.groupBox1.Controls.Add(this.btnLeftArmLeftSlot);
-            this.groupBox1.Controls.Add(this.btnLeftArmCenterSlot);
-            this.groupBox1.Controls.Add(this.btnLeftArmRightSlot);
-            this.groupBox1.Location = new System.Drawing.Point(130, 171);
-            this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(118, 128);
-            this.groupBox1.TabIndex = 218;
-            this.groupBox1.TabStop = false;
-            this.groupBox1.Text = "Bras gauche";
-            // 
-            // grpArmLeft
-            // 
-            this.grpArmLeft.Controls.Add(this.btnRightPumpOff);
-            this.grpArmLeft.Controls.Add(this.btnRightPumpOn);
-            this.grpArmLeft.Controls.Add(this.btnRightArmLeftCube);
-            this.grpArmLeft.Controls.Add(this.btnRightArmCenterCube);
-            this.grpArmLeft.Controls.Add(this.btnRightArmRightCube);
-            this.grpArmLeft.Controls.Add(this.btnRightArmLeftSlot);
-            this.grpArmLeft.Controls.Add(this.btnRightArmCenterSlot);
-            this.grpArmLeft.Controls.Add(this.btnRightArmRightSLot);
-            this.grpArmLeft.Location = new System.Drawing.Point(6, 171);
-            this.grpArmLeft.Name = "grpArmLeft";
-            this.grpArmLeft.Size = new System.Drawing.Size(118, 128);
-            this.grpArmLeft.TabIndex = 213;
-            this.grpArmLeft.TabStop = false;
-            this.grpArmLeft.Text = "Bras droite";
-            // 
-            // grpConv
-            // 
-            this.grpConv.Controls.Add(this.btnConvAllOut);
-            this.grpConv.Controls.Add(this.btnConvAllIn);
-            this.grpConv.Controls.Add(this.btnConvLeftOut);
-            this.grpConv.Controls.Add(this.btnConvRightIn);
-            this.grpConv.Controls.Add(this.btnConvLeftIn);
-            this.grpConv.Controls.Add(this.btnConvCenterOut);
-            this.grpConv.Controls.Add(this.btnConvRightOut);
-            this.grpConv.Controls.Add(this.btnConvCenterIn);
-            this.grpConv.Location = new System.Drawing.Point(6, 40);
-            this.grpConv.Name = "grpConv";
-            this.grpConv.Size = new System.Drawing.Size(118, 125);
-            this.grpConv.TabIndex = 212;
-            this.grpConv.TabStop = false;
-            this.grpConv.Text = "Convoyeur";
-            // 
-            // panelActionneursOnOff1
-            // 
-            this.panelActionneursOnOff1.Location = new System.Drawing.Point(6, 305);
-            this.panelActionneursOnOff1.Name = "panelActionneursOnOff1";
-            this.panelActionneursOnOff1.Size = new System.Drawing.Size(320, 64);
-            this.panelActionneursOnOff1.TabIndex = 202;
-            // 
-            // btnDiagnostic
-            // 
-            this.btnDiagnostic.Location = new System.Drawing.Point(130, 11);
-            this.btnDiagnostic.Name = "btnDiagnostic";
-            this.btnDiagnostic.Size = new System.Drawing.Size(75, 23);
-            this.btnDiagnostic.TabIndex = 201;
-            this.btnDiagnostic.Text = "Diagnostic";
-            this.btnDiagnostic.UseVisualStyleBackColor = true;
-            this.btnDiagnostic.Click += new System.EventHandler(this.btnDiagnostic_Click);
             // 
             // btnBenneHandle
             // 
@@ -281,6 +259,17 @@
             this.btnBenneStore.UseVisualStyleBackColor = true;
             this.btnBenneStore.Click += new System.EventHandler(this.btnBenneStore_Click);
             // 
+            // groupBox1
+            // 
+            this.groupBox1.Controls.Add(this.btnLeftPumpEnable);
+            this.groupBox1.Controls.Add(this.btnLeftPumDisable);
+            this.groupBox1.Location = new System.Drawing.Point(130, 171);
+            this.groupBox1.Name = "groupBox1";
+            this.groupBox1.Size = new System.Drawing.Size(118, 128);
+            this.groupBox1.TabIndex = 218;
+            this.groupBox1.TabStop = false;
+            this.groupBox1.Text = "Bras gauche";
+            // 
             // btnLeftPumpEnable
             // 
             this.btnLeftPumpEnable.Image = global::GoBot.Properties.Resources.Pump16;
@@ -301,75 +290,16 @@
             this.btnLeftPumDisable.UseVisualStyleBackColor = true;
             this.btnLeftPumDisable.Click += new System.EventHandler(this.btnLeftPumDisable_Click);
             // 
-            // btnLeftArmStorage
+            // grpArmLeft
             // 
-            this.btnLeftArmStorage.Image = global::GoBot.Properties.Resources.Close16;
-            this.btnLeftArmStorage.Location = new System.Drawing.Point(93, 57);
-            this.btnLeftArmStorage.Name = "btnLeftArmStorage";
-            this.btnLeftArmStorage.Size = new System.Drawing.Size(23, 30);
-            this.btnLeftArmStorage.TabIndex = 218;
-            this.btnLeftArmStorage.UseVisualStyleBackColor = true;
-            this.btnLeftArmStorage.Click += new System.EventHandler(this.btnLeftArmStorage_Click);
-            // 
-            // btnLeftArmLeftCube
-            // 
-            this.btnLeftArmLeftCube.Image = global::GoBot.Properties.Resources.DownGreen16;
-            this.btnLeftArmLeftCube.Location = new System.Drawing.Point(64, 71);
-            this.btnLeftArmLeftCube.Name = "btnLeftArmLeftCube";
-            this.btnLeftArmLeftCube.Size = new System.Drawing.Size(23, 30);
-            this.btnLeftArmLeftCube.TabIndex = 217;
-            this.btnLeftArmLeftCube.UseVisualStyleBackColor = true;
-            this.btnLeftArmLeftCube.Click += new System.EventHandler(this.btnLeftArmLeftCube_Click);
-            // 
-            // btnLeftArmCenterCube
-            // 
-            this.btnLeftArmCenterCube.Image = global::GoBot.Properties.Resources.DownGreen16;
-            this.btnLeftArmCenterCube.Location = new System.Drawing.Point(35, 71);
-            this.btnLeftArmCenterCube.Name = "btnLeftArmCenterCube";
-            this.btnLeftArmCenterCube.Size = new System.Drawing.Size(23, 30);
-            this.btnLeftArmCenterCube.TabIndex = 216;
-            this.btnLeftArmCenterCube.UseVisualStyleBackColor = true;
-            this.btnLeftArmCenterCube.Click += new System.EventHandler(this.btnLeftArmCenterCube_Click);
-            // 
-            // btnLeftArmRightCube
-            // 
-            this.btnLeftArmRightCube.Image = global::GoBot.Properties.Resources.DownGreen16;
-            this.btnLeftArmRightCube.Location = new System.Drawing.Point(6, 71);
-            this.btnLeftArmRightCube.Name = "btnLeftArmRightCube";
-            this.btnLeftArmRightCube.Size = new System.Drawing.Size(23, 30);
-            this.btnLeftArmRightCube.TabIndex = 215;
-            this.btnLeftArmRightCube.UseVisualStyleBackColor = true;
-            this.btnLeftArmRightCube.Click += new System.EventHandler(this.btnLeftArmRightCube_Click);
-            // 
-            // btnLeftArmLeftSlot
-            // 
-            this.btnLeftArmLeftSlot.Image = global::GoBot.Properties.Resources.UpGreen16;
-            this.btnLeftArmLeftSlot.Location = new System.Drawing.Point(64, 42);
-            this.btnLeftArmLeftSlot.Name = "btnLeftArmLeftSlot";
-            this.btnLeftArmLeftSlot.Size = new System.Drawing.Size(23, 30);
-            this.btnLeftArmLeftSlot.TabIndex = 214;
-            this.btnLeftArmLeftSlot.UseVisualStyleBackColor = true;
-            this.btnLeftArmLeftSlot.Click += new System.EventHandler(this.btnLeftArmLeftSlot_Click);
-            // 
-            // btnLeftArmCenterSlot
-            // 
-            this.btnLeftArmCenterSlot.Image = global::GoBot.Properties.Resources.UpGreen16;
-            this.btnLeftArmCenterSlot.Location = new System.Drawing.Point(35, 42);
-            this.btnLeftArmCenterSlot.Name = "btnLeftArmCenterSlot";
-            this.btnLeftArmCenterSlot.Size = new System.Drawing.Size(23, 30);
-            this.btnLeftArmCenterSlot.TabIndex = 213;
-            this.btnLeftArmCenterSlot.UseVisualStyleBackColor = true;
-            this.btnLeftArmCenterSlot.Click += new System.EventHandler(this.btnLeftArmCenterSlot_Click);
-            // 
-            // btnLeftArmRightSlot
-            // 
-            this.btnLeftArmRightSlot.Image = global::GoBot.Properties.Resources.UpGreen16;
-            this.btnLeftArmRightSlot.Location = new System.Drawing.Point(6, 42);
-            this.btnLeftArmRightSlot.Name = "btnLeftArmRightSlot";
-            this.btnLeftArmRightSlot.Size = new System.Drawing.Size(23, 30);
-            this.btnLeftArmRightSlot.TabIndex = 212;
-            this.btnLeftArmRightSlot.UseVisualStyleBackColor = true;
-            this.btnLeftArmRightSlot.Click += new System.EventHandler(this.btnLeftArmRightSlot_Click);
+            this.grpArmLeft.Controls.Add(this.btnRightPumpOff);
+            this.grpArmLeft.Controls.Add(this.btnRightPumpOn);
+            this.grpArmLeft.Location = new System.Drawing.Point(6, 171);
+            this.grpArmLeft.Name = "grpArmLeft";
+            this.grpArmLeft.Size = new System.Drawing.Size(118, 128);
+            this.grpArmLeft.TabIndex = 213;
+            this.grpArmLeft.TabStop = false;
+            this.grpArmLeft.Text = "Bras droite";
             // 
             // btnRightPumpOff
             // 
@@ -391,65 +321,22 @@
             this.btnRightPumpOn.UseVisualStyleBackColor = true;
             this.btnRightPumpOn.Click += new System.EventHandler(this.btnRightPumpOn_Click);
             // 
-            // btnRightArmLeftCube
+            // grpConv
             // 
-            this.btnRightArmLeftCube.Image = global::GoBot.Properties.Resources.DownGreen16;
-            this.btnRightArmLeftCube.Location = new System.Drawing.Point(78, 71);
-            this.btnRightArmLeftCube.Name = "btnRightArmLeftCube";
-            this.btnRightArmLeftCube.Size = new System.Drawing.Size(23, 30);
-            this.btnRightArmLeftCube.TabIndex = 217;
-            this.btnRightArmLeftCube.UseVisualStyleBackColor = true;
-            this.btnRightArmLeftCube.Click += new System.EventHandler(this.btnRightArmLeftCube_Click);
-            // 
-            // btnRightArmCenterCube
-            // 
-            this.btnRightArmCenterCube.Image = global::GoBot.Properties.Resources.DownGreen16;
-            this.btnRightArmCenterCube.Location = new System.Drawing.Point(49, 71);
-            this.btnRightArmCenterCube.Name = "btnRightArmCenterCube";
-            this.btnRightArmCenterCube.Size = new System.Drawing.Size(23, 30);
-            this.btnRightArmCenterCube.TabIndex = 216;
-            this.btnRightArmCenterCube.UseVisualStyleBackColor = true;
-            this.btnRightArmCenterCube.Click += new System.EventHandler(this.btnRightArmCenterCube_Click);
-            // 
-            // btnRightArmRightCube
-            // 
-            this.btnRightArmRightCube.Image = global::GoBot.Properties.Resources.DownGreen16;
-            this.btnRightArmRightCube.Location = new System.Drawing.Point(20, 71);
-            this.btnRightArmRightCube.Name = "btnRightArmRightCube";
-            this.btnRightArmRightCube.Size = new System.Drawing.Size(23, 30);
-            this.btnRightArmRightCube.TabIndex = 215;
-            this.btnRightArmRightCube.UseVisualStyleBackColor = true;
-            this.btnRightArmRightCube.Click += new System.EventHandler(this.btnRightArmRightCube_Click);
-            // 
-            // btnRightArmLeftSlot
-            // 
-            this.btnRightArmLeftSlot.Image = global::GoBot.Properties.Resources.UpGreen16;
-            this.btnRightArmLeftSlot.Location = new System.Drawing.Point(78, 42);
-            this.btnRightArmLeftSlot.Name = "btnRightArmLeftSlot";
-            this.btnRightArmLeftSlot.Size = new System.Drawing.Size(23, 30);
-            this.btnRightArmLeftSlot.TabIndex = 214;
-            this.btnRightArmLeftSlot.UseVisualStyleBackColor = true;
-            this.btnRightArmLeftSlot.Click += new System.EventHandler(this.btnRightArmLeftSlot_Click);
-            // 
-            // btnRightArmCenterSlot
-            // 
-            this.btnRightArmCenterSlot.Image = global::GoBot.Properties.Resources.UpGreen16;
-            this.btnRightArmCenterSlot.Location = new System.Drawing.Point(49, 42);
-            this.btnRightArmCenterSlot.Name = "btnRightArmCenterSlot";
-            this.btnRightArmCenterSlot.Size = new System.Drawing.Size(23, 30);
-            this.btnRightArmCenterSlot.TabIndex = 213;
-            this.btnRightArmCenterSlot.UseVisualStyleBackColor = true;
-            this.btnRightArmCenterSlot.Click += new System.EventHandler(this.btnRightArmCenterSlot_Click);
-            // 
-            // btnRightArmRightSLot
-            // 
-            this.btnRightArmRightSLot.Image = global::GoBot.Properties.Resources.UpGreen16;
-            this.btnRightArmRightSLot.Location = new System.Drawing.Point(20, 42);
-            this.btnRightArmRightSLot.Name = "btnRightArmRightSLot";
-            this.btnRightArmRightSLot.Size = new System.Drawing.Size(23, 30);
-            this.btnRightArmRightSLot.TabIndex = 212;
-            this.btnRightArmRightSLot.UseVisualStyleBackColor = true;
-            this.btnRightArmRightSLot.Click += new System.EventHandler(this.btnRightArmRightSLot_Click);
+            this.grpConv.Controls.Add(this.btnConvAllOut);
+            this.grpConv.Controls.Add(this.btnConvAllIn);
+            this.grpConv.Controls.Add(this.btnConvLeftOut);
+            this.grpConv.Controls.Add(this.btnConvRightIn);
+            this.grpConv.Controls.Add(this.btnConvLeftIn);
+            this.grpConv.Controls.Add(this.btnConvCenterOut);
+            this.grpConv.Controls.Add(this.btnConvRightOut);
+            this.grpConv.Controls.Add(this.btnConvCenterIn);
+            this.grpConv.Location = new System.Drawing.Point(6, 40);
+            this.grpConv.Name = "grpConv";
+            this.grpConv.Size = new System.Drawing.Size(118, 125);
+            this.grpConv.TabIndex = 212;
+            this.grpConv.TabStop = false;
+            this.grpConv.Text = "Convoyeur";
             // 
             // btnConvAllOut
             // 
@@ -531,6 +418,23 @@
             this.btnConvCenterIn.UseVisualStyleBackColor = true;
             this.btnConvCenterIn.Click += new System.EventHandler(this.btnConvCenterIn_Click);
             // 
+            // panelActionneursOnOff1
+            // 
+            this.panelActionneursOnOff1.Location = new System.Drawing.Point(6, 305);
+            this.panelActionneursOnOff1.Name = "panelActionneursOnOff1";
+            this.panelActionneursOnOff1.Size = new System.Drawing.Size(320, 64);
+            this.panelActionneursOnOff1.TabIndex = 202;
+            // 
+            // btnDiagnostic
+            // 
+            this.btnDiagnostic.Location = new System.Drawing.Point(130, 11);
+            this.btnDiagnostic.Name = "btnDiagnostic";
+            this.btnDiagnostic.Size = new System.Drawing.Size(75, 23);
+            this.btnDiagnostic.TabIndex = 201;
+            this.btnDiagnostic.Text = "Diagnostic";
+            this.btnDiagnostic.UseVisualStyleBackColor = true;
+            this.btnDiagnostic.Click += new System.EventHandler(this.btnDiagnostic_Click);
+            // 
             // PanelGrosRobotUtilisation
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -565,22 +469,9 @@
         private System.Windows.Forms.Button btnConvCenterOut;
         private System.Windows.Forms.GroupBox grpConv;
         private System.Windows.Forms.GroupBox groupBox1;
-        private System.Windows.Forms.Button btnLeftArmStorage;
-        private System.Windows.Forms.Button btnLeftArmLeftCube;
-        private System.Windows.Forms.Button btnLeftArmCenterCube;
-        private System.Windows.Forms.Button btnLeftArmRightCube;
-        private System.Windows.Forms.Button btnLeftArmLeftSlot;
-        private System.Windows.Forms.Button btnLeftArmCenterSlot;
-        private System.Windows.Forms.Button btnLeftArmRightSlot;
         private System.Windows.Forms.GroupBox grpArmLeft;
         private System.Windows.Forms.Button btnRightPumpOff;
         private System.Windows.Forms.Button btnRightPumpOn;
-        private System.Windows.Forms.Button btnRightArmLeftCube;
-        private System.Windows.Forms.Button btnRightArmCenterCube;
-        private System.Windows.Forms.Button btnRightArmRightCube;
-        private System.Windows.Forms.Button btnRightArmLeftSlot;
-        private System.Windows.Forms.Button btnRightArmCenterSlot;
-        private System.Windows.Forms.Button btnRightArmRightSLot;
         private System.Windows.Forms.Button btnLeftPumpEnable;
         private System.Windows.Forms.Button btnLeftPumDisable;
         private System.Windows.Forms.GroupBox grpBenne;
@@ -594,5 +485,10 @@
         private System.Windows.Forms.Button btnGateOpen;
         private System.Windows.Forms.Button btnBenneHandle;
         private System.Windows.Forms.Button btnBenneLiberation;
+        private System.Windows.Forms.Button button5;
+        private System.Windows.Forms.Button button4;
+        private System.Windows.Forms.Button button3;
+        private System.Windows.Forms.Button button2;
+        private System.Windows.Forms.Button button1;
     }
 }

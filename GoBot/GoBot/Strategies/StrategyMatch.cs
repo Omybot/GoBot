@@ -6,6 +6,7 @@ using System.Threading;
 using System.Windows.Forms;
 
 using GoBot.Movements;
+using GoBot.Threading;
 
 namespace GoBot.Strategies
 {
@@ -13,22 +14,55 @@ namespace GoBot.Strategies
     {
         private List<Movement> fixedMovements;
 
+        public override bool AvoidElements => false;
+
         protected override void SequenceBegin()
         {
             fixedMovements = new List<Movement>();
+
+            // Sortir ICI de la zonde de départ
+
+            Plateau.Score += 10;
+
+            ThreadManager.CreateThread(link => InitArms()).StartThread();
+
+            Robots.GrosRobot.Avancer(50);
+
+            if (Plateau.NotreCouleur == Plateau.CouleurGaucheVert)
+                Robots.GrosRobot.PivotDroite(5);
+            else
+                Robots.GrosRobot.PivotGauche(5);
+
+            Robots.GrosRobot.Avancer(900);
 
             // Ajouter ICI l'ordre de la strat fixe avant détection d'adversaire
 
             if (Plateau.NotreCouleur == Plateau.CouleurGaucheVert)
             {
+                new MovementDomoticBoard(Plateau.Elements.DomoticBoards[0]).Execute();
                 //fixedMovements.Add(new MouvementFusee(1));
             }
             else
             {
+                new MovementDomoticBoard(Plateau.Elements.DomoticBoards[1]).Execute();
                 //fixedMovements.Add(new MouvementFusee(2));
             }
+        }
 
-            // Sortir ICI de la zonde de départ
+        private void InitArms()
+        {
+
+            Config.CurrentConfig.ServoCoudeGauche.SendPosition(Config.CurrentConfig.ServoCoudeGauche.PositionApprocheHaute);
+            Config.CurrentConfig.ServoCoudeDroite.SendPosition(Config.CurrentConfig.ServoCoudeDroite.PositionApprocheHaute);
+            Thread.Sleep(500);
+            Config.CurrentConfig.ServoLateralGauche.SendPosition(Config.CurrentConfig.ServoLateralGauche.PositionStockage);
+            Config.CurrentConfig.ServoLateralDroite.SendPosition(Config.CurrentConfig.ServoLateralDroite.PositionDroite);
+            Config.CurrentConfig.ServoPoignetDroite.SendPosition(Config.CurrentConfig.ServoPoignetDroite.PositionPrise);
+            Config.CurrentConfig.ServoPoignetGauche.SendPosition(Config.CurrentConfig.ServoPoignetGauche.PositionPrise);
+            Thread.Sleep(500);
+            Config.CurrentConfig.ServoCoudeDroite.SendPosition(Config.CurrentConfig.ServoCoudeDroite.PositionRange);
+            Config.CurrentConfig.ServoCoudeGauche.SendPosition(Config.CurrentConfig.ServoCoudeGauche.PositionRange);
+
         }
 
         protected override void SequenceCore()

@@ -12,6 +12,8 @@ namespace GoBot.Strategies
     {
         List<Movement> mouvements;
 
+        public override bool AvoidElements => false;
+
         protected override void SequenceBegin()
         {
             List<Movement> mouvements = new List<Movement>();

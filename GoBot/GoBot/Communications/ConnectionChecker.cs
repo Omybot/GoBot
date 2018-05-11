@@ -87,7 +87,7 @@ namespace GoBot.Communications
         public void CheckConnection()
         {
             UpdateStatus();
-            SendConnectionTest?.Invoke(AttachedConnection);
+            SendConnectionTest?.Invoke(AttachedConnection); 
         }
 
         /// <summary>

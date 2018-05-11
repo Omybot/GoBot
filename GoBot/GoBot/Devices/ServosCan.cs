@@ -43,7 +43,10 @@ namespace GoBot.Devices
             TorqueMaxResponse = 0x0E,
             TorqueMaxSet = 0x0F,
             TorqueCurrentAsk = 0x10,
-            TorqueCurrentResponse = 0x11
+            TorqueCurrentResponse = 0x11,
+            TrajectorySet = 0x15,
+
+            SetScore = 0xA0
         }
 
         public ServosCan(Board board)
@@ -64,7 +67,14 @@ namespace GoBot.Devices
             if (!Execution.DesignMode)
             {
                 Connections.BoardConnection[_board].FrameReceived += board_FrameReceived;
+
+                Plateau.ScoreChange += Plateau_ScoreChange;
             }
+        }
+
+        private void Plateau_ScoreChange(object sender, EventArgs e)
+        {
+            SetScore(Plateau.Score);
         }
 
         private void board_FrameReceived(Frame frame)
@@ -338,6 +348,42 @@ namespace GoBot.Devices
             tab[4] = (byte)(id % 4);
             tab[5] = ByteDivide(torque, true);
             tab[6] = ByteDivide(torque, false);
+            tab[7] = 0;
+            tab[8] = 0;
+            tab[9] = Checksum(tab);
+
+            SendFrame(new Frame(tab));
+        }
+
+        public void SetTrajectory(int id, int position, int speed, int accel)
+        {
+            byte[] tab = new byte[10];
+
+            tab[0] = ByteDivide(id / 4, true);
+            tab[1] = ByteDivide(id / 4, false);
+            tab[2] = (byte)_framesCount;
+            tab[3] = (byte)ServosCanFunctions.TrajectorySet;
+            tab[4] = (byte)(id % 4);
+            tab[5] = ByteDivide(position, true);
+            tab[6] = ByteDivide(position, false);
+            tab[7] = ByteDivide(speed, true);
+            tab[8] = ByteDivide(speed, true);
+            tab[9] = (byte)accel;
+
+            SendFrame(new Frame(tab));
+        }
+
+        public void SetScore(int score)
+        {
+            byte[] tab = new byte[10];
+
+            tab[0] = 0x00;
+            tab[1] = 0x04;
+            tab[2] = (byte)_framesCount;
+            tab[3] = (byte)ServosCanFunctions.SetScore;
+            tab[4] = 0x00;
+            tab[5] = ByteDivide(score, true);
+            tab[6] = ByteDivide(score, false);
             tab[7] = 0;
             tab[8] = 0;
             tab[9] = Checksum(tab);

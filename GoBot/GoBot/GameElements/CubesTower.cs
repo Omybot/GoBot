@@ -66,9 +66,9 @@ namespace GoBot.GameElements
             {
                 int total = 0;
 
-                for(int i = 1; i <= 5; i++)
-                    if (cubes.Count >= i)
-                        total += i;
+                for(int i = 0; i < 5; i++)
+                    if (cubes.Count > i)
+                        total += (i + 1);
 
                 if (this.ContainsPattern)
                     total += 30;

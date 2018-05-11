@@ -12,6 +12,7 @@ using GoBot.Actionneurs;
 using GoBot.Geometry;
 using AStarFolder;
 using GoBot.Threading;
+using System.Diagnostics;
 
 namespace GoBot.Strategies
 {
@@ -19,6 +20,8 @@ namespace GoBot.Strategies
     {
         private System.Timers.Timer endMatchTimer;
         private ThreadLink _linkMatch;
+
+        public abstract bool AvoidElements { get; }
 
         /// <summary>
         /// Obtient ou définit la durée d'un match
@@ -62,7 +65,14 @@ namespace GoBot.Strategies
         /// </summary>
         public Strategy()
         {
-            MatchDuration = new TimeSpan(0, 0, 100);
+            if (Debugger.IsAttached)
+            {
+                MatchDuration = new TimeSpan(0, 0, 1000);
+            }
+            else
+            {
+                MatchDuration = new TimeSpan(0, 0, 100);
+            }
 
             Plateau.PoidActions = new PoidsTest();
             Movements = new List<Movement>();
@@ -173,6 +183,11 @@ namespace GoBot.Strategies
         {
             // Couper ICI tous les actionneurs à la fin du match et lancer la Funny Action
 
+            Actionneur.Harvester.DoLeftPumpDisable();
+            Actionneur.Harvester.DoRightPumpDisable();
+            Actionneur.Dumper.DoOpenGates();
+            Actionneur.Dumper.DoLibereTours();
+            Actionneur.Dumper.DoCoupeBenne();
             Robots.GrosRobot.Stop(StopMode.Freely);
             Plateau.Balise.VitesseRotation(0);
         }

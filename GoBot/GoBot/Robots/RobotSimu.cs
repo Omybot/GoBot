@@ -246,7 +246,7 @@ namespace GoBot
                         }
                         else
                         {
-                            Position.Angle.Turn(diff);
+                            Position.Copy(Destination);
                         }
 
                         OnPositionChange(Position);
@@ -442,20 +442,7 @@ namespace GoBot
         {
             Historique = new Historique(IDRobot);
             HistoriqueCoordonnees = new List<Position>();
-            if (this == Robots.GrosRobot)
-            {
-                if (Plateau.NotreCouleur == Plateau.CouleurGaucheVert)
-                    Position = new Position(new Angle(0, AnglyeType.Degre), new RealPoint(240, 1000));
-                else
-                    Position = new Position(new Angle(180, AnglyeType.Degre), new RealPoint(3000 - 240, 1000));
-            }
-            else
-            {
-                if (Plateau.NotreCouleur == Plateau.CouleurGaucheVert)
-                    Position = new Position(new Angle(0, AnglyeType.Degre), new RealPoint(480, 1000));
-                else
-                    Position = new Position(new Angle(180, AnglyeType.Degre), new RealPoint(3000 - 480, 1000));
-            }
+            Position = new Position(Recallages.PositionDepart);
 
             PositionCible = null;
         }

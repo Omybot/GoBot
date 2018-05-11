@@ -6,11 +6,14 @@ using GoBot.Communications;
 using System.Drawing;
 using System.Threading;
 using GoBot.Actionneurs;
+using GoBot.Threading;
 
 namespace GoBot.Devices
 {
     public class RecGoBot
     {
+        private bool _switch1, _switch2, _switch3, _switch4;
+
         public delegate void ButtonChangeDelegate(CapteurOnOffID btn, Boolean state);
         public event ButtonChangeDelegate ButtonChange;
 
@@ -50,7 +53,7 @@ namespace GoBot.Devices
                 conLed.ConnectionChecker.SendConnectionTest += ConnexionCheck_SendConnectionTest;
                 led++;
             }
-            
+
             ledsStatus = new Dictionary<LedID, LedStatus>();
             for (LedID i = 0; i <= (LedID)15; i++)
                 ledsStatus.Add(i, LedStatus.Off);
@@ -59,12 +62,33 @@ namespace GoBot.Devices
 
         }
 
+        private int _toggleBtn1;
         private void Button1Click()
         {
+            if (_toggleBtn1 == 0)
+            {
+                Actionneur.Harvester.DoLeftPumpEnable();
+                Config.CurrentConfig.ServoCoudeGauche.SendPosition(Config.CurrentConfig.ServoCoudeGauche.PositionApprocheBasse);
+                Config.CurrentConfig.ServoPoignetGauche.SendPosition(Config.CurrentConfig.ServoPoignetGauche.PositionPrise);
+            }
+            if (_toggleBtn1 == 1)
+            {
+                Actionneur.Harvester.DoTakeCubeOnLeftArm();
+                //Actionneur.Dumper.DoConvoyeurLoopCentre();
+            }
+
+            _toggleBtn1++;
+            _toggleBtn1 = _toggleBtn1 % 2;
+
         }
         private void Button2Click()
         {
-
+            ThreadManager.CreateThread(link =>
+            {
+                Robots.GrosRobot.RangerActionneurs();
+                Thread.Sleep(1000);
+                Recallages.RecallageGrosRobot();
+            }).StartThread();
         }
         private void Button3Click()
         {
@@ -88,10 +112,16 @@ namespace GoBot.Devices
         private bool _toggleBtn9;
         private void Button9Click()
         {
-            if(_toggleBtn9)
+            if (_toggleBtn9)
+            {
                 Actionneur.Harvester.DoLeftPumpDisable();
+                Actionneur.Harvester.DoRightPumpDisable();
+            }
             else
+            {
                 Actionneur.Harvester.DoLeftPumpEnable();
+                Actionneur.Harvester.DoRightPumpEnable();
+            }
 
             _toggleBtn9 = !_toggleBtn9;
         }
@@ -138,9 +168,72 @@ namespace GoBot.Devices
                         case CapteurOnOffID.Bouton10:
                             Button10Click();
                             break;
+                        case CapteurOnOffID.LSwitch1:
+                            _switch1 = true;
+                            SwitchChanged();
+                            break;
+                        case CapteurOnOffID.LSwitch2:
+                            _switch2 = true;
+                            SwitchChanged();
+                            break;
+                        case CapteurOnOffID.LSwitch3:
+                            _switch3 = true;
+                            SwitchChanged();
+                            break;
+                        case CapteurOnOffID.LSwitch4:
+                            _switch4 = true;
+                            SwitchChanged();
+                            break;
+                    }
+                }
+                else
+                {
+                    switch (btn)
+                    {
+                        case CapteurOnOffID.LSwitch1:
+                            _switch1 = false;
+                            SwitchChanged();
+                            break;
+                        case CapteurOnOffID.LSwitch2:
+                            _switch2 = false;
+                            SwitchChanged();
+                            break;
+                        case CapteurOnOffID.LSwitch3:
+                            _switch3 = false;
+                            SwitchChanged();
+                            break;
+                        case CapteurOnOffID.LSwitch4:
+                            _switch4 = false;
+                            SwitchChanged();
+                            break;
                     }
                 }
             }
+        }
+
+        void SwitchChanged()
+        {
+            //if (!_switch1 && !_switch2 && !_switch3 && !_switch4)
+            //{
+            //    Plateau.Strategy = new Strategies.StrategyMatch();
+            //    Buzz(0, 0);
+            //}
+            //else if (!_switch1 && !_switch2 && _switch3 && !_switch4)
+            //{
+            //    Plateau.Strategy = new Strategies.StrategyMinimumScore();
+            //    Buzz(0, 0);
+            //}
+            //else if (!_switch1 && !_switch2 && !_switch3 && _switch4)
+            //{
+            //    Plateau.Strategy = new Strategies.StrategyRoundTrip();
+            //    Buzz(0, 0);
+            //}
+            //else
+            //{
+            //    Buzz(5000, 200);
+            //}
+
+            //Robots.GrosRobot.MajGraphFranchissable();
         }
 
         void ChangeLedConnection(bool connected, LedID led)
@@ -168,8 +261,8 @@ namespace GoBot.Devices
             if (trameRecue[1] == (byte)FrameFunction.RetourCapteurOnOff)
             {
                 CapteurOnOffID but;
-                
-                switch(trameRecue[2])
+
+                switch (trameRecue[2])
                 {
                     case 0:
                         but = CapteurOnOffID.Bouton2;
@@ -231,7 +324,7 @@ namespace GoBot.Devices
                     case 19:
                         but = CapteurOnOffID.PresenceGauche;
                         break;
-                    default :
+                    default:
                         return;
                 }
 
@@ -246,7 +339,7 @@ namespace GoBot.Devices
                 else ButtonChange?.Invoke(but, pushed);
             }
 
-            if(trameRecue[1] == (byte)FrameFunction.RetourPositionCodeur)
+            if (trameRecue[1] == (byte)FrameFunction.RetourPositionCodeur)
             {
                 if (trameRecue[2] == (byte)CodeurID.Manuel)
                 {
@@ -263,7 +356,7 @@ namespace GoBot.Devices
                 }
             }
         }
-        
+
         public void SetLed(LedID led, LedStatus state)
         {
             ledsStatus[led] = state;

@@ -51,7 +51,13 @@
             this.groupBoxDeplacements = new System.Windows.Forms.GroupBox();
             this.numNbPoints = new System.Windows.Forms.NumericUpDown();
             this.btnTrajLancer = new System.Windows.Forms.Button();
+            this.labelPlus1 = new Composants.LabelPlus();
             this.btnTrajCreer = new System.Windows.Forms.Button();
+            this.lblGrosRobotDeplacements = new Composants.LabelPlus();
+            this.btnPathRPCentre = new System.Windows.Forms.Button();
+            this.btnPathRPFace = new System.Windows.Forms.Button();
+            this.btnTeleportRPCentre = new System.Windows.Forms.Button();
+            this.btnTeleportRPFace = new System.Windows.Forms.Button();
             this.toolTip = new System.Windows.Forms.ToolTip(this.components);
             this.groupBoxAffichage = new System.Windows.Forms.GroupBox();
             this.btnZoneDepart = new System.Windows.Forms.Button();
@@ -59,15 +65,10 @@
             this.button1 = new System.Windows.Forms.Button();
             this.button2 = new System.Windows.Forms.Button();
             this.btnHokuyoUart = new System.Windows.Forms.Button();
-            this.btnPathRPCentre = new System.Windows.Forms.Button();
-            this.btnPathRPFace = new System.Windows.Forms.Button();
-            this.btnTeleportRPCentre = new System.Windows.Forms.Button();
-            this.btnTeleportRPFace = new System.Windows.Forms.Button();
             this.btnReset = new System.Windows.Forms.Button();
             this.btnAffichage = new System.Windows.Forms.Button();
             this.pictureBoxTable = new System.Windows.Forms.PictureBox();
-            this.labelPlus1 = new Composants.LabelPlus();
-            this.lblGrosRobotDeplacements = new Composants.LabelPlus();
+            this.btnTestScore = new System.Windows.Forms.Button();
             this.groupBox.SuspendLayout();
             this.groupBoxDeplacements.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numNbPoints)).BeginInit();
@@ -317,6 +318,15 @@
             this.btnTrajLancer.UseVisualStyleBackColor = true;
             this.btnTrajLancer.Click += new System.EventHandler(this.btnTrajLancer_Click);
             // 
+            // labelPlus1
+            // 
+            this.labelPlus1.AutoSize = true;
+            this.labelPlus1.Location = new System.Drawing.Point(6, 65);
+            this.labelPlus1.Name = "labelPlus1";
+            this.labelPlus1.Size = new System.Drawing.Size(57, 13);
+            this.labelPlus1.TabIndex = 73;
+            this.labelPlus1.Text = "Trajectoire";
+            // 
             // btnTrajCreer
             // 
             this.btnTrajCreer.Location = new System.Drawing.Point(86, 60);
@@ -326,6 +336,55 @@
             this.btnTrajCreer.Text = "Créer";
             this.btnTrajCreer.UseVisualStyleBackColor = true;
             this.btnTrajCreer.Click += new System.EventHandler(this.btnTrajCreer_Click);
+            // 
+            // lblGrosRobotDeplacements
+            // 
+            this.lblGrosRobotDeplacements.AutoSize = true;
+            this.lblGrosRobotDeplacements.Location = new System.Drawing.Point(6, 29);
+            this.lblGrosRobotDeplacements.Name = "lblGrosRobotDeplacements";
+            this.lblGrosRobotDeplacements.Size = new System.Drawing.Size(56, 13);
+            this.lblGrosRobotDeplacements.TabIndex = 64;
+            this.lblGrosRobotDeplacements.Text = "Gros robot";
+            // 
+            // btnPathRPCentre
+            // 
+            this.btnPathRPCentre.Image = global::GoBot.Properties.Resources.PathCenter16;
+            this.btnPathRPCentre.Location = new System.Drawing.Point(68, 24);
+            this.btnPathRPCentre.Name = "btnPathRPCentre";
+            this.btnPathRPCentre.Size = new System.Drawing.Size(27, 23);
+            this.btnPathRPCentre.TabIndex = 49;
+            this.btnPathRPCentre.UseVisualStyleBackColor = true;
+            this.btnPathRPCentre.Click += new System.EventHandler(this.btnPathRPCentre_Click);
+            // 
+            // btnPathRPFace
+            // 
+            this.btnPathRPFace.Image = global::GoBot.Properties.Resources.PathFront16;
+            this.btnPathRPFace.Location = new System.Drawing.Point(134, 24);
+            this.btnPathRPFace.Name = "btnPathRPFace";
+            this.btnPathRPFace.Size = new System.Drawing.Size(27, 23);
+            this.btnPathRPFace.TabIndex = 50;
+            this.btnPathRPFace.UseVisualStyleBackColor = true;
+            this.btnPathRPFace.Click += new System.EventHandler(this.btnPathRPFace_Click);
+            // 
+            // btnTeleportRPCentre
+            // 
+            this.btnTeleportRPCentre.Image = global::GoBot.Properties.Resources.TeleportCenter16;
+            this.btnTeleportRPCentre.Location = new System.Drawing.Point(101, 24);
+            this.btnTeleportRPCentre.Name = "btnTeleportRPCentre";
+            this.btnTeleportRPCentre.Size = new System.Drawing.Size(27, 23);
+            this.btnTeleportRPCentre.TabIndex = 58;
+            this.btnTeleportRPCentre.UseVisualStyleBackColor = true;
+            this.btnTeleportRPCentre.Click += new System.EventHandler(this.btnTeleportRPCentre_Click);
+            // 
+            // btnTeleportRPFace
+            // 
+            this.btnTeleportRPFace.Image = global::GoBot.Properties.Resources.TeleportFront16;
+            this.btnTeleportRPFace.Location = new System.Drawing.Point(167, 24);
+            this.btnTeleportRPFace.Name = "btnTeleportRPFace";
+            this.btnTeleportRPFace.Size = new System.Drawing.Size(27, 23);
+            this.btnTeleportRPFace.TabIndex = 59;
+            this.btnTeleportRPFace.UseVisualStyleBackColor = true;
+            this.btnTeleportRPFace.Click += new System.EventHandler(this.btnTeleportRPFace_Click);
             // 
             // groupBoxAffichage
             // 
@@ -387,46 +446,6 @@
             this.btnHokuyoUart.UseVisualStyleBackColor = true;
             this.btnHokuyoUart.Click += new System.EventHandler(this.btnHokuyoUart_Click);
             // 
-            // btnPathRPCentre
-            // 
-            this.btnPathRPCentre.Image = global::GoBot.Properties.Resources.PathCenter16;
-            this.btnPathRPCentre.Location = new System.Drawing.Point(68, 24);
-            this.btnPathRPCentre.Name = "btnPathRPCentre";
-            this.btnPathRPCentre.Size = new System.Drawing.Size(27, 23);
-            this.btnPathRPCentre.TabIndex = 49;
-            this.btnPathRPCentre.UseVisualStyleBackColor = true;
-            this.btnPathRPCentre.Click += new System.EventHandler(this.btnPathRPCentre_Click);
-            // 
-            // btnPathRPFace
-            // 
-            this.btnPathRPFace.Image = global::GoBot.Properties.Resources.PathFront16;
-            this.btnPathRPFace.Location = new System.Drawing.Point(134, 24);
-            this.btnPathRPFace.Name = "btnPathRPFace";
-            this.btnPathRPFace.Size = new System.Drawing.Size(27, 23);
-            this.btnPathRPFace.TabIndex = 50;
-            this.btnPathRPFace.UseVisualStyleBackColor = true;
-            this.btnPathRPFace.Click += new System.EventHandler(this.btnPathRPFace_Click);
-            // 
-            // btnTeleportRPCentre
-            // 
-            this.btnTeleportRPCentre.Image = global::GoBot.Properties.Resources.TeleportCenter16;
-            this.btnTeleportRPCentre.Location = new System.Drawing.Point(101, 24);
-            this.btnTeleportRPCentre.Name = "btnTeleportRPCentre";
-            this.btnTeleportRPCentre.Size = new System.Drawing.Size(27, 23);
-            this.btnTeleportRPCentre.TabIndex = 58;
-            this.btnTeleportRPCentre.UseVisualStyleBackColor = true;
-            this.btnTeleportRPCentre.Click += new System.EventHandler(this.btnTeleportRPCentre_Click);
-            // 
-            // btnTeleportRPFace
-            // 
-            this.btnTeleportRPFace.Image = global::GoBot.Properties.Resources.TeleportFront16;
-            this.btnTeleportRPFace.Location = new System.Drawing.Point(167, 24);
-            this.btnTeleportRPFace.Name = "btnTeleportRPFace";
-            this.btnTeleportRPFace.Size = new System.Drawing.Size(27, 23);
-            this.btnTeleportRPFace.TabIndex = 59;
-            this.btnTeleportRPFace.UseVisualStyleBackColor = true;
-            this.btnTeleportRPFace.Click += new System.EventHandler(this.btnTeleportRPFace_Click);
-            // 
             // btnReset
             // 
             this.btnReset.Image = global::GoBot.Properties.Resources.Refresh16;
@@ -467,29 +486,22 @@
             this.pictureBoxTable.MouseMove += new System.Windows.Forms.MouseEventHandler(this.pictureBoxTable_MouseMove);
             this.pictureBoxTable.MouseUp += new System.Windows.Forms.MouseEventHandler(this.pictureBoxTable_MouseUp);
             // 
-            // labelPlus1
+            // btnTestScore
             // 
-            this.labelPlus1.AutoSize = true;
-            this.labelPlus1.Location = new System.Drawing.Point(6, 65);
-            this.labelPlus1.Name = "labelPlus1";
-            this.labelPlus1.Size = new System.Drawing.Size(57, 13);
-            this.labelPlus1.TabIndex = 73;
-            this.labelPlus1.Text = "Trajectoire";
-            // 
-            // lblGrosRobotDeplacements
-            // 
-            this.lblGrosRobotDeplacements.AutoSize = true;
-            this.lblGrosRobotDeplacements.Location = new System.Drawing.Point(6, 29);
-            this.lblGrosRobotDeplacements.Name = "lblGrosRobotDeplacements";
-            this.lblGrosRobotDeplacements.Size = new System.Drawing.Size(56, 13);
-            this.lblGrosRobotDeplacements.TabIndex = 64;
-            this.lblGrosRobotDeplacements.Text = "Gros robot";
+            this.btnTestScore.Location = new System.Drawing.Point(154, 249);
+            this.btnTestScore.Name = "btnTestScore";
+            this.btnTestScore.Size = new System.Drawing.Size(87, 23);
+            this.btnTestScore.TabIndex = 75;
+            this.btnTestScore.Text = "Test Score ++";
+            this.btnTestScore.UseVisualStyleBackColor = true;
+            this.btnTestScore.Click += new System.EventHandler(this.btnTestScore_Click);
             // 
             // PanelTable
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.Transparent;
+            this.Controls.Add(this.btnTestScore);
             this.Controls.Add(this.btnHokuyoUart);
             this.Controls.Add(this.button2);
             this.Controls.Add(this.button1);
@@ -569,5 +581,6 @@
         private System.Windows.Forms.Button button2;
         private System.Windows.Forms.NumericUpDown numNbPoints;
         private System.Windows.Forms.Button btnHokuyoUart;
+        private System.Windows.Forms.Button btnTestScore;
     }
 }

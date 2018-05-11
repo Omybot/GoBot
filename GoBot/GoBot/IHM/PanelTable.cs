@@ -378,13 +378,13 @@ namespace GoBot.IHM
 
         private void btnStratNul_Click(object sender, EventArgs e)
         {
-            Plateau.Strategy = new StrategyRoundTrip();
+            Plateau.Strategy = new StrategyMinimumScore();
             Plateau.Strategy.ExecuteMatch();
         }
 
         private void btnStratTest_Click(object sender, EventArgs e)
         {
-            Plateau.Strategy = new StrategyMinimumScore();
+            Plateau.Strategy = new StrategyRoundTrip();
             Plateau.Strategy.ExecuteMatch();
         }
 
@@ -685,6 +685,11 @@ namespace GoBot.IHM
 
             distance = Actionneur.Hokuyo.CalculDistanceY(3000 - 1170, 3000 - 970, 150, 2);
             Robots.GrosRobot.ReglerOffsetAsserv(new Position(0, Robots.GrosRobot.Position.Coordinates.Translation(0, -distance)));
+        }
+
+        private void btnTestScore_Click(object sender, EventArgs e)
+        {
+            Plateau.Score++;
         }
     }
 }

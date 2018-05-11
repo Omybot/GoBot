@@ -31,7 +31,7 @@ namespace GoBot.GameElements
                 g.DrawRectangle(pen, r);
                 pen.Dispose();
                 
-                g.DrawString("Omybot", new Font("Jokerman", 8), Brushes.Red, r.X + 3, r.Y + 6);
+                g.DrawString("OMYBOT", new Font("Jokerman", 7), Brushes.Red, r.X + 3, r.Y + 8);
             }
 
             if (isAvailable && isHover)

@@ -30,9 +30,8 @@ namespace GoBot
         
         public static void RecallageGrosRobot()
         {
-            Robots.GrosRobot.EnvoyerPID(40, 0, 600);
+            Robots.GrosRobot.EnvoyerPID(40, 0, 400);
             Robots.GrosRobot.Stop();
-            Robots.GrosRobot.RangerActionneurs();
 
             Robots.GrosRobot.Lent();
             Robots.GrosRobot.Avancer(10);

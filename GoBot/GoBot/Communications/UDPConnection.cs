@@ -73,21 +73,30 @@ namespace GoBot.Communications
             OutputPort = outputPort;
             InputPort = inputPort;
 
-            try
+            lock (this)
             {
-                if ((DateTime.Now - LastPingTry).TotalSeconds > 1)
-                {
-                    Ping ping = new Ping();
-                    PingReply pingReponse = ping.Send(IPAddress, 10);
-                    LastPingTry = DateTime.Now;
 
-                    if (pingReponse.Status == IPStatus.Success)
+                try
+                {
+                    if ((DateTime.Now - LastPingTry).TotalSeconds > 1)
                     {
-                        Client = new UdpClient();
-                        Client.Connect(IPAddress, OutputPort);
-                        Connected = true;
-                        retour = ConnectionState.Ok;
-                        StartReception();
+                        Ping ping = new Ping();
+                        PingReply pingReponse = ping.Send(IPAddress, 10);
+                        LastPingTry = DateTime.Now;
+
+                        if (pingReponse.Status == IPStatus.Success)
+                        {
+                            Client = new UdpClient();
+                            Client.Connect(IPAddress, OutputPort);
+                            Connected = true;
+                            retour = ConnectionState.Ok;
+                            StartReception();
+                        }
+                        else
+                        {
+                            retour = ConnectionState.Error;
+                            Connected = false;
+                        }
                     }
                     else
                     {
@@ -95,15 +104,10 @@ namespace GoBot.Communications
                         Connected = false;
                     }
                 }
-                else
+                catch (Exception)
                 {
-                    retour = ConnectionState.Error;
                     Connected = false;
                 }
-            }
-            catch (Exception)
-            {
-                Connected = false;
             }
 
             return retour;
@@ -118,7 +122,7 @@ namespace GoBot.Communications
         {
             int sended = 0;
 
-            if (Connections.EnableConnection[frame.Board])
+            //if (Connections.EnableConnection[frame.Board])
             {
                 try
                 {
@@ -179,8 +183,9 @@ namespace GoBot.Communications
                 
                 u.BeginReceive(ReceptionCallback, new UdpState(u, e));
             }
-            catch (Exception)
+            catch (Exception e)
             {
+                Console.WriteLine("ERREUR UDP");
             }
         }
     }

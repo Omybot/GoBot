@@ -17,6 +17,8 @@ namespace GoBot.Strategies
     {
         Random rand = new Random();
 
+        public override bool AvoidElements => false;
+
         protected override void SequenceBegin()
         {
             Robots.GrosRobot.SpeedConfig.SetParams(500, 2000, 2000, 800, 2000, 2000);

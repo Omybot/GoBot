@@ -53,8 +53,10 @@ namespace GoBot.Beacons
         {
             AngleDebut = angleDebut;
             AngleFin = angleFin;
-            AngleCentral = (angleDebut + angleFin ) / 2;
-            Distance = AngleVisibleToDistance(Math.Abs(AngleFin - AngleDebut));
+            AngleCentral = (angleDebut.InDegrees + angleFin.InDegrees) / 2;
+            Distance = AngleVisibleToDistance(Math.Abs(AngleFin.InPositiveDegrees - AngleDebut.InPositiveDegrees));
+
+            Console.WriteLine(AngleCentral.ToString());
 
             // Bornes
             if (Distance > Plateau.Largeur)

@@ -23,11 +23,13 @@ namespace GoBot
         public ServoConvoyeurGauche ServoConvoyeurGauche { get; set; }
         public ServoConvoyeurCentre ServoConvoyeurCentre { get; set; }
         public ServoConvoyeurDroite ServoConvoyeurDroite { get; set; }
-
         public ServoBenneLiberation ServoBenneLiberation { get; set; }
         public ServoBenneOuverture ServoBenneOuverture { get; set; }
 
         public MoteurElevation MoteurElevation { get; set; }
+        public MoteurShaker MoteurShaker { get; set; }
+
+        public ServoBouton ServoBouton { get; set; }
     }
 }
 
@@ -60,14 +62,18 @@ namespace GoBot.Actionneurs
         public int PositionRange { get; set; }
         public int PositionApprocheHaute { get; set; }
         public int PositionApprocheBasse { get; set; }
+        public int PositionApprocheStockage { get; set; }
         public int PositionPrise { get; set; }
         public int PositionTampon { get; set; }
+        public int PositionFinStockage { get; set; }
     }
 
     public abstract class ServoPoignet : PositionableServo
     {
         public int PositionRange { get; set; }
         public int PositionPrise { get; set; }
+        public int PositionStockage { get; set; }
+        public int PositionFinStockage { get; set; }
     }
 
     public abstract class ServoLateral : PositionableServo
@@ -75,6 +81,10 @@ namespace GoBot.Actionneurs
         public int PositionGauche { get; set; }
         public int PositionCentre { get; set; }
         public int PositionDroite { get; set; }
+
+        public int PositionCubeGauche { get; set; }
+        public int PositionCubeDroite { get; set; }
+
         public int PositionStockage { get; set; }
     }
 
@@ -175,6 +185,16 @@ namespace GoBot.Actionneurs
 
         public int PositionDepose { get; set; }
         public int PositionRange { get; set; }
+    }
+
+    public class MoteurShaker : PositionableMotorSpeed
+    {
+        public override MoteurID ID => MoteurID.Shaker;
+    }
+
+    public class ServoBouton : PositionableServo
+    {
+        public override ServomoteurID ID => ServomoteurID.BrasBouton;
     }
 
     #endregion

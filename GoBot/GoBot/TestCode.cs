@@ -46,8 +46,8 @@ namespace GoBot
                 }
             }
 
-            if (error)
-                MessageBox.Show(errors.ToString(), "Attention", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            //if (error)
+            //    MessageBox.Show(errors.ToString(), "Attention", MessageBoxButtons.OK, MessageBoxIcon.Warning);
 
         }
     }

@@ -41,8 +41,6 @@ namespace GoBot.IHM
             lock (this)
             {
                 _currentPositionnable = (Positionable)cboPositionnable.SelectedItem;
-                trackBar.Min = _currentPositionnable.Minimum;
-                trackBar.Max = _currentPositionnable.Maximum;
 
                 SetPositions(_currentPositionnable);
             }
@@ -52,6 +50,8 @@ namespace GoBot.IHM
         {
             if (value)
             {
+                trackBar.Min = _currentPositionnable.Minimum;
+                trackBar.Max = _currentPositionnable.Maximum;
                 _linkPolling = ThreadManager.CreateThread(link => PollingLoop());
                 _linkPolling.StartThread();
             }
@@ -167,7 +167,7 @@ namespace GoBot.IHM
         private void cboPositions_SelectedIndexChanged(object sender, EventArgs e)
         {
             btnSave.Enabled = true;
-            _currentPosition = (int)_positionsProp[(String)cboPositions.SelectedItem].GetValue(cboPositionnable.SelectedItem);
+            _currentPosition = (int)_positionsProp[(String)cboPositions.SelectedItem].GetValue(cboPositionnable.SelectedItem, null);
         }
     }
 }

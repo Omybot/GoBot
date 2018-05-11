@@ -36,6 +36,7 @@ namespace GoBot
         
         BenneLiberation = 208,
         BenneOuverture = 209,
+        BrasBouton = 210,
 
         ConvoyeurGauche = 215,
         ConvoyeurCentre = 211,
@@ -58,6 +59,8 @@ namespace GoBot
         ValveLeft = 1,
 
         Beacon = 0x10,
+
+        Shaker = 11,
         Elevation = 12
     }
 

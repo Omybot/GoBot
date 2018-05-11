@@ -28,7 +28,7 @@ namespace GoBot
             Application.SetCompatibleTextRenderingDefault(false);
 
             SplashScreen.ShowSplash(Properties.Resources.Splash, new Rectangle(230, 30, 255, 75));
-
+            
             CheckAlreadyLaunched();
             DebugChecks();
             Update();

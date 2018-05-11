@@ -42,8 +42,18 @@
             this.lblPosition = new System.Windows.Forms.Label();
             this.lblSpeed = new System.Windows.Forms.Label();
             this.lblTorqueMax = new System.Windows.Forms.Label();
+            this.numPosition = new System.Windows.Forms.NumericUpDown();
+            this.label2 = new System.Windows.Forms.Label();
+            this.label1 = new System.Windows.Forms.Label();
+            this.numSpeed = new System.Windows.Forms.NumericUpDown();
+            this.label3 = new System.Windows.Forms.Label();
+            this.numAccel = new System.Windows.Forms.NumericUpDown();
+            this.btnGo = new System.Windows.Forms.Button();
             this.grpTorque.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numID)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numPosition)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numSpeed)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numAccel)).BeginInit();
             this.SuspendLayout();
             // 
             // boxTorque
@@ -206,10 +216,90 @@
             this.lblTorqueMax.Text = "-";
             this.lblTorqueMax.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             // 
+            // numPosition
+            // 
+            this.numPosition.Location = new System.Drawing.Point(66, 155);
+            this.numPosition.Maximum = new decimal(new int[] {
+            100000,
+            0,
+            0,
+            0});
+            this.numPosition.Name = "numPosition";
+            this.numPosition.Size = new System.Drawing.Size(57, 20);
+            this.numPosition.TabIndex = 14;
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(21, 158);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(44, 13);
+            this.label2.TabIndex = 16;
+            this.label2.Text = "Position";
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(130, 158);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(41, 13);
+            this.label1.TabIndex = 18;
+            this.label1.Text = "Vitesse";
+            // 
+            // numSpeed
+            // 
+            this.numSpeed.Location = new System.Drawing.Point(174, 155);
+            this.numSpeed.Maximum = new decimal(new int[] {
+            100000,
+            0,
+            0,
+            0});
+            this.numSpeed.Name = "numSpeed";
+            this.numSpeed.Size = new System.Drawing.Size(57, 20);
+            this.numSpeed.TabIndex = 17;
+            // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Location = new System.Drawing.Point(241, 158);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(34, 13);
+            this.label3.TabIndex = 20;
+            this.label3.Text = "Accel";
+            // 
+            // numAccel
+            // 
+            this.numAccel.Location = new System.Drawing.Point(278, 155);
+            this.numAccel.Maximum = new decimal(new int[] {
+            100000,
+            0,
+            0,
+            0});
+            this.numAccel.Name = "numAccel";
+            this.numAccel.Size = new System.Drawing.Size(57, 20);
+            this.numAccel.TabIndex = 19;
+            // 
+            // btnGo
+            // 
+            this.btnGo.Location = new System.Drawing.Point(347, 153);
+            this.btnGo.Name = "btnGo";
+            this.btnGo.Size = new System.Drawing.Size(36, 23);
+            this.btnGo.TabIndex = 21;
+            this.btnGo.Text = "Go";
+            this.btnGo.UseVisualStyleBackColor = true;
+            this.btnGo.Click += new System.EventHandler(this.btnGo_Click);
+            // 
             // PanelServoCAN
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.Controls.Add(this.btnGo);
+            this.Controls.Add(this.label3);
+            this.Controls.Add(this.numAccel);
+            this.Controls.Add(this.label1);
+            this.Controls.Add(this.numSpeed);
+            this.Controls.Add(this.label2);
+            this.Controls.Add(this.numPosition);
             this.Controls.Add(this.lblTorqueMax);
             this.Controls.Add(this.lblSpeed);
             this.Controls.Add(this.lblPosition);
@@ -223,10 +313,13 @@
             this.Controls.Add(this.numID);
             this.Controls.Add(this.grpTorque);
             this.Name = "PanelServoCAN";
-            this.Size = new System.Drawing.Size(407, 158);
+            this.Size = new System.Drawing.Size(407, 185);
             this.grpTorque.ResumeLayout(false);
             this.grpTorque.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numID)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numPosition)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numSpeed)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numAccel)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -248,5 +341,12 @@
         private System.Windows.Forms.Label lblPosition;
         private System.Windows.Forms.Label lblSpeed;
         private System.Windows.Forms.Label lblTorqueMax;
+        private System.Windows.Forms.NumericUpDown numPosition;
+        private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.NumericUpDown numSpeed;
+        private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.NumericUpDown numAccel;
+        private System.Windows.Forms.Button btnGo;
     }
 }

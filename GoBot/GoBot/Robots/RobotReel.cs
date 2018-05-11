@@ -124,7 +124,7 @@ namespace GoBot
             {
                 JackArme = false;
                 if (Plateau.Strategy == null)
-                    Plateau.Strategy = new GoBot.Strategies.StrategyMatch();
+                    Plateau.Strategy = new GoBot.Strategies.StrategyMinimumScore();
                 Plateau.Strategy.ExecuteMatch();
             }
         }
@@ -292,7 +292,7 @@ namespace GoBot
                         }
 
                         if (Plateau.Balise != null)
-                            Plateau.Balise.Position = Position;
+                            Plateau.Balise.Position = new Position(Position);
 
                         OnPositionChange(Position);
                     }
@@ -484,8 +484,12 @@ namespace GoBot
             Historique.AjouterAction(new ActionAvance(this, distance));
 
             if (attendre)
-                if (!SemaphoresTrame[FrameFunction.FinDeplacement].WaitOne((int)SpeedConfig.LineDuration(distance).TotalMilliseconds))
-                    Thread.Sleep(1000); // Tempo de secours, on a jamais reçu la fin de trajectoire après la fin du délai théorique
+            {
+                int duration = (int)SpeedConfig.LineDuration(distance).TotalMilliseconds;
+                //if (!SemaphoresTrame[FrameFunction.FinDeplacement].WaitOne((int)SpeedConfig.LineDuration(distance).TotalMilliseconds))
+                //    Thread.Sleep(1000); // Tempo de secours, on a jamais reçu la fin de trajectoire après la fin du délai théorique
+                SemaphoresTrame[FrameFunction.FinDeplacement].WaitOne();
+            }
 
             DeplacementLigne = false;
         }
@@ -512,8 +516,9 @@ namespace GoBot
             Historique.AjouterAction(new ActionRecule(this, distance));
 
             if (attendre)
-                if (!SemaphoresTrame[FrameFunction.FinDeplacement].WaitOne((int)SpeedConfig.LineDuration(distance).TotalMilliseconds))
-                    Thread.Sleep(1000); // Tempo de secours, on a jamais reçu la fin de trajectoire après la fin du délai théorique
+                //if (!SemaphoresTrame[FrameFunction.FinDeplacement].WaitOne((int)SpeedConfig.LineDuration(distance).TotalMilliseconds))
+                //    Thread.Sleep(1000); // Tempo de secours, on a jamais reçu la fin de trajectoire après la fin du délai théorique
+                SemaphoresTrame[FrameFunction.FinDeplacement].WaitOne();
 
             DeplacementLigne = false;
         }
@@ -533,8 +538,9 @@ namespace GoBot
             Historique.AjouterAction(new ActionPivot(this, angle, SensGD.Gauche));
 
             if (attendre)
-                if (!SemaphoresTrame[FrameFunction.FinDeplacement].WaitOne((int)SpeedConfig.PivotDuration(angle, Entraxe).TotalMilliseconds))
-                    Thread.Sleep(1000); // Tempo de secours, on a jamais reçu la fin de trajectoire après la fin du délai théorique
+                //if (!SemaphoresTrame[FrameFunction.FinDeplacement].WaitOne((int)SpeedConfig.PivotDuration(angle, Entraxe).TotalMilliseconds))
+                //    Thread.Sleep(1000); // Tempo de secours, on a jamais reçu la fin de trajectoire après la fin du délai théorique
+                SemaphoresTrame[FrameFunction.FinDeplacement].WaitOne();
             DeplacementLigne = false;
         }
 
@@ -551,8 +557,9 @@ namespace GoBot
             Historique.AjouterAction(new ActionPivot(this, angle, SensGD.Droite));
 
             if (attendre)
-                if (!SemaphoresTrame[FrameFunction.FinDeplacement].WaitOne((int)SpeedConfig.PivotDuration(angle, Entraxe).TotalMilliseconds))
-                    Thread.Sleep(1000); // Tempo de secours, on a jamais reçu la fin de trajectoire après la fin du délai théorique
+                //if (!SemaphoresTrame[FrameFunction.FinDeplacement].WaitOne((int)SpeedConfig.PivotDuration(angle, Entraxe).TotalMilliseconds))
+                //    Thread.Sleep(1000); // Tempo de secours, on a jamais reçu la fin de trajectoire après la fin du délai théorique
+                SemaphoresTrame[FrameFunction.FinDeplacement].WaitOne();
         }
 
         public override void Stop(StopMode mode = StopMode.Smooth)
@@ -727,7 +734,7 @@ namespace GoBot
         {
             base.MoteurVitesse(moteur, sens, vitesse);
 
-            if (moteur == MoteurID.Elevation)
+            if (moteur == MoteurID.Elevation || moteur == MoteurID.Shaker)
             {
                 Frame trame = FrameFactory.MoteurVitesse(Board.RecMove, moteur, sens, vitesse);
                 Connections.ConnectionMove.SendMessage(trame);

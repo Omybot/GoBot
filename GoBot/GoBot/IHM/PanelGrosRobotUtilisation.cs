@@ -8,6 +8,7 @@ using System.Text;
 using System.Windows.Forms;
 using System.Threading;
 using GoBot.Actionneurs;
+using GoBot.Threading;
 
 namespace GoBot.IHM
 {
@@ -106,36 +107,6 @@ namespace GoBot.IHM
             Actionneur.Harvester.DoRightPumpEnable();
         }
 
-        private void btnRightArmRightSLot_Click(object sender, EventArgs e)
-        {
-            Actionneur.Harvester.DoRightArmInRightSlot();
-        }
-
-        private void btnRightArmCenterSlot_Click(object sender, EventArgs e)
-        {
-            Actionneur.Harvester.DoRightArmInCenterSlot();
-        }
-
-        private void btnRightArmLeftSlot_Click(object sender, EventArgs e)
-        {
-            Actionneur.Harvester.DoRightArmInLeftSlot();
-        }
-
-        private void btnRightArmRightCube_Click(object sender, EventArgs e)
-        {
-            Actionneur.Harvester.DoRightArmOnRightCube();
-        }
-
-        private void btnRightArmCenterCube_Click(object sender, EventArgs e)
-        {
-            Actionneur.Harvester.DoRightArmOnCenterCube();
-        }
-
-        private void btnRightArmLeftCube_Click(object sender, EventArgs e)
-        {
-            Actionneur.Harvester.DoRightArmOnLeftCube();
-        }
-
         private void btnLeftPumDisable_Click(object sender, EventArgs e)
         {
             Actionneur.Harvester.DoLeftPumpDisable();
@@ -145,42 +116,7 @@ namespace GoBot.IHM
         {
             Actionneur.Harvester.DoLeftPumpEnable();
         }
-
-        private void btnLeftArmRightSlot_Click(object sender, EventArgs e)
-        {
-            Actionneur.Harvester.DoLeftArmInRightSlot();
-        }
-
-        private void btnLeftArmCenterSlot_Click(object sender, EventArgs e)
-        {
-            Actionneur.Harvester.DoLeftArmInCenterSlot();
-        }
-
-        private void btnLeftArmLeftSlot_Click(object sender, EventArgs e)
-        {
-            Actionneur.Harvester.DoLeftArmInLeftSlot();
-        }
-
-        private void btnLeftArmRightCube_Click(object sender, EventArgs e)
-        {
-            Actionneur.Harvester.DoLeftArmOnRightCube();
-        }
-
-        private void btnLeftArmCenterCube_Click(object sender, EventArgs e)
-        {
-            Actionneur.Harvester.DoLeftArmOnCenterCube();
-        }
-
-        private void btnLeftArmLeftCube_Click(object sender, EventArgs e)
-        {
-            Actionneur.Harvester.DoLeftArmOnLeftCube();
-        }
-
-        private void btnLeftArmStorage_Click(object sender, EventArgs e)
-        {
-            Actionneur.Harvester.DoLeftArmOnStorage();
-        }
-
+        
         private void btnBenneBuild_Click(object sender, EventArgs e)
         {
             Config.CurrentConfig.MoteurElevation.SendPosition(Config.CurrentConfig.MoteurElevation.DeplacementDepose);
@@ -229,6 +165,41 @@ namespace GoBot.IHM
         private void btnBenneHandle_Click(object sender, EventArgs e)
         {
             Config.CurrentConfig.ServoBenneLiberation.SendPosition(Config.CurrentConfig.ServoBenneLiberation.PositionMaintien);
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            ThreadManager.CreateThread(link => Actionneur.Harvester.DoTakeCenterCube()).StartThread();
+        }
+
+        private void button4_Click(object sender, EventArgs e)
+        {
+            ThreadManager.CreateThread(link =>
+            {
+                Robots.GrosRobot.Avancer(58);
+                Actionneur.Harvester.DoTakeCenterCube();
+                }).StartThread();
+        }
+
+        private void button5_Click(object sender, EventArgs e)
+        {
+            ThreadManager.CreateThread(link =>
+            Actionneur.Harvester.DoTakeRightCube()).StartThread();
+        }
+
+        private void button3_Click(object sender, EventArgs e)
+        {
+            ThreadManager.CreateThread(link =>
+            Actionneur.Harvester.DoTakeLeftCube()).StartThread();
+        }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            ThreadManager.CreateThread(link =>
+            {
+                Robots.GrosRobot.Avancer(58);
+                Actionneur.Harvester.DoTakeCenterCube();
+            }).StartThread();
         }
     }
 }

@@ -19,12 +19,12 @@ namespace GoBot.Movements
         {
             constructionZone = zone;
             
-            Positions.Add(new Position(90, zone.Position.Translation(0, 170)));
+            Positions.Add(new Position(-90, zone.Position.Translation(0, 225)));
         }
 
         public override bool CanExecute => Actionneur.Dumper.CanBuildTower && constructionZone.TowersCount == 0;
 
-        public override double Score
+        public override int Score
         {
             get
             {
@@ -44,18 +44,18 @@ namespace GoBot.Movements
             {
                 if (Color == Plateau.NotreCouleur)
                 {
-                    double value = Score / 100;
+                    double value = Score / 10;
 
                     if (Plateau.Strategy.TimeBeforeEnd.TotalSeconds < 90)
-                        value *= 2;
+                        value *= 1.5;
                     if (Plateau.Strategy.TimeBeforeEnd.TotalSeconds < 80)
-                        value *= 2;
+                        value *= 1.5;
                     if (Plateau.Strategy.TimeBeforeEnd.TotalSeconds < 70)
-                        value *= 2;
+                        value *= 1.5;
                     if (Plateau.Strategy.TimeBeforeEnd.TotalSeconds < 60)
-                        value *= 2;
+                        value *= 1.5;
                     if (Plateau.Strategy.TimeBeforeEnd.TotalSeconds < 50)
-                        value *= 2;
+                        value *= 1.5;
 
                     return value;
                 }
@@ -75,15 +75,41 @@ namespace GoBot.Movements
         protected override void MovementBegin()
         {
             // TODO Préparer le déchargement ?
+            Robot.Lent();
         }
 
         protected override void MovementCore()
         {
             // TODO Décharger
+            
+            Config.CurrentConfig.ServoCoudeDroite.SendPosition(Config.CurrentConfig.ServoCoudeDroite.PositionPrise);
+            Config.CurrentConfig.ServoCoudeGauche.SendPosition(Config.CurrentConfig.ServoCoudeGauche.PositionPrise);
+
+            Thread.Sleep(500);
+
+            Actionneur.Harvester.DoLeftPumpDisable();
+            Actionneur.Harvester.DoRightPumpDisable();
+
+            Thread.Sleep(500);
+
+            Actionneur.Harvester.DoInitArms();
 
             Robot.Lent();
-            Robot.Reculer(50);
 
+            Robot.Reculer(100);
+            Robot.PivotDroite(180);
+
+            Actionneur.Dumper.DoDeploy();
+
+            Robot.Reculer(100);
+            Actionneur.Dumper.DoLibereTours();
+            Thread.Sleep(500);
+            Actionneur.Dumper.DoOpenGates();
+
+            Robot.Avancer(150);
+
+            Actionneur.Dumper.DoStore();
+            
             foreach (Dumper.Slot slot in Enum.GetValues(typeof(Dumper.Slot)))
             {
                 CubesTower tower = new CubesTower(Actionneur.Dumper.GetCubes(slot));
@@ -92,11 +118,6 @@ namespace GoBot.Movements
             }
 
             Actionneur.Dumper.Clear();
-
-            Thread.Sleep(500);
-            Robot.Lent();
-            Robot.Avancer(175);
-            Robot.Rapide();
         }
     }
 }

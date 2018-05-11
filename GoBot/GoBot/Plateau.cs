@@ -36,6 +36,28 @@ namespace GoBot
         public static List<IShape> ObstaclesPlateau { get; set; }
         public static List<IShape> ObstaclesBalise { get; set; }
 
+        public static List<IShape> ObstaclesCouleur
+        {
+            get
+            {
+                List<IShape> shapes = new List<IShape>();
+                if(Plateau.NotreCouleur == Plateau.CouleurGaucheVert)
+                {
+                    shapes.Add(new Circle(new RealPoint(250, 850), 200));
+                    shapes.Add(new PolygonRectangle(new RealPoint(2030, 0), 600, 180));
+                    shapes.Add(new PolygonRectangle(new RealPoint(2600, 0), 400, 645));
+                }
+                else
+                {
+                    shapes.Add(new Circle(new RealPoint(3000 - 250, 850), 200));
+                    shapes.Add(new PolygonRectangle(new RealPoint(400, 0), 600, 180));
+                    shapes.Add(new PolygonRectangle(new RealPoint(0, 0), 400, 645));
+                }
+
+                return shapes;
+            }
+        }
+
         public static AllGameElements Elements { get; protected set; }
 
         private static Color notreCouleur;
@@ -53,6 +75,7 @@ namespace GoBot
                         Devices.Devices.RecGoBot.SetLedColor(Color.Orange);
 
                     NotreCouleurChange?.Invoke(null, null);
+                    Robots.GrosRobot.MajGraphFranchissable();
                 }
             }
         }
@@ -97,6 +120,7 @@ namespace GoBot
                 toutObstacles.AddRange(ObstaclesPlateau);
                 toutObstacles.AddRange(ObstaclesBalise);
                 toutObstacles.AddRange(Elements.AsObstacles);
+                //toutObstacles.AddRange(ObstaclesCouleur);
                 return toutObstacles;
             }
         }
@@ -122,7 +146,8 @@ namespace GoBot
                 SemaphoreCollisions = new Semaphore(0, int.MaxValue);
                 ThreadManager.CreateThread(ThreadTestCollisions).StartThread();
 
-                Strategy = new StrategyMatch();
+                Strategy = new StrategyMinimumScore();
+                Robots.GrosRobot.MajGraphFranchissable();
             }
         }
 

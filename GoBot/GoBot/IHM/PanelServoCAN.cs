@@ -71,6 +71,11 @@ namespace GoBot.IHM
             this.InvokeAuto(() => graphTorque.DrawCurves());
         }
 
+        private void btnGo_Click(object sender, EventArgs e)
+        {
+            Devices.Devices.ServosCan.SetTrajectory((int)numID.Value, (int)numPosition.Value, (int)numSpeed.Value, (int)numAccel.Value);
+        }
+
         private void numID_ValueChanged(object sender, EventArgs e)
         {
             _id = (int)numID.Value;

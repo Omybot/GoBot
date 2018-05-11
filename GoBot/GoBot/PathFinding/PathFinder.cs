@@ -45,6 +45,7 @@ namespace GoBot.PathFinding
 
             lock (graph)
             {
+                Console.WriteLine("Cherche trajectoire début");
                 int nbPointsDepart = 0;
                 int nbPointsArrivee = 0;
 
@@ -95,8 +96,8 @@ namespace GoBot.PathFinding
                                     if (Plateau.ObstaclesBalise.Contains(obstacle) && Plateau.RayonAdversaire > 50)
                                     {
                                         Robots.GrosRobot.Historique.Log("Adversaire au contact, impossible de s'enfuir, réduction du périmètre adverse", TypeLog.PathFinding);
-                                        Plateau.RayonAdversaire -= 10;
-                                        _linkResetRadius?.Cancel();
+                                        //Plateau.RayonAdversaire -= 10;
+                                        //_linkResetRadius?.Cancel();
                                     }
                                 }
                             }
@@ -148,8 +149,8 @@ namespace GoBot.PathFinding
                                         if (Plateau.ObstaclesBalise.Contains(obstacle) && Plateau.RayonAdversaire > 50)
                                         {
                                             Robots.GrosRobot.Historique.Log("Adversaire au contact, impossible de s'enfuir, réduction du périmètre adverse", TypeLog.PathFinding);
-                                            Plateau.RayonAdversaire -= 10;
-                                            _linkResetRadius?.Cancel();
+                                            //Plateau.RayonAdversaire -= 10;
+                                            //_linkResetRadius?.Cancel();
                                         }
                                     }
                                 }
@@ -173,6 +174,10 @@ namespace GoBot.PathFinding
                 {
                     finNode = new Node(destination.Coordinates.X, destination.Coordinates.Y, 0);
                     nbPointsArrivee = graph.AddNode(finNode, obstacles, rayonSecurite, distanceRaccordable);
+                }
+                else
+                {
+                    nbPointsArrivee = 1;
                 }
                 if (nbPointsArrivee == 0)
                 {
@@ -380,6 +385,8 @@ namespace GoBot.PathFinding
                 }
 
                 graph.CleanNodesArcsAdd();
+
+                Console.WriteLine("Cherche trajectoire fin");
             }
 
             PointsTrouves = null;
@@ -412,7 +419,7 @@ namespace GoBot.PathFinding
             _linkResetRadius.RegisterName();
 
             Thread.Sleep(1000);
-            while (!_linkResetRadius.Cancelled)
+            while (_linkResetRadius != null && _linkResetRadius.Cancelled)
             {
                 Plateau.RayonAdversaire++;
                 Thread.Sleep(50);

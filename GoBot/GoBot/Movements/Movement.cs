@@ -31,7 +31,7 @@ namespace GoBot.Movements
         /// <summary>
         /// Obtient le score rapporté par l'execution de l'action
         /// </summary>
-        public abstract double Score { get; }
+        public abstract int Score { get; }
 
         /// <summary>
         /// Obtient la valeur de l'action, c'est à dire l'interet qu'il existe à la réaliser
@@ -78,6 +78,7 @@ namespace GoBot.Movements
             startTime = DateTime.Now;
 
             Position position = BestPosition;
+            bool ok = true;
 
             if (position != null)
             {
@@ -89,19 +90,22 @@ namespace GoBot.Movements
                 {
                     MovementCore();
                     Robots.GrosRobot.Historique.Log("Fin " + this.ToString() + " en " + (DateTime.Now - startTime).TotalSeconds.ToString("#.#") + "s");
-                    return true;
+                    ok = true;
                 }
                 else
                 {
                     Robots.GrosRobot.Historique.Log("Annulation " + this.ToString() + ", trajectoire échouée");
-                    return false;
+                    ok = false;
                 }
             }
             else
             {
                 Robots.GrosRobot.Historique.Log("Annulation " + this.ToString() + ", trajectoire non trouvée");
-                return false;
+                ok = false;
             }
+
+            Robots.GrosRobot.MajGraphFranchissable();
+            return ok;
         }
         
         /// <summary>
