@@ -15,6 +15,17 @@ namespace GoBot.Actionneurs
 {
     class PatternReader
     {
+        public static CubesPattern ONV = new CubesPattern(CubeColor.Orange, CubeColor.Black, CubeColor.Green);
+        public static CubesPattern JNB = new CubesPattern(CubeColor.Yellow, CubeColor.Black, CubeColor.Blue);
+        public static CubesPattern BVO = new CubesPattern(CubeColor.Blue, CubeColor.Green, CubeColor.Orange);
+        public static CubesPattern JVN = new CubesPattern(CubeColor.Yellow, CubeColor.Green, CubeColor.Black);
+        public static CubesPattern NJO = new CubesPattern(CubeColor.Black, CubeColor.Yellow, CubeColor.Orange);
+        public static CubesPattern VJB = new CubesPattern(CubeColor.Green, CubeColor.Yellow, CubeColor.Blue);
+        public static CubesPattern BON = new CubesPattern(CubeColor.Blue, CubeColor.Orange, CubeColor.Black);
+        public static CubesPattern VOJ = new CubesPattern(CubeColor.Green, CubeColor.Orange, CubeColor.Yellow);
+        public static CubesPattern NBV = new CubesPattern(CubeColor.Black, CubeColor.Blue, CubeColor.Green);
+        public static CubesPattern OBJ = new CubesPattern(CubeColor.Orange, CubeColor.Blue, CubeColor.Yellow);
+
         private CubesPattern _pattern;
 
         private LimitedQueue<double> _measures;
@@ -23,7 +34,7 @@ namespace GoBot.Actionneurs
         private int _errors;
 
         private ThreadLink _linkPolling;
-        
+
         public delegate void PatternChangedDelegate(CubesPattern pattern);
         public event PatternChangedDelegate PatternChanged;
 
@@ -64,7 +75,7 @@ namespace GoBot.Actionneurs
             _linkPolling.WaitEnd();
             _linkPolling = null;
         }
-        
+
         private void AskRefresh()
         {
             _linkPolling.RegisterName();

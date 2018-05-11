@@ -207,31 +207,41 @@ namespace GoBot.Actionneurs
         public void DoArmOnLeftCube()
         {
             Config.CurrentConfig.ServoCoudeDroite.SendPosition(Config.CurrentConfig.ServoCoudeDroite.PositionApprocheHaute);
-            Thread.Sleep(300);
+            Thread.Sleep(200);
             Config.CurrentConfig.ServoLateralDroite.SendPosition(Config.CurrentConfig.ServoLateralDroite.PositionCubeGauche);
             Config.CurrentConfig.ServoCoudeDroite.SendPosition(Config.CurrentConfig.ServoCoudeDroite.PositionApprocheBasse);
             Config.CurrentConfig.ServoPoignetDroite.SendPosition(Config.CurrentConfig.ServoPoignetDroite.PositionPrise);
-            Thread.Sleep(800);
+            Thread.Sleep(700);
         }
 
         public void DoLeftArmOnLeftCube()
         {
             Config.CurrentConfig.ServoCoudeGauche.SendPosition(Config.CurrentConfig.ServoCoudeGauche.PositionApprocheHaute);
-            Thread.Sleep(300);
+            Thread.Sleep(200);
             Config.CurrentConfig.ServoLateralGauche.SendPosition(Config.CurrentConfig.ServoLateralGauche.PositionCubeGauche);
             Config.CurrentConfig.ServoCoudeGauche.SendPosition(Config.CurrentConfig.ServoCoudeGauche.PositionApprocheBasse);
             Config.CurrentConfig.ServoPoignetGauche.SendPosition(Config.CurrentConfig.ServoPoignetGauche.PositionPrise);
-            Thread.Sleep(800);
+            Thread.Sleep(700);
+        }
+
+        public void DoLeftArmOnCenterCube()
+        {
+            Config.CurrentConfig.ServoCoudeGauche.SendPosition(Config.CurrentConfig.ServoCoudeGauche.PositionApprocheHaute);
+            Thread.Sleep(200);
+            Config.CurrentConfig.ServoLateralGauche.SendPosition(Config.CurrentConfig.ServoLateralGauche.PositionCentre);
+            Config.CurrentConfig.ServoCoudeGauche.SendPosition(Config.CurrentConfig.ServoCoudeGauche.PositionApprocheBasse);
+            Config.CurrentConfig.ServoPoignetGauche.SendPosition(Config.CurrentConfig.ServoPoignetGauche.PositionPrise);
+            Thread.Sleep(700);
         }
 
         public void DoArmOnCenterCube()
         {
             Config.CurrentConfig.ServoCoudeDroite.SendPosition(Config.CurrentConfig.ServoCoudeDroite.PositionApprocheHaute);
-            Thread.Sleep(300);
+            Thread.Sleep(200);
             Config.CurrentConfig.ServoLateralDroite.SendPosition(Config.CurrentConfig.ServoLateralDroite.PositionCentre);
             Config.CurrentConfig.ServoCoudeDroite.SendPosition(Config.CurrentConfig.ServoCoudeDroite.PositionApprocheBasse);
             Config.CurrentConfig.ServoPoignetDroite.SendPosition(Config.CurrentConfig.ServoPoignetDroite.PositionPrise);
-            Thread.Sleep(800);
+            Thread.Sleep(700);
         }
 
         public void DoTakeCube(Dumper.Slot slot)
@@ -245,11 +255,11 @@ namespace GoBot.Actionneurs
             // On cache le cube dans le bras
             Config.CurrentConfig.ServoCoudeDroite.SendPosition(Config.CurrentConfig.ServoCoudeDroite.PositionApprocheBasse);
             Config.CurrentConfig.ServoPoignetDroite.SendPosition(Config.CurrentConfig.ServoPoignetDroite.Maximum);
-            Thread.Sleep(400);
+            Thread.Sleep(300);
 
             // On remonte
             Config.CurrentConfig.ServoCoudeDroite.SendPosition(Config.CurrentConfig.ServoCoudeDroite.PositionApprocheHaute);
-            Thread.Sleep(400);
+            Thread.Sleep(300);
             switch(slot)
             {
                 case Dumper.Slot.Rigth:
@@ -262,7 +272,27 @@ namespace GoBot.Actionneurs
                     Config.CurrentConfig.ServoLateralDroite.SendPosition(Config.CurrentConfig.ServoLateralDroite.PositionGauche);
                     break;
             }
+            Thread.Sleep(300);
+        }
+
+        public void DoTakeCentralCube()
+        {
+            Actionneur.Harvester.DoRightPumpEnable();
+
+            // On prend le cube
+            Config.CurrentConfig.ServoCoudeDroite.SendPosition(Config.CurrentConfig.ServoCoudeDroite.PositionPrise);
             Thread.Sleep(400);
+
+            // On cache le cube dans le bras
+            Config.CurrentConfig.ServoCoudeDroite.SendPosition(Config.CurrentConfig.ServoCoudeDroite.PositionApprocheBasse);
+            Config.CurrentConfig.ServoPoignetDroite.SendPosition(Config.CurrentConfig.ServoPoignetDroite.Maximum);
+            Thread.Sleep(300);
+
+            // On remonte
+            Config.CurrentConfig.ServoCoudeDroite.SendPosition(Config.CurrentConfig.ServoCoudeDroite.PositionApprocheHaute);
+            Thread.Sleep(300);
+            Config.CurrentConfig.ServoLateralDroite.SendPosition(Config.CurrentConfig.ServoLateralDroite.PositionCentre);
+            Thread.Sleep(300);
         }
 
         public void DoStoreCube()
@@ -284,8 +314,95 @@ namespace GoBot.Actionneurs
 
             // On lache on pousse et on recule
             Actionneur.Harvester.DoRightPumpDisable();
-            Thread.Sleep(300);
+            Thread.Sleep(200);
             Config.CurrentConfig.ServoCoudeDroite.SendPosition(Config.CurrentConfig.ServoCoudeDroite.PositionApprocheStockage);
+        }
+
+        public void DoDemoCube()
+        {
+            DoTakeCentralCube();
+            DoStoreCube();
+        }
+
+        public void DoStoreCubeLeftArm()
+        {
+            // On retourne
+            Config.CurrentConfig.ServoPoignetGauche.SendPosition(Config.CurrentConfig.ServoPoignetGauche.PositionStockage);
+            Thread.Sleep(250);
+            Config.CurrentConfig.ServoCoudeGauche.SendPosition(Config.CurrentConfig.ServoCoudeGauche.PositionPrise);
+            Thread.Sleep(450);
+
+            // On l'approche devant le convoyeur
+            Config.CurrentConfig.ServoCoudeGauche.SendPosition(Config.CurrentConfig.ServoCoudeGauche.PositionApprocheStockage);
+            Thread.Sleep(200);
+
+            // On le rentre dans le convoyeur
+            Config.CurrentConfig.ServoCoudeGauche.SendPosition(Config.CurrentConfig.ServoCoudeGauche.PositionFinStockage);
+            Config.CurrentConfig.ServoPoignetGauche.SendPosition(Config.CurrentConfig.ServoPoignetGauche.PositionFinStockage);
+            Thread.Sleep(200);
+
+            // On lache on pousse et on recule
+            Actionneur.Harvester.DoLeftPumpDisable();
+            Thread.Sleep(300);
+            Config.CurrentConfig.ServoCoudeGauche.SendPosition(Config.CurrentConfig.ServoCoudeGauche.PositionApprocheStockage);
+        }
+
+        CubesCross.CubeColor _buffer;
+
+        public void DoBuffer(CubesCross cross, CubesCross.CubePlace place)
+        {
+            Config.CurrentConfig.ServoLateralDroite.SendPosition(Config.CurrentConfig.ServoLateralDroite.PositionDroite);
+
+            switch(place)
+            {
+                case CubesCross.CubePlace.Bottom:
+                case CubesCross.CubePlace.Center:
+                case CubesCross.CubePlace.Top:
+                    Config.CurrentConfig.ServoLateralGauche.SendPosition(Config.CurrentConfig.ServoLateralGauche.PositionCentre);
+                    break;
+                case CubesCross.CubePlace.Left:
+                    Config.CurrentConfig.ServoLateralGauche.SendPosition(Config.CurrentConfig.ServoLateralGauche.PositionGauche);
+                    break;
+                case CubesCross.CubePlace.Rigth:
+                    Config.CurrentConfig.ServoLateralGauche.SendPosition(Config.CurrentConfig.ServoLateralGauche.PositionDroite);
+                    break;
+            }
+
+            Thread.Sleep(600);
+            Config.CurrentConfig.ServoCoudeGauche.SendPosition(Config.CurrentConfig.ServoCoudeGauche.PositionApprocheHaute);
+            Thread.Sleep(300);
+            Config.CurrentConfig.ServoCoudeGauche.SendPosition(Config.CurrentConfig.ServoCoudeGauche.PositionPrise);
+            Thread.Sleep(800);
+            Config.CurrentConfig.ServoPoignetGauche.SendPosition(Config.CurrentConfig.ServoPoignetGauche.PositionPrise);
+            Thread.Sleep(500);
+            Config.CurrentConfig.ServoCoudeGauche.SendPosition(Config.CurrentConfig.ServoCoudeGauche.PositionApprocheHaute);
+            Thread.Sleep(300);
+            Config.CurrentConfig.ServoLateralGauche.SendPosition(Config.CurrentConfig.ServoLateralGauche.PositionStockage);
+
+            _buffer = cross.GetColor(place);
+            cross.RemoveCube(place);
+        }
+
+        public void DoStoreBuffer(Dumper.Slot slot)
+        {
+            Config.CurrentConfig.ServoLateralDroite.SendPosition(Config.CurrentConfig.ServoLateralDroite.PositionDroite);
+
+            switch (slot)
+            {
+                case Dumper.Slot.Middle:
+                    Config.CurrentConfig.ServoLateralGauche.SendPosition(Config.CurrentConfig.ServoLateralGauche.PositionCentre);
+                    break;
+                case Dumper.Slot.Left:
+                    Config.CurrentConfig.ServoLateralGauche.SendPosition(Config.CurrentConfig.ServoLateralGauche.PositionGauche);
+                    break;
+                case Dumper.Slot.Rigth:
+                    Config.CurrentConfig.ServoLateralGauche.SendPosition(Config.CurrentConfig.ServoLateralGauche.PositionDroite);
+                    break;
+            }
+
+            DoStoreCubeLeftArm();
+
+            Actionneur.Dumper.AddCube(slot, _buffer);
         }
 
         public void DoTakeCubeInSlot(CubesCross cross, CubesCross.CubePlace place, Dumper.Slot slot)

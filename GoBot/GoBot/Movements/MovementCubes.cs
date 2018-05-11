@@ -100,71 +100,204 @@ namespace GoBot.Movements
             // TODO Préparer les bras ?
         }
 
+        private CubesCross.CubePlace MyLeft()
+        {
+            if (Plateau.NotreCouleur == Plateau.CouleurGaucheVert)
+                return CubesCross.CubePlace.Left;
+            else
+                return CubesCross.CubePlace.Rigth;
+        }
+
+        private CubesCross.CubePlace MyRight()
+        {
+            if (Plateau.NotreCouleur == Plateau.CouleurGaucheVert)
+                return CubesCross.CubePlace.Rigth;
+            else
+                return CubesCross.CubePlace.Left;
+        }
+
         protected override void MovementCore()
         {
             CubesCross cross = (CubesCross)Element;
 
             Robots.GrosRobot.Avancer(50);
 
-            if (_firstCube)
+            if (Actionneur.PatternReader.Pattern.IsSame(PatternReader.VJB))
             {
-                Actionneur.Harvester.DoTakeCubeInSlot(cross, CubesCross.CubePlace.Bottom, Dumper.Slot.Middle);
+                if (_firstCube)
+                {
+                    Actionneur.Harvester.DoTakeCubeInSlot(cross, CubesCross.CubePlace.Bottom, Dumper.Slot.Middle);
 
-                Robots.GrosRobot.Avancer(58);
+                    Robots.GrosRobot.Avancer(58);
 
-                Actionneur.Harvester.DoTakeCubeInSlot(cross, CubesCross.CubePlace.Center, Dumper.Slot.Middle);
-                Actionneur.Harvester.DoTakeCubeInSlot(cross, CubesCross.CubePlace.Rigth, Dumper.Slot.Middle);
-                Actionneur.Harvester.DoTakeCubeInSlot(cross, CubesCross.CubePlace.Left, Dumper.Slot.Middle);
+                    Actionneur.Harvester.DoTakeCubeInSlot(cross, CubesCross.CubePlace.Center, Dumper.Slot.Middle);
+                    Actionneur.Harvester.DoTakeCubeInSlot(cross, MyLeft(), Dumper.Slot.Middle);
+                    Actionneur.Harvester.DoTakeCubeInSlot(cross, MyRight(), Dumper.Slot.Middle);
 
-                Robots.GrosRobot.Avancer(58);
+                    Robots.GrosRobot.Avancer(58);
 
-                Actionneur.Harvester.DoTakeCubeInSlot(cross, CubesCross.CubePlace.Top, Dumper.Slot.Rigth);
-                
-                _firstCube = false;
+                    Actionneur.Harvester.DoTakeCubeInSlot(cross, CubesCross.CubePlace.Top, Dumper.Slot.Left);
+
+                    _firstCube = false;
+                }
+                else
+                {
+                    Actionneur.Harvester.DoTakeCubeInSlot(cross, CubesCross.CubePlace.Bottom, Dumper.Slot.Rigth);
+
+                    Robots.GrosRobot.Avancer(58);
+
+                    Actionneur.Harvester.DoTakeCubeInSlot(cross, CubesCross.CubePlace.Center, Dumper.Slot.Rigth);
+
+                    Actionneur.Harvester.DoTakeCubeInSlot(cross, CubesCross.CubePlace.Rigth, Dumper.Slot.Rigth);
+
+                    Config.CurrentConfig.ServoCoudeDroite.SendPosition(Config.CurrentConfig.ServoCoudeDroite.PositionApprocheHaute);
+                    Thread.Sleep(500);
+                    Config.CurrentConfig.ServoCoudeDroite.SendPosition(Config.CurrentConfig.ServoLateralGauche.PositionDroite);
+
+                    Actionneur.Harvester.DoLeftArmOnLeftCube();
+                    Config.CurrentConfig.MoteurPompeGauche.SendPosition(Config.CurrentConfig.MoteurPompeGauche.PositionAspire);
+                    Config.CurrentConfig.ServoCoudeGauche.SendPosition(Config.CurrentConfig.ServoCoudeGauche.PositionPrise);
+                    Thread.Sleep(600);
+                    Config.CurrentConfig.ServoCoudeGauche.SendPosition(Config.CurrentConfig.ServoCoudeGauche.PositionApprocheBasse);
+                    Thread.Sleep(50);
+                    Config.CurrentConfig.ServoLateralGauche.SendPosition(Config.CurrentConfig.ServoLateralGauche.PositionStockage);
+                    Actionneur.Dumper.InsertCube(Dumper.Slot.Rigth, cross.GetColor(CubesCross.CubePlace.Left));
+                    cross.RemoveCube(CubesCross.CubePlace.Left);
+
+                    Robots.GrosRobot.Avancer(58);
+
+                    Actionneur.Harvester.DoArmOnCenterCube();
+                    Config.CurrentConfig.MoteurPompeDroite.SendPosition(Config.CurrentConfig.MoteurPompeDroite.PositionAspire);
+                    Config.CurrentConfig.ServoCoudeDroite.SendPosition(Config.CurrentConfig.ServoCoudeDroite.PositionPrise);
+                    Thread.Sleep(600);
+                    Config.CurrentConfig.ServoCoudeDroite.SendPosition(Config.CurrentConfig.ServoCoudeDroite.PositionApprocheBasse);
+                    Thread.Sleep(50);
+                    Actionneur.Dumper.InsertCube(Dumper.Slot.Middle, cross.GetColor(CubesCross.CubePlace.Top));
+                    cross.RemoveCube(CubesCross.CubePlace.Top);
+
+                    Config.CurrentConfig.ServoLateralDroite.SendPosition(Config.CurrentConfig.ServoLateralDroite.PositionCentre);
+                    Thread.Sleep(100);
+                    Config.CurrentConfig.ServoLateralGauche.SendPosition(Config.CurrentConfig.ServoLateralGauche.PositionGauche);
+                }
+
+                Plateau.Score -= 5; // Cube pousseur
             }
+            else if (Actionneur.PatternReader.Pattern.IsSame(PatternReader.BVO))
+            {
+                if (_firstCube)
+                {
+                    Actionneur.Harvester.DoTakeCubeInSlot(cross, CubesCross.CubePlace.Bottom, Dumper.Slot.Middle);
+
+                    Robots.GrosRobot.Avancer(58);
+
+                    Actionneur.Harvester.DoTakeCubeInSlot(cross, MyLeft(), Dumper.Slot.Middle);
+                    Actionneur.Harvester.DoTakeCubeInSlot(cross, MyRight(), Dumper.Slot.Middle);
+                    Actionneur.Harvester.DoTakeCubeInSlot(cross, CubesCross.CubePlace.Center, Dumper.Slot.Middle);
+
+                    Robots.GrosRobot.Avancer(58);
+
+                    Actionneur.Harvester.DoTakeCubeInSlot(cross, CubesCross.CubePlace.Top, Dumper.Slot.Left);
+
+                    _firstCube = false;
+                }
+                else
+                {
+                    Actionneur.Harvester.DoTakeCubeInSlot(cross, CubesCross.CubePlace.Bottom, Dumper.Slot.Rigth);
+
+                    Robots.GrosRobot.Avancer(58);
+
+                    Actionneur.Harvester.DoTakeCubeInSlot(cross, MyLeft(), Dumper.Slot.Rigth);
+
+                    Actionneur.Harvester.DoTakeCubeInSlot(cross, MyRight(), Dumper.Slot.Rigth);
+
+
+                    Actionneur.Harvester.DoTakeCubeInSlot(cross, CubesCross.CubePlace.Center, Dumper.Slot.Rigth);
+
+                    Config.CurrentConfig.ServoCoudeDroite.SendPosition(Config.CurrentConfig.ServoCoudeDroite.PositionApprocheHaute);
+                    Thread.Sleep(500);
+                    Config.CurrentConfig.ServoCoudeDroite.SendPosition(Config.CurrentConfig.ServoLateralGauche.PositionDroite);
+
+                    Robots.GrosRobot.Avancer(58);
+
+                    Actionneur.Harvester.DoArmOnCenterCube();
+                    Config.CurrentConfig.MoteurPompeDroite.SendPosition(Config.CurrentConfig.MoteurPompeDroite.PositionAspire);
+                    Config.CurrentConfig.ServoCoudeDroite.SendPosition(Config.CurrentConfig.ServoCoudeDroite.PositionPrise);
+                    Thread.Sleep(600);
+                    Config.CurrentConfig.ServoCoudeDroite.SendPosition(Config.CurrentConfig.ServoCoudeDroite.PositionApprocheBasse);
+                    Thread.Sleep(50);
+                    Actionneur.Dumper.InsertCube(Dumper.Slot.Middle, cross.GetColor(CubesCross.CubePlace.Top));
+                    cross.RemoveCube(CubesCross.CubePlace.Top);
+                    
+                    Config.CurrentConfig.ServoLateralDroite.SendPosition(Config.CurrentConfig.ServoLateralDroite.PositionGauche);
+                    Thread.Sleep(100);
+                    Config.CurrentConfig.ServoLateralGauche.SendPosition(Config.CurrentConfig.ServoLateralGauche.PositionStockage);
+                }
+
+                Plateau.Score -= 5; // Cube pousseur
+            }
+
             else
             {
-                Actionneur.Harvester.DoTakeCubeInSlot(cross, CubesCross.CubePlace.Bottom, Dumper.Slot.Rigth);
-                
-                Robots.GrosRobot.Avancer(58);
+                if (_firstCube)
+                {
+                    Actionneur.Harvester.DoTakeCubeInSlot(cross, CubesCross.CubePlace.Bottom, Dumper.Slot.Middle);
 
-                Actionneur.Harvester.DoTakeCubeInSlot(cross, CubesCross.CubePlace.Center, Dumper.Slot.Rigth);
+                    Robots.GrosRobot.Avancer(58);
 
-                Actionneur.Harvester.DoTakeCubeInSlot(cross, CubesCross.CubePlace.Rigth, Dumper.Slot.Rigth);
-                
-                Config.CurrentConfig.ServoCoudeDroite.SendPosition(Config.CurrentConfig.ServoCoudeDroite.PositionApprocheHaute);
-                Thread.Sleep(500);
-                Config.CurrentConfig.ServoCoudeDroite.SendPosition(Config.CurrentConfig.ServoLateralGauche.PositionDroite);
+                    Actionneur.Harvester.DoTakeCubeInSlot(cross, CubesCross.CubePlace.Center, Dumper.Slot.Middle);
+                    Actionneur.Harvester.DoTakeCubeInSlot(cross, CubesCross.CubePlace.Rigth, Dumper.Slot.Middle);
+                    Actionneur.Harvester.DoTakeCubeInSlot(cross, CubesCross.CubePlace.Left, Dumper.Slot.Middle);
 
-                Actionneur.Harvester.DoLeftArmOnLeftCube();
-                Config.CurrentConfig.MoteurPompeGauche.SendPosition(Config.CurrentConfig.MoteurPompeGauche.PositionAspire);
-                Config.CurrentConfig.ServoCoudeGauche.SendPosition(Config.CurrentConfig.ServoCoudeGauche.PositionPrise);
-                Thread.Sleep(500);
-                Config.CurrentConfig.ServoCoudeGauche.SendPosition(Config.CurrentConfig.ServoCoudeGauche.PositionApprocheBasse);
-                Thread.Sleep(50);
-                Config.CurrentConfig.ServoLateralGauche.SendPosition(Config.CurrentConfig.ServoLateralGauche.PositionStockage);
-                Actionneur.Dumper.InsertCube(Dumper.Slot.Rigth, cross.GetColor(CubesCross.CubePlace.Left));
-                cross.RemoveCube(CubesCross.CubePlace.Left);
+                    Robots.GrosRobot.Avancer(58);
 
-                Robots.GrosRobot.Avancer(58);
+                    Actionneur.Harvester.DoTakeCubeInSlot(cross, CubesCross.CubePlace.Top, Dumper.Slot.Rigth);
 
-                Actionneur.Harvester.DoArmOnCenterCube();
-                Config.CurrentConfig.MoteurPompeDroite.SendPosition(Config.CurrentConfig.MoteurPompeDroite.PositionAspire);
-                Config.CurrentConfig.ServoCoudeDroite.SendPosition(Config.CurrentConfig.ServoCoudeDroite.PositionPrise);
-                Thread.Sleep(500);
-                Config.CurrentConfig.ServoCoudeDroite.SendPosition(Config.CurrentConfig.ServoCoudeDroite.PositionApprocheBasse);
-                Thread.Sleep(50);
-                Actionneur.Dumper.InsertCube(Dumper.Slot.Middle, cross.GetColor(CubesCross.CubePlace.Top));
-                cross.RemoveCube(CubesCross.CubePlace.Top);
+                    _firstCube = false;
+                }
+                else
+                {
+                    Actionneur.Harvester.DoTakeCubeInSlot(cross, CubesCross.CubePlace.Bottom, Dumper.Slot.Rigth);
 
-                Config.CurrentConfig.ServoLateralDroite.SendPosition(Config.CurrentConfig.ServoLateralDroite.PositionCentre);
-                Thread.Sleep(100);
-                Config.CurrentConfig.ServoLateralGauche.SendPosition(Config.CurrentConfig.ServoLateralGauche.PositionGauche);
+                    Robots.GrosRobot.Avancer(58);
+
+                    Actionneur.Harvester.DoTakeCubeInSlot(cross, CubesCross.CubePlace.Center, Dumper.Slot.Rigth);
+
+                    Actionneur.Harvester.DoTakeCubeInSlot(cross, CubesCross.CubePlace.Rigth, Dumper.Slot.Rigth);
+
+                    Config.CurrentConfig.ServoCoudeDroite.SendPosition(Config.CurrentConfig.ServoCoudeDroite.PositionApprocheHaute);
+                    Thread.Sleep(500);
+                    Config.CurrentConfig.ServoCoudeDroite.SendPosition(Config.CurrentConfig.ServoLateralGauche.PositionDroite);
+
+                    Actionneur.Harvester.DoLeftArmOnLeftCube();
+                    Config.CurrentConfig.MoteurPompeGauche.SendPosition(Config.CurrentConfig.MoteurPompeGauche.PositionAspire);
+                    Config.CurrentConfig.ServoCoudeGauche.SendPosition(Config.CurrentConfig.ServoCoudeGauche.PositionPrise);
+                    Thread.Sleep(600);
+                    Config.CurrentConfig.ServoCoudeGauche.SendPosition(Config.CurrentConfig.ServoCoudeGauche.PositionApprocheBasse);
+                    Thread.Sleep(50);
+                    Config.CurrentConfig.ServoLateralGauche.SendPosition(Config.CurrentConfig.ServoLateralGauche.PositionStockage);
+                    Actionneur.Dumper.InsertCube(Dumper.Slot.Rigth, cross.GetColor(CubesCross.CubePlace.Left));
+                    cross.RemoveCube(CubesCross.CubePlace.Left);
+
+                    Robots.GrosRobot.Avancer(58);
+
+                    Actionneur.Harvester.DoArmOnCenterCube();
+                    Config.CurrentConfig.MoteurPompeDroite.SendPosition(Config.CurrentConfig.MoteurPompeDroite.PositionAspire);
+                    Config.CurrentConfig.ServoCoudeDroite.SendPosition(Config.CurrentConfig.ServoCoudeDroite.PositionPrise);
+                    Thread.Sleep(600);
+                    Config.CurrentConfig.ServoCoudeDroite.SendPosition(Config.CurrentConfig.ServoCoudeDroite.PositionApprocheBasse);
+                    Thread.Sleep(50);
+                    Actionneur.Dumper.InsertCube(Dumper.Slot.Middle, cross.GetColor(CubesCross.CubePlace.Top));
+                    cross.RemoveCube(CubesCross.CubePlace.Top);
+
+                    Config.CurrentConfig.ServoLateralDroite.SendPosition(Config.CurrentConfig.ServoLateralDroite.PositionCentre);
+                    Thread.Sleep(100);
+                    Config.CurrentConfig.ServoLateralGauche.SendPosition(Config.CurrentConfig.ServoLateralGauche.PositionGauche);
+                }
             }
 
             Element.IsAvailable = false;
         }
-        
+
         //if (Actionneur.Dumper.CanPickupCubes)
         //{
         //    Actionneur.Dumper.PickupCubes((CubesCross)Element, Actionneur.PatternReader.Pattern);

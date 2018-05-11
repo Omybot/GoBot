@@ -96,8 +96,22 @@ namespace GoBot.Devices
         private void Button4Click()
         {
         }
+
+        private bool _toggleBtn5;
         private void Button5Click()
         {
+            if(!_toggleBtn5)
+            {
+                Config.CurrentConfig.ServoCoudeDroite.SendPosition(Config.CurrentConfig.ServoCoudeDroite.PositionApprocheBasse);
+                Config.CurrentConfig.ServoCoudeGauche.SendPosition(Config.CurrentConfig.ServoCoudeGauche.PositionApprocheBasse);
+            }
+            else
+            {
+                Config.CurrentConfig.ServoCoudeDroite.SendPosition(Config.CurrentConfig.ServoCoudeDroite.PositionRange);
+                Config.CurrentConfig.ServoCoudeGauche.SendPosition(Config.CurrentConfig.ServoCoudeGauche.PositionRange);
+            }
+
+            _toggleBtn5 = !_toggleBtn5;
         }
         private void Button6Click()
         {

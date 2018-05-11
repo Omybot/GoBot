@@ -65,14 +65,14 @@ namespace GoBot.Strategies
         /// </summary>
         public Strategy()
         {
-            if (Debugger.IsAttached)
-            {
-                MatchDuration = new TimeSpan(0, 0, 1000);
-            }
-            else
-            {
+            //if (Debugger.IsAttached)
+            //{
+            //    MatchDuration = new TimeSpan(0, 0, 1000);
+            //}
+            //else
+            //{
                 MatchDuration = new TimeSpan(0, 0, 100);
-            }
+            //}
 
             Plateau.PoidActions = new PoidsTest();
             Movements = new List<Movement>();

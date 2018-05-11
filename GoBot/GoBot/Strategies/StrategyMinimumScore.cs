@@ -28,7 +28,7 @@ namespace GoBot.Strategies
             //Plateau.Score += 10; // distributeur ouvert
             //Plateau.Score += 35; // 7 balles
 
-            Robots.GrosRobot.SpeedConfig.SetParams(400, 1000, 2000, 400, 1000, 2000);
+            Robots.GrosRobot.SpeedConfig.SetParams(1000, 1500, 2000, 1000, 2000, 2000);
 
             ThreadManager.CreateThread(link => Actionneurs.Actionneur.Harvester.DoInitArms()).StartThread();
 
@@ -54,6 +54,8 @@ namespace GoBot.Strategies
                 Plateau.Score += 25;
                 Plateau.Elements.DomoticBoards[1].IsAvailable = false;
             }
+
+            Robots.GrosRobot.SpeedConfig.SetParams(500, 1000, 1500, 500, 1000, 2000);
 
             Robots.GrosRobot.PivotDroite(90);
             Config.CurrentConfig.ServoBouton.SendPosition(Config.CurrentConfig.ServoBouton.Maximum);
@@ -81,6 +83,9 @@ namespace GoBot.Strategies
                 _avoidElements = true;
                 Robots.GrosRobot.MajGraphFranchissable();
                 while (!new MovementBee(Plateau.Elements.Flowers[1]).Execute()) ;
+                while (!new MovementsCubesFromBottom(Plateau.Elements.CubesCrosses[5]).Execute()) ;
+                while (!new MovementsCubesFromBottom(Plateau.Elements.CubesCrosses[4]).Execute()) ;
+                while (!new MovementBuilding(Plateau.Elements.ConstructionZones[2]).Execute()) ;
                 //fixedMovements.Add(new MouvementFusee(2));
             }
         }

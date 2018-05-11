@@ -69,7 +69,7 @@ namespace GoBot.GameElements
 
         public bool IsSame(CubesPattern pattern)
         {
-            return (pattern.colors[0] == colors[0] && pattern.colors[1] == colors[1] && pattern.colors[2] == colors[2]);
+            return ((pattern.colors[0] == colors[0] && pattern.colors[1] == colors[1] && pattern.colors[2] == colors[2])) || ((pattern.colors[0] == colors[2] && pattern.colors[1] == colors[1] && pattern.colors[2] == colors[0]));
         }
     }
 }

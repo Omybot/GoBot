@@ -94,17 +94,18 @@ namespace GoBot.Movements
 
             Actionneur.Harvester.DoInitArms();
 
-            Robot.Lent();
-
             Robot.Reculer(100);
             Robot.PivotDroite(180);
 
             Actionneur.Dumper.DoDeploy();
 
+            Robot.Lent();
+
             Robot.Reculer(100);
             Actionneur.Dumper.DoLibereTours();
             Thread.Sleep(500);
             Actionneur.Dumper.DoOpenGates();
+            Thread.Sleep(500);
 
             Robot.Avancer(150);
 
@@ -112,9 +113,12 @@ namespace GoBot.Movements
             
             foreach (Dumper.Slot slot in Enum.GetValues(typeof(Dumper.Slot)))
             {
-                CubesTower tower = new CubesTower(Actionneur.Dumper.GetCubes(slot));
-                constructionZone.AddTower(tower);
-                Plateau.Score += tower.Score;
+                if (slot != Dumper.Slot.Left)
+                {
+                    CubesTower tower = new CubesTower(Actionneur.Dumper.GetCubes(slot));
+                    constructionZone.AddTower(tower);
+                    Plateau.Score += tower.Score;
+                }
             }
 
             Actionneur.Dumper.Clear();

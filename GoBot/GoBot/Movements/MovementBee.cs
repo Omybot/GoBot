@@ -61,28 +61,15 @@ namespace GoBot.Movements
                 Config.CurrentConfig.ServoCoudeDroite.SendPosition(Config.CurrentConfig.ServoCoudeDroite.PositionApprocheHaute);
                 Thread.Sleep(500);
                 Config.CurrentConfig.ServoLateralDroite.SendPosition(Config.CurrentConfig.ServoLateralDroite.PositionDroite);
-
-                Config.CurrentConfig.ServoCoudeGauche.SendPosition(Config.CurrentConfig.ServoCoudeGauche.PositionApprocheBasse);
-                Thread.Sleep(500);
-                Config.CurrentConfig.ServoPoignetGauche.SendPosition(Config.CurrentConfig.ServoPoignetGauche.PositionPrise);
-                Thread.Sleep(500);
-                Config.CurrentConfig.ServoLateralGauche.SendPosition(Config.CurrentConfig.ServoLateralGauche.PositionStockage);
-                Thread.Sleep(500);
-                Config.CurrentConfig.ServoCoudeGauche.SendPosition(Config.CurrentConfig.ServoCoudeGauche.PositionRange);
             }
             else
             {
                 Config.CurrentConfig.ServoCoudeGauche.SendPosition(Config.CurrentConfig.ServoCoudeGauche.PositionApprocheHaute);
                 Thread.Sleep(500);
                 Config.CurrentConfig.ServoLateralGauche.SendPosition(Config.CurrentConfig.ServoLateralGauche.PositionStockage);
-
-                Config.CurrentConfig.ServoCoudeDroite.SendPosition(Config.CurrentConfig.ServoCoudeDroite.PositionApprocheBasse);
-                Thread.Sleep(500);
-                Config.CurrentConfig.ServoPoignetDroite.SendPosition(Config.CurrentConfig.ServoPoignetDroite.PositionPrise);
-                Thread.Sleep(500);
+                
                 Config.CurrentConfig.ServoLateralDroite.SendPosition(Config.CurrentConfig.ServoLateralDroite.PositionDroite);
                 Thread.Sleep(500);
-                Config.CurrentConfig.ServoCoudeDroite.SendPosition(Config.CurrentConfig.ServoCoudeDroite.PositionRange);
             }
 
             if (_flower.Color == Plateau.CouleurGaucheVert) Robot.PivotDroite(45); else Robot.PivotGauche(45);
@@ -92,33 +79,26 @@ namespace GoBot.Movements
             if (_flower.Color == Plateau.CouleurGaucheVert)
             {
                 Config.CurrentConfig.ServoCoudeDroite.SendPosition(Config.CurrentConfig.ServoCoudeDroite.PositionApprocheBasse);
-                Thread.Sleep(600);
-
                 Config.CurrentConfig.ServoPoignetDroite.SendPosition((Config.CurrentConfig.ServoPoignetDroite.Minimum + Config.CurrentConfig.ServoPoignetDroite.Maximum) / 2);
-                Thread.Sleep(600);
+                Thread.Sleep(400);
 
                 Config.CurrentConfig.ServoLateralDroite.SendPosition(Config.CurrentConfig.ServoLateralDroite.PositionGauche);
                 Thread.Sleep(600);
 
                 Config.CurrentConfig.ServoPoignetDroite.SendPosition(Config.CurrentConfig.ServoPoignetDroite.PositionPrise);
                 Config.CurrentConfig.ServoCoudeDroite.SendPosition(Config.CurrentConfig.ServoCoudeDroite.PositionRange);
-                Thread.Sleep(600);
             }
             else
             {
-
                 Config.CurrentConfig.ServoCoudeGauche.SendPosition(Config.CurrentConfig.ServoCoudeGauche.PositionApprocheBasse);
-                Thread.Sleep(600);
-
                 Config.CurrentConfig.ServoPoignetGauche.SendPosition((Config.CurrentConfig.ServoPoignetGauche.Minimum + Config.CurrentConfig.ServoPoignetGauche.Maximum) / 2);
-                Thread.Sleep(600);
+                Thread.Sleep(400);
 
                 Config.CurrentConfig.ServoLateralGauche.SendPosition(Config.CurrentConfig.ServoLateralGauche.PositionCentre);
                 Thread.Sleep(600);
 
                 Config.CurrentConfig.ServoPoignetGauche.SendPosition(Config.CurrentConfig.ServoPoignetGauche.PositionPrise);
                 Config.CurrentConfig.ServoCoudeGauche.SendPosition(Config.CurrentConfig.ServoCoudeGauche.PositionRange);
-                Thread.Sleep(600);
             }
 
             Robot.Rapide();
@@ -127,6 +107,7 @@ namespace GoBot.Movements
             if (_flower.Color == Plateau.CouleurGaucheVert) Robot.PivotGauche(90); else Robot.PivotDroite(90);
             Robot.Avancer(100);
 
+            Actionneurs.Actionneur.Harvester.DoInitArms();
 
             // Pousser l'abeille
 

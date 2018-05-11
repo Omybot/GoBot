@@ -55,8 +55,8 @@ namespace GoBot
     {
         PumpRight = 4,
         PumpLeft = 3,
-        ValveRight = 2,
-        ValveLeft = 1,
+        ValveRight = 1,
+        ValveLeft = 2,
 
         Beacon = 0x10,
 
