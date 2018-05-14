@@ -369,7 +369,7 @@ namespace GoBot.Actionneurs
             }
             Thread.Sleep(600);
             Config.CurrentConfig.ServoCoudeGauche.SendPosition(Config.CurrentConfig.ServoCoudeGauche.PositionApprocheHaute);
-            Thread.Sleep(300);
+            Thread.Sleep(200);
             Config.CurrentConfig.ServoPoignetGauche.SendPosition(Config.CurrentConfig.ServoPoignetGauche.PositionPrise);
             Thread.Sleep(800);
             Config.CurrentConfig.ServoCoudeGauche.SendPosition(Config.CurrentConfig.ServoCoudeGauche.PositionPrise);
@@ -467,6 +467,9 @@ namespace GoBot.Actionneurs
 
             DoStoreCubeLeftArm();
 
+            ConvoyeurStuff(slot);
+            Actionneur.Harvester.DoThreadShaking(new TimeSpan(0, 0, 2));
+
             Thread.Sleep(300);
 
             Config.CurrentConfig.ServoLateralGauche.SendPosition(Config.CurrentConfig.ServoLateralGauche.PositionStockage);
@@ -492,6 +495,9 @@ namespace GoBot.Actionneurs
             }
 
             DoStoreCubeRightArm();
+
+            ConvoyeurStuff(slot);
+            Actionneur.Harvester.DoThreadShaking(new TimeSpan(0, 0, 2));
 
             Actionneur.Dumper.AddCube(slot, _bufferRight);
         }

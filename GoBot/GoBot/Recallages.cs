@@ -30,6 +30,7 @@ namespace GoBot
         
         public static void RecallageGrosRobot()
         {
+            Devices.Devices.RecGoBot.SetLed(LedID.DebugB2, Devices.RecGoBot.LedStatus.Rouge);
             Plateau.FreezeColor();
 
             Robots.GrosRobot.EnvoyerPID(40, 0, 400);

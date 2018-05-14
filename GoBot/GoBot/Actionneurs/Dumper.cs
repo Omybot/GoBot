@@ -73,53 +73,6 @@ namespace GoBot.Actionneurs
             Config.CurrentConfig.MoteurElevation.SendPosition(Config.CurrentConfig.MoteurElevation.PositionRange);
         }
 
-
-        public void DoShakeYourDumper()
-        {
-            for (int i = 0; i < 60; i++)
-            {
-                Config.CurrentConfig.MoteurElevation.SendPosition(Config.CurrentConfig.MoteurElevation.DeplacementDepose);
-                Thread.Sleep(50);
-                Config.CurrentConfig.MoteurElevation.SendPosition(Config.CurrentConfig.MoteurElevation.DeplacementRange);
-                Thread.Sleep(60);
-            }
-
-            Config.CurrentConfig.MoteurElevation.SendPosition(Config.CurrentConfig.MoteurElevation.Neutre);
-        }
-
-        public void DoLoadOnRight()
-        {
-            ThreadManager.CreateThread(link => DoConvoyeurLoopDroite()).StartThread();
-            ThreadManager.CreateThread(link => DoShakeYourDumper()).StartThread();
-        }
-
-        public void DoLoadOnCenter()
-        {
-            ThreadManager.CreateThread(link => DoConvoyeurLoopCentre()).StartThread();
-            ThreadManager.CreateThread(link => DoShakeYourDumper()).StartThread();
-        }
-
-        public void DoLoadOnLeft()
-        {
-            ThreadManager.CreateThread(link => DoConvoyeurLoopGauche()).StartThread();
-            ThreadManager.CreateThread(link => DoShakeYourDumper()).StartThread();
-        }
-
-        public void DoTasseMoiLeFond()
-        {
-            for(int i= 0; i < 2; i++)
-            {
-                Config.CurrentConfig.ServoConvoyeurGauche.SendPosition(Config.CurrentConfig.ServoConvoyeurGauche.PositionArriere);
-                Config.CurrentConfig.ServoConvoyeurCentre.SendPosition(Config.CurrentConfig.ServoConvoyeurCentre.PositionArriere);
-                Config.CurrentConfig.ServoConvoyeurDroite.SendPosition(Config.CurrentConfig.ServoConvoyeurDroite.PositionArriere);
-                Thread.Sleep(200);
-                Config.CurrentConfig.ServoConvoyeurGauche.SendPosition(Config.CurrentConfig.ServoConvoyeurGauche.PositionAvant);
-                Config.CurrentConfig.ServoConvoyeurCentre.SendPosition(Config.CurrentConfig.ServoConvoyeurCentre.PositionAvant);
-                Config.CurrentConfig.ServoConvoyeurDroite.SendPosition(Config.CurrentConfig.ServoConvoyeurDroite.PositionAvant);
-                Thread.Sleep(200);
-            }
-        }
-
         public void DoForward()
         {
             Config.CurrentConfig.ServoConvoyeurGauche.SendPosition(Config.CurrentConfig.ServoConvoyeurGauche.PositionAvant);

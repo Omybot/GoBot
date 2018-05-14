@@ -23,12 +23,13 @@ namespace GoBot.Strategies
             // Sortir ICI de la zonde de départ
 
             Plateau.Score += (3 + 5 + 10 + 10 + 35); // abeille posée - erreur de 2
-            //Plateau.Score += 5; // panneau domotique posé
-            //Plateau.Score += 10; // sortir de la zone de départ
-            //Plateau.Score += 10; // distributeur ouvert
-            //Plateau.Score += 35; // 7 balles
+                                                     //Plateau.Score += 5; // panneau domotique posé
+                                                     //Plateau.Score += 10; // sortir de la zone de départ
+                                                     //Plateau.Score += 10; // distributeur ouvert
+                                                     //Plateau.Score += 35; // 7 balles
 
             Robots.GrosRobot.SpeedConfig.SetParams(1000, 1500, 2000, 1000, 2000, 2000);
+            //Robots.GrosRobot.SpeedConfig.SetParams(500, 500, 500, 500, 500, 500);
 
             ThreadManager.CreateThread(link => Actionneurs.Actionneur.Harvester.DoInitArms()).StartThread();
 
@@ -70,7 +71,7 @@ namespace GoBot.Strategies
             {
                 _avoidElements = true;
                 Robots.GrosRobot.MajGraphFranchissable();
-                //while (!new MovementBee(Plateau.Elements.Flowers[0]).Execute()) ;
+                while (!new MovementBee(Plateau.Elements.Flowers[0]).Execute()) ;
                 while (!new MovementsCubesFromBottom(Plateau.Elements.CubesCrosses[0]).Execute());
                 while (!new MovementsCubesFromBottom(Plateau.Elements.CubesCrosses[1]).Execute());
                 while (!new MovementBuilding(Plateau.Elements.ConstructionZones[1]).Execute());
@@ -82,10 +83,10 @@ namespace GoBot.Strategies
             {
                 _avoidElements = true;
                 Robots.GrosRobot.MajGraphFranchissable();
-                //while (!new MovementBee(Plateau.Elements.Flowers[1]).Execute()) ;
-                while (!new MovementsCubesFromBottom(Plateau.Elements.CubesCrosses[5]).Execute()) ;
-                while (!new MovementsCubesFromBottom(Plateau.Elements.CubesCrosses[4]).Execute()) ;
-                while (!new MovementBuilding(Plateau.Elements.ConstructionZones[2]).Execute()) ;
+                while (!new MovementBee(Plateau.Elements.Flowers[1]).Execute()) ;
+                while (!new MovementsCubesFromBottom(Plateau.Elements.CubesCrosses[5]).Execute());
+                while (!new MovementsCubesFromBottom(Plateau.Elements.CubesCrosses[4]).Execute());
+                while (!new MovementBuilding(Plateau.Elements.ConstructionZones[2]).Execute());
                 //fixedMovements.Add(new MouvementFusee(2));
             }
         }

@@ -40,7 +40,7 @@ namespace GoBot.Actionneurs
 
         public CubesPattern Pattern
         {
-            get { return JVN; }// _pattern; }
+            get { return _pattern; }
         }
 
         public double Period
@@ -101,7 +101,7 @@ namespace GoBot.Actionneurs
                 {
                     _pattern = newPattern;
                     OnPatternChanged();
-
+                    Devices.Devices.RecGoBot.SetLed(LedID.DebugB2, Devices.RecGoBot.LedStatus.Vert);
                 }
             }
             else

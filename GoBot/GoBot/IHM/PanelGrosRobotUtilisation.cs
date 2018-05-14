@@ -9,6 +9,7 @@ using System.Windows.Forms;
 using System.Threading;
 using GoBot.Actionneurs;
 using GoBot.Threading;
+using GoBot.Communications;
 
 namespace GoBot.IHM
 {
@@ -185,6 +186,10 @@ namespace GoBot.IHM
         }
 
         private void button2_Click(object sender, EventArgs e)
+        {
+        }
+
+        private void button6_Click(object sender, EventArgs e)
         {
         }
     }

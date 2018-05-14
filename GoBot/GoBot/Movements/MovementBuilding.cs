@@ -75,7 +75,6 @@ namespace GoBot.Movements
         protected override void MovementBegin()
         {
             // TODO Préparer le déchargement ?
-            Robot.Lent();
         }
 
         protected override void MovementCore()
@@ -99,15 +98,16 @@ namespace GoBot.Movements
 
             Actionneur.Dumper.DoDeploy();
 
-            Robot.Lent();
-
-            Robot.Reculer(100);
+            Robot.Reculer(95);
             Actionneur.Dumper.DoLibereTours();
             Thread.Sleep(500);
             Actionneur.Dumper.DoOpenGates();
             Thread.Sleep(500);
 
-            Robot.Avancer(150);
+            Robot.Lent();
+            Robot.SpeedConfig.SetParams(100, 100, 100, 100, 100, 100);
+
+            Robot.Avancer(200);
 
             Actionneur.Dumper.DoStore();
             
