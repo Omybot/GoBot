@@ -21,7 +21,7 @@ namespace GoBot.IHM
 
         private void _timer_Tick(object sender, EventArgs e)
         {
-            this.InvokeAuto(() => _conIndicator.SetConnectionState(_connection.Connected, _connection.ConnectionChecker.Connected, true));
+            this.InvokeAuto(() => _conIndicator.SetConnectionState(_connection.ConnectionChecker.Connected, _connection.ConnectionChecker.Connected, true));
         }
 
         public Connection Connection
@@ -39,7 +39,7 @@ namespace GoBot.IHM
 
                 if (_connection != null && _connection.ConnectionChecker != null)
                 {
-                    _conIndicator.SetConnectionState(_connection.Connected, _connection.ConnectionChecker.Connected, false);
+                    _conIndicator.SetConnectionState(_connection.ConnectionChecker.Connected, _connection.ConnectionChecker.Connected, false);
                     _connection.ConnectionChecker.ConnectionStatusChange += ConnexionCheck_ConnectionStatusChange;
                     _lblName.Text = Connections.GetBoardByConnection(_connection).ToString();
                 }

@@ -46,8 +46,6 @@ namespace GoBot.Communications
         /// </summary>
         private UdpClient Client { get; set; }
         
-        private DateTime LastPingTry { get; set; }
-
         IPEndPoint e;
         UdpClient u;
 
@@ -55,7 +53,6 @@ namespace GoBot.Communications
         {
             ConnectionChecker = new ConnectionChecker(this, 500);
             Archives = new ConnectionReplay();
-            LastPingTry = new DateTime(1, 1, 1);
         }
 
         /// <summary>
@@ -75,34 +72,13 @@ namespace GoBot.Communications
 
             lock (this)
             {
-
                 try
                 {
-                    if ((DateTime.Now - LastPingTry).TotalSeconds > 1)
-                    {
-                        Ping ping = new Ping();
-                        PingReply pingReponse = ping.Send(IPAddress, 10);
-                        LastPingTry = DateTime.Now;
-
-                        if (pingReponse.Status == IPStatus.Success)
-                        {
-                            Client = new UdpClient();
-                            Client.Connect(IPAddress, OutputPort);
-                            Connected = true;
-                            retour = ConnectionState.Ok;
-                            StartReception();
-                        }
-                        else
-                        {
-                            retour = ConnectionState.Error;
-                            Connected = false;
-                        }
-                    }
-                    else
-                    {
-                        retour = ConnectionState.Error;
-                        Connected = false;
-                    }
+                    Client = new UdpClient();
+                    Client.Connect(IPAddress, OutputPort);
+                    Connected = true;
+                    retour = ConnectionState.Ok;
+                    StartReception();
                 }
                 catch (Exception)
                 {
