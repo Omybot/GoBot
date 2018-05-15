@@ -350,7 +350,7 @@ namespace GoBot.Threading
             _loopLock?.Release();
 
             // Pompage des messages windows parce que si on attend sur le thread principal une invocation du thread principal c'est un deadlock...
-            while (sw.ElapsedMilliseconds < timeout && !_innerThread.Join(10))
+            while (_innerThread != null && sw.ElapsedMilliseconds < timeout && !_innerThread.Join(10))
                 System.Windows.Forms.Application.DoEvents();
 
             return sw.ElapsedMilliseconds < timeout;
