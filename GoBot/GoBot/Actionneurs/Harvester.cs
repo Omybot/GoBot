@@ -2,6 +2,7 @@
 using GoBot.Threading;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading;
@@ -17,6 +18,34 @@ namespace GoBot.Actionneurs
         {
             Left,
             Rigth
+        }
+
+        public void DoTestSpeed()
+        {
+            CubesCross cross = new CubesCross(new Geometry.Shapes.RealPoint(), true);
+
+            // 1er cube
+
+            Stopwatch sw = Stopwatch.StartNew();
+
+            Actionneur.Harvester.DoTakeCubeInSlot(cross, CubesCross.CubePlace.Bottom, Dumper.Slot.Middle);
+
+            Robots.GrosRobot.Avancer(58, false);
+
+            //Actionneur.Harvester.DoBufferLeft(cross, CubesCross.CubePlace.Left);
+            Actionneur.Harvester.DoTakeCubeInSlot(cross, CubesCross.CubePlace.Left, Dumper.Slot.Middle);
+            Actionneur.Harvester.DoTakeCubeInSlot(cross, CubesCross.CubePlace.Center, Dumper.Slot.Middle);
+            //Actionneur.Harvester.DoStoreBufferLeft(Dumper.Slot.Middle);
+            Actionneur.Harvester.DoTakeCubeInSlot(cross, CubesCross.CubePlace.Right, Dumper.Slot.Middle);
+
+            Robots.GrosRobot.Avancer(58, false);
+
+            Actionneur.Harvester.DoTakeCubeInSlot(cross, CubesCross.CubePlace.Top, Dumper.Slot.Middle);
+            //Actionneur.Harvester.DoBufferLeft(cross, CubesCross.CubePlace.Top);
+
+            // 2eme cube
+
+            Console.WriteLine(sw.ElapsedMilliseconds);
         }
 
         public void DoTakeCubeOnLeftArm()

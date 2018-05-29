@@ -161,7 +161,7 @@ namespace GoBot.Communications
             }
             catch (Exception e)
             {
-                Console.WriteLine("ERREUR UDP");
+                Console.WriteLine("ERREUR UDP : " + e.ToString());
             }
         }
     }

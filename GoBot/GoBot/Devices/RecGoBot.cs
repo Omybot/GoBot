@@ -92,6 +92,7 @@ namespace GoBot.Devices
         }
         private void Button3Click()
         {
+
         }
         private void Button4Click()
         {
@@ -259,7 +260,7 @@ namespace GoBot.Devices
                 else
                     SetLed(led, RecGoBot.LedStatus.Off);
             }
-            catch (Exception e)
+            catch (Exception)
             {
 
             }
