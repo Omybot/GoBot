@@ -44,6 +44,10 @@ namespace GoBot.Devices
             TorqueMaxSet = 0x0F,
             TorqueCurrentAsk = 0x10,
             TorqueCurrentResponse = 0x11,
+            AccelerationAsk = 0x12,
+            AccelerationResponse = 0x13,
+            AccelerationSet = 0x14,
+            TargetSet = 0x15,
             TrajectorySet = 0x16,
 
             SetScore = 0xA0
@@ -150,14 +154,8 @@ namespace GoBot.Devices
 
             tab[0] = ByteDivide(id / 4, true);
             tab[1] = ByteDivide(id / 4, false);
-            tab[2] = (byte)_framesCount;
-            tab[3] = (byte)ServosCanFunctions.PositionAsk;
-            tab[4] = (byte)(id % 4);
-            tab[5] = 0;
-            tab[6] = 0;
-            tab[7] = 0;
-            tab[8] = 0;
-            tab[9] = Checksum(tab);
+            tab[2] = (byte)ServosCanFunctions.PositionAsk;
+            tab[3] = (byte)(id % 4);
 
             SendFrame(new Frame(tab), true);
 
@@ -170,14 +168,8 @@ namespace GoBot.Devices
 
             tab[0] = ByteDivide(id / 4, true);
             tab[1] = ByteDivide(id / 4, false);
-            tab[2] = (byte)_framesCount;
-            tab[3] = (byte)ServosCanFunctions.PositionMinAsk;
-            tab[4] = (byte)(id % 4);
-            tab[5] = 0;
-            tab[6] = 0;
-            tab[7] = 0;
-            tab[8] = 0;
-            tab[9] = Checksum(tab);
+            tab[2] = (byte)ServosCanFunctions.PositionMinAsk;
+            tab[3] = (byte)(id % 4);
 
             SendFrame(new Frame(tab), true);
 
@@ -190,14 +182,8 @@ namespace GoBot.Devices
 
             tab[0] = ByteDivide(id / 4, true);
             tab[1] = ByteDivide(id / 4, false);
-            tab[2] = (byte)_framesCount;
-            tab[3] = (byte)ServosCanFunctions.PositionMaxAsk;
-            tab[4] = (byte)(id % 4);
-            tab[5] = 0;
-            tab[6] = 0;
-            tab[7] = 0;
-            tab[8] = 0;
-            tab[9] = Checksum(tab);
+            tab[2] = (byte)ServosCanFunctions.PositionMaxAsk;
+            tab[3] = (byte)(id % 4);
 
             SendFrame(new Frame(tab), true);
 
@@ -210,14 +196,8 @@ namespace GoBot.Devices
 
             tab[0] = ByteDivide(id / 4, true);
             tab[1] = ByteDivide(id / 4, false);
-            tab[2] = (byte)_framesCount;
-            tab[3] = (byte)ServosCanFunctions.SpeedAsk;
-            tab[4] = (byte)(id % 4);
-            tab[5] = 0;
-            tab[6] = 0;
-            tab[7] = 0;
-            tab[8] = 0;
-            tab[9] = Checksum(tab);
+            tab[2] = (byte)ServosCanFunctions.SpeedAsk;
+            tab[3] = (byte)(id % 4);
 
             SendFrame(new Frame(tab), true);
 
@@ -230,14 +210,8 @@ namespace GoBot.Devices
 
             tab[0] = ByteDivide(id / 4, true);
             tab[1] = ByteDivide(id / 4, false);
-            tab[2] = (byte)_framesCount;
-            tab[3] = (byte)ServosCanFunctions.TorqueCurrentAsk;
-            tab[4] = (byte)(id % 4);
-            tab[5] = 0;
-            tab[6] = 0;
-            tab[7] = 0;
-            tab[8] = 0;
-            tab[9] = Checksum(tab);
+            tab[2] = (byte)ServosCanFunctions.TorqueCurrentAsk;
+            tab[3] = (byte)(id % 4);
 
             SendFrame(new Frame(tab), true);
 
@@ -250,14 +224,8 @@ namespace GoBot.Devices
 
             tab[0] = ByteDivide(id / 4, true);
             tab[1] = ByteDivide(id / 4, false);
-            tab[2] = (byte)_framesCount;
-            tab[3] = (byte)ServosCanFunctions.TorqueMaxAsk;
-            tab[4] = (byte)(id % 4);
-            tab[5] = 0;
-            tab[6] = 0;
-            tab[7] = 0;
-            tab[8] = 0;
-            tab[9] = Checksum(tab);
+            tab[2] = (byte)ServosCanFunctions.TorqueMaxAsk;
+            tab[3] = (byte)(id % 4);
 
             SendFrame(new Frame(tab), true);
 
@@ -270,14 +238,10 @@ namespace GoBot.Devices
 
             tab[0] = ByteDivide(id / 4, true);
             tab[1] = ByteDivide(id / 4, false);
-            tab[2] = (byte)_framesCount;
-            tab[3] = (byte)ServosCanFunctions.PositionSet;
-            tab[4] = (byte)(id % 4);
-            tab[5] = ByteDivide(position, true);
-            tab[6] = ByteDivide(position, false);
-            tab[7] = 0;
-            tab[8] = 0;
-            tab[9] = Checksum(tab);
+            tab[2] = (byte)ServosCanFunctions.PositionSet;
+            tab[3] = (byte)(id % 4);
+            tab[4] = ByteDivide(position, true);
+            tab[5] = ByteDivide(position, false);
 
             SendFrame(new Frame(tab));
         }
@@ -288,14 +252,10 @@ namespace GoBot.Devices
 
             tab[0] = ByteDivide(id / 4, true);
             tab[1] = ByteDivide(id / 4, false);
-            tab[2] = (byte)_framesCount;
-            tab[3] = (byte)ServosCanFunctions.PositionMaxSet;
-            tab[4] = (byte)(id % 4);
-            tab[5] = ByteDivide(position, true);
-            tab[6] = ByteDivide(position, false);
-            tab[7] = 0;
-            tab[8] = 0;
-            tab[9] = Checksum(tab);
+            tab[2] = (byte)ServosCanFunctions.PositionMaxSet;
+            tab[3] = (byte)(id % 4);
+            tab[4] = ByteDivide(position, true);
+            tab[5] = ByteDivide(position, false);
 
             SendFrame(new Frame(tab));
         }
@@ -306,14 +266,10 @@ namespace GoBot.Devices
 
             tab[0] = ByteDivide(id / 4, true);
             tab[1] = ByteDivide(id / 4, false);
-            tab[2] = (byte)_framesCount;
-            tab[3] = (byte)ServosCanFunctions.PositionMinSet;
-            tab[4] = (byte)(id % 4);
-            tab[5] = ByteDivide(position, true);
-            tab[6] = ByteDivide(position, false);
-            tab[7] = 0;
-            tab[8] = 0;
-            tab[9] = Checksum(tab);
+            tab[2] = (byte)ServosCanFunctions.PositionMinSet;
+            tab[3] = (byte)(id % 4);
+            tab[4] = ByteDivide(position, true);
+            tab[5] = ByteDivide(position, false);
 
             SendFrame(new Frame(tab));
         }
@@ -324,14 +280,10 @@ namespace GoBot.Devices
 
             tab[0] = ByteDivide(id / 4, true);
             tab[1] = ByteDivide(id / 4, false);
-            tab[2] = (byte)_framesCount;
-            tab[3] = (byte)ServosCanFunctions.SpeedSet;
-            tab[4] = (byte)(id % 4);
-            tab[5] = ByteDivide(speed, true);
-            tab[6] = ByteDivide(speed, false);
-            tab[7] = 0;
-            tab[8] = 0;
-            tab[9] = Checksum(tab);
+            tab[2] = (byte)ServosCanFunctions.SpeedSet;
+            tab[3] = (byte)(id % 4);
+            tab[4] = ByteDivide(speed, true);
+            tab[5] = ByteDivide(speed, false);
 
             SendFrame(new Frame(tab));
         }
@@ -342,14 +294,10 @@ namespace GoBot.Devices
 
             tab[0] = ByteDivide(id / 4, true);
             tab[1] = ByteDivide(id / 4, false);
-            tab[2] = (byte)_framesCount;
-            tab[3] = (byte)ServosCanFunctions.TorqueMaxSet;
-            tab[4] = (byte)(id % 4);
-            tab[5] = ByteDivide(torque, true);
-            tab[6] = ByteDivide(torque, false);
-            tab[7] = 0;
-            tab[8] = 0;
-            tab[9] = Checksum(tab);
+            tab[2] = (byte)ServosCanFunctions.TorqueMaxSet;
+            tab[3] = (byte)(id % 4);
+            tab[4] = ByteDivide(torque, true);
+            tab[5] = ByteDivide(torque, false);
 
             SendFrame(new Frame(tab));
         }
@@ -360,14 +308,14 @@ namespace GoBot.Devices
 
             tab[0] = ByteDivide(id / 4, true);
             tab[1] = ByteDivide(id / 4, false);
-            tab[2] = (byte)_framesCount;
-            tab[3] = (byte)ServosCanFunctions.TrajectorySet;
-            tab[4] = (byte)(id % 4);
-            tab[5] = ByteDivide(position, true);
-            tab[6] = ByteDivide(position, false);
-            tab[7] = ByteDivide(speed, true);
-            tab[8] = ByteDivide(speed, true);
-            tab[9] = (byte)accel;
+            tab[2] = (byte)ServosCanFunctions.TrajectorySet;
+            tab[3] = (byte)(id % 4);
+            tab[4] = ByteDivide(position, true);
+            tab[5] = ByteDivide(position, false);
+            tab[6] = ByteDivide(speed, true);
+            tab[7] = ByteDivide(speed, false);
+            tab[8] = ByteDivide(accel, true);
+            tab[9] = ByteDivide(accel, false);
 
             SendFrame(new Frame(tab));
         }
@@ -378,14 +326,10 @@ namespace GoBot.Devices
 
             tab[0] = 0x00;
             tab[1] = 0x04;
-            tab[2] = (byte)_framesCount;
-            tab[3] = (byte)ServosCanFunctions.SetScore;
-            tab[4] = 0x00;
-            tab[5] = ByteDivide(score, true);
-            tab[6] = ByteDivide(score, false);
-            tab[7] = 0;
-            tab[8] = 0;
-            tab[9] = Checksum(tab);
+            tab[2] = (byte)ServosCanFunctions.SetScore;
+            tab[3] = 0x00;
+            tab[4] = ByteDivide(score, true);
+            tab[5] = ByteDivide(score, false);
 
             SendFrame(new Frame(tab));
         }
@@ -416,16 +360,6 @@ namespace GoBot.Devices
             else
                 b = (byte)(valeur & 0x00FF);
             return b;
-        }
-
-        private byte Checksum(IEnumerable<byte> data)
-        {
-            byte sum = 0;
-
-            foreach (byte b in data)
-                sum ^= b;
-
-            return sum;
         }
     }
 }
