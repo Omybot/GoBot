@@ -20,11 +20,15 @@ using GoBot.Communications;
 using GoBot.GameElements;
 using GoBot.Devices;
 using GoBot.Threading;
+using GoBot.GameBoard;
+using System.Diagnostics;
 
 namespace GoBot
 {
     public class Plateau
     {
+        private static Obstacles _obstacles;
+
         public static int RayonAdversaireInitial { get; set; }
         public static int RayonAdversaire { get; set; }
 
@@ -33,28 +37,14 @@ namespace GoBot
         public static Strategy Strategy { get; set; }
         public static Poids PoidActions { get; set; }
 
-        public static List<IShape> ObstaclesPlateau { get; set; }
-        public static List<IShape> ObstaclesBalise { get; set; }
+        //public static List<IShape> ObstaclesPlateau { get; set; }
+        //public static List<IShape> ObstaclesBalise { get; set; }
 
-        public static List<IShape> ObstaclesCouleur
+        public static IEnumerable<IShape> ObstaclesCouleur
         {
             get
             {
-                List<IShape> shapes = new List<IShape>();
-                if(Plateau.NotreCouleur == Plateau.CouleurGaucheVert)
-                {
-                    shapes.Add(new Circle(new RealPoint(250, 850), 200));
-                    shapes.Add(new PolygonRectangle(new RealPoint(2030, 0), 600, 180));
-                    shapes.Add(new PolygonRectangle(new RealPoint(2600, 0), 400, 645));
-                }
-                else
-                {
-                    shapes.Add(new Circle(new RealPoint(3000 - 250, 850), 200));
-                    shapes.Add(new PolygonRectangle(new RealPoint(400, 0), 600, 180));
-                    shapes.Add(new PolygonRectangle(new RealPoint(0, 0), 400, 645));
-                }
-
-                return shapes;
+                return _obstacles.FromColor;
             }
         }
 
@@ -71,7 +61,7 @@ namespace GoBot
         public static Color NotreCouleur
         {
             get { return notreCouleur; }
-            set 
+            set
             {
                 if (!_colorFreezed)
                 {
@@ -84,7 +74,7 @@ namespace GoBot
                             Devices.Devices.RecGoBot.SetLedColor(Color.Orange);
 
                         NotreCouleurChange?.Invoke(null, null);
-                        Robots.GrosRobot.MajGraphFranchissable();
+                        Robots.GrosRobot.MajGraphFranchissable(_obstacles.FromAllExceptBoard);
                     }
                 }
             }
@@ -122,19 +112,22 @@ namespace GoBot
         /// <summary>
         /// Liste complète des obstacles fixes et temporaires
         /// </summary>
-        public static List<IShape> ListeObstacles
+        public static IEnumerable<IShape> ListeObstacles
         {
             get
             {
-                List<IShape> toutObstacles = new List<IShape>();
-                toutObstacles.AddRange(ObstaclesPlateau);
-                toutObstacles.AddRange(ObstaclesBalise);
-                toutObstacles.AddRange(Elements.AsObstacles);
-                //toutObstacles.AddRange(ObstaclesCouleur);
-                return toutObstacles;
+                return _obstacles.FromAll.ToList(); // Pour concretiser la liste
             }
         }
         
+        public static IEnumerable<IShape> ObstaclesOpponents
+        {
+            get
+            {
+                return _obstacles.FromDetection.ToList();
+            }
+        }
+
         public Plateau()
         {
             if (!Execution.DesignMode)
@@ -144,20 +137,14 @@ namespace GoBot
                 RayonAdversaire = RayonAdversaireInitial;
 
                 ReflecteursNosRobots = true;
-
-                ObstaclesBalise = new List<IShape>();
-
-                ChargerObstacles();
+                
+                _obstacles = new Obstacles(Elements);
                 CreerSommets(100);
-                SauverGraph();
 
                 Balise.PositionEnnemisActualisee += Balise_PositionEnnemisActualisee;
                 
-                SemaphoreCollisions = new Semaphore(0, int.MaxValue);
-                ThreadManager.CreateThread(ThreadTestCollisions).StartThread();
-
                 Strategy = new StrategyMinimumScore();
-                Robots.GrosRobot.MajGraphFranchissable();
+                Robots.GrosRobot.MajGraphFranchissable(_obstacles.FromAllExceptBoard);
             }
         }
 
@@ -165,190 +152,73 @@ namespace GoBot
         {
             // Positions ennemies signalées par la balise
 
-            lock (ObstaclesBalise)
-            {
-                ObstaclesBalise.Clear();
+            Stopwatch sw = Stopwatch.StartNew();
 
-                int vitesseMax = Config.CurrentConfig.ConfigRapide.LineSpeed;
-
-                for (int i = 0; i < positions.Count; i++)
-                {
-                    RealPoint coordonnees = new RealPoint(positions[i].X, positions[i].Y);
-                    AjouterObstacle(new Circle(coordonnees, RayonAdversaire));
-
-                    if (Plateau.Strategy == null)
-                    {
-                        // Tester ICI ce qu'il y a à tester en fonction de la position de l'ennemi AVANT de lancer le match
-                    }
-                    else
-                    {
-                        // Tester ICI ce qu'il y a à tester en fonction de la position de l'ennemi PENDANT le match
-
-                        Elements.SetOpponents(positions);
-
-                        if (Robots.GrosRobot.VitesseAdaptableEnnemi)
-                        {
-                            double distanceAdv = Robots.GrosRobot.Position.Coordinates.Distance(coordonnees);
-                            if (distanceAdv < 1500)
-                            {
-                                vitesseMax = (int)(Math.Min(vitesseMax, (distanceAdv - 300) / 1000.0 * Config.CurrentConfig.ConfigRapide.LineSpeed));
-                            }
-                        }
-                    }
-                }
-            }
-
-            Robots.GrosRobot.MajGraphFranchissable();
-
-            SemaphoreCollisions.Release();
-        }
-
-        public static void Init()
-        {
-            Balise = new Beacon();
-        }
-
-        private Semaphore SemaphoreCollisions { get; set; }
-        private void ThreadTestCollisions(ThreadLink link)
-        {
-            link.RegisterName();
-
-            while (!link.Cancelled)
-            {
-                // Le timeout sur le Thread permet de vérifier chaque seconde si on est en train d'éteindre l'application pour couper le Thread.
-                if (SemaphoreCollisions.WaitOne(1000))
-                {
-                    link.LoopsCount++;
-                    Robots.GrosRobot.ObstacleTest();
-                }
-            }
-        }
-
-        public void ObstacleTest(int x, int y)
-        {
-            // Obstacle de simulation
-            ObstaclesBalise.Clear();
-            RealPoint coordonnees = new RealPoint(x, y);
-
-            Console.Write(" Ajout obstacle");
-            AjouterObstacle(new Circle(coordonnees, 200));
-
+            int vitesseMax = Config.CurrentConfig.ConfigRapide.LineSpeed;
+            
             if (Plateau.Strategy == null)
             {
-                // Tester ici ce qu'il y a à tester en fonction de la position de l'ennemi AVANT de lancer le match
+                // Tester ICI ce qu'il y a à tester en fonction de la position de l'ennemi AVANT de lancer le match
             }
             else
             {
-                // Tester ici ce qu'il y a à tester en fonction de la position de l'ennemi PENDANT le match
+                // Tester ICI ce qu'il y a à tester en fonction de la position de l'ennemi PENDANT le match
+
+                Elements.SetOpponents(positions);
+
+                if (Robots.GrosRobot.VitesseAdaptableEnnemi)
+                {
+                    double minOpponentDist = positions.Min(p => p.Distance(Robots.GrosRobot.Position.Coordinates));
+                    if (minOpponentDist < 1500)
+                    {
+                        vitesseMax = (int)(Math.Min(vitesseMax, (minOpponentDist - 300) / 1000.0 * Config.CurrentConfig.ConfigRapide.LineSpeed));
+                    }
+                }
             }
 
-            SemaphoreCollisions.Release();
+            _obstacles.SetDetections(positions.Select(p => new Circle(p, RayonAdversaire)).ToList());
+            
+            Robots.GrosRobot.MajGraphFranchissable(_obstacles.FromAllExceptBoard);
+            Console.WriteLine(sw.ElapsedMilliseconds + "ms");
+            Robots.GrosRobot.ObstacleTest(_obstacles.FromDetection);
         }
 
-        /// <summary>
-        /// Vide les obstacles temporaires et rend tout le graph parcourable
-        /// </summary>
-        public static void ViderObstacles()
-        {
-            foreach (Robot robot in new List<Robot> { Robots.GrosRobot })
-            {
-                for (int i = 0; i < robot.Graph.Arcs.Count; i++)
-                    ((Arc)robot.Graph.Arcs[i]).Passable = true;
-                for (int i = 0; i < robot.Graph.Nodes.Count; i++)
-                    ((Node)robot.Graph.Nodes[i]).Passable = true;
-            }
-        }
-
-        /// <summary>
-        /// Ajoute un obstacle et teste les endroits du graph qui ne sont plus franchissables
-        /// </summary>
-        /// <param name="obstacle">Forme de l'obstacle</param>
-        /// <param name="fixe">Si l'obstacle est fixe, on supprime complètement les noeuds et arcs non franchissables. Sinon on les rends non franchissables temporairement.</param>
-        public static void AjouterObstacle(IShape obstacle, bool fixe = false, bool majGraph = false)
-        {
-            if (majGraph)
-                ObstaclesBalise.Clear();
-
-            if (fixe)
-                ObstaclesPlateau.Add(obstacle);
-            else
-                ObstaclesBalise.Add(obstacle);
-        }
-
-        /// <summary>
-        /// Sauve le graph pour une utilisation ultérieure
-        /// </summary>
-        public void SauverGraph()
-        {
-            IFormatter formatter = new BinaryFormatter();
-            using (Stream stream = new FileStream(Config.PathData + "/graphGros.bin", FileMode.OpenOrCreate, FileAccess.Write, FileShare.None))
-                formatter.Serialize(stream, Robots.GrosRobot.Graph);
-        }
-
-        /// <summary>
-        /// Charge le dernier graph sauvegardé. Permet de gagner du temps par rapport à une génération du graph à chaque execution.
-        /// </summary>
-        public static void ChargerGraphGros()
-        {
-            try
-            {
-                IFormatter formatter = new BinaryFormatter();
-                using (Stream stream = new FileStream(Config.PathData + "/graphGros.bin", FileMode.Open, FileAccess.Read, FileShare.Read))
-                    Robots.GrosRobot.Graph = (Graph)formatter.Deserialize(stream);
-            }
-            catch (Exception e)
-            {
-                MessageBox.Show("Impossible de charger le graph." + Environment.NewLine + e.Message);
-            }
-        }
-
-        /// <summary>
-        /// Crée le graph du pathfinding.
-        /// </summary>
-        /// <param name="resolution">Distance (mm) entre chaque noeud du graph en X et Y</param>
-        /// <param name="distanceLiaison">Distance (mm) jusqu'à laquelle les noeuds sont reliés par un arc. Par défaut on crée un graph minimal (liaison aux 8 points alentours : N/S/E/O/NE/NO/SE/SO)</param>
-        private void CreerSommets(int resolution, double distanceLiaison = -1)
-        {
-            if (distanceLiaison == -1)
-                distanceLiaison = Math.Sqrt((resolution * resolution) * 2) + 1;
-
-            Robots.GrosRobot.Graph = new Graph();
-
-            // Création des noeuds
-            for (int x = resolution / 2; x < Largeur; x += resolution)
-                for (int y = resolution / 2; y < Hauteur; y += resolution)
-                    Robots.GrosRobot.Graph.AddNode(new Node(x, y, 0), Plateau.ObstaclesPlateau, Robots.GrosRobot.Rayon, Math.Sqrt(resolution * resolution * 2) + 1, true);
-        }
-
-        public void ChargerObstacles()
-        {
-            ObstaclesPlateau = new List<IShape>();
-            List<RealPoint> points = new List<RealPoint>();
-
-            // Contours du plateau
-            AjouterObstacle(new Segment(new RealPoint(0, 0), new RealPoint(Largeur - 4, 0)), true);
-            AjouterObstacle(new Segment(new RealPoint(Largeur - 4, 0), new RealPoint(Largeur - 4, Hauteur - 4)), true);
-            AjouterObstacle(new Segment(new RealPoint(Largeur - 4, Hauteur - 4), new RealPoint(0, Hauteur - 4)), true);
-            AjouterObstacle(new Segment(new RealPoint(0, Hauteur - 4), new RealPoint(0, 0)), true);
-
-            // Distributeurs
-            AjouterObstacle(new Circle(new RealPoint(0, 840), 110), true);
-            AjouterObstacle(new Circle(new RealPoint(610, 2000), 110), true);
-            AjouterObstacle(new Circle(new RealPoint(2390, 2000), 110), true);
-            AjouterObstacle(new Circle(new RealPoint(3000, 840), 110), true);
-
-            // Stations dépuration
-            AjouterObstacle(new PolygonRectangle(new RealPoint(894, 1750), 1200, 250), true);
-        }
-
-        /// <summary>
-        /// Teste si on point est contenu dans la table
-        /// </summary>
-        /// <param name="croisement">Point à tester</param>
-        /// <returns></returns>
-        public static bool Contient(RealPoint point)
-        {
-            return new PolygonRectangle(new RealPoint(0, 0), Hauteur, Largeur).Contains(point);
-        }
+    public static void Init()
+    {
+        Balise = new Beacon();
     }
+
+    /// <summary>
+    /// Crée le graph du pathfinding.
+    /// </summary>
+    /// <param name="resolution">Distance (mm) entre chaque noeud du graph en X et Y</param>
+    /// <param name="distanceLiaison">Distance (mm) jusqu'à laquelle les noeuds sont reliés par un arc. Par défaut on crée un graph minimal (liaison aux 8 points alentours : N/S/E/O/NE/NO/SE/SO)</param>
+    private void CreerSommets(int resolution, double distanceLiaison = -1)
+    {
+        if (distanceLiaison == -1)
+            distanceLiaison = Math.Sqrt((resolution * resolution) * 2) + 1;
+
+        Robots.GrosRobot.Graph = new Graph();
+
+        // Création des noeuds
+        for (int x = resolution / 2; x < Largeur; x += resolution)
+            for (int y = resolution / 2; y < Hauteur; y += resolution)
+                Robots.GrosRobot.Graph.AddNode(new Node(x, y, 0), _obstacles.FromBoard, Robots.GrosRobot.Rayon, Math.Sqrt(resolution * resolution * 2) + 1, true);
+    }
+
+    public static void SetDetections(IEnumerable<IShape> detections)
+    {
+        _obstacles.SetDetections(detections);
+    }
+
+    /// <summary>
+    /// Teste si on point est contenu dans la table
+    /// </summary>
+    /// <param name="croisement">Point à tester</param>
+    /// <returns></returns>
+    public static bool Contient(RealPoint point)
+    {
+        return new PolygonRectangle(new RealPoint(0, 0), Hauteur, Largeur).Contains(point);
+    }
+}
 }

@@ -84,7 +84,7 @@ namespace GoBot.Movements
             {
                 MovementBegin();
 
-                Trajectory traj = PathFinder.ChercheTrajectoire(Robot.Graph, Plateau.ListeObstacles, new Position(Robot.Position), position, Robot.Rayon, Robot.Largeur / 2);
+                Trajectory traj = PathFinder.ChercheTrajectoire(Robot.Graph, Plateau.ListeObstacles, Plateau.ObstaclesOpponents,new Position(Robot.Position), position, Robot.Rayon, Robot.Largeur / 2);
 
                 if (traj != null && Robot.ParcourirTrajectoire(traj))
                 {
@@ -104,7 +104,7 @@ namespace GoBot.Movements
                 ok = false;
             }
 
-            Robots.GrosRobot.MajGraphFranchissable();
+            Robots.GrosRobot.MajGraphFranchissable(Plateau.ListeObstacles);
             return ok;
         }
         
@@ -148,8 +148,8 @@ namespace GoBot.Movements
                 {
                     double distancePosition = Robot.Position.Coordinates.Distance(position.Coordinates); 
                     
-                    List<IShape> obstacles = new List<IShape>(Plateau.ObstaclesBalise);
-                    foreach (Circle c in obstacles)
+                    List<IShape> opponents = new List<IShape>(Plateau.ObstaclesOpponents);
+                    foreach (Circle c in opponents)
                     {
                         double distanceAdv = position.Coordinates.Distance(c.Center);
                         if (distanceAdv < minimumOpponentDistance)
@@ -191,8 +191,8 @@ namespace GoBot.Movements
                 double cout = (Math.Sqrt(distance)) / Value;
                 bool adversairePlusProche = false;
 
-                List<IShape> obstacles = new List<IShape>(Plateau.ObstaclesBalise);
-                foreach (Circle c in obstacles)
+                List<IShape> opponents = new List<IShape>(Plateau.ObstaclesOpponents);
+                foreach (Circle c in opponents)
                 {
                     double distanceAdv = position.Coordinates.Distance(c.Center);
                     if (distanceAdv < minimumOpponentDistance)

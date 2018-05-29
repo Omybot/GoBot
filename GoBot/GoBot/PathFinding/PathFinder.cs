@@ -25,7 +25,7 @@ namespace GoBot.PathFinding
         public static IShape ObstacleProbleme { get; private set; }
         public static List<RealPoint> PointsTrouves { get; private set; }
 
-        public static Trajectory ChercheTrajectoire(Graph graph, List<IShape> obstacles, Position positionActuell, Position destination, double rayonSecurite, double distanceSecuriteCote)
+        public static Trajectory ChercheTrajectoire(Graph graph, IEnumerable<IShape> obstacles, IEnumerable<IShape> opponents, Position positionActuell, Position destination, double rayonSecurite, double distanceSecuriteCote)
         {
             DateTime debut = DateTime.Now;
 
@@ -84,21 +84,18 @@ namespace GoBot.PathFinding
 
                         // Test des obstacles
 
-                        lock (Plateau.ObstaclesBalise)
+                        foreach (IShape obstacle in obstacles)
                         {
-                            foreach (IShape obstacle in obstacles)
+                            if (obstacle.Distance(segmentTest) < distanceSecuriteCote)
                             {
-                                if (obstacle.Distance(segmentTest) < distanceSecuriteCote)
-                                {
-                                    franchissable = false;
+                                franchissable = false;
 
-                                    // Si l'obstacle génant est un adversaire, on diminue petit à petit son rayon pour pouvoir s'échapper au bout d'un moment
-                                    if (Plateau.ObstaclesBalise.Contains(obstacle) && Plateau.RayonAdversaire > 50)
-                                    {
-                                        Robots.GrosRobot.Historique.Log("Adversaire au contact, impossible de s'enfuir, réduction du périmètre adverse", TypeLog.PathFinding);
-                                        //Plateau.RayonAdversaire -= 10;
-                                        //_linkResetRadius?.Cancel();
-                                    }
+                                // Si l'obstacle génant est un adversaire, on diminue petit à petit son rayon pour pouvoir s'échapper au bout d'un moment
+                                if (opponents.Contains(obstacle) && Plateau.RayonAdversaire > 50)
+                                {
+                                    Robots.GrosRobot.Historique.Log("Adversaire au contact, impossible de s'enfuir, réduction du périmètre adverse", TypeLog.PathFinding);
+                                    //Plateau.RayonAdversaire -= 10;
+                                    //_linkResetRadius?.Cancel();
                                 }
                             }
                         }
@@ -136,22 +133,19 @@ namespace GoBot.PathFinding
                         {
                             Segment segmentTest = new Segment(new RealPoint(positionTestee.Coordinates), new RealPoint(destination.Coordinates));
 
-                            lock (Plateau.ObstaclesBalise)
+                            // Test des obstacles
+                            foreach (IShape obstacle in obstacles)
                             {
-                                // Test des obstacles
-                                foreach (IShape obstacle in obstacles)
+                                if (obstacle.Distance(segmentTest) < distanceSecuriteCote)
                                 {
-                                    if (obstacle.Distance(segmentTest) < distanceSecuriteCote)
-                                    {
-                                        franchissable = false;
+                                    franchissable = false;
 
-                                        // Si l'obstacle génant est un adversaire, on diminue petit à petit son rayon pour pouvoir s'échapper au bout d'un moment
-                                        if (Plateau.ObstaclesBalise.Contains(obstacle) && Plateau.RayonAdversaire > 50)
-                                        {
-                                            Robots.GrosRobot.Historique.Log("Adversaire au contact, impossible de s'enfuir, réduction du périmètre adverse", TypeLog.PathFinding);
-                                            //Plateau.RayonAdversaire -= 10;
-                                            //_linkResetRadius?.Cancel();
-                                        }
+                                    // Si l'obstacle génant est un adversaire, on diminue petit à petit son rayon pour pouvoir s'échapper au bout d'un moment
+                                    if (opponents.Contains(obstacle) && Plateau.RayonAdversaire > 50)
+                                    {
+                                        Robots.GrosRobot.Historique.Log("Adversaire au contact, impossible de s'enfuir, réduction du périmètre adverse", TypeLog.PathFinding);
+                                        //Plateau.RayonAdversaire -= 10;
+                                        //_linkResetRadius?.Cancel();
                                     }
                                 }
                             }
@@ -277,8 +271,6 @@ namespace GoBot.PathFinding
                 // Sinon on passe par le graph
                 else
                 {
-                    bool ok = false;
-
                     AStar aStar = new AStar(graph);
                     aStar.DijkstraHeuristicBalance = 1;
 
@@ -324,9 +316,9 @@ namespace GoBot.PathFinding
                                 //CheminTest = arcRacourci;
                                 //arcRacourci.Passable = false;
 
-                                for (int i = obstacles.Count - 1; i >= 4; i--) // > 4 pour ne pas tester les bordures
+                                for (int i = obstacles.Count() - 1; i >= 4; i--) // > 4 pour ne pas tester les bordures
                                 {
-                                    IShape forme = obstacles[i];
+                                    IShape forme = obstacles.ElementAt(i);
                                     ObstacleTeste = forme;
                                     ObstacleProbleme = null;
 

@@ -20,6 +20,9 @@ namespace GoBot.GameElements
 
         private Dictionary<CubesCross, int> cubesProximityCounter;
 
+        public delegate void ObstaclesChangedDelegate();
+        public event ObstaclesChangedDelegate ObstaclesChanged;
+
         public AllGameElements()
         {
             CubesCrosses = new List<CubesCross>();
@@ -120,7 +123,7 @@ namespace GoBot.GameElements
                 }
             }
 
-            foreach (CubesCross cross in cubesProximityCounter.Keys)
+            foreach (CubesCross cross in cubesProximityCounter.Keys.ToList())
             {
                 cubesProximityCounter[cross] -= 1;
 

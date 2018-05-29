@@ -271,6 +271,7 @@ namespace GoBot.Devices
         {
             double angleSomme = 0;
             int nb = 0;
+            List<Line> lines = new List<Line>();
 
             for (int i = 0; i < nombreMesures; i++)
             {
@@ -282,7 +283,7 @@ namespace GoBot.Devices
 
                     Line interpol = new Line(pointsBordure);
 
-                    Plateau.ObstaclesPlateau.Add(interpol);
+                    lines.Add(interpol);
 
                     Console.WriteLine(new Angle(Math.Atan(interpol.A), AnglyeType.Radian).InPositiveDegrees - 270);
 
@@ -290,6 +291,8 @@ namespace GoBot.Devices
                     nb++;
                 }
             }
+
+            Plateau.SetDetections(lines);
 
             return new Angle(angleSomme / nb, AnglyeType.Radian);
         }

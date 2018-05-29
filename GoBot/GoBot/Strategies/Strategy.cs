@@ -107,7 +107,7 @@ namespace GoBot.Strategies
                 for(int iPos = 0; iPos < Movements[iMov].Positions.Count; iPos++)
                 {
                     if(!Movements[iMov].Robot.Graph.Raccordable(new Node(Movements[iMov].Positions[iPos].Coordinates.X, Movements[iMov].Positions[iPos].Coordinates.Y, 0),
-                        Plateau.ObstaclesPlateau,
+                        Plateau.ListeObstacles,
                         Movements[iMov].Robot.Rayon,
                         200))
                     {

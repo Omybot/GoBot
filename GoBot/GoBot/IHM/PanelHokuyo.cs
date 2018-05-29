@@ -85,8 +85,6 @@ namespace GoBot.IHM
             } while (cercles.Count == 0);
 
             RealPoint nearest = cercles.OrderBy(c => c.Distance(new RealPoint())).ToList()[0].Center;
-
-            Plateau.ObstaclesPlateau.Clear();
         }
 
         private void trackZoom_ValueChanged(object sender, double value)

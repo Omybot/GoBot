@@ -70,7 +70,7 @@ namespace GoBot.Strategies
             if (Plateau.NotreCouleur == Plateau.CouleurGaucheVert)
             {
                 _avoidElements = true;
-                Robots.GrosRobot.MajGraphFranchissable();
+                Robots.GrosRobot.MajGraphFranchissable(Plateau.ListeObstacles);
                 while (!new MovementBee(Plateau.Elements.Flowers[0]).Execute()) ;
                 while (!new MovementsCubesFromBottom(Plateau.Elements.CubesCrosses[0]).Execute());
                 while (!new MovementsCubesFromBottom(Plateau.Elements.CubesCrosses[1]).Execute());
@@ -82,7 +82,7 @@ namespace GoBot.Strategies
             else
             {
                 _avoidElements = true;
-                Robots.GrosRobot.MajGraphFranchissable();
+                Robots.GrosRobot.MajGraphFranchissable(Plateau.ListeObstacles);
                 while (!new MovementBee(Plateau.Elements.Flowers[1]).Execute()) ;
                 while (!new MovementsCubesFromBottom(Plateau.Elements.CubesCrosses[5]).Execute());
                 while (!new MovementsCubesFromBottom(Plateau.Elements.CubesCrosses[4]).Execute());

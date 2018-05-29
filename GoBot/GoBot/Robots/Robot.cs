@@ -14,6 +14,7 @@ using GoBot.Communications;
 using System.Diagnostics;
 using GoBot.Threading;
 using GoBot.GameElements;
+using System.Linq;
 
 namespace GoBot
 {
@@ -50,7 +51,7 @@ namespace GoBot
         public Graph Graph { get; set; }
         public bool TrajectoireEchouee { get; set; }
         private bool TrajectoireCoupee { get; set; }
-        
+
         private Semaphore semTrajectoire;
 
         public Trajectory TrajectoireEnCours = null;
@@ -272,13 +273,13 @@ namespace GoBot
         {
             Historique.Log("Lancement pathfinding pour aller en " + dest.ToString(), TypeLog.PathFinding);
 
-            Trajectory traj = PathFinder.ChercheTrajectoire(Graph, Plateau.ListeObstacles, Position, dest, Rayon, Robots.GrosRobot.Largeur / 2);
+            Trajectory traj = PathFinder.ChercheTrajectoire(Graph, Plateau.ListeObstacles, Plateau.ObstaclesOpponents, Position, dest, Rayon, Robots.GrosRobot.Largeur / 2);
 
             if (traj == null)
                 return false;
-            
+
             ParcourirTrajectoire(traj);
-            
+
             return !TrajectoireCoupee && !TrajectoireEchouee;
         }
 
@@ -295,14 +296,14 @@ namespace GoBot
 
             if (typeForme1.IsAssignableFrom(typeof(Segment)))
                 if (typeForme2.IsAssignableFrom(typeof(Segment)))
-                    return ((Segment)forme1).Distance((Segment)forme2) < Rayon;
+                    return ((Segment)forme1).Distance((Segment)forme2) < Rayon + marge;
                 else
-                    return ((Segment)forme1).Distance(forme2) < Rayon;
+                    return ((Segment)forme1).Distance(forme2) < Rayon + marge;
             else
                 return forme1.Distance(forme2) < Rayon + marge;
         }
 
-        public bool ObstacleTest()
+        public bool ObstacleTest(IEnumerable<IShape> obstacles)
         {
             bool ok = true;
 
@@ -326,30 +327,27 @@ namespace GoBot
                             segmentsTrajectoire.Add(TrajectoireEnCours.Lines[iSegment]);
                         }
 
-                        lock (Plateau.ObstaclesBalise)
+                        foreach (IShape forme in obstacles)
                         {
-                            foreach (IShape forme in Plateau.ObstaclesBalise)
+                            foreach (Segment segment in segmentsTrajectoire)
                             {
-                                foreach (Segment segment in segmentsTrajectoire)
+                                // Marge de 30mm pour être plus permissif sur le passage et ne pas s'arreter dès que l'adversaire approche
+                                if (TropProche(seg, forme, -30))
                                 {
-                                    // Marge de 30mm pour être plus permissif sur le passage te ne pas s'arreter dès que l'adversaire approche
-                                    if (TropProche(seg, forme, -30))
-                                    {
-                                        // Demande de génération d'une nouvelle trajectoire
-                                        Historique.Log("Trajectoire coupée, annulation", TypeLog.PathFinding);
-                                        TrajectoireCoupee = true;
-                                        TrajectoireEnCours = null;
+                                    // Demande de génération d'une nouvelle trajectoire
+                                    Historique.Log("Trajectoire coupée, annulation", TypeLog.PathFinding);
+                                    TrajectoireCoupee = true;
+                                    TrajectoireEnCours = null;
 
-                                        if (DeplacementLigne)
-                                            Stop();
-                                        ok = false;
-                                        break;
-                                    }
-                                }
-
-                                if (!ok)
+                                    if (DeplacementLigne)
+                                        Stop();
+                                    ok = false;
                                     break;
+                                }
                             }
+
+                            if (!ok)
+                                break;
                         }
                     }
                 }
@@ -362,12 +360,10 @@ namespace GoBot
             return ok;
         }
 
-        public void MajGraphFranchissable()
+        public void MajGraphFranchissable(IEnumerable<IShape> obstacles)
         {
             lock (Graph)
             {
-                List<IShape> obstacles = new List<IShape>(Plateau.ObstaclesBalise.Concat(Plateau.Elements.AsObstacles));
-
                 foreach (Arc arc in Graph.Arcs)
                     arc.Passable = true;
 
@@ -377,21 +373,21 @@ namespace GoBot
                 foreach (IShape obstacle in obstacles)
                 {
                     // Teste les arcs non franchissables
-                    for (int i = 0; i < Graph.Arcs.Count; i++)
-                    {
-                        Arc arc = (Arc)Graph.Arcs[i];
+                    //for (int i = 0; i < Graph.Arcs.Count; i++)
+                    //{
+                    //    Arc arc = (Arc)Graph.Arcs[i];
 
-                        if (arc.Passable)
-                        {
-                            Segment segment = new Segment(new RealPoint(arc.StartNode.X, arc.StartNode.Y), new RealPoint(arc.EndNode.X, arc.EndNode.Y));
+                    //    if (arc.Passable)
+                    //    {
+                    //        Segment segment = new Segment(new RealPoint(arc.StartNode.X, arc.StartNode.Y), new RealPoint(arc.EndNode.X, arc.EndNode.Y));
 
-                            // Marge de 20mm pour prévoir une trajectoire plus éloignée de l'adversaire
-                            if (TropProche(obstacle, segment, 20))
-                            {
-                                arc.Passable = false;
-                            }
-                        }
-                    }
+                    //        // Marge de 20mm pour prévoir une trajectoire plus éloignée de l'adversaire
+                    //        if (TropProche(obstacle, segment, 20))
+                    //        {
+                    //            arc.Passable = false;
+                    //        }
+                    //    }
+                    //}
 
                     // Teste les noeuds non franchissables
                     for (int i = 0; i < Graph.Nodes.Count; i++)
@@ -404,6 +400,9 @@ namespace GoBot
                             if (TropProche(obstacle, noeud))
                             {
                                 n.Passable = false;
+                                // Désactivation des arcs connectés aux noeuds désactivés = 10 fois plus rapide que tester les arcs
+                                foreach (Arc a in n.IncomingArcs) a.Passable = false;
+                                foreach (Arc a in n.OutgoingArcs) a.Passable = false;
                             }
                         }
                     }

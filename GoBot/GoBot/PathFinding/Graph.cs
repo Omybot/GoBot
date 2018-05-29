@@ -94,7 +94,7 @@ namespace AStarFolder
         /// <param name="distanceMax">Distance (mm) max de liaison avec les autres noeuds</param>
         /// <param name="permnant">True si le point est ajouté de façon permanente et donc ne sera pas supprimé au prochain appel de @CleanNodesArcsAdd</param>
         /// <returns>Nombre de points reliés au point ajouté</returns>
-        public int AddNode(Node node, List<IShape> obstacles, double distanceSecurite, double distanceMax, bool permanent = false)
+        public int AddNode(Node node, IEnumerable<IShape> obstacles, double distanceSecurite, double distanceMax, bool permanent = false)
         {
             double distanceNode;
 
@@ -104,7 +104,7 @@ namespace AStarFolder
                 return 0;
 
             // Teste si le noeud est franchissable avec la liste des obstacles
-            foreach (IShape obstacle in Plateau.ObstaclesPlateau)
+            foreach (IShape obstacle in obstacles)
             {
                 if (obstacle.Distance(new RealPoint(node.X, node.Y)) < distanceSecurite)
                 {
@@ -171,7 +171,7 @@ namespace AStarFolder
         /// <param name="distanceSecurite"></param>
         /// <param name="distanceMax"></param>
         /// <returns></returns>
-        public bool Raccordable(Node node, List<IShape> obstacles, double distanceSecurite, double distanceMax)
+        public bool Raccordable(Node node, IEnumerable<IShape> obstacles, double distanceSecurite, double distanceMax)
         {
             foreach (Node no in Nodes)
             {

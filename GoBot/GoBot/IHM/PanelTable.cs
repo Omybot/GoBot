@@ -11,6 +11,7 @@ using System.Drawing;
 using System.Threading;
 using System.Windows.Forms;
 using GoBot.Threading;
+using System.Linq;
 
 namespace GoBot.IHM
 {
@@ -473,11 +474,7 @@ namespace GoBot.IHM
 
                 if (points.Count > 0)
                 {
-                    Plateau.ObstaclesPlateau = new List<IShape>();
-                    foreach (RealPoint p in points)
-                    {
-                        Plateau.ObstaclesPlateau.Add(new Circle(p, 4));
-                    }
+                    Plateau.SetDetections(points.Select(p => new Circle(p, 4)));
 
                     //Segment seg = new Segment(new PointReel(0, 50), new PointReel(0, 900));
                     //List<PointReel> pointsBordure = points.Where(p => p.Distance(seg) < 30).ToList();
@@ -626,11 +623,8 @@ namespace GoBot.IHM
 
             HokuyoUart lidar = new HokuyoUart(LidarID.ScanSol);
             List<RealPoint> pts = lidar.GetMesure();
-            Plateau.ObstaclesPlateau = new List<IShape>();
-            foreach (RealPoint p in pts)
-            {
-                Plateau.ObstaclesPlateau.Add(new Circle(p, 4));
-            }
+            Plateau.SetDetections(pts.Select(p => new Circle(p, 4)));
+
             MessageBox.Show(pts.Count + " points");
         }
 
