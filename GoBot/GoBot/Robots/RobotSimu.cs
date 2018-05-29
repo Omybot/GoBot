@@ -267,7 +267,7 @@ namespace GoBot
                         else if (VitesseActuelle > 0)
                         {
                             double speedWithDeceleration = Math.Max(0, VitesseActuelle - SpeedConfig.LineDeceleration / (1000.0 / interval));
-                            double distance = (VitesseActuelle + speedWithDeceleration) / 2 / (1000.0 / interval);
+                            double distance = Math.Min(Destination.Coordinates.Distance(Position.Coordinates), (VitesseActuelle + speedWithDeceleration) / 2 / (1000.0 / interval));
                             VitesseActuelle = speedWithDeceleration;
 
                             Position.Move(distance * SensDep.Factor());
