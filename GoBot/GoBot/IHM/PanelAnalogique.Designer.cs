@@ -260,22 +260,28 @@
             // 
             // switchOnOff
             // 
+            this.switchOnOff.AutoSize = true;
             this.switchOnOff.BackColor = System.Drawing.Color.Transparent;
             this.switchOnOff.Location = new System.Drawing.Point(88, 25);
+            this.switchOnOff.MaximumSize = new System.Drawing.Size(35, 15);
+            this.switchOnOff.MinimumSize = new System.Drawing.Size(35, 15);
+            this.switchOnOff.Mirrored = true;
             this.switchOnOff.Name = "switchOnOff";
             this.switchOnOff.Size = new System.Drawing.Size(35, 15);
-            this.switchOnOff.Mirrored = true;
             this.switchOnOff.TabIndex = 35;
+            this.switchOnOff.Value = false;
             this.switchOnOff.ValueChanged += new Composants.SwitchButton.ValueChangedDelegate(this.switchBouton_ValueChanged);
             // 
             // ctrlGraphique
             // 
             this.ctrlGraphique.BackColor = System.Drawing.Color.White;
             this.ctrlGraphique.GraphScale = Composants.GraphPanel.ScaleType.DynamicGlobal;
+            this.ctrlGraphique.LimitsVisible = true;
+            this.ctrlGraphique.Location = new System.Drawing.Point(210, 25);
             this.ctrlGraphique.MaxLimit = 1D;
             this.ctrlGraphique.MinLimit = 0D;
-            this.ctrlGraphique.Location = new System.Drawing.Point(210, 25);
             this.ctrlGraphique.Name = "ctrlGraphique";
+            this.ctrlGraphique.NamesVisible = true;
             this.ctrlGraphique.Size = new System.Drawing.Size(981, 470);
             this.ctrlGraphique.TabIndex = 15;
             // 

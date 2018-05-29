@@ -41,26 +41,29 @@ namespace GoBot.IHM
 
             if (Robots.GrosRobot.ValeursAnalogiques[Carte] != null)
             {
-                List<double> values = Robots.GrosRobot.ValeursAnalogiques[Carte];
-                lblAN1.Text = values[0].ToString("0.0000") + " V";
-                lblAN2.Text = values[1].ToString("0.0000") + " V";
-                lblAN3.Text = values[2].ToString("0.0000") + " V";
-                lblAN4.Text = values[3].ToString("0.0000") + " V";
-                lblAN5.Text = values[4].ToString("0.0000") + " V";
-                lblAN6.Text = values[5].ToString("0.0000") + " V";
-                lblAN7.Text = values[6].ToString("0.0000") + " V";
-                lblAN8.Text = values[7].ToString("0.0000") + " V";
-                lblAN9.Text = values[8].ToString("0.0000") + " V";
+                this.InvokeAuto(() =>
+                {
+                    List<double> values = Robots.GrosRobot.ValeursAnalogiques[Carte];
+                    lblAN1.Text = values[0].ToString("0.0000") + " V";
+                    lblAN2.Text = values[1].ToString("0.0000") + " V";
+                    lblAN3.Text = values[2].ToString("0.0000") + " V";
+                    lblAN4.Text = values[3].ToString("0.0000") + " V";
+                    lblAN5.Text = values[4].ToString("0.0000") + " V";
+                    lblAN6.Text = values[5].ToString("0.0000") + " V";
+                    lblAN7.Text = values[6].ToString("0.0000") + " V";
+                    lblAN8.Text = values[7].ToString("0.0000") + " V";
+                    lblAN9.Text = values[8].ToString("0.0000") + " V";
 
-                ctrlGraphique.AddPoint("AN1", values[0], Color.Blue);
-                ctrlGraphique.AddPoint("AN2", values[1], Color.Aqua);
-                ctrlGraphique.AddPoint("AN3", values[2], Color.Red);
-                ctrlGraphique.AddPoint("AN4", values[3], Color.Magenta);
-                ctrlGraphique.AddPoint("AN5", values[4], Color.Green);
-                ctrlGraphique.AddPoint("AN6", values[5], Color.Orange);
-                ctrlGraphique.AddPoint("AN7", values[6], Color.Black);
-                ctrlGraphique.AddPoint("AN8", values[7], Color.Coral);
-                ctrlGraphique.AddPoint("AN9", values[8], Color.DeepPink);
+                    ctrlGraphique.AddPoint("AN1", values[0], Color.Blue);
+                    ctrlGraphique.AddPoint("AN2", values[1], Color.Aqua);
+                    ctrlGraphique.AddPoint("AN3", values[2], Color.Red);
+                    ctrlGraphique.AddPoint("AN4", values[3], Color.Magenta);
+                    ctrlGraphique.AddPoint("AN5", values[4], Color.Green);
+                    ctrlGraphique.AddPoint("AN6", values[5], Color.Orange);
+                    ctrlGraphique.AddPoint("AN7", values[6], Color.Black);
+                    ctrlGraphique.AddPoint("AN8", values[7], Color.Coral);
+                    ctrlGraphique.AddPoint("AN9", values[8], Color.DeepPink);
+                });
             }
 
             ctrlGraphique.DrawCurves();
