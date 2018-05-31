@@ -119,7 +119,7 @@ namespace GoBot
                 return _obstacles.FromAll.ToList(); // Pour concretiser la liste
             }
         }
-        
+
         public static IEnumerable<IShape> ObstaclesOpponents
         {
             get
@@ -137,12 +137,12 @@ namespace GoBot
                 RayonAdversaire = RayonAdversaireInitial;
 
                 ReflecteursNosRobots = true;
-                
+
                 _obstacles = new Obstacles(Elements);
                 CreerSommets(100);
 
                 Balise.PositionEnnemisActualisee += Balise_PositionEnnemisActualisee;
-                
+
                 Strategy = new StrategyMinimumScore();
                 Robots.GrosRobot.MajGraphFranchissable(_obstacles.FromAllExceptBoard);
             }
@@ -155,7 +155,7 @@ namespace GoBot
             Stopwatch sw = Stopwatch.StartNew();
 
             int vitesseMax = Config.CurrentConfig.ConfigRapide.LineSpeed;
-            
+
             if (Plateau.Strategy == null)
             {
                 // Tester ICI ce qu'il y a à tester en fonction de la position de l'ennemi AVANT de lancer le match
@@ -169,56 +169,67 @@ namespace GoBot
                 if (Robots.GrosRobot.VitesseAdaptableEnnemi)
                 {
                     double minOpponentDist = positions.Min(p => p.Distance(Robots.GrosRobot.Position.Coordinates));
-                    if (minOpponentDist < 1500)
-                    {
-                        vitesseMax = (int)(Math.Min(vitesseMax, (minOpponentDist - 300) / 1000.0 * Config.CurrentConfig.ConfigRapide.LineSpeed));
-                    }
+                    Robots.GrosRobot.SpeedConfig.LineSpeed = SpeedWithOpponent(minOpponentDist, Config.CurrentConfig.ConfigRapide.LineSpeed);
                 }
             }
 
             _obstacles.SetDetections(positions.Select(p => new Circle(p, RayonAdversaire)).ToList());
-            
+
             Robots.GrosRobot.MajGraphFranchissable(_obstacles.FromAllExceptBoard);
-            Console.WriteLine(sw.ElapsedMilliseconds + "ms");
             Robots.GrosRobot.ObstacleTest(_obstacles.FromDetection);
         }
 
-    public static void Init()
-    {
-        Balise = new Beacon();
+        public static void Init()
+        {
+            Balise = new Beacon();
+        }
+
+        /// <summary>
+        /// Crée le graph du pathfinding.
+        /// </summary>
+        /// <param name="resolution">Distance (mm) entre chaque noeud du graph en X et Y</param>
+        /// <param name="distanceLiaison">Distance (mm) jusqu'à laquelle les noeuds sont reliés par un arc. Par défaut on crée un graph minimal (liaison aux 8 points alentours : N/S/E/O/NE/NO/SE/SO)</param>
+        private void CreerSommets(int resolution, double distanceLiaison = -1)
+        {
+            if (distanceLiaison == -1)
+                distanceLiaison = Math.Sqrt((resolution * resolution) * 2) + 1;
+
+            Robots.GrosRobot.Graph = new Graph();
+
+            // Création des noeuds
+            for (int x = resolution / 2; x < Largeur; x += resolution)
+                for (int y = resolution / 2; y < Hauteur; y += resolution)
+                    Robots.GrosRobot.Graph.AddNode(new Node(x, y, 0), _obstacles.FromBoard, Robots.GrosRobot.Rayon, Math.Sqrt(resolution * resolution * 2) + 1, true);
+        }
+
+        public static void SetDetections(IEnumerable<IShape> detections)
+        {
+            _obstacles.SetDetections(detections);
+        }
+
+        private static int SpeedWithOpponent(double opponentDist, int maxSpeed)
+        {
+            double minPower = 0.20;
+            double minDist = 250;
+            double maxPowerDist = 600;
+            double factor;
+
+            if (opponentDist < minDist)
+                factor = minPower;
+            else
+                factor = Math.Min((Math.Pow(opponentDist - minDist, 2) / Math.Pow((maxPowerDist - minDist), 2)) * (1 - minPower) + minPower, 1);
+
+            return (int)(factor * maxSpeed);
+        }
+
+        /// <summary>
+        /// Teste si on point est contenu dans la table
+        /// </summary>
+        /// <param name="croisement">Point à tester</param>
+        /// <returns></returns>
+        public static bool Contient(RealPoint point)
+        {
+            return new PolygonRectangle(new RealPoint(0, 0), Hauteur, Largeur).Contains(point);
+        }
     }
-
-    /// <summary>
-    /// Crée le graph du pathfinding.
-    /// </summary>
-    /// <param name="resolution">Distance (mm) entre chaque noeud du graph en X et Y</param>
-    /// <param name="distanceLiaison">Distance (mm) jusqu'à laquelle les noeuds sont reliés par un arc. Par défaut on crée un graph minimal (liaison aux 8 points alentours : N/S/E/O/NE/NO/SE/SO)</param>
-    private void CreerSommets(int resolution, double distanceLiaison = -1)
-    {
-        if (distanceLiaison == -1)
-            distanceLiaison = Math.Sqrt((resolution * resolution) * 2) + 1;
-
-        Robots.GrosRobot.Graph = new Graph();
-
-        // Création des noeuds
-        for (int x = resolution / 2; x < Largeur; x += resolution)
-            for (int y = resolution / 2; y < Hauteur; y += resolution)
-                Robots.GrosRobot.Graph.AddNode(new Node(x, y, 0), _obstacles.FromBoard, Robots.GrosRobot.Rayon, Math.Sqrt(resolution * resolution * 2) + 1, true);
-    }
-
-    public static void SetDetections(IEnumerable<IShape> detections)
-    {
-        _obstacles.SetDetections(detections);
-    }
-
-    /// <summary>
-    /// Teste si on point est contenu dans la table
-    /// </summary>
-    /// <param name="croisement">Point à tester</param>
-    /// <returns></returns>
-    public static bool Contient(RealPoint point)
-    {
-        return new PolygonRectangle(new RealPoint(0, 0), Hauteur, Largeur).Contains(point);
-    }
-}
 }
