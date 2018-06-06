@@ -17,6 +17,35 @@ namespace GoBot.Geometry
 
         private const double PRECISION = 0.01;
 
+        #region Constructeurs
+
+        /// <summary>
+        /// Construit un angle avec la valeur passée en paramètre
+        /// </summary>
+        /// <param name="angle">Angle de départ</param>
+        public Angle(double angle, AnglyeType type = AnglyeType.Degre)
+        {
+            if (type == AnglyeType.Degre)
+                this.angle = angle;
+            else if (type == AnglyeType.Radian)
+                this.angle = (double)(180 * angle / Math.PI);
+
+            this.angle = this.angle % 360;
+            this.angle = OptimalAngle(this);
+        }
+
+        /// <summary>
+        /// Constructeur par défaut. L'angle vaudra 0.
+        /// </summary>
+        public Angle()
+        {
+            angle = 0;
+        }
+
+        #endregion
+
+        #region Trigonometrie
+
         public double Cos
         {
             get
@@ -64,6 +93,10 @@ namespace GoBot.Geometry
                 return Math.Atan(InRadians);
             }
         }
+
+#endregion
+
+
 
         /// <summary>
         /// Retourne l'angle en degrés (-180 à +180)
@@ -113,29 +146,6 @@ namespace GoBot.Geometry
         }
 
         /// <summary>
-        /// Construit un angle avec la valeur passée en paramètre
-        /// </summary>
-        /// <param name="angle">Angle de départ</param>
-        public Angle(double angle, AnglyeType type = AnglyeType.Degre)
-        {
-            if (type == AnglyeType.Degre)
-                this.angle = angle;
-            else if (type == AnglyeType.Radian)
-                this.angle = (double)(180 * angle / Math.PI);
-
-            this.angle = this.angle % 360;
-            this.angle = OptimalAngle(this);
-        }
-
-        /// <summary>
-        /// Constructeur par défaut. L'angle vaudra 0.
-        /// </summary>
-        public Angle()
-        {
-            angle = 0;
-        }
-
-        /// <summary>
         /// Fait tourner l'angle de l'angle (objet) choisi
         /// </summary>
         /// <param name="turnAngle">Angle à tourner</param>
@@ -143,24 +153,6 @@ namespace GoBot.Geometry
         {
             angle += turnAngle;
             angle = OptimalAngle(this);
-        }
-
-        /// <summary>
-        /// Retourne l'angle le plus proche de 0 correspondant à l'angle passé en paramètre.
-        /// Par exemple pour 345°, l'angle optimal est -15°
-        /// </summary>
-        /// <param name="a">Angle à convertir</param>
-        /// <returns>Angle optimal (en degrés)</returns>
-        private static double OptimalAngle(Angle a)
-        {
-            double newAngle = a.InDegrees;
-
-            while (newAngle > 180)
-                newAngle = newAngle - 360;
-            while (newAngle < -180)
-                newAngle = newAngle + 360;
-
-            return newAngle;
         }
 
         /// <summary>
@@ -233,6 +225,8 @@ namespace GoBot.Geometry
 
         #endregion
 
+        #region Overrides
+
         public override string ToString()
         {
             return angle.ToString("0.00") + "°";
@@ -253,6 +247,26 @@ namespace GoBot.Geometry
         public override int GetHashCode()
         {
             return (int)(InDegrees * 1000);
+        }
+
+        #endregion
+
+        /// <summary>
+        /// Retourne l'angle le plus proche de 0 correspondant à l'angle passé en paramètre.
+        /// Par exemple pour 345°, l'angle optimal est -15°
+        /// </summary>
+        /// <param name="a">Angle à convertir</param>
+        /// <returns>Angle optimal (en degrés)</returns>
+        private static double OptimalAngle(Angle a)
+        {
+            double newAngle = a.InDegrees;
+
+            while (newAngle > 180)
+                newAngle = newAngle - 360;
+            while (newAngle < -180)
+                newAngle = newAngle + 360;
+
+            return newAngle;
         }
     }
 }

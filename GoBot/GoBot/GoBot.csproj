@@ -106,6 +106,8 @@
     <Compile Include="GameElements\Distributor.cs" />
     <Compile Include="GameElements\DomoticBoard.cs" />
     <Compile Include="GameElements\Flower.cs" />
+    <Compile Include="Geometry\AngleDelta.cs" />
+    <Compile Include="Geometry\AnglePosition.cs" />
     <Compile Include="Geometry\ListDouble.cs" />
     <Compile Include="IHM\PanelBoardNumeric.cs">
       <SubType>UserControl</SubType>

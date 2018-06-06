@@ -1,13 +1,15 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 14
-VisualStudioVersion = 14.0.25420.1
+# Visual Studio 15
+VisualStudioVersion = 15.0.26730.16
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GoBot", "GoBot\GoBot.csproj", "{2B2AB0B0-DA2E-4C88-A57B-BCB8D57B12BF}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Composants", "Composants\Composants.csproj", "{665AB15C-9620-4FAB-9DA7-10428A2B53AC}"
 EndProject
 Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "Extensions", "Extensions\Extensions.shproj", "{FD793CB5-D3A9-4FA9-8CF6-390D6475F2D6}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tests", "Tests\Tests.csproj", "{72F961F5-2B0B-468E-9908-7EB64B81BEB6}"
 EndProject
 Global
 	GlobalSection(SharedMSBuildProjectFiles) = preSolution
@@ -44,8 +46,23 @@ Global
 		{665AB15C-9620-4FAB-9DA7-10428A2B53AC}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
 		{665AB15C-9620-4FAB-9DA7-10428A2B53AC}.Release|Mixed Platforms.Build.0 = Release|Any CPU
 		{665AB15C-9620-4FAB-9DA7-10428A2B53AC}.Release|x86.ActiveCfg = Release|Any CPU
+		{72F961F5-2B0B-468E-9908-7EB64B81BEB6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{72F961F5-2B0B-468E-9908-7EB64B81BEB6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{72F961F5-2B0B-468E-9908-7EB64B81BEB6}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{72F961F5-2B0B-468E-9908-7EB64B81BEB6}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{72F961F5-2B0B-468E-9908-7EB64B81BEB6}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{72F961F5-2B0B-468E-9908-7EB64B81BEB6}.Debug|x86.Build.0 = Debug|Any CPU
+		{72F961F5-2B0B-468E-9908-7EB64B81BEB6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{72F961F5-2B0B-468E-9908-7EB64B81BEB6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{72F961F5-2B0B-468E-9908-7EB64B81BEB6}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{72F961F5-2B0B-468E-9908-7EB64B81BEB6}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{72F961F5-2B0B-468E-9908-7EB64B81BEB6}.Release|x86.ActiveCfg = Release|Any CPU
+		{72F961F5-2B0B-468E-9908-7EB64B81BEB6}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {546460BA-0638-41DA-8234-2EAF1D0322A5}
 	EndGlobalSection
 EndGlobal
