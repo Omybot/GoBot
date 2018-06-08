@@ -9,12 +9,12 @@ namespace GoBot.Actions
     class ActionVirage : IAction
     {
         private int distance;
-        private Angle angle;
+        private AngleDelta angle;
         private Robot robot;
         private SensGD sensGD;
         private SensAR sensAR;
 
-        public ActionVirage(Robot r, int dist, Angle a, SensAR ar, SensGD gd)
+        public ActionVirage(Robot r, int dist, AngleDelta a, SensAR ar, SensGD gd)
         {
             robot = r;
             distance = dist;

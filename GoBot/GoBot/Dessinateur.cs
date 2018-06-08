@@ -264,7 +264,7 @@ namespace GoBot
                             Direction traj = Maths.GetDirection(positionDepart, PositionCurseurTable);
 
                             Point pointOrigine = Scale.RealToScreenPosition(positionDepart);
-                            Position departRecule = new Position(360 - traj.angle, pointOrigine);
+                            Position departRecule = new Position(- traj.angle, pointOrigine);
                             departRecule.Move(Scale.RealToScreenDistance(-Robots.GrosRobot.Longueur / 2));
 
                             gGros.FillRectangle(brushNoirTresTransparent, bmpGrosRobot.Width / 2 - Scale.RealToScreenDistance(Robots.GrosRobot.Largeur / 2), bmpGrosRobot.Height / 2 - Scale.RealToScreenDistance(Robots.GrosRobot.Longueur / 2), Scale.RealToScreenDistance(Robots.GrosRobot.Largeur), Scale.RealToScreenDistance(Robots.GrosRobot.Longueur));
@@ -478,16 +478,16 @@ namespace GoBot
         {
             if (Actionneur.Hokuyo != null)
             {
-                Angle milieuAngleMort = new Angle(-180);
-                Angle largeurAngleMort = Actionneur.Hokuyo.AngleMort;
+                AnglePosition milieuAngleMort = -180;
+                AngleDelta largeurAngleMort = Actionneur.Hokuyo.AngleMort;
 
-                Angle debutAngleMort = new Angle(Actionneur.Hokuyo.Position.Angle + milieuAngleMort - largeurAngleMort / 2);
-                Angle finAngleMort = new Angle(Robots.GrosRobot.Position.Angle + milieuAngleMort + largeurAngleMort / 2);
+                AnglePosition debutAngleMort = Actionneur.Hokuyo.Position.Angle + Actionneur.Hokuyo.ScanRange / 2;
+                AnglePosition finAngleMort = Actionneur.Hokuyo.Position.Angle + Actionneur.Hokuyo.ScanRange / 2 + Actionneur.Hokuyo.AngleMort;
 
                 List<Point> points = new List<Point>();
                 points.Add(Scale.RealToScreenPosition(Actionneur.Hokuyo.Position.Coordinates));
-                points.Add(Scale.RealToScreenPosition(new Point((int)(Actionneur.Hokuyo.Position.Coordinates.X + Math.Cos(debutAngleMort.InRadians) * 3000), (int)(Actionneur.Hokuyo.Position.Coordinates.Y + Math.Sin(debutAngleMort.InRadians) * 3000))));
-                points.Add(Scale.RealToScreenPosition(new Point((int)(Actionneur.Hokuyo.Position.Coordinates.X + Math.Cos(finAngleMort.InRadians) * 3000), (int)(Actionneur.Hokuyo.Position.Coordinates.Y + Math.Sin(finAngleMort.InRadians) * 3000))));
+                points.Add(Scale.RealToScreenPosition(new Point((int)(Actionneur.Hokuyo.Position.Coordinates.X + debutAngleMort.Cos * 3000), (int)(Actionneur.Hokuyo.Position.Coordinates.Y + debutAngleMort.Sin * 3000))));
+                points.Add(Scale.RealToScreenPosition(new Point((int)(Actionneur.Hokuyo.Position.Coordinates.X + finAngleMort.Sin * 3000), (int)(Actionneur.Hokuyo.Position.Coordinates.Y + finAngleMort.Sin * 3000))));
 
                 Region regionTable = new Region(new Rectangle(Scale.RealToScreenPosition(new Point(0, 0)), new Size(Scale.RealToScreenDistance(Plateau.Largeur), Scale.RealToScreenDistance(Plateau.Hauteur))));
                 GraphicsPath pathZoneMorte = new GraphicsPath();
@@ -595,7 +595,7 @@ namespace GoBot
                 }*/
         }
 
-        private static Bitmap RotateImage(Bitmap b, Angle angle)
+        private static Bitmap RotateImage(Bitmap b, AnglePosition angle)
         {
             //create a new empty bitmap to hold rotated image
             Bitmap returnBitmap = new Bitmap(b.Width, b.Height);
@@ -607,7 +607,7 @@ namespace GoBot
                 //move rotation point to center of image
                 g.TranslateTransform((float)b.Width / 2, (float)b.Height / 2);
                 //rotate
-                g.RotateTransform((float)angle.InDegrees);
+                g.RotateTransform((float)angle);
                 //move image back
                 g.TranslateTransform(-(float)b.Width / 2, -(float)b.Height / 2);
                 //draw passed in image onto graphics object

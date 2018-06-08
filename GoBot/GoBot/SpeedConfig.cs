@@ -134,9 +134,9 @@ namespace GoBot
             return DistanceDuration(distance, LineAcceleration, LineSpeed, LineDeceleration);
         }
 
-        public TimeSpan PivotDuration(Angle angle, double axialDistance)
+        public TimeSpan PivotDuration(AngleDelta angle, double axialDistance)
         {
-            double dist = (Math.PI * axialDistance) / 360 * angle.InPositiveDegrees;
+            double dist = (Math.PI * axialDistance) / 360 * Math.Abs(angle.InDegrees);
 
             return DistanceDuration((int)dist, PivotAcceleration, PivotSpeed, PivotDeceleration);
         }

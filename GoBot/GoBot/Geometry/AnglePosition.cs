@@ -2,8 +2,15 @@
 
 namespace GoBot.Geometry
 {
+    public enum AngleType
+    {
+        Radian,
+        Degre
+    }
+
     public struct AnglePosition
     {
+
         #region Constantes
 
         public const double PRECISION = 0.01;
@@ -22,9 +29,9 @@ namespace GoBot.Geometry
         /// Construit un angle avec la valeur passée en paramètre
         /// </summary>
         /// <param name="angle">Angle de départ</param>
-        public AnglePosition(double angle, AnglyeType type = AnglyeType.Degre)
+        public AnglePosition(double angle, AngleType type = AngleType.Degre)
         {
-            if (type == AnglyeType.Degre)
+            if (type == AngleType.Degre)
                 _angle = angle;
             else
                 _angle = (double)(180 * angle / Math.PI);
@@ -105,6 +112,17 @@ namespace GoBot.Geometry
             }
         }
 
+        /// <summary>
+        /// Retourne l'angle en radians positif (0 à 2PI)
+        /// </summary>
+        public double InPositiveRadians
+        {
+            get
+            {
+                return InPositiveDegrees / 180 * Math.PI;
+            }
+        }
+
         #endregion
 
         #region Centre de l'arc
@@ -150,40 +168,24 @@ namespace GoBot.Geometry
         #region Autres calculs
 
         /// <summary>
-        /// Retourne si l'angle est compris entre les angles données, c'est à dire qu'i lse situe dans l'arc de cercle le plus petit formé par les deux angles
+        /// Retourne si l'angle est compris entre les angles données, c'est à dire qu'il se situe dans l'arc de cercle partant de startAngle vers endAngle
         /// Exemples : 
-        /// 150° est entre 130° et 160°
-        /// 10° est entre 350° et 50°
+        /// 150° est entre 130° et 160° mais pas entre 160° et 130°
+        /// 10° est entre 350° et 50° mais pas entre 50° et 350°
         /// </summary>
-        /// <param name="a1">Premier angle</param>
-        /// <param name="a2">Deuxième angle</param>
+        /// <param name="startAngle">Angle de départ</param>
+        /// <param name="endAngle">Angle d'arrivée</param>
         /// <returns>Vrai si l'angle est compris entre les deux angles</returns>
-        public bool IsOnSmallArc(AnglePosition a1, AnglePosition a2)
+        public bool IsOnArc(AnglePosition startAngle, AnglePosition endAngle)
         {
-            double start = a1.InPositiveDegrees;
-            double end = a2.InPositiveDegrees;
-            double me = InPositiveDegrees;
+            bool ok;
 
-            if (end < start)
-            {
-                end += 360;
-                me += 360;
-            }
+            if (startAngle.InPositiveDegrees < endAngle.InPositiveDegrees)
+                ok = this.InPositiveDegrees >= startAngle.InPositiveDegrees && this.InPositiveDegrees <= endAngle.InPositiveDegrees;
+            else
+                ok = this.InPositiveDegrees == startAngle.InPositiveDegrees || this.InPositiveDegrees == endAngle.InPositiveDegrees || !this.IsOnArc(endAngle, startAngle);
 
-            if (Math.Abs(end - start) > 180)
-            {
-                double tmp = end;
-                end = start;
-                start = tmp;
-            }
-
-            if (end < start)
-            {
-                end += 360;
-                me += 360;
-            }
-
-            return me >= start && me <= end;
+            return ok;
         }
 
         #endregion
@@ -192,12 +194,12 @@ namespace GoBot.Geometry
 
         public static AnglePosition operator +(AnglePosition a1, AngleDelta a2)
         {
-            return new AnglePosition(a1.InPositiveDegrees + a2.InDegrees, AnglyeType.Degre);
+            return new AnglePosition(a1.InPositiveDegrees + a2.InDegrees, AngleType.Degre);
         }
 
         public static AnglePosition operator -(AnglePosition a1, AngleDelta a2)
         {
-            return new AnglePosition(a1.InPositiveDegrees - a2.InDegrees, AnglyeType.Degre);
+            return new AnglePosition(a1.InPositiveDegrees - a2.InDegrees, AngleType.Degre);
         }
 
         public static AngleDelta operator -(AnglePosition start, AnglePosition end)

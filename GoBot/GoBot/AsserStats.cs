@@ -21,19 +21,19 @@ namespace GoBot
         /// <summary>
         /// Liste des angle parcourus en pivot gauche
         /// </summary>
-        public List<double> LeftRotations { get; protected set; }
+        public List<AngleDelta> LeftRotations { get; protected set; }
 
         /// <summary>
         /// Liste des angle parcourus en pivot droit
         /// </summary>
-        public List<double> RightsRotations { get; protected set; }
+        public List<AngleDelta> RightsRotations { get; protected set; }
 
         public AsserStats()
         {
             ForwardMoves = new List<int>();
             BackwardMoves = new List<int>();
-            LeftRotations = new List<double>();
-            RightsRotations = new List<double>();
+            LeftRotations = new List<AngleDelta>();
+            RightsRotations = new List<AngleDelta>();
         }
 
         public TimeSpan CalculDuration(SpeedConfig config, Robot robot)
@@ -42,7 +42,7 @@ namespace GoBot
 
             foreach (int dist in ForwardMoves.Union(BackwardMoves))
                 totalDuration += config.LineDuration(dist);
-            foreach (Angle ang in LeftRotations.Union(RightsRotations))
+            foreach (AngleDelta ang in LeftRotations.Union(RightsRotations))
                 totalDuration += config.PivotDuration(ang, robot.Entraxe);
 
             return totalDuration;

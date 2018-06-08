@@ -691,7 +691,7 @@ namespace GoBot.Geometry.Shapes
         /// <param name="angle">Angle de rotation</param>
         /// <param name="rotationCenter">Centre de rotation, si null le barycentre est utilisé</param>
         /// <returns>Polygone tourné de l'angle donné</returns>
-        public Polygon Rotation(Angle angle, RealPoint rotationCenter = null)
+        public Polygon Rotation(AngleDelta angle, RealPoint rotationCenter = null)
         {
             return new Polygon(Points.Select(p => p.Rotation(angle, rotationCenter)));
         }

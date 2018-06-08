@@ -80,19 +80,19 @@ namespace GoBot
                 AsserStats.BackwardMoves.Add(-distance);
         }
 
-        public virtual void PivotGauche(Angle angle, bool attendre = true)
+        public virtual void PivotGauche(AngleDelta angle, bool attendre = true)
         {
             AsserStats.LeftRotations.Add(angle);
         }
 
-        public virtual void PivotDroite(Angle angle, bool attendre = true)
+        public virtual void PivotDroite(AngleDelta angle, bool attendre = true)
         {
             AsserStats.RightsRotations.Add(angle);
         }
 
         public abstract void TrajectoirePolaire(SensAR sens, List<RealPoint> points, bool attendre = true);
         public abstract void Stop(StopMode mode = StopMode.Smooth);
-        public abstract void Virage(SensAR sensAr, SensGD sensGd, int rayon, Angle angle, bool attendre = true);
+        public abstract void Virage(SensAR sensAr, SensGD sensGd, int rayon, AngleDelta angle, bool attendre = true);
         public abstract void ReglerOffsetAsserv(Position newPosition);
         public abstract void Recallage(SensAR sens, bool attendre = true);
         public abstract void EnvoyerPID(int p, int i, int d);
@@ -226,9 +226,9 @@ namespace GoBot
             Historique.AjouterAction(new ActionMoteur(this, acceleration, moteur));
         }
 
-        public void PositionerAngle(Angle angle, double marge = 0)
+        public void PositionerAngle(AnglePosition angle, double marge = 0)
         {
-            Angle diff = angle - Position.Angle;
+            AngleDelta diff = angle - Position.Angle;
             if (Math.Abs(diff.InDegrees) > marge)
             {
                 if (diff.InDegrees > 0)

@@ -517,7 +517,7 @@ namespace GoBot.Geometry.Shapes
         /// <param name="angle">Angle de rotation</param>
         /// <param name="rotationCenter">Centre de rotation, si null (0, 0) est utilisé</param>
         /// <returns>Segment tourné de l'angle donné</returns>
-        public new Segment Rotation(Angle angle, RealPoint rotationCenter = null)
+        public new Segment Rotation(AngleDelta angle, RealPoint rotationCenter = null)
         {
             if (rotationCenter == null)
                 rotationCenter = Barycenter;

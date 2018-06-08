@@ -10,8 +10,8 @@ namespace Tests
         [TestMethod]
         public void TestAngleDeltaDegRad()
         {
-            AngleDelta deg = new AngleDelta(720, AnglyeType.Degre);
-            AngleDelta rad = new AngleDelta(Math.PI * 4, AnglyeType.Radian);
+            AngleDelta deg = new AngleDelta(720, AngleType.Degre);
+            AngleDelta rad = new AngleDelta(Math.PI * 4, AngleType.Radian);
 
             Assert.AreEqual(deg, rad);
             Assert.AreEqual(deg, 720, AngleDelta.PRECISION);
@@ -22,7 +22,7 @@ namespace Tests
         {
             double a = Math.PI / 2.54; // Arbitraire
 
-            AngleDelta deg = new AngleDelta(a, AnglyeType.Radian);
+            AngleDelta deg = new AngleDelta(a, AngleType.Radian);
 
             Assert.AreEqual(Math.Cos(a), deg.Cos, AngleDelta.PRECISION);
             Assert.AreEqual(Math.Sin(a), deg.Sin, AngleDelta.PRECISION);
@@ -30,10 +30,23 @@ namespace Tests
         }
 
         [TestMethod]
+        public void TestAngleDeltaModulo()
+        {
+            Assert.AreEqual(10, new AngleDelta(10).Modulo(), AngleDelta.PRECISION);
+            Assert.AreEqual(10, new AngleDelta(370).Modulo(), AngleDelta.PRECISION);
+            Assert.AreEqual(0, new AngleDelta(0).Modulo(), AngleDelta.PRECISION);
+            Assert.AreEqual(180, new AngleDelta(180).Modulo(), AngleDelta.PRECISION);
+            Assert.AreEqual(-180, new AngleDelta(-180).Modulo(), AngleDelta.PRECISION);
+            Assert.AreEqual(0, new AngleDelta(360).Modulo(), AngleDelta.PRECISION);
+            Assert.AreEqual(-10, new AngleDelta(-10).Modulo(), AngleDelta.PRECISION);
+            Assert.AreEqual(170, new AngleDelta(-190).Modulo(), AngleDelta.PRECISION);
+        }
+
+        [TestMethod]
         public void TestAnglePositionDegRad()
         {
-            AnglePosition deg = new AnglePosition(90, AnglyeType.Degre);
-            AnglePosition rad = new AnglePosition(Math.PI / 2, AnglyeType.Radian);
+            AnglePosition deg = new AnglePosition(90, AngleType.Degre);
+            AnglePosition rad = new AnglePosition(Math.PI / 2, AngleType.Radian);
 
             Assert.AreEqual(deg, rad);
             Assert.AreEqual(deg, 90, AnglePosition.PRECISION);
@@ -42,8 +55,8 @@ namespace Tests
         [TestMethod]
         public void TestAnglePositionModulo()
         {
-            AnglePosition a800 = new AnglePosition(800, AnglyeType.Degre);
-            AnglePosition a80 = new AnglePosition(80, AnglyeType.Degre);
+            AnglePosition a800 = new AnglePosition(800, AngleType.Degre);
+            AnglePosition a80 = new AnglePosition(80, AngleType.Degre);
 
             Assert.AreEqual(a800, a80);
             Assert.AreEqual(80, a800.InDegrees, AnglePosition.PRECISION);
@@ -54,7 +67,7 @@ namespace Tests
         [TestMethod]
         public void TestAnglePositionNeg()
         {
-            AnglePosition a = new AnglePosition(-50, AnglyeType.Degre);
+            AnglePosition a = new AnglePosition(-50, AngleType.Degre);
 
             Assert.AreEqual(-50, a.InDegrees, AnglePosition.PRECISION);
             Assert.AreEqual(310, a.InPositiveDegrees, AnglePosition.PRECISION);
@@ -182,17 +195,23 @@ namespace Tests
         [TestMethod]
         public void TestAnglePositionIsOnArc()
         {
-            Assert.IsTrue(((AnglePosition)45).IsOnSmallArc(0, 90));
-            Assert.IsTrue(((AnglePosition)0).IsOnSmallArc(0, 90));
-            Assert.IsTrue(((AnglePosition)90).IsOnSmallArc(0, 90));
-            Assert.IsFalse(((AnglePosition)91).IsOnSmallArc(0, 90));
-            Assert.IsFalse(((AnglePosition)(-50)).IsOnSmallArc(0, 90));
+            Assert.IsTrue(((AnglePosition)45).IsOnArc(0, 90));
+            Assert.IsTrue(((AnglePosition)0).IsOnArc(0, 90));
+            Assert.IsTrue(((AnglePosition)90).IsOnArc(0, 90));
+            Assert.IsFalse(((AnglePosition)91).IsOnArc(0, 90));
+            Assert.IsFalse(((AnglePosition)(-50)).IsOnArc(0, 90));
 
-            Assert.IsTrue(((AnglePosition)0).IsOnSmallArc(-20, 20));
-            Assert.IsFalse(((AnglePosition)(-40)).IsOnSmallArc(-20, 20));
+            Assert.IsFalse(((AnglePosition)45).IsOnArc(90, 0));
+            Assert.IsTrue(((AnglePosition)0).IsOnArc(90, 0));
+            Assert.IsTrue(((AnglePosition)90).IsOnArc(90, 0));
+            Assert.IsTrue(((AnglePosition)91).IsOnArc(90, 0));
+            Assert.IsTrue(((AnglePosition)(-50)).IsOnArc(90, 0));
 
-            Assert.IsTrue(((AnglePosition)0).IsOnSmallArc(20, -20));
-            Assert.IsFalse(((AnglePosition)(-40)).IsOnSmallArc(20, -20));
+            Assert.IsTrue(((AnglePosition)0).IsOnArc(-20, 20));
+            Assert.IsFalse(((AnglePosition)(-40)).IsOnArc(-20, 20));
+
+            Assert.IsFalse(((AnglePosition)0).IsOnArc(20, -20));
+            Assert.IsTrue(((AnglePosition)(-40)).IsOnArc(20, -20));
         }
     }
 }

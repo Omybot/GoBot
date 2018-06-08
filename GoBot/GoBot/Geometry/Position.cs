@@ -8,8 +8,8 @@ namespace GoBot.Geometry
 {
     public class Position
     {
-        public RealPoint Coordinates { get; private set; }
-        public Angle Angle { get; private set; }
+        public RealPoint Coordinates { get; set; }
+        public AnglePosition Angle { get; set; }
 
         /// <summary>
         /// Constructeur par défaut
@@ -17,7 +17,7 @@ namespace GoBot.Geometry
         /// </summary>
         public Position()
         {
-            Angle = new Angle();
+            Angle = new AnglePosition();
             Coordinates = new RealPoint();
         }
         
@@ -27,7 +27,7 @@ namespace GoBot.Geometry
         /// <param name="other">Position à copier</param>
         public Position(Position other)
         {
-            Angle = new Angle(other.Angle);
+            Angle = other.Angle;
             Coordinates = new RealPoint(other.Coordinates);
         }
 
@@ -36,9 +36,9 @@ namespace GoBot.Geometry
         /// </summary>
         /// <param name="angle">Angle de départ</param>
         /// <param name="coordinates">Coordonnées de départ</param>
-        public Position(Angle angle, RealPoint coordinates)
+        public Position(AnglePosition angle, RealPoint coordinates)
         {
-            Angle = new Angle(angle);
+            Angle = angle;
             Coordinates = new RealPoint(coordinates);
         }
 
@@ -56,9 +56,9 @@ namespace GoBot.Geometry
         /// Fait tourner l'angle de l'angle choisi
         /// </summary>
         /// <param name="angle">Angle à tourner</param>
-        public void Turn(Angle angle)
+        public void Turn(AngleDelta angle)
         {
-            Angle.Turn(angle);
+            Angle += angle;
         }
 
         /// <summary>
@@ -79,7 +79,7 @@ namespace GoBot.Geometry
         /// <param name="position">Position à copier</param>
         public void Copy(Position position)
         {
-            Angle.Set(position.Angle);
+            Angle = position.Angle;
             Coordinates.Set(position.Coordinates.X, position.Coordinates.Y);
         }
 

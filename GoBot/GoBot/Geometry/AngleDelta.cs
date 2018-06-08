@@ -22,15 +22,30 @@ namespace GoBot.Geometry
         /// Construit un angle avec la valeur passée en paramètre
         /// </summary>
         /// <param name="angle">Angle de départ</param>
-        public AngleDelta(double angle, AnglyeType type = AnglyeType.Degre)
+        public AngleDelta(double angle, AngleType type = AngleType.Degre)
         {
-            if (type == AnglyeType.Degre)
+            if (type == AngleType.Degre)
                 _angle = angle;
             else
                 _angle = (180 * angle / Math.PI);
         }
 
         #endregion
+
+        /// <summary>
+        /// Minimize l'angle en considérant que la valeur doit se situer entre -180° et +180°.
+        /// Exemple : 370° est minimisé à 10°.
+        /// </summary>
+        public AngleDelta Modulo()
+        {
+            while (_angle > 180)
+                _angle -= 360;
+            while (_angle < -180)
+                _angle += 360;
+
+            return this;
+        }
+
 
         #region Trigonométrie
 
@@ -90,12 +105,12 @@ namespace GoBot.Geometry
 
         public static AngleDelta operator +(AngleDelta a1, AngleDelta a2)
         {
-            return new AngleDelta(a1.InDegrees + a2.InDegrees, AnglyeType.Degre);
+            return new AngleDelta(a1.InDegrees + a2.InDegrees, AngleType.Degre);
         }
 
         public static AngleDelta operator -(AngleDelta a1, AngleDelta a2)
         {
-            return new AngleDelta(a1.InDegrees - a2.InDegrees, AnglyeType.Degre);
+            return new AngleDelta(a1.InDegrees - a2.InDegrees, AngleType.Degre);
         }
 
         public static bool operator ==(AngleDelta a1, AngleDelta a2)

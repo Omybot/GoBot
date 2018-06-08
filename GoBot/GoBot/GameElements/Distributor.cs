@@ -18,11 +18,11 @@ namespace GoBot.GameElements
         private List<Color> balls;
         private bool isOpen;
         private int numero;
-        private Angle angle;
+        private AnglePosition angle;
 
         private static int nextNumero;
 
-        public Distributor(RealPoint position, Color owner, bool alternate, Angle angle) : base(position, owner, 50)
+        public Distributor(RealPoint position, Color owner, bool alternate, AnglePosition angle) : base(position, owner, 50)
         {
             this.angle = angle;
             isOpen = false;

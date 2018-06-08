@@ -18,13 +18,13 @@ namespace GoBot.Devices
 
         public LidarID ID { get; protected set; }
 
-        public Angle ScanRange { get; protected set; }
+        public AngleDelta ScanRange { get; protected set; }
 
-        public Angle AnalyzedAngleStart { get; set; }
+        public AnglePosition AnalyzedAngleStart { get; set; }
 
-        public Angle AnalyzedAngleEnd { get; set; }
+        public AnglePosition AnalyzedAngleEnd { get; set; }
 
-        public Angle AnalyzedAngle
+        public AngleDelta AnalyzedAngle
         {
             get
             {
@@ -34,7 +34,7 @@ namespace GoBot.Devices
 
         public int PointsCount { get; protected set; }
 
-        public Angle InterPointsAngle
+        public AnglePosition InterPointsAngle
         {
             get
             {
@@ -109,9 +109,9 @@ namespace GoBot.Devices
             FrequencyChange?.Invoke(value);
         }
 
-        public Angle AngleMort
+        public AngleDelta AngleMort
         {
-            get { return new Angle(360 - ScanRange); }
+            get { return new AngleDelta(360 - ScanRange); }
         }
 
         public void StartLoopMeasure()
@@ -144,7 +144,7 @@ namespace GoBot.Devices
 
         protected Position PositionDepuisRobot(Position robotPosition)
         {
-            return new Position(robotPosition.Angle, new RealPoint(robotPosition.Coordinates.X + offsetX, robotPosition.Coordinates.Y + offsetY).Rotation(robotPosition.Angle, robotPosition.Coordinates));
+            return new Position(robotPosition.Angle, new RealPoint(robotPosition.Coordinates.X + offsetX, robotPosition.Coordinates.Y + offsetY).Rotation(new AngleDelta(robotPosition.Angle), robotPosition.Coordinates));
         }
 
         private Semaphore semLock;
@@ -204,18 +204,18 @@ namespace GoBot.Devices
         protected List<RealPoint> ValeursToPositions(List<int> mesures, bool limiteTable, int minDistance, int maxDistance, Position refPosition)
         {
             List<RealPoint> positions = new List<RealPoint>();
-            double stepAngular = ScanRange.InPositiveRadians / (double)mesures.Count;
+            double stepAngular = ScanRange.InDegrees / (double)mesures.Count;
 
             for (int i = 0; i < mesures.Count; i++)
             {
-                Angle angle = new Angle(stepAngular * i, AnglyeType.Radian);
+                AnglePosition angle = stepAngular * i;
 
                 if (mesures[i] > minDistance && (mesures[i] < maxDistance || maxDistance == -1))
                 {
-                    if (angle.IsBetween(AnalyzedAngleStart, AnalyzedAngleEnd))
+                    if (angle.IsOnArc(AnalyzedAngleStart, AnalyzedAngleEnd))
                     {
-                        double sin = Math.Sin(angle.InPositiveRadians - refPosition.Angle.InPositiveRadians - ScanRange.InPositiveRadians / 2 - Math.PI / 2) * mesures[i];
-                        double cos = Math.Cos(angle.InPositiveRadians - refPosition.Angle.InPositiveRadians - ScanRange.InPositiveRadians / 2 - Math.PI / 2) * mesures[i];
+                        double sin = Math.Sin(angle.InPositiveRadians - refPosition.Angle.InPositiveRadians - ScanRange.InRadians / 2 - 180 / 2) * mesures[i];
+                        double cos = Math.Cos(angle.InPositiveRadians - refPosition.Angle.InPositiveRadians - ScanRange.InRadians / 2 - Math.PI / 2) * mesures[i];
 
                         RealPoint pos = new RealPoint(refPosition.Coordinates.X - sin, refPosition.Coordinates.Y - cos);
 
@@ -267,7 +267,7 @@ namespace GoBot.Devices
             return value;
         }
 
-        public Angle CalculAngle(Segment segmentPointsProches, double distanceMaxSegment, int nombreMesures)
+        public AnglePosition CalculAngle(Segment segmentPointsProches, double distanceMaxSegment, int nombreMesures)
         {
             double angleSomme = 0;
             int nb = 0;
@@ -284,9 +284,7 @@ namespace GoBot.Devices
                     Line interpol = new Line(pointsBordure);
 
                     lines.Add(interpol);
-
-                    Console.WriteLine(new Angle(Math.Atan(interpol.A), AnglyeType.Radian).InPositiveDegrees - 270);
-
+                    
                     angleSomme += Math.Atan(interpol.A);
                     nb++;
                 }
@@ -294,7 +292,7 @@ namespace GoBot.Devices
 
             Plateau.SetDetections(lines);
 
-            return new Angle(angleSomme / nb, AnglyeType.Radian);
+            return new AnglePosition(angleSomme / nb, AngleType.Radian);
         }
 
         public double CalculDistanceX(Segment segmentPointsProches, double distanceMaxSegment, int nombreMesures)
@@ -348,7 +346,7 @@ namespace GoBot.Devices
 
             Thread.Sleep(500);
 
-            Angle a = CalculAngle(new Segment(new RealPoint(0, 50), new RealPoint(0, 900)), 50, 10);
+            AnglePosition a = CalculAngle(new Segment(new RealPoint(0, 50), new RealPoint(0, 900)), 50, 10);
             if (a.InPositiveDegrees > 180)
                 Robots.GrosRobot.PivotDroite(a.InPositiveDegrees - 270);
             else
@@ -370,7 +368,7 @@ namespace GoBot.Devices
 
             Thread.Sleep(500);
 
-            Angle a = CalculAngle(new Segment(new RealPoint(3000, 50), new RealPoint(3000, 900)), 50, 10);
+            AnglePosition a = CalculAngle(new Segment(new RealPoint(3000, 50), new RealPoint(3000, 900)), 50, 10);
             if (a.InPositiveDegrees > 180)
                 Robots.GrosRobot.PivotDroite(a.InPositiveDegrees - 270);
             else

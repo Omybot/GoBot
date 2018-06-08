@@ -36,8 +36,8 @@ namespace GoBot.PathFinding
             bool raccordable = false;
 
             Trajectory trajectoire = new Trajectory();
-            trajectoire.StartAngle = new Angle(positionActuell.Angle);
-            trajectoire.EndAngle = new Angle(destination.Angle);
+            trajectoire.StartAngle = positionActuell.Angle;
+            trajectoire.EndAngle = destination.Angle;
 
             PointsTrouves = new List<RealPoint>();
             PointsTrouves.Add(new RealPoint(positionActuell.Coordinates));

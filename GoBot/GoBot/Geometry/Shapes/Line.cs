@@ -543,7 +543,7 @@ namespace GoBot.Geometry.Shapes
         /// <param name="angle">Angle de rotation</param>
         /// <param name="rotationCenter">Centre de rotation, si null (0, 0) est utilisé</param>
         /// <returns>Droite tournée de l'angle donné</returns>
-        public Line Rotation(Angle angle, RealPoint rotationCenter = null)
+        public Line Rotation(AngleDelta angle, RealPoint rotationCenter = null)
         {
             RealPoint p1, p2;
 

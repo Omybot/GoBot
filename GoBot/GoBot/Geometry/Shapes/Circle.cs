@@ -394,7 +394,7 @@ namespace GoBot.Geometry.Shapes
         /// <param name="angle">Angle de rotation</param>
         /// <param name="rotationCenter">Centre de rotation, si null le barycentre est utilisé</param>
         /// <returns>Cercle tourné de l'angle donné</returns>
-        public Circle Rotation(Angle angle, RealPoint rotationCenter = null)
+        public Circle Rotation(AngleDelta angle, RealPoint rotationCenter = null)
         {
             return new Circle(center.Rotation(angle, rotationCenter), radius);
         }

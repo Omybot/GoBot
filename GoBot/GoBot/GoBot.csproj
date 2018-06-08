@@ -404,7 +404,6 @@
     <Compile Include="PathFinding\Track.cs" />
     <Compile Include="PathFinding\Vector3D.cs" />
     <Compile Include="Beacons\Balise.cs" />
-    <Compile Include="Geometry\Angle.cs" />
     <Compile Include="Beacons\DetectionBalise.cs" />
     <Compile Include="Geometry\Shapes\Circle.cs" />
     <Compile Include="Geometry\Shapes\Line.cs" />

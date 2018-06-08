@@ -36,8 +36,8 @@ namespace GoBot.PathFinding
             }
         }
 
-        public Angle StartAngle { get; set; }
-        public Angle EndAngle { get; set; }
+        public AnglePosition StartAngle { get; set; }
+        public AnglePosition EndAngle { get; set; }
 
         public Trajectory()
         {
@@ -64,7 +64,7 @@ namespace GoBot.PathFinding
         public List<ITimeableAction> ConvertToActions(Robot robot)
         {
             List<ITimeableAction> actions = new List<ITimeableAction>();
-            Angle angle = new Angle(StartAngle);
+            AnglePosition angle = StartAngle;
 
             for (int i = 0; i < Points.Count - 1; i++)
             {
@@ -79,24 +79,26 @@ namespace GoBot.PathFinding
 
                 if (i < Points.Count - 2)
                 {
-                    inverse = Math.Abs(traj.angle.InDegrees) > 90;
+                    inverse = Math.Abs(traj.angle) > 90;
                 }
                 else
                 {
                     // On cherche à minimiser le tout dernier angle quand on fait l'avant dernier
-                    Angle finalAngle = angle - traj.angle;
+                    AnglePosition finalAngle = angle - traj.angle;
                     inverse = Math.Abs(finalAngle - EndAngle) > 90;
                 }
 
                 if(inverse)
-                    traj.angle = new Angle(traj.angle.InDegrees - 180);
+                    traj.angle = new AngleDelta(traj.angle - 180);
 
-                if (traj.angle.InDegrees < 0)
+                traj.angle.Modulo();
+
+                if (traj.angle < 0)
                 {
                     actions.Add(new ActionPivot(robot, -traj.angle, SensGD.Droite));
                     angle -= traj.angle;
                 }
-                else if (traj.angle.InDegrees > 0)
+                else if (traj.angle > 0)
                 {
                     actions.Add(new ActionPivot(robot, traj.angle, SensGD.Gauche));
                     angle -= traj.angle;
@@ -108,10 +110,10 @@ namespace GoBot.PathFinding
                     actions.Add(new ActionAvance(robot, (int)(traj.distance)));
             }
 
-            Angle diff = angle - EndAngle;
-            if (Math.Abs(diff.InDegrees) > 0.2)
+            AngleDelta diff = angle - EndAngle;
+            if (Math.Abs(diff) > 0.2) // Angle minimal en dessous duquel on considère qu'il n'y a pas besoin d'effectuer le pivot
             {
-                if (diff.InDegrees < 0)
+                if (diff < 0)
                     actions.Add(new ActionPivot(robot, -diff, SensGD.Droite));
                 else
                     actions.Add(new ActionPivot(robot, diff, SensGD.Gauche));

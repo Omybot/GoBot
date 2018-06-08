@@ -104,7 +104,7 @@ namespace GoBot
         {
             lock (HistoriqueCoordonnees)
             {
-                HistoriqueCoordonnees.Add(new Position(new Angle(Position.Angle), new RealPoint(Position.Coordinates.X, Position.Coordinates.Y)));
+                HistoriqueCoordonnees.Add(new Position(Position.Angle, new RealPoint(Position.Coordinates.X, Position.Coordinates.Y)));
 
                 while (HistoriqueCoordonnees.Count > 1200)
                     HistoriqueCoordonnees.RemoveAt(0);
@@ -203,8 +203,8 @@ namespace GoBot
                     }
 
                     RealPoint newPos = seg.GetCrossingPoints(cer)[0];
-                    Angle a = -Maths.GetDirection(newPos, trajectoirePolaire[pointCourantTrajPolaire]).angle;
-                    position = new Position(a, newPos);
+                    AngleDelta a = -Maths.GetDirection(newPos, trajectoirePolaire[pointCourantTrajPolaire]).angle;
+                    position = new Position(new AnglePosition(a), newPos);
                     OnPositionChange(Position);
 
                     if (pointCourantTrajPolaire == trajectoirePolaire.Count - 1)
@@ -220,7 +220,7 @@ namespace GoBot
 
                     if (needAngle)
                     {
-                        Angle diff = Math.Abs(Destination.Angle - Position.Angle);
+                        AngleDelta diff = Math.Abs(Destination.Angle - Position.Angle);
 
                         double speedWithAcceleration = Math.Min(SpeedConfig.PivotSpeed, VitesseActuelle + SpeedConfig.PivotAcceleration / (1000.0 / interval));
                         double remainingDistanceWithAcceleration = CircleArcLenght(Entraxe, diff) - (VitesseActuelle + speedWithAcceleration) / 2 / (1000.0 / interval);
@@ -228,21 +228,21 @@ namespace GoBot
                         if (remainingDistanceWithAcceleration > DistanceFreinage(speedWithAcceleration))
                         {
                             double distParcourue = (VitesseActuelle + speedWithAcceleration) / 2 / (1000.0 / interval);
-                            Angle angleParcouru = (360 * distParcourue) / (Math.PI * Entraxe);
+                            AngleDelta angleParcouru = (360 * distParcourue) / (Math.PI * Entraxe);
 
                             VitesseActuelle = speedWithAcceleration;
 
-                            Position.Angle.Turn(SensPivot.Factor() * angleParcouru);
+                            Position.Angle += (SensPivot.Factor() * angleParcouru);
                         }
                         else if (VitesseActuelle > 0)
                         {
                             double speedWithDeceleration = Math.Max(0, VitesseActuelle - SpeedConfig.PivotDeceleration / (1000.0 / interval));
                             double distParcourue = (VitesseActuelle + speedWithDeceleration) / 2 / (1000.0 / interval);
-                            Angle angleParcouru = (360 * distParcourue) / (Math.PI * Entraxe);
+                            AngleDelta angleParcouru = (360 * distParcourue) / (Math.PI * Entraxe);
 
                             VitesseActuelle = speedWithDeceleration;
 
-                            Position.Angle.Turn(SensPivot.Factor() * angleParcouru);
+                            Position.Angle += (SensPivot.Factor() * angleParcouru);
                         }
                         else
                         {
@@ -293,9 +293,9 @@ namespace GoBot
             return (speed * speed) / (2 * SpeedConfig.LineDeceleration);
         }
 
-        private double CircleArcLenght(double diameter, Angle arc)
+        private double CircleArcLenght(double diameter, AngleDelta arc)
         {
-            return arc.InPositiveDegrees / 360 * Math.PI * diameter;
+            return Math.Abs(arc.InDegrees) / 360 * Math.PI * diameter;
         }
         
         public override void Avancer(int distance, bool attendre = true)
@@ -316,16 +316,13 @@ namespace GoBot
                     Historique.AjouterAction(new ActionRecule(this, -distance));
                 SensDep = SensAR.Arriere;
             }
-
-            double depX = distance * Math.Cos(Position.Angle.InRadians);
-            double depY = distance * Math.Sin(Position.Angle.InRadians);
-
-            Destination = new Position(Position.Angle, new RealPoint(Position.Coordinates.X + depX, Position.Coordinates.Y + depY));
+            
+            Destination = new Position(Position.Angle, new RealPoint(Position.Coordinates.X + distance * Position.Angle.Cos, Position.Coordinates.Y + distance * Position.Angle.Sin));
 
             // TODO2018 attente avec un sémaphore ?
             if (attendre)
-                while (Position.Coordinates.X != Destination.Coordinates.X ||
-                    Position.Coordinates.Y != Destination.Coordinates.Y)
+                while ((Position.Coordinates.X != Destination.Coordinates.X ||
+                    Position.Coordinates.Y != Destination.Coordinates.Y) && !Execution.Shutdown)
                     Thread.Sleep(10);
         }
 
@@ -334,13 +331,13 @@ namespace GoBot
             Avancer(-distance, attendre);
         }
 
-        public override void PivotGauche(Angle angle, bool attendre = true)
+        public override void PivotGauche(AngleDelta angle, bool attendre = true)
         {
             base.PivotGauche(angle, attendre);
 
             angle = Math.Round(angle, 2);
             Historique.AjouterAction(new ActionPivot(this, angle, SensGD.Gauche));
-            Destination = new Position(new Angle(Position.Angle.InDegrees - angle, AnglyeType.Degre), new RealPoint(Position.Coordinates.X, Position.Coordinates.Y));
+            Destination = new Position(Position.Angle - angle, new RealPoint(Position.Coordinates.X, Position.Coordinates.Y));
             SensPivot = SensGD.Gauche;
 
             if (attendre)
@@ -348,13 +345,13 @@ namespace GoBot
                     Thread.Sleep(10);
         }
 
-        public override void PivotDroite(Angle angle, bool attendre = true)
+        public override void PivotDroite(AngleDelta angle, bool attendre = true)
         {
             base.PivotDroite(angle, attendre);
 
             angle = Math.Round(angle, 2);
             Historique.AjouterAction(new ActionPivot(this, angle, SensGD.Droite));
-            Destination = new Position(new Angle(Position.Angle.InDegrees + angle, AnglyeType.Degre), new RealPoint(Position.Coordinates.X, Position.Coordinates.Y));
+            Destination = new Position(Position.Angle + angle, new RealPoint(Position.Coordinates.X, Position.Coordinates.Y));
             SensPivot = SensGD.Droite;
 
             if (attendre)
@@ -369,7 +366,7 @@ namespace GoBot
 
             if (mode == StopMode.Smooth)
             {
-                Position nouvelleDestination = new Position(new Angle(Position.Angle.InDegrees), new RealPoint(position.Coordinates.X, position.Coordinates.Y));
+                Position nouvelleDestination = new Position(Position.Angle, new RealPoint(position.Coordinates.X, position.Coordinates.Y));
 
                 if (DeplacementLigne)
                 {
@@ -389,7 +386,7 @@ namespace GoBot
             SemDeplacement.Release();
         }
 
-        public override void Virage(SensAR sensAr, SensGD sensGd, int rayon, Angle angle, bool attendre = true)
+        public override void Virage(SensAR sensAr, SensGD sensGd, int rayon, AngleDelta angle, bool attendre = true)
         {
             // TODO2018
         }

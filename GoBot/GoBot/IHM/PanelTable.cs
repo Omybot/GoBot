@@ -251,7 +251,7 @@ namespace GoBot.IHM
             {
                 Direction traj = Maths.GetDirection(Dessinateur.positionDepart, Dessinateur.Scale.ScreenToRealPosition(pictureBoxTable.PointToClient(MousePosition)));
 
-                positionArrivee = new Position(traj.angle, Dessinateur.positionDepart);
+                positionArrivee = new Position(new AnglePosition(traj.angle), Dessinateur.positionDepart);
 
                 if (Dessinateur.modeCourant == Dessinateur.MouseMode.PositionCentre)
                     ThreadManager.CreateThread(link => ThreadTrajectory(link)).StartThread();
@@ -267,9 +267,9 @@ namespace GoBot.IHM
                 Direction traj = Maths.GetDirection(Dessinateur.positionDepart, Dessinateur.Scale.ScreenToRealPosition(pictureBoxTable.PointToClient(MousePosition)));
 
                 Point pointOrigine = Dessinateur.positionDepart;
-                Position departRecule = new Position(360 - traj.angle, pointOrigine);
+                Position departRecule = new Position(new AnglePosition(-traj.angle), pointOrigine);
                 departRecule.Move(-Robots.GrosRobot.Longueur / 2);
-                departRecule = new Position(traj.angle, new RealPoint(departRecule.Coordinates.X, departRecule.Coordinates.Y));
+                departRecule = new Position(new AnglePosition(traj.angle), new RealPoint(departRecule.Coordinates.X, departRecule.Coordinates.Y));
                 positionArrivee = departRecule;
 
                 if (Dessinateur.modeCourant == Dessinateur.MouseMode.PositionFace)
@@ -645,7 +645,7 @@ namespace GoBot.IHM
         {
             Robots.GrosRobot.PositionerAngle(180);
 
-            Angle a = Actionneur.Hokuyo.CalculAngle(new Segment(new RealPoint(0, 50), new RealPoint(0, 900)), 50, 10);
+            AnglePosition a = Actionneur.Hokuyo.CalculAngle(new Segment(new RealPoint(0, 50), new RealPoint(0, 900)), 50, 10);
             if (a.InPositiveDegrees > 180)
                 Robots.GrosRobot.PivotDroite(a.InPositiveDegrees - 270);
             else
@@ -664,7 +664,7 @@ namespace GoBot.IHM
         {
             Robots.GrosRobot.PositionerAngle(0);
 
-            Angle a = Actionneur.Hokuyo.CalculAngle(new Segment(new RealPoint(3000, 50), new RealPoint(3000, 900)), 50, 10);
+            AnglePosition a = Actionneur.Hokuyo.CalculAngle(new Segment(new RealPoint(3000, 50), new RealPoint(3000, 900)), 50, 10);
             if (a.InPositiveDegrees > 180)
                 Robots.GrosRobot.PivotDroite(a.InPositiveDegrees - 270);
             else

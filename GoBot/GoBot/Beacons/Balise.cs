@@ -174,8 +174,8 @@ namespace GoBot.Beacons
                         if (recalcul)
                         {
                             // Un peu de trigo pas bien compliquée
-                            double xPoint = Position.Coordinates.X + Math.Cos(detect.AngleCentral.InRadians) * detect.Distance;
-                            double yPoint = Position.Coordinates.Y + Math.Sin(detect.AngleCentral.InRadians) * detect.Distance;
+                            double xPoint = Position.Coordinates.X + detect.AngleCentral.Cos * detect.Distance;
+                            double yPoint = Position.Coordinates.Y + detect.AngleCentral.Sin * detect.Distance;
 
                             detect.Position = new RealPoint(xPoint, yPoint);
                         }
@@ -291,8 +291,8 @@ namespace GoBot.Beacons
                             if (recalcul)
                             {
                                 // Un peu de trigo pas bien compliquée
-                                double xPoint = Position.Coordinates.X + Math.Cos(detect.AngleCentral.InRadians) * detect.Distance;
-                                double yPoint = Position.Coordinates.Y + Math.Sin(detect.AngleCentral.InRadians) * detect.Distance;
+                                double xPoint = Position.Coordinates.X + detect.AngleCentral.Cos * detect.Distance;
+                                double yPoint = Position.Coordinates.Y + detect.AngleCentral.Sin * detect.Distance;
 
                                 detect.Position = new RealPoint(xPoint, yPoint);
                             }
@@ -356,8 +356,8 @@ namespace GoBot.Beacons
                             if (recalcul)
                             {
                                 // Un peu de trigo pas bien compliquée
-                                double xPoint = Position.Coordinates.X + Math.Cos(detect.AngleCentral.InRadians) * detect.Distance;
-                                double yPoint = Position.Coordinates.Y + Math.Sin(detect.AngleCentral.InRadians) * detect.Distance;
+                                double xPoint = Position.Coordinates.X + detect.AngleCentral.Cos * detect.Distance;
+                                double yPoint = Position.Coordinates.Y + detect.AngleCentral.Sin * detect.Distance;
 
                                 detect.Position = new RealPoint(xPoint, yPoint);
                             }
@@ -450,14 +450,14 @@ namespace GoBot.Beacons
                                     double distanceBaliseRobot = robot.Position.Coordinates.Distance(Position.Coordinates);
 
                                     double a = Math.Acos(distanceBaliseTroisiemePoint / distanceBaliseRobot);
-                                    Angle angleGrosRobot = new Angle(a, AnglyeType.Radian);
-                                    Angle angleDetection = new Angle(detection.AngleCentral);
+                                    AnglePosition angleGrosRobot = new AnglePosition(a, AngleType.Radian);
+                                    AnglePosition angleDetection = new AnglePosition(detection.AngleCentral);
 
                                     double marge = 4;
 
                                     if (Plateau.NotreCouleur == Plateau.CouleurDroiteOrange)
                                     {
-                                        Angle diff = new Angle(180) - (angleDetection - angleGrosRobot);
+                                        AngleDelta diff = 180 - (angleDetection - angleGrosRobot);
                                         if (Math.Abs((diff).InDegrees) < marge)
                                         {
                                             Detections.RemoveAt(i);
@@ -466,7 +466,7 @@ namespace GoBot.Beacons
                                     }
                                     else if (Plateau.NotreCouleur == Plateau.CouleurGaucheVert)
                                     {
-                                        Angle diff = angleGrosRobot - angleDetection;
+                                        AngleDelta diff = angleGrosRobot - angleDetection;
                                         if (Math.Abs((diff).InDegrees) < marge)
                                         {
                                             Detections.RemoveAt(i);

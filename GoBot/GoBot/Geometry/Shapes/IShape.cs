@@ -79,7 +79,7 @@ namespace GoBot.Geometry.Shapes
         /// <param name="angle">Angle de rotation</param>
         /// <param name="rotationCenter">Centre de rotation. Si null alors le barycentre est utilisé.</param>
         /// <returns>Nouvelle forme ayant subit la rotation</returns>
-        public static IShape Rotation(this IShape shape, Angle angle, RealPoint rotationCenter = null)
+        public static IShape Rotation(this IShape shape, AngleDelta angle, RealPoint rotationCenter = null)
         {
             return ((IShapeModifiable<IShape>)shape).Rotation(angle, rotationCenter);
         }
@@ -101,6 +101,6 @@ namespace GoBot.Geometry.Shapes
         /// <param name="angle">Angle de rotation</param>
         /// <param name="rotationCenter">Centre de rotation. Si null alors le barycentre est utilisé.</param>
         /// <returns>Nouvelle forme ayant subit la rotation</returns>
-        T Rotation(Angle angle, RealPoint rotationCenter = null);
+        T Rotation(AngleDelta angle, RealPoint rotationCenter = null);
     }
 }

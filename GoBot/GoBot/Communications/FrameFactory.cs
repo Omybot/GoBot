@@ -210,7 +210,7 @@ namespace GoBot.Communications
             return retour;
         }
 
-        static public Frame Pivot(SensGD sens, Angle angle, Robot robot)
+        static public Frame Pivot(SensGD sens, AngleDelta angle, Robot robot)
         {
             byte[] tab = new byte[7];
             tab[0] = (byte)robot.Carte;
@@ -293,7 +293,7 @@ namespace GoBot.Communications
             return retour;
         }
 
-        static public Frame Virage(SensAR sensAr, SensGD sensGd, int rayon, Angle angle, Robot robot)
+        static public Frame Virage(SensAR sensAr, SensGD sensGd, int rayon, AngleDelta angle, Robot robot)
         {
             byte[] tab = new byte[8];
             tab[0] = (byte)robot.Carte;

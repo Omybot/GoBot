@@ -21,17 +21,17 @@ namespace GoBot.Beacons
         /// <summary>
         /// Angle du début de la détection
         /// </summary>
-        public Angle AngleDebut { get; set; }
+        public AnglePosition AngleDebut { get; set; }
 
         /// <summary>
         /// Angle de la fin de la détection
         /// </summary>
-        public Angle AngleFin { get; set; }
+        public AnglePosition AngleFin { get; set; }
 
         /// <summary>
         /// Angle médian de la détection
         /// </summary>
-        public Angle AngleCentral { get; set; }
+        public AnglePosition AngleCentral { get; set; }
 
         /// <summary>
         /// Distance de détection en mm
@@ -49,11 +49,11 @@ namespace GoBot.Beacons
         /// <param name="balise">Balise ayant émis cette mesure</param>
         /// <param name="angleDebut">Début de l'angle mesuré</param>
         /// <param name="angleFin">Fin de l'angle mesuré</param>
-        public BeaconDetection(Beacon balise, Angle angleDebut, Angle angleFin)
+        public BeaconDetection(Beacon balise, AnglePosition angleDebut, AnglePosition angleFin)
         {
             AngleDebut = angleDebut;
             AngleFin = angleFin;
-            AngleCentral = (angleDebut.InDegrees + angleFin.InDegrees) / 2;
+            AngleCentral = AnglePosition.Center(angleDebut, angleFin);
             Distance = AngleVisibleToDistance(Math.Abs(AngleFin.InPositiveDegrees - AngleDebut.InPositiveDegrees));
 
             Console.WriteLine(AngleCentral.ToString());
@@ -65,8 +65,8 @@ namespace GoBot.Beacons
                 Distance = 1;
 
             // Un peu de trigo pas bien compliquée
-            double xPoint = balise.Position.Coordinates.X + Math.Cos(AngleCentral.InRadians) * Distance;
-            double yPoint = balise.Position.Coordinates.Y + Math.Sin(AngleCentral.InRadians) * Distance;
+            double xPoint = balise.Position.Coordinates.X + AngleCentral.Cos * Distance;
+            double yPoint = balise.Position.Coordinates.Y + AngleCentral.Sin * Distance;
 
             Position = new RealPoint(xPoint, yPoint);
 
@@ -78,7 +78,7 @@ namespace GoBot.Beacons
         /// </summary>
         /// <param name="largeurAngle">Largeur de l'angle de détection</param>
         /// <returns>Distance calculée</returns>
-        private double AngleVisibleToDistance(Angle largeurAngle)
+        private double AngleVisibleToDistance(AngleDelta largeurAngle)
         {
             // Formule calculée par expérimentations
             return 2784.6 * Math.Pow(largeurAngle, -0.96);
@@ -104,16 +104,16 @@ namespace GoBot.Beacons
             // Point du côté du début de l'angle
             // 5000 valeur arbitraire, assez grande pour dépasser de la table
 
-            xPoint1 = Balise.Position.Coordinates.X + Math.Cos(AngleDebut.InRadians) * 5000;
-            yPoint1 = Balise.Position.Coordinates.Y + Math.Sin(AngleDebut.InRadians) * 5000;
+            xPoint1 = Balise.Position.Coordinates.X + AngleDebut.Cos * 5000;
+            yPoint1 = Balise.Position.Coordinates.Y + AngleDebut.Sin * 5000;
             point = new RealPoint(xPoint1, yPoint1);
 
             listePoints.Add(point);
 
             // Point du côté du début de l'angle
 
-            xPoint1 = Balise.Position.Coordinates.X + Math.Cos(AngleFin.InRadians) * 5000;
-            yPoint1 = Balise.Position.Coordinates.Y + Math.Sin(AngleFin.InRadians) * 5000;
+            xPoint1 = Balise.Position.Coordinates.X + AngleFin.Cos * 5000;
+            yPoint1 = Balise.Position.Coordinates.Y + AngleFin.Sin * 5000;
             point = new RealPoint(xPoint1, yPoint1);
 
             listePoints.Add(point);

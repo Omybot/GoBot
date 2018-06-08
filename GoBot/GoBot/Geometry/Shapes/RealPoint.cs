@@ -415,11 +415,11 @@ namespace GoBot.Geometry.Shapes
         /// <param name="angle">Angle de rotation</param>
         /// <param name="rotationCenter">Centre de la rotation</param>
         /// <returns>Point ayant subit la rotation donnée</returns>
-        public RealPoint Rotation(Angle angle, RealPoint rotationCenter = null)
+        public RealPoint Rotation(AngleDelta angle, RealPoint rotationCenter = null)
         {
             RealPoint newPoint = new RealPoint();
-            newPoint.X = rotationCenter.X + Math.Cos(angle.InRadians) * (this.X - rotationCenter.X) - Math.Sin(angle.InRadians) * (this.Y - rotationCenter.Y);
-            newPoint.Y = rotationCenter.Y + Math.Cos(angle.InRadians) * (this.Y - rotationCenter.Y) + Math.Sin(angle.InRadians) * (this.X - rotationCenter.X);
+            newPoint.X = rotationCenter.X + angle.Cos * (this.X - rotationCenter.X) - angle.Sin * (this.Y - rotationCenter.Y);
+            newPoint.Y = rotationCenter.Y + angle.Cos * (this.Y - rotationCenter.Y) + angle.Sin * (this.X - rotationCenter.X);
             return newPoint;
         }
 

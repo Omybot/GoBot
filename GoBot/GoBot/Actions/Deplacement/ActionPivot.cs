@@ -8,11 +8,11 @@ namespace GoBot.Actions
 {
     class ActionPivot : ITimeableAction
     {
-        private Angle angle;
+        private AngleDelta angle;
         private Robot robot;
         private SensGD sens;
 
-        public ActionPivot(Robot r, Angle a, SensGD s)
+        public ActionPivot(Robot r, AngleDelta a, SensGD s)
         {
             robot = r;
             angle = a;

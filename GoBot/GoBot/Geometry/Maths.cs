@@ -8,7 +8,7 @@ namespace GoBot.Geometry
 {
     public struct Direction
     {
-        public Angle angle;
+        public AngleDelta angle;
         public double distance;
     }
 
@@ -64,10 +64,9 @@ namespace GoBot.Geometry
             }
 
             // Prendre en compte l'angle initial
-            Angle angle = new Angle(angleCalc, AnglyeType.Radian);
+            AngleDelta angle = new AngleDelta(angleCalc, AngleType.Radian);
             angle = angle + startPosition.Angle;
-
-            result.angle = angle;
+            result.angle = angle.Modulo();
 
             return result;
         }
@@ -80,10 +79,10 @@ namespace GoBot.Geometry
         /// <returns>Coordonnées du point</returns>
         public static Position GetDestination(Position startPosition, Direction direction)
         {
-            Angle endAngle = direction.angle + startPosition.Angle;
+            AnglePosition endAngle = startPosition.Angle + direction.angle;
 
-            double x = startPosition.Coordinates.X + Math.Cos(endAngle.InRadians) * direction.distance;
-            double y = startPosition.Coordinates.Y + Math.Sin(endAngle.InRadians) * direction.distance;
+            double x = startPosition.Coordinates.X + endAngle.Cos * direction.distance;
+            double y = startPosition.Coordinates.Y + endAngle.Sin * direction.distance;
 
             return new Position(endAngle, new RealPoint(x, y));
         }

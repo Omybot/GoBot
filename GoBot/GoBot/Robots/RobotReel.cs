@@ -157,16 +157,16 @@ namespace GoBot
             if (this == Robots.GrosRobot)
             {
                 if (Plateau.NotreCouleur == Plateau.CouleurGaucheVert)
-                    Position = new Position(new Angle(0, AnglyeType.Degre), new RealPoint(240, 1000));
+                    Position = new Position(0, new RealPoint(240, 1000));
                 else
-                    Position = new Position(new Angle(180, AnglyeType.Degre), new RealPoint(3000 - 240, 1000));
+                    Position = new Position(180, new RealPoint(3000 - 240, 1000));
             }
             else
             {
                 if (Plateau.NotreCouleur == Plateau.CouleurGaucheVert)
-                    Position = new Position(new Angle(0, AnglyeType.Degre), new RealPoint(480, 1000));
+                    Position = new Position(0, new RealPoint(480, 1000));
                 else
-                    Position = new Position(new Angle(180, AnglyeType.Degre), new RealPoint(3000 - 480, 1000));
+                    Position = new Position(180, new RealPoint(3000 - 480, 1000));
             }
 
             PositionCible = null; //TODO2018 Init commun à la simu
@@ -268,7 +268,7 @@ namespace GoBot
                         y = -y;
                         x = -x;
 
-                        Position nouvellePosition = new Position(new Angle(teta, AnglyeType.Degre), new RealPoint(x, y));
+                        Position nouvellePosition = new Position(teta, new RealPoint(x, y));
 
                         if (Position.Coordinates.Distance(nouvellePosition.Coordinates) < 300 || !positionRecue)
                         {
@@ -523,7 +523,7 @@ namespace GoBot
             DeplacementLigne = false;
         }
 
-        public override void PivotGauche(Angle angle, bool attendre = true)
+        public override void PivotGauche(AngleDelta angle, bool attendre = true)
         {
             base.PivotGauche(angle, attendre);
 
@@ -544,7 +544,7 @@ namespace GoBot
             DeplacementLigne = false;
         }
 
-        public override void PivotDroite(Angle angle, bool attendre = true)
+        public override void PivotDroite(AngleDelta angle, bool attendre = true)
         {
             base.PivotDroite(angle, attendre);
 
@@ -574,7 +574,7 @@ namespace GoBot
             Historique.AjouterAction(new ActionStop(this, mode));
         }
 
-        public override void Virage(SensAR sensAr, SensGD sensGd, int rayon, Angle angle, bool attendre = true)
+        public override void Virage(SensAR sensAr, SensGD sensGd, int rayon, AngleDelta angle, bool attendre = true)
         {
             if (attendre)
                 SemaphoresTrame[FrameFunction.FinDeplacement] = new Semaphore(0, int.MaxValue);

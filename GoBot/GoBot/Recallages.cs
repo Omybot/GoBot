@@ -25,7 +25,7 @@ namespace GoBot
         static Recallages()
         {
             PositionDepartGauche = new Position(0, new RealPoint(Robots.GrosRobot.Longueur / 2, Robots.GrosRobot.Largeur / 2 + 70));
-            PositionDepartDroite = new Position(180 - PositionDepartGauche.Angle, new RealPoint(3000 - PositionDepartGauche.Coordinates.X, PositionDepartGauche.Coordinates.Y));
+            PositionDepartDroite = new Position(180, new RealPoint(3000 - PositionDepartGauche.Coordinates.X, PositionDepartGauche.Coordinates.Y));
         }
         
         public static void RecallageGrosRobot()
