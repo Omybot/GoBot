@@ -427,86 +427,21 @@ namespace GoBot.IHM
             Robots.GrosRobot.Reculer(300);
 
         }
-
-        Thread threadHokuyo;
-
+        
         private void button1_Click(object sender, EventArgs e)
         {
-            //String mess = "MS000072500001";
-
-
-            /*
-            String mess = "VV\n00P\n";
-
-            byte[] b = new Byte[mess.Length];
-
-            for (int i = 0; i < mess.Length; i++)
-            {
-                b[i] = (byte)mess[i];
-            }
-
-            Trame trameUart = new Trame(b);
-            Trame trameUdp = TrameFactory.EnvoyerUart(Carte.RecIO, trameUart);
-            Connexions.ConnexionIO.SendMessage(trameUdp);*/
-
-            threadHokuyo = new Thread(FonctionHokuyo);
-            threadHokuyo.Start();
-
-            //PololuMiniUart.setTarget(15, 0);
-            //Thread.Sleep(1000);
-            //PololuMiniUart.setTarget(15, 500);
-
-            //HokuyoUart lidar = new HokuyoUart(LidarID.LidarSol);
-            //List<PointReel> pts = lidar.GetMesure();
-            //Plateau.ObstaclesFixes = new List<IForme>();
-            //foreach (PointReel p in pts)
-            //{
-            //    Plateau.ObstaclesFixes.Add(new Cercle(p, 4));
-            //}
-            //MessageBox.Show(pts.Count + " points");
+            List<RealPoint> pts = Actionneur.Hokuyo.GetRawPoints();
         }
 
         private void FonctionHokuyo()
         {
             while (true)
             {
-                List<RealPoint> points = Actionneur.Hokuyo.GetMesure();
+                List<RealPoint> points = Actionneur.Hokuyo.GetPoints();
 
                 if (points.Count > 0)
                 {
                     Plateau.SetDetections(points.Select(p => new Circle(p, 4)));
-
-                    //Segment seg = new Segment(new PointReel(0, 50), new PointReel(0, 900));
-                    //List<PointReel> pointsBordure = points.Where(p => p.Distance(seg) < 30).ToList();
-
-                    //Droite interpol = new Droite(pointsBordure);
-
-                    //Plateau.ObstaclesFixes.Add(interpol);
-
-                    //Console.WriteLine(new Angle(Math.Atan(interpol.A), AnglyeType.Radian).AngleDegresPositif - 270);
-
-                    //Droite interpol = new Droite(points.GetRange((int)(points.Count *0.8), (int)(points.Count * 0.1)+1));
-                    //Plateau.ObstaclesFixes.Add(interpol);
-
-                    // Cherche le point à droite du robot qui fait la bordure
-                    /*points = points.Where(p => p.X > Robots.GrosRobot.Position.Coordonnees.X).ToList();
-
-                    PointReel pointDroite = points[0];
-
-                    for (int i = 0; i < points.Count; i++)
-                    {
-                        if (Math.Abs(points[i].Y - Robots.GrosRobot.Position.Coordonnees.Y) < Math.Abs(pointDroite.Y - Robots.GrosRobot.Position.Coordonnees.Y))
-                            pointDroite = points[i];
-                    }
-
-                    double distanceDroite = pointDroite.X - Actionneur.Hokuyo.Position.Coordonnees.X;
-                    distanceDroite -= 76; // Pour avoir la distance par rapport au bord du robot
-
-                    PointReel p0 = new PointReel(Actionneur.Hokuyo.Position.Coordonnees);
-                    p0.X += 76;
-                    p0.Y += 100;
-                    Dessinateur._PointBordRobot = p0;
-                    Dessinateur._DistanceBordRobot = distanceDroite;*/
                 }
             }
         }
@@ -604,30 +539,6 @@ namespace GoBot.IHM
             }
         }
 
-        private void btnHokuyoUart_Click(object sender, EventArgs e)
-        {
-            ////String mess = "MS000072500001";
-
-            //String mess = "VV\n00P\n";
-
-            //byte[] b = new Byte[mess.Length];
-
-            //for (int i = 0; i < mess.Length; i++)
-            //{
-            //    b[i] = (byte)mess[i];
-            //}
-
-            //Trame trameUart = new Trame(b);
-            //Trame trameUdp = TrameFactory.EnvoyerUart(Carte.RecIO, trameUart);
-            //Connexions.ConnexionIO.SendMessage(trameUdp);
-
-            HokuyoUart lidar = new HokuyoUart(LidarID.ScanSol);
-            List<RealPoint> pts = lidar.GetMesure();
-            Plateau.SetDetections(pts.Select(p => new Circle(p, 4)));
-
-            MessageBox.Show(pts.Count + " points");
-        }
-
         private void ThreadMouvement(Object o)
         {
             Movement m = (Movement)o;
@@ -639,46 +550,6 @@ namespace GoBot.IHM
             Strategy m = (Strategy)o;
             Plateau.Strategy = m;
             Plateau.Strategy.ExecuteMatch();
-        }
-
-        private void ThreadHokuyoRecalViolet()
-        {
-            Robots.GrosRobot.PositionerAngle(180);
-
-            AnglePosition a = Actionneur.Hokuyo.CalculAngle(new Segment(new RealPoint(0, 50), new RealPoint(0, 900)), 50, 10);
-            if (a.InPositiveDegrees > 180)
-                Robots.GrosRobot.PivotDroite(a.InPositiveDegrees - 270);
-            else
-                Robots.GrosRobot.PivotGauche((90 - a.InPositiveDegrees));
-
-            Robots.GrosRobot.ReglerOffsetAsserv(new Position(180, Robots.GrosRobot.Position.Coordinates));
-
-            double distance = Actionneur.Hokuyo.CalculDistanceX(new Segment(new RealPoint(0, 50), new RealPoint(0, 900)), 50, 2);
-            Robots.GrosRobot.ReglerOffsetAsserv(new Position(180, Robots.GrosRobot.Position.Coordinates.Translation(-distance, 0)));
-
-            distance = Actionneur.Hokuyo.CalculDistanceY(970, 1170, 150, 2);
-            Robots.GrosRobot.ReglerOffsetAsserv(new Position(180, Robots.GrosRobot.Position.Coordinates.Translation(0, -distance)));
-        }
-
-        private void ThreadHokuyoRecalVert()
-        {
-            Robots.GrosRobot.PositionerAngle(0);
-
-            AnglePosition a = Actionneur.Hokuyo.CalculAngle(new Segment(new RealPoint(3000, 50), new RealPoint(3000, 900)), 50, 10);
-            if (a.InPositiveDegrees > 180)
-                Robots.GrosRobot.PivotDroite(a.InPositiveDegrees - 270);
-            else
-                Robots.GrosRobot.PivotGauche((90 - a.InPositiveDegrees));
-
-            Robots.GrosRobot.ReglerOffsetAsserv(new Position(0, Robots.GrosRobot.Position.Coordinates));
-
-            double distance = Actionneur.Hokuyo.CalculDistanceX(new Segment(new RealPoint(3000, 50), new RealPoint(3000, 900)), 50, 10);
-            Robots.GrosRobot.ReglerOffsetAsserv(new Position(0, Robots.GrosRobot.Position.Coordinates.Translation(-(distance - 3000), 0)));
-
-            Robots.GrosRobot.PositionerAngle(45);
-
-            distance = Actionneur.Hokuyo.CalculDistanceY(3000 - 1170, 3000 - 970, 150, 2);
-            Robots.GrosRobot.ReglerOffsetAsserv(new Position(0, Robots.GrosRobot.Position.Coordinates.Translation(0, -distance)));
         }
 
         private void btnTestScore_Click(object sender, EventArgs e)

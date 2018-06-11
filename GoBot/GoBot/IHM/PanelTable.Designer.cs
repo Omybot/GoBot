@@ -64,7 +64,6 @@
             this.btnTestAsser = new System.Windows.Forms.Button();
             this.button1 = new System.Windows.Forms.Button();
             this.button2 = new System.Windows.Forms.Button();
-            this.btnHokuyoUart = new System.Windows.Forms.Button();
             this.btnReset = new System.Windows.Forms.Button();
             this.btnAffichage = new System.Windows.Forms.Button();
             this.pictureBoxTable = new System.Windows.Forms.PictureBox();
@@ -436,16 +435,6 @@
             this.button2.UseVisualStyleBackColor = true;
             this.button2.Click += new System.EventHandler(this.pwet_Click);
             // 
-            // btnHokuyoUart
-            // 
-            this.btnHokuyoUart.Location = new System.Drawing.Point(0, 595);
-            this.btnHokuyoUart.Name = "btnHokuyoUart";
-            this.btnHokuyoUart.Size = new System.Drawing.Size(75, 23);
-            this.btnHokuyoUart.TabIndex = 74;
-            this.btnHokuyoUart.Text = "HokuyoUart";
-            this.btnHokuyoUart.UseVisualStyleBackColor = true;
-            this.btnHokuyoUart.Click += new System.EventHandler(this.btnHokuyoUart_Click);
-            // 
             // btnReset
             // 
             this.btnReset.Image = global::GoBot.Properties.Resources.Refresh16;
@@ -502,7 +491,6 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.Transparent;
             this.Controls.Add(this.btnTestScore);
-            this.Controls.Add(this.btnHokuyoUart);
             this.Controls.Add(this.button2);
             this.Controls.Add(this.button1);
             this.Controls.Add(this.btnTestAsser);
@@ -580,7 +568,6 @@
         private System.Windows.Forms.Button btnTrajCreer;
         private System.Windows.Forms.Button button2;
         private System.Windows.Forms.NumericUpDown numNbPoints;
-        private System.Windows.Forms.Button btnHokuyoUart;
         private System.Windows.Forms.Button btnTestScore;
     }
 }

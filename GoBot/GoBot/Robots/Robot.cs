@@ -118,7 +118,6 @@ namespace GoBot
         }
 
         public abstract bool GetJack();
-        public abstract String GetMesureLidar(LidarID lidar, int timeout, out Position refPosition);
         public abstract Color GetCouleurEquipe(bool historique = true);
 
         public Dictionary<CapteurOnOffID, bool> CapteurActive { get; set; }

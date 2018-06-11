@@ -479,10 +479,10 @@ namespace GoBot
             if (Actionneur.Hokuyo != null)
             {
                 AnglePosition milieuAngleMort = -180;
-                AngleDelta largeurAngleMort = Actionneur.Hokuyo.AngleMort;
+                AngleDelta largeurAngleMort = Actionneur.Hokuyo.DeadAngle;
 
                 AnglePosition debutAngleMort = Actionneur.Hokuyo.Position.Angle + Actionneur.Hokuyo.ScanRange / 2;
-                AnglePosition finAngleMort = Actionneur.Hokuyo.Position.Angle + Actionneur.Hokuyo.ScanRange / 2 + Actionneur.Hokuyo.AngleMort;
+                AnglePosition finAngleMort = Actionneur.Hokuyo.Position.Angle + Actionneur.Hokuyo.ScanRange / 2 + Actionneur.Hokuyo.DeadAngle;
 
                 List<Point> points = new List<Point>();
                 points.Add(Scale.RealToScreenPosition(Actionneur.Hokuyo.Position.Coordinates));

@@ -76,7 +76,7 @@ namespace GoBot.IHM
             List<Circle> cercles;
             do
             {
-                List<RealPoint> points = Actionneur.Hokuyo.GetRawMesure();
+                List<RealPoint> points = Actionneur.Hokuyo.GetRawPoints();
 
                 List<List<RealPoint>> groups = points.GroupByDistance(50);
 

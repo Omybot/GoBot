@@ -145,7 +145,7 @@ namespace GoBot
 
     public enum LidarID
     {
-        ScanSol = 0
+        Detection = 0
     }
 
     public enum Board

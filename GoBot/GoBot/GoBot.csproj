@@ -205,8 +205,6 @@
     <Compile Include="Dessinateur.cs" />
     <Compile Include="Devices\Devices.cs" />
     <Compile Include="Devices\Hokuyo.cs" />
-    <Compile Include="Devices\HokuyoUart.cs" />
-    <Compile Include="Devices\HokuyoUsb.cs" />
     <Compile Include="Devices\PololuMiniUart.cs" />
     <Compile Include="Devices\PololuMiniUsb.cs" />
     <Compile Include="Devices\RecGoBot.cs" />

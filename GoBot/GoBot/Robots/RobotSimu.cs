@@ -528,12 +528,6 @@ namespace GoBot
             return true;
         }
 
-        public override String GetMesureLidar(LidarID lidar, int timeout, out Position refPosition)
-        {
-            refPosition = new Position(position);
-            return "";
-        }
-
         public override Color GetCouleurEquipe(bool historique = true)
         {
             return Plateau.CouleurDroiteOrange;

@@ -1,237 +1,265 @@
 ﻿using GoBot.Geometry;
 using GoBot.Geometry.Shapes;
+using GoBot.Threading;
 using System;
 using System.Collections.Generic;
-using System.Linq;
+using System.Diagnostics;
+using System.IO.Ports;
+using System.Text.RegularExpressions;
 using System.Threading;
 
 namespace GoBot.Devices
 {
-    abstract class Hokuyo
+    public class Hokuyo
     {
-        protected const int offsetX = 115;
-        protected const int offsetY = -87;
+        #region Attributs
 
-        protected bool _measureEnable = false;
+        private LidarID _id;
 
-        protected TicksPerSecond _measuresPerSecond { get; set; }
+        private SerialPort _port;
+        private String _frameMeasure, _frameDetails;
 
-        public LidarID ID { get; protected set; }
+        private String _model;
+        private int _pointsCount, _pointsOffset, _maxDistance;
+        private AngleDelta _scanRange;
+        private Position _position;
 
-        public AngleDelta ScanRange { get; protected set; }
+        private Semaphore _lock;
+        private TicksPerSecond _measuresTicker;
+        private ThreadLink _linkMeasures;
 
-        public AnglePosition AnalyzedAngleStart { get; set; }
+        private List<RealPoint> _lastMeasure;
 
-        public AnglePosition AnalyzedAngleEnd { get; set; }
+        #endregion
 
-        public AngleDelta AnalyzedAngle
+        #region Propriétés
+
+        public LidarID ID { get { return _id; } }
+
+        public String Model { get { return _model; } }
+
+        public AngleDelta ScanRange { get { return _scanRange; } }
+
+        public AngleDelta DeadAngle { get { return new AngleDelta(360 - _scanRange); } }
+
+        public int PointsCount { get { return _pointsCount; } }
+
+        public Position Position { get { return _position; } set { _position = value; } }
+
+        public List<RealPoint> LastMeasure { get { return _lastMeasure; } }
+
+        #endregion
+
+        #region Constructeurs
+
+        public Hokuyo(LidarID id, String portCom)
         {
-            get
-            {
-                return AnalyzedAngleEnd - AnalyzedAngleStart;
-            }
+            _id = id;
+            _lock = new Semaphore(1, 1);
+
+            _maxDistance = 3999; // En dessous de 4000 parce que le protocole choisi seuille le maximum à 4000 niveau matos
+
+            _position = new Position();
+
+            _lastMeasure = null;
+            _measuresTicker = new TicksPerSecond();
+            _measuresTicker.ValueChange += _measuresPerSecond_ValueChange;
+
+            _port = new SerialPort(portCom, 115200);
+            _port.Open();
+
+            _frameDetails = "VV\n00P\n";
+
+            IdentifyModel();
+
+            _frameMeasure = "MS0000" + _pointsCount.ToString("0000") + "00001";
         }
 
-        public int PointsCount { get; protected set; }
+        #endregion
 
-        public AnglePosition InterPointsAngle
-        {
-            get
-            {
-                return ScanRange / PointsCount;
-            }
-        }
-
-        public int AnalyzedPointsCount
-        {
-            get
-            {
-                return (int)(AnalyzedAngle / InterPointsAngle);
-            }
-        }
-
-        private int OffsetPoints { get; set; }
-
-        public String Model { get; protected set; }
-
-        public Position Position;
-
-        public List<RealPoint> LastMeasure { get; protected set; }
+        #region Evenements sortants
 
         public delegate void NewMeasureDelegate(List<RealPoint> measure);
         public event NewMeasureDelegate NewMeasure;
 
         public delegate void FrequencyChangeDelegate(double value);
         public event FrequencyChangeDelegate FrequencyChange;
-
-        public Hokuyo(LidarID lidar)
+        
+        protected void OnNewMeasure(List<RealPoint> measure)
         {
-            //trameDetails = "VV\n00P\n";
-            this.ID = lidar;
-            semLock = new Semaphore(1, 1);
-
-            switch (lidar)
-            {
-                case LidarID.ScanSol: Model = "URG-04LX-UG01"; break;
-            }
-
-            if (Model.Contains("UBG-04LX-F01"))//Hokuyo bleu 
-            {
-                PointsCount = 725;
-                ScanRange = 240;
-                OffsetPoints = 44;
-            }
-            else if (Model.Contains("URG-04LX-UG01")) //Petit hokuyo
-            {
-                PointsCount = 725;
-                ScanRange = 240;
-                OffsetPoints = 44;
-            }
-            else if (Model.Contains("BTM-75LX")) // Grand hokuyo
-            {
-                PointsCount = 1080;
-                ScanRange = 270;
-                OffsetPoints = 0;
-            }
-
-            Position = new Position();
-
-            AnalyzedAngleStart = 45;
-            AnalyzedAngleEnd = 180;
-
-            LastMeasure = null;
-            _measuresPerSecond = new TicksPerSecond();
-            _measuresPerSecond.ValueChange += _measuresPerSecond_ValueChange;
+            _measuresTicker.AddTick();
+            NewMeasure?.Invoke(measure);
         }
+
+        protected void OnFrequencyChange(double freq)
+        {
+            FrequencyChange?.Invoke(freq);
+        }
+
+        #endregion
+
+        #region Evenements entrants
 
         private void _measuresPerSecond_ValueChange(double value)
         {
-            FrequencyChange?.Invoke(value);
+            OnFrequencyChange(value);
         }
 
-        public AngleDelta AngleMort
-        {
-            get { return new AngleDelta(360 - ScanRange); }
-        }
+        #endregion
+
+        #region Fonctionnement externe
 
         public void StartLoopMeasure()
         {
-            _measuresPerSecond.Start();
-            _measureEnable = true;
-
-            ThreadPool.QueueUserWorkItem(f =>
-            {
-                while (_measureEnable)
-                {
-                    LastMeasure = GetMesure();
-                    if(_measureEnable)
-                        OnNewMeasure();
-                }
-            });
+            _measuresTicker.Start();
+            _linkMeasures = ThreadManager.CreateThread(link => DoMeasure());
+            _linkMeasures.Name = "Mesure Hokuyo " + _id.ToString();
+            _linkMeasures.StartInfiniteLoop(new TimeSpan());
         }
 
         public void StopLoopMeasure()
         {
-            _measureEnable = false;
-            _measuresPerSecond.Stop();
+            _linkMeasures.Cancel();
+            _measuresTicker.Stop();
         }
 
-        protected void OnNewMeasure()
-        {
-            _measuresPerSecond.AddTick();
-            NewMeasure?.Invoke(LastMeasure);
-        }
-
-        protected Position PositionDepuisRobot(Position robotPosition)
-        {
-            return new Position(robotPosition.Angle, new RealPoint(robotPosition.Coordinates.X + offsetX, robotPosition.Coordinates.Y + offsetY).Rotation(new AngleDelta(robotPosition.Angle), robotPosition.Coordinates));
-        }
-
-        private Semaphore semLock;
-        public List<RealPoint> GetMesure()
+        public List<RealPoint> GetPoints()
         {
             List<RealPoint> points = new List<RealPoint>();
 
-            semLock.WaitOne();
+            _lock.WaitOne();
 
-            Position refPosition;
-            String reponse = GetResultat(out refPosition);
-            Position = refPosition;
-
-            //Console.WriteLine((DateTime.Now - debut).Milliseconds.ToString() + "ms");
+            Position refPosition = new Position();
+            String reponse = GetMeasure();
 
             try
             {
                 if (reponse != "")
                 {
                     List<int> mesures = DecodeMessage(reponse);
-                    mesures.RemoveRange(0, OffsetPoints);
-                    points = ValeursToPositions(mesures, false, 10, -1, refPosition);
+                    mesures.RemoveRange(0, _pointsOffset);
+                    points = ValuesToPositions(mesures, false, 150, _maxDistance, refPosition);
                 }
             }
             catch (Exception) { }
 
-            semLock.Release();
+            _lock.Release();
 
             return points;
         }
 
-        public List<RealPoint> GetRawMesure()
+        public List<RealPoint> GetRawPoints()
         {
             List<RealPoint> points = new List<RealPoint>();
 
-            semLock.WaitOne();
+            _lock.WaitOne();
 
-            Position refPosition;
-            String reponse = GetResultat(out refPosition);
-            
+            String reponse = GetMeasure();
+
             try
             {
                 if (reponse != "")
                 {
                     List<int> mesures = DecodeMessage(reponse);
-                    mesures.RemoveRange(0, OffsetPoints);
-                    points = ValeursToPositions(mesures, false, 200, 3000, new Position());
+                    mesures.RemoveRange(0, _pointsOffset);
+                    points = ValuesToPositions(mesures, false, 150, _maxDistance, new Position());
                 }
             }
             catch (Exception) { }
 
-            semLock.Release();
+            _lock.Release();
 
             return points;
         }
 
-        protected List<RealPoint> ValeursToPositions(List<int> mesures, bool limiteTable, int minDistance, int maxDistance, Position refPosition)
+        #endregion
+
+        #region Fonctionnement interne
+        
+        private void IdentifyModel()
+        {
+            _port.WriteLine(_frameDetails);
+            String details = GetResponse();
+
+            if (details.Contains("UBG-04LX-F01"))
+            {
+                // Hokuyo bleu
+                _model = "UBG-04LX-F01";
+                _pointsCount = 725;
+                _scanRange = 240;
+                _pointsOffset = 44;
+            }
+            else if (details.Contains("URG-04LX-UG01"))
+            {
+                // Petit Hokuyo
+                _model = "URG-04LX-UG01";
+                _pointsCount = 725;
+                _scanRange = 240;
+                _pointsOffset = 44;
+            }
+            else if (details.Contains("UTM-30LX"))
+            {
+                // Grand hokuyo
+                _model = "UTM-30LX";
+                _pointsCount = 1080;
+                _scanRange = 270;
+                _pointsOffset = 0;
+            }
+        }
+
+        private String GetMeasure(int timeout = 500)
+        {
+            _port.WriteLine(_frameMeasure);
+            return GetResponse(timeout);
+        }
+
+        private String GetResponse(int timeout = 500)
+        {
+            Stopwatch chrono = Stopwatch.StartNew();
+            String reponse = "";
+
+            do
+            {
+                reponse += _port.ReadExisting();
+            } while (Regex.Matches(reponse, "\n\n").Count < 2 && chrono.ElapsedMilliseconds < timeout);
+
+            if (chrono.ElapsedMilliseconds > timeout)
+                return "";
+            else
+                return reponse;
+        }
+
+        private void DoMeasure()
+        {
+            _lastMeasure = GetPoints();
+            if(!_linkMeasures.Cancelled) OnNewMeasure(_lastMeasure);
+        }
+
+        private List<RealPoint> ValuesToPositions(List<int> measures, bool limitOnTable, int minDistance, int maxDistance, Position refPosition)
         {
             List<RealPoint> positions = new List<RealPoint>();
-            double stepAngular = ScanRange.InDegrees / (double)mesures.Count;
+            double stepAngular = ScanRange.InDegrees / (double)measures.Count;
 
-            for (int i = 0; i < mesures.Count; i++)
+            for (int i = 0; i < measures.Count; i++)
             {
                 AnglePosition angle = stepAngular * i;
 
-                if (mesures[i] > minDistance && (mesures[i] < maxDistance || maxDistance == -1))
+                if (measures[i] > minDistance && (measures[i] < maxDistance || maxDistance == -1))
                 {
-                    if (angle.IsOnArc(AnalyzedAngleStart, AnalyzedAngleEnd))
-                    {
-                        double sin = Math.Sin(angle.InPositiveRadians - refPosition.Angle.InPositiveRadians - ScanRange.InRadians / 2 - 180 / 2) * mesures[i];
-                        double cos = Math.Cos(angle.InPositiveRadians - refPosition.Angle.InPositiveRadians - ScanRange.InRadians / 2 - Math.PI / 2) * mesures[i];
+                    AnglePosition anglePoint = new AnglePosition(angle.InPositiveRadians - refPosition.Angle.InPositiveRadians - ScanRange.InRadians / 2 - Math.PI / 2, AngleType.Radian);
 
-                        RealPoint pos = new RealPoint(refPosition.Coordinates.X - sin, refPosition.Coordinates.Y - cos);
+                    RealPoint pos = new RealPoint(refPosition.Coordinates.X - anglePoint.Sin * measures[i], refPosition.Coordinates.Y - anglePoint.Cos * measures[i]);
 
-                        int marge = 20; // Marge en mm de distance de detection à l'exterieur de la table (pour ne pas jeter les mesures de la bordure qui ne collent pas parfaitement)
-                        if (!limiteTable || (pos.X > -marge && pos.X < Plateau.Largeur + marge && pos.Y > -marge && pos.Y < Plateau.Hauteur + marge))
-                            positions.Add(pos);
-                    }
+                    int marge = 20; // Marge en mm de distance de detection à l'exterieur de la table (pour ne pas jeter les mesures de la bordure qui ne collent pas parfaitement)
+                    if (!limitOnTable || (pos.X > -marge && pos.X < Plateau.Largeur + marge && pos.Y > -marge && pos.Y < Plateau.Hauteur + marge))
+                        positions.Add(pos);
                 }
             }
 
             return positions;
         }
 
-        protected abstract String GetResultat(out Position refPosition, int timeout = 500);
-
-        protected List<int> DecodeMessage(String message)
+        private List<int> DecodeMessage(String message)
         {
             List<int> values = new List<int>();
 
@@ -255,7 +283,7 @@ namespace GoBot.Devices
             return values;
         }
 
-        protected int DecodeValue(String data)
+        private int DecodeValue(String data)
         {
             int value = 0;
             for (int i = 0; i < data.Length; ++i)
@@ -267,122 +295,6 @@ namespace GoBot.Devices
             return value;
         }
 
-        public AnglePosition CalculAngle(Segment segmentPointsProches, double distanceMaxSegment, int nombreMesures)
-        {
-            double angleSomme = 0;
-            int nb = 0;
-            List<Line> lines = new List<Line>();
-
-            for (int i = 0; i < nombreMesures; i++)
-            {
-                List<RealPoint> points = GetMesure();
-
-                if (points.Count > 0)
-                {
-                    List<RealPoint> pointsBordure = points.Where(p => p.Distance(segmentPointsProches) < distanceMaxSegment).ToList();
-
-                    Line interpol = new Line(pointsBordure);
-
-                    lines.Add(interpol);
-                    
-                    angleSomme += Math.Atan(interpol.A);
-                    nb++;
-                }
-            }
-
-            Plateau.SetDetections(lines);
-
-            return new AnglePosition(angleSomme / nb, AngleType.Radian);
-        }
-
-        public double CalculDistanceX(Segment segmentPointsProches, double distanceMaxSegment, int nombreMesures)
-        {
-            double distanceSomme = 0;
-            int nb = 0;
-
-            for (int i = 0; i < nombreMesures; i++)
-            {
-                List<RealPoint> points = GetMesure();
-
-                if (points.Count > 0)
-                {
-                    List<RealPoint> pointsBordure = points.Where(p => p.Distance(segmentPointsProches) < distanceMaxSegment).ToList();
-
-                    if (pointsBordure.Count > 0)
-                    {
-                        distanceSomme += pointsBordure.Average(p => p.X);
-                        nb++;
-                    }
-                }
-            }
-
-            return distanceSomme / nb;
-        }
-
-        public double CalculDistanceY(int minX, int maxX, int maxY, int nombreMesures)
-        {
-            double distanceSomme = 0;
-
-            for (int i = 0; i < nombreMesures; i++)
-            {
-                List<RealPoint> points = GetMesure();
-
-                if (points.Count > 0)
-                {
-                    List<RealPoint> pointsBordure = points.Where(p => p.X > minX && p.X < maxX && p.Y < maxY).ToList();
-
-                    if (pointsBordure.Count > 0)
-                        distanceSomme += pointsBordure.Average(p => p.Y);
-                }
-            }
-
-            return distanceSomme / nombreMesures;
-        }
-        
-        private void HokuyoRecalViolet()
-        {
-            // A ranger
-            Robots.GrosRobot.PositionerAngle(180);
-
-            Thread.Sleep(500);
-
-            AnglePosition a = CalculAngle(new Segment(new RealPoint(0, 50), new RealPoint(0, 900)), 50, 10);
-            if (a.InPositiveDegrees > 180)
-                Robots.GrosRobot.PivotDroite(a.InPositiveDegrees - 270);
-            else
-                Robots.GrosRobot.PivotGauche((90 - a.InPositiveDegrees));
-
-            Robots.GrosRobot.ReglerOffsetAsserv(new Position(180, Robots.GrosRobot.Position.Coordinates));
-
-            double distance = CalculDistanceX(new Segment(new RealPoint(0, 50), new RealPoint(0, 900)), 50, 2);
-            Robots.GrosRobot.ReglerOffsetAsserv(new Position(180, Robots.GrosRobot.Position.Coordinates.Translation(-distance, 0)));
-
-            distance = CalculDistanceY(970, 1170, 150, 2);
-            Robots.GrosRobot.ReglerOffsetAsserv(new Position(180, Robots.GrosRobot.Position.Coordinates.Translation(0, -distance)));
-        }
-
-        private void ThreadHokuyoRecalVert()
-        {
-            // A ranger
-            Robots.GrosRobot.PositionerAngle(0);
-
-            Thread.Sleep(500);
-
-            AnglePosition a = CalculAngle(new Segment(new RealPoint(3000, 50), new RealPoint(3000, 900)), 50, 10);
-            if (a.InPositiveDegrees > 180)
-                Robots.GrosRobot.PivotDroite(a.InPositiveDegrees - 270);
-            else
-                Robots.GrosRobot.PivotGauche((90 - a.InPositiveDegrees));
-
-            Robots.GrosRobot.ReglerOffsetAsserv(new Position(0, Robots.GrosRobot.Position.Coordinates));
-
-            double distance = CalculDistanceX(new Segment(new RealPoint(3000, 50), new RealPoint(3000, 900)), 50, 10);
-            Robots.GrosRobot.ReglerOffsetAsserv(new Position(0, Robots.GrosRobot.Position.Coordinates.Translation(-(distance - 3000), 0)));
-
-            Robots.GrosRobot.PositionerAngle(45);
-
-            distance = CalculDistanceY(3000 - 1170, 3000 - 970, 150, 2);
-            Robots.GrosRobot.ReglerOffsetAsserv(new Position(0, Robots.GrosRobot.Position.Coordinates.Translation(0, -distance)));
-        }
+        #endregion
     }
 }

@@ -355,38 +355,6 @@ namespace GoBot
 
                     SemaphoresTrame[FrameFunction.DemandeCapteurPattern]?.Release();
                     break;
-                case FrameFunction.ReponseLidar:
-                    int lidarID = trameRecue[2];
-
-                    if (mesureLidar == null)
-                        mesureLidar = "";
-
-                    String mess = "";
-                    int decallageEntete = 3;
-
-                    if (mesureLidar.Length == 0)
-                    {
-                        // C'est le début de la trame à recomposer, et au début y'a la position de la prise de mesure à lire !
-
-                        double y = (double)((short)(trameRecue[3] << 8 | trameRecue[4]) / 10.0);
-                        double x = (double)((short)(trameRecue[5] << 8 | trameRecue[6]) / 10.0);
-                        double teta = (trameRecue[7] << 8 | trameRecue[8]) / 100.0 - 180;
-
-                        positionMesureLidar = new Position(teta, new RealPoint(x, y));
-                        decallageEntete += 6;
-                    }
-
-                    for (int i = decallageEntete; i < trameRecue.Length; i++)
-                    {
-                        mesureLidar += (char)trameRecue[i];
-                        mess += (char)trameRecue[i];
-                    }
-
-                    if (Regex.Matches(mesureLidar, "\n\n").Count == 2)
-                    {
-                        SemaphoresTrame[FrameFunction.ReponseLidar]?.Release();
-                    }
-                    break;
                 case FrameFunction.RetourCapteurOnOff:
                     CapteurOnOffID capteur = (CapteurOnOffID)trameRecue[2];
 
@@ -769,19 +737,6 @@ namespace GoBot
         public override bool GetJack()
         {
             return DemandeCapteurOnOff(CapteurOnOffID.Jack, true);
-        }
-
-        private String mesureLidar;
-        private Position positionMesureLidar;
-
-        public override String GetMesureLidar(LidarID lidar, int timeout, out Position refPosition)
-        {
-            mesureLidar = "";
-            SemaphoresTrame[FrameFunction.ReponseLidar] = new Semaphore(0, int.MaxValue);
-            Connections.ConnectionMove.SendMessage(FrameFactory.DemandeMesureLidar(lidar));
-            SemaphoresTrame[FrameFunction.ReponseLidar].WaitOne(timeout);
-            refPosition = positionMesureLidar;
-            return mesureLidar;
         }
 
         private Color couleurEquipe;

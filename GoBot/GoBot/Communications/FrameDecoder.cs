@@ -376,12 +376,6 @@ namespace GoBot.Communications
                         output = ReplaceParam(output, parameters[0].ToString());
                     }
                     break;
-                case FrameFunction.DemandeLidar:
-                    output = "Demande mesure LIDAR";
-                    break;
-                case FrameFunction.ReponseLidar:
-                    output = "Retour mesure LIDAR";
-                    break;
                 case FrameFunction.ChangementBaudrateUART:
                     output = "Changement baudrate UART : {0} bauds";
                     if (parameters != null)
