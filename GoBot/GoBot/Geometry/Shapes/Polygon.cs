@@ -101,14 +101,13 @@ namespace GoBot.Geometry.Shapes
 
             sides.Add(segs.ElementAt(segs.Count() - 1));
 
-            foreach (Segment s1 in sides)
-                foreach (Segment s2 in sides)
-                    if (s1 != s2)
-                    {
-                        RealPoint cross = s1.GetCrossingPoint(s2);
-                        if(cross != null && cross != s1.StartPoint && cross != s1.EndPoint)
-                            throw new ArgumentException("Le polygone construit a un ou plusieurs côtés qui se croisent. Création impossible.");
-                    }
+            for (int i = 0; i < sides.Count; i++)
+                for (int j = i+1; j < sides.Count; j++)
+                {
+                    RealPoint cross = sides[i].GetCrossingPoint(sides[j]);
+                    if (cross != null && cross != sides[i].StartPoint && cross != sides[i].EndPoint)
+                        throw new ArgumentException("Le polygone construit a un ou plusieurs côtés qui se croisent. Création impossible.");
+                }
         }
 
         #endregion
