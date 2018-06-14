@@ -475,16 +475,16 @@ namespace GoBot.Geometry.Shapes
             double distance;
 
             // Seule différence : on teste si l'intersection appartient bien au segment, sinon on retourne la distance avec l'extrémité la plus proche
-            if (cross.Count == 0)
+            if (cross.Count > 0 && Contains(cross[0]))
+            {
+                distance = point.Distance(cross[0]);
+            }
+            else
             {
                 double distanceDebut = point.Distance(StartPoint);
                 double distanceFin = point.Distance(EndPoint);
 
-                distance = Math.Min(distanceDebut,  distanceFin);
-            }
-            else
-            {
-                distance = point.Distance(cross[0]);
+                distance = Math.Min(distanceDebut, distanceFin);
             }
 
             return distance;
