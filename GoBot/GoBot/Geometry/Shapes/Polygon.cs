@@ -168,8 +168,11 @@ namespace GoBot.Geometry.Shapes
                     RealPoint barycentreTriangle = t.Barycenter;
                     double otherSurface = t.Surface;
 
-                    x += barycentreTriangle.X * otherSurface / surface;
-                    y += barycentreTriangle.Y * otherSurface / surface;
+                    if (t.Surface > 0)
+                    {
+                        x += barycentreTriangle.X * otherSurface / surface;
+                        y += barycentreTriangle.Y * otherSurface / surface;
+                    }
                 }
 
                 return new RealPoint(x, y);

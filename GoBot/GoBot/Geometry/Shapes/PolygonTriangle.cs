@@ -52,10 +52,25 @@ namespace GoBot.Geometry.Shapes
         {
             get
             {
-                Line d1 = new Line(new Segment(Points[0], Points[1]).Barycenter, Points[2]);
-                Line d2 = new Line(new Segment(Points[1], Points[2]).Barycenter, Points[0]);
+                RealPoint output = null;
 
-                return d1.GetCrossingPoints(d2)[0];
+                if (Points[0] == Points[1] && Points[0] == Points[2])
+                    output = new RealPoint(Points[0]);
+                else if (Points[0] == Points[1])
+                    output = new Segment(Points[0], Points[2]).Barycenter;
+                else if (Points[0] == Points[2])
+                    output = new Segment(Points[1], Points[2]).Barycenter;
+                else if (Points[1] == Points[2])
+                    output = new Segment(Points[0], Points[1]).Barycenter;
+                else
+                {
+                    Line d1 = new Line(new Segment(Points[0], Points[1]).Barycenter, Points[2]);
+                    Line d2 = new Line(new Segment(Points[1], Points[2]).Barycenter, Points[0]);
+
+                    output = d1.GetCrossingPoints(d2)[0];
+                }
+
+                return output;
             }
         }
     }

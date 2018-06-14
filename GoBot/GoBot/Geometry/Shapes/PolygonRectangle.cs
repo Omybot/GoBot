@@ -17,7 +17,20 @@ namespace GoBot.Geometry.Shapes
         {
             List<Segment> rectSides = new List<Segment>();
 
-            if (width < 0 || heigth < 0 || topLeft == null)
+            topLeft = new RealPoint(topLeft);
+
+            if (width < 0)
+            {
+                topLeft.X += width;
+                width = -width;
+            }
+            if(heigth < 0)
+            {
+                topLeft.Y += heigth;
+                heigth = -heigth;
+            }
+
+            if (topLeft == null)
                 throw new ArgumentOutOfRangeException();
 
             List<RealPoint> points = new List<RealPoint>
