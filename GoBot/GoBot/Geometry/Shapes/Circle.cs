@@ -327,7 +327,8 @@ namespace GoBot.Geometry.Shapes
         {
             // Même test que pour la droite
             double distanceToCenter = segment.Distance(_center);
-            return distanceToCenter <= _radius;
+
+            return distanceToCenter <= _radius && !this.Contains(segment);
         }
 
         /// <summary>
