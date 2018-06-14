@@ -154,26 +154,30 @@ namespace GoBot.Geometry.Shapes
         /// <summary>
         /// Retourne la liste des points de croisement avec la forme donnée
         /// </summary>
-        /// <param name="forme">Forme à tester</param>
+        /// <param name="shape">Forme à tester</param>
         /// <returns>Liste des points de croisement</returns>
-        public override List<RealPoint> GetCrossingPoints(IShape forme)
+        public override List<RealPoint> GetCrossingPoints(IShape shape)
         {
-            Circle c = forme as Circle;
-            if (c != null)
-                return GetCrossingPoints(c);
+            List<RealPoint> output = new List<RealPoint>();
 
-            return null;
+            if (shape is Circle) output = GetCrossingPointsWithCircle(shape as Circle);
+            else if (shape is Polygon) output = GetCrossingPointsWithPolygon(shape as Polygon);
+            else if (shape is Segment) output = GetCrossingPointsWithSegment(shape as Segment);
+            else if (shape is RealPoint) output = GetCrossingPointsWithPoint(shape as RealPoint);
+            else if (shape is Line) output = GetCrossingPointsWithLine(shape as Line);
+
+            return output;
         }
 
-        /// <summary>
-        /// Retourne la liste des points de croisement avec le cercle donné
-        /// </summary>
-        /// <param name="circle">Cercle à tester</param>
-        /// <returns>Liste des points de croisement</returns>
-        public List<RealPoint> GetCrossingPoints(Circle circle)
+        private List<RealPoint> GetCrossingPointsWithPolygon(Polygon polygon)
         {
-            List<RealPoint> intersectsPoints = null;
-	        double dx = endPoint.X - startPoint.X;
+            return polygon.GetCrossingPoints(this); // Le polygone sait faire
+        }
+
+        private List<RealPoint> GetCrossingPointsWithCircle(Circle circle)
+        {
+            List<RealPoint> intersectsPoints = new List<RealPoint>();
+            double dx = endPoint.X - startPoint.X;
             double dy = endPoint.Y - startPoint.Y;
             double Ox = startPoint.X - circle.Center.X;
             double Oy = startPoint.Y - circle.Center.Y;
@@ -184,14 +188,12 @@ namespace GoBot.Geometry.Shapes
 
 	        if (delta < 0 + double.Epsilon && delta > 0 - double.Epsilon)
 	        {
-                intersectsPoints = new List<RealPoint>();
                 double t = -B / (2 * A);
 		        if (t >= 0 && t <= 1)
                     intersectsPoints.Add(new RealPoint(startPoint.X + t * dx, startPoint.Y + t * dy));
 	        }
 	        if (delta > 0)
 	        {
-                intersectsPoints = new List<RealPoint>();
                 double t1 = (double)((-B - Math.Sqrt(delta)) / (2 * A));
                 double t2 = (double)((-B + Math.Sqrt(delta)) / (2 * A));
 		        if (t1 >= 0 && t1 <= 1)
@@ -199,7 +201,31 @@ namespace GoBot.Geometry.Shapes
 		        if (t2 >= 0 && t2 <= 1)
                     intersectsPoints.Add(new RealPoint(startPoint.X + t2 * dx, startPoint.Y + t2 * dy));
 	        }
+
 	        return intersectsPoints;
+        }
+
+        private List<RealPoint> GetCrossingPointsWithLine(Line line)
+        {
+            return base.GetCrossingPoints(line); // La ligne sait faire
+        }
+
+        private List<RealPoint> GetCrossingPointsWithPoint(RealPoint point)
+        {
+            return point.GetCrossingPoints(this); // Le point sait faire
+        }
+
+        private List<RealPoint> GetCrossingPointsWithSegment(Segment segment)
+        {
+            // Pour ne pas réécrire du code existant, on récupère le croisement entre ce segment et l'autre en tant que droite
+            // Si l'autre segment contient ce point, c'est le croisement, sinon il n'en existe pas
+
+            List<RealPoint> cross = new List<RealPoint>();
+
+            cross = base.GetCrossingPoints(segment);
+            if (cross.Count > 0 && !this.Contains(cross[0])) cross.Clear();
+
+            return cross;
         }
 
         /// <summary>
@@ -229,7 +255,7 @@ namespace GoBot.Geometry.Shapes
         /// <returns>Vrai si le segment contient le segment donné</returns>
         protected override bool Cross(Segment segment)
         {
-            return GetCrossingPoint(segment) != null;
+            return GetCrossingPoints(segment).Count > 0;
         }
 
         /// <summary>
@@ -239,7 +265,7 @@ namespace GoBot.Geometry.Shapes
         /// <returns>Vrai si la segment contient la droite donnée</returns>
         protected override bool Cross(Line line)
         {
-            return GetCrossingPoint(line) != null;
+            return GetCrossingPoints(line).Count > 0;
         }
 
         /// <summary>
@@ -260,34 +286,6 @@ namespace GoBot.Geometry.Shapes
         protected override bool Cross(Polygon polygon)
         {
             return polygon.Cross(this);
-        }
-
-        /// <summary>
-        /// Retourne le point de croisement du segment courant avec une droite donnée
-        /// </summary>
-        /// <param name="line">Droite testée</param>
-        /// <returns>Le point de croisement si la droite donnée croise le segment courant, sinon null</returns>
-        new public RealPoint GetCrossingPoint(Line line)
-        {
-            // La ligne sait le faire
-            return line.GetCrossingPoint(this);
-        }
-
-        /// <summary>
-        /// Retourne le point croisement du segment courant avec un segment donné
-        /// </summary>
-        /// <param name="autreDroite">Segment testé</param>
-        /// <returns>Le point de croisement si le segment donné croise le segment courant, sinon null</returns>
-        new public RealPoint GetCrossingPoint(Segment segment)
-        {
-            // Pour ne pas réécrire du code existant, on récupère le croisement entre ce segment et l'autre en tant que droite
-            // Si l'autre segment contient ce point, c'est le croisement, sinon il n'en existe pas
-
-            RealPoint crossingPoint = GetCrossingPoint((Line)segment);
-            if (crossingPoint != null && segment.Contains(crossingPoint) && this.Contains(crossingPoint))
-                return crossingPoint;
-
-            return null;
         }
 
         #endregion
@@ -389,24 +387,20 @@ namespace GoBot.Geometry.Shapes
 
             // Le minimal est peut etre entre une extremité et son projeté hortogonal sur l'autre segment
             Line perpendicular = segment.GetPerpendicular(StartPoint);
-            RealPoint crossingPoint = segment.GetCrossingPoint(perpendicular);
-            if(crossingPoint != null)
-                minDistance = Math.Min(minDistance, crossingPoint.Distance(StartPoint));
+            List<RealPoint> cross = segment.GetCrossingPoints(perpendicular);
+            if(cross.Count > 0) minDistance = Math.Min(minDistance, cross[0].Distance(StartPoint));
 
             perpendicular = segment.GetPerpendicular(EndPoint);
-            crossingPoint = segment.GetCrossingPoint(perpendicular);
-            if(crossingPoint != null)
-                minDistance = Math.Min(minDistance, crossingPoint.Distance(EndPoint));
+            cross = segment.GetCrossingPoints(perpendicular);
+            if (cross.Count > 0) minDistance = Math.Min(minDistance, cross[0].Distance(EndPoint));
 
             perpendicular = GetPerpendicular(segment.StartPoint);
-            crossingPoint = GetCrossingPoint(perpendicular);
-            if (crossingPoint != null)
-                minDistance = Math.Min(minDistance, crossingPoint.Distance(segment.StartPoint));
+            cross = GetCrossingPoints(perpendicular);
+            if (cross.Count > 0) minDistance = Math.Min(minDistance, cross[0].Distance(segment.StartPoint));
 
             perpendicular = GetPerpendicular(segment.EndPoint);
-            crossingPoint = GetCrossingPoint(perpendicular);
-            if (crossingPoint != null)
-                minDistance = Math.Min(minDistance, crossingPoint.Distance(segment.EndPoint));
+            cross = GetCrossingPoints(perpendicular);
+            if (cross.Count > 0) minDistance = Math.Min(minDistance, cross[0].Distance(segment.EndPoint));
 
             return minDistance;
         }
@@ -476,12 +470,12 @@ namespace GoBot.Geometry.Shapes
             // Le raisonnement est le même que pour la droite cf Droite.Distance
 
             Line perpendicular = GetPerpendicular(point);
-            RealPoint crossingPoint = GetCrossingPoint(perpendicular);
+            List<RealPoint> cross = GetCrossingPoints(perpendicular);
 
             double distance;
 
             // Seule différence : on teste si l'intersection appartient bien au segment, sinon on retourne la distance avec l'extrémité la plus proche
-            if (crossingPoint == null)
+            if (cross.Count == 0)
             {
                 double distanceDebut = point.Distance(StartPoint);
                 double distanceFin = point.Distance(EndPoint);
@@ -490,7 +484,7 @@ namespace GoBot.Geometry.Shapes
             }
             else
             {
-                distance = point.Distance(crossingPoint);
+                distance = point.Distance(cross[0]);
             }
 
             return distance;
@@ -519,8 +513,7 @@ namespace GoBot.Geometry.Shapes
         /// <returns>Segment tourné de l'angle donné</returns>
         public new Segment Rotation(AngleDelta angle, RealPoint rotationCenter = null)
         {
-            if (rotationCenter == null)
-                rotationCenter = Barycenter;
+            if (rotationCenter == null) rotationCenter = Barycenter;
 
             return new Segment(startPoint.Rotation(angle, rotationCenter), endPoint.Rotation(angle, rotationCenter));
         }

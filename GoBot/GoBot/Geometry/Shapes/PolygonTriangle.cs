@@ -55,7 +55,7 @@ namespace GoBot.Geometry.Shapes
                 Line d1 = new Line(new Segment(Points[0], Points[1]).Barycenter, Points[2]);
                 Line d2 = new Line(new Segment(Points[1], Points[2]).Barycenter, Points[0]);
 
-                return d1.GetCrossingPoint(d2);
+                return d1.GetCrossingPoints(d2)[0];
             }
         }
     }

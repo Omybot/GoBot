@@ -209,7 +209,7 @@ namespace GoBot.Geometry.Shapes
             // Le segment sait le faire
             return segment.Distance(this);
         }
-        
+
         /// <summary>
         /// Retourne la distance minimale entre le PointReel courant et la Droite donnée
         /// </summary>
@@ -261,7 +261,7 @@ namespace GoBot.Geometry.Shapes
         #endregion
 
         #region Contient
-        
+
         /// <summary>
         /// Teste si le PointReel contient la IForme donnée
         /// </summary>
@@ -288,7 +288,7 @@ namespace GoBot.Geometry.Shapes
         /// <returns>Vrai si le PointReel courant croise la IForme donnée</returns>
         public bool Cross(IShape shape)
         {
-            return GetCrossingPoints(Util.ToRealType(shape)) != null;
+            return GetCrossingPoints(shape).Count > 0;
         }
 
         /// <summary>
@@ -298,78 +298,60 @@ namespace GoBot.Geometry.Shapes
         /// <returns>Points de croisement</returns>
         public List<RealPoint> GetCrossingPoints(IShape shape)
         {
-            RealPoint crossPoint = GetCrossingPoint(Util.ToRealType(shape));
-            List<RealPoint> crossPoints = new List<RealPoint>();
+            List<RealPoint> output = new List<RealPoint>();
 
-            if (crossPoint != null)
-                crossPoints.Add(crossPoint);
+            if (shape is Circle) output = GetCrossingPointsWithCircle(shape as Circle);
+            else if (shape is Polygon) output = GetCrossingPointsWithPolygon(shape as Polygon);
+            else if (shape is Segment) output = GetCrossingPointsWithSegment(shape as Segment);
+            else if (shape is RealPoint) output = GetCrossingPointsWithPoint(shape as RealPoint);
+            else if (shape is Line) output = GetCrossingPointsWithLine(shape as Line);
 
-            return crossPoints;
+            return output;
         }
 
-        /// <summary>
-        /// Retourne le PointReel si il est sur le Segment donné avec une marge de <c>PRECISION</c>, sinon null
-        /// </summary>
-        /// <param name="segment">Segment testé</param>
-        /// <returns>Le PointReel lui même si il est sur le Segment, sinon null</returns>
-        protected RealPoint GetCrossingPoint(Segment segment)
+        private List<RealPoint> GetCrossingPointsWithSegment(Segment segment)
         {
-            if (segment.Contains(this))
-                return new RealPoint(this);
-            else
-                return null;
+            List<RealPoint> output = new List<RealPoint>();
+
+            if (segment.Contains(this)) output.Add(new RealPoint(this));
+
+            return output;
         }
 
-        /// <summary>
-        /// Retourne le PointReel si il est sur le PointReel donné avec une marge de <c>PRECISION</c>, sinon null
-        /// </summary>
-        /// <param name="point">point testé</param>
-        /// <returns>Le PointReel lui même si il est sur le PointReel, sinon null</returns>
-        protected RealPoint GetCrossingPoints(RealPoint point)
+        private List<RealPoint> GetCrossingPointsWithPoint(RealPoint point)
         {
-            if (point.X == X && point.Y == Y)
-                return new RealPoint(this);
-            else
-                return null;
+            List<RealPoint> output = new List<RealPoint>();
+
+            if (point.X == X && point.Y == Y) output.Add(new RealPoint(this));
+
+            return output;
         }
 
-        /// <summary>
-        /// Retourne le PointReel si il est sur la Droite donnée avec une marge de <c>PRECISION</c>, sinon null
-        /// </summary>
-        /// <param name="droite">Droite testée</param>
-        /// <returns>Le PointReel lui même si il est sur la Droite, sinon null</returns>
-        protected RealPoint GetCrossingPoints(Line droite)
+        private List<RealPoint> GetCrossingPointsWithLine(Line line)
         {
-            if (droite.Contains(this))
-                return new RealPoint(this);
-            else
-                return null;
+            List<RealPoint> output = new List<RealPoint>();
+
+            if (line.Contains(this)) output.Add(new RealPoint(this));
+
+            return output;
         }
 
-        /// <summary>
-        /// Retourne le PointReel si il est sur le Polygone donné avec une marge de <c>PRECISION</c>, sinon null
-        /// </summary>
-        /// <param name="polygone">Polygone testé</param>
-        /// <returns>Le PointReel lui même si il est sur le Polygone, sinon null</returns>
-        protected RealPoint GetCrossingPoints(Polygon polygone)
+        private List<RealPoint> GetCrossingPointsWithPolygon(Polygon polygon)
         {
-            if (polygone.Contains(this))
-                return new RealPoint(this);
-            else
-                return null;
+            List<RealPoint> output = new List<RealPoint>();
+
+            if (polygon.Contains(this)) output.Add(new RealPoint(this));
+
+            return output;
         }
 
-        /// <summary>
-        /// Retourne le PointReel si il est sur le Cercle donné avec une marge de <c>PRECISION</c>, sinon null
-        /// </summary>
-        /// <param name="cercle">Cercle testé</param>
-        /// <returns>Le PointReel lui même si il est sur le Cercle, sinon null</returns>
-        protected RealPoint GetCrossingPoints(Circle cercle)
+        private List<RealPoint> GetCrossingPointsWithCircle(Circle circle)
         {
-            if (cercle.Contains(this))
-                return new RealPoint(this);
-            else
-                return null;
+            List<RealPoint> output = new List<RealPoint>();
+
+            if (circle.Contains(this)) output.Add(new RealPoint(this));
+
+            return output;
         }
 
         #endregion
@@ -415,7 +397,7 @@ namespace GoBot.Geometry.Shapes
         /// <param name="angle">Angle de rotation</param>
         /// <param name="rotationCenter">Centre de la rotation</param>
         /// <returns>Point ayant subit la rotation donnée</returns>
-        public RealPoint Rotation(AngleDelta angle, RealPoint rotationCenter = null)
+        public RealPoint Rotation(AngleDelta angle, RealPoint rotationCenter)
         {
             RealPoint newPoint = new RealPoint();
             newPoint.X = rotationCenter.X + angle.Cos * (this.X - rotationCenter.X) - angle.Sin * (this.Y - rotationCenter.Y);

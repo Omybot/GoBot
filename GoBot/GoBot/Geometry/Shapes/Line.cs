@@ -278,8 +278,8 @@ namespace GoBot.Geometry.Shapes
 
             Line perpendicular = GetPerpendicular(new RealPoint(0, 0));
 
-            RealPoint p1 = GetCrossingPoint(perpendicular);
-            RealPoint p2 = GetCrossingPoint(perpendicular);
+            RealPoint p1 = GetCrossingPoints(perpendicular)[0];
+            RealPoint p2 = line.GetCrossingPoints(perpendicular)[0];
 
             return p1.Distance(p2);
         }
@@ -324,7 +324,7 @@ namespace GoBot.Geometry.Shapes
             // On retourne la distance entre ces deux points
 
             Line perpendicular = GetPerpendicular(point);
-            RealPoint cross = GetCrossingPoint(perpendicular);
+            RealPoint cross = GetCrossingPoints(perpendicular)[0];
 
             double distance = point.Distance(cross);
 
@@ -418,10 +418,70 @@ namespace GoBot.Geometry.Shapes
         #endregion
 
         #region Croisement
-        public virtual List<RealPoint> GetCrossingPoints(IShape forme)
+        
+        /// <summary>
+        /// Retourne la liste des points de croisement avec la forme donnée
+        /// </summary>
+        /// <param name="shape">Forme à tester</param>
+        /// <returns>Liste des points de croisement</returns>
+        public virtual List<RealPoint> GetCrossingPoints(IShape shape)
         {
-            // TODOFORMES
-            return null;
+            List<RealPoint> output = new List<RealPoint>();
+
+            if (shape is Circle) output = GetCrossingPointsWithCircle(shape as Circle);
+            else if (shape is Polygon) output = GetCrossingPointsWithPolygon(shape as Polygon);
+            else if (shape is Segment) output = GetCrossingPointsWithSegment(shape as Segment);
+            else if (shape is RealPoint) output = GetCrossingPointsWithPoint(shape as RealPoint);
+            else if (shape is Line) output = GetCrossingPointsWithLine(shape as Line);
+
+            return output;
+        }
+
+        private List<RealPoint> GetCrossingPointsWithCircle(Circle circle)
+        {
+            return circle.GetCrossingPoints(this); //Le cercle sait faire
+        }
+
+        private List<RealPoint> GetCrossingPointsWithPolygon(Polygon polygon)
+        {
+            return polygon.GetCrossingPoints(this); // Le polygone sait faire
+        }
+
+        private List<RealPoint> GetCrossingPointsWithSegment(Segment segment)
+        {
+            List<RealPoint> output = new List<RealPoint>();
+
+            // Vérifie de la même manière qu'une droite mais vérifie ensuite que le point appartient au segment
+            output = GetCrossingPointsWithLine(segment);
+
+            if (output.Count > 0 && !segment.Contains(output[0])) output.Clear();
+
+            return output;
+        }
+
+        private List<RealPoint> GetCrossingPointsWithPoint(RealPoint point)
+        {
+            return point.GetCrossingPoints(this); // Le point sait faire
+        }
+
+        private List<RealPoint> GetCrossingPointsWithLine(Line line)
+        {
+            List<RealPoint> output = new List<RealPoint>();
+
+            double x, y;
+
+            if (!(C == 0 && line.C == 0                              // Les deux droites sont verticales
+                || A == 0 && line.A == 0                             // Les deux droites sont horizontales
+                || (C == 1 && line.C == 1 && A == line.A)))          // Les deux droites sont parallèles
+            {
+
+                x = (line.B * C - line.C * B) / (line.C * A - line.A * C);
+                y = (line.A * B - line.B * A) / (line.A * C - line.C * A);
+
+                output.Add(new RealPoint(x, y));
+            }
+
+            return output;
         }
 
         /// <summary>
@@ -441,7 +501,7 @@ namespace GoBot.Geometry.Shapes
         /// <returns>Vrai si la droite croise la droite donnée</returns>
         protected virtual bool Cross(Line line)
         {
-            return GetCrossingPoint(line) != null;
+            return GetCrossingPoints(line).Count > 0;
         }
 
         /// <summary>
@@ -451,7 +511,7 @@ namespace GoBot.Geometry.Shapes
         /// <returns>Vrai si la droite croise le segment</returns>
         protected virtual bool Cross(Segment segment)
         {
-            return GetCrossingPoint(segment) != null;
+            return GetCrossingPoints(segment).Count > 0;
         }
 
         /// <summary>
@@ -486,42 +546,6 @@ namespace GoBot.Geometry.Shapes
             return Contains(point);
         }
 
-        /// <summary>
-        /// Retourne le point de croisement avec une autre droite ou null si le croisement n'existe pas
-        /// </summary>
-        /// <param name="line">Droite croisant la droite actuelle</param>
-        /// <returns>Point de croisement</returns>
-        public RealPoint GetCrossingPoint(Line line)
-        {
-            double x, y;
-
-            if (C == 0 && line.C == 0                               // Les deux droites sont verticales
-                || A == 0 && line.A == 0                            // Les deux droites sont horizontales
-                || (C == 1 && line.C == 1 && A == line.A))          // Les deux droites sont parallèles
-                return null;
-
-            x = (line.B * C - line.C * B) / (line.C * A - line.A * C);
-            y = (line.A * B - line.B * A) / (line.A * C - line.C * A);
-
-            return new RealPoint(x, y);
-        }
-
-        /// <summary>
-        /// Retourne le point de croisement avec un segment ou null si le croisement n'existe pas
-        /// </summary>
-        /// <param name="segment"></param>
-        /// <returns></returns>
-        public RealPoint GetCrossingPoint(Segment segment)
-        {
-            // Vérifie de la même manière qu'une droite mais vérifie ensuite que le point appartient au segment
-            RealPoint croisement = GetCrossingPoint((Line)segment);
-
-            if (croisement != null && segment.Contains(croisement))
-                return croisement;
-            else
-                return null;
-        }
-
         #endregion
 
         #region Transformations
@@ -547,10 +571,9 @@ namespace GoBot.Geometry.Shapes
         {
             RealPoint p1, p2;
 
-            if(rotationCenter == null)
-                rotationCenter = Barycenter;
+            if (rotationCenter == null) rotationCenter = Barycenter;
 
-            if(c == 1)
+            if (c == 1)
             {
                 p1 = new RealPoint(0, a * 0 + b);
                 p2 = new RealPoint(1, a * 1 + b);
@@ -609,13 +632,13 @@ namespace GoBot.Geometry.Shapes
         public virtual void Paint(Graphics g, Color outlineColor, int outlineWidth, Color fillColor, WorldScale scale)
         {
             // Un peu douteux mais bon
-            RealPoint p1 = GetCrossingPoint(new Line(new RealPoint(-10000, -10000), new RealPoint(-10001, 10000)));
-            RealPoint p2 = GetCrossingPoint(new Line(new RealPoint(10000, -10000), new RealPoint(10001, 10000)));
+            RealPoint p1 = GetCrossingPoints(new Line(new RealPoint(-10000, -10000), new RealPoint(-10001, 10000)))[0];
+            RealPoint p2 = GetCrossingPoints(new Line(new RealPoint(10000, -10000), new RealPoint(10001, 10000)))[0];
 
             if (p1 == null || p2 == null)
             {
-                p1 = GetCrossingPoint(new Line(new RealPoint(-10000, -10000), new RealPoint(10000, -10001)));
-                p2 = GetCrossingPoint(new Line(new RealPoint(10000, 10000), new RealPoint(-10000, 10001)));
+                p1 = GetCrossingPoints(new Line(new RealPoint(-10000, -10000), new RealPoint(10000, -10001)))[0];
+                p2 = GetCrossingPoints(new Line(new RealPoint(10000, 10000), new RealPoint(-10000, 10001)))[0];
             }
 
             if (p1 != null && p2 != null)

@@ -282,10 +282,49 @@ namespace GoBot.Geometry.Shapes
 
         #region Croise
 
-        public List<RealPoint> GetCrossingPoints(IShape forme)
+        /// <summary>
+        /// Retourne la liste des points de croisement avec la forme donnée
+        /// </summary>
+        /// <param name="shape">Forme à tester</param>
+        /// <returns>Liste des points de croisement</returns>
+        public List<RealPoint> GetCrossingPoints(IShape shape)
         {
-            // TODOFORMES
-            return null;
+            List<RealPoint> output = new List<RealPoint>();
+
+            if (shape is Circle) output = GetCrossingPointsWithCircle(shape as Circle);
+            else if (shape is Polygon) output = GetCrossingPointsWithPolygon(shape as Polygon);
+            else if (shape is Segment) output = GetCrossingPointsWithSegment(shape as Segment);
+            else if (shape is RealPoint) output = GetCrossingPointsWithPoint(shape as RealPoint);
+            else if (shape is Line) output = GetCrossingPointsWithLine(shape as Line);
+
+            return output;
+        }
+
+        private List<RealPoint> GetCrossingPointsWithCircle(Circle circle)
+        {
+            // TODO
+            return new List<RealPoint>();
+        }
+
+        private List<RealPoint> GetCrossingPointsWithPolygon(Polygon polygon)
+        {
+            return polygon.GetCrossingPoints(this); //Le polygone sait faire
+        }
+
+        private List<RealPoint> GetCrossingPointsWithSegment(Segment segment)
+        {
+            return segment.GetCrossingPoints(this); //Le segment sait faire
+        }
+
+        private List<RealPoint> GetCrossingPointsWithPoint(RealPoint point)
+        {
+            return point.GetCrossingPoints(this); //Le point sait faire
+        }
+
+        private List<RealPoint> GetCrossingPointsWithLine(Line line)
+        {
+            // TODO
+            return new List<RealPoint>();
         }
 
         /// <summary>
@@ -396,6 +435,8 @@ namespace GoBot.Geometry.Shapes
         /// <returns>Cercle tourné de l'angle donné</returns>
         public Circle Rotation(AngleDelta angle, RealPoint rotationCenter = null)
         {
+            if (rotationCenter == null) rotationCenter = Barycenter;
+
             return new Circle(center.Rotation(angle, rotationCenter), radius);
         }
 

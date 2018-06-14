@@ -104,8 +104,8 @@ namespace GoBot.Geometry.Shapes
             for (int i = 0; i < sides.Count; i++)
                 for (int j = i+1; j < sides.Count; j++)
                 {
-                    RealPoint cross = sides[i].GetCrossingPoint(sides[j]);
-                    if (cross != null && cross != sides[i].StartPoint && cross != sides[i].EndPoint)
+                    List<RealPoint> cross = sides[i].GetCrossingPoints(sides[j]);
+                    if (cross.Count > 0 && cross[0] != sides[i].StartPoint && cross[0] != sides[i].EndPoint)
                         throw new ArgumentException("Le polygone construit a un ou plusieurs côtés qui se croisent. Création impossible.");
                 }
         }
@@ -364,8 +364,8 @@ namespace GoBot.Geometry.Shapes
 
                 if (s.Cross(testSeg))
                 {
-                    RealPoint crossingPoint = testSeg.GetCrossingPoint(s);
-                    if(crossingPoint != s.EndPoint) // Pour ne pas compter 2 fois un croisement sur un sommet, il sera déjà compté sur le Begin d'un autre
+                    List<RealPoint> cross = testSeg.GetCrossingPoints(s);
+                    if(cross.Count > 0 && cross[0] != s.EndPoint) // Pour ne pas compter 2 fois un croisement sur un sommet, il sera déjà compté sur le Begin d'un autre
                         crossCount++;
                 }
             }
@@ -456,10 +456,18 @@ namespace GoBot.Geometry.Shapes
 
         #region Croisements
 
-        public List<RealPoint> GetCrossingPoints(IShape forme)
+        /// <summary>
+        /// Retourne la liste des points de croisement avec la forme donnée
+        /// </summary>
+        /// <param name="forme">Forme à tester</param>
+        /// <returns>Liste des points de croisement</returns>
+        public List<RealPoint> GetCrossingPoints(IShape shape)
         {
-            // TODOFORMES
-            return null;
+            List<RealPoint> output = new List<RealPoint>();
+
+            sides.ForEach(s => output.AddRange(s.GetCrossingPoints(shape)));
+            
+            return output;
         }
 
         /// <summary>
@@ -480,25 +488,6 @@ namespace GoBot.Geometry.Shapes
             }
 
             return false;
-        }
-
-        /// <summary>
-        /// Retourne les points de croisement avec le segment donné
-        /// </summary>
-        /// <param name="segment">Segment testé</param>
-        /// <returns>Points de croisement avec le segment</returns>
-        public List<RealPoint> GetCrossingPoints(Segment segment)
-        {
-            List<RealPoint> retour = new List<RealPoint>();
-
-            foreach (Segment s in Sides)
-            {
-                RealPoint croisement = segment.GetCrossingPoint(s);
-                if (croisement != null)
-                    retour.Add(croisement);
-            }
-
-            return retour;
         }
 
         #endregion
@@ -692,6 +681,8 @@ namespace GoBot.Geometry.Shapes
         /// <returns>Polygone tourné de l'angle donné</returns>
         public Polygon Rotation(AngleDelta angle, RealPoint rotationCenter = null)
         {
+            if (rotationCenter == null) rotationCenter = Barycenter;
+
             return new Polygon(Points.Select(p => p.Rotation(angle, rotationCenter)));
         }
 
