@@ -13,15 +13,8 @@ namespace GoBot.Geometry.Shapes
 
         #region Attributs
 
-        /// <summary>
-        /// Position sur l'axe des abscisses
-        /// </summary>
-        private double xPosition;
-
-        /// <summary>
-        /// Position sur l'axe des ordonnées
-        /// </summary>
-        private double yPosition;
+        private double _x;
+        private double _y;
 
         #endregion
 
@@ -32,8 +25,8 @@ namespace GoBot.Geometry.Shapes
         /// </summary>
         public RealPoint()
         {
-            xPosition = 0;
-            yPosition = 0;
+            _x = 0;
+            _y = 0;
         }
 
         /// <summary>
@@ -41,8 +34,8 @@ namespace GoBot.Geometry.Shapes
         /// </summary>
         public RealPoint(RealPoint other)
         {
-            xPosition = other.xPosition;
-            yPosition = other.yPosition;
+            _x = other._x;
+            _y = other._y;
         }
 
         /// <summary>
@@ -52,8 +45,8 @@ namespace GoBot.Geometry.Shapes
         /// <param name="y">Ordonnée</param>
         public RealPoint(double x, double y)
         {
-            xPosition = x;
-            yPosition = y;
+            _x = x;
+            _y = y;
         }
 
         #endregion
@@ -61,56 +54,24 @@ namespace GoBot.Geometry.Shapes
         #region Propriétés
 
         /// <summary>
-        /// Obtient la position sur l'axe des abscisses
+        /// Obtient ou définit la position sur l'axe des abscisses
         /// </summary>
-        public double X
-        {
-            get
-            {
-                return xPosition;
-            }
-            set
-            {
-                xPosition = value;
-            }
-        }
+        public double X { get { return _x; } set { _x = value; } }
 
         /// <summary>
-        /// Obtient la coordonnée sur l'axe des ordonnées
+        /// Obtient ou définit  la coordonnée sur l'axe des ordonnées
         /// </summary>
-        public double Y
-        {
-            get
-            {
-                return yPosition;
-            }
-            set
-            {
-                yPosition = value;
-            }
-        }
+        public double Y { get { return _y; } set { _y = value; } }
 
         /// <summary>
-        /// Surface du PointReel
+        /// Obtient la surface du point (toujours 0)
         /// </summary>
-        public double Surface
-        {
-            get
-            {
-                return 0;
-            }
-        }
+        public double Surface { get { return 0; } }
 
         /// <summary>
-        /// Barycentre du PointReel
+        /// Obtient le barycentre du point (toujours lui même)
         /// </summary>
-        public RealPoint Barycenter
-        {
-            get
-            {
-                return new RealPoint(this);
-            }
-        }
+        public RealPoint Barycenter { get { return new RealPoint(this); } }
 
         #endregion
 
@@ -365,8 +326,8 @@ namespace GoBot.Geometry.Shapes
         /// <param name="y">Ordonnée</param>
         public void Set(double x, double y)
         {
-            xPosition = x;
-            yPosition = y;
+            _x = x;
+            _y = y;
         }
 
         /// <summary>
@@ -376,8 +337,8 @@ namespace GoBot.Geometry.Shapes
         /// <param name="y">Ordonnée</param>
         public void Set(RealPoint pos)
         {
-            xPosition = pos.X;
-            yPosition = pos.Y;
+            _x = pos.X;
+            _y = pos.Y;
         }
 
         /// <summary>
@@ -388,7 +349,7 @@ namespace GoBot.Geometry.Shapes
         /// <returns>Point translaté</returns>
         public RealPoint Translation(double dx, double dy)
         {
-            return new RealPoint(xPosition + dx, yPosition + dy);
+            return new RealPoint(_x + dx, _y + dy);
         }
 
         /// <summary>

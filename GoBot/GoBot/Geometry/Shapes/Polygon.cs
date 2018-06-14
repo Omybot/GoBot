@@ -16,7 +16,7 @@ namespace GoBot.Geometry.Shapes
         /// Liste des côtés du Polygone sous forme de segments
         /// La figure est forcément fermée et le dernier point est donc forcément relié au premier
         /// </summary>
-        protected List<Segment> sides;
+        protected List<Segment> _sides;
 
         #endregion
 
@@ -32,8 +32,6 @@ namespace GoBot.Geometry.Shapes
         /// <param name="sides">Liste des cotés</param>
         public Polygon(IEnumerable<Segment> sides)
         {
-            this.sides = new List<Segment>();
-
             BuildPolygon(sides);
         }
 
@@ -42,7 +40,7 @@ namespace GoBot.Geometry.Shapes
         /// </summary>
         protected Polygon()
         {
-            sides = new List<Segment>();
+            _sides = new List<Segment>();
         }
 
         /// <summary>
@@ -50,10 +48,10 @@ namespace GoBot.Geometry.Shapes
         /// </summary>
         protected Polygon(Polygon polygon)
         {
-            sides = new List<Segment>();
+            _sides = new List<Segment>();
 
             foreach(Segment s in polygon.Sides)
-                sides.Add(new Segment(s));
+                _sides.Add(new Segment(s));
         }
 
         /// <summary>
@@ -63,7 +61,7 @@ namespace GoBot.Geometry.Shapes
         /// <param name="points">Liste des points du polygone dans l'ordre où ils sont reliés</param>
         public Polygon(IEnumerable<RealPoint> points)
         {
-            sides = new List<Segment>();
+            _sides = new List<Segment>();
 
             List<Segment> segs = new List<Segment>();
 
@@ -87,25 +85,27 @@ namespace GoBot.Geometry.Shapes
             if (segs.Count() == 0)
                 return;
 
+            _sides = new List<Segment>();
+
             for (int i = 0; i < segs.Count() - 1; i++)
             {
                 Segment seg1 = segs.ElementAt(i);
                 Segment seg2 = segs.ElementAt(i + 1);
 
-                sides.Add(seg1);
+                _sides.Add(seg1);
 
                 if (seg1.EndPoint != seg2.StartPoint)
-                    sides.Add(new Segment(seg1.EndPoint, seg2.StartPoint));
+                    _sides.Add(new Segment(seg1.EndPoint, seg2.StartPoint));
 
             }
 
-            sides.Add(segs.ElementAt(segs.Count() - 1));
+            _sides.Add(segs.ElementAt(segs.Count() - 1));
 
-            for (int i = 0; i < sides.Count; i++)
-                for (int j = i+1; j < sides.Count; j++)
+            for (int i = 0; i < _sides.Count; i++)
+                for (int j = i+1; j < _sides.Count; j++)
                 {
-                    List<RealPoint> cross = sides[i].GetCrossingPoints(sides[j]);
-                    if (cross.Count > 0 && cross[0] != sides[i].StartPoint && cross[0] != sides[i].EndPoint)
+                    List<RealPoint> cross = _sides[i].GetCrossingPoints(_sides[j]);
+                    if (cross.Count > 0 && cross[0] != _sides[i].StartPoint && cross[0] != _sides[i].EndPoint)
                         throw new ArgumentException("Le polygone construit a un ou plusieurs côtés qui se croisent. Création impossible.");
                 }
         }
@@ -121,7 +121,7 @@ namespace GoBot.Geometry.Shapes
         {
             get
             {
-                return sides;
+                return _sides;
             }
         }
 
@@ -217,24 +217,24 @@ namespace GoBot.Geometry.Shapes
 
         public override int GetHashCode()
         {
-            if (sides.Count == 0)
+            if (_sides.Count == 0)
                 return 0;
 
-            int hash = sides[0].GetHashCode();
-            for (int i = 1; i < sides.Count; i++)
-                hash ^= sides[i].GetHashCode();
+            int hash = _sides[0].GetHashCode();
+            for (int i = 1; i < _sides.Count; i++)
+                hash ^= _sides[i].GetHashCode();
 
             return hash;
         }
 
         public override string ToString()
         {
-            if (sides.Count == 0)
+            if (_sides.Count == 0)
                 return "-";
 
-            String chaine = sides[0].ToString() + Environment.NewLine;
-            for (int i = 1; i < sides.Count; i++)
-                chaine += sides[i].ToString() + Environment.NewLine;
+            String chaine = _sides[0].ToString() + Environment.NewLine;
+            for (int i = 1; i < _sides.Count; i++)
+                chaine += _sides[i].ToString() + Environment.NewLine;
 
             return chaine;
         }
@@ -323,7 +323,7 @@ namespace GoBot.Geometry.Shapes
 
             double minDistance = double.MaxValue;
 
-            foreach (Segment s in sides)
+            foreach (Segment s in _sides)
                 minDistance = Math.Min(minDistance, s.Distance(point));
 
             return minDistance;
@@ -465,7 +465,7 @@ namespace GoBot.Geometry.Shapes
         {
             List<RealPoint> output = new List<RealPoint>();
 
-            sides.ForEach(s => output.AddRange(s.GetCrossingPoints(shape)));
+            _sides.ForEach(s => output.AddRange(s.GetCrossingPoints(shape)));
             
             return output;
         }
@@ -478,16 +478,7 @@ namespace GoBot.Geometry.Shapes
         public bool Cross(IShape shape)
         {
             // On teste si la forme croise un des cotés du polygone
-            foreach (Segment cote in sides)
-            {
-                if (cote.Cross(shape))
-                {
-                    return true;
-                }
-
-            }
-
-            return false;
+            return _sides.Exists(s => s.Cross(shape));
         }
 
         #endregion

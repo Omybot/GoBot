@@ -15,8 +15,6 @@ namespace GoBot.Geometry.Shapes
         /// <param name="heigth">Hauteur du rectangle</param>
         public PolygonRectangle(RealPoint topLeft, double width, double heigth)
         {
-            sides = new List<Segment>();
-
             List<Segment> rectSides = new List<Segment>();
 
             if (width < 0 || heigth < 0 || topLeft == null)

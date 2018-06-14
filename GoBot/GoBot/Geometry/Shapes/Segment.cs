@@ -11,7 +11,7 @@ namespace GoBot.Geometry.Shapes
     {
         #region Attributs
 
-        protected RealPoint startPoint, endPoint;
+        protected RealPoint _startPoint, _endPoint;
 
         #endregion
 
@@ -19,20 +19,20 @@ namespace GoBot.Geometry.Shapes
 
         public Segment(RealPoint start, RealPoint end)
         {
-            startPoint = new RealPoint(start);
-            endPoint = new RealPoint(end);
+            _startPoint = new RealPoint(start);
+            _endPoint = new RealPoint(end);
 
             SetLine(StartPoint, EndPoint);
         }
 
         public Segment(Segment segment)
         {
-            startPoint = new RealPoint(segment.StartPoint);
-            endPoint = new RealPoint(segment.EndPoint);
+            _startPoint = new RealPoint(segment.StartPoint);
+            _endPoint = new RealPoint(segment.EndPoint);
 
-            a = segment.A;
-            b = segment.B;
-            c = segment.C;
+            _a = segment.A;
+            _b = segment.B;
+            _c = segment.C;
             SetLine(StartPoint, EndPoint);
         }
 
@@ -47,11 +47,11 @@ namespace GoBot.Geometry.Shapes
         {
             get
             {
-                return startPoint;
+                return _startPoint;
             }
             set
             {
-                startPoint = value;
+                _startPoint = value;
                 SetLine(StartPoint, EndPoint);
             }
         }
@@ -63,11 +63,11 @@ namespace GoBot.Geometry.Shapes
         {
             get
             {
-                return endPoint;
+                return _endPoint;
             }
             set
             {
-                endPoint = value;
+                _endPoint = value;
                 SetLine(StartPoint, EndPoint);
             }
         }
@@ -101,7 +101,7 @@ namespace GoBot.Geometry.Shapes
         {
             get
             {
-                return new RealPoint((startPoint.X + endPoint.X) / 2, (startPoint.Y + endPoint.Y) / 2);
+                return new RealPoint((_startPoint.X + _endPoint.X) / 2, (_startPoint.Y + _endPoint.Y) / 2);
             }
         }
 
@@ -177,10 +177,10 @@ namespace GoBot.Geometry.Shapes
         private List<RealPoint> GetCrossingPointsWithCircle(Circle circle)
         {
             List<RealPoint> intersectsPoints = new List<RealPoint>();
-            double dx = endPoint.X - startPoint.X;
-            double dy = endPoint.Y - startPoint.Y;
-            double Ox = startPoint.X - circle.Center.X;
-            double Oy = startPoint.Y - circle.Center.Y;
+            double dx = _endPoint.X - _startPoint.X;
+            double dy = _endPoint.Y - _startPoint.Y;
+            double Ox = _startPoint.X - circle.Center.X;
+            double Oy = _startPoint.Y - circle.Center.Y;
             double A = dx * dx + dy * dy;
             double B = 2 * (dx * Ox + dy * Oy);
             double C = Ox * Ox + Oy * Oy - circle.Radius * circle.Radius;
@@ -190,16 +190,16 @@ namespace GoBot.Geometry.Shapes
 	        {
                 double t = -B / (2 * A);
 		        if (t >= 0 && t <= 1)
-                    intersectsPoints.Add(new RealPoint(startPoint.X + t * dx, startPoint.Y + t * dy));
+                    intersectsPoints.Add(new RealPoint(_startPoint.X + t * dx, _startPoint.Y + t * dy));
 	        }
 	        if (delta > 0)
 	        {
                 double t1 = (double)((-B - Math.Sqrt(delta)) / (2 * A));
                 double t2 = (double)((-B + Math.Sqrt(delta)) / (2 * A));
 		        if (t1 >= 0 && t1 <= 1)
-                    intersectsPoints.Add(new RealPoint(startPoint.X + t1 * dx, startPoint.Y + t1 * dy));
+                    intersectsPoints.Add(new RealPoint(_startPoint.X + t1 * dx, _startPoint.Y + t1 * dy));
 		        if (t2 >= 0 && t2 <= 1)
-                    intersectsPoints.Add(new RealPoint(startPoint.X + t2 * dx, startPoint.Y + t2 * dy));
+                    intersectsPoints.Add(new RealPoint(_startPoint.X + t2 * dx, _startPoint.Y + t2 * dy));
 	        }
 
 	        return intersectsPoints;
@@ -502,7 +502,7 @@ namespace GoBot.Geometry.Shapes
         /// <returns>Segment translaté des distances données</returns>
         public new Segment Translation(double dx, double dy)
         {
-            return new Segment(startPoint.Translation(dx, dy), endPoint.Translation(dx, dy));
+            return new Segment(_startPoint.Translation(dx, dy), _endPoint.Translation(dx, dy));
         }
 
         /// <summary>
@@ -515,7 +515,7 @@ namespace GoBot.Geometry.Shapes
         {
             if (rotationCenter == null) rotationCenter = Barycenter;
 
-            return new Segment(startPoint.Rotation(angle, rotationCenter), endPoint.Rotation(angle, rotationCenter));
+            return new Segment(_startPoint.Rotation(angle, rotationCenter), _endPoint.Rotation(angle, rotationCenter));
         }
         #endregion
 

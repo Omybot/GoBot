@@ -15,7 +15,7 @@ namespace GoBot.Geometry.Shapes
     {
         #region Attributs
 
-        protected double a, b, c;
+        protected double _a, _b, _c;
 
         #endregion
 
@@ -26,9 +26,9 @@ namespace GoBot.Geometry.Shapes
         /// </summary>
         public Line()
         {
-            a = 0;
-            b = 0;
-            c = 1;
+            _a = 0;
+            _b = 0;
+            _c = 1;
         }
 
         /// <summary>
@@ -39,9 +39,9 @@ namespace GoBot.Geometry.Shapes
         /// <param name="c">C</param>
         public Line(double a, double b, double c = 1)
         {
-            this.a = a;
-            this.b = b;
-            this.c = c;
+            this._a = a;
+            this._b = b;
+            this._c = c;
         }
 
         /// <summary>
@@ -60,9 +60,9 @@ namespace GoBot.Geometry.Shapes
         /// <param name="line">Droite à copier</param>
         public Line(Line line)
         {
-            a = line.A;
-            b = line.B;
-            c = line.C;
+            _a = line.A;
+            _b = line.B;
+            _c = line.C;
         }
 
         /// <summary>
@@ -88,15 +88,15 @@ namespace GoBot.Geometry.Shapes
             if (sum2 == 0)
             {
                 // Droite verticale
-                a = 0;
-                b = -points[0].X;
-                c = 0;
+                _a = 0;
+                _b = -points[0].X;
+                _c = 0;
             }
             else
             {
-                a = sum1 / sum2;
-                b = yAvg - a * xAvg;
-                c = 1;
+                _a = sum1 / sum2;
+                _b = yAvg - _a * xAvg;
+                _c = 1;
             }
         }
 
@@ -109,15 +109,15 @@ namespace GoBot.Geometry.Shapes
         {
             if (p2.X - p1.X == 0)
             {
-                a = 1;
-                b = -p1.X;
-                c = 0;
+                _a = 1;
+                _b = -p1.X;
+                _c = 0;
             }
             else
             {
-                a = (p2.Y - p1.Y) / (p2.X - p1.X);
-                b = -(a * p1.X - p1.Y);
-                c = 1;
+                _a = (p2.Y - p1.Y) / (p2.X - p1.X);
+                _b = -(_a * p1.X - p1.Y);
+                _c = 1;
             }
         }
 
@@ -132,7 +132,7 @@ namespace GoBot.Geometry.Shapes
         {
             get
             {
-                return a;
+                return _a;
             }
         }
 
@@ -143,7 +143,7 @@ namespace GoBot.Geometry.Shapes
         {
             get
             {
-                return b;
+                return _b;
             }
         }
 
@@ -154,7 +154,7 @@ namespace GoBot.Geometry.Shapes
         {
             get
             {
-                return c;
+                return _c;
             }
         }
 
@@ -212,7 +212,7 @@ namespace GoBot.Geometry.Shapes
 
         public override int GetHashCode()
         {
-            return (int)a ^ (int)b ^ (int)c;
+            return (int)_a ^ (int)_b ^ (int)_c;
         }
 
         /// <summary>
@@ -558,7 +558,7 @@ namespace GoBot.Geometry.Shapes
         /// <returns>Ligne translatée des distances données</returns>
         public Line Translation(double dx, double dy)
         {
-            return new Line(a, b + dx + dy, c);
+            return new Line(_a, _b + dx + dy, _c);
         }
 
         /// <summary>
@@ -573,18 +573,18 @@ namespace GoBot.Geometry.Shapes
 
             if (rotationCenter == null) rotationCenter = Barycenter;
 
-            if (c == 1)
+            if (_c == 1)
             {
-                p1 = new RealPoint(0, a * 0 + b);
-                p2 = new RealPoint(1, a * 1 + b);
+                p1 = new RealPoint(0, _a * 0 + _b);
+                p2 = new RealPoint(1, _a * 1 + _b);
 
                 p1 = p1.Rotation(angle, rotationCenter);
                 p2 = p2.Rotation(angle, rotationCenter);
             }
             else
             {
-                p1 = new RealPoint(b, 0);
-                p2 = new RealPoint(b, 1);
+                p1 = new RealPoint(_b, 0);
+                p2 = new RealPoint(_b, 1);
             }
 
             return new Line(p1, p2);
@@ -610,7 +610,7 @@ namespace GoBot.Geometry.Shapes
             // Si je suis une droite banale, je calcule
             else
             {
-                double newA = -1 / a;
+                double newA = -1 / _a;
                 double newB = -newA * point.X + point.Y;
 
                 return new Line(newA, newB);

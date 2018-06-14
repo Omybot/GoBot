@@ -10,15 +10,8 @@ namespace GoBot.Geometry.Shapes
     {
         #region Attributs
 
-        /// <summary>
-        /// Centre du cercle
-        /// </summary>
-        private RealPoint center;
-
-        /// <summary>
-        /// Rayon du cercle
-        /// </summary>
-        private double radius;
+        private RealPoint _center;
+        private double _radius;
 
         #endregion
 
@@ -31,8 +24,8 @@ namespace GoBot.Geometry.Shapes
         /// <param name="radius">Rayon du cercle</param>
         public Circle(RealPoint center, double radius)
         {
-            this.center = center;
-            this.radius = radius;
+            _center = center;
+            _radius = radius;
         }
 
         /// <summary>
@@ -41,8 +34,8 @@ namespace GoBot.Geometry.Shapes
         /// <param name="circle">cercle à copier</param>
         public Circle(Circle circle)
         {
-            this.center = circle.center;
-            this.radius = circle.radius;
+            _center = circle._center;
+            _radius = circle._radius;
         }
 
         #endregion
@@ -52,46 +45,22 @@ namespace GoBot.Geometry.Shapes
         /// <summary>
         /// Obtient le centre du cercle
         /// </summary>
-        public RealPoint Center
-        {
-            get
-            {
-                return center;
-            }
-        }
+        public RealPoint Center { get { return _center; } }
 
         /// <summary>
         /// Obtient le rayon du cercle
         /// </summary>
-        public double Radius
-        {
-            get
-            {
-                return radius;
-            }
-        }
+        public double Radius { get { return _radius; } }
 
         /// <summary>
         /// Obtient la surface du cercle
         /// </summary>
-        public double Surface
-        {
-            get
-            {
-                return radius * radius * Math.PI;
-            }
-        }
+        public double Surface { get { return _radius * _radius * Math.PI; } }
 
         /// <summary>
         /// Obtient le barycentre du cercle
         /// </summary>
-        public RealPoint Barycenter
-        {
-            get
-            {
-                return Center;
-            }
-        }
+        public RealPoint Barycenter { get { return _center; } }
 
         #endregion
 
@@ -124,12 +93,12 @@ namespace GoBot.Geometry.Shapes
 
         public override int GetHashCode()
         {
-            return (int)(center.GetHashCode()) ^ (int)radius;
+            return (int)(_center.GetHashCode()) ^ (int)_radius;
         }
 
         public override string ToString()
         {
-            return center + " R = " + radius;
+            return "Circle, [Center] = " + _center + ", [Radius] = " + _radius;
         }
 
         #endregion
@@ -200,7 +169,7 @@ namespace GoBot.Geometry.Shapes
         public double Distance(RealPoint point)
         {
             // C'est la distance entre le centre du cercle et le point moins le rayon du cercle
-            return point.Distance(Center) - Radius;
+            return point.Distance(Center) - _radius;
         }
 
         #endregion
@@ -225,7 +194,7 @@ namespace GoBot.Geometry.Shapes
         protected bool Contains(RealPoint point)
         {
             // Pour contenir un point, celui si se trouve à une distance inférieure au rayon du centre
-            return point.Distance(center) <= radius;
+            return point.Distance(_center) <= _radius;
         }
 
         /// <summary>
@@ -275,7 +244,7 @@ namespace GoBot.Geometry.Shapes
         protected bool Contains(Circle circle)
         {
             // Pour contenir un cercle il faut que son rayon + la distance entre les centres des deux cercles soit inférieure à notre rayon
-            return circle.radius + circle.Center.Distance(Center) < radius;
+            return circle._radius + circle.Center.Distance(Center) < _radius;
         }
 
         #endregion
@@ -345,8 +314,8 @@ namespace GoBot.Geometry.Shapes
         protected bool Cross(Line line)
         {
             // Si une droite croise le cercle, c'est que le point de la droite le plus proche du centre du cercle est éloigné d'une distance inférieure au rayon
-            double distanceToCenter = line.Distance(center);
-            return distanceToCenter <= radius;
+            double distanceToCenter = line.Distance(_center);
+            return distanceToCenter <= _radius;
         }
 
         /// <summary>
@@ -357,8 +326,8 @@ namespace GoBot.Geometry.Shapes
         protected bool Cross(Segment segment)
         {
             // Même test que pour la droite
-            double distanceToCenter = segment.Distance(center);
-            return distanceToCenter <= radius;
+            double distanceToCenter = segment.Distance(_center);
+            return distanceToCenter <= _radius;
         }
 
         /// <summary>
@@ -386,11 +355,12 @@ namespace GoBot.Geometry.Shapes
         protected bool Cross(Circle circle)
         {
             // Pour croiser un cercle il suffit que son centre soit éloigné de notre centre de moins que la somme de nos 2 rayons
+            // Et que les cercles ne se contiennent pas l'un l'autre
 
-            double distanceBetweenCenters = center.Distance(circle.center);
+            double distanceBetweenCenters = _center.Distance(circle._center);
 
-            if (distanceBetweenCenters <= radius + circle.radius)
-                return true;
+            if (distanceBetweenCenters <= _radius + circle._radius)
+                return (!circle.Contains(this)) && (!this.Contains(circle));
 
             return false;
         }
@@ -402,11 +372,9 @@ namespace GoBot.Geometry.Shapes
         /// <returns>Vrai si le cercle courant croise le cercle testé</returns>
         protected bool Cross(RealPoint point)
         {
-            // Pour croiser un cercle il suffit que son centre soit éloigné de notre centre de moins que la somme de nos 2 rayons
+            double distanceToCenter = _center.Distance(point);
 
-            double distanceToCenter = center.Distance(point);
-
-            if (distanceToCenter <= radius + RealPoint.PRECISION && distanceToCenter >= radius - RealPoint.PRECISION)
+            if (distanceToCenter <= _radius + RealPoint.PRECISION && distanceToCenter >= _radius - RealPoint.PRECISION)
                 return true;
 
             return false;
@@ -424,7 +392,7 @@ namespace GoBot.Geometry.Shapes
         /// <returns>Cercle translaté des distances données</returns>
         public Circle Translation(double dx, double dy)
         {
-            return new Circle(center.Translation(dx, dy), radius);
+            return new Circle(_center.Translation(dx, dy), _radius);
         }
 
         /// <summary>
@@ -437,7 +405,7 @@ namespace GoBot.Geometry.Shapes
         {
             if (rotationCenter == null) rotationCenter = Barycenter;
 
-            return new Circle(center.Rotation(angle, rotationCenter), radius);
+            return new Circle(_center.Rotation(angle, rotationCenter), _radius);
         }
 
         #endregion
