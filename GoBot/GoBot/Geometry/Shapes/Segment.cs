@@ -207,7 +207,7 @@ namespace GoBot.Geometry.Shapes
 
         private List<RealPoint> GetCrossingPointsWithLine(Line line)
         {
-            return base.GetCrossingPoints(line); // La ligne sait faire
+            return line.GetCrossingPoints(this); // La ligne sait faire
         }
 
         private List<RealPoint> GetCrossingPointsWithPoint(RealPoint point)
