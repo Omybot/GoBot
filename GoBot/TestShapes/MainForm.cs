@@ -94,7 +94,7 @@ namespace TestShapes
         {
             if (_barycenterVisible)
             {
-                pt.Paint(g, Color.Black, 3, Color.Blue, WorldScale.Default());
+                pt?.Paint(g, Color.Black, 3, Color.Blue, WorldScale.Default());
             }
         }
 
@@ -212,6 +212,10 @@ namespace TestShapes
             {
                 _currentShape = new Segment(_startPoint, _startPoint);
             }
+            else if (_shapeMode == 5)
+            {
+                _currentShape = new Line(_startPoint, _startPoint);
+            }
         }
 
         private void picWorld_MouseMove(object sender, MouseEventArgs e)
@@ -235,6 +239,10 @@ namespace TestShapes
                 else if (_shapeMode == 4)
                 {
                     _currentShape = new Segment(_startPoint, currentPoint);
+                }
+                else if (_shapeMode == 5)
+                {
+                    _currentShape = new Line(_startPoint, currentPoint);
                 }
 
                 picWorld.Invalidate();
@@ -264,6 +272,10 @@ namespace TestShapes
                 {
                     _shapes.Add(new Segment(_startPoint, currentPoint));
                 }
+                else if (_shapeMode == 5)
+                {
+                    _shapes.Add(new Line(_startPoint, currentPoint));
+                }
 
                 picWorld.Invalidate();
                 _startPoint = null;
@@ -285,6 +297,12 @@ namespace TestShapes
         private void btnSegment_Click(object sender, EventArgs e)
         {
             _shapeMode = 4;
+            picWorld.Cursor = Cursors.Cross;
+        }
+
+        private void btnLine_Click(object sender, EventArgs e)
+        {
+            _shapeMode = 5;
             picWorld.Cursor = Cursors.Cross;
         }
     }
