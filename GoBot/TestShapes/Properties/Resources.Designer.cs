@@ -63,6 +63,16 @@ namespace TestShapes.Properties {
         /// <summary>
         ///   Recherche une ressource localisée de type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap Cancel {
+            get {
+                object obj = ResourceManager.GetObject("Cancel", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une ressource localisée de type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap Circle1 {
             get {
                 object obj = ResourceManager.GetObject("Circle1", resourceCulture);
@@ -76,6 +86,16 @@ namespace TestShapes.Properties {
         internal static System.Drawing.Bitmap Circle2 {
             get {
                 object obj = ResourceManager.GetObject("Circle2", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une ressource localisée de type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap FileNew {
+            get {
+                object obj = ResourceManager.GetObject("FileNew", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

@@ -145,6 +145,8 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Icone.ico" />
+    <None Include="Resources\Cancel.png" />
+    <None Include="Resources\FileNew.png" />
     <None Include="Resources\Segment.png" />
     <None Include="Resources\Rectangle.png" />
     <None Include="Resources\Line.png" />

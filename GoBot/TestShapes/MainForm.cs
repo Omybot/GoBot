@@ -14,6 +14,16 @@ namespace TestShapes
 {
     public partial class MainForm : Form
     {
+        private enum ShapeMode
+        {
+            None,
+            Rectangle,
+            Circle,
+            CircleFromCenter,
+            Segment,
+            Line
+        }
+
         private List<IShape> _shapes;
 
         private bool _barycenterVisible = true;
@@ -22,15 +32,21 @@ namespace TestShapes
         private bool _containedColorVisible = true;
         private bool _gridVisible = true;
 
+        private ShapeMode _shapeMode;
+        private RealPoint _startPoint;
+        private IShape _currentShape;
+
         public MainForm()
         {
             InitializeComponent();
+
+            _shapeMode = ShapeMode.Rectangle;
 
             _shapes = new List<IShape>();
 
             _shapes.Add(new Circle(new RealPoint(200, 200), 30));
             _shapes.Add(new Circle(new RealPoint(250, 180), 30));
-            _shapes.Add(new Segment(new RealPoint(0, 0), new RealPoint(300, 300)));
+            _shapes.Add(new Segment(new RealPoint(10, 10), new RealPoint(300, 300)));
             _shapes.Add(new PolygonRectangle(new RealPoint(250, 250), 300, 50));
             _shapes.Add(new Circle(new RealPoint(260, 500), 30));
             _shapes.Add(new PolygonRectangle(new RealPoint(230, 400), 300, 40));
@@ -53,7 +69,6 @@ namespace TestShapes
             _shapes.Add(new Segment(new RealPoint(80, 500), new RealPoint(180, 500)));
 
             _shapes.Add(new PolygonRectangle(new RealPoint(230, 400), 300, 40).Rotation(45));
-
         }
 
         #region Peinture
@@ -182,69 +197,24 @@ namespace TestShapes
 
         #endregion
 
-        private int _shapeMode;
-        private RealPoint _startPoint;
-        private IShape _currentShape;
-
-        private void btnRectangle_Click(object sender, EventArgs e)
-        {
-            _shapeMode = 1;
-            picWorld.Cursor = Cursors.Cross;
-        }
 
         private void picWorld_MouseDown(object sender, MouseEventArgs e)
         {
             _startPoint = picWorld.PointToClient(Cursor.Position);
+            _currentShape = BuildCurrentShape(_shapeMode, _startPoint, _startPoint);
 
-            if (_shapeMode == 1)
-            {
-                _currentShape = new PolygonRectangle(_startPoint, 0, 0);
-            }
-            else if (_shapeMode == 2)
-            {
-                _currentShape = new Circle(_startPoint, 0);
-            }
-            else if (_shapeMode == 3)
-            {
-                _currentShape = new Circle(_startPoint, 0);
-            }
-            else if (_shapeMode == 4)
-            {
-                _currentShape = new Segment(_startPoint, _startPoint);
-            }
-            else if (_shapeMode == 5)
-            {
-                _currentShape = new Line(_startPoint, _startPoint);
-            }
+            picWorld.Invalidate();
         }
 
         private void picWorld_MouseMove(object sender, MouseEventArgs e)
         {
+            RealPoint pos = picWorld.PointToClient(Cursor.Position);
+            lblPosition.Text = "X = " + pos.X.ToString().PadLeft(4) + ": Y = " + pos.Y.ToString().PadLeft(4);
+
             if (_startPoint != null)
             {
-                RealPoint currentPoint = picWorld.PointToClient(Cursor.Position);
-
-                if (_shapeMode == 1)
-                {
-                    _currentShape = new PolygonRectangle(_startPoint, currentPoint.X - _startPoint.X, currentPoint.Y - _startPoint.Y);
-                }
-                else if (_shapeMode == 2)
-                {
-                    _currentShape = new Circle(new Segment(_startPoint, currentPoint).Barycenter, _startPoint.Distance(currentPoint) / 2);
-                }
-                else if (_shapeMode == 3)
-                {
-                    _currentShape = new Circle(_startPoint, _startPoint.Distance(currentPoint));
-                }
-                else if (_shapeMode == 4)
-                {
-                    _currentShape = new Segment(_startPoint, currentPoint);
-                }
-                else if (_shapeMode == 5)
-                {
-                    _currentShape = new Line(_startPoint, currentPoint);
-                }
-
+                _currentShape = BuildCurrentShape(_shapeMode, _startPoint, pos);
+                lblItem.Text = _currentShape.GetType().Name + " : "+  _currentShape.ToString();
                 picWorld.Invalidate();
             }
         }
@@ -253,57 +223,80 @@ namespace TestShapes
         {
             if (_startPoint != null)
             {
-                RealPoint currentPoint = picWorld.PointToClient(Cursor.Position);
+                _shapes.Add(BuildCurrentShape(_shapeMode, _startPoint, picWorld.PointToClient(Cursor.Position)));
+                lblItem.Text = "";
+
                 _currentShape = null;
-
-                if (_shapeMode == 1)
-                {
-                    _shapes.Add(new PolygonRectangle(_startPoint, currentPoint.X - _startPoint.X, currentPoint.Y - _startPoint.Y));
-                }
-                else if (_shapeMode == 2)
-                {
-                    _shapes.Add(new Circle(new Segment(_startPoint, currentPoint).Barycenter, _startPoint.Distance(currentPoint) / 2));
-                }
-                else if (_shapeMode == 3)
-                {
-                    _shapes.Add(new Circle(_startPoint, _startPoint.Distance(currentPoint)));
-                }
-                else if (_shapeMode == 4)
-                {
-                    _shapes.Add(new Segment(_startPoint, currentPoint));
-                }
-                else if (_shapeMode == 5)
-                {
-                    _shapes.Add(new Line(_startPoint, currentPoint));
-                }
-
-                picWorld.Invalidate();
                 _startPoint = null;
+                
+                picWorld.Invalidate();
             }
         }
 
-        private void btnCircle_Click(object sender, EventArgs e)
+        private static IShape BuildCurrentShape(ShapeMode mode, RealPoint startPoint, RealPoint endPoint)
         {
-            _shapeMode = 2;
-            picWorld.Cursor = Cursors.Cross;
+            IShape output = null;
+
+            switch (mode)
+            {
+                case ShapeMode.Rectangle:
+                    output = new PolygonRectangle(startPoint, endPoint.X - startPoint.X, endPoint.Y - startPoint.Y);
+                    break;
+                case ShapeMode.Circle:
+                    output = new Circle(new Segment(startPoint, endPoint).Barycenter, startPoint.Distance(endPoint) / 2);
+                    break;
+                case ShapeMode.CircleFromCenter:
+                    output = new Circle(startPoint, startPoint.Distance(endPoint));
+                    break;
+                case ShapeMode.Segment:
+                    output = new Segment(startPoint, endPoint);
+                    break;
+                case ShapeMode.Line:
+                    output = new Line(startPoint, endPoint);
+                    break;
+            }
+
+            return output;
         }
 
-        private void btnCircleFromCenter_Click(object sender, EventArgs e)
+        private void btnRectangle_CheckedChanged(object sender, EventArgs e)
         {
-            _shapeMode = 3;
-            picWorld.Cursor = Cursors.Cross;
+            if (btnRectangle.Checked) _shapeMode = ShapeMode.Rectangle;
         }
 
-        private void btnSegment_Click(object sender, EventArgs e)
+        private void btnCircle_CheckedChanged(object sender, EventArgs e)
         {
-            _shapeMode = 4;
-            picWorld.Cursor = Cursors.Cross;
+            if (btnCircle.Checked) _shapeMode = ShapeMode.Circle;
         }
 
-        private void btnLine_Click(object sender, EventArgs e)
+        private void btnCircleFromCenter_CheckedChanged(object sender, EventArgs e)
         {
-            _shapeMode = 5;
-            picWorld.Cursor = Cursors.Cross;
+            if (btnCircleFromCenter.Checked) _shapeMode = ShapeMode.CircleFromCenter;
+        }
+
+        private void btnSegment_CheckedChanged(object sender, EventArgs e)
+        {
+            if (btnSegment.Checked) _shapeMode = ShapeMode.Segment;
+        }
+
+        private void btnLine_CheckedChanged(object sender, EventArgs e)
+        {
+            if (btnLine.Checked) _shapeMode = ShapeMode.Line;
+        }
+
+        private void btnErase_Click(object sender, EventArgs e)
+        {
+            _shapes.Clear();
+            picWorld.Invalidate();
+        }
+
+        private void btnDelete_Click(object sender, EventArgs e)
+        {
+            if (_shapes.Count > 0)
+            {
+                _shapes.RemoveAt(_shapes.Count - 1);
+                picWorld.Invalidate();
+            }
         }
     }
 }
