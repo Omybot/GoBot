@@ -132,7 +132,7 @@ namespace GoBot.Geometry.Shapes
         {
             get
             {
-                return Sides.Select(s => new RealPoint(s.StartPoint.X, s.StartPoint.Y)).ToList();
+                return _sides.Select(s => new RealPoint(s.StartPoint)).ToList();
             }
         }
 
@@ -159,23 +159,31 @@ namespace GoBot.Geometry.Shapes
         {
             get
             {
-                double x = 0;
-                double y = 0;
                 double surface = Surface;
+                RealPoint output = null;
 
-                foreach (PolygonTriangle t in this.ToTriangles())
+                if (this.Surface == 0)
                 {
-                    RealPoint barycentreTriangle = t.Barycenter;
-                    double otherSurface = t.Surface;
+                    output = new RealPoint(_sides[0].StartPoint);
+                }
+                else
+                {
+                    output = new RealPoint();
 
-                    if (t.Surface > 0)
+                    foreach (PolygonTriangle t in this.ToTriangles())
                     {
-                        x += barycentreTriangle.X * otherSurface / surface;
-                        y += barycentreTriangle.Y * otherSurface / surface;
+                        RealPoint barycentreTriangle = t.Barycenter;
+                        double otherSurface = t.Surface;
+
+                        if (t.Surface > 0)
+                        {
+                            output.X += barycentreTriangle.X * otherSurface / surface;
+                            output.Y += barycentreTriangle.Y * otherSurface / surface;
+                        }
                     }
                 }
 
-                return new RealPoint(x, y);
+                return output;
             }
         }
 

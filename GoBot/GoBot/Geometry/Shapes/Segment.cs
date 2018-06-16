@@ -144,7 +144,7 @@ namespace GoBot.Geometry.Shapes
 
         public override string ToString()
         {
-            return StartPoint + " -> " + EndPoint + " / " + base.ToString();
+            return StartPoint + " -> " + EndPoint;
         }
 
         #endregion

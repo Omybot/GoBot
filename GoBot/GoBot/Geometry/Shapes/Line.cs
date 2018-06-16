@@ -224,16 +224,16 @@ namespace GoBot.Geometry.Shapes
         /// <returns>Chaine représentant la Droite</returns>
         public override string ToString()
         {
-            String cString = C != 1 ? C + "" : "";
-            String aString = A != 1 ? A + "" : "";
+            String cString = C != 1 ? C.ToString("0.00") + "" : "";
+            String aString = A != 1 ? A.ToString("0.00") + "" : "";
             if (C == 0)
-                return "x = " + (-B);
+                return "X = " + ((-B).ToString("0.00"));
             else if (A == 0)
-                return cString + "y = " + B;
+                return cString + "Y = " + B.ToString("0.00");
             else if (B == 0)
-                return cString + "y = " + aString + "x";
+                return cString + "Y = " + aString + "X";
             else
-                return cString + "y = " + aString + "x + " + B;
+                return cString + "Y = " + aString + "X " + (B > 0 ? "+ " : "- ") + Math.Abs(B).ToString("0.00");
         }
 
         #endregion
@@ -632,13 +632,17 @@ namespace GoBot.Geometry.Shapes
         public virtual void Paint(Graphics g, Color outlineColor, int outlineWidth, Color fillColor, WorldScale scale)
         {
             // Un peu douteux mais bon
-            RealPoint p1 = GetCrossingPoints(new Line(new RealPoint(-10000, -10000), new RealPoint(-10001, 10000)))[0];
-            RealPoint p2 = GetCrossingPoints(new Line(new RealPoint(10000, -10000), new RealPoint(10001, 10000)))[0];
+            RealPoint p1, p2;
 
-            if (p1 == null || p2 == null)
+            if(Math.Abs(_a) > 1)
             {
-                p1 = GetCrossingPoints(new Line(new RealPoint(-10000, -10000), new RealPoint(10000, -10001)))[0];
-                p2 = GetCrossingPoints(new Line(new RealPoint(10000, 10000), new RealPoint(-10000, 10001)))[0];
+                p1 = GetCrossingPoints(new Line(new RealPoint(-100000, -100000), new RealPoint(+100000, -100000))).FirstOrDefault();
+                p2 = GetCrossingPoints(new Line(new RealPoint(-100000, +100000), new RealPoint(+100000, +100000))).FirstOrDefault();
+            }
+            else
+            {
+                p1 = GetCrossingPoints(new Line(new RealPoint(-100000, -100000), new RealPoint(-100000, +100000))).FirstOrDefault();
+                p2 = GetCrossingPoints(new Line(new RealPoint(+100000, -100000), new RealPoint(+100000, +100000))).FirstOrDefault();
             }
 
             if (p1 != null && p2 != null)

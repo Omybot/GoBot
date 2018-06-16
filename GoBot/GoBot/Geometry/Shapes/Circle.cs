@@ -98,7 +98,7 @@ namespace GoBot.Geometry.Shapes
 
         public override string ToString()
         {
-            return "Circle, [Center] = " + _center + ", [Radius] = " + _radius;
+            return "C = " + _center.ToString() + "; R = " + _radius.ToString("0.00");
         }
 
         #endregion

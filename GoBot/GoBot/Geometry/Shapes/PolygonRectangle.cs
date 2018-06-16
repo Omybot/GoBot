@@ -48,5 +48,12 @@ namespace GoBot.Geometry.Shapes
 
             BuildPolygon(rectSides);
         }
+
+        public override string ToString()
+        {
+            return _sides[0].StartPoint.ToString() + "; " +
+                "W = " + (_sides[1].StartPoint.X - _sides[0].StartPoint.X).ToString("0.00") + "; " +
+                "H = " + (_sides[3].StartPoint.Y - _sides[0].StartPoint.Y).ToString("0.00");
+        }
     }
 }
