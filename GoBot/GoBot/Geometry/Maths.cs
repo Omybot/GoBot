@@ -12,7 +12,7 @@ namespace GoBot.Geometry
         public double distance;
     }
 
-    class Maths
+    public class Maths
     {
         /// <summary>
         /// Retourne la direction (angle et distance) à suivre pour arriver à un point donné en partant d'une corrdonnée précise (et par défaut, angle de 0°)

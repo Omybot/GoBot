@@ -6,7 +6,7 @@ using GoBot.Geometry.Shapes;
 
 namespace GoBot.Geometry
 {
-    class BezierCurve
+    public class BezierCurve
     {
         private static double[] factorialLookup;
 

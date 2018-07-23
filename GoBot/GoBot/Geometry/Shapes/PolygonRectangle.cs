@@ -5,7 +5,7 @@ using System.Text;
 
 namespace GoBot.Geometry.Shapes
 {
-    class PolygonRectangle : Polygon
+    public class PolygonRectangle : Polygon
     {
         /// <summary>
         /// Construit un rectangle à partir du point en haut à gauche, de la largeur et de la hauteur
