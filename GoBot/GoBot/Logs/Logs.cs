@@ -11,6 +11,7 @@ namespace GoBot.Logs
 
         static Logs()
         {
+            Init();
             LogDebug = new LogFile(Config.PathData + "/LogsTraces/LogDebug" + Execution.LaunchStartString + ".txt");
             LogConsole = new LogConsole();
         }
