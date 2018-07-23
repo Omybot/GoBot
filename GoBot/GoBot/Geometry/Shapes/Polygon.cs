@@ -198,11 +198,7 @@ namespace GoBot.Geometry.Shapes
                 return (object)a == null && (object)b == null;
             else if (a.Sides.Count == b.Sides.Count)
             {
-                for (int i = 0; i < a.Sides.Count; i++)
-                {
-                    if (a.Sides[i] != b.Sides[i])
-                        return false;
-                }
+                return a.Points.TrueForAll(p => b.Points.Contains(p));
             }
             else
                 return false;
