@@ -445,7 +445,7 @@ namespace GoBot.Beacons
                                     // Calcul du 3ème point du triangle rectangle Balise / Gros robot
                                     Line droiteBalise0Degres = new Line(Position.Coordinates, new RealPoint(Position.Coordinates.X + 500, Position.Coordinates.Y));
                                     Line perpendiculaire = droiteBalise0Degres.GetPerpendicular(robot.Position.Coordinates);
-                                    RealPoint troisiemePoint = perpendiculaire.GetCrossingPoint(droiteBalise0Degres);
+                                    RealPoint troisiemePoint = perpendiculaire.GetCrossingPoints(droiteBalise0Degres).FirstOrDefault();
                                     double distanceBaliseTroisiemePoint = troisiemePoint.Distance(Position.Coordinates);
                                     double distanceBaliseRobot = robot.Position.Coordinates.Distance(Position.Coordinates);
 
