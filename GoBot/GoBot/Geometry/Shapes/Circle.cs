@@ -71,7 +71,7 @@ namespace GoBot.Geometry.Shapes
             if ((object)a == null || (object)b == null)
                 return (object)a == null && (object)b == null;
             else
-                return a.Radius == b.Radius
+                return Math.Abs(a.Radius - b.Radius) < RealPoint.PRECISION
                         && a.Center == b.Center;
         }
 
@@ -166,7 +166,7 @@ namespace GoBot.Geometry.Shapes
         /// </summary>
         /// <param name="point">Point testé</param>
         /// <returns>Distance calculée</returns>
-        public double Distance(RealPoint point)
+        protected double Distance(RealPoint point)
         {
             // C'est la distance entre le centre du cercle et le point moins le rayon du cercle
             return point.Distance(Center) - _radius;
