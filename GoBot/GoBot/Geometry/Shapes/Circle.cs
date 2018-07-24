@@ -273,48 +273,39 @@ namespace GoBot.Geometry.Shapes
         {
             List<RealPoint> output = new List<RealPoint>();
 
+            bool aligned = Math.Abs(circle.Center.Y - _center.Y) < RealPoint.PRECISION;
+
+            if (aligned)// Cercles non alignés horizontalement (on pivote pour les calculs, sinon division par 0)
+                circle = circle.Rotation(90, this.Center);
+
             RealPoint oc1 = new RealPoint(circle.Center), oc2 = new RealPoint(_center);
             double b = circle.Radius, c = _radius;
 
-            if (Math.Abs(oc1.Y - oc2.Y) > RealPoint.PRECISION) // Cercles non alignés horizontalement (sinon division par 0)
+            double a = (-(Math.Pow(oc1.X, 2)) - (Math.Pow(oc1.Y, 2)) + Math.Pow(oc2.X, 2) + Math.Pow(oc2.Y, 2) + Math.Pow(b, 2) - Math.Pow(c, 2)) / (2 * (oc2.Y - oc1.Y));
+            double d = ((oc2.X - oc1.X) / (oc2.Y - oc1.Y));
+
+            double A = Math.Pow(d, 2) + 1;
+            double B = -2 * oc1.X + 2 * oc1.Y * d - 2 * a * d;
+            double C = Math.Pow(oc1.X, 2) + Math.Pow(oc1.Y, 2) - 2 * oc1.Y * a + Math.Pow(a, 2) - Math.Pow(b, 2);
+
+            double delta = Math.Pow(B, 2) - 4 * A * C;
+
+            if (delta >= 0)
             {
-                double a = (-(Math.Pow(oc1.X, 2)) - (Math.Pow(oc1.Y, 2)) + Math.Pow(oc2.X, 2) + Math.Pow(oc2.Y, 2) + Math.Pow(b, 2) - Math.Pow(c, 2)) / (2 * (oc2.Y - oc1.Y));
-                double d = ((oc2.X - oc1.X) / (oc2.Y - oc1.Y));
+                double x1 = (-B + Math.Sqrt(delta)) / (2 * A);
+                double y1 = a - x1 * d;
+                output.Add(new RealPoint(x1, y1));
 
-                double A = Math.Pow(d, 2) + 1;
-                double B = -2 * oc1.X + 2 * oc1.Y * d - 2 * a * d;
-                double C = Math.Pow(oc1.X, 2) + Math.Pow(oc1.Y, 2) - 2 * oc1.Y * a + Math.Pow(a, 2) - Math.Pow(b, 2);
-
-                double delta = Math.Pow(B, 2) - 4 * A * C;
-
-                if (delta >= 0)
+                if (delta > 0)
                 {
-                    double x1 = (-B + Math.Sqrt(delta)) / (2 * A);
-                    double y1 = a - x1 * d;
-                    output.Add(new RealPoint(x1, y1));
-
-                    if (delta > 0)
-                    {
-                        double x2 = (-B - Math.Sqrt(delta)) / (2 * A);
-                        double y2 = a - x2 * d;
-                        output.Add(new RealPoint(x2, y2));
-                    }
+                    double x2 = (-B - Math.Sqrt(delta)) / (2 * A);
+                    double y2 = a - x2 * d;
+                    output.Add(new RealPoint(x2, y2));
                 }
             }
-            else
-            {
-                double a = oc1.Distance(oc2);
 
-                if (a <= b + c)
-                {
-                    double x1 = ((c * c) - (a * a) - (b * b)) / (-2 * a);
-                    double y1 = Math.Sqrt((c * c) - Math.Pow(a - x1, 2));
-
-                    output.Add(new RealPoint(x1 + oc1.X, y1 + oc1.Y));
-                    if (Math.Abs(y1) > RealPoint.PRECISION)
-                        output.Add(new RealPoint(x1 + oc1.X, -y1 + oc1.Y));
-                }
-            }
+            if (aligned)
+                output = output.ConvertAll(p => p.Rotation(-90, this.Center));
 
             return output;
         }
