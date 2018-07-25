@@ -8,8 +8,8 @@ using System.Text;
 using System.Windows.Forms;
 using GoBot.Actions;
 using System.Threading;
-using GoBot.Geometry;
-using GoBot.Geometry.Shapes;
+using Geometry;
+using Geometry.Shapes;
 using GoBot.Threading;
 
 namespace GoBot.IHM

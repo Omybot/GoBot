@@ -2,10 +2,10 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using GoBot.Geometry;
+using Geometry;
 using System.Threading;
 using AStarFolder;
-using GoBot.Geometry.Shapes;
+using Geometry.Shapes;
 using System.Drawing;
 using GoBot.Actions;
 using GoBot.Actionneurs;

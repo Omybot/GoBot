@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using GoBot.Geometry;
+using Geometry;
 using System.Timers;
-using GoBot.Geometry.Shapes;
+using Geometry.Shapes;
 using System.Threading;
 using GoBot.Actions;
 using System.Drawing;

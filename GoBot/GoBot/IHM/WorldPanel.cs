@@ -1,4 +1,5 @@
-﻿using GoBot.Geometry.Shapes;
+﻿using Geometry;
+using Geometry.Shapes;
 using System.ComponentModel;
 using System.Drawing;
 using System.Windows.Forms;

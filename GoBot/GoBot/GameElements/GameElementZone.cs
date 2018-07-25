@@ -2,8 +2,9 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using GoBot.Geometry.Shapes;
+using Geometry.Shapes;
 using System.Drawing;
+using Geometry;
 
 namespace GoBot.GameElements
 {

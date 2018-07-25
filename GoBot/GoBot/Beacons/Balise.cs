@@ -7,8 +7,8 @@ using System.Windows.Forms;
 using System.IO;
 using System.Threading;
 
-using GoBot.Geometry;
-using GoBot.Geometry.Shapes;
+using Geometry;
+using Geometry.Shapes;
 using GoBot.Communications;
 
 namespace GoBot.Beacons

@@ -1,4 +1,5 @@
-﻿using GoBot.Geometry.Shapes;
+﻿using Geometry;
+using Geometry.Shapes;
 using GoBot.Movements;
 using System.Collections.Generic;
 using System.Drawing;

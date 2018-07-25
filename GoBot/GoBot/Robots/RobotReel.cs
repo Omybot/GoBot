@@ -1,6 +1,6 @@
 ﻿using GoBot.Actions;
-using GoBot.Geometry;
-using GoBot.Geometry.Shapes;
+using Geometry;
+using Geometry.Shapes;
 using GoBot.Communications;
 using GoBot.Devices;
 using System;

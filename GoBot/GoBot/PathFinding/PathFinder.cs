@@ -1,7 +1,7 @@
 ﻿using AStarFolder;
 using GoBot.Actions;
-using GoBot.Geometry;
-using GoBot.Geometry.Shapes;
+using Geometry;
+using Geometry.Shapes;
 using GoBot.Threading;
 using System;
 using System.Collections.Generic;

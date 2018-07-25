@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using GoBot.Geometry;
+using Geometry;
 
 namespace GoBot.Beacons
 {

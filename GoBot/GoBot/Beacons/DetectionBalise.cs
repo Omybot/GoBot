@@ -3,8 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Drawing;
-using GoBot.Geometry.Shapes;
-using GoBot.Geometry;
+using Geometry.Shapes;
+using Geometry;
 
 namespace GoBot.Beacons
 {

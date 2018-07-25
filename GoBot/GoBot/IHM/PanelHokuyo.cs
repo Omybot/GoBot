@@ -1,5 +1,5 @@
 ﻿using GoBot.Actionneurs;
-using GoBot.Geometry.Shapes;
+using Geometry.Shapes;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;

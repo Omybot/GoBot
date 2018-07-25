@@ -1,6 +1,6 @@
-﻿using GoBot.Geometry;
+﻿using Geometry;
 using GoBot.Actionneurs;
-using GoBot.Geometry.Shapes;
+using Geometry.Shapes;
 using GoBot.Devices;
 using GoBot.GameElements;
 using GoBot.Strategies;

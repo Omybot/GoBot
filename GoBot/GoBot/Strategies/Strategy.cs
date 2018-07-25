@@ -9,7 +9,7 @@ using System.Threading;
 using GoBot.Movements;
 using GoBot.Ponderations;
 using GoBot.Actionneurs;
-using GoBot.Geometry;
+using Geometry;
 using AStarFolder;
 using GoBot.Threading;
 using System.Diagnostics;

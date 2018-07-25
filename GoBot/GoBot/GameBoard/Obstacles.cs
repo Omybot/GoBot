@@ -1,4 +1,4 @@
-﻿using GoBot.Geometry.Shapes;
+﻿using Geometry.Shapes;
 using System;
 using System.Collections.Generic;
 using System.Linq;

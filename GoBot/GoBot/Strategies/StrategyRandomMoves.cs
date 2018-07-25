@@ -4,8 +4,8 @@ using System.Linq;
 using System.Text;
 using System.Threading;
 
-using GoBot.Geometry;
-using GoBot.Geometry.Shapes;
+using Geometry;
+using Geometry.Shapes;
 using AStarFolder;
 
 namespace GoBot.Strategies

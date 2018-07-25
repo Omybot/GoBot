@@ -1,6 +1,6 @@
 ﻿using GoBot.Communications;
 using GoBot.GameElements;
-using GoBot.Geometry.Shapes;
+using Geometry.Shapes;
 using GoBot.Threading;
 using GoBot.Utils;
 using System;
@@ -10,6 +10,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using static GoBot.GameElements.CubesCross;
+using Geometry;
 
 namespace GoBot.Actionneurs
 {

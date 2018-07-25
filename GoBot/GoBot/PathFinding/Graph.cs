@@ -15,7 +15,7 @@ using System.IO;
 using System.Xml.Serialization;
 using System.Collections.Generic;
 using GoBot;
-using GoBot.Geometry.Shapes;
+using Geometry.Shapes;
 using System.Threading;
 
 namespace AStarFolder

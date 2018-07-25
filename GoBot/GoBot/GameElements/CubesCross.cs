@@ -1,5 +1,5 @@
 ﻿using GoBot.Actionneurs;
-using GoBot.Geometry.Shapes;
+using Geometry.Shapes;
 using GoBot.Movements;
 using System;
 using System.Collections.Generic;
@@ -7,6 +7,7 @@ using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.Linq;
 using System.Text;
+using Geometry;
 
 namespace GoBot.GameElements
 {

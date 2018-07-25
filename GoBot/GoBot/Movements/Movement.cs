@@ -5,8 +5,8 @@ using System.Text;
 using System.Drawing;
 using System.Drawing.Drawing2D;
 
-using GoBot.Geometry;
-using GoBot.Geometry.Shapes;
+using Geometry;
+using Geometry.Shapes;
 using GoBot.GameElements;
 using GoBot.PathFinding;
 

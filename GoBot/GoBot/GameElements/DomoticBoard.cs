@@ -4,7 +4,8 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using GoBot.Geometry.Shapes;
+using Geometry.Shapes;
+using Geometry;
 
 namespace GoBot.GameElements
 {

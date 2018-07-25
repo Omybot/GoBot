@@ -6,7 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using GoBot.GameElements;
 using GoBot.Actionneurs;
-using GoBot.Geometry;
+using Geometry;
 using System.Threading;
 
 namespace GoBot.Movements

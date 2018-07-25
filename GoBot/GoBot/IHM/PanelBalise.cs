@@ -6,7 +6,7 @@ using System.Data;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
-using GoBot.Geometry;
+using Geometry;
 using GoBot.Beacons;
 using System.Drawing.Drawing2D;
 

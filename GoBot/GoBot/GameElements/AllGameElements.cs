@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Collections;
 
-using GoBot.Geometry.Shapes;
+using Geometry.Shapes;
 
 namespace GoBot.GameElements
 {

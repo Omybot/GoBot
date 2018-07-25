@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using GoBot.GameElements;
-using GoBot.Geometry;
+using Geometry;
 using GoBot.Actionneurs;
 using System.Threading;
 using GoBot.Threading;

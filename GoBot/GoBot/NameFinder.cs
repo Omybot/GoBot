@@ -14,7 +14,14 @@ namespace GoBot
         /// <returns>Nom de l'objet si trouvé, sinon chaine vide</returns>
         public static String GetNameUnknow(object o)
         {
-            return GetName(Util.ToRealType(o));
+            return GetName(ToRealType(o));
+        }
+
+        private static dynamic ToRealType(Object o)
+        {
+            Type type = o.GetType();
+            dynamic pp = Convert.ChangeType(o, type);
+            return pp;
         }
 
         /// <summary>

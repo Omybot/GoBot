@@ -31,7 +31,7 @@
     <BootstrapperEnabled>true</BootstrapperEnabled>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x86' ">
-    <PlatformTarget>x86</PlatformTarget>
+    <PlatformTarget>AnyCPU</PlatformTarget>
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
@@ -106,9 +106,6 @@
     <Compile Include="GameElements\Distributor.cs" />
     <Compile Include="GameElements\DomoticBoard.cs" />
     <Compile Include="GameElements\Flower.cs" />
-    <Compile Include="Geometry\AngleDelta.cs" />
-    <Compile Include="Geometry\AnglePosition.cs" />
-    <Compile Include="Geometry\ListDouble.cs" />
     <Compile Include="IHM\PanelBoardNumeric.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -147,7 +144,6 @@
     <Compile Include="Actions\Deplacement\ActionAvance.cs" />
     <Compile Include="Actions\Deplacement\ActionRecule.cs" />
     <Compile Include="Actions\IAction.cs" />
-    <Compile Include="Geometry\ListRealPoints.cs" />
     <Compile Include="Execution.cs" />
     <Compile Include="IHM\PanelNumeric.cs">
       <SubType>UserControl</SubType>
@@ -194,10 +190,6 @@
     <Compile Include="AsserStats.cs" />
     <Compile Include="Beacons\BaliseStats.cs" />
     <Compile Include="Beacons\SuiviBalise.cs" />
-    <Compile Include="Geometry\BezierCurve.cs" />
-    <Compile Include="Geometry\Shapes\IShape.cs" />
-    <Compile Include="Geometry\Shapes\PolygonRectangle.cs" />
-    <Compile Include="Geometry\Shapes\PolygonTriangle.cs" />
     <Compile Include="CameraIP.cs" />
     <Compile Include="Communications\Connection.cs" />
     <Compile Include="Communications\FrameDecoder.cs" />
@@ -384,7 +376,6 @@
     <Compile Include="Logs\Logs.cs" />
     <Compile Include="Movements\Movement.cs" />
     <Compile Include="Utils\LimitedQueue.cs" />
-    <Compile Include="WorldScale.cs" />
     <Compile Include="PathFinding\PathFinder.cs" />
     <Compile Include="PathFinding\Trajectory.cs" />
     <Compile Include="Ponderations\PoidsTest.cs" />
@@ -403,13 +394,6 @@
     <Compile Include="PathFinding\Vector3D.cs" />
     <Compile Include="Beacons\Balise.cs" />
     <Compile Include="Beacons\DetectionBalise.cs" />
-    <Compile Include="Geometry\Shapes\Circle.cs" />
-    <Compile Include="Geometry\Shapes\Line.cs" />
-    <Compile Include="Geometry\Shapes\RealPoint.cs" />
-    <Compile Include="Geometry\Shapes\Polygon.cs" />
-    <Compile Include="Geometry\Shapes\Segment.cs" />
-    <Compile Include="Geometry\Maths.cs" />
-    <Compile Include="Geometry\Position.cs" />
     <Compile Include="Config.cs" />
     <Compile Include="Strategies\Strategy.cs" />
     <Compile Include="Enums.cs" />
@@ -476,8 +460,6 @@
     <Compile Include="Communications\UDPConnection.cs" />
     <Compile Include="Communications\Frame.cs" />
     <Compile Include="TestCode.cs" />
-    <Compile Include="Util.cs" />
-    <Compile Include="WorldRect.cs" />
     <EmbeddedResource Include="IHM\ConnectionDetails.resx">
       <DependentUpon>ConnectionDetails.cs</DependentUpon>
     </EmbeddedResource>
@@ -715,6 +697,10 @@
     <ProjectReference Include="..\Composants\Composants.csproj">
       <Project>{665ab15c-9620-4fab-9da7-10428a2b53ac}</Project>
       <Name>Composants</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Geometry\Geometry.csproj">
+      <Project>{a61a9d09-eedb-4f30-b040-c44f22f74024}</Project>
+      <Name>Geometry</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="..\Extensions\Extensions.projitems" Label="Shared" />
