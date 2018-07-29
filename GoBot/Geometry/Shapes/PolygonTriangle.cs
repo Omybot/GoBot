@@ -3,10 +3,13 @@ using System.Collections.Generic;
 
 namespace Geometry.Shapes
 {
+    /// <summary>
+    /// Polygone à 3 côtés.
+    /// </summary>
     public class PolygonTriangle : Polygon
     {
         /// <summary>
-        /// COnstruit un triangle à partir de ses 3 sommets
+        /// Construit un triangle à partir de ses 3 sommets
         /// </summary>
         /// <param name="p1">Sommet 1</param>
         /// <param name="p2">Sommet 2</param>
@@ -14,6 +17,7 @@ namespace Geometry.Shapes
         public PolygonTriangle(RealPoint p1, RealPoint p2, RealPoint p3)
             : base(new List<RealPoint>() { p1, p2, p3 })
         {
+            // L'interet du triangle c'est qu'il est simple de calculer son aire et son barycentre et qu'on s'en sert pour calculer ceux de polygones quelconques
         }
 
         /// <summary>
@@ -28,48 +32,36 @@ namespace Geometry.Shapes
             if (s1.EndPoint != s2.StartPoint || s2.EndPoint != s3.StartPoint || s3.EndPoint != s1.StartPoint)
                 throw new Exception("Triangle mal formé");
         }
-
-        /// <summary>
-        /// Obtient la surface du triangle
-        /// </summary>
-        public override double Surface
+        
+        protected override double ComputeSurface()
         {
-            get
-            {
-                Segment seg = new Segment(Points[0], Points[1]);
-                double height = seg.Distance(Points[2]);
-                double width = seg.Length;
-                return height * width / 2;
-            }
+            Segment seg = new Segment(Points[0], Points[1]);
+            double height = seg.Distance(Points[2]);
+            double width = seg.Length;
+            return height * width / 2;
         }
 
-        /// <summary>
-        /// Obtient le barycentre du triangle
-        /// </summary>
-        public override RealPoint Barycenter
+        protected override RealPoint ComputeBarycenter()
         {
-            get
+            RealPoint output = null;
+
+            if (Points[0] == Points[1] && Points[0] == Points[2])
+                output = new RealPoint(Points[0]);
+            else if (Points[0] == Points[1])
+                output = new Segment(Points[0], Points[2]).Barycenter;
+            else if (Points[0] == Points[2])
+                output = new Segment(Points[1], Points[2]).Barycenter;
+            else if (Points[1] == Points[2])
+                output = new Segment(Points[0], Points[1]).Barycenter;
+            else
             {
-                RealPoint output = null;
+                Line d1 = new Line(new Segment(Points[0], Points[1]).Barycenter, Points[2]);
+                Line d2 = new Line(new Segment(Points[1], Points[2]).Barycenter, Points[0]);
 
-                if (Points[0] == Points[1] && Points[0] == Points[2])
-                    output = new RealPoint(Points[0]);
-                else if (Points[0] == Points[1])
-                    output = new Segment(Points[0], Points[2]).Barycenter;
-                else if (Points[0] == Points[2])
-                    output = new Segment(Points[1], Points[2]).Barycenter;
-                else if (Points[1] == Points[2])
-                    output = new Segment(Points[0], Points[1]).Barycenter;
-                else
-                {
-                    Line d1 = new Line(new Segment(Points[0], Points[1]).Barycenter, Points[2]);
-                    Line d2 = new Line(new Segment(Points[1], Points[2]).Barycenter, Points[0]);
-
-                    output = d1.GetCrossingPoints(d2)[0];
-                }
-
-                return output;
+                output = d1.GetCrossingPoints(d2)[0];
             }
+
+            return output;
         }
     }
 }

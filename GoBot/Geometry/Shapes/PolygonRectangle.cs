@@ -11,9 +11,12 @@ namespace Geometry.Shapes
         /// <param name="topLeft">Point en haut à gauche du rectangle</param>
         /// <param name="width">Largeur du rectangle</param>
         /// <param name="heigth">Hauteur du rectangle</param>
-        public PolygonRectangle(RealPoint topLeft, double width, double heigth)
+        public PolygonRectangle(RealPoint topLeft, double width, double heigth) : base()
         {
             List<Segment> rectSides = new List<Segment>();
+
+            if (topLeft == null)
+                throw new ArgumentOutOfRangeException();
 
             topLeft = new RealPoint(topLeft);
 
@@ -28,9 +31,6 @@ namespace Geometry.Shapes
                 heigth = -heigth;
             }
 
-            if (topLeft == null)
-                throw new ArgumentOutOfRangeException();
-
             List<RealPoint> points = new List<RealPoint>
             {
                 new RealPoint(topLeft.X, topLeft.Y),
@@ -44,7 +44,7 @@ namespace Geometry.Shapes
 
             rectSides.Add(new Segment(points[points.Count - 1], points[0]));
 
-            BuildPolygon(rectSides);
+            BuildPolygon(rectSides, false);
         }
 
         public override string ToString()

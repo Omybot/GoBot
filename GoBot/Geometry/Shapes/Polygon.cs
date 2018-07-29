@@ -15,6 +15,9 @@ namespace Geometry.Shapes
         /// </summary>
         protected List<Segment> _sides;
 
+        protected VolatileResult<RealPoint> _barycenter;
+        protected VolatileResult<double> _surface;
+
         #endregion
 
         #region Constructeurs
@@ -27,9 +30,14 @@ namespace Geometry.Shapes
         /// Si le polygone n'est pas fermé le premier et le dernier point sont reliés
         /// </summary>
         /// <param name="sides">Liste des cotés</param>
-        public Polygon(IEnumerable<Segment> sides)
+        public Polygon(IEnumerable<Segment> sides) : this(sides, true)
         {
-            BuildPolygon(sides);
+            // Construit le polygon en forcant la vérification des croisements
+        }
+
+        protected Polygon(IEnumerable<Segment> sides, bool checkCrossing) : this()
+        {
+            BuildPolygon(sides, checkCrossing);
         }
 
         /// <summary>
@@ -37,18 +45,17 @@ namespace Geometry.Shapes
         /// </summary>
         protected Polygon()
         {
+            _barycenter = new VolatileResult<RealPoint>(ComputeBarycenter);
+            _surface = new VolatileResult<double>(ComputeSurface);
             _sides = new List<Segment>();
         }
 
         /// <summary>
         /// Construit un Polygone depuis un autre Polygone
         /// </summary>
-        protected Polygon(Polygon polygon)
+        protected Polygon(Polygon polygon) : this()
         {
-            _sides = new List<Segment>();
-
-            foreach(Segment s in polygon.Sides)
-                _sides.Add(new Segment(s));
+            polygon.Sides.ForEach(s => _sides.Add(new Segment(s)));
         }
 
         /// <summary>
@@ -56,10 +63,19 @@ namespace Geometry.Shapes
         /// Si le polygone n'est pas fermé le premier et le dernier point sont reliés
         /// </summary>
         /// <param name="points">Liste des points du polygone dans l'ordre où ils sont reliés</param>
-        public Polygon(IEnumerable<RealPoint> points)
+        public Polygon(IEnumerable<RealPoint> points) : this(points, true)
         {
-            _sides = new List<Segment>();
+            // Construit le polygon en forcant la vérification des croisements
+        }
 
+        /// <summary>
+        /// Construit un polygone selon une liste de points
+        /// Si le polygone n'est pas fermé le premier et le dernier point sont reliés
+        /// </summary>
+        /// <param name="points">Liste des points du polygone dans l'ordre où ils sont reliés</param>
+        /// <param name="checkCrossing">Vrai pour vérifier le croisement entre les côtés</param>
+        protected Polygon(IEnumerable<RealPoint> points, bool checkCrossing) : this()
+        {
             List<Segment> segs = new List<Segment>();
 
             if (points.Count() == 0)
@@ -70,19 +86,20 @@ namespace Geometry.Shapes
 
             segs.Add(new Segment(points.ElementAt(points.Count() - 1), points.ElementAt(0)));
 
-            BuildPolygon(segs);
+            BuildPolygon(segs, checkCrossing);
         }
 
         /// <summary>
         /// Construit le polygone à partir d'une liste de segment définissant son contour
         /// </summary>
         /// <param name="segs">Segments du contour</param>
-        protected void BuildPolygon(IEnumerable<Segment> segs)
+        /// <param name="crossChecking">Vrai pour vérifier les croisements des côtés</param>
+        protected void BuildPolygon(IEnumerable<Segment> segs, bool crossChecking)
         {
             if (segs.Count() == 0)
                 return;
 
-            _sides = new List<Segment>();
+            _sides.Clear();
 
             for (int i = 0; i < segs.Count() - 1; i++)
             {
@@ -98,13 +115,16 @@ namespace Geometry.Shapes
 
             _sides.Add(segs.ElementAt(segs.Count() - 1));
 
-            for (int i = 0; i < _sides.Count; i++)
-                for (int j = i+1; j < _sides.Count; j++)
-                {
-                    List<RealPoint> cross = _sides[i].GetCrossingPoints(_sides[j]);
-                    if (cross.Count > 0 && cross[0] != _sides[i].StartPoint && cross[0] != _sides[i].EndPoint)
-                        throw new ArgumentException("Le polygone construit a un ou plusieurs côtés qui se croisent. Création impossible.");
-                }
+            if (crossChecking)
+            {
+                for (int i = 0; i < _sides.Count; i++)
+                    for (int j = i + 1; j < _sides.Count; j++)
+                    {
+                        List<RealPoint> cross = _sides[i].GetCrossingPoints(_sides[j]);
+                        if (cross.Count > 0 && cross[0] != _sides[i].StartPoint && cross[0] != _sides[i].EndPoint)
+                            throw new ArgumentException("Impossible to create a polygon with crossing sides.");
+                    }
+            }
         }
 
         #endregion
@@ -136,52 +156,62 @@ namespace Geometry.Shapes
         /// <summary>
         /// Obtient la surface du polygone
         /// </summary>
-        public virtual double Surface
+        public double Surface
         {
             get
             {
-                double surface = 0;
-
-                foreach(PolygonTriangle t in this.ToTriangles())
-                    surface += t.Surface;
-
-                return surface;
+                return _surface.Value;
             }
+        }
+
+        protected virtual double ComputeSurface()
+        {
+            double surface = 0;
+
+            foreach (PolygonTriangle t in this.ToTriangles())
+                surface += t.Surface;
+
+            return surface;
         }
 
         /// <summary>
         /// Obtient le barycentre du polygone
         /// </summary>
-        public virtual RealPoint Barycenter
+        public RealPoint Barycenter
         {
             get
             {
-                double surface = Surface;
-                RealPoint output = null;
+                return _barycenter.Value;
+            }
+        }
 
-                if (this.Surface == 0)
-                {
-                    output = new RealPoint(_sides[0].StartPoint);
-                }
-                else
-                {
-                    output = new RealPoint();
+        protected virtual RealPoint ComputeBarycenter()
+        {
+            double surface = Surface;
+            RealPoint output = null;
 
-                    foreach (PolygonTriangle t in this.ToTriangles())
+            if (this.Surface == 0)
+            {
+                output = new RealPoint(_sides[0].StartPoint);
+            }
+            else
+            {
+                output = new RealPoint();
+
+                foreach (PolygonTriangle t in this.ToTriangles())
+                {
+                    RealPoint barycentreTriangle = t.Barycenter;
+                    double otherSurface = t.Surface;
+
+                    if (t.Surface > 0)
                     {
-                        RealPoint barycentreTriangle = t.Barycenter;
-                        double otherSurface = t.Surface;
-
-                        if (t.Surface > 0)
-                        {
-                            output.X += barycentreTriangle.X * otherSurface / surface;
-                            output.Y += barycentreTriangle.Y * otherSurface / surface;
-                        }
+                        output.X += barycentreTriangle.X * otherSurface / surface;
+                        output.Y += barycentreTriangle.Y * otherSurface / surface;
                     }
                 }
-
-                return output;
             }
+
+            return output;
         }
 
         #endregion
@@ -190,17 +220,18 @@ namespace Geometry.Shapes
 
         public static bool operator ==(Polygon a, Polygon b)
         {
+            bool ok;
 
             if ((object)a == null || (object)b == null)
-                return (object)a == null && (object)b == null;
+                ok = (object)a == null && (object)b == null;
             else if (a.Sides.Count == b.Sides.Count)
             {
-                return a.Points.TrueForAll(p => b.Points.Contains(p));
+                ok = a.Points.TrueForAll(p => b.Points.Contains(p));
             }
             else
-                return false;
+                ok = false;
 
-            return true;
+            return ok;
         }
 
         public static bool operator !=(Polygon a, Polygon b)
@@ -303,18 +334,19 @@ namespace Geometry.Shapes
         /// <returns>Distance minimum entre le polygone et le polygone donné</returns>
         public double Distance(Polygon polygon)
         {
-            if (Cross(polygon)) return 0;                                  // Si les polygones se croisent
-            if (Contains(polygon) || polygon.Contains(this)) return 0;     // Si les polygones sont imbriqués (dans les 2 sens)
+            double minDistance = 0;
 
-            double minDistance = double.MaxValue;
+            // Si les polygones se croisent ou se contiennent, la distance est nulle
+            if (!Cross(polygon) && !Contains(polygon) && !polygon.Contains(this))
+            {
+                minDistance = double.MaxValue;
 
-            foreach (Segment s1 in polygon.Sides)
-                foreach (Segment s2 in Sides)
-                {
-                    if (s1.Cross(s2))
-                        return 0;
-                    minDistance = Math.Min(minDistance, s1.Distance(s2));
-                }
+                foreach (Segment s1 in polygon.Sides)
+                    foreach (Segment s2 in Sides)
+                    {
+                        minDistance = Math.Min(minDistance, s1.Distance(s2));
+                    }
+            }
 
             return minDistance;
         }
@@ -592,7 +624,7 @@ namespace Geometry.Shapes
                             {
                                 // ... et le ferme : on a terminé un polygone
                                 currentSegs.Add(seg);
-                                polygons.Add(new Polygon(currentSegs));
+                                polygons.Add(new Polygon(currentSegs, false));
                                 currentSegs.Clear();
                                 polygonOpen = false;
                                 break;
@@ -610,7 +642,7 @@ namespace Geometry.Shapes
                             {
                                 // ... et le ferme : on le retourne et on a terminé un polygone
                                 currentSegs.Add(new Segment(seg.EndPoint, seg.StartPoint));
-                                polygons.Add(new Polygon(currentSegs));
+                                polygons.Add(new Polygon(currentSegs, false));
                                 currentSegs.Clear();
                                 polygonOpen = false;
                                 break;
@@ -671,7 +703,12 @@ namespace Geometry.Shapes
         /// <returns>Polygone translaté des distances données</returns>
         public Polygon Translation(double dx, double dy)
         {
-            return new Polygon(Points.Select(p => p.Translation(dx, dy)));
+            Polygon output = new Polygon(Points.Select(p => p.Translation(dx, dy)), false);
+
+            if (_barycenter.Computed)
+                output._barycenter.Value = _barycenter.Value.Translation(dx, dy);
+
+            return output;
         }
 
         /// <summary>
@@ -682,9 +719,15 @@ namespace Geometry.Shapes
         /// <returns>Polygone tourné de l'angle donné</returns>
         public Polygon Rotation(AngleDelta angle, RealPoint rotationCenter = null)
         {
-            if (rotationCenter == null) rotationCenter = Barycenter;
+            if (rotationCenter == null)
+                rotationCenter = Barycenter;
+            
+            Polygon output = new Polygon(Points.ConvertAll(p => p.Rotation(angle, rotationCenter)), false);
 
-            return new Polygon(Points.Select(p => p.Rotation(angle, rotationCenter)));
+            if (_barycenter.Computed && _barycenter.Value == rotationCenter)
+                output._barycenter.Value = new RealPoint(_barycenter.Value);
+
+            return output;
         }
 
         /// <summary>
@@ -718,7 +761,6 @@ namespace Geometry.Shapes
                 }
             } while (points.Count >= 3);
             
-
             return triangles;
         }
 
