@@ -58,6 +58,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Shapes\RealPoint.cs" />
     <Compile Include="Shapes\Segment.cs" />
+    <Compile Include="Shapes\ShapesInteractions\CircleWithCircle.cs" />
     <Compile Include="Util.cs" />
     <Compile Include="VolatileResult.cs" />
     <Compile Include="WorldRect.cs" />

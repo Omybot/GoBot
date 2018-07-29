@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
+using Geometry.Shapes.ShapesInteractions;
 
 namespace Geometry.Shapes
 {
@@ -136,19 +137,6 @@ namespace Geometry.Shapes
         }
 
         /// <summary>
-        /// Retourne la distance minimale entre le cercle courant et le cercle donné
-        /// </summary>
-        /// <param name="circle">cercle testé</param>
-        /// <returns>Distance minimale</returns>
-        protected double Distance(Circle circle)
-        {
-            if (Cross(circle))
-                return 0;
-
-            return circle.Center.Distance(Center) - Radius - circle.Radius;
-        }
-
-        /// <summary>
         /// Retourne la distance minimale entre le cercle courant et le polygone donné
         /// </summary>
         /// <param name="polygon">Polygone testé</param>
@@ -181,7 +169,15 @@ namespace Geometry.Shapes
         /// <returns>Vrai si le cercle contient la forme testée</returns>
         public bool Contains(IShape shape)
         {
-            return Contains(Util.ToRealType(shape));
+            bool output = false;
+
+            if (shape is Circle) output = CircleWithCircle.Contains(this, shape as Circle);
+            else if (shape is Polygon) output = Contains(Util.ToRealType(shape));
+            else if (shape is Segment) output = Contains(Util.ToRealType(shape));
+            else if (shape is RealPoint) output = Contains(Util.ToRealType(shape));
+            else if (shape is Line) output = Contains(Util.ToRealType(shape));
+            
+            return output;
         }
 
         /// <summary>
@@ -234,17 +230,6 @@ namespace Geometry.Shapes
             return true;
         }
 
-        /// <summary>
-        /// Teste si le cercle courant contient le cercle donné
-        /// </summary>
-        /// <param name="circle">cercle testé</param>
-        /// <returns>Vrai si le cercle courant contient le cercle testé</returns>
-        protected bool Contains(Circle circle)
-        {
-            // Pour contenir un cercle il faut que son rayon + la distance entre les centres des deux cercles soit inférieure à notre rayon
-            return circle._radius + circle.Center.Distance(Center) < _radius;
-        }
-
         #endregion
 
         #region Croise
@@ -258,52 +243,11 @@ namespace Geometry.Shapes
         {
             List<RealPoint> output = new List<RealPoint>();
 
-            if (shape is Circle) output = GetCrossingPointsWithCircle(shape as Circle);
+            if (shape is Circle) output = CircleWithCircle.GetCrossingPoints(this, shape as Circle);
             else if (shape is Polygon) output = GetCrossingPointsWithPolygon(shape as Polygon);
             else if (shape is Segment) output = GetCrossingPointsWithSegment(shape as Segment);
             else if (shape is RealPoint) output = GetCrossingPointsWithPoint(shape as RealPoint);
             else if (shape is Line) output = GetCrossingPointsWithLine(shape as Line);
-
-            return output;
-        }
-
-        private List<RealPoint> GetCrossingPointsWithCircle(Circle circle)
-        {
-            List<RealPoint> output = new List<RealPoint>();
-
-            bool aligned = Math.Abs(circle.Center.Y - _center.Y) < RealPoint.PRECISION;
-
-            if (aligned)// Cercles non alignés horizontalement (on pivote pour les calculs, sinon division par 0)
-                circle = circle.Rotation(90, this.Center);
-
-            RealPoint oc1 = new RealPoint(circle.Center), oc2 = new RealPoint(_center);
-            double b = circle.Radius, c = _radius;
-
-            double a = (-(Math.Pow(oc1.X, 2)) - (Math.Pow(oc1.Y, 2)) + Math.Pow(oc2.X, 2) + Math.Pow(oc2.Y, 2) + Math.Pow(b, 2) - Math.Pow(c, 2)) / (2 * (oc2.Y - oc1.Y));
-            double d = ((oc2.X - oc1.X) / (oc2.Y - oc1.Y));
-
-            double A = Math.Pow(d, 2) + 1;
-            double B = -2 * oc1.X + 2 * oc1.Y * d - 2 * a * d;
-            double C = Math.Pow(oc1.X, 2) + Math.Pow(oc1.Y, 2) - 2 * oc1.Y * a + Math.Pow(a, 2) - Math.Pow(b, 2);
-
-            double delta = Math.Pow(B, 2) - 4 * A * C;
-
-            if (delta >= 0)
-            {
-                double x1 = (-B + Math.Sqrt(delta)) / (2 * A);
-                double y1 = a - x1 * d;
-                output.Add(new RealPoint(x1, y1));
-
-                if (delta > 0)
-                {
-                    double x2 = (-B - Math.Sqrt(delta)) / (2 * A);
-                    double y2 = a - x2 * d;
-                    output.Add(new RealPoint(x2, y2));
-                }
-            }
-
-            if (aligned)
-                output = output.ConvertAll(p => p.Rotation(-90, this.Center));
 
             return output;
         }
@@ -336,7 +280,15 @@ namespace Geometry.Shapes
         /// <returns>Vrai si le cercle courant croise la forme donnée</returns>
         public bool Cross(IShape shape)
         {
-            return Cross(Util.ToRealType(shape));
+            bool output = false;
+
+            if (shape is Circle) output = CircleWithCircle.Cross(this, shape as Circle);
+            else if (shape is Polygon) output = Cross(Util.ToRealType(shape));
+            else if (shape is Segment) output = Cross(Util.ToRealType(shape));
+            else if (shape is RealPoint) output = Cross(Util.ToRealType(shape));
+            else if (shape is Line) output = Cross(Util.ToRealType(shape));
+
+            return output;
         }
 
         /// <summary>
@@ -377,24 +329,6 @@ namespace Geometry.Shapes
                 if (Cross(segment))
                     return true;
             }
-
-            return false;
-        }
-
-        /// <summary>
-        /// Teste si le cercle courant croise un autre cercle donné
-        /// </summary>
-        /// <param name="circle">Cercle testé</param>
-        /// <returns>Vrai si le cercle courant croise le cercle testé</returns>
-        protected bool Cross(Circle circle)
-        {
-            // Pour croiser un cercle il suffit que son centre soit éloigné de notre centre de moins que la somme de nos 2 rayons
-            // Et que les cercles ne se contiennent pas l'un l'autre
-
-            double distanceBetweenCenters = _center.Distance(circle._center);
-
-            if (distanceBetweenCenters <= _radius + circle._radius)
-                return (!circle.Contains(this)) && (!this.Contains(circle));
 
             return false;
         }
