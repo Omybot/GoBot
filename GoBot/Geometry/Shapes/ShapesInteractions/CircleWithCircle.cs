@@ -7,6 +7,13 @@ namespace Geometry.Shapes.ShapesInteractions
 {
     internal static class CircleWithCircle
     {
+        public static bool Contains(Circle circleContaining, Circle circleContained)
+        {
+            // Pour contenir un cercle il faut que son rayon + la distance entre les centres des deux cercles soit inférieure à notre rayon
+
+            return circleContained.Radius + circleContained.Center.Distance(circleContaining.Center) < circleContaining.Radius;
+        }
+
         public static double Distance(Circle circle1, Circle circle2)
         {
             return Math.Max(0, circle1.Center.Distance(circle2.Center) - circle2.Radius - circle1.Radius);
@@ -26,14 +33,7 @@ namespace Geometry.Shapes.ShapesInteractions
 
             return ok;
         }
-
-        public static bool Contains(Circle circleContaining, Circle circleContained)
-        {
-            // Pour contenir un cercle il faut que son rayon + la distance entre les centres des deux cercles soit inférieure à notre rayon
-
-            return circleContained.Radius + circleContained.Center.Distance(circleContaining.Center) < circleContaining.Radius;
-        }
-
+        
         public static List<RealPoint> GetCrossingPoints(Circle circle1, Circle circle2)
         {
             // Résolution du système d'équation à deux inconnues des deux équations de cercle

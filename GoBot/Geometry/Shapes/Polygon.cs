@@ -316,15 +316,7 @@ namespace Geometry.Shapes
         /// <returns>Distance minimum entre le polygone et le cercle donné</returns>
         public double Distance(Circle circle)
         {
-            if (Cross(circle)) return 0;                                 // Si le polygone croise le cercle
-            if (Contains(circle) || circle.Contains(this)) return 0;     // Si les polygones sont imbriqués (dans les 2 sens)
-
-            double minDistance = double.MaxValue;
-
-            foreach (Segment s in Sides)
-                minDistance = Math.Min(minDistance, s.Distance(circle));
-
-            return minDistance;
+            return circle.Distance(this);
         }
 
         /// <summary>

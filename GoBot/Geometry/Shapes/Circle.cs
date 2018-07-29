@@ -111,51 +111,15 @@ namespace Geometry.Shapes
         /// <returns>Distance minimale</returns>
         public double Distance(IShape shape)
         {
-            return Distance(Util.ToRealType(shape));
-        }
+            double output = 0;
 
-        /// <summary>
-        /// Retourne la distance minimale entre le cercle courant et le segment donné
-        /// </summary>
-        /// <param name="segment">Segment testé</param>
-        /// <returns>Distance minimale</returns>
-        protected double Distance(Segment segment)
-        {
-            // Le segment sait le faire
-            return segment.Distance(this);
-        }
+            if (shape is Circle) output = CircleWithCircle.Distance(this, shape as Circle);
+            else if (shape is Polygon) output = CircleWithPolygon.Distance(this, shape as Polygon);
+            else if (shape is Segment) output = CircleWithSegment.Distance(this, shape as Segment);
+            else if (shape is RealPoint) output = CircleWithRealPoint.Distance(this, shape as RealPoint);
+            else if (shape is Line) output = CircleWithLine.Distance(this, shape as Line);
 
-        /// <summary>
-        /// Retourne la distance minimale entre le cercle courant et la droite donnée
-        /// </summary>
-        /// <param name="line">Droite testée</param>
-        /// <returns>Distance minimale</returns>
-        protected double Distance(Line line)
-        {
-            // La droite sait le faire
-            return line.Distance(this);
-        }
-
-        /// <summary>
-        /// Retourne la distance minimale entre le cercle courant et le polygone donné
-        /// </summary>
-        /// <param name="polygon">Polygone testé</param>
-        /// <returns>Distance minimale</returns>
-        protected double Distance(Polygon polygon)
-        {
-            // Le polygone sait le faire
-            return polygon.Distance(this);
-        }
-
-        /// <summary>
-        /// Retourne la distance minimale entre le cercle courant et le point donné
-        /// </summary>
-        /// <param name="point">Point testé</param>
-        /// <returns>Distance calculée</returns>
-        protected double Distance(RealPoint point)
-        {
-            // C'est la distance entre le centre du cercle et le point moins le rayon du cercle
-            return point.Distance(Center) - _radius;
+            return output;
         }
 
         #endregion
@@ -172,62 +136,12 @@ namespace Geometry.Shapes
             bool output = false;
 
             if (shape is Circle) output = CircleWithCircle.Contains(this, shape as Circle);
-            else if (shape is Polygon) output = Contains(Util.ToRealType(shape));
-            else if (shape is Segment) output = Contains(Util.ToRealType(shape));
-            else if (shape is RealPoint) output = Contains(Util.ToRealType(shape));
-            else if (shape is Line) output = Contains(Util.ToRealType(shape));
-            
+            else if (shape is Polygon) output = CircleWithPolygon.Contains(this, shape as Polygon);
+            else if (shape is Segment) output = CircleWithSegment.Contains(this, shape as Segment);
+            else if (shape is RealPoint) output = CircleWithRealPoint.Contains(this, shape as RealPoint);
+            else if (shape is Line) output = CircleWithLine.Contains(this, shape as Line);
+
             return output;
-        }
-
-        /// <summary>
-        /// Teste si le cercle courant contient le point donné
-        /// </summary>
-        /// <param name="point">Point testé</param>
-        /// <returns>Vrai si le cercle contient le point testé</returns>
-        protected bool Contains(RealPoint point)
-        {
-            // Pour contenir un point, celui si se trouve à une distance inférieure au rayon du centre
-            return point.Distance(_center) <= _radius;
-        }
-
-        /// <summary>
-        /// Teste si le cercle courant contient le segment donné
-        /// </summary>
-        /// <param name="segment">Segment testé</param>
-        /// <returns>Vrai si le cercle courant contient le segment testé</returns>
-        protected bool Contains(Segment segment)
-        {
-            // Pour contenir un Segment il suffit de contenir ses 2 extremités
-            return Contains(segment.StartPoint) && Contains(segment.EndPoint);
-        }
-
-        /// <summary>
-        /// Teste si le cercle courant contient la droite donnée
-        /// </summary>
-        /// <param name="line">Droite testée</param>
-        /// <returns>Vrai si le cercle courant contient la droite testée</returns>
-        protected bool Contains(Line line)
-        {
-            // Un cercle ne peut pas contenir de droite
-            return false;
-        }
-
-        /// <summary>
-        /// Teste si le cercle courant contient le Polygone donné
-        /// </summary>
-        /// <param name="polygon">Polygone testé</param>
-        /// <returns>Vrai si le cercle courant contient le Polygone testé</returns>
-        protected bool Contains(Polygon polygon)
-        {
-            // Pour contenir un polygone il suffit de contenir tous ses cotés
-            foreach (Segment s in polygon.Sides)
-            {
-                if (!Contains(s))
-                    return false;
-            }
-
-            return true;
         }
 
         #endregion
@@ -244,33 +158,12 @@ namespace Geometry.Shapes
             List<RealPoint> output = new List<RealPoint>();
 
             if (shape is Circle) output = CircleWithCircle.GetCrossingPoints(this, shape as Circle);
-            else if (shape is Polygon) output = GetCrossingPointsWithPolygon(shape as Polygon);
-            else if (shape is Segment) output = GetCrossingPointsWithSegment(shape as Segment);
-            else if (shape is RealPoint) output = GetCrossingPointsWithPoint(shape as RealPoint);
-            else if (shape is Line) output = GetCrossingPointsWithLine(shape as Line);
+            else if (shape is Polygon) output = CircleWithPolygon.GetCrossingPoints(this, shape as Polygon);
+            else if (shape is Segment) output = CircleWithSegment.GetCrossingPoints(this, shape as Segment);
+            else if (shape is RealPoint) output = CircleWithRealPoint.GetCrossingPoints(this, shape as RealPoint);
+            else if (shape is Line) output = CircleWithLine.GetCrossingPoints(this, shape as Line);
 
             return output;
-        }
-
-        private List<RealPoint> GetCrossingPointsWithPolygon(Polygon polygon)
-        {
-            return polygon.GetCrossingPoints(this); //Le polygone sait faire
-        }
-
-        private List<RealPoint> GetCrossingPointsWithSegment(Segment segment)
-        {
-            return segment.GetCrossingPoints(this); //Le segment sait faire
-        }
-
-        private List<RealPoint> GetCrossingPointsWithPoint(RealPoint point)
-        {
-            return point.GetCrossingPoints(this); //Le point sait faire
-        }
-
-        private List<RealPoint> GetCrossingPointsWithLine(Line line)
-        {
-            // TODO
-            return new List<RealPoint>();
         }
 
         /// <summary>
@@ -283,69 +176,12 @@ namespace Geometry.Shapes
             bool output = false;
 
             if (shape is Circle) output = CircleWithCircle.Cross(this, shape as Circle);
-            else if (shape is Polygon) output = Cross(Util.ToRealType(shape));
-            else if (shape is Segment) output = Cross(Util.ToRealType(shape));
-            else if (shape is RealPoint) output = Cross(Util.ToRealType(shape));
-            else if (shape is Line) output = Cross(Util.ToRealType(shape));
+            else if (shape is Polygon) output = CircleWithPolygon.Cross(this, shape as Polygon);
+            else if (shape is Segment) output = CircleWithSegment.Cross(this, shape as Segment);
+            else if (shape is RealPoint) output = CircleWithRealPoint.Cross(this, shape as RealPoint);
+            else if (shape is Line) output = CircleWithLine.Cross(this, shape as Line);
 
             return output;
-        }
-
-        /// <summary>
-        /// Teste si le cercle courant croise la droite donnée
-        /// </summary>
-        /// <param name="line">Droite testée</param>
-        /// <returns>Vrai si le cercle courant contient la droite donnée</returns>
-        protected bool Cross(Line line)
-        {
-            // Si une droite croise le cercle, c'est que le point de la droite le plus proche du centre du cercle est éloigné d'une distance inférieure au rayon
-            double distanceToCenter = line.Distance(_center);
-            return distanceToCenter <= _radius;
-        }
-
-        /// <summary>
-        /// Teste si le cercle courant contient le segment donné
-        /// </summary>
-        /// <param name="segment">Segment testé</param>
-        /// <returns>Vrai si le cercle courant croise le segment testé</returns>
-        protected bool Cross(Segment segment)
-        {
-            // Même test que pour la droite
-            double distanceToCenter = segment.Distance(_center);
-
-            return distanceToCenter <= _radius && !this.Contains(segment);
-        }
-
-        /// <summary>
-        /// Teste si le cercle courant contient le polygone donné
-        /// </summary>
-        /// <param name="polygon">Polygone testé</param>
-        /// <returns>Vrai si le cercle courant contient le polygone testé</returns>
-        protected bool Cross(Polygon polygon)
-        {
-            // On teste le croisement avec chaque coté du polygone
-            foreach (Segment segment in polygon.Sides)
-            {
-                if (Cross(segment))
-                    return true;
-            }
-
-            return false;
-        }
-
-        /// <summary>
-        /// Teste si le cercle courant croise un PointReel donné
-        /// </summary>
-        /// <param name=" point">PointReel testé</param>
-        /// <returns>Vrai si le cercle courant croise le cercle testé</returns>
-        protected bool Cross(RealPoint point)
-        {
-            double distanceToCenter = _center.Distance(point);
-
-            if (distanceToCenter <= _radius + RealPoint.PRECISION && distanceToCenter >= _radius - RealPoint.PRECISION)
-                return true;
-
-            return false;
         }
 
         #endregion

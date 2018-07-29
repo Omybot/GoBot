@@ -59,6 +59,10 @@
     <Compile Include="Shapes\RealPoint.cs" />
     <Compile Include="Shapes\Segment.cs" />
     <Compile Include="Shapes\ShapesInteractions\CircleWithCircle.cs" />
+    <Compile Include="Shapes\ShapesInteractions\CircleWithLine.cs" />
+    <Compile Include="Shapes\ShapesInteractions\CircleWithPolygon.cs" />
+    <Compile Include="Shapes\ShapesInteractions\CircleWithRealPoint.cs" />
+    <Compile Include="Shapes\ShapesInteractions\CircleWithSegment.cs" />
     <Compile Include="Util.cs" />
     <Compile Include="VolatileResult.cs" />
     <Compile Include="WorldRect.cs" />
