@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Geometry.Shapes.ShapesInteractions;
+using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
@@ -158,6 +159,30 @@ namespace Geometry.Shapes
         }
 
         /// <summary>
+        /// Retourne vrai si la droite est parrallèle à l'axe des abscisses.
+        /// Dans ce cas l'équation donne Y = B
+        /// </summary>
+        public bool IsHorizontal
+        {
+            get
+            {
+                return _a == 0;
+            }
+        }
+
+        /// <summary>
+        /// Retourne vrai si la droite est parallèle à l'axe des ordonnées.
+        /// Dans ce cas l'équation donne X = -B
+        /// </summary>
+        public bool IsVertical
+        {
+            get
+            {
+                return _c == 0;
+            }
+        }
+
+        /// <summary>
         /// Obtient la surface de la droite
         /// </summary>
         public virtual double Surface
@@ -188,9 +213,9 @@ namespace Geometry.Shapes
             if ((object)a == null || (object)b == null)
                 return (object)a == null && (object)b == null;
             else
-                return a.A == b.A
-                    && a.B == b.B
-                    && a.C == a.C;
+                return Math.Abs(a.A - b.A) < RealPoint.PRECISION
+                    && Math.Abs(a.B - b.B) < RealPoint.PRECISION
+                    && Math.Abs(a.C - a.C) < RealPoint.PRECISION;
         }
 
         public static bool operator !=(Line a, Line b)
@@ -223,16 +248,21 @@ namespace Geometry.Shapes
         /// <returns>Chaine représentant la Droite</returns>
         public override string ToString()
         {
-            String cString = C != 1 ? C.ToString("0.00") + "" : "";
-            String aString = A != 1 ? A.ToString("0.00") + "" : "";
-            if (C == 0)
-                return "X = " + ((-B).ToString("0.00"));
-            else if (A == 0)
-                return cString + "Y = " + B.ToString("0.00");
+            String output;
+
+            String cString = C != 1 ? C.ToString("0.00") : "";
+            String aString = A != 1 ? A.ToString("0.00") : "";
+
+            if (this.IsVertical)
+                output = "X = " + ((-B).ToString("0.00"));
+            else if (this.IsHorizontal)
+                output = cString + "Y = " + B.ToString("0.00");
             else if (B == 0)
-                return cString + "Y = " + aString + "X";
+                output = cString + "Y = " + aString + "X";
             else
-                return cString + "Y = " + aString + "X " + (B > 0 ? "+ " : "- ") + Math.Abs(B).ToString("0.00");
+                output = cString + "Y = " + aString + "X " + (B > 0 ? "+ " : "- ") + Math.Abs(B).ToString("0.00");
+
+            return output;
         }
 
         #endregion
@@ -244,91 +274,19 @@ namespace Geometry.Shapes
         /// </summary>
         /// <param name="shape">IForme testée</param>
         /// <returns>Distance minimale</returns>
-        public double Distance(IShape shape)
+        public virtual double Distance(IShape shape)
         {
-            return Distance(Util.ToRealType(shape));
+            double output = 0;
+
+            if (shape is Circle) output = CircleWithLine.Distance(shape as Circle, this);
+            else if (shape is Polygon) output = LineWithPolygon.Distance(this, shape as Polygon);
+            else if (shape is Segment) output = LineWithSegment.Distance(this, shape as Segment);
+            else if (shape is RealPoint) output = LineWithRealPoint.Distance(this, shape as RealPoint);
+            else if (shape is Line) output = LineWithLine.Distance(this, shape as Line);
+
+            return output;
         }
-
-        /// <summary>
-        /// Retourne la distance minimale entre la Droite et le Segment donné
-        /// </summary>
-        /// <param name="segment">Segment testé</param>
-        /// <returns>Distance minimale</returns>
-        protected virtual double Distance(Segment segment)
-        {
-            // Le segment sait le faire
-            return segment.Distance(this);
-        }
-
-        /// <summary>
-        /// Retourne la distance minimale entre la Droite et la Droite donnée
-        /// </summary>
-        /// <param name="line">Droite testée</param>
-        /// <returns>Distance minimale</returns>
-        protected virtual double Distance(Line line)
-        {
-            // Si les droites se croisent la distance est de 0
-            if (Cross(line))
-                return 0;
-
-            // Sinon elles sont parrallèles et la distance entre elles est la distance entre les deux interesections :
-            // - D'une perpendiculaire et la première droite
-            // - De la même perpendiculaire et la deuxième droite
-
-            Line perpendicular = GetPerpendicular(new RealPoint(0, 0));
-
-            RealPoint p1 = GetCrossingPoints(perpendicular)[0];
-            RealPoint p2 = line.GetCrossingPoints(perpendicular)[0];
-
-            return p1.Distance(p2);
-        }
-
-        /// <summary>
-        /// Retourne la distance minimale entre la droite courante et le cercle donné
-        /// </summary>
-        /// <param name="circle">Cercle testé</param>
-        /// <returns>Distance minimale</returns>
-        protected virtual double Distance(Circle circle)
-        {
-            // Distance jusqu'au centre du cercle - son rayon
-            return Distance(circle.Center) - circle.Radius;
-        }
-
-        /// <summary>
-        /// Retourne la distance minimale entre la droite courante et le polygone donné
-        /// </summary>
-        /// <param name="polygon">Polygone testé</param>
-        /// <returns>Distance minimale</returns>
-        protected virtual double Distance(Polygon polygon)
-        {
-            // Distance jusqu'au segment le plus proche
-            double minDistance = double.MaxValue;
-
-            foreach (Segment s in polygon.Sides)
-                minDistance = Math.Min(s.Distance(this), minDistance);
-
-            return minDistance;
-        }
-
-        /// <summary>
-        /// Retourne la distance minimale entre la droite courante et le point donné
-        /// </summary>
-        /// <param name="point">Point testé</param>
-        /// <returns>Distance minimale</returns>
-        protected virtual double Distance(RealPoint point)
-        {
-            // Pour calculer la distance, on calcule la droite perpendiculaire passant par ce point
-            // Puis on calcule l'intersection de la droite et de sa perpendiculaire
-            // On obtient la de projection orthogonale du point, qui est le point de la droite le plus proche du point
-            // On retourne la distance entre ces deux points
-
-            Line perpendicular = GetPerpendicular(point);
-            RealPoint cross = GetCrossingPoints(perpendicular)[0];
-
-            double distance = point.Distance(cross);
-
-            return distance;
-        }
+        
 
         #endregion
         
@@ -341,77 +299,15 @@ namespace Geometry.Shapes
         /// <returns>Vrai si la droite contient la forme donnée</returns>
         public virtual bool Contains(IShape shape)
         {
-            return Contains(Util.ToRealType(shape));
-        }
+            bool output = false;
 
-        /// <summary>
-        /// Teste si la droite courante contient le point donné
-        /// </summary>
-        /// <param name="point">Point testé</param>
-        /// <returns>Vrai si la droite contient le point donné</returns>
-        protected virtual bool Contains(RealPoint point)
-        {
-            // Vérifie si le point est sur la droite en vérifiant sa coordonnée Y pour sa coordonnée X par rapport à l'équation de la droite
-            // J'arrondie sinon la précision est trop grande et on rejette des points à cause des arrondis
+            if (shape is Circle) output = CircleWithLine.Contains(shape as Circle, this);
+            else if (shape is Polygon) output = LineWithPolygon.Contains(this, shape as Polygon);
+            else if (shape is Segment) output = LineWithSegment.Contains(this, shape as Segment);
+            else if (shape is RealPoint) output = LineWithRealPoint.Contains(this, shape as RealPoint);
+            else if (shape is Line) output = LineWithLine.Contains(this, shape as Line);
 
-            double calc1 = point.X * A + B;
-            double calc2 = point.Y * C;
-            double difference = calc1 > calc2 ? calc1 - calc2 : calc2 - calc1;
-            if (difference <= RealPoint.PRECISION)
-                return true;
-            else
-                return false;
-        }
-
-        /// <summary>
-        /// Teste si la droite courante contient le segment donné
-        /// </summary>
-        /// <param name="segment">Segment testé</param>
-        /// <returns>Vrai si la droite contient le segment donné</returns>
-        protected virtual bool Contains(Segment segment)
-        {
-            // Contenir un Segment revient à contenir la Droite sur laquelle se trouve le Segment
-            return Contains((Line)segment);
-        }
-
-        /// <summary>
-        /// Teste si la droite courante contient la droite donnée
-        /// </summary>
-        /// <param name="line">Droite testée</param>
-        /// <returns>Vrai si la droite contient la droite donnée</returns>
-        protected virtual bool Contains(Line line)
-        {
-            // Contenir une droite revient à avoir la même équation
-            if (line == this)
-                return true;
-            else
-                return false;
-        }
-
-        /// <summary>
-        /// Teste si la droite courante contient le polygone donné
-        /// </summary>
-        /// <param name="polygon">Polygone testé</param>
-        /// <returns>Vrai si la droite contient le polygone donné</returns>
-        protected virtual bool Contains(Polygon polygon)
-        {
-            // Contenir un polygone revient à contenir tous les cotés du polygone
-            foreach (Segment s in polygon.Sides)
-                if (!Contains(s))
-                    return false;
-
-            return true;
-        }
-
-        /// <summary>
-        /// Teste si la droite courante contient le cercle donné
-        /// </summary>
-        /// <param name="circle">Cercle testé</param>
-        /// <returns>Vrai si la droite contient le cercle donné</returns>
-        protected virtual bool Contains(Circle circle)
-        {
-            // Une droite ne peut contenir un Cercle que si son centre est sur la droite et que son rayon est de 0
-            return (circle.Radius == 0 && Contains(circle.Center));
+            return output;
         }
 
         #endregion
@@ -427,58 +323,11 @@ namespace Geometry.Shapes
         {
             List<RealPoint> output = new List<RealPoint>();
 
-            if (shape is Circle) output = GetCrossingPointsWithCircle(shape as Circle);
-            else if (shape is Polygon) output = GetCrossingPointsWithPolygon(shape as Polygon);
-            else if (shape is Segment) output = GetCrossingPointsWithSegment(shape as Segment);
-            else if (shape is RealPoint) output = GetCrossingPointsWithPoint(shape as RealPoint);
-            else if (shape is Line) output = GetCrossingPointsWithLine(shape as Line);
-
-            return output;
-        }
-
-        private List<RealPoint> GetCrossingPointsWithCircle(Circle circle)
-        {
-            return circle.GetCrossingPoints(this); //Le cercle sait faire
-        }
-
-        private List<RealPoint> GetCrossingPointsWithPolygon(Polygon polygon)
-        {
-            return polygon.GetCrossingPoints(this); // Le polygone sait faire
-        }
-
-        private List<RealPoint> GetCrossingPointsWithSegment(Segment segment)
-        {
-            List<RealPoint> output = new List<RealPoint>();
-
-            // Vérifie de la même manière qu'une droite mais vérifie ensuite que le point appartient au segment
-            output = GetCrossingPointsWithLine(segment);
-
-            if (output.Count > 0 && !segment.Contains(output[0])) output.Clear();
-
-            return output;
-        }
-
-        private List<RealPoint> GetCrossingPointsWithPoint(RealPoint point)
-        {
-            return point.GetCrossingPoints(this); // Le point sait faire
-        }
-
-        private List<RealPoint> GetCrossingPointsWithLine(Line line)
-        {
-            List<RealPoint> output = new List<RealPoint>();
-
-            double x, y;
-
-            if (!(C == 0 && line.C == 0                              // Les deux droites sont verticales
-                || A == 0 && line.A == 0                             // Les deux droites sont horizontales
-                || (C == 1 && line.C == 1 && A == line.A)))          // Les deux droites sont parallèles
-            {
-
-                x = (line.B * C - line.C * B) / (line.C * A - line.A * C);
-                y = (line.A * B - line.B * A) / (line.A * C - line.C * A);
-
-                output.Add(new RealPoint(x, y));
-            }
+            if (shape is Circle) output = CircleWithLine.GetCrossingPoints(shape as Circle, this);
+            else if (shape is Polygon) output = LineWithPolygon.GetCrossingPoints(this, shape as Polygon);
+            else if (shape is Segment) output = LineWithSegment.GetCrossingPoints(this, shape as Segment);
+            else if (shape is RealPoint) output = LineWithRealPoint.GetCrossingPoints(this, shape as RealPoint);
+            else if (shape is Line) output = LineWithLine.GetCrossingPoints(this, shape as Line);
 
             return output;
         }
@@ -490,59 +339,15 @@ namespace Geometry.Shapes
         /// <returns>Vrai si droite croise la forme testée</returns>
         public virtual bool Cross(IShape shape)
         {
-            return Cross(Util.ToRealType(shape));
-        }
+            bool output = false;
 
-        /// <summary>
-        /// Teste si la droite courante croise la droite donnée
-        /// </summary>
-        /// <param name="line">Droite testée</param>
-        /// <returns>Vrai si la droite croise la droite donnée</returns>
-        protected virtual bool Cross(Line line)
-        {
-            return GetCrossingPoints(line).Count > 0;
-        }
+            if (shape is Circle) output = CircleWithLine.Cross(shape as Circle, this);
+            else if (shape is Polygon) output = LineWithPolygon.Cross(this, shape as Polygon);
+            else if (shape is Segment) output = LineWithSegment.Cross(this, shape as Segment);
+            else if (shape is RealPoint) output = LineWithRealPoint.Cross(this, shape as RealPoint);
+            else if (shape is Line) output = LineWithLine.Cross(this, shape as Line);
 
-        /// <summary>
-        /// Teste si la droite courante croise le segment donné
-        /// </summary>
-        /// <param name="segment">Segment testé</param>
-        /// <returns>Vrai si la droite croise le segment</returns>
-        protected virtual bool Cross(Segment segment)
-        {
-            return GetCrossingPoints(segment).Count > 0;
-        }
-
-        /// <summary>
-        /// Teste si la droite courante croise le polygone donné
-        /// </summary>
-        /// <param name="polygon">Polygone testé</param>
-        /// <returns>Vrai si la droite croise le polygone</returns>
-        protected virtual bool Cross(Polygon polygon)
-        {
-            // Le polygone sait faire ça
-            return polygon.Cross(this);
-        }
-
-        /// <summary>
-        /// Teste si la droite courante croise le cercle donné
-        /// </summary>
-        /// <param name="circle">Cercle testé</param>
-        /// <returns>Vrai si la droite croise le cercle</returns>
-        protected virtual bool Cross(Circle circle)
-        {
-            // Le cercle sait faire ça
-            return circle.Cross(this);
-        }
-
-        /// <summary>
-        /// Teste si la droite courante croise le point donné
-        /// </summary>
-        /// <param name="point">Point testé</param>
-        /// <returns>Vrai si la droite croise le point</returns>
-        protected virtual bool Cross(RealPoint point)
-        {
-            return Contains(point);
+            return output;
         }
 
         #endregion
@@ -614,6 +419,13 @@ namespace Geometry.Shapes
 
                 return new Line(newA, newB);
             }
+        }
+
+        public bool IsParallel(Line other)
+        {
+            // Les deux horizontales, les deux verticales, ou la même pente
+
+            return this.IsHorizontal && other.IsHorizontal || this.IsVertical && other.IsVertical || this.A == other.A;
         }
 
 

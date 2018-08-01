@@ -24,14 +24,14 @@ namespace Geometry.Shapes.ShapesInteractions
             // Pour croiser un cercle il suffit que son centre soit éloigné de notre centre de moins que la somme de nos 2 rayons
             // Et que les cercles ne se contiennent pas l'un l'autre
 
-            bool ok;
+            bool output;
 
             if (circle1.Center.Distance(circle2.Center) <= circle1.Radius + circle2.Radius)
-                ok = (!circle2.Contains(circle1)) && (!circle1.Contains(circle2));
+                output = (!circle2.Contains(circle1)) && (!circle1.Contains(circle2));
             else
-                ok = false;
+                output = false;
 
-            return ok;
+            return output;
         }
         
         public static List<RealPoint> GetCrossingPoints(Circle circle1, Circle circle2)

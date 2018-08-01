@@ -230,7 +230,7 @@ namespace Geometry.Shapes
         /// Teste si le segment courant croise la forme donnée
         /// </summary>
         /// <param name="shape">Forme testée</param>
-        /// <returns>Vrai si le segment contient la forme donnée</returns>
+        /// <returns>Vrai si le segment croise la forme donnée</returns>
         public override bool Cross(IShape shape)
         {
             return Cross(Util.ToRealType(shape));
@@ -241,7 +241,7 @@ namespace Geometry.Shapes
         /// </summary>
         /// <param name="point">Point testé</param>
         /// <returns>Vrai si le segment contient le point donné</returns>
-        protected override bool Cross(RealPoint point)
+        protected bool Cross(RealPoint point)
         {
             return Contains(point);
         }
@@ -251,7 +251,7 @@ namespace Geometry.Shapes
         /// </summary>
         /// <param name="segment">Segment testé</param>
         /// <returns>Vrai si le segment contient le segment donné</returns>
-        protected override bool Cross(Segment segment)
+        protected  bool Cross(Segment segment)
         {
             return GetCrossingPoints(segment).Count > 0;
         }
@@ -261,7 +261,7 @@ namespace Geometry.Shapes
         /// </summary>
         /// <param name="line">Droite testée</param>
         /// <returns>Vrai si la segment contient la droite donnée</returns>
-        protected override bool Cross(Line line)
+        protected bool Cross(Line line)
         {
             return GetCrossingPoints(line).Count > 0;
         }
@@ -271,7 +271,7 @@ namespace Geometry.Shapes
         /// </summary>
         /// <param name="circle">Cercle testé</param>
         /// <returns>Vrai si la Droite contient le cercle donné</returns>
-        protected override bool Cross(Circle circle)
+        protected bool Cross(Circle circle)
         {
             return circle.Cross(this);
         }
@@ -281,7 +281,7 @@ namespace Geometry.Shapes
         /// </summary>
         /// <param name="polygon">Polygone testé</param>
         /// <returns>Vrai si le segment croise le polygone donné</returns>
-        protected override bool Cross(Polygon polygon)
+        protected  bool Cross(Polygon polygon)
         {
             return polygon.Cross(this);
         }
@@ -289,13 +289,23 @@ namespace Geometry.Shapes
         #endregion
 
         #region Contient
+        
+        /// <summary>
+        /// Teste si le segment courant contient la forme donnée
+        /// </summary>
+        /// <param name="shape">Forme testée</param>
+        /// <returns>Vrai si le segment contient la forme donnée</returns>
+        public override bool Contains(IShape shape)
+        {
+            return Contains(Util.ToRealType(shape));
+        }
 
         /// <summary>
         /// Teste si le segment courant contient le PointReel donné
         /// </summary>
         /// <param name="point">PointReel testé</param>
         /// <returns>Vrai si le segment contient le PointReel donné</returns>
-        protected override bool Contains(RealPoint point)
+        protected bool Contains(RealPoint point)
         {
             // Vérifie que le point est situé sur la droite
             if (!base.Contains(point))
@@ -316,7 +326,7 @@ namespace Geometry.Shapes
         /// </summary>
         /// <param name="segment">Segment testé</param>
         /// <returns>Vrai si le segment contient le segment donné</returns>
-        protected override bool Contains(Segment segment)
+        protected bool Contains(Segment segment)
         {
             // Il suffit de vérifier que le segment contient les deux extrémités
             return Contains(segment.StartPoint) && Contains(segment.EndPoint);
@@ -327,7 +337,7 @@ namespace Geometry.Shapes
         /// </summary>
         /// <param name="droite">Droite testée</param>
         /// <returns>Vrai si le segment contient la droite donnée</returns>
-        protected override bool Contains(Line droite)
+        protected bool Contains(Line droite)
         {
             // Un segment ne peut pas contenir de Droite
             return false;
@@ -338,7 +348,7 @@ namespace Geometry.Shapes
         /// </summary>
         /// <param name="polygone">Polygone testé</param>
         /// <returns>Vrai si le segment contient le polygone donné</returns>
-        protected override bool Contains(Polygon polygone)
+        protected bool Contains(Polygon polygone)
         {
             // Contenir un polygone revient à contenir tous les points du polygone
             foreach (RealPoint p in polygone.Points)
@@ -353,7 +363,7 @@ namespace Geometry.Shapes
         /// </summary>
         /// <param name="Cercle">Cercle testé</param>
         /// <returns>Vrai si le segment contient le Cercle donné</returns>
-        protected override bool Contains(Circle Cercle)
+        protected bool Contains(Circle Cercle)
         {
             // Contenir un cercle revient à avoir un cercle de rayon 0 dont le centre se trouve sur le segment
             return Contains(Cercle.Center) && Cercle.Radius == 0;
@@ -362,13 +372,18 @@ namespace Geometry.Shapes
         #endregion
 
         #region Distance
+        
+        public override double Distance(IShape shape)
+        {
+            return Distance(Util.ToRealType(shape));
+        }
 
         /// <summary>
         /// Retourne la distance minimale entre le segment courant et le segment donné
         /// </summary>
         /// <param name="forme">Segment testé</param>
         /// <returns>Distance minimale</returns>
-        protected override double Distance(Segment segment)
+        protected double Distance(Segment segment)
         {
             // Si les segments se croisent la distance est de 0
             if (Cross(segment))
@@ -408,7 +423,7 @@ namespace Geometry.Shapes
         /// </summary>
         /// <param name="forme">Droite testée</param>
         /// <returns>Distance minimale</returns>
-        protected override double Distance(Line line)
+        protected double Distance(Line line)
         {
             // Si la droite et le segment se croisent la distance est de 0
             if (Cross(line))
@@ -428,7 +443,7 @@ namespace Geometry.Shapes
         /// </summary>
         /// <param name="forme">Cercle testé</param>
         /// <returns>Distance minimale</returns>
-        protected override double Distance(Circle circle)
+        protected double Distance(Circle circle)
         {
             if (Cross(circle))
                 return 0;
@@ -442,7 +457,7 @@ namespace Geometry.Shapes
         /// </summary>
         /// <param name="forme">Polygone testé</param>
         /// <returns>Distance minimale</returns>
-        protected override double Distance(Polygon polygon)
+        protected double Distance(Polygon polygon)
         {
             // Distance jusqu'au segment le plus proche
             double minDistance = double.MaxValue;
@@ -463,7 +478,7 @@ namespace Geometry.Shapes
         /// </summary>
         /// <param name="point">Point testé</param>
         /// <returns>Distance minimale</returns>
-        protected override double Distance(RealPoint point)
+        protected double Distance(RealPoint point)
         {
             // Le raisonnement est le même que pour la droite cf Droite.Distance
 
