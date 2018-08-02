@@ -23,6 +23,8 @@ namespace Geometry.Shapes
         /// <param name="radius">Rayon du cercle</param>
         public Circle(RealPoint center, double radius)
         {
+            if (radius < 0) throw new ArgumentException("Radius must be >= 0");
+
             _center = center;
             _radius = radius;
         }
