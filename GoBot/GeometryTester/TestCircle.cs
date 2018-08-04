@@ -32,7 +32,7 @@ namespace GeometryTester
         }
 
         [TestMethod]
-        public void TestConstructorZeroPositionNeg()
+        public void TestConstructorPositionNeg()
         {
             Circle c = new Circle(new RealPoint(-10, -20), 5);
 
@@ -42,7 +42,7 @@ namespace GeometryTester
         }
 
         [TestMethod]
-        public void TestConstructorZeroRadiusNeg()
+        public void TestConstructorRadiusNeg()
         {
             Assert.ThrowsException<ArgumentException>(() => new Circle(new RealPoint(0, 0), -5));
         }
@@ -74,7 +74,7 @@ namespace GeometryTester
         }
 
         [TestMethod]
-        public void TestTranslationNull()
+        public void TestTranslationZero()
         {
             Circle c1 = new Circle(new RealPoint(10, 20), 30);
             Circle c2 = c1.Translation(0, 0);

@@ -54,6 +54,7 @@
     <Compile Include="TestAngles.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="TestCircle.cs" />
+    <Compile Include="TestCircleWithCircle.cs" />
     <Compile Include="TestRectangles.cs" />
   </ItemGroup>
   <ItemGroup>
