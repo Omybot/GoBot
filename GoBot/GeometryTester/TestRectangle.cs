@@ -204,8 +204,8 @@ namespace GeometryTester
 
             Polygon r2 = new PolygonRectangle(new RealPoint(-20, -20), -10, -20);
 
-            Assert.AreEqual(-25, r1.Barycenter.X, RealPoint.PRECISION);
-            Assert.AreEqual(-30, r1.Barycenter.X, RealPoint.PRECISION);
+            Assert.AreEqual(-25, r2.Barycenter.X, RealPoint.PRECISION);
+            Assert.AreEqual(-30, r2.Barycenter.Y, RealPoint.PRECISION);
 
             Polygon r3 = new PolygonRectangle(new RealPoint(-10, -20), 10, 20);
 
