@@ -72,5 +72,8 @@
     <Compile Include="WorldRect.cs" />
     <Compile Include="WorldScale.cs" />
   </ItemGroup>
+  <ItemGroup>
+    <Content Include="README.txt" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
