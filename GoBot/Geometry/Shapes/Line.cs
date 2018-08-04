@@ -425,7 +425,9 @@ namespace Geometry.Shapes
         {
             // Les deux horizontales, les deux verticales, ou la même pente
 
-            return this.IsHorizontal && other.IsHorizontal || this.IsVertical && other.IsVertical || this.A == other.A;
+            return this.IsHorizontal && other.IsHorizontal ||
+                    this.IsVertical && other.IsVertical ||
+                    (!this.IsHorizontal && !this.IsVertical && !other.IsHorizontal && !other.IsVertical && this.A == other.A);
         }
 
 

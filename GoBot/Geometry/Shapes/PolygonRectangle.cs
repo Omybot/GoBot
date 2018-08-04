@@ -47,6 +47,11 @@ namespace Geometry.Shapes
             BuildPolygon(rectSides, false);
         }
 
+        public PolygonRectangle(PolygonRectangle other) : base(other)
+        {
+
+        }
+
         public override string ToString()
         {
             return _sides[0].StartPoint.ToString() + "; " +
