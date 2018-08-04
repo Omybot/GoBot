@@ -56,6 +56,9 @@
     <Compile Include="TestCircle.cs" />
     <Compile Include="TestCircleWithCircle.cs" />
     <Compile Include="TestRectangle.cs" />
+    <Compile Include="TestRectangleWithCircle.cs" />
+    <Compile Include="TestRectangleWithRectangle.cs" />
+    <Compile Include="TestRectangleWithSegment.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
