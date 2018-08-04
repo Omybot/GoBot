@@ -16,17 +16,22 @@ namespace Geometry.Shapes.ShapesInteractions
 
         public static double Distance(Circle circle1, Circle circle2)
         {
+            // C'est la distance entre les deux centres - la somme des deux rayons
+
             return Math.Max(0, circle1.Center.Distance(circle2.Center) - circle2.Radius - circle1.Radius);
         }
 
         public static bool Cross(Circle circle1, Circle circle2)
         {
+            // 2 cercles identiques se croisent
             // Pour croiser un cercle il suffit que son centre soit éloigné de notre centre de moins que la somme de nos 2 rayons
             // Et que les cercles ne se contiennent pas l'un l'autre
 
             bool output;
 
-            if (circle1.Center.Distance(circle2.Center) <= circle1.Radius + circle2.Radius)
+            if (circle1.Center == circle2.Center && Math.Abs(circle1.Radius - circle2.Radius) < RealPoint.PRECISION)
+                output = true;
+            else if (circle1.Center.Distance(circle2.Center) <= circle1.Radius + circle2.Radius)
                 output = (!circle2.Contains(circle1)) && (!circle1.Contains(circle2));
             else
                 output = false;
