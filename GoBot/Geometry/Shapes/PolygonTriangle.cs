@@ -32,7 +32,12 @@ namespace Geometry.Shapes
             if (s1.EndPoint != s2.StartPoint || s2.EndPoint != s3.StartPoint || s3.EndPoint != s1.StartPoint)
                 throw new Exception("Triangle mal formé");
         }
-        
+
+        public PolygonTriangle(PolygonTriangle other) : base(other)
+        {
+
+        }
+
         protected override double ComputeSurface()
         {
             Segment seg = new Segment(Points[0], Points[1]);

@@ -53,7 +53,7 @@ namespace Geometry.Shapes
         /// <summary>
         /// Construit un Polygone depuis un autre Polygone
         /// </summary>
-        protected Polygon(Polygon polygon) : this()
+        public Polygon(Polygon polygon) : this()
         {
             polygon.Sides.ForEach(s => _sides.Add(new Segment(s)));
         }
