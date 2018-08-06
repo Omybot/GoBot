@@ -447,7 +447,7 @@ namespace Geometry.Shapes
             // Un peu douteux mais bon
             RealPoint p1, p2;
 
-            if(Math.Abs(_a) > 1)
+            if(this.IsVertical)
             {
                 p1 = GetCrossingPoints(new Line(new RealPoint(-100000, -100000), new RealPoint(+100000, -100000))).FirstOrDefault();
                 p2 = GetCrossingPoints(new Line(new RealPoint(-100000, +100000), new RealPoint(+100000, +100000))).FirstOrDefault();
