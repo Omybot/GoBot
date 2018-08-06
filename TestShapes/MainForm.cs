@@ -20,12 +20,14 @@ namespace TestShapes
         }
 
         private List<IShape> _shapes;
+        private WorldScale _worldScale;
 
         private bool _barycenterVisible = true;
         private bool _crossingPointsVisible = true;
         private bool _crossingColorVisible = true;
         private bool _containedColorVisible = true;
         private bool _gridVisible = true;
+        private bool _axesVisible = false;
 
         private ShapeMode _shapeMode;
         private RealPoint _startPoint;
@@ -70,7 +72,11 @@ namespace TestShapes
 
         private void picWorld_Paint(object sender, PaintEventArgs e)
         {
+            e.Graphics.TranslateTransform(0, +picWorld.Height);
+            e.Graphics.ScaleTransform(1, -1);
+
             DrawGrid(e.Graphics);
+            DrawAxes(e.Graphics);
 
             e.Graphics.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.AntiAlias;
 
@@ -100,11 +106,43 @@ namespace TestShapes
             }
         }
 
+        private void DrawAxes(Graphics g)
+        {
+            if (_axesVisible)
+            {
+                new Segment(new RealPoint(0, 0), new RealPoint(0, 150)).Paint(g, Color.Black, 3, Color.Transparent, _worldScale);
+                new Segment(new RealPoint(0, 150), new RealPoint(5, 145)).Paint(g, Color.Black, 2, Color.Transparent, _worldScale);
+                new Segment(new RealPoint(0, 150), new RealPoint(-5, 145)).Paint(g, Color.Black, 2, Color.Transparent, _worldScale);
+
+                new Segment(new RealPoint(0, 0), new RealPoint(150, 0)).Paint(g, Color.Black, 3, Color.Transparent, _worldScale);
+                new Segment(new RealPoint(150, 0), new RealPoint(145, 5)).Paint(g, Color.Black, 2, Color.Transparent, _worldScale);
+                new Segment(new RealPoint(150, 0), new RealPoint(145, -5)).Paint(g, Color.Black, 2, Color.Transparent, _worldScale);
+
+                RealPoint arc1 = _worldScale.RealToScreenPosition(new RealPoint(-80, -80));
+                RealPoint arc2 = _worldScale.RealToScreenPosition(new RealPoint(80, 80));
+
+                Rectangle r = new Rectangle((int)arc1.X, (int)arc1.Y, (int)(arc2.X - arc1.X), (int)(arc2.Y - arc1.Y));
+
+                g.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.AntiAlias;
+                g.DrawArc(Pens.Black, r, 0, 90);
+                g.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.None;
+
+                RealPoint arrow1 = new RealPoint(1, 80);
+                RealPoint arrow2 = new RealPoint(6, 85);
+                RealPoint arrow3 = new RealPoint(6, 75);
+
+                new Segment(arrow1, arrow2).Paint(g, Color.Black, 1, Color.Black, _worldScale);
+                new Segment(arrow1, arrow3).Paint(g, Color.Black, 1, Color.Black, _worldScale);
+
+                new RealPoint(0, 0).Paint(g, Color.Black, 3, Color.Black, _worldScale);
+            }
+        }
+
         private void DrawBarycenter(RealPoint pt, Graphics g)
         {
             if (_barycenterVisible)
             {
-                pt?.Paint(g, Color.Black, 3, Color.Blue, WorldScale.Default());
+                pt?.Paint(g, Color.Black, 3, Color.Blue, _worldScale);
             }
         }
 
@@ -112,7 +150,7 @@ namespace TestShapes
         {
             if (_crossingPointsVisible)
             {
-                pt.Paint(g, Color.Black, 5, Color.Red, WorldScale.Default());
+                pt.Paint(g, Color.Black, 5, Color.Red, _worldScale);
             }
         }
 
@@ -134,25 +172,34 @@ namespace TestShapes
                 if (isContained)
                     fillColor = Color.FromArgb(100, Color.Green);
             }
-
-            shape.Paint(g, outlineColor, 1, fillColor, WorldScale.Default());
+            
+            shape.Paint(g, outlineColor, 1, fillColor, _worldScale);
         }
 
         private void DrawGrid(Graphics g)
         {
             if (_gridVisible)
             {
-                for (int i = 0; i < picWorld.Width; i += 10)
-                    g.DrawLine(Pens.WhiteSmoke, i, 0, i, picWorld.Height);
+                for (int i = -_worldScale.OffsetX / 10 * 10; i < picWorld.Width + _worldScale.OffsetX; i += 10)
+                    new Segment(new RealPoint(i, -10000), new RealPoint(i, 10000)).Paint(g, Color.WhiteSmoke, 1, Color.Transparent, _worldScale);
 
-                for (int i = 0; i < picWorld.Height; i += 10)
-                    g.DrawLine(Pens.WhiteSmoke, 0, i, picWorld.Width, i);
+                for (int i = -_worldScale.OffsetY / 10 * 10; i < picWorld.Height + _worldScale.OffsetY; i += 10)
+                    new Segment(new RealPoint(-10000, i), new RealPoint(10000, i)).Paint(g, Color.WhiteSmoke, 1, Color.Transparent, _worldScale);
 
-                for (int i = 0; i < picWorld.Width; i += 100)
-                    g.DrawLine(Pens.LightGray, i, 0, i, picWorld.Height);
+                new Segment(new RealPoint(0, -10000), new RealPoint(0, 10000)).Paint(g, Color.Black, 1, Color.Transparent, _worldScale);
+                new Segment(new RealPoint(-10000, 0), new RealPoint(10000, 0)).Paint(g, Color.Black, 1, Color.Transparent, _worldScale);
+                
+                //for (int i = 0; i < picWorld.Width; i += 10)
+                //    g.DrawLine(Pens.WhiteSmoke, i, 0, i, picWorld.Height);
 
-                for (int i = 0; i < picWorld.Height; i += 100)
-                    g.DrawLine(Pens.LightGray, 0, i, picWorld.Width, i);
+                //for (int i = 0; i < picWorld.Height; i += 10)
+                //    g.DrawLine(Pens.WhiteSmoke, 0, i, picWorld.Width, i);
+
+                //for (int i = 0; i < picWorld.Width; i += 100)
+                //    g.DrawLine(Pens.LightGray, i, 0, i, picWorld.Height);
+
+                //for (int i = 0; i < picWorld.Height; i += 100)
+                //    g.DrawLine(Pens.LightGray, 0, i, picWorld.Width, i);
             }
         }
 
@@ -192,10 +239,19 @@ namespace TestShapes
 
         #endregion
 
+        private RealPoint PicCoordinates()
+        {
+            RealPoint pt = picWorld.PointToClient(Cursor.Position);
+            pt.X -= _worldScale.OffsetX;
+            pt.Y -= _worldScale.OffsetY;
+
+            pt.Y = -pt.Y;
+            return pt;
+        }
 
         private void picWorld_MouseDown(object sender, MouseEventArgs e)
         {
-            _startPoint = picWorld.PointToClient(Cursor.Position);
+            _startPoint = PicCoordinates();
             _currentShape = BuildCurrentShape(_shapeMode, _startPoint, _startPoint);
 
             picWorld.Invalidate();
@@ -203,7 +259,7 @@ namespace TestShapes
 
         private void picWorld_MouseMove(object sender, MouseEventArgs e)
         {
-            RealPoint pos = picWorld.PointToClient(Cursor.Position);
+            RealPoint pos = PicCoordinates();
             lblPosition.Text = "X = " + pos.X.ToString().PadLeft(4) + ": Y = " + pos.Y.ToString().PadLeft(4);
 
             if (_startPoint != null)
@@ -218,7 +274,7 @@ namespace TestShapes
         {
             if (_startPoint != null)
             {
-                _shapes.Add(BuildCurrentShape(_shapeMode, _startPoint, picWorld.PointToClient(Cursor.Position)));
+                _shapes.Add(BuildCurrentShape(_shapeMode, _startPoint, PicCoordinates()));
                 lblItem.Text = "";
 
                 _currentShape = null;
@@ -292,6 +348,23 @@ namespace TestShapes
                 _shapes.RemoveAt(_shapes.Count - 1);
                 picWorld.Invalidate();
             }
+        }
+
+        private void MainForm_Load(object sender, EventArgs e)
+        {
+            _worldScale = new WorldScale(1, picWorld.Width / 2, picWorld.Height / 2);
+        }
+
+        private void picWorld_SizeChanged(object sender, EventArgs e)
+        {
+            _worldScale = new WorldScale(1, picWorld.Width / 2, picWorld.Height / 2);
+            picWorld.Invalidate();
+        }
+
+        private void btnAxes_ValueChanged(object sender, bool value)
+        {
+            _axesVisible = value;
+            picWorld.Invalidate();
         }
     }
 }
