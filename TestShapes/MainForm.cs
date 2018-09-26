@@ -366,5 +366,17 @@ namespace TestShapes
             _axesVisible = value;
             picWorld.Invalidate();
         }
+
+        private void btnZoomPlus_Click(object sender, EventArgs e)
+        {
+            _worldScale = new WorldScale(_worldScale.Factor *0.85, picWorld.Width / 2, picWorld.Height / 2);
+            picWorld.Invalidate();
+        }
+
+        private void btnZoomMinus_Click(object sender, EventArgs e)
+        {
+            _worldScale = new WorldScale(_worldScale.Factor * 1.2, picWorld.Width / 2, picWorld.Height / 2);
+            picWorld.Invalidate();
+        }
     }
 }

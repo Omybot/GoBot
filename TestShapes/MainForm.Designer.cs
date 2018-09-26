@@ -50,12 +50,14 @@
             this.btnSegment = new System.Windows.Forms.RadioButton();
             this.btnCircleFromCenter = new System.Windows.Forms.RadioButton();
             this.grpDisplay = new System.Windows.Forms.GroupBox();
+            this.btnAxes = new Composants.SwitchButton();
+            this.lblAxes = new System.Windows.Forms.Label();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.btnDelete = new System.Windows.Forms.Button();
             this.btnErase = new System.Windows.Forms.Button();
             this.picWorld = new System.Windows.Forms.PictureBox();
-            this.btnAxes = new Composants.SwitchButton();
-            this.lblAxes = new System.Windows.Forms.Label();
+            this.btnZoomPlus = new System.Windows.Forms.Button();
+            this.btnZoomMinus = new System.Windows.Forms.Button();
             this.statusStrip1.SuspendLayout();
             this.grpDrawTools.SuspendLayout();
             this.grpDisplay.SuspendLayout();
@@ -302,13 +304,38 @@
             this.grpDisplay.TabStop = false;
             this.grpDisplay.Text = "Affichage";
             // 
+            // btnAxes
+            // 
+            this.btnAxes.AutoSize = true;
+            this.btnAxes.BackColor = System.Drawing.Color.Transparent;
+            this.btnAxes.Location = new System.Drawing.Point(6, 43);
+            this.btnAxes.MaximumSize = new System.Drawing.Size(35, 15);
+            this.btnAxes.MinimumSize = new System.Drawing.Size(35, 15);
+            this.btnAxes.Mirrored = false;
+            this.btnAxes.Name = "btnAxes";
+            this.btnAxes.Size = new System.Drawing.Size(35, 15);
+            this.btnAxes.TabIndex = 13;
+            this.btnAxes.Value = false;
+            this.btnAxes.ValueChanged += new Composants.SwitchButton.ValueChangedDelegate(this.btnAxes_ValueChanged);
+            // 
+            // lblAxes
+            // 
+            this.lblAxes.AutoSize = true;
+            this.lblAxes.Location = new System.Drawing.Point(47, 43);
+            this.lblAxes.Name = "lblAxes";
+            this.lblAxes.Size = new System.Drawing.Size(42, 13);
+            this.lblAxes.TabIndex = 14;
+            this.lblAxes.Text = "Repère";
+            // 
             // groupBox1
             // 
+            this.groupBox1.Controls.Add(this.btnZoomMinus);
+            this.groupBox1.Controls.Add(this.btnZoomPlus);
             this.groupBox1.Controls.Add(this.btnDelete);
             this.groupBox1.Controls.Add(this.btnErase);
             this.groupBox1.Location = new System.Drawing.Point(3, 310);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(160, 100);
+            this.groupBox1.Size = new System.Drawing.Size(160, 116);
             this.groupBox1.TabIndex = 30;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Outils";
@@ -358,28 +385,25 @@
             this.picWorld.MouseMove += new System.Windows.Forms.MouseEventHandler(this.picWorld_MouseMove);
             this.picWorld.MouseUp += new System.Windows.Forms.MouseEventHandler(this.picWorld_MouseUp);
             // 
-            // btnAxes
+            // btnZoomPlus
             // 
-            this.btnAxes.AutoSize = true;
-            this.btnAxes.BackColor = System.Drawing.Color.Transparent;
-            this.btnAxes.Location = new System.Drawing.Point(6, 43);
-            this.btnAxes.MaximumSize = new System.Drawing.Size(35, 15);
-            this.btnAxes.MinimumSize = new System.Drawing.Size(35, 15);
-            this.btnAxes.Mirrored = false;
-            this.btnAxes.Name = "btnAxes";
-            this.btnAxes.Size = new System.Drawing.Size(35, 15);
-            this.btnAxes.TabIndex = 13;
-            this.btnAxes.Value = false;
-            this.btnAxes.ValueChanged += new Composants.SwitchButton.ValueChangedDelegate(this.btnAxes_ValueChanged);
+            this.btnZoomPlus.Location = new System.Drawing.Point(14, 85);
+            this.btnZoomPlus.Name = "btnZoomPlus";
+            this.btnZoomPlus.Size = new System.Drawing.Size(63, 23);
+            this.btnZoomPlus.TabIndex = 31;
+            this.btnZoomPlus.Text = "Zoom +";
+            this.btnZoomPlus.UseVisualStyleBackColor = true;
+            this.btnZoomPlus.Click += new System.EventHandler(this.btnZoomPlus_Click);
             // 
-            // lblAxes
+            // btnZoomMinus
             // 
-            this.lblAxes.AutoSize = true;
-            this.lblAxes.Location = new System.Drawing.Point(47, 43);
-            this.lblAxes.Name = "lblAxes";
-            this.lblAxes.Size = new System.Drawing.Size(42, 13);
-            this.lblAxes.TabIndex = 14;
-            this.lblAxes.Text = "Repère";
+            this.btnZoomMinus.Location = new System.Drawing.Point(83, 85);
+            this.btnZoomMinus.Name = "btnZoomMinus";
+            this.btnZoomMinus.Size = new System.Drawing.Size(63, 23);
+            this.btnZoomMinus.TabIndex = 32;
+            this.btnZoomMinus.Text = "Zoom -";
+            this.btnZoomMinus.UseVisualStyleBackColor = true;
+            this.btnZoomMinus.Click += new System.EventHandler(this.btnZoomMinus_Click);
             // 
             // MainForm
             // 
@@ -435,6 +459,8 @@
         private System.Windows.Forms.Button btnDelete;
         private Composants.SwitchButton btnAxes;
         private System.Windows.Forms.Label lblAxes;
+        private System.Windows.Forms.Button btnZoomMinus;
+        private System.Windows.Forms.Button btnZoomPlus;
     }
 }
 
