@@ -37,7 +37,7 @@ namespace GoBot.GameBoard
                 all.Concat(_elements.AsObstacles);
                 if (_colorObstacles.ContainsKey(Plateau.NotreCouleur)) all = all.Concat(_colorObstacles[Plateau.NotreCouleur]);
                 if (_detectionObstacles != null) all = all.Concat(_detectionObstacles);
-                
+
                 return all.ToList();
             }
         }
@@ -47,7 +47,7 @@ namespace GoBot.GameBoard
             get
             {
                 IEnumerable<IShape> all = _elements.AsObstacles;
-                
+
                 if (_colorObstacles.ContainsKey(Plateau.NotreCouleur)) all = all.Concat(_colorObstacles[Plateau.NotreCouleur]);
                 if (_detectionObstacles != null) all = all.Concat(_detectionObstacles);
 
@@ -108,14 +108,20 @@ namespace GoBot.GameBoard
             obstacles.Add(new Segment(new RealPoint(Plateau.Largeur - 4, Plateau.Hauteur - 4), new RealPoint(0, Plateau.Hauteur - 4)));
             obstacles.Add(new Segment(new RealPoint(0, Plateau.Hauteur - 4), new RealPoint(0, 0)));
 
-            // Distributeurs
-            obstacles.Add(new Circle(new RealPoint(0, 840), 110));
-            obstacles.Add(new Circle(new RealPoint(610, 2000), 110));
-            obstacles.Add(new Circle(new RealPoint(2390, 2000), 110));
-            obstacles.Add(new Circle(new RealPoint(3000, 840), 110));
+            // Accelerateurs
+            obstacles.Add(new PolygonRectangle(new RealPoint(500, 0), 2000, 22));
+            obstacles.Add(new PolygonRectangle(new RealPoint(500 + 235 - 22, 22), 80 + 22, 22));
+            obstacles.Add(new PolygonRectangle(new RealPoint(3000 - (500 + 235) - 80, 22), 80 + 22, 22));
 
-            // Stations dépuration
-            obstacles.Add(new PolygonRectangle(new RealPoint(894, 1750), 1200, 250));
+            // Distributeurs
+            obstacles.Add(new PolygonRectangle(new RealPoint(450, 1543), 600, 30));
+            obstacles.Add(new PolygonRectangle(new RealPoint(3000 - 450 - 600, 1543), 600, 30));
+
+            // Tasseau balances
+            obstacles.Add(new PolygonRectangle(new RealPoint(1500 - 20, 1543 + 30 - 200), 40, 2000 - 1543 + 30 + 200));
+
+            // Rampes + balances
+            obstacles.Add(new PolygonRectangle(new RealPoint(450, 1600 - 22), 3000 - 450 * 2, 2000 - (1600 - 22)));
 
             return obstacles;
         }
