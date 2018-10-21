@@ -12,9 +12,9 @@ namespace Geometry.Shapes.ShapesInteractions
             bool output;
 
             if (containingLine.IsHorizontal)
-                output = containedPoint.Y == containingLine.B;
+                output = Math.Abs(containedPoint.Y - containingLine.B) <= RealPoint.PRECISION;
             else if (containingLine.IsVertical)
-                output = containedPoint.X == -containingLine.B;
+                output = Math.Abs(containedPoint.X - -containingLine.B) <= RealPoint.PRECISION;
             else
             {
                 // Vérifie si le point est sur la droite en vérifiant sa coordonnée Y pour sa coordonnée X par rapport à l'équation de la droite
