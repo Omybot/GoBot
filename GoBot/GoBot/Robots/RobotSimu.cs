@@ -456,14 +456,6 @@ namespace GoBot
             return Color.Black;
         }
 
-
-        public override CubesPattern DemandeCapteurPattern(bool attendre = true)
-        {
-            // TODO
-
-            return new CubesPattern(CubesCross.CubeColor.Black, CubesCross.CubeColor.Orange, CubesCross.CubeColor.Green);
-        }
-
         public override void ServoVitesse(ServomoteurID servo, int vitesse)
         {
         }

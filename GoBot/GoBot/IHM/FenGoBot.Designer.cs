@@ -85,8 +85,6 @@ namespace GoBot
             this.panelServoCAN1 = new GoBot.IHM.PanelServoCAN();
             this.grpServoCodeur = new System.Windows.Forms.GroupBox();
             this.potarControl1 = new GoBot.IHM.PotarControl();
-            this.grpPattern = new System.Windows.Forms.GroupBox();
-            this.panelColorPattern = new GoBot.IHM.PanelColorPattern();
             this.grpCapteurs = new System.Windows.Forms.GroupBox();
             this.panelCapteurs1 = new GoBot.IHM.PanelCapteurs();
             this.grpRecGB = new System.Windows.Forms.GroupBox();
@@ -129,7 +127,6 @@ namespace GoBot
             this.tabRecGoBot.SuspendLayout();
             this.grpServoCAN.SuspendLayout();
             this.grpServoCodeur.SuspendLayout();
-            this.grpPattern.SuspendLayout();
             this.grpCapteurs.SuspendLayout();
             this.grpRecGB.SuspendLayout();
             this.tabActionneurs.SuspendLayout();
@@ -651,7 +648,6 @@ namespace GoBot
             // 
             this.tabRecGoBot.Controls.Add(this.grpServoCAN);
             this.tabRecGoBot.Controls.Add(this.grpServoCodeur);
-            this.tabRecGoBot.Controls.Add(this.grpPattern);
             this.tabRecGoBot.Controls.Add(this.grpCapteurs);
             this.tabRecGoBot.Controls.Add(this.grpRecGB);
             this.tabRecGoBot.Location = new System.Drawing.Point(4, 22);
@@ -695,23 +691,6 @@ namespace GoBot
             this.potarControl1.Name = "potarControl1";
             this.potarControl1.Size = new System.Drawing.Size(385, 98);
             this.potarControl1.TabIndex = 5;
-            // 
-            // grpPattern
-            // 
-            this.grpPattern.Controls.Add(this.panelColorPattern);
-            this.grpPattern.Location = new System.Drawing.Point(571, 54);
-            this.grpPattern.Name = "grpPattern";
-            this.grpPattern.Size = new System.Drawing.Size(198, 122);
-            this.grpPattern.TabIndex = 6;
-            this.grpPattern.TabStop = false;
-            this.grpPattern.Text = "Plan de construction";
-            // 
-            // panelColorPattern
-            // 
-            this.panelColorPattern.Location = new System.Drawing.Point(8, 29);
-            this.panelColorPattern.Name = "panelColorPattern";
-            this.panelColorPattern.Size = new System.Drawing.Size(179, 63);
-            this.panelColorPattern.TabIndex = 0;
             // 
             // grpCapteurs
             // 
@@ -882,7 +861,6 @@ namespace GoBot
             this.tabRecGoBot.ResumeLayout(false);
             this.grpServoCAN.ResumeLayout(false);
             this.grpServoCodeur.ResumeLayout(false);
-            this.grpPattern.ResumeLayout(false);
             this.grpCapteurs.ResumeLayout(false);
             this.grpRecGB.ResumeLayout(false);
             this.tabActionneurs.ResumeLayout(false);
@@ -959,8 +937,6 @@ namespace GoBot
         private PanelBoardNumeric panelBoardNumericIO;
         private System.Windows.Forms.TabPage tabThreads;
         private PanelLogThreads panelLogThreads1;
-        private System.Windows.Forms.GroupBox grpPattern;
-        private PanelColorPattern panelColorPattern;
         private PanelServoCAN panelServoCAN1;
         private System.Windows.Forms.GroupBox grpServoCAN;
         private System.Windows.Forms.GroupBox grpServoCodeur;

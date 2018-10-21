@@ -100,22 +100,18 @@ namespace GoBot.IHM
 
         private void btnRightPumpOff_Click(object sender, EventArgs e)
         {
-            Actionneur.Harvester.DoRightPumpDisable();
         }
 
         private void btnRightPumpOn_Click(object sender, EventArgs e)
         {
-            Actionneur.Harvester.DoRightPumpEnable();
         }
 
         private void btnLeftPumDisable_Click(object sender, EventArgs e)
         {
-            Actionneur.Harvester.DoLeftPumpDisable();
         }
 
         private void btnLeftPumpEnable_Click(object sender, EventArgs e)
         {
-            Actionneur.Harvester.DoLeftPumpEnable();
         }
         
         private void btnBenneBuild_Click(object sender, EventArgs e)

@@ -11,5 +11,6 @@
 bin
 obj
 /GoBot/packages
+/TestShapes/packages
 /GoBot/TestResults
 *.ide

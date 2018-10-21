@@ -62,7 +62,8 @@ namespace GoBot.IHM
             if (!Execution.DesignMode)
             {
                 trackZoom.SetValue(1);
-                Actionneur.Hokuyo.FrequencyChange += Hokuyo_FrequencyChange;
+                if(Actionneur.Hokuyo != null)
+                    Actionneur.Hokuyo.FrequencyChange += Hokuyo_FrequencyChange;
             }
         }
 

@@ -31,12 +31,6 @@ namespace GoBot.Communications
                 case FrameFunction.RetourUart2:
                     output = "Retour UART2";
                     break;
-                case FrameFunction.DemandeCapteurPattern:
-                    output = "Demande periode capteur pattern";
-                    break;
-                case FrameFunction.RetourCapteurPattern:
-                    output = "Retour periode capteur pattern {0-1}";
-                    break;
                 case FrameFunction.DemandeValeursNumeriques:
                     output = "Demande valeurs des ports numériques";
                     break;

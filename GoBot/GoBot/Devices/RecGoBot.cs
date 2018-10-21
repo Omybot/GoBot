@@ -61,25 +61,9 @@ namespace GoBot.Devices
             ButtonChange += RecGoBot_ButtonChange;
 
         }
-
-        private int _toggleBtn1;
+        
         private void Button1Click()
         {
-            if (_toggleBtn1 == 0)
-            {
-                Actionneur.Harvester.DoLeftPumpEnable();
-                Config.CurrentConfig.ServoCoudeGauche.SendPosition(Config.CurrentConfig.ServoCoudeGauche.PositionApprocheBasse);
-                Config.CurrentConfig.ServoPoignetGauche.SendPosition(Config.CurrentConfig.ServoPoignetGauche.PositionPrise);
-            }
-            if (_toggleBtn1 == 1)
-            {
-                Actionneur.Harvester.DoTakeCubeOnLeftArm();
-                //Actionneur.Dumper.DoConvoyeurLoopCentre();
-            }
-
-            _toggleBtn1++;
-            _toggleBtn1 = _toggleBtn1 % 2;
-
         }
         private void Button2Click()
         {
@@ -97,22 +81,8 @@ namespace GoBot.Devices
         private void Button4Click()
         {
         }
-
-        private bool _toggleBtn5;
         private void Button5Click()
         {
-            if(!_toggleBtn5)
-            {
-                Config.CurrentConfig.ServoCoudeDroite.SendPosition(Config.CurrentConfig.ServoCoudeDroite.PositionApprocheBasse);
-                Config.CurrentConfig.ServoCoudeGauche.SendPosition(Config.CurrentConfig.ServoCoudeGauche.PositionApprocheBasse);
-            }
-            else
-            {
-                Config.CurrentConfig.ServoCoudeDroite.SendPosition(Config.CurrentConfig.ServoCoudeDroite.PositionRange);
-                Config.CurrentConfig.ServoCoudeGauche.SendPosition(Config.CurrentConfig.ServoCoudeGauche.PositionRange);
-            }
-
-            _toggleBtn5 = !_toggleBtn5;
         }
         private void Button6Click()
         {
@@ -123,22 +93,8 @@ namespace GoBot.Devices
         private void Button8Click()
         {
         }
-
-        private bool _toggleBtn9;
         private void Button9Click()
         {
-            if (_toggleBtn9)
-            {
-                Actionneur.Harvester.DoLeftPumpDisable();
-                Actionneur.Harvester.DoRightPumpDisable();
-            }
-            else
-            {
-                Actionneur.Harvester.DoLeftPumpEnable();
-                Actionneur.Harvester.DoRightPumpEnable();
-            }
-
-            _toggleBtn9 = !_toggleBtn9;
         }
         private void Button10Click()
         {

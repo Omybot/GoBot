@@ -29,17 +29,17 @@ namespace GoBot
         /// <summary>
         /// Nombre de pixels par mm du terrain
         /// </summary>
-        private const double RAPPORT_SCREEN_REAL = 3.773584905660377;
+        private const double RAPPORT_SCREEN_REAL = (3.488372093023256 + 3.496503496503497) / 2;
 
         /// <summary>
         /// Position en pixel sur l'image de l'abscisse 0 de la table
         /// </summary>
-        private const int OFFSET_IMAGE_X = 32;
+        private const int OFFSET_IMAGE_X = 8;
 
         /// <summary>
         /// Position en pixel sur l'image de l'ordonnée 0 de la table
         /// </summary>
-        private const int OFFSET_IMAGE_Y = 53;
+        private const int OFFSET_IMAGE_Y = 8;
 
         #endregion
 
@@ -212,7 +212,6 @@ namespace GoBot
                         if (AfficheElementsJeu)
                         {
                             DessineElementsJeu(g, Plateau.Elements);
-                            Actionneur.PatternReader.Paint(g, Scale);
                         }
 
                         DessinePathFinding(g);
@@ -455,10 +454,8 @@ namespace GoBot
             g.DrawRectangle(Plateau.NotreCouleur == Plateau.CouleurDroiteOrange ? penCouleurDroite : penCouleurGauche, robotRect);
             g.DrawLine(Plateau.NotreCouleur == Plateau.CouleurDroiteOrange ? penCouleurDroite : penCouleurGauche, robotRect.Center(), new Point(robotRect.Right, (int)robotRect.Center().Y));
 
-            // Dessiner ici les actionneurs pour qu'ils prennent l'inclinaison du robot
-
-            Actionneur.Dumper.Paint(g, Scale, robot.Position.Coordinates);
-
+            // TODOEACHYEAR Dessiner ici les actionneurs pour qu'ils prennent l'inclinaison du robot
+            
             g.ResetTransform();
         }
 
@@ -540,13 +537,13 @@ namespace GoBot
                     foreach (Arc a in robot.Graph.Arcs)
                     {
                         if (a.Passable)
-                            new Segment(new RealPoint(a.StartNode.X, a.StartNode.Y), new RealPoint(a.EndNode.X, a.EndNode.Y)).Paint(g, Color.Blue, 1, Color.Transparent, Scale);
+                            new Segment(new RealPoint(a.StartNode.X, a.StartNode.Y), new RealPoint(a.EndNode.X, a.EndNode.Y)).Paint(g, Color.LimeGreen, 1, Color.Transparent, Scale);
                     }
 
                 if (graph)
                     // Dessin des noeuds
                     foreach (Node n in robot.Graph.Nodes)
-                        new RealPoint(n.Position.X, n.Position.Y).Paint(g, n.Passable ? Color.Black : Color.Red, 3, Color.Blue, Scale);
+                        new RealPoint(n.Position.X, n.Position.Y).Paint(g, n.Passable ? Color.Black : Color.Red, 3, Color.LimeGreen, Scale);
             }
 
             //robot.SemGraph.Release();

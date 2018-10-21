@@ -18,11 +18,13 @@ namespace GoBot.Strategies
 
         protected override void SequenceBegin()
         {
+            // TODOEACHYEAR
+
             fixedMovements = new List<Movement>();
 
             // Sortir ICI de la zonde de départ
 
-            Plateau.Score += 10;
+            Plateau.Score = 0;
 
             ThreadManager.CreateThread(link => InitArms()).StartThread();
 
@@ -39,12 +41,10 @@ namespace GoBot.Strategies
 
             if (Plateau.NotreCouleur == Plateau.CouleurGaucheVert)
             {
-                new MovementDomoticBoard(Plateau.Elements.DomoticBoards[0]).Execute();
                 //fixedMovements.Add(new MouvementFusee(1));
             }
             else
             {
-                new MovementDomoticBoard(Plateau.Elements.DomoticBoards[1]).Execute();
                 //fixedMovements.Add(new MouvementFusee(2));
             }
         }

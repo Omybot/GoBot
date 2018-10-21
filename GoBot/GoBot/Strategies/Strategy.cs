@@ -77,30 +77,12 @@ namespace GoBot.Strategies
             Plateau.PoidActions = new PoidsTest();
             Movements = new List<Movement>();
 
-            // Charger ICI dans les listes ListeMouvementsGros et ListeMouvementsPetit les mouvements possibles
-
-            for (int i = 0; i < Plateau.Elements.CubesCrosses.Count; i++)
-            {
-                Movements.Add(new MovementsCubesFromBottom(Plateau.Elements.CubesCrosses[i]));
-                Movements.Add(new MovementsCubesFromTop(Plateau.Elements.CubesCrosses[i]));
-                Movements.Add(new MovementsCubesFromLeft(Plateau.Elements.CubesCrosses[i]));
-                Movements.Add(new MovementsCubesFromRigth(Plateau.Elements.CubesCrosses[i]));
-            }
-
-            for (int i = 0; i < Plateau.Elements.ConstructionZones.Count; i++)
-            {
-                Movements.Add(new MovementBuilding(Plateau.Elements.ConstructionZones[i]));
-            }
-
-            for (int i = 0; i < Plateau.Elements.Flowers.Count; i++)
-            {
-                Movements.Add(new MovementBee(Plateau.Elements.Flowers[i]));
-            }
-
-            for (int i = 0; i < Plateau.Elements.DomoticBoards.Count; i++)
-            {
-                Movements.Add(new MovementDomoticBoard(Plateau.Elements.DomoticBoards[i]));
-            }
+            // TODOEACHYEAR Charger ICI dans Movements les mouvements possibles
+            
+            //for (int i = 0; i < Plateau.Elements.ConstructionZones.Count; i++)
+            //{
+            //    Movements.Add(new MovementBuilding(Plateau.Elements.ConstructionZones[i]));
+            //}
 
             for (int iMov = 0; iMov < Movements.Count; iMov++)
             {
@@ -123,8 +105,6 @@ namespace GoBot.Strategies
         /// </summary>
         public void ExecuteMatch()
         {
-            Actionneurs.Actionneur.PatternReader.StopPolling();
-
             Robots.GrosRobot.Historique.Log("DEBUT DU MATCH", TypeLog.Strat);
 
             StartingDateTime = DateTime.Now;
@@ -181,14 +161,8 @@ namespace GoBot.Strategies
         /// </summary>
         protected virtual void SequenceEnd()
         {
-            // Couper ICI tous les actionneurs à la fin du match et lancer la Funny Action
+            // TODOEACHYEAR Couper ICI tous les actionneurs à la fin du match et lancer la Funny Action
 
-            Config.CurrentConfig.MoteurElevation.SendPosition(Config.CurrentConfig.MoteurElevation.Neutre);
-            Actionneur.Harvester.DoLeftPumpDisable();
-            Actionneur.Harvester.DoRightPumpDisable();
-            Actionneur.Dumper.DoOpenGates();
-            Actionneur.Dumper.DoLibereTours();
-            Actionneur.Dumper.DoCoupeBenne();
             Robots.GrosRobot.Stop(StopMode.Freely);
             Plateau.Balise.VitesseRotation(0);
         }

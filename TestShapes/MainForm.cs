@@ -41,31 +41,34 @@ namespace TestShapes
 
             _shapes = new List<IShape>();
 
-            _shapes.Add(new Circle(new RealPoint(200, 200), 30));
-            _shapes.Add(new Circle(new RealPoint(250, 180), 30));
-            _shapes.Add(new Segment(new RealPoint(10, 10), new RealPoint(300, 300)));
-            _shapes.Add(new PolygonRectangle(new RealPoint(250, 250), 300, 50));
-            _shapes.Add(new Circle(new RealPoint(260, 500), 30));
-            _shapes.Add(new PolygonRectangle(new RealPoint(230, 400), 300, 40));
-            _shapes.Add(new Circle(new RealPoint(320, 420), 15));
+            _shapes.Add(new Segment(new RealPoint(500, 22), new RealPoint(2500, 22)));
+            _shapes.Add(new Segment(new RealPoint(1350, 850), new RealPoint(-100000, -100000)));
+            
+            //_shapes.Add(new Circle(new RealPoint(200, 200), 30));
+            //_shapes.Add(new Circle(new RealPoint(250, 180), 30));
+            //_shapes.Add(new Segment(new RealPoint(10, 10), new RealPoint(300, 300)));
+            //_shapes.Add(new PolygonRectangle(new RealPoint(250, 250), 300, 50));
+            //_shapes.Add(new Circle(new RealPoint(260, 500), 30));
+            //_shapes.Add(new PolygonRectangle(new RealPoint(230, 400), 300, 40));
+            //_shapes.Add(new Circle(new RealPoint(320, 420), 15));
 
-            _shapes.Add(new Circle(new RealPoint(100, 200), 15));
-            _shapes.Add(new Circle(new RealPoint(100, 200), 30));
-            _shapes.Add(new Circle(new RealPoint(100, 200), 45));
-            _shapes.Add(new Circle(new RealPoint(100, 200), 60));
+            //_shapes.Add(new Circle(new RealPoint(100, 200), 15));
+            //_shapes.Add(new Circle(new RealPoint(100, 200), 30));
+            //_shapes.Add(new Circle(new RealPoint(100, 200), 45));
+            //_shapes.Add(new Circle(new RealPoint(100, 200), 60));
 
-            _shapes.Add(new Circle(new RealPoint(80, 350), 15));
-            _shapes.Add(new Circle(new RealPoint(80 + 14, 350), 30));
-            _shapes.Add(new Circle(new RealPoint(80 + 14 + 14, 350), 45));
-            _shapes.Add(new Circle(new RealPoint(80 + 14 + 14 + 14, 350), 60));
+            //_shapes.Add(new Circle(new RealPoint(80, 350), 15));
+            //_shapes.Add(new Circle(new RealPoint(80 + 14, 350), 30));
+            //_shapes.Add(new Circle(new RealPoint(80 + 14 + 14, 350), 45));
+            //_shapes.Add(new Circle(new RealPoint(80 + 14 + 14 + 14, 350), 60));
 
-            _shapes.Add(new Circle(new RealPoint(80, 500), 15));
-            _shapes.Add(new Circle(new RealPoint(80 + 14, 500), 30));
-            _shapes.Add(new Circle(new RealPoint(80 + 14 + 14, 500), 45));
-            _shapes.Add(new Circle(new RealPoint(80 + 14 + 14 + 14, 500), 60));
-            _shapes.Add(new Segment(new RealPoint(80, 500), new RealPoint(180, 500)));
+            //_shapes.Add(new Circle(new RealPoint(80, 500), 15));
+            //_shapes.Add(new Circle(new RealPoint(80 + 14, 500), 30));
+            //_shapes.Add(new Circle(new RealPoint(80 + 14 + 14, 500), 45));
+            //_shapes.Add(new Circle(new RealPoint(80 + 14 + 14 + 14, 500), 60));
+            //_shapes.Add(new Segment(new RealPoint(80, 500), new RealPoint(180, 500)));
 
-            _shapes.Add(new PolygonRectangle(new RealPoint(230, 400), 300, 40).Rotation(45));
+            //_shapes.Add(new PolygonRectangle(new RealPoint(230, 400), 300, 40).Rotation(45));
         }
 
         #region Peinture
@@ -369,13 +372,15 @@ namespace TestShapes
 
         private void btnZoomPlus_Click(object sender, EventArgs e)
         {
-            _worldScale = new WorldScale(_worldScale.Factor *0.85, picWorld.Width / 2, picWorld.Height / 2);
+            _worldScale = new WorldScale(_worldScale.Factor * 0.85, picWorld.Width / 2, picWorld.Height / 2);
             picWorld.Invalidate();
         }
 
         private void btnZoomMinus_Click(object sender, EventArgs e)
         {
-            _worldScale = new WorldScale(_worldScale.Factor * 1.2, picWorld.Width / 2, picWorld.Height / 2);
+            //_worldScale = new WorldScale(_worldScale.Factor * 1.2, picWorld.Width / 2, picWorld.Height / 2);
+            //picWorld.Invalidate();
+            _worldScale = new WorldScale(_worldScale.Factor, -50, 600);
             picWorld.Invalidate();
         }
     }

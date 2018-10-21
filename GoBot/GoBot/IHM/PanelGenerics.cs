@@ -29,10 +29,14 @@ namespace GoBot.IHM
                 foreach (PropertyInfo prop in t.GetProperties())
                 {
                     PanelActionneurGeneric panel = new PanelActionneurGeneric();
-                    panel.SetObject(prop.GetValue(null, null));
-                    panel.SetBounds(x, 0, panel.Width, this.Height);
-                    this.Controls.Add(panel);
-                    x += 135;
+                    Object item = prop.GetValue(null, null);
+                    if (item != null)
+                    {
+                        panel.SetObject(item);
+                        panel.SetBounds(x, 0, panel.Width, this.Height);
+                        this.Controls.Add(panel);
+                        x += 135;
+                    }
                 }
             }
         }

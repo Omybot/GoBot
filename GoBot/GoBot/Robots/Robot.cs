@@ -102,7 +102,6 @@ namespace GoBot
         public abstract List<double>[] DiagnosticCpuPwm(int nbValeurs);
         public abstract bool DemandeCapteurOnOff(CapteurOnOffID capteur, bool attendre = true);
         public abstract Color DemandeCapteurCouleur(CapteurCouleurID capteur, bool attendre = true);
-        public abstract CubesPattern DemandeCapteurPattern(bool attendre = true);
         public abstract void DemandeValeursAnalogiques(Board carte, bool attendre = true);
         public abstract void DemandeValeursNumeriques(Board carte, bool attendre = true);
 
@@ -470,17 +469,12 @@ namespace GoBot
 
         public void RangerActionneurs()
         {
-            Config.CurrentConfig.ServoBenneLiberation.SendPosition(Config.CurrentConfig.ServoBenneLiberation.PositionMaintien);
-            Config.CurrentConfig.ServoBenneOuverture.SendPosition(Config.CurrentConfig.ServoBenneOuverture.PositionFerme);
-
-            Config.CurrentConfig.MoteurElevation.SendPosition(Config.CurrentConfig.MoteurElevation.DeplacementRange);
-            Actionneur.Harvester.DoStoreArms();
-            Config.CurrentConfig.MoteurElevation.SendPosition(Config.CurrentConfig.MoteurElevation.PositionRange);
+            // TODOEACHYEAR
         }
 
         public void DeployerActionnneurs()
         {
-
+            // TODOEACHYEAR
         }
     }
 }

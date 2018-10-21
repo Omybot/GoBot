@@ -84,9 +84,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Actionneurs\Actionneur.cs" />
-    <Compile Include="Actionneurs\Dumper.cs" />
-    <Compile Include="Actionneurs\Harvester.cs" />
-    <Compile Include="Actionneurs\PatternReader.cs" />
     <Compile Include="Actionneurs\Positionables.cs" />
     <Compile Include="Actionneurs\RobotPositionables.cs" />
     <Compile Include="Devices\ServosCan.cs" />
@@ -100,23 +97,11 @@
     <Compile Include="Actions\ITimeableAction.cs" />
     <Compile Include="ColorPlus.cs" />
     <Compile Include="GameBoard\Obstacles.cs" />
-    <Compile Include="GameElements\ConstructionZone.cs" />
-    <Compile Include="GameElements\CubesPattern.cs" />
-    <Compile Include="GameElements\CubesTower.cs" />
-    <Compile Include="GameElements\Distributor.cs" />
-    <Compile Include="GameElements\DomoticBoard.cs" />
-    <Compile Include="GameElements\Flower.cs" />
     <Compile Include="IHM\PanelBoardNumeric.cs">
       <SubType>UserControl</SubType>
     </Compile>
     <Compile Include="IHM\PanelBoardNumeric.Designer.cs">
       <DependentUpon>PanelBoardNumeric.cs</DependentUpon>
-    </Compile>
-    <Compile Include="IHM\PanelColorPattern.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="IHM\PanelColorPattern.Designer.cs">
-      <DependentUpon>PanelColorPattern.cs</DependentUpon>
     </Compile>
     <Compile Include="IHM\PanelLogThreads.cs">
       <SubType>UserControl</SubType>
@@ -131,10 +116,6 @@
       <DependentUpon>PanelServoCAN.cs</DependentUpon>
     </Compile>
     <Compile Include="IHM\SplashScreen.cs" />
-    <Compile Include="Movements\MovementBee.cs" />
-    <Compile Include="Movements\MovementBuilding.cs" />
-    <Compile Include="Movements\MovementCubes.cs" />
-    <Compile Include="Movements\MovementDomoticBoard.cs" />
     <Compile Include="NameFinder.cs" />
     <Compile Include="Actions\Asservissement\ActionAccelerationLigne.cs" />
     <Compile Include="Actions\Asservissement\ActionVitesseLigne.cs" />
@@ -202,7 +183,6 @@
     <Compile Include="Devices\RecGoBot.cs" />
     <Compile Include="GameElements\GameElement.cs" />
     <Compile Include="GameElements\AllGameElements.cs" />
-    <Compile Include="GameElements\CubesCross.cs" />
     <Compile Include="GameElements\GameElementZone.cs" />
     <Compile Include="Strategies\StrategyRoundTrip.cs" />
     <Compile Include="Strategies\StrategyMinimumScore.cs" />
@@ -477,9 +457,6 @@
     </EmbeddedResource>
     <EmbeddedResource Include="IHM\PanelBoardNumeric.resx">
       <DependentUpon>PanelBoardNumeric.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="IHM\PanelColorPattern.resx">
-      <DependentUpon>PanelColorPattern.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="IHM\PanelLogThreads.resx">
       <DependentUpon>PanelLogThreads.cs</DependentUpon>
