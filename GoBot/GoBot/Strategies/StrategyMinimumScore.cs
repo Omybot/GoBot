@@ -25,7 +25,7 @@ namespace GoBot.Strategies
             Robots.GrosRobot.SpeedConfig.SetParams(1000, 1500, 2000, 1000, 2000, 2000);
             //Robots.GrosRobot.SpeedConfig.SetParams(500, 500, 500, 500, 500, 500);
             
-            if (Plateau.NotreCouleur == Plateau.CouleurGaucheVert)
+            if (Plateau.NotreCouleur == Plateau.CouleurGaucheJaune)
             {
                 Robots.GrosRobot.Avancer(920);
 
@@ -56,7 +56,7 @@ namespace GoBot.Strategies
         {
             // TODOYEACHYEAR Ajouter ICI l'ordre de la strat fixe avant détection d'adversaire
 
-            if (Plateau.NotreCouleur == Plateau.CouleurGaucheVert)
+            if (Plateau.NotreCouleur == Plateau.CouleurGaucheJaune)
             {
                 _avoidElements = true;
                 Robots.GrosRobot.MajGraphFranchissable(Plateau.ListeObstacles);

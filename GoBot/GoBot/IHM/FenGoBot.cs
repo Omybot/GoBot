@@ -108,7 +108,7 @@ namespace GoBot
 
                 Instance = this;
 
-                Plateau.NotreCouleur = Plateau.CouleurGaucheVert;
+                Plateau.NotreCouleur = Plateau.CouleurGaucheJaune;
 
                 Connections.ConnectionIO.SendMessage(FrameFactory.DemandeCouleurEquipe());
                 

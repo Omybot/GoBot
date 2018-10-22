@@ -18,13 +18,13 @@ namespace GoBot
         {
             get
             {
-                return Plateau.NotreCouleur == Plateau.CouleurGaucheVert ? PositionDepartGauche : PositionDepartDroite;
+                return Plateau.NotreCouleur == Plateau.CouleurGaucheJaune ? PositionDepartGauche : PositionDepartDroite;
             }
         }
 
         static Recallages()
         {
-            PositionDepartGauche = new Position(0, new RealPoint(Robots.GrosRobot.Longueur / 2, Robots.GrosRobot.Largeur / 2 + 70));
+            PositionDepartGauche = new Position(0, new RealPoint(Robots.GrosRobot.Longueur / 2, Robots.GrosRobot.Largeur / 2 + 300));
             PositionDepartDroite = new Position(180, new RealPoint(3000 - PositionDepartGauche.Coordinates.X, PositionDepartGauche.Coordinates.Y));
         }
         
@@ -40,9 +40,9 @@ namespace GoBot
             Robots.GrosRobot.Avancer(10);
             Robots.GrosRobot.Recallage(SensAR.Arriere);
 
-            Robots.GrosRobot.Avancer((int)(70 + Robots.GrosRobot.Largeur / 2 - Robots.GrosRobot.Longueur / 2)); // 70mm du bord une fois en place
+            Robots.GrosRobot.Avancer((int)(PositionDepartGauche.Coordinates.Y - Robots.GrosRobot.Longueur / 2)); // 300mm du bord une fois en place
 
-            if (Plateau.NotreCouleur == Plateau.CouleurGaucheVert)
+            if (Plateau.NotreCouleur == Plateau.CouleurGaucheJaune)
                 Robots.GrosRobot.PivotGauche(90);
             else
                 Robots.GrosRobot.PivotDroite(90);

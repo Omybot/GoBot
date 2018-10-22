@@ -132,9 +132,9 @@ namespace GoBot
         void RecGoBot_ColorChange(MatchColor state)
         {
             if (state == MatchColor.LeftBlue)
-                couleurEquipe = Plateau.CouleurGaucheVert;
+                couleurEquipe = Plateau.CouleurGaucheJaune;
             else if (state == MatchColor.RightYellow)
-                couleurEquipe = Plateau.CouleurDroiteOrange;
+                couleurEquipe = Plateau.CouleurDroiteViolet;
 
             Plateau.NotreCouleur = couleurEquipe;
 
@@ -156,14 +156,14 @@ namespace GoBot
 
             if (this == Robots.GrosRobot)
             {
-                if (Plateau.NotreCouleur == Plateau.CouleurGaucheVert)
+                if (Plateau.NotreCouleur == Plateau.CouleurGaucheJaune)
                     Position = new Position(0, new RealPoint(240, 1000));
                 else
                     Position = new Position(180, new RealPoint(3000 - 240, 1000));
             }
             else
             {
-                if (Plateau.NotreCouleur == Plateau.CouleurGaucheVert)
+                if (Plateau.NotreCouleur == Plateau.CouleurGaucheJaune)
                     Position = new Position(0, new RealPoint(480, 1000));
                 else
                     Position = new Position(180, new RealPoint(3000 - 480, 1000));

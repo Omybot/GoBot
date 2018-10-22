@@ -30,7 +30,7 @@ namespace GoBot.Strategies
 
             Robots.GrosRobot.Avancer(50);
 
-            if (Plateau.NotreCouleur == Plateau.CouleurGaucheVert)
+            if (Plateau.NotreCouleur == Plateau.CouleurGaucheJaune)
                 Robots.GrosRobot.PivotDroite(5);
             else
                 Robots.GrosRobot.PivotGauche(5);
@@ -39,7 +39,7 @@ namespace GoBot.Strategies
 
             // Ajouter ICI l'ordre de la strat fixe avant détection d'adversaire
 
-            if (Plateau.NotreCouleur == Plateau.CouleurGaucheVert)
+            if (Plateau.NotreCouleur == Plateau.CouleurGaucheJaune)
             {
                 //fixedMovements.Add(new MouvementFusee(1));
             }

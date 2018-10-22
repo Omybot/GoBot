@@ -68,7 +68,7 @@ namespace GoBot
                     if (notreCouleur != value)
                     {
                         notreCouleur = value;
-                        if (Plateau.NotreCouleur == Plateau.CouleurGaucheVert)
+                        if (Plateau.NotreCouleur == Plateau.CouleurGaucheJaune)
                             Devices.Devices.RecGoBot.SetLedColor(Color.Green);
                         else
                             Devices.Devices.RecGoBot.SetLedColor(Color.Orange);
@@ -91,8 +91,8 @@ namespace GoBot
         }
         public static event EventHandler ScoreChange;
 
-        public static Color CouleurGaucheVert { get { return Color.FromArgb(96, 153, 58); } }
-        public static Color CouleurDroiteOrange { get { return Color.FromArgb(219, 114, 52); } }
+        public static Color CouleurGaucheJaune { get { return Color.FromArgb(254, 194, 16); } }
+        public static Color CouleurDroiteViolet { get { return Color.FromArgb(137, 58, 144); } }
 
         /// <summary>
         /// Largeur de la table (mm)

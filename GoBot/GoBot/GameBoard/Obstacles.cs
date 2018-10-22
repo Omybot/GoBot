@@ -135,14 +135,14 @@ namespace GoBot.GameBoard
             //obsLeft.Add(new Circle(new RealPoint(250, 850), 200));
             //obsLeft.Add(new PolygonRectangle(new RealPoint(2030, 0), 600, 180));
             //obsLeft.Add(new PolygonRectangle(new RealPoint(2600, 0), 400, 645));
-            obstacles.Add(Plateau.CouleurGaucheVert, obsLeft);
+            obstacles.Add(Plateau.CouleurGaucheJaune, obsLeft);
 
             // Obstacles pour le joueur de droite
             List<IShape> obsRight = new List<IShape>();
             obsRight.Add(new Circle(new RealPoint(3000 - 250, 850), 200));
             obsRight.Add(new PolygonRectangle(new RealPoint(400, 0), 600, 180));
             obsRight.Add(new PolygonRectangle(new RealPoint(0, 0), 400, 645));
-            obstacles.Add(Plateau.CouleurDroiteOrange, obsRight);
+            obstacles.Add(Plateau.CouleurDroiteViolet, obsRight);
 
             return obstacles;
         }

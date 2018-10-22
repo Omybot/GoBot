@@ -455,7 +455,7 @@ namespace GoBot.Beacons
 
                                     double marge = 4;
 
-                                    if (Plateau.NotreCouleur == Plateau.CouleurDroiteOrange)
+                                    if (Plateau.NotreCouleur == Plateau.CouleurDroiteViolet)
                                     {
                                         AngleDelta diff = 180 - (angleDetection - angleGrosRobot);
                                         if (Math.Abs((diff).InDegrees) < marge)
@@ -464,7 +464,7 @@ namespace GoBot.Beacons
                                             i--;
                                         }
                                     }
-                                    else if (Plateau.NotreCouleur == Plateau.CouleurGaucheVert)
+                                    else if (Plateau.NotreCouleur == Plateau.CouleurGaucheJaune)
                                     {
                                         AngleDelta diff = angleGrosRobot - angleDetection;
                                         if (Math.Abs((diff).InDegrees) < marge)

@@ -522,7 +522,7 @@ namespace GoBot
 
         public override Color GetCouleurEquipe(bool historique = true)
         {
-            return Plateau.CouleurDroiteOrange;
+            return Plateau.CouleurDroiteViolet;
         }
 
         public override List<int>[] MesureTestPid(int consigne, SensAR sens, int nbValeurs)

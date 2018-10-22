@@ -25,7 +25,7 @@ namespace GoBot.Strategies
 
             Robots.GrosRobot.Avancer(200);
 
-            if (Plateau.NotreCouleur == Plateau.CouleurGaucheVert)
+            if (Plateau.NotreCouleur == Plateau.CouleurGaucheJaune)
                 Robots.GrosRobot.PivotDroite(45);
             else
                 Robots.GrosRobot.PivotGauche(45);
