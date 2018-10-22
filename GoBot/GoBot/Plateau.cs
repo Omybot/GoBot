@@ -158,11 +158,11 @@ namespace GoBot
 
             if (Plateau.Strategy == null)
             {
-                // Tester ICI ce qu'il y a à tester en fonction de la position de l'ennemi AVANT de lancer le match
+                // TODOEACHYEAR Tester ICI ce qu'il y a à tester en fonction de la position de l'ennemi AVANT de lancer le match
             }
             else
             {
-                // Tester ICI ce qu'il y a à tester en fonction de la position de l'ennemi PENDANT le match
+                // TODOEACHYEAR Tester ICI ce qu'il y a à tester en fonction de la position de l'ennemi PENDANT le match
 
                 Elements.SetOpponents(positions);
 

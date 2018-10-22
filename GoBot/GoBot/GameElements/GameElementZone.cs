@@ -20,7 +20,7 @@ namespace GoBot.GameElements
             : base(position, color, radius)
         {
             IsHover = false;
-            Color = color;
+            Owner = color;
         }
         
         /// <summary>

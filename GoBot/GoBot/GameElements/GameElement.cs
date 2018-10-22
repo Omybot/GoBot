@@ -9,28 +9,28 @@ namespace GoBot.GameElements
 {
     public abstract class GameElement
     {
-        protected RealPoint position;
-        protected bool isAvailable;
-        protected bool isHover;
-        protected int hoverRadius;
-        protected Color color;
+        protected RealPoint _position;
+        protected bool _isAvailable;
+        protected bool _isHover;
+        protected int _hoverRadius;
+        protected Color _owner;
 
         /// <summary>
         /// Obtient ou définit si l'élement de jeu est parti et donc n'est plus disponible
         /// </summary>
         public bool IsAvailable
         {
-            get { return isAvailable; }
-            set { isAvailable = value; }
+            get { return _isAvailable; }
+            set { _isAvailable = value; }
         }
 
         /// <summary>
         /// Obtient ou définir la couleur de l'action (joueur propriétaire ou blanc)
         /// </summary>
-        public Color Color
+        public Color Owner
         {
-            get { return color; }
-            set { color = value; }
+            get { return _owner; }
+            set { _owner = value; }
         }
 
         /// <summary>
@@ -38,8 +38,8 @@ namespace GoBot.GameElements
         /// </summary>
         public RealPoint Position
         {
-            get { return position; }
-            set { position = value; }
+            get { return _position; }
+            set { _position = value; }
         }
         
         /// <summary>
@@ -47,8 +47,8 @@ namespace GoBot.GameElements
         /// </summary>
         public bool IsHover
         {
-            get { return isHover; }
-            set { isHover = value; }
+            get { return _isHover; }
+            set { _isHover = value; }
         }
         
         /// <summary>
@@ -56,22 +56,22 @@ namespace GoBot.GameElements
         /// </summary>
         public int HoverRadius
         {
-            get { return hoverRadius; }
-            set { hoverRadius = value; }
+            get { return _hoverRadius; }
+            set { _hoverRadius = value; }
         }
 
         /// <summary>
         /// Constructeur
         /// </summary>
         /// <param name="position">Position de l'élément</param>
-        /// <param name="color">Couleur d'appartenance de l'élément</param>
+        /// <param name="owner">Couleur d'appartenance de l'élément</param>
         /// <param name="hoverRadius">Rayon de survol de l'élément</param>
-        public GameElement(RealPoint position, Color color, int hoverRadius)
+        public GameElement(RealPoint position, Color owner, int hoverRadius)
         {
-            this.hoverRadius = hoverRadius;
-            this.position = position;
-            this.color = color;
-            this.isAvailable = true;
+            this._hoverRadius = hoverRadius;
+            this._position = position;
+            this._owner = owner;
+            this._isAvailable = true;
         }
 
         /// <summary>

@@ -40,7 +40,7 @@ namespace GoBot
             Robots.GrosRobot.Avancer(10);
             Robots.GrosRobot.Recallage(SensAR.Arriere);
 
-            Robots.GrosRobot.Avancer((int)(PositionDepartGauche.Coordinates.Y - Robots.GrosRobot.Longueur / 2)); // 300mm du bord une fois en place
+            Robots.GrosRobot.Avancer((int)(PositionDepartGauche.Coordinates.Y - Robots.GrosRobot.Longueur / 2));
 
             if (Plateau.NotreCouleur == Plateau.CouleurGaucheJaune)
                 Robots.GrosRobot.PivotGauche(90);
