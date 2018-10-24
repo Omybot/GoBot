@@ -15,7 +15,7 @@ namespace GoBot.Actionneurs
 
         static Actionneur()
         {
-            _hokuyo = CreateHokuyo("COM5", LidarID.Detection);
+            _hokuyo = CreateHokuyo("COM6", LidarID.Detection);
             _servosCan = new ServosCan(Board.RecIO);
         }
 

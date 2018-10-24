@@ -42,17 +42,25 @@
             this.lblMousePosition = new System.Windows.Forms.Label();
             this.lblMousePositionTxt = new System.Windows.Forms.Label();
             this.lblMeasuresPerSecond = new System.Windows.Forms.Label();
+            this.numDistanceMax = new System.Windows.Forms.NumericUpDown();
+            this.lblDistanceMax = new System.Windows.Forms.Label();
+            this.lblDistanceMaxUnit = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.picWorld)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numDistanceMax)).BeginInit();
             this.SuspendLayout();
             // 
             // switchBouton1
             // 
+            this.switchBouton1.AutoSize = true;
             this.switchBouton1.BackColor = System.Drawing.Color.Transparent;
             this.switchBouton1.Location = new System.Drawing.Point(29, 16);
+            this.switchBouton1.MaximumSize = new System.Drawing.Size(35, 15);
+            this.switchBouton1.MinimumSize = new System.Drawing.Size(35, 15);
+            this.switchBouton1.Mirrored = true;
             this.switchBouton1.Name = "switchBouton1";
             this.switchBouton1.Size = new System.Drawing.Size(35, 15);
-            this.switchBouton1.Mirrored = true;
             this.switchBouton1.TabIndex = 2;
+            this.switchBouton1.Value = false;
             this.switchBouton1.ValueChanged += new Composants.SwitchButton.ValueChangedDelegate(this.switchEnable_ValueChanged);
             // 
             // rdoOutline
@@ -88,14 +96,14 @@
             // trackZoom
             // 
             this.trackZoom.BackColor = System.Drawing.Color.Transparent;
-            this.trackZoom.IntervalTimer = 1;
-            this.trackZoom.Location = new System.Drawing.Point(3, 180);
+            this.trackZoom.DecimalPlaces = 1;
+            this.trackZoom.IntervalTimer = ((uint)(1u));
+            this.trackZoom.Location = new System.Drawing.Point(5, 157);
             this.trackZoom.Max = 10D;
             this.trackZoom.MaximumSize = new System.Drawing.Size(3000, 15);
             this.trackZoom.Min = 0.1D;
-            this.trackZoom.MinimumSize = new System.Drawing.Size(0, 15);
+            this.trackZoom.MinimumSize = new System.Drawing.Size(30, 15);
             this.trackZoom.Name = "trackZoom";
-            this.trackZoom.DecimalPlaces = 1;
             this.trackZoom.Reverse = false;
             this.trackZoom.Size = new System.Drawing.Size(90, 15);
             this.trackZoom.TabIndex = 6;
@@ -107,7 +115,7 @@
             this.boxScale.AutoSize = true;
             this.boxScale.Checked = true;
             this.boxScale.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.boxScale.Location = new System.Drawing.Point(13, 233);
+            this.boxScale.Location = new System.Drawing.Point(13, 178);
             this.boxScale.Name = "boxScale";
             this.boxScale.Size = new System.Drawing.Size(61, 17);
             this.boxScale.TabIndex = 7;
@@ -129,7 +137,7 @@
             // boxGroup
             // 
             this.boxGroup.AutoSize = true;
-            this.boxGroup.Location = new System.Drawing.Point(13, 256);
+            this.boxGroup.Location = new System.Drawing.Point(13, 201);
             this.boxGroup.Name = "boxGroup";
             this.boxGroup.Size = new System.Drawing.Size(64, 17);
             this.boxGroup.TabIndex = 9;
@@ -187,8 +195,53 @@
             this.lblMeasuresPerSecond.Text = "-";
             this.lblMeasuresPerSecond.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
+            // numDistanceMax
+            // 
+            this.numDistanceMax.Increment = new decimal(new int[] {
+            100,
+            0,
+            0,
+            0});
+            this.numDistanceMax.Location = new System.Drawing.Point(6, 252);
+            this.numDistanceMax.Maximum = new decimal(new int[] {
+            4000,
+            0,
+            0,
+            0});
+            this.numDistanceMax.Name = "numDistanceMax";
+            this.numDistanceMax.Size = new System.Drawing.Size(58, 20);
+            this.numDistanceMax.TabIndex = 15;
+            this.numDistanceMax.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.numDistanceMax.Value = new decimal(new int[] {
+            4000,
+            0,
+            0,
+            0});
+            this.numDistanceMax.ValueChanged += new System.EventHandler(this.numDistanceMax_ValueChanged);
+            // 
+            // lblDistanceMax
+            // 
+            this.lblDistanceMax.AutoSize = true;
+            this.lblDistanceMax.Location = new System.Drawing.Point(5, 236);
+            this.lblDistanceMax.Name = "lblDistanceMax";
+            this.lblDistanceMax.Size = new System.Drawing.Size(77, 13);
+            this.lblDistanceMax.TabIndex = 16;
+            this.lblDistanceMax.Text = "Distance max :";
+            // 
+            // lblDistanceMaxUnit
+            // 
+            this.lblDistanceMaxUnit.AutoSize = true;
+            this.lblDistanceMaxUnit.Location = new System.Drawing.Point(70, 254);
+            this.lblDistanceMaxUnit.Name = "lblDistanceMaxUnit";
+            this.lblDistanceMaxUnit.Size = new System.Drawing.Size(23, 13);
+            this.lblDistanceMaxUnit.TabIndex = 17;
+            this.lblDistanceMaxUnit.Text = "mm";
+            // 
             // PanelHokuyo
             // 
+            this.Controls.Add(this.lblDistanceMaxUnit);
+            this.Controls.Add(this.lblDistanceMax);
+            this.Controls.Add(this.numDistanceMax);
             this.Controls.Add(this.lblMeasuresPerSecond);
             this.Controls.Add(this.lblMousePositionTxt);
             this.Controls.Add(this.lblMousePosition);
@@ -206,6 +259,7 @@
             this.Size = new System.Drawing.Size(851, 461);
             this.Load += new System.EventHandler(this.PanelHokuyo_Load);
             ((System.ComponentModel.ISupportInitialize)(this.picWorld)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numDistanceMax)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -225,5 +279,8 @@
         private System.Windows.Forms.Label lblMousePosition;
         private System.Windows.Forms.Label lblMousePositionTxt;
         private System.Windows.Forms.Label lblMeasuresPerSecond;
+        private System.Windows.Forms.NumericUpDown numDistanceMax;
+        private System.Windows.Forms.Label lblDistanceMax;
+        private System.Windows.Forms.Label lblDistanceMaxUnit;
     }
 }

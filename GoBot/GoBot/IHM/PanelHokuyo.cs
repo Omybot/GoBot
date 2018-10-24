@@ -62,7 +62,7 @@ namespace GoBot.IHM
             if (!Execution.DesignMode)
             {
                 trackZoom.SetValue(1);
-                if(Actionneur.Hokuyo != null)
+                if (Actionneur.Hokuyo != null)
                     Actionneur.Hokuyo.FrequencyChange += Hokuyo_FrequencyChange;
             }
         }
@@ -81,7 +81,7 @@ namespace GoBot.IHM
 
                 List<List<RealPoint>> groups = points.GroupByDistance(50);
 
-                cercles = groups.Select(g => g.GetContainingCircle()).ToList();
+                cercles = groups.Select(g => g.FitCircle()).ToList();
                 cercles = cercles.Where(c => c.Radius > 20 && c.Radius < 40).ToList();
             } while (cercles.Count == 0);
 
@@ -117,7 +117,7 @@ namespace GoBot.IHM
                         new Circle(new RealPoint(), i).Paint(g, Color.Gray, picWorld.Dimensions.WorldScale.Factor < 1 ? 2 : 1, Color.Transparent, picWorld.Dimensions.WorldScale);
                     }
 
-                    if(picWorld.Dimensions.WorldScale.Factor < 1)
+                    if (picWorld.Dimensions.WorldScale.Factor < 1)
                     {
                         for (int i = 10; i < 5000; i += 10)
                         {
@@ -165,11 +165,22 @@ namespace GoBot.IHM
                     if (boxGroup.Checked)
                     {
                         List<List<RealPoint>> groups = points.GroupByDistance(50);
+
+                        List<Color> colors = new List<Color>(){ Color.Blue, Color.Green, Color.Red, Color.Brown};
+
                         for (int i = 0; i < groups.Count; i++)
                         {
-                            Circle circle = groups[i].GetContainingCircle();
-                            circle.Paint(g, Color.Black, 1, Color.Transparent, picWorld.Dimensions.WorldScale);
-                            g.DrawString((circle.Radius * 2).ToString("0"), new Font("Calibri", 9), Brushes.Black, picWorld.Dimensions.WorldScale.RealToScreenPosition(circle.Center.Translation(circle.Radius, 0)));
+                            if (groups[i].Count > 10 && i < colors.Count)
+                            {
+                                Circle circle = groups[i].FitCircle();
+                                Line line = groups[i].FitLine();
+
+                                circle.Paint(g, colors[i], 1, Color.Transparent, picWorld.Dimensions.WorldScale);
+                                g.DrawString((circle.Radius * 2).ToString("0") + "mm / " + (groups[i].FitCircleScore(circle) * 100).ToString("0") + "% / " + (groups[i].FitLineCorrelation()).ToString("0.00") + "%", new Font("Calibri", 9), new SolidBrush(colors[i]), picWorld.Dimensions.WorldScale.RealToScreenPosition(circle.Center.Translation(circle.Radius, 0)));
+
+                                line.Paint(g, colors[i], 1, Color.Transparent, picWorld.Dimensions.WorldScale);
+                                
+                            }
                         }
                     }
                 }
@@ -179,6 +190,11 @@ namespace GoBot.IHM
         private void picWorld_MouseMove(object sender, MouseEventArgs e)
         {
             lblMousePosition.Text = picWorld.Dimensions.WorldScale.ScreenToRealPosition(e.Location).ToString();
+        }
+
+        private void numDistanceMax_ValueChanged(object sender, EventArgs e)
+        {
+            Actionneur.Hokuyo.MaxDistance = (int)numDistanceMax.Value;
         }
     }
 }

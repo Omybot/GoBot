@@ -48,6 +48,8 @@ namespace GoBot.Devices
 
         public List<RealPoint> LastMeasure { get { return _lastMeasure; } }
 
+        public int MaxDistance { get { return _maxDistance; } set { _maxDistance = value; } }
+
         #endregion
 
         #region Constructeurs
