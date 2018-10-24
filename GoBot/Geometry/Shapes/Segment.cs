@@ -530,6 +530,32 @@ namespace Geometry.Shapes
 
             return new Segment(_startPoint.Rotation(angle, rotationCenter), _endPoint.Rotation(angle, rotationCenter));
         }
+
+        /// <summary>
+        /// Retourne un segment qui prolonge l'actuel en ajoutant un point.
+        /// Le résultat est valide uniquement si le point ajouté se trouve sur la droite formée par le segment.
+        /// </summary>
+        /// <param name="pt">Point à ajouter au segment</param>
+        /// <returns>Segment prolongé jusqu'au point donné</returns>
+        public Segment Join(RealPoint pt)
+        {
+            Segment s1 = new Segment(_startPoint, pt);
+            Segment s2 = new Segment(_endPoint, pt);
+
+            Segment res;
+
+            if (this.Contains(pt))
+                res = new Segment(this);
+            else if (s1.Contains(_endPoint))
+                res = s1;
+            else if (s2.Contains(_startPoint))
+                res = s2;
+            else
+                res = null;
+
+            return res;
+        }
+
         #endregion
 
         #region Peinture

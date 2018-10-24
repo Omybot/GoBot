@@ -70,7 +70,7 @@ namespace Geometry.Shapes
         /// Régression linéaire par la méthode des moindres carrés.
         /// </summary>
         /// <param name="points">Liste des points qui génèrent la droite</param>
-        public Line(List<RealPoint> points)
+        public Line(IEnumerable<RealPoint> points)
         {
             double xAvg, yAvg, sum1, sum2;
 
@@ -79,17 +79,17 @@ namespace Geometry.Shapes
             xAvg = points.Average(p => p.X);
             yAvg = points.Average(p => p.Y);
 
-            for (int i = 0; i < points.Count; i++)
+            foreach (RealPoint p in points)
             {
-                sum1 += (points[i].X - xAvg) * (points[i].Y - yAvg);
-                sum2 += (points[i].X - xAvg) * (points[i].X - xAvg);
+                sum1 += (p.X - xAvg) * (p.Y - yAvg);
+                sum2 += (p.X - xAvg) * (p.X - xAvg);
             }
 
             if (sum2 == 0)
             {
                 // Droite verticale
                 _a = 0;
-                _b = -points[0].X;
+                _b = -points.ElementAt(0).X;
                 _c = 0;
             }
             else
@@ -419,6 +419,16 @@ namespace Geometry.Shapes
 
                 return new Line(newA, newB);
             }
+        }
+
+        /// <summary>
+        /// Retourne la projection hortogonale du point sur la droite.
+        /// </summary>
+        /// <param name="point">Point à projet sur la droite</param>
+        /// <returns>Projection du point sur la droite</returns>
+        public RealPoint GetProjection(RealPoint point)
+        {
+            return GetCrossingPoints(GetPerpendicular(point))[0]; ;
         }
 
         public bool IsParallel(Line other)

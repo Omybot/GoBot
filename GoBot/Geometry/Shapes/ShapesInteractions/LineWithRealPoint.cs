@@ -39,11 +39,8 @@ namespace Geometry.Shapes.ShapesInteractions
             // Puis on calcule l'intersection de la droite et de sa perpendiculaire
             // On obtient la projection orthogonale du point, qui est le point de la droite le plus proche du point donné
             // On retourne la distance entre ces deux points
-
-            Line perpendicular = line.GetPerpendicular(point);
-            RealPoint cross = line.GetCrossingPoints(perpendicular)[0];
-
-            return point.Distance(cross);
+            
+            return point.Distance(line.GetProjection(point));
         }
 
 

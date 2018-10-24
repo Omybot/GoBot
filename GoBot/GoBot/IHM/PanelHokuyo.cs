@@ -173,7 +173,8 @@ namespace GoBot.IHM
                             if (groups[i].Count > 10 && i < colors.Count)
                             {
                                 Circle circle = groups[i].FitCircle();
-                                Line line = groups[i].FitLine();
+                                //Line line = groups[i].FitLine();
+                                Segment line = groups[i].FitSegment();
 
                                 circle.Paint(g, colors[i], 1, Color.Transparent, picWorld.Dimensions.WorldScale);
                                 g.DrawString((circle.Radius * 2).ToString("0") + "mm / " + (groups[i].FitCircleScore(circle) * 100).ToString("0") + "% / " + (groups[i].FitLineCorrelation()).ToString("0.00") + "%", new Font("Calibri", 9), new SolidBrush(colors[i]), picWorld.Dimensions.WorldScale.RealToScreenPosition(circle.Center.Translation(circle.Radius, 0)));

@@ -44,6 +44,7 @@
     <Compile Include="AngleDelta.cs" />
     <Compile Include="AnglePosition.cs" />
     <Compile Include="BezierCurve.cs" />
+    <Compile Include="Matrix.cs" />
     <Compile Include="RectangleExtensions.cs" />
     <Compile Include="Shapes\Circle.cs" />
     <Compile Include="Shapes\IShape.cs" />

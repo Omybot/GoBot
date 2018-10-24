@@ -10,19 +10,19 @@ namespace Geometry
         /// <summary>
         /// Retourne l'écart-type d'une liste de valeurs décimales
         /// </summary>
-        /// <param name="list">Valeurs décimales</param>
+        /// <param name="values">Valeurs décimales</param>
         /// <returns>Ecart-type</returns>
-        public static double StandardDeviation(this List<double> list)
+        public static double StandardDeviation(this IEnumerable<double> values)
         {
-            if (list.Count > 0)
+            if (values.Count() > 0)
             {
-                double avg = list.Average();
+                double avg = values.Average();
                 double diffs = 0;
 
-                foreach (double val in list)
+                foreach (double val in values)
                     diffs += (val - avg) * (val - avg);
 
-                diffs /= list.Count;
+                diffs /= values.Count();
                 diffs = Math.Sqrt(diffs);
 
                 return diffs;
