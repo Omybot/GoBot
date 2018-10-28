@@ -139,7 +139,7 @@ namespace GoBot
                 ReflecteursNosRobots = true;
 
                 _obstacles = new Obstacles(Elements);
-                CreerSommets(100);
+                CreerSommets(25);
 
                 Balise.PositionEnnemisActualisee += Balise_PositionEnnemisActualisee;
 
@@ -192,14 +192,14 @@ namespace GoBot
         private void CreerSommets(int resolution, double distanceLiaison = -1)
         {
             if (distanceLiaison == -1)
-                distanceLiaison = Math.Sqrt((resolution * resolution) * 2) + 1;
+                distanceLiaison = Math.Sqrt((resolution * resolution) * 2) * 1.05; //+5% pour prendre large
 
-            Robots.GrosRobot.Graph = new Graph();
+            Robots.GrosRobot.Graph = new Graph(resolution, distanceLiaison);
 
             // Création des noeuds
             for (int x = resolution / 2; x < Largeur; x += resolution)
                 for (int y = resolution / 2; y < Hauteur; y += resolution)
-                    Robots.GrosRobot.Graph.AddNode(new Node(x, y, 0), _obstacles.FromBoard, Robots.GrosRobot.Rayon, Math.Sqrt(resolution * resolution * 2) + 1, true);
+                    Robots.GrosRobot.Graph.AddNode(new Node(x, y, 0), _obstacles.FromBoard, Robots.GrosRobot.Rayon, true);
         }
 
         public static void SetDetections(IEnumerable<IShape> detections)

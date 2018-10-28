@@ -97,6 +97,7 @@ namespace GoBot
             this.btnClose = new System.Windows.Forms.Button();
             this.btnFenetre = new System.Windows.Forms.Button();
             this.panelConnexions = new GoBot.IHM.PanelConnexions();
+            this.button1 = new System.Windows.Forms.Button();
             this.tabAlimentation.SuspendLayout();
             this.tabServomoteurs.SuspendLayout();
             this.tabConnexions.SuspendLayout();
@@ -346,6 +347,7 @@ namespace GoBot
             // 
             // tabTable
             // 
+            this.tabTable.Controls.Add(this.button1);
             this.tabTable.Controls.Add(this.panelTable);
             this.tabTable.Location = new System.Drawing.Point(4, 22);
             this.tabTable.Name = "tabTable";
@@ -812,6 +814,16 @@ namespace GoBot
             this.panelConnexions.Size = new System.Drawing.Size(980, 27);
             this.panelConnexions.TabIndex = 74;
             // 
+            // button1
+            // 
+            this.button1.Location = new System.Drawing.Point(210, 39);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(75, 23);
+            this.button1.TabIndex = 1;
+            this.button1.Text = "button1";
+            this.button1.UseVisualStyleBackColor = true;
+            this.button1.Click += new System.EventHandler(this.button1_Click);
+            // 
             // FenGoBot
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -940,6 +952,7 @@ namespace GoBot
         private PanelServoCAN panelServoCAN1;
         private System.Windows.Forms.GroupBox grpServoCAN;
         private System.Windows.Forms.GroupBox grpServoCodeur;
+        private System.Windows.Forms.Button button1;
     }
 }
 

@@ -90,8 +90,7 @@ namespace GoBot.Strategies
                 {
                     if(!Movements[iMov].Robot.Graph.Raccordable(new Node(Movements[iMov].Positions[iPos].Coordinates.X, Movements[iMov].Positions[iPos].Coordinates.Y, 0),
                         Plateau.ListeObstacles,
-                        Movements[iMov].Robot.Rayon,
-                        200))
+                        Movements[iMov].Robot.Rayon))
                     {
                         Movements[iMov].Positions.RemoveAt(iPos);
                         iPos--;

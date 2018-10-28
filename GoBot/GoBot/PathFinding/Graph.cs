@@ -17,6 +17,7 @@ using System.Collections.Generic;
 using GoBot;
 using Geometry.Shapes;
 using System.Threading;
+using System.Linq;
 
 namespace AStarFolder
 {
@@ -27,36 +28,43 @@ namespace AStarFolder
     [Serializable]
     public class Graph
     {
+        private double _resolution, _distanceMax;
 
-        ArrayList LN;
-        ArrayList LA;
+        private ArrayList _nodes, _arcs;
+
+        double Resolution { get { return _resolution; } }
+        double DistanceMaxRaccordable { get { return _distanceMax; } }
+
 
         /// <summary>
         /// Constructor.
         /// </summary>
-        public Graph()
+        public Graph(double resolution, double distanceMaxRaccordable)
         {
-            LN = new ArrayList();
-            LA = new ArrayList();
+            _resolution = resolution;
+            _distanceMax = distanceMaxRaccordable;
+
+            _nodes = new ArrayList();
+            _arcs = new ArrayList();
         }
 
         /// <summary>
         /// Gets the List interface of the nodes in the graph.
         /// </summary>
-        public IList Nodes { get { return LN; } }
+        public IList Nodes { get { return _nodes; } }
 
         /// <summary>
         /// Gets the List interface of the arcs in the graph.
         /// </summary>
-        public IList Arcs { get { return LA; } }
+        public IList Arcs { get { return _arcs; } }
 
         /// <summary>
         /// Empties the graph.
         /// </summary>
         public void Clear()
         {
-            LN.Clear();
-            LA.Clear();
+            _nodes.Clear();
+            _arcs.Clear();
         }
 
         /// <summary>
@@ -67,7 +75,7 @@ namespace AStarFolder
         public bool AddNode(Node NewNode)
         {
             //if ( NewNode==null || LN.Contains(NewNode) ) return false;
-            LN.Add(NewNode);
+            _nodes.Add(NewNode);
             return true;
         }
 
@@ -91,10 +99,9 @@ namespace AStarFolder
         /// <param name="node">Noeud à ajouter</param>
         /// <param name="obstacles">Obstacles à éviter</param>
         /// <param name="distanceSecurite">Distance (mm) de sécurité auour des obstacles</param>
-        /// <param name="distanceMax">Distance (mm) max de liaison avec les autres noeuds</param>
         /// <param name="permnant">True si le point est ajouté de façon permanente et donc ne sera pas supprimé au prochain appel de @CleanNodesArcsAdd</param>
         /// <returns>Nombre de points reliés au point ajouté</returns>
-        public int AddNode(Node node, IEnumerable<IShape> obstacles, double distanceSecurite, double distanceMax, bool permanent = false)
+        public int AddNode(Node node, IEnumerable<IShape> obstacles, double distanceSecurite, bool permanent = false)
         {
             double distanceNode;
 
@@ -126,7 +133,7 @@ namespace AStarFolder
                 if (node != no)
                 {
                     double distance = new RealPoint(node.Position.X, node.Position.Y).Distance(new RealPoint(no.Position.X, no.Position.Y));
-                    if (distance < distanceMax)
+                    if (distance < _distanceMax)
                     {
                         Arc arc = new Arc(no, node);
                         arc.Weight = Math.Sqrt(distance);
@@ -171,34 +178,21 @@ namespace AStarFolder
         /// <param name="distanceSecurite"></param>
         /// <param name="distanceMax"></param>
         /// <returns></returns>
-        public bool Raccordable(Node node, IEnumerable<IShape> obstacles, double distanceSecurite, double distanceMax)
+        public bool Raccordable(Node node, IEnumerable<IShape> obstacles, double distanceSecurite)
         {
+            bool ok;
+
             foreach (Node no in Nodes)
             {
                 if (!node.Equals(no))
                 {
                     double distance = new RealPoint(node.Position.X, node.Position.Y).Distance(new RealPoint(no.Position.X, no.Position.Y));
-                    if (distance < distanceMax)
+                    if (distance < _distanceMax)
                     {
-                        Arc arc = new Arc(no, node);
-                        arc.Weight = Math.Sqrt(distance);
-                        Arc arc2 = new Arc(node, no);
-                        arc2.Weight = Math.Sqrt(distance);
-
-                        foreach (IShape obstacle in obstacles)
-                        {
-                            if (obstacle.Distance(new Segment(new RealPoint(no.X, no.Y), new RealPoint(node.X, node.Y))) < distanceSecurite)
-                            {
-                                arc.Passable = false;
-                                arc2.Passable = false;
-                                break;
-                            }
-                        }
-
-                        if (arc.Passable)
-                        {
+                        ok = (obstacles.FirstOrDefault(o => o.Distance(new Segment(new RealPoint(no.X, no.Y), new RealPoint(node.X, node.Y))) < distanceSecurite) == null);
+                        
+                        if (ok)
                             return true;
-                        }
                     }
                 }
             }
@@ -234,9 +228,9 @@ namespace AStarFolder
             //if ( NewArc==null || LA.Contains(NewArc) ) return false;
             if (NewArc == null) return false;
 
-            if (!LN.Contains(NewArc.StartNode) || !LN.Contains(NewArc.EndNode))
+            if (!_nodes.Contains(NewArc.StartNode) || !_nodes.Contains(NewArc.EndNode))
                 throw new ArgumentException("Cannot add an arc if one of its extremity nodes does not belong to the graph.");
-            LA.Add(NewArc);
+            _arcs.Add(NewArc);
             return true;
         }
 
@@ -281,14 +275,14 @@ namespace AStarFolder
                 foreach (Arc A in NodeToRemove.IncomingArcs)
                 {
                     A.StartNode.OutgoingArcs.Remove(A);
-                    LA.Remove(A);
+                    _arcs.Remove(A);
                 }
                 foreach (Arc A in NodeToRemove.OutgoingArcs)
                 {
                     A.EndNode.IncomingArcs.Remove(A);
-                    LA.Remove(A);
+                    _arcs.Remove(A);
                 }
-                LN.Remove(NodeToRemove);
+                _nodes.Remove(NodeToRemove);
             }
             catch { return false; }
             return true;
@@ -296,21 +290,21 @@ namespace AStarFolder
 
         public bool RemoveNode(int index)
         {
-            if (index < 0 || index > LN.Count) return false;
+            if (index < 0 || index > _nodes.Count) return false;
             try
             {
-                Node NodeToRemove = (Node)LN[index];
+                Node NodeToRemove = (Node)_nodes[index];
                 foreach (Arc A in NodeToRemove.IncomingArcs)
                 {
                     A.StartNode.OutgoingArcs.Remove(A);
-                    LA.Remove(A);
+                    _arcs.Remove(A);
                 }
                 foreach (Arc A in NodeToRemove.OutgoingArcs)
                 {
                     A.EndNode.IncomingArcs.Remove(A);
-                    LA.Remove(A);
+                    _arcs.Remove(A);
                 }
-                LN.RemoveAt(index);
+                _nodes.RemoveAt(index);
             }
             catch { return false; }
             return true;
@@ -326,7 +320,7 @@ namespace AStarFolder
             if (ArcToRemove == null) return false;
             try
             {
-                LA.Remove(ArcToRemove);
+                _arcs.Remove(ArcToRemove);
                 ArcToRemove.StartNode.OutgoingArcs.Remove(ArcToRemove);
                 ArcToRemove.EndNode.IncomingArcs.Remove(ArcToRemove);
             }
@@ -336,11 +330,11 @@ namespace AStarFolder
 
         public bool RemoveArc(int index)
         {
-            Arc ArcToRemove = (Arc)LA[index];
+            Arc ArcToRemove = (Arc)_arcs[index];
             if (ArcToRemove == null) return false;
             try
             {
-                LA.RemoveAt(index);
+                _arcs.RemoveAt(index);
                 ArcToRemove.StartNode.OutgoingArcs.Remove(ArcToRemove);
                 ArcToRemove.EndNode.IncomingArcs.Remove(ArcToRemove);
             }
@@ -378,7 +372,7 @@ namespace AStarFolder
             Node NodeMin = null;
             double DistanceMin = -1;
             Point3D P = new Point3D(PtX, PtY, PtZ);
-            foreach (Node N in LN)
+            foreach (Node N in _nodes)
             {
                 if (!IgnorePassableProperty && N.Passable == false) continue;
                 double DistanceTemp = Point3D.DistanceBetween(N.Position, P);
@@ -406,7 +400,7 @@ namespace AStarFolder
             Arc ArcMin = null;
             double DistanceMin = -1;
             Point3D P = new Point3D(PtX, PtY, PtZ);
-            foreach (Arc A in LA)
+            foreach (Arc A in _arcs)
             {
                 if (IgnorePassableProperty && A.Passable == false) continue;
                 Point3D Projection = Point3D.ProjectOnLine(P, A.StartNode.Position, A.EndNode.Position);
