@@ -537,13 +537,13 @@ namespace GoBot
                     foreach (Arc a in robot.Graph.Arcs)
                     {
                         if (a.Passable)
-                            new Segment(new RealPoint(a.StartNode.X, a.StartNode.Y), new RealPoint(a.EndNode.X, a.EndNode.Y)).Paint(g, Color.LimeGreen, 1, Color.Transparent, Scale);
+                            new Segment(a.StartNode.Position, a.EndNode.Position).Paint(g, Color.LimeGreen, 1, Color.Transparent, Scale);
                     }
 
                 if (graph)
                     // Dessin des noeuds
                     foreach (Node n in robot.Graph.Nodes)
-                        new RealPoint(n.Position.X, n.Position.Y).Paint(g, n.Passable ? Color.Black : Color.Red, 3, Color.LimeGreen, Scale);
+                        n.Position.Paint(g, n.Passable ? Color.Black : Color.Red, 3, Color.LimeGreen, Scale);
             }
 
             //robot.SemGraph.Release();

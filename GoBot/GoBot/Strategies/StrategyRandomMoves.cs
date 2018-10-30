@@ -36,7 +36,7 @@ namespace GoBot.Strategies
                 if (!((Node)Robots.GrosRobot.Graph.Nodes[next]).Passable)
                     continue;
 
-                Position destination = new Position(rand.Next(360), new RealPoint(((Node)Robots.GrosRobot.Graph.Nodes[next]).X, ((Node)Robots.GrosRobot.Graph.Nodes[next]).Y));
+                Position destination = new Position(rand.Next(360), ((Node)Robots.GrosRobot.Graph.Nodes[next]).Position);
 
                 Robots.GrosRobot.Historique.Log("Nouvelle destination " + destination.ToString());
                 Robots.GrosRobot.GotoXYTeta(destination);

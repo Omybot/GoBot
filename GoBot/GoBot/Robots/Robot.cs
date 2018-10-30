@@ -394,8 +394,7 @@ namespace GoBot
 
                         if (n.Passable)
                         {
-                            RealPoint noeud = new RealPoint(n.X, n.Y);
-                            if (TropProche(obstacle, noeud))
+                            if (TropProche(obstacle, n.Position))
                             {
                                 n.Passable = false;
                                 // Désactivation des arcs connectés aux noeuds désactivés = 10 fois plus rapide que tester les arcs

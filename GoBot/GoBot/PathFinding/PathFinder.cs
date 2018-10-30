@@ -74,10 +74,10 @@ namespace GoBot.PathFinding
                     int nbPointsArrivee = 0;
 
                     Node debutNode = null, finNode = null;
-                    Node nodeProche = graph.ClosestNode(startPos.Coordinates.X, startPos.Coordinates.Y, 0, out distance, false);
+                    Node nodeProche = graph.ClosestNode(startPos.Coordinates.X, startPos.Coordinates.Y, out distance, false);
                     if (distance != 0)
                     {
-                        debutNode = new Node(startPos.Coordinates.X, startPos.Coordinates.Y, 0);
+                        debutNode = new Node(startPos.Coordinates);
                         nbPointsDepart = graph.AddNode(debutNode, obstacles, rayonSecurite);
                     }
                     else
@@ -97,7 +97,7 @@ namespace GoBot.PathFinding
                         {
                             positionTestee.Move(10);
 
-                            debutNode = new Node(positionTestee.Coordinates.X, positionTestee.Coordinates.Y, 0);
+                            debutNode = new Node(positionTestee.Coordinates);
                             raccordable = graph.Raccordable(debutNode, obstacles, rayonSecurite);
                         }
 
@@ -130,7 +130,7 @@ namespace GoBot.PathFinding
                                 PointsTrouves.Add(new RealPoint(positionTestee.Coordinates));
                                 output.AddPoint(new RealPoint(positionTestee.Coordinates));
 
-                                debutNode = new Node(positionTestee.Coordinates.X, positionTestee.Coordinates.Y, 0);
+                                debutNode = new Node(positionTestee.Coordinates);
                                 nbPointsDepart = graph.AddNode(debutNode, obstacles, rayonSecurite);
                             }
                         }
@@ -148,7 +148,7 @@ namespace GoBot.PathFinding
                             {
                                 positionTestee.Move(-10);
 
-                                debutNode = new Node(positionTestee.Coordinates.X, positionTestee.Coordinates.Y, 0);
+                                debutNode = new Node(positionTestee.Coordinates);
                                 raccordable = graph.Raccordable(debutNode, obstacles, rayonSecurite);
                             }
 
@@ -180,7 +180,7 @@ namespace GoBot.PathFinding
                                     PointsTrouves.Add(new RealPoint(positionTestee.Coordinates));
                                     output.AddPoint(new RealPoint(positionTestee.Coordinates));
 
-                                    debutNode = new Node(positionTestee.Coordinates.X, positionTestee.Coordinates.Y, 0);
+                                    debutNode = new Node(positionTestee.Coordinates);
                                     nbPointsDepart = graph.AddNode(debutNode, obstacles, rayonSecurite);
                                 }
                             }
@@ -189,10 +189,10 @@ namespace GoBot.PathFinding
 
                     if (nbPointsDepart > 0)
                     {
-                        finNode = graph.ClosestNode(endPos.Coordinates.X, endPos.Coordinates.Y, 0, out distance, false);
+                        finNode = graph.ClosestNode(endPos.Coordinates.X, endPos.Coordinates.Y, out distance, false);
                         if (distance != 0)
                         {
-                            finNode = new Node(endPos.Coordinates.X, endPos.Coordinates.Y, 0);
+                            finNode = new Node(endPos.Coordinates);
                             nbPointsArrivee = graph.AddNode(finNode, obstacles, rayonSecurite);
                         }
                         else
@@ -215,7 +215,7 @@ namespace GoBot.PathFinding
                             for (i = 0; i < 100 && !raccordable; i++)
                             {
                                 positionTestee.Move(10);
-                                raccordable = graph.Raccordable(new Node(positionTestee.Coordinates.X, positionTestee.Coordinates.Y, 0), obstacles, rayonSecurite);
+                                raccordable = graph.Raccordable(new Node(positionTestee.Coordinates), obstacles, rayonSecurite);
                             }
 
                             // Le point à i*10 mm devant nous est reliable au graph, on cherche à l'atteindre
@@ -242,7 +242,7 @@ namespace GoBot.PathFinding
                                 for (i = 0; i > -100 && !raccordable; i--)
                                 {
                                     positionTestee.Move(-10);
-                                    raccordable = graph.Raccordable(new Node(positionTestee.Coordinates.X, positionTestee.Coordinates.Y, 0), obstacles, rayonSecurite);
+                                    raccordable = graph.Raccordable(new Node(positionTestee.Coordinates), obstacles, rayonSecurite);
                                 }
 
                                 if (raccordable)
@@ -262,7 +262,7 @@ namespace GoBot.PathFinding
                             // Si le semgent entre notre position et le node relié au graph est parcourable on y va !
                             if (franchissable)
                             {
-                                finNode = new Node(positionTestee.Coordinates.X, positionTestee.Coordinates.Y, 0);
+                                finNode = new Node(positionTestee.Coordinates);
                                 nbPointsArrivee = graph.AddNode(finNode, obstacles, rayonSecurite);
                             }
                         }
@@ -273,7 +273,7 @@ namespace GoBot.PathFinding
 
                         // Teste s'il est possible d'aller directement à la fin sans passer par le graph
                         bool toutDroit = true;
-                        Segment segment = new Segment(new RealPoint(debutNode.X, debutNode.Y), new RealPoint(finNode.X, finNode.Y));
+                        Segment segment = new Segment(debutNode.Position, finNode.Position);
 
                         foreach (IShape forme in obstacles)
                         {
@@ -289,9 +289,9 @@ namespace GoBot.PathFinding
                             Robots.GrosRobot.Historique.Log("Chemin trouvé : ligne droite", TypeLog.PathFinding);
                             pathFound = true;
 
-                            PointsTrouves.Add(new RealPoint(finNode.X, finNode.Y));
-                            output.AddPoint(new RealPoint(finNode.X, finNode.Y));
-                            if (endPos.Coordinates.Distance(new RealPoint(finNode.X, finNode.Y)) > 1)
+                            PointsTrouves.Add(finNode.Position);
+                            output.AddPoint(finNode.Position);
+                            if (endPos.Coordinates.Distance(finNode.Position) > 1)
                             {
                                 PointsTrouves.Add(new RealPoint(endPos.Coordinates));
                                 output.AddPoint(new RealPoint(endPos.Coordinates));
@@ -330,8 +330,8 @@ namespace GoBot.PathFinding
                                 {
                                     if (iNodeDepart != 0)
                                     {
-                                        PointsTrouves.Add(new RealPoint(nodes[iNodeDepart].X, nodes[iNodeDepart].Y));
-                                        output.AddPoint(new RealPoint(nodes[iNodeDepart].X, nodes[iNodeDepart].Y));
+                                        PointsTrouves.Add(nodes[iNodeDepart].Position);
+                                        output.AddPoint(nodes[iNodeDepart].Position);
                                     }
 
                                     CheminEnCoursNoeuds.Add(nodes[iNodeDepart]);
@@ -341,7 +341,7 @@ namespace GoBot.PathFinding
                                     {
                                         raccourciPossible = true;
 
-                                        Segment racourci = new Segment(new RealPoint(nodes[iNodeDepart].X, nodes[iNodeDepart].Y), new RealPoint(nodes[iNodeArrivee].X, nodes[iNodeArrivee].Y));
+                                        Segment racourci = new Segment(nodes[iNodeDepart].Position, nodes[iNodeArrivee].Position);
                                         //Arc arcRacourci = new Arc(nodes[iNodeDepart], nodes[iNodeArrivee]);
                                         //CheminTest = arcRacourci;
                                         //arcRacourci.Passable = false;
@@ -387,12 +387,12 @@ namespace GoBot.PathFinding
                                 }
 
                                 CheminEnCoursNoeuds.Add(nodes[nodes.Count - 1]);
-                                PointsTrouves.Add(new RealPoint(nodes[nodes.Count - 1].X, nodes[nodes.Count - 1].Y));
-                                output.AddPoint(new RealPoint(nodes[nodes.Count - 1].X, nodes[nodes.Count - 1].Y));
+                                PointsTrouves.Add(nodes[nodes.Count - 1].Position);
+                                output.AddPoint(nodes[nodes.Count - 1].Position);
                                 Robots.GrosRobot.Historique.Log("Chemin optimisé : " + (CheminEnCoursNoeuds.Count - 2) + " noeud(s) intermédiaire(s)", TypeLog.PathFinding);
                                 pathFound = true;
 
-                                if (endPos.Coordinates.Distance(new RealPoint(finNode.X, finNode.Y)) > 1)
+                                if (endPos.Coordinates.Distance(finNode.Position) > 1)
                                 {
                                     PointsTrouves.Add(new RealPoint(endPos.Coordinates));
                                     output.AddPoint(new RealPoint(endPos.Coordinates));

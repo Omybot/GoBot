@@ -52,7 +52,7 @@ namespace AStarFolder
         public Arc()
         {
             StartNode = new Node();
-            EndNode = new Node(1, 1, 1);
+            EndNode = new Node(1, 1);
             Weight = 0;
             LengthUpdated = false;
             Passable = true;
@@ -144,7 +144,7 @@ namespace AStarFolder
 		/// <returns></returns>
 		virtual protected double CalculateLength()
 		{
-			return Point3D.DistanceBetween(_StartNode.Position, _EndNode.Position);
+			return _StartNode.Position.Distance(_EndNode.Position);
 		}
 
 		/// <summary>

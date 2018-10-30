@@ -84,11 +84,10 @@ namespace AStarFolder
         /// </summary>
         /// <param name="x">X coordinate.</param>
         /// <param name="y">Y coordinate.</param>
-        /// <param name="z">Z coordinate.</param>
         /// <returns>The reference of the new node / null if the node is already in the graph.</returns>
-        public Node AddNode(float x, float y, float z)
+        public Node AddNode(float x, float y)
         {
-            Node NewNode = new Node(x, y, z);
+            Node NewNode = new Node(x, y);
             return AddNode(NewNode) ? NewNode : null;
         }
 
@@ -106,14 +105,14 @@ namespace AStarFolder
             double distanceNode;
 
             // Si un noeud est deja présent à cet endroit on ne l'ajoute pas
-            ClosestNode(node.X, node.Y, node.Z, out distanceNode, true);
+            ClosestNode(node.X, node.Y, out distanceNode, true);
             if (distanceNode == 0)
                 return 0;
 
             // Teste si le noeud est franchissable avec la liste des obstacles
             foreach (IShape obstacle in obstacles)
             {
-                if (obstacle.Distance(new RealPoint(node.X, node.Y)) < distanceSecurite)
+                if (obstacle.Distance(node.Position) < distanceSecurite)
                 {
                     node.Passable = false;
                     return 0;
@@ -132,7 +131,7 @@ namespace AStarFolder
             {
                 if (node != no)
                 {
-                    double distance = new RealPoint(node.Position.X, node.Position.Y).Distance(new RealPoint(no.Position.X, no.Position.Y));
+                    double distance = node.Position.Distance(no.Position);
                     if (distance < _distanceMax)
                     {
                         Arc arc = new Arc(no, node);
@@ -142,7 +141,7 @@ namespace AStarFolder
 
                         foreach (IShape obstacle in obstacles)
                         {
-                            if (obstacle.Distance(new Segment(new RealPoint(no.X, no.Y), new RealPoint(node.X, node.Y))) < distanceSecurite)
+                            if (obstacle.Distance(new Segment(no.Position, node.Position)) < distanceSecurite)
                             {
                                 arc.Passable = false;
                                 arc2.Passable = false;
@@ -186,10 +185,10 @@ namespace AStarFolder
             {
                 if (!node.Equals(no))
                 {
-                    double distance = new RealPoint(node.Position.X, node.Position.Y).Distance(new RealPoint(no.Position.X, no.Position.Y));
+                    double distance = node.Position.Distance(no.Position);
                     if (distance < _distanceMax)
                     {
-                        ok = (obstacles.FirstOrDefault(o => o.Distance(new Segment(new RealPoint(no.X, no.Y), new RealPoint(node.X, node.Y))) < distanceSecurite) == null);
+                        ok = (obstacles.FirstOrDefault(o => o.Distance(new Segment(no.Position, node.Position)) < distanceSecurite) == null);
                         
                         if (ok)
                             return true;
@@ -228,8 +227,8 @@ namespace AStarFolder
             //if ( NewArc==null || LA.Contains(NewArc) ) return false;
             if (NewArc == null) return false;
 
-            if (!_nodes.Contains(NewArc.StartNode) || !_nodes.Contains(NewArc.EndNode))
-                throw new ArgumentException("Cannot add an arc if one of its extremity nodes does not belong to the graph.");
+            //if (!_nodes.Contains(NewArc.StartNode) || !_nodes.Contains(NewArc.EndNode))
+            //    throw new ArgumentException("Cannot add an arc if one of its extremity nodes does not belong to the graph.");
             _arcs.Add(NewArc);
             return true;
         }
@@ -341,78 +340,31 @@ namespace AStarFolder
             catch { return false; }
             return true;
         }
-
-        /// <summary>
-        /// Determines the bounding box of the entire graph.
-        /// </summary>
-        /// <exception cref="InvalidOperationException">Impossible to determine the bounding box for this graph.</exception>
-        /// <param name="MinPoint">The point of minimal coordinates for the box.</param>
-        /// <param name="MaxPoint">The point of maximal coordinates for the box.</param>
-        public void BoundingBox(out double[] MinPoint, out double[] MaxPoint)
-        {
-            try
-            {
-                Node.BoundingBox(Nodes, out MinPoint, out MaxPoint);
-            }
-            catch (ArgumentException e)
-            { throw new InvalidOperationException("Impossible to determine the bounding box for this graph.\n", e); }
-        }
-
         /// <summary>
         /// This function will find the closest node from a geographical position in space.
         /// </summary>
         /// <param name="PtX">X coordinate of the point from which you want the closest node.</param>
         /// <param name="PtY">Y coordinate of the point from which you want the closest node.</param>
-        /// <param name="PtZ">Z coordinate of the point from which you want the closest node.</param>
         /// <param name="Distance">The distance to the closest node.</param>
         /// <param name="IgnorePassableProperty">if 'false', then nodes whose property Passable is set to false will not be taken into account.</param>
         /// <returns>The closest node that has been found.</returns>
-        public Node ClosestNode(double PtX, double PtY, double PtZ, out double Distance, bool IgnorePassableProperty)
+        public Node ClosestNode(double PtX, double PtY, out double Distance, bool IgnorePassableProperty)
         {
             Node NodeMin = null;
             double DistanceMin = -1;
-            Point3D P = new Point3D(PtX, PtY, PtZ);
-            foreach (Node N in _nodes)
+            RealPoint P = new RealPoint(PtX, PtY);
+            foreach (Node node in _nodes)
             {
-                if (!IgnorePassableProperty && N.Passable == false) continue;
-                double DistanceTemp = Point3D.DistanceBetween(N.Position, P);
+                if (!IgnorePassableProperty && node.Passable == false) continue;
+                double DistanceTemp = node.Position.Distance(P);
                 if (DistanceMin == -1 || DistanceMin > DistanceTemp)
                 {
                     DistanceMin = DistanceTemp;
-                    NodeMin = N;
+                    NodeMin = node;
                 }
             }
             Distance = DistanceMin;
             return NodeMin;
-        }
-
-        /// <summary>
-        /// This function will find the closest arc from a geographical position in space using projection.
-        /// </summary>
-        /// <param name="PtX">X coordinate of the point from which you want the closest arc.</param>
-        /// <param name="PtY">Y coordinate of the point from which you want the closest arc.</param>
-        /// <param name="PtZ">Z coordinate of the point from which you want the closest arc.</param>
-        /// <param name="Distance">The distance to the closest arc.</param>
-        /// <param name="IgnorePassableProperty">if 'false', then arcs whose property Passable is set to false will not be taken into account.</param>
-        /// <returns>The closest arc that has been found.</returns>
-        public Arc ClosestArc(double PtX, double PtY, double PtZ, out double Distance, bool IgnorePassableProperty)
-        {
-            Arc ArcMin = null;
-            double DistanceMin = -1;
-            Point3D P = new Point3D(PtX, PtY, PtZ);
-            foreach (Arc A in _arcs)
-            {
-                if (IgnorePassableProperty && A.Passable == false) continue;
-                Point3D Projection = Point3D.ProjectOnLine(P, A.StartNode.Position, A.EndNode.Position);
-                double DistanceTemp = Point3D.DistanceBetween(P, Projection);
-                if (DistanceMin == -1 || DistanceMin > DistanceTemp)
-                {
-                    DistanceMin = DistanceTemp;
-                    ArcMin = A;
-                }
-            }
-            Distance = DistanceMin;
-            return ArcMin;
         }
     }
 }

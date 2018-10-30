@@ -94,7 +94,7 @@ namespace AStarFolder
 			Track P1 = O1 as Track;
 			Track P2 = O2 as Track;
 			if ( P1==null || P2==null ) throw new ArgumentException("Objects must be of 'Track' type.");
-			return P1.EndNode==P2.EndNode;
+			return P1.EndNode.X ==P2.EndNode.X && P1.EndNode.Y == P2.EndNode.Y;
 		}
 	}
 }
