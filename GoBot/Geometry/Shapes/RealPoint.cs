@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Drawing;
+using Geometry.Shapes.ShapesInteractions;
 
 namespace Geometry.Shapes
 {
@@ -80,12 +81,7 @@ namespace Geometry.Shapes
             if ((object)a == null || (object)b == null)
                 return (object)a == null && (object)b == null;
             else
-            {
-                double diffX = a.X > b.X ? a.X - b.X : b.X - a.X;
-                double diffY = a.Y > b.Y ? a.Y - b.Y : b.Y - a.Y;
-
-                return (diffX < PRECISION && diffY < PRECISION);
-            }
+                return (Math.Abs(a.X-b.X) < PRECISION && Math.Abs(a.Y - b.Y) < PRECISION);
         }
 
         public static bool operator !=(RealPoint a, RealPoint b)
@@ -155,7 +151,15 @@ namespace Geometry.Shapes
         /// <returns>Distance minimale</returns>
         public double Distance(IShape shape)
         {
-            return Distance(Util.ToRealType(shape));
+            double output = 0;
+
+            if (shape is Circle) output = this.Distance(shape as Circle);
+            else if (shape is Polygon) output = this.Distance(shape as Polygon);
+            else if (shape is Segment) output = this.Distance(shape as Segment);
+            else if (shape is RealPoint) output = this.Distance(shape as RealPoint);
+            else if (shape is Line) output = this.Distance(shape as Line);
+
+            return output;
         }
 
         /// <summary>

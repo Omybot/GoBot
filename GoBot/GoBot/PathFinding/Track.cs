@@ -18,7 +18,7 @@ namespace AStarFolder
 	/// Thus when it leads to the target node, it is easy to return the result path.
 	/// These objects are contained in Open and Closed lists.
 	/// </summary>
-	internal class Track : IComparable
+	public class Track : IComparable
 	{
 		private static Node _Target = null;
 		private static double _Coeff = 0.5;
@@ -89,12 +89,10 @@ namespace AStarFolder
 			return Evaluation.CompareTo(OtherTrack.Evaluation);
 		}
 
-		public static bool SameEndNode(object O1, object O2)
+		public static bool SameEndNode(Track O1, Track O2)
 		{
-			Track P1 = O1 as Track;
-			Track P2 = O2 as Track;
-			if ( P1==null || P2==null ) throw new ArgumentException("Objects must be of 'Track' type.");
-			return P1.EndNode.X ==P2.EndNode.X && P1.EndNode.Y == P2.EndNode.Y;
+			if ( O1==null || O2==null ) throw new ArgumentException("Objects must be of 'Track' type.");
+			return O1.EndNode.X ==O2.EndNode.X && O1.EndNode.Y == O2.EndNode.Y;
 		}
 	}
 }

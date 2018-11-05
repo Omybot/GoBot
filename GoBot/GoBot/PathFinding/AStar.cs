@@ -26,12 +26,12 @@ namespace AStarFolder
     public class AStar
     {
         Graph _Graph;
-        SortableList _Open, _Closed;
+        Tracks _Open;
         Dictionary<Node, Track> _OpenTracks, _ClosedTracks;
         Track _LeafToGoBackUp;
         int _NbIterations = -1;
 
-        SortableList.Equality SameNodesReached = new SortableList.Equality(Track.SameEndNode);
+        Tracks.Equality SameNodesReached = new Tracks.Equality(Track.SameEndNode);
 
         /// <summary>
         /// Heuristic based on the euclidian distance : Sqrt(Dx²+Dy²+Dz²)
@@ -84,9 +84,8 @@ namespace AStarFolder
         public AStar(Graph G)
         {
             _Graph = G;
-            _Open = new SortableList();
+            _Open = new Tracks();
             _OpenTracks = new Dictionary<Node, Track>();
-            _Closed = new SortableList();
             _ClosedTracks = new Dictionary<Node, Track>();
             ChoosenHeuristic = EuclidianHeuristic;
             DijkstraHeuristicBalance = 0.5;
@@ -125,21 +124,6 @@ namespace AStarFolder
         }
 
         /// <summary>
-        /// Use for debug in a 'step by step' mode only.
-        /// Returns all the tracks found in the 'Closed' list of the algorithm at a given time.
-        /// A track is a list of the nodes visited to come to the current node.
-        /// </summary>
-        public Node[][] Closed
-        {
-            get
-            {
-                Node[][] NodesList = new Node[_Closed.Count][];
-                for (int i = 0; i < _Closed.Count; i++) NodesList[i] = GoBackUpNodes((Track)_Closed[i]);
-                return NodesList;
-            }
-        }
-
-        /// <summary>
         /// Use for a 'step by step' search only. This method is alternate to SearchPath.
         /// Initializes AStar before performing search steps manually with NextStep.
         /// </summary>
@@ -149,7 +133,6 @@ namespace AStarFolder
         public void Initialize(Node StartNode, Node EndNode)
         {
             if (StartNode == null || EndNode == null) throw new ArgumentNullException();
-            _Closed.Clear();
             _ClosedTracks.Clear();
             _Open.Clear();
             _OpenTracks.Clear();
@@ -187,40 +170,49 @@ namespace AStarFolder
             else
             {
                 Propagate(BestTrack);
-                _Closed.Add(BestTrack);
-                _ClosedTracks.Add(BestTrack.EndNode, BestTrack);
             }
             return _Open.Count > 0;
         }
 
         private void Propagate(Track TrackToPropagate)
         {
+            if(_ClosedTracks.ContainsKey(TrackToPropagate.EndNode))
+            {
+                _ClosedTracks[TrackToPropagate.EndNode] = TrackToPropagate;
+            }
+            else
+            {
+                _ClosedTracks.Add(TrackToPropagate.EndNode, TrackToPropagate);
+            }
+
             foreach (Arc A in TrackToPropagate.EndNode.OutgoingArcs)
             {
                 if (A.Passable && A.EndNode.Passable)
                 {
                     Track Successor = new Track(TrackToPropagate, A);
 
-                    int PosNF = -1;
+                    Track NF, NO;
                     if (_ClosedTracks.ContainsKey(Successor.EndNode))
-                        PosNF = _Closed.IndexOf(Successor, SameNodesReached);
-
-                    int PosNO = -1;
+                        NF = _ClosedTracks[Successor.EndNode];
+                    else
+                        NF = null;
+                    
                     if (_OpenTracks.ContainsKey(Successor.EndNode))
-                        PosNO = _Open.IndexOf(Successor, SameNodesReached);
+                        NO = _OpenTracks[Successor.EndNode];
+                    else
+                        NO = null;
 
-                    if (PosNF > 0 && Successor.Cost >= ((Track)_Closed[PosNF]).Cost)
+                    if (NF != null && Successor.Cost >= NF.Cost)
                         continue;
-                    if (PosNO > 0 && Successor.Cost >= ((Track)_Open[PosNO]).Cost)
+                    if (NO != null && Successor.Cost >= NO.Cost)
                         continue;
-                    if (PosNF > -1)
+                    if (NF != null)
                     {
-                        _Closed.RemoveAt(PosNF);
                         _ClosedTracks.Remove(Successor.EndNode);
                     }
-                    if (PosNO > -1)
+                    if (NO != null)
                     {
-                        _Open.RemoveAt(PosNO);
+                        _Open.Remove(NO);
                         _OpenTracks.Remove(Successor.EndNode);
                     }
 

@@ -243,8 +243,14 @@ namespace GoBot
         private void button1_Click(object sender, EventArgs e)
         {
             Stopwatch sw = Stopwatch.StartNew();
-            PathFinding.Trajectory traj = PathFinding.PathFinder.ChercheTrajectoire(Robots.GrosRobot.Graph, Plateau.ListeObstacles, Plateau.ObstaclesOpponents, new Position(0, new RealPoint(287, 1412)), new Position(0, new RealPoint(2712, 1412)), Robots.GrosRobot.Rayon, Robots.GrosRobot.Largeur / 2);
-            Console.WriteLine(sw.ElapsedMilliseconds.ToString());
+
+            PathFinding.Trajectory traj = null;
+            for (int i = 0; i < 200; i++)
+            {
+                traj = PathFinding.PathFinder.ChercheTrajectoire(Robots.GrosRobot.Graph, Plateau.ListeObstacles, Plateau.ObstaclesOpponents, new Position(0, new RealPoint(287, 1412)), new Position(0, new RealPoint(2712, 1412)), Robots.GrosRobot.Rayon, Robots.GrosRobot.Largeur / 2);
+            }
+
+            MessageBox.Show(sw.ElapsedMilliseconds.ToString());
         }
     }
 }

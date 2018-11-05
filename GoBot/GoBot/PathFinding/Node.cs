@@ -11,6 +11,7 @@
 using Geometry.Shapes;
 using System;
 using System.Collections;
+using System.Collections.Generic;
 using System.Xml.Serialization;
 
 
@@ -20,16 +21,13 @@ namespace AStarFolder
 	/// Basically a node is defined with a geographical position in space.
 	/// It is also characterized with both collections of outgoing arcs and incoming arcs.
 	/// </summary>
-	[Serializable]
 	public class Node
 	{
         RealPoint _pos;
 		bool _passable;
-
-        [XmlIgnore]
-        ArrayList _incomingArcs;
-        [XmlIgnore]
-        ArrayList _outgoingArcs;
+        
+        List<Arc> _incomingArcs;
+        List<Arc> _outgoingArcs;
 
         /// <summary>
         /// Constructor.
@@ -40,8 +38,8 @@ namespace AStarFolder
         {
             _pos = new RealPoint(x, y);
             _passable = true;
-            _incomingArcs = new ArrayList();
-            _outgoingArcs = new ArrayList();
+            _incomingArcs = new List<Arc>();
+            _outgoingArcs = new List<Arc>();
         }
 
         /// <summary>
@@ -52,8 +50,8 @@ namespace AStarFolder
         {
             _pos = new RealPoint(pos);
             _passable = true;
-            _incomingArcs = new ArrayList();
-            _outgoingArcs = new ArrayList();
+            _incomingArcs = new List<Arc>();
+            _outgoingArcs = new List<Arc>();
         }
 
         /// <summary>
@@ -63,19 +61,19 @@ namespace AStarFolder
         {
             _pos = new RealPoint();
             _passable = true;
-            _incomingArcs = new ArrayList();
-            _outgoingArcs = new ArrayList();
+            _incomingArcs = new List<Arc>();
+            _outgoingArcs = new List<Arc>();
         }
 
 		/// <summary>
 		/// Gets the list of the arcs that lead to this node.
 		/// </summary>
-		public IList IncomingArcs { get { return _incomingArcs; } }
+		public List<Arc> IncomingArcs { get { return _incomingArcs; } }
 
 		/// <summary>
 		/// Gets the list of the arcs that start from this node.
 		/// </summary>
-		public IList OutgoingArcs { get { return _outgoingArcs; } }
+		public List<Arc> OutgoingArcs { get { return _outgoingArcs; } }
 
 		/// Gets/Sets the functional state of the node.
 		/// 'true' means that the node is in its normal state.
