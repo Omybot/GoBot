@@ -175,56 +175,10 @@ namespace AStarFolder
         public int Count { get { return _list.Count; } }
         
         /// <summary>
-        /// Idem IndexOf(object), but starting at a specified position in the list
-        /// </summary>
-        /// <param name="t">The object to locate.</param>
-        /// <param name="fromIndex">The index for start position.</param>
-        /// <returns></returns>
-        public int IndexOf(Track t, int fromIndex)
-        {
-            int Result = -1;
-            if (_isSorted)
-            {
-                Result = _list.BinarySearch(fromIndex, _list.Count - fromIndex, t, _comparer);
-                while (Result > fromIndex && _list[Result - 1].Equals(t)) Result--; // We want to point at the first occurence
-            }
-            else Result = _list.IndexOf(t, fromIndex);
-            return Result;
-        }
-
-        /// <summary>
         /// Defines an equality for two objects
         /// </summary>
         public delegate bool Equality(Track O1, Track O2);
-
-        /// <summary>
-        /// Idem IndexOf(object), but with a specified equality function
-        /// </summary>
-        /// <param name="t">The object to locate.</param>
-        /// <param name="AreEqual">Equality function to use for the search.</param>
-        /// <returns></returns>
-        public int IndexOf(Track t, Equality AreEqual)
-        {
-            for (int i = 0; i < _list.Count; i++)
-                if (AreEqual(_list[i], t)) return i;
-            return -1;
-        }
-
-        /// <summary>
-        /// Idem IndexOf(object), but with a start index and a specified equality function
-        /// </summary>
-        /// <param name="t">The object to locate.</param>
-        /// <param name="Start">The index for start position.</param>
-        /// <param name="AreEqual">Equality function to use for the search.</param>
-        /// <returns></returns>
-        public int IndexOf(Track t, int Start, Equality AreEqual)
-        {
-            if (Start < 0 || Start >= _list.Count) throw new ArgumentException("Start index must belong to [0; Count-1].");
-            for (int i = Start; i < _list.Count; i++)
-                if (AreEqual(_list[i], t)) return i;
-            return -1;
-        }
-        
+                
         /// <summary>
         /// Object.ToString() override.
         /// Build a string to represent the list.
@@ -263,54 +217,6 @@ namespace AStarFolder
             if (_isSorted) return;
             _list.Sort(_comparer);
             _isSorted = true;
-        }
-
-        /// <summary>
-        /// Returns the object of the list whose value is minimum
-        /// </summary>
-        /// <returns>The minimum object in the list</returns>
-        public int IndexOfMin()
-        {
-            int RetInt = -1;
-            if (_list.Count > 0)
-            {
-                RetInt = 0;
-                Track RetObj = _list[0];
-                if (!_isSorted)
-                {
-                    for (int i = 1; i < _list.Count; i++)
-                        if (_comparer.Compare(RetObj, _list[i]) > 0)
-                        {
-                            RetObj = _list[i];
-                            RetInt = i;
-                        }
-                }
-            }
-            return RetInt;
-        }
-
-        /// <summary>
-        /// Returns the object of the list whose value is maximum
-        /// </summary>
-        /// <returns>The maximum object in the list</returns>
-        public int IndexOfMax()
-        {
-            int RetInt = -1;
-            if (_list.Count > 0)
-            {
-                RetInt = _list.Count - 1;
-                Track RetObj = _list[_list.Count - 1];
-                if (!_isSorted)
-                {
-                    for (int i = _list.Count - 2; i >= 0; i--)
-                        if (_comparer.Compare(RetObj, _list[i]) < 0)
-                        {
-                            RetObj = _list[i];
-                            RetInt = i;
-                        }
-                }
-            }
-            return RetInt;
         }
 
         public IEnumerator<Track> GetEnumerator()

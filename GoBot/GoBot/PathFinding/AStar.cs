@@ -156,9 +156,9 @@ namespace AStarFolder
             if (_Open.Count == 0) return false;
             _NbIterations++;
 
-            int IndexMin = _Open.IndexOfMin();
-            Track BestTrack = (Track)_Open[IndexMin];
-            _Open.RemoveAt(IndexMin);
+            _Open.Sort();
+            Track BestTrack = (Track)_Open[0];
+            _Open.RemoveAt(0);
             _OpenTracks.Remove(BestTrack.EndNode);
 
             if (BestTrack.Succeed)

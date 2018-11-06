@@ -370,10 +370,8 @@
     <Compile Include="PathFinding\AStar.cs" />
     <Compile Include="PathFinding\Graph.cs" />
     <Compile Include="PathFinding\Node.cs" />
-    <Compile Include="PathFinding\Point3D.cs" />
     <Compile Include="PathFinding\SortableList.cs" />
     <Compile Include="PathFinding\Track.cs" />
-    <Compile Include="PathFinding\Vector3D.cs" />
     <Compile Include="Beacons\Balise.cs" />
     <Compile Include="Beacons\DetectionBalise.cs" />
     <Compile Include="Config.cs" />
