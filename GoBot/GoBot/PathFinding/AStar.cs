@@ -31,9 +31,7 @@ namespace AStarFolder
         Dictionary<Node, Track> _openTracks;
         Track _LeafToGoBackUp;
         int _iterations = -1;
-
-        Tracks.Equality SameNodesReached = new Tracks.Equality(Track.SameEndNode);
-
+        
         /// <summary>
         /// Heuristic based on the euclidian distance : Sqrt(Dx²+Dy²+Dz²)
         /// </summary>
@@ -129,9 +127,8 @@ namespace AStarFolder
             if (_open.Count == 0) return false;
             _iterations++;
            // Console.WriteLine("_iterations : " + _iterations.ToString());
-
-            _open.Sort();
-            Track bestTrack = (Track)_open[0];
+           
+            Track bestTrack = _open[0];
             _open.RemoveAt(0);
             _openTracks.Remove(bestTrack.EndNode);
 
@@ -187,7 +184,7 @@ namespace AStarFolder
                     }
                     if (trackInOpen != null)
                     {
-                        _open.Remove(trackInOpen);
+                        //_open.Remove(trackInOpen);
                         _openTracks.Remove(successor.EndNode);
                     }
 

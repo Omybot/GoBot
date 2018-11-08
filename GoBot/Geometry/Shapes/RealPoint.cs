@@ -104,20 +104,18 @@ namespace Geometry.Shapes
             return "{" + X.ToString("0.00") + " : " + Y.ToString("0.00") + "}";
         }
 
-        public override bool Equals(object obj)
+        public override bool Equals(object o)
         {
-            RealPoint p = obj as RealPoint;
-            if ((Object)p == null)
-            {
-                return false;
-            }
+            RealPoint p = o as RealPoint;
 
-            return (RealPoint)obj == this;
+            return (p != null) && (p == this);
         }
 
         public override int GetHashCode()
         {
-            return (int)X ^ (int)Y;
+            //return (int)X ^ (int)Y;
+            return (int)(_x * _y);
+            //return (int)(_x*10000 + _y);
         }
 
         public static implicit operator Point(RealPoint point)
@@ -153,10 +151,10 @@ namespace Geometry.Shapes
         {
             double output = 0;
 
-            if (shape is Circle) output = this.Distance(shape as Circle);
-            else if (shape is Polygon) output = this.Distance(shape as Polygon);
+            if (shape is RealPoint) output = this.Distance(shape as RealPoint);
             else if (shape is Segment) output = this.Distance(shape as Segment);
-            else if (shape is RealPoint) output = this.Distance(shape as RealPoint);
+            else if (shape is Polygon) output = this.Distance(shape as Polygon);
+            else if(shape is Circle) output = this.Distance(shape as Circle);
             else if (shape is Line) output = this.Distance(shape as Line);
 
             return output;
@@ -216,7 +214,7 @@ namespace Geometry.Shapes
         /// </summary>
         /// <param name="point">PointReel testé</param>
         /// <returns>Distance minimale</returns>
-        protected double Distance(RealPoint point)
+        public double Distance(RealPoint point)
         {
             return Maths.Hypothenuse((X - point.X), (Y - point.Y));
         }
@@ -263,10 +261,10 @@ namespace Geometry.Shapes
         {
             List<RealPoint> output = new List<RealPoint>();
 
-            if (shape is Circle) output = GetCrossingPointsWithCircle(shape as Circle);
-            else if (shape is Polygon) output = GetCrossingPointsWithPolygon(shape as Polygon);
+            if (shape is RealPoint) output = GetCrossingPointsWithPoint(shape as RealPoint);
             else if (shape is Segment) output = GetCrossingPointsWithSegment(shape as Segment);
-            else if (shape is RealPoint) output = GetCrossingPointsWithPoint(shape as RealPoint);
+            else if (shape is Polygon) output = GetCrossingPointsWithPolygon(shape as Polygon);
+            else if (shape is Circle) output = GetCrossingPointsWithCircle(shape as Circle);
             else if (shape is Line) output = GetCrossingPointsWithLine(shape as Line);
 
             return output;

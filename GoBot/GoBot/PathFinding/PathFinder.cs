@@ -72,14 +72,17 @@ namespace GoBot.PathFinding
                     int nbPointsArrivee = 0;
 
                     Node debutNode = null, finNode = null;
-                    Node nodeProche = graph.ClosestNode(startPos.Coordinates.X, startPos.Coordinates.Y, out distance);
+                    Node nodeProche = graph.ClosestNode(startPos.Coordinates, out distance);
                     if (distance != 0)
                     {
                         debutNode = new Node(startPos.Coordinates);
                         nbPointsDepart = graph.AddNode(debutNode, obstacles, rayonSecurite);
                     }
                     else
+                    {
                         debutNode = nodeProche;
+                        nbPointsDepart = debutNode.OutgoingArcs.Count;
+                    }
 
                     //TODO2018 phase d'approche finale pourrie, l'angle final peut se faire à la fin au lieu de à la fin du path finding avant l'approche finale
                     if (nbPointsDepart == 0)
@@ -187,7 +190,7 @@ namespace GoBot.PathFinding
 
                     if (nbPointsDepart > 0)
                     {
-                        finNode = graph.ClosestNode(endPos.Coordinates.X, endPos.Coordinates.Y, out distance);
+                        finNode = graph.ClosestNode(endPos.Coordinates, out distance);
                         if (distance != 0)
                         {
                             finNode = new Node(endPos.Coordinates);

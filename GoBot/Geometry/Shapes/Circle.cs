@@ -115,10 +115,10 @@ namespace Geometry.Shapes
         {
             double output = 0;
 
-            if (shape is Circle) output = CircleWithCircle.Distance(this, shape as Circle);
-            else if (shape is Polygon) output = CircleWithPolygon.Distance(this, shape as Polygon);
+            if (shape is RealPoint) output = CircleWithRealPoint.Distance(this, shape as RealPoint);
             else if (shape is Segment) output = CircleWithSegment.Distance(this, shape as Segment);
-            else if (shape is RealPoint) output = CircleWithRealPoint.Distance(this, shape as RealPoint);
+            else if (shape is Polygon) output = CircleWithPolygon.Distance(this, shape as Polygon);
+            else if (shape is Circle) output = CircleWithCircle.Distance(this, shape as Circle);
             else if (shape is Line) output = CircleWithLine.Distance(this, shape as Line);
 
             return output;
@@ -137,10 +137,10 @@ namespace Geometry.Shapes
         {
             bool output = false;
 
-            if (shape is Circle) output = CircleWithCircle.Contains(this, shape as Circle);
-            else if (shape is Polygon) output = CircleWithPolygon.Contains(this, shape as Polygon);
+            if (shape is RealPoint) output = CircleWithRealPoint.Contains(this, shape as RealPoint);
             else if (shape is Segment) output = CircleWithSegment.Contains(this, shape as Segment);
-            else if (shape is RealPoint) output = CircleWithRealPoint.Contains(this, shape as RealPoint);
+            else if (shape is Polygon) output = CircleWithPolygon.Contains(this, shape as Polygon);
+            else if (shape is Circle) output = CircleWithCircle.Contains(this, shape as Circle);
             else if (shape is Line) output = CircleWithLine.Contains(this, shape as Line);
 
             return output;
@@ -159,10 +159,10 @@ namespace Geometry.Shapes
         {
             List<RealPoint> output = new List<RealPoint>();
 
-            if (shape is Circle) output = CircleWithCircle.GetCrossingPoints(this, shape as Circle);
-            else if (shape is Polygon) output = CircleWithPolygon.GetCrossingPoints(this, shape as Polygon);
+            if (shape is RealPoint) output = CircleWithRealPoint.GetCrossingPoints(this, shape as RealPoint);
             else if (shape is Segment) output = CircleWithSegment.GetCrossingPoints(this, shape as Segment);
-            else if (shape is RealPoint) output = CircleWithRealPoint.GetCrossingPoints(this, shape as RealPoint);
+            else if (shape is Polygon) output = CircleWithPolygon.GetCrossingPoints(this, shape as Polygon);
+            else if (shape is Circle) output = CircleWithCircle.GetCrossingPoints(this, shape as Circle);
             else if (shape is Line) output = CircleWithLine.GetCrossingPoints(this, shape as Line);
 
             return output;
@@ -177,10 +177,10 @@ namespace Geometry.Shapes
         {
             bool output = false;
 
-            if (shape is Circle) output = CircleWithCircle.Cross(this, shape as Circle);
-            else if (shape is Polygon) output = CircleWithPolygon.Cross(this, shape as Polygon);
+            if (shape is RealPoint) output = CircleWithRealPoint.Cross(this, shape as RealPoint);
             else if (shape is Segment) output = CircleWithSegment.Cross(this, shape as Segment);
-            else if (shape is RealPoint) output = CircleWithRealPoint.Cross(this, shape as RealPoint);
+            else if (shape is Polygon) output = CircleWithPolygon.Cross(this, shape as Polygon);
+            else if (shape is Circle) output = CircleWithCircle.Cross(this, shape as Circle);
             else if (shape is Line) output = CircleWithLine.Cross(this, shape as Line);
 
             return output;

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Geometry.Shapes.ShapesInteractions;
+using System;
 using System.Collections.Generic;
 using System.Drawing;
 
@@ -158,10 +159,10 @@ namespace Geometry.Shapes
         {
             List<RealPoint> output = new List<RealPoint>();
 
-            if (shape is Circle) output = GetCrossingPointsWithCircle(shape as Circle);
-            else if (shape is Polygon) output = GetCrossingPointsWithPolygon(shape as Polygon);
+            if (shape is RealPoint) output = GetCrossingPointsWithPoint(shape as RealPoint);
             else if (shape is Segment) output = GetCrossingPointsWithSegment(shape as Segment);
-            else if (shape is RealPoint) output = GetCrossingPointsWithPoint(shape as RealPoint);
+            else if (shape is Polygon) output = GetCrossingPointsWithPolygon(shape as Polygon);
+            else if (shape is Circle) output = GetCrossingPointsWithCircle(shape as Circle);
             else if (shape is Line) output = GetCrossingPointsWithLine(shape as Line);
 
             return output;
@@ -233,7 +234,15 @@ namespace Geometry.Shapes
         /// <returns>Vrai si le segment croise la forme donnée</returns>
         public override bool Cross(IShape shape)
         {
-            return Cross(Util.ToRealType(shape));
+            bool output = false;
+
+            if (shape is RealPoint) output = Cross(shape as RealPoint);
+            else if (shape is Segment) output = Cross(shape as Segment);
+            else if (shape is Polygon) output = Cross(shape as Polygon);
+            else if (shape is Circle) output = CircleWithSegment.Cross(shape as Circle, this);
+            else if (shape is Line) output = LineWithSegment.Cross(shape as Line, this);
+
+            return output;
         }
 
         /// <summary>
@@ -297,7 +306,15 @@ namespace Geometry.Shapes
         /// <returns>Vrai si le segment contient la forme donnée</returns>
         public override bool Contains(IShape shape)
         {
-            return Contains(Util.ToRealType(shape));
+            bool output = false;
+
+            if (shape is RealPoint) output = Contains(shape as RealPoint);
+            else if (shape is Segment) output = Contains(shape as Segment);
+            else if (shape is Polygon) output = Contains(shape as Polygon);
+            else if (shape is Circle) output = Contains(shape as Circle);
+            else if (shape is Line) output = LineWithSegment.Contains(shape as Line, this);
+
+            return output;
         }
 
         /// <summary>
@@ -375,7 +392,15 @@ namespace Geometry.Shapes
         
         public override double Distance(IShape shape)
         {
-            return Distance(Util.ToRealType(shape));
+            double output = 0;
+
+            if (shape is RealPoint) output = Distance(shape as RealPoint);
+            else if (shape is Segment) output = Distance(shape as Segment);
+            else if (shape is Polygon) output = Distance(shape as Polygon);
+            else if (shape is Circle) output = CircleWithSegment.Distance(shape as Circle, this);
+            else if (shape is Line) output = LineWithSegment.Distance(shape as Line, this);
+
+            return output;
         }
 
         /// <summary>

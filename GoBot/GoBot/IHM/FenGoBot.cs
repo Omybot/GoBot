@@ -245,7 +245,7 @@ namespace GoBot
             Stopwatch sw = Stopwatch.StartNew();
 
             PathFinding.Trajectory traj = null;
-            for (int i = 0; i < 200; i++)
+            for (int i = 0; i < 500; i++)
             {
                 traj = PathFinding.PathFinder.ChercheTrajectoire(Robots.GrosRobot.Graph, Plateau.ListeObstacles, Plateau.ObstaclesOpponents, new Position(0, new RealPoint(287, 1412)), new Position(0, new RealPoint(2712, 1412)), Robots.GrosRobot.Rayon, Robots.GrosRobot.Largeur / 2);
             }

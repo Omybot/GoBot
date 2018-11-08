@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Drawing;
+using Geometry.Shapes.ShapesInteractions;
 
 namespace Geometry.Shapes
 {
@@ -285,7 +286,15 @@ namespace Geometry.Shapes
         /// <returns>Distance minimum entre le polygone et la forme donnée</returns>
         public double Distance(IShape shape)
         {
-            return Distance(Util.ToRealType(shape));
+            double output = 0;
+
+            if (shape is RealPoint) output = Distance(shape as RealPoint);
+            else if (shape is Segment) output = Distance(shape as Segment);
+            else if (shape is Polygon) output = Distance(shape as Polygon);
+            else if (shape is Circle) output = CircleWithPolygon.Distance(shape as Circle, this);
+            else if (shape is Line) output = LineWithPolygon.Distance(shape as Line, this);
+
+            return output;
         }
 
         /// <summary>
@@ -374,7 +383,15 @@ namespace Geometry.Shapes
         /// <returns>Vrai si le polygone contient la forme testée</returns>
         public bool Contains(IShape shape)
         {
-            return Contains(Util.ToRealType(shape));
+            bool output = false;
+
+            if (shape is RealPoint) output = Contains(shape as RealPoint);
+            else if (shape is Segment) output = Contains(shape as Segment);
+            else if (shape is Polygon) output = Contains(shape as Polygon);
+            else if (shape is Circle) output = Contains(shape as Circle);
+            else if (shape is Line) output = LineWithPolygon.Contains(shape as Line, this);
+
+            return output;
         }
 
         /// <summary>
@@ -399,7 +416,7 @@ namespace Geometry.Shapes
                 if (s.Cross(testSeg))
                 {
                     List<RealPoint> cross = testSeg.GetCrossingPoints(s);
-                    if(cross.Count > 0 && cross[0] != s.EndPoint) // Pour ne pas compter 2 fois un croisement sur un sommet, il sera déjà compté sur le Begin d'un autre
+                    if (cross.Count > 0 && cross[0] != s.EndPoint) // Pour ne pas compter 2 fois un croisement sur un sommet, il sera déjà compté sur le Begin d'un autre
                         crossCount++;
                 }
             }
@@ -444,12 +461,12 @@ namespace Geometry.Shapes
                 if (crossPoints.Count > 2)
                 {
                     // Plus de 2 croisements : le segment n'est pas contenu
-                    result = false; 
+                    result = false;
                 }
                 else
                 {
                     // Maximum 2 croisements : le segment est contenu si les 2 extremités et un point aléatoire du segment (genre le milieu) sont contenus
-                    if(Contains(segment.StartPoint) && Contains(segment.EndPoint) && Contains(segment.Barycenter))
+                    if (Contains(segment.StartPoint) && Contains(segment.EndPoint) && Contains(segment.Barycenter))
                         result = true;
                     else
                         result = false;
@@ -500,7 +517,7 @@ namespace Geometry.Shapes
             List<RealPoint> output = new List<RealPoint>();
 
             _sides.ForEach(s => output.AddRange(s.GetCrossingPoints(shape)));
-            
+
             return output;
         }
 
@@ -518,7 +535,7 @@ namespace Geometry.Shapes
         #endregion
 
         #region Intersection
-        
+
         /// <summary>
         /// Sépare un polygone en coupant les segments qui croisent un autre polygone
         /// </summary>
@@ -532,7 +549,7 @@ namespace Geometry.Shapes
             foreach (Segment seg in origin.Sides)
             {
                 List<RealPoint> points = cutter.GetCrossingPoints(seg).OrderBy(p => p.Distance(seg.StartPoint)).ToList();
-                
+
                 if (points.Count != 0)
                 {
                     points.Insert(0, seg.StartPoint);
@@ -594,14 +611,14 @@ namespace Geometry.Shapes
         {
             List<Segment> currentSegs = new List<Segment>();
             List<Polygon> polygons = new List<Polygon>();
-            
+
             while (inputSegs.Count != 0)
             {
                 currentSegs.Add(inputSegs[0]);
                 inputSegs.RemoveAt(0);
-                
+
                 bool polygonOpen = true;
-                
+
                 while (polygonOpen)
                 {
                     for (int i = inputSegs.Count - 1; i >= 0; i--)
@@ -713,7 +730,7 @@ namespace Geometry.Shapes
         {
             if (rotationCenter == null)
                 rotationCenter = Barycenter;
-            
+
             Polygon output = new Polygon(Points.ConvertAll(p => p.Rotation(angle, rotationCenter)), false);
 
             if (_barycenter.Computed && _barycenter.Value == rotationCenter)
@@ -739,7 +756,7 @@ namespace Geometry.Shapes
                 p3 = points[2];
 
                 PolygonTriangle triangle = new PolygonTriangle(p1, p2, p3);
-                if(this.Contains(triangle.Barycenter))
+                if (this.Contains(triangle.Barycenter))
                 {
                     triangles.Add(triangle);
                     points.Add(p1);
@@ -752,7 +769,7 @@ namespace Geometry.Shapes
                     points.RemoveAt(0);
                 }
             } while (points.Count >= 3);
-            
+
             return triangles;
         }
 
@@ -784,7 +801,7 @@ namespace Geometry.Shapes
             }
 
             listePoints[listePoints.Length - 1] = listePoints[0];
-            
+
             if (fillColor != Color.Transparent)
                 using (SolidBrush brush = new SolidBrush(fillColor))
                     g.FillPolygon(brush, listePoints, System.Drawing.Drawing2D.FillMode.Winding);

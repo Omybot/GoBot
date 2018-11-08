@@ -64,6 +64,7 @@
     <Compile Include="Shapes\ShapesInteractions\CircleWithPolygon.cs" />
     <Compile Include="Shapes\ShapesInteractions\CircleWithRealPoint.cs" />
     <Compile Include="Shapes\ShapesInteractions\CircleWithSegment.cs" />
+    <Compile Include="Shapes\ShapesInteractions\LineWithCircle.cs" />
     <Compile Include="Shapes\ShapesInteractions\LineWithLine.cs" />
     <Compile Include="Shapes\ShapesInteractions\LineWithPolygon.cs" />
     <Compile Include="Shapes\ShapesInteractions\LineWithRealPoint.cs" />
