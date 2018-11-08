@@ -25,7 +25,7 @@ namespace GoBot
         private static ThreadLink _linkDisplay;
 
         #region Conversion coordonnées réelles / écran
-        
+
         /// <summary>
         /// Nombre de pixels par mm du terrain
         /// </summary>
@@ -47,7 +47,7 @@ namespace GoBot
         public delegate void TableDessineeDelegate(Image img);
         //Déclaration de l’évènement utilisant le délégué
         public static event TableDessineeDelegate TableDessinee;
-        
+
         private static RealPoint positionCurseur;
         public static RealPoint PositionCurseurTable { get; set; }
         public static RealPoint positionDepart;
@@ -55,7 +55,7 @@ namespace GoBot
         public static List<Point> trajectoirePolaireScreen;
         private static List<Point> pointsPolaireScreen;
         public static bool MouseClicked { get; set; }
-        
+
         public static bool AfficheGraphArretes { get; set; } = false;
         public static bool AfficheGraph { get; set; } = false;
         public static bool AfficheObstacles { get; set; } = false;
@@ -172,7 +172,7 @@ namespace GoBot
             _linkDisplay.RegisterName();
 
             Stopwatch sw = Stopwatch.StartNew();
-            
+
             while (!_linkDisplay.Cancelled)
             {
                 _linkDisplay.LoopsCount++;
@@ -192,11 +192,11 @@ namespace GoBot
                         bmp = new Bitmap(Properties.Resources.TablePlan);
                     else
                         bmp = new Bitmap(Properties.Resources.TablePlan.Width, Properties.Resources.TablePlan.Height);
-                    
+
                     {
                         Graphics g = Graphics.FromImage(bmp);
                         g.SmoothingMode = SmoothingMode.AntiAlias;
-                        
+
                         if (AfficheGraph || AfficheGraphArretes)
                             DessineGraph(Robots.GrosRobot, g, AfficheGraph, AfficheGraphArretes);
 
@@ -263,7 +263,7 @@ namespace GoBot
                             Direction traj = Maths.GetDirection(positionDepart, PositionCurseurTable);
 
                             Point pointOrigine = Scale.RealToScreenPosition(positionDepart);
-                            Position departRecule = new Position(- traj.angle, pointOrigine);
+                            Position departRecule = new Position(-traj.angle, pointOrigine);
                             departRecule.Move(Scale.RealToScreenDistance(-Robots.GrosRobot.Longueur / 2));
 
                             gGros.FillRectangle(brushNoirTresTransparent, bmpGrosRobot.Width / 2 - Scale.RealToScreenDistance(Robots.GrosRobot.Largeur / 2), bmpGrosRobot.Height / 2 - Scale.RealToScreenDistance(Robots.GrosRobot.Longueur / 2), Scale.RealToScreenDistance(Robots.GrosRobot.Largeur), Scale.RealToScreenDistance(Robots.GrosRobot.Longueur));
@@ -297,7 +297,7 @@ namespace GoBot
                                 foreach (Point p in pointsPolaireScreen)
                                     g.DrawEllipse(Pens.Black, p.X - 3, p.Y - 3, 6, 6);
                         }
-                        
+
                         TableDessinee?.Invoke(bmp);
                     }
                 }
@@ -375,7 +375,7 @@ namespace GoBot
                     detection.ToPolygone().Paint(g, Color.Red, 1, Color.FromArgb(35, Color.Red), Scale);
 
                     Point positionEcran = Scale.RealToScreenPosition(detection.Position);
-                    
+
                     g.DrawLine(Pens.Red, new Point(positionEcran.X - 4, positionEcran.Y - 4), new Point(positionEcran.X + 4, positionEcran.Y + 4));
                     g.DrawLine(Pens.Red, new Point(positionEcran.X - 4, positionEcran.Y + 4), new Point(positionEcran.X + 4, positionEcran.Y - 4));
                 }
@@ -441,7 +441,7 @@ namespace GoBot
         private static void DessineRobot(Robot robot, Graphics g)
         {
             Point positionRobot = Scale.RealToScreenPosition(robot.Position.Coordinates);
-            
+
             g.TranslateTransform(positionRobot.X, positionRobot.Y);
             g.RotateTransform((float)(robot.Position.Angle.InDegrees));
             g.TranslateTransform(-positionRobot.X, -positionRobot.Y);
@@ -455,13 +455,13 @@ namespace GoBot
             g.DrawLine(Plateau.NotreCouleur == Plateau.CouleurDroiteViolet ? penCouleurDroite : penCouleurGauche, robotRect.Center(), new Point(robotRect.Right, (int)robotRect.Center().Y));
 
             // TODOEACHYEAR Dessiner ici les actionneurs pour qu'ils prennent l'inclinaison du robot
-            
+
             g.ResetTransform();
         }
 
         private static void DessineObstacles(Graphics g)
         {
-            g.SetClip(Scale.RealToScreenRect(new RectangleF(-Plateau.BorderWidth, -Plateau.BorderWidth, Plateau.Largeur+ Plateau.BorderWidth*2, Plateau.Hauteur+ Plateau.BorderWidth*2)));
+            g.SetClip(Scale.RealToScreenRect(new RectangleF(-Plateau.BorderWidth, -Plateau.BorderWidth, Plateau.Largeur + Plateau.BorderWidth * 2, Plateau.Hauteur + Plateau.BorderWidth * 2)));
 
             foreach (IShape forme in Plateau.ListeObstacles)
                 forme.Paint(g, Color.Red, 5, Color.Transparent, Scale);
@@ -541,9 +541,11 @@ namespace GoBot
                     }
 
                 if (graph)
-                    // Dessin des noeuds
+                    //Dessin des noeuds
                     foreach (Node n in robot.Graph.Nodes)
+                    {
                         n.Position.Paint(g, n.Passable ? Color.Black : Color.Red, 3, Color.LimeGreen, Scale);
+                    }
             }
 
             //robot.SemGraph.Release();
@@ -551,38 +553,27 @@ namespace GoBot
 
         private static void DessinePathFinding(Graphics g)
         {
-            /*foreach (Node n in robot.NodeTrouve)
-            {
-                Point positionNode = scale.RealToScreenPosition(n.Position);
-                g.FillEllipse(brushRouge, new Rectangle(positionNode.X - 4, positionNode.Y - 4, 8, 8));
-            }
+            //List<RealPoint> points = null;
+            //if (PathFinder.PointsTrouves != null)
+            //    points = new List<RealPoint>(PathFinder.PointsTrouves);
+            //if (points != null && points.Count > 1)
+            //{
+            //    for (int i = 1; i < points.Count; i++)
+            //    {
+            //        g.DrawLine(penVertEpais, Scale.RealToScreenPosition(points[i - 1]), Scale.RealToScreenPosition(points[i - 1]));
+            //    }
+            //}
 
-            foreach (Arc a in robot.CheminTrouve)
-            {
-                g.DrawLine(penOrangeEpais, scale.RealToScreenPosition(a.StartNode.Position), scale.RealToScreenPosition(a.EndNode.Position));
-            }*/
-
-            List<RealPoint> points = null;
-            if (PathFinder.PointsTrouves != null)
-                points = new List<RealPoint>(PathFinder.PointsTrouves);
-            if (points != null && points.Count > 1)
-            {
-                for (int i = 1; i < points.Count; i++)
-                {
-                    g.DrawLine(penVertEpais, Scale.RealToScreenPosition(points[i - 1]), Scale.RealToScreenPosition(points[i - 1]));
-                }
-            }
-
-            Arc cheminTest = PathFinder.CheminTest;
-            if (cheminTest != null)
-                g.DrawLine(penRougeEpais, Scale.RealToScreenPosition(new RealPoint(cheminTest.StartNode.Position.X, cheminTest.StartNode.Position.Y)), Scale.RealToScreenPosition(new RealPoint(cheminTest.EndNode.Position.X, cheminTest.EndNode.Position.Y)));
+            //Arc cheminTest = PathFinder.CheminTest;
+            //if (cheminTest != null)
+            //    g.DrawLine(penRougeEpais, Scale.RealToScreenPosition(new RealPoint(cheminTest.StartNode.Position.X, cheminTest.StartNode.Position.Y)), Scale.RealToScreenPosition(new RealPoint(cheminTest.EndNode.Position.X, cheminTest.EndNode.Position.Y)));
 
             //if (robot.ObstacleTeste != null)
             //    DessinerForme(g, Color.Green, 10, robot.ObstacleTeste);
 
-            IShape obstacleProbleme = PathFinder.ObstacleProbleme;
-            if (obstacleProbleme != null)
-                obstacleProbleme.Paint(g, Color.Red, 10, Color.Transparent, Scale);
+            //IShape obstacleProbleme = PathFinder.ObstacleProbleme;
+            //if (obstacleProbleme != null)
+            //    obstacleProbleme.Paint(g, Color.Red, 10, Color.Transparent, Scale);
 
             /*if (robot.CheminEnCoursNoeuds != null)
                 foreach (Node n in robot.CheminEnCoursNoeuds)

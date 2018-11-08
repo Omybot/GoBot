@@ -1,13 +1,3 @@
-// Copyright 2003 Eric Marchesin - <eric.marchesin@laposte.net>
-//
-// This source file(s) may be redistributed by any means PROVIDING they
-// are not sold for profit without the authors expressed written consent,
-// and providing that this notice and the authors name and all copyright
-// notices remain intact.
-// THIS SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
-// EXPRESS OR IMPLIED. USE IT AT YOUR OWN RISK. THE AUTHOR ACCEPTS NO
-// LIABILITY FOR ANY DATA DAMAGE/LOSS THAT THIS PRODUCT MAY CAUSE.
-//-----------------------------------------------------------------------
 using Geometry.Shapes;
 using System;
 using System.Collections;
@@ -102,19 +92,6 @@ namespace AStarFolder
 
         public RealPoint Position { get { return _pos; } }
         
-		/// <summary>
-		/// Returns the arc that leads to the specified node if it exists.
-		/// </summary>
-		/// <exception cref="ArgumentNullException">Argument node must not be null.</exception>
-		/// <param name="N">A node that could be reached from this one.</param>
-		/// <returns>The arc leading to N from this / null if there is no solution.</returns>
-		public Arc ArcGoingTo(Node N)
-		{
-			if ( N==null ) throw new ArgumentNullException();
-			foreach (Arc A in _outgoingArcs)
-				if (A.EndNode == N) return A;
-			return null;
-		}
 
 		/// <summary>
 		/// object.ToString() override.
@@ -179,36 +156,6 @@ namespace AStarFolder
 			double DX = n1.X - n2.X;
 			double DY = n1.Y - n2.Y;
 			return DX*DX+DY*DY;
-		}
-
-		/// <summary>
-		/// Returns the manhattan distance between two nodes : |Dx|+|Dy|
-		/// </summary>
-		/// <exception cref="ArgumentNullException">Argument nodes must not be null.</exception>
-		/// <param name="n1">First node.</param>
-		/// <param name="n2">Second node.</param>
-		/// <returns>Distance value.</returns>
-		public static double ManhattanDistance(Node n1, Node n2)
-		{
-			if ( n1==null || n2==null ) throw new ArgumentNullException();
-			double DX = n1.X - n2.X;
-			double DY = n1.Y - n2.Y;
-			return Math.Abs(DX)+Math.Abs(DY);
-		}
-
-		/// <summary>
-		/// Returns the maximum distance between two nodes : Max(|Dx|, |Dy|)
-		/// </summary>
-		/// <exception cref="ArgumentNullException">Argument nodes must not be null.</exception>
-		/// <param name="n1">First node.</param>
-		/// <param name="n2">Second node.</param>
-		/// <returns>Distance value.</returns>
-		public static double MaxDistanceAlongAxis(Node n1, Node n2)
-		{
-			if ( n1==null || n2==null ) throw new ArgumentNullException();
-			double DX = Math.Abs(n1.X - n2.X);
-			double DY = Math.Abs(n1.Y - n2.Y);
-			return Math.Max(DX, DY);
 		}
 	}
 }

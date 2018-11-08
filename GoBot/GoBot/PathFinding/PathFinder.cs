@@ -15,9 +15,7 @@ namespace GoBot.PathFinding
     static class PathFinder
     {
         private static ThreadLink _linkResetRadius;
-
-        public static List<Arc> CheminTrouve { get; private set; }
-        public static List<Node> NodeTrouve { get; private set; }
+        
         public static List<Node> CheminEnCoursNoeuds { get; private set; }
         public static List<Arc> CheminEnCoursArcs { get; private set; }
 
@@ -74,7 +72,7 @@ namespace GoBot.PathFinding
                     int nbPointsArrivee = 0;
 
                     Node debutNode = null, finNode = null;
-                    Node nodeProche = graph.ClosestNode(startPos.Coordinates.X, startPos.Coordinates.Y, out distance, false);
+                    Node nodeProche = graph.ClosestNode(startPos.Coordinates.X, startPos.Coordinates.Y, out distance);
                     if (distance != 0)
                     {
                         debutNode = new Node(startPos.Coordinates);
@@ -189,7 +187,7 @@ namespace GoBot.PathFinding
 
                     if (nbPointsDepart > 0)
                     {
-                        finNode = graph.ClosestNode(endPos.Coordinates.X, endPos.Coordinates.Y, out distance, false);
+                        finNode = graph.ClosestNode(endPos.Coordinates.X, endPos.Coordinates.Y, out distance);
                         if (distance != 0)
                         {
                             finNode = new Node(endPos.Coordinates);
@@ -311,16 +309,12 @@ namespace GoBot.PathFinding
                                 //Console.WriteLine("PathFinding trouvé : " + (DateTime.Now - debut).TotalMilliseconds + "ms");
 
                                 List<Node> nodes = aStar.PathByNodes.ToList<Node>();
-                                List<Arc> arcs = aStar.PathByArcs.ToList<Arc>();
 
                                 Robots.GrosRobot.Historique.Log("Chemin trouvé : " + (nodes.Count - 2) + " noeud(s) intermédiaire(s)", TypeLog.PathFinding);
 
                                 CheminEnCoursNoeuds = new List<Node>();
                                 CheminEnCoursArcs = new List<Arc>();
-
-                                CheminTrouve = new List<Arc>(arcs);
-                                NodeTrouve = new List<Node>(nodes);
-
+                                
                                 //Console.WriteLine("Début simplification : " + (DateTime.Now - debut).TotalMilliseconds + "ms");
 
                                 // Simplification du chemin
@@ -417,8 +411,6 @@ namespace GoBot.PathFinding
             PointsTrouves = null;
             ObstacleProbleme = null;
             ObstacleTeste = null;
-            NodeTrouve = new List<Node>();
-            CheminTrouve = new List<Arc>();
 
             //Console.WriteLine("PathFinding en " + (DateTime.Now - debut).TotalMilliseconds + " ms");
 

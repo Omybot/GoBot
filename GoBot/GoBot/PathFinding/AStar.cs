@@ -25,11 +25,12 @@ namespace AStarFolder
     /// </summary>
     public class AStar
     {
-        Graph _Graph;
-        Tracks _Open;
-        Dictionary<Node, Track> _OpenTracks, _ClosedTracks;
+        Graph _graph;
+        Tracks _open;
+        Dictionary<Node, Track> _closedTracks;
+        Dictionary<Node, Track> _openTracks;
         Track _LeafToGoBackUp;
-        int _NbIterations = -1;
+        int _iterations = -1;
 
         Tracks.Equality SameNodesReached = new Tracks.Equality(Track.SameEndNode);
 
@@ -38,19 +39,7 @@ namespace AStarFolder
         /// </summary>
         public static Heuristic EuclidianHeuristic
         { get { return new Heuristic(Node.EuclidianDistance); } }
-
-        /// <summary>
-        /// Heuristic based on the maximum distance : Max(|Dx|, |Dy|, |Dz|)
-        /// </summary>
-        public static Heuristic MaxAlongAxisHeuristic
-        { get { return new Heuristic(Node.MaxDistanceAlongAxis); } }
-
-        /// <summary>
-        /// Heuristic based on the manhattan distance : |Dx|+|Dy|+|Dz|
-        /// </summary>
-        public static Heuristic ManhattanHeuristic
-        { get { return new Heuristic(Node.ManhattanDistance); } }
-
+        
         /// <summary>
         /// Gets/Sets the heuristic that AStar will use.
         /// It must be homogeneous to arc's cost.
@@ -80,13 +69,13 @@ namespace AStarFolder
         /// <summary>
         /// AStar Constructor.
         /// </summary>
-        /// <param name="G">The graph on which AStar will perform the search.</param>
-        public AStar(Graph G)
+        /// <param name="graph">The graph on which AStar will perform the search.</param>
+        public AStar(Graph graph)
         {
-            _Graph = G;
-            _Open = new Tracks();
-            _OpenTracks = new Dictionary<Node, Track>();
-            _ClosedTracks = new Dictionary<Node, Track>();
+            _graph = graph;
+            _open = new Tracks();
+            _openTracks = new Dictionary<Node, Track>();
+            _closedTracks = new Dictionary<Node, Track>();
             ChoosenHeuristic = EuclidianHeuristic;
             DijkstraHeuristicBalance = 0.5;
         }
@@ -95,32 +84,17 @@ namespace AStarFolder
         /// Searches for the best path to reach the specified EndNode from the specified StartNode.
         /// </summary>
         /// <exception cref="ArgumentNullException">StartNode and EndNode cannot be null.</exception>
-        /// <param name="StartNode">The node from which the path must start.</param>
-        /// <param name="EndNode">The node to which the path must end.</param>
+        /// <param name="startNode">The node from which the path must start.</param>
+        /// <param name="endNode">The node to which the path must end.</param>
         /// <returns>'true' if succeeded / 'false' if failed.</returns>
-        public bool SearchPath(Node StartNode, Node EndNode)
+        public bool SearchPath(Node startNode, Node endNode)
         {
-            lock (_Graph)
-            {
-                Initialize(StartNode, EndNode);
+            //lock (_graph)
+            //{
+                Initialize(startNode, endNode);
                 while (NextStep()) { }
                 return PathFound;
-            }
-        }
-
-        /// <summary>
-        /// Use for debug in 'step by step' mode only.
-        /// Returns all the tracks found in the 'Open' list of the algorithm at a given time.
-        /// A track is a list of the nodes visited to come to the current node.
-        /// </summary>
-        public Node[][] Open
-        {
-            get
-            {
-                Node[][] NodesList = new Node[_Open.Count][];
-                for (int i = 0; i < _Open.Count; i++) NodesList[i] = GoBackUpNodes((Track)_Open[i]);
-                return NodesList;
-            }
+            //}
         }
 
         /// <summary>
@@ -130,17 +104,17 @@ namespace AStarFolder
         /// <exception cref="ArgumentNullException">StartNode and EndNode cannot be null.</exception>
         /// <param name="StartNode">The node from which the path must start.</param>
         /// <param name="EndNode">The node to which the path must end.</param>
-        public void Initialize(Node StartNode, Node EndNode)
+        protected void Initialize(Node StartNode, Node EndNode)
         {
             if (StartNode == null || EndNode == null) throw new ArgumentNullException();
-            _ClosedTracks.Clear();
-            _Open.Clear();
-            _OpenTracks.Clear();
+            _closedTracks.Clear();
+            _open.Clear();
+            _openTracks.Clear();
             Track.Target = EndNode;
             Track newTrack = new Track(StartNode);
-            _Open.Add(newTrack);
-            _OpenTracks.Add(StartNode, newTrack);
-            _NbIterations = 0;
+            _open.Add(newTrack);
+            _openTracks.Add(StartNode, newTrack);
+            _iterations = 0;
             _LeafToGoBackUp = null;
         }
 
@@ -150,93 +124,79 @@ namespace AStarFolder
         /// </summary>
         /// <exception cref="InvalidOperationException">You must initialize AStar before using NextStep().</exception>
         /// <returns>'true' unless the search ended.</returns>
-        public bool NextStep()
+        protected bool NextStep()
         {
-            if (!Initialized) throw new InvalidOperationException("You must initialize AStar before launching the algorithm.");
-            if (_Open.Count == 0) return false;
-            _NbIterations++;
+            if (_open.Count == 0) return false;
+            _iterations++;
+           // Console.WriteLine("_iterations : " + _iterations.ToString());
 
-            _Open.Sort();
-            Track BestTrack = (Track)_Open[0];
-            _Open.RemoveAt(0);
-            _OpenTracks.Remove(BestTrack.EndNode);
+            _open.Sort();
+            Track bestTrack = (Track)_open[0];
+            _open.RemoveAt(0);
+            _openTracks.Remove(bestTrack.EndNode);
 
-            if (BestTrack.Succeed)
+            if (bestTrack.Succeed)
             {
-                _LeafToGoBackUp = BestTrack;
-                _Open.Clear();
-                _OpenTracks.Clear();
+                _LeafToGoBackUp = bestTrack;
+                _open.Clear();
+                _openTracks.Clear();
             }
             else
             {
-                Propagate(BestTrack);
+                Propagate(bestTrack);
             }
-            return _Open.Count > 0;
+
+            return (_open.Count > 0);
         }
 
         private void Propagate(Track TrackToPropagate)
         {
-            if(_ClosedTracks.ContainsKey(TrackToPropagate.EndNode))
+            if(_closedTracks.ContainsKey(TrackToPropagate.EndNode))
             {
-                _ClosedTracks[TrackToPropagate.EndNode] = TrackToPropagate;
+                _closedTracks[TrackToPropagate.EndNode] = TrackToPropagate;
             }
             else
             {
-                _ClosedTracks.Add(TrackToPropagate.EndNode, TrackToPropagate);
+                _closedTracks.Add(TrackToPropagate.EndNode, TrackToPropagate);
             }
-
-            foreach (Arc A in TrackToPropagate.EndNode.OutgoingArcs)
+            
+            foreach (Arc arc in TrackToPropagate.EndNode.OutgoingArcs)
             {
-                if (A.Passable && A.EndNode.Passable)
+                if (arc.Passable && arc.EndNode.Passable)
                 {
-                    Track Successor = new Track(TrackToPropagate, A);
+                    Track successor = new Track(TrackToPropagate, arc);
+                    Track trackInClose, trackInOpen;
 
-                    Track NF, NO;
-                    if (_ClosedTracks.ContainsKey(Successor.EndNode))
-                        NF = _ClosedTracks[Successor.EndNode];
+                    if (_closedTracks.ContainsKey(successor.EndNode))
+                        trackInClose = _closedTracks[successor.EndNode];
                     else
-                        NF = null;
+                        trackInClose = null;
                     
-                    if (_OpenTracks.ContainsKey(Successor.EndNode))
-                        NO = _OpenTracks[Successor.EndNode];
+                    if (_openTracks.ContainsKey(successor.EndNode))
+                        trackInOpen = _openTracks[successor.EndNode];
                     else
-                        NO = null;
+                        trackInOpen = null;
 
-                    if (NF != null && Successor.Cost >= NF.Cost)
+                    if (trackInClose != null && successor.Cost >= trackInClose.Cost)
                         continue;
-                    if (NO != null && Successor.Cost >= NO.Cost)
+                    if (trackInOpen != null && successor.Cost >= trackInOpen.Cost)
                         continue;
-                    if (NF != null)
+                    if (trackInClose != null)
                     {
-                        _ClosedTracks.Remove(Successor.EndNode);
+                        _closedTracks.Remove(successor.EndNode);
                     }
-                    if (NO != null)
+                    if (trackInOpen != null)
                     {
-                        _Open.Remove(NO);
-                        _OpenTracks.Remove(Successor.EndNode);
+                        _open.Remove(trackInOpen);
+                        _openTracks.Remove(successor.EndNode);
                     }
 
-                    _Open.Add(Successor);
-                    _OpenTracks.Add(Successor.EndNode, Successor);
+                    _open.Add(successor);
+                    _openTracks.Add(successor.EndNode, successor);
                 }
             }
         }
-
-        /// <summary>
-        /// To know if the search has been initialized.
-        /// </summary>
-        public bool Initialized { get { return _NbIterations >= 0; } }
-
-        /// <summary>
-        /// To know if the search has been started.
-        /// </summary>
-        public bool SearchStarted { get { return _NbIterations > 0; } }
-
-        /// <summary>
-        /// To know if the search has ended.
-        /// </summary>
-        public bool SearchEnded { get { return SearchStarted && _Open.Count == 0; } }
-
+        
         /// <summary>
         /// To know if a path has been found.
         /// </summary>
@@ -248,36 +208,8 @@ namespace AStarFolder
         /// -1 if the search has not been initialized.
         /// 0 if it has not been started.
         /// </summary>
-        public int StepCounter { get { return _NbIterations; } }
-
-        private void CheckSearchHasEnded()
-        {
-            if (!SearchEnded) throw new InvalidOperationException("You cannot get a result unless the search has ended.");
-        }
-
-        /// <summary>
-        /// Returns information on the result.
-        /// </summary>
-        /// <param name="NbArcsOfPath">The number of arcs in the result path / -1 if no result.</param>
-        /// <param name="CostOfPath">The cost of the result path / -1 if no result.</param>
-        /// <returns>'true' if the search succeeded / 'false' if it failed.</returns>
-        public bool ResultInformation(out int NbArcsOfPath, out double CostOfPath)
-        {
-            CheckSearchHasEnded();
-            if (!PathFound)
-            {
-                NbArcsOfPath = -1;
-                CostOfPath = -1;
-                return false;
-            }
-            else
-            {
-                NbArcsOfPath = _LeafToGoBackUp.NbArcsVisited;
-                CostOfPath = _LeafToGoBackUp.Cost;
-                return true;
-            }
-        }
-
+        public int StepCounter { get { return _iterations; } }
+        
         /// <summary>
         /// Gets the array of nodes representing the found path.
         /// </summary>
@@ -286,7 +218,6 @@ namespace AStarFolder
         {
             get
             {
-                CheckSearchHasEnded();
                 if (!PathFound) return null;
                 return GoBackUpNodes(_LeafToGoBackUp);
             }
@@ -299,25 +230,6 @@ namespace AStarFolder
             for (int i = Nb; i >= 0; i--, T = T.Queue)
                 Path[i] = T.EndNode;
             return Path;
-        }
-
-        /// <summary>
-        /// Gets the array of arcs representing the found path.
-        /// </summary>
-        /// <exception cref="InvalidOperationException">You cannot get a result unless the search has ended.</exception>
-        public Arc[] PathByArcs
-        {
-            get
-            {
-                CheckSearchHasEnded();
-                if (!PathFound) return null;
-                int Nb = _LeafToGoBackUp.NbArcsVisited;
-                Arc[] Path = new Arc[Nb];
-                Track Cur = _LeafToGoBackUp;
-                for (int i = Nb - 1; i >= 0; i--, Cur = Cur.Queue)
-                    Path[i] = Cur.Queue.EndNode.ArcGoingTo(Cur.EndNode);
-                return Path;
-            }
         }
     }
 }
