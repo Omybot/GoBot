@@ -408,7 +408,7 @@ namespace Geometry.Shapes
         /// </summary>
         /// <param name="forme">Segment testé</param>
         /// <returns>Distance minimale</returns>
-        protected double Distance(Segment segment)
+        public double Distance(Segment segment)
         {
             // Si les segments se croisent la distance est de 0
             if (Cross(segment))
@@ -448,7 +448,7 @@ namespace Geometry.Shapes
         /// </summary>
         /// <param name="forme">Droite testée</param>
         /// <returns>Distance minimale</returns>
-        protected double Distance(Line line)
+        public double Distance(Line line)
         {
             // Si la droite et le segment se croisent la distance est de 0
             if (Cross(line))
@@ -468,7 +468,7 @@ namespace Geometry.Shapes
         /// </summary>
         /// <param name="forme">Cercle testé</param>
         /// <returns>Distance minimale</returns>
-        protected double Distance(Circle circle)
+        public double Distance(Circle circle)
         {
             if (Cross(circle))
                 return 0;
@@ -482,7 +482,7 @@ namespace Geometry.Shapes
         /// </summary>
         /// <param name="forme">Polygone testé</param>
         /// <returns>Distance minimale</returns>
-        protected double Distance(Polygon polygon)
+        public double Distance(Polygon polygon)
         {
             // Distance jusqu'au segment le plus proche
             double minDistance = double.MaxValue;
@@ -503,7 +503,7 @@ namespace Geometry.Shapes
         /// </summary>
         /// <param name="point">Point testé</param>
         /// <returns>Distance minimale</returns>
-        protected double Distance(RealPoint point)
+        public double Distance(RealPoint point)
         {
             // Le raisonnement est le même que pour la droite cf Droite.Distance
 

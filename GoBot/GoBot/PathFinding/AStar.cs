@@ -148,14 +148,7 @@ namespace AStarFolder
 
         private void Propagate(Track TrackToPropagate)
         {
-            if(_closedTracks.ContainsKey(TrackToPropagate.EndNode))
-            {
-                _closedTracks[TrackToPropagate.EndNode] = TrackToPropagate;
-            }
-            else
-            {
-                _closedTracks.Add(TrackToPropagate.EndNode, TrackToPropagate);
-            }
+            _closedTracks[TrackToPropagate.EndNode] = TrackToPropagate;
             
             foreach (Arc arc in TrackToPropagate.EndNode.OutgoingArcs)
             {
@@ -164,32 +157,25 @@ namespace AStarFolder
                     Track successor = new Track(TrackToPropagate, arc);
                     Track trackInClose, trackInOpen;
 
-                    if (_closedTracks.ContainsKey(successor.EndNode))
-                        trackInClose = _closedTracks[successor.EndNode];
-                    else
-                        trackInClose = null;
-                    
-                    if (_openTracks.ContainsKey(successor.EndNode))
-                        trackInOpen = _openTracks[successor.EndNode];
-                    else
-                        trackInOpen = null;
+                    _closedTracks.TryGetValue(successor.EndNode, out trackInClose);
+                    _openTracks.TryGetValue(successor.EndNode, out trackInOpen);
 
                     if (trackInClose != null && successor.Cost >= trackInClose.Cost)
                         continue;
                     if (trackInOpen != null && successor.Cost >= trackInOpen.Cost)
                         continue;
+
                     if (trackInClose != null)
                     {
                         _closedTracks.Remove(successor.EndNode);
                     }
                     if (trackInOpen != null)
                     {
-                        //_open.Remove(trackInOpen);
-                        _openTracks.Remove(successor.EndNode);
+                        _open.Remove(trackInOpen);
                     }
 
                     _open.Add(successor);
-                    _openTracks.Add(successor.EndNode, successor);
+                    _openTracks[successor.EndNode] = successor;
                 }
             }
         }

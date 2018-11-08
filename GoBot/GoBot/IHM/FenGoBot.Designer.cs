@@ -53,6 +53,7 @@ namespace GoBot
             this.tabGestionLog = new System.Windows.Forms.TabPage();
             this.panelGestionLog = new GoBot.IHM.PanelGestionLog();
             this.tabTable = new System.Windows.Forms.TabPage();
+            this.button1 = new System.Windows.Forms.Button();
             this.panelTable = new GoBot.IHM.PanelTable();
             this.tabMatch = new System.Windows.Forms.TabPage();
             this.panelMatch = new GoBot.IHM.PanelMatch();
@@ -97,7 +98,6 @@ namespace GoBot
             this.btnClose = new System.Windows.Forms.Button();
             this.btnFenetre = new System.Windows.Forms.Button();
             this.panelConnexions = new GoBot.IHM.PanelConnexions();
-            this.button1 = new System.Windows.Forms.Button();
             this.tabAlimentation.SuspendLayout();
             this.tabServomoteurs.SuspendLayout();
             this.tabConnexions.SuspendLayout();
@@ -356,6 +356,16 @@ namespace GoBot
             this.tabTable.TabIndex = 7;
             this.tabTable.Text = "Table";
             this.tabTable.UseVisualStyleBackColor = true;
+            // 
+            // button1
+            // 
+            this.button1.Location = new System.Drawing.Point(190, 35);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(75, 23);
+            this.button1.TabIndex = 1;
+            this.button1.Text = "button1";
+            this.button1.UseVisualStyleBackColor = true;
+            this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
             // panelTable
             // 
@@ -813,16 +823,6 @@ namespace GoBot
             this.panelConnexions.Name = "panelConnexions";
             this.panelConnexions.Size = new System.Drawing.Size(980, 27);
             this.panelConnexions.TabIndex = 74;
-            // 
-            // button1
-            // 
-            this.button1.Location = new System.Drawing.Point(210, 39);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(75, 23);
-            this.button1.TabIndex = 1;
-            this.button1.Text = "button1";
-            this.button1.UseVisualStyleBackColor = true;
-            this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
             // FenGoBot
             // 

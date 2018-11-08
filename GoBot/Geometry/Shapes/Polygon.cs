@@ -406,7 +406,7 @@ namespace Geometry.Shapes
             // Si ce nombre est impaire alors le point est contenu dans le polygone
 
             int crossCount = 0;
-            Segment testSeg = new Segment(point, new RealPoint(-100000, -100000));
+            Segment testSeg = new Segment(point, new RealPoint(Sides.Min(o => o.StartPoint.X) - 10000, point.Y));
 
             foreach (Segment s in Sides)
             {
@@ -420,6 +420,8 @@ namespace Geometry.Shapes
                         crossCount++;
                 }
             }
+
+            crossCount -= Sides.Count(o => Math.Abs(o.StartPoint.Y - point.Y) < RealPoint.PRECISION);
 
             return (crossCount % 2 == 1);
         }
