@@ -75,13 +75,13 @@ namespace Geometry.Shapes
         #endregion
 
         #region Opérateurs & Surcharges
-
+        
         public static bool operator ==(RealPoint a, RealPoint b)
         {
-            if ((object)a == null || (object)b == null)
-                return (object)a == null && (object)b == null;
+            if (a is null || b is null)
+                return (a is null && b is null);
             else
-                return (Math.Abs(a.X-b.X) < PRECISION && Math.Abs(a.Y - b.Y) < PRECISION);
+                return (Math.Abs(a.X - b.X) < PRECISION && Math.Abs(a.Y - b.Y) < PRECISION);
         }
 
         public static bool operator !=(RealPoint a, RealPoint b)
