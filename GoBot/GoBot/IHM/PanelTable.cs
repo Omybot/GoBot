@@ -361,7 +361,7 @@ namespace GoBot.IHM
             if (ligne == "Détections balises")
                 Dessinateur.AfficheLigneDetections = e.NewValue == CheckState.Checked;
             if (ligne == "Calcul path finding")
-                Config.CurrentConfig.AfficheDetailTraj = e.NewValue == CheckState.Checked ? 200 : 0;
+                Config.CurrentConfig.AfficheDetailTraj = e.NewValue == CheckState.Checked ? 30 : 0;
             if (ligne == "Historique trajectoire")
                 Dessinateur.AfficheHistoriqueCoordonnees = e.NewValue == CheckState.Checked;
         }

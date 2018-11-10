@@ -65,7 +65,7 @@ namespace AStarFolder
                                     && node.Position.Distance(iNode.Position) < _distanceMax
                                     && !obstacles.Any(iObstacle => iObstacle.Distance(new Segment(iNode.Position, node.Position)) < safeDistance)))
             {
-                AddLiaison(node, no, node.Position.Distance(no.Position), isPermanent);
+                AddLiaison(node, no, isPermanent);
                 connections++;
             }
 
@@ -101,10 +101,9 @@ namespace AStarFolder
             _tmpNodes.Clear();
         }
 
-        public Arc AddArc(Node startNode, Node endNode, double weight, bool isPermanent)
+        public Arc AddArc(Node startNode, Node endNode, bool isPermanent)
         {
             Arc arc = new Arc(startNode, endNode);
-            arc.Weight = weight;
 
             _arcs.Add(arc);
             if (!isPermanent) _tmpArcs.Add(arc);
@@ -112,10 +111,10 @@ namespace AStarFolder
             return arc;
         }
 
-        public void AddLiaison(Node node1, Node node2, double weight, bool isPermanent)
+        public void AddLiaison(Node node1, Node node2, bool isPermanent)
         {
-            AddArc(node1, node2, weight, isPermanent);
-            AddArc(node2, node1, weight, isPermanent);
+            AddArc(node1, node2, isPermanent);
+            AddArc(node2, node1, isPermanent);
         }
 
         public void RemoveNode(Node node)

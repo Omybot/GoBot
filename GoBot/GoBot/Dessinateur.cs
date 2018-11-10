@@ -551,36 +551,75 @@ namespace GoBot
             //robot.SemGraph.Release();
         }
 
+        public static Track CurrentTrack;
+
         private static void DessinePathFinding(Graphics g)
         {
-            //List<RealPoint> points = null;
-            //if (PathFinder.PointsTrouves != null)
-            //    points = new List<RealPoint>(PathFinder.PointsTrouves);
-            //if (points != null && points.Count > 1)
-            //{
-            //    for (int i = 1; i < points.Count; i++)
-            //    {
-            //        g.DrawLine(penVertEpais, Scale.RealToScreenPosition(points[i - 1]), Scale.RealToScreenPosition(points[i - 1]));
-            //    }
-            //}
-
-            //Arc cheminTest = PathFinder.CheminTest;
-            //if (cheminTest != null)
-            //    g.DrawLine(penRougeEpais, Scale.RealToScreenPosition(new RealPoint(cheminTest.StartNode.Position.X, cheminTest.StartNode.Position.Y)), Scale.RealToScreenPosition(new RealPoint(cheminTest.EndNode.Position.X, cheminTest.EndNode.Position.Y)));
-
-            //if (robot.ObstacleTeste != null)
-            //    DessinerForme(g, Color.Green, 10, robot.ObstacleTeste);
-
-            //IShape obstacleProbleme = PathFinder.ObstacleProbleme;
-            //if (obstacleProbleme != null)
-            //    obstacleProbleme.Paint(g, Color.Red, 10, Color.Transparent, Scale);
-
-            /*if (robot.CheminEnCoursNoeuds != null)
-                foreach (Node n in robot.CheminEnCoursNoeuds)
+            if (GoBot.Config.CurrentConfig.AfficheDetailTraj > 0)
+            {
+                if (CurrentTrack != null)
                 {
-                    Point positionNode = scale.RealToScreenPosition(n.Position);
-                    g.FillEllipse(brushVert, new Rectangle(positionNode.X - 4, positionNode.Y - 4, 8, 8));
-                }*/
+                    Track track = CurrentTrack;
+
+                    Node n1, n2;
+                    n1 = track.EndNode;
+
+                    while (track.Queue != null)
+                    {
+                        track = track.Queue;
+                        n2 = track.EndNode;
+
+                        new Segment(n1.Position, n2.Position).Paint(g, Color.White, 4, Color.Yellow, Scale);
+
+                        if (PathFinder.CheminEnCoursNoeuds != null && PathFinder.CheminEnCoursNoeuds.Contains(n2))
+                            break;
+
+                        // g.DrawLine(Pens.Red, Scale.RealToScreenPosition(n1.Position), Scale.RealToScreenPosition(n2.Position));
+                        n1 = n2;
+                    }
+                }
+
+                if (PathFinder.CheminTest != null)
+                {
+                    PathFinder.CheminTest.Paint(g, Color.White, 4, Color.DodgerBlue, Scale);
+                }
+                //List<RealPoint> points = null;
+                //if (PathFinder.PointsTrouves != null)
+                //    points = new List<RealPoint>(PathFinder.PointsTrouves);
+                //if (points != null && points.Count > 1)
+                //{
+                //    for (int i = 1; i < points.Count; i++)
+                //    {
+                //        g.DrawLine(penVertEpais, Scale.RealToScreenPosition(points[i - 1]), Scale.RealToScreenPosition(points[i - 1]));
+                //    }
+                //}
+
+                //Arc cheminTest = PathFinder.CheminTest;
+                //if (cheminTest != null)
+                //    g.DrawLine(penRougeEpais, Scale.RealToScreenPosition(new RealPoint(cheminTest.StartNode.Position.X, cheminTest.StartNode.Position.Y)), Scale.RealToScreenPosition(new RealPoint(cheminTest.EndNode.Position.X, cheminTest.EndNode.Position.Y)));
+
+                //if (robot.ObstacleTeste != null)
+                //    DessinerForme(g, Color.Green, 10, robot.ObstacleTeste);
+
+                IShape obstacleProbleme = PathFinder.ObstacleProbleme;
+                if (obstacleProbleme != null)
+                    obstacleProbleme.Paint(g, Color.Red, 10, Color.Transparent, Scale);
+
+                if (PathFinder.CheminEnCoursNoeuds != null && PathFinder.CheminEnCoursNoeuds.Count > 0)
+                {
+                    Node n1, n2;
+                    n1 = PathFinder.CheminEnCoursNoeuds[0];
+                    int i = 1;
+
+                    while (i < PathFinder.CheminEnCoursNoeuds.Count)
+                    {
+                        n2 = PathFinder.CheminEnCoursNoeuds[i];
+                        new Segment(n1.Position, n2.Position).Paint(g, Color.White, 4, Color.Green, Scale);
+                        i++;
+                        n1 = n2;
+                    }
+                }
+            }
         }
 
         private static Bitmap RotateImage(Bitmap b, AnglePosition angle)

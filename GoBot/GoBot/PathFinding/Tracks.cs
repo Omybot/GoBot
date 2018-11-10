@@ -98,7 +98,7 @@ namespace AStarFolder
             public int Compare(Track O1, Track O2)
             {
                 IComparable C = O1 as IComparable;
-                return O1.Cost.CompareTo(O2.Cost);
+                return O1.Evaluation.CompareTo(O2.Evaluation);
             }
         }
     }

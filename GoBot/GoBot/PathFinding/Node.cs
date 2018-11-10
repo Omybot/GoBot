@@ -73,15 +73,7 @@ namespace AStarFolder
         
 		public static double EuclidianDistance(Node n1, Node n2)
 		{
-			return Math.Sqrt( SquareEuclidianDistance(n1, n2) );
-		}
-        
-		public static double SquareEuclidianDistance(Node n1, Node n2)
-		{
-			if ( n1==null || n2==null ) throw new ArgumentNullException();
-			double DX = n1.X - n2.X;
-			double DY = n1.Y - n2.Y;
-			return DX*DX+DY*DY;
+			return n1.Position.Distance(n2.Position);
 		}
 	}
 }

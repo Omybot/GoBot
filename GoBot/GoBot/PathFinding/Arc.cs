@@ -6,8 +6,7 @@ namespace AStarFolder
     {
         Node _startNode;
         Node _endNode;
-
-        double _weight;
+        
         bool _passable;
         double _length;
         
@@ -15,7 +14,6 @@ namespace AStarFolder
         {
             StartNode = Start;
             EndNode = End;
-            _weight = 1;
             _length = _startNode.Position.Distance(_endNode.Position);
             _passable = true;
         }
@@ -42,12 +40,6 @@ namespace AStarFolder
             get { return _endNode; }
         }
         
-        public double Weight
-        {
-            set { _weight = value; }
-            get { return _weight; }
-        }
-        
         public bool Passable
         {
             set { _passable = value; }
@@ -64,7 +56,7 @@ namespace AStarFolder
         
         virtual public double Cost
         {
-            get { return _weight * _length; }
+            get { return Math.Sqrt(_length); }
         }
         
         public override string ToString()

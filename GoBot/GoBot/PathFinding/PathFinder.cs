@@ -19,7 +19,7 @@ namespace GoBot.PathFinding
         public static List<Node> CheminEnCoursNoeuds { get; private set; }
         public static List<Arc> CheminEnCoursArcs { get; private set; }
 
-        public static Arc CheminTest { get; private set; }
+        public static Segment CheminTest { get; private set; }
         public static IShape ObstacleTeste { get; private set; }
         public static IShape ObstacleProbleme { get; private set; }
         public static List<RealPoint> PointsTrouves { get; private set; }
@@ -303,7 +303,7 @@ namespace GoBot.PathFinding
                         else
                         {
                             AStar aStar = new AStar(graph);
-                            aStar.DijkstraHeuristicBalance = 1;
+                            aStar.DijkstraHeuristicBalance = 0;
 
                             //Console.WriteLine("Avant pathFinding : " + (DateTime.Now - debut).TotalMilliseconds + "ms");
 
@@ -340,7 +340,7 @@ namespace GoBot.PathFinding
 
                                         Segment racourci = new Segment(nodes[iNodeDepart].Position, nodes[iNodeArrivee].Position);
                                         //Arc arcRacourci = new Arc(nodes[iNodeDepart], nodes[iNodeArrivee]);
-                                        //CheminTest = arcRacourci;
+                                        CheminTest = racourci;
                                         //arcRacourci.Passable = false;
 
                                         for (int i = obstacles.Count() - 1; i >= 4; i--) // > 4 pour ne pas tester les bordures
@@ -352,17 +352,14 @@ namespace GoBot.PathFinding
                                             if (racourci.Distance(forme) < rayonSecurite)
                                             {
                                                 ObstacleProbleme = forme;
-
-                                                // Tempo pour l'affichage détaillé de la recherche de trajectoire (option)
-                                                if (Config.CurrentConfig.AfficheDetailTraj > 0)
-                                                    Thread.Sleep(Config.CurrentConfig.AfficheDetailTraj);
-
+                                                
                                                 raccourciPossible = false;
                                                 break;
                                             }
                                             //else if(Config.CurrentConfig.AfficheDetailTraj > 0)
                                             //    Thread.Sleep(Config.CurrentConfig.AfficheDetailTraj);
                                         }
+
                                         if (Config.CurrentConfig.AfficheDetailTraj > 0)
                                             Thread.Sleep(Config.CurrentConfig.AfficheDetailTraj);
 
@@ -408,6 +405,9 @@ namespace GoBot.PathFinding
 
                 }
             }
+
+            Dessinateur.CurrentTrack = null;
+            CheminEnCoursNoeuds = null;
 
             Console.WriteLine("Cherche trajectoire fin : " + sw.ElapsedMilliseconds + "ms");
 

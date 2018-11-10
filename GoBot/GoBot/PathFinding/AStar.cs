@@ -33,7 +33,7 @@ namespace AStarFolder
         int _iterations = -1;
         
         /// <summary>
-        /// Heuristic based on the euclidian distance : Sqrt(Dx²+Dy²+Dz²)
+        /// Heuristic based on the euclidian distance : Sqrt(Dx²+Dy²)
         /// </summary>
         public static Heuristic EuclidianHeuristic
         { get { return new Heuristic(Node.EuclidianDistance); } }
@@ -115,7 +115,7 @@ namespace AStarFolder
             _iterations = 0;
             _LeafToGoBackUp = null;
         }
-
+        
         /// <summary>
         /// Use for a 'step by step' search only. This method is alternate to SearchPath.
         /// The algorithm must have been initialize before.
@@ -129,6 +129,13 @@ namespace AStarFolder
            // Console.WriteLine("_iterations : " + _iterations.ToString());
            
             Track bestTrack = _open[0];
+
+            if (GoBot.Config.CurrentConfig.AfficheDetailTraj > 0)
+            {
+                GoBot.Dessinateur.CurrentTrack = bestTrack;
+                System.Threading.Thread.Sleep(GoBot.Config.CurrentConfig.AfficheDetailTraj);
+            }
+
             _open.RemoveAt(0);
             _openTracks.Remove(bestTrack.EndNode);
 
