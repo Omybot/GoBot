@@ -29,12 +29,12 @@ namespace GoBot
         /// <summary>
         /// Nombre de pixels par mm du terrain
         /// </summary>
-        private const double RAPPORT_SCREEN_REAL = (3.488372093023256 + 3.496503496503497) / 2;
+        private const double RAPPORT_SCREEN_REAL = (3000.0 / 862);
 
         /// <summary>
         /// Position en pixel sur l'image de l'abscisse 0 de la table
         /// </summary>
-        private const int OFFSET_IMAGE_X = 8;
+        private const int OFFSET_IMAGE_X = 6;
 
         /// <summary>
         /// Position en pixel sur l'image de l'ordonnée 0 de la table
