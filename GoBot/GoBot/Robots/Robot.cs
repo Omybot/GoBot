@@ -433,7 +433,7 @@ namespace GoBot
                     if (action is ActionAvance || action is ActionRecule)
                     {
                         Historique.Log("Noeud atteint " + TrajectoireEnCours.Points[0].X.ToString("0") + ":" + TrajectoireEnCours.Points[0].Y.ToString("0"), TypeLog.PathFinding);
-                        TrajectoireEnCours.RemoveFirst();
+                        TrajectoireEnCours.RemovePoint(0);
                     }
                 }
             }

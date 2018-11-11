@@ -83,6 +83,17 @@ namespace Geometry.Shapes
         }
 
         /// <summary>
+        /// Obtient la droite sur laquelle le segment se trouve
+        /// </summary>
+        public Line Line
+        {
+            get
+            {
+                return new Line(this);
+            }
+        }
+
+        /// <summary>
         /// Obtient la surface du segment
         /// </summary>
         public override double Surface

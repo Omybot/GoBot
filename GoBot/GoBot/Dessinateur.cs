@@ -605,6 +605,20 @@ namespace GoBot
                 if (obstacleProbleme != null)
                     obstacleProbleme.Paint(g, Color.Red, 10, Color.Transparent, Scale);
 
+                if (PathFinder.CheminEnCoursNoeudsSimplifyed != null && PathFinder.CheminEnCoursNoeudsSimplifyed.Count > 0)
+                {
+                    Node n1, n2;
+                    n1 = PathFinder.CheminEnCoursNoeudsSimplifyed[0];
+                    int i = 1;
+
+                    while (i < PathFinder.CheminEnCoursNoeudsSimplifyed?.Count)
+                    {
+                        n2 = PathFinder.CheminEnCoursNoeudsSimplifyed[i];
+                        new Segment(n1.Position, n2.Position).Paint(g, Color.White, 4, Color.Orange, Scale);
+                        i++;
+                        n1 = n2;
+                    }
+                }
                 if (PathFinder.CheminEnCoursNoeuds != null && PathFinder.CheminEnCoursNoeuds.Count > 0)
                 {
                     Node n1, n2;

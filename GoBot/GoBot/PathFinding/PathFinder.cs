@@ -15,8 +15,9 @@ namespace GoBot.PathFinding
     static class PathFinder
     {
         private static ThreadLink _linkResetRadius;
-        
+
         public static List<Node> CheminEnCoursNoeuds { get; private set; }
+        public static List<Node> CheminEnCoursNoeudsSimplifyed { get; private set; }
         public static List<Arc> CheminEnCoursArcs { get; private set; }
 
         public static Segment CheminTest { get; private set; }
@@ -53,7 +54,7 @@ namespace GoBot.PathFinding
             else
             {
                 _linkResetRadius = null;
-                
+
                 double distance;
                 bool raccordable = false;
 
@@ -317,7 +318,7 @@ namespace GoBot.PathFinding
 
                                 CheminEnCoursNoeuds = new List<Node>();
                                 CheminEnCoursArcs = new List<Arc>();
-                                
+
                                 //Console.WriteLine("Début simplification : " + (DateTime.Now - debut).TotalMilliseconds + "ms");
 
                                 // Simplification du chemin
@@ -352,7 +353,7 @@ namespace GoBot.PathFinding
                                             if (racourci.Distance(forme) < rayonSecurite)
                                             {
                                                 ObstacleProbleme = forme;
-                                                
+
                                                 raccourciPossible = false;
                                                 break;
                                             }
@@ -407,7 +408,7 @@ namespace GoBot.PathFinding
             }
 
             Dessinateur.CurrentTrack = null;
-            CheminEnCoursNoeuds = null;
+            //CheminEnCoursNoeuds = null;
 
             Console.WriteLine("Cherche trajectoire fin : " + sw.ElapsedMilliseconds + "ms");
 
@@ -430,6 +431,11 @@ namespace GoBot.PathFinding
                     _linkResetRadius.StartThread();
                 }
 
+                if (output.Lines.Count > 1)
+                {
+                    output = ReduceLines(output, obstacles.Concat(opponents), rayonSecurite);
+                }
+
                 return output;
             }
         }
@@ -445,6 +451,53 @@ namespace GoBot.PathFinding
                 Thread.Sleep(50);
             }
         }
-    }
 
+        private static Trajectory ReduceLines(Trajectory traj, IEnumerable<IShape> obstacles, double securityRadius)
+        {
+            Trajectory output = traj;
+            TimeSpan currentDuration = output.GetDuration(Robots.GrosRobot);
+
+            Console.WriteLine("Avant : " + currentDuration.ToString());
+
+            int iSeg = 1;
+
+            while (iSeg < output.Lines.Count - 1)
+            {
+                Trajectory tested = new Trajectory(output);
+                tested.RemoveLine(iSeg);
+                iSeg++;
+
+                CheminEnCoursNoeudsSimplifyed = tested.Points.Select(o => new Node(o)).ToList();
+
+                ObstacleProbleme = obstacles.FirstOrDefault(o => tested.Lines.Any(s => s.Distance(o) < securityRadius));
+                Thread.Sleep(Config.CurrentConfig.AfficheDetailTraj * 15);
+
+                if (ObstacleProbleme == null)
+                {
+                    TimeSpan testedDuration = tested.GetDuration(Robots.GrosRobot);
+
+                    if (testedDuration < currentDuration)
+                    {
+                        output = tested;
+                        if (Config.CurrentConfig.AfficheDetailTraj > 0)
+                        {
+                            CheminEnCoursNoeuds = CheminEnCoursNoeudsSimplifyed;
+                            CheminEnCoursNoeudsSimplifyed = null;
+                            Thread.Sleep(Config.CurrentConfig.AfficheDetailTraj * 15);
+                        }
+                        currentDuration = testedDuration;
+                        iSeg--;
+                    }
+                }
+            }
+
+            CheminEnCoursNoeuds = null;
+            CheminEnCoursNoeudsSimplifyed = null;
+
+
+            Console.WriteLine("Après : " + currentDuration.ToString());
+
+            return output;
+        }
+    }
 }

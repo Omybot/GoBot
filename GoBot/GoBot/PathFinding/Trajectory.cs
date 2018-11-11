@@ -35,6 +35,14 @@ namespace GoBot.PathFinding
             _lines = new List<Segment>();
         }
 
+        public Trajectory(Trajectory other)
+        {
+            _points = new List<RealPoint>(other.Points);
+            _lines = new List<Segment>(other.Lines);
+            _startAngle = other.StartAngle;
+            _endAngle = other.EndAngle;
+        }
+
         /// <summary>
         /// Ajoute un point de passage à la trajectoire
         /// </summary>
@@ -142,10 +150,66 @@ namespace GoBot.PathFinding
             }
         }
 
-        public void RemoveFirst()
+        public void RemovePoint(int index)
         {
-            _points.RemoveAt(0);
-            _lines.RemoveAt(0);
+            if(index == 0)
+            {
+                _points.RemoveAt(0);
+                _lines.RemoveAt(0);
+            }
+            else if(index == _points.Count -1)
+            {
+                _points.RemoveAt(_points.Count - 1);
+                _points.RemoveAt(_lines.Count - 1);
+            }
+            else
+            {
+                Segment newSeg = new Segment(_points[index - 1], _points[index + 1]);
+                _points.RemoveAt(index);
+                _lines.RemoveAt(index - 1);
+                _lines.RemoveAt(index - 1);
+                _lines.Insert(index, newSeg);
+            }
+        }
+
+        public bool RemoveLine(int index)
+        {
+            bool ok = true;
+
+            if (index == 0)
+            {
+                _points.RemoveAt(0);
+                _lines.RemoveAt(0);
+            }
+            else if (index == _lines.Count - 1)
+            {
+                _points.RemoveAt(_points.Count - 1);
+                _points.RemoveAt(_lines.Count - 1);
+            }
+            else
+            {
+                Segment s1 = _lines[index - 1];
+                Segment s2 = _lines[index + 1];
+
+                if (s1.Line.Cross(s2.Line))
+                {
+                    RealPoint cross = s1.Line.GetCrossingPoints(s2.Line)[0];
+                    Segment newSeg1 = new Segment(s1.EndPoint, cross);
+                    Segment newSeg2 = new Segment(cross, s2.StartPoint);
+
+                    _lines[index - 1] = newSeg1;
+                    _lines[index + 1] = newSeg2;
+                    _lines.RemoveAt(index);
+                    _points.RemoveRange(index, 2);
+                    _points.Insert(index, cross);
+                }
+                else
+                {
+                    ok = false;
+                }
+            }
+
+            return ok;
         }
     }
 }
