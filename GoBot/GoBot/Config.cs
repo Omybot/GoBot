@@ -17,7 +17,6 @@ namespace GoBot
     [Serializable]
     public partial class Config
     {
-
         private static Config config = null;
 
         public static List<Positionable> Positionnables { get; set; }

@@ -30,11 +30,15 @@
         {
             this.groupBoxUtilisation = new Composants.GroupBoxPlus();
             this.btnDiagnostic = new System.Windows.Forms.Button();
+            this.trackBarPlus1 = new Composants.TrackBarPlus();
+            this.button1 = new System.Windows.Forms.Button();
             this.groupBoxUtilisation.SuspendLayout();
             this.SuspendLayout();
             // 
             // groupBoxUtilisation
             // 
+            this.groupBoxUtilisation.Controls.Add(this.button1);
+            this.groupBoxUtilisation.Controls.Add(this.trackBarPlus1);
             this.groupBoxUtilisation.Controls.Add(this.btnDiagnostic);
             this.groupBoxUtilisation.Location = new System.Drawing.Point(3, 3);
             this.groupBoxUtilisation.Name = "groupBoxUtilisation";
@@ -52,6 +56,33 @@
             this.btnDiagnostic.Text = "Diagnostic";
             this.btnDiagnostic.UseVisualStyleBackColor = true;
             this.btnDiagnostic.Click += new System.EventHandler(this.btnDiagnostic_Click);
+            // 
+            // trackBarPlus1
+            // 
+            this.trackBarPlus1.BackColor = System.Drawing.Color.Transparent;
+            this.trackBarPlus1.DecimalPlaces = 0;
+            this.trackBarPlus1.IntervalTimer = ((uint)(1u));
+            this.trackBarPlus1.Location = new System.Drawing.Point(55, 80);
+            this.trackBarPlus1.Max = 8000D;
+            this.trackBarPlus1.MaximumSize = new System.Drawing.Size(3000, 15);
+            this.trackBarPlus1.Min = 0D;
+            this.trackBarPlus1.MinimumSize = new System.Drawing.Size(0, 15);
+            this.trackBarPlus1.Name = "trackBarPlus1";
+            this.trackBarPlus1.Reverse = false;
+            this.trackBarPlus1.Size = new System.Drawing.Size(150, 15);
+            this.trackBarPlus1.TabIndex = 202;
+            this.trackBarPlus1.Vertical = false;
+            this.trackBarPlus1.TickValueChanged += new Composants.TrackBarPlus.ValueChangedDelegate(this.trackBarPlus1_TickValueChanged);
+            // 
+            // button1
+            // 
+            this.button1.Location = new System.Drawing.Point(152, 187);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(75, 23);
+            this.button1.TabIndex = 203;
+            this.button1.Text = "button1";
+            this.button1.UseVisualStyleBackColor = true;
+            this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
             // PanelGrosRobotUtilisation
             // 
@@ -72,5 +103,7 @@
 
         private System.Windows.Forms.Button btnDiagnostic;
         private Composants.GroupBoxPlus groupBoxUtilisation;
+        private Composants.TrackBarPlus trackBarPlus1;
+        private System.Windows.Forms.Button button1;
     }
 }

@@ -19,6 +19,7 @@ using GoBot.Beacons;
 using GoBot.Communications;
 using System.IO;
 using GoBot.Threading;
+using GoBot.Devices;
 
 namespace GoBot
 {
@@ -242,15 +243,18 @@ namespace GoBot
 
         private void button1_Click(object sender, EventArgs e)
         {
-            Stopwatch sw = Stopwatch.StartNew();
+            //Stopwatch sw = Stopwatch.StartNew();
 
-            PathFinding.Trajectory traj = null;
-            for (int i = 0; i < 1000; i++)
-            {
-                traj = PathFinding.PathFinder.ChercheTrajectoire(Robots.GrosRobot.Graph, Plateau.ListeObstacles, Plateau.ObstaclesOpponents, new Position(0, new RealPoint(287, 1412)), new Position(0, new RealPoint(2712, 1412)), Robots.GrosRobot.Rayon, Robots.GrosRobot.Largeur / 2);
-            }
+            //PathFinding.Trajectory traj = null;
+            //for (int i = 0; i < 1000; i++)
+            //{
+            //    traj = PathFinding.PathFinder.ChercheTrajectoire(Robots.GrosRobot.Graph, Plateau.ListeObstacles, Plateau.ObstaclesOpponents, new Position(0, new RealPoint(287, 1412)), new Position(0, new RealPoint(2712, 1412)), Robots.GrosRobot.Rayon, Robots.GrosRobot.Largeur / 2);
+            //}
 
-            MessageBox.Show(sw.ElapsedMilliseconds.ToString());
+            //MessageBox.Show(sw.ElapsedMilliseconds.ToString());
+
+            HokuyoRec hok = new HokuyoRec(LidarID.Detection);
+            List<RealPoint> pts =  hok.GetPoints();
         }
     }
 }

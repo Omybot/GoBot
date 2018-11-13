@@ -54,139 +54,29 @@ namespace GoBot.IHM
             Robots.GrosRobot.Diagnostic();
         }
 
-        private void btnConvAllOut_Click(object sender, EventArgs e)
+        private void trackBarPlus1_TickValueChanged(object sender, double value)
         {
-            Config.CurrentConfig.ServoConvoyeurGauche.SendPosition(Config.CurrentConfig.ServoConvoyeurGauche.PositionArriere);
-            Config.CurrentConfig.ServoConvoyeurCentre.SendPosition(Config.CurrentConfig.ServoConvoyeurCentre.PositionArriere);
-            Config.CurrentConfig.ServoConvoyeurDroite.SendPosition(Config.CurrentConfig.ServoConvoyeurDroite.PositionArriere);
-        }
-
-        private void btnConvAllIn_Click(object sender, EventArgs e)
-        {
-            Config.CurrentConfig.ServoConvoyeurGauche.SendPosition(Config.CurrentConfig.ServoConvoyeurGauche.PositionAvant);
-            Config.CurrentConfig.ServoConvoyeurCentre.SendPosition(Config.CurrentConfig.ServoConvoyeurCentre.PositionAvant);
-            Config.CurrentConfig.ServoConvoyeurDroite.SendPosition(Config.CurrentConfig.ServoConvoyeurDroite.PositionAvant);
-        }
-
-        private void btnConvLeftOut_Click(object sender, EventArgs e)
-        {
-            Config.CurrentConfig.ServoConvoyeurGauche.SendPosition(Config.CurrentConfig.ServoConvoyeurGauche.PositionArriere);
-        }
-
-        private void btnConvCenterOut_Click(object sender, EventArgs e)
-        {
-            Config.CurrentConfig.ServoConvoyeurCentre.SendPosition(Config.CurrentConfig.ServoConvoyeurCentre.PositionArriere);
-        }
-
-        private void btnConvRightOut_Click(object sender, EventArgs e)
-        {
-            Config.CurrentConfig.ServoConvoyeurDroite.SendPosition(Config.CurrentConfig.ServoConvoyeurDroite.PositionArriere);
-        }
-
-        private void btnConvLeftIn_Click(object sender, EventArgs e)
-        {
-            Config.CurrentConfig.ServoConvoyeurGauche.SendPosition(Config.CurrentConfig.ServoConvoyeurGauche.PositionAvant);
-        }
-
-        private void btnConvCenterIn_Click(object sender, EventArgs e)
-        {
-            Config.CurrentConfig.ServoConvoyeurCentre.SendPosition(Config.CurrentConfig.ServoConvoyeurCentre.PositionAvant);
-        }
-
-        private void btnConvRightIn_Click(object sender, EventArgs e)
-        {
-            Config.CurrentConfig.ServoConvoyeurDroite.SendPosition(Config.CurrentConfig.ServoConvoyeurDroite.PositionAvant);
-        }
-
-        private void btnRightPumpOff_Click(object sender, EventArgs e)
-        {
-        }
-
-        private void btnRightPumpOn_Click(object sender, EventArgs e)
-        {
-        }
-
-        private void btnLeftPumDisable_Click(object sender, EventArgs e)
-        {
-        }
-
-        private void btnLeftPumpEnable_Click(object sender, EventArgs e)
-        {
-        }
-        
-        private void btnBenneBuild_Click(object sender, EventArgs e)
-        {
-            Config.CurrentConfig.MoteurElevation.SendPosition(Config.CurrentConfig.MoteurElevation.DeplacementDepose);
-        }
-
-        private void btnBenneKeepBuild_Click(object sender, EventArgs e)
-        {
-            Config.CurrentConfig.MoteurElevation.SendPosition(Config.CurrentConfig.MoteurElevation.PositionDepose);
-        }
-
-        private void btnBenneOff_Click(object sender, EventArgs e)
-        {
-            Config.CurrentConfig.MoteurElevation.SendPosition(Config.CurrentConfig.MoteurElevation.Neutre);
-        }
-
-        private void btnBenneKeepStored_Click(object sender, EventArgs e)
-        {
-            Config.CurrentConfig.MoteurElevation.SendPosition(Config.CurrentConfig.MoteurElevation.PositionRange);
-        }
-
-        private void btnBenneStore_Click(object sender, EventArgs e)
-        {
-            Config.CurrentConfig.MoteurElevation.SendPosition(Config.CurrentConfig.MoteurElevation.DeplacementRange);
-        }
-
-        private void btnGateOpen_Click(object sender, EventArgs e)
-        {
-            Config.CurrentConfig.ServoBenneOuverture.SendPosition(Config.CurrentConfig.ServoBenneOuverture.PositionOuvert);
-        }
-
-        private void btnGateUnblock_Click(object sender, EventArgs e)
-        {
-            Config.CurrentConfig.ServoBenneOuverture.SendPosition(Config.CurrentConfig.ServoBenneOuverture.PositionDeblocage);
-        }
-
-        private void btnGateClose_Click(object sender, EventArgs e)
-        {
-            Config.CurrentConfig.ServoBenneOuverture.SendPosition(Config.CurrentConfig.ServoBenneOuverture.PositionFerme);
-        }
-
-        private void btnBenneLiberation_Click(object sender, EventArgs e)
-        {
-            Config.CurrentConfig.ServoBenneLiberation.SendPosition(Config.CurrentConfig.ServoBenneLiberation.PositionLiberation);
-        }
-
-        private void btnBenneHandle_Click(object sender, EventArgs e)
-        {
-            Config.CurrentConfig.ServoBenneLiberation.SendPosition(Config.CurrentConfig.ServoBenneLiberation.PositionMaintien);
+            Robots.GrosRobot.MoteurVitesse(MoteurID.Gulp, SensGD.Gauche, (int)value);
         }
 
         private void button1_Click(object sender, EventArgs e)
         {
+            Robots.GrosRobot.Avancer(50);
+            Devices.Devices.ServosCan.SetPosition(5, 34000);
+            Devices.Devices.ServosCan.SetPosition(6, 17000);
 
-        }
+            Robots.GrosRobot.MoteurVitesse(MoteurID.Gulp, SensGD.Gauche, 4000);
+            Thread.Sleep(1000);
+            Robots.GrosRobot.MoteurVitesse(MoteurID.Gulp, SensGD.Gauche, 0);
 
-        private void button4_Click(object sender, EventArgs e)
-        {
-        }
 
-        private void button5_Click(object sender, EventArgs e)
-        {
-        }
+            Devices.Devices.ServosCan.SetPosition(4, 40000);
 
-        private void button3_Click(object sender, EventArgs e)
-        {
-        }
-
-        private void button2_Click(object sender, EventArgs e)
-        {
-        }
-
-        private void button6_Click(object sender, EventArgs e)
-        {
+            Thread.Sleep(1000);
+            Devices.Devices.ServosCan.SetPosition(4, 16800);
+            Devices.Devices.ServosCan.SetPosition(5, 26000);
+            Devices.Devices.ServosCan.SetPosition(6, 23400);
+            Robots.GrosRobot.Reculer(50);
         }
     }
 }

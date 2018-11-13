@@ -57,6 +57,16 @@ namespace GoBot.Communications
             return new Frame(tab);
         }
 
+        static public Frame DemandeMesureLidar(LidarID lidar)
+        {
+            byte[] tab = new byte[3];
+            tab[0] = (byte)Board.RecMove;
+            tab[1] = (byte)FrameFunction.DemandeLidar;
+            tab[2] = (byte)lidar;
+
+            return new Frame(tab);
+        }
+
         static public Frame SetLedColor(Color color)
         {
             byte[] tab = new byte[6];

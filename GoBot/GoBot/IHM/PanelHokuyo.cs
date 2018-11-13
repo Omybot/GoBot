@@ -9,6 +9,7 @@ using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Windows.Forms;
+using GoBot.Devices;
 
 namespace GoBot.IHM
 {
@@ -37,18 +38,26 @@ namespace GoBot.IHM
             }
         }
 
+                HokuyoRec hok = new HokuyoRec(LidarID.Detection);
         private void switchEnable_ValueChanged(object sender, bool value)
         {
             if (value)
             {
-                Actionneur.Hokuyo.StartLoopMeasure();
-                Actionneur.Hokuyo.NewMeasure += Hokuyo_NewMeasure;
+                Threading.ThreadManager.CreateThread(link => AskPoints()).StartInfiniteLoop(new TimeSpan(0, 0, 0, 0, 250));
+                //Actionneur.Hokuyo.StartLoopMeasure();
+                //Actionneur.Hokuyo.NewMeasure += Hokuyo_NewMeasure;
             }
             else
             {
-                Actionneur.Hokuyo.StopLoopMeasure();
-                Actionneur.Hokuyo.NewMeasure -= Hokuyo_NewMeasure;
+                //Actionneur.Hokuyo.StopLoopMeasure();
+                //Actionneur.Hokuyo.NewMeasure -= Hokuyo_NewMeasure;
             }
+        }
+
+        private void AskPoints()
+        {
+            _lastMeasure = hok.GetPoints();
+            picWorld.Invalidate();
         }
 
         private void Hokuyo_NewMeasure(List<RealPoint> measure)

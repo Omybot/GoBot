@@ -27,28 +27,13 @@ namespace GoBot.Strategies
             
             if (Plateau.NotreCouleur == Plateau.CouleurGaucheJaune)
             {
-                Robots.GrosRobot.Avancer(920);
-
-                Config.CurrentConfig.ServoBouton.SendPosition(Config.CurrentConfig.ServoBouton.Minimum);
-                Thread.Sleep(1000);
-                Plateau.Score += 25;
-                
-                Robots.GrosRobot.Avancer(120);
             }
             else
             {
-                Robots.GrosRobot.Avancer(1040);
-
-                Robots.GrosRobot.PivotDroite(180);
-
-                Config.CurrentConfig.ServoBouton.SendPosition(Config.CurrentConfig.ServoBouton.Minimum);
-                Thread.Sleep(1000);
             }
 
             Robots.GrosRobot.SpeedConfig.SetParams(500, 1000, 1500, 500, 1000, 2000);
-
-            Robots.GrosRobot.PivotDroite(90);
-            Config.CurrentConfig.ServoBouton.SendPosition(Config.CurrentConfig.ServoBouton.Maximum);
+            
             Robots.GrosRobot.Avancer(100);
         }
 

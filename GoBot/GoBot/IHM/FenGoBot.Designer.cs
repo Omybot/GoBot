@@ -53,7 +53,7 @@ namespace GoBot
             this.tabGestionLog = new System.Windows.Forms.TabPage();
             this.panelGestionLog = new GoBot.IHM.PanelGestionLog();
             this.tabTable = new System.Windows.Forms.TabPage();
-            this.button1 = new System.Windows.Forms.Button();
+            this.btnTest = new System.Windows.Forms.Button();
             this.panelTable = new GoBot.IHM.PanelTable();
             this.tabMatch = new System.Windows.Forms.TabPage();
             this.panelMatch = new GoBot.IHM.PanelMatch();
@@ -347,7 +347,7 @@ namespace GoBot
             // 
             // tabTable
             // 
-            this.tabTable.Controls.Add(this.button1);
+            this.tabTable.Controls.Add(this.btnTest);
             this.tabTable.Controls.Add(this.panelTable);
             this.tabTable.Location = new System.Drawing.Point(4, 22);
             this.tabTable.Name = "tabTable";
@@ -357,15 +357,15 @@ namespace GoBot
             this.tabTable.Text = "Table";
             this.tabTable.UseVisualStyleBackColor = true;
             // 
-            // button1
+            // btnTest
             // 
-            this.button1.Location = new System.Drawing.Point(190, 35);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(75, 23);
-            this.button1.TabIndex = 1;
-            this.button1.Text = "button1";
-            this.button1.UseVisualStyleBackColor = true;
-            this.button1.Click += new System.EventHandler(this.button1_Click);
+            this.btnTest.Location = new System.Drawing.Point(166, 35);
+            this.btnTest.Name = "btnTest";
+            this.btnTest.Size = new System.Drawing.Size(75, 23);
+            this.btnTest.TabIndex = 1;
+            this.btnTest.Text = "Test";
+            this.btnTest.UseVisualStyleBackColor = true;
+            this.btnTest.Click += new System.EventHandler(this.button1_Click);
             // 
             // panelTable
             // 
@@ -952,7 +952,7 @@ namespace GoBot
         private PanelServoCAN panelServoCAN1;
         private System.Windows.Forms.GroupBox grpServoCAN;
         private System.Windows.Forms.GroupBox grpServoCodeur;
-        private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.Button btnTest;
     }
 }
 

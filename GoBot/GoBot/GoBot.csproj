@@ -86,6 +86,7 @@
     <Compile Include="Actionneurs\Actionneur.cs" />
     <Compile Include="Actionneurs\Positionables.cs" />
     <Compile Include="Actionneurs\RobotPositionables.cs" />
+    <Compile Include="Devices\HokuyoRec.cs" />
     <Compile Include="Devices\ServosCan.cs" />
     <Compile Include="Actions\Asservissement\ActionAccelerationPivot.cs" />
     <Compile Include="Actions\Asservissement\ActionVitessePivot.cs" />

@@ -46,28 +46,6 @@ namespace GoBot
             {
                 case ServomoteurID.Tous:
                     return "tous les servomoteurs";
-                case ServomoteurID.CoudeDroite:
-                    return "coude du bras droit";
-                case ServomoteurID.CoudeGauche:
-                    return "coude du bras gauche";
-                case ServomoteurID.LateralDroite:
-                    return "latéral du bras droit";
-                case ServomoteurID.LateralGauche:
-                    return "latéral du bras gauche";
-                case ServomoteurID.PoignetDroite:
-                    return "poignet du bras droit";
-                case ServomoteurID.PoignetGauche:
-                    return "poignet du bras gauche";
-                case ServomoteurID.BenneLiberation:
-                    return "plancher de la benne";
-                case ServomoteurID.BenneOuverture:
-                    return "porte de la benne";
-                case ServomoteurID.ConvoyeurCentre:
-                    return "convoyeur centre";
-                case ServomoteurID.ConvoyeurDroite:
-                    return "convoyeur droite";
-                case ServomoteurID.ConvoyeurGauche:
-                    return "convoyeur gauche";
                 default:
                         return servo.ToString();
             }
@@ -228,16 +206,6 @@ namespace GoBot
             {
                 case MoteurID.Beacon:
                     return "balise";
-                case MoteurID.PumpRight:
-                    return "aspiration bras droit";
-                case MoteurID.PumpLeft:
-                    return "aspiration bras gauche";
-                case MoteurID.ValveRight:
-                    return "electrovanne bras droit";
-                case MoteurID.ValveLeft:
-                    return "electrovanne bras gauche";
-                case MoteurID.Elevation:
-                    return "benne";
                 default:
                     return motor.ToString();
             }

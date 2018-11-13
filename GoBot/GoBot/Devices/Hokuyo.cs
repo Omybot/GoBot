@@ -17,12 +17,14 @@ namespace GoBot.Devices
         private LidarID _id;
 
         private SerialPort _port;
-        private String _frameMeasure, _frameDetails;
+        protected String _frameMeasure, _frameDetails;
 
-        private String _model;
-        private int _pointsCount, _pointsOffset, _maxDistance;
-        private AngleDelta _scanRange;
-        private Position _position;
+        protected String _model;
+        protected int _pointsCount, _pointsOffset, _maxDistance;
+        protected AngleDelta _scanRange;
+        protected Position _position;
+        protected int _keepFrom, _keepTo;
+        protected bool _invertRotation;
 
         private Semaphore _lock;
         private TicksPerSecond _measuresTicker;
@@ -53,6 +55,25 @@ namespace GoBot.Devices
         #endregion
 
         #region Constructeurs
+
+        public Hokuyo(LidarID id)
+        {
+            _id = id;
+            _lock = new Semaphore(1, 1);
+
+            _maxDistance = 3999; // En dessous de 4000 parce que le protocole choisi seuille le maximum à 4000 niveau matos
+
+            _position = new Position();
+
+            _lastMeasure = null;
+            _measuresTicker = new TicksPerSecond();
+            _measuresTicker.ValueChange += _measuresPerSecond_ValueChange;
+            _frameDetails = "VV\n00P\n";
+            
+            _frameMeasure = "MS0000" + _pointsCount.ToString("0000") + "00001";
+
+            _invertRotation = false;
+        }
 
         public Hokuyo(LidarID id, String portCom)
         {
@@ -140,7 +161,7 @@ namespace GoBot.Devices
                 {
                     List<int> mesures = DecodeMessage(reponse);
                     mesures.RemoveRange(0, _pointsOffset);
-                    points = ValuesToPositions(mesures, false, 150, _maxDistance, refPosition);
+                    points = ValuesToPositions(mesures, _pointsCount, false, 50, _maxDistance, refPosition);
                 }
             }
             catch (Exception) { }
@@ -164,7 +185,7 @@ namespace GoBot.Devices
                 {
                     List<int> mesures = DecodeMessage(reponse);
                     mesures.RemoveRange(0, _pointsOffset);
-                    points = ValuesToPositions(mesures, false, 150, _maxDistance, new Position());
+                    points = ValuesToPositions(mesures, _pointsCount, false, 150, _maxDistance, new Position());
                 }
             }
             catch (Exception) { }
@@ -180,7 +201,7 @@ namespace GoBot.Devices
         
         private void IdentifyModel()
         {
-            _port.WriteLine(_frameDetails);
+            SendMessage(_frameDetails);
             String details = GetResponse();
 
             if (details.Contains("UBG-04LX-F01"))
@@ -207,15 +228,23 @@ namespace GoBot.Devices
                 _scanRange = 270;
                 _pointsOffset = 0;
             }
+
+            _keepFrom = 0;
+            _keepTo = _pointsCount;
         }
 
         private String GetMeasure(int timeout = 500)
         {
-            _port.WriteLine(_frameMeasure);
+            SendMessage(_frameMeasure);
             return GetResponse(timeout);
         }
 
-        private String GetResponse(int timeout = 500)
+        protected virtual void SendMessage(String msg)
+        {
+            _port.WriteLine(_frameMeasure);
+        }
+
+        protected virtual String GetResponse(int timeout = 500)
         {
             Stopwatch chrono = Stopwatch.StartNew();
             String reponse = "";
@@ -237,10 +266,10 @@ namespace GoBot.Devices
             if(!_linkMeasures.Cancelled) OnNewMeasure(_lastMeasure);
         }
 
-        private List<RealPoint> ValuesToPositions(List<int> measures, bool limitOnTable, int minDistance, int maxDistance, Position refPosition)
+        private List<RealPoint> ValuesToPositions(List<int> measures, int pointsCount, bool limitOnTable, int minDistance, int maxDistance, Position refPosition)
         {
             List<RealPoint> positions = new List<RealPoint>();
-            double stepAngular = ScanRange.InDegrees / (double)measures.Count;
+            double stepAngular = ScanRange.InDegrees / pointsCount;
 
             for (int i = 0; i < measures.Count; i++)
             {
@@ -281,6 +310,12 @@ namespace GoBot.Devices
                     }
                 }
             }
+            
+            if(values.Count >= _pointsCount)
+                values = values.GetRange(_keepFrom, _keepTo - _keepFrom);
+
+            if (_invertRotation)
+                values.Reverse();
 
             return values;
         }

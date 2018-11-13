@@ -100,6 +100,12 @@ namespace GoBot
             _linkAsserv.WaitEnd();
         }
 
+        public override String GetMesureLidar(LidarID lidar, int timeout, out Position refPosition)
+        {
+            refPosition = new Position(position);
+            return "";
+        }
+
         void timerPositions_Elapsed(object sender, ElapsedEventArgs e)
         {
             lock (HistoriqueCoordonnees)

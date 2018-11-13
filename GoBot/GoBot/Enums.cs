@@ -26,21 +26,9 @@ namespace GoBot
 
     public enum ServomoteurID
     {
-        LateralGauche = 212,
-        CoudeGauche = 213,
-        PoignetGauche = 214,
-
-        CoudeDroite = 206,
-        PoignetDroite = 205,
-        LateralDroite = 204,
-        
-        BenneLiberation = 208,
-        BenneOuverture = 209,
-        BrasBouton = 210,
-
-        ConvoyeurGauche = 215,
-        ConvoyeurCentre = 211,
-        ConvoyeurDroite = 207,
+        Elevation = 207,
+        ClampLeft = 206,
+        ClampRight = 205,
 
         Tous = 254
     }
@@ -53,15 +41,15 @@ namespace GoBot
 
     public enum MoteurID
     {
-        PumpRight = 4,
-        PumpLeft = 3,
-        ValveRight = 1,
-        ValveLeft = 2,
+        AvailableOnRecIO1 = 1, // RecIO
+        AvailableOnRecIO2 = 2, // RecIO
+        AvailableOnRecIO3 = 4, // RecIO
+        AvailableOnRecIO4 = 3, // RecIO
 
-        Beacon = 0x10,
+        Beacon = 0x10, // RecMove
 
-        Shaker = 11,
-        Elevation = 12
+        Gulp = 11, // RecMove
+        AvailableOnRecMove12 = 12 // RecMove
     }
 
     public enum CapteurID

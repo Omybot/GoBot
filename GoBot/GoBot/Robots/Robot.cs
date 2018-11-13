@@ -104,6 +104,7 @@ namespace GoBot
         public abstract Color DemandeCapteurCouleur(CapteurCouleurID capteur, bool attendre = true);
         public abstract void DemandeValeursAnalogiques(Board carte, bool attendre = true);
         public abstract void DemandeValeursNumeriques(Board carte, bool attendre = true);
+        public abstract String GetMesureLidar(LidarID lidar, int timeout, out Position refPosition);
 
         public abstract void ActionneurOnOff(ActionneurOnOffID actionneur, bool on);
 
