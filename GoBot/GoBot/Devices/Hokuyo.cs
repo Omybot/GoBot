@@ -75,27 +75,12 @@ namespace GoBot.Devices
             _invertRotation = false;
         }
 
-        public Hokuyo(LidarID id, String portCom)
+        public Hokuyo(LidarID id, String portCom) : this(id)
         {
-            _id = id;
-            _lock = new Semaphore(1, 1);
-
-            _maxDistance = 3999; // En dessous de 4000 parce que le protocole choisi seuille le maximum à 4000 niveau matos
-
-            _position = new Position();
-
-            _lastMeasure = null;
-            _measuresTicker = new TicksPerSecond();
-            _measuresTicker.ValueChange += _measuresPerSecond_ValueChange;
-
             _port = new SerialPort(portCom, 115200);
             _port.Open();
-
-            _frameDetails = "VV\n00P\n";
-
+            
             IdentifyModel();
-
-            _frameMeasure = "MS0000" + _pointsCount.ToString("0000") + "00001";
         }
 
         #endregion
@@ -151,8 +136,7 @@ namespace GoBot.Devices
             List<RealPoint> points = new List<RealPoint>();
 
             _lock.WaitOne();
-
-            Position refPosition = new Position();
+            
             String reponse = GetMeasure();
 
             try
@@ -161,7 +145,7 @@ namespace GoBot.Devices
                 {
                     List<int> mesures = DecodeMessage(reponse);
                     mesures.RemoveRange(0, _pointsOffset);
-                    points = ValuesToPositions(mesures, _pointsCount, false, 50, _maxDistance, refPosition);
+                    points = ValuesToPositions(mesures, _pointsCount, false, 50, _maxDistance, _position);
                 }
             }
             catch (Exception) { }
@@ -203,7 +187,7 @@ namespace GoBot.Devices
         {
             SendMessage(_frameDetails);
             String details = GetResponse();
-
+            
             if (details.Contains("UBG-04LX-F01"))
             {
                 // Hokuyo bleu
@@ -241,7 +225,7 @@ namespace GoBot.Devices
 
         protected virtual void SendMessage(String msg)
         {
-            _port.WriteLine(_frameMeasure);
+            _port.Write(msg);
         }
 
         protected virtual String GetResponse(int timeout = 500)
@@ -254,7 +238,9 @@ namespace GoBot.Devices
                 reponse += _port.ReadExisting();
             } while (Regex.Matches(reponse, "\n\n").Count < 2 && chrono.ElapsedMilliseconds < timeout);
 
-            if (chrono.ElapsedMilliseconds > timeout)
+            chrono.Stop();
+
+            if (chrono.ElapsedMilliseconds >= timeout)
                 return "";
             else
                 return reponse;
@@ -273,7 +259,7 @@ namespace GoBot.Devices
 
             for (int i = 0; i < measures.Count; i++)
             {
-                AnglePosition angle = stepAngular * i;
+                AnglePosition angle = stepAngular * (i + _keepFrom);
 
                 if (measures[i] > minDistance && (measures[i] < maxDistance || maxDistance == -1))
                 {

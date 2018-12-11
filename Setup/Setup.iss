@@ -3,7 +3,7 @@
 ; SEE THE DOCUMENTATION FOR DETAILS ON CREATING INNO SETUP SCRIPT FILES!
 
 #define MyAppName "GoBot"
-#define MyAppVersion "1.17.0"
+#define MyAppVersion "1.19.0"
 #define MyAppPublisher "Omybot"
 #define MyAppURL "www.omybot.com"
 #define MyAppExeName "GoBot.exe"
@@ -36,11 +36,11 @@ Name: "french"; MessagesFile: "compiler:Languages\French.isl"
 [Tasks]
 Name: "desktopicon"; Description: "{cm:CreateDesktopIcon}"; GroupDescription: "{cm:AdditionalIcons}"; Flags: unchecked
 [Files]                                                                                          
-Source: "..\GoBot\GoBot\bin\Release\GoBot.exe"; DestDir: "{app}"; Flags: ignoreversion  
+Source: "..\GoBot\GoBot\bin\Release\GoBot.exe"; DestDir: "{app}"; Flags: ignoreversion     
 Source: "..\GoBot\GoBot\bin\Release\Composants.dll"; DestDir: "{app}"; Flags: ignoreversion
+Source: "..\GoBot\GoBot\bin\Release\Geometry.dll"; DestDir: "{app}"; Flags: ignoreversion
 Source: "./iconeTlog.ico"; DestDir: "{app}"; Flags: ignoreversion
 Source: "./iconeElog.ico"; DestDir: "{app}"; Flags: ignoreversion    
-Source: "..\GoBot\GoBot\Librairies\DShowNET.dll"; DestDir: "{app}"; Flags: ignoreversion
 Source: "..\GoBot\GoBot\Librairies\Bytecode.dll"; DestDir: "{app}"; Flags: ignoreversion
 Source: "..\GoBot\GoBot\Librairies\Sequencer.dll"; DestDir: "{app}"; Flags: ignoreversion
 Source: "..\GoBot\GoBot\Librairies\UsbWrapper.dll"; DestDir: "{app}"; Flags: ignoreversion

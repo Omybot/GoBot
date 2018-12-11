@@ -15,12 +15,14 @@ namespace GoBot.IHM
 {
     public partial class PanelHokuyo : UserControl
     {
+        private Hokuyo _selectedHokuyo;
         private List<RealPoint> _lastMeasure;
 
         public PanelHokuyo()
         {
             InitializeComponent();
             _lastMeasure = null;
+            _selectedHokuyo = null;
         }
 
         protected override void OnMouseWheel(MouseEventArgs e)
@@ -38,25 +40,37 @@ namespace GoBot.IHM
             }
         }
 
-                HokuyoRec hok = new HokuyoRec(LidarID.Detection);
         private void switchEnable_ValueChanged(object sender, bool value)
         {
+            if (_selectedHokuyo != null)
+            {
+                _selectedHokuyo.FrequencyChange -= Hokuyo_FrequencyChange;
+                _selectedHokuyo.NewMeasure -= Hokuyo_NewMeasure;
+                _selectedHokuyo.StartLoopMeasure();
+            }
+
             if (value)
             {
-                Threading.ThreadManager.CreateThread(link => AskPoints()).StartInfiniteLoop(new TimeSpan(0, 0, 0, 0, 250));
-                //Actionneur.Hokuyo.StartLoopMeasure();
-                //Actionneur.Hokuyo.NewMeasure += Hokuyo_NewMeasure;
-            }
-            else
-            {
-                //Actionneur.Hokuyo.StopLoopMeasure();
-                //Actionneur.Hokuyo.NewMeasure -= Hokuyo_NewMeasure;
+                if ((String)cboHokuyo.Text == "Ground")
+                    _selectedHokuyo = Actionneur.HokuyoGround;
+                else if ((String)cboHokuyo.Text == "Avoid")
+                    _selectedHokuyo = Actionneur.HokuyoAvoid;
+                else
+                    _selectedHokuyo = null;
+
+                if (_selectedHokuyo != null)
+                {
+                    _selectedHokuyo.FrequencyChange += Hokuyo_FrequencyChange;
+                    _selectedHokuyo.NewMeasure += Hokuyo_NewMeasure;
+                    _selectedHokuyo.StartLoopMeasure();
+                }
             }
         }
 
         private void AskPoints()
         {
-            _lastMeasure = hok.GetPoints();
+            _lastMeasure = _selectedHokuyo.GetPoints();
+
             picWorld.Invalidate();
         }
 
@@ -71,8 +85,9 @@ namespace GoBot.IHM
             if (!Execution.DesignMode)
             {
                 trackZoom.SetValue(1);
-                if (Actionneur.Hokuyo != null)
-                    Actionneur.Hokuyo.FrequencyChange += Hokuyo_FrequencyChange;
+
+                cboHokuyo.Items.Add("Ground");
+                cboHokuyo.Items.Add("Avoid");
             }
         }
 
@@ -86,7 +101,7 @@ namespace GoBot.IHM
             List<Circle> cercles;
             do
             {
-                List<RealPoint> points = Actionneur.Hokuyo.GetRawPoints();
+                List<RealPoint> points = _selectedHokuyo.GetRawPoints();
 
                 List<List<RealPoint>> groups = points.GroupByDistance(50);
 
@@ -175,7 +190,9 @@ namespace GoBot.IHM
                     {
                         List<List<RealPoint>> groups = points.GroupByDistance(50);
 
-                        List<Color> colors = new List<Color>(){ Color.Blue, Color.Green, Color.Red, Color.Brown};
+                        List<Color> colors = new List<Color>() { Color.Blue, Color.Green, Color.Red, Color.Brown };
+
+                        List<IShape> shapes = new List<IShape>();
 
                         for (int i = 0; i < groups.Count; i++)
                         {
@@ -185,14 +202,24 @@ namespace GoBot.IHM
                                 //Line line = groups[i].FitLine();
                                 //Segment line = groups[i].FitSegment();
 
+                                shapes.Add(circle);
+
                                 circle.Paint(g, colors[i], 1, Color.Transparent, picWorld.Dimensions.WorldScale);
                                 g.DrawString((circle.Radius * 2).ToString("0") + "mm / " + (groups[i].FitCircleScore(circle) * 100).ToString("0") + "% / " + (groups[i].FitLineCorrelation()).ToString("0.00") + "%", new Font("Calibri", 9), new SolidBrush(colors[i]), picWorld.Dimensions.WorldScale.RealToScreenPosition(circle.Center.Translation(circle.Radius, 0)));
 
                                 //line.Paint(g, colors[i], 1, Color.Transparent, picWorld.Dimensions.WorldScale);
-                                
+
                             }
                         }
+
+                        Plateau.Detections = shapes;
                     }
+                    else
+                    {
+                        Plateau.Detections = new List<IShape>(points);
+                    }
+
+                    new Circle(_selectedHokuyo.Position.Coordinates, 20).Paint(g, Color.Black, 1, Color.White, picWorld.Dimensions.WorldScale);
                 }
             }
         }
@@ -204,7 +231,7 @@ namespace GoBot.IHM
 
         private void numDistanceMax_ValueChanged(object sender, EventArgs e)
         {
-            Actionneur.Hokuyo.MaxDistance = (int)numDistanceMax.Value;
+            _selectedHokuyo.MaxDistance = (int)numDistanceMax.Value;
         }
     }
 }

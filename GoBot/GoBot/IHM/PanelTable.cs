@@ -430,14 +430,14 @@ namespace GoBot.IHM
         
         private void button1_Click(object sender, EventArgs e)
         {
-            List<RealPoint> pts = Actionneur.Hokuyo.GetRawPoints();
+            List<RealPoint> pts = Actionneur.HokuyoAvoid.GetRawPoints();
         }
 
         private void FonctionHokuyo()
         {
             while (true)
             {
-                List<RealPoint> points = Actionneur.Hokuyo.GetPoints();
+                List<RealPoint> points = Actionneur.HokuyoAvoid.GetPoints();
 
                 if (points.Count > 0)
                 {

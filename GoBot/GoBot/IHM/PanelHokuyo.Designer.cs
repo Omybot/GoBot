@@ -45,6 +45,7 @@
             this.numDistanceMax = new System.Windows.Forms.NumericUpDown();
             this.lblDistanceMax = new System.Windows.Forms.Label();
             this.lblDistanceMaxUnit = new System.Windows.Forms.Label();
+            this.cboHokuyo = new System.Windows.Forms.ComboBox();
             ((System.ComponentModel.ISupportInitialize)(this.picWorld)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numDistanceMax)).BeginInit();
             this.SuspendLayout();
@@ -53,7 +54,7 @@
             // 
             this.switchBouton1.AutoSize = true;
             this.switchBouton1.BackColor = System.Drawing.Color.Transparent;
-            this.switchBouton1.Location = new System.Drawing.Point(29, 16);
+            this.switchBouton1.Location = new System.Drawing.Point(39, 42);
             this.switchBouton1.MaximumSize = new System.Drawing.Size(35, 15);
             this.switchBouton1.MinimumSize = new System.Drawing.Size(35, 15);
             this.switchBouton1.Mirrored = true;
@@ -66,7 +67,7 @@
             // rdoOutline
             // 
             this.rdoOutline.AutoSize = true;
-            this.rdoOutline.Location = new System.Drawing.Point(19, 86);
+            this.rdoOutline.Location = new System.Drawing.Point(19, 99);
             this.rdoOutline.Name = "rdoOutline";
             this.rdoOutline.Size = new System.Drawing.Size(62, 17);
             this.rdoOutline.TabIndex = 3;
@@ -76,7 +77,7 @@
             // rdoRays
             // 
             this.rdoRays.AutoSize = true;
-            this.rdoRays.Location = new System.Drawing.Point(19, 109);
+            this.rdoRays.Location = new System.Drawing.Point(19, 122);
             this.rdoRays.Name = "rdoRays";
             this.rdoRays.Size = new System.Drawing.Size(61, 17);
             this.rdoRays.TabIndex = 4;
@@ -86,7 +87,7 @@
             // rdoShadows
             // 
             this.rdoShadows.AutoSize = true;
-            this.rdoShadows.Location = new System.Drawing.Point(19, 132);
+            this.rdoShadows.Location = new System.Drawing.Point(19, 145);
             this.rdoShadows.Name = "rdoShadows";
             this.rdoShadows.Size = new System.Drawing.Size(61, 17);
             this.rdoShadows.TabIndex = 5;
@@ -98,7 +99,7 @@
             this.trackZoom.BackColor = System.Drawing.Color.Transparent;
             this.trackZoom.DecimalPlaces = 1;
             this.trackZoom.IntervalTimer = ((uint)(1u));
-            this.trackZoom.Location = new System.Drawing.Point(5, 157);
+            this.trackZoom.Location = new System.Drawing.Point(5, 170);
             this.trackZoom.Max = 10D;
             this.trackZoom.MaximumSize = new System.Drawing.Size(3000, 15);
             this.trackZoom.Min = 0.1D;
@@ -115,7 +116,7 @@
             this.boxScale.AutoSize = true;
             this.boxScale.Checked = true;
             this.boxScale.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.boxScale.Location = new System.Drawing.Point(13, 178);
+            this.boxScale.Location = new System.Drawing.Point(13, 191);
             this.boxScale.Name = "boxScale";
             this.boxScale.Size = new System.Drawing.Size(61, 17);
             this.boxScale.TabIndex = 7;
@@ -126,7 +127,7 @@
             // 
             this.rdoObjects.AutoSize = true;
             this.rdoObjects.Checked = true;
-            this.rdoObjects.Location = new System.Drawing.Point(19, 63);
+            this.rdoObjects.Location = new System.Drawing.Point(19, 76);
             this.rdoObjects.Name = "rdoObjects";
             this.rdoObjects.Size = new System.Drawing.Size(55, 17);
             this.rdoObjects.TabIndex = 8;
@@ -137,7 +138,7 @@
             // boxGroup
             // 
             this.boxGroup.AutoSize = true;
-            this.boxGroup.Location = new System.Drawing.Point(13, 201);
+            this.boxGroup.Location = new System.Drawing.Point(13, 214);
             this.boxGroup.Name = "boxGroup";
             this.boxGroup.Size = new System.Drawing.Size(64, 17);
             this.boxGroup.TabIndex = 9;
@@ -146,7 +147,7 @@
             // 
             // btnGo
             // 
-            this.btnGo.Location = new System.Drawing.Point(6, 314);
+            this.btnGo.Location = new System.Drawing.Point(6, 327);
             this.btnGo.Name = "btnGo";
             this.btnGo.Size = new System.Drawing.Size(75, 23);
             this.btnGo.TabIndex = 10;
@@ -170,7 +171,7 @@
             // 
             // lblMousePosition
             // 
-            this.lblMousePosition.Location = new System.Drawing.Point(0, 381);
+            this.lblMousePosition.Location = new System.Drawing.Point(0, 394);
             this.lblMousePosition.Name = "lblMousePosition";
             this.lblMousePosition.Size = new System.Drawing.Size(100, 23);
             this.lblMousePosition.TabIndex = 12;
@@ -180,7 +181,7 @@
             // lblMousePositionTxt
             // 
             this.lblMousePositionTxt.AutoSize = true;
-            this.lblMousePositionTxt.Location = new System.Drawing.Point(10, 368);
+            this.lblMousePositionTxt.Location = new System.Drawing.Point(10, 381);
             this.lblMousePositionTxt.Name = "lblMousePositionTxt";
             this.lblMousePositionTxt.Size = new System.Drawing.Size(74, 13);
             this.lblMousePositionTxt.TabIndex = 13;
@@ -188,7 +189,7 @@
             // 
             // lblMeasuresPerSecond
             // 
-            this.lblMeasuresPerSecond.Location = new System.Drawing.Point(0, 404);
+            this.lblMeasuresPerSecond.Location = new System.Drawing.Point(0, 417);
             this.lblMeasuresPerSecond.Name = "lblMeasuresPerSecond";
             this.lblMeasuresPerSecond.Size = new System.Drawing.Size(100, 23);
             this.lblMeasuresPerSecond.TabIndex = 14;
@@ -202,7 +203,7 @@
             0,
             0,
             0});
-            this.numDistanceMax.Location = new System.Drawing.Point(6, 252);
+            this.numDistanceMax.Location = new System.Drawing.Point(6, 265);
             this.numDistanceMax.Maximum = new decimal(new int[] {
             4000,
             0,
@@ -222,7 +223,7 @@
             // lblDistanceMax
             // 
             this.lblDistanceMax.AutoSize = true;
-            this.lblDistanceMax.Location = new System.Drawing.Point(5, 236);
+            this.lblDistanceMax.Location = new System.Drawing.Point(5, 249);
             this.lblDistanceMax.Name = "lblDistanceMax";
             this.lblDistanceMax.Size = new System.Drawing.Size(77, 13);
             this.lblDistanceMax.TabIndex = 16;
@@ -231,14 +232,24 @@
             // lblDistanceMaxUnit
             // 
             this.lblDistanceMaxUnit.AutoSize = true;
-            this.lblDistanceMaxUnit.Location = new System.Drawing.Point(70, 254);
+            this.lblDistanceMaxUnit.Location = new System.Drawing.Point(70, 267);
             this.lblDistanceMaxUnit.Name = "lblDistanceMaxUnit";
             this.lblDistanceMaxUnit.Size = new System.Drawing.Size(23, 13);
             this.lblDistanceMaxUnit.TabIndex = 17;
             this.lblDistanceMaxUnit.Text = "mm";
             // 
+            // cboHokuyo
+            // 
+            this.cboHokuyo.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cboHokuyo.FormattingEnabled = true;
+            this.cboHokuyo.Location = new System.Drawing.Point(8, 15);
+            this.cboHokuyo.Name = "cboHokuyo";
+            this.cboHokuyo.Size = new System.Drawing.Size(96, 21);
+            this.cboHokuyo.TabIndex = 18;
+            // 
             // PanelHokuyo
             // 
+            this.Controls.Add(this.cboHokuyo);
             this.Controls.Add(this.lblDistanceMaxUnit);
             this.Controls.Add(this.lblDistanceMax);
             this.Controls.Add(this.numDistanceMax);
@@ -282,5 +293,6 @@
         private System.Windows.Forms.NumericUpDown numDistanceMax;
         private System.Windows.Forms.Label lblDistanceMax;
         private System.Windows.Forms.Label lblDistanceMaxUnit;
+        private System.Windows.Forms.ComboBox cboHokuyo;
     }
 }

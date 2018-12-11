@@ -56,6 +56,7 @@ namespace GoBot
         }
 
         public static AllGameElements Elements { get; protected set; }
+        public static List<IShape> Detections { get; set; }
 
         private static Color notreCouleur;
         public static Color NotreCouleur

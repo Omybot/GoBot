@@ -305,7 +305,7 @@ namespace GoBot
         {
             switch (lidar)
             {
-                case LidarID.Detection:
+                case LidarID.Ground:
                     return "scan sol";
                 default:
                     return lidar.ToString();

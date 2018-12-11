@@ -26,7 +26,7 @@ namespace GoBot
 
     public enum ServomoteurID
     {
-        Elevation = 207,
+        Elevation = 204,
         ClampLeft = 206,
         ClampRight = 205,
 
@@ -133,7 +133,8 @@ namespace GoBot
 
     public enum LidarID
     {
-        Detection = 0
+        Ground = 0,
+        Avoid = 1
     }
 
     public enum Board

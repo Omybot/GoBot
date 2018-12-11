@@ -218,6 +218,8 @@ namespace GoBot
 
                         DessinePositionEnnemis(g);
 
+                        DessineDetections(g);
+
                         if (AfficheLigneDetections)
                             DessineLignesDetection(g);
 
@@ -438,7 +440,20 @@ namespace GoBot
             }*/
         }
 
-        private static void DessineRobot(Robot robot, Graphics g)
+        private static void DessineDetections(Graphics g)
+        {
+            List<IShape> detections = Plateau.Detections;
+
+            if (detections != null)
+            {
+                foreach (IShape d in detections)
+                {
+                    d.Paint(g, Color.DodgerBlue, 1, Color.LightSkyBlue, Scale);
+                }
+            }
+        }
+
+            private static void DessineRobot(Robot robot, Graphics g)
         {
             Point positionRobot = Scale.RealToScreenPosition(robot.Position.Coordinates);
 
@@ -473,18 +488,18 @@ namespace GoBot
 
         private static void DessineZoneMorte(Graphics g)
         {
-            if (Actionneur.Hokuyo != null)
+            if (Actionneur.HokuyoAvoid != null)
             {
                 AnglePosition milieuAngleMort = -180;
-                AngleDelta largeurAngleMort = Actionneur.Hokuyo.DeadAngle;
+                AngleDelta largeurAngleMort = Actionneur.HokuyoAvoid.DeadAngle;
 
-                AnglePosition debutAngleMort = Actionneur.Hokuyo.Position.Angle + Actionneur.Hokuyo.ScanRange / 2;
-                AnglePosition finAngleMort = Actionneur.Hokuyo.Position.Angle + Actionneur.Hokuyo.ScanRange / 2 + Actionneur.Hokuyo.DeadAngle;
+                AnglePosition debutAngleMort = Actionneur.HokuyoAvoid.Position.Angle + Actionneur.HokuyoAvoid.ScanRange / 2;
+                AnglePosition finAngleMort = Actionneur.HokuyoAvoid.Position.Angle + Actionneur.HokuyoAvoid.ScanRange / 2 + Actionneur.HokuyoAvoid.DeadAngle;
 
                 List<Point> points = new List<Point>();
-                points.Add(Scale.RealToScreenPosition(Actionneur.Hokuyo.Position.Coordinates));
-                points.Add(Scale.RealToScreenPosition(new Point((int)(Actionneur.Hokuyo.Position.Coordinates.X + debutAngleMort.Cos * 3000), (int)(Actionneur.Hokuyo.Position.Coordinates.Y + debutAngleMort.Sin * 3000))));
-                points.Add(Scale.RealToScreenPosition(new Point((int)(Actionneur.Hokuyo.Position.Coordinates.X + finAngleMort.Sin * 3000), (int)(Actionneur.Hokuyo.Position.Coordinates.Y + finAngleMort.Sin * 3000))));
+                points.Add(Scale.RealToScreenPosition(Actionneur.HokuyoAvoid.Position.Coordinates));
+                points.Add(Scale.RealToScreenPosition(new Point((int)(Actionneur.HokuyoAvoid.Position.Coordinates.X + debutAngleMort.Cos * 3000), (int)(Actionneur.HokuyoAvoid.Position.Coordinates.Y + debutAngleMort.Sin * 3000))));
+                points.Add(Scale.RealToScreenPosition(new Point((int)(Actionneur.HokuyoAvoid.Position.Coordinates.X + finAngleMort.Sin * 3000), (int)(Actionneur.HokuyoAvoid.Position.Coordinates.Y + finAngleMort.Sin * 3000))));
 
                 Region regionTable = new Region(new Rectangle(Scale.RealToScreenPosition(new Point(0, 0)), new Size(Scale.RealToScreenDistance(Plateau.Largeur), Scale.RealToScreenDistance(Plateau.Hauteur))));
                 GraphicsPath pathZoneMorte = new GraphicsPath();

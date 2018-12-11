@@ -9,17 +9,18 @@ namespace GoBot.Actionneurs
 {
     static class Actionneur
     {
-        private static Hokuyo _hokuyo;
+        private static Hokuyo _hokuyoGround, _hokuyoAvoid;
         private static ServosCan _servosCan;
 
 
         static Actionneur()
         {
-            _hokuyo = CreateHokuyo("COM6", LidarID.Detection);
+            _hokuyoGround = new HokuyoRec(LidarID.Ground);
+            _hokuyoAvoid = CreateHokuyo("COM5", LidarID.Avoid); 
             _servosCan = new ServosCan(Board.RecIO);
         }
 
-        public static Hokuyo CreateHokuyo(String portCom, LidarID id)
+        private static Hokuyo CreateHokuyo(String portCom, LidarID id)
         {
             Hokuyo hok = null;
 
@@ -34,12 +35,18 @@ namespace GoBot.Actionneurs
             return hok;
         }
 
-        public static Hokuyo Hokuyo
+        public static Hokuyo HokuyoGround
         {
-            get { return _hokuyo; }
-            set { _hokuyo = value; }
+            get { return _hokuyoGround; }
+            set { _hokuyoGround = value; }
         }
-        
+
+        public static Hokuyo HokuyoAvoid
+        {
+            get { return _hokuyoAvoid; }
+            set { _hokuyoAvoid = value; }
+        }
+
         public static ServosCan ServosCan
         {
             get { return _servosCan; }

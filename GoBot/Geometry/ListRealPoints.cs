@@ -17,17 +17,6 @@ namespace Geometry.Shapes
         }
 
         /// <summary>
-        /// Retourne la liste des points contenus dans la forme
-        /// </summary>
-        /// <param name="pts">Liste des points d'origine</param>
-        /// <param name="shape">Forme qui doit contenir les points</param>
-        /// <returns>Points contenus par la forme</returns>
-        public static List<RealPoint> GetPointsIn(this IEnumerable<RealPoint> pts, IShape shape)
-        {
-            return pts.Where(p => shape.Contains(p)).ToList();
-        }
-
-        /// <summary>
         /// Retourne une droite approximant la liste de points par la méthode des moindres carrés
         /// </summary>
         /// <param name="pts">Liste de points à approximer</param>

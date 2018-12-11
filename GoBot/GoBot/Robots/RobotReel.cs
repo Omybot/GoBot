@@ -428,7 +428,7 @@ namespace GoBot
                         double x = (double)((short)(trameRecue[5] << 8 | trameRecue[6]) / 10.0);
                         double teta = (trameRecue[7] << 8 | trameRecue[8]) / 100.0 - 180;
 
-                        positionMesureLidar = new Position(teta, new RealPoint(x, y));
+                        positionMesureLidar = new Position(-teta, new RealPoint(-x, -y));
                         decallageEntete += 6;
                     }
 

@@ -7,6 +7,8 @@ using System.Drawing;
 using System.Threading;
 using GoBot.Actionneurs;
 using GoBot.Threading;
+using Geometry.Shapes;
+using Geometry;
 
 namespace GoBot.Devices
 {
@@ -64,7 +66,42 @@ namespace GoBot.Devices
         
         private void Button1Click()
         {
+            while (Plateau.Detections?.Count > 0)
+            {
+                IShape target = Plateau.Detections.OrderBy(o=> o.Distance(Robots.GrosRobot.Position.Coordinates)).ToList()[0];
+
+                Direction dir = Maths.GetDirection(Robots.GrosRobot.Position, target.Barycenter);
+
+                Config.CurrentConfig.ServoElevation.SendPosition(Config.CurrentConfig.ServoElevation.PositionGround);
+                Config.CurrentConfig.ServoClampLeft.SendPosition(Config.CurrentConfig.ServoClampLeft.PositionOpen);
+                Config.CurrentConfig.ServoClampRight.SendPosition(Config.CurrentConfig.ServoClampRight.PositionOpen);
+                Config.CurrentConfig.MotorGulp.SendPosition(Config.CurrentConfig.MotorGulp.PositionSwallow);
+
+                Thread.Sleep(1000);
+
+                if (dir.angle > 0)
+                    Robots.GrosRobot.PivotGauche(dir.angle);
+                else
+                    Robots.GrosRobot.PivotDroite(-dir.angle);
+
+                Robots.GrosRobot.Avancer((int)(dir.distance - 150));
+
+
+                Config.CurrentConfig.ServoClampLeft.SendPosition(Config.CurrentConfig.ServoClampLeft.PositionClose);
+                Config.CurrentConfig.ServoClampRight.SendPosition(Config.CurrentConfig.ServoClampRight.PositionClose);
+
+                Thread.Sleep(1000);
+                Config.CurrentConfig.MotorGulp.SendPosition(Config.CurrentConfig.MotorGulp.PositionStop);
+                Config.CurrentConfig.ServoElevation.SendPosition(Config.CurrentConfig.ServoElevation.PositionInside);
+                Thread.Sleep(1000);
+                Config.CurrentConfig.ServoClampLeft.SendPosition(Config.CurrentConfig.ServoClampLeft.PositionOpen);
+                Config.CurrentConfig.ServoClampRight.SendPosition(Config.CurrentConfig.ServoClampRight.PositionOpen);
+
+                Robots.GrosRobot.Reculer(200);
+                Thread.Sleep(500);
+            }
         }
+
         private void Button2Click()
         {
             ThreadManager.CreateThread(link =>
@@ -76,13 +113,24 @@ namespace GoBot.Devices
         }
         private void Button3Click()
         {
-
         }
         private void Button4Click()
         {
         }
         private void Button5Click()
         {
+            Config.CurrentConfig.ServoElevation.SendPosition(Config.CurrentConfig.ServoElevation.PositionInside);
+            Config.CurrentConfig.ServoClampLeft.SendPosition(Config.CurrentConfig.ServoClampLeft.PositionClose);
+            Config.CurrentConfig.ServoClampRight.SendPosition(Config.CurrentConfig.ServoClampRight.PositionClose);
+
+            Thread.Sleep(2000);
+            Config.CurrentConfig.ServoClampLeft.SendPosition(Config.CurrentConfig.ServoClampLeft.PositionOpen);
+            Config.CurrentConfig.ServoClampRight.SendPosition(Config.CurrentConfig.ServoClampRight.PositionOpen);
+            Thread.Sleep(500);
+
+            Config.CurrentConfig.ServoElevation.SendPosition(Config.CurrentConfig.ServoElevation.PositionGround);
+            Config.CurrentConfig.ServoClampLeft.SendPosition(Config.CurrentConfig.ServoClampLeft.PositionClose);
+            Config.CurrentConfig.ServoClampRight.SendPosition(Config.CurrentConfig.ServoClampRight.PositionClose);
         }
         private void Button6Click()
         {
