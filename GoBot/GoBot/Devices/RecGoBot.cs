@@ -36,14 +36,14 @@ namespace GoBot.Devices
             Vert
         }
 
-        private UDPConnection connexion;
+        private Connection connexion;
         private Dictionary<LedID, LedStatus> ledsStatus;
 
         private Dictionary<Connection, LedID> ledConnexionState;
 
-        public RecGoBot(UDPConnection conn)
+        public RecGoBot(Board board)
         {
-            connexion = conn;
+            connexion = Connections.BoardConnection[board];
             connexion.FrameReceived += new Connection.NewFrameDelegate(connexion_NouvelleTrameRecue);
 
             ledConnexionState = new Dictionary<Connection, LedID>();

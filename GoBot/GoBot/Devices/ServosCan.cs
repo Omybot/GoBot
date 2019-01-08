@@ -334,8 +334,10 @@ namespace GoBot.Devices
             SendFrame(new Frame(tab));
         }
 
-        private void SendFrame(Frame f, bool waitResponse = false)
+        private bool SendFrame(Frame f, bool waitResponse = false)
         {
+            bool ok = true;
+
             if (waitResponse)
             {
                 _lockAsk.WaitOne();
@@ -347,9 +349,11 @@ namespace GoBot.Devices
 
             if (waitResponse)
             {
-                _lockWaitResponse.WaitOne(1000);
+                ok = _lockWaitResponse.WaitOne(1000);
                 _lockAsk.Release();
             }
+
+            return ok;
         }
 
         private static byte ByteDivide(int valeur, bool mostSignifiantBit)

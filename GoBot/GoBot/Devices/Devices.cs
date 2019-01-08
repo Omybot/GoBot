@@ -13,8 +13,8 @@ namespace GoBot.Devices
 
         public static void Init()
         {
-            _recGoBot = new RecGoBot(Connections.ConnectionGB);
-            _servosCan = new ServosCan(Board.RecIO);
+            _recGoBot = new RecGoBot(Board.RecGB);
+            _servosCan = new ServosCan(Board.RecCan);
         }
 
         public static RecGoBot RecGoBot
