@@ -62,9 +62,9 @@ namespace GoBot.Communications
         /// <param name="inputPort">Port à écouter</param>
         /// <param name="outputPort">Port sur lequel envoyer les messages</param>
         /// <returns>Etat de la connexion</returns>
-        public ConnectionState Connexion(IPAddress ipAddress, int inputPort, int outputPort)
+        public ConnectionState Connect(IPAddress ipAddress, int inputPort, int outputPort)
         {
-            ConnectionState retour = ConnectionState.Error;
+            ConnectionState state = ConnectionState.Error;
 
             IPAddress = ipAddress;
             OutputPort = outputPort;
@@ -77,7 +77,7 @@ namespace GoBot.Communications
                     Client = new UdpClient();
                     Client.Connect(IPAddress, OutputPort);
                     Connected = true;
-                    retour = ConnectionState.Ok;
+                    state = ConnectionState.Ok;
                     StartReception();
                 }
                 catch (Exception)
@@ -86,7 +86,7 @@ namespace GoBot.Communications
                 }
             }
 
-            return retour;
+            return state;
         }
 
         /// <summary>
@@ -103,7 +103,7 @@ namespace GoBot.Communications
                 try
                 {
                     if (!Connected)
-                        if (Connexion(IPAddress, OutputPort, InputPort) != ConnectionState.Ok)
+                        if (Connect(IPAddress, OutputPort, InputPort) != ConnectionState.Ok)
                             return -1;
 
                     byte[] envoi = frame.ToBytes();

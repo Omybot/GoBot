@@ -14,6 +14,7 @@ namespace GoBot.Communications
         public static UDPConnection ConnectionMove { get; set; }
         public static UDPConnection ConnectionIO { get; set; }
         public static UDPConnection ConnectionGB { get; set; }
+        public static UDPConnection ConnectionCan { get; set; }
 
         /// <summary>
         /// Liste de toutes les connexions suivies par Connections
@@ -47,6 +48,7 @@ namespace GoBot.Communications
             ConnectionIO = AddUDPConnection(Board.RecIO, IPAddress.Parse("10.1.0.14"), 12324, 12314);
             ConnectionMove = AddUDPConnection(Board.RecMove, IPAddress.Parse("10.1.0.11"), 12321, 12311);
             ConnectionGB = AddUDPConnection(Board.RecGB, IPAddress.Parse("10.1.0.12"), 12322, 12312);
+            ConnectionCan = AddUDPConnection(Board.RecCan, IPAddress.Parse("10.1.0.15"), 12325, 12315);
 
             // En remplacement des tests de connexion des ConnexionCheck, pour les syncroniser
             _linkTestConnections = ThreadManager.CreateThread(link => TestConnections());
@@ -64,7 +66,7 @@ namespace GoBot.Communications
         private static UDPConnection AddUDPConnection(Board board, IPAddress ip, int inPort, int outPort)
         {
             UDPConnection output = new UDPConnection();
-            output.Connexion(ip, inPort, outPort);
+            output.Connect(ip, inPort, outPort);
             BoardConnection.Add(board, output);
             EnableConnection.Add(board, true);
             AllConnections.Add(output);
