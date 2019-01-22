@@ -35,12 +35,14 @@ namespace GoBot
             if (!Simulation)
             {
                 RobotReel grosRobot = new RobotReel(IDRobot.GrosRobot, Board.RecMove);
+                grosRobot.PositionChange += GrosRobot_PositionChange;
                 grosRobot.Connexion = Connections.ConnectionMove;
                 GrosRobot = grosRobot;
             }
             else
             {
                 GrosRobot = new RobotSimu(IDRobot.GrosRobot);
+                GrosRobot.PositionChange += GrosRobot_PositionChange;
             }
 
             DicRobots = new Dictionary<IDRobot, Robot>();
@@ -55,6 +57,12 @@ namespace GoBot
                 Robots.GrosRobot.Graph = graphGros;
 
             GrosRobot.Rapide();
+        }
+
+        private static void GrosRobot_PositionChange(Geometry.Position position)
+        {
+            if (Actionneurs.Actionneur.HokuyoAvoid != null)
+                Actionneurs.Actionneur.HokuyoAvoid.Position = position;
         }
 
         public static void Simuler(bool simu)

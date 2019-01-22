@@ -427,11 +427,6 @@ namespace GoBot.IHM
             Robots.GrosRobot.Reculer(300);
 
         }
-        
-        private void button1_Click(object sender, EventArgs e)
-        {
-            List<RealPoint> pts = Actionneur.HokuyoAvoid.GetRawPoints();
-        }
 
         private void FonctionHokuyo()
         {

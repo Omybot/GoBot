@@ -38,7 +38,6 @@
             this.rdoObjects = new System.Windows.Forms.RadioButton();
             this.boxGroup = new System.Windows.Forms.CheckBox();
             this.btnGo = new System.Windows.Forms.Button();
-            this.picWorld = new GoBot.IHM.WorldPanel(this.components);
             this.lblMousePosition = new System.Windows.Forms.Label();
             this.lblMousePositionTxt = new System.Windows.Forms.Label();
             this.lblMeasuresPerSecond = new System.Windows.Forms.Label();
@@ -46,8 +45,15 @@
             this.lblDistanceMax = new System.Windows.Forms.Label();
             this.lblDistanceMaxUnit = new System.Windows.Forms.Label();
             this.cboHokuyo = new System.Windows.Forms.ComboBox();
-            ((System.ComponentModel.ISupportInitialize)(this.picWorld)).BeginInit();
+            this.numFrom = new System.Windows.Forms.NumericUpDown();
+            this.label1 = new System.Windows.Forms.Label();
+            this.label2 = new System.Windows.Forms.Label();
+            this.numTo = new System.Windows.Forms.NumericUpDown();
+            this.picWorld = new GoBot.IHM.WorldPanel(this.components);
             ((System.ComponentModel.ISupportInitialize)(this.numDistanceMax)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numFrom)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numTo)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.picWorld)).BeginInit();
             this.SuspendLayout();
             // 
             // switchBouton1
@@ -147,7 +153,7 @@
             // 
             // btnGo
             // 
-            this.btnGo.Location = new System.Drawing.Point(6, 327);
+            this.btnGo.Location = new System.Drawing.Point(6, 439);
             this.btnGo.Name = "btnGo";
             this.btnGo.Size = new System.Drawing.Size(75, 23);
             this.btnGo.TabIndex = 10;
@@ -155,23 +161,9 @@
             this.btnGo.UseVisualStyleBackColor = true;
             this.btnGo.Click += new System.EventHandler(this.btnGo_Click);
             // 
-            // picWorld
-            // 
-            this.picWorld.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.picWorld.Location = new System.Drawing.Point(110, 16);
-            this.picWorld.Name = "picWorld";
-            this.picWorld.Size = new System.Drawing.Size(727, 429);
-            this.picWorld.TabIndex = 11;
-            this.picWorld.TabStop = false;
-            this.picWorld.WorldChange += new GoBot.IHM.WorldPanel.WorldChangeDelegate(this.picWorld_WorldChange);
-            this.picWorld.Paint += new System.Windows.Forms.PaintEventHandler(this.picWorld_Paint);
-            this.picWorld.MouseMove += new System.Windows.Forms.MouseEventHandler(this.picWorld_MouseMove);
-            // 
             // lblMousePosition
             // 
-            this.lblMousePosition.Location = new System.Drawing.Point(0, 394);
+            this.lblMousePosition.Location = new System.Drawing.Point(0, 506);
             this.lblMousePosition.Name = "lblMousePosition";
             this.lblMousePosition.Size = new System.Drawing.Size(100, 23);
             this.lblMousePosition.TabIndex = 12;
@@ -181,7 +173,7 @@
             // lblMousePositionTxt
             // 
             this.lblMousePositionTxt.AutoSize = true;
-            this.lblMousePositionTxt.Location = new System.Drawing.Point(10, 381);
+            this.lblMousePositionTxt.Location = new System.Drawing.Point(10, 493);
             this.lblMousePositionTxt.Name = "lblMousePositionTxt";
             this.lblMousePositionTxt.Size = new System.Drawing.Size(74, 13);
             this.lblMousePositionTxt.TabIndex = 13;
@@ -189,7 +181,7 @@
             // 
             // lblMeasuresPerSecond
             // 
-            this.lblMeasuresPerSecond.Location = new System.Drawing.Point(0, 417);
+            this.lblMeasuresPerSecond.Location = new System.Drawing.Point(0, 529);
             this.lblMeasuresPerSecond.Name = "lblMeasuresPerSecond";
             this.lblMeasuresPerSecond.Size = new System.Drawing.Size(100, 23);
             this.lblMeasuresPerSecond.TabIndex = 14;
@@ -203,7 +195,7 @@
             0,
             0,
             0});
-            this.numDistanceMax.Location = new System.Drawing.Point(6, 265);
+            this.numDistanceMax.Location = new System.Drawing.Point(6, 258);
             this.numDistanceMax.Maximum = new decimal(new int[] {
             4000,
             0,
@@ -223,7 +215,7 @@
             // lblDistanceMax
             // 
             this.lblDistanceMax.AutoSize = true;
-            this.lblDistanceMax.Location = new System.Drawing.Point(5, 249);
+            this.lblDistanceMax.Location = new System.Drawing.Point(5, 242);
             this.lblDistanceMax.Name = "lblDistanceMax";
             this.lblDistanceMax.Size = new System.Drawing.Size(77, 13);
             this.lblDistanceMax.TabIndex = 16;
@@ -232,7 +224,7 @@
             // lblDistanceMaxUnit
             // 
             this.lblDistanceMaxUnit.AutoSize = true;
-            this.lblDistanceMaxUnit.Location = new System.Drawing.Point(70, 267);
+            this.lblDistanceMaxUnit.Location = new System.Drawing.Point(70, 260);
             this.lblDistanceMaxUnit.Name = "lblDistanceMaxUnit";
             this.lblDistanceMaxUnit.Size = new System.Drawing.Size(23, 13);
             this.lblDistanceMaxUnit.TabIndex = 17;
@@ -247,8 +239,87 @@
             this.cboHokuyo.Size = new System.Drawing.Size(96, 21);
             this.cboHokuyo.TabIndex = 18;
             // 
+            // numFrom
+            // 
+            this.numFrom.Increment = new decimal(new int[] {
+            10,
+            0,
+            0,
+            0});
+            this.numFrom.Location = new System.Drawing.Point(42, 284);
+            this.numFrom.Maximum = new decimal(new int[] {
+            4000,
+            0,
+            0,
+            0});
+            this.numFrom.Name = "numFrom";
+            this.numFrom.Size = new System.Drawing.Size(58, 20);
+            this.numFrom.TabIndex = 19;
+            this.numFrom.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.numFrom.ValueChanged += new System.EventHandler(this.numFrom_ValueChanged);
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(6, 286);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(30, 13);
+            this.label1.TabIndex = 20;
+            this.label1.Text = "From";
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(16, 312);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(20, 13);
+            this.label2.TabIndex = 21;
+            this.label2.Text = "To";
+            // 
+            // numTo
+            // 
+            this.numTo.Increment = new decimal(new int[] {
+            10,
+            0,
+            0,
+            0});
+            this.numTo.Location = new System.Drawing.Point(42, 310);
+            this.numTo.Maximum = new decimal(new int[] {
+            4000,
+            0,
+            0,
+            0});
+            this.numTo.Name = "numTo";
+            this.numTo.Size = new System.Drawing.Size(58, 20);
+            this.numTo.TabIndex = 22;
+            this.numTo.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.numTo.Value = new decimal(new int[] {
+            1080,
+            0,
+            0,
+            0});
+            this.numTo.ValueChanged += new System.EventHandler(this.numTo_ValueChanged);
+            // 
+            // picWorld
+            // 
+            this.picWorld.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.picWorld.Location = new System.Drawing.Point(110, 16);
+            this.picWorld.Name = "picWorld";
+            this.picWorld.Size = new System.Drawing.Size(727, 572);
+            this.picWorld.TabIndex = 11;
+            this.picWorld.TabStop = false;
+            this.picWorld.WorldChange += new GoBot.IHM.WorldPanel.WorldChangeDelegate(this.picWorld_WorldChange);
+            this.picWorld.Paint += new System.Windows.Forms.PaintEventHandler(this.picWorld_Paint);
+            this.picWorld.MouseMove += new System.Windows.Forms.MouseEventHandler(this.picWorld_MouseMove);
+            // 
             // PanelHokuyo
             // 
+            this.Controls.Add(this.numTo);
+            this.Controls.Add(this.label2);
+            this.Controls.Add(this.label1);
+            this.Controls.Add(this.numFrom);
             this.Controls.Add(this.cboHokuyo);
             this.Controls.Add(this.lblDistanceMaxUnit);
             this.Controls.Add(this.lblDistanceMax);
@@ -267,10 +338,12 @@
             this.Controls.Add(this.rdoOutline);
             this.Controls.Add(this.switchBouton1);
             this.Name = "PanelHokuyo";
-            this.Size = new System.Drawing.Size(851, 461);
+            this.Size = new System.Drawing.Size(851, 604);
             this.Load += new System.EventHandler(this.PanelHokuyo_Load);
-            ((System.ComponentModel.ISupportInitialize)(this.picWorld)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.numDistanceMax)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numFrom)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numTo)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.picWorld)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -294,5 +367,9 @@
         private System.Windows.Forms.Label lblDistanceMax;
         private System.Windows.Forms.Label lblDistanceMaxUnit;
         private System.Windows.Forms.ComboBox cboHokuyo;
+        private System.Windows.Forms.NumericUpDown numFrom;
+        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.NumericUpDown numTo;
     }
 }

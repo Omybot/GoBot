@@ -13,11 +13,11 @@ namespace GoBot.Devices
 
         public HokuyoRec(LidarID id) : base(id)
         {
-            _model = "UBG-04LX-F01";
-            _pointsCount = 725;
+            //_model = "UBG-04LX-F01";
+            //_pointsCount = 725;
             _scanRange = 240;
-            _pointsOffset = 44;
-            _maxDistance = 400;
+            //_pointsOffset = 44;
+            _distanceMaxLimit = 400;
             _keepFrom = 200;
             _keepTo = 600;
             _invertRotation = true;

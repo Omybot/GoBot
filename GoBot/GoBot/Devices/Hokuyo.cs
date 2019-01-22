@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO.Ports;
+using System.Linq;
 using System.Text.RegularExpressions;
 using System.Threading;
 
@@ -17,11 +18,19 @@ namespace GoBot.Devices
         private LidarID _id;
 
         private SerialPort _port;
-        protected String _frameMeasure, _frameDetails;
 
-        protected String _model;
-        protected int _pointsCount, _pointsOffset, _maxDistance;
-        protected AngleDelta _scanRange;
+        protected String _frameMeasure;
+        protected String _frameDetails;
+        protected String _frameSpecif;
+        protected String _frameHighSentitivity, _frameLowSentitivity;
+
+        protected String _romVendor, _romProduct, _romFirmware, _romProtocol, _romSerialNumber, _romModel;
+        protected int _romMinDistance, _romMaxDistance, _romDivisions, _romFirstMeasure, _romLastMeasure, _romTotalMeasures, _romMotorSpeed;
+        protected int _usefullMeasures;
+        protected AngleDelta _scanRange, _resolution;
+
+        protected int _distanceMinLimit, _distanceMaxLimit;
+
         protected Position _position;
         protected int _keepFrom, _keepTo;
         protected bool _invertRotation;
@@ -38,19 +47,43 @@ namespace GoBot.Devices
 
         public LidarID ID { get { return _id; } }
 
-        public String Model { get { return _model; } }
+        public String Model { get { return _romModel; } }
 
         public AngleDelta ScanRange { get { return _scanRange; } }
 
         public AngleDelta DeadAngle { get { return new AngleDelta(360 - _scanRange); } }
 
-        public int PointsCount { get { return _pointsCount; } }
+        public int PointsCount { get { return _romTotalMeasures; } }
 
         public Position Position { get { return _position; } set { _position = value; } }
 
         public List<RealPoint> LastMeasure { get { return _lastMeasure; } }
 
-        public int MaxDistance { get { return _maxDistance; } set { _maxDistance = value; } }
+        public int DistanceMaxLimit { get { return _distanceMaxLimit; } set { _distanceMaxLimit = value; } }
+
+        public int KeepFrom
+        {
+            get { return _keepFrom; }
+            set
+            {
+                _lock.WaitOne();
+                _keepFrom = value;
+                _frameMeasure = "MS" + _keepFrom.ToString("0000") + _keepTo.ToString("0000") + "00001\n";
+                _lock.Release();
+            }
+        }
+
+        public int KeepTo
+        {
+            get { return _keepTo; }
+            set
+            {
+                _lock.WaitOne();
+                _keepTo = value;
+                _frameMeasure = "MS" + _keepFrom.ToString("0000") + _keepTo.ToString("0000") + "00001\n";
+                _lock.Release();
+            }
+        }
 
         #endregion
 
@@ -61,16 +94,18 @@ namespace GoBot.Devices
             _id = id;
             _lock = new Semaphore(1, 1);
 
-            _maxDistance = 3999; // En dessous de 4000 parce que le protocole choisi seuille le maximum à 4000 niveau matos
+            _distanceMaxLimit = 3999; // En dessous de 4000 parce que le protocole choisi seuille le maximum à 4000 niveau matos
 
             _position = new Position();
 
             _lastMeasure = null;
             _measuresTicker = new TicksPerSecond();
             _measuresTicker.ValueChange += _measuresPerSecond_ValueChange;
-            _frameDetails = "VV\n00P\n";
-            
-            _frameMeasure = "MS0000" + _pointsCount.ToString("0000") + "00001";
+
+            _frameDetails = "VV\n";
+            _frameSpecif = "PP\n";
+            _frameLowSentitivity = "HS0\n";
+            _frameHighSentitivity = "HS1\n";
 
             _invertRotation = false;
         }
@@ -79,7 +114,7 @@ namespace GoBot.Devices
         {
             _port = new SerialPort(portCom, 115200);
             _port.Open();
-            
+
             IdentifyModel();
         }
 
@@ -92,7 +127,7 @@ namespace GoBot.Devices
 
         public delegate void FrequencyChangeDelegate(double value);
         public event FrequencyChangeDelegate FrequencyChange;
-        
+
         protected void OnNewMeasure(List<RealPoint> measure)
         {
             _measuresTicker.AddTick();
@@ -133,88 +168,76 @@ namespace GoBot.Devices
 
         public List<RealPoint> GetPoints()
         {
-            List<RealPoint> points = new List<RealPoint>();
-
-            _lock.WaitOne();
-            
-            String reponse = GetMeasure();
-
-            try
-            {
-                if (reponse != "")
-                {
-                    List<int> mesures = DecodeMessage(reponse);
-                    mesures.RemoveRange(0, _pointsOffset);
-                    points = ValuesToPositions(mesures, _pointsCount, false, 50, _maxDistance, _position);
-                }
-            }
-            catch (Exception) { }
-
-            _lock.Release();
-
-            return points;
+            return GetPoints(_position);
         }
 
         public List<RealPoint> GetRawPoints()
         {
-            List<RealPoint> points = new List<RealPoint>();
-
-            _lock.WaitOne();
-
-            String reponse = GetMeasure();
-
-            try
-            {
-                if (reponse != "")
-                {
-                    List<int> mesures = DecodeMessage(reponse);
-                    mesures.RemoveRange(0, _pointsOffset);
-                    points = ValuesToPositions(mesures, _pointsCount, false, 150, _maxDistance, new Position());
-                }
-            }
-            catch (Exception) { }
-
-            _lock.Release();
-
-            return points;
+            return GetPoints(new Position());
         }
 
         #endregion
 
         #region Fonctionnement interne
-        
+
+        private List<RealPoint> GetPoints(Position reference)
+        {
+            List<RealPoint> points = new List<RealPoint>();
+
+            _lock.WaitOne();
+
+            String reponse = GetMeasure();
+
+            try
+            {
+                if (reponse != "")
+                {
+                    List<int> mesures = DecodeMessage(reponse);
+                    points = ValuesToPositions(mesures, false, _distanceMinLimit, _distanceMaxLimit, reference);
+                }
+            }
+            catch (Exception) { }
+            
+            _lock.Release();
+
+            return points;
+        }
+
         private void IdentifyModel()
         {
             SendMessage(_frameDetails);
-            String details = GetResponse();
-            
-            if (details.Contains("UBG-04LX-F01"))
-            {
-                // Hokuyo bleu
-                _model = "UBG-04LX-F01";
-                _pointsCount = 725;
-                _scanRange = 240;
-                _pointsOffset = 44;
-            }
-            else if (details.Contains("URG-04LX-UG01"))
-            {
-                // Petit Hokuyo
-                _model = "URG-04LX-UG01";
-                _pointsCount = 725;
-                _scanRange = 240;
-                _pointsOffset = 44;
-            }
-            else if (details.Contains("UTM-30LX"))
-            {
-                // Grand hokuyo
-                _model = "UTM-30LX";
-                _pointsCount = 1080;
-                _scanRange = 270;
-                _pointsOffset = 0;
-            }
+            String response = GetResponse();
 
-            _keepFrom = 0;
-            _keepTo = _pointsCount;
+            List<String> details = response.Split(new char[] { '\n', ':', ';' }).ToList();
+
+            _romVendor = details[3];
+            _romProduct = details[6];
+            _romFirmware = details[9];
+            _romProtocol = details[12];
+            _romSerialNumber = details[15];
+
+            SendMessage(_frameSpecif);
+            response = GetResponse();
+
+            details = response.Split(new char[] { '\n', ':', ';' }).ToList();
+
+            _romModel = details[3];
+            _romMinDistance = int.Parse(details[6]);
+            _romMaxDistance = int.Parse(details[9]);
+            _romDivisions = int.Parse(details[12]);
+            _romFirstMeasure = int.Parse(details[15]);
+            _romLastMeasure = int.Parse(details[18]);
+            _romTotalMeasures = int.Parse(details[21]) * 2 + 1;
+            _romMotorSpeed = int.Parse(details[24]);
+
+            _usefullMeasures = _romTotalMeasures - (_romTotalMeasures - (_romLastMeasure + 1)) - _romFirstMeasure;
+            _resolution = 360.0 / _romDivisions;
+            _scanRange = _resolution * _usefullMeasures;
+
+            _keepFrom = _romFirstMeasure;
+            _keepTo = _romFirstMeasure + _usefullMeasures - 1;
+
+            _frameMeasure = "MS" + _keepFrom.ToString("0000") + _keepTo.ToString("0000") + "00001\n";
         }
 
         private String GetMeasure(int timeout = 500)
@@ -236,7 +259,7 @@ namespace GoBot.Devices
             do
             {
                 reponse += _port.ReadExisting();
-            } while (Regex.Matches(reponse, "\n\n").Count < 2 && chrono.ElapsedMilliseconds < timeout);
+            } while (!reponse.Contains("\n\n") && chrono.ElapsedMilliseconds < timeout);
 
             chrono.Stop();
 
@@ -249,17 +272,40 @@ namespace GoBot.Devices
         private void DoMeasure()
         {
             _lastMeasure = GetPoints();
-            if(!_linkMeasures.Cancelled) OnNewMeasure(_lastMeasure);
+            if (!_linkMeasures.Cancelled) OnNewMeasure(_lastMeasure);
         }
 
-        private List<RealPoint> ValuesToPositions(List<int> measures, int pointsCount, bool limitOnTable, int minDistance, int maxDistance, Position refPosition)
+        //private List<RealPoint> ValuesToPositions(List<int> measures, int pointsCount, bool limitOnTable, int minDistance, int maxDistance, Position refPosition)
+        //{
+        //    List<RealPoint> positions = new List<RealPoint>();
+        //    double stepAngular = ScanRange.InDegrees / pointsCount;
+
+        //    for (int i = 0; i < measures.Count; i++)
+        //    {
+        //        AnglePosition angle = stepAngular * (i + _keepFrom);
+
+        //        if (measures[i] > minDistance && (measures[i] < maxDistance || maxDistance == -1))
+        //        {
+        //            AnglePosition anglePoint = new AnglePosition(angle.InPositiveRadians - refPosition.Angle.InPositiveRadians - ScanRange.InRadians / 2 - Math.PI / 2, AngleType.Radian);
+
+        //            RealPoint pos = new RealPoint(refPosition.Coordinates.X - anglePoint.Sin * measures[i], refPosition.Coordinates.Y - anglePoint.Cos * measures[i]);
+
+        //            int marge = 20; // Marge en mm de distance de detection à l'exterieur de la table (pour ne pas jeter les mesures de la bordure qui ne collent pas parfaitement)
+        //            if (!limitOnTable || (pos.X > -marge && pos.X < Plateau.Largeur + marge && pos.Y > -marge && pos.Y < Plateau.Hauteur + marge))
+        //                positions.Add(pos);
+        //        }
+        //    }
+
+        //    return positions;
+        //}
+
+        private List<RealPoint> ValuesToPositions(List<int> measures, bool limitOnTable, int minDistance, int maxDistance, Position refPosition)
         {
             List<RealPoint> positions = new List<RealPoint>();
-            double stepAngular = ScanRange.InDegrees / pointsCount;
 
             for (int i = 0; i < measures.Count; i++)
             {
-                AnglePosition angle = stepAngular * (i + _keepFrom);
+                AnglePosition angle = _resolution * (i + _keepFrom);
 
                 if (measures[i] > minDistance && (measures[i] < maxDistance || maxDistance == -1))
                 {
@@ -296,8 +342,8 @@ namespace GoBot.Devices
                     }
                 }
             }
-            
-            if(values.Count >= _pointsCount)
+
+            if (values.Count >= _romTotalMeasures)
                 values = values.GetRange(_keepFrom, _keepTo - _keepFrom);
 
             if (_invertRotation)

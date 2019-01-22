@@ -231,7 +231,17 @@ namespace GoBot.IHM
 
         private void numDistanceMax_ValueChanged(object sender, EventArgs e)
         {
-            _selectedHokuyo.MaxDistance = (int)numDistanceMax.Value;
+            _selectedHokuyo.DistanceMaxLimit = (int)numDistanceMax.Value;
+        }
+
+        private void numFrom_ValueChanged(object sender, EventArgs e)
+        {
+            _selectedHokuyo.KeepFrom = (int)numFrom.Value;
+        }
+
+        private void numTo_ValueChanged(object sender, EventArgs e)
+        {
+            _selectedHokuyo.KeepTo = (int)numTo.Value;
         }
     }
 }

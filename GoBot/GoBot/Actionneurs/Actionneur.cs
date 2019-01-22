@@ -1,23 +1,17 @@
 ﻿using GoBot.Devices;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using Geometry.Shapes;
 
 namespace GoBot.Actionneurs
 {
     static class Actionneur
     {
         private static Hokuyo _hokuyoGround, _hokuyoAvoid;
-        private static ServosCan _servosCan;
 
 
         static Actionneur()
         {
             _hokuyoGround = new HokuyoRec(LidarID.Ground);
-            _hokuyoAvoid = CreateHokuyo("COM5", LidarID.Avoid); 
-            _servosCan = new ServosCan(Board.RecIO);
+            _hokuyoAvoid = CreateHokuyo("COM8", LidarID.Avoid); 
         }
 
         private static Hokuyo CreateHokuyo(String portCom, LidarID id)
@@ -45,12 +39,6 @@ namespace GoBot.Actionneurs
         {
             get { return _hokuyoAvoid; }
             set { _hokuyoAvoid = value; }
-        }
-
-        public static ServosCan ServosCan
-        {
-            get { return _servosCan; }
-            set { _servosCan = value; }
         }
     }
 }

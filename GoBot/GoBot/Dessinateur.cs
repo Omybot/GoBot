@@ -488,31 +488,27 @@ namespace GoBot
 
         private static void DessineZoneMorte(Graphics g)
         {
+            int farAway = 10000;
+
             if (Actionneur.HokuyoAvoid != null)
             {
-                AnglePosition milieuAngleMort = -180;
-                AngleDelta largeurAngleMort = Actionneur.HokuyoAvoid.DeadAngle;
-
-                AnglePosition debutAngleMort = Actionneur.HokuyoAvoid.Position.Angle + Actionneur.HokuyoAvoid.ScanRange / 2;
-                AnglePosition finAngleMort = Actionneur.HokuyoAvoid.Position.Angle + Actionneur.HokuyoAvoid.ScanRange / 2 + Actionneur.HokuyoAvoid.DeadAngle;
+                AnglePosition debutAngleMort = Actionneur.HokuyoAvoid.Position.Angle + 180 + new AngleDelta(Actionneur.HokuyoAvoid.DeadAngle / 2);
+                AnglePosition finAngleMort = Actionneur.HokuyoAvoid.Position.Angle + 180 + new AngleDelta(-Actionneur.HokuyoAvoid.DeadAngle / 2);
 
                 List<Point> points = new List<Point>();
                 points.Add(Scale.RealToScreenPosition(Actionneur.HokuyoAvoid.Position.Coordinates));
-                points.Add(Scale.RealToScreenPosition(new Point((int)(Actionneur.HokuyoAvoid.Position.Coordinates.X + debutAngleMort.Cos * 3000), (int)(Actionneur.HokuyoAvoid.Position.Coordinates.Y + debutAngleMort.Sin * 3000))));
-                points.Add(Scale.RealToScreenPosition(new Point((int)(Actionneur.HokuyoAvoid.Position.Coordinates.X + finAngleMort.Sin * 3000), (int)(Actionneur.HokuyoAvoid.Position.Coordinates.Y + finAngleMort.Sin * 3000))));
+                points.Add(Scale.RealToScreenPosition(new Point((int)(Actionneur.HokuyoAvoid.Position.Coordinates.X + debutAngleMort.Cos * farAway), (int)(Actionneur.HokuyoAvoid.Position.Coordinates.Y + debutAngleMort.Sin * farAway))));
+                points.Add(Scale.RealToScreenPosition(new Point((int)(Actionneur.HokuyoAvoid.Position.Coordinates.X + finAngleMort.Cos * farAway), (int)(Actionneur.HokuyoAvoid.Position.Coordinates.Y + finAngleMort.Sin * farAway))));
 
-                Region regionTable = new Region(new Rectangle(Scale.RealToScreenPosition(new Point(0, 0)), new Size(Scale.RealToScreenDistance(Plateau.Largeur), Scale.RealToScreenDistance(Plateau.Hauteur))));
-                GraphicsPath pathZoneMorte = new GraphicsPath();
-                pathZoneMorte.AddPolygon(points.ToArray());
-                Region regionZoneMorte = new Region(pathZoneMorte);
-                regionZoneMorte.Intersect(regionTable);
+                g.IntersectClip(new Rectangle(Scale.RealToScreenPosition(new Point(0, 0)), new Size(Scale.RealToScreenDistance(Plateau.Largeur), Scale.RealToScreenDistance(Plateau.Hauteur))));
 
+                g.DrawLine(Pens.Black, points[0], points[1]);
+                g.DrawLine(Pens.Black, points[0], points[2]);
                 Brush brush = new SolidBrush(Color.FromArgb(50, Color.Black));
-                g.SmoothingMode = SmoothingMode.AntiAlias;
-                g.FillRegion(brush, regionZoneMorte);
+                g.FillPolygon(brush, points.ToArray());
                 brush.Dispose();
-                regionTable.Dispose();
-                regionZoneMorte.Dispose();
+
+                g.ResetClip();
             }
         }
 
