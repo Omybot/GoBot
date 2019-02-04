@@ -1,4 +1,5 @@
 ﻿using GoBot.Communications;
+using GoBot.Devices.CAN;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,12 +10,14 @@ namespace GoBot.Devices
     static class Devices
     {
         private static RecGoBot _recGoBot;
-        private static ServosCan _servosCan;
+        private static CanServos _canServos;
+        private static CanDisplay _canDisplay;
 
         public static void Init()
         {
             _recGoBot = new RecGoBot(Board.RecGB);
-            _servosCan = new ServosCan(Board.RecCan);
+            _canServos = new CanServos(Connections.ConnectionCan);
+            _canDisplay = new CanDisplay(Connections.ConnectionCan);
         }
 
         public static RecGoBot RecGoBot
@@ -25,11 +28,11 @@ namespace GoBot.Devices
             }
         }
 
-        public static ServosCan ServosCan
+        public static CanServos CanServos
         {
             get
             {
-                return _servosCan;
+                return _canServos;
             }
         }
     }

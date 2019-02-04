@@ -83,8 +83,13 @@
     <Compile Include="Actionneurs\Actionneur.cs" />
     <Compile Include="Actionneurs\Positionables.cs" />
     <Compile Include="Actionneurs\RobotPositionables.cs" />
+    <Compile Include="Devices\CAN\CanCommunication.cs" />
+    <Compile Include="Devices\CAN\CanDisplay.cs" />
+    <Compile Include="Devices\CAN\CanFrameFactory.cs" />
+    <Compile Include="Devices\CAN\CanFunctions.cs" />
+    <Compile Include="Devices\CAN\CanServo.cs" />
     <Compile Include="Devices\HokuyoRec.cs" />
-    <Compile Include="Devices\ServosCan.cs" />
+    <Compile Include="Devices\CAN\CanServos.cs" />
     <Compile Include="Actions\Asservissement\ActionAccelerationPivot.cs" />
     <Compile Include="Actions\Asservissement\ActionVitessePivot.cs" />
     <Compile Include="Actions\ActionMoteur.cs" />

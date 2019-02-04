@@ -647,7 +647,7 @@ namespace GoBot
             else if (idCan != -1)
             {
                 // Envoi en bus can si c'est un servo géré par CAN
-                Devices.Devices.ServosCan.SetPosition(idCan, position);
+                Devices.Devices.CanServos[idCan].SetPosition(position);
             }
             else
             {

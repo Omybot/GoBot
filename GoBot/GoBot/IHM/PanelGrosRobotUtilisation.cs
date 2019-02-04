@@ -62,20 +62,20 @@ namespace GoBot.IHM
         private void button1_Click(object sender, EventArgs e)
         {
             Robots.GrosRobot.Avancer(50);
-            Devices.Devices.ServosCan.SetPosition(5, 34000);
-            Devices.Devices.ServosCan.SetPosition(6, 17000);
+            Devices.Devices.CanServos[5].SetPosition(34000);
+            Devices.Devices.CanServos[6].SetPosition(617000);
 
             Robots.GrosRobot.MoteurVitesse(MoteurID.Gulp, SensGD.Gauche, 4000);
             Thread.Sleep(1000);
             Robots.GrosRobot.MoteurVitesse(MoteurID.Gulp, SensGD.Gauche, 0);
 
 
-            Devices.Devices.ServosCan.SetPosition(4, 40000);
+            Devices.Devices.CanServos[4].SetPosition(40000);
 
             Thread.Sleep(1000);
-            Devices.Devices.ServosCan.SetPosition(4, 16800);
-            Devices.Devices.ServosCan.SetPosition(5, 26000);
-            Devices.Devices.ServosCan.SetPosition(6, 23400);
+            Devices.Devices.CanServos[4].SetPosition(16800);
+            Devices.Devices.CanServos[5].SetPosition(26000);
+            Devices.Devices.CanServos[6].SetPosition(23400);
             Robots.GrosRobot.Reculer(50);
         }
     }

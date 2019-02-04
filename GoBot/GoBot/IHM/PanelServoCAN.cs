@@ -8,13 +8,14 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using GoBot.Threading;
+using GoBot.Devices.CAN;
 
 namespace GoBot.IHM
 {
     public partial class PanelServoCAN : UserControl
     {
         private ThreadLink _linkPolling, _linkDrawing;
-        private int _id;
+        private CanServo _servo;
 
         public PanelServoCAN()
         {
@@ -22,23 +23,28 @@ namespace GoBot.IHM
 
             graphTorque.LimitsVisible = true;
             graphTorque.GraphScale = Composants.GraphPanel.ScaleType.DynamicGlobal;
+
+            if (!Execution.DesignMode)
+            {
+                _servo = Devices.Devices.CanServos[0];
+            }
         }
 
         private void trackBarPosition_TickValueChanged(object sender, double value)
         {
-            Devices.Devices.ServosCan.SetPosition(_id, (int)value);
+            _servo.SetPosition((int)value);
             lblPosition.Text = value.ToString();
         }
 
         private void trackBarSpeed_TickValueChanged(object sender, double value)
         {
-            Devices.Devices.ServosCan.SetSpeed(_id, (int)value);
+            _servo.SetSpeed((int)value);
             lblSpeed.Text = value.ToString();
         }
 
         private void trackBarTorque_TickValueChanged(object sender, double value)
         {
-            Devices.Devices.ServosCan.SetTorqueMax(_id, (int)value);
+            _servo.SetTorqueMax((int)value);
             lblTorqueMax.Text = value.ToString();
         }
 
@@ -62,8 +68,8 @@ namespace GoBot.IHM
 
         private void GetServoTorque()
         {
-            _linkPolling.Name = "PanelServoCAN.GetServoTorque : " + _id.ToString();
-            graphTorque.AddPoint("Couple", Devices.Devices.ServosCan.GetTorqueCurrent(_id), Color.RoyalBlue);
+            _linkPolling.Name = "PanelServoCAN.GetServoTorque : " + _servo.ID.ToString();
+            graphTorque.AddPoint("Couple", _servo.ReadTorqueCurrent(), Color.RoyalBlue);
         }
 
         private void DrawTorqueCurve()
@@ -73,12 +79,12 @@ namespace GoBot.IHM
 
         private void btnGo_Click(object sender, EventArgs e)
         {
-            Devices.Devices.ServosCan.SetTrajectory((int)numID.Value, (int)numPosition.Value, (int)numSpeed.Value, (int)numAccel.Value);
+            _servo.SetTrajectory((int)numPosition.Value, (int)numSpeed.Value, (int)numAccel.Value);
         }
 
         private void numID_ValueChanged(object sender, EventArgs e)
         {
-            _id = (int)numID.Value;
+            _servo = Devices.Devices.CanServos[(int)numID.Value];
         }
     }
 }

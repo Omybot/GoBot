@@ -65,6 +65,9 @@
         RetourUart2 = 0xA5,
         ChangementBaudrateUART = 0x61,
 
+        EnvoiCAN = 0xB0,
+        ReponseCAN = 0xB1,
+
         AffichageLCD = 0xB0,
         CouleurLedRGB = 0xB1,
 

@@ -482,6 +482,19 @@ namespace GoBot.Communications
             return retour;
         }
 
+        static public Frame EnvoyerCAN(Board carte, Frame trame)
+        {
+            byte[] tab = new byte[3 + trame.Length];
+            tab[0] = (byte)carte;
+            tab[1] = (byte)FrameFunction.EnvoiCAN;
+            tab[2] = (byte)trame.Length;
+            for (int i = 0; i < trame.Length; i++)
+                tab[3 + i] = trame[i];
+
+            Frame retour = new Frame(tab);
+            return retour;
+        }
+
         static public Frame EnvoyerUart2(Board carte, Frame trame)
         {
             byte[] tab = new byte[3 + trame.Length];
