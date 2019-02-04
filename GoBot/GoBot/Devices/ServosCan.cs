@@ -76,7 +76,7 @@ namespace GoBot.Devices
             }
         }
 
-        private void Plateau_ScoreChange(object sender, EventArgs e)
+        private void Plateau_ScoreChange(object sender, EventArgs e)    // On renomme le fichier ServoCAN ? ou bien un autre fichier pour l'affichage ? classe noeud CAN et ServosCan + AffichageCAN qui héritent ?
         {
             SetScore(Plateau.Score);
         }
@@ -99,45 +99,44 @@ namespace GoBot.Devices
 
         private void CanFrameReception(Frame frame)
         {
-            int idCan = frame[0] * 256 + frame[1];
-            int idServo = frame[4];
+            int idCan = frame[0] * 256 + frame[1];                                      // Récupération Id de la trame CAN
+            ServosCanFunctions function = (ServosCanFunctions)frame[2];                 // Récupération de la commande de la trame CAN
+            int idServo = frame[3];                                                     // Récupération du numéro de servo de la carte
+
+            int globalServoId = (idCan-1) * 4 + idServo;                                // Reconstruction du numéro global du servo (un Id CAN par carte servo != 0 et 4 servos par carte N°0 à 3)
 
             try
             {
-                int globalId = idCan * 4 + idServo;
-
-                ServosCanFunctions function = (ServosCanFunctions)frame[3];
-
                 switch (function)
                 {
                     case ServosCanFunctions.PositionResponse:
-                        if (!_position.ContainsKey(globalId)) _position.Add(globalId, 0);
-                        _position[globalId] = frame[5] * 256 + frame[6];
+                        if (!_position.ContainsKey(globalServoId)) _position.Add(globalServoId, 0);
+                        _position[globalServoId] = frame[4] * 256 + frame[5];
                         _lockWaitResponse?.Release();
                         break;
                     case ServosCanFunctions.PositionMaxResponse:
-                        if (!_positionMax.ContainsKey(globalId)) _positionMax.Add(globalId, 0);
-                        _positionMax[globalId] = frame[5] * 256 + frame[6];
+                        if (!_positionMax.ContainsKey(globalServoId)) _positionMax.Add(globalServoId, 0);
+                        _positionMax[globalServoId] = frame[4] * 256 + frame[5];
                         _lockWaitResponse?.Release();
                         break;
                     case ServosCanFunctions.PositionMinResponse:
-                        if (!_positionMin.ContainsKey(globalId)) _positionMin.Add(globalId, 0);
-                        _positionMin[globalId] = frame[5] * 256 + frame[6];
+                        if (!_positionMin.ContainsKey(globalServoId)) _positionMin.Add(globalServoId, 0);
+                        _positionMin[globalServoId] = frame[4] * 256 + frame[5];
                         _lockWaitResponse?.Release();
                         break;
                     case ServosCanFunctions.SpeedResponse:
-                        if (!_speed.ContainsKey(globalId)) _speed.Add(globalId, 0);
-                        _speed[globalId] = frame[5] * 256 + frame[6];
+                        if (!_speed.ContainsKey(globalServoId)) _speed.Add(globalServoId, 0);
+                        _speed[globalServoId] = frame[4] * 256 + frame[5];
                         _lockWaitResponse?.Release();
                         break;
                     case ServosCanFunctions.TorqueCurrentResponse:
-                        if (!_torqueCurrent.ContainsKey(globalId)) _torqueCurrent.Add(globalId, 0);
-                        _torqueCurrent[globalId] = frame[5] * 256 + frame[6];
+                        if (!_torqueCurrent.ContainsKey(globalServoId)) _torqueCurrent.Add(globalServoId, 0);
+                        _torqueCurrent[globalServoId] = frame[4] * 256 + frame[5];
                         _lockWaitResponse?.Release();
                         break;
                     case ServosCanFunctions.TorqueMaxResponse:
-                        if (!_torqueMax.ContainsKey(globalId)) _torqueMax.Add(globalId, 0);
-                        _torqueMax[globalId] = frame[5] * 256 + frame[6];
+                        if (!_torqueMax.ContainsKey(globalServoId)) _torqueMax.Add(globalServoId, 0);
+                        _torqueMax[globalServoId] = frame[4] * 256 + frame[5];
                         _lockWaitResponse?.Release();
                         break;
                 }
@@ -148,168 +147,168 @@ namespace GoBot.Devices
             }
         }
 
-        public int GetPosition(int id)
+        public int GetPosition(int globalServoId)
         {
             byte[] tab = new byte[10];
 
-            tab[0] = ByteDivide(id / 4, true);
-            tab[1] = ByteDivide(id / 4, false);
+            tab[0] = ByteDivide(globalServoId / 4 + 1, true);
+            tab[1] = ByteDivide(globalServoId / 4 + 1, false);
             tab[2] = (byte)ServosCanFunctions.PositionAsk;
-            tab[3] = (byte)(id % 4);
+            tab[3] = (byte)(globalServoId % 4);
 
-            SendFrame(new Frame(tab), true);
+            bool ok = SendFrame(new Frame(tab), true);
 
-            return _position.ContainsKey(id) ? _position[id] : 0;
+            return ok ? (_position.ContainsKey(globalServoId) ? _position[globalServoId] : 0) : -1;
         }
 
-        public int GetPositionMin(int id)
+        public int GetPositionMin(int globalServoId)
         {
             byte[] tab = new byte[10];
 
-            tab[0] = ByteDivide(id / 4, true);
-            tab[1] = ByteDivide(id / 4, false);
+            tab[0] = ByteDivide(globalServoId / 4 + 1, true);
+            tab[1] = ByteDivide(globalServoId / 4 + 1, false);
             tab[2] = (byte)ServosCanFunctions.PositionMinAsk;
-            tab[3] = (byte)(id % 4);
+            tab[3] = (byte)(globalServoId % 4);
 
-            SendFrame(new Frame(tab), true);
+            bool ok = SendFrame(new Frame(tab), true);
 
-            return _positionMin.ContainsKey(id) ? _positionMin[id] : 0;
+            return ok ? (_positionMin.ContainsKey(globalServoId) ? _positionMin[globalServoId] : 0) : -1;
         }
 
-        public int GetPositionMax(int id)
+        public int GetPositionMax(int globalServoId)
         {
             byte[] tab = new byte[10];
 
-            tab[0] = ByteDivide(id / 4, true);
-            tab[1] = ByteDivide(id / 4, false);
+            tab[0] = ByteDivide(globalServoId / 4 + 1, true);
+            tab[1] = ByteDivide(globalServoId / 4 + 1, false);
             tab[2] = (byte)ServosCanFunctions.PositionMaxAsk;
-            tab[3] = (byte)(id % 4);
+            tab[3] = (byte)(globalServoId % 4);
 
-            SendFrame(new Frame(tab), true);
+            bool ok = SendFrame(new Frame(tab), true);
 
-            return _positionMax.ContainsKey(id) ? _positionMax[id] : 0;
+            return ok ? (_positionMax.ContainsKey(globalServoId) ? _positionMax[globalServoId] : 0) : -1;
         }
 
-        public int GetSpeed(int id)
+        public int GetSpeed(int globalServoId)
         {
             byte[] tab = new byte[10];
 
-            tab[0] = ByteDivide(id / 4, true);
-            tab[1] = ByteDivide(id / 4, false);
+            tab[0] = ByteDivide(globalServoId / 4 + 1, true);
+            tab[1] = ByteDivide(globalServoId / 4 + 1, false);
             tab[2] = (byte)ServosCanFunctions.SpeedAsk;
-            tab[3] = (byte)(id % 4);
+            tab[3] = (byte)(globalServoId % 4);
 
-            SendFrame(new Frame(tab), true);
+            bool ok = SendFrame(new Frame(tab), true);
 
-            return _speed.ContainsKey(id) ? _speed[id] : 0;
+            return ok ? (_speed.ContainsKey(globalServoId) ? _speed[globalServoId] : 0) : -1;
         }
 
-        public int GetTorqueCurrent(int id)
+        public int GetTorqueCurrent(int globalServoId)
         {
             byte[] tab = new byte[10];
 
-            tab[0] = ByteDivide(id / 4, true);
-            tab[1] = ByteDivide(id / 4, false);
+            tab[0] = ByteDivide(globalServoId / 4 + 1, true);
+            tab[1] = ByteDivide(globalServoId / 4 + 1, false);
             tab[2] = (byte)ServosCanFunctions.TorqueCurrentAsk;
-            tab[3] = (byte)(id % 4);
+            tab[3] = (byte)(globalServoId % 4);
 
-            SendFrame(new Frame(tab), true);
+            bool ok = SendFrame(new Frame(tab), true);
 
-            return _torqueCurrent.ContainsKey(id) ? _torqueCurrent[id] : 0;
+            return ok ? (_torqueCurrent.ContainsKey(globalServoId) ? _torqueCurrent[globalServoId] : 0) : -1;
         }
 
-        public int GetTorqueMax(int id)
+        public int GetTorqueMax(int globalServoId)
         {
             byte[] tab = new byte[10];
 
-            tab[0] = ByteDivide(id / 4, true);
-            tab[1] = ByteDivide(id / 4, false);
+            tab[0] = ByteDivide(globalServoId / 4 + 1, true);
+            tab[1] = ByteDivide(globalServoId / 4 + 1, false);
             tab[2] = (byte)ServosCanFunctions.TorqueMaxAsk;
-            tab[3] = (byte)(id % 4);
+            tab[3] = (byte)(globalServoId % 4);
 
-            SendFrame(new Frame(tab), true);
+            bool ok = SendFrame(new Frame(tab), true);
 
-            return _torqueMax.ContainsKey(id) ? _torqueMax[id] : 0;
+            return ok ? (_torqueMax.ContainsKey(globalServoId) ? _torqueMax[globalServoId] : 0) : -1;
         }
 
-        public void SetPosition(int id, int position)
+        public void SetPosition(int globalServoId, int position)
         {
             byte[] tab = new byte[10];
 
-            tab[0] = ByteDivide(id / 4, true);
-            tab[1] = ByteDivide(id / 4, false);
+            tab[0] = ByteDivide(globalServoId / 4 + 1, true);
+            tab[1] = ByteDivide(globalServoId / 4 + 1, false);
             tab[2] = (byte)ServosCanFunctions.PositionSet;
-            tab[3] = (byte)(id % 4);
+            tab[3] = (byte)(globalServoId % 4);
             tab[4] = ByteDivide(position, true);
             tab[5] = ByteDivide(position, false);
 
             SendFrame(new Frame(tab));
         }
 
-        public void SetPositionMax(int id, int position)
+        public void SetPositionMax(int globalServoId, int position)
         {
             byte[] tab = new byte[10];
 
-            tab[0] = ByteDivide(id / 4, true);
-            tab[1] = ByteDivide(id / 4, false);
+            tab[0] = ByteDivide(globalServoId / 4 + 1, true);
+            tab[1] = ByteDivide(globalServoId / 4 + 1, false);
             tab[2] = (byte)ServosCanFunctions.PositionMaxSet;
-            tab[3] = (byte)(id % 4);
+            tab[3] = (byte)(globalServoId % 4);
             tab[4] = ByteDivide(position, true);
             tab[5] = ByteDivide(position, false);
 
             SendFrame(new Frame(tab));
         }
 
-        public void SetPositionMin(int id, int position)
+        public void SetPositionMin(int globalServoId, int position)
         {
             byte[] tab = new byte[10];
 
-            tab[0] = ByteDivide(id / 4, true);
-            tab[1] = ByteDivide(id / 4, false);
+            tab[0] = ByteDivide(globalServoId / 4 + 1, true);
+            tab[1] = ByteDivide(globalServoId / 4 + 1, false);
             tab[2] = (byte)ServosCanFunctions.PositionMinSet;
-            tab[3] = (byte)(id % 4);
+            tab[3] = (byte)(globalServoId % 4);
             tab[4] = ByteDivide(position, true);
             tab[5] = ByteDivide(position, false);
 
             SendFrame(new Frame(tab));
         }
 
-        public void SetSpeed(int id, int speed)
+        public void SetSpeed(int globalServoId, int speed)
         {
             byte[] tab = new byte[10];
 
-            tab[0] = ByteDivide(id / 4, true);
-            tab[1] = ByteDivide(id / 4, false);
+            tab[0] = ByteDivide(globalServoId / 4 + 1, true);
+            tab[1] = ByteDivide(globalServoId / 4 + 1, false);
             tab[2] = (byte)ServosCanFunctions.SpeedSet;
-            tab[3] = (byte)(id % 4);
+            tab[3] = (byte)(globalServoId % 4);
             tab[4] = ByteDivide(speed, true);
             tab[5] = ByteDivide(speed, false);
 
             SendFrame(new Frame(tab));
         }
 
-        public void SetTorqueMax(int id, int torque)
+        public void SetTorqueMax(int globalServoId, int torque)
         {
             byte[] tab = new byte[10];
 
-            tab[0] = ByteDivide(id / 4, true);
-            tab[1] = ByteDivide(id / 4, false);
+            tab[0] = ByteDivide(globalServoId / 4 + 1, true);
+            tab[1] = ByteDivide(globalServoId / 4 + 1, false);
             tab[2] = (byte)ServosCanFunctions.TorqueMaxSet;
-            tab[3] = (byte)(id % 4);
+            tab[3] = (byte)(globalServoId % 4);
             tab[4] = ByteDivide(torque, true);
             tab[5] = ByteDivide(torque, false);
 
             SendFrame(new Frame(tab));
         }
 
-        public void SetTrajectory(int id, int position, int speed, int accel)
+        public void SetTrajectory(int globalServoId, int position, int speed, int accel)
         {
             byte[] tab = new byte[10];
 
-            tab[0] = ByteDivide(id / 4, true);
-            tab[1] = ByteDivide(id / 4, false);
+            tab[0] = ByteDivide(globalServoId / 4 + 1, true);
+            tab[1] = ByteDivide(globalServoId / 4 + 1, false);
             tab[2] = (byte)ServosCanFunctions.TrajectorySet;
-            tab[3] = (byte)(id % 4);
+            tab[3] = (byte)(globalServoId % 4);
             tab[4] = ByteDivide(position, true);
             tab[5] = ByteDivide(position, false);
             tab[6] = ByteDivide(speed, true);
@@ -320,12 +319,12 @@ namespace GoBot.Devices
             SendFrame(new Frame(tab));
         }
 
-        public void SetScore(int score)
+        public void SetScore(int score)                         // (Même remarque^^) On renomme le fichier ServoCAN ? ou bien un autre fichier pour l'affichage ? classe noeud CAN et ServosCan + AffichageCAN qui héritent ?
         {
             byte[] tab = new byte[10];
 
             tab[0] = 0x00;
-            tab[1] = 0x04;
+            tab[1] = 0x04;                                      // Id de la carte qui affiche le score ...
             tab[2] = (byte)ServosCanFunctions.SetScore;
             tab[3] = 0x00;
             tab[4] = ByteDivide(score, true);
