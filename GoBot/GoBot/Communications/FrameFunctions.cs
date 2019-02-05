@@ -65,11 +65,11 @@
         RetourUart2 = 0xA5,
         ChangementBaudrateUART = 0x61,
 
-        EnvoiCAN = 0xB0,
-        ReponseCAN = 0xB1,
-
         AffichageLCD = 0xB0,
         CouleurLedRGB = 0xB1,
+
+        EnvoiCAN = 0xC0,
+        ReponseCAN = 0xC1,
 
         DetectionBalise = 0xE4,
         DetectionBaliseRapide = 0xE5

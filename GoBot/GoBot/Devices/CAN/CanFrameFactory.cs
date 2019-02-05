@@ -193,7 +193,7 @@ namespace GoBot.Devices.CAN
             byte[] tab = new byte[10];
 
             tab[0] = 0x00;
-            tab[1] = (byte)CanBoard.Display;
+            tab[1] = (byte)CanBoard.DisplayBoard;
             tab[2] = (byte)CanFunction.SetScore;
             tab[3] = 0x00;
             tab[4] = ByteDivide(score, true);

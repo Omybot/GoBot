@@ -35,9 +35,9 @@ namespace GoBot.Devices.CAN
 
     enum CanBoard
     {
-        Servo1 = 0x01,
-        Servo2 = 0x02,
-        Servo3 = 0x03,
-        Display = 0x04,
+        ServoBoard1 = 0x01,
+        ServoBoard2 = 0x02,
+        ServoBoard3 = 0x03,
+        DisplayBoard = 0x04,
     }
 }
