@@ -160,13 +160,14 @@ namespace GoBot
                 using (FileStream myFileStream = new FileStream(PathData + "/config.xml", FileMode.Open))
                     CurrentConfig = (Config)mySerializer.Deserialize(myFileStream);
 
-                ChargerPositionnables();
                 CurrentConfig.AfficheDetailTraj = 0;
             }
             catch (Exception)
             {
                 MessageBox.Show("Aucune configuration chargée.");
             }
+
+            ChargerPositionnables();
         }
 
         public static void Save()
