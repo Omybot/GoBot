@@ -62,14 +62,16 @@
             this.tabControlMessages = new System.Windows.Forms.TabControl();
             this.tabPageMove = new System.Windows.Forms.TabPage();
             this.tabPageIO = new System.Windows.Forms.TabPage();
+            this.tabGB = new System.Windows.Forms.TabPage();
+            this.checkedListBoxGB = new System.Windows.Forms.CheckedListBox();
             this.btnRejouerTout = new System.Windows.Forms.Button();
             this.btnRejouerSelection = new System.Windows.Forms.Button();
             this.boxScroll = new System.Windows.Forms.CheckBox();
             this.btnAfficher = new System.Windows.Forms.Button();
             this.btnRefresh = new System.Windows.Forms.Button();
             this.btnCharger = new System.Windows.Forms.Button();
-            this.tabGB = new System.Windows.Forms.TabPage();
-            this.checkedListBoxGB = new System.Windows.Forms.CheckedListBox();
+            this.tabCAN = new System.Windows.Forms.TabPage();
+            this.checkedListBoxCAN = new System.Windows.Forms.CheckedListBox();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewLog)).BeginInit();
             this.contextMenuStripRow.SuspendLayout();
             this.groupBox2.SuspendLayout();
@@ -84,6 +86,7 @@
             this.tabPageMove.SuspendLayout();
             this.tabPageIO.SuspendLayout();
             this.tabGB.SuspendLayout();
+            this.tabCAN.SuspendLayout();
             this.SuspendLayout();
             // 
             // dataGridViewLog
@@ -420,6 +423,7 @@
             this.tabControlMessages.Controls.Add(this.tabPageMove);
             this.tabControlMessages.Controls.Add(this.tabPageIO);
             this.tabControlMessages.Controls.Add(this.tabGB);
+            this.tabControlMessages.Controls.Add(this.tabCAN);
             this.tabControlMessages.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tabControlMessages.Location = new System.Drawing.Point(3, 3);
             this.tabControlMessages.Name = "tabControlMessages";
@@ -448,6 +452,32 @@
             this.tabPageIO.TabIndex = 1;
             this.tabPageIO.Text = "RecIO";
             this.tabPageIO.UseVisualStyleBackColor = true;
+            // 
+            // tabGB
+            // 
+            this.tabGB.Controls.Add(this.checkedListBoxGB);
+            this.tabGB.Location = new System.Drawing.Point(4, 22);
+            this.tabGB.Name = "tabGB";
+            this.tabGB.Padding = new System.Windows.Forms.Padding(3);
+            this.tabGB.Size = new System.Drawing.Size(361, 304);
+            this.tabGB.TabIndex = 5;
+            this.tabGB.Text = "RecGoBot";
+            this.tabGB.UseVisualStyleBackColor = true;
+            // 
+            // checkedListBoxGB
+            // 
+            this.checkedListBoxGB.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.checkedListBoxGB.CheckOnClick = true;
+            this.checkedListBoxGB.ColumnWidth = 150;
+            this.checkedListBoxGB.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.checkedListBoxGB.FormattingEnabled = true;
+            this.checkedListBoxGB.Location = new System.Drawing.Point(3, 3);
+            this.checkedListBoxGB.MultiColumn = true;
+            this.checkedListBoxGB.Name = "checkedListBoxGB";
+            this.checkedListBoxGB.Size = new System.Drawing.Size(355, 298);
+            this.checkedListBoxGB.Sorted = true;
+            this.checkedListBoxGB.TabIndex = 18;
+            this.checkedListBoxGB.ItemCheck += new System.Windows.Forms.ItemCheckEventHandler(this.checkedListBoxGB_ItemCheck);
             // 
             // btnRejouerTout
             // 
@@ -520,31 +550,31 @@
             this.btnCharger.UseVisualStyleBackColor = true;
             this.btnCharger.Click += new System.EventHandler(this.btnCharger_Click);
             // 
-            // tabGB
+            // tabCAN
             // 
-            this.tabGB.Controls.Add(this.checkedListBoxGB);
-            this.tabGB.Location = new System.Drawing.Point(4, 22);
-            this.tabGB.Name = "tabGB";
-            this.tabGB.Padding = new System.Windows.Forms.Padding(3);
-            this.tabGB.Size = new System.Drawing.Size(361, 304);
-            this.tabGB.TabIndex = 5;
-            this.tabGB.Text = "RecGoBot";
-            this.tabGB.UseVisualStyleBackColor = true;
+            this.tabCAN.Controls.Add(this.checkedListBoxCAN);
+            this.tabCAN.Location = new System.Drawing.Point(4, 22);
+            this.tabCAN.Name = "tabCAN";
+            this.tabCAN.Padding = new System.Windows.Forms.Padding(3);
+            this.tabCAN.Size = new System.Drawing.Size(361, 304);
+            this.tabCAN.TabIndex = 6;
+            this.tabCAN.Text = "RecCAN";
+            this.tabCAN.UseVisualStyleBackColor = true;
             // 
-            // checkedListBoxGB
+            // checkedListBoxCAN
             // 
-            this.checkedListBoxGB.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.checkedListBoxGB.CheckOnClick = true;
-            this.checkedListBoxGB.ColumnWidth = 150;
-            this.checkedListBoxGB.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.checkedListBoxGB.FormattingEnabled = true;
-            this.checkedListBoxGB.Location = new System.Drawing.Point(3, 3);
-            this.checkedListBoxGB.MultiColumn = true;
-            this.checkedListBoxGB.Name = "checkedListBoxGB";
-            this.checkedListBoxGB.Size = new System.Drawing.Size(355, 298);
-            this.checkedListBoxGB.Sorted = true;
-            this.checkedListBoxGB.TabIndex = 18;
-            this.checkedListBoxGB.ItemCheck += new System.Windows.Forms.ItemCheckEventHandler(this.checkedListBoxGB_ItemCheck);
+            this.checkedListBoxCAN.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.checkedListBoxCAN.CheckOnClick = true;
+            this.checkedListBoxCAN.ColumnWidth = 150;
+            this.checkedListBoxCAN.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.checkedListBoxCAN.FormattingEnabled = true;
+            this.checkedListBoxCAN.Location = new System.Drawing.Point(3, 3);
+            this.checkedListBoxCAN.MultiColumn = true;
+            this.checkedListBoxCAN.Name = "checkedListBoxCAN";
+            this.checkedListBoxCAN.Size = new System.Drawing.Size(355, 298);
+            this.checkedListBoxCAN.Sorted = true;
+            this.checkedListBoxCAN.TabIndex = 19;
+            this.checkedListBoxCAN.ItemCheck += new System.Windows.Forms.ItemCheckEventHandler(this.checkedListBoxCAN_ItemCheck);
             // 
             // PanelLogsTrames
             // 
@@ -579,6 +609,7 @@
             this.tabPageMove.ResumeLayout(false);
             this.tabPageIO.ResumeLayout(false);
             this.tabGB.ResumeLayout(false);
+            this.tabCAN.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -627,6 +658,7 @@
         private System.Windows.Forms.Button btnCocher;
         private System.Windows.Forms.TabPage tabGB;
         private System.Windows.Forms.CheckedListBox checkedListBoxGB;
-
+        private System.Windows.Forms.TabPage tabCAN;
+        private System.Windows.Forms.CheckedListBox checkedListBoxCAN;
     }
 }

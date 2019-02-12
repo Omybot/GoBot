@@ -36,9 +36,9 @@ namespace GoBot.Communications
                     break;
                 case FrameFunction.RetourValeursNumeriques:
                     output = "Retour ports numériques : {0}_{1} / {2}_{3} / {4}_{5}";
-                    if(parameters != null)
+                    if (parameters != null)
                     {
-                        for(int i = 0; i < 6; i++)
+                        for (int i = 0; i < 6; i++)
                             output = ReplaceParam(output, Convert.ToString(parameters[i], 2).PadLeft(8, '0'));
                     }
                     break;
@@ -81,7 +81,7 @@ namespace GoBot.Communications
                         output = ReplaceParam(output, parameters[0].ToString());
                     }
                     break;
-                case FrameFunction.DemandeCapteurOnOff: 
+                case FrameFunction.DemandeCapteurOnOff:
                     output = "Demande capteur {0}";
                     if (parameters != null)
                     {
@@ -386,7 +386,7 @@ namespace GoBot.Communications
                         for (int i = 0; i < 32; i++)
                             output = ReplaceParam(output, ((char)parameters[i]).ToString());
                     }
-                        break;
+                    break;
                 case FrameFunction.CouleurLedRGB:
                     output = "Envoi couleur LED {0}: {1}-{2}-{3}";
                     if (parameters != null)
@@ -409,6 +409,12 @@ namespace GoBot.Communications
                     break;
                 case FrameFunction.DetectionBaliseRapide:
                     output = "Détection rapide balise";
+                    break;
+                case FrameFunction.EnvoiCAN:
+                    output = "Envoi message CAN";
+                    break;
+                case FrameFunction.ReponseCAN:
+                    output = "Reception message CAN";
                     break;
                 default:
                     output = "Inconnu";

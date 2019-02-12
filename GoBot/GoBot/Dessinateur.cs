@@ -504,7 +504,7 @@ namespace GoBot
 
                 g.DrawLine(Pens.Black, points[0], points[1]);
                 g.DrawLine(Pens.Black, points[0], points[2]);
-                Brush brush = new SolidBrush(Color.FromArgb(50, Color.Black));
+                Brush brush = new SolidBrush(Color.FromArgb(80, Color.Black));
                 g.FillPolygon(brush, points.ToArray());
                 brush.Dispose();
 

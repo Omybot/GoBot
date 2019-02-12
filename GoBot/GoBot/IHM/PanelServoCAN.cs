@@ -82,6 +82,11 @@ namespace GoBot.IHM
             _servo.SetTrajectory((int)numPosition.Value, (int)numSpeed.Value, (int)numAccel.Value);
         }
 
+        private void btnGetPos_Click(object sender, EventArgs e)
+        {
+            MessageBox.Show("Position : " + _servo.ReadPosition().ToString());
+        }
+
         private void numID_ValueChanged(object sender, EventArgs e)
         {
             _servo = Devices.Devices.CanServos[(int)numID.Value];

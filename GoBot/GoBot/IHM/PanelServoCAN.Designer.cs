@@ -49,6 +49,7 @@
             this.label3 = new System.Windows.Forms.Label();
             this.numAccel = new System.Windows.Forms.NumericUpDown();
             this.btnGo = new System.Windows.Forms.Button();
+            this.btnGetPos = new System.Windows.Forms.Button();
             this.grpTorque.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numID)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numPosition)).BeginInit();
@@ -289,10 +290,21 @@
             this.btnGo.UseVisualStyleBackColor = true;
             this.btnGo.Click += new System.EventHandler(this.btnGo_Click);
             // 
+            // btnGetPos
+            // 
+            this.btnGetPos.Location = new System.Drawing.Point(323, 3);
+            this.btnGetPos.Name = "btnGetPos";
+            this.btnGetPos.Size = new System.Drawing.Size(60, 23);
+            this.btnGetPos.TabIndex = 22;
+            this.btnGetPos.Text = "GetPos";
+            this.btnGetPos.UseVisualStyleBackColor = true;
+            this.btnGetPos.Click += new System.EventHandler(this.btnGetPos_Click);
+            // 
             // PanelServoCAN
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.Controls.Add(this.btnGetPos);
             this.Controls.Add(this.btnGo);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.numAccel);
@@ -348,5 +360,6 @@
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.NumericUpDown numAccel;
         private System.Windows.Forms.Button btnGo;
+        private System.Windows.Forms.Button btnGetPos;
     }
 }

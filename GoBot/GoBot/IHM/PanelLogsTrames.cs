@@ -47,7 +47,8 @@ namespace GoBot.IHM
             couleurCarte.Add(Board.RecMove, Color.FromArgb(143, 255, 143));
             couleurCarte.Add(Board.RecIO, Color.FromArgb(210, 254, 211));
             couleurCarte.Add(Board.RecGB, Color.FromArgb(219, 209, 233));
-            
+            couleurCarte.Add(Board.RecCan, Color.FromArgb(254, 244, 188));
+
             // L'ajout de champs déclenche le SetCheck event qui ajoute les éléments automatiquement dans le dictionnaire
             if (Config.CurrentConfig.LogsFonctionsMove == null)
                 Config.CurrentConfig.LogsFonctionsMove = new SerializableDictionary<FrameFunction, bool>();
@@ -55,6 +56,8 @@ namespace GoBot.IHM
                 Config.CurrentConfig.LogsFonctionsIO = new SerializableDictionary<FrameFunction, bool>();
             if (Config.CurrentConfig.LogsFonctionsGB == null)
                 Config.CurrentConfig.LogsFonctionsGB = new SerializableDictionary<FrameFunction, bool>();
+            if (Config.CurrentConfig.LogsFonctionsCAN == null)
+                Config.CurrentConfig.LogsFonctionsCAN = new SerializableDictionary<FrameFunction, bool>();
             if (Config.CurrentConfig.LogsExpediteurs == null)
                 Config.CurrentConfig.LogsExpediteurs = new SerializableDictionary<Board, bool>();
             if (Config.CurrentConfig.LogsDestinataires == null)
@@ -77,6 +80,10 @@ namespace GoBot.IHM
 
                 checkedListBoxGB.Items.Add(fonction.ToString(), Config.CurrentConfig.LogsFonctionsGB[fonction]);
 
+                if (!Config.CurrentConfig.LogsFonctionsCAN.ContainsKey(fonction))
+                    Config.CurrentConfig.LogsFonctionsCAN.Add(fonction, true);
+
+                checkedListBoxCAN.Items.Add(fonction.ToString(), Config.CurrentConfig.LogsFonctionsCAN[fonction]);
             }
             
             foreach (Board carte in Enum.GetValues(typeof(Board)))
@@ -183,28 +190,42 @@ namespace GoBot.IHM
 
                         Board carte = trameReplay.Frame.Board;
 
+                        FrameFunction fonction = (FrameFunction)trameReplay.Frame[1];
+
+                        switch (carte)
+                        {
+                            case Board.RecMove:
+                                checkedListBoxMove.Items.Remove(fonction.ToString());
+                                checkedListBoxMove.Items.Add(fonction.ToString(), false);
+                                Config.CurrentConfig.LogsFonctionsMove[fonction] = false;
+                                break;
+                            case Board.RecIO:
+                                checkedListBoxIO.Items.Remove(fonction.ToString());
+                                checkedListBoxIO.Items.Add(fonction.ToString(), false);
+                                Config.CurrentConfig.LogsFonctionsIO[fonction] = false;
+                                break;
+                            case Board.RecGB:
+                                checkedListBoxGB.Items.Remove(fonction.ToString());
+                                checkedListBoxGB.Items.Add(fonction.ToString(), false);
+                                Config.CurrentConfig.LogsFonctionsGB[fonction] = false;
+                                break;
+                            case Board.RecCan:
+                                checkedListBoxCAN.Items.Remove(fonction.ToString());
+                                checkedListBoxCAN.Items.Add(fonction.ToString(), false);
+                                Config.CurrentConfig.LogsFonctionsCAN[fonction] = false;
+                                break;
+                        }
+
                         if (carte == Board.RecMove)
                         {
-                            FrameFunction fonction = (FrameFunction)trameReplay.Frame[1];
-                            checkedListBoxMove.Items.Remove(fonction.ToString());
-                            checkedListBoxMove.Items.Add(fonction.ToString(), false);
-                            Config.CurrentConfig.LogsFonctionsMove[fonction] = false;
                         }
 
                         if (carte == Board.RecIO)
                         {
-                            FrameFunction fonction = (FrameFunction)trameReplay.Frame[1];
-                            checkedListBoxIO.Items.Remove(fonction.ToString());
-                            checkedListBoxIO.Items.Add(fonction.ToString(), false);
-                            Config.CurrentConfig.LogsFonctionsIO[fonction] = false;
                         }
 
                         if (carte == Board.RecGB)
                         {
-                            FrameFunction fonction = (FrameFunction)trameReplay.Frame[1];
-                            checkedListBoxGB.Items.Remove(fonction.ToString());
-                            checkedListBoxGB.Items.Add(fonction.ToString(), false);
-                            Config.CurrentConfig.LogsFonctionsGB[fonction] = false;
                         }
                     }
 
@@ -235,6 +256,9 @@ namespace GoBot.IHM
                 Connections.ConnectionGB.FrameReceived += new UDPConnection.NewFrameDelegate((frame) => replay.AddFrame(frame, true));
                 Connections.ConnectionGB.FrameSend += new UDPConnection.NewFrameDelegate((frame) => replay.AddFrame(frame, false));
 
+                Connections.ConnectionCanBridge.FrameReceived += new UDPConnection.NewFrameDelegate((frame) => replay.AddFrame(frame, true));
+                Connections.ConnectionCanBridge.FrameSend += new UDPConnection.NewFrameDelegate((frame) => replay.AddFrame(frame, false));
+
                 btnRejouerTout.Enabled = false;
                 btnRejouerSelection.Enabled = false;
                 btnCharger.Enabled = false;
@@ -253,6 +277,9 @@ namespace GoBot.IHM
 
                 Connections.ConnectionGB.FrameReceived -= new UDPConnection.NewFrameDelegate((frame) => replay.AddFrame(frame, true));
                 Connections.ConnectionGB.FrameSend -= new UDPConnection.NewFrameDelegate((frame) => replay.AddFrame(frame, false));
+
+                Connections.ConnectionCanBridge.FrameReceived -= new UDPConnection.NewFrameDelegate((frame) => replay.AddFrame(frame, true));
+                Connections.ConnectionCanBridge.FrameSend -= new UDPConnection.NewFrameDelegate((frame) => replay.AddFrame(frame, false));
 
                 btnRejouerTout.Enabled = true;
                 btnRejouerSelection.Enabled = true;
@@ -303,7 +330,8 @@ namespace GoBot.IHM
                 if ((carte == Board.RecMove && Config.CurrentConfig.LogsFonctionsMove[(FrameFunction)trame[1]]) ||
                     trame[1] == 0xA1 ||
                     (carte == Board.RecIO && Config.CurrentConfig.LogsFonctionsIO[(FrameFunction)trame[1]]) ||
-                    (carte == Board.RecGB && Config.CurrentConfig.LogsFonctionsGB[(FrameFunction)trame[1]]))
+                    (carte == Board.RecGB && Config.CurrentConfig.LogsFonctionsGB[(FrameFunction)trame[1]]) ||
+                    (carte == Board.RecCan && Config.CurrentConfig.LogsFonctionsCAN[(FrameFunction)trame[1]]))
                     fonctionAutorisee = true;
 
 
@@ -403,6 +431,17 @@ namespace GoBot.IHM
                 FrameFunction fonction = (FrameFunction)Enum.Parse(typeof(FrameFunction), fonctionString);
 
                 Config.CurrentConfig.LogsFonctionsIO[fonction] = (e.NewValue == CheckState.Checked);
+            }
+        }
+
+        private void checkedListBoxCAN_ItemCheck(object sender, ItemCheckEventArgs e)
+        {
+            if (!Execution.DesignMode && !chargement)
+            {
+                String fonctionString = (String)checkedListBoxCAN.Items[e.Index];
+                FrameFunction fonction = (FrameFunction)Enum.Parse(typeof(FrameFunction), fonctionString);
+
+                Config.CurrentConfig.LogsFonctionsCAN[fonction] = (e.NewValue == CheckState.Checked);
             }
         }
 

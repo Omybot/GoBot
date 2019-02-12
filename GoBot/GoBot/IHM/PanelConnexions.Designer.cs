@@ -47,23 +47,24 @@
             // 
             // batteriePack
             // 
+            this.batteriePack.CurrentState = Composants.Battery.State.VeryLow;
+            this.batteriePack.CurrentVoltage = 0D;
             this.batteriePack.Image = ((System.Drawing.Image)(resources.GetObject("batteriePack.Image")));
             this.batteriePack.Location = new System.Drawing.Point(14, 6);
             this.batteriePack.Name = "batteriePack";
             this.batteriePack.Size = new System.Drawing.Size(16, 16);
             this.batteriePack.TabIndex = 89;
             this.batteriePack.TabStop = false;
-            this.batteriePack.CurrentVoltage = 0D;
-            this.batteriePack.VoltageLow = 0D;
             this.batteriePack.VoltageAverage = 0D;
             this.batteriePack.VoltageHigh = 0D;
+            this.batteriePack.VoltageLow = 0D;
             this.batteriePack.VoltageVeryLow = 0D;
             // 
             // _ledsPanel
             // 
             this._ledsPanel.Location = new System.Drawing.Point(122, 3);
             this._ledsPanel.Name = "_ledsPanel";
-            this._ledsPanel.Size = new System.Drawing.Size(483, 24);
+            this._ledsPanel.Size = new System.Drawing.Size(622, 24);
             this._ledsPanel.TabIndex = 99;
             // 
             // PanelConnexions

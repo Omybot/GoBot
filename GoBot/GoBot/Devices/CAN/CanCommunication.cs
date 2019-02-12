@@ -85,7 +85,7 @@ namespace GoBot.Devices.CAN
                 Frame canFrame = new Frame(_receivedBuffer.GetRange(0, 10));
                 _receivedBuffer.RemoveRange(0, 10);
                 OnFrameReceived(canFrame);
-                _lockWaitResponse.Release();
+                _lockWaitResponse?.Release();
             }
         }
 
