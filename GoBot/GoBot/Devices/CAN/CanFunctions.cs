@@ -30,7 +30,11 @@ namespace GoBot.Devices.CAN
         TargetSet = 0x15,
         TrajectorySet = 0x16,
 
-        SetScore = 0xA0
+        SetScore = 0xA0,
+
+        Debug = 0xF0,
+        DebugAsk = 0xF1,
+        DebugResponse = 0xF0,
     }
 
     enum CanBoard

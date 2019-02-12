@@ -50,7 +50,7 @@ namespace GoBot.Devices.CAN
             FrameReceived?.Invoke(frame);
         }
 
-        private bool SendFrame(Frame f, bool waitResponse = false)
+        public bool SendFrame(Frame f, bool waitResponse = false)
         {
             bool ok = true;
 
@@ -66,6 +66,8 @@ namespace GoBot.Devices.CAN
             if (waitResponse)
             {
                 ok = _lockWaitResponse.WaitOne(1000);
+                _lockWaitResponse.Dispose();
+                _lockWaitResponse = null;
                 _lockAsk.Release();
             }
 

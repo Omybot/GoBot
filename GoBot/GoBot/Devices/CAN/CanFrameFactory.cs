@@ -202,6 +202,28 @@ namespace GoBot.Devices.CAN
             return new Frame(tab);
         }
 
+        public static Frame BuildDebug(CanBoard board)
+        {
+            byte[] tab = new byte[10];
+
+            tab[0] = 0x00;
+            tab[1] = (byte)board;
+            tab[2] = (byte)CanFunction.Debug;
+
+            return new Frame(tab);
+        }
+
+        public static Frame BuildDebugAsk(CanBoard board)
+        {
+            byte[] tab = new byte[10];
+
+            tab[0] = 0x00;
+            tab[1] = (byte)board;
+            tab[2] = (byte)CanFunction.DebugAsk;
+
+            return new Frame(tab);
+        }
+
         private static byte ByteDivide(int valeur, bool mostSignifiantBit)
         {
             byte b;

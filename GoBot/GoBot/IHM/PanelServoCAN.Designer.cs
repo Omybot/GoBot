@@ -50,6 +50,7 @@
             this.numAccel = new System.Windows.Forms.NumericUpDown();
             this.btnGo = new System.Windows.Forms.Button();
             this.btnGetPos = new System.Windows.Forms.Button();
+            this.btnDebug = new System.Windows.Forms.Button();
             this.grpTorque.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numID)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numPosition)).BeginInit();
@@ -300,10 +301,21 @@
             this.btnGetPos.UseVisualStyleBackColor = true;
             this.btnGetPos.Click += new System.EventHandler(this.btnGetPos_Click);
             // 
+            // btnDebug
+            // 
+            this.btnDebug.Location = new System.Drawing.Point(244, 3);
+            this.btnDebug.Name = "btnDebug";
+            this.btnDebug.Size = new System.Drawing.Size(75, 23);
+            this.btnDebug.TabIndex = 23;
+            this.btnDebug.Text = "Debug CAN";
+            this.btnDebug.UseVisualStyleBackColor = true;
+            this.btnDebug.Click += new System.EventHandler(this.btnDebug_Click);
+            // 
             // PanelServoCAN
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.Controls.Add(this.btnDebug);
             this.Controls.Add(this.btnGetPos);
             this.Controls.Add(this.btnGo);
             this.Controls.Add(this.label3);
@@ -361,5 +373,6 @@
         private System.Windows.Forms.NumericUpDown numAccel;
         private System.Windows.Forms.Button btnGo;
         private System.Windows.Forms.Button btnGetPos;
+        private System.Windows.Forms.Button btnDebug;
     }
 }

@@ -87,6 +87,21 @@ namespace GoBot.IHM
             MessageBox.Show("Position : " + _servo.ReadPosition().ToString());
         }
 
+        private void btnDebug_Click(object sender, EventArgs e)
+        {
+            GoBot.Communications.Frame frame = CanFrameFactory.BuildDebug(CanBoard.ServoBoard1);
+            
+            for (int i = 0; i < 1000; i++)
+            {
+                GoBot.Communications.Connections.ConnectionCan.SendFrame(frame);
+            }
+
+            System.Threading.Thread.Sleep(5000);
+
+            GoBot.Communications.Connections.ConnectionCan.SendFrame(CanFrameFactory.BuildDebugAsk(CanBoard.ServoBoard1));
+
+        }
+
         private void numID_ValueChanged(object sender, EventArgs e)
         {
             _servo = Devices.Devices.CanServos[(int)numID.Value];
