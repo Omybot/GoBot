@@ -80,7 +80,7 @@ namespace GoBot
                 {
                     if (Path.GetExtension(chaine) == ".elog")
                         fichiersElog.Add(chaine);
-                    if (Path.GetExtension(chaine) == ConnectionReplay.FileExtension)
+                    if (Path.GetExtension(chaine) == FramesLog.FileExtension)
                         fichiersTlog.Add(chaine);
                 }
 
@@ -100,8 +100,8 @@ namespace GoBot
                 if (fichiersTlog.Count > 0)
                 {
                     foreach (String fichier in fichiersTlog)
-                        panelLogTrames.ChargerLog(fichier);
-                    panelLogTrames.Afficher();
+                        panelLogTrames.LoadLog(fichier);
+                    panelLogTrames.DisplayLog();
 
                     tabControl.SelectedTab = tabLogs;
                     tabControlLogs.SelectedTab = tabLogUDP;
@@ -123,11 +123,11 @@ namespace GoBot
 
         public void ChargerReplay(String fichier)
         {
-            if (Path.GetExtension(fichier) == ConnectionReplay.FileExtension)
+            if (Path.GetExtension(fichier) == FramesLog.FileExtension)
             {
                 panelLogTrames.Clear();
-                panelLogTrames.ChargerLog(fichier);
-                panelLogTrames.Afficher();
+                panelLogTrames.LoadLog(fichier);
+                panelLogTrames.DisplayLog();
                 tabControl.SelectedTab = tabLogs;
                 tabControlLogs.SelectedTab = tabLogUDP;
             }
@@ -173,7 +173,7 @@ namespace GoBot
             DateTime debut = DateTime.Now;
 
             foreach (Connection conn in Connections.AllConnections)
-                conn.Archives.Export(Config.PathData + "/Logs/" + Execution.LaunchStartString + "/" + Connections.GetBoardByConnection(conn).ToString() + ConnectionReplay.FileExtension);
+                conn.Archives.Export(Config.PathData + "/Logs/" + Execution.LaunchStartString + "/" + Connections.GetBoardByConnection(conn).ToString() + FramesLog.FileExtension);
 
             Robots.GrosRobot.Historique.Sauvegarder(Config.PathData + "/Logs/" + Execution.LaunchStartString + "/ActionsGros.elog");
         }

@@ -13,43 +13,55 @@ namespace GoBot.IHM
 {
     public partial class PanelLogsTrames : UserControl
     {
-        private ConnectionReplay replay;
-        private Dictionary<Board, Color> couleurCarte;
+        private FramesLog _log;
+        private Dictionary<Board, Color> _boardColor;
 
-        private DateTime dateDebut;
-        private DateTime datePrec;
-        private DateTime datePrecAff;
-        private System.Windows.Forms.Timer timerAffichage;
-        private int compteur = 0;
-        private Thread threadReplay;
+        private DateTime _startTime;
+        private DateTime _previousTime, _previousDisplayTime;
+        private System.Windows.Forms.Timer _displayTimer;
+        private int _counter = 0;
+        private Thread _thReplay;
+
+        private List<CheckedListBox> _boxLists;
+        private Dictionary<CheckedListBox, Dictionary<FrameFunction, bool>> _configFunctions;
+        private Dictionary<Board, CheckedListBox> _lstFunctions;
+
+        bool _loading;
 
         public PanelLogsTrames()
         {
             InitializeComponent();
 
-            chargement = true;
+            _loading = true;
 
-            dataGridViewLog.Columns.Add("Id", "Id");
-            dataGridViewLog.Columns[0].Width = 40;
-            dataGridViewLog.Columns.Add("Heure", "Heure");
-            dataGridViewLog.Columns[1].Width = 80;
-            dataGridViewLog.Columns.Add("Expediteur", "Expediteur");
-            dataGridViewLog.Columns[2].Width = 60;
-            dataGridViewLog.Columns.Add("Destinataire", "Destinataire");
-            dataGridViewLog.Columns[3].Width = 60;
-            dataGridViewLog.Columns.Add("Message", "Message");
-            dataGridViewLog.Columns[4].Width = 320;
-            dataGridViewLog.Columns.Add("Trame", "Trame");
-            dataGridViewLog.Columns[5].Width = dataGridViewLog.Width - 18 - dataGridViewLog.Columns[0].Width - dataGridViewLog.Columns[1].Width - dataGridViewLog.Columns[2].Width - dataGridViewLog.Columns[3].Width - dataGridViewLog.Columns[4].Width;
+            dgvLog.Columns.Add("Id", "Id");
+            dgvLog.Columns[0].Width = 40;
+            dgvLog.Columns.Add("Heure", "Heure");
+            dgvLog.Columns[1].Width = 80;
+            dgvLog.Columns.Add("Expediteur", "Expediteur");
+            dgvLog.Columns[2].Width = 60;
+            dgvLog.Columns.Add("Destinataire", "Destinataire");
+            dgvLog.Columns[3].Width = 60;
+            dgvLog.Columns.Add("Message", "Message");
+            dgvLog.Columns[4].Width = 320;
+            dgvLog.Columns.Add("Trame", "Trame");
+            dgvLog.Columns[5].Width = dgvLog.Width - 18 - dgvLog.Columns[0].Width - dgvLog.Columns[1].Width - dgvLog.Columns[2].Width - dgvLog.Columns[3].Width - dgvLog.Columns[4].Width;
 
-            couleurCarte = new Dictionary<Board, Color>();
-            couleurCarte.Add(Board.PC, Color.FromArgb(180, 245, 245));
-            couleurCarte.Add(Board.RecMove, Color.FromArgb(143, 255, 143));
-            couleurCarte.Add(Board.RecIO, Color.FromArgb(210, 254, 211));
-            couleurCarte.Add(Board.RecGB, Color.FromArgb(219, 209, 233));
-            couleurCarte.Add(Board.RecCan, Color.FromArgb(254, 244, 188));
+            _boardColor = new Dictionary<Board, Color>();
+            _boardColor.Add(Board.PC, Color.FromArgb(180, 245, 245));
+            _boardColor.Add(Board.RecMove, Color.FromArgb(143, 255, 143));
+            _boardColor.Add(Board.RecIO, Color.FromArgb(210, 254, 211));
+            _boardColor.Add(Board.RecGB, Color.FromArgb(219, 209, 233));
+            _boardColor.Add(Board.RecCan, Color.FromArgb(254, 244, 188));
 
-            // L'ajout de champs déclenche le SetCheck event qui ajoute les éléments automatiquement dans le dictionnaire
+            _boxLists = new List<CheckedListBox>();
+            _boxLists.Add(lstSender);
+            _boxLists.Add(lstReceiver);
+            _boxLists.Add(lstRecIOFunctions);
+            _boxLists.Add(lstRecMoveFunctions);
+            _boxLists.Add(lstRecGoBotFunctions);
+            _boxLists.Add(lstRecCANFunctions);
+
             if (Config.CurrentConfig.LogsFonctionsMove == null)
                 Config.CurrentConfig.LogsFonctionsMove = new SerializableDictionary<FrameFunction, bool>();
             if (Config.CurrentConfig.LogsFonctionsIO == null)
@@ -62,92 +74,116 @@ namespace GoBot.IHM
                 Config.CurrentConfig.LogsExpediteurs = new SerializableDictionary<Board, bool>();
             if (Config.CurrentConfig.LogsDestinataires == null)
                 Config.CurrentConfig.LogsDestinataires = new SerializableDictionary<Board, bool>();
-            
-            foreach (FrameFunction fonction in Enum.GetValues(typeof(FrameFunction)))
+
+            _configFunctions = new Dictionary<CheckedListBox, Dictionary<FrameFunction, bool>>();
+            _configFunctions.Add(lstRecIOFunctions, Config.CurrentConfig.LogsFonctionsIO);
+            _configFunctions.Add(lstRecMoveFunctions, Config.CurrentConfig.LogsFonctionsMove);
+            _configFunctions.Add(lstRecGoBotFunctions, Config.CurrentConfig.LogsFonctionsGB);
+            _configFunctions.Add(lstRecCANFunctions, Config.CurrentConfig.LogsFonctionsCAN);
+
+            _lstFunctions = new Dictionary<Board, CheckedListBox>();
+            _lstFunctions.Add(Board.RecIO, lstRecIOFunctions);
+            _lstFunctions.Add(Board.RecMove, lstRecMoveFunctions);
+            _lstFunctions.Add(Board.RecGB, lstRecGoBotFunctions);
+            _lstFunctions.Add(Board.RecCan, lstRecCANFunctions);
+
+            // L'ajout de champs déclenche le SetCheck event qui ajoute les éléments automatiquement dans le dictionnaire
+            foreach (FrameFunction func in Enum.GetValues(typeof(FrameFunction)))
             {
-                if (!Config.CurrentConfig.LogsFonctionsMove.ContainsKey(fonction))
-                    Config.CurrentConfig.LogsFonctionsMove.Add(fonction, true);
-
-                checkedListBoxMove.Items.Add(fonction.ToString(), Config.CurrentConfig.LogsFonctionsMove[fonction]);
-
-                if (!Config.CurrentConfig.LogsFonctionsIO.ContainsKey(fonction))
-                    Config.CurrentConfig.LogsFonctionsIO.Add(fonction, true);
-
-                checkedListBoxIO.Items.Add(fonction.ToString(), Config.CurrentConfig.LogsFonctionsIO[fonction]);
-
-                if (!Config.CurrentConfig.LogsFonctionsGB.ContainsKey(fonction))
-                    Config.CurrentConfig.LogsFonctionsGB.Add(fonction, true);
-
-                checkedListBoxGB.Items.Add(fonction.ToString(), Config.CurrentConfig.LogsFonctionsGB[fonction]);
-
-                if (!Config.CurrentConfig.LogsFonctionsCAN.ContainsKey(fonction))
-                    Config.CurrentConfig.LogsFonctionsCAN.Add(fonction, true);
-
-                checkedListBoxCAN.Items.Add(fonction.ToString(), Config.CurrentConfig.LogsFonctionsCAN[fonction]);
-            }
-            
-            foreach (Board carte in Enum.GetValues(typeof(Board)))
-            {
-                if (!Config.CurrentConfig.LogsExpediteurs.ContainsKey(carte))
-                    Config.CurrentConfig.LogsExpediteurs.Add(carte, true);
-                if (!Config.CurrentConfig.LogsDestinataires.ContainsKey(carte))
-                    Config.CurrentConfig.LogsDestinataires.Add(carte, true);
-
-                checkedListBoxExpediteur.Items.Add(carte.ToString(), Config.CurrentConfig.LogsExpediteurs[carte]);
-                checkedListBoxDestinataire.Items.Add(carte.ToString(), Config.CurrentConfig.LogsDestinataires[carte]);
-            }
-
-            chargement = false;
-            replay = new ConnectionReplay();
-        }
-        bool chargement;
-
-        private void btnCharger_Click(object sender, EventArgs e)
-        {
-            OpenFileDialog open = new OpenFileDialog();
-            open.Filter = "Fichiers replay trames (*" + ConnectionReplay.FileExtension + ")| *" + ConnectionReplay.FileExtension + "";
-            open.Multiselect = true;
-            if (open.ShowDialog() == DialogResult.OK)
-            {
-
-                foreach (String fichier in open.FileNames)
+                foreach (CheckedListBox lst in _configFunctions.Keys)
                 {
-                    ChargerLog(fichier);
+                    if (!_configFunctions[lst].ContainsKey(func))
+                        _configFunctions[lst].Add(func, true);
+
+                    lst.Items.Add(func.ToString(), _configFunctions[lst][func]);
                 }
-                replay.Sort();
-                Afficher();
             }
+
+            foreach (Board board in Enum.GetValues(typeof(Board)))
+            {
+                if (!Config.CurrentConfig.LogsExpediteurs.ContainsKey(board))
+                    Config.CurrentConfig.LogsExpediteurs.Add(board, true);
+                lstSender.Items.Add(board.ToString(), Config.CurrentConfig.LogsExpediteurs[board]);
+
+                if (!Config.CurrentConfig.LogsDestinataires.ContainsKey(board))
+                    Config.CurrentConfig.LogsDestinataires.Add(board, true);
+                lstReceiver.Items.Add(board.ToString(), Config.CurrentConfig.LogsDestinataires[board]);
+            }
+
+            _loading = false;
+            _log = new FramesLog();
         }
+
+        #region Publiques
 
         public void Clear()
         {
-            replay = new ConnectionReplay();
+            _log = new FramesLog();
         }
 
-        public void ChargerLog(String fichier)
+        public void DisplayFrame(TimedFrame tFrame)
         {
-            ConnectionReplay replayTemp = new ConnectionReplay();
-            replayTemp.Import(fichier);
+            String time = "";
 
-            foreach (ReplayFrame t in replayTemp.Frames)
-                replay.Frames.Add(t);
+            try
+            {
+                Frame frame = tFrame.Frame;
+
+                if (rdoTimeAbsolute.Checked)
+                    time = tFrame.Date.ToString("hh:mm:ss:fff");
+                if (rdoTimeFromStart.Checked)
+                    time = (tFrame.Date - _startTime).ToString(@"hh\:mm\:ss\:fff");
+                if (rdoTimeFromPrev.Checked)
+                    time = ((int)(tFrame.Date - _previousTime).TotalMilliseconds).ToString() + " ms";
+                if (rdoTimeFromPrevDisplay.Checked)
+                    time = ((int)(tFrame.Date - _previousDisplayTime).TotalMilliseconds).ToString() + " ms";
+
+                Board receiver = tFrame.IsInputFrame ? Board.PC : frame.Board;
+                Board sender = tFrame.IsInputFrame ? frame.Board : Board.PC;
+                Board board = frame.Board;
+
+                if (board == Board.PC) throw new Exception();
+
+                bool receiverVisible = Config.CurrentConfig.LogsDestinataires[receiver];
+                bool senderVisible = Config.CurrentConfig.LogsExpediteurs[sender];
+                bool functionVisible = (_configFunctions[_lstFunctions[board]][FrameFactory.ExtractFunction(frame)]);
+
+                if (senderVisible && receiverVisible && functionVisible)
+                {
+                    dgvLog.Rows.Add(_counter, time, sender.ToString(), receiver.ToString(), FrameDecoder.Decode(frame), frame.ToString());
+                    _previousDisplayTime = tFrame.Date;
+
+                    if (rdoColorByBoard.Checked)
+                        dgvLog.Rows[dgvLog.Rows.Count - 1].DefaultCellStyle.BackColor = _boardColor[board];
+                    else if (rdoColorByReceiver.Checked)
+                        dgvLog.Rows[dgvLog.Rows.Count - 1].DefaultCellStyle.BackColor = _boardColor[receiver];
+                    else if (rdoColorBySender.Checked)
+                        dgvLog.Rows[dgvLog.Rows.Count - 1].DefaultCellStyle.BackColor = _boardColor[sender];
+                }
+            }
+            catch (Exception)
+            {
+                dgvLog.Rows.Add(_counter, time, "?", "?", "Inconnu !", tFrame.Frame.ToString());
+                dgvLog.Rows[dgvLog.Rows.Count - 1].DefaultCellStyle.BackColor = Color.Red;
+            }
+
+            _counter++;
+            _previousTime = tFrame.Date;
         }
 
-        public void Afficher()
+        public void DisplayLog()
         {
             try
             {
-                dataGridViewLog.Rows.Clear();
+                dgvLog.Rows.Clear();
 
-                dateDebut = replay.Frames[0].Date;
-                datePrec = replay.Frames[0].Date;
-                datePrecAff = replay.Frames[0].Date;
-                compteur = 0;
+                _startTime = _log.Frames[0].Date;
+                _previousTime = _log.Frames[0].Date;
+                _previousDisplayTime = _log.Frames[0].Date;
+                _counter = 0;
 
-                for (int iTrame = 0; iTrame < replay.Frames.Count; iTrame++)
-                {
-                    AfficherTrame(replay.Frames[iTrame]);
-                }
+                for (int iFrame = 0; iFrame < _log.Frames.Count; iFrame++)
+                    DisplayFrame(_log.Frames[iFrame]);
             }
             catch (Exception)
             {
@@ -155,423 +191,296 @@ namespace GoBot.IHM
             }
         }
 
+        public void LoadLog()
+        {
+            OpenFileDialog open = new OpenFileDialog();
+            open.Filter = "Fichiers replay trames (*" + FramesLog.FileExtension + ")| *" + FramesLog.FileExtension + "";
+            open.Multiselect = true;
+
+            if (open.ShowDialog() == DialogResult.OK)
+            {
+                foreach (String fichier in open.FileNames)
+                {
+                    LoadLog(fichier);
+                }
+                _log.Sort();
+                DisplayLog();
+            }
+        }
+
+        public void LoadLog(String file)
+        {
+            FramesLog log = new FramesLog();
+            log.Import(file);
+
+            foreach (TimedFrame t in log.Frames)
+                _log.Frames.Add(t);
+        }
+
+        #endregion
+
+        #region Privées
+
+        private void EnableAllCheckBoxes(bool enable)
+        {
+            for (int iList = 0; iList < _boxLists.Count; iList++)
+                for (int iItem = 0; iItem < _boxLists[iList].Items.Count; iItem++)
+                    _boxLists[iList].SetItemChecked(iItem, enable);
+        }
+
+        private TimedFrame GetFrameFromLine(DataGridViewRow line)
+        {
+            return _log.Frames[Convert.ToInt32(dgvLog["Id", line.Index].Value)];
+        }
+
+        private void ShowFramesReceiver(Board board, bool show)
+        {
+            lstReceiver.Items.Remove(board.ToString());
+            lstReceiver.Items.Add(board.ToString(), show);
+            Config.CurrentConfig.LogsDestinataires[board] = show;
+        }
+
+        private void ShowFramesSender(Board board, bool show)
+        {
+            lstSender.Items.Remove(board.ToString());
+            lstSender.Items.Add(board.ToString(), show);
+            Config.CurrentConfig.LogsExpediteurs[board] = show;
+        }
+
+        private void ShowFrameFunction(Board board, FrameFunction func, bool show)
+        {
+            _lstFunctions[board].Items.Remove(func.ToString());
+            _lstFunctions[board].Items.Add(func.ToString(), show);
+            _configFunctions[_lstFunctions[board]][func] = show;
+        }
+
+        private FramesLog CreateLogFromSelection()
+        {
+            FramesLog logSelection = new FramesLog();
+
+            foreach (DataGridViewRow line in dgvLog.SelectedRows)
+            {
+                TimedFrame trameReplay = GetFrameFromLine(line);
+                logSelection.AddFrame(trameReplay.Frame, trameReplay.IsInputFrame, trameReplay.Date);
+            }
+
+            return logSelection;
+        }
+
+        private void ReplayLog(FramesLog log)
+        {
+            _thReplay = new Thread(_log.ReplayInputFrames);
+            _thReplay.Start();
+        }
+
+        #endregion
+
+        #region Events
+
+        private void btnReplayAll_Click(object sender, EventArgs e)
+        {
+            ReplayLog(_log);
+        }
+
+        private void btnReplaySelected_Click(object sender, EventArgs e)
+        {
+            ReplayLog(CreateLogFromSelection());
+        }
+
+        private void lstSender_ItemCheck(object sender, ItemCheckEventArgs e)
+        {
+            if (!Execution.DesignMode && !_loading)
+            {
+                String boardStr = (String)lstSender.Items[e.Index];
+                Board board = (Board)Enum.Parse(typeof(Board), boardStr);
+
+                Config.CurrentConfig.LogsExpediteurs[board] = (e.NewValue == CheckState.Checked);
+            }
+        }
+
+        private void lstReceiver_ItemCheck(object sender, ItemCheckEventArgs e)
+        {
+            if (!Execution.DesignMode && !_loading)
+            {
+                String boardStr = (String)lstReceiver.Items[e.Index];
+                Board board = (Board)Enum.Parse(typeof(Board), boardStr);
+
+                Config.CurrentConfig.LogsDestinataires[board] = (e.NewValue == CheckState.Checked);
+            }
+        }
+
+        private void lstFunctions_ItemCheck(object sender, ItemCheckEventArgs e)
+        {
+            if (!Execution.DesignMode && !_loading)
+            {
+                CheckedListBox lst = (CheckedListBox)sender;
+                String funcStr = (String)lst.Items[e.Index];
+                FrameFunction func = (FrameFunction)Enum.Parse(typeof(FrameFunction), funcStr);
+
+                _configFunctions[lst][func] = (e.NewValue == CheckState.Checked);
+            }
+        }
+
+        private void mnuHideSameSenderFrames_Click(object sender, EventArgs e)
+        {
+            if (dgvLog.SelectedRows.Count >= 1)
+            {
+                foreach (DataGridViewRow line in dgvLog.SelectedRows)
+                {
+                    TimedFrame tFrame = GetFrameFromLine(line);
+                    ShowFramesSender(tFrame.Sender, false);
+                }
+
+                DisplayLog();
+            }
+        }
+
+        private void mnuHideSameReceiverFrames_Click(object sender, EventArgs e)
+        {
+            if (dgvLog.SelectedRows.Count >= 1)
+            {
+                foreach (DataGridViewRow line in dgvLog.SelectedRows)
+                {
+                    TimedFrame tFrame = GetFrameFromLine(line);
+                    ShowFramesReceiver(tFrame.Receiver, false);
+                }
+
+                DisplayLog();
+            }
+        }
+
+        private void mnuHideSameBoardFrames_Click(object sender, EventArgs e)
+        {
+            if (dgvLog.SelectedRows.Count >= 1)
+            {
+                foreach (DataGridViewRow line in dgvLog.SelectedRows)
+                {
+                    Board board = GetFrameFromLine(line).Frame.Board;
+                    ShowFramesReceiver(board, false);
+                    ShowFramesSender(board, false);
+                }
+
+                DisplayLog();
+            }
+        }
+
+        private void mnuHideAllFrames_Click(object sender, EventArgs e)
+        {
+            if (dgvLog.SelectedRows.Count >= 1)
+            {
+                foreach (DataGridViewRow line in dgvLog.Rows)
+                {
+                    TimedFrame tFrame = GetFrameFromLine(line);
+                    ShowFrameFunction(tFrame.Frame.Board, (FrameFunction)tFrame.Frame[1], false);
+                }
+
+                DisplayLog();
+            }
+        }
+
+        private void mnuFrameCopy_Click(object sender, EventArgs e)
+        {
+            if (dgvLog.Rows.Count > 0)
+                Clipboard.SetText(GetFrameFromLine(dgvLog.SelectedRows[0]).Frame.ToString());
+        }
+
+        private void btnAllCheck_Click(object sender, EventArgs e)
+        {
+            EnableAllCheckBoxes(true);
+        }
+
+        private void btnAllUncheck_Click(object sender, EventArgs e)
+        {
+            EnableAllCheckBoxes(false);
+        }
+
         private void btnRefresh_Click(object sender, EventArgs e)
         {
-            Afficher();
+            DisplayLog();
         }
 
-        private void checkedListBoxGros_ItemCheck(object sender, ItemCheckEventArgs e)
-        {
-            if (!Execution.DesignMode && !chargement)
-            {
-                String fonctionString = (String)checkedListBoxMove.Items[e.Index];
-                FrameFunction fonction = (FrameFunction)Enum.Parse(typeof(FrameFunction), fonctionString);
-
-                Config.CurrentConfig.LogsFonctionsMove[fonction] = (e.NewValue == CheckState.Checked);
-            }
-        }
-
-        private void dataGridViewLog_CellMouseDown(object sender, DataGridViewCellMouseEventArgs e)
+        private void dgvLog_CellMouseDown(object sender, DataGridViewCellMouseEventArgs e)
         {
             if (e.Button == System.Windows.Forms.MouseButtons.Right && e.RowIndex > 0 && e.ColumnIndex > 0)
-                dataGridViewLog.CurrentCell = dataGridViewLog.Rows[e.RowIndex].Cells[e.ColumnIndex];
+                dgvLog.CurrentCell = dgvLog.Rows[e.RowIndex].Cells[e.ColumnIndex];
         }
 
-        private void nePlusAfficherCeTypeDeMessagesToolStripMenuItem_Click(object sender, EventArgs e)
+        private void mnuHideSameTypeFrames_Click(object sender, EventArgs e)
         {
-            if (dataGridViewLog.SelectedRows.Count >= 1)
+            if (dgvLog.SelectedRows.Count >= 1)
             {
-                try
+                foreach (DataGridViewRow line in dgvLog.SelectedRows)
                 {
-                    foreach (DataGridViewRow ligne in dataGridViewLog.SelectedRows)
-                    {
-                        int index = ligne.Index;
-                        ReplayFrame trameReplay = replay.Frames[Convert.ToInt32(dataGridViewLog["Id", index].Value)];
-
-                        Board carte = trameReplay.Frame.Board;
-
-                        FrameFunction fonction = (FrameFunction)trameReplay.Frame[1];
-
-                        switch (carte)
-                        {
-                            case Board.RecMove:
-                                checkedListBoxMove.Items.Remove(fonction.ToString());
-                                checkedListBoxMove.Items.Add(fonction.ToString(), false);
-                                Config.CurrentConfig.LogsFonctionsMove[fonction] = false;
-                                break;
-                            case Board.RecIO:
-                                checkedListBoxIO.Items.Remove(fonction.ToString());
-                                checkedListBoxIO.Items.Add(fonction.ToString(), false);
-                                Config.CurrentConfig.LogsFonctionsIO[fonction] = false;
-                                break;
-                            case Board.RecGB:
-                                checkedListBoxGB.Items.Remove(fonction.ToString());
-                                checkedListBoxGB.Items.Add(fonction.ToString(), false);
-                                Config.CurrentConfig.LogsFonctionsGB[fonction] = false;
-                                break;
-                            case Board.RecCan:
-                                checkedListBoxCAN.Items.Remove(fonction.ToString());
-                                checkedListBoxCAN.Items.Add(fonction.ToString(), false);
-                                Config.CurrentConfig.LogsFonctionsCAN[fonction] = false;
-                                break;
-                        }
-
-                        if (carte == Board.RecMove)
-                        {
-                        }
-
-                        if (carte == Board.RecIO)
-                        {
-                        }
-
-                        if (carte == Board.RecGB)
-                        {
-                        }
-                    }
-
-                    Afficher();
+                    TimedFrame tFrame = GetFrameFromLine(line);
+                    ShowFrameFunction(tFrame.Frame.Board, (FrameFunction)tFrame.Frame[1], false);
                 }
-                catch (Exception)
-                {
-                }
+
+                DisplayLog();
             }
         }
 
-        private void btnAfficher_Click(object sender, EventArgs e)
+        private void btnDisplay_Click(object sender, EventArgs e)
         {
-            if (timerAffichage == null || !timerAffichage.Enabled)
+            if (_displayTimer == null || !_displayTimer.Enabled)
             {
-                replay = new ConnectionReplay();
-                timerAffichage = new System.Windows.Forms.Timer();
-                timerAffichage.Interval = 1000;
-                timerAffichage.Tick += timerAffichage_Tick;
-                timerAffichage.Start();
+                _log = new FramesLog();
+                _displayTimer = new System.Windows.Forms.Timer();
+                _displayTimer.Interval = 1000;
+                _displayTimer.Tick += displayTimer_Tick;
+                _displayTimer.Start();
 
-                Connections.ConnectionMove.FrameReceived += new UDPConnection.NewFrameDelegate((frame) => replay.AddFrame(frame, true));
-                Connections.ConnectionMove.FrameSend += new UDPConnection.NewFrameDelegate((frame) => replay.AddFrame(frame, false));
+                Connections.AllConnections.ForEach(conn =>
+                {
+                    if (conn.GetType() == typeof(UDPConnection))
+                    {
+                        conn.FrameReceived += new UDPConnection.NewFrameDelegate((frame) => _log.AddFrame(frame, true));
+                        conn.FrameSend += new UDPConnection.NewFrameDelegate((frame) => _log.AddFrame(frame, false));
+                    }
+                });
 
-                Connections.ConnectionIO.FrameReceived += new UDPConnection.NewFrameDelegate((frame) => replay.AddFrame(frame, true));
-                Connections.ConnectionIO.FrameSend += new UDPConnection.NewFrameDelegate((frame) => replay.AddFrame(frame, false));
-
-                Connections.ConnectionGB.FrameReceived += new UDPConnection.NewFrameDelegate((frame) => replay.AddFrame(frame, true));
-                Connections.ConnectionGB.FrameSend += new UDPConnection.NewFrameDelegate((frame) => replay.AddFrame(frame, false));
-
-                Connections.ConnectionCanBridge.FrameReceived += new UDPConnection.NewFrameDelegate((frame) => replay.AddFrame(frame, true));
-                Connections.ConnectionCanBridge.FrameSend += new UDPConnection.NewFrameDelegate((frame) => replay.AddFrame(frame, false));
-
-                btnRejouerTout.Enabled = false;
-                btnRejouerSelection.Enabled = false;
-                btnCharger.Enabled = false;
-                btnAfficher.Text = "Arrêter l'affichage";
-                btnAfficher.Image = GoBot.Properties.Resources.Pause16;
+                btnReplayAll.Enabled = false;
+                btnReplaySelected.Enabled = false;
+                btnLoad.Enabled = false;
+                btnDisplay.Text = "Arrêter l'affichage";
+                btnDisplay.Image = GoBot.Properties.Resources.Pause16;
             }
             else
             {
-                timerAffichage.Stop();
+                _displayTimer.Stop();
 
-                Connections.ConnectionMove.FrameReceived -= new UDPConnection.NewFrameDelegate((frame) => replay.AddFrame(frame, true));
-                Connections.ConnectionMove.FrameSend -= new UDPConnection.NewFrameDelegate((frame) => replay.AddFrame(frame, false));
-
-                Connections.ConnectionIO.FrameReceived -= new UDPConnection.NewFrameDelegate((frame) => replay.AddFrame(frame, true));
-                Connections.ConnectionIO.FrameSend -= new UDPConnection.NewFrameDelegate((frame) => replay.AddFrame(frame, false));
-
-                Connections.ConnectionGB.FrameReceived -= new UDPConnection.NewFrameDelegate((frame) => replay.AddFrame(frame, true));
-                Connections.ConnectionGB.FrameSend -= new UDPConnection.NewFrameDelegate((frame) => replay.AddFrame(frame, false));
-
-                Connections.ConnectionCanBridge.FrameReceived -= new UDPConnection.NewFrameDelegate((frame) => replay.AddFrame(frame, true));
-                Connections.ConnectionCanBridge.FrameSend -= new UDPConnection.NewFrameDelegate((frame) => replay.AddFrame(frame, false));
-
-                btnRejouerTout.Enabled = true;
-                btnRejouerSelection.Enabled = true;
-                btnCharger.Enabled = true;
-                btnAfficher.Text = "Afficher temps réel";
-                btnAfficher.Image = GoBot.Properties.Resources.Play16;
-            }
-        }
-
-        void timerAffichage_Tick(object sender, EventArgs e)
-        {
-            int nbTrames = replay.Frames.Count;
-            for (int i = compteur; i < nbTrames; i++)
-                AfficherTrame(replay.Frames[i]);
-
-            if (boxScroll.Checked && dataGridViewLog.Rows.Count > 10)
-                dataGridViewLog.FirstDisplayedScrollingRowIndex = dataGridViewLog.RowCount - 1;
-        }
-
-        private void AfficherTrame(ReplayFrame trameReplay)
-        {
-            String heure = "";
-            try
-            {
-                Frame trame = trameReplay.Frame;
-
-                if (rdoHeure.Checked)
-                    heure = trameReplay.Date.ToString("hh:mm:ss:fff");
-                if (rdoTempsDebut.Checked)
-                    heure = (trameReplay.Date - dateDebut).ToString(@"hh\:mm\:ss\:fff");
-                if (rdoTempsPrec.Checked)
-                    heure = ((int)(trameReplay.Date - datePrec).TotalMilliseconds).ToString() + " ms";
-                if (rdoTempsPrecAff.Checked)
-                    heure = ((int)(trameReplay.Date - datePrecAff).TotalMilliseconds).ToString() + " ms";
-
-                Board destinataire = trameReplay.IsInputFrame ? Board.PC : trame.Board;
-                Board expediteur = trameReplay.IsInputFrame ? trame.Board : Board.PC;
-                Board carte = trame.Board;
-
-                if (carte == Board.PC)
-                    throw new Exception();
-
-                bool cartesAutorisees = false;
-                if (Config.CurrentConfig.LogsDestinataires[destinataire] && Config.CurrentConfig.LogsExpediteurs[expediteur])
-                    cartesAutorisees = true;
-
-                bool fonctionAutorisee = false;
-                if ((carte == Board.RecMove && Config.CurrentConfig.LogsFonctionsMove[(FrameFunction)trame[1]]) ||
-                    trame[1] == 0xA1 ||
-                    (carte == Board.RecIO && Config.CurrentConfig.LogsFonctionsIO[(FrameFunction)trame[1]]) ||
-                    (carte == Board.RecGB && Config.CurrentConfig.LogsFonctionsGB[(FrameFunction)trame[1]]) ||
-                    (carte == Board.RecCan && Config.CurrentConfig.LogsFonctionsCAN[(FrameFunction)trame[1]]))
-                    fonctionAutorisee = true;
-
-
-                if (cartesAutorisees && fonctionAutorisee)
+                Connections.AllConnections.ForEach(conn =>
                 {
-                    dataGridViewLog.Rows.Add(compteur, heure, expediteur.ToString(), destinataire.ToString(), FrameDecoder.Decode(trame), trame.ToString());
-                    datePrecAff = trameReplay.Date;
-
-                    if (rdoCarte.Checked)
-                        dataGridViewLog.Rows[dataGridViewLog.Rows.Count - 1].DefaultCellStyle.BackColor = couleurCarte[carte];
-                    else if (rdoDest.Checked)
-                        dataGridViewLog.Rows[dataGridViewLog.Rows.Count - 1].DefaultCellStyle.BackColor = couleurCarte[destinataire];
-                    else if (rdoExp.Checked)
-                        dataGridViewLog.Rows[dataGridViewLog.Rows.Count - 1].DefaultCellStyle.BackColor = couleurCarte[expediteur];
-                }
-            }
-            catch (Exception)
-            {
-                dataGridViewLog.Rows.Add(compteur, heure, "?", "?", "Inconnu !", trameReplay.Frame.ToString());
-                dataGridViewLog.Rows[dataGridViewLog.Rows.Count - 1].DefaultCellStyle.BackColor = Color.Red;
-            }
-
-            compteur++;
-
-            datePrec = trameReplay.Date;
-        }
-
-        private void btnRejouerTout_Click(object sender, EventArgs e)
-        {
-            threadReplay = new Thread(replay.ReplayInputFrames);
-            threadReplay.Start();
-        }
-
-        private void btnRejouerSelection_Click(object sender, EventArgs e)
-        {
-            ConnectionReplay replaySelection = new ConnectionReplay();
-
-            if (dataGridViewLog.SelectedRows.Count >= 1)
-            {
-                try
-                {
-                    foreach (DataGridViewRow ligne in dataGridViewLog.SelectedRows)
+                    if (conn.GetType() == typeof(UDPConnection))
                     {
-                        int index = ligne.Index;
-                        ReplayFrame trameReplay = replay.Frames[Convert.ToInt32(dataGridViewLog["Id", index].Value)];
-                        replaySelection.AddFrame(trameReplay.Frame, trameReplay.IsInputFrame, trameReplay.Date);
+                        conn.FrameReceived -= new UDPConnection.NewFrameDelegate((frame) => _log.AddFrame(frame, true));
+                        conn.FrameSend -= new UDPConnection.NewFrameDelegate((frame) => _log.AddFrame(frame, false));
                     }
+                });
 
-                    replaySelection.Sort();
-                    threadReplay = new Thread(replaySelection.ReplayInputFrames);
-                    threadReplay.Start();
-                }
-                catch (Exception)
-                {
-                }
+                btnReplayAll.Enabled = true;
+                btnReplaySelected.Enabled = true;
+                btnLoad.Enabled = true;
+                btnDisplay.Text = "Afficher temps réel";
+                btnDisplay.Image = GoBot.Properties.Resources.Play16;
             }
         }
 
-        private void checkedListBoxExpediteur_ItemCheck(object sender, ItemCheckEventArgs e)
+        void displayTimer_Tick(object sender, EventArgs e)
         {
-            if (!Execution.DesignMode && !chargement)
-            {
-                String carteString = (String)checkedListBoxExpediteur.Items[e.Index];
-                Board carte = (Board)Enum.Parse(typeof(Board), carteString);
+            int nbTrames = _log.Frames.Count;
+            for (int i = _counter; i < nbTrames; i++)
+                DisplayFrame(_log.Frames[i]);
 
-                Config.CurrentConfig.LogsExpediteurs[carte] = (e.NewValue == CheckState.Checked);
-            }
+            if (boxScroll.Checked && dgvLog.Rows.Count > 10)
+                dgvLog.FirstDisplayedScrollingRowIndex = dgvLog.RowCount - 1;
         }
 
-        private void checkedListBoxDestinataire_ItemCheck(object sender, ItemCheckEventArgs e)
+        private void btnLoad_Click(object sender, EventArgs e)
         {
-            if (!Execution.DesignMode && !chargement)
-            {
-                String carteString = (String)checkedListBoxDestinataire.Items[e.Index];
-                Board carte = (Board)Enum.Parse(typeof(Board), carteString);
-
-                Config.CurrentConfig.LogsDestinataires[carte] = (e.NewValue == CheckState.Checked);
-            }
+            LoadLog();
         }
 
-        private void checkedListBoxGB_ItemCheck(object sender, ItemCheckEventArgs e)
-        {
-            if (!Execution.DesignMode && !chargement)
-            {
-                String fonctionString = (String)checkedListBoxGB.Items[e.Index];
-                FrameFunction fonction = (FrameFunction)Enum.Parse(typeof(FrameFunction), fonctionString);
+        #endregion
 
-                Config.CurrentConfig.LogsFonctionsGB[fonction] = (e.NewValue == CheckState.Checked);
-            }
-        }
-
-        private void checkedListBoxIO_ItemCheck(object sender, ItemCheckEventArgs e)
-        {
-            if (!Execution.DesignMode && !chargement)
-            {
-                String fonctionString = (String)checkedListBoxIO.Items[e.Index];
-                FrameFunction fonction = (FrameFunction)Enum.Parse(typeof(FrameFunction), fonctionString);
-
-                Config.CurrentConfig.LogsFonctionsIO[fonction] = (e.NewValue == CheckState.Checked);
-            }
-        }
-
-        private void checkedListBoxCAN_ItemCheck(object sender, ItemCheckEventArgs e)
-        {
-            if (!Execution.DesignMode && !chargement)
-            {
-                String fonctionString = (String)checkedListBoxCAN.Items[e.Index];
-                FrameFunction fonction = (FrameFunction)Enum.Parse(typeof(FrameFunction), fonctionString);
-
-                Config.CurrentConfig.LogsFonctionsCAN[fonction] = (e.NewValue == CheckState.Checked);
-            }
-        }
-
-        private void nePlusAfficherDeMessagesDeCetExpéditeurToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            if (dataGridViewLog.SelectedRows.Count >= 1)
-            {
-                try
-                {
-                    foreach (DataGridViewRow ligne in dataGridViewLog.SelectedRows)
-                    {
-                        int index = ligne.Index;
-                        ReplayFrame trameReplay = replay.Frames[Convert.ToInt32(dataGridViewLog["Id", index].Value)];
-                        Frame trame = trameReplay.Frame;
-
-                        Board expediteur = trameReplay.IsInputFrame ? trameReplay.Frame.Board : Board.PC;
-
-                        checkedListBoxExpediteur.Items.Remove(expediteur.ToString());
-                        checkedListBoxExpediteur.Items.Add(expediteur.ToString(), false);
-                        Config.CurrentConfig.LogsExpediteurs[expediteur] = false;
-                    }
-
-                    Afficher();
-                }
-                catch (Exception)
-                {
-                }
-            }
-        }
-
-        private void nePlusAfficherDeMessagesAvecCeDestinataireToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            if (dataGridViewLog.SelectedRows.Count >= 1)
-            {
-                try
-                {
-                    foreach (DataGridViewRow ligne in dataGridViewLog.SelectedRows)
-                    {
-                        int index = ligne.Index;
-                        ReplayFrame trameReplay = replay.Frames[Convert.ToInt32(dataGridViewLog["Id", index].Value)];
-
-                        Board destinataire = trameReplay.IsInputFrame ? Board.PC : trameReplay.Frame.Board;
-
-                        checkedListBoxDestinataire.Items.Remove(destinataire.ToString());
-                        checkedListBoxDestinataire.Items.Add(destinataire.ToString(), false);
-                        Config.CurrentConfig.LogsDestinataires[destinataire] = false;
-                    }
-
-                    Afficher();
-                }
-                catch (Exception)
-                {
-                }
-            }
-        }
-
-        private void nePlusAfficherDeMessagesDeCetteCarteToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            if (dataGridViewLog.SelectedRows.Count >= 1)
-            {
-                try
-                {
-                    foreach (DataGridViewRow ligne in dataGridViewLog.SelectedRows)
-                    {
-                        int index = ligne.Index;
-                        ReplayFrame trameReplay = replay.Frames[Convert.ToInt32(dataGridViewLog["Id", index].Value)];
-
-                        Board carte = trameReplay.Frame.Board;
-
-                        checkedListBoxExpediteur.Items.Remove(carte.ToString());
-                        checkedListBoxExpediteur.Items.Add(carte.ToString(), false);
-                        Config.CurrentConfig.LogsExpediteurs[carte] = false;
-                        checkedListBoxDestinataire.Items.Remove(carte.ToString());
-                        checkedListBoxDestinataire.Items.Add(carte.ToString(), false);
-                        Config.CurrentConfig.LogsDestinataires[carte] = false;
-                    }
-
-                    Afficher();
-                }
-                catch (Exception)
-                {
-                }
-            }
-        }
-
-        private void nePlusAfficherTousCesMessagesToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            if (dataGridViewLog.Rows.Count > 0)
-            {
-                for (int i = 0; i < dataGridViewLog.Rows.Count; i++)
-                    dataGridViewLog.Rows[i].Selected = true;
-
-                nePlusAfficherCeTypeDeMessagesToolStripMenuItem_Click(null, null);
-            }
-        }
-
-        private void copierLaTrameToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            if (dataGridViewLog.Rows.Count > 0)
-            {
-                Clipboard.SetText((String)(dataGridViewLog.SelectedRows[0].Cells["Trame"].Value));
-            }
-        }
-
-        private void btnCocher_Click(object sender, EventArgs e)
-        {
-            for (int i = 0; i < checkedListBoxGB.Items.Count; i++)
-                checkedListBoxGB.SetItemChecked(i, true);
-            for (int i = 0; i < checkedListBoxDestinataire.Items.Count; i++)
-                checkedListBoxDestinataire.SetItemChecked(i, true);
-            for (int i = 0; i < checkedListBoxExpediteur.Items.Count; i++)
-                checkedListBoxExpediteur.SetItemChecked(i, true);
-            for (int i = 0; i < checkedListBoxIO.Items.Count; i++)
-                checkedListBoxIO.SetItemChecked(i, true);
-            for (int i = 0; i < checkedListBoxMove.Items.Count; i++)
-                checkedListBoxMove.SetItemChecked(i, true);
-        }
-
-        private void btnDecocher_Click(object sender, EventArgs e)
-        {
-            for (int i = 0; i < checkedListBoxGB.Items.Count; i++)
-                checkedListBoxGB.SetItemChecked(i, false);
-            for (int i = 0; i < checkedListBoxDestinataire.Items.Count; i++)
-                checkedListBoxDestinataire.SetItemChecked(i, false);
-            for (int i = 0; i < checkedListBoxExpediteur.Items.Count; i++)
-                checkedListBoxExpediteur.SetItemChecked(i, false);
-            for (int i = 0; i < checkedListBoxIO.Items.Count; i++)
-                checkedListBoxIO.SetItemChecked(i, false);
-            for (int i = 0; i < checkedListBoxMove.Items.Count; i++)
-                checkedListBoxMove.SetItemChecked(i, false);
-        }
     }
 }

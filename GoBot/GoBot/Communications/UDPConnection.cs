@@ -52,7 +52,7 @@ namespace GoBot.Communications
         public UDPConnection()
         {
             ConnectionChecker = new ConnectionChecker(this, 500);
-            Archives = new ConnectionReplay();
+            Archives = new FramesLog();
         }
 
         /// <summary>

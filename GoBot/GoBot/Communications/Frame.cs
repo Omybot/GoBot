@@ -126,7 +126,7 @@ namespace GoBot.Communications
         }
 
         /// <summary>
-        /// Carte concernée par la trame (Information contenue dans le premier octet de la trale)
+        /// Carte concernée par la trame (Information contenue dans le premier octet de la trame)
         /// </summary>
         public Board Board
         {

@@ -3,11 +3,17 @@ using Geometry.Shapes;
 using GoBot.Devices;
 using System.Collections.Generic;
 using System.Drawing;
+using System;
 
 namespace GoBot.Communications
 {
     static class FrameFactory
     {
+        static public FrameFunction ExtractFunction(Frame frame)
+        {
+            return (FrameFunction)frame[1];
+        }
+
         private static byte ByteDivide(int valeur, bool poidsFort)
         {
             byte b;

@@ -429,7 +429,7 @@
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Robots\RobotReel.cs" />
-    <Compile Include="Communications\ConnectionReplay.cs" />
+    <Compile Include="Communications\FramesLog.cs" />
     <Compile Include="Robots\Robot.cs" />
     <Compile Include="Robots\RobotSimu.cs" />
     <Compile Include="SerializableDictionnary.cs" />

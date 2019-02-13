@@ -5,7 +5,7 @@
         /// <summary>
         /// Sauvegarde des trames transitées par la connexion
         /// </summary>
-        public ConnectionReplay Archives { get; protected set; }
+        public FramesLog Archives { get; protected set; }
 
         /// <summary>
         /// Verificateur de connexion

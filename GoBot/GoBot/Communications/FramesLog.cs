@@ -9,7 +9,7 @@ namespace GoBot.Communications
     /// <summary>
     /// Association d'une trame et de son heure de réception
     /// </summary>
-    public class ReplayFrame : IComparable
+    public class TimedFrame : IComparable
     {
         /// <summary>
         /// Trame contenant les données
@@ -25,8 +25,18 @@ namespace GoBot.Communications
         /// Vrai si la trame a été reçue, faux si elle a été envoyée
         /// </summary>
         public bool IsInputFrame { get; set; }
-        
-        public ReplayFrame(Frame frame, DateTime date, bool input = true)
+
+        /// <summary>
+        /// Retourne la carte ayant envoyé cette trame
+        /// </summary>
+        public Board Sender { get => IsInputFrame ? Frame.Board : Board.PC; }
+
+        /// <summary>
+        /// Retourne la carte ayant reçu cette trame
+        /// </summary>
+        public Board Receiver { get => IsInputFrame ? Board.PC : Frame.Board; }
+
+        public TimedFrame(Frame frame, DateTime date, bool input = true)
         {
             Frame = frame;
             Date = date;
@@ -35,7 +45,7 @@ namespace GoBot.Communications
 
         int IComparable.CompareTo(object obj)
         {
-            return Date.CompareTo(((ReplayFrame)obj).Date);
+            return Date.CompareTo(((TimedFrame)obj).Date);
         }
 
         public void Export(StreamWriter writer)
@@ -45,20 +55,20 @@ namespace GoBot.Communications
             writer.WriteLine(IsInputFrame);
         }
 
-        public static ReplayFrame Import(StreamReader reader)
+        public static TimedFrame Import(StreamReader reader)
         {
             DateTime date = DateTime.ParseExact(reader.ReadLine(), "dd/MM/yyyy hh:mm:ss.fff", null);
             Frame frame = new Frame(reader.ReadLine());
             Boolean isInput = Boolean.Parse(reader.ReadLine());
 
-            return new ReplayFrame(frame, date, isInput);
+            return new TimedFrame(frame, date, isInput);
         }
     }
 
     /// <summary>
     /// Permet de sauvegarder l'historique des trames reçue ainsi que leur heure d'arrivée
     /// </summary>
-    public class ConnectionReplay
+    public class FramesLog
     {
         /// <summary>
         /// Extension du fichier de sauvegarde
@@ -68,11 +78,11 @@ namespace GoBot.Communications
         /// <summary>
         /// Liste des trames
         /// </summary>
-        public List<ReplayFrame> Frames { get; private set; }
+        public List<TimedFrame> Frames { get; private set; }
 
-        public ConnectionReplay()
+        public FramesLog()
         {
-            Frames = new List<ReplayFrame>();
+            Frames = new List<TimedFrame>();
         }
 
         /// <summary>
@@ -86,7 +96,7 @@ namespace GoBot.Communications
 
             lock (Frames)
             {
-                Frames.Add(new ReplayFrame(frame, date.Value, isInput));
+                Frames.Add(new TimedFrame(frame, date.Value, isInput));
             }
         }
 
@@ -106,7 +116,7 @@ namespace GoBot.Communications
                 lock (Frames)
                 {
                     while (!reader.EndOfStream)
-                        Frames.Add(ReplayFrame.Import(reader));
+                        Frames.Add(TimedFrame.Import(reader));
                 }
 
                 reader.Close();
@@ -135,7 +145,7 @@ namespace GoBot.Communications
 
                 lock (Frames)
                 {
-                    foreach (ReplayFrame frame in Frames)
+                    foreach (TimedFrame frame in Frames)
                         frame.Export(writer);
                 }
 

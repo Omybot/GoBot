@@ -29,387 +29,387 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            this.dataGridViewLog = new System.Windows.Forms.DataGridView();
-            this.contextMenuStripRow = new System.Windows.Forms.ContextMenuStrip(this.components);
-            this.copierLaTrameToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.nePlusAfficherTousCesMessagesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.nePlusAfficherCeTypeDeMessagesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.nePlusAfficherDeMessagesDeCetExpéditeurToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.nePlusAfficherDeMessagesAvecCeDestinataireToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.nePlusAfficherDeMessagesDeCetteCarteToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.groupBox2 = new System.Windows.Forms.GroupBox();
-            this.rdoAucun = new System.Windows.Forms.RadioButton();
-            this.rdoDest = new System.Windows.Forms.RadioButton();
-            this.rdoCarte = new System.Windows.Forms.RadioButton();
-            this.rdoExp = new System.Windows.Forms.RadioButton();
-            this.checkedListBoxMove = new System.Windows.Forms.CheckedListBox();
-            this.groupBox1 = new System.Windows.Forms.GroupBox();
-            this.rdoHeure = new System.Windows.Forms.RadioButton();
-            this.rdoTempsDebut = new System.Windows.Forms.RadioButton();
-            this.rdoTempsPrecAff = new System.Windows.Forms.RadioButton();
-            this.rdoTempsPrec = new System.Windows.Forms.RadioButton();
-            this.checkedListBoxIO = new System.Windows.Forms.CheckedListBox();
-            this.groupBoxMessages = new System.Windows.Forms.GroupBox();
-            this.btnDecocher = new System.Windows.Forms.Button();
-            this.btnCocher = new System.Windows.Forms.Button();
-            this.tabControlGestion = new System.Windows.Forms.TabControl();
-            this.tabPageCartes = new System.Windows.Forms.TabPage();
-            this.groupBoxExpediteur = new System.Windows.Forms.GroupBox();
-            this.checkedListBoxExpediteur = new System.Windows.Forms.CheckedListBox();
-            this.groupBoxDestinataire = new System.Windows.Forms.GroupBox();
-            this.checkedListBoxDestinataire = new System.Windows.Forms.CheckedListBox();
+            this.dgvLog = new System.Windows.Forms.DataGridView();
+            this.ctxMnuFrames = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.mnuFrameCopy = new System.Windows.Forms.ToolStripMenuItem();
+            this.mnuHideAllFrames = new System.Windows.Forms.ToolStripMenuItem();
+            this.mnuHideSameTypeFrames = new System.Windows.Forms.ToolStripMenuItem();
+            this.mnuHideSameSenderFrames = new System.Windows.Forms.ToolStripMenuItem();
+            this.mnuHideSameReceiverFrames = new System.Windows.Forms.ToolStripMenuItem();
+            this.mnuHideSameBoardFrames = new System.Windows.Forms.ToolStripMenuItem();
+            this.grpColor = new System.Windows.Forms.GroupBox();
+            this.rdoColorNone = new System.Windows.Forms.RadioButton();
+            this.rdoColorByReceiver = new System.Windows.Forms.RadioButton();
+            this.rdoColorByBoard = new System.Windows.Forms.RadioButton();
+            this.rdoColorBySender = new System.Windows.Forms.RadioButton();
+            this.lstRecMoveFunctions = new System.Windows.Forms.CheckedListBox();
+            this.grpTime = new System.Windows.Forms.GroupBox();
+            this.rdoTimeAbsolute = new System.Windows.Forms.RadioButton();
+            this.rdoTimeFromStart = new System.Windows.Forms.RadioButton();
+            this.rdoTimeFromPrevDisplay = new System.Windows.Forms.RadioButton();
+            this.rdoTimeFromPrev = new System.Windows.Forms.RadioButton();
+            this.lstRecIOFunctions = new System.Windows.Forms.CheckedListBox();
+            this.grpMessages = new System.Windows.Forms.GroupBox();
+            this.btnAllUncheck = new System.Windows.Forms.Button();
+            this.btnAllCheck = new System.Windows.Forms.Button();
+            this.tabFilters = new System.Windows.Forms.TabControl();
+            this.tabPageBoards = new System.Windows.Forms.TabPage();
+            this.grpSender = new System.Windows.Forms.GroupBox();
+            this.lstSender = new System.Windows.Forms.CheckedListBox();
+            this.grpReceiver = new System.Windows.Forms.GroupBox();
+            this.lstReceiver = new System.Windows.Forms.CheckedListBox();
             this.tabPageMessages = new System.Windows.Forms.TabPage();
-            this.tabControlMessages = new System.Windows.Forms.TabControl();
+            this.tabFunctions = new System.Windows.Forms.TabControl();
             this.tabPageMove = new System.Windows.Forms.TabPage();
             this.tabPageIO = new System.Windows.Forms.TabPage();
-            this.tabGB = new System.Windows.Forms.TabPage();
-            this.checkedListBoxGB = new System.Windows.Forms.CheckedListBox();
-            this.btnRejouerTout = new System.Windows.Forms.Button();
-            this.btnRejouerSelection = new System.Windows.Forms.Button();
+            this.tabPageGB = new System.Windows.Forms.TabPage();
+            this.lstRecGoBotFunctions = new System.Windows.Forms.CheckedListBox();
+            this.tabPageCAN = new System.Windows.Forms.TabPage();
+            this.lstRecCANFunctions = new System.Windows.Forms.CheckedListBox();
+            this.btnReplayAll = new System.Windows.Forms.Button();
+            this.btnReplaySelected = new System.Windows.Forms.Button();
             this.boxScroll = new System.Windows.Forms.CheckBox();
-            this.btnAfficher = new System.Windows.Forms.Button();
+            this.btnDisplay = new System.Windows.Forms.Button();
             this.btnRefresh = new System.Windows.Forms.Button();
-            this.btnCharger = new System.Windows.Forms.Button();
-            this.tabCAN = new System.Windows.Forms.TabPage();
-            this.checkedListBoxCAN = new System.Windows.Forms.CheckedListBox();
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridViewLog)).BeginInit();
-            this.contextMenuStripRow.SuspendLayout();
-            this.groupBox2.SuspendLayout();
-            this.groupBox1.SuspendLayout();
-            this.groupBoxMessages.SuspendLayout();
-            this.tabControlGestion.SuspendLayout();
-            this.tabPageCartes.SuspendLayout();
-            this.groupBoxExpediteur.SuspendLayout();
-            this.groupBoxDestinataire.SuspendLayout();
+            this.btnLoad = new System.Windows.Forms.Button();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvLog)).BeginInit();
+            this.ctxMnuFrames.SuspendLayout();
+            this.grpColor.SuspendLayout();
+            this.grpTime.SuspendLayout();
+            this.grpMessages.SuspendLayout();
+            this.tabFilters.SuspendLayout();
+            this.tabPageBoards.SuspendLayout();
+            this.grpSender.SuspendLayout();
+            this.grpReceiver.SuspendLayout();
             this.tabPageMessages.SuspendLayout();
-            this.tabControlMessages.SuspendLayout();
+            this.tabFunctions.SuspendLayout();
             this.tabPageMove.SuspendLayout();
             this.tabPageIO.SuspendLayout();
-            this.tabGB.SuspendLayout();
-            this.tabCAN.SuspendLayout();
+            this.tabPageGB.SuspendLayout();
+            this.tabPageCAN.SuspendLayout();
             this.SuspendLayout();
             // 
             // dataGridViewLog
             // 
-            this.dataGridViewLog.AllowUserToAddRows = false;
-            this.dataGridViewLog.AllowUserToDeleteRows = false;
-            this.dataGridViewLog.AllowUserToOrderColumns = true;
-            this.dataGridViewLog.AllowUserToResizeRows = false;
-            this.dataGridViewLog.BackgroundColor = System.Drawing.Color.White;
-            this.dataGridViewLog.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.dataGridViewLog.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridViewLog.ContextMenuStrip = this.contextMenuStripRow;
-            this.dataGridViewLog.Location = new System.Drawing.Point(416, 9);
-            this.dataGridViewLog.Name = "dataGridViewLog";
-            this.dataGridViewLog.ReadOnly = true;
-            this.dataGridViewLog.RowHeadersVisible = false;
-            this.dataGridViewLog.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.dataGridViewLog.Size = new System.Drawing.Size(835, 624);
-            this.dataGridViewLog.TabIndex = 1;
-            this.dataGridViewLog.CellMouseDown += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.dataGridViewLog_CellMouseDown);
+            this.dgvLog.AllowUserToAddRows = false;
+            this.dgvLog.AllowUserToDeleteRows = false;
+            this.dgvLog.AllowUserToOrderColumns = true;
+            this.dgvLog.AllowUserToResizeRows = false;
+            this.dgvLog.BackgroundColor = System.Drawing.Color.White;
+            this.dgvLog.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.dgvLog.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dgvLog.ContextMenuStrip = this.ctxMnuFrames;
+            this.dgvLog.Location = new System.Drawing.Point(416, 9);
+            this.dgvLog.Name = "dataGridViewLog";
+            this.dgvLog.ReadOnly = true;
+            this.dgvLog.RowHeadersVisible = false;
+            this.dgvLog.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
+            this.dgvLog.Size = new System.Drawing.Size(835, 624);
+            this.dgvLog.TabIndex = 1;
+            this.dgvLog.CellMouseDown += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.dgvLog_CellMouseDown);
             // 
-            // contextMenuStripRow
+            // ctxMnuFrames
             // 
-            this.contextMenuStripRow.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.copierLaTrameToolStripMenuItem,
-            this.nePlusAfficherTousCesMessagesToolStripMenuItem,
-            this.nePlusAfficherCeTypeDeMessagesToolStripMenuItem,
-            this.nePlusAfficherDeMessagesDeCetExpéditeurToolStripMenuItem,
-            this.nePlusAfficherDeMessagesAvecCeDestinataireToolStripMenuItem,
-            this.nePlusAfficherDeMessagesDeCetteCarteToolStripMenuItem});
-            this.contextMenuStripRow.Name = "contextMenuStripRow";
-            this.contextMenuStripRow.Size = new System.Drawing.Size(368, 136);
+            this.ctxMnuFrames.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.mnuFrameCopy,
+            this.mnuHideAllFrames,
+            this.mnuHideSameTypeFrames,
+            this.mnuHideSameSenderFrames,
+            this.mnuHideSameReceiverFrames,
+            this.mnuHideSameBoardFrames});
+            this.ctxMnuFrames.Name = "contextMenuStripRow";
+            this.ctxMnuFrames.Size = new System.Drawing.Size(368, 136);
             // 
-            // copierLaTrameToolStripMenuItem
+            // mnuFrameCopy
             // 
-            this.copierLaTrameToolStripMenuItem.Name = "copierLaTrameToolStripMenuItem";
-            this.copierLaTrameToolStripMenuItem.Size = new System.Drawing.Size(367, 22);
-            this.copierLaTrameToolStripMenuItem.Text = "Copier la trame";
-            this.copierLaTrameToolStripMenuItem.Click += new System.EventHandler(this.copierLaTrameToolStripMenuItem_Click);
+            this.mnuFrameCopy.Name = "mnuFrameCopy";
+            this.mnuFrameCopy.Size = new System.Drawing.Size(367, 22);
+            this.mnuFrameCopy.Text = "Copier la trame";
+            this.mnuFrameCopy.Click += new System.EventHandler(this.mnuFrameCopy_Click);
             // 
-            // nePlusAfficherTousCesMessagesToolStripMenuItem
+            // mnuHideAllFrames
             // 
-            this.nePlusAfficherTousCesMessagesToolStripMenuItem.Name = "nePlusAfficherTousCesMessagesToolStripMenuItem";
-            this.nePlusAfficherTousCesMessagesToolStripMenuItem.Size = new System.Drawing.Size(367, 22);
-            this.nePlusAfficherTousCesMessagesToolStripMenuItem.Text = "Ne plus afficher tous ces messages";
-            this.nePlusAfficherTousCesMessagesToolStripMenuItem.Click += new System.EventHandler(this.nePlusAfficherTousCesMessagesToolStripMenuItem_Click);
+            this.mnuHideAllFrames.Name = "mnuHideAllFrames";
+            this.mnuHideAllFrames.Size = new System.Drawing.Size(367, 22);
+            this.mnuHideAllFrames.Text = "Ne plus afficher tous ces messages";
+            this.mnuHideAllFrames.Click += new System.EventHandler(this.mnuHideAllFrames_Click);
             // 
-            // nePlusAfficherCeTypeDeMessagesToolStripMenuItem
+            // mnuHideSameTypeFrames
             // 
-            this.nePlusAfficherCeTypeDeMessagesToolStripMenuItem.Name = "nePlusAfficherCeTypeDeMessagesToolStripMenuItem";
-            this.nePlusAfficherCeTypeDeMessagesToolStripMenuItem.Size = new System.Drawing.Size(367, 22);
-            this.nePlusAfficherCeTypeDeMessagesToolStripMenuItem.Text = "Ne plus afficher ce type de messages";
-            this.nePlusAfficherCeTypeDeMessagesToolStripMenuItem.Click += new System.EventHandler(this.nePlusAfficherCeTypeDeMessagesToolStripMenuItem_Click);
+            this.mnuHideSameTypeFrames.Name = "mnuHideSameTypeFrames";
+            this.mnuHideSameTypeFrames.Size = new System.Drawing.Size(367, 22);
+            this.mnuHideSameTypeFrames.Text = "Ne plus afficher ce type de messages";
+            this.mnuHideSameTypeFrames.Click += new System.EventHandler(this.mnuHideSameTypeFrames_Click);
             // 
-            // nePlusAfficherDeMessagesDeCetExpéditeurToolStripMenuItem
+            // mnuHideSameSenderFrames
             // 
-            this.nePlusAfficherDeMessagesDeCetExpéditeurToolStripMenuItem.Name = "nePlusAfficherDeMessagesDeCetExpéditeurToolStripMenuItem";
-            this.nePlusAfficherDeMessagesDeCetExpéditeurToolStripMenuItem.Size = new System.Drawing.Size(367, 22);
-            this.nePlusAfficherDeMessagesDeCetExpéditeurToolStripMenuItem.Text = "Ne plus afficher de messages avec le même expéditeur";
-            this.nePlusAfficherDeMessagesDeCetExpéditeurToolStripMenuItem.Click += new System.EventHandler(this.nePlusAfficherDeMessagesDeCetExpéditeurToolStripMenuItem_Click);
+            this.mnuHideSameSenderFrames.Name = "mnuHideSameSenderFrames";
+            this.mnuHideSameSenderFrames.Size = new System.Drawing.Size(367, 22);
+            this.mnuHideSameSenderFrames.Text = "Ne plus afficher de messages avec le même expéditeur";
+            this.mnuHideSameSenderFrames.Click += new System.EventHandler(this.mnuHideSameSenderFrames_Click);
             // 
-            // nePlusAfficherDeMessagesAvecCeDestinataireToolStripMenuItem
+            // mnuHideSameReceiverFrames
             // 
-            this.nePlusAfficherDeMessagesAvecCeDestinataireToolStripMenuItem.Name = "nePlusAfficherDeMessagesAvecCeDestinataireToolStripMenuItem";
-            this.nePlusAfficherDeMessagesAvecCeDestinataireToolStripMenuItem.Size = new System.Drawing.Size(367, 22);
-            this.nePlusAfficherDeMessagesAvecCeDestinataireToolStripMenuItem.Text = "Ne plus afficher de messages avec le même destinataire";
-            this.nePlusAfficherDeMessagesAvecCeDestinataireToolStripMenuItem.Click += new System.EventHandler(this.nePlusAfficherDeMessagesAvecCeDestinataireToolStripMenuItem_Click);
+            this.mnuHideSameReceiverFrames.Name = "mnuHideSameReceiverFrames";
+            this.mnuHideSameReceiverFrames.Size = new System.Drawing.Size(367, 22);
+            this.mnuHideSameReceiverFrames.Text = "Ne plus afficher de messages avec le même destinataire";
+            this.mnuHideSameReceiverFrames.Click += new System.EventHandler(this.mnuHideSameReceiverFrames_Click);
             // 
-            // nePlusAfficherDeMessagesDeCetteCarteToolStripMenuItem
+            // mnuHideSameBoardFrames
             // 
-            this.nePlusAfficherDeMessagesDeCetteCarteToolStripMenuItem.Name = "nePlusAfficherDeMessagesDeCetteCarteToolStripMenuItem";
-            this.nePlusAfficherDeMessagesDeCetteCarteToolStripMenuItem.Size = new System.Drawing.Size(367, 22);
-            this.nePlusAfficherDeMessagesDeCetteCarteToolStripMenuItem.Text = "Ne plus afficher de messages de cette carte";
-            this.nePlusAfficherDeMessagesDeCetteCarteToolStripMenuItem.Click += new System.EventHandler(this.nePlusAfficherDeMessagesDeCetteCarteToolStripMenuItem_Click);
+            this.mnuHideSameBoardFrames.Name = "mnuHideSameBoardFrames";
+            this.mnuHideSameBoardFrames.Size = new System.Drawing.Size(367, 22);
+            this.mnuHideSameBoardFrames.Text = "Ne plus afficher de messages de cette carte";
+            this.mnuHideSameBoardFrames.Click += new System.EventHandler(this.mnuHideSameBoardFrames_Click);
             // 
-            // groupBox2
+            // grpColor
             // 
-            this.groupBox2.Controls.Add(this.rdoAucun);
-            this.groupBox2.Controls.Add(this.rdoDest);
-            this.groupBox2.Controls.Add(this.rdoCarte);
-            this.groupBox2.Controls.Add(this.rdoExp);
-            this.groupBox2.Location = new System.Drawing.Point(293, 114);
-            this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(117, 120);
-            this.groupBox2.TabIndex = 14;
-            this.groupBox2.TabStop = false;
-            this.groupBox2.Text = "Colorer par";
+            this.grpColor.Controls.Add(this.rdoColorNone);
+            this.grpColor.Controls.Add(this.rdoColorByReceiver);
+            this.grpColor.Controls.Add(this.rdoColorByBoard);
+            this.grpColor.Controls.Add(this.rdoColorBySender);
+            this.grpColor.Location = new System.Drawing.Point(293, 114);
+            this.grpColor.Name = "grpColor";
+            this.grpColor.Size = new System.Drawing.Size(117, 120);
+            this.grpColor.TabIndex = 14;
+            this.grpColor.TabStop = false;
+            this.grpColor.Text = "Colorer par";
             // 
-            // rdoAucun
+            // rdoColorNone
             // 
-            this.rdoAucun.AutoSize = true;
-            this.rdoAucun.Location = new System.Drawing.Point(13, 90);
-            this.rdoAucun.Name = "rdoAucun";
-            this.rdoAucun.Size = new System.Drawing.Size(56, 17);
-            this.rdoAucun.TabIndex = 13;
-            this.rdoAucun.Text = "Aucun";
-            this.rdoAucun.UseVisualStyleBackColor = true;
+            this.rdoColorNone.AutoSize = true;
+            this.rdoColorNone.Location = new System.Drawing.Point(13, 90);
+            this.rdoColorNone.Name = "rdoColorNone";
+            this.rdoColorNone.Size = new System.Drawing.Size(56, 17);
+            this.rdoColorNone.TabIndex = 13;
+            this.rdoColorNone.Text = "Aucun";
+            this.rdoColorNone.UseVisualStyleBackColor = true;
             // 
-            // rdoDest
+            // rdoColorByReceiver
             // 
-            this.rdoDest.AutoSize = true;
-            this.rdoDest.Location = new System.Drawing.Point(13, 44);
-            this.rdoDest.Name = "rdoDest";
-            this.rdoDest.Size = new System.Drawing.Size(81, 17);
-            this.rdoDest.TabIndex = 12;
-            this.rdoDest.Text = "Destinataire";
-            this.rdoDest.UseVisualStyleBackColor = true;
+            this.rdoColorByReceiver.AutoSize = true;
+            this.rdoColorByReceiver.Location = new System.Drawing.Point(13, 44);
+            this.rdoColorByReceiver.Name = "rdoColorByReceiver";
+            this.rdoColorByReceiver.Size = new System.Drawing.Size(81, 17);
+            this.rdoColorByReceiver.TabIndex = 12;
+            this.rdoColorByReceiver.Text = "Destinataire";
+            this.rdoColorByReceiver.UseVisualStyleBackColor = true;
             // 
-            // rdoCarte
+            // rdoColorByBoard
             // 
-            this.rdoCarte.AutoSize = true;
-            this.rdoCarte.Location = new System.Drawing.Point(13, 67);
-            this.rdoCarte.Name = "rdoCarte";
-            this.rdoCarte.Size = new System.Drawing.Size(104, 17);
-            this.rdoCarte.TabIndex = 10;
-            this.rdoCarte.Text = "Carte concernée";
-            this.rdoCarte.UseVisualStyleBackColor = true;
+            this.rdoColorByBoard.AutoSize = true;
+            this.rdoColorByBoard.Location = new System.Drawing.Point(13, 67);
+            this.rdoColorByBoard.Name = "rdoColorByBoard";
+            this.rdoColorByBoard.Size = new System.Drawing.Size(104, 17);
+            this.rdoColorByBoard.TabIndex = 10;
+            this.rdoColorByBoard.Text = "Carte concernée";
+            this.rdoColorByBoard.UseVisualStyleBackColor = true;
             // 
-            // rdoExp
+            // rdoColorBySender
             // 
-            this.rdoExp.AutoSize = true;
-            this.rdoExp.Checked = true;
-            this.rdoExp.Location = new System.Drawing.Point(13, 21);
-            this.rdoExp.Name = "rdoExp";
-            this.rdoExp.Size = new System.Drawing.Size(75, 17);
-            this.rdoExp.TabIndex = 11;
-            this.rdoExp.TabStop = true;
-            this.rdoExp.Text = "Expéditeur";
-            this.rdoExp.UseVisualStyleBackColor = true;
+            this.rdoColorBySender.AutoSize = true;
+            this.rdoColorBySender.Checked = true;
+            this.rdoColorBySender.Location = new System.Drawing.Point(13, 21);
+            this.rdoColorBySender.Name = "rdoColorBySender";
+            this.rdoColorBySender.Size = new System.Drawing.Size(75, 17);
+            this.rdoColorBySender.TabIndex = 11;
+            this.rdoColorBySender.TabStop = true;
+            this.rdoColorBySender.Text = "Expéditeur";
+            this.rdoColorBySender.UseVisualStyleBackColor = true;
             // 
-            // checkedListBoxMove
+            // lstRecMoveFunctions
             // 
-            this.checkedListBoxMove.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.checkedListBoxMove.CheckOnClick = true;
-            this.checkedListBoxMove.ColumnWidth = 155;
-            this.checkedListBoxMove.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.checkedListBoxMove.FormattingEnabled = true;
-            this.checkedListBoxMove.Location = new System.Drawing.Point(3, 3);
-            this.checkedListBoxMove.Margin = new System.Windows.Forms.Padding(0);
-            this.checkedListBoxMove.MultiColumn = true;
-            this.checkedListBoxMove.Name = "checkedListBoxMove";
-            this.checkedListBoxMove.Size = new System.Drawing.Size(355, 298);
-            this.checkedListBoxMove.Sorted = true;
-            this.checkedListBoxMove.TabIndex = 15;
-            this.checkedListBoxMove.ItemCheck += new System.Windows.Forms.ItemCheckEventHandler(this.checkedListBoxGros_ItemCheck);
+            this.lstRecMoveFunctions.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.lstRecMoveFunctions.CheckOnClick = true;
+            this.lstRecMoveFunctions.ColumnWidth = 155;
+            this.lstRecMoveFunctions.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.lstRecMoveFunctions.FormattingEnabled = true;
+            this.lstRecMoveFunctions.Location = new System.Drawing.Point(3, 3);
+            this.lstRecMoveFunctions.Margin = new System.Windows.Forms.Padding(0);
+            this.lstRecMoveFunctions.MultiColumn = true;
+            this.lstRecMoveFunctions.Name = "lstRecMoveFunctions";
+            this.lstRecMoveFunctions.Size = new System.Drawing.Size(355, 298);
+            this.lstRecMoveFunctions.Sorted = true;
+            this.lstRecMoveFunctions.TabIndex = 15;
+            this.lstRecMoveFunctions.ItemCheck += new System.Windows.Forms.ItemCheckEventHandler(this.lstFunctions_ItemCheck);
             // 
-            // groupBox1
+            // grpTime
             // 
-            this.groupBox1.Controls.Add(this.rdoHeure);
-            this.groupBox1.Controls.Add(this.rdoTempsDebut);
-            this.groupBox1.Controls.Add(this.rdoTempsPrecAff);
-            this.groupBox1.Controls.Add(this.rdoTempsPrec);
-            this.groupBox1.Location = new System.Drawing.Point(3, 114);
-            this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(284, 120);
-            this.groupBox1.TabIndex = 15;
-            this.groupBox1.TabStop = false;
-            this.groupBox1.Text = "Affichage heure";
+            this.grpTime.Controls.Add(this.rdoTimeAbsolute);
+            this.grpTime.Controls.Add(this.rdoTimeFromStart);
+            this.grpTime.Controls.Add(this.rdoTimeFromPrevDisplay);
+            this.grpTime.Controls.Add(this.rdoTimeFromPrev);
+            this.grpTime.Location = new System.Drawing.Point(3, 114);
+            this.grpTime.Name = "grpTime";
+            this.grpTime.Size = new System.Drawing.Size(284, 120);
+            this.grpTime.TabIndex = 15;
+            this.grpTime.TabStop = false;
+            this.grpTime.Text = "Affichage heure";
             // 
-            // rdoHeure
+            // rdoTimeAbsolute
             // 
-            this.rdoHeure.AutoSize = true;
-            this.rdoHeure.Location = new System.Drawing.Point(13, 67);
-            this.rdoHeure.Name = "rdoHeure";
-            this.rdoHeure.Size = new System.Drawing.Size(94, 17);
-            this.rdoHeure.TabIndex = 10;
-            this.rdoHeure.Text = "Heure absolue";
-            this.rdoHeure.UseVisualStyleBackColor = true;
+            this.rdoTimeAbsolute.AutoSize = true;
+            this.rdoTimeAbsolute.Location = new System.Drawing.Point(13, 67);
+            this.rdoTimeAbsolute.Name = "rdoTimeAbsolute";
+            this.rdoTimeAbsolute.Size = new System.Drawing.Size(94, 17);
+            this.rdoTimeAbsolute.TabIndex = 10;
+            this.rdoTimeAbsolute.Text = "Heure absolue";
+            this.rdoTimeAbsolute.UseVisualStyleBackColor = true;
             // 
-            // rdoTempsDebut
+            // rdoTimeFromStart
             // 
-            this.rdoTempsDebut.AutoSize = true;
-            this.rdoTempsDebut.Location = new System.Drawing.Point(13, 90);
-            this.rdoTempsDebut.Name = "rdoTempsDebut";
-            this.rdoTempsDebut.Size = new System.Drawing.Size(167, 17);
-            this.rdoTempsDebut.TabIndex = 13;
-            this.rdoTempsDebut.Text = "Temps écoulé depuis le début";
-            this.rdoTempsDebut.UseVisualStyleBackColor = true;
+            this.rdoTimeFromStart.AutoSize = true;
+            this.rdoTimeFromStart.Location = new System.Drawing.Point(13, 90);
+            this.rdoTimeFromStart.Name = "rdoTimeFromStart";
+            this.rdoTimeFromStart.Size = new System.Drawing.Size(167, 17);
+            this.rdoTimeFromStart.TabIndex = 13;
+            this.rdoTimeFromStart.Text = "Temps écoulé depuis le début";
+            this.rdoTimeFromStart.UseVisualStyleBackColor = true;
             // 
-            // rdoTempsPrecAff
+            // rdoTimeFromPrevDisplay
             // 
-            this.rdoTempsPrecAff.AutoSize = true;
-            this.rdoTempsPrecAff.Checked = true;
-            this.rdoTempsPrecAff.Location = new System.Drawing.Point(13, 21);
-            this.rdoTempsPrecAff.Name = "rdoTempsPrecAff";
-            this.rdoTempsPrecAff.Size = new System.Drawing.Size(268, 17);
-            this.rdoTempsPrecAff.TabIndex = 12;
-            this.rdoTempsPrecAff.TabStop = true;
-            this.rdoTempsPrecAff.Text = "Temps écoulé depuis le message affiché précédent";
-            this.rdoTempsPrecAff.UseVisualStyleBackColor = true;
+            this.rdoTimeFromPrevDisplay.AutoSize = true;
+            this.rdoTimeFromPrevDisplay.Checked = true;
+            this.rdoTimeFromPrevDisplay.Location = new System.Drawing.Point(13, 21);
+            this.rdoTimeFromPrevDisplay.Name = "rdoTimeFromPrevDisplay";
+            this.rdoTimeFromPrevDisplay.Size = new System.Drawing.Size(268, 17);
+            this.rdoTimeFromPrevDisplay.TabIndex = 12;
+            this.rdoTimeFromPrevDisplay.TabStop = true;
+            this.rdoTimeFromPrevDisplay.Text = "Temps écoulé depuis le message affiché précédent";
+            this.rdoTimeFromPrevDisplay.UseVisualStyleBackColor = true;
             // 
-            // rdoTempsPrec
+            // rdoTimeFromPrev
             // 
-            this.rdoTempsPrec.AutoSize = true;
-            this.rdoTempsPrec.Location = new System.Drawing.Point(13, 44);
-            this.rdoTempsPrec.Name = "rdoTempsPrec";
-            this.rdoTempsPrec.Size = new System.Drawing.Size(233, 17);
-            this.rdoTempsPrec.TabIndex = 11;
-            this.rdoTempsPrec.Text = "Temps écoulé depuis le message précédent";
-            this.rdoTempsPrec.UseVisualStyleBackColor = true;
+            this.rdoTimeFromPrev.AutoSize = true;
+            this.rdoTimeFromPrev.Location = new System.Drawing.Point(13, 44);
+            this.rdoTimeFromPrev.Name = "rdoTimeFromPrev";
+            this.rdoTimeFromPrev.Size = new System.Drawing.Size(233, 17);
+            this.rdoTimeFromPrev.TabIndex = 11;
+            this.rdoTimeFromPrev.Text = "Temps écoulé depuis le message précédent";
+            this.rdoTimeFromPrev.UseVisualStyleBackColor = true;
             // 
-            // checkedListBoxIO
+            // lstRecIOFunctions
             // 
-            this.checkedListBoxIO.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.checkedListBoxIO.CheckOnClick = true;
-            this.checkedListBoxIO.ColumnWidth = 150;
-            this.checkedListBoxIO.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.checkedListBoxIO.FormattingEnabled = true;
-            this.checkedListBoxIO.Location = new System.Drawing.Point(3, 3);
-            this.checkedListBoxIO.MultiColumn = true;
-            this.checkedListBoxIO.Name = "checkedListBoxIO";
-            this.checkedListBoxIO.Size = new System.Drawing.Size(355, 298);
-            this.checkedListBoxIO.Sorted = true;
-            this.checkedListBoxIO.TabIndex = 17;
-            this.checkedListBoxIO.ItemCheck += new System.Windows.Forms.ItemCheckEventHandler(this.checkedListBoxIO_ItemCheck);
+            this.lstRecIOFunctions.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.lstRecIOFunctions.CheckOnClick = true;
+            this.lstRecIOFunctions.ColumnWidth = 150;
+            this.lstRecIOFunctions.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.lstRecIOFunctions.FormattingEnabled = true;
+            this.lstRecIOFunctions.Location = new System.Drawing.Point(3, 3);
+            this.lstRecIOFunctions.MultiColumn = true;
+            this.lstRecIOFunctions.Name = "lstRecIOFunctions";
+            this.lstRecIOFunctions.Size = new System.Drawing.Size(355, 298);
+            this.lstRecIOFunctions.Sorted = true;
+            this.lstRecIOFunctions.TabIndex = 17;
+            this.lstRecIOFunctions.ItemCheck += new System.Windows.Forms.ItemCheckEventHandler(this.lstFunctions_ItemCheck);
             // 
-            // groupBoxMessages
+            // grpMessages
             // 
-            this.groupBoxMessages.Controls.Add(this.btnDecocher);
-            this.groupBoxMessages.Controls.Add(this.btnCocher);
-            this.groupBoxMessages.Controls.Add(this.tabControlGestion);
-            this.groupBoxMessages.Location = new System.Drawing.Point(3, 240);
-            this.groupBoxMessages.Name = "groupBoxMessages";
-            this.groupBoxMessages.Size = new System.Drawing.Size(407, 393);
-            this.groupBoxMessages.TabIndex = 19;
-            this.groupBoxMessages.TabStop = false;
-            this.groupBoxMessages.Text = "Filtres sur les messages";
+            this.grpMessages.Controls.Add(this.btnAllUncheck);
+            this.grpMessages.Controls.Add(this.btnAllCheck);
+            this.grpMessages.Controls.Add(this.tabFilters);
+            this.grpMessages.Location = new System.Drawing.Point(3, 240);
+            this.grpMessages.Name = "grpMessages";
+            this.grpMessages.Size = new System.Drawing.Size(407, 393);
+            this.grpMessages.TabIndex = 19;
+            this.grpMessages.TabStop = false;
+            this.grpMessages.Text = "Filtres sur les messages";
             // 
-            // btnDecocher
+            // btnAllUncheck
             // 
-            this.btnDecocher.Location = new System.Drawing.Point(311, 12);
-            this.btnDecocher.Name = "btnDecocher";
-            this.btnDecocher.Size = new System.Drawing.Size(85, 23);
-            this.btnDecocher.TabIndex = 27;
-            this.btnDecocher.Text = "Tout décocher";
-            this.btnDecocher.UseVisualStyleBackColor = true;
-            this.btnDecocher.Click += new System.EventHandler(this.btnDecocher_Click);
+            this.btnAllUncheck.Location = new System.Drawing.Point(311, 12);
+            this.btnAllUncheck.Name = "btnAllUncheck";
+            this.btnAllUncheck.Size = new System.Drawing.Size(85, 23);
+            this.btnAllUncheck.TabIndex = 27;
+            this.btnAllUncheck.Text = "Tout décocher";
+            this.btnAllUncheck.UseVisualStyleBackColor = true;
+            this.btnAllUncheck.Click += new System.EventHandler(this.btnAllUncheck_Click);
             // 
-            // btnCocher
+            // btnAllCheck
             // 
-            this.btnCocher.Location = new System.Drawing.Point(230, 12);
-            this.btnCocher.Name = "btnCocher";
-            this.btnCocher.Size = new System.Drawing.Size(75, 23);
-            this.btnCocher.TabIndex = 26;
-            this.btnCocher.Text = "Tout cocher";
-            this.btnCocher.UseVisualStyleBackColor = true;
-            this.btnCocher.Click += new System.EventHandler(this.btnCocher_Click);
+            this.btnAllCheck.Location = new System.Drawing.Point(230, 12);
+            this.btnAllCheck.Name = "btnAllCheck";
+            this.btnAllCheck.Size = new System.Drawing.Size(75, 23);
+            this.btnAllCheck.TabIndex = 26;
+            this.btnAllCheck.Text = "Tout cocher";
+            this.btnAllCheck.UseVisualStyleBackColor = true;
+            this.btnAllCheck.Click += new System.EventHandler(this.btnAllCheck_Click);
             // 
-            // tabControlGestion
+            // tabFilters
             // 
-            this.tabControlGestion.Controls.Add(this.tabPageCartes);
-            this.tabControlGestion.Controls.Add(this.tabPageMessages);
-            this.tabControlGestion.Location = new System.Drawing.Point(13, 19);
-            this.tabControlGestion.Name = "tabControlGestion";
-            this.tabControlGestion.SelectedIndex = 0;
-            this.tabControlGestion.Size = new System.Drawing.Size(383, 362);
-            this.tabControlGestion.TabIndex = 26;
+            this.tabFilters.Controls.Add(this.tabPageBoards);
+            this.tabFilters.Controls.Add(this.tabPageMessages);
+            this.tabFilters.Location = new System.Drawing.Point(13, 19);
+            this.tabFilters.Name = "tabFilters";
+            this.tabFilters.SelectedIndex = 0;
+            this.tabFilters.Size = new System.Drawing.Size(383, 362);
+            this.tabFilters.TabIndex = 26;
             // 
-            // tabPageCartes
+            // tabPageBoards
             // 
-            this.tabPageCartes.Controls.Add(this.groupBoxExpediteur);
-            this.tabPageCartes.Controls.Add(this.groupBoxDestinataire);
-            this.tabPageCartes.Location = new System.Drawing.Point(4, 22);
-            this.tabPageCartes.Name = "tabPageCartes";
-            this.tabPageCartes.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPageCartes.Size = new System.Drawing.Size(375, 336);
-            this.tabPageCartes.TabIndex = 0;
-            this.tabPageCartes.Text = "Cartes";
-            this.tabPageCartes.UseVisualStyleBackColor = true;
+            this.tabPageBoards.Controls.Add(this.grpSender);
+            this.tabPageBoards.Controls.Add(this.grpReceiver);
+            this.tabPageBoards.Location = new System.Drawing.Point(4, 22);
+            this.tabPageBoards.Name = "tabPageBoards";
+            this.tabPageBoards.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPageBoards.Size = new System.Drawing.Size(375, 336);
+            this.tabPageBoards.TabIndex = 0;
+            this.tabPageBoards.Text = "Cartes";
+            this.tabPageBoards.UseVisualStyleBackColor = true;
             // 
-            // groupBoxExpediteur
+            // grpSender
             // 
-            this.groupBoxExpediteur.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            this.grpSender.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left)));
-            this.groupBoxExpediteur.Controls.Add(this.checkedListBoxExpediteur);
-            this.groupBoxExpediteur.Location = new System.Drawing.Point(6, 6);
-            this.groupBoxExpediteur.Name = "groupBoxExpediteur";
-            this.groupBoxExpediteur.Size = new System.Drawing.Size(177, 324);
-            this.groupBoxExpediteur.TabIndex = 24;
-            this.groupBoxExpediteur.TabStop = false;
-            this.groupBoxExpediteur.Text = "Expediteur";
+            this.grpSender.Controls.Add(this.lstSender);
+            this.grpSender.Location = new System.Drawing.Point(6, 6);
+            this.grpSender.Name = "grpSender";
+            this.grpSender.Size = new System.Drawing.Size(177, 324);
+            this.grpSender.TabIndex = 24;
+            this.grpSender.TabStop = false;
+            this.grpSender.Text = "Expediteur";
             // 
-            // checkedListBoxExpediteur
+            // lstSender
             // 
-            this.checkedListBoxExpediteur.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.checkedListBoxExpediteur.CheckOnClick = true;
-            this.checkedListBoxExpediteur.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.checkedListBoxExpediteur.FormattingEnabled = true;
-            this.checkedListBoxExpediteur.Location = new System.Drawing.Point(3, 16);
-            this.checkedListBoxExpediteur.Name = "checkedListBoxExpediteur";
-            this.checkedListBoxExpediteur.Size = new System.Drawing.Size(171, 305);
-            this.checkedListBoxExpediteur.Sorted = true;
-            this.checkedListBoxExpediteur.TabIndex = 16;
-            this.checkedListBoxExpediteur.ItemCheck += new System.Windows.Forms.ItemCheckEventHandler(this.checkedListBoxExpediteur_ItemCheck);
+            this.lstSender.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.lstSender.CheckOnClick = true;
+            this.lstSender.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.lstSender.FormattingEnabled = true;
+            this.lstSender.Location = new System.Drawing.Point(3, 16);
+            this.lstSender.Name = "lstSender";
+            this.lstSender.Size = new System.Drawing.Size(171, 305);
+            this.lstSender.Sorted = true;
+            this.lstSender.TabIndex = 16;
+            this.lstSender.ItemCheck += new System.Windows.Forms.ItemCheckEventHandler(this.lstSender_ItemCheck);
             // 
-            // groupBoxDestinataire
+            // grpReceiver
             // 
-            this.groupBoxDestinataire.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            this.grpReceiver.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.groupBoxDestinataire.Controls.Add(this.checkedListBoxDestinataire);
-            this.groupBoxDestinataire.Location = new System.Drawing.Point(192, 6);
-            this.groupBoxDestinataire.Name = "groupBoxDestinataire";
-            this.groupBoxDestinataire.Size = new System.Drawing.Size(177, 324);
-            this.groupBoxDestinataire.TabIndex = 25;
-            this.groupBoxDestinataire.TabStop = false;
-            this.groupBoxDestinataire.Text = "Destinataire";
+            this.grpReceiver.Controls.Add(this.lstReceiver);
+            this.grpReceiver.Location = new System.Drawing.Point(192, 6);
+            this.grpReceiver.Name = "grpReceiver";
+            this.grpReceiver.Size = new System.Drawing.Size(177, 324);
+            this.grpReceiver.TabIndex = 25;
+            this.grpReceiver.TabStop = false;
+            this.grpReceiver.Text = "Destinataire";
             // 
-            // checkedListBoxDestinataire
+            // lstReceiver
             // 
-            this.checkedListBoxDestinataire.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.checkedListBoxDestinataire.CheckOnClick = true;
-            this.checkedListBoxDestinataire.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.checkedListBoxDestinataire.FormattingEnabled = true;
-            this.checkedListBoxDestinataire.Location = new System.Drawing.Point(3, 16);
-            this.checkedListBoxDestinataire.Name = "checkedListBoxDestinataire";
-            this.checkedListBoxDestinataire.Size = new System.Drawing.Size(171, 305);
-            this.checkedListBoxDestinataire.Sorted = true;
-            this.checkedListBoxDestinataire.TabIndex = 16;
-            this.checkedListBoxDestinataire.ItemCheck += new System.Windows.Forms.ItemCheckEventHandler(this.checkedListBoxDestinataire_ItemCheck);
+            this.lstReceiver.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.lstReceiver.CheckOnClick = true;
+            this.lstReceiver.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.lstReceiver.FormattingEnabled = true;
+            this.lstReceiver.Location = new System.Drawing.Point(3, 16);
+            this.lstReceiver.Name = "lstReceiver";
+            this.lstReceiver.Size = new System.Drawing.Size(171, 305);
+            this.lstReceiver.Sorted = true;
+            this.lstReceiver.TabIndex = 16;
+            this.lstReceiver.ItemCheck += new System.Windows.Forms.ItemCheckEventHandler(this.lstReceiver_ItemCheck);
             // 
             // tabPageMessages
             // 
-            this.tabPageMessages.Controls.Add(this.tabControlMessages);
+            this.tabPageMessages.Controls.Add(this.tabFunctions);
             this.tabPageMessages.Location = new System.Drawing.Point(4, 22);
             this.tabPageMessages.Name = "tabPageMessages";
             this.tabPageMessages.Padding = new System.Windows.Forms.Padding(3);
@@ -418,22 +418,22 @@
             this.tabPageMessages.Text = "Messages";
             this.tabPageMessages.UseVisualStyleBackColor = true;
             // 
-            // tabControlMessages
+            // tabFunctions
             // 
-            this.tabControlMessages.Controls.Add(this.tabPageMove);
-            this.tabControlMessages.Controls.Add(this.tabPageIO);
-            this.tabControlMessages.Controls.Add(this.tabGB);
-            this.tabControlMessages.Controls.Add(this.tabCAN);
-            this.tabControlMessages.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tabControlMessages.Location = new System.Drawing.Point(3, 3);
-            this.tabControlMessages.Name = "tabControlMessages";
-            this.tabControlMessages.SelectedIndex = 0;
-            this.tabControlMessages.Size = new System.Drawing.Size(369, 330);
-            this.tabControlMessages.TabIndex = 0;
+            this.tabFunctions.Controls.Add(this.tabPageMove);
+            this.tabFunctions.Controls.Add(this.tabPageIO);
+            this.tabFunctions.Controls.Add(this.tabPageGB);
+            this.tabFunctions.Controls.Add(this.tabPageCAN);
+            this.tabFunctions.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tabFunctions.Location = new System.Drawing.Point(3, 3);
+            this.tabFunctions.Name = "tabFunctions";
+            this.tabFunctions.SelectedIndex = 0;
+            this.tabFunctions.Size = new System.Drawing.Size(369, 330);
+            this.tabFunctions.TabIndex = 0;
             // 
             // tabPageMove
             // 
-            this.tabPageMove.Controls.Add(this.checkedListBoxMove);
+            this.tabPageMove.Controls.Add(this.lstRecMoveFunctions);
             this.tabPageMove.Location = new System.Drawing.Point(4, 22);
             this.tabPageMove.Name = "tabPageMove";
             this.tabPageMove.Padding = new System.Windows.Forms.Padding(3);
@@ -444,7 +444,7 @@
             // 
             // tabPageIO
             // 
-            this.tabPageIO.Controls.Add(this.checkedListBoxIO);
+            this.tabPageIO.Controls.Add(this.lstRecIOFunctions);
             this.tabPageIO.Location = new System.Drawing.Point(4, 22);
             this.tabPageIO.Name = "tabPageIO";
             this.tabPageIO.Padding = new System.Windows.Forms.Padding(3);
@@ -453,51 +453,77 @@
             this.tabPageIO.Text = "RecIO";
             this.tabPageIO.UseVisualStyleBackColor = true;
             // 
-            // tabGB
+            // tabPageGB
             // 
-            this.tabGB.Controls.Add(this.checkedListBoxGB);
-            this.tabGB.Location = new System.Drawing.Point(4, 22);
-            this.tabGB.Name = "tabGB";
-            this.tabGB.Padding = new System.Windows.Forms.Padding(3);
-            this.tabGB.Size = new System.Drawing.Size(361, 304);
-            this.tabGB.TabIndex = 5;
-            this.tabGB.Text = "RecGoBot";
-            this.tabGB.UseVisualStyleBackColor = true;
+            this.tabPageGB.Controls.Add(this.lstRecGoBotFunctions);
+            this.tabPageGB.Location = new System.Drawing.Point(4, 22);
+            this.tabPageGB.Name = "tabPageGB";
+            this.tabPageGB.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPageGB.Size = new System.Drawing.Size(361, 304);
+            this.tabPageGB.TabIndex = 5;
+            this.tabPageGB.Text = "RecGoBot";
+            this.tabPageGB.UseVisualStyleBackColor = true;
             // 
-            // checkedListBoxGB
+            // lstRecGoBotFunctions
             // 
-            this.checkedListBoxGB.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.checkedListBoxGB.CheckOnClick = true;
-            this.checkedListBoxGB.ColumnWidth = 150;
-            this.checkedListBoxGB.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.checkedListBoxGB.FormattingEnabled = true;
-            this.checkedListBoxGB.Location = new System.Drawing.Point(3, 3);
-            this.checkedListBoxGB.MultiColumn = true;
-            this.checkedListBoxGB.Name = "checkedListBoxGB";
-            this.checkedListBoxGB.Size = new System.Drawing.Size(355, 298);
-            this.checkedListBoxGB.Sorted = true;
-            this.checkedListBoxGB.TabIndex = 18;
-            this.checkedListBoxGB.ItemCheck += new System.Windows.Forms.ItemCheckEventHandler(this.checkedListBoxGB_ItemCheck);
+            this.lstRecGoBotFunctions.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.lstRecGoBotFunctions.CheckOnClick = true;
+            this.lstRecGoBotFunctions.ColumnWidth = 150;
+            this.lstRecGoBotFunctions.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.lstRecGoBotFunctions.FormattingEnabled = true;
+            this.lstRecGoBotFunctions.Location = new System.Drawing.Point(3, 3);
+            this.lstRecGoBotFunctions.MultiColumn = true;
+            this.lstRecGoBotFunctions.Name = "lstRecGoBotFunctions";
+            this.lstRecGoBotFunctions.Size = new System.Drawing.Size(355, 298);
+            this.lstRecGoBotFunctions.Sorted = true;
+            this.lstRecGoBotFunctions.TabIndex = 18;
+            this.lstRecGoBotFunctions.ItemCheck += new System.Windows.Forms.ItemCheckEventHandler(this.lstFunctions_ItemCheck);
             // 
-            // btnRejouerTout
+            // tabPageCAN
             // 
-            this.btnRejouerTout.Location = new System.Drawing.Point(140, 33);
-            this.btnRejouerTout.Name = "btnRejouerTout";
-            this.btnRejouerTout.Size = new System.Drawing.Size(106, 23);
-            this.btnRejouerTout.TabIndex = 21;
-            this.btnRejouerTout.Text = "Rejouer tout";
-            this.btnRejouerTout.UseVisualStyleBackColor = true;
-            this.btnRejouerTout.Click += new System.EventHandler(this.btnRejouerTout_Click);
+            this.tabPageCAN.Controls.Add(this.lstRecCANFunctions);
+            this.tabPageCAN.Location = new System.Drawing.Point(4, 22);
+            this.tabPageCAN.Name = "tabPageCAN";
+            this.tabPageCAN.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPageCAN.Size = new System.Drawing.Size(361, 304);
+            this.tabPageCAN.TabIndex = 6;
+            this.tabPageCAN.Text = "RecCAN";
+            this.tabPageCAN.UseVisualStyleBackColor = true;
             // 
-            // btnRejouerSelection
+            // lstRecCANFunctions
             // 
-            this.btnRejouerSelection.Location = new System.Drawing.Point(140, 63);
-            this.btnRejouerSelection.Name = "btnRejouerSelection";
-            this.btnRejouerSelection.Size = new System.Drawing.Size(106, 23);
-            this.btnRejouerSelection.TabIndex = 22;
-            this.btnRejouerSelection.Text = "Rejouer sélection";
-            this.btnRejouerSelection.UseVisualStyleBackColor = true;
-            this.btnRejouerSelection.Click += new System.EventHandler(this.btnRejouerSelection_Click);
+            this.lstRecCANFunctions.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.lstRecCANFunctions.CheckOnClick = true;
+            this.lstRecCANFunctions.ColumnWidth = 150;
+            this.lstRecCANFunctions.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.lstRecCANFunctions.FormattingEnabled = true;
+            this.lstRecCANFunctions.Location = new System.Drawing.Point(3, 3);
+            this.lstRecCANFunctions.MultiColumn = true;
+            this.lstRecCANFunctions.Name = "lstRecCANFunctions";
+            this.lstRecCANFunctions.Size = new System.Drawing.Size(355, 298);
+            this.lstRecCANFunctions.Sorted = true;
+            this.lstRecCANFunctions.TabIndex = 19;
+            this.lstRecCANFunctions.ItemCheck += new System.Windows.Forms.ItemCheckEventHandler(this.lstFunctions_ItemCheck);
+            // 
+            // btnReplayAll
+            // 
+            this.btnReplayAll.Location = new System.Drawing.Point(140, 33);
+            this.btnReplayAll.Name = "btnReplayAll";
+            this.btnReplayAll.Size = new System.Drawing.Size(106, 23);
+            this.btnReplayAll.TabIndex = 21;
+            this.btnReplayAll.Text = "Rejouer tout";
+            this.btnReplayAll.UseVisualStyleBackColor = true;
+            this.btnReplayAll.Click += new System.EventHandler(this.btnReplayAll_Click);
+            // 
+            // btnReplaySelected
+            // 
+            this.btnReplaySelected.Location = new System.Drawing.Point(140, 63);
+            this.btnReplaySelected.Name = "btnReplaySelected";
+            this.btnReplaySelected.Size = new System.Drawing.Size(106, 23);
+            this.btnReplaySelected.TabIndex = 22;
+            this.btnReplaySelected.Text = "Rejouer sélection";
+            this.btnReplaySelected.UseVisualStyleBackColor = true;
+            this.btnReplaySelected.Click += new System.EventHandler(this.btnReplaySelected_Click);
             // 
             // boxScroll
             // 
@@ -511,18 +537,18 @@
             this.boxScroll.Text = "Scroll automatique";
             this.boxScroll.UseVisualStyleBackColor = true;
             // 
-            // btnAfficher
+            // btnDisplay
             // 
-            this.btnAfficher.Image = global::GoBot.Properties.Resources.Play16;
-            this.btnAfficher.Location = new System.Drawing.Point(270, 33);
-            this.btnAfficher.Name = "btnAfficher";
-            this.btnAfficher.Size = new System.Drawing.Size(129, 23);
-            this.btnAfficher.TabIndex = 20;
-            this.btnAfficher.Text = "Afficher temps réel";
-            this.btnAfficher.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.btnAfficher.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
-            this.btnAfficher.UseVisualStyleBackColor = true;
-            this.btnAfficher.Click += new System.EventHandler(this.btnAfficher_Click);
+            this.btnDisplay.Image = global::GoBot.Properties.Resources.Play16;
+            this.btnDisplay.Location = new System.Drawing.Point(270, 33);
+            this.btnDisplay.Name = "btnDisplay";
+            this.btnDisplay.Size = new System.Drawing.Size(129, 23);
+            this.btnDisplay.TabIndex = 20;
+            this.btnDisplay.Text = "Afficher temps réel";
+            this.btnDisplay.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.btnDisplay.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
+            this.btnDisplay.UseVisualStyleBackColor = true;
+            this.btnDisplay.Click += new System.EventHandler(this.btnDisplay_Click);
             // 
             // btnRefresh
             // 
@@ -537,44 +563,18 @@
             this.btnRefresh.UseVisualStyleBackColor = true;
             this.btnRefresh.Click += new System.EventHandler(this.btnRefresh_Click);
             // 
-            // btnCharger
+            // btnLoad
             // 
-            this.btnCharger.Image = global::GoBot.Properties.Resources.Folder16;
-            this.btnCharger.Location = new System.Drawing.Point(11, 33);
-            this.btnCharger.Name = "btnCharger";
-            this.btnCharger.Size = new System.Drawing.Size(104, 23);
-            this.btnCharger.TabIndex = 0;
-            this.btnCharger.Text = "Charger un log";
-            this.btnCharger.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.btnCharger.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
-            this.btnCharger.UseVisualStyleBackColor = true;
-            this.btnCharger.Click += new System.EventHandler(this.btnCharger_Click);
-            // 
-            // tabCAN
-            // 
-            this.tabCAN.Controls.Add(this.checkedListBoxCAN);
-            this.tabCAN.Location = new System.Drawing.Point(4, 22);
-            this.tabCAN.Name = "tabCAN";
-            this.tabCAN.Padding = new System.Windows.Forms.Padding(3);
-            this.tabCAN.Size = new System.Drawing.Size(361, 304);
-            this.tabCAN.TabIndex = 6;
-            this.tabCAN.Text = "RecCAN";
-            this.tabCAN.UseVisualStyleBackColor = true;
-            // 
-            // checkedListBoxCAN
-            // 
-            this.checkedListBoxCAN.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.checkedListBoxCAN.CheckOnClick = true;
-            this.checkedListBoxCAN.ColumnWidth = 150;
-            this.checkedListBoxCAN.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.checkedListBoxCAN.FormattingEnabled = true;
-            this.checkedListBoxCAN.Location = new System.Drawing.Point(3, 3);
-            this.checkedListBoxCAN.MultiColumn = true;
-            this.checkedListBoxCAN.Name = "checkedListBoxCAN";
-            this.checkedListBoxCAN.Size = new System.Drawing.Size(355, 298);
-            this.checkedListBoxCAN.Sorted = true;
-            this.checkedListBoxCAN.TabIndex = 19;
-            this.checkedListBoxCAN.ItemCheck += new System.Windows.Forms.ItemCheckEventHandler(this.checkedListBoxCAN_ItemCheck);
+            this.btnLoad.Image = global::GoBot.Properties.Resources.Folder16;
+            this.btnLoad.Location = new System.Drawing.Point(11, 33);
+            this.btnLoad.Name = "btnLoad";
+            this.btnLoad.Size = new System.Drawing.Size(104, 23);
+            this.btnLoad.TabIndex = 0;
+            this.btnLoad.Text = "Charger un log";
+            this.btnLoad.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.btnLoad.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
+            this.btnLoad.UseVisualStyleBackColor = true;
+            this.btnLoad.Click += new System.EventHandler(this.btnLoad_Click);
             // 
             // PanelLogsTrames
             // 
@@ -582,34 +582,34 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.Transparent;
             this.Controls.Add(this.boxScroll);
-            this.Controls.Add(this.btnRejouerSelection);
-            this.Controls.Add(this.btnRejouerTout);
-            this.Controls.Add(this.btnAfficher);
-            this.Controls.Add(this.groupBoxMessages);
-            this.Controls.Add(this.groupBox1);
+            this.Controls.Add(this.btnReplaySelected);
+            this.Controls.Add(this.btnReplayAll);
+            this.Controls.Add(this.btnDisplay);
+            this.Controls.Add(this.grpMessages);
+            this.Controls.Add(this.grpTime);
             this.Controls.Add(this.btnRefresh);
-            this.Controls.Add(this.groupBox2);
-            this.Controls.Add(this.dataGridViewLog);
-            this.Controls.Add(this.btnCharger);
+            this.Controls.Add(this.grpColor);
+            this.Controls.Add(this.dgvLog);
+            this.Controls.Add(this.btnLoad);
             this.Name = "PanelLogsTrames";
             this.Size = new System.Drawing.Size(1254, 669);
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridViewLog)).EndInit();
-            this.contextMenuStripRow.ResumeLayout(false);
-            this.groupBox2.ResumeLayout(false);
-            this.groupBox2.PerformLayout();
-            this.groupBox1.ResumeLayout(false);
-            this.groupBox1.PerformLayout();
-            this.groupBoxMessages.ResumeLayout(false);
-            this.tabControlGestion.ResumeLayout(false);
-            this.tabPageCartes.ResumeLayout(false);
-            this.groupBoxExpediteur.ResumeLayout(false);
-            this.groupBoxDestinataire.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.dgvLog)).EndInit();
+            this.ctxMnuFrames.ResumeLayout(false);
+            this.grpColor.ResumeLayout(false);
+            this.grpColor.PerformLayout();
+            this.grpTime.ResumeLayout(false);
+            this.grpTime.PerformLayout();
+            this.grpMessages.ResumeLayout(false);
+            this.tabFilters.ResumeLayout(false);
+            this.tabPageBoards.ResumeLayout(false);
+            this.grpSender.ResumeLayout(false);
+            this.grpReceiver.ResumeLayout(false);
             this.tabPageMessages.ResumeLayout(false);
-            this.tabControlMessages.ResumeLayout(false);
+            this.tabFunctions.ResumeLayout(false);
             this.tabPageMove.ResumeLayout(false);
             this.tabPageIO.ResumeLayout(false);
-            this.tabGB.ResumeLayout(false);
-            this.tabCAN.ResumeLayout(false);
+            this.tabPageGB.ResumeLayout(false);
+            this.tabPageCAN.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -617,48 +617,48 @@
 
         #endregion
 
-        private System.Windows.Forms.Button btnCharger;
-        private System.Windows.Forms.DataGridView dataGridViewLog;
-        private System.Windows.Forms.GroupBox groupBox2;
-        private System.Windows.Forms.RadioButton rdoCarte;
-        private System.Windows.Forms.RadioButton rdoDest;
-        private System.Windows.Forms.RadioButton rdoExp;
-        private System.Windows.Forms.RadioButton rdoAucun;
-        private System.Windows.Forms.CheckedListBox checkedListBoxMove;
+        private System.Windows.Forms.Button btnLoad;
+        private System.Windows.Forms.DataGridView dgvLog;
+        private System.Windows.Forms.GroupBox grpColor;
+        private System.Windows.Forms.RadioButton rdoColorByBoard;
+        private System.Windows.Forms.RadioButton rdoColorByReceiver;
+        private System.Windows.Forms.RadioButton rdoColorBySender;
+        private System.Windows.Forms.RadioButton rdoColorNone;
+        private System.Windows.Forms.CheckedListBox lstRecMoveFunctions;
         private System.Windows.Forms.Button btnRefresh;
-        private System.Windows.Forms.GroupBox groupBox1;
-        private System.Windows.Forms.RadioButton rdoTempsDebut;
-        private System.Windows.Forms.RadioButton rdoHeure;
-        private System.Windows.Forms.RadioButton rdoTempsPrecAff;
-        private System.Windows.Forms.RadioButton rdoTempsPrec;
-        private System.Windows.Forms.CheckedListBox checkedListBoxIO;
-        private System.Windows.Forms.GroupBox groupBoxMessages;
-        private System.Windows.Forms.ContextMenuStrip contextMenuStripRow;
-        private System.Windows.Forms.ToolStripMenuItem nePlusAfficherCeTypeDeMessagesToolStripMenuItem;
-        private System.Windows.Forms.Button btnAfficher;
-        private System.Windows.Forms.Button btnRejouerTout;
-        private System.Windows.Forms.Button btnRejouerSelection;
+        private System.Windows.Forms.GroupBox grpTime;
+        private System.Windows.Forms.RadioButton rdoTimeFromStart;
+        private System.Windows.Forms.RadioButton rdoTimeAbsolute;
+        private System.Windows.Forms.RadioButton rdoTimeFromPrevDisplay;
+        private System.Windows.Forms.RadioButton rdoTimeFromPrev;
+        private System.Windows.Forms.CheckedListBox lstRecIOFunctions;
+        private System.Windows.Forms.GroupBox grpMessages;
+        private System.Windows.Forms.ContextMenuStrip ctxMnuFrames;
+        private System.Windows.Forms.ToolStripMenuItem mnuHideSameTypeFrames;
+        private System.Windows.Forms.Button btnDisplay;
+        private System.Windows.Forms.Button btnReplayAll;
+        private System.Windows.Forms.Button btnReplaySelected;
         private System.Windows.Forms.CheckBox boxScroll;
-        private System.Windows.Forms.GroupBox groupBoxExpediteur;
-        private System.Windows.Forms.CheckedListBox checkedListBoxExpediteur;
-        private System.Windows.Forms.CheckedListBox checkedListBoxDestinataire;
-        private System.Windows.Forms.GroupBox groupBoxDestinataire;
-        private System.Windows.Forms.ToolStripMenuItem nePlusAfficherDeMessagesDeCetExpéditeurToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem nePlusAfficherDeMessagesAvecCeDestinataireToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem nePlusAfficherDeMessagesDeCetteCarteToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem nePlusAfficherTousCesMessagesToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem copierLaTrameToolStripMenuItem;
-        private System.Windows.Forms.TabControl tabControlGestion;
-        private System.Windows.Forms.TabPage tabPageCartes;
+        private System.Windows.Forms.GroupBox grpSender;
+        private System.Windows.Forms.CheckedListBox lstSender;
+        private System.Windows.Forms.CheckedListBox lstReceiver;
+        private System.Windows.Forms.GroupBox grpReceiver;
+        private System.Windows.Forms.ToolStripMenuItem mnuHideSameSenderFrames;
+        private System.Windows.Forms.ToolStripMenuItem mnuHideSameReceiverFrames;
+        private System.Windows.Forms.ToolStripMenuItem mnuHideSameBoardFrames;
+        private System.Windows.Forms.ToolStripMenuItem mnuHideAllFrames;
+        private System.Windows.Forms.ToolStripMenuItem mnuFrameCopy;
+        private System.Windows.Forms.TabControl tabFilters;
+        private System.Windows.Forms.TabPage tabPageBoards;
         private System.Windows.Forms.TabPage tabPageMessages;
-        private System.Windows.Forms.TabControl tabControlMessages;
+        private System.Windows.Forms.TabControl tabFunctions;
         private System.Windows.Forms.TabPage tabPageMove;
         private System.Windows.Forms.TabPage tabPageIO;
-        private System.Windows.Forms.Button btnDecocher;
-        private System.Windows.Forms.Button btnCocher;
-        private System.Windows.Forms.TabPage tabGB;
-        private System.Windows.Forms.CheckedListBox checkedListBoxGB;
-        private System.Windows.Forms.TabPage tabCAN;
-        private System.Windows.Forms.CheckedListBox checkedListBoxCAN;
+        private System.Windows.Forms.Button btnAllUncheck;
+        private System.Windows.Forms.Button btnAllCheck;
+        private System.Windows.Forms.TabPage tabPageGB;
+        private System.Windows.Forms.CheckedListBox lstRecGoBotFunctions;
+        private System.Windows.Forms.TabPage tabPageCAN;
+        private System.Windows.Forms.CheckedListBox lstRecCANFunctions;
     }
 }

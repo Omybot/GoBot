@@ -152,7 +152,7 @@ namespace GoBot.IHM
                         }
                         else if (Path.GetFileName(fichier) == "ConnexionGB.tlog")
                         {
-                            ConnectionReplay r = new ConnectionReplay();
+                            FramesLog r = new FramesLog();
                             r.Import(fichier);
                             if (r.Import(fichier))
                             {
@@ -164,7 +164,7 @@ namespace GoBot.IHM
                         }
                         else if (Path.GetFileName(fichier) == "ConnexionMove.tlog")
                         {
-                            ConnectionReplay r = new ConnectionReplay();
+                            FramesLog r = new FramesLog();
                             r.Import(fichier);
                             if (r.Import(fichier))
                             {
@@ -176,7 +176,7 @@ namespace GoBot.IHM
                         }
                         else if (Path.GetFileName(fichier) == "ConnexionIO.tlog")
                         {
-                            ConnectionReplay r = new ConnectionReplay();
+                            FramesLog r = new FramesLog();
                             r.Import(fichier);
                             if (r.Import(fichier))
                             {
@@ -239,7 +239,7 @@ namespace GoBot.IHM
                             }
                             else if (Path.GetFileName(fichier) == "ConnexionGB.tlog")
                             {
-                                ConnectionReplay r = new ConnectionReplay();
+                                FramesLog r = new FramesLog();
                                 r.Import(fichier);
                                 if (r.Import(fichier))
                                     datas[(int)Columns.TramesGB + 1] = r.Frames.Count;
@@ -248,7 +248,7 @@ namespace GoBot.IHM
                             }
                             else if (Path.GetFileName(fichier) == "ConnexionMove.tlog")
                             {
-                                ConnectionReplay r = new ConnectionReplay();
+                                FramesLog r = new FramesLog();
                                 r.Import(fichier);
                                 if (r.Import(fichier))
                                     datas[(int)Columns.TramesMove + 1] = r.Frames.Count;
@@ -257,7 +257,7 @@ namespace GoBot.IHM
                             }
                             else if (Path.GetFileName(fichier) == "ConnexionIO.tlog")
                             {
-                                ConnectionReplay r = new ConnectionReplay();
+                                FramesLog r = new FramesLog();
                                 r.Import(fichier);
                                 if (r.Import(fichier))
                                     datas[(int)Columns.TramesIO + 1] = r.Frames.Count;
@@ -339,7 +339,7 @@ namespace GoBot.IHM
                     foreach (String fichier in Directory.EnumerateFiles(dossier))
                     {
                         String extension = Path.GetExtension(fichier);
-                        if (extension == ConnectionReplay.FileExtension || extension == ".elog")
+                        if (extension == FramesLog.FileExtension || extension == ".elog")
                         {
                             dataGridViewFichiersLog.Rows.Add(Path.GetFileName(fichier), fichier);
                         }
@@ -405,7 +405,7 @@ namespace GoBot.IHM
                     foreach (String fichier in Directory.EnumerateFiles(dossier))
                     {
                         String extension = Path.GetExtension(fichier);
-                        if (extension == ConnectionReplay.FileExtension || extension == ".elog")
+                        if (extension == FramesLog.FileExtension || extension == ".elog")
                         {
                             dataGridViewFichiersLog.Rows.Add(Path.GetFileName(fichier), fichier);
                         }
