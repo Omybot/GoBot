@@ -73,7 +73,7 @@ namespace GoBot.Communications
         /// <summary>
         /// Extension du fichier de sauvegarde
         /// </summary>
-        public static String FileExtension { get; } = ".flog";
+        public static String FileExtension { get; } = ".tlog";
 
         /// <summary>
         /// Liste des trames

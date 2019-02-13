@@ -106,13 +106,16 @@ namespace GoBot.IHM
 
             int currentLog = 0;
 
-            List<String> dossiers = (List<String>)Directory.EnumerateDirectories(Config.PathData + "/Logs/").ToList<String>();
+            List<String> dossiers = (List<String>)Directory.EnumerateDirectories(Config.PathData + @"\Logs\").ToList<String>();
             nbLogs = dossiers.Count;
 
             dossiers.Sort(OrdreAlphabetiqueInverse);
 
             foreach (String dossier in dossiers)
             {
+                if (dossier.Contains(Execution.LaunchStartString))
+                    continue;
+
                 if (Execution.Shutdown)
                     return;
 
@@ -188,9 +191,9 @@ namespace GoBot.IHM
                         }
                     }
 
-                    // Si il n'y a aucune trame ni aucun evenement dans le dossier, on le supprime
-                    if (nbElements == 0)
-                        Directory.Delete(dossier);
+                    // S'il y a moins de 10 éléments dans ce log, on le supprime
+                    if (nbElements < 10)
+                        Directory.Delete(dossier, true);
                     else
                         dataSet.Tables[0].Rows.Add(datas);
                 }

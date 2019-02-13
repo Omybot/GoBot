@@ -339,11 +339,11 @@
     <Compile Include="IHM\PanelReglageAsserv.Designer.cs">
       <DependentUpon>PanelReglageAsserv.cs</DependentUpon>
     </Compile>
-    <Compile Include="IHM\PanelLogsTrames.cs">
+    <Compile Include="IHM\PanelLogFrames.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="IHM\PanelLogsTrames.Designer.cs">
-      <DependentUpon>PanelLogsTrames.cs</DependentUpon>
+    <Compile Include="IHM\PanelLogFrames.Designer.cs">
+      <DependentUpon>PanelLogFrames.cs</DependentUpon>
     </Compile>
     <Compile Include="IHM\PotarControl.cs">
       <SubType>UserControl</SubType>
@@ -552,8 +552,8 @@
     <EmbeddedResource Include="IHM\PanelServo.resx">
       <DependentUpon>PanelServo.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="IHM\PanelLogsTrames.resx">
-      <DependentUpon>PanelLogsTrames.cs</DependentUpon>
+    <EmbeddedResource Include="IHM\PanelLogFrames.resx">
+      <DependentUpon>PanelLogFrames.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="IHM\PanelTable.resx">
       <DependentUpon>PanelTable.cs</DependentUpon>
@@ -627,7 +627,6 @@
     <None Include="Images\TablePlan.png" />
     <None Include="Images\Turtle.png" />
     <None Include="Images\Rabbit.png" />
-    <None Include="Images\Vinyle.png" />
     <None Include="Images\Save16.png" />
     <None Include="Images\Play16.png" />
     <None Include="Images\Windows16.png" />
@@ -660,6 +659,10 @@
     <None Include="Images\OpenMid16.png" />
     <None Include="Images\VerticalLock16.png" />
     <None Include="Images\VerticalUnlock16.png" />
+    <None Include="Images\GlassPause48.png" />
+    <None Include="Images\GlassStart48.png" />
+    <None Include="Images\UncheckAll16.png" />
+    <None Include="Images\CheckAll16.png" />
     <Content Include="robot.ico" />
   </ItemGroup>
   <ItemGroup>

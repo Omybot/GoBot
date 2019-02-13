@@ -47,7 +47,7 @@ namespace GoBot
             this.tabThreads = new System.Windows.Forms.TabPage();
             this.panelLogThreads1 = new GoBot.IHM.PanelLogThreads();
             this.tabLogUDP = new System.Windows.Forms.TabPage();
-            this.panelLogTrames = new GoBot.IHM.PanelLogsTrames();
+            this.panelLogTrames = new GoBot.IHM.PanelLogFrames();
             this.tabLogEvent = new System.Windows.Forms.TabPage();
             this.panelLogsEvents = new GoBot.IHM.PanelLogsEvents();
             this.tabGestionLog = new System.Windows.Forms.TabPage();
@@ -257,9 +257,9 @@ namespace GoBot
             // 
             // tabControlLogs
             // 
-            this.tabControlLogs.Controls.Add(this.tabThreads);
             this.tabControlLogs.Controls.Add(this.tabLogUDP);
             this.tabControlLogs.Controls.Add(this.tabLogEvent);
+            this.tabControlLogs.Controls.Add(this.tabThreads);
             this.tabControlLogs.Controls.Add(this.tabGestionLog);
             this.tabControlLogs.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tabControlLogs.Location = new System.Drawing.Point(3, 3);
@@ -292,7 +292,7 @@ namespace GoBot
             this.tabLogUDP.Location = new System.Drawing.Point(4, 22);
             this.tabLogUDP.Name = "tabLogUDP";
             this.tabLogUDP.Padding = new System.Windows.Forms.Padding(3);
-            this.tabLogUDP.Size = new System.Drawing.Size(178, 42);
+            this.tabLogUDP.Size = new System.Drawing.Size(1286, 680);
             this.tabLogUDP.TabIndex = 0;
             this.tabLogUDP.Text = "Logs UDP";
             this.tabLogUDP.UseVisualStyleBackColor = true;
@@ -303,7 +303,7 @@ namespace GoBot
             this.panelLogTrames.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panelLogTrames.Location = new System.Drawing.Point(3, 3);
             this.panelLogTrames.Name = "panelLogTrames";
-            this.panelLogTrames.Size = new System.Drawing.Size(172, 36);
+            this.panelLogTrames.Size = new System.Drawing.Size(1280, 674);
             this.panelLogTrames.TabIndex = 1;
             // 
             // tabLogEvent
@@ -312,7 +312,7 @@ namespace GoBot
             this.tabLogEvent.Location = new System.Drawing.Point(4, 22);
             this.tabLogEvent.Name = "tabLogEvent";
             this.tabLogEvent.Padding = new System.Windows.Forms.Padding(3);
-            this.tabLogEvent.Size = new System.Drawing.Size(178, 42);
+            this.tabLogEvent.Size = new System.Drawing.Size(1286, 680);
             this.tabLogEvent.TabIndex = 1;
             this.tabLogEvent.Text = "Logs events";
             this.tabLogEvent.UseVisualStyleBackColor = true;
@@ -323,7 +323,7 @@ namespace GoBot
             this.panelLogsEvents.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panelLogsEvents.Location = new System.Drawing.Point(3, 3);
             this.panelLogsEvents.Name = "panelLogsEvents";
-            this.panelLogsEvents.Size = new System.Drawing.Size(172, 36);
+            this.panelLogsEvents.Size = new System.Drawing.Size(1280, 674);
             this.panelLogsEvents.TabIndex = 1;
             // 
             // tabGestionLog
@@ -331,7 +331,7 @@ namespace GoBot
             this.tabGestionLog.Controls.Add(this.panelGestionLog);
             this.tabGestionLog.Location = new System.Drawing.Point(4, 22);
             this.tabGestionLog.Name = "tabGestionLog";
-            this.tabGestionLog.Size = new System.Drawing.Size(178, 42);
+            this.tabGestionLog.Size = new System.Drawing.Size(1286, 680);
             this.tabGestionLog.TabIndex = 2;
             this.tabGestionLog.Text = "Gestion logs";
             this.tabGestionLog.UseVisualStyleBackColor = true;
@@ -342,7 +342,7 @@ namespace GoBot
             this.panelGestionLog.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panelGestionLog.Location = new System.Drawing.Point(0, 0);
             this.panelGestionLog.Name = "panelGestionLog";
-            this.panelGestionLog.Size = new System.Drawing.Size(178, 42);
+            this.panelGestionLog.Size = new System.Drawing.Size(1286, 680);
             this.panelGestionLog.TabIndex = 1;
             // 
             // tabTable
@@ -903,7 +903,7 @@ namespace GoBot
         private System.Windows.Forms.TabPage tabLogs;
         private System.Windows.Forms.TabControl tabControlLogs;
         private System.Windows.Forms.TabPage tabLogUDP;
-        private PanelLogsTrames panelLogTrames;
+        private PanelLogFrames panelLogTrames;
         private System.Windows.Forms.TabPage tabLogEvent;
         private PanelLogsEvents panelLogsEvents;
         private System.Windows.Forms.TabPage tabGestionLog;
