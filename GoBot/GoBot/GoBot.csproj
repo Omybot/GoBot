@@ -84,6 +84,7 @@
     <Compile Include="Actionneurs\Positionables.cs" />
     <Compile Include="Actionneurs\RobotPositionables.cs" />
     <Compile Include="Devices\CAN\CanCommunication.cs" />
+    <Compile Include="Devices\CAN\CanDecoder.cs" />
     <Compile Include="Devices\CAN\CanDisplay.cs" />
     <Compile Include="Devices\CAN\CanFrameFactory.cs" />
     <Compile Include="Devices\CAN\CanFunctions.cs" />
@@ -107,6 +108,12 @@
     </Compile>
     <Compile Include="IHM\PanelBoardNumeric.Designer.cs">
       <DependentUpon>PanelBoardNumeric.cs</DependentUpon>
+    </Compile>
+    <Compile Include="IHM\PanelLogCAN.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="IHM\PanelLogCAN.Designer.cs">
+      <DependentUpon>PanelLogCAN.cs</DependentUpon>
     </Compile>
     <Compile Include="IHM\PanelLogThreads.cs">
       <SubType>UserControl</SubType>
@@ -455,6 +462,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="IHM\PanelBoardNumeric.resx">
       <DependentUpon>PanelBoardNumeric.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="IHM\PanelLogCAN.resx">
+      <DependentUpon>PanelLogCAN.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="IHM\PanelLogThreads.resx">
       <DependentUpon>PanelLogThreads.cs</DependentUpon>

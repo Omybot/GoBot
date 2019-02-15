@@ -100,8 +100,8 @@ namespace GoBot
                 if (fichiersTlog.Count > 0)
                 {
                     foreach (String fichier in fichiersTlog)
-                        panelLogTrames.LoadLog(fichier);
-                    panelLogTrames.DisplayLog();
+                        pnlLogFrames.LoadLog(fichier);
+                    pnlLogFrames.DisplayLog();
 
                     tabControl.SelectedTab = tabLogs;
                     tabControlLogs.SelectedTab = tabLogUDP;
@@ -125,9 +125,9 @@ namespace GoBot
         {
             if (Path.GetExtension(fichier) == FramesLog.FileExtension)
             {
-                panelLogTrames.Clear();
-                panelLogTrames.LoadLog(fichier);
-                panelLogTrames.DisplayLog();
+                pnlLogFrames.Clear();
+                pnlLogFrames.LoadLog(fichier);
+                pnlLogFrames.DisplayLog();
                 tabControl.SelectedTab = tabLogs;
                 tabControlLogs.SelectedTab = tabLogUDP;
             }

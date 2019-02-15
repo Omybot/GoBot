@@ -8,13 +8,14 @@ using System.Text;
 using System.Windows.Forms;
 using System.Threading;
 using GoBot.Communications;
+using GoBot.Devices.CAN;
 
 namespace GoBot.IHM
 {
-    public partial class PanelLogFrames : UserControl
+    public partial class PanelLogCAN : UserControl
     {
         private FramesLog _log;
-        private Dictionary<Board, Color> _boardColor;
+        private Dictionary<CanBoard, Color> _boardColor;
 
         private DateTime _startTime;
         private DateTime _previousTime, _previousDisplayTime;
@@ -23,12 +24,10 @@ namespace GoBot.IHM
         private Thread _thReplay;
 
         private List<CheckedListBox> _boxLists;
-        private Dictionary<CheckedListBox, Dictionary<FrameFunction, bool>> _configFunctions;
-        private Dictionary<Board, CheckedListBox> _lstFunctions;
 
         bool _loading;
 
-        public PanelLogFrames()
+        public PanelLogCAN()
         {
             InitializeComponent();
 
@@ -47,67 +46,43 @@ namespace GoBot.IHM
             dgvLog.Columns.Add("Trame", "Trame");
             dgvLog.Columns[5].Width = dgvLog.Width - 18 - dgvLog.Columns[0].Width - dgvLog.Columns[1].Width - dgvLog.Columns[2].Width - dgvLog.Columns[3].Width - dgvLog.Columns[4].Width;
 
-            _boardColor = new Dictionary<Board, Color>();
-            _boardColor.Add(Board.PC, Color.FromArgb(180, 245, 245));
-            _boardColor.Add(Board.RecMove, Color.FromArgb(143, 255, 143));
-            _boardColor.Add(Board.RecIO, Color.FromArgb(210, 254, 211));
-            _boardColor.Add(Board.RecGB, Color.FromArgb(251, 217, 231));
-            _boardColor.Add(Board.RecCan, Color.FromArgb(254, 244, 188));
+            _boardColor = new Dictionary<CanBoard, Color>();
+            _boardColor.Add(CanBoard.PC, Color.FromArgb(180, 245, 245));
+            _boardColor.Add(CanBoard.ServoBoard1, Color.FromArgb(143, 255, 143));
+            _boardColor.Add(CanBoard.ServoBoard2, Color.FromArgb(210, 254, 211));
+            _boardColor.Add(CanBoard.ServoBoard3, Color.FromArgb(251, 217, 231));
+            _boardColor.Add(CanBoard.DisplayBoard, Color.FromArgb(254, 244, 188));
 
             _boxLists = new List<CheckedListBox>();
             _boxLists.Add(lstSender);
             _boxLists.Add(lstReceiver);
-            _boxLists.Add(lstRecIOFunctions);
-            _boxLists.Add(lstRecMoveFunctions);
-            _boxLists.Add(lstRecGoBotFunctions);
-            _boxLists.Add(lstRecCANFunctions);
+            _boxLists.Add(lstFunctions);
 
-            if (Config.CurrentConfig.LogsFonctionsMove == null)
-                Config.CurrentConfig.LogsFonctionsMove = new SerializableDictionary<FrameFunction, bool>();
-            if (Config.CurrentConfig.LogsFonctionsIO == null)
-                Config.CurrentConfig.LogsFonctionsIO = new SerializableDictionary<FrameFunction, bool>();
-            if (Config.CurrentConfig.LogsFonctionsGB == null)
-                Config.CurrentConfig.LogsFonctionsGB = new SerializableDictionary<FrameFunction, bool>();
-            if (Config.CurrentConfig.LogsFonctionsCAN == null)
-                Config.CurrentConfig.LogsFonctionsCAN = new SerializableDictionary<FrameFunction, bool>();
-            if (Config.CurrentConfig.LogsExpediteurs == null)
-                Config.CurrentConfig.LogsExpediteurs = new SerializableDictionary<Board, bool>();
-            if (Config.CurrentConfig.LogsDestinataires == null)
-                Config.CurrentConfig.LogsDestinataires = new SerializableDictionary<Board, bool>();
+            if (Config.CurrentConfig.LogsCanFunctions == null)
+                Config.CurrentConfig.LogsCanFunctions = new SerializableDictionary<CanFunction, bool>();
+            if (Config.CurrentConfig.LogsCanSenders == null)
+                Config.CurrentConfig.LogsCanSenders = new SerializableDictionary<CanBoard, bool>();
+            if (Config.CurrentConfig.LogsCanReceivers== null)
+                Config.CurrentConfig.LogsCanReceivers = new SerializableDictionary<CanBoard, bool>();
 
-            _configFunctions = new Dictionary<CheckedListBox, Dictionary<FrameFunction, bool>>();
-            _configFunctions.Add(lstRecIOFunctions, Config.CurrentConfig.LogsFonctionsIO);
-            _configFunctions.Add(lstRecMoveFunctions, Config.CurrentConfig.LogsFonctionsMove);
-            _configFunctions.Add(lstRecGoBotFunctions, Config.CurrentConfig.LogsFonctionsGB);
-            _configFunctions.Add(lstRecCANFunctions, Config.CurrentConfig.LogsFonctionsCAN);
-
-            _lstFunctions = new Dictionary<Board, CheckedListBox>();
-            _lstFunctions.Add(Board.RecIO, lstRecIOFunctions);
-            _lstFunctions.Add(Board.RecMove, lstRecMoveFunctions);
-            _lstFunctions.Add(Board.RecGB, lstRecGoBotFunctions);
-            _lstFunctions.Add(Board.RecCan, lstRecCANFunctions);
-
-            foreach (CheckedListBox lst in _configFunctions.Keys)
+            // L'ajout de champs déclenche le SetCheck event qui ajoute les éléments automatiquement dans le dictionnaire
+            foreach (CanFunction func in Enum.GetValues(typeof(CanFunction)))
             {
-                // L'ajout de champs déclenche le SetCheck event qui ajoute les éléments automatiquement dans le dictionnaire
-                foreach (FrameFunction func in Enum.GetValues(typeof(FrameFunction)))
-                {
-                    if (!_configFunctions[lst].ContainsKey(func))
-                        _configFunctions[lst].Add(func, true);
+                if (!Config.CurrentConfig.LogsCanFunctions.ContainsKey(func))
+                    Config.CurrentConfig.LogsCanFunctions.Add(func, true);
 
-                    lst.Items.Add(func.ToString(), _configFunctions[lst][func]);
-                }
+                lstFunctions.Items.Add(func.ToString(), Config.CurrentConfig.LogsCanFunctions[func]);
             }
 
-            foreach (Board board in Enum.GetValues(typeof(Board)))
+            foreach (CanBoard board in Enum.GetValues(typeof(CanBoard)))
             {
-                if (!Config.CurrentConfig.LogsExpediteurs.ContainsKey(board))
-                    Config.CurrentConfig.LogsExpediteurs.Add(board, true);
-                lstSender.Items.Add(board.ToString(), Config.CurrentConfig.LogsExpediteurs[board]);
+                if (!Config.CurrentConfig.LogsCanSenders.ContainsKey(board))
+                    Config.CurrentConfig.LogsCanSenders.Add(board, true);
+                lstSender.Items.Add(board.ToString(), Config.CurrentConfig.LogsCanSenders[board]);
 
-                if (!Config.CurrentConfig.LogsDestinataires.ContainsKey(board))
-                    Config.CurrentConfig.LogsDestinataires.Add(board, true);
-                lstReceiver.Items.Add(board.ToString(), Config.CurrentConfig.LogsDestinataires[board]);
+                if (!Config.CurrentConfig.LogsCanReceivers.ContainsKey(board))
+                    Config.CurrentConfig.LogsCanReceivers.Add(board, true);
+                lstReceiver.Items.Add(board.ToString(), Config.CurrentConfig.LogsCanReceivers[board]);
             }
 
             _loading = false;
@@ -127,8 +102,6 @@ namespace GoBot.IHM
 
             try
             {
-                Frame frame = tFrame.Frame;
-
                 if (rdoTimeAbsolute.Checked)
                     time = tFrame.Date.ToString("hh:mm:ss:fff");
                 if (rdoTimeFromStart.Checked)
@@ -137,26 +110,28 @@ namespace GoBot.IHM
                     time = ((int)(tFrame.Date - _previousTime).TotalMilliseconds).ToString() + " ms";
                 if (rdoTimeFromPrevDisplay.Checked)
                     time = ((int)(tFrame.Date - _previousDisplayTime).TotalMilliseconds).ToString() + " ms";
-                
-                Board board = frame.Board;
 
-                if (board == Board.PC) throw new Exception();
+                CanBoard board = CanFrameFactory.ExtractBoard(tFrame.Frame);
+                CanBoard sender = CanFrameFactory.ExtractSender(tFrame.Frame, tFrame.IsInputFrame);
+                CanBoard receiver = CanFrameFactory.ExtractReceiver(tFrame.Frame, tFrame.IsInputFrame);
 
-                bool receiverVisible = Config.CurrentConfig.LogsDestinataires[tFrame.Receiver];
-                bool senderVisible = Config.CurrentConfig.LogsExpediteurs[tFrame.Sender];
-                bool functionVisible = (_configFunctions[_lstFunctions[board]][FrameFactory.ExtractFunction(frame)]);
+                if (board == CanBoard.PC) throw new Exception();
+
+                bool receiverVisible = Config.CurrentConfig.LogsCanReceivers[receiver];
+                bool senderVisible = Config.CurrentConfig.LogsCanSenders[sender];
+                bool functionVisible = Config.CurrentConfig.LogsCanFunctions[CanFrameFactory.ExtractFunction(tFrame.Frame)];
 
                 if (senderVisible && receiverVisible && functionVisible)
                 {
-                    dgvLog.Rows.Add(_counter, time, tFrame.Sender.ToString(), tFrame.Receiver.ToString(), FrameDecoder.Decode(frame), frame.ToString());
+                    dgvLog.Rows.Add(_counter, time, tFrame.Sender.ToString(), tFrame.Receiver.ToString(), CanDecoder.Decode(tFrame.Frame), tFrame.Frame.ToString());
                     _previousDisplayTime = tFrame.Date;
 
                     if (rdoColorByBoard.Checked)
                         dgvLog.Rows[dgvLog.Rows.Count - 1].DefaultCellStyle.BackColor = _boardColor[board];
                     else if (rdoColorByReceiver.Checked)
-                        dgvLog.Rows[dgvLog.Rows.Count - 1].DefaultCellStyle.BackColor = _boardColor[tFrame.Receiver];
+                        dgvLog.Rows[dgvLog.Rows.Count - 1].DefaultCellStyle.BackColor = _boardColor[receiver];
                     else if (rdoColorBySender.Checked)
-                        dgvLog.Rows[dgvLog.Rows.Count - 1].DefaultCellStyle.BackColor = _boardColor[tFrame.Sender];
+                        dgvLog.Rows[dgvLog.Rows.Count - 1].DefaultCellStyle.BackColor = _boardColor[sender];
                 }
             }
             catch (Exception)
@@ -235,25 +210,25 @@ namespace GoBot.IHM
             return _log.Frames[Convert.ToInt32(dgvLog["ID", line.Index].Value)];
         }
 
-        private void ShowFramesReceiver(Board board, bool show)
+        private void ShowFramesReceiver(CanBoard board, bool show)
         {
             lstReceiver.Items.Remove(board.ToString());
             lstReceiver.Items.Add(board.ToString(), show);
-            Config.CurrentConfig.LogsDestinataires[board] = show;
+            Config.CurrentConfig.LogsCanReceivers[board] = show;
         }
 
-        private void ShowFramesSender(Board board, bool show)
+        private void ShowFramesSender(CanBoard board, bool show)
         {
             lstSender.Items.Remove(board.ToString());
             lstSender.Items.Add(board.ToString(), show);
-            Config.CurrentConfig.LogsExpediteurs[board] = show;
+            Config.CurrentConfig.LogsCanSenders[board] = show;
         }
 
-        private void ShowFrameFunction(Board board, FrameFunction func, bool show)
+        private void ShowFrameFunction(CanFunction func, bool show)
         {
-            _lstFunctions[board].Items.Remove(func.ToString());
-            _lstFunctions[board].Items.Add(func.ToString(), show);
-            _configFunctions[_lstFunctions[board]][func] = show;
+            lstFunctions.Items.Remove(func.ToString());
+            lstFunctions.Items.Add(func.ToString(), show);
+            Config.CurrentConfig.LogsCanFunctions[func] = show;
         }
 
         private FramesLog CreateLogFromSelection()
@@ -294,9 +269,9 @@ namespace GoBot.IHM
             if (!Execution.DesignMode && !_loading)
             {
                 String boardStr = (String)lstSender.Items[e.Index];
-                Board board = (Board)Enum.Parse(typeof(Board), boardStr);
+                CanBoard board = (CanBoard)Enum.Parse(typeof(CanBoard), boardStr);
 
-                Config.CurrentConfig.LogsExpediteurs[board] = (e.NewValue == CheckState.Checked);
+                Config.CurrentConfig.LogsCanReceivers[board] = (e.NewValue == CheckState.Checked);
             }
         }
 
@@ -305,9 +280,9 @@ namespace GoBot.IHM
             if (!Execution.DesignMode && !_loading)
             {
                 String boardStr = (String)lstReceiver.Items[e.Index];
-                Board board = (Board)Enum.Parse(typeof(Board), boardStr);
+                CanBoard board = (CanBoard)Enum.Parse(typeof(Board), boardStr);
 
-                Config.CurrentConfig.LogsDestinataires[board] = (e.NewValue == CheckState.Checked);
+                Config.CurrentConfig.LogsCanReceivers[board] = (e.NewValue == CheckState.Checked);
             }
         }
 
@@ -315,11 +290,10 @@ namespace GoBot.IHM
         {
             if (!Execution.DesignMode && !_loading)
             {
-                CheckedListBox lst = (CheckedListBox)sender;
-                String funcStr = (String)lst.Items[e.Index];
-                FrameFunction func = (FrameFunction)Enum.Parse(typeof(FrameFunction), funcStr);
+                String funcStr = (String)lstFunctions.Items[e.Index];
+                CanFunction func = (CanFunction)Enum.Parse(typeof(CanFunction), funcStr);
 
-                _configFunctions[lst][func] = (e.NewValue == CheckState.Checked);
+                Config.CurrentConfig.LogsCanFunctions[func] = (e.NewValue == CheckState.Checked);
             }
         }
 
@@ -330,7 +304,7 @@ namespace GoBot.IHM
                 foreach (DataGridViewRow line in dgvLog.SelectedRows)
                 {
                     TimedFrame tFrame = GetFrameFromLine(line);
-                    ShowFramesSender(tFrame.Sender, false);
+                    ShowFramesSender(CanFrameFactory.ExtractSender(tFrame.Frame, tFrame.IsInputFrame), false);
                 }
 
                 DisplayLog();
@@ -344,7 +318,7 @@ namespace GoBot.IHM
                 foreach (DataGridViewRow line in dgvLog.SelectedRows)
                 {
                     TimedFrame tFrame = GetFrameFromLine(line);
-                    ShowFramesReceiver(tFrame.Receiver, false);
+                    ShowFramesReceiver(CanFrameFactory.ExtractReceiver(tFrame.Frame, tFrame.IsInputFrame), false);
                 }
 
                 DisplayLog();
@@ -357,7 +331,7 @@ namespace GoBot.IHM
             {
                 foreach (DataGridViewRow line in dgvLog.SelectedRows)
                 {
-                    Board board = GetFrameFromLine(line).Frame.Board;
+                    CanBoard board = CanFrameFactory.ExtractBoard(GetFrameFromLine(line).Frame);
                     ShowFramesReceiver(board, false);
                     ShowFramesSender(board, false);
                 }
@@ -373,7 +347,7 @@ namespace GoBot.IHM
                 foreach (DataGridViewRow line in dgvLog.Rows)
                 {
                     TimedFrame tFrame = GetFrameFromLine(line);
-                    ShowFrameFunction(tFrame.Frame.Board, FrameFactory.ExtractFunction(tFrame.Frame), false);
+                    ShowFrameFunction(CanFrameFactory.ExtractFunction(tFrame.Frame), false);
                 }
 
                 DisplayLog();
@@ -414,7 +388,7 @@ namespace GoBot.IHM
                 foreach (DataGridViewRow line in dgvLog.SelectedRows)
                 {
                     TimedFrame tFrame = GetFrameFromLine(line);
-                    ShowFrameFunction(tFrame.Frame.Board, FrameFactory.ExtractFunction(tFrame.Frame), false);
+                    ShowFrameFunction(CanFrameFactory.ExtractFunction(tFrame.Frame), false);
                 }
 
                 DisplayLog();
@@ -431,14 +405,8 @@ namespace GoBot.IHM
                 _displayTimer.Tick += displayTimer_Tick;
                 _displayTimer.Start();
 
-                Connections.AllConnections.ForEach(conn =>
-                {
-                    if (conn.GetType() == typeof(UDPConnection))
-                    {
-                        conn.FrameReceived += new Connection.NewFrameDelegate((frame) => _log.AddFrame(frame, true));
-                        conn.FrameSend += new Connection.NewFrameDelegate((frame) => _log.AddFrame(frame, false));
-                    }
-                });
+                Connections.ConnectionCan.FrameReceived += new CanCommunication.NewFrameDelegate((frame) => _log.AddFrame(frame, true));
+                Connections.ConnectionCan.FrameSend += new CanCommunication.NewFrameDelegate((frame) => _log.AddFrame(frame, false));
 
                 btnReplayAll.Enabled = false;
                 btnReplaySelected.Enabled = false;
@@ -454,8 +422,8 @@ namespace GoBot.IHM
                 {
                     if (conn.GetType() == typeof(UDPConnection))
                     {
-                        conn.FrameReceived -= new Connection.NewFrameDelegate((frame) => _log.AddFrame(frame, true));
-                        conn.FrameSend -= new Connection.NewFrameDelegate((frame) => _log.AddFrame(frame, false));
+                        conn.FrameReceived -= new UDPConnection.NewFrameDelegate((frame) => _log.AddFrame(frame, true));
+                        conn.FrameSend -= new UDPConnection.NewFrameDelegate((frame) => _log.AddFrame(frame, false));
                     }
                 });
 

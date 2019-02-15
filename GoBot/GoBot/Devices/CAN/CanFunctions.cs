@@ -5,7 +5,7 @@ using System.Text;
 
 namespace GoBot.Devices.CAN
 {
-    enum CanFunction
+    public enum CanFunction
     {
         PositionAsk = 0x01,
         PositionResponse = 0x02,
@@ -34,11 +34,12 @@ namespace GoBot.Devices.CAN
 
         Debug = 0xF0,
         DebugAsk = 0xF1,
-        DebugResponse = 0xF0,
+        DebugResponse = 0xF2,
     }
 
-    enum CanBoard
+    public enum CanBoard
     {
+        PC = 0x00,
         ServoBoard1 = 0x01,
         ServoBoard2 = 0x02,
         ServoBoard3 = 0x03,

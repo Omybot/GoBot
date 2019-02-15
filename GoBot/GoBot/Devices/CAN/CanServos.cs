@@ -38,7 +38,7 @@ namespace GoBot.Devices.CAN
 
         private void _communication_FrameReceived(Frame frame)
         {
-            CanBoard idCan = CanFrameFactory.ExtractCanBoard(frame);
+            CanBoard idCan = CanFrameFactory.ExtractBoard(frame);
 
             if (_canBoards.Contains(idCan))
             {

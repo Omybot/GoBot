@@ -30,6 +30,7 @@ namespace GoBot.Devices.CAN
 
         public delegate void NewFrameDelegate(Frame frame);
         public event NewFrameDelegate FrameReceived;
+        public event NewFrameDelegate FrameSend;
 
         public CanCommunication(Board board)
         {
@@ -60,7 +61,9 @@ namespace GoBot.Devices.CAN
                 _lockWaitResponse = new Semaphore(0, 1);
             }
 
-            Connections.BoardConnection[_board].SendMessage(FrameFactory.EnvoyerCAN(_board, f));
+            if(Connections.BoardConnection[_board].SendMessage(FrameFactory.EnvoyerCAN(_board, f)) > 0)
+                FrameSend?.Invoke(f);
+
             _framesCount = (_framesCount + 1) % 255;
 
             if (waitResponse)

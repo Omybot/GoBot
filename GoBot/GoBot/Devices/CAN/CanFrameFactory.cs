@@ -13,14 +13,29 @@ namespace GoBot.Devices.CAN
             return (CanFunction)frame[2];
         }
 
-        public static CanBoard ExtractCanBoard(Frame frame)
+        public static CanBoard ExtractBoard(Frame frame)
         {
             return (CanBoard)(frame[0] * 256 + frame[1]);
         }
 
+        public static CanBoard ExtractSender(Frame frame, bool isInput)
+        {
+            return isInput ? ExtractBoard(frame) : CanBoard.PC;
+        }
+
+        public static CanBoard ExtractReceiver(Frame frame, bool isInput)
+        {
+            return isInput ? CanBoard.PC : ExtractBoard(frame);
+        }
+
         public static int ExtractServoGlobalId(Frame frame)
         {
-            return (int)(ExtractCanBoard(frame) - 1) * 4 + frame[3];
+            return (int)(ExtractBoard(frame) - 1) * 4 + frame[3];
+        }
+
+        public static ServomoteurID ExtractServomoteurID(Frame frame)
+        {
+            return (ServomoteurID)((int)(ExtractBoard(frame) - 1) * 4 + frame[3] + 200);
         }
 
         public static int ExtractValue(Frame frame, int paramNo = 0)

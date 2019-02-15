@@ -11,6 +11,7 @@ using GoBot.Communications;
 using System.Drawing;
 using GoBot.Actionneurs;
 using System.Reflection;
+using GoBot.Devices.CAN;
 
 namespace GoBot
 {
@@ -102,8 +103,7 @@ namespace GoBot
         public double OffsetBaliseCapteur2 { get; set; }
 
         // Parametres logs UDP
-
-        public SerializableDictionary<FrameFunction, bool> LogsFonctionsBalise { get; set; }
+        
         public SerializableDictionary<FrameFunction, bool> LogsFonctionsIO { get; set; }
         public SerializableDictionary<FrameFunction, bool> LogsFonctionsMove { get; set; }
         public SerializableDictionary<FrameFunction, bool> LogsFonctionsGB { get; set; }
@@ -111,6 +111,12 @@ namespace GoBot
 
         public SerializableDictionary<Board, bool> LogsExpediteurs { get; set; }
         public SerializableDictionary<Board, bool> LogsDestinataires { get; set; }
+
+        // Parametres logs CAN
+
+        public SerializableDictionary<CanFunction, bool> LogsCanFunctions { get; set; }
+        public SerializableDictionary<CanBoard, bool> LogsCanSenders { get; set; }
+        public SerializableDictionary<CanBoard, bool> LogsCanReceivers { get; set; }
 
         public double GetOffsetBalise(int iCapteur)
         {
