@@ -244,6 +244,7 @@ namespace GoBot
             this.tabLogsCan.Controls.Add(this.pnlLogCAN);
             this.tabLogsCan.Location = new System.Drawing.Point(4, 22);
             this.tabLogsCan.Name = "tabLogsCan";
+            this.tabLogsCan.Padding = new System.Windows.Forms.Padding(3);
             this.tabLogsCan.Size = new System.Drawing.Size(1286, 680);
             this.tabLogsCan.TabIndex = 4;
             this.tabLogsCan.Text = "Logs CAN";
@@ -842,9 +843,9 @@ namespace GoBot
             // 
             this.pnlLogCAN.BackColor = System.Drawing.Color.Transparent;
             this.pnlLogCAN.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.pnlLogCAN.Location = new System.Drawing.Point(0, 0);
+            this.pnlLogCAN.Location = new System.Drawing.Point(3, 3);
             this.pnlLogCAN.Name = "pnlLogCAN";
-            this.pnlLogCAN.Size = new System.Drawing.Size(1286, 680);
+            this.pnlLogCAN.Size = new System.Drawing.Size(1280, 674);
             this.pnlLogCAN.TabIndex = 0;
             // 
             // FenGoBot

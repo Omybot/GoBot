@@ -7,19 +7,12 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 using GoBot.IHM;
-using Composants;
-using System.Net;
-using GoBot.Strategies;
 using Geometry;
 using Geometry.Shapes;
 using System.Threading;
-using GoBot.Movements;
-using System.Diagnostics;
-using GoBot.Beacons;
 using GoBot.Communications;
 using System.IO;
 using GoBot.Threading;
-using GoBot.Devices;
 
 namespace GoBot
 {

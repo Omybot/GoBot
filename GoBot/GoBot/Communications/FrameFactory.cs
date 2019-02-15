@@ -14,6 +14,21 @@ namespace GoBot.Communications
             return (FrameFunction)frame[1];
         }
 
+        static public Board ExtractBoard(Frame frame)
+        {
+            return (Board)frame[0];
+        }
+
+        static public Board ExtractSender(Frame frame, bool isInput)
+        {
+            return isInput ? (Board)frame[0] : Board.PC;
+        }
+
+        static public Board ExtractReceiver(Frame frame, bool isInput)
+        {
+            return isInput ? Board.PC : (Board)frame[0];
+        }
+
         private static byte ByteDivide(int valeur, bool poidsFort)
         {
             byte b;

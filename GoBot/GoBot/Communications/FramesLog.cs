@@ -26,16 +26,6 @@ namespace GoBot.Communications
         /// </summary>
         public bool IsInputFrame { get; set; }
 
-        /// <summary>
-        /// Retourne la carte ayant envoyé cette trame
-        /// </summary>
-        public Board Sender { get => IsInputFrame ? Frame.Board : Board.PC; }
-
-        /// <summary>
-        /// Retourne la carte ayant reçu cette trame
-        /// </summary>
-        public Board Receiver { get => IsInputFrame ? Board.PC : Frame.Board; }
-
         public TimedFrame(Frame frame, DateTime date, bool input = true)
         {
             Frame = frame;
@@ -165,10 +155,11 @@ namespace GoBot.Communications
         /// </summary>
         public void ReplayInputFrames()
         {
+            // Attention ça ne marche que pour l'UDP !
             for (int i = 0; i < Frames.Count;i++)
             {
                 if (Frames[i].IsInputFrame)
-                    Connections.BoardConnection[Frames[i].Frame.Board].OnFrameReceived(Frames[i].Frame);
+                    Connections.BoardConnection[FrameFactory.ExtractBoard(Frames[i].Frame)].OnFrameReceived(Frames[i].Frame);
 
                 if (i - 1 > 0)
                     Thread.Sleep(Frames[i].Date - Frames[i - 1].Date);

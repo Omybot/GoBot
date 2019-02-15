@@ -224,14 +224,14 @@ namespace GoBot.Devices.CAN
         /// <summary>
         /// Retourne le message contenu dans une trame dans un texte explicite avec les paramètres décodés
         /// </summary>
-        /// <param name="trame">Trame à décoder</param>
+        /// <param name="frame">Trame à décoder</param>
         /// <returns>Message sur le contnu de la trame</returns>
-        public static String GetMessage(Frame trame)
+        public static String GetMessage(Frame frame)
         {
             String output = "";
 
-            output = GetMessage((CanFunction)trame[1]);
-            output = GetMessage((CanFunction)trame[1], GetParameters(output, trame));
+            output = GetMessage(CanFrameFactory.ExtractFunction(frame));
+            output = GetMessage(CanFrameFactory.ExtractFunction(frame), GetParameters(output, frame));
 
             return output;
         }
@@ -248,7 +248,10 @@ namespace GoBot.Devices.CAN
             String subParameter;
 
             if (format.Contains("{ServoID}"))
+            {
                 parameters.Add((uint)CanFrameFactory.ExtractServoGlobalId(frame));
+                format = format.Replace("{ServoID}", "");
+            }
 
             for (int iChar = 0; iChar < format.Length; iChar++)
             {
@@ -265,7 +268,7 @@ namespace GoBot.Devices.CAN
                             subParameter += format[iChar];
                             iChar++;
                         }
-                        parameters[parameters.Count - 1] = parameters[parameters.Count - 1] * 256 + frame[int.Parse(subParameter) + 2];
+                        parameters[parameters.Count - 1] = parameters[parameters.Count - 1] * 256 + frame[int.Parse(subParameter)];
                         if (format[iChar] == '-')
                             iChar++;
                     }

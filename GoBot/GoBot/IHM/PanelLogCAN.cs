@@ -38,20 +38,20 @@ namespace GoBot.IHM
             dgvLog.Columns.Add("Heure", "Heure");
             dgvLog.Columns[1].Width = 80;
             dgvLog.Columns.Add("Expediteur", "Expediteur");
-            dgvLog.Columns[2].Width = 65;
+            dgvLog.Columns[2].Width = 70;
             dgvLog.Columns.Add("Destinataire", "Destinataire");
-            dgvLog.Columns[3].Width = 65;
+            dgvLog.Columns[3].Width = 70;
             dgvLog.Columns.Add("Message", "Message");
-            dgvLog.Columns[4].Width = 310;
+            dgvLog.Columns[4].Width = 300;
             dgvLog.Columns.Add("Trame", "Trame");
             dgvLog.Columns[5].Width = dgvLog.Width - 18 - dgvLog.Columns[0].Width - dgvLog.Columns[1].Width - dgvLog.Columns[2].Width - dgvLog.Columns[3].Width - dgvLog.Columns[4].Width;
 
             _boardColor = new Dictionary<CanBoard, Color>();
             _boardColor.Add(CanBoard.PC, Color.FromArgb(180, 245, 245));
-            _boardColor.Add(CanBoard.ServoBoard1, Color.FromArgb(143, 255, 143));
-            _boardColor.Add(CanBoard.ServoBoard2, Color.FromArgb(210, 254, 211));
-            _boardColor.Add(CanBoard.ServoBoard3, Color.FromArgb(251, 217, 231));
-            _boardColor.Add(CanBoard.DisplayBoard, Color.FromArgb(254, 244, 188));
+            _boardColor.Add(CanBoard.CanServo1, Color.FromArgb(140, 255, 140));
+            _boardColor.Add(CanBoard.CanServo2, Color.FromArgb(180, 255, 180));
+            _boardColor.Add(CanBoard.CanServo3, Color.FromArgb(220, 255, 220));
+            _boardColor.Add(CanBoard.CanDisplay, Color.FromArgb(254, 244, 188));
 
             _boxLists = new List<CheckedListBox>();
             _boxLists.Add(lstSender);
@@ -123,7 +123,7 @@ namespace GoBot.IHM
 
                 if (senderVisible && receiverVisible && functionVisible)
                 {
-                    dgvLog.Rows.Add(_counter, time, tFrame.Sender.ToString(), tFrame.Receiver.ToString(), CanDecoder.Decode(tFrame.Frame), tFrame.Frame.ToString());
+                    dgvLog.Rows.Add(_counter, time, sender.ToString(), receiver.ToString(), CanDecoder.Decode(tFrame.Frame), tFrame.Frame.ToString());
                     _previousDisplayTime = tFrame.Date;
 
                     if (rdoColorByBoard.Checked)

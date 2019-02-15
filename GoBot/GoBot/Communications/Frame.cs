@@ -126,24 +126,6 @@ namespace GoBot.Communications
         }
 
         /// <summary>
-        /// Carte concernée par la trame (Information contenue dans le premier octet de la trame)
-        /// </summary>
-        public Board Board
-        {
-            get
-            {
-                try
-                {
-                    return (Board)this[0];
-                }
-                catch (Exception)
-                {
-                    return Board.PC;
-                }
-            }
-        }
-
-        /// <summary>
         /// Retourne un message textuel contenant l'information compréhensible véhiculée par la trame
         /// </summary>
         /// <returns>Message de la trame décodée</returns>

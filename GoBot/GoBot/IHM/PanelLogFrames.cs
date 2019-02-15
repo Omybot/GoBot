@@ -39,11 +39,11 @@ namespace GoBot.IHM
             dgvLog.Columns.Add("Heure", "Heure");
             dgvLog.Columns[1].Width = 80;
             dgvLog.Columns.Add("Expediteur", "Expediteur");
-            dgvLog.Columns[2].Width = 65;
+            dgvLog.Columns[2].Width = 70;
             dgvLog.Columns.Add("Destinataire", "Destinataire");
-            dgvLog.Columns[3].Width = 65;
+            dgvLog.Columns[3].Width = 70;
             dgvLog.Columns.Add("Message", "Message");
-            dgvLog.Columns[4].Width = 310;
+            dgvLog.Columns[4].Width = 300;
             dgvLog.Columns.Add("Trame", "Trame");
             dgvLog.Columns[5].Width = dgvLog.Width - 18 - dgvLog.Columns[0].Width - dgvLog.Columns[1].Width - dgvLog.Columns[2].Width - dgvLog.Columns[3].Width - dgvLog.Columns[4].Width;
 
@@ -127,8 +127,6 @@ namespace GoBot.IHM
 
             try
             {
-                Frame frame = tFrame.Frame;
-
                 if (rdoTimeAbsolute.Checked)
                     time = tFrame.Date.ToString("hh:mm:ss:fff");
                 if (rdoTimeFromStart.Checked)
@@ -137,26 +135,29 @@ namespace GoBot.IHM
                     time = ((int)(tFrame.Date - _previousTime).TotalMilliseconds).ToString() + " ms";
                 if (rdoTimeFromPrevDisplay.Checked)
                     time = ((int)(tFrame.Date - _previousDisplayTime).TotalMilliseconds).ToString() + " ms";
-                
-                Board board = frame.Board;
+
+                Board board = FrameFactory.ExtractBoard(tFrame.Frame);
+                Board sender = FrameFactory.ExtractSender(tFrame.Frame, tFrame.IsInputFrame);
+                Board receiver = FrameFactory.ExtractReceiver(tFrame.Frame, tFrame.IsInputFrame);
+                FrameFunction func = FrameFactory.ExtractFunction(tFrame.Frame);
 
                 if (board == Board.PC) throw new Exception();
 
-                bool receiverVisible = Config.CurrentConfig.LogsDestinataires[tFrame.Receiver];
-                bool senderVisible = Config.CurrentConfig.LogsExpediteurs[tFrame.Sender];
-                bool functionVisible = (_configFunctions[_lstFunctions[board]][FrameFactory.ExtractFunction(frame)]);
+                bool receiverVisible = Config.CurrentConfig.LogsDestinataires[receiver];
+                bool senderVisible = Config.CurrentConfig.LogsExpediteurs[sender];
+                bool functionVisible = (_configFunctions[_lstFunctions[board]][func]);
 
                 if (senderVisible && receiverVisible && functionVisible)
                 {
-                    dgvLog.Rows.Add(_counter, time, tFrame.Sender.ToString(), tFrame.Receiver.ToString(), FrameDecoder.Decode(frame), frame.ToString());
+                    dgvLog.Rows.Add(_counter, time, sender.ToString(), receiver.ToString(), FrameDecoder.Decode(tFrame.Frame), tFrame.Frame.ToString());
                     _previousDisplayTime = tFrame.Date;
 
                     if (rdoColorByBoard.Checked)
                         dgvLog.Rows[dgvLog.Rows.Count - 1].DefaultCellStyle.BackColor = _boardColor[board];
                     else if (rdoColorByReceiver.Checked)
-                        dgvLog.Rows[dgvLog.Rows.Count - 1].DefaultCellStyle.BackColor = _boardColor[tFrame.Receiver];
+                        dgvLog.Rows[dgvLog.Rows.Count - 1].DefaultCellStyle.BackColor = _boardColor[receiver];
                     else if (rdoColorBySender.Checked)
-                        dgvLog.Rows[dgvLog.Rows.Count - 1].DefaultCellStyle.BackColor = _boardColor[tFrame.Sender];
+                        dgvLog.Rows[dgvLog.Rows.Count - 1].DefaultCellStyle.BackColor = _boardColor[sender];
                 }
             }
             catch (Exception)
@@ -330,7 +331,7 @@ namespace GoBot.IHM
                 foreach (DataGridViewRow line in dgvLog.SelectedRows)
                 {
                     TimedFrame tFrame = GetFrameFromLine(line);
-                    ShowFramesSender(tFrame.Sender, false);
+                    ShowFramesSender(FrameFactory.ExtractSender(tFrame.Frame, tFrame.IsInputFrame), false);
                 }
 
                 DisplayLog();
@@ -344,7 +345,7 @@ namespace GoBot.IHM
                 foreach (DataGridViewRow line in dgvLog.SelectedRows)
                 {
                     TimedFrame tFrame = GetFrameFromLine(line);
-                    ShowFramesReceiver(tFrame.Receiver, false);
+                    ShowFramesReceiver(FrameFactory.ExtractReceiver(tFrame.Frame, tFrame.IsInputFrame), false);
                 }
 
                 DisplayLog();
@@ -357,7 +358,7 @@ namespace GoBot.IHM
             {
                 foreach (DataGridViewRow line in dgvLog.SelectedRows)
                 {
-                    Board board = GetFrameFromLine(line).Frame.Board;
+                    Board board = FrameFactory.ExtractBoard(GetFrameFromLine(line).Frame);
                     ShowFramesReceiver(board, false);
                     ShowFramesSender(board, false);
                 }
@@ -373,7 +374,7 @@ namespace GoBot.IHM
                 foreach (DataGridViewRow line in dgvLog.Rows)
                 {
                     TimedFrame tFrame = GetFrameFromLine(line);
-                    ShowFrameFunction(tFrame.Frame.Board, FrameFactory.ExtractFunction(tFrame.Frame), false);
+                    ShowFrameFunction(FrameFactory.ExtractBoard(tFrame.Frame), FrameFactory.ExtractFunction(tFrame.Frame), false);
                 }
 
                 DisplayLog();
@@ -414,7 +415,7 @@ namespace GoBot.IHM
                 foreach (DataGridViewRow line in dgvLog.SelectedRows)
                 {
                     TimedFrame tFrame = GetFrameFromLine(line);
-                    ShowFrameFunction(tFrame.Frame.Board, FrameFactory.ExtractFunction(tFrame.Frame), false);
+                    ShowFrameFunction(FrameFactory.ExtractBoard(tFrame.Frame), FrameFactory.ExtractFunction(tFrame.Frame), false);
                 }
 
                 DisplayLog();

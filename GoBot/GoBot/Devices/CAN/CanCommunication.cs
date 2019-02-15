@@ -46,6 +46,11 @@ namespace GoBot.Devices.CAN
             }
         }
 
+        public void OnFrameSend(Frame frame)
+        {
+            FrameSend?.Invoke(frame);
+        }
+
         protected void OnFrameReceived(Frame frame)
         {
             FrameReceived?.Invoke(frame);
@@ -61,8 +66,8 @@ namespace GoBot.Devices.CAN
                 _lockWaitResponse = new Semaphore(0, 1);
             }
 
-            if(Connections.BoardConnection[_board].SendMessage(FrameFactory.EnvoyerCAN(_board, f)) > 0)
-                FrameSend?.Invoke(f);
+            Connections.BoardConnection[_board].SendMessage(FrameFactory.EnvoyerCAN(_board, f));
+            OnFrameSend(f);
 
             _framesCount = (_framesCount + 1) % 255;
 
