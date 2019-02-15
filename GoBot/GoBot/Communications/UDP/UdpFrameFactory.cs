@@ -5,13 +5,13 @@ using System.Collections.Generic;
 using System.Drawing;
 using System;
 
-namespace GoBot.Communications
+namespace GoBot.Communications.UDP
 {
-    static class FrameFactory
+    static class UdpFrameFactory
     {
-        static public FrameFunction ExtractFunction(Frame frame)
+        static public UdpFrameFunction ExtractFunction(Frame frame)
         {
-            return (FrameFunction)frame[1];
+            return (UdpFrameFunction)frame[1];
         }
 
         static public Board ExtractBoard(Frame frame)
@@ -46,10 +46,10 @@ namespace GoBot.Communications
             switch(carte)
             {
                 case Board.RecIO:
-                    tab[1] = (byte)FrameFunction.Debug;
+                    tab[1] = (byte)UdpFrameFunction.Debug;
                     break;
                 case Board.RecMove:
-                    tab[1] = (byte)FrameFunction.Debug;
+                    tab[1] = (byte)UdpFrameFunction.Debug;
                     break;
             }
             tab[2] = (byte)numDebug;
@@ -61,7 +61,7 @@ namespace GoBot.Communications
         {
             byte[] tab = new byte[4];
             tab[0] = (byte)Board.RecGB;
-            tab[1] = (byte)FrameFunction.Led;
+            tab[1] = (byte)UdpFrameFunction.Led;
             tab[2] = (byte)led;
             tab[3] = (byte)status;
 
@@ -72,7 +72,7 @@ namespace GoBot.Communications
         {
             byte[] tab = new byte[3];
             tab[0] = (byte)Board.RecIO;
-            tab[1] = (byte)FrameFunction.DemandeCapteurCouleur;
+            tab[1] = (byte)UdpFrameFunction.DemandeCapteurCouleur;
             tab[2] = (byte)capteur;
 
             return new Frame(tab);
@@ -82,7 +82,7 @@ namespace GoBot.Communications
         {
             byte[] tab = new byte[3];
             tab[0] = (byte)Board.RecMove;
-            tab[1] = (byte)FrameFunction.DemandeLidar;
+            tab[1] = (byte)UdpFrameFunction.DemandeLidar;
             tab[2] = (byte)lidar;
 
             return new Frame(tab);
@@ -92,7 +92,7 @@ namespace GoBot.Communications
         {
             byte[] tab = new byte[6];
             tab[0] = (byte)Board.RecGB;
-            tab[1] = (byte)FrameFunction.CouleurLedRGB;
+            tab[1] = (byte)UdpFrameFunction.CouleurLedRGB;
             tab[2] = (byte)0;
             tab[3] = (byte)color.R;
             tab[4] = (byte)color.G;
@@ -105,7 +105,7 @@ namespace GoBot.Communications
         {
             byte[] tab = new byte[5];
             tab[0] = (byte)Board.RecGB;
-            tab[1] = (byte)FrameFunction.Buzzer;
+            tab[1] = (byte)UdpFrameFunction.Buzzer;
             tab[2] = (byte)ByteDivide(frequency, true);
             tab[3] = (byte)ByteDivide(frequency, false);
             tab[4] = (byte)volume;
@@ -117,7 +117,7 @@ namespace GoBot.Communications
         {
             byte[] tab = new byte[4];
             tab[0] = (byte)Board.RecIO;
-            tab[1] = (byte)FrameFunction.PilotageOnOff;
+            tab[1] = (byte)UdpFrameFunction.PilotageOnOff;
             tab[2] = (byte)actionneur;
             tab[3] = (byte)(onOff ? 1 : 0);
 
@@ -128,7 +128,7 @@ namespace GoBot.Communications
         {
             byte[] tab = new byte[3];
             tab[0] = (byte)Board.RecGB;
-            tab[1] = (byte)FrameFunction.DemandeCapteurOnOff;
+            tab[1] = (byte)UdpFrameFunction.DemandeCapteurOnOff;
             tab[2] = (byte)capteur;
 
             return new Frame(tab);
@@ -138,7 +138,7 @@ namespace GoBot.Communications
         {
             byte[] tab = new byte[5];
             tab[0] = (byte)Board.RecIO;
-            tab[1] = (byte)FrameFunction.MoteurPosition;
+            tab[1] = (byte)UdpFrameFunction.MoteurPosition;
             tab[2] = (byte)moteur;
             tab[3] = (byte)ByteDivide(position, true);
             tab[4] = (byte)ByteDivide(position, false);
@@ -150,7 +150,7 @@ namespace GoBot.Communications
         {
             byte[] tab = new byte[5];
             tab[0] = (byte)Board.RecMove;
-            tab[1] = (byte)FrameFunction.MoteurPosition;
+            tab[1] = (byte)UdpFrameFunction.MoteurPosition;
             tab[2] = (byte)MoteurID.Beacon;
             tab[3] = (byte)ByteDivide(vitesse, true);
             tab[4] = (byte)ByteDivide(vitesse, false);
@@ -162,7 +162,7 @@ namespace GoBot.Communications
         {
             byte[] tab = new byte[6];
             tab[0] = (byte)board;
-            tab[1] = (byte)FrameFunction.MoteurVitesse;
+            tab[1] = (byte)UdpFrameFunction.MoteurVitesse;
             tab[2] = (byte)moteur;
             tab[3] = (byte)sens;
             tab[4] = (byte)ByteDivide(vitesse, true);
@@ -175,7 +175,7 @@ namespace GoBot.Communications
         {
             byte[] tab = new byte[5];
             tab[0] = (byte)Board.RecIO;
-            tab[1] = (byte)FrameFunction.MoteurAccel;
+            tab[1] = (byte)UdpFrameFunction.MoteurAccel;
             tab[2] = (byte)moteur;
             tab[3] = (byte)ByteDivide(acceleration, true);
             tab[4] = (byte)ByteDivide(acceleration, false);
@@ -187,7 +187,7 @@ namespace GoBot.Communications
         {
             byte[] tab = new byte[3];
             tab[0] = (byte)Board.RecIO;
-            tab[1] = (byte)FrameFunction.ChangementBaudrateUART;
+            tab[1] = (byte)UdpFrameFunction.ChangementBaudrateUART;
             tab[2] = (byte)baudrate;
 
             return new Frame(tab);
@@ -197,7 +197,7 @@ namespace GoBot.Communications
         {
             byte[] tab = new byte[5];
             tab[0] = (byte)robot.Carte;
-            tab[1] = (byte)FrameFunction.Deplace;
+            tab[1] = (byte)UdpFrameFunction.Deplace;
             tab[2] = (byte)sens;
             tab[3] = ByteDivide(distance, true);
             tab[4] = ByteDivide(distance, false);
@@ -210,7 +210,7 @@ namespace GoBot.Communications
         {
             byte[] tab = new byte[8];
             tab[0] = (byte)robot.Carte;
-            tab[1] = (byte)FrameFunction.AsserEnvoiPositionAbsolue;
+            tab[1] = (byte)UdpFrameFunction.AsserEnvoiPositionAbsolue;
             tab[2] = ByteDivide((int)pos.Coordinates.X, true);
             tab[3] = ByteDivide((int)pos.Coordinates.X, false);
             tab[4] = ByteDivide((int)pos.Coordinates.Y, true);
@@ -226,7 +226,7 @@ namespace GoBot.Communications
         {
             byte[] tab = new byte[7];
             tab[0] = (byte)robot.Carte;
-            tab[1] = (byte)FrameFunction.Pivot;
+            tab[1] = (byte)UdpFrameFunction.Pivot;
             tab[2] = (byte)sens;
             tab[3] = ByteDivide((int)(angle * 100.0), true);
             tab[4] = ByteDivide((int)(angle * 100.0), false);
@@ -239,7 +239,7 @@ namespace GoBot.Communications
         {
             byte[] tab = new byte[3];
             tab[0] = (byte)robot.Carte;
-            tab[1] = (byte)FrameFunction.Stop;
+            tab[1] = (byte)UdpFrameFunction.Stop;
             tab[2] = (byte)mode;
 
             Frame retour = new Frame(tab);
@@ -250,7 +250,7 @@ namespace GoBot.Communications
         {
             byte[] tab = new byte[3];
             tab[0] = (byte)robot.Carte;
-            tab[1] = (byte)FrameFunction.AsserIntervalleRetourPosition;
+            tab[1] = (byte)UdpFrameFunction.AsserIntervalleRetourPosition;
             tab[2] = (byte)(intervalle / 10.0);
 
             Frame retour = new Frame(tab);
@@ -261,7 +261,7 @@ namespace GoBot.Communications
         {
             byte[] tab = new byte[8];
             tab[0] = (byte)robot.Carte;
-            tab[1] = (byte)FrameFunction.AsserPID;
+            tab[1] = (byte)UdpFrameFunction.AsserPID;
             tab[2] = (byte)ByteDivide(p, true);
             tab[3] = (byte)ByteDivide(p, false);
             tab[4] = (byte)ByteDivide(i, true);
@@ -277,7 +277,7 @@ namespace GoBot.Communications
         {
             byte[] tab = new byte[8];
             tab[0] = (byte)robot.Carte;
-            tab[1] = (byte)FrameFunction.AsserPIDCap;
+            tab[1] = (byte)UdpFrameFunction.AsserPIDCap;
             tab[2] = (byte)ByteDivide(p / 100, true);
             tab[3] = (byte)ByteDivide(p / 100, false);
             tab[4] = (byte)ByteDivide(i, true);
@@ -293,7 +293,7 @@ namespace GoBot.Communications
         {
             byte[] tab = new byte[8];
             tab[0] = (byte)robot.Carte;
-            tab[1] = (byte)FrameFunction.AsserPID;
+            tab[1] = (byte)UdpFrameFunction.AsserPID;
             tab[2] = (byte)ByteDivide(p, true);
             tab[3] = (byte)ByteDivide(p, false);
             tab[4] = (byte)ByteDivide(i, true);
@@ -309,7 +309,7 @@ namespace GoBot.Communications
         {
             byte[] tab = new byte[8];
             tab[0] = (byte)robot.Carte;
-            tab[1] = (byte)FrameFunction.Virage;
+            tab[1] = (byte)UdpFrameFunction.Virage;
             tab[2] = (byte)sensAr;
             tab[3] = (byte)sensGd;
             tab[4] = (byte)ByteDivide(rayon, true);
@@ -325,7 +325,7 @@ namespace GoBot.Communications
         {
             byte[] tab = new byte[5 + points.Count * 2 * 2];
             tab[0] = (byte)robot.Carte;
-            tab[1] = (byte)FrameFunction.TrajectoirePolaire;
+            tab[1] = (byte)UdpFrameFunction.TrajectoirePolaire;
             tab[2] = (byte)sensAr;
             tab[3] = (byte)ByteDivide(points.Count, true);
             tab[4] = (byte)ByteDivide(points.Count, false);
@@ -345,7 +345,7 @@ namespace GoBot.Communications
         {
             byte[] tab = new byte[2];
             tab[0] = (byte)Board.RecMove;
-            tab[1] = (byte)FrameFunction.Reset;
+            tab[1] = (byte)UdpFrameFunction.Reset;
             return new Frame(tab);
         }
 
@@ -353,7 +353,7 @@ namespace GoBot.Communications
         {
             byte[] tab = new byte[2];
             tab[0] = (byte)robot.Carte;
-            tab[1] = (byte)FrameFunction.AsserDemandePositionXYTeta;
+            tab[1] = (byte)UdpFrameFunction.AsserDemandePositionXYTeta;
 
             Frame retour = new Frame(tab);
             return retour;
@@ -363,7 +363,7 @@ namespace GoBot.Communications
         {
             byte[] tab = new byte[4];
             tab[0] = (byte)robot.Carte;
-            tab[1] = (byte)FrameFunction.AsserVitesseDeplacement;
+            tab[1] = (byte)UdpFrameFunction.AsserVitesseDeplacement;
             tab[2] = (byte)ByteDivide(vitesse, true);
             tab[3] = (byte)ByteDivide(vitesse, false);
 
@@ -375,7 +375,7 @@ namespace GoBot.Communications
         {
             byte[] tab = new byte[6];
             tab[0] = (byte)robot.Carte;
-            tab[1] = (byte)FrameFunction.AsserAccelerationDeplacement;
+            tab[1] = (byte)UdpFrameFunction.AsserAccelerationDeplacement;
             tab[2] = (byte)ByteDivide(accelDebut, true);
             tab[3] = (byte)ByteDivide(accelDebut, false);
             tab[4] = (byte)ByteDivide(accelFin, true);
@@ -389,7 +389,7 @@ namespace GoBot.Communications
         {
             byte[] tab = new byte[4];
             tab[0] = (byte)robot.Carte;
-            tab[1] = (byte)FrameFunction.AsserVitessePivot;
+            tab[1] = (byte)UdpFrameFunction.AsserVitessePivot;
             tab[2] = (byte)ByteDivide(vitesse, true);
             tab[3] = (byte)ByteDivide(vitesse, false);
 
@@ -401,7 +401,7 @@ namespace GoBot.Communications
         {
             byte[] tab = new byte[4];
             tab[0] = (byte)robot.Carte;
-            tab[1] = (byte)FrameFunction.AsserAccelerationPivot;
+            tab[1] = (byte)UdpFrameFunction.AsserAccelerationPivot;
             tab[2] = (byte)ByteDivide(accel, true);
             tab[3] = (byte)ByteDivide(accel, false);
 
@@ -413,7 +413,7 @@ namespace GoBot.Communications
         {
             byte[] tab = new byte[3];
             tab[0] = (byte)robot.Carte;
-            tab[1] = (byte)FrameFunction.Recallage;
+            tab[1] = (byte)UdpFrameFunction.Recallage;
             tab[2] = (byte)sens;
 
             Frame retour = new Frame(tab);
@@ -424,7 +424,7 @@ namespace GoBot.Communications
         {
             byte[] tab = new byte[2];
             tab[0] = (byte)carte;
-            tab[1] = (byte)FrameFunction.TestConnexion;
+            tab[1] = (byte)UdpFrameFunction.TestConnexion;
             return new Frame(tab);
         }
 
@@ -432,7 +432,7 @@ namespace GoBot.Communications
         {
             byte[] tab = new byte[2];
             tab[0] = (byte)Board.RecIO;
-            tab[1] = (byte)FrameFunction.DemandeCouleurEquipe;
+            tab[1] = (byte)UdpFrameFunction.DemandeCouleurEquipe;
             return new Frame(tab);
         }
 
@@ -441,7 +441,7 @@ namespace GoBot.Communications
         {
             byte[] tab = new byte[5];
             tab[0] = (byte)robot.Carte;
-            tab[1] = (byte)FrameFunction.AsserEnvoiConsigneBrutePosition;
+            tab[1] = (byte)UdpFrameFunction.AsserEnvoiConsigneBrutePosition;
             tab[2] = (byte)sens;
             tab[3] = (byte)ByteDivide(consigne, true);
             tab[4] = (byte)ByteDivide(consigne, false);
@@ -454,7 +454,7 @@ namespace GoBot.Communications
         {
             byte[] tab = new byte[2];
             tab[0] = (byte)robot.Carte;
-            tab[1] = (byte)FrameFunction.AsserDemandePositionCodeurs;
+            tab[1] = (byte)UdpFrameFunction.AsserDemandePositionCodeurs;
 
             Frame retour = new Frame(tab);
             return retour;
@@ -464,7 +464,7 @@ namespace GoBot.Communications
         {
             byte[] tab = new byte[2];
             tab[0] = (byte)carte;
-            tab[1] = (byte)FrameFunction.DemandeValeursAnalogiques;
+            tab[1] = (byte)UdpFrameFunction.DemandeValeursAnalogiques;
 
             Frame retour = new Frame(tab);
             return retour;
@@ -474,7 +474,7 @@ namespace GoBot.Communications
         {
             byte[] tab = new byte[2];
             tab[0] = (byte)carte;
-            tab[1] = (byte)FrameFunction.DemandeValeursNumeriques;
+            tab[1] = (byte)UdpFrameFunction.DemandeValeursNumeriques;
 
             Frame retour = new Frame(tab);
             return retour;
@@ -484,7 +484,7 @@ namespace GoBot.Communications
         {
             byte[] tab = new byte[2];
             tab[0] = (byte)robot.Carte;
-            tab[1] = (byte)FrameFunction.DemandeChargeCPU_PWM;
+            tab[1] = (byte)UdpFrameFunction.DemandeChargeCPU_PWM;
 
             Frame retour = new Frame(tab);
             return retour;
@@ -494,7 +494,7 @@ namespace GoBot.Communications
         {
             byte[] tab = new byte[3 + trame.Length];
             tab[0] = (byte)carte;
-            tab[1] = (byte)FrameFunction.EnvoiUart1;
+            tab[1] = (byte)UdpFrameFunction.EnvoiUart1;
             tab[2] = (byte)trame.Length;
             for (int i = 0; i < trame.Length; i++)
                 tab[3 + i] = trame[i];
@@ -507,7 +507,7 @@ namespace GoBot.Communications
         {
             byte[] tab = new byte[3 + trame.Length];
             tab[0] = (byte)carte;
-            tab[1] = (byte)FrameFunction.EnvoiCAN;
+            tab[1] = (byte)UdpFrameFunction.EnvoiCAN;
             tab[2] = (byte)trame.Length;
             for (int i = 0; i < trame.Length; i++)
                 tab[3 + i] = trame[i];
@@ -520,7 +520,7 @@ namespace GoBot.Communications
         {
             byte[] tab = new byte[3 + trame.Length];
             tab[0] = (byte)carte;
-            tab[1] = (byte)FrameFunction.EnvoiUart2;
+            tab[1] = (byte)UdpFrameFunction.EnvoiUart2;
             tab[2] = (byte)trame.Length;
             for (int i = 0; i < trame.Length; i++)
                 tab[3 + i] = trame[i];
@@ -533,7 +533,7 @@ namespace GoBot.Communications
         {
             byte[] tab = new byte[3];
             tab[0] = (byte)carte;
-            tab[1] = (byte)FrameFunction.DemandePositionCodeur;
+            tab[1] = (byte)UdpFrameFunction.DemandePositionCodeur;
             tab[2] = (byte)codeur;
 
             Frame retour = new Frame(tab);
@@ -546,7 +546,7 @@ namespace GoBot.Communications
         {
             byte[] tab = new byte[4];
             tab[0] = (byte)carte;
-            tab[1] = (byte)FrameFunction.CommandeServo;
+            tab[1] = (byte)UdpFrameFunction.CommandeServo;
             tab[2] = (byte)ServoFunction.DemandeErreurs;
             tab[3] = (byte)servo;
             return new Frame(tab);
@@ -556,7 +556,7 @@ namespace GoBot.Communications
         {
             byte[] tab = new byte[4];
             tab[0] = (byte)carte;
-            tab[1] = (byte)FrameFunction.CommandeServo;
+            tab[1] = (byte)UdpFrameFunction.CommandeServo;
             tab[2] = (byte)ServoFunction.DemandePositionCible;
             tab[3] = (byte)servo;
             return new Frame(tab);
@@ -566,7 +566,7 @@ namespace GoBot.Communications
         {
             byte[] tab = new byte[6];
             tab[0] = (byte)carte;
-            tab[1] = (byte)FrameFunction.CommandeServo;
+            tab[1] = (byte)UdpFrameFunction.CommandeServo;
             tab[2] = (byte)ServoFunction.EnvoiPositionCible;
             tab[3] = (byte)servo;
             tab[4] = ByteDivide(position, true);
@@ -578,7 +578,7 @@ namespace GoBot.Communications
         {
             byte[] tab = new byte[5];
             tab[0] = (byte)carte;
-            tab[1] = (byte)FrameFunction.CommandeServo;
+            tab[1] = (byte)UdpFrameFunction.CommandeServo;
             tab[2] = (byte)ServoFunction.EnvoiBaudrate;
             tab[3] = (byte)servo;
             tab[4] = (byte)baud;
@@ -589,7 +589,7 @@ namespace GoBot.Communications
         {
             byte[] tab = new byte[4];
             tab[0] = (byte)carte;
-            tab[1] = (byte)FrameFunction.CommandeServo;
+            tab[1] = (byte)UdpFrameFunction.CommandeServo;
             tab[2] = (byte)ServoFunction.DemandeVitesseMax;
             tab[3] = (byte)servo;
             return new Frame(tab);
@@ -599,7 +599,7 @@ namespace GoBot.Communications
         {
             byte[] tab = new byte[6];
             tab[0] = (byte)carte;
-            tab[1] = (byte)FrameFunction.CommandeServo;
+            tab[1] = (byte)UdpFrameFunction.CommandeServo;
             tab[2] = (byte)ServoFunction.EnvoiVitesseMax;
             tab[3] = (byte)servo;
             tab[4] = ByteDivide(vitesse, true);
@@ -611,7 +611,7 @@ namespace GoBot.Communications
         {
             byte[] tab = new byte[5];
             tab[0] = (byte)carte;
-            tab[1] = (byte)FrameFunction.CommandeServo;
+            tab[1] = (byte)UdpFrameFunction.CommandeServo;
             tab[2] = (byte)ServoFunction.EnvoiId;
             tab[3] = (byte)servo;
             tab[4] = (byte)nouvelId;
@@ -622,7 +622,7 @@ namespace GoBot.Communications
         {
             byte[] tab = new byte[4];
             tab[0] = (byte)carte;
-            tab[1] = (byte)FrameFunction.CommandeServo;
+            tab[1] = (byte)UdpFrameFunction.CommandeServo;
             tab[2] = (byte)ServoFunction.Reset;
             tab[3] = (byte)servo;
             return new Frame(tab);
@@ -632,7 +632,7 @@ namespace GoBot.Communications
         {
             byte[] tab = new byte[4];
             tab[0] = (byte)carte;
-            tab[1] = (byte)FrameFunction.CommandeServo;
+            tab[1] = (byte)UdpFrameFunction.CommandeServo;
             tab[2] = (byte)ServoFunction.DemandeCoupleMaximum;
             tab[3] = (byte)servo;
             return new Frame(tab);
@@ -642,7 +642,7 @@ namespace GoBot.Communications
         {
             byte[] tab = new byte[6];
             tab[0] = (byte)carte;
-            tab[1] = (byte)FrameFunction.CommandeServo;
+            tab[1] = (byte)UdpFrameFunction.CommandeServo;
             tab[2] = (byte)ServoFunction.EnvoiCoupleMaximum;
             tab[3] = (byte)servo;
             tab[4] = ByteDivide(couple, true);
@@ -654,7 +654,7 @@ namespace GoBot.Communications
         {
             byte[] tab = new byte[5];
             tab[0] = (byte)carte;
-            tab[1] = (byte)FrameFunction.CommandeServo;
+            tab[1] = (byte)UdpFrameFunction.CommandeServo;
             tab[2] = (byte)ServoFunction.EnvoiTensionMax;
             tab[3] = (byte)servo;
             tab[4] = (byte)(tension * 10);
@@ -665,7 +665,7 @@ namespace GoBot.Communications
         {
             byte[] tab = new byte[4];
             tab[0] = (byte)carte;
-            tab[1] = (byte)FrameFunction.CommandeServo;
+            tab[1] = (byte)UdpFrameFunction.CommandeServo;
             tab[2] = (byte)ServoFunction.DemandeTemperatureMax;
             tab[3] = (byte)servo;
             return new Frame(tab);
@@ -675,7 +675,7 @@ namespace GoBot.Communications
         {
             byte[] tab = new byte[5];
             tab[0] = (byte)carte;
-            tab[1] = (byte)FrameFunction.CommandeServo;
+            tab[1] = (byte)UdpFrameFunction.CommandeServo;
             tab[2] = (byte)ServoFunction.EnvoiTemperatureMax;
             tab[3] = (byte)servo;
             tab[4] = (byte)temperature;
@@ -686,7 +686,7 @@ namespace GoBot.Communications
         {
             byte[] tab = new byte[5];
             tab[0] = (byte)carte;
-            tab[1] = (byte)FrameFunction.CommandeServo;
+            tab[1] = (byte)UdpFrameFunction.CommandeServo;
             tab[2] = (byte)ServoFunction.EnvoiTensionMin;
             tab[3] = (byte)servo;
             tab[4] = (byte)(tension * 10);
@@ -697,7 +697,7 @@ namespace GoBot.Communications
         {
             byte[] tab = new byte[4];
             tab[0] = (byte)carte;
-            tab[1] = (byte)FrameFunction.CommandeServo;
+            tab[1] = (byte)UdpFrameFunction.CommandeServo;
             tab[2] = (byte)ServoFunction.DemandeCoupleActive;
             tab[3] = (byte)servo;
             return new Frame(tab);
@@ -707,7 +707,7 @@ namespace GoBot.Communications
         {
             byte[] tab = new byte[5];
             tab[0] = (byte)carte;
-            tab[1] = (byte)FrameFunction.CommandeServo;
+            tab[1] = (byte)UdpFrameFunction.CommandeServo;
             tab[2] = (byte)ServoFunction.EnvoiCoupleActive;
             tab[3] = (byte)servo;
             tab[4] = (byte)(actif ? 1 : 0);
@@ -718,7 +718,7 @@ namespace GoBot.Communications
         {
             byte[] tab = new byte[4];
             tab[0] = (byte)carte;
-            tab[1] = (byte)FrameFunction.CommandeServo;
+            tab[1] = (byte)UdpFrameFunction.CommandeServo;
             tab[2] = (byte)ServoFunction.DemandeTemperature;
             tab[3] = (byte)servo;
             return new Frame(tab);
@@ -728,7 +728,7 @@ namespace GoBot.Communications
         {
             byte[] tab = new byte[4];
             tab[0] = (byte)carte;
-            tab[1] = (byte)FrameFunction.CommandeServo;
+            tab[1] = (byte)UdpFrameFunction.CommandeServo;
             tab[2] = (byte)ServoFunction.DemandeTension;
             tab[3] = (byte)servo;
             return new Frame(tab);
@@ -738,7 +738,7 @@ namespace GoBot.Communications
         {
             byte[] tab = new byte[4];
             tab[0] = (byte)carte;
-            tab[1] = (byte)FrameFunction.CommandeServo;
+            tab[1] = (byte)UdpFrameFunction.CommandeServo;
             tab[2] = (byte)ServoFunction.DemandeTensionMin;
             tab[3] = (byte)servo;
             return new Frame(tab);
@@ -748,7 +748,7 @@ namespace GoBot.Communications
         {
             byte[] tab = new byte[4];
             tab[0] = (byte)carte;
-            tab[1] = (byte)FrameFunction.CommandeServo;
+            tab[1] = (byte)UdpFrameFunction.CommandeServo;
             tab[2] = (byte)ServoFunction.DemandeTensionMax;
             tab[3] = (byte)servo;
             return new Frame(tab);
@@ -758,7 +758,7 @@ namespace GoBot.Communications
         {
             byte[] tab = new byte[4];
             tab[0] = (byte)carte;
-            tab[1] = (byte)FrameFunction.CommandeServo;
+            tab[1] = (byte)UdpFrameFunction.CommandeServo;
             tab[2] = (byte)ServoFunction.DemandeMouvement;
             tab[3] = (byte)servo;
             return new Frame(tab);
@@ -768,7 +768,7 @@ namespace GoBot.Communications
         {
             byte[] tab = new byte[4];
             tab[0] = (byte)carte;
-            tab[1] = (byte)FrameFunction.CommandeServo;
+            tab[1] = (byte)UdpFrameFunction.CommandeServo;
             tab[2] = (byte)ServoFunction.DemandePositionMinimum;
             tab[3] = (byte)servo;
             return new Frame(tab);
@@ -778,7 +778,7 @@ namespace GoBot.Communications
         {
             byte[] tab = new byte[6];
             tab[0] = (byte)carte;
-            tab[1] = (byte)FrameFunction.CommandeServo;
+            tab[1] = (byte)UdpFrameFunction.CommandeServo;
             tab[2] = (byte)ServoFunction.EnvoiPositionMinimum;
             tab[3] = (byte)servo;
             tab[4] = ByteDivide(position, true);
@@ -790,7 +790,7 @@ namespace GoBot.Communications
         {
             byte[] tab = new byte[4];
             tab[0] = (byte)carte;
-            tab[1] = (byte)FrameFunction.CommandeServo;
+            tab[1] = (byte)UdpFrameFunction.CommandeServo;
             tab[2] = (byte)ServoFunction.DemandePositionMaximum;
             tab[3] = (byte)servo;
             return new Frame(tab);
@@ -800,7 +800,7 @@ namespace GoBot.Communications
         {
             byte[] tab = new byte[6];
             tab[0] = (byte)carte;
-            tab[1] = (byte)FrameFunction.CommandeServo;
+            tab[1] = (byte)UdpFrameFunction.CommandeServo;
             tab[2] = (byte)ServoFunction.EnvoiPositionMaximum;
             tab[3] = (byte)servo;
             tab[4] = ByteDivide(position, true);
@@ -812,7 +812,7 @@ namespace GoBot.Communications
         {
             byte[] tab = new byte[4];
             tab[0] = (byte)carte;
-            tab[1] = (byte)FrameFunction.CommandeServo;
+            tab[1] = (byte)UdpFrameFunction.CommandeServo;
             tab[2] = (byte)ServoFunction.DemandeNumeroModele;
             tab[3] = (byte)servo;
             return new Frame(tab);
@@ -822,7 +822,7 @@ namespace GoBot.Communications
         {
             byte[] tab = new byte[4];
             tab[0] = (byte)carte;
-            tab[1] = (byte)FrameFunction.CommandeServo;
+            tab[1] = (byte)UdpFrameFunction.CommandeServo;
             tab[2] = (byte)ServoFunction.DemandeVersionFirmware;
             tab[3] = (byte)servo;
             return new Frame(tab);
@@ -832,7 +832,7 @@ namespace GoBot.Communications
         {
             byte[] tab = new byte[4];
             tab[0] = (byte)carte;
-            tab[1] = (byte)FrameFunction.CommandeServo;
+            tab[1] = (byte)UdpFrameFunction.CommandeServo;
             tab[2] = (byte)ServoFunction.DemandeLed;
             tab[3] = (byte)servo;
             return new Frame(tab);
@@ -842,7 +842,7 @@ namespace GoBot.Communications
         {
             byte[] tab = new byte[5];
             tab[0] = (byte)carte;
-            tab[1] = (byte)FrameFunction.CommandeServo;
+            tab[1] = (byte)UdpFrameFunction.CommandeServo;
             tab[2] = (byte)ServoFunction.EnvoiLed;
             tab[3] = (byte)servo;
             tab[4] = (byte)(allume ? 1 : 0);
@@ -853,7 +853,7 @@ namespace GoBot.Communications
         {
             byte[] tab = new byte[4];
             tab[0] = (byte)carte;
-            tab[1] = (byte)FrameFunction.CommandeServo;
+            tab[1] = (byte)UdpFrameFunction.CommandeServo;
             tab[2] = (byte)ServoFunction.DemandeConfigAlarmeLED;
             tab[3] = (byte)servo;
             return new Frame(tab);
@@ -863,7 +863,7 @@ namespace GoBot.Communications
         {
             byte[] tab = new byte[11];
             tab[0] = (byte)carte;
-            tab[1] = (byte)FrameFunction.CommandeServo;
+            tab[1] = (byte)UdpFrameFunction.CommandeServo;
             tab[2] = (byte)ServoFunction.EnvoiConfigAlarmeLED;
             tab[3] = (byte)servo;
             tab[4] = (byte)(inputVoltage ? 1 : 0);
@@ -880,7 +880,7 @@ namespace GoBot.Communications
         {
             byte[] tab = new byte[4];
             tab[0] = (byte)carte;
-            tab[1] = (byte)FrameFunction.CommandeServo;
+            tab[1] = (byte)UdpFrameFunction.CommandeServo;
             tab[2] = (byte)ServoFunction.DemandeConfigAlarmeShutdown;
             tab[3] = (byte)servo;
             return new Frame(tab);
@@ -890,7 +890,7 @@ namespace GoBot.Communications
         {
             byte[] tab = new byte[11];
             tab[0] = (byte)carte;
-            tab[1] = (byte)FrameFunction.CommandeServo;
+            tab[1] = (byte)UdpFrameFunction.CommandeServo;
             tab[2] = (byte)ServoFunction.EnvoiConfigAlarmeShutdown;
             tab[3] = (byte)servo;
             tab[4] = (byte)(inputVoltage ? 1 : 0);
@@ -907,7 +907,7 @@ namespace GoBot.Communications
         {
             byte[] tab = new byte[4];
             tab[0] = (byte)carte;
-            tab[1] = (byte)FrameFunction.CommandeServo;
+            tab[1] = (byte)UdpFrameFunction.CommandeServo;
             tab[2] = (byte)ServoFunction.DemandeConfigEcho;
             tab[3] = (byte)servo;
             return new Frame(tab);
@@ -917,7 +917,7 @@ namespace GoBot.Communications
         {
             byte[] tab = new byte[5];
             tab[0] = (byte)carte;
-            tab[1] = (byte)FrameFunction.CommandeServo;
+            tab[1] = (byte)UdpFrameFunction.CommandeServo;
             tab[2] = (byte)ServoFunction.EnvoiConfigEcho;
             tab[3] = (byte)servo;
             tab[4] = (byte)val;
@@ -928,7 +928,7 @@ namespace GoBot.Communications
         {
             byte[] tab = new byte[4];
             tab[0] = (byte)carte;
-            tab[1] = (byte)FrameFunction.CommandeServo;
+            tab[1] = (byte)UdpFrameFunction.CommandeServo;
             tab[2] = (byte)ServoFunction.DemandeComplianceParams;
             tab[3] = (byte)servo;
             return new Frame(tab);
@@ -938,7 +938,7 @@ namespace GoBot.Communications
         {
             byte[] tab = new byte[4];
             tab[0] = (byte)carte;
-            tab[1] = (byte)FrameFunction.CommandeServo;
+            tab[1] = (byte)UdpFrameFunction.CommandeServo;
             tab[2] = (byte)ServoFunction.DemandeAllIn;
             tab[3] = (byte)servo;
             return new Frame(tab);
@@ -948,7 +948,7 @@ namespace GoBot.Communications
         {
             byte[] tab = new byte[8];
             tab[0] = (byte)carte;
-            tab[1] = (byte)FrameFunction.CommandeServo;
+            tab[1] = (byte)UdpFrameFunction.CommandeServo;
             tab[2] = (byte)ServoFunction.EnvoiComplianceParams;
             tab[3] = (byte)servo;
             tab[4] = CCWSlope;
@@ -962,7 +962,7 @@ namespace GoBot.Communications
         {
             byte[] tab = new byte[4];
             tab[0] = (byte)carte;
-            tab[1] = (byte)FrameFunction.CommandeServo;
+            tab[1] = (byte)UdpFrameFunction.CommandeServo;
             tab[2] = (byte)ServoFunction.DemandePositionActuelle;
             tab[3] = (byte)servo;
             return new Frame(tab);
@@ -972,7 +972,7 @@ namespace GoBot.Communications
         {
             byte[] tab = new byte[4];
             tab[0] = (byte)carte;
-            tab[1] = (byte)FrameFunction.CommandeServo;
+            tab[1] = (byte)UdpFrameFunction.CommandeServo;
             tab[2] = (byte)ServoFunction.DemandeVitesseActuelle;
             tab[3] = (byte)servo;
             return new Frame(tab);
@@ -982,7 +982,7 @@ namespace GoBot.Communications
         {
             byte[] tab = new byte[4];
             tab[0] = (byte)carte;
-            tab[1] = (byte)FrameFunction.CommandeServo;
+            tab[1] = (byte)UdpFrameFunction.CommandeServo;
             tab[2] = (byte)ServoFunction.DemandeCoupleCourant;
             tab[3] = (byte)servo;
             return new Frame(tab);
@@ -992,7 +992,7 @@ namespace GoBot.Communications
         {
             byte[] tab = new byte[4];
             tab[0] = (byte)carte;
-            tab[1] = (byte)FrameFunction.CommandeServo;
+            tab[1] = (byte)UdpFrameFunction.CommandeServo;
             tab[2] = (byte)ServoFunction.DemandeCoupleLimite;
             tab[3] = (byte)servo;
             return new Frame(tab);
@@ -1002,7 +1002,7 @@ namespace GoBot.Communications
         {
             byte[] tab = new byte[6];
             tab[0] = (byte)carte;
-            tab[1] = (byte)FrameFunction.CommandeServo;
+            tab[1] = (byte)UdpFrameFunction.CommandeServo;
             tab[2] = (byte)ServoFunction.EnvoiCoupleLimite;
             tab[3] = (byte)servo;
             tab[4] = ByteDivide(couple, true);

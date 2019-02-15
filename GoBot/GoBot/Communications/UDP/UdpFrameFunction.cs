@@ -1,7 +1,6 @@
-﻿namespace GoBot.Communications
+﻿namespace GoBot.Communications.UDP
 {
-
-    public enum FrameFunction
+    public enum UdpFrameFunction
     {
         Debug = 0xEE,
         TestConnexion = 0xF0,

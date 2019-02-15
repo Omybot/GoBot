@@ -22,7 +22,7 @@
         /// </summary>
         /// <param name="message">Message à envoyer au client</param>
         /// <returns>Nombre de caractères envoyés</returns>
-        abstract public int SendMessage(Frame message);
+        abstract public bool SendMessage(Frame message);
 
         //Déclaration du délégué pour l’évènement réception ou émission de message
         public delegate void NewFrameDelegate(Frame frame);

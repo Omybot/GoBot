@@ -7,11 +7,10 @@ using System.IO;
 using System.Windows.Forms;
 using System.Xml.Serialization;
 using Microsoft.Win32;
-using GoBot.Communications;
-using System.Drawing;
 using GoBot.Actionneurs;
 using System.Reflection;
-using GoBot.Devices.CAN;
+using GoBot.Communications.UDP;
+using GoBot.Communications.CAN;
 
 namespace GoBot
 {
@@ -104,17 +103,17 @@ namespace GoBot
 
         // Parametres logs UDP
         
-        public SerializableDictionary<FrameFunction, bool> LogsFonctionsIO { get; set; }
-        public SerializableDictionary<FrameFunction, bool> LogsFonctionsMove { get; set; }
-        public SerializableDictionary<FrameFunction, bool> LogsFonctionsGB { get; set; }
-        public SerializableDictionary<FrameFunction, bool> LogsFonctionsCAN { get; set; }
+        public SerializableDictionary<UdpFrameFunction, bool> LogsFonctionsIO { get; set; }
+        public SerializableDictionary<UdpFrameFunction, bool> LogsFonctionsMove { get; set; }
+        public SerializableDictionary<UdpFrameFunction, bool> LogsFonctionsGB { get; set; }
+        public SerializableDictionary<UdpFrameFunction, bool> LogsFonctionsCAN { get; set; }
 
         public SerializableDictionary<Board, bool> LogsExpediteurs { get; set; }
         public SerializableDictionary<Board, bool> LogsDestinataires { get; set; }
 
         // Parametres logs CAN
 
-        public SerializableDictionary<CanFunction, bool> LogsCanFunctions { get; set; }
+        public SerializableDictionary<CanFrameFunction, bool> LogsCanFunctions { get; set; }
         public SerializableDictionary<CanBoard, bool> LogsCanSenders { get; set; }
         public SerializableDictionary<CanBoard, bool> LogsCanReceivers { get; set; }
 

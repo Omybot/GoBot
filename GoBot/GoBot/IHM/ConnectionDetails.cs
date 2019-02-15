@@ -1,4 +1,5 @@
 ﻿using GoBot.Communications;
+using GoBot.Communications.UDP;
 using System.Windows.Forms;
 
 namespace GoBot.IHM

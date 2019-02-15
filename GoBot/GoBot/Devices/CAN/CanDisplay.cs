@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using GoBot.Communications.CAN;
 
 namespace GoBot.Devices.CAN
 {

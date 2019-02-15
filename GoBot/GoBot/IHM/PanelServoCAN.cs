@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using GoBot.Threading;
 using GoBot.Devices.CAN;
+using GoBot.Communications.CAN;
 
 namespace GoBot.IHM
 {
@@ -89,16 +90,16 @@ namespace GoBot.IHM
 
         private void btnDebug_Click(object sender, EventArgs e)
         {
-            GoBot.Communications.Frame frame = CanFrameFactory.BuildDebug(CanBoard.ServoBoard1);
+            GoBot.Communications.Frame frame = CanFrameFactory.BuildDebugAsk(CanBoard.CanServo1);
             
-            for (int i = 0; i < 1000; i++)
+            for (int i = 0; i < 100; i++)
             {
-                GoBot.Communications.Connections.ConnectionCan.SendFrame(frame);
+                GoBot.Communications.Connections.ConnectionCan.SendMessage(frame);
             }
 
-            System.Threading.Thread.Sleep(5000);
+            //System.Threading.Thread.Sleep(5000);
 
-            GoBot.Communications.Connections.ConnectionCan.SendFrame(CanFrameFactory.BuildDebugAsk(CanBoard.ServoBoard1));
+            //GoBot.Communications.Connections.ConnectionCan.SendFrame(CanFrameFactory.BuildDebugAsk(CanBoard.ServoBoard1));
 
         }
 

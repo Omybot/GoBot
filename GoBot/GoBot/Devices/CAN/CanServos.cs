@@ -1,4 +1,5 @@
 ﻿using GoBot.Communications;
+using GoBot.Communications.CAN;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,10 +16,10 @@ namespace GoBot.Devices.CAN
     {
         private Dictionary<int, CanServo> _servos;
 
-        private CanCommunication _communication;
+        private CanConnection _communication;
         private List<CanBoard> _canBoards;
 
-        public CanServos(CanCommunication comm)
+        public CanServos(CanConnection comm)
         {
             _communication = comm;
             _communication.FrameReceived += _communication_FrameReceived;

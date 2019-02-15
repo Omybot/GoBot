@@ -9,6 +9,7 @@ using System.Windows.Forms;
 using GoBot.Communications;
 using System.Net;
 using System.Threading;
+using GoBot.Communications.UDP;
 
 namespace GoBot.IHM
 {
@@ -86,17 +87,17 @@ namespace GoBot.IHM
 
             if (boxMove.Checked)
             {
-                Frame trame = FrameFactory.Debug(Board.RecMove, val);
+                Frame trame = UdpFrameFactory.Debug(Board.RecMove, val);
                 Connections.ConnectionMove.SendMessage(trame);
             }
             if (boxIO.Checked)
             {
-                Frame trame = FrameFactory.Debug(Board.RecIO, val);
+                Frame trame = UdpFrameFactory.Debug(Board.RecIO, val);
                 Connections.ConnectionIO.SendMessage(trame);
             }
             if (boxGB.Checked)
             {
-                Frame trame = FrameFactory.Debug(Board.RecGB, val);
+                Frame trame = UdpFrameFactory.Debug(Board.RecGB, val);
                 Connections.ConnectionGB.SendMessage(trame);
             }
         }
@@ -125,17 +126,17 @@ namespace GoBot.IHM
         {
             if (boxMove.Checked)
             {
-                Frame trame = FrameFactory.TestConnexion(Board.RecMove);
+                Frame trame = UdpFrameFactory.TestConnexion(Board.RecMove);
                 Connections.ConnectionMove.SendMessage(trame);
             }
             if (boxIO.Checked)
             {
-                Frame trame = FrameFactory.TestConnexion(Board.RecIO);
+                Frame trame = UdpFrameFactory.TestConnexion(Board.RecIO);
                 Connections.ConnectionIO.SendMessage(trame);
             }
             if (boxGB.Checked)
             {
-                Frame trame = FrameFactory.TestConnexion(Board.RecGB);
+                Frame trame = UdpFrameFactory.TestConnexion(Board.RecGB);
                 Connections.ConnectionGB.SendMessage(trame);
             }
         }

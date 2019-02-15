@@ -10,6 +10,7 @@ using System.Threading;
 using Geometry;
 using Geometry.Shapes;
 using GoBot.Communications;
+using GoBot.Communications.UDP;
 
 namespace GoBot.Beacons
 {
@@ -132,7 +133,7 @@ namespace GoBot.Beacons
 
             try
             {
-                if (trame[1] == (byte)FrameFunction.DetectionBaliseRapide)
+                if (trame[1] == (byte)UdpFrameFunction.DetectionBaliseRapide)
                 {
                     if (Position != null)
                     {
@@ -188,7 +189,7 @@ namespace GoBot.Beacons
                     }
                 }
 
-                if (trame[1] == (byte)FrameFunction.DetectionBalise)
+                if (trame[1] == (byte)UdpFrameFunction.DetectionBalise)
                 {
                     if (Position != null)
                     {
@@ -501,7 +502,7 @@ namespace GoBot.Beacons
             }
 
             ValeurConsigne = vitesse;
-            Frame t = FrameFactory.BaliseVitesse(vitesse);
+            Frame t = UdpFrameFactory.BaliseVitesse(vitesse);
             Connexion.SendMessage(t);
         }
 

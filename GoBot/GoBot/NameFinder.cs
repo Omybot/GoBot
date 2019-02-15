@@ -2,6 +2,7 @@
 using System.Reflection;
 using GoBot.Actionneurs;
 using GoBot.Communications;
+using GoBot.Communications.UDP;
 
 namespace GoBot
 {
@@ -317,9 +318,9 @@ namespace GoBot
         /// </summary>
         /// <param name="capteur">Fonction à décoder</param>
         /// <returns>Template de décodage</returns>
-        public static String GetName(FrameFunction frame)
+        public static String GetName(UdpFrameFunction frame)
         {
-            return FrameDecoder.GetMessage(frame);
+            return UdpFrameDecoder.GetMessage(frame);
         }
 
         /// <summary>

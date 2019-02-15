@@ -1,16 +1,15 @@
-﻿using GoBot.Communications;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace GoBot.Devices.CAN
+namespace GoBot.Communications.CAN
 {
     static class CanFrameFactory
     {
-        public static CanFunction ExtractFunction(Frame frame)
+        public static CanFrameFunction ExtractFunction(Frame frame)
         {
-            return (CanFunction)frame[2];
+            return (CanFrameFunction)frame[2];
         }
 
         public static CanBoard ExtractBoard(Frame frame)
@@ -49,7 +48,7 @@ namespace GoBot.Devices.CAN
 
             tab[0] = 0x00;
             tab[1] = (byte)GlobalIdToCanBoard(servoGlobalId);
-            tab[2] = (byte)CanFunction.PositionAsk;
+            tab[2] = (byte)CanFrameFunction.PositionAsk;
             tab[3] = GlobalIdToServoNo(servoGlobalId);
 
             return new Frame(tab);
@@ -61,7 +60,7 @@ namespace GoBot.Devices.CAN
 
             tab[0] = 0x00;
             tab[1] = (byte)GlobalIdToCanBoard(servoGlobalId);
-            tab[2] = (byte)CanFunction.PositionMinAsk;
+            tab[2] = (byte)CanFrameFunction.PositionMinAsk;
             tab[3] = GlobalIdToServoNo(servoGlobalId);
 
             return new Frame(tab);
@@ -73,7 +72,7 @@ namespace GoBot.Devices.CAN
 
             tab[0] = 0x00;
             tab[1] = (byte)GlobalIdToCanBoard(servoGlobalId);
-            tab[2] = (byte)CanFunction.PositionMaxAsk;
+            tab[2] = (byte)CanFrameFunction.PositionMaxAsk;
             tab[3] = GlobalIdToServoNo(servoGlobalId);
 
             return new Frame(tab);
@@ -85,7 +84,7 @@ namespace GoBot.Devices.CAN
 
             tab[0] = 0x00;
             tab[1] = (byte)GlobalIdToCanBoard(servoGlobalId);
-            tab[2] = (byte)CanFunction.SpeedAsk;
+            tab[2] = (byte)CanFrameFunction.SpeedAsk;
             tab[3] = GlobalIdToServoNo(servoGlobalId);
 
             return new Frame(tab);
@@ -97,7 +96,7 @@ namespace GoBot.Devices.CAN
 
             tab[0] = 0x00;
             tab[1] = (byte)GlobalIdToCanBoard(servoGlobalId);
-            tab[2] = (byte)CanFunction.TorqueCurrentAsk;
+            tab[2] = (byte)CanFrameFunction.TorqueCurrentAsk;
             tab[3] = GlobalIdToServoNo(servoGlobalId);
 
             return new Frame(tab);
@@ -109,7 +108,7 @@ namespace GoBot.Devices.CAN
 
             tab[0] = 0x00;
             tab[1] = (byte)GlobalIdToCanBoard(servoGlobalId);
-            tab[2] = (byte)CanFunction.TorqueMaxAsk;
+            tab[2] = (byte)CanFrameFunction.TorqueMaxAsk;
             tab[3] = GlobalIdToServoNo(servoGlobalId);
 
             return new Frame(tab);
@@ -121,7 +120,7 @@ namespace GoBot.Devices.CAN
 
             tab[0] = 0x00;
             tab[1] = (byte)GlobalIdToCanBoard(servoGlobalId);
-            tab[2] = (byte)CanFunction.PositionSet;
+            tab[2] = (byte)CanFrameFunction.PositionSet;
             tab[3] = GlobalIdToServoNo(servoGlobalId);
             tab[4] = ByteDivide(position, true);
             tab[5] = ByteDivide(position, false);
@@ -135,7 +134,7 @@ namespace GoBot.Devices.CAN
 
             tab[0] = 0x00;
             tab[1] = (byte)GlobalIdToCanBoard(servoGlobalId);
-            tab[2] = (byte)CanFunction.PositionMaxSet;
+            tab[2] = (byte)CanFrameFunction.PositionMaxSet;
             tab[3] = GlobalIdToServoNo(servoGlobalId);
             tab[4] = ByteDivide(position, true);
             tab[5] = ByteDivide(position, false);
@@ -149,7 +148,7 @@ namespace GoBot.Devices.CAN
 
             tab[0] = 0x00;
             tab[1] = (byte)GlobalIdToCanBoard(servoGlobalId);
-            tab[2] = (byte)CanFunction.PositionMinSet;
+            tab[2] = (byte)CanFrameFunction.PositionMinSet;
             tab[3] = GlobalIdToServoNo(servoGlobalId);
             tab[4] = ByteDivide(position, true);
             tab[5] = ByteDivide(position, false);
@@ -163,7 +162,7 @@ namespace GoBot.Devices.CAN
 
             tab[0] = 0x00;
             tab[1] = (byte)GlobalIdToCanBoard(servoGlobalId);
-            tab[2] = (byte)CanFunction.SpeedSet;
+            tab[2] = (byte)CanFrameFunction.SpeedSet;
             tab[3] = GlobalIdToServoNo(servoGlobalId);
             tab[4] = ByteDivide(speed, true);
             tab[5] = ByteDivide(speed, false);
@@ -177,7 +176,7 @@ namespace GoBot.Devices.CAN
 
             tab[0] = 0x00;
             tab[1] = (byte)GlobalIdToCanBoard(servoGlobalId);
-            tab[2] = (byte)CanFunction.TorqueMaxSet;
+            tab[2] = (byte)CanFrameFunction.TorqueMaxSet;
             tab[3] = GlobalIdToServoNo(servoGlobalId);
             tab[4] = ByteDivide(torque, true);
             tab[5] = ByteDivide(torque, false);
@@ -191,7 +190,7 @@ namespace GoBot.Devices.CAN
 
             tab[0] = 0x00;
             tab[1] = (byte)GlobalIdToCanBoard(servoGlobalId);
-            tab[2] = (byte)CanFunction.TrajectorySet;
+            tab[2] = (byte)CanFrameFunction.TrajectorySet;
             tab[3] = GlobalIdToServoNo(servoGlobalId);
             tab[4] = ByteDivide(position, true);
             tab[5] = ByteDivide(position, false);
@@ -209,7 +208,7 @@ namespace GoBot.Devices.CAN
 
             tab[0] = 0x00;
             tab[1] = (byte)CanBoard.CanDisplay;
-            tab[2] = (byte)CanFunction.SetScore;
+            tab[2] = (byte)CanFrameFunction.SetScore;
             tab[3] = 0x00;
             tab[4] = ByteDivide(score, true);
             tab[5] = ByteDivide(score, false);
@@ -223,7 +222,7 @@ namespace GoBot.Devices.CAN
 
             tab[0] = 0x00;
             tab[1] = (byte)board;
-            tab[2] = (byte)CanFunction.Debug;
+            tab[2] = (byte)CanFrameFunction.Debug;
 
             return new Frame(tab);
         }
@@ -234,7 +233,7 @@ namespace GoBot.Devices.CAN
 
             tab[0] = 0x00;
             tab[1] = (byte)board;
-            tab[2] = (byte)CanFunction.DebugAsk;
+            tab[2] = (byte)CanFrameFunction.DebugAsk;
 
             return new Frame(tab);
         }

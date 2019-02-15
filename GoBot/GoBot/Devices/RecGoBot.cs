@@ -9,6 +9,7 @@ using GoBot.Actionneurs;
 using GoBot.Threading;
 using Geometry.Shapes;
 using Geometry;
+using GoBot.Communications.UDP;
 
 namespace GoBot.Devices
 {
@@ -277,7 +278,7 @@ namespace GoBot.Devices
 
         void connexion_NouvelleTrameRecue(Frame trameRecue)
         {
-            if (trameRecue[1] == (byte)FrameFunction.RetourCapteurOnOff)
+            if (trameRecue[1] == (byte)UdpFrameFunction.RetourCapteurOnOff)
             {
                 CapteurOnOffID but;
 
@@ -358,7 +359,7 @@ namespace GoBot.Devices
                 else ButtonChange?.Invoke(but, pushed);
             }
 
-            if (trameRecue[1] == (byte)FrameFunction.RetourPositionCodeur)
+            if (trameRecue[1] == (byte)UdpFrameFunction.RetourPositionCodeur)
             {
                 if (trameRecue[2] == (byte)CodeurID.Manuel)
                 {
@@ -379,22 +380,22 @@ namespace GoBot.Devices
         public void SetLed(LedID led, LedStatus state)
         {
             ledsStatus[led] = state;
-            connexion.SendMessage(FrameFactory.SetLed(led, state));
+            connexion.SendMessage(UdpFrameFactory.SetLed(led, state));
         }
 
         public void SetLedColor(Color color)
         {
-            connexion.SendMessage(FrameFactory.SetLedColor(color));
+            connexion.SendMessage(UdpFrameFactory.SetLedColor(color));
         }
 
         public void Buzz(int frequency, byte volume)
         {
-            connexion.SendMessage(FrameFactory.Buzz(frequency, volume));
+            connexion.SendMessage(UdpFrameFactory.Buzz(frequency, volume));
         }
 
         public uint GetCodeurPosition()
         {
-            Frame t = FrameFactory.CodeurPosition(Board.RecGB, CodeurID.Manuel);
+            Frame t = UdpFrameFactory.CodeurPosition(Board.RecGB, CodeurID.Manuel);
             semCodeur = new Semaphore(0, int.MaxValue);
             Connections.ConnectionGB.SendMessage(t);
 

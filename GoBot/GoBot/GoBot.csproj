@@ -83,11 +83,11 @@
     <Compile Include="Actionneurs\Actionneur.cs" />
     <Compile Include="Actionneurs\Positionables.cs" />
     <Compile Include="Actionneurs\RobotPositionables.cs" />
-    <Compile Include="Devices\CAN\CanCommunication.cs" />
-    <Compile Include="Devices\CAN\CanDecoder.cs" />
+    <Compile Include="Communications\CAN\CanConnection.cs" />
+    <Compile Include="Communications\CAN\CanFrameDecoder.cs" />
     <Compile Include="Devices\CAN\CanDisplay.cs" />
-    <Compile Include="Devices\CAN\CanFrameFactory.cs" />
-    <Compile Include="Devices\CAN\CanFunctions.cs" />
+    <Compile Include="Communications\CAN\CanFrameFactory.cs" />
+    <Compile Include="Communications\CAN\CanFrameFunction.cs" />
     <Compile Include="Devices\CAN\CanServo.cs" />
     <Compile Include="Devices\HokuyoRec.cs" />
     <Compile Include="Devices\CAN\CanServos.cs" />
@@ -185,8 +185,8 @@
     <Compile Include="Beacons\SuiviBalise.cs" />
     <Compile Include="CameraIP.cs" />
     <Compile Include="Communications\Connection.cs" />
-    <Compile Include="Communications\FrameDecoder.cs" />
-    <Compile Include="Communications\FrameFunctions.cs" />
+    <Compile Include="Communications\UDP\UdpFrameDecoder.cs" />
+    <Compile Include="Communications\UDP\UdpFrameFunction.cs" />
     <Compile Include="Dessinateur.cs" />
     <Compile Include="Devices\Devices.cs" />
     <Compile Include="Devices\Hokuyo.cs" />
@@ -441,8 +441,8 @@
     <Compile Include="Robots\RobotSimu.cs" />
     <Compile Include="SerializableDictionnary.cs" />
     <Compile Include="Servomoteur.cs" />
-    <Compile Include="Communications\FrameFactory.cs" />
-    <Compile Include="Communications\UDPConnection.cs" />
+    <Compile Include="Communications\UDP\UdpFrameFactory.cs" />
+    <Compile Include="Communications\UDP\UdpConnection.cs" />
     <Compile Include="Communications\Frame.cs" />
     <Compile Include="TestCode.cs" />
     <EmbeddedResource Include="IHM\ConnectionDetails.resx">

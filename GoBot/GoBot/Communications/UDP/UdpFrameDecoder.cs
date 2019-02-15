@@ -1,10 +1,9 @@
-﻿using GoBot.Actions;
-using System;
+﻿using System;
 using System.Collections.Generic;
 
-namespace GoBot.Communications
+namespace GoBot.Communications.UDP
 {
-    static class FrameDecoder
+    static class UdpFrameDecoder
     {
         public static String Decode(Frame trame)
         {
@@ -19,22 +18,22 @@ namespace GoBot.Communications
         /// <param name="function"></param>
         /// <param name="parameters"></param>
         /// <returns></returns>
-        public static String GetMessage(FrameFunction function, List<uint> parameters = null)
+        public static String GetMessage(UdpFrameFunction function, List<uint> parameters = null)
         {
             String output = "";
 
             switch (function)
             {
-                case FrameFunction.EnvoiUart2:
+                case UdpFrameFunction.EnvoiUart2:
                     output = "Envoi UART2";
                     break;
-                case FrameFunction.RetourUart2:
+                case UdpFrameFunction.RetourUart2:
                     output = "Retour UART2";
                     break;
-                case FrameFunction.DemandeValeursNumeriques:
+                case UdpFrameFunction.DemandeValeursNumeriques:
                     output = "Demande valeurs des ports numériques";
                     break;
-                case FrameFunction.RetourValeursNumeriques:
+                case UdpFrameFunction.RetourValeursNumeriques:
                     output = "Retour ports numériques : {0}_{1} / {2}_{3} / {4}_{5}";
                     if (parameters != null)
                     {
@@ -43,27 +42,27 @@ namespace GoBot.Communications
                     }
                     break;
 
-                case FrameFunction.Debug:
+                case UdpFrameFunction.Debug:
                     output = "Debug {0}";
                     if (parameters != null)
                     {
                         output = ReplaceParam(output, parameters[0].ToString());
                     }
                     break;
-                case FrameFunction.TestConnexion:
+                case UdpFrameFunction.TestConnexion:
                     output = "Test connexion";
                     break;
-                case FrameFunction.TensionBatteries:
+                case UdpFrameFunction.TensionBatteries:
                     output = "Tension batteries = {0-1}V";
                     if (parameters != null)
                     {
                         output = ReplaceParam(output, (parameters[0] / 100.0).ToString("0.00"));
                     }
                     break;
-                case FrameFunction.Reset:
+                case UdpFrameFunction.Reset:
                     output = "Envoi Reset";
                     break;
-                case FrameFunction.Buzzer:
+                case UdpFrameFunction.Buzzer:
                     output = "Buzzer fréquence = {0-1}Hz, volume={2}";
                     if (parameters != null)
                     {
@@ -71,24 +70,24 @@ namespace GoBot.Communications
                         output = ReplaceParam(output, parameters[1].ToString());
                     }
                     break;
-                case FrameFunction.DemandeCouleurEquipe:
+                case UdpFrameFunction.DemandeCouleurEquipe:
                     output = "Demande couleur équipe";
                     break;
-                case FrameFunction.RetourCouleurEquipe:
+                case UdpFrameFunction.RetourCouleurEquipe:
                     output = "Retour couleur équipe : {0}";
                     if (parameters != null)
                     {
                         output = ReplaceParam(output, parameters[0].ToString());
                     }
                     break;
-                case FrameFunction.DemandeCapteurOnOff:
+                case UdpFrameFunction.DemandeCapteurOnOff:
                     output = "Demande capteur {0}";
                     if (parameters != null)
                     {
                         output = ReplaceParam(output, NameFinder.GetName((CapteurOnOffID)parameters[0]));
                     }
                     break;
-                case FrameFunction.RetourCapteurOnOff:
+                case UdpFrameFunction.RetourCapteurOnOff:
                     output = "Retour capteur {0} : {1}";
                     if (parameters != null)
                     {
@@ -96,10 +95,10 @@ namespace GoBot.Communications
                         output = ReplaceParam(output, NameFinder.GetName(parameters[1] > 0));
                     }
                     break;
-                case FrameFunction.DemandeValeursAnalogiques:
+                case UdpFrameFunction.DemandeValeursAnalogiques:
                     output = "Demande valeurs analogiques";
                     break;
-                case FrameFunction.RetourValeursAnalogiques:
+                case UdpFrameFunction.RetourValeursAnalogiques:
                     output = "Retour valeurs analogiques : {0}V / {1}V / {2}V / {3}V / {4}V / {5}V / {6}V / {7}V / {8}V";
                     if (parameters != null)
                     {
@@ -109,14 +108,14 @@ namespace GoBot.Communications
                         }
                     }
                     break;
-                case FrameFunction.DemandeCapteurCouleur:
+                case UdpFrameFunction.DemandeCapteurCouleur:
                     output = "Demande capteur couleur {0}";
                     if (parameters != null)
                     {
                         output = ReplaceParam(output, NameFinder.GetName((CapteurCouleurID)parameters[0]));
                     }
                     break;
-                case FrameFunction.RetourCapteurCouleur:
+                case UdpFrameFunction.RetourCapteurCouleur:
                     output = "Retour capteur couleur {0} : {1}-{2}-{3}";
                     if (parameters != null)
                     {
@@ -126,14 +125,14 @@ namespace GoBot.Communications
                         output = ReplaceParam(output, parameters[3].ToString("000"));
                     }
                     break;
-                case FrameFunction.DemandePositionCodeur:
+                case UdpFrameFunction.DemandePositionCodeur:
                     output = "Demande position codeur {0}";
                     if (parameters != null)
                     {
                         output = ReplaceParam(output, NameFinder.GetName((CodeurID)parameters[0]));
                     }
                     break;
-                case FrameFunction.RetourPositionCodeur:
+                case UdpFrameFunction.RetourPositionCodeur:
                     output = "Retour position codeur {0} : {1-2-3-4}";
                     if (parameters != null)
                     {
@@ -141,7 +140,7 @@ namespace GoBot.Communications
                         output = ReplaceParam(output, parameters[1].ToString());
                     }
                     break;
-                case FrameFunction.PilotageOnOff:
+                case UdpFrameFunction.PilotageOnOff:
                     output = "Pilote actionneur on off {0} : {1}";
                     if (parameters != null)
                     {
@@ -149,7 +148,7 @@ namespace GoBot.Communications
                         output = ReplaceParam(output, NameFinder.GetName(parameters[1] > 0));
                     }
                     break;
-                case FrameFunction.Led:
+                case UdpFrameFunction.Led:
                     output = "Pilote led {0} : {1}";
                     if (parameters != null)
                     {
@@ -157,7 +156,7 @@ namespace GoBot.Communications
                         output = ReplaceParam(output, ((Devices.RecGoBot.LedStatus)parameters[1]).ToString());
                     }
                     break;
-                case FrameFunction.MoteurPosition:
+                case UdpFrameFunction.MoteurPosition:
                     output = "Pilote moteur {0} position {1-2}";
                     if (parameters != null)
                     {
@@ -165,7 +164,7 @@ namespace GoBot.Communications
                         output = ReplaceParam(output, parameters[1].ToString());
                     }
                     break;
-                case FrameFunction.MoteurVitesse:
+                case UdpFrameFunction.MoteurVitesse:
                     output = "Pilote moteur {0} vitesse {2-3} vers la {1}";
                     if (parameters != null)
                     {
@@ -174,7 +173,7 @@ namespace GoBot.Communications
                         output = ReplaceParam(output, ((SensGD)parameters[2]).ToString().ToLower());
                     }
                     break;
-                case FrameFunction.MoteurAccel:
+                case UdpFrameFunction.MoteurAccel:
                     output = "Pilote moteur {0} accélération {1-2}";
                     if (parameters != null)
                     {
@@ -182,11 +181,11 @@ namespace GoBot.Communications
                         output = ReplaceParam(output, parameters[1].ToString());
                     }
                     break;
-                case FrameFunction.CommandeServo:
+                case UdpFrameFunction.CommandeServo:
                     output = "Commande servomoteur";
                     // TODO
                     break;
-                case FrameFunction.Deplace:
+                case UdpFrameFunction.Deplace:
                     output = "{0} sur {1-2} mm";
                     if (parameters != null)
                     {
@@ -194,7 +193,7 @@ namespace GoBot.Communications
                         output = ReplaceParam(output, parameters[1].ToString());
                     }
                     break;
-                case FrameFunction.Pivot:
+                case UdpFrameFunction.Pivot:
                     output = "Pivot {0} sur {1-2}°";
                     if (parameters != null)
                     {
@@ -202,7 +201,7 @@ namespace GoBot.Communications
                         output = ReplaceParam(output, (parameters[1] / 100.0).ToString());
                     }
                     break;
-                case FrameFunction.Virage:
+                case UdpFrameFunction.Virage:
                     output = "Virage {0} {1} de {4-5}° sur un rayon de {2-3}mm";
                     if (parameters != null)
                     {
@@ -212,21 +211,21 @@ namespace GoBot.Communications
                         output = ReplaceParam(output, parameters[3].ToString());
                     }
                     break;
-                case FrameFunction.Stop:
+                case UdpFrameFunction.Stop:
                     output = "Stop {0}";
                     if (parameters != null)
                     {
                         output = ReplaceParam(output, ((StopMode)parameters[0]).ToString().ToLower());
                     }
                     break;
-                case FrameFunction.Recallage:
+                case UdpFrameFunction.Recallage:
                     output = "Recallage {0}";
                     if (parameters != null)
                     {
                         output = ReplaceParam(output, ((SensAR)parameters[0]).ToString().ToLower());
                     }
                     break;
-                case FrameFunction.TrajectoirePolaire:
+                case UdpFrameFunction.TrajectoirePolaire:
                     output = "Trajectoire polaire {0} sur {1-2} points";
                     if (parameters != null)
                     {
@@ -234,26 +233,26 @@ namespace GoBot.Communications
                         output = ReplaceParam(output, parameters[1].ToString());
                     }
                     break;
-                case FrameFunction.FinRecallage:
+                case UdpFrameFunction.FinRecallage:
                     output = "Fin de recallage";
                     break;
-                case FrameFunction.FinDeplacement:
+                case UdpFrameFunction.FinDeplacement:
                     output = "Fin de déplacement";
                     break;
-                case FrameFunction.Blocage:
+                case UdpFrameFunction.Blocage:
                     output = "Blocage !!!";
                     break;
-                case FrameFunction.AsserDemandePositionCodeurs:
+                case UdpFrameFunction.AsserDemandePositionCodeurs:
                     output = "Demande position codeurs déplacement";
                     break;
-                case FrameFunction.AsserRetourPositionCodeurs:
+                case UdpFrameFunction.AsserRetourPositionCodeurs:
                     output = "Retour position codeurs déplacement : {0} valeurs";
                     if (parameters != null)
                     {
                         output = ReplaceParam(output, parameters[0].ToString());
                     }
                     break;
-                case FrameFunction.AsserEnvoiConsigneBrutePosition:
+                case UdpFrameFunction.AsserEnvoiConsigneBrutePosition:
                     output = "Envoi consigne brute : {1-2} pas en {0}";
                     if (parameters != null)
                     {
@@ -261,27 +260,27 @@ namespace GoBot.Communications
                         output = ReplaceParam(output, ((SensAR)parameters[0]).ToString().ToLower());
                     }
                     break;
-                case FrameFunction.DemandeChargeCPU_PWM:
+                case UdpFrameFunction.DemandeChargeCPU_PWM:
                     output = "Demande charge CPU PWM";
                     break;
-                case FrameFunction.RetourChargeCPU_PWM:
+                case UdpFrameFunction.RetourChargeCPU_PWM:
                     output = "Retour charge CPU PWM : {0} valeurs";
                     if (parameters != null)
                     {
                         output = ReplaceParam(output, parameters[0].ToString());
                     }
                     break;
-                case FrameFunction.AsserIntervalleRetourPosition:
+                case UdpFrameFunction.AsserIntervalleRetourPosition:
                     output = "Intervalle de retour de la position : {0}ms";
                     if (parameters != null)
                     {
                         output = ReplaceParam(output, (parameters[0] * 10).ToString());
                     }
                     break;
-                case FrameFunction.AsserDemandePositionXYTeta:
+                case UdpFrameFunction.AsserDemandePositionXYTeta:
                     output = "Demande position X Y Teta";
                     break;
-                case FrameFunction.AsserRetourPositionXYTeta:
+                case UdpFrameFunction.AsserRetourPositionXYTeta:
                     output = "Retour position X = {0-1}mm Y = {2-3}mm Teta = {4-5}°";
                     if (parameters != null)
                     {
@@ -290,14 +289,14 @@ namespace GoBot.Communications
                         output = ReplaceParam(output, (parameters[2] / 100.0).ToString());
                     }
                     break;
-                case FrameFunction.AsserVitesseDeplacement:
+                case UdpFrameFunction.AsserVitesseDeplacement:
                     output = "Vitesse ligne : {0-1}mm/s";
                     if (parameters != null)
                     {
                         output = ReplaceParam(output, parameters[0].ToString());
                     }
                     break;
-                case FrameFunction.AsserAccelerationDeplacement:
+                case UdpFrameFunction.AsserAccelerationDeplacement:
                     output = "Accélération ligne : {0-1}mm/s² au début, {2-3}mm/s² à la fin";
                     if (parameters != null)
                     {
@@ -305,14 +304,14 @@ namespace GoBot.Communications
                         output = ReplaceParam(output, parameters[0].ToString());
                     }
                     break;
-                case FrameFunction.AsserVitessePivot:
+                case UdpFrameFunction.AsserVitessePivot:
                     output = "Vitesse pivot : {0-1}mm/s";
                     if (parameters != null)
                     {
                         output = ReplaceParam(output, parameters[0].ToString());
                     }
                     break;
-                case FrameFunction.AsserAccelerationPivot:
+                case UdpFrameFunction.AsserAccelerationPivot:
                     output = "Accélération pivot : {0-1}mm/s² au début, {2-3}mm/s² à la fin";
                     if (parameters != null)
                     {
@@ -320,7 +319,7 @@ namespace GoBot.Communications
                         output = ReplaceParam(output, parameters[0].ToString());
                     }
                     break;
-                case FrameFunction.AsserPID:
+                case UdpFrameFunction.AsserPID:
                     output = "Asservissement P={0-1} I={2-3} D={4-5}";
                     if (parameters != null)
                     {
@@ -329,7 +328,7 @@ namespace GoBot.Communications
                         output = ReplaceParam(output, parameters[2].ToString());
                     }
                     break;
-                case FrameFunction.AsserEnvoiPositionAbsolue:
+                case UdpFrameFunction.AsserEnvoiPositionAbsolue:
                     output = "Envoi position absolue : X={0-1}mm Y={2-3}mm Teta={4-5}°";
                     if (parameters != null)
                     {
@@ -338,7 +337,7 @@ namespace GoBot.Communications
                         output = ReplaceParam(output, (parameters[2] / 100.0).ToString());
                     }
                     break;
-                case FrameFunction.AsserPIDCap:
+                case UdpFrameFunction.AsserPIDCap:
                     output = "Asservissement cap P={0-1} I={2-3} D={4-5}";
                     if (parameters != null)
                     {
@@ -347,7 +346,7 @@ namespace GoBot.Communications
                         output = ReplaceParam(output, parameters[1].ToString());
                     }
                     break;
-                case FrameFunction.AsserPIDVitesse:
+                case UdpFrameFunction.AsserPIDVitesse:
                     output = "Asservissement vitesse P={0-1} I={2-3} D={4-5}";
                     if (parameters != null)
                     {
@@ -356,28 +355,28 @@ namespace GoBot.Communications
                         output = ReplaceParam(output, parameters[1].ToString());
                     }
                     break;
-                case FrameFunction.EnvoiUart1:
+                case UdpFrameFunction.EnvoiUart1:
                     output = "Envoi UART {0} caractères";
                     if (parameters != null)
                     {
                         output = ReplaceParam(output, parameters[0].ToString());
                     }
                     break;
-                case FrameFunction.RetourUart1:
+                case UdpFrameFunction.RetourUart1:
                     output = "Réception UART {0} caractères";
                     if (parameters != null)
                     {
                         output = ReplaceParam(output, parameters[0].ToString());
                     }
                     break;
-                case FrameFunction.ChangementBaudrateUART:
+                case UdpFrameFunction.ChangementBaudrateUART:
                     output = "Changement baudrate UART : {0} bauds";
                     if (parameters != null)
                     {
                         output = ReplaceParam(output, ((ServoBaudrate)parameters[0]).ToString().Substring(1));
                     }
                     break;
-                case FrameFunction.AffichageLCD:
+                case UdpFrameFunction.AffichageLCD:
                     output = "Affichage message LCD : ";
                     for (int i = 0; i < 32; i++)
                         output += "{" + i + "}";
@@ -387,7 +386,7 @@ namespace GoBot.Communications
                             output = ReplaceParam(output, ((char)parameters[i]).ToString());
                     }
                     break;
-                case FrameFunction.CouleurLedRGB:
+                case UdpFrameFunction.CouleurLedRGB:
                     output = "Envoi couleur LED {0}: {1}-{2}-{3}";
                     if (parameters != null)
                     {
@@ -397,7 +396,7 @@ namespace GoBot.Communications
                         output = ReplaceParam(output, parameters[3].ToString("000"));
                     }
                     break;
-                case FrameFunction.DetectionBalise:
+                case UdpFrameFunction.DetectionBalise:
                     output = "Détection balise {0} : Tour de {1-2} ticks, {3} détections en haut, {4} détections en bas";
                     if (parameters != null)
                     {
@@ -407,13 +406,13 @@ namespace GoBot.Communications
                         output = ReplaceParam(output, parameters[3].ToString());
                     }
                     break;
-                case FrameFunction.DetectionBaliseRapide:
+                case UdpFrameFunction.DetectionBaliseRapide:
                     output = "Détection rapide balise";
                     break;
-                case FrameFunction.EnvoiCAN:
+                case UdpFrameFunction.EnvoiCAN:
                     output = "Envoi message CAN";
                     break;
-                case FrameFunction.ReponseCAN:
+                case UdpFrameFunction.ReponseCAN:
                     output = "Reception message CAN";
                     break;
                 default:
@@ -433,8 +432,8 @@ namespace GoBot.Communications
         {
             String output = "";
 
-            output = GetMessage((FrameFunction)trame[1]);
-            output = GetMessage((FrameFunction)trame[1], GetParameters(output, trame));
+            output = GetMessage((UdpFrameFunction)trame[1]);
+            output = GetMessage((UdpFrameFunction)trame[1], GetParameters(output, trame));
 
             return output;
         }

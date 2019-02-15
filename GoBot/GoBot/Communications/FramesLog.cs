@@ -159,7 +159,7 @@ namespace GoBot.Communications
             for (int i = 0; i < Frames.Count;i++)
             {
                 if (Frames[i].IsInputFrame)
-                    Connections.BoardConnection[FrameFactory.ExtractBoard(Frames[i].Frame)].OnFrameReceived(Frames[i].Frame);
+                    Connections.BoardConnection[UDP.UdpFrameFactory.ExtractBoard(Frames[i].Frame)].OnFrameReceived(Frames[i].Frame);
 
                 if (i - 1 > 0)
                     Thread.Sleep(Frames[i].Date - Frames[i - 1].Date);

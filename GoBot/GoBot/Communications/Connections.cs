@@ -1,5 +1,5 @@
-﻿using GoBot.Devices;
-using GoBot.Devices.CAN;
+﻿using GoBot.Communications.CAN;
+using GoBot.Communications.UDP;
 using GoBot.Threading;
 using System;
 using System.Collections.Generic;
@@ -18,7 +18,7 @@ namespace GoBot.Communications
         public static UDPConnection ConnectionGB { get; set; }
         public static UDPConnection ConnectionCanBridge { get; set; }
 
-        public static CanCommunication ConnectionCan { get; set; }
+        public static CanConnection ConnectionCan { get; set; }
 
         /// <summary>
         /// Liste de toutes les connexions suivies par Connections
@@ -52,9 +52,11 @@ namespace GoBot.Communications
             ConnectionIO = AddUDPConnection(Board.RecIO, IPAddress.Parse("10.1.0.14"), 12324, 12314);
             ConnectionMove = AddUDPConnection(Board.RecMove, IPAddress.Parse("10.1.0.11"), 12321, 12311);
             ConnectionGB = AddUDPConnection(Board.RecGB, IPAddress.Parse("10.1.0.12"), 12322, 12312);
-            ConnectionCanBridge = AddUDPConnection(Board.RecCan, IPAddress.Parse("10.1.0.15"), 12325, 12315);
+            //ConnectionCanBridge = AddUDPConnection(Board.RecCan, IPAddress.Parse("10.1.0.15"), 12325, 12315);
+            ConnectionCanBridge = AddUDPConnection(Board.RecCan, IPAddress.Parse("185.45.34.144"), 12325, 12315); // RecCAN chez Polo
 
-            ConnectionCan = new CanCommunication(Board.RecCan);
+            ConnectionCan = new CanConnection(Board.RecCan);
+            ConnectionCan.StartReception();
 
             // En remplacement des tests de connexion des ConnexionCheck, pour les syncroniser
             _linkTestConnections = ThreadManager.CreateThread(link => TestConnections());
@@ -87,7 +89,7 @@ namespace GoBot.Communications
         /// <param name="sender">Connexion à laquelle envoyer le test</param>
         private static void ConnexionCheck_SendConnectionTestUDP(Connection sender)
         {
-            sender.SendMessage(FrameFactory.TestConnexion(GetBoardByConnection(sender)));
+            sender.SendMessage(UdpFrameFactory.TestConnexion(GetBoardByConnection(sender)));
         }
 
         /// <summary>

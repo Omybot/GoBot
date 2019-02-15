@@ -8,7 +8,7 @@ using System.Text;
 using System.Windows.Forms;
 using System.Threading;
 using GoBot.Communications;
-using GoBot.Devices.CAN;
+using GoBot.Communications.CAN;
 
 namespace GoBot.IHM
 {
@@ -59,14 +59,14 @@ namespace GoBot.IHM
             _boxLists.Add(lstFunctions);
 
             if (Config.CurrentConfig.LogsCanFunctions == null)
-                Config.CurrentConfig.LogsCanFunctions = new SerializableDictionary<CanFunction, bool>();
+                Config.CurrentConfig.LogsCanFunctions = new SerializableDictionary<CanFrameFunction, bool>();
             if (Config.CurrentConfig.LogsCanSenders == null)
                 Config.CurrentConfig.LogsCanSenders = new SerializableDictionary<CanBoard, bool>();
             if (Config.CurrentConfig.LogsCanReceivers== null)
                 Config.CurrentConfig.LogsCanReceivers = new SerializableDictionary<CanBoard, bool>();
 
             // L'ajout de champs déclenche le SetCheck event qui ajoute les éléments automatiquement dans le dictionnaire
-            foreach (CanFunction func in Enum.GetValues(typeof(CanFunction)))
+            foreach (CanFrameFunction func in Enum.GetValues(typeof(CanFrameFunction)))
             {
                 if (!Config.CurrentConfig.LogsCanFunctions.ContainsKey(func))
                     Config.CurrentConfig.LogsCanFunctions.Add(func, true);
@@ -123,7 +123,7 @@ namespace GoBot.IHM
 
                 if (senderVisible && receiverVisible && functionVisible)
                 {
-                    dgvLog.Rows.Add(_counter, time, sender.ToString(), receiver.ToString(), CanDecoder.Decode(tFrame.Frame), tFrame.Frame.ToString());
+                    dgvLog.Rows.Add(_counter, time, sender.ToString(), receiver.ToString(), CanFrameDecoder.Decode(tFrame.Frame), tFrame.Frame.ToString());
                     _previousDisplayTime = tFrame.Date;
 
                     if (rdoColorByBoard.Checked)
@@ -224,7 +224,7 @@ namespace GoBot.IHM
             Config.CurrentConfig.LogsCanSenders[board] = show;
         }
 
-        private void ShowFrameFunction(CanFunction func, bool show)
+        private void ShowFrameFunction(CanFrameFunction func, bool show)
         {
             lstFunctions.Items.Remove(func.ToString());
             lstFunctions.Items.Add(func.ToString(), show);
@@ -291,7 +291,7 @@ namespace GoBot.IHM
             if (!Execution.DesignMode && !_loading)
             {
                 String funcStr = (String)lstFunctions.Items[e.Index];
-                CanFunction func = (CanFunction)Enum.Parse(typeof(CanFunction), funcStr);
+                CanFrameFunction func = (CanFrameFunction)Enum.Parse(typeof(CanFrameFunction), funcStr);
 
                 Config.CurrentConfig.LogsCanFunctions[func] = (e.NewValue == CheckState.Checked);
             }
@@ -405,8 +405,8 @@ namespace GoBot.IHM
                 _displayTimer.Tick += displayTimer_Tick;
                 _displayTimer.Start();
 
-                Connections.ConnectionCan.FrameReceived += new CanCommunication.NewFrameDelegate((frame) => _log.AddFrame(frame, true));
-                Connections.ConnectionCan.FrameSend += new CanCommunication.NewFrameDelegate((frame) => _log.AddFrame(frame, false));
+                Connections.ConnectionCan.FrameReceived += new CanConnection.NewFrameDelegate((frame) => _log.AddFrame(frame, true));
+                Connections.ConnectionCan.FrameSend += new CanConnection.NewFrameDelegate((frame) => _log.AddFrame(frame, false));
 
                 btnReplayAll.Enabled = false;
                 btnReplaySelected.Enabled = false;
@@ -418,14 +418,9 @@ namespace GoBot.IHM
             {
                 _displayTimer.Stop();
 
-                Connections.AllConnections.ForEach(conn =>
-                {
-                    if (conn.GetType() == typeof(UDPConnection))
-                    {
-                        conn.FrameReceived -= new UDPConnection.NewFrameDelegate((frame) => _log.AddFrame(frame, true));
-                        conn.FrameSend -= new UDPConnection.NewFrameDelegate((frame) => _log.AddFrame(frame, false));
-                    }
-                });
+
+                Connections.ConnectionCan.FrameReceived -= new CanConnection.NewFrameDelegate((frame) => _log.AddFrame(frame, true));
+                Connections.ConnectionCan.FrameSend -= new CanConnection.NewFrameDelegate((frame) => _log.AddFrame(frame, false));
 
                 btnReplayAll.Enabled = true;
                 btnReplaySelected.Enabled = true;

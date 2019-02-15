@@ -13,6 +13,7 @@ using System.Threading;
 using GoBot.Communications;
 using System.IO;
 using GoBot.Threading;
+using GoBot.Communications.UDP;
 
 namespace GoBot
 {
@@ -104,7 +105,7 @@ namespace GoBot
 
                 Plateau.NotreCouleur = Plateau.CouleurGaucheJaune;
 
-                Connections.ConnectionIO.SendMessage(FrameFactory.DemandeCouleurEquipe());
+                Connections.ConnectionIO.SendMessage(UdpFrameFactory.DemandeCouleurEquipe());
                 
                 panelBalise.Balise = Plateau.Balise;
                 panelBaliseDiagnostic.Balise = Plateau.Balise;

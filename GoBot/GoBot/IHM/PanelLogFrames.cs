@@ -8,6 +8,7 @@ using System.Text;
 using System.Windows.Forms;
 using System.Threading;
 using GoBot.Communications;
+using GoBot.Communications.UDP;
 
 namespace GoBot.IHM
 {
@@ -23,7 +24,7 @@ namespace GoBot.IHM
         private Thread _thReplay;
 
         private List<CheckedListBox> _boxLists;
-        private Dictionary<CheckedListBox, Dictionary<FrameFunction, bool>> _configFunctions;
+        private Dictionary<CheckedListBox, Dictionary<UdpFrameFunction, bool>> _configFunctions;
         private Dictionary<Board, CheckedListBox> _lstFunctions;
 
         bool _loading;
@@ -63,19 +64,19 @@ namespace GoBot.IHM
             _boxLists.Add(lstRecCANFunctions);
 
             if (Config.CurrentConfig.LogsFonctionsMove == null)
-                Config.CurrentConfig.LogsFonctionsMove = new SerializableDictionary<FrameFunction, bool>();
+                Config.CurrentConfig.LogsFonctionsMove = new SerializableDictionary<UdpFrameFunction, bool>();
             if (Config.CurrentConfig.LogsFonctionsIO == null)
-                Config.CurrentConfig.LogsFonctionsIO = new SerializableDictionary<FrameFunction, bool>();
+                Config.CurrentConfig.LogsFonctionsIO = new SerializableDictionary<UdpFrameFunction, bool>();
             if (Config.CurrentConfig.LogsFonctionsGB == null)
-                Config.CurrentConfig.LogsFonctionsGB = new SerializableDictionary<FrameFunction, bool>();
+                Config.CurrentConfig.LogsFonctionsGB = new SerializableDictionary<UdpFrameFunction, bool>();
             if (Config.CurrentConfig.LogsFonctionsCAN == null)
-                Config.CurrentConfig.LogsFonctionsCAN = new SerializableDictionary<FrameFunction, bool>();
+                Config.CurrentConfig.LogsFonctionsCAN = new SerializableDictionary<UdpFrameFunction, bool>();
             if (Config.CurrentConfig.LogsExpediteurs == null)
                 Config.CurrentConfig.LogsExpediteurs = new SerializableDictionary<Board, bool>();
             if (Config.CurrentConfig.LogsDestinataires == null)
                 Config.CurrentConfig.LogsDestinataires = new SerializableDictionary<Board, bool>();
 
-            _configFunctions = new Dictionary<CheckedListBox, Dictionary<FrameFunction, bool>>();
+            _configFunctions = new Dictionary<CheckedListBox, Dictionary<UdpFrameFunction, bool>>();
             _configFunctions.Add(lstRecIOFunctions, Config.CurrentConfig.LogsFonctionsIO);
             _configFunctions.Add(lstRecMoveFunctions, Config.CurrentConfig.LogsFonctionsMove);
             _configFunctions.Add(lstRecGoBotFunctions, Config.CurrentConfig.LogsFonctionsGB);
@@ -90,7 +91,7 @@ namespace GoBot.IHM
             foreach (CheckedListBox lst in _configFunctions.Keys)
             {
                 // L'ajout de champs déclenche le SetCheck event qui ajoute les éléments automatiquement dans le dictionnaire
-                foreach (FrameFunction func in Enum.GetValues(typeof(FrameFunction)))
+                foreach (UdpFrameFunction func in Enum.GetValues(typeof(UdpFrameFunction)))
                 {
                     if (!_configFunctions[lst].ContainsKey(func))
                         _configFunctions[lst].Add(func, true);
@@ -136,10 +137,10 @@ namespace GoBot.IHM
                 if (rdoTimeFromPrevDisplay.Checked)
                     time = ((int)(tFrame.Date - _previousDisplayTime).TotalMilliseconds).ToString() + " ms";
 
-                Board board = FrameFactory.ExtractBoard(tFrame.Frame);
-                Board sender = FrameFactory.ExtractSender(tFrame.Frame, tFrame.IsInputFrame);
-                Board receiver = FrameFactory.ExtractReceiver(tFrame.Frame, tFrame.IsInputFrame);
-                FrameFunction func = FrameFactory.ExtractFunction(tFrame.Frame);
+                Board board = UdpFrameFactory.ExtractBoard(tFrame.Frame);
+                Board sender = UdpFrameFactory.ExtractSender(tFrame.Frame, tFrame.IsInputFrame);
+                Board receiver = UdpFrameFactory.ExtractReceiver(tFrame.Frame, tFrame.IsInputFrame);
+                UdpFrameFunction func = UdpFrameFactory.ExtractFunction(tFrame.Frame);
 
                 if (board == Board.PC) throw new Exception();
 
@@ -149,7 +150,7 @@ namespace GoBot.IHM
 
                 if (senderVisible && receiverVisible && functionVisible)
                 {
-                    dgvLog.Rows.Add(_counter, time, sender.ToString(), receiver.ToString(), FrameDecoder.Decode(tFrame.Frame), tFrame.Frame.ToString());
+                    dgvLog.Rows.Add(_counter, time, sender.ToString(), receiver.ToString(), UdpFrameDecoder.Decode(tFrame.Frame), tFrame.Frame.ToString());
                     _previousDisplayTime = tFrame.Date;
 
                     if (rdoColorByBoard.Checked)
@@ -250,7 +251,7 @@ namespace GoBot.IHM
             Config.CurrentConfig.LogsExpediteurs[board] = show;
         }
 
-        private void ShowFrameFunction(Board board, FrameFunction func, bool show)
+        private void ShowFrameFunction(Board board, UdpFrameFunction func, bool show)
         {
             _lstFunctions[board].Items.Remove(func.ToString());
             _lstFunctions[board].Items.Add(func.ToString(), show);
@@ -318,7 +319,7 @@ namespace GoBot.IHM
             {
                 CheckedListBox lst = (CheckedListBox)sender;
                 String funcStr = (String)lst.Items[e.Index];
-                FrameFunction func = (FrameFunction)Enum.Parse(typeof(FrameFunction), funcStr);
+                UdpFrameFunction func = (UdpFrameFunction)Enum.Parse(typeof(UdpFrameFunction), funcStr);
 
                 _configFunctions[lst][func] = (e.NewValue == CheckState.Checked);
             }
@@ -331,7 +332,7 @@ namespace GoBot.IHM
                 foreach (DataGridViewRow line in dgvLog.SelectedRows)
                 {
                     TimedFrame tFrame = GetFrameFromLine(line);
-                    ShowFramesSender(FrameFactory.ExtractSender(tFrame.Frame, tFrame.IsInputFrame), false);
+                    ShowFramesSender(UdpFrameFactory.ExtractSender(tFrame.Frame, tFrame.IsInputFrame), false);
                 }
 
                 DisplayLog();
@@ -345,7 +346,7 @@ namespace GoBot.IHM
                 foreach (DataGridViewRow line in dgvLog.SelectedRows)
                 {
                     TimedFrame tFrame = GetFrameFromLine(line);
-                    ShowFramesReceiver(FrameFactory.ExtractReceiver(tFrame.Frame, tFrame.IsInputFrame), false);
+                    ShowFramesReceiver(UdpFrameFactory.ExtractReceiver(tFrame.Frame, tFrame.IsInputFrame), false);
                 }
 
                 DisplayLog();
@@ -358,7 +359,7 @@ namespace GoBot.IHM
             {
                 foreach (DataGridViewRow line in dgvLog.SelectedRows)
                 {
-                    Board board = FrameFactory.ExtractBoard(GetFrameFromLine(line).Frame);
+                    Board board = UdpFrameFactory.ExtractBoard(GetFrameFromLine(line).Frame);
                     ShowFramesReceiver(board, false);
                     ShowFramesSender(board, false);
                 }
@@ -374,7 +375,7 @@ namespace GoBot.IHM
                 foreach (DataGridViewRow line in dgvLog.Rows)
                 {
                     TimedFrame tFrame = GetFrameFromLine(line);
-                    ShowFrameFunction(FrameFactory.ExtractBoard(tFrame.Frame), FrameFactory.ExtractFunction(tFrame.Frame), false);
+                    ShowFrameFunction(UdpFrameFactory.ExtractBoard(tFrame.Frame), UdpFrameFactory.ExtractFunction(tFrame.Frame), false);
                 }
 
                 DisplayLog();
@@ -415,7 +416,7 @@ namespace GoBot.IHM
                 foreach (DataGridViewRow line in dgvLog.SelectedRows)
                 {
                     TimedFrame tFrame = GetFrameFromLine(line);
-                    ShowFrameFunction(FrameFactory.ExtractBoard(tFrame.Frame), FrameFactory.ExtractFunction(tFrame.Frame), false);
+                    ShowFrameFunction(UdpFrameFactory.ExtractBoard(tFrame.Frame), UdpFrameFactory.ExtractFunction(tFrame.Frame), false);
                 }
 
                 DisplayLog();

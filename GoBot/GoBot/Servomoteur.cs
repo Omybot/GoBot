@@ -5,6 +5,7 @@ using System.Text;
 using System.Windows.Forms;
 using GoBot.Communications;
 using System.Threading;
+using GoBot.Communications.UDP;
 
 namespace GoBot
 {
@@ -41,7 +42,7 @@ namespace GoBot
             get { return id; }
             set
             {
-                connexion.SendMessage(FrameFactory.ServoEnvoiId((ServomoteurID)id, (char)value, carte));
+                connexion.SendMessage(UdpFrameFactory.ServoEnvoiId((ServomoteurID)id, (char)value, carte));
                 id = value;
             }
         }
@@ -52,12 +53,12 @@ namespace GoBot
             set
             {
                 baudrate = value;
-                connexion.SendMessage(FrameFactory.ServoEnvoiBaudrate((ServomoteurID)id, baudrate, carte));
+                connexion.SendMessage(UdpFrameFactory.ServoEnvoiBaudrate((ServomoteurID)id, baudrate, carte));
             }
         }
         private void EnvoiCompliance()
         {
-            connexion.SendMessage(FrameFactory.ServoEnvoiComplianceParams((ServomoteurID)id, ccwSlope, ccwMargin, cwMargin, cwSlope, carte));
+            connexion.SendMessage(UdpFrameFactory.ServoEnvoiComplianceParams((ServomoteurID)id, ccwSlope, ccwMargin, cwMargin, cwSlope, carte));
         }
         private int punch;
         public int Punch
@@ -116,12 +117,12 @@ namespace GoBot
             set
             {
                 coupleLimite = value;
-                connexion.SendMessage(FrameFactory.ServoEnvoiCoupleLimite((ServomoteurID)id, coupleLimite, carte));
+                connexion.SendMessage(UdpFrameFactory.ServoEnvoiCoupleLimite((ServomoteurID)id, coupleLimite, carte));
             }
         }
         private void EnvoiParamLED()
         {
-            connexion.SendMessage(FrameFactory.ServoEnvoiConfigAlarmeLED((ServomoteurID)id, alarmeLEDInputVoltage, alarmeLEDAngleLimit, alarmeLEDOverheating, alarmeLEDRange, alarmeLEDChecksum, alarmeLEDOverload, alarmeLEDInstruction, carte));
+            connexion.SendMessage(UdpFrameFactory.ServoEnvoiConfigAlarmeLED((ServomoteurID)id, alarmeLEDInputVoltage, alarmeLEDAngleLimit, alarmeLEDOverheating, alarmeLEDRange, alarmeLEDChecksum, alarmeLEDOverload, alarmeLEDInstruction, carte));
         }
         private bool alarmeLEDInputVoltage;
         public bool AlarmeLEDInputVoltage
@@ -196,7 +197,7 @@ namespace GoBot
 
         private void EnvoiParamShutdown()
         {
-            connexion.SendMessage(FrameFactory.ServoEnvoiConfigAlarmeShutdown((ServomoteurID)id, alarmeShutdownInputVoltage, alarmeShutdownAngleLimit, alarmeShutdownOverheating, alarmeShutdownRange, alarmeShutdownChecksum, alarmeShutdownOverload, alarmeShutdownInstruction, carte));
+            connexion.SendMessage(UdpFrameFactory.ServoEnvoiConfigAlarmeShutdown((ServomoteurID)id, alarmeShutdownInputVoltage, alarmeShutdownAngleLimit, alarmeShutdownOverheating, alarmeShutdownRange, alarmeShutdownChecksum, alarmeShutdownOverload, alarmeShutdownInstruction, carte));
         }
         private bool alarmeShutdownInputVoltage;
         public bool AlarmeShutdownInputVoltage
@@ -276,7 +277,7 @@ namespace GoBot
             set
             {
                 coupleActive = value;
-                connexion.SendMessage(FrameFactory.ServoEnvoiCoupleActive((ServomoteurID)id, coupleActive, carte));
+                connexion.SendMessage(UdpFrameFactory.ServoEnvoiCoupleActive((ServomoteurID)id, coupleActive, carte));
             }
         }
         private int coupleActuel;
@@ -291,7 +292,7 @@ namespace GoBot
             set
             {
                 coupleMaximum = value;
-                connexion.SendMessage(FrameFactory.ServoEnvoiCoupleMaximum((ServomoteurID)id, coupleMaximum, carte));
+                connexion.SendMessage(UdpFrameFactory.ServoEnvoiCoupleMaximum((ServomoteurID)id, coupleMaximum, carte));
             }
         }
         private double tensionMaximum = 5;
@@ -304,7 +305,7 @@ namespace GoBot
                     tensionMaximum = 5;
                 else
                     tensionMaximum = value;
-                connexion.SendMessage(FrameFactory.ServoEnvoiTensionMax((ServomoteurID)id, tensionMaximum, carte));
+                connexion.SendMessage(UdpFrameFactory.ServoEnvoiTensionMax((ServomoteurID)id, tensionMaximum, carte));
             }
         }
         private int temperatureMaximum;
@@ -314,7 +315,7 @@ namespace GoBot
             set
             {
                 temperatureMaximum = value;
-                connexion.SendMessage(FrameFactory.ServoEnvoiTemperatureMax((ServomoteurID)id, temperatureMaximum, carte));
+                connexion.SendMessage(UdpFrameFactory.ServoEnvoiTemperatureMax((ServomoteurID)id, temperatureMaximum, carte));
             }
         }
         private double tensionMinimum = 5;
@@ -324,7 +325,7 @@ namespace GoBot
             set
             {
                 tensionMinimum = value;
-                connexion.SendMessage(FrameFactory.ServoEnvoiTensionMin((ServomoteurID)id, tensionMinimum, carte));
+                connexion.SendMessage(UdpFrameFactory.ServoEnvoiTensionMin((ServomoteurID)id, tensionMinimum, carte));
             }
         }
         private bool ledAllumee;
@@ -334,7 +335,7 @@ namespace GoBot
             set
             {
                 ledAllumee = value;
-                connexion.SendMessage(FrameFactory.ServoEnvoiLed((ServomoteurID)id, ledAllumee, carte));
+                connexion.SendMessage(UdpFrameFactory.ServoEnvoiLed((ServomoteurID)id, ledAllumee, carte));
             }
         }
         private bool enMouvement;
@@ -369,7 +370,7 @@ namespace GoBot
             set
             {
                 positionCible = value;
-                connexion.SendMessage(FrameFactory.ServoEnvoiPositionCible((ServomoteurID)id, positionCible, carte));
+                connexion.SendMessage(UdpFrameFactory.ServoEnvoiPositionCible((ServomoteurID)id, positionCible, carte));
             }
         }
         private int positionMin;
@@ -379,7 +380,7 @@ namespace GoBot
             set
             {
                 positionMin = value;
-                connexion.SendMessage(FrameFactory.ServoEnvoiPositionMinimum((ServomoteurID)id, positionMin, carte));
+                connexion.SendMessage(UdpFrameFactory.ServoEnvoiPositionMinimum((ServomoteurID)id, positionMin, carte));
             }
         }
         private int positionMax;
@@ -389,7 +390,7 @@ namespace GoBot
             set
             {
                 positionMax = value;
-                connexion.SendMessage(FrameFactory.ServoEnvoiPositionMaximum((ServomoteurID)id, positionMax, carte));
+                connexion.SendMessage(UdpFrameFactory.ServoEnvoiPositionMaximum((ServomoteurID)id, positionMax, carte));
             }
         }
         private int temperature;
@@ -409,7 +410,7 @@ namespace GoBot
             set
             {
                 vitesseMax = value;
-                connexion.SendMessage(FrameFactory.ServoEnvoiVitesseMax((ServomoteurID)id, vitesseMax, carte));
+                connexion.SendMessage(UdpFrameFactory.ServoEnvoiVitesseMax((ServomoteurID)id, vitesseMax, carte));
             }
         }
 
@@ -489,13 +490,13 @@ namespace GoBot
             connexion.SendMessage(TrameFactory.ServoDemandeLed((ServomoteurID)id, carte));
             Thread.Sleep(10);*/
 
-            connexion.SendMessage(FrameFactory.ServoDemandeAllIn((ServomoteurID)id, carte));
+            connexion.SendMessage(UdpFrameFactory.ServoDemandeAllIn((ServomoteurID)id, carte));
         }
 
         void connexion_NouvelleTrame(Frame trame)
         {
             // Test trame de type configuration servomoteur
-            if (trame[1] == (byte)FrameFunction.CommandeServo)
+            if (trame[1] == (byte)UdpFrameFunction.CommandeServo)
             {
                 // Test trame pour ce servo
                 if (trame[3] == id)
@@ -694,7 +695,7 @@ namespace GoBot
             get
             {
                 semPing = new Semaphore(0, int.MaxValue);
-                connexion.SendMessage(FrameFactory.ServoDemandeTension((ServomoteurID)id, carte));
+                connexion.SendMessage(UdpFrameFactory.ServoDemandeTension((ServomoteurID)id, carte));
                 if (semPing.WaitOne(100))
                     return Tension != 4.2; // Code de retour timeout = 42
                 else

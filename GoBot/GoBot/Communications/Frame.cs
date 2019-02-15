@@ -124,14 +124,5 @@ namespace GoBot.Communications
                 return Bytes.Count;
             }
         }
-
-        /// <summary>
-        /// Retourne un message textuel contenant l'information compréhensible véhiculée par la trame
-        /// </summary>
-        /// <returns>Message de la trame décodée</returns>
-        public String Decode()
-        {
-            return FrameDecoder.Decode(this);
-        }
     }
 }

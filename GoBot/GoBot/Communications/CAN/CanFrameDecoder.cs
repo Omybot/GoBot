@@ -1,11 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 
-using GoBot.Communications;
-
-namespace GoBot.Devices.CAN
+namespace GoBot.Communications.CAN
 {
-    static class CanDecoder
+    static class CanFrameDecoder
     {
         public static String Decode(Frame trame)
         {
@@ -20,20 +18,20 @@ namespace GoBot.Devices.CAN
         /// <param name="function"></param>
         /// <param name="parameters"></param>
         /// <returns></returns>
-        public static String GetMessage(CanFunction function, List<uint> parameters = null)
+        public static String GetMessage(CanFrameFunction function, List<uint> parameters = null)
         {
             String output = "";
 
             switch (function)
             {
-                case CanFunction.PositionAsk:
+                case CanFrameFunction.PositionAsk:
                     output = "Demande de position servo {ServoID}";
                     if (parameters != null)
                     {
                         output = ReplaceParam(output, ((ServomoteurID)parameters[0]).ToString());
                     }
                     break;
-                case CanFunction.PositionResponse:
+                case CanFrameFunction.PositionResponse:
                     output = "Retour de position servo {ServoID} : {4-5}";
                     if (parameters != null)
                     {
@@ -41,7 +39,7 @@ namespace GoBot.Devices.CAN
                         output = ReplaceParam(output, parameters[1].ToString());
                     }
                     break;
-                case CanFunction.PositionSet:
+                case CanFrameFunction.PositionSet:
                     output = "Envoi de position servo {ServoID} : {4-5}";
                     if (parameters != null)
                     {
@@ -49,14 +47,14 @@ namespace GoBot.Devices.CAN
                         output = ReplaceParam(output, parameters[1].ToString());
                     }
                     break;
-                case CanFunction.PositionMinAsk:
+                case CanFrameFunction.PositionMinAsk:
                     output = "Demande de position min servo {ServoID}";
                     if (parameters != null)
                     {
                         output = ReplaceParam(output, ((ServomoteurID)parameters[0]).ToString());
                     }
                     break;
-                case CanFunction.PositionMinResponse:
+                case CanFrameFunction.PositionMinResponse:
                     output = "Retour de position min servo {ServoID} : {4-5}";
                     if (parameters != null)
                     {
@@ -64,7 +62,7 @@ namespace GoBot.Devices.CAN
                         output = ReplaceParam(output, parameters[1].ToString());
                     }
                     break;
-                case CanFunction.PositionMinSet:
+                case CanFrameFunction.PositionMinSet:
                     output = "Envoi de position min servo {ServoID} : {4-5}";
                     if (parameters != null)
                     {
@@ -72,14 +70,14 @@ namespace GoBot.Devices.CAN
                         output = ReplaceParam(output, parameters[1].ToString());
                     }
                     break;
-                case CanFunction.PositionMaxAsk:
+                case CanFrameFunction.PositionMaxAsk:
                     output = "Demande de position max servo {ServoID}";
                     if (parameters != null)
                     {
                         output = ReplaceParam(output, ((ServomoteurID)parameters[0]).ToString());
                     }
                     break;
-                case CanFunction.PositionMaxResponse:
+                case CanFrameFunction.PositionMaxResponse:
                     output = "Retour de position max servo {ServoID} : {4-5}";
                     if (parameters != null)
                     {
@@ -87,7 +85,7 @@ namespace GoBot.Devices.CAN
                         output = ReplaceParam(output, parameters[1].ToString());
                     }
                     break;
-                case CanFunction.PositionMaxSet:
+                case CanFrameFunction.PositionMaxSet:
                     output = "Envoi de position max servo {ServoID} : {4-5}";
                     if (parameters != null)
                     {
@@ -95,14 +93,14 @@ namespace GoBot.Devices.CAN
                         output = ReplaceParam(output, parameters[1].ToString());
                     }
                     break;
-                case CanFunction.SpeedAsk:
+                case CanFrameFunction.SpeedAsk:
                     output = "Demande de vitesse servo {ServoID}";
                     if (parameters != null)
                     {
                         output = ReplaceParam(output, ((ServomoteurID)parameters[0]).ToString());
                     }
                     break;
-                case CanFunction.SpeedResponse:
+                case CanFrameFunction.SpeedResponse:
                     output = "Retour de vitesse servo {ServoID} : {4-5}";
                     if (parameters != null)
                     {
@@ -110,7 +108,7 @@ namespace GoBot.Devices.CAN
                         output = ReplaceParam(output, parameters[1].ToString());
                     }
                     break;
-                case CanFunction.SpeedSet:
+                case CanFrameFunction.SpeedSet:
                     output = "Envoi de vitesse servo {ServoID} : {4-5}";
                     if (parameters != null)
                     {
@@ -118,14 +116,14 @@ namespace GoBot.Devices.CAN
                         output = ReplaceParam(output, parameters[1].ToString());
                     }
                     break;
-                case CanFunction.TorqueMaxAsk:
+                case CanFrameFunction.TorqueMaxAsk:
                     output = "Demande de couple max servo {ServoID}";
                     if (parameters != null)
                     {
                         output = ReplaceParam(output, ((ServomoteurID)parameters[0]).ToString());
                     }
                     break;
-                case CanFunction.TorqueMaxResponse:
+                case CanFrameFunction.TorqueMaxResponse:
                     output = "Retour de couple max servo {ServoID} : {4-5}";
                     if (parameters != null)
                     {
@@ -133,7 +131,7 @@ namespace GoBot.Devices.CAN
                         output = ReplaceParam(output, parameters[1].ToString());
                     }
                     break;
-                case CanFunction.TorqueMaxSet:
+                case CanFrameFunction.TorqueMaxSet:
                     output = "Envoi de couple max servo {ServoID} : {4-5}";
                     if (parameters != null)
                     {
@@ -141,7 +139,7 @@ namespace GoBot.Devices.CAN
                         output = ReplaceParam(output, parameters[1].ToString());
                     }
                     break;
-                case CanFunction.TorqueCurrentAsk:
+                case CanFrameFunction.TorqueCurrentAsk:
                     output = "Demande de couple actuel servo {ServoID} : {4-5}";
                     if (parameters != null)
                     {
@@ -149,7 +147,7 @@ namespace GoBot.Devices.CAN
                         output = ReplaceParam(output, parameters[1].ToString());
                     }
                     break;
-                case CanFunction.TorqueCurrentResponse:
+                case CanFrameFunction.TorqueCurrentResponse:
                     output = "Retour de couple actuel servo {ServoID} : {4-5}";
                     if (parameters != null)
                     {
@@ -157,7 +155,7 @@ namespace GoBot.Devices.CAN
                         output = ReplaceParam(output, parameters[1].ToString());
                     }
                     break;
-                case CanFunction.AccelerationAsk:
+                case CanFrameFunction.AccelerationAsk:
                     output = "Demande de l'acceleration servo {ServoID} : {4-5}";
                     if (parameters != null)
                     {
@@ -165,7 +163,7 @@ namespace GoBot.Devices.CAN
                         output = ReplaceParam(output, parameters[1].ToString());
                     }
                     break;
-                case CanFunction.AccelerationResponse:
+                case CanFrameFunction.AccelerationResponse:
                     output = "Retour de l'acceleration servo {ServoID} : {4-5}";
                     if (parameters != null)
                     {
@@ -173,7 +171,7 @@ namespace GoBot.Devices.CAN
                         output = ReplaceParam(output, parameters[1].ToString());
                     }
                     break;
-                case CanFunction.AccelerationSet:
+                case CanFrameFunction.AccelerationSet:
                     output = "Envoi de l'acceleration servo {ServoID} : {4-5}";
                     if (parameters != null)
                     {
@@ -181,7 +179,7 @@ namespace GoBot.Devices.CAN
                         output = ReplaceParam(output, parameters[1].ToString());
                     }
                     break;
-                case CanFunction.TargetSet:
+                case CanFrameFunction.TargetSet:
                     output = "Déplacement servo {ServoID} : {4-5}";
                     if (parameters != null)
                     {
@@ -189,7 +187,7 @@ namespace GoBot.Devices.CAN
                         output = ReplaceParam(output, parameters[1].ToString());
                     }
                     break;
-                case CanFunction.TrajectorySet:
+                case CanFrameFunction.TrajectorySet:
                     output = "Déplacement servo {ServoID} : Pos = {4-5}; Vit = {6-7}; Accel = {8-9}";
                     if (parameters != null)
                     {
@@ -197,20 +195,20 @@ namespace GoBot.Devices.CAN
                         output = ReplaceParam(output, parameters[1].ToString());
                     }
                     break;
-                case CanFunction.SetScore:
+                case CanFrameFunction.SetScore:
                     output = "Affichage de score : {4-5}";
                     if (parameters != null)
                     {
                         output = ReplaceParam(output, parameters[1].ToString());
                     }
                     break;
-                case CanFunction.Debug:
+                case CanFrameFunction.Debug:
                     output = "Debug";
                     break;
-                case CanFunction.DebugAsk:
+                case CanFrameFunction.DebugAsk:
                     output = "Demande valeur debug";
                     break;
-                case CanFunction.DebugResponse:
+                case CanFrameFunction.DebugResponse:
                     output = "Retour valeur debug";
                     break;
                 default:

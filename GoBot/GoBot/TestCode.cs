@@ -5,6 +5,7 @@ using System.Text;
 using GoBot.Actions;
 using System.Windows.Forms;
 using GoBot.Communications;
+using GoBot.Communications.UDP;
 
 namespace GoBot
 {
@@ -28,7 +29,7 @@ namespace GoBot
             typesEnum.Add(typeof(LedID));
             typesEnum.Add(typeof(LedRgbID));
             typesEnum.Add(typeof(LidarID));
-            typesEnum.Add(typeof(FrameFunction));
+            typesEnum.Add(typeof(UdpFrameFunction));
             
             foreach (Type type in typesEnum)
             {

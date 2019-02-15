@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace GoBot.Devices.CAN
+namespace GoBot.Communications.CAN
 {
-    public enum CanFunction
+    public enum CanFrameFunction
     {
         PositionAsk = 0x01,
         PositionResponse = 0x02,

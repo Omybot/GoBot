@@ -1,4 +1,5 @@
 ﻿using GoBot.Communications;
+using GoBot.Communications.CAN;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -102,28 +103,28 @@ namespace GoBot.Devices.CAN
 
         public void FrameReceived(Frame frame)
         {
-            CanFunction function = CanFrameFactory.ExtractFunction(frame);
+            CanFrameFunction function = CanFrameFactory.ExtractFunction(frame);
 
             try
             {
                 switch (function)
                 {
-                    case CanFunction.PositionResponse:
+                    case CanFrameFunction.PositionResponse:
                         _position = CanFrameFactory.ExtractValue(frame);
                         break;
-                    case CanFunction.PositionMaxResponse:
+                    case CanFrameFunction.PositionMaxResponse:
                         _positionMax = CanFrameFactory.ExtractValue(frame);
                         break;
-                    case CanFunction.PositionMinResponse:
+                    case CanFrameFunction.PositionMinResponse:
                         _positionMin = CanFrameFactory.ExtractValue(frame);
                         break;
-                    case CanFunction.SpeedResponse:
+                    case CanFrameFunction.SpeedResponse:
                         _speed = CanFrameFactory.ExtractValue(frame);
                         break;
-                    case CanFunction.TorqueCurrentResponse:
+                    case CanFrameFunction.TorqueCurrentResponse:
                         _torqueCurrent = CanFrameFactory.ExtractValue(frame);
                         break;
-                    case CanFunction.TorqueMaxResponse:
+                    case CanFrameFunction.TorqueMaxResponse:
                         _torqueMax = CanFrameFactory.ExtractValue(frame);
                         break;
                 }

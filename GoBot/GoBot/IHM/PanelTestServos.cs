@@ -9,6 +9,7 @@ using System.Windows.Forms;
 using GoBot.Communications;
 using System.Threading;
 using GoBot.Threading;
+using GoBot.Communications.UDP;
 
 namespace GoBot.IHM
 {
@@ -38,7 +39,7 @@ namespace GoBot.IHM
             {
                 if (!_linkSearch.Cancelled && checkedListBoxBaudrates.CheckedIndices.Contains(iBaudrate))
                 {
-                    Connections.ConnectionIO.SendMessage(FrameFactory.ChangementBaudrate(baudrate));
+                    Connections.ConnectionIO.SendMessage(UdpFrameFactory.ChangementBaudrate(baudrate));
                     Thread.Sleep(100);
 
                     //Servomoteur servoAll = new Servomoteur(Carte.RecIO, 254, 0);
@@ -94,7 +95,7 @@ namespace GoBot.IHM
         private void listBoxServos_SelectedValueChanged(object sender, EventArgs e)
         {
             Servomoteur servo = (Servomoteur)listBoxServos.SelectedItem;
-            Connections.ConnectionIO.SendMessage(FrameFactory.ChangementBaudrate(servo.Baudrate));
+            Connections.ConnectionIO.SendMessage(UdpFrameFactory.ChangementBaudrate(servo.Baudrate));
             panelServo.AfficherServo(servo);
         }
     }
