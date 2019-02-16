@@ -1,6 +1,6 @@
 ﻿namespace GoBot.IHM
 {
-    partial class PanelServoCAN
+    partial class PanelServoCan
     {
         /// <summary> 
         /// Variable nécessaire au concepteur.

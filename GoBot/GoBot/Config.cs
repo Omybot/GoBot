@@ -106,7 +106,7 @@ namespace GoBot
         public SerializableDictionary<UdpFrameFunction, bool> LogsFonctionsIO { get; set; }
         public SerializableDictionary<UdpFrameFunction, bool> LogsFonctionsMove { get; set; }
         public SerializableDictionary<UdpFrameFunction, bool> LogsFonctionsGB { get; set; }
-        public SerializableDictionary<UdpFrameFunction, bool> LogsFonctionsCAN { get; set; }
+        public SerializableDictionary<UdpFrameFunction, bool> LogsFonctionsCan { get; set; }
 
         public SerializableDictionary<Board, bool> LogsExpediteurs { get; set; }
         public SerializableDictionary<Board, bool> LogsDestinataires { get; set; }

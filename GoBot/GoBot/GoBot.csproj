@@ -109,11 +109,11 @@
     <Compile Include="IHM\PanelBoardNumeric.Designer.cs">
       <DependentUpon>PanelBoardNumeric.cs</DependentUpon>
     </Compile>
-    <Compile Include="IHM\PanelLogCAN.cs">
+    <Compile Include="IHM\PanelLogCan.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="IHM\PanelLogCAN.Designer.cs">
-      <DependentUpon>PanelLogCAN.cs</DependentUpon>
+    <Compile Include="IHM\PanelLogCan.Designer.cs">
+      <DependentUpon>PanelLogCan.cs</DependentUpon>
     </Compile>
     <Compile Include="IHM\PanelLogThreads.cs">
       <SubType>UserControl</SubType>
@@ -121,11 +121,11 @@
     <Compile Include="IHM\PanelLogThreads.Designer.cs">
       <DependentUpon>PanelLogThreads.cs</DependentUpon>
     </Compile>
-    <Compile Include="IHM\PanelServoCAN.cs">
+    <Compile Include="IHM\PanelServoCan.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="IHM\PanelServoCAN.Designer.cs">
-      <DependentUpon>PanelServoCAN.cs</DependentUpon>
+    <Compile Include="IHM\PanelServoCan.Designer.cs">
+      <DependentUpon>PanelServoCan.cs</DependentUpon>
     </Compile>
     <Compile Include="IHM\SplashScreen.cs" />
     <Compile Include="NameFinder.cs" />
@@ -346,11 +346,11 @@
     <Compile Include="IHM\PanelReglageAsserv.Designer.cs">
       <DependentUpon>PanelReglageAsserv.cs</DependentUpon>
     </Compile>
-    <Compile Include="IHM\PanelLogFrames.cs">
+    <Compile Include="IHM\PanelLogUdp.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="IHM\PanelLogFrames.Designer.cs">
-      <DependentUpon>PanelLogFrames.cs</DependentUpon>
+    <Compile Include="IHM\PanelLogUdp.Designer.cs">
+      <DependentUpon>PanelLogUdp.cs</DependentUpon>
     </Compile>
     <Compile Include="IHM\PotarControl.cs">
       <SubType>UserControl</SubType>
@@ -463,8 +463,8 @@
     <EmbeddedResource Include="IHM\PanelBoardNumeric.resx">
       <DependentUpon>PanelBoardNumeric.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="IHM\PanelLogCAN.resx">
-      <DependentUpon>PanelLogCAN.cs</DependentUpon>
+    <EmbeddedResource Include="IHM\PanelLogCan.resx">
+      <DependentUpon>PanelLogCan.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="IHM\PanelLogThreads.resx">
       <DependentUpon>PanelLogThreads.cs</DependentUpon>
@@ -496,8 +496,8 @@
     <EmbeddedResource Include="IHM\PanelRecGoBot.resx">
       <DependentUpon>PanelRecGoBot.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="IHM\PanelServoCAN.resx">
-      <DependentUpon>PanelServoCAN.cs</DependentUpon>
+    <EmbeddedResource Include="IHM\PanelServoCan.resx">
+      <DependentUpon>PanelServoCan.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="IHM\PanelTestServos.resx">
       <DependentUpon>PanelTestServos.cs</DependentUpon>
@@ -562,8 +562,8 @@
     <EmbeddedResource Include="IHM\PanelServo.resx">
       <DependentUpon>PanelServo.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="IHM\PanelLogFrames.resx">
-      <DependentUpon>PanelLogFrames.cs</DependentUpon>
+    <EmbeddedResource Include="IHM\PanelLogUdp.resx">
+      <DependentUpon>PanelLogUdp.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="IHM\PanelTable.resx">
       <DependentUpon>PanelTable.cs</DependentUpon>

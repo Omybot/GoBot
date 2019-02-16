@@ -1,6 +1,6 @@
 ﻿namespace GoBot.IHM
 {
-    partial class PanelLogFrames
+    partial class PanelLogUdp
     {
         /// <summary> 
         /// Variable nécessaire au concepteur.
@@ -29,7 +29,7 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(PanelLogFrames));
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(PanelLogUdp));
             this.dgvLog = new System.Windows.Forms.DataGridView();
             this.ctxMnuFrames = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.mnuFrameCopy = new System.Windows.Forms.ToolStripMenuItem();
@@ -63,8 +63,8 @@
             this.tabPageIO = new System.Windows.Forms.TabPage();
             this.tabPageGB = new System.Windows.Forms.TabPage();
             this.lstRecGoBotFunctions = new System.Windows.Forms.CheckedListBox();
-            this.tabPageCAN = new System.Windows.Forms.TabPage();
-            this.lstRecCANFunctions = new System.Windows.Forms.CheckedListBox();
+            this.tabPageCan = new System.Windows.Forms.TabPage();
+            this.lstRecCanFunctions = new System.Windows.Forms.CheckedListBox();
             this.boxScroll = new System.Windows.Forms.CheckBox();
             this.grpReplay = new System.Windows.Forms.GroupBox();
             this.grpMonitoring = new System.Windows.Forms.GroupBox();
@@ -89,7 +89,7 @@
             this.tabPageMove.SuspendLayout();
             this.tabPageIO.SuspendLayout();
             this.tabPageGB.SuspendLayout();
-            this.tabPageCAN.SuspendLayout();
+            this.tabPageCan.SuspendLayout();
             this.grpReplay.SuspendLayout();
             this.grpMonitoring.SuspendLayout();
             this.SuspendLayout();
@@ -409,7 +409,7 @@
             this.tabFunctions.Controls.Add(this.tabPageMove);
             this.tabFunctions.Controls.Add(this.tabPageIO);
             this.tabFunctions.Controls.Add(this.tabPageGB);
-            this.tabFunctions.Controls.Add(this.tabPageCAN);
+            this.tabFunctions.Controls.Add(this.tabPageCan);
             this.tabFunctions.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tabFunctions.Location = new System.Drawing.Point(3, 3);
             this.tabFunctions.Name = "tabFunctions";
@@ -467,29 +467,29 @@
             // 
             // tabPageCAN
             // 
-            this.tabPageCAN.Controls.Add(this.lstRecCANFunctions);
-            this.tabPageCAN.Location = new System.Drawing.Point(4, 22);
-            this.tabPageCAN.Name = "tabPageCAN";
-            this.tabPageCAN.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPageCAN.Size = new System.Drawing.Size(361, 280);
-            this.tabPageCAN.TabIndex = 6;
-            this.tabPageCAN.Text = "RecCAN";
-            this.tabPageCAN.UseVisualStyleBackColor = true;
+            this.tabPageCan.Controls.Add(this.lstRecCanFunctions);
+            this.tabPageCan.Location = new System.Drawing.Point(4, 22);
+            this.tabPageCan.Name = "tabPageCan";
+            this.tabPageCan.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPageCan.Size = new System.Drawing.Size(361, 280);
+            this.tabPageCan.TabIndex = 6;
+            this.tabPageCan.Text = "RecCAN";
+            this.tabPageCan.UseVisualStyleBackColor = true;
             // 
             // lstRecCANFunctions
             // 
-            this.lstRecCANFunctions.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.lstRecCANFunctions.CheckOnClick = true;
-            this.lstRecCANFunctions.ColumnWidth = 150;
-            this.lstRecCANFunctions.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.lstRecCANFunctions.FormattingEnabled = true;
-            this.lstRecCANFunctions.Location = new System.Drawing.Point(3, 3);
-            this.lstRecCANFunctions.MultiColumn = true;
-            this.lstRecCANFunctions.Name = "lstRecCANFunctions";
-            this.lstRecCANFunctions.Size = new System.Drawing.Size(355, 274);
-            this.lstRecCANFunctions.Sorted = true;
-            this.lstRecCANFunctions.TabIndex = 19;
-            this.lstRecCANFunctions.ItemCheck += new System.Windows.Forms.ItemCheckEventHandler(this.lstFunctions_ItemCheck);
+            this.lstRecCanFunctions.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.lstRecCanFunctions.CheckOnClick = true;
+            this.lstRecCanFunctions.ColumnWidth = 150;
+            this.lstRecCanFunctions.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.lstRecCanFunctions.FormattingEnabled = true;
+            this.lstRecCanFunctions.Location = new System.Drawing.Point(3, 3);
+            this.lstRecCanFunctions.MultiColumn = true;
+            this.lstRecCanFunctions.Name = "lstRecCanFunctions";
+            this.lstRecCanFunctions.Size = new System.Drawing.Size(355, 274);
+            this.lstRecCanFunctions.Sorted = true;
+            this.lstRecCanFunctions.TabIndex = 19;
+            this.lstRecCanFunctions.ItemCheck += new System.Windows.Forms.ItemCheckEventHandler(this.lstFunctions_ItemCheck);
             // 
             // boxScroll
             // 
@@ -645,7 +645,7 @@
             this.tabPageMove.ResumeLayout(false);
             this.tabPageIO.ResumeLayout(false);
             this.tabPageGB.ResumeLayout(false);
-            this.tabPageCAN.ResumeLayout(false);
+            this.tabPageCan.ResumeLayout(false);
             this.grpReplay.ResumeLayout(false);
             this.grpMonitoring.ResumeLayout(false);
             this.grpMonitoring.PerformLayout();
@@ -696,8 +696,8 @@
         private System.Windows.Forms.Button btnAllCheck;
         private System.Windows.Forms.TabPage tabPageGB;
         private System.Windows.Forms.CheckedListBox lstRecGoBotFunctions;
-        private System.Windows.Forms.TabPage tabPageCAN;
-        private System.Windows.Forms.CheckedListBox lstRecCANFunctions;
+        private System.Windows.Forms.TabPage tabPageCan;
+        private System.Windows.Forms.CheckedListBox lstRecCanFunctions;
         private System.Windows.Forms.GroupBox grpReplay;
         private System.Windows.Forms.GroupBox grpMonitoring;
     }

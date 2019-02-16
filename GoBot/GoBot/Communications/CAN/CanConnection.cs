@@ -36,11 +36,6 @@ namespace GoBot.Communications.CAN
 
             _receivedBuffer = new List<byte>();
             _lockAsk = new Semaphore(1, 1);
-
-            if (!Execution.DesignMode)
-            {
-                Connections.BoardConnection[_board].FrameReceived += board_FrameReceived;
-            }
         }
 
         private void board_FrameReceived(Frame frame)
@@ -104,12 +99,12 @@ namespace GoBot.Communications.CAN
 
         public override void StartReception()
         {
-            throw new NotImplementedException();
+            Connections.BoardConnection[_board].FrameReceived += board_FrameReceived;
         }
 
         public override void Close()
         {
-            throw new NotImplementedException();
+            Connections.BoardConnection[_board].FrameReceived -= board_FrameReceived;
         }
     }
 }

@@ -12,7 +12,7 @@ using GoBot.Communications.UDP;
 
 namespace GoBot.IHM
 {
-    public partial class PanelLogFrames : UserControl
+    public partial class PanelLogUdp : UserControl
     {
         private FramesLog _log;
         private Dictionary<Board, Color> _boardColor;
@@ -29,7 +29,7 @@ namespace GoBot.IHM
 
         bool _loading;
 
-        public PanelLogFrames()
+        public PanelLogUdp()
         {
             InitializeComponent();
 
@@ -61,7 +61,7 @@ namespace GoBot.IHM
             _boxLists.Add(lstRecIOFunctions);
             _boxLists.Add(lstRecMoveFunctions);
             _boxLists.Add(lstRecGoBotFunctions);
-            _boxLists.Add(lstRecCANFunctions);
+            _boxLists.Add(lstRecCanFunctions);
 
             if (Config.CurrentConfig.LogsFonctionsMove == null)
                 Config.CurrentConfig.LogsFonctionsMove = new SerializableDictionary<UdpFrameFunction, bool>();
@@ -69,8 +69,8 @@ namespace GoBot.IHM
                 Config.CurrentConfig.LogsFonctionsIO = new SerializableDictionary<UdpFrameFunction, bool>();
             if (Config.CurrentConfig.LogsFonctionsGB == null)
                 Config.CurrentConfig.LogsFonctionsGB = new SerializableDictionary<UdpFrameFunction, bool>();
-            if (Config.CurrentConfig.LogsFonctionsCAN == null)
-                Config.CurrentConfig.LogsFonctionsCAN = new SerializableDictionary<UdpFrameFunction, bool>();
+            if (Config.CurrentConfig.LogsFonctionsCan == null)
+                Config.CurrentConfig.LogsFonctionsCan = new SerializableDictionary<UdpFrameFunction, bool>();
             if (Config.CurrentConfig.LogsExpediteurs == null)
                 Config.CurrentConfig.LogsExpediteurs = new SerializableDictionary<Board, bool>();
             if (Config.CurrentConfig.LogsDestinataires == null)
@@ -80,13 +80,13 @@ namespace GoBot.IHM
             _configFunctions.Add(lstRecIOFunctions, Config.CurrentConfig.LogsFonctionsIO);
             _configFunctions.Add(lstRecMoveFunctions, Config.CurrentConfig.LogsFonctionsMove);
             _configFunctions.Add(lstRecGoBotFunctions, Config.CurrentConfig.LogsFonctionsGB);
-            _configFunctions.Add(lstRecCANFunctions, Config.CurrentConfig.LogsFonctionsCAN);
+            _configFunctions.Add(lstRecCanFunctions, Config.CurrentConfig.LogsFonctionsCan);
 
             _lstFunctions = new Dictionary<Board, CheckedListBox>();
             _lstFunctions.Add(Board.RecIO, lstRecIOFunctions);
             _lstFunctions.Add(Board.RecMove, lstRecMoveFunctions);
             _lstFunctions.Add(Board.RecGB, lstRecGoBotFunctions);
-            _lstFunctions.Add(Board.RecCan, lstRecCANFunctions);
+            _lstFunctions.Add(Board.RecCan, lstRecCanFunctions);
 
             foreach (CheckedListBox lst in _configFunctions.Keys)
             {

@@ -12,7 +12,7 @@ using GoBot.Communications.CAN;
 
 namespace GoBot.IHM
 {
-    public partial class PanelLogCAN : UserControl
+    public partial class PanelLogCan : UserControl
     {
         private FramesLog _log;
         private Dictionary<CanBoard, Color> _boardColor;
@@ -27,7 +27,7 @@ namespace GoBot.IHM
 
         bool _loading;
 
-        public PanelLogCAN()
+        public PanelLogCan()
         {
             InitializeComponent();
 

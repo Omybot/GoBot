@@ -1,6 +1,6 @@
 ﻿namespace GoBot.IHM
 {
-    partial class PanelLogCAN
+    partial class PanelLogCan
     {
         /// <summary> 
         /// Variable nécessaire au concepteur.
@@ -29,7 +29,7 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(PanelLogCAN));
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(PanelLogCan));
             this.dgvLog = new System.Windows.Forms.DataGridView();
             this.ctxMnuFrames = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.mnuFrameCopy = new System.Windows.Forms.ToolStripMenuItem();
@@ -500,7 +500,7 @@
             this.lstFunctions.Sorted = true;
             this.lstFunctions.TabIndex = 16;
             // 
-            // PanelLogCAN
+            // PanelLogCan
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -511,7 +511,7 @@
             this.Controls.Add(this.grpTime);
             this.Controls.Add(this.grpColor);
             this.Controls.Add(this.dgvLog);
-            this.Name = "PanelLogCAN";
+            this.Name = "PanelLogCan";
             this.Size = new System.Drawing.Size(1254, 669);
             ((System.ComponentModel.ISupportInitialize)(this.dgvLog)).EndInit();
             this.ctxMnuFrames.ResumeLayout(false);

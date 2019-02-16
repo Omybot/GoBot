@@ -25,7 +25,7 @@ namespace GoBot
                 return -1;
         }
 
-        public static short idServoCAN(ServomoteurID servo)
+        public static short idServoCan(ServomoteurID servo)
         {
             if ((int)servo >= 200)
                 return (short)(servo - 200);

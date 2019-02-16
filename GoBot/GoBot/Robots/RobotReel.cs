@@ -638,7 +638,7 @@ namespace GoBot
             base.BougeServo(servo, position);
 
             int idPololu = Servomoteur.idServoPololu(servo);
-            int idCan = Servomoteur.idServoCAN(servo);
+            int idCan = Servomoteur.idServoCan(servo);
 
             if (idPololu != -1 && idPololu < 100)
             {

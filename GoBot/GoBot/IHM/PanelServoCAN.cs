@@ -13,12 +13,12 @@ using GoBot.Communications.CAN;
 
 namespace GoBot.IHM
 {
-    public partial class PanelServoCAN : UserControl
+    public partial class PanelServoCan : UserControl
     {
         private ThreadLink _linkPolling, _linkDrawing;
         private CanServo _servo;
 
-        public PanelServoCAN()
+        public PanelServoCan()
         {
             InitializeComponent();
 
@@ -69,7 +69,7 @@ namespace GoBot.IHM
 
         private void GetServoTorque()
         {
-            _linkPolling.Name = "PanelServoCAN.GetServoTorque : " + _servo.ID.ToString();
+            _linkPolling.Name = "PanelServoCan.GetServoTorque : " + _servo.ID.ToString();
             graphTorque.AddPoint("Couple", _servo.ReadTorqueCurrent(), Color.RoyalBlue);
         }
 
