@@ -55,7 +55,7 @@ namespace GoBot.Devices.CAN
 
         public int ReadSpeed()
         {
-            bool ok = _communication.SendFrame(CanFrameFactory.BuildGetSpeed(_globalId), true);
+            bool ok = _communication.SendFrame(CanFrameFactory.BuildGetSpeedMax(_globalId), true);
             return ok ? _speed : -1;
         }
 
@@ -88,7 +88,7 @@ namespace GoBot.Devices.CAN
 
         public void SetSpeed(int speed)
         {
-            _communication.SendFrame(CanFrameFactory.BuildSetSpeed(_globalId, speed), false);
+            _communication.SendFrame(CanFrameFactory.BuildSetSpeedMax(_globalId, speed), false);
         }
 
         public void SetTorqueMax(int torqueMax)
@@ -118,7 +118,7 @@ namespace GoBot.Devices.CAN
                     case CanFrameFunction.PositionMinResponse:
                         _positionMin = CanFrameFactory.ExtractValue(frame);
                         break;
-                    case CanFrameFunction.SpeedResponse:
+                    case CanFrameFunction.SpeedMaxResponse:
                         _speed = CanFrameFactory.ExtractValue(frame);
                         break;
                     case CanFrameFunction.TorqueCurrentResponse:

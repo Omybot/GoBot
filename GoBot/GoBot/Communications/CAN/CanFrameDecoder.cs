@@ -93,14 +93,14 @@ namespace GoBot.Communications.CAN
                         output = ReplaceParam(output, parameters[1].ToString());
                     }
                     break;
-                case CanFrameFunction.SpeedAsk:
+                case CanFrameFunction.SpeedMaxAsk:
                     output = "Demande de vitesse servo {ServoID}";
                     if (parameters != null)
                     {
                         output = ReplaceParam(output, ((ServomoteurID)parameters[0]).ToString());
                     }
                     break;
-                case CanFrameFunction.SpeedResponse:
+                case CanFrameFunction.SpeedMaxResponse:
                     output = "Retour de vitesse servo {ServoID} : {4-5}";
                     if (parameters != null)
                     {
@@ -108,7 +108,7 @@ namespace GoBot.Communications.CAN
                         output = ReplaceParam(output, parameters[1].ToString());
                     }
                     break;
-                case CanFrameFunction.SpeedSet:
+                case CanFrameFunction.SpeedMaxSet:
                     output = "Envoi de vitesse servo {ServoID} : {4-5}";
                     if (parameters != null)
                     {

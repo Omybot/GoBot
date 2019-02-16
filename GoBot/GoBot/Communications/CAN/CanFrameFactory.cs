@@ -78,13 +78,13 @@ namespace GoBot.Communications.CAN
             return new Frame(tab);
         }
 
-        public static Frame BuildGetSpeed(int servoGlobalId)
+        public static Frame BuildGetSpeedMax(int servoGlobalId)
         {
             byte[] tab = new byte[10];
 
             tab[0] = 0x00;
             tab[1] = (byte)GlobalIdToCanBoard(servoGlobalId);
-            tab[2] = (byte)CanFrameFunction.SpeedAsk;
+            tab[2] = (byte)CanFrameFunction.SpeedMaxAsk;
             tab[3] = GlobalIdToServoNo(servoGlobalId);
 
             return new Frame(tab);
@@ -156,13 +156,13 @@ namespace GoBot.Communications.CAN
             return new Frame(tab);
         }
 
-        public static Frame BuildSetSpeed(int servoGlobalId, int speed)
+        public static Frame BuildSetSpeedMax(int servoGlobalId, int speed)
         {
             byte[] tab = new byte[10];
 
             tab[0] = 0x00;
             tab[1] = (byte)GlobalIdToCanBoard(servoGlobalId);
-            tab[2] = (byte)CanFrameFunction.SpeedSet;
+            tab[2] = (byte)CanFrameFunction.SpeedMaxSet;
             tab[3] = GlobalIdToServoNo(servoGlobalId);
             tab[4] = ByteDivide(speed, true);
             tab[5] = ByteDivide(speed, false);
