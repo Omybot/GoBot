@@ -51,7 +51,6 @@ namespace GoBot.Communications.UDP
         public UDPConnection()
         {
             ConnectionChecker = new ConnectionChecker(this, 500);
-            Archives = new FramesLog();
         }
 
         /// <summary>

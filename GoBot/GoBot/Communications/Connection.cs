@@ -31,6 +31,11 @@
         //Déclaration de l’évènement utilisant le délégué pour l'émission d'une trame
         public event NewFrameDelegate FrameSend;
 
+        public Connection()
+        {
+            Archives = new FramesLog();
+        }
+
         /// <summary>
         /// Lance la réception de trames sur la configuration actuelle
         /// </summary>
