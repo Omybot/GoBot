@@ -46,6 +46,16 @@ namespace Composants
         /// </summary>
         public bool LimitsVisible { get; set; }
 
+        /// <summary>
+        /// Définit la couleur de la bordure du graph et de la bordure des libellés
+        /// </summary>
+        public Color BorderColor { get; set; }
+
+        /// <summary>
+        /// Définit si le contour du graph est visible
+        /// </summary>
+        public bool BorderVisible { get; set; }
+
         public GraphPanel()
         {
             InitializeComponent();
@@ -55,6 +65,9 @@ namespace Composants
             CurvesPen = new Dictionary<string, Pen>();
             GraphScale = ScaleType.DynamicGlobal;
             BackColor = Color.White;
+            BorderColor = Color.LightGray;
+            BorderVisible = false;
+
             MaxLimit = 1;
             MinLimit = 0;
         }
@@ -102,12 +115,11 @@ namespace Composants
         {
             lock (CurvesData)
             {
-
-                Bitmap bmp = new Bitmap(pictureBox.Width, pictureBox.Height);
+                Bitmap bmp = new Bitmap(Width, Height);
                 Graphics gTemp = Graphics.FromImage(bmp);
 
                 gTemp.Clear(BackColor);
-
+                
                 double min = double.MaxValue;
                 double max = double.MinValue;
 
@@ -155,13 +167,26 @@ namespace Composants
 
                 if (NamesVisible)
                 {
-                    int y = pictureBox.Height - 20;
+                    int maxWidth = CurvesData.Max(c => (int)gTemp.MeasureString(c.Key, myFont).Width);
+                    int margin = 5, hPerRow = 10;
+                    Rectangle txtRect = new Rectangle(0, pictureBox.Height - hPerRow * CurvesData.Count - margin, maxWidth + margin, (CurvesData.Count * hPerRow) + margin-1);
+
+                    Brush backBsh = new SolidBrush(Color.FromArgb(200, BackColor));
+                    gTemp.FillRectangle(backBsh, new Rectangle(txtRect.X, txtRect.Y, txtRect.Width + 1, txtRect.Height + 1));
+                    backBsh.Dispose();
+
+                    Pen backPen = new Pen(BorderColor);
+                    backPen.DashStyle = DashStyle.Dot;
+                    gTemp.DrawRectangle(backPen, txtRect);
+                    backPen.Dispose();
+
+                    int y = pictureBox.Height - hPerRow - margin;
                     foreach (KeyValuePair<String, List<double>> courbe in CurvesData)
                     {
                         if (CurvesDisplayed[courbe.Key])
                         {
                             Brush b = new SolidBrush(CurvesPen[courbe.Key].Color);
-                            gTemp.DrawString(courbe.Key, myFont, b, 2, y);
+                            gTemp.DrawString(courbe.Key, myFont, b, 0, y);
                             y -= 10;
                             b.Dispose();
                         }
@@ -175,12 +200,20 @@ namespace Composants
                     SizeF minSize = gTemp.MeasureString(minText, myFont);
                     SizeF maxSize = gTemp.MeasureString(maxText, myFont);
 
-                    gTemp.DrawString(minText, myFont, Brushes.Black, this.Width - 2 - minSize.Width, bmp.Height - maxSize.Height - 2);
+                    gTemp.DrawString(minText, myFont, Brushes.Black, this.Width - 2 - minSize.Width, Height - maxSize.Height - 2);
                     gTemp.DrawString(maxText, myFont, Brushes.Black, this.Width - 2 - maxSize.Width, 2);
                 }
 
-                pictureBox.Image = bmp;
+                if (BorderVisible)
+                {
+                    Pen borderPen = new Pen(BorderColor);
+                    gTemp.DrawRectangle(borderPen, new Rectangle(0, 0, Width - 1, Height - 1));
+                    borderPen.Dispose();
+                }
+
                 myFont.Dispose();
+
+                pictureBox.Image = bmp;
             }
         }
 
