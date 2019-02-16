@@ -32,7 +32,7 @@
             this.grpTorque = new System.Windows.Forms.GroupBox();
             this.graphTorque = new Composants.GraphPanel();
             this.numID = new System.Windows.Forms.NumericUpDown();
-            this.lblIdTxt = new Composants.LabelPlus();
+            this.lblIDTxt = new Composants.LabelPlus();
             this.trackBarPosition = new Composants.TrackBarPlus();
             this.lblPositionTxt = new System.Windows.Forms.Label();
             this.lblSpeedTxt = new System.Windows.Forms.Label();
@@ -49,8 +49,13 @@
             this.label3 = new System.Windows.Forms.Label();
             this.numAccel = new System.Windows.Forms.NumericUpDown();
             this.btnGo = new System.Windows.Forms.Button();
-            this.btnGetPos = new System.Windows.Forms.Button();
-            this.btnDebug = new System.Windows.Forms.Button();
+            this.label4 = new System.Windows.Forms.Label();
+            this.label5 = new System.Windows.Forms.Label();
+            this.label6 = new System.Windows.Forms.Label();
+            this.label7 = new System.Windows.Forms.Label();
+            this.label8 = new System.Windows.Forms.Label();
+            this.label9 = new System.Windows.Forms.Label();
+            this.label10 = new System.Windows.Forms.Label();
             this.grpTorque.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numID)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numPosition)).BeginInit();
@@ -98,20 +103,20 @@
             // 
             // numID
             // 
-            this.numID.Location = new System.Drawing.Point(51, 13);
+            this.numID.Location = new System.Drawing.Point(82, 13);
             this.numID.Name = "numID";
             this.numID.Size = new System.Drawing.Size(50, 20);
             this.numID.TabIndex = 2;
             this.numID.ValueChanged += new System.EventHandler(this.numID_ValueChanged);
             // 
-            // lblIdTxt
+            // lblIDTxt
             // 
-            this.lblIdTxt.AutoSize = true;
-            this.lblIdTxt.Location = new System.Drawing.Point(21, 15);
-            this.lblIdTxt.Name = "lblIdTxt";
-            this.lblIdTxt.Size = new System.Drawing.Size(24, 13);
-            this.lblIdTxt.TabIndex = 3;
-            this.lblIdTxt.Text = "ID :";
+            this.lblIDTxt.AutoSize = true;
+            this.lblIDTxt.Location = new System.Drawing.Point(21, 15);
+            this.lblIDTxt.Name = "lblIDTxt";
+            this.lblIDTxt.Size = new System.Drawing.Size(55, 13);
+            this.lblIDTxt.TabIndex = 3;
+            this.lblIDTxt.Text = "Servo ID :";
             // 
             // trackBarPosition
             // 
@@ -291,32 +296,80 @@
             this.btnGo.UseVisualStyleBackColor = true;
             this.btnGo.Click += new System.EventHandler(this.btnGo_Click);
             // 
-            // btnGetPos
+            // label4
             // 
-            this.btnGetPos.Location = new System.Drawing.Point(323, 3);
-            this.btnGetPos.Name = "btnGetPos";
-            this.btnGetPos.Size = new System.Drawing.Size(60, 23);
-            this.btnGetPos.TabIndex = 22;
-            this.btnGetPos.Text = "GetPos";
-            this.btnGetPos.UseVisualStyleBackColor = true;
-            this.btnGetPos.Click += new System.EventHandler(this.btnGetPos_Click);
+            this.label4.AutoSize = true;
+            this.label4.Location = new System.Drawing.Point(32, 236);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(44, 13);
+            this.label4.TabIndex = 22;
+            this.label4.Text = "Position";
             // 
-            // btnDebug
+            // label5
             // 
-            this.btnDebug.Location = new System.Drawing.Point(244, 3);
-            this.btnDebug.Name = "btnDebug";
-            this.btnDebug.Size = new System.Drawing.Size(75, 23);
-            this.btnDebug.TabIndex = 23;
-            this.btnDebug.Text = "Debug CAN";
-            this.btnDebug.UseVisualStyleBackColor = true;
-            this.btnDebug.Click += new System.EventHandler(this.btnDebug_Click);
+            this.label5.AutoSize = true;
+            this.label5.Location = new System.Drawing.Point(135, 246);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(63, 13);
+            this.label5.TabIndex = 23;
+            this.label5.Text = "Position min";
             // 
-            // PanelServoCAN
+            // label6
+            // 
+            this.label6.AutoSize = true;
+            this.label6.Location = new System.Drawing.Point(135, 272);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(63, 13);
+            this.label6.TabIndex = 24;
+            this.label6.Text = "Vitesse max";
+            // 
+            // label7
+            // 
+            this.label7.AutoSize = true;
+            this.label7.Location = new System.Drawing.Point(135, 259);
+            this.label7.Name = "label7";
+            this.label7.Size = new System.Drawing.Size(66, 13);
+            this.label7.TabIndex = 25;
+            this.label7.Text = "Position max";
+            // 
+            // label8
+            // 
+            this.label8.AutoSize = true;
+            this.label8.Location = new System.Drawing.Point(135, 285);
+            this.label8.Name = "label8";
+            this.label8.Size = new System.Drawing.Size(62, 13);
+            this.label8.TabIndex = 26;
+            this.label8.Text = "Couple max";
+            // 
+            // label9
+            // 
+            this.label9.AutoSize = true;
+            this.label9.Location = new System.Drawing.Point(32, 249);
+            this.label9.Name = "label9";
+            this.label9.Size = new System.Drawing.Size(40, 13);
+            this.label9.TabIndex = 27;
+            this.label9.Text = "Couple";
+            // 
+            // label10
+            // 
+            this.label10.AutoSize = true;
+            this.label10.Location = new System.Drawing.Point(135, 298);
+            this.label10.Name = "label10";
+            this.label10.Size = new System.Drawing.Size(66, 13);
+            this.label10.TabIndex = 28;
+            this.label10.Text = "Accélération";
+            // 
+            // PanelServoCan
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.Controls.Add(this.btnDebug);
-            this.Controls.Add(this.btnGetPos);
+            this.Controls.Add(this.label10);
+            this.Controls.Add(this.label9);
+            this.Controls.Add(this.label8);
+            this.Controls.Add(this.label7);
+            this.Controls.Add(this.label6);
+            this.Controls.Add(this.label5);
+            this.Controls.Add(this.label4);
             this.Controls.Add(this.btnGo);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.numAccel);
@@ -333,11 +386,11 @@
             this.Controls.Add(this.lblSpeedTxt);
             this.Controls.Add(this.lblPositionTxt);
             this.Controls.Add(this.trackBarPosition);
-            this.Controls.Add(this.lblIdTxt);
+            this.Controls.Add(this.lblIDTxt);
             this.Controls.Add(this.numID);
             this.Controls.Add(this.grpTorque);
-            this.Name = "PanelServoCAN";
-            this.Size = new System.Drawing.Size(407, 185);
+            this.Name = "PanelServoCan";
+            this.Size = new System.Drawing.Size(522, 445);
             this.grpTorque.ResumeLayout(false);
             this.grpTorque.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numID)).EndInit();
@@ -354,7 +407,7 @@
         private Composants.SwitchButton boxTorque;
         private System.Windows.Forms.GroupBox grpTorque;
         private System.Windows.Forms.NumericUpDown numID;
-        private Composants.LabelPlus lblIdTxt;
+        private Composants.LabelPlus lblIDTxt;
         private Composants.GraphPanel graphTorque;
         private Composants.TrackBarPlus trackBarPosition;
         private System.Windows.Forms.Label lblPositionTxt;
@@ -372,7 +425,12 @@
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.NumericUpDown numAccel;
         private System.Windows.Forms.Button btnGo;
-        private System.Windows.Forms.Button btnGetPos;
-        private System.Windows.Forms.Button btnDebug;
+        private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.Label label5;
+        private System.Windows.Forms.Label label6;
+        private System.Windows.Forms.Label label7;
+        private System.Windows.Forms.Label label8;
+        private System.Windows.Forms.Label label9;
+        private System.Windows.Forms.Label label10;
     }
 }

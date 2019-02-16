@@ -145,7 +145,7 @@ namespace Composants
             reverse = false;
             IntervalTimer = 1;
             TimerTickValue = new Timer();
-            TimerTickValue.Tick += new EventHandler(timer_Tick);
+            TimerTickValue.Tick += new EventHandler(TimerTickValue_Tick);
 
             Min = 0;
             Max = 100;
@@ -235,6 +235,7 @@ namespace Composants
         {
             OnMouseDown(e);
         }
+
         protected override void OnEnter(EventArgs e)
         {
             FocusedImage = true;
@@ -276,6 +277,12 @@ namespace Composants
             base.OnMouseMove(e);
         }
 
+        protected override void OnMouseWheel(MouseEventArgs e)
+        {
+            Focus();
+            SetValue(Value + e.Delta / SystemInformation.MouseWheelScrollDelta, true);
+        }
+        
         private void TrackBarPlus_Leave(object sender, EventArgs e)
         {
             ChangeImages();
@@ -284,27 +291,6 @@ namespace Composants
         private void TrackBarPlus_Enter(object sender, EventArgs e)
         {
             ChangeImages();
-        }
-
-        private void TrackBarPlus_KeyDown(object sender, KeyEventArgs e)
-        {
-            if (e.KeyCode == Keys.Down)
-            {
-                SetValue(Min);
-            }
-            else if (e.KeyCode == Keys.Up)
-            {
-                SetValue(Max);
-            }
-            else if (e.KeyCode == Keys.Left)
-            {
-                SetValue(Value - (Max - Min) * 0.05);
-            }
-            else if (e.KeyCode == Keys.Right)
-            {
-                SetValue(Value + (Max - Min) * 0.05);
-            }
-            e.Handled = true;
         }
 
         #endregion
@@ -351,7 +337,7 @@ namespace Composants
             ChangeImages();
         }
 
-        void timer_Tick(object sender, EventArgs e)
+        void TimerTickValue_Tick(object sender, EventArgs e)
         {
             // les ticks suivants se font avec l'intervalle voulu
             TimerTickValue.Interval = (int)IntervalTimer;
