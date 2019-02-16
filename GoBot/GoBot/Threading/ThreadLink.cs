@@ -314,9 +314,9 @@ namespace GoBot.Threading
         /// <summary>
         /// Enregistre la classe et le nom de la fonction appellante comme nom du thread.
         /// </summary>
-        public void RegisterName()
+        public void RegisterName(String complement = "")
         {
-            _name = GetCaller();
+            _name = GetCaller() + complement;
         }
 
         /// <summary>
