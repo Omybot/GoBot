@@ -151,6 +151,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
+    <Compile Include="SpeedSample.cs" />
     <Compile Include="Threading\ThreadLink.cs" />
     <Compile Include="Threading\ThreadManager.cs" />
     <Compile Include="TicksPerSecond.cs" />

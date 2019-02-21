@@ -101,16 +101,13 @@ namespace GoBot.Communications.UDP
                 try
                 {
                     if (!Connected)
-                    {
-                        if (Connect(IPAddress, OutputPort, InputPort) == ConnectionState.Ok)
-                        {
+                        if (Connect(IPAddress, OutputPort, InputPort) != ConnectionState.Ok)
+                            return false;
 
-                            byte[] envoi = frame.ToBytes();
+                    byte[] envoi = frame.ToBytes();
 
-                            ok = Client.Send(envoi, envoi.Length) > 0;
-                            OnFrameSend(frame);
-                        }
-                    }
+                    ok = Client.Send(envoi, envoi.Length) > 0;
+                    OnFrameSend(frame);
                 }
                 catch (SocketException)
                 {
@@ -122,49 +119,49 @@ namespace GoBot.Communications.UDP
             return ok;
         }
 
-    /// <summary>
-    /// Lance la réception de trames sur le port actuel
-    /// </summary>
-    public override void StartReception()
-    {
-        e = new IPEndPoint(IPAddress.Any, InputPort);
-        if (u != null)
-            u.Close();
-        u = new UdpClient(e);
-
-        u.BeginReceive(new AsyncCallback(ReceptionCallback), new UdpState(u, e));
-    }
-
-    /// <summary>
-    /// Libère la connexion vers le client
-    /// </summary>
-    public override void Close()
-    {
-        Client.Close();
-    }
-
-    /// <summary>
-    /// Callback appelée par la disponibilité d'une trame
-    /// </summary>
-    /// <param name="ar"></param>
-    private void ReceptionCallback(IAsyncResult ar)
-    {
-        try
+        /// <summary>
+        /// Lance la réception de trames sur le port actuel
+        /// </summary>
+        public override void StartReception()
         {
-            UdpClient u = ((UdpState)(ar.AsyncState)).Client;
-            IPEndPoint e = new IPEndPoint(IPAddress.Any, InputPort);
-            Byte[] receiveBytes = u.EndReceive(ar, ref e);
-            Frame trameRecue = new Frame(receiveBytes);
+            e = new IPEndPoint(IPAddress.Any, InputPort);
+            if (u != null)
+                u.Close();
+            u = new UdpClient(e);
 
-            ConnectionChecker.NotifyAlive();
-            OnFrameReceived(trameRecue);
-
-            u.BeginReceive(ReceptionCallback, new UdpState(u, e));
+            u.BeginReceive(new AsyncCallback(ReceptionCallback), new UdpState(u, e));
         }
-        catch (Exception e)
+
+        /// <summary>
+        /// Libère la connexion vers le client
+        /// </summary>
+        public override void Close()
         {
-            Console.WriteLine("ERREUR UDP : " + e.ToString());
+            Client.Close();
+        }
+
+        /// <summary>
+        /// Callback appelée par la disponibilité d'une trame
+        /// </summary>
+        /// <param name="ar"></param>
+        private void ReceptionCallback(IAsyncResult ar)
+        {
+            try
+            {
+                UdpClient u = ((UdpState)(ar.AsyncState)).Client;
+                IPEndPoint e = new IPEndPoint(IPAddress.Any, InputPort);
+                Byte[] receiveBytes = u.EndReceive(ar, ref e);
+                Frame trameRecue = new Frame(receiveBytes);
+
+                ConnectionChecker.NotifyAlive();
+                OnFrameReceived(trameRecue);
+
+                u.BeginReceive(ReceptionCallback, new UdpState(u, e));
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine("ERREUR UDP : " + e.ToString());
+            }
         }
     }
-}
 }

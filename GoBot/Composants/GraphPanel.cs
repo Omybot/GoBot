@@ -41,6 +41,8 @@ namespace Composants
         /// </summary>
         public bool NamesVisible { get; set; }
 
+        public ContentAlignment NamesAlignment { get; set; } = ContentAlignment.BottomLeft;
+
         /// <summary>
         /// Définit si les limites de l'échelle sont affichées dans le cas où l'échelle est commune
         /// </summary>
@@ -165,11 +167,29 @@ namespace Composants
 
                 Font myFont = new Font("Calibri", 9);
 
-                if (NamesVisible)
+                if (NamesVisible && CurvesData.Count > 0)
                 {
                     int maxWidth = CurvesData.Max(c => (int)gTemp.MeasureString(c.Key, myFont).Width);
                     int margin = 5, hPerRow = 10;
-                    Rectangle txtRect = new Rectangle(0, pictureBox.Height - hPerRow * CurvesData.Count - margin, maxWidth + margin, (CurvesData.Count * hPerRow) + margin-1);
+
+                    Rectangle txtRect;
+                    Size sz = new Size(maxWidth + margin, (CurvesData.Count * hPerRow) + margin - 1);
+                    
+                    switch (NamesAlignment)
+                    {
+                        case ContentAlignment.BottomLeft:
+                            txtRect = new Rectangle(0, pictureBox.Height - hPerRow * CurvesData.Count - margin, sz.Width, sz.Height);
+                            break;
+                        case ContentAlignment.TopLeft:
+                            txtRect = new Rectangle(0, 0, sz.Width, sz.Height);
+                            break;
+                        case ContentAlignment.MiddleLeft:
+                            txtRect = new Rectangle(0, pictureBox.Height / 2 - sz.Height / 2, sz.Width, sz.Height);
+                            break;
+                        default:
+                            txtRect = new Rectangle(0, 0, pictureBox.Width, pictureBox.Height);
+                            break;
+                    }
 
                     Brush backBsh = new SolidBrush(Color.FromArgb(200, BackColor));
                     gTemp.FillRectangle(backBsh, new Rectangle(txtRect.X, txtRect.Y, txtRect.Width + 1, txtRect.Height + 1));
@@ -180,14 +200,14 @@ namespace Composants
                     gTemp.DrawRectangle(backPen, txtRect);
                     backPen.Dispose();
 
-                    int y = pictureBox.Height - hPerRow - margin;
+                    Point p = new Point(txtRect.X, txtRect.Y);
                     foreach (KeyValuePair<String, List<double>> courbe in CurvesData)
                     {
                         if (CurvesDisplayed[courbe.Key])
                         {
                             Brush b = new SolidBrush(CurvesPen[courbe.Key].Color);
-                            gTemp.DrawString(courbe.Key, myFont, b, 0, y);
-                            y -= 10;
+                            gTemp.DrawString(courbe.Key, myFont, b, 0, p.Y);
+                            p.Y += 10;
                             b.Dispose();
                         }
                     }

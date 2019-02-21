@@ -16,7 +16,8 @@ namespace GoBot.Devices.CAN
 
         private int _position;
         private int _positionMin, _positionMax;
-        private int _speed;
+        private int _acceleration;
+        private int _speedMax;
         private int _torqueCurrent, _torqueMax;
 
         private iCanSpeakable _communication;
@@ -31,9 +32,10 @@ namespace GoBot.Devices.CAN
         public int LastPosition { get => _position; }
         public int LastPositionMin { get => _positionMin; }
         public int LastPositionMax { get => _positionMax; }
-        public int LastSpeed { get => _speed; }
+        public int LastSpeedMax { get => _speedMax; }
         public int LastTorqueCurrent { get => _torqueCurrent; }
         public int LastTorqueMax { get => _torqueMax; }
+        public int LastAcceleration { get => _acceleration; }
 
         public int ReadPosition()
         {
@@ -53,10 +55,16 @@ namespace GoBot.Devices.CAN
             return ok ? _positionMin : -1;
         }
 
-        public int ReadSpeed()
+        public int ReadSpeedMax()
         {
             bool ok = _communication.SendFrame(CanFrameFactory.BuildGetSpeedMax(_globalId), true);
-            return ok ? _speed : -1;
+            return ok ? _speedMax : -1;
+        }
+
+        public int ReadAcceleration()
+        {
+            bool ok = _communication.SendFrame(CanFrameFactory.BuildGetAcceleration(_globalId), true);
+            return ok ? _acceleration : -1;
         }
 
         public int ReadTorqueCurrent()
@@ -71,6 +79,11 @@ namespace GoBot.Devices.CAN
             return ok ? _torqueMax : -1;
         }
 
+        public void SetAcceleration(int acceleration)
+        {
+            _communication.SendFrame(CanFrameFactory.BuildSetAcceleration(_globalId, acceleration), false);
+        }
+
         public void SetPosition(int position)
         {
             _communication.SendFrame(CanFrameFactory.BuildSetPosition(_globalId, position), false);
@@ -78,7 +91,7 @@ namespace GoBot.Devices.CAN
 
         public void SetPositionMax(int positionMax)
         {
-            _communication.SendFrame(CanFrameFactory.BuildSetPositionMin(_globalId, positionMax), false);
+            _communication.SendFrame(CanFrameFactory.BuildSetPositionMax(_globalId, positionMax), false);
         }
 
         public void SetPositionMin(int positionMin)
@@ -86,9 +99,9 @@ namespace GoBot.Devices.CAN
             _communication.SendFrame(CanFrameFactory.BuildSetPositionMin(_globalId, positionMin), false);
         }
 
-        public void SetSpeed(int speed)
+        public void SetSpeedMax(int speedMax)
         {
-            _communication.SendFrame(CanFrameFactory.BuildSetSpeedMax(_globalId, speed), false);
+            _communication.SendFrame(CanFrameFactory.BuildSetSpeedMax(_globalId, speedMax), false);
         }
 
         public void SetTorqueMax(int torqueMax)
@@ -119,13 +132,16 @@ namespace GoBot.Devices.CAN
                         _positionMin = CanFrameFactory.ExtractValue(frame);
                         break;
                     case CanFrameFunction.SpeedMaxResponse:
-                        _speed = CanFrameFactory.ExtractValue(frame);
+                        _speedMax = CanFrameFactory.ExtractValue(frame);
                         break;
                     case CanFrameFunction.TorqueCurrentResponse:
                         _torqueCurrent = CanFrameFactory.ExtractValue(frame);
                         break;
                     case CanFrameFunction.TorqueMaxResponse:
                         _torqueMax = CanFrameFactory.ExtractValue(frame);
+                        break;
+                    case CanFrameFunction.AccelerationResponse:
+                        _acceleration = CanFrameFactory.ExtractValue(frame);
                         break;
                 }
             }

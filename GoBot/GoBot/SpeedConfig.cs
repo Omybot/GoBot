@@ -131,14 +131,26 @@ namespace GoBot
 
         public TimeSpan LineDuration(int distance)
         {
-            return DistanceDuration(distance, LineAcceleration, LineSpeed, LineDeceleration);
+            TimeSpan accel, maxSpeed, braking;
+            return DistanceDuration((int)distance, LineAcceleration, LineSpeed, LineDeceleration, out accel, out maxSpeed, out braking);
+        }
+
+        public TimeSpan LineDuration(int distance, out TimeSpan accelDuration, out TimeSpan maxSpeedDuration, out TimeSpan brakingDuration)
+        {
+            return DistanceDuration((int)distance, LineAcceleration, LineSpeed, LineDeceleration, out accelDuration, out maxSpeedDuration, out brakingDuration);
         }
 
         public TimeSpan PivotDuration(AngleDelta angle, double axialDistance)
         {
             double dist = (Math.PI * axialDistance) / 360 * Math.Abs(angle.InDegrees);
+            TimeSpan accel, maxSpeed, braking;
+            return DistanceDuration((int)dist, PivotAcceleration, PivotSpeed, PivotDeceleration, out accel, out maxSpeed, out braking);
+        }
 
-            return DistanceDuration((int)dist, PivotAcceleration, PivotSpeed, PivotDeceleration);
+        public TimeSpan PivotDuration(AngleDelta angle, double axialDistance, out TimeSpan accelDuration, out TimeSpan maxSpeedDuration, out TimeSpan brakingDuration)
+        {
+            double dist = (Math.PI * axialDistance) / 360 * Math.Abs(angle.InDegrees);
+            return DistanceDuration((int)dist, PivotAcceleration, PivotSpeed, PivotDeceleration, out accelDuration, out maxSpeedDuration, out brakingDuration);
         }
 
         public void SetParams(int lineSpeed, int lineAccel, int lineDecel, int pivotSpeed, int pivotAccel, int pivotDecel)
@@ -169,42 +181,55 @@ namespace GoBot
 
         #region Private
 
-        private TimeSpan DistanceDuration(int distance, int acceleration, int maxSpeed, int decceleration)
+        private TimeSpan DistanceDuration(int distance, int acceleration, int maxSpeed, int decceleration, out TimeSpan accelDuration, out TimeSpan maxSpeedDuration, out TimeSpan brakingDuration)
         {
             if (distance == 0 || acceleration == 0 || decceleration == 0 || maxSpeed == 0)
-                return new TimeSpan(0);
-
-            double durationAccel, durationMaxSpeed, durationBraking;
-            double distanceAccel, distanceMaxSpeed, distanceBraking;
-
-            distanceAccel = (maxSpeed * maxSpeed) / (double)(2 * acceleration);
-            distanceBraking = (maxSpeed * maxSpeed) / (double)(2 * decceleration);
-
-            if (distanceAccel + distanceBraking < distance)
             {
-                distanceMaxSpeed = distance - distanceAccel - distanceBraking;
-
-                durationAccel = maxSpeed / (double)acceleration;
-                durationBraking = maxSpeed / (double)decceleration;
-                durationMaxSpeed = distanceMaxSpeed / (double)maxSpeed;
+                accelDuration = new TimeSpan();
+                maxSpeedDuration = new TimeSpan();
+                brakingDuration = new TimeSpan();
+                return new TimeSpan();
             }
             else
             {
-                distanceMaxSpeed = 0;
-                durationMaxSpeed = 0;
 
-                double rapport = decceleration / (double)acceleration;
-                distanceBraking = (int)(distance / (rapport + 1));
-                distanceAccel = distance - distanceBraking;
+                double durationAccel, durationMaxSpeed, durationBraking;
+                double distanceAccel, distanceMaxSpeed, distanceBraking;
 
-                durationAccel = Math.Sqrt((2 * distanceAccel) / (double)acceleration);
-                durationBraking = Math.Sqrt((2 * distanceBraking) / (double)(decceleration));
+                distanceAccel = (maxSpeed * maxSpeed) / (double)(2 * acceleration);
+                distanceBraking = (maxSpeed * maxSpeed) / (double)(2 * decceleration);
+
+                if (distanceAccel + distanceBraking < distance)
+                {
+                    distanceMaxSpeed = distance - distanceAccel - distanceBraking;
+
+                    durationAccel = maxSpeed / (double)acceleration;
+                    durationBraking = maxSpeed / (double)decceleration;
+                    durationMaxSpeed = distanceMaxSpeed / (double)maxSpeed;
+                }
+                else
+                {
+                    distanceMaxSpeed = 0;
+                    durationMaxSpeed = 0;
+
+                    double rapport = decceleration / (double)acceleration;
+                    distanceBraking = (int)(distance / (rapport + 1));
+                    distanceAccel = distance - distanceBraking;
+
+                    durationAccel = Math.Sqrt((2 * distanceAccel) / (double)acceleration);
+                    durationBraking = Math.Sqrt((2 * distanceBraking) / (double)(decceleration));
+                }
+
+                accelDuration = new TimeSpan(0, 0, 0, 0, (int) (1000 * durationAccel));
+                maxSpeedDuration = new TimeSpan(0, 0, 0, 0, (int)(1000 * durationMaxSpeed));
+                brakingDuration = new TimeSpan(0, 0, 0, 0, (int)(1000 * durationBraking));
+
             }
 
-            return new TimeSpan(0, 0, 0, 0, (int)(1000 * ((durationAccel + durationMaxSpeed + durationBraking))));
+            return accelDuration + maxSpeedDuration + brakingDuration;
         }
 
         #endregion
-        
+
     }
 }

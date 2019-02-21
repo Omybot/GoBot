@@ -90,6 +90,18 @@ namespace GoBot.Communications.CAN
             return new Frame(tab);
         }
 
+        public static Frame BuildGetAcceleration(int servoGlobalId)
+        {
+            byte[] tab = new byte[10];
+
+            tab[0] = 0x00;
+            tab[1] = (byte)GlobalIdToCanBoard(servoGlobalId);
+            tab[2] = (byte)CanFrameFunction.AccelerationAsk;
+            tab[3] = GlobalIdToServoNo(servoGlobalId);
+
+            return new Frame(tab);
+        }
+
         public static Frame BuildGetTorqueCurrent(int servoGlobalId)
         {
             byte[] tab = new byte[10];
@@ -110,6 +122,20 @@ namespace GoBot.Communications.CAN
             tab[1] = (byte)GlobalIdToCanBoard(servoGlobalId);
             tab[2] = (byte)CanFrameFunction.TorqueMaxAsk;
             tab[3] = GlobalIdToServoNo(servoGlobalId);
+
+            return new Frame(tab);
+        }
+
+        public static Frame BuildSetAcceleration(int servoGlobalId, int acceleration)
+        {
+            byte[] tab = new byte[10];
+
+            tab[0] = 0x00;
+            tab[1] = (byte)GlobalIdToCanBoard(servoGlobalId);
+            tab[2] = (byte)CanFrameFunction.AccelerationSet;
+            tab[3] = GlobalIdToServoNo(servoGlobalId);
+            tab[4] = ByteDivide(acceleration, true);
+            tab[5] = ByteDivide(acceleration, false);
 
             return new Frame(tab);
         }

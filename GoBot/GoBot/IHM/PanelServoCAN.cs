@@ -5,11 +5,10 @@ using System.Drawing;
 using System.Data;
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using GoBot.Threading;
 using GoBot.Devices.CAN;
-using GoBot.Communications.CAN;
+using System.Drawing.Drawing2D;
 
 namespace GoBot.IHM
 {
@@ -21,40 +20,54 @@ namespace GoBot.IHM
         public PanelServoCan()
         {
             InitializeComponent();
-
-            graphTorque.LimitsVisible = true;
-            graphTorque.GraphScale = Composants.GraphPanel.ScaleType.DynamicGlobal;
-
+            
             if (!Execution.DesignMode)
             {
                 _servo = Devices.Devices.CanServos[0];
             }
         }
 
+        private void DrawTimeArrow()
+        {
+            Bitmap bmp = new Bitmap(picArrow.Width, picArrow.Height);
+            Graphics g = Graphics.FromImage(bmp);
+            Pen p = new Pen(Color.DimGray, 1);
+            g.SmoothingMode = SmoothingMode.AntiAlias;
+
+            p.StartCap = LineCap.Custom;
+            p.EndCap = LineCap.Custom;
+            p.CustomStartCap = p.CustomEndCap = new AdjustableArrowCap(3, 3);
+            g.DrawLine(p, new Point(0, picArrow.Height / 2), new Point(picArrow.Width, picArrow.Height / 2));
+            p.Dispose();
+
+            picArrow.Image = bmp;
+            lblTrajectoryTime.Visible = true;
+        }
+
         private void trackBarPosition_TickValueChanged(object sender, double value)
         {
             _servo.SetPosition((int)value);
-            lblPosition.Text = value.ToString();
+            numPosition.Value = (int)value;
         }
 
         private void trackBarSpeed_TickValueChanged(object sender, double value)
         {
-            _servo.SetSpeed((int)value);
-            lblSpeed.Text = value.ToString();
+            _servo.SetSpeedMax((int)value);
+            lblSpeedMaxTxt.Text = value.ToString();
         }
 
         private void trackBarTorque_TickValueChanged(object sender, double value)
         {
             _servo.SetTorqueMax((int)value);
-            lblTorqueMax.Text = value.ToString();
+            lblTorqueMaxTxt.Text = value.ToString();
         }
 
         private void boxTorque_ValueChanged(object sender, bool value)
         {
             if(value)
             {
-                _linkPolling = ThreadManager.CreateThread(link => GetServoTorque());
-                _linkPolling.StartInfiniteLoop(new TimeSpan(0, 0, 0, 0, 100));
+                _linkPolling = ThreadManager.CreateThread(link => GetServoInfos());
+                _linkPolling.StartInfiniteLoop(new TimeSpan(0, 0, 0, 0, 50));
 
                 _linkDrawing = ThreadManager.CreateThread(link => DrawTorqueCurve());
                 _linkDrawing.StartInfiniteLoop(new TimeSpan(0, 0, 0, 0, 100));
@@ -62,50 +75,136 @@ namespace GoBot.IHM
             else
             {
                 _linkPolling.Cancel();
+                _linkDrawing.Cancel();
+
                 _linkPolling.WaitEnd();
+                _linkDrawing.WaitEnd();
+
                 _linkPolling = null;
+                _linkDrawing = null;
             }
         }
 
-        private void GetServoTorque()
+        private void GetServoInfos()
         {
-            _linkPolling.Name = "PanelServoCan.GetServoTorque : " + _servo.ID.ToString();
-            graphTorque.AddPoint("Couple", _servo.ReadTorqueCurrent(), Color.RoyalBlue);
+            _linkPolling.RegisterName(" : " + _servo.ID.ToString());
+            gphMonitoring.AddPoint("Couple", _servo.ReadTorqueCurrent(), Color.Firebrick);
+            gphMonitoring.AddPoint("Position", _servo.ReadPosition(), Color.RoyalBlue);
         }
 
         private void DrawTorqueCurve()
         {
-            this.InvokeAuto(() => graphTorque.DrawCurves());
+            _linkDrawing.RegisterName(" : " + _servo.ID.ToString());
+            this.InvokeAuto(() => gphMonitoring.DrawCurves());
         }
 
         private void btnGo_Click(object sender, EventArgs e)
         {
-            _servo.SetTrajectory((int)numPosition.Value, (int)numSpeed.Value, (int)numAccel.Value);
+            _servo.SetTrajectory((int)numPosition.Value, (int)numSpeedMax.Value, (int)numAccel.Value);
         }
 
-        private void btnGetPos_Click(object sender, EventArgs e)
+        private void btnReadValue_Click(object sender, EventArgs e)
         {
-            MessageBox.Show("Position : " + _servo.ReadPosition().ToString());
+            btnReadValue.Enabled = false;
+            numPosition.Value = _servo.ReadPosition();
+            trkPosition.SetValue(_servo.LastPosition, false);
+            numPositionMin.Value = _servo.ReadPositionMin();
+            numPositionMax.Value = _servo.ReadPositionMax();
+            numAccel.Value = _servo.ReadAcceleration();
+            numSpeedMax.Value = _servo.ReadSpeedMax();
+            numTorqueMax.Value = _servo.ReadTorqueMax();
+
+            trkTrajectoryTarget.Min = _servo.LastPositionMin;
+            trkTrajectoryTarget.Max = _servo.LastPositionMax;
+            trkTrajectoryTarget.SetValue(_servo.LastPosition);
+            trkTrajectorySpeed.SetValue(_servo.LastSpeedMax);
+            trkTrajectoryAccel.SetValue(_servo.LastAcceleration);
+
+            btnReadValue.Enabled = true;
         }
 
-        private void btnDebug_Click(object sender, EventArgs e)
+        private void numPosition_ValueChanged(object sender, EventArgs e)
         {
-            GoBot.Communications.Frame frame = CanFrameFactory.BuildDebugAsk(CanBoard.CanServo1);
-            
-            for (int i = 0; i < 100; i++)
+            if (_servo.LastPosition != numPosition.Value)
             {
-                GoBot.Communications.Connections.ConnectionCan.SendMessage(frame);
+                _servo.SetPosition((int)numPosition.Value);
+
             }
+        }
 
-            //System.Threading.Thread.Sleep(5000);
+        private void numPositionMin_ValueChanged(object sender, EventArgs e)
+        {
+            if(_servo.LastPositionMin != (int)numPositionMin.Value)
+                _servo.SetPositionMin((int)numPositionMin.Value);
+        }
 
-            //GoBot.Communications.Connections.ConnectionCan.SendFrame(CanFrameFactory.BuildDebugAsk(CanBoard.ServoBoard1));
+        private void numPositionMax_ValueChanged(object sender, EventArgs e)
+        {
+            if (_servo.LastPositionMax != (int)numPositionMax.Value)
+                _servo.SetPositionMax((int)numPositionMax.Value);
+        }
 
+        private void numAccel_ValueChanged(object sender, EventArgs e)
+        {
+            if (_servo.LastAcceleration != (int)numAccel.Value)
+                _servo.SetAcceleration((int)numAccel.Value);
+        }
+
+        private void numSpeedMax_ValueChanged(object sender, EventArgs e)
+        {
+            if (_servo.LastSpeedMax != (int)numSpeedMax.Value)
+                _servo.SetSpeedMax((int)numSpeedMax.Value);
+        }
+
+        private void numTorqueMax_ValueChanged(object sender, EventArgs e)
+        {
+            if (_servo.LastTorqueMax != (int)numTorqueMax.Value)
+                _servo.SetTorqueMax((int)numTorqueMax.Value);
+        }
+
+        private void trkTrajectoryTarget_ValueChanged(object sender, double value)
+        {
+            lblTrajectoryTarget.Text = trkTrajectoryTarget.Value.ToString();
+            DrawTrajectoryGraphs();
+        }
+
+        private void trkTrajectorySpeed_ValueChanged(object sender, double value)
+        {
+            lblTrajectorySpeed.Text = trkTrajectorySpeed.Value.ToString();
+            DrawTrajectoryGraphs();
+        }
+
+        private void trkTrajectoryAccel_ValueChanged(object sender, double value)
+        {
+            lblTrajectoryAccel.Text = trkTrajectoryAccel.Value.ToString();
+            DrawTrajectoryGraphs();
         }
 
         private void numID_ValueChanged(object sender, EventArgs e)
         {
             _servo = Devices.Devices.CanServos[(int)numID.Value];
+        }
+
+        private void DrawTrajectoryGraphs()
+        {
+            SpeedConfig config = new SpeedConfig((int)trkTrajectorySpeed.Value, (int)trkTrajectoryAccel.Value, (int)trkTrajectoryAccel.Value, 0, 0, 0);
+            SpeedSample sample = new SpeedSampler(config).SampleLine(_servo.LastPosition, (int)trkTrajectoryTarget.Value, gphTrajectoryPosition.Width);
+
+            gphTrajectorySpeed.DeleteCurve("Vitesse");
+            gphTrajectoryPosition.DeleteCurve("Position");
+
+            if (sample.Valid)
+            {
+                sample.Speeds.ForEach(s => gphTrajectorySpeed.AddPoint("Vitesse", s, Color.Purple));
+                gphTrajectorySpeed.DrawCurves();
+
+                sample.Positions.ForEach(s => gphTrajectoryPosition.AddPoint("Position", s, Color.ForestGreen));
+                gphTrajectoryPosition.DrawCurves();
+
+                lblTrajectoryTime.Text = sample.Duration.TotalSeconds.ToString("0.0") + "s";
+            }
+
+            if (picArrow.Image == null) DrawTimeArrow();
         }
     }
 }
