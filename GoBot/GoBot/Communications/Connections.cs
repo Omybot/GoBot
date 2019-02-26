@@ -52,8 +52,7 @@ namespace GoBot.Communications
             ConnectionIO = AddUDPConnection(Board.RecIO, IPAddress.Parse("10.1.0.14"), 12324, 12314);
             ConnectionMove = AddUDPConnection(Board.RecMove, IPAddress.Parse("10.1.0.11"), 12321, 12311);
             ConnectionGB = AddUDPConnection(Board.RecGB, IPAddress.Parse("10.1.0.12"), 12322, 12312);
-            //ConnectionCanBridge = AddUDPConnection(Board.RecCan, IPAddress.Parse("10.1.0.15"), 12325, 12315);
-            ConnectionCanBridge = AddUDPConnection(Board.RecCan, IPAddress.Parse("185.45.34.144"), 12325, 12315); // RecCAN chez Polo
+            ConnectionCanBridge = AddUDPConnection(Board.RecCan, IPAddress.Parse("10.1.0.15"), 12325, 12315);
 
             ConnectionCan = new CanConnection(Board.RecCan);
             ConnectionCan.StartReception();
