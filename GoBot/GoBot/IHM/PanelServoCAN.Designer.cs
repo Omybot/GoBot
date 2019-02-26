@@ -28,10 +28,10 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             this.grpMonitoring = new System.Windows.Forms.GroupBox();
             this.numID = new System.Windows.Forms.NumericUpDown();
             this.lblPositionTxt = new System.Windows.Forms.Label();
-            this.btnTrajectoryGo = new System.Windows.Forms.Button();
             this.lblPosMinTxt = new System.Windows.Forms.Label();
             this.lblSpeedMaxTxt = new System.Windows.Forms.Label();
             this.lblPosMaxTxt = new System.Windows.Forms.Label();
@@ -39,7 +39,6 @@
             this.lblAccelTxt = new System.Windows.Forms.Label();
             this.grpTrajectory = new System.Windows.Forms.GroupBox();
             this.lblTrajectoryTime = new System.Windows.Forms.Label();
-            this.picArrow = new System.Windows.Forms.PictureBox();
             this.lblTrajectoryAccelTxt = new System.Windows.Forms.Label();
             this.lblTrajectorySpeedTxt = new System.Windows.Forms.Label();
             this.lblTrajectoryTargetTxt = new System.Windows.Forms.Label();
@@ -53,20 +52,25 @@
             this.numPosition = new System.Windows.Forms.NumericUpDown();
             this.numAccel = new System.Windows.Forms.NumericUpDown();
             this.grpControl = new System.Windows.Forms.GroupBox();
-            this.btnReadValue = new System.Windows.Forms.Button();
+            this.lblAutoScale = new System.Windows.Forms.Label();
             this.trkPosition = new Composants.TrackBarPlus();
             this.trkTrajectoryAccel = new Composants.TrackBarPlus();
             this.trkTrajectorySpeed = new Composants.TrackBarPlus();
             this.trkTrajectoryTarget = new Composants.TrackBarPlus();
             this.gphTrajectorySpeed = new Composants.GraphPanel();
             this.gphTrajectoryPosition = new Composants.GraphPanel();
+            this.boxAutoScale = new Composants.SwitchButton();
             this.gphMonitoring = new Composants.GraphPanel();
             this.boxMonitoring = new Composants.SwitchButton();
             this.lblIDTxt = new Composants.LabelPlus();
+            this.picWarning = new System.Windows.Forms.PictureBox();
+            this.btnReadValue = new System.Windows.Forms.Button();
+            this.picArrow = new System.Windows.Forms.PictureBox();
+            this.btnTrajectoryGo = new System.Windows.Forms.Button();
+            this.toolTip = new System.Windows.Forms.ToolTip(this.components);
             this.grpMonitoring.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numID)).BeginInit();
             this.grpTrajectory.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.picArrow)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numPositionMin)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numPositionMax)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numSpeedMax)).BeginInit();
@@ -74,12 +78,17 @@
             ((System.ComponentModel.ISupportInitialize)(this.numPosition)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numAccel)).BeginInit();
             this.grpControl.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.picWarning)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.picArrow)).BeginInit();
             this.SuspendLayout();
             // 
             // grpMonitoring
             // 
+            this.grpMonitoring.Controls.Add(this.lblAutoScale);
+            this.grpMonitoring.Controls.Add(this.boxAutoScale);
             this.grpMonitoring.Controls.Add(this.gphMonitoring);
             this.grpMonitoring.Controls.Add(this.boxMonitoring);
+            this.grpMonitoring.Enabled = false;
             this.grpMonitoring.Location = new System.Drawing.Point(3, 167);
             this.grpMonitoring.Name = "grpMonitoring";
             this.grpMonitoring.Size = new System.Drawing.Size(295, 142);
@@ -103,18 +112,6 @@
             this.lblPositionTxt.Size = new System.Drawing.Size(44, 13);
             this.lblPositionTxt.TabIndex = 5;
             this.lblPositionTxt.Text = "Position";
-            // 
-            // btnTrajectoryGo
-            // 
-            this.btnTrajectoryGo.Image = global::GoBot.Properties.Resources.Play16;
-            this.btnTrajectoryGo.Location = new System.Drawing.Point(56, 145);
-            this.btnTrajectoryGo.Name = "btnTrajectoryGo";
-            this.btnTrajectoryGo.Size = new System.Drawing.Size(47, 23);
-            this.btnTrajectoryGo.TabIndex = 21;
-            this.btnTrajectoryGo.Text = "Go";
-            this.btnTrajectoryGo.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
-            this.btnTrajectoryGo.UseVisualStyleBackColor = true;
-            this.btnTrajectoryGo.Click += new System.EventHandler(this.btnGo_Click);
             // 
             // lblPosMinTxt
             // 
@@ -177,6 +174,7 @@
             this.grpTrajectory.Controls.Add(this.gphTrajectorySpeed);
             this.grpTrajectory.Controls.Add(this.gphTrajectoryPosition);
             this.grpTrajectory.Controls.Add(this.btnTrajectoryGo);
+            this.grpTrajectory.Enabled = false;
             this.grpTrajectory.Location = new System.Drawing.Point(3, 315);
             this.grpTrajectory.Name = "grpTrajectory";
             this.grpTrajectory.Size = new System.Drawing.Size(295, 173);
@@ -193,14 +191,6 @@
             this.lblTrajectoryTime.TabIndex = 40;
             this.lblTrajectoryTime.Text = "00.0s";
             this.lblTrajectoryTime.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-            // 
-            // picArrow
-            // 
-            this.picArrow.Location = new System.Drawing.Point(158, 153);
-            this.picArrow.Name = "picArrow";
-            this.picArrow.Size = new System.Drawing.Size(131, 15);
-            this.picArrow.TabIndex = 41;
-            this.picArrow.TabStop = false;
             // 
             // lblTrajectoryAccelTxt
             // 
@@ -350,6 +340,7 @@
             this.grpControl.Controls.Add(this.lblTorqueMaxTxt);
             this.grpControl.Controls.Add(this.numPositionMin);
             this.grpControl.Controls.Add(this.lblAccelTxt);
+            this.grpControl.Enabled = false;
             this.grpControl.Location = new System.Drawing.Point(3, 34);
             this.grpControl.Name = "grpControl";
             this.grpControl.Size = new System.Drawing.Size(295, 127);
@@ -357,24 +348,20 @@
             this.grpControl.TabStop = false;
             this.grpControl.Text = "Contrôle";
             // 
-            // btnReadValue
+            // lblAutoScale
             // 
-            this.btnReadValue.Image = global::GoBot.Properties.Resources.Refresh16;
-            this.btnReadValue.Location = new System.Drawing.Point(169, 98);
-            this.btnReadValue.Name = "btnReadValue";
-            this.btnReadValue.Size = new System.Drawing.Size(115, 24);
-            this.btnReadValue.TabIndex = 39;
-            this.btnReadValue.Text = "Lire les valeurs";
-            this.btnReadValue.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.btnReadValue.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
-            this.btnReadValue.UseVisualStyleBackColor = true;
-            this.btnReadValue.Click += new System.EventHandler(this.btnReadValue_Click);
+            this.lblAutoScale.AutoSize = true;
+            this.lblAutoScale.Location = new System.Drawing.Point(187, 0);
+            this.lblAutoScale.Name = "lblAutoScale";
+            this.lblAutoScale.Size = new System.Drawing.Size(61, 13);
+            this.lblAutoScale.TabIndex = 6;
+            this.lblAutoScale.Text = "Echelle fixe";
             // 
             // trkPosition
             // 
             this.trkPosition.BackColor = System.Drawing.Color.Transparent;
             this.trkPosition.DecimalPlaces = 0;
-            this.trkPosition.IntervalTimer = ((uint)(100u));
+            this.trkPosition.IntervalTimer = ((uint)(25u));
             this.trkPosition.Location = new System.Drawing.Point(148, 23);
             this.trkPosition.Max = 40000D;
             this.trkPosition.MaximumSize = new System.Drawing.Size(3000, 15);
@@ -470,6 +457,20 @@
             this.gphTrajectoryPosition.Size = new System.Drawing.Size(131, 69);
             this.gphTrajectoryPosition.TabIndex = 29;
             // 
+            // boxAutoScale
+            // 
+            this.boxAutoScale.AutoSize = true;
+            this.boxAutoScale.BackColor = System.Drawing.Color.Transparent;
+            this.boxAutoScale.Location = new System.Drawing.Point(254, 0);
+            this.boxAutoScale.MaximumSize = new System.Drawing.Size(35, 15);
+            this.boxAutoScale.MinimumSize = new System.Drawing.Size(35, 15);
+            this.boxAutoScale.Mirrored = true;
+            this.boxAutoScale.Name = "boxAutoScale";
+            this.boxAutoScale.Size = new System.Drawing.Size(35, 15);
+            this.boxAutoScale.TabIndex = 5;
+            this.boxAutoScale.Value = false;
+            this.boxAutoScale.ValueChanged += new Composants.SwitchButton.ValueChangedDelegate(this.boxAutoScale_ValueChanged);
+            // 
             // gphMonitoring
             // 
             this.gphMonitoring.BackColor = System.Drawing.Color.White;
@@ -510,10 +511,55 @@
             this.lblIDTxt.TabIndex = 3;
             this.lblIDTxt.Text = "Servomoteur ID :";
             // 
+            // picWarning
+            // 
+            this.picWarning.Image = global::GoBot.Properties.Resources.Warning24;
+            this.picWarning.Location = new System.Drawing.Point(221, 5);
+            this.picWarning.Name = "picWarning";
+            this.picWarning.Size = new System.Drawing.Size(25, 25);
+            this.picWarning.TabIndex = 39;
+            this.picWarning.TabStop = false;
+            this.toolTip.SetToolTip(this.picWarning, "Le servomoteur demandé est introuvable...");
+            this.picWarning.Visible = false;
+            // 
+            // btnReadValue
+            // 
+            this.btnReadValue.Image = global::GoBot.Properties.Resources.Refresh16;
+            this.btnReadValue.Location = new System.Drawing.Point(169, 98);
+            this.btnReadValue.Name = "btnReadValue";
+            this.btnReadValue.Size = new System.Drawing.Size(115, 24);
+            this.btnReadValue.TabIndex = 39;
+            this.btnReadValue.Text = "Lire les valeurs";
+            this.btnReadValue.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.btnReadValue.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
+            this.btnReadValue.UseVisualStyleBackColor = true;
+            this.btnReadValue.Click += new System.EventHandler(this.btnReadValue_Click);
+            // 
+            // picArrow
+            // 
+            this.picArrow.Location = new System.Drawing.Point(158, 153);
+            this.picArrow.Name = "picArrow";
+            this.picArrow.Size = new System.Drawing.Size(131, 15);
+            this.picArrow.TabIndex = 41;
+            this.picArrow.TabStop = false;
+            // 
+            // btnTrajectoryGo
+            // 
+            this.btnTrajectoryGo.Image = global::GoBot.Properties.Resources.Play16;
+            this.btnTrajectoryGo.Location = new System.Drawing.Point(56, 145);
+            this.btnTrajectoryGo.Name = "btnTrajectoryGo";
+            this.btnTrajectoryGo.Size = new System.Drawing.Size(47, 23);
+            this.btnTrajectoryGo.TabIndex = 21;
+            this.btnTrajectoryGo.Text = "Go";
+            this.btnTrajectoryGo.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
+            this.btnTrajectoryGo.UseVisualStyleBackColor = true;
+            this.btnTrajectoryGo.Click += new System.EventHandler(this.btnGo_Click);
+            // 
             // PanelServoCan
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.Controls.Add(this.picWarning);
             this.Controls.Add(this.grpControl);
             this.Controls.Add(this.grpTrajectory);
             this.Controls.Add(this.numID);
@@ -526,7 +572,6 @@
             ((System.ComponentModel.ISupportInitialize)(this.numID)).EndInit();
             this.grpTrajectory.ResumeLayout(false);
             this.grpTrajectory.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.picArrow)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.numPositionMin)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.numPositionMax)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.numSpeedMax)).EndInit();
@@ -535,6 +580,8 @@
             ((System.ComponentModel.ISupportInitialize)(this.numAccel)).EndInit();
             this.grpControl.ResumeLayout(false);
             this.grpControl.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.picWarning)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.picArrow)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -577,5 +624,9 @@
         private System.Windows.Forms.Label lblTrajectoryTime;
         private Composants.GraphPanel gphTrajectoryPosition;
         private System.Windows.Forms.PictureBox picArrow;
+        private System.Windows.Forms.Label lblAutoScale;
+        private Composants.SwitchButton boxAutoScale;
+        private System.Windows.Forms.PictureBox picWarning;
+        private System.Windows.Forms.ToolTip toolTip;
     }
 }

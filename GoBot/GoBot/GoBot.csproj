@@ -674,6 +674,7 @@
     <None Include="Images\GlassStart48.png" />
     <None Include="Images\UncheckAll16.png" />
     <None Include="Images\CheckAll16.png" />
+    <None Include="Images\Warning24.png" />
     <Content Include="robot.ico" />
   </ItemGroup>
   <ItemGroup>

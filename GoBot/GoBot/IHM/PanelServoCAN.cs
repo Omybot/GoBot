@@ -20,7 +20,7 @@ namespace GoBot.IHM
         public PanelServoCan()
         {
             InitializeComponent();
-            
+
             if (!Execution.DesignMode)
             {
                 _servo = Devices.Devices.CanServos[0];
@@ -64,7 +64,7 @@ namespace GoBot.IHM
 
         private void boxTorque_ValueChanged(object sender, bool value)
         {
-            if(value)
+            if (value)
             {
                 _linkPolling = ThreadManager.CreateThread(link => GetServoInfos());
                 _linkPolling.StartInfiniteLoop(new TimeSpan(0, 0, 0, 0, 50));
@@ -105,22 +105,7 @@ namespace GoBot.IHM
 
         private void btnReadValue_Click(object sender, EventArgs e)
         {
-            btnReadValue.Enabled = false;
-            numPosition.Value = _servo.ReadPosition();
-            trkPosition.SetValue(_servo.LastPosition, false);
-            numPositionMin.Value = _servo.ReadPositionMin();
-            numPositionMax.Value = _servo.ReadPositionMax();
-            numAccel.Value = _servo.ReadAcceleration();
-            numSpeedMax.Value = _servo.ReadSpeedMax();
-            numTorqueMax.Value = _servo.ReadTorqueMax();
-
-            trkTrajectoryTarget.Min = _servo.LastPositionMin;
-            trkTrajectoryTarget.Max = _servo.LastPositionMax;
-            trkTrajectoryTarget.SetValue(_servo.LastPosition);
-            trkTrajectorySpeed.SetValue(_servo.LastSpeedMax);
-            trkTrajectoryAccel.SetValue(_servo.LastAcceleration);
-
-            btnReadValue.Enabled = true;
+            ReadValues();
         }
 
         private void numPosition_ValueChanged(object sender, EventArgs e)
@@ -134,14 +119,20 @@ namespace GoBot.IHM
 
         private void numPositionMin_ValueChanged(object sender, EventArgs e)
         {
-            if(_servo.LastPositionMin != (int)numPositionMin.Value)
+            if (_servo.LastPositionMin != (int)numPositionMin.Value)
+            {
                 _servo.SetPositionMin((int)numPositionMin.Value);
+                gphMonitoring.MinLimit = _servo.LastPositionMin;
+            }
         }
 
         private void numPositionMax_ValueChanged(object sender, EventArgs e)
         {
             if (_servo.LastPositionMax != (int)numPositionMax.Value)
+            {
                 _servo.SetPositionMax((int)numPositionMax.Value);
+                gphMonitoring.MaxLimit = _servo.LastPositionMax;
+            }
         }
 
         private void numAccel_ValueChanged(object sender, EventArgs e)
@@ -183,6 +174,7 @@ namespace GoBot.IHM
         private void numID_ValueChanged(object sender, EventArgs e)
         {
             _servo = Devices.Devices.CanServos[(int)numID.Value];
+            ReadValues();
         }
 
         private void DrawTrajectoryGraphs()
@@ -205,6 +197,46 @@ namespace GoBot.IHM
             }
 
             if (picArrow.Image == null) DrawTimeArrow();
+        }
+
+        private void boxAutoScale_ValueChanged(object sender, bool value)
+        {
+            gphMonitoring.MinLimit = _servo.LastPositionMin;
+            gphMonitoring.MaxLimit = _servo.LastPositionMax;
+            gphMonitoring.GraphScale = value ? Composants.GraphPanel.ScaleType.Fixed : Composants.GraphPanel.ScaleType.DynamicPerCurve;
+        }
+
+        private void ReadValues()
+        {
+            try
+            {
+                btnReadValue.Enabled = false;
+                numPosition.Value = _servo.ReadPosition();
+                trkPosition.SetValue(_servo.LastPosition, false);
+                numPositionMin.Value = _servo.ReadPositionMin();
+                numPositionMax.Value = _servo.ReadPositionMax();
+                numAccel.Value = _servo.ReadAcceleration();
+                numSpeedMax.Value = _servo.ReadSpeedMax();
+                numTorqueMax.Value = _servo.ReadTorqueMax();
+
+                trkTrajectoryTarget.Min = _servo.LastPositionMin;
+                trkTrajectoryTarget.Max = _servo.LastPositionMax;
+                trkTrajectoryTarget.SetValue(_servo.LastPosition);
+                trkTrajectorySpeed.SetValue(_servo.LastSpeedMax);
+                trkTrajectoryAccel.SetValue(_servo.LastAcceleration);
+                picWarning.Visible = false;
+                grpControl.Enabled = true;
+                grpMonitoring.Enabled = true;
+                grpTrajectory.Enabled = true;
+            }
+            catch
+            {
+                btnReadValue.Enabled = true;
+                picWarning.Visible = true;
+                grpControl.Enabled = false;
+                grpMonitoring.Enabled = false;
+                grpTrajectory.Enabled = false;
+            }
         }
     }
 }

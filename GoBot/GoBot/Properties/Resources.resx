@@ -142,6 +142,9 @@
   <data name="Open16" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Images\Open16.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="TurnLeft16" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Images\TurnLeft16.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
   <data name="Star16" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Images\Star16.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
@@ -166,8 +169,8 @@
   <data name="Stop" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Images\Stop.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="Webcam" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Images\Webcam.jpg;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="BottomToRigth16" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Images\BottomToRigth16.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="Motor16" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Images\Motor16.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
@@ -190,9 +193,6 @@
   <data name="BottomToLeft16" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Images\BottomToLeft16.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="Speed16" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Images\Speed16.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
   <data name="RigthArrow" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Images\RigthArrow.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
@@ -201,6 +201,9 @@
   </data>
   <data name="GlassPause48" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Images\GlassPause48.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Speed16" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Images\Speed16.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="UncheckAll16" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Images\UncheckAll16.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
@@ -211,9 +214,6 @@
   <data name="Rabbit" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Images\Rabbit.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="UpGrey" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Images\UpGrey.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
   <data name="Turtle" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Images\Turtle.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
@@ -222,6 +222,9 @@
   </data>
   <data name="TopToRigth16" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Images\TopToRigth16.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="CheckAll16" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Images\CheckAll16.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="Refresh16" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Images\Refresh16.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
@@ -235,8 +238,8 @@
   <data name="Folder16" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Images\Folder16.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="TurnLeft16" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Images\TurnLeft16.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="Webcam" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Images\Webcam.jpg;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="OpenMid16" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Images\OpenMid16.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
@@ -247,8 +250,8 @@
   <data name="OpenClose16" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Images\OpenClose16.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="BottomToRigth16" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Images\BottomToRigth16.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="UpGrey" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Images\UpGrey.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="VerticalUnlock16" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Images\VerticalUnlock16.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
@@ -268,7 +271,7 @@
   <data name="UpGreen16" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Images\UpGreen16.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="CheckAll16" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Images\CheckAll16.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="Warning24" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Images\Warning24.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
 </root>
