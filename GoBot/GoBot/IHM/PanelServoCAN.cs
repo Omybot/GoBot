@@ -119,19 +119,25 @@ namespace GoBot.IHM
 
         private void numPositionMin_ValueChanged(object sender, EventArgs e)
         {
-            if (_servo.LastPositionMin != (int)numPositionMin.Value)
+            int val = (int)numPositionMin.Value;
+
+            if (_servo.LastPositionMin != val)
             {
-                _servo.SetPositionMin((int)numPositionMin.Value);
-                gphMonitoring.MinLimit = _servo.LastPositionMin;
+                _servo.SetPositionMin(val);
+                gphMonitoring.MinLimit = val;
+                trkPosition.Min = val;
             }
         }
 
         private void numPositionMax_ValueChanged(object sender, EventArgs e)
         {
-            if (_servo.LastPositionMax != (int)numPositionMax.Value)
+            int val = (int)numPositionMax.Value;
+
+            if (_servo.LastPositionMax != val)
             {
-                _servo.SetPositionMax((int)numPositionMax.Value);
-                gphMonitoring.MaxLimit = _servo.LastPositionMax;
+                _servo.SetPositionMax(val);
+                gphMonitoring.MaxLimit = val;
+                trkPosition.Max = val;
             }
         }
 
@@ -224,6 +230,10 @@ namespace GoBot.IHM
                 trkTrajectoryTarget.SetValue(_servo.LastPosition);
                 trkTrajectorySpeed.SetValue(_servo.LastSpeedMax);
                 trkTrajectoryAccel.SetValue(_servo.LastAcceleration);
+                
+                gphMonitoring.MinLimit = _servo.LastPositionMin;
+                gphMonitoring.MaxLimit = _servo.LastPositionMax;
+
                 picWarning.Visible = false;
                 grpControl.Enabled = true;
                 grpMonitoring.Enabled = true;
@@ -231,12 +241,13 @@ namespace GoBot.IHM
             }
             catch
             {
-                btnReadValue.Enabled = true;
                 picWarning.Visible = true;
                 grpControl.Enabled = false;
                 grpMonitoring.Enabled = false;
                 grpTrajectory.Enabled = false;
             }
+
+            btnReadValue.Enabled = true;
         }
     }
 }
