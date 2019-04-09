@@ -100,6 +100,8 @@ namespace GoBot
             this.btnFenetre = new System.Windows.Forms.Button();
             this.switchBoutonSimu = new Composants.SwitchButton();
             this.panelConnexions = new GoBot.IHM.PanelConnexions();
+            this.button1 = new System.Windows.Forms.Button();
+            this.btnMotorStop = new System.Windows.Forms.Button();
             this.tabAlimentation.SuspendLayout();
             this.tabServomoteurs.SuspendLayout();
             this.tabConnexions.SuspendLayout();
@@ -193,6 +195,8 @@ namespace GoBot
             // 
             // tabConnexions
             // 
+            this.tabConnexions.Controls.Add(this.button1);
+            this.tabConnexions.Controls.Add(this.btnMotorStop);
             this.tabConnexions.Controls.Add(this.panelEnvoiUdp1);
             this.tabConnexions.Location = new System.Drawing.Point(4, 22);
             this.tabConnexions.Name = "tabConnexions";
@@ -849,6 +853,26 @@ namespace GoBot
             this.panelConnexions.Size = new System.Drawing.Size(980, 27);
             this.panelConnexions.TabIndex = 74;
             // 
+            // button1
+            // 
+            this.button1.Location = new System.Drawing.Point(912, 52);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(75, 23);
+            this.button1.TabIndex = 14;
+            this.button1.Text = "Stop abrupt";
+            this.button1.UseVisualStyleBackColor = true;
+            this.button1.Click += new System.EventHandler(this.button1_Click_2);
+            // 
+            // btnMotorStop
+            // 
+            this.btnMotorStop.Location = new System.Drawing.Point(831, 52);
+            this.btnMotorStop.Name = "btnMotorStop";
+            this.btnMotorStop.Size = new System.Drawing.Size(75, 23);
+            this.btnMotorStop.TabIndex = 13;
+            this.btnMotorStop.Text = "Stop freely";
+            this.btnMotorStop.UseVisualStyleBackColor = true;
+            this.btnMotorStop.Click += new System.EventHandler(this.btnMotorStop_Click_1);
+            // 
             // FenGoBot
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -981,6 +1005,8 @@ namespace GoBot
         private System.Windows.Forms.Button btnTest;
         private System.Windows.Forms.TabPage tabLogsCan;
         private PanelLogCan pnlLogCan;
+        private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.Button btnMotorStop;
     }
 }
 

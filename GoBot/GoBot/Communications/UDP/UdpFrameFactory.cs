@@ -146,6 +146,17 @@ namespace GoBot.Communications.UDP
             return new Frame(tab);
         }
 
+        static public Frame MoteurStop(MoteurID moteur, StopMode mode)
+        {
+            byte[] tab = new byte[4];
+            tab[0] = (byte)Board.RecIO;
+            tab[1] = (byte)UdpFrameFunction.MoteurStop;
+            tab[2] = (byte)moteur;
+            tab[3] = (byte)mode;
+
+            return new Frame(tab);
+        }
+
         static public Frame BaliseVitesse(int vitesse)
         {
             byte[] tab = new byte[5];

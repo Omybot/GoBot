@@ -41,10 +41,10 @@ namespace GoBot
 
     public enum MoteurID
     {
+        AvailableOnRecIO0 = 0, // RecIO
         AvailableOnRecIO1 = 1, // RecIO
         AvailableOnRecIO2 = 2, // RecIO
-        AvailableOnRecIO3 = 4, // RecIO
-        AvailableOnRecIO4 = 3, // RecIO
+        AvailableOnRecIO3 = 3, // RecIO
 
         Beacon = 0x10, // RecMove
 

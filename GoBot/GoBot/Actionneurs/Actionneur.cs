@@ -11,7 +11,7 @@ namespace GoBot.Actionneurs
         static Actionneur()
         {
             _hokuyoGround = new HokuyoRec(LidarID.Ground);
-            _hokuyoAvoid = CreateHokuyo("COM8", LidarID.Avoid); 
+            _hokuyoAvoid = CreateHokuyo("COM6", LidarID.Avoid); 
         }
 
         private static Hokuyo CreateHokuyo(String portCom, LidarID id)

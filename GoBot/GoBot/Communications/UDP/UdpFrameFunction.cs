@@ -26,6 +26,8 @@
         MoteurPosition = 0x66,
         MoteurVitesse = 0x67,
         MoteurAccel = 0x68,
+        MoteurStop = 0x69,
+
         CommandeServo = 0x60,
 
         Deplace = 0x01,

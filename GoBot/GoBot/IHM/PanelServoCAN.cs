@@ -46,20 +46,7 @@ namespace GoBot.IHM
 
         private void trackBarPosition_TickValueChanged(object sender, double value)
         {
-            _servo.SetPosition((int)value);
             numPosition.Value = (int)value;
-        }
-
-        private void trackBarSpeed_TickValueChanged(object sender, double value)
-        {
-            _servo.SetSpeedMax((int)value);
-            lblSpeedMaxTxt.Text = value.ToString();
-        }
-
-        private void trackBarTorque_TickValueChanged(object sender, double value)
-        {
-            _servo.SetTorqueMax((int)value);
-            lblTorqueMaxTxt.Text = value.ToString();
         }
 
         private void boxTorque_ValueChanged(object sender, bool value)
@@ -107,13 +94,12 @@ namespace GoBot.IHM
         {
             ReadValues();
         }
-
+        
         private void numPosition_ValueChanged(object sender, EventArgs e)
         {
             if (_servo.LastPosition != numPosition.Value)
             {
                 _servo.SetPosition((int)numPosition.Value);
-
             }
         }
 

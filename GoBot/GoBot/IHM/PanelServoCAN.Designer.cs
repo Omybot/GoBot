@@ -30,6 +30,10 @@
         {
             this.components = new System.ComponentModel.Container();
             this.grpMonitoring = new System.Windows.Forms.GroupBox();
+            this.lblAutoScale = new System.Windows.Forms.Label();
+            this.boxAutoScale = new Composants.SwitchButton();
+            this.gphMonitoring = new Composants.GraphPanel();
+            this.boxMonitoring = new Composants.SwitchButton();
             this.numID = new System.Windows.Forms.NumericUpDown();
             this.lblPositionTxt = new System.Windows.Forms.Label();
             this.lblPosMinTxt = new System.Windows.Forms.Label();
@@ -39,12 +43,19 @@
             this.lblAccelTxt = new System.Windows.Forms.Label();
             this.grpTrajectory = new System.Windows.Forms.GroupBox();
             this.lblTrajectoryTime = new System.Windows.Forms.Label();
+            this.picArrow = new System.Windows.Forms.PictureBox();
             this.lblTrajectoryAccelTxt = new System.Windows.Forms.Label();
             this.lblTrajectorySpeedTxt = new System.Windows.Forms.Label();
             this.lblTrajectoryTargetTxt = new System.Windows.Forms.Label();
             this.lblTrajectoryAccel = new System.Windows.Forms.Label();
             this.lblTrajectorySpeed = new System.Windows.Forms.Label();
             this.lblTrajectoryTarget = new System.Windows.Forms.Label();
+            this.trkTrajectoryAccel = new Composants.TrackBarPlus();
+            this.trkTrajectorySpeed = new Composants.TrackBarPlus();
+            this.trkTrajectoryTarget = new Composants.TrackBarPlus();
+            this.gphTrajectorySpeed = new Composants.GraphPanel();
+            this.gphTrajectoryPosition = new Composants.GraphPanel();
+            this.btnTrajectoryGo = new System.Windows.Forms.Button();
             this.numPositionMin = new System.Windows.Forms.NumericUpDown();
             this.numPositionMax = new System.Windows.Forms.NumericUpDown();
             this.numSpeedMax = new System.Windows.Forms.NumericUpDown();
@@ -52,25 +63,15 @@
             this.numPosition = new System.Windows.Forms.NumericUpDown();
             this.numAccel = new System.Windows.Forms.NumericUpDown();
             this.grpControl = new System.Windows.Forms.GroupBox();
-            this.lblAutoScale = new System.Windows.Forms.Label();
+            this.btnReadValue = new System.Windows.Forms.Button();
             this.trkPosition = new Composants.TrackBarPlus();
-            this.trkTrajectoryAccel = new Composants.TrackBarPlus();
-            this.trkTrajectorySpeed = new Composants.TrackBarPlus();
-            this.trkTrajectoryTarget = new Composants.TrackBarPlus();
-            this.gphTrajectorySpeed = new Composants.GraphPanel();
-            this.gphTrajectoryPosition = new Composants.GraphPanel();
-            this.boxAutoScale = new Composants.SwitchButton();
-            this.gphMonitoring = new Composants.GraphPanel();
-            this.boxMonitoring = new Composants.SwitchButton();
             this.lblIDTxt = new Composants.LabelPlus();
             this.picWarning = new System.Windows.Forms.PictureBox();
-            this.btnReadValue = new System.Windows.Forms.Button();
-            this.picArrow = new System.Windows.Forms.PictureBox();
-            this.btnTrajectoryGo = new System.Windows.Forms.Button();
             this.toolTip = new System.Windows.Forms.ToolTip(this.components);
             this.grpMonitoring.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numID)).BeginInit();
             this.grpTrajectory.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.picArrow)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numPositionMin)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numPositionMax)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numSpeedMax)).BeginInit();
@@ -79,7 +80,6 @@
             ((System.ComponentModel.ISupportInitialize)(this.numAccel)).BeginInit();
             this.grpControl.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.picWarning)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.picArrow)).BeginInit();
             this.SuspendLayout();
             // 
             // grpMonitoring
@@ -95,6 +95,60 @@
             this.grpMonitoring.TabIndex = 1;
             this.grpMonitoring.TabStop = false;
             this.grpMonitoring.Text = "Monitoring";
+            // 
+            // lblAutoScale
+            // 
+            this.lblAutoScale.AutoSize = true;
+            this.lblAutoScale.BackColor = System.Drawing.Color.White;
+            this.lblAutoScale.Location = new System.Drawing.Point(187, 0);
+            this.lblAutoScale.Name = "lblAutoScale";
+            this.lblAutoScale.Size = new System.Drawing.Size(61, 13);
+            this.lblAutoScale.TabIndex = 6;
+            this.lblAutoScale.Text = "Echelle fixe";
+            // 
+            // boxAutoScale
+            // 
+            this.boxAutoScale.AutoSize = true;
+            this.boxAutoScale.BackColor = System.Drawing.Color.Transparent;
+            this.boxAutoScale.Location = new System.Drawing.Point(254, 0);
+            this.boxAutoScale.MaximumSize = new System.Drawing.Size(35, 15);
+            this.boxAutoScale.MinimumSize = new System.Drawing.Size(35, 15);
+            this.boxAutoScale.Mirrored = true;
+            this.boxAutoScale.Name = "boxAutoScale";
+            this.boxAutoScale.Size = new System.Drawing.Size(35, 15);
+            this.boxAutoScale.TabIndex = 5;
+            this.boxAutoScale.Value = false;
+            this.boxAutoScale.ValueChanged += new Composants.SwitchButton.ValueChangedDelegate(this.boxAutoScale_ValueChanged);
+            // 
+            // gphMonitoring
+            // 
+            this.gphMonitoring.BackColor = System.Drawing.Color.White;
+            this.gphMonitoring.BorderColor = System.Drawing.Color.LightGray;
+            this.gphMonitoring.BorderVisible = false;
+            this.gphMonitoring.GraphScale = Composants.GraphPanel.ScaleType.DynamicPerCurve;
+            this.gphMonitoring.LimitsVisible = true;
+            this.gphMonitoring.Location = new System.Drawing.Point(8, 21);
+            this.gphMonitoring.MaxLimit = 1D;
+            this.gphMonitoring.MinLimit = 0D;
+            this.gphMonitoring.Name = "gphMonitoring";
+            this.gphMonitoring.NamesAlignment = System.Drawing.ContentAlignment.TopLeft;
+            this.gphMonitoring.NamesVisible = true;
+            this.gphMonitoring.Size = new System.Drawing.Size(281, 115);
+            this.gphMonitoring.TabIndex = 4;
+            // 
+            // boxMonitoring
+            // 
+            this.boxMonitoring.AutoSize = true;
+            this.boxMonitoring.BackColor = System.Drawing.Color.Transparent;
+            this.boxMonitoring.Location = new System.Drawing.Point(68, 0);
+            this.boxMonitoring.MaximumSize = new System.Drawing.Size(35, 15);
+            this.boxMonitoring.MinimumSize = new System.Drawing.Size(35, 15);
+            this.boxMonitoring.Mirrored = true;
+            this.boxMonitoring.Name = "boxMonitoring";
+            this.boxMonitoring.Size = new System.Drawing.Size(35, 15);
+            this.boxMonitoring.TabIndex = 0;
+            this.boxMonitoring.Value = false;
+            this.boxMonitoring.ValueChanged += new Composants.SwitchButton.ValueChangedDelegate(this.boxTorque_ValueChanged);
             // 
             // numID
             // 
@@ -192,6 +246,14 @@
             this.lblTrajectoryTime.Text = "00.0s";
             this.lblTrajectoryTime.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             // 
+            // picArrow
+            // 
+            this.picArrow.Location = new System.Drawing.Point(158, 153);
+            this.picArrow.Name = "picArrow";
+            this.picArrow.Size = new System.Drawing.Size(131, 15);
+            this.picArrow.TabIndex = 41;
+            this.picArrow.TabStop = false;
+            // 
             // lblTrajectoryAccelTxt
             // 
             this.lblTrajectoryAccelTxt.AutoSize = true;
@@ -245,6 +307,101 @@
             this.lblTrajectoryTarget.TabIndex = 37;
             this.lblTrajectoryTarget.Text = "-";
             this.lblTrajectoryTarget.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            // 
+            // trkTrajectoryAccel
+            // 
+            this.trkTrajectoryAccel.BackColor = System.Drawing.Color.Transparent;
+            this.trkTrajectoryAccel.DecimalPlaces = 0;
+            this.trkTrajectoryAccel.IntervalTimer = ((uint)(1u));
+            this.trkTrajectoryAccel.Location = new System.Drawing.Point(20, 120);
+            this.trkTrajectoryAccel.Max = 10000D;
+            this.trkTrajectoryAccel.MaximumSize = new System.Drawing.Size(3000, 15);
+            this.trkTrajectoryAccel.Min = 0D;
+            this.trkTrajectoryAccel.MinimumSize = new System.Drawing.Size(30, 15);
+            this.trkTrajectoryAccel.Name = "trkTrajectoryAccel";
+            this.trkTrajectoryAccel.Reverse = false;
+            this.trkTrajectoryAccel.Size = new System.Drawing.Size(127, 15);
+            this.trkTrajectoryAccel.TabIndex = 36;
+            this.trkTrajectoryAccel.Vertical = false;
+            this.trkTrajectoryAccel.ValueChanged += new Composants.TrackBarPlus.ValueChangedDelegate(this.trkTrajectoryAccel_ValueChanged);
+            // 
+            // trkTrajectorySpeed
+            // 
+            this.trkTrajectorySpeed.BackColor = System.Drawing.Color.Transparent;
+            this.trkTrajectorySpeed.DecimalPlaces = 0;
+            this.trkTrajectorySpeed.IntervalTimer = ((uint)(1u));
+            this.trkTrajectorySpeed.Location = new System.Drawing.Point(20, 82);
+            this.trkTrajectorySpeed.Max = 20000D;
+            this.trkTrajectorySpeed.MaximumSize = new System.Drawing.Size(3000, 15);
+            this.trkTrajectorySpeed.Min = 0D;
+            this.trkTrajectorySpeed.MinimumSize = new System.Drawing.Size(30, 15);
+            this.trkTrajectorySpeed.Name = "trkTrajectorySpeed";
+            this.trkTrajectorySpeed.Reverse = false;
+            this.trkTrajectorySpeed.Size = new System.Drawing.Size(127, 15);
+            this.trkTrajectorySpeed.TabIndex = 34;
+            this.trkTrajectorySpeed.Vertical = false;
+            this.trkTrajectorySpeed.ValueChanged += new Composants.TrackBarPlus.ValueChangedDelegate(this.trkTrajectorySpeed_ValueChanged);
+            // 
+            // trkTrajectoryTarget
+            // 
+            this.trkTrajectoryTarget.BackColor = System.Drawing.Color.Transparent;
+            this.trkTrajectoryTarget.DecimalPlaces = 0;
+            this.trkTrajectoryTarget.IntervalTimer = ((uint)(100u));
+            this.trkTrajectoryTarget.Location = new System.Drawing.Point(20, 44);
+            this.trkTrajectoryTarget.Max = 40000D;
+            this.trkTrajectoryTarget.MaximumSize = new System.Drawing.Size(3000, 15);
+            this.trkTrajectoryTarget.Min = 0D;
+            this.trkTrajectoryTarget.MinimumSize = new System.Drawing.Size(30, 15);
+            this.trkTrajectoryTarget.Name = "trkTrajectoryTarget";
+            this.trkTrajectoryTarget.Reverse = false;
+            this.trkTrajectoryTarget.Size = new System.Drawing.Size(127, 15);
+            this.trkTrajectoryTarget.TabIndex = 31;
+            this.trkTrajectoryTarget.Vertical = false;
+            this.trkTrajectoryTarget.ValueChanged += new Composants.TrackBarPlus.ValueChangedDelegate(this.trkTrajectoryTarget_ValueChanged);
+            // 
+            // gphTrajectorySpeed
+            // 
+            this.gphTrajectorySpeed.BackColor = System.Drawing.Color.White;
+            this.gphTrajectorySpeed.BorderColor = System.Drawing.Color.LightGray;
+            this.gphTrajectorySpeed.BorderVisible = false;
+            this.gphTrajectorySpeed.GraphScale = Composants.GraphPanel.ScaleType.DynamicPerCurve;
+            this.gphTrajectorySpeed.LimitsVisible = true;
+            this.gphTrajectorySpeed.Location = new System.Drawing.Point(158, 12);
+            this.gphTrajectorySpeed.MaxLimit = 1D;
+            this.gphTrajectorySpeed.MinLimit = 0D;
+            this.gphTrajectorySpeed.Name = "gphTrajectorySpeed";
+            this.gphTrajectorySpeed.NamesAlignment = System.Drawing.ContentAlignment.MiddleLeft;
+            this.gphTrajectorySpeed.NamesVisible = true;
+            this.gphTrajectorySpeed.Size = new System.Drawing.Size(131, 69);
+            this.gphTrajectorySpeed.TabIndex = 5;
+            // 
+            // gphTrajectoryPosition
+            // 
+            this.gphTrajectoryPosition.BackColor = System.Drawing.Color.White;
+            this.gphTrajectoryPosition.BorderColor = System.Drawing.Color.LightGray;
+            this.gphTrajectoryPosition.BorderVisible = false;
+            this.gphTrajectoryPosition.GraphScale = Composants.GraphPanel.ScaleType.DynamicPerCurve;
+            this.gphTrajectoryPosition.LimitsVisible = true;
+            this.gphTrajectoryPosition.Location = new System.Drawing.Point(158, 82);
+            this.gphTrajectoryPosition.MaxLimit = 1D;
+            this.gphTrajectoryPosition.MinLimit = 0D;
+            this.gphTrajectoryPosition.Name = "gphTrajectoryPosition";
+            this.gphTrajectoryPosition.NamesAlignment = System.Drawing.ContentAlignment.MiddleLeft;
+            this.gphTrajectoryPosition.NamesVisible = true;
+            this.gphTrajectoryPosition.Size = new System.Drawing.Size(131, 69);
+            this.gphTrajectoryPosition.TabIndex = 29;
+            // 
+            // btnTrajectoryGo
+            // 
+            this.btnTrajectoryGo.Image = global::GoBot.Properties.Resources.Play16;
+            this.btnTrajectoryGo.Location = new System.Drawing.Point(56, 145);
+            this.btnTrajectoryGo.Name = "btnTrajectoryGo";
+            this.btnTrajectoryGo.Size = new System.Drawing.Size(47, 23);
+            this.btnTrajectoryGo.TabIndex = 21;
+            this.btnTrajectoryGo.Text = "Go";
+            this.btnTrajectoryGo.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
+            this.btnTrajectoryGo.UseVisualStyleBackColor = true;
+            this.btnTrajectoryGo.Click += new System.EventHandler(this.btnGo_Click);
             // 
             // numPositionMin
             // 
@@ -348,14 +505,18 @@
             this.grpControl.TabStop = false;
             this.grpControl.Text = "Contrôle";
             // 
-            // lblAutoScale
+            // btnReadValue
             // 
-            this.lblAutoScale.AutoSize = true;
-            this.lblAutoScale.Location = new System.Drawing.Point(187, 0);
-            this.lblAutoScale.Name = "lblAutoScale";
-            this.lblAutoScale.Size = new System.Drawing.Size(61, 13);
-            this.lblAutoScale.TabIndex = 6;
-            this.lblAutoScale.Text = "Echelle fixe";
+            this.btnReadValue.Image = global::GoBot.Properties.Resources.Refresh16;
+            this.btnReadValue.Location = new System.Drawing.Point(169, 98);
+            this.btnReadValue.Name = "btnReadValue";
+            this.btnReadValue.Size = new System.Drawing.Size(115, 24);
+            this.btnReadValue.TabIndex = 39;
+            this.btnReadValue.Text = "Lire les valeurs";
+            this.btnReadValue.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.btnReadValue.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
+            this.btnReadValue.UseVisualStyleBackColor = true;
+            this.btnReadValue.Click += new System.EventHandler(this.btnReadValue_Click);
             // 
             // trkPosition
             // 
@@ -373,133 +534,6 @@
             this.trkPosition.TabIndex = 4;
             this.trkPosition.Vertical = false;
             this.trkPosition.TickValueChanged += new Composants.TrackBarPlus.ValueChangedDelegate(this.trackBarPosition_TickValueChanged);
-            // 
-            // trkTrajectoryAccel
-            // 
-            this.trkTrajectoryAccel.BackColor = System.Drawing.Color.Transparent;
-            this.trkTrajectoryAccel.DecimalPlaces = 0;
-            this.trkTrajectoryAccel.IntervalTimer = ((uint)(1u));
-            this.trkTrajectoryAccel.Location = new System.Drawing.Point(20, 120);
-            this.trkTrajectoryAccel.Max = 10000D;
-            this.trkTrajectoryAccel.MaximumSize = new System.Drawing.Size(3000, 15);
-            this.trkTrajectoryAccel.Min = 0D;
-            this.trkTrajectoryAccel.MinimumSize = new System.Drawing.Size(30, 15);
-            this.trkTrajectoryAccel.Name = "trkTrajectoryAccel";
-            this.trkTrajectoryAccel.Reverse = false;
-            this.trkTrajectoryAccel.Size = new System.Drawing.Size(127, 15);
-            this.trkTrajectoryAccel.TabIndex = 36;
-            this.trkTrajectoryAccel.Vertical = false;
-            this.trkTrajectoryAccel.ValueChanged += new Composants.TrackBarPlus.ValueChangedDelegate(this.trkTrajectoryAccel_ValueChanged);
-            // 
-            // trkTrajectorySpeed
-            // 
-            this.trkTrajectorySpeed.BackColor = System.Drawing.Color.Transparent;
-            this.trkTrajectorySpeed.DecimalPlaces = 0;
-            this.trkTrajectorySpeed.IntervalTimer = ((uint)(1u));
-            this.trkTrajectorySpeed.Location = new System.Drawing.Point(20, 82);
-            this.trkTrajectorySpeed.Max = 20000D;
-            this.trkTrajectorySpeed.MaximumSize = new System.Drawing.Size(3000, 15);
-            this.trkTrajectorySpeed.Min = 0D;
-            this.trkTrajectorySpeed.MinimumSize = new System.Drawing.Size(30, 15);
-            this.trkTrajectorySpeed.Name = "trkTrajectorySpeed";
-            this.trkTrajectorySpeed.Reverse = false;
-            this.trkTrajectorySpeed.Size = new System.Drawing.Size(127, 15);
-            this.trkTrajectorySpeed.TabIndex = 34;
-            this.trkTrajectorySpeed.Vertical = false;
-            this.trkTrajectorySpeed.ValueChanged += new Composants.TrackBarPlus.ValueChangedDelegate(this.trkTrajectorySpeed_ValueChanged);
-            // 
-            // trkTrajectoryTarget
-            // 
-            this.trkTrajectoryTarget.BackColor = System.Drawing.Color.Transparent;
-            this.trkTrajectoryTarget.DecimalPlaces = 0;
-            this.trkTrajectoryTarget.IntervalTimer = ((uint)(100u));
-            this.trkTrajectoryTarget.Location = new System.Drawing.Point(20, 44);
-            this.trkTrajectoryTarget.Max = 40000D;
-            this.trkTrajectoryTarget.MaximumSize = new System.Drawing.Size(3000, 15);
-            this.trkTrajectoryTarget.Min = 0D;
-            this.trkTrajectoryTarget.MinimumSize = new System.Drawing.Size(30, 15);
-            this.trkTrajectoryTarget.Name = "trkTrajectoryTarget";
-            this.trkTrajectoryTarget.Reverse = false;
-            this.trkTrajectoryTarget.Size = new System.Drawing.Size(127, 15);
-            this.trkTrajectoryTarget.TabIndex = 31;
-            this.trkTrajectoryTarget.Vertical = false;
-            this.trkTrajectoryTarget.ValueChanged += new Composants.TrackBarPlus.ValueChangedDelegate(this.trkTrajectoryTarget_ValueChanged);
-            // 
-            // gphTrajectorySpeed
-            // 
-            this.gphTrajectorySpeed.BackColor = System.Drawing.Color.White;
-            this.gphTrajectorySpeed.BorderColor = System.Drawing.Color.LightGray;
-            this.gphTrajectorySpeed.BorderVisible = false;
-            this.gphTrajectorySpeed.GraphScale = Composants.GraphPanel.ScaleType.DynamicPerCurve;
-            this.gphTrajectorySpeed.LimitsVisible = true;
-            this.gphTrajectorySpeed.Location = new System.Drawing.Point(158, 12);
-            this.gphTrajectorySpeed.MaxLimit = 1D;
-            this.gphTrajectorySpeed.MinLimit = 0D;
-            this.gphTrajectorySpeed.Name = "gphTrajectorySpeed";
-            this.gphTrajectorySpeed.NamesAlignment = System.Drawing.ContentAlignment.MiddleLeft;
-            this.gphTrajectorySpeed.NamesVisible = true;
-            this.gphTrajectorySpeed.Size = new System.Drawing.Size(131, 69);
-            this.gphTrajectorySpeed.TabIndex = 5;
-            // 
-            // gphTrajectoryPosition
-            // 
-            this.gphTrajectoryPosition.BackColor = System.Drawing.Color.White;
-            this.gphTrajectoryPosition.BorderColor = System.Drawing.Color.LightGray;
-            this.gphTrajectoryPosition.BorderVisible = false;
-            this.gphTrajectoryPosition.GraphScale = Composants.GraphPanel.ScaleType.DynamicPerCurve;
-            this.gphTrajectoryPosition.LimitsVisible = true;
-            this.gphTrajectoryPosition.Location = new System.Drawing.Point(158, 82);
-            this.gphTrajectoryPosition.MaxLimit = 1D;
-            this.gphTrajectoryPosition.MinLimit = 0D;
-            this.gphTrajectoryPosition.Name = "gphTrajectoryPosition";
-            this.gphTrajectoryPosition.NamesAlignment = System.Drawing.ContentAlignment.MiddleLeft;
-            this.gphTrajectoryPosition.NamesVisible = true;
-            this.gphTrajectoryPosition.Size = new System.Drawing.Size(131, 69);
-            this.gphTrajectoryPosition.TabIndex = 29;
-            // 
-            // boxAutoScale
-            // 
-            this.boxAutoScale.AutoSize = true;
-            this.boxAutoScale.BackColor = System.Drawing.Color.Transparent;
-            this.boxAutoScale.Location = new System.Drawing.Point(254, 0);
-            this.boxAutoScale.MaximumSize = new System.Drawing.Size(35, 15);
-            this.boxAutoScale.MinimumSize = new System.Drawing.Size(35, 15);
-            this.boxAutoScale.Mirrored = true;
-            this.boxAutoScale.Name = "boxAutoScale";
-            this.boxAutoScale.Size = new System.Drawing.Size(35, 15);
-            this.boxAutoScale.TabIndex = 5;
-            this.boxAutoScale.Value = false;
-            this.boxAutoScale.ValueChanged += new Composants.SwitchButton.ValueChangedDelegate(this.boxAutoScale_ValueChanged);
-            // 
-            // gphMonitoring
-            // 
-            this.gphMonitoring.BackColor = System.Drawing.Color.White;
-            this.gphMonitoring.BorderColor = System.Drawing.Color.LightGray;
-            this.gphMonitoring.BorderVisible = false;
-            this.gphMonitoring.GraphScale = Composants.GraphPanel.ScaleType.DynamicPerCurve;
-            this.gphMonitoring.LimitsVisible = true;
-            this.gphMonitoring.Location = new System.Drawing.Point(8, 21);
-            this.gphMonitoring.MaxLimit = 1D;
-            this.gphMonitoring.MinLimit = 0D;
-            this.gphMonitoring.Name = "gphMonitoring";
-            this.gphMonitoring.NamesAlignment = System.Drawing.ContentAlignment.TopLeft;
-            this.gphMonitoring.NamesVisible = true;
-            this.gphMonitoring.Size = new System.Drawing.Size(281, 115);
-            this.gphMonitoring.TabIndex = 4;
-            // 
-            // boxMonitoring
-            // 
-            this.boxMonitoring.AutoSize = true;
-            this.boxMonitoring.BackColor = System.Drawing.Color.Transparent;
-            this.boxMonitoring.Location = new System.Drawing.Point(68, 0);
-            this.boxMonitoring.MaximumSize = new System.Drawing.Size(35, 15);
-            this.boxMonitoring.MinimumSize = new System.Drawing.Size(35, 15);
-            this.boxMonitoring.Mirrored = true;
-            this.boxMonitoring.Name = "boxMonitoring";
-            this.boxMonitoring.Size = new System.Drawing.Size(35, 15);
-            this.boxMonitoring.TabIndex = 0;
-            this.boxMonitoring.Value = false;
-            this.boxMonitoring.ValueChanged += new Composants.SwitchButton.ValueChangedDelegate(this.boxTorque_ValueChanged);
             // 
             // lblIDTxt
             // 
@@ -522,39 +556,6 @@
             this.toolTip.SetToolTip(this.picWarning, "Le servomoteur demandé est introuvable...");
             this.picWarning.Visible = false;
             // 
-            // btnReadValue
-            // 
-            this.btnReadValue.Image = global::GoBot.Properties.Resources.Refresh16;
-            this.btnReadValue.Location = new System.Drawing.Point(169, 98);
-            this.btnReadValue.Name = "btnReadValue";
-            this.btnReadValue.Size = new System.Drawing.Size(115, 24);
-            this.btnReadValue.TabIndex = 39;
-            this.btnReadValue.Text = "Lire les valeurs";
-            this.btnReadValue.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.btnReadValue.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
-            this.btnReadValue.UseVisualStyleBackColor = true;
-            this.btnReadValue.Click += new System.EventHandler(this.btnReadValue_Click);
-            // 
-            // picArrow
-            // 
-            this.picArrow.Location = new System.Drawing.Point(158, 153);
-            this.picArrow.Name = "picArrow";
-            this.picArrow.Size = new System.Drawing.Size(131, 15);
-            this.picArrow.TabIndex = 41;
-            this.picArrow.TabStop = false;
-            // 
-            // btnTrajectoryGo
-            // 
-            this.btnTrajectoryGo.Image = global::GoBot.Properties.Resources.Play16;
-            this.btnTrajectoryGo.Location = new System.Drawing.Point(56, 145);
-            this.btnTrajectoryGo.Name = "btnTrajectoryGo";
-            this.btnTrajectoryGo.Size = new System.Drawing.Size(47, 23);
-            this.btnTrajectoryGo.TabIndex = 21;
-            this.btnTrajectoryGo.Text = "Go";
-            this.btnTrajectoryGo.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
-            this.btnTrajectoryGo.UseVisualStyleBackColor = true;
-            this.btnTrajectoryGo.Click += new System.EventHandler(this.btnGo_Click);
-            // 
             // PanelServoCan
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -572,6 +573,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.numID)).EndInit();
             this.grpTrajectory.ResumeLayout(false);
             this.grpTrajectory.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.picArrow)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.numPositionMin)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.numPositionMax)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.numSpeedMax)).EndInit();
@@ -581,7 +583,6 @@
             this.grpControl.ResumeLayout(false);
             this.grpControl.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.picWarning)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.picArrow)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 

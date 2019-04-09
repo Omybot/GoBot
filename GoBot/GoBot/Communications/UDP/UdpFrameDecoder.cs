@@ -181,6 +181,14 @@ namespace GoBot.Communications.UDP
                         output = ReplaceParam(output, parameters[1].ToString());
                     }
                     break;
+                case UdpFrameFunction.MoteurStop:
+                    output = "Pilote moteur {0} Stop {1}";
+                    if (parameters != null)
+                    {
+                        output = ReplaceParam(output, NameFinder.GetName((MoteurID)parameters[0]));
+                        output = ReplaceParam(output, ((StopMode)parameters[1]).ToString());
+                    }
+                    break;
                 case UdpFrameFunction.CommandeServo:
                     output = "Commande servomoteur";
                     // TODO
