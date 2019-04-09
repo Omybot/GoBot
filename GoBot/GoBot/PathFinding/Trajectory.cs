@@ -72,22 +72,27 @@ namespace GoBot.PathFinding
                 Position p = new Position(angle, c1);
                 Direction traj = Maths.GetDirection(p, c2);
 
+                // Désactivation 2019 de la possibilité de faire des marches arrière pour conserver le LDIAR d'évitement dans le sens de déplacement du robot
+                bool canReverse = false;
+
                 // Teste si il est plus rapide (moins d'angle à tourner) de se déplacer en marche arrière avant la fin
                 bool inverse = false;
 
-                if (i < _points.Count - 2)
+                if (canReverse)
                 {
-                    inverse = Math.Abs(traj.angle) > 90;
+                    if (i < _points.Count - 2)
+                    {
+                        inverse = Math.Abs(traj.angle) > 90;
+                    }
+                    else
+                    {
+                        // On cherche à minimiser le tout dernier angle quand on fait l'avant dernier
+                        AnglePosition finalAngle = angle - traj.angle;
+                        inverse = Math.Abs(finalAngle - _endAngle) > 90;
+                    }
+                    if (inverse)
+                        traj.angle = new AngleDelta(traj.angle - 180);
                 }
-                else
-                {
-                    // On cherche à minimiser le tout dernier angle quand on fait l'avant dernier
-                    AnglePosition finalAngle = angle - traj.angle;
-                    inverse = Math.Abs(finalAngle - _endAngle) > 90;
-                }
-
-                if (inverse)
-                    traj.angle = new AngleDelta(traj.angle - 180);
 
                 traj.angle.Modulo();
 
@@ -152,12 +157,12 @@ namespace GoBot.PathFinding
 
         public void RemovePoint(int index)
         {
-            if(index == 0)
+            if (index == 0)
             {
                 _points.RemoveAt(0);
                 _lines.RemoveAt(0);
             }
-            else if(index == _points.Count -1)
+            else if (index == _points.Count - 1)
             {
                 _points.RemoveAt(_points.Count - 1);
                 _points.RemoveAt(_lines.Count - 1);
