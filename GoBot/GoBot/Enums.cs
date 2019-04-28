@@ -26,9 +26,31 @@ namespace GoBot
 
     public enum ServomoteurID
     {
-        Elevation = 204,
+        GoldElevationLeft = 201,
+        GoldClampLeft = 202,
+        GoldElevationRight = 203,
+        GoldClampRight = 204,
+        
+        Elevation = 205,
         ClampLeft = 206,
-        ClampRight = 205,
+        ClampRight = 207,
+        Unused08 = 208,
+
+        FingerFront = 209,
+        FingerBack = 210,
+        HoldDropLeft = 211,
+        HoldDropRight = 212,
+
+        LauncherLeft = 213,
+        CalibrationLeft = 214,
+        Unused15 = 215,
+        Unused16 = 216,
+
+        LauncherRight = 217,
+        CalibrationRight = 218,
+        Unused19 = 219,
+        Unused20 = 220,
+
 
         Tous = 254
     }
