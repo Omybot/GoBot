@@ -194,6 +194,26 @@ namespace GoBot.Communications.UDP
             return new Frame(tab);
         }
 
+        static public Frame MoteurResetPosition(MoteurID moteur)
+        {
+            byte[] tab = new byte[3];
+            tab[0] = (byte)Board.RecIO;
+            tab[1] = (byte)UdpFrameFunction.MoteurResetPosition;
+            tab[2] = (byte)moteur;
+
+            return new Frame(tab);
+        }
+
+        static public Frame MoteurOrigin(MoteurID moteur)
+        {
+            byte[] tab = new byte[3];
+            tab[0] = (byte)Board.RecIO;
+            tab[1] = (byte)UdpFrameFunction.MoteurOrigin;
+            tab[2] = (byte)moteur;
+
+            return new Frame(tab);
+        }
+
         static public Frame ChangementBaudrate(ServoBaudrate baudrate)
         {
             byte[] tab = new byte[3];

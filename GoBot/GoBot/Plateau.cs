@@ -70,9 +70,9 @@ namespace GoBot
                     {
                         notreCouleur = value;
                         if (Plateau.NotreCouleur == Plateau.CouleurGaucheJaune)
-                            Devices.Devices.RecGoBot.SetLedColor(Color.Green);
+                            Devices.Devices.RecGoBot.SetLedColor(Color.Yellow);
                         else
-                            Devices.Devices.RecGoBot.SetLedColor(Color.Orange);
+                            Devices.Devices.RecGoBot.SetLedColor(Color.DarkViolet);
 
                         NotreCouleurChange?.Invoke(null, null);
                         Robots.GrosRobot.MajGraphFranchissable(_obstacles.FromAllExceptBoard);

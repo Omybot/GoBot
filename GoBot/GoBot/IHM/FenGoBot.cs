@@ -268,15 +268,5 @@ namespace GoBot
                 
             }
         }
-
-        private void btnMotorStop_Click_1(object sender, EventArgs e)
-        {
-            Connections.ConnectionIO.SendMessage(UdpFrameFactory.MoteurStop(MoteurID.AvailableOnRecIO0, StopMode.Freely));
-        }
-
-        private void button1_Click_2(object sender, EventArgs e)
-        {
-            Connections.ConnectionIO.SendMessage(UdpFrameFactory.MoteurStop(MoteurID.AvailableOnRecIO0, StopMode.Abrupt));
-        }
     }
 }

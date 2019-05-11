@@ -19,6 +19,7 @@ namespace GoBot
         Dictionary<CapteurOnOffID, Semaphore> SemaphoresCapteurs = new Dictionary<CapteurOnOffID, Semaphore>();
         Dictionary<CapteurCouleurID, Semaphore> SemaphoresCouleur = new Dictionary<CapteurCouleurID, Semaphore>();
         Dictionary<UdpFrameFunction, Semaphore> SemaphoresTrame = new Dictionary<UdpFrameFunction, Semaphore>();
+        Dictionary<MoteurID, Semaphore> SemaphoresMoteur = new Dictionary<MoteurID, Semaphore>();
 
         private DateTime DateRefreshPos { get; set; }
         private bool positionRecue = false;
@@ -39,6 +40,9 @@ namespace GoBot
             foreach (UdpFrameFunction fonction in Enum.GetValues(typeof(UdpFrameFunction)))
                 SemaphoresTrame.Add(fonction, new Semaphore(0, int.MaxValue));
 
+            foreach (MoteurID moteur in Enum.GetValues(typeof(MoteurID)))
+                SemaphoresMoteur.Add(moteur, new Semaphore(0, int.MaxValue));
+
             foreach (CapteurOnOffID fonction in Enum.GetValues(typeof(CapteurOnOffID)))
             {
                 SemaphoresCapteurs.Add(fonction, new Semaphore(0, int.MaxValue));
@@ -49,6 +53,7 @@ namespace GoBot
             {
                 ActionneurActive.Add(fonction, false);
             }
+
 
             foreach (CapteurCouleurID fonction in Enum.GetValues(typeof(CapteurCouleurID)))
             {
@@ -235,6 +240,10 @@ namespace GoBot
 
             switch ((UdpFrameFunction)trameRecue[1])
             {
+                case UdpFrameFunction.MoteurFin:
+                case UdpFrameFunction.MoteurBlocage:    // Idem
+                    SemaphoresMoteur[(MoteurID)trameRecue[2]]?.Release();
+                    break;
                 case UdpFrameFunction.Blocage:
                     ThreadManager.CreateThread(ReactivationAsserv).StartThread();
                     break;
@@ -703,12 +712,37 @@ namespace GoBot
             Historique.AjouterAction(new ActionOnOff(this, actionneur, on));
         }
 
-        public override void MoteurPosition(MoteurID moteur, int position)
+        public override void MoteurPosition(MoteurID moteur, int position, bool waitEnd)
         {
             base.MoteurPosition(moteur, position);
 
+            SemaphoresMoteur[moteur] = new Semaphore(0, int.MaxValue);
+
             Frame trame = UdpFrameFactory.MoteurPosition(moteur, position);
-            Connexion.SendMessage(trame);
+            Connections.ConnectionIO.SendMessage(trame);
+
+            if (waitEnd)
+                SemaphoresMoteur[moteur].WaitOne(5000);
+        }
+
+        public override void MoteurWait(MoteurID moteur)
+        {
+            base.MoteurWait(moteur);
+
+            SemaphoresMoteur[moteur].WaitOne(5000);
+        }
+
+        public override void MoteurOrigin(MoteurID moteur, bool waitEnd)
+        {
+            base.MoteurOrigin(moteur);
+
+            SemaphoresMoteur[moteur] = new Semaphore(0, int.MaxValue);
+
+            Frame trame = UdpFrameFactory.MoteurOrigin(moteur);
+            Connections.ConnectionIO.SendMessage(trame);
+
+            if (waitEnd)
+                SemaphoresMoteur[moteur].WaitOne(5000);
         }
 
         public override void MoteurVitesse(MoteurID moteur, SensGD sens, int vitesse)

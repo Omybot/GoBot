@@ -18,9 +18,6 @@ namespace GoBot
         public ServoCalibrationLeft ServoCalibrationLeft { get; set; } = new ServoCalibrationLeft();
         public ServoCalibrationRight ServoCalibrationRight { get; set; } = new ServoCalibrationRight();
 
-        public ServoHoldDropLeft ServoHoldDropLeft { get; set; } = new ServoHoldDropLeft();
-        public ServoHoldDropRight ServoHoldDropRight { get; set; } = new ServoHoldDropRight();
-
         public ServoLauncherLeft ServoLauncherLeft { get; set; } = new ServoLauncherLeft();
         public ServoLauncherRight ServoLauncherRight { get; set; } = new ServoLauncherRight();
 
@@ -28,6 +25,8 @@ namespace GoBot
         public ServoFingerBack ServoFingerBack { get; set; } = new ServoFingerBack();
 
         public MotorGulp MotorGulp { get; set; } = new MotorGulp();
+        public MotorFingerBack MotorFingerBack { get; set; } = new MotorFingerBack();
+        public MotorFingerFront MotorFingerFront { get; set; } = new MotorFingerFront();
     }
 }
 
@@ -47,6 +46,7 @@ namespace GoBot.Actionneurs
     {
         public int PositionOpen { get; set; }
         public int PositionClose { get; set; }
+        public int PositionFree { get; set; }
     }
 
     public class ServoClampLeft : ServoClamp
@@ -92,16 +92,6 @@ namespace GoBot.Actionneurs
         public int PositionHold { get; set; }
     }
 
-    public class ServoHoldDropLeft : ServoHoldDrop
-    {
-        public override ServomoteurID ID => ServomoteurID.HoldDropLeft;
-    }
-
-    public class ServoHoldDropRight : ServoHoldDrop
-    {
-        public override ServomoteurID ID => ServomoteurID.HoldDropRight;
-    }
-
     public abstract class ServoCalibration : PositionableServo
     {
         public int PositionStored { get; set; }
@@ -138,11 +128,16 @@ namespace GoBot.Actionneurs
     public class ServoFingerFront : PositionableServo
     {
         public override ServomoteurID ID => ServomoteurID.FingerFront;
+        public int PositionOpen { get; set; }
+        public int PositionClose { get; set; }
     }
 
     public class ServoFingerBack : PositionableServo
     {
         public override ServomoteurID ID => ServomoteurID.FingerBack;
+        public int PositionForward { get; set; }
+        public int PositionBackward { get; set; }
+        public int PositionVertical { get; set; }
     }
 
 
@@ -161,4 +156,16 @@ namespace GoBot.Actionneurs
     }
 
     #endregion
+
+    public class MotorFingerFront : PositionableMotorPosition
+    {
+        public override MoteurID ID => MoteurID.FingerFront;
+        public int PositionPrepare { get; set; }
+        public int PositionStore { get; set; }
+    }
+
+    public class MotorFingerBack : PositionableMotorPosition
+    {
+        public override MoteurID ID => MoteurID.FingerBack;
+    }
 }

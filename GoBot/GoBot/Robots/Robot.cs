@@ -208,9 +208,19 @@ namespace GoBot
 
         public abstract void ServoVitesse(ServomoteurID servo, int vitesse);
 
-        public virtual void MoteurPosition(MoteurID moteur, int position)
+        public virtual void MoteurPosition(MoteurID moteur, int position, bool waitEnd = false)
         {
             Historique.AjouterAction(new ActionMoteur(this, position, moteur));
+        }
+
+        public virtual void MoteurOrigin(MoteurID moteur, bool waitEnd = false)
+        {
+
+        }
+
+        public virtual void MoteurWait(MoteurID moteur)
+        {
+
         }
 
         public virtual void MoteurVitesse(MoteurID moteur, SensGD sens, int vitesse)

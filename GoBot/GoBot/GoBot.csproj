@@ -81,6 +81,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Actionneurs\Actionneur.cs" />
+    <Compile Include="Actionneurs\AtomHandler.cs" />
+    <Compile Include="Actionneurs\AtomStacker.cs" />
     <Compile Include="Actionneurs\Positionables.cs" />
     <Compile Include="Actionneurs\RobotPositionables.cs" />
     <Compile Include="Communications\CAN\CanConnection.cs" />

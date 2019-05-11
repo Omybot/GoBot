@@ -95,7 +95,7 @@ namespace GoBot.Communications.UDP
         public override bool SendMessage(Frame frame)
         {
             bool ok = false;
-
+            
             //if (Connections.EnableConnection[frame.Board])
             {
                 try

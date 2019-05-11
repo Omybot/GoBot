@@ -182,11 +182,39 @@ namespace GoBot.Communications.UDP
                     }
                     break;
                 case UdpFrameFunction.MoteurStop:
-                    output = "Pilote moteur {0} Stop {1}";
+                    output = "Moteur {0} stoppé {1}";
                     if (parameters != null)
                     {
                         output = ReplaceParam(output, NameFinder.GetName((MoteurID)parameters[0]));
                         output = ReplaceParam(output, ((StopMode)parameters[1]).ToString());
+                    }
+                    break;
+                case UdpFrameFunction.MoteurOrigin:
+                    output = "Envoi du moteur {0} à l'origine";
+                    if (parameters != null)
+                    {
+                        output = ReplaceParam(output, NameFinder.GetName((MoteurID)parameters[0]));
+                    }
+                    break;
+                case UdpFrameFunction.MoteurResetPosition:
+                    output = "Moteur {0} réintialisé à 0";
+                    if (parameters != null)
+                    {
+                        output = ReplaceParam(output, NameFinder.GetName((MoteurID)parameters[0]));
+                    }
+                    break;
+                case UdpFrameFunction.MoteurFin:
+                    output = "Moteur {0} arrivé à destination";
+                    if (parameters != null)
+                    {
+                        output = ReplaceParam(output, NameFinder.GetName((MoteurID)parameters[0]));
+                    }
+                    break;
+                case UdpFrameFunction.MoteurBlocage:
+                    output = "Moteur {0} bloqué";
+                    if (parameters != null)
+                    {
+                        output = ReplaceParam(output, NameFinder.GetName((MoteurID)parameters[0]));
                     }
                     break;
                 case UdpFrameFunction.CommandeServo:

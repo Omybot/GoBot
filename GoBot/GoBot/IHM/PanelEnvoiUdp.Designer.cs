@@ -62,6 +62,7 @@
             this.switchBoutonMove = new Composants.SwitchButton();
             this.switchBoutonIO = new Composants.SwitchButton();
             this._pnlConnections = new System.Windows.Forms.FlowLayoutPanel();
+            this.boxCan = new System.Windows.Forms.CheckBox();
             this.groupBox3.SuspendLayout();
             this.groupBox6.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numIntervalleTest)).BeginInit();
@@ -92,6 +93,7 @@
             // 
             // groupBox3
             // 
+            this.groupBox3.Controls.Add(this.boxCan);
             this.groupBox3.Controls.Add(this.boxGB);
             this.groupBox3.Controls.Add(this.groupBox6);
             this.groupBox3.Controls.Add(this.btnDebug9);
@@ -395,12 +397,16 @@
             // 
             // switchBoutonGB
             // 
+            this.switchBoutonGB.AutoSize = true;
             this.switchBoutonGB.BackColor = System.Drawing.Color.Transparent;
             this.switchBoutonGB.Location = new System.Drawing.Point(119, 75);
+            this.switchBoutonGB.MaximumSize = new System.Drawing.Size(35, 15);
+            this.switchBoutonGB.MinimumSize = new System.Drawing.Size(35, 15);
+            this.switchBoutonGB.Mirrored = true;
             this.switchBoutonGB.Name = "switchBoutonGB";
             this.switchBoutonGB.Size = new System.Drawing.Size(35, 15);
-            this.switchBoutonGB.Mirrored = true;
             this.switchBoutonGB.TabIndex = 23;
+            this.switchBoutonGB.Value = false;
             this.switchBoutonGB.ValueChanged += new Composants.SwitchButton.ValueChangedDelegate(this.switchBoutonConnexion_ValueChanged);
             // 
             // label7
@@ -414,22 +420,30 @@
             // 
             // switchBoutonMove
             // 
+            this.switchBoutonMove.AutoSize = true;
             this.switchBoutonMove.BackColor = System.Drawing.Color.Transparent;
             this.switchBoutonMove.Location = new System.Drawing.Point(119, 33);
+            this.switchBoutonMove.MaximumSize = new System.Drawing.Size(35, 15);
+            this.switchBoutonMove.MinimumSize = new System.Drawing.Size(35, 15);
+            this.switchBoutonMove.Mirrored = true;
             this.switchBoutonMove.Name = "switchBoutonMove";
             this.switchBoutonMove.Size = new System.Drawing.Size(35, 15);
-            this.switchBoutonMove.Mirrored = true;
             this.switchBoutonMove.TabIndex = 16;
+            this.switchBoutonMove.Value = false;
             this.switchBoutonMove.ValueChanged += new Composants.SwitchButton.ValueChangedDelegate(this.switchBoutonConnexion_ValueChanged);
             // 
             // switchBoutonIO
             // 
+            this.switchBoutonIO.AutoSize = true;
             this.switchBoutonIO.BackColor = System.Drawing.Color.Transparent;
             this.switchBoutonIO.Location = new System.Drawing.Point(119, 54);
+            this.switchBoutonIO.MaximumSize = new System.Drawing.Size(35, 15);
+            this.switchBoutonIO.MinimumSize = new System.Drawing.Size(35, 15);
+            this.switchBoutonIO.Mirrored = true;
             this.switchBoutonIO.Name = "switchBoutonIO";
             this.switchBoutonIO.Size = new System.Drawing.Size(35, 15);
-            this.switchBoutonIO.Mirrored = true;
             this.switchBoutonIO.TabIndex = 17;
+            this.switchBoutonIO.Value = false;
             this.switchBoutonIO.ValueChanged += new Composants.SwitchButton.ValueChangedDelegate(this.switchBoutonConnexion_ValueChanged);
             // 
             // _pnlConnections
@@ -440,6 +454,16 @@
             this._pnlConnections.Name = "_pnlConnections";
             this._pnlConnections.Size = new System.Drawing.Size(212, 596);
             this._pnlConnections.TabIndex = 30;
+            // 
+            // boxCan
+            // 
+            this.boxCan.AutoSize = true;
+            this.boxCan.Location = new System.Drawing.Point(249, 26);
+            this.boxCan.Name = "boxCan";
+            this.boxCan.Size = new System.Drawing.Size(65, 17);
+            this.boxCan.TabIndex = 28;
+            this.boxCan.Text = "RecCan";
+            this.boxCan.UseVisualStyleBackColor = true;
             // 
             // PanelEnvoiUdp
             // 
@@ -502,5 +526,6 @@
         private System.Windows.Forms.Label label7;
         private System.Windows.Forms.CheckBox boxGB;
         private System.Windows.Forms.FlowLayoutPanel _pnlConnections;
+        private System.Windows.Forms.CheckBox boxCan;
     }
 }

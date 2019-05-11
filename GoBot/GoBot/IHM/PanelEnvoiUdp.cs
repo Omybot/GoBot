@@ -39,6 +39,8 @@ namespace GoBot.IHM
                 Connections.ConnectionIO.SendMessage(trame);
             if (boxGB.Checked)
                 Connections.ConnectionGB.SendMessage(trame);
+            if (boxCan.Checked)
+                Connections.ConnectionCan.SendMessage(trame);
         }
 
         private void PanelEnvoiUdp_Load(object sender, EventArgs e)

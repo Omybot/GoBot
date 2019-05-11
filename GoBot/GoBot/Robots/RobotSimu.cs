@@ -489,7 +489,7 @@ namespace GoBot
         
         System.Timers.Timer timerPositions;
 
-        public override void MoteurPosition(MoteurID moteur, int vitesse)
+        public override void MoteurPosition(MoteurID moteur, int vitesse, bool waitEnd)
         {
             base.MoteurPosition(moteur, vitesse);
         }

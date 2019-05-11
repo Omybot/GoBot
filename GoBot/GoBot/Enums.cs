@@ -26,32 +26,31 @@ namespace GoBot
 
     public enum ServomoteurID
     {
-        GoldElevationLeft = 201,
-        GoldClampLeft = 202,
-        GoldElevationRight = 203,
-        GoldClampRight = 204,
+        ExitLauncherRight = 200,
+        LauncherRight = 201,
+        CalibrationRight = 202,
+        Unused03 = 203,
+
+        FingerFront = 204,
+        Unused05 = 205,
+        Unused06 = 206,
+        FingerBack = 207,
+
+        ExitLauncherLeft = 208,
+        LauncherLeft = 209,
+        CalibrationLeft = 210,
+        Unused11 = 211,
+
+        GoldClampRight = 212,
+        GoldElevationRight = 213,
+        GoldClampLeft = 214,
+        GoldElevationLeft = 215,
         
-        Elevation = 205,
-        ClampLeft = 206,
-        ClampRight = 207,
-        Unused08 = 208,
-
-        FingerFront = 209,
-        FingerBack = 210,
-        HoldDropLeft = 211,
-        HoldDropRight = 212,
-
-        LauncherLeft = 213,
-        CalibrationLeft = 214,
-        Unused15 = 215,
-        Unused16 = 216,
-
-        LauncherRight = 217,
-        CalibrationRight = 218,
-        Unused19 = 219,
-        Unused20 = 220,
-
-
+        ClampRight = 216,
+        Unused78 = 217,
+        Elevation = 218,
+        ClampLeft = 219,
+        
         Tous = 254
     }
 
@@ -63,8 +62,8 @@ namespace GoBot
 
     public enum MoteurID
     {
-        AvailableOnRecIO0 = 0, // RecIO
-        AvailableOnRecIO1 = 1, // RecIO
+        FingerFront = 0, // RecIO
+        FingerBack = 1, // RecIO
         AvailableOnRecIO2 = 2, // RecIO
         AvailableOnRecIO3 = 3, // RecIO
 

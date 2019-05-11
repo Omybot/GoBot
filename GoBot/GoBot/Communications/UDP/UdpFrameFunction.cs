@@ -21,12 +21,16 @@
         DemandePositionCodeur = 0x21,
         RetourPositionCodeur = 0x22,
 
-        PilotageOnOff = 0x65,
         Led = 0x62,
+        MoteurOrigin = 0x63,
+        MoteurResetPosition = 0x64,
+        PilotageOnOff = 0x65,
         MoteurPosition = 0x66,
         MoteurVitesse = 0x67,
         MoteurAccel = 0x68,
         MoteurStop = 0x69,
+        MoteurFin = 0x70,
+        MoteurBlocage = 0x71,
 
         CommandeServo = 0x60,
 
