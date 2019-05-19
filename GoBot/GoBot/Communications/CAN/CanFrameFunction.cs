@@ -43,6 +43,8 @@ namespace GoBot.Communications.CAN
         CanServo1 = 0x01,
         CanServo2 = 0x02,
         CanServo3 = 0x03,
-        CanDisplay = 0x04
+        CanServo4 = 0x04,
+        CanServo5 = 0x05,
+        CanDisplay = 0x10
     }
 }

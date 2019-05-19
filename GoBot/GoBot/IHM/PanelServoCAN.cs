@@ -27,6 +27,11 @@ namespace GoBot.IHM
             }
         }
 
+        public void SetServo(ServomoteurID servo)
+        {
+            numID.Value = (int)(servo - 200);
+        }
+
         private void DrawTimeArrow()
         {
             Bitmap bmp = new Bitmap(picArrow.Width, picArrow.Height);

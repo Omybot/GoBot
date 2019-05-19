@@ -106,9 +106,6 @@ namespace GoBot
                 Plateau.NotreCouleur = Plateau.CouleurGaucheJaune;
 
                 Connections.ConnectionIO.SendMessage(UdpFrameFactory.DemandeCouleurEquipe());
-                
-                panelBalise.Balise = Plateau.Balise;
-                panelBaliseDiagnostic.Balise = Plateau.Balise;
             }
 
             SplashScreen.SetMessage("Youhou !", Color.Green);
@@ -267,6 +264,11 @@ namespace GoBot
                 Config.CurrentConfig.ServoClampRight.SendPosition(Config.CurrentConfig.ServoClampRight.PositionOpen);
                 
             }
+        }
+
+        private void panelCanArchi_ServoClick(ServomoteurID servoNo)
+        {
+            panelServoCan.SetServo(servoNo);
         }
     }
 }

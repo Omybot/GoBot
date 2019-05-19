@@ -47,7 +47,7 @@ namespace GoBot
         GoldElevationLeft = 215,
         
         ClampRight = 216,
-        Unused78 = 217,
+        Unused17 = 217,
         Elevation = 218,
         ClampLeft = 219,
         

@@ -105,11 +105,23 @@
     <Compile Include="GameBoard\Obstacles.cs" />
     <Compile Include="GameElements\LayingAtom.cs" />
     <Compile Include="GameElements\StandingAtom.cs" />
+    <Compile Include="IHM\PanelBoardCanServos.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="IHM\PanelBoardCanServos.Designer.cs">
+      <DependentUpon>PanelBoardCanServos.cs</DependentUpon>
+    </Compile>
     <Compile Include="IHM\PanelBoardNumeric.cs">
       <SubType>UserControl</SubType>
     </Compile>
     <Compile Include="IHM\PanelBoardNumeric.Designer.cs">
       <DependentUpon>PanelBoardNumeric.cs</DependentUpon>
+    </Compile>
+    <Compile Include="IHM\PanelCanArchi.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="IHM\PanelCanArchi.Designer.cs">
+      <DependentUpon>PanelCanArchi.cs</DependentUpon>
     </Compile>
     <Compile Include="IHM\PanelLogCan.cs">
       <SubType>UserControl</SubType>
@@ -463,8 +475,14 @@
     <EmbeddedResource Include="IHM\PanelActionneursOnOff.resx">
       <DependentUpon>PanelActionneursOnOff.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="IHM\PanelBoardCanServos.resx">
+      <DependentUpon>PanelBoardCanServos.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="IHM\PanelBoardNumeric.resx">
       <DependentUpon>PanelBoardNumeric.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="IHM\PanelCanArchi.resx">
+      <DependentUpon>PanelCanArchi.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="IHM\PanelLogCan.resx">
       <DependentUpon>PanelLogCan.cs</DependentUpon>
