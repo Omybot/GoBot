@@ -119,6 +119,12 @@ namespace GoBot.Actionneurs
             FingerBackStop();
             FingerFrontStop();
 
+            MoveFingerFront(150);
+            MoveFingerBack(100);
+
+            FingerBackStop();
+            FingerFrontStop();
+
             Thread.Sleep(500);
         }
 
@@ -137,7 +143,7 @@ namespace GoBot.Actionneurs
             })).StartLoop(new TimeSpan(), 3);
         }
 
-        public void MoveFingerFront(int position, bool wait)
+        public void MoveFingerFront(int position, bool wait = true)
         {
             position = Math.Max(Config.CurrentConfig.MotorFingerFront.Minimum, Math.Min(position, Config.CurrentConfig.MotorFingerFront.Maximum));
 
@@ -146,7 +152,7 @@ namespace GoBot.Actionneurs
             Robots.GrosRobot.MoteurPosition(MoteurID.FingerBack, position, wait);
         }
 
-        public void MoveFingerBack(int position, bool wait)
+        public void MoveFingerBack(int position, bool wait = true)
         {
             position = Math.Max(Config.CurrentConfig.MotorFingerBack.Minimum, Math.Min(position, Config.CurrentConfig.MotorFingerBack.Maximum));
 

@@ -29,6 +29,12 @@ namespace GoBot.Actionneurs
             MoveClampRight(Config.CurrentConfig.ServoClampRight.PositionFree);
         }
 
+        public void DoFreeTorque()
+        {
+            MoveClampLeft(0);
+            MoveClampRight(0);
+        }
+
         public void DoUp()
         {
             MoveElevation(Config.CurrentConfig.ServoElevation.PositionInside);

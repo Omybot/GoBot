@@ -115,12 +115,27 @@ namespace GoBot.Devices
                 Recallages.RecallageGrosRobot();
             }).StartThread();
         }
+
         private void Button3Click()
         {
+            Actionneur.AtomHandler.DoDown();
+            Actionneur.AtomHandler.DoOpen();
+            Actionneur.AtomHandler.DoSwallow();
+            Thread.Sleep(150);
+            Robots.GrosRobot.Avancer(150);
+            Actionneur.AtomHandler.DoClose();
+            Thread.Sleep(200);
+            Actionneur.AtomHandler.DoStop();
+            Actionneur.AtomHandler.DoUp();
+
+            Robots.GrosRobot.Avancer(1000);
+            Actionneur.AtomHandler.DoFreeTorque();
         }
+
         private void Button4Click()
         {
         }
+
         private void Button5Click()
         {
             Config.CurrentConfig.ServoElevation.SendPosition(Config.CurrentConfig.ServoElevation.PositionInside);
