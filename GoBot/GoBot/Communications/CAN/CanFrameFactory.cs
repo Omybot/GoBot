@@ -228,6 +228,18 @@ namespace GoBot.Communications.CAN
             return new Frame(tab);
         }
 
+        public static Frame BuildDisableOutput(int servoGlobalId)
+        {
+            byte[] tab = new byte[10];
+
+            tab[0] = 0x00;
+            tab[1] = (byte)GlobalIdToCanBoard(servoGlobalId);
+            tab[2] = (byte)CanFrameFunction.DisableOutput;
+            tab[3] = GlobalIdToServoNo(servoGlobalId);
+
+            return new Frame(tab);
+        }
+
         public static Frame BuildSetScore(int score)
         {
             byte[] tab = new byte[10];

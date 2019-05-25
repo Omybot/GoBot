@@ -114,6 +114,11 @@ namespace GoBot.Devices.CAN
             _communication.SendFrame(CanFrameFactory.BuildSetTrajectory(_globalId, position, speed, accel), false);
         }
 
+        public void DisableOutput()
+        {
+            _communication.SendFrame(CanFrameFactory.BuildDisableOutput(_globalId), false);
+        }
+
         public void FrameReceived(Frame frame)
         {
             CanFrameFunction function = CanFrameFactory.ExtractFunction(frame);
