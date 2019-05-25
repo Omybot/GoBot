@@ -81,7 +81,7 @@ namespace GoBot.Communications.CAN
                 _lockWaitResponse = new Semaphore(0, 1);
             }
 
-            Connections.BoardConnection[_board].SendMessage(UdpFrameFactory.EnvoyerCAN(_board, f));
+            Connections.UDPBoardConnection[_board].SendMessage(UdpFrameFactory.EnvoyerCAN(_board, f));
             OnFrameSend(f);
 
             _framesCount = (_framesCount + 1) % 255;
@@ -99,12 +99,12 @@ namespace GoBot.Communications.CAN
 
         public override void StartReception()
         {
-            Connections.BoardConnection[_board].FrameReceived += board_FrameReceived;
+            Connections.UDPBoardConnection[_board].FrameReceived += board_FrameReceived;
         }
 
         public override void Close()
         {
-            Connections.BoardConnection[_board].FrameReceived -= board_FrameReceived;
+            Connections.UDPBoardConnection[_board].FrameReceived -= board_FrameReceived;
         }
     }
 }

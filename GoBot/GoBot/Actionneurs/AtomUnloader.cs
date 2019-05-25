@@ -121,6 +121,17 @@ namespace GoBot.Actionneurs
             Thread.Sleep(500);
             DoCalibrationRightStore();
             Thread.Sleep(500);
+
+            Devices.Devices.CanServos[(int)Config.CurrentConfig.ServoCalibrationLeft.ID].DisableOutput();
+            Devices.Devices.CanServos[(int)Config.CurrentConfig.ServoCalibrationRight.ID].DisableOutput();
+
+            Devices.Devices.CanServos[(int)Config.CurrentConfig.ServoExitLauncherLeft.ID].DisableOutput();
+            Devices.Devices.CanServos[(int)Config.CurrentConfig.ServoExitLauncherRight.ID].DisableOutput();
+
+            Devices.Devices.CanServos[(int)Config.CurrentConfig.ServoLauncherLeft.ID].DisableOutput();
+            Devices.Devices.CanServos[(int)Config.CurrentConfig.ServoLauncherRight.ID].DisableOutput();
+
+            Devices.Devices.CanServos[(int)Config.CurrentConfig.ServoUnloader.ID].DisableOutput();
         }
 
         public void DoLaunchPalet()

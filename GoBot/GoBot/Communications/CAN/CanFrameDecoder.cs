@@ -196,7 +196,7 @@ namespace GoBot.Communications.CAN
                     }
                     break;
                 case CanFrameFunction.DisableOutput:
-                    output = "Disbale servo {ServoID};";
+                    output = "Disable servo {ServoID}";
                     if (parameters != null)
                     {
                         output = ReplaceParam(output, ((ServomoteurID)parameters[0]).ToString());

@@ -67,12 +67,12 @@ namespace GoBot.Actionneurs
             MoveFingerBack(0, false);
         }
 
-        public void FingerFrontStop()
+        public void DoFingerFrontStop()
         {
             Connections.ConnectionIO.SendMessage(UdpFrameFactory.MoteurStop(MoteurID.FingerFront, StopMode.Abrupt));
         }
 
-        public void FingerBackStop()
+        public void DoFingerBackStop()
         {
             Connections.ConnectionIO.SendMessage(UdpFrameFactory.MoteurStop(MoteurID.FingerBack, StopMode.Abrupt));
         }
@@ -108,37 +108,40 @@ namespace GoBot.Actionneurs
             Thread.Sleep(500);
             DoBackClose();
 
-            FingerBackStop();
+            DoFingerBackStop();
             FingerBackOrigin();
             FingerBackResetPosition();
 
-            FingerFrontStop();
+            DoFingerFrontStop();
             FingerFrontOrigin();
             FingerFrontResetPosition();
 
-            FingerBackStop();
-            FingerFrontStop();
+            DoFingerBackStop();
+            DoFingerFrontStop();
 
             MoveFingerFront(150);
             MoveFingerBack(100);
 
-            FingerBackStop();
-            FingerFrontStop();
+            DoFingerBackStop();
+            DoFingerFrontStop();
 
             Thread.Sleep(500);
+
+            Devices.Devices.CanServos[(int)ServomoteurID.FingerBack].DisableOutput();
+            Devices.Devices.CanServos[(int)ServomoteurID.FingerFront].DisableOutput();
         }
 
         public void DoLoop()
         {
             ThreadManager.CreateThread(new ThreadLink.CallBack(link =>
             {
-                FingerFrontStop();
+                DoFingerFrontStop();
                 Robots.GrosRobot.MoteurPosition(MoteurID.FingerFront, Config.CurrentConfig.MotorFingerFront.Minimum, true);
-                FingerFrontStop();
+                DoFingerFrontStop();
                 Robots.GrosRobot.MoteurPosition(MoteurID.FingerFront, Config.CurrentConfig.MotorFingerFront.Maximum, true);
-                FingerBackStop();
+                DoFingerBackStop();
                 Robots.GrosRobot.MoteurPosition(MoteurID.FingerBack, Config.CurrentConfig.MotorFingerBack.Maximum, true);
-                FingerBackStop();
+                DoFingerBackStop();
                 Robots.GrosRobot.MoteurPosition(MoteurID.FingerBack, Config.CurrentConfig.MotorFingerBack.Minimum, true);
             })).StartLoop(new TimeSpan(), 3);
         }

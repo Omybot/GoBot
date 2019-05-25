@@ -197,7 +197,7 @@ namespace GoBot.Devices
                 }
             }
             catch (Exception) { }
-            
+
             _lock.Release();
 
             return points;

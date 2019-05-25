@@ -484,7 +484,7 @@ namespace GoBot
             Actionneur.AtomStacker.DoInit();
             Actionneur.AtomHandler.DoInit();
             Actionneur.AtomUnloader.DoInit();
-
+            Actionneur.GoldGrabber.DoInit();
         }
 
         public void DeployerActionnneurs()

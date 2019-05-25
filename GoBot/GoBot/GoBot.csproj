@@ -89,6 +89,7 @@
     <Compile Include="Actionneurs\RobotPositionables.cs" />
     <Compile Include="Communications\CAN\CanConnection.cs" />
     <Compile Include="Communications\CAN\CanFrameDecoder.cs" />
+    <Compile Include="Communications\CAN\CanSubConnection.cs" />
     <Compile Include="Devices\CAN\CanDisplay.cs" />
     <Compile Include="Communications\CAN\CanFrameFactory.cs" />
     <Compile Include="Communications\CAN\CanFrameFunction.cs" />

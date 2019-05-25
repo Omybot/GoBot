@@ -10,6 +10,7 @@ using GoBot.Threading;
 using Geometry.Shapes;
 using Geometry;
 using GoBot.Communications.UDP;
+using GoBot.Communications.CAN;
 
 namespace GoBot.Devices
 {
@@ -47,17 +48,24 @@ namespace GoBot.Devices
 
         public RecGoBot(Board board)
         {
-            connexion = Connections.BoardConnection[board];
+            connexion = Connections.UDPBoardConnection[board];
             connexion.FrameReceived += new Connection.NewFrameDelegate(connexion_NouvelleTrameRecue);
 
             ledConnexionState = new Dictionary<Connection, LedID>();
 
-            LedID led = LedID.DebugA1;
-            foreach (UDPConnection conLed in Connections.AllConnections.OrderBy(c => Connections.GetBoardByConnection(c).ToString()))
+            LedID led = LedID.DebugA8;
+            foreach (Connection conLed in Connections.AllConnections.OfType<UDPConnection>().OrderBy(c => Connections.GetUDPBoardByConnection(c).ToString()))
             {
                 ledConnexionState.Add(conLed, led);
                 conLed.ConnectionChecker.SendConnectionTest += ConnexionCheck_SendConnectionTest;
-                led++;
+                led--;
+            }
+
+            foreach (Connection conLed in Connections.AllConnections.OfType<CanSubConnection>().OrderBy(c => Connections.GetCANBoardByConnection(c).ToString()))
+            {
+                ledConnexionState.Add(conLed, led);
+                conLed.ConnectionChecker.SendConnectionTest += ConnexionCheck_SendConnectionTest;
+                led--;
             }
 
             ledsStatus = new Dictionary<LedID, LedStatus>();

@@ -214,6 +214,8 @@ namespace GoBot
         public static void Init()
         {
             Balise = new Beacon();
+
+            Devices.Devices.RecGoBot.SetLed(LedID.DebugB1, Actionneurs.Actionneur.HokuyoAvoid == null ? RecGoBot.LedStatus.Rouge : RecGoBot.LedStatus.Vert);
         }
 
         private static void HokuyoAvoid_NewMeasure(List<RealPoint> measure)

@@ -26,9 +26,9 @@ namespace GoBot.Communications
         public static List<Connection> AllConnections { get; set; }
 
         /// <summary>
-        /// Association de la connexion avec la carte
+        /// Association de la connexion avec la carte UDP
         /// </summary>
-        public static Dictionary<Board, Connection> BoardConnection { get; private set; }
+        public static Dictionary<Board, Connection> UDPBoardConnection { get; private set; }
 
         /// <summary>
         /// Activation ou désactivation de la connexion
@@ -40,13 +40,15 @@ namespace GoBot.Communications
         /// </summary>
         private static int IntervalLoopTests = 500;
 
+        private static Dictionary<CanBoard, CanSubConnection> _connectionCanServo = new Dictionary<CanBoard, CanSubConnection>();
+
         /// <summary>
         /// Initialise toutes les connexions
         /// </summary>
         public static void Init()
         {
             EnableConnection = new Dictionary<Board, bool>();
-            BoardConnection = new Dictionary<Board, Connection>();
+            UDPBoardConnection = new Dictionary<Board, Connection>();
             AllConnections = new List<Connection>();
 
             ConnectionIO = AddUDPConnection(Board.RecIO, IPAddress.Parse("10.1.0.14"), 12324, 12314);
@@ -56,6 +58,14 @@ namespace GoBot.Communications
 
             ConnectionCan = new CanConnection(Board.RecCan);
             ConnectionCan.StartReception();
+
+            _connectionCanServo.Add(CanBoard.CanServo1, new CanSubConnection(ConnectionCan, CanBoard.CanServo1));
+            _connectionCanServo.Add(CanBoard.CanServo2, new CanSubConnection(ConnectionCan, CanBoard.CanServo2));
+            _connectionCanServo.Add(CanBoard.CanServo3, new CanSubConnection(ConnectionCan, CanBoard.CanServo3));
+            _connectionCanServo.Add(CanBoard.CanServo4, new CanSubConnection(ConnectionCan, CanBoard.CanServo4));
+            _connectionCanServo.Add(CanBoard.CanServo5, new CanSubConnection(ConnectionCan, CanBoard.CanServo5));
+
+            _connectionCanServo.Values.ToList().ForEach(o => AllConnections.Add(o));
 
             // En remplacement des tests de connexion des ConnexionCheck, pour les syncroniser
             _linkTestConnections = ThreadManager.CreateThread(link => TestConnections());
@@ -74,7 +84,7 @@ namespace GoBot.Communications
         {
             UDPConnection output = new UDPConnection();
             output.Connect(ip, inPort, outPort);
-            BoardConnection.Add(board, output);
+            UDPBoardConnection.Add(board, output);
             EnableConnection.Add(board, true);
             AllConnections.Add(output);
             output.ConnectionChecker.SendConnectionTest += ConnexionCheck_SendConnectionTestUDP;
@@ -88,7 +98,7 @@ namespace GoBot.Communications
         /// <param name="sender">Connexion à laquelle envoyer le test</param>
         private static void ConnexionCheck_SendConnectionTestUDP(Connection sender)
         {
-            sender.SendMessage(UdpFrameFactory.TestConnexion(GetBoardByConnection(sender)));
+            sender.SendMessage(UdpFrameFactory.TestConnexion(GetUDPBoardByConnection(sender)));
         }
 
         /// <summary>
@@ -100,7 +110,7 @@ namespace GoBot.Communications
 
             int interval = IntervalLoopTests / AllConnections.Count();
 
-            foreach (UDPConnection conn in AllConnections.OrderBy(c => Connections.GetBoardByConnection(c).ToString()))
+            foreach (Connection conn in AllConnections.OrderBy(c => Connections.GetUDPBoardByConnection(c).ToString()))
             {
                 if (!_linkTestConnections.Cancelled)
                 {
@@ -115,13 +125,31 @@ namespace GoBot.Communications
         /// </summary>
         /// <param name="conn">Connexion dont on veut la carte</param>
         /// <returns>La carte concernée par la connexion donnée</returns>
-        public static Board GetBoardByConnection(Connection conn)
+        public static Board GetUDPBoardByConnection(Connection conn)
         {
             Board output = Board.RecMove;
 
             foreach (Board c in Enum.GetValues(typeof(Board)))
             {
-                if (BoardConnection.ContainsKey(c) && BoardConnection[c] == conn)
+                if (UDPBoardConnection.ContainsKey(c) && UDPBoardConnection[c] == conn)
+                    output = c;
+            }
+
+            return output;
+        }
+
+        /// <summary>
+        /// Retourne la carte concernée par une connexion
+        /// </summary>
+        /// <param name="conn">Connexion dont on veut la carte</param>
+        /// <returns>La carte concernée par la connexion donnée</returns>
+        public static CanBoard GetCANBoardByConnection(Connection conn)
+        {
+            CanBoard output = CanBoard.CanServo1;
+
+            foreach (CanBoard c in Enum.GetValues(typeof(CanBoard)))
+            {
+                if (_connectionCanServo.ContainsKey(c) && _connectionCanServo[c] == conn)
                     output = c;
             }
 

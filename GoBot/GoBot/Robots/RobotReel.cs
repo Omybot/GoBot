@@ -669,14 +669,14 @@ namespace GoBot
 
         public override void DemandeValeursAnalogiques(Board carte, bool attendre = true)
         {
-            if (!Connections.BoardConnection[carte].ConnectionChecker.Connected)
+            if (!Connections.UDPBoardConnection[carte].ConnectionChecker.Connected)
                 return;
 
             if (attendre)
                 SemaphoresTrame[UdpFrameFunction.RetourValeursAnalogiques] = new Semaphore(0, int.MaxValue);
 
             Frame trame = UdpFrameFactory.DemandeValeursAnalogiques(carte);
-            Connections.BoardConnection[carte].SendMessage(trame);
+            Connections.UDPBoardConnection[carte].SendMessage(trame);
 
             if (attendre)
                 SemaphoresTrame[UdpFrameFunction.RetourValeursAnalogiques].WaitOne(1000);
@@ -684,14 +684,14 @@ namespace GoBot
 
         public override void DemandeValeursNumeriques(Board carte, bool attendre = true)
         {
-            if (!Connections.BoardConnection[carte].ConnectionChecker.Connected)
+            if (!Connections.UDPBoardConnection[carte].ConnectionChecker.Connected)
                 return;
 
             if (attendre)
                 SemaphoresTrame[UdpFrameFunction.RetourValeursNumeriques] = new Semaphore(0, int.MaxValue);
 
             Frame trame = UdpFrameFactory.DemandeValeursNumeriques(carte);
-            Connections.BoardConnection[carte].SendMessage(trame);
+            Connections.UDPBoardConnection[carte].SendMessage(trame);
 
             if (attendre)
                 SemaphoresTrame[UdpFrameFunction.RetourValeursNumeriques].WaitOne(1000);
@@ -855,7 +855,7 @@ namespace GoBot
         public void EnvoyerUart(Board carte, Frame trame)
         {
             Frame trameUart = UdpFrameFactory.EnvoyerUart1(carte, trame);
-            Connections.BoardConnection[carte].SendMessage(trameUart);
+            Connections.UDPBoardConnection[carte].SendMessage(trameUart);
         }
 
         private String mesureLidar;
