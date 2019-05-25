@@ -195,6 +195,13 @@ namespace GoBot.Communications.CAN
                         output = ReplaceParam(output, parameters[1].ToString());
                     }
                     break;
+                case CanFrameFunction.DisableOutput:
+                    output = "Disbale servo {ServoID};";
+                    if (parameters != null)
+                    {
+                        output = ReplaceParam(output, ((ServomoteurID)parameters[0]).ToString());
+                    }
+                    break;
                 case CanFrameFunction.SetScore:
                     output = "Affichage de score : {4-5}";
                     if (parameters != null)
