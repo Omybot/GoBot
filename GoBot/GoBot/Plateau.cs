@@ -40,6 +40,8 @@ namespace GoBot
         //public static List<IShape> ObstaclesPlateau { get; set; }
         //public static List<IShape> ObstaclesBalise { get; set; }
 
+        private static Polygon _bounds;
+
         public static IEnumerable<IShape> ObstaclesCouleur
         {
             get
@@ -129,6 +131,11 @@ namespace GoBot
             }
         }
 
+        public static bool IsInside(RealPoint p)
+        {
+            return _bounds.Contains(p);
+        }
+
         public Plateau()
         {
             if (!Execution.DesignMode)
@@ -142,14 +149,38 @@ namespace GoBot
                 _obstacles = new Obstacles(Elements);
                 CreerSommets(25);
 
-                Balise.PositionEnnemisActualisee += Balise_PositionEnnemisActualisee;
+                //Balise.PositionEnnemisActualisee += Balise_PositionEnnemisActualisee;
 
                 Strategy = new StrategyMinimumScore();
                 Robots.GrosRobot.MajGraphFranchissable(_obstacles.FromAllExceptBoard);
+
+                List<RealPoint> bounds = new List<RealPoint>();
+                bounds.Add(new RealPoint(0, 0));
+                bounds.Add(new RealPoint(3000, 0));
+                bounds.Add(new RealPoint(3000, 2000));
+
+                bounds.Add(new RealPoint(2550, 2000));
+                bounds.Add(new RealPoint(2550, 1600));
+                bounds.Add(new RealPoint(450, 1600));
+                bounds.Add(new RealPoint(450, 2000));
+                
+                bounds.Add(new RealPoint(0, 2000));
+                _bounds = new Polygon(bounds);
+
+                StartDetection();
             }
         }
 
-        void Balise_PositionEnnemisActualisee(List<RealPoint> positions)
+        public static void StartDetection()
+        {
+            if (Actionneurs.Actionneur.HokuyoAvoid != null)
+            {
+                Actionneurs.Actionneur.HokuyoAvoid.StartLoopMeasure();
+                Actionneurs.Actionneur.HokuyoAvoid.NewMeasure += HokuyoAvoid_NewMeasure;
+            }
+        }
+
+        static void SetOpponents(List<RealPoint> positions)
         {
             // Positions ennemies signalées par la balise
 
@@ -185,6 +216,24 @@ namespace GoBot
             Balise = new Beacon();
         }
 
+        private static void HokuyoAvoid_NewMeasure(List<RealPoint> measure)
+        {
+            List<RealPoint> pts = measure.Where(o => IsInside(o)).ToList();
+            List<List<RealPoint>> groups = pts.GroupByDistance(50, 20);
+
+            List<Circle> obstacles = new List<Circle>();
+
+            foreach (List<RealPoint> group in groups)
+            {
+                Circle circle = group.FitCircle();
+                if(circle.Radius < 100) obstacles.Add(circle);
+            }
+
+            Stopwatch sw = Stopwatch.StartNew();
+            if(obstacles.Count > 0) SetOpponents(obstacles.Select(o => o.Center).ToList());
+            Debug.Print(sw.ElapsedMilliseconds + " ms");
+        }
+
         /// <summary>
         /// Crée le graph du pathfinding.
         /// </summary>
@@ -205,7 +254,7 @@ namespace GoBot
 
         public static void SetDetections(IEnumerable<IShape> detections)
         {
-            _obstacles.SetDetections(detections);
+            _obstacles?.SetDetections(detections);
         }
 
         private static int SpeedWithOpponent(double opponentDist, int maxSpeed)

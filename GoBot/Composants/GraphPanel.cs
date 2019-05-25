@@ -167,18 +167,20 @@ namespace Composants
 
                 Font myFont = new Font("Calibri", 9);
 
-                if (NamesVisible && CurvesData.Count > 0)
+                List<String> namesVisible = CurvesDisplayed.Where(o => CurvesDisplayed[o.Key]).Select(o => o.Key).ToList();
+
+                if (NamesVisible && namesVisible.Count > 0)
                 {
-                    int maxWidth = CurvesData.Max(c => (int)gTemp.MeasureString(c.Key, myFont).Width);
+                    int maxWidth = namesVisible.Max(c => (int)gTemp.MeasureString(c, myFont).Width);
                     int margin = 5, hPerRow = 10;
 
                     Rectangle txtRect;
-                    Size sz = new Size(maxWidth + margin, (CurvesData.Count * hPerRow) + margin - 1);
+                    Size sz = new Size(maxWidth + margin, (namesVisible.Count * hPerRow) + margin - 1);
                     
                     switch (NamesAlignment)
                     {
                         case ContentAlignment.BottomLeft:
-                            txtRect = new Rectangle(0, pictureBox.Height - hPerRow * CurvesData.Count - margin, sz.Width, sz.Height);
+                            txtRect = new Rectangle(0, pictureBox.Height - hPerRow * namesVisible.Count - margin, sz.Width, sz.Height);
                             break;
                         case ContentAlignment.TopLeft:
                             txtRect = new Rectangle(0, 0, sz.Width, sz.Height);
@@ -201,12 +203,12 @@ namespace Composants
                     backPen.Dispose();
 
                     Point p = new Point(txtRect.X, txtRect.Y);
-                    foreach (KeyValuePair<String, List<double>> courbe in CurvesData)
+                    foreach (String courbe in namesVisible)
                     {
-                        if (CurvesDisplayed[courbe.Key])
+                        if (CurvesDisplayed[courbe])
                         {
-                            Brush b = new SolidBrush(CurvesPen[courbe.Key].Color);
-                            gTemp.DrawString(courbe.Key, myFont, b, 0, p.Y);
+                            Brush b = new SolidBrush(CurvesPen[courbe].Color);
+                            gTemp.DrawString(courbe, myFont, b, 0, p.Y);
                             p.Y += 10;
                             b.Dispose();
                         }
@@ -262,7 +264,7 @@ namespace Composants
         {
             if (CurvesDisplayed.ContainsKey(curveName))
             {
-                CurvesDisplayed[curveName] = !showed;
+                CurvesDisplayed[curveName] = showed;
             }
         }
     }

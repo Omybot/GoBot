@@ -10,30 +10,33 @@ namespace GoBot.Actionneurs
     {
         public void DoOpen()
         {
-            Config.CurrentConfig.ServoClampLeft.SendPosition(Config.CurrentConfig.ServoClampLeft.PositionOpen);
-            Config.CurrentConfig.ServoClampRight.SendPosition(Config.CurrentConfig.ServoClampRight.PositionOpen);
+            MoveClampLeft(Config.CurrentConfig.ServoClampLeft.PositionOpen);
+            MoveClampRight(Config.CurrentConfig.ServoClampRight.PositionOpen);
         }
 
         public void DoClose()
         {
-            Config.CurrentConfig.ServoClampLeft.SendPosition(Config.CurrentConfig.ServoClampLeft.PositionClose);
-            Config.CurrentConfig.ServoClampRight.SendPosition(Config.CurrentConfig.ServoClampRight.PositionClose);
+            //MoveClampLeft(Config.CurrentConfig.ServoClampLeft.PositionClose);
+            //MoveClampRight(Config.CurrentConfig.ServoClampRight.PositionClose);
+
+            MoveClampLeft(Config.CurrentConfig.ServoClampLeft.Minimum);
+            MoveClampRight(Config.CurrentConfig.ServoClampRight.Maximum);
         }
 
         public void DoFree()
         {
-            Config.CurrentConfig.ServoClampLeft.SendPosition(Config.CurrentConfig.ServoClampLeft.PositionFree);
-            Config.CurrentConfig.ServoClampRight.SendPosition(Config.CurrentConfig.ServoClampRight.PositionFree);
+            MoveClampLeft(Config.CurrentConfig.ServoClampLeft.PositionFree);
+            MoveClampRight(Config.CurrentConfig.ServoClampRight.PositionFree);
         }
 
         public void DoUp()
         {
-            Config.CurrentConfig.ServoElevation.SendPosition(Config.CurrentConfig.ServoElevation.PositionInside);
+            MoveElevation(Config.CurrentConfig.ServoElevation.PositionInside);
         }
 
         public void DoDown()
         {
-            Config.CurrentConfig.ServoElevation.SendPosition(Config.CurrentConfig.ServoElevation.PositionGround);
+            MoveElevation(Config.CurrentConfig.ServoElevation.PositionGround);
         }
 
         public void DoSwallow()
@@ -53,23 +56,61 @@ namespace GoBot.Actionneurs
 
         public void DoGrab()
         {
-            Actionneur.AtomStacker.DoPrepareFingerFront();
+            Actionneur.AtomStacker.DoFrontOpen();
+            Actionneur.AtomStacker.DoFrontPrepare(false);
 
-            // TODO le doigt doit se préparer
             DoSwallow();
             DoClose();
             Thread.Sleep(2000);
             DoStop();
             DoUp();
             Thread.Sleep(2000);
-            DoFree();
 
-            Actionneur.AtomStacker.DoStoreFingerFront();
-            // TODO le doigt doit prendre le palet
+            Actionneur.AtomStacker.MoveFingerFront(Config.CurrentConfig.MotorFingerFront.Maximum, true);
+
+            Actionneur.AtomStacker.DoFrontClose();
+            Thread.Sleep(500);
+            DoFree();
+            Thread.Sleep(100);
+
+            Actionneur.AtomStacker.DoFrontStore();
             Thread.Sleep(400);
             DoDown();
             Thread.Sleep(400);
             DoFree();
+        }
+
+        public void MoveClampLeft(int position)
+        {
+            Config.CurrentConfig.ServoClampLeft.SendPosition(position);
+        }
+
+        public void MoveClampRight(int position)
+        {
+            Config.CurrentConfig.ServoClampRight.SendPosition(position);
+        }
+
+        public void MoveElevation(int position)
+        {
+            Config.CurrentConfig.ServoElevation.SendPosition(position);
+        }
+
+        public void DoInit()
+        {
+            MoveClampLeft(Config.CurrentConfig.ServoClampLeft.PositionClose);
+            Thread.Sleep(500);
+            MoveClampLeft(Config.CurrentConfig.ServoClampLeft.PositionFree);
+            Thread.Sleep(500);
+
+            MoveClampRight(Config.CurrentConfig.ServoClampRight.PositionClose);
+            Thread.Sleep(500);
+            MoveClampRight(Config.CurrentConfig.ServoClampRight.PositionFree);
+            Thread.Sleep(500);
+
+            MoveElevation(Config.CurrentConfig.ServoElevation.PositionGround);
+            Thread.Sleep(500);
+            MoveElevation(Config.CurrentConfig.ServoElevation.PositionInside);
+            Thread.Sleep(500);
         }
     }
 }

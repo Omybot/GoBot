@@ -91,11 +91,14 @@ namespace Geometry.Shapes
         /// <param name="pts">Liste de points à regrouper</param>
         /// <param name="maxDistance">Distance maximale pour accrocher un point à un groupe. Représente donc également la distance minimale entre deux groupes.</param>
         /// <returns>Liste des listes de points pour chaque regroupement</returns>
-        public static List<List<RealPoint>> GroupByDistance(this IEnumerable<RealPoint> pts, double maxDistance)
+        public static List<List<RealPoint>> GroupByDistance(this IEnumerable<RealPoint> pts, double maxDistance, int maxPopulation)
         {
             List<RealPoint> pool = new List<RealPoint>(pts);
 
+            List<List<RealPoint>> fullGroups = new List<List<RealPoint>>();
             List<List<RealPoint>> groups = new List<List<RealPoint>>();
+
+            // TODO2019 : Maximum de population
 
             while (pool.Count > 0)
             {

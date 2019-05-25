@@ -480,6 +480,11 @@ namespace GoBot
         public void RangerActionneurs()
         {
             // TODOEACHYEAR
+
+            Actionneur.AtomStacker.DoInit();
+            Actionneur.AtomHandler.DoInit();
+            Actionneur.AtomUnloader.DoInit();
+
         }
 
         public void DeployerActionnneurs()

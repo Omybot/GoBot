@@ -36,15 +36,15 @@ namespace GoBot
         Unused06 = 206,
         FingerBack = 207,
 
-        ExitLauncherLeft = 208,
+        CalibrationLeft= 208,
         LauncherLeft = 209,
-        CalibrationLeft = 210,
-        Unused11 = 211,
+        ExitLauncherLeft = 210,
+        Unloader = 211,
 
         GoldClampRight = 212,
         GoldElevationRight = 213,
-        GoldClampLeft = 214,
-        GoldElevationLeft = 215,
+        GoldElevationLeft = 214,
+        GoldClampLeft = 215,
         
         ClampRight = 216,
         Unused17 = 217,

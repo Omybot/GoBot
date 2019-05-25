@@ -41,7 +41,9 @@ namespace GoBot.IHM
 
         void b_Click(object sender, EventArgs e)
         {
-            ((MethodInfo)((Button)sender).Tag).Invoke(obj, null);
+            MethodInfo method = ((MethodInfo)((Button)sender).Tag);
+            object[] parameters = method.GetParameters().Count() > 0 ? new Object[] { false } : null;
+            method.Invoke(obj, parameters);
         }
 
         private void PanelActionneurGeneric_Load(object sender, EventArgs e)

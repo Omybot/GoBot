@@ -55,6 +55,7 @@ namespace GoBot
             Plateau.Balise.VitesseRotation(150);
 
             Robots.GrosRobot.Rapide();
+            Devices.Devices.RecGoBot.SetLed(LedID.DebugB2, Devices.RecGoBot.LedStatus.Vert);
         }
     }
 }

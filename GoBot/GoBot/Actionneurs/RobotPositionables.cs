@@ -21,19 +21,24 @@ namespace GoBot
         public ServoLauncherLeft ServoLauncherLeft { get; set; } = new ServoLauncherLeft();
         public ServoLauncherRight ServoLauncherRight { get; set; } = new ServoLauncherRight();
 
+        public ServoExitLauncherLeft ServoExitLauncherLeft { get; set; } = new ServoExitLauncherLeft();
+        public ServoExitLauncherRight ServoExitLauncherRight { get; set; } = new ServoExitLauncherRight();
+
         public ServoFingerFront ServoFingerFront { get; set; } = new ServoFingerFront();
         public ServoFingerBack ServoFingerBack { get; set; } = new ServoFingerBack();
 
         public MotorGulp MotorGulp { get; set; } = new MotorGulp();
         public MotorFingerBack MotorFingerBack { get; set; } = new MotorFingerBack();
         public MotorFingerFront MotorFingerFront { get; set; } = new MotorFingerFront();
+
+        public ServoUnloader ServoUnloader { get; set; } = new ServoUnloader();
     }
 }
 
 namespace GoBot.Actionneurs
 {
     #region PositionableServo
-        
+
     public class ServoElevation : PositionableServo
     {
         public override ServomoteurID ID => ServomoteurID.Elevation;
@@ -140,6 +145,29 @@ namespace GoBot.Actionneurs
         public int PositionVertical { get; set; }
     }
 
+    public class ServoUnloader : PositionableServo
+    {
+        public override ServomoteurID ID => ServomoteurID.Unloader;
+        public int PositionUnload { get; set; }
+        public int PositionStore { get; set; }
+        public int PositionDocking { get; set; }
+    }
+
+    public abstract class ServoExitLauncher : PositionableServo
+    {
+        public int PositionInside { get; set; }
+        public int PositionOutside { get; set; }
+    }
+
+    public class ServoExitLauncherLeft : ServoExitLauncher
+    {
+        public override ServomoteurID ID => ServomoteurID.ExitLauncherLeft;
+    }
+
+    public class ServoExitLauncherRight : ServoExitLauncher
+    {
+        public override ServomoteurID ID => ServomoteurID.ExitLauncherRight;
+    }
 
 
     #endregion

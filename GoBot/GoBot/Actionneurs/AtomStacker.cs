@@ -11,68 +11,60 @@ namespace GoBot.Actionneurs
 {
     class AtomStacker
     {
-        public void DoOpenFingerFront()
+        public void DoFrontOpen()
         {
             Config.CurrentConfig.ServoFingerFront.SendPosition(Config.CurrentConfig.ServoFingerFront.PositionOpen);
         }
 
-        public void DoCloseFingerFront()
+        public void DoFrontClose()
         {
             Config.CurrentConfig.ServoFingerFront.SendPosition(Config.CurrentConfig.ServoFingerFront.PositionClose);
         }
 
-        public void DoOpenForwardFingerBack()
+        public void DoBackOpenForward()
         {
             Config.CurrentConfig.ServoFingerBack.SendPosition(Config.CurrentConfig.ServoFingerBack.PositionForward);
         }
 
-        public void DoOpenBackwardFingerBack()
+        public void DoBackOpenBackward()
         {
             Config.CurrentConfig.ServoFingerBack.SendPosition(Config.CurrentConfig.ServoFingerBack.PositionBackward);
         }
 
-        public void DoCloseFingerBack()
+        public void DoBackClose()
         {
             Config.CurrentConfig.ServoFingerBack.SendPosition(Config.CurrentConfig.ServoFingerBack.PositionVertical);
         }
 
-        public void DoPrepareFingerFront()
+        public void DoFrontPrepare(bool wait = true)
         {
-            Connections.ConnectionIO.SendMessage(UdpFrameFactory.MoteurStop(MoteurID.FingerFront, StopMode.Abrupt));
-            Config.CurrentConfig.MotorFingerFront.SendPosition(Config.CurrentConfig.MotorFingerFront.PositionPrepare);
-            DoOpenFingerFront();
+            MoveFingerFront(Config.CurrentConfig.MotorFingerFront.PositionPrepare, wait);
         }
 
-        public void DoStoreFingerFront()
+        public void DoFrontStore(bool wait = true)
         {
-            DoCloseFingerFront();
-            Thread.Sleep(700);
-            Connections.ConnectionIO.SendMessage(UdpFrameFactory.MoteurStop(MoteurID.FingerFront, StopMode.Abrupt));
-            Config.CurrentConfig.MotorFingerFront.SendPosition(Config.CurrentConfig.MotorFingerFront.PositionStore);
+            MoveFingerFront(Config.CurrentConfig.MotorFingerFront.PositionStore, wait);
         }
 
         public void DoAtomTransfer()
         {
-            DoOpenFingerFront();
-            MoveFingerFront(200);
-            Thread.Sleep(3500 / 3 * 2);
+            DoFrontOpen();
+            MoveFingerFront(200, true);
 
-            DoCloseFingerFront();
+            DoFrontClose();
             Thread.Sleep(200);
 
-            MoveFingerFront(50);
-            Thread.Sleep(2800 / 3 * 2);
+            MoveFingerFront(50, true);
 
-            DoOpenFingerFront();
-            MoveFingerFront(200);
-            DoOpenForwardFingerBack();
-            MoveFingerBack(150);
-            Thread.Sleep(2800 / 3 * 2);
+            DoFrontOpen();
+            MoveFingerFront(200, false);
+            DoBackOpenForward();
+            MoveFingerBack(150, true);
 
-            DoCloseFingerBack();
+            DoBackClose();
             Thread.Sleep(200);
 
-            MoveFingerBack(0);
+            MoveFingerBack(0, false);
         }
 
         public void FingerFrontStop()
@@ -105,10 +97,16 @@ namespace GoBot.Actionneurs
             Connections.ConnectionIO.SendMessage(UdpFrameFactory.MoteurResetPosition(MoteurID.FingerBack));
         }
 
-        public void DoInitFingers()
+        public void DoInit()
         {
-            DoCloseFingerFront();
-            DoCloseFingerBack();
+            DoFrontOpen();
+            Thread.Sleep(500);
+            DoFrontClose();
+            Thread.Sleep(500);
+
+            DoBackOpenBackward();
+            Thread.Sleep(500);
+            DoBackClose();
 
             FingerBackStop();
             FingerBackOrigin();
@@ -120,6 +118,8 @@ namespace GoBot.Actionneurs
 
             FingerBackStop();
             FingerFrontStop();
+
+            Thread.Sleep(500);
         }
 
         public void DoLoop()
@@ -137,20 +137,39 @@ namespace GoBot.Actionneurs
             })).StartLoop(new TimeSpan(), 3);
         }
 
-        public void MoveFingerFront(int position)
+        public void MoveFingerFront(int position, bool wait)
         {
             position = Math.Max(Config.CurrentConfig.MotorFingerFront.Minimum, Math.Min(position, Config.CurrentConfig.MotorFingerFront.Maximum));
 
             Connections.ConnectionIO.SendMessage(UdpFrameFactory.MoteurStop(MoteurID.FingerFront, StopMode.Abrupt));
-            Config.CurrentConfig.MotorFingerFront.SendPosition(position);
+
+            Robots.GrosRobot.MoteurPosition(MoteurID.FingerBack, position, wait);
         }
 
-        public void MoveFingerBack(int position)
+        public void MoveFingerBack(int position, bool wait)
         {
             position = Math.Max(Config.CurrentConfig.MotorFingerBack.Minimum, Math.Min(position, Config.CurrentConfig.MotorFingerBack.Maximum));
 
             Connections.ConnectionIO.SendMessage(UdpFrameFactory.MoteurStop(MoteurID.FingerBack, StopMode.Abrupt));
-            Config.CurrentConfig.MotorFingerBack.SendPosition(position);
+
+            Robots.GrosRobot.MoteurPosition(MoteurID.FingerBack, position, wait);
         }
+
+        public void DoFingerBackPosition1()
+        {
+            Config.CurrentConfig.MotorFingerBack.SendPosition(0);
+        }
+
+        public void DoFingerBackPosition2()
+        {
+            Config.CurrentConfig.MotorFingerBack.SendPosition(30);
+        }
+
+        public void DoFingerBackPosition3()
+        {
+            Config.CurrentConfig.MotorFingerBack.SendPosition(100);
+        }
+
+        
     }
 }

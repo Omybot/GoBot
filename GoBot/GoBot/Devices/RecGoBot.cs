@@ -23,6 +23,9 @@ namespace GoBot.Devices
         public delegate void JackChangeDelegate(Boolean state);
         public event JackChangeDelegate JackChange;
 
+        public delegate void LedChangeDelegate(LedID led, LedStatus state);
+        public event LedChangeDelegate LedChange;
+
         public delegate void ColorChangeDelegate(MatchColor state);
         public event ColorChangeDelegate ColorChange;
 
@@ -69,7 +72,7 @@ namespace GoBot.Devices
         {
             while (Plateau.Detections?.Count > 0)
             {
-                IShape target = Plateau.Detections.OrderBy(o=> o.Distance(Robots.GrosRobot.Position.Coordinates)).ToList()[0];
+                IShape target = Plateau.Detections.OrderBy(o => o.Distance(Robots.GrosRobot.Position.Coordinates)).ToList()[0];
 
                 Direction dir = Maths.GetDirection(Robots.GrosRobot.Position, target.Barycenter);
 
@@ -381,6 +384,8 @@ namespace GoBot.Devices
         {
             ledsStatus[led] = state;
             connexion.SendMessage(UdpFrameFactory.SetLed(led, state));
+
+            LedChange?.Invoke(led, state);
         }
 
         public void SetLedColor(Color color)

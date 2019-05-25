@@ -103,7 +103,7 @@ namespace GoBot.IHM
             {
                 List<RealPoint> points = _selectedHokuyo.GetRawPoints();
 
-                List<List<RealPoint>> groups = points.GroupByDistance(50);
+                List<List<RealPoint>> groups = points.GroupByDistance(50, 20);
 
                 cercles = groups.Select(g => g.FitCircle()).ToList();
                 cercles = cercles.Where(c => c.Radius > 20 && c.Radius < 40).ToList();
@@ -188,7 +188,8 @@ namespace GoBot.IHM
 
                     if (boxGroup.Checked)
                     {
-                        List<List<RealPoint>> groups = points.GroupByDistance(50);
+                        points = points.Where(o => Plateau.IsInside(o)).ToList();
+                        List<List<RealPoint>> groups = points.GroupByDistance(50, 20);
 
                         List<Color> colors = new List<Color>() { Color.Blue, Color.Green, Color.Red, Color.Brown };
 
@@ -196,7 +197,7 @@ namespace GoBot.IHM
 
                         for (int i = 0; i < groups.Count; i++)
                         {
-                            if (groups[i].Count > 10 && i < colors.Count)
+                            if (groups[i].Count > 5 && i < colors.Count)
                             {
                                 Circle circle = groups[i].FitCircle();
                                 //Line line = groups[i].FitLine();
@@ -212,11 +213,11 @@ namespace GoBot.IHM
                             }
                         }
 
-                        Plateau.Detections = shapes;
+                        //Plateau.Detections = shapes;
                     }
                     else
                     {
-                        Plateau.Detections = new List<IShape>(points);
+                        //Plateau.Detections = new List<IShape>(points);
                     }
 
                     new Circle(_selectedHokuyo.Position.Coordinates, 20).Paint(g, Color.Black, 1, Color.White, picWorld.Dimensions.WorldScale);

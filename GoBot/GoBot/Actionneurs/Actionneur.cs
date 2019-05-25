@@ -8,14 +8,18 @@ namespace GoBot.Actionneurs
         private static Hokuyo _hokuyoGround, _hokuyoAvoid;
         private static AtomHandler _atomHandler;
         private static AtomStacker _atomStacker;
-
+        private static AtomUnloader _atomUnloader;
+        private static GoldGrabber _goldGrabber;
 
         static Actionneur()
         {
             _hokuyoGround = new HokuyoRec(LidarID.Ground);
-            _hokuyoAvoid = CreateHokuyo("COM6", LidarID.Avoid);
+            _hokuyoAvoid = CreateHokuyo("COM7", LidarID.Avoid);
             _atomHandler = new AtomHandler();
             _atomStacker = new AtomStacker();
+            _atomUnloader = new AtomUnloader();
+            _goldGrabber = new GoldGrabber();
+
         }
 
         private static Hokuyo CreateHokuyo(String portCom, LidarID id)
@@ -54,7 +58,19 @@ namespace GoBot.Actionneurs
         public static AtomStacker AtomStacker
         {
             get { return _atomStacker; }
-            set { _atomStacker= value; }
+            set { _atomStacker = value; }
+        }
+
+        public static AtomUnloader AtomUnloader
+        {
+            get { return _atomUnloader; }
+            set { _atomUnloader = value; }
+        }
+
+        public static GoldGrabber GoldGrabber
+        {
+            get { return _goldGrabber; }
+            set { _goldGrabber = value; }
         }
     }
 }

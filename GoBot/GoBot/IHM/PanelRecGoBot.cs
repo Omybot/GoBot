@@ -79,7 +79,68 @@ namespace GoBot.IHM
                 Devices.Devices.RecGoBot.ButtonChange += RecGoBot_ButtonChange;
                 Devices.Devices.RecGoBot.ColorChange += RecGoBot_ColorChange;
                 Devices.Devices.RecGoBot.JackChange += RecGoBot_JackChange;
+                Devices.Devices.RecGoBot.LedChange += RecGoBot_LedChange;
             }
+        }
+
+        private void RecGoBot_LedChange(LedID led, RecGoBot.LedStatus state)
+        {
+            Led target = null;
+
+            switch(led)
+            {
+                case LedID.DebugA1:
+                    target = ledA1;
+                    break;
+                case LedID.DebugA2:
+                    target = ledA2;
+                    break;
+                case LedID.DebugA3:
+                    target = ledA3;
+                    break;
+                case LedID.DebugA4:
+                    target = ledA4;
+                    break;
+                case LedID.DebugA5:
+                    target = ledA5;
+                    break;
+                case LedID.DebugA6:
+                    target = ledA6;
+                    break;
+                case LedID.DebugA7:
+                    target = ledA7;
+                    break;
+                case LedID.DebugA8:
+                    target = ledA8;
+                    break;
+                case LedID.DebugB1:
+                    target = ledB1;
+                    break;
+                case LedID.DebugB2:
+                    target = ledB2;
+                    break;
+                case LedID.DebugB3:
+                    target = ledB3;
+                    break;
+                case LedID.DebugB4:
+                    target = ledB4;
+                    break;
+                case LedID.DebugB5:
+                    target = ledB5;
+                    break;
+                case LedID.DebugB6:
+                    target = ledB6;
+                    break;
+                case LedID.DebugB7:
+                    target = ledB7;
+                    break;
+                case LedID.DebugB8:
+                    target = ledB8;
+                    break;
+            }
+
+            ledActive[target] = state;
+            target.Color = LedStateToColor(state);
         }
 
         void RecGoBot_JackChange(bool state)
@@ -144,6 +205,29 @@ namespace GoBot.IHM
             }
 
             Devices.Devices.RecGoBot.SetLed((LedID)ledNo, ledActive[ledSender]);
+        }
+
+        private Color LedStateToColor(RecGoBot.LedStatus state)
+        {
+            Color c = Color.Gray;
+
+            switch (state)
+            {
+                case RecGoBot.LedStatus.Off:
+                    c = Color.Gray;
+                    break;
+                case RecGoBot.LedStatus.Rouge:
+                    c = Color.Red;
+                    break;
+                case RecGoBot.LedStatus.Orange:
+                    c = Color.DarkOrange;
+                    break;
+                case RecGoBot.LedStatus.Vert:
+                    c = Color.LimeGreen;
+                    break;
+            }
+
+            return c;
         }
 
         private void picLedColor_Click(object sender, EventArgs e)
