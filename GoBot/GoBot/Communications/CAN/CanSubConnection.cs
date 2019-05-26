@@ -10,6 +10,8 @@ namespace GoBot.Communications.CAN
         private CanConnection _baseConnection;
         private CanBoard _board;
 
+        private String _name;
+
         public CanSubConnection(CanConnection baseConnection, CanBoard board)
         {
             _baseConnection = baseConnection;
@@ -17,7 +19,11 @@ namespace GoBot.Communications.CAN
             ConnectionChecker = new ConnectionChecker(this, 500);
             ConnectionChecker.SendConnectionTest += ConnectionChecker_SendConnectionTest;
             _baseConnection.FrameReceived += _baseConnection_FrameReceived;
+
+            _name = board.ToString();
         }
+
+        public override string Name { get => _name; set => _name = value; }
 
         private void _baseConnection_FrameReceived(Frame frame)
         {

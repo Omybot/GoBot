@@ -34,20 +34,20 @@
             ((System.ComponentModel.ISupportInitialize)(this._conIndicator)).BeginInit();
             this.SuspendLayout();
             // 
-            // conIndicator
+            // _conIndicator
             // 
-            this._conIndicator.Image = ((System.Drawing.Image)(resources.GetObject("conIndicator.Image")));
-            this._conIndicator.Location = new System.Drawing.Point(11, 2);
-            this._conIndicator.Name = "conIndicator";
+            this._conIndicator.Image = ((System.Drawing.Image)(resources.GetObject("_conIndicator.Image")));
+            this._conIndicator.Location = new System.Drawing.Point(3, 2);
+            this._conIndicator.Name = "_conIndicator";
             this._conIndicator.Size = new System.Drawing.Size(16, 16);
             this._conIndicator.TabIndex = 0;
             this._conIndicator.TabStop = false;
             // 
-            // lblName
+            // _lblName
             // 
             this._lblName.AutoSize = true;
-            this._lblName.Location = new System.Drawing.Point(33, 3);
-            this._lblName.Name = "lblName";
+            this._lblName.Location = new System.Drawing.Point(23, 3);
+            this._lblName.Name = "_lblName";
             this._lblName.Size = new System.Drawing.Size(10, 13);
             this._lblName.TabIndex = 1;
             this._lblName.Text = "-";
@@ -59,7 +59,7 @@
             this.Controls.Add(this._lblName);
             this.Controls.Add(this._conIndicator);
             this.Name = "ConnectionStatus";
-            this.Size = new System.Drawing.Size(120, 21);
+            this.Size = new System.Drawing.Size(90, 21);
             ((System.ComponentModel.ISupportInitialize)(this._conIndicator)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();

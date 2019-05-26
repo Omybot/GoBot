@@ -64,7 +64,7 @@
             // 
             this._ledsPanel.Location = new System.Drawing.Point(122, 3);
             this._ledsPanel.Name = "_ledsPanel";
-            this._ledsPanel.Size = new System.Drawing.Size(622, 24);
+            this._ledsPanel.Size = new System.Drawing.Size(1042, 24);
             this._ledsPanel.TabIndex = 99;
             // 
             // PanelConnexions
@@ -76,7 +76,7 @@
             this.Controls.Add(this.lblVoltage);
             this.Controls.Add(this.batteriePack);
             this.Name = "PanelConnexions";
-            this.Size = new System.Drawing.Size(979, 27);
+            this.Size = new System.Drawing.Size(1167, 27);
             this.Load += new System.EventHandler(this.PanelConnexions_Load);
             ((System.ComponentModel.ISupportInitialize)(this.batteriePack)).EndInit();
             this.ResumeLayout(false);

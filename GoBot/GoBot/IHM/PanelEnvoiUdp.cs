@@ -51,7 +51,7 @@ namespace GoBot.IHM
                 switchBoutonIO.Value = true;
                 switchBoutonGB.Value = true;
 
-                foreach (UDPConnection conn in Connections.AllConnections)
+                foreach (UDPConnection conn in Connections.AllConnections.OfType<UDPConnection>())
                 {
                     ConnectionDetails details = new ConnectionDetails();
                     details.Connection = conn;

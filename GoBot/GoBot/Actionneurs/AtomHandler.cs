@@ -1,4 +1,5 @@
-﻿using GoBot.Devices.CAN;
+﻿using GoBot.Communications;
+using GoBot.Devices.CAN;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,50 +10,69 @@ namespace GoBot.Actionneurs
 {
     class AtomHandler
     {
+        private CanServo _servoClampLeft;
+        private CanServo _servoClampRight;
+        private CanServo _servoElevation;
+
+        private ServoClampLeft _posClampLeft;
+        private ServoClampRight _posClampRight;
+        private ServoElevation _posElevation;
+
+        public AtomHandler()
+        {
+            _servoClampLeft = new CanServo((int)Config.CurrentConfig.ServoClampLeft.ID - 200, Connections.ConnectionCan);
+            _servoClampRight = new CanServo((int)Config.CurrentConfig.ServoClampRight.ID - 200, Connections.ConnectionCan);
+            _servoElevation = new CanServo((int)Config.CurrentConfig.ServoElevation.ID - 200, Connections.ConnectionCan);
+
+            _posClampLeft = Config.CurrentConfig.ServoClampLeft;
+            _posClampRight = Config.CurrentConfig.ServoClampRight;
+            _posElevation = Config.CurrentConfig.ServoElevation;
+        }
+
         public void DoOpen()
         {
-            MoveClampLeft(Config.CurrentConfig.ServoClampLeft.PositionOpen);
-            MoveClampRight(Config.CurrentConfig.ServoClampRight.PositionOpen);
+            _servoClampLeft.SetPosition(_posClampLeft.PositionOpen);
+            _servoClampRight.SetPosition(_posClampRight.PositionOpen);
 
             Threading.ThreadManager.CreateThread(link =>
             {
-                Devices.Devices.CanServos[(int)Config.CurrentConfig.ServoClampRight.ID - 200].DisableOutput();
-                Devices.Devices.CanServos[(int)Config.CurrentConfig.ServoClampLeft.ID - 200].DisableOutput();
+                _servoClampRight.DisableOutput();
+                _servoClampLeft.DisableOutput();
             }).StartDelayedThread(500);
         }
 
         public void DoClose()
         {
-            MoveClampLeft(Config.CurrentConfig.ServoClampLeft.Minimum);
-            MoveClampRight(Config.CurrentConfig.ServoClampRight.Maximum);
+            _servoClampLeft.SetPosition(_posClampLeft.Minimum);
+            _servoClampRight.SetPosition(_posClampRight.Maximum);
         }
 
         public void DoCloseAlmost()
         {
-            MoveClampLeft(Config.CurrentConfig.ServoClampLeft.PositionAlmostClose);
-            MoveClampRight(Config.CurrentConfig.ServoClampRight.PositionAlmostClose);
+            _servoClampLeft.SetPosition(_posClampLeft.PositionAlmostClose);
+            _servoClampRight.SetPosition(_posClampRight.PositionAlmostClose);
         }
 
         public void DoFree()
         {
-            MoveClampLeft(Config.CurrentConfig.ServoClampLeft.PositionFree);
-            MoveClampRight(Config.CurrentConfig.ServoClampRight.PositionFree);
+            _servoClampLeft.SetPosition(_posClampLeft.PositionFree);
+            _servoClampRight.SetPosition(_posClampRight.PositionFree);
         }
 
         public void DoFreeTorque()
         {
-            MoveClampLeft(0);
-            MoveClampRight(0);
+            _servoClampLeft.DisableOutput();
+            _servoClampRight.DisableOutput();
         }
 
         public void DoUp()
         {
-            MoveElevation(Config.CurrentConfig.ServoElevation.PositionInside);
+            _servoElevation.SetPosition(_posElevation.PositionInside);
         }
 
         public void DoDown()
         {
-            MoveElevation(Config.CurrentConfig.ServoElevation.PositionGround);
+            _servoElevation.SetPosition(_posElevation.PositionGround);
         }
 
         public void DoSwallow()
@@ -78,6 +98,7 @@ namespace GoBot.Actionneurs
             DoSwallow();
             DoClose();
             Thread.Sleep(500);
+            Actionneur.AtomStacker.DoFrontPrepare();
             DoUp();
             Thread.Sleep(500);
             DoStop();
@@ -98,38 +119,42 @@ namespace GoBot.Actionneurs
 
         public void MoveClampLeft(int position)
         {
-            Config.CurrentConfig.ServoClampLeft.SendPosition(position);
+            _servoClampLeft.SetPosition(position);
         }
 
         public void MoveClampRight(int position)
         {
-            Config.CurrentConfig.ServoClampRight.SendPosition(position);
+            _servoClampRight.SetPosition(position);
         }
 
         public void MoveElevation(int position)
         {
-            Config.CurrentConfig.ServoElevation.SendPosition(position);
+            _servoElevation.SetPosition(position);
         }
 
         public void DoInit()
         {
-            MoveClampLeft(Config.CurrentConfig.ServoClampLeft.PositionClose);
-            Thread.Sleep(500);
-            MoveClampLeft(Config.CurrentConfig.ServoClampLeft.PositionFree);
+            _servoClampLeft.SetPosition(_posClampLeft.PositionFree);
+            _servoClampLeft.SetPosition(_posClampRight.PositionFree);
+
+            _servoElevation.SetPosition(_posElevation.PositionGround);
             Thread.Sleep(500);
 
-            MoveClampRight(Config.CurrentConfig.ServoClampRight.PositionClose);
+            _servoClampLeft.SetPosition(_posClampLeft.PositionClose);
             Thread.Sleep(500);
-            MoveClampRight(Config.CurrentConfig.ServoClampRight.PositionFree);
-            Thread.Sleep(500);
-
-            MoveElevation(Config.CurrentConfig.ServoElevation.PositionGround);
-            Thread.Sleep(500);
-            MoveElevation(Config.CurrentConfig.ServoElevation.PositionInside);
+            _servoClampLeft.SetPosition(_posClampLeft.PositionFree);
             Thread.Sleep(500);
 
-            Devices.Devices.CanServos[(int)Config.CurrentConfig.ServoClampRight.ID].DisableOutput();
-            Devices.Devices.CanServos[(int)Config.CurrentConfig.ServoClampLeft.ID].DisableOutput();
+            _servoClampRight.SetPosition(_posClampRight.PositionClose);
+            Thread.Sleep(500);
+            _servoClampRight.SetPosition(_posClampRight.PositionFree);
+            Thread.Sleep(500);
+
+            _servoElevation.SetPosition(_posElevation.PositionInside);
+            Thread.Sleep(500);
+
+            _servoClampRight.DisableOutput();
+            _servoClampLeft.DisableOutput();
         }
     }
 }

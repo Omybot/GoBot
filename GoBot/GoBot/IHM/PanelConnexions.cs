@@ -22,7 +22,7 @@ namespace GoBot.IHM
             }
             else
             {
-                if (Connections.ConnectionIO.ConnectionChecker.Connected)
+                if (Connections.ConnectionGB.ConnectionChecker.Connected)
                 {
                     batteriePack.Enabled = true;
                     batteriePack.CurrentVoltage = Robots.GrosRobot.BatterieVoltage;

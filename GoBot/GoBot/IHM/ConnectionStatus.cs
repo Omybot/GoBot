@@ -1,4 +1,5 @@
 ﻿using GoBot.Communications;
+using GoBot.Communications.UDP;
 using System;
 using System.Windows.Forms;
 
@@ -41,7 +42,8 @@ namespace GoBot.IHM
                 {
                     _conIndicator.SetConnectionState(_connection.ConnectionChecker.Connected, _connection.ConnectionChecker.Connected, false);
                     _connection.ConnectionChecker.ConnectionStatusChange += ConnexionCheck_ConnectionStatusChange;
-                    _lblName.Text = Connections.GetUDPBoardByConnection(_connection).ToString();
+
+                    _lblName.Text = _connection.Name;
                 }
             }
         }

@@ -23,7 +23,6 @@ namespace GoBot.Strategies
         {
             // Sortir ICI de la zonde de départ
 
-
             Actionneur.AtomHandler.DoDown();
             Actionneur.AtomHandler.DoOpen();
             Actionneur.AtomHandler.DoSwallow();
@@ -34,22 +33,42 @@ namespace GoBot.Strategies
             Actionneur.AtomHandler.DoStop();
             Actionneur.AtomHandler.DoUp();
 
-            Robots.GrosRobot.Avancer(1000);
-            Actionneur.AtomHandler.DoFreeTorque();
-
-            Robots.GrosRobot.SpeedConfig.SetParams(1000, 1500, 2000, 1000, 2000, 2000);
-            //Robots.GrosRobot.SpeedConfig.SetParams(500, 500, 500, 500, 500, 500);
+            ThreadManager.CreateThread(link => StoreAtom()).StartThread();
+            
+            Robots.GrosRobot.SpeedConfig.SetParams(600, 1200, 1200, 1000, 2000, 2000);
             
             if (Plateau.NotreCouleur == Plateau.CouleurGaucheJaune)
             {
+                new MoveAccelerator(Plateau.Elements.AcceleratorYellow).Execute();
+                new MoveGoldGrab(Plateau.Elements.GoldeniumYellow).Execute();
+                new MoveBalance(Plateau.Elements.BalanceYellow).Execute();
             }
             else
             {
+                new MoveAccelerator(Plateau.Elements.AcceleratorViolet).Execute();
+                new MoveGoldGrab(Plateau.Elements.GoldeniumViolet).Execute();
+                new MoveBalance(Plateau.Elements.BalanceViolet).Execute();
             }
+        }
 
-            Robots.GrosRobot.SpeedConfig.SetParams(500, 1000, 1500, 500, 1000, 2000);
-            
-            Robots.GrosRobot.Avancer(100);
+        private void StoreAtom()
+        {
+            Thread.Sleep(500);
+            Actionneur.AtomHandler.DoCloseAlmost();
+            Actionneur.AtomStacker.DoFrontOpen();
+            Actionneur.AtomStacker.DoFrontPrepare();
+
+            Actionneur.AtomStacker.MoveFingerFront(Config.CurrentConfig.MotorFingerFront.Maximum, true);
+
+            Actionneur.AtomStacker.DoFrontClose();
+            Thread.Sleep(200);
+            Actionneur.AtomHandler.DoFree();
+            Thread.Sleep(100);
+
+            Actionneur.AtomStacker.DoFrontStore(false);
+            Thread.Sleep(1000);
+            Actionneur.AtomHandler.DoFree();
+            Actionneur.AtomStacker.DoFrontStore(true);
         }
 
         protected override void SequenceCore()

@@ -52,10 +52,17 @@ namespace GoBot.Communications
             AllConnections = new List<Connection>();
 
             ConnectionIO = AddUDPConnection(Board.RecIO, IPAddress.Parse("10.1.0.14"), 12324, 12314);
-            ConnectionMove = AddUDPConnection(Board.RecMove, IPAddress.Parse("10.1.0.11"), 12321, 12311);
-            ConnectionGB = AddUDPConnection(Board.RecGB, IPAddress.Parse("10.1.0.12"), 12322, 12312);
-            ConnectionCanBridge = AddUDPConnection(Board.RecCan, IPAddress.Parse("10.1.0.15"), 12325, 12315);
+            ConnectionIO.Name = Board.RecIO.ToString();
 
+            ConnectionMove = AddUDPConnection(Board.RecMove, IPAddress.Parse("10.1.0.11"), 12321, 12311);
+            ConnectionMove.Name = Board.RecMove.ToString();
+
+            ConnectionGB = AddUDPConnection(Board.RecGB, IPAddress.Parse("10.1.0.12"), 12322, 12312);
+            ConnectionGB.Name = Board.RecGB.ToString();
+
+            ConnectionCanBridge = AddUDPConnection(Board.RecCan, IPAddress.Parse("10.1.0.15"), 12325, 12315);
+            ConnectionCanBridge.Name = Board.RecCan.ToString();
+            
             ConnectionCan = new CanConnection(Board.RecCan);
             ConnectionCan.StartReception();
 

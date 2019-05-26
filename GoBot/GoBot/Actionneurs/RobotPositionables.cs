@@ -52,6 +52,7 @@ namespace GoBot.Actionneurs
         public int PositionOpen { get; set; }
         public int PositionClose { get; set; }
         public int PositionFree { get; set; }
+        public int PositionPush { get; set; }
     }
 
     public abstract class ServoClampAtom : ServoClamp
@@ -76,7 +77,7 @@ namespace GoBot.Actionneurs
 
     public class ServoClampGoldLeft : ServoClamp
     {
-        public override ServomoteurID ID => ServomoteurID.GoldClampRight;
+        public override ServomoteurID ID => ServomoteurID.GoldClampLeft;
     }
 
     public abstract class ServoElevationGold : PositionableServo
@@ -84,6 +85,7 @@ namespace GoBot.Actionneurs
         public int PositionStored { get; set; }
         public int PositionApproach { get; set; }
         public int PositionLocking { get; set; }
+        public int PositionPush { get; set; }
     }
 
     public class ServoElevationGoldLeft : ServoElevationGold

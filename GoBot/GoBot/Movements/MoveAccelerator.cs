@@ -25,17 +25,17 @@ namespace GoBot.Movements
             
             if (_accelerator.Owner == Plateau.CouleurDroiteViolet)
             {
-                Positions.Add(new Position(90, new RealPoint(1290 + 20, Robot.Longueur / 2 + 150)));
-                _servoCalibration = Config.CurrentConfig.ServoCalibrationRight;
-                _servoExitLauncher = Config.CurrentConfig.ServoExitLauncherRight;
-                _servoLauncher = Config.CurrentConfig.ServoLauncherRight;
-            }
-            else
-            {
-                Positions.Add(new Position(90, new RealPoint(1710 - 20, Robot.Longueur / 2 + 150)));
+                Positions.Add(new Position(90, new RealPoint(1290 + 30, Robot.Longueur / 2 + 150)));
                 _servoCalibration = Config.CurrentConfig.ServoCalibrationLeft;
                 _servoExitLauncher = Config.CurrentConfig.ServoExitLauncherLeft;
                 _servoLauncher = Config.CurrentConfig.ServoLauncherLeft;
+            }
+            else
+            {
+                Positions.Add(new Position(90, new RealPoint(1710 - 30, Robot.Longueur / 2 + 150)));
+                _servoCalibration = Config.CurrentConfig.ServoCalibrationRight;
+                _servoExitLauncher = Config.CurrentConfig.ServoExitLauncherRight;
+                _servoLauncher = Config.CurrentConfig.ServoLauncherRight;
             }
         }
 
@@ -62,7 +62,9 @@ namespace GoBot.Movements
             _servoExitLauncher.SendPosition(_servoExitLauncher.PositionOutside);
             _servoLauncher.SendPosition(_servoLauncher.PositionStored);
 
+            Robot.Lent();
             Robot.Recallage(SensAR.Arriere);
+            Robot.Rapide();
 
             if (_accelerator.HasInitialAtom)
             {

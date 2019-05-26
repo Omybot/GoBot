@@ -481,7 +481,7 @@ namespace GoBot
         {
             // TODOEACHYEAR
 
-            Actionneur.AtomStacker.DoInit();
+            ThreadManager.CreateThread(link => Actionneur.AtomStacker.DoInit()).StartThread();
             Actionneur.AtomHandler.DoInit();
             Actionneur.AtomUnloader.DoInit();
             Actionneur.GoldGrabber.DoInit();

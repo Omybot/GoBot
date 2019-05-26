@@ -92,8 +92,8 @@ namespace GoBot.GameElements
             _goldeniumYellow = new Goldenium(new RealPoint(3000 - 770, 20), Plateau.CouleurGaucheJaune, 40);
 
             // Balances
-            _balanceViolet = new Balance(new RealPoint(1360, 1800), Plateau.CouleurDroiteViolet, 100);
-            _balanceYellow = new Balance(new RealPoint(3000-1360, 1800), Plateau.CouleurGaucheJaune, 100);
+            _balanceViolet = new Balance(new RealPoint(3000 - 1360, 1800), Plateau.CouleurDroiteViolet, 100);
+            _balanceYellow = new Balance(new RealPoint(1360, 1800), Plateau.CouleurGaucheJaune, 100);
         }
 
         public Accelerator AcceleratorViolet => _acceleratorViolet;

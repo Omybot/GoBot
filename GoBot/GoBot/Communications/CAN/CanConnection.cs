@@ -25,6 +25,8 @@ namespace GoBot.Communications.CAN
 
         private Board _board;
         private List<byte> _receivedBuffer;
+
+        private String _name;
         
         public CanConnection(Board board)
         {
@@ -32,7 +34,10 @@ namespace GoBot.Communications.CAN
             _framesCount = 0;
 
             _receivedBuffer = new List<byte>();
+            _name = board.ToString();
         }
+
+        public override string Name { get => _name; set => _name = value; }
 
         private void board_FrameReceived(Frame frame)
         {

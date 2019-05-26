@@ -22,15 +22,15 @@ namespace GoBot.Movements
 
             if(_balance.Owner == Plateau.CouleurDroiteViolet)
             {
-                Positions.Add(new Geometry.Position(-90, new Geometry.Shapes.RealPoint(3000 - (1772 - 50), 1300)));
+                Positions.Add(new Geometry.Position(90, new Geometry.Shapes.RealPoint(1772 - 50, 1300)));
                 _servoElevation = Config.CurrentConfig.ServoElevationGoldRight;
-                _servoClamp = Config.CurrentConfig.ServoClampRight;
+                _servoClamp = Config.CurrentConfig.ServoClampGoldRight;
             }
             else
             {
-                Positions.Add(new Geometry.Position(-90, new Geometry.Shapes.RealPoint(1772 - 50, 1300)));
+                Positions.Add(new Geometry.Position(90, new Geometry.Shapes.RealPoint(3000 - (1772 - 50), 1300)));
                 _servoElevation = Config.CurrentConfig.ServoElevationGoldLeft;
-                _servoClamp = Config.CurrentConfig.ServoClampLeft;
+                _servoClamp = Config.CurrentConfig.ServoClampGoldLeft;
             }
         }
 
@@ -55,15 +55,19 @@ namespace GoBot.Movements
             _servoElevation.SendPosition(_servoElevation.PositionLocking);
             Robot.Lent();
             Robot.Recallage(SensAR.Avant);
-            _servoClamp.SendPosition(_servoClamp.PositionOpen);
             Robot.Rapide();
+
+            _servoClamp.SendPosition(_servoClamp.PositionOpen);
+
+            Plateau.Score += 24; // Goldenium dans la balance
 
             Thread.Sleep(500);
             Robots.GrosRobot.Reculer(100);
-            _servoClamp.SendPosition(_servoClamp.PositionOpen);
-
-            Config.CurrentConfig.ServoElevationGoldRight.SendPosition(17000); // TODO position poussage
-            Robots.GrosRobot.Avancer(950);
+            
+            _servoElevation.SendPosition(_servoElevation.PositionPush);
+            _servoClamp.SendPosition(_servoClamp.PositionPush);
+            Thread.Sleep(500);
+            Robots.GrosRobot.Avancer(95);
             Robots.GrosRobot.Reculer(100);
 
             _servoClamp.SendPosition(_servoClamp.PositionClose);

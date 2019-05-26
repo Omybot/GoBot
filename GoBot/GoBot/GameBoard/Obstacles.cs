@@ -130,18 +130,16 @@ namespace GoBot.GameBoard
         {
             Dictionary<ColorPlus, IEnumerable<IShape>> obstacles = new Dictionary<ColorPlus, IEnumerable<IShape>>();
 
+            // TODOEACHYEAR : créer les obstacles fixes en fonction de la couleur (genre zones réservées à l'adversaire)
+
             // Obstacles pour le joueur de gauche
             List<IShape> obsLeft = new List<IShape>();
-            //obsLeft.Add(new Circle(new RealPoint(250, 850), 200));
-            //obsLeft.Add(new PolygonRectangle(new RealPoint(2030, 0), 600, 180));
-            //obsLeft.Add(new PolygonRectangle(new RealPoint(2600, 0), 400, 645));
+            obsLeft.Add(new PolygonRectangle(new RealPoint(2550, 300), 400, 900));
             obstacles.Add(Plateau.CouleurGaucheJaune, obsLeft);
 
             // Obstacles pour le joueur de droite
             List<IShape> obsRight = new List<IShape>();
-            obsRight.Add(new Circle(new RealPoint(3000 - 250, 850), 200));
-            obsRight.Add(new PolygonRectangle(new RealPoint(400, 0), 600, 180));
-            obsRight.Add(new PolygonRectangle(new RealPoint(0, 0), 400, 645));
+            obsRight.Add(new PolygonRectangle(new RealPoint(0, 300), 400, 900));
             obstacles.Add(Plateau.CouleurDroiteViolet, obsRight);
 
             return obstacles;

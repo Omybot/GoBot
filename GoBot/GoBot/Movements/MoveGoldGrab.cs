@@ -22,17 +22,17 @@ namespace GoBot.Movements
         {
             _goldenium = goldenium;
 
-            Positions.Add(new Position(90, new RealPoint(_goldenium.Position.X, _goldenium.Position.Y - 150)));
-
             if (_goldenium.Owner == Plateau.CouleurDroiteViolet)
             {
+                Positions.Add(new Position(-90, new RealPoint(_goldenium.Position.X - 100, 310)));
                 _servoElevation = Config.CurrentConfig.ServoElevationGoldRight;
-                _servoClamp = Config.CurrentConfig.ServoClampRight;
+                _servoClamp = Config.CurrentConfig.ServoClampGoldRight;
             }
             else
             {
+                Positions.Add(new Position(-90, new RealPoint(_goldenium.Position.X + 100, 300)));
                 _servoElevation = Config.CurrentConfig.ServoElevationGoldLeft;
-                _servoClamp = Config.CurrentConfig.ServoClampLeft;
+                _servoClamp = Config.CurrentConfig.ServoClampGoldLeft;
             }
         }
 
@@ -56,9 +56,11 @@ namespace GoBot.Movements
         {
             _servoElevation.SendPosition(_servoElevation.PositionApproach);
             _servoClamp.SendPosition(_servoClamp.PositionOpen);
+            Thread.Sleep(500);
 
             Robots.GrosRobot.Lent();
-            Robots.GrosRobot.Recallage(SensAR.Avant);
+            Robots.GrosRobot.Avancer(70);
+            Robots.GrosRobot.Stop(StopMode.Freely);
 
             _servoElevation.SendPosition(_servoElevation.PositionLocking);
             Thread.Sleep(500);
@@ -66,12 +68,13 @@ namespace GoBot.Movements
             Thread.Sleep(500);
             _servoElevation.SendPosition(_servoElevation.PositionApproach);
             Thread.Sleep(500);
+            Robots.GrosRobot.Stop(StopMode.Abrupt);
 
-            if (Color == Plateau.CouleurDroiteViolet)
-                Robots.GrosRobot.PivotGauche(5);
-            else
-                Robots.GrosRobot.PivotDroite(5);
-            
+            //if (Color == Plateau.CouleurDroiteViolet)
+            //    Robots.GrosRobot.PivotGauche(5);
+            //else
+            //    Robots.GrosRobot.PivotDroite(5);
+
             Robots.GrosRobot.Rapide();
             Robots.GrosRobot.Reculer(150);
 

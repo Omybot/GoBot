@@ -41,6 +41,8 @@
         /// </summary>
         abstract public void StartReception();
 
+        abstract public string Name { get; set; }
+
         /// <summary>
         /// Libère la connexion vers le client
         /// </summary>

@@ -7,6 +7,8 @@ namespace GoBot.Communications.UDP
 
     public class UDPConnection : Connection
     {
+        private String _name;
+
         private class UdpState
         {
             public UdpClient Client { get; set; }
@@ -18,6 +20,8 @@ namespace GoBot.Communications.UDP
                 EndPoint = endPoint;
             }
         }
+
+        public override string Name { get => _name; set => _name = value; }
 
         public enum ConnectionState
         {

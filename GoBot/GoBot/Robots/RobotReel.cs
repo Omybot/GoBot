@@ -245,7 +245,7 @@ namespace GoBot
                     break;
                 case UdpFrameFunction.MoteurBlocage:    // Idem avec bip
                     SemaphoresMoteur[(MoteurID)trameRecue[2]]?.Release();
-                    Devices.Devices.RecGoBot.Buzz(".--.");
+                    Devices.Devices.RecGoBot.Buzz("..");
                     break;
                 case UdpFrameFunction.Blocage:
                     ThreadManager.CreateThread(ReactivationAsserv).StartThread();
