@@ -21,6 +21,22 @@ namespace GoBot.Strategies
         private System.Timers.Timer endMatchTimer;
         private ThreadLink _linkMatch;
 
+        private bool _goldFree = false;
+
+        public bool GoldFree
+        {
+            get { return _goldFree; }
+            set { _goldFree = value; }
+        }
+
+        private bool _goldGrabed = false;
+
+        public bool GoldGrabed
+        {
+            get { return _goldGrabed; }
+            set { _goldGrabed = value; }
+        }
+
         public abstract bool AvoidElements { get; }
 
         /// <summary>
@@ -78,11 +94,20 @@ namespace GoBot.Strategies
             Movements = new List<Movement>();
 
             // TODOEACHYEAR Charger ICI dans Movements les mouvements possibles
-            
+
             //for (int i = 0; i < Plateau.Elements.ConstructionZones.Count; i++)
             //{
             //    Movements.Add(new MovementBuilding(Plateau.Elements.ConstructionZones[i]));
             //}
+
+            Movements.Add(new MoveAccelerator(Plateau.Elements.AcceleratorViolet));
+            Movements.Add(new MoveAccelerator(Plateau.Elements.AcceleratorYellow));
+
+            Movements.Add(new MoveGoldGrab(Plateau.Elements.GoldeniumViolet));
+            Movements.Add(new MoveGoldGrab(Plateau.Elements.GoldeniumYellow));
+
+            Movements.Add(new MoveBalance(Plateau.Elements.BalanceViolet));
+            Movements.Add(new MoveBalance(Plateau.Elements.BalanceYellow));
 
             for (int iMov = 0; iMov < Movements.Count; iMov++)
             {

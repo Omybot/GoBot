@@ -203,6 +203,11 @@ namespace GoBot.IHM
             gphMonitoring.GraphScale = value ? Composants.GraphPanel.ScaleType.Fixed : Composants.GraphPanel.ScaleType.DynamicPerCurve;
         }
 
+        private void btnStop_Click(object sender, EventArgs e)
+        {
+            _servo.DisableOutput();
+        }
+
         private void ReadValues()
         {
             try

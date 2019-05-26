@@ -1,4 +1,5 @@
-﻿using System;
+﻿using GoBot.Devices.CAN;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -12,6 +13,12 @@ namespace GoBot.Actionneurs
         {
             MoveClampLeft(Config.CurrentConfig.ServoClampLeft.PositionOpen);
             MoveClampRight(Config.CurrentConfig.ServoClampRight.PositionOpen);
+
+            Threading.ThreadManager.CreateThread(link =>
+            {
+                Devices.Devices.CanServos[(int)Config.CurrentConfig.ServoClampRight.ID].DisableOutput();
+                Devices.Devices.CanServos[(int)Config.CurrentConfig.ServoClampLeft.ID].DisableOutput();
+            }).StartDelayedThread(500);
         }
 
         public void DoClose()
@@ -27,6 +34,12 @@ namespace GoBot.Actionneurs
         {
             MoveClampLeft(Config.CurrentConfig.ServoClampLeft.PositionFree);
             MoveClampRight(Config.CurrentConfig.ServoClampRight.PositionFree);
+        }
+
+        public void DoFreeTorque()
+        {
+            MoveClampLeft(0);
+            MoveClampRight(0);
         }
 
         public void DoUp()
@@ -111,6 +124,9 @@ namespace GoBot.Actionneurs
             Thread.Sleep(500);
             MoveElevation(Config.CurrentConfig.ServoElevation.PositionInside);
             Thread.Sleep(500);
+
+            Devices.Devices.CanServos[(int)Config.CurrentConfig.ServoClampRight.ID].DisableOutput();
+            Devices.Devices.CanServos[(int)Config.CurrentConfig.ServoClampLeft.ID].DisableOutput();
         }
     }
 }

@@ -19,6 +19,10 @@ namespace GoBot.GameElements
 
         private Color _colorRedium, _colorGreenium, _colorBlueium;
 
+        private Accelerator _acceleratorViolet, _acceleratorYellow;
+        private Goldenium _goldeniumViolet, _goldeniumYellow;
+        private Balance _balanceViolet, _balanceYellow;
+
         public AllGameElements()
         {
             _colorRedium = Color.FromArgb(250, 36, 39);
@@ -78,8 +82,29 @@ namespace GoBot.GameElements
 
             // Atome accélérateur droite
             _standingAtoms.Add(new StandingAtom(new RealPoint(1500 + 210, 12.5), Plateau.CouleurDroiteViolet, _colorBlueium));
+
+            // Accélérateur (déchargement)
+            _acceleratorViolet = new Accelerator(new RealPoint(1290, 20), Plateau.CouleurDroiteViolet, 80);
+            _acceleratorYellow = new Accelerator(new RealPoint(1710, 20), Plateau.CouleurGaucheJaune, 80);
+
+            // Goldenium
+            _goldeniumViolet = new Goldenium(new RealPoint(770, 20), Plateau.CouleurDroiteViolet, 40);
+            _goldeniumYellow = new Goldenium(new RealPoint(3000 - 770, 20), Plateau.CouleurGaucheJaune, 40);
+
+            // Balances
+            _balanceViolet = new Balance(new RealPoint(1360, 1800), Plateau.CouleurDroiteViolet, 100);
+            _balanceYellow = new Balance(new RealPoint(3000-1360, 1800), Plateau.CouleurGaucheJaune, 100);
         }
 
+        public Accelerator AcceleratorViolet => _acceleratorViolet;
+        public Accelerator AcceleratorYellow => _acceleratorYellow;
+
+        public Goldenium GoldeniumViolet => _goldeniumViolet;
+        public Goldenium GoldeniumYellow => _goldeniumYellow;
+
+        public Balance BalanceViolet => _balanceViolet;
+        public Balance BalanceYellow=> _balanceYellow;
+        
         public IEnumerable<GameElement> AllElements
         {
             get
@@ -90,6 +115,10 @@ namespace GoBot.GameElements
 
                 elements = elements.Concat(_layingAtoms);
                 elements = elements.Concat(_standingAtoms);
+
+                elements = elements.Concat(new GameElement[] { _acceleratorViolet, _acceleratorYellow });
+                elements = elements.Concat(new GameElement[] { _goldeniumViolet, _goldeniumYellow });
+                elements = elements.Concat(new GameElement[] { _balanceViolet, _balanceYellow });
 
                 return elements;
             }

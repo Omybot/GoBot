@@ -89,6 +89,7 @@
     <Compile Include="Actionneurs\RobotPositionables.cs" />
     <Compile Include="Communications\CAN\CanConnection.cs" />
     <Compile Include="Communications\CAN\CanFrameDecoder.cs" />
+    <Compile Include="Communications\CAN\CanSubConnection.cs" />
     <Compile Include="Devices\CAN\CanDisplay.cs" />
     <Compile Include="Communications\CAN\CanFrameFactory.cs" />
     <Compile Include="Communications\CAN\CanFrameFunction.cs" />
@@ -105,6 +106,9 @@
     <Compile Include="Actions\ITimeableAction.cs" />
     <Compile Include="ColorPlus.cs" />
     <Compile Include="GameBoard\Obstacles.cs" />
+    <Compile Include="GameElements\Accelerator.cs" />
+    <Compile Include="GameElements\Balance.cs" />
+    <Compile Include="GameElements\Goldenium.cs" />
     <Compile Include="GameElements\LayingAtom.cs" />
     <Compile Include="GameElements\StandingAtom.cs" />
     <Compile Include="IHM\PanelBoardCanServos.cs">
@@ -144,6 +148,9 @@
       <DependentUpon>PanelServoCan.cs</DependentUpon>
     </Compile>
     <Compile Include="IHM\SplashScreen.cs" />
+    <Compile Include="Movements\MoveAccelerator.cs" />
+    <Compile Include="Movements\MoveBalance.cs" />
+    <Compile Include="Movements\MoveGoldGrab.cs" />
     <Compile Include="NameFinder.cs" />
     <Compile Include="Actions\Asservissement\ActionAccelerationLigne.cs" />
     <Compile Include="Actions\Asservissement\ActionVitesseLigne.cs" />

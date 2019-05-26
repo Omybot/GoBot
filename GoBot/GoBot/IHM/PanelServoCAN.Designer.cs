@@ -68,6 +68,7 @@
             this.lblIDTxt = new Composants.LabelPlus();
             this.picWarning = new System.Windows.Forms.PictureBox();
             this.toolTip = new System.Windows.Forms.ToolTip(this.components);
+            this.btnStop = new System.Windows.Forms.Button();
             this.grpMonitoring.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numID)).BeginInit();
             this.grpTrajectory.SuspendLayout();
@@ -431,7 +432,7 @@
             // 
             // numSpeedMax
             // 
-            this.numSpeedMax.Location = new System.Drawing.Point(234, 47);
+            this.numSpeedMax.Location = new System.Drawing.Point(239, 47);
             this.numSpeedMax.Maximum = new decimal(new int[] {
             65000,
             0,
@@ -444,7 +445,7 @@
             // 
             // numTorqueMax
             // 
-            this.numTorqueMax.Location = new System.Drawing.Point(234, 73);
+            this.numTorqueMax.Location = new System.Drawing.Point(239, 73);
             this.numTorqueMax.Maximum = new decimal(new int[] {
             65000,
             0,
@@ -483,6 +484,7 @@
             // 
             // grpControl
             // 
+            this.grpControl.Controls.Add(this.btnStop);
             this.grpControl.Controls.Add(this.btnReadValue);
             this.grpControl.Controls.Add(this.lblPositionTxt);
             this.grpControl.Controls.Add(this.numAccel);
@@ -530,7 +532,7 @@
             this.trkPosition.MinimumSize = new System.Drawing.Size(30, 15);
             this.trkPosition.Name = "trkPosition";
             this.trkPosition.Reverse = false;
-            this.trkPosition.Size = new System.Drawing.Size(136, 15);
+            this.trkPosition.Size = new System.Drawing.Size(109, 15);
             this.trkPosition.TabIndex = 4;
             this.trkPosition.Vertical = false;
             this.trkPosition.TickValueChanged += new Composants.TrackBarPlus.ValueChangedDelegate(this.trackBarPosition_TickValueChanged);
@@ -555,6 +557,16 @@
             this.picWarning.TabStop = false;
             this.toolTip.SetToolTip(this.picWarning, "Le servomoteur demandé est introuvable...");
             this.picWarning.Visible = false;
+            // 
+            // btnStop
+            // 
+            this.btnStop.Image = global::GoBot.Properties.Resources.Close16;
+            this.btnStop.Location = new System.Drawing.Point(266, 19);
+            this.btnStop.Name = "btnStop";
+            this.btnStop.Size = new System.Drawing.Size(23, 23);
+            this.btnStop.TabIndex = 40;
+            this.btnStop.UseVisualStyleBackColor = true;
+            this.btnStop.Click += new System.EventHandler(this.btnStop_Click);
             // 
             // PanelServoCan
             // 
@@ -629,5 +641,6 @@
         private Composants.SwitchButton boxAutoScale;
         private System.Windows.Forms.PictureBox picWarning;
         private System.Windows.Forms.ToolTip toolTip;
+        private System.Windows.Forms.Button btnStop;
     }
 }

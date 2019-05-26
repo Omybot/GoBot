@@ -428,7 +428,7 @@ namespace GoBot
             this.id = id;
             this.baudrate = baudrate;
 
-            connexion = Connections.BoardConnection[carte];
+            connexion = Connections.UDPBoardConnection[carte];
 
             connexion.FrameReceived += new UDPConnection.NewFrameDelegate(connexion_NouvelleTrame);
         }

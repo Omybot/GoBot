@@ -33,6 +33,31 @@ namespace GoBot.Actionneurs
             Config.CurrentConfig.ServoElevationGoldRight.SendPosition(Config.CurrentConfig.ServoElevationGoldRight.PositionStored);
         }
 
+        public void DoLeftOpen()
+        {
+            Config.CurrentConfig.ServoClampGoldLeft.SendPosition(Config.CurrentConfig.ServoClampGoldLeft.PositionOpen);
+        }
+
+        public void DoLeftClose()
+        {
+            Config.CurrentConfig.ServoClampGoldLeft.SendPosition(Config.CurrentConfig.ServoClampGoldLeft.PositionClose);
+        }
+
+        public void DoLeftUp()
+        {
+            Config.CurrentConfig.ServoElevationGoldLeft.SendPosition(Config.CurrentConfig.ServoElevationGoldLeft.PositionApproach);
+        }
+
+        public void DoLeftDown()
+        {
+            Config.CurrentConfig.ServoElevationGoldLeft.SendPosition(Config.CurrentConfig.ServoElevationGoldLeft.PositionLocking);
+        }
+
+        public void DoLeftStore()
+        {
+            Config.CurrentConfig.ServoElevationGoldLeft.SendPosition(Config.CurrentConfig.ServoElevationGoldLeft.PositionStored);
+        }
+
         public void DoGrabRight()
         {
             DoRightUp();
@@ -76,6 +101,33 @@ namespace GoBot.Actionneurs
             DoRightClose();
             DoRightStore();
             Robots.GrosRobot.Rapide();
+        }
+
+        public void DoInit()
+        {
+            DoRightUp();
+            Thread.Sleep(500);
+            DoRightOpen();
+            Thread.Sleep(500);
+            DoRightClose();
+            Thread.Sleep(500);
+            DoRightStore();
+            Thread.Sleep(500);
+
+            DoLeftUp();
+            Thread.Sleep(500);
+            DoLeftOpen();
+            Thread.Sleep(500);
+            DoLeftClose();
+            Thread.Sleep(500);
+            DoLeftStore();
+            Thread.Sleep(500);
+
+            Devices.Devices.CanServos[(int)Config.CurrentConfig.ServoElevationGoldLeft.ID].DisableOutput();
+            Devices.Devices.CanServos[(int)Config.CurrentConfig.ServoElevationGoldRight.ID].DisableOutput();
+
+            Devices.Devices.CanServos[(int)Config.CurrentConfig.ServoClampGoldLeft.ID].DisableOutput();
+            Devices.Devices.CanServos[(int)Config.CurrentConfig.ServoClampGoldRight.ID].DisableOutput();
         }
     }
 }
