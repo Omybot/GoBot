@@ -80,14 +80,18 @@ namespace GoBot.IHM
         private void GetServoInfos()
         {
             _linkPolling.RegisterName(" : " + _servo.ID.ToString());
-            gphMonitoring.AddPoint("Couple", _servo.ReadTorqueCurrent(), Color.Firebrick);
-            gphMonitoring.AddPoint("Position", _servo.ReadPosition(), Color.RoyalBlue);
+            gphMonitoringTorque.AddPoint("Couple", _servo.ReadTorqueCurrent(), Color.Firebrick);
+            gphMonitoringPos.AddPoint("Position", _servo.ReadPosition(), Color.RoyalBlue);
         }
 
         private void DrawTorqueCurve()
         {
             _linkDrawing.RegisterName(" : " + _servo.ID.ToString());
-            this.InvokeAuto(() => gphMonitoring.DrawCurves());
+            this.InvokeAuto(() =>
+            {
+                gphMonitoringPos.DrawCurves();
+                gphMonitoringTorque.DrawCurves();
+            });
         }
 
         private void btnGo_Click(object sender, EventArgs e)
@@ -99,7 +103,7 @@ namespace GoBot.IHM
         {
             ReadValues();
         }
-        
+
         private void numPosition_ValueChanged(object sender, EventArgs e)
         {
             if (_servo.LastPosition != numPosition.Value)
@@ -115,7 +119,7 @@ namespace GoBot.IHM
             if (_servo.LastPositionMin != val)
             {
                 _servo.SetPositionMin(val);
-                gphMonitoring.MinLimit = val;
+                gphMonitoringPos.MinLimit = val;
                 trkPosition.Min = val;
             }
         }
@@ -127,7 +131,7 @@ namespace GoBot.IHM
             if (_servo.LastPositionMax != val)
             {
                 _servo.SetPositionMax(val);
-                gphMonitoring.MaxLimit = val;
+                gphMonitoringPos.MaxLimit = val;
                 trkPosition.Max = val;
             }
         }
@@ -198,9 +202,9 @@ namespace GoBot.IHM
 
         private void boxAutoScale_ValueChanged(object sender, bool value)
         {
-            gphMonitoring.MinLimit = _servo.LastPositionMin;
-            gphMonitoring.MaxLimit = _servo.LastPositionMax;
-            gphMonitoring.GraphScale = value ? Composants.GraphPanel.ScaleType.Fixed : Composants.GraphPanel.ScaleType.DynamicPerCurve;
+            gphMonitoringPos.MinLimit = _servo.LastPositionMin;
+            gphMonitoringPos.MaxLimit = _servo.LastPositionMax;
+            gphMonitoringPos.GraphScale = value ? Composants.GraphPanel.ScaleType.Fixed : Composants.GraphPanel.ScaleType.DynamicPerCurve;
         }
 
         private void btnStop_Click(object sender, EventArgs e)
@@ -226,9 +230,9 @@ namespace GoBot.IHM
                 trkTrajectoryTarget.SetValue(_servo.LastPosition);
                 trkTrajectorySpeed.SetValue(_servo.LastSpeedMax);
                 trkTrajectoryAccel.SetValue(_servo.LastAcceleration);
-                
-                gphMonitoring.MinLimit = _servo.LastPositionMin;
-                gphMonitoring.MaxLimit = _servo.LastPositionMax;
+
+                gphMonitoringPos.MinLimit = _servo.LastPositionMin;
+                gphMonitoringPos.MaxLimit = _servo.LastPositionMax;
 
                 picWarning.Visible = false;
                 grpControl.Enabled = true;

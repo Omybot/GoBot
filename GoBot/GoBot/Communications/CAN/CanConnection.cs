@@ -13,7 +13,7 @@ namespace GoBot.Communications.CAN
     /// </summary>
     interface iCanSpeakable
     {
-        bool SendFrame(Frame frame, bool waitResponse);
+        bool SendFrame(Frame frame);
         int GetNextFrameID();
     }
 
@@ -25,9 +25,6 @@ namespace GoBot.Communications.CAN
 
         private Board _board;
         private List<byte> _receivedBuffer;
-
-        private Semaphore _lockAsk;
-        private Semaphore _lockWaitResponse;
         
         public CanConnection(Board board)
         {
@@ -35,7 +32,6 @@ namespace GoBot.Communications.CAN
             _framesCount = 0;
 
             _receivedBuffer = new List<byte>();
-            _lockAsk = new Semaphore(1, 1);
         }
 
         private void board_FrameReceived(Frame frame)
@@ -51,13 +47,12 @@ namespace GoBot.Communications.CAN
                 Frame canFrame = new Frame(_receivedBuffer.GetRange(0, 10));
                 _receivedBuffer.RemoveRange(0, 10);
                 OnFrameReceived(canFrame);
-                _lockWaitResponse?.Release();
             }
         }
 
-        bool iCanSpeakable.SendFrame(Frame frame, bool waitResponse)
+        bool iCanSpeakable.SendFrame(Frame frame)
         {
-            return this.SendMessage(frame, waitResponse);
+            return this.SendMessage(frame);
         }
 
         int iCanSpeakable.GetNextFrameID()
@@ -68,32 +63,13 @@ namespace GoBot.Communications.CAN
 
         public override bool SendMessage(Frame f)
         {
-            return SendMessage(f, false);
-        }
-
-        public bool SendMessage(Frame f, bool waitResponse)
-        {
             bool ok = true;
-
-            if (waitResponse)
-            {
-                _lockAsk.WaitOne();
-                _lockWaitResponse = new Semaphore(0, 1);
-            }
-
+            
             Connections.UDPBoardConnection[_board].SendMessage(UdpFrameFactory.EnvoyerCAN(_board, f));
             OnFrameSend(f);
 
             _framesCount = (_framesCount + 1) % 255;
-
-            if (waitResponse)
-            {
-                ok = _lockWaitResponse.WaitOne(1000);
-                _lockWaitResponse.Dispose();
-                _lockWaitResponse = null;
-                _lockAsk.Release();
-            }
-
+            
             return ok;
         }
 

@@ -25,7 +25,7 @@ namespace GoBot.Devices.CAN
 
         public void SetScore(int score)
         {
-            _communication.SendFrame(CanFrameFactory.BuildSetScore(score), false);
+            _communication.SendFrame(CanFrameFactory.BuildSetScore(score));
         }
 
         private void Plateau_ScoreChange(object sender, EventArgs e)

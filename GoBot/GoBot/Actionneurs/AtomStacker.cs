@@ -67,12 +67,12 @@ namespace GoBot.Actionneurs
             MoveFingerBack(0, false);
         }
 
-        public void DoFingerFrontStop()
+        public void DoFrontStop()
         {
             Connections.ConnectionIO.SendMessage(UdpFrameFactory.MoteurStop(MoteurID.FingerFront, StopMode.Abrupt));
         }
 
-        public void DoFingerBackStop()
+        public void DoBackStop()
         {
             Connections.ConnectionIO.SendMessage(UdpFrameFactory.MoteurStop(MoteurID.FingerBack, StopMode.Abrupt));
         }
@@ -108,22 +108,24 @@ namespace GoBot.Actionneurs
             Thread.Sleep(500);
             DoBackClose();
 
-            DoFingerBackStop();
+            DoBackStop();
             FingerBackOrigin();
             FingerBackResetPosition();
 
-            DoFingerFrontStop();
+            DoFrontStop();
             FingerFrontOrigin();
             FingerFrontResetPosition();
 
-            DoFingerBackStop();
-            DoFingerFrontStop();
+            DoBackStop();
+            DoFrontStop();
+
+            Thread.Sleep(1000);
 
             MoveFingerFront(150);
             MoveFingerBack(100);
 
-            DoFingerBackStop();
-            DoFingerFrontStop();
+            DoBackStop();
+            DoFrontStop();
 
             Thread.Sleep(500);
 
@@ -135,13 +137,13 @@ namespace GoBot.Actionneurs
         {
             ThreadManager.CreateThread(new ThreadLink.CallBack(link =>
             {
-                DoFingerFrontStop();
+                DoFrontStop();
                 Robots.GrosRobot.MoteurPosition(MoteurID.FingerFront, Config.CurrentConfig.MotorFingerFront.Minimum, true);
-                DoFingerFrontStop();
+                DoFrontStop();
                 Robots.GrosRobot.MoteurPosition(MoteurID.FingerFront, Config.CurrentConfig.MotorFingerFront.Maximum, true);
-                DoFingerBackStop();
+                DoBackStop();
                 Robots.GrosRobot.MoteurPosition(MoteurID.FingerBack, Config.CurrentConfig.MotorFingerBack.Maximum, true);
-                DoFingerBackStop();
+                DoBackStop();
                 Robots.GrosRobot.MoteurPosition(MoteurID.FingerBack, Config.CurrentConfig.MotorFingerBack.Minimum, true);
             })).StartLoop(new TimeSpan(), 3);
         }
@@ -152,7 +154,7 @@ namespace GoBot.Actionneurs
 
             Connections.ConnectionIO.SendMessage(UdpFrameFactory.MoteurStop(MoteurID.FingerFront, StopMode.Abrupt));
 
-            Robots.GrosRobot.MoteurPosition(MoteurID.FingerBack, position, wait);
+            Robots.GrosRobot.MoteurPosition(MoteurID.FingerFront, position, wait);
         }
 
         public void MoveFingerBack(int position, bool wait = true)
@@ -164,17 +166,17 @@ namespace GoBot.Actionneurs
             Robots.GrosRobot.MoteurPosition(MoteurID.FingerBack, position, wait);
         }
 
-        public void DoFingerBackPosition1()
+        public void DoBackPosition1()
         {
             Config.CurrentConfig.MotorFingerBack.SendPosition(0);
         }
 
-        public void DoFingerBackPosition2()
+        public void DoBackPosition2()
         {
             Config.CurrentConfig.MotorFingerBack.SendPosition(30);
         }
 
-        public void DoFingerBackPosition3()
+        public void DoBackPosition3()
         {
             Config.CurrentConfig.MotorFingerBack.SendPosition(100);
         }

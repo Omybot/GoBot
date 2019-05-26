@@ -54,12 +54,17 @@ namespace GoBot.Actionneurs
         public int PositionFree { get; set; }
     }
 
-    public class ServoClampLeft : ServoClamp
+    public abstract class ServoClampAtom : ServoClamp
+    {
+        public int PositionAlmostClose { get; set; }
+    }
+
+    public class ServoClampLeft : ServoClampAtom
     {
         public override ServomoteurID ID => ServomoteurID.ClampLeft;
     }
 
-    public class ServoClampRight : ServoClamp
+    public class ServoClampRight : ServoClampAtom
     {
         public override ServomoteurID ID => ServomoteurID.ClampRight;
     }

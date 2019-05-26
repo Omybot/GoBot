@@ -421,6 +421,36 @@ namespace GoBot.Devices
             connexion.SendMessage(UdpFrameFactory.Buzz(frequency, volume));
         }
 
+        public void Buzz()
+        {
+            ThreadManager.CreateThread(link =>
+            {
+                link.Name = "Buzz";
+                connexion.SendMessage(UdpFrameFactory.Buzz(5000, 200));
+                Thread.Sleep(200);
+                connexion.SendMessage(UdpFrameFactory.Buzz(0, 200));
+            }).StartThread();
+        }
+
+        public void Buzz(String morse)
+        {
+            ThreadManager.CreateThread(link =>
+            {
+                link.Name = "Buzz " + morse;
+
+                foreach(char c in morse)
+                {
+                    connexion.SendMessage(UdpFrameFactory.Buzz(5000, 200));
+                    if (c == '.')
+                        Thread.Sleep(100);
+                    else
+                        Thread.Sleep(200);
+                    connexion.SendMessage(UdpFrameFactory.Buzz(0, 200));
+                    Thread.Sleep(100);
+                }
+            }).StartThread();
+        }
+
         public uint GetCodeurPosition()
         {
             Frame t = UdpFrameFactory.CodeurPosition(Board.RecGB, CodeurID.Manuel);

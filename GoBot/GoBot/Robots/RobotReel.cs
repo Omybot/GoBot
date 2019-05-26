@@ -241,8 +241,11 @@ namespace GoBot
             switch ((UdpFrameFunction)trameRecue[1])
             {
                 case UdpFrameFunction.MoteurFin:
-                case UdpFrameFunction.MoteurBlocage:    // Idem
                     SemaphoresMoteur[(MoteurID)trameRecue[2]]?.Release();
+                    break;
+                case UdpFrameFunction.MoteurBlocage:    // Idem avec bip
+                    SemaphoresMoteur[(MoteurID)trameRecue[2]]?.Release();
+                    Devices.Devices.RecGoBot.Buzz(".--.");
                     break;
                 case UdpFrameFunction.Blocage:
                     ThreadManager.CreateThread(ReactivationAsserv).StartThread();

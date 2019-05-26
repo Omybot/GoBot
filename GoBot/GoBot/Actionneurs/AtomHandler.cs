@@ -16,18 +16,21 @@ namespace GoBot.Actionneurs
 
             Threading.ThreadManager.CreateThread(link =>
             {
-                Devices.Devices.CanServos[(int)Config.CurrentConfig.ServoClampRight.ID].DisableOutput();
-                Devices.Devices.CanServos[(int)Config.CurrentConfig.ServoClampLeft.ID].DisableOutput();
+                Devices.Devices.CanServos[(int)Config.CurrentConfig.ServoClampRight.ID - 200].DisableOutput();
+                Devices.Devices.CanServos[(int)Config.CurrentConfig.ServoClampLeft.ID - 200].DisableOutput();
             }).StartDelayedThread(500);
         }
 
         public void DoClose()
         {
-            //MoveClampLeft(Config.CurrentConfig.ServoClampLeft.PositionClose);
-            //MoveClampRight(Config.CurrentConfig.ServoClampRight.PositionClose);
-
             MoveClampLeft(Config.CurrentConfig.ServoClampLeft.Minimum);
             MoveClampRight(Config.CurrentConfig.ServoClampRight.Maximum);
+        }
+
+        public void DoCloseAlmost()
+        {
+            MoveClampLeft(Config.CurrentConfig.ServoClampLeft.PositionAlmostClose);
+            MoveClampRight(Config.CurrentConfig.ServoClampRight.PositionAlmostClose);
         }
 
         public void DoFree()
@@ -74,23 +77,23 @@ namespace GoBot.Actionneurs
 
             DoSwallow();
             DoClose();
-            Thread.Sleep(2000);
-            DoStop();
+            Thread.Sleep(500);
             DoUp();
-            Thread.Sleep(2000);
+            Thread.Sleep(500);
+            DoStop();
 
             Actionneur.AtomStacker.MoveFingerFront(Config.CurrentConfig.MotorFingerFront.Maximum, true);
 
             Actionneur.AtomStacker.DoFrontClose();
-            Thread.Sleep(500);
+            Thread.Sleep(200);
             DoFree();
             Thread.Sleep(100);
 
-            Actionneur.AtomStacker.DoFrontStore();
-            Thread.Sleep(400);
+            Actionneur.AtomStacker.DoFrontStore(false);
+            Thread.Sleep(1000);
             DoDown();
-            Thread.Sleep(400);
             DoFree();
+            Actionneur.AtomStacker.DoFrontStore(true);
         }
 
         public void MoveClampLeft(int position)

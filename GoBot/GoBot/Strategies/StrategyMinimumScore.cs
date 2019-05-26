@@ -1,4 +1,5 @@
-﻿using GoBot.Movements;
+﻿using GoBot.Actionneurs;
+using GoBot.Movements;
 using GoBot.Threading;
 using System;
 using System.Collections.Generic;
@@ -21,7 +22,21 @@ namespace GoBot.Strategies
         protected override void SequenceBegin()
         {
             // Sortir ICI de la zonde de départ
-            
+
+
+            Actionneur.AtomHandler.DoDown();
+            Actionneur.AtomHandler.DoOpen();
+            Actionneur.AtomHandler.DoSwallow();
+            Thread.Sleep(150);
+            Robots.GrosRobot.Avancer(150);
+            Actionneur.AtomHandler.DoClose();
+            Thread.Sleep(200);
+            Actionneur.AtomHandler.DoStop();
+            Actionneur.AtomHandler.DoUp();
+
+            Robots.GrosRobot.Avancer(1000);
+            Actionneur.AtomHandler.DoFreeTorque();
+
             Robots.GrosRobot.SpeedConfig.SetParams(1000, 1500, 2000, 1000, 2000, 2000);
             //Robots.GrosRobot.SpeedConfig.SetParams(500, 500, 500, 500, 500, 500);
             

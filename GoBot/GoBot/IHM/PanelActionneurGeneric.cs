@@ -26,8 +26,8 @@ namespace GoBot.IHM
             int i = 25;
 
             lblName.Text = t.Name;
-
-            foreach (MethodInfo method in t.GetMethods().Where(m => m.Name.StartsWith("Do")))
+            
+            foreach (MethodInfo method in t.GetMethods().Where(m => m.Name.StartsWith("Do")).OrderBy(s => s.Name))
             {
                 Button b = new Button();
                 b.SetBounds(5, i, 120, 22);
@@ -41,9 +41,18 @@ namespace GoBot.IHM
 
         void b_Click(object sender, EventArgs e)
         {
-            MethodInfo method = ((MethodInfo)((Button)sender).Tag);
-            object[] parameters = method.GetParameters().Count() > 0 ? new Object[] { false } : null;
-            method.Invoke(obj, parameters);
+            Button b = (Button)sender;
+            Color oldColor = b.BackColor;
+
+            b.BackColor = Color.LightGreen;
+            Threading.ThreadManager.CreateThread(link =>
+            {
+                link.Name = b.Text;
+                MethodInfo method = ((MethodInfo)((Button)sender).Tag);
+                object[] parameters = method.GetParameters().Count() > 0 ? new Object[] { false } : null;
+                method.Invoke(obj, parameters);
+                b.InvokeAuto(() => b.BackColor = oldColor);
+            }).StartThread();
         }
 
         private void PanelActionneurGeneric_Load(object sender, EventArgs e)

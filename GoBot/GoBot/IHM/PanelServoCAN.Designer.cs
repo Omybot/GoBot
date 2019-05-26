@@ -32,7 +32,7 @@
             this.grpMonitoring = new System.Windows.Forms.GroupBox();
             this.lblAutoScale = new System.Windows.Forms.Label();
             this.boxAutoScale = new Composants.SwitchButton();
-            this.gphMonitoring = new Composants.GraphPanel();
+            this.gphMonitoringPos = new Composants.GraphPanel();
             this.boxMonitoring = new Composants.SwitchButton();
             this.numID = new System.Windows.Forms.NumericUpDown();
             this.lblPositionTxt = new System.Windows.Forms.Label();
@@ -69,6 +69,7 @@
             this.picWarning = new System.Windows.Forms.PictureBox();
             this.toolTip = new System.Windows.Forms.ToolTip(this.components);
             this.btnStop = new System.Windows.Forms.Button();
+            this.gphMonitoringTorque = new Composants.GraphPanel();
             this.grpMonitoring.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numID)).BeginInit();
             this.grpTrajectory.SuspendLayout();
@@ -85,9 +86,10 @@
             // 
             // grpMonitoring
             // 
+            this.grpMonitoring.Controls.Add(this.gphMonitoringTorque);
             this.grpMonitoring.Controls.Add(this.lblAutoScale);
             this.grpMonitoring.Controls.Add(this.boxAutoScale);
-            this.grpMonitoring.Controls.Add(this.gphMonitoring);
+            this.grpMonitoring.Controls.Add(this.gphMonitoringPos);
             this.grpMonitoring.Controls.Add(this.boxMonitoring);
             this.grpMonitoring.Enabled = false;
             this.grpMonitoring.Location = new System.Drawing.Point(3, 167);
@@ -121,21 +123,21 @@
             this.boxAutoScale.Value = false;
             this.boxAutoScale.ValueChanged += new Composants.SwitchButton.ValueChangedDelegate(this.boxAutoScale_ValueChanged);
             // 
-            // gphMonitoring
+            // gphMonitoringPos
             // 
-            this.gphMonitoring.BackColor = System.Drawing.Color.White;
-            this.gphMonitoring.BorderColor = System.Drawing.Color.LightGray;
-            this.gphMonitoring.BorderVisible = false;
-            this.gphMonitoring.GraphScale = Composants.GraphPanel.ScaleType.DynamicPerCurve;
-            this.gphMonitoring.LimitsVisible = true;
-            this.gphMonitoring.Location = new System.Drawing.Point(8, 21);
-            this.gphMonitoring.MaxLimit = 1D;
-            this.gphMonitoring.MinLimit = 0D;
-            this.gphMonitoring.Name = "gphMonitoring";
-            this.gphMonitoring.NamesAlignment = System.Drawing.ContentAlignment.TopLeft;
-            this.gphMonitoring.NamesVisible = true;
-            this.gphMonitoring.Size = new System.Drawing.Size(281, 115);
-            this.gphMonitoring.TabIndex = 4;
+            this.gphMonitoringPos.BackColor = System.Drawing.Color.White;
+            this.gphMonitoringPos.BorderColor = System.Drawing.Color.LightGray;
+            this.gphMonitoringPos.BorderVisible = false;
+            this.gphMonitoringPos.GraphScale = Composants.GraphPanel.ScaleType.DynamicGlobal;
+            this.gphMonitoringPos.LimitsVisible = true;
+            this.gphMonitoringPos.Location = new System.Drawing.Point(6, 21);
+            this.gphMonitoringPos.MaxLimit = 1D;
+            this.gphMonitoringPos.MinLimit = 0D;
+            this.gphMonitoringPos.Name = "gphMonitoringPos";
+            this.gphMonitoringPos.NamesAlignment = System.Drawing.ContentAlignment.TopLeft;
+            this.gphMonitoringPos.NamesVisible = true;
+            this.gphMonitoringPos.Size = new System.Drawing.Size(139, 115);
+            this.gphMonitoringPos.TabIndex = 4;
             // 
             // boxMonitoring
             // 
@@ -568,6 +570,22 @@
             this.btnStop.UseVisualStyleBackColor = true;
             this.btnStop.Click += new System.EventHandler(this.btnStop_Click);
             // 
+            // gphMonitoringTorque
+            // 
+            this.gphMonitoringTorque.BackColor = System.Drawing.Color.White;
+            this.gphMonitoringTorque.BorderColor = System.Drawing.Color.LightGray;
+            this.gphMonitoringTorque.BorderVisible = false;
+            this.gphMonitoringTorque.GraphScale = Composants.GraphPanel.ScaleType.DynamicGlobal;
+            this.gphMonitoringTorque.LimitsVisible = true;
+            this.gphMonitoringTorque.Location = new System.Drawing.Point(150, 21);
+            this.gphMonitoringTorque.MaxLimit = 1D;
+            this.gphMonitoringTorque.MinLimit = 0D;
+            this.gphMonitoringTorque.Name = "gphMonitoringTorque";
+            this.gphMonitoringTorque.NamesAlignment = System.Drawing.ContentAlignment.TopLeft;
+            this.gphMonitoringTorque.NamesVisible = true;
+            this.gphMonitoringTorque.Size = new System.Drawing.Size(139, 115);
+            this.gphMonitoringTorque.TabIndex = 7;
+            // 
             // PanelServoCan
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -606,7 +624,7 @@
         private System.Windows.Forms.GroupBox grpMonitoring;
         private System.Windows.Forms.NumericUpDown numID;
         private Composants.LabelPlus lblIDTxt;
-        private Composants.GraphPanel gphMonitoring;
+        private Composants.GraphPanel gphMonitoringPos;
         private Composants.TrackBarPlus trkPosition;
         private System.Windows.Forms.Label lblPositionTxt;
         private System.Windows.Forms.Button btnTrajectoryGo;
@@ -642,5 +660,6 @@
         private System.Windows.Forms.PictureBox picWarning;
         private System.Windows.Forms.ToolTip toolTip;
         private System.Windows.Forms.Button btnStop;
+        private Composants.GraphPanel gphMonitoringTorque;
     }
 }

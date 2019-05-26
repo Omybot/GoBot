@@ -31,6 +31,7 @@ namespace GoBot.Communications.CAN
         TrajectorySet = 0x16,
         DisableOutput = 0x17,
         TorqueAlert = 0x18,
+        TestConnection = 0x19,
 
         SetScore = 0xA0,
 
