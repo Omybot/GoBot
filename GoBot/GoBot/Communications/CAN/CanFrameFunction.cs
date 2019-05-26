@@ -30,6 +30,7 @@ namespace GoBot.Communications.CAN
         TargetSet = 0x15,
         TrajectorySet = 0x16,
         DisableOutput = 0x17,
+        TorqueAlert = 0x18,
 
         SetScore = 0xA0,
 

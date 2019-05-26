@@ -148,6 +148,9 @@ namespace GoBot.Devices.CAN
                     case CanFrameFunction.AccelerationResponse:
                         _acceleration = CanFrameFactory.ExtractValue(frame);
                         break;
+                    case CanFrameFunction.TorqueAlert:
+                        Devices.RecGoBot.Buzz(5000,200);
+                        break;
                 }
             }
             catch (Exception e)
