@@ -1,4 +1,6 @@
-﻿using System;
+﻿using GoBot.Communications;
+using GoBot.Devices.CAN;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -6,73 +8,58 @@ using System.Threading;
 
 namespace GoBot.Actionneurs
 {
-    class GoldGrabber
+    public abstract class GoldGrabber
     {
-        public void DoRightOpen()
+        protected CanServo _servoClamp;
+        protected CanServo _servoElevation;
+
+        protected ServoClampGold _posClamp;
+        protected ServoElevationGold _posElevation;
+
+        public GoldGrabber()
         {
-            Config.CurrentConfig.ServoClampGoldRight.SendPosition(Config.CurrentConfig.ServoClampGoldRight.PositionOpen);
         }
 
-        public void DoRightClose()
+        public void DoOpen()
         {
-            Config.CurrentConfig.ServoClampGoldRight.SendPosition(Config.CurrentConfig.ServoClampGoldRight.PositionClose);
+            _servoClamp.SetPosition(_posClamp.PositionOpen);
         }
 
-        public void DoRightUp()
+        public void DoClose()
         {
-            Config.CurrentConfig.ServoElevationGoldRight.SendPosition(Config.CurrentConfig.ServoElevationGoldRight.PositionApproach);
+            _servoClamp.SetPosition(_posClamp.PositionClose);
         }
 
-        public void DoRightDown()
+        public void DoUp()
         {
-            Config.CurrentConfig.ServoElevationGoldRight.SendPosition(Config.CurrentConfig.ServoElevationGoldRight.PositionLocking);
+            _servoElevation.SetPosition(_posElevation.PositionApproach);
         }
 
-        public void DoRightStore()
+        public void DoDown()
         {
-            Config.CurrentConfig.ServoElevationGoldRight.SendPosition(Config.CurrentConfig.ServoElevationGoldRight.PositionStored);
+            _servoElevation.SetPosition(_posElevation.PositionLocking);
         }
 
-        public void DoLeftOpen()
+        public void DoStore()
         {
-            Config.CurrentConfig.ServoClampGoldLeft.SendPosition(Config.CurrentConfig.ServoClampGoldLeft.PositionOpen);
+            _servoElevation.SetPosition(_posElevation.PositionStored);
         }
 
-        public void DoLeftClose()
+        public void DoGrab()
         {
-            Config.CurrentConfig.ServoClampGoldLeft.SendPosition(Config.CurrentConfig.ServoClampGoldLeft.PositionClose);
-        }
-
-        public void DoLeftUp()
-        {
-            Config.CurrentConfig.ServoElevationGoldLeft.SendPosition(Config.CurrentConfig.ServoElevationGoldLeft.PositionApproach);
-        }
-
-        public void DoLeftDown()
-        {
-            Config.CurrentConfig.ServoElevationGoldLeft.SendPosition(Config.CurrentConfig.ServoElevationGoldLeft.PositionLocking);
-        }
-
-        public void DoLeftStore()
-        {
-            Config.CurrentConfig.ServoElevationGoldLeft.SendPosition(Config.CurrentConfig.ServoElevationGoldLeft.PositionStored);
-        }
-
-        public void DoGrabRight()
-        {
-            DoRightUp();
+            DoUp();
             Thread.Sleep(500);
-            DoRightOpen();
+            DoOpen();
 
             Robots.GrosRobot.Lent();
             Robots.GrosRobot.Avancer(150);
 
-            DoRightDown();
+            DoDown();
             Thread.Sleep(500);
-            DoRightClose();
+            DoClose();
             Thread.Sleep(1000);
 
-            DoRightUp();
+            DoUp();
             Thread.Sleep(500);
             Robots.GrosRobot.PivotGauche(5);
 
@@ -80,54 +67,66 @@ namespace GoBot.Actionneurs
             Robots.GrosRobot.Reculer(150);
             Robots.GrosRobot.Rapide();
 
-            DoRightStore();
+            DoStore();
         }
 
-        public void DoDropRight()
+        public void DoDrop()
         {
-            DoRightUp();
+            DoUp();
             Thread.Sleep(500);
             Robots.GrosRobot.Lent();
             Robots.GrosRobot.Recallage(SensAR.Avant);
-            DoRightOpen();
+            DoOpen();
             Thread.Sleep(500);
             Robots.GrosRobot.Reculer(100);
-            DoRightClose();
+            DoClose();
 
             Config.CurrentConfig.ServoElevationGoldRight.SendPosition(17000);
             Robots.GrosRobot.Recallage(SensAR.Avant);
             Robots.GrosRobot.Reculer(100);
 
-            DoRightClose();
-            DoRightStore();
+            DoClose();
+            DoStore();
             Robots.GrosRobot.Rapide();
         }
 
         public void DoInit()
         {
-            DoRightUp();
+            DoUp();
             Thread.Sleep(500);
-            DoRightOpen();
+            DoOpen();
             Thread.Sleep(500);
-            DoRightClose();
+            DoClose();
             Thread.Sleep(500);
-            DoRightStore();
-            Thread.Sleep(500);
-
-            DoLeftUp();
-            Thread.Sleep(500);
-            DoLeftOpen();
-            Thread.Sleep(500);
-            DoLeftClose();
-            Thread.Sleep(500);
-            DoLeftStore();
+            DoStore();
             Thread.Sleep(500);
 
-            Devices.Devices.CanServos[(int)Config.CurrentConfig.ServoElevationGoldLeft.ID].DisableOutput();
-            Devices.Devices.CanServos[(int)Config.CurrentConfig.ServoElevationGoldRight.ID].DisableOutput();
+            _servoElevation.DisableOutput();
+            _servoClamp.DisableOutput();
+        }
+    }
 
-            Devices.Devices.CanServos[(int)Config.CurrentConfig.ServoClampGoldLeft.ID].DisableOutput();
-            Devices.Devices.CanServos[(int)Config.CurrentConfig.ServoClampGoldRight.ID].DisableOutput();
+    public class GoldGrabberLeft : GoldGrabber
+    {
+        public GoldGrabberLeft()
+        {
+            _servoClamp = Devices.Devices.CanServos[ServomoteurID.GoldClampLeft];
+            _servoElevation = Devices.Devices.CanServos[ServomoteurID.GoldElevationLeft];
+
+            _posClamp = Config.CurrentConfig.ServoClampGoldLeft;
+            _posElevation = Config.CurrentConfig.ServoElevationGoldLeft;
+        }
+    }
+
+    public class GoldGrabberRight : GoldGrabber
+    {
+        public GoldGrabberRight()
+        {
+            _servoClamp = Devices.Devices.CanServos[ServomoteurID.GoldClampLeft];
+            _servoElevation = Devices.Devices.CanServos[ServomoteurID.GoldElevationLeft];
+
+            _posClamp = Config.CurrentConfig.ServoClampGoldLeft;
+            _posElevation = Config.CurrentConfig.ServoElevationGoldLeft;
         }
     }
 }

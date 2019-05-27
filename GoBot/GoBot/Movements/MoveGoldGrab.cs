@@ -13,8 +13,7 @@ namespace GoBot.Movements
 {
     class MoveGoldGrab : Movement
     {
-        private ServoElevationGold _servoElevation;
-        private ServoClamp _servoClamp;
+        private GoldGrabber _grabber;
 
         private Goldenium _goldenium;
 
@@ -25,14 +24,12 @@ namespace GoBot.Movements
             if (_goldenium.Owner == Plateau.CouleurDroiteViolet)
             {
                 Positions.Add(new Position(-90, new RealPoint(_goldenium.Position.X - 100, 310)));
-                _servoElevation = Config.CurrentConfig.ServoElevationGoldRight;
-                _servoClamp = Config.CurrentConfig.ServoClampGoldRight;
+                _grabber = Actionneur.GoldGrabberRight;
             }
             else
             {
                 Positions.Add(new Position(-90, new RealPoint(_goldenium.Position.X + 100, 300)));
-                _servoElevation = Config.CurrentConfig.ServoElevationGoldLeft;
-                _servoClamp = Config.CurrentConfig.ServoClampGoldLeft;
+                _grabber = Actionneur.GoldGrabberLeft;
             }
         }
 
@@ -54,19 +51,19 @@ namespace GoBot.Movements
 
         protected override void MovementCore()
         {
-            _servoElevation.SendPosition(_servoElevation.PositionApproach);
-            _servoClamp.SendPosition(_servoClamp.PositionOpen);
+            _grabber.DoUp();
+            _grabber.DoOpen();
             Thread.Sleep(500);
 
             Robots.GrosRobot.Lent();
             Robots.GrosRobot.Avancer(70);
             Robots.GrosRobot.Stop(StopMode.Freely);
 
-            _servoElevation.SendPosition(_servoElevation.PositionLocking);
+            _grabber.DoDown();
             Thread.Sleep(500);
-            _servoClamp.SendPosition(_servoClamp.PositionClose);
+            _grabber.DoClose();
             Thread.Sleep(500);
-            _servoElevation.SendPosition(_servoElevation.PositionApproach);
+            _grabber.DoUp();
             Thread.Sleep(500);
             Robots.GrosRobot.Stop(StopMode.Abrupt);
 
@@ -78,7 +75,7 @@ namespace GoBot.Movements
             Robots.GrosRobot.Rapide();
             Robots.GrosRobot.Reculer(150);
 
-            _servoElevation.SendPosition(_servoElevation.PositionStored);
+            _grabber.DoStore();
 
             Plateau.Strategy.GoldGrabed = true;
 

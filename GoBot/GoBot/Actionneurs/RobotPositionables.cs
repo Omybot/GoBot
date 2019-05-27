@@ -70,12 +70,17 @@ namespace GoBot.Actionneurs
         public override ServomoteurID ID => ServomoteurID.ClampRight;
     }
 
-    public class ServoClampGoldRight : ServoClamp
+    public abstract class ServoClampGold : ServoClamp
+    {
+
+    }
+
+    public class ServoClampGoldRight : ServoClampGold
     {
         public override ServomoteurID ID => ServomoteurID.GoldClampRight;
     }
 
-    public class ServoClampGoldLeft : ServoClamp
+    public class ServoClampGoldLeft : ServoClampGold
     {
         public override ServomoteurID ID => ServomoteurID.GoldClampLeft;
     }

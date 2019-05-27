@@ -11,8 +11,7 @@ namespace GoBot.Movements
 {
     public class MoveBalance : Movement
     {
-        private ServoElevationGold _servoElevation;
-        private ServoClamp _servoClamp;
+        private GoldGrabber _grabber;
 
         Balance _balance;
 
@@ -23,14 +22,12 @@ namespace GoBot.Movements
             if(_balance.Owner == Plateau.CouleurDroiteViolet)
             {
                 Positions.Add(new Geometry.Position(90, new Geometry.Shapes.RealPoint(1772 - 50, 1300)));
-                _servoElevation = Config.CurrentConfig.ServoElevationGoldRight;
-                _servoClamp = Config.CurrentConfig.ServoClampGoldRight;
+                _grabber = Actionneur.GoldGrabberRight;
             }
             else
             {
                 Positions.Add(new Geometry.Position(90, new Geometry.Shapes.RealPoint(3000 - (1772 - 50), 1300)));
-                _servoElevation = Config.CurrentConfig.ServoElevationGoldLeft;
-                _servoClamp = Config.CurrentConfig.ServoClampGoldLeft;
+                _grabber = Actionneur.GoldGrabberLeft;
             }
         }
 
@@ -52,26 +49,20 @@ namespace GoBot.Movements
 
         protected override void MovementCore()
         {
-            _servoElevation.SendPosition(_servoElevation.PositionLocking);
+            _grabber.DoDown();
             Robot.Lent();
             Robot.Recallage(SensAR.Avant);
             Robot.Rapide();
 
-            _servoClamp.SendPosition(_servoClamp.PositionOpen);
+            _grabber.DoOpen();
 
             Plateau.Score += 24; // Goldenium dans la balance
 
             Thread.Sleep(500);
             Robots.GrosRobot.Reculer(100);
-            
-            _servoElevation.SendPosition(_servoElevation.PositionPush);
-            _servoClamp.SendPosition(_servoClamp.PositionPush);
-            Thread.Sleep(500);
-            Robots.GrosRobot.Avancer(95);
-            Robots.GrosRobot.Reculer(100);
 
-            _servoClamp.SendPosition(_servoClamp.PositionClose);
-            _servoElevation.SendPosition(_servoElevation.PositionStored);
+            _grabber.DoClose();
+            _grabber.DoStore();
         }
     }
 }

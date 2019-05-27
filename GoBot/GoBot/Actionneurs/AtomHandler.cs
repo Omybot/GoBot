@@ -20,9 +20,9 @@ namespace GoBot.Actionneurs
 
         public AtomHandler()
         {
-            _servoClampLeft = new CanServo((int)Config.CurrentConfig.ServoClampLeft.ID - 200, Connections.ConnectionCan);
-            _servoClampRight = new CanServo((int)Config.CurrentConfig.ServoClampRight.ID - 200, Connections.ConnectionCan);
-            _servoElevation = new CanServo((int)Config.CurrentConfig.ServoElevation.ID - 200, Connections.ConnectionCan);
+            _servoClampLeft = Devices.Devices.CanServos[ServomoteurID.ClampLeft];
+            _servoClampRight = Devices.Devices.CanServos[ServomoteurID.ClampRight];
+            _servoElevation = Devices.Devices.CanServos[ServomoteurID.Elevation];
 
             _posClampLeft = Config.CurrentConfig.ServoClampLeft;
             _posClampRight = Config.CurrentConfig.ServoClampRight;

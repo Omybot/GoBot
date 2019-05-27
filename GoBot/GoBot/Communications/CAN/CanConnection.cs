@@ -11,13 +11,13 @@ namespace GoBot.Communications.CAN
     /// <summary>
     /// Définit un objet capable d'envoyer des messages CAN
     /// </summary>
-    interface iCanSpeakable
+    public interface iCanSpeakable
     {
         bool SendFrame(Frame frame);
         int GetNextFrameID();
     }
 
-    class CanConnection : Connection, iCanSpeakable
+    public class CanConnection : Connection, iCanSpeakable
     {
         //TODO : CanConnection, héritier de Connection et transfert de la classe dans ../../Communications
 

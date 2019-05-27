@@ -13,9 +13,7 @@ namespace GoBot.Movements
 {
     class MoveAccelerator : Movement
     {
-        private ServoCalibration _servoCalibration;
-        private ServoExitLauncher _servoExitLauncher;
-        private ServoLauncher _servoLauncher;
+        private AtomUnloader _unloader;
         
         private Accelerator _accelerator;
 
@@ -26,16 +24,12 @@ namespace GoBot.Movements
             if (_accelerator.Owner == Plateau.CouleurDroiteViolet)
             {
                 Positions.Add(new Position(90, new RealPoint(1290 + 30, Robot.Longueur / 2 + 150)));
-                _servoCalibration = Config.CurrentConfig.ServoCalibrationLeft;
-                _servoExitLauncher = Config.CurrentConfig.ServoExitLauncherLeft;
-                _servoLauncher = Config.CurrentConfig.ServoLauncherLeft;
+                _unloader = Actionneur.AtomUnloaderLeft;
             }
             else
             {
                 Positions.Add(new Position(90, new RealPoint(1710 - 30, Robot.Longueur / 2 + 150)));
-                _servoCalibration = Config.CurrentConfig.ServoCalibrationRight;
-                _servoExitLauncher = Config.CurrentConfig.ServoExitLauncherRight;
-                _servoLauncher = Config.CurrentConfig.ServoLauncherRight;
+                _unloader = Actionneur.AtomUnloaderRight;
             }
         }
 
@@ -58,9 +52,10 @@ namespace GoBot.Movements
 
         protected override void MovementCore()
         {
-            _servoCalibration.SendPosition(_servoCalibration.PositionCalibration);
-            _servoExitLauncher.SendPosition(_servoExitLauncher.PositionOutside);
-            _servoLauncher.SendPosition(_servoLauncher.PositionStored);
+            _unloader.DoCalibrationExit();
+            _unloader.DoLauncherOutside();
+            _unloader.DoLauncherPrepare();
+
 
             Robot.Lent();
             Robot.Recallage(SensAR.Arriere);
@@ -68,9 +63,10 @@ namespace GoBot.Movements
 
             if (_accelerator.HasInitialAtom)
             {
-                _servoLauncher.SendPosition(_servoLauncher.PositionLaunch);
+                _unloader.DoLauncherLaunch();
                 Thread.Sleep(500);
-                _servoLauncher.SendPosition(_servoLauncher.PositionStored);
+                _unloader.DoLauncherPrepare();
+
                 _accelerator.HasInitialAtom = false;
                 Plateau.Strategy.GoldFree = true;
 
@@ -81,8 +77,8 @@ namespace GoBot.Movements
             // Deverser les palets stockés
 
             Robot.Avancer(150);
-            _servoExitLauncher.SendPosition(_servoExitLauncher.PositionInside);
-            _servoCalibration.SendPosition(_servoCalibration.PositionStored);
+            _unloader.DoLauncherInside();
+            _unloader.DoCalibrationStore();
         }
     }
 }

@@ -37,6 +37,14 @@ namespace GoBot.Devices.CAN
             }
         }
 
+        public CanServo this[ServomoteurID id]
+        {
+            get
+            {
+                return this[(int)id - 200];
+            }
+        }
+
         private void _communication_FrameReceived(Frame frame)
         {
             CanBoard idCan = CanFrameFactory.ExtractBoard(frame);

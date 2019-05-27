@@ -1,4 +1,6 @@
-﻿using System;
+﻿using GoBot.Communications;
+using GoBot.Devices.CAN;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -6,140 +8,104 @@ using System.Threading;
 
 namespace GoBot.Actionneurs
 {
-    class AtomUnloader
+    abstract public class AtomUnloader
     {
+        protected CanServo _servoUnloader;
+        protected CanServo _servoCalibration;
+        protected CanServo _servoExitLauncher;
+        protected CanServo _servoLauncher;
 
+        protected ServoUnloader _posUnloader;
+        protected ServoCalibration _posCalibration;
+        protected ServoExitLauncher _posExitLauncher;
+        protected ServoLauncher _posLauncher;
+
+        public AtomUnloader()
+        {
+            _servoUnloader = Devices.Devices.CanServos[ServomoteurID.Unloader];
+
+            _posUnloader = Config.CurrentConfig.ServoUnloader;
+        }
 
         public void DoUnloaderStore()
         {
-            Config.CurrentConfig.ServoUnloader.SendPosition(Config.CurrentConfig.ServoUnloader.PositionStore);
+            _servoUnloader.SetPosition(_posUnloader.PositionStore);
         }
 
         public void DoUnloaderDock()
         {
-            Config.CurrentConfig.ServoUnloader.SendPosition(Config.CurrentConfig.ServoUnloader.PositionDocking);
+            _servoUnloader.SetPosition(_posUnloader.PositionDocking);
         }
 
         public void DoUnloaderUnload()
         {
-            Config.CurrentConfig.ServoUnloader.SendPosition(Config.CurrentConfig.ServoUnloader.PositionUnload);
+            _servoUnloader.SetPosition(_posUnloader.PositionUnload);
         }
 
-        public void DoCalibrationLeftExit()
+        public void DoCalibrationExit()
         {
-            Config.CurrentConfig.ServoCalibrationLeft.SendPosition(Config.CurrentConfig.ServoCalibrationLeft.PositionCalibration);
+            _servoCalibration.SetPosition(_posCalibration.PositionCalibration);
         }
 
-        public void DoCalibrationLeftStore()
+        public void DoCalibrationStore()
         {
-            Config.CurrentConfig.ServoCalibrationLeft.SendPosition(Config.CurrentConfig.ServoCalibrationLeft.PositionStored);
+            _servoCalibration.SetPosition(_posCalibration.PositionStored);
         }
 
-        public void DoLauncherLeftOutside()
+        public void DoLauncherOutside()
         {
-            Config.CurrentConfig.ServoExitLauncherLeft.SendPosition(Config.CurrentConfig.ServoExitLauncherLeft.PositionOutside);
+            _servoExitLauncher.SetPosition(_posExitLauncher.PositionOutside);
         }
 
-        public void DoLauncherLeftInside()
+        public void DoLauncherInside()
         {
-            Config.CurrentConfig.ServoExitLauncherLeft.SendPosition(Config.CurrentConfig.ServoExitLauncherLeft.PositionInside);
+            _servoExitLauncher.SetPosition(_posExitLauncher.PositionInside);
         }
 
-        public void DoLauncherLeftLaunch()
+        public void DoLauncherLaunch()
         {
-            Config.CurrentConfig.ServoLauncherLeft.SendPosition(Config.CurrentConfig.ServoLauncherLeft.PositionLaunch);
+            _servoLauncher.SetPosition(_posLauncher.PositionLaunch);
         }
 
-        public void DoLauncherLeftStore()
+        public void DoLauncherPrepare()
         {
-            Config.CurrentConfig.ServoLauncherLeft.SendPosition(Config.CurrentConfig.ServoLauncherLeft.PositionStored);
+            _servoLauncher.SetPosition(_posLauncher.PositionStored);
         }
-
-
-
-        public void DoCalibrationRightExit()
-        {
-            Config.CurrentConfig.ServoCalibrationRight.SendPosition(Config.CurrentConfig.ServoCalibrationRight.PositionCalibration);
-        }
-
-        public void DoCalibrationRightStore()
-        {
-            Config.CurrentConfig.ServoCalibrationRight.SendPosition(Config.CurrentConfig.ServoCalibrationRight.PositionStored);
-        }
-
-        public void DoLauncherRightOutside()
-        {
-            Config.CurrentConfig.ServoExitLauncherRight.SendPosition(Config.CurrentConfig.ServoExitLauncherRight.PositionOutside);
-        }
-
-        public void DoLauncherRightInside()
-        {
-            Config.CurrentConfig.ServoExitLauncherRight.SendPosition(Config.CurrentConfig.ServoExitLauncherRight.PositionInside);
-        }
-
-        public void DoLauncherRightLaunch()
-        {
-            Config.CurrentConfig.ServoLauncherRight.SendPosition(Config.CurrentConfig.ServoLauncherRight.PositionLaunch);
-        }
-
-        public void DoLauncherRightStore()
-        {
-            Config.CurrentConfig.ServoLauncherRight.SendPosition(Config.CurrentConfig.ServoLauncherRight.PositionStored);
-        }
-
+        
         public void DoInit()
         {
-            DoCalibrationLeftExit();
-            Thread.Sleep(500);
-            DoCalibrationLeftStore();
-            Thread.Sleep(500);
-
-            DoLauncherLeftOutside();
-            Thread.Sleep(500);
-            DoLauncherLeftLaunch();
-            Thread.Sleep(500);
-            DoLauncherLeftStore();
-            Thread.Sleep(500);
-            DoLauncherLeftInside();
-            Thread.Sleep(500);
-
             DoUnloaderDock();
             Thread.Sleep(500);
             DoUnloaderStore();
             Thread.Sleep(500);
 
-            DoLauncherRightOutside();
+            DoCalibrationExit();
             Thread.Sleep(500);
-            DoLauncherRightLaunch();
-            Thread.Sleep(500);
-            DoLauncherRightStore();
-            Thread.Sleep(500);
-            DoLauncherRightInside();
+            DoCalibrationStore();
             Thread.Sleep(500);
 
-            DoCalibrationRightExit();
+            DoLauncherOutside();
             Thread.Sleep(500);
-            DoCalibrationRightStore();
+            DoLauncherLaunch();
             Thread.Sleep(500);
-
-            Devices.Devices.CanServos[(int)Config.CurrentConfig.ServoCalibrationLeft.ID].DisableOutput();
-            Devices.Devices.CanServos[(int)Config.CurrentConfig.ServoCalibrationRight.ID].DisableOutput();
-
-            Devices.Devices.CanServos[(int)Config.CurrentConfig.ServoExitLauncherLeft.ID].DisableOutput();
-            Devices.Devices.CanServos[(int)Config.CurrentConfig.ServoExitLauncherRight.ID].DisableOutput();
-
-            Devices.Devices.CanServos[(int)Config.CurrentConfig.ServoLauncherLeft.ID].DisableOutput();
-            Devices.Devices.CanServos[(int)Config.CurrentConfig.ServoLauncherRight.ID].DisableOutput();
-
-            Devices.Devices.CanServos[(int)Config.CurrentConfig.ServoUnloader.ID].DisableOutput();
+            DoLauncherPrepare();
+            Thread.Sleep(500);
+            DoLauncherInside();
+            Thread.Sleep(500);
+            
+            _servoCalibration.DisableOutput();
+            _servoExitLauncher.DisableOutput();
+            _servoLauncher.DisableOutput();
+            _servoUnloader.DisableOutput();
         }
 
         public void DoLaunchPalet()
         {
             DoUnloaderDock();
-            DoCalibrationLeftExit();
-            DoLauncherLeftOutside();
+            DoCalibrationExit();
+            DoLauncherOutside();
             Robots.GrosRobot.Lent();
+
             Thread.Sleep(1000);
             Robots.GrosRobot.Recallage(SensAR.Arriere);
             Robots.GrosRobot.Rapide();
@@ -147,11 +113,39 @@ namespace GoBot.Actionneurs
             Actionneur.AtomStacker.MoveFingerBack(0, true);
             Actionneur.AtomStacker.MoveFingerBack(17, false);
 
-            DoLauncherLeftLaunch();
+            DoLauncherLaunch();
             Thread.Sleep(1000);
-            DoLauncherLeftStore();
+            DoLauncherPrepare();
             Thread.Sleep(1000);
-            DoLauncherLeftInside();
+            DoLauncherInside();
+        }
+    }
+
+    public class AtomUnloaderLeft : AtomUnloader
+    {
+        public AtomUnloaderLeft()
+        {
+            _servoCalibration = Devices.Devices.CanServos[ServomoteurID.CalibrationLeft];
+            _servoExitLauncher = Devices.Devices.CanServos[ServomoteurID.ExitLauncherLeft];
+            _servoLauncher = Devices.Devices.CanServos[ServomoteurID.LauncherLeft];
+
+            _posCalibration = Config.CurrentConfig.ServoCalibrationLeft;
+            _posLauncher = Config.CurrentConfig.ServoLauncherLeft;
+            _posExitLauncher = Config.CurrentConfig.ServoExitLauncherLeft;
+        }
+    }
+
+    public class AtomUnloaderRight : AtomUnloader
+    {
+        public AtomUnloaderRight()
+        {
+            _servoCalibration = Devices.Devices.CanServos[ServomoteurID.CalibrationRight];
+            _servoExitLauncher = Devices.Devices.CanServos[ServomoteurID.ExitLauncherRight];
+            _servoLauncher = Devices.Devices.CanServos[ServomoteurID.LauncherRight];
+            
+            _posCalibration = Config.CurrentConfig.ServoCalibrationRight;
+            _posLauncher = Config.CurrentConfig.ServoLauncherRight;
+            _posExitLauncher = Config.CurrentConfig.ServoExitLauncherRight;
         }
     }
 }

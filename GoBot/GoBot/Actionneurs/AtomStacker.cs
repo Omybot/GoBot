@@ -1,5 +1,6 @@
 ﻿using GoBot.Communications;
 using GoBot.Communications.UDP;
+using GoBot.Devices.CAN;
 using GoBot.Threading;
 using System;
 using System.Collections.Generic;
@@ -11,29 +12,44 @@ namespace GoBot.Actionneurs
 {
     class AtomStacker
     {
+        CanServo _servoFingerFront;
+        CanServo _servoFingerBack;
+
+        ServoFingerFront _posFingerFront;
+        ServoFingerBack _posFingerBack;
+
+        public AtomStacker()
+        {
+            _servoFingerFront = Devices.Devices.CanServos[ServomoteurID.FingerFront];
+            _servoFingerBack = Devices.Devices.CanServos[ServomoteurID.FingerBack];
+
+            _posFingerFront = Config.CurrentConfig.ServoFingerFront;
+            _posFingerBack = Config.CurrentConfig.ServoFingerBack;
+        }
+
         public void DoFrontOpen()
         {
-            Config.CurrentConfig.ServoFingerFront.SendPosition(Config.CurrentConfig.ServoFingerFront.PositionOpen);
+            _servoFingerFront.SetPosition(_posFingerFront.PositionOpen);
         }
 
         public void DoFrontClose()
         {
-            Config.CurrentConfig.ServoFingerFront.SendPosition(Config.CurrentConfig.ServoFingerFront.PositionClose);
+            _servoFingerFront.SetPosition(_posFingerFront.PositionClose);
         }
 
         public void DoBackOpenForward()
         {
-            Config.CurrentConfig.ServoFingerBack.SendPosition(Config.CurrentConfig.ServoFingerBack.PositionForward);
+            _servoFingerBack.SetPosition(_posFingerBack.PositionForward);
         }
 
         public void DoBackOpenBackward()
         {
-            Config.CurrentConfig.ServoFingerBack.SendPosition(Config.CurrentConfig.ServoFingerBack.PositionBackward);
+            _servoFingerBack.SetPosition(_posFingerBack.PositionBackward);
         }
 
         public void DoBackClose()
         {
-            Config.CurrentConfig.ServoFingerBack.SendPosition(Config.CurrentConfig.ServoFingerBack.PositionVertical);
+            _servoFingerBack.SetPosition(_posFingerBack.PositionVertical);
         }
 
         public void DoFrontPrepare(bool wait = true)
@@ -126,9 +142,9 @@ namespace GoBot.Actionneurs
             DoBackClose();
             MoveFingerBack(1);
             MoveFingerBack(50, false);
-            
-            Devices.Devices.CanServos[(int)ServomoteurID.FingerBack].DisableOutput();
-            Devices.Devices.CanServos[(int)ServomoteurID.FingerFront].DisableOutput();
+
+            _servoFingerBack.DisableOutput();
+            _servoFingerFront.DisableOutput();
         }
 
         public void DoFrontMax()
@@ -167,7 +183,7 @@ namespace GoBot.Actionneurs
 
         public void DoBackPosition1()
         {
-            Config.CurrentConfig.MotorFingerBack.SendPosition(0);
+            Config.CurrentConfig.MotorFingerBack.SendPosition(1);
         }
 
         public void DoBackPosition2()

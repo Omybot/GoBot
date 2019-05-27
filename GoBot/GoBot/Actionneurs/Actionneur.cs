@@ -8,8 +8,8 @@ namespace GoBot.Actionneurs
         private static Hokuyo _hokuyoGround, _hokuyoAvoid;
         private static AtomHandler _atomHandler;
         private static AtomStacker _atomStacker;
-        private static AtomUnloader _atomUnloader;
-        private static GoldGrabber _goldGrabber;
+        private static AtomUnloader _atomUnloaderLeft, _atomUnloaderRight;
+        private static GoldGrabber _goldGrabberLeft, _goldGrabberRight;
 
         static Actionneur()
         {
@@ -17,8 +17,10 @@ namespace GoBot.Actionneurs
             _hokuyoAvoid = CreateHokuyo("COM7", LidarID.Avoid);
             _atomHandler = new AtomHandler();
             _atomStacker = new AtomStacker();
-            _atomUnloader = new AtomUnloader();
-            _goldGrabber = new GoldGrabber();
+            _atomUnloaderLeft = new AtomUnloaderLeft();
+            _atomUnloaderRight = new AtomUnloaderRight();
+            _goldGrabberLeft = new GoldGrabberLeft();
+            _goldGrabberRight = new GoldGrabberRight();
 
         }
 
@@ -61,16 +63,28 @@ namespace GoBot.Actionneurs
             set { _atomStacker = value; }
         }
 
-        public static AtomUnloader AtomUnloader
+        public static AtomUnloader AtomUnloaderLeft
         {
-            get { return _atomUnloader; }
-            set { _atomUnloader = value; }
+            get { return _atomUnloaderLeft; }
+            set { _atomUnloaderLeft = value; }
         }
 
-        public static GoldGrabber GoldGrabber
+        public static AtomUnloader AtomUnloaderRight
         {
-            get { return _goldGrabber; }
-            set { _goldGrabber = value; }
+            get { return _atomUnloaderRight; }
+            set { _atomUnloaderRight = value; }
+        }
+
+        public static GoldGrabber GoldGrabberLeft
+        {
+            get { return _goldGrabberLeft; }
+            set { _goldGrabberLeft = value; }
+        }
+
+        public static GoldGrabber GoldGrabberRight
+        {
+            get { return _goldGrabberRight; }
+            set { _goldGrabberRight = value; }
         }
     }
 }

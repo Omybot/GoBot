@@ -483,8 +483,10 @@ namespace GoBot
 
             ThreadManager.CreateThread(link => Actionneur.AtomStacker.DoInit()).StartThread();
             Actionneur.AtomHandler.DoInit();
-            Actionneur.AtomUnloader.DoInit();
-            Actionneur.GoldGrabber.DoInit();
+            Actionneur.AtomUnloaderLeft.DoInit();
+            Actionneur.AtomUnloaderRight.DoInit();
+            Actionneur.GoldGrabberLeft.DoInit();
+            Actionneur.GoldGrabberRight.DoInit();
         }
 
         public void DeployerActionnneurs()

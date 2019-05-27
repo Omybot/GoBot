@@ -11,7 +11,7 @@ namespace GoBot.Devices.CAN
     /// <summary>
     /// Représente un servomoteur piloté par liaison CAN
     /// </summary>
-    class CanServo
+    public class CanServo
     {
         private int _globalId;
 
