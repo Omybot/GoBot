@@ -173,10 +173,10 @@ namespace GoBot
 
         public static void StartDetection()
         {
-            if (Actionneurs.Actionneur.HokuyoAvoid != null)
+            if (Devices.Devices.HokuyoAvoid != null)
             {
-                Actionneurs.Actionneur.HokuyoAvoid.StartLoopMeasure();
-                Actionneurs.Actionneur.HokuyoAvoid.NewMeasure += HokuyoAvoid_NewMeasure;
+                Devices.Devices.HokuyoAvoid.StartLoopMeasure();
+                Devices.Devices.HokuyoAvoid.NewMeasure += HokuyoAvoid_NewMeasure;
             }
         }
 
@@ -215,7 +215,7 @@ namespace GoBot
         {
             Balise = new Beacon();
 
-            Devices.Devices.RecGoBot.SetLed(LedID.DebugB1, Actionneurs.Actionneur.HokuyoAvoid == null ? RecGoBot.LedStatus.Rouge : RecGoBot.LedStatus.Vert);
+            Devices.Devices.RecGoBot.SetLed(LedID.DebugB1, Devices.Devices.HokuyoAvoid == null ? RecGoBot.LedStatus.Rouge : RecGoBot.LedStatus.Vert);
         }
 
         private static void HokuyoAvoid_NewMeasure(List<RealPoint> measure)

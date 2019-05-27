@@ -40,6 +40,7 @@ namespace GoBot.Devices
         private ThreadLink _linkMeasures;
 
         private List<RealPoint> _lastMeasure;
+        protected bool _conected;
 
         #endregion
 

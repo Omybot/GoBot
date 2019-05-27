@@ -1,4 +1,5 @@
 ﻿using GoBot.Communications;
+using GoBot.Devices;
 using GoBot.Devices.CAN;
 using System;
 using System.Collections.Generic;
@@ -18,6 +19,8 @@ namespace GoBot.Actionneurs
         private ServoClampRight _posClampRight;
         private ServoElevation _posElevation;
 
+        private Hokuyo _detector;
+
         public AtomHandler()
         {
             _servoClampLeft = Devices.Devices.CanServos[ServomoteurID.ClampLeft];
@@ -27,6 +30,8 @@ namespace GoBot.Actionneurs
             _posClampLeft = Config.CurrentConfig.ServoClampLeft;
             _posClampRight = Config.CurrentConfig.ServoClampRight;
             _posElevation = Config.CurrentConfig.ServoElevation;
+
+            _detector = Devices.Devices.HokuyoGround;
         }
 
         public void DoOpen()

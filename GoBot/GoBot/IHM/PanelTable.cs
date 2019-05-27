@@ -432,7 +432,7 @@ namespace GoBot.IHM
         {
             while (true)
             {
-                List<RealPoint> points = Actionneur.HokuyoAvoid.GetPoints();
+                List<RealPoint> points = Devices.Devices.HokuyoAvoid.GetPoints();
 
                 if (points.Count > 0)
                 {
