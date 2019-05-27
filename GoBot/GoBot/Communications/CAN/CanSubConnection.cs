@@ -33,7 +33,7 @@ namespace GoBot.Communications.CAN
 
         private void ConnectionChecker_SendConnectionTest(Connection sender)
         {
-            _baseConnection.SendMessage(CanFrameFactory.BuildGetPosition(4 * (int)_board - 1));
+            _baseConnection.SendMessage(CanFrameFactory.BuildTestConnection(_board));
         }
 
         public override void Close()

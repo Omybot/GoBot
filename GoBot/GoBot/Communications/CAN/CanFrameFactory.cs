@@ -254,6 +254,17 @@ namespace GoBot.Communications.CAN
             return new Frame(tab);
         }
 
+        public static Frame BuildTestConnection(CanBoard board)
+        {
+            byte[] tab = new byte[10];
+
+            tab[0] = 0x00;
+            tab[1] = (byte)board;
+            tab[2] = (byte)CanFrameFunction.TestConnection;
+
+            return new Frame(tab);
+        }
+
         public static Frame BuildDebug(CanBoard board)
         {
             byte[] tab = new byte[10];

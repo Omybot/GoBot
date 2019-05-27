@@ -47,7 +47,7 @@ namespace GoBot
             {
                 panelGrosRobot.Init();
 
-                if (Screen.PrimaryScreen.Bounds.Width == 1024)
+                if (Screen.PrimaryScreen.Bounds.Width >= this.Width)
                 {
                     WindowState = FormWindowState.Maximized;
                     FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
