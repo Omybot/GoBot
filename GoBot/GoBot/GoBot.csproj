@@ -212,7 +212,7 @@
     <Compile Include="Communications\UDP\UdpFrameDecoder.cs" />
     <Compile Include="Communications\UDP\UdpFrameFunction.cs" />
     <Compile Include="Dessinateur.cs" />
-    <Compile Include="Devices\Devices.cs" />
+    <Compile Include="Devices\AllDevices.cs" />
     <Compile Include="Devices\Hokuyo.cs" />
     <Compile Include="Devices\PololuMiniUart.cs" />
     <Compile Include="Devices\PololuMiniUsb.cs" />

@@ -10,6 +10,7 @@ using System.IO;
 using System.Net;
 using System.Threading;
 using System.Diagnostics;
+using GoBot.Devices;
 
 namespace GoBot
 {
@@ -41,7 +42,7 @@ namespace GoBot
             Config.Load();
 
             SplashScreen.SetMessage("Initialisation :\nDevices...", Color.Black);
-            Devices.Devices.Init();
+            AllDevices.Init();
 
             SplashScreen.SetMessage("Initialisation :\nRobot...", Color.Black);
             Robots.Init();

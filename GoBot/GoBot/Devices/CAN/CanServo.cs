@@ -170,7 +170,7 @@ namespace GoBot.Devices.CAN
                         _lockResponse.Release();
                         break;
                     case CanFrameFunction.TorqueAlert:
-                        Devices.RecGoBot.Buzz(".-.");
+                        AllDevices.RecGoBot.Buzz(".-.");
                         if (_enableAutoCut)
                             _communication.SendFrame(CanFrameFactory.BuildDisableOutput(_globalId));
                         break;

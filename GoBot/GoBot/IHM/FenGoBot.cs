@@ -47,15 +47,15 @@ namespace GoBot
             {
                 panelGrosRobot.Init();
 
-                if (Screen.PrimaryScreen.Bounds.Width >= this.Width)
+                if (Screen.PrimaryScreen.Bounds.Width <= this.Width)
                 {
                     WindowState = FormWindowState.Maximized;
-                    FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
+                    FormBorderStyle = FormBorderStyle.None;
                 }
                 else
                 {
                     WindowState = FormWindowState.Normal;
-                    FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
+                    FormBorderStyle = FormBorderStyle.FixedSingle;
                     btnFenetre.Location = btnClose.Location;
                     btnClose.Visible = false;
                 }

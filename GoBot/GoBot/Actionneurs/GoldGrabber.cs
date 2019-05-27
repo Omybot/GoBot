@@ -1,4 +1,5 @@
 ﻿using GoBot.Communications;
+using GoBot.Devices;
 using GoBot.Devices.CAN;
 using System;
 using System.Collections.Generic;
@@ -110,8 +111,8 @@ namespace GoBot.Actionneurs
     {
         public GoldGrabberLeft()
         {
-            _servoClamp = Devices.Devices.CanServos[ServomoteurID.GoldClampLeft];
-            _servoElevation = Devices.Devices.CanServos[ServomoteurID.GoldElevationLeft];
+            _servoClamp = AllDevices.CanServos[ServomoteurID.GoldClampLeft];
+            _servoElevation = AllDevices.CanServos[ServomoteurID.GoldElevationLeft];
 
             _posClamp = Config.CurrentConfig.ServoClampGoldLeft;
             _posElevation = Config.CurrentConfig.ServoElevationGoldLeft;
@@ -122,8 +123,8 @@ namespace GoBot.Actionneurs
     {
         public GoldGrabberRight()
         {
-            _servoClamp = Devices.Devices.CanServos[ServomoteurID.GoldClampLeft];
-            _servoElevation = Devices.Devices.CanServos[ServomoteurID.GoldElevationLeft];
+            _servoClamp = AllDevices.CanServos[ServomoteurID.GoldClampLeft];
+            _servoElevation = AllDevices.CanServos[ServomoteurID.GoldElevationLeft];
 
             _posClamp = Config.CurrentConfig.ServoClampGoldLeft;
             _posElevation = Config.CurrentConfig.ServoElevationGoldLeft;

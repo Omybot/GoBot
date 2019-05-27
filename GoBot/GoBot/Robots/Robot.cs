@@ -15,6 +15,7 @@ using System.Diagnostics;
 using GoBot.Threading;
 using GoBot.GameElements;
 using System.Linq;
+using GoBot.Devices;
 
 namespace GoBot
 {
@@ -175,9 +176,9 @@ namespace GoBot
                 // TODO procédure de diagnostic des actionneurs
                 Plateau.Balise.VitesseRotation(150);
                 Thread.Sleep(tempo);
-                Devices.Devices.RecGoBot.Buzz(5000, 200);
+                AllDevices.RecGoBot.Buzz(5000, 200);
                 Thread.Sleep(tempo * 4);
-                Devices.Devices.RecGoBot.Buzz(0, 200);
+                AllDevices.RecGoBot.Buzz(0, 200);
                 Plateau.Balise.VitesseRotation(0);
             }
         }

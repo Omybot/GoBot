@@ -72,9 +72,9 @@ namespace GoBot
                     {
                         notreCouleur = value;
                         if (Plateau.NotreCouleur == Plateau.CouleurGaucheJaune)
-                            Devices.Devices.RecGoBot.SetLedColor(Color.Yellow);
+                            AllDevices.RecGoBot.SetLedColor(Color.Yellow);
                         else
-                            Devices.Devices.RecGoBot.SetLedColor(Color.DarkViolet);
+                            AllDevices.RecGoBot.SetLedColor(Color.DarkViolet);
 
                         NotreCouleurChange?.Invoke(null, null);
                         Robots.GrosRobot.MajGraphFranchissable(_obstacles.FromAllExceptBoard);
@@ -173,10 +173,10 @@ namespace GoBot
 
         public static void StartDetection()
         {
-            if (Devices.Devices.HokuyoAvoid != null)
+            if (AllDevices.HokuyoAvoid != null)
             {
-                Devices.Devices.HokuyoAvoid.StartLoopMeasure();
-                Devices.Devices.HokuyoAvoid.NewMeasure += HokuyoAvoid_NewMeasure;
+                AllDevices.HokuyoAvoid.StartLoopMeasure();
+                AllDevices.HokuyoAvoid.NewMeasure += HokuyoAvoid_NewMeasure;
             }
         }
 
@@ -215,7 +215,7 @@ namespace GoBot
         {
             Balise = new Beacon();
 
-            Devices.Devices.RecGoBot.SetLed(LedID.DebugB1, Devices.Devices.HokuyoAvoid == null ? RecGoBot.LedStatus.Rouge : RecGoBot.LedStatus.Vert);
+            AllDevices.RecGoBot.SetLed(LedID.DebugB1, AllDevices.HokuyoAvoid == null ? RecGoBot.LedStatus.Rouge : RecGoBot.LedStatus.Vert);
         }
 
         private static void HokuyoAvoid_NewMeasure(List<RealPoint> measure)

@@ -7,7 +7,7 @@ using System.Text;
 
 namespace GoBot.Devices
 {
-    static class Devices
+    static class AllDevices
     {
         private static RecGoBot _recGoBot;
         private static CanServos _canServos;

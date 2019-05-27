@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading;
+using GoBot.Devices;
 
 namespace GoBot
 {
@@ -30,7 +31,7 @@ namespace GoBot
         
         public static void RecallageGrosRobot()
         {
-            Devices.Devices.RecGoBot.SetLed(LedID.DebugB2, Devices.RecGoBot.LedStatus.Rouge);
+            AllDevices.RecGoBot.SetLed(LedID.DebugB2, Devices.RecGoBot.LedStatus.Rouge);
             Plateau.FreezeColor();
 
             Robots.GrosRobot.EnvoyerPID(40, 0, 400);
@@ -55,7 +56,7 @@ namespace GoBot
             Plateau.Balise.VitesseRotation(150);
 
             Robots.GrosRobot.Rapide();
-            Devices.Devices.RecGoBot.SetLed(LedID.DebugB2, Devices.RecGoBot.LedStatus.Vert);
+            AllDevices.RecGoBot.SetLed(LedID.DebugB2, Devices.RecGoBot.LedStatus.Vert);
         }
     }
 }

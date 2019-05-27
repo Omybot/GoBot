@@ -1,4 +1,5 @@
 ﻿using GoBot.Communications;
+using GoBot.Devices;
 using GoBot.Devices.CAN;
 using System;
 using System.Collections.Generic;
@@ -22,7 +23,7 @@ namespace GoBot.Actionneurs
 
         public AtomUnloader()
         {
-            _servoUnloader = Devices.Devices.CanServos[ServomoteurID.Unloader];
+            _servoUnloader = AllDevices.CanServos[ServomoteurID.Unloader];
 
             _posUnloader = Config.CurrentConfig.ServoUnloader;
         }
@@ -125,9 +126,9 @@ namespace GoBot.Actionneurs
     {
         public AtomUnloaderLeft()
         {
-            _servoCalibration = Devices.Devices.CanServos[ServomoteurID.CalibrationLeft];
-            _servoExitLauncher = Devices.Devices.CanServos[ServomoteurID.ExitLauncherLeft];
-            _servoLauncher = Devices.Devices.CanServos[ServomoteurID.LauncherLeft];
+            _servoCalibration = AllDevices.CanServos[ServomoteurID.CalibrationLeft];
+            _servoExitLauncher = AllDevices.CanServos[ServomoteurID.ExitLauncherLeft];
+            _servoLauncher = AllDevices.CanServos[ServomoteurID.LauncherLeft];
 
             _posCalibration = Config.CurrentConfig.ServoCalibrationLeft;
             _posLauncher = Config.CurrentConfig.ServoLauncherLeft;
@@ -139,9 +140,9 @@ namespace GoBot.Actionneurs
     {
         public AtomUnloaderRight()
         {
-            _servoCalibration = Devices.Devices.CanServos[ServomoteurID.CalibrationRight];
-            _servoExitLauncher = Devices.Devices.CanServos[ServomoteurID.ExitLauncherRight];
-            _servoLauncher = Devices.Devices.CanServos[ServomoteurID.LauncherRight];
+            _servoCalibration = AllDevices.CanServos[ServomoteurID.CalibrationRight];
+            _servoExitLauncher = AllDevices.CanServos[ServomoteurID.ExitLauncherRight];
+            _servoLauncher = AllDevices.CanServos[ServomoteurID.LauncherRight];
             
             _posCalibration = Config.CurrentConfig.ServoCalibrationRight;
             _posLauncher = Config.CurrentConfig.ServoLauncherRight;

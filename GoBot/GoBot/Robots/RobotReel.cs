@@ -124,7 +124,7 @@ namespace GoBot
 
         void RecGoBot_JackChange(bool state)
         {
-            Devices.Devices.RecGoBot.SetLed(LedID.DebugB1, state ? RecGoBot.LedStatus.Vert : RecGoBot.LedStatus.Rouge);
+            AllDevices.RecGoBot.SetLed(LedID.DebugB1, state ? RecGoBot.LedStatus.Vert : RecGoBot.LedStatus.Rouge);
 
             if (!state && JackArme)
             {
@@ -180,8 +180,8 @@ namespace GoBot
             HistoriqueCoordonnees = new List<Position>();
             Connexion.SendMessage(UdpFrameFactory.DemandePositionContinue(100, this));
 
-            Devices.Devices.RecGoBot.ColorChange += RecGoBot_ColorChange;
-            Devices.Devices.RecGoBot.JackChange += RecGoBot_JackChange;
+            AllDevices.RecGoBot.ColorChange += RecGoBot_ColorChange;
+            AllDevices.RecGoBot.JackChange += RecGoBot_JackChange;
         }
 
         public override Color DemandeCapteurCouleur(CapteurCouleurID capteur, bool attendre = true)
@@ -217,19 +217,19 @@ namespace GoBot
             link.RegisterName();
 
             for (LedID i = LedID.DebugB1; i <= LedID.DebugA1; i++)
-                Devices.Devices.RecGoBot.SetLed((LedID)i, RecGoBot.LedStatus.Rouge);
+                AllDevices.RecGoBot.SetLed((LedID)i, RecGoBot.LedStatus.Rouge);
 
-            Devices.Devices.RecGoBot.Buzz(7000, 200);
+            AllDevices.RecGoBot.Buzz(7000, 200);
 
             Thread.Sleep(500);
             TrajectoireEchouee = true;
             Stop(StopMode.Abrupt);
             SemaphoresTrame[UdpFrameFunction.FinDeplacement]?.Release();
 
-            Devices.Devices.RecGoBot.Buzz(0, 200);
+            AllDevices.RecGoBot.Buzz(0, 200);
 
             for (LedID i = LedID.DebugB1; i <= LedID.DebugA1; i++)
-                Devices.Devices.RecGoBot.SetLed((LedID)i, RecGoBot.LedStatus.Off);
+                AllDevices.RecGoBot.SetLed((LedID)i, RecGoBot.LedStatus.Off);
         }
 
         public void ReceptionMessage(Frame trameRecue)
@@ -245,7 +245,7 @@ namespace GoBot
                     break;
                 case UdpFrameFunction.MoteurBlocage:    // Idem avec bip
                     SemaphoresMoteur[(MoteurID)trameRecue[2]]?.Release();
-                    Devices.Devices.RecGoBot.Buzz("..");
+                    AllDevices.RecGoBot.Buzz("..");
                     break;
                 case UdpFrameFunction.Blocage:
                     ThreadManager.CreateThread(ReactivationAsserv).StartThread();
@@ -660,7 +660,7 @@ namespace GoBot
             else if (idCan != -1)
             {
                 // Envoi en bus can si c'est un servo géré par CAN
-                Devices.Devices.CanServos[idCan].SetPosition(position);
+                AllDevices.CanServos[idCan].SetPosition(position);
             }
             else
             {

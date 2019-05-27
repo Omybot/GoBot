@@ -10,6 +10,7 @@ using GoBot.Actionneurs;
 using System.Threading;
 using GoBot.Threading;
 using System.Reflection;
+using GoBot.Devices;
 
 namespace GoBot.IHM
 {
@@ -70,7 +71,7 @@ namespace GoBot.IHM
 
             _linkPolling.RegisterName();
 
-            ticksCurrent = Devices.Devices.RecGoBot.GetCodeurPosition();
+            ticksCurrent = AllDevices.RecGoBot.GetCodeurPosition();
             ticksMin = ticksCurrent;
             ticksRange = pointsParTour * toursRange;
 
@@ -85,7 +86,7 @@ namespace GoBot.IHM
                     toursRange = trackBarSpeed.Value;
                     ticksRange = pointsParTour * toursRange;
                     Thread.Sleep(50);
-                    ticksCurrent = Devices.Devices.RecGoBot.GetCodeurPosition();
+                    ticksCurrent = AllDevices.RecGoBot.GetCodeurPosition();
 
                     if (ticksCurrent > ticksMin + ticksRange)
                         ticksMin = ticksCurrent - ticksRange;

@@ -16,6 +16,7 @@ using GoBot.PathFinding;
 using System.Drawing.Drawing2D;
 using System.Diagnostics;
 using GoBot.Threading;
+using GoBot.Devices;
 
 namespace GoBot
 {
@@ -490,15 +491,15 @@ namespace GoBot
         {
             int farAway = 10000;
 
-            if (Actionneur.HokuyoAvoid != null)
+            if (AllDevices.HokuyoAvoid != null)
             {
-                AnglePosition debutAngleMort = Actionneur.HokuyoAvoid.Position.Angle + 180 + new AngleDelta(Actionneur.HokuyoAvoid.DeadAngle / 2);
-                AnglePosition finAngleMort = Actionneur.HokuyoAvoid.Position.Angle + 180 + new AngleDelta(-Actionneur.HokuyoAvoid.DeadAngle / 2);
+                AnglePosition debutAngleMort = AllDevices.HokuyoAvoid.Position.Angle + 180 + new AngleDelta(AllDevices.HokuyoAvoid.DeadAngle / 2);
+                AnglePosition finAngleMort = AllDevices.HokuyoAvoid.Position.Angle + 180 + new AngleDelta(-AllDevices.HokuyoAvoid.DeadAngle / 2);
 
                 List<Point> points = new List<Point>();
-                points.Add(Scale.RealToScreenPosition(Actionneur.HokuyoAvoid.Position.Coordinates));
-                points.Add(Scale.RealToScreenPosition(new Point((int)(Actionneur.HokuyoAvoid.Position.Coordinates.X + debutAngleMort.Cos * farAway), (int)(Actionneur.HokuyoAvoid.Position.Coordinates.Y + debutAngleMort.Sin * farAway))));
-                points.Add(Scale.RealToScreenPosition(new Point((int)(Actionneur.HokuyoAvoid.Position.Coordinates.X + finAngleMort.Cos * farAway), (int)(Actionneur.HokuyoAvoid.Position.Coordinates.Y + finAngleMort.Sin * farAway))));
+                points.Add(Scale.RealToScreenPosition(AllDevices.HokuyoAvoid.Position.Coordinates));
+                points.Add(Scale.RealToScreenPosition(new Point((int)(AllDevices.HokuyoAvoid.Position.Coordinates.X + debutAngleMort.Cos * farAway), (int)(AllDevices.HokuyoAvoid.Position.Coordinates.Y + debutAngleMort.Sin * farAway))));
+                points.Add(Scale.RealToScreenPosition(new Point((int)(AllDevices.HokuyoAvoid.Position.Coordinates.X + finAngleMort.Cos * farAway), (int)(AllDevices.HokuyoAvoid.Position.Coordinates.Y + finAngleMort.Sin * farAway))));
 
                 g.IntersectClip(new Rectangle(Scale.RealToScreenPosition(new Point(0, 0)), new Size(Scale.RealToScreenDistance(Plateau.Largeur), Scale.RealToScreenDistance(Plateau.Hauteur))));
 

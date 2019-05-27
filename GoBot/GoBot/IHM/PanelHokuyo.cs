@@ -52,9 +52,9 @@ namespace GoBot.IHM
             if (value)
             {
                 if ((String)cboHokuyo.Text == "Ground")
-                    _selectedHokuyo = Actionneur.HokuyoGround;
+                    _selectedHokuyo = AllDevices.HokuyoGround;
                 else if ((String)cboHokuyo.Text == "Avoid")
-                    _selectedHokuyo = Actionneur.HokuyoAvoid;
+                    _selectedHokuyo = AllDevices.HokuyoAvoid;
                 else
                     _selectedHokuyo = null;
 

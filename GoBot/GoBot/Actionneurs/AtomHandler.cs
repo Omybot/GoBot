@@ -23,15 +23,15 @@ namespace GoBot.Actionneurs
 
         public AtomHandler()
         {
-            _servoClampLeft = Devices.Devices.CanServos[ServomoteurID.ClampLeft];
-            _servoClampRight = Devices.Devices.CanServos[ServomoteurID.ClampRight];
-            _servoElevation = Devices.Devices.CanServos[ServomoteurID.Elevation];
+            _servoClampLeft = AllDevices.CanServos[ServomoteurID.ClampLeft];
+            _servoClampRight = AllDevices.CanServos[ServomoteurID.ClampRight];
+            _servoElevation = AllDevices.CanServos[ServomoteurID.Elevation];
 
             _posClampLeft = Config.CurrentConfig.ServoClampLeft;
             _posClampRight = Config.CurrentConfig.ServoClampRight;
             _posElevation = Config.CurrentConfig.ServoElevation;
 
-            _detector = Devices.Devices.HokuyoGround;
+            _detector = AllDevices.HokuyoGround;
         }
 
         public void DoOpen()

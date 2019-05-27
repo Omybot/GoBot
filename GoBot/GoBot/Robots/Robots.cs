@@ -1,5 +1,6 @@
 ﻿using AStarFolder;
 using GoBot.Communications;
+using GoBot.Devices;
 using System;
 using System.Collections.Generic;
 
@@ -61,8 +62,8 @@ namespace GoBot
 
         private static void GrosRobot_PositionChange(Geometry.Position position)
         {
-            if (Actionneurs.Actionneur.HokuyoAvoid != null)
-                Actionneurs.Actionneur.HokuyoAvoid.Position = position;
+            if (AllDevices.HokuyoAvoid != null)
+                AllDevices.HokuyoAvoid.Position = position;
         }
 
         public static void Simuler(bool simu)

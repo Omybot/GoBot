@@ -9,6 +9,7 @@ using System.Windows.Forms;
 using GoBot.Threading;
 using GoBot.Devices.CAN;
 using System.Drawing.Drawing2D;
+using GoBot.Devices;
 
 namespace GoBot.IHM
 {
@@ -23,7 +24,7 @@ namespace GoBot.IHM
 
             if (!Execution.DesignMode)
             {
-                _servo = Devices.Devices.CanServos[0];
+                _servo = AllDevices.CanServos[0];
             }
         }
 
@@ -174,7 +175,7 @@ namespace GoBot.IHM
 
         private void numID_ValueChanged(object sender, EventArgs e)
         {
-            _servo = Devices.Devices.CanServos[(int)numID.Value];
+            _servo = AllDevices.CanServos[(int)numID.Value];
             ReadValues();
         }
 

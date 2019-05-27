@@ -76,10 +76,10 @@ namespace GoBot.IHM
             if (!Execution.DesignMode)
             {
                 // TODO déplacer en dehors de la fenetre
-                Devices.Devices.RecGoBot.ButtonChange += RecGoBot_ButtonChange;
-                Devices.Devices.RecGoBot.ColorChange += RecGoBot_ColorChange;
-                Devices.Devices.RecGoBot.JackChange += RecGoBot_JackChange;
-                Devices.Devices.RecGoBot.LedChange += RecGoBot_LedChange;
+                AllDevices.RecGoBot.ButtonChange += RecGoBot_ButtonChange;
+                AllDevices.RecGoBot.ColorChange += RecGoBot_ColorChange;
+                AllDevices.RecGoBot.JackChange += RecGoBot_JackChange;
+                AllDevices.RecGoBot.LedChange += RecGoBot_LedChange;
             }
         }
 
@@ -204,7 +204,7 @@ namespace GoBot.IHM
                     break;
             }
 
-            Devices.Devices.RecGoBot.SetLed((LedID)ledNo, ledActive[ledSender]);
+            AllDevices.RecGoBot.SetLed((LedID)ledNo, ledActive[ledSender]);
         }
 
         private Color LedStateToColor(RecGoBot.LedStatus state)
@@ -239,15 +239,15 @@ namespace GoBot.IHM
 
         private void btnBuzz_Click(object sender, EventArgs e)
         {
-            Devices.Devices.RecGoBot.Buzz(8000, 200);
+            AllDevices.RecGoBot.Buzz(8000, 200);
             Thread.Sleep(1000);
-            Devices.Devices.RecGoBot.Buzz(0, 0);
+            AllDevices.RecGoBot.Buzz(0, 0);
         }
 
         private void SetColor(Color color)
         {
             picLedColor.BackColor = color;
-            Devices.Devices.RecGoBot.SetLedColor(color);
+            AllDevices.RecGoBot.SetLedColor(color);
         }
     }
 }

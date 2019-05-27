@@ -1,5 +1,6 @@
 ﻿using GoBot.Communications;
 using GoBot.Communications.UDP;
+using GoBot.Devices;
 using GoBot.Devices.CAN;
 using GoBot.Threading;
 using System;
@@ -20,8 +21,8 @@ namespace GoBot.Actionneurs
 
         public AtomStacker()
         {
-            _servoFingerFront = Devices.Devices.CanServos[ServomoteurID.FingerFront];
-            _servoFingerBack = Devices.Devices.CanServos[ServomoteurID.FingerBack];
+            _servoFingerFront = AllDevices.CanServos[ServomoteurID.FingerFront];
+            _servoFingerBack = AllDevices.CanServos[ServomoteurID.FingerBack];
 
             _posFingerFront = Config.CurrentConfig.ServoFingerFront;
             _posFingerBack = Config.CurrentConfig.ServoFingerBack;
