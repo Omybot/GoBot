@@ -25,6 +25,8 @@ namespace GoBot.GameElements
 
         private VoidZone _zoneViolet, _zoneYellow;
 
+        private Slope _slopeViolet, _slopeYellow;
+
         public AllGameElements()
         {
             _colorRedium = Color.FromArgb(250, 36, 39);
@@ -98,8 +100,12 @@ namespace GoBot.GameElements
             _balanceYellow = new Balance(new RealPoint(1360, 1800), Plateau.CouleurGaucheJaune, 100);
 
             // Zones de vide
-            _zoneViolet = new VoidZone(new RealPoint(1000, 1050), Color.White, 150);
-            _zoneYellow = new VoidZone(new RealPoint(3000 - 1000, 1050), Color.White, 150);
+            _zoneViolet = new VoidZone(new RealPoint(3000 - 1000, 1050), Color.White, 150);
+            _zoneYellow = new VoidZone(new RealPoint(1000, 1050), Color.White, 150);
+
+            // Pentes
+            _slopeViolet = new Slope(new RealPoint(3000 - 700, 1750), Plateau.CouleurDroiteViolet, 170);
+            _slopeYellow = new Slope(new RealPoint(700, 1750), Plateau.CouleurGaucheJaune, 170);
         }
 
         public Accelerator AcceleratorViolet => _acceleratorViolet;
@@ -109,11 +115,14 @@ namespace GoBot.GameElements
         public Goldenium GoldeniumYellow => _goldeniumYellow;
 
         public Balance BalanceViolet => _balanceViolet;
-        public Balance BalanceYellow=> _balanceYellow;
+        public Balance BalanceYellow => _balanceYellow;
 
         public VoidZone VoidZoneViolet => _zoneViolet;
         public VoidZone VoidZoneYellow => _zoneYellow;
-        
+
+        public Slope SlopeViolet => _slopeViolet;
+        public Slope SlopeYellow => _slopeYellow;
+
         public IEnumerable<GameElement> AllElements
         {
             get
@@ -129,6 +138,7 @@ namespace GoBot.GameElements
                 elements = elements.Concat(new GameElement[] { _goldeniumViolet, _goldeniumYellow });
                 elements = elements.Concat(new GameElement[] { _balanceViolet, _balanceYellow });
                 elements = elements.Concat(new GameElement[] { _zoneViolet, _zoneYellow });
+                elements = elements.Concat(new GameElement[] { _slopeViolet, _slopeYellow });
 
                 return elements;
             }
@@ -153,6 +163,11 @@ namespace GoBot.GameElements
                 if (Plateau.Strategy != null && Plateau.Strategy.AvoidElements)
                 {
                     // TODOEACHYEAR Ici ajouter à obstacles les elements à contourner
+                    if (_zoneViolet.AtomsCount > 1)
+                        obstacles.Add(new Circle(_zoneViolet.Position, _zoneViolet.HoverRadius * 0.6));
+
+                    if (_zoneYellow.AtomsCount > 1)
+                        obstacles.Add(new Circle(_zoneYellow.Position, _zoneYellow.HoverRadius * 0.6));
                 }
 
                 return obstacles;

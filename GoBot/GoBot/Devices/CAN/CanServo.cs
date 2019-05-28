@@ -1,5 +1,6 @@
 ﻿using GoBot.Communications;
 using GoBot.Communications.CAN;
+using GoBot.Threading;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -26,12 +27,15 @@ namespace GoBot.Devices.CAN
 
         private iCanSpeakable _communication;
 
+        private ThreadLink _nextDisable;
+
         public CanServo(int globalId, iCanSpeakable communication)
         {
             _globalId = globalId;
             _communication = communication;
             _lockResponse = new Semaphore(0, int.MaxValue);
             _enableAutoCut = false;
+            _nextDisable = null;
         }
 
         public int ID { get => _globalId; }
@@ -100,6 +104,7 @@ namespace GoBot.Devices.CAN
 
         public void SetPosition(int position)
         {
+            CancelDisable();
             _communication.SendFrame(CanFrameFactory.BuildSetPosition(_globalId, position));
         }
 
@@ -128,9 +133,23 @@ namespace GoBot.Devices.CAN
             _communication.SendFrame(CanFrameFactory.BuildSetTrajectory(_globalId, position, speed, accel));
         }
 
-        public void DisableOutput()
+        public void DisableOutput(int delayMs = 0)
         {
-            _communication.SendFrame(CanFrameFactory.BuildDisableOutput(_globalId));
+            if(delayMs > 0)
+            {
+                CancelDisable();
+
+                ThreadManager.CreateThread(link =>
+                {
+                    _nextDisable = link;
+                    if(!link.Cancelled)
+                        _communication.SendFrame(CanFrameFactory.BuildDisableOutput(_globalId));
+                }).StartDelayedThread(delayMs);
+            }
+            else
+            {
+                _communication.SendFrame(CanFrameFactory.BuildDisableOutput(_globalId));
+            }
         }
 
         public void FrameReceived(Frame frame)
@@ -179,6 +198,15 @@ namespace GoBot.Devices.CAN
             catch (Exception e)
             {
                 Console.WriteLine(DateTime.Now.ToLongTimeString() + ":" + DateTime.Now.Millisecond.ToString("000") + " : Erreur servo CAN : " + e.Message);
+            }
+        }
+
+        private void CancelDisable()
+        {
+            if(_nextDisable != null)
+            {
+                _nextDisable.Cancel();
+                _nextDisable = null;
             }
         }
     }

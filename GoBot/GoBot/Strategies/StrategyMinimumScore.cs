@@ -15,14 +15,14 @@ namespace GoBot.Strategies
     /// </summary>
     class StrategyMinimumScore : Strategy
     {
-        private bool _avoidElements = false;
+        private bool _avoidElements = true;
 
         public override bool AvoidElements => _avoidElements;
 
         protected override void SequenceBegin()
         {
             // Sortir ICI de la zonde de départ
-
+            
             Actionneur.AtomHandler.DoDown();
             Actionneur.AtomHandler.DoOpen();
             Actionneur.AtomHandler.DoSwallow();
@@ -36,8 +36,6 @@ namespace GoBot.Strategies
             Actionneur.AtomStacker.AtomsCount++;
 
             ThreadManager.CreateThread(link => StoreAtom()).StartThread();
-            
-            Robots.GrosRobot.SpeedConfig.SetParams(600, 1200, 1200, 1000, 2000, 2000);
             
             if (Plateau.NotreCouleur == Plateau.CouleurGaucheJaune)
             {

@@ -278,6 +278,7 @@ namespace GoBot.IHM
                 Config.CurrentConfig.GRCoeffP = (int)numCoeffP.Value;
                 Config.CurrentConfig.GRCoeffI = (int)numCoeffI.Value;
                 Config.CurrentConfig.GRCoeffD = (int)numCoeffD.Value;
+                Config.Save();
             }
 
             btnPID.Enabled = false;

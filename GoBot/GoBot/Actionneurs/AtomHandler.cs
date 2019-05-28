@@ -150,14 +150,14 @@ namespace GoBot.Actionneurs
             Thread.Sleep(500);
 
             _servoClampLeft.SetPosition(_posClampLeft.PositionClose);
-            Thread.Sleep(500);
+            Thread.Sleep(250);
             _servoClampLeft.SetPosition(_posClampLeft.PositionFree);
-            Thread.Sleep(500);
+            Thread.Sleep(250);
 
             _servoClampRight.SetPosition(_posClampRight.PositionClose);
-            Thread.Sleep(500);
+            Thread.Sleep(250);
             _servoClampRight.SetPosition(_posClampRight.PositionFree);
-            Thread.Sleep(500);
+            Thread.Sleep(250);
 
             _servoElevation.SetPosition(_posElevation.PositionInside);
             Thread.Sleep(500);
@@ -255,15 +255,20 @@ namespace GoBot.Actionneurs
             return ok;
         }
 
-        public void DoVoidZone()
+        public int DoVoidZone()
         {
             bool found = true;
+            int atoms = 0;
 
             for (int i = 0; i < 3 && found; i++)
             {
                 DoDetection();
                 found = DoSearchAtom();
+                if (found)
+                    atoms++;
             }
+
+            return atoms;
         }
     }
 }

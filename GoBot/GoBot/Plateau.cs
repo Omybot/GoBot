@@ -151,7 +151,7 @@ namespace GoBot
                 ReflecteursNosRobots = true;
 
                 _obstacles = new Obstacles(Elements);
-                CreerSommets(25);
+                CreerSommets(50);
 
                 //Balise.PositionEnnemisActualisee += Balise_PositionEnnemisActualisee;
 
@@ -184,7 +184,7 @@ namespace GoBot
             }
         }
 
-        static void SetOpponents(List<RealPoint> positions)
+        public static void SetOpponents(List<RealPoint> positions)
         {
             // Positions ennemies signalées par la balise
 

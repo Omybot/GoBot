@@ -110,6 +110,7 @@
     <Compile Include="GameElements\Balance.cs" />
     <Compile Include="GameElements\Goldenium.cs" />
     <Compile Include="GameElements\LayingAtom.cs" />
+    <Compile Include="GameElements\Slope.cs" />
     <Compile Include="GameElements\StandingAtom.cs" />
     <Compile Include="GameElements\VoidZone.cs" />
     <Compile Include="IHM\PanelBoardCanServos.cs">
@@ -150,6 +151,7 @@
     </Compile>
     <Compile Include="IHM\SplashScreen.cs" />
     <Compile Include="Movements\MoveAccelerator.cs" />
+    <Compile Include="Movements\MoveAtomsToSlope.cs" />
     <Compile Include="Movements\MoveBalance.cs" />
     <Compile Include="Movements\MoveGoldGrab.cs" />
     <Compile Include="Movements\MoveVoidZone.cs" />

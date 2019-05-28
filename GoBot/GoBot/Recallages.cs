@@ -25,7 +25,7 @@ namespace GoBot
 
         static Recallages()
         {
-            PositionDepartGauche = new Position(0, new RealPoint(Robots.GrosRobot.Longueur / 2, Robots.GrosRobot.Largeur / 2 + 300));
+            PositionDepartGauche = new Position(0, new RealPoint(Robots.GrosRobot.Longueur / 2, Robots.GrosRobot.Largeur / 2 + 305));
             PositionDepartDroite = new Position(180, new RealPoint(3000 - PositionDepartGauche.Coordinates.X, PositionDepartGauche.Coordinates.Y));
         }
         
@@ -34,7 +34,7 @@ namespace GoBot
             AllDevices.RecGoBot.SetLed(LedID.DebugB2, Devices.RecGoBot.LedStatus.Rouge);
             Plateau.FreezeColor();
 
-            Robots.GrosRobot.EnvoyerPID(40, 0, 400);
+            Robots.GrosRobot.EnvoyerPID(Config.CurrentConfig.GRCoeffP, Config.CurrentConfig.GRCoeffI, Config.CurrentConfig.GRCoeffD);
             Robots.GrosRobot.Stop();
 
             Robots.GrosRobot.Lent();

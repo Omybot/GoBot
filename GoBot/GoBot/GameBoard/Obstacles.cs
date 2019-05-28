@@ -34,7 +34,7 @@ namespace GoBot.GameBoard
             {
                 IEnumerable<IShape> all = _boardObstacles;
 
-                all.Concat(_elements.AsObstacles);
+                all = all.Concat(_elements.AsObstacles);
                 if (_colorObstacles.ContainsKey(Plateau.NotreCouleur)) all = all.Concat(_colorObstacles[Plateau.NotreCouleur]);
                 if (_detectionObstacles != null) all = all.Concat(_detectionObstacles);
 

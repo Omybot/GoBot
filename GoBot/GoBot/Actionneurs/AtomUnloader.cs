@@ -76,28 +76,29 @@ namespace GoBot.Actionneurs
         public void DoInit()
         {
             DoUnloaderDock();
-            Thread.Sleep(500);
+            Thread.Sleep(250);
             DoUnloaderStore();
-            Thread.Sleep(500);
-
+            Thread.Sleep(250);
+            
             DoCalibrationExit();
-            Thread.Sleep(500);
+            Thread.Sleep(250);
             DoCalibrationStore();
-            Thread.Sleep(500);
+            Thread.Sleep(250);
+
+            _servoUnloader.DisableOutput();
 
             DoLauncherOutside();
             Thread.Sleep(500);
             DoLauncherLaunch();
-            Thread.Sleep(500);
+            Thread.Sleep(250);
             DoLauncherPrepare();
-            Thread.Sleep(500);
+            Thread.Sleep(250);
             DoLauncherInside();
-            Thread.Sleep(500);
+            Thread.Sleep(250);
             
             _servoCalibration.DisableOutput();
             _servoExitLauncher.DisableOutput();
             _servoLauncher.DisableOutput();
-            _servoUnloader.DisableOutput();
         }
 
         public void DoLaunchPalet()

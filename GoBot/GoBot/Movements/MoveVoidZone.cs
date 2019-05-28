@@ -6,6 +6,7 @@ using System.Text;
 using GoBot.GameElements;
 using Geometry;
 using Geometry.Shapes;
+using GoBot.Actionneurs;
 
 namespace GoBot.Movements
 {
@@ -21,10 +22,8 @@ namespace GoBot.Movements
             for(int i = 0; i < 360; i += 45)
             {
                 double rad = i / 180.0 * Math.PI;
-                Positions.Add(new Position(-i, new RealPoint(_zone.Position.X + distance * Math.Cos(rad), _zone.Position.Y + distance * Math.Sin(rad))));
+                Positions.Add(new Position(i + 180, new RealPoint(_zone.Position.X + distance * Math.Cos(rad), _zone.Position.Y + distance * Math.Sin(rad))));
             }
-
-            _zone = zone;
         }
 
         public override bool CanExecute => _zone.IsAvailable && _zone.AtomsCount > 0;
@@ -46,7 +45,8 @@ namespace GoBot.Movements
 
         protected override void MovementCore()
         {
-            Actionneurs.Actionneur.AtomHandler.DoSearchAtom();
+            _zone.AtomsCount -= Actionneur.AtomHandler.DoVoidZone();
+            _zone.AtomsCount = 0;
         }
 
         protected override void MovementEnd()

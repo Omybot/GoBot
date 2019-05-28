@@ -36,7 +36,13 @@ namespace GoBot.Actionneurs
 
         public void DoFrontOpen()
         {
-            _servoFingerFront.SetPosition(_posFingerFront.PositionOpen);
+            _servoFingerFront.SetPosition(_posFingerFront.Maximum);
+            ThreadManager.CreateThread(link =>
+            {
+                link.Name = "Securité doigt avant";
+                Thread.Sleep(300);
+                _servoFingerFront.SetPosition(_posFingerFront.PositionOpen);
+            }).StartThread();
         }
 
         public void DoFrontClose()

@@ -94,11 +94,11 @@ namespace GoBot.Actionneurs
         public void DoInit()
         {
             DoUp();
-            Thread.Sleep(500);
+            Thread.Sleep(250);
             DoOpen();
-            Thread.Sleep(500);
+            Thread.Sleep(250);
             DoClose();
-            Thread.Sleep(500);
+            Thread.Sleep(250);
             DoStore();
             Thread.Sleep(500);
 
@@ -112,10 +112,12 @@ namespace GoBot.Actionneurs
             Robots.GrosRobot.Recallage(SensAR.Avant);
             Robots.GrosRobot.Rapide();
             Robots.GrosRobot.Reculer(80);
-            DoUp();
+            Actionneur.GoldGrabberLeft.DoUp();
+            Actionneur.GoldGrabberRight.DoUp();
             Thread.Sleep(700);
             Robots.GrosRobot.Reculer(100);
-            DoStore();
+            Actionneur.GoldGrabberLeft.DoStore();
+            Actionneur.GoldGrabberRight.DoStore();
         }
     }
 

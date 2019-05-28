@@ -19,16 +19,9 @@ namespace GoBot.Strategies
         {
             Robots.GrosRobot.SpeedConfig.SetParams(400, 1000, 2000, 400, 1000, 2000);
 
-            Plateau.Balise.VitesseRotation(250);
+            //Plateau.Balise.VitesseRotation(250);
 
             // Sortir ICI de la zone de départ pour commencer
-
-            Robots.GrosRobot.Avancer(200);
-
-            if (Plateau.NotreCouleur == Plateau.CouleurGaucheJaune)
-                Robots.GrosRobot.PivotDroite(45);
-            else
-                Robots.GrosRobot.PivotGauche(45);
 
             Robots.GrosRobot.Avancer(200);
         }

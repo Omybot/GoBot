@@ -12,6 +12,7 @@ using System.Threading;
 using System.Windows.Forms;
 using GoBot.Threading;
 using System.Linq;
+using GoBot.GameBoard;
 
 namespace GoBot.IHM
 {
@@ -136,6 +137,7 @@ namespace GoBot.IHM
 
                     positions.Add(Dessinateur.Scale.ScreenToRealPosition(pictureBoxTable.PointToClient(MousePosition)));
                     Plateau.Balise.Actualisation(false, Dessinateur.Scale.ScreenToRealPosition(pictureBoxTable.PointToClient(MousePosition)));
+                    Plateau.SetOpponents(positions);
                     //SuiviBalise.MajPositions(positions, Plateau.Enchainement == null || Plateau.Enchainement.DebutMatch == null);
                 }
             }

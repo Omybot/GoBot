@@ -82,7 +82,7 @@ namespace GoBot
                 if (_pivotAcceleration != value)
                 {
                     _pivotAcceleration = value;
-                    OnParamChange(true, false, false, false, false, false);
+                    OnParamChange(false, false, false, true, false, false);
                 }
             }
         }
@@ -95,7 +95,7 @@ namespace GoBot
                 if (_pivotDeceleration != value)
                 {
                     _pivotDeceleration = value;
-                    OnParamChange(false, true, false, false, false, false);
+                    OnParamChange(false, false, false, false, true, false);
                 }
             }
         }
@@ -108,7 +108,7 @@ namespace GoBot
                 if (_pivotSpeed != value)
                 {
                     _pivotSpeed = value;
-                    OnParamChange(false, false, true, false, false, false);
+                    OnParamChange(false, false, false, false, false, true);
                 }
             }
         }
