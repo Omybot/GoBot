@@ -449,7 +449,7 @@ namespace GoBot
             {
                 foreach (IShape d in detections)
                 {
-                    d.Paint(g, Color.DodgerBlue, 1, Color.LightSkyBlue, Scale);
+                    d?.Paint(g, Color.DodgerBlue, 1, Color.LightSkyBlue, Scale);
                 }
             }
         }

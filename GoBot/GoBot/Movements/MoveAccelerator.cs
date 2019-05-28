@@ -50,6 +50,10 @@ namespace GoBot.Movements
         {
         }
 
+        protected override void MovementEnd()
+        {
+        }
+
         protected override void MovementCore()
         {
             _unloader.DoCalibrationExit();

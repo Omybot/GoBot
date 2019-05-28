@@ -47,6 +47,10 @@ namespace GoBot.Movements
         {
         }
 
+        protected override void MovementEnd()
+        {
+        }
+
         protected override void MovementCore()
         {
             _grabber.DoDown();

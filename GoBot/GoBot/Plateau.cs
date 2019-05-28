@@ -131,9 +131,13 @@ namespace GoBot
             }
         }
 
-        public static bool IsInside(RealPoint p)
+        public static bool IsInside(RealPoint p, int securityDistance = 0)
         {
-            return _bounds.Contains(p);
+            bool inside = _bounds.Contains(p);
+            if (inside && securityDistance > 0)
+                inside = !_bounds.Sides.Exists(o=> o.Distance(p) < securityDistance);
+
+            return inside;
         }
 
         public Plateau()

@@ -33,6 +33,7 @@
             this.panelBoardCanServos3 = new GoBot.IHM.PanelBoardCanServos();
             this.panelBoardCanServos4 = new GoBot.IHM.PanelBoardCanServos();
             this.panelBoardCanServos5 = new GoBot.IHM.PanelBoardCanServos();
+            this.panelBoardCanServos6 = new GoBot.IHM.PanelBoardCanServos();
             this.SuspendLayout();
             // 
             // panelBoardCanServos1
@@ -80,17 +81,27 @@
             this.panelBoardCanServos5.TabIndex = 4;
             this.panelBoardCanServos5.ServoClick += new GoBot.IHM.PanelBoardCanServos.ServoClickDelegate(this.panelBoardCanServos_ServoClick);
             // 
+            // panelBoardCanServos6
+            // 
+            this.panelBoardCanServos6.BoardID = 6;
+            this.panelBoardCanServos6.Location = new System.Drawing.Point(673, 3);
+            this.panelBoardCanServos6.Name = "panelBoardCanServos6";
+            this.panelBoardCanServos6.Size = new System.Drawing.Size(128, 137);
+            this.panelBoardCanServos6.TabIndex = 5;
+            this.panelBoardCanServos6.ServoClick += new GoBot.IHM.PanelBoardCanServos.ServoClickDelegate(this.panelBoardCanServos_ServoClick);
+            // 
             // PanelCanArchi
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.Controls.Add(this.panelBoardCanServos6);
             this.Controls.Add(this.panelBoardCanServos5);
             this.Controls.Add(this.panelBoardCanServos4);
             this.Controls.Add(this.panelBoardCanServos3);
             this.Controls.Add(this.panelBoardCanServos2);
             this.Controls.Add(this.panelBoardCanServos1);
             this.Name = "PanelCanArchi";
-            this.Size = new System.Drawing.Size(672, 143);
+            this.Size = new System.Drawing.Size(805, 143);
             this.ResumeLayout(false);
 
         }
@@ -102,5 +113,6 @@
         private PanelBoardCanServos panelBoardCanServos3;
         private PanelBoardCanServos panelBoardCanServos4;
         private PanelBoardCanServos panelBoardCanServos5;
+        private PanelBoardCanServos panelBoardCanServos6;
     }
 }

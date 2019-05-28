@@ -17,10 +17,11 @@ namespace GoBot.Devices
             //_pointsCount = 725;
             _scanRange = 240;
             //_pointsOffset = 44;
-            _distanceMaxLimit = 400;
+            _distanceMaxLimit = 1000;
             _keepFrom = 200;
             _keepTo = 600;
             _invertRotation = true;
+            _resolution = 240 / 725.0;
 
             _deltaX = 112;
             _deltaY = -82;
@@ -31,12 +32,15 @@ namespace GoBot.Devices
             // non...
         }
 
+        int offset = 0;
+
         protected override String GetResponse(int timeout = 5000)
         {
             Position robotPos;
             String mesure = Robots.GrosRobot.GetMesureLidar(ID, timeout, out robotPos);
-            
-            _position = new Position(robotPos.Angle, new RealPoint(robotPos.Coordinates.X + _deltaX, robotPos.Coordinates.Y + _deltaY).Rotation(new AngleDelta(robotPos.Angle), robotPos.Coordinates));
+
+            // TODO2019 régler cet offset de 18° écrit là juste pour que ça marche
+            _position = new Position(robotPos.Angle + 18, new RealPoint(robotPos.Coordinates.X + _deltaX, robotPos.Coordinates.Y + _deltaY).Rotation(new AngleDelta(robotPos.Angle), robotPos.Coordinates));
 
             return mesure;
         }

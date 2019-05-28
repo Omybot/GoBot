@@ -19,14 +19,20 @@ namespace GoBot.Actionneurs
         ServoFingerFront _posFingerFront;
         ServoFingerBack _posFingerBack;
 
+        int _atomsCount;
+
         public AtomStacker()
         {
+            _atomsCount = 0;
+
             _servoFingerFront = AllDevices.CanServos[ServomoteurID.FingerFront];
             _servoFingerBack = AllDevices.CanServos[ServomoteurID.FingerBack];
 
             _posFingerFront = Config.CurrentConfig.ServoFingerFront;
             _posFingerBack = Config.CurrentConfig.ServoFingerBack;
         }
+
+        public int AtomsCount { get => _atomsCount; set => _atomsCount = value; }
 
         public void DoFrontOpen()
         {
@@ -121,11 +127,10 @@ namespace GoBot.Actionneurs
             DoFrontOpen();
             DoFrontMax();
             DoFrontClose();
-
-            DoBackOpenBackward();
-
+            
             DoBackStop();
             DoBackOrigin();
+            DoBackOpenForward();
 
             DoFrontStop();
             DoFrontOrigin();

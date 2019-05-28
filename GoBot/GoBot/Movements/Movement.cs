@@ -82,20 +82,23 @@ namespace GoBot.Movements
 
             if (position != null)
             {
-                MovementBegin();
-
                 Trajectory traj = PathFinder.ChercheTrajectoire(Robot.Graph, Plateau.ListeObstacles, Plateau.ObstaclesOpponents,new Position(Robot.Position), position, Robot.Rayon, Robot.Largeur / 2);
 
-                if (traj != null && Robot.ParcourirTrajectoire(traj))
+                if (traj != null)
                 {
-                    MovementCore();
-                    Robots.GrosRobot.Historique.Log("Fin " + this.ToString() + " en " + (DateTime.Now - startTime).TotalSeconds.ToString("#.#") + "s");
-                    ok = true;
-                }
-                else
-                {
-                    Robots.GrosRobot.Historique.Log("Annulation " + this.ToString() + ", trajectoire échouée");
-                    ok = false;
+                    MovementBegin();
+
+                    if (Robot.ParcourirTrajectoire(traj))
+                    {
+                        MovementCore();
+                        Robots.GrosRobot.Historique.Log("Fin " + this.ToString() + " en " + (DateTime.Now - startTime).TotalSeconds.ToString("#.#") + "s");
+                        ok = true;
+                    }
+                    else
+                    {
+                        Robots.GrosRobot.Historique.Log("Annulation " + this.ToString() + ", trajectoire échouée");
+                        ok = false;
+                    }
                 }
             }
             else
@@ -117,6 +120,11 @@ namespace GoBot.Movements
         /// Représente les actions à effectuer une fois arrivé à la position d'approche du mouvement
         /// </summary>
         protected abstract void MovementCore();
+
+        /// <summary>
+        /// Représente les actions à effectuer à la fin du mouvement, qu'il soit réussi ou non
+        /// </summary>
+        protected abstract void MovementEnd();
 
         /// <summary>
         /// Retourne vrai si la couleur de l'action correspond à la couleur du robot qui peut la réaliser

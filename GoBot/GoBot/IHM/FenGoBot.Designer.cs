@@ -454,7 +454,7 @@ namespace GoBot
             this.grpCAN.Controls.Add(this.panelCanArchi);
             this.grpCAN.Location = new System.Drawing.Point(8, 6);
             this.grpCAN.Name = "grpCAN";
-            this.grpCAN.Size = new System.Drawing.Size(683, 174);
+            this.grpCAN.Size = new System.Drawing.Size(802, 174);
             this.grpCAN.TabIndex = 12;
             this.grpCAN.TabStop = false;
             this.grpCAN.Text = "Cartes CAN";
@@ -463,14 +463,14 @@ namespace GoBot
             // 
             this.panelCanArchi.Location = new System.Drawing.Point(6, 20);
             this.panelCanArchi.Name = "panelCanArchi";
-            this.panelCanArchi.Size = new System.Drawing.Size(672, 143);
+            this.panelCanArchi.Size = new System.Drawing.Size(790, 143);
             this.panelCanArchi.TabIndex = 0;
             this.panelCanArchi.ServoClick += new GoBot.IHM.PanelCanArchi.ServoClickDelegate(this.panelCanArchi_ServoClick);
             // 
             // grpServoCan
             // 
             this.grpServoCan.Controls.Add(this.panelServoCan);
-            this.grpServoCan.Location = new System.Drawing.Point(697, 6);
+            this.grpServoCan.Location = new System.Drawing.Point(816, 6);
             this.grpServoCan.Name = "grpServoCan";
             this.grpServoCan.Size = new System.Drawing.Size(308, 511);
             this.grpServoCan.TabIndex = 11;
@@ -812,7 +812,7 @@ namespace GoBot
             this.panelConnexions.BackColor = System.Drawing.Color.White;
             this.panelConnexions.Location = new System.Drawing.Point(0, 735);
             this.panelConnexions.Name = "panelConnexions";
-            this.panelConnexions.Size = new System.Drawing.Size(980, 27);
+            this.panelConnexions.Size = new System.Drawing.Size(1202, 27);
             this.panelConnexions.TabIndex = 74;
             // 
             // FenGoBot

@@ -66,11 +66,13 @@ namespace GoBot.Communications
             ConnectionCan = new CanConnection(Board.RecCan);
             ConnectionCan.StartReception();
 
+            _connectionCanServo.Add(CanBoard.CanDisplay, new CanSubConnection(ConnectionCan, CanBoard.CanDisplay));
             _connectionCanServo.Add(CanBoard.CanServo1, new CanSubConnection(ConnectionCan, CanBoard.CanServo1));
             _connectionCanServo.Add(CanBoard.CanServo2, new CanSubConnection(ConnectionCan, CanBoard.CanServo2));
             _connectionCanServo.Add(CanBoard.CanServo3, new CanSubConnection(ConnectionCan, CanBoard.CanServo3));
             _connectionCanServo.Add(CanBoard.CanServo4, new CanSubConnection(ConnectionCan, CanBoard.CanServo4));
             _connectionCanServo.Add(CanBoard.CanServo5, new CanSubConnection(ConnectionCan, CanBoard.CanServo5));
+            _connectionCanServo.Add(CanBoard.CanServo6, new CanSubConnection(ConnectionCan, CanBoard.CanServo6));
 
             _connectionCanServo.Values.ToList().ForEach(o => AllConnections.Add(o));
 

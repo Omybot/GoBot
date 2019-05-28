@@ -109,6 +109,9 @@ namespace GoBot.Strategies
             Movements.Add(new MoveBalance(Plateau.Elements.BalanceViolet));
             Movements.Add(new MoveBalance(Plateau.Elements.BalanceYellow));
 
+            Movements.Add(new MoveVoidZone(Plateau.Elements.VoidZoneViolet));
+            Movements.Add(new MoveVoidZone(Plateau.Elements.VoidZoneYellow));
+
             for (int iMov = 0; iMov < Movements.Count; iMov++)
             {
                 for(int iPos = 0; iPos < Movements[iMov].Positions.Count; iPos++)

@@ -33,6 +33,8 @@ namespace GoBot.Strategies
             Actionneur.AtomHandler.DoStop();
             Actionneur.AtomHandler.DoUp();
 
+            Actionneur.AtomStacker.AtomsCount++;
+
             ThreadManager.CreateThread(link => StoreAtom()).StartThread();
             
             Robots.GrosRobot.SpeedConfig.SetParams(600, 1200, 1200, 1000, 2000, 2000);

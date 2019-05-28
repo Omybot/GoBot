@@ -43,14 +43,19 @@ namespace GoBot
 
         GoldClampRight = 212,
         GoldElevationRight = 213,
-        GoldElevationLeft = 214,
-        GoldClampLeft = 215,
-        
+        WiperRight = 214,
+        Unused15 = 215,
+
         ClampRight = 216,
         Unused17 = 217,
         Elevation = 218,
         ClampLeft = 219,
-        
+
+        GoldClampLeft = 220,
+        GoldElevationLeft = 221,
+        WiperLeft = 222,
+        Unused23 = 223,
+
         Tous = 254
     }
 

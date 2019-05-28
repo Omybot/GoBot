@@ -105,6 +105,18 @@ namespace GoBot.Actionneurs
             _servoElevation.DisableOutput();
             _servoClamp.DisableOutput();
         }
+
+        public void DoCalibEject()
+        {
+            Robots.GrosRobot.Lent();
+            Robots.GrosRobot.Recallage(SensAR.Avant);
+            Robots.GrosRobot.Rapide();
+            Robots.GrosRobot.Reculer(80);
+            DoUp();
+            Thread.Sleep(700);
+            Robots.GrosRobot.Reculer(100);
+            DoStore();
+        }
     }
 
     public class GoldGrabberLeft : GoldGrabber
@@ -123,11 +135,11 @@ namespace GoBot.Actionneurs
     {
         public GoldGrabberRight()
         {
-            _servoClamp = AllDevices.CanServos[ServomoteurID.GoldClampLeft];
-            _servoElevation = AllDevices.CanServos[ServomoteurID.GoldElevationLeft];
+            _servoClamp = AllDevices.CanServos[ServomoteurID.GoldClampRight];
+            _servoElevation = AllDevices.CanServos[ServomoteurID.GoldElevationRight];
 
-            _posClamp = Config.CurrentConfig.ServoClampGoldLeft;
-            _posElevation = Config.CurrentConfig.ServoElevationGoldLeft;
+            _posClamp = Config.CurrentConfig.ServoClampGoldRight;
+            _posElevation = Config.CurrentConfig.ServoElevationGoldRight;
         }
     }
 }

@@ -91,7 +91,7 @@ namespace Geometry.Shapes
         /// <param name="pts">Liste de points à regrouper</param>
         /// <param name="maxDistance">Distance maximale pour accrocher un point à un groupe. Représente donc également la distance minimale entre deux groupes.</param>
         /// <returns>Liste des listes de points pour chaque regroupement</returns>
-        public static List<List<RealPoint>> GroupByDistance(this IEnumerable<RealPoint> pts, double maxDistance, int maxPopulation)
+        public static List<List<RealPoint>> GroupByDistance(this IEnumerable<RealPoint> pts, double maxDistance)
         {
             List<RealPoint> pool = new List<RealPoint>(pts);
 
@@ -111,6 +111,35 @@ namespace Geometry.Shapes
                 {
                     group.AddRange(pool.Where(p => p.Distance(group[i]) < maxDistance).ToList());
                     pool.RemoveAll(p => p.Distance(group[i]) < maxDistance);
+                }
+            }
+
+            return groups;
+        }
+
+        public static List<List<RealPoint>> GroupByDistance(this IEnumerable<RealPoint> pts, double maxDistance, double maxSize)
+        {
+            List<RealPoint> pool = new List<RealPoint>(pts);
+
+            List<List<RealPoint>> fullGroups = new List<List<RealPoint>>();
+            List<List<RealPoint>> groups = new List<List<RealPoint>>();
+
+            // TODO2019 : Maximum de population
+
+            while (pool.Count > 0)
+            {
+                List<RealPoint> group = new List<RealPoint>();
+                groups.Add(group);
+                group.Add(pool[0]);
+                pool.RemoveAt(0);
+
+                for (int i = 0; i < group.Count; i++)
+                {
+                    List<RealPoint> closePts = pool.Where(p => p.Distance(group[i]) < maxDistance).ToList();
+                    List<RealPoint> acceptedPts = closePts.Where(o => !group.Exists(o2 => o2.Distance(o) > maxDistance)).ToList();
+                    
+                    group.AddRange(acceptedPts);
+                    acceptedPts.ForEach(o => pool.Remove(o));
                 }
             }
 

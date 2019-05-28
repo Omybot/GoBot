@@ -23,6 +23,8 @@ namespace GoBot.GameElements
         private Goldenium _goldeniumViolet, _goldeniumYellow;
         private Balance _balanceViolet, _balanceYellow;
 
+        private VoidZone _zoneViolet, _zoneYellow;
+
         public AllGameElements()
         {
             _colorRedium = Color.FromArgb(250, 36, 39);
@@ -94,6 +96,10 @@ namespace GoBot.GameElements
             // Balances
             _balanceViolet = new Balance(new RealPoint(3000 - 1360, 1800), Plateau.CouleurDroiteViolet, 100);
             _balanceYellow = new Balance(new RealPoint(1360, 1800), Plateau.CouleurGaucheJaune, 100);
+
+            // Zones de vide
+            _zoneViolet = new VoidZone(new RealPoint(1000, 1050), Color.White, 150);
+            _zoneYellow = new VoidZone(new RealPoint(3000 - 1000, 1050), Color.White, 150);
         }
 
         public Accelerator AcceleratorViolet => _acceleratorViolet;
@@ -104,6 +110,9 @@ namespace GoBot.GameElements
 
         public Balance BalanceViolet => _balanceViolet;
         public Balance BalanceYellow=> _balanceYellow;
+
+        public VoidZone VoidZoneViolet => _zoneViolet;
+        public VoidZone VoidZoneYellow => _zoneYellow;
         
         public IEnumerable<GameElement> AllElements
         {
@@ -119,6 +128,7 @@ namespace GoBot.GameElements
                 elements = elements.Concat(new GameElement[] { _acceleratorViolet, _acceleratorYellow });
                 elements = elements.Concat(new GameElement[] { _goldeniumViolet, _goldeniumYellow });
                 elements = elements.Concat(new GameElement[] { _balanceViolet, _balanceYellow });
+                elements = elements.Concat(new GameElement[] { _zoneViolet, _zoneYellow });
 
                 return elements;
             }
