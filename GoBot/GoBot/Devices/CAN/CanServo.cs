@@ -28,6 +28,9 @@ namespace GoBot.Devices.CAN
         private iCanSpeakable _communication;
 
         private ThreadLink _nextDisable;
+        
+        public delegate void TorqueAlertDelegate();
+        public event TorqueAlertDelegate TorqueAlert;
 
         public CanServo(int globalId, iCanSpeakable communication)
         {
@@ -192,6 +195,7 @@ namespace GoBot.Devices.CAN
                         AllDevices.RecGoBot.Buzz(".-.");
                         if (_enableAutoCut)
                             _communication.SendFrame(CanFrameFactory.BuildDisableOutput(_globalId));
+                        TorqueAlert?.Invoke();
                         break;
                 }
             }
