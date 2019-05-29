@@ -130,7 +130,7 @@ namespace GoBot
             {
                 JackArme = false;
                 if (Plateau.Strategy == null)
-                    Plateau.Strategy = new GoBot.Strategies.StrategyMinimumScore();
+                    Plateau.Strategy = new GoBot.Strategies.StrategyRoundTrip();
                 Plateau.Strategy.ExecuteMatch();
             }
         }

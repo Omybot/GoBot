@@ -83,7 +83,7 @@ namespace GoBot.Strategies
         {
             if (Debugger.IsAttached)
             {
-                MatchDuration = new TimeSpan(0, 0, 1000);
+                MatchDuration = new TimeSpan(0, 0, 100);
             }
             else
             {
@@ -111,6 +111,9 @@ namespace GoBot.Strategies
 
             Movements.Add(new MoveVoidZone(Plateau.Elements.VoidZoneViolet));
             Movements.Add(new MoveVoidZone(Plateau.Elements.VoidZoneYellow));
+
+            Movements.Add(new MoveAtomsToSlope(Plateau.Elements.SlopeViolet));
+            Movements.Add(new MoveAtomsToSlope(Plateau.Elements.SlopeYellow));
 
             for (int iMov = 0; iMov < Movements.Count; iMov++)
             {

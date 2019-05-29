@@ -13,9 +13,11 @@ namespace GoBot.Actionneurs
     {
         protected CanServo _servoClamp;
         protected CanServo _servoElevation;
+        protected CanServo _servoWiper;
 
         protected ServoClampGold _posClamp;
         protected ServoElevationGold _posElevation;
+        protected ServoWiper _posWiper;
 
         public GoldGrabber()
         {
@@ -93,17 +95,22 @@ namespace GoBot.Actionneurs
 
         public void DoInit()
         {
+            DoWiperSide();
+            Thread.Sleep(250);
+            DoWiperStore();
+            Thread.Sleep(250);
             DoUp();
-            Thread.Sleep(250);
+            Thread.Sleep(500);
             DoOpen();
-            Thread.Sleep(250);
+            Thread.Sleep(500);
             DoClose();
-            Thread.Sleep(250);
+            Thread.Sleep(500);
             DoStore();
             Thread.Sleep(500);
 
-            _servoElevation.DisableOutput();
-            _servoClamp.DisableOutput();
+            _servoElevation.DisableOutput(500);
+            _servoClamp.DisableOutput(500);
+            _servoWiper.DisableOutput(500);
         }
 
         public void DoCalibEject()
@@ -119,6 +126,16 @@ namespace GoBot.Actionneurs
             Actionneur.GoldGrabberLeft.DoStore();
             Actionneur.GoldGrabberRight.DoStore();
         }
+
+        public void DoWiperStore()
+        {
+            _servoWiper.SetPosition(_posWiper.PositionStore);
+        }
+
+        public void DoWiperSide()
+        {
+            _servoWiper.SetPosition(_posWiper.PositionSide);
+        }
     }
 
     public class GoldGrabberLeft : GoldGrabber
@@ -127,9 +144,11 @@ namespace GoBot.Actionneurs
         {
             _servoClamp = AllDevices.CanServos[ServomoteurID.GoldClampLeft];
             _servoElevation = AllDevices.CanServos[ServomoteurID.GoldElevationLeft];
+            _servoWiper = AllDevices.CanServos[ServomoteurID.WiperLeft];
 
             _posClamp = Config.CurrentConfig.ServoClampGoldLeft;
             _posElevation = Config.CurrentConfig.ServoElevationGoldLeft;
+            _posWiper = Config.CurrentConfig.ServoWiperLeft;
         }
     }
 
@@ -139,9 +158,11 @@ namespace GoBot.Actionneurs
         {
             _servoClamp = AllDevices.CanServos[ServomoteurID.GoldClampRight];
             _servoElevation = AllDevices.CanServos[ServomoteurID.GoldElevationRight];
+            _servoWiper = AllDevices.CanServos[ServomoteurID.WiperRight];
 
             _posClamp = Config.CurrentConfig.ServoClampGoldRight;
             _posElevation = Config.CurrentConfig.ServoElevationGoldRight;
+            _posWiper = Config.CurrentConfig.ServoWiperRight;
         }
     }
 }

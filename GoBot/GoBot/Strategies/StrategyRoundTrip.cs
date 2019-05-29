@@ -17,7 +17,7 @@ namespace GoBot.Strategies
 
         protected override void SequenceBegin()
         {
-            Robots.GrosRobot.SpeedConfig.SetParams(400, 1000, 2000, 400, 1000, 2000);
+            Robots.GrosRobot.MajGraphFranchissable(Plateau.ListeObstacles);
 
             //Plateau.Balise.VitesseRotation(250);
 
@@ -30,8 +30,8 @@ namespace GoBot.Strategies
         {
             while (IsRunning)
             {
-                while (!Robots.GrosRobot.GotoXYTeta(new Position(180, new RealPoint(350, 950)))) ;
-                while (!Robots.GrosRobot.GotoXYTeta(new Position(0, new RealPoint(3000 - 350, 950)))) ;
+                while (!Robots.GrosRobot.GotoXYTeta(new Position(0, new RealPoint(700, 1250)))) ;
+                while (!Robots.GrosRobot.GotoXYTeta(new Position(180, new RealPoint(3000 - 700, 1250)))) ;
             }
         }
     }

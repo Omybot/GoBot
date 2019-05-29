@@ -20,7 +20,7 @@ namespace GoBot.Devices
             _canServos = new CanServos(Connections.ConnectionCan);
             _canDisplay = new CanDisplay(Connections.ConnectionCan);
             _hokuyoGround = new HokuyoRec(LidarID.Ground);
-            _hokuyoAvoid = CreateHokuyo("COM7", LidarID.Avoid);
+            _hokuyoAvoid = CreateHokuyo("COM4", LidarID.Avoid);
         }
 
         public static RecGoBot RecGoBot

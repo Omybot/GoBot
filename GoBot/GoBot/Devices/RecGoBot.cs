@@ -48,6 +48,10 @@ namespace GoBot.Devices
 
         public RecGoBot(Board board)
         {
+            ledsStatus = new Dictionary<LedID, LedStatus>();
+            for (LedID i = 0; i <= (LedID)15; i++)
+                ledsStatus.Add(i, LedStatus.Off);
+
             connexion = Connections.UDPBoardConnection[board];
             connexion.FrameReceived += new Connection.NewFrameDelegate(connexion_NouvelleTrameRecue);
 
@@ -67,11 +71,6 @@ namespace GoBot.Devices
                 conLed.ConnectionChecker.SendConnectionTest += ConnexionCheck_SendConnectionTest;
                 led--;
             }
-
-            ledsStatus = new Dictionary<LedID, LedStatus>();
-            for (LedID i = 0; i <= (LedID)15; i++)
-                ledsStatus.Add(i, LedStatus.Off);
-
             ButtonChange += RecGoBot_ButtonChange;
 
         }
@@ -256,27 +255,27 @@ namespace GoBot.Devices
 
         void SwitchChanged()
         {
-            //if (!_switch1 && !_switch2 && !_switch3 && !_switch4)
-            //{
-            //    Plateau.Strategy = new Strategies.StrategyMatch();
-            //    Buzz(0, 0);
-            //}
-            //else if (!_switch1 && !_switch2 && _switch3 && !_switch4)
-            //{
-            //    Plateau.Strategy = new Strategies.StrategyMinimumScore();
-            //    Buzz(0, 0);
-            //}
-            //else if (!_switch1 && !_switch2 && !_switch3 && _switch4)
-            //{
-            //    Plateau.Strategy = new Strategies.StrategyRoundTrip();
-            //    Buzz(0, 0);
-            //}
-            //else
-            //{
-            //    Buzz(5000, 200);
-            //}
+            if (!_switch1 && !_switch2 && !_switch3 && !_switch4)
+            {
+                Plateau.Strategy = new Strategies.StrategyMatch();
+                Buzz(0, 0);
+            }
+            else if (!_switch1 && !_switch2 && _switch3 && !_switch4)
+            {
+                Plateau.Strategy = new Strategies.StrategyMinimumScore();
+                Buzz(0, 0);
+            }
+            else if (!_switch1 && !_switch2 && !_switch3 && _switch4)
+            {
+                Plateau.Strategy = new Strategies.StrategyRoundTrip();
+                Buzz(0, 0);
+            }
+            else
+            {
+                Buzz(5000, 200);
+            }
 
-            //Robots.GrosRobot.MajGraphFranchissable();
+            Robots.GrosRobot.MajGraphFranchissable(Plateau.ListeObstacles);
         }
 
         void ChangeLedConnection(bool connected, LedID led)
@@ -290,7 +289,7 @@ namespace GoBot.Devices
             }
             catch (Exception)
             {
-
+                Console.WriteLine("Problème LED");
             }
         }
 

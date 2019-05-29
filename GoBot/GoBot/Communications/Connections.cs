@@ -38,7 +38,7 @@ namespace GoBot.Communications
         /// <summary>
         /// Intervalle entre les vérifications de connexion
         /// </summary>
-        private static int IntervalLoopTests = 500;
+        private static int IntervalLoopTests = 1000;
 
         private static Dictionary<CanBoard, CanSubConnection> _connectionCanServo = new Dictionary<CanBoard, CanSubConnection>();
 
@@ -78,7 +78,7 @@ namespace GoBot.Communications
 
             // En remplacement des tests de connexion des ConnexionCheck, pour les syncroniser
             _linkTestConnections = ThreadManager.CreateThread(link => TestConnections());
-            _linkTestConnections.StartInfiniteLoop(new TimeSpan(0, 0, 1));
+            _linkTestConnections.StartInfiniteLoop();
         }
 
         /// <summary>

@@ -7,6 +7,7 @@ using GoBot.GameElements;
 using Geometry;
 using Geometry.Shapes;
 using GoBot.Actionneurs;
+using System.Threading;
 
 namespace GoBot.Movements
 {
@@ -40,18 +41,19 @@ namespace GoBot.Movements
 
         protected override void MovementBegin()
         {
-            // TODO2019 : libérer le champ de vision du LIDAR
         }
 
         protected override void MovementCore()
         {
+            Actionneur.GoldGrabberLeft.DoWiperSide();
+            Thread.Sleep(500);
             _zone.AtomsCount -= Actionneur.AtomHandler.DoVoidZone();
             _zone.AtomsCount = 0;
+            Actionneur.GoldGrabberLeft.DoWiperStore();
         }
 
         protected override void MovementEnd()
         {
-            // TODO2019 : baisse le bras devant le LIDAR
         }
     }
 }

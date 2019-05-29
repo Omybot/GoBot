@@ -100,30 +100,14 @@ namespace GoBot.Actionneurs
 
         public void DoGrab()
         {
-            Actionneur.AtomStacker.DoFrontOpen();
-            Actionneur.AtomStacker.DoFrontPrepare(false);
-
             DoSwallow();
             DoClose();
             Thread.Sleep(500);
-            Actionneur.AtomStacker.DoFrontPrepare();
             DoUp();
-            Thread.Sleep(200);
+            DoStop();
+            Thread.Sleep(500);
 
-            Threading.ThreadManager.CreateThread(link =>
-            {
-                Thread.Sleep(300);
-                DoStop();
-                link.Name = "Atom stocking";
-                Actionneur.AtomStacker.MoveFingerFront(Config.CurrentConfig.MotorFingerFront.Maximum, true);
-
-                Actionneur.AtomStacker.DoFrontClose();
-                Thread.Sleep(200);
-                DoFree();
-                Thread.Sleep(100);
-
-                Actionneur.AtomStacker.DoFrontStore(false);
-            }).StartThread();
+            Threading.ThreadManager.CreateThread(link => Actionneur.AtomStacker.DoStoreAtom()).StartThread();
         }
 
         public void MoveClampLeft(int position)
@@ -175,7 +159,7 @@ namespace GoBot.Actionneurs
         {
             List<RealPoint> rawPts = _detector.GetPoints();
 
-            List<RealPoint> pts = rawPts.Where(o => Plateau.IsInside(o, 30)).ToList();
+            List<RealPoint> pts = rawPts.Where(o => Plateau.IsInside(o, 80)).ToList();
             pts = pts.Where(o => InRange(o.Distance(Robots.GrosRobot.Position.Coordinates), 200, maxDistance)).ToList();
 
             List<List<RealPoint>> groups = pts.GroupByDistance(50, 200);

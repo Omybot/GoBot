@@ -23,12 +23,12 @@ namespace GoBot.Movements
 
             if (_goldenium.Owner == Plateau.CouleurDroiteViolet)
             {
-                Positions.Add(new Position(-90, new RealPoint(_goldenium.Position.X - 100, 310)));
+                Positions.Add(new Position(-90, new RealPoint(_goldenium.Position.X - 100, 360)));
                 _grabber = Actionneur.GoldGrabberRight;
             }
             else
             {
-                Positions.Add(new Position(-90, new RealPoint(_goldenium.Position.X + 100, 300)));
+                Positions.Add(new Position(-90, new RealPoint(_goldenium.Position.X + 100, 360)));
                 _grabber = Actionneur.GoldGrabberLeft;
             }
         }
@@ -55,12 +55,13 @@ namespace GoBot.Movements
 
         protected override void MovementCore()
         {
+            Thread.Sleep(250);
             _grabber.DoUp();
             _grabber.DoOpen();
             Thread.Sleep(500);
 
             Robots.GrosRobot.Lent();
-            Robots.GrosRobot.Avancer(70);
+            Robots.GrosRobot.Avancer(120);
             Robots.GrosRobot.Stop(StopMode.Freely);
 
             _grabber.DoDown();

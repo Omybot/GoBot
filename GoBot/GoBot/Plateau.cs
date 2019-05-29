@@ -165,6 +165,12 @@ namespace GoBot
 
                 bounds.Add(new RealPoint(2550, 2000));
                 bounds.Add(new RealPoint(2550, 1600));
+
+                bounds.Add(new RealPoint(1500 + 20, 1600));
+                bounds.Add(new RealPoint(1500 + 20, 1375));
+                bounds.Add(new RealPoint(1500 - 20, 1375));
+                bounds.Add(new RealPoint(1500 - 20, 1600));
+
                 bounds.Add(new RealPoint(450, 1600));
                 bounds.Add(new RealPoint(450, 2000));
                 
@@ -224,19 +230,22 @@ namespace GoBot
 
         private static void HokuyoAvoid_NewMeasure(List<RealPoint> measure)
         {
-            List<RealPoint> pts = measure.Where(o => IsInside(o)).ToList();
+            List<RealPoint> pts = measure.Where(o => IsInside(o, 100)).ToList();
+            pts = pts.Where(o => o.Distance(Robots.GrosRobot.Position.Coordinates) > 300).ToList();
+
             List<List<RealPoint>> groups = pts.GroupByDistance(50, 20);
 
-            List<Circle> obstacles = new List<Circle>();
+            List<RealPoint> obstacles = new List<RealPoint>();
 
             foreach (List<RealPoint> group in groups)
             {
-                Circle circle = group.FitCircle();
-                if(circle.Radius < 100) obstacles.Add(circle);
+                RealPoint center = group.GetBarycenter();
+                if(!obstacles.Exists(o => o.Distance(center) < 150))
+                    obstacles.Add(center);
             }
 
             Stopwatch sw = Stopwatch.StartNew();
-            if(obstacles.Count > 0) SetOpponents(obstacles.Select(o => o.Center).ToList());
+            if(obstacles.Count > 0) SetOpponents(obstacles);
             Debug.Print(sw.ElapsedMilliseconds + " ms");
         }
 

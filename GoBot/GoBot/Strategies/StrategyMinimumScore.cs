@@ -1,4 +1,6 @@
-﻿using GoBot.Actionneurs;
+﻿using Geometry;
+using Geometry.Shapes;
+using GoBot.Actionneurs;
 using GoBot.Movements;
 using GoBot.Threading;
 using System;
@@ -19,10 +21,14 @@ namespace GoBot.Strategies
 
         public override bool AvoidElements => _avoidElements;
 
+        List<Movement> mouvements = new List<Movement>();
+
         protected override void SequenceBegin()
         {
             // Sortir ICI de la zonde de départ
-            
+
+            Robots.GrosRobot.MajGraphFranchissable(Plateau.ListeObstacles);
+
             Actionneur.AtomHandler.DoDown();
             Actionneur.AtomHandler.DoOpen();
             Actionneur.AtomHandler.DoSwallow();
@@ -39,15 +45,17 @@ namespace GoBot.Strategies
             
             if (Plateau.NotreCouleur == Plateau.CouleurGaucheJaune)
             {
-                new MoveAccelerator(Plateau.Elements.AcceleratorYellow).Execute();
-                new MoveGoldGrab(Plateau.Elements.GoldeniumYellow).Execute();
-                new MoveBalance(Plateau.Elements.BalanceYellow).Execute();
+                mouvements.Add(new MoveAccelerator(Plateau.Elements.AcceleratorYellow));
+                mouvements.Add(new MoveGoldGrab(Plateau.Elements.GoldeniumYellow));
+                mouvements.Add(new MoveBalance(Plateau.Elements.BalanceYellow));
+                //new MoveVoidZone(Plateau.Elements.VoidZoneYellow).Execute();
             }
             else
             {
-                new MoveAccelerator(Plateau.Elements.AcceleratorViolet).Execute();
-                new MoveGoldGrab(Plateau.Elements.GoldeniumViolet).Execute();
-                new MoveBalance(Plateau.Elements.BalanceViolet).Execute();
+                mouvements.Add(new MoveAccelerator(Plateau.Elements.AcceleratorViolet));
+                mouvements.Add(new MoveGoldGrab(Plateau.Elements.GoldeniumViolet));
+                mouvements.Add(new MoveBalance(Plateau.Elements.BalanceViolet));
+                //new MoveVoidZone(Plateau.Elements.VoidZoneViolet).Execute();
             }
         }
 
@@ -75,15 +83,21 @@ namespace GoBot.Strategies
         {
             // TODOYEACHYEAR Ajouter ICI l'ordre de la strat fixe avant détection d'adversaire
 
-            if (Plateau.NotreCouleur == Plateau.CouleurGaucheJaune)
+            _avoidElements = true;
+
+            foreach (Movement move in mouvements)
             {
-                _avoidElements = true;
-                Robots.GrosRobot.MajGraphFranchissable(Plateau.ListeObstacles);
+                bool ok = false;
+                while (!ok)
+                {
+                    ok = move.Execute();
+                }
             }
-            else
+            
+            while (IsRunning)
             {
-                _avoidElements = true;
-                Robots.GrosRobot.MajGraphFranchissable(Plateau.ListeObstacles);
+                while (!Robots.GrosRobot.GotoXYTeta(new Position(0, new RealPoint(700, 1250)))) ;
+                while (!Robots.GrosRobot.GotoXYTeta(new Position(180, new RealPoint(3000 - 700, 1250)))) ;
             }
         }
     }

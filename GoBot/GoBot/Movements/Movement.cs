@@ -100,6 +100,10 @@ namespace GoBot.Movements
                         ok = false;
                     }
                 }
+                else
+                {
+                    ok = false;
+                }
             }
             else
             {

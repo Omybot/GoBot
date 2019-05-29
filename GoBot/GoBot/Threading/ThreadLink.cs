@@ -304,6 +304,16 @@ namespace GoBot.Threading
         }
 
         /// <summary>
+        /// Lance le thread sur une execution à intervalle régulier pour un certain nombre de fois.
+        /// </summary>
+        /// <param name="interval">Intervalle entre les executions. (De la fin d'une execution au début de la suivante)</param>
+        /// <param name="executions">Nombre total d'executions attendues.</param>
+        public void StartLoop(int intervalMs, int executions)
+        {
+            this.StartLoop(new TimeSpan(0, 0, 0, 0, intervalMs), executions);
+        }
+
+        /// <summary>
         /// Lance le thread sur une execution à intervalle régulier pour un nombre illimité de fois.
         /// </summary>
         /// <param name="interval">Intervalle entre les executions. (De la fin d'une execution au début de la suivante)</param>
@@ -312,6 +322,15 @@ namespace GoBot.Threading
             _innerThread = new Thread(f => ThreadInfiniteLoop(interval));
             _innerThread.IsBackground = true;
             _innerThread.Start();
+        }
+
+        /// <summary>
+        /// Lance le thread sur une execution à intervalle régulier pour un nombre illimité de fois.
+        /// </summary>
+        /// <param name="interval">Intervalle entre les executions. (De la fin d'une execution au début de la suivante)</param>
+        public void StartInfiniteLoop(int intervalMs = 0)
+        {
+            this.StartInfiniteLoop(new TimeSpan(0, 0, 0, 0, intervalMs));
         }
 
         /// <summary>
