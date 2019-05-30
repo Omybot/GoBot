@@ -105,7 +105,7 @@ namespace GoBot
 
                 Plateau.NotreCouleur = Plateau.CouleurGaucheJaune;
 
-                Connections.ConnectionIO.SendMessage(UdpFrameFactory.DemandeCouleurEquipe());
+                Connections.ConnectionGB.SendMessage(UdpFrameFactory.DemandeCouleurEquipe());
             }
 
             SplashScreen.SetMessage("Youhou !", Color.Green);

@@ -19,9 +19,14 @@ namespace GoBot.Actionneurs
         protected ServoElevationGold _posElevation;
         protected ServoWiper _posWiper;
 
+        protected bool _loaded;
+
         public GoldGrabber()
         {
+            _loaded = false;
         }
+
+        public bool Loaded { get => _loaded; set => _loaded = value; }
 
         public void DoOpen()
         {
@@ -111,6 +116,11 @@ namespace GoBot.Actionneurs
             _servoElevation.DisableOutput(500);
             _servoClamp.DisableOutput(500);
             _servoWiper.DisableOutput(500);
+        }
+
+        public void DoDisableElevation()
+        {
+            _servoElevation.DisableOutput();
         }
 
         public void DoCalibEject()

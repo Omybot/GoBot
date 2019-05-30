@@ -27,7 +27,7 @@ namespace GoBot.IHM
         {
             InitializeComponent();
             Plateau = new Plateau();
-            Plateau.ScoreChange += new EventHandler(Plateau_ScoreChange);
+            Plateau.ScoreChange += new Plateau.ScoreChangeDelegate(Plateau_ScoreChange);
             Dessinateur.TableDessinee += Dessinateur_TableDessinee;
 
             checkedListBox.SetItemChecked(0, true);
@@ -44,9 +44,9 @@ namespace GoBot.IHM
             this.InvokeAuto(() => pictureBoxTable.Image = img);
         }
 
-        void Plateau_ScoreChange(object sender, EventArgs e)
+        void Plateau_ScoreChange(int score)
         {
-            this.InvokeAuto(() => lblScore.Text = Plateau.Score.ToString());
+            this.InvokeAuto(() => lblScore.Text = score.ToString());
         }
 
         void DisplayInfos()
@@ -552,6 +552,20 @@ namespace GoBot.IHM
         private void btnTestScore_Click(object sender, EventArgs e)
         {
             Plateau.Score++;
+        }
+
+        private void btnRestartRecal_Click(object sender, EventArgs e)
+        {
+            if(Plateau.CouleurGaucheJaune == Plateau.NotreCouleur)
+            {
+                Robots.GrosRobot.GotoXYTeta(new Position(90, new RealPoint(300, 300)));
+                Recallages.RecallageGrosRobot();
+            }
+            else
+            {
+                Robots.GrosRobot.GotoXYTeta(new Position(90, new RealPoint(3000-300, 300)));
+                Recallages.RecallageGrosRobot();
+            }
         }
     }
 }

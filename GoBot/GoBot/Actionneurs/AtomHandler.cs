@@ -220,19 +220,15 @@ namespace GoBot.Actionneurs
                 if (elapsed < 500)
                     Thread.Sleep(500 - elapsed);
 
+                Robots.GrosRobot.SpeedConfig.LineDeceleration = 800;
                 Robots.GrosRobot.Avancer((int)(dir.distance) - 130);
+                Robots.GrosRobot.Rapide();
 
                 DoGrab();
                 Actionneur.AtomStacker.AtomsCount++;
 
-                Robots.GrosRobot.Reculer((int)(dir.distance) - 130);
-
-
-                if (dir.angle > 0)
-                    Robots.GrosRobot.PivotDroite(dir.angle);
-                else
-                    Robots.GrosRobot.PivotGauche(-dir.angle);
-
+                Robots.GrosRobot.Reculer(100);
+                
                 ok = true;
             }
 

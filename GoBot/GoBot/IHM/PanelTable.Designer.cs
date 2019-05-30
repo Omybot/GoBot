@@ -67,6 +67,7 @@
             this.btnAffichage = new System.Windows.Forms.Button();
             this.pictureBoxTable = new System.Windows.Forms.PictureBox();
             this.btnTestScore = new System.Windows.Forms.Button();
+            this.btnRestartRecal = new System.Windows.Forms.Button();
             this.groupBox.SuspendLayout();
             this.groupBoxDeplacements.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numNbPoints)).BeginInit();
@@ -474,11 +475,22 @@
             this.btnTestScore.UseVisualStyleBackColor = true;
             this.btnTestScore.Click += new System.EventHandler(this.btnTestScore_Click);
             // 
+            // btnRestartRecal
+            // 
+            this.btnRestartRecal.Location = new System.Drawing.Point(31, 645);
+            this.btnRestartRecal.Name = "btnRestartRecal";
+            this.btnRestartRecal.Size = new System.Drawing.Size(81, 21);
+            this.btnRestartRecal.TabIndex = 76;
+            this.btnRestartRecal.Text = "Restart Recal";
+            this.btnRestartRecal.UseVisualStyleBackColor = true;
+            this.btnRestartRecal.Click += new System.EventHandler(this.btnRestartRecal_Click);
+            // 
             // PanelTable
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.Transparent;
+            this.Controls.Add(this.btnRestartRecal);
             this.Controls.Add(this.btnTestScore);
             this.Controls.Add(this.button2);
             this.Controls.Add(this.btnTestAsser);
@@ -556,5 +568,6 @@
         private System.Windows.Forms.Button button2;
         private System.Windows.Forms.NumericUpDown numNbPoints;
         private System.Windows.Forms.Button btnTestScore;
+        private System.Windows.Forms.Button btnRestartRecal;
     }
 }

@@ -150,7 +150,7 @@ namespace GoBot.IHM
 
         void RecGoBot_ColorChange(MatchColor state)
         {
-            this.InvokeAuto(() => btnCouleur.Value = state == MatchColor.LeftBlue ? true : false);
+            this.InvokeAuto(() => btnCouleur.Value = state == MatchColor.LeftYellow ? true : false);
         }
 
         void colorPickup1_ColorClick(Color color)

@@ -90,9 +90,11 @@ namespace GoBot
         public static int Score
         {
             get { return score; }
-            set { score = value; ScoreChange?.Invoke(null, null); }
+            set { score = value; ScoreChange?.Invoke(score); }
         }
-        public static event EventHandler ScoreChange;
+
+        public delegate void ScoreChangeDelegate(int score);
+        public static event ScoreChangeDelegate ScoreChange;
 
         public static Color CouleurGaucheJaune { get { return Color.FromArgb(254, 194, 16); } }
         public static Color CouleurDroiteViolet { get { return Color.FromArgb(137, 58, 144); } }
@@ -135,9 +137,30 @@ namespace GoBot
         {
             bool inside = _bounds.Contains(p);
             if (inside && securityDistance > 0)
-                inside = !_bounds.Sides.Exists(o=> o.Distance(p) < securityDistance);
+                inside = !_bounds.Sides.Exists(o => o.Distance(p) < securityDistance);
 
             return inside;
+        }
+
+        public static void StartMatch()
+        {
+            timerZoneDepart = ThreadManager.CreateThread(link =>
+            {
+                if (qqunZoneDepart)
+                    cptZoneDepart++;
+                else
+                {
+                    cptZoneDepart = 0;
+                    reduireAdvInZoneDepart = false;
+                }
+
+                qqunZoneDepart = false;
+
+                if (cptZoneDepart >= 5)
+                    reduireAdvInZoneDepart = true;
+
+            });
+            timerZoneDepart.StartInfiniteLoop(1000);
         }
 
         public Plateau()
@@ -173,7 +196,7 @@ namespace GoBot
 
                 bounds.Add(new RealPoint(450, 1600));
                 bounds.Add(new RealPoint(450, 2000));
-                
+
                 bounds.Add(new RealPoint(0, 2000));
                 _bounds = new Polygon(bounds);
 
@@ -189,6 +212,11 @@ namespace GoBot
                 AllDevices.HokuyoAvoid.NewMeasure += HokuyoAvoid_NewMeasure;
             }
         }
+
+        private static int cptZoneDepart = 0;
+        private static bool qqunZoneDepart = false;
+        private static ThreadLink timerZoneDepart;
+        private static bool reduireAdvInZoneDepart = false;
 
         public static void SetOpponents(List<RealPoint> positions)
         {
@@ -215,10 +243,36 @@ namespace GoBot
                 }
             }
 
-            _obstacles.SetDetections(positions.Select(p => new Circle(p, RayonAdversaire)).ToList());
+            // Truc dégueu pour ne pas détecter notre robot secondaire qui est dans la zone de départ au début du match
+            positions = positions.Where(o => !NotreZoneDepart().Contains(o)).ToList();
+
+
+            _obstacles.SetDetections(positions.Select(p =>
+            {
+                if (_obstacles.FromColor.ElementAt(0).Contains(p))
+                {
+                    qqunZoneDepart = true;
+                    if (reduireAdvInZoneDepart)
+                        return new Circle(p, RayonAdversaire / 3);
+                    else
+                        return new Circle(p, RayonAdversaire);
+                }
+                else
+                    return new Circle(p, RayonAdversaire);
+            }).ToList());
+
+            //_obstacles.SetDetections(positions.Select(p => new Circle(p, RayonAdversaire)).ToList());
 
             Robots.GrosRobot.MajGraphFranchissable(_obstacles.FromAllExceptBoard);
             Robots.GrosRobot.ObstacleTest(_obstacles.FromDetection);
+        }
+
+        public static IShape NotreZoneDepart()
+        {
+            if (Plateau.NotreCouleur == Plateau.CouleurDroiteViolet)
+                return new PolygonRectangle(new RealPoint(2550, 300), 400, 900);
+            else
+                return new PolygonRectangle(new RealPoint(0, 300), 400, 900);
         }
 
         public static void Init()
@@ -240,12 +294,12 @@ namespace GoBot
             foreach (List<RealPoint> group in groups)
             {
                 RealPoint center = group.GetBarycenter();
-                if(!obstacles.Exists(o => o.Distance(center) < 150))
+                if (!obstacles.Exists(o => o.Distance(center) < 150))
                     obstacles.Add(center);
             }
 
             Stopwatch sw = Stopwatch.StartNew();
-            if(obstacles.Count > 0) SetOpponents(obstacles);
+            if (obstacles.Count > 0) SetOpponents(obstacles);
             Debug.Print(sw.ElapsedMilliseconds + " ms");
         }
 

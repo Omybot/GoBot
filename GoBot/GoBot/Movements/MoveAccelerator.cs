@@ -38,7 +38,7 @@ namespace GoBot.Movements
 
         public override int Score => 0;
 
-        public override double Value => IsCorrectColor() ? 1 : 0;
+        public override double Value => IsCorrectColor() ? ((_accelerator.HasInitialAtom ? 100 :  0) + Actionneur.AtomStacker.AtomsCount * 5) : 0;
 
         public override GameElement Element => _accelerator;
 
@@ -60,27 +60,46 @@ namespace GoBot.Movements
             _unloader.DoLauncherOutside();
             _unloader.DoLauncherPrepare();
 
-
-            Robot.Lent();
-            Robot.Recallage(SensAR.Arriere);
-            Robot.Rapide();
-
             if (_accelerator.HasInitialAtom)
             {
+                Robot.Lent();
+                Robot.Recallage(SensAR.Arriere);
+                Robot.Rapide();
+
                 _unloader.DoLauncherLaunch();
                 Thread.Sleep(500);
                 _unloader.DoLauncherPrepare();
 
+                _accelerator.AtomsCount++;
                 _accelerator.HasInitialAtom = false;
                 Plateau.Strategy.GoldFree = true;
 
                 Plateau.Score += 10; // Atome bleu dans l'accélérateur
                 Plateau.Score += 10; // Goldenium découvert
+                Robot.Avancer(150);
+            }
+
+            if(Actionneur.AtomStacker.AtomsCount > 0 && _accelerator.AtomsCount < 10)
+            {
+                _unloader.DoUnloaderDock();
+                Thread.Sleep(200);
+                Robot.Lent();
+                Robot.Recallage(SensAR.Arriere);
+                Robot.Rapide();
+                _unloader.DoUnloaderUnload();
+
+                while(Actionneur.AtomStacker.AtomsCount > 0 && _accelerator.AtomsCount < 10)
+                {
+                    Actionneur.AtomStacker.DoDrop();
+                    Plateau.Score += 10; // Atome supplémentaire
+                }
+
+                Robot.Avancer(150);
+                _unloader.DoUnloaderStore();
             }
 
             // Deverser les palets stockés
 
-            Robot.Avancer(150);
             _unloader.DoLauncherInside();
             _unloader.DoCalibrationStore();
         }

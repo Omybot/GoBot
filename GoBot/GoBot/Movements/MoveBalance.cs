@@ -31,11 +31,11 @@ namespace GoBot.Movements
             }
         }
 
-        public override bool CanExecute => _balance.AtomsCount < 6; // TODO if goldenium chargé
+        public override bool CanExecute => _balance.AtomsCount < 6 && (Actionneur.GoldGrabberLeft.Loaded || Actionneur.GoldGrabberRight.Loaded); // TODO if goldenium chargé
 
         public override int Score => 0;
 
-        public override double Value => IsCorrectColor() ? 1 : 0;
+        public override double Value => IsCorrectColor() ? ((Actionneur.GoldGrabberLeft.Loaded || Actionneur.GoldGrabberRight.Loaded) ? 100 : 0) : 0;
 
         public override GameElement Element => _balance;
 
@@ -55,7 +55,12 @@ namespace GoBot.Movements
         {
             _grabber.DoDown();
             Robot.Lent();
-            Robot.Recallage(SensAR.Avant);
+
+            if(Robot.GetType().Name == "RobotSimu")
+                Robot.Avancer(100);
+            else
+                Robot.Recallage(SensAR.Avant);
+
             Robot.Rapide();
 
             _grabber.DoOpen();

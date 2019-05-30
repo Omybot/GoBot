@@ -51,6 +51,11 @@ namespace GoBot.Devices
             set { _hokuyoAvoid = value; }
         }
 
+        public static CanDisplay CanDisplay
+        {
+            get { return _canDisplay; }
+        }
+
         private static Hokuyo CreateHokuyo(String portCom, LidarID id)
         {
             Hokuyo hok = null;

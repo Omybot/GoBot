@@ -353,37 +353,51 @@ namespace GoBot.Actionneurs
             {
                 if (!_dropPosition)
                 {
-                    int pos = (int)(_posFront.PositionPrepare - 25.4 * _atomsCount);
-                    MoveFrontAndBack(_posFront.PositionPrepare-100, pos-100);
+                    MoveFrontAndBack(20, (int)(20 + (_atomsCount - 1) * 25.4));
 
                     MoveFingerBack(0, false);
                     Thread.Sleep(200);
                     DoBackOpenForward();
-                    MoveFrontAndBack(_posFront.PositionPrepare, (int)(posBackDrop + 15 - _atomsCount * 25.4));
+                    MoveFrontAndBack(_posFront.PositionPrepare, (int)(posBackDrop + 52 - _atomsCount * 25.4));
                     DoBackClose();
-                    Thread.Sleep(300);
+                    Thread.Sleep(500);
+                    MoveFingerBack(50);
+                    MoveFingerBack(110);
+                    _servoFingerBack.SetPosition(12500);
+                    Thread.Sleep(500);
+                    MoveFingerBack(50);
                 }
 
                 MoveFingerBack((int)(posBackDrop - (25.4 * (5 - _atomsCount))));
             }
             else if (_atomsCount == 1)
             {
-                //75 12500 50
-                // TODO
                 if (!_dropPosition)
                 {
+                    MoveFrontAndBack(20, 20);
+
                     MoveFingerBack(0, false);
                     Thread.Sleep(200);
                     DoBackOpenForward();
-                    MoveFrontAndBack(_posFront.PositionPrepare, (int)(posBackDrop + 15 - _atomsCount * 25.4));
+                    MoveFrontAndBack(_posFront.PositionPrepare, (int)(posBackDrop + 52 - _atomsCount * 25.4));
                     DoBackClose();
-                    Thread.Sleep(300);
+                    Thread.Sleep(500);
+                    MoveFingerBack(50);
+                    MoveFingerBack(110);
+                    _servoFingerBack.SetPosition(12500);
+                    Thread.Sleep(500);
+                    MoveFingerBack(50);
+                    _servoFingerBack.DisableOutput();
+                    MoveFingerBack(40);
                 }
+                else
+                {
 
-                MoveFingerBack(75);
-                _servoFingerBack.SetPosition(12500);
-                Thread.Sleep(500);
-                MoveFingerBack(50);
+                    MoveFingerBack(75);
+                    _servoFingerBack.SetPosition(12500);
+                    Thread.Sleep(500);
+                    MoveFingerBack(50);
+                }
             }
 
             Actionneur.AtomUnloaderLeft.DoLauncherLaunch();

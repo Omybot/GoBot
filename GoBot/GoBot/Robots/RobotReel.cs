@@ -137,9 +137,9 @@ namespace GoBot
 
         void RecGoBot_ColorChange(MatchColor state)
         {
-            if (state == MatchColor.LeftBlue)
+            if (state == MatchColor.LeftYellow)
                 couleurEquipe = Plateau.CouleurGaucheJaune;
-            else if (state == MatchColor.RightYellow)
+            else if (state == MatchColor.RightViolet)
                 couleurEquipe = Plateau.CouleurDroiteViolet;
 
             Plateau.NotreCouleur = couleurEquipe;
@@ -795,7 +795,7 @@ namespace GoBot
         {
             historiqueCouleurEquipe = historique;
             SemaphoresTrame[UdpFrameFunction.RetourCouleurEquipe] = new Semaphore(0, int.MaxValue);
-            Connections.ConnectionIO.SendMessage(UdpFrameFactory.DemandeCouleurEquipe());
+            Connections.ConnectionGB.SendMessage(UdpFrameFactory.DemandeCouleurEquipe());
             SemaphoresTrame[UdpFrameFunction.RetourCouleurEquipe].WaitOne(50);
             return couleurEquipe;
         }

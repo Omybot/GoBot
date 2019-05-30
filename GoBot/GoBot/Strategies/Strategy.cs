@@ -139,6 +139,8 @@ namespace GoBot.Strategies
 
             StartingDateTime = DateTime.Now;
 
+            Plateau.StartMatch();
+
             endMatchTimer = new System.Timers.Timer();
             endMatchTimer.Elapsed += new ElapsedEventHandler(endMatchTimer_Elapsed);
             endMatchTimer.Interval = MatchDuration.TotalMilliseconds;
@@ -194,7 +196,10 @@ namespace GoBot.Strategies
             // TODOEACHYEAR Couper ICI tous les actionneurs à la fin du match et lancer la Funny Action
 
             Robots.GrosRobot.Stop(StopMode.Freely);
-            Plateau.Balise.VitesseRotation(0);
+            //Plateau.Balise.VitesseRotation(0);
+
+            // On renvoie le score au cas où histoire d'assurer le truc...
+            Devices.AllDevices.CanDisplay.SetScore(Plateau.Score);
         }
     }
 }

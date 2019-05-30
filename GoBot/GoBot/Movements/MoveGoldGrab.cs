@@ -8,6 +8,7 @@ using GoBot.Actionneurs;
 using System.Threading;
 using Geometry;
 using Geometry.Shapes;
+using GoBot.Threading;
 
 namespace GoBot.Movements
 {
@@ -23,12 +24,12 @@ namespace GoBot.Movements
 
             if (_goldenium.Owner == Plateau.CouleurDroiteViolet)
             {
-                Positions.Add(new Position(-90, new RealPoint(_goldenium.Position.X - 100, 360)));
+                Positions.Add(new Position(-90, new RealPoint(_goldenium.Position.X - 105, 360)));
                 _grabber = Actionneur.GoldGrabberRight;
             }
             else
             {
-                Positions.Add(new Position(-90, new RealPoint(_goldenium.Position.X + 100, 360)));
+                Positions.Add(new Position(-90, new RealPoint(_goldenium.Position.X + 105, 360)));
                 _grabber = Actionneur.GoldGrabberLeft;
             }
         }
@@ -37,7 +38,7 @@ namespace GoBot.Movements
 
         public override int Score => 0;
 
-        public override double Value => IsCorrectColor() && Plateau.Strategy.GoldFree && !Plateau.Strategy.GoldGrabed ? 1 : 0;
+        public override double Value => IsCorrectColor() && Plateau.Strategy.GoldFree && !Plateau.Strategy.GoldGrabed ? 100 : 0;
 
         public override GameElement Element => _goldenium;
 
@@ -61,7 +62,7 @@ namespace GoBot.Movements
             Thread.Sleep(500);
 
             Robots.GrosRobot.Lent();
-            Robots.GrosRobot.Avancer(120);
+            Robots.GrosRobot.Avancer(145);
             Robots.GrosRobot.Stop(StopMode.Freely);
 
             _grabber.DoDown();
@@ -77,12 +78,15 @@ namespace GoBot.Movements
             //else
             //    Robots.GrosRobot.PivotDroite(5);
 
+            Robots.GrosRobot.Reculer(145);
             Robots.GrosRobot.Rapide();
-            Robots.GrosRobot.Reculer(150);
 
             _grabber.DoStore();
 
+            ThreadManager.CreateThread(link => _grabber.DoDisableElevation()).StartDelayedThread(1000);
+
             Plateau.Strategy.GoldGrabed = true;
+            _grabber.Loaded = true;
 
             Plateau.Score += 20; // Goldenium retiré
         }

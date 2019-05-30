@@ -7,6 +7,7 @@ using System.Windows.Forms;
 
 using GoBot.Movements;
 using GoBot.Threading;
+using GoBot.Actionneurs;
 
 namespace GoBot.Strategies
 {
@@ -24,33 +25,59 @@ namespace GoBot.Strategies
 
             // Sortir ICI de la zonde de départ
 
-            Plateau.Score = 0;
+            // Experience posée + Experience OK + Atome OK
+            Plateau.Score = 5 + 15 + 20;
 
-            ThreadManager.CreateThread(link => InitArms()).StartThread();
+            Robots.GrosRobot.MajGraphFranchissable(Plateau.ListeObstacles);
 
-            Robots.GrosRobot.Avancer(50);
-
-            if (Plateau.NotreCouleur == Plateau.CouleurGaucheJaune)
-                Robots.GrosRobot.PivotDroite(5);
-            else
-                Robots.GrosRobot.PivotGauche(5);
-
-            Robots.GrosRobot.Avancer(900);
+            Actionneur.AtomHandler.DoDown();
+            Actionneur.AtomHandler.DoOpen();
+            Actionneur.AtomHandler.DoSwallow();
+            Thread.Sleep(150);
+            Robots.GrosRobot.Avancer(150);
+            Actionneur.AtomHandler.DoGrab();
 
             // Ajouter ICI l'ordre de la strat fixe avant détection d'adversaire
 
             if (Plateau.NotreCouleur == Plateau.CouleurGaucheJaune)
             {
-                //fixedMovements.Add(new MouvementFusee(1));
+                fixedMovements.Add(new MoveAccelerator(Plateau.Elements.AcceleratorYellow));
+                fixedMovements.Add(new MoveGoldGrab(Plateau.Elements.GoldeniumYellow));
+                fixedMovements.Add(new MoveBalance(Plateau.Elements.BalanceYellow));
+                fixedMovements.Add(new MoveVoidZone(Plateau.Elements.VoidZoneYellow));
+                fixedMovements.Add(new MoveAccelerator(Plateau.Elements.AcceleratorYellow));
+                // 
             }
             else
             {
-                //fixedMovements.Add(new MouvementFusee(2));
+                fixedMovements.Add(new MoveAccelerator(Plateau.Elements.AcceleratorViolet));
+                fixedMovements.Add(new MoveGoldGrab(Plateau.Elements.GoldeniumViolet));
+                fixedMovements.Add(new MoveBalance(Plateau.Elements.BalanceViolet));
+                fixedMovements.Add(new MoveVoidZone(Plateau.Elements.VoidZoneViolet));
+                fixedMovements.Add(new MoveAccelerator(Plateau.Elements.AcceleratorViolet));
+                // 
             }
         }
 
-        private void InitArms()
+
+        private void StoreAtom()
         {
+            Thread.Sleep(500);
+            Actionneur.AtomHandler.DoCloseAlmost();
+            Actionneur.AtomStacker.DoFrontOpen();
+            Actionneur.AtomStacker.DoFrontPrepare();
+
+            Actionneur.AtomStacker.MoveFingerFront(Config.CurrentConfig.MotorFingerFront.Maximum, true);
+
+            Actionneur.AtomStacker.DoFrontClose();
+            Thread.Sleep(200);
+            Actionneur.AtomHandler.DoFree();
+            Thread.Sleep(100);
+
+            Actionneur.AtomStacker.DoFrontStore(false);
+            Thread.Sleep(1000);
+            Actionneur.AtomHandler.DoFree();
+            Actionneur.AtomStacker.DoFrontStore(true);
         }
 
         protected override void SequenceCore()

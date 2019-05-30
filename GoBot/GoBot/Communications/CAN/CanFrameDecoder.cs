@@ -214,7 +214,7 @@ namespace GoBot.Communications.CAN
                     output = "Affichage de score : {4-5}";
                     if (parameters != null)
                     {
-                        output = ReplaceParam(output, parameters[1].ToString());
+                        output = ReplaceParam(output, parameters[0].ToString());
                     }
                     break;
                 case CanFrameFunction.Debug:
@@ -225,6 +225,9 @@ namespace GoBot.Communications.CAN
                     break;
                 case CanFrameFunction.DebugResponse:
                     output = "Retour valeur debug";
+                    break;
+                case CanFrameFunction.TestConnection:
+                    output = "Test connexion";
                     break;
                 default:
                     output = "Inconnu";

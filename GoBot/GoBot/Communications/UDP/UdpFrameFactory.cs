@@ -461,9 +461,10 @@ namespace GoBot.Communications.UDP
 
         static public Frame DemandeCouleurEquipe()
         {
-            byte[] tab = new byte[2];
-            tab[0] = (byte)Board.RecIO;
-            tab[1] = (byte)UdpFrameFunction.DemandeCouleurEquipe;
+            byte[] tab = new byte[3];
+            tab[0] = (byte)Board.RecGB;
+            tab[1] = (byte)UdpFrameFunction.DemandeCapteurOnOff;
+            tab[2] = (byte)CapteurOnOffID.CouleurEquipe;
             return new Frame(tab);
         }
 

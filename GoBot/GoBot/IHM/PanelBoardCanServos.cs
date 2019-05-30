@@ -40,9 +40,9 @@ namespace GoBot.IHM
                 _boardID = value;
 
                 _servo1 = AllDevices.CanServos[(ServomoteurID)(200 + (_boardID - 1) * 4 + 0)];
-                _servo2 = AllDevices.CanServos[(200 + (_boardID - 1) * 4 + 1)];
-                _servo3 = AllDevices.CanServos[(200 + (_boardID - 1) * 4 + 2)];
-                _servo4 = AllDevices.CanServos[(200 + (_boardID - 1) * 4 + 3)];
+                _servo2 = AllDevices.CanServos[(ServomoteurID)(200 + (_boardID - 1) * 4 + 1)];
+                _servo3 = AllDevices.CanServos[(ServomoteurID)(200 + (_boardID - 1) * 4 + 2)];
+                _servo4 = AllDevices.CanServos[(ServomoteurID)(200 + (_boardID - 1) * 4 + 3)];
 
                 lblTitle.Text = "CAN Servos " + _boardID.ToString();
                 lblServo1.Text = Parse((ServomoteurID)(_servo1.ID +200));
