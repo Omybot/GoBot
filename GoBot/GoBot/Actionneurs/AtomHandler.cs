@@ -235,13 +235,34 @@ namespace GoBot.Actionneurs
             AtomTooClose
         }
 
+        public void DoTestDown()
+        {
+            DoDown();
+            DoFree();
+            DoSwallow();
+            Thread.Sleep(800);
+
+            if (_servoElevation.ReadTorqueCurrent() > 100)
+            {
+                AllDevices.RecGoBot.Buzz("...-.-");
+            }
+            else
+            {
+                Thread.Sleep(2000);
+            }
+
+            DoStop();
+            DoUp();
+        }
+
         public GrabResult DoSearchAtom()
         {
             RealPoint target = DetectAtom(500);
 
             if (target != null)
             {
-                if (target.Distance(Robots.GrosRobot.Position.Coordinates) < 200)
+                double distance = target.Distance(Robots.GrosRobot.Position.Coordinates);
+                if (distance < 280)
                     return GrabResult.AtomTooClose;
 
                 Direction dir = Maths.GetDirection(Robots.GrosRobot.Position, target.Barycenter);
@@ -249,7 +270,16 @@ namespace GoBot.Actionneurs
                 DoDown();
                 DoFree();
                 DoSwallow();
-                Thread.Sleep(500);
+                Thread.Sleep(800);
+
+                int torque = _servoElevation.ReadTorqueCurrent();
+                if (torque > 100)
+                {
+                    DoStop();
+                    DoUp();
+                    return GrabResult.AtomTooClose;
+                }
+
                 DoOpen();
 
                 Stopwatch sw = Stopwatch.StartNew();
