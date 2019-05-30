@@ -3,6 +3,7 @@ using Geometry.Shapes;
 using GoBot.Communications;
 using GoBot.Devices;
 using GoBot.Devices.CAN;
+using GoBot.Threading;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -98,16 +99,45 @@ namespace GoBot.Actionneurs
             Config.CurrentConfig.MotorGulp.SendPosition(Config.CurrentConfig.MotorGulp.PositionStop);
         }
 
-        public void DoGrab()
+        public GrabResult DoGrab(bool recule = false)
         {
             DoSwallow();
             DoClose();
             Thread.Sleep(500);
+
             DoUp();
             DoStop();
+
+            if (recule)
+            {
+                ThreadManager.CreateThread(link =>
+                {
+                    Robots.GrosRobot.Reculer(75);
+                    Robots.GrosRobot.Rapide();
+                }).StartThread();
+            }
+
             Thread.Sleep(500);
 
-            Threading.ThreadManager.CreateThread(link => Actionneur.AtomStacker.DoStoreAtom()).StartThread();
+            if (DetectClampTorque())
+            {
+                // Pas de serrage = pas d'atome
+                //Threading.ThreadManager.CreateThread(link => Actionneur.AtomStacker.DoStoreAtom()).StartThread();
+                Actionneur.AtomStacker.DoStoreAtom();
+                return GrabResult.AtomGrabbed;
+            }
+            else
+            {
+                DoFree();
+                _servoClampLeft.DisableOutput(500);
+                _servoClampRight.DisableOutput(500);
+                return GrabResult.GrabFail;
+            }
+        }
+
+        public bool DetectClampTorque()
+        {
+            return _servoClampLeft.ReadTorqueCurrent() + _servoClampRight.ReadTorqueCurrent() > 200;
         }
 
         public void MoveClampLeft(int position)
@@ -128,7 +158,8 @@ namespace GoBot.Actionneurs
         public void DoInit()
         {
             _servoClampLeft.SetPosition(_posClampLeft.PositionFree);
-            _servoClampLeft.SetPosition(_posClampRight.PositionFree);
+            _servoClampRight.SetPosition(_posClampRight.PositionFree);
+            Thread.Sleep(500);
 
             _servoElevation.SetPosition(_posElevation.PositionGround);
             Thread.Sleep(500);
@@ -178,7 +209,7 @@ namespace GoBot.Actionneurs
 
             Circle detection = null;
 
-            if(circles.Count > 0)
+            if (circles.Count > 0)
                 detection = circles.OrderBy(o => o.Distance(Robots.GrosRobot.Position.Coordinates)).First();
 
             List<IShape> detections = new List<IShape>();
@@ -196,18 +227,30 @@ namespace GoBot.Actionneurs
             return value > min && value < max;
         }
 
-        public bool DoSearchAtom()
+        public enum GrabResult
         {
-            bool ok = false;
+            NoAtomDetected,
+            GrabFail,
+            AtomGrabbed,
+            AtomTooClose
+        }
+
+        public GrabResult DoSearchAtom()
+        {
             RealPoint target = DetectAtom(500);
 
-            if(target != null)
+            if (target != null)
             {
+                if (target.Distance(Robots.GrosRobot.Position.Coordinates) < 200)
+                    return GrabResult.AtomTooClose;
+
                 Direction dir = Maths.GetDirection(Robots.GrosRobot.Position, target.Barycenter);
 
                 DoDown();
-                DoOpen();
+                DoFree();
                 DoSwallow();
+                Thread.Sleep(500);
+                DoOpen();
 
                 Stopwatch sw = Stopwatch.StartNew();
 
@@ -222,33 +265,30 @@ namespace GoBot.Actionneurs
 
                 Robots.GrosRobot.SpeedConfig.LineDeceleration = 800;
                 Robots.GrosRobot.Avancer((int)(dir.distance) - 130);
-                Robots.GrosRobot.Rapide();
+                Robots.GrosRobot.SpeedConfig.LineAcceleration = 400;
 
-                DoGrab();
-                Actionneur.AtomStacker.AtomsCount++;
-
-                Robots.GrosRobot.Reculer(100);
-                
-                ok = true;
+                return DoGrab(true);
             }
-
-            return ok;
+            else
+            {
+                return GrabResult.NoAtomDetected;
+            }
         }
 
-        public int DoVoidZone()
+        public GrabResult DoGrabByDetect()
         {
-            bool found = true;
+            GrabResult res;
             int atoms = 0;
 
-            for (int i = 0; i < 3 && found; i++)
+            //for (int i = 0; i < 3 && found; i++)
             {
                 DoDetection();
-                found = DoSearchAtom();
-                if (found)
+                res = DoSearchAtom();
+                if (res == GrabResult.AtomGrabbed)
                     atoms++;
             }
 
-            return atoms;
+            return res;
         }
     }
 }

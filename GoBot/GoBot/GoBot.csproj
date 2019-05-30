@@ -151,6 +151,7 @@
     </Compile>
     <Compile Include="IHM\SplashScreen.cs" />
     <Compile Include="Movements\MoveAccelerator.cs" />
+    <Compile Include="Movements\MoveAtomGrab.cs" />
     <Compile Include="Movements\MoveAtomsToSlope.cs" />
     <Compile Include="Movements\MoveBalance.cs" />
     <Compile Include="Movements\MoveGoldGrab.cs" />

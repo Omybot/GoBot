@@ -41,6 +41,7 @@ namespace GoBot.Actionneurs
         }
 
         public int AtomsCount { get => _atomsCount; set => _atomsCount = value; }
+        public int AtomsCountMax => 4;
 
         public void DoFrontOpen()
         {
@@ -52,6 +53,8 @@ namespace GoBot.Actionneurs
                 _servoFingerFront.SetPosition(_posFingerFront.PositionOpen);
             }).StartThread();
         }
+
+        public bool CanStoreMore => _atomsCount < AtomsCountMax;
 
         public void DoFrontClose()
         {
@@ -166,12 +169,18 @@ namespace GoBot.Actionneurs
             MoveFingerBack(110);
             DoBackClose();
             MoveFingerBack(1);
-            MoveFingerBack(50);
 
+            DoSubInit();
+        }
+
+        public void DoSubInit()
+        {
             DoFrontOpen();
+            DoBackBlock();
+            MoveFrontAndBack(_posFront.PositionPrepare, _posFront.PositionPrepare);
 
-            _servoFingerBack.DisableOutput(500);
-            _servoFingerFront.DisableOutput(500);
+            _servoFingerBack.DisableOutput(1000);
+            _servoFingerFront.DisableOutput(1000);
             MoveFingerBackFree();
             MoveFingerFrontFree();
         }
@@ -301,17 +310,38 @@ namespace GoBot.Actionneurs
             _dropPosition = false;
         }
 
-        public void DoDrop()
+        public void DoDropLeft()
+        {
+            DoDrop(Actionneur.AtomUnloaderLeft);
+        }
+
+        public void DoDropRight()
+        {
+            DoDrop(Actionneur.AtomUnloaderRight);
+        }
+
+        public void DoDropRightAll()
+        {
+            while(Actionneur.AtomStacker.AtomsCount > 0)
+                DoDrop(Actionneur.AtomUnloaderRight);
+        }
+
+        public void DoDrop(AtomUnloader unloader)
         {
             int posFrontDrop = 78;
             int posBackDrop = 95;
+
+            unloader.DoLauncherOutside();
+
 
             if (_atomsCount == 7)
             {
                 MoveFrontAndBack((int)(_posFront.PositionPrepare + 25.4 * 2), (int)25.4);
                 MoveFingerBack(0);
+                MoveFingerBackFree();
                 DoBackOpenForward();
-                MoveFingerFront((int)(posFrontDrop - 25.4));
+                MoveFingerFront((int)(48));
+                MoveFingerFront((int)(48 + 5));
             }
             else if (_atomsCount == 6)
             {
@@ -322,7 +352,8 @@ namespace GoBot.Actionneurs
                     DoBackOpenForward();
                 }
 
-                MoveFingerFront((int)(posFrontDrop - 25.4 * 2));
+                MoveFingerFront(25);
+                MoveFingerFront(25+5);
             }
             else if (_atomsCount == 5)
             {
@@ -333,42 +364,28 @@ namespace GoBot.Actionneurs
                     DoBackOpenForward();
                 }
 
-                MoveFingerFront((int)(posFrontDrop - 25.4 * 3));
-            }
-            else if (_atomsCount == 4)
-            {
-                if (!_dropPosition)
-                {
-                    MoveFingerBack(0, false);
-                    Thread.Sleep(200);
-                    DoBackOpenForward();
-                }
-
-                MoveFrontAndBack(_posFront.PositionPrepare, posBackDrop + 10);
-                DoBackClose();
-                Thread.Sleep(300);
-                MoveFingerBack((int)(posBackDrop - 25.4));
+                MoveFingerFront((int)(2));
+                MoveFingerFront((int)(2+5));
             }
             else if (_atomsCount > 1)
             {
                 if (!_dropPosition)
                 {
-                    MoveFrontAndBack(20, (int)(20 + (_atomsCount - 1) * 25.4));
+                    MoveFrontAndBack((int)(20 + (_atomsCount - 1) * 25.4), 20);
 
                     MoveFingerBack(0, false);
                     Thread.Sleep(200);
                     DoBackOpenForward();
-                    MoveFrontAndBack(_posFront.PositionPrepare, (int)(posBackDrop + 52 - _atomsCount * 25.4));
+                    MoveFrontAndBack(_posFront.PositionPrepare + 60, (int)(posBackDrop + _atomsCount * 25.4));
                     DoBackClose();
                     Thread.Sleep(500);
-                    MoveFingerBack(50);
-                    MoveFingerBack(110);
-                    _servoFingerBack.SetPosition(12500);
-                    Thread.Sleep(500);
-                    MoveFingerBack(50);
+                    MoveFingerFront(_posFront.PositionPrepare, false);
+                    MoveFingerBack((int)(posBackDrop - (25.4 * (5 - _atomsCount))));
                 }
-
-                MoveFingerBack((int)(posBackDrop - (25.4 * (5 - _atomsCount))));
+                else
+                {
+                    MoveFingerBack((int)(posBackDrop - (25.4 * (5 - _atomsCount))));
+                }
             }
             else if (_atomsCount == 1)
             {
@@ -392,21 +409,24 @@ namespace GoBot.Actionneurs
                 }
                 else
                 {
-
                     MoveFingerBack(75);
                     _servoFingerBack.SetPosition(12500);
                     Thread.Sleep(500);
                     MoveFingerBack(50);
+                    MoveFingerBack(48);
+                    _servoFingerBack.DisableOutput();
+                    MoveFingerBackFree();
                 }
             }
 
-            Actionneur.AtomUnloaderLeft.DoLauncherLaunch();
+            unloader.DoLauncherLaunch();
 
             MoveFingerBackFree();
             MoveFingerFrontFree();
 
             Thread.Sleep(500);
-            Actionneur.AtomUnloaderLeft.DoLauncherPrepare();
+            unloader.DoLauncherPrepare();
+            Thread.Sleep(500);
 
             _dropPosition = true;
             _atomsCount--;

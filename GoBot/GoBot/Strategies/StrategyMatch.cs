@@ -15,7 +15,7 @@ namespace GoBot.Strategies
     {
         private List<Movement> fixedMovements;
 
-        public override bool AvoidElements => false;
+        public override bool AvoidElements => true;
 
         protected override void SequenceBegin()
         {
@@ -25,17 +25,22 @@ namespace GoBot.Strategies
 
             // Sortir ICI de la zonde de départ
 
-            // Experience posée + Experience OK + Atome OK
-            Plateau.Score = 5 + 15 + 20;
+            // Experience posée + Experience OK + Atome OK + Atome vert + bleu + rouge du petit robot dans la balance
+            Plateau.Score = 5 + 15 + 20 + 24;
 
             Robots.GrosRobot.MajGraphFranchissable(Plateau.ListeObstacles);
 
             Actionneur.AtomHandler.DoDown();
             Actionneur.AtomHandler.DoOpen();
             Actionneur.AtomHandler.DoSwallow();
-            Thread.Sleep(150);
+            Thread.Sleep(400);
             Robots.GrosRobot.Avancer(150);
             Actionneur.AtomHandler.DoGrab();
+
+            if (Plateau.NotreCouleur == Plateau.CouleurGaucheJaune)
+                Plateau.Elements.LayingAtoms[0].IsAvailable = false;
+            else
+                Plateau.Elements.LayingAtoms[4].IsAvailable = false;
 
             // Ajouter ICI l'ordre de la strat fixe avant détection d'adversaire
 
@@ -44,8 +49,8 @@ namespace GoBot.Strategies
                 fixedMovements.Add(new MoveAccelerator(Plateau.Elements.AcceleratorYellow));
                 fixedMovements.Add(new MoveGoldGrab(Plateau.Elements.GoldeniumYellow));
                 fixedMovements.Add(new MoveBalance(Plateau.Elements.BalanceYellow));
-                fixedMovements.Add(new MoveVoidZone(Plateau.Elements.VoidZoneYellow));
-                fixedMovements.Add(new MoveAccelerator(Plateau.Elements.AcceleratorYellow));
+                //fixedMovements.Add(new MoveVoidZone(Plateau.Elements.VoidZoneYellow));
+                //fixedMovements.Add(new MoveAccelerator(Plateau.Elements.AcceleratorYellow));
                 // 
             }
             else
@@ -53,8 +58,8 @@ namespace GoBot.Strategies
                 fixedMovements.Add(new MoveAccelerator(Plateau.Elements.AcceleratorViolet));
                 fixedMovements.Add(new MoveGoldGrab(Plateau.Elements.GoldeniumViolet));
                 fixedMovements.Add(new MoveBalance(Plateau.Elements.BalanceViolet));
-                fixedMovements.Add(new MoveVoidZone(Plateau.Elements.VoidZoneViolet));
-                fixedMovements.Add(new MoveAccelerator(Plateau.Elements.AcceleratorViolet));
+                //fixedMovements.Add(new MoveVoidZone(Plateau.Elements.VoidZoneViolet));
+                //fixedMovements.Add(new MoveAccelerator(Plateau.Elements.AcceleratorViolet));
                 // 
             }
         }

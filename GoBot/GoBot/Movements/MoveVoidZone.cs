@@ -8,6 +8,7 @@ using Geometry;
 using Geometry.Shapes;
 using GoBot.Actionneurs;
 using System.Threading;
+using static GoBot.Actionneurs.AtomHandler;
 
 namespace GoBot.Movements
 {
@@ -17,7 +18,7 @@ namespace GoBot.Movements
 
         public MoveVoidZone(VoidZone zone)
         {
-            int distance = 350;
+            int distance = 410;
             _zone = zone;
 
             for(int i = 0; i < 360; i += 45)
@@ -27,11 +28,11 @@ namespace GoBot.Movements
             }
         }
 
-        public override bool CanExecute => _zone.IsAvailable && _zone.AtomsCount > 0;
+        public override bool CanExecute => _zone.IsAvailable && _zone.AtomsCount > 0 && Actionneur.AtomStacker.CanStoreMore;
 
         public override int Score => 0;
 
-        public override double Value => _zone.AtomsCount;
+        public override double Value => Math.Max(_zone.AtomsCount,  4 - Actionneur.AtomStacker.AtomsCount) * 10;
 
         public override GameElement Element => _zone;
 
@@ -45,11 +46,50 @@ namespace GoBot.Movements
 
         protected override void MovementCore()
         {
-            Actionneur.GoldGrabberLeft.DoWiperSide();
-            Thread.Sleep(500);
-            _zone.AtomsCount -= Actionneur.AtomHandler.DoVoidZone();
+            //Actionneur.GoldGrabberLeft.DoWiperSide();
+            //Thread.Sleep(500);
+
+            bool retry = true;
+            int fails = 0;
+            
+            while(retry && Actionneur.AtomStacker.CanStoreMore && _zone.AtomsCount > 0)
+            {
+                int maxFails = 3;
+                GrabResult res = Actionneur.AtomHandler.DoGrabByDetect();
+                
+                switch (res)
+                {
+                    case GrabResult.AtomGrabbed:
+                        _zone.AtomsCount -= 1;
+                        retry = true;
+                        break;
+                    case GrabResult.AtomTooClose:
+                        fails++;
+                        if (fails < maxFails)
+                        {
+                            Robot.Lent();
+                            Robots.GrosRobot.Reculer(50);
+                            Robot.Rapide();
+                            retry = true;
+                        }
+                        else
+                        {
+                            retry = false;
+                        }
+                        break;
+                    case GrabResult.GrabFail:
+                        fails++;
+                        retry = fails < maxFails;
+                        break;
+                    case GrabResult.NoAtomDetected:
+                        retry = false;
+                        break;
+                }
+            }
+
             _zone.AtomsCount = 0;
-            Actionneur.GoldGrabberLeft.DoWiperStore();
+
+            //Actionneur.GoldGrabberLeft.DoWiperStore();
         }
 
         protected override void MovementEnd()

@@ -113,9 +113,9 @@ namespace GoBot.Actionneurs
             DoStore();
             Thread.Sleep(500);
 
-            _servoElevation.DisableOutput(500);
-            _servoClamp.DisableOutput(500);
-            _servoWiper.DisableOutput(500);
+            _servoElevation.DisableOutput(1000);
+            _servoClamp.DisableOutput(1000);
+            _servoWiper.DisableOutput(1000);
         }
 
         public void DoDisableElevation()

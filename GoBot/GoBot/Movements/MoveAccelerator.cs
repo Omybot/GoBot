@@ -8,6 +8,7 @@ using GoBot.Actionneurs;
 using System.Threading;
 using Geometry;
 using Geometry.Shapes;
+using GoBot.Threading;
 
 namespace GoBot.Movements
 {
@@ -76,7 +77,11 @@ namespace GoBot.Movements
 
                 Plateau.Score += 10; // Atome bleu dans l'accélérateur
                 Plateau.Score += 10; // Goldenium découvert
-                Robot.Avancer(150);
+
+                if (Actionneur.AtomStacker.AtomsCount > 0 && _accelerator.AtomsCount < 10)
+                    Robot.Avancer(60);
+                else
+                    Robot.Avancer(150);
             }
 
             if(Actionneur.AtomStacker.AtomsCount > 0 && _accelerator.AtomsCount < 10)
@@ -90,16 +95,16 @@ namespace GoBot.Movements
 
                 while(Actionneur.AtomStacker.AtomsCount > 0 && _accelerator.AtomsCount < 10)
                 {
-                    Actionneur.AtomStacker.DoDrop();
+                    Actionneur.AtomStacker.DoDrop(_unloader);
                     Plateau.Score += 10; // Atome supplémentaire
                 }
+
+                ThreadManager.CreateThread(link => Actionneur.AtomStacker.DoSubInit()).StartThread();
 
                 Robot.Avancer(150);
                 _unloader.DoUnloaderStore();
             }
-
-            // Deverser les palets stockés
-
+            
             _unloader.DoLauncherInside();
             _unloader.DoCalibrationStore();
         }

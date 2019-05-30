@@ -115,6 +115,14 @@ namespace GoBot.Strategies
             Movements.Add(new MoveAtomsToSlope(Plateau.Elements.SlopeViolet));
             Movements.Add(new MoveAtomsToSlope(Plateau.Elements.SlopeYellow));
 
+            //Movements.Add(new MoveAtomGrab(Plateau.Elements.LayingAtoms[0]));
+            Movements.Add(new MoveAtomGrab(Plateau.Elements.LayingAtoms[1]));
+            //Movements.Add(new MoveAtomGrab(Plateau.Elements.LayingAtoms[2]));
+
+            //Movements.Add(new MoveAtomGrab(Plateau.Elements.LayingAtoms[4]));
+            Movements.Add(new MoveAtomGrab(Plateau.Elements.LayingAtoms[5]));
+            //Movements.Add(new MoveAtomGrab(Plateau.Elements.LayingAtoms[6]));
+
             for (int iMov = 0; iMov < Movements.Count; iMov++)
             {
                 for(int iPos = 0; iPos < Movements[iMov].Positions.Count; iPos++)
@@ -199,7 +207,8 @@ namespace GoBot.Strategies
             //Plateau.Balise.VitesseRotation(0);
 
             // On renvoie le score au cas où histoire d'assurer le truc...
-            Devices.AllDevices.CanDisplay.SetScore(Plateau.Score);
+            //Devices.AllDevices.CanDisplay.SetScore(Plateau.Score);
+            Devices.AllDevices.CanDisplay.SetScore((int)(Plateau.Score * 0.8)); // Sous estimation pour essaye de se rapprocher su score réel
         }
     }
 }

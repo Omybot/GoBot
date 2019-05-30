@@ -54,6 +54,8 @@ namespace GoBot.Movements
         protected override void MovementCore()
         {
             _grabber.DoDown();
+            Thread.Sleep(1000);
+
             Robot.Lent();
 
             if(Robot.GetType().Name == "RobotSimu")
@@ -64,13 +66,15 @@ namespace GoBot.Movements
             Robot.Rapide();
 
             _grabber.DoOpen();
+            _grabber.Loaded = false;
 
             Plateau.Score += 24; // Goldenium dans la balance
 
-            Thread.Sleep(500);
+            Thread.Sleep(1000);
             Robots.GrosRobot.Reculer(100);
 
             _grabber.DoClose();
+            Thread.Sleep(500);
             _grabber.DoStore();
         }
     }

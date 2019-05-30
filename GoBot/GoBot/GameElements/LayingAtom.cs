@@ -8,7 +8,7 @@ using Geometry.Shapes;
 
 namespace GoBot.GameElements
 {
-    class LayingAtom : GameElement
+    public class LayingAtom : GameElement
     {
         private Color _color;
 

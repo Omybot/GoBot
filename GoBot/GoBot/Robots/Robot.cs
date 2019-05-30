@@ -469,7 +469,7 @@ namespace GoBot
 
                     semTrajectoire?.Release();
 
-                    return true;
+                    return false;
                 }
             }
 
@@ -481,6 +481,9 @@ namespace GoBot
         public void RangerActionneurs()
         {
             // TODOEACHYEAR
+
+            Actionneur.AtomUnloaderLeft.DoUnloaderStore();
+            Thread.Sleep(250);
 
             ThreadManager.CreateThread(link => Actionneur.AtomStacker.DoInit()).StartThread();
             Actionneur.AtomHandler.DoInit();

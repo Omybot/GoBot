@@ -567,5 +567,17 @@ namespace GoBot.IHM
                 Recallages.RecallageGrosRobot();
             }
         }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            Actionneur.AtomStacker.AtomsCount++;
+            label6.Text = Actionneur.AtomStacker.AtomsCount.ToString();
+        }
+
+        private void button3_Click(object sender, EventArgs e)
+        {
+            Actionneur.AtomStacker.AtomsCount--;
+            label6.Text = Actionneur.AtomStacker.AtomsCount.ToString();
+        }
     }
 }

@@ -123,6 +123,8 @@ namespace GoBot.GameElements
         public Slope SlopeViolet => _slopeViolet;
         public Slope SlopeYellow => _slopeYellow;
 
+        public List<LayingAtom> LayingAtoms => _layingAtoms;
+
         public IEnumerable<GameElement> AllElements
         {
             get

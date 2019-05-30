@@ -47,15 +47,22 @@ namespace GoBot.Devices.CAN
 
         private void _communication_FrameReceived(Frame frame)
         {
-            CanBoard idCan = CanFrameFactory.ExtractBoard(frame);
-
-            if (_canBoards.Contains(idCan))
+            try
             {
-                int servoGlobalId = CanFrameFactory.ExtractServoGlobalId(frame);
+                CanBoard idCan = CanFrameFactory.ExtractBoard(frame);
 
-                if (!_servos.ContainsKey(servoGlobalId)) _servos.Add(servoGlobalId, new CanServo(servoGlobalId, _communication));
+                if (_canBoards.Contains(idCan))
+                {
+                    int servoGlobalId = CanFrameFactory.ExtractServoGlobalId(frame);
 
-                _servos[servoGlobalId].FrameReceived(frame);
+                    if (!_servos.ContainsKey(servoGlobalId)) _servos.Add(servoGlobalId, new CanServo(servoGlobalId, _communication));
+
+                    _servos[servoGlobalId].FrameReceived(frame);
+                }
+            }
+            catch (Exception e)
+            {
+
             }
         }
     }

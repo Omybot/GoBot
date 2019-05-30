@@ -253,29 +253,41 @@ namespace GoBot.Devices
             }
         }
 
+        internal void ChangeLed(LedID led)
+        {
+            try
+            {
+                SetLed(led, ledsStatus[led] == LedStatus.Vert ? LedStatus.Off : LedStatus.Vert);
+            }
+            catch(Exception e)
+            {
+
+            }
+        }
+
         void SwitchChanged()
         {
-            if (!_switch1 && !_switch2 && !_switch3 && !_switch4)
-            {
-                Plateau.Strategy = new Strategies.StrategyMatch();
-                Buzz(0, 0);
-            }
-            else if (!_switch1 && !_switch2 && _switch3 && !_switch4)
-            {
-                Plateau.Strategy = new Strategies.StrategyMinimumScore();
-                Buzz(0, 0);
-            }
-            else if (!_switch1 && !_switch2 && !_switch3 && _switch4)
-            {
-                Plateau.Strategy = new Strategies.StrategyRoundTrip();
-                Buzz(0, 0);
-            }
-            else
-            {
-                Buzz(5000, 200);
-            }
+            //if (!_switch1 && !_switch2 && !_switch3 && !_switch4)
+            //{
+            //    Plateau.Strategy = new Strategies.StrategyMatch();
+            //    Buzz(0, 0);
+            //}
+            //else if (!_switch1 && !_switch2 && _switch3 && !_switch4)
+            //{
+            //    Plateau.Strategy = new Strategies.StrategyMinimumScore();
+            //    Buzz(0, 0);
+            //}
+            //else if (!_switch1 && !_switch2 && !_switch3 && _switch4)
+            //{
+            //    Plateau.Strategy = new Strategies.StrategyRoundTrip();
+            //    Buzz(0, 0);
+            //}
+            //else
+            //{
+            //    Buzz(5000, 200);
+            //}
 
-            Robots.GrosRobot.MajGraphFranchissable(Plateau.ListeObstacles);
+            //Robots.GrosRobot.MajGraphFranchissable(Plateau.ListeObstacles);
         }
 
         void ChangeLedConnection(bool connected, LedID led)

@@ -60,7 +60,7 @@ namespace GoBot
         public static AllGameElements Elements { get; protected set; }
         public static List<IShape> Detections { get; set; }
 
-        private static Color notreCouleur;
+        private static Color notreCouleur = CouleurDroiteViolet;
         public static Color NotreCouleur
         {
             get { return notreCouleur; }
@@ -77,7 +77,8 @@ namespace GoBot
                             AllDevices.RecGoBot.SetLedColor(Color.DarkViolet);
 
                         NotreCouleurChange?.Invoke(null, null);
-                        Robots.GrosRobot.MajGraphFranchissable(_obstacles.FromAllExceptBoard);
+                        if(_obstacles != null)
+                            Robots.GrosRobot.MajGraphFranchissable(_obstacles.FromAllExceptBoard);
                     }
                 }
             }
@@ -178,7 +179,7 @@ namespace GoBot
 
                 //Balise.PositionEnnemisActualisee += Balise_PositionEnnemisActualisee;
 
-                Strategy = new StrategyMinimumScore();
+                Strategy = new StrategyMatch();
                 Robots.GrosRobot.MajGraphFranchissable(_obstacles.FromAllExceptBoard);
 
                 List<RealPoint> bounds = new List<RealPoint>();
@@ -206,12 +207,15 @@ namespace GoBot
 
         public static void StartDetection()
         {
-            if (AllDevices.HokuyoAvoid != null)
+            ThreadManager.CreateThread(link =>
             {
-                AllDevices.HokuyoAvoid.StartLoopMeasure();
-                AllDevices.HokuyoAvoid.NewMeasure += HokuyoAvoid_NewMeasure;
-            }
+                while (AllDevices.HokuyoAvoid == null) ;
+                    AllDevices.HokuyoAvoid.StartLoopMeasure();
+                    AllDevices.HokuyoAvoid.NewMeasure += HokuyoAvoid_NewMeasure;
+            }).StartThread();
         }
+
+
 
         private static int cptZoneDepart = 0;
         private static bool qqunZoneDepart = false;
@@ -220,51 +224,56 @@ namespace GoBot
 
         public static void SetOpponents(List<RealPoint> positions)
         {
-            // Positions ennemies signalées par la balise
-
-            Stopwatch sw = Stopwatch.StartNew();
-
-            int vitesseMax = Config.CurrentConfig.ConfigRapide.LineSpeed;
-
-            if (Plateau.Strategy == null)
+            if (_obstacles != null)
             {
-                // TODOEACHYEAR Tester ICI ce qu'il y a à tester en fonction de la position de l'ennemi AVANT de lancer le match
-            }
-            else
-            {
-                // TODOEACHYEAR Tester ICI ce qu'il y a à tester en fonction de la position de l'ennemi PENDANT le match
 
-                Elements.SetOpponents(positions);
+                // Positions ennemies signalées par la balise
 
-                if (Robots.GrosRobot.VitesseAdaptableEnnemi)
+                Stopwatch sw = Stopwatch.StartNew();
+
+                int vitesseMax = Config.CurrentConfig.ConfigRapide.LineSpeed;
+                
+                // Truc dégueu pour ne pas détecter notre robot secondaire qui est dans la zone de départ au début du match
+                positions = positions.Where(o => !NotreZoneDepart().Contains(o)).ToList();
+
+
+                if (Plateau.Strategy == null)
                 {
-                    double minOpponentDist = positions.Min(p => p.Distance(Robots.GrosRobot.Position.Coordinates));
-                    Robots.GrosRobot.SpeedConfig.LineSpeed = SpeedWithOpponent(minOpponentDist, Config.CurrentConfig.ConfigRapide.LineSpeed);
-                }
-            }
-
-            // Truc dégueu pour ne pas détecter notre robot secondaire qui est dans la zone de départ au début du match
-            positions = positions.Where(o => !NotreZoneDepart().Contains(o)).ToList();
-
-
-            _obstacles.SetDetections(positions.Select(p =>
-            {
-                if (_obstacles.FromColor.ElementAt(0).Contains(p))
-                {
-                    qqunZoneDepart = true;
-                    if (reduireAdvInZoneDepart)
-                        return new Circle(p, RayonAdversaire / 3);
-                    else
-                        return new Circle(p, RayonAdversaire);
+                    // TODOEACHYEAR Tester ICI ce qu'il y a à tester en fonction de la position de l'ennemi AVANT de lancer le match
                 }
                 else
-                    return new Circle(p, RayonAdversaire);
-            }).ToList());
+                {
+                    // TODOEACHYEAR Tester ICI ce qu'il y a à tester en fonction de la position de l'ennemi PENDANT le match
 
-            //_obstacles.SetDetections(positions.Select(p => new Circle(p, RayonAdversaire)).ToList());
+                    Elements.SetOpponents(positions);
 
-            Robots.GrosRobot.MajGraphFranchissable(_obstacles.FromAllExceptBoard);
-            Robots.GrosRobot.ObstacleTest(_obstacles.FromDetection);
+                    if (Robots.GrosRobot.VitesseAdaptableEnnemi)
+                    {
+                        double minOpponentDist = positions.Min(p => p.Distance(Robots.GrosRobot.Position.Coordinates));
+                        Robots.GrosRobot.SpeedConfig.LineSpeed = SpeedWithOpponent(minOpponentDist, Config.CurrentConfig.ConfigRapide.LineSpeed);
+                    }
+                }
+                
+                _obstacles.SetDetections(positions.Select(p =>
+                {
+                    if (_obstacles.FromColor.ElementAt(0).Contains(p))
+                    {
+                        qqunZoneDepart = true;
+                        if (reduireAdvInZoneDepart)
+                            return new Circle(p, RayonAdversaire / 3);
+                        else
+                            return new Circle(p, RayonAdversaire);
+                    }
+                    else
+                        return new Circle(p, RayonAdversaire);
+                }).ToList());
+
+                //_obstacles.SetDetections(positions.Select(p => new Circle(p, RayonAdversaire)).ToList());
+
+                AllDevices.RecGoBot.ChangeLed(LedID.DebugB3);
+                Robots.GrosRobot.MajGraphFranchissable(_obstacles.FromAllExceptBoard);
+                Robots.GrosRobot.ObstacleTest(_obstacles.FromDetection);
+            }
         }
 
         public static IShape NotreZoneDepart()
@@ -279,28 +288,35 @@ namespace GoBot
         {
             Balise = new Beacon();
 
-            AllDevices.RecGoBot.SetLed(LedID.DebugB1, AllDevices.HokuyoAvoid == null ? RecGoBot.LedStatus.Rouge : RecGoBot.LedStatus.Vert);
+            AllDevices.RecGoBot.SetLed(LedID.DebugB3, AllDevices.HokuyoAvoid == null ? RecGoBot.LedStatus.Rouge : RecGoBot.LedStatus.Vert);
         }
+
+        static long cptLIDAR = 0;
 
         private static void HokuyoAvoid_NewMeasure(List<RealPoint> measure)
         {
-            List<RealPoint> pts = measure.Where(o => IsInside(o, 100)).ToList();
-            pts = pts.Where(o => o.Distance(Robots.GrosRobot.Position.Coordinates) > 300).ToList();
+            cptLIDAR++;
 
-            List<List<RealPoint>> groups = pts.GroupByDistance(50, 20);
-
-            List<RealPoint> obstacles = new List<RealPoint>();
-
-            foreach (List<RealPoint> group in groups)
+            if (cptLIDAR % 4 == 0) // TODO2020 : Diminution de l'échantilonnage à l'arrache
             {
-                RealPoint center = group.GetBarycenter();
-                if (!obstacles.Exists(o => o.Distance(center) < 150))
-                    obstacles.Add(center);
-            }
+                List<RealPoint> pts = measure.Where(o => IsInside(o, 100)).ToList();
+                pts = pts.Where(o => o.Distance(Robots.GrosRobot.Position.Coordinates) > 300).ToList();
 
-            Stopwatch sw = Stopwatch.StartNew();
-            if (obstacles.Count > 0) SetOpponents(obstacles);
-            Debug.Print(sw.ElapsedMilliseconds + " ms");
+                List<List<RealPoint>> groups = pts.GroupByDistance(50, 20);
+
+                List<RealPoint> obstacles = new List<RealPoint>();
+
+                foreach (List<RealPoint> group in groups)
+                {
+                    RealPoint center = group.GetBarycenter();
+                    if (!obstacles.Exists(o => o.Distance(center) < 150))
+                        obstacles.Add(center);
+                }
+
+                Stopwatch sw = Stopwatch.StartNew();
+                if (obstacles.Count > 0) SetOpponents(obstacles);
+                Debug.Print(sw.ElapsedMilliseconds + " ms");
+            }
         }
 
         /// <summary>

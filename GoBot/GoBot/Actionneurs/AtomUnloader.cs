@@ -84,9 +84,7 @@ namespace GoBot.Actionneurs
             Thread.Sleep(250);
             DoCalibrationStore();
             Thread.Sleep(250);
-
-            _servoUnloader.DisableOutput();
-
+            
             DoLauncherOutside();
             Thread.Sleep(500);
             DoLauncherLaunch();
@@ -96,9 +94,10 @@ namespace GoBot.Actionneurs
             DoLauncherInside();
             Thread.Sleep(250);
             
-            _servoCalibration.DisableOutput();
-            _servoExitLauncher.DisableOutput();
-            _servoLauncher.DisableOutput();
+            _servoCalibration.DisableOutput(1000);
+            _servoExitLauncher.DisableOutput(1000);
+            _servoLauncher.DisableOutput(1000);
+            _servoUnloader.DisableOutput(1000);
         }
 
         public void DoLaunchPalet()
