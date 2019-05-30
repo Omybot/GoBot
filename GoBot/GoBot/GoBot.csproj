@@ -113,6 +113,7 @@
     <Compile Include="GameElements\Slope.cs" />
     <Compile Include="GameElements\StandingAtom.cs" />
     <Compile Include="GameElements\VoidZone.cs" />
+    <Compile Include="GameElements\ZoneCalibration.cs" />
     <Compile Include="IHM\PanelBoardCanServos.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -154,6 +155,7 @@
     <Compile Include="Movements\MoveAtomGrab.cs" />
     <Compile Include="Movements\MoveAtomsToSlope.cs" />
     <Compile Include="Movements\MoveBalance.cs" />
+    <Compile Include="Movements\MoveCalibration.cs" />
     <Compile Include="Movements\MoveGoldGrab.cs" />
     <Compile Include="Movements\MoveVoidZone.cs" />
     <Compile Include="NameFinder.cs" />

@@ -27,6 +27,8 @@ namespace GoBot.GameElements
 
         private Slope _slopeViolet, _slopeYellow;
 
+        private ZoneCalibration _calibViolet, _calibYellow;
+
         public AllGameElements()
         {
             _colorRedium = Color.FromArgb(250, 36, 39);
@@ -106,6 +108,10 @@ namespace GoBot.GameElements
             // Pentes
             _slopeViolet = new Slope(new RealPoint(3000 - 700, 1750), Plateau.CouleurDroiteViolet, 170);
             _slopeYellow = new Slope(new RealPoint(700, 1750), Plateau.CouleurGaucheJaune, 170);
+
+            // Zones de recallage
+            _calibViolet = new ZoneCalibration(new RealPoint(300, 300), Plateau.CouleurDroiteViolet, 100);
+            _calibYellow = new ZoneCalibration(new RealPoint(3000- 300, 300), Plateau.CouleurGaucheJaune, 100);
         }
 
         public Accelerator AcceleratorViolet => _acceleratorViolet;
@@ -122,6 +128,9 @@ namespace GoBot.GameElements
 
         public Slope SlopeViolet => _slopeViolet;
         public Slope SlopeYellow => _slopeYellow;
+
+        public ZoneCalibration CalibrationZoneViolet => _calibViolet;
+        public ZoneCalibration CalibrationZoneYellow => _calibYellow;
 
         public List<LayingAtom> LayingAtoms => _layingAtoms;
 
@@ -141,6 +150,7 @@ namespace GoBot.GameElements
                 elements = elements.Concat(new GameElement[] { _balanceViolet, _balanceYellow });
                 elements = elements.Concat(new GameElement[] { _zoneViolet, _zoneYellow });
                 elements = elements.Concat(new GameElement[] { _slopeViolet, _slopeYellow });
+                elements = elements.Concat(new GameElement[] { _calibViolet, _calibYellow });
 
                 return elements;
             }

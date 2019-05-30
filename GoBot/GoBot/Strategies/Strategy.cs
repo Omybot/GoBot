@@ -115,6 +115,9 @@ namespace GoBot.Strategies
             Movements.Add(new MoveAtomsToSlope(Plateau.Elements.SlopeViolet));
             Movements.Add(new MoveAtomsToSlope(Plateau.Elements.SlopeYellow));
 
+            Movements.Add(new MoveCalibration(Plateau.Elements.CalibrationZoneViolet));
+            Movements.Add(new MoveCalibration(Plateau.Elements.CalibrationZoneYellow));
+
             //Movements.Add(new MoveAtomGrab(Plateau.Elements.LayingAtoms[0]));
             Movements.Add(new MoveAtomGrab(Plateau.Elements.LayingAtoms[1]));
             //Movements.Add(new MoveAtomGrab(Plateau.Elements.LayingAtoms[2]));
@@ -128,7 +131,7 @@ namespace GoBot.Strategies
                 for(int iPos = 0; iPos < Movements[iMov].Positions.Count; iPos++)
                 {
                     if(!Movements[iMov].Robot.Graph.Raccordable(new Node(Movements[iMov].Positions[iPos].Coordinates),
-                        Plateau.ListeObstacles,
+                        Plateau.ListeObstacles.Except(Plateau.ObstaclesCouleur),
                         Movements[iMov].Robot.Rayon))
                     {
                         Movements[iMov].Positions.RemoveAt(iPos);

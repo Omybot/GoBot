@@ -229,35 +229,6 @@ namespace GoBot.Actionneurs
             Robots.GrosRobot.MoteurPosition(MoteurID.FingerBack, position, wait);
         }
 
-        public void DoBackPosition1()
-        {
-            Config.CurrentConfig.MotorFingerBack.SendPosition(1);
-        }
-
-        public void DoBackPosition2()
-        {
-            Config.CurrentConfig.MotorFingerBack.SendPosition(30);
-        }
-
-        public void DoBackPosition3()
-        {
-            Config.CurrentConfig.MotorFingerBack.SendPosition(100);
-        }
-
-        public void DoTestTransit()
-        {
-            DoFrontClose();
-            DoBackBlock();
-            Thread.Sleep(500);
-            for (int i = 0; i < 5; i++)
-            {
-                MoveFrontAndBack(10, 10);
-                MoveFrontAndBack(100, 100);
-            }
-            DoFrontOpen();
-            DoBackClose();
-        }
-
         public void DoStoreAtom()
         {
             if (_atomsCount < 5)

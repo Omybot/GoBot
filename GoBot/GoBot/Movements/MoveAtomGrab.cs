@@ -6,6 +6,7 @@ using System.Text;
 using GoBot.GameElements;
 using GoBot.Actionneurs;
 using Geometry.Shapes;
+using static GoBot.Actionneurs.AtomHandler;
 
 namespace GoBot.Movements
 {
@@ -41,7 +42,16 @@ namespace GoBot.Movements
 
         protected override void MovementCore()
         {
-            Actionneur.AtomHandler.DoGrabByDetect();
+            GrabResult res = Actionneur.AtomHandler.DoGrabByDetect();
+
+            if (res == GrabResult.GrabFail)
+                res = Actionneur.AtomHandler.DoGrabByDetect();
+            else if (res == GrabResult.AtomTooClose)
+            {
+                Robot.Reculer(50);
+                res = Actionneur.AtomHandler.DoGrabByDetect();
+            }
+
             _atom.IsAvailable = false;
 
             if (Actionneur.AtomStacker.AtomsCount < Actionneur.AtomStacker.AtomsCountMax)
@@ -51,7 +61,15 @@ namespace GoBot.Movements
                 else
                     Robot.PivotDroite(45);
 
-                Actionneur.AtomHandler.DoGrabByDetect();
+                res = Actionneur.AtomHandler.DoGrabByDetect();
+
+                if (res == GrabResult.GrabFail)
+                    res = Actionneur.AtomHandler.DoGrabByDetect();
+                else if (res == GrabResult.AtomTooClose)
+                {
+                    Robot.Reculer(50);
+                    res = Actionneur.AtomHandler.DoGrabByDetect();
+                }
             }
         }
 

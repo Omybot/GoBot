@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading;
+using System.Windows.Forms;
 
 namespace GoBot.Actionneurs
 {
@@ -19,14 +20,19 @@ namespace GoBot.Actionneurs
         protected ServoElevationGold _posElevation;
         protected ServoWiper _posWiper;
 
+        protected byte _maskSensor;
+
         protected bool _loaded;
+        protected bool _needCalibration;
 
         public GoldGrabber()
         {
             _loaded = false;
+            _needCalibration = false;
         }
 
         public bool Loaded { get => _loaded; set => _loaded = value; }
+        public bool NeedCalibration { get => _needCalibration; set => _needCalibration = value; }
 
         public void DoOpen()
         {
@@ -53,49 +59,18 @@ namespace GoBot.Actionneurs
             _servoElevation.SetPosition(_posElevation.PositionStored);
         }
 
-        public void DoGrab()
+        public bool GoldIsPresent()
         {
-            DoUp();
-            Thread.Sleep(500);
-            DoOpen();
-
-            Robots.GrosRobot.Lent();
-            Robots.GrosRobot.Avancer(150);
-
-            DoDown();
-            Thread.Sleep(500);
-            DoClose();
-            Thread.Sleep(1000);
-
-            DoUp();
-            Thread.Sleep(500);
-            Robots.GrosRobot.PivotGauche(5);
-
-
-            Robots.GrosRobot.Reculer(150);
-            Robots.GrosRobot.Rapide();
-
-            DoStore();
+            Robots.GrosRobot.DemandeValeursNumeriques(Board.RecMove, true);
+            return (Robots.GrosRobot.ValeursNumeriques[Board.RecMove][2] & _maskSensor) > 0;
         }
 
-        public void DoDrop()
+        public void DoDetect()
         {
-            DoUp();
-            Thread.Sleep(500);
-            Robots.GrosRobot.Lent();
-            Robots.GrosRobot.Recallage(SensAR.Avant);
-            DoOpen();
-            Thread.Sleep(500);
-            Robots.GrosRobot.Reculer(100);
-            DoClose();
-
-            Config.CurrentConfig.ServoElevationGoldRight.SendPosition(17000);
-            Robots.GrosRobot.Recallage(SensAR.Avant);
-            Robots.GrosRobot.Reculer(100);
-
-            DoClose();
-            DoStore();
-            Robots.GrosRobot.Rapide();
+            if (GoldIsPresent())
+                MessageBox.Show("Oui");
+            else
+                MessageBox.Show("Non");
         }
 
         public void DoInit()
@@ -159,6 +134,8 @@ namespace GoBot.Actionneurs
             _posClamp = Config.CurrentConfig.ServoClampGoldLeft;
             _posElevation = Config.CurrentConfig.ServoElevationGoldLeft;
             _posWiper = Config.CurrentConfig.ServoWiperLeft;
+
+            _maskSensor = 0b01000000;
         }
     }
 
@@ -173,6 +150,8 @@ namespace GoBot.Actionneurs
             _posClamp = Config.CurrentConfig.ServoClampGoldRight;
             _posElevation = Config.CurrentConfig.ServoElevationGoldRight;
             _posWiper = Config.CurrentConfig.ServoWiperRight;
+
+            _maskSensor = 0b00100000;
         }
     }
 }

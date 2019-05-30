@@ -38,7 +38,7 @@ namespace GoBot.Movements
 
         public override int Score => 0;
 
-        public override double Value => IsCorrectColor() && Plateau.Strategy.GoldFree && !Plateau.Strategy.GoldGrabed ? 100 : 0;
+        public override double Value => (IsCorrectColor() && Plateau.Strategy.GoldFree && !Plateau.Strategy.GoldGrabed && !_grabber.NeedCalibration) ? 100 : 0;
 
         public override GameElement Element => _goldenium;
 
@@ -82,13 +82,23 @@ namespace GoBot.Movements
             Robots.GrosRobot.Rapide();
 
             _grabber.DoStore();
+            Thread.Sleep(1000);
 
-            ThreadManager.CreateThread(link => _grabber.DoDisableElevation()).StartDelayedThread(1000);
+            if(_grabber.GoldIsPresent())
+            {
+                // Goldenium retiré
+                _grabber.Loaded = true;
+                Plateau.Score += 20;
+                Plateau.Strategy.GoldGrabed = true;
+            }
+            else
+            {
+                // Snif...
+                _grabber.NeedCalibration = true;
+            }
 
-            Plateau.Strategy.GoldGrabed = true;
-            _grabber.Loaded = true;
+            _grabber.DoDisableElevation();
 
-            Plateau.Score += 20; // Goldenium retiré
         }
     }
 }

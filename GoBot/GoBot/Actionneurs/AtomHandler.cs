@@ -186,12 +186,13 @@ namespace GoBot.Actionneurs
             DetectAtom(500);
         }
 
-        public RealPoint DetectAtom(int maxDistance = 500)
+        public RealPoint DetectAtom(int maxDistance = 500, int minOpponentDistance = 150)
         {
             List<RealPoint> rawPts = _detector.GetPoints();
 
             List<RealPoint> pts = rawPts.Where(o => Plateau.IsInside(o, 80)).ToList();
             pts = pts.Where(o => InRange(o.Distance(Robots.GrosRobot.Position.Coordinates), 200, maxDistance)).ToList();
+            pts = pts.Where(o => !Plateau.ObstaclesOpponents.ToList().Exists(o2 => o2.Distance(o) < minOpponentDistance)).ToList();
 
             List<List<RealPoint>> groups = pts.GroupByDistance(50, 200);
 
@@ -257,12 +258,12 @@ namespace GoBot.Actionneurs
 
         public GrabResult DoSearchAtom()
         {
-            RealPoint target = DetectAtom(500);
+            RealPoint target = DetectAtom(550);
 
             if (target != null)
             {
                 double distance = target.Distance(Robots.GrosRobot.Position.Coordinates);
-                if (distance < 280)
+                if (distance < 275)
                     return GrabResult.AtomTooClose;
 
                 Direction dir = Maths.GetDirection(Robots.GrosRobot.Position, target.Barycenter);
