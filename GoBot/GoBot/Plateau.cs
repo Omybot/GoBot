@@ -235,8 +235,7 @@ namespace GoBot
                 
                 // Truc dégueu pour ne pas détecter notre robot secondaire qui est dans la zone de départ au début du match
                 positions = positions.Where(o => !NotreZoneDepart().Contains(o)).ToList();
-
-
+                
                 if (Plateau.Strategy == null)
                 {
                     // TODOEACHYEAR Tester ICI ce qu'il y a à tester en fonction de la position de l'ennemi AVANT de lancer le match
@@ -247,7 +246,7 @@ namespace GoBot
 
                     Elements.SetOpponents(positions);
 
-                    if (Robots.GrosRobot.VitesseAdaptableEnnemi)
+                    if (Robots.GrosRobot.VitesseAdaptableEnnemi && positions.Count > 0)
                     {
                         double minOpponentDist = positions.Min(p => p.Distance(Robots.GrosRobot.Position.Coordinates));
                         Robots.GrosRobot.SpeedConfig.LineSpeed = SpeedWithOpponent(minOpponentDist, Config.CurrentConfig.ConfigRapide.LineSpeed);
@@ -264,8 +263,14 @@ namespace GoBot
                         else
                             return new Circle(p, RayonAdversaire);
                     }
+
+                    else if (_obstacles.BalanceYellow.Contains(p) && notreCouleur == CouleurDroiteViolet)
+                        return new Circle(p, RayonAdversaire / 3);
+                    else if (_obstacles.BalanceViolet.Contains(p) && notreCouleur == CouleurGaucheJaune)
+                        return new Circle(p, RayonAdversaire / 3);
                     else
                         return new Circle(p, RayonAdversaire);
+
                 }).ToList());
 
                 //_obstacles.SetDetections(positions.Select(p => new Circle(p, RayonAdversaire)).ToList());

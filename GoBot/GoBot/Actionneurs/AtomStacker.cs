@@ -2,6 +2,7 @@
 using GoBot.Communications.UDP;
 using GoBot.Devices;
 using GoBot.Devices.CAN;
+using GoBot.GameElements;
 using GoBot.Threading;
 using System;
 using System.Collections.Generic;
@@ -54,7 +55,15 @@ namespace GoBot.Actionneurs
             }).StartThread();
         }
 
-        public bool CanStoreMore => _atomsCount < AtomsCountMax;
+        public bool CanStoreMore
+        {
+            get
+            {
+                Accelerator accel = Plateau.NotreCouleur == Plateau.CouleurDroiteViolet ? Plateau.Elements.AcceleratorViolet : Plateau.Elements.AcceleratorYellow;
+
+                return _atomsCount < AtomsCountMax && _atomsCount + accel.AtomsCount < 10;
+            }
+        }
 
         public void DoFrontClose()
         {

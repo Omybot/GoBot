@@ -65,5 +65,10 @@ namespace GoBot.Devices.CAN
 
             }
         }
+
+        public void DisableAll()
+        {
+            _servos.Values.ToList().ForEach(o => o.DisableOutput());
+        }
     }
 }

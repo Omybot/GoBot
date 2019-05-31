@@ -61,7 +61,6 @@ namespace GoBot
             this.tabControl = new System.Windows.Forms.TabControl();
             this.tabCANServos = new System.Windows.Forms.TabPage();
             this.grpCAN = new System.Windows.Forms.GroupBox();
-            this.panelCanArchi = new GoBot.IHM.PanelCanArchi();
             this.grpServoCan = new System.Windows.Forms.GroupBox();
             this.panelServoCan = new GoBot.IHM.PanelServoCan();
             this.tabConstantes = new System.Windows.Forms.TabPage();
@@ -113,7 +112,6 @@ namespace GoBot
             this.tabGrosRobot.SuspendLayout();
             this.tabControl.SuspendLayout();
             this.tabCANServos.SuspendLayout();
-            this.grpCAN.SuspendLayout();
             this.grpServoCan.SuspendLayout();
             this.tabConstantes.SuspendLayout();
             this.tabPortsAnalogiques.SuspendLayout();
@@ -451,21 +449,12 @@ namespace GoBot
             // 
             // grpCAN
             // 
-            this.grpCAN.Controls.Add(this.panelCanArchi);
             this.grpCAN.Location = new System.Drawing.Point(8, 6);
             this.grpCAN.Name = "grpCAN";
             this.grpCAN.Size = new System.Drawing.Size(802, 174);
             this.grpCAN.TabIndex = 12;
             this.grpCAN.TabStop = false;
             this.grpCAN.Text = "Cartes CAN";
-            // 
-            // panelCanArchi
-            // 
-            this.panelCanArchi.Location = new System.Drawing.Point(6, 20);
-            this.panelCanArchi.Name = "panelCanArchi";
-            this.panelCanArchi.Size = new System.Drawing.Size(790, 143);
-            this.panelCanArchi.TabIndex = 0;
-            this.panelCanArchi.ServoClick += new GoBot.IHM.PanelCanArchi.ServoClickDelegate(this.panelCanArchi_ServoClick);
             // 
             // grpServoCan
             // 
@@ -633,17 +622,18 @@ namespace GoBot
             this.tabMoveNumeric.Location = new System.Drawing.Point(4, 22);
             this.tabMoveNumeric.Name = "tabMoveNumeric";
             this.tabMoveNumeric.Padding = new System.Windows.Forms.Padding(3);
-            this.tabMoveNumeric.Size = new System.Drawing.Size(184, 48);
+            this.tabMoveNumeric.Size = new System.Drawing.Size(1292, 686);
             this.tabMoveNumeric.TabIndex = 0;
             this.tabMoveNumeric.Text = "RecMove";
             this.tabMoveNumeric.UseVisualStyleBackColor = true;
             // 
             // panelBoardNumericMove
             // 
+            this.panelBoardNumericMove.Board = GoBot.Board.RecMove;
             this.panelBoardNumericMove.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panelBoardNumericMove.Location = new System.Drawing.Point(3, 3);
             this.panelBoardNumericMove.Name = "panelBoardNumericMove";
-            this.panelBoardNumericMove.Size = new System.Drawing.Size(178, 42);
+            this.panelBoardNumericMove.Size = new System.Drawing.Size(1286, 680);
             this.panelBoardNumericMove.TabIndex = 1;
             // 
             // tabGBNumeric
@@ -850,7 +840,6 @@ namespace GoBot
             this.tabGrosRobot.ResumeLayout(false);
             this.tabControl.ResumeLayout(false);
             this.tabCANServos.ResumeLayout(false);
-            this.grpCAN.ResumeLayout(false);
             this.grpServoCan.ResumeLayout(false);
             this.tabConstantes.ResumeLayout(false);
             this.tabPortsAnalogiques.ResumeLayout(false);

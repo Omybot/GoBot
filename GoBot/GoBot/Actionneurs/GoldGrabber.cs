@@ -62,15 +62,8 @@ namespace GoBot.Actionneurs
         public bool GoldIsPresent()
         {
             Robots.GrosRobot.DemandeValeursNumeriques(Board.RecMove, true);
-            return (Robots.GrosRobot.ValeursNumeriques[Board.RecMove][2] & _maskSensor) > 0;
-        }
-
-        public void DoDetect()
-        {
-            if (GoldIsPresent())
-                MessageBox.Show("Oui");
-            else
-                MessageBox.Show("Non");
+            
+            return (Robots.GrosRobot.ValeursNumeriques[Board.RecMove][5] & _maskSensor) == 0;
         }
 
         public void DoInit()
@@ -135,7 +128,7 @@ namespace GoBot.Actionneurs
             _posElevation = Config.CurrentConfig.ServoElevationGoldLeft;
             _posWiper = Config.CurrentConfig.ServoWiperLeft;
 
-            _maskSensor = 0b01000000;
+            _maskSensor = 0b00000100;
         }
     }
 
@@ -151,7 +144,7 @@ namespace GoBot.Actionneurs
             _posElevation = Config.CurrentConfig.ServoElevationGoldRight;
             _posWiper = Config.CurrentConfig.ServoWiperRight;
 
-            _maskSensor = 0b00100000;
+            _maskSensor = 0b00000010;
         }
     }
 }

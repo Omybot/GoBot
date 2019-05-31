@@ -209,9 +209,14 @@ namespace GoBot.Strategies
             Robots.GrosRobot.Stop(StopMode.Freely);
             //Plateau.Balise.VitesseRotation(0);
 
+            Devices.AllDevices.CanServos.DisableAll();
+
+            Actionneurs.Actionneur.AtomStacker.MoveFingerBackFree();
+            Actionneurs.Actionneur.AtomStacker.MoveFingerFrontFree();
+
             // On renvoie le score au cas où histoire d'assurer le truc...
             //Devices.AllDevices.CanDisplay.SetScore(Plateau.Score);
-            Devices.AllDevices.CanDisplay.SetScore((int)(Plateau.Score * 0.8)); // Sous estimation pour essaye de se rapprocher su score réel
+            Devices.AllDevices.CanDisplay.SetScore((int)(Plateau.Score * 0.9)); // Sous estimation pour essaye de se rapprocher su score réel
         }
     }
 }

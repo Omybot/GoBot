@@ -28,13 +28,19 @@ namespace GoBot.Movements
 
         public override int Score => 0;
 
-        public override double Value => Plateau.Strategy.TimeBeforeEnd.TotalSeconds > 20 && _atom.IsAvailable && Actionneur.AtomStacker.CanStoreMore ? 10 : 0;
+        public override double Value => Plateau.Strategy.TimeBeforeEnd.TotalSeconds > 20 && _atom.IsAvailable && IsCorrectColor() && Actionneur.AtomStacker.CanStoreMore ? 10 : 0;
 
         public override GameElement Element => _atom;
 
         public override Robot Robot => Robots.GrosRobot;
 
-        public override Color Color => _atom.Owner;
+        public override Color Color
+        {
+            get
+            {
+                return _atom.Position.X < 1500 ? Plateau.CouleurGaucheJaune : Plateau.CouleurDroiteViolet;
+            }
+        }
 
         protected override void MovementBegin()
         {
@@ -54,7 +60,7 @@ namespace GoBot.Movements
 
             _atom.IsAvailable = false;
 
-            if (Actionneur.AtomStacker.AtomsCount < Actionneur.AtomStacker.AtomsCountMax)
+            if (Actionneur.AtomStacker.CanStoreMore && Plateau.Strategy.TimeBeforeEnd.TotalSeconds > 15)
             {
                 if (_atom.Position.X < 1500)
                     Robot.PivotGauche(45);

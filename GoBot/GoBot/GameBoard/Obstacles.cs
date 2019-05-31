@@ -87,6 +87,9 @@ namespace GoBot.GameBoard
             }
         }
 
+        public IShape BalanceViolet => new PolygonRectangle(new RealPoint(1600, 1250), 300, 300);
+        public IShape BalanceYellow => new PolygonRectangle(new RealPoint(1100, 1250), 300, 300);
+
         public void SetDetections(IEnumerable<IShape> detections)
         {
             _detectionObstacles = detections;

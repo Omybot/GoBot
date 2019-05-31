@@ -263,7 +263,7 @@ namespace GoBot.Actionneurs
             if (target != null)
             {
                 double distance = target.Distance(Robots.GrosRobot.Position.Coordinates);
-                if (distance < 275)
+                if (distance < 240)
                     return GrabResult.AtomTooClose;
 
                 Direction dir = Maths.GetDirection(Robots.GrosRobot.Position, target.Barycenter);

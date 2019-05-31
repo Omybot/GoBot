@@ -38,7 +38,7 @@ namespace GoBot.Movements
 
         public override int Score => 0;
 
-        public override double Value => (IsCorrectColor() && Plateau.Strategy.GoldFree && !Plateau.Strategy.GoldGrabed && !_grabber.NeedCalibration) ? 100 : 0;
+        public override double Value => (IsCorrectColor() && Plateau.Strategy.GoldFree && !Plateau.Strategy.GoldGrabed && !_grabber.NeedCalibration) ? 1000000 : 0;
 
         public override GameElement Element => _goldenium;
 

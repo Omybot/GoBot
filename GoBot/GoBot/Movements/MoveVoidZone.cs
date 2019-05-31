@@ -32,7 +32,7 @@ namespace GoBot.Movements
 
         public override int Score => 0;
 
-        public override double Value => Math.Max(_zone.AtomsCount,  4 - Actionneur.AtomStacker.AtomsCount) * 10;
+        public override double Value => Plateau.Strategy.TimeBeforeEnd.TotalSeconds > 25 ? Math.Max(_zone.AtomsCount,  4 - Actionneur.AtomStacker.AtomsCount) * 10 : 1;
 
         public override GameElement Element => _zone;
 
@@ -51,10 +51,12 @@ namespace GoBot.Movements
 
             bool retry = true;
             int fails = 0;
+            int maxFails = 5;
+
+            Accelerator accel = Plateau.NotreCouleur == Plateau.CouleurDroiteViolet ? Plateau.Elements.AcceleratorViolet : Plateau.Elements.AcceleratorYellow;
             
-            while(retry && Actionneur.AtomStacker.CanStoreMore && _zone.AtomsCount > 0)
+            while(retry && Actionneur.AtomStacker.CanStoreMore && _zone.AtomsCount > 0 && Plateau.Strategy.TimeBeforeEnd.TotalSeconds > 15)
             {
-                int maxFails = 3;
                 GrabResult res = Actionneur.AtomHandler.DoGrabByDetect();
                 
                 switch (res)
@@ -87,7 +89,8 @@ namespace GoBot.Movements
                 }
             }
 
-            _zone.AtomsCount = 0;
+            if(fails >= maxFails)
+                _zone.AtomsCount = 0;
 
             //Actionneur.GoldGrabberLeft.DoWiperStore();
         }

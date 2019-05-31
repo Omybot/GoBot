@@ -176,10 +176,10 @@ namespace GoBot.GameElements
                 {
                     // TODOEACHYEAR Ici ajouter à obstacles les elements à contourner
                     if (_zoneViolet.AtomsCount > 1)
-                        obstacles.Add(new Circle(_zoneViolet.Position, _zoneViolet.HoverRadius * 0.6));
+                        obstacles.Add(new Circle(_zoneViolet.Position, _zoneViolet.HoverRadius * 0.48));
 
                     if (_zoneYellow.AtomsCount > 1)
-                        obstacles.Add(new Circle(_zoneYellow.Position, _zoneYellow.HoverRadius * 0.6));
+                        obstacles.Add(new Circle(_zoneYellow.Position, _zoneYellow.HoverRadius * 0.48));
                 }
 
                 return obstacles;

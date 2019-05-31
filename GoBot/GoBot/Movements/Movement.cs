@@ -57,16 +57,16 @@ namespace GoBot.Movements
         /// Obtient la couleur d'appartenance de l'action (ou blanc)
         /// </summary>
         public abstract Color Color { get; }
-        
+
         public Movement()
         {
             Positions = new List<Position>();
             DisplayCostFactor = 1;
 
             dateMinimum = DateTime.Now;
-            minimumOpponentDistance = 450;
+            minimumOpponentDistance = 400;
         }
-        
+
         /// <summary>
         /// Execute le mouvement en enchainant l'action de début de mouvement, le pathfinding vers la position d'approche puis le mouvement lui même
         /// </summary>
@@ -82,7 +82,7 @@ namespace GoBot.Movements
 
             if (position != null)
             {
-                Trajectory traj = PathFinder.ChercheTrajectoire(Robot.Graph, Plateau.ListeObstacles, Plateau.ObstaclesOpponents,new Position(Robot.Position), position, Robot.Rayon, Robot.Largeur / 2);
+                Trajectory traj = PathFinder.ChercheTrajectoire(Robot.Graph, Plateau.ListeObstacles, Plateau.ObstaclesOpponents, new Position(Robot.Position), position, Robot.Rayon, Robot.Largeur / 2);
 
                 if (traj != null)
                 {
@@ -114,7 +114,7 @@ namespace GoBot.Movements
             Robots.GrosRobot.MajGraphFranchissable(Plateau.ListeObstacles);
             return ok;
         }
-        
+
         /// <summary>
         /// Représente les actions à effectuer avant de se rendre à la position d'approche du mouvement
         /// </summary>
@@ -152,32 +152,35 @@ namespace GoBot.Movements
                 if (Positions.Count == 1)
                     return Positions[0];
 
-                double distance = double.MaxValue;
-                
-                Position proche = Positions[0];
+                double closestDist = double.MaxValue;
+
+                Position closestPoint = Positions[0];
+
+                List<Circle> opponents = new List<IShape>(Plateau.ObstaclesOpponents).OfType<Circle>().ToList();
 
                 foreach (Position position in Positions)
                 {
-                    double distancePosition = Robot.Position.Coordinates.Distance(position.Coordinates); 
-                    
-                    List<IShape> opponents = new List<IShape>(Plateau.ObstaclesOpponents);
-                    foreach (Circle c in opponents)
+                    double distancePosition = Robot.Position.Coordinates.Distance(position.Coordinates);
+                    double distanceAdv = double.MaxValue;
+
+                    if (opponents.Count > 0)
                     {
-                        double distanceAdv = position.Coordinates.Distance(c.Center);
+                        distanceAdv = opponents.Min(op => position.Coordinates.Distance(op.Center));
+
                         if (distanceAdv < minimumOpponentDistance)
                             distancePosition = double.PositiveInfinity;
                         else
-                            distancePosition -= distanceAdv;
+                            distancePosition -= Math.Sqrt(distanceAdv);
                     }
 
-                    if (distancePosition < distance)
+                    if (distancePosition < closestDist)
                     {
-                        distance = distancePosition;
-                        proche = position;
+                        closestDist = distancePosition;
+                        closestPoint = position;
                     }
                 }
 
-                return proche;
+                return closestPoint;
             }
         }
 
@@ -196,7 +199,7 @@ namespace GoBot.Movements
 
                 Position position = BestPosition;
 
-                if (position == null) 
+                if (position == null)
                     return double.MaxValue;
 
                 double distance = Math.Max(50, Robot.Position.Coordinates.Distance(position.Coordinates)); // En dessous de 5cm de distance, tout se vaut

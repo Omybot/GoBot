@@ -39,7 +39,7 @@ namespace GoBot.Movements
 
         public override int Score => 0;
 
-        public override double Value => IsCorrectColor() ? ((_accelerator.HasInitialAtom ? 100 :  0) + Actionneur.AtomStacker.AtomsCount * 5) : 0;
+        public override double Value => IsCorrectColor() ? ((_accelerator.HasInitialAtom ? 10000 :  0) + Actionneur.AtomStacker.AtomsCount * 5) : 0;
 
         public override GameElement Element => _accelerator;
 
