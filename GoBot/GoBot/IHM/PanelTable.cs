@@ -381,7 +381,7 @@ namespace GoBot.IHM
 
         private void btnStratNul_Click(object sender, EventArgs e)
         {
-            Plateau.Strategy = new StrategyMinimumScore();
+            Plateau.Strategy = new StrategyEmpty();
             Plateau.Strategy.ExecuteMatch();
         }
 

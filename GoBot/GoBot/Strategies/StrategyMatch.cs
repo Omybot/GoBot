@@ -33,9 +33,10 @@ namespace GoBot.Strategies
             Actionneur.AtomHandler.DoDown();
             Actionneur.AtomHandler.DoOpen();
             Actionneur.AtomHandler.DoSwallow();
-            Thread.Sleep(400);
-            Robots.GrosRobot.Avancer(150);
-            Actionneur.AtomHandler.DoGrab();
+            Thread.Sleep(350);
+
+            ThreadManager.CreateThread(link => Actionneur.AtomHandler.DoGrab()).StartDelayedThread(400);
+            Robots.GrosRobot.Avancer(500);
 
             if (Plateau.NotreCouleur == Plateau.CouleurGaucheJaune)
                 Plateau.Elements.LayingAtoms[0].IsAvailable = false;

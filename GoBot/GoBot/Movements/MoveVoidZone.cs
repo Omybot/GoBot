@@ -84,6 +84,7 @@ namespace GoBot.Movements
                         retry = fails < maxFails;
                         break;
                     case GrabResult.NoAtomDetected:
+                        fails = maxFails;
                         retry = false;
                         break;
                 }

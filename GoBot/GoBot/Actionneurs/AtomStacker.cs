@@ -245,7 +245,12 @@ namespace GoBot.Actionneurs
                 DoBackBlock();
                 DoFrontOpen();
                 Thread.Sleep(250);
-                MoveFingerFront(_posFront.Maximum);
+
+                if (_atomsCount == 0)
+                    MoveFrontAndBack(_posFront.Maximum, _posBack.Maximum);
+                else
+                    MoveFingerFront(_posFront.Maximum);
+
                 DoFrontClose();
                 Thread.Sleep(200);
                 Actionneur.AtomHandler.DoFree();
@@ -302,7 +307,7 @@ namespace GoBot.Actionneurs
 
         public void DoDropRightAll()
         {
-            while(Actionneur.AtomStacker.AtomsCount > 0)
+            while (Actionneur.AtomStacker.AtomsCount > 0)
                 DoDrop(Actionneur.AtomUnloaderRight);
         }
 
@@ -333,7 +338,7 @@ namespace GoBot.Actionneurs
                 }
 
                 MoveFingerFront(25);
-                MoveFingerFront(25+5);
+                MoveFingerFront(25 + 5);
             }
             else if (_atomsCount == 5)
             {
@@ -345,7 +350,7 @@ namespace GoBot.Actionneurs
                 }
 
                 MoveFingerFront((int)(2));
-                MoveFingerFront((int)(2+5));
+                MoveFingerFront((int)(2 + 5));
             }
             else if (_atomsCount > 1)
             {

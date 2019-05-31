@@ -117,7 +117,7 @@ namespace GoBot.Actionneurs
                 }).StartThread();
             }
 
-            Thread.Sleep(500);
+            Thread.Sleep(400);
 
             if (DetectClampTorque())
             {
@@ -219,7 +219,7 @@ namespace GoBot.Actionneurs
             detections.AddRange(pts);
 
             Plateau.Detections = detections;
-
+            
             return detection == null ? null : detection.Center;
         }
 
@@ -271,29 +271,24 @@ namespace GoBot.Actionneurs
                 DoDown();
                 DoFree();
                 DoSwallow();
-                Thread.Sleep(800);
+                Thread.Sleep(300);
+                DoOpen();
+                Thread.Sleep(500);
 
                 int torque = _servoElevation.ReadTorqueCurrent();
                 if (torque > 100)
                 {
                     DoStop();
                     DoUp();
+                    DoFree();
                     return GrabResult.AtomTooClose;
                 }
-
-                DoOpen();
-
-                Stopwatch sw = Stopwatch.StartNew();
-
+                
                 if (dir.angle > 0)
                     Robots.GrosRobot.PivotGauche(dir.angle);
                 else
                     Robots.GrosRobot.PivotDroite(-dir.angle);
-
-                int elapsed = (int)sw.ElapsedMilliseconds;
-                if (elapsed < 500)
-                    Thread.Sleep(500 - elapsed);
-
+                
                 Robots.GrosRobot.SpeedConfig.LineDeceleration = 800;
                 Robots.GrosRobot.Avancer((int)(dir.distance) - 130);
                 Robots.GrosRobot.SpeedConfig.LineAcceleration = 400;

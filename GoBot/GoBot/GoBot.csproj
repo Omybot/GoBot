@@ -182,6 +182,7 @@
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
     <Compile Include="SpeedSampler.cs" />
+    <Compile Include="Strategies\StrategyEmpty.cs" />
     <Compile Include="Threading\ThreadLink.cs" />
     <Compile Include="Threading\ThreadManager.cs" />
     <Compile Include="TicksPerSecond.cs" />

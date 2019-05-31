@@ -86,6 +86,11 @@ namespace GoBot.Movements
 
             if(Actionneur.AtomStacker.AtomsCount > 0 && _accelerator.AtomsCount < 10)
             {
+                if(Actionneur.AtomStacker.AtomsCount == 1)
+                    Actionneur.AtomStacker.MoveFrontAndBack(20, 20);
+                else
+                    Actionneur.AtomStacker.MoveFrontAndBack((int)(20 + (Actionneur.AtomStacker.AtomsCount - 1) * 25.4), 20);
+
                 _unloader.DoUnloaderDock();
                 Thread.Sleep(200);
                 Robot.Lent();
