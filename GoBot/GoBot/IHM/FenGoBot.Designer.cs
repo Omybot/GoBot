@@ -60,7 +60,6 @@ namespace GoBot
             this.panelGrosRobot = new GoBot.IHM.PanelGrosRobot();
             this.tabControl = new System.Windows.Forms.TabControl();
             this.tabCANServos = new System.Windows.Forms.TabPage();
-            this.grpCAN = new System.Windows.Forms.GroupBox();
             this.grpServoCan = new System.Windows.Forms.GroupBox();
             this.panelServoCan = new GoBot.IHM.PanelServoCan();
             this.tabConstantes = new System.Windows.Forms.TabPage();
@@ -96,6 +95,7 @@ namespace GoBot
             this.btnFenetre = new System.Windows.Forms.Button();
             this.switchBoutonSimu = new Composants.SwitchButton();
             this.panelConnexions = new GoBot.IHM.PanelConnexions();
+            this.panelCanArchi1 = new GoBot.IHM.PanelCanArchi();
             this.tabAlimentation.SuspendLayout();
             this.tabConnexions.SuspendLayout();
             this.tabDiagnosticRecMove.SuspendLayout();
@@ -437,7 +437,7 @@ namespace GoBot
             // 
             // tabCANServos
             // 
-            this.tabCANServos.Controls.Add(this.grpCAN);
+            this.tabCANServos.Controls.Add(this.panelCanArchi1);
             this.tabCANServos.Controls.Add(this.grpServoCan);
             this.tabCANServos.Location = new System.Drawing.Point(4, 22);
             this.tabCANServos.Name = "tabCANServos";
@@ -446,15 +446,6 @@ namespace GoBot
             this.tabCANServos.TabIndex = 30;
             this.tabCANServos.Text = "Servos CAN";
             this.tabCANServos.UseVisualStyleBackColor = true;
-            // 
-            // grpCAN
-            // 
-            this.grpCAN.Location = new System.Drawing.Point(8, 6);
-            this.grpCAN.Name = "grpCAN";
-            this.grpCAN.Size = new System.Drawing.Size(802, 174);
-            this.grpCAN.TabIndex = 12;
-            this.grpCAN.TabStop = false;
-            this.grpCAN.Text = "Cartes CAN";
             // 
             // grpServoCan
             // 
@@ -622,7 +613,7 @@ namespace GoBot
             this.tabMoveNumeric.Location = new System.Drawing.Point(4, 22);
             this.tabMoveNumeric.Name = "tabMoveNumeric";
             this.tabMoveNumeric.Padding = new System.Windows.Forms.Padding(3);
-            this.tabMoveNumeric.Size = new System.Drawing.Size(1292, 686);
+            this.tabMoveNumeric.Size = new System.Drawing.Size(184, 48);
             this.tabMoveNumeric.TabIndex = 0;
             this.tabMoveNumeric.Text = "RecMove";
             this.tabMoveNumeric.UseVisualStyleBackColor = true;
@@ -633,7 +624,7 @@ namespace GoBot
             this.panelBoardNumericMove.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panelBoardNumericMove.Location = new System.Drawing.Point(3, 3);
             this.panelBoardNumericMove.Name = "panelBoardNumericMove";
-            this.panelBoardNumericMove.Size = new System.Drawing.Size(1286, 680);
+            this.panelBoardNumericMove.Size = new System.Drawing.Size(178, 42);
             this.panelBoardNumericMove.TabIndex = 1;
             // 
             // tabGBNumeric
@@ -805,6 +796,14 @@ namespace GoBot
             this.panelConnexions.Size = new System.Drawing.Size(1202, 27);
             this.panelConnexions.TabIndex = 74;
             // 
+            // panelCanArchi1
+            // 
+            this.panelCanArchi1.Location = new System.Drawing.Point(5, 14);
+            this.panelCanArchi1.Name = "panelCanArchi1";
+            this.panelCanArchi1.Size = new System.Drawing.Size(805, 143);
+            this.panelCanArchi1.TabIndex = 12;
+            this.panelCanArchi1.ServoClick += new GoBot.IHM.PanelCanArchi.ServoClickDelegate(this.panelCanArchi_ServoClick);
+            // 
             // FenGoBot
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -929,10 +928,10 @@ namespace GoBot
         private System.Windows.Forms.TabPage tabLogsCan;
         private PanelLogCan pnlLogCan;
         private System.Windows.Forms.TabPage tabCANServos;
-        private System.Windows.Forms.GroupBox grpCAN;
         private PanelCanArchi panelCanArchi;
         private System.Windows.Forms.GroupBox grpServoCan;
         private PanelServoCan panelServoCan;
+        private PanelCanArchi panelCanArchi1;
     }
 }
 

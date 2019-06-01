@@ -31,32 +31,32 @@ namespace GoBot
         
         public static void RecallageGrosRobot()
         {
-            AllDevices.RecGoBot.SetLed(LedID.DebugB2, Devices.RecGoBot.LedStatus.Rouge);
-            Plateau.FreezeColor();
+                AllDevices.RecGoBot.SetLed(LedID.DebugB2, Devices.RecGoBot.LedStatus.Rouge);
+                Plateau.FreezeColor();
 
-            Robots.GrosRobot.EnvoyerPID(Config.CurrentConfig.GRCoeffP, Config.CurrentConfig.GRCoeffI, Config.CurrentConfig.GRCoeffD);
-            Robots.GrosRobot.Stop();
+                Robots.GrosRobot.EnvoyerPID(Config.CurrentConfig.GRCoeffP, Config.CurrentConfig.GRCoeffI, Config.CurrentConfig.GRCoeffD);
+                Robots.GrosRobot.Stop();
 
-            Robots.GrosRobot.Lent();
-            Robots.GrosRobot.Avancer(10);
-            Robots.GrosRobot.Recallage(SensAR.Arriere);
+                Robots.GrosRobot.Lent();
+                Robots.GrosRobot.Avancer(10);
+                Robots.GrosRobot.Recallage(SensAR.Arriere);
 
-            Robots.GrosRobot.Avancer((int)(PositionDepartGauche.Coordinates.Y - Robots.GrosRobot.Longueur / 2));
+                Robots.GrosRobot.Avancer((int)(PositionDepartGauche.Coordinates.Y - Robots.GrosRobot.Longueur / 2));
 
-            if (Plateau.NotreCouleur == Plateau.CouleurGaucheJaune)
-                Robots.GrosRobot.PivotGauche(90);
-            else
-                Robots.GrosRobot.PivotDroite(90);
+                if (Plateau.NotreCouleur == Plateau.CouleurGaucheJaune)
+                    Robots.GrosRobot.PivotGauche(90);
+                else
+                    Robots.GrosRobot.PivotDroite(90);
 
-            Robots.GrosRobot.Recallage(SensAR.Arriere);
-            
-            Robots.GrosRobot.ReglerOffsetAsserv(PositionDepart);
+                Robots.GrosRobot.Recallage(SensAR.Arriere);
 
-            Robots.GrosRobot.ArmerJack();
-            Plateau.Balise.VitesseRotation(150);
+                Robots.GrosRobot.ReglerOffsetAsserv(PositionDepart);
 
-            Robots.GrosRobot.Rapide();
-            AllDevices.RecGoBot.SetLed(LedID.DebugB2, Devices.RecGoBot.LedStatus.Vert);
+                Robots.GrosRobot.ArmerJack();
+                Plateau.Balise.VitesseRotation(150);
+
+                Robots.GrosRobot.Rapide();
+                AllDevices.RecGoBot.SetLed(LedID.DebugB2, Devices.RecGoBot.LedStatus.Vert);
         }
     }
 }

@@ -38,7 +38,6 @@
             // 
             // panelBoardCanServos1
             // 
-            this.panelBoardCanServos1.BoardID = 1;
             this.panelBoardCanServos1.Location = new System.Drawing.Point(3, 3);
             this.panelBoardCanServos1.Name = "panelBoardCanServos1";
             this.panelBoardCanServos1.Size = new System.Drawing.Size(128, 137);
@@ -47,7 +46,6 @@
             // 
             // panelBoardCanServos2
             // 
-            this.panelBoardCanServos2.BoardID = 2;
             this.panelBoardCanServos2.Location = new System.Drawing.Point(137, 3);
             this.panelBoardCanServos2.Name = "panelBoardCanServos2";
             this.panelBoardCanServos2.Size = new System.Drawing.Size(128, 137);
@@ -56,7 +54,6 @@
             // 
             // panelBoardCanServos3
             // 
-            this.panelBoardCanServos3.BoardID = 3;
             this.panelBoardCanServos3.Location = new System.Drawing.Point(271, 3);
             this.panelBoardCanServos3.Name = "panelBoardCanServos3";
             this.panelBoardCanServos3.Size = new System.Drawing.Size(128, 137);
@@ -65,7 +62,6 @@
             // 
             // panelBoardCanServos4
             // 
-            this.panelBoardCanServos4.BoardID = 4;
             this.panelBoardCanServos4.Location = new System.Drawing.Point(405, 3);
             this.panelBoardCanServos4.Name = "panelBoardCanServos4";
             this.panelBoardCanServos4.Size = new System.Drawing.Size(128, 137);
@@ -74,7 +70,6 @@
             // 
             // panelBoardCanServos5
             // 
-            this.panelBoardCanServos5.BoardID = 5;
             this.panelBoardCanServos5.Location = new System.Drawing.Point(539, 3);
             this.panelBoardCanServos5.Name = "panelBoardCanServos5";
             this.panelBoardCanServos5.Size = new System.Drawing.Size(128, 137);
@@ -83,7 +78,6 @@
             // 
             // panelBoardCanServos6
             // 
-            this.panelBoardCanServos6.BoardID = 6;
             this.panelBoardCanServos6.Location = new System.Drawing.Point(673, 3);
             this.panelBoardCanServos6.Name = "panelBoardCanServos6";
             this.panelBoardCanServos6.Size = new System.Drawing.Size(128, 137);
@@ -102,6 +96,7 @@
             this.Controls.Add(this.panelBoardCanServos1);
             this.Name = "PanelCanArchi";
             this.Size = new System.Drawing.Size(805, 143);
+            this.Load += new System.EventHandler(this.PanelCanArchi_Load);
             this.ResumeLayout(false);
 
         }

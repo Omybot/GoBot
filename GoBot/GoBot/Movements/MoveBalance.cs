@@ -35,7 +35,7 @@ namespace GoBot.Movements
 
         public override int Score => 0;
 
-        public override double Value => IsCorrectColor() ? ((Actionneur.GoldGrabberLeft.Loaded || Actionneur.GoldGrabberRight.Loaded) ? 100 : 0) : 0;
+        public override double Value => IsCorrectColor() ? ((Actionneur.GoldGrabberLeft.Loaded || Actionneur.GoldGrabberRight.Loaded) ? 200 : 0) : 0;
 
         public override GameElement Element => _balance;
 

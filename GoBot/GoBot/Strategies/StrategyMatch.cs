@@ -26,7 +26,7 @@ namespace GoBot.Strategies
             // Sortir ICI de la zonde de départ
 
             // Experience posée + Experience OK + Atome OK + Atome vert + bleu + rouge du petit robot dans la balance
-            Plateau.Score = 5 + 15 + 20 + 24;
+            Plateau.Score = 5 + 15 + 20 + 44 + 12;
 
             Robots.GrosRobot.MajGraphFranchissable(Plateau.ListeObstacles);
 

@@ -11,6 +11,7 @@ namespace GoBot.GameElements
     public class VoidZone : GameElementZone
     {
         int _atomsCount;
+        bool _isObstacle;
 
         public VoidZone(RealPoint position, Color color, int radius) : base(position, color, radius)
         {
@@ -18,5 +19,6 @@ namespace GoBot.GameElements
         }
 
         public int AtomsCount { get => _atomsCount; set => _atomsCount = value; }
+        public bool IsObstacle { get => _isObstacle; set => _isObstacle = value; }
     }
 }

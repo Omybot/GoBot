@@ -110,6 +110,8 @@ namespace GoBot
 
             SplashScreen.SetMessage("Youhou !", Color.Green);
             SplashScreen.CloseSplash();
+
+            this.Text = "GoBot 2019 - Match 5.4";
         }
 
         public void ChargerReplay(String fichier)

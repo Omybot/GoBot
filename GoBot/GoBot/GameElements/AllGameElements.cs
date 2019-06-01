@@ -175,10 +175,10 @@ namespace GoBot.GameElements
                 if (Plateau.Strategy != null && Plateau.Strategy.AvoidElements)
                 {
                     // TODOEACHYEAR Ici ajouter à obstacles les elements à contourner
-                    if (_zoneViolet.AtomsCount > 1)
+                    if (_zoneViolet.IsObstacle)
                         obstacles.Add(new Circle(_zoneViolet.Position, _zoneViolet.HoverRadius * 0.48));
 
-                    if (_zoneYellow.AtomsCount > 1)
+                    if (_zoneYellow.IsObstacle)
                         obstacles.Add(new Circle(_zoneYellow.Position, _zoneYellow.HoverRadius * 0.48));
                 }
 

@@ -55,7 +55,7 @@ namespace GoBot.Movements
 
             Accelerator accel = Plateau.NotreCouleur == Plateau.CouleurDroiteViolet ? Plateau.Elements.AcceleratorViolet : Plateau.Elements.AcceleratorYellow;
             
-            while(retry && Actionneur.AtomStacker.CanStoreMore && _zone.AtomsCount > 0 && Plateau.Strategy.TimeBeforeEnd.TotalSeconds > 15)
+            while(retry && Actionneur.AtomStacker.CanStoreMore && _zone.AtomsCount > 0 && Plateau.Strategy.TimeBeforeEnd.TotalSeconds > 15 + 2 * Actionneur.AtomStacker.AtomsCount)
             {
                 GrabResult res = Actionneur.AtomHandler.DoGrabByDetect();
                 
@@ -69,9 +69,7 @@ namespace GoBot.Movements
                         fails++;
                         if (fails < maxFails)
                         {
-                            Robot.Lent();
                             Robots.GrosRobot.Reculer(50);
-                            Robot.Rapide();
                             retry = true;
                         }
                         else
@@ -80,7 +78,7 @@ namespace GoBot.Movements
                         }
                         break;
                     case GrabResult.GrabFail:
-                        fails++;
+                        fails+=2;
                         retry = fails < maxFails;
                         break;
                     case GrabResult.NoAtomDetected:
@@ -89,6 +87,8 @@ namespace GoBot.Movements
                         break;
                 }
             }
+
+            _zone.IsObstacle = false;
 
             if(fails >= maxFails)
                 _zone.AtomsCount = 0;

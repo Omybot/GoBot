@@ -357,7 +357,7 @@ namespace GoBot
             if (opponentDist < minDist)
                 factor = minPower;
             else
-                factor = Math.Min((Math.Pow(opponentDist - minDist, 2) / Math.Pow((maxPowerDist - minDist), 2)) * (1 - minPower) + minPower, 1);
+                factor = 0.6; // Math.Min((Math.Pow(opponentDist - minDist, 2) / Math.Pow((maxPowerDist - minDist), 2)) * (1 - minPower) + minPower, 1);
 
             return (int)(factor * maxSpeed);
         }

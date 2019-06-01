@@ -124,8 +124,6 @@ namespace GoBot
 
         void RecGoBot_JackChange(bool state)
         {
-            AllDevices.RecGoBot.SetLed(LedID.DebugB1, state ? RecGoBot.LedStatus.Vert : RecGoBot.LedStatus.Rouge);
-
             if (!state && JackArme)
             {
                 JackArme = false;

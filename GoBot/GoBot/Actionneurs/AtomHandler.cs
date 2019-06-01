@@ -190,7 +190,7 @@ namespace GoBot.Actionneurs
         {
             List<RealPoint> rawPts = _detector.GetPoints();
 
-            List<RealPoint> pts = rawPts.Where(o => Plateau.IsInside(o, 80)).ToList();
+            List<RealPoint> pts = rawPts.Where(o => Plateau.IsInside(o, 200)).ToList();
             pts = pts.Where(o => InRange(o.Distance(Robots.GrosRobot.Position.Coordinates), 200, maxDistance)).ToList();
             pts = pts.Where(o => !Plateau.ObstaclesOpponents.ToList().Exists(o2 => o2.Distance(o) < minOpponentDistance)).ToList();
 

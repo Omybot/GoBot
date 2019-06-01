@@ -74,7 +74,7 @@ namespace GoBot.Devices
             ButtonChange += RecGoBot_ButtonChange;
 
         }
-        
+
         private void Button1Click()
         {
 
@@ -259,7 +259,7 @@ namespace GoBot.Devices
             {
                 SetLed(led, ledsStatus[led] == LedStatus.Vert ? LedStatus.Off : LedStatus.Vert);
             }
-            catch(Exception e)
+            catch (Exception e)
             {
 
             }
@@ -315,6 +315,8 @@ namespace GoBot.Devices
             if (trameRecue[1] == (byte)UdpFrameFunction.RetourCapteurOnOff)
             {
                 CapteurOnOffID but;
+
+                bool pushed = trameRecue[3] > 0;
 
                 switch (trameRecue[2])
                 {
@@ -382,13 +384,14 @@ namespace GoBot.Devices
                         return;
                 }
 
-                bool pushed = trameRecue[3] > 0;
+                if (but == CapteurOnOffID.CouleurEquipe)
+                    ColorChange?.Invoke((MatchColor)trameRecue[3]);
 
-                if (but == CapteurOnOffID.CouleurEquipe && ColorChange != null)
-                    ColorChange((MatchColor)trameRecue[3]);
-
-                else if (but == CapteurOnOffID.Jack && JackChange != null)
-                    JackChange(pushed);
+                else if (but == CapteurOnOffID.Jack)
+                {
+                    AllDevices.RecGoBot.SetLed(LedID.DebugB1, pushed ? RecGoBot.LedStatus.Vert : RecGoBot.LedStatus.Rouge);
+                    JackChange?.Invoke(pushed);
+                }
 
                 else ButtonChange?.Invoke(but, pushed);
             }
@@ -446,7 +449,7 @@ namespace GoBot.Devices
             {
                 link.Name = "Buzz " + morse;
 
-                foreach(char c in morse)
+                foreach (char c in morse)
                 {
                     connexion.SendMessage(UdpFrameFactory.Buzz(5000, 200));
                     if (c == '.')

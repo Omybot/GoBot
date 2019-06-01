@@ -94,7 +94,15 @@ namespace GoBot.Movements
             else
             {
                 // Snif...
-                _grabber.NeedCalibration = true;
+                //_grabber.NeedCalibration = true;
+                _grabber.DoUp();
+                Thread.Sleep(1000);
+                _grabber.DoOpen();
+                Thread.Sleep(500);
+                _grabber.DoClose();
+                Thread.Sleep(500);
+                _grabber.DoStore();
+                Thread.Sleep(1000);
             }
 
             _grabber.DoDisableElevation();
