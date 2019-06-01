@@ -89,7 +89,6 @@ namespace GoBot.Movements
                 // Goldenium retiré
                 _grabber.Loaded = true;
                 Plateau.Score += 20;
-                Plateau.Strategy.GoldGrabed = true;
             }
             else
             {
@@ -107,6 +106,7 @@ namespace GoBot.Movements
 
             _grabber.DoDisableElevation();
 
+            Plateau.Strategy.GoldGrabed = true;
         }
     }
 }

@@ -347,6 +347,8 @@ namespace GoBot
             _obstacles?.SetDetections(detections);
         }
 
+        static double lastFactor = 1;
+
         private static int SpeedWithOpponent(double opponentDist, int maxSpeed)
         {
             double minPower = 0.20;
@@ -357,7 +359,13 @@ namespace GoBot
             if (opponentDist < minDist)
                 factor = minPower;
             else
-                factor = 0.6; // Math.Min((Math.Pow(opponentDist - minDist, 2) / Math.Pow((maxPowerDist - minDist), 2)) * (1 - minPower) + minPower, 1);
+            {
+                factor = Math.Min((Math.Pow(opponentDist - minDist, 2) / Math.Pow((maxPowerDist - minDist), 2)) * (1 - minPower) + minPower, 1);
+                if (factor < 0.6)
+                    factor = 0.6;
+                else
+                    factor = 1;
+            }
 
             return (int)(factor * maxSpeed);
         }
