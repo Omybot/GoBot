@@ -114,43 +114,43 @@
     <Compile Include="GameElements\StandingAtom.cs" />
     <Compile Include="GameElements\VoidZone.cs" />
     <Compile Include="GameElements\ZoneCalibration.cs" />
-    <Compile Include="IHM\PanelBoardCanServos.cs">
+    <Compile Include="IHM\Elements\PanelBoardCanServos.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="IHM\PanelBoardCanServos.Designer.cs">
+    <Compile Include="IHM\Elements\PanelBoardCanServos.Designer.cs">
       <DependentUpon>PanelBoardCanServos.cs</DependentUpon>
     </Compile>
-    <Compile Include="IHM\PanelBoardNumeric.cs">
+    <Compile Include="IHM\Panels\PanelBoardNumeric.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="IHM\PanelBoardNumeric.Designer.cs">
+    <Compile Include="IHM\Panels\PanelBoardNumeric.Designer.cs">
       <DependentUpon>PanelBoardNumeric.cs</DependentUpon>
     </Compile>
-    <Compile Include="IHM\PanelCanArchi.cs">
+    <Compile Include="IHM\Panels\PanelCanArchi.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="IHM\PanelCanArchi.Designer.cs">
+    <Compile Include="IHM\Panels\PanelCanArchi.Designer.cs">
       <DependentUpon>PanelCanArchi.cs</DependentUpon>
     </Compile>
-    <Compile Include="IHM\PanelLogCan.cs">
+    <Compile Include="IHM\Tabs\PanelLogCan.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="IHM\PanelLogCan.Designer.cs">
+    <Compile Include="IHM\Tabs\PanelLogCan.Designer.cs">
       <DependentUpon>PanelLogCan.cs</DependentUpon>
     </Compile>
-    <Compile Include="IHM\PanelLogThreads.cs">
+    <Compile Include="IHM\Tabs\PanelLogThreads.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="IHM\PanelLogThreads.Designer.cs">
+    <Compile Include="IHM\Tabs\PanelLogThreads.Designer.cs">
       <DependentUpon>PanelLogThreads.cs</DependentUpon>
     </Compile>
-    <Compile Include="IHM\PanelServoCan.cs">
+    <Compile Include="IHM\Panels\PanelServoCan.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="IHM\PanelServoCan.Designer.cs">
+    <Compile Include="IHM\Panels\PanelServoCan.Designer.cs">
       <DependentUpon>PanelServoCan.cs</DependentUpon>
     </Compile>
-    <Compile Include="IHM\SplashScreen.cs" />
+    <Compile Include="IHM\Forms\SplashScreen.cs" />
     <Compile Include="Movements\MoveAccelerator.cs" />
     <Compile Include="Movements\MoveAtomGrab.cs" />
     <Compile Include="Movements\MoveAtomsToSlope.cs" />
@@ -168,10 +168,10 @@
     <Compile Include="Actions\Deplacement\ActionRecule.cs" />
     <Compile Include="Actions\IAction.cs" />
     <Compile Include="Execution.cs" />
-    <Compile Include="IHM\PanelNumeric.cs">
+    <Compile Include="IHM\Elements\PanelNumeric.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="IHM\PanelNumeric.Designer.cs">
+    <Compile Include="IHM\Elements\PanelNumeric.Designer.cs">
       <DependentUpon>PanelNumeric.cs</DependentUpon>
     </Compile>
     <Compile Include="Logs\ILog.cs" />
@@ -186,28 +186,28 @@
     <Compile Include="Threading\ThreadLink.cs" />
     <Compile Include="Threading\ThreadManager.cs" />
     <Compile Include="TicksPerSecond.cs" />
-    <Compile Include="IHM\ConnectionDetails.cs">
+    <Compile Include="IHM\Elements\ConnectionDetails.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="IHM\ConnectionDetails.Designer.cs">
+    <Compile Include="IHM\Elements\ConnectionDetails.Designer.cs">
       <DependentUpon>ConnectionDetails.cs</DependentUpon>
     </Compile>
-    <Compile Include="IHM\ConnectionStatus.cs">
+    <Compile Include="IHM\Elements\ConnectionStatus.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="IHM\ConnectionStatus.Designer.cs">
+    <Compile Include="IHM\Elements\ConnectionStatus.Designer.cs">
       <DependentUpon>ConnectionStatus.cs</DependentUpon>
     </Compile>
-    <Compile Include="IHM\PanelHokuyo.cs">
+    <Compile Include="IHM\Tabs\PanelHokuyo.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="IHM\PanelHokuyo.Designer.cs">
+    <Compile Include="IHM\Tabs\PanelHokuyo.Designer.cs">
       <DependentUpon>PanelHokuyo.cs</DependentUpon>
     </Compile>
-    <Compile Include="IHM\WorldPanel.cs">
+    <Compile Include="IHM\Elements\WorldPanel.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="IHM\WorldPanel.Designer.cs">
+    <Compile Include="IHM\Elements\WorldPanel.Designer.cs">
       <DependentUpon>WorldPanel.cs</DependentUpon>
     </Compile>
     <Compile Include="MinimumDelay.cs" />
@@ -232,142 +232,136 @@
     <Compile Include="Strategies\StrategyRandomMoves.cs" />
     <Compile Include="Strategies\StrategyMatch.cs" />
     <Compile Include="EventsReplay.cs" />
-    <Compile Include="IHM\PanelActionneurGeneric.cs">
+    <Compile Include="IHM\Panels\PanelActionneurGeneric.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="IHM\PanelActionneurGeneric.Designer.cs">
+    <Compile Include="IHM\Panels\PanelActionneurGeneric.Designer.cs">
       <DependentUpon>PanelActionneurGeneric.cs</DependentUpon>
     </Compile>
-    <Compile Include="IHM\PanelActionneurOnOff.cs">
+    <Compile Include="IHM\Elements\PanelActionneurOnOff.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="IHM\PanelActionneurOnOff.Designer.cs">
+    <Compile Include="IHM\Elements\PanelActionneurOnOff.Designer.cs">
       <DependentUpon>PanelActionneurOnOff.cs</DependentUpon>
     </Compile>
-    <Compile Include="IHM\PanelActionneursOnOff.cs">
+    <Compile Include="IHM\Panels\PanelActionneursOnOff.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="IHM\PanelActionneursOnOff.Designer.cs">
+    <Compile Include="IHM\Panels\PanelActionneursOnOff.Designer.cs">
       <DependentUpon>PanelActionneursOnOff.cs</DependentUpon>
     </Compile>
-    <Compile Include="IHM\PanelAnalogique.cs">
+    <Compile Include="IHM\Panels\PanelAnalogique.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="IHM\PanelAnalogique.Designer.cs">
+    <Compile Include="IHM\Panels\PanelAnalogique.Designer.cs">
       <DependentUpon>PanelAnalogique.cs</DependentUpon>
     </Compile>
-    <Compile Include="IHM\PanelCapteurs.cs">
+    <Compile Include="IHM\Panels\PanelCapteurs.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="IHM\PanelCapteurs.Designer.cs">
+    <Compile Include="IHM\Panels\PanelCapteurs.Designer.cs">
       <DependentUpon>PanelCapteurs.cs</DependentUpon>
     </Compile>
-    <Compile Include="IHM\PanelConstantes.cs">
+    <Compile Include="IHM\Tabs\PanelConstantes.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="IHM\PanelConstantes.Designer.cs">
+    <Compile Include="IHM\Tabs\PanelConstantes.Designer.cs">
       <DependentUpon>PanelConstantes.cs</DependentUpon>
     </Compile>
-    <Compile Include="IHM\PanelAlimentation.cs">
+    <Compile Include="IHM\Tabs\PanelAlimentation.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="IHM\PanelAlimentation.Designer.cs">
+    <Compile Include="IHM\Tabs\PanelAlimentation.Designer.cs">
       <DependentUpon>PanelAlimentation.cs</DependentUpon>
     </Compile>
-    <Compile Include="IHM\PanelGenerics.cs">
+    <Compile Include="IHM\Elements\PanelGenerics.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="IHM\PanelGenerics.Designer.cs">
+    <Compile Include="IHM\Elements\PanelGenerics.Designer.cs">
       <DependentUpon>PanelGenerics.cs</DependentUpon>
     </Compile>
-    <Compile Include="IHM\PanelRecGoBot.cs">
+    <Compile Include="IHM\Panels\PanelRecGoBot.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="IHM\PanelRecGoBot.designer.cs">
+    <Compile Include="IHM\Panels\PanelRecGoBot.designer.cs">
       <DependentUpon>PanelRecGoBot.cs</DependentUpon>
     </Compile>
-    <Compile Include="IHM\FenNomArchivage.cs">
+    <Compile Include="IHM\Forms\FenNomArchivage.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="IHM\FenNomArchivage.Designer.cs">
+    <Compile Include="IHM\Forms\FenNomArchivage.Designer.cs">
       <DependentUpon>FenNomArchivage.cs</DependentUpon>
     </Compile>
-    <Compile Include="IHM\PanelGestionLogs.cs">
+    <Compile Include="IHM\Tabs\PanelGestionLogs.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="IHM\PanelGestionLogs.Designer.cs">
+    <Compile Include="IHM\Tabs\PanelGestionLogs.Designer.cs">
       <DependentUpon>PanelGestionLogs.cs</DependentUpon>
     </Compile>
-    <Compile Include="IHM\PanelDiagnosticMove.cs">
+    <Compile Include="IHM\Tabs\PanelDiagnosticMove.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="IHM\PanelDiagnosticMove.Designer.cs">
+    <Compile Include="IHM\Tabs\PanelDiagnosticMove.Designer.cs">
       <DependentUpon>PanelDiagnosticMove.cs</DependentUpon>
     </Compile>
-    <Compile Include="IHM\PanelEnvoiUdp.cs">
+    <Compile Include="IHM\Tabs\PanelEnvoiUdp.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="IHM\PanelEnvoiUdp.Designer.cs">
+    <Compile Include="IHM\Tabs\PanelEnvoiUdp.Designer.cs">
       <DependentUpon>PanelEnvoiUdp.cs</DependentUpon>
     </Compile>
-    <Compile Include="IHM\PanelLogsEvents.cs">
+    <Compile Include="IHM\Tabs\PanelLogsEvents.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="IHM\PanelLogsEvents.Designer.cs">
+    <Compile Include="IHM\Tabs\PanelLogsEvents.Designer.cs">
       <DependentUpon>PanelLogsEvents.cs</DependentUpon>
     </Compile>
-    <Compile Include="IHM\PanelConnexions.cs">
+    <Compile Include="IHM\Panels\PanelConnexions.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="IHM\PanelConnexions.Designer.cs">
+    <Compile Include="IHM\Panels\PanelConnexions.Designer.cs">
       <DependentUpon>PanelConnexions.cs</DependentUpon>
     </Compile>
-    <Compile Include="IHM\PanelBaliseDiagnostic.cs">
+    <Compile Include="IHM\Panels\PanelGrosRobotCapteurs.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="IHM\PanelBaliseDiagnostic.Designer.cs">
-      <DependentUpon>PanelBaliseDiagnostic.cs</DependentUpon>
-    </Compile>
-    <Compile Include="IHM\PanelGrosRobotCapteurs.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="IHM\PanelGrosRobotCapteurs.Designer.cs">
+    <Compile Include="IHM\Panels\PanelGrosRobotCapteurs.Designer.cs">
       <DependentUpon>PanelGrosRobotCapteurs.cs</DependentUpon>
     </Compile>
-    <Compile Include="IHM\PanelGrosRobotSequences.cs">
+    <Compile Include="IHM\Panels\PanelGrosRobotSequences.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="IHM\PanelGrosRobotSequences.Designer.cs">
+    <Compile Include="IHM\Panels\PanelGrosRobotSequences.Designer.cs">
       <DependentUpon>PanelGrosRobotSequences.cs</DependentUpon>
     </Compile>
-    <Compile Include="IHM\PanelGrosRobotUtilisation.cs">
+    <Compile Include="IHM\Panels\PanelGrosRobotUtilisation.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="IHM\PanelGrosRobotUtilisation.Designer.cs">
+    <Compile Include="IHM\Panels\PanelGrosRobotUtilisation.Designer.cs">
       <DependentUpon>PanelGrosRobotUtilisation.cs</DependentUpon>
     </Compile>
-    <Compile Include="IHM\PanelGrosRobotReglage.cs">
+    <Compile Include="IHM\Panels\PanelGrosRobotReglage.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="IHM\PanelGrosRobotReglage.Designer.cs">
+    <Compile Include="IHM\Panels\PanelGrosRobotReglage.Designer.cs">
       <DependentUpon>PanelGrosRobotReglage.cs</DependentUpon>
     </Compile>
-    <Compile Include="IHM\PanelReglageAsserv.cs">
+    <Compile Include="IHM\Tabs\PanelReglageAsserv.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="IHM\PanelReglageAsserv.Designer.cs">
+    <Compile Include="IHM\Tabs\PanelReglageAsserv.Designer.cs">
       <DependentUpon>PanelReglageAsserv.cs</DependentUpon>
     </Compile>
-    <Compile Include="IHM\PanelLogUdp.cs">
+    <Compile Include="IHM\Tabs\PanelLogUdp.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="IHM\PanelLogUdp.Designer.cs">
+    <Compile Include="IHM\Tabs\PanelLogUdp.Designer.cs">
       <DependentUpon>PanelLogUdp.cs</DependentUpon>
     </Compile>
-    <Compile Include="IHM\PotarControl.cs">
+    <Compile Include="IHM\Panels\PotarControl.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="IHM\PotarControl.Designer.cs">
+    <Compile Include="IHM\Panels\PotarControl.Designer.cs">
       <DependentUpon>PotarControl.cs</DependentUpon>
     </Compile>
     <Compile Include="Logs\LogFile.cs" />
@@ -395,47 +389,41 @@
     <Compile Include="Strategies\Strategy.cs" />
     <Compile Include="Enums.cs" />
     <Compile Include="Communications\ConnectionChecker.cs" />
-    <Compile Include="IHM\PanelBalise.cs">
+    <Compile Include="IHM\Panels\PanelDeplacement.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="IHM\PanelBalise.Designer.cs">
-      <DependentUpon>PanelBalise.cs</DependentUpon>
-    </Compile>
-    <Compile Include="IHM\PanelDeplacement.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="IHM\PanelDeplacement.Designer.cs">
+    <Compile Include="IHM\Panels\PanelDeplacement.Designer.cs">
       <DependentUpon>PanelDeplacement.cs</DependentUpon>
     </Compile>
-    <Compile Include="IHM\PanelHistorique.cs">
+    <Compile Include="IHM\Panels\PanelHistorique.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="IHM\PanelHistorique.Designer.cs">
+    <Compile Include="IHM\Panels\PanelHistorique.Designer.cs">
       <DependentUpon>PanelHistorique.cs</DependentUpon>
     </Compile>
-    <Compile Include="IHM\PanelTable.cs">
+    <Compile Include="IHM\Tabs\PanelTable.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="IHM\PanelTable.Designer.cs">
+    <Compile Include="IHM\Tabs\PanelTable.Designer.cs">
       <DependentUpon>PanelTable.cs</DependentUpon>
     </Compile>
-    <Compile Include="IHM\Fenetre.cs">
+    <Compile Include="IHM\Elements\Fenetre.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="IHM\Fenetre.Designer.cs">
+    <Compile Include="IHM\Elements\Fenetre.Designer.cs">
       <DependentUpon>Fenetre.cs</DependentUpon>
     </Compile>
-    <Compile Include="IHM\FenGoBot.cs">
+    <Compile Include="IHM\Forms\FenGoBot.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="IHM\FenGoBot.Designer.cs">
+    <Compile Include="IHM\Forms\FenGoBot.Designer.cs">
       <DependentUpon>FenGoBot.cs</DependentUpon>
     </Compile>
     <Compile Include="Historique.cs" />
-    <Compile Include="IHM\PanelGrosRobot.cs">
+    <Compile Include="IHM\Tabs\PanelGrosRobot.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="IHM\PanelGrosRobot.Designer.cs">
+    <Compile Include="IHM\Tabs\PanelGrosRobot.Designer.cs">
       <DependentUpon>PanelGrosRobot.cs</DependentUpon>
     </Compile>
     <Compile Include="Plateau.cs" />
@@ -450,127 +438,121 @@
     <Compile Include="Communications\UDP\UdpConnection.cs" />
     <Compile Include="Communications\Frame.cs" />
     <Compile Include="TestCode.cs" />
-    <EmbeddedResource Include="IHM\ConnectionDetails.resx">
+    <EmbeddedResource Include="IHM\Elements\ConnectionDetails.resx">
       <DependentUpon>ConnectionDetails.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="IHM\ConnectionStatus.resx">
+    <EmbeddedResource Include="IHM\Elements\ConnectionStatus.resx">
       <DependentUpon>ConnectionStatus.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="IHM\PanelActionneurGeneric.resx">
+    <EmbeddedResource Include="IHM\Panels\PanelActionneurGeneric.resx">
       <DependentUpon>PanelActionneurGeneric.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="IHM\PanelActionneurOnOff.resx">
+    <EmbeddedResource Include="IHM\Elements\PanelActionneurOnOff.resx">
       <DependentUpon>PanelActionneurOnOff.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="IHM\PanelActionneursOnOff.resx">
+    <EmbeddedResource Include="IHM\Panels\PanelActionneursOnOff.resx">
       <DependentUpon>PanelActionneursOnOff.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="IHM\PanelBoardCanServos.resx">
+    <EmbeddedResource Include="IHM\Elements\PanelBoardCanServos.resx">
       <DependentUpon>PanelBoardCanServos.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="IHM\PanelBoardNumeric.resx">
+    <EmbeddedResource Include="IHM\Panels\PanelBoardNumeric.resx">
       <DependentUpon>PanelBoardNumeric.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="IHM\PanelCanArchi.resx">
+    <EmbeddedResource Include="IHM\Panels\PanelCanArchi.resx">
       <DependentUpon>PanelCanArchi.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="IHM\PanelLogCan.resx">
+    <EmbeddedResource Include="IHM\Tabs\PanelLogCan.resx">
       <DependentUpon>PanelLogCan.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="IHM\PanelLogThreads.resx">
+    <EmbeddedResource Include="IHM\Tabs\PanelLogThreads.resx">
       <DependentUpon>PanelLogThreads.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="IHM\PanelNumeric.resx">
+    <EmbeddedResource Include="IHM\Elements\PanelNumeric.resx">
       <DependentUpon>PanelNumeric.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="IHM\PanelAnalogique.resx">
+    <EmbeddedResource Include="IHM\Panels\PanelAnalogique.resx">
       <DependentUpon>PanelAnalogique.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="IHM\PanelCapteurs.resx">
+    <EmbeddedResource Include="IHM\Panels\PanelCapteurs.resx">
       <DependentUpon>PanelCapteurs.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="IHM\PanelConstantes.resx">
+    <EmbeddedResource Include="IHM\Tabs\PanelConstantes.resx">
       <DependentUpon>PanelConstantes.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="IHM\PanelAlimentation.resx">
+    <EmbeddedResource Include="IHM\Tabs\PanelAlimentation.resx">
       <DependentUpon>PanelAlimentation.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="IHM\PanelGenerics.resx">
+    <EmbeddedResource Include="IHM\Elements\PanelGenerics.resx">
       <DependentUpon>PanelGenerics.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="IHM\PanelHokuyo.resx">
+    <EmbeddedResource Include="IHM\Tabs\PanelHokuyo.resx">
       <DependentUpon>PanelHokuyo.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="IHM\PanelRecGoBot.resx">
+    <EmbeddedResource Include="IHM\Panels\PanelRecGoBot.resx">
       <DependentUpon>PanelRecGoBot.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="IHM\PanelServoCan.resx">
+    <EmbeddedResource Include="IHM\Panels\PanelServoCan.resx">
       <DependentUpon>PanelServoCan.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="IHM\FenNomArchivage.resx">
+    <EmbeddedResource Include="IHM\Forms\FenNomArchivage.resx">
       <DependentUpon>FenNomArchivage.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="IHM\PanelGestionLogs.resx">
+    <EmbeddedResource Include="IHM\Tabs\PanelGestionLogs.resx">
       <DependentUpon>PanelGestionLogs.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="IHM\PanelDiagnosticMove.resx">
+    <EmbeddedResource Include="IHM\Tabs\PanelDiagnosticMove.resx">
       <DependentUpon>PanelDiagnosticMove.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="IHM\PanelEnvoiUdp.resx">
+    <EmbeddedResource Include="IHM\Tabs\PanelEnvoiUdp.resx">
       <DependentUpon>PanelEnvoiUdp.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="IHM\PanelLogsEvents.resx">
+    <EmbeddedResource Include="IHM\Tabs\PanelLogsEvents.resx">
       <DependentUpon>PanelLogsEvents.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="IHM\PanelConnexions.resx">
+    <EmbeddedResource Include="IHM\Panels\PanelConnexions.resx">
       <DependentUpon>PanelConnexions.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="IHM\PanelBaliseDiagnostic.resx">
-      <DependentUpon>PanelBaliseDiagnostic.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="IHM\PanelGrosRobotCapteurs.resx">
+    <EmbeddedResource Include="IHM\Panels\PanelGrosRobotCapteurs.resx">
       <DependentUpon>PanelGrosRobotCapteurs.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="IHM\PanelGrosRobotSequences.resx">
+    <EmbeddedResource Include="IHM\Panels\PanelGrosRobotSequences.resx">
       <DependentUpon>PanelGrosRobotSequences.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="IHM\PanelGrosRobotUtilisation.resx">
+    <EmbeddedResource Include="IHM\Panels\PanelGrosRobotUtilisation.resx">
       <DependentUpon>PanelGrosRobotUtilisation.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="IHM\PanelBalise.resx">
-      <DependentUpon>PanelBalise.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="IHM\PanelDeplacement.resx">
+    <EmbeddedResource Include="IHM\Panels\PanelDeplacement.resx">
       <DependentUpon>PanelDeplacement.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="IHM\Fenetre.resx">
+    <EmbeddedResource Include="IHM\Elements\Fenetre.resx">
       <DependentUpon>Fenetre.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="IHM\FenGoBot.resx">
+    <EmbeddedResource Include="IHM\Forms\FenGoBot.resx">
       <DependentUpon>FenGoBot.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="IHM\PanelGrosRobot.resx">
+    <EmbeddedResource Include="IHM\Tabs\PanelGrosRobot.resx">
       <DependentUpon>PanelGrosRobot.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="IHM\PanelHistorique.resx">
+    <EmbeddedResource Include="IHM\Panels\PanelHistorique.resx">
       <DependentUpon>PanelHistorique.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="IHM\PanelGrosRobotReglage.resx">
+    <EmbeddedResource Include="IHM\Panels\PanelGrosRobotReglage.resx">
       <DependentUpon>PanelGrosRobotReglage.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="IHM\PanelReglageAsserv.resx">
+    <EmbeddedResource Include="IHM\Tabs\PanelReglageAsserv.resx">
       <DependentUpon>PanelReglageAsserv.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="IHM\PanelLogUdp.resx">
+    <EmbeddedResource Include="IHM\Tabs\PanelLogUdp.resx">
       <DependentUpon>PanelLogUdp.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="IHM\PanelTable.resx">
+    <EmbeddedResource Include="IHM\Tabs\PanelTable.resx">
       <DependentUpon>PanelTable.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="IHM\PotarControl.resx">
+    <EmbeddedResource Include="IHM\Panels\PotarControl.resx">
       <DependentUpon>PotarControl.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="IHM\WorldPanel.resx">
+    <EmbeddedResource Include="IHM\Elements\WorldPanel.resx">
       <DependentUpon>WorldPanel.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
