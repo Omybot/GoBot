@@ -86,7 +86,7 @@ namespace GoBot
             ValeursNumeriques.Add(Board.RecGB, new List<byte>());
             ValeursNumeriques.Add(Board.RecMove, new List<byte>());
 
-            for(int i = 0; i < 3 * 2; i++)
+            for (int i = 0; i < 3 * 2; i++)
             {
                 ValeursNumeriques[Board.RecIO].Add(0);
                 ValeursNumeriques[Board.RecGB].Add(0);
@@ -303,7 +303,7 @@ namespace GoBot
         {
             return Math.Abs(arc.InDegrees) / 360 * Math.PI * diameter;
         }
-        
+
         public override void Avancer(int distance, bool attendre = true)
         {
             base.Avancer(distance, attendre);
@@ -322,7 +322,7 @@ namespace GoBot
                     Historique.AjouterAction(new ActionRecule(this, -distance));
                 SensDep = SensAR.Arriere;
             }
-            
+
             Destination = new Position(Position.Angle, new RealPoint(Position.Coordinates.X + distance * Position.Angle.Cos, Position.Coordinates.Y + distance * Position.Angle.Sin));
 
             // TODO2018 attente avec un sémaphore ?
@@ -403,7 +403,7 @@ namespace GoBot
             trajectoirePolaire = points;
             pointCourantTrajPolaire = 0;
 
-            while (pointCourantTrajPolaire != -1)
+            while (attendre && pointCourantTrajPolaire != -1)
                 Thread.Sleep(10);
         }
 
@@ -419,24 +419,38 @@ namespace GoBot
             RecallageEnCours = true;
             Historique.AjouterAction(new ActionRecallage(this, sens));
 
+            if (attendre)
+                RecalProcedure(sens);
+            else
+                ThreadManager.CreateThread(link => RecalProcedure(sens)).StartThread();
+        }
+
+        private void RecalProcedure(SensAR sens)
+        {
+
+            int realAccel = SpeedConfig.LineAcceleration;
+            int realDeccel = SpeedConfig.LineAcceleration;
+            SpeedConfig.LineAcceleration = 50000;
+            SpeedConfig.LineDeceleration = 50000;
+
+            IShape contact = GetBounds(sens);
+
             while (Position.Coordinates.X - Longueur / 2 > 0 &&
                 Position.Coordinates.X + Longueur / 2 < Plateau.Largeur &&
                 Position.Coordinates.Y - Longueur / 2 > 0 &&
-                Position.Coordinates.Y + Longueur / 2 < Plateau.Hauteur)
+                Position.Coordinates.Y + Longueur / 2 < Plateau.Hauteur &&
+                !Plateau.ListeObstacles.ToList().Exists(o => o.Cross(contact)))
             {
                 if (sens == SensAR.Arriere)
-                    Reculer(5);
+                    Reculer(1);
                 else
-                    Avancer(5);
+                    Avancer(1);
+
+                contact = GetBounds(sens);
             }
-            if (Position.Coordinates.X < 0)
-                Position.Coordinates.X = Longueur / 2;
-            if (Position.Coordinates.X > Plateau.Largeur)
-                Position.Coordinates.X = Plateau.Largeur - Longueur / 2;
-            if (Position.Coordinates.Y < 0)
-                Position.Coordinates.Y = Longueur / 2;
-            if (Position.Coordinates.Y > Plateau.Hauteur)
-                Position.Coordinates.Y = Plateau.Hauteur - Longueur / 2;
+
+            SpeedConfig.LineAcceleration = realAccel;
+            SpeedConfig.LineDeceleration = realDeccel;
 
             RecallageEnCours = false;
         }
@@ -462,10 +476,6 @@ namespace GoBot
             return Color.Black;
         }
 
-        public override void ServoVitesse(ServomoteurID servo, int vitesse)
-        {
-        }
-
         public override void EnvoyerPID(int p, int i, int d)
         {
             // TODO
@@ -486,7 +496,7 @@ namespace GoBot
             // TODO
             Historique.AjouterAction(new ActionOnOff(this, actionneur, on));
         }
-        
+
         System.Timers.Timer timerPositions;
 
         public override void MoteurPosition(MoteurID moteur, int vitesse, bool waitEnd)
@@ -560,8 +570,8 @@ namespace GoBot
         public override void DemandeValeursNumeriques(Board carte, bool attendre)
         {
             Random r = new Random();
-            
-            for (int i = 0; i < 3*2; i++)
+
+            for (int i = 0; i < 3 * 2; i++)
                 ValeursNumeriques[carte][i] = (Byte)r.Next();
         }
     }

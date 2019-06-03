@@ -265,7 +265,7 @@ namespace GoBot.Communications.CAN
 
             if (format.Contains("{ServoID}"))
             {
-                parameters.Add((uint)CanFrameFactory.ExtractServoGlobalId(frame));
+                parameters.Add((uint)CanFrameFactory.ExtractServomoteurID(frame));
                 format = format.Replace("{ServoID}", "");
             }
 

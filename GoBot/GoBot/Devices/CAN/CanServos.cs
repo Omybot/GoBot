@@ -14,7 +14,7 @@ namespace GoBot.Devices.CAN
     /// </summary>
     class CanServos
     {
-        private Dictionary<int, CanServo> _servos;
+        private Dictionary<ServomoteurID, CanServo> _servos;
 
         private CanConnection _communication;
         private List<CanBoard> _canBoards;
@@ -24,24 +24,16 @@ namespace GoBot.Devices.CAN
             _communication = comm;
             _communication.FrameReceived += _communication_FrameReceived;
 
-            _servos = new Dictionary<int, CanServo>();
+            _servos = new Dictionary<ServomoteurID, CanServo>();
             _canBoards = new List<CanBoard> { CanBoard.CanDisplay, CanBoard.CanServo1, CanBoard.CanServo2, CanBoard.CanServo3, CanBoard.CanServo4, CanBoard.CanServo5, CanBoard.CanServo6 };
         }
 
-        public CanServo this[int servoGlobalId]
+        public CanServo this[ServomoteurID servoGlobalId]
         {
             get
             {
                 if (!_servos.ContainsKey(servoGlobalId)) _servos.Add(servoGlobalId, new CanServo(servoGlobalId, _communication));
                 return _servos[servoGlobalId];
-            }
-        }
-
-        public CanServo this[ServomoteurID id]
-        {
-            get
-            {
-                return this[(int)id - 200];
             }
         }
 
@@ -53,7 +45,7 @@ namespace GoBot.Devices.CAN
 
                 if (_canBoards.Contains(idCan))
                 {
-                    int servoGlobalId = CanFrameFactory.ExtractServoGlobalId(frame);
+                    ServomoteurID servoGlobalId = CanFrameFactory.ExtractServomoteurID(frame);
 
                     if (!_servos.ContainsKey(servoGlobalId)) _servos.Add(servoGlobalId, new CanServo(servoGlobalId, _communication));
 

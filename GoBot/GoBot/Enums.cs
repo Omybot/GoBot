@@ -26,37 +26,35 @@ namespace GoBot
 
     public enum ServomoteurID
     {
-        ExitLauncherRight = 200,
-        LauncherRight = 201,
-        CalibrationRight = 202,
-        Unused03 = 203,
+        ExitLauncherRight = 0,
+        LauncherRight = 1,
+        CalibrationRight = 2,
+        Unused03 = 3,
 
-        FingerFront = 204,
-        Unused05 = 205,
-        Unused06 = 206,
-        FingerBack = 207,
+        FingerFront = 4,
+        Unused05 = 5,
+        Unused06 = 6,
+        FingerBack = 7,
 
-        CalibrationLeft= 208,
-        LauncherLeft = 209,
-        ExitLauncherLeft = 210,
-        Unloader = 211,
+        CalibrationLeft= 8,
+        LauncherLeft = 9,
+        ExitLauncherLeft = 10,
+        Unloader = 11,
 
-        GoldClampRight = 212,
-        GoldElevationRight = 213,
-        WiperRight = 214,
-        Unused15 = 215,
+        GoldClampRight = 12,
+        GoldElevationRight = 13,
+        WiperRight = 14,
+        Unused15 = 15,
 
-        ClampRight = 216,
-        Unused17 = 217,
-        Elevation = 218,
-        ClampLeft = 219,
+        ClampRight = 16,
+        Unused17 = 17,
+        Elevation = 18,
+        ClampLeft = 19,
 
-        GoldClampLeft = 220,
-        GoldElevationLeft = 221,
-        WiperLeft = 222,
-        Unused23 = 223,
-
-        Tous = 254
+        GoldClampLeft = 20,
+        GoldElevationLeft = 21,
+        WiperLeft = 22,
+        Unused23 = 23,
     }
 
     public enum MatchColor

@@ -45,8 +45,6 @@ namespace GoBot
         {
             switch (servo)
             {
-                case ServomoteurID.Tous:
-                    return "tous les servomoteurs";
                 default:
                         return servo.ToString();
             }

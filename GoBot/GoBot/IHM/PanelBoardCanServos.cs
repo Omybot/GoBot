@@ -36,17 +36,17 @@ namespace GoBot.IHM
                 _servo3.TorqueAlert -= PanelBoardCanServos_TorqueAlert3;
                 _servo4.TorqueAlert -= PanelBoardCanServos_TorqueAlert4;
             }
-            
-            _servo1 = AllDevices.CanServos[(ServomoteurID)(200 + ((int)_boardID - 1) * 4 + 0)];
-            _servo2 = AllDevices.CanServos[(ServomoteurID)(200 + ((int)_boardID - 1) * 4 + 1)];
-            _servo3 = AllDevices.CanServos[(ServomoteurID)(200 + ((int)_boardID - 1) * 4 + 2)];
-            _servo4 = AllDevices.CanServos[(ServomoteurID)(200 + ((int)_boardID - 1) * 4 + 3)];
+
+            _servo1 = AllDevices.CanServos[(ServomoteurID)(((int)_boardID - 1) * 4 + 0)];
+            _servo2 = AllDevices.CanServos[(ServomoteurID)(((int)_boardID - 1) * 4 + 1)];
+            _servo3 = AllDevices.CanServos[(ServomoteurID)(((int)_boardID - 1) * 4 + 2)];
+            _servo4 = AllDevices.CanServos[(ServomoteurID)(((int)_boardID - 1) * 4 + 3)];
 
             lblTitle.Text = "CAN Servos " + _boardID.ToString();
-            lblServo1.Text = Parse((ServomoteurID)(_servo1.ID + 200));
-            lblServo2.Text = Parse((ServomoteurID)(_servo2.ID + 200));
-            lblServo3.Text = Parse((ServomoteurID)(_servo3.ID + 200));
-            lblServo4.Text = Parse((ServomoteurID)(_servo4.ID + 200));
+            lblServo1.Text = Parse(_servo1.ID);
+            lblServo2.Text = Parse(_servo2.ID);
+            lblServo3.Text = Parse(_servo3.ID);
+            lblServo4.Text = Parse(_servo4.ID);
 
             if (!Execution.DesignMode)
             {
@@ -101,28 +101,28 @@ namespace GoBot.IHM
         {
             return servo.ToString().Replace("Unused", "");
         }
-        
+
         public delegate void ServoClickDelegate(ServomoteurID servoNo);
         public event ServoClickDelegate ServoClick;
 
         private void lblServo1_Click(object sender, EventArgs e)
         {
-            ServoClick?.Invoke((ServomoteurID)(200 + ((int)_boardID - 1) * 4 + 0));
+            ServoClick?.Invoke((ServomoteurID)(((int)_boardID - 1) * 4 + 0));
         }
 
         private void lblServo2_Click(object sender, EventArgs e)
         {
-            ServoClick?.Invoke((ServomoteurID)(200 + ((int)_boardID - 1) * 4 + 1));
+            ServoClick?.Invoke((ServomoteurID)(((int)_boardID - 1) * 4 + 1));
         }
 
         private void lblServo3_Click(object sender, EventArgs e)
         {
-            ServoClick?.Invoke((ServomoteurID)(200 + ((int)_boardID - 1) * 4 + 2));
+            ServoClick?.Invoke((ServomoteurID)(((int)_boardID - 1) * 4 + 2));
         }
 
         private void lblServo4_Click(object sender, EventArgs e)
         {
-            ServoClick?.Invoke((ServomoteurID)(200 + ((int)_boardID - 1) * 4 + 3));
+            ServoClick?.Invoke((ServomoteurID)(((int)_boardID - 1) * 4 + 3));
         }
     }
 }

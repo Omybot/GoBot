@@ -27,14 +27,9 @@ namespace GoBot.Communications.CAN
             return isInput ? CanBoard.PC : ExtractBoard(frame);
         }
 
-        public static int ExtractServoGlobalId(Frame frame)
-        {
-            return (int)(ExtractBoard(frame) - 1) * 4 + frame[3];
-        }
-
         public static ServomoteurID ExtractServomoteurID(Frame frame)
         {
-            return (ServomoteurID)((int)(ExtractBoard(frame) - 1) * 4 + frame[3] + 200);
+            return (ServomoteurID)((int)(ExtractBoard(frame) - 1) * 4 + frame[3]);
         }
 
         public static int ExtractValue(Frame frame, int paramNo = 0)
@@ -42,182 +37,182 @@ namespace GoBot.Communications.CAN
             return frame[4 + paramNo * 2] * 256 + frame[5 + paramNo * 2];
         }
 
-        public static Frame BuildGetPosition(int servoGlobalId)
+        public static Frame BuildGetPosition(ServomoteurID id)
         {
             byte[] tab = new byte[10];
 
             tab[0] = 0x00;
-            tab[1] = (byte)GlobalIdToCanBoard(servoGlobalId);
+            tab[1] = (byte)GlobalIdToCanBoard(id);
             tab[2] = (byte)CanFrameFunction.PositionAsk;
-            tab[3] = GlobalIdToServoNo(servoGlobalId);
+            tab[3] = GlobalIdToServoNo(id);
 
             return new Frame(tab);
         }
 
-        public static Frame BuildGetPositionMin(int servoGlobalId)
+        public static Frame BuildGetPositionMin(ServomoteurID id)
         {
             byte[] tab = new byte[10];
 
             tab[0] = 0x00;
-            tab[1] = (byte)GlobalIdToCanBoard(servoGlobalId);
+            tab[1] = (byte)GlobalIdToCanBoard(id);
             tab[2] = (byte)CanFrameFunction.PositionMinAsk;
-            tab[3] = GlobalIdToServoNo(servoGlobalId);
+            tab[3] = GlobalIdToServoNo(id);
 
             return new Frame(tab);
         }
 
-        public static Frame BuildGetPositionMax(int servoGlobalId)
+        public static Frame BuildGetPositionMax(ServomoteurID id)
         {
             byte[] tab = new byte[10];
 
             tab[0] = 0x00;
-            tab[1] = (byte)GlobalIdToCanBoard(servoGlobalId);
+            tab[1] = (byte)GlobalIdToCanBoard(id);
             tab[2] = (byte)CanFrameFunction.PositionMaxAsk;
-            tab[3] = GlobalIdToServoNo(servoGlobalId);
+            tab[3] = GlobalIdToServoNo(id);
 
             return new Frame(tab);
         }
 
-        public static Frame BuildGetSpeedMax(int servoGlobalId)
+        public static Frame BuildGetSpeedMax(ServomoteurID id)
         {
             byte[] tab = new byte[10];
 
             tab[0] = 0x00;
-            tab[1] = (byte)GlobalIdToCanBoard(servoGlobalId);
+            tab[1] = (byte)GlobalIdToCanBoard(id);
             tab[2] = (byte)CanFrameFunction.SpeedMaxAsk;
-            tab[3] = GlobalIdToServoNo(servoGlobalId);
+            tab[3] = GlobalIdToServoNo(id);
 
             return new Frame(tab);
         }
 
-        public static Frame BuildGetAcceleration(int servoGlobalId)
+        public static Frame BuildGetAcceleration(ServomoteurID id)
         {
             byte[] tab = new byte[10];
 
             tab[0] = 0x00;
-            tab[1] = (byte)GlobalIdToCanBoard(servoGlobalId);
+            tab[1] = (byte)GlobalIdToCanBoard(id);
             tab[2] = (byte)CanFrameFunction.AccelerationAsk;
-            tab[3] = GlobalIdToServoNo(servoGlobalId);
+            tab[3] = GlobalIdToServoNo(id);
 
             return new Frame(tab);
         }
 
-        public static Frame BuildGetTorqueCurrent(int servoGlobalId)
+        public static Frame BuildGetTorqueCurrent(ServomoteurID id)
         {
             byte[] tab = new byte[10];
 
             tab[0] = 0x00;
-            tab[1] = (byte)GlobalIdToCanBoard(servoGlobalId);
+            tab[1] = (byte)GlobalIdToCanBoard(id);
             tab[2] = (byte)CanFrameFunction.TorqueCurrentAsk;
-            tab[3] = GlobalIdToServoNo(servoGlobalId);
+            tab[3] = GlobalIdToServoNo(id);
 
             return new Frame(tab);
         }
 
-        public static Frame BuildGetTorqueMax(int servoGlobalId)
+        public static Frame BuildGetTorqueMax(ServomoteurID id)
         {
             byte[] tab = new byte[10];
 
             tab[0] = 0x00;
-            tab[1] = (byte)GlobalIdToCanBoard(servoGlobalId);
+            tab[1] = (byte)GlobalIdToCanBoard(id);
             tab[2] = (byte)CanFrameFunction.TorqueMaxAsk;
-            tab[3] = GlobalIdToServoNo(servoGlobalId);
+            tab[3] = GlobalIdToServoNo(id);
 
             return new Frame(tab);
         }
 
-        public static Frame BuildSetAcceleration(int servoGlobalId, int acceleration)
+        public static Frame BuildSetAcceleration(ServomoteurID id, int acceleration)
         {
             byte[] tab = new byte[10];
 
             tab[0] = 0x00;
-            tab[1] = (byte)GlobalIdToCanBoard(servoGlobalId);
+            tab[1] = (byte)GlobalIdToCanBoard(id);
             tab[2] = (byte)CanFrameFunction.AccelerationSet;
-            tab[3] = GlobalIdToServoNo(servoGlobalId);
+            tab[3] = GlobalIdToServoNo(id);
             tab[4] = ByteDivide(acceleration, true);
             tab[5] = ByteDivide(acceleration, false);
 
             return new Frame(tab);
         }
 
-        public static Frame BuildSetPosition(int servoGlobalId, int position)
+        public static Frame BuildSetPosition(ServomoteurID id, int position)
         {
             byte[] tab = new byte[10];
 
             tab[0] = 0x00;
-            tab[1] = (byte)GlobalIdToCanBoard(servoGlobalId);
+            tab[1] = (byte)GlobalIdToCanBoard(id);
             tab[2] = (byte)CanFrameFunction.PositionSet;
-            tab[3] = GlobalIdToServoNo(servoGlobalId);
+            tab[3] = GlobalIdToServoNo(id);
             tab[4] = ByteDivide(position, true);
             tab[5] = ByteDivide(position, false);
 
             return new Frame(tab);
         }
 
-        public static Frame BuildSetPositionMax(int servoGlobalId, int position)
+        public static Frame BuildSetPositionMax(ServomoteurID id, int position)
         {
             byte[] tab = new byte[10];
 
             tab[0] = 0x00;
-            tab[1] = (byte)GlobalIdToCanBoard(servoGlobalId);
+            tab[1] = (byte)GlobalIdToCanBoard(id);
             tab[2] = (byte)CanFrameFunction.PositionMaxSet;
-            tab[3] = GlobalIdToServoNo(servoGlobalId);
+            tab[3] = GlobalIdToServoNo(id);
             tab[4] = ByteDivide(position, true);
             tab[5] = ByteDivide(position, false);
 
             return new Frame(tab);
         }
 
-        public static Frame BuildSetPositionMin(int servoGlobalId, int position)
+        public static Frame BuildSetPositionMin(ServomoteurID id, int position)
         {
             byte[] tab = new byte[10];
 
             tab[0] = 0x00;
-            tab[1] = (byte)GlobalIdToCanBoard(servoGlobalId);
+            tab[1] = (byte)GlobalIdToCanBoard(id);
             tab[2] = (byte)CanFrameFunction.PositionMinSet;
-            tab[3] = GlobalIdToServoNo(servoGlobalId);
+            tab[3] = GlobalIdToServoNo(id);
             tab[4] = ByteDivide(position, true);
             tab[5] = ByteDivide(position, false);
 
             return new Frame(tab);
         }
 
-        public static Frame BuildSetSpeedMax(int servoGlobalId, int speed)
+        public static Frame BuildSetSpeedMax(ServomoteurID id, int speed)
         {
             byte[] tab = new byte[10];
 
             tab[0] = 0x00;
-            tab[1] = (byte)GlobalIdToCanBoard(servoGlobalId);
+            tab[1] = (byte)GlobalIdToCanBoard(id);
             tab[2] = (byte)CanFrameFunction.SpeedMaxSet;
-            tab[3] = GlobalIdToServoNo(servoGlobalId);
+            tab[3] = GlobalIdToServoNo(id);
             tab[4] = ByteDivide(speed, true);
             tab[5] = ByteDivide(speed, false);
 
             return new Frame(tab);
         }
 
-        public static Frame BuildSetTorqueMax(int servoGlobalId, int torque)
+        public static Frame BuildSetTorqueMax(ServomoteurID id, int torque)
         {
             byte[] tab = new byte[10];
 
             tab[0] = 0x00;
-            tab[1] = (byte)GlobalIdToCanBoard(servoGlobalId);
+            tab[1] = (byte)GlobalIdToCanBoard(id);
             tab[2] = (byte)CanFrameFunction.TorqueMaxSet;
-            tab[3] = GlobalIdToServoNo(servoGlobalId);
+            tab[3] = GlobalIdToServoNo(id);
             tab[4] = ByteDivide(torque, true);
             tab[5] = ByteDivide(torque, false);
 
             return new Frame(tab);
         }
 
-        public static Frame BuildSetTrajectory(int servoGlobalId, int position, int speed, int accel)
+        public static Frame BuildSetTrajectory(ServomoteurID id, int position, int speed, int accel)
         {
             byte[] tab = new byte[10];
 
             tab[0] = 0x00;
-            tab[1] = (byte)GlobalIdToCanBoard(servoGlobalId);
+            tab[1] = (byte)GlobalIdToCanBoard(id);
             tab[2] = (byte)CanFrameFunction.TrajectorySet;
-            tab[3] = GlobalIdToServoNo(servoGlobalId);
+            tab[3] = GlobalIdToServoNo(id);
             tab[4] = ByteDivide(position, true);
             tab[5] = ByteDivide(position, false);
             tab[6] = ByteDivide(speed, true);
@@ -228,14 +223,14 @@ namespace GoBot.Communications.CAN
             return new Frame(tab);
         }
 
-        public static Frame BuildDisableOutput(int servoGlobalId)
+        public static Frame BuildDisableOutput(ServomoteurID id)
         {
             byte[] tab = new byte[10];
 
             tab[0] = 0x00;
-            tab[1] = (byte)GlobalIdToCanBoard(servoGlobalId);
+            tab[1] = (byte)GlobalIdToCanBoard(id);
             tab[2] = (byte)CanFrameFunction.DisableOutput;
-            tab[3] = GlobalIdToServoNo(servoGlobalId);
+            tab[3] = GlobalIdToServoNo(id);
 
             return new Frame(tab);
         }
@@ -297,14 +292,14 @@ namespace GoBot.Communications.CAN
             return b;
         }
 
-        private static CanBoard GlobalIdToCanBoard(int servoGlobalId)
+        private static CanBoard GlobalIdToCanBoard(ServomoteurID servoGlobalId)
         {
-            return (CanBoard)(servoGlobalId / 4 + 1);
+            return (CanBoard)((int)servoGlobalId / 4 + 1);
         }
 
-        private static byte GlobalIdToServoNo(int servoGlobalId)
+        private static byte GlobalIdToServoNo(ServomoteurID servoGlobalId)
         {
-            return (byte)(servoGlobalId % 4);
+            return (byte)((int)servoGlobalId % 4);
         }
     }
 }

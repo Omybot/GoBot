@@ -30,7 +30,7 @@ namespace GoBot.IHM
 
         public void SetServo(ServomoteurID servo)
         {
-            numID.Value = (int)(servo - 200);
+            numID.Value = (int)(servo);
         }
 
         private void DrawTimeArrow()
@@ -175,7 +175,7 @@ namespace GoBot.IHM
 
         private void numID_ValueChanged(object sender, EventArgs e)
         {
-            _servo = AllDevices.CanServos[(int)numID.Value];
+            _servo = AllDevices.CanServos[(ServomoteurID)numID.Value];
             ReadValues();
         }
 
