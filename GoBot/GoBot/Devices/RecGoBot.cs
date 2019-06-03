@@ -11,6 +11,7 @@ using Geometry.Shapes;
 using Geometry;
 using GoBot.Communications.UDP;
 using GoBot.Communications.CAN;
+using static GoBot.Actionneurs.AtomHandler;
 
 namespace GoBot.Devices
 {
@@ -157,15 +158,58 @@ namespace GoBot.Devices
         }
         private void Button6Click()
         {
+            Actionneur.AtomHandler.DoGrabByDetect();
         }
         private void Button7Click()
         {
+            bool retry = true;
+            int fails = 0;
+            int maxFails = 5;
+            int atomsCount = 4;
+            
+            while (retry && Actionneur.AtomStacker.CanStoreMore && atomsCount > 0)
+            {
+                GrabResult res = Actionneur.AtomHandler.DoGrabByDetect();
+
+                switch (res)
+                {
+                    case GrabResult.AtomGrabbed:
+                        atomsCount -= 1;
+                        retry = true;
+                        break;
+                    case GrabResult.AtomTooClose:
+                        fails++;
+                        if (fails < maxFails)
+                        {
+                            Robots.GrosRobot.Reculer(50);
+                            retry = true;
+                        }
+                        else
+                        {
+                            retry = false;
+                        }
+                        break;
+                    case GrabResult.GrabFail:
+                        fails += 2;
+                        retry = fails < maxFails;
+                        break;
+                    case GrabResult.NoAtomDetected:
+                        fails = maxFails;
+                        retry = false;
+                        break;
+                }
+            }
         }
         private void Button8Click()
         {
+            Actionneur.AtomUnloaderLeft.DoUnloaderUnload();
+            Robots.GrosRobot.PivotDroite(180);
+            Actionneur.AtomStacker.DoDropRightAll();
+            Robots.GrosRobot.PivotGauche(180);
         }
         private void Button9Click()
         {
+            Robots.GrosRobot.Reculer(200);
         }
         private void Button10Click()
         {
