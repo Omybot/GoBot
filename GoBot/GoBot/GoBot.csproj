@@ -328,18 +328,6 @@
     <Compile Include="IHM\Panels\PanelGrosRobotCapteurs.Designer.cs">
       <DependentUpon>PanelGrosRobotCapteurs.cs</DependentUpon>
     </Compile>
-    <Compile Include="IHM\Panels\PanelGrosRobotSequences.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="IHM\Panels\PanelGrosRobotSequences.Designer.cs">
-      <DependentUpon>PanelGrosRobotSequences.cs</DependentUpon>
-    </Compile>
-    <Compile Include="IHM\Panels\PanelGrosRobotUtilisation.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="IHM\Panels\PanelGrosRobotUtilisation.Designer.cs">
-      <DependentUpon>PanelGrosRobotUtilisation.cs</DependentUpon>
-    </Compile>
     <Compile Include="IHM\Panels\PanelGrosRobotReglage.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -394,12 +382,6 @@
     </Compile>
     <Compile Include="IHM\Panels\PanelDeplacement.Designer.cs">
       <DependentUpon>PanelDeplacement.cs</DependentUpon>
-    </Compile>
-    <Compile Include="IHM\Panels\PanelHistorique.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="IHM\Panels\PanelHistorique.Designer.cs">
-      <DependentUpon>PanelHistorique.cs</DependentUpon>
     </Compile>
     <Compile Include="IHM\Tabs\PanelTable.cs">
       <SubType>UserControl</SubType>
@@ -516,12 +498,6 @@
     <EmbeddedResource Include="IHM\Panels\PanelGrosRobotCapteurs.resx">
       <DependentUpon>PanelGrosRobotCapteurs.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="IHM\Panels\PanelGrosRobotSequences.resx">
-      <DependentUpon>PanelGrosRobotSequences.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="IHM\Panels\PanelGrosRobotUtilisation.resx">
-      <DependentUpon>PanelGrosRobotUtilisation.cs</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="IHM\Panels\PanelDeplacement.resx">
       <DependentUpon>PanelDeplacement.cs</DependentUpon>
     </EmbeddedResource>
@@ -533,9 +509,6 @@
     </EmbeddedResource>
     <EmbeddedResource Include="IHM\Tabs\PanelGrosRobot.resx">
       <DependentUpon>PanelGrosRobot.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="IHM\Panels\PanelHistorique.resx">
-      <DependentUpon>PanelHistorique.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="IHM\Panels\PanelGrosRobotReglage.resx">
       <DependentUpon>PanelGrosRobotReglage.cs</DependentUpon>

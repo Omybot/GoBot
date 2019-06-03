@@ -21,7 +21,6 @@ namespace GoBot.IHM
         {
             panelDeplacement.Robot = Robots.GrosRobot;
             panelDeplacement.Init();
-            panelHistorique.SetHistorique(Robots.GrosRobot.Historique);
         }
         
         private void btnClose_Click(object sender, EventArgs e)
