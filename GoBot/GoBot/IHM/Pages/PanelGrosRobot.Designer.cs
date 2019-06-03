@@ -29,12 +29,15 @@
         private void InitializeComponent()
         {
             this.flowLayoutPanel1 = new System.Windows.Forms.FlowLayoutPanel();
-            this.panelDeplacement = new GoBot.IHM.PanelDeplacement();
             this.flowLayoutPanel2 = new System.Windows.Forms.FlowLayoutPanel();
             this.panelReglageGros1 = new GoBot.IHM.PanelGrosRobotReglage();
             this.panelCapteursGros1 = new GoBot.IHM.PanelGrosRobotCapteurs();
+            this.panelConstantes1 = new GoBot.IHM.PanelSpeedConfig();
+            this.panelDeplacement = new GoBot.IHM.PanelDeplacement();
+            this.grpSpeedConfig = new System.Windows.Forms.GroupBox();
             this.flowLayoutPanel1.SuspendLayout();
             this.flowLayoutPanel2.SuspendLayout();
+            this.grpSpeedConfig.SuspendLayout();
             this.SuspendLayout();
             // 
             // flowLayoutPanel1
@@ -47,22 +50,13 @@
             this.flowLayoutPanel1.Size = new System.Drawing.Size(343, 556);
             this.flowLayoutPanel1.TabIndex = 90;
             // 
-            // panelDeplacement
-            // 
-            this.panelDeplacement.AutoSize = true;
-            this.panelDeplacement.BackColor = System.Drawing.Color.Transparent;
-            this.panelDeplacement.Location = new System.Drawing.Point(3, 3);
-            this.panelDeplacement.Name = "panelDeplacement";
-            this.panelDeplacement.Robot = null;
-            this.panelDeplacement.Size = new System.Drawing.Size(337, 449);
-            this.panelDeplacement.TabIndex = 72;
-            // 
             // flowLayoutPanel2
             // 
             this.flowLayoutPanel2.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left)));
             this.flowLayoutPanel2.Controls.Add(this.panelReglageGros1);
             this.flowLayoutPanel2.Controls.Add(this.panelCapteursGros1);
+            this.flowLayoutPanel2.Controls.Add(this.grpSpeedConfig);
             this.flowLayoutPanel2.Location = new System.Drawing.Point(352, 3);
             this.flowLayoutPanel2.Name = "flowLayoutPanel2";
             this.flowLayoutPanel2.Size = new System.Drawing.Size(343, 562);
@@ -86,6 +80,33 @@
             this.panelCapteursGros1.Size = new System.Drawing.Size(338, 43);
             this.panelCapteursGros1.TabIndex = 118;
             // 
+            // panelConstantes1
+            // 
+            this.panelConstantes1.Location = new System.Drawing.Point(6, 19);
+            this.panelConstantes1.Name = "panelConstantes1";
+            this.panelConstantes1.Size = new System.Drawing.Size(300, 218);
+            this.panelConstantes1.TabIndex = 1;
+            // 
+            // panelDeplacement
+            // 
+            this.panelDeplacement.AutoSize = true;
+            this.panelDeplacement.BackColor = System.Drawing.Color.Transparent;
+            this.panelDeplacement.Location = new System.Drawing.Point(3, 3);
+            this.panelDeplacement.Name = "panelDeplacement";
+            this.panelDeplacement.Robot = null;
+            this.panelDeplacement.Size = new System.Drawing.Size(337, 449);
+            this.panelDeplacement.TabIndex = 72;
+            // 
+            // grpSpeedConfig
+            // 
+            this.grpSpeedConfig.Controls.Add(this.panelConstantes1);
+            this.grpSpeedConfig.Location = new System.Drawing.Point(3, 274);
+            this.grpSpeedConfig.Name = "grpSpeedConfig";
+            this.grpSpeedConfig.Size = new System.Drawing.Size(338, 243);
+            this.grpSpeedConfig.TabIndex = 120;
+            this.grpSpeedConfig.TabStop = false;
+            this.grpSpeedConfig.Text = "Réglages de vitesse";
+            // 
             // PanelGrosRobot
             // 
             this.BackColor = System.Drawing.Color.Transparent;
@@ -97,6 +118,7 @@
             this.flowLayoutPanel1.PerformLayout();
             this.flowLayoutPanel2.ResumeLayout(false);
             this.flowLayoutPanel2.PerformLayout();
+            this.grpSpeedConfig.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -108,6 +130,7 @@
         private PanelGrosRobotReglage panelReglageGros1;
         private System.Windows.Forms.FlowLayoutPanel flowLayoutPanel2;
         private PanelGrosRobotCapteurs panelCapteursGros1;
-
+        private PanelSpeedConfig panelConstantes1;
+        private System.Windows.Forms.GroupBox grpSpeedConfig;
     }
 }

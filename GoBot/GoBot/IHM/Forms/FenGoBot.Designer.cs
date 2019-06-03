@@ -32,7 +32,7 @@ namespace GoBot
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FenGoBot));
             this.lblSimulation = new System.Windows.Forms.Label();
             this.tabAlimentation = new System.Windows.Forms.TabPage();
-            this.pnlPower = new GoBot.IHM.PanelAlimentation();
+            this.pnlPower = new GoBot.IHM.PagePower();
             this.tabConnexions = new System.Windows.Forms.TabPage();
             this.panelEnvoiUdp1 = new GoBot.IHM.PanelEnvoiUdp();
             this.tabDiagnosticRecMove = new System.Windows.Forms.TabPage();
@@ -60,8 +60,6 @@ namespace GoBot
             this.panelCanArchi1 = new GoBot.IHM.PanelCanArchi();
             this.grpServoCan = new System.Windows.Forms.GroupBox();
             this.panelServoCan = new GoBot.IHM.PanelServoCan();
-            this.tabConstantes = new System.Windows.Forms.TabPage();
-            this.panelConstantes = new GoBot.IHM.PanelConstantes();
             this.tabPortsAnalogiques = new System.Windows.Forms.TabPage();
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabIO = new System.Windows.Forms.TabPage();
@@ -93,7 +91,7 @@ namespace GoBot
             this.btnFenetre = new System.Windows.Forms.Button();
             this.switchBoutonSimu = new Composants.SwitchButton();
             this.panelConnexions = new GoBot.IHM.PanelConnexions();
-            this.panelAlimentation1 = new GoBot.IHM.PanelAlimentation();
+            this.panelAlimentation1 = new GoBot.IHM.PagePower();
             this.tabAlimentation.SuspendLayout();
             this.tabConnexions.SuspendLayout();
             this.tabDiagnosticRecMove.SuspendLayout();
@@ -110,7 +108,6 @@ namespace GoBot
             this.tabControl.SuspendLayout();
             this.tabCANServos.SuspendLayout();
             this.grpServoCan.SuspendLayout();
-            this.tabConstantes.SuspendLayout();
             this.tabPortsAnalogiques.SuspendLayout();
             this.tabControl1.SuspendLayout();
             this.tabIO.SuspendLayout();
@@ -388,7 +385,6 @@ namespace GoBot
             this.tabControl.Controls.Add(this.tabDiagnosticRecMove);
             this.tabControl.Controls.Add(this.tabConnexions);
             this.tabControl.Controls.Add(this.tabAlimentation);
-            this.tabControl.Controls.Add(this.tabConstantes);
             this.tabControl.Controls.Add(this.tabPortsAnalogiques);
             this.tabControl.Controls.Add(this.tabPortsNumeriques);
             this.tabControl.Controls.Add(this.tabRecGoBot);
@@ -438,25 +434,6 @@ namespace GoBot
             this.panelServoCan.Name = "panelServoCan";
             this.panelServoCan.Size = new System.Drawing.Size(302, 492);
             this.panelServoCan.TabIndex = 7;
-            // 
-            // tabConstantes
-            // 
-            this.tabConstantes.Controls.Add(this.panelConstantes);
-            this.tabConstantes.Location = new System.Drawing.Point(4, 22);
-            this.tabConstantes.Name = "tabConstantes";
-            this.tabConstantes.Padding = new System.Windows.Forms.Padding(3);
-            this.tabConstantes.Size = new System.Drawing.Size(1300, 712);
-            this.tabConstantes.TabIndex = 23;
-            this.tabConstantes.Text = "Constantes";
-            this.tabConstantes.UseVisualStyleBackColor = true;
-            // 
-            // panelConstantes
-            // 
-            this.panelConstantes.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panelConstantes.Location = new System.Drawing.Point(3, 3);
-            this.panelConstantes.Name = "panelConstantes";
-            this.panelConstantes.Size = new System.Drawing.Size(1294, 706);
-            this.panelConstantes.TabIndex = 0;
             // 
             // tabPortsAnalogiques
             // 
@@ -812,7 +789,6 @@ namespace GoBot
             this.tabControl.ResumeLayout(false);
             this.tabCANServos.ResumeLayout(false);
             this.grpServoCan.ResumeLayout(false);
-            this.tabConstantes.ResumeLayout(false);
             this.tabPortsAnalogiques.ResumeLayout(false);
             this.tabControl1.ResumeLayout(false);
             this.tabIO.ResumeLayout(false);
@@ -843,7 +819,7 @@ namespace GoBot
         private PanelConnexions panelConnexions;
         private System.Windows.Forms.Button btnFenetre;
         private System.Windows.Forms.TabPage tabAlimentation;
-        private PanelAlimentation pnlPower;
+        private PagePower pnlPower;
         private System.Windows.Forms.TabPage tabConnexions;
         private PanelEnvoiUdp panelEnvoiUdp1;
         private System.Windows.Forms.TabPage tabDiagnosticRecMove;
@@ -863,8 +839,6 @@ namespace GoBot
         private System.Windows.Forms.TabPage tabGrosRobot;
         private PanelGrosRobot panelGrosRobot;
         private System.Windows.Forms.TabControl tabControl;
-        private System.Windows.Forms.TabPage tabConstantes;
-        private PanelConstantes panelConstantes;
         private System.Windows.Forms.TabPage tabPortsAnalogiques;
         private System.Windows.Forms.TabPage tabRecGoBot;
         private System.Windows.Forms.GroupBox grpCapteurs;
@@ -901,7 +875,7 @@ namespace GoBot
         private System.Windows.Forms.GroupBox grpServoCan;
         private PanelServoCan panelServoCan;
         private PanelCanArchi panelCanArchi1;
-        private PanelAlimentation panelAlimentation1;
+        private PagePower panelAlimentation1;
     }
 }
 

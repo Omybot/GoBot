@@ -5,12 +5,12 @@ using System.Timers;
 
 namespace GoBot.IHM
 {
-    public partial class PanelAlimentation : UserControl
+    public partial class PagePower : UserControl
     {
         private System.Timers.Timer _timerVoltage;
         private bool _loaded;
 
-        public PanelAlimentation()
+        public PagePower()
         {
             InitializeComponent();
             _loaded = false;
