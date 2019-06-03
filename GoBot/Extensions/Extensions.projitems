@@ -9,6 +9,7 @@
     <Import_RootNamespace>Extensions</Import_RootNamespace>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="$(MSBuildThisFileDirectory)ColorPlus.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ControlExtensions.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)RectangleExtensions.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)StringExtensions.cs" />

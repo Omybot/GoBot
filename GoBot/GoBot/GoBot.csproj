@@ -104,7 +104,6 @@
     <Compile Include="Actions\Deplacement\ActionRecallage.cs" />
     <Compile Include="Actions\ActionServo.cs" />
     <Compile Include="Actions\ITimeableAction.cs" />
-    <Compile Include="ColorPlus.cs" />
     <Compile Include="GameBoard\Obstacles.cs" />
     <Compile Include="GameElements\Accelerator.cs" />
     <Compile Include="GameElements\Balance.cs" />

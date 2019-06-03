@@ -43,7 +43,7 @@
             this.graph.MaxLimit = 1.3D;
             this.graph.MinLimit = -0.3D;
             this.graph.Location = new System.Drawing.Point(26, 1);
-            this.graph.GraphScale = GraphPanel.ScaleType.Fixed;
+            this.graph.ScaleMode = GraphPanel.ScaleType.Fixed;
             this.graph.LimitsVisible = false;
             this.graph.Name = "graph";
             this.graph.NamesVisible = false;

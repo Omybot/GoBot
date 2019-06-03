@@ -40,7 +40,7 @@
             // ctrlGraphique
             // 
             this.ctrlGraphique.BackColor = System.Drawing.Color.White;
-            this.ctrlGraphique.GraphScale = Composants.GraphPanel.ScaleType.Fixed;
+            this.ctrlGraphique.ScaleMode = Composants.GraphPanel.ScaleType.Fixed;
             this.ctrlGraphique.LimitsVisible = false;
             this.ctrlGraphique.Location = new System.Drawing.Point(199, 64);
             this.ctrlGraphique.MaxLimit = 1D;
@@ -63,7 +63,7 @@
             // ctrlGraphique1
             // 
             this.ctrlGraphique1.BackColor = System.Drawing.Color.White;
-            this.ctrlGraphique1.GraphScale = Composants.GraphPanel.ScaleType.Fixed;
+            this.ctrlGraphique1.ScaleMode = Composants.GraphPanel.ScaleType.Fixed;
             this.ctrlGraphique1.LimitsVisible = false;
             this.ctrlGraphique1.Location = new System.Drawing.Point(199, 240);
             this.ctrlGraphique1.MaxLimit = 4000D;
@@ -76,7 +76,7 @@
             // ctrlGraphique2
             // 
             this.ctrlGraphique2.BackColor = System.Drawing.Color.White;
-            this.ctrlGraphique2.GraphScale = Composants.GraphPanel.ScaleType.Fixed;
+            this.ctrlGraphique2.ScaleMode = Composants.GraphPanel.ScaleType.Fixed;
             this.ctrlGraphique2.LimitsVisible = false;
             this.ctrlGraphique2.Location = new System.Drawing.Point(199, 416);
             this.ctrlGraphique2.MaxLimit = 4000D;

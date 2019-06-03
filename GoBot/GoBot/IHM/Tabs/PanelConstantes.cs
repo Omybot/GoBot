@@ -35,17 +35,6 @@ namespace GoBot.IHM
                 numVitesseLigneRapide.Value = Config.CurrentConfig.ConfigRapide.LineSpeed;
                 numAccelerationPivotRapide.Value = Config.CurrentConfig.ConfigRapide.PivotAcceleration;
                 numVitessePivotRapide.Value = Config.CurrentConfig.ConfigRapide.PivotSpeed;
-                
-                numBatGrosVert.Value = (decimal)Config.CurrentConfig.BatterieRobotVert;
-                numBatGrosOrange.Value = (decimal)Config.CurrentConfig.BatterieRobotOrange;
-                numBatGrosRouge.Value = (decimal)Config.CurrentConfig.BatterieRobotRouge;
-                numBatGrosCritique.Value = (decimal)Config.CurrentConfig.BatterieRobotCritique;
-
-                batGrosCritique.CurrentState = Composants.Battery.State.VeryLow;
-                batGrosOrange.CurrentState = Composants.Battery.State.Average;
-                batGrosRouge.CurrentState = Composants.Battery.State.Low;
-                batGrosVert.CurrentState = Composants.Battery.State.High;
-                batGrosVide.CurrentState = Composants.Battery.State.Absent;
             }
         }
 
@@ -69,11 +58,8 @@ namespace GoBot.IHM
                 (int)numVitessePivotLent.Value,
                 (int)numAccelerationPivotLent.Value,
                 (int)numAccelerationPivotLent.Value);
-            
-            Config.CurrentConfig.BatterieRobotVert = (double)numBatGrosVert.Value;
-            Config.CurrentConfig.BatterieRobotOrange = (double)numBatGrosOrange.Value;
-            Config.CurrentConfig.BatterieRobotRouge = (double)numBatGrosRouge.Value;
-            Config.CurrentConfig.BatterieRobotCritique = (double)numBatGrosCritique.Value;
+
+            Config.Save();
         }
     }
 }

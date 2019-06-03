@@ -14,18 +14,20 @@ namespace Composants
         {
             DynamicGlobal, // Le min et le max sont fixés par la courbe la plus haute et la courbe la plus basse
             DynamicPerCurve, // Le min et le max sont propre à chaque courbe qui a donc sa propre échelle. Min et max ne sont pas affichés dans ce cas
-            Fixed // Le min et le max sont fixés par MinLimit et MaxLimit
+            Fixed, // Le min et le max sont fixés par MinLimit et MaxLimit
+            FixedIfEnough // Le min et le max sont fixés par MinLimit et MaxLimit mais sont outrepassés si insufisants pour couvrir la dynamique
         }
 
         private Dictionary<String, List<double>> CurvesData { get; set; }
         private Dictionary<String, bool> CurvesDisplayed { get; set; }
         private Dictionary<String, Pen> CurvesPen { get; set; }
+        private Dictionary<String, bool> CurveFilled { get; set; }
 
         /// <summary>
         /// Définit le type d'échelle utilisée par le graph
         /// </summary>
-        public ScaleType GraphScale {get;set;}
-        
+        public ScaleType ScaleMode { get; set; }
+
         /// <summary>
         /// Définit la limite inférieur du graph dans le cas où l'échelle est fixe
         /// </summary>
@@ -41,6 +43,9 @@ namespace Composants
         /// </summary>
         public bool NamesVisible { get; set; }
 
+        /// <summary>
+        /// Définit l'endroit où sont affichés les noms des courbes
+        /// </summary>
         public ContentAlignment NamesAlignment { get; set; } = ContentAlignment.BottomLeft;
 
         /// <summary>
@@ -63,9 +68,10 @@ namespace Composants
             InitializeComponent();
             CurvesData = new Dictionary<string, List<double>>();
             CurvesDisplayed = new Dictionary<string, bool>();
+            CurveFilled = new Dictionary<string, bool>();
 
             CurvesPen = new Dictionary<string, Pen>();
-            GraphScale = ScaleType.DynamicGlobal;
+            ScaleMode = ScaleType.DynamicGlobal;
             BackColor = Color.White;
             BorderColor = Color.LightGray;
             BorderVisible = false;
@@ -81,16 +87,19 @@ namespace Composants
         /// <param name="curveName">Nom de la courbe auquel ajouter un point</param>
         /// <param name="value">Valeur à ajouter à la courbe</param>
         /// <param name="col">Couleur à associer à la courbe (null pour ne pas changer la couleur)</param>
-        public void AddPoint(String curveName, double value, Color? col = null)
+        public void AddPoint(String curveName, double value, Color? col = null, bool fill = false)
         {
             lock (CurvesData)
             {
                 List<double> data;
+
                 if (CurvesData.ContainsKey(curveName))
                 {
                     data = CurvesData[curveName];
                     if (col != null)
                         CurvesPen[curveName] = new Pen(col.Value);
+
+                    CurveFilled[curveName] = fill;
                 }
                 else
                 {
@@ -101,6 +110,8 @@ namespace Composants
                         CurvesPen.Add(curveName, new Pen(col.Value));
                     else
                         CurvesPen.Add(curveName, new Pen(Color.Black));
+
+                    CurveFilled.Add(curveName, fill);
                 }
 
                 data.Add(value);
@@ -120,17 +131,18 @@ namespace Composants
                 Bitmap bmp = new Bitmap(Width, Height);
                 Graphics gTemp = Graphics.FromImage(bmp);
 
+                gTemp.SmoothingMode = SmoothingMode.AntiAlias;
                 gTemp.Clear(BackColor);
-                
+
                 double min = double.MaxValue;
                 double max = double.MinValue;
 
-                if (GraphScale == ScaleType.Fixed)
+                if (ScaleMode == ScaleType.Fixed)
                 {
                     min = MinLimit;
                     max = MaxLimit;
                 }
-                else if (GraphScale == ScaleType.DynamicGlobal)
+                else if (ScaleMode == ScaleType.DynamicGlobal)
                 {
                     foreach (KeyValuePair<String, List<double>> courbe in CurvesData)
                     {
@@ -141,25 +153,59 @@ namespace Composants
                         }
                     }
                 }
+                else if (ScaleMode == ScaleType.FixedIfEnough)
+                {
+                    foreach (KeyValuePair<String, List<double>> courbe in CurvesData)
+                    {
+                        if (CurvesDisplayed[courbe.Key] && courbe.Value.Count > 1)
+                        {
+                            min = Math.Min(min, courbe.Value.Min());
+                            max = Math.Max(max, courbe.Value.Max());
+                        }
+                    }
+
+                    min = Math.Min(min, MinLimit);
+                    max = Math.Max(max, MaxLimit);
+                }
 
                 double coef = max == min ? 1 : (float)(pictureBox.Height - 1) / (max - min);
-
-                gTemp.SmoothingMode = SmoothingMode.AntiAlias;
 
                 foreach (KeyValuePair<String, List<double>> courbe in CurvesData)
                 {
                     if (CurvesDisplayed[courbe.Key] && courbe.Value.Count > 1)
                     {
-                        if (GraphScale == ScaleType.DynamicPerCurve)
+                        if (ScaleMode == ScaleType.DynamicPerCurve)
                         {
                             coef = courbe.Value.Max() == courbe.Value.Min() ? 1 : (float)(pictureBox.Height - 1) / (courbe.Value.Max() - courbe.Value.Min());
                             min = courbe.Value.Min();
                         }
 
-                        for (int i = 1; i < courbe.Value.Count; i++)
+                        ColorPlus startCol, endCol;
+                        startCol = CurvesPen[courbe.Key].Color;
+                        endCol = startCol;
+                        endCol.Lightness = 0.95;
+
+                        List<Point> pts = new List<Point>();
+
+                        for (int i = 0; i < courbe.Value.Count; i++)
                         {
-                            gTemp.DrawLine(CurvesPen[courbe.Key], new Point(i - 1, (int)((pictureBox.Height - 1) - coef * (courbe.Value[i - 1] - min))), new Point(i, (int)((pictureBox.Height - 1) - coef * (courbe.Value[i] - min))));
+                            pts.Add(new Point(i, (int)((pictureBox.Height - 1) - coef * (courbe.Value[i] - min))));
+                            //gTemp.DrawLine(CurvesPen[courbe.Key], new Point(i - 1, (int)((pictureBox.Height - 1) - coef * (courbe.Value[i - 1] - min))), new Point(i, (int)((pictureBox.Height - 1) - coef * (courbe.Value[i] - min))));
                         }
+
+                        if (CurveFilled[courbe.Key])
+                        {
+                            List<Point> ptsFill = new List<Point>(pts);
+
+                            ptsFill.Insert(0, new Point(0, pictureBox.Height));
+                            ptsFill.Add(new Point(pts[pts.Count - 1].X, pictureBox.Height));
+
+                            Brush b = new LinearGradientBrush(new PointF(0, 0), new PointF(0, pictureBox.Height), endCol, startCol);
+                            gTemp.FillPolygon(b, ptsFill.ToArray());
+                            b.Dispose();
+                        }
+
+                        gTemp.DrawLines(CurvesPen[courbe.Key], pts.ToArray());
                     }
                 }
 
@@ -176,7 +222,7 @@ namespace Composants
 
                     Rectangle txtRect;
                     Size sz = new Size(maxWidth + margin, (namesVisible.Count * hPerRow) + margin - 1);
-                    
+
                     switch (NamesAlignment)
                     {
                         case ContentAlignment.BottomLeft:
@@ -215,7 +261,7 @@ namespace Composants
                     }
                 }
 
-                if (GraphScale != ScaleType.DynamicPerCurve && LimitsVisible)
+                if (ScaleMode != ScaleType.DynamicPerCurve && LimitsVisible)
                 {
                     String minText = min.ToString("G3");
                     String maxText = max.ToString("G3");

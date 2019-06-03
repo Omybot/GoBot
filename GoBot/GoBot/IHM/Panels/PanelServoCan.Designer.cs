@@ -128,7 +128,7 @@
             this.gphMonitoringPos.BackColor = System.Drawing.Color.White;
             this.gphMonitoringPos.BorderColor = System.Drawing.Color.LightGray;
             this.gphMonitoringPos.BorderVisible = false;
-            this.gphMonitoringPos.GraphScale = Composants.GraphPanel.ScaleType.DynamicGlobal;
+            this.gphMonitoringPos.ScaleMode = Composants.GraphPanel.ScaleType.DynamicGlobal;
             this.gphMonitoringPos.LimitsVisible = true;
             this.gphMonitoringPos.Location = new System.Drawing.Point(6, 21);
             this.gphMonitoringPos.MaxLimit = 1D;
@@ -367,7 +367,7 @@
             this.gphTrajectorySpeed.BackColor = System.Drawing.Color.White;
             this.gphTrajectorySpeed.BorderColor = System.Drawing.Color.LightGray;
             this.gphTrajectorySpeed.BorderVisible = false;
-            this.gphTrajectorySpeed.GraphScale = Composants.GraphPanel.ScaleType.DynamicPerCurve;
+            this.gphTrajectorySpeed.ScaleMode = Composants.GraphPanel.ScaleType.DynamicPerCurve;
             this.gphTrajectorySpeed.LimitsVisible = true;
             this.gphTrajectorySpeed.Location = new System.Drawing.Point(158, 12);
             this.gphTrajectorySpeed.MaxLimit = 1D;
@@ -383,7 +383,7 @@
             this.gphTrajectoryPosition.BackColor = System.Drawing.Color.White;
             this.gphTrajectoryPosition.BorderColor = System.Drawing.Color.LightGray;
             this.gphTrajectoryPosition.BorderVisible = false;
-            this.gphTrajectoryPosition.GraphScale = Composants.GraphPanel.ScaleType.DynamicPerCurve;
+            this.gphTrajectoryPosition.ScaleMode = Composants.GraphPanel.ScaleType.DynamicPerCurve;
             this.gphTrajectoryPosition.LimitsVisible = true;
             this.gphTrajectoryPosition.Location = new System.Drawing.Point(158, 82);
             this.gphTrajectoryPosition.MaxLimit = 1D;
@@ -575,7 +575,7 @@
             this.gphMonitoringTorque.BackColor = System.Drawing.Color.White;
             this.gphMonitoringTorque.BorderColor = System.Drawing.Color.LightGray;
             this.gphMonitoringTorque.BorderVisible = false;
-            this.gphMonitoringTorque.GraphScale = Composants.GraphPanel.ScaleType.DynamicGlobal;
+            this.gphMonitoringTorque.ScaleMode = Composants.GraphPanel.ScaleType.DynamicGlobal;
             this.gphMonitoringTorque.LimitsVisible = true;
             this.gphMonitoringTorque.Location = new System.Drawing.Point(150, 21);
             this.gphMonitoringTorque.MaxLimit = 1D;

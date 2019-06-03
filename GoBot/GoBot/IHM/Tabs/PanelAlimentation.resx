@@ -118,11 +118,40 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
-  <data name="batteriePack1.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+  <data name="batAbsent.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABGdBTUEAALGPC/xhBQAAAENJREFUOE9j
         +I8DAgGIgGNkOWSIxESFZBmArgkXRtGDwgFyz5w5gxcTZUBDQwNWPGrAqAEgTD8D8GGCBhCDETr+MwAA
         0Pgaw1fBQr4AAAAASUVORK5CYII=
+</value>
+  </data>
+  <data name="batVeryLow.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+    <value>
+        iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABGdBTUEAALGPC/xhBQAAAGdJREFUOE9j
+        +I8DAgGIgGNkOWSIxESFZBmArgkXRtGDwgFy/9w5jhcTbcD/ri6gQpBiIAaySTcAphmKB8AAZC8giZNn
+        ADlhADYEagCyGEkGYMP0NQAkDcLIYvQ1ABsmaAAxGKHjPwMAZiNBd34PUaUAAAAASUVORK5CYII=
+</value>
+  </data>
+  <data name="batLow.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+    <value>
+        iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABGdBTUEAALGPC/xhBQAAAEpJREFUOE9j
+        +I8DAgGIgGNkOWSIxESFZBmArgkXRtGDwgFJXr2KF48aMIIMMDbGjok2QEkJOybaAEFB7JhoA/BgggYQ
+        gxE6/jMAAA+WUOe5u1XOAAAAAElFTkSuQmCC
+</value>
+  </data>
+  <data name="batAverage.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+    <value>
+        iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABGdBTUEAALGPC/xhBQAAAF5JREFUOE9j
+        +I8DAgGIgGNkOWSIxESFZBmArgkXRtGDwgFy/91djRePGkCsAddmYcdEG3CyAjsm2oDdYdgx0QasNcGO
+        iTZguTJ2TLQBMxmxY6INwIMJGkAMRuj4zwAAD5lJ/deCRA0AAAAASUVORK5CYII=
+</value>
+  </data>
+  <data name="batHigh.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+    <value>
+        iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABGdBTUEAALGPC/xhBQAAAHVJREFUOE9j
+        +I8DAgGIgGNkOWSIxESFZBmArgkXRtGDwgFyXf574MX0McD4vwVWTLQBSv/VsWKiDRD8L44VE20Aw382
+        rJh4A94BNWDBxBtwlxUrJt6AM0ANWDDxBuxmwYqJN2AmUAMWTLQB+DBBA4jBCB3/GQD9P+C4VoAOVgAA
+        AABJRU5ErkJggg==
 </value>
   </data>
 </root>

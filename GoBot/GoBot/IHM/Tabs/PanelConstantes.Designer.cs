@@ -28,7 +28,6 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(PanelConstantes));
             this.groupBoxDeplacement = new System.Windows.Forms.GroupBox();
             this.numAccelerationFinLigneLent = new System.Windows.Forms.NumericUpDown();
             this.label11 = new System.Windows.Forms.Label();
@@ -50,17 +49,6 @@
             this.label2 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
             this.btnSave = new System.Windows.Forms.Button();
-            this.groupBoxBatteries = new System.Windows.Forms.GroupBox();
-            this.label9 = new System.Windows.Forms.Label();
-            this.batGrosVide = new Composants.Battery();
-            this.numBatGrosCritique = new System.Windows.Forms.NumericUpDown();
-            this.batGrosCritique = new Composants.Battery();
-            this.numBatGrosRouge = new System.Windows.Forms.NumericUpDown();
-            this.batGrosRouge = new Composants.Battery();
-            this.numBatGrosOrange = new System.Windows.Forms.NumericUpDown();
-            this.batGrosOrange = new Composants.Battery();
-            this.batGrosVert = new Composants.Battery();
-            this.numBatGrosVert = new System.Windows.Forms.NumericUpDown();
             this.groupBoxDeplacement.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numAccelerationFinLigneLent)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numAccelerationFinLigneRapide)).BeginInit();
@@ -72,16 +60,6 @@
             ((System.ComponentModel.ISupportInitialize)(this.numVitessePivotRapide)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numAccelerationLigneRapide)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numVitesseLigneRapide)).BeginInit();
-            this.groupBoxBatteries.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.batGrosVide)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numBatGrosCritique)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.batGrosCritique)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numBatGrosRouge)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.batGrosRouge)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numBatGrosOrange)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.batGrosOrange)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.batGrosVert)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numBatGrosVert)).BeginInit();
             this.SuspendLayout();
             // 
             // groupBoxDeplacement
@@ -376,166 +354,10 @@
             this.btnSave.UseVisualStyleBackColor = true;
             this.btnSave.Click += new System.EventHandler(this.btnSave_Click);
             // 
-            // groupBoxBatteries
-            // 
-            this.groupBoxBatteries.Controls.Add(this.label9);
-            this.groupBoxBatteries.Controls.Add(this.batGrosVide);
-            this.groupBoxBatteries.Controls.Add(this.numBatGrosCritique);
-            this.groupBoxBatteries.Controls.Add(this.batGrosCritique);
-            this.groupBoxBatteries.Controls.Add(this.numBatGrosRouge);
-            this.groupBoxBatteries.Controls.Add(this.batGrosRouge);
-            this.groupBoxBatteries.Controls.Add(this.numBatGrosOrange);
-            this.groupBoxBatteries.Controls.Add(this.batGrosOrange);
-            this.groupBoxBatteries.Controls.Add(this.batGrosVert);
-            this.groupBoxBatteries.Controls.Add(this.numBatGrosVert);
-            this.groupBoxBatteries.Location = new System.Drawing.Point(12, 293);
-            this.groupBoxBatteries.Name = "groupBoxBatteries";
-            this.groupBoxBatteries.Size = new System.Drawing.Size(423, 69);
-            this.groupBoxBatteries.TabIndex = 2;
-            this.groupBoxBatteries.TabStop = false;
-            this.groupBoxBatteries.Text = "Batteries";
-            // 
-            // label9
-            // 
-            this.label9.AutoSize = true;
-            this.label9.Location = new System.Drawing.Point(25, 27);
-            this.label9.Name = "label9";
-            this.label9.Size = new System.Drawing.Size(36, 13);
-            this.label9.TabIndex = 16;
-            this.label9.Text = "Robot";
-            // 
-            // batGrosVide
-            // 
-            this.batGrosVide.CurrentState = Composants.Battery.State.Absent;
-            this.batGrosVide.CurrentVoltage = 0D;
-            this.batGrosVide.Image = ((System.Drawing.Image)(resources.GetObject("batGrosVide.Image")));
-            this.batGrosVide.Location = new System.Drawing.Point(389, 27);
-            this.batGrosVide.Name = "batGrosVide";
-            this.batGrosVide.Size = new System.Drawing.Size(16, 16);
-            this.batGrosVide.TabIndex = 25;
-            this.batGrosVide.TabStop = false;
-            this.batGrosVide.VoltageAverage = 0D;
-            this.batGrosVide.VoltageHigh = 0D;
-            this.batGrosVide.VoltageLow = 0D;
-            this.batGrosVide.VoltageVeryLow = 0D;
-            // 
-            // numBatGrosCritique
-            // 
-            this.numBatGrosCritique.DecimalPlaces = 2;
-            this.numBatGrosCritique.Location = new System.Drawing.Point(333, 27);
-            this.numBatGrosCritique.Maximum = new decimal(new int[] {
-            30,
-            0,
-            0,
-            0});
-            this.numBatGrosCritique.Name = "numBatGrosCritique";
-            this.numBatGrosCritique.Size = new System.Drawing.Size(50, 20);
-            this.numBatGrosCritique.TabIndex = 24;
-            // 
-            // batGrosCritique
-            // 
-            this.batGrosCritique.CurrentState = Composants.Battery.State.VeryLow;
-            this.batGrosCritique.CurrentVoltage = 0D;
-            this.batGrosCritique.Image = ((System.Drawing.Image)(resources.GetObject("batGrosCritique.Image")));
-            this.batGrosCritique.Location = new System.Drawing.Point(308, 27);
-            this.batGrosCritique.Name = "batGrosCritique";
-            this.batGrosCritique.Size = new System.Drawing.Size(16, 16);
-            this.batGrosCritique.TabIndex = 23;
-            this.batGrosCritique.TabStop = false;
-            this.batGrosCritique.VoltageAverage = 0D;
-            this.batGrosCritique.VoltageHigh = 0D;
-            this.batGrosCritique.VoltageLow = 0D;
-            this.batGrosCritique.VoltageVeryLow = 0D;
-            // 
-            // numBatGrosRouge
-            // 
-            this.numBatGrosRouge.DecimalPlaces = 2;
-            this.numBatGrosRouge.Location = new System.Drawing.Point(253, 27);
-            this.numBatGrosRouge.Maximum = new decimal(new int[] {
-            30,
-            0,
-            0,
-            0});
-            this.numBatGrosRouge.Name = "numBatGrosRouge";
-            this.numBatGrosRouge.Size = new System.Drawing.Size(50, 20);
-            this.numBatGrosRouge.TabIndex = 22;
-            // 
-            // batGrosRouge
-            // 
-            this.batGrosRouge.CurrentState = Composants.Battery.State.Low;
-            this.batGrosRouge.CurrentVoltage = 0D;
-            this.batGrosRouge.Image = ((System.Drawing.Image)(resources.GetObject("batGrosRouge.Image")));
-            this.batGrosRouge.Location = new System.Drawing.Point(231, 27);
-            this.batGrosRouge.Name = "batGrosRouge";
-            this.batGrosRouge.Size = new System.Drawing.Size(16, 16);
-            this.batGrosRouge.TabIndex = 21;
-            this.batGrosRouge.TabStop = false;
-            this.batGrosRouge.VoltageAverage = 0D;
-            this.batGrosRouge.VoltageHigh = 0D;
-            this.batGrosRouge.VoltageLow = 0D;
-            this.batGrosRouge.VoltageVeryLow = 0D;
-            // 
-            // numBatGrosOrange
-            // 
-            this.numBatGrosOrange.DecimalPlaces = 2;
-            this.numBatGrosOrange.Location = new System.Drawing.Point(175, 27);
-            this.numBatGrosOrange.Maximum = new decimal(new int[] {
-            30,
-            0,
-            0,
-            0});
-            this.numBatGrosOrange.Name = "numBatGrosOrange";
-            this.numBatGrosOrange.Size = new System.Drawing.Size(50, 20);
-            this.numBatGrosOrange.TabIndex = 20;
-            // 
-            // batGrosOrange
-            // 
-            this.batGrosOrange.CurrentState = Composants.Battery.State.Average;
-            this.batGrosOrange.CurrentVoltage = 0D;
-            this.batGrosOrange.Image = ((System.Drawing.Image)(resources.GetObject("batGrosOrange.Image")));
-            this.batGrosOrange.Location = new System.Drawing.Point(153, 27);
-            this.batGrosOrange.Name = "batGrosOrange";
-            this.batGrosOrange.Size = new System.Drawing.Size(16, 16);
-            this.batGrosOrange.TabIndex = 19;
-            this.batGrosOrange.TabStop = false;
-            this.batGrosOrange.VoltageAverage = 0D;
-            this.batGrosOrange.VoltageHigh = 0D;
-            this.batGrosOrange.VoltageLow = 0D;
-            this.batGrosOrange.VoltageVeryLow = 0D;
-            // 
-            // batGrosVert
-            // 
-            this.batGrosVert.CurrentState = Composants.Battery.State.High;
-            this.batGrosVert.CurrentVoltage = 0D;
-            this.batGrosVert.Image = ((System.Drawing.Image)(resources.GetObject("batGrosVert.Image")));
-            this.batGrosVert.Location = new System.Drawing.Point(75, 27);
-            this.batGrosVert.Name = "batGrosVert";
-            this.batGrosVert.Size = new System.Drawing.Size(16, 16);
-            this.batGrosVert.TabIndex = 18;
-            this.batGrosVert.TabStop = false;
-            this.batGrosVert.VoltageAverage = 0D;
-            this.batGrosVert.VoltageHigh = 0D;
-            this.batGrosVert.VoltageLow = 0D;
-            this.batGrosVert.VoltageVeryLow = 0D;
-            // 
-            // numBatGrosVert
-            // 
-            this.numBatGrosVert.DecimalPlaces = 2;
-            this.numBatGrosVert.Location = new System.Drawing.Point(97, 27);
-            this.numBatGrosVert.Maximum = new decimal(new int[] {
-            30,
-            0,
-            0,
-            0});
-            this.numBatGrosVert.Name = "numBatGrosVert";
-            this.numBatGrosVert.Size = new System.Drawing.Size(50, 20);
-            this.numBatGrosVert.TabIndex = 17;
-            // 
             // PanelConstantes
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.Controls.Add(this.groupBoxBatteries);
             this.Controls.Add(this.btnSave);
             this.Controls.Add(this.groupBoxDeplacement);
             this.Name = "PanelConstantes";
@@ -553,17 +375,6 @@
             ((System.ComponentModel.ISupportInitialize)(this.numVitessePivotRapide)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.numAccelerationLigneRapide)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.numVitesseLigneRapide)).EndInit();
-            this.groupBoxBatteries.ResumeLayout(false);
-            this.groupBoxBatteries.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.batGrosVide)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numBatGrosCritique)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.batGrosCritique)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numBatGrosRouge)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.batGrosRouge)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numBatGrosOrange)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.batGrosOrange)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.batGrosVert)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numBatGrosVert)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -588,17 +399,6 @@
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Button btnSave;
-        private System.Windows.Forms.GroupBox groupBoxBatteries;
-        private Composants.Battery batGrosVide;
-        private System.Windows.Forms.NumericUpDown numBatGrosCritique;
-        private Composants.Battery batGrosCritique;
-        private System.Windows.Forms.NumericUpDown numBatGrosRouge;
-        private Composants.Battery batGrosRouge;
-        private System.Windows.Forms.NumericUpDown numBatGrosOrange;
-        private Composants.Battery batGrosOrange;
-        private Composants.Battery batGrosVert;
-        private System.Windows.Forms.NumericUpDown numBatGrosVert;
-        private System.Windows.Forms.Label label9;
         private System.Windows.Forms.NumericUpDown numAccelerationFinLigneLent;
         private System.Windows.Forms.Label label11;
         private System.Windows.Forms.NumericUpDown numAccelerationFinLigneRapide;

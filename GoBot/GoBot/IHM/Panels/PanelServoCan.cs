@@ -205,7 +205,7 @@ namespace GoBot.IHM
         {
             gphMonitoringPos.MinLimit = _servo.LastPositionMin;
             gphMonitoringPos.MaxLimit = _servo.LastPositionMax;
-            gphMonitoringPos.GraphScale = value ? Composants.GraphPanel.ScaleType.Fixed : Composants.GraphPanel.ScaleType.DynamicPerCurve;
+            gphMonitoringPos.ScaleMode = value ? Composants.GraphPanel.ScaleType.Fixed : Composants.GraphPanel.ScaleType.DynamicPerCurve;
         }
 
         private void btnStop_Click(object sender, EventArgs e)

@@ -275,7 +275,7 @@
             // ctrlGraphique
             // 
             this.ctrlGraphique.BackColor = System.Drawing.Color.White;
-            this.ctrlGraphique.GraphScale = Composants.GraphPanel.ScaleType.DynamicGlobal;
+            this.ctrlGraphique.ScaleMode = Composants.GraphPanel.ScaleType.DynamicGlobal;
             this.ctrlGraphique.LimitsVisible = true;
             this.ctrlGraphique.Location = new System.Drawing.Point(210, 25);
             this.ctrlGraphique.MaxLimit = 1D;
