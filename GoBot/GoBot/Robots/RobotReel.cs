@@ -643,31 +643,6 @@ namespace GoBot
                 return true;
         }
 
-        public override void BougeServo(ServomoteurID servo, int position)
-        {
-            base.BougeServo(servo, position);
-
-            int idPololu = Servomoteur.idServoPololu(servo);
-            int idCan = Servomoteur.idServoCan(servo);
-
-            if (idPololu != -1 && idPololu < 100)
-            {
-                // Envoi à la pololu si c'est un servo géré par la carte
-                PololuMiniUart.setTarget((byte)idPololu, (ushort)position);
-            }
-            else if (idCan != -1)
-            {
-                // Envoi en bus can si c'est un servo géré par CAN
-                AllDevices.CanServos[idCan].SetPosition(position);
-            }
-            else
-            {
-                // Sinon en UDP à RecIO
-                Frame trame = UdpFrameFactory.ServoEnvoiPositionCible(servo, position);
-                Connections.ConnectionIO.SendMessage(trame);
-            }
-        }
-
         public override void DemandeValeursAnalogiques(Board carte, bool attendre = true)
         {
             if (!Connections.UDPBoardConnection[carte].ConnectionChecker.Connected)
@@ -696,12 +671,6 @@ namespace GoBot
 
             if (attendre)
                 SemaphoresTrame[UdpFrameFunction.RetourValeursNumeriques].WaitOne(1000);
-        }
-
-        public override void ServoVitesse(ServomoteurID servo, int vitesse)
-        {
-            Frame trame = UdpFrameFactory.ServoEnvoiVitesseMax(servo, vitesse);
-            Connections.ConnectionIO.SendMessage(trame);
         }
 
         public override void ActionneurOnOff(ActionneurOnOffID actionneur, bool on)

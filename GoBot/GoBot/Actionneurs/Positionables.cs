@@ -60,7 +60,7 @@ namespace GoBot.Actionneurs
 
         protected override void SendPositionSpecific(int position)
         {
-            Robots.GrosRobot.BougeServo(ID, position);
+            Devices.AllDevices.CanServos[ID].SetPosition(position);
         }
     }
 

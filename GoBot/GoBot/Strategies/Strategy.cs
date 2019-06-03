@@ -132,7 +132,7 @@ namespace GoBot.Strategies
                 {
                     if(!Movements[iMov].Robot.Graph.Raccordable(new Node(Movements[iMov].Positions[iPos].Coordinates),
                         Plateau.ListeObstacles.Except(Plateau.ObstaclesCouleur),
-                        Movements[iMov].Robot.Rayon))
+                        Movements[iMov].Robot.RayonAvecChanfrein))
                     {
                         Movements[iMov].Positions.RemoveAt(iPos);
                         iPos--;

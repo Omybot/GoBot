@@ -222,8 +222,6 @@
     <Compile Include="Dessinateur.cs" />
     <Compile Include="Devices\AllDevices.cs" />
     <Compile Include="Devices\Hokuyo.cs" />
-    <Compile Include="Devices\PololuMiniUart.cs" />
-    <Compile Include="Devices\PololuMiniUsb.cs" />
     <Compile Include="Devices\RecGoBot.cs" />
     <Compile Include="GameElements\GameElement.cs" />
     <Compile Include="GameElements\AllGameElements.cs" />
@@ -282,23 +280,11 @@
     <Compile Include="IHM\PanelGenerics.Designer.cs">
       <DependentUpon>PanelGenerics.cs</DependentUpon>
     </Compile>
-    <Compile Include="IHM\PanelPololu.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="IHM\PanelPololu.Designer.cs">
-      <DependentUpon>PanelPololu.cs</DependentUpon>
-    </Compile>
     <Compile Include="IHM\PanelRecGoBot.cs">
       <SubType>UserControl</SubType>
     </Compile>
     <Compile Include="IHM\PanelRecGoBot.designer.cs">
       <DependentUpon>PanelRecGoBot.cs</DependentUpon>
-    </Compile>
-    <Compile Include="IHM\PanelTestServos.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="IHM\PanelTestServos.Designer.cs">
-      <DependentUpon>PanelTestServos.cs</DependentUpon>
     </Compile>
     <Compile Include="IHM\FenNomArchivage.cs">
       <SubType>Form</SubType>
@@ -329,12 +315,6 @@
     </Compile>
     <Compile Include="IHM\PanelLogsEvents.Designer.cs">
       <DependentUpon>PanelLogsEvents.cs</DependentUpon>
-    </Compile>
-    <Compile Include="IHM\PanelMatch.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="IHM\PanelMatch.Designer.cs">
-      <DependentUpon>PanelMatch.cs</DependentUpon>
     </Compile>
     <Compile Include="IHM\PanelConnexions.cs">
       <SubType>UserControl</SubType>
@@ -433,12 +413,6 @@
     <Compile Include="IHM\PanelHistorique.Designer.cs">
       <DependentUpon>PanelHistorique.cs</DependentUpon>
     </Compile>
-    <Compile Include="IHM\PanelServo.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="IHM\PanelServo.Designer.cs">
-      <DependentUpon>PanelServo.cs</DependentUpon>
-    </Compile>
     <Compile Include="IHM\PanelTable.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -472,7 +446,6 @@
     <Compile Include="Robots\Robot.cs" />
     <Compile Include="Robots\RobotSimu.cs" />
     <Compile Include="SerializableDictionnary.cs" />
-    <Compile Include="Servomoteur.cs" />
     <Compile Include="Communications\UDP\UdpFrameFactory.cs" />
     <Compile Include="Communications\UDP\UdpConnection.cs" />
     <Compile Include="Communications\Frame.cs" />
@@ -528,17 +501,11 @@
     <EmbeddedResource Include="IHM\PanelHokuyo.resx">
       <DependentUpon>PanelHokuyo.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="IHM\PanelPololu.resx">
-      <DependentUpon>PanelPololu.cs</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="IHM\PanelRecGoBot.resx">
       <DependentUpon>PanelRecGoBot.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="IHM\PanelServoCan.resx">
       <DependentUpon>PanelServoCan.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="IHM\PanelTestServos.resx">
-      <DependentUpon>PanelTestServos.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="IHM\FenNomArchivage.resx">
       <DependentUpon>FenNomArchivage.cs</DependentUpon>
@@ -554,9 +521,6 @@
     </EmbeddedResource>
     <EmbeddedResource Include="IHM\PanelLogsEvents.resx">
       <DependentUpon>PanelLogsEvents.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="IHM\PanelMatch.resx">
-      <DependentUpon>PanelMatch.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="IHM\PanelConnexions.resx">
       <DependentUpon>PanelConnexions.cs</DependentUpon>
@@ -596,9 +560,6 @@
     </EmbeddedResource>
     <EmbeddedResource Include="IHM\PanelReglageAsserv.resx">
       <DependentUpon>PanelReglageAsserv.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="IHM\PanelServo.resx">
-      <DependentUpon>PanelServo.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="IHM\PanelLogUdp.resx">
       <DependentUpon>PanelLogUdp.cs</DependentUpon>

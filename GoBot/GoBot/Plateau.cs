@@ -339,7 +339,7 @@ namespace GoBot
             // Création des noeuds
             for (int x = resolution / 2; x < Largeur; x += resolution)
                 for (int y = resolution / 2; y < Hauteur; y += resolution)
-                    Robots.GrosRobot.Graph.AddNode(new Node(x, y), _obstacles.FromBoard, Robots.GrosRobot.Rayon, true);
+                    Robots.GrosRobot.Graph.AddNode(new Node(x, y), _obstacles.FromBoard, Robots.GrosRobot.RayonAvecChanfrein, true);
         }
 
         public static void SetDetections(IEnumerable<IShape> detections)

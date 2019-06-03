@@ -258,10 +258,15 @@ namespace GoBot.IHM
 
         private void btnRecallage_Click(object sender, EventArgs e)
         {
-            Robot.Avancer(10);
-            Robot.Lent();
-            Robot.Recallage(SensAR.Arriere);
-            Robot.Rapide();
+            ThreadManager.CreateThread(link =>
+            {
+                btnRecallage.InvokeAuto(() => btnRecallage.Enabled = false);
+                Robot.Avancer(10);
+                Robot.Lent();
+                Robot.Recallage(SensAR.Arriere);
+                Robot.Rapide();
+                btnRecallage.InvokeAuto(() => btnRecallage.Enabled = true);
+            }).StartThread();
         }
 
         private void btnFreely_Click(object sender, EventArgs e)

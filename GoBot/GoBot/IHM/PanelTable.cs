@@ -515,7 +515,9 @@ namespace GoBot.IHM
         bool moveMouse = false;
         private void pictureBoxTable_Click(object sender, EventArgs e)
         {
-            if (!moveMouse && Dessinateur.modeCourant == Dessinateur.MouseMode.TrajectoirePolaire)
+            if (boxSourisObstacle.Checked)
+                boxSourisObstacle.Checked = false;
+            else if (!moveMouse && Dessinateur.modeCourant == Dessinateur.MouseMode.TrajectoirePolaire)
             {
                 RealPoint point = Dessinateur.Scale.ScreenToRealPosition(pictureBoxTable.PointToClient(MousePosition));
                 //if (pointsPolaires.Count >= 2 && pointsPolaires.Count < 4)

@@ -298,7 +298,7 @@ namespace GoBot
                                     g.FillEllipse(Brushes.Red, p.X - 1, p.Y - 1, 2, 2);
                             if (pointsPolaireScreen != null)
                                 foreach (Point p in pointsPolaireScreen)
-                                    g.DrawEllipse(Pens.Black, p.X - 3, p.Y - 3, 6, 6);
+                                    g.DrawEllipse(Pens.White, p.X - 3, p.Y - 3, 6, 6);
                         }
 
                         TableDessinee?.Invoke(bmp);
@@ -454,7 +454,7 @@ namespace GoBot
             }
         }
 
-            private static void DessineRobot(Robot robot, Graphics g)
+        private static void DessineRobot(Robot robot, Graphics g)
         {
             Point positionRobot = Scale.RealToScreenPosition(robot.Position.Coordinates);
 

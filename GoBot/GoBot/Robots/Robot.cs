@@ -33,7 +33,8 @@ namespace GoBot
 
         public double Longueur { get; set; }
         public double Largeur { get; set; }
-        public double Rayon { get { return Maths.Hypothenuse(Longueur, Largeur) / 2 - 16; } } // -16 = valeur calculée par Nico en 2018
+        public double Rayon { get { return Maths.Hypothenuse(Longueur, Largeur) / 2; } } 
+        public double RayonAvecChanfrein { get { return Rayon - 16; } } // -16 = valeur calculée par Nico en 2018
         public double Entraxe { get; set; }// Distance entre les deux roues en mm
 
         // Déplacement
@@ -60,7 +61,6 @@ namespace GoBot
         // Actionneurs / Capteurs
 
         public bool JackArme { get; protected set; } = false;
-        public Dictionary<ServomoteurID, bool> ServoActive { get; set; }
         public Dictionary<MoteurID, bool> MoteurTourne { get; set; }
 
         public abstract void Delete();
@@ -183,32 +183,6 @@ namespace GoBot
             }
         }
 
-        private MinimumDelay _delayServo = new MinimumDelay(10);
-
-        public virtual void BougeServo(ServomoteurID servo, int position)
-        {
-            //TODO2018 : améliorer cette tempo ?
-            // Testé sur AX12 et sur pololu, c'est vraiment nécessaire
-            // Attention sur pololu ca dépend des servos, desfois ca mache sans tempo...
-            _delayServo.Wait();
-
-            Historique.AjouterAction(new ActionServo(this, position, servo));
-
-            if (ServoActive.ContainsKey(servo))
-            {
-                /*
-                 * Todo
-                 * if (servo == ServomoteurID.GRFruitsCoude && position != Config.CurrentConfig.PositionGRCoudeRange ||
-                    servo == ServomoteurID.GRFruitsEpaule && position != Config.CurrentConfig.PositionGREpauleRange)
-                    ServoActive[servo] = true;
-                else
-                    ServoActive[servo] = false;*/
-
-            }
-        }
-
-        public abstract void ServoVitesse(ServomoteurID servo, int vitesse);
-
         public virtual void MoteurPosition(MoteurID moteur, int position, bool waitEnd = false)
         {
             Historique.AjouterAction(new ActionMoteur(this, position, moteur));
@@ -253,9 +227,7 @@ namespace GoBot
             SpeedConfig = new SpeedConfig(500, 1000, 1000, 500, 1000, 1000);
             AsserStats = new AsserStats();
             VitesseAdaptableEnnemi = true;
-            ServoActive = new Dictionary<ServomoteurID, bool>();
-            foreach (ServomoteurID servo in Enum.GetValues(typeof(ServomoteurID)))
-                ServoActive.Add(servo, false);
+           
             MoteurTourne = new Dictionary<MoteurID, bool>();
             foreach (MoteurID moteur in Enum.GetValues(typeof(MoteurID)))
                 MoteurTourne.Add(moteur, false);
@@ -283,7 +255,7 @@ namespace GoBot
         {
             Historique.Log("Lancement pathfinding pour aller en " + dest.ToString(), TypeLog.PathFinding);
 
-            Trajectory traj = PathFinder.ChercheTrajectoire(Graph, Plateau.ListeObstacles, Plateau.ObstaclesOpponents, Position, dest, Rayon, Robots.GrosRobot.Largeur / 2);
+            Trajectory traj = PathFinder.ChercheTrajectoire(Graph, Plateau.ListeObstacles, Plateau.ObstaclesOpponents, Position, dest, RayonAvecChanfrein, Robots.GrosRobot.Largeur / 2);
 
             if (traj == null)
                 return false;
@@ -306,11 +278,11 @@ namespace GoBot
 
             if (typeForme1.IsAssignableFrom(typeof(Segment)))
                 if (typeForme2.IsAssignableFrom(typeof(Segment)))
-                    return ((Segment)forme1).Distance((Segment)forme2) < Rayon + marge;
+                    return ((Segment)forme1).Distance((Segment)forme2) < RayonAvecChanfrein + marge;
                 else
-                    return ((Segment)forme1).Distance(forme2) < Rayon + marge;
+                    return ((Segment)forme1).Distance(forme2) < RayonAvecChanfrein + marge;
             else
-                return forme1.Distance(forme2) < Rayon + marge;
+                return forme1.Distance(forme2) < RayonAvecChanfrein + marge;
         }
 
         public bool ObstacleTest(IEnumerable<IShape> obstacles)
@@ -496,6 +468,19 @@ namespace GoBot
         public void DeployerActionnneurs()
         {
             // TODOEACHYEAR
+        }
+        
+        public IShape GetBounds(SensAR sens)
+        {
+            RealPoint p1 = new RealPoint((Robots.GrosRobot.Position.Coordinates.X - Robots.GrosRobot.Longueur / 2), (Robots.GrosRobot.Position.Coordinates.Y + Robots.GrosRobot.Largeur / 2));
+            RealPoint p2 = new RealPoint((Robots.GrosRobot.Position.Coordinates.X - Robots.GrosRobot.Longueur / 2), (Robots.GrosRobot.Position.Coordinates.Y - Robots.GrosRobot.Largeur / 2));
+            RealPoint p3 = new RealPoint((Robots.GrosRobot.Position.Coordinates.X + Robots.GrosRobot.Longueur / 2), (Robots.GrosRobot.Position.Coordinates.Y - Robots.GrosRobot.Largeur / 2));
+            RealPoint p4 = new RealPoint((Robots.GrosRobot.Position.Coordinates.X + Robots.GrosRobot.Longueur / 2), (Robots.GrosRobot.Position.Coordinates.Y + Robots.GrosRobot.Largeur / 2));
+
+            IShape contact = new PolygonRectangle(new RealPoint(Position.Coordinates.X - Longueur / 2, Position.Coordinates.Y - Largeur / 2), Longueur, Largeur);
+            contact = contact.Rotation(new AngleDelta(Position.Angle));
+
+            return contact;
         }
     }
 }

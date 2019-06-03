@@ -25,7 +25,7 @@ namespace GoBot.Actions
 
         void IAction.Executer()
         {
-            robot.BougeServo(pince, position);
+            Devices.AllDevices.CanServos[pince].SetPosition(position);
         }
 
         public System.Drawing.Image Image

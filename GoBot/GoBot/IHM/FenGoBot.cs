@@ -234,40 +234,6 @@ namespace GoBot
             }
         }
 
-        private void button1_Click(object sender, EventArgs e)
-        {
-            if(Plateau.Detections?.Count > 0)
-            {
-                IShape target = Plateau.Detections[0];
-
-                Direction dir = Maths.GetDirection(Robots.GrosRobot.Position, target.Barycenter);
-
-                Config.CurrentConfig.ServoElevation.SendPosition(Config.CurrentConfig.ServoElevation.PositionGround);
-                Config.CurrentConfig.ServoClampLeft.SendPosition(Config.CurrentConfig.ServoClampLeft.PositionOpen);
-                Config.CurrentConfig.ServoClampRight.SendPosition(Config.CurrentConfig.ServoClampRight.PositionOpen);
-                Config.CurrentConfig.MotorGulp.SendPosition(Config.CurrentConfig.MotorGulp.PositionSwallow);
-
-                if(dir.angle > 0)
-                    Robots.GrosRobot.PivotGauche(dir.angle);
-                else
-                    Robots.GrosRobot.PivotDroite(-dir.angle);
-
-                Robots.GrosRobot.Avancer((int)(dir.distance - 150));
-
-
-                Config.CurrentConfig.ServoClampLeft.SendPosition(Config.CurrentConfig.ServoClampLeft.PositionClose);
-                Config.CurrentConfig.ServoClampRight.SendPosition(Config.CurrentConfig.ServoClampRight.PositionClose);
-
-                Thread.Sleep(1000);
-                Config.CurrentConfig.MotorGulp.SendPosition(Config.CurrentConfig.MotorGulp.PositionStop);
-                Config.CurrentConfig.ServoElevation.SendPosition(Config.CurrentConfig.ServoElevation.PositionInside);
-                Thread.Sleep(1000);
-                Config.CurrentConfig.ServoClampLeft.SendPosition(Config.CurrentConfig.ServoClampLeft.PositionOpen);
-                Config.CurrentConfig.ServoClampRight.SendPosition(Config.CurrentConfig.ServoClampRight.PositionOpen);
-                
-            }
-        }
-
         private void panelCanArchi_ServoClick(ServomoteurID servoNo)
         {
             panelServoCan.SetServo(servoNo);

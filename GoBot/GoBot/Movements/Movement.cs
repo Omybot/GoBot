@@ -82,7 +82,7 @@ namespace GoBot.Movements
 
             if (position != null)
             {
-                Trajectory traj = PathFinder.ChercheTrajectoire(Robot.Graph, Plateau.ListeObstacles, Plateau.ObstaclesOpponents, new Position(Robot.Position), position, Robot.Rayon, Robot.Largeur / 2);
+                Trajectory traj = PathFinder.ChercheTrajectoire(Robot.Graph, Plateau.ListeObstacles, Plateau.ObstaclesOpponents, new Position(Robot.Position), position, Robot.RayonAvecChanfrein, Robot.Largeur / 2);
 
                 if (traj != null)
                 {
