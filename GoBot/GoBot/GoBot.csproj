@@ -56,12 +56,6 @@
     <ApplicationIcon>robot.ico</ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Bytecode">
-      <HintPath>Librairies\Bytecode.dll</HintPath>
-    </Reference>
-    <Reference Include="Sequencer">
-      <HintPath>Librairies\Sequencer.dll</HintPath>
-    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -72,12 +66,6 @@
     <Reference Include="System.Drawing" />
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
-    <Reference Include="UsbWrapper">
-      <HintPath>Librairies\UsbWrapper.dll</HintPath>
-    </Reference>
-    <Reference Include="Usc">
-      <HintPath>Librairies\Usc.dll</HintPath>
-    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Actionneurs\Actionneur.cs" />

@@ -41,10 +41,6 @@ Source: "..\GoBot\GoBot\bin\Release\Composants.dll"; DestDir: "{app}"; Flags: ig
 Source: "..\GoBot\GoBot\bin\Release\Geometry.dll"; DestDir: "{app}"; Flags: ignoreversion
 Source: "./iconeTlog.ico"; DestDir: "{app}"; Flags: ignoreversion
 Source: "./iconeElog.ico"; DestDir: "{app}"; Flags: ignoreversion    
-Source: "..\GoBot\GoBot\Librairies\Bytecode.dll"; DestDir: "{app}"; Flags: ignoreversion
-Source: "..\GoBot\GoBot\Librairies\Sequencer.dll"; DestDir: "{app}"; Flags: ignoreversion
-Source: "..\GoBot\GoBot\Librairies\UsbWrapper.dll"; DestDir: "{app}"; Flags: ignoreversion
-Source: "..\GoBot\GoBot\Librairies\Usc.dll"; DestDir: "{app}"; Flags: ignoreversion
 Source: "./Jokerman.TTF"; DestDir: "{fonts}"; FontInstall: "Jokerman"; Flags: onlyifdoesntexist uninsneveruninstall  
 Source: "C:\Users\Kryss\AppData\Local\GoBot\config.xml"; DestDir: "{localappdata}\GoBot"; Flags: ignoreversion  
         
