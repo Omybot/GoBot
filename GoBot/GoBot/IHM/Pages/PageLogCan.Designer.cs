@@ -1,6 +1,6 @@
 ﻿namespace GoBot.IHM
 {
-    partial class PanelLogCan
+    partial class PageLogCan
     {
         /// <summary> 
         /// Variable nécessaire au concepteur.
@@ -29,7 +29,7 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(PanelLogCan));
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(PageLogCan));
             this.dgvLog = new System.Windows.Forms.DataGridView();
             this.ctxMnuFrames = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.mnuFrameCopy = new System.Windows.Forms.ToolStripMenuItem();

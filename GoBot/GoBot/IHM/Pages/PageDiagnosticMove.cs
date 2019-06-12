@@ -12,14 +12,14 @@ using GoBot.Threading;
 
 namespace GoBot.IHM
 {
-    public partial class PanelDiagnosticMove : UserControl
+    public partial class PageDiagnosticMove : UserControl
     {
         private ThreadLink _linkPolling;
         private ThreadLink _linkDrawing;
 
         double _cpuAverage;
 
-        public PanelDiagnosticMove()
+        public PageDiagnosticMove()
         {
             InitializeComponent();
         }

@@ -1,6 +1,6 @@
 ﻿namespace GoBot.IHM
 {
-    partial class PanelGestionLog
+    partial class PageGestionLog
     {
         /// <summary> 
         /// Variable nécessaire au concepteur.

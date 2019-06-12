@@ -1,6 +1,6 @@
 ﻿namespace GoBot.IHM
 {
-    partial class PanelDiagnosticMove
+    partial class PageDiagnosticMove
     {
         /// <summary> 
         /// Variable nécessaire au concepteur.

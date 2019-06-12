@@ -1,6 +1,6 @@
 ﻿namespace GoBot.IHM
 {
-    partial class PanelEnvoiUdp
+    partial class PageEnvoiUdp
     {
         /// <summary> 
         /// Variable nécessaire au concepteur.

@@ -11,11 +11,11 @@ using GoBot.Threading;
 
 namespace GoBot.IHM
 {
-    public partial class PanelLogThreads : UserControl
+    public partial class PageLogThreads : UserControl
     {
         private System.Windows.Forms.Timer _timerDisplay;
 
-        public PanelLogThreads()
+        public PageLogThreads()
         {
             InitializeComponent();
         }

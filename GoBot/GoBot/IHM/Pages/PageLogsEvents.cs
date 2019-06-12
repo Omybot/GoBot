@@ -9,7 +9,7 @@ using System.Windows.Forms;
 
 namespace GoBot.IHM
 {
-    public partial class PanelLogsEvents : UserControl
+    public partial class PageLogsEvents : UserControl
     {
         private Dictionary<IDRobot, Color> couleurRobot;
         private Dictionary<TypeLog, Color> couleurTypeLog;
@@ -25,7 +25,7 @@ namespace GoBot.IHM
         private int compteur = 0;
         private EventsReplay Replay { get; set; }
 
-        public PanelLogsEvents()
+        public PageLogsEvents()
         {
             InitializeComponent();
 

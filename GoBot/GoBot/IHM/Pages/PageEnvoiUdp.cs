@@ -13,9 +13,9 @@ using GoBot.Communications.UDP;
 
 namespace GoBot.IHM
 {
-    public partial class PanelEnvoiUdp : UserControl
+    public partial class PageEnvoiUdp : UserControl
     {
-        public PanelEnvoiUdp()
+        public PageEnvoiUdp()
         {
             InitializeComponent();
         }

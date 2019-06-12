@@ -11,11 +11,11 @@ using GoBot.Threading;
 
 namespace GoBot.IHM
 {
-    public partial class PanelReglageAsserv : UserControl
+    public partial class PageReglageAsserv : UserControl
     {
         private Robot Robot { get; set; }
 
-        public PanelReglageAsserv()
+        public PageReglageAsserv()
         {
             InitializeComponent();
 

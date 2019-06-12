@@ -12,7 +12,7 @@ using System.IO;
 
 namespace GoBot.IHM
 {
-    public partial class PanelGestionLog : UserControl
+    public partial class PageGestionLog : UserControl
     {
         private enum Columns : int
         {
@@ -24,7 +24,7 @@ namespace GoBot.IHM
             Events
         }
 
-        public PanelGestionLog()
+        public PageGestionLog()
         {
             InitializeComponent();
 

@@ -13,12 +13,12 @@ using GoBot.Devices;
 
 namespace GoBot.IHM
 {
-    public partial class PanelHokuyo : UserControl
+    public partial class PageHokuyo : UserControl
     {
         private Hokuyo _selectedHokuyo;
         private List<RealPoint> _lastMeasure;
 
-        public PanelHokuyo()
+        public PageHokuyo()
         {
             InitializeComponent();
             _lastMeasure = null;

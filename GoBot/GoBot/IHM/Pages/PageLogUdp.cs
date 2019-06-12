@@ -12,7 +12,7 @@ using GoBot.Communications.UDP;
 
 namespace GoBot.IHM
 {
-    public partial class PanelLogUdp : UserControl
+    public partial class PageLogUdp : UserControl
     {
         private FramesLog _log;
         private Dictionary<Board, Color> _boardColor;
@@ -29,7 +29,7 @@ namespace GoBot.IHM
 
         bool _loading;
 
-        public PanelLogUdp()
+        public PageLogUdp()
         {
             InitializeComponent();
 

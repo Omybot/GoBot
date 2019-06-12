@@ -10,9 +10,9 @@ using GoBot.Actions;
 
 namespace GoBot.IHM
 {
-    public partial class PanelGrosRobot : UserControl
+    public partial class PageGrosRobot : UserControl
     {
-        public PanelGrosRobot()
+        public PageGrosRobot()
         {
             InitializeComponent();
         }

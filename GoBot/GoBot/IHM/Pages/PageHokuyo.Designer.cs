@@ -1,6 +1,6 @@
 ﻿namespace GoBot.IHM
 {
-    partial class PanelHokuyo
+    partial class PageHokuyo
     {
         /// <summary>
         /// Variable nécessaire au concepteur.

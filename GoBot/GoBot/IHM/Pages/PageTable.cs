@@ -17,13 +17,13 @@ using GoBot.GameBoard;
 namespace GoBot.IHM
 {
 
-    public partial class PanelTable : UserControl
+    public partial class PageTable : UserControl
     {
         private static ThreadLink _linkDisplay;
 
         public static Plateau Plateau { get; set; }
 
-        public PanelTable()
+        public PageTable()
         {
             InitializeComponent();
             Plateau = new Plateau();

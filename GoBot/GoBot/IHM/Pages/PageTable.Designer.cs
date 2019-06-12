@@ -1,6 +1,6 @@
 ﻿namespace GoBot.IHM
 {
-    partial class PanelTable
+    partial class PageTable
     {
         /// <summary> 
         /// Variable nécessaire au concepteur.

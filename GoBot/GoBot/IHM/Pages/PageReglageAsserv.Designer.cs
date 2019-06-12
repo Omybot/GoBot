@@ -1,6 +1,6 @@
 ﻿namespace GoBot.IHM
 {
-    partial class PanelReglageAsserv
+    partial class PageReglageAsserv
     {
         /// <summary> 
         /// Variable nécessaire au concepteur.
