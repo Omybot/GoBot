@@ -8,10 +8,10 @@ namespace GoBot.Actions
     class ActionMoteur : IAction
     {
         private int vitesse;
-        MoteurID moteur;
+        MotorID moteur;
         private Robot robot;
 
-        public ActionMoteur(Robot r, int vi, MoteurID mo)
+        public ActionMoteur(Robot r, int vi, MotorID mo)
         {
             robot = r;
             vitesse = vi;

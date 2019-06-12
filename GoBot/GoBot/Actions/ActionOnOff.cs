@@ -8,10 +8,10 @@ namespace GoBot.Actions
     class ActionOnOff : IAction
     {
         private bool on;
-        ActionneurOnOffID actionneur;
+        ActuatorOnOffID actionneur;
         private Robot robot;
 
-        public ActionOnOff(Robot r, ActionneurOnOffID ac, bool _on)
+        public ActionOnOff(Robot r, ActuatorOnOffID ac, bool _on)
         {
             robot = r;
             on = _on;

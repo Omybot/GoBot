@@ -123,34 +123,34 @@ namespace GoBot.Actionneurs
 
         public void DoFrontStop()
         {
-            Connections.ConnectionIO.SendMessage(UdpFrameFactory.MoteurStop(MoteurID.FingerFront, StopMode.Abrupt));
+            Connections.ConnectionIO.SendMessage(UdpFrameFactory.MoteurStop(MotorID.FingerFront, StopMode.Abrupt));
         }
 
         public void DoBackStop()
         {
-            Connections.ConnectionIO.SendMessage(UdpFrameFactory.MoteurStop(MoteurID.FingerBack, StopMode.Abrupt));
+            Connections.ConnectionIO.SendMessage(UdpFrameFactory.MoteurStop(MotorID.FingerBack, StopMode.Abrupt));
         }
 
         public void DoFrontOrigin()
         {
-            Robots.GrosRobot.MoteurOrigin(MoteurID.FingerFront, true);
+            Robots.GrosRobot.MoteurOrigin(MotorID.FingerFront, true);
             FingerFrontResetPosition();
         }
 
         public void DoBackOrigin()
         {
-            Robots.GrosRobot.MoteurOrigin(MoteurID.FingerBack, true);
+            Robots.GrosRobot.MoteurOrigin(MotorID.FingerBack, true);
             FingerBackResetPosition();
         }
 
         public void FingerFrontResetPosition()
         {
-            Connections.ConnectionIO.SendMessage(UdpFrameFactory.MoteurResetPosition(MoteurID.FingerFront));
+            Connections.ConnectionIO.SendMessage(UdpFrameFactory.MoteurResetPosition(MotorID.FingerFront));
         }
 
         public void FingerBackResetPosition()
         {
-            Connections.ConnectionIO.SendMessage(UdpFrameFactory.MoteurResetPosition(MoteurID.FingerBack));
+            Connections.ConnectionIO.SendMessage(UdpFrameFactory.MoteurResetPosition(MotorID.FingerBack));
         }
 
         public void DoInit()
@@ -206,38 +206,38 @@ namespace GoBot.Actionneurs
             ThreadManager.CreateThread(new ThreadLink.CallBack(link =>
             {
                 DoFrontStop();
-                Robots.GrosRobot.MoteurPosition(MoteurID.FingerFront, Config.CurrentConfig.MotorFingerFront.Minimum, true);
+                Robots.GrosRobot.MoteurPosition(MotorID.FingerFront, Config.CurrentConfig.MotorFingerFront.Minimum, true);
                 DoFrontStop();
-                Robots.GrosRobot.MoteurPosition(MoteurID.FingerFront, Config.CurrentConfig.MotorFingerFront.Maximum, true);
+                Robots.GrosRobot.MoteurPosition(MotorID.FingerFront, Config.CurrentConfig.MotorFingerFront.Maximum, true);
                 DoBackStop();
-                Robots.GrosRobot.MoteurPosition(MoteurID.FingerBack, Config.CurrentConfig.MotorFingerBack.Maximum, true);
+                Robots.GrosRobot.MoteurPosition(MotorID.FingerBack, Config.CurrentConfig.MotorFingerBack.Maximum, true);
                 DoBackStop();
-                Robots.GrosRobot.MoteurPosition(MoteurID.FingerBack, Config.CurrentConfig.MotorFingerBack.Minimum, true);
+                Robots.GrosRobot.MoteurPosition(MotorID.FingerBack, Config.CurrentConfig.MotorFingerBack.Minimum, true);
             })).StartLoop(new TimeSpan(), 3);
         }
 
         public void MoveFingerFront(int position, bool wait = true)
         {
-            Connections.ConnectionIO.SendMessage(UdpFrameFactory.MoteurStop(MoteurID.FingerFront, StopMode.Abrupt));
+            Connections.ConnectionIO.SendMessage(UdpFrameFactory.MoteurStop(MotorID.FingerFront, StopMode.Abrupt));
 
-            Robots.GrosRobot.MoteurPosition(MoteurID.FingerFront, position, wait);
+            Robots.GrosRobot.MoteurPosition(MotorID.FingerFront, position, wait);
         }
 
         public void MoveFingerFrontFree()
         {
-            Connections.ConnectionIO.SendMessage(UdpFrameFactory.MoteurStop(MoteurID.FingerFront, StopMode.Freely));
+            Connections.ConnectionIO.SendMessage(UdpFrameFactory.MoteurStop(MotorID.FingerFront, StopMode.Freely));
         }
 
         public void MoveFingerBackFree()
         {
-            Connections.ConnectionIO.SendMessage(UdpFrameFactory.MoteurStop(MoteurID.FingerBack, StopMode.Freely));
+            Connections.ConnectionIO.SendMessage(UdpFrameFactory.MoteurStop(MotorID.FingerBack, StopMode.Freely));
         }
 
         public void MoveFingerBack(int position, bool wait = true)
         {
-            Connections.ConnectionIO.SendMessage(UdpFrameFactory.MoteurStop(MoteurID.FingerBack, StopMode.Abrupt));
+            Connections.ConnectionIO.SendMessage(UdpFrameFactory.MoteurStop(MotorID.FingerBack, StopMode.Abrupt));
 
-            Robots.GrosRobot.MoteurPosition(MoteurID.FingerBack, position, wait);
+            Robots.GrosRobot.MoteurPosition(MotorID.FingerBack, position, wait);
         }
 
         public void DoStoreAtom()

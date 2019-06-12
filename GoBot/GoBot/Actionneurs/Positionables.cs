@@ -66,7 +66,7 @@ namespace GoBot.Actionneurs
 
     public abstract class PositionableMotorPosition : Positionable
     {
-        public abstract MoteurID ID { get; }
+        public abstract MotorID ID { get; }
 
         protected override void SendPositionSpecific(int position)
         {
@@ -76,7 +76,7 @@ namespace GoBot.Actionneurs
 
     public abstract class PositionableMotorSpeed : Positionable
     {
-        public abstract MoteurID ID { get; }
+        public abstract MotorID ID { get; }
 
         protected override void SendPositionSpecific(int position)
         {

@@ -97,9 +97,7 @@ namespace Geometry.Shapes
 
             List<List<RealPoint>> fullGroups = new List<List<RealPoint>>();
             List<List<RealPoint>> groups = new List<List<RealPoint>>();
-
-            // TODO2019 : Maximum de population
-
+            
             while (pool.Count > 0)
             {
                 List<RealPoint> group = new List<RealPoint>();
@@ -123,9 +121,7 @@ namespace Geometry.Shapes
 
             List<List<RealPoint>> fullGroups = new List<List<RealPoint>>();
             List<List<RealPoint>> groups = new List<List<RealPoint>>();
-
-            // TODO2019 : Maximum de population
-
+            
             while (pool.Count > 0)
             {
                 List<RealPoint> group = new List<RealPoint>();

@@ -86,7 +86,7 @@ namespace GoBot
         /// <param name="position">Position du moteur</param>
         /// <param name="moteur">Moteur</param>
         /// <returns>Nom de la position</returns>
-        public static String GetName(int position, MoteurID moteur)
+        public static String GetName(int position, MotorID moteur)
         {
             PropertyInfo[] properties = typeof(Config).GetProperties();
             foreach (PropertyInfo p in properties)
@@ -115,53 +115,53 @@ namespace GoBot
         /// </summary>
         /// <param name="sensor">Capteur on off à nommer</param>
         /// <returns>Nom du capteur on off</returns>
-        public static String GetName(CapteurOnOffID sensor)
+        public static String GetName(SensorOnOffID sensor)
         {
             switch (sensor)
             {
-                case CapteurOnOffID.Bouton1:
+                case SensorOnOffID.Bouton1:
                     return "bouton 1";
-                case CapteurOnOffID.Bouton2:
+                case SensorOnOffID.Bouton2:
                     return "bouton 2";
-                case CapteurOnOffID.Bouton3:
+                case SensorOnOffID.Bouton3:
                     return "bouton 3";
-                case CapteurOnOffID.Bouton4:
+                case SensorOnOffID.Bouton4:
                     return "bouton 4";
-                case CapteurOnOffID.Bouton5:
+                case SensorOnOffID.Bouton5:
                     return "bouton 5";
-                case CapteurOnOffID.Bouton6:
+                case SensorOnOffID.Bouton6:
                     return "bouton 6";
-                case CapteurOnOffID.Bouton7:
+                case SensorOnOffID.Bouton7:
                     return "bouton 7";
-                case CapteurOnOffID.Bouton8:
+                case SensorOnOffID.Bouton8:
                     return "bouton 8";
-                case CapteurOnOffID.Bouton9:
+                case SensorOnOffID.Bouton9:
                     return "bouton 9";
-                case CapteurOnOffID.Bouton10:
+                case SensorOnOffID.Bouton10:
                     return "bouton 10";
-                case CapteurOnOffID.Jack:
+                case SensorOnOffID.Jack:
                     return "jack";
-                case CapteurOnOffID.CouleurEquipe:
+                case SensorOnOffID.CouleurEquipe:
                     return "couleur d'equipe";
-                case CapteurOnOffID.LSwitch1:
+                case SensorOnOffID.LSwitch1:
                     return "switch linéaire 1";
-                case CapteurOnOffID.LSwitch2:
+                case SensorOnOffID.LSwitch2:
                     return "switch linéaire 2";
-                case CapteurOnOffID.LSwitch3:
+                case SensorOnOffID.LSwitch3:
                     return "switch linéaire 3";
-                case CapteurOnOffID.LSwitch4:
+                case SensorOnOffID.LSwitch4:
                     return "switch linéaire 4";
-                case CapteurOnOffID.ChaiPas:
+                case SensorOnOffID.ChaiPas:
                     return "on sait pas";
-                case CapteurOnOffID.ChaiPlus:
+                case SensorOnOffID.ChaiPlus:
                     return "on sait plus";
-                case CapteurOnOffID.PresenceDroite:
+                case SensorOnOffID.PresenceDroite:
                     return "présence module à droite";
-                case CapteurOnOffID.PresenceGauche:
+                case SensorOnOffID.PresenceGauche:
                     return "présence module à gauche";
-                case CapteurOnOffID.PresenceCentre:
+                case SensorOnOffID.PresenceCentre:
                     return "présence module au centre";
-                case CapteurOnOffID.PresenceOnSaitPasOu:
+                case SensorOnOffID.PresenceOnSaitPasOu:
                     return "présence pas cablé";
                 default:
                     return sensor.ToString();
@@ -199,11 +199,11 @@ namespace GoBot
         /// </summary>
         /// <param name="capteur">Moteur à nommer</param>
         /// <returns>Nom du Moteur</returns>
-        public static String GetName(MoteurID motor)
+        public static String GetName(MotorID motor)
         {
             switch (motor)
             {
-                case MoteurID.Beacon:
+                case MotorID.Beacon:
                     return "balise";
                 default:
                     return motor.ToString();
@@ -215,11 +215,11 @@ namespace GoBot
         /// </summary>
         /// <param name="capteur">Actionneur à nommer</param>
         /// <returns>Nom de l'actionneur</returns>
-        public static String GetName(ActionneurOnOffID actuator)
+        public static String GetName(ActuatorOnOffID actuator)
         {
             switch (actuator)
             {
-                case ActionneurOnOffID.AlimCapteurCouleur:
+                case ActuatorOnOffID.AlimCapteurCouleur:
                     return "alimentation capteur couleur";
                 default:
                     return actuator.ToString();
@@ -251,11 +251,11 @@ namespace GoBot
         /// </summary>
         /// <param name="sensor">Capteur couleur à nommer</param>
         /// <returns>Nom du capteur couleur</returns>
-        public static String GetName(CapteurCouleurID sensor)
+        public static String GetName(SensorColorID sensor)
         {
             switch (sensor)
             {
-                case CapteurCouleurID.CouleurTube:
+                case SensorColorID.CouleurTube:
                     return "module lunaire";
                 default:
                     return sensor.ToString();

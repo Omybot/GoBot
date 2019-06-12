@@ -68,7 +68,7 @@ namespace GoBot.Communications.UDP
             return new Frame(tab);
         }
 
-        static public Frame DemandeCapteurCouleur(CapteurCouleurID capteur)
+        static public Frame DemandeCapteurCouleur(SensorColorID capteur)
         {
             byte[] tab = new byte[3];
             tab[0] = (byte)Board.RecIO;
@@ -113,7 +113,7 @@ namespace GoBot.Communications.UDP
             return new Frame(tab);
         }
 
-        static public Frame ActionneurOnOff(ActionneurOnOffID actionneur, bool onOff)
+        static public Frame ActionneurOnOff(ActuatorOnOffID actionneur, bool onOff)
         {
             byte[] tab = new byte[4];
             tab[0] = (byte)Board.RecIO;
@@ -124,7 +124,7 @@ namespace GoBot.Communications.UDP
             return new Frame(tab);
         }
 
-        static public Frame DemandeCapteurOnOff(CapteurOnOffID capteur)
+        static public Frame DemandeCapteurOnOff(SensorOnOffID capteur)
         {
             byte[] tab = new byte[3];
             tab[0] = (byte)Board.RecGB;
@@ -134,7 +134,7 @@ namespace GoBot.Communications.UDP
             return new Frame(tab);
         }
 
-        static public Frame MoteurPosition(MoteurID moteur, int position)
+        static public Frame MoteurPosition(MotorID moteur, int position)
         {
             byte[] tab = new byte[5];
             tab[0] = (byte)Board.RecIO;
@@ -146,7 +146,7 @@ namespace GoBot.Communications.UDP
             return new Frame(tab);
         }
 
-        static public Frame MoteurStop(MoteurID moteur, StopMode mode)
+        static public Frame MoteurStop(MotorID moteur, StopMode mode)
         {
             byte[] tab = new byte[4];
             tab[0] = (byte)Board.RecIO;
@@ -162,14 +162,14 @@ namespace GoBot.Communications.UDP
             byte[] tab = new byte[5];
             tab[0] = (byte)Board.RecMove;
             tab[1] = (byte)UdpFrameFunction.MoteurPosition;
-            tab[2] = (byte)MoteurID.Beacon;
+            tab[2] = (byte)MotorID.Beacon;
             tab[3] = (byte)ByteDivide(vitesse, true);
             tab[4] = (byte)ByteDivide(vitesse, false);
 
             return new Frame(tab);
         }
 
-        static public Frame MoteurVitesse(Board board, MoteurID moteur, SensGD sens, int vitesse)
+        static public Frame MoteurVitesse(Board board, MotorID moteur, SensGD sens, int vitesse)
         {
             byte[] tab = new byte[6];
             tab[0] = (byte)board;
@@ -182,7 +182,7 @@ namespace GoBot.Communications.UDP
             return new Frame(tab);
         }
 
-        static public Frame MoteurAcceleration(MoteurID moteur, int acceleration)
+        static public Frame MoteurAcceleration(MotorID moteur, int acceleration)
         {
             byte[] tab = new byte[5];
             tab[0] = (byte)Board.RecIO;
@@ -194,7 +194,7 @@ namespace GoBot.Communications.UDP
             return new Frame(tab);
         }
 
-        static public Frame MoteurResetPosition(MoteurID moteur)
+        static public Frame MoteurResetPosition(MotorID moteur)
         {
             byte[] tab = new byte[3];
             tab[0] = (byte)Board.RecIO;
@@ -204,7 +204,7 @@ namespace GoBot.Communications.UDP
             return new Frame(tab);
         }
 
-        static public Frame MoteurOrigin(MoteurID moteur)
+        static public Frame MoteurOrigin(MotorID moteur)
         {
             byte[] tab = new byte[3];
             tab[0] = (byte)Board.RecIO;
@@ -227,7 +227,7 @@ namespace GoBot.Communications.UDP
         static public Frame Deplacer(SensAR sens, int distance, Robot robot)
         {
             byte[] tab = new byte[5];
-            tab[0] = (byte)robot.Carte;
+            tab[0] = (byte)robot.AsservBoard;
             tab[1] = (byte)UdpFrameFunction.Deplace;
             tab[2] = (byte)sens;
             tab[3] = ByteDivide(distance, true);
@@ -240,7 +240,7 @@ namespace GoBot.Communications.UDP
         static public Frame OffsetPos(Position pos, Robot robot)
         {
             byte[] tab = new byte[8];
-            tab[0] = (byte)robot.Carte;
+            tab[0] = (byte)robot.AsservBoard;
             tab[1] = (byte)UdpFrameFunction.AsserEnvoiPositionAbsolue;
             tab[2] = ByteDivide((int)pos.Coordinates.X, true);
             tab[3] = ByteDivide((int)pos.Coordinates.X, false);
@@ -256,7 +256,7 @@ namespace GoBot.Communications.UDP
         static public Frame Pivot(SensGD sens, AngleDelta angle, Robot robot)
         {
             byte[] tab = new byte[7];
-            tab[0] = (byte)robot.Carte;
+            tab[0] = (byte)robot.AsservBoard;
             tab[1] = (byte)UdpFrameFunction.Pivot;
             tab[2] = (byte)sens;
             tab[3] = ByteDivide((int)(angle * 100.0), true);
@@ -269,7 +269,7 @@ namespace GoBot.Communications.UDP
         static public Frame Stop(StopMode mode, Robot robot)
         {
             byte[] tab = new byte[3];
-            tab[0] = (byte)robot.Carte;
+            tab[0] = (byte)robot.AsservBoard;
             tab[1] = (byte)UdpFrameFunction.Stop;
             tab[2] = (byte)mode;
 
@@ -280,7 +280,7 @@ namespace GoBot.Communications.UDP
         static public Frame DemandePositionContinue(int intervalle, Robot robot)
         {
             byte[] tab = new byte[3];
-            tab[0] = (byte)robot.Carte;
+            tab[0] = (byte)robot.AsservBoard;
             tab[1] = (byte)UdpFrameFunction.AsserIntervalleRetourPosition;
             tab[2] = (byte)(intervalle / 10.0);
 
@@ -291,7 +291,7 @@ namespace GoBot.Communications.UDP
         static public Frame CoeffAsserv(int p, int i, int d, Robot robot)
         {
             byte[] tab = new byte[8];
-            tab[0] = (byte)robot.Carte;
+            tab[0] = (byte)robot.AsservBoard;
             tab[1] = (byte)UdpFrameFunction.AsserPID;
             tab[2] = (byte)ByteDivide(p, true);
             tab[3] = (byte)ByteDivide(p, false);
@@ -307,7 +307,7 @@ namespace GoBot.Communications.UDP
         static public Frame CoeffAsservCap(int p, int i, int d, Robot robot)
         {
             byte[] tab = new byte[8];
-            tab[0] = (byte)robot.Carte;
+            tab[0] = (byte)robot.AsservBoard;
             tab[1] = (byte)UdpFrameFunction.AsserPIDCap;
             tab[2] = (byte)ByteDivide(p / 100, true);
             tab[3] = (byte)ByteDivide(p / 100, false);
@@ -323,7 +323,7 @@ namespace GoBot.Communications.UDP
         static public Frame CoeffAsservVitesse(int p, int i, int d, Robot robot)
         {
             byte[] tab = new byte[8];
-            tab[0] = (byte)robot.Carte;
+            tab[0] = (byte)robot.AsservBoard;
             tab[1] = (byte)UdpFrameFunction.AsserPID;
             tab[2] = (byte)ByteDivide(p, true);
             tab[3] = (byte)ByteDivide(p, false);
@@ -339,7 +339,7 @@ namespace GoBot.Communications.UDP
         static public Frame Virage(SensAR sensAr, SensGD sensGd, int rayon, AngleDelta angle, Robot robot)
         {
             byte[] tab = new byte[8];
-            tab[0] = (byte)robot.Carte;
+            tab[0] = (byte)robot.AsservBoard;
             tab[1] = (byte)UdpFrameFunction.Virage;
             tab[2] = (byte)sensAr;
             tab[3] = (byte)sensGd;
@@ -355,7 +355,7 @@ namespace GoBot.Communications.UDP
         static public Frame TrajectoirePolaire(SensAR sensAr, List<RealPoint> points, Robot robot)
         {
             byte[] tab = new byte[5 + points.Count * 2 * 2];
-            tab[0] = (byte)robot.Carte;
+            tab[0] = (byte)robot.AsservBoard;
             tab[1] = (byte)UdpFrameFunction.TrajectoirePolaire;
             tab[2] = (byte)sensAr;
             tab[3] = (byte)ByteDivide(points.Count, true);
@@ -383,7 +383,7 @@ namespace GoBot.Communications.UDP
         static public Frame DemandePosition(Robot robot)
         {
             byte[] tab = new byte[2];
-            tab[0] = (byte)robot.Carte;
+            tab[0] = (byte)robot.AsservBoard;
             tab[1] = (byte)UdpFrameFunction.AsserDemandePositionXYTeta;
 
             Frame retour = new Frame(tab);
@@ -393,7 +393,7 @@ namespace GoBot.Communications.UDP
         static public Frame VitesseLigne(int vitesse, Robot robot)
         {
             byte[] tab = new byte[4];
-            tab[0] = (byte)robot.Carte;
+            tab[0] = (byte)robot.AsservBoard;
             tab[1] = (byte)UdpFrameFunction.AsserVitesseDeplacement;
             tab[2] = (byte)ByteDivide(vitesse, true);
             tab[3] = (byte)ByteDivide(vitesse, false);
@@ -405,7 +405,7 @@ namespace GoBot.Communications.UDP
         static public Frame AccelLigne(int accelDebut, int accelFin, Robot robot)
         {
             byte[] tab = new byte[6];
-            tab[0] = (byte)robot.Carte;
+            tab[0] = (byte)robot.AsservBoard;
             tab[1] = (byte)UdpFrameFunction.AsserAccelerationDeplacement;
             tab[2] = (byte)ByteDivide(accelDebut, true);
             tab[3] = (byte)ByteDivide(accelDebut, false);
@@ -419,7 +419,7 @@ namespace GoBot.Communications.UDP
         static public Frame VitessePivot(int vitesse, Robot robot)
         {
             byte[] tab = new byte[4];
-            tab[0] = (byte)robot.Carte;
+            tab[0] = (byte)robot.AsservBoard;
             tab[1] = (byte)UdpFrameFunction.AsserVitessePivot;
             tab[2] = (byte)ByteDivide(vitesse, true);
             tab[3] = (byte)ByteDivide(vitesse, false);
@@ -431,7 +431,7 @@ namespace GoBot.Communications.UDP
         static public Frame AccelPivot(int accel, Robot robot)
         {
             byte[] tab = new byte[4];
-            tab[0] = (byte)robot.Carte;
+            tab[0] = (byte)robot.AsservBoard;
             tab[1] = (byte)UdpFrameFunction.AsserAccelerationPivot;
             tab[2] = (byte)ByteDivide(accel, true);
             tab[3] = (byte)ByteDivide(accel, false);
@@ -443,7 +443,7 @@ namespace GoBot.Communications.UDP
         static public Frame Recallage(SensAR sens, Robot robot)
         {
             byte[] tab = new byte[3];
-            tab[0] = (byte)robot.Carte;
+            tab[0] = (byte)robot.AsservBoard;
             tab[1] = (byte)UdpFrameFunction.Recallage;
             tab[2] = (byte)sens;
 
@@ -464,7 +464,7 @@ namespace GoBot.Communications.UDP
             byte[] tab = new byte[3];
             tab[0] = (byte)Board.RecGB;
             tab[1] = (byte)UdpFrameFunction.DemandeCapteurOnOff;
-            tab[2] = (byte)CapteurOnOffID.CouleurEquipe;
+            tab[2] = (byte)SensorOnOffID.CouleurEquipe;
             return new Frame(tab);
         }
 
@@ -472,7 +472,7 @@ namespace GoBot.Communications.UDP
         static public Frame EnvoiConsigneBrute(int consigne, SensAR sens, Robot robot)
         {
             byte[] tab = new byte[5];
-            tab[0] = (byte)robot.Carte;
+            tab[0] = (byte)robot.AsservBoard;
             tab[1] = (byte)UdpFrameFunction.AsserEnvoiConsigneBrutePosition;
             tab[2] = (byte)sens;
             tab[3] = (byte)ByteDivide(consigne, true);
@@ -485,7 +485,7 @@ namespace GoBot.Communications.UDP
         static public Frame DemandePositionsCodeurs(Robot robot)
         {
             byte[] tab = new byte[2];
-            tab[0] = (byte)robot.Carte;
+            tab[0] = (byte)robot.AsservBoard;
             tab[1] = (byte)UdpFrameFunction.AsserDemandePositionCodeurs;
 
             Frame retour = new Frame(tab);
@@ -515,7 +515,7 @@ namespace GoBot.Communications.UDP
         static public Frame DemandeCpuPwm(Robot robot)
         {
             byte[] tab = new byte[2];
-            tab[0] = (byte)robot.Carte;
+            tab[0] = (byte)robot.AsservBoard;
             tab[1] = (byte)UdpFrameFunction.DemandeChargeCPU_PWM;
 
             Frame retour = new Frame(tab);

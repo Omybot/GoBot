@@ -22,7 +22,7 @@ namespace GoBot
     public abstract class Robot
     {
         // Communication
-        public Board Carte { get; set; }
+        public Board AsservBoard { get; set; }
         public Historique Historique { get; protected set; }
         public double BatterieVoltage { get; protected set; }
 
@@ -61,7 +61,7 @@ namespace GoBot
         // Actionneurs / Capteurs
 
         public bool JackArme { get; protected set; } = false;
-        public Dictionary<MoteurID, bool> MoteurTourne { get; set; }
+        public Dictionary<MotorID, bool> MoteurTourne { get; set; }
 
         public abstract void Delete();
 
@@ -101,13 +101,13 @@ namespace GoBot
         public abstract void EnvoyerPIDVitesse(int p, int i, int d);
         public abstract List<int>[] MesureTestPid(int consigne, SensAR sens, int nbValeurs);
         public abstract List<double>[] DiagnosticCpuPwm(int nbValeurs);
-        public abstract bool DemandeCapteurOnOff(CapteurOnOffID capteur, bool attendre = true);
-        public abstract Color DemandeCapteurCouleur(CapteurCouleurID capteur, bool attendre = true);
+        public abstract bool DemandeCapteurOnOff(SensorOnOffID capteur, bool attendre = true);
+        public abstract Color DemandeCapteurCouleur(SensorColorID capteur, bool attendre = true);
         public abstract void DemandeValeursAnalogiques(Board carte, bool attendre = true);
         public abstract void DemandeValeursNumeriques(Board carte, bool attendre = true);
         public abstract String GetMesureLidar(LidarID lidar, int timeout, out Position refPosition);
 
-        public abstract void ActionneurOnOff(ActionneurOnOffID actionneur, bool on);
+        public abstract void ActionneurOnOff(ActuatorOnOffID actionneur, bool on);
 
         public abstract void Init();
         public abstract void AlimentationPuissance(bool on);
@@ -121,19 +121,19 @@ namespace GoBot
         public abstract bool GetJack();
         public abstract Color GetCouleurEquipe(bool historique = true);
 
-        public Dictionary<CapteurOnOffID, bool> CapteurActive { get; set; }
-        public Dictionary<CapteurCouleurID, Color> CapteursCouleur { get; set; }
-        public Dictionary<ActionneurOnOffID, bool> ActionneurActive { get; set; }
+        public Dictionary<SensorOnOffID, bool> CapteurActive { get; set; }
+        public Dictionary<SensorColorID, Color> CapteursCouleur { get; set; }
+        public Dictionary<ActuatorOnOffID, bool> ActionneurActive { get; set; }
         public Dictionary<Board, List<double>> ValeursAnalogiques { get; set; }
         public Dictionary<Board, List<Byte>> ValeursNumeriques { get; set; }
 
-        public delegate void ChangementEtatCapteurOnOffDelegate(CapteurOnOffID capteur, bool etat);
+        public delegate void ChangementEtatCapteurOnOffDelegate(SensorOnOffID capteur, bool etat);
         public event ChangementEtatCapteurOnOffDelegate ChangementEtatCapteurOnOff;
 
         public delegate void PositionChangeDelegate(Position position);
         public event PositionChangeDelegate PositionChange;
 
-        public delegate void CapteurCouleurDelegate(CapteurCouleurID capteur, Color couleur);
+        public delegate void CapteurCouleurDelegate(SensorColorID capteur, Color couleur);
         public event CapteurCouleurDelegate CapteurCouleurChange;
 
         /// <summary>
@@ -150,13 +150,13 @@ namespace GoBot
         /// </summary>
         /// <param name="capteur"></param>
         /// <param name="etat"></param>
-        protected void ChangerEtatCapteurOnOff(CapteurOnOffID capteur, bool etat)
+        protected void ChangerEtatCapteurOnOff(SensorOnOffID capteur, bool etat)
         {
             CapteurActive[capteur] = etat;
             ChangementEtatCapteurOnOff?.Invoke(capteur, etat);
         }
 
-        protected void ChangeCouleurCapteur(CapteurCouleurID capteur, Color couleur)
+        protected void ChangeCouleurCapteur(SensorColorID capteur, Color couleur)
         {
             CapteurCouleurChange?.Invoke(capteur, couleur);
         }
@@ -183,29 +183,29 @@ namespace GoBot
             }
         }
 
-        public virtual void MoteurPosition(MoteurID moteur, int position, bool waitEnd = false)
+        public virtual void MoteurPosition(MotorID moteur, int position, bool waitEnd = false)
         {
             Historique.AjouterAction(new ActionMoteur(this, position, moteur));
         }
 
-        public virtual void MoteurOrigin(MoteurID moteur, bool waitEnd = false)
+        public virtual void MoteurOrigin(MotorID moteur, bool waitEnd = false)
         {
 
         }
 
-        public virtual void MoteurWait(MoteurID moteur)
+        public virtual void MoteurWait(MotorID moteur)
         {
 
         }
 
-        public virtual void MoteurVitesse(MoteurID moteur, SensGD sens, int vitesse)
+        public virtual void MoteurVitesse(MotorID moteur, SensGD sens, int vitesse)
         {
             if (MoteurTourne.ContainsKey(moteur))
                 MoteurTourne[moteur] = vitesse == 0 ? false : true;
             Historique.AjouterAction(new ActionMoteur(this, vitesse, moteur));
         }
 
-        public virtual void MoteurAcceleration(MoteurID moteur, int acceleration)
+        public virtual void MoteurAcceleration(MotorID moteur, int acceleration)
         {
             Historique.AjouterAction(new ActionMoteur(this, acceleration, moteur));
         }
@@ -228,8 +228,8 @@ namespace GoBot
             AsserStats = new AsserStats();
             VitesseAdaptableEnnemi = true;
            
-            MoteurTourne = new Dictionary<MoteurID, bool>();
-            foreach (MoteurID moteur in Enum.GetValues(typeof(MoteurID)))
+            MoteurTourne = new Dictionary<MotorID, bool>();
+            foreach (MotorID moteur in Enum.GetValues(typeof(MotorID)))
                 MoteurTourne.Add(moteur, false);
 
             BatterieVoltage = 0;

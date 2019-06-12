@@ -22,7 +22,7 @@ namespace GoBot.IHM
         {
             if (value)
             {
-                Robots.GrosRobot.ActionneurOnOff(ActionneurOnOffID.AlimCapteurCouleur, true);
+                Robots.GrosRobot.ActionneurOnOff(ActuatorOnOffID.AlimCapteurCouleur, true);
                 Robots.GrosRobot.CapteurCouleurChange += GrosRobot_CapteurCouleurChange;
                 tCouleur = new Timer();
                 tCouleur.Tick += tCouleur_Tick;
@@ -31,7 +31,7 @@ namespace GoBot.IHM
             }
             else
             {
-                Robots.GrosRobot.ActionneurOnOff(ActionneurOnOffID.AlimCapteurCouleur, false);
+                Robots.GrosRobot.ActionneurOnOff(ActuatorOnOffID.AlimCapteurCouleur, false);
                 Robots.GrosRobot.CapteurCouleurChange -= GrosRobot_CapteurCouleurChange;
                 tCouleur.Stop();
                 tCouleur.Dispose();
@@ -40,14 +40,14 @@ namespace GoBot.IHM
 
         void tCouleur_Tick(object sender, EventArgs e)
         {
-            Robots.GrosRobot.DemandeCapteurCouleur(CapteurCouleurID.CouleurTube, false);
+            Robots.GrosRobot.DemandeCapteurCouleur(SensorColorID.CouleurTube, false);
         }
 
-        void GrosRobot_CapteurCouleurChange(CapteurCouleurID capteur, Color couleur)
+        void GrosRobot_CapteurCouleurChange(SensorColorID capteur, Color couleur)
         {
             this.InvokeAuto(() =>
             {
-                if (capteur == CapteurCouleurID.CouleurTube)
+                if (capteur == SensorColorID.CouleurTube)
                     picColor.SetColor(couleur);
             });
         }

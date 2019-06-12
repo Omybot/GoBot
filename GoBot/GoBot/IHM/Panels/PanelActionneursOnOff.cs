@@ -22,7 +22,7 @@ namespace GoBot.IHM
             {
                 int y = 20;
 
-                foreach (ActionneurOnOffID act in Enum.GetValues(typeof(ActionneurOnOffID)))
+                foreach (ActuatorOnOffID act in Enum.GetValues(typeof(ActuatorOnOffID)))
                 {
                     PanelActionneurOnOff panel = new PanelActionneurOnOff();
                     panel.SetBounds(0, y, panel.Width, panel.Height);

@@ -57,21 +57,21 @@ namespace GoBot
             RecallageEnCours = false;
 
             IDRobot = idRobot;
-            CapteurActive = new Dictionary<CapteurOnOffID, bool>();
-            ActionneurActive = new Dictionary<ActionneurOnOffID, bool>();
-            CapteursCouleur = new Dictionary<CapteurCouleurID, Color>();
+            CapteurActive = new Dictionary<SensorOnOffID, bool>();
+            ActionneurActive = new Dictionary<ActuatorOnOffID, bool>();
+            CapteursCouleur = new Dictionary<SensorColorID, Color>();
 
-            foreach (CapteurOnOffID fonction in Enum.GetValues(typeof(CapteurOnOffID)))
+            foreach (SensorOnOffID fonction in Enum.GetValues(typeof(SensorOnOffID)))
             {
                 CapteurActive.Add(fonction, false);
             }
 
-            foreach (ActionneurOnOffID fonction in Enum.GetValues(typeof(ActionneurOnOffID)))
+            foreach (ActuatorOnOffID fonction in Enum.GetValues(typeof(ActuatorOnOffID)))
             {
                 ActionneurActive.Add(fonction, false);
             }
 
-            foreach (CapteurCouleurID fonction in Enum.GetValues(typeof(CapteurCouleurID)))
+            foreach (SensorColorID fonction in Enum.GetValues(typeof(SensorColorID)))
             {
                 CapteursCouleur.Add(fonction, Color.Black);
             }
@@ -464,13 +464,13 @@ namespace GoBot
             PositionCible = null;
         }
 
-        public override bool DemandeCapteurOnOff(CapteurOnOffID capteur, bool attendre = true)
+        public override bool DemandeCapteurOnOff(SensorOnOffID capteur, bool attendre = true)
         {
             // TODO
             return true;
         }
 
-        public override Color DemandeCapteurCouleur(CapteurCouleurID capteur, bool attendre = true)
+        public override Color DemandeCapteurCouleur(SensorColorID capteur, bool attendre = true)
         {
             // TODO
             return Color.Black;
@@ -491,7 +491,7 @@ namespace GoBot
             // TODO
         }
 
-        public override void ActionneurOnOff(ActionneurOnOffID actionneur, bool on)
+        public override void ActionneurOnOff(ActuatorOnOffID actionneur, bool on)
         {
             // TODO
             Historique.AjouterAction(new ActionOnOff(this, actionneur, on));
@@ -499,17 +499,17 @@ namespace GoBot
 
         System.Timers.Timer timerPositions;
 
-        public override void MoteurPosition(MoteurID moteur, int vitesse, bool waitEnd)
+        public override void MoteurPosition(MotorID moteur, int vitesse, bool waitEnd)
         {
             base.MoteurPosition(moteur, vitesse);
         }
 
-        public override void MoteurVitesse(MoteurID moteur, SensGD sens, int vitesse)
+        public override void MoteurVitesse(MotorID moteur, SensGD sens, int vitesse)
         {
             base.MoteurVitesse(moteur, sens, vitesse);
         }
 
-        public override void MoteurAcceleration(MoteurID moteur, int acceleration)
+        public override void MoteurAcceleration(MotorID moteur, int acceleration)
         {
             base.MoteurAcceleration(moteur, acceleration);
         }

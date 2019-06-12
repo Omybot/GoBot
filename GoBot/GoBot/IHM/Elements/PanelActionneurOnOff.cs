@@ -12,14 +12,14 @@ namespace GoBot.IHM
 {
     public partial class PanelActionneurOnOff : UserControl
     {
-        private ActionneurOnOffID actionneur;
+        private ActuatorOnOffID actionneur;
 
         public PanelActionneurOnOff()
         {
             InitializeComponent();
         }
 
-        public void SetActionneur(ActionneurOnOffID act)
+        public void SetActionneur(ActuatorOnOffID act)
         {
             actionneur = act;
             lblName.Text = NameFinder.GetName(act).Substring(0, 1).ToUpper() + NameFinder.GetName(act).Substring(1);

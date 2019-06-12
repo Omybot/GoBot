@@ -19,12 +19,12 @@ namespace GoBot
 
             List<Type> typesEnum = new List<Type>();
             typesEnum.Add(typeof(CapteurID));
-            typesEnum.Add(typeof(CapteurOnOffID));
-            typesEnum.Add(typeof(ActionneurOnOffID));
+            typesEnum.Add(typeof(SensorOnOffID));
+            typesEnum.Add(typeof(ActuatorOnOffID));
             typesEnum.Add(typeof(ServomoteurID));
-            typesEnum.Add(typeof(MoteurID));
+            typesEnum.Add(typeof(MotorID));
             typesEnum.Add(typeof(CodeurID));
-            typesEnum.Add(typeof(CapteurCouleurID));
+            typesEnum.Add(typeof(SensorColorID));
             typesEnum.Add(typeof(BaliseID));
             typesEnum.Add(typeof(LedID));
             typesEnum.Add(typeof(LedRgbID));

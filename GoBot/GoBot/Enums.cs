@@ -63,7 +63,7 @@ namespace GoBot
         RightViolet
     }
 
-    public enum MoteurID
+    public enum MotorID
     {
         FingerFront = 0, // RecIO
         FingerBack = 1, // RecIO
@@ -83,12 +83,12 @@ namespace GoBot
         BaliseRapide2 = 3
     }
 
-    public enum ActionneurOnOffID
+    public enum ActuatorOnOffID
     {
         AlimCapteurCouleur = 1
     }
 
-    public enum CapteurOnOffID
+    public enum SensorOnOffID
     {
         Bouton2 = 0,
         Bouton4 = 1,
@@ -114,7 +114,7 @@ namespace GoBot
         PresenceOnSaitPasOu = 0x52
     }
 
-    public enum CapteurCouleurID
+    public enum SensorColorID
     {
         CouleurTube = 0
     }

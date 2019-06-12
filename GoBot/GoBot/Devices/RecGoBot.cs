@@ -19,7 +19,7 @@ namespace GoBot.Devices
     {
         private bool _switch1, _switch2, _switch3, _switch4;
 
-        public delegate void ButtonChangeDelegate(CapteurOnOffID btn, Boolean state);
+        public delegate void ButtonChangeDelegate(SensorOnOffID btn, Boolean state);
         public event ButtonChangeDelegate ButtonChange;
 
         public delegate void JackChangeDelegate(Boolean state);
@@ -234,7 +234,7 @@ namespace GoBot.Devices
             Robots.GrosRobot.Stop(Robots.GrosRobot.AsserActif ? StopMode.Freely : StopMode.Abrupt);
         }
 
-        void RecGoBot_ButtonChange(CapteurOnOffID btn, bool state)
+        void RecGoBot_ButtonChange(SensorOnOffID btn, bool state)
         {
             if (Plateau.Strategy == null || (Plateau.Strategy != null && !Plateau.Strategy.IsRunning))
             {
@@ -242,49 +242,49 @@ namespace GoBot.Devices
                 {
                     switch (btn)
                     {
-                        case CapteurOnOffID.Bouton1:
+                        case SensorOnOffID.Bouton1:
                             Button1Click();
                             break;
-                        case CapteurOnOffID.Bouton2:
+                        case SensorOnOffID.Bouton2:
                             Button2Click();
                             break;
-                        case CapteurOnOffID.Bouton3:
+                        case SensorOnOffID.Bouton3:
                             Button3Click();
                             break;
-                        case CapteurOnOffID.Bouton4:
+                        case SensorOnOffID.Bouton4:
                             Button4Click();
                             break;
-                        case CapteurOnOffID.Bouton5:
+                        case SensorOnOffID.Bouton5:
                             Button5Click();
                             break;
-                        case CapteurOnOffID.Bouton6:
+                        case SensorOnOffID.Bouton6:
                             Button6Click();
                             break;
-                        case CapteurOnOffID.Bouton7:
+                        case SensorOnOffID.Bouton7:
                             Button7Click();
                             break;
-                        case CapteurOnOffID.Bouton8:
+                        case SensorOnOffID.Bouton8:
                             Button8Click();
                             break;
-                        case CapteurOnOffID.Bouton9:
+                        case SensorOnOffID.Bouton9:
                             Button9Click();
                             break;
-                        case CapteurOnOffID.Bouton10:
+                        case SensorOnOffID.Bouton10:
                             Button10Click();
                             break;
-                        case CapteurOnOffID.LSwitch1:
+                        case SensorOnOffID.LSwitch1:
                             _switch1 = true;
                             SwitchChanged();
                             break;
-                        case CapteurOnOffID.LSwitch2:
+                        case SensorOnOffID.LSwitch2:
                             _switch2 = true;
                             SwitchChanged();
                             break;
-                        case CapteurOnOffID.LSwitch3:
+                        case SensorOnOffID.LSwitch3:
                             _switch3 = true;
                             SwitchChanged();
                             break;
-                        case CapteurOnOffID.LSwitch4:
+                        case SensorOnOffID.LSwitch4:
                             _switch4 = true;
                             SwitchChanged();
                             break;
@@ -294,19 +294,19 @@ namespace GoBot.Devices
                 {
                     switch (btn)
                     {
-                        case CapteurOnOffID.LSwitch1:
+                        case SensorOnOffID.LSwitch1:
                             _switch1 = false;
                             SwitchChanged();
                             break;
-                        case CapteurOnOffID.LSwitch2:
+                        case SensorOnOffID.LSwitch2:
                             _switch2 = false;
                             SwitchChanged();
                             break;
-                        case CapteurOnOffID.LSwitch3:
+                        case SensorOnOffID.LSwitch3:
                             _switch3 = false;
                             SwitchChanged();
                             break;
-                        case CapteurOnOffID.LSwitch4:
+                        case SensorOnOffID.LSwitch4:
                             _switch4 = false;
                             SwitchChanged();
                             break;
@@ -376,80 +376,80 @@ namespace GoBot.Devices
         {
             if (trameRecue[1] == (byte)UdpFrameFunction.RetourCapteurOnOff)
             {
-                CapteurOnOffID but;
+                SensorOnOffID but;
 
                 bool pushed = trameRecue[3] > 0;
 
                 switch (trameRecue[2])
                 {
                     case 0:
-                        but = CapteurOnOffID.Bouton2;
+                        but = SensorOnOffID.Bouton2;
                         break;
                     case 1:
-                        but = CapteurOnOffID.Bouton4;
+                        but = SensorOnOffID.Bouton4;
                         break;
                     case 2:
-                        but = CapteurOnOffID.Bouton1;
+                        but = SensorOnOffID.Bouton1;
                         break;
                     case 3:
-                        but = CapteurOnOffID.Bouton3;
+                        but = SensorOnOffID.Bouton3;
                         break;
                     case 4:
-                        but = CapteurOnOffID.Bouton10;
+                        but = SensorOnOffID.Bouton10;
                         break;
                     case 5:
-                        but = CapteurOnOffID.Bouton8;
+                        but = SensorOnOffID.Bouton8;
                         break;
                     case 6:
-                        but = CapteurOnOffID.Bouton9;
+                        but = SensorOnOffID.Bouton9;
                         break;
                     case 7:
-                        but = CapteurOnOffID.Bouton7;
+                        but = SensorOnOffID.Bouton7;
                         break;
                     case 8:
-                        but = CapteurOnOffID.Bouton6;
+                        but = SensorOnOffID.Bouton6;
                         break;
                     case 9:
-                        but = CapteurOnOffID.CouleurEquipe;
+                        but = SensorOnOffID.CouleurEquipe;
                         break;
                     case 10:
-                        but = CapteurOnOffID.Jack;
+                        but = SensorOnOffID.Jack;
                         break;
                     case 11:
-                        but = CapteurOnOffID.Bouton5;
+                        but = SensorOnOffID.Bouton5;
                         break;
                     case 12:
-                        but = CapteurOnOffID.LSwitch1;
+                        but = SensorOnOffID.LSwitch1;
                         break;
                     case 13:
-                        but = CapteurOnOffID.LSwitch2;
+                        but = SensorOnOffID.LSwitch2;
                         break;
                     case 14:
-                        but = CapteurOnOffID.LSwitch3;
+                        but = SensorOnOffID.LSwitch3;
                         break;
                     case 15:
-                        but = CapteurOnOffID.LSwitch4;
+                        but = SensorOnOffID.LSwitch4;
                         break;
                     case 16:
-                        but = CapteurOnOffID.ChaiPas;
+                        but = SensorOnOffID.ChaiPas;
                         break;
                     case 17:
-                        but = CapteurOnOffID.ChaiPlus;
+                        but = SensorOnOffID.ChaiPlus;
                         break;
                     case 18:
-                        but = CapteurOnOffID.PresenceDroite;
+                        but = SensorOnOffID.PresenceDroite;
                         break;
                     case 19:
-                        but = CapteurOnOffID.PresenceGauche;
+                        but = SensorOnOffID.PresenceGauche;
                         break;
                     default:
                         return;
                 }
 
-                if (but == CapteurOnOffID.CouleurEquipe)
+                if (but == SensorOnOffID.CouleurEquipe)
                     ColorChange?.Invoke((MatchColor)trameRecue[3]);
 
-                else if (but == CapteurOnOffID.Jack)
+                else if (but == SensorOnOffID.Jack)
                 {
                     AllDevices.RecGoBot.SetLed(LedID.DebugB1, pushed ? RecGoBot.LedStatus.Vert : RecGoBot.LedStatus.Rouge);
                     JackChange?.Invoke(pushed);

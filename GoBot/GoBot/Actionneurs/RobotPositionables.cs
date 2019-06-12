@@ -209,7 +209,7 @@ namespace GoBot.Actionneurs
 
     public class MotorGulp : PositionableMotorSpeed
     {
-        public override MoteurID ID => MoteurID.Gulp;
+        public override MotorID ID => MotorID.Gulp;
         public int PositionSwallow { get; set; }
         public int PositionStop { get; set; }
         public int PositionSpit { get; set; }
@@ -219,13 +219,13 @@ namespace GoBot.Actionneurs
 
     public class MotorFingerFront : PositionableMotorPosition
     {
-        public override MoteurID ID => MoteurID.FingerFront;
+        public override MotorID ID => MotorID.FingerFront;
         public int PositionPrepare { get; set; }
         public int PositionStore { get; set; }
     }
 
     public class MotorFingerBack : PositionableMotorPosition
     {
-        public override MoteurID ID => MoteurID.FingerBack;
+        public override MotorID ID => MotorID.FingerBack;
     }
 }

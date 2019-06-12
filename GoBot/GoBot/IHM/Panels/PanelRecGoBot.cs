@@ -35,22 +35,22 @@ namespace GoBot.IHM
             colorPickup1.ColorHover += colorPickup1_ColorHover;
             colorPickup1.ColorClick += colorPickup1_ColorClick;
 
-            btn1.Tag = CapteurOnOffID.Bouton1;
-            btn2.Tag = CapteurOnOffID.Bouton2;
-            btn3.Tag = CapteurOnOffID.Bouton3;
-            btn4.Tag = CapteurOnOffID.Bouton4;
-            btn5.Tag = CapteurOnOffID.Bouton5;
-            btn6.Tag = CapteurOnOffID.Bouton6;
-            btn7.Tag = CapteurOnOffID.Bouton7;
-            btn8.Tag = CapteurOnOffID.Bouton8;
-            btn9.Tag = CapteurOnOffID.Bouton9;
-            btn10.Tag = CapteurOnOffID.Bouton10;
-            btnJack.Tag = CapteurOnOffID.Jack;
-            btnCouleur.Tag = CapteurOnOffID.CouleurEquipe;
-            swi1.Tag = CapteurOnOffID.LSwitch1;
-            swi2.Tag = CapteurOnOffID.LSwitch2;
-            swi3.Tag = CapteurOnOffID.LSwitch3;
-            swi4.Tag = CapteurOnOffID.LSwitch4;
+            btn1.Tag = SensorOnOffID.Bouton1;
+            btn2.Tag = SensorOnOffID.Bouton2;
+            btn3.Tag = SensorOnOffID.Bouton3;
+            btn4.Tag = SensorOnOffID.Bouton4;
+            btn5.Tag = SensorOnOffID.Bouton5;
+            btn6.Tag = SensorOnOffID.Bouton6;
+            btn7.Tag = SensorOnOffID.Bouton7;
+            btn8.Tag = SensorOnOffID.Bouton8;
+            btn9.Tag = SensorOnOffID.Bouton9;
+            btn10.Tag = SensorOnOffID.Bouton10;
+            btnJack.Tag = SensorOnOffID.Jack;
+            btnCouleur.Tag = SensorOnOffID.CouleurEquipe;
+            swi1.Tag = SensorOnOffID.LSwitch1;
+            swi2.Tag = SensorOnOffID.LSwitch2;
+            swi3.Tag = SensorOnOffID.LSwitch3;
+            swi4.Tag = SensorOnOffID.LSwitch4;
 
             ledA1.Tag = LedID.DebugA1;
             ledA2.Tag = LedID.DebugA2;
@@ -164,13 +164,13 @@ namespace GoBot.IHM
             SetColor(color);
         }
 
-        void RecGoBot_ButtonChange(CapteurOnOffID btn, bool state)
+        void RecGoBot_ButtonChange(SensorOnOffID btn, bool state)
         {
             this.InvokeAuto(() =>
             {
                 try
                 {
-                    boutons.Find(b => (CapteurOnOffID)b.Tag == btn).Value = state;
+                    boutons.Find(b => (SensorOnOffID)b.Tag == btn).Value = state;
                 }
                 catch (Exception)
                 {

@@ -84,14 +84,14 @@ namespace GoBot.Communications.UDP
                     output = "Demande capteur {0}";
                     if (parameters != null)
                     {
-                        output = ReplaceParam(output, NameFinder.GetName((CapteurOnOffID)parameters[0]));
+                        output = ReplaceParam(output, NameFinder.GetName((SensorOnOffID)parameters[0]));
                     }
                     break;
                 case UdpFrameFunction.RetourCapteurOnOff:
                     output = "Retour capteur {0} : {1}";
                     if (parameters != null)
                     {
-                        output = ReplaceParam(output, NameFinder.GetName((CapteurOnOffID)parameters[0]));
+                        output = ReplaceParam(output, NameFinder.GetName((SensorOnOffID)parameters[0]));
                         output = ReplaceParam(output, NameFinder.GetName(parameters[1] > 0));
                     }
                     break;
@@ -112,14 +112,14 @@ namespace GoBot.Communications.UDP
                     output = "Demande capteur couleur {0}";
                     if (parameters != null)
                     {
-                        output = ReplaceParam(output, NameFinder.GetName((CapteurCouleurID)parameters[0]));
+                        output = ReplaceParam(output, NameFinder.GetName((SensorColorID)parameters[0]));
                     }
                     break;
                 case UdpFrameFunction.RetourCapteurCouleur:
                     output = "Retour capteur couleur {0} : {1}-{2}-{3}";
                     if (parameters != null)
                     {
-                        output = ReplaceParam(output, NameFinder.GetName((CapteurCouleurID)parameters[0]));
+                        output = ReplaceParam(output, NameFinder.GetName((SensorColorID)parameters[0]));
                         output = ReplaceParam(output, parameters[1].ToString("000"));
                         output = ReplaceParam(output, parameters[2].ToString("000"));
                         output = ReplaceParam(output, parameters[3].ToString("000"));
@@ -144,7 +144,7 @@ namespace GoBot.Communications.UDP
                     output = "Pilote actionneur on off {0} : {1}";
                     if (parameters != null)
                     {
-                        output = ReplaceParam(output, NameFinder.GetName((ActionneurOnOffID)parameters[0]));
+                        output = ReplaceParam(output, NameFinder.GetName((ActuatorOnOffID)parameters[0]));
                         output = ReplaceParam(output, NameFinder.GetName(parameters[1] > 0));
                     }
                     break;
@@ -160,7 +160,7 @@ namespace GoBot.Communications.UDP
                     output = "Pilote moteur {0} position {1-2}";
                     if (parameters != null)
                     {
-                        output = ReplaceParam(output, NameFinder.GetName((MoteurID)parameters[0]));
+                        output = ReplaceParam(output, NameFinder.GetName((MotorID)parameters[0]));
                         output = ReplaceParam(output, parameters[1].ToString());
                     }
                     break;
@@ -168,7 +168,7 @@ namespace GoBot.Communications.UDP
                     output = "Pilote moteur {0} vitesse {2-3} vers la {1}";
                     if (parameters != null)
                     {
-                        output = ReplaceParam(output, NameFinder.GetName((MoteurID)parameters[0]));
+                        output = ReplaceParam(output, NameFinder.GetName((MotorID)parameters[0]));
                         output = ReplaceParam(output, parameters[1].ToString());
                         output = ReplaceParam(output, ((SensGD)parameters[2]).ToString().ToLower());
                     }
@@ -177,7 +177,7 @@ namespace GoBot.Communications.UDP
                     output = "Pilote moteur {0} accélération {1-2}";
                     if (parameters != null)
                     {
-                        output = ReplaceParam(output, NameFinder.GetName((MoteurID)parameters[0]));
+                        output = ReplaceParam(output, NameFinder.GetName((MotorID)parameters[0]));
                         output = ReplaceParam(output, parameters[1].ToString());
                     }
                     break;
@@ -185,7 +185,7 @@ namespace GoBot.Communications.UDP
                     output = "Moteur {0} stoppé {1}";
                     if (parameters != null)
                     {
-                        output = ReplaceParam(output, NameFinder.GetName((MoteurID)parameters[0]));
+                        output = ReplaceParam(output, NameFinder.GetName((MotorID)parameters[0]));
                         output = ReplaceParam(output, ((StopMode)parameters[1]).ToString());
                     }
                     break;
@@ -193,28 +193,28 @@ namespace GoBot.Communications.UDP
                     output = "Envoi du moteur {0} à l'origine";
                     if (parameters != null)
                     {
-                        output = ReplaceParam(output, NameFinder.GetName((MoteurID)parameters[0]));
+                        output = ReplaceParam(output, NameFinder.GetName((MotorID)parameters[0]));
                     }
                     break;
                 case UdpFrameFunction.MoteurResetPosition:
                     output = "Moteur {0} réintialisé à 0";
                     if (parameters != null)
                     {
-                        output = ReplaceParam(output, NameFinder.GetName((MoteurID)parameters[0]));
+                        output = ReplaceParam(output, NameFinder.GetName((MotorID)parameters[0]));
                     }
                     break;
                 case UdpFrameFunction.MoteurFin:
                     output = "Moteur {0} arrivé à destination";
                     if (parameters != null)
                     {
-                        output = ReplaceParam(output, NameFinder.GetName((MoteurID)parameters[0]));
+                        output = ReplaceParam(output, NameFinder.GetName((MotorID)parameters[0]));
                     }
                     break;
                 case UdpFrameFunction.MoteurBlocage:
                     output = "Moteur {0} bloqué";
                     if (parameters != null)
                     {
-                        output = ReplaceParam(output, NameFinder.GetName((MoteurID)parameters[0]));
+                        output = ReplaceParam(output, NameFinder.GetName((MotorID)parameters[0]));
                     }
                     break;
                 case UdpFrameFunction.CommandeServo:
