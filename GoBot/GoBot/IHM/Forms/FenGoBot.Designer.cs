@@ -57,6 +57,7 @@ namespace GoBot
             this.panelGrosRobot = new GoBot.IHM.PanelGrosRobot();
             this.tabControl = new System.Windows.Forms.TabControl();
             this.tabCANServos = new System.Windows.Forms.TabPage();
+            this.pageServomotors = new GoBot.IHM.Pages.PageServomotors();
             this.tabPortsAnalogiques = new System.Windows.Forms.TabPage();
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabIO = new System.Windows.Forms.TabPage();
@@ -89,7 +90,6 @@ namespace GoBot
             this.switchBoutonSimu = new Composants.SwitchButton();
             this.panelConnexions = new GoBot.IHM.PanelConnexions();
             this.panelAlimentation1 = new GoBot.IHM.PagePower();
-            this.pageServomotors = new GoBot.IHM.Pages.PageServomotors();
             this.tabAlimentation.SuspendLayout();
             this.tabConnexions.SuspendLayout();
             this.tabDiagnosticRecMove.SuspendLayout();
@@ -184,9 +184,10 @@ namespace GoBot
             // 
             // panelChargeCPU1
             // 
+            this.panelChargeCPU1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panelChargeCPU1.Location = new System.Drawing.Point(3, 3);
             this.panelChargeCPU1.Name = "panelChargeCPU1";
-            this.panelChargeCPU1.Size = new System.Drawing.Size(1133, 615);
+            this.panelChargeCPU1.Size = new System.Drawing.Size(1294, 706);
             this.panelChargeCPU1.TabIndex = 0;
             // 
             // tabReglagePID
@@ -404,6 +405,14 @@ namespace GoBot
             this.tabCANServos.TabIndex = 30;
             this.tabCANServos.Text = "Servos CAN";
             this.tabCANServos.UseVisualStyleBackColor = true;
+            // 
+            // pageServomotors
+            // 
+            this.pageServomotors.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.pageServomotors.Location = new System.Drawing.Point(3, 3);
+            this.pageServomotors.Name = "pageServomotors";
+            this.pageServomotors.Size = new System.Drawing.Size(1294, 706);
+            this.pageServomotors.TabIndex = 0;
             // 
             // tabPortsAnalogiques
             // 
@@ -723,14 +732,6 @@ namespace GoBot
             this.panelAlimentation1.Name = "panelAlimentation1";
             this.panelAlimentation1.Size = new System.Drawing.Size(1025, 501);
             this.panelAlimentation1.TabIndex = 0;
-            // 
-            // pageServomotors
-            // 
-            this.pageServomotors.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.pageServomotors.Location = new System.Drawing.Point(3, 3);
-            this.pageServomotors.Name = "pageServomotors";
-            this.pageServomotors.Size = new System.Drawing.Size(1294, 706);
-            this.pageServomotors.TabIndex = 0;
             // 
             // FenGoBot
             // 

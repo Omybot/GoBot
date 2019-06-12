@@ -196,10 +196,10 @@ namespace Composants
                         if (CurveFilled[courbe.Key])
                         {
                             List<Point> ptsFill = new List<Point>(pts);
-
-                            ptsFill.Insert(0, new Point(0, pictureBox.Height));
-                            ptsFill.Add(new Point(pts[pts.Count - 1].X, pictureBox.Height));
-
+                            
+                            ptsFill.Insert(0, new Point(0, (int)((pictureBox.Height - 1) - coef * (0 - min))));
+                            ptsFill.Add(new Point(pts[pts.Count - 1].X, (int)((pictureBox.Height - 1) - coef * (0 - min))));
+                            
                             Brush b = new LinearGradientBrush(new PointF(0, 0), new PointF(0, pictureBox.Height), endCol, startCol);
                             gTemp.FillPolygon(b, ptsFill.ToArray());
                             b.Dispose();

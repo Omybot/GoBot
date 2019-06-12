@@ -17,26 +17,31 @@ namespace GoBot.IHM
         private ThreadLink _linkPolling;
         private ThreadLink _linkDrawing;
 
+        double _cpuAverage;
+
         public PanelDiagnosticMove()
         {
             InitializeComponent();
         }
 
-        private void btnDemandeCharge_Click(object sender, EventArgs e)
+        private void btnLaunch_Click(object sender, EventArgs e)
         {
-            if (_linkPolling != null)
+            if (_linkPolling == null)
             {
-                btnDemandeCharge.Text = "Stopper";
+                btnLaunch.Text = "Stopper";
+                btnLaunch.Image = Properties.Resources.Pause16;
 
-                _linkPolling = ThreadManager.CreateThread(link => DemandeValeurs());
+                _linkPolling = ThreadManager.CreateThread(link => Measure());
                 _linkPolling.StartInfiniteLoop(new TimeSpan(0));
 
-                _linkDrawing = ThreadManager.CreateThread(link => Dessine());
+                _linkDrawing = ThreadManager.CreateThread(link => DrawMeasures());
                 _linkDrawing.StartInfiniteLoop(new TimeSpan(0, 0, 0, 0, 50));
             }
             else
             {
-                btnDemandeCharge.Text = "Lancer";
+                btnLaunch.Text = "Lancer";
+                btnLaunch.Image = Properties.Resources.Play16;
+
                 _linkPolling.Cancel();
                 _linkDrawing.Cancel();
 
@@ -47,36 +52,70 @@ namespace GoBot.IHM
                 _linkDrawing = null;
             }
         }
-        
-        void Dessine()
-        {
-            lblChargeCPU.Text = (moyenne * 100).ToString("#.##") + "%";
-            ctrlGraphique.DrawCurves();
-            ctrlGraphique1.DrawCurves();
-            ctrlGraphique2.DrawCurves();
 
-            Color c = Color.FromArgb(230, Color.White);
-            Image img = new Bitmap(global::GoBot.Properties.Resources.Vumetre);
-            Graphics g = Graphics.FromImage(img);
-            g.FillRectangle(new SolidBrush(Color.White), 0, 0, 12, img.Height - (int)(moyenne * img.Height));
-            pictureBoxVumetreCPU.Image = img;
+        private void DrawMeasures()
+        {
+            this.InvokeAuto(() =>
+            {
+                lblCpuLoad.Text = (_cpuAverage * 100).ToString("00") + "%";
+                gphCpu.DrawCurves();
+                gphPwmRight.DrawCurves();
+                gphPwmLeft.DrawCurves();
+                
+                Image img = new Bitmap(Properties.Resources.Vumetre);
+                Graphics g = Graphics.FromImage(img);
+                g.FillRectangle(new SolidBrush(Color.FromArgb(250, 250, 250)), 0, 0, 12, img.Height - (int)(_cpuAverage * img.Height));
+                picVumetre.Image = img;
+            });
         }
 
-        double moyenne;
-        void DemandeValeurs()
+        private void Measure()
         {
-            List<double>[] valeurs = Robots.GrosRobot.DiagnosticCpuPwm(30);
-            moyenne = valeurs[0].Average();
+            List<double>[] values = Robots.GrosRobot.DiagnosticCpuPwm(30);
+            _cpuAverage = values[0].Average();
 
-            int min = Math.Min(valeurs[0].Count, valeurs[1].Count); 
-            min = Math.Min(min, valeurs[2].Count);
+            int min = Math.Min(values[0].Count, values[1].Count);
+            min = Math.Min(min, values[2].Count);
 
             for (int i = 0; i < min; i++)
             {
-                ctrlGraphique.AddPoint("CPU", valeurs[0][i], Color.Green);
+                gphCpu.AddPoint("Charge CPU", values[0][i], Color.Green, true);
 
-                ctrlGraphique2.AddPoint("PWM gauche", valeurs[1][i], Color.Blue);
-                ctrlGraphique1.AddPoint("PWM droite", valeurs[2][i], Color.Red);
+                gphPwmLeft.AddPoint("PWM Gauche", values[1][i], Color.Blue, true);
+                gphPwmRight.AddPoint("PWM Droite", values[2][i], Color.Red, true);
+            }
+        }
+
+        private void PanelDiagnosticMove_Load(object sender, EventArgs e)
+        {
+            if(!Execution.DesignMode)
+            {
+                gphCpu.MaxLimit = 1;
+                gphCpu.MinLimit = 0;
+                gphCpu.ScaleMode = Composants.GraphPanel.ScaleType.Fixed;
+                gphCpu.NamesVisible = true;
+                gphCpu.BorderVisible = true;
+                gphCpu.BorderColor = Color.FromArgb(100, 100, 100);
+                gphCpu.BackColor = Color.FromArgb(250, 250, 250);
+                gphCpu.NamesAlignment = ContentAlignment.BottomLeft;
+
+                gphPwmLeft.MaxLimit = 4000;
+                gphPwmLeft.MinLimit = -4000;
+                gphPwmLeft.ScaleMode = Composants.GraphPanel.ScaleType.Fixed;
+                gphPwmLeft.NamesVisible = true;
+                gphPwmLeft.BorderVisible = true;
+                gphPwmLeft.BorderColor = Color.FromArgb(100, 100, 100);
+                gphPwmLeft.BackColor = Color.FromArgb(250, 250, 250);
+                gphPwmLeft.NamesAlignment = ContentAlignment.TopLeft;
+
+                gphPwmRight.MaxLimit = 4000;
+                gphPwmRight.MinLimit = -4000;
+                gphPwmRight.ScaleMode = Composants.GraphPanel.ScaleType.Fixed;
+                gphPwmRight.NamesVisible = true;
+                gphPwmRight.BorderVisible = true;
+                gphPwmRight.BorderColor = Color.FromArgb(100, 100, 100);
+                gphPwmRight.BackColor = Color.FromArgb(250, 250, 250);
+                gphPwmRight.NamesAlignment = ContentAlignment.BottomLeft;
             }
         }
     }

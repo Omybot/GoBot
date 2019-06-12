@@ -16,6 +16,8 @@ namespace GoBot
 {
     class RobotReel : Robot
     {
+        List<double> _measRecMoveLoad, _measPwmLeft, _measPwmRight;
+
         Dictionary<CapteurOnOffID, Semaphore> SemaphoresCapteurs = new Dictionary<CapteurOnOffID, Semaphore>();
         Dictionary<CapteurCouleurID, Semaphore> SemaphoresCouleur = new Dictionary<CapteurCouleurID, Semaphore>();
         Dictionary<UdpFrameFunction, Semaphore> SemaphoresTrame = new Dictionary<UdpFrameFunction, Semaphore>();
@@ -230,19 +232,19 @@ namespace GoBot
                 AllDevices.RecGoBot.SetLed((LedID)i, RecGoBot.LedStatus.Off);
         }
 
-        public void ReceptionMessage(Frame trameRecue)
+        public void ReceptionMessage(Frame frame)
         {
             // Analyser la trame reçue
 
             //Console.WriteLine(trameRecue.ToString());
 
-            switch ((UdpFrameFunction)trameRecue[1])
+            switch ((UdpFrameFunction)frame[1])
             {
                 case UdpFrameFunction.MoteurFin:
-                    SemaphoresMoteur[(MoteurID)trameRecue[2]]?.Release();
+                    SemaphoresMoteur[(MoteurID)frame[2]]?.Release();
                     break;
                 case UdpFrameFunction.MoteurBlocage:    // Idem avec bip
-                    SemaphoresMoteur[(MoteurID)trameRecue[2]]?.Release();
+                    SemaphoresMoteur[(MoteurID)frame[2]]?.Release();
                     AllDevices.RecGoBot.Buzz("..");
                     break;
                 case UdpFrameFunction.Blocage:
@@ -258,9 +260,9 @@ namespace GoBot
                     // Réception de la position mesurée par l'asservissement
                     try
                     {
-                        double y = (double)((short)(trameRecue[2] << 8 | trameRecue[3]) / 10.0);
-                        double x = (double)((short)(trameRecue[4] << 8 | trameRecue[5]) / 10.0);
-                        double teta = (trameRecue[6] << 8 | trameRecue[7]) / 100.0 - 180;
+                        double y = (double)((short)(frame[2] << 8 | frame[3]) / 10.0);
+                        double x = (double)((short)(frame[4] << 8 | frame[5]) / 10.0);
+                        double teta = (frame[6] << 8 | frame[7]) / 100.0 - 180;
                         teta = (-teta);
                         y = -y;
                         x = -x;
@@ -299,22 +301,22 @@ namespace GoBot
                     }
                     break;
                 case UdpFrameFunction.AsserRetourPositionCodeurs:
-                    int nbPositions = trameRecue[2];
+                    int nbPositions = frame[2];
 
                     for (int i = 0; i < nbPositions; i++)
                     {
                         // TODO2018 peut mieux faire, décaller les bits
-                        int gauche1 = trameRecue[3 + i * 8];
-                        int gauche2 = trameRecue[4 + i * 8];
-                        int gauche3 = trameRecue[5 + i * 8];
-                        int gauche4 = trameRecue[6 + i * 8];
+                        int gauche1 = frame[3 + i * 8];
+                        int gauche2 = frame[4 + i * 8];
+                        int gauche3 = frame[5 + i * 8];
+                        int gauche4 = frame[6 + i * 8];
 
                         int codeurGauche = gauche1 * 256 * 256 * 256 + gauche2 * 256 * 256 + gauche3 * 256 + gauche4;
 
-                        int droite1 = trameRecue[7 + i * 8];
-                        int droite2 = trameRecue[8 + i * 8];
-                        int droite3 = trameRecue[9 + i * 8];
-                        int droite4 = trameRecue[10 + i * 8];
+                        int droite1 = frame[7 + i * 8];
+                        int droite2 = frame[8 + i * 8];
+                        int droite3 = frame[9 + i * 8];
+                        int droite4 = frame[10 + i * 8];
 
                         int codeurDroit = droite1 * 256 * 256 * 256 + droite2 * 256 * 256 + droite3 * 256 + droite4;
 
@@ -323,31 +325,31 @@ namespace GoBot
                     }
                     break;
                 case UdpFrameFunction.RetourChargeCPU_PWM:
-                    int nbValeurs = trameRecue[2];
+                    int nbValeurs = frame[2];
 
                     for (int i = 0; i < nbValeurs; i++)
                     {
-                        double chargeCPU = (trameRecue[3 + i * 6] * 256 + trameRecue[4 + i * 6]) / 5000.0;
-                        double chargePWMGauche = trameRecue[5 + i * 6] * 256 + trameRecue[6 + i * 6] - 4000;
-                        double chargePWMDroite = trameRecue[7 + i * 6] * 256 + trameRecue[8 + i * 6] - 4000;
+                        double cpuLoad = (frame[3 + i * 6] * 256 + frame[4 + i * 6]) / 5000.0;
+                        double pwmLeft = frame[5 + i * 6] * 256 + frame[6 + i * 6] - 4000;
+                        double pwmRight = frame[7 + i * 6] * 256 + frame[8 + i * 6] - 4000;
 
 
-                        retourTestCharge[0].Add(chargeCPU);
-                        retourTestCharge[1].Add(chargePWMGauche);
-                        retourTestCharge[2].Add(chargePWMDroite);
+                        _measRecMoveLoad.Add(cpuLoad);
+                        _measPwmLeft.Add(pwmLeft);
+                        _measPwmRight.Add(pwmRight);
                     }
                     break;
                 case UdpFrameFunction.RetourCapteurCouleur:
                     //TODO2018 : multiplier par 2 pour obtenir de belles couleurs ?
-                    Color couleur = Color.FromArgb(Math.Min(255, trameRecue[3] * 1), Math.Min(255, trameRecue[4] * 1), Math.Min(255, trameRecue[5] * 1));
+                    Color couleur = Color.FromArgb(Math.Min(255, frame[3] * 1), Math.Min(255, frame[4] * 1), Math.Min(255, frame[5] * 1));
 
-                    ChangeCouleurCapteur((CapteurCouleurID)trameRecue[2], couleur);
-                    CapteursCouleur[(CapteurCouleurID)trameRecue[2]] = couleur;
+                    ChangeCouleurCapteur((CapteurCouleurID)frame[2], couleur);
+                    CapteursCouleur[(CapteurCouleurID)frame[2]] = couleur;
 
-                    SemaphoresCouleur[(CapteurCouleurID)trameRecue[2]]?.Release();
+                    SemaphoresCouleur[(CapteurCouleurID)frame[2]]?.Release();
                     break;
                 case UdpFrameFunction.RetourCapteurOnOff:
-                    CapteurOnOffID capteur = (CapteurOnOffID)trameRecue[2];
+                    CapteurOnOffID capteur = (CapteurOnOffID)frame[2];
 
 
                     //if (trameRecue[2] == (byte)CapteurID.Balise)
@@ -377,7 +379,7 @@ namespace GoBot
                     //else
                     {
 
-                        bool nouvelEtat = trameRecue[3] > 0 ? true : false;
+                        bool nouvelEtat = frame[3] > 0 ? true : false;
 
                         if (nouvelEtat != CapteurActive[capteur])
                             ChangerEtatCapteurOnOff(capteur, nouvelEtat);
@@ -386,44 +388,44 @@ namespace GoBot
                     }
                     break;
                 case UdpFrameFunction.TensionBatteries:
-                    BatterieVoltage = (double)(trameRecue[2] * 256 + trameRecue[3]) / 100.0;
+                    BatterieVoltage = (double)(frame[2] * 256 + frame[3]) / 100.0;
                     break;
                 case UdpFrameFunction.RetourValeursNumeriques:
-                    Board numericBoard = (Board)trameRecue[0];
+                    Board numericBoard = (Board)frame[0];
 
                     lock (ValeursNumeriques)
                     {
-                        ValeursNumeriques[numericBoard][0] = (Byte)trameRecue[2];
-                        ValeursNumeriques[numericBoard][1] = (Byte)trameRecue[3];
-                        ValeursNumeriques[numericBoard][2] = (Byte)trameRecue[4];
-                        ValeursNumeriques[numericBoard][3] = (Byte)trameRecue[5];
-                        ValeursNumeriques[numericBoard][4] = (Byte)trameRecue[6];
-                        ValeursNumeriques[numericBoard][5] = (Byte)trameRecue[7];
+                        ValeursNumeriques[numericBoard][0] = (Byte)frame[2];
+                        ValeursNumeriques[numericBoard][1] = (Byte)frame[3];
+                        ValeursNumeriques[numericBoard][2] = (Byte)frame[4];
+                        ValeursNumeriques[numericBoard][3] = (Byte)frame[5];
+                        ValeursNumeriques[numericBoard][4] = (Byte)frame[6];
+                        ValeursNumeriques[numericBoard][5] = (Byte)frame[7];
                     }
 
                     SemaphoresTrame[UdpFrameFunction.RetourValeursNumeriques]?.Release();
                     break;
 
                 case UdpFrameFunction.RetourValeursAnalogiques:
-                    Board analogBoard = (Board)trameRecue[0];
+                    Board analogBoard = (Board)frame[0];
 
                     const double toVolts = 0.0008056640625;
 
                     List<double> values = new List<double>();
-                    ValeursAnalogiques[analogBoard][0] = ((trameRecue[2] * 256 + trameRecue[3]) * toVolts);
-                    ValeursAnalogiques[analogBoard][1] = ((trameRecue[4] * 256 + trameRecue[5]) * toVolts);
-                    ValeursAnalogiques[analogBoard][2] = ((trameRecue[6] * 256 + trameRecue[7]) * toVolts);
-                    ValeursAnalogiques[analogBoard][3] = ((trameRecue[8] * 256 + trameRecue[9]) * toVolts);
-                    ValeursAnalogiques[analogBoard][4] = ((trameRecue[10] * 256 + trameRecue[11]) * toVolts);
-                    ValeursAnalogiques[analogBoard][5] = ((trameRecue[12] * 256 + trameRecue[13]) * toVolts);
-                    ValeursAnalogiques[analogBoard][6] = ((trameRecue[14] * 256 + trameRecue[15]) * toVolts);
-                    ValeursAnalogiques[analogBoard][7] = ((trameRecue[16] * 256 + trameRecue[17]) * toVolts);
-                    ValeursAnalogiques[analogBoard][8] = ((trameRecue[18] * 256 + trameRecue[19]) * toVolts);
+                    ValeursAnalogiques[analogBoard][0] = ((frame[2] * 256 + frame[3]) * toVolts);
+                    ValeursAnalogiques[analogBoard][1] = ((frame[4] * 256 + frame[5]) * toVolts);
+                    ValeursAnalogiques[analogBoard][2] = ((frame[6] * 256 + frame[7]) * toVolts);
+                    ValeursAnalogiques[analogBoard][3] = ((frame[8] * 256 + frame[9]) * toVolts);
+                    ValeursAnalogiques[analogBoard][4] = ((frame[10] * 256 + frame[11]) * toVolts);
+                    ValeursAnalogiques[analogBoard][5] = ((frame[12] * 256 + frame[13]) * toVolts);
+                    ValeursAnalogiques[analogBoard][6] = ((frame[14] * 256 + frame[15]) * toVolts);
+                    ValeursAnalogiques[analogBoard][7] = ((frame[16] * 256 + frame[17]) * toVolts);
+                    ValeursAnalogiques[analogBoard][8] = ((frame[18] * 256 + frame[19]) * toVolts);
 
                     SemaphoresTrame[UdpFrameFunction.RetourValeursAnalogiques]?.Release();
                     break;
                 case UdpFrameFunction.ReponseLidar:
-                    int lidarID = trameRecue[2];
+                    int lidarID = frame[2];
 
                     if (mesureLidar == null)
                         mesureLidar = "";
@@ -435,18 +437,18 @@ namespace GoBot
                     {
                         // C'est le début de la trame à recomposer, et au début y'a la position de la prise de mesure à lire !
 
-                        double y = (double)((short)(trameRecue[3] << 8 | trameRecue[4]) / 10.0);
-                        double x = (double)((short)(trameRecue[5] << 8 | trameRecue[6]) / 10.0);
-                        double teta = (trameRecue[7] << 8 | trameRecue[8]) / 100.0 - 180;
+                        double y = (double)((short)(frame[3] << 8 | frame[4]) / 10.0);
+                        double x = (double)((short)(frame[5] << 8 | frame[6]) / 10.0);
+                        double teta = (frame[7] << 8 | frame[8]) / 100.0 - 180;
 
                         positionMesureLidar = new Position(-teta, new RealPoint(-x, -y));
                         decallageEntete += 6;
                     }
 
-                    for (int i = decallageEntete; i < trameRecue.Length; i++)
+                    for (int i = decallageEntete; i < frame.Length; i++)
                     {
-                        mesureLidar += (char)trameRecue[i];
-                        mess += (char)trameRecue[i];
+                        mesureLidar += (char)frame[i];
+                        mess += (char)frame[i];
                     }
 
                     if (Regex.Matches(mesureLidar, "\n\n").Count == 2)
@@ -793,33 +795,30 @@ namespace GoBot
             return retourTestPid;
         }
 
-        List<double>[] retourTestCharge;
-        public override List<double>[] DiagnosticCpuPwm(int nbValeurs)
+        public override List<double>[] DiagnosticCpuPwm(int ptsCount)
         {
-            retourTestCharge = new List<double>[3];
-            retourTestCharge[0] = new List<double>();
-            retourTestCharge[1] = new List<double>();
-            retourTestCharge[2] = new List<double>();
+            _measRecMoveLoad = new List<double>();
+            _measPwmLeft = new List<double>();
+            _measPwmRight = new List<double>();
 
-            Frame trame = UdpFrameFactory.DemandeCpuPwm(this);
-            while (retourTestCharge[0].Count <= nbValeurs)
+            Frame frame = UdpFrameFactory.DemandeCpuPwm(this);
+            while (_measRecMoveLoad.Count <= ptsCount)
             {
-                Connexion.SendMessage(trame);
+                Connexion.SendMessage(frame);
                 Thread.Sleep(30);
             }
 
             // Supprime d'éventuelles valeurs supplémentaires
-            while (retourTestCharge[0].Count > nbValeurs)
-                retourTestCharge[0].RemoveAt(retourTestCharge[0].Count - 1);
+            while (_measRecMoveLoad.Count > ptsCount)
+                _measRecMoveLoad.RemoveAt(_measRecMoveLoad.Count - 1);
 
-            while (retourTestCharge[1].Count > nbValeurs)
-                retourTestCharge[1].RemoveAt(retourTestCharge[1].Count - 1);
+            while (_measPwmLeft.Count > ptsCount)
+                _measPwmLeft.RemoveAt(_measPwmLeft.Count - 1);
 
-            while (retourTestCharge[2].Count > nbValeurs)
-                retourTestCharge[2].RemoveAt(retourTestCharge[2].Count - 1);
-
-
-            return retourTestCharge;
+            while (_measPwmRight.Count > ptsCount)
+                _measPwmRight.RemoveAt(_measPwmRight.Count - 1);
+            
+            return new List<double>[3]{ _measRecMoveLoad, _measPwmLeft, _measPwmRight};
         }
 
         public void EnvoyerUart(Board carte, Frame trame)

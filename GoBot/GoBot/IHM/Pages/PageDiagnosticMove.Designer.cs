@@ -28,107 +28,100 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.ctrlGraphique = new Composants.GraphPanel();
-            this.btnDemandeCharge = new System.Windows.Forms.Button();
-            this.ctrlGraphique1 = new Composants.GraphPanel();
-            this.ctrlGraphique2 = new Composants.GraphPanel();
-            this.lblChargeCPU = new System.Windows.Forms.Label();
-            this.pictureBoxVumetreCPU = new System.Windows.Forms.PictureBox();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBoxVumetreCPU)).BeginInit();
+            this.btnLaunch = new System.Windows.Forms.Button();
+            this.lblCpuLoad = new System.Windows.Forms.Label();
+            this.picVumetre = new System.Windows.Forms.PictureBox();
+            this.gphPwmLeft = new Composants.GraphPanel();
+            this.gphPwmRight = new Composants.GraphPanel();
+            this.gphCpu = new Composants.GraphPanel();
+            ((System.ComponentModel.ISupportInitialize)(this.picVumetre)).BeginInit();
             this.SuspendLayout();
             // 
-            // ctrlGraphique
+            // btnLaunch
             // 
-            this.ctrlGraphique.BackColor = System.Drawing.Color.White;
-            this.ctrlGraphique.ScaleMode = Composants.GraphPanel.ScaleType.Fixed;
-            this.ctrlGraphique.LimitsVisible = false;
-            this.ctrlGraphique.Location = new System.Drawing.Point(199, 64);
-            this.ctrlGraphique.MaxLimit = 1D;
-            this.ctrlGraphique.MinLimit = 0D;
-            this.ctrlGraphique.Name = "ctrlGraphique";
-            this.ctrlGraphique.NamesVisible = false;
-            this.ctrlGraphique.Size = new System.Drawing.Size(773, 170);
-            this.ctrlGraphique.TabIndex = 123;
+            this.btnLaunch.Image = global::GoBot.Properties.Resources.Play16;
+            this.btnLaunch.Location = new System.Drawing.Point(8, 197);
+            this.btnLaunch.Name = "btnLaunch";
+            this.btnLaunch.Size = new System.Drawing.Size(85, 35);
+            this.btnLaunch.TabIndex = 124;
+            this.btnLaunch.Text = "Lancer";
+            this.btnLaunch.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.btnLaunch.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
+            this.btnLaunch.UseVisualStyleBackColor = true;
+            this.btnLaunch.Click += new System.EventHandler(this.btnLaunch_Click);
             // 
-            // btnDemandeCharge
+            // lblCpuLoad
             // 
-            this.btnDemandeCharge.Location = new System.Drawing.Point(55, 128);
-            this.btnDemandeCharge.Name = "btnDemandeCharge";
-            this.btnDemandeCharge.Size = new System.Drawing.Size(75, 23);
-            this.btnDemandeCharge.TabIndex = 124;
-            this.btnDemandeCharge.Text = "Lancer";
-            this.btnDemandeCharge.UseVisualStyleBackColor = true;
-            this.btnDemandeCharge.Click += new System.EventHandler(this.btnDemandeCharge_Click);
+            this.lblCpuLoad.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblCpuLoad.Location = new System.Drawing.Point(9, 529);
+            this.lblCpuLoad.Name = "lblCpuLoad";
+            this.lblCpuLoad.Size = new System.Drawing.Size(59, 25);
+            this.lblCpuLoad.TabIndex = 127;
+            this.lblCpuLoad.Text = "0%";
+            this.lblCpuLoad.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             // 
-            // ctrlGraphique1
+            // picVumetre
             // 
-            this.ctrlGraphique1.BackColor = System.Drawing.Color.White;
-            this.ctrlGraphique1.ScaleMode = Composants.GraphPanel.ScaleType.Fixed;
-            this.ctrlGraphique1.LimitsVisible = false;
-            this.ctrlGraphique1.Location = new System.Drawing.Point(199, 240);
-            this.ctrlGraphique1.MaxLimit = 4000D;
-            this.ctrlGraphique1.MinLimit = -4000D;
-            this.ctrlGraphique1.Name = "ctrlGraphique1";
-            this.ctrlGraphique1.NamesVisible = false;
-            this.ctrlGraphique1.Size = new System.Drawing.Size(773, 170);
-            this.ctrlGraphique1.TabIndex = 125;
+            this.picVumetre.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.picVumetre.Location = new System.Drawing.Point(74, 462);
+            this.picVumetre.Name = "picVumetre";
+            this.picVumetre.Size = new System.Drawing.Size(19, 170);
+            this.picVumetre.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.picVumetre.TabIndex = 128;
+            this.picVumetre.TabStop = false;
             // 
-            // ctrlGraphique2
+            // gphPwmLeft
             // 
-            this.ctrlGraphique2.BackColor = System.Drawing.Color.White;
-            this.ctrlGraphique2.ScaleMode = Composants.GraphPanel.ScaleType.Fixed;
-            this.ctrlGraphique2.LimitsVisible = false;
-            this.ctrlGraphique2.Location = new System.Drawing.Point(199, 416);
-            this.ctrlGraphique2.MaxLimit = 4000D;
-            this.ctrlGraphique2.MinLimit = -4000D;
-            this.ctrlGraphique2.Name = "ctrlGraphique2";
-            this.ctrlGraphique2.NamesVisible = false;
-            this.ctrlGraphique2.Size = new System.Drawing.Size(773, 170);
-            this.ctrlGraphique2.TabIndex = 126;
+            this.gphPwmLeft.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.gphPwmLeft.Location = new System.Drawing.Point(99, 221);
+            this.gphPwmLeft.Name = "gphPwmLeft";
+            this.gphPwmLeft.Size = new System.Drawing.Size(1152, 202);
+            this.gphPwmLeft.TabIndex = 126;
             // 
-            // lblChargeCPU
+            // gphPwmRight
             // 
-            this.lblChargeCPU.AutoSize = true;
-            this.lblChargeCPU.Location = new System.Drawing.Point(1052, 128);
-            this.lblChargeCPU.Name = "lblChargeCPU";
-            this.lblChargeCPU.Size = new System.Drawing.Size(21, 13);
-            this.lblChargeCPU.TabIndex = 127;
-            this.lblChargeCPU.Text = "0%";
+            this.gphPwmRight.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.gphPwmRight.Location = new System.Drawing.Point(99, 13);
+            this.gphPwmRight.Name = "gphPwmRight";
+            this.gphPwmRight.Size = new System.Drawing.Size(1152, 202);
+            this.gphPwmRight.TabIndex = 125;
             // 
-            // pictureBoxVumetreCPU
+            // gphCpu
             // 
-            this.pictureBoxVumetreCPU.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.pictureBoxVumetreCPU.Location = new System.Drawing.Point(1034, 103);
-            this.pictureBoxVumetreCPU.Name = "pictureBoxVumetreCPU";
-            this.pictureBoxVumetreCPU.Size = new System.Drawing.Size(12, 75);
-            this.pictureBoxVumetreCPU.TabIndex = 128;
-            this.pictureBoxVumetreCPU.TabStop = false;
+            this.gphCpu.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.gphCpu.Location = new System.Drawing.Point(99, 462);
+            this.gphCpu.Name = "gphCpu";
+            this.gphCpu.Size = new System.Drawing.Size(1152, 170);
+            this.gphCpu.TabIndex = 123;
             // 
             // PanelDiagnosticMove
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.Controls.Add(this.pictureBoxVumetreCPU);
-            this.Controls.Add(this.lblChargeCPU);
-            this.Controls.Add(this.ctrlGraphique2);
-            this.Controls.Add(this.ctrlGraphique1);
-            this.Controls.Add(this.btnDemandeCharge);
-            this.Controls.Add(this.ctrlGraphique);
+            this.Controls.Add(this.picVumetre);
+            this.Controls.Add(this.lblCpuLoad);
+            this.Controls.Add(this.gphPwmLeft);
+            this.Controls.Add(this.gphPwmRight);
+            this.Controls.Add(this.btnLaunch);
+            this.Controls.Add(this.gphCpu);
             this.Name = "PanelDiagnosticMove";
-            this.Size = new System.Drawing.Size(1254, 600);
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBoxVumetreCPU)).EndInit();
+            this.Size = new System.Drawing.Size(1254, 635);
+            this.Load += new System.EventHandler(this.PanelDiagnosticMove_Load);
+            ((System.ComponentModel.ISupportInitialize)(this.picVumetre)).EndInit();
             this.ResumeLayout(false);
-            this.PerformLayout();
 
         }
 
         #endregion
 
-        private Composants.GraphPanel ctrlGraphique;
-        private System.Windows.Forms.Button btnDemandeCharge;
-        private Composants.GraphPanel ctrlGraphique1;
-        private Composants.GraphPanel ctrlGraphique2;
-        private System.Windows.Forms.Label lblChargeCPU;
-        private System.Windows.Forms.PictureBox pictureBoxVumetreCPU;
+        private Composants.GraphPanel gphCpu;
+        private System.Windows.Forms.Button btnLaunch;
+        private Composants.GraphPanel gphPwmRight;
+        private Composants.GraphPanel gphPwmLeft;
+        private System.Windows.Forms.Label lblCpuLoad;
+        private System.Windows.Forms.PictureBox picVumetre;
     }
 }

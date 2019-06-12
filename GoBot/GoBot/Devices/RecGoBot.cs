@@ -207,9 +207,9 @@ namespace GoBot.Devices
 
             Robots.GrosRobot.Avancer(200);
 
-            Actionneur.AtomUnloaderRight.DoLauncherPrepare();
-            Actionneur.AtomUnloaderRight.DoLauncherInside();
-            Actionneur.AtomUnloaderRight.DoUnloaderStore();
+            Actionneur.AtomUnloaderLeft.DoLauncherPrepare();
+            Actionneur.AtomUnloaderLeft.DoLauncherInside();
+            Actionneur.AtomUnloaderLeft.DoUnloaderStore();
 
             Actionneur.AtomStacker.DoBackBlock();
 

@@ -556,9 +556,25 @@ namespace GoBot
             return retour;
         }
 
-        public override List<double>[] DiagnosticCpuPwm(int nbValeurs)
+        public override List<double>[] DiagnosticCpuPwm(int ptsCount)
         {
-            return null;
+            List<double> cpuLoad, pwmLeft, pwmRight;
+            Random r = new Random();
+
+            cpuLoad = new List<double>();
+            pwmLeft = new List<double>();
+            pwmRight = new List<double>();
+
+            for(int i = 0; i < ptsCount; i++)
+            {
+                cpuLoad.Add((Math.Sin(i / (double)ptsCount * Math.PI*2) / 2 + 0.5) * 0.2 + r.NextDouble() * 0.2 + 0.3);
+                pwmLeft.Add(Math.Sin((DateTime.Now.Millisecond + i + DateTime.Now.Second * 1000) % 1500 / (double)1500 * Math.PI * 2) * 3800 + (r.NextDouble() - 0.5) * 400);
+                pwmRight.Add(Math.Sin((DateTime.Now.Millisecond + i + DateTime.Now.Second*1000) % 5000 / (double)5000 * Math.PI * 2) * 3800 + (r.NextDouble() - 0.5) * 400);
+            }
+
+            Thread.Sleep(ptsCount);
+            
+            return new List<double>[3] { cpuLoad, pwmLeft, pwmRight };
         }
 
         public override void DemandeValeursAnalogiques(Board carte, bool attendre)
