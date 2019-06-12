@@ -283,7 +283,7 @@ namespace GoBot.IHM
             if (!Execution.DesignMode && !_loading)
             {
                 String boardStr = (String)lstReceiver.Items[e.Index];
-                CanBoard board = (CanBoard)Enum.Parse(typeof(Board), boardStr);
+                CanBoard board = (CanBoard)Enum.Parse(typeof(CanBoard), boardStr);
 
                 Config.CurrentConfig.LogsCanReceivers[board] = (e.NewValue == CheckState.Checked);
             }

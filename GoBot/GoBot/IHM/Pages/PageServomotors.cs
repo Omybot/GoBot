@@ -7,26 +7,23 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 
-namespace GoBot.IHM
+namespace GoBot.IHM.Pages
 {
-    public partial class PanelCanArchi : UserControl
+    public partial class PageServomotors : UserControl
     {
-        public delegate void ServoClickDelegate(ServomoteurID servoNo);
-        public event ServoClickDelegate ServoClick;
-
-        public PanelCanArchi()
+        public PageServomotors()
         {
             InitializeComponent();
         }
 
-        private void panelBoardCanServos_ServoClick(ServomoteurID servoNo)
+        private void panelCan_ServoClick(ServomoteurID servoNo)
         {
-            ServoClick?.Invoke(servoNo);
+            panelServoCan.SetServo(servoNo);
         }
 
-        private void PanelCanArchi_Load(object sender, EventArgs e)
+        private void PageServomotors_Load(object sender, EventArgs e)
         {
-            if(!Execution.DesignMode)
+            if (!Execution.DesignMode)
             {
                 panelBoardCanServos1.SetBoardID(Communications.CAN.CanBoard.CanServo1);
                 panelBoardCanServos2.SetBoardID(Communications.CAN.CanBoard.CanServo2);

@@ -107,17 +107,17 @@
     <Compile Include="IHM\Elements\PanelBoardCanServos.Designer.cs">
       <DependentUpon>PanelBoardCanServos.cs</DependentUpon>
     </Compile>
+    <Compile Include="IHM\Pages\PageServomotors.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="IHM\Pages\PageServomotors.Designer.cs">
+      <DependentUpon>PageServomotors.cs</DependentUpon>
+    </Compile>
     <Compile Include="IHM\Panels\PanelBoardNumeric.cs">
       <SubType>UserControl</SubType>
     </Compile>
     <Compile Include="IHM\Panels\PanelBoardNumeric.Designer.cs">
       <DependentUpon>PanelBoardNumeric.cs</DependentUpon>
-    </Compile>
-    <Compile Include="IHM\Panels\PanelCanArchi.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="IHM\Panels\PanelCanArchi.Designer.cs">
-      <DependentUpon>PanelCanArchi.cs</DependentUpon>
     </Compile>
     <Compile Include="IHM\Pages\PanelLogCan.cs">
       <SubType>UserControl</SubType>
@@ -413,6 +413,9 @@
     <EmbeddedResource Include="IHM\Elements\ConnectionStatus.resx">
       <DependentUpon>ConnectionStatus.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="IHM\Pages\PageServomotors.resx">
+      <DependentUpon>PageServomotors.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="IHM\Panels\PanelActionneurGeneric.resx">
       <DependentUpon>PanelActionneurGeneric.cs</DependentUpon>
     </EmbeddedResource>
@@ -427,9 +430,6 @@
     </EmbeddedResource>
     <EmbeddedResource Include="IHM\Panels\PanelBoardNumeric.resx">
       <DependentUpon>PanelBoardNumeric.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="IHM\Panels\PanelCanArchi.resx">
-      <DependentUpon>PanelCanArchi.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="IHM\Pages\PanelLogCan.resx">
       <DependentUpon>PanelLogCan.cs</DependentUpon>

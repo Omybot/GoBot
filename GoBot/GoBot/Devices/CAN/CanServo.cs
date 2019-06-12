@@ -3,6 +3,7 @@ using GoBot.Communications.CAN;
 using GoBot.Threading;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading;
@@ -90,6 +91,8 @@ namespace GoBot.Devices.CAN
         {
             _communication.SendFrame(CanFrameFactory.BuildGetTorqueCurrent(_id));
             bool ok = _lockResponse.WaitOne(200);
+            Debug.Print(_torqueCurrent.ToString());
+
             return ok ? _torqueCurrent : -1;
         }
 
@@ -100,9 +103,76 @@ namespace GoBot.Devices.CAN
             return ok ? _torqueMax : -1;
         }
 
+        public void SearchMax()
+        {
+            int initial = _position;
+            int max = initial;
+            int targetTorque = 100;
+            int tempo = 500;
+
+            SetPositionMin(0);
+
+            while (ReadTorqueCurrent() < targetTorque)
+            {
+                max += 500;
+                SetPosition(max);
+                Thread.Sleep(tempo);
+            }
+
+            max += 500;
+            SetPosition(max);
+            Thread.Sleep(tempo);
+
+            while (ReadTorqueCurrent() < targetTorque)
+            {
+                max += 100;
+                SetPosition(max);
+                Thread.Sleep(tempo);
+            }
+
+            max += 100;
+
+            SetPositionMax(max);
+            SetPosition(initial);
+        }
+
+        public void SearchMin()
+        {
+            int initial = _position;
+            int min = initial;
+            int targetTorque = 100;
+            int tempo = 500;
+
+            SetPositionMin(0);
+
+            while (ReadTorqueCurrent() < targetTorque)
+            {
+                min -= 500;
+                SetPosition(min);
+                Thread.Sleep(tempo);
+            }
+
+            min += 500;
+            SetPosition(min);
+            Thread.Sleep(tempo);
+
+            while (ReadTorqueCurrent() < targetTorque)
+            {
+                min -= 100;
+                SetPosition(min);
+                Thread.Sleep(tempo);
+            }
+
+            min += 100;
+
+            SetPositionMin(min);
+            SetPosition(initial);
+        }
+
         public void SetAcceleration(int acceleration)
         {
             _communication.SendFrame(CanFrameFactory.BuildSetAcceleration(_id, acceleration));
+            _acceleration = acceleration;
         }
 
         public void SetPosition(int position)
@@ -114,21 +184,25 @@ namespace GoBot.Devices.CAN
         public void SetPositionMax(int positionMax)
         {
             _communication.SendFrame(CanFrameFactory.BuildSetPositionMax(_id, positionMax));
+            _positionMax = positionMax;
         }
 
         public void SetPositionMin(int positionMin)
         {
             _communication.SendFrame(CanFrameFactory.BuildSetPositionMin(_id, positionMin));
+            _positionMin = positionMin;
         }
 
         public void SetSpeedMax(int speedMax)
         {
             _communication.SendFrame(CanFrameFactory.BuildSetSpeedMax(_id, speedMax));
+            _speedMax = speedMax;
         }
 
         public void SetTorqueMax(int torqueMax)
         {
             _communication.SendFrame(CanFrameFactory.BuildSetTorqueMax(_id, torqueMax));
+            _torqueMax = torqueMax;
         }
 
         public void SetTrajectory(int position, int speed, int accel)
@@ -192,7 +266,7 @@ namespace GoBot.Devices.CAN
                         _lockResponse.Release();
                         break;
                     case CanFrameFunction.TorqueAlert:
-                        AllDevices.RecGoBot.Buzz(".-.");
+                        //AllDevices.RecGoBot.Buzz(".-.");
                         if (_enableAutoCut)
                             _communication.SendFrame(CanFrameFactory.BuildDisableOutput(_id));
                         TorqueAlert?.Invoke();

@@ -42,7 +42,7 @@ namespace GoBot.IHM
             _servo3 = AllDevices.CanServos[(ServomoteurID)(((int)_boardID - 1) * 4 + 2)];
             _servo4 = AllDevices.CanServos[(ServomoteurID)(((int)_boardID - 1) * 4 + 3)];
 
-            lblTitle.Text = "CAN Servos " + _boardID.ToString();
+            lblTitle.Text = _boardID.ToString();
             lblServo1.Text = Parse(_servo1.ID);
             lblServo2.Text = Parse(_servo2.ID);
             lblServo3.Text = Parse(_servo3.ID);

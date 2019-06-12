@@ -180,6 +180,8 @@ namespace GoBot.Actionneurs
             MoveFingerBack(1);
 
             DoSubInit();
+
+            _atomsCount = 0;
         }
 
         public void DoSubInit()
@@ -309,6 +311,12 @@ namespace GoBot.Actionneurs
         {
             while (Actionneur.AtomStacker.AtomsCount > 0)
                 DoDrop(Actionneur.AtomUnloaderRight);
+        }
+
+        public void DoDropLeftAll()
+        {
+            while (Actionneur.AtomStacker.AtomsCount > 0)
+                DoDrop(Actionneur.AtomUnloaderLeft);
         }
 
         public void DoDrop(AtomUnloader unloader)

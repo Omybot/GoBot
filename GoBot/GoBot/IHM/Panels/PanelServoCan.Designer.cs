@@ -29,17 +29,21 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(PanelServoCan));
             this.grpMonitoring = new System.Windows.Forms.GroupBox();
-            this.lblAutoScale = new System.Windows.Forms.Label();
-            this.boxAutoScale = new Composants.SwitchButton();
+            this.label2 = new System.Windows.Forms.Label();
+            this.switchButton1 = new Composants.SwitchButton();
+            this.label1 = new System.Windows.Forms.Label();
+            this.gphMonitoringTorque = new Composants.GraphPanel();
             this.gphMonitoringPos = new Composants.GraphPanel();
             this.boxMonitoring = new Composants.SwitchButton();
+            this.lblTorqueUnit = new System.Windows.Forms.Label();
+            this.lblTorqueMaxTxt = new System.Windows.Forms.Label();
+            this.numTorqueMax = new System.Windows.Forms.NumericUpDown();
             this.numID = new System.Windows.Forms.NumericUpDown();
-            this.lblPositionTxt = new System.Windows.Forms.Label();
             this.lblPosMinTxt = new System.Windows.Forms.Label();
             this.lblSpeedMaxTxt = new System.Windows.Forms.Label();
             this.lblPosMaxTxt = new System.Windows.Forms.Label();
-            this.lblTorqueMaxTxt = new System.Windows.Forms.Label();
             this.lblAccelTxt = new System.Windows.Forms.Label();
             this.grpTrajectory = new System.Windows.Forms.GroupBox();
             this.lblTrajectoryTime = new System.Windows.Forms.Label();
@@ -59,91 +63,125 @@
             this.numPositionMin = new System.Windows.Forms.NumericUpDown();
             this.numPositionMax = new System.Windows.Forms.NumericUpDown();
             this.numSpeedMax = new System.Windows.Forms.NumericUpDown();
-            this.numTorqueMax = new System.Windows.Forms.NumericUpDown();
             this.numPosition = new System.Windows.Forms.NumericUpDown();
             this.numAccel = new System.Windows.Forms.NumericUpDown();
             this.grpControl = new System.Windows.Forms.GroupBox();
-            this.btnReadValue = new System.Windows.Forms.Button();
+            this.btnAutoMax = new System.Windows.Forms.Button();
+            this.btnAutoMin = new System.Windows.Forms.Button();
+            this.btnStop = new System.Windows.Forms.Button();
             this.trkPosition = new Composants.TrackBarPlus();
             this.lblIDTxt = new Composants.LabelPlus();
-            this.picWarning = new System.Windows.Forms.PictureBox();
             this.toolTip = new System.Windows.Forms.ToolTip(this.components);
-            this.btnStop = new System.Windows.Forms.Button();
-            this.gphMonitoringTorque = new Composants.GraphPanel();
+            this.picConnection = new System.Windows.Forms.PictureBox();
+            this.lblName = new System.Windows.Forms.Label();
+            this.grpSettings = new System.Windows.Forms.GroupBox();
+            this.lblSpeedUnit = new System.Windows.Forms.Label();
+            this.lblAccelUnit = new System.Windows.Forms.Label();
+            this.grpPositions = new System.Windows.Forms.GroupBox();
+            this.comboBox1 = new System.Windows.Forms.ComboBox();
+            this.btnSauvegarderPosition = new System.Windows.Forms.Button();
+            this.switchButton2 = new Composants.SwitchButton();
+            this.label3 = new System.Windows.Forms.Label();
             this.grpMonitoring.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.numTorqueMax)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numID)).BeginInit();
             this.grpTrajectory.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.picArrow)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numPositionMin)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numPositionMax)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numSpeedMax)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numTorqueMax)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numPosition)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numAccel)).BeginInit();
             this.grpControl.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.picWarning)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.picConnection)).BeginInit();
+            this.grpSettings.SuspendLayout();
+            this.grpPositions.SuspendLayout();
             this.SuspendLayout();
             // 
             // grpMonitoring
             // 
+            this.grpMonitoring.Controls.Add(this.label2);
+            this.grpMonitoring.Controls.Add(this.switchButton1);
+            this.grpMonitoring.Controls.Add(this.label1);
             this.grpMonitoring.Controls.Add(this.gphMonitoringTorque);
-            this.grpMonitoring.Controls.Add(this.lblAutoScale);
-            this.grpMonitoring.Controls.Add(this.boxAutoScale);
             this.grpMonitoring.Controls.Add(this.gphMonitoringPos);
             this.grpMonitoring.Controls.Add(this.boxMonitoring);
             this.grpMonitoring.Enabled = false;
-            this.grpMonitoring.Location = new System.Drawing.Point(3, 167);
+            this.grpMonitoring.Location = new System.Drawing.Point(304, 34);
             this.grpMonitoring.Name = "grpMonitoring";
-            this.grpMonitoring.Size = new System.Drawing.Size(295, 142);
+            this.grpMonitoring.Size = new System.Drawing.Size(295, 453);
             this.grpMonitoring.TabIndex = 1;
             this.grpMonitoring.TabStop = false;
             this.grpMonitoring.Text = "Monitoring";
             // 
-            // lblAutoScale
+            // label2
             // 
-            this.lblAutoScale.AutoSize = true;
-            this.lblAutoScale.BackColor = System.Drawing.Color.White;
-            this.lblAutoScale.Location = new System.Drawing.Point(187, 0);
-            this.lblAutoScale.Name = "lblAutoScale";
-            this.lblAutoScale.Size = new System.Drawing.Size(61, 13);
-            this.lblAutoScale.TabIndex = 6;
-            this.lblAutoScale.Text = "Echelle fixe";
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(161, 237);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(87, 13);
+            this.label2.TabIndex = 44;
+            this.label2.Text = "Suivre le courant";
             // 
-            // boxAutoScale
+            // switchButton1
             // 
-            this.boxAutoScale.AutoSize = true;
-            this.boxAutoScale.BackColor = System.Drawing.Color.Transparent;
-            this.boxAutoScale.Location = new System.Drawing.Point(254, 0);
-            this.boxAutoScale.MaximumSize = new System.Drawing.Size(35, 15);
-            this.boxAutoScale.MinimumSize = new System.Drawing.Size(35, 15);
-            this.boxAutoScale.Mirrored = true;
-            this.boxAutoScale.Name = "boxAutoScale";
-            this.boxAutoScale.Size = new System.Drawing.Size(35, 15);
-            this.boxAutoScale.TabIndex = 5;
-            this.boxAutoScale.Value = false;
-            this.boxAutoScale.ValueChanged += new Composants.SwitchButton.ValueChangedDelegate(this.boxAutoScale_ValueChanged);
+            this.switchButton1.AutoSize = true;
+            this.switchButton1.BackColor = System.Drawing.Color.Transparent;
+            this.switchButton1.Location = new System.Drawing.Point(254, 237);
+            this.switchButton1.MaximumSize = new System.Drawing.Size(35, 15);
+            this.switchButton1.MinimumSize = new System.Drawing.Size(35, 15);
+            this.switchButton1.Mirrored = true;
+            this.switchButton1.Name = "switchButton1";
+            this.switchButton1.Size = new System.Drawing.Size(35, 15);
+            this.switchButton1.TabIndex = 43;
+            this.switchButton1.Value = false;
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(161, 18);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(87, 13);
+            this.label1.TabIndex = 42;
+            this.label1.Text = "Suivre la position";
+            // 
+            // gphMonitoringTorque
+            // 
+            this.gphMonitoringTorque.BackColor = System.Drawing.Color.White;
+            this.gphMonitoringTorque.BorderColor = System.Drawing.Color.LightGray;
+            this.gphMonitoringTorque.BorderVisible = false;
+            this.gphMonitoringTorque.LimitsVisible = true;
+            this.gphMonitoringTorque.Location = new System.Drawing.Point(6, 258);
+            this.gphMonitoringTorque.MaxLimit = 1D;
+            this.gphMonitoringTorque.MinLimit = 0D;
+            this.gphMonitoringTorque.Name = "gphMonitoringTorque";
+            this.gphMonitoringTorque.NamesAlignment = System.Drawing.ContentAlignment.TopLeft;
+            this.gphMonitoringTorque.NamesVisible = true;
+            this.gphMonitoringTorque.ScaleMode = Composants.GraphPanel.ScaleType.DynamicGlobal;
+            this.gphMonitoringTorque.Size = new System.Drawing.Size(283, 185);
+            this.gphMonitoringTorque.TabIndex = 7;
             // 
             // gphMonitoringPos
             // 
             this.gphMonitoringPos.BackColor = System.Drawing.Color.White;
             this.gphMonitoringPos.BorderColor = System.Drawing.Color.LightGray;
             this.gphMonitoringPos.BorderVisible = false;
-            this.gphMonitoringPos.ScaleMode = Composants.GraphPanel.ScaleType.DynamicGlobal;
             this.gphMonitoringPos.LimitsVisible = true;
-            this.gphMonitoringPos.Location = new System.Drawing.Point(6, 21);
+            this.gphMonitoringPos.Location = new System.Drawing.Point(6, 39);
             this.gphMonitoringPos.MaxLimit = 1D;
             this.gphMonitoringPos.MinLimit = 0D;
             this.gphMonitoringPos.Name = "gphMonitoringPos";
             this.gphMonitoringPos.NamesAlignment = System.Drawing.ContentAlignment.TopLeft;
             this.gphMonitoringPos.NamesVisible = true;
-            this.gphMonitoringPos.Size = new System.Drawing.Size(139, 115);
+            this.gphMonitoringPos.ScaleMode = Composants.GraphPanel.ScaleType.DynamicGlobal;
+            this.gphMonitoringPos.Size = new System.Drawing.Size(283, 185);
             this.gphMonitoringPos.TabIndex = 4;
             // 
             // boxMonitoring
             // 
             this.boxMonitoring.AutoSize = true;
             this.boxMonitoring.BackColor = System.Drawing.Color.Transparent;
-            this.boxMonitoring.Location = new System.Drawing.Point(68, 0);
+            this.boxMonitoring.Location = new System.Drawing.Point(254, 18);
             this.boxMonitoring.MaximumSize = new System.Drawing.Size(35, 15);
             this.boxMonitoring.MinimumSize = new System.Drawing.Size(35, 15);
             this.boxMonitoring.Mirrored = true;
@@ -153,36 +191,65 @@
             this.boxMonitoring.Value = false;
             this.boxMonitoring.ValueChanged += new Composants.SwitchButton.ValueChangedDelegate(this.boxTorque_ValueChanged);
             // 
+            // lblTorqueUnit
+            // 
+            this.lblTorqueUnit.AutoSize = true;
+            this.lblTorqueUnit.Location = new System.Drawing.Point(186, 77);
+            this.lblTorqueUnit.Name = "lblTorqueUnit";
+            this.lblTorqueUnit.Size = new System.Drawing.Size(22, 13);
+            this.lblTorqueUnit.TabIndex = 42;
+            this.lblTorqueUnit.Text = "mA";
+            // 
+            // lblTorqueMaxTxt
+            // 
+            this.lblTorqueMaxTxt.AutoSize = true;
+            this.lblTorqueMaxTxt.Location = new System.Drawing.Point(48, 77);
+            this.lblTorqueMaxTxt.Name = "lblTorqueMaxTxt";
+            this.lblTorqueMaxTxt.Size = new System.Drawing.Size(73, 13);
+            this.lblTorqueMaxTxt.TabIndex = 26;
+            this.lblTorqueMaxTxt.Text = "Alerte courant";
+            // 
+            // numTorqueMax
+            // 
+            this.numTorqueMax.Increment = new decimal(new int[] {
+            50,
+            0,
+            0,
+            0});
+            this.numTorqueMax.Location = new System.Drawing.Point(130, 75);
+            this.numTorqueMax.Maximum = new decimal(new int[] {
+            65000,
+            0,
+            0,
+            0});
+            this.numTorqueMax.Name = "numTorqueMax";
+            this.numTorqueMax.Size = new System.Drawing.Size(50, 20);
+            this.numTorqueMax.TabIndex = 35;
+            this.numTorqueMax.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.numTorqueMax.ValueChanged += new System.EventHandler(this.numTorqueMax_ValueChanged);
+            // 
             // numID
             // 
-            this.numID.Location = new System.Drawing.Point(168, 8);
+            this.numID.Location = new System.Drawing.Point(284, 7);
             this.numID.Name = "numID";
-            this.numID.Size = new System.Drawing.Size(50, 20);
+            this.numID.Size = new System.Drawing.Size(34, 20);
             this.numID.TabIndex = 2;
+            this.numID.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             this.numID.ValueChanged += new System.EventHandler(this.numID_ValueChanged);
-            // 
-            // lblPositionTxt
-            // 
-            this.lblPositionTxt.AutoSize = true;
-            this.lblPositionTxt.Location = new System.Drawing.Point(9, 23);
-            this.lblPositionTxt.Name = "lblPositionTxt";
-            this.lblPositionTxt.Size = new System.Drawing.Size(44, 13);
-            this.lblPositionTxt.TabIndex = 5;
-            this.lblPositionTxt.Text = "Position";
             // 
             // lblPosMinTxt
             // 
             this.lblPosMinTxt.AutoSize = true;
-            this.lblPosMinTxt.Location = new System.Drawing.Point(9, 49);
+            this.lblPosMinTxt.Location = new System.Drawing.Point(6, 55);
             this.lblPosMinTxt.Name = "lblPosMinTxt";
-            this.lblPosMinTxt.Size = new System.Drawing.Size(63, 13);
+            this.lblPosMinTxt.Size = new System.Drawing.Size(24, 13);
             this.lblPosMinTxt.TabIndex = 23;
-            this.lblPosMinTxt.Text = "Position min";
+            this.lblPosMinTxt.Text = "Min";
             // 
             // lblSpeedMaxTxt
             // 
             this.lblSpeedMaxTxt.AutoSize = true;
-            this.lblSpeedMaxTxt.Location = new System.Drawing.Point(165, 49);
+            this.lblSpeedMaxTxt.Location = new System.Drawing.Point(48, 51);
             this.lblSpeedMaxTxt.Name = "lblSpeedMaxTxt";
             this.lblSpeedMaxTxt.Size = new System.Drawing.Size(63, 13);
             this.lblSpeedMaxTxt.TabIndex = 24;
@@ -191,25 +258,16 @@
             // lblPosMaxTxt
             // 
             this.lblPosMaxTxt.AutoSize = true;
-            this.lblPosMaxTxt.Location = new System.Drawing.Point(9, 75);
+            this.lblPosMaxTxt.Location = new System.Drawing.Point(264, 55);
             this.lblPosMaxTxt.Name = "lblPosMaxTxt";
-            this.lblPosMaxTxt.Size = new System.Drawing.Size(66, 13);
+            this.lblPosMaxTxt.Size = new System.Drawing.Size(27, 13);
             this.lblPosMaxTxt.TabIndex = 25;
-            this.lblPosMaxTxt.Text = "Position max";
-            // 
-            // lblTorqueMaxTxt
-            // 
-            this.lblTorqueMaxTxt.AutoSize = true;
-            this.lblTorqueMaxTxt.Location = new System.Drawing.Point(166, 75);
-            this.lblTorqueMaxTxt.Name = "lblTorqueMaxTxt";
-            this.lblTorqueMaxTxt.Size = new System.Drawing.Size(62, 13);
-            this.lblTorqueMaxTxt.TabIndex = 26;
-            this.lblTorqueMaxTxt.Text = "Couple max";
+            this.lblPosMaxTxt.Text = "Max";
             // 
             // lblAccelTxt
             // 
             this.lblAccelTxt.AutoSize = true;
-            this.lblAccelTxt.Location = new System.Drawing.Point(9, 101);
+            this.lblAccelTxt.Location = new System.Drawing.Point(48, 25);
             this.lblAccelTxt.Name = "lblAccelTxt";
             this.lblAccelTxt.Size = new System.Drawing.Size(66, 13);
             this.lblAccelTxt.TabIndex = 28;
@@ -232,7 +290,7 @@
             this.grpTrajectory.Controls.Add(this.gphTrajectoryPosition);
             this.grpTrajectory.Controls.Add(this.btnTrajectoryGo);
             this.grpTrajectory.Enabled = false;
-            this.grpTrajectory.Location = new System.Drawing.Point(3, 315);
+            this.grpTrajectory.Location = new System.Drawing.Point(3, 314);
             this.grpTrajectory.Name = "grpTrajectory";
             this.grpTrajectory.Size = new System.Drawing.Size(295, 173);
             this.grpTrajectory.TabIndex = 31;
@@ -367,7 +425,6 @@
             this.gphTrajectorySpeed.BackColor = System.Drawing.Color.White;
             this.gphTrajectorySpeed.BorderColor = System.Drawing.Color.LightGray;
             this.gphTrajectorySpeed.BorderVisible = false;
-            this.gphTrajectorySpeed.ScaleMode = Composants.GraphPanel.ScaleType.DynamicPerCurve;
             this.gphTrajectorySpeed.LimitsVisible = true;
             this.gphTrajectorySpeed.Location = new System.Drawing.Point(158, 12);
             this.gphTrajectorySpeed.MaxLimit = 1D;
@@ -375,6 +432,7 @@
             this.gphTrajectorySpeed.Name = "gphTrajectorySpeed";
             this.gphTrajectorySpeed.NamesAlignment = System.Drawing.ContentAlignment.MiddleLeft;
             this.gphTrajectorySpeed.NamesVisible = true;
+            this.gphTrajectorySpeed.ScaleMode = Composants.GraphPanel.ScaleType.DynamicPerCurve;
             this.gphTrajectorySpeed.Size = new System.Drawing.Size(131, 69);
             this.gphTrajectorySpeed.TabIndex = 5;
             // 
@@ -383,7 +441,6 @@
             this.gphTrajectoryPosition.BackColor = System.Drawing.Color.White;
             this.gphTrajectoryPosition.BorderColor = System.Drawing.Color.LightGray;
             this.gphTrajectoryPosition.BorderVisible = false;
-            this.gphTrajectoryPosition.ScaleMode = Composants.GraphPanel.ScaleType.DynamicPerCurve;
             this.gphTrajectoryPosition.LimitsVisible = true;
             this.gphTrajectoryPosition.Location = new System.Drawing.Point(158, 82);
             this.gphTrajectoryPosition.MaxLimit = 1D;
@@ -391,6 +448,7 @@
             this.gphTrajectoryPosition.Name = "gphTrajectoryPosition";
             this.gphTrajectoryPosition.NamesAlignment = System.Drawing.ContentAlignment.MiddleLeft;
             this.gphTrajectoryPosition.NamesVisible = true;
+            this.gphTrajectoryPosition.ScaleMode = Composants.GraphPanel.ScaleType.DynamicPerCurve;
             this.gphTrajectoryPosition.Size = new System.Drawing.Size(131, 69);
             this.gphTrajectoryPosition.TabIndex = 29;
             // 
@@ -408,7 +466,12 @@
             // 
             // numPositionMin
             // 
-            this.numPositionMin.Location = new System.Drawing.Point(89, 47);
+            this.numPositionMin.Increment = new decimal(new int[] {
+            100,
+            0,
+            0,
+            0});
+            this.numPositionMin.Location = new System.Drawing.Point(28, 74);
             this.numPositionMin.Maximum = new decimal(new int[] {
             65000,
             0,
@@ -417,11 +480,17 @@
             this.numPositionMin.Name = "numPositionMin";
             this.numPositionMin.Size = new System.Drawing.Size(50, 20);
             this.numPositionMin.TabIndex = 32;
+            this.numPositionMin.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             this.numPositionMin.ValueChanged += new System.EventHandler(this.numPositionMin_ValueChanged);
             // 
             // numPositionMax
             // 
-            this.numPositionMax.Location = new System.Drawing.Point(89, 73);
+            this.numPositionMax.Increment = new decimal(new int[] {
+            100,
+            0,
+            0,
+            0});
+            this.numPositionMax.Location = new System.Drawing.Point(217, 74);
             this.numPositionMax.Maximum = new decimal(new int[] {
             65000,
             0,
@@ -430,11 +499,17 @@
             this.numPositionMax.Name = "numPositionMax";
             this.numPositionMax.Size = new System.Drawing.Size(50, 20);
             this.numPositionMax.TabIndex = 33;
+            this.numPositionMax.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             this.numPositionMax.ValueChanged += new System.EventHandler(this.numPositionMax_ValueChanged);
             // 
             // numSpeedMax
             // 
-            this.numSpeedMax.Location = new System.Drawing.Point(239, 47);
+            this.numSpeedMax.Increment = new decimal(new int[] {
+            100,
+            0,
+            0,
+            0});
+            this.numSpeedMax.Location = new System.Drawing.Point(130, 49);
             this.numSpeedMax.Maximum = new decimal(new int[] {
             65000,
             0,
@@ -443,37 +518,36 @@
             this.numSpeedMax.Name = "numSpeedMax";
             this.numSpeedMax.Size = new System.Drawing.Size(50, 20);
             this.numSpeedMax.TabIndex = 34;
+            this.numSpeedMax.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             this.numSpeedMax.ValueChanged += new System.EventHandler(this.numSpeedMax_ValueChanged);
-            // 
-            // numTorqueMax
-            // 
-            this.numTorqueMax.Location = new System.Drawing.Point(239, 73);
-            this.numTorqueMax.Maximum = new decimal(new int[] {
-            65000,
-            0,
-            0,
-            0});
-            this.numTorqueMax.Name = "numTorqueMax";
-            this.numTorqueMax.Size = new System.Drawing.Size(50, 20);
-            this.numTorqueMax.TabIndex = 35;
-            this.numTorqueMax.ValueChanged += new System.EventHandler(this.numTorqueMax_ValueChanged);
             // 
             // numPosition
             // 
-            this.numPosition.Location = new System.Drawing.Point(89, 21);
+            this.numPosition.Increment = new decimal(new int[] {
+            500,
+            0,
+            0,
+            0});
+            this.numPosition.Location = new System.Drawing.Point(105, 74);
             this.numPosition.Maximum = new decimal(new int[] {
             65000,
             0,
             0,
             0});
             this.numPosition.Name = "numPosition";
-            this.numPosition.Size = new System.Drawing.Size(50, 20);
+            this.numPosition.Size = new System.Drawing.Size(94, 20);
             this.numPosition.TabIndex = 36;
+            this.numPosition.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             this.numPosition.ValueChanged += new System.EventHandler(this.numPosition_ValueChanged);
             // 
             // numAccel
             // 
-            this.numAccel.Location = new System.Drawing.Point(89, 99);
+            this.numAccel.Increment = new decimal(new int[] {
+            100,
+            0,
+            0,
+            0});
+            this.numAccel.Location = new System.Drawing.Point(130, 23);
             this.numAccel.Maximum = new decimal(new int[] {
             65000,
             0,
@@ -482,59 +556,76 @@
             this.numAccel.Name = "numAccel";
             this.numAccel.Size = new System.Drawing.Size(50, 20);
             this.numAccel.TabIndex = 37;
+            this.numAccel.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             this.numAccel.ValueChanged += new System.EventHandler(this.numAccel_ValueChanged);
             // 
             // grpControl
             // 
+            this.grpControl.Controls.Add(this.label3);
+            this.grpControl.Controls.Add(this.switchButton2);
+            this.grpControl.Controls.Add(this.btnAutoMax);
+            this.grpControl.Controls.Add(this.btnAutoMin);
             this.grpControl.Controls.Add(this.btnStop);
-            this.grpControl.Controls.Add(this.btnReadValue);
-            this.grpControl.Controls.Add(this.lblPositionTxt);
-            this.grpControl.Controls.Add(this.numAccel);
             this.grpControl.Controls.Add(this.trkPosition);
             this.grpControl.Controls.Add(this.numPosition);
             this.grpControl.Controls.Add(this.lblPosMinTxt);
-            this.grpControl.Controls.Add(this.numTorqueMax);
-            this.grpControl.Controls.Add(this.lblSpeedMaxTxt);
-            this.grpControl.Controls.Add(this.numSpeedMax);
             this.grpControl.Controls.Add(this.lblPosMaxTxt);
             this.grpControl.Controls.Add(this.numPositionMax);
-            this.grpControl.Controls.Add(this.lblTorqueMaxTxt);
             this.grpControl.Controls.Add(this.numPositionMin);
-            this.grpControl.Controls.Add(this.lblAccelTxt);
             this.grpControl.Enabled = false;
             this.grpControl.Location = new System.Drawing.Point(3, 34);
             this.grpControl.Name = "grpControl";
-            this.grpControl.Size = new System.Drawing.Size(295, 127);
+            this.grpControl.Size = new System.Drawing.Size(295, 102);
             this.grpControl.TabIndex = 38;
             this.grpControl.TabStop = false;
             this.grpControl.Text = "Contrôle";
             // 
-            // btnReadValue
+            // btnAutoMax
             // 
-            this.btnReadValue.Image = global::GoBot.Properties.Resources.Refresh16;
-            this.btnReadValue.Location = new System.Drawing.Point(169, 98);
-            this.btnReadValue.Name = "btnReadValue";
-            this.btnReadValue.Size = new System.Drawing.Size(115, 24);
-            this.btnReadValue.TabIndex = 39;
-            this.btnReadValue.Text = "Lire les valeurs";
-            this.btnReadValue.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.btnReadValue.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
-            this.btnReadValue.UseVisualStyleBackColor = true;
-            this.btnReadValue.Click += new System.EventHandler(this.btnReadValue_Click);
+            this.btnAutoMax.Image = ((System.Drawing.Image)(resources.GetObject("btnAutoMax.Image")));
+            this.btnAutoMax.Location = new System.Drawing.Point(267, 73);
+            this.btnAutoMax.Name = "btnAutoMax";
+            this.btnAutoMax.Size = new System.Drawing.Size(22, 22);
+            this.btnAutoMax.TabIndex = 41;
+            this.btnAutoMax.UseVisualStyleBackColor = true;
+            this.btnAutoMax.Click += new System.EventHandler(this.btnAutoMax_Click);
+            // 
+            // btnAutoMin
+            // 
+            this.btnAutoMin.Image = ((System.Drawing.Image)(resources.GetObject("btnAutoMin.Image")));
+            this.btnAutoMin.Location = new System.Drawing.Point(6, 73);
+            this.btnAutoMin.Name = "btnAutoMin";
+            this.btnAutoMin.Size = new System.Drawing.Size(22, 22);
+            this.btnAutoMin.TabIndex = 40;
+            this.btnAutoMin.UseVisualStyleBackColor = true;
+            this.btnAutoMin.Click += new System.EventHandler(this.btnAutoMin_Click);
+            // 
+            // btnStop
+            // 
+            this.btnStop.Image = global::GoBot.Properties.Resources.Close16;
+            this.btnStop.Location = new System.Drawing.Point(175, 21);
+            this.btnStop.Name = "btnStop";
+            this.btnStop.Size = new System.Drawing.Size(114, 23);
+            this.btnStop.TabIndex = 40;
+            this.btnStop.Text = "Couper le couple";
+            this.btnStop.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.btnStop.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
+            this.btnStop.UseVisualStyleBackColor = true;
+            this.btnStop.Click += new System.EventHandler(this.btnStop_Click);
             // 
             // trkPosition
             // 
             this.trkPosition.BackColor = System.Drawing.Color.Transparent;
             this.trkPosition.DecimalPlaces = 0;
             this.trkPosition.IntervalTimer = ((uint)(25u));
-            this.trkPosition.Location = new System.Drawing.Point(148, 23);
+            this.trkPosition.Location = new System.Drawing.Point(31, 54);
             this.trkPosition.Max = 40000D;
             this.trkPosition.MaximumSize = new System.Drawing.Size(3000, 15);
             this.trkPosition.Min = 0D;
             this.trkPosition.MinimumSize = new System.Drawing.Size(30, 15);
             this.trkPosition.Name = "trkPosition";
             this.trkPosition.Reverse = false;
-            this.trkPosition.Size = new System.Drawing.Size(109, 15);
+            this.trkPosition.Size = new System.Drawing.Size(232, 15);
             this.trkPosition.TabIndex = 4;
             this.trkPosition.Vertical = false;
             this.trkPosition.TickValueChanged += new Composants.TrackBarPlus.ValueChangedDelegate(this.trackBarPosition_TickValueChanged);
@@ -543,63 +634,141 @@
             // 
             this.lblIDTxt.AutoSize = true;
             this.lblIDTxt.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblIDTxt.Location = new System.Drawing.Point(59, 10);
+            this.lblIDTxt.Location = new System.Drawing.Point(175, 9);
             this.lblIDTxt.Name = "lblIDTxt";
             this.lblIDTxt.Size = new System.Drawing.Size(103, 13);
             this.lblIDTxt.TabIndex = 3;
             this.lblIDTxt.Text = "Servomoteur ID :";
             // 
-            // picWarning
+            // picConnection
             // 
-            this.picWarning.Image = global::GoBot.Properties.Resources.Warning24;
-            this.picWarning.Location = new System.Drawing.Point(221, 5);
-            this.picWarning.Name = "picWarning";
-            this.picWarning.Size = new System.Drawing.Size(25, 25);
-            this.picWarning.TabIndex = 39;
-            this.picWarning.TabStop = false;
-            this.toolTip.SetToolTip(this.picWarning, "Le servomoteur demandé est introuvable...");
-            this.picWarning.Visible = false;
+            this.picConnection.Image = global::GoBot.Properties.Resources.ConnectionOk;
+            this.picConnection.Location = new System.Drawing.Point(324, 9);
+            this.picConnection.Name = "picConnection";
+            this.picConnection.Size = new System.Drawing.Size(16, 16);
+            this.picConnection.TabIndex = 39;
+            this.picConnection.TabStop = false;
+            this.toolTip.SetToolTip(this.picConnection, "Le servomoteur demandé est introuvable...");
+            this.picConnection.Visible = false;
             // 
-            // btnStop
+            // lblName
             // 
-            this.btnStop.Image = global::GoBot.Properties.Resources.Close16;
-            this.btnStop.Location = new System.Drawing.Point(266, 19);
-            this.btnStop.Name = "btnStop";
-            this.btnStop.Size = new System.Drawing.Size(23, 23);
-            this.btnStop.TabIndex = 40;
-            this.btnStop.UseVisualStyleBackColor = true;
-            this.btnStop.Click += new System.EventHandler(this.btnStop_Click);
+            this.lblName.AutoSize = true;
+            this.lblName.Location = new System.Drawing.Point(342, 10);
+            this.lblName.Name = "lblName";
+            this.lblName.Size = new System.Drawing.Size(92, 13);
+            this.lblName.TabIndex = 40;
+            this.lblName.Text = "Pas de connexion";
             // 
-            // gphMonitoringTorque
+            // grpSettings
             // 
-            this.gphMonitoringTorque.BackColor = System.Drawing.Color.White;
-            this.gphMonitoringTorque.BorderColor = System.Drawing.Color.LightGray;
-            this.gphMonitoringTorque.BorderVisible = false;
-            this.gphMonitoringTorque.ScaleMode = Composants.GraphPanel.ScaleType.DynamicGlobal;
-            this.gphMonitoringTorque.LimitsVisible = true;
-            this.gphMonitoringTorque.Location = new System.Drawing.Point(150, 21);
-            this.gphMonitoringTorque.MaxLimit = 1D;
-            this.gphMonitoringTorque.MinLimit = 0D;
-            this.gphMonitoringTorque.Name = "gphMonitoringTorque";
-            this.gphMonitoringTorque.NamesAlignment = System.Drawing.ContentAlignment.TopLeft;
-            this.gphMonitoringTorque.NamesVisible = true;
-            this.gphMonitoringTorque.Size = new System.Drawing.Size(139, 115);
-            this.gphMonitoringTorque.TabIndex = 7;
+            this.grpSettings.Controls.Add(this.lblSpeedUnit);
+            this.grpSettings.Controls.Add(this.lblAccelUnit);
+            this.grpSettings.Controls.Add(this.lblTorqueUnit);
+            this.grpSettings.Controls.Add(this.lblAccelTxt);
+            this.grpSettings.Controls.Add(this.numAccel);
+            this.grpSettings.Controls.Add(this.lblSpeedMaxTxt);
+            this.grpSettings.Controls.Add(this.numSpeedMax);
+            this.grpSettings.Controls.Add(this.lblTorqueMaxTxt);
+            this.grpSettings.Controls.Add(this.numTorqueMax);
+            this.grpSettings.Location = new System.Drawing.Point(3, 200);
+            this.grpSettings.Name = "grpSettings";
+            this.grpSettings.Size = new System.Drawing.Size(295, 108);
+            this.grpSettings.TabIndex = 41;
+            this.grpSettings.TabStop = false;
+            this.grpSettings.Text = "Réglage";
+            // 
+            // lblSpeedUnit
+            // 
+            this.lblSpeedUnit.AutoSize = true;
+            this.lblSpeedUnit.Location = new System.Drawing.Point(186, 51);
+            this.lblSpeedUnit.Name = "lblSpeedUnit";
+            this.lblSpeedUnit.Size = new System.Drawing.Size(40, 13);
+            this.lblSpeedUnit.TabIndex = 44;
+            this.lblSpeedUnit.Text = "pas / s";
+            // 
+            // lblAccelUnit
+            // 
+            this.lblAccelUnit.AutoSize = true;
+            this.lblAccelUnit.Location = new System.Drawing.Point(186, 25);
+            this.lblAccelUnit.Name = "lblAccelUnit";
+            this.lblAccelUnit.Size = new System.Drawing.Size(43, 13);
+            this.lblAccelUnit.TabIndex = 43;
+            this.lblAccelUnit.Text = "pas / s²";
+            // 
+            // grpPositions
+            // 
+            this.grpPositions.Controls.Add(this.btnSauvegarderPosition);
+            this.grpPositions.Controls.Add(this.comboBox1);
+            this.grpPositions.Location = new System.Drawing.Point(3, 142);
+            this.grpPositions.Name = "grpPositions";
+            this.grpPositions.Size = new System.Drawing.Size(295, 52);
+            this.grpPositions.TabIndex = 42;
+            this.grpPositions.TabStop = false;
+            this.grpPositions.Text = "Positions";
+            // 
+            // comboBox1
+            // 
+            this.comboBox1.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.comboBox1.FormattingEnabled = true;
+            this.comboBox1.Location = new System.Drawing.Point(6, 19);
+            this.comboBox1.Name = "comboBox1";
+            this.comboBox1.Size = new System.Drawing.Size(184, 21);
+            this.comboBox1.TabIndex = 0;
+            // 
+            // btnSauvegarderPosition
+            // 
+            this.btnSauvegarderPosition.Image = global::GoBot.Properties.Resources.Save16;
+            this.btnSauvegarderPosition.Location = new System.Drawing.Point(196, 18);
+            this.btnSauvegarderPosition.Name = "btnSauvegarderPosition";
+            this.btnSauvegarderPosition.Size = new System.Drawing.Size(93, 23);
+            this.btnSauvegarderPosition.TabIndex = 40;
+            this.btnSauvegarderPosition.Text = "Sauvegarder";
+            this.btnSauvegarderPosition.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.btnSauvegarderPosition.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
+            this.btnSauvegarderPosition.UseVisualStyleBackColor = true;
+            // 
+            // switchButton2
+            // 
+            this.switchButton2.AutoSize = true;
+            this.switchButton2.BackColor = System.Drawing.Color.Transparent;
+            this.switchButton2.Location = new System.Drawing.Point(11, 25);
+            this.switchButton2.MaximumSize = new System.Drawing.Size(35, 15);
+            this.switchButton2.MinimumSize = new System.Drawing.Size(35, 15);
+            this.switchButton2.Mirrored = true;
+            this.switchButton2.Name = "switchButton2";
+            this.switchButton2.Size = new System.Drawing.Size(35, 15);
+            this.switchButton2.TabIndex = 43;
+            this.switchButton2.Value = false;
+            // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Location = new System.Drawing.Point(49, 26);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(100, 13);
+            this.label3.TabIndex = 43;
+            this.label3.Text = "Contrôle par codeur";
             // 
             // PanelServoCan
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.Controls.Add(this.picWarning);
+            this.Controls.Add(this.grpPositions);
+            this.Controls.Add(this.grpSettings);
+            this.Controls.Add(this.lblName);
+            this.Controls.Add(this.picConnection);
             this.Controls.Add(this.grpControl);
             this.Controls.Add(this.grpTrajectory);
             this.Controls.Add(this.numID);
             this.Controls.Add(this.grpMonitoring);
             this.Controls.Add(this.lblIDTxt);
             this.Name = "PanelServoCan";
-            this.Size = new System.Drawing.Size(302, 491);
+            this.Size = new System.Drawing.Size(603, 490);
+            this.Load += new System.EventHandler(this.PanelServoCan_Load);
             this.grpMonitoring.ResumeLayout(false);
             this.grpMonitoring.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.numTorqueMax)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.numID)).EndInit();
             this.grpTrajectory.ResumeLayout(false);
             this.grpTrajectory.PerformLayout();
@@ -607,12 +776,14 @@
             ((System.ComponentModel.ISupportInitialize)(this.numPositionMin)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.numPositionMax)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.numSpeedMax)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numTorqueMax)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.numPosition)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.numAccel)).EndInit();
             this.grpControl.ResumeLayout(false);
             this.grpControl.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.picWarning)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.picConnection)).EndInit();
+            this.grpSettings.ResumeLayout(false);
+            this.grpSettings.PerformLayout();
+            this.grpPositions.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -626,7 +797,6 @@
         private Composants.LabelPlus lblIDTxt;
         private Composants.GraphPanel gphMonitoringPos;
         private Composants.TrackBarPlus trkPosition;
-        private System.Windows.Forms.Label lblPositionTxt;
         private System.Windows.Forms.Button btnTrajectoryGo;
         private System.Windows.Forms.Label lblPosMinTxt;
         private System.Windows.Forms.Label lblSpeedMaxTxt;
@@ -651,15 +821,27 @@
         private System.Windows.Forms.NumericUpDown numPosition;
         private System.Windows.Forms.NumericUpDown numAccel;
         private System.Windows.Forms.GroupBox grpControl;
-        private System.Windows.Forms.Button btnReadValue;
         private System.Windows.Forms.Label lblTrajectoryTime;
         private Composants.GraphPanel gphTrajectoryPosition;
         private System.Windows.Forms.PictureBox picArrow;
-        private System.Windows.Forms.Label lblAutoScale;
-        private Composants.SwitchButton boxAutoScale;
-        private System.Windows.Forms.PictureBox picWarning;
+        private System.Windows.Forms.PictureBox picConnection;
         private System.Windows.Forms.ToolTip toolTip;
         private System.Windows.Forms.Button btnStop;
         private Composants.GraphPanel gphMonitoringTorque;
+        private System.Windows.Forms.Button btnAutoMin;
+        private System.Windows.Forms.Label lblTorqueUnit;
+        private System.Windows.Forms.Button btnAutoMax;
+        private System.Windows.Forms.Label lblName;
+        private System.Windows.Forms.GroupBox grpSettings;
+        private System.Windows.Forms.Label lblSpeedUnit;
+        private System.Windows.Forms.Label lblAccelUnit;
+        private System.Windows.Forms.Label label2;
+        private Composants.SwitchButton switchButton1;
+        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.GroupBox grpPositions;
+        private System.Windows.Forms.ComboBox comboBox1;
+        private System.Windows.Forms.Button btnSauvegarderPosition;
+        private System.Windows.Forms.Label label3;
+        private Composants.SwitchButton switchButton2;
     }
 }

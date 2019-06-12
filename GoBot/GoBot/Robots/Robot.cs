@@ -463,6 +463,8 @@ namespace GoBot
             Actionneur.AtomUnloaderRight.DoInit();
             Actionneur.GoldGrabberLeft.DoInit();
             Actionneur.GoldGrabberRight.DoInit();
+
+            Robots.GrosRobot.ReglerOffsetAsserv(new Position(0, new RealPoint(1500, 1000)));
         }
 
         public void DeployerActionnneurs()

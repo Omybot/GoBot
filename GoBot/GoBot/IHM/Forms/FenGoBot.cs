@@ -233,10 +233,5 @@ namespace GoBot
                 }
             }
         }
-
-        private void panelCanArchi_ServoClick(ServomoteurID servoNo)
-        {
-            panelServoCan.SetServo(servoNo);
-        }
     }
 }

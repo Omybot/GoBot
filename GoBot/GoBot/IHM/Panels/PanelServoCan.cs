@@ -10,6 +10,7 @@ using GoBot.Threading;
 using GoBot.Devices.CAN;
 using System.Drawing.Drawing2D;
 using GoBot.Devices;
+using System.Threading;
 
 namespace GoBot.IHM
 {
@@ -17,20 +18,24 @@ namespace GoBot.IHM
     {
         private ThreadLink _linkPolling, _linkDrawing;
         private CanServo _servo;
+        private bool _loaded;
 
         public PanelServoCan()
         {
             InitializeComponent();
-
-            if (!Execution.DesignMode)
-            {
-                _servo = AllDevices.CanServos[0];
-            }
+            _loaded = false;
         }
 
         public void SetServo(ServomoteurID servo)
         {
-            numID.Value = (int)(servo);
+            if (_servo is null || _servo.ID != servo)
+            {
+                numID.Value = (int)(servo);
+                _servo = AllDevices.CanServos[(ServomoteurID)numID.Value];
+                picConnection.Visible = false;
+                lblName.Text = "";
+                ReadValues();
+            }
         }
 
         private void DrawTimeArrow()
@@ -60,7 +65,7 @@ namespace GoBot.IHM
             if (value)
             {
                 _linkPolling = ThreadManager.CreateThread(link => GetServoInfos());
-                _linkPolling.StartInfiniteLoop(new TimeSpan(0, 0, 0, 0, 50));
+                _linkPolling.StartInfiniteLoop(new TimeSpan(0, 0, 0, 0, 20));
 
                 _linkDrawing = ThreadManager.CreateThread(link => DrawTorqueCurve());
                 _linkDrawing.StartInfiniteLoop(new TimeSpan(0, 0, 0, 0, 100));
@@ -81,7 +86,8 @@ namespace GoBot.IHM
         private void GetServoInfos()
         {
             _linkPolling.RegisterName(" : " + _servo.ID.ToString());
-            gphMonitoringTorque.AddPoint("Couple", _servo.ReadTorqueCurrent(), Color.Firebrick);
+            gphMonitoringTorque.AddPoint("Couple", _servo.ReadTorqueCurrent(), Color.Firebrick, true);
+            gphMonitoringTorque.AddPoint("Alerte", _servo.LastTorqueMax, Color.Red, false);
             gphMonitoringPos.AddPoint("Position", _servo.ReadPosition(), Color.RoyalBlue);
         }
 
@@ -98,11 +104,6 @@ namespace GoBot.IHM
         private void btnGo_Click(object sender, EventArgs e)
         {
             _servo.SetTrajectory((int)numPosition.Value, (int)numSpeedMax.Value, (int)numAccel.Value);
-        }
-
-        private void btnReadValue_Click(object sender, EventArgs e)
-        {
-            ReadValues();
         }
 
         private void numPosition_ValueChanged(object sender, EventArgs e)
@@ -152,7 +153,10 @@ namespace GoBot.IHM
         private void numTorqueMax_ValueChanged(object sender, EventArgs e)
         {
             if (_servo.LastTorqueMax != (int)numTorqueMax.Value)
+            {
                 _servo.SetTorqueMax((int)numTorqueMax.Value);
+                gphMonitoringTorque.MaxLimit = _servo.LastTorqueMax * 1.5;
+            }
         }
 
         private void trkTrajectoryTarget_ValueChanged(object sender, double value)
@@ -175,8 +179,7 @@ namespace GoBot.IHM
 
         private void numID_ValueChanged(object sender, EventArgs e)
         {
-            _servo = AllDevices.CanServos[(ServomoteurID)numID.Value];
-            ReadValues();
+            SetServo((ServomoteurID)numID.Value);
         }
 
         private void DrawTrajectoryGraphs()
@@ -201,54 +204,105 @@ namespace GoBot.IHM
             if (picArrow.Image == null) DrawTimeArrow();
         }
 
-        private void boxAutoScale_ValueChanged(object sender, bool value)
-        {
-            gphMonitoringPos.MinLimit = _servo.LastPositionMin;
-            gphMonitoringPos.MaxLimit = _servo.LastPositionMax;
-            gphMonitoringPos.ScaleMode = value ? Composants.GraphPanel.ScaleType.Fixed : Composants.GraphPanel.ScaleType.DynamicPerCurve;
-        }
-
         private void btnStop_Click(object sender, EventArgs e)
         {
             _servo.DisableOutput();
         }
 
+        private void btnAutoMax_Click(object sender, EventArgs e)
+        {
+            if (MessageBox.Show("Lancer une recherche automatique de maximum ?", "Attention", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
+            {
+                btnAutoMax.Enabled = false;
+                ThreadManager.CreateThread(link =>
+                {
+                    link.Name = "Recherche servo max";
+                    _servo.SearchMax();
+                    ReadValues();
+                    btnAutoMin.InvokeAuto(() => btnAutoMax.Enabled = true);
+                });
+            }
+        }
+
+        private void btnAutoMin_Click(object sender, EventArgs e)
+        {
+            if (MessageBox.Show("Lancer une recherche automatique de minimum ?", "Attention", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
+            {
+                btnAutoMin.Enabled = false;
+                ThreadManager.CreateThread(link =>
+                {
+                    link.Name = "Recherche servo min";
+                    _servo.SearchMin();
+                    ReadValues();
+                    btnAutoMin.InvokeAuto(() => btnAutoMin.Enabled = true);
+                });
+            }
+        }
+
+        private void PanelServoCan_Load(object sender, EventArgs e)
+        {
+            if (!Execution.DesignMode)
+            {
+                gphMonitoringTorque.ScaleMode = Composants.GraphPanel.ScaleType.FixedIfEnough;
+                gphMonitoringPos.ScaleMode = Composants.GraphPanel.ScaleType.FixedIfEnough;
+            }
+        }
+
         private void ReadValues()
         {
+            _loaded = false;
+
             try
             {
-                btnReadValue.Enabled = false;
                 numPosition.Value = _servo.ReadPosition();
+
                 trkPosition.SetValue(_servo.LastPosition, false);
+                trkPosition.Min = _servo.LastPositionMin;
+                trkPosition.Max = _servo.LastPositionMax;
+
                 numPositionMin.Value = _servo.ReadPositionMin();
                 numPositionMax.Value = _servo.ReadPositionMax();
                 numAccel.Value = _servo.ReadAcceleration();
                 numSpeedMax.Value = _servo.ReadSpeedMax();
                 numTorqueMax.Value = _servo.ReadTorqueMax();
 
-                trkTrajectoryTarget.Min = _servo.LastPositionMin;
-                trkTrajectoryTarget.Max = _servo.LastPositionMax;
-                trkTrajectoryTarget.SetValue(_servo.LastPosition);
-                trkTrajectorySpeed.SetValue(_servo.LastSpeedMax);
-                trkTrajectoryAccel.SetValue(_servo.LastAcceleration);
+                //trkTrajectoryTarget.Min = _servo.LastPositionMin;
+                //trkTrajectoryTarget.Max = _servo.LastPositionMax;
+                //trkTrajectoryTarget.SetValue(_servo.LastPosition);
+                //trkTrajectorySpeed.SetValue(_servo.LastSpeedMax);
+                //trkTrajectoryAccel.SetValue(_servo.LastAcceleration);
+                
+                gphMonitoringTorque.MinLimit = 0;
+                gphMonitoringTorque.MaxLimit = _servo.LastTorqueMax * 1.5;
 
                 gphMonitoringPos.MinLimit = _servo.LastPositionMin;
                 gphMonitoringPos.MaxLimit = _servo.LastPositionMax;
 
-                picWarning.Visible = false;
+                picConnection.Visible = true;
+                picConnection.Image = GoBot.Properties.Resources.ConnectionOk;
+                lblName.Text = NameFinder.GetName(_servo.ID);
+
                 grpControl.Enabled = true;
                 grpMonitoring.Enabled = true;
                 grpTrajectory.Enabled = true;
+                grpSettings.Enabled = true;
+                grpPositions.Enabled = true;
+
             }
             catch
             {
-                picWarning.Visible = true;
+                picConnection.Visible = true;
+                picConnection.Image = GoBot.Properties.Resources.ConnectionNok;
+                lblName.Text = "Pas de connexion";
+
                 grpControl.Enabled = false;
                 grpMonitoring.Enabled = false;
                 grpTrajectory.Enabled = false;
+                grpSettings.Enabled = false;
+                grpPositions.Enabled = false;
             }
 
-            btnReadValue.Enabled = true;
+            _loaded = true;
         }
     }
 }
