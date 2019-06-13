@@ -200,7 +200,6 @@
     <Compile Include="MinimumDelay.cs" />
     <Compile Include="SpeedConfig.cs" />
     <Compile Include="AsserStats.cs" />
-    <Compile Include="Beacons\BaliseStats.cs" />
     <Compile Include="Beacons\SuiviBalise.cs" />
     <Compile Include="CameraIP.cs" />
     <Compile Include="Communications\Connection.cs" />
@@ -358,8 +357,6 @@
     <Compile Include="PathFinding\Node.cs" />
     <Compile Include="PathFinding\Tracks.cs" />
     <Compile Include="PathFinding\Track.cs" />
-    <Compile Include="Beacons\Balise.cs" />
-    <Compile Include="Beacons\DetectionBalise.cs" />
     <Compile Include="Config.cs" />
     <Compile Include="Strategies\Strategy.cs" />
     <Compile Include="Enums.cs" />
