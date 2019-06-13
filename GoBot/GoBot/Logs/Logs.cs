@@ -8,16 +8,12 @@ namespace GoBot.Logs
     {
         public static ILog LogDebug { get; private set; }
         public static ILog LogConsole { get; private set; }
-
-        static Logs()
-        {
-            Init();
-            LogDebug = new LogFile(Config.PathData + "/LogsTraces/LogDebug" + Execution.LaunchStartString + ".txt");
-            LogConsole = new LogConsole();
-        }
-
+        
         public static void Init()
         {
+            LogDebug = new LogFile(Config.PathData + "/LogsTraces/LogDebug" + Execution.LaunchStartString + ".txt");
+            LogConsole = new LogConsole();
+
             try
             {
                 if (!Directory.Exists(Config.PathData + "/Logs/"))

@@ -33,12 +33,13 @@ namespace GoBot.Threading
         #endregion
 
         #region Constructors
-
-        static ThreadManager()
+        
+        public static void Init()
         {
             _threadsLink = new List<ThreadLink>();
 
             _linkCleanDeads = CreateThread(link => CleanDeads());
+            _linkCleanDeads.Name = "Nettoyage des threads terminés";
             _linkCleanDeads.StartInfiniteLoop(new TimeSpan(0, 0, 1));
         }
 
@@ -134,7 +135,6 @@ namespace GoBot.Threading
         /// </summary>
         private static void CleanDeads()
         {
-            _linkCleanDeads.RegisterName();
             _threadsLink.RemoveAll(t => t.Ended && t.EndDate < (DateTime.Now - new TimeSpan(0, 1, 0)));
         }
 

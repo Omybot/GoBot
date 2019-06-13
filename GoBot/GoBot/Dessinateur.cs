@@ -64,7 +64,6 @@ namespace GoBot
         public static bool AfficheTableRelief { get; set; } = false;
         public static bool AfficheHistoriqueCoordonnees { get; set; } = false;
         public static bool AfficheCoutsMouvements { get; set; } = false;
-        public static bool AfficheLigneDetections { get; set; } = false;
         public static bool AfficheElementsJeu { get; set; } = true;
 
         public static MouseMode modeCourant;
@@ -129,7 +128,7 @@ namespace GoBot
             }
         }
 
-        static Dessinateur()
+        public static void Init()
         {
             penRougePointille.DashStyle = DashStyle.Dot;
             penBleuClairPointille.DashStyle = DashStyle.Dot;
@@ -146,15 +145,14 @@ namespace GoBot
             PositionCurseur = new RealPoint();
 
             _linkDisplay = ThreadManager.CreateThread(link => DisplayLoop());
+            _linkDisplay.Name = "Affichage de la table";
             _linkDisplay.StartThread();
         }
 
         public static void Stop()
         {
-            Console.WriteLine("Arrete stp");
             _linkDisplay?.Cancel();
-            if (!(_linkDisplay?.WaitEnd()).Value)
-                Console.WriteLine("Niop");
+            _linkDisplay?.WaitEnd();
             _linkDisplay = null;
         }
 
@@ -170,8 +168,6 @@ namespace GoBot
 
         public static void DisplayLoop()
         {
-            _linkDisplay.RegisterName();
-
             Stopwatch sw = Stopwatch.StartNew();
 
             while (!_linkDisplay.Cancelled)
@@ -220,10 +216,7 @@ namespace GoBot
                         DessinePositionEnnemis(g);
 
                         DessineDetections(g);
-
-                        if (AfficheLigneDetections)
-                            DessineLignesDetection(g);
-
+                        
                         Robots.GrosRobot.PositionCible?.Paint(g, Color.Red, 5, Color.Red, Scale);
 
                         if (AfficheCoutsMouvements)
@@ -338,107 +331,6 @@ namespace GoBot
                 g.DrawLine(Plateau.NotreCouleur == Plateau.CouleurDroiteViolet ? penCouleurGaucheFleche : penCouleurDroiteFleche, positionEcran.X, positionEcran.Y, positionEcran.X + Scale.RealToScreenDistance(SuiviBalise.VecteursPositionsEnnemies[i].X / 3), positionEcran.Y + Scale.RealToScreenDistance(SuiviBalise.VecteursPositionsEnnemies[i].Y / 3));
                 g.DrawString(i + " - " + vitesse.ToString() + "mm/s", new Font("Calibri", 9, FontStyle.Bold), Brushes.White, positionEcran.X, positionEcran.Y);
             }
-
-            if (Plateau.Balise != null && Plateau.Balise.PositionsAdverses != null)
-            {
-                for (int i = 0; i < Plateau.Balise.PositionsAdverses.Count; i++)
-                {
-                    RealPoint p = Plateau.Balise.PositionsAdverses[i];
-                    Point positionEcran = Scale.RealToScreenPosition(p);
-
-                    if (p == null)
-                        continue;
-
-                    //if (vitesse < 50)
-                    //    g.DrawImage(Properties.Resources.Stop, positionEcran.X - Properties.Resources.Stop.Width / 2, positionEcran.Y - Properties.Resources.Stop.Height / 2, Properties.Resources.Stop.Width, Properties.Resources.Stop.Height);
-                    g.FillEllipse(Plateau.NotreCouleur == Plateau.CouleurDroiteViolet ? brushCouleurGaucheTransparent : brushCouleurDroiteTransparent, positionEcran.X - Scale.RealToScreenDistance(Plateau.RayonAdversaire), positionEcran.Y - Scale.RealToScreenDistance(Plateau.RayonAdversaire), Scale.RealToScreenDistance(Plateau.RayonAdversaire * 2), Scale.RealToScreenDistance(Plateau.RayonAdversaire * 2));
-                    g.DrawEllipse(Plateau.NotreCouleur == Plateau.CouleurDroiteViolet ? penCouleurGauche : penCouleurDroite, positionEcran.X - Scale.RealToScreenDistance(Plateau.RayonAdversaire), positionEcran.Y - Scale.RealToScreenDistance(Plateau.RayonAdversaire), Scale.RealToScreenDistance(Plateau.RayonAdversaire * 2), Scale.RealToScreenDistance(Plateau.RayonAdversaire * 2));
-                    //g.DrawLine(Plateau.NotreCouleur == Plateau.CouleurDroiteVert ? penCouleurJ1REpais : penCouleurJ2JEpais, new Point(positionEcran.X - 7, positionEcran.Y - 7), new Point(positionEcran.X + 7, positionEcran.Y + 7));
-                    //g.DrawLine(Plateau.NotreCouleur == Plateau.CouleurDroiteVert ? penCouleurJ1REpais : penCouleurJ2JEpais, new Point(positionEcran.X - 7, positionEcran.Y + 7), new Point(positionEcran.X + 7, positionEcran.Y - 7));
-                    //g.DrawLine(Plateau.NotreCouleur == Plateau.CouleurDroiteVert ? penCouleurJ1RFleche : penCouleurJ2JFleche, positionEcran.X, positionEcran.Y, positionEcran.X + scale.RealToScreenDistance(SuiviBalise.VecteursPositionsEnnemies[i].X / 3), positionEcran.Y + scale.RealToScreenDistance(SuiviBalise.VecteursPositionsEnnemies[i].Y / 3));
-                    //g.DrawString(i + " - " + vitesse + "mm/s", new Font("Calibri", 9, FontStyle.Bold), brushBlanc, positionEcran.X, positionEcran.Y);
-                }
-            }
-        }
-
-        private static void DessineLignesDetection(Graphics g)
-        {
-            if (Plateau.Balise.Detections != null)
-            {
-                List<BeaconDetection> detections = new List<BeaconDetection>(Plateau.Balise.Detections);
-
-                foreach (BeaconDetection detection in detections)
-                {
-                    // Ligne médiane
-                    g.DrawLine(penBleuClairPointille,
-                        Scale.RealToScreenPosition(detection.Balise.Position.Coordinates),
-                        (Scale.RealToScreenPosition(detection.Position)));
-
-                    // Dessin du polygone de détection
-                    detection.ToPolygone().Paint(g, Color.Red, 1, Color.FromArgb(35, Color.Red), Scale);
-
-                    Point positionEcran = Scale.RealToScreenPosition(detection.Position);
-
-                    g.DrawLine(Pens.Red, new Point(positionEcran.X - 4, positionEcran.Y - 4), new Point(positionEcran.X + 4, positionEcran.Y + 4));
-                    g.DrawLine(Pens.Red, new Point(positionEcran.X - 4, positionEcran.Y + 4), new Point(positionEcran.X + 4, positionEcran.Y - 4));
-                }
-            }
-
-            /*if (Plateau.InterpreteurBalise.DetectionBalises != null)
-            {
-
-                foreach (DetectionBalise detection in Plateau.InterpreteurBalise.DetectionBalises)
-                {
-                    // Ligne médiane
-                    g.DrawLine(penRougePointille,
-                        scale.RealToScreenPosition(detection.Balise.Position.Coordonnees),
-                        (scale.RealToScreenPosition(detection.Position)));
-
-                    // Dessin du polygone de détection
-                    Polygone polygone = InterpreteurBalise.DetectionToPolygone(detection);
-                    List<Point> points = new List<Point>();
-
-                    foreach (Segment s in polygone.Cotes)
-                    {
-                        points.Add(scale.RealToScreenPosition(s.Debut));
-                        points.Add(scale.RealToScreenPosition(s.Fin));
-                    }
-
-                    Point positionEcran = scale.RealToScreenPosition(detection.Position);
-                    g.DrawPolygon(penRougeFin, points.ToArray());
-                    g.FillPolygon(brushCouleurGaucheJauneTresTransparent, points.ToArray());
-                    g.DrawLine(penRougeFin, new Point(positionEcran.X - 4, positionEcran.Y - 4), new Point(positionEcran.X + 4, positionEcran.Y + 4));
-                    g.DrawLine(penRougeFin, new Point(positionEcran.X - 4, positionEcran.Y + 4), new Point(positionEcran.X + 4, positionEcran.Y - 4));
-                }
-
-                if (Plateau.InterpreteurBalise.Intersections != null)
-                {
-                    foreach (PointReelGenere p in Plateau.InterpreteurBalise.Intersections)
-                    {
-                        Point positionEcran = scale.RealToScreenPosition(p.Point);
-                        g.FillEllipse(brushVertFonce, positionEcran.X - 2, positionEcran.Y - 2, 4, 4);
-                    }
-                }
-
-                if (Plateau.InterpreteurBalise.MoyennesIntersections != null)
-                {
-                    foreach (PointReelGenere p in Plateau.InterpreteurBalise.MoyennesIntersections)
-                    {
-                        Point positionEcran = scale.RealToScreenPosition(p.Point);
-                        g.FillEllipse(brushVertFonce, positionEcran.X - 4, positionEcran.Y - 4, 8, 8);
-                    }
-                }
-
-                if (Plateau.InterpreteurBalise.AssociationPointDistanceIntersection != null)
-                {
-                    foreach (List<PointReel> liste in Plateau.InterpreteurBalise.AssociationPointDistanceIntersection)
-                    {
-                        if (liste[0] == null || liste[1] == null)
-                            continue;
-                        g.DrawLine(penVertFonce, scale.RealToScreenPosition(liste[0].X, liste[0].Y), scale.RealToScreenPosition(liste[1].X, liste[1].Y));
-                    }
-                }
-            }*/
         }
 
         private static void DessineDetections(Graphics g)

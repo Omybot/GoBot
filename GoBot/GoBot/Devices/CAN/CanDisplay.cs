@@ -25,16 +25,10 @@ namespace GoBot.Devices.CAN
             if (!Execution.DesignMode)
             {
                 Plateau.ScoreChange += Plateau_ScoreChange;
-                _loopSend = ThreadManager.CreateThread(link =>
-                {
-                    // Dans une boucle qui évite de spammer la carte qui ne bufferise pas les trames
-                    if (_lastSendedScore != _currentScore)
-                    {
-                        _communication.SendFrame(CanFrameFactory.BuildSetScore(_currentScore));
-                        _lastSendedScore = _currentScore;
-                    }
-                });
-                _loopSend.Name = "Affichage score";
+                
+                // Dans une boucle qui évite de spammer la carte qui ne bufferise pas les trames
+                _loopSend = ThreadManager.CreateThread(link => SendScore());
+                _loopSend.Name = "Envoi du score";
                 _loopSend.StartInfiniteLoop(500);
             }
         }
@@ -47,6 +41,15 @@ namespace GoBot.Devices.CAN
         private void Plateau_ScoreChange(int score)
         {
             SetScore(score);
+        }
+
+        private void SendScore()
+        {
+            if (_lastSendedScore != _currentScore)
+            {
+                _communication.SendFrame(CanFrameFactory.BuildSetScore(_currentScore));
+                _lastSendedScore = _currentScore;
+            }
         }
     }
 }

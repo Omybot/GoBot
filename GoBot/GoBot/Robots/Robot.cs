@@ -161,28 +161,6 @@ namespace GoBot
             CapteurCouleurChange?.Invoke(capteur, couleur);
         }
 
-        public void Diagnostic()
-        {
-            if (this == Robots.GrosRobot)
-            {
-                int tempo = 200;
-
-                Lent();
-                Avancer(50);
-                Reculer(50);
-                PivotDroite(10);
-                PivotGauche(10);
-
-                // TODO procédure de diagnostic des actionneurs
-                Plateau.Balise.VitesseRotation(150);
-                Thread.Sleep(tempo);
-                AllDevices.RecGoBot.Buzz(5000, 200);
-                Thread.Sleep(tempo * 4);
-                AllDevices.RecGoBot.Buzz(0, 200);
-                Plateau.Balise.VitesseRotation(0);
-            }
-        }
-
         public virtual void MoteurPosition(MotorID moteur, int position, bool waitEnd = false)
         {
             Historique.AjouterAction(new ActionMoteur(this, position, moteur));

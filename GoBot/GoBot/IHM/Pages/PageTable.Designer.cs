@@ -60,7 +60,6 @@
             this.btnTeleportRPFace = new System.Windows.Forms.Button();
             this.toolTip = new System.Windows.Forms.ToolTip(this.components);
             this.groupBoxAffichage = new System.Windows.Forms.GroupBox();
-            this.btnZoneDepart = new System.Windows.Forms.Button();
             this.btnTestAsser = new System.Windows.Forms.Button();
             this.button2 = new System.Windows.Forms.Button();
             this.btnReset = new System.Windows.Forms.Button();
@@ -68,9 +67,6 @@
             this.pictureBoxTable = new System.Windows.Forms.PictureBox();
             this.btnTestScore = new System.Windows.Forms.Button();
             this.btnRestartRecal = new System.Windows.Forms.Button();
-            this.button1 = new System.Windows.Forms.Button();
-            this.button3 = new System.Windows.Forms.Button();
-            this.label6 = new System.Windows.Forms.Label();
             this.groupBox.SuspendLayout();
             this.groupBoxDeplacements.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numNbPoints)).BeginInit();
@@ -234,11 +230,10 @@
             "Graph (arcs)",
             "Coûts mouvements",
             "Calcul path finding",
-            "Détections balises",
             "Historique trajectoire"});
             this.checkedListBox.Location = new System.Drawing.Point(3, 19);
             this.checkedListBox.Name = "checkedListBox";
-            this.checkedListBox.Size = new System.Drawing.Size(184, 135);
+            this.checkedListBox.Size = new System.Drawing.Size(184, 120);
             this.checkedListBox.TabIndex = 63;
             this.checkedListBox.ItemCheck += new System.Windows.Forms.ItemCheckEventHandler(this.checkedListBox_ItemCheck);
             // 
@@ -393,20 +388,10 @@
             this.groupBoxAffichage.Controls.Add(this.checkedListBox);
             this.groupBoxAffichage.Location = new System.Drawing.Point(0, 71);
             this.groupBoxAffichage.Name = "groupBoxAffichage";
-            this.groupBoxAffichage.Size = new System.Drawing.Size(200, 164);
+            this.groupBoxAffichage.Size = new System.Drawing.Size(200, 145);
             this.groupBoxAffichage.TabIndex = 68;
             this.groupBoxAffichage.TabStop = false;
             this.groupBoxAffichage.Text = "Affichage";
-            // 
-            // btnZoneDepart
-            // 
-            this.btnZoneDepart.Location = new System.Drawing.Point(14, 319);
-            this.btnZoneDepart.Name = "btnZoneDepart";
-            this.btnZoneDepart.Size = new System.Drawing.Size(98, 23);
-            this.btnZoneDepart.TabIndex = 69;
-            this.btnZoneDepart.Text = "Retour départ";
-            this.btnZoneDepart.UseVisualStyleBackColor = true;
-            this.btnZoneDepart.Click += new System.EventHandler(this.btnZoneDepart_Click);
             // 
             // btnTestAsser
             // 
@@ -480,56 +465,23 @@
             // 
             // btnRestartRecal
             // 
-            this.btnRestartRecal.Location = new System.Drawing.Point(31, 645);
+            this.btnRestartRecal.Location = new System.Drawing.Point(14, 319);
             this.btnRestartRecal.Name = "btnRestartRecal";
-            this.btnRestartRecal.Size = new System.Drawing.Size(81, 21);
+            this.btnRestartRecal.Size = new System.Drawing.Size(98, 25);
             this.btnRestartRecal.TabIndex = 76;
-            this.btnRestartRecal.Text = "Restart Recal";
+            this.btnRestartRecal.Text = "Retour départ";
             this.btnRestartRecal.UseVisualStyleBackColor = true;
             this.btnRestartRecal.Click += new System.EventHandler(this.btnRestartRecal_Click);
             // 
-            // button1
-            // 
-            this.button1.Location = new System.Drawing.Point(192, 42);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(37, 23);
-            this.button1.TabIndex = 77;
-            this.button1.Text = "+";
-            this.button1.UseVisualStyleBackColor = true;
-            this.button1.Click += new System.EventHandler(this.button1_Click);
-            // 
-            // button3
-            // 
-            this.button3.Location = new System.Drawing.Point(235, 42);
-            this.button3.Name = "button3";
-            this.button3.Size = new System.Drawing.Size(37, 23);
-            this.button3.TabIndex = 78;
-            this.button3.Text = "-";
-            this.button3.UseVisualStyleBackColor = true;
-            this.button3.Click += new System.EventHandler(this.button3_Click);
-            // 
-            // label6
-            // 
-            this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(219, 71);
-            this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(35, 13);
-            this.label6.TabIndex = 79;
-            this.label6.Text = "label6";
-            // 
-            // PanelTable
+            // PageTable
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.Transparent;
-            this.Controls.Add(this.label6);
-            this.Controls.Add(this.button3);
-            this.Controls.Add(this.button1);
             this.Controls.Add(this.btnRestartRecal);
             this.Controls.Add(this.btnTestScore);
             this.Controls.Add(this.button2);
             this.Controls.Add(this.btnTestAsser);
-            this.Controls.Add(this.btnZoneDepart);
             this.Controls.Add(this.groupBoxAffichage);
             this.Controls.Add(this.groupBoxDeplacements);
             this.Controls.Add(this.groupBox);
@@ -549,7 +501,7 @@
             this.Controls.Add(this.boxSourisObstacle);
             this.Controls.Add(this.btnAffichage);
             this.Controls.Add(this.pictureBoxTable);
-            this.Name = "PanelTable";
+            this.Name = "PageTable";
             this.Size = new System.Drawing.Size(1273, 669);
             this.Load += new System.EventHandler(this.PanelTable_Load);
             this.groupBox.ResumeLayout(false);
@@ -593,7 +545,6 @@
         private System.Windows.Forms.GroupBox groupBoxDeplacements;
         private System.Windows.Forms.ToolTip toolTip;
         private System.Windows.Forms.GroupBox groupBoxAffichage;
-        private System.Windows.Forms.Button btnZoneDepart;
         private System.Windows.Forms.Button btnStratNul;
         private System.Windows.Forms.Button btnStratTest;
         private System.Windows.Forms.Button btnTestAsser;
@@ -604,8 +555,5 @@
         private System.Windows.Forms.NumericUpDown numNbPoints;
         private System.Windows.Forms.Button btnTestScore;
         private System.Windows.Forms.Button btnRestartRecal;
-        private System.Windows.Forms.Button button1;
-        private System.Windows.Forms.Button button3;
-        private System.Windows.Forms.Label label6;
     }
 }

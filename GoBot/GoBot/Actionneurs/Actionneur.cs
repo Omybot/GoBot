@@ -9,8 +9,8 @@ namespace GoBot.Actionneurs
         private static AtomStacker _atomStacker;
         private static AtomUnloader _atomUnloaderLeft, _atomUnloaderRight;
         private static GoldGrabber _goldGrabberLeft, _goldGrabberRight;
-
-        static Actionneur()
+        
+        public static void Init()
         {
             _atomHandler = new AtomHandler();
             _atomStacker = new AtomStacker();

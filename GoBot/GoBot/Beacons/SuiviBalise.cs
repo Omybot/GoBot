@@ -46,8 +46,8 @@ namespace GoBot.Beacons
         private static List<List<PositionTemporelle>> PositionsTemporelles { get; set; }
         private static List<DateTime> DatePositionsBalises { get; set; }
         private const double deplacementMaxSeconde = 4000;
-
-        static SuiviBalise()
+        
+        public static void Init()
         {
             NombreMaxBalises = 2;
             PositionsEnnemies = new List<RealPoint>();

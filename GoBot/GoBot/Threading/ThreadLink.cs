@@ -383,6 +383,8 @@ namespace GoBot.Threading
             while (_innerThread != null && sw.ElapsedMilliseconds < timeout && !_innerThread.Join(10))
                 System.Windows.Forms.Application.DoEvents();
 
+            sw.Stop();
+
             return sw.ElapsedMilliseconds < timeout;
         }
 

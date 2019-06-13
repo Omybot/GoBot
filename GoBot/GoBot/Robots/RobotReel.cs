@@ -291,10 +291,7 @@ namespace GoBot
                             while (HistoriqueCoordonnees.Count > 1200)
                                 HistoriqueCoordonnees.RemoveAt(0);
                         }
-
-                        if (Plateau.Balise != null)
-                            Plateau.Balise.Position = new Position(Position);
-
+                        
                         OnPositionChange(Position);
                     }
                     catch (Exception)

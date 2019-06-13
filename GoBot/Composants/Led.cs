@@ -12,16 +12,16 @@ namespace Composants
         private Timer BlinkTimer { get; set; }
         private int BlinkCounter { get; set; } = 0;
 
-        private static Dictionary<Color, Bitmap> LedsBitmap { get; } // Images déjà créées, inutile de les recaculer à chaque fois
-
-        static Led()
-        {
-            LedsBitmap = new Dictionary<Color, Bitmap>();
-            LedsBitmap.Add(Color.Red, Properties.Resources.RedLed);
-        }
-
+        private static Dictionary<Color, Bitmap> LedsBitmap { get; set; } // Images déjà créées, inutile de les recaculer à chaque fois
+        
         public Led()
         {
+            if(LedsBitmap is null)
+            {
+                LedsBitmap = new Dictionary<Color, Bitmap>();
+                LedsBitmap.Add(Color.Red, Properties.Resources.RedLed);
+            }
+
             InitializeComponent();
             BackColor = Color.Transparent;
 

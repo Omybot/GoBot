@@ -1,5 +1,4 @@
 ﻿using Geometry;
-using GoBot.Actionneurs;
 using Geometry.Shapes;
 using GoBot.Devices;
 using GoBot.GameElements;
@@ -12,7 +11,6 @@ using System.Threading;
 using System.Windows.Forms;
 using GoBot.Threading;
 using System.Linq;
-using GoBot.GameBoard;
 
 namespace GoBot.IHM
 {
@@ -51,8 +49,6 @@ namespace GoBot.IHM
 
         void DisplayInfos()
         {
-            _linkDisplay.RegisterName();
-
             this.InvokeAuto(() =>
             { 
                 lblPosGrosX.Text = Robots.GrosRobot.Position.Coordinates.X.ToString("0.00");
@@ -88,6 +84,7 @@ namespace GoBot.IHM
             if (btnAffichage.Text == "Lancer l'affichage")
             {
                 _linkDisplay = ThreadManager.CreateThread(link => DisplayInfos());
+                _linkDisplay.Name = "Affichage des données";
                 _linkDisplay.StartInfiniteLoop(new TimeSpan(0, 0, 0, 0, 100));
 
                 Dessinateur.Start();
@@ -136,7 +133,6 @@ namespace GoBot.IHM
                     List<RealPoint> positions = new List<RealPoint>();
 
                     positions.Add(Dessinateur.Scale.ScreenToRealPosition(pictureBoxTable.PointToClient(MousePosition)));
-                    Plateau.Balise.Actualisation(false, Dessinateur.Scale.ScreenToRealPosition(pictureBoxTable.PointToClient(MousePosition)));
                     Plateau.SetOpponents(positions);
                     //SuiviBalise.MajPositions(positions, Plateau.Enchainement == null || Plateau.Enchainement.DebutMatch == null);
                 }
@@ -360,8 +356,6 @@ namespace GoBot.IHM
                 Dessinateur.AfficheGraphArretes = e.NewValue == CheckState.Checked;
             if (ligne == "Coûts mouvements")
                 Dessinateur.AfficheCoutsMouvements = e.NewValue == CheckState.Checked;
-            if (ligne == "Détections balises")
-                Dessinateur.AfficheLigneDetections = e.NewValue == CheckState.Checked;
             if (ligne == "Calcul path finding")
                 Config.CurrentConfig.AfficheDetailTraj = e.NewValue == CheckState.Checked ? 30 : 0;
             if (ligne == "Historique trajectoire")
@@ -427,7 +421,6 @@ namespace GoBot.IHM
             Robots.GrosRobot.GotoXYTeta(Recallages.PositionDepart);
 
             Robots.GrosRobot.Reculer(300);
-
         }
 
         private void FonctionHokuyo()
@@ -568,18 +561,6 @@ namespace GoBot.IHM
                 Robots.GrosRobot.GotoXYTeta(new Position(90, new RealPoint(3000-300, 300)));
                 Recallages.RecallageGrosRobot();
             }
-        }
-
-        private void button1_Click(object sender, EventArgs e)
-        {
-            Actionneur.AtomStacker.AtomsCount++;
-            label6.Text = Actionneur.AtomStacker.AtomsCount.ToString();
-        }
-
-        private void button3_Click(object sender, EventArgs e)
-        {
-            Actionneur.AtomStacker.AtomsCount--;
-            label6.Text = Actionneur.AtomStacker.AtomsCount.ToString();
         }
     }
 }

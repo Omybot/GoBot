@@ -80,7 +80,6 @@ namespace GoBot.Communications.UDP
                     Client.Connect(IPAddress, OutputPort);
                     Connected = true;
                     state = ConnectionState.Ok;
-                    StartReception();
                 }
                 catch (Exception)
                 {

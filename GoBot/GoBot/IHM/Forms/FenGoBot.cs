@@ -107,6 +107,8 @@ namespace GoBot
 
                 Connections.ConnectionGB.SendMessage(UdpFrameFactory.DemandeCouleurEquipe());
             }
+            
+            Connections.StartConnections();
 
             SplashScreen.SetMessage("Youhou !", Color.Green);
             SplashScreen.CloseSplash();
@@ -150,8 +152,7 @@ namespace GoBot
             }
 
             Execution.Shutdown = true;
-
-            Plateau.Balise.Stop();
+            
             Config.Save();
             SauverLogs();
 

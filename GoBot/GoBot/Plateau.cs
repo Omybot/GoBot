@@ -32,8 +32,6 @@ namespace GoBot
         public static int RayonAdversaireInitial { get; set; }
         public static int RayonAdversaire { get; set; }
 
-        public static Beacon Balise { get; set; }
-
         public static Strategy Strategy { get; set; }
         public static Poids PoidActions { get; set; }
 
@@ -77,7 +75,7 @@ namespace GoBot
                             AllDevices.RecGoBot.SetLedColor(Color.DarkViolet);
 
                         NotreCouleurChange?.Invoke(null, null);
-                        if(_obstacles != null)
+                        if (_obstacles != null)
                             Robots.GrosRobot.MajGraphFranchissable(_obstacles.FromAllExceptBoard);
                     }
                 }
@@ -207,16 +205,13 @@ namespace GoBot
 
         public static void StartDetection()
         {
-            ThreadManager.CreateThread(link =>
+            if (AllDevices.HokuyoAvoid != null)
             {
-                while (AllDevices.HokuyoAvoid == null) ;
-                    AllDevices.HokuyoAvoid.StartLoopMeasure();
-                    AllDevices.HokuyoAvoid.NewMeasure += HokuyoAvoid_NewMeasure;
-            }).StartThread();
+                AllDevices.HokuyoAvoid.StartLoopMeasure();
+                AllDevices.HokuyoAvoid.NewMeasure += HokuyoAvoid_NewMeasure;
+            }
         }
-
-
-
+        
         private static int cptZoneDepart = 0;
         private static bool qqunZoneDepart = false;
         private static ThreadLink timerZoneDepart;
@@ -232,10 +227,10 @@ namespace GoBot
                 Stopwatch sw = Stopwatch.StartNew();
 
                 int vitesseMax = Config.CurrentConfig.ConfigRapide.LineSpeed;
-                
+
                 // Truc dégueu pour ne pas détecter notre robot secondaire qui est dans la zone de départ au début du match
                 positions = positions.Where(o => !NotreZoneDepart().Contains(o)).ToList();
-                
+
                 if (Plateau.Strategy == null)
                 {
                     // TODOEACHYEAR Tester ICI ce qu'il y a à tester en fonction de la position de l'ennemi AVANT de lancer le match
@@ -252,7 +247,7 @@ namespace GoBot
                         Robots.GrosRobot.SpeedConfig.LineSpeed = SpeedWithOpponent(minOpponentDist, Config.CurrentConfig.ConfigRapide.LineSpeed);
                     }
                 }
-                
+
                 _obstacles.SetDetections(positions.Select(p =>
                 {
                     if (_obstacles.FromColor.ElementAt(0).Contains(p))
@@ -291,8 +286,6 @@ namespace GoBot
 
         public static void Init()
         {
-            Balise = new Beacon();
-
             AllDevices.RecGoBot.SetLed(LedID.DebugB3, AllDevices.HokuyoAvoid == null ? RecGoBot.LedStatus.Rouge : RecGoBot.LedStatus.Vert);
         }
 

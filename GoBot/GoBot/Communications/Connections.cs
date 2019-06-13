@@ -64,7 +64,6 @@ namespace GoBot.Communications
             ConnectionCanBridge.Name = Board.RecCan.ToString();
             
             ConnectionCan = new CanConnection(Board.RecCan);
-            ConnectionCan.StartReception();
 
             _connectionCanServo.Add(CanBoard.CanDisplay, new CanSubConnection(ConnectionCan, CanBoard.CanDisplay));
             _connectionCanServo.Add(CanBoard.CanServo1, new CanSubConnection(ConnectionCan, CanBoard.CanServo1));
@@ -78,7 +77,16 @@ namespace GoBot.Communications
 
             // En remplacement des tests de connexion des ConnexionCheck, pour les syncroniser
             _linkTestConnections = ThreadManager.CreateThread(link => TestConnections());
+            _linkTestConnections.Name = "Tests de connexion";
             _linkTestConnections.StartInfiniteLoop();
+        }
+
+        public static void StartConnections()
+        {
+            ConnectionIO.StartReception();
+            ConnectionMove.StartReception();
+            ConnectionGB.StartReception();
+            ConnectionCan.StartReception();
         }
 
         /// <summary>
@@ -115,8 +123,6 @@ namespace GoBot.Communications
         /// </summary>
         private static void TestConnections()
         {
-            _linkTestConnections.RegisterName();
-
             int interval = IntervalLoopTests / AllConnections.Count();
 
             foreach (Connection conn in AllConnections.OrderBy(c => Connections.GetUDPBoardByConnection(c).ToString()))

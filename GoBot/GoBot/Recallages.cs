@@ -23,7 +23,7 @@ namespace GoBot
             }
         }
 
-        static Recallages()
+        public static void Init()
         {
             PositionDepartGauche = new Position(0, new RealPoint(Robots.GrosRobot.Longueur / 2, Robots.GrosRobot.Largeur / 2 + 305));
             PositionDepartDroite = new Position(180, new RealPoint(3000 - PositionDepartGauche.Coordinates.X, PositionDepartGauche.Coordinates.Y));
@@ -53,7 +53,6 @@ namespace GoBot
                 Robots.GrosRobot.ReglerOffsetAsserv(PositionDepart);
 
                 Robots.GrosRobot.ArmerJack();
-                Plateau.Balise.VitesseRotation(150);
 
                 Robots.GrosRobot.Rapide();
                 AllDevices.RecGoBot.SetLed(LedID.DebugB2, Devices.RecGoBot.LedStatus.Vert);

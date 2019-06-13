@@ -432,19 +432,6 @@ namespace GoBot.Communications.UDP
                         output = ReplaceParam(output, parameters[3].ToString("000"));
                     }
                     break;
-                case UdpFrameFunction.DetectionBalise:
-                    output = "Détection balise {0} : Tour de {1-2} ticks, {3} détections en haut, {4} détections en bas";
-                    if (parameters != null)
-                    {
-                        output = ReplaceParam(output, NameFinder.GetName((BaliseID)parameters[0]));
-                        output = ReplaceParam(output, parameters[1].ToString());
-                        output = ReplaceParam(output, parameters[2].ToString());
-                        output = ReplaceParam(output, parameters[3].ToString());
-                    }
-                    break;
-                case UdpFrameFunction.DetectionBaliseRapide:
-                    output = "Détection rapide balise";
-                    break;
                 case UdpFrameFunction.EnvoiCAN:
                     output = "Envoi message CAN";
                     break;

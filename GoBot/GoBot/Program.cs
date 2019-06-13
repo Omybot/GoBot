@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Windows.Forms;
-using Geometry;
 using GoBot.Communications;
 using GoBot.IHM;
 using System.Drawing;
@@ -11,6 +10,9 @@ using System.Net;
 using System.Threading;
 using System.Diagnostics;
 using GoBot.Devices;
+using GoBot.Actionneurs;
+using GoBot.Threading;
+using GoBot.Beacons;
 
 namespace GoBot
 {
@@ -36,6 +38,7 @@ namespace GoBot
             CheckIP();
 
             SplashScreen.SetMessage("Initialisation :\nConnexions...", Color.Black);
+            ThreadManager.Init();
             Connections.Init();
 
             SplashScreen.SetMessage("Initialisation :\nConfig...", Color.Black);
@@ -43,11 +46,15 @@ namespace GoBot
 
             SplashScreen.SetMessage("Initialisation :\nDevices...", Color.Black);
             AllDevices.Init();
+            Actionneur.Init();
+            SuiviBalise.Init();
 
             SplashScreen.SetMessage("Initialisation :\nRobot...", Color.Black);
             Robots.Init();
+            Recallages.Init();
 
             SplashScreen.SetMessage("Initialisation :\nPlateau...", Color.Black);
+            Dessinateur.Init();
             Plateau.Init();
 
             SplashScreen.SetMessage("Initialisation :\nLogs...", Color.Black);

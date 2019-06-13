@@ -22,9 +22,7 @@ namespace GoBot.Strategies
         protected override void SequenceBegin()
         {
             Robots.GrosRobot.SpeedConfig.SetParams(500, 2000, 2000, 800, 2000, 2000);
-
-            Plateau.Balise.VitesseRotation(150);
-
+            
             // Sortir ICI de la zone de départ pour commencer
         }
 

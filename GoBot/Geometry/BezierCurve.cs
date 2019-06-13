@@ -7,13 +7,8 @@ namespace Geometry
 {
     public class BezierCurve
     {
-        private static double[] factorialLookup;
-
-        static BezierCurve()
-        {
-            CreateFactorialTable();
-        }
-
+        private static double[] _factorial;
+        
         /// <summary>
         /// Retourne une liste de points correspondant à une courbe de Bézier suivant des points donnés en entrée
         /// </summary>
@@ -45,52 +40,54 @@ namespace Geometry
 
         private static double factorial(int n)
         {
+            if (_factorial is null)
+                CreateFactorialTable();
+
             // Just check if n is appropriate, then return the result
             if (n < 0) { throw new Exception("n is less than 0"); }
             if (n > 32) { throw new Exception("n is greater than 32"); }
 
-            return factorialLookup[n]; /* returns the value n! as a SUMORealing point number */
+            return _factorial[n]; /* returns the value n! as a SUMORealing point number */
         }
 
         private static void CreateFactorialTable()
         {
             // Create lookup table for fast factorial calculation
             // Fill untill n=32. The rest is too high to represent
-            double[] a = new double[33];
-            a[0] = 1.0;
-            a[1] = 1.0;
-            a[2] = 2.0;
-            a[3] = 6.0;
-            a[4] = 24.0;
-            a[5] = 120.0;
-            a[6] = 720.0;
-            a[7] = 5040.0;
-            a[8] = 40320.0;
-            a[9] = 362880.0;
-            a[10] = 3628800.0;
-            a[11] = 39916800.0;
-            a[12] = 479001600.0;
-            a[13] = 6227020800.0;
-            a[14] = 87178291200.0;
-            a[15] = 1307674368000.0;
-            a[16] = 20922789888000.0;
-            a[17] = 355687428096000.0;
-            a[18] = 6402373705728000.0;
-            a[19] = 121645100408832000.0;
-            a[20] = 2432902008176640000.0;
-            a[21] = 51090942171709440000.0;
-            a[22] = 1124000727777607680000.0;
-            a[23] = 25852016738884976640000.0;
-            a[24] = 620448401733239439360000.0;
-            a[25] = 15511210043330985984000000.0;
-            a[26] = 403291461126605635584000000.0;
-            a[27] = 10888869450418352160768000000.0;
-            a[28] = 304888344611713860501504000000.0;
-            a[29] = 8841761993739701954543616000000.0;
-            a[30] = 265252859812191058636308480000000.0;
-            a[31] = 8222838654177922817725562880000000.0;
-            a[32] = 263130836933693530167218012160000000.0;
-            factorialLookup = a;
+            _factorial = new double[33];
+            _factorial[0] = 1.0;
+            _factorial[1] = 1.0;
+            _factorial[2] = 2.0;
+            _factorial[3] = 6.0;
+            _factorial[4] = 24.0;
+            _factorial[5] = 120.0;
+            _factorial[6] = 720.0;
+            _factorial[7] = 5040.0;
+            _factorial[8] = 40320.0;
+            _factorial[9] = 362880.0;
+            _factorial[10] = 3628800.0;
+            _factorial[11] = 39916800.0;
+            _factorial[12] = 479001600.0;
+            _factorial[13] = 6227020800.0;
+            _factorial[14] = 87178291200.0;
+            _factorial[15] = 1307674368000.0;
+            _factorial[16] = 20922789888000.0;
+            _factorial[17] = 355687428096000.0;
+            _factorial[18] = 6402373705728000.0;
+            _factorial[19] = 121645100408832000.0;
+            _factorial[20] = 2432902008176640000.0;
+            _factorial[21] = 51090942171709440000.0;
+            _factorial[22] = 1124000727777607680000.0;
+            _factorial[23] = 25852016738884976640000.0;
+            _factorial[24] = 620448401733239439360000.0;
+            _factorial[25] = 15511210043330985984000000.0;
+            _factorial[26] = 403291461126605635584000000.0;
+            _factorial[27] = 10888869450418352160768000000.0;
+            _factorial[28] = 304888344611713860501504000000.0;
+            _factorial[29] = 8841761993739701954543616000000.0;
+            _factorial[30] = 265252859812191058636308480000000.0;
+            _factorial[31] = 8222838654177922817725562880000000.0;
+            _factorial[32] = 263130836933693530167218012160000000.0;
         }
 
         private static double Ni(int n, int i)
