@@ -585,10 +585,8 @@ namespace GoBot
 
         public override void DemandeValeursNumeriques(Board carte, bool attendre)
         {
-            Random r = new Random();
-
             for (int i = 0; i < 3 * 2; i++)
-                ValeursNumeriques[carte][i] = (Byte)r.Next();
+                ValeursNumeriques[carte][i] = (byte)((DateTime.Now.Second * 1000 + DateTime.Now.Millisecond) / 60000.0 * 255);
         }
     }
 }

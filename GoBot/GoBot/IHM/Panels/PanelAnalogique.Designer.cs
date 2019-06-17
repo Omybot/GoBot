@@ -54,7 +54,7 @@
             // lblAN1
             // 
             this.lblAN1.AutoSize = true;
-            this.lblAN1.Location = new System.Drawing.Point(100, 64);
+            this.lblAN1.Location = new System.Drawing.Point(59, 39);
             this.lblAN1.Name = "lblAN1";
             this.lblAN1.Size = new System.Drawing.Size(23, 13);
             this.lblAN1.TabIndex = 4;
@@ -63,7 +63,7 @@
             // lblAN2
             // 
             this.lblAN2.AutoSize = true;
-            this.lblAN2.Location = new System.Drawing.Point(100, 86);
+            this.lblAN2.Location = new System.Drawing.Point(59, 61);
             this.lblAN2.Name = "lblAN2";
             this.lblAN2.Size = new System.Drawing.Size(23, 13);
             this.lblAN2.TabIndex = 5;
@@ -72,7 +72,7 @@
             // lblAN5
             // 
             this.lblAN5.AutoSize = true;
-            this.lblAN5.Location = new System.Drawing.Point(100, 152);
+            this.lblAN5.Location = new System.Drawing.Point(59, 127);
             this.lblAN5.Name = "lblAN5";
             this.lblAN5.Size = new System.Drawing.Size(23, 13);
             this.lblAN5.TabIndex = 6;
@@ -81,7 +81,7 @@
             // lblAN6
             // 
             this.lblAN6.AutoSize = true;
-            this.lblAN6.Location = new System.Drawing.Point(100, 174);
+            this.lblAN6.Location = new System.Drawing.Point(59, 149);
             this.lblAN6.Name = "lblAN6";
             this.lblAN6.Size = new System.Drawing.Size(23, 13);
             this.lblAN6.TabIndex = 26;
@@ -90,7 +90,7 @@
             // lblAN4
             // 
             this.lblAN4.AutoSize = true;
-            this.lblAN4.Location = new System.Drawing.Point(100, 130);
+            this.lblAN4.Location = new System.Drawing.Point(59, 105);
             this.lblAN4.Name = "lblAN4";
             this.lblAN4.Size = new System.Drawing.Size(23, 13);
             this.lblAN4.TabIndex = 34;
@@ -99,7 +99,7 @@
             // lblAN3
             // 
             this.lblAN3.AutoSize = true;
-            this.lblAN3.Location = new System.Drawing.Point(100, 108);
+            this.lblAN3.Location = new System.Drawing.Point(59, 83);
             this.lblAN3.Name = "lblAN3";
             this.lblAN3.Size = new System.Drawing.Size(23, 13);
             this.lblAN3.TabIndex = 33;
@@ -108,7 +108,7 @@
             // lblEnable
             // 
             this.lblEnable.AutoSize = true;
-            this.lblEnable.Location = new System.Drawing.Point(44, 25);
+            this.lblEnable.Location = new System.Drawing.Point(3, 7);
             this.lblEnable.Name = "lblEnable";
             this.lblEnable.Size = new System.Drawing.Size(28, 13);
             this.lblEnable.TabIndex = 49;
@@ -119,7 +119,7 @@
             this.boxIOAN1.AutoSize = true;
             this.boxIOAN1.Checked = true;
             this.boxIOAN1.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.boxIOAN1.Location = new System.Drawing.Point(47, 63);
+            this.boxIOAN1.Location = new System.Drawing.Point(6, 38);
             this.boxIOAN1.Name = "boxIOAN1";
             this.boxIOAN1.Size = new System.Drawing.Size(47, 17);
             this.boxIOAN1.TabIndex = 52;
@@ -130,7 +130,7 @@
             // lblAN7
             // 
             this.lblAN7.AutoSize = true;
-            this.lblAN7.Location = new System.Drawing.Point(99, 196);
+            this.lblAN7.Location = new System.Drawing.Point(58, 171);
             this.lblAN7.Name = "lblAN7";
             this.lblAN7.Size = new System.Drawing.Size(23, 13);
             this.lblAN7.TabIndex = 54;
@@ -139,7 +139,7 @@
             // lblAN8
             // 
             this.lblAN8.AutoSize = true;
-            this.lblAN8.Location = new System.Drawing.Point(100, 218);
+            this.lblAN8.Location = new System.Drawing.Point(59, 193);
             this.lblAN8.Name = "lblAN8";
             this.lblAN8.Size = new System.Drawing.Size(23, 13);
             this.lblAN8.TabIndex = 56;
@@ -148,7 +148,7 @@
             // lblAN9
             // 
             this.lblAN9.AutoSize = true;
-            this.lblAN9.Location = new System.Drawing.Point(99, 240);
+            this.lblAN9.Location = new System.Drawing.Point(58, 215);
             this.lblAN9.Name = "lblAN9";
             this.lblAN9.Size = new System.Drawing.Size(23, 13);
             this.lblAN9.TabIndex = 58;
@@ -159,7 +159,7 @@
             this.boxIOAN2.AutoSize = true;
             this.boxIOAN2.Checked = true;
             this.boxIOAN2.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.boxIOAN2.Location = new System.Drawing.Point(47, 85);
+            this.boxIOAN2.Location = new System.Drawing.Point(6, 60);
             this.boxIOAN2.Name = "boxIOAN2";
             this.boxIOAN2.Size = new System.Drawing.Size(47, 17);
             this.boxIOAN2.TabIndex = 59;
@@ -172,7 +172,7 @@
             this.boxIOAN3.AutoSize = true;
             this.boxIOAN3.Checked = true;
             this.boxIOAN3.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.boxIOAN3.Location = new System.Drawing.Point(47, 107);
+            this.boxIOAN3.Location = new System.Drawing.Point(6, 82);
             this.boxIOAN3.Name = "boxIOAN3";
             this.boxIOAN3.Size = new System.Drawing.Size(47, 17);
             this.boxIOAN3.TabIndex = 60;
@@ -185,7 +185,7 @@
             this.boxIOAN4.AutoSize = true;
             this.boxIOAN4.Checked = true;
             this.boxIOAN4.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.boxIOAN4.Location = new System.Drawing.Point(47, 129);
+            this.boxIOAN4.Location = new System.Drawing.Point(6, 104);
             this.boxIOAN4.Name = "boxIOAN4";
             this.boxIOAN4.Size = new System.Drawing.Size(47, 17);
             this.boxIOAN4.TabIndex = 61;
@@ -198,7 +198,7 @@
             this.boxIOAN5.AutoSize = true;
             this.boxIOAN5.Checked = true;
             this.boxIOAN5.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.boxIOAN5.Location = new System.Drawing.Point(47, 151);
+            this.boxIOAN5.Location = new System.Drawing.Point(6, 126);
             this.boxIOAN5.Name = "boxIOAN5";
             this.boxIOAN5.Size = new System.Drawing.Size(47, 17);
             this.boxIOAN5.TabIndex = 62;
@@ -211,7 +211,7 @@
             this.boxIOAN6.AutoSize = true;
             this.boxIOAN6.Checked = true;
             this.boxIOAN6.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.boxIOAN6.Location = new System.Drawing.Point(47, 173);
+            this.boxIOAN6.Location = new System.Drawing.Point(6, 148);
             this.boxIOAN6.Name = "boxIOAN6";
             this.boxIOAN6.Size = new System.Drawing.Size(47, 17);
             this.boxIOAN6.TabIndex = 63;
@@ -224,7 +224,7 @@
             this.boxIOAN7.AutoSize = true;
             this.boxIOAN7.Checked = true;
             this.boxIOAN7.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.boxIOAN7.Location = new System.Drawing.Point(47, 195);
+            this.boxIOAN7.Location = new System.Drawing.Point(6, 170);
             this.boxIOAN7.Name = "boxIOAN7";
             this.boxIOAN7.Size = new System.Drawing.Size(47, 17);
             this.boxIOAN7.TabIndex = 64;
@@ -237,7 +237,7 @@
             this.boxIOAN8.AutoSize = true;
             this.boxIOAN8.Checked = true;
             this.boxIOAN8.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.boxIOAN8.Location = new System.Drawing.Point(47, 217);
+            this.boxIOAN8.Location = new System.Drawing.Point(6, 192);
             this.boxIOAN8.Name = "boxIOAN8";
             this.boxIOAN8.Size = new System.Drawing.Size(47, 17);
             this.boxIOAN8.TabIndex = 65;
@@ -250,7 +250,7 @@
             this.boxIOAN9.AutoSize = true;
             this.boxIOAN9.Checked = true;
             this.boxIOAN9.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.boxIOAN9.Location = new System.Drawing.Point(47, 239);
+            this.boxIOAN9.Location = new System.Drawing.Point(6, 214);
             this.boxIOAN9.Name = "boxIOAN9";
             this.boxIOAN9.Size = new System.Drawing.Size(47, 17);
             this.boxIOAN9.TabIndex = 66;
@@ -262,7 +262,7 @@
             // 
             this.switchOnOff.AutoSize = true;
             this.switchOnOff.BackColor = System.Drawing.Color.Transparent;
-            this.switchOnOff.Location = new System.Drawing.Point(88, 25);
+            this.switchOnOff.Location = new System.Drawing.Point(47, 7);
             this.switchOnOff.MaximumSize = new System.Drawing.Size(35, 15);
             this.switchOnOff.MinimumSize = new System.Drawing.Size(35, 15);
             this.switchOnOff.Mirrored = true;
@@ -274,15 +274,21 @@
             // 
             // ctrlGraphique
             // 
+            this.ctrlGraphique.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.ctrlGraphique.BackColor = System.Drawing.Color.White;
-            this.ctrlGraphique.ScaleMode = Composants.GraphPanel.ScaleType.DynamicGlobal;
+            this.ctrlGraphique.BorderColor = System.Drawing.Color.LightGray;
+            this.ctrlGraphique.BorderVisible = false;
             this.ctrlGraphique.LimitsVisible = true;
-            this.ctrlGraphique.Location = new System.Drawing.Point(210, 25);
+            this.ctrlGraphique.Location = new System.Drawing.Point(113, 3);
             this.ctrlGraphique.MaxLimit = 1D;
             this.ctrlGraphique.MinLimit = 0D;
             this.ctrlGraphique.Name = "ctrlGraphique";
+            this.ctrlGraphique.NamesAlignment = System.Drawing.ContentAlignment.BottomLeft;
             this.ctrlGraphique.NamesVisible = true;
-            this.ctrlGraphique.Size = new System.Drawing.Size(981, 470);
+            this.ctrlGraphique.ScaleMode = Composants.GraphPanel.ScaleType.DynamicGlobal;
+            this.ctrlGraphique.Size = new System.Drawing.Size(1094, 619);
             this.ctrlGraphique.TabIndex = 15;
             // 
             // PanelAnalogique

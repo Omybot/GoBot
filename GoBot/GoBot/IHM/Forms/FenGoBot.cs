@@ -115,6 +115,10 @@ namespace GoBot
 
             pnlPower.StartGraph();
 
+            pnlNumericIO.SetBoard(Board.RecIO);
+            pnlNumericMove.SetBoard(Board.RecMove);
+            pnlNumericGB.SetBoard(Board.RecGB);
+
             this.Text = "GoBot 2019 - Match 5.7";
         }
 

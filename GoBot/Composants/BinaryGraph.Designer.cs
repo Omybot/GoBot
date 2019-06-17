@@ -39,20 +39,24 @@
             this.graph.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.graph.BackColor = System.Drawing.Color.Gainsboro;
+            this.graph.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(240)))), ((int)(((byte)(240)))), ((int)(((byte)(240)))));
+            this.graph.BorderColor = System.Drawing.Color.LightGray;
+            this.graph.BorderVisible = true;
+            this.graph.LimitsVisible = false;
+            this.graph.Location = new System.Drawing.Point(26, 1);
             this.graph.MaxLimit = 1.3D;
             this.graph.MinLimit = -0.3D;
-            this.graph.Location = new System.Drawing.Point(26, 1);
-            this.graph.ScaleMode = GraphPanel.ScaleType.Fixed;
-            this.graph.LimitsVisible = false;
             this.graph.Name = "graph";
+            this.graph.NamesAlignment = System.Drawing.ContentAlignment.BottomLeft;
             this.graph.NamesVisible = false;
+            this.graph.ScaleMode = Composants.GraphPanel.ScaleType.Fixed;
             this.graph.Size = new System.Drawing.Size(187, 25);
             this.graph.TabIndex = 1;
             // 
             // led
             // 
             this.led.BackColor = System.Drawing.Color.Transparent;
+            this.led.Color = System.Drawing.Color.Red;
             this.led.Image = ((System.Drawing.Image)(resources.GetObject("led.Image")));
             this.led.Location = new System.Drawing.Point(5, 5);
             this.led.Name = "led";

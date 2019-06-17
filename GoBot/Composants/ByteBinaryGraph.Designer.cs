@@ -126,7 +126,7 @@
             this.label1.Size = new System.Drawing.Size(83, 26);
             this.label1.TabIndex = 8;
             this.label1.Text = "-";
-            this.label1.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.label1.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             // 
             // label2
             // 
@@ -136,7 +136,7 @@
             this.label2.Size = new System.Drawing.Size(83, 26);
             this.label2.TabIndex = 9;
             this.label2.Text = "-";
-            this.label2.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.label2.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             // 
             // label3
             // 
@@ -146,7 +146,7 @@
             this.label3.Size = new System.Drawing.Size(83, 26);
             this.label3.TabIndex = 10;
             this.label3.Text = "-";
-            this.label3.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.label3.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             // 
             // label4
             // 
@@ -156,7 +156,7 @@
             this.label4.Size = new System.Drawing.Size(83, 26);
             this.label4.TabIndex = 11;
             this.label4.Text = "-";
-            this.label4.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.label4.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             // 
             // label5
             // 
@@ -166,7 +166,7 @@
             this.label5.Size = new System.Drawing.Size(83, 26);
             this.label5.TabIndex = 12;
             this.label5.Text = "-";
-            this.label5.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.label5.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             // 
             // label6
             // 
@@ -176,7 +176,7 @@
             this.label6.Size = new System.Drawing.Size(83, 26);
             this.label6.TabIndex = 13;
             this.label6.Text = "-";
-            this.label6.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.label6.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             // 
             // label7
             // 
@@ -186,7 +186,7 @@
             this.label7.Size = new System.Drawing.Size(83, 26);
             this.label7.TabIndex = 14;
             this.label7.Text = "-";
-            this.label7.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.label7.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             // 
             // label8
             // 
@@ -196,7 +196,7 @@
             this.label8.Size = new System.Drawing.Size(83, 26);
             this.label8.TabIndex = 15;
             this.label8.Text = "-";
-            this.label8.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.label8.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             // 
             // ByteBinaryGraph
             // 

@@ -113,11 +113,11 @@
     <Compile Include="IHM\Pages\PageServomotors.Designer.cs">
       <DependentUpon>PageServomotors.cs</DependentUpon>
     </Compile>
-    <Compile Include="IHM\Panels\PanelBoardNumeric.cs">
+    <Compile Include="IHM\Pages\PageNumeric.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="IHM\Panels\PanelBoardNumeric.Designer.cs">
-      <DependentUpon>PanelBoardNumeric.cs</DependentUpon>
+    <Compile Include="IHM\Pages\PageNumeric.Designer.cs">
+      <DependentUpon>PageNumeric.cs</DependentUpon>
     </Compile>
     <Compile Include="IHM\Pages\PageLogCan.cs">
       <SubType>UserControl</SubType>
@@ -155,12 +155,6 @@
     <Compile Include="Actions\Deplacement\ActionRecule.cs" />
     <Compile Include="Actions\IAction.cs" />
     <Compile Include="Execution.cs" />
-    <Compile Include="IHM\Elements\PanelNumeric.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="IHM\Elements\PanelNumeric.Designer.cs">
-      <DependentUpon>PanelNumeric.cs</DependentUpon>
-    </Compile>
     <Compile Include="Logs\ILog.cs" />
     <Compile Include="Logs\LogConsole.cs" />
     <Compile Include="Properties\Resources.Designer.cs">
@@ -425,17 +419,14 @@
     <EmbeddedResource Include="IHM\Elements\PanelBoardCanServos.resx">
       <DependentUpon>PanelBoardCanServos.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="IHM\Panels\PanelBoardNumeric.resx">
-      <DependentUpon>PanelBoardNumeric.cs</DependentUpon>
+    <EmbeddedResource Include="IHM\Pages\PageNumeric.resx">
+      <DependentUpon>PageNumeric.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="IHM\Pages\PageLogCan.resx">
       <DependentUpon>PageLogCan.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="IHM\Pages\PageLogThreads.resx">
       <DependentUpon>PageLogThreads.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="IHM\Elements\PanelNumeric.resx">
-      <DependentUpon>PanelNumeric.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="IHM\Panels\PanelAnalogique.resx">
       <DependentUpon>PanelAnalogique.cs</DependentUpon>

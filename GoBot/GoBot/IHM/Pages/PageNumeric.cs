@@ -9,19 +9,18 @@ using System.Windows.Forms;
 using System.Threading;
 using System.Timers;
 using GoBot.Communications;
+using GoBot.Threading;
 
 namespace GoBot.IHM
 {
     public partial class PanelBoardNumeric : UserControl
     {
-        private System.Timers.Timer timerValues;
+        private ThreadLink _link;
+        private Board _board;
 
         public PanelBoardNumeric()
         {
             InitializeComponent();
-            
-            timerValues = new System.Timers.Timer(100);
-            timerValues.Elapsed += new ElapsedEventHandler(timerValues_Elapsed);
 
             //byteBinaryGraphA1.SetNames(new List<String>() { "A0", "A1", "A2", "A3", "A4", "A5", "A6", "A7" });
             //byteBinaryGraphA2.SetNames(new List<String>() { "A8", "A9", "A10", "A11", "A12", "A13", "A14", "A15" });
@@ -31,8 +30,7 @@ namespace GoBot.IHM
 
             //byteBinaryGraphC1.SetNames(new List<String>() { "C0", "C1", "C2", "C3", "C4", "C5", "C6", "C7" });
             //byteBinaryGraphC2.SetNames(new List<String>() { "C8", "C9", "C10", "C11", "C12", "C13", "C14", "C15" });
-
-
+            
             byteBinaryGraphA1.SetNames(new List<String>() { "A0", "A1", "A2", "A3", "Ethernet reset", "A5", "A6", "A7" });
             byteBinaryGraphA2.SetNames(new List<String>() { "PWM balise", "Ethernet CS", "A10", "A11", "A12", "A13", "A14", "A15" });
 
@@ -42,44 +40,51 @@ namespace GoBot.IHM
             byteBinaryGraphC1.SetNames(new List<String>() { "Lidar RX", "Laser 1", "Laser 2", "Ethernet SCK", "Ethernet MOSI", "Ethernet MISO", "Moteur 1 H", "Moteur 1 L" });
             byteBinaryGraphC2.SetNames(new List<String>() { "Codeur 2 A", "Codeur 2 B", "C10", "C11", "C12", "C13", "C14", "C15" });
         }
-
-        public Board Board { get; set; }
-
-        void timerValues_Elapsed(object sender, ElapsedEventArgs e)
+        
+        private void AskValues()
         {
-            if (Execution.Shutdown)
-                return;
-
-            Robots.GrosRobot.DemandeValeursNumeriques(Board, true);
+            Robots.GrosRobot.DemandeValeursNumeriques(_board, true);
 
             lock (Robots.GrosRobot.ValeursNumeriques)
             {
-
                 if (switchButtonPortA.Value)
                 {
-                    byteBinaryGraphA1.SetValue(Robots.GrosRobot.ValeursNumeriques[Board][1]);
-                    byteBinaryGraphA2.SetValue(Robots.GrosRobot.ValeursNumeriques[Board][0]);
+                    byteBinaryGraphA1.SetValue(Robots.GrosRobot.ValeursNumeriques[_board][1]);
+                    byteBinaryGraphA2.SetValue(Robots.GrosRobot.ValeursNumeriques[_board][0]);
                 }
                 if (switchButtonPortB.Value)
                 {
-                    byteBinaryGraphB1.SetValue(Robots.GrosRobot.ValeursNumeriques[Board][3]);
-                    byteBinaryGraphB2.SetValue(Robots.GrosRobot.ValeursNumeriques[Board][2]);
+                    byteBinaryGraphB1.SetValue(Robots.GrosRobot.ValeursNumeriques[_board][3]);
+                    byteBinaryGraphB2.SetValue(Robots.GrosRobot.ValeursNumeriques[_board][2]);
                 }
                 if (switchButtonPortC.Value)
                 {
-                    byteBinaryGraphC1.SetValue(Robots.GrosRobot.ValeursNumeriques[Board][5]);
-                    byteBinaryGraphC2.SetValue(Robots.GrosRobot.ValeursNumeriques[Board][4]);
+                    byteBinaryGraphC1.SetValue(Robots.GrosRobot.ValeursNumeriques[_board][5]);
+                    byteBinaryGraphC2.SetValue(Robots.GrosRobot.ValeursNumeriques[_board][4]);
                 }
             }
         }
 
+        public void SetBoard(Board board)
+        {
+            _board = board;
+        }
+
         private void switchButtonPort_ValueChanged(object sender, bool value)
         {
-            if ((switchButtonPortA.Value | switchButtonPortB.Value | switchButtonPortC.Value) & !timerValues.Enabled)
-                timerValues.Start();
+            if ((switchButtonPortA.Value || switchButtonPortB.Value || switchButtonPortC.Value) && _link  == null)
+            {
+                _link = ThreadManager.CreateThread(link => AskValues());
+                _link.Name = "Ports numériques " + _board.ToString();
+                _link.StartInfiniteLoop(50);
+            }
 
-            if (!switchButtonPortA.Value & !switchButtonPortB.Value & !switchButtonPortC.Value & timerValues.Enabled)
-                timerValues.Stop();
+            if (!switchButtonPortA.Value & !switchButtonPortB.Value & !switchButtonPortC.Value & _link != null)
+            {
+                _link.Cancel();
+                _link.WaitEnd();
+                _link = null;
+            }
         }
     }
 }
