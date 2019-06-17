@@ -207,9 +207,7 @@ namespace GoBot
                             DessineObstacles(g);
 
                         if (AfficheElementsJeu)
-                        {
                             DessineElementsJeu(g, Plateau.Elements);
-                        }
 
                         DessinePathFinding(g);
 

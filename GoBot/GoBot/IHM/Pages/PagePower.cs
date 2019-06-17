@@ -16,20 +16,23 @@ namespace GoBot.IHM
             _loaded = false;
         }
 
+        public void StartGraph()
+        {
+            ctrlGraphic.NamesVisible = true;
+            ctrlGraphic.MinLimit = 20;
+            ctrlGraphic.MaxLimit = 26;
+            ctrlGraphic.ScaleMode = Composants.GraphPanel.ScaleType.FixedIfEnough;
+            ctrlGraphic.LimitsVisible = true;
+
+            _timerVoltage = new System.Timers.Timer(1000);
+            _timerVoltage.Elapsed += new ElapsedEventHandler(timerTension_Elapsed);
+            _timerVoltage.Start();
+        }
+
         private void PanelAlimentation_Load(object sender, EventArgs e)
         {
             if (!Execution.DesignMode)
             {
-                _timerVoltage = new System.Timers.Timer(1000);
-                _timerVoltage.Elapsed += new ElapsedEventHandler(timerTension_Elapsed);
-                _timerVoltage.Start();
-
-                ctrlGraphic.NamesVisible = true;
-                ctrlGraphic.MinLimit = 20;
-                ctrlGraphic.MaxLimit = 26;
-                ctrlGraphic.ScaleMode = Composants.GraphPanel.ScaleType.FixedIfEnough;
-                ctrlGraphic.LimitsVisible = true;
-
                 numBatHighToAverage.Value = (decimal)Config.CurrentConfig.BatterieRobotVert;
                 numBatAverageToLow.Value = (decimal)Config.CurrentConfig.BatterieRobotOrange;
                 numBatLowToVeryLow.Value = (decimal)Config.CurrentConfig.BatterieRobotRouge;

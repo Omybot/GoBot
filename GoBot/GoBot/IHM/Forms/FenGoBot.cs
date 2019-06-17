@@ -113,6 +113,8 @@ namespace GoBot
             SplashScreen.SetMessage("Youhou !", Color.Green);
             SplashScreen.CloseSplash();
 
+            pnlPower.StartGraph();
+
             this.Text = "GoBot 2019 - Match 5.7";
         }
 
