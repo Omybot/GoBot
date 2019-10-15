@@ -1,6 +1,6 @@
 ﻿namespace GoBot.IHM
 {
-    partial class PageHokuyo
+    partial class PageLidar
     {
         /// <summary>
         /// Variable nécessaire au concepteur.
@@ -40,7 +40,7 @@
             this.lblMousePosition = new System.Windows.Forms.Label();
             this.lblMousePositionTxt = new System.Windows.Forms.Label();
             this.lblMeasuresPerSecond = new System.Windows.Forms.Label();
-            this.cboHokuyo = new System.Windows.Forms.ComboBox();
+            this.cboLidar = new System.Windows.Forms.ComboBox();
             this.picWorld = new GoBot.IHM.WorldPanel(this.components);
             ((System.ComponentModel.ISupportInitialize)(this.picWorld)).BeginInit();
             this.SuspendLayout();
@@ -167,14 +167,14 @@
             this.lblMeasuresPerSecond.Text = "-";
             this.lblMeasuresPerSecond.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
-            // cboHokuyo
+            // cboLidar
             // 
-            this.cboHokuyo.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cboHokuyo.FormattingEnabled = true;
-            this.cboHokuyo.Location = new System.Drawing.Point(8, 15);
-            this.cboHokuyo.Name = "cboHokuyo";
-            this.cboHokuyo.Size = new System.Drawing.Size(96, 21);
-            this.cboHokuyo.TabIndex = 18;
+            this.cboLidar.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cboLidar.FormattingEnabled = true;
+            this.cboLidar.Location = new System.Drawing.Point(8, 15);
+            this.cboLidar.Name = "cboLidar";
+            this.cboLidar.Size = new System.Drawing.Size(96, 21);
+            this.cboLidar.TabIndex = 18;
             // 
             // picWorld
             // 
@@ -190,9 +190,9 @@
             this.picWorld.Paint += new System.Windows.Forms.PaintEventHandler(this.picWorld_Paint);
             this.picWorld.MouseMove += new System.Windows.Forms.MouseEventHandler(this.picWorld_MouseMove);
             // 
-            // PageHokuyo
+            // PageLidar
             // 
-            this.Controls.Add(this.cboHokuyo);
+            this.Controls.Add(this.cboLidar);
             this.Controls.Add(this.lblMeasuresPerSecond);
             this.Controls.Add(this.lblMousePositionTxt);
             this.Controls.Add(this.lblMousePosition);
@@ -205,9 +205,9 @@
             this.Controls.Add(this.rdoRays);
             this.Controls.Add(this.rdoOutline);
             this.Controls.Add(this.switchBouton1);
-            this.Name = "PageHokuyo";
+            this.Name = "PageLidar";
             this.Size = new System.Drawing.Size(851, 604);
-            this.Load += new System.EventHandler(this.PanelHokuyo_Load);
+            this.Load += new System.EventHandler(this.PanelLidar_Load);
             ((System.ComponentModel.ISupportInitialize)(this.picWorld)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
@@ -227,6 +227,6 @@
         private System.Windows.Forms.Label lblMousePosition;
         private System.Windows.Forms.Label lblMousePositionTxt;
         private System.Windows.Forms.Label lblMeasuresPerSecond;
-        private System.Windows.Forms.ComboBox cboHokuyo;
+        private System.Windows.Forms.ComboBox cboLidar;
     }
 }

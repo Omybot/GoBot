@@ -13,12 +13,12 @@ using GoBot.Devices;
 
 namespace GoBot.IHM
 {
-    public partial class PageHokuyo : UserControl
+    public partial class PageLidar : UserControl
     {
         private Lidar _selectedLidar;
         private List<RealPoint> _lastMeasure;
 
-        public PageHokuyo()
+        public PageLidar()
         {
             InitializeComponent();
             _lastMeasure = null;
@@ -44,23 +44,23 @@ namespace GoBot.IHM
         {
             if (_selectedLidar != null)
             {
-                _selectedLidar.FrequencyChange -= Hokuyo_FrequencyChange;
+                _selectedLidar.FrequencyChange -= lidar_FrequencyChange;
                 _selectedLidar.NewMeasure -= lidar_NewMeasure;
                 _selectedLidar.StartLoopMeasure();
             }
 
             if (value)
             {
-                if ((String)cboHokuyo.Text == "Ground")
+                if ((String)cboLidar.Text == "Ground")
                     _selectedLidar = AllDevices.LidarGround;
-                else if ((String)cboHokuyo.Text == "Avoid")
+                else if ((String)cboLidar.Text == "Avoid")
                     _selectedLidar = AllDevices.LidarAvoid;
                 else
                     _selectedLidar = null;
 
                 if (_selectedLidar != null)
                 {
-                    _selectedLidar.FrequencyChange += Hokuyo_FrequencyChange;
+                    _selectedLidar.FrequencyChange += lidar_FrequencyChange;
                     _selectedLidar.NewMeasure += lidar_NewMeasure;
                     _selectedLidar.StartLoopMeasure();
                 }
@@ -73,18 +73,18 @@ namespace GoBot.IHM
             picWorld.Invalidate();
         }
 
-        private void PanelHokuyo_Load(object sender, EventArgs e)
+        private void PanelLidar_Load(object sender, EventArgs e)
         {
             if (!Execution.DesignMode)
             {
                 trackZoom.SetValue(1);
 
-                cboHokuyo.Items.Add("Ground");
-                cboHokuyo.Items.Add("Avoid");
+                cboLidar.Items.Add("Ground");
+                cboLidar.Items.Add("Avoid");
             }
         }
 
-        private void Hokuyo_FrequencyChange(double value)
+        private void lidar_FrequencyChange(double value)
         {
             lblMeasuresPerSecond.InvokeAuto(() => lblMeasuresPerSecond.Text = value.ToString("0.00") + " mesures/s");
         }

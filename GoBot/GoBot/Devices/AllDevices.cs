@@ -13,23 +13,23 @@ namespace GoBot.Devices
         private static RecGoBot _recGoBot;
         private static CanServos _canServos;
         private static CanDisplay _canDisplay;
-        private static Lidar _hokuyoGround, _hokuyoAvoid;
+        private static Lidar _lidarGround, _lidarAvoid;
 
         public static void Init()
         {
             _recGoBot = new RecGoBot(Board.RecGB);
             _canServos = new CanServos(Connections.ConnectionCan);
             _canDisplay = new CanDisplay(Connections.ConnectionCan);
-            _hokuyoGround = new HokuyoRec(LidarID.Ground);
-            _hokuyoAvoid = new Pepperl(IPAddress.Parse("10.1.0.50"));
-            ((Pepperl)_hokuyoAvoid).SetFrequency(PepperlFreq.Hz20);
-            ((Pepperl)_hokuyoAvoid).SetFilter(PepperlFilter.Average, 3);
+            _lidarGround = new HokuyoRec(LidarID.Ground);
+            _lidarAvoid = new Pepperl(IPAddress.Parse("10.1.0.50"));
+            ((Pepperl)_lidarAvoid).SetFrequency(PepperlFreq.Hz20);
+            ((Pepperl)_lidarAvoid).SetFilter(PepperlFilter.Average, 3);
         }
 
         public static void Close()
         {
-            _hokuyoAvoid.StopLoopMeasure();
-            _hokuyoGround.StopLoopMeasure();
+            _lidarAvoid.StopLoopMeasure();
+            _lidarGround.StopLoopMeasure();
         }
 
         public static RecGoBot RecGoBot
@@ -50,14 +50,14 @@ namespace GoBot.Devices
 
         public static Lidar LidarGround
         {
-            get { return _hokuyoGround; }
-            set { _hokuyoGround = value; }
+            get { return _lidarGround; }
+            set { _lidarGround = value; }
         }
 
         public static Lidar LidarAvoid
         {
-            get { return _hokuyoAvoid; }
-            set { _hokuyoAvoid = value; }
+            get { return _lidarAvoid; }
+            set { _lidarAvoid = value; }
         }
 
         public static CanDisplay CanDisplay

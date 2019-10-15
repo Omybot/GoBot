@@ -173,11 +173,11 @@
     <Compile Include="IHM\Elements\ConnectionStatus.Designer.cs">
       <DependentUpon>ConnectionStatus.cs</DependentUpon>
     </Compile>
-    <Compile Include="IHM\Pages\PageHokuyo.cs">
+    <Compile Include="IHM\Pages\PageLidar.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="IHM\Pages\PageHokuyo.Designer.cs">
-      <DependentUpon>PageHokuyo.cs</DependentUpon>
+    <Compile Include="IHM\Pages\PageLidar.Designer.cs">
+      <DependentUpon>PageLidar.cs</DependentUpon>
     </Compile>
     <Compile Include="IHM\Elements\WorldPanel.cs">
       <SubType>Component</SubType>
@@ -440,8 +440,8 @@
     <EmbeddedResource Include="IHM\Elements\PanelGenerics.resx">
       <DependentUpon>PanelGenerics.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="IHM\Pages\PageHokuyo.resx">
-      <DependentUpon>PageHokuyo.cs</DependentUpon>
+    <EmbeddedResource Include="IHM\Pages\PageLidar.resx">
+      <DependentUpon>PageLidar.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="IHM\Panels\PanelRecGoBot.resx">
       <DependentUpon>PanelRecGoBot.cs</DependentUpon>

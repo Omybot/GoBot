@@ -208,7 +208,7 @@ namespace GoBot
             if (AllDevices.LidarAvoid != null)
             {
                 AllDevices.LidarAvoid.StartLoopMeasure();
-                AllDevices.LidarAvoid.NewMeasure += HokuyoAvoid_NewMeasure;
+                AllDevices.LidarAvoid.NewMeasure += LidarAvoid_NewMeasure;
             }
         }
         
@@ -290,7 +290,7 @@ namespace GoBot
 
         static long cptLIDAR = 0;
 
-        private static void HokuyoAvoid_NewMeasure(List<RealPoint> measure)
+        private static void LidarAvoid_NewMeasure(List<RealPoint> measure)
         {
             cptLIDAR++;
 

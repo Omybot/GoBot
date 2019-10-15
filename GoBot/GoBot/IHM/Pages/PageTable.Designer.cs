@@ -61,7 +61,6 @@
             this.toolTip = new System.Windows.Forms.ToolTip(this.components);
             this.groupBoxAffichage = new System.Windows.Forms.GroupBox();
             this.btnTestAsser = new System.Windows.Forms.Button();
-            this.button2 = new System.Windows.Forms.Button();
             this.btnReset = new System.Windows.Forms.Button();
             this.btnAffichage = new System.Windows.Forms.Button();
             this.pictureBoxTable = new System.Windows.Forms.PictureBox();
@@ -403,16 +402,6 @@
             this.btnTestAsser.UseVisualStyleBackColor = true;
             this.btnTestAsser.Click += new System.EventHandler(this.btnTestAsser_Click);
             // 
-            // button2
-            // 
-            this.button2.Location = new System.Drawing.Point(81, 608);
-            this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(75, 23);
-            this.button2.TabIndex = 72;
-            this.button2.Text = "TestPolaire";
-            this.button2.UseVisualStyleBackColor = true;
-            this.button2.Click += new System.EventHandler(this.pwet_Click);
-            // 
             // btnReset
             // 
             this.btnReset.Image = global::GoBot.Properties.Resources.Refresh16;
@@ -480,7 +469,6 @@
             this.BackColor = System.Drawing.Color.Transparent;
             this.Controls.Add(this.btnRestartRecal);
             this.Controls.Add(this.btnTestScore);
-            this.Controls.Add(this.button2);
             this.Controls.Add(this.btnTestAsser);
             this.Controls.Add(this.groupBoxAffichage);
             this.Controls.Add(this.groupBoxDeplacements);
@@ -551,7 +539,6 @@
         private System.Windows.Forms.Button btnTrajLancer;
         private Composants.LabelPlus labelPlus1;
         private System.Windows.Forms.Button btnTrajCreer;
-        private System.Windows.Forms.Button button2;
         private System.Windows.Forms.NumericUpDown numNbPoints;
         private System.Windows.Forms.Button btnTestScore;
         private System.Windows.Forms.Button btnRestartRecal;
