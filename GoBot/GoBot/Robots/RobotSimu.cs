@@ -38,6 +38,7 @@ namespace GoBot
         }
 
         private ThreadLink _linkAsserv;
+        private Random _rand;
 
         public RobotSimu(IDRobot idRobot) : base()
         {
@@ -45,6 +46,8 @@ namespace GoBot
 
             _linkAsserv = ThreadManager.CreateThread(link => Asservissement());
             _linkAsserv.StartInfiniteLoop(new TimeSpan(0, 0, 0, 0, HighResolutionAsservissement ? 1 : 16));
+
+            _rand = new Random();
 
             timerPositions = new System.Timers.Timer(100);
             timerPositions.Elapsed += new ElapsedEventHandler(timerPositions_Elapsed);
@@ -579,7 +582,7 @@ namespace GoBot
 
         public override void DemandeValeursAnalogiques(Board carte, bool attendre)
         {
-            List<double> values = Enumerable.Range(1, 9).Select(o => (double)o).ToList();
+            List<double> values = Enumerable.Range(1, 9).Select(o => o + _rand.NextDouble()).ToList();
             ValeursAnalogiques[carte] = values;
         }
 
