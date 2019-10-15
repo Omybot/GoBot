@@ -11,7 +11,7 @@ using System.Threading;
 
 namespace GoBot.Devices
 {
-    public class Hokuyo
+    public class Hokuyo : Lidar
     {
         #region Attributs
 
@@ -31,12 +31,10 @@ namespace GoBot.Devices
 
         protected int _distanceMinLimit, _distanceMaxLimit;
 
-        protected Position _position;
         protected int _keepFrom, _keepTo;
         protected bool _invertRotation;
 
         private Semaphore _lock;
-        private TicksPerSecond _measuresTicker;
         private ThreadLink _linkMeasures;
 
         private List<RealPoint> _lastMeasure;
@@ -55,8 +53,6 @@ namespace GoBot.Devices
         public AngleDelta DeadAngle { get { return new AngleDelta(360 - _scanRange); } }
 
         public int PointsCount { get { return _romTotalMeasures; } }
-
-        public Position Position { get { return _position; } set { _position = value; } }
 
         public List<RealPoint> LastMeasure { get { return _lastMeasure; } }
 
@@ -100,8 +96,6 @@ namespace GoBot.Devices
             _position = new Position();
 
             _lastMeasure = null;
-            _measuresTicker = new TicksPerSecond();
-            _measuresTicker.ValueChange += _measuresPerSecond_ValueChange;
 
             _frameDetails = "VV\n";
             _frameSpecif = "PP\n";
@@ -120,51 +114,19 @@ namespace GoBot.Devices
         }
 
         #endregion
-
-        #region Evenements sortants
-
-        public delegate void NewMeasureDelegate(List<RealPoint> measure);
-        public event NewMeasureDelegate NewMeasure;
-
-        public delegate void FrequencyChangeDelegate(double value);
-        public event FrequencyChangeDelegate FrequencyChange;
-
-        protected void OnNewMeasure(List<RealPoint> measure)
-        {
-            _measuresTicker.AddTick();
-            NewMeasure?.Invoke(measure);
-        }
-
-        protected void OnFrequencyChange(double freq)
-        {
-            FrequencyChange?.Invoke(freq);
-        }
-
-        #endregion
-
-        #region Evenements entrants
-
-        private void _measuresPerSecond_ValueChange(double value)
-        {
-            OnFrequencyChange(value);
-        }
-
-        #endregion
-
+        
         #region Fonctionnement externe
 
-        public void StartLoopMeasure()
+        protected override void StartLoop()
         {
-            _measuresTicker.Start();
             _linkMeasures = ThreadManager.CreateThread(link => DoMeasure());
             _linkMeasures.Name = "Mesure Hokuyo " + _id.ToString();
             _linkMeasures.StartInfiniteLoop(new TimeSpan());
         }
 
-        public void StopLoopMeasure()
+        protected override void StopLoop()
         {
             _linkMeasures.Cancel();
-            _measuresTicker.Stop();
         }
 
         public List<RealPoint> GetPoints()
