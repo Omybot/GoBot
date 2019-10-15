@@ -9,12 +9,13 @@ using System.Windows.Forms;
 using System.Threading;
 using System.Timers;
 using GoBot.Communications;
+using GoBot.Threading;
 
 namespace GoBot.IHM
 {
     public partial class PanelAnalogique : UserControl
     {
-        private System.Timers.Timer timerTrame;
+        private ThreadLink _linkPolling, _linkDraw;
 
         public PanelAnalogique()
         {
@@ -27,17 +28,14 @@ namespace GoBot.IHM
         {
             if (!Execution.DesignMode)
             {
-                timerTrame = new System.Timers.Timer();
-                timerTrame.Elapsed += new ElapsedEventHandler(timerTrame_Elapsed);
-                timerTrame.Start();
-                timerTrame.Enabled = false;
+                ctrlGraphique.BorderVisible = true;
+                ctrlGraphique.BorderColor = Color.LightGray;
             }
         }
 
-        void timerTrame_Elapsed(object sender, ElapsedEventArgs e)
+        void AskValues()
         {
-            if (Execution.Shutdown)
-                return;
+            Robots.GrosRobot.DemandeValeursAnalogiques(Carte, true);
 
             if (Robots.GrosRobot.ValeursAnalogiques[Carte] != null)
             {
@@ -54,26 +52,41 @@ namespace GoBot.IHM
                     lblAN8.Text = values[7].ToString("0.0000") + " V";
                     lblAN9.Text = values[8].ToString("0.0000") + " V";
 
-                    ctrlGraphique.AddPoint("AN1", values[0], Color.Blue);
-                    ctrlGraphique.AddPoint("AN2", values[1], Color.Aqua);
-                    ctrlGraphique.AddPoint("AN3", values[2], Color.Red);
-                    ctrlGraphique.AddPoint("AN4", values[3], Color.Magenta);
-                    ctrlGraphique.AddPoint("AN5", values[4], Color.Green);
-                    ctrlGraphique.AddPoint("AN6", values[5], Color.Orange);
-                    ctrlGraphique.AddPoint("AN7", values[6], Color.Black);
-                    ctrlGraphique.AddPoint("AN8", values[7], Color.Coral);
-                    ctrlGraphique.AddPoint("AN9", values[8], Color.DeepPink);
+                    ctrlGraphique.AddPoint("AN1", values[0], ColorPlus.FromHsl(360 / 9 * 0, 1, 0.4));
+                    ctrlGraphique.AddPoint("AN2", values[1], ColorPlus.FromHsl(360 / 9 * 1, 1, 0.4));
+                    ctrlGraphique.AddPoint("AN3", values[2], ColorPlus.FromHsl(360 / 9 * 2, 1, 0.4));
+                    ctrlGraphique.AddPoint("AN4", values[3], ColorPlus.FromHsl(360 / 9 * 3, 1, 0.4));
+                    ctrlGraphique.AddPoint("AN5", values[4], ColorPlus.FromHsl(360 / 9 * 4, 1, 0.4));
+                    ctrlGraphique.AddPoint("AN6", values[5], ColorPlus.FromHsl(360 / 9 * 5, 1, 0.4));
+                    ctrlGraphique.AddPoint("AN7", values[6], ColorPlus.FromHsl(360 / 9 * 6, 1, 0.4));
+                    ctrlGraphique.AddPoint("AN8", values[7], ColorPlus.FromHsl(360 / 9 * 7, 1, 0.4));
+                    ctrlGraphique.AddPoint("AN9", values[8], ColorPlus.FromHsl(360 / 9 * 8, 1, 0.4));
                 });
             }
-
-            ctrlGraphique.DrawCurves();
-
-            Robots.GrosRobot.DemandeValeursAnalogiques(Carte);
         }
 
         private void switchBouton_ValueChanged(object sender, bool value)
         {
-            timerTrame.Enabled = value;
+            if(value)
+            {
+                _linkPolling = ThreadManager.CreateThread(link => AskValues());
+                _linkPolling.Name = "Ports analogiques " + Carte.ToString();
+                _linkPolling.StartInfiniteLoop(50);
+
+                _linkDraw = ThreadManager.CreateThread(link => ctrlGraphique.DrawCurves());
+                _linkDraw.Name = "Graph ports analogiques " + Carte.ToString();
+                _linkDraw.StartInfiniteLoop(100);
+            }
+            else
+            {
+                _linkPolling.Cancel();
+                _linkPolling.WaitEnd();
+                _linkPolling = null;
+
+                _linkDraw.Cancel();
+                _linkDraw.WaitEnd();
+                _linkDraw = null;
+            }
         }
 
         private void boxAN1_CheckedChanged(object sender, EventArgs e)

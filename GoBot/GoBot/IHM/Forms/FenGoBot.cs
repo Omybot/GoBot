@@ -14,6 +14,8 @@ using GoBot.Communications;
 using System.IO;
 using GoBot.Threading;
 using GoBot.Communications.UDP;
+using GoBot.Devices;
+using System.Diagnostics;
 
 namespace GoBot
 {
@@ -164,7 +166,9 @@ namespace GoBot
 
             if (Plateau.Strategy != null && Plateau.Strategy.IsRunning)
                 Plateau.Strategy.Stop();
-                
+
+            AllDevices.Close();
+
             base.OnClosing(e);
         }
 

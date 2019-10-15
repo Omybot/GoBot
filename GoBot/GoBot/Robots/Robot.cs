@@ -259,6 +259,16 @@ namespace GoBot
                     return ((Segment)forme1).Distance((Segment)forme2) < RayonAvecChanfrein + marge;
                 else
                     return ((Segment)forme1).Distance(forme2) < RayonAvecChanfrein + marge;
+            else if (typeForme1.IsAssignableFrom(typeof(Circle)) && typeForme1.IsAssignableFrom(typeof(RealPoint)))
+            {
+                // très opportuniste
+                RealPoint c = ((Circle)forme1).Center;
+                RealPoint p = (RealPoint)forme2;
+                double dx = c.X - p.X;
+                double dy = c.Y - p.Y;
+
+                return dx * dx + dy * dy < marge * marge;
+            }
             else
                 return forme1.Distance(forme2) < RayonAvecChanfrein + marge;
         }

@@ -15,14 +15,14 @@ namespace GoBot.IHM
 {
     public partial class PageHokuyo : UserControl
     {
-        private Hokuyo _selectedHokuyo;
+        private Lidar _selectedLidar;
         private List<RealPoint> _lastMeasure;
 
         public PageHokuyo()
         {
             InitializeComponent();
             _lastMeasure = null;
-            _selectedHokuyo = null;
+            _selectedLidar = null;
         }
 
         protected override void OnMouseWheel(MouseEventArgs e)
@@ -42,39 +42,32 @@ namespace GoBot.IHM
 
         private void switchEnable_ValueChanged(object sender, bool value)
         {
-            if (_selectedHokuyo != null)
+            if (_selectedLidar != null)
             {
-                _selectedHokuyo.FrequencyChange -= Hokuyo_FrequencyChange;
-                _selectedHokuyo.NewMeasure -= Hokuyo_NewMeasure;
-                _selectedHokuyo.StartLoopMeasure();
+                _selectedLidar.FrequencyChange -= Hokuyo_FrequencyChange;
+                _selectedLidar.NewMeasure -= lidar_NewMeasure;
+                _selectedLidar.StartLoopMeasure();
             }
 
             if (value)
             {
                 if ((String)cboHokuyo.Text == "Ground")
-                    _selectedHokuyo = AllDevices.HokuyoGround;
+                    _selectedLidar = AllDevices.LidarGround;
                 else if ((String)cboHokuyo.Text == "Avoid")
-                    _selectedHokuyo = AllDevices.HokuyoAvoid;
+                    _selectedLidar = AllDevices.LidarAvoid;
                 else
-                    _selectedHokuyo = null;
+                    _selectedLidar = null;
 
-                if (_selectedHokuyo != null)
+                if (_selectedLidar != null)
                 {
-                    _selectedHokuyo.FrequencyChange += Hokuyo_FrequencyChange;
-                    _selectedHokuyo.NewMeasure += Hokuyo_NewMeasure;
-                    _selectedHokuyo.StartLoopMeasure();
+                    _selectedLidar.FrequencyChange += Hokuyo_FrequencyChange;
+                    _selectedLidar.NewMeasure += lidar_NewMeasure;
+                    _selectedLidar.StartLoopMeasure();
                 }
             }
         }
 
-        private void AskPoints()
-        {
-            _lastMeasure = _selectedHokuyo.GetPoints();
-
-            picWorld.Invalidate();
-        }
-
-        private void Hokuyo_NewMeasure(List<RealPoint> measure)
+        private void lidar_NewMeasure(List<RealPoint> measure)
         {
             _lastMeasure = measure;
             picWorld.Invalidate();
@@ -94,22 +87,6 @@ namespace GoBot.IHM
         private void Hokuyo_FrequencyChange(double value)
         {
             lblMeasuresPerSecond.InvokeAuto(() => lblMeasuresPerSecond.Text = value.ToString("0.00") + " mesures/s");
-        }
-
-        private void btnGo_Click(object sender, EventArgs e)
-        {
-            List<Circle> cercles;
-            do
-            {
-                List<RealPoint> points = _selectedHokuyo.GetRawPoints();
-
-                List<List<RealPoint>> groups = points.GroupByDistance(50, 20);
-
-                cercles = groups.Select(g => g.FitCircle()).ToList();
-                cercles = cercles.Where(c => c.Radius > 20 && c.Radius < 40).ToList();
-            } while (cercles.Count == 0);
-
-            RealPoint nearest = cercles.OrderBy(c => c.Distance(new RealPoint())).ToList()[0].Center;
         }
 
         private void trackZoom_ValueChanged(object sender, double value)
@@ -220,7 +197,7 @@ namespace GoBot.IHM
                         //Plateau.Detections = new List<IShape>(points);
                     }
 
-                    new Circle(_selectedHokuyo.Position.Coordinates, 20).Paint(g, Color.Black, 1, Color.White, picWorld.Dimensions.WorldScale);
+                    new Circle(_selectedLidar.Position.Coordinates, 20).Paint(g, Color.Black, 1, Color.White, picWorld.Dimensions.WorldScale);
                 }
             }
         }
@@ -228,21 +205,6 @@ namespace GoBot.IHM
         private void picWorld_MouseMove(object sender, MouseEventArgs e)
         {
             lblMousePosition.Text = picWorld.Dimensions.WorldScale.ScreenToRealPosition(e.Location).ToString();
-        }
-
-        private void numDistanceMax_ValueChanged(object sender, EventArgs e)
-        {
-            _selectedHokuyo.DistanceMaxLimit = (int)numDistanceMax.Value;
-        }
-
-        private void numFrom_ValueChanged(object sender, EventArgs e)
-        {
-            _selectedHokuyo.KeepFrom = (int)numFrom.Value;
-        }
-
-        private void numTo_ValueChanged(object sender, EventArgs e)
-        {
-            _selectedHokuyo.KeepTo = (int)numTo.Value;
         }
     }
 }

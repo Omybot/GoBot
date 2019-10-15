@@ -381,15 +381,15 @@ namespace GoBot
         {
             int farAway = 10000;
 
-            if (AllDevices.HokuyoAvoid != null)
+            if (AllDevices.LidarAvoid != null)
             {
-                AnglePosition debutAngleMort = AllDevices.HokuyoAvoid.Position.Angle + 180 + new AngleDelta(AllDevices.HokuyoAvoid.DeadAngle / 2);
-                AnglePosition finAngleMort = AllDevices.HokuyoAvoid.Position.Angle + 180 + new AngleDelta(-AllDevices.HokuyoAvoid.DeadAngle / 2);
+                AnglePosition debutAngleMort = AllDevices.LidarAvoid.Position.Angle + 180 + new AngleDelta(AllDevices.LidarAvoid.DeadAngle / 2);
+                AnglePosition finAngleMort = AllDevices.LidarAvoid.Position.Angle + 180 + new AngleDelta(-AllDevices.LidarAvoid.DeadAngle / 2);
 
                 List<Point> points = new List<Point>();
-                points.Add(Scale.RealToScreenPosition(AllDevices.HokuyoAvoid.Position.Coordinates));
-                points.Add(Scale.RealToScreenPosition(new Point((int)(AllDevices.HokuyoAvoid.Position.Coordinates.X + debutAngleMort.Cos * farAway), (int)(AllDevices.HokuyoAvoid.Position.Coordinates.Y + debutAngleMort.Sin * farAway))));
-                points.Add(Scale.RealToScreenPosition(new Point((int)(AllDevices.HokuyoAvoid.Position.Coordinates.X + finAngleMort.Cos * farAway), (int)(AllDevices.HokuyoAvoid.Position.Coordinates.Y + finAngleMort.Sin * farAway))));
+                points.Add(Scale.RealToScreenPosition(AllDevices.LidarAvoid.Position.Coordinates));
+                points.Add(Scale.RealToScreenPosition(new Point((int)(AllDevices.LidarAvoid.Position.Coordinates.X + debutAngleMort.Cos * farAway), (int)(AllDevices.LidarAvoid.Position.Coordinates.Y + debutAngleMort.Sin * farAway))));
+                points.Add(Scale.RealToScreenPosition(new Point((int)(AllDevices.LidarAvoid.Position.Coordinates.X + finAngleMort.Cos * farAway), (int)(AllDevices.LidarAvoid.Position.Coordinates.Y + finAngleMort.Sin * farAway))));
 
                 g.IntersectClip(new Rectangle(Scale.RealToScreenPosition(new Point(0, 0)), new Size(Scale.RealToScreenDistance(Plateau.Largeur), Scale.RealToScreenDistance(Plateau.Hauteur))));
 

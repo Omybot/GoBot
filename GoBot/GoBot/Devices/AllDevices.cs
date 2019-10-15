@@ -3,6 +3,7 @@ using GoBot.Devices.CAN;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Text;
 
 namespace GoBot.Devices
@@ -12,7 +13,7 @@ namespace GoBot.Devices
         private static RecGoBot _recGoBot;
         private static CanServos _canServos;
         private static CanDisplay _canDisplay;
-        private static Hokuyo _hokuyoGround, _hokuyoAvoid;
+        private static Lidar _hokuyoGround, _hokuyoAvoid;
 
         public static void Init()
         {
@@ -20,7 +21,15 @@ namespace GoBot.Devices
             _canServos = new CanServos(Connections.ConnectionCan);
             _canDisplay = new CanDisplay(Connections.ConnectionCan);
             _hokuyoGround = new HokuyoRec(LidarID.Ground);
-            _hokuyoAvoid = CreateHokuyo("COM4", LidarID.Avoid);
+            _hokuyoAvoid = new Pepperl(IPAddress.Parse("10.1.0.50"));
+            ((Pepperl)_hokuyoAvoid).SetFrequency(PepperlFreq.Hz20);
+            ((Pepperl)_hokuyoAvoid).SetFilter(PepperlFilter.Average, 3);
+        }
+
+        public static void Close()
+        {
+            _hokuyoAvoid.StopLoopMeasure();
+            _hokuyoGround.StopLoopMeasure();
         }
 
         public static RecGoBot RecGoBot
@@ -39,13 +48,13 @@ namespace GoBot.Devices
             }
         }
 
-        public static Hokuyo HokuyoGround
+        public static Lidar LidarGround
         {
             get { return _hokuyoGround; }
             set { _hokuyoGround = value; }
         }
 
-        public static Hokuyo HokuyoAvoid
+        public static Lidar LidarAvoid
         {
             get { return _hokuyoAvoid; }
             set { _hokuyoAvoid = value; }

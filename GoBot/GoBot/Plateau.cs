@@ -173,7 +173,7 @@ namespace GoBot
                 ReflecteursNosRobots = true;
 
                 _obstacles = new Obstacles(Elements);
-                CreerSommets(50);
+                CreerSommets(75);
 
                 //Balise.PositionEnnemisActualisee += Balise_PositionEnnemisActualisee;
 
@@ -205,10 +205,10 @@ namespace GoBot
 
         public static void StartDetection()
         {
-            if (AllDevices.HokuyoAvoid != null)
+            if (AllDevices.LidarAvoid != null)
             {
-                AllDevices.HokuyoAvoid.StartLoopMeasure();
-                AllDevices.HokuyoAvoid.NewMeasure += HokuyoAvoid_NewMeasure;
+                AllDevices.LidarAvoid.StartLoopMeasure();
+                AllDevices.LidarAvoid.NewMeasure += HokuyoAvoid_NewMeasure;
             }
         }
         
@@ -221,14 +221,11 @@ namespace GoBot
         {
             if (_obstacles != null)
             {
-
                 // Positions ennemies signalées par la balise
-
-                Stopwatch sw = Stopwatch.StartNew();
-
+                
                 int vitesseMax = Config.CurrentConfig.ConfigRapide.LineSpeed;
 
-                // Truc dégueu pour ne pas détecter notre robot secondaire qui est dans la zone de départ au début du match
+                // TODO2020 Truc dégueu pour ne pas détecter notre robot secondaire qui est dans la zone de départ au début du match
                 positions = positions.Where(o => !NotreZoneDepart().Contains(o)).ToList();
 
                 if (Plateau.Strategy == null)
@@ -271,6 +268,8 @@ namespace GoBot
                 //_obstacles.SetDetections(positions.Select(p => new Circle(p, RayonAdversaire)).ToList());
 
                 AllDevices.RecGoBot.ChangeLed(LedID.DebugB3);
+                // TODO2020 : faudrait pouvoir mettre à jour le graph sans refaire les zones interdites de couleur (sauvegarder un résultat après application de la couleur ?)
+                // parce que les carrés c'est beaucoup plus long que les ronds...
                 Robots.GrosRobot.MajGraphFranchissable(_obstacles.FromAllExceptBoard);
                 Robots.GrosRobot.ObstacleTest(_obstacles.FromDetection);
             }
@@ -286,7 +285,7 @@ namespace GoBot
 
         public static void Init()
         {
-            AllDevices.RecGoBot.SetLed(LedID.DebugB3, AllDevices.HokuyoAvoid == null ? RecGoBot.LedStatus.Rouge : RecGoBot.LedStatus.Vert);
+            AllDevices.RecGoBot.SetLed(LedID.DebugB3, AllDevices.LidarAvoid == null ? RecGoBot.LedStatus.Rouge : RecGoBot.LedStatus.Vert);
         }
 
         static long cptLIDAR = 0;
@@ -310,10 +309,8 @@ namespace GoBot
                     if (!obstacles.Exists(o => o.Distance(center) < 150))
                         obstacles.Add(center);
                 }
-
-                Stopwatch sw = Stopwatch.StartNew();
+                
                 if (obstacles.Count > 0) SetOpponents(obstacles);
-                Debug.Print(sw.ElapsedMilliseconds + " ms");
             }
         }
 
@@ -339,9 +336,7 @@ namespace GoBot
         {
             _obstacles?.SetDetections(detections);
         }
-
-        static double lastFactor = 1;
-
+        
         private static int SpeedWithOpponent(double opponentDist, int maxSpeed)
         {
             double minPower = 0.20;

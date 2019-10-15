@@ -423,19 +423,6 @@ namespace GoBot.IHM
             Robots.GrosRobot.Reculer(300);
         }
 
-        private void FonctionHokuyo()
-        {
-            while (true)
-            {
-                List<RealPoint> points = AllDevices.HokuyoAvoid.GetPoints();
-
-                if (points.Count > 0)
-                {
-                    Plateau.SetDetections(points.Select(p => new Circle(p, 4)));
-                }
-            }
-        }
-
         private void btnTrajCreer_Click(object sender, EventArgs e)
         {
             Dessinateur.modeCourant = Dessinateur.MouseMode.TrajectoirePolaire;

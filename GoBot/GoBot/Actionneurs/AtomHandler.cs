@@ -23,7 +23,7 @@ namespace GoBot.Actionneurs
         private ServoClampRight _posClampRight;
         private ServoElevation _posElevation;
 
-        private Hokuyo _detector;
+        private Lidar _detector;
 
         public AtomHandler()
         {
@@ -35,7 +35,7 @@ namespace GoBot.Actionneurs
             _posClampRight = Config.CurrentConfig.ServoClampRight;
             _posElevation = Config.CurrentConfig.ServoElevation;
 
-            _detector = AllDevices.HokuyoGround;
+            _detector = AllDevices.LidarGround;
         }
 
         public void DoOpen()
@@ -188,39 +188,41 @@ namespace GoBot.Actionneurs
 
         public RealPoint DetectAtom(int maxDistance = 500, int minOpponentDistance = 150)
         {
-            List<RealPoint> rawPts = _detector.GetPoints();
+            //List<RealPoint> rawPts = _detector.GetPoints();
 
-            List<RealPoint> pts = rawPts.Where(o => Plateau.IsInside(o, 200)).ToList();
-            pts = pts.Where(o => InRange(o.Distance(Robots.GrosRobot.Position.Coordinates), 200, maxDistance)).ToList();
-            pts = pts.Where(o => !Plateau.ObstaclesOpponents.ToList().Exists(o2 => o2.Distance(o) < minOpponentDistance)).ToList();
+            //List<RealPoint> pts = rawPts.Where(o => Plateau.IsInside(o, 200)).ToList();
+            //pts = pts.Where(o => InRange(o.Distance(Robots.GrosRobot.Position.Coordinates), 200, maxDistance)).ToList();
+            //pts = pts.Where(o => !Plateau.ObstaclesOpponents.ToList().Exists(o2 => o2.Distance(o) < minOpponentDistance)).ToList();
 
-            List<List<RealPoint>> groups = pts.GroupByDistance(50, 200);
+            //List<List<RealPoint>> groups = pts.GroupByDistance(50, 200);
 
-            List<Circle> circles = new List<Circle>();
+            //List<Circle> circles = new List<Circle>();
 
-            for (int i = 0; i < groups.Count; i++)
-            {
-                if (groups[i].Count > 5)
-                {
-                    Circle circle = new Circle(groups[i].GetBarycenter(), 40);
-                    if (!circles.Exists(o => o.Center.Distance(circle.Center) < 60))
-                        circles.Add(circle);
-                }
-            }
+            //for (int i = 0; i < groups.Count; i++)
+            //{
+            //    if (groups[i].Count > 5)
+            //    {
+            //        Circle circle = new Circle(groups[i].GetBarycenter(), 40);
+            //        if (!circles.Exists(o => o.Center.Distance(circle.Center) < 60))
+            //            circles.Add(circle);
+            //    }
+            //}
 
-            Circle detection = null;
+            //Circle detection = null;
 
-            if (circles.Count > 0)
-                detection = circles.OrderBy(o => o.Distance(Robots.GrosRobot.Position.Coordinates)).First();
+            //if (circles.Count > 0)
+            //    detection = circles.OrderBy(o => o.Distance(Robots.GrosRobot.Position.Coordinates)).First();
 
-            List<IShape> detections = new List<IShape>();
+            //List<IShape> detections = new List<IShape>();
 
-            detections.AddRange(circles);
-            detections.AddRange(pts);
+            //detections.AddRange(circles);
+            //detections.AddRange(pts);
 
-            Plateau.Detections = detections;
-            
-            return detection == null ? null : detection.Center;
+            //Plateau.Detections = detections;
+
+            //return detection == null ? null : detection.Center;
+
+            return new RealPoint();
         }
 
         private bool InRange(double value, double min, double max)

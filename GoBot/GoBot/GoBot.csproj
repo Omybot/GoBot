@@ -82,7 +82,7 @@
     <Compile Include="Communications\CAN\CanFrameFactory.cs" />
     <Compile Include="Communications\CAN\CanFrameFunction.cs" />
     <Compile Include="Devices\CAN\CanServo.cs" />
-    <Compile Include="Devices\HokuyoRec.cs" />
+    <Compile Include="Devices\Hokuyo\HokuyoRec.cs" />
     <Compile Include="Devices\CAN\CanServos.cs" />
     <Compile Include="Actions\Asservissement\ActionAccelerationPivot.cs" />
     <Compile Include="Actions\Asservissement\ActionVitessePivot.cs" />
@@ -92,6 +92,13 @@
     <Compile Include="Actions\Deplacement\ActionRecallage.cs" />
     <Compile Include="Actions\ActionServo.cs" />
     <Compile Include="Actions\ITimeableAction.cs" />
+    <Compile Include="Devices\Lidar.cs" />
+    <Compile Include="Devices\Pepperl\JsonDumbParser.cs" />
+    <Compile Include="Devices\Pepperl\Pepperl.cs" />
+    <Compile Include="Devices\Pepperl\PepperlComm.cs" />
+    <Compile Include="Devices\Pepperl\PepperlConst.cs" />
+    <Compile Include="Devices\Pepperl\PepperlEnums.cs" />
+    <Compile Include="Devices\Pepperl\PepperlManager.cs" />
     <Compile Include="GameBoard\Obstacles.cs" />
     <Compile Include="GameElements\Accelerator.cs" />
     <Compile Include="GameElements\Balance.cs" />
@@ -106,6 +113,12 @@
     </Compile>
     <Compile Include="IHM\Elements\PanelBoardCanServos.Designer.cs">
       <DependentUpon>PanelBoardCanServos.cs</DependentUpon>
+    </Compile>
+    <Compile Include="IHM\Pages\PagePepperl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="IHM\Pages\PagePepperl.Designer.cs">
+      <DependentUpon>PagePepperl.cs</DependentUpon>
     </Compile>
     <Compile Include="IHM\Pages\PageServomotors.cs">
       <SubType>UserControl</SubType>
@@ -201,7 +214,7 @@
     <Compile Include="Communications\UDP\UdpFrameFunction.cs" />
     <Compile Include="Dessinateur.cs" />
     <Compile Include="Devices\AllDevices.cs" />
-    <Compile Include="Devices\Hokuyo.cs" />
+    <Compile Include="Devices\Hokuyo\Hokuyo.cs" />
     <Compile Include="Devices\RecGoBot.cs" />
     <Compile Include="GameElements\GameElement.cs" />
     <Compile Include="GameElements\AllGameElements.cs" />
@@ -403,6 +416,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="IHM\Elements\ConnectionStatus.resx">
       <DependentUpon>ConnectionStatus.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="IHM\Pages\PagePepperl.resx">
+      <DependentUpon>PagePepperl.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="IHM\Pages\PageServomotors.resx">
       <DependentUpon>PageServomotors.cs</DependentUpon>

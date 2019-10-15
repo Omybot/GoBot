@@ -62,8 +62,8 @@ namespace GoBot
 
         private static void GrosRobot_PositionChange(Geometry.Position position)
         {
-            if (AllDevices.HokuyoAvoid != null)
-                AllDevices.HokuyoAvoid.Position = position;
+            if (AllDevices.LidarAvoid != null)
+                AllDevices.LidarAvoid.Position = position;
         }
 
         public static void Simuler(bool simu)

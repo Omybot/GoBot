@@ -49,22 +49,27 @@ namespace GoBot
             this.tabControl3 = new System.Windows.Forms.TabControl();
             this.tabDiagnotic = new System.Windows.Forms.TabPage();
             this.tabPID = new System.Windows.Forms.TabPage();
-            this.tabPortsAnalogiques = new System.Windows.Forms.TabPage();
+            this.tabPics = new System.Windows.Forms.TabPage();
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabIO = new System.Windows.Forms.TabPage();
+            this.tabControl4 = new System.Windows.Forms.TabControl();
+            this.tabAnalog = new System.Windows.Forms.TabPage();
+            this.tabNumeric = new System.Windows.Forms.TabPage();
             this.tabMove = new System.Windows.Forms.TabPage();
+            this.tabControl5 = new System.Windows.Forms.TabControl();
+            this.tabPage6 = new System.Windows.Forms.TabPage();
+            this.tabPage7 = new System.Windows.Forms.TabPage();
             this.tabGB = new System.Windows.Forms.TabPage();
-            this.tabPortsNumeriques = new System.Windows.Forms.TabPage();
-            this.tabControl2 = new System.Windows.Forms.TabControl();
-            this.tabPage3 = new System.Windows.Forms.TabPage();
-            this.tabPage4 = new System.Windows.Forms.TabPage();
-            this.tabPage5 = new System.Windows.Forms.TabPage();
+            this.tabControl6 = new System.Windows.Forms.TabControl();
+            this.tabPage8 = new System.Windows.Forms.TabPage();
+            this.tabPage9 = new System.Windows.Forms.TabPage();
             this.tabRecGoBot = new System.Windows.Forms.TabPage();
             this.grpServoCodeur = new System.Windows.Forms.GroupBox();
             this.grpCapteurs = new System.Windows.Forms.GroupBox();
             this.grpRecGB = new System.Windows.Forms.GroupBox();
             this.tabActionneurs = new System.Windows.Forms.TabPage();
             this.tabHokuyo = new System.Windows.Forms.TabPage();
+            this.tabPepperl = new System.Windows.Forms.TabPage();
             this.btnClose = new System.Windows.Forms.Button();
             this.btnFenetre = new System.Windows.Forms.Button();
             this.tabPage1 = new System.Windows.Forms.TabPage();
@@ -83,16 +88,17 @@ namespace GoBot
             this.panelEnvoiUdp1 = new GoBot.IHM.PageEnvoiUdp();
             this.pnlPower = new GoBot.IHM.PagePower();
             this.panelAnalogiqueIO = new GoBot.IHM.PanelAnalogique();
-            this.panelAnalogiqueMove = new GoBot.IHM.PanelAnalogique();
-            this.panelAnalogiqueGB = new GoBot.IHM.PanelAnalogique();
             this.pnlNumericIO = new GoBot.IHM.PanelBoardNumeric();
+            this.panelAnalogiqueMove = new GoBot.IHM.PanelAnalogique();
             this.pnlNumericMove = new GoBot.IHM.PanelBoardNumeric();
+            this.panelAnalogiqueGB = new GoBot.IHM.PanelAnalogique();
             this.pnlNumericGB = new GoBot.IHM.PanelBoardNumeric();
             this.potarControl1 = new GoBot.IHM.PotarControl();
             this.panelCapteurs1 = new GoBot.IHM.PanelCapteurs();
             this.panelRecGoBot1 = new GoBot.IHM.PanelRecGoBot();
             this.panelGenerics1 = new GoBot.IHM.PanelGenerics();
             this.panelHokuyo1 = new GoBot.IHM.PageHokuyo();
+            this.pagePepperl1 = new GoBot.IHM.Pages.PagePepperl();
             this.panelConnexions = new GoBot.IHM.PanelConnexions();
             this.panelChargeCPU1 = new GoBot.IHM.PageDiagnosticMove();
             this.panelReglageAsserv = new GoBot.IHM.PageReglageAsserv();
@@ -114,22 +120,27 @@ namespace GoBot
             this.tabControl3.SuspendLayout();
             this.tabDiagnotic.SuspendLayout();
             this.tabPID.SuspendLayout();
-            this.tabPortsAnalogiques.SuspendLayout();
+            this.tabPics.SuspendLayout();
             this.tabControl1.SuspendLayout();
             this.tabIO.SuspendLayout();
+            this.tabControl4.SuspendLayout();
+            this.tabAnalog.SuspendLayout();
+            this.tabNumeric.SuspendLayout();
             this.tabMove.SuspendLayout();
+            this.tabControl5.SuspendLayout();
+            this.tabPage6.SuspendLayout();
+            this.tabPage7.SuspendLayout();
             this.tabGB.SuspendLayout();
-            this.tabPortsNumeriques.SuspendLayout();
-            this.tabControl2.SuspendLayout();
-            this.tabPage3.SuspendLayout();
-            this.tabPage4.SuspendLayout();
-            this.tabPage5.SuspendLayout();
+            this.tabControl6.SuspendLayout();
+            this.tabPage8.SuspendLayout();
+            this.tabPage9.SuspendLayout();
             this.tabRecGoBot.SuspendLayout();
             this.grpServoCodeur.SuspendLayout();
             this.grpCapteurs.SuspendLayout();
             this.grpRecGB.SuspendLayout();
             this.tabActionneurs.SuspendLayout();
             this.tabHokuyo.SuspendLayout();
+            this.tabPepperl.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.tabPage2.SuspendLayout();
             this.SuspendLayout();
@@ -288,11 +299,11 @@ namespace GoBot
             this.tabControl.Controls.Add(this.tabAsservissement);
             this.tabControl.Controls.Add(this.tabConnexions);
             this.tabControl.Controls.Add(this.tabAlimentation);
-            this.tabControl.Controls.Add(this.tabPortsAnalogiques);
-            this.tabControl.Controls.Add(this.tabPortsNumeriques);
+            this.tabControl.Controls.Add(this.tabPics);
             this.tabControl.Controls.Add(this.tabRecGoBot);
             this.tabControl.Controls.Add(this.tabActionneurs);
             this.tabControl.Controls.Add(this.tabHokuyo);
+            this.tabControl.Controls.Add(this.tabPepperl);
             this.tabControl.HotTrack = true;
             this.tabControl.Location = new System.Drawing.Point(0, 0);
             this.tabControl.Name = "tabControl";
@@ -355,16 +366,16 @@ namespace GoBot
             this.tabPID.Text = "Réglage PID";
             this.tabPID.UseVisualStyleBackColor = true;
             // 
-            // tabPortsAnalogiques
+            // tabPics
             // 
-            this.tabPortsAnalogiques.Controls.Add(this.tabControl1);
-            this.tabPortsAnalogiques.Location = new System.Drawing.Point(4, 22);
-            this.tabPortsAnalogiques.Name = "tabPortsAnalogiques";
-            this.tabPortsAnalogiques.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPortsAnalogiques.Size = new System.Drawing.Size(1300, 712);
-            this.tabPortsAnalogiques.TabIndex = 24;
-            this.tabPortsAnalogiques.Text = "Ports analogiques";
-            this.tabPortsAnalogiques.UseVisualStyleBackColor = true;
+            this.tabPics.Controls.Add(this.tabControl1);
+            this.tabPics.Location = new System.Drawing.Point(4, 22);
+            this.tabPics.Name = "tabPics";
+            this.tabPics.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPics.Size = new System.Drawing.Size(1300, 712);
+            this.tabPics.TabIndex = 24;
+            this.tabPics.Text = "Microcontrôleurs";
+            this.tabPics.UseVisualStyleBackColor = true;
             // 
             // tabControl1
             // 
@@ -380,7 +391,7 @@ namespace GoBot
             // 
             // tabIO
             // 
-            this.tabIO.Controls.Add(this.panelAnalogiqueIO);
+            this.tabIO.Controls.Add(this.tabControl4);
             this.tabIO.Location = new System.Drawing.Point(4, 22);
             this.tabIO.Name = "tabIO";
             this.tabIO.Padding = new System.Windows.Forms.Padding(3);
@@ -389,9 +400,42 @@ namespace GoBot
             this.tabIO.Text = "RecIO";
             this.tabIO.UseVisualStyleBackColor = true;
             // 
+            // tabControl4
+            // 
+            this.tabControl4.Controls.Add(this.tabAnalog);
+            this.tabControl4.Controls.Add(this.tabNumeric);
+            this.tabControl4.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tabControl4.Location = new System.Drawing.Point(3, 3);
+            this.tabControl4.Name = "tabControl4";
+            this.tabControl4.SelectedIndex = 0;
+            this.tabControl4.Size = new System.Drawing.Size(1280, 674);
+            this.tabControl4.TabIndex = 1;
+            // 
+            // tabAnalog
+            // 
+            this.tabAnalog.Controls.Add(this.panelAnalogiqueIO);
+            this.tabAnalog.Location = new System.Drawing.Point(4, 22);
+            this.tabAnalog.Name = "tabAnalog";
+            this.tabAnalog.Padding = new System.Windows.Forms.Padding(3);
+            this.tabAnalog.Size = new System.Drawing.Size(1272, 648);
+            this.tabAnalog.TabIndex = 0;
+            this.tabAnalog.Text = "Ports analogiques";
+            this.tabAnalog.UseVisualStyleBackColor = true;
+            // 
+            // tabNumeric
+            // 
+            this.tabNumeric.Controls.Add(this.pnlNumericIO);
+            this.tabNumeric.Location = new System.Drawing.Point(4, 22);
+            this.tabNumeric.Name = "tabNumeric";
+            this.tabNumeric.Padding = new System.Windows.Forms.Padding(3);
+            this.tabNumeric.Size = new System.Drawing.Size(1272, 648);
+            this.tabNumeric.TabIndex = 1;
+            this.tabNumeric.Text = "Ports numériques";
+            this.tabNumeric.UseVisualStyleBackColor = true;
+            // 
             // tabMove
             // 
-            this.tabMove.Controls.Add(this.panelAnalogiqueMove);
+            this.tabMove.Controls.Add(this.tabControl5);
             this.tabMove.Location = new System.Drawing.Point(4, 22);
             this.tabMove.Name = "tabMove";
             this.tabMove.Padding = new System.Windows.Forms.Padding(3);
@@ -400,9 +444,42 @@ namespace GoBot
             this.tabMove.Text = "RecMove";
             this.tabMove.UseVisualStyleBackColor = true;
             // 
+            // tabControl5
+            // 
+            this.tabControl5.Controls.Add(this.tabPage6);
+            this.tabControl5.Controls.Add(this.tabPage7);
+            this.tabControl5.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tabControl5.Location = new System.Drawing.Point(3, 3);
+            this.tabControl5.Name = "tabControl5";
+            this.tabControl5.SelectedIndex = 0;
+            this.tabControl5.Size = new System.Drawing.Size(1280, 674);
+            this.tabControl5.TabIndex = 2;
+            // 
+            // tabPage6
+            // 
+            this.tabPage6.Controls.Add(this.panelAnalogiqueMove);
+            this.tabPage6.Location = new System.Drawing.Point(4, 22);
+            this.tabPage6.Name = "tabPage6";
+            this.tabPage6.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPage6.Size = new System.Drawing.Size(1272, 648);
+            this.tabPage6.TabIndex = 0;
+            this.tabPage6.Text = "Ports analogiques";
+            this.tabPage6.UseVisualStyleBackColor = true;
+            // 
+            // tabPage7
+            // 
+            this.tabPage7.Controls.Add(this.pnlNumericMove);
+            this.tabPage7.Location = new System.Drawing.Point(4, 22);
+            this.tabPage7.Name = "tabPage7";
+            this.tabPage7.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPage7.Size = new System.Drawing.Size(1272, 648);
+            this.tabPage7.TabIndex = 1;
+            this.tabPage7.Text = "Ports numériques";
+            this.tabPage7.UseVisualStyleBackColor = true;
+            // 
             // tabGB
             // 
-            this.tabGB.Controls.Add(this.panelAnalogiqueGB);
+            this.tabGB.Controls.Add(this.tabControl6);
             this.tabGB.Location = new System.Drawing.Point(4, 22);
             this.tabGB.Name = "tabGB";
             this.tabGB.Padding = new System.Windows.Forms.Padding(3);
@@ -411,61 +488,38 @@ namespace GoBot
             this.tabGB.Text = "RecGoBot";
             this.tabGB.UseVisualStyleBackColor = true;
             // 
-            // tabPortsNumeriques
+            // tabControl6
             // 
-            this.tabPortsNumeriques.Controls.Add(this.tabControl2);
-            this.tabPortsNumeriques.Location = new System.Drawing.Point(4, 22);
-            this.tabPortsNumeriques.Name = "tabPortsNumeriques";
-            this.tabPortsNumeriques.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPortsNumeriques.Size = new System.Drawing.Size(1300, 712);
-            this.tabPortsNumeriques.TabIndex = 29;
-            this.tabPortsNumeriques.Text = "Ports numériques";
-            this.tabPortsNumeriques.UseVisualStyleBackColor = true;
+            this.tabControl6.Controls.Add(this.tabPage8);
+            this.tabControl6.Controls.Add(this.tabPage9);
+            this.tabControl6.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tabControl6.Location = new System.Drawing.Point(3, 3);
+            this.tabControl6.Name = "tabControl6";
+            this.tabControl6.SelectedIndex = 0;
+            this.tabControl6.Size = new System.Drawing.Size(1280, 674);
+            this.tabControl6.TabIndex = 3;
             // 
-            // tabControl2
+            // tabPage8
             // 
-            this.tabControl2.Controls.Add(this.tabPage3);
-            this.tabControl2.Controls.Add(this.tabPage4);
-            this.tabControl2.Controls.Add(this.tabPage5);
-            this.tabControl2.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tabControl2.Location = new System.Drawing.Point(3, 3);
-            this.tabControl2.Name = "tabControl2";
-            this.tabControl2.SelectedIndex = 0;
-            this.tabControl2.Size = new System.Drawing.Size(1294, 706);
-            this.tabControl2.TabIndex = 2;
+            this.tabPage8.Controls.Add(this.panelAnalogiqueGB);
+            this.tabPage8.Location = new System.Drawing.Point(4, 22);
+            this.tabPage8.Name = "tabPage8";
+            this.tabPage8.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPage8.Size = new System.Drawing.Size(1272, 648);
+            this.tabPage8.TabIndex = 0;
+            this.tabPage8.Text = "Ports analogiques";
+            this.tabPage8.UseVisualStyleBackColor = true;
             // 
-            // tabPage3
+            // tabPage9
             // 
-            this.tabPage3.Controls.Add(this.pnlNumericIO);
-            this.tabPage3.Location = new System.Drawing.Point(4, 22);
-            this.tabPage3.Name = "tabPage3";
-            this.tabPage3.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage3.Size = new System.Drawing.Size(1286, 680);
-            this.tabPage3.TabIndex = 0;
-            this.tabPage3.Text = "RecIO";
-            this.tabPage3.UseVisualStyleBackColor = true;
-            // 
-            // tabPage4
-            // 
-            this.tabPage4.Controls.Add(this.pnlNumericMove);
-            this.tabPage4.Location = new System.Drawing.Point(4, 22);
-            this.tabPage4.Name = "tabPage4";
-            this.tabPage4.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage4.Size = new System.Drawing.Size(1292, 686);
-            this.tabPage4.TabIndex = 1;
-            this.tabPage4.Text = "RecMove";
-            this.tabPage4.UseVisualStyleBackColor = true;
-            // 
-            // tabPage5
-            // 
-            this.tabPage5.Controls.Add(this.pnlNumericGB);
-            this.tabPage5.Location = new System.Drawing.Point(4, 22);
-            this.tabPage5.Name = "tabPage5";
-            this.tabPage5.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage5.Size = new System.Drawing.Size(1292, 686);
-            this.tabPage5.TabIndex = 2;
-            this.tabPage5.Text = "RecGoBot";
-            this.tabPage5.UseVisualStyleBackColor = true;
+            this.tabPage9.Controls.Add(this.pnlNumericGB);
+            this.tabPage9.Location = new System.Drawing.Point(4, 22);
+            this.tabPage9.Name = "tabPage9";
+            this.tabPage9.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPage9.Size = new System.Drawing.Size(1272, 648);
+            this.tabPage9.TabIndex = 1;
+            this.tabPage9.Text = "Ports numériques";
+            this.tabPage9.UseVisualStyleBackColor = true;
             // 
             // tabRecGoBot
             // 
@@ -531,6 +585,17 @@ namespace GoBot
             this.tabHokuyo.TabIndex = 28;
             this.tabHokuyo.Text = "Hokuyo";
             this.tabHokuyo.UseVisualStyleBackColor = true;
+            // 
+            // tabPepperl
+            // 
+            this.tabPepperl.Controls.Add(this.pagePepperl1);
+            this.tabPepperl.Location = new System.Drawing.Point(4, 22);
+            this.tabPepperl.Name = "tabPepperl";
+            this.tabPepperl.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPepperl.Size = new System.Drawing.Size(1300, 712);
+            this.tabPepperl.TabIndex = 31;
+            this.tabPepperl.Text = "R2000";
+            this.tabPepperl.UseVisualStyleBackColor = true;
             // 
             // btnClose
             // 
@@ -699,8 +764,16 @@ namespace GoBot
             this.panelAnalogiqueIO.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panelAnalogiqueIO.Location = new System.Drawing.Point(3, 3);
             this.panelAnalogiqueIO.Name = "panelAnalogiqueIO";
-            this.panelAnalogiqueIO.Size = new System.Drawing.Size(1280, 674);
+            this.panelAnalogiqueIO.Size = new System.Drawing.Size(1266, 642);
             this.panelAnalogiqueIO.TabIndex = 0;
+            // 
+            // pnlNumericIO
+            // 
+            this.pnlNumericIO.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.pnlNumericIO.Location = new System.Drawing.Point(3, 3);
+            this.pnlNumericIO.Name = "pnlNumericIO";
+            this.pnlNumericIO.Size = new System.Drawing.Size(1266, 642);
+            this.pnlNumericIO.TabIndex = 1;
             // 
             // panelAnalogiqueMove
             // 
@@ -708,8 +781,16 @@ namespace GoBot
             this.panelAnalogiqueMove.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panelAnalogiqueMove.Location = new System.Drawing.Point(3, 3);
             this.panelAnalogiqueMove.Name = "panelAnalogiqueMove";
-            this.panelAnalogiqueMove.Size = new System.Drawing.Size(1280, 674);
+            this.panelAnalogiqueMove.Size = new System.Drawing.Size(1266, 642);
             this.panelAnalogiqueMove.TabIndex = 0;
+            // 
+            // pnlNumericMove
+            // 
+            this.pnlNumericMove.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.pnlNumericMove.Location = new System.Drawing.Point(3, 3);
+            this.pnlNumericMove.Name = "pnlNumericMove";
+            this.pnlNumericMove.Size = new System.Drawing.Size(158, 4);
+            this.pnlNumericMove.TabIndex = 1;
             // 
             // panelAnalogiqueGB
             // 
@@ -717,32 +798,16 @@ namespace GoBot
             this.panelAnalogiqueGB.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panelAnalogiqueGB.Location = new System.Drawing.Point(3, 3);
             this.panelAnalogiqueGB.Name = "panelAnalogiqueGB";
-            this.panelAnalogiqueGB.Size = new System.Drawing.Size(1280, 674);
+            this.panelAnalogiqueGB.Size = new System.Drawing.Size(1266, 642);
             this.panelAnalogiqueGB.TabIndex = 0;
-            // 
-            // pnlNumericIO
-            // 
-            this.pnlNumericIO.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.pnlNumericIO.Location = new System.Drawing.Point(3, 3);
-            this.pnlNumericIO.Name = "pnlNumericIO";
-            this.pnlNumericIO.Size = new System.Drawing.Size(1280, 674);
-            this.pnlNumericIO.TabIndex = 0;
-            // 
-            // pnlNumericMove
-            // 
-            this.pnlNumericMove.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.pnlNumericMove.Location = new System.Drawing.Point(3, 3);
-            this.pnlNumericMove.Name = "pnlNumericMove";
-            this.pnlNumericMove.Size = new System.Drawing.Size(1286, 680);
-            this.pnlNumericMove.TabIndex = 0;
             // 
             // pnlNumericGB
             // 
             this.pnlNumericGB.Dock = System.Windows.Forms.DockStyle.Fill;
             this.pnlNumericGB.Location = new System.Drawing.Point(3, 3);
             this.pnlNumericGB.Name = "pnlNumericGB";
-            this.pnlNumericGB.Size = new System.Drawing.Size(1286, 680);
-            this.pnlNumericGB.TabIndex = 0;
+            this.pnlNumericGB.Size = new System.Drawing.Size(158, 4);
+            this.pnlNumericGB.TabIndex = 1;
             // 
             // potarControl1
             // 
@@ -782,6 +847,14 @@ namespace GoBot
             this.panelHokuyo1.Name = "panelHokuyo1";
             this.panelHokuyo1.Size = new System.Drawing.Size(1294, 706);
             this.panelHokuyo1.TabIndex = 0;
+            // 
+            // pagePepperl1
+            // 
+            this.pagePepperl1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.pagePepperl1.Location = new System.Drawing.Point(3, 3);
+            this.pagePepperl1.Name = "pagePepperl1";
+            this.pagePepperl1.Size = new System.Drawing.Size(1294, 706);
+            this.pagePepperl1.TabIndex = 0;
             // 
             // panelConnexions
             // 
@@ -851,16 +924,20 @@ namespace GoBot
             this.tabControl3.ResumeLayout(false);
             this.tabDiagnotic.ResumeLayout(false);
             this.tabPID.ResumeLayout(false);
-            this.tabPortsAnalogiques.ResumeLayout(false);
+            this.tabPics.ResumeLayout(false);
             this.tabControl1.ResumeLayout(false);
             this.tabIO.ResumeLayout(false);
+            this.tabControl4.ResumeLayout(false);
+            this.tabAnalog.ResumeLayout(false);
+            this.tabNumeric.ResumeLayout(false);
             this.tabMove.ResumeLayout(false);
+            this.tabControl5.ResumeLayout(false);
+            this.tabPage6.ResumeLayout(false);
+            this.tabPage7.ResumeLayout(false);
             this.tabGB.ResumeLayout(false);
-            this.tabPortsNumeriques.ResumeLayout(false);
-            this.tabControl2.ResumeLayout(false);
-            this.tabPage3.ResumeLayout(false);
-            this.tabPage4.ResumeLayout(false);
-            this.tabPage5.ResumeLayout(false);
+            this.tabControl6.ResumeLayout(false);
+            this.tabPage8.ResumeLayout(false);
+            this.tabPage9.ResumeLayout(false);
             this.tabRecGoBot.ResumeLayout(false);
             this.grpServoCodeur.ResumeLayout(false);
             this.grpCapteurs.ResumeLayout(false);
@@ -868,6 +945,7 @@ namespace GoBot
             this.tabActionneurs.ResumeLayout(false);
             this.tabActionneurs.PerformLayout();
             this.tabHokuyo.ResumeLayout(false);
+            this.tabPepperl.ResumeLayout(false);
             this.tabPage1.ResumeLayout(false);
             this.tabPage2.ResumeLayout(false);
             this.ResumeLayout(false);
@@ -901,7 +979,7 @@ namespace GoBot
         private System.Windows.Forms.TabPage tabGrosRobot;
         private PageGrosRobot panelGrosRobot;
         private System.Windows.Forms.TabControl tabControl;
-        private System.Windows.Forms.TabPage tabPortsAnalogiques;
+        private System.Windows.Forms.TabPage tabPics;
         private System.Windows.Forms.TabPage tabRecGoBot;
         private System.Windows.Forms.GroupBox grpCapteurs;
         private System.Windows.Forms.GroupBox grpRecGB;
@@ -919,7 +997,6 @@ namespace GoBot
         private PotarControl potarControl1;
         private System.Windows.Forms.TabPage tabHokuyo;
         private PageHokuyo panelHokuyo1;
-        private System.Windows.Forms.TabPage tabPortsNumeriques;
         private System.Windows.Forms.TabPage tabThreads;
         private PageLogThreads panelLogThreads1;
         private System.Windows.Forms.GroupBox grpServoCodeur;
@@ -937,13 +1014,20 @@ namespace GoBot
         private System.Windows.Forms.TabPage tabPage2;
         private PageDiagnosticMove pageDiagnosticMove;
         private PageReglageAsserv pageReglageAsserv;
-        private System.Windows.Forms.TabControl tabControl2;
-        private System.Windows.Forms.TabPage tabPage3;
-        private System.Windows.Forms.TabPage tabPage4;
-        private System.Windows.Forms.TabPage tabPage5;
+        private System.Windows.Forms.TabControl tabControl4;
+        private System.Windows.Forms.TabPage tabAnalog;
+        private System.Windows.Forms.TabPage tabNumeric;
         private PanelBoardNumeric pnlNumericIO;
+        private System.Windows.Forms.TabControl tabControl5;
+        private System.Windows.Forms.TabPage tabPage6;
+        private System.Windows.Forms.TabPage tabPage7;
         private PanelBoardNumeric pnlNumericMove;
+        private System.Windows.Forms.TabControl tabControl6;
+        private System.Windows.Forms.TabPage tabPage8;
+        private System.Windows.Forms.TabPage tabPage9;
         private PanelBoardNumeric pnlNumericGB;
+        private System.Windows.Forms.TabPage tabPepperl;
+        private IHM.Pages.PagePepperl pagePepperl1;
     }
 }
 
