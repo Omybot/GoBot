@@ -1,9 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Drawing;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Collections;
+using GoBot.BoardContext;
 
 using Geometry.Shapes;
 
@@ -47,7 +45,7 @@ namespace GoBot.GameElements
             {
                 List<IShape> obstacles = new List<IShape>();
 
-                if (Plateau.Strategy != null && Plateau.Strategy.AvoidElements)
+                if (GameBoard.Strategy != null && GameBoard.Strategy.AvoidElements)
                 {
                     // TODOEACHYEAR Ici ajouter à obstacles les elements à contourner
                 }

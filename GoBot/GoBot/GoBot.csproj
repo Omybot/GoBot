@@ -95,7 +95,7 @@
     <Compile Include="Devices\Pepperl\PepperlConst.cs" />
     <Compile Include="Devices\Pepperl\PepperlEnums.cs" />
     <Compile Include="Devices\Pepperl\PepperlManager.cs" />
-    <Compile Include="GameBoard\Obstacles.cs" />
+    <Compile Include="BoardContext\Obstacles.cs" />
     <Compile Include="IHM\Elements\PanelBoardCanServos.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -333,9 +333,6 @@
     <Compile Include="Utils\LimitedQueue.cs" />
     <Compile Include="PathFinding\PathFinder.cs" />
     <Compile Include="PathFinding\Trajectory.cs" />
-    <Compile Include="Ponderations\PoidsTest.cs" />
-    <Compile Include="Ponderations\Poids.cs" />
-    <Compile Include="Ponderations\PoidsBase.cs" />
     <Compile Include="Recallages.cs" />
     <Compile Include="Robots\Robots.cs" />
     <Compile Include="Communications\Connections.cs" />
@@ -380,7 +377,7 @@
     <Compile Include="IHM\Pages\PageGrosRobot.Designer.cs">
       <DependentUpon>PageGrosRobot.cs</DependentUpon>
     </Compile>
-    <Compile Include="Plateau.cs" />
+    <Compile Include="BoardContext\GameBoard.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Robots\RobotReel.cs" />

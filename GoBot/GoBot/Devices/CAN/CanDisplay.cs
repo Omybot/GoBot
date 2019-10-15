@@ -1,10 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using GoBot.Communications.CAN;
+﻿using GoBot.Communications.CAN;
 using GoBot.Threading;
-using System.Threading;
+using GoBot.BoardContext;
 
 namespace GoBot.Devices.CAN
 {
@@ -24,7 +20,7 @@ namespace GoBot.Devices.CAN
 
             if (!Execution.DesignMode)
             {
-                Plateau.ScoreChange += Plateau_ScoreChange;
+                GameBoard.ScoreChange += Plateau_ScoreChange;
                 
                 // Dans une boucle qui évite de spammer la carte qui ne bufferise pas les trames
                 _loopSend = ThreadManager.CreateThread(link => SendScore());

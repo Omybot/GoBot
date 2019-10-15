@@ -92,6 +92,7 @@ namespace GoBot.Devices
             try
             {
                 HttpWebRequest request = (HttpWebRequest)WebRequest.Create("http://" + _ip.ToString() + "/cmd/" + message);
+                request.Timeout = 500;
 
                 using (HttpWebResponse response = (HttpWebResponse)request.GetResponse())
                 using (Stream stream = response.GetResponseStream())

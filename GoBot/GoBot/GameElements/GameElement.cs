@@ -4,6 +4,7 @@ using GoBot.Movements;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
+using GoBot.BoardContext;
 
 namespace GoBot.GameElements
 {
@@ -87,7 +88,7 @@ namespace GoBot.GameElements
         /// <returns>Vrai si l'éction a été correctement executée</returns>
         public virtual bool ClickAction()
         {
-            IEnumerable<Movement> movements = Plateau.Strategy.Movements.Where(m => m.Element == this);
+            IEnumerable<Movement> movements = GameBoard.Strategy.Movements.Where(m => m.Element == this);
 
             if(movements.Count() > 0)
             {

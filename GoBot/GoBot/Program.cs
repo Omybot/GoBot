@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Windows.Forms;
 using GoBot.Communications;
@@ -13,6 +12,7 @@ using GoBot.Devices;
 using GoBot.Actionneurs;
 using GoBot.Threading;
 using GoBot.Beacons;
+using GoBot.BoardContext;
 
 namespace GoBot
 {
@@ -55,7 +55,7 @@ namespace GoBot
 
             SplashScreen.SetMessage("Initialisation :\nPlateau...", Color.Black);
             Dessinateur.Init();
-            Plateau.Init();
+            GameBoard.Init();
 
             SplashScreen.SetMessage("Initialisation :\nLogs...", Color.Black);
             Logs.Logs.Init();

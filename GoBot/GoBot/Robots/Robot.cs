@@ -1,21 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using Geometry;
 using System.Threading;
 using AStarFolder;
 using Geometry.Shapes;
 using System.Drawing;
 using GoBot.Actions;
-using GoBot.Actionneurs;
 using GoBot.PathFinding;
-using GoBot.Communications;
 using System.Diagnostics;
-using GoBot.Threading;
-using GoBot.GameElements;
-using System.Linq;
-using GoBot.Devices;
+using GoBot.BoardContext;
 
 namespace GoBot
 {
@@ -233,7 +226,7 @@ namespace GoBot
         {
             Historique.Log("Lancement pathfinding pour aller en " + dest.ToString(), TypeLog.PathFinding);
 
-            Trajectory traj = PathFinder.ChercheTrajectoire(Graph, Plateau.ListeObstacles, Plateau.ObstaclesOpponents, Position, dest, RayonAvecChanfrein, Robots.GrosRobot.Largeur / 2);
+            Trajectory traj = PathFinder.ChercheTrajectoire(Graph, GameBoard.ObstaclesAll, GameBoard.ObstaclesOpponents, Position, dest, RayonAvecChanfrein, Robots.GrosRobot.Largeur / 2);
 
             if (traj == null)
                 return false;

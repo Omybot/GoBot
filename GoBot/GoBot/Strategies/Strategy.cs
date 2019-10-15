@@ -1,18 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Drawing;
 using System.Timers;
-using System.Threading;
 
 using GoBot.Movements;
-using GoBot.Ponderations;
-using GoBot.Actionneurs;
-using Geometry;
 using AStarFolder;
 using GoBot.Threading;
 using System.Diagnostics;
+using GoBot.BoardContext;
 
 namespace GoBot.Strategies
 {
@@ -73,8 +68,7 @@ namespace GoBot.Strategies
             {
                 MatchDuration = new TimeSpan(0, 0, 100);
             }
-
-            Plateau.PoidActions = new PoidsTest();
+            
             Movements = new List<Movement>();
 
             // TODOEACHYEAR Charger ICI dans Movements les mouvements possibles
@@ -89,7 +83,7 @@ namespace GoBot.Strategies
                 for(int iPos = 0; iPos < Movements[iMov].Positions.Count; iPos++)
                 {
                     if(!Movements[iMov].Robot.Graph.Raccordable(new Node(Movements[iMov].Positions[iPos].Coordinates),
-                        Plateau.ListeObstacles.Except(Plateau.ObstaclesCouleur),
+                        GameBoard.ObstaclesAll,
                         Movements[iMov].Robot.RayonAvecChanfrein))
                     {
                         Movements[iMov].Positions.RemoveAt(iPos);
@@ -108,7 +102,7 @@ namespace GoBot.Strategies
 
             StartingDateTime = DateTime.Now;
 
-            Plateau.StartMatch();
+            GameBoard.StartMatch();
 
             endMatchTimer = new System.Timers.Timer();
             endMatchTimer.Elapsed += new ElapsedEventHandler(endMatchTimer_Elapsed);
@@ -171,7 +165,7 @@ namespace GoBot.Strategies
 
             // On renvoie le score au cas où histoire d'assurer le truc...
             //Devices.AllDevices.CanDisplay.SetScore(Plateau.Score);
-            Devices.AllDevices.CanDisplay.SetScore((int)(Plateau.Score * 0.9)); // Sous estimation pour essaye de se rapprocher su score réel
+            Devices.AllDevices.CanDisplay.SetScore((int)(GameBoard.Score * 0.9)); // Sous estimation pour essaye de se rapprocher su score réel
         }
     }
 }

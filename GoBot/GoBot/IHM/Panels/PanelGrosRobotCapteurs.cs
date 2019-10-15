@@ -1,12 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
 using System.Drawing;
-using System.Data;
-using System.Linq;
-using System.Text;
 using System.Windows.Forms;
-using System.Threading;
+using GoBot.BoardContext;
 
 namespace GoBot.IHM
 {
@@ -70,7 +65,7 @@ namespace GoBot.IHM
         {
             this.InvokeAuto(() =>
             {
-                if (Robots.GrosRobot.GetCouleurEquipe(false) == Plateau.ColorRightYellow)
+                if (Robots.GrosRobot.GetCouleurEquipe(false) == GameBoard.ColorRightYellow)
                     ledCouleurEquipe.Color = Color.LimeGreen;
                 else
                     ledCouleurEquipe.Color = Color.Yellow;

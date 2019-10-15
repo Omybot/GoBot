@@ -1,21 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.Data;
 using System.Drawing;
-using System.Linq;
-using System.Text;
 using System.Windows.Forms;
 using GoBot.IHM;
-using Geometry;
-using Geometry.Shapes;
-using System.Threading;
 using GoBot.Communications;
 using System.IO;
 using GoBot.Threading;
 using GoBot.Communications.UDP;
 using GoBot.Devices;
-using System.Diagnostics;
+using GoBot.BoardContext;
 
 namespace GoBot
 {
@@ -105,7 +99,7 @@ namespace GoBot
 
                 Instance = this;
 
-                Plateau.NotreCouleur = Plateau.ColorLeftBlue;
+                GameBoard.MyColor = GameBoard.ColorLeftBlue;
 
                 Connections.ConnectionGB.SendMessage(UdpFrameFactory.DemandeCouleurEquipe());
             }
@@ -164,8 +158,8 @@ namespace GoBot
             Config.Save();
             SauverLogs();
 
-            if (Plateau.Strategy != null && Plateau.Strategy.IsRunning)
-                Plateau.Strategy.Stop();
+            if (GameBoard.Strategy != null && GameBoard.Strategy.IsRunning)
+                GameBoard.Strategy.Stop();
 
             AllDevices.Close();
 

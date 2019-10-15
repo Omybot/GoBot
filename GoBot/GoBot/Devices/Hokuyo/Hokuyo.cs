@@ -6,8 +6,8 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO.Ports;
 using System.Linq;
-using System.Text.RegularExpressions;
 using System.Threading;
+using GoBot.BoardContext;
 
 namespace GoBot.Devices
 {
@@ -238,30 +238,6 @@ namespace GoBot.Devices
             if (!_linkMeasures.Cancelled) OnNewMeasure(_lastMeasure);
         }
 
-        //private List<RealPoint> ValuesToPositions(List<int> measures, int pointsCount, bool limitOnTable, int minDistance, int maxDistance, Position refPosition)
-        //{
-        //    List<RealPoint> positions = new List<RealPoint>();
-        //    double stepAngular = ScanRange.InDegrees / pointsCount;
-
-        //    for (int i = 0; i < measures.Count; i++)
-        //    {
-        //        AnglePosition angle = stepAngular * (i + _keepFrom);
-
-        //        if (measures[i] > minDistance && (measures[i] < maxDistance || maxDistance == -1))
-        //        {
-        //            AnglePosition anglePoint = new AnglePosition(angle.InPositiveRadians - refPosition.Angle.InPositiveRadians - ScanRange.InRadians / 2 - Math.PI / 2, AngleType.Radian);
-
-        //            RealPoint pos = new RealPoint(refPosition.Coordinates.X - anglePoint.Sin * measures[i], refPosition.Coordinates.Y - anglePoint.Cos * measures[i]);
-
-        //            int marge = 20; // Marge en mm de distance de detection à l'exterieur de la table (pour ne pas jeter les mesures de la bordure qui ne collent pas parfaitement)
-        //            if (!limitOnTable || (pos.X > -marge && pos.X < Plateau.Largeur + marge && pos.Y > -marge && pos.Y < Plateau.Hauteur + marge))
-        //                positions.Add(pos);
-        //        }
-        //    }
-
-        //    return positions;
-        //}
-
         private List<RealPoint> ValuesToPositions(List<int> measures, bool limitOnTable, int minDistance, int maxDistance, Position refPosition)
         {
             List<RealPoint> positions = new List<RealPoint>();
@@ -277,7 +253,7 @@ namespace GoBot.Devices
                     RealPoint pos = new RealPoint(refPosition.Coordinates.X - anglePoint.Sin * measures[i], refPosition.Coordinates.Y - anglePoint.Cos * measures[i]);
 
                     int marge = 20; // Marge en mm de distance de detection à l'exterieur de la table (pour ne pas jeter les mesures de la bordure qui ne collent pas parfaitement)
-                    if (!limitOnTable || (pos.X > -marge && pos.X < Plateau.Largeur + marge && pos.Y > -marge && pos.Y < Plateau.Hauteur + marge))
+                    if (!limitOnTable || (pos.X > -marge && pos.X < GameBoard.Width + marge && pos.Y > -marge && pos.Y < GameBoard.Height + marge))
                         positions.Add(pos);
                 }
             }

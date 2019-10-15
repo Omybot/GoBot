@@ -1,5 +1,4 @@
 ﻿using AStarFolder;
-using GoBot.Actions;
 using Geometry;
 using Geometry.Shapes;
 using GoBot.Threading;
@@ -9,6 +8,7 @@ using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading;
+using GoBot.BoardContext;
 
 namespace GoBot.PathFinding
 {
@@ -117,10 +117,10 @@ namespace GoBot.PathFinding
                                     franchissable = false;
 
                                     // Si l'obstacle génant est un adversaire, on diminue petit à petit son rayon pour pouvoir s'échapper au bout d'un moment
-                                    if (opponents.Contains(obstacle) && Plateau.RayonAdversaire > 50)
+                                    if (opponents.Contains(obstacle) && GameBoard.OpponentRadius > 50)
                                     {
                                         Robots.GrosRobot.Historique.Log("Adversaire au contact, impossible de s'enfuir, réduction du périmètre adverse", TypeLog.PathFinding);
-                                        Plateau.RayonAdversaire -= 10;
+                                        GameBoard.OpponentRadius -= 10;
                                         _linkResetRadius?.Cancel();
                                     }
                                 }
@@ -167,10 +167,10 @@ namespace GoBot.PathFinding
                                         franchissable = false;
 
                                         // Si l'obstacle génant est un adversaire, on diminue petit à petit son rayon pour pouvoir s'échapper au bout d'un moment
-                                        if (opponents.Contains(obstacle) && Plateau.RayonAdversaire > 50)
+                                        if (opponents.Contains(obstacle) && GameBoard.OpponentRadius > 50)
                                         {
                                             Robots.GrosRobot.Historique.Log("Adversaire au contact, impossible de s'enfuir, réduction du périmètre adverse", TypeLog.PathFinding);
-                                            Plateau.RayonAdversaire -= 10;
+                                            GameBoard.OpponentRadius -= 10;
                                             _linkResetRadius?.Cancel();
                                         }
                                     }
@@ -425,7 +425,7 @@ namespace GoBot.PathFinding
             }
             else
             {
-                if (Plateau.RayonAdversaire < Plateau.RayonAdversaireInitial)
+                if (GameBoard.OpponentRadius < GameBoard.OpponentRadiusInitial)
                 {
                     _linkResetRadius = ThreadManager.CreateThread(link => ResetOpponentRadiusLoop());
                     _linkResetRadius.StartThread();
@@ -445,9 +445,9 @@ namespace GoBot.PathFinding
             _linkResetRadius.RegisterName();
 
             Thread.Sleep(1000);
-            while (_linkResetRadius != null && !_linkResetRadius.Cancelled && Plateau.RayonAdversaire < Plateau.RayonAdversaireInitial)
+            while (_linkResetRadius != null && !_linkResetRadius.Cancelled && GameBoard.OpponentRadius < GameBoard.OpponentRadiusInitial)
             {
-                Plateau.RayonAdversaire++;
+                GameBoard.OpponentRadius++;
                 Thread.Sleep(50);
             }
         }

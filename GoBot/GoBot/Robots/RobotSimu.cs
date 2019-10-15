@@ -1,18 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using Geometry;
 using System.Timers;
 using Geometry.Shapes;
 using System.Threading;
 using GoBot.Actions;
 using System.Drawing;
-using GoBot.Actionneurs;
 using System.Diagnostics;
-using GoBot.Communications;
 using GoBot.Threading;
-using GoBot.GameElements;
+using GoBot.BoardContext;
 
 namespace GoBot
 {
@@ -439,10 +436,10 @@ namespace GoBot
             IShape contact = GetBounds(sens);
 
             while (Position.Coordinates.X - Longueur / 2 > 0 &&
-                Position.Coordinates.X + Longueur / 2 < Plateau.Largeur &&
+                Position.Coordinates.X + Longueur / 2 < GameBoard.Width &&
                 Position.Coordinates.Y - Longueur / 2 > 0 &&
-                Position.Coordinates.Y + Longueur / 2 < Plateau.Hauteur &&
-                !Plateau.ListeObstacles.ToList().Exists(o => o.Cross(contact)))
+                Position.Coordinates.Y + Longueur / 2 < GameBoard.Height &&
+                !GameBoard.ObstaclesAll.ToList().Exists(o => o.Cross(contact)))
             {
                 if (sens == SensAR.Arriere)
                     Reculer(1);
@@ -541,7 +538,7 @@ namespace GoBot
 
         public override Color GetCouleurEquipe(bool historique = true)
         {
-            return Plateau.ColorRightYellow;
+            return GameBoard.ColorRightYellow;
         }
 
         public override List<int>[] MesureTestPid(int consigne, SensAR sens, int nbValeurs)

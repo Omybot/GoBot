@@ -1,15 +1,12 @@
-﻿using GoBot.Actionneurs;
-using Geometry.Shapes;
+﻿using Geometry.Shapes;
 using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Data;
 using System.Drawing;
 using System.Linq;
-using System.Text;
-using System.Threading;
 using System.Windows.Forms;
 using GoBot.Devices;
+using GoBot.BoardContext;
 
 namespace GoBot.IHM
 {
@@ -165,7 +162,7 @@ namespace GoBot.IHM
 
                     if (boxGroup.Checked)
                     {
-                        points = points.Where(o => Plateau.IsInside(o)).ToList();
+                        points = points.Where(o => GameBoard.IsInside(o)).ToList();
                         List<List<RealPoint>> groups = points.GroupByDistance(50, 20);
 
                         List<Color> colors = new List<Color>() { Color.Blue, Color.Green, Color.Red, Color.Brown };

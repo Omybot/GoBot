@@ -5,7 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
-using System.Text;
+using GoBot.BoardContext;
 
 namespace GoBot.Devices
 {
@@ -107,7 +107,7 @@ namespace GoBot.Devices
                     RealPoint pos = new RealPoint(refPosition.Coordinates.X - anglePoint.Sin * measures[i], refPosition.Coordinates.Y - anglePoint.Cos * measures[i]);
 
                     int marge = 20; // Marge en mm de distance de detection à l'exterieur de la table (pour ne pas jeter les mesures de la bordure qui ne collent pas parfaitement)
-                    if (!limitOnTable || (pos.X > -marge && pos.X < Plateau.Largeur + marge && pos.Y > -marge && pos.Y < Plateau.Hauteur + marge))
+                    if (!limitOnTable || (pos.X > -marge && pos.X < GameBoard.Width + marge && pos.Y > -marge && pos.Y < GameBoard.Height + marge))
                         positions.Add(pos);
                 }
             }

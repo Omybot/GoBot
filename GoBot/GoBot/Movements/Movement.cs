@@ -9,6 +9,7 @@ using Geometry;
 using Geometry.Shapes;
 using GoBot.GameElements;
 using GoBot.PathFinding;
+using GoBot.BoardContext;
 
 namespace GoBot.Movements
 {
@@ -82,7 +83,7 @@ namespace GoBot.Movements
 
             if (position != null)
             {
-                Trajectory traj = PathFinder.ChercheTrajectoire(Robot.Graph, Plateau.ListeObstacles, Plateau.ObstaclesOpponents, new Position(Robot.Position), position, Robot.RayonAvecChanfrein, Robot.Largeur / 2);
+                Trajectory traj = PathFinder.ChercheTrajectoire(Robot.Graph, GameBoard.ObstaclesAll, GameBoard.ObstaclesOpponents, new Position(Robot.Position), position, Robot.RayonAvecChanfrein, Robot.Largeur / 2);
 
                 if (traj != null)
                 {
@@ -111,7 +112,7 @@ namespace GoBot.Movements
                 ok = false;
             }
 
-            Robots.GrosRobot.MajGraphFranchissable(Plateau.ListeObstacles);
+            Robots.GrosRobot.MajGraphFranchissable(GameBoard.ObstaclesAll);
             return ok;
         }
 
@@ -136,7 +137,7 @@ namespace GoBot.Movements
         /// <returns></returns>
         public bool IsCorrectColor()
         {
-            return (Color == null) || (Color == Plateau.NotreCouleur) || (Color == Color.White);
+            return (Color == null) || (Color == GameBoard.MyColor) || (Color == Color.White);
         }
 
         /// <summary>
@@ -156,7 +157,7 @@ namespace GoBot.Movements
 
                 Position closestPoint = Positions[0];
 
-                List<Circle> opponents = new List<IShape>(Plateau.ObstaclesOpponents).OfType<Circle>().ToList();
+                List<Circle> opponents = new List<IShape>(GameBoard.ObstaclesOpponents).OfType<Circle>().ToList();
 
                 foreach (Position position in Positions)
                 {
@@ -206,7 +207,7 @@ namespace GoBot.Movements
                 double cout = (Math.Sqrt(distance)) / Value;
                 bool adversairePlusProche = false;
 
-                List<IShape> opponents = new List<IShape>(Plateau.ObstaclesOpponents);
+                List<IShape> opponents = new List<IShape>(GameBoard.ObstaclesOpponents);
                 foreach (Circle c in opponents)
                 {
                     double distanceAdv = position.Coordinates.Distance(c.Center);

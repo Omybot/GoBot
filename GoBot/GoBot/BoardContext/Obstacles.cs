@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using GoBot.GameElements;
 
-namespace GoBot.GameBoard
+namespace GoBot.BoardContext
 {
     public class Obstacles
     {
@@ -35,7 +35,7 @@ namespace GoBot.GameBoard
                 IEnumerable<IShape> all = _boardObstacles;
 
                 all = all.Concat(_elements.AsObstacles);
-                if (_colorObstacles.ContainsKey(Plateau.NotreCouleur)) all = all.Concat(_colorObstacles[Plateau.NotreCouleur]);
+                if (_colorObstacles.ContainsKey(GameBoard.MyColor)) all = all.Concat(_colorObstacles[GameBoard.MyColor]);
                 if (_detectionObstacles != null) all = all.Concat(_detectionObstacles);
 
                 return all.ToList();
@@ -48,7 +48,7 @@ namespace GoBot.GameBoard
             {
                 IEnumerable<IShape> all = _elements.AsObstacles;
 
-                if (_colorObstacles.ContainsKey(Plateau.NotreCouleur)) all = all.Concat(_colorObstacles[Plateau.NotreCouleur]);
+                if (_colorObstacles.ContainsKey(GameBoard.MyColor)) all = all.Concat(_colorObstacles[GameBoard.MyColor]);
                 if (_detectionObstacles != null) all = all.Concat(_detectionObstacles);
 
                 return all.ToList();
@@ -67,7 +67,7 @@ namespace GoBot.GameBoard
         {
             get
             {
-                return _colorObstacles[Plateau.NotreCouleur];
+                return _colorObstacles[GameBoard.MyColor];
             }
         }
 
@@ -83,7 +83,7 @@ namespace GoBot.GameBoard
         {
             get
             {
-                return Plateau.Elements.AsObstacles;
+                return GameBoard.Elements.AsObstacles;
             }
         }
 
@@ -106,10 +106,10 @@ namespace GoBot.GameBoard
             List<IShape> obstacles = new List<IShape>();
 
             // Contours du plateau
-            obstacles.Add(new Segment(new RealPoint(0, 0), new RealPoint(Plateau.Largeur - 4, 0)));
-            obstacles.Add(new Segment(new RealPoint(Plateau.Largeur - 4, 0), new RealPoint(Plateau.Largeur - 4, Plateau.Hauteur - 4)));
-            obstacles.Add(new Segment(new RealPoint(Plateau.Largeur - 4, Plateau.Hauteur - 4), new RealPoint(0, Plateau.Hauteur - 4)));
-            obstacles.Add(new Segment(new RealPoint(0, Plateau.Hauteur - 4), new RealPoint(0, 0)));
+            obstacles.Add(new Segment(new RealPoint(0, 0), new RealPoint(GameBoard.Width - 4, 0)));
+            obstacles.Add(new Segment(new RealPoint(GameBoard.Width - 4, 0), new RealPoint(GameBoard.Width - 4, GameBoard.Height - 4)));
+            obstacles.Add(new Segment(new RealPoint(GameBoard.Width - 4, GameBoard.Height - 4), new RealPoint(0, GameBoard.Height - 4)));
+            obstacles.Add(new Segment(new RealPoint(0, GameBoard.Height - 4), new RealPoint(0, 0)));
 
             // TODOEACHYEAR : créer les obstacles fixes du plateau
 
@@ -140,8 +140,8 @@ namespace GoBot.GameBoard
             //Port secondaire
             obsRight.Add(new Circle(new RealPoint(1800, 1800), 150));
             
-            obstacles.Add(Plateau.ColorLeftBlue, obsLeft);
-            obstacles.Add(Plateau.ColorRightYellow, obsRight);
+            obstacles.Add(GameBoard.ColorLeftBlue, obsLeft);
+            obstacles.Add(GameBoard.ColorRightYellow, obsRight);
 
             return obstacles;
         }

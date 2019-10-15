@@ -1,14 +1,8 @@
-﻿using Geometry;
+﻿using System.Collections.Generic;
+using Geometry;
 using Geometry.Shapes;
-using GoBot.Actionneurs;
 using GoBot.Movements;
-using GoBot.Threading;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading;
-using System.Windows.Forms;
+using GoBot.BoardContext;
 
 namespace GoBot.Strategies
 {
@@ -27,11 +21,11 @@ namespace GoBot.Strategies
         {
             // Sortir ICI de la zonde de départ
 
-            Robots.GrosRobot.MajGraphFranchissable(Plateau.ListeObstacles);
+            Robots.GrosRobot.MajGraphFranchissable(GameBoard.ObstaclesAll);
             
             Robots.GrosRobot.Avancer(500);
             
-            if (Plateau.NotreCouleur == Plateau.ColorLeftBlue)
+            if (GameBoard.MyColor == GameBoard.ColorLeftBlue)
             {
                 //*mouvements.Add(new MoveAccelerator(Plateau.Elements.AcceleratorYellow));
             }

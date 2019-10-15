@@ -1,16 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using GoBot.Communications;
 using System.Drawing;
 using System.Threading;
-using GoBot.Actionneurs;
 using GoBot.Threading;
-using Geometry.Shapes;
-using Geometry;
 using GoBot.Communications.UDP;
 using GoBot.Communications.CAN;
+using GoBot.BoardContext;
 
 namespace GoBot.Devices
 {
@@ -180,7 +177,7 @@ namespace GoBot.Devices
 
         void RecGoBot_ButtonChange(SensorOnOffID btn, bool state)
         {
-            if (Plateau.Strategy == null || (Plateau.Strategy != null && !Plateau.Strategy.IsRunning))
+            if (GameBoard.Strategy == null || (GameBoard.Strategy != null && !GameBoard.Strategy.IsRunning))
             {
                 if (state)
                 {

@@ -1,13 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading;
-using System.Windows.Forms;
-
 using GoBot.Movements;
-using GoBot.Threading;
-using GoBot.Actionneurs;
+using GoBot.BoardContext;
 
 namespace GoBot.Strategies
 {
@@ -24,15 +20,15 @@ namespace GoBot.Strategies
             fixedMovements = new List<Movement>();
 
             // Ajouter les points fixes au score (non forfait, elements posés etc)
-            Plateau.Score = 42;
+            GameBoard.Score = 42;
 
             // Sortir ICI de la zonde de départ
-            Robots.GrosRobot.MajGraphFranchissable(Plateau.ListeObstacles);
+            Robots.GrosRobot.MajGraphFranchissable(GameBoard.ObstaclesAll);
             Robots.GrosRobot.Avancer(500);
             
             // Ajouter ICI l'ordre de la strat fixe avant détection d'adversaire
 
-            if (Plateau.NotreCouleur == Plateau.ColorLeftBlue)
+            if (GameBoard.MyColor == GameBoard.ColorLeftBlue)
             {
                 //*fixedMovements.Add(new MoveVoidZone(Plateau.Elements.VoidZoneYellow));
                 //*fixedMovements.Add(new MoveAccelerator(Plateau.Elements.AcceleratorYellow));

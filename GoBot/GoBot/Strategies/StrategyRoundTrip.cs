@@ -1,10 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-
+﻿using Geometry;
 using Geometry.Shapes;
-using Geometry;
+using GoBot.BoardContext;
 
 namespace GoBot.Strategies
 {
@@ -17,7 +13,7 @@ namespace GoBot.Strategies
 
         protected override void SequenceBegin()
         {
-            Robots.GrosRobot.MajGraphFranchissable(Plateau.ListeObstacles);
+            Robots.GrosRobot.MajGraphFranchissable(GameBoard.ObstaclesAll);
 
             //Plateau.Balise.VitesseRotation(250);
 

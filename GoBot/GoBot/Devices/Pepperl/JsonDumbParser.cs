@@ -11,6 +11,8 @@ namespace GoBot.Devices
         {
             Dictionary<String, String> values = new Dictionary<string, string>();
 
+            if (json == "") return null;
+
             json = json.Replace("{", "").Replace("}", "").Replace(",\r\n", ":").Replace("\r\n", "");
 
             List<String> splits = json.Split(new String[] { ":" }, StringSplitOptions.None).ToList();

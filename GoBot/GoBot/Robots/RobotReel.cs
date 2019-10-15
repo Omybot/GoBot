@@ -9,8 +9,8 @@ using System.Drawing;
 using System.Text.RegularExpressions;
 using System.Threading;
 using GoBot.Threading;
-using GoBot.GameElements;
 using GoBot.Communications.UDP;
+using GoBot.BoardContext;
 
 namespace GoBot
 {
@@ -130,20 +130,20 @@ namespace GoBot
             if (!state && JackArme)
             {
                 JackArme = false;
-                if (Plateau.Strategy == null)
-                    Plateau.Strategy = new GoBot.Strategies.StrategyMatch();
-                Plateau.Strategy.ExecuteMatch();
+                if (GameBoard.Strategy == null)
+                    GameBoard.Strategy = new GoBot.Strategies.StrategyMatch();
+                GameBoard.Strategy.ExecuteMatch();
             }
         }
 
         void RecGoBot_ColorChange(MatchColor state)
         {
             if (state == MatchColor.LeftBlue)
-                _lastTeamColor = Plateau.ColorLeftBlue;
+                _lastTeamColor = GameBoard.ColorLeftBlue;
             else if (state == MatchColor.RightYellow)
-                _lastTeamColor = Plateau.ColorRightYellow;
+                _lastTeamColor = GameBoard.ColorRightYellow;
 
-            Plateau.NotreCouleur = _lastTeamColor;
+            GameBoard.MyColor = _lastTeamColor;
 
             _lockFrame[UdpFrameFunction.RetourCouleurEquipe]?.Release();
         }
@@ -161,14 +161,14 @@ namespace GoBot
 
             if (this == Robots.GrosRobot)
             {
-                if (Plateau.NotreCouleur == Plateau.ColorLeftBlue)
+                if (GameBoard.MyColor == GameBoard.ColorLeftBlue)
                     Position = new Position(0, new RealPoint(240, 1000));
                 else
                     Position = new Position(180, new RealPoint(3000 - 240, 1000));
             }
             else
             {
-                if (Plateau.NotreCouleur == Plateau.ColorLeftBlue)
+                if (GameBoard.MyColor == GameBoard.ColorLeftBlue)
                     Position = new Position(0, new RealPoint(480, 1000));
                 else
                     Position = new Position(180, new RealPoint(3000 - 480, 1000));

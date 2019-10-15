@@ -1,22 +1,19 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Drawing;
 using System.Threading;
 using Geometry.Shapes;
 using AStarFolder;
-using GoBot.Strategies;
 using Geometry;
 using GoBot.Beacons;
-using GoBot.Actionneurs;
 using GoBot.GameElements;
-using GoBot.Movements;
 using GoBot.PathFinding;
 using System.Drawing.Drawing2D;
 using System.Diagnostics;
 using GoBot.Threading;
 using GoBot.Devices;
+using GoBot.BoardContext;
 
 namespace GoBot
 {
@@ -74,25 +71,25 @@ namespace GoBot
 
                             penBlancTransparent = new Pen(Color.FromArgb(40, Color.Black)),
                             penBlancFleche = new Pen(Color.White, 3),
-                            penCouleurGauche = new Pen(Plateau.ColorLeftBlue),
-                            penCouleurGaucheFleche = new Pen(Plateau.ColorLeftBlue, 3),
-                            penCouleurGaucheEpais = new Pen(Color.FromArgb(35, Plateau.ColorLeftBlue), 3),
-                            penCouleurDroite = new Pen(Plateau.ColorRightYellow),
-                            penCouleurDroiteFleche = new Pen(Plateau.ColorRightYellow, 3),
-                            penCouleurDroiteEpais = new Pen(Color.FromArgb(35, Plateau.ColorRightYellow), 3),
+                            penCouleurGauche = new Pen(GameBoard.ColorLeftBlue),
+                            penCouleurGaucheFleche = new Pen(GameBoard.ColorLeftBlue, 3),
+                            penCouleurGaucheEpais = new Pen(Color.FromArgb(35, GameBoard.ColorLeftBlue), 3),
+                            penCouleurDroite = new Pen(GameBoard.ColorRightYellow),
+                            penCouleurDroiteFleche = new Pen(GameBoard.ColorRightYellow, 3),
+                            penCouleurDroiteEpais = new Pen(Color.FromArgb(35, GameBoard.ColorRightYellow), 3),
 
                             penRougeEpais = new Pen(Color.Red, 3),
-                            penBleuEpais = new Pen(Plateau.ColorRightYellow, 3),
+                            penBleuEpais = new Pen(GameBoard.ColorRightYellow, 3),
                             penVertEpais = new Pen(Color.Green, 3);
 
         private static SolidBrush brushNoir = new SolidBrush(Color.Black),
                                     brushNoirTresTransparent = new SolidBrush(Color.FromArgb(35, Color.Black)),
-                                    brushCouleurGauche = new SolidBrush(Plateau.ColorLeftBlue),
-                                    brushCouleurGaucheTransparent = new SolidBrush(Color.FromArgb(110, Plateau.ColorLeftBlue)),
-                                    brushCouleurGaucheTresTransparent = new SolidBrush(Color.FromArgb(35, Plateau.ColorLeftBlue)),
-                                    brushCouleurDroite = new SolidBrush(Plateau.ColorRightYellow),
-                                    brushCouleurDroiteTransparent = new SolidBrush(Color.FromArgb(110, Plateau.ColorRightYellow)),
-                                    brushCouleurDroiteTresTransparent = new SolidBrush(Color.FromArgb(35, Plateau.ColorRightYellow));
+                                    brushCouleurGauche = new SolidBrush(GameBoard.ColorLeftBlue),
+                                    brushCouleurGaucheTransparent = new SolidBrush(Color.FromArgb(110, GameBoard.ColorLeftBlue)),
+                                    brushCouleurGaucheTresTransparent = new SolidBrush(Color.FromArgb(35, GameBoard.ColorLeftBlue)),
+                                    brushCouleurDroite = new SolidBrush(GameBoard.ColorRightYellow),
+                                    brushCouleurDroiteTransparent = new SolidBrush(Color.FromArgb(110, GameBoard.ColorRightYellow)),
+                                    brushCouleurDroiteTresTransparent = new SolidBrush(Color.FromArgb(35, GameBoard.ColorRightYellow));
 
         public static WorldScale Scale { get; } = new WorldScale(RAPPORT_SCREEN_REAL, OFFSET_IMAGE_X, OFFSET_IMAGE_Y);
 
@@ -207,7 +204,7 @@ namespace GoBot
                             DessineObstacles(g);
 
                         if (AfficheElementsJeu)
-                            DessineElementsJeu(g, Plateau.Elements);
+                            DessineElementsJeu(g, GameBoard.Elements);
 
                         DessinePathFinding(g);
 
@@ -219,10 +216,10 @@ namespace GoBot
 
                         if (AfficheCoutsMouvements)
                         {
-                            if (Plateau.Strategy != null && Plateau.Strategy.Movements != null)
+                            if (GameBoard.Strategy != null && GameBoard.Strategy.Movements != null)
                             {
-                                Plateau.Strategy.Movements.ForEach(mouv => mouv.DisplayCostFactor = Plateau.Strategy.Movements.Min(m => m.GlobalCost));
-                                Plateau.Strategy.Movements.ForEach(mouv => mouv.Paint(g, Scale));
+                                GameBoard.Strategy.Movements.ForEach(mouv => mouv.DisplayCostFactor = GameBoard.Strategy.Movements.Min(m => m.GlobalCost));
+                                GameBoard.Strategy.Movements.ForEach(mouv => mouv.Paint(g, Scale));
                             }
                         }
 
@@ -237,8 +234,8 @@ namespace GoBot
                             Direction traj = Maths.GetDirection(positionDepart, PositionCurseurTable);
 
                             gGros.FillRectangle(brushNoirTresTransparent, bmpGrosRobot.Width / 2 - Scale.RealToScreenDistance(Robots.GrosRobot.Largeur / 2), bmpGrosRobot.Height / 2 - Scale.RealToScreenDistance(Robots.GrosRobot.Longueur / 2), Scale.RealToScreenDistance(Robots.GrosRobot.Largeur), Scale.RealToScreenDistance(Robots.GrosRobot.Longueur));
-                            gGros.DrawRectangle(Plateau.NotreCouleur == Plateau.ColorLeftBlue ? penCouleurGauche : penCouleurDroite, bmpGrosRobot.Width / 2 - Scale.RealToScreenDistance(Robots.GrosRobot.Largeur / 2), bmpGrosRobot.Height / 2 - Scale.RealToScreenDistance(Robots.GrosRobot.Longueur / 2), Scale.RealToScreenDistance(Robots.GrosRobot.Largeur), Scale.RealToScreenDistance(Robots.GrosRobot.Longueur));
-                            gGros.DrawLine(Plateau.NotreCouleur == Plateau.ColorLeftBlue ? penCouleurGauche : penCouleurDroite, bmpGrosRobot.Width / 2, bmpGrosRobot.Height / 2, bmpGrosRobot.Width / 2, bmpGrosRobot.Height / 2 - Scale.RealToScreenDistance(Robots.GrosRobot.Longueur / 2));
+                            gGros.DrawRectangle(GameBoard.MyColor == GameBoard.ColorLeftBlue ? penCouleurGauche : penCouleurDroite, bmpGrosRobot.Width / 2 - Scale.RealToScreenDistance(Robots.GrosRobot.Largeur / 2), bmpGrosRobot.Height / 2 - Scale.RealToScreenDistance(Robots.GrosRobot.Longueur / 2), Scale.RealToScreenDistance(Robots.GrosRobot.Largeur), Scale.RealToScreenDistance(Robots.GrosRobot.Longueur));
+                            gGros.DrawLine(GameBoard.MyColor == GameBoard.ColorLeftBlue ? penCouleurGauche : penCouleurDroite, bmpGrosRobot.Width / 2, bmpGrosRobot.Height / 2, bmpGrosRobot.Width / 2, bmpGrosRobot.Height / 2 - Scale.RealToScreenDistance(Robots.GrosRobot.Longueur / 2));
 
                             Point pointOrigine = Scale.RealToScreenPosition(positionDepart);
                             g.DrawImage(RotateImage(bmpGrosRobot, 360 - traj.angle.InDegrees + 90), pointOrigine.X - bmpGrosRobot.Width / 2, pointOrigine.Y - bmpGrosRobot.Height / 2);
@@ -261,8 +258,8 @@ namespace GoBot
                             departRecule.Move(Scale.RealToScreenDistance(-Robots.GrosRobot.Longueur / 2));
 
                             gGros.FillRectangle(brushNoirTresTransparent, bmpGrosRobot.Width / 2 - Scale.RealToScreenDistance(Robots.GrosRobot.Largeur / 2), bmpGrosRobot.Height / 2 - Scale.RealToScreenDistance(Robots.GrosRobot.Longueur / 2), Scale.RealToScreenDistance(Robots.GrosRobot.Largeur), Scale.RealToScreenDistance(Robots.GrosRobot.Longueur));
-                            gGros.DrawRectangle(Plateau.NotreCouleur == Plateau.ColorLeftBlue ? penCouleurGauche : penCouleurDroite, bmpGrosRobot.Width / 2 - Scale.RealToScreenDistance(Robots.GrosRobot.Largeur / 2), bmpGrosRobot.Height / 2 - Scale.RealToScreenDistance(Robots.GrosRobot.Longueur / 2), Scale.RealToScreenDistance(Robots.GrosRobot.Largeur), Scale.RealToScreenDistance(Robots.GrosRobot.Longueur));
-                            gGros.DrawLine(Plateau.NotreCouleur == Plateau.ColorLeftBlue ? penCouleurGauche : penCouleurDroite, bmpGrosRobot.Width / 2, bmpGrosRobot.Height / 2, bmpGrosRobot.Width / 2, bmpGrosRobot.Height / 2 - Scale.RealToScreenDistance(Robots.GrosRobot.Longueur / 2));
+                            gGros.DrawRectangle(GameBoard.MyColor == GameBoard.ColorLeftBlue ? penCouleurGauche : penCouleurDroite, bmpGrosRobot.Width / 2 - Scale.RealToScreenDistance(Robots.GrosRobot.Largeur / 2), bmpGrosRobot.Height / 2 - Scale.RealToScreenDistance(Robots.GrosRobot.Longueur / 2), Scale.RealToScreenDistance(Robots.GrosRobot.Largeur), Scale.RealToScreenDistance(Robots.GrosRobot.Longueur));
+                            gGros.DrawLine(GameBoard.MyColor == GameBoard.ColorLeftBlue ? penCouleurGauche : penCouleurDroite, bmpGrosRobot.Width / 2, bmpGrosRobot.Height / 2, bmpGrosRobot.Width / 2, bmpGrosRobot.Height / 2 - Scale.RealToScreenDistance(Robots.GrosRobot.Longueur / 2));
 
                             g.DrawImage(RotateImage(bmpGrosRobot, 360 - traj.angle.InDegrees + 90), (int)(departRecule.Coordinates.X) - bmpGrosRobot.Width / 2, (int)(departRecule.Coordinates.Y) - bmpGrosRobot.Height / 2);
 
@@ -322,18 +319,18 @@ namespace GoBot
 
                 //if (vitesse < 50)
                 //    g.DrawImage(Properties.Resources.Stop, positionEcran.X - Properties.Resources.Stop.Width / 2, positionEcran.Y - Properties.Resources.Stop.Height / 2, Properties.Resources.Stop.Width, Properties.Resources.Stop.Height);
-                g.FillEllipse(Plateau.NotreCouleur == Plateau.ColorRightYellow ? brushCouleurGaucheTransparent : brushCouleurDroiteTransparent, positionEcran.X - Scale.RealToScreenDistance(Plateau.RayonAdversaire), positionEcran.Y - Scale.RealToScreenDistance(Plateau.RayonAdversaire), Scale.RealToScreenDistance(Plateau.RayonAdversaire * 2), Scale.RealToScreenDistance(Plateau.RayonAdversaire * 2));
-                g.DrawEllipse(Plateau.NotreCouleur == Plateau.ColorRightYellow ? penCouleurGauche : penCouleurDroite, positionEcran.X - Scale.RealToScreenDistance(Plateau.RayonAdversaire), positionEcran.Y - Scale.RealToScreenDistance(Plateau.RayonAdversaire), Scale.RealToScreenDistance(Plateau.RayonAdversaire * 2), Scale.RealToScreenDistance(Plateau.RayonAdversaire * 2));
-                g.DrawLine(Plateau.NotreCouleur == Plateau.ColorRightYellow ? penCouleurGaucheEpais : penCouleurDroiteEpais, new Point(positionEcran.X - 7, positionEcran.Y - 7), new Point(positionEcran.X + 7, positionEcran.Y + 7));
-                g.DrawLine(Plateau.NotreCouleur == Plateau.ColorRightYellow ? penCouleurGaucheEpais : penCouleurDroiteEpais, new Point(positionEcran.X - 7, positionEcran.Y + 7), new Point(positionEcran.X + 7, positionEcran.Y - 7));
-                g.DrawLine(Plateau.NotreCouleur == Plateau.ColorRightYellow ? penCouleurGaucheFleche : penCouleurDroiteFleche, positionEcran.X, positionEcran.Y, positionEcran.X + Scale.RealToScreenDistance(SuiviBalise.VecteursPositionsEnnemies[i].X / 3), positionEcran.Y + Scale.RealToScreenDistance(SuiviBalise.VecteursPositionsEnnemies[i].Y / 3));
+                g.FillEllipse(GameBoard.MyColor == GameBoard.ColorRightYellow ? brushCouleurGaucheTransparent : brushCouleurDroiteTransparent, positionEcran.X - Scale.RealToScreenDistance(GameBoard.OpponentRadius), positionEcran.Y - Scale.RealToScreenDistance(GameBoard.OpponentRadius), Scale.RealToScreenDistance(GameBoard.OpponentRadius * 2), Scale.RealToScreenDistance(GameBoard.OpponentRadius * 2));
+                g.DrawEllipse(GameBoard.MyColor == GameBoard.ColorRightYellow ? penCouleurGauche : penCouleurDroite, positionEcran.X - Scale.RealToScreenDistance(GameBoard.OpponentRadius), positionEcran.Y - Scale.RealToScreenDistance(GameBoard.OpponentRadius), Scale.RealToScreenDistance(GameBoard.OpponentRadius * 2), Scale.RealToScreenDistance(GameBoard.OpponentRadius * 2));
+                g.DrawLine(GameBoard.MyColor == GameBoard.ColorRightYellow ? penCouleurGaucheEpais : penCouleurDroiteEpais, new Point(positionEcran.X - 7, positionEcran.Y - 7), new Point(positionEcran.X + 7, positionEcran.Y + 7));
+                g.DrawLine(GameBoard.MyColor == GameBoard.ColorRightYellow ? penCouleurGaucheEpais : penCouleurDroiteEpais, new Point(positionEcran.X - 7, positionEcran.Y + 7), new Point(positionEcran.X + 7, positionEcran.Y - 7));
+                g.DrawLine(GameBoard.MyColor == GameBoard.ColorRightYellow ? penCouleurGaucheFleche : penCouleurDroiteFleche, positionEcran.X, positionEcran.Y, positionEcran.X + Scale.RealToScreenDistance(SuiviBalise.VecteursPositionsEnnemies[i].X / 3), positionEcran.Y + Scale.RealToScreenDistance(SuiviBalise.VecteursPositionsEnnemies[i].Y / 3));
                 g.DrawString(i + " - " + vitesse.ToString() + "mm/s", new Font("Calibri", 9, FontStyle.Bold), Brushes.White, positionEcran.X, positionEcran.Y);
             }
         }
 
         private static void DessineDetections(Graphics g)
         {
-            List<IShape> detections = Plateau.Detections;
+            List<IShape> detections = GameBoard.Detections;
 
             if (detections != null)
             {
@@ -355,10 +352,10 @@ namespace GoBot
             Rectangle robotRect = new Rectangle(positionRobot.X - Scale.RealToScreenDistance(robot.Longueur / 2), positionRobot.Y - Scale.RealToScreenDistance(robot.Largeur / 2), Scale.RealToScreenDistance(robot.Longueur), Scale.RealToScreenDistance(robot.Largeur));
 
             g.FillRectangle(Brushes.White, robotRect);
-            using (SolidBrush brush = new SolidBrush(Color.FromArgb(50, Plateau.NotreCouleur)))
+            using (SolidBrush brush = new SolidBrush(Color.FromArgb(50, GameBoard.MyColor)))
                 g.FillRectangle(brush, robotRect);
-            g.DrawRectangle(Plateau.NotreCouleur == Plateau.ColorRightYellow ? penCouleurDroite : penCouleurGauche, robotRect);
-            g.DrawLine(Plateau.NotreCouleur == Plateau.ColorRightYellow ? penCouleurDroite : penCouleurGauche, robotRect.Center(), new Point(robotRect.Right, (int)robotRect.Center().Y));
+            g.DrawRectangle(GameBoard.MyColor == GameBoard.ColorRightYellow ? penCouleurDroite : penCouleurGauche, robotRect);
+            g.DrawLine(GameBoard.MyColor == GameBoard.ColorRightYellow ? penCouleurDroite : penCouleurGauche, robotRect.Center(), new Point(robotRect.Right, (int)robotRect.Center().Y));
 
             // TODOEACHYEAR Dessiner ici les actionneurs pour qu'ils prennent l'inclinaison du robot
 
@@ -367,9 +364,9 @@ namespace GoBot
 
         private static void DessineObstacles(Graphics g)
         {
-            g.SetClip(Scale.RealToScreenRect(new RectangleF(-Plateau.BorderWidth, -Plateau.BorderWidth, Plateau.Largeur + Plateau.BorderWidth * 2, Plateau.Hauteur + Plateau.BorderWidth * 2)));
+            g.SetClip(Scale.RealToScreenRect(new RectangleF(-GameBoard.BorderSize, -GameBoard.BorderSize, GameBoard.Width + GameBoard.BorderSize * 2, GameBoard.Height + GameBoard.BorderSize * 2)));
 
-            foreach (IShape forme in Plateau.ListeObstacles)
+            foreach (IShape forme in GameBoard.ObstaclesAll)
                 forme.Paint(g, Color.Red, 5, Color.Transparent, Scale);
 
             DessineZoneMorte(g);
@@ -391,7 +388,7 @@ namespace GoBot
                 points.Add(Scale.RealToScreenPosition(new Point((int)(AllDevices.LidarAvoid.Position.Coordinates.X + debutAngleMort.Cos * farAway), (int)(AllDevices.LidarAvoid.Position.Coordinates.Y + debutAngleMort.Sin * farAway))));
                 points.Add(Scale.RealToScreenPosition(new Point((int)(AllDevices.LidarAvoid.Position.Coordinates.X + finAngleMort.Cos * farAway), (int)(AllDevices.LidarAvoid.Position.Coordinates.Y + finAngleMort.Sin * farAway))));
 
-                g.IntersectClip(new Rectangle(Scale.RealToScreenPosition(new Point(0, 0)), new Size(Scale.RealToScreenDistance(Plateau.Largeur), Scale.RealToScreenDistance(Plateau.Hauteur))));
+                g.IntersectClip(new Rectangle(Scale.RealToScreenPosition(new Point(0, 0)), new Size(Scale.RealToScreenDistance(GameBoard.Width), Scale.RealToScreenDistance(GameBoard.Height))));
 
                 g.DrawLine(Pens.Black, points[0], points[1]);
                 g.DrawLine(Pens.Black, points[0], points[2]);

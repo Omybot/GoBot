@@ -1,12 +1,7 @@
-﻿using GoBot.Actionneurs;
-using Geometry;
+﻿using Geometry;
 using Geometry.Shapes;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading;
 using GoBot.Devices;
+using GoBot.BoardContext;
 
 namespace GoBot
 {
@@ -19,7 +14,7 @@ namespace GoBot
         {
             get
             {
-                return Plateau.NotreCouleur == Plateau.ColorLeftBlue ? PositionDepartGauche : PositionDepartDroite;
+                return GameBoard.MyColor == GameBoard.ColorLeftBlue ? PositionDepartGauche : PositionDepartDroite;
             }
         }
 
@@ -32,7 +27,6 @@ namespace GoBot
         public static void RecallageGrosRobot()
         {
                 AllDevices.RecGoBot.SetLed(LedID.DebugB2, Devices.RecGoBot.LedStatus.Rouge);
-                Plateau.FreezeColor();
 
                 Robots.GrosRobot.EnvoyerPID(Config.CurrentConfig.GRCoeffP, Config.CurrentConfig.GRCoeffI, Config.CurrentConfig.GRCoeffD);
                 Robots.GrosRobot.Stop();
@@ -43,7 +37,7 @@ namespace GoBot
 
                 Robots.GrosRobot.Avancer((int)(PositionDepartGauche.Coordinates.Y - Robots.GrosRobot.Longueur / 2));
 
-                if (Plateau.NotreCouleur == Plateau.ColorLeftBlue)
+                if (GameBoard.MyColor == GameBoard.ColorLeftBlue)
                     Robots.GrosRobot.PivotGauche(90);
                 else
                     Robots.GrosRobot.PivotDroite(90);

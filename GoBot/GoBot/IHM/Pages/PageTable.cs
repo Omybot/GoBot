@@ -10,7 +10,7 @@ using System.Drawing;
 using System.Threading;
 using System.Windows.Forms;
 using GoBot.Threading;
-using System.Linq;
+using GoBot.BoardContext;
 
 namespace GoBot.IHM
 {
@@ -19,13 +19,13 @@ namespace GoBot.IHM
     {
         private static ThreadLink _linkDisplay;
 
-        public static Plateau Plateau { get; set; }
+        public static GameBoard Plateau { get; set; }
 
         public PageTable()
         {
             InitializeComponent();
-            Plateau = new Plateau();
-            Plateau.ScoreChange += new Plateau.ScoreChangeDelegate(Plateau_ScoreChange);
+            Plateau = new GameBoard();
+            GameBoard.ScoreChange += new GameBoard.ScoreChangeDelegate(Plateau_ScoreChange);
             Dessinateur.TableDessinee += Dessinateur_TableDessinee;
 
             checkedListBox.SetItemChecked(0, true);
@@ -56,17 +56,17 @@ namespace GoBot.IHM
                 lblPosGrosTeta.Text = Robots.GrosRobot.Position.Angle.ToString();
             });
 
-            if (Plateau.Strategy != null)
+            if (GameBoard.Strategy != null)
             {
-                TimeSpan tempsRestant = Plateau.Strategy.TimeBeforeEnd;
+                TimeSpan tempsRestant = GameBoard.Strategy.TimeBeforeEnd;
                 if (tempsRestant.TotalMilliseconds <= 0)
                     tempsRestant = new TimeSpan(0);
 
                 Color couleur;
-                if (tempsRestant.TotalSeconds > Plateau.Strategy.MatchDuration.TotalSeconds / 2)
-                    couleur = Color.FromArgb((int)((Plateau.Strategy.MatchDuration.TotalSeconds - tempsRestant.TotalSeconds) * (150.0 / (Plateau.Strategy.MatchDuration.TotalSeconds / 2.0))), 150, 0);
+                if (tempsRestant.TotalSeconds > GameBoard.Strategy.MatchDuration.TotalSeconds / 2)
+                    couleur = Color.FromArgb((int)((GameBoard.Strategy.MatchDuration.TotalSeconds - tempsRestant.TotalSeconds) * (150.0 / (GameBoard.Strategy.MatchDuration.TotalSeconds / 2.0))), 150, 0);
                 else
-                    couleur = Color.FromArgb(150, 150 - (int)((Plateau.Strategy.MatchDuration.TotalSeconds / 2.0 - tempsRestant.TotalSeconds) * (150.0 / (Plateau.Strategy.MatchDuration.TotalSeconds / 2.0))), 0);
+                    couleur = Color.FromArgb(150, 150 - (int)((GameBoard.Strategy.MatchDuration.TotalSeconds / 2.0 - tempsRestant.TotalSeconds) * (150.0 / (GameBoard.Strategy.MatchDuration.TotalSeconds / 2.0))), 0);
 
                 this.InvokeAuto(() =>
                 {
@@ -133,7 +133,7 @@ namespace GoBot.IHM
                     List<RealPoint> positions = new List<RealPoint>();
 
                     positions.Add(Dessinateur.Scale.ScreenToRealPosition(pictureBoxTable.PointToClient(MousePosition)));
-                    Plateau.SetOpponents(positions);
+                    GameBoard.SetOpponents(positions);
                     //SuiviBalise.MajPositions(positions, Plateau.Enchainement == null || Plateau.Enchainement.DebutMatch == null);
                 }
             }
@@ -146,7 +146,7 @@ namespace GoBot.IHM
 
                 RealPoint positionRelle = new RealPoint(positionSurTable.X, positionSurTable.Y);
                 
-                foreach (GameElement element in Plateau.Elements)
+                foreach (GameElement element in GameBoard.Elements)
                 {
                     if (positionRelle.Distance(element.Position) < element.HoverRadius)
                     {
@@ -185,12 +185,12 @@ namespace GoBot.IHM
         {
             // Todo
             
-            Plateau.Score = 0;
+            GameBoard.Score = 0;
         }
 
         private void CheckElementClick()
         {
-            foreach (GameElement element in Plateau.Elements)
+            foreach (GameElement element in GameBoard.Elements)
                 if (element.IsHover)
                     ThreadManager.CreateThread(link =>
                     {
@@ -203,8 +203,8 @@ namespace GoBot.IHM
 
         private void btnGo_Click(object sender, EventArgs e)
         {
-            Plateau.Strategy = new StrategyMatch();
-            Plateau.Strategy.ExecuteMatch();
+            GameBoard.Strategy = new StrategyMatch();
+            GameBoard.Strategy.ExecuteMatch();
         }
 
         private void PanelTable_Load(object sender, EventArgs e)
@@ -283,8 +283,8 @@ namespace GoBot.IHM
 
         private void btnAleatoire_Click(object sender, EventArgs e)
         {
-            Plateau.Strategy = new StrategyRandomMoves();
-            Plateau.Strategy.ExecuteMatch();
+            GameBoard.Strategy = new StrategyRandomMoves();
+            GameBoard.Strategy.ExecuteMatch();
         }
         Position positionArrivee;
 
@@ -375,14 +375,14 @@ namespace GoBot.IHM
 
         private void btnStratNul_Click(object sender, EventArgs e)
         {
-            Plateau.Strategy = new StrategyEmpty();
-            Plateau.Strategy.ExecuteMatch();
+            GameBoard.Strategy = new StrategyEmpty();
+            GameBoard.Strategy.ExecuteMatch();
         }
 
         private void btnStratTest_Click(object sender, EventArgs e)
         {
-            Plateau.Strategy = new StrategyRoundTrip();
-            Plateau.Strategy.ExecuteMatch();
+            GameBoard.Strategy = new StrategyRoundTrip();
+            GameBoard.Strategy.ExecuteMatch();
         }
 
         private void btnTestAsser_Click(object sender, EventArgs e)
@@ -470,18 +470,18 @@ namespace GoBot.IHM
         private void ThreadEnchainement(Object o)
         {
             Strategy m = (Strategy)o;
-            Plateau.Strategy = m;
-            Plateau.Strategy.ExecuteMatch();
+            GameBoard.Strategy = m;
+            GameBoard.Strategy.ExecuteMatch();
         }
 
         private void btnTestScore_Click(object sender, EventArgs e)
         {
-            Plateau.Score++;
+            GameBoard.Score++;
         }
 
         private void btnRestartRecal_Click(object sender, EventArgs e)
         {
-            if(Plateau.ColorLeftBlue == Plateau.NotreCouleur)
+            if(GameBoard.ColorLeftBlue == GameBoard.MyColor)
             {
                 Robots.GrosRobot.GotoXYTeta(new Position(90, new RealPoint(300, 300)));
                 Recallages.RecallageGrosRobot();
