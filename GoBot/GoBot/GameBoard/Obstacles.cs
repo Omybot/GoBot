@@ -111,20 +111,12 @@ namespace GoBot.GameBoard
             obstacles.Add(new Segment(new RealPoint(Plateau.Largeur - 4, Plateau.Hauteur - 4), new RealPoint(0, Plateau.Hauteur - 4)));
             obstacles.Add(new Segment(new RealPoint(0, Plateau.Hauteur - 4), new RealPoint(0, 0)));
 
-            // Accelerateurs
-            obstacles.Add(new PolygonRectangle(new RealPoint(500, 0), 2000, 22));
-            obstacles.Add(new PolygonRectangle(new RealPoint(500 + 235 - 22, 22), 80 + 22, 22));
-            obstacles.Add(new PolygonRectangle(new RealPoint(3000 - (500 + 235) - 80, 22), 80 + 22, 22));
+            // TODOEACHYEAR : créer les obstacles fixes du plateau
 
-            // Distributeurs
-            obstacles.Add(new PolygonRectangle(new RealPoint(450, 1543), 600, 30));
-            obstacles.Add(new PolygonRectangle(new RealPoint(3000 - 450 - 600, 1543), 600, 30));
-
-            // Tasseau balances
-            obstacles.Add(new PolygonRectangle(new RealPoint(1500 - 20, 1543 + 30 - 200), 40, 2000 - 1543 + 30 + 200));
-
-            // Rampes + balances
-            obstacles.Add(new PolygonRectangle(new RealPoint(450, 1600 - 22), 3000 - 450 * 2, 2000 - (1600 - 22)));
+            // Récifs
+            obstacles.Add(new PolygonRectangle(new RealPoint(889, 1850), 22, 150));
+            obstacles.Add(new PolygonRectangle(new RealPoint(1489, 1700), 22, 300));
+            obstacles.Add(new PolygonRectangle(new RealPoint(2089, 1850), 22, 150));
 
             return obstacles;
         }
@@ -135,14 +127,20 @@ namespace GoBot.GameBoard
 
             // TODOEACHYEAR : créer les obstacles fixes en fonction de la couleur (genre zones réservées à l'adversaire)
 
-            // Obstacles pour le joueur de gauche
             List<IShape> obsLeft = new List<IShape>();
-            obsLeft.Add(new PolygonRectangle(new RealPoint(2550, 300), 400, 900));
-            obstacles.Add(Plateau.CouleurGaucheJaune, obsLeft);
-
-            // Obstacles pour le joueur de droite
             List<IShape> obsRight = new List<IShape>();
-            obsRight.Add(new PolygonRectangle(new RealPoint(0, 300), 400, 900));
+
+            //Bande de droite (zone de départ etc)
+            obsLeft.Add(new PolygonRectangle(new RealPoint(2550, 0), 450, 2000));
+            //Port secondaire
+            obsLeft.Add(new Circle(new RealPoint(1200, 1800), 150));
+            
+            //Bande de gauche (zone de départ etc)
+            obsRight.Add(new PolygonRectangle(new RealPoint(0, 0), 450, 2000));
+            //Port secondaire
+            obsRight.Add(new Circle(new RealPoint(1800, 1800), 150));
+            
+            obstacles.Add(Plateau.CouleurGaucheJaune, obsLeft);
             obstacles.Add(Plateau.CouleurDroiteViolet, obsRight);
 
             return obstacles;
