@@ -121,7 +121,7 @@ namespace GoBot
             pnlNumericMove.SetBoard(Board.RecMove);
             pnlNumericGB.SetBoard(Board.RecGB);
 
-            this.Text = "GoBot 2019 - Match 5.7";
+            this.Text = "GoBot 2020 - Beta";
         }
 
         public void ChargerReplay(String fichier)

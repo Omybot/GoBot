@@ -28,57 +28,19 @@ namespace GoBot.Strategies
             // Sortir ICI de la zonde de départ
 
             Robots.GrosRobot.MajGraphFranchissable(Plateau.ListeObstacles);
-
-            Actionneur.AtomHandler.DoDown();
-            Actionneur.AtomHandler.DoOpen();
-            Actionneur.AtomHandler.DoSwallow();
-            Thread.Sleep(150);
-            Robots.GrosRobot.Avancer(150);
-            Actionneur.AtomHandler.DoClose();
-            Thread.Sleep(200);
-            Actionneur.AtomHandler.DoStop();
-            Actionneur.AtomHandler.DoUp();
-
-            Actionneur.AtomStacker.AtomsCount++;
-
-            ThreadManager.CreateThread(link => StoreAtom()).StartThread();
+            
+            Robots.GrosRobot.Avancer(500);
             
             if (Plateau.NotreCouleur == Plateau.ColorLeftBlue)
             {
-                mouvements.Add(new MoveAccelerator(Plateau.Elements.AcceleratorYellow));
-                mouvements.Add(new MoveGoldGrab(Plateau.Elements.GoldeniumYellow));
-                mouvements.Add(new MoveBalance(Plateau.Elements.BalanceYellow));
-                //new MoveVoidZone(Plateau.Elements.VoidZoneYellow).Execute();
+                //*mouvements.Add(new MoveAccelerator(Plateau.Elements.AcceleratorYellow));
             }
             else
             {
-                mouvements.Add(new MoveAccelerator(Plateau.Elements.AcceleratorViolet));
-                mouvements.Add(new MoveGoldGrab(Plateau.Elements.GoldeniumViolet));
-                mouvements.Add(new MoveBalance(Plateau.Elements.BalanceViolet));
-                //new MoveVoidZone(Plateau.Elements.VoidZoneViolet).Execute();
+                //*mouvements.Add(new MoveAccelerator(Plateau.Elements.AcceleratorViolet));
             }
         }
-
-        private void StoreAtom()
-        {
-            Thread.Sleep(500);
-            Actionneur.AtomHandler.DoCloseAlmost();
-            Actionneur.AtomStacker.DoFrontOpen();
-            Actionneur.AtomStacker.DoFrontPrepare();
-
-            Actionneur.AtomStacker.MoveFingerFront(Config.CurrentConfig.MotorFingerFront.Maximum, true);
-
-            Actionneur.AtomStacker.DoFrontClose();
-            Thread.Sleep(200);
-            Actionneur.AtomHandler.DoFree();
-            Thread.Sleep(100);
-
-            Actionneur.AtomStacker.DoFrontStore(false);
-            Thread.Sleep(1000);
-            Actionneur.AtomHandler.DoFree();
-            Actionneur.AtomStacker.DoFrontStore(true);
-        }
-
+        
         protected override void SequenceCore()
         {
             // TODOYEACHYEAR Ajouter ICI l'ordre de la strat fixe avant détection d'adversaire

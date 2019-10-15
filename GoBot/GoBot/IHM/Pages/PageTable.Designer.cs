@@ -395,9 +395,9 @@
             // 
             // btnTestAsser
             // 
-            this.btnTestAsser.Location = new System.Drawing.Point(118, 304);
+            this.btnTestAsser.Location = new System.Drawing.Point(118, 288);
             this.btnTestAsser.Name = "btnTestAsser";
-            this.btnTestAsser.Size = new System.Drawing.Size(75, 23);
+            this.btnTestAsser.Size = new System.Drawing.Size(87, 25);
             this.btnTestAsser.TabIndex = 70;
             this.btnTestAsser.Text = "Test asser";
             this.btnTestAsser.UseVisualStyleBackColor = true;
@@ -455,9 +455,9 @@
             // 
             // btnTestScore
             // 
-            this.btnTestScore.Location = new System.Drawing.Point(154, 249);
+            this.btnTestScore.Location = new System.Drawing.Point(118, 319);
             this.btnTestScore.Name = "btnTestScore";
-            this.btnTestScore.Size = new System.Drawing.Size(87, 23);
+            this.btnTestScore.Size = new System.Drawing.Size(87, 25);
             this.btnTestScore.TabIndex = 75;
             this.btnTestScore.Text = "Test Score ++";
             this.btnTestScore.UseVisualStyleBackColor = true;

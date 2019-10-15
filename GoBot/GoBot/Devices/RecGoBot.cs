@@ -11,7 +11,6 @@ using Geometry.Shapes;
 using Geometry;
 using GoBot.Communications.UDP;
 using GoBot.Communications.CAN;
-using static GoBot.Actionneurs.AtomHandler;
 
 namespace GoBot.Devices
 {
@@ -146,76 +145,20 @@ namespace GoBot.Devices
             Config.CurrentConfig.ServoClampLeft.SendPosition(Config.CurrentConfig.ServoClampLeft.PositionClose);
             Config.CurrentConfig.ServoClampRight.SendPosition(Config.CurrentConfig.ServoClampRight.PositionClose);
         }
+
         private void Button6Click()
         {
-            Actionneur.AtomHandler.DoGrabByDetect();
+
         }
+
         private void Button7Click()
         {
-            bool retry = true;
-            int fails = 0;
-            int maxFails = 5;
-            int atomsCount = 4;
 
-            Robots.GrosRobot.Rapide();
-            
-            while (retry && Actionneur.AtomStacker.CanStoreMore && atomsCount > 0)
-            {
-                GrabResult res = Actionneur.AtomHandler.DoGrabByDetect();
-
-                switch (res)
-                {
-                    case GrabResult.AtomGrabbed:
-                        atomsCount -= 1;
-                        retry = true;
-                        Devices.AllDevices.RecGoBot.Buzz(".");
-                        break;
-                    case GrabResult.AtomTooClose:
-                        Devices.AllDevices.RecGoBot.Buzz("..");
-                        fails++;
-                        if (fails < maxFails)
-                        {
-                            Thread.Sleep(500);
-                            Robots.GrosRobot.Reculer(50);
-                            retry = true;
-                        }
-                        else
-                        {
-                            retry = false;
-                        }
-                        break;
-                    case GrabResult.GrabFail:
-                        Devices.AllDevices.RecGoBot.Buzz("...");
-                        fails += 2;
-                        retry = fails < maxFails;
-                        break;
-                    case GrabResult.NoAtomDetected:
-                        Devices.AllDevices.RecGoBot.Buzz("--");
-                        fails = maxFails;
-                        retry = false;
-                        break;
-                }
-            }
         }
+
         private void Button8Click()
         {
-            Robots.GrosRobot.Lent();
-            Robots.GrosRobot.PivotDroite(180);
-            Actionneur.AtomUnloaderLeft.DoUnloaderUnload();
-            Robots.GrosRobot.Reculer(50);
-            Actionneur.AtomStacker.DoDropLeftAll();
 
-            Robots.GrosRobot.Avancer(200);
-
-            Actionneur.AtomUnloaderLeft.DoLauncherPrepare();
-            Actionneur.AtomUnloaderLeft.DoLauncherInside();
-            Actionneur.AtomUnloaderLeft.DoUnloaderStore();
-
-            Actionneur.AtomStacker.DoBackBlock();
-
-            Thread.Sleep(500);
-
-            Robots.GrosRobot.PivotGauche(180);
         }
 
         int cpt9 = 0;
@@ -229,6 +172,7 @@ namespace GoBot.Devices
             else
                 Robots.GrosRobot.PivotDroite(360);
         }
+
         private void Button10Click()
         {
             Robots.GrosRobot.Stop(Robots.GrosRobot.AsserActif ? StopMode.Freely : StopMode.Abrupt);

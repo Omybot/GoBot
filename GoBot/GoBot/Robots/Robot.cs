@@ -440,24 +440,15 @@ namespace GoBot
 
         public void RangerActionneurs()
         {
-            // TODOEACHYEAR
-
-            Actionneur.AtomUnloaderLeft.DoUnloaderStore();
-            Thread.Sleep(250);
-
-            ThreadManager.CreateThread(link => Actionneur.AtomStacker.DoInit()).StartThread();
-            Actionneur.AtomHandler.DoInit();
-            Actionneur.AtomUnloaderLeft.DoInit();
-            Actionneur.AtomUnloaderRight.DoInit();
-            Actionneur.GoldGrabberLeft.DoInit();
-            Actionneur.GoldGrabberRight.DoInit();
-
             Robots.GrosRobot.ReglerOffsetAsserv(new Position(0, new RealPoint(1500, 1000)));
+
+            // TODOEACHYEAR Lister les actionneurs à ranger pour préparer un match
+            
         }
 
         public void DeployerActionnneurs()
         {
-            // TODOEACHYEAR
+            // TODOEACHYEAR Lister les actionneurs à déployer
         }
         
         public IShape GetBounds(SensAR sens)

@@ -19,73 +19,31 @@ namespace GoBot.Strategies
 
         protected override void SequenceBegin()
         {
-            // TODOEACHYEAR
+            // TODOEACHYEAR Actions fixes au lancement du match
 
             fixedMovements = new List<Movement>();
 
+            // Ajouter les points fixes au score (non forfait, elements posés etc)
+            Plateau.Score = 42;
+
             // Sortir ICI de la zonde de départ
-
-            // Experience posée + Experience OK + Atome OK + Atome vert + bleu + rouge du petit robot dans la balance
-            Plateau.Score = 5 + 15 + 20 + 44 + 12;
-
             Robots.GrosRobot.MajGraphFranchissable(Plateau.ListeObstacles);
-
-            Actionneur.AtomHandler.DoDown();
-            Actionneur.AtomHandler.DoOpen();
-            Actionneur.AtomHandler.DoSwallow();
-            Thread.Sleep(350);
-
-            ThreadManager.CreateThread(link => Actionneur.AtomHandler.DoGrab()).StartDelayedThread(400);
             Robots.GrosRobot.Avancer(500);
-
-            if (Plateau.NotreCouleur == Plateau.ColorLeftBlue)
-                Plateau.Elements.LayingAtoms[0].IsAvailable = false;
-            else
-                Plateau.Elements.LayingAtoms[4].IsAvailable = false;
-
+            
             // Ajouter ICI l'ordre de la strat fixe avant détection d'adversaire
 
             if (Plateau.NotreCouleur == Plateau.ColorLeftBlue)
             {
-                fixedMovements.Add(new MoveAccelerator(Plateau.Elements.AcceleratorYellow));
-                fixedMovements.Add(new MoveGoldGrab(Plateau.Elements.GoldeniumYellow));
-                fixedMovements.Add(new MoveBalance(Plateau.Elements.BalanceYellow));
-                //fixedMovements.Add(new MoveVoidZone(Plateau.Elements.VoidZoneYellow));
-                //fixedMovements.Add(new MoveAccelerator(Plateau.Elements.AcceleratorYellow));
-                // 
+                //*fixedMovements.Add(new MoveVoidZone(Plateau.Elements.VoidZoneYellow));
+                //*fixedMovements.Add(new MoveAccelerator(Plateau.Elements.AcceleratorYellow));
             }
             else
             {
-                fixedMovements.Add(new MoveAccelerator(Plateau.Elements.AcceleratorViolet));
-                fixedMovements.Add(new MoveGoldGrab(Plateau.Elements.GoldeniumViolet));
-                fixedMovements.Add(new MoveBalance(Plateau.Elements.BalanceViolet));
-                //fixedMovements.Add(new MoveVoidZone(Plateau.Elements.VoidZoneViolet));
-                //fixedMovements.Add(new MoveAccelerator(Plateau.Elements.AcceleratorViolet));
-                // 
+                //*fixedMovements.Add(new MoveVoidZone(Plateau.Elements.VoidZoneViolet));
+                //*fixedMovements.Add(new MoveAccelerator(Plateau.Elements.AcceleratorViolet));
             }
         }
-
-
-        private void StoreAtom()
-        {
-            Thread.Sleep(500);
-            Actionneur.AtomHandler.DoCloseAlmost();
-            Actionneur.AtomStacker.DoFrontOpen();
-            Actionneur.AtomStacker.DoFrontPrepare();
-
-            Actionneur.AtomStacker.MoveFingerFront(Config.CurrentConfig.MotorFingerFront.Maximum, true);
-
-            Actionneur.AtomStacker.DoFrontClose();
-            Thread.Sleep(200);
-            Actionneur.AtomHandler.DoFree();
-            Thread.Sleep(100);
-
-            Actionneur.AtomStacker.DoFrontStore(false);
-            Thread.Sleep(1000);
-            Actionneur.AtomHandler.DoFree();
-            Actionneur.AtomStacker.DoFrontStore(true);
-        }
-
+        
         protected override void SequenceCore()
         {
             Movement bestMovement;

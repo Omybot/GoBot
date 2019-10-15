@@ -69,10 +69,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Actionneurs\Actionneur.cs" />
-    <Compile Include="Actionneurs\AtomHandler.cs" />
-    <Compile Include="Actionneurs\AtomStacker.cs" />
-    <Compile Include="Actionneurs\AtomUnloader.cs" />
-    <Compile Include="Actionneurs\GoldGrabber.cs" />
     <Compile Include="Actionneurs\Positionables.cs" />
     <Compile Include="Actionneurs\RobotPositionables.cs" />
     <Compile Include="Communications\CAN\CanConnection.cs" />
@@ -100,14 +96,6 @@
     <Compile Include="Devices\Pepperl\PepperlEnums.cs" />
     <Compile Include="Devices\Pepperl\PepperlManager.cs" />
     <Compile Include="GameBoard\Obstacles.cs" />
-    <Compile Include="GameElements\Accelerator.cs" />
-    <Compile Include="GameElements\Balance.cs" />
-    <Compile Include="GameElements\Goldenium.cs" />
-    <Compile Include="GameElements\LayingAtom.cs" />
-    <Compile Include="GameElements\Slope.cs" />
-    <Compile Include="GameElements\StandingAtom.cs" />
-    <Compile Include="GameElements\VoidZone.cs" />
-    <Compile Include="GameElements\ZoneCalibration.cs" />
     <Compile Include="IHM\Elements\PanelBoardCanServos.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -151,13 +139,6 @@
       <DependentUpon>PanelServoCan.cs</DependentUpon>
     </Compile>
     <Compile Include="IHM\Forms\SplashScreen.cs" />
-    <Compile Include="Movements\MoveAccelerator.cs" />
-    <Compile Include="Movements\MoveAtomGrab.cs" />
-    <Compile Include="Movements\MoveAtomsToSlope.cs" />
-    <Compile Include="Movements\MoveBalance.cs" />
-    <Compile Include="Movements\MoveCalibration.cs" />
-    <Compile Include="Movements\MoveGoldGrab.cs" />
-    <Compile Include="Movements\MoveVoidZone.cs" />
     <Compile Include="NameFinder.cs" />
     <Compile Include="Actions\Asservissement\ActionAccelerationLigne.cs" />
     <Compile Include="Actions\Asservissement\ActionVitesseLigne.cs" />

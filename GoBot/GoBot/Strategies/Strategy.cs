@@ -20,23 +20,7 @@ namespace GoBot.Strategies
     {
         private System.Timers.Timer endMatchTimer;
         private ThreadLink _linkMatch;
-
-        private bool _goldFree = false;
-
-        public bool GoldFree
-        {
-            get { return _goldFree; }
-            set { _goldFree = value; }
-        }
-
-        private bool _goldGrabed = false;
-
-        public bool GoldGrabed
-        {
-            get { return _goldGrabed; }
-            set { _goldGrabed = value; }
-        }
-
+        
         public abstract bool AvoidElements { get; }
 
         /// <summary>
@@ -99,33 +83,7 @@ namespace GoBot.Strategies
             //{
             //    Movements.Add(new MovementBuilding(Plateau.Elements.ConstructionZones[i]));
             //}
-
-            Movements.Add(new MoveAccelerator(Plateau.Elements.AcceleratorViolet));
-            Movements.Add(new MoveAccelerator(Plateau.Elements.AcceleratorYellow));
-
-            Movements.Add(new MoveGoldGrab(Plateau.Elements.GoldeniumViolet));
-            Movements.Add(new MoveGoldGrab(Plateau.Elements.GoldeniumYellow));
-
-            Movements.Add(new MoveBalance(Plateau.Elements.BalanceViolet));
-            Movements.Add(new MoveBalance(Plateau.Elements.BalanceYellow));
-
-            Movements.Add(new MoveVoidZone(Plateau.Elements.VoidZoneViolet));
-            Movements.Add(new MoveVoidZone(Plateau.Elements.VoidZoneYellow));
-
-            Movements.Add(new MoveAtomsToSlope(Plateau.Elements.SlopeViolet));
-            Movements.Add(new MoveAtomsToSlope(Plateau.Elements.SlopeYellow));
-
-            Movements.Add(new MoveCalibration(Plateau.Elements.CalibrationZoneViolet));
-            Movements.Add(new MoveCalibration(Plateau.Elements.CalibrationZoneYellow));
-
-            //Movements.Add(new MoveAtomGrab(Plateau.Elements.LayingAtoms[0]));
-            Movements.Add(new MoveAtomGrab(Plateau.Elements.LayingAtoms[1]));
-            //Movements.Add(new MoveAtomGrab(Plateau.Elements.LayingAtoms[2]));
-
-            //Movements.Add(new MoveAtomGrab(Plateau.Elements.LayingAtoms[4]));
-            Movements.Add(new MoveAtomGrab(Plateau.Elements.LayingAtoms[5]));
-            //Movements.Add(new MoveAtomGrab(Plateau.Elements.LayingAtoms[6]));
-
+            
             for (int iMov = 0; iMov < Movements.Count; iMov++)
             {
                 for(int iPos = 0; iPos < Movements[iMov].Positions.Count; iPos++)
@@ -204,15 +162,12 @@ namespace GoBot.Strategies
         /// </summary>
         protected virtual void SequenceEnd()
         {
-            // TODOEACHYEAR Couper ICI tous les actionneurs à la fin du match et lancer la Funny Action
+            // TODOEACHYEAR Couper ICI tous les actionneurs à la fin du match et lancer la Funny Action / afficher le score
 
             Robots.GrosRobot.Stop(StopMode.Freely);
             //Plateau.Balise.VitesseRotation(0);
 
             Devices.AllDevices.CanServos.DisableAll();
-
-            Actionneurs.Actionneur.AtomStacker.MoveFingerBackFree();
-            Actionneurs.Actionneur.AtomStacker.MoveFingerFrontFree();
 
             // On renvoie le score au cas où histoire d'assurer le truc...
             //Devices.AllDevices.CanDisplay.SetScore(Plateau.Score);
