@@ -357,7 +357,7 @@ namespace Geometry.Shapes
         /// </summary>
         /// <param name="point">Point testé</param>
         /// <returns>Distance minimum entre le polygone et le point donné</returns>
-        public double Distance(RealPoint point)
+        public virtual double Distance(RealPoint point)
         {
             // C'est la distance minimale entre le point et chaque segment
 
@@ -399,7 +399,7 @@ namespace Geometry.Shapes
         /// </summary>
         /// <param name="point">PointReel testé</param>
         /// <returns>Vrai si le polygone contient le point donné</returns>
-        protected bool Contains(RealPoint point)
+        protected virtual bool Contains(RealPoint point)
         {
             // Pour savoir si le Polygone contient un point on trace un segment entre ce point et un point très éloigné
             // On compte combien de cotés du polygone croisent cette droite
