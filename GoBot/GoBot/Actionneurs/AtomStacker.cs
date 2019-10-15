@@ -59,7 +59,7 @@ namespace GoBot.Actionneurs
         {
             get
             {
-                Accelerator accel = Plateau.NotreCouleur == Plateau.CouleurDroiteViolet ? Plateau.Elements.AcceleratorViolet : Plateau.Elements.AcceleratorYellow;
+                Accelerator accel = Plateau.NotreCouleur == Plateau.ColorRightYellow ? Plateau.Elements.AcceleratorViolet : Plateau.Elements.AcceleratorYellow;
 
                 return _atomsCount < AtomsCountMax && _atomsCount + accel.AtomsCount < 10;
             }

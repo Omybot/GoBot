@@ -19,7 +19,7 @@ namespace GoBot.Movements
         {
             _balance = balance;
 
-            if(_balance.Owner == Plateau.CouleurDroiteViolet)
+            if(_balance.Owner == Plateau.ColorRightYellow)
             {
                 Positions.Add(new Geometry.Position(90, new Geometry.Shapes.RealPoint(1772 - 50, 1300)));
                 _grabber = Actionneur.GoldGrabberRight;

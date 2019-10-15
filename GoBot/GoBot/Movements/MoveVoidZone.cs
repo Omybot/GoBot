@@ -53,7 +53,7 @@ namespace GoBot.Movements
             int fails = 0;
             int maxFails = 5;
 
-            Accelerator accel = Plateau.NotreCouleur == Plateau.CouleurDroiteViolet ? Plateau.Elements.AcceleratorViolet : Plateau.Elements.AcceleratorYellow;
+            Accelerator accel = Plateau.NotreCouleur == Plateau.ColorRightYellow ? Plateau.Elements.AcceleratorViolet : Plateau.Elements.AcceleratorYellow;
             
             while(retry && Actionneur.AtomStacker.CanStoreMore && _zone.AtomsCount > 0 && Plateau.Strategy.TimeBeforeEnd.TotalSeconds > 15 + 2 * Actionneur.AtomStacker.AtomsCount)
             {

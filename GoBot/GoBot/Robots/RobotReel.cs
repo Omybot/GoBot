@@ -138,10 +138,10 @@ namespace GoBot
 
         void RecGoBot_ColorChange(MatchColor state)
         {
-            if (state == MatchColor.LeftYellow)
-                _lastTeamColor = Plateau.CouleurGaucheJaune;
-            else if (state == MatchColor.RightViolet)
-                _lastTeamColor = Plateau.CouleurDroiteViolet;
+            if (state == MatchColor.LeftBlue)
+                _lastTeamColor = Plateau.ColorLeftBlue;
+            else if (state == MatchColor.RightYellow)
+                _lastTeamColor = Plateau.ColorRightYellow;
 
             Plateau.NotreCouleur = _lastTeamColor;
 
@@ -161,14 +161,14 @@ namespace GoBot
 
             if (this == Robots.GrosRobot)
             {
-                if (Plateau.NotreCouleur == Plateau.CouleurGaucheJaune)
+                if (Plateau.NotreCouleur == Plateau.ColorLeftBlue)
                     Position = new Position(0, new RealPoint(240, 1000));
                 else
                     Position = new Position(180, new RealPoint(3000 - 240, 1000));
             }
             else
             {
-                if (Plateau.NotreCouleur == Plateau.CouleurGaucheJaune)
+                if (Plateau.NotreCouleur == Plateau.ColorLeftBlue)
                     Position = new Position(0, new RealPoint(480, 1000));
                 else
                     Position = new Position(180, new RealPoint(3000 - 480, 1000));

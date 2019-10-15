@@ -140,8 +140,8 @@ namespace GoBot.GameBoard
             //Port secondaire
             obsRight.Add(new Circle(new RealPoint(1800, 1800), 150));
             
-            obstacles.Add(Plateau.CouleurGaucheJaune, obsLeft);
-            obstacles.Add(Plateau.CouleurDroiteViolet, obsRight);
+            obstacles.Add(Plateau.ColorLeftBlue, obsLeft);
+            obstacles.Add(Plateau.ColorRightYellow, obsRight);
 
             return obstacles;
         }

@@ -38,7 +38,7 @@ namespace GoBot.Movements
         {
             get
             {
-                return _atom.Position.X < 1500 ? Plateau.CouleurGaucheJaune : Plateau.CouleurDroiteViolet;
+                return _atom.Position.X < 1500 ? Plateau.ColorLeftBlue : Plateau.ColorRightYellow;
             }
         }
 

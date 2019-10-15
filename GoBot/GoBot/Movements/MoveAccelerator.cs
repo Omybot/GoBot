@@ -22,7 +22,7 @@ namespace GoBot.Movements
         {
             _accelerator = accelerator;
             
-            if (_accelerator.Owner == Plateau.CouleurDroiteViolet)
+            if (_accelerator.Owner == Plateau.ColorRightYellow)
             {
                 Positions.Add(new Position(90, new RealPoint(1290 + 30, Robot.Longueur / 2 + 150)));
                 _unloader = Actionneur.AtomUnloaderLeft;

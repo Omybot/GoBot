@@ -22,7 +22,7 @@ namespace GoBot.Movements
         {
             _goldenium = goldenium;
 
-            if (_goldenium.Owner == Plateau.CouleurDroiteViolet)
+            if (_goldenium.Owner == Plateau.ColorRightYellow)
             {
                 Positions.Add(new Position(-90, new RealPoint(_goldenium.Position.X - 105, 360)));
                 _grabber = Actionneur.GoldGrabberRight;

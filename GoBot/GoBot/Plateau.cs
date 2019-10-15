@@ -58,7 +58,7 @@ namespace GoBot
         public static AllGameElements Elements { get; protected set; }
         public static List<IShape> Detections { get; set; }
 
-        private static Color notreCouleur = CouleurDroiteViolet;
+        private static Color notreCouleur = ColorRightYellow;
         public static Color NotreCouleur
         {
             get { return notreCouleur; }
@@ -69,7 +69,7 @@ namespace GoBot
                     if (notreCouleur != value)
                     {
                         notreCouleur = value;
-                        if (Plateau.NotreCouleur == Plateau.CouleurGaucheJaune)
+                        if (Plateau.NotreCouleur == Plateau.ColorLeftBlue)
                             AllDevices.RecGoBot.SetLedColor(Color.Yellow);
                         else
                             AllDevices.RecGoBot.SetLedColor(Color.DarkViolet);
@@ -95,8 +95,8 @@ namespace GoBot
         public delegate void ScoreChangeDelegate(int score);
         public static event ScoreChangeDelegate ScoreChange;
 
-        public static Color CouleurGaucheJaune { get { return Color.FromArgb(254, 194, 16); } }
-        public static Color CouleurDroiteViolet { get { return Color.FromArgb(137, 58, 144); } }
+        public static Color ColorLeftBlue { get { return Color.FromArgb(0, 0, 255); } }
+        public static Color ColorRightYellow { get { return Color.FromArgb(255, 255, 0); } }
 
         /// <summary>
         /// Largeur de la table (mm)
@@ -256,9 +256,9 @@ namespace GoBot
                             return new Circle(p, RayonAdversaire);
                     }
 
-                    else if (_obstacles.BalanceYellow.Contains(p) && notreCouleur == CouleurDroiteViolet)
+                    else if (_obstacles.BalanceYellow.Contains(p) && notreCouleur == ColorRightYellow)
                         return new Circle(p, RayonAdversaire / 3);
-                    else if (_obstacles.BalanceViolet.Contains(p) && notreCouleur == CouleurGaucheJaune)
+                    else if (_obstacles.BalanceViolet.Contains(p) && notreCouleur == ColorLeftBlue)
                         return new Circle(p, RayonAdversaire / 3);
                     else
                         return new Circle(p, RayonAdversaire);
@@ -277,7 +277,7 @@ namespace GoBot
 
         public static IShape NotreZoneDepart()
         {
-            if (Plateau.NotreCouleur == Plateau.CouleurDroiteViolet)
+            if (Plateau.NotreCouleur == Plateau.ColorRightYellow)
                 return new PolygonRectangle(new RealPoint(2550, 300), 400, 900);
             else
                 return new PolygonRectangle(new RealPoint(0, 300), 400, 900);

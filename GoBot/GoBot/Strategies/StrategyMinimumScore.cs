@@ -43,7 +43,7 @@ namespace GoBot.Strategies
 
             ThreadManager.CreateThread(link => StoreAtom()).StartThread();
             
-            if (Plateau.NotreCouleur == Plateau.CouleurGaucheJaune)
+            if (Plateau.NotreCouleur == Plateau.ColorLeftBlue)
             {
                 mouvements.Add(new MoveAccelerator(Plateau.Elements.AcceleratorYellow));
                 mouvements.Add(new MoveGoldGrab(Plateau.Elements.GoldeniumYellow));

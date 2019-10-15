@@ -38,14 +38,14 @@ namespace GoBot.Strategies
             ThreadManager.CreateThread(link => Actionneur.AtomHandler.DoGrab()).StartDelayedThread(400);
             Robots.GrosRobot.Avancer(500);
 
-            if (Plateau.NotreCouleur == Plateau.CouleurGaucheJaune)
+            if (Plateau.NotreCouleur == Plateau.ColorLeftBlue)
                 Plateau.Elements.LayingAtoms[0].IsAvailable = false;
             else
                 Plateau.Elements.LayingAtoms[4].IsAvailable = false;
 
             // Ajouter ICI l'ordre de la strat fixe avant détection d'adversaire
 
-            if (Plateau.NotreCouleur == Plateau.CouleurGaucheJaune)
+            if (Plateau.NotreCouleur == Plateau.ColorLeftBlue)
             {
                 fixedMovements.Add(new MoveAccelerator(Plateau.Elements.AcceleratorYellow));
                 fixedMovements.Add(new MoveGoldGrab(Plateau.Elements.GoldeniumYellow));

@@ -66,12 +66,12 @@ namespace GoBot.GameElements
             _standingAtoms.Add(new StandingAtom(new RealPoint(1000, 1555.5), Color.White, _colorGreenium));
 
             // Atomes de petit distributeur gauche (réservé)
-            _standingAtoms.Add(new StandingAtom(new RealPoint(125, 2012.5), Plateau.CouleurGaucheJaune, _colorBlueium));
-            _standingAtoms.Add(new StandingAtom(new RealPoint(225, 2012.5), Plateau.CouleurGaucheJaune, _colorGreenium));
-            _standingAtoms.Add(new StandingAtom(new RealPoint(325, 2012.5), Plateau.CouleurGaucheJaune, _colorRedium));
+            _standingAtoms.Add(new StandingAtom(new RealPoint(125, 2012.5), Plateau.ColorLeftBlue, _colorBlueium));
+            _standingAtoms.Add(new StandingAtom(new RealPoint(225, 2012.5), Plateau.ColorLeftBlue, _colorGreenium));
+            _standingAtoms.Add(new StandingAtom(new RealPoint(325, 2012.5), Plateau.ColorLeftBlue, _colorRedium));
 
             // Atome accélérateur gauche
-            _standingAtoms.Add(new StandingAtom(new RealPoint(1500 - 210, 12.5), Plateau.CouleurGaucheJaune, _colorBlueium));
+            _standingAtoms.Add(new StandingAtom(new RealPoint(1500 - 210, 12.5), Plateau.ColorLeftBlue, _colorBlueium));
 
             // Atomes de grand distributeur droite
             _standingAtoms.Add(new StandingAtom(new RealPoint(3000 - 500, 1555.5), Color.White, _colorRedium));
@@ -82,36 +82,36 @@ namespace GoBot.GameElements
             _standingAtoms.Add(new StandingAtom(new RealPoint(3000 - 1000, 1555.5), Color.White, _colorGreenium));
 
             // Atomes de petit distributeur droite (réservé)
-            _standingAtoms.Add(new StandingAtom(new RealPoint(3000 - 125, 2012.5), Plateau.CouleurDroiteViolet, _colorBlueium));
-            _standingAtoms.Add(new StandingAtom(new RealPoint(3000 - 225, 2012.5), Plateau.CouleurDroiteViolet, _colorGreenium));
-            _standingAtoms.Add(new StandingAtom(new RealPoint(3000 - 325, 2012.5), Plateau.CouleurDroiteViolet, _colorRedium));
+            _standingAtoms.Add(new StandingAtom(new RealPoint(3000 - 125, 2012.5), Plateau.ColorRightYellow, _colorBlueium));
+            _standingAtoms.Add(new StandingAtom(new RealPoint(3000 - 225, 2012.5), Plateau.ColorRightYellow, _colorGreenium));
+            _standingAtoms.Add(new StandingAtom(new RealPoint(3000 - 325, 2012.5), Plateau.ColorRightYellow, _colorRedium));
 
             // Atome accélérateur droite
-            _standingAtoms.Add(new StandingAtom(new RealPoint(1500 + 210, 12.5), Plateau.CouleurDroiteViolet, _colorBlueium));
+            _standingAtoms.Add(new StandingAtom(new RealPoint(1500 + 210, 12.5), Plateau.ColorRightYellow, _colorBlueium));
 
             // Accélérateur (déchargement)
-            _acceleratorViolet = new Accelerator(new RealPoint(1290, 20), Plateau.CouleurDroiteViolet, 80);
-            _acceleratorYellow = new Accelerator(new RealPoint(1710, 20), Plateau.CouleurGaucheJaune, 80);
+            _acceleratorViolet = new Accelerator(new RealPoint(1290, 20), Plateau.ColorRightYellow, 80);
+            _acceleratorYellow = new Accelerator(new RealPoint(1710, 20), Plateau.ColorLeftBlue, 80);
 
             // Goldenium
-            _goldeniumViolet = new Goldenium(new RealPoint(770, 20), Plateau.CouleurDroiteViolet, 40);
-            _goldeniumYellow = new Goldenium(new RealPoint(3000 - 770, 20), Plateau.CouleurGaucheJaune, 40);
+            _goldeniumViolet = new Goldenium(new RealPoint(770, 20), Plateau.ColorRightYellow, 40);
+            _goldeniumYellow = new Goldenium(new RealPoint(3000 - 770, 20), Plateau.ColorLeftBlue, 40);
 
             // Balances
-            _balanceViolet = new Balance(new RealPoint(3000 - 1360, 1800), Plateau.CouleurDroiteViolet, 100);
-            _balanceYellow = new Balance(new RealPoint(1360, 1800), Plateau.CouleurGaucheJaune, 100);
+            _balanceViolet = new Balance(new RealPoint(3000 - 1360, 1800), Plateau.ColorRightYellow, 100);
+            _balanceYellow = new Balance(new RealPoint(1360, 1800), Plateau.ColorLeftBlue, 100);
 
             // Zones de vide
             _zoneViolet = new VoidZone(new RealPoint(3000 - 1000, 1050), Color.White, 150);
             _zoneYellow = new VoidZone(new RealPoint(1000, 1050), Color.White, 150);
 
             // Pentes
-            _slopeViolet = new Slope(new RealPoint(3000 - 700, 1750), Plateau.CouleurDroiteViolet, 170);
-            _slopeYellow = new Slope(new RealPoint(700, 1750), Plateau.CouleurGaucheJaune, 170);
+            _slopeViolet = new Slope(new RealPoint(3000 - 700, 1750), Plateau.ColorRightYellow, 170);
+            _slopeYellow = new Slope(new RealPoint(700, 1750), Plateau.ColorLeftBlue, 170);
 
             // Zones de recallage
-            _calibViolet = new ZoneCalibration(new RealPoint(300, 300), Plateau.CouleurDroiteViolet, 100);
-            _calibYellow = new ZoneCalibration(new RealPoint(3000- 300, 300), Plateau.CouleurGaucheJaune, 100);
+            _calibViolet = new ZoneCalibration(new RealPoint(300, 300), Plateau.ColorRightYellow, 100);
+            _calibYellow = new ZoneCalibration(new RealPoint(3000- 300, 300), Plateau.ColorLeftBlue, 100);
         }
 
         public Accelerator AcceleratorViolet => _acceleratorViolet;

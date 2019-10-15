@@ -538,7 +538,7 @@ namespace GoBot.IHM
 
         private void btnRestartRecal_Click(object sender, EventArgs e)
         {
-            if(Plateau.CouleurGaucheJaune == Plateau.NotreCouleur)
+            if(Plateau.ColorLeftBlue == Plateau.NotreCouleur)
             {
                 Robots.GrosRobot.GotoXYTeta(new Position(90, new RealPoint(300, 300)));
                 Recallages.RecallageGrosRobot();

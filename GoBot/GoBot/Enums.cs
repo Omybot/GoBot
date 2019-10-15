@@ -59,8 +59,8 @@ namespace GoBot
 
     public enum MatchColor
     {
-        LeftYellow,
-        RightViolet
+        LeftBlue,
+        RightYellow
     }
 
     public enum MotorID

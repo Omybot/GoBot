@@ -19,7 +19,7 @@ namespace GoBot
         {
             get
             {
-                return Plateau.NotreCouleur == Plateau.CouleurGaucheJaune ? PositionDepartGauche : PositionDepartDroite;
+                return Plateau.NotreCouleur == Plateau.ColorLeftBlue ? PositionDepartGauche : PositionDepartDroite;
             }
         }
 
@@ -43,7 +43,7 @@ namespace GoBot
 
                 Robots.GrosRobot.Avancer((int)(PositionDepartGauche.Coordinates.Y - Robots.GrosRobot.Longueur / 2));
 
-                if (Plateau.NotreCouleur == Plateau.CouleurGaucheJaune)
+                if (Plateau.NotreCouleur == Plateau.ColorLeftBlue)
                     Robots.GrosRobot.PivotGauche(90);
                 else
                     Robots.GrosRobot.PivotDroite(90);
