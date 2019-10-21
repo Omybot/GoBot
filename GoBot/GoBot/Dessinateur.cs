@@ -27,7 +27,7 @@ namespace GoBot
         /// <summary>
         /// Nombre de pixels par mm du terrain
         /// </summary>
-        private const double RAPPORT_SCREEN_REAL = (3000.0 / 806);
+        private const double RAPPORT_SCREEN_REAL = (3000.0 / 805);
 
         /// <summary>
         /// Position en pixel sur l'image de l'abscisse 0 de la table
@@ -436,14 +436,14 @@ namespace GoBot
                     foreach (Arc a in robot.Graph.Arcs)
                     {
                         if (a.Passable)
-                            new Segment(a.StartNode.Position, a.EndNode.Position).Paint(g, Color.LimeGreen, 1, Color.Transparent, Scale);
+                            new Segment(a.StartNode.Position, a.EndNode.Position).Paint(g, Color.RoyalBlue, 1, Color.Transparent, Scale);
                     }
 
                 if (graph)
                     //Dessin des noeuds
                     foreach (Node n in robot.Graph.Nodes)
                     {
-                        n.Position.Paint(g, n.Passable ? Color.Black : Color.Red, 3, Color.LimeGreen, Scale);
+                        n.Position.Paint(g, n.Passable ? Color.Black : Color.Red, 3, Color.RoyalBlue, Scale);
                     }
             }
 

@@ -104,6 +104,7 @@ namespace GoBot.BoardContext
 
         public static Color ColorLeftBlue { get { return Color.FromArgb(0, 0, 255); } }
         public static Color ColorRightYellow { get { return Color.FromArgb(255, 255, 0); } }
+        public static Color ColorNeutral { get { return Color.White; } }
 
         /// <summary>
         /// Largeur de la table (mm)

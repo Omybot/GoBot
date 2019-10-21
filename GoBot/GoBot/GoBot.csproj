@@ -96,6 +96,7 @@
     <Compile Include="Devices\Pepperl\PepperlEnums.cs" />
     <Compile Include="Devices\Pepperl\PepperlManager.cs" />
     <Compile Include="BoardContext\Obstacles.cs" />
+    <Compile Include="GameElements\Buoy.cs" />
     <Compile Include="IHM\Elements\PanelBoardCanServos.cs">
       <SubType>UserControl</SubType>
     </Compile>
