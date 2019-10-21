@@ -69,20 +69,34 @@ namespace GoBot.Devices
             _manager.SetFilter(_filter, _filterWidth);
         }
 
-        protected override void StartLoop()
+        protected override bool StartLoop()
         {
-            _manager.CreateChannelUDP();
-            _feedLink = ThreadManager.CreateThread(link => FeedWatchDog());
-            _feedLink.Name = "R2000 Watchdog";
-            _feedLink.StartInfiniteLoop(1000);
+            bool ok;
+
+            if (_manager.CreateChannelUDP())
+            {
+                _feedLink = ThreadManager.CreateThread(link => FeedWatchDog());
+                _feedLink.Name = "R2000 Watchdog";
+                _feedLink.StartInfiniteLoop(1000);
+                ok = true;
+            }
+            else
+            {
+                ok = false;
+            }
+
+            return ok;
         }
 
         protected override void StopLoop()
         {
-            _manager.CloseChannelUDP();
-            _feedLink.Cancel();
-            _feedLink.WaitEnd();
-            _feedLink = null;
+            if (_feedLink != null)
+            {
+                _manager.CloseChannelUDP();
+                _feedLink.Cancel();
+                _feedLink.WaitEnd();
+                _feedLink = null;
+            }
         }
 
         public void Reboot()

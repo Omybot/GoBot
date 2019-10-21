@@ -56,24 +56,37 @@ namespace GoBot.Devices
             _comm.SendCommand(PepperlCmd.Reboot);
         }
 
-        public void CreateChannelUDP()
+        public bool CreateChannelUDP()
         {
-            _udp = new UDPConnection();
-            _udp.Connect(_ip, _port, _port + 1);
-            _udp.StartReception();
-            _udp.FrameReceived += _udp_FrameReceived;
+            bool ok;
 
-            Dictionary<String, String> rep = _comm.SendCommand(PepperlCmd.CreateChannelUDP,
-                                PepperlConst.ParamUdpAddress, FindMyIP().ToString(),
-                                PepperlConst.ParamUdpPort, _port.ToString(),
-                                PepperlConst.ParamUdpWatchdog, PepperlConst.ValueUdpWatchdogOn,
-                                PepperlConst.ParamUdpWatchdogTimeout, _timeout.TotalMilliseconds.ToString(),
-                                PepperlConst.ParamUdpPacketType, PepperlConst.ValueUdpPacketTypeDistanceAmplitudeCompact);
+            try
+            {
+                _udp = new UDPConnection();
+                _udp.Connect(_ip, _port, _port + 1);
+                _udp.StartReception();
+                _udp.FrameReceived += _udp_FrameReceived;
 
-            _handle = rep[PepperlConst.ParamUdpHandle];
+                Dictionary<String, String> rep = _comm.SendCommand(PepperlCmd.CreateChannelUDP,
+                                    PepperlConst.ParamUdpAddress, FindMyIP().ToString(),
+                                    PepperlConst.ParamUdpPort, _port.ToString(),
+                                    PepperlConst.ParamUdpWatchdog, PepperlConst.ValueUdpWatchdogOn,
+                                    PepperlConst.ParamUdpWatchdogTimeout, _timeout.TotalMilliseconds.ToString(),
+                                    PepperlConst.ParamUdpPacketType, PepperlConst.ValueUdpPacketTypeDistanceAmplitudeCompact);
 
-            _comm.SendCommand(PepperlCmd.ScanStart,
-                                PepperlConst.ParamUdpHandle, _handle);
+                _handle = rep[PepperlConst.ParamUdpHandle];
+
+                _comm.SendCommand(PepperlCmd.ScanStart,
+                                    PepperlConst.ParamUdpHandle, _handle);
+
+                ok = true;
+            }
+            catch(Exception)
+            {
+                ok = false;
+            }
+
+            return ok;
         }
 
         public void CloseChannelUDP()

@@ -117,11 +117,13 @@ namespace GoBot.Devices
         
         #region Fonctionnement externe
 
-        protected override void StartLoop()
+        protected override bool StartLoop()
         {
             _linkMeasures = ThreadManager.CreateThread(link => DoMeasure());
             _linkMeasures.Name = "Mesure Hokuyo " + _id.ToString();
             _linkMeasures.StartInfiniteLoop(new TimeSpan());
+
+            return true;
         }
 
         protected override void StopLoop()
