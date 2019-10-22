@@ -5,26 +5,26 @@ using GoBot.BoardContext;
 
 namespace GoBot
 {
-    public static class Recallages
+    public static class Recalibration
     {
-        private static Position PositionDepartGauche { get; set; }
-        private static Position PositionDepartDroite { get; set; }
+        private static Position PositionLeft { get; set; }
+        private static Position PositionRight { get; set; }
 
-        public static Position PositionDepart
+        public static Position StartPosition
         {
             get
             {
-                return GameBoard.MyColor == GameBoard.ColorLeftBlue ? PositionDepartGauche : PositionDepartDroite;
+                return GameBoard.MyColor == GameBoard.ColorLeftBlue ? PositionLeft : PositionRight;
             }
         }
 
         public static void Init()
         {
-            PositionDepartGauche = new Position(0, new RealPoint(Robots.GrosRobot.Longueur / 2, Robots.GrosRobot.Largeur / 2 + 305));
-            PositionDepartDroite = new Position(180, new RealPoint(3000 - PositionDepartGauche.Coordinates.X, PositionDepartGauche.Coordinates.Y));
+            PositionLeft = new Position(0, new RealPoint(Robots.GrosRobot.Longueur / 2, Robots.GrosRobot.Largeur / 2 + 530+10));
+            PositionRight = new Position(180, new RealPoint(3000 - PositionLeft.Coordinates.X, PositionLeft.Coordinates.Y));
         }
         
-        public static void RecallageGrosRobot()
+        public static void Calibration()
         {
                 AllDevices.RecGoBot.SetLed(LedID.DebugB2, Devices.RecGoBot.LedStatus.Rouge);
 
@@ -35,7 +35,7 @@ namespace GoBot
                 Robots.GrosRobot.Avancer(10);
                 Robots.GrosRobot.Recallage(SensAR.Arriere);
 
-                Robots.GrosRobot.Avancer((int)(PositionDepartGauche.Coordinates.Y - Robots.GrosRobot.Longueur / 2));
+                Robots.GrosRobot.Avancer((int)(StartPosition.Coordinates.Y - Robots.GrosRobot.Longueur / 2));
 
                 if (GameBoard.MyColor == GameBoard.ColorLeftBlue)
                     Robots.GrosRobot.PivotGauche(90);
@@ -44,7 +44,7 @@ namespace GoBot
 
                 Robots.GrosRobot.Recallage(SensAR.Arriere);
 
-                Robots.GrosRobot.ReglerOffsetAsserv(PositionDepart);
+                Robots.GrosRobot.ReglerOffsetAsserv(StartPosition);
 
                 Robots.GrosRobot.ArmerJack();
 

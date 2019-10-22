@@ -459,7 +459,7 @@ namespace GoBot
         {
             Historique = new Historique(IDRobot);
             HistoriqueCoordonnees = new List<Position>();
-            Position = new Position(Recallages.PositionDepart);
+            Position = new Position(Recalibration.StartPosition);
 
             PositionCible = null;
         }

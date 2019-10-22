@@ -114,7 +114,7 @@ namespace GoBot.Devices
 
         private void Button2Click()
         {
-            ThreadManager.CreateThread(link => Recallages.RecallageGrosRobot()).StartThread();
+            ThreadManager.CreateThread(link => Recalibration.Calibration()).StartThread();
         }
 
         private void Button3Click()

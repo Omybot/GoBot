@@ -51,7 +51,7 @@ namespace GoBot
 
             SplashScreen.SetMessage("Initialisation :\nRobot...", Color.Black);
             Robots.Init();
-            Recallages.Init();
+            Recalibration.Init();
 
             SplashScreen.SetMessage("Initialisation :\nPlateau...", Color.Black);
             Dessinateur.Init();

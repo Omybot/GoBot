@@ -334,7 +334,7 @@
     <Compile Include="Utils\LimitedQueue.cs" />
     <Compile Include="PathFinding\PathFinder.cs" />
     <Compile Include="PathFinding\Trajectory.cs" />
-    <Compile Include="Recallages.cs" />
+    <Compile Include="Recalibration.cs" />
     <Compile Include="Robots\Robots.cs" />
     <Compile Include="Communications\Connections.cs" />
     <Compile Include="PathFinding\Arc.cs" />
