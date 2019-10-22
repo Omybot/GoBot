@@ -53,7 +53,7 @@ namespace GoBot.Devices
         public const String ParamSystemTimeRaw = "system_time_raw";
         public const String ParamUserTag = "user_tag";
         public const String ParamUserNotes = "user_notes";
-        public const String ParamEmitterType = "emitter_tyme";
+        public const String ParamEmitterType = "emitter_type";
         public const String ParamUptime = "up_time";
         public const String ParamPowerCycles = "power_cycles";
         public const String ParamOperationTime = "operation_time";

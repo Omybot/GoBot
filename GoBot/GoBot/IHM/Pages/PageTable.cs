@@ -59,10 +59,11 @@ namespace GoBot.IHM
         void DisplayInfos()
         {
             this.InvokeAuto(() =>
-            { 
-                lblPosGrosX.Text = Robots.GrosRobot.Position.Coordinates.X.ToString("0.00");
-                lblPosGrosY.Text = Robots.GrosRobot.Position.Coordinates.Y.ToString("0.00");
-                lblPosGrosTeta.Text = Robots.GrosRobot.Position.Angle.ToString();
+            {
+                Position pos = Robots.GrosRobot.Position;
+                lblPosX.Text = pos.Coordinates.X.ToString("0.00");
+                lblPosY.Text = pos.Coordinates.Y.ToString("0.00");
+                lblPosTheta.Text = pos.Angle.InDegrees.ToString("0.00") + "°";
             });
 
             if (GameBoard.Strategy != null)
@@ -79,8 +80,8 @@ namespace GoBot.IHM
 
                 this.InvokeAuto(() =>
                 {
-                    lblSecondes.Text = (int)tempsRestant.TotalSeconds + "";
-                    lblMilli.Text = tempsRestant.Milliseconds + "";
+                    lblSecondes.Text = tempsRestant.TotalSeconds.ToString("0");
+                    lblMilli.Text = tempsRestant.Milliseconds.ToString("000");
 
                     lblSecondes.ForeColor = couleur;
                     lblMilli.ForeColor = couleur;
@@ -153,7 +154,7 @@ namespace GoBot.IHM
                 lblY.Text = posOnTable.Y.ToString("0");
 
                 bool hoverElement = false;
-                
+
                 foreach (GameElement element in GameBoard.Elements)
                 {
                     if (posOnTable.Distance(element.Position) < element.HoverRadius)
@@ -192,7 +193,7 @@ namespace GoBot.IHM
         private void btnReset_Click(object sender, EventArgs e)
         {
             // Todo
-            
+
             GameBoard.Score = 0;
         }
 
@@ -206,7 +207,7 @@ namespace GoBot.IHM
                         element.ClickAction();
                     }).StartThread();
         }
-        
+
         //MouseEventArgs ev;
 
         private void btnGo_Click(object sender, EventArgs e)
@@ -244,7 +245,7 @@ namespace GoBot.IHM
                 }
             }
         }
-        
+
         List<RealPoint> trajectoirePolaire;
         List<RealPoint> pointsPolaires;
 
@@ -489,16 +490,12 @@ namespace GoBot.IHM
 
         private void btnRestartRecal_Click(object sender, EventArgs e)
         {
-            if(GameBoard.ColorLeftBlue == GameBoard.MyColor)
+            ThreadManager.CreateThread(link =>
             {
-                Robots.GrosRobot.GotoXYTeta(new Position(90, new RealPoint(300, 300)));
+                link.Name = "GoToCalibration";
+                Recalibration.GoToCalibration();
                 Recalibration.Calibration();
-            }
-            else
-            {
-                Robots.GrosRobot.GotoXYTeta(new Position(90, new RealPoint(3000-300, 300)));
-                Recalibration.Calibration();
-            }
+            }).StartThread();
         }
 
         private void btnColorLeft_Click(object sender, EventArgs e)
@@ -513,7 +510,11 @@ namespace GoBot.IHM
 
         private void btnCalib_Click(object sender, EventArgs e)
         {
-            ThreadManager.CreateThread(link => Recalibration.Calibration()).StartThread();
+            ThreadManager.CreateThread(link =>
+            {
+                link.Name = "Calibration";
+                Recalibration.Calibration();
+            }).StartThread();
         }
     }
 }

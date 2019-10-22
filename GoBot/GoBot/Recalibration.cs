@@ -25,6 +25,14 @@ namespace GoBot
             PositionRight = new Position(180, new RealPoint(3000 - PositionLeft.Coordinates.X, PositionLeft.Coordinates.Y));
         }
 
+        public static void GoToCalibration()
+        {
+            if (GameBoard.ColorLeftBlue == GameBoard.MyColor)
+                Robots.GrosRobot.GotoXYTeta(new Position(90, new RealPoint(Robots.GrosRobot.Largeur, Robots.GrosRobot.Largeur)));
+            else
+                Robots.GrosRobot.GotoXYTeta(new Position(90, new RealPoint(3000 - Robots.GrosRobot.Largeur, Robots.GrosRobot.Largeur)));
+        }
+
         public static void Calibration()
         {
             AllDevices.RecGoBot.SetLed(LedID.DebugB2, Devices.RecGoBot.LedStatus.Rouge);

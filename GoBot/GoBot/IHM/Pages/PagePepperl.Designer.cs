@@ -48,9 +48,11 @@
             this.lblDistPointsTxt = new System.Windows.Forms.Label();
             this.grpText = new System.Windows.Forms.GroupBox();
             this.grpDetection = new System.Windows.Forms.GroupBox();
+            this.grpInfos = new System.Windows.Forms.GroupBox();
             ((System.ComponentModel.ISupportInitialize)(this.numFilter)).BeginInit();
             this.grpText.SuspendLayout();
             this.grpDetection.SuspendLayout();
+            this.grpInfos.SuspendLayout();
             this.SuspendLayout();
             // 
             // cboFreq
@@ -91,7 +93,7 @@
             // 
             // btnReboot
             // 
-            this.btnReboot.Location = new System.Drawing.Point(67, 330);
+            this.btnReboot.Location = new System.Drawing.Point(89, 22);
             this.btnReboot.Name = "btnReboot";
             this.btnReboot.Size = new System.Drawing.Size(75, 23);
             this.btnReboot.TabIndex = 9;
@@ -268,13 +270,23 @@
             this.grpDetection.TabStop = false;
             this.grpDetection.Text = "Détection";
             // 
+            // grpInfos
+            // 
+            this.grpInfos.Controls.Add(this.btnReboot);
+            this.grpInfos.Location = new System.Drawing.Point(287, 23);
+            this.grpInfos.Name = "grpInfos";
+            this.grpInfos.Size = new System.Drawing.Size(259, 280);
+            this.grpInfos.TabIndex = 26;
+            this.grpInfos.TabStop = false;
+            this.grpInfos.Text = "Informations";
+            // 
             // PagePepperl
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.Controls.Add(this.grpInfos);
             this.Controls.Add(this.grpDetection);
             this.Controls.Add(this.grpText);
-            this.Controls.Add(this.btnReboot);
             this.Name = "PagePepperl";
             this.Size = new System.Drawing.Size(820, 572);
             this.Load += new System.EventHandler(this.PagePepperl_Load);
@@ -283,6 +295,7 @@
             this.grpText.PerformLayout();
             this.grpDetection.ResumeLayout(false);
             this.grpDetection.PerformLayout();
+            this.grpInfos.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -309,5 +322,6 @@
         private System.Windows.Forms.Label lblDistPointsTxt;
         private System.Windows.Forms.GroupBox grpText;
         private System.Windows.Forms.GroupBox grpDetection;
+        private System.Windows.Forms.GroupBox grpInfos;
     }
 }
