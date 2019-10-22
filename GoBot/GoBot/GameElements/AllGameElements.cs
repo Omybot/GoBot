@@ -41,11 +41,11 @@ namespace GoBot.GameElements
             _buoys.Add(new Buoy(new RealPoint(1335, 1650), GameBoard.ColorNeutral, red, 36));
             _buoys.Add(new Buoy(new RealPoint(1395, 1955), GameBoard.ColorNeutral, green, 36));
 
-            _buoys.Add(new Buoy(new RealPoint(700, -67), GameBoard.ColorLeftBlue, Color.LightGray, 36));
+            _buoys.Add(new Buoy(new RealPoint(700, -67), GameBoard.ColorLeftBlue, green, 36));
             _buoys.Add(new Buoy(new RealPoint(775, -67), GameBoard.ColorLeftBlue, Color.LightGray, 36));
             _buoys.Add(new Buoy(new RealPoint(850, -67), GameBoard.ColorLeftBlue, Color.LightGray, 36));
             _buoys.Add(new Buoy(new RealPoint(925, -67), GameBoard.ColorLeftBlue, Color.LightGray, 36));
-            _buoys.Add(new Buoy(new RealPoint(1000, -67), GameBoard.ColorLeftBlue, Color.LightGray, 36));
+            _buoys.Add(new Buoy(new RealPoint(1000, -67), GameBoard.ColorLeftBlue, red, 36));
 
             _buoys.Add(new Buoy(new RealPoint(3067, 1450), GameBoard.ColorLeftBlue, green, 36));
             _buoys.Add(new Buoy(new RealPoint(3067, 1525), GameBoard.ColorLeftBlue, red, 36));
@@ -66,11 +66,11 @@ namespace GoBot.GameElements
             _buoys.Add(new Buoy(new RealPoint(3000 - 1335, 1650), GameBoard.ColorNeutral, green, 36));
             _buoys.Add(new Buoy(new RealPoint(3000 - 1395, 1955), GameBoard.ColorNeutral, red, 36));
 
-            _buoys.Add(new Buoy(new RealPoint(3000 - 700, -67), GameBoard.ColorLeftBlue, Color.LightGray, 36));
+            _buoys.Add(new Buoy(new RealPoint(3000 - 700, -67), GameBoard.ColorLeftBlue, green, 36));
             _buoys.Add(new Buoy(new RealPoint(3000 - 775, -67), GameBoard.ColorLeftBlue, Color.LightGray, 36));
             _buoys.Add(new Buoy(new RealPoint(3000 - 850, -67), GameBoard.ColorLeftBlue, Color.LightGray, 36));
             _buoys.Add(new Buoy(new RealPoint(3000 - 925, -67), GameBoard.ColorLeftBlue, Color.LightGray, 36));
-            _buoys.Add(new Buoy(new RealPoint(3000 - 1000, -67), GameBoard.ColorLeftBlue, Color.LightGray, 36));
+            _buoys.Add(new Buoy(new RealPoint(3000 - 1000, -67), GameBoard.ColorLeftBlue, red, 36));
         }
 
         public IEnumerable<GameElement> AllElements
