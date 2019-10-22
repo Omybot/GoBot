@@ -32,7 +32,6 @@
             this.boxSourisObstacle = new System.Windows.Forms.CheckBox();
             this.lblScore = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
-            this.lblPos = new System.Windows.Forms.Label();
             this.btnGo = new System.Windows.Forms.Button();
             this.label2 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
@@ -71,6 +70,9 @@
             this.grpMatch = new System.Windows.Forms.GroupBox();
             this.picColor = new System.Windows.Forms.PictureBox();
             this.btnCalib = new System.Windows.Forms.Button();
+            this.lblX = new System.Windows.Forms.Label();
+            this.lblY = new System.Windows.Forms.Label();
+            this.label7 = new System.Windows.Forms.Label();
             this.groupBox.SuspendLayout();
             this.groupBoxDeplacements.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numNbPoints)).BeginInit();
@@ -109,15 +111,6 @@
             this.label1.Size = new System.Drawing.Size(41, 13);
             this.label1.TabIndex = 14;
             this.label1.Text = "Score :";
-            // 
-            // lblPos
-            // 
-            this.lblPos.AutoSize = true;
-            this.lblPos.Location = new System.Drawing.Point(201, 0);
-            this.lblPos.Name = "lblPos";
-            this.lblPos.Size = new System.Drawing.Size(28, 13);
-            this.lblPos.TabIndex = 15;
-            this.lblPos.Text = "0 : 0";
             // 
             // btnGo
             // 
@@ -522,11 +515,44 @@
             this.btnCalib.UseVisualStyleBackColor = true;
             this.btnCalib.Click += new System.EventHandler(this.btnCalib_Click);
             // 
+            // lblX
+            // 
+            this.lblX.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblX.Location = new System.Drawing.Point(637, 20);
+            this.lblX.Name = "lblX";
+            this.lblX.Size = new System.Drawing.Size(69, 23);
+            this.lblX.TabIndex = 80;
+            this.lblX.Text = "1000";
+            this.lblX.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            // 
+            // lblY
+            // 
+            this.lblY.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblY.Location = new System.Drawing.Point(716, 20);
+            this.lblY.Name = "lblY";
+            this.lblY.Size = new System.Drawing.Size(69, 23);
+            this.lblY.TabIndex = 81;
+            this.lblY.Text = "1000";
+            this.lblY.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // label7
+            // 
+            this.label7.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label7.Location = new System.Drawing.Point(701, 20);
+            this.label7.Name = "label7";
+            this.label7.Size = new System.Drawing.Size(18, 23);
+            this.label7.TabIndex = 82;
+            this.label7.Text = ":";
+            this.label7.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            // 
             // PageTable
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.Transparent;
+            this.Controls.Add(this.label7);
+            this.Controls.Add(this.lblY);
+            this.Controls.Add(this.lblX);
             this.Controls.Add(this.grpMatch);
             this.Controls.Add(this.btnRestartRecal);
             this.Controls.Add(this.btnTestScore);
@@ -543,7 +569,6 @@
             this.Controls.Add(this.label4);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.label2);
-            this.Controls.Add(this.lblPos);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.lblScore);
             this.Controls.Add(this.btnReset);
@@ -574,7 +599,6 @@
         private System.Windows.Forms.Button btnReset;
         private System.Windows.Forms.Label lblScore;
         private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.Label lblPos;
         private System.Windows.Forms.Button btnGo;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label3;
@@ -610,5 +634,8 @@
         private System.Windows.Forms.GroupBox grpMatch;
         private System.Windows.Forms.PictureBox picColor;
         private System.Windows.Forms.Button btnCalib;
+        private System.Windows.Forms.Label lblX;
+        private System.Windows.Forms.Label lblY;
+        private System.Windows.Forms.Label label7;
     }
 }

@@ -148,16 +148,15 @@ namespace GoBot.IHM
             }
             else
             {
-                Point positionSurTable = Dessinateur.Scale.ScreenToRealPosition(pictureBoxTable.PointToClient(MousePosition));
-                lblPos.Text = positionSurTable.X + " : " + positionSurTable.Y;
+                RealPoint posOnTable = Dessinateur.Scale.ScreenToRealPosition(pictureBoxTable.PointToClient(MousePosition));
+                lblX.Text = posOnTable.X.ToString("0");
+                lblY.Text = posOnTable.Y.ToString("0");
 
                 bool hoverElement = false;
-
-                RealPoint positionRelle = new RealPoint(positionSurTable.X, positionSurTable.Y);
                 
                 foreach (GameElement element in GameBoard.Elements)
                 {
-                    if (positionRelle.Distance(element.Position) < element.HoverRadius)
+                    if (posOnTable.Distance(element.Position) < element.HoverRadius)
                     {
                         element.IsHover = true;
                         hoverElement = true;
