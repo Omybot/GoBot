@@ -85,13 +85,13 @@ namespace GoBot.BoardContext
                     else
                         AllDevices.RecGoBot.SetLedColor(Color.DarkViolet);
 
-                    NotreCouleurChange?.Invoke(null, null);
+                    MyColorChange?.Invoke(null, null);
                     if (_obstacles != null)
                         Robots.GrosRobot.MajGraphFranchissable(_obstacles.FromAllExceptBoard);
                 }
             }
         }
-        public static event EventHandler NotreCouleurChange;
+        public static event EventHandler MyColorChange;
 
         public static int Score
         {
@@ -102,8 +102,8 @@ namespace GoBot.BoardContext
         public delegate void ScoreChangeDelegate(int score);
         public static event ScoreChangeDelegate ScoreChange;
 
-        public static Color ColorLeftBlue { get { return Color.FromArgb(0, 0, 255); } }
-        public static Color ColorRightYellow { get { return Color.FromArgb(255, 255, 0); } }
+        public static Color ColorLeftBlue { get { return Color.FromArgb(0, 91, 140); } }
+        public static Color ColorRightYellow { get { return Color.FromArgb(247, 181, 0); } }
         public static Color ColorNeutral { get { return Color.White; } }
 
         /// <summary>

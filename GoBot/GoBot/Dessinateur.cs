@@ -378,7 +378,7 @@ namespace GoBot
         {
             int farAway = 10000;
 
-            if (AllDevices.LidarAvoid != null)
+            if (AllDevices.LidarAvoid != null && AllDevices.LidarAvoid.DeadAngle > 0)
             {
                 AnglePosition debutAngleMort = AllDevices.LidarAvoid.Position.Angle + 180 + new AngleDelta(AllDevices.LidarAvoid.DeadAngle / 2);
                 AnglePosition finAngleMort = AllDevices.LidarAvoid.Position.Angle + 180 + new AngleDelta(-AllDevices.LidarAvoid.DeadAngle / 2);

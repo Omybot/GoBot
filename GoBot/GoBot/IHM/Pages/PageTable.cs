@@ -26,7 +26,11 @@ namespace GoBot.IHM
             InitializeComponent();
             Plateau = new GameBoard();
             GameBoard.ScoreChange += new GameBoard.ScoreChangeDelegate(Plateau_ScoreChange);
+            GameBoard.MyColorChange += GameBoard_MyColorChange;
             Dessinateur.TableDessinee += Dessinateur_TableDessinee;
+
+            btnColorLeft.BackColor = GameBoard.ColorLeftBlue;
+            btnColorRight.BackColor = GameBoard.ColorRightYellow;
 
             checkedListBox.SetItemChecked(0, true);
             checkedListBox.SetItemChecked(1, true);
@@ -35,6 +39,11 @@ namespace GoBot.IHM
             toolTip.SetToolTip(btnTeleportRPCentre, "Téléportation de centre");
             toolTip.SetToolTip(btnPathRPFace, "Path finding de face");
             toolTip.SetToolTip(btnPathRPCentre, "Path finding du centre");
+        }
+
+        private void GameBoard_MyColorChange(object sender, EventArgs e)
+        {
+            picColor.BackColor = GameBoard.MyColor;
         }
 
         void Dessinateur_TableDessinee(Image img)
@@ -249,7 +258,7 @@ namespace GoBot.IHM
             {
                 Direction traj = Maths.GetDirection(Dessinateur.positionDepart, Dessinateur.Scale.ScreenToRealPosition(pictureBoxTable.PointToClient(MousePosition)));
 
-                positionArrivee = new Position(new AnglePosition(traj.angle), Dessinateur.positionDepart);
+                positionArrivee = new Position(new AnglePosition(-traj.angle), Dessinateur.positionDepart);
 
                 if (Dessinateur.modeCourant == Dessinateur.MouseMode.PositionCentre)
                     ThreadManager.CreateThread(link => ThreadTrajectory(link)).StartThread();
@@ -267,7 +276,7 @@ namespace GoBot.IHM
                 Point pointOrigine = Dessinateur.positionDepart;
                 Position departRecule = new Position(new AnglePosition(-traj.angle), pointOrigine);
                 departRecule.Move(-Robots.GrosRobot.Longueur / 2);
-                departRecule = new Position(new AnglePosition(traj.angle), new RealPoint(departRecule.Coordinates.X, departRecule.Coordinates.Y));
+                departRecule = new Position(new AnglePosition(-traj.angle), new RealPoint(departRecule.Coordinates.X, departRecule.Coordinates.Y));
                 positionArrivee = departRecule;
 
                 if (Dessinateur.modeCourant == Dessinateur.MouseMode.PositionFace)
@@ -370,7 +379,7 @@ namespace GoBot.IHM
         public void GoToDepart(ThreadLink link)
         {
             link.RegisterName();
-            Robots.GrosRobot.GotoXYTeta(Recallages.PositionDepart);
+            Robots.GrosRobot.GotoXYTeta(Recalibration.StartPosition);
         }
 
         private void btnStratNul_Click(object sender, EventArgs e)
@@ -418,7 +427,7 @@ namespace GoBot.IHM
             Robots.GrosRobot.PivotGauche(10);
             Robots.GrosRobot.Avancer(100);
 
-            Robots.GrosRobot.GotoXYTeta(Recallages.PositionDepart);
+            Robots.GrosRobot.GotoXYTeta(Recalibration.StartPosition);
 
             Robots.GrosRobot.Reculer(300);
         }
@@ -484,13 +493,28 @@ namespace GoBot.IHM
             if(GameBoard.ColorLeftBlue == GameBoard.MyColor)
             {
                 Robots.GrosRobot.GotoXYTeta(new Position(90, new RealPoint(300, 300)));
-                Recallages.RecallageGrosRobot();
+                Recalibration.Calibration();
             }
             else
             {
                 Robots.GrosRobot.GotoXYTeta(new Position(90, new RealPoint(3000-300, 300)));
-                Recallages.RecallageGrosRobot();
+                Recalibration.Calibration();
             }
+        }
+
+        private void btnColorLeft_Click(object sender, EventArgs e)
+        {
+            GameBoard.MyColor = GameBoard.ColorLeftBlue;
+        }
+
+        private void btnColorRight_Click(object sender, EventArgs e)
+        {
+            GameBoard.MyColor = GameBoard.ColorRightYellow;
+        }
+
+        private void btnCalib_Click(object sender, EventArgs e)
+        {
+            ThreadManager.CreateThread(link => Recalibration.Calibration()).StartThread();
         }
     }
 }

@@ -409,7 +409,7 @@ namespace GoBot
 
         public override void ReglerOffsetAsserv(Position newPosition)
         {
-            Position = new Position(-newPosition.Angle, newPosition.Coordinates); // TODO2018 Hum, pouruqoi c'est pas le meme repere ?
+            Position = new Position(newPosition.Angle, newPosition.Coordinates);
             PositionCible?.Set(Position.Coordinates);
             OnPositionChange(Position);
         }

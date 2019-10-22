@@ -489,6 +489,7 @@ namespace GoBot
         public override void ReglerOffsetAsserv(Position newPosition)
         {
             Position.Copy(newPosition);
+            newPosition.Angle = -newPosition.Angle; // Repère angulaire du robot inversé
             Frame trame = UdpFrameFactory.OffsetPos(newPosition, this);
             Connexion.SendMessage(trame);
             OnPositionChange(Position);

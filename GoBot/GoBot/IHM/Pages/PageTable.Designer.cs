@@ -66,17 +66,24 @@
             this.pictureBoxTable = new System.Windows.Forms.PictureBox();
             this.btnTestScore = new System.Windows.Forms.Button();
             this.btnRestartRecal = new System.Windows.Forms.Button();
+            this.btnColorRight = new System.Windows.Forms.Button();
+            this.btnColorLeft = new System.Windows.Forms.Button();
+            this.grpMatch = new System.Windows.Forms.GroupBox();
+            this.picColor = new System.Windows.Forms.PictureBox();
+            this.btnCalib = new System.Windows.Forms.Button();
             this.groupBox.SuspendLayout();
             this.groupBoxDeplacements.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numNbPoints)).BeginInit();
             this.groupBoxAffichage.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxTable)).BeginInit();
+            this.grpMatch.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.picColor)).BeginInit();
             this.SuspendLayout();
             // 
             // boxSourisObstacle
             // 
             this.boxSourisObstacle.AutoSize = true;
-            this.boxSourisObstacle.Location = new System.Drawing.Point(14, 253);
+            this.boxSourisObstacle.Location = new System.Drawing.Point(3, 578);
             this.boxSourisObstacle.Name = "boxSourisObstacle";
             this.boxSourisObstacle.Size = new System.Drawing.Size(98, 17);
             this.boxSourisObstacle.TabIndex = 9;
@@ -242,7 +249,7 @@
             this.groupBox.Controls.Add(this.btnStratNul);
             this.groupBox.Controls.Add(this.btnGo);
             this.groupBox.Controls.Add(this.btnAleatoire);
-            this.groupBox.Location = new System.Drawing.Point(0, 353);
+            this.groupBox.Location = new System.Drawing.Point(0, 328);
             this.groupBox.Name = "groupBox";
             this.groupBox.Size = new System.Drawing.Size(200, 100);
             this.groupBox.TabIndex = 66;
@@ -280,7 +287,7 @@
             this.groupBoxDeplacements.Controls.Add(this.btnPathRPFace);
             this.groupBoxDeplacements.Controls.Add(this.btnTeleportRPCentre);
             this.groupBoxDeplacements.Controls.Add(this.btnTeleportRPFace);
-            this.groupBoxDeplacements.Location = new System.Drawing.Point(0, 459);
+            this.groupBoxDeplacements.Location = new System.Drawing.Point(0, 434);
             this.groupBoxDeplacements.Name = "groupBoxDeplacements";
             this.groupBoxDeplacements.Size = new System.Drawing.Size(200, 130);
             this.groupBoxDeplacements.TabIndex = 67;
@@ -394,7 +401,7 @@
             // 
             // btnTestAsser
             // 
-            this.btnTestAsser.Location = new System.Drawing.Point(118, 288);
+            this.btnTestAsser.Location = new System.Drawing.Point(107, 601);
             this.btnTestAsser.Name = "btnTestAsser";
             this.btnTestAsser.Size = new System.Drawing.Size(87, 25);
             this.btnTestAsser.TabIndex = 70;
@@ -405,7 +412,7 @@
             // btnReset
             // 
             this.btnReset.Image = global::GoBot.Properties.Resources.Refresh16;
-            this.btnReset.Location = new System.Drawing.Point(14, 288);
+            this.btnReset.Location = new System.Drawing.Point(3, 601);
             this.btnReset.Name = "btnReset";
             this.btnReset.Size = new System.Drawing.Size(98, 25);
             this.btnReset.TabIndex = 10;
@@ -444,7 +451,7 @@
             // 
             // btnTestScore
             // 
-            this.btnTestScore.Location = new System.Drawing.Point(118, 319);
+            this.btnTestScore.Location = new System.Drawing.Point(107, 632);
             this.btnTestScore.Name = "btnTestScore";
             this.btnTestScore.Size = new System.Drawing.Size(87, 25);
             this.btnTestScore.TabIndex = 75;
@@ -454,7 +461,7 @@
             // 
             // btnRestartRecal
             // 
-            this.btnRestartRecal.Location = new System.Drawing.Point(14, 319);
+            this.btnRestartRecal.Location = new System.Drawing.Point(3, 632);
             this.btnRestartRecal.Name = "btnRestartRecal";
             this.btnRestartRecal.Size = new System.Drawing.Size(98, 25);
             this.btnRestartRecal.TabIndex = 76;
@@ -462,11 +469,65 @@
             this.btnRestartRecal.UseVisualStyleBackColor = true;
             this.btnRestartRecal.Click += new System.EventHandler(this.btnRestartRecal_Click);
             // 
+            // btnColorRight
+            // 
+            this.btnColorRight.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnColorRight.Location = new System.Drawing.Point(154, 21);
+            this.btnColorRight.Name = "btnColorRight";
+            this.btnColorRight.Size = new System.Drawing.Size(40, 40);
+            this.btnColorRight.TabIndex = 77;
+            this.btnColorRight.UseVisualStyleBackColor = true;
+            this.btnColorRight.Click += new System.EventHandler(this.btnColorRight_Click);
+            // 
+            // btnColorLeft
+            // 
+            this.btnColorLeft.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnColorLeft.ForeColor = System.Drawing.Color.White;
+            this.btnColorLeft.Location = new System.Drawing.Point(6, 21);
+            this.btnColorLeft.Name = "btnColorLeft";
+            this.btnColorLeft.Size = new System.Drawing.Size(40, 40);
+            this.btnColorLeft.TabIndex = 78;
+            this.btnColorLeft.UseVisualStyleBackColor = true;
+            this.btnColorLeft.Click += new System.EventHandler(this.btnColorLeft_Click);
+            // 
+            // grpMatch
+            // 
+            this.grpMatch.Controls.Add(this.btnCalib);
+            this.grpMatch.Controls.Add(this.picColor);
+            this.grpMatch.Controls.Add(this.btnColorLeft);
+            this.grpMatch.Controls.Add(this.btnColorRight);
+            this.grpMatch.Location = new System.Drawing.Point(0, 222);
+            this.grpMatch.Name = "grpMatch";
+            this.grpMatch.Size = new System.Drawing.Size(200, 100);
+            this.grpMatch.TabIndex = 79;
+            this.grpMatch.TabStop = false;
+            this.grpMatch.Text = "Match";
+            // 
+            // picColor
+            // 
+            this.picColor.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.picColor.Location = new System.Drawing.Point(52, 23);
+            this.picColor.Name = "picColor";
+            this.picColor.Size = new System.Drawing.Size(96, 36);
+            this.picColor.TabIndex = 79;
+            this.picColor.TabStop = false;
+            // 
+            // btnCalib
+            // 
+            this.btnCalib.Location = new System.Drawing.Point(52, 65);
+            this.btnCalib.Name = "btnCalib";
+            this.btnCalib.Size = new System.Drawing.Size(96, 23);
+            this.btnCalib.TabIndex = 80;
+            this.btnCalib.Text = "Recalage";
+            this.btnCalib.UseVisualStyleBackColor = true;
+            this.btnCalib.Click += new System.EventHandler(this.btnCalib_Click);
+            // 
             // PageTable
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.Transparent;
+            this.Controls.Add(this.grpMatch);
             this.Controls.Add(this.btnRestartRecal);
             this.Controls.Add(this.btnTestScore);
             this.Controls.Add(this.btnTestAsser);
@@ -498,6 +559,8 @@
             ((System.ComponentModel.ISupportInitialize)(this.numNbPoints)).EndInit();
             this.groupBoxAffichage.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxTable)).EndInit();
+            this.grpMatch.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.picColor)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -542,5 +605,10 @@
         private System.Windows.Forms.NumericUpDown numNbPoints;
         private System.Windows.Forms.Button btnTestScore;
         private System.Windows.Forms.Button btnRestartRecal;
+        private System.Windows.Forms.Button btnColorRight;
+        private System.Windows.Forms.Button btnColorLeft;
+        private System.Windows.Forms.GroupBox grpMatch;
+        private System.Windows.Forms.PictureBox picColor;
+        private System.Windows.Forms.Button btnCalib;
     }
 }
