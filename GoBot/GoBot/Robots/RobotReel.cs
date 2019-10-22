@@ -743,7 +743,7 @@ namespace GoBot
 
         public override void AlimentationPuissance(bool on)
         {
-            // TODO : couper tout manuellement
+            // TODOEACHYEAR : couper tout manuellement
             Stop(StopMode.Freely);
         }
 

@@ -302,7 +302,7 @@ namespace GoBot.IHM
 
             this.InvokeAuto(() => btnPathRPCentre.Enabled = false);
 
-            Robots.GrosRobot.GotoXYTeta(new Position(360 - positionArrivee.Angle.InDegrees, positionArrivee.Coordinates)); // TODO2018 pourquoi on change de repère ?
+            Robots.GrosRobot.GotoXYTeta(new Position(positionArrivee.Angle.InDegrees, positionArrivee.Coordinates));
 
             this.InvokeAuto(() => btnPathRPCentre.Enabled = true);
         }
