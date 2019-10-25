@@ -7,27 +7,29 @@ namespace Composants
 {
     public partial class Led : PictureBox
     {
-        private Color color;
+        private Color _color;
 
-        private Timer BlinkTimer { get; set; }
-        private int BlinkCounter { get; set; } = 0;
+        private Timer _blinkTimer;
+        private int _blinkCounter;
 
-        private static Dictionary<Color, Bitmap> LedsBitmap { get; set; } // Images déjà créées, inutile de les recaculer à chaque fois
+        private static Dictionary<Color, Bitmap> _bitmaps { get; set; } // Images déjà créées, inutile de les recaculer à chaque fois
         
         public Led()
         {
-            if(LedsBitmap is null)
+            if(_bitmaps is null)
             {
-                LedsBitmap = new Dictionary<Color, Bitmap>();
-                LedsBitmap.Add(Color.Red, Properties.Resources.RedLed);
+                _bitmaps = new Dictionary<Color, Bitmap>();
+                _bitmaps.Add(Color.Red, Properties.Resources.RedLed);
             }
 
             InitializeComponent();
             BackColor = Color.Transparent;
 
-            BlinkTimer = new Timer();
-            BlinkTimer.Interval = 100;
-            BlinkTimer.Tick += new EventHandler(timer_Tick);
+            _blinkTimer = new Timer();
+            _blinkTimer.Interval = 100;
+            _blinkTimer.Tick += new EventHandler(timer_Tick);
+
+            _blinkCounter = 0;
 
             Color = Color.Red;
         }
@@ -37,17 +39,17 @@ namespace Composants
         /// </summary>
         public Color Color
         {
-            get { return color; }
+            get { return _color; }
             set
             {
-                color = value;
+                _color = value;
 
-                lock (LedsBitmap)
+                lock (_bitmaps)
                 {
-                    if (!LedsBitmap.ContainsKey(color))
-                        GenerateLed(color);
+                    if (!_bitmaps.ContainsKey(_color))
+                        GenerateLed(_color);
 
-                    this.Image = (Image)LedsBitmap[color].Clone();
+                    this.Image = (Image)_bitmaps[_color].Clone();
                 }
 
             }
@@ -59,13 +61,26 @@ namespace Composants
         /// <param name="shutdown">Vrai si la LED doit rester éteinte à la fin du clignotement</param>
         public void Blink(bool shutdown = false)
         {
-            BlinkTimer.Stop();
+            _blinkTimer.Stop();
             Visible = true;
-            BlinkCounter = 0;
+            _blinkCounter = 0;
             if (shutdown)
-                BlinkCounter = 1;
+                _blinkCounter = 1;
 
-            BlinkTimer.Start();
+            _blinkTimer.Start();
+        }
+
+        /// <summary>
+        /// Change la couleur de la led et la fait clignoter 7 fois si la couleur est différente à la précédente.
+        /// </summary>
+        /// <param name="color"></param>
+        public void BlinkColor(Color color)
+        {
+            if(_color != color)
+            {
+                Color = color;
+                Blink();
+            }
         }
 
         void timer_Tick(object sender, EventArgs e)
@@ -75,10 +90,10 @@ namespace Composants
             else
                 Visible = true;
 
-            BlinkCounter++;
+            _blinkCounter++;
 
-            if (BlinkCounter > 7)
-                BlinkTimer.Stop();
+            if (_blinkCounter > 7)
+                _blinkTimer.Stop();
         }
         
         private void GenerateLed(Color col)
@@ -98,7 +113,7 @@ namespace Composants
                 }
             }
 
-            LedsBitmap.Add(col, bmp);
+            _bitmaps.Add(col, bmp);
         }
     }
 }

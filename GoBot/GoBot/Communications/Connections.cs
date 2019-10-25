@@ -64,8 +64,7 @@ namespace GoBot.Communications
             ConnectionCanBridge.Name = Board.RecCan.ToString();
             
             ConnectionCan = new CanConnection(Board.RecCan);
-
-            _connectionCanServo.Add(CanBoard.CanDisplay, new CanSubConnection(ConnectionCan, CanBoard.CanDisplay));
+            
             _connectionCanServo.Add(CanBoard.CanServo1, new CanSubConnection(ConnectionCan, CanBoard.CanServo1));
             _connectionCanServo.Add(CanBoard.CanServo2, new CanSubConnection(ConnectionCan, CanBoard.CanServo2));
             _connectionCanServo.Add(CanBoard.CanServo3, new CanSubConnection(ConnectionCan, CanBoard.CanServo3));

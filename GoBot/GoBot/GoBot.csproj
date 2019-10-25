@@ -74,7 +74,6 @@
     <Compile Include="Communications\CAN\CanConnection.cs" />
     <Compile Include="Communications\CAN\CanFrameDecoder.cs" />
     <Compile Include="Communications\CAN\CanSubConnection.cs" />
-    <Compile Include="Devices\CAN\CanDisplay.cs" />
     <Compile Include="Communications\CAN\CanFrameFactory.cs" />
     <Compile Include="Communications\CAN\CanFrameFunction.cs" />
     <Compile Include="Devices\CAN\CanServo.cs" />
@@ -291,11 +290,11 @@
     <Compile Include="IHM\Pages\PageLogsEvents.Designer.cs">
       <DependentUpon>PageLogsEvents.cs</DependentUpon>
     </Compile>
-    <Compile Include="IHM\Panels\PanelConnexions.cs">
+    <Compile Include="IHM\Panels\PanelConnections.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="IHM\Panels\PanelConnexions.Designer.cs">
-      <DependentUpon>PanelConnexions.cs</DependentUpon>
+    <Compile Include="IHM\Panels\PanelConnections.Designer.cs">
+      <DependentUpon>PanelConnections.cs</DependentUpon>
     </Compile>
     <Compile Include="IHM\Panels\PanelGrosRobotCapteurs.cs">
       <SubType>UserControl</SubType>
@@ -462,8 +461,8 @@
     <EmbeddedResource Include="IHM\Pages\PageLogsEvents.resx">
       <DependentUpon>PageLogsEvents.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="IHM\Panels\PanelConnexions.resx">
-      <DependentUpon>PanelConnexions.cs</DependentUpon>
+    <EmbeddedResource Include="IHM\Panels\PanelConnections.resx">
+      <DependentUpon>PanelConnections.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="IHM\Panels\PanelGrosRobotCapteurs.resx">
       <DependentUpon>PanelGrosRobotCapteurs.cs</DependentUpon>

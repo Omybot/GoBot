@@ -25,7 +25,7 @@ namespace GoBot.Devices.CAN
             _communication.FrameReceived += _communication_FrameReceived;
 
             _servos = new Dictionary<ServomoteurID, CanServo>();
-            _canBoards = new List<CanBoard> { CanBoard.CanDisplay, CanBoard.CanServo1, CanBoard.CanServo2, CanBoard.CanServo3, CanBoard.CanServo4, CanBoard.CanServo5, CanBoard.CanServo6 };
+            _canBoards = new List<CanBoard> { CanBoard.CanServo1, CanBoard.CanServo2, CanBoard.CanServo3, CanBoard.CanServo4, CanBoard.CanServo5, CanBoard.CanServo6 };
         }
 
         public CanServo this[ServomoteurID servoGlobalId]

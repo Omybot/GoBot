@@ -28,6 +28,20 @@ namespace GoBot.Devices
             _freq = PepperlFreq.Hz35;
             _filter = PepperlFilter.None;
             _filterWidth = 2;
+            _checker.SendConnectionTest += _checker_SendConnectionTest;
+        }
+
+        private void _checker_SendConnectionTest(Communications.Connection sender)
+        {
+            if (!_checker.Connected && _started)
+            {
+                // On est censés être connectés mais en fait non, donc on essaie de relancer
+                lock (this)
+                {
+                    StopLoop();
+                    StartLoop();
+                }
+            }
         }
 
         public int PointsPerScan { get { return _freq.SamplesPerScan() / (_filter == PepperlFilter.None ? 1 : _filterWidth); } }

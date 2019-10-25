@@ -33,8 +33,6 @@ namespace GoBot.Communications.CAN
         TorqueAlert = 0x18,
         TestConnection = 0x19,
 
-        SetScore = 0xA0,
-
         Debug = 0xF0,
         DebugAsk = 0xF1,
         DebugResponse = 0xF2,
@@ -48,7 +46,6 @@ namespace GoBot.Communications.CAN
         CanServo3 = 0x03,
         CanServo4 = 0x04,
         CanServo5 = 0x05,
-        CanServo6 = 0x06,
-        CanDisplay = 0x10
+        CanServo6 = 0x06
     }
 }

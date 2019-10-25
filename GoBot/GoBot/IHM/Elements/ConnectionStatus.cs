@@ -1,13 +1,14 @@
 ﻿using GoBot.Communications;
 using GoBot.Communications.UDP;
 using System;
+using System.Drawing;
 using System.Windows.Forms;
 
 namespace GoBot.IHM
 {
     public partial class ConnectionStatus : UserControl
     {
-        private Connection _connection;
+        private ConnectionChecker _connection;
         private Timer _timer;
         
         public ConnectionStatus()
@@ -22,10 +23,10 @@ namespace GoBot.IHM
 
         private void _timer_Tick(object sender, EventArgs e)
         {
-            this.InvokeAuto(() => _conIndicator.SetConnectionState(_connection.ConnectionChecker.Connected, _connection.ConnectionChecker.Connected, true));
+            this.InvokeAuto(() => _conIndicator.BlinkColor(GetColor(_connection.Connected, _connection.Connected)));
         }
 
-        public Connection Connection
+        public ConnectionChecker Connection
         {
             get
             {
@@ -33,24 +34,41 @@ namespace GoBot.IHM
             }
             set
             {
-                if (_connection != null && _connection.ConnectionChecker != null)
-                    _connection.ConnectionChecker.ConnectionStatusChange -= ConnexionCheck_ConnectionStatusChange;
+                if (_connection != null)
+                    _connection.ConnectionStatusChange -= ConnexionCheck_ConnectionStatusChange;
 
                 _connection = value;
 
-                if (_connection != null && _connection.ConnectionChecker != null)
+                if (_connection != null)
                 {
-                    _conIndicator.SetConnectionState(_connection.ConnectionChecker.Connected, _connection.ConnectionChecker.Connected, false);
-                    _connection.ConnectionChecker.ConnectionStatusChange += ConnexionCheck_ConnectionStatusChange;
-
-                    _lblName.Text = _connection.Name;
+                    _conIndicator.Color = GetColor(_connection.Connected, _connection.Connected);
+                    _connection.ConnectionStatusChange += ConnexionCheck_ConnectionStatusChange;
                 }
             }
+        }
+
+        public String ConnectionName
+        {
+            set { _lblName.Text = value; }
         }
         
         private void ConnexionCheck_ConnectionStatusChange(Connection sender, bool connected)
         {
-            this.InvokeAuto(() => _conIndicator.SetConnectionState(sender.Connected, connected, true));
+            this.InvokeAuto(() => _conIndicator.BlinkColor(GetColor(_connection.Connected, connected)));
+        }
+
+        private ColorPlus GetColor(bool inOK, bool outOk)
+        {
+            ColorPlus output;
+
+            if (inOK && outOk)
+                output = Color.Green;
+            else if (!inOK && !outOk)
+                output = Color.Red;
+            else
+                output = Color.Orange;
+
+            return output;
         }
     }
 }

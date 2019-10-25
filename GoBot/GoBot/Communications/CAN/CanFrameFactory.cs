@@ -235,20 +235,6 @@ namespace GoBot.Communications.CAN
             return new Frame(tab);
         }
 
-        public static Frame BuildSetScore(int score)
-        {
-            byte[] tab = new byte[10];
-
-            tab[0] = 0x00;
-            tab[1] = (byte)CanBoard.CanDisplay;
-            tab[2] = (byte)CanFrameFunction.SetScore;
-            tab[3] = 0x00;
-            tab[4] = ByteDivide(score, true);
-            tab[5] = ByteDivide(score, false);
-
-            return new Frame(tab);
-        }
-
         public static Frame BuildTestConnection(CanBoard board)
         {
             byte[] tab = new byte[10];

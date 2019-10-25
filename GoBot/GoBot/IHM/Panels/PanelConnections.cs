@@ -7,7 +7,7 @@ namespace GoBot.IHM
 {
     public partial class PanelConnexions : UserControl
     {
-        private Timer timerBatteries;
+        private Timer _timerBatteries;
 
         public PanelConnexions()
         {
@@ -18,19 +18,19 @@ namespace GoBot.IHM
         {
             if (Robots.Simulation)
             {
-                batteriePack.Enabled = false;
+                batteryPack.Enabled = false;
             }
             else
             {
                 if (Connections.ConnectionGB.ConnectionChecker.Connected)
                 {
-                    batteriePack.Enabled = true;
-                    batteriePack.CurrentVoltage = Robots.GrosRobot.BatterieVoltage;
+                    batteryPack.Enabled = true;
+                    batteryPack.CurrentVoltage = Robots.GrosRobot.BatterieVoltage;
                     lblVoltage.Text = Robots.GrosRobot.BatterieVoltage.ToString() + "V";
                 }
                 else
                 {
-                    batteriePack.Enabled = false;
+                    batteryPack.Enabled = false;
                     lblVoltage.Text = "-";
                 }
             }
@@ -45,22 +45,28 @@ namespace GoBot.IHM
         {
             if (!Execution.DesignMode)
             {
+                ConnectionStatus statusAvoid = new ConnectionStatus();
+                statusAvoid.Connection = Devices.AllDevices.LidarAvoid.ConnectionChecker;
+                statusAvoid.ConnectionName = "Avoid";
+                _ledsPanel.Controls.Add(statusAvoid);
+
                 foreach (Connection conn in Connections.AllConnections)
                 {
                     ConnectionStatus status = new ConnectionStatus();
-                    status.Connection = conn;
+                    status.Connection = conn.ConnectionChecker;
+                    status.ConnectionName = conn.Name;
                     _ledsPanel.Controls.Add(status);
                 }
-                
-                batteriePack.VoltageHigh = Config.CurrentConfig.BatterieRobotVert;
-                batteriePack.VoltageAverage = Config.CurrentConfig.BatterieRobotOrange;
-                batteriePack.VoltageLow = Config.CurrentConfig.BatterieRobotRouge;
-                batteriePack.VoltageVeryLow = Config.CurrentConfig.BatterieRobotCritique;
 
-                timerBatteries = new System.Windows.Forms.Timer();
-                timerBatteries.Interval = 1000;
-                timerBatteries.Tick += new EventHandler(timerBatteries_Tick);
-                timerBatteries.Start();
+                batteryPack.VoltageHigh = Config.CurrentConfig.BatterieRobotVert;
+                batteryPack.VoltageAverage = Config.CurrentConfig.BatterieRobotOrange;
+                batteryPack.VoltageLow = Config.CurrentConfig.BatterieRobotRouge;
+                batteryPack.VoltageVeryLow = Config.CurrentConfig.BatterieRobotCritique;
+
+                _timerBatteries = new System.Windows.Forms.Timer();
+                _timerBatteries.Interval = 1000;
+                _timerBatteries.Tick += new EventHandler(timerBatteries_Tick);
+                _timerBatteries.Start();
             }
         }
     }

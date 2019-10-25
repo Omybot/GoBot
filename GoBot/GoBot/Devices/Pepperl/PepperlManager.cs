@@ -58,32 +58,44 @@ namespace GoBot.Devices
 
         public bool CreateChannelUDP()
         {
-            bool ok;
+            bool ok = false;
 
             try
             {
-                _udp = new UDPConnection();
-                _udp.Connect(_ip, _port, _port + 1);
-                _udp.StartReception();
-                _udp.FrameReceived += _udp_FrameReceived;
-
                 Dictionary<String, String> rep = _comm.SendCommand(PepperlCmd.CreateChannelUDP,
-                                    PepperlConst.ParamUdpAddress, FindMyIP().ToString(),
-                                    PepperlConst.ParamUdpPort, _port.ToString(),
-                                    PepperlConst.ParamUdpWatchdog, PepperlConst.ValueUdpWatchdogOn,
-                                    PepperlConst.ParamUdpWatchdogTimeout, _timeout.TotalMilliseconds.ToString(),
-                                    PepperlConst.ParamUdpPacketType, PepperlConst.ValueUdpPacketTypeDistanceAmplitudeCompact);
+                                        PepperlConst.ParamUdpAddress, FindMyIP().ToString(),
+                                        PepperlConst.ParamUdpPort, _port.ToString(),
+                                        PepperlConst.ParamUdpWatchdog, PepperlConst.ValueUdpWatchdogOn,
+                                        PepperlConst.ParamUdpWatchdogTimeout, _timeout.TotalMilliseconds.ToString(),
+                                        PepperlConst.ParamUdpPacketType, PepperlConst.ValueUdpPacketTypeDistanceAmplitudeCompact);
 
-                _handle = rep[PepperlConst.ParamUdpHandle];
+                if (rep != null)
+                {
+                    _handle = rep[PepperlConst.ParamUdpHandle];
 
-                _comm.SendCommand(PepperlCmd.ScanStart,
-                                    PepperlConst.ParamUdpHandle, _handle);
+                    if (_handle != "")
+                    {
+                        _udp = new UDPConnection();
+                        _udp.Connect(_ip, _port, _port + 1);
+                        _udp.StartReception();
+                        _udp.FrameReceived += _udp_FrameReceived;
 
-                ok = true;
+                        _comm.SendCommand(PepperlCmd.ScanStart,
+                                            PepperlConst.ParamUdpHandle, _handle);
+
+                        ok = true;
+                    }
+                }
             }
-            catch(Exception)
+            catch (Exception)
             {
                 ok = false;
+
+                if (_udp != null && _udp.Connected)
+                {
+                    _udp.Close();
+                    _udp = null;
+                }
             }
 
             return ok;

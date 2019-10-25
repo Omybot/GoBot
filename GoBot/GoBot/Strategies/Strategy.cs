@@ -8,6 +8,7 @@ using AStarFolder;
 using GoBot.Threading;
 using System.Diagnostics;
 using GoBot.BoardContext;
+using GoBot.Devices;
 
 namespace GoBot.Strategies
 {
@@ -164,8 +165,7 @@ namespace GoBot.Strategies
             Devices.AllDevices.CanServos.DisableAll();
 
             // On renvoie le score au cas où histoire d'assurer le truc...
-            //Devices.AllDevices.CanDisplay.SetScore(Plateau.Score);
-            Devices.AllDevices.CanDisplay.SetScore((int)(GameBoard.Score * 0.9)); // Sous estimation pour essaye de se rapprocher su score réel
+            ((Pepperl)AllDevices.LidarAvoid).ShowMessage("Estimation :", ((int)(GameBoard.Score * 0.9)).ToString()); // Sous estimation pour essaye de se rapprocher su score réel
         }
     }
 }

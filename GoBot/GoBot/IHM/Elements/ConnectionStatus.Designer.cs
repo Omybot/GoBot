@@ -29,15 +29,17 @@
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ConnectionStatus));
-            this._conIndicator = new Composants.ConnectionIndicator();
+            this._conIndicator = new Composants.Led();
             this._lblName = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this._conIndicator)).BeginInit();
             this.SuspendLayout();
             // 
             // _conIndicator
             // 
+            this._conIndicator.BackColor = System.Drawing.Color.Transparent;
+            this._conIndicator.Color = System.Drawing.Color.Red;
             this._conIndicator.Image = ((System.Drawing.Image)(resources.GetObject("_conIndicator.Image")));
-            this._conIndicator.Location = new System.Drawing.Point(3, 2);
+            this._conIndicator.Location = new System.Drawing.Point(3, 1);
             this._conIndicator.Name = "_conIndicator";
             this._conIndicator.Size = new System.Drawing.Size(16, 16);
             this._conIndicator.TabIndex = 0;
@@ -46,7 +48,7 @@
             // _lblName
             // 
             this._lblName.AutoSize = true;
-            this._lblName.Location = new System.Drawing.Point(23, 3);
+            this._lblName.Location = new System.Drawing.Point(21, 3);
             this._lblName.Name = "_lblName";
             this._lblName.Size = new System.Drawing.Size(10, 13);
             this._lblName.TabIndex = 1;
@@ -68,7 +70,7 @@
 
         #endregion
 
-        private Composants.ConnectionIndicator _conIndicator;
+        private Composants.Led _conIndicator;
         private System.Windows.Forms.Label _lblName;
     }
 }
