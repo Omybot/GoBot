@@ -433,7 +433,6 @@ namespace GoBot
 
             lock (robot.Graph)
             {
-
                 // Dessin des arcs
                 if (arretes)
                     foreach (Arc a in robot.Graph.Arcs)
@@ -446,7 +445,7 @@ namespace GoBot
                     //Dessin des noeuds
                     foreach (Node n in robot.Graph.Nodes)
                     {
-                        n.Position.Paint(g, n.Passable ? Color.Black : Color.Red, 3, Color.RoyalBlue, Scale);
+                        n.Position.Paint(g, n.Passable ? Color.Black : Color.RoyalBlue, 3,  n.Passable ? Color.RoyalBlue : Color.Transparent, Scale);
                     }
             }
 

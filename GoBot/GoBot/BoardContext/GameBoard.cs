@@ -279,9 +279,12 @@ namespace GoBot.BoardContext
 
             foreach (List<RealPoint> group in groups)
             {
-                RealPoint center = group.GetBarycenter();
-                if (!obstacles.Exists(o => o.Distance(center) < 150))
-                    obstacles.Add(center);
+                if (group.Count > 2)
+                {
+                    RealPoint center = group.GetBarycenter();
+                    if (!obstacles.Exists(o => o.Distance(center) < 150))
+                        obstacles.Add(center);
+                }
             }
 
             if (obstacles.Count > 0) SetOpponents(obstacles);

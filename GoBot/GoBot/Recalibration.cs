@@ -43,6 +43,7 @@ namespace GoBot
             Robots.GrosRobot.Lent();
             Robots.GrosRobot.Avancer(10);
             Robots.GrosRobot.Recallage(SensAR.Arriere);
+            Robots.GrosRobot.Rapide();
             Robots.GrosRobot.ReglerOffsetAsserv(new Position(Math.Round(Robots.GrosRobot.Position.Angle.InPositiveDegrees / 90) * 90, 
                 new RealPoint(Robots.GrosRobot.Position.Coordinates.X, Robots.GrosRobot.Longueur/2)));
 
@@ -53,6 +54,7 @@ namespace GoBot
             else
                 Robots.GrosRobot.PivotDroite(90);
 
+            Robots.GrosRobot.Lent();
             Robots.GrosRobot.Recallage(SensAR.Arriere);
 
             Robots.GrosRobot.ReglerOffsetAsserv(StartPosition);

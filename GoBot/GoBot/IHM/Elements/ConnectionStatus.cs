@@ -62,7 +62,7 @@ namespace GoBot.IHM
             ColorPlus output;
 
             if (inOK && outOk)
-                output = Color.Green;
+                output = Color.LimeGreen;
             else if (!inOK && !outOk)
                 output = Color.Red;
             else
