@@ -70,6 +70,7 @@ namespace GoBot
             this.tabActionneurs = new System.Windows.Forms.TabPage();
             this.tabLidar = new System.Windows.Forms.TabPage();
             this.tabPepperl = new System.Windows.Forms.TabPage();
+            this.tabMatch = new System.Windows.Forms.TabPage();
             this.btnClose = new System.Windows.Forms.Button();
             this.btnFenetre = new System.Windows.Forms.Button();
             this.tabPage1 = new System.Windows.Forms.TabPage();
@@ -103,6 +104,7 @@ namespace GoBot
             this.panelChargeCPU1 = new GoBot.IHM.PageDiagnosticMove();
             this.panelReglageAsserv = new GoBot.IHM.PageReglageAsserv();
             this.panelAlimentation1 = new GoBot.IHM.PagePower();
+            this.pnlMatch = new GoBot.IHM.Pages.PageMatch();
             this.tabAlimentation.SuspendLayout();
             this.tabConnexions.SuspendLayout();
             this.tabLogs.SuspendLayout();
@@ -141,6 +143,7 @@ namespace GoBot
             this.tabActionneurs.SuspendLayout();
             this.tabLidar.SuspendLayout();
             this.tabPepperl.SuspendLayout();
+            this.tabMatch.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.tabPage2.SuspendLayout();
             this.SuspendLayout();
@@ -304,6 +307,7 @@ namespace GoBot
             this.tabControl.Controls.Add(this.tabActionneurs);
             this.tabControl.Controls.Add(this.tabLidar);
             this.tabControl.Controls.Add(this.tabPepperl);
+            this.tabControl.Controls.Add(this.tabMatch);
             this.tabControl.HotTrack = true;
             this.tabControl.Location = new System.Drawing.Point(0, 0);
             this.tabControl.Name = "tabControl";
@@ -597,6 +601,16 @@ namespace GoBot
             this.tabPepperl.Text = "R2000";
             this.tabPepperl.UseVisualStyleBackColor = true;
             // 
+            // tabMatch
+            // 
+            this.tabMatch.Controls.Add(this.pnlMatch);
+            this.tabMatch.Location = new System.Drawing.Point(4, 22);
+            this.tabMatch.Name = "tabMatch";
+            this.tabMatch.Size = new System.Drawing.Size(1300, 712);
+            this.tabMatch.TabIndex = 32;
+            this.tabMatch.Text = "Match";
+            this.tabMatch.UseVisualStyleBackColor = true;
+            // 
             // btnClose
             // 
             this.btnClose.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
@@ -888,6 +902,13 @@ namespace GoBot
             this.panelAlimentation1.Size = new System.Drawing.Size(1025, 501);
             this.panelAlimentation1.TabIndex = 0;
             // 
+            // pnlMatch
+            // 
+            this.pnlMatch.Location = new System.Drawing.Point(8, 12);
+            this.pnlMatch.Name = "pnlMatch";
+            this.pnlMatch.Size = new System.Drawing.Size(1024, 600);
+            this.pnlMatch.TabIndex = 0;
+            // 
             // FenGoBot
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -947,6 +968,7 @@ namespace GoBot
             this.tabActionneurs.PerformLayout();
             this.tabLidar.ResumeLayout(false);
             this.tabPepperl.ResumeLayout(false);
+            this.tabMatch.ResumeLayout(false);
             this.tabPage1.ResumeLayout(false);
             this.tabPage2.ResumeLayout(false);
             this.ResumeLayout(false);
@@ -1029,6 +1051,8 @@ namespace GoBot
         private PanelBoardNumeric pnlNumericGB;
         private System.Windows.Forms.TabPage tabPepperl;
         private IHM.Pages.PagePepperl pagePepperl1;
+        private System.Windows.Forms.TabPage tabMatch;
+        private IHM.Pages.PageMatch pnlMatch;
     }
 }
 

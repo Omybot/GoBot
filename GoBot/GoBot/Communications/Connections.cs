@@ -13,10 +13,13 @@ namespace GoBot.Communications
     {
         private static ThreadLink _linkTestConnections;
 
+        private static Dictionary<CanBoard, CanSubConnection> _connectionCanServo;
+
         public static UDPConnection ConnectionMove { get; set; }
         public static UDPConnection ConnectionIO { get; set; }
         public static UDPConnection ConnectionGB { get; set; }
         public static UDPConnection ConnectionCanBridge { get; set; }
+        public static Dictionary<CanBoard, CanSubConnection> ConnectionsCanServo { get { return _connectionCanServo; } }
 
         public static CanConnection ConnectionCan { get; set; }
 
@@ -40,13 +43,14 @@ namespace GoBot.Communications
         /// </summary>
         private static int IntervalLoopTests = 1000;
 
-        private static Dictionary<CanBoard, CanSubConnection> _connectionCanServo = new Dictionary<CanBoard, CanSubConnection>();
 
         /// <summary>
         /// Initialise toutes les connexions
         /// </summary>
         public static void Init()
         {
+            _connectionCanServo = new Dictionary<CanBoard, CanSubConnection>();
+
             EnableConnection = new Dictionary<Board, bool>();
             UDPBoardConnection = new Dictionary<Board, Connection>();
             AllConnections = new List<Connection>();

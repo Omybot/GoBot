@@ -119,7 +119,7 @@ namespace GoBot.BoardContext
             obstacles.Add(new PolygonRectangle(new RealPoint(2089, 1850), 22, 150));
 
             //Boussole
-            obstacles.Add(new PolygonRectangle(new RealPoint(3000/2-140/2, 0), 140, 20));
+            obstacles.Add(new PolygonRectangle(new RealPoint(3000/2-300/2, 0), 300, 30));
 
             return obstacles;
         }

@@ -102,6 +102,12 @@
     <Compile Include="IHM\Elements\PanelBoardCanServos.Designer.cs">
       <DependentUpon>PanelBoardCanServos.cs</DependentUpon>
     </Compile>
+    <Compile Include="IHM\Pages\PageMatch.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="IHM\Pages\PageMatch.Designer.cs">
+      <DependentUpon>PageMatch.cs</DependentUpon>
+    </Compile>
     <Compile Include="IHM\Pages\PagePepperl.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -395,6 +401,9 @@
     <EmbeddedResource Include="IHM\Elements\ConnectionStatus.resx">
       <DependentUpon>ConnectionStatus.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="IHM\Pages\PageMatch.resx">
+      <DependentUpon>PageMatch.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="IHM\Pages\PagePepperl.resx">
       <DependentUpon>PagePepperl.cs</DependentUpon>
     </EmbeddedResource>
@@ -500,7 +509,7 @@
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <SubType>Designer</SubType>
-      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+      <LastGenOutput>Resources1.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <None Include="app.config">
       <SubType>Designer</SubType>
@@ -547,7 +556,6 @@
     <None Include="Images\Crochet.png" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Images\Alerts.png" />
     <None Include="Images\Folder16.png" />
     <None Include="Images\DownGreen16.png" />
     <None Include="Images\Close16.png" />
@@ -583,7 +591,6 @@
     <None Include="Images\Speed16.png" />
     <None Include="Images\Robot.png" />
     <None Include="Images\Pacman.png" />
-    <None Include="Images\Explode.png" />
     <None Include="Images\Star16.png" />
     <None Include="Images\PumpDisable16.png" />
     <None Include="Images\UpLine16.png" />
@@ -597,6 +604,10 @@
     <None Include="Images\UncheckAll16.png" />
     <None Include="Images\CheckAll16.png" />
     <None Include="Images\Warning24.png" />
+    <None Include="Images\ValidNok48.png" />
+    <None Include="Images\ValidNok96.png" />
+    <None Include="Images\ValidOk48.png" />
+    <None Include="Images\ValidOk96.png" />
     <Content Include="robot.ico" />
   </ItemGroup>
   <ItemGroup>

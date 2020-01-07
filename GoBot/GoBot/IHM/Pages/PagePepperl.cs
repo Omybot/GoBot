@@ -8,6 +8,7 @@ using System.Text;
 using System.Windows.Forms;
 using GoBot.Devices;
 using Geometry;
+using System.Threading;
 
 namespace GoBot.IHM.Pages
 {
@@ -15,9 +16,22 @@ namespace GoBot.IHM.Pages
     {
         Pepperl _lidar;
         
+        private void Loop()
+        {
+            String txt = "148_______148_______148_______";
+            while (true)
+            {
+                _lidar.ShowMessage("Estimation", txt);
+                Thread.Sleep(150);
+                txt += txt[0];
+                txt = txt.Substring(1, txt.Length - 1);
+            }
+        }
+
         private void btnText_Click(object sender, EventArgs e)
         {
             _lidar.ShowMessage(txtText1.Text, txtText2.Text);
+            Threading.ThreadManager.CreateThread(link => Loop()).StartThread();
         }
 
         public PagePepperl()
