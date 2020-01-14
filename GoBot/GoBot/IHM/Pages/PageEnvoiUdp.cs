@@ -37,8 +37,6 @@ namespace GoBot.IHM
                 Connections.ConnectionMove.SendMessage(trame);
             if (boxIO.Checked)
                 Connections.ConnectionIO.SendMessage(trame);
-            if (boxGB.Checked)
-                Connections.ConnectionGB.SendMessage(trame);
             if (boxCan.Checked)
                 Connections.ConnectionCan.SendMessage(trame);
         }
@@ -49,7 +47,6 @@ namespace GoBot.IHM
             {
                 switchBoutonMove.Value = true;
                 switchBoutonIO.Value = true;
-                switchBoutonGB.Value = true;
 
                 foreach (UDPConnection conn in Connections.AllConnections.OfType<UDPConnection>())
                 {
@@ -97,11 +94,6 @@ namespace GoBot.IHM
                 Frame trame = UdpFrameFactory.Debug(Board.RecIO, val);
                 Connections.ConnectionIO.SendMessage(trame);
             }
-            if (boxGB.Checked)
-            {
-                Frame trame = UdpFrameFactory.Debug(Board.RecGB, val);
-                Connections.ConnectionGB.SendMessage(trame);
-            }
         }
 
         private System.Windows.Forms.Timer timerTestConnexion;
@@ -136,18 +128,12 @@ namespace GoBot.IHM
                 Frame trame = UdpFrameFactory.TestConnexion(Board.RecIO);
                 Connections.ConnectionIO.SendMessage(trame);
             }
-            if (boxGB.Checked)
-            {
-                Frame trame = UdpFrameFactory.TestConnexion(Board.RecGB);
-                Connections.ConnectionGB.SendMessage(trame);
-            }
         }
 
         private void switchBoutonConnexion_ValueChanged(object sender, bool value)
         {
             Connections.EnableConnection[Board.RecMove] = switchBoutonMove.Value;
             Connections.EnableConnection[Board.RecIO] = switchBoutonIO.Value;
-            Connections.EnableConnection[Board.RecGB] = switchBoutonGB.Value;
         }
     }
 }

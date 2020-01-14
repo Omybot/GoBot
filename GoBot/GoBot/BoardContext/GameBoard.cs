@@ -80,14 +80,8 @@ namespace GoBot.BoardContext
                 if (_myColor != value)
                 {
                     _myColor = value;
-                    if (GameBoard.MyColor == GameBoard.ColorLeftBlue)
-                        AllDevices.RecGoBot.SetLedColor(Color.Yellow);
-                    else
-                        AllDevices.RecGoBot.SetLedColor(Color.DarkViolet);
-
                     MyColorChange?.Invoke(null, null);
-                    if (_obstacles != null)
-                        Robots.MainRobot.UpdateGraph(_obstacles.FromAllExceptBoard);
+                    if (_obstacles != null) Robots.MainRobot.UpdateGraph(_obstacles.FromAllExceptBoard);
                 }
             }
         }
@@ -247,7 +241,6 @@ namespace GoBot.BoardContext
 
                 //_obstacles.SetDetections(positions.Select(p => new Circle(p, RayonAdversaire)).ToList());
 
-                AllDevices.RecGoBot.ChangeLed(LedID.DebugB3);
                 // TODO2020 : faudrait pouvoir mettre à jour le graph sans refaire les zones interdites de couleur (sauvegarder un résultat après application de la couleur ?)
                 // parce que les carrés c'est beaucoup plus long que les ronds...
                 Robots.MainRobot.UpdateGraph(_obstacles.FromAllExceptBoard);
@@ -265,7 +258,6 @@ namespace GoBot.BoardContext
 
         public static void Init()
         {
-            AllDevices.RecGoBot.SetLed(LedID.DebugB3, AllDevices.LidarAvoid == null ? RecGoBot.LedStatus.Rouge : RecGoBot.LedStatus.Vert);
         }
 
         private static void LidarAvoid_NewMeasure(List<RealPoint> measure)

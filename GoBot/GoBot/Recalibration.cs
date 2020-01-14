@@ -35,8 +35,6 @@ namespace GoBot
 
         public static void Calibration()
         {
-            AllDevices.RecGoBot.SetLed(LedID.DebugB2, Devices.RecGoBot.LedStatus.Rouge);
-
             Robots.MainRobot.SendPID(Config.CurrentConfig.GRCoeffP, Config.CurrentConfig.GRCoeffI, Config.CurrentConfig.GRCoeffD);
             Robots.MainRobot.Stop();
 
@@ -62,7 +60,6 @@ namespace GoBot
             Robots.MainRobot.EnableStartTrigger();
 
             Robots.MainRobot.SetSpeedFast();
-            AllDevices.RecGoBot.SetLed(LedID.DebugB2, Devices.RecGoBot.LedStatus.Vert);
         }
     }
 }

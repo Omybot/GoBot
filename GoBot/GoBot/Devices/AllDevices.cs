@@ -10,13 +10,11 @@ namespace GoBot.Devices
 {
     static class AllDevices
     {
-        private static RecGoBot _recGoBot;
         private static CanServos _canServos;
         private static Lidar _lidarGround, _lidarAvoid;
 
         public static void Init()
         {
-            _recGoBot = new RecGoBot(Board.RecGB);
             _canServos = new CanServos(Connections.ConnectionCan);
             _lidarGround = new HokuyoRec(LidarID.Ground);
             _lidarAvoid = new Pepperl(IPAddress.Parse("10.1.0.50"));
@@ -28,14 +26,6 @@ namespace GoBot.Devices
         {
             _lidarAvoid.StopLoopMeasure();
             _lidarGround.StopLoopMeasure();
-        }
-
-        public static RecGoBot RecGoBot
-        {
-            get
-            {
-                return _recGoBot;
-            }
         }
 
         public static CanServos CanServos

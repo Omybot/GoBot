@@ -202,7 +202,6 @@
     <Compile Include="Dessinateur.cs" />
     <Compile Include="Devices\AllDevices.cs" />
     <Compile Include="Devices\Hokuyo\Hokuyo.cs" />
-    <Compile Include="Devices\RecGoBot.cs" />
     <Compile Include="GameElements\GameElement.cs" />
     <Compile Include="GameElements\AllGameElements.cs" />
     <Compile Include="GameElements\GameElementZone.cs" />
@@ -259,12 +258,6 @@
     </Compile>
     <Compile Include="IHM\Elements\PanelGenerics.Designer.cs">
       <DependentUpon>PanelGenerics.cs</DependentUpon>
-    </Compile>
-    <Compile Include="IHM\Panels\PanelRecGoBot.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="IHM\Panels\PanelRecGoBot.designer.cs">
-      <DependentUpon>PanelRecGoBot.cs</DependentUpon>
     </Compile>
     <Compile Include="IHM\Forms\FenNomArchivage.cs">
       <SubType>Form</SubType>
@@ -448,9 +441,6 @@
     </EmbeddedResource>
     <EmbeddedResource Include="IHM\Pages\PageLidar.resx">
       <DependentUpon>PageLidar.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="IHM\Panels\PanelRecGoBot.resx">
-      <DependentUpon>PanelRecGoBot.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="IHM\Panels\PanelServoCan.resx">
       <DependentUpon>PanelServoCan.cs</DependentUpon>

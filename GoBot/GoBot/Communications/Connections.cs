@@ -17,7 +17,6 @@ namespace GoBot.Communications
 
         public static UDPConnection ConnectionMove { get; set; }
         public static UDPConnection ConnectionIO { get; set; }
-        public static UDPConnection ConnectionGB { get; set; }
         public static UDPConnection ConnectionCanBridge { get; set; }
         public static Dictionary<CanBoard, CanSubConnection> ConnectionsCanServo { get { return _connectionCanServo; } }
 
@@ -61,9 +60,6 @@ namespace GoBot.Communications
             ConnectionMove = AddUDPConnection(Board.RecMove, IPAddress.Parse("10.1.0.11"), 12321, 12311);
             ConnectionMove.Name = Board.RecMove.ToString();
 
-            ConnectionGB = AddUDPConnection(Board.RecGB, IPAddress.Parse("10.1.0.12"), 12322, 12312);
-            ConnectionGB.Name = Board.RecGB.ToString();
-
             ConnectionCanBridge = AddUDPConnection(Board.RecCan, IPAddress.Parse("10.1.0.15"), 12325, 12315);
             ConnectionCanBridge.Name = Board.RecCan.ToString();
             
@@ -88,7 +84,6 @@ namespace GoBot.Communications
         {
             ConnectionIO.StartReception();
             ConnectionMove.StartReception();
-            ConnectionGB.StartReception();
             ConnectionCan.StartReception();
         }
 

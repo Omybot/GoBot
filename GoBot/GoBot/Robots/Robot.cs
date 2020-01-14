@@ -45,25 +45,21 @@ namespace GoBot
 
             AnalogicPinsValue = new Dictionary<Board, List<double>>();
             AnalogicPinsValue.Add(Board.RecIO, new List<double>());
-            AnalogicPinsValue.Add(Board.RecGB, new List<double>());
             AnalogicPinsValue.Add(Board.RecMove, new List<double>());
 
             for (int i = 0; i < 9; i++)
             {
                 AnalogicPinsValue[Board.RecIO].Add(0);
-                AnalogicPinsValue[Board.RecGB].Add(0);
                 AnalogicPinsValue[Board.RecMove].Add(0);
             }
 
             NumericPinsValue = new Dictionary<Board, List<Byte>>();
             NumericPinsValue.Add(Board.RecIO, new List<byte>());
-            NumericPinsValue.Add(Board.RecGB, new List<byte>());
             NumericPinsValue.Add(Board.RecMove, new List<byte>());
 
             for (int i = 0; i < 3 * 2; i++)
             {
                 NumericPinsValue[Board.RecIO].Add(0);
-                NumericPinsValue[Board.RecGB].Add(0);
                 NumericPinsValue[Board.RecMove].Add(0);
             }
 
@@ -410,7 +406,6 @@ namespace GoBot
         public abstract Color ReadSensorColor(SensorColorID sensor, bool waitEnd = true);
         public abstract String ReadLidarMeasure(LidarID lidar, int timeout, out Position refPosition);
         public abstract bool ReadStartTrigger();
-        public abstract Color ReadMyColor();
 
         public void EnableStartTrigger()
         {

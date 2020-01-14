@@ -31,7 +31,7 @@
             this.btnEnvoyer = new System.Windows.Forms.Button();
             this.boxMove = new System.Windows.Forms.CheckBox();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
-            this.boxGB = new System.Windows.Forms.CheckBox();
+            this.boxCan = new System.Windows.Forms.CheckBox();
             this.groupBox6 = new System.Windows.Forms.GroupBox();
             this.label10 = new System.Windows.Forms.Label();
             this.numIntervalleTest = new System.Windows.Forms.NumericUpDown();
@@ -57,12 +57,9 @@
             this.RecMove = new System.Windows.Forms.Label();
             this.label15 = new System.Windows.Forms.Label();
             this.groupBox7 = new System.Windows.Forms.GroupBox();
-            this.switchBoutonGB = new Composants.SwitchButton();
-            this.label7 = new System.Windows.Forms.Label();
             this.switchBoutonMove = new Composants.SwitchButton();
             this.switchBoutonIO = new Composants.SwitchButton();
             this._pnlConnections = new System.Windows.Forms.FlowLayoutPanel();
-            this.boxCan = new System.Windows.Forms.CheckBox();
             this.groupBox3.SuspendLayout();
             this.groupBox6.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numIntervalleTest)).BeginInit();
@@ -94,7 +91,6 @@
             // groupBox3
             // 
             this.groupBox3.Controls.Add(this.boxCan);
-            this.groupBox3.Controls.Add(this.boxGB);
             this.groupBox3.Controls.Add(this.groupBox6);
             this.groupBox3.Controls.Add(this.btnDebug9);
             this.groupBox3.Controls.Add(this.btnDebug8);
@@ -119,15 +115,15 @@
             this.groupBox3.TabStop = false;
             this.groupBox3.Text = "Envoi rapide trame";
             // 
-            // boxGB
+            // boxCan
             // 
-            this.boxGB.AutoSize = true;
-            this.boxGB.Location = new System.Drawing.Point(167, 26);
-            this.boxGB.Name = "boxGB";
-            this.boxGB.Size = new System.Drawing.Size(76, 17);
-            this.boxGB.TabIndex = 27;
-            this.boxGB.Text = "RecGoBot";
-            this.boxGB.UseVisualStyleBackColor = true;
+            this.boxCan.AutoSize = true;
+            this.boxCan.Location = new System.Drawing.Point(172, 26);
+            this.boxCan.Name = "boxCan";
+            this.boxCan.Size = new System.Drawing.Size(65, 17);
+            this.boxCan.TabIndex = 28;
+            this.boxCan.Text = "RecCan";
+            this.boxCan.UseVisualStyleBackColor = true;
             // 
             // groupBox6
             // 
@@ -382,41 +378,16 @@
             // 
             // groupBox7
             // 
-            this.groupBox7.Controls.Add(this.switchBoutonGB);
-            this.groupBox7.Controls.Add(this.label7);
             this.groupBox7.Controls.Add(this.switchBoutonMove);
             this.groupBox7.Controls.Add(this.switchBoutonIO);
             this.groupBox7.Controls.Add(this.RecMove);
             this.groupBox7.Controls.Add(this.label15);
             this.groupBox7.Location = new System.Drawing.Point(235, 233);
             this.groupBox7.Name = "groupBox7";
-            this.groupBox7.Size = new System.Drawing.Size(200, 110);
+            this.groupBox7.Size = new System.Drawing.Size(200, 88);
             this.groupBox7.TabIndex = 29;
             this.groupBox7.TabStop = false;
             this.groupBox7.Text = "Activation connexions";
-            // 
-            // switchBoutonGB
-            // 
-            this.switchBoutonGB.AutoSize = true;
-            this.switchBoutonGB.BackColor = System.Drawing.Color.Transparent;
-            this.switchBoutonGB.Location = new System.Drawing.Point(119, 75);
-            this.switchBoutonGB.MaximumSize = new System.Drawing.Size(35, 15);
-            this.switchBoutonGB.MinimumSize = new System.Drawing.Size(35, 15);
-            this.switchBoutonGB.Mirrored = true;
-            this.switchBoutonGB.Name = "switchBoutonGB";
-            this.switchBoutonGB.Size = new System.Drawing.Size(35, 15);
-            this.switchBoutonGB.TabIndex = 23;
-            this.switchBoutonGB.Value = false;
-            this.switchBoutonGB.ValueChanged += new Composants.SwitchButton.ValueChangedDelegate(this.switchBoutonConnexion_ValueChanged);
-            // 
-            // label7
-            // 
-            this.label7.AutoSize = true;
-            this.label7.Location = new System.Drawing.Point(42, 77);
-            this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(42, 13);
-            this.label7.TabIndex = 24;
-            this.label7.Text = "RecGB";
             // 
             // switchBoutonMove
             // 
@@ -455,17 +426,7 @@
             this._pnlConnections.Size = new System.Drawing.Size(212, 596);
             this._pnlConnections.TabIndex = 30;
             // 
-            // boxCan
-            // 
-            this.boxCan.AutoSize = true;
-            this.boxCan.Location = new System.Drawing.Point(249, 26);
-            this.boxCan.Name = "boxCan";
-            this.boxCan.Size = new System.Drawing.Size(65, 17);
-            this.boxCan.TabIndex = 28;
-            this.boxCan.Text = "RecCan";
-            this.boxCan.UseVisualStyleBackColor = true;
-            // 
-            // PanelEnvoiUdp
+            // PageEnvoiUdp
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -473,7 +434,7 @@
             this.Controls.Add(this._pnlConnections);
             this.Controls.Add(this.groupBox7);
             this.Controls.Add(this.groupBox3);
-            this.Name = "PanelEnvoiUdp";
+            this.Name = "PageEnvoiUdp";
             this.Size = new System.Drawing.Size(916, 608);
             this.Load += new System.EventHandler(this.PanelEnvoiUdp_Load);
             this.groupBox3.ResumeLayout(false);
@@ -522,9 +483,6 @@
         private System.Windows.Forms.Label RecMove;
         private System.Windows.Forms.Label label15;
         private System.Windows.Forms.GroupBox groupBox7;
-        private Composants.SwitchButton switchBoutonGB;
-        private System.Windows.Forms.Label label7;
-        private System.Windows.Forms.CheckBox boxGB;
         private System.Windows.Forms.FlowLayoutPanel _pnlConnections;
         private System.Windows.Forms.CheckBox boxCan;
     }

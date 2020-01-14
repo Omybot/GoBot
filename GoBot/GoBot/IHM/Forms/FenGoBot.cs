@@ -7,7 +7,6 @@ using GoBot.IHM;
 using GoBot.Communications;
 using System.IO;
 using GoBot.Threading;
-using GoBot.Communications.UDP;
 using GoBot.Devices;
 using GoBot.BoardContext;
 
@@ -100,8 +99,6 @@ namespace GoBot
                 Instance = this;
 
                 GameBoard.MyColor = GameBoard.ColorLeftBlue;
-
-                Connections.ConnectionGB.SendMessage(UdpFrameFactory.DemandeCouleurEquipe());
             }
             
             Connections.StartConnections();
@@ -113,7 +110,6 @@ namespace GoBot
 
             pnlNumericIO.SetBoard(Board.RecIO);
             pnlNumericMove.SetBoard(Board.RecMove);
-            pnlNumericGB.SetBoard(Board.RecGB);
 
             this.Text = "GoBot 2020 - Beta";
         }

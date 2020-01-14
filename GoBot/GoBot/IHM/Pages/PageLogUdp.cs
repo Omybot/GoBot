@@ -52,7 +52,6 @@ namespace GoBot.IHM
             _boardColor.Add(Board.PC, Color.FromArgb(180, 245, 245));
             _boardColor.Add(Board.RecMove, Color.FromArgb(143, 255, 143));
             _boardColor.Add(Board.RecIO, Color.FromArgb(210, 254, 211));
-            _boardColor.Add(Board.RecGB, Color.FromArgb(251, 217, 231));
             _boardColor.Add(Board.RecCan, Color.FromArgb(254, 244, 188));
 
             _boxLists = new List<CheckedListBox>();
@@ -85,7 +84,6 @@ namespace GoBot.IHM
             _lstFunctions = new Dictionary<Board, CheckedListBox>();
             _lstFunctions.Add(Board.RecIO, lstRecIOFunctions);
             _lstFunctions.Add(Board.RecMove, lstRecMoveFunctions);
-            _lstFunctions.Add(Board.RecGB, lstRecGoBotFunctions);
             _lstFunctions.Add(Board.RecCan, lstRecCanFunctions);
 
             foreach (CheckedListBox lst in _configFunctions.Keys)

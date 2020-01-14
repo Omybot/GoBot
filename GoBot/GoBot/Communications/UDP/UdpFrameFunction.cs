@@ -8,8 +8,6 @@
         Reset = 0xF1,
         Buzzer = 0xF3,
 
-        DemandeCouleurEquipe = 0x72,
-        RetourCouleurEquipe = 0x73,
         DemandeCapteurOnOff = 0x74,
         RetourCapteurOnOff = 0x75,
         DemandeValeursAnalogiques = 0x76,
@@ -21,7 +19,6 @@
         DemandePositionCodeur = 0x21,
         RetourPositionCodeur = 0x22,
 
-        Led = 0x62,
         MoteurOrigin = 0x63,
         MoteurResetPosition = 0x64,
         PilotageOnOff = 0x65,
@@ -71,7 +68,6 @@
         ChangementBaudrateUART = 0x61,
 
         AffichageLCD = 0xB0,
-        CouleurLedRGB = 0xB1,
 
         EnvoiCAN = 0xC0,
         ReponseCAN = 0xC1,

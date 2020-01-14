@@ -498,11 +498,6 @@ namespace GoBot
             return true;
         }
 
-        public override Color ReadMyColor()
-        {
-            return GameBoard.ColorRightYellow;
-        }
-
         public override List<int>[] DiagnosticPID(int steps, SensAR sens, int pointsCount)
         {
             List<int>[] output = new List<int>[2];

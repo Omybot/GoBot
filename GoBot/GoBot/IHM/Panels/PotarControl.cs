@@ -71,7 +71,7 @@ namespace GoBot.IHM
 
             _linkPolling.RegisterName();
 
-            ticksCurrent = AllDevices.RecGoBot.GetCodeurPosition();
+            ticksCurrent = 0;//TODO2020 AllDevices.RecGoBot.GetCodeurPosition();
             ticksMin = ticksCurrent;
             ticksRange = pointsParTour * toursRange;
 
@@ -86,7 +86,7 @@ namespace GoBot.IHM
                     toursRange = trackBarSpeed.Value;
                     ticksRange = pointsParTour * toursRange;
                     Thread.Sleep(50);
-                    ticksCurrent = AllDevices.RecGoBot.GetCodeurPosition();
+                    ticksCurrent = 0;//TODO2020 AllDevices.RecGoBot.GetCodeurPosition();
 
                     if (ticksCurrent > ticksMin + ticksRange)
                         ticksMin = ticksCurrent - ticksRange;

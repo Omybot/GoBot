@@ -70,16 +70,6 @@ namespace GoBot.Communications.UDP
                         output = ReplaceParam(output, parameters[1].ToString());
                     }
                     break;
-                case UdpFrameFunction.DemandeCouleurEquipe:
-                    output = "Demande couleur équipe";
-                    break;
-                case UdpFrameFunction.RetourCouleurEquipe:
-                    output = "Retour couleur équipe : {0}";
-                    if (parameters != null)
-                    {
-                        output = ReplaceParam(output, parameters[0].ToString());
-                    }
-                    break;
                 case UdpFrameFunction.DemandeCapteurOnOff:
                     output = "Demande capteur {0}";
                     if (parameters != null)
@@ -146,14 +136,6 @@ namespace GoBot.Communications.UDP
                     {
                         output = ReplaceParam(output, NameFinder.GetName((ActuatorOnOffID)parameters[0]));
                         output = ReplaceParam(output, NameFinder.GetName(parameters[1] > 0));
-                    }
-                    break;
-                case UdpFrameFunction.Led:
-                    output = "Pilote led {0} : {1}";
-                    if (parameters != null)
-                    {
-                        output = ReplaceParam(output, NameFinder.GetName((LedID)parameters[0]));
-                        output = ReplaceParam(output, ((Devices.RecGoBot.LedStatus)parameters[1]).ToString());
                     }
                     break;
                 case UdpFrameFunction.MoteurPosition:
@@ -420,16 +402,6 @@ namespace GoBot.Communications.UDP
                     {
                         for (int i = 0; i < 32; i++)
                             output = ReplaceParam(output, ((char)parameters[i]).ToString());
-                    }
-                    break;
-                case UdpFrameFunction.CouleurLedRGB:
-                    output = "Envoi couleur LED {0}: {1}-{2}-{3}";
-                    if (parameters != null)
-                    {
-                        output = ReplaceParam(output, NameFinder.GetName((LedRgbID)parameters[0]));
-                        output = ReplaceParam(output, parameters[1].ToString("000"));
-                        output = ReplaceParam(output, parameters[2].ToString("000"));
-                        output = ReplaceParam(output, parameters[3].ToString("000"));
                     }
                     break;
                 case UdpFrameFunction.EnvoiCAN:

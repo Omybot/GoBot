@@ -25,7 +25,6 @@ namespace GoBot
         private bool _positionReceived;
 
         private List<double> _lastRecMoveLoad, _lastPwmLeft, _lastPwmRight;
-        private Color _lastTeamColor;
         List<int>[] _lastPidTest;
         private string _lastLidarMeasure;
         private Position _lastLidarPosition;
@@ -99,21 +98,10 @@ namespace GoBot
             {
                 StartTriggerEnable = false;
                 if (GameBoard.Strategy == null)
-                    GameBoard.Strategy = new GoBot.Strategies.StrategyMatch();
+                    GameBoard.Strategy = new Strategies.StrategyMatch();
+
                 GameBoard.Strategy.ExecuteMatch();
             }
-        }
-
-        void RecGoBot_ColorChange(MatchColor state)
-        {
-            if (state == MatchColor.LeftBlue)
-                _lastTeamColor = GameBoard.ColorLeftBlue;
-            else if (state == MatchColor.RightYellow)
-                _lastTeamColor = GameBoard.ColorRightYellow;
-
-            GameBoard.MyColor = _lastTeamColor;
-
-            _lockFrame[UdpFrameFunction.RetourCouleurEquipe]?.Release();
         }
 
         public override void Init()
@@ -124,8 +112,6 @@ namespace GoBot
 
             if (this == Robots.MainRobot)
                 Connections.ConnectionIO.FrameReceived += new UDPConnection.NewFrameDelegate(ReceptionMessage);
-
-            Connections.ConnectionGB.FrameReceived += new UDPConnection.NewFrameDelegate(ReceptionMessage);
 
             if (this == Robots.MainRobot)
             {
@@ -147,8 +133,7 @@ namespace GoBot
             PositionsHistorical = new List<Position>();
             _asserConnection.SendMessage(UdpFrameFactory.DemandePositionContinue(100, this));
 
-            AllDevices.RecGoBot.ColorChange += RecGoBot_ColorChange;
-            AllDevices.RecGoBot.JackChange += RecGoBot_JackChange;
+            //TODO2020AllDevices.RecGoBot.JackChange += RecGoBot_JackChange;
         }
 
         public override Color ReadSensorColor(SensorColorID capteur, bool wait = true)
@@ -167,8 +152,9 @@ namespace GoBot
         {
             if (wait) _lockSensorOnOff[sensor] = new Semaphore(0, int.MaxValue);
 
-            Frame t = UdpFrameFactory.DemandeCapteurOnOff(sensor);
-            Connections.ConnectionGB.SendMessage(t);
+            // TODO2020 y'a ptet pas que RecMove...
+            Frame t = UdpFrameFactory.DemandeCapteurOnOff(Board.RecMove, sensor);
+            Connections.ConnectionMove.SendMessage(t);
 
             if (wait) _lockSensorOnOff[sensor].WaitOne(1000);
 
@@ -179,20 +165,14 @@ namespace GoBot
         {
             link.RegisterName();
 
-            for (LedID i = LedID.DebugB1; i <= LedID.DebugA1; i++)
-                AllDevices.RecGoBot.SetLed((LedID)i, RecGoBot.LedStatus.Rouge);
-
-            AllDevices.RecGoBot.Buzz(7000, 200);
+            //TODO2020AllDevices.RecGoBot.Buzz(7000, 200);
 
             Thread.Sleep(500);
             TrajectoryFailed = true;
             Stop(StopMode.Abrupt);
             _lockFrame[UdpFrameFunction.FinDeplacement]?.Release();
 
-            AllDevices.RecGoBot.Buzz(0, 200);
-
-            for (LedID i = LedID.DebugB1; i <= LedID.DebugA1; i++)
-                AllDevices.RecGoBot.SetLed((LedID)i, RecGoBot.LedStatus.Off);
+            //TODO2020AllDevices.RecGoBot.Buzz(0, 200);
         }
 
         public void ReceptionMessage(Frame frame)
@@ -208,7 +188,7 @@ namespace GoBot
                     break;
                 case UdpFrameFunction.MoteurBlocage:    // Idem avec bip
                     _lockMotor[(MotorID)frame[2]]?.Release();
-                    AllDevices.RecGoBot.Buzz("..");
+                    //TODO2020AllDevices.RecGoBot.Buzz("..");
                     break;
                 case UdpFrameFunction.Blocage:
                     ThreadManager.CreateThread(AsyncAsserEnable).StartThread();
@@ -673,15 +653,6 @@ namespace GoBot
         public override bool ReadStartTrigger()
         {
             return ReadSensorOnOff(SensorOnOffID.Jack, true);
-        }
-
-        public override Color ReadMyColor()
-        {
-            _lockFrame[UdpFrameFunction.RetourCouleurEquipe] = new Semaphore(0, int.MaxValue);
-            Connections.ConnectionGB.SendMessage(UdpFrameFactory.DemandeCouleurEquipe());
-            _lockFrame[UdpFrameFunction.RetourCouleurEquipe].WaitOne(500);
-
-            return _lastTeamColor;
         }
 
         public override List<int>[] DiagnosticPID(int steps, SensAR sens, int pointsCount)

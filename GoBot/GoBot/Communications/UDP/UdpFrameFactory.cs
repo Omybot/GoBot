@@ -57,17 +57,6 @@ namespace GoBot.Communications.UDP
             return new Frame(tab);
         }
 
-        static public Frame SetLed(LedID led, RecGoBot.LedStatus status)
-        {
-            byte[] tab = new byte[4];
-            tab[0] = (byte)Board.RecGB;
-            tab[1] = (byte)UdpFrameFunction.Led;
-            tab[2] = (byte)led;
-            tab[3] = (byte)status;
-
-            return new Frame(tab);
-        }
-
         static public Frame DemandeCapteurCouleur(SensorColorID capteur)
         {
             byte[] tab = new byte[3];
@@ -88,31 +77,6 @@ namespace GoBot.Communications.UDP
             return new Frame(tab);
         }
 
-        static public Frame SetLedColor(Color color)
-        {
-            byte[] tab = new byte[6];
-            tab[0] = (byte)Board.RecGB;
-            tab[1] = (byte)UdpFrameFunction.CouleurLedRGB;
-            tab[2] = (byte)0;
-            tab[3] = (byte)color.R;
-            tab[4] = (byte)color.G;
-            tab[5] = (byte)color.B;
-
-            return new Frame(tab);
-        }
-
-        static public Frame Buzz(int frequency, byte volume)
-        {
-            byte[] tab = new byte[5];
-            tab[0] = (byte)Board.RecGB;
-            tab[1] = (byte)UdpFrameFunction.Buzzer;
-            tab[2] = (byte)ByteDivide(frequency, true);
-            tab[3] = (byte)ByteDivide(frequency, false);
-            tab[4] = (byte)volume;
-
-            return new Frame(tab);
-        }
-
         static public Frame ActionneurOnOff(ActuatorOnOffID actionneur, bool onOff)
         {
             byte[] tab = new byte[4];
@@ -124,10 +88,10 @@ namespace GoBot.Communications.UDP
             return new Frame(tab);
         }
 
-        static public Frame DemandeCapteurOnOff(SensorOnOffID capteur)
+        static public Frame DemandeCapteurOnOff(Board board, SensorOnOffID capteur)
         {
             byte[] tab = new byte[3];
-            tab[0] = (byte)Board.RecGB;
+            tab[0] = (byte)board;
             tab[1] = (byte)UdpFrameFunction.DemandeCapteurOnOff;
             tab[2] = (byte)capteur;
 
@@ -458,16 +422,6 @@ namespace GoBot.Communications.UDP
             tab[1] = (byte)UdpFrameFunction.TestConnexion;
             return new Frame(tab);
         }
-
-        static public Frame DemandeCouleurEquipe()
-        {
-            byte[] tab = new byte[3];
-            tab[0] = (byte)Board.RecGB;
-            tab[1] = (byte)UdpFrameFunction.DemandeCapteurOnOff;
-            tab[2] = (byte)SensorOnOffID.CouleurEquipe;
-            return new Frame(tab);
-        }
-
 
         static public Frame EnvoiConsigneBrute(int consigne, SensAR sens, Robot robot)
         {
