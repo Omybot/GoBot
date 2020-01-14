@@ -75,7 +75,7 @@ namespace GoBot.Devices
         private void Button1Click()
         {
 
-            ThreadManager.CreateThread(link => Robots.GrosRobot.RangerActionneurs()).StartThread();
+            ThreadManager.CreateThread(link => Robots.MainRobot.ActuatorsStore()).StartThread();
             //while (Plateau.Detections?.Count > 0)
             //{
             //    IShape target = Plateau.Detections.OrderBy(o => o.Distance(Robots.GrosRobot.Position.Coordinates)).ToList()[0];
@@ -119,12 +119,12 @@ namespace GoBot.Devices
 
         private void Button3Click()
         {
-            Robots.GrosRobot.Rapide();
+            Robots.MainRobot.SetSpeedFast();
         }
 
         private void Button4Click()
         {
-            Robots.GrosRobot.Lent();
+            Robots.MainRobot.SetSpeedLow();
         }
 
         private void Button5Click()
@@ -165,14 +165,14 @@ namespace GoBot.Devices
             cpt9++;
 
             if(cpt9 % 2 == 0)
-                Robots.GrosRobot.PivotGauche(360);
+                Robots.MainRobot.PivotLeft(360);
             else
-                Robots.GrosRobot.PivotDroite(360);
+                Robots.MainRobot.PivotRight(360);
         }
 
         private void Button10Click()
         {
-            Robots.GrosRobot.Stop(Robots.GrosRobot.AsserActif ? StopMode.Freely : StopMode.Abrupt);
+            Robots.MainRobot.Stop(Robots.MainRobot.AsserEnable ? StopMode.Freely : StopMode.Abrupt);
         }
 
         void RecGoBot_ButtonChange(SensorOnOffID btn, bool state)

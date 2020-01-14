@@ -37,7 +37,7 @@ namespace GoBot
         private ThreadLink _linkAsserv;
         private Random _rand;
 
-        public RobotSimu(IDRobot idRobot) : base()
+        public RobotSimu(IDRobot idRobot, double width, double lenght, double wheelSpacing, double diameter) : base(width, lenght, wheelSpacing, diameter)
         {
             IDRobot = idRobot;
 
@@ -53,54 +53,19 @@ namespace GoBot
             SemDeplacement = new Semaphore(1, 1);
             SensDep = SensAR.Avant;
 
-            Nom = "GrosRobot";
+            Name = "GrosRobot";
             RecallageEnCours = false;
 
             IDRobot = idRobot;
-            CapteurActive = new Dictionary<SensorOnOffID, bool>();
-            ActionneurActive = new Dictionary<ActuatorOnOffID, bool>();
-            CapteursCouleur = new Dictionary<SensorColorID, Color>();
-
-            foreach (SensorOnOffID fonction in Enum.GetValues(typeof(SensorOnOffID)))
-            {
-                CapteurActive.Add(fonction, false);
-            }
-
-            foreach (ActuatorOnOffID fonction in Enum.GetValues(typeof(ActuatorOnOffID)))
-            {
-                ActionneurActive.Add(fonction, false);
-            }
-
-            foreach (SensorColorID fonction in Enum.GetValues(typeof(SensorColorID)))
-            {
-                CapteursCouleur.Add(fonction, Color.Black);
-            }
-
-            ValeursAnalogiques = new Dictionary<Board, List<double>>();
-            ValeursAnalogiques.Add(Board.RecIO, null);
-            ValeursAnalogiques.Add(Board.RecGB, null);
-            ValeursAnalogiques.Add(Board.RecMove, null);
-
-            ValeursNumeriques = new Dictionary<Board, List<Byte>>();
-            ValeursNumeriques.Add(Board.RecIO, new List<byte>());
-            ValeursNumeriques.Add(Board.RecGB, new List<byte>());
-            ValeursNumeriques.Add(Board.RecMove, new List<byte>());
-
-            for (int i = 0; i < 3 * 2; i++)
-            {
-                ValeursNumeriques[Board.RecIO].Add(0);
-                ValeursNumeriques[Board.RecGB].Add(0);
-                ValeursNumeriques[Board.RecMove].Add(0);
-            }
         }
 
-        public override void Delete()
+        public override void DeInit()
         {
             _linkAsserv.Cancel();
             _linkAsserv.WaitEnd();
         }
 
-        public override String GetMesureLidar(LidarID lidar, int timeout, out Position refPosition)
+        public override string ReadLidarMeasure(LidarID lidar, int timeout, out Position refPosition)
         {
             refPosition = new Position(position);
             return "";
@@ -108,12 +73,12 @@ namespace GoBot
 
         void timerPositions_Elapsed(object sender, ElapsedEventArgs e)
         {
-            lock (HistoriqueCoordonnees)
+            lock (PositionsHistorical)
             {
-                HistoriqueCoordonnees.Add(new Position(Position.Angle, new RealPoint(Position.Coordinates.X, Position.Coordinates.Y)));
+                PositionsHistorical.Add(new Position(Position.Angle, new RealPoint(Position.Coordinates.X, Position.Coordinates.Y)));
 
-                while (HistoriqueCoordonnees.Count > 1200)
-                    HistoriqueCoordonnees.RemoveAt(0);
+                while (PositionsHistorical.Count > 1200)
+                    PositionsHistorical.RemoveAt(0);
             }
         }
 
@@ -211,7 +176,7 @@ namespace GoBot
                     RealPoint newPos = seg.GetCrossingPoints(cer)[0];
                     AngleDelta a = -Maths.GetDirection(newPos, trajectoirePolaire[pointCourantTrajPolaire]).angle;
                     position = new Position(new AnglePosition(a), newPos);
-                    OnPositionChange(Position);
+                    OnPositionChanged(Position);
 
                     if (pointCourantTrajPolaire == trajectoirePolaire.Count - 1)
                     {
@@ -229,12 +194,12 @@ namespace GoBot
                         AngleDelta diff = Math.Abs(Destination.Angle - Position.Angle);
 
                         double speedWithAcceleration = Math.Min(SpeedConfig.PivotSpeed, VitesseActuelle + SpeedConfig.PivotAcceleration / (1000.0 / interval));
-                        double remainingDistanceWithAcceleration = CircleArcLenght(Entraxe, diff) - (VitesseActuelle + speedWithAcceleration) / 2 / (1000.0 / interval);
+                        double remainingDistanceWithAcceleration = CircleArcLenght(WheelSpacing, diff) - (VitesseActuelle + speedWithAcceleration) / 2 / (1000.0 / interval);
 
                         if (remainingDistanceWithAcceleration > DistanceFreinage(speedWithAcceleration))
                         {
                             double distParcourue = (VitesseActuelle + speedWithAcceleration) / 2 / (1000.0 / interval);
-                            AngleDelta angleParcouru = (360 * distParcourue) / (Math.PI * Entraxe);
+                            AngleDelta angleParcouru = (360 * distParcourue) / (Math.PI * WheelSpacing);
 
                             VitesseActuelle = speedWithAcceleration;
 
@@ -244,7 +209,7 @@ namespace GoBot
                         {
                             double speedWithDeceleration = Math.Max(0, VitesseActuelle - SpeedConfig.PivotDeceleration / (1000.0 / interval));
                             double distParcourue = (VitesseActuelle + speedWithDeceleration) / 2 / (1000.0 / interval);
-                            AngleDelta angleParcouru = (360 * distParcourue) / (Math.PI * Entraxe);
+                            AngleDelta angleParcouru = (360 * distParcourue) / (Math.PI * WheelSpacing);
 
                             VitesseActuelle = speedWithDeceleration;
 
@@ -255,7 +220,7 @@ namespace GoBot
                             Position.Copy(Destination);
                         }
 
-                        OnPositionChange(Position);
+                        OnPositionChanged(Position);
                     }
                     else if (needLine)
                     {
@@ -283,10 +248,10 @@ namespace GoBot
                             // Si on est déjà à l'arrêt on force l'équivalence de la position avec la destination.
 
                             Position.Copy(Destination);
-                            DeplacementLigne = false;
+                            IsInLineMove = false;
                         }
 
-                        OnPositionChange(Position);
+                        OnPositionChanged(Position);
                     }
                 }
 
@@ -304,11 +269,11 @@ namespace GoBot
             return Math.Abs(arc.InDegrees) / 360 * Math.PI * diameter;
         }
 
-        public override void Avancer(int distance, bool attendre = true)
+        public override void MoveForward(int distance, bool attendre = true)
         {
-            base.Avancer(distance, attendre);
+            base.MoveForward(distance, attendre);
 
-            DeplacementLigne = true;
+            IsInLineMove = true;
 
             if (distance > 0)
             {
@@ -332,14 +297,14 @@ namespace GoBot
                     Thread.Sleep(10);
         }
 
-        public override void Reculer(int distance, bool attendre = true)
+        public override void MoveBackward(int distance, bool attendre = true)
         {
-            Avancer(-distance, attendre);
+            MoveForward(-distance, attendre);
         }
 
-        public override void PivotGauche(AngleDelta angle, bool attendre = true)
+        public override void PivotLeft(AngleDelta angle, bool attendre = true)
         {
-            base.PivotGauche(angle, attendre);
+            base.PivotLeft(angle, attendre);
 
             angle = Math.Round(angle, 2);
             Historique.AjouterAction(new ActionPivot(this, angle, SensGD.Gauche));
@@ -351,9 +316,9 @@ namespace GoBot
                     Thread.Sleep(10);
         }
 
-        public override void PivotDroite(AngleDelta angle, bool attendre = true)
+        public override void PivotRight(AngleDelta angle, bool attendre = true)
         {
-            base.PivotDroite(angle, attendre);
+            base.PivotRight(angle, attendre);
 
             angle = Math.Round(angle, 2);
             Historique.AjouterAction(new ActionPivot(this, angle, SensGD.Droite));
@@ -374,7 +339,7 @@ namespace GoBot
             {
                 Position nouvelleDestination = new Position(Position.Angle, new RealPoint(position.Coordinates.X, position.Coordinates.Y));
 
-                if (DeplacementLigne)
+                if (IsInLineMove)
                 {
                     if (SensDep == SensAR.Avant)
                         nouvelleDestination.Move(DistanceFreinageActuelle);
@@ -392,13 +357,13 @@ namespace GoBot
             SemDeplacement.Release();
         }
 
-        public override void Virage(SensAR sensAr, SensGD sensGd, int rayon, AngleDelta angle, bool attendre = true)
+        public override void Turn(SensAR sensAr, SensGD sensGd, int rayon, AngleDelta angle, bool attendre = true)
         {
             // TODO2018
         }
 
         private List<RealPoint> trajectoirePolaire;
-        public override void TrajectoirePolaire(SensAR sens, List<RealPoint> points, bool attendre = true)
+        public override void PolarTrajectory(SensAR sens, List<RealPoint> points, bool attendre = true)
         {
             trajectoirePolaire = points;
             pointCourantTrajPolaire = 0;
@@ -407,14 +372,14 @@ namespace GoBot
                 Thread.Sleep(10);
         }
 
-        public override void ReglerOffsetAsserv(Position newPosition)
+        public override void SetAsservOffset(Position newPosition)
         {
             Position = new Position(newPosition.Angle, newPosition.Coordinates);
-            PositionCible?.Set(Position.Coordinates);
-            OnPositionChange(Position);
+            PositionTarget?.Set(Position.Coordinates);
+            OnPositionChanged(Position);
         }
 
-        public override void Recallage(SensAR sens, bool attendre = true)
+        public override void Recalibration(SensAR sens, bool attendre = true)
         {
             RecallageEnCours = true;
             Historique.AjouterAction(new ActionRecallage(this, sens));
@@ -433,20 +398,20 @@ namespace GoBot
             SpeedConfig.LineAcceleration = 50000;
             SpeedConfig.LineDeceleration = 50000;
 
-            IShape contact = GetBounds(sens);
+            IShape contact = GetBounds();
 
-            while (Position.Coordinates.X - Longueur / 2 > 0 &&
-                Position.Coordinates.X + Longueur / 2 < GameBoard.Width &&
-                Position.Coordinates.Y - Longueur / 2 > 0 &&
-                Position.Coordinates.Y + Longueur / 2 < GameBoard.Height &&
+            while (Position.Coordinates.X - Lenght / 2 > 0 &&
+                Position.Coordinates.X + Lenght / 2 < GameBoard.Width &&
+                Position.Coordinates.Y - Lenght / 2 > 0 &&
+                Position.Coordinates.Y + Lenght / 2 < GameBoard.Height &&
                 !GameBoard.ObstaclesAll.ToList().Exists(o => o.Cross(contact)))
             {
                 if (sens == SensAR.Arriere)
-                    Reculer(1);
+                    MoveBackward(1);
                 else
-                    Avancer(1);
+                    MoveForward(1);
 
-                contact = GetBounds(sens);
+                contact = GetBounds();
             }
 
             SpeedConfig.LineAcceleration = realAccel;
@@ -458,40 +423,40 @@ namespace GoBot
         public override void Init()
         {
             Historique = new Historique(IDRobot);
-            HistoriqueCoordonnees = new List<Position>();
-            Position = new Position(Recalibration.StartPosition);
+            PositionsHistorical = new List<Position>();
+            Position = new Position(GoBot.Recalibration.StartPosition);
 
-            PositionCible = null;
+            PositionTarget = null;
         }
 
-        public override bool DemandeCapteurOnOff(SensorOnOffID capteur, bool attendre = true)
+        public override bool ReadSensorOnOff(SensorOnOffID capteur, bool attendre = true)
         {
             // TODO
             return true;
         }
 
-        public override Color DemandeCapteurCouleur(SensorColorID capteur, bool attendre = true)
+        public override Color ReadSensorColor(SensorColorID capteur, bool attendre = true)
         {
             // TODO
             return Color.Black;
         }
 
-        public override void EnvoyerPID(int p, int i, int d)
+        public override void SendPID(int p, int i, int d)
         {
             // TODO
         }
 
-        public override void EnvoyerPIDCap(int p, int i, int d)
+        public override void SendPIDCap(int p, int i, int d)
         {
             // TODO
         }
 
-        public override void EnvoyerPIDVitesse(int p, int i, int d)
+        public override void SendPIDSpeed(int p, int i, int d)
         {
             // TODO
         }
 
-        public override void ActionneurOnOff(ActuatorOnOffID actionneur, bool on)
+        public override void SetActuatorOnOffValue(ActuatorOnOffID actionneur, bool on)
         {
             // TODO
             Historique.AjouterAction(new ActionOnOff(this, actionneur, on));
@@ -499,22 +464,22 @@ namespace GoBot
 
         System.Timers.Timer timerPositions;
 
-        public override void MoteurPosition(MotorID moteur, int vitesse, bool waitEnd)
+        public override void SetMotorAtPosition(MotorID moteur, int vitesse, bool waitEnd)
         {
-            base.MoteurPosition(moteur, vitesse);
+            base.SetMotorAtPosition(moteur, vitesse);
         }
 
-        public override void MoteurVitesse(MotorID moteur, SensGD sens, int vitesse)
+        public override void SetMotorSpeed(MotorID moteur, SensGD sens, int vitesse)
         {
-            base.MoteurVitesse(moteur, sens, vitesse);
+            base.SetMotorSpeed(moteur, sens, vitesse);
         }
 
-        public override void MoteurAcceleration(MotorID moteur, int acceleration)
+        public override void SetMotorAcceleration(MotorID moteur, int acceleration)
         {
-            base.MoteurAcceleration(moteur, acceleration);
+            base.SetMotorAcceleration(moteur, acceleration);
         }
 
-        public override void AlimentationPuissance(bool on)
+        public override void EnablePower(bool on)
         {
             // TODO
             if (!on)
@@ -531,17 +496,17 @@ namespace GoBot
             // TODO
         }
 
-        public override bool GetJack()
+        public override bool ReadStartTrigger()
         {
             return true;
         }
 
-        public override Color GetCouleurEquipe(bool historique = true)
+        public override Color ReadMyColor()
         {
             return GameBoard.ColorRightYellow;
         }
 
-        public override List<int>[] MesureTestPid(int consigne, SensAR sens, int nbValeurs)
+        public override List<int>[] DiagnosticPID(int consigne, SensAR sens, int nbValeurs)
         {
             List<int>[] retour = new List<int>[2];
             retour[0] = new List<int>();
@@ -577,16 +542,16 @@ namespace GoBot
             return new List<double>[3] { cpuLoad, pwmLeft, pwmRight };
         }
 
-        public override void DemandeValeursAnalogiques(Board carte, bool attendre)
+        public override void ReadAnalogicPins(Board carte, bool attendre)
         {
             List<double> values = Enumerable.Range(1, 9).Select(o => o + _rand.NextDouble()).ToList();
-            ValeursAnalogiques[carte] = values;
+            AnalogicPinsValue[carte] = values;
         }
 
-        public override void DemandeValeursNumeriques(Board carte, bool attendre)
+        public override void ReadNumericPins(Board carte, bool attendre)
         {
             for (int i = 0; i < 3 * 2; i++)
-                ValeursNumeriques[carte][i] = (byte)((DateTime.Now.Second * 1000 + DateTime.Now.Millisecond) / 60000.0 * 255);
+                NumericPinsValue[carte][i] = (byte)((DateTime.Now.Second * 1000 + DateTime.Now.Millisecond) / 60000.0 * 255);
         }
     }
 }

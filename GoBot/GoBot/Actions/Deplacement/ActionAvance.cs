@@ -18,12 +18,12 @@ namespace GoBot.Actions
 
         public override String ToString()
         {
-            return robot.Nom + " avance de " + distance + "mm";
+            return robot.Name + " avance de " + distance + "mm";
         }
 
         void IAction.Executer()
         {
-            robot.Avancer(distance);
+            robot.MoveForward(distance);
         }
 
         public System.Drawing.Image Image

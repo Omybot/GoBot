@@ -26,7 +26,7 @@ namespace GoBot.IHM.Pages
             if (!Execution.DesignMode)
             {
                 Dessinateur.TableDessinee += Dessinateur_TableDessinee;
-                Robots.GrosRobot.ChangementEtatCapteurOnOff += GrosRobot_ChangementEtatCapteurOnOff;
+                Robots.MainRobot.SensorOnOffChanged += GrosRobot_ChangementEtatCapteurOnOff;
                 Connections.AllConnections.ForEach(c => c.ConnectionChecker.ConnectionStatusChange += ConnectionChecker_ConnectionStatusChange);
                 Devices.AllDevices.LidarAvoid.ConnectionChecker.ConnectionStatusChange += LidarAvoid_ConnectionStatusChange;
                 Devices.AllDevices.LidarGround.ConnectionChecker.ConnectionStatusChange += LidarGround_ConnectionStatusChange;
@@ -43,7 +43,7 @@ namespace GoBot.IHM.Pages
                 SetPicImage(picServo5, Connections.ConnectionsCanServo[Communications.CAN.CanBoard.CanServo5].Connected);
                 SetPicImage(picServo6, Connections.ConnectionsCanServo[Communications.CAN.CanBoard.CanServo6].Connected);
 
-                bool jack = Robots.GrosRobot.GetJack();
+                bool jack = Robots.MainRobot.ReadStartTrigger();
                 SetPicImage(picJack, jack);
                 btnCalib.Enabled = jack;
             }

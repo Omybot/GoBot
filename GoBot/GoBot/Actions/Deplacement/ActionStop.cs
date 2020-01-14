@@ -18,7 +18,7 @@ namespace GoBot.Actions
 
         public override string ToString()
         {
-            return robot.Nom + " stop " + mode;
+            return robot.Name + " stop " + mode;
         }
 
         void IAction.Executer()

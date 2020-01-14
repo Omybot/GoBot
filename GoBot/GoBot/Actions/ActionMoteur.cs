@@ -25,7 +25,7 @@ namespace GoBot.Actions
 
         void IAction.Executer()
         {
-            robot.MoteurPosition(moteur, vitesse);
+            robot.SetMotorAtPosition(moteur, vitesse);
         }
 
         public System.Drawing.Image Image

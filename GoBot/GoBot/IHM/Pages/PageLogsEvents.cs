@@ -161,7 +161,7 @@ namespace GoBot.IHM
                 timerAffichage.Tick += timerAffichage_Tick;
                 timerAffichage.Start();
 
-                Robots.GrosRobot.Historique.NouveauLog += Replay.AjouterEvent;
+                Robots.MainRobot.Historique.NouveauLog += Replay.AjouterEvent;
                 
                 btnCharger.Enabled = false;
                 btnAfficher.Text = "Arrêter l'affichage";
@@ -172,7 +172,7 @@ namespace GoBot.IHM
             {
                 timerAffichage.Stop();
 
-                Robots.GrosRobot.Historique.NouveauLog -= Replay.AjouterEvent;
+                Robots.MainRobot.Historique.NouveauLog -= Replay.AjouterEvent;
 
                 btnCharger.Enabled = true;
                 btnAfficher.Text = "Afficher temps réel";

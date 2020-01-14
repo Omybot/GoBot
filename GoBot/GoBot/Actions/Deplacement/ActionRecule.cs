@@ -23,12 +23,12 @@ namespace GoBot.Actions
 
         public override String ToString()
         {
-            return robot.Nom + " recule de " + distance + "mm";
+            return robot.Name + " recule de " + distance + "mm";
         }
 
         void IAction.Executer()
         {
-            robot.Reculer(distance);
+            robot.MoveBackward(distance);
         }
 
         public TimeSpan Duration

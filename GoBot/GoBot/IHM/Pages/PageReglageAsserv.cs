@@ -25,7 +25,7 @@ namespace GoBot.IHM
             this.numCoeffD.ValueChanged += new System.EventHandler(this.btnOk_Click);
             this.numCoeffI.ValueChanged += new System.EventHandler(this.btnOk_Click);
             this.numCoeffP.ValueChanged += new System.EventHandler(this.btnOk_Click);
-            Robot = Robots.GrosRobot;
+            Robot = Robots.MainRobot;
         }
 
         private void btnOk_Click(object sender, EventArgs e)
@@ -37,8 +37,8 @@ namespace GoBot.IHM
         {
             link.RegisterName();
 
-            Robot.EnvoyerPID((int)numCoeffP.Value, (int)numCoeffI.Value, (int)numCoeffD.Value);
-            List<int>[] mesures = Robot.MesureTestPid((int)numPasCodeurs.Value, SensAR.Avant, (int)numNbPoints.Value);
+            Robot.SendPID((int)numCoeffP.Value, (int)numCoeffI.Value, (int)numCoeffD.Value);
+            List<int>[] mesures = Robot.DiagnosticPID((int)numPasCodeurs.Value, SensAR.Avant, (int)numNbPoints.Value);
             // Afficher les courbes
 
             int derniereValeurGauche = mesures[0][mesures[0].Count - 1];
@@ -106,7 +106,7 @@ namespace GoBot.IHM
 
             ctrlGraphique.DrawCurves();
 
-            Robot.MesureTestPid((int)numPasCodeurs.Value, SensAR.Arriere, (int)numNbPoints.Value);
+            Robot.DiagnosticPID((int)numPasCodeurs.Value, SensAR.Arriere, (int)numNbPoints.Value);
         }
     }
 }

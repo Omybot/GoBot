@@ -55,7 +55,7 @@ namespace GoBot.IHM
 
             this.InvokeAuto(() =>
             {
-                ctrlGraphic.AddPoint("Tension", Robots.GrosRobot.BatterieVoltage, Color.DodgerBlue, true);
+                ctrlGraphic.AddPoint("Tension", Robots.MainRobot.BatterieVoltage, Color.DodgerBlue, true);
                 ctrlGraphic.AddPoint("High", Config.CurrentConfig.BatterieRobotVert, Color.LimeGreen);
                 ctrlGraphic.AddPoint("Average", Config.CurrentConfig.BatterieRobotOrange, Color.Orange);
                 ctrlGraphic.AddPoint("Low", Config.CurrentConfig.BatterieRobotRouge, Color.Firebrick);

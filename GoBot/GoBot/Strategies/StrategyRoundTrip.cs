@@ -13,21 +13,21 @@ namespace GoBot.Strategies
 
         protected override void SequenceBegin()
         {
-            Robots.GrosRobot.MajGraphFranchissable(GameBoard.ObstaclesAll);
+            Robots.MainRobot.UpdateGraph(GameBoard.ObstaclesAll);
 
             //Plateau.Balise.VitesseRotation(250);
 
             // Sortir ICI de la zone de départ pour commencer
 
-            Robots.GrosRobot.Avancer(200);
+            Robots.MainRobot.MoveForward(200);
         }
 
         protected override void SequenceCore()
         {
             while (IsRunning)
             {
-                while (!Robots.GrosRobot.GotoXYTeta(new Position(0, new RealPoint(700, 1250)))) ;
-                while (!Robots.GrosRobot.GotoXYTeta(new Position(180, new RealPoint(3000 - 700, 1250)))) ;
+                while (!Robots.MainRobot.GoToPosition(new Position(0, new RealPoint(700, 1250)))) ;
+                while (!Robots.MainRobot.GoToPosition(new Position(180, new RealPoint(3000 - 700, 1250)))) ;
             }
         }
     }

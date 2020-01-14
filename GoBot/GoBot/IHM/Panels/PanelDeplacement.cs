@@ -42,7 +42,7 @@ namespace GoBot.IHM
 
         void groupBoxDep_Deploiement(bool deploye)
         {
-            if (Robot == Robots.GrosRobot)
+            if (Robot == Robots.MainRobot)
                 Config.CurrentConfig.DeplacementGROuvert = deploye;
         }
 
@@ -50,7 +50,7 @@ namespace GoBot.IHM
         {
             // Charger la config
 
-            if (Robot == Robots.GrosRobot)
+            if (Robot == Robots.MainRobot)
             {
                 trackBarVitesseLigne.SetValue(Config.CurrentConfig.ConfigRapide.LineSpeed, false);
                 trackBarAccelLigne.SetValue(Config.CurrentConfig.ConfigRapide.LineAcceleration, false);
@@ -61,7 +61,7 @@ namespace GoBot.IHM
                 numCoeffP.Value = Config.CurrentConfig.GRCoeffP;
                 numCoeffI.Value = Config.CurrentConfig.GRCoeffI;
                 numCoeffD.Value = Config.CurrentConfig.GRCoeffD;
-                Robot.EnvoyerPID(Config.CurrentConfig.GRCoeffP, Config.CurrentConfig.GRCoeffI, Config.CurrentConfig.GRCoeffD);
+                Robot.SendPID(Config.CurrentConfig.GRCoeffP, Config.CurrentConfig.GRCoeffI, Config.CurrentConfig.GRCoeffD);
 
                 groupBoxDep.Deploy(Config.CurrentConfig.DeplacementGROuvert, false);
             }
@@ -73,7 +73,7 @@ namespace GoBot.IHM
             if (!(Int32.TryParse(txtDistance.Text, out distance) && distance != 0))
                 txtDistance.ErrorMode = true;
             else
-                Robot.Avancer(distance, false);
+                Robot.MoveForward(distance, false);
         }
 
         protected virtual void btnRecule_Click(object sender, EventArgs e)
@@ -82,7 +82,7 @@ namespace GoBot.IHM
             if (!(Int32.TryParse(txtDistance.Text, out distance) && distance != 0))
                 txtDistance.ErrorMode = true;
             else
-                Robot.Reculer(distance, false);
+                Robot.MoveBackward(distance, false);
         }
 
         protected virtual void btnPivotGauche_Click(object sender, EventArgs e)
@@ -91,7 +91,7 @@ namespace GoBot.IHM
             if (!(Int32.TryParse(txtAngle.Text, out angle) && angle != 0))
                 txtAngle.ErrorMode = true;
             else
-                Robot.PivotGauche(angle, false);
+                Robot.PivotLeft(angle, false);
         }
 
         protected virtual void btnPivotDroite_Click(object sender, EventArgs e)
@@ -100,7 +100,7 @@ namespace GoBot.IHM
             if (!(Int32.TryParse(txtAngle.Text, out angle) && angle != 0))
                 txtAngle.ErrorMode = true;
             else
-                Robot.PivotDroite(angle, false);
+                Robot.PivotRight(angle, false);
         }
 
         protected virtual void btnVirageAvDr_Click(object sender, EventArgs e)
@@ -141,7 +141,7 @@ namespace GoBot.IHM
             }
 
             if (ok)
-                Robot.Virage(sensAr, sensGd, distance, angle, false);
+                Robot.Turn(sensAr, sensGd, distance, angle, false);
         }
 
         #region Vitesse ligne
@@ -237,22 +237,22 @@ namespace GoBot.IHM
             if (e.KeyCode == Keys.Down)
             {
                 // Reculer
-                Robot.Reculer(10000, false);
+                Robot.MoveBackward(10000, false);
             }
             else if (e.KeyCode == Keys.Up)
             {
                 // Avancer
-                Robot.Avancer(10000, false);
+                Robot.MoveForward(10000, false);
             }
             else if (e.KeyCode == Keys.Left)
             {
                 // Pivot gauche
-                Robot.PivotGauche(90, false);
+                Robot.PivotLeft(90, false);
             }
             else if (e.KeyCode == Keys.Right)
             {
                 // Pivot droit
-                Robot.PivotDroite(90, false);
+                Robot.PivotRight(90, false);
             }
         }
 
@@ -261,10 +261,10 @@ namespace GoBot.IHM
             ThreadManager.CreateThread(link =>
             {
                 btnRecallage.InvokeAuto(() => btnRecallage.Enabled = false);
-                Robot.Avancer(10);
-                Robot.Lent();
-                Robot.Recallage(SensAR.Arriere);
-                Robot.Rapide();
+                Robot.MoveForward(10);
+                Robot.SetSpeedLow();
+                Robot.Recalibration(SensAR.Arriere);
+                Robot.SetSpeedFast();
                 btnRecallage.InvokeAuto(() => btnRecallage.Enabled = true);
             }).StartThread();
         }
@@ -276,9 +276,9 @@ namespace GoBot.IHM
 
         private void btnPID_Click(object sender, EventArgs e)
         {
-            Robot.EnvoyerPID((int)numCoeffP.Value, (int)numCoeffI.Value, (int)numCoeffD.Value);
+            Robot.SendPID((int)numCoeffP.Value, (int)numCoeffI.Value, (int)numCoeffD.Value);
 
-            if (Robot == Robots.GrosRobot)
+            if (Robot == Robots.MainRobot)
             {
                 Config.CurrentConfig.GRCoeffP = (int)numCoeffP.Value;
                 Config.CurrentConfig.GRCoeffI = (int)numCoeffI.Value;
@@ -321,17 +321,17 @@ namespace GoBot.IHM
         private void ThreadGoTo(ThreadLink link)
         {
             link.RegisterName();
-            Robot.GotoXYTeta(new Position((double)numTeta.Value, new RealPoint((double)numX.Value, (double)numY.Value)));
+            Robot.GoToPosition(new Position((double)numTeta.Value, new RealPoint((double)numX.Value, (double)numY.Value)));
         }
 
         private void btnLent_Click(object sender, EventArgs e)
         {
-            Robot.Lent();
+            Robot.SetSpeedLow();
         }
 
         private void btnRapide_Click(object sender, EventArgs e)
         {
-            Robot.Rapide();
+            Robot.SetSpeedFast();
         }
 
         private void trackBarAccelerationFinLigne_TickValueChanged(object sender, double value)
@@ -352,12 +352,12 @@ namespace GoBot.IHM
 
         private void btnPIDPol_Click(object sender, EventArgs e)
         {
-            Robots.GrosRobot.EnvoyerPIDCap((int)numCoeffP.Value, (int)numCoeffI.Value, (int)numCoeffD.Value);
+            Robots.MainRobot.SendPIDCap((int)numCoeffP.Value, (int)numCoeffI.Value, (int)numCoeffD.Value);
         }
 
         private void btnPIDVit_Click(object sender, EventArgs e)
         {
-            Robots.GrosRobot.EnvoyerPIDVitesse((int)numCoeffP.Value, (int)numCoeffI.Value, (int)numCoeffD.Value);
+            Robots.MainRobot.SendPIDSpeed((int)numCoeffP.Value, (int)numCoeffI.Value, (int)numCoeffD.Value);
         }
     }
 }

@@ -25,7 +25,7 @@ namespace GoBot.PathFinding
         public static IShape ObstacleProbleme { get; private set; }
         public static List<RealPoint> PointsTrouves { get; private set; }
 
-        private static Trajectory DirectTrajectory(Graph graph, IEnumerable<IShape> obstacles, Position startPos, Position endPos, double securityRadius)
+        private static Trajectory DirectTrajectory(IEnumerable<IShape> obstacles, Position startPos, Position endPos, double securityRadius)
         {
             Segment directLine = new Segment(new RealPoint(startPos.Coordinates), new RealPoint(endPos.Coordinates));
 
@@ -47,7 +47,7 @@ namespace GoBot.PathFinding
             Stopwatch sw = Stopwatch.StartNew();
             bool pathFound = false;
 
-            Trajectory output = DirectTrajectory(graph, obstacles.Concat(opponents), startPos, endPos, rayonSecurite);
+            Trajectory output = DirectTrajectory(obstacles.Concat(opponents), startPos, endPos, rayonSecurite);
 
             if (output != null)
                 pathFound = true;
@@ -119,7 +119,7 @@ namespace GoBot.PathFinding
                                     // Si l'obstacle génant est un adversaire, on diminue petit à petit son rayon pour pouvoir s'échapper au bout d'un moment
                                     if (opponents.Contains(obstacle) && GameBoard.OpponentRadius > 50)
                                     {
-                                        Robots.GrosRobot.Historique.Log("Adversaire au contact, impossible de s'enfuir, réduction du périmètre adverse", TypeLog.PathFinding);
+                                        Robots.MainRobot.Historique.Log("Adversaire au contact, impossible de s'enfuir, réduction du périmètre adverse", TypeLog.PathFinding);
                                         GameBoard.OpponentRadius -= 10;
                                         _linkResetRadius?.Cancel();
                                     }
@@ -169,7 +169,7 @@ namespace GoBot.PathFinding
                                         // Si l'obstacle génant est un adversaire, on diminue petit à petit son rayon pour pouvoir s'échapper au bout d'un moment
                                         if (opponents.Contains(obstacle) && GameBoard.OpponentRadius > 50)
                                         {
-                                            Robots.GrosRobot.Historique.Log("Adversaire au contact, impossible de s'enfuir, réduction du périmètre adverse", TypeLog.PathFinding);
+                                            Robots.MainRobot.Historique.Log("Adversaire au contact, impossible de s'enfuir, réduction du périmètre adverse", TypeLog.PathFinding);
                                             GameBoard.OpponentRadius -= 10;
                                             _linkResetRadius?.Cancel();
                                         }
@@ -288,7 +288,7 @@ namespace GoBot.PathFinding
 
                         if (toutDroit)
                         {
-                            Robots.GrosRobot.Historique.Log("Chemin trouvé : ligne droite", TypeLog.PathFinding);
+                            Robots.MainRobot.Historique.Log("Chemin trouvé : ligne droite", TypeLog.PathFinding);
                             pathFound = true;
 
                             PointsTrouves.Add(finNode.Position);
@@ -314,7 +314,7 @@ namespace GoBot.PathFinding
 
                                 List<Node> nodes = aStar.PathByNodes.ToList<Node>();
 
-                                Robots.GrosRobot.Historique.Log("Chemin trouvé : " + (nodes.Count - 2) + " noeud(s) intermédiaire(s)", TypeLog.PathFinding);
+                                Robots.MainRobot.Historique.Log("Chemin trouvé : " + (nodes.Count - 2) + " noeud(s) intermédiaire(s)", TypeLog.PathFinding);
 
                                 CheminEnCoursNoeuds = new List<Node>();
                                 CheminEnCoursArcs = new List<Arc>();
@@ -384,7 +384,7 @@ namespace GoBot.PathFinding
                                 CheminEnCoursNoeuds.Add(nodes[nodes.Count - 1]);
                                 PointsTrouves.Add(nodes[nodes.Count - 1].Position);
                                 output.AddPoint(nodes[nodes.Count - 1].Position);
-                                Robots.GrosRobot.Historique.Log("Chemin optimisé : " + (CheminEnCoursNoeuds.Count - 2) + " noeud(s) intermédiaire(s)", TypeLog.PathFinding);
+                                Robots.MainRobot.Historique.Log("Chemin optimisé : " + (CheminEnCoursNoeuds.Count - 2) + " noeud(s) intermédiaire(s)", TypeLog.PathFinding);
                                 pathFound = true;
 
                                 if (endPos.Coordinates.Distance(finNode.Position) > 1)
@@ -420,7 +420,7 @@ namespace GoBot.PathFinding
 
             if (!pathFound)
             {
-                Robots.GrosRobot.Historique.Log("Chemin non trouvé", TypeLog.PathFinding);
+                Robots.MainRobot.Historique.Log("Chemin non trouvé", TypeLog.PathFinding);
                 return null;
             }
             else
@@ -455,7 +455,7 @@ namespace GoBot.PathFinding
         private static Trajectory ReduceLines(Trajectory traj, IEnumerable<IShape> obstacles, double securityRadius)
         {
             Trajectory output = traj;
-            TimeSpan currentDuration = output.GetDuration(Robots.GrosRobot);
+            TimeSpan currentDuration = output.GetDuration(Robots.MainRobot);
 
             Console.WriteLine("Avant : " + currentDuration.ToString());
 
@@ -474,7 +474,7 @@ namespace GoBot.PathFinding
 
                 if (ObstacleProbleme == null)
                 {
-                    TimeSpan testedDuration = tested.GetDuration(Robots.GrosRobot);
+                    TimeSpan testedDuration = tested.GetDuration(Robots.MainRobot);
 
                     if (testedDuration < currentDuration)
                     {

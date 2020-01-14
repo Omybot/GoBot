@@ -43,24 +43,24 @@ namespace GoBot.IHM
         
         private void AskValues()
         {
-            Robots.GrosRobot.DemandeValeursNumeriques(_board, true);
+            Robots.MainRobot.ReadNumericPins(_board, true);
 
-            lock (Robots.GrosRobot.ValeursNumeriques)
+            lock (Robots.MainRobot.NumericPinsValue)
             {
                 if (switchButtonPortA.Value)
                 {
-                    byteBinaryGraphA1.SetValue(Robots.GrosRobot.ValeursNumeriques[_board][1]);
-                    byteBinaryGraphA2.SetValue(Robots.GrosRobot.ValeursNumeriques[_board][0]);
+                    byteBinaryGraphA1.SetValue(Robots.MainRobot.NumericPinsValue[_board][1]);
+                    byteBinaryGraphA2.SetValue(Robots.MainRobot.NumericPinsValue[_board][0]);
                 }
                 if (switchButtonPortB.Value)
                 {
-                    byteBinaryGraphB1.SetValue(Robots.GrosRobot.ValeursNumeriques[_board][3]);
-                    byteBinaryGraphB2.SetValue(Robots.GrosRobot.ValeursNumeriques[_board][2]);
+                    byteBinaryGraphB1.SetValue(Robots.MainRobot.NumericPinsValue[_board][3]);
+                    byteBinaryGraphB2.SetValue(Robots.MainRobot.NumericPinsValue[_board][2]);
                 }
                 if (switchButtonPortC.Value)
                 {
-                    byteBinaryGraphC1.SetValue(Robots.GrosRobot.ValeursNumeriques[_board][5]);
-                    byteBinaryGraphC2.SetValue(Robots.GrosRobot.ValeursNumeriques[_board][4]);
+                    byteBinaryGraphC1.SetValue(Robots.MainRobot.NumericPinsValue[_board][5]);
+                    byteBinaryGraphC2.SetValue(Robots.MainRobot.NumericPinsValue[_board][4]);
                 }
             }
         }

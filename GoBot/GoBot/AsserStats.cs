@@ -43,7 +43,7 @@ namespace GoBot
             foreach (int dist in ForwardMoves.Union(BackwardMoves))
                 totalDuration += config.LineDuration(dist);
             foreach (AngleDelta ang in LeftRotations.Union(RightsRotations))
-                totalDuration += config.PivotDuration(ang, robot.Entraxe);
+                totalDuration += config.PivotDuration(ang, robot.WheelSpacing);
 
             return totalDuration;
         }

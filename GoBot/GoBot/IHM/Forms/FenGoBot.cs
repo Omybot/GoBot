@@ -173,7 +173,7 @@ namespace GoBot
             foreach (Connection conn in Connections.AllConnections)
                 conn.Archives.Export(Config.PathData + "/Logs/" + Execution.LaunchStartString + "/" + Connections.GetUDPBoardByConnection(conn).ToString() + FramesLog.FileExtension);
 
-            Robots.GrosRobot.Historique.Sauvegarder(Config.PathData + "/Logs/" + Execution.LaunchStartString + "/ActionsGros.elog");
+            Robots.MainRobot.Historique.Sauvegarder(Config.PathData + "/Logs/" + Execution.LaunchStartString + "/ActionsGros.elog");
         }
 
         private void btnClose_Click(object sender, EventArgs e)

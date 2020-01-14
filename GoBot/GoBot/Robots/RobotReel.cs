@@ -29,19 +29,15 @@ namespace GoBot
         private String _lastLidarMeasure;
         private Position _lastLidarPosition;
         
-        public Connection Connexion { get; set; }
+        public Connection ConnectionAsser { get; set; }
         public override Position Position { get; set; }
 
-        public RobotReel(IDRobot idRobot, Board asservBoard) : base()
+        public RobotReel(IDRobot idRobot, Board asserBoard, double width, double lenght, double wheelSpacing, double diameter) : base(width, lenght, wheelSpacing, diameter)
         {
-            AsserActif = true;
-            AsservBoard = asservBoard;
+            AsserEnable = true;
+            AsservBoard = asserBoard;
             IDRobot = idRobot;
-
-            CapteurActive = new Dictionary<SensorOnOffID, bool>();
-            ActionneurActive = new Dictionary<ActuatorOnOffID, bool>();
-            CapteursCouleur = new Dictionary<SensorColorID, Color>();
-
+            
             foreach (UdpFrameFunction o in Enum.GetValues(typeof(UdpFrameFunction)))
                 _lockFrame.Add(o, new Semaphore(0, int.MaxValue));
 
@@ -49,50 +45,15 @@ namespace GoBot
                 _lockMotor.Add(o, new Semaphore(0, int.MaxValue));
 
             foreach (SensorOnOffID o in Enum.GetValues(typeof(SensorOnOffID)))
-            {
                 _lockSensorOnOff.Add(o, new Semaphore(0, int.MaxValue));
-                CapteurActive.Add(o, false);
-            }
-
-            foreach (ActuatorOnOffID o in Enum.GetValues(typeof(ActuatorOnOffID)))
-            {
-                ActionneurActive.Add(o, false);
-            }
             
             foreach (SensorColorID o in Enum.GetValues(typeof(SensorColorID)))
-            {
                 _lockSensorColor.Add(o, new Semaphore(0, int.MaxValue));
-                CapteursCouleur.Add(o, Color.Black);
-            }
-
-            ValeursAnalogiques = new Dictionary<Board, List<double>>();
-            ValeursAnalogiques.Add(Board.RecIO, new List<double>());
-            ValeursAnalogiques.Add(Board.RecGB, new List<double>());
-            ValeursAnalogiques.Add(Board.RecMove, new List<double>());
-
-            for (int i = 0; i < 9; i++)
-            {
-                ValeursAnalogiques[Board.RecIO].Add(0);
-                ValeursAnalogiques[Board.RecGB].Add(0);
-                ValeursAnalogiques[Board.RecMove].Add(0);
-            }
-
-            ValeursNumeriques = new Dictionary<Board, List<Byte>>();
-            ValeursNumeriques.Add(Board.RecIO, new List<byte>());
-            ValeursNumeriques.Add(Board.RecGB, new List<byte>());
-            ValeursNumeriques.Add(Board.RecMove, new List<byte>());
-
-            for (int i = 0; i < 3 * 2; i++)
-            {
-                ValeursNumeriques[Board.RecIO].Add(0);
-                ValeursNumeriques[Board.RecGB].Add(0);
-                ValeursNumeriques[Board.RecMove].Add(0);
-            }
-
+            
             SpeedConfig.ParamChange += SpeedConfig_ParamChange;
         }
 
-        public override void Delete()
+        public override void DeInit()
         {
 
         }
@@ -102,34 +63,34 @@ namespace GoBot
             if (lineSpeedChange)
             {
                 Frame frame = UdpFrameFactory.VitesseLigne(SpeedConfig.LineSpeed, this);
-                Connexion.SendMessage(frame);
+                ConnectionAsser.SendMessage(frame);
                 Historique.AjouterAction(new ActionVitesseLigne(this, SpeedConfig.LineSpeed));
             }
             if (lineAccelChange || lineDecelChange)
             {
                 Frame frame = UdpFrameFactory.AccelLigne(SpeedConfig.LineAcceleration, SpeedConfig.LineDeceleration, this);
-                Connexion.SendMessage(frame);
+                ConnectionAsser.SendMessage(frame);
                 Historique.AjouterAction(new ActionAccelerationLigne(this, SpeedConfig.LineAcceleration, SpeedConfig.LineDeceleration));
             }
             if (pivotSpeedChange)
             {
                 Frame frame = UdpFrameFactory.VitessePivot(SpeedConfig.PivotSpeed, this);
-                Connexion.SendMessage(frame);
+                ConnectionAsser.SendMessage(frame);
                 Historique.AjouterAction(new ActionVitessePivot(this, SpeedConfig.PivotSpeed));
             }
             if (pivotAccelChange || pivotDecelChange)
             {
                 Frame frame = UdpFrameFactory.AccelPivot(SpeedConfig.PivotAcceleration, this);
-                Connexion.SendMessage(frame);
+                ConnectionAsser.SendMessage(frame);
                 Historique.AjouterAction(new ActionAccelerationPivot(this, SpeedConfig.PivotAcceleration, SpeedConfig.PivotDeceleration));
             }
         }
 
         void RecGoBot_JackChange(bool state)
         {
-            if (!state && JackArme)
+            if (!state && StartTriggerEnable)
             {
-                JackArme = false;
+                StartTriggerEnable = false;
                 if (GameBoard.Strategy == null)
                     GameBoard.Strategy = new GoBot.Strategies.StrategyMatch();
                 GameBoard.Strategy.ExecuteMatch();
@@ -152,14 +113,14 @@ namespace GoBot
         {
             Historique = new Historique(IDRobot);
             
-            Connexion.FrameReceived += new UDPConnection.NewFrameDelegate(ReceptionMessage);
+            ConnectionAsser.FrameReceived += new UDPConnection.NewFrameDelegate(ReceptionMessage);
 
-            if (this == Robots.GrosRobot)
+            if (this == Robots.MainRobot)
                 Connections.ConnectionIO.FrameReceived += new UDPConnection.NewFrameDelegate(ReceptionMessage);
 
             Connections.ConnectionGB.FrameReceived += new UDPConnection.NewFrameDelegate(ReceptionMessage);
 
-            if (this == Robots.GrosRobot)
+            if (this == Robots.MainRobot)
             {
                 if (GameBoard.MyColor == GameBoard.ColorLeftBlue)
                     Position = new Position(0, new RealPoint(240, 1000));
@@ -174,16 +135,16 @@ namespace GoBot
                     Position = new Position(180, new RealPoint(3000 - 480, 1000));
             }
 
-            PositionCible = null; //TODO2018 Init commun à la simu
+            PositionTarget = null; //TODO2018 Init commun à la simu
 
-            HistoriqueCoordonnees = new List<Position>();
-            Connexion.SendMessage(UdpFrameFactory.DemandePositionContinue(100, this));
+            PositionsHistorical = new List<Position>();
+            ConnectionAsser.SendMessage(UdpFrameFactory.DemandePositionContinue(100, this));
 
             AllDevices.RecGoBot.ColorChange += RecGoBot_ColorChange;
             AllDevices.RecGoBot.JackChange += RecGoBot_JackChange;
         }
 
-        public override Color DemandeCapteurCouleur(SensorColorID capteur, bool attendre = true)
+        public override Color ReadSensorColor(SensorColorID capteur, bool attendre = true)
         {
             if (attendre)
                 _lockSensorColor[capteur] = new Semaphore(0, int.MaxValue);
@@ -194,10 +155,10 @@ namespace GoBot
             if (attendre)
                 _lockSensorColor[capteur].WaitOne(100);
 
-            return CapteursCouleur[capteur];
+            return SensorsColorValue[capteur];
         }
 
-        public override bool DemandeCapteurOnOff(SensorOnOffID capteur, bool attendre = true)
+        public override bool ReadSensorOnOff(SensorOnOffID capteur, bool attendre = true)
         {
             if (attendre)
                 _lockSensorOnOff[capteur] = new Semaphore(0, int.MaxValue);
@@ -207,8 +168,8 @@ namespace GoBot
 
             if (attendre)
                 _lockSensorOnOff[capteur].WaitOne(1000);
-            Console.WriteLine("Retour " + CapteurActive[capteur].ToString());
-            return CapteurActive[capteur];
+            Console.WriteLine("Retour " + SensorsOnOffValue[capteur].ToString());
+            return SensorsOnOffValue[capteur];
         }
 
         public void ReactivationAsserv(ThreadLink link)
@@ -221,7 +182,7 @@ namespace GoBot
             AllDevices.RecGoBot.Buzz(7000, 200);
 
             Thread.Sleep(500);
-            TrajectoireEchouee = true;
+            TrajectoryFailed = true;
             Stop(StopMode.Abrupt);
             _lockFrame[UdpFrameFunction.FinDeplacement]?.Release();
 
@@ -277,22 +238,22 @@ namespace GoBot
                         else
                         {
                             // On pense avoir une meilleure position à lui redonner parce que la position reçue est loin de celle qu'on connait alors qu'on l'avait reçue du robot
-                            ReglerOffsetAsserv(Position);
+                            SetAsservOffset(Position);
                         }
 
                         _positionReceived = true;
                         
                         _lockFrame[UdpFrameFunction.AsserDemandePositionXYTeta]?.Release();
 
-                        lock (HistoriqueCoordonnees)
+                        lock (PositionsHistorical)
                         {
-                            HistoriqueCoordonnees.Add(new Position(teta, new RealPoint(x, y)));
+                            PositionsHistorical.Add(new Position(teta, new RealPoint(x, y)));
 
-                            while (HistoriqueCoordonnees.Count > 1200)
-                                HistoriqueCoordonnees.RemoveAt(0);
+                            while (PositionsHistorical.Count > 1200)
+                                PositionsHistorical.RemoveAt(0);
                         }
                         
-                        OnPositionChange(Position);
+                        OnPositionChanged(Position);
                     }
                     catch (Exception)
                     {
@@ -342,8 +303,8 @@ namespace GoBot
                     //TODO2018 : multiplier par 2 pour obtenir de belles couleurs ?
                     Color couleur = Color.FromArgb(Math.Min(255, frame[3] * 1), Math.Min(255, frame[4] * 1), Math.Min(255, frame[5] * 1));
 
-                    ChangeCouleurCapteur((SensorColorID)frame[2], couleur);
-                    CapteursCouleur[(SensorColorID)frame[2]] = couleur;
+                    OnSensorColorChanged((SensorColorID)frame[2], couleur);
+                    SensorsColorValue[(SensorColorID)frame[2]] = couleur;
 
                     _lockSensorColor[(SensorColorID)frame[2]]?.Release();
                     break;
@@ -380,8 +341,8 @@ namespace GoBot
 
                         bool nouvelEtat = frame[3] > 0 ? true : false;
 
-                        if (nouvelEtat != CapteurActive[capteur])
-                            ChangerEtatCapteurOnOff(capteur, nouvelEtat);
+                        if (nouvelEtat != SensorsOnOffValue[capteur])
+                            OnSensorOnOffChanged(capteur, nouvelEtat);
 
                         _lockSensorOnOff[capteur]?.Release();
                     }
@@ -392,14 +353,14 @@ namespace GoBot
                 case UdpFrameFunction.RetourValeursNumeriques:
                     Board numericBoard = (Board)frame[0];
 
-                    lock (ValeursNumeriques)
+                    lock (NumericPinsValue)
                     {
-                        ValeursNumeriques[numericBoard][0] = (Byte)frame[2];
-                        ValeursNumeriques[numericBoard][1] = (Byte)frame[3];
-                        ValeursNumeriques[numericBoard][2] = (Byte)frame[4];
-                        ValeursNumeriques[numericBoard][3] = (Byte)frame[5];
-                        ValeursNumeriques[numericBoard][4] = (Byte)frame[6];
-                        ValeursNumeriques[numericBoard][5] = (Byte)frame[7];
+                        NumericPinsValue[numericBoard][0] = (Byte)frame[2];
+                        NumericPinsValue[numericBoard][1] = (Byte)frame[3];
+                        NumericPinsValue[numericBoard][2] = (Byte)frame[4];
+                        NumericPinsValue[numericBoard][3] = (Byte)frame[5];
+                        NumericPinsValue[numericBoard][4] = (Byte)frame[6];
+                        NumericPinsValue[numericBoard][5] = (Byte)frame[7];
                     }
 
                     _lockFrame[UdpFrameFunction.RetourValeursNumeriques]?.Release();
@@ -411,15 +372,15 @@ namespace GoBot
                     const double toVolts = 0.0008056640625;
 
                     List<double> values = new List<double>();
-                    ValeursAnalogiques[analogBoard][0] = ((frame[2] * 256 + frame[3]) * toVolts);
-                    ValeursAnalogiques[analogBoard][1] = ((frame[4] * 256 + frame[5]) * toVolts);
-                    ValeursAnalogiques[analogBoard][2] = ((frame[6] * 256 + frame[7]) * toVolts);
-                    ValeursAnalogiques[analogBoard][3] = ((frame[8] * 256 + frame[9]) * toVolts);
-                    ValeursAnalogiques[analogBoard][4] = ((frame[10] * 256 + frame[11]) * toVolts);
-                    ValeursAnalogiques[analogBoard][5] = ((frame[12] * 256 + frame[13]) * toVolts);
-                    ValeursAnalogiques[analogBoard][6] = ((frame[14] * 256 + frame[15]) * toVolts);
-                    ValeursAnalogiques[analogBoard][7] = ((frame[16] * 256 + frame[17]) * toVolts);
-                    ValeursAnalogiques[analogBoard][8] = ((frame[18] * 256 + frame[19]) * toVolts);
+                    AnalogicPinsValue[analogBoard][0] = ((frame[2] * 256 + frame[3]) * toVolts);
+                    AnalogicPinsValue[analogBoard][1] = ((frame[4] * 256 + frame[5]) * toVolts);
+                    AnalogicPinsValue[analogBoard][2] = ((frame[6] * 256 + frame[7]) * toVolts);
+                    AnalogicPinsValue[analogBoard][3] = ((frame[8] * 256 + frame[9]) * toVolts);
+                    AnalogicPinsValue[analogBoard][4] = ((frame[10] * 256 + frame[11]) * toVolts);
+                    AnalogicPinsValue[analogBoard][5] = ((frame[12] * 256 + frame[13]) * toVolts);
+                    AnalogicPinsValue[analogBoard][6] = ((frame[14] * 256 + frame[15]) * toVolts);
+                    AnalogicPinsValue[analogBoard][7] = ((frame[16] * 256 + frame[17]) * toVolts);
+                    AnalogicPinsValue[analogBoard][8] = ((frame[18] * 256 + frame[19]) * toVolts);
 
                     _lockFrame[UdpFrameFunction.RetourValeursAnalogiques]?.Release();
                     break;
@@ -460,18 +421,18 @@ namespace GoBot
 
         #region Déplacements
 
-        public override void Avancer(int distance, bool attendre = true)
+        public override void MoveForward(int distance, bool attendre = true)
         {
             //TODO2018 : FOnction de déplacement communes avec Simu sur l'historique etc, à voir, le recallage de Simu se fait en avancant...
             //TODO2018 : En finir avec Avancer Reculer PivotGauche PivotDroite et se contenter de Move & Turn avec des négatifs qui font le job
-            base.Avancer(distance, attendre);
+            base.MoveForward(distance, attendre);
 
             if (attendre)
                 _lockFrame[UdpFrameFunction.FinDeplacement] = new Semaphore(0, int.MaxValue);
 
-            DeplacementLigne = true;
+            IsInLineMove = true;
             Frame trame = UdpFrameFactory.Deplacer(SensAR.Avant, distance, this);
-            Connexion.SendMessage(trame);
+            ConnectionAsser.SendMessage(trame);
 
             Historique.AjouterAction(new ActionAvance(this, distance));
 
@@ -483,28 +444,28 @@ namespace GoBot
                 _lockFrame[UdpFrameFunction.FinDeplacement].WaitOne();
             }
 
-            DeplacementLigne = false;
+            IsInLineMove = false;
         }
 
-        public override void ReglerOffsetAsserv(Position newPosition)
+        public override void SetAsservOffset(Position newPosition)
         {
             Position.Copy(newPosition);
             newPosition.Angle = -newPosition.Angle; // Repère angulaire du robot inversé
             Frame trame = UdpFrameFactory.OffsetPos(newPosition, this);
-            Connexion.SendMessage(trame);
-            OnPositionChange(Position);
+            ConnectionAsser.SendMessage(trame);
+            OnPositionChanged(Position);
         }
 
-        public override void Reculer(int distance, bool attendre = true)
+        public override void MoveBackward(int distance, bool attendre = true)
         {
-            base.Reculer(distance, attendre);
+            base.MoveBackward(distance, attendre);
 
             if (attendre)
                 _lockFrame[UdpFrameFunction.FinDeplacement] = new Semaphore(0, int.MaxValue);
 
-            DeplacementLigne = true;
+            IsInLineMove = true;
             Frame trame = UdpFrameFactory.Deplacer(SensAR.Arriere, distance, this);
-            Connexion.SendMessage(trame);
+            ConnectionAsser.SendMessage(trame);
 
             Historique.AjouterAction(new ActionRecule(this, distance));
 
@@ -513,12 +474,12 @@ namespace GoBot
                 //    Thread.Sleep(1000); // Tempo de secours, on a jamais reçu la fin de trajectoire après la fin du délai théorique
                 _lockFrame[UdpFrameFunction.FinDeplacement].WaitOne();
 
-            DeplacementLigne = false;
+            IsInLineMove = false;
         }
 
-        public override void PivotGauche(AngleDelta angle, bool attendre = true)
+        public override void PivotLeft(AngleDelta angle, bool attendre = true)
         {
-            base.PivotGauche(angle, attendre);
+            base.PivotLeft(angle, attendre);
 
             angle = Math.Round(angle, 2);
 
@@ -526,7 +487,7 @@ namespace GoBot
                 _lockFrame[UdpFrameFunction.FinDeplacement] = new Semaphore(0, int.MaxValue);
 
             Frame trame = UdpFrameFactory.Pivot(SensGD.Gauche, angle, this);
-            Connexion.SendMessage(trame);
+            ConnectionAsser.SendMessage(trame);
 
             Historique.AjouterAction(new ActionPivot(this, angle, SensGD.Gauche));
 
@@ -534,18 +495,18 @@ namespace GoBot
                 //if (!SemaphoresTrame[FrameFunction.FinDeplacement].WaitOne((int)SpeedConfig.PivotDuration(angle, Entraxe).TotalMilliseconds))
                 //    Thread.Sleep(1000); // Tempo de secours, on a jamais reçu la fin de trajectoire après la fin du délai théorique
                 _lockFrame[UdpFrameFunction.FinDeplacement].WaitOne();
-            DeplacementLigne = false;
+            IsInLineMove = false;
         }
 
-        public override void PivotDroite(AngleDelta angle, bool attendre = true)
+        public override void PivotRight(AngleDelta angle, bool attendre = true)
         {
-            base.PivotDroite(angle, attendre);
+            base.PivotRight(angle, attendre);
 
             if (attendre)
                 _lockFrame[UdpFrameFunction.FinDeplacement] = new Semaphore(0, int.MaxValue);
 
             Frame trame = UdpFrameFactory.Pivot(SensGD.Droite, angle, this);
-            Connexion.SendMessage(trame);
+            ConnectionAsser.SendMessage(trame);
 
             Historique.AjouterAction(new ActionPivot(this, angle, SensGD.Droite));
 
@@ -557,17 +518,17 @@ namespace GoBot
 
         public override void Stop(StopMode mode = StopMode.Smooth)
         {
-            AsserActif = (mode != StopMode.Freely);
+            AsserEnable = (mode != StopMode.Freely);
 
             Frame trame = UdpFrameFactory.Stop(mode, this);
-            DeplacementLigne = false;
+            IsInLineMove = false;
 
-            Connexion.SendMessage(trame);
+            ConnectionAsser.SendMessage(trame);
 
             Historique.AjouterAction(new ActionStop(this, mode));
         }
 
-        public override void Virage(SensAR sensAr, SensGD sensGd, int rayon, AngleDelta angle, bool attendre = true)
+        public override void Turn(SensAR sensAr, SensGD sensGd, int rayon, AngleDelta angle, bool attendre = true)
         {
             if (attendre)
                 _lockFrame[UdpFrameFunction.FinDeplacement] = new Semaphore(0, int.MaxValue);
@@ -575,13 +536,13 @@ namespace GoBot
             Historique.AjouterAction(new ActionVirage(this, rayon, angle, sensAr, sensGd));
 
             Frame trame = UdpFrameFactory.Virage(sensAr, sensGd, rayon, angle, this);
-            Connexion.SendMessage(trame);
+            ConnectionAsser.SendMessage(trame);
 
             if (attendre)
                 _lockFrame[UdpFrameFunction.FinDeplacement].WaitOne();
         }
 
-        public override void TrajectoirePolaire(SensAR sens, List<RealPoint> points, bool attendre = true)
+        public override void PolarTrajectory(SensAR sens, List<RealPoint> points, bool attendre = true)
         {
             if (attendre)
                 _lockFrame[UdpFrameFunction.FinDeplacement] = new Semaphore(0, int.MaxValue);
@@ -589,20 +550,20 @@ namespace GoBot
             //Historique.AjouterAction(new ActionVirage(this, rayon, angle, sensAr, sensGd)); TODO
 
             Frame trame = UdpFrameFactory.TrajectoirePolaire(sens, points, this);
-            Connexion.SendMessage(trame);
+            ConnectionAsser.SendMessage(trame);
 
             if (attendre)
                 _lockFrame[UdpFrameFunction.FinDeplacement].WaitOne();
         }
 
-        public override void Recallage(SensAR sens, bool attendre = true)
+        public override void Recalibration(SensAR sens, bool attendre = true)
         {
             if (attendre)
                 _lockFrame[UdpFrameFunction.FinDeplacement] = new Semaphore(0, int.MaxValue);
 
             Historique.AjouterAction(new ActionRecallage(this, sens));
             Frame trame = UdpFrameFactory.Recallage(sens, this);
-            Connexion.SendMessage(trame);
+            ConnectionAsser.SendMessage(trame);
 
             if (attendre)
                 _lockFrame[UdpFrameFunction.FinDeplacement].WaitOne();
@@ -610,34 +571,34 @@ namespace GoBot
 
         #endregion
 
-        public override void EnvoyerPID(int p, int i, int d)
+        public override void SendPID(int p, int i, int d)
         {
             Frame trame = UdpFrameFactory.CoeffAsserv(p, i, d, this);
-            Connexion.SendMessage(trame);
+            ConnectionAsser.SendMessage(trame);
         }
 
-        public override void EnvoyerPIDCap(int p, int i, int d)
+        public override void SendPIDCap(int p, int i, int d)
         {
             Frame trame = UdpFrameFactory.CoeffAsservCap(p, i, d, this);
-            Connexion.SendMessage(trame);
+            ConnectionAsser.SendMessage(trame);
         }
 
-        public override void EnvoyerPIDVitesse(int p, int i, int d)
+        public override void SendPIDSpeed(int p, int i, int d)
         {
             Frame trame = UdpFrameFactory.CoeffAsservVitesse(p, i, d, this);
-            Connexion.SendMessage(trame);
+            ConnectionAsser.SendMessage(trame);
         }
 
         public bool DemandePosition(bool attendre = true)
         {
-            if (!Connexion.ConnectionChecker.Connected)
+            if (!ConnectionAsser.ConnectionChecker.Connected)
                 return false;
 
             if (attendre)
                 _lockFrame[UdpFrameFunction.AsserRetourPositionCodeurs] = new Semaphore(0, int.MaxValue);
 
             Frame t = UdpFrameFactory.DemandePosition(this);
-            Connexion.SendMessage(t);
+            ConnectionAsser.SendMessage(t);
 
             if (attendre)
                 return _lockFrame[UdpFrameFunction.AsserRetourPositionXYTeta].WaitOne(1000);// semPosition.WaitOne(1000);
@@ -645,7 +606,7 @@ namespace GoBot
                 return true;
         }
 
-        public override void DemandeValeursAnalogiques(Board carte, bool attendre = true)
+        public override void ReadAnalogicPins(Board carte, bool attendre = true)
         {
             if (!Connections.UDPBoardConnection[carte].ConnectionChecker.Connected)
                 return;
@@ -660,7 +621,7 @@ namespace GoBot
                 _lockFrame[UdpFrameFunction.RetourValeursAnalogiques].WaitOne(1000);
         }
 
-        public override void DemandeValeursNumeriques(Board carte, bool attendre = true)
+        public override void ReadNumericPins(Board carte, bool attendre = true)
         {
             if (!Connections.UDPBoardConnection[carte].ConnectionChecker.Connected)
                 return;
@@ -675,18 +636,18 @@ namespace GoBot
                 _lockFrame[UdpFrameFunction.RetourValeursNumeriques].WaitOne(1000);
         }
 
-        public override void ActionneurOnOff(ActuatorOnOffID actionneur, bool on)
+        public override void SetActuatorOnOffValue(ActuatorOnOffID actionneur, bool on)
         {
-            ActionneurActive[actionneur] = on;
+            ActuatorOnOffState[actionneur] = on;
             Frame trame = UdpFrameFactory.ActionneurOnOff(actionneur, on);
             Connections.ConnectionIO.SendMessage(trame);
 
             Historique.AjouterAction(new ActionOnOff(this, actionneur, on));
         }
 
-        public override void MoteurPosition(MotorID moteur, int position, bool waitEnd)
+        public override void SetMotorAtPosition(MotorID moteur, int position, bool waitEnd)
         {
-            base.MoteurPosition(moteur, position);
+            base.SetMotorAtPosition(moteur, position);
 
             _lockMotor[moteur] = new Semaphore(0, int.MaxValue);
 
@@ -697,16 +658,16 @@ namespace GoBot
                 _lockMotor[moteur].WaitOne(5000);
         }
 
-        public override void MoteurWait(MotorID moteur)
+        public override void MotorWaitEnd(MotorID moteur)
         {
-            base.MoteurWait(moteur);
+            base.MotorWaitEnd(moteur);
 
             _lockMotor[moteur].WaitOne(5000);
         }
 
-        public override void MoteurOrigin(MotorID moteur, bool waitEnd)
+        public override void SetMotorAtOrigin(MotorID moteur, bool waitEnd)
         {
-            base.MoteurOrigin(moteur);
+            base.SetMotorAtOrigin(moteur);
 
             _lockMotor[moteur] = new Semaphore(0, int.MaxValue);
 
@@ -717,9 +678,9 @@ namespace GoBot
                 _lockMotor[moteur].WaitOne(5000);
         }
 
-        public override void MoteurVitesse(MotorID moteur, SensGD sens, int vitesse)
+        public override void SetMotorSpeed(MotorID moteur, SensGD sens, int vitesse)
         {
-            base.MoteurVitesse(moteur, sens, vitesse);
+            base.SetMotorSpeed(moteur, sens, vitesse);
 
             if (moteur == MotorID.AvailableOnRecMove12 || moteur == MotorID.Gulp)
             {
@@ -733,15 +694,15 @@ namespace GoBot
             }
         }
 
-        public override void MoteurAcceleration(MotorID moteur, int acceleration)
+        public override void SetMotorAcceleration(MotorID moteur, int acceleration)
         {
-            base.MoteurAcceleration(moteur, acceleration);
+            base.SetMotorAcceleration(moteur, acceleration);
 
             Frame trame = UdpFrameFactory.MoteurAcceleration(moteur, acceleration);
             Connections.ConnectionIO.SendMessage(trame);
         }
 
-        public override void AlimentationPuissance(bool on)
+        public override void EnablePower(bool on)
         {
             // TODOEACHYEAR : couper tout manuellement
             Stop(StopMode.Freely);
@@ -749,16 +710,16 @@ namespace GoBot
 
         public override void Reset()
         {
-            Connexion.SendMessage(UdpFrameFactory.ResetRecMove());
+            ConnectionAsser.SendMessage(UdpFrameFactory.ResetRecMove());
             Thread.Sleep(1500);
         }
 
-        public override bool GetJack()
+        public override bool ReadStartTrigger()
         {
-            return DemandeCapteurOnOff(SensorOnOffID.Jack, true);
+            return ReadSensorOnOff(SensorOnOffID.Jack, true);
         }
 
-        public override Color GetCouleurEquipe(bool historique = true)
+        public override Color ReadMyColor()
         {
             _lockFrame[UdpFrameFunction.RetourCouleurEquipe] = new Semaphore(0, int.MaxValue);
             Connections.ConnectionGB.SendMessage(UdpFrameFactory.DemandeCouleurEquipe());
@@ -766,19 +727,19 @@ namespace GoBot
             return _lastTeamColor;
         }
 
-        public override List<int>[] MesureTestPid(int consigne, SensAR sens, int ptsCount)
+        public override List<int>[] DiagnosticPID(int consigne, SensAR sens, int ptsCount)
         {
             _lastPidTest = new List<int>[2];
             _lastPidTest[0] = new List<int>();
             _lastPidTest[1] = new List<int>();
 
             Frame frame = UdpFrameFactory.EnvoiConsigneBrute(consigne, sens, this);
-            Connexion.SendMessage(frame);
+            ConnectionAsser.SendMessage(frame);
 
             frame = UdpFrameFactory.DemandePositionsCodeurs(this);
             while (_lastPidTest[0].Count < ptsCount)
             {
-                Connexion.SendMessage(frame);
+                ConnectionAsser.SendMessage(frame);
                 Thread.Sleep(30);
             }
 
@@ -800,7 +761,7 @@ namespace GoBot
             Frame frame = UdpFrameFactory.DemandeCpuPwm(this);
             while (_lastRecMoveLoad.Count <= ptsCount)
             {
-                Connexion.SendMessage(frame);
+                ConnectionAsser.SendMessage(frame);
                 Thread.Sleep(30);
             }
 
@@ -823,7 +784,7 @@ namespace GoBot
             Connections.UDPBoardConnection[byBoard].SendMessage(trameUart);
         }
 
-        public override String GetMesureLidar(LidarID lidar, int timeout, out Position refPosition)
+        public override String ReadLidarMeasure(LidarID lidar, int timeout, out Position refPosition)
         {
             _lastLidarMeasure = "";
             _lockFrame[UdpFrameFunction.ReponseLidar] = new Semaphore(0, int.MaxValue);

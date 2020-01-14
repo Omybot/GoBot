@@ -1,14 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using AStarFolder;
 using Geometry;
-using System.Threading;
-using AStarFolder;
 using Geometry.Shapes;
-using System.Drawing;
 using GoBot.Actions;
-using GoBot.PathFinding;
-using System.Diagnostics;
 using GoBot.BoardContext;
+using GoBot.PathFinding;
+using System;
+using System.Collections.Generic;
+using System.Diagnostics;
+using System.Drawing;
 
 namespace GoBot
 {
@@ -21,44 +20,108 @@ namespace GoBot
 
         // Constitution
         public IDRobot IDRobot { get; protected set; }
-        public String Nom { get; set; }
-        public double Taille { get { return Math.Max(Longueur, Largeur); } }
+        public string Name { get; set; }
 
-        public double Longueur { get; set; }
-        public double Largeur { get; set; }
-        public double Rayon { get { return Maths.Hypothenuse(Longueur, Largeur) / 2; } } 
-        public double RayonAvecChanfrein { get { return Rayon - 16; } } // -16 = valeur calculée par Nico en 2018
-        public double Entraxe { get; set; }// Distance entre les deux roues en mm
+        public Robot(double width, double lenght, double wheelSpacing, double diameter)
+        {
+            Width = width;
+            Lenght = lenght;
+            WheelSpacing = wheelSpacing;
+            RadiusOptimized = diameter / 2;
 
-        // Déplacement
-        public bool AsserActif { get; set; }
-        public abstract Position Position { get; set; }
-        public RealPoint PositionCible { get; set; }
-        public bool DeplacementLigne { get; protected set; }
-        public bool VitesseAdaptableEnnemi { get; set; }
+            SpeedConfig = new SpeedConfig(500, 1000, 1000, 500, 1000, 1000);
+            AsserStats = new AsserStats();
+            IsSpeedAdvAdaptable = true;
+
+            foreach (MotorID moteur in Enum.GetValues(typeof(MotorID)))
+                MotorState.Add(moteur, false);
+
+            foreach (SensorOnOffID o in Enum.GetValues(typeof(SensorOnOffID)))
+                SensorsOnOffValue.Add(o, false);
+
+            foreach (ActuatorOnOffID o in Enum.GetValues(typeof(ActuatorOnOffID)))
+                ActuatorOnOffState.Add(o, false);
+
+            foreach (SensorColorID o in Enum.GetValues(typeof(SensorColorID)))
+                SensorsColorValue.Add(o, Color.Black);
+
+            AnalogicPinsValue = new Dictionary<Board, List<double>>();
+            AnalogicPinsValue.Add(Board.RecIO, new List<double>());
+            AnalogicPinsValue.Add(Board.RecGB, new List<double>());
+            AnalogicPinsValue.Add(Board.RecMove, new List<double>());
+
+            for (int i = 0; i < 9; i++)
+            {
+                AnalogicPinsValue[Board.RecIO].Add(0);
+                AnalogicPinsValue[Board.RecGB].Add(0);
+                AnalogicPinsValue[Board.RecMove].Add(0);
+            }
+
+            NumericPinsValue = new Dictionary<Board, List<Byte>>();
+            NumericPinsValue.Add(Board.RecIO, new List<byte>());
+            NumericPinsValue.Add(Board.RecGB, new List<byte>());
+            NumericPinsValue.Add(Board.RecMove, new List<byte>());
+
+            for (int i = 0; i < 3 * 2; i++)
+            {
+                NumericPinsValue[Board.RecIO].Add(0);
+                NumericPinsValue[Board.RecGB].Add(0);
+                NumericPinsValue[Board.RecMove].Add(0);
+            }
+
+            BatterieVoltage = 0;
+            TrajectoryFailed = false;
+            TrajectoryCutOff = false;
+        }
+
+        public override string ToString()
+        {
+            return Name;
+        }
+
+        #region Pinout
+
+        public Dictionary<Board, List<double>> AnalogicPinsValue { get; set; }
+        public Dictionary<Board, List<byte>> NumericPinsValue { get; set; }
+
+        public abstract void ReadAnalogicPins(Board board, bool waitEnd = true);
+        public abstract void ReadNumericPins(Board board, bool waitEnd = true);
+
+        #endregion
+
+        #region Management
+
+        public abstract void Init();
+        public abstract void DeInit();
+        public abstract void EnablePower(bool on);
+        public abstract void Reset();
+        public abstract List<double>[] DiagnosticCpuPwm(int valuesCount);
+        public abstract List<int>[] DiagnosticPID(int steps, SensAR sens, int valuesCount);
+
+        #endregion
+
+        #region Moves
 
         public SpeedConfig SpeedConfig { get; protected set; }
-        public List<Position> HistoriqueCoordonnees { get; protected set; }
-
+        public List<Position> PositionsHistorical { get; protected set; }
         public AsserStats AsserStats { get; protected set; }
+        public bool AsserEnable { get; set; }
+        public abstract Position Position { get; set; }
+        public RealPoint PositionTarget { get; set; }
+        public bool IsInLineMove { get; protected set; }
+        public bool IsSpeedAdvAdaptable { get; set; }
 
-        // PathFinding
-        public Graph Graph { get; set; }
-        public bool TrajectoireEchouee { get; set; }
-        private bool TrajectoireCoupee { get; set; }
 
-        private Semaphore semTrajectoire;
+        public delegate void PositionChangedDelegate(Position position);
+        public event PositionChangedDelegate PositionChanged;
 
-        public Trajectory TrajectoireEnCours = null;
+        protected void OnPositionChanged(Position position)
+        {
+            PositionChanged?.Invoke(position);
+        }
 
-        // Actionneurs / Capteurs
 
-        public bool JackArme { get; protected set; } = false;
-        public Dictionary<MotorID, bool> MoteurTourne { get; set; }
-
-        public abstract void Delete();
-
-        public virtual void Avancer(int distance, bool attendre = true)
+        public virtual void MoveForward(int distance, bool waitEnd = true)
         {
             if (distance > 0)
                 AsserStats.ForwardMoves.Add(distance);
@@ -66,7 +129,7 @@ namespace GoBot
                 AsserStats.BackwardMoves.Add(-distance);
         }
 
-        public virtual void Reculer(int distance, bool attendre = true)
+        public virtual void MoveBackward(int distance, bool waitEnd = true)
         {
             if (distance < 0)
                 AsserStats.ForwardMoves.Add(distance);
@@ -74,203 +137,113 @@ namespace GoBot
                 AsserStats.BackwardMoves.Add(-distance);
         }
 
-        public virtual void PivotGauche(AngleDelta angle, bool attendre = true)
+        public virtual void Move(int distance, bool waitEnd = true)
+        {
+            if (distance > 0)
+                AsserStats.ForwardMoves.Add(distance);
+            else
+                AsserStats.BackwardMoves.Add(-distance);
+        }
+
+        public virtual void PivotLeft(AngleDelta angle, bool waitEnd = true)
         {
             AsserStats.LeftRotations.Add(angle);
         }
 
-        public virtual void PivotDroite(AngleDelta angle, bool attendre = true)
+        public virtual void PivotRight(AngleDelta angle, bool waitEnd = true)
         {
             AsserStats.RightsRotations.Add(angle);
         }
-
-        public abstract void TrajectoirePolaire(SensAR sens, List<RealPoint> points, bool attendre = true);
-        public abstract void Stop(StopMode mode = StopMode.Smooth);
-        public abstract void Virage(SensAR sensAr, SensGD sensGd, int rayon, AngleDelta angle, bool attendre = true);
-        public abstract void ReglerOffsetAsserv(Position newPosition);
-        public abstract void Recallage(SensAR sens, bool attendre = true);
-        public abstract void EnvoyerPID(int p, int i, int d);
-        public abstract void EnvoyerPIDCap(int p, int i, int d);
-        public abstract void EnvoyerPIDVitesse(int p, int i, int d);
-        public abstract List<int>[] MesureTestPid(int consigne, SensAR sens, int nbValeurs);
-        public abstract List<double>[] DiagnosticCpuPwm(int nbValeurs);
-        public abstract bool DemandeCapteurOnOff(SensorOnOffID capteur, bool attendre = true);
-        public abstract Color DemandeCapteurCouleur(SensorColorID capteur, bool attendre = true);
-        public abstract void DemandeValeursAnalogiques(Board carte, bool attendre = true);
-        public abstract void DemandeValeursNumeriques(Board carte, bool attendre = true);
-        public abstract String GetMesureLidar(LidarID lidar, int timeout, out Position refPosition);
-
-        public abstract void ActionneurOnOff(ActuatorOnOffID actionneur, bool on);
-
-        public abstract void Init();
-        public abstract void AlimentationPuissance(bool on);
-        public abstract void Reset();
-
-        public void ArmerJack()
+        public void SetSpeedLow()
         {
-            JackArme = true;
+            SpeedConfig.SetParams(Config.CurrentConfig.ConfigLent);
+
+            IsSpeedAdvAdaptable = false;
         }
 
-        public abstract bool GetJack();
-        public abstract Color GetCouleurEquipe(bool historique = true);
-
-        public Dictionary<SensorOnOffID, bool> CapteurActive { get; set; }
-        public Dictionary<SensorColorID, Color> CapteursCouleur { get; set; }
-        public Dictionary<ActuatorOnOffID, bool> ActionneurActive { get; set; }
-        public Dictionary<Board, List<double>> ValeursAnalogiques { get; set; }
-        public Dictionary<Board, List<Byte>> ValeursNumeriques { get; set; }
-
-        public delegate void ChangementEtatCapteurOnOffDelegate(SensorOnOffID capteur, bool etat);
-        public event ChangementEtatCapteurOnOffDelegate ChangementEtatCapteurOnOff;
-
-        public delegate void PositionChangeDelegate(Position position);
-        public event PositionChangeDelegate PositionChange;
-
-        public delegate void CapteurCouleurDelegate(SensorColorID capteur, Color couleur);
-        public event CapteurCouleurDelegate CapteurCouleurChange;
-
-        /// <summary>
-        /// Génère l'évènement de changement de position
-        /// </summary>
-        /// <param name="position">Nouvelle position</param>
-        protected void OnPositionChange(Position position)
+        public void SetSpeedFast()
         {
-            PositionChange?.Invoke(position);
+            SpeedConfig.SetParams(Config.CurrentConfig.ConfigRapide);
+
+            IsSpeedAdvAdaptable = true;
         }
 
-        /// <summary>
-        /// Génère l'évènement de changement d'état d'un capteur
-        /// </summary>
-        /// <param name="capteur"></param>
-        /// <param name="etat"></param>
-        protected void ChangerEtatCapteurOnOff(SensorOnOffID capteur, bool etat)
-        {
-            CapteurActive[capteur] = etat;
-            ChangementEtatCapteurOnOff?.Invoke(capteur, etat);
-        }
-
-        protected void ChangeCouleurCapteur(SensorColorID capteur, Color couleur)
-        {
-            CapteurCouleurChange?.Invoke(capteur, couleur);
-        }
-
-        public virtual void MoteurPosition(MotorID moteur, int position, bool waitEnd = false)
-        {
-            Historique.AjouterAction(new ActionMoteur(this, position, moteur));
-        }
-
-        public virtual void MoteurOrigin(MotorID moteur, bool waitEnd = false)
-        {
-
-        }
-
-        public virtual void MoteurWait(MotorID moteur)
-        {
-
-        }
-
-        public virtual void MoteurVitesse(MotorID moteur, SensGD sens, int vitesse)
-        {
-            if (MoteurTourne.ContainsKey(moteur))
-                MoteurTourne[moteur] = vitesse == 0 ? false : true;
-            Historique.AjouterAction(new ActionMoteur(this, vitesse, moteur));
-        }
-
-        public virtual void MoteurAcceleration(MotorID moteur, int acceleration)
-        {
-            Historique.AjouterAction(new ActionMoteur(this, acceleration, moteur));
-        }
-
-        public void PositionerAngle(AnglePosition angle, double marge = 0)
+        public void GoToAngle(AnglePosition angle, double marge = 0)
         {
             AngleDelta diff = angle - Position.Angle;
             if (Math.Abs(diff.InDegrees) > marge)
             {
                 if (diff.InDegrees > 0)
-                    PivotDroite(diff.InDegrees);
+                    PivotRight(diff.InDegrees);
                 else
-                    PivotGauche(-diff.InDegrees);
+                    PivotLeft(-diff.InDegrees);
             }
         }
 
-        public Robot()
-        {
-            SpeedConfig = new SpeedConfig(500, 1000, 1000, 500, 1000, 1000);
-            AsserStats = new AsserStats();
-            VitesseAdaptableEnnemi = true;
-           
-            MoteurTourne = new Dictionary<MotorID, bool>();
-            foreach (MotorID moteur in Enum.GetValues(typeof(MotorID)))
-                MoteurTourne.Add(moteur, false);
-
-            BatterieVoltage = 0;
-            TrajectoireEchouee = false;
-            TrajectoireCoupee = false;
-        }
-
-        public void Lent()
-        {
-            SpeedConfig.SetParams(Config.CurrentConfig.ConfigLent);
-
-            VitesseAdaptableEnnemi = false;
-        }
-
-        public void Rapide()
-        {
-            SpeedConfig.SetParams(Config.CurrentConfig.ConfigRapide);
-
-            VitesseAdaptableEnnemi = true;
-        }
-
-        public bool GotoXYTeta(Position dest)
+        public bool GoToPosition(Position dest)
         {
             Historique.Log("Lancement pathfinding pour aller en " + dest.ToString(), TypeLog.PathFinding);
 
-            Trajectory traj = PathFinder.ChercheTrajectoire(Graph, GameBoard.ObstaclesAll, GameBoard.ObstaclesOpponents, Position, dest, RayonAvecChanfrein, Robots.GrosRobot.Largeur / 2);
+            Trajectory traj = PathFinder.ChercheTrajectoire(Graph, GameBoard.ObstaclesAll, GameBoard.ObstaclesOpponents, Position, dest, RadiusOptimized, Robots.MainRobot.Width / 2);
 
             if (traj == null)
                 return false;
 
-            ParcourirTrajectoire(traj);
+            RunTrajectory(traj);
 
-            return !TrajectoireCoupee && !TrajectoireEchouee;
+            return !TrajectoryCutOff && !TrajectoryFailed;
         }
 
-        /// <summary>
-        /// Teste si deux formes sont trop proches pour envisager le passage du robot
-        /// </summary>
-        /// <param name="forme1">Forme 1</param>
-        /// <param name="forme2">Forme 2</param>
-        /// <returns>Vrai si les deux formes sont trop proches</returns>
-        public bool TropProche(IShape forme1, IShape forme2, int marge = 0)
+        public abstract void PolarTrajectory(SensAR sens, List<RealPoint> points, bool waitEnd = true);
+        public abstract void Stop(StopMode mode = StopMode.Smooth);
+        public abstract void Turn(SensAR sensAr, SensGD sensGd, int radius, AngleDelta angle, bool waitEnd = true);
+        public abstract void SetAsservOffset(Position newPosition);
+        public abstract void Recalibration(SensAR sens, bool waitEnd = true);
+        public abstract void SendPID(int p, int i, int d);
+        public abstract void SendPIDCap(int p, int i, int d);
+        public abstract void SendPIDSpeed(int p, int i, int d);
+
+        #endregion
+
+        #region PathFinding
+
+        public Graph Graph { get; set; } = null;
+        public bool TrajectoryFailed { get; protected set; } = false;
+        public bool TrajectoryCutOff { get; protected set; } = false;
+        public Trajectory TrajectoryRunning { get; protected set; } = null;
+
+        public bool IsFarEnough(IShape target, IShape toAvoid, int margin = 0)
         {
-            Type typeForme1 = forme1.GetType();
-            Type typeForme2 = forme2.GetType();
+            Type typeForme1 = target.GetType();
+            Type typeForme2 = toAvoid.GetType();
+            bool can;
 
             if (typeForme1.IsAssignableFrom(typeof(Segment)))
                 if (typeForme2.IsAssignableFrom(typeof(Segment)))
-                    return ((Segment)forme1).Distance((Segment)forme2) < RayonAvecChanfrein + marge;
+                    can = ((Segment)target).Distance((Segment)toAvoid) > RadiusOptimized + margin;
                 else
-                    return ((Segment)forme1).Distance(forme2) < RayonAvecChanfrein + marge;
+                    can = ((Segment)target).Distance(toAvoid) > RadiusOptimized + margin;
             else if (typeForme1.IsAssignableFrom(typeof(Circle)) && typeForme1.IsAssignableFrom(typeof(RealPoint)))
             {
                 // très opportuniste
-                RealPoint c = ((Circle)forme1).Center;
-                RealPoint p = (RealPoint)forme2;
+                RealPoint c = ((Circle)target).Center;
+                RealPoint p = (RealPoint)toAvoid;
                 double dx = c.X - p.X;
                 double dy = c.Y - p.Y;
 
-                return dx * dx + dy * dy < marge * marge;
+                can = dx * dx + dy * dy > margin * margin;
             }
             else
-                return forme1.Distance(forme2) < RayonAvecChanfrein + marge;
+                can = target.Distance(toAvoid) > RadiusOptimized + margin;
+
+            return can;
         }
 
-        public bool ObstacleTest(IEnumerable<IShape> obstacles)
+        public bool OpponentsTrajectoryCollision(IEnumerable<IShape> opponents)
         {
             bool ok = true;
 
-            if (TrajectoireCoupee)
+            if (TrajectoryCutOff)
                 ok = false;
 
             if (ok)
@@ -278,31 +251,31 @@ namespace GoBot
                 try
                 {
                     // Teste si le chemin en cours de parcours est toujours franchissable
-                    if (TrajectoireEnCours != null && TrajectoireEnCours.Lines.Count > 0)
+                    if (TrajectoryRunning != null && TrajectoryRunning.Lines.Count > 0)
                     {
                         List<Segment> segmentsTrajectoire = new List<Segment>();
                         // Calcule le segment entre nous et notre destination (permet de ne pas considérer un obstacle sur un tronçon déjà franchi)
-                        Segment seg = new Segment(Position.Coordinates, new RealPoint(TrajectoireEnCours.Lines[0].EndPoint));
-                        segmentsTrajectoire.Add(seg);
+                        Segment toNextPoint = new Segment(Position.Coordinates, new RealPoint(TrajectoryRunning.Lines[0].EndPoint));
+                        segmentsTrajectoire.Add(toNextPoint);
 
-                        for (int iSegment = 1; iSegment < TrajectoireEnCours.Lines.Count; iSegment++)
+                        for (int iSegment = 1; iSegment < TrajectoryRunning.Lines.Count; iSegment++)
                         {
-                            segmentsTrajectoire.Add(TrajectoireEnCours.Lines[iSegment]);
+                            segmentsTrajectoire.Add(TrajectoryRunning.Lines[iSegment]);
                         }
 
-                        foreach (IShape forme in obstacles)
+                        foreach (IShape opponent in opponents)
                         {
                             foreach (Segment segment in segmentsTrajectoire)
                             {
                                 // Marge de 30mm pour être plus permissif sur le passage et ne pas s'arreter dès que l'adversaire approche
-                                if (TropProche(seg, forme, -30))
+                                if (!IsFarEnough(toNextPoint, opponent, -30))
                                 {
                                     // Demande de génération d'une nouvelle trajectoire
                                     Historique.Log("Trajectoire coupée, annulation", TypeLog.PathFinding);
-                                    TrajectoireCoupee = true;
-                                    TrajectoireEnCours = null;
+                                    TrajectoryCutOff = true;
+                                    TrajectoryRunning = null;
 
-                                    if (DeplacementLigne)
+                                    if (IsInLineMove)
                                         Stop();
                                     ok = false;
                                     break;
@@ -323,7 +296,7 @@ namespace GoBot
             return ok;
         }
 
-        public void MajGraphFranchissable(IEnumerable<IShape> obstacles)
+        public void UpdateGraph(IEnumerable<IShape> obstacles)
         {
             lock (Graph)
             {
@@ -335,31 +308,15 @@ namespace GoBot
 
                 foreach (IShape obstacle in obstacles)
                 {
-                    // Teste les arcs non franchissables
-                    //for (int i = 0; i < Graph.Arcs.Count; i++)
-                    //{
-                    //    Arc arc = (Arc)Graph.Arcs[i];
-
-                    //    if (arc.Passable)
-                    //    {
-                    //        Segment segment = new Segment(new RealPoint(arc.StartNode.X, arc.StartNode.Y), new RealPoint(arc.EndNode.X, arc.EndNode.Y));
-
-                    //        // Marge de 20mm pour prévoir une trajectoire plus éloignée de l'adversaire
-                    //        if (TropProche(obstacle, segment, 20))
-                    //        {
-                    //            arc.Passable = false;
-                    //        }
-                    //    }
-                    //}
-
-                    // Teste les noeuds non franchissables
+                    // On ne désactive pas les arcs unitairement parce qu'on considère qu'ils sont trop courts pour qu'un arc non franchissable raccord 2 points franchissables
+                    // Donc on ne teste que les noeuds non franchissables
                     for (int i = 0; i < Graph.Nodes.Count; i++)
                     {
-                        Node n = (Node)Graph.Nodes[i];
+                        Node n = Graph.Nodes[i];
 
                         if (n.Passable)
                         {
-                            if (TropProche(obstacle, n.Position))
+                            if (!IsFarEnough(obstacle, n.Position))
                             {
                                 n.Passable = false;
                                 // Désactivation des arcs connectés aux noeuds désactivés = 10 fois plus rapide que tester les arcs
@@ -372,19 +329,14 @@ namespace GoBot
             }
         }
 
-        public override string ToString()
+        public bool RunTrajectory(Trajectory traj)
         {
-            return Nom;
-        }
-
-        public bool ParcourirTrajectoire(Trajectory traj)
-        {
-            TrajectoireEnCours = traj;
-            TimeSpan dureeEstimee = traj.GetDuration(this);
+            TrajectoryRunning = traj;
+            TimeSpan estimatedDuration = traj.GetDuration(this);
             Stopwatch sw = Stopwatch.StartNew();
 
-            TrajectoireCoupee = false;
-            TrajectoireEchouee = false;
+            TrajectoryCutOff = false;
+            TrajectoryFailed = false;
 
             foreach (IAction action in traj.ConvertToActions(this))
             {
@@ -392,69 +344,148 @@ namespace GoBot
                 {
                     action.Executer();
 
-                    if (TrajectoireCoupee || TrajectoireEchouee)
+                    if (TrajectoryCutOff || TrajectoryFailed)
                         break;
 
                     if (action is ActionAvance || action is ActionRecule)
                     {
-                        Historique.Log("Noeud atteint " + TrajectoireEnCours.Points[0].X.ToString("0") + ":" + TrajectoireEnCours.Points[0].Y.ToString("0"), TypeLog.PathFinding);
-                        TrajectoireEnCours.RemovePoint(0);
+                        Historique.Log("Noeud atteint " + TrajectoryRunning.Points[0].X.ToString("0") + ":" + TrajectoryRunning.Points[0].Y.ToString("0"), TypeLog.PathFinding);
+                        TrajectoryRunning.RemovePoint(0);
                     }
                 }
             }
 
             if (!Execution.Shutdown)
             {
-                TrajectoireEnCours = null;
+                TrajectoryRunning = null;
 
-                if (!TrajectoireCoupee && !TrajectoireEchouee)
+                if (!TrajectoryCutOff && !TrajectoryFailed)
                 {
-                    Historique.Log("Trajectoire parcourue en " + (sw.ElapsedMilliseconds / 1000.0).ToString("0.0") + "s (durée théorique : " + (dureeEstimee.TotalSeconds).ToString("0.0") + "s)", TypeLog.PathFinding);
-
-                    semTrajectoire?.Release();
+                    Historique.Log("Trajectoire parcourue en " + (sw.ElapsedMilliseconds / 1000.0).ToString("0.0") + "s (durée théorique : " + (estimatedDuration.TotalSeconds).ToString("0.0") + "s)", TypeLog.PathFinding);
 
                     return true;
                 }
 
-                if (TrajectoireEchouee)
+                if (TrajectoryFailed)
                 {
                     Historique.Log("Echec du parcours de la trajectoire (dérapage, blocage...)", TypeLog.PathFinding);
-
-                    semTrajectoire?.Release();
 
                     return false;
                 }
             }
 
-            semTrajectoire?.Release();
-
             return false;
         }
 
-        public void RangerActionneurs()
+        #endregion
+
+        #region Sensors
+
+        public bool StartTriggerEnable { get; protected set; } = false;
+        public Dictionary<SensorOnOffID, bool> SensorsOnOffValue { get; } = new Dictionary<SensorOnOffID, bool>();
+        public Dictionary<SensorColorID, Color> SensorsColorValue { get; } = new Dictionary<SensorColorID, Color>();
+
+
+        public delegate void SensorOnOffChangedDelegate(SensorOnOffID sensor, bool state);
+        public event SensorOnOffChangedDelegate SensorOnOffChanged;
+
+        public delegate void SensorColorChangedDelegate(SensorColorID sensor, Color color);
+        public event SensorColorChangedDelegate SensorColorChanged;
+
+        protected void OnSensorOnOffChanged(SensorOnOffID sensor, bool state)
         {
-            Robots.GrosRobot.ReglerOffsetAsserv(new Position(0, new RealPoint(1500, 1000)));
+            SensorsOnOffValue[sensor] = state;
+            SensorOnOffChanged?.Invoke(sensor, state);
+        }
+
+        protected void OnSensorColorChanged(SensorColorID sensor, Color color)
+        {
+            SensorColorChanged?.Invoke(sensor, color);
+        }
+
+
+        public abstract bool ReadSensorOnOff(SensorOnOffID sensor, bool waitEnd = true);
+        public abstract Color ReadSensorColor(SensorColorID sensor, bool waitEnd = true);
+        public abstract String ReadLidarMeasure(LidarID lidar, int timeout, out Position refPosition);
+        public abstract bool ReadStartTrigger();
+        public abstract Color ReadMyColor();
+
+        public void EnableStartTrigger()
+        {
+            StartTriggerEnable = true;
+        }
+
+
+        #endregion
+
+        #region Actuators
+
+        public Dictionary<ActuatorOnOffID, bool> ActuatorOnOffState { get; } = new Dictionary<ActuatorOnOffID, bool>();
+        public Dictionary<MotorID, bool> MotorState { get; } = new Dictionary<MotorID, bool>();
+
+
+        public abstract void SetActuatorOnOffValue(ActuatorOnOffID actuator, bool on);
+
+        public virtual void SetMotorAtPosition(MotorID motor, int position, bool waitEnd = false)
+        {
+            Historique.AjouterAction(new ActionMoteur(this, position, motor));
+        }
+
+        public virtual void SetMotorAtOrigin(MotorID motor, bool waitEnd = false)
+        {
+            //TODO historique ?
+        }
+
+        public virtual void MotorWaitEnd(MotorID moteur)
+        {
+
+        }
+
+        public virtual void SetMotorSpeed(MotorID moteur, SensGD sens, int vitesse)
+        {
+            if (MotorState.ContainsKey(moteur))
+                MotorState[moteur] = vitesse == 0 ? false : true;
+            Historique.AjouterAction(new ActionMoteur(this, vitesse, moteur));
+        }
+
+        public virtual void SetMotorAcceleration(MotorID moteur, int acceleration)
+        {
+            Historique.AjouterAction(new ActionMoteur(this, acceleration, moteur));
+        }
+
+        public void ActuatorsStore()
+        {
+            Robots.MainRobot.SetAsservOffset(new Position(0, new RealPoint(1500, 1000)));
 
             // TODOEACHYEAR Lister les actionneurs à ranger pour préparer un match
             
         }
 
-        public void DeployerActionnneurs()
+        public void ActuatorsDeploy()
         {
             // TODOEACHYEAR Lister les actionneurs à déployer
         }
-        
-        public IShape GetBounds(SensAR sens)
-        {
-            RealPoint p1 = new RealPoint((Robots.GrosRobot.Position.Coordinates.X - Robots.GrosRobot.Longueur / 2), (Robots.GrosRobot.Position.Coordinates.Y + Robots.GrosRobot.Largeur / 2));
-            RealPoint p2 = new RealPoint((Robots.GrosRobot.Position.Coordinates.X - Robots.GrosRobot.Longueur / 2), (Robots.GrosRobot.Position.Coordinates.Y - Robots.GrosRobot.Largeur / 2));
-            RealPoint p3 = new RealPoint((Robots.GrosRobot.Position.Coordinates.X + Robots.GrosRobot.Longueur / 2), (Robots.GrosRobot.Position.Coordinates.Y - Robots.GrosRobot.Largeur / 2));
-            RealPoint p4 = new RealPoint((Robots.GrosRobot.Position.Coordinates.X + Robots.GrosRobot.Longueur / 2), (Robots.GrosRobot.Position.Coordinates.Y + Robots.GrosRobot.Largeur / 2));
 
-            IShape contact = new PolygonRectangle(new RealPoint(Position.Coordinates.X - Longueur / 2, Position.Coordinates.Y - Largeur / 2), Longueur, Largeur);
+        #endregion
+
+        #region Shape
+
+        public double Lenght { get; private set; }
+        public double Width { get; private set; }
+        public double Radius { get { return Maths.Hypothenuse(Lenght, Width) / 2; } }
+        public double RadiusOptimized { get; private set; }
+        public double WheelSpacing { get; private set; }// Distance entre les deux roues en mm
+        public double MaxWidth { get { return Math.Max(Lenght, Width); } }
+
+        public IShape GetBounds()
+        {
+            IShape contact = new PolygonRectangle(new RealPoint(Position.Coordinates.X - Lenght / 2, Position.Coordinates.Y - Width / 2), Lenght, Width);
             contact = contact.Rotation(new AngleDelta(Position.Angle));
 
             return contact;
         }
+
+        #endregion
+
     }
 }

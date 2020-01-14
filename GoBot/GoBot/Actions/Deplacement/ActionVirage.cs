@@ -25,12 +25,12 @@ namespace GoBot.Actions
 
         public override String ToString()
         {
-            return robot.Nom + " tourne " + distance + "mm " + angle + "° " + sensAR.ToString().ToLower() + " " + sensGD.ToString().ToLower();
+            return robot.Name + " tourne " + distance + "mm " + angle + "° " + sensAR.ToString().ToLower() + " " + sensGD.ToString().ToLower();
         }
 
         void IAction.Executer()
         {
-            robot.Virage(sensAR, sensGD, distance, angle);
+            robot.Turn(sensAR, sensGD, distance, angle);
         }
 
         public System.Drawing.Image Image

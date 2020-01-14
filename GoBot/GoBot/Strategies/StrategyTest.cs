@@ -28,7 +28,7 @@ namespace GoBot.Strategies
             {
                 for (int i = 0; i < move.Positions.Count; i++)
                 {
-                    Robots.GrosRobot.ReglerOffsetAsserv(move.Positions[i]);
+                    Robots.MainRobot.SetAsservOffset(move.Positions[i]);
                     Thread.Sleep(500);
                     move.Execute();
                 }

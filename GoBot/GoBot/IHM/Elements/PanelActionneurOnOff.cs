@@ -27,7 +27,7 @@ namespace GoBot.IHM
 
         private void btnOnOff_ValueChanged(object sender, bool value)
         {
-            Robots.GrosRobot.ActionneurOnOff(actionneur, value);
+            Robots.MainRobot.SetActuatorOnOffValue(actionneur, value);
         }
     }
 }

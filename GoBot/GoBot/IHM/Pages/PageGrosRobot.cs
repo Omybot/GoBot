@@ -19,7 +19,7 @@ namespace GoBot.IHM
 
         public void Init()
         {
-            panelDeplacement.Robot = Robots.GrosRobot;
+            panelDeplacement.Robot = Robots.MainRobot;
             panelDeplacement.Init();
         }
         

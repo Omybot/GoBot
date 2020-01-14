@@ -32,22 +32,22 @@ namespace GoBot.Actions
 
         public override String ToString()
         {
-            return robot.Nom + " pivote de " + angle + " " + sens.ToString().ToLower();
+            return robot.Name + " pivote de " + angle + " " + sens.ToString().ToLower();
         }
 
         void IAction.Executer()
         {
             if(sens == SensGD.Droite)
-                robot.PivotDroite(angle);
+                robot.PivotRight(angle);
             else
-                robot.PivotGauche(angle);
+                robot.PivotLeft(angle);
         }
 
         public TimeSpan Duration
         {
             get
             {
-                return robot.SpeedConfig.PivotDuration(angle, robot.Entraxe);
+                return robot.SpeedConfig.PivotDuration(angle, robot.WheelSpacing);
             }
         }
     }

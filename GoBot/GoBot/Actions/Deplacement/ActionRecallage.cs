@@ -18,12 +18,12 @@ namespace GoBot.Actions
 
         public override String ToString()
         {
-            return robot.Nom + " recallage " + sens.ToString().ToLower();
+            return robot.Name + " recallage " + sens.ToString().ToLower();
         }
 
         void IAction.Executer()
         {
-            robot.Recallage(sens);
+            robot.Recalibration(sens);
         }
 
         public System.Drawing.Image Image

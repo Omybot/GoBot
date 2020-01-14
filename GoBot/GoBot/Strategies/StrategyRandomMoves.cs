@@ -21,7 +21,7 @@ namespace GoBot.Strategies
 
         protected override void SequenceBegin()
         {
-            Robots.GrosRobot.SpeedConfig.SetParams(500, 2000, 2000, 800, 2000, 2000);
+            Robots.MainRobot.SpeedConfig.SetParams(500, 2000, 2000, 800, 2000, 2000);
             
             // Sortir ICI de la zone de départ pour commencer
         }
@@ -30,14 +30,14 @@ namespace GoBot.Strategies
         {
             while (IsRunning)
             {
-                int next = rand.Next(Robots.GrosRobot.Graph.Nodes.Count);
-                if (!((Node)Robots.GrosRobot.Graph.Nodes[next]).Passable)
+                int next = rand.Next(Robots.MainRobot.Graph.Nodes.Count);
+                if (!((Node)Robots.MainRobot.Graph.Nodes[next]).Passable)
                     continue;
 
-                Position destination = new Position(rand.Next(360), ((Node)Robots.GrosRobot.Graph.Nodes[next]).Position);
+                Position destination = new Position(rand.Next(360), ((Node)Robots.MainRobot.Graph.Nodes[next]).Position);
 
-                Robots.GrosRobot.Historique.Log("Nouvelle destination " + destination.ToString());
-                Robots.GrosRobot.GotoXYTeta(destination);
+                Robots.MainRobot.Historique.Log("Nouvelle destination " + destination.ToString());
+                Robots.MainRobot.GoToPosition(destination);
             }
         }
     }

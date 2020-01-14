@@ -35,13 +35,13 @@ namespace GoBot.IHM
 
         void AskValues()
         {
-            Robots.GrosRobot.DemandeValeursAnalogiques(Carte, true);
+            Robots.MainRobot.ReadAnalogicPins(Carte, true);
 
-            if (Robots.GrosRobot.ValeursAnalogiques[Carte] != null)
+            if (Robots.MainRobot.AnalogicPinsValue[Carte] != null)
             {
                 this.InvokeAuto(() =>
                 {
-                    List<double> values = Robots.GrosRobot.ValeursAnalogiques[Carte];
+                    List<double> values = Robots.MainRobot.AnalogicPinsValue[Carte];
                     lblAN1.Text = values[0].ToString("0.0000") + " V";
                     lblAN2.Text = values[1].ToString("0.0000") + " V";
                     lblAN3.Text = values[2].ToString("0.0000") + " V";

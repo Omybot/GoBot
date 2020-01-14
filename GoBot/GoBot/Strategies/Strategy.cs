@@ -85,7 +85,7 @@ namespace GoBot.Strategies
                 {
                     if(!Movements[iMov].Robot.Graph.Raccordable(new Node(Movements[iMov].Positions[iPos].Coordinates),
                         GameBoard.ObstaclesAll,
-                        Movements[iMov].Robot.RayonAvecChanfrein))
+                        Movements[iMov].Robot.RadiusOptimized))
                     {
                         Movements[iMov].Positions.RemoveAt(iPos);
                         iPos--;
@@ -99,7 +99,7 @@ namespace GoBot.Strategies
         /// </summary>
         public void ExecuteMatch()
         {
-            Robots.GrosRobot.Historique.Log("DEBUT DU MATCH", TypeLog.Strat);
+            Robots.MainRobot.Historique.Log("DEBUT DU MATCH", TypeLog.Strat);
 
             StartingDateTime = DateTime.Now;
 
@@ -126,7 +126,7 @@ namespace GoBot.Strategies
 
         private void endMatchTimer_Elapsed(object sender, ElapsedEventArgs e)
         {
-            Robots.GrosRobot.Historique.Log("FIN DU MATCH", TypeLog.Strat);
+            Robots.MainRobot.Historique.Log("FIN DU MATCH", TypeLog.Strat);
             
             endMatchTimer.Stop();
             _linkMatch.Kill();
@@ -159,7 +159,7 @@ namespace GoBot.Strategies
         {
             // TODOEACHYEAR Couper ICI tous les actionneurs à la fin du match et lancer la Funny Action / afficher le score
 
-            Robots.GrosRobot.Stop(StopMode.Freely);
+            Robots.MainRobot.Stop(StopMode.Freely);
             //Plateau.Balise.VitesseRotation(0);
 
             Devices.AllDevices.CanServos.DisableAll();

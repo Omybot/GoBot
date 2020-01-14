@@ -20,7 +20,7 @@ namespace GoBot.Actions
 
         public override String ToString()
         {
-            return _robot.Nom + " accélération pivot à " + _accel + " / " + _decel;
+            return _robot.Name + " accélération pivot à " + _accel + " / " + _decel;
         }
 
         void IAction.Executer()

@@ -25,7 +25,7 @@ namespace GoBot.Actions
 
         void IAction.Executer()
         {
-            robot.ActionneurOnOff(actionneur, on);
+            robot.SetActuatorOnOffValue(actionneur, on);
         }
 
         public System.Drawing.Image Image

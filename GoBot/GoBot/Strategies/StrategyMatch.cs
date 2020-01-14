@@ -23,8 +23,8 @@ namespace GoBot.Strategies
             GameBoard.Score = 42;
 
             // Sortir ICI de la zonde de départ
-            Robots.GrosRobot.MajGraphFranchissable(GameBoard.ObstaclesAll);
-            Robots.GrosRobot.Avancer(500);
+            Robots.MainRobot.UpdateGraph(GameBoard.ObstaclesAll);
+            Robots.MainRobot.MoveForward(500);
             
             // Ajouter ICI l'ordre de la strat fixe avant détection d'adversaire
 
@@ -66,13 +66,13 @@ namespace GoBot.Strategies
                     }
                     else
                     {
-                        Robots.GrosRobot.Historique.Log("Aucune action à effectuer");
+                        Robots.MainRobot.Historique.Log("Aucune action à effectuer");
                         Thread.Sleep(500);
                     }
                 }
                 else
                 {
-                    Robots.GrosRobot.Historique.Log("Aucune action à effectuer");
+                    Robots.MainRobot.Historique.Log("Aucune action à effectuer");
                     Thread.Sleep(500);
                 }
             }

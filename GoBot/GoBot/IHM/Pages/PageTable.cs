@@ -60,7 +60,7 @@ namespace GoBot.IHM
         {
             this.InvokeAuto(() =>
             {
-                Position pos = Robots.GrosRobot.Position;
+                Position pos = Robots.MainRobot.Position;
                 lblPosX.Text = pos.Coordinates.X.ToString("0.00");
                 lblPosY.Text = pos.Coordinates.Y.ToString("0.00");
                 lblPosTheta.Text = pos.Angle.InDegrees.ToString("0.00") + "°";
@@ -263,7 +263,7 @@ namespace GoBot.IHM
                 if (Dessinateur.modeCourant == Dessinateur.MouseMode.PositionCentre)
                     ThreadManager.CreateThread(link => ThreadTrajectory(link)).StartThread();
                 else
-                    Robots.GrosRobot.ReglerOffsetAsserv(positionArrivee);
+                    Robots.MainRobot.SetAsservOffset(positionArrivee);
 
                 Dessinateur.modeCourant = Dessinateur.MouseMode.None;
             }
@@ -275,14 +275,14 @@ namespace GoBot.IHM
 
                 Point pointOrigine = Dessinateur.positionDepart;
                 Position departRecule = new Position(new AnglePosition(-traj.angle), pointOrigine);
-                departRecule.Move(-Robots.GrosRobot.Longueur / 2);
+                departRecule.Move(-Robots.MainRobot.Lenght / 2);
                 departRecule = new Position(new AnglePosition(-traj.angle), new RealPoint(departRecule.Coordinates.X, departRecule.Coordinates.Y));
                 positionArrivee = departRecule;
 
                 if (Dessinateur.modeCourant == Dessinateur.MouseMode.PositionFace)
                     ThreadManager.CreateThread(link => ThreadTrajectory(link)).StartThread();
                 else
-                    Robots.GrosRobot.ReglerOffsetAsserv(positionArrivee);
+                    Robots.MainRobot.SetAsservOffset(positionArrivee);
 
                 Dessinateur.modeCourant = Dessinateur.MouseMode.None;
             }
@@ -303,7 +303,7 @@ namespace GoBot.IHM
 
             this.InvokeAuto(() => btnPathRPCentre.Enabled = false);
 
-            Robots.GrosRobot.GotoXYTeta(new Position(positionArrivee.Angle.InDegrees, positionArrivee.Coordinates));
+            Robots.MainRobot.GoToPosition(new Position(positionArrivee.Angle.InDegrees, positionArrivee.Coordinates));
 
             this.InvokeAuto(() => btnPathRPCentre.Enabled = true);
         }
@@ -379,7 +379,7 @@ namespace GoBot.IHM
         public void GoToDepart(ThreadLink link)
         {
             link.RegisterName();
-            Robots.GrosRobot.GotoXYTeta(Recalibration.StartPosition);
+            Robots.MainRobot.GoToPosition(Recalibration.StartPosition);
         }
 
         private void btnStratNul_Click(object sender, EventArgs e)
@@ -404,32 +404,32 @@ namespace GoBot.IHM
         {
             link.RegisterName();
 
-            Robots.GrosRobot.Avancer(2000);
-            Robots.GrosRobot.PivotDroite(270);
-            Robots.GrosRobot.Avancer(200);
-            Robots.GrosRobot.PivotDroite(10);
-            Robots.GrosRobot.Avancer(100);
-            Robots.GrosRobot.PivotDroite(10);
-            Robots.GrosRobot.Avancer(100);
-            Robots.GrosRobot.PivotDroite(10);
-            Robots.GrosRobot.Avancer(100);
-            Robots.GrosRobot.Reculer(1000);
-            Robots.GrosRobot.PivotGauche(90);
-            Robots.GrosRobot.Reculer(500);
-            Robots.GrosRobot.PivotGauche(10);
-            Robots.GrosRobot.Avancer(1000);
-            Robots.GrosRobot.PivotGauche(10);
-            Robots.GrosRobot.Avancer(100);
-            Robots.GrosRobot.PivotGauche(10);
-            Robots.GrosRobot.Avancer(100);
-            Robots.GrosRobot.PivotGauche(10);
-            Robots.GrosRobot.Avancer(100);
-            Robots.GrosRobot.PivotGauche(10);
-            Robots.GrosRobot.Avancer(100);
+            Robots.MainRobot.MoveForward(2000);
+            Robots.MainRobot.PivotRight(270);
+            Robots.MainRobot.MoveForward(200);
+            Robots.MainRobot.PivotRight(10);
+            Robots.MainRobot.MoveForward(100);
+            Robots.MainRobot.PivotRight(10);
+            Robots.MainRobot.MoveForward(100);
+            Robots.MainRobot.PivotRight(10);
+            Robots.MainRobot.MoveForward(100);
+            Robots.MainRobot.MoveBackward(1000);
+            Robots.MainRobot.PivotLeft(90);
+            Robots.MainRobot.MoveBackward(500);
+            Robots.MainRobot.PivotLeft(10);
+            Robots.MainRobot.MoveForward(1000);
+            Robots.MainRobot.PivotLeft(10);
+            Robots.MainRobot.MoveForward(100);
+            Robots.MainRobot.PivotLeft(10);
+            Robots.MainRobot.MoveForward(100);
+            Robots.MainRobot.PivotLeft(10);
+            Robots.MainRobot.MoveForward(100);
+            Robots.MainRobot.PivotLeft(10);
+            Robots.MainRobot.MoveForward(100);
 
-            Robots.GrosRobot.GotoXYTeta(Recalibration.StartPosition);
+            Robots.MainRobot.GoToPosition(Recalibration.StartPosition);
 
-            Robots.GrosRobot.Reculer(300);
+            Robots.MainRobot.MoveBackward(300);
         }
 
         private void btnTrajCreer_Click(object sender, EventArgs e)
@@ -441,7 +441,7 @@ namespace GoBot.IHM
 
         private void btnTrajLancer_Click(object sender, EventArgs e)
         {
-            Robots.GrosRobot.TrajectoirePolaire(SensAR.Avant, trajectoirePolaire, false);
+            Robots.MainRobot.PolarTrajectory(SensAR.Avant, trajectoirePolaire, false);
         }
 
         bool moveMouse = false;

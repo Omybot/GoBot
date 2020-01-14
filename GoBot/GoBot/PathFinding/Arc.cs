@@ -4,11 +4,11 @@ namespace AStarFolder
 {
     public class Arc
     {
-        Node _startNode;
-        Node _endNode;
-        
-        bool _passable;
-        double _length;
+        private Node _startNode;
+        private Node _endNode;
+
+        private bool _passable;
+        private double _length;
         
         public Arc(Node Start, Node End)
         {

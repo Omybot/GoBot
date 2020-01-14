@@ -45,7 +45,7 @@ namespace GoBot.BoardContext
                 //Balise.PositionEnnemisActualisee += Balise_PositionEnnemisActualisee;
 
                 _currentStrategy = new StrategyMatch();
-                Robots.GrosRobot.MajGraphFranchissable(_obstacles.FromAllExceptBoard);
+                Robots.MainRobot.UpdateGraph(_obstacles.FromAllExceptBoard);
 
                 // TODOEACHYEAR Définir ici la zone correspondant au plateau où les detections d'adversaire sont autorisées (enlever les pentes par exemple)
                 _bounds = new PolygonRectangle(new RealPoint(0, 0), 3000, 2000);
@@ -87,7 +87,7 @@ namespace GoBot.BoardContext
 
                     MyColorChange?.Invoke(null, null);
                     if (_obstacles != null)
-                        Robots.GrosRobot.MajGraphFranchissable(_obstacles.FromAllExceptBoard);
+                        Robots.MainRobot.UpdateGraph(_obstacles.FromAllExceptBoard);
                 }
             }
         }
@@ -217,10 +217,10 @@ namespace GoBot.BoardContext
 
                     Elements.SetOpponents(positions);
 
-                    if (Robots.GrosRobot.VitesseAdaptableEnnemi && positions.Count > 0)
+                    if (Robots.MainRobot.IsSpeedAdvAdaptable && positions.Count > 0)
                     {
-                        double minOpponentDist = positions.Min(p => p.Distance(Robots.GrosRobot.Position.Coordinates));
-                        Robots.GrosRobot.SpeedConfig.LineSpeed = SpeedWithOpponent(minOpponentDist, Config.CurrentConfig.ConfigRapide.LineSpeed);
+                        double minOpponentDist = positions.Min(p => p.Distance(Robots.MainRobot.Position.Coordinates));
+                        Robots.MainRobot.SpeedConfig.LineSpeed = SpeedWithOpponent(minOpponentDist, Config.CurrentConfig.ConfigRapide.LineSpeed);
                     }
                 }
 
@@ -250,8 +250,8 @@ namespace GoBot.BoardContext
                 AllDevices.RecGoBot.ChangeLed(LedID.DebugB3);
                 // TODO2020 : faudrait pouvoir mettre à jour le graph sans refaire les zones interdites de couleur (sauvegarder un résultat après application de la couleur ?)
                 // parce que les carrés c'est beaucoup plus long que les ronds...
-                Robots.GrosRobot.MajGraphFranchissable(_obstacles.FromAllExceptBoard);
-                Robots.GrosRobot.ObstacleTest(_obstacles.FromDetection);
+                Robots.MainRobot.UpdateGraph(_obstacles.FromAllExceptBoard);
+                Robots.MainRobot.OpponentsTrajectoryCollision(_obstacles.FromDetection);
             }
         }
 
@@ -271,7 +271,7 @@ namespace GoBot.BoardContext
         private static void LidarAvoid_NewMeasure(List<RealPoint> measure)
         {
             List<RealPoint> pts = measure.Where(o => IsInside(o, 100)).ToList();
-            pts = pts.Where(o => o.Distance(Robots.GrosRobot.Position.Coordinates) > 300).ToList();
+            pts = pts.Where(o => o.Distance(Robots.MainRobot.Position.Coordinates) > 300).ToList();
 
             List<List<RealPoint>> groups = pts.GroupByDistance(50, 20);
 
@@ -310,12 +310,12 @@ namespace GoBot.BoardContext
             if (distanceLiaison == -1)
                 distanceLiaison = Math.Sqrt((resolution * resolution) * 2) * 1.05; //+5% pour prendre large
 
-            Robots.GrosRobot.Graph = new Graph(resolution, distanceLiaison);
+            Robots.MainRobot.Graph = new Graph(resolution, distanceLiaison);
 
             // Création des noeuds
             for (int x = resolution / 2; x < Width; x += resolution)
                 for (int y = resolution / 2; y < Height; y += resolution)
-                    Robots.GrosRobot.Graph.AddNode(new Node(x, y), _obstacles.FromBoard, Robots.GrosRobot.RayonAvecChanfrein, true);
+                    Robots.MainRobot.Graph.AddNode(new Node(x, y), _obstacles.FromBoard, Robots.MainRobot.RadiusOptimized, true);
         }
 
         /// <summary>

@@ -71,7 +71,7 @@ namespace GoBot.IHM
 
         private void Measure()
         {
-            List<double>[] values = Robots.GrosRobot.DiagnosticCpuPwm(30);
+            List<double>[] values = Robots.MainRobot.DiagnosticCpuPwm(30);
             _cpuAverage = values[0].Average();
 
             int min = Math.Min(values[0].Count, values[1].Count);

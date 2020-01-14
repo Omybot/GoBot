@@ -21,47 +21,47 @@ namespace GoBot
 
         public static void Init()
         {
-            PositionLeft = new Position(0, new RealPoint(Robots.GrosRobot.Longueur / 2, Robots.GrosRobot.Largeur / 2 + 530 + 10));
+            PositionLeft = new Position(0, new RealPoint(Robots.MainRobot.Lenght / 2, Robots.MainRobot.Width / 2 + 530 + 10));
             PositionRight = new Position(180, new RealPoint(3000 - PositionLeft.Coordinates.X, PositionLeft.Coordinates.Y));
         }
 
         public static void GoToCalibration()
         {
             if (GameBoard.ColorLeftBlue == GameBoard.MyColor)
-                Robots.GrosRobot.GotoXYTeta(new Position(90, new RealPoint(Robots.GrosRobot.Largeur, Robots.GrosRobot.Largeur)));
+                Robots.MainRobot.GoToPosition(new Position(90, new RealPoint(Robots.MainRobot.Width, Robots.MainRobot.Width)));
             else
-                Robots.GrosRobot.GotoXYTeta(new Position(90, new RealPoint(3000 - Robots.GrosRobot.Largeur, Robots.GrosRobot.Largeur)));
+                Robots.MainRobot.GoToPosition(new Position(90, new RealPoint(3000 - Robots.MainRobot.Width, Robots.MainRobot.Width)));
         }
 
         public static void Calibration()
         {
             AllDevices.RecGoBot.SetLed(LedID.DebugB2, Devices.RecGoBot.LedStatus.Rouge);
 
-            Robots.GrosRobot.EnvoyerPID(Config.CurrentConfig.GRCoeffP, Config.CurrentConfig.GRCoeffI, Config.CurrentConfig.GRCoeffD);
-            Robots.GrosRobot.Stop();
+            Robots.MainRobot.SendPID(Config.CurrentConfig.GRCoeffP, Config.CurrentConfig.GRCoeffI, Config.CurrentConfig.GRCoeffD);
+            Robots.MainRobot.Stop();
 
-            Robots.GrosRobot.Lent();
-            Robots.GrosRobot.Avancer(10);
-            Robots.GrosRobot.Recallage(SensAR.Arriere);
-            Robots.GrosRobot.Rapide();
-            Robots.GrosRobot.ReglerOffsetAsserv(new Position(Math.Round(Robots.GrosRobot.Position.Angle.InPositiveDegrees / 90) * 90, 
-                new RealPoint(Robots.GrosRobot.Position.Coordinates.X, Robots.GrosRobot.Longueur/2)));
+            Robots.MainRobot.SetSpeedLow();
+            Robots.MainRobot.MoveForward(10);
+            Robots.MainRobot.Recalibration(SensAR.Arriere);
+            Robots.MainRobot.SetSpeedFast();
+            Robots.MainRobot.SetAsservOffset(new Position(Math.Round(Robots.MainRobot.Position.Angle.InPositiveDegrees / 90) * 90, 
+                new RealPoint(Robots.MainRobot.Position.Coordinates.X, Robots.MainRobot.Lenght/2)));
 
-            Robots.GrosRobot.Avancer((int)(StartPosition.Coordinates.Y - Robots.GrosRobot.Longueur / 2));
+            Robots.MainRobot.MoveForward((int)(StartPosition.Coordinates.Y - Robots.MainRobot.Lenght / 2));
 
             if (GameBoard.MyColor == GameBoard.ColorLeftBlue)
-                Robots.GrosRobot.PivotGauche(90);
+                Robots.MainRobot.PivotLeft(90);
             else
-                Robots.GrosRobot.PivotDroite(90);
+                Robots.MainRobot.PivotRight(90);
 
-            Robots.GrosRobot.Lent();
-            Robots.GrosRobot.Recallage(SensAR.Arriere);
+            Robots.MainRobot.SetSpeedLow();
+            Robots.MainRobot.Recalibration(SensAR.Arriere);
 
-            Robots.GrosRobot.ReglerOffsetAsserv(StartPosition);
+            Robots.MainRobot.SetAsservOffset(StartPosition);
 
-            Robots.GrosRobot.ArmerJack();
+            Robots.MainRobot.EnableStartTrigger();
 
-            Robots.GrosRobot.Rapide();
+            Robots.MainRobot.SetSpeedFast();
             AllDevices.RecGoBot.SetLed(LedID.DebugB2, Devices.RecGoBot.LedStatus.Vert);
         }
     }

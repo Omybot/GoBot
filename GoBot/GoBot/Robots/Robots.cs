@@ -16,7 +16,7 @@ namespace GoBot
     {
         public static Dictionary<IDRobot, Robot> DicRobots { get; set; }
 
-        public static Robot GrosRobot { get; set; }
+        public static Robot MainRobot { get; set; }
         public static bool Simulation { get; set; }
 
         public static void Init()
@@ -28,39 +28,36 @@ namespace GoBot
         private static void CreerRobots()
         {
             Graph graphGros = null;
-            if (Robots.GrosRobot != null && Robots.GrosRobot.Graph != null)
-                graphGros = Robots.GrosRobot.Graph;
+            if (Robots.MainRobot != null && Robots.MainRobot.Graph != null)
+                graphGros = Robots.MainRobot.Graph;
 
-            Robots.GrosRobot?.Delete();
+            Robots.MainRobot?.DeInit();
 
             if (!Simulation)
             {
-                RobotReel grosRobot = new RobotReel(IDRobot.GrosRobot, Board.RecMove);
-                grosRobot.PositionChange += GrosRobot_PositionChange;
-                grosRobot.Connexion = Connections.ConnectionMove;
-                GrosRobot = grosRobot;
+                RobotReel grosRobot = new RobotReel(IDRobot.GrosRobot, Board.RecMove, 335, 271, 295, 390);
+                grosRobot.PositionChanged += GrosRobot_PositionChanged;
+                grosRobot.ConnectionAsser = Connections.ConnectionMove;
+                MainRobot = grosRobot;
             }
             else
             {
-                GrosRobot = new RobotSimu(IDRobot.GrosRobot);
-                GrosRobot.PositionChange += GrosRobot_PositionChange;
+                MainRobot = new RobotSimu(IDRobot.GrosRobot, 335, 271, 295, 390);
+                MainRobot.PositionChanged += GrosRobot_PositionChanged;
             }
 
             DicRobots = new Dictionary<IDRobot, Robot>();
-            DicRobots.Add(IDRobot.GrosRobot, GrosRobot);
+            DicRobots.Add(IDRobot.GrosRobot, MainRobot);
 
-            GrosRobot.Largeur = 320;
-            GrosRobot.Longueur = 300;
-            GrosRobot.Entraxe = 291.95;
-            GrosRobot.Nom = "Gros robot";
-            GrosRobot.Init();
+            MainRobot.Name = "Gros robot";
+            MainRobot.Init();
             if (graphGros != null)
-                Robots.GrosRobot.Graph = graphGros;
+                Robots.MainRobot.Graph = graphGros;
 
-            GrosRobot.Rapide();
+            MainRobot.SetSpeedFast();
         }
 
-        private static void GrosRobot_PositionChange(Geometry.Position position)
+        private static void GrosRobot_PositionChanged(Geometry.Position position)
         {
             if (AllDevices.LidarAvoid != null)
                 AllDevices.LidarAvoid.Position = position;

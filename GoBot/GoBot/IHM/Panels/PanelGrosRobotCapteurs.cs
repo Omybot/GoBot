@@ -7,15 +7,17 @@ namespace GoBot.IHM
 {
     public partial class PanelGrosRobotCapteurs : UserControl
     {
-        private ToolTip tooltip;
+        private System.Timers.Timer _timerStartTrigger;
+        private System.Timers.Timer _timerMyColor;
+        private ToolTip _tooltip;
 
         public PanelGrosRobotCapteurs()
         {
             InitializeComponent();
 
-            tooltip = new ToolTip();
-            tooltip.InitialDelay = 1500;
-            groupBoxCapteurs.DeployedChanged += new Composants.GroupBoxPlus.DeployedChangedDelegate(groupBoxCapteurs_Deploiement);
+            _tooltip = new ToolTip();
+            _tooltip.InitialDelay = 1500;
+            grpSensors.DeployedChanged += new Composants.GroupBoxPlus.DeployedChangedDelegate(groupBoxCapteurs_Deploiement);
         }
 
         void groupBoxCapteurs_Deploiement(bool deploye)
@@ -25,61 +27,58 @@ namespace GoBot.IHM
 
         private void PanelSequencesGros_Load(object sender, EventArgs e)
         {
-            ledJack.Color = Color.Gray;
-            ledCouleurEquipe.Color = Color.Gray;
+            ledStartTrigger.Color = Color.Gray;
+            ledMyColor.Color = Color.Gray;
 
-            groupBoxCapteurs.Deploy(Config.CurrentConfig.CapteursGROuvert, false);
+            grpSensors.Deploy(Config.CurrentConfig.CapteursGROuvert, false);
 
-            timerJack = new System.Timers.Timer(100);
-            timerJack.Elapsed += new System.Timers.ElapsedEventHandler(timerJack_Elapsed);
-            timerCouleurEquipe = new System.Timers.Timer(100);
-            timerCouleurEquipe.Elapsed += new System.Timers.ElapsedEventHandler(timerCouleurEquipe_Elapsed);
+            _timerStartTrigger = new System.Timers.Timer(100);
+            _timerStartTrigger.Elapsed += new System.Timers.ElapsedEventHandler(_timerStartTrigger_Elapsed);
+            _timerMyColor = new System.Timers.Timer(100);
+            _timerMyColor.Elapsed += new System.Timers.ElapsedEventHandler(timerMyColor_Elapsed);
         }
-
-        System.Timers.Timer timerJack;
-        System.Timers.Timer timerCouleurEquipe;
 
         private void boxJack_CheckedChanged(object sender, EventArgs e)
         {
             if (boxJack.Checked)
-                timerJack.Start();
+                _timerStartTrigger.Start();
             else
             {
-                timerJack.Stop();
-                ledJack.Color = Color.Gray;
+                _timerStartTrigger.Stop();
+                ledStartTrigger.Color = Color.Gray;
             }
         }
 
-        void timerJack_Elapsed(object sender, System.Timers.ElapsedEventArgs e)
+        void _timerStartTrigger_Elapsed(object sender, System.Timers.ElapsedEventArgs e)
         {
             this.InvokeAuto(() =>
             { 
-                if (Robots.GrosRobot.GetJack())
-                    ledJack.Color = Color.LimeGreen;
+                if (Robots.MainRobot.ReadStartTrigger())
+                    ledStartTrigger.Color = Color.LimeGreen;
                 else
-                    ledJack.Color = Color.Red;
+                    ledStartTrigger.Color = Color.Red;
             });
         }
 
-        void timerCouleurEquipe_Elapsed(object sender, System.Timers.ElapsedEventArgs e)
+        void timerMyColor_Elapsed(object sender, System.Timers.ElapsedEventArgs e)
         {
             this.InvokeAuto(() =>
             {
-                if (Robots.GrosRobot.GetCouleurEquipe(false) == GameBoard.ColorRightYellow)
-                    ledCouleurEquipe.Color = Color.LimeGreen;
+                if (Robots.MainRobot.ReadMyColor() == GameBoard.ColorRightYellow)
+                    ledMyColor.Color = Color.LimeGreen;
                 else
-                    ledCouleurEquipe.Color = Color.Yellow;
+                    ledMyColor.Color = Color.Yellow;
             });
         }
 
-        private void boxCouleurEquipe_CheckedChanged(object sender, EventArgs e)
+        private void boxMyColor_CheckedChanged(object sender, EventArgs e)
         {
-            if (boxCouleurEquipe.Checked)
-                timerCouleurEquipe.Start();
+            if (boxMyColor.Checked)
+                _timerMyColor.Start();
             else
             {
-                timerCouleurEquipe.Stop();
-                ledCouleurEquipe.Color = Color.Gray;
+                _timerMyColor.Stop();
+                ledMyColor.Color = Color.Gray;
             }
         }
     }

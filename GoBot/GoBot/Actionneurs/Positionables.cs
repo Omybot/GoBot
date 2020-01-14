@@ -70,7 +70,7 @@ namespace GoBot.Actionneurs
 
         protected override void SendPositionSpecific(int position)
         {
-            Robots.GrosRobot.MoteurPosition(ID, position);
+            Robots.MainRobot.SetMotorAtPosition(ID, position);
         }
     }
 
@@ -80,7 +80,7 @@ namespace GoBot.Actionneurs
 
         protected override void SendPositionSpecific(int position)
         {
-            Robots.GrosRobot.MoteurVitesse(ID, position > 0 ? SensGD.Gauche : SensGD.Droite, Math.Abs(position));
+            Robots.MainRobot.SetMotorSpeed(ID, position > 0 ? SensGD.Gauche : SensGD.Droite, Math.Abs(position));
         }
     }
 }

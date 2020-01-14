@@ -21,9 +21,9 @@ namespace GoBot.Strategies
         {
             // Sortir ICI de la zonde de départ
 
-            Robots.GrosRobot.MajGraphFranchissable(GameBoard.ObstaclesAll);
+            Robots.MainRobot.UpdateGraph(GameBoard.ObstaclesAll);
             
-            Robots.GrosRobot.Avancer(500);
+            Robots.MainRobot.MoveForward(500);
             
             if (GameBoard.MyColor == GameBoard.ColorLeftBlue)
             {
@@ -52,8 +52,8 @@ namespace GoBot.Strategies
             
             while (IsRunning)
             {
-                while (!Robots.GrosRobot.GotoXYTeta(new Position(0, new RealPoint(700, 1250)))) ;
-                while (!Robots.GrosRobot.GotoXYTeta(new Position(180, new RealPoint(3000 - 700, 1250)))) ;
+                while (!Robots.MainRobot.GoToPosition(new Position(0, new RealPoint(700, 1250)))) ;
+                while (!Robots.MainRobot.GoToPosition(new Position(180, new RealPoint(3000 - 700, 1250)))) ;
             }
         }
     }

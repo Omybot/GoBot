@@ -74,7 +74,7 @@ namespace GoBot.Movements
         /// <returns>Retourne vrai si le mouvement a pu s'executer intégralement sans problème</returns>
         public bool Execute()
         {
-            Robots.GrosRobot.Historique.Log("Début " + this.ToString());
+            Robots.MainRobot.Historique.Log("Début " + this.ToString());
 
             startTime = DateTime.Now;
 
@@ -83,21 +83,21 @@ namespace GoBot.Movements
 
             if (position != null)
             {
-                Trajectory traj = PathFinder.ChercheTrajectoire(Robot.Graph, GameBoard.ObstaclesAll, GameBoard.ObstaclesOpponents, new Position(Robot.Position), position, Robot.RayonAvecChanfrein, Robot.Largeur / 2);
+                Trajectory traj = PathFinder.ChercheTrajectoire(Robot.Graph, GameBoard.ObstaclesAll, GameBoard.ObstaclesOpponents, new Position(Robot.Position), position, Robot.RadiusOptimized, Robot.Width / 2);
 
                 if (traj != null)
                 {
                     MovementBegin();
 
-                    if (Robot.ParcourirTrajectoire(traj))
+                    if (Robot.RunTrajectory(traj))
                     {
                         MovementCore();
-                        Robots.GrosRobot.Historique.Log("Fin " + this.ToString() + " en " + (DateTime.Now - startTime).TotalSeconds.ToString("#.#") + "s");
+                        Robots.MainRobot.Historique.Log("Fin " + this.ToString() + " en " + (DateTime.Now - startTime).TotalSeconds.ToString("#.#") + "s");
                         ok = true;
                     }
                     else
                     {
-                        Robots.GrosRobot.Historique.Log("Annulation " + this.ToString() + ", trajectoire échouée");
+                        Robots.MainRobot.Historique.Log("Annulation " + this.ToString() + ", trajectoire échouée");
                         ok = false;
                     }
                 }
@@ -108,11 +108,11 @@ namespace GoBot.Movements
             }
             else
             {
-                Robots.GrosRobot.Historique.Log("Annulation " + this.ToString() + ", trajectoire non trouvée");
+                Robots.MainRobot.Historique.Log("Annulation " + this.ToString() + ", trajectoire non trouvée");
                 ok = false;
             }
 
-            Robots.GrosRobot.MajGraphFranchissable(GameBoard.ObstaclesAll);
+            Robots.MainRobot.UpdateGraph(GameBoard.ObstaclesAll);
             return ok;
         }
 

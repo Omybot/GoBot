@@ -29,24 +29,24 @@
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(PanelGrosRobotCapteurs));
-            this.ledJack = new Composants.Led();
+            this.ledStartTrigger = new Composants.Led();
             this.boxJack = new System.Windows.Forms.CheckBox();
-            this.groupBoxCapteurs = new Composants.GroupBoxPlus();
-            this.boxCouleurEquipe = new System.Windows.Forms.CheckBox();
-            this.ledCouleurEquipe = new Composants.Led();
-            ((System.ComponentModel.ISupportInitialize)(this.ledJack)).BeginInit();
-            this.groupBoxCapteurs.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.ledCouleurEquipe)).BeginInit();
+            this.grpSensors = new Composants.GroupBoxPlus();
+            this.boxMyColor = new System.Windows.Forms.CheckBox();
+            this.ledMyColor = new Composants.Led();
+            ((System.ComponentModel.ISupportInitialize)(this.ledStartTrigger)).BeginInit();
+            this.grpSensors.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.ledMyColor)).BeginInit();
             this.SuspendLayout();
             // 
-            // ledJack
+            // ledStartTrigger
             // 
-            this.ledJack.Image = ((System.Drawing.Image)(resources.GetObject("ledJack.Image")));
-            this.ledJack.Location = new System.Drawing.Point(147, 40);
-            this.ledJack.Name = "ledJack";
-            this.ledJack.Size = new System.Drawing.Size(16, 16);
-            this.ledJack.TabIndex = 101;
-            this.ledJack.TabStop = false;
+            this.ledStartTrigger.Image = ((System.Drawing.Image)(resources.GetObject("ledJack.Image")));
+            this.ledStartTrigger.Location = new System.Drawing.Point(147, 40);
+            this.ledStartTrigger.Name = "ledStartTrigger";
+            this.ledStartTrigger.Size = new System.Drawing.Size(16, 16);
+            this.ledStartTrigger.TabIndex = 101;
+            this.ledStartTrigger.TabStop = false;
             // 
             // boxJack
             // 
@@ -59,38 +59,38 @@
             this.boxJack.UseVisualStyleBackColor = true;
             this.boxJack.CheckedChanged += new System.EventHandler(this.boxJack_CheckedChanged);
             // 
-            // groupBoxCapteurs
+            // grpSensors
             // 
-            this.groupBoxCapteurs.Controls.Add(this.boxCouleurEquipe);
-            this.groupBoxCapteurs.Controls.Add(this.ledCouleurEquipe);
-            this.groupBoxCapteurs.Controls.Add(this.boxJack);
-            this.groupBoxCapteurs.Controls.Add(this.ledJack);
-            this.groupBoxCapteurs.Location = new System.Drawing.Point(3, 3);
-            this.groupBoxCapteurs.Name = "groupBoxCapteurs";
-            this.groupBoxCapteurs.Size = new System.Drawing.Size(332, 185);
-            this.groupBoxCapteurs.TabIndex = 1;
-            this.groupBoxCapteurs.TabStop = false;
-            this.groupBoxCapteurs.Text = "Capteurs";
+            this.grpSensors.Controls.Add(this.boxMyColor);
+            this.grpSensors.Controls.Add(this.ledMyColor);
+            this.grpSensors.Controls.Add(this.boxJack);
+            this.grpSensors.Controls.Add(this.ledStartTrigger);
+            this.grpSensors.Location = new System.Drawing.Point(3, 3);
+            this.grpSensors.Name = "grpSensors";
+            this.grpSensors.Size = new System.Drawing.Size(332, 185);
+            this.grpSensors.TabIndex = 1;
+            this.grpSensors.TabStop = false;
+            this.grpSensors.Text = "Capteurs";
             // 
-            // boxCouleurEquipe
+            // boxMyColor
             // 
-            this.boxCouleurEquipe.AutoSize = true;
-            this.boxCouleurEquipe.Location = new System.Drawing.Point(23, 63);
-            this.boxCouleurEquipe.Name = "boxCouleurEquipe";
-            this.boxCouleurEquipe.Size = new System.Drawing.Size(103, 17);
-            this.boxCouleurEquipe.TabIndex = 102;
-            this.boxCouleurEquipe.Text = "Couleur équipe :";
-            this.boxCouleurEquipe.UseVisualStyleBackColor = true;
-            this.boxCouleurEquipe.CheckedChanged += new System.EventHandler(this.boxCouleurEquipe_CheckedChanged);
+            this.boxMyColor.AutoSize = true;
+            this.boxMyColor.Location = new System.Drawing.Point(23, 63);
+            this.boxMyColor.Name = "boxMyColor";
+            this.boxMyColor.Size = new System.Drawing.Size(103, 17);
+            this.boxMyColor.TabIndex = 102;
+            this.boxMyColor.Text = "Couleur équipe :";
+            this.boxMyColor.UseVisualStyleBackColor = true;
+            this.boxMyColor.CheckedChanged += new System.EventHandler(this.boxMyColor_CheckedChanged);
             // 
-            // ledCouleurEquipe
+            // ledMyColor
             // 
-            this.ledCouleurEquipe.Image = ((System.Drawing.Image)(resources.GetObject("ledCouleurEquipe.Image")));
-            this.ledCouleurEquipe.Location = new System.Drawing.Point(147, 63);
-            this.ledCouleurEquipe.Name = "ledCouleurEquipe";
-            this.ledCouleurEquipe.Size = new System.Drawing.Size(16, 16);
-            this.ledCouleurEquipe.TabIndex = 103;
-            this.ledCouleurEquipe.TabStop = false;
+            this.ledMyColor.Image = ((System.Drawing.Image)(resources.GetObject("ledCouleurEquipe.Image")));
+            this.ledMyColor.Location = new System.Drawing.Point(147, 63);
+            this.ledMyColor.Name = "ledMyColor";
+            this.ledMyColor.Size = new System.Drawing.Size(16, 16);
+            this.ledMyColor.TabIndex = 103;
+            this.ledMyColor.TabStop = false;
             // 
             // PanelGrosRobotCapteurs
             // 
@@ -98,24 +98,24 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoSize = true;
             this.BackColor = System.Drawing.Color.Transparent;
-            this.Controls.Add(this.groupBoxCapteurs);
+            this.Controls.Add(this.grpSensors);
             this.Name = "PanelGrosRobotCapteurs";
             this.Size = new System.Drawing.Size(341, 194);
             this.Load += new System.EventHandler(this.PanelSequencesGros_Load);
-            ((System.ComponentModel.ISupportInitialize)(this.ledJack)).EndInit();
-            this.groupBoxCapteurs.ResumeLayout(false);
-            this.groupBoxCapteurs.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.ledCouleurEquipe)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.ledStartTrigger)).EndInit();
+            this.grpSensors.ResumeLayout(false);
+            this.grpSensors.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.ledMyColor)).EndInit();
             this.ResumeLayout(false);
 
         }
 
         #endregion
 
-        private Composants.Led ledJack;
+        private Composants.Led ledStartTrigger;
         private System.Windows.Forms.CheckBox boxJack;
-        private Composants.GroupBoxPlus groupBoxCapteurs;
-        private System.Windows.Forms.CheckBox boxCouleurEquipe;
-        private Composants.Led ledCouleurEquipe;
+        private Composants.GroupBoxPlus grpSensors;
+        private System.Windows.Forms.CheckBox boxMyColor;
+        private Composants.Led ledMyColor;
     }
 }
