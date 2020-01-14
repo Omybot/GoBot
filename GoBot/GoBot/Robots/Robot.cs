@@ -14,20 +14,18 @@ namespace GoBot
     public abstract class Robot
     {
         // Communication
-        public Board AsservBoard { get; set; }
+        public Board AsservBoard { get; protected set; }
         public Historique Historique { get; protected set; }
         public double BatterieVoltage { get; protected set; }
 
         // Constitution
-        public IDRobot IDRobot { get; protected set; }
-        public string Name { get; set; }
+        public IDRobot IDRobot { get; private set; }
+        public string Name { get; private set; }
 
-        public Robot(double width, double lenght, double wheelSpacing, double diameter)
+        public Robot(IDRobot id, string name)
         {
-            Width = width;
-            Lenght = lenght;
-            WheelSpacing = wheelSpacing;
-            RadiusOptimized = diameter / 2;
+            IDRobot = id;
+            Name = name;
 
             SpeedConfig = new SpeedConfig(500, 1000, 1000, 500, 1000, 1000);
             AsserStats = new AsserStats();
@@ -70,8 +68,10 @@ namespace GoBot
             }
 
             BatterieVoltage = 0;
+            Graph = null;
             TrajectoryFailed = false;
             TrajectoryCutOff = false;
+            TrajectoryRunning = null;
         }
 
         public override string ToString()
@@ -81,8 +81,8 @@ namespace GoBot
 
         #region Pinout
 
-        public Dictionary<Board, List<double>> AnalogicPinsValue { get; set; }
-        public Dictionary<Board, List<byte>> NumericPinsValue { get; set; }
+        public Dictionary<Board, List<double>> AnalogicPinsValue { get; protected set; }
+        public Dictionary<Board, List<byte>> NumericPinsValue { get; protected set; }
 
         public abstract void ReadAnalogicPins(Board board, bool waitEnd = true);
         public abstract void ReadNumericPins(Board board, bool waitEnd = true);
@@ -105,11 +105,11 @@ namespace GoBot
         public SpeedConfig SpeedConfig { get; protected set; }
         public List<Position> PositionsHistorical { get; protected set; }
         public AsserStats AsserStats { get; protected set; }
-        public bool AsserEnable { get; set; }
-        public abstract Position Position { get; set; }
-        public RealPoint PositionTarget { get; set; }
+        public bool AsserEnable { get; protected set; }
+        public abstract Position Position { get; protected set; }
+        public RealPoint PositionTarget { get; protected set; }
         public bool IsInLineMove { get; protected set; }
-        public bool IsSpeedAdvAdaptable { get; set; }
+        public bool IsSpeedAdvAdaptable { get; protected set; }
 
 
         public delegate void PositionChangedDelegate(Position position);
@@ -154,6 +154,7 @@ namespace GoBot
         {
             AsserStats.RightsRotations.Add(angle);
         }
+
         public void SetSpeedLow()
         {
             SpeedConfig.SetParams(Config.CurrentConfig.ConfigLent);
@@ -207,10 +208,10 @@ namespace GoBot
 
         #region PathFinding
 
-        public Graph Graph { get; set; } = null;
-        public bool TrajectoryFailed { get; protected set; } = false;
-        public bool TrajectoryCutOff { get; protected set; } = false;
-        public Trajectory TrajectoryRunning { get; protected set; } = null;
+        public Graph Graph { get; set; }
+        public bool TrajectoryFailed { get; protected set; }
+        public bool TrajectoryCutOff { get; protected set; }
+        public Trajectory TrajectoryRunning { get; protected set; }
 
         public bool IsFarEnough(IShape target, IShape toAvoid, int margin = 0)
         {
@@ -400,6 +401,7 @@ namespace GoBot
 
         protected void OnSensorColorChanged(SensorColorID sensor, Color color)
         {
+            SensorsColorValue[sensor] = color;
             SensorColorChanged?.Invoke(sensor, color);
         }
 
@@ -458,7 +460,7 @@ namespace GoBot
             Robots.MainRobot.SetAsservOffset(new Position(0, new RealPoint(1500, 1000)));
 
             // TODOEACHYEAR Lister les actionneurs à ranger pour préparer un match
-            
+
         }
 
         public void ActuatorsDeploy()
@@ -476,6 +478,14 @@ namespace GoBot
         public double RadiusOptimized { get; private set; }
         public double WheelSpacing { get; private set; }// Distance entre les deux roues en mm
         public double MaxWidth { get { return Math.Max(Lenght, Width); } }
+
+        public void SetDimensions(double width, double lenght, double wheelSpacing, double diameter)
+        {
+            Width = width;
+            Lenght = lenght;
+            WheelSpacing = wheelSpacing;
+            RadiusOptimized = diameter / 2;
+        }
 
         public IShape GetBounds()
         {

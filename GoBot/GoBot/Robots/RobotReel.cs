@@ -16,41 +16,48 @@ namespace GoBot
 {
     class RobotReel : Robot
     {
-        private Dictionary<SensorOnOffID, Semaphore> _lockSensorOnOff = new Dictionary<SensorOnOffID, Semaphore>();
-        private Dictionary<SensorColorID, Semaphore> _lockSensorColor = new Dictionary<SensorColorID, Semaphore>();
-        private Dictionary<UdpFrameFunction, Semaphore> _lockFrame = new Dictionary<UdpFrameFunction, Semaphore>();
-        private Dictionary<MotorID, Semaphore> _lockMotor = new Dictionary<MotorID, Semaphore>();
-        
-        private bool _positionReceived = false;
+        private Dictionary<SensorOnOffID, Semaphore> _lockSensorOnOff;
+        private Dictionary<SensorColorID, Semaphore> _lockSensorColor;
+        private Dictionary<UdpFrameFunction, Semaphore> _lockFrame;
+        private Dictionary<MotorID, Semaphore> _lockMotor;
+
+        private Connection _asserConnection;
+        private bool _positionReceived;
 
         private List<double> _lastRecMoveLoad, _lastPwmLeft, _lastPwmRight;
         private Color _lastTeamColor;
         List<int>[] _lastPidTest;
-        private String _lastLidarMeasure;
+        private string _lastLidarMeasure;
         private Position _lastLidarPosition;
-        
-        public Connection ConnectionAsser { get; set; }
-        public override Position Position { get; set; }
 
-        public RobotReel(IDRobot idRobot, Board asserBoard, double width, double lenght, double wheelSpacing, double diameter) : base(width, lenght, wheelSpacing, diameter)
+        public override Position Position { get; protected set; }
+
+        public RobotReel(IDRobot id, Board asserBoard) : base(id, "Robot")
         {
             AsserEnable = true;
             AsservBoard = asserBoard;
-            IDRobot = idRobot;
-            
+
+            _asserConnection = Connections.UDPBoardConnection[AsservBoard];
+            _positionReceived = false;
+
+            _lockFrame = new Dictionary<UdpFrameFunction, Semaphore>();
             foreach (UdpFrameFunction o in Enum.GetValues(typeof(UdpFrameFunction)))
                 _lockFrame.Add(o, new Semaphore(0, int.MaxValue));
 
+            _lockMotor = new Dictionary<MotorID, Semaphore>();
             foreach (MotorID o in Enum.GetValues(typeof(MotorID)))
                 _lockMotor.Add(o, new Semaphore(0, int.MaxValue));
 
+            _lockSensorOnOff = new Dictionary<SensorOnOffID, Semaphore>();
             foreach (SensorOnOffID o in Enum.GetValues(typeof(SensorOnOffID)))
                 _lockSensorOnOff.Add(o, new Semaphore(0, int.MaxValue));
-            
+
+            _lockSensorColor = new Dictionary<SensorColorID, Semaphore>();
             foreach (SensorColorID o in Enum.GetValues(typeof(SensorColorID)))
                 _lockSensorColor.Add(o, new Semaphore(0, int.MaxValue));
-            
+
             SpeedConfig.ParamChange += SpeedConfig_ParamChange;
+
         }
 
         public override void DeInit()
@@ -63,25 +70,25 @@ namespace GoBot
             if (lineSpeedChange)
             {
                 Frame frame = UdpFrameFactory.VitesseLigne(SpeedConfig.LineSpeed, this);
-                ConnectionAsser.SendMessage(frame);
+                _asserConnection.SendMessage(frame);
                 Historique.AjouterAction(new ActionVitesseLigne(this, SpeedConfig.LineSpeed));
             }
             if (lineAccelChange || lineDecelChange)
             {
                 Frame frame = UdpFrameFactory.AccelLigne(SpeedConfig.LineAcceleration, SpeedConfig.LineDeceleration, this);
-                ConnectionAsser.SendMessage(frame);
+                _asserConnection.SendMessage(frame);
                 Historique.AjouterAction(new ActionAccelerationLigne(this, SpeedConfig.LineAcceleration, SpeedConfig.LineDeceleration));
             }
             if (pivotSpeedChange)
             {
                 Frame frame = UdpFrameFactory.VitessePivot(SpeedConfig.PivotSpeed, this);
-                ConnectionAsser.SendMessage(frame);
+                _asserConnection.SendMessage(frame);
                 Historique.AjouterAction(new ActionVitessePivot(this, SpeedConfig.PivotSpeed));
             }
             if (pivotAccelChange || pivotDecelChange)
             {
                 Frame frame = UdpFrameFactory.AccelPivot(SpeedConfig.PivotAcceleration, this);
-                ConnectionAsser.SendMessage(frame);
+                _asserConnection.SendMessage(frame);
                 Historique.AjouterAction(new ActionAccelerationPivot(this, SpeedConfig.PivotAcceleration, SpeedConfig.PivotDeceleration));
             }
         }
@@ -112,8 +119,8 @@ namespace GoBot
         public override void Init()
         {
             Historique = new Historique(IDRobot);
-            
-            ConnectionAsser.FrameReceived += new UDPConnection.NewFrameDelegate(ReceptionMessage);
+
+            _asserConnection.FrameReceived += new UDPConnection.NewFrameDelegate(ReceptionMessage);
 
             if (this == Robots.MainRobot)
                 Connections.ConnectionIO.FrameReceived += new UDPConnection.NewFrameDelegate(ReceptionMessage);
@@ -138,41 +145,37 @@ namespace GoBot
             PositionTarget = null; //TODO2018 Init commun à la simu
 
             PositionsHistorical = new List<Position>();
-            ConnectionAsser.SendMessage(UdpFrameFactory.DemandePositionContinue(100, this));
+            _asserConnection.SendMessage(UdpFrameFactory.DemandePositionContinue(100, this));
 
             AllDevices.RecGoBot.ColorChange += RecGoBot_ColorChange;
             AllDevices.RecGoBot.JackChange += RecGoBot_JackChange;
         }
 
-        public override Color ReadSensorColor(SensorColorID capteur, bool attendre = true)
+        public override Color ReadSensorColor(SensorColorID capteur, bool wait = true)
         {
-            if (attendre)
-                _lockSensorColor[capteur] = new Semaphore(0, int.MaxValue);
+            if (wait) _lockSensorColor[capteur] = new Semaphore(0, int.MaxValue);
 
             Frame t = UdpFrameFactory.DemandeCapteurCouleur(capteur);
             Connections.ConnectionIO.SendMessage(t);
 
-            if (attendre)
-                _lockSensorColor[capteur].WaitOne(100);
+            if (wait) _lockSensorColor[capteur].WaitOne(100);
 
             return SensorsColorValue[capteur];
         }
 
-        public override bool ReadSensorOnOff(SensorOnOffID capteur, bool attendre = true)
+        public override bool ReadSensorOnOff(SensorOnOffID sensor, bool wait = true)
         {
-            if (attendre)
-                _lockSensorOnOff[capteur] = new Semaphore(0, int.MaxValue);
+            if (wait) _lockSensorOnOff[sensor] = new Semaphore(0, int.MaxValue);
 
-            Frame t = UdpFrameFactory.DemandeCapteurOnOff(capteur);
+            Frame t = UdpFrameFactory.DemandeCapteurOnOff(sensor);
             Connections.ConnectionGB.SendMessage(t);
 
-            if (attendre)
-                _lockSensorOnOff[capteur].WaitOne(1000);
-            Console.WriteLine("Retour " + SensorsOnOffValue[capteur].ToString());
-            return SensorsOnOffValue[capteur];
+            if (wait) _lockSensorOnOff[sensor].WaitOne(1000);
+
+            return SensorsOnOffValue[sensor];
         }
 
-        public void ReactivationAsserv(ThreadLink link)
+        public void AsyncAsserEnable(ThreadLink link)
         {
             link.RegisterName();
 
@@ -208,12 +211,12 @@ namespace GoBot
                     AllDevices.RecGoBot.Buzz("..");
                     break;
                 case UdpFrameFunction.Blocage:
-                    ThreadManager.CreateThread(ReactivationAsserv).StartThread();
+                    ThreadManager.CreateThread(AsyncAsserEnable).StartThread();
                     break;
                 case UdpFrameFunction.FinDeplacement:
                 case UdpFrameFunction.FinRecallage:        // Idem
                     Thread.Sleep(40); // TODO2018 ceci est une tempo ajoutée au pif de pwet parce qu'on avant envie alors voilà
-                    Console.WriteLine("Déblocage déplacement " + DateTime.Now.Hour + ":" + DateTime.Now.Minute + ":" + DateTime.Now.Second + ":" + DateTime.Now.Millisecond);
+                    IsInLineMove = false;
                     _lockFrame[UdpFrameFunction.FinDeplacement]?.Release();
                     break;
                 case UdpFrameFunction.AsserRetourPositionXYTeta:
@@ -242,7 +245,7 @@ namespace GoBot
                         }
 
                         _positionReceived = true;
-                        
+
                         _lockFrame[UdpFrameFunction.AsserDemandePositionXYTeta]?.Release();
 
                         lock (PositionsHistorical)
@@ -252,7 +255,7 @@ namespace GoBot
                             while (PositionsHistorical.Count > 1200)
                                 PositionsHistorical.RemoveAt(0);
                         }
-                        
+
                         OnPositionChanged(Position);
                     }
                     catch (Exception)
@@ -285,9 +288,9 @@ namespace GoBot
                     }
                     break;
                 case UdpFrameFunction.RetourChargeCPU_PWM:
-                    int nbValeurs = frame[2];
+                    int valsCount = frame[2];
 
-                    for (int i = 0; i < nbValeurs; i++)
+                    for (int i = 0; i < valsCount; i++)
                     {
                         double cpuLoad = (frame[3 + i * 6] * 256 + frame[4 + i * 6]) / 5000.0;
                         double pwmLeft = frame[5 + i * 6] * 256 + frame[6 + i * 6] - 4000;
@@ -301,51 +304,26 @@ namespace GoBot
                     break;
                 case UdpFrameFunction.RetourCapteurCouleur:
                     //TODO2018 : multiplier par 2 pour obtenir de belles couleurs ?
-                    Color couleur = Color.FromArgb(Math.Min(255, frame[3] * 1), Math.Min(255, frame[4] * 1), Math.Min(255, frame[5] * 1));
 
-                    OnSensorColorChanged((SensorColorID)frame[2], couleur);
-                    SensorsColorValue[(SensorColorID)frame[2]] = couleur;
+                    SensorColorID sensorColor = (SensorColorID)frame[2];
+
+                    Color newColor = Color.FromArgb(Math.Min(255, frame[3] * 1), Math.Min(255, frame[4] * 1), Math.Min(255, frame[5] * 1));
+
+                    if (newColor != SensorsColorValue[sensorColor])
+                        OnSensorColorChanged(sensorColor, newColor);
 
                     _lockSensorColor[(SensorColorID)frame[2]]?.Release();
                     break;
                 case UdpFrameFunction.RetourCapteurOnOff:
-                    SensorOnOffID capteur = (SensorOnOffID)frame[2];
+                    SensorOnOffID sensorOnOff = (SensorOnOffID)frame[2];
 
+                    bool newState = frame[3] > 0 ? true : false;
 
-                    //if (trameRecue[2] == (byte)CapteurID.Balise)
-                    //{
-                    //    // Recomposition de la trame comme si elle venait d'une balise
-                    //    String message = "B1 E4 " + trameRecue.ToString().Substring(9);
-                    //    if (Plateau.Balise != null)
-                    //        Plateau.Balise.connexion_NouvelleTrame(new Trame(message));
-                    //}
+                    if (newState != SensorsOnOffValue[sensorOnOff])
+                        OnSensorOnOffChanged(sensorOnOff, newState);
 
-                    //else if (trameRecue[2] == (byte)CapteurID.BaliseRapide1)
-                    //{
-                    //    // Recomposition de la trame comme si elle venait d'une balise
-                    //    String message = "B1 E5 02 " + trameRecue.ToString().Substring(9);
-                    //    if (Plateau.Balise != null)
-                    //        Plateau.Balise.connexion_NouvelleTrame(new Trame(message));
-                    //}
+                    _lockSensorOnOff[sensorOnOff]?.Release();
 
-                    //else if (trameRecue[2] == (byte)CapteurID.BaliseRapide2)
-                    //{
-                    //    // Recomposition de la trame comme si elle venait d'une balise
-                    //    String message = "B1 E5 01 " + trameRecue.ToString().Substring(9);
-                    //    if (Plateau.Balise != null)
-                    //        Plateau.Balise.connexion_NouvelleTrame(new Trame(message));
-                    //}
-
-                    //else
-                    {
-
-                        bool nouvelEtat = frame[3] > 0 ? true : false;
-
-                        if (nouvelEtat != SensorsOnOffValue[capteur])
-                            OnSensorOnOffChanged(capteur, nouvelEtat);
-
-                        _lockSensorOnOff[capteur]?.Release();
-                    }
                     break;
                 case UdpFrameFunction.TensionBatteries:
                     BatterieVoltage = (double)(frame[2] * 256 + frame[3]) / 100.0;
@@ -390,7 +368,7 @@ namespace GoBot
                     if (_lastLidarMeasure == null)
                         _lastLidarMeasure = "";
 
-                    String mess = "";
+                    string mess = "";
                     int decallageEntete = 3;
 
                     if (_lastLidarMeasure.Length == 0)
@@ -421,284 +399,260 @@ namespace GoBot
 
         #region Déplacements
 
-        public override void MoveForward(int distance, bool attendre = true)
-        {
-            //TODO2018 : FOnction de déplacement communes avec Simu sur l'historique etc, à voir, le recallage de Simu se fait en avancant...
-            //TODO2018 : En finir avec Avancer Reculer PivotGauche PivotDroite et se contenter de Move & Turn avec des négatifs qui font le job
-            base.MoveForward(distance, attendre);
-
-            if (attendre)
-                _lockFrame[UdpFrameFunction.FinDeplacement] = new Semaphore(0, int.MaxValue);
-
-            IsInLineMove = true;
-            Frame trame = UdpFrameFactory.Deplacer(SensAR.Avant, distance, this);
-            ConnectionAsser.SendMessage(trame);
-
-            Historique.AjouterAction(new ActionAvance(this, distance));
-
-            if (attendre)
-            {
-                int duration = (int)SpeedConfig.LineDuration(distance).TotalMilliseconds;
-                //if (!SemaphoresTrame[FrameFunction.FinDeplacement].WaitOne((int)SpeedConfig.LineDuration(distance).TotalMilliseconds))
-                //    Thread.Sleep(1000); // Tempo de secours, on a jamais reçu la fin de trajectoire après la fin du délai théorique
-                _lockFrame[UdpFrameFunction.FinDeplacement].WaitOne();
-            }
-
-            IsInLineMove = false;
-        }
-
         public override void SetAsservOffset(Position newPosition)
         {
             Position.Copy(newPosition);
             newPosition.Angle = -newPosition.Angle; // Repère angulaire du robot inversé
-            Frame trame = UdpFrameFactory.OffsetPos(newPosition, this);
-            ConnectionAsser.SendMessage(trame);
+
+            Frame frame = UdpFrameFactory.OffsetPos(newPosition, this);
+            _asserConnection.SendMessage(frame);
+
             OnPositionChanged(Position);
         }
 
-        public override void MoveBackward(int distance, bool attendre = true)
+        public override void MoveForward(int distance, bool wait = true)
         {
-            base.MoveBackward(distance, attendre);
+            //TODO2018 : FOnction de déplacement communes avec Simu sur l'historique etc, à voir, le recallage de Simu se fait en avancant...
+            base.MoveForward(distance, wait);
 
-            if (attendre)
-                _lockFrame[UdpFrameFunction.FinDeplacement] = new Semaphore(0, int.MaxValue);
+            if (wait) _lockFrame[UdpFrameFunction.FinDeplacement] = new Semaphore(0, int.MaxValue);
 
             IsInLineMove = true;
-            Frame trame = UdpFrameFactory.Deplacer(SensAR.Arriere, distance, this);
-            ConnectionAsser.SendMessage(trame);
 
-            Historique.AjouterAction(new ActionRecule(this, distance));
+            Frame frame = UdpFrameFactory.Deplacer(SensAR.Avant, distance, this);
+            _asserConnection.SendMessage(frame);
 
-            if (attendre)
+            Historique.AjouterAction(new ActionAvance(this, distance));
+
+            if (wait)
+            {
                 //if (!SemaphoresTrame[FrameFunction.FinDeplacement].WaitOne((int)SpeedConfig.LineDuration(distance).TotalMilliseconds))
                 //    Thread.Sleep(1000); // Tempo de secours, on a jamais reçu la fin de trajectoire après la fin du délai théorique
                 _lockFrame[UdpFrameFunction.FinDeplacement].WaitOne();
-
-            IsInLineMove = false;
+            }
         }
 
-        public override void PivotLeft(AngleDelta angle, bool attendre = true)
+        public override void MoveBackward(int distance, bool wait = true)
         {
-            base.PivotLeft(angle, attendre);
+            base.MoveBackward(distance, wait);
+
+            if (wait) _lockFrame[UdpFrameFunction.FinDeplacement] = new Semaphore(0, int.MaxValue);
+
+            IsInLineMove = true;
+
+            Frame frame = UdpFrameFactory.Deplacer(SensAR.Arriere, distance, this);
+            _asserConnection.SendMessage(frame);
+
+            Historique.AjouterAction(new ActionRecule(this, distance));
+
+            if (wait)
+            {
+                //if (!SemaphoresTrame[FrameFunction.FinDeplacement].WaitOne((int)SpeedConfig.LineDuration(distance).TotalMilliseconds))
+                //    Thread.Sleep(1000); // Tempo de secours, on a jamais reçu la fin de trajectoire après la fin du délai théorique
+                _lockFrame[UdpFrameFunction.FinDeplacement].WaitOne();
+            }
+        }
+
+        public override void PivotLeft(AngleDelta angle, bool wait = true)
+        {
+            base.PivotLeft(angle, wait);
 
             angle = Math.Round(angle, 2);
 
-            if (attendre)
-                _lockFrame[UdpFrameFunction.FinDeplacement] = new Semaphore(0, int.MaxValue);
+            if (wait) _lockFrame[UdpFrameFunction.FinDeplacement] = new Semaphore(0, int.MaxValue);
 
-            Frame trame = UdpFrameFactory.Pivot(SensGD.Gauche, angle, this);
-            ConnectionAsser.SendMessage(trame);
+            Frame frame = UdpFrameFactory.Pivot(SensGD.Gauche, angle, this);
+            _asserConnection.SendMessage(frame);
 
             Historique.AjouterAction(new ActionPivot(this, angle, SensGD.Gauche));
 
-            if (attendre)
+            if (wait)
+            {
                 //if (!SemaphoresTrame[FrameFunction.FinDeplacement].WaitOne((int)SpeedConfig.PivotDuration(angle, Entraxe).TotalMilliseconds))
                 //    Thread.Sleep(1000); // Tempo de secours, on a jamais reçu la fin de trajectoire après la fin du délai théorique
                 _lockFrame[UdpFrameFunction.FinDeplacement].WaitOne();
-            IsInLineMove = false;
+            }
         }
 
-        public override void PivotRight(AngleDelta angle, bool attendre = true)
+        public override void PivotRight(AngleDelta angle, bool wait = true)
         {
-            base.PivotRight(angle, attendre);
+            base.PivotRight(angle, wait);
 
-            if (attendre)
-                _lockFrame[UdpFrameFunction.FinDeplacement] = new Semaphore(0, int.MaxValue);
+            if (wait) _lockFrame[UdpFrameFunction.FinDeplacement] = new Semaphore(0, int.MaxValue);
 
-            Frame trame = UdpFrameFactory.Pivot(SensGD.Droite, angle, this);
-            ConnectionAsser.SendMessage(trame);
+            Frame frame = UdpFrameFactory.Pivot(SensGD.Droite, angle, this);
+            _asserConnection.SendMessage(frame);
 
             Historique.AjouterAction(new ActionPivot(this, angle, SensGD.Droite));
 
-            if (attendre)
+            if (wait)
+            {
                 //if (!SemaphoresTrame[FrameFunction.FinDeplacement].WaitOne((int)SpeedConfig.PivotDuration(angle, Entraxe).TotalMilliseconds))
                 //    Thread.Sleep(1000); // Tempo de secours, on a jamais reçu la fin de trajectoire après la fin du délai théorique
                 _lockFrame[UdpFrameFunction.FinDeplacement].WaitOne();
+            }
         }
 
         public override void Stop(StopMode mode = StopMode.Smooth)
         {
             AsserEnable = (mode != StopMode.Freely);
 
-            Frame trame = UdpFrameFactory.Stop(mode, this);
             IsInLineMove = false;
 
-            ConnectionAsser.SendMessage(trame);
+            Frame frame = UdpFrameFactory.Stop(mode, this);
+            _asserConnection.SendMessage(frame);
 
             Historique.AjouterAction(new ActionStop(this, mode));
         }
 
-        public override void Turn(SensAR sensAr, SensGD sensGd, int rayon, AngleDelta angle, bool attendre = true)
+        public override void Turn(SensAR sensAr, SensGD sensGd, int radius, AngleDelta angle, bool wait = true)
         {
-            if (attendre)
-                _lockFrame[UdpFrameFunction.FinDeplacement] = new Semaphore(0, int.MaxValue);
+            if (wait) _lockFrame[UdpFrameFunction.FinDeplacement] = new Semaphore(0, int.MaxValue);
 
-            Historique.AjouterAction(new ActionVirage(this, rayon, angle, sensAr, sensGd));
+            Frame frame = UdpFrameFactory.Virage(sensAr, sensGd, radius, angle, this);
+            _asserConnection.SendMessage(frame);
 
-            Frame trame = UdpFrameFactory.Virage(sensAr, sensGd, rayon, angle, this);
-            ConnectionAsser.SendMessage(trame);
+            Historique.AjouterAction(new ActionVirage(this, radius, angle, sensAr, sensGd));
 
-            if (attendre)
-                _lockFrame[UdpFrameFunction.FinDeplacement].WaitOne();
+            if (wait) _lockFrame[UdpFrameFunction.FinDeplacement].WaitOne();
         }
 
-        public override void PolarTrajectory(SensAR sens, List<RealPoint> points, bool attendre = true)
+        public override void PolarTrajectory(SensAR sens, List<RealPoint> points, bool wait = true)
         {
-            if (attendre)
-                _lockFrame[UdpFrameFunction.FinDeplacement] = new Semaphore(0, int.MaxValue);
+            if (wait) _lockFrame[UdpFrameFunction.FinDeplacement] = new Semaphore(0, int.MaxValue);
 
-            //Historique.AjouterAction(new ActionVirage(this, rayon, angle, sensAr, sensGd)); TODO
+            Frame frame = UdpFrameFactory.TrajectoirePolaire(sens, points, this);
+            _asserConnection.SendMessage(frame);
 
-            Frame trame = UdpFrameFactory.TrajectoirePolaire(sens, points, this);
-            ConnectionAsser.SendMessage(trame);
-
-            if (attendre)
-                _lockFrame[UdpFrameFunction.FinDeplacement].WaitOne();
+            if (wait) _lockFrame[UdpFrameFunction.FinDeplacement].WaitOne();
         }
 
-        public override void Recalibration(SensAR sens, bool attendre = true)
+        public override void Recalibration(SensAR sens, bool wait = true)
         {
-            if (attendre)
-                _lockFrame[UdpFrameFunction.FinDeplacement] = new Semaphore(0, int.MaxValue);
+            if (wait) _lockFrame[UdpFrameFunction.FinDeplacement] = new Semaphore(0, int.MaxValue);
+
+            Frame frame = UdpFrameFactory.Recallage(sens, this);
+            _asserConnection.SendMessage(frame);
 
             Historique.AjouterAction(new ActionRecallage(this, sens));
-            Frame trame = UdpFrameFactory.Recallage(sens, this);
-            ConnectionAsser.SendMessage(trame);
 
-            if (attendre)
-                _lockFrame[UdpFrameFunction.FinDeplacement].WaitOne();
+            if (wait) _lockFrame[UdpFrameFunction.FinDeplacement].WaitOne();
         }
 
         #endregion
 
         public override void SendPID(int p, int i, int d)
         {
-            Frame trame = UdpFrameFactory.CoeffAsserv(p, i, d, this);
-            ConnectionAsser.SendMessage(trame);
+            Frame frame = UdpFrameFactory.CoeffAsserv(p, i, d, this);
+            _asserConnection.SendMessage(frame);
         }
 
         public override void SendPIDCap(int p, int i, int d)
         {
-            Frame trame = UdpFrameFactory.CoeffAsservCap(p, i, d, this);
-            ConnectionAsser.SendMessage(trame);
+            Frame frame = UdpFrameFactory.CoeffAsservCap(p, i, d, this);
+            _asserConnection.SendMessage(frame);
         }
 
         public override void SendPIDSpeed(int p, int i, int d)
         {
-            Frame trame = UdpFrameFactory.CoeffAsservVitesse(p, i, d, this);
-            ConnectionAsser.SendMessage(trame);
+            Frame frame = UdpFrameFactory.CoeffAsservVitesse(p, i, d, this);
+            _asserConnection.SendMessage(frame);
         }
 
-        public bool DemandePosition(bool attendre = true)
+        public Position ReadPosition()
         {
-            if (!ConnectionAsser.ConnectionChecker.Connected)
-                return false;
+            _lockFrame[UdpFrameFunction.AsserRetourPositionCodeurs] = new Semaphore(0, int.MaxValue);
 
-            if (attendre)
-                _lockFrame[UdpFrameFunction.AsserRetourPositionCodeurs] = new Semaphore(0, int.MaxValue);
+            Frame frame = UdpFrameFactory.DemandePosition(this);
+            _asserConnection.SendMessage(frame);
 
-            Frame t = UdpFrameFactory.DemandePosition(this);
-            ConnectionAsser.SendMessage(t);
+            _lockFrame[UdpFrameFunction.AsserRetourPositionXYTeta].WaitOne(1000);
 
-            if (attendre)
-                return _lockFrame[UdpFrameFunction.AsserRetourPositionXYTeta].WaitOne(1000);// semPosition.WaitOne(1000);
-            else
-                return true;
+            return Position;
         }
 
-        public override void ReadAnalogicPins(Board carte, bool attendre = true)
+        public override void ReadAnalogicPins(Board board, bool wait = true)
         {
-            if (!Connections.UDPBoardConnection[carte].ConnectionChecker.Connected)
-                return;
+            if (wait) _lockFrame[UdpFrameFunction.RetourValeursAnalogiques] = new Semaphore(0, int.MaxValue);
 
-            if (attendre)
-                _lockFrame[UdpFrameFunction.RetourValeursAnalogiques] = new Semaphore(0, int.MaxValue);
+            Frame frame = UdpFrameFactory.DemandeValeursAnalogiques(board);
+            Connections.UDPBoardConnection[board].SendMessage(frame);
 
-            Frame trame = UdpFrameFactory.DemandeValeursAnalogiques(carte);
-            Connections.UDPBoardConnection[carte].SendMessage(trame);
-
-            if (attendre)
-                _lockFrame[UdpFrameFunction.RetourValeursAnalogiques].WaitOne(1000);
+            if (wait) _lockFrame[UdpFrameFunction.RetourValeursAnalogiques].WaitOne(1000);
         }
 
-        public override void ReadNumericPins(Board carte, bool attendre = true)
+        public override void ReadNumericPins(Board board, bool wait = true)
         {
-            if (!Connections.UDPBoardConnection[carte].ConnectionChecker.Connected)
-                return;
+            if (wait) _lockFrame[UdpFrameFunction.RetourValeursNumeriques] = new Semaphore(0, int.MaxValue);
 
-            if (attendre)
-                _lockFrame[UdpFrameFunction.RetourValeursNumeriques] = new Semaphore(0, int.MaxValue);
+            Frame frame = UdpFrameFactory.DemandeValeursNumeriques(board);
+            Connections.UDPBoardConnection[board].SendMessage(frame);
 
-            Frame trame = UdpFrameFactory.DemandeValeursNumeriques(carte);
-            Connections.UDPBoardConnection[carte].SendMessage(trame);
-
-            if (attendre)
-                _lockFrame[UdpFrameFunction.RetourValeursNumeriques].WaitOne(1000);
+            if (wait) _lockFrame[UdpFrameFunction.RetourValeursNumeriques].WaitOne(1000);
         }
 
-        public override void SetActuatorOnOffValue(ActuatorOnOffID actionneur, bool on)
+        public override void SetActuatorOnOffValue(ActuatorOnOffID actuator, bool on)
         {
-            ActuatorOnOffState[actionneur] = on;
-            Frame trame = UdpFrameFactory.ActionneurOnOff(actionneur, on);
-            Connections.ConnectionIO.SendMessage(trame);
+            ActuatorOnOffState[actuator] = on;
 
-            Historique.AjouterAction(new ActionOnOff(this, actionneur, on));
+            Frame frame = UdpFrameFactory.ActionneurOnOff(actuator, on);
+            Connections.ConnectionIO.SendMessage(frame);
+
+            Historique.AjouterAction(new ActionOnOff(this, actuator, on));
         }
 
-        public override void SetMotorAtPosition(MotorID moteur, int position, bool waitEnd)
+        public override void SetMotorAtPosition(MotorID motor, int position, bool wait)
         {
-            base.SetMotorAtPosition(moteur, position);
+            base.SetMotorAtPosition(motor, position);
 
-            _lockMotor[moteur] = new Semaphore(0, int.MaxValue);
+            if (wait) _lockMotor[motor] = new Semaphore(0, int.MaxValue);
 
-            Frame trame = UdpFrameFactory.MoteurPosition(moteur, position);
-            Connections.ConnectionIO.SendMessage(trame);
+            Frame frame = UdpFrameFactory.MoteurPosition(motor, position);
+            Connections.ConnectionIO.SendMessage(frame);
 
-            if (waitEnd)
-                _lockMotor[moteur].WaitOne(5000);
+            if (wait) _lockMotor[motor].WaitOne(5000);
         }
 
-        public override void MotorWaitEnd(MotorID moteur)
+        public override void MotorWaitEnd(MotorID motor)
         {
-            base.MotorWaitEnd(moteur);
+            base.MotorWaitEnd(motor);
 
-            _lockMotor[moteur].WaitOne(5000);
+            _lockMotor[motor].WaitOne(5000);
         }
 
-        public override void SetMotorAtOrigin(MotorID moteur, bool waitEnd)
+        public override void SetMotorAtOrigin(MotorID motor, bool wait)
         {
-            base.SetMotorAtOrigin(moteur);
+            base.SetMotorAtOrigin(motor);
 
-            _lockMotor[moteur] = new Semaphore(0, int.MaxValue);
+            if (wait) _lockMotor[motor] = new Semaphore(0, int.MaxValue);
 
-            Frame trame = UdpFrameFactory.MoteurOrigin(moteur);
-            Connections.ConnectionIO.SendMessage(trame);
+            Frame frame = UdpFrameFactory.MoteurOrigin(motor);
+            Connections.ConnectionIO.SendMessage(frame);
 
-            if (waitEnd)
-                _lockMotor[moteur].WaitOne(5000);
+            if (wait) _lockMotor[motor].WaitOne(5000);
         }
 
-        public override void SetMotorSpeed(MotorID moteur, SensGD sens, int vitesse)
+        public override void SetMotorSpeed(MotorID motor, SensGD sens, int speed)
         {
-            base.SetMotorSpeed(moteur, sens, vitesse);
+            base.SetMotorSpeed(motor, sens, speed);
 
-            if (moteur == MotorID.AvailableOnRecMove12 || moteur == MotorID.Gulp)
+            if (motor == MotorID.AvailableOnRecMove12 || motor == MotorID.Gulp)
             {
-                Frame trame = UdpFrameFactory.MoteurVitesse(Board.RecMove, moteur, sens, vitesse);
-                Connections.ConnectionMove.SendMessage(trame);
+                Frame frame = UdpFrameFactory.MoteurVitesse(Board.RecMove, motor, sens, speed);
+                Connections.ConnectionMove.SendMessage(frame);
             }
             else
             {
-                Frame trame = UdpFrameFactory.MoteurVitesse(Board.RecIO, moteur, sens, vitesse);
-                Connections.ConnectionIO.SendMessage(trame);
+                Frame frame = UdpFrameFactory.MoteurVitesse(Board.RecIO, motor, sens, speed);
+                Connections.ConnectionIO.SendMessage(frame);
             }
         }
 
-        public override void SetMotorAcceleration(MotorID moteur, int acceleration)
+        public override void SetMotorAcceleration(MotorID motor, int acceleration)
         {
-            base.SetMotorAcceleration(moteur, acceleration);
+            base.SetMotorAcceleration(motor, acceleration);
 
-            Frame trame = UdpFrameFactory.MoteurAcceleration(moteur, acceleration);
+            Frame trame = UdpFrameFactory.MoteurAcceleration(motor, acceleration);
             Connections.ConnectionIO.SendMessage(trame);
         }
 
@@ -710,7 +664,9 @@ namespace GoBot
 
         public override void Reset()
         {
-            ConnectionAsser.SendMessage(UdpFrameFactory.ResetRecMove());
+            Frame frame = UdpFrameFactory.ResetRecMove();
+            _asserConnection.SendMessage(frame);
+
             Thread.Sleep(1500);
         }
 
@@ -723,73 +679,76 @@ namespace GoBot
         {
             _lockFrame[UdpFrameFunction.RetourCouleurEquipe] = new Semaphore(0, int.MaxValue);
             Connections.ConnectionGB.SendMessage(UdpFrameFactory.DemandeCouleurEquipe());
-            _lockFrame[UdpFrameFunction.RetourCouleurEquipe].WaitOne(50);
+            _lockFrame[UdpFrameFunction.RetourCouleurEquipe].WaitOne(500);
+
             return _lastTeamColor;
         }
 
-        public override List<int>[] DiagnosticPID(int consigne, SensAR sens, int ptsCount)
+        public override List<int>[] DiagnosticPID(int steps, SensAR sens, int pointsCount)
         {
             _lastPidTest = new List<int>[2];
             _lastPidTest[0] = new List<int>();
             _lastPidTest[1] = new List<int>();
 
-            Frame frame = UdpFrameFactory.EnvoiConsigneBrute(consigne, sens, this);
-            ConnectionAsser.SendMessage(frame);
+            Frame frame = UdpFrameFactory.EnvoiConsigneBrute(steps, sens, this);
+            _asserConnection.SendMessage(frame);
 
             frame = UdpFrameFactory.DemandePositionsCodeurs(this);
-            while (_lastPidTest[0].Count < ptsCount)
+            while (_lastPidTest[0].Count < pointsCount)
             {
-                ConnectionAsser.SendMessage(frame);
+                _asserConnection.SendMessage(frame);
                 Thread.Sleep(30);
             }
 
-            while (_lastPidTest[0].Count > ptsCount)
+            while (_lastPidTest[0].Count > pointsCount)
                 _lastPidTest[0].RemoveAt(_lastPidTest[0].Count - 1);
 
-            while (_lastPidTest[1].Count > ptsCount)
+            while (_lastPidTest[1].Count > pointsCount)
                 _lastPidTest[1].RemoveAt(_lastPidTest[1].Count - 1);
 
             return _lastPidTest;
         }
 
-        public override List<double>[] DiagnosticCpuPwm(int ptsCount)
+        public override List<double>[] DiagnosticCpuPwm(int pointsCount)
         {
             _lastRecMoveLoad = new List<double>();
             _lastPwmLeft = new List<double>();
             _lastPwmRight = new List<double>();
 
             Frame frame = UdpFrameFactory.DemandeCpuPwm(this);
-            while (_lastRecMoveLoad.Count <= ptsCount)
+            while (_lastRecMoveLoad.Count <= pointsCount)
             {
-                ConnectionAsser.SendMessage(frame);
+                _asserConnection.SendMessage(frame);
                 Thread.Sleep(30);
             }
 
             // Supprime d'éventuelles valeurs supplémentaires
-            while (_lastRecMoveLoad.Count > ptsCount)
+            while (_lastRecMoveLoad.Count > pointsCount)
                 _lastRecMoveLoad.RemoveAt(_lastRecMoveLoad.Count - 1);
 
-            while (_lastPwmLeft.Count > ptsCount)
+            while (_lastPwmLeft.Count > pointsCount)
                 _lastPwmLeft.RemoveAt(_lastPwmLeft.Count - 1);
 
-            while (_lastPwmRight.Count > ptsCount)
+            while (_lastPwmRight.Count > pointsCount)
                 _lastPwmRight.RemoveAt(_lastPwmRight.Count - 1);
-            
-            return new List<double>[3]{ _lastRecMoveLoad, _lastPwmLeft, _lastPwmRight};
+
+            return new List<double>[3] { _lastRecMoveLoad, _lastPwmLeft, _lastPwmRight };
         }
 
         public void EnvoyerUart(Board byBoard, Frame frame)
         {
-            Frame trameUart = UdpFrameFactory.EnvoyerUart1(byBoard, frame);
-            Connections.UDPBoardConnection[byBoard].SendMessage(trameUart);
+            Frame frameUdp = UdpFrameFactory.EnvoyerUart1(byBoard, frame);
+            Connections.UDPBoardConnection[byBoard].SendMessage(frameUdp);
         }
 
         public override String ReadLidarMeasure(LidarID lidar, int timeout, out Position refPosition)
         {
             _lastLidarMeasure = "";
+
             _lockFrame[UdpFrameFunction.ReponseLidar] = new Semaphore(0, int.MaxValue);
             Connections.ConnectionMove.SendMessage(UdpFrameFactory.DemandeMesureLidar(lidar));
             _lockFrame[UdpFrameFunction.ReponseLidar].WaitOne(timeout);
+
             refPosition = _lastLidarPosition;
 
             return _lastLidarMeasure;

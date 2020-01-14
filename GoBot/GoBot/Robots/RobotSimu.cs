@@ -15,64 +15,81 @@ namespace GoBot
 {
     class RobotSimu : Robot
     {
-        private Semaphore SemDeplacement { get; set; }
+        private Random _rand;
+        private Semaphore _lockMove;
+        private bool _highResolutionAsservissement;
 
-        public double VitesseActuelle { get; set; }
+        private Position _destination;
+        private double _currentSpeed;
+        private SensGD _sensPivot;
+        private SensAR _sensMove;
+        private bool _inRecalibration;
+        private ThreadLink _linkAsserv, _linkLogPositions;
 
-        private bool HighResolutionAsservissement = true;
+        private Position _currentPosition;
 
-        private Position Destination { get; set; }
-        private SensGD SensPivot { get; set; }
-        private SensAR SensDep { get; set; }
+        private Stopwatch _asserChrono ;
+        private int _currentPolarPoint;
+        private List<RealPoint> _polarTrajectory;
 
-        private bool RecallageEnCours { get; set; }
+        private long _lastTimerTick;
 
-        private Position position;
         public override Position Position
         {
-            get { return position; }
-            set { position = value; Destination = value; }
+            get { return _currentPosition; }
+            protected set { _currentPosition = value; _destination = value; }
         }
 
-        private ThreadLink _linkAsserv;
-        private Random _rand;
-
-        public RobotSimu(IDRobot idRobot, double width, double lenght, double wheelSpacing, double diameter) : base(width, lenght, wheelSpacing, diameter)
+        public RobotSimu(IDRobot idRobot) : base(idRobot, "Robot Simu")
         {
-            IDRobot = idRobot;
-
-            _linkAsserv = ThreadManager.CreateThread(link => Asservissement());
-            _linkAsserv.StartInfiniteLoop(new TimeSpan(0, 0, 0, 0, HighResolutionAsservissement ? 1 : 16));
-
+            _highResolutionAsservissement = true;
             _rand = new Random();
 
-            timerPositions = new System.Timers.Timer(100);
-            timerPositions.Elapsed += new ElapsedEventHandler(timerPositions_Elapsed);
-            timerPositions.Start();
+            _linkAsserv = ThreadManager.CreateThread(link => Asservissement());
+            _linkLogPositions = ThreadManager.CreateThread(link => LogPosition());
 
-            SemDeplacement = new Semaphore(1, 1);
-            SensDep = SensAR.Avant;
+            _lockMove = new Semaphore(1, 1);
+            _sensMove = SensAR.Avant;
 
-            Name = "GrosRobot";
-            RecallageEnCours = false;
+            _inRecalibration = false;
+            _asserChrono = null;
+            _currentPolarPoint = -1;
+        }
 
-            IDRobot = idRobot;
+        public override void Init()
+        {
+            Historique = new Historique(IDRobot);
+            PositionsHistorical = new List<Position>();
+            Position = new Position(GoBot.Recalibration.StartPosition);
+
+            PositionTarget = null;
+
+            _linkAsserv.StartInfiniteLoop(new TimeSpan(0, 0, 0, 0, _highResolutionAsservissement ? 1 : 16));
+            _linkLogPositions.StartInfiniteLoop(new TimeSpan(0, 0, 0, 0, 100));
         }
 
         public override void DeInit()
         {
             _linkAsserv.Cancel();
+            _linkLogPositions.Cancel();
+
             _linkAsserv.WaitEnd();
+            _linkLogPositions.WaitEnd();
         }
 
         public override string ReadLidarMeasure(LidarID lidar, int timeout, out Position refPosition)
         {
-            refPosition = new Position(position);
+            refPosition = new Position(_currentPosition);
+
+            // Pas de simulation de LIDAR
+
             return "";
         }
 
-        void timerPositions_Elapsed(object sender, ElapsedEventArgs e)
+        private void LogPosition()
         {
+            _linkLogPositions.RegisterName();
+
             lock (PositionsHistorical)
             {
                 PositionsHistorical.Add(new Position(Position.Angle, new RealPoint(Position.Coordinates.X, Position.Coordinates.Y)));
@@ -82,23 +99,17 @@ namespace GoBot
             }
         }
 
-        public double DistanceFreinageActuelle
+        private double GetCurrentLineBreakDistance()
         {
-            get
-            {
-                return (VitesseActuelle * VitesseActuelle) / (2 * SpeedConfig.LineDeceleration);
-            }
+            return (_currentSpeed * _currentSpeed) / (2 * SpeedConfig.LineDeceleration);
         }
 
-        public double AngleFreinageActuel
+        private double GetCurrentAngleBreakDistance()
         {
-            get
-            {
-                return (VitesseActuelle * VitesseActuelle) / (2 * SpeedConfig.PivotDeceleration);
-            }
+            return (_currentSpeed * _currentSpeed) / (2 * SpeedConfig.PivotDeceleration);
         }
 
-        double DistanceParcours(List<RealPoint> points, int from, int to)
+        private double DistanceBetween(List<RealPoint> points, int from, int to)
         {
             double distance = 0;
 
@@ -108,146 +119,139 @@ namespace GoBot
             return distance;
         }
 
-        Stopwatch watch = null;
-        int pointCourantTrajPolaire = -1;
-
-        private long _lastTimerTick;
-
-        void Asservissement()
+        private void Asservissement()
         {
             _linkAsserv.RegisterName();
 
             // Calcul du temps écoulé depuis la dernière mise à jour de la position
             double interval = 0;
 
-            long currentTick = 0;
-
-            if (watch != null)
+            if (_asserChrono != null)
             {
-                currentTick = watch.ElapsedMilliseconds;
+                long currentTick = _asserChrono.ElapsedMilliseconds;
                 interval = currentTick - _lastTimerTick;
                 _lastTimerTick = currentTick;
             }
             else
-                watch = Stopwatch.StartNew();
+                _asserChrono = Stopwatch.StartNew();
 
             if (interval > 0)
             {
-                SemDeplacement.WaitOne();
+                _lockMove.WaitOne();
 
-                if (pointCourantTrajPolaire >= 0)
+                if (_currentPolarPoint >= 0)
                 {
-                    double distanceAvantProchainPoint = Position.Coordinates.Distance(trajectoirePolaire[pointCourantTrajPolaire]);
-                    double distanceTotaleRestante = distanceAvantProchainPoint;
+                    double distanceBeforeNext = Position.Coordinates.Distance(_polarTrajectory[_currentPolarPoint]);
+                    double distanceBeforeEnd = distanceBeforeNext;
 
-                    distanceTotaleRestante += DistanceParcours(trajectoirePolaire, pointCourantTrajPolaire, trajectoirePolaire.Count - 1);
+                    distanceBeforeEnd += DistanceBetween(_polarTrajectory, _currentPolarPoint, _polarTrajectory.Count - 1);
 
-                    if (distanceTotaleRestante > DistanceFreinageActuelle)
-                        VitesseActuelle = Math.Min(SpeedConfig.LineSpeed, VitesseActuelle + SpeedConfig.LineAcceleration / (1000.0 / interval));
+                    if (distanceBeforeEnd > GetCurrentAngleBreakDistance())
+                        _currentSpeed = Math.Min(SpeedConfig.LineSpeed, _currentSpeed + SpeedConfig.LineAcceleration / (1000.0 / interval));
                     else
-                        VitesseActuelle = VitesseActuelle - SpeedConfig.LineDeceleration / (1000.0 / interval);
+                        _currentSpeed = _currentSpeed - SpeedConfig.LineDeceleration / (1000.0 / interval);
 
-                    double distanceAParcourir = VitesseActuelle / (1000.0 / interval);
+                    double distanceToRun = _currentSpeed / (1000.0 / interval);
 
-                    double distanceTestee = distanceAvantProchainPoint;
+                    double distanceTested = distanceBeforeNext;
 
                     bool changePoint = false;
-                    while (distanceTestee < distanceAParcourir && pointCourantTrajPolaire < trajectoirePolaire.Count - 1)
+                    while (distanceTested < distanceToRun && _currentPolarPoint < _polarTrajectory.Count - 1)
                     {
-                        pointCourantTrajPolaire++;
-                        distanceTestee += trajectoirePolaire[pointCourantTrajPolaire - 1].Distance(trajectoirePolaire[pointCourantTrajPolaire]);
+                        _currentPolarPoint++;
+                        distanceTested += _polarTrajectory[_currentPolarPoint - 1].Distance(_polarTrajectory[_currentPolarPoint]);
                         changePoint = true;
                     }
 
-                    Segment seg = null;
-                    Circle cer = null;
+                    Segment segment;
+                    Circle circle;
 
                     if (changePoint)
                     {
-                        seg = new Segment(trajectoirePolaire[pointCourantTrajPolaire - 1], trajectoirePolaire[pointCourantTrajPolaire]);
-                        cer = new Circle(trajectoirePolaire[pointCourantTrajPolaire - 1], distanceAParcourir - (distanceTestee - trajectoirePolaire[pointCourantTrajPolaire - 1].Distance(trajectoirePolaire[pointCourantTrajPolaire])));
+                        segment = new Segment(_polarTrajectory[_currentPolarPoint - 1], _polarTrajectory[_currentPolarPoint]);
+                        circle = new Circle(_polarTrajectory[_currentPolarPoint - 1], distanceToRun - (distanceTested - _polarTrajectory[_currentPolarPoint - 1].Distance(_polarTrajectory[_currentPolarPoint])));
                     }
                     else
                     {
-                        seg = new Segment(Position.Coordinates, trajectoirePolaire[pointCourantTrajPolaire]);
-                        cer = new Circle(Position.Coordinates, distanceAParcourir);
+                        segment = new Segment(Position.Coordinates, _polarTrajectory[_currentPolarPoint]);
+                        circle = new Circle(Position.Coordinates, distanceToRun);
                     }
 
-                    RealPoint newPos = seg.GetCrossingPoints(cer)[0];
-                    AngleDelta a = -Maths.GetDirection(newPos, trajectoirePolaire[pointCourantTrajPolaire]).angle;
-                    position = new Position(new AnglePosition(a), newPos);
+                    RealPoint newPos = segment.GetCrossingPoints(circle)[0];
+                    AngleDelta a = -Maths.GetDirection(newPos, _polarTrajectory[_currentPolarPoint]).angle;
+                    _currentPosition = new Position(new AnglePosition(a), newPos);
                     OnPositionChanged(Position);
 
-                    if (pointCourantTrajPolaire == trajectoirePolaire.Count - 1)
+                    if (_currentPolarPoint == _polarTrajectory.Count - 1)
                     {
-                        pointCourantTrajPolaire = -1;
-                        Destination.Copy(Position);
+                        _currentPolarPoint = -1;
+                        _destination.Copy(Position);
                     }
                 }
                 else
                 {
-                    bool needLine = Destination.Coordinates.Distance(Position.Coordinates) > 0;
-                    bool needAngle = Math.Abs(Destination.Angle - Position.Angle) > 0.01;
+                    bool needLine = _destination.Coordinates.Distance(Position.Coordinates) > 0;
+                    bool needAngle = Math.Abs(_destination.Angle - Position.Angle) > 0.01;
 
                     if (needAngle)
                     {
-                        AngleDelta diff = Math.Abs(Destination.Angle - Position.Angle);
+                        AngleDelta diff = Math.Abs(_destination.Angle - Position.Angle);
 
-                        double speedWithAcceleration = Math.Min(SpeedConfig.PivotSpeed, VitesseActuelle + SpeedConfig.PivotAcceleration / (1000.0 / interval));
-                        double remainingDistanceWithAcceleration = CircleArcLenght(WheelSpacing, diff) - (VitesseActuelle + speedWithAcceleration) / 2 / (1000.0 / interval);
+                        double speedWithAcceleration = Math.Min(SpeedConfig.PivotSpeed, _currentSpeed + SpeedConfig.PivotAcceleration / (1000.0 / interval));
+                        double remainingDistanceWithAcceleration = CircleArcLenght(WheelSpacing, diff) - (_currentSpeed + speedWithAcceleration) / 2 / (1000.0 / interval);
 
                         if (remainingDistanceWithAcceleration > DistanceFreinage(speedWithAcceleration))
                         {
-                            double distParcourue = (VitesseActuelle + speedWithAcceleration) / 2 / (1000.0 / interval);
+                            double distParcourue = (_currentSpeed + speedWithAcceleration) / 2 / (1000.0 / interval);
                             AngleDelta angleParcouru = (360 * distParcourue) / (Math.PI * WheelSpacing);
 
-                            VitesseActuelle = speedWithAcceleration;
+                            _currentSpeed = speedWithAcceleration;
 
-                            Position.Angle += (SensPivot.Factor() * angleParcouru);
+                            Position.Angle += (_sensPivot.Factor() * angleParcouru);
                         }
-                        else if (VitesseActuelle > 0)
+                        else if (_currentSpeed > 0)
                         {
-                            double speedWithDeceleration = Math.Max(0, VitesseActuelle - SpeedConfig.PivotDeceleration / (1000.0 / interval));
-                            double distParcourue = (VitesseActuelle + speedWithDeceleration) / 2 / (1000.0 / interval);
+                            double speedWithDeceleration = Math.Max(0, _currentSpeed - SpeedConfig.PivotDeceleration / (1000.0 / interval));
+                            double distParcourue = (_currentSpeed + speedWithDeceleration) / 2 / (1000.0 / interval);
                             AngleDelta angleParcouru = (360 * distParcourue) / (Math.PI * WheelSpacing);
 
-                            VitesseActuelle = speedWithDeceleration;
+                            _currentSpeed = speedWithDeceleration;
 
-                            Position.Angle += (SensPivot.Factor() * angleParcouru);
+                            Position.Angle += (_sensPivot.Factor() * angleParcouru);
                         }
                         else
                         {
-                            Position.Copy(Destination);
+                            Position.Copy(_destination);
                         }
 
                         OnPositionChanged(Position);
                     }
                     else if (needLine)
                     {
-                        double speedWithAcceleration = Math.Min(SpeedConfig.LineSpeed, VitesseActuelle + SpeedConfig.LineAcceleration / (1000.0 / interval));
-                        double remainingDistanceWithAcceleration = Position.Coordinates.Distance(Destination.Coordinates) - (VitesseActuelle + speedWithAcceleration) / 2 / (1000.0 / interval);
+                        double speedWithAcceleration = Math.Min(SpeedConfig.LineSpeed, _currentSpeed + SpeedConfig.LineAcceleration / (1000.0 / interval));
+                        double remainingDistanceWithAcceleration = Position.Coordinates.Distance(_destination.Coordinates) - (_currentSpeed + speedWithAcceleration) / 2 / (1000.0 / interval);
 
                         // Phase accélération ou déccélération
                         if (remainingDistanceWithAcceleration > DistanceFreinage(speedWithAcceleration))
                         {
-                            double distance = (VitesseActuelle + speedWithAcceleration) / 2 / (1000.0 / interval);
-                            VitesseActuelle = speedWithAcceleration;
+                            double distance = (_currentSpeed + speedWithAcceleration) / 2 / (1000.0 / interval);
+                            _currentSpeed = speedWithAcceleration;
 
-                            Position.Move(distance * SensDep.Factor());
+                            Position.Move(distance * _sensMove.Factor());
                         }
-                        else if (VitesseActuelle > 0)
+                        else if (_currentSpeed > 0)
                         {
-                            double speedWithDeceleration = Math.Max(0, VitesseActuelle - SpeedConfig.LineDeceleration / (1000.0 / interval));
-                            double distance = Math.Min(Destination.Coordinates.Distance(Position.Coordinates), (VitesseActuelle + speedWithDeceleration) / 2 / (1000.0 / interval));
-                            VitesseActuelle = speedWithDeceleration;
+                            double speedWithDeceleration = Math.Max(0, _currentSpeed - SpeedConfig.LineDeceleration / (1000.0 / interval));
+                            double distance = Math.Min(_destination.Coordinates.Distance(Position.Coordinates), (_currentSpeed + speedWithDeceleration) / 2 / (1000.0 / interval));
+                            _currentSpeed = speedWithDeceleration;
 
-                            Position.Move(distance * SensDep.Factor());
+                            Position.Move(distance * _sensMove.Factor());
                         }
                         else
                         {
                             // Si on est déjà à l'arrêt on force l'équivalence de la position avec la destination.
 
-                            Position.Copy(Destination);
+                            Position.Copy(_destination);
                             IsInLineMove = false;
                         }
 
@@ -255,7 +259,7 @@ namespace GoBot
                     }
                 }
 
-                SemDeplacement.Release();
+                _lockMove.Release();
             }
         }
 
@@ -269,106 +273,108 @@ namespace GoBot
             return Math.Abs(arc.InDegrees) / 360 * Math.PI * diameter;
         }
 
-        public override void MoveForward(int distance, bool attendre = true)
+        public override void MoveForward(int distance, bool wait = true)
         {
-            base.MoveForward(distance, attendre);
+            base.MoveForward(distance, wait);
 
             IsInLineMove = true;
 
             if (distance > 0)
             {
-                if (!RecallageEnCours)
+                if (!_inRecalibration)
                     Historique.AjouterAction(new ActionAvance(this, distance));
-                SensDep = SensAR.Avant;
+                _sensMove = SensAR.Avant;
             }
             else
             {
-                if (!RecallageEnCours)
+                if (!_inRecalibration)
                     Historique.AjouterAction(new ActionRecule(this, -distance));
-                SensDep = SensAR.Arriere;
+                _sensMove = SensAR.Arriere;
             }
 
-            Destination = new Position(Position.Angle, new RealPoint(Position.Coordinates.X + distance * Position.Angle.Cos, Position.Coordinates.Y + distance * Position.Angle.Sin));
+            _destination = new Position(Position.Angle, new RealPoint(Position.Coordinates.X + distance * Position.Angle.Cos, Position.Coordinates.Y + distance * Position.Angle.Sin));
 
             // TODO2018 attente avec un sémaphore ?
-            if (attendre)
-                while ((Position.Coordinates.X != Destination.Coordinates.X ||
-                    Position.Coordinates.Y != Destination.Coordinates.Y) && !Execution.Shutdown)
+            if (wait)
+                while ((Position.Coordinates.X != _destination.Coordinates.X ||
+                    Position.Coordinates.Y != _destination.Coordinates.Y) && !Execution.Shutdown)
                     Thread.Sleep(10);
         }
 
-        public override void MoveBackward(int distance, bool attendre = true)
+        public override void MoveBackward(int distance, bool wait = true)
         {
-            MoveForward(-distance, attendre);
+            MoveForward(-distance, wait);
         }
 
-        public override void PivotLeft(AngleDelta angle, bool attendre = true)
+        public override void PivotLeft(AngleDelta angle, bool wait = true)
         {
-            base.PivotLeft(angle, attendre);
+            base.PivotLeft(angle, wait);
 
             angle = Math.Round(angle, 2);
             Historique.AjouterAction(new ActionPivot(this, angle, SensGD.Gauche));
-            Destination = new Position(Position.Angle - angle, new RealPoint(Position.Coordinates.X, Position.Coordinates.Y));
-            SensPivot = SensGD.Gauche;
 
-            if (attendre)
-                while (Position.Angle != Destination.Angle)
+            _destination = new Position(Position.Angle - angle, new RealPoint(Position.Coordinates.X, Position.Coordinates.Y));
+            _sensPivot = SensGD.Gauche;
+
+            if (wait)
+                while (Position.Angle != _destination.Angle)
                     Thread.Sleep(10);
         }
 
-        public override void PivotRight(AngleDelta angle, bool attendre = true)
+        public override void PivotRight(AngleDelta angle, bool wait = true)
         {
-            base.PivotRight(angle, attendre);
+            base.PivotRight(angle, wait);
 
             angle = Math.Round(angle, 2);
             Historique.AjouterAction(new ActionPivot(this, angle, SensGD.Droite));
-            Destination = new Position(Position.Angle + angle, new RealPoint(Position.Coordinates.X, Position.Coordinates.Y));
-            SensPivot = SensGD.Droite;
 
-            if (attendre)
-                while (Position.Angle != Destination.Angle)
+            _destination = new Position(Position.Angle + angle, new RealPoint(Position.Coordinates.X, Position.Coordinates.Y));
+            _sensPivot = SensGD.Droite;
+
+            if (wait)
+                while (Position.Angle != _destination.Angle)
                     Thread.Sleep(10);
         }
 
         public override void Stop(StopMode mode)
         {
             Historique.AjouterAction(new ActionStop(this, mode));
-            SemDeplacement.WaitOne();
+
+            _lockMove.WaitOne();
 
             if (mode == StopMode.Smooth)
             {
-                Position nouvelleDestination = new Position(Position.Angle, new RealPoint(position.Coordinates.X, position.Coordinates.Y));
+                Position nouvelleDestination = new Position(Position.Angle, new RealPoint(_currentPosition.Coordinates.X, _currentPosition.Coordinates.Y));
 
                 if (IsInLineMove)
                 {
-                    if (SensDep == SensAR.Avant)
-                        nouvelleDestination.Move(DistanceFreinageActuelle);
+                    if (_sensMove == SensAR.Avant)
+                        nouvelleDestination.Move(GetCurrentLineBreakDistance());
                     else
-                        nouvelleDestination.Move(-DistanceFreinageActuelle);
+                        nouvelleDestination.Move(-GetCurrentLineBreakDistance());
                 }
 
-                Destination = nouvelleDestination;
+                _destination = nouvelleDestination;
             }
             else if (mode == StopMode.Abrupt)
             {
-                VitesseActuelle = 0;
-                Destination = Position;
+                _currentSpeed = 0;
+                _destination = Position;
             }
-            SemDeplacement.Release();
+            _lockMove.Release();
         }
 
-        public override void Turn(SensAR sensAr, SensGD sensGd, int rayon, AngleDelta angle, bool attendre = true)
+        public override void Turn(SensAR sensAr, SensGD sensGd, int rayon, AngleDelta angle, bool wait = true)
         {
             // TODO2018
         }
 
-        private List<RealPoint> trajectoirePolaire;
-        public override void PolarTrajectory(SensAR sens, List<RealPoint> points, bool attendre = true)
+        public override void PolarTrajectory(SensAR sens, List<RealPoint> points, bool wait = true)
         {
-            trajectoirePolaire = points;
-            pointCourantTrajPolaire = 0;
+            _polarTrajectory = points;
+            _currentPolarPoint = 0;
 
-            while (attendre && pointCourantTrajPolaire != -1)
+            while (wait && _currentPolarPoint != -1)
                 Thread.Sleep(10);
         }
 
@@ -376,15 +382,17 @@ namespace GoBot
         {
             Position = new Position(newPosition.Angle, newPosition.Coordinates);
             PositionTarget?.Set(Position.Coordinates);
+
             OnPositionChanged(Position);
         }
 
-        public override void Recalibration(SensAR sens, bool attendre = true)
+        public override void Recalibration(SensAR sens, bool wait = true)
         {
-            RecallageEnCours = true;
+            _inRecalibration = true;
+
             Historique.AjouterAction(new ActionRecallage(this, sens));
 
-            if (attendre)
+            if (wait)
                 RecalProcedure(sens);
             else
                 ThreadManager.CreateThread(link => RecalProcedure(sens)).StartThread();
@@ -392,9 +400,9 @@ namespace GoBot
 
         private void RecalProcedure(SensAR sens)
         {
-
             int realAccel = SpeedConfig.LineAcceleration;
             int realDeccel = SpeedConfig.LineAcceleration;
+
             SpeedConfig.LineAcceleration = 50000;
             SpeedConfig.LineDeceleration = 50000;
 
@@ -417,25 +425,16 @@ namespace GoBot
             SpeedConfig.LineAcceleration = realAccel;
             SpeedConfig.LineDeceleration = realDeccel;
 
-            RecallageEnCours = false;
+            _inRecalibration = false;
         }
 
-        public override void Init()
-        {
-            Historique = new Historique(IDRobot);
-            PositionsHistorical = new List<Position>();
-            Position = new Position(GoBot.Recalibration.StartPosition);
-
-            PositionTarget = null;
-        }
-
-        public override bool ReadSensorOnOff(SensorOnOffID capteur, bool attendre = true)
+        public override bool ReadSensorOnOff(SensorOnOffID sensor, bool wait = true)
         {
             // TODO
             return true;
         }
 
-        public override Color ReadSensorColor(SensorColorID capteur, bool attendre = true)
+        public override Color ReadSensorColor(SensorColorID sensor, bool wait = true)
         {
             // TODO
             return Color.Black;
@@ -456,27 +455,25 @@ namespace GoBot
             // TODO
         }
 
-        public override void SetActuatorOnOffValue(ActuatorOnOffID actionneur, bool on)
+        public override void SetActuatorOnOffValue(ActuatorOnOffID actuator, bool on)
         {
             // TODO
-            Historique.AjouterAction(new ActionOnOff(this, actionneur, on));
+            Historique.AjouterAction(new ActionOnOff(this, actuator, on));
         }
 
-        System.Timers.Timer timerPositions;
-
-        public override void SetMotorAtPosition(MotorID moteur, int vitesse, bool waitEnd)
+        public override void SetMotorAtPosition(MotorID motor, int vitesse, bool wait)
         {
-            base.SetMotorAtPosition(moteur, vitesse);
+            base.SetMotorAtPosition(motor, vitesse);
         }
 
-        public override void SetMotorSpeed(MotorID moteur, SensGD sens, int vitesse)
+        public override void SetMotorSpeed(MotorID motor, SensGD sens, int speed)
         {
-            base.SetMotorSpeed(moteur, sens, vitesse);
+            base.SetMotorSpeed(motor, sens, speed);
         }
 
-        public override void SetMotorAcceleration(MotorID moteur, int acceleration)
+        public override void SetMotorAcceleration(MotorID motor, int acceleration)
         {
-            base.SetMotorAcceleration(moteur, acceleration);
+            base.SetMotorAcceleration(motor, acceleration);
         }
 
         public override void EnablePower(bool on)
@@ -506,52 +503,51 @@ namespace GoBot
             return GameBoard.ColorRightYellow;
         }
 
-        public override List<int>[] DiagnosticPID(int consigne, SensAR sens, int nbValeurs)
+        public override List<int>[] DiagnosticPID(int steps, SensAR sens, int pointsCount)
         {
-            List<int>[] retour = new List<int>[2];
-            retour[0] = new List<int>();
-            retour[1] = new List<int>();
+            List<int>[] output = new List<int>[2];
+            output[0] = new List<int>();
+            output[1] = new List<int>();
 
-            for (double i = 0; i < nbValeurs; i++)
+            for (double i = 0; i < pointsCount; i++)
             {
-                retour[0].Add((int)(Math.Sin((i + DateTime.Now.Millisecond) / 100.0 * Math.PI) * consigne * 10000000 / (i * i * i)));
-                retour[1].Add((int)(Math.Sin((i + DateTime.Now.Millisecond) / 100.0 * Math.PI) * consigne * 10000000 / (i * i * i) + 10));
+                output[0].Add((int)(Math.Sin((i + DateTime.Now.Millisecond) / 100.0 * Math.PI) * steps * 10000000 / (i * i * i)));
+                output[1].Add((int)(Math.Sin((i + DateTime.Now.Millisecond) / 100.0 * Math.PI) * steps * 10000000 / (i * i * i) + 10));
             }
 
-            return retour;
+            return output;
         }
 
-        public override List<double>[] DiagnosticCpuPwm(int ptsCount)
+        public override List<double>[] DiagnosticCpuPwm(int pointsCount)
         {
             List<double> cpuLoad, pwmLeft, pwmRight;
-            Random r = new Random();
-
+            
             cpuLoad = new List<double>();
             pwmLeft = new List<double>();
             pwmRight = new List<double>();
 
-            for(int i = 0; i < ptsCount; i++)
+            for(int i = 0; i < pointsCount; i++)
             {
-                cpuLoad.Add((Math.Sin(i / (double)ptsCount * Math.PI*2) / 2 + 0.5) * 0.2 + r.NextDouble() * 0.2 + 0.3);
-                pwmLeft.Add(Math.Sin((DateTime.Now.Millisecond + i + DateTime.Now.Second * 1000) % 1500 / (double)1500 * Math.PI * 2) * 3800 + (r.NextDouble() - 0.5) * 400);
-                pwmRight.Add(Math.Sin((DateTime.Now.Millisecond + i + DateTime.Now.Second*1000) % 5000 / (double)5000 * Math.PI * 2) * 3800 + (r.NextDouble() - 0.5) * 400);
+                cpuLoad.Add((Math.Sin(i / (double)pointsCount * Math.PI*2) / 2 + 0.5) * 0.2 + _rand.NextDouble() * 0.2 + 0.3);
+                pwmLeft.Add(Math.Sin((DateTime.Now.Millisecond + i + DateTime.Now.Second * 1000) % 1500 / (double)1500 * Math.PI * 2) * 3800 + (_rand.NextDouble() - 0.5) * 400);
+                pwmRight.Add(Math.Sin((DateTime.Now.Millisecond + i + DateTime.Now.Second*1000) % 5000 / (double)5000 * Math.PI * 2) * 3800 + (_rand.NextDouble() - 0.5) * 400);
             }
 
-            Thread.Sleep(ptsCount);
+            Thread.Sleep(pointsCount);
             
             return new List<double>[3] { cpuLoad, pwmLeft, pwmRight };
         }
 
-        public override void ReadAnalogicPins(Board carte, bool attendre)
+        public override void ReadAnalogicPins(Board board, bool wait)
         {
             List<double> values = Enumerable.Range(1, 9).Select(o => o + _rand.NextDouble()).ToList();
-            AnalogicPinsValue[carte] = values;
+            AnalogicPinsValue[board] = values;
         }
 
-        public override void ReadNumericPins(Board carte, bool attendre)
+        public override void ReadNumericPins(Board board, bool wait)
         {
             for (int i = 0; i < 3 * 2; i++)
-                NumericPinsValue[carte][i] = (byte)((DateTime.Now.Second * 1000 + DateTime.Now.Millisecond) / 60000.0 * 255);
+                NumericPinsValue[board][i] = (byte)((DateTime.Now.Second * 1000 + DateTime.Now.Millisecond) / 60000.0 * 255);
         }
     }
 }

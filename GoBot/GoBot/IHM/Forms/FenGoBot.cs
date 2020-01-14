@@ -188,11 +188,8 @@ namespace GoBot
 
         private void switchBoutonSimu_ValueChanged(object sender, bool value)
         {
-            Robots.Simuler(value);
+            Robots.EnableSimulation(value);
             panelGrosRobot.Init();
-            // todo
-            //Robots.GrosRobot.Historique.NouvelleAction += new Historique.DelegateAction(HistoriqueGR_nouvelleAction);
-            //Robots.PetitRobot.Historique.NouvelleAction += new Historique.DelegateAction(HistoriquePR_nouvelleAction);
         }
 
         private void buttonFenetre_Click(object sender, EventArgs e)

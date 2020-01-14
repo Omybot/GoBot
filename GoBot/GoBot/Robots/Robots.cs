@@ -22,34 +22,28 @@ namespace GoBot
         public static void Init()
         {
             Simulation = false;
-            CreerRobots();
+            CreateRobots();
         }
 
-        private static void CreerRobots()
+        private static void CreateRobots()
         {
             Graph graphGros = null;
             if (Robots.MainRobot != null && Robots.MainRobot.Graph != null)
                 graphGros = Robots.MainRobot.Graph;
 
             Robots.MainRobot?.DeInit();
-
+            
             if (!Simulation)
-            {
-                RobotReel grosRobot = new RobotReel(IDRobot.GrosRobot, Board.RecMove, 335, 271, 295, 390);
-                grosRobot.PositionChanged += GrosRobot_PositionChanged;
-                grosRobot.ConnectionAsser = Connections.ConnectionMove;
-                MainRobot = grosRobot;
-            }
+                MainRobot = new RobotReel(IDRobot.GrosRobot, Board.RecMove);
             else
-            {
-                MainRobot = new RobotSimu(IDRobot.GrosRobot, 335, 271, 295, 390);
-                MainRobot.PositionChanged += GrosRobot_PositionChanged;
-            }
+                MainRobot = new RobotSimu(IDRobot.GrosRobot);
+
+            MainRobot.SetDimensions(335, 271, 295, 390);
+            MainRobot.PositionChanged += GrosRobot_PositionChanged;
 
             DicRobots = new Dictionary<IDRobot, Robot>();
             DicRobots.Add(IDRobot.GrosRobot, MainRobot);
 
-            MainRobot.Name = "Gros robot";
             MainRobot.Init();
             if (graphGros != null)
                 Robots.MainRobot.Graph = graphGros;
@@ -63,14 +57,14 @@ namespace GoBot
                 AllDevices.LidarAvoid.Position = position;
         }
 
-        public static void Simuler(bool simu)
+        public static void EnableSimulation(bool isSimulation)
         {
-            if (Simulation == simu)
+            if (Simulation == isSimulation)
                 return;
 
-            Simulation = simu;
+            Simulation = isSimulation;
 
-            CreerRobots();
+            CreateRobots();
         }
     }
 }
