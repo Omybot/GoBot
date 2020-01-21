@@ -1,60 +1,88 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
 using System.Drawing;
-using System.Data;
-using System.Linq;
-using System.Text;
 using System.Windows.Forms;
+
+using GoBot.Threading;
 
 namespace GoBot.IHM
 {
     public partial class PanelCapteurs : UserControl
     {
-        Timer tCouleur;
+        ThreadLink _linkColorLeft, _linkColorRight;
 
         public PanelCapteurs()
         {
             InitializeComponent();
         }
 
-        private void btnColor_ValueChanged(object sender, bool value)
+        private void PanelCapteurs_Load(object sender, EventArgs e)
+        {
+            picColorLeft.SetColor(Color.Black);
+            picColorRight.SetColor(Color.Black);
+        }
+
+        private void btnColorLeft_ValueChanged(object sender, bool value)
         {
             if (value)
             {
-                Robots.MainRobot.SetActuatorOnOffValue(ActuatorOnOffID.AlimCapteurCouleur, true);
+                Robots.MainRobot.SetActuatorOnOffValue(ActuatorOnOffID.PowerSensorColorBuoyLeft, true);
                 Robots.MainRobot.SensorColorChanged += GrosRobot_SensorColorChanged;
-                tCouleur = new Timer();
-                tCouleur.Tick += tCouleur_Tick;
-                tCouleur.Interval = 50;
-                tCouleur.Start();
+                ThreadManager.CreateThread(link => PollingColorLeft(link)).StartInfiniteLoop(50);
             }
             else
             {
-                Robots.MainRobot.SetActuatorOnOffValue(ActuatorOnOffID.AlimCapteurCouleur, false);
-                Robots.MainRobot.SensorColorChanged -= GrosRobot_SensorColorChanged;
-                tCouleur.Stop();
-                tCouleur.Dispose();
+                Robots.MainRobot.SetActuatorOnOffValue(ActuatorOnOffID.PowerSensorColorBuoyLeft, false);
+                _linkColorLeft.Cancel();
+                _linkColorLeft.WaitEnd();
+                _linkColorLeft = null;
             }
         }
 
-        void tCouleur_Tick(object sender, EventArgs e)
+        private void btnColorRight_ValueChanged(object sender, bool value)
         {
-            Robots.MainRobot.ReadSensorColor(SensorColorID.CouleurTube, false);
+            if (value)
+            {
+                Robots.MainRobot.SetActuatorOnOffValue(ActuatorOnOffID.PowerSensorColorBuoyRight, true);
+                Robots.MainRobot.SensorColorChanged += GrosRobot_SensorColorChanged;
+                ThreadManager.CreateThread(link => PollingColorRight(link)).StartInfiniteLoop(50);
+            }
+            else
+            {
+                Robots.MainRobot.SetActuatorOnOffValue(ActuatorOnOffID.PowerSensorColorBuoyRight, false);
+                _linkColorRight.Cancel();
+                _linkColorRight.WaitEnd();
+                _linkColorRight = null;
+            }
         }
 
-        void GrosRobot_SensorColorChanged(SensorColorID capteur, Color couleur)
+        void PollingColorLeft(ThreadLink link)
+        {
+            _linkColorLeft = link;
+            _linkColorLeft.RegisterName();
+            Robots.MainRobot.ReadSensorColor(SensorColorID.BuoyLeft, false);
+        }
+
+        void PollingColorRight(ThreadLink link)
+        {
+            _linkColorRight = link;
+            _linkColorRight.RegisterName();
+            Robots.MainRobot.ReadSensorColor(SensorColorID.BuoyRight, false);
+        }
+
+        void GrosRobot_SensorColorChanged(SensorColorID sensor, Color color)
         {
             this.InvokeAuto(() =>
             {
-                if (capteur == SensorColorID.CouleurTube)
-                    picColor.SetColor(couleur);
+                switch (sensor)
+                {
+                    case SensorColorID.BuoyLeft:
+                        picColorLeft.SetColor(color);
+                        break;
+                    case SensorColorID.BuoyRight:
+                        picColorLeft.SetColor(color);
+                        break;
+                }
             });
-        }
-
-        private void PanelCapteurs_Load(object sender, EventArgs e)
-        {
-            picColor.SetColor(Color.Black);
         }
     }
 }

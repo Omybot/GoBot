@@ -57,12 +57,6 @@ namespace GoBot
         Unused23 = 23,
     }
 
-    public enum MatchColor
-    {
-        LeftBlue,
-        RightYellow
-    }
-
     public enum MotorID
     {
         FingerFront = 0, // RecIO
@@ -85,38 +79,27 @@ namespace GoBot
 
     public enum ActuatorOnOffID
     {
-        AlimCapteurCouleur = 1
+        PowerSensorColorBuoyLeft = 1,
+        PowerSensorColorBuoyRight = 2,
+        MakeVacuumFrontLeft = 11,
+        MakeVacuumFrontRight = 12,
+        MakeVacuumBackLeft = 13,
+        MakeVacuumBackRight = 14,
+        OpenVacuumFrontLeft = 20,
+        OpenVacuumFrontRight = 21,
+        OpenVacuumBackLeft = 22,
+        OpenVacuumBackRight = 23
     }
 
     public enum SensorOnOffID
     {
-        Bouton2 = 0,
-        Bouton4 = 1,
-        Bouton1 = 2,
-        Bouton3 = 3,
-        Bouton10 = 4,
-        Bouton8 = 5,
-        Bouton9 = 6,
-        Bouton7 = 7,
-        Bouton6 = 8,
-        CouleurEquipe = 9,
-        Jack = 10,
-        Bouton5 = 11,
-        LSwitch1 = 12,
-        LSwitch2 = 13,
-        LSwitch3 = 14,
-        LSwitch4 = 15,
-        ChaiPas = 16,
-        ChaiPlus = 17,
-        PresenceDroite = 18,
-        PresenceGauche = 19,
-        PresenceCentre = 0x51,
-        PresenceOnSaitPasOu = 0x52
+        StartTrigger = 10
     }
 
     public enum SensorColorID
     {
-        CouleurTube = 0
+        BuoyLeft = 0,
+        BuoyRight = 1
     }
 
     public enum CodeurID
@@ -124,35 +107,9 @@ namespace GoBot
         Manuel = 1
     }
 
-    public enum LedRgbID
-    {
-        CouleurMatch = 0
-    }
-
     public enum BaliseID
     {
         Principale = 0
-    }
-
-    public enum LedID
-    {
-        DebugA1 = 8,
-        DebugA2 = 9,
-        DebugA3 = 10,
-        DebugA4 = 11,
-        DebugA5 = 12,
-        DebugA6 = 13,
-        DebugA7 = 14,
-        DebugA8 = 15,
-
-        DebugB8 = 7,
-        DebugB7 = 6,
-        DebugB6 = 5,
-        DebugB5 = 4,
-        DebugB4 = 3,
-        DebugB3 = 2,
-        DebugB2 = 1,
-        DebugB1 = 0
     }
 
     public enum LidarID

@@ -1,15 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Drawing;
-using System.Data;
-using System.Linq;
-using System.Text;
 using System.Windows.Forms;
-using System.Threading;
-using System.Timers;
-using GoBot.Communications;
-using System.Reflection;
 
 namespace GoBot.IHM
 {
@@ -23,23 +13,23 @@ namespace GoBot.IHM
             _loaded = false;
         }
 
-        private void PanelConstantes_Load(object sender, EventArgs e)
+        private void PanelSpeedConfig_Load(object sender, EventArgs e)
         {
             if (!Execution.DesignMode)
             {
-                numAccelerationLigneLent.Value = Config.CurrentConfig.ConfigLent.LineAcceleration;
-                numAccelerationFinLigneLent.Value = Config.CurrentConfig.ConfigLent.LineDeceleration;
-                numVitesseLigneLent.Value = Config.CurrentConfig.ConfigLent.LineSpeed;
-                numAccelerationPivotLent.Value = Config.CurrentConfig.ConfigLent.PivotAcceleration;
-                numDecelerationPivotLent.Value = Config.CurrentConfig.ConfigLent.PivotDeceleration;
-                numVitessePivotLent.Value = Config.CurrentConfig.ConfigLent.PivotSpeed;
+                numSlowLineAcceleration.Value = Config.CurrentConfig.ConfigLent.LineAcceleration;
+                numSlowLineDecceleration.Value = Config.CurrentConfig.ConfigLent.LineDeceleration;
+                numSlowLineSpeed.Value = Config.CurrentConfig.ConfigLent.LineSpeed;
+                numSlowPivotAcceleration.Value = Config.CurrentConfig.ConfigLent.PivotAcceleration;
+                numSlowPivotDecceleration.Value = Config.CurrentConfig.ConfigLent.PivotDeceleration;
+                numSlowPivotSpeed.Value = Config.CurrentConfig.ConfigLent.PivotSpeed;
 
-                numAccelerationLigneRapide.Value = Config.CurrentConfig.ConfigRapide.LineAcceleration;
-                numAccelerationFinLigneRapide.Value = Config.CurrentConfig.ConfigRapide.LineDeceleration;
-                numVitesseLigneRapide.Value = Config.CurrentConfig.ConfigRapide.LineSpeed;
-                numAccelerationPivotRapide.Value = Config.CurrentConfig.ConfigRapide.PivotAcceleration;
-                numDecelerationPivotRapide.Value = Config.CurrentConfig.ConfigRapide.PivotDeceleration;
-                numVitessePivotRapide.Value = Config.CurrentConfig.ConfigRapide.PivotSpeed;
+                numFastLineAcceleration.Value = Config.CurrentConfig.ConfigRapide.LineAcceleration;
+                numFastLineDecceleration.Value = Config.CurrentConfig.ConfigRapide.LineDeceleration;
+                numFastLineSpeed.Value = Config.CurrentConfig.ConfigRapide.LineSpeed;
+                numFastPivotAcceleration.Value = Config.CurrentConfig.ConfigRapide.PivotAcceleration;
+                numFastPivotDecceleration.Value = Config.CurrentConfig.ConfigRapide.PivotDeceleration;
+                numFastPivotSpeed.Value = Config.CurrentConfig.ConfigRapide.PivotSpeed;
 
                 _loaded = true;
             }
@@ -50,20 +40,20 @@ namespace GoBot.IHM
             if (_loaded)
             {
                 Config.CurrentConfig.ConfigRapide.SetParams(
-                    (int)numVitesseLigneRapide.Value,
-                    (int)numAccelerationLigneRapide.Value,
-                    (int)numAccelerationFinLigneRapide.Value,
-                    (int)numVitessePivotRapide.Value,
-                    (int)numAccelerationPivotRapide.Value,
-                    (int)numDecelerationPivotRapide.Value);
+                    (int)numFastLineSpeed.Value,
+                    (int)numFastLineAcceleration.Value,
+                    (int)numFastLineDecceleration.Value,
+                    (int)numFastPivotSpeed.Value,
+                    (int)numFastPivotAcceleration.Value,
+                    (int)numFastPivotDecceleration.Value);
 
                 Config.CurrentConfig.ConfigLent.SetParams(
-                    (int)numVitesseLigneLent.Value,
-                    (int)numAccelerationLigneLent.Value,
-                    (int)numAccelerationFinLigneLent.Value,
-                    (int)numVitessePivotLent.Value,
-                    (int)numAccelerationPivotLent.Value,
-                    (int)numDecelerationPivotLent.Value);
+                    (int)numSlowLineSpeed.Value,
+                    (int)numSlowLineAcceleration.Value,
+                    (int)numSlowLineDecceleration.Value,
+                    (int)numSlowPivotSpeed.Value,
+                    (int)numSlowPivotAcceleration.Value,
+                    (int)numSlowPivotDecceleration.Value);
 
                 Config.Save();
             }

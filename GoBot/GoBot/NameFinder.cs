@@ -119,50 +119,8 @@ namespace GoBot
         {
             switch (sensor)
             {
-                case SensorOnOffID.Bouton1:
-                    return "bouton 1";
-                case SensorOnOffID.Bouton2:
-                    return "bouton 2";
-                case SensorOnOffID.Bouton3:
-                    return "bouton 3";
-                case SensorOnOffID.Bouton4:
-                    return "bouton 4";
-                case SensorOnOffID.Bouton5:
-                    return "bouton 5";
-                case SensorOnOffID.Bouton6:
-                    return "bouton 6";
-                case SensorOnOffID.Bouton7:
-                    return "bouton 7";
-                case SensorOnOffID.Bouton8:
-                    return "bouton 8";
-                case SensorOnOffID.Bouton9:
-                    return "bouton 9";
-                case SensorOnOffID.Bouton10:
-                    return "bouton 10";
-                case SensorOnOffID.Jack:
+                case SensorOnOffID.StartTrigger:
                     return "jack";
-                case SensorOnOffID.CouleurEquipe:
-                    return "couleur d'equipe";
-                case SensorOnOffID.LSwitch1:
-                    return "switch linéaire 1";
-                case SensorOnOffID.LSwitch2:
-                    return "switch linéaire 2";
-                case SensorOnOffID.LSwitch3:
-                    return "switch linéaire 3";
-                case SensorOnOffID.LSwitch4:
-                    return "switch linéaire 4";
-                case SensorOnOffID.ChaiPas:
-                    return "on sait pas";
-                case SensorOnOffID.ChaiPlus:
-                    return "on sait plus";
-                case SensorOnOffID.PresenceDroite:
-                    return "présence module à droite";
-                case SensorOnOffID.PresenceGauche:
-                    return "présence module à gauche";
-                case SensorOnOffID.PresenceCentre:
-                    return "présence module au centre";
-                case SensorOnOffID.PresenceOnSaitPasOu:
-                    return "présence pas cablé";
                 default:
                     return sensor.ToString();
             }
@@ -219,8 +177,26 @@ namespace GoBot
         {
             switch (actuator)
             {
-                case ActuatorOnOffID.AlimCapteurCouleur:
-                    return "alimentation capteur couleur";
+                case ActuatorOnOffID.PowerSensorColorBuoyLeft:
+                    return "alimentation capteur couleur bouée gauche";
+                case ActuatorOnOffID.PowerSensorColorBuoyRight:
+                    return "alimentation capteur couleur bouée droite";
+                case ActuatorOnOffID.MakeVacuumBackLeft:
+                    return "aspiration arrière gauche";
+                case ActuatorOnOffID.MakeVacuumBackRight:
+                    return "aspiration arrière droite";
+                case ActuatorOnOffID.MakeVacuumFrontLeft:
+                    return "aspiration avant gauche";
+                case ActuatorOnOffID.MakeVacuumFrontRight:
+                    return "aspiration avant droite";
+                case ActuatorOnOffID.OpenVacuumBackLeft:
+                    return "electrovanne arrière gauche";
+                case ActuatorOnOffID.OpenVacuumBackRight:
+                    return "electrovanne arrière droite";
+                case ActuatorOnOffID.OpenVacuumFrontLeft:
+                    return "electrovanne avant gauche";
+                case ActuatorOnOffID.OpenVacuumFrontRight:
+                    return "electrovanne avant droite";
                 default:
                     return actuator.ToString();
             }
@@ -255,8 +231,10 @@ namespace GoBot
         {
             switch (sensor)
             {
-                case SensorColorID.CouleurTube:
-                    return "module lunaire";
+                case SensorColorID.BuoyLeft:
+                    return "bouée gauche";
+                case SensorColorID.BuoyRight:
+                    return "bouée droite";
                 default:
                     return sensor.ToString();
             }
@@ -275,23 +253,6 @@ namespace GoBot
                     return "principale";
                 default:
                     return balise.ToString();
-            }
-        }
-
-
-        /// <summary>
-        /// Retourne le nom usuel d'une LED RGB
-        /// </summary>
-        /// <param name="capteur">LED RGB à nommer</param>
-        /// <returns>Nom de la LED RGB</returns>
-        public static String GetName(LedRgbID led)
-        {
-            switch (led)
-            {
-                case LedRgbID.CouleurMatch:
-                    return "couleur match";
-                default:
-                    return led.ToString();
             }
         }
 
@@ -319,52 +280,6 @@ namespace GoBot
         public static String GetName(UdpFrameFunction frame)
         {
             return UdpFrameDecoder.GetMessage(frame);
-        }
-
-        /// <summary>
-        /// Retourne le nom usuel d'une led
-        /// </summary>
-        /// <param name="capteur">Led à nommer</param>
-        /// <returns>Nom de la led</returns>
-        public static String GetName(LedID led)
-        {
-            switch (led)
-            {
-                case LedID.DebugA1:
-                    return "debug A1";
-                case LedID.DebugA2:
-                    return "debug A2";
-                case LedID.DebugA3:
-                    return "debug A3";
-                case LedID.DebugA4:
-                    return "debug A4";
-                case LedID.DebugA5:
-                    return "debug A5";
-                case LedID.DebugA6:
-                    return "debug A6";
-                case LedID.DebugA7:
-                    return "debug A7";
-                case LedID.DebugA8:
-                    return "debug A8";
-                case LedID.DebugB8:
-                    return "debug B8";
-                case LedID.DebugB7:
-                    return "debug B7";
-                case LedID.DebugB6:
-                    return "debug B6";
-                case LedID.DebugB5:
-                    return "debug B5";
-                case LedID.DebugB4:
-                    return "debug B4";
-                case LedID.DebugB3:
-                    return "debug B3";
-                case LedID.DebugB2:
-                    return "debug B2";
-                case LedID.DebugB1:
-                    return "debug B1";
-                default:
-                    return led.ToString();
-            }
         }
     }
 }

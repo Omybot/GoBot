@@ -83,7 +83,7 @@ namespace GoBot.IHM.Pages
 
         private void GrosRobot_ChangementEtatCapteurOnOff(SensorOnOffID capteur, bool etat)
         {
-            if (capteur == SensorOnOffID.Jack)
+            if (capteur == SensorOnOffID.StartTrigger)
             {
                 SetPicImage(picJack, etat);
                 picCalibration.InvokeAuto(() => picCalibration.Enabled = etat);

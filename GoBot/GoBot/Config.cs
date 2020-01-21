@@ -78,15 +78,6 @@ namespace GoBot
         public int CameraYMin { get; set; }
         public int CameraYMax { get; set; }
 
-        // Fenêtres gros robot
-
-        public bool DeplacementGROuvert { get; set; }
-        public bool HistoriqueGROuvert { get; set; }
-        public bool ReglageGROuvert { get; set; }
-        public bool UtilisationGROuvert { get; set; }
-        public bool SequencesGROuvert { get; set; }
-        public bool CapteursGROuvert { get; set; }
-
         // Déplacement gros robot
         
         public SpeedConfig ConfigRapide { get; set; }

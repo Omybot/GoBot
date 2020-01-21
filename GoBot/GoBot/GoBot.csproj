@@ -96,6 +96,12 @@
     <Compile Include="Devices\Pepperl\PepperlManager.cs" />
     <Compile Include="BoardContext\Obstacles.cs" />
     <Compile Include="GameElements\Buoy.cs" />
+    <Compile Include="IHM\Elements\PanelSensorOnOff.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="IHM\Elements\PanelSensorOnOff.Designer.cs">
+      <DependentUpon>PanelSensorOnOff.cs</DependentUpon>
+    </Compile>
     <Compile Include="IHM\Elements\PanelBoardCanServos.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -217,17 +223,17 @@
     <Compile Include="IHM\Panels\PanelActionneurGeneric.Designer.cs">
       <DependentUpon>PanelActionneurGeneric.cs</DependentUpon>
     </Compile>
-    <Compile Include="IHM\Elements\PanelActionneurOnOff.cs">
+    <Compile Include="IHM\Elements\PanelActuatorOnOff.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="IHM\Elements\PanelActionneurOnOff.Designer.cs">
-      <DependentUpon>PanelActionneurOnOff.cs</DependentUpon>
+    <Compile Include="IHM\Elements\PanelActuatorOnOff.Designer.cs">
+      <DependentUpon>PanelActuatorOnOff.cs</DependentUpon>
     </Compile>
-    <Compile Include="IHM\Panels\PanelActionneursOnOff.cs">
+    <Compile Include="IHM\Panels\PanelActuatorsOnOff.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="IHM\Panels\PanelActionneursOnOff.Designer.cs">
-      <DependentUpon>PanelActionneursOnOff.cs</DependentUpon>
+    <Compile Include="IHM\Panels\PanelActuatorsOnOff.Designer.cs">
+      <DependentUpon>PanelActuatorsOnOff.cs</DependentUpon>
     </Compile>
     <Compile Include="IHM\Panels\PanelAnalogique.cs">
       <SubType>UserControl</SubType>
@@ -295,17 +301,17 @@
     <Compile Include="IHM\Panels\PanelConnections.Designer.cs">
       <DependentUpon>PanelConnections.cs</DependentUpon>
     </Compile>
-    <Compile Include="IHM\Panels\PanelGrosRobotCapteurs.cs">
+    <Compile Include="IHM\Panels\PanelSensorsOnOff.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="IHM\Panels\PanelGrosRobotCapteurs.Designer.cs">
-      <DependentUpon>PanelGrosRobotCapteurs.cs</DependentUpon>
+    <Compile Include="IHM\Panels\PanelSensorsOnOff.Designer.cs">
+      <DependentUpon>PanelSensorsOnOff.cs</DependentUpon>
     </Compile>
-    <Compile Include="IHM\Panels\PanelGrosRobotReglage.cs">
+    <Compile Include="IHM\Panels\PanelPositionables.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="IHM\Panels\PanelGrosRobotReglage.Designer.cs">
-      <DependentUpon>PanelGrosRobotReglage.cs</DependentUpon>
+    <Compile Include="IHM\Panels\PanelPositionables.Designer.cs">
+      <DependentUpon>PanelPositionables.cs</DependentUpon>
     </Compile>
     <Compile Include="IHM\Pages\PageReglageAsserv.cs">
       <SubType>UserControl</SubType>
@@ -394,6 +400,9 @@
     <EmbeddedResource Include="IHM\Elements\ConnectionStatus.resx">
       <DependentUpon>ConnectionStatus.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="IHM\Elements\PanelSensorOnOff.resx">
+      <DependentUpon>PanelSensorOnOff.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="IHM\Pages\PageMatch.resx">
       <DependentUpon>PageMatch.cs</DependentUpon>
     </EmbeddedResource>
@@ -406,11 +415,11 @@
     <EmbeddedResource Include="IHM\Panels\PanelActionneurGeneric.resx">
       <DependentUpon>PanelActionneurGeneric.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="IHM\Elements\PanelActionneurOnOff.resx">
-      <DependentUpon>PanelActionneurOnOff.cs</DependentUpon>
+    <EmbeddedResource Include="IHM\Elements\PanelActuatorOnOff.resx">
+      <DependentUpon>PanelActuatorOnOff.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="IHM\Panels\PanelActionneursOnOff.resx">
-      <DependentUpon>PanelActionneursOnOff.cs</DependentUpon>
+    <EmbeddedResource Include="IHM\Panels\PanelActuatorsOnOff.resx">
+      <DependentUpon>PanelActuatorsOnOff.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="IHM\Elements\PanelBoardCanServos.resx">
       <DependentUpon>PanelBoardCanServos.cs</DependentUpon>
@@ -463,8 +472,8 @@
     <EmbeddedResource Include="IHM\Panels\PanelConnections.resx">
       <DependentUpon>PanelConnections.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="IHM\Panels\PanelGrosRobotCapteurs.resx">
-      <DependentUpon>PanelGrosRobotCapteurs.cs</DependentUpon>
+    <EmbeddedResource Include="IHM\Panels\PanelSensorsOnOff.resx">
+      <DependentUpon>PanelSensorsOnOff.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="IHM\Panels\PanelDeplacement.resx">
       <DependentUpon>PanelDeplacement.cs</DependentUpon>
@@ -478,8 +487,8 @@
     <EmbeddedResource Include="IHM\Pages\PageGrosRobot.resx">
       <DependentUpon>PageGrosRobot.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="IHM\Panels\PanelGrosRobotReglage.resx">
-      <DependentUpon>PanelGrosRobotReglage.cs</DependentUpon>
+    <EmbeddedResource Include="IHM\Panels\PanelPositionables.resx">
+      <DependentUpon>PanelPositionables.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="IHM\Pages\PageReglageAsserv.resx">
       <DependentUpon>PageReglageAsserv.cs</DependentUpon>

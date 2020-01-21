@@ -858,7 +858,6 @@ namespace GoBot
             this.tabControl5.ResumeLayout(false);
             this.tabPage6.ResumeLayout(false);
             this.tabPage7.ResumeLayout(false);
-            this.tabGB.ResumeLayout(false);
             this.tabControl6.ResumeLayout(false);
             this.grpServoCodeur.ResumeLayout(false);
             this.grpCapteurs.ResumeLayout(false);

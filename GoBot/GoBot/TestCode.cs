@@ -6,6 +6,7 @@ using GoBot.Actions;
 using System.Windows.Forms;
 using GoBot.Communications;
 using GoBot.Communications.UDP;
+using System.Diagnostics;
 
 namespace GoBot
 {
@@ -26,8 +27,6 @@ namespace GoBot
             typesEnum.Add(typeof(CodeurID));
             typesEnum.Add(typeof(SensorColorID));
             typesEnum.Add(typeof(BaliseID));
-            typesEnum.Add(typeof(LedID));
-            typesEnum.Add(typeof(LedRgbID));
             typesEnum.Add(typeof(LidarID));
             typesEnum.Add(typeof(UdpFrameFunction));
             
@@ -47,8 +46,7 @@ namespace GoBot
                 }
             }
 
-            //if (error)
-            //    MessageBox.Show(errors.ToString(), "Attention", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            //if (error && Debugger.IsAttached) MessageBox.Show(errors.ToString(), "Attention", MessageBoxButtons.OK, MessageBoxIcon.Warning);
 
         }
     }

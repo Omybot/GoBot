@@ -30,14 +30,15 @@
         {
             this.flowLayoutPanel1 = new System.Windows.Forms.FlowLayoutPanel();
             this.flowLayoutPanel2 = new System.Windows.Forms.FlowLayoutPanel();
-            this.panelReglageGros1 = new GoBot.IHM.PanelGrosRobotReglage();
-            this.panelCapteursGros1 = new GoBot.IHM.PanelGrosRobotCapteurs();
-            this.panelConstantes1 = new GoBot.IHM.PanelSpeedConfig();
+            this.flowLayoutPanel3 = new System.Windows.Forms.FlowLayoutPanel();
+            this.pnlPositionables = new GoBot.IHM.PanelPositionables();
+            this.panelSpeedConfig1 = new GoBot.IHM.PanelSpeedConfig();
             this.panelDeplacement = new GoBot.IHM.PanelDeplacement();
-            this.grpSpeedConfig = new System.Windows.Forms.GroupBox();
+            this.panelActuatorsOnOff1 = new GoBot.IHM.PanelActuatorsOnOff();
+            this.panelSensorsOnOff1 = new GoBot.IHM.PanelSensorsOnOff();
             this.flowLayoutPanel1.SuspendLayout();
             this.flowLayoutPanel2.SuspendLayout();
-            this.grpSpeedConfig.SuspendLayout();
+            this.flowLayoutPanel3.SuspendLayout();
             this.SuspendLayout();
             // 
             // flowLayoutPanel1
@@ -54,38 +55,39 @@
             // 
             this.flowLayoutPanel2.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left)));
-            this.flowLayoutPanel2.Controls.Add(this.panelReglageGros1);
-            this.flowLayoutPanel2.Controls.Add(this.panelCapteursGros1);
-            this.flowLayoutPanel2.Controls.Add(this.grpSpeedConfig);
+            this.flowLayoutPanel2.Controls.Add(this.pnlPositionables);
+            this.flowLayoutPanel2.Controls.Add(this.panelSpeedConfig1);
             this.flowLayoutPanel2.Location = new System.Drawing.Point(352, 3);
             this.flowLayoutPanel2.Name = "flowLayoutPanel2";
             this.flowLayoutPanel2.Size = new System.Drawing.Size(343, 562);
             this.flowLayoutPanel2.TabIndex = 91;
             // 
-            // panelReglageGros1
+            // flowLayoutPanel3
             // 
-            this.panelReglageGros1.AutoSize = true;
-            this.panelReglageGros1.BackColor = System.Drawing.Color.Transparent;
-            this.panelReglageGros1.Location = new System.Drawing.Point(3, 3);
-            this.panelReglageGros1.Name = "panelReglageGros1";
-            this.panelReglageGros1.Size = new System.Drawing.Size(338, 216);
-            this.panelReglageGros1.TabIndex = 115;
+            this.flowLayoutPanel3.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left)));
+            this.flowLayoutPanel3.Controls.Add(this.panelActuatorsOnOff1);
+            this.flowLayoutPanel3.Controls.Add(this.panelSensorsOnOff1);
+            this.flowLayoutPanel3.Location = new System.Drawing.Point(699, 3);
+            this.flowLayoutPanel3.Name = "flowLayoutPanel3";
+            this.flowLayoutPanel3.Size = new System.Drawing.Size(343, 562);
+            this.flowLayoutPanel3.TabIndex = 92;
             // 
-            // panelCapteursGros1
+            // pnlPositionables
             // 
-            this.panelCapteursGros1.AutoSize = true;
-            this.panelCapteursGros1.BackColor = System.Drawing.Color.Transparent;
-            this.panelCapteursGros1.Location = new System.Drawing.Point(3, 225);
-            this.panelCapteursGros1.Name = "panelCapteursGros1";
-            this.panelCapteursGros1.Size = new System.Drawing.Size(338, 43);
-            this.panelCapteursGros1.TabIndex = 118;
+            this.pnlPositionables.AutoSize = true;
+            this.pnlPositionables.BackColor = System.Drawing.Color.Transparent;
+            this.pnlPositionables.Location = new System.Drawing.Point(3, 3);
+            this.pnlPositionables.Name = "pnlPositionables";
+            this.pnlPositionables.Size = new System.Drawing.Size(326, 148);
+            this.pnlPositionables.TabIndex = 115;
             // 
-            // panelConstantes1
+            // panelSpeedConfig1
             // 
-            this.panelConstantes1.Location = new System.Drawing.Point(6, 19);
-            this.panelConstantes1.Name = "panelConstantes1";
-            this.panelConstantes1.Size = new System.Drawing.Size(300, 218);
-            this.panelConstantes1.TabIndex = 1;
+            this.panelSpeedConfig1.Location = new System.Drawing.Point(3, 157);
+            this.panelSpeedConfig1.Name = "panelSpeedConfig1";
+            this.panelSpeedConfig1.Size = new System.Drawing.Size(330, 245);
+            this.panelSpeedConfig1.TabIndex = 119;
             // 
             // panelDeplacement
             // 
@@ -97,28 +99,35 @@
             this.panelDeplacement.Size = new System.Drawing.Size(337, 449);
             this.panelDeplacement.TabIndex = 72;
             // 
-            // grpSpeedConfig
+            // panelActuatorsOnOff1
             // 
-            this.grpSpeedConfig.Controls.Add(this.panelConstantes1);
-            this.grpSpeedConfig.Location = new System.Drawing.Point(3, 274);
-            this.grpSpeedConfig.Name = "grpSpeedConfig";
-            this.grpSpeedConfig.Size = new System.Drawing.Size(338, 243);
-            this.grpSpeedConfig.TabIndex = 120;
-            this.grpSpeedConfig.TabStop = false;
-            this.grpSpeedConfig.Text = "Réglages de vitesse";
+            this.panelActuatorsOnOff1.BackColor = System.Drawing.Color.Transparent;
+            this.panelActuatorsOnOff1.Location = new System.Drawing.Point(3, 3);
+            this.panelActuatorsOnOff1.Name = "panelActuatorsOnOff1";
+            this.panelActuatorsOnOff1.Size = new System.Drawing.Size(330, 110);
+            this.panelActuatorsOnOff1.TabIndex = 0;
             // 
-            // PanelGrosRobot
+            // panelSensorsOnOff1
+            // 
+            this.panelSensorsOnOff1.BackColor = System.Drawing.Color.Transparent;
+            this.panelSensorsOnOff1.Location = new System.Drawing.Point(3, 119);
+            this.panelSensorsOnOff1.Name = "panelSensorsOnOff1";
+            this.panelSensorsOnOff1.Size = new System.Drawing.Size(330, 110);
+            this.panelSensorsOnOff1.TabIndex = 1;
+            // 
+            // PageGrosRobot
             // 
             this.BackColor = System.Drawing.Color.Transparent;
+            this.Controls.Add(this.flowLayoutPanel3);
             this.Controls.Add(this.flowLayoutPanel2);
             this.Controls.Add(this.flowLayoutPanel1);
-            this.Name = "PanelGrosRobot";
+            this.Name = "PageGrosRobot";
             this.Size = new System.Drawing.Size(1003, 562);
             this.flowLayoutPanel1.ResumeLayout(false);
             this.flowLayoutPanel1.PerformLayout();
             this.flowLayoutPanel2.ResumeLayout(false);
             this.flowLayoutPanel2.PerformLayout();
-            this.grpSpeedConfig.ResumeLayout(false);
+            this.flowLayoutPanel3.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -127,10 +136,11 @@
 
         private System.Windows.Forms.FlowLayoutPanel flowLayoutPanel1;
         private PanelDeplacement panelDeplacement;
-        private PanelGrosRobotReglage panelReglageGros1;
+        private PanelPositionables pnlPositionables;
         private System.Windows.Forms.FlowLayoutPanel flowLayoutPanel2;
-        private PanelGrosRobotCapteurs panelCapteursGros1;
-        private PanelSpeedConfig panelConstantes1;
-        private System.Windows.Forms.GroupBox grpSpeedConfig;
+        private System.Windows.Forms.FlowLayoutPanel flowLayoutPanel3;
+        private PanelSpeedConfig panelSpeedConfig1;
+        private PanelActuatorsOnOff panelActuatorsOnOff1;
+        private PanelSensorsOnOff panelSensorsOnOff1;
     }
 }

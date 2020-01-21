@@ -1,6 +1,6 @@
 ﻿namespace GoBot.IHM
 {
-    partial class PanelActionneursOnOff
+    partial class PanelActuatorsOnOff
     {
         /// <summary> 
         /// Variable nécessaire au concepteur.
@@ -28,19 +28,34 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.grpActuatorsOnOff = new System.Windows.Forms.GroupBox();
             this.SuspendLayout();
             // 
-            // PanelActionneursOnOff
+            // grpActuatorsOnOff
+            // 
+            this.grpActuatorsOnOff.BackColor = System.Drawing.Color.Transparent;
+            this.grpActuatorsOnOff.Location = new System.Drawing.Point(3, 3);
+            this.grpActuatorsOnOff.Name = "grpActuatorsOnOff";
+            this.grpActuatorsOnOff.Size = new System.Drawing.Size(320, 100);
+            this.grpActuatorsOnOff.TabIndex = 0;
+            this.grpActuatorsOnOff.TabStop = false;
+            this.grpActuatorsOnOff.Text = "Actionneurs On / Off";
+            // 
+            // PanelActuatorsOnOff
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.Name = "PanelActionneursOnOff";
-            this.Size = new System.Drawing.Size(320, 300);
-            this.Load += new System.EventHandler(this.PanelActionneursOnOff_Load);
+            this.BackColor = System.Drawing.Color.Transparent;
+            this.Controls.Add(this.grpActuatorsOnOff);
+            this.Name = "PanelActuatorsOnOff";
+            this.Size = new System.Drawing.Size(330, 110);
+            this.Load += new System.EventHandler(this.PanelActuatorsOnOff_Load);
             this.ResumeLayout(false);
 
         }
 
         #endregion
+
+        private System.Windows.Forms.GroupBox grpActuatorsOnOff;
     }
 }

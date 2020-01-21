@@ -57,10 +57,10 @@ namespace GoBot.Communications.UDP
             return new Frame(tab);
         }
 
-        static public Frame DemandeCapteurCouleur(SensorColorID capteur)
+        static public Frame DemandeCapteurCouleur(Board board, SensorColorID capteur)
         {
             byte[] tab = new byte[3];
-            tab[0] = (byte)Board.RecIO;
+            tab[0] = (byte)board;
             tab[1] = (byte)UdpFrameFunction.DemandeCapteurCouleur;
             tab[2] = (byte)capteur;
 

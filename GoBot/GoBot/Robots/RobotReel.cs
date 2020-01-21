@@ -21,6 +21,10 @@ namespace GoBot
         private Dictionary<UdpFrameFunction, Semaphore> _lockFrame;
         private Dictionary<MotorID, Semaphore> _lockMotor;
 
+        private Dictionary<SensorColorID, Board> _boardSensorColor;
+        private Dictionary<SensorOnOffID, Board> _boardSensorOnOff;
+        private Dictionary<ActuatorOnOffID, Board> _boardActuatorOnOff;
+
         private Connection _asserConnection;
         private bool _positionReceived;
 
@@ -55,8 +59,26 @@ namespace GoBot
             foreach (SensorColorID o in Enum.GetValues(typeof(SensorColorID)))
                 _lockSensorColor.Add(o, new Semaphore(0, int.MaxValue));
 
-            SpeedConfig.ParamChange += SpeedConfig_ParamChange;
+            _boardSensorColor = new Dictionary<SensorColorID, Board>();
+            _boardSensorColor.Add(SensorColorID.BuoyLeft, Board.RecMove);
+            _boardSensorColor.Add(SensorColorID.BuoyRight, Board.RecIO);
 
+            _boardSensorOnOff = new Dictionary<SensorOnOffID, Board>();
+            _boardSensorOnOff.Add(SensorOnOffID.StartTrigger, Board.RecMove);
+
+            _boardActuatorOnOff = new Dictionary<ActuatorOnOffID, Board>();
+            _boardActuatorOnOff.Add(ActuatorOnOffID.PowerSensorColorBuoyLeft, Board.RecMove);
+            _boardActuatorOnOff.Add(ActuatorOnOffID.MakeVacuumBackLeft, Board.RecMove);
+            _boardActuatorOnOff.Add(ActuatorOnOffID.MakeVacuumFrontLeft, Board.RecMove);
+            _boardActuatorOnOff.Add(ActuatorOnOffID.OpenVacuumBackLeft, Board.RecMove);
+            _boardActuatorOnOff.Add(ActuatorOnOffID.OpenVacuumFrontLeft, Board.RecMove);
+            _boardActuatorOnOff.Add(ActuatorOnOffID.PowerSensorColorBuoyRight, Board.RecIO);
+            _boardActuatorOnOff.Add(ActuatorOnOffID.MakeVacuumBackRight, Board.RecIO);
+            _boardActuatorOnOff.Add(ActuatorOnOffID.MakeVacuumFrontRight, Board.RecIO);
+            _boardActuatorOnOff.Add(ActuatorOnOffID.OpenVacuumBackRight, Board.RecIO);
+            _boardActuatorOnOff.Add(ActuatorOnOffID.OpenVacuumFrontRight, Board.RecIO);
+
+            SpeedConfig.ParamChange += SpeedConfig_ParamChange;
         }
 
         public override void DeInit()
@@ -136,27 +158,26 @@ namespace GoBot
             //TODO2020AllDevices.RecGoBot.JackChange += RecGoBot_JackChange;
         }
 
-        public override Color ReadSensorColor(SensorColorID capteur, bool wait = true)
+        public override Color ReadSensorColor(SensorColorID sensor, bool wait = true)
         {
-            if (wait) _lockSensorColor[capteur] = new Semaphore(0, int.MaxValue);
+            if (wait) _lockSensorColor[sensor] = new Semaphore(0, int.MaxValue);
 
-            Frame t = UdpFrameFactory.DemandeCapteurCouleur(capteur);
+            Frame t = UdpFrameFactory.DemandeCapteurCouleur(_boardSensorColor[sensor], sensor);
             Connections.ConnectionIO.SendMessage(t);
 
-            if (wait) _lockSensorColor[capteur].WaitOne(100);
+            if (wait) _lockSensorColor[sensor].WaitOne(100);
 
-            return SensorsColorValue[capteur];
+            return SensorsColorValue[sensor];
         }
 
         public override bool ReadSensorOnOff(SensorOnOffID sensor, bool wait = true)
         {
             if (wait) _lockSensorOnOff[sensor] = new Semaphore(0, int.MaxValue);
 
-            // TODO2020 y'a ptet pas que RecMove...
-            Frame t = UdpFrameFactory.DemandeCapteurOnOff(Board.RecMove, sensor);
+            Frame t = UdpFrameFactory.DemandeCapteurOnOff(_boardSensorOnOff[sensor], sensor);
             Connections.ConnectionMove.SendMessage(t);
 
-            if (wait) _lockSensorOnOff[sensor].WaitOne(1000);
+            if (wait) _lockSensorOnOff[sensor].WaitOne(100);
 
             return SensorsOnOffValue[sensor];
         }
@@ -546,7 +567,7 @@ namespace GoBot
             Frame frame = UdpFrameFactory.DemandePosition(this);
             _asserConnection.SendMessage(frame);
 
-            _lockFrame[UdpFrameFunction.AsserRetourPositionXYTeta].WaitOne(1000);
+            _lockFrame[UdpFrameFunction.AsserRetourPositionXYTeta].WaitOne(100);
 
             return Position;
         }
@@ -558,7 +579,7 @@ namespace GoBot
             Frame frame = UdpFrameFactory.DemandeValeursAnalogiques(board);
             Connections.UDPBoardConnection[board].SendMessage(frame);
 
-            if (wait) _lockFrame[UdpFrameFunction.RetourValeursAnalogiques].WaitOne(1000);
+            if (wait) _lockFrame[UdpFrameFunction.RetourValeursAnalogiques].WaitOne(100);
         }
 
         public override void ReadNumericPins(Board board, bool wait = true)
@@ -568,7 +589,7 @@ namespace GoBot
             Frame frame = UdpFrameFactory.DemandeValeursNumeriques(board);
             Connections.UDPBoardConnection[board].SendMessage(frame);
 
-            if (wait) _lockFrame[UdpFrameFunction.RetourValeursNumeriques].WaitOne(1000);
+            if (wait) _lockFrame[UdpFrameFunction.RetourValeursNumeriques].WaitOne(100);
         }
 
         public override void SetActuatorOnOffValue(ActuatorOnOffID actuator, bool on)
@@ -652,7 +673,7 @@ namespace GoBot
 
         public override bool ReadStartTrigger()
         {
-            return ReadSensorOnOff(SensorOnOffID.Jack, true);
+            return ReadSensorOnOff(SensorOnOffID.StartTrigger, true);
         }
 
         public override List<int>[] DiagnosticPID(int steps, SensAR sens, int pointsCount)
