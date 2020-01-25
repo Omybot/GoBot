@@ -1,16 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.Drawing;
 using System.Data;
 using System.Linq;
-using System.Text;
-using System.Windows.Forms;
-using GoBot.Communications;
-using System.Net;
 using System.IO;
+using System.Windows.Forms;
 
-namespace GoBot.IHM
+using GoBot.Communications;
+
+namespace GoBot.IHM.Pages
 {
     public partial class PageGestionLog : UserControl
     {

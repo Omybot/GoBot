@@ -1,14 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Drawing;
-using System.Data;
-using System.Linq;
-using System.Text;
 using System.Windows.Forms;
-using GoBot.Actions;
 
-namespace GoBot.IHM
+namespace GoBot.IHM.Pages
 {
     public partial class PageGrosRobot : UserControl
     {
@@ -19,8 +12,8 @@ namespace GoBot.IHM
 
         public void Init()
         {
-            panelDeplacement.Robot = Robots.MainRobot;
-            panelDeplacement.Init();
+            panelDisplacement.Robot = Robots.MainRobot;
+            panelDisplacement.Init();
         }
         
         private void btnClose_Click(object sender, EventArgs e)

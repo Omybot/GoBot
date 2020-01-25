@@ -1,16 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Drawing;
-using System.Data;
 using System.Linq;
-using System.Text;
 using System.Windows.Forms;
-using GoBot.Communications;
-using System.Threading;
+
 using GoBot.Threading;
 
-namespace GoBot.IHM
+namespace GoBot.IHM.Pages
 {
     public partial class PageDiagnosticMove : UserControl
     {

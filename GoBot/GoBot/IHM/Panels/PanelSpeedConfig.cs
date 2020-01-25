@@ -18,17 +18,17 @@ namespace GoBot.IHM
             if (!Execution.DesignMode)
             {
                 numSlowLineAcceleration.Value = Config.CurrentConfig.ConfigLent.LineAcceleration;
-                numSlowLineDecceleration.Value = Config.CurrentConfig.ConfigLent.LineDeceleration;
+                numSlowLineDeceleration.Value = Config.CurrentConfig.ConfigLent.LineDeceleration;
                 numSlowLineSpeed.Value = Config.CurrentConfig.ConfigLent.LineSpeed;
                 numSlowPivotAcceleration.Value = Config.CurrentConfig.ConfigLent.PivotAcceleration;
-                numSlowPivotDecceleration.Value = Config.CurrentConfig.ConfigLent.PivotDeceleration;
+                numSlowPivotDeceleration.Value = Config.CurrentConfig.ConfigLent.PivotDeceleration;
                 numSlowPivotSpeed.Value = Config.CurrentConfig.ConfigLent.PivotSpeed;
 
                 numFastLineAcceleration.Value = Config.CurrentConfig.ConfigRapide.LineAcceleration;
-                numFastLineDecceleration.Value = Config.CurrentConfig.ConfigRapide.LineDeceleration;
+                numFastLineDeceleration.Value = Config.CurrentConfig.ConfigRapide.LineDeceleration;
                 numFastLineSpeed.Value = Config.CurrentConfig.ConfigRapide.LineSpeed;
                 numFastPivotAcceleration.Value = Config.CurrentConfig.ConfigRapide.PivotAcceleration;
-                numFastPivotDecceleration.Value = Config.CurrentConfig.ConfigRapide.PivotDeceleration;
+                numFastPivotDeceleration.Value = Config.CurrentConfig.ConfigRapide.PivotDeceleration;
                 numFastPivotSpeed.Value = Config.CurrentConfig.ConfigRapide.PivotSpeed;
 
                 _loaded = true;
@@ -42,18 +42,18 @@ namespace GoBot.IHM
                 Config.CurrentConfig.ConfigRapide.SetParams(
                     (int)numFastLineSpeed.Value,
                     (int)numFastLineAcceleration.Value,
-                    (int)numFastLineDecceleration.Value,
+                    (int)numFastLineDeceleration.Value,
                     (int)numFastPivotSpeed.Value,
                     (int)numFastPivotAcceleration.Value,
-                    (int)numFastPivotDecceleration.Value);
+                    (int)numFastPivotDeceleration.Value);
 
                 Config.CurrentConfig.ConfigLent.SetParams(
                     (int)numSlowLineSpeed.Value,
                     (int)numSlowLineAcceleration.Value,
-                    (int)numSlowLineDecceleration.Value,
+                    (int)numSlowLineDeceleration.Value,
                     (int)numSlowPivotSpeed.Value,
                     (int)numSlowPivotAcceleration.Value,
-                    (int)numSlowPivotDecceleration.Value);
+                    (int)numSlowPivotDeceleration.Value);
 
                 Config.Save();
             }

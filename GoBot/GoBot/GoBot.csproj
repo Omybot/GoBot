@@ -351,11 +351,11 @@
     <Compile Include="Strategies\Strategy.cs" />
     <Compile Include="Enums.cs" />
     <Compile Include="Communications\ConnectionChecker.cs" />
-    <Compile Include="IHM\Panels\PanelDeplacement.cs">
+    <Compile Include="IHM\Panels\PanelDisplacement.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="IHM\Panels\PanelDeplacement.Designer.cs">
-      <DependentUpon>PanelDeplacement.cs</DependentUpon>
+    <Compile Include="IHM\Panels\PanelDisplacement.Designer.cs">
+      <DependentUpon>PanelDisplacement.cs</DependentUpon>
     </Compile>
     <Compile Include="IHM\Pages\PageTable.cs">
       <SubType>UserControl</SubType>
@@ -475,8 +475,8 @@
     <EmbeddedResource Include="IHM\Panels\PanelSensorsOnOff.resx">
       <DependentUpon>PanelSensorsOnOff.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="IHM\Panels\PanelDeplacement.resx">
-      <DependentUpon>PanelDeplacement.cs</DependentUpon>
+    <EmbeddedResource Include="IHM\Panels\PanelDisplacement.resx">
+      <DependentUpon>PanelDisplacement.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="IHM\Elements\Fenetre.resx">
       <DependentUpon>Fenetre.cs</DependentUpon>

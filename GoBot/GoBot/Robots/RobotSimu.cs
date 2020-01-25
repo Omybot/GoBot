@@ -28,7 +28,7 @@ namespace GoBot
 
         private Position _currentPosition;
 
-        private Stopwatch _asserChrono ;
+        private Stopwatch _asserChrono;
         private int _currentPolarPoint;
         private List<RealPoint> _polarTrajectory;
 
@@ -401,7 +401,7 @@ namespace GoBot
         private void RecalProcedure(SensAR sens)
         {
             int realAccel = SpeedConfig.LineAcceleration;
-            int realDeccel = SpeedConfig.LineAcceleration;
+            int realDecel = SpeedConfig.LineAcceleration;
 
             SpeedConfig.LineAcceleration = 50000;
             SpeedConfig.LineDeceleration = 50000;
@@ -423,7 +423,7 @@ namespace GoBot
             }
 
             SpeedConfig.LineAcceleration = realAccel;
-            SpeedConfig.LineDeceleration = realDeccel;
+            SpeedConfig.LineDeceleration = realDecel;
 
             _inRecalibration = false;
         }
@@ -436,8 +436,44 @@ namespace GoBot
 
         public override Color ReadSensorColor(SensorColorID sensor, bool wait = true)
         {
-            // TODO
-            return Color.Black;
+            ColorPlus c = Color.White;
+            int i = DateTime.Now.Millisecond + DateTime.Now.Second * 1000 + DateTime.Now.Minute * 60 * 1000 + DateTime.Now.Hour * 60 * 60 * 1000;
+            int max = 999 + 59 * 1000 + 59 * 60 * 1000 + 23 * 60 * 60 * 1000;
+
+            i %= (15 * 1000);
+            max %= (15 * 1000);
+
+            int steps = 10;
+            int maxColor = 255 * steps;
+
+            i = (int)Math.Floor(i / (max / (float)maxColor));
+
+            switch (i / 255)
+            {
+                case 0:
+                    c = ColorPlus.FromRgb(255, i % 255, 0); break;
+                case 1:
+                    c = ColorPlus.FromRgb(255 - i % 255, 255, 0); break;
+                case 2:
+                    c = ColorPlus.FromRgb(0, 255, i % 255); break;
+                case 3:
+                    c = ColorPlus.FromRgb(0, 255 - i % 255, 255); break;
+                case 4:
+                    c = ColorPlus.FromRgb(i % 255, 0, 255); break;
+                case 5:
+                    c = ColorPlus.FromRgb(255, 0, 255 - i % 255); break;
+                case 6:
+                    c = ColorPlus.FromRgb(255 - i % 255, 0, 0); break;
+                case 7:
+                    c = ColorPlus.FromRgb(i % 255, i % 255, i % 255); break;
+                case 8:
+                    c = ColorPlus.FromRgb(255 - i % 255 / 2, 255 - i % 255 / 2, 255 - i % 255 / 2); break;
+                case 9:
+                    c = ColorPlus.FromHsl(0, i % 255 / 255f, 0.5); break;
+            }
+
+            OnSensorColorChanged(sensor, c);
+            return SensorsColorValue[sensor];
         }
 
         public override void SendPID(int p, int i, int d)
@@ -516,20 +552,20 @@ namespace GoBot
         public override List<double>[] DiagnosticCpuPwm(int pointsCount)
         {
             List<double> cpuLoad, pwmLeft, pwmRight;
-            
+
             cpuLoad = new List<double>();
             pwmLeft = new List<double>();
             pwmRight = new List<double>();
 
-            for(int i = 0; i < pointsCount; i++)
+            for (int i = 0; i < pointsCount; i++)
             {
-                cpuLoad.Add((Math.Sin(i / (double)pointsCount * Math.PI*2) / 2 + 0.5) * 0.2 + _rand.NextDouble() * 0.2 + 0.3);
+                cpuLoad.Add((Math.Sin(i / (double)pointsCount * Math.PI * 2) / 2 + 0.5) * 0.2 + _rand.NextDouble() * 0.2 + 0.3);
                 pwmLeft.Add(Math.Sin((DateTime.Now.Millisecond + i + DateTime.Now.Second * 1000) % 1500 / (double)1500 * Math.PI * 2) * 3800 + (_rand.NextDouble() - 0.5) * 400);
-                pwmRight.Add(Math.Sin((DateTime.Now.Millisecond + i + DateTime.Now.Second*1000) % 5000 / (double)5000 * Math.PI * 2) * 3800 + (_rand.NextDouble() - 0.5) * 400);
+                pwmRight.Add(Math.Sin((DateTime.Now.Millisecond + i + DateTime.Now.Second * 1000) % 5000 / (double)5000 * Math.PI * 2) * 3800 + (_rand.NextDouble() - 0.5) * 400);
             }
 
             Thread.Sleep(pointsCount);
-            
+
             return new List<double>[3] { cpuLoad, pwmLeft, pwmRight };
         }
 

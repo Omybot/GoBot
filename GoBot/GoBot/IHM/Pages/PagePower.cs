@@ -3,7 +3,7 @@ using System.Drawing;
 using System.Windows.Forms;
 using System.Timers;
 
-namespace GoBot.IHM
+namespace GoBot.IHM.Pages
 {
     public partial class PagePower : UserControl
     {

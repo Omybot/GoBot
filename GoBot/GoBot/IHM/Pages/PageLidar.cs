@@ -1,14 +1,15 @@
-﻿using Geometry.Shapes;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Drawing;
 using System.Linq;
 using System.Windows.Forms;
+
+using Geometry.Shapes;
 using GoBot.Devices;
 using GoBot.BoardContext;
 
-namespace GoBot.IHM
+namespace GoBot.IHM.Pages
 {
     public partial class PageLidar : UserControl
     {

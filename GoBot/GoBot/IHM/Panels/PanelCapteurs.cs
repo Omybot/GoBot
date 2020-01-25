@@ -17,8 +17,8 @@ namespace GoBot.IHM
 
         private void PanelCapteurs_Load(object sender, EventArgs e)
         {
-            picColorLeft.SetColor(Color.Black);
-            picColorRight.SetColor(Color.Black);
+            picColorLeft.SetColor(Color.Red);
+            picColorRight.SetColor(Color.HotPink);
         }
 
         private void btnColorLeft_ValueChanged(object sender, bool value)
@@ -79,7 +79,7 @@ namespace GoBot.IHM
                         picColorLeft.SetColor(color);
                         break;
                     case SensorColorID.BuoyRight:
-                        picColorLeft.SetColor(color);
+                        picColorRight.SetColor(color);
                         break;
                 }
             });

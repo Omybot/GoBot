@@ -44,12 +44,12 @@
             this.numSlowLineAcceleration = new System.Windows.Forms.NumericUpDown();
             this.numSlowPivotSpeed = new System.Windows.Forms.NumericUpDown();
             this.numSlowPivotAcceleration = new System.Windows.Forms.NumericUpDown();
-            this.numFastLineDecceleration = new System.Windows.Forms.NumericUpDown();
-            this.lblDeccelerationLine = new System.Windows.Forms.Label();
-            this.numSlowLineDecceleration = new System.Windows.Forms.NumericUpDown();
-            this.numSlowPivotDecceleration = new System.Windows.Forms.NumericUpDown();
-            this.lblDeccelerationPivot = new System.Windows.Forms.Label();
-            this.numFastPivotDecceleration = new System.Windows.Forms.NumericUpDown();
+            this.numFastLineDeceleration = new System.Windows.Forms.NumericUpDown();
+            this.lblDecelerationLine = new System.Windows.Forms.Label();
+            this.numSlowLineDeceleration = new System.Windows.Forms.NumericUpDown();
+            this.numSlowPivotDeceleration = new System.Windows.Forms.NumericUpDown();
+            this.lblDecelerationPivot = new System.Windows.Forms.Label();
+            this.numFastPivotDeceleration = new System.Windows.Forms.NumericUpDown();
             this.picFast = new System.Windows.Forms.PictureBox();
             this.picSlow = new System.Windows.Forms.PictureBox();
             this.grpSpeedConfig = new System.Windows.Forms.GroupBox();
@@ -61,10 +61,10 @@
             ((System.ComponentModel.ISupportInitialize)(this.numSlowLineAcceleration)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numSlowPivotSpeed)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numSlowPivotAcceleration)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numFastLineDecceleration)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numSlowLineDecceleration)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numSlowPivotDecceleration)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numFastPivotDecceleration)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numFastLineDeceleration)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numSlowLineDeceleration)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numSlowPivotDeceleration)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numFastPivotDeceleration)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.picFast)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.picSlow)).BeginInit();
             this.grpSpeedConfig.SuspendLayout();
@@ -340,120 +340,120 @@
             0});
             this.numSlowPivotAcceleration.ValueChanged += new System.EventHandler(this.num_ValueChanged);
             // 
-            // numFastLineDecceleration
+            // numFastLineDeceleration
             // 
-            this.numFastLineDecceleration.Increment = new decimal(new int[] {
+            this.numFastLineDeceleration.Increment = new decimal(new int[] {
             100,
             0,
             0,
             0});
-            this.numFastLineDecceleration.Location = new System.Drawing.Point(240, 110);
-            this.numFastLineDecceleration.Maximum = new decimal(new int[] {
+            this.numFastLineDeceleration.Location = new System.Drawing.Point(240, 110);
+            this.numFastLineDeceleration.Maximum = new decimal(new int[] {
             10000,
             0,
             0,
             0});
-            this.numFastLineDecceleration.Name = "numFastLineDecceleration";
-            this.numFastLineDecceleration.Size = new System.Drawing.Size(58, 20);
-            this.numFastLineDecceleration.TabIndex = 16;
-            this.numFastLineDecceleration.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-            this.numFastLineDecceleration.Value = new decimal(new int[] {
+            this.numFastLineDeceleration.Name = "numFastLineDeceleration";
+            this.numFastLineDeceleration.Size = new System.Drawing.Size(58, 20);
+            this.numFastLineDeceleration.TabIndex = 16;
+            this.numFastLineDeceleration.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.numFastLineDeceleration.Value = new decimal(new int[] {
             1000,
             0,
             0,
             0});
-            this.numFastLineDecceleration.ValueChanged += new System.EventHandler(this.num_ValueChanged);
+            this.numFastLineDeceleration.ValueChanged += new System.EventHandler(this.num_ValueChanged);
             // 
-            // lblDeccelerationLine
+            // lblDecelerationLine
             // 
-            this.lblDeccelerationLine.AutoSize = true;
-            this.lblDeccelerationLine.Location = new System.Drawing.Point(41, 112);
-            this.lblDeccelerationLine.Name = "lblDeccelerationLine";
-            this.lblDeccelerationLine.Size = new System.Drawing.Size(103, 13);
-            this.lblDeccelerationLine.TabIndex = 17;
-            this.lblDeccelerationLine.Text = "Décceleration (m/s²)";
+            this.lblDecelerationLine.AutoSize = true;
+            this.lblDecelerationLine.Location = new System.Drawing.Point(41, 112);
+            this.lblDecelerationLine.Name = "lblDecelerationLine";
+            this.lblDecelerationLine.Size = new System.Drawing.Size(103, 13);
+            this.lblDecelerationLine.TabIndex = 17;
+            this.lblDecelerationLine.Text = "Déceleration (m/s²)";
             // 
-            // numSlowLineDecceleration
+            // numSlowLineDeceleration
             // 
-            this.numSlowLineDecceleration.Increment = new decimal(new int[] {
+            this.numSlowLineDeceleration.Increment = new decimal(new int[] {
             100,
             0,
             0,
             0});
-            this.numSlowLineDecceleration.Location = new System.Drawing.Point(166, 110);
-            this.numSlowLineDecceleration.Maximum = new decimal(new int[] {
+            this.numSlowLineDeceleration.Location = new System.Drawing.Point(166, 110);
+            this.numSlowLineDeceleration.Maximum = new decimal(new int[] {
             10000,
             0,
             0,
             0});
-            this.numSlowLineDecceleration.Name = "numSlowLineDecceleration";
-            this.numSlowLineDecceleration.Size = new System.Drawing.Size(58, 20);
-            this.numSlowLineDecceleration.TabIndex = 18;
-            this.numSlowLineDecceleration.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-            this.numSlowLineDecceleration.Value = new decimal(new int[] {
+            this.numSlowLineDeceleration.Name = "numSlowLineDeceleration";
+            this.numSlowLineDeceleration.Size = new System.Drawing.Size(58, 20);
+            this.numSlowLineDeceleration.TabIndex = 18;
+            this.numSlowLineDeceleration.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.numSlowLineDeceleration.Value = new decimal(new int[] {
             1000,
             0,
             0,
             0});
-            this.numSlowLineDecceleration.ValueChanged += new System.EventHandler(this.num_ValueChanged);
+            this.numSlowLineDeceleration.ValueChanged += new System.EventHandler(this.num_ValueChanged);
             // 
-            // numSlowPivotDecceleration
+            // numSlowPivotDeceleration
             // 
-            this.numSlowPivotDecceleration.Increment = new decimal(new int[] {
+            this.numSlowPivotDeceleration.Increment = new decimal(new int[] {
             100,
             0,
             0,
             0});
-            this.numSlowPivotDecceleration.Location = new System.Drawing.Point(166, 209);
-            this.numSlowPivotDecceleration.Maximum = new decimal(new int[] {
+            this.numSlowPivotDeceleration.Location = new System.Drawing.Point(166, 209);
+            this.numSlowPivotDeceleration.Maximum = new decimal(new int[] {
             10000,
             0,
             0,
             0});
-            this.numSlowPivotDecceleration.Name = "numSlowPivotDecceleration";
-            this.numSlowPivotDecceleration.Size = new System.Drawing.Size(58, 20);
-            this.numSlowPivotDecceleration.TabIndex = 21;
-            this.numSlowPivotDecceleration.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-            this.numSlowPivotDecceleration.Value = new decimal(new int[] {
+            this.numSlowPivotDeceleration.Name = "numSlowPivotDeceleration";
+            this.numSlowPivotDeceleration.Size = new System.Drawing.Size(58, 20);
+            this.numSlowPivotDeceleration.TabIndex = 21;
+            this.numSlowPivotDeceleration.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.numSlowPivotDeceleration.Value = new decimal(new int[] {
             1000,
             0,
             0,
             0});
-            this.numSlowPivotDecceleration.ValueChanged += new System.EventHandler(this.num_ValueChanged);
+            this.numSlowPivotDeceleration.ValueChanged += new System.EventHandler(this.num_ValueChanged);
             // 
-            // lblDeccelerationPivot
+            // lblDecelerationPivot
             // 
-            this.lblDeccelerationPivot.AutoSize = true;
-            this.lblDeccelerationPivot.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblDeccelerationPivot.Location = new System.Drawing.Point(41, 211);
-            this.lblDeccelerationPivot.Name = "lblDeccelerationPivot";
-            this.lblDeccelerationPivot.Size = new System.Drawing.Size(103, 13);
-            this.lblDeccelerationPivot.TabIndex = 20;
-            this.lblDeccelerationPivot.Text = "Décceleration (m/s²)";
+            this.lblDecelerationPivot.AutoSize = true;
+            this.lblDecelerationPivot.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblDecelerationPivot.Location = new System.Drawing.Point(41, 211);
+            this.lblDecelerationPivot.Name = "lblDecelerationPivot";
+            this.lblDecelerationPivot.Size = new System.Drawing.Size(103, 13);
+            this.lblDecelerationPivot.TabIndex = 20;
+            this.lblDecelerationPivot.Text = "Déceleration (m/s²)";
             // 
-            // numFastPivotDecceleration
+            // numFastPivotDeceleration
             // 
-            this.numFastPivotDecceleration.Increment = new decimal(new int[] {
+            this.numFastPivotDeceleration.Increment = new decimal(new int[] {
             100,
             0,
             0,
             0});
-            this.numFastPivotDecceleration.Location = new System.Drawing.Point(240, 209);
-            this.numFastPivotDecceleration.Maximum = new decimal(new int[] {
+            this.numFastPivotDeceleration.Location = new System.Drawing.Point(240, 209);
+            this.numFastPivotDeceleration.Maximum = new decimal(new int[] {
             10000,
             0,
             0,
             0});
-            this.numFastPivotDecceleration.Name = "numFastPivotDecceleration";
-            this.numFastPivotDecceleration.Size = new System.Drawing.Size(58, 20);
-            this.numFastPivotDecceleration.TabIndex = 19;
-            this.numFastPivotDecceleration.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-            this.numFastPivotDecceleration.Value = new decimal(new int[] {
+            this.numFastPivotDeceleration.Name = "numFastPivotDeceleration";
+            this.numFastPivotDeceleration.Size = new System.Drawing.Size(58, 20);
+            this.numFastPivotDeceleration.TabIndex = 19;
+            this.numFastPivotDeceleration.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.numFastPivotDeceleration.Value = new decimal(new int[] {
             1000,
             0,
             0,
             0});
-            this.numFastPivotDecceleration.ValueChanged += new System.EventHandler(this.num_ValueChanged);
+            this.numFastPivotDeceleration.ValueChanged += new System.EventHandler(this.num_ValueChanged);
             // 
             // picFast
             // 
@@ -482,22 +482,22 @@
             this.grpSpeedConfig.Controls.Add(this.numFastPivotSpeed);
             this.grpSpeedConfig.Controls.Add(this.lblSpeedLine);
             this.grpSpeedConfig.Controls.Add(this.numSlowLineSpeed);
-            this.grpSpeedConfig.Controls.Add(this.numSlowPivotDecceleration);
+            this.grpSpeedConfig.Controls.Add(this.numSlowPivotDeceleration);
             this.grpSpeedConfig.Controls.Add(this.numFastLineAcceleration);
             this.grpSpeedConfig.Controls.Add(this.lblFast);
             this.grpSpeedConfig.Controls.Add(this.numSlowLineAcceleration);
-            this.grpSpeedConfig.Controls.Add(this.lblDeccelerationPivot);
+            this.grpSpeedConfig.Controls.Add(this.lblDecelerationPivot);
             this.grpSpeedConfig.Controls.Add(this.numFastLineSpeed);
             this.grpSpeedConfig.Controls.Add(this.numSlowPivotSpeed);
-            this.grpSpeedConfig.Controls.Add(this.numFastPivotDecceleration);
+            this.grpSpeedConfig.Controls.Add(this.numFastPivotDeceleration);
             this.grpSpeedConfig.Controls.Add(this.lblSlow);
             this.grpSpeedConfig.Controls.Add(this.lblAccelerationLine);
             this.grpSpeedConfig.Controls.Add(this.numSlowPivotAcceleration);
-            this.grpSpeedConfig.Controls.Add(this.numSlowLineDecceleration);
+            this.grpSpeedConfig.Controls.Add(this.numSlowLineDeceleration);
             this.grpSpeedConfig.Controls.Add(this.lblAccelerationPivot);
             this.grpSpeedConfig.Controls.Add(this.lblPivot);
-            this.grpSpeedConfig.Controls.Add(this.numFastLineDecceleration);
-            this.grpSpeedConfig.Controls.Add(this.lblDeccelerationLine);
+            this.grpSpeedConfig.Controls.Add(this.numFastLineDeceleration);
+            this.grpSpeedConfig.Controls.Add(this.lblDecelerationLine);
             this.grpSpeedConfig.Controls.Add(this.lblSpeedPivot);
             this.grpSpeedConfig.Location = new System.Drawing.Point(3, 3);
             this.grpSpeedConfig.Name = "grpSpeedConfig";
@@ -522,10 +522,10 @@
             ((System.ComponentModel.ISupportInitialize)(this.numSlowLineAcceleration)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.numSlowPivotSpeed)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.numSlowPivotAcceleration)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numFastLineDecceleration)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numSlowLineDecceleration)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numSlowPivotDecceleration)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numFastPivotDecceleration)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numFastLineDeceleration)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numSlowLineDeceleration)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numSlowPivotDeceleration)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numFastPivotDeceleration)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.picFast)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.picSlow)).EndInit();
             this.grpSpeedConfig.ResumeLayout(false);
@@ -551,12 +551,12 @@
         private System.Windows.Forms.NumericUpDown numSlowLineAcceleration;
         private System.Windows.Forms.NumericUpDown numSlowPivotSpeed;
         private System.Windows.Forms.NumericUpDown numSlowPivotAcceleration;
-        private System.Windows.Forms.NumericUpDown numFastLineDecceleration;
-        private System.Windows.Forms.Label lblDeccelerationLine;
-        private System.Windows.Forms.NumericUpDown numSlowLineDecceleration;
-        private System.Windows.Forms.NumericUpDown numSlowPivotDecceleration;
-        private System.Windows.Forms.Label lblDeccelerationPivot;
-        private System.Windows.Forms.NumericUpDown numFastPivotDecceleration;
+        private System.Windows.Forms.NumericUpDown numFastLineDeceleration;
+        private System.Windows.Forms.Label lblDecelerationLine;
+        private System.Windows.Forms.NumericUpDown numSlowLineDeceleration;
+        private System.Windows.Forms.NumericUpDown numSlowPivotDeceleration;
+        private System.Windows.Forms.Label lblDecelerationPivot;
+        private System.Windows.Forms.NumericUpDown numFastPivotDeceleration;
         private System.Windows.Forms.PictureBox picFast;
         private System.Windows.Forms.PictureBox picSlow;
         private System.Windows.Forms.GroupBox grpSpeedConfig;

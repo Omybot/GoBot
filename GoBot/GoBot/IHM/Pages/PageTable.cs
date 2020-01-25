@@ -1,18 +1,18 @@
-﻿using Geometry;
-using Geometry.Shapes;
-using GoBot.Devices;
-using GoBot.GameElements;
-using GoBot.Strategies;
-using GoBot.Movements;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Threading;
 using System.Windows.Forms;
+
+using Geometry;
+using Geometry.Shapes;
 using GoBot.Threading;
 using GoBot.BoardContext;
+using GoBot.GameElements;
+using GoBot.Strategies;
+using GoBot.Movements;
 
-namespace GoBot.IHM
+namespace GoBot.IHM.Pages
 {
 
     public partial class PageTable : UserControl

@@ -1,4 +1,4 @@
-﻿namespace GoBot.IHM
+﻿namespace GoBot.IHM.Pages
 {
     partial class PageTable
     {

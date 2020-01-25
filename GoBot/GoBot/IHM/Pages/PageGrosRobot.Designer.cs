@@ -1,4 +1,4 @@
-﻿namespace GoBot.IHM
+﻿namespace GoBot.IHM.Pages
 {
     partial class PageGrosRobot
     {
@@ -29,13 +29,14 @@
         private void InitializeComponent()
         {
             this.flowLayoutPanel1 = new System.Windows.Forms.FlowLayoutPanel();
+            this.panelDisplacement = new GoBot.IHM.PanelDisplacement();
             this.flowLayoutPanel2 = new System.Windows.Forms.FlowLayoutPanel();
-            this.flowLayoutPanel3 = new System.Windows.Forms.FlowLayoutPanel();
             this.pnlPositionables = new GoBot.IHM.PanelPositionables();
             this.panelSpeedConfig1 = new GoBot.IHM.PanelSpeedConfig();
-            this.panelDeplacement = new GoBot.IHM.PanelDeplacement();
+            this.flowLayoutPanel3 = new System.Windows.Forms.FlowLayoutPanel();
             this.panelActuatorsOnOff1 = new GoBot.IHM.PanelActuatorsOnOff();
             this.panelSensorsOnOff1 = new GoBot.IHM.PanelSensorsOnOff();
+            this.panelCapteurs1 = new GoBot.IHM.PanelCapteurs();
             this.flowLayoutPanel1.SuspendLayout();
             this.flowLayoutPanel2.SuspendLayout();
             this.flowLayoutPanel3.SuspendLayout();
@@ -45,11 +46,21 @@
             // 
             this.flowLayoutPanel1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left)));
-            this.flowLayoutPanel1.Controls.Add(this.panelDeplacement);
+            this.flowLayoutPanel1.Controls.Add(this.panelDisplacement);
             this.flowLayoutPanel1.Location = new System.Drawing.Point(3, 3);
             this.flowLayoutPanel1.Name = "flowLayoutPanel1";
             this.flowLayoutPanel1.Size = new System.Drawing.Size(343, 556);
             this.flowLayoutPanel1.TabIndex = 90;
+            // 
+            // panelDisplacement
+            // 
+            this.panelDisplacement.AutoSize = true;
+            this.panelDisplacement.BackColor = System.Drawing.Color.Transparent;
+            this.panelDisplacement.Location = new System.Drawing.Point(3, 3);
+            this.panelDisplacement.Name = "panelDisplacement";
+            this.panelDisplacement.Robot = null;
+            this.panelDisplacement.Size = new System.Drawing.Size(326, 449);
+            this.panelDisplacement.TabIndex = 72;
             // 
             // flowLayoutPanel2
             // 
@@ -57,21 +68,11 @@
             | System.Windows.Forms.AnchorStyles.Left)));
             this.flowLayoutPanel2.Controls.Add(this.pnlPositionables);
             this.flowLayoutPanel2.Controls.Add(this.panelSpeedConfig1);
+            this.flowLayoutPanel2.Controls.Add(this.panelSensorsOnOff1);
             this.flowLayoutPanel2.Location = new System.Drawing.Point(352, 3);
             this.flowLayoutPanel2.Name = "flowLayoutPanel2";
             this.flowLayoutPanel2.Size = new System.Drawing.Size(343, 562);
             this.flowLayoutPanel2.TabIndex = 91;
-            // 
-            // flowLayoutPanel3
-            // 
-            this.flowLayoutPanel3.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left)));
-            this.flowLayoutPanel3.Controls.Add(this.panelActuatorsOnOff1);
-            this.flowLayoutPanel3.Controls.Add(this.panelSensorsOnOff1);
-            this.flowLayoutPanel3.Location = new System.Drawing.Point(699, 3);
-            this.flowLayoutPanel3.Name = "flowLayoutPanel3";
-            this.flowLayoutPanel3.Size = new System.Drawing.Size(343, 562);
-            this.flowLayoutPanel3.TabIndex = 92;
             // 
             // pnlPositionables
             // 
@@ -89,15 +90,16 @@
             this.panelSpeedConfig1.Size = new System.Drawing.Size(330, 245);
             this.panelSpeedConfig1.TabIndex = 119;
             // 
-            // panelDeplacement
+            // flowLayoutPanel3
             // 
-            this.panelDeplacement.AutoSize = true;
-            this.panelDeplacement.BackColor = System.Drawing.Color.Transparent;
-            this.panelDeplacement.Location = new System.Drawing.Point(3, 3);
-            this.panelDeplacement.Name = "panelDeplacement";
-            this.panelDeplacement.Robot = null;
-            this.panelDeplacement.Size = new System.Drawing.Size(337, 449);
-            this.panelDeplacement.TabIndex = 72;
+            this.flowLayoutPanel3.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left)));
+            this.flowLayoutPanel3.Controls.Add(this.panelActuatorsOnOff1);
+            this.flowLayoutPanel3.Controls.Add(this.panelCapteurs1);
+            this.flowLayoutPanel3.Location = new System.Drawing.Point(699, 3);
+            this.flowLayoutPanel3.Name = "flowLayoutPanel3";
+            this.flowLayoutPanel3.Size = new System.Drawing.Size(343, 562);
+            this.flowLayoutPanel3.TabIndex = 92;
             // 
             // panelActuatorsOnOff1
             // 
@@ -110,10 +112,17 @@
             // panelSensorsOnOff1
             // 
             this.panelSensorsOnOff1.BackColor = System.Drawing.Color.Transparent;
-            this.panelSensorsOnOff1.Location = new System.Drawing.Point(3, 119);
+            this.panelSensorsOnOff1.Location = new System.Drawing.Point(3, 408);
             this.panelSensorsOnOff1.Name = "panelSensorsOnOff1";
             this.panelSensorsOnOff1.Size = new System.Drawing.Size(330, 110);
             this.panelSensorsOnOff1.TabIndex = 1;
+            // 
+            // panelCapteurs1
+            // 
+            this.panelCapteurs1.Location = new System.Drawing.Point(3, 119);
+            this.panelCapteurs1.Name = "panelCapteurs1";
+            this.panelCapteurs1.Size = new System.Drawing.Size(330, 353);
+            this.panelCapteurs1.TabIndex = 1;
             // 
             // PageGrosRobot
             // 
@@ -135,12 +144,13 @@
         #endregion
 
         private System.Windows.Forms.FlowLayoutPanel flowLayoutPanel1;
-        private PanelDeplacement panelDeplacement;
+        private PanelDisplacement panelDisplacement;
         private PanelPositionables pnlPositionables;
         private System.Windows.Forms.FlowLayoutPanel flowLayoutPanel2;
         private System.Windows.Forms.FlowLayoutPanel flowLayoutPanel3;
         private PanelSpeedConfig panelSpeedConfig1;
         private PanelActuatorsOnOff panelActuatorsOnOff1;
         private PanelSensorsOnOff panelSensorsOnOff1;
+        private PanelCapteurs panelCapteurs1;
     }
 }

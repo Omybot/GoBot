@@ -17,19 +17,27 @@ namespace Composants
         /// Détermine la couleur actuellement affichée
         /// </summary>
         /// <param name="color">Couleur affichée</param>
-        public void SetColor(Color color)
+        public void SetColor(ColorPlus color)
         {
             this.InvokeAuto(() =>
             {
-                lblR.Text = color.R.ToString();
-                lblG.Text = color.G.ToString();
-                lblB.Text = color.B.ToString();
+                lblR.Text = color.Red.ToString();
+                lblG.Text = color.Green.ToString();
+                lblB.Text = color.Blue.ToString();
+
+                lblH.Text = ((int)(color.Hue)).ToString();
+                lblS.Text = ((int)(color.Saturation * 255)).ToString();
+                lblL.Text = ((int)(color.Lightness * 255)).ToString();
 
                 picColor.Image = MakeColorZone(picColor.Size, color);
 
-                picR.Image = MakeColorBar(picR.Size, Color.Red, color.R);
-                picG.Image = MakeColorBar(picG.Size, Color.FromArgb(44, 208, 0), color.G);
-                picB.Image = MakeColorBar(picB.Size, Color.FromArgb(10, 104, 199), color.B);
+                picR.Image = MakeColorBar(picR.Size, Color.Red, color.Red);
+                picG.Image = MakeColorBar(picG.Size, Color.FromArgb(44, 208, 0), color.Green);
+                picB.Image = MakeColorBar(picB.Size, Color.FromArgb(10, 104, 199), color.Blue);
+
+                picH.Image = MakeColorBarRainbow(picR.Size, color.Hue);
+                picS.Image = MakeColorBar2(picG.Size, ColorPlus.FromHsl(color.Hue, 0, 0.5), ColorPlus.FromHsl(color.Hue, 1, 0.5), (int)(color.Saturation * 255));
+                picL.Image = MakeColorBar2(picB.Size, ColorPlus.FromHsl(color.Hue, 1, 0), ColorPlus.FromHsl(color.Hue, 1, 1), (int)(color.Lightness * 255));
             });
         }
 
@@ -67,6 +75,66 @@ namespace Composants
 
             g.FillPath(brush, path);
             g.DrawPath(Pens.Black, path);
+
+            brush.Dispose();
+
+            return bmp;
+        }
+
+        private Image MakeColorBar2(Size sz, ColorPlus colorBottom, ColorPlus colorTop, float value)
+        {
+            Bitmap bmp = new Bitmap(sz.Width, sz.Height);
+            Graphics g = Graphics.FromImage(bmp);
+            g.SmoothingMode = SmoothingMode.AntiAlias;
+
+            LinearGradientBrush brush = new LinearGradientBrush(new Point(0, bmp.Height), new Point(0, 0), colorBottom, colorTop);
+
+            int margin = 2;
+            int height = (int)(sz.Height - margin * 2);
+            Rectangle rect = new Rectangle(margin, sz.Height - margin - height, sz.Width - margin * 2, height);
+
+            GraphicsPath path = CreateMixRect(rect, new List<int> { Math.Min(2, height), Math.Min(2, height), Math.Min(2, height), Math.Min(2, height) });
+
+            g.FillPath(brush, path);
+            g.DrawPath(Pens.Black, path);
+
+            height = (int)((sz.Height - margin * 2 - 2) * (1 - value / 255.0)) + 2;
+            g.DrawLine(Pens.Black, 0, height - 1, bmp.Width, height - 1);
+            g.DrawLine(Pens.White, 0, height, bmp.Width, height);
+            g.DrawLine(Pens.Black, 0, height + 1, bmp.Width, height + 1);
+
+            brush.Dispose();
+
+            return bmp;
+        }
+
+        private Image MakeColorBarRainbow(Size sz, double hue)
+        {
+            Bitmap bmp = new Bitmap(sz.Width, sz.Height);
+            Graphics g = Graphics.FromImage(bmp);
+            g.SmoothingMode = SmoothingMode.AntiAlias;
+
+            LinearGradientBrush brush = new LinearGradientBrush(new Point(0, bmp.Height), new Point(0, 0), Color.White, Color.Black);
+
+            ColorBlend colors = new ColorBlend(7);
+            colors.Colors = new Color[] { Color.Red, Color.Yellow, Color.Lime, Color.Cyan, Color.Blue, Color.Magenta, Color.Red };
+            colors.Positions = new float[] { 0/6f, 1 / 6f, 2 / 6f, 3 / 6f, 4 / 6f, 5 / 6f, 6 / 6f};
+
+            brush.InterpolationColors = colors;
+
+            int margin = 2;
+            int height = (int)(sz.Height - margin * 2);
+            Rectangle rect = new Rectangle(margin, sz.Height - margin - height, sz.Width - margin * 2, height);
+
+            GraphicsPath path = CreateMixRect(rect, new List<int> { Math.Min(2, height), Math.Min(2, height), Math.Min(2, height), Math.Min(2, height) });
+
+            g.FillPath(brush, path);
+            g.DrawPath(Pens.Black, path);
+
+            height = (int)((sz.Height - margin * 2 - 2) * (1-hue / 360)) + 2;
+            g.DrawLine(Pens.Black, 0, height - 1, bmp.Width, height - 1);
+            g.DrawLine(Pens.White, 0, height, bmp.Width, height);
+            g.DrawLine(Pens.Black, 0, height + 1, bmp.Width, height + 1);
 
             brush.Dispose();
 

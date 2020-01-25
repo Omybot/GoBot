@@ -1,17 +1,13 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
 using System.Drawing;
-using System.Data;
 using System.Linq;
-using System.Text;
 using System.Windows.Forms;
-using GoBot.Communications;
 using System.Net;
-using System.Threading;
+
+using GoBot.Communications;
 using GoBot.Communications.UDP;
 
-namespace GoBot.IHM
+namespace GoBot.IHM.Pages
 {
     public partial class PageEnvoiUdp : UserControl
     {

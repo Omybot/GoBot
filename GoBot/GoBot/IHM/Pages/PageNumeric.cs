@@ -1,17 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Drawing;
-using System.Data;
-using System.Linq;
-using System.Text;
 using System.Windows.Forms;
-using System.Threading;
-using System.Timers;
-using GoBot.Communications;
+
 using GoBot.Threading;
 
-namespace GoBot.IHM
+namespace GoBot.IHM.Pages
 {
     public partial class PanelBoardNumeric : UserControl
     {
