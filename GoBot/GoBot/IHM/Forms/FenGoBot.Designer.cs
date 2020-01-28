@@ -86,7 +86,6 @@ namespace GoBot
             this.panelAnalogiqueMove = new GoBot.IHM.PanelAnalogique();
             this.pnlNumericMove = new GoBot.IHM.Pages.PanelBoardNumeric();
             this.potarControl1 = new GoBot.IHM.PotarControl();
-            this.panelCapteurs1 = new GoBot.IHM.PanelCapteurs();
             this.panelGenerics1 = new GoBot.IHM.PanelGenerics();
             this.pageLidar = new GoBot.IHM.Pages.PageLidar();
             this.pagePepperl1 = new GoBot.IHM.Pages.PagePepperl();
@@ -716,13 +715,6 @@ namespace GoBot
             this.potarControl1.Size = new System.Drawing.Size(385, 98);
             this.potarControl1.TabIndex = 5;
             // 
-            // panelCapteurs1
-            // 
-            this.panelCapteurs1.Location = new System.Drawing.Point(6, 19);
-            this.panelCapteurs1.Name = "panelCapteurs1";
-            this.panelCapteurs1.Size = new System.Drawing.Size(261, 172);
-            this.panelCapteurs1.TabIndex = 1;
-            // 
             // panelGenerics1
             // 
             this.panelGenerics1.AutoSize = true;
@@ -898,7 +890,6 @@ namespace GoBot
         private System.Windows.Forms.TabControl tabControl6;
         private PanelAnalogique panelAnalogiqueIO;
         private PanelAnalogique panelAnalogiqueMove;
-        private PanelCapteurs panelCapteurs1;
         private PanelGenerics panelGenerics1;
         private PotarControl potarControl1;
         private IHM.Pages.PageLidar pageLidar;

@@ -36,7 +36,7 @@
             this.flowLayoutPanel3 = new System.Windows.Forms.FlowLayoutPanel();
             this.panelActuatorsOnOff1 = new GoBot.IHM.PanelActuatorsOnOff();
             this.panelSensorsOnOff1 = new GoBot.IHM.PanelSensorsOnOff();
-            this.panelCapteurs1 = new GoBot.IHM.PanelCapteurs();
+            this.panelSensorsColor = new GoBot.IHM.PanelSensorsColor();
             this.flowLayoutPanel1.SuspendLayout();
             this.flowLayoutPanel2.SuspendLayout();
             this.flowLayoutPanel3.SuspendLayout();
@@ -95,7 +95,7 @@
             this.flowLayoutPanel3.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left)));
             this.flowLayoutPanel3.Controls.Add(this.panelActuatorsOnOff1);
-            this.flowLayoutPanel3.Controls.Add(this.panelCapteurs1);
+            this.flowLayoutPanel3.Controls.Add(this.panelSensorsColor);
             this.flowLayoutPanel3.Location = new System.Drawing.Point(699, 3);
             this.flowLayoutPanel3.Name = "flowLayoutPanel3";
             this.flowLayoutPanel3.Size = new System.Drawing.Size(343, 562);
@@ -117,12 +117,12 @@
             this.panelSensorsOnOff1.Size = new System.Drawing.Size(330, 110);
             this.panelSensorsOnOff1.TabIndex = 1;
             // 
-            // panelCapteurs1
+            // panelSensorsColor
             // 
-            this.panelCapteurs1.Location = new System.Drawing.Point(3, 119);
-            this.panelCapteurs1.Name = "panelCapteurs1";
-            this.panelCapteurs1.Size = new System.Drawing.Size(330, 353);
-            this.panelCapteurs1.TabIndex = 1;
+            this.panelSensorsColor.Location = new System.Drawing.Point(3, 119);
+            this.panelSensorsColor.Name = "panelSensorsColor";
+            this.panelSensorsColor.Size = new System.Drawing.Size(330, 353);
+            this.panelSensorsColor.TabIndex = 1;
             // 
             // PageGrosRobot
             // 
@@ -151,6 +151,6 @@
         private PanelSpeedConfig panelSpeedConfig1;
         private PanelActuatorsOnOff panelActuatorsOnOff1;
         private PanelSensorsOnOff panelSensorsOnOff1;
-        private PanelCapteurs panelCapteurs1;
+        private PanelSensorsColor panelSensorsColor;
     }
 }

@@ -1,6 +1,6 @@
 ﻿namespace GoBot.IHM
 {
-    partial class PanelCapteurs
+    partial class PanelSensorsColor
     {
         /// <summary> 
         /// Variable nécessaire au concepteur.
@@ -34,8 +34,8 @@
             this.picColorRight = new Composants.ColorDisplay();
             this.lblRightColor = new System.Windows.Forms.Label();
             this.btnColorRight = new Composants.SwitchButton();
-            this.groupBox1 = new System.Windows.Forms.GroupBox();
-            this.groupBox1.SuspendLayout();
+            this.grpSensors = new System.Windows.Forms.GroupBox();
+            this.grpSensors.SuspendLayout();
             this.SuspendLayout();
             // 
             // lblLeftColor
@@ -98,31 +98,31 @@
             this.btnColorRight.Value = false;
             this.btnColorRight.ValueChanged += new Composants.SwitchButton.ValueChangedDelegate(this.btnColorRight_ValueChanged);
             // 
-            // groupBox1
+            // grpSensors
             // 
-            this.groupBox1.Controls.Add(this.lblLeftColor);
-            this.groupBox1.Controls.Add(this.picColorRight);
-            this.groupBox1.Controls.Add(this.btnColorLeft);
-            this.groupBox1.Controls.Add(this.lblRightColor);
-            this.groupBox1.Controls.Add(this.picColorLeft);
-            this.groupBox1.Controls.Add(this.btnColorRight);
-            this.groupBox1.Location = new System.Drawing.Point(3, 3);
-            this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(320, 347);
-            this.groupBox1.TabIndex = 7;
-            this.groupBox1.TabStop = false;
-            this.groupBox1.Text = "groupBox1";
+            this.grpSensors.Controls.Add(this.lblLeftColor);
+            this.grpSensors.Controls.Add(this.picColorRight);
+            this.grpSensors.Controls.Add(this.btnColorLeft);
+            this.grpSensors.Controls.Add(this.lblRightColor);
+            this.grpSensors.Controls.Add(this.picColorLeft);
+            this.grpSensors.Controls.Add(this.btnColorRight);
+            this.grpSensors.Location = new System.Drawing.Point(3, 3);
+            this.grpSensors.Name = "grpSensors";
+            this.grpSensors.Size = new System.Drawing.Size(320, 347);
+            this.grpSensors.TabIndex = 7;
+            this.grpSensors.TabStop = false;
+            this.grpSensors.Text = "Capteurs couleur";
             // 
-            // PanelCapteurs
+            // PanelSensorsColor
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.Controls.Add(this.groupBox1);
-            this.Name = "PanelCapteurs";
+            this.Controls.Add(this.grpSensors);
+            this.Name = "PanelSensorsColor";
             this.Size = new System.Drawing.Size(330, 353);
-            this.Load += new System.EventHandler(this.PanelCapteurs_Load);
-            this.groupBox1.ResumeLayout(false);
-            this.groupBox1.PerformLayout();
+            this.Load += new System.EventHandler(this.PanelSensorsColor_Load);
+            this.grpSensors.ResumeLayout(false);
+            this.grpSensors.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -135,6 +135,6 @@
         private Composants.ColorDisplay picColorRight;
         private System.Windows.Forms.Label lblRightColor;
         private Composants.SwitchButton btnColorRight;
-        private System.Windows.Forms.GroupBox groupBox1;
+        private System.Windows.Forms.GroupBox grpSensors;
     }
 }

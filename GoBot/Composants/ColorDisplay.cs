@@ -114,24 +114,26 @@ namespace Composants
             Graphics g = Graphics.FromImage(bmp);
             g.SmoothingMode = SmoothingMode.AntiAlias;
 
-            LinearGradientBrush brush = new LinearGradientBrush(new Point(0, bmp.Height), new Point(0, 0), Color.White, Color.Black);
+            int margin = 2;
+            int totalHeight = (int)(sz.Height - margin * 2);
+            Rectangle rect = new Rectangle(margin, sz.Height - margin - totalHeight, sz.Width - margin * 2, totalHeight);
+
+            GraphicsPath path = CreateMixRect(rect, new List<int> { Math.Min(2, totalHeight), Math.Min(2, totalHeight), Math.Min(2, totalHeight), Math.Min(2, totalHeight) });
+
+            int height = (int)((sz.Height - margin * 2 - 2) * (1 - hue / 360)) + 2;
+            LinearGradientBrush brush = new LinearGradientBrush(new Point(0, height + totalHeight/2), new Point(0, height + totalHeight + totalHeight / 2), Color.White, Color.Black);
 
             ColorBlend colors = new ColorBlend(7);
             colors.Colors = new Color[] { Color.Red, Color.Yellow, Color.Lime, Color.Cyan, Color.Blue, Color.Magenta, Color.Red };
-            colors.Positions = new float[] { 0/6f, 1 / 6f, 2 / 6f, 3 / 6f, 4 / 6f, 5 / 6f, 6 / 6f};
+            colors.Positions = new float[] { 0 / 6f, 1 / 6f, 2 / 6f, 3 / 6f, 4 / 6f, 5 / 6f, 6 / 6f };
 
             brush.InterpolationColors = colors;
-
-            int margin = 2;
-            int height = (int)(sz.Height - margin * 2);
-            Rectangle rect = new Rectangle(margin, sz.Height - margin - height, sz.Width - margin * 2, height);
-
-            GraphicsPath path = CreateMixRect(rect, new List<int> { Math.Min(2, height), Math.Min(2, height), Math.Min(2, height), Math.Min(2, height) });
 
             g.FillPath(brush, path);
             g.DrawPath(Pens.Black, path);
 
-            height = (int)((sz.Height - margin * 2 - 2) * (1-hue / 360)) + 2;
+            height = (int)(sz.Height /2);
+
             g.DrawLine(Pens.Black, 0, height - 1, bmp.Width, height - 1);
             g.DrawLine(Pens.White, 0, height, bmp.Width, height);
             g.DrawLine(Pens.Black, 0, height + 1, bmp.Width, height + 1);

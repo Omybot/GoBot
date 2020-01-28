@@ -6,16 +6,16 @@ using GoBot.Threading;
 
 namespace GoBot.IHM
 {
-    public partial class PanelCapteurs : UserControl
+    public partial class PanelSensorsColor : UserControl
     {
         ThreadLink _linkColorLeft, _linkColorRight;
 
-        public PanelCapteurs()
+        public PanelSensorsColor()
         {
             InitializeComponent();
         }
 
-        private void PanelCapteurs_Load(object sender, EventArgs e)
+        private void PanelSensorsColor_Load(object sender, EventArgs e)
         {
             picColorLeft.SetColor(Color.Red);
             picColorRight.SetColor(Color.HotPink);

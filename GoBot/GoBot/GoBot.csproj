@@ -241,11 +241,11 @@
     <Compile Include="IHM\Panels\PanelAnalogique.Designer.cs">
       <DependentUpon>PanelAnalogique.cs</DependentUpon>
     </Compile>
-    <Compile Include="IHM\Panels\PanelCapteurs.cs">
+    <Compile Include="IHM\Panels\PanelSensorsColor.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="IHM\Panels\PanelCapteurs.Designer.cs">
-      <DependentUpon>PanelCapteurs.cs</DependentUpon>
+    <Compile Include="IHM\Panels\PanelSensorsColor.Designer.cs">
+      <DependentUpon>PanelSensorsColor.cs</DependentUpon>
     </Compile>
     <Compile Include="IHM\Panels\PanelSpeedConfig.cs">
       <SubType>UserControl</SubType>
@@ -436,8 +436,8 @@
     <EmbeddedResource Include="IHM\Panels\PanelAnalogique.resx">
       <DependentUpon>PanelAnalogique.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="IHM\Panels\PanelCapteurs.resx">
-      <DependentUpon>PanelCapteurs.cs</DependentUpon>
+    <EmbeddedResource Include="IHM\Panels\PanelSensorsColor.resx">
+      <DependentUpon>PanelSensorsColor.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="IHM\Panels\PanelSpeedConfig.resx">
       <DependentUpon>PanelSpeedConfig.cs</DependentUpon>
