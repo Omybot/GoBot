@@ -1,10 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
 using System.Drawing;
 using System.Data;
 using System.Linq;
-using System.Text;
 using System.Windows.Forms;
 using System.Reflection;
 
@@ -57,7 +54,7 @@ namespace GoBot.IHM
 
         private void PanelActionneurGeneric_Load(object sender, EventArgs e)
         {
-            BorderStyle = System.Windows.Forms.BorderStyle.None;
+            BorderStyle = BorderStyle.None;
         }
     }
 }

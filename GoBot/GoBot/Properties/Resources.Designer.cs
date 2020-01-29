@@ -669,13 +669,51 @@ namespace GoBot.Properties {
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
-        
+
         /// <summary>
         ///   Recherche une ressource localisée de type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap Windows16 {
-            get {
+        internal static System.Drawing.Bitmap Windows16
+        {
+            get
+            {
                 object obj = ResourceManager.GetObject("Windows16", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+
+        /// <summary>
+        ///   Recherche une ressource localisée de type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap BigArrow
+        {
+            get
+            {
+                object obj = ResourceManager.GetObject("BigArrow", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+
+        /// <summary>
+        ///   Recherche une ressource localisée de type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap BigArrowUp
+        {
+            get
+            {
+                object obj = ResourceManager.GetObject("BigArrowUp", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+
+        /// <summary>
+        ///   Recherche une ressource localisée de type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap BigArrowDown
+        {
+            get
+            {
+                object obj = ResourceManager.GetObject("BigArrowDown", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

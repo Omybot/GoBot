@@ -144,6 +144,12 @@
     <Compile Include="IHM\Pages\PageLogThreads.Designer.cs">
       <DependentUpon>PageLogThreads.cs</DependentUpon>
     </Compile>
+    <Compile Include="IHM\Pages\PageStorage.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="IHM\Pages\PageStorage.Designer.cs">
+      <DependentUpon>PageStorage.cs</DependentUpon>
+    </Compile>
     <Compile Include="IHM\Panels\PanelServoCan.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -151,6 +157,12 @@
       <DependentUpon>PanelServoCan.cs</DependentUpon>
     </Compile>
     <Compile Include="IHM\Forms\SplashScreen.cs" />
+    <Compile Include="IHM\Panels\PanelStorage.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="IHM\Panels\PanelStorage.Designer.cs">
+      <DependentUpon>PanelStorage.cs</DependentUpon>
+    </Compile>
     <Compile Include="NameFinder.cs" />
     <Compile Include="Actions\Asservissement\ActionAccelerationLigne.cs" />
     <Compile Include="Actions\Asservissement\ActionVitesseLigne.cs" />
@@ -412,6 +424,9 @@
     <EmbeddedResource Include="IHM\Pages\PageServomotors.resx">
       <DependentUpon>PageServomotors.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="IHM\Pages\PageStorage.resx">
+      <DependentUpon>PageStorage.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="IHM\Panels\PanelActionneurGeneric.resx">
       <DependentUpon>PanelActionneurGeneric.cs</DependentUpon>
     </EmbeddedResource>
@@ -498,6 +513,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="IHM\Pages\PageTable.resx">
       <DependentUpon>PageTable.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="IHM\Panels\PanelStorage.resx">
+      <DependentUpon>PanelStorage.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="IHM\Panels\PotarControl.resx">
       <DependentUpon>PotarControl.cs</DependentUpon>
@@ -607,6 +625,9 @@
     <None Include="Images\ValidNok96.png" />
     <None Include="Images\ValidOk48.png" />
     <None Include="Images\ValidOk96.png" />
+    <None Include="Images\BigArrow.png" />
+    <None Include="Images\BigArrowUp.png" />
+    <None Include="Images\BigArrowDown.png" />
     <Content Include="robot.ico" />
   </ItemGroup>
   <ItemGroup>

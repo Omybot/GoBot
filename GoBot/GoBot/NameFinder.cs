@@ -181,21 +181,21 @@ namespace GoBot
                     return "alimentation capteur couleur bouée gauche";
                 case ActuatorOnOffID.PowerSensorColorBuoyRight:
                     return "alimentation capteur couleur bouée droite";
-                case ActuatorOnOffID.MakeVacuumBackLeft:
+                case ActuatorOnOffID.MakeVacuumLeftBack:
                     return "aspiration arrière gauche";
-                case ActuatorOnOffID.MakeVacuumBackRight:
+                case ActuatorOnOffID.MakeVacuumRightBack:
                     return "aspiration arrière droite";
-                case ActuatorOnOffID.MakeVacuumFrontLeft:
+                case ActuatorOnOffID.MakeVacuumLeftFront:
                     return "aspiration avant gauche";
-                case ActuatorOnOffID.MakeVacuumFrontRight:
+                case ActuatorOnOffID.MakeVacuumRightFront:
                     return "aspiration avant droite";
-                case ActuatorOnOffID.OpenVacuumBackLeft:
+                case ActuatorOnOffID.OpenVacuumLeftBack:
                     return "electrovanne arrière gauche";
-                case ActuatorOnOffID.OpenVacuumBackRight:
+                case ActuatorOnOffID.OpenVacuumRightBack:
                     return "electrovanne arrière droite";
-                case ActuatorOnOffID.OpenVacuumFrontLeft:
+                case ActuatorOnOffID.OpenVacuumLeftFront:
                     return "electrovanne avant gauche";
-                case ActuatorOnOffID.OpenVacuumFrontRight:
+                case ActuatorOnOffID.OpenVacuumRightFront:
                     return "electrovanne avant droite";
                 default:
                     return actuator.ToString();

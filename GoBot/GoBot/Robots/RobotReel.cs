@@ -68,15 +68,15 @@ namespace GoBot
 
             _boardActuatorOnOff = new Dictionary<ActuatorOnOffID, Board>();
             _boardActuatorOnOff.Add(ActuatorOnOffID.PowerSensorColorBuoyLeft, Board.RecMove);
-            _boardActuatorOnOff.Add(ActuatorOnOffID.MakeVacuumBackLeft, Board.RecMove);
-            _boardActuatorOnOff.Add(ActuatorOnOffID.MakeVacuumFrontLeft, Board.RecMove);
-            _boardActuatorOnOff.Add(ActuatorOnOffID.OpenVacuumBackLeft, Board.RecMove);
-            _boardActuatorOnOff.Add(ActuatorOnOffID.OpenVacuumFrontLeft, Board.RecMove);
+            _boardActuatorOnOff.Add(ActuatorOnOffID.MakeVacuumLeftBack, Board.RecMove);
+            _boardActuatorOnOff.Add(ActuatorOnOffID.MakeVacuumLeftFront, Board.RecMove);
+            _boardActuatorOnOff.Add(ActuatorOnOffID.OpenVacuumLeftBack, Board.RecMove);
+            _boardActuatorOnOff.Add(ActuatorOnOffID.OpenVacuumLeftFront, Board.RecMove);
             _boardActuatorOnOff.Add(ActuatorOnOffID.PowerSensorColorBuoyRight, Board.RecIO);
-            _boardActuatorOnOff.Add(ActuatorOnOffID.MakeVacuumBackRight, Board.RecIO);
-            _boardActuatorOnOff.Add(ActuatorOnOffID.MakeVacuumFrontRight, Board.RecIO);
-            _boardActuatorOnOff.Add(ActuatorOnOffID.OpenVacuumBackRight, Board.RecIO);
-            _boardActuatorOnOff.Add(ActuatorOnOffID.OpenVacuumFrontRight, Board.RecIO);
+            _boardActuatorOnOff.Add(ActuatorOnOffID.MakeVacuumRightBack, Board.RecIO);
+            _boardActuatorOnOff.Add(ActuatorOnOffID.MakeVacuumRightFront, Board.RecIO);
+            _boardActuatorOnOff.Add(ActuatorOnOffID.OpenVacuumRightBack, Board.RecIO);
+            _boardActuatorOnOff.Add(ActuatorOnOffID.OpenVacuumRightFront, Board.RecIO);
 
             SpeedConfig.ParamChange += SpeedConfig_ParamChange;
         }

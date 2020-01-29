@@ -121,6 +121,9 @@
   <data name="ReglagePivot" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Images\ReglagePivot.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="ValidNok48" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Images\ValidNok48.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
   <data name="Close16" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Images\Close16.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
@@ -151,8 +154,8 @@
   <data name="ConnectionNok" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Images\ConnectionNok.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="TurnRigth16" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Images\TurnRigth16.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="BigArrow" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Images\BigArrow.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="PathFront16" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Images\PathFront16.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
@@ -162,6 +165,9 @@
   </data>
   <data name="Stop16" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Images\Stop16.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="TurnRigth16" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Images\TurnRigth16.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="Stop" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Images\Stop.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
@@ -178,11 +184,14 @@
   <data name="PumpDisable16" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Images\PumpDisable16.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="UpGrey" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Images\UpGrey.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="BigArrowUp" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Images\BigArrowUp.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="GlassStart48" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Images\GlassStart48.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="ValidOk96" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Images\ValidOk96.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="ConnectionOk" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Images\ConnectionOk.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
@@ -208,11 +217,17 @@
   <data name="UncheckAll16" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Images\UncheckAll16.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="VerticalLock16" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Images\VerticalLock16.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
   <data name="Rabbit" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Images\Rabbit.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="Play16" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Images\Play16.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="UpGrey" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Images\UpGrey.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="ValidOk48" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Images\ValidOk48.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="Turtle" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Images\Turtle.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
@@ -268,8 +283,8 @@
   <data name="PathCenter16" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Images\PathCenter16.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="VerticalLock16" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Images\VerticalLock16.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="Play16" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Images\Play16.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="DownGreen16" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Images\DownGreen16.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
@@ -277,16 +292,10 @@
   <data name="UpGreen16" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Images\UpGreen16.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="ValidNok48" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Images\ValidNok48.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
   <data name="ValidNok96" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Images\ValidNok96.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="ValidOk48" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Images\ValidOk48.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="ValidOk96" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Images\ValidOk96.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="BigArrowDown" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Images\BigArrowDown.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
 </root>

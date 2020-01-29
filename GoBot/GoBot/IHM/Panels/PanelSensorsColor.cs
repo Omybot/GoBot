@@ -17,8 +17,8 @@ namespace GoBot.IHM
 
         private void PanelSensorsColor_Load(object sender, EventArgs e)
         {
-            picColorLeft.SetColor(Color.Red);
-            picColorRight.SetColor(Color.HotPink);
+            picColorLeft.SetColor(Color.DarkRed);
+            picColorRight.SetColor(Color.DarkRed);
         }
 
         private void btnColorLeft_ValueChanged(object sender, bool value)

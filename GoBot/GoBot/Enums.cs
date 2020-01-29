@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-
-namespace GoBot
+﻿namespace GoBot
 {
     public enum SensAR
     {
@@ -81,14 +76,14 @@ namespace GoBot
     {
         PowerSensorColorBuoyLeft = 1,
         PowerSensorColorBuoyRight = 2,
-        MakeVacuumFrontLeft = 11,
-        MakeVacuumFrontRight = 12,
-        MakeVacuumBackLeft = 13,
-        MakeVacuumBackRight = 14,
-        OpenVacuumFrontLeft = 20,
-        OpenVacuumFrontRight = 21,
-        OpenVacuumBackLeft = 22,
-        OpenVacuumBackRight = 23
+        MakeVacuumLeftFront = 11,
+        MakeVacuumRightFront = 12,
+        MakeVacuumLeftBack = 13,
+        MakeVacuumRightBack = 14,
+        OpenVacuumLeftFront = 20,
+        OpenVacuumRightFront = 21,
+        OpenVacuumLeftBack = 22,
+        OpenVacuumRightBack = 23
     }
 
     public enum SensorOnOffID
