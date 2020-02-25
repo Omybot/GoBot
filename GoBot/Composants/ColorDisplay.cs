@@ -17,10 +17,11 @@ namespace Composants
         /// Détermine la couleur actuellement affichée
         /// </summary>
         /// <param name="color">Couleur affichée</param>
-        public void SetColor(ColorPlus color)
+        public void SetColor(Color c)
         {
             this.InvokeAuto(() =>
             {
+                ColorPlus color = c;
                 lblR.Text = color.Red.ToString();
                 lblG.Text = color.Green.ToString();
                 lblB.Text = color.Blue.ToString();
