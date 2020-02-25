@@ -37,7 +37,9 @@ namespace Composants
         {
             for(int i = 0; i < 8; i++)
             {
-                Graphs[i].AddPoint((value & 0x1) > 0);
+                if (Labels[i].Text != "-")
+                    Graphs[i].AddPoint((value & 0x1) > 0);
+
                 value = (Byte)(value >> 1);
             }
         }

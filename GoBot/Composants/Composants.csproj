@@ -195,12 +195,6 @@
     <None Include="img\SwitchOn.png" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="img\FlecheBasGris.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="img\FlecheHautGris.png" />
-  </ItemGroup>
-  <ItemGroup>
     <None Include="img\BatHigh.PNG" />
   </ItemGroup>
   <ItemGroup>
