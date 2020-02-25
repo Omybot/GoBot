@@ -524,11 +524,6 @@ namespace GoBot
             }
         }
 
-        public override void Reset()
-        {
-            // TODO
-        }
-
         public override bool ReadStartTrigger()
         {
             return true;

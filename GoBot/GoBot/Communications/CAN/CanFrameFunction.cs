@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-
-namespace GoBot.Communications.CAN
+﻿namespace GoBot.Communications.CAN
 {
     public enum CanFrameFunction
     {
@@ -36,6 +31,8 @@ namespace GoBot.Communications.CAN
         Debug = 0xF0,
         DebugAsk = 0xF1,
         DebugResponse = 0xF2,
+        Buffer = 0xF3, // TODO2020
+        BatterieVoltage = 0xF5 // TODO2020
     }
 
     public enum CanBoard
@@ -46,6 +43,7 @@ namespace GoBot.Communications.CAN
         CanServo3 = 0x03,
         CanServo4 = 0x04,
         CanServo5 = 0x05,
-        CanServo6 = 0x06
+        CanServo6 = 0x06,
+        CanAlim = 0x10
     }
 }

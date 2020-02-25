@@ -52,24 +52,6 @@ namespace GoBot.Communications.UDP
                 case UdpFrameFunction.TestConnexion:
                     output = "Test connexion";
                     break;
-                case UdpFrameFunction.TensionBatteries:
-                    output = "Tension batteries = {0-1}V";
-                    if (parameters != null)
-                    {
-                        output = ReplaceParam(output, (parameters[0] / 100.0).ToString("0.00"));
-                    }
-                    break;
-                case UdpFrameFunction.Reset:
-                    output = "Envoi Reset";
-                    break;
-                case UdpFrameFunction.Buzzer:
-                    output = "Buzzer fréquence = {0-1}Hz, volume={2}";
-                    if (parameters != null)
-                    {
-                        output = ReplaceParam(output, parameters[0].ToString());
-                        output = ReplaceParam(output, parameters[1].ToString());
-                    }
-                    break;
                 case UdpFrameFunction.DemandeCapteurOnOff:
                     output = "Demande capteur {0}";
                     if (parameters != null)
@@ -198,10 +180,6 @@ namespace GoBot.Communications.UDP
                     {
                         output = ReplaceParam(output, NameFinder.GetName((MotorID)parameters[0]));
                     }
-                    break;
-                case UdpFrameFunction.CommandeServo:
-                    output = "Commande servomoteur";
-                    // TODO
                     break;
                 case UdpFrameFunction.Deplace:
                     output = "{0} sur {1-2} mm";
@@ -385,23 +363,6 @@ namespace GoBot.Communications.UDP
                     if (parameters != null)
                     {
                         output = ReplaceParam(output, parameters[0].ToString());
-                    }
-                    break;
-                case UdpFrameFunction.ChangementBaudrateUART:
-                    output = "Changement baudrate UART : {0} bauds";
-                    if (parameters != null)
-                    {
-                        output = ReplaceParam(output, ((ServoBaudrate)parameters[0]).ToString().Substring(1));
-                    }
-                    break;
-                case UdpFrameFunction.AffichageLCD:
-                    output = "Affichage message LCD : ";
-                    for (int i = 0; i < 32; i++)
-                        output += "{" + i + "}";
-                    if (parameters != null)
-                    {
-                        for (int i = 0; i < 32; i++)
-                            output = ReplaceParam(output, ((char)parameters[i]).ToString());
                     }
                     break;
                 case UdpFrameFunction.EnvoiCAN:

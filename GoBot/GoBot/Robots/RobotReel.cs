@@ -11,6 +11,7 @@ using System.Threading;
 using GoBot.Threading;
 using GoBot.Communications.UDP;
 using GoBot.BoardContext;
+using GoBot.Communications.CAN;
 
 namespace GoBot
 {
@@ -114,7 +115,7 @@ namespace GoBot
             }
         }
 
-        void RecGoBot_JackChange(bool state)
+        private void SetStartTrigger(bool state)
         {
             if (!state && StartTriggerEnable)
             {
@@ -130,10 +131,12 @@ namespace GoBot
         {
             Historique = new Historique(IDRobot);
 
-            _asserConnection.FrameReceived += new UDPConnection.NewFrameDelegate(ReceptionMessage);
+            _asserConnection.FrameReceived += ReceptionUdpMessage;
 
             if (this == Robots.MainRobot)
-                Connections.ConnectionIO.FrameReceived += new UDPConnection.NewFrameDelegate(ReceptionMessage);
+                Connections.ConnectionIO.FrameReceived += ReceptionUdpMessage;
+
+            Connections.ConnectionsCan[CanBoard.CanAlim].FrameReceived += ReceptionCanMessage;
 
             if (this == Robots.MainRobot)
             {
@@ -154,8 +157,6 @@ namespace GoBot
 
             PositionsHistorical = new List<Position>();
             _asserConnection.SendMessage(UdpFrameFactory.DemandePositionContinue(100, this));
-
-            //TODO2020AllDevices.RecGoBot.JackChange += RecGoBot_JackChange;
         }
 
         public override Color ReadSensorColor(SensorColorID sensor, bool wait = true)
@@ -196,7 +197,18 @@ namespace GoBot
             //TODO2020AllDevices.RecGoBot.Buzz(0, 200);
         }
 
-        public void ReceptionMessage(Frame frame)
+        public void ReceptionCanMessage(Frame frame)
+        {
+
+            switch ((CanFrameFunction)frame[1])
+            {
+                case CanFrameFunction.BatterieVoltage:
+                    BatterieVoltage = (double)(frame[2] * 256 + frame[3]) / 100.0;
+                    break;
+            }
+        }
+
+        public void ReceptionUdpMessage(Frame frame)
         {
             // Analyser la trame reçue
 
@@ -320,14 +332,14 @@ namespace GoBot
 
                     bool newState = frame[3] > 0 ? true : false;
 
+                    if (sensorOnOff == SensorOnOffID.StartTrigger)
+                        SetStartTrigger(newState);
+
                     if (newState != SensorsOnOffValue[sensorOnOff])
                         OnSensorOnOffChanged(sensorOnOff, newState);
 
                     _lockSensorOnOff[sensorOnOff]?.Release();
 
-                    break;
-                case UdpFrameFunction.TensionBatteries:
-                    BatterieVoltage = (double)(frame[2] * 256 + frame[3]) / 100.0;
                     break;
                 case UdpFrameFunction.RetourValeursNumeriques:
                     Board numericBoard = (Board)frame[0];
@@ -661,14 +673,6 @@ namespace GoBot
         {
             // TODOEACHYEAR : couper tout manuellement
             Stop(StopMode.Freely);
-        }
-
-        public override void Reset()
-        {
-            Frame frame = UdpFrameFactory.ResetRecMove();
-            _asserConnection.SendMessage(frame);
-
-            Thread.Sleep(1500);
         }
 
         public override bool ReadStartTrigger()

@@ -4,9 +4,6 @@
     {
         Debug = 0xEE,
         TestConnexion = 0xF0,
-        TensionBatteries = 0xF5,
-        Reset = 0xF1,
-        Buzzer = 0xF3,
 
         DemandeCapteurOnOff = 0x74,
         RetourCapteurOnOff = 0x75,
@@ -28,8 +25,6 @@
         MoteurStop = 0x69,
         MoteurFin = 0x70,
         MoteurBlocage = 0x71,
-
-        CommandeServo = 0x60,
 
         Deplace = 0x01,
         Pivot = 0x03,
@@ -65,15 +60,9 @@
         ReponseLidar = 0xA3,
         EnvoiUart2 = 0xA4,
         RetourUart2 = 0xA5,
-        ChangementBaudrateUART = 0x61,
-
-        AffichageLCD = 0xB0,
 
         EnvoiCAN = 0xC0,
-        ReponseCAN = 0xC1,
-
-        DetectionBalise = 0xE4,
-        DetectionBaliseRapide = 0xE5
+        ReponseCAN = 0xC1
     }
 
     public enum ServoFunction

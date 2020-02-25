@@ -90,7 +90,6 @@ namespace GoBot
         public abstract void Init();
         public abstract void DeInit();
         public abstract void EnablePower(bool on);
-        public abstract void Reset();
         public abstract List<double>[] DiagnosticCpuPwm(int valuesCount);
         public abstract List<int>[] DiagnosticPID(int steps, SensAR sens, int valuesCount);
 

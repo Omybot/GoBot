@@ -178,16 +178,6 @@ namespace GoBot.Communications.UDP
             return new Frame(tab);
         }
 
-        static public Frame ChangementBaudrate(ServoBaudrate baudrate)
-        {
-            byte[] tab = new byte[3];
-            tab[0] = (byte)Board.RecIO;
-            tab[1] = (byte)UdpFrameFunction.ChangementBaudrateUART;
-            tab[2] = (byte)baudrate;
-
-            return new Frame(tab);
-        }
-
         static public Frame Deplacer(SensAR sens, int distance, Robot robot)
         {
             byte[] tab = new byte[5];
@@ -334,14 +324,6 @@ namespace GoBot.Communications.UDP
 
             Frame retour = new Frame(tab);
             return retour;
-        }
-
-        static public Frame ResetRecMove()
-        {
-            byte[] tab = new byte[2];
-            tab[0] = (byte)Board.RecMove;
-            tab[1] = (byte)UdpFrameFunction.Reset;
-            return new Frame(tab);
         }
 
         static public Frame DemandePosition(Robot robot)
