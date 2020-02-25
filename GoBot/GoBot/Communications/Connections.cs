@@ -13,12 +13,13 @@ namespace GoBot.Communications
     {
         private static ThreadLink _linkTestConnections;
 
-        private static Dictionary<CanBoard, CanSubConnection> _connectionCanServo;
+        private static Dictionary<CanBoard, CanSubConnection> _connectionsCan;
+
 
         public static UDPConnection ConnectionMove { get; set; }
         public static UDPConnection ConnectionIO { get; set; }
         public static UDPConnection ConnectionCanBridge { get; set; }
-        public static Dictionary<CanBoard, CanSubConnection> ConnectionsCanServo { get { return _connectionCanServo; } }
+        public static Dictionary<CanBoard, CanSubConnection> ConnectionsCan { get { return _connectionsCan; } }
 
         public static CanConnection ConnectionCan { get; set; }
 
@@ -48,7 +49,7 @@ namespace GoBot.Communications
         /// </summary>
         public static void Init()
         {
-            _connectionCanServo = new Dictionary<CanBoard, CanSubConnection>();
+            _connectionsCan = new Dictionary<CanBoard, CanSubConnection>();
 
             EnableConnection = new Dictionary<Board, bool>();
             UDPBoardConnection = new Dictionary<Board, Connection>();
@@ -65,14 +66,15 @@ namespace GoBot.Communications
             
             ConnectionCan = new CanConnection(Board.RecCan);
             
-            _connectionCanServo.Add(CanBoard.CanServo1, new CanSubConnection(ConnectionCan, CanBoard.CanServo1));
-            _connectionCanServo.Add(CanBoard.CanServo2, new CanSubConnection(ConnectionCan, CanBoard.CanServo2));
-            _connectionCanServo.Add(CanBoard.CanServo3, new CanSubConnection(ConnectionCan, CanBoard.CanServo3));
-            _connectionCanServo.Add(CanBoard.CanServo4, new CanSubConnection(ConnectionCan, CanBoard.CanServo4));
-            _connectionCanServo.Add(CanBoard.CanServo5, new CanSubConnection(ConnectionCan, CanBoard.CanServo5));
-            _connectionCanServo.Add(CanBoard.CanServo6, new CanSubConnection(ConnectionCan, CanBoard.CanServo6));
+            _connectionsCan.Add(CanBoard.CanServo1, new CanSubConnection(ConnectionCan, CanBoard.CanServo1));
+            _connectionsCan.Add(CanBoard.CanServo2, new CanSubConnection(ConnectionCan, CanBoard.CanServo2));
+            _connectionsCan.Add(CanBoard.CanServo3, new CanSubConnection(ConnectionCan, CanBoard.CanServo3));
+            _connectionsCan.Add(CanBoard.CanServo4, new CanSubConnection(ConnectionCan, CanBoard.CanServo4));
+            _connectionsCan.Add(CanBoard.CanServo5, new CanSubConnection(ConnectionCan, CanBoard.CanServo5));
+            _connectionsCan.Add(CanBoard.CanServo6, new CanSubConnection(ConnectionCan, CanBoard.CanServo6));
+            _connectionsCan.Add(CanBoard.CanAlim, new CanSubConnection(ConnectionCan, CanBoard.CanAlim));
 
-            _connectionCanServo.Values.ToList().ForEach(o => AllConnections.Add(o));
+            _connectionsCan.Values.ToList().ForEach(o => AllConnections.Add(o));
 
             // En remplacement des tests de connexion des ConnexionCheck, pour les syncroniser
             _linkTestConnections = ThreadManager.CreateThread(link => TestConnections());
@@ -162,7 +164,7 @@ namespace GoBot.Communications
 
             foreach (CanBoard c in Enum.GetValues(typeof(CanBoard)))
             {
-                if (_connectionCanServo.ContainsKey(c) && _connectionCanServo[c] == conn)
+                if (_connectionsCan.ContainsKey(c) && _connectionsCan[c] == conn)
                     output = c;
             }
 

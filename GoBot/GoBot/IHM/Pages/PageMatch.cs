@@ -36,12 +36,13 @@ namespace GoBot.IHM.Pages
                 SetPicImage(picIO, Connections.ConnectionIO.Connected);
                 SetPicImage(picMove, Connections.ConnectionMove.Connected);
                 SetPicImage(picCAN, Connections.ConnectionCan.Connected);
-                SetPicImage(picServo1, Connections.ConnectionsCanServo[Communications.CAN.CanBoard.CanServo1].Connected);
-                SetPicImage(picServo2, Connections.ConnectionsCanServo[Communications.CAN.CanBoard.CanServo2].Connected);
-                SetPicImage(picServo3, Connections.ConnectionsCanServo[Communications.CAN.CanBoard.CanServo3].Connected);
-                SetPicImage(picServo4, Connections.ConnectionsCanServo[Communications.CAN.CanBoard.CanServo4].Connected);
-                SetPicImage(picServo5, Connections.ConnectionsCanServo[Communications.CAN.CanBoard.CanServo5].Connected);
-                SetPicImage(picServo6, Connections.ConnectionsCanServo[Communications.CAN.CanBoard.CanServo6].Connected);
+                SetPicImage(picServo1, Connections.ConnectionsCan[Communications.CAN.CanBoard.CanServo1].Connected);
+                SetPicImage(picServo2, Connections.ConnectionsCan[Communications.CAN.CanBoard.CanServo2].Connected);
+                SetPicImage(picServo3, Connections.ConnectionsCan[Communications.CAN.CanBoard.CanServo3].Connected);
+                SetPicImage(picServo4, Connections.ConnectionsCan[Communications.CAN.CanBoard.CanServo4].Connected);
+                SetPicImage(picServo5, Connections.ConnectionsCan[Communications.CAN.CanBoard.CanServo5].Connected);
+                SetPicImage(picServo6, Connections.ConnectionsCan[Communications.CAN.CanBoard.CanServo6].Connected);
+                SetPicImage(picServo6, Connections.ConnectionsCan[Communications.CAN.CanBoard.CanAlim].Connected);
 
                 bool jack = Robots.MainRobot.ReadStartTrigger();
                 SetPicImage(picJack, jack);
@@ -67,18 +68,20 @@ namespace GoBot.IHM.Pages
                 SetPicImage(picMove, connected);
             else if (sender == Connections.ConnectionCan)
                 SetPicImage(picCAN, connected);
-            else if (sender == Connections.ConnectionsCanServo[Communications.CAN.CanBoard.CanServo1])
+            else if (sender == Connections.ConnectionsCan[Communications.CAN.CanBoard.CanServo1])
                 SetPicImage(picServo1, connected);
-            else if (sender == Connections.ConnectionsCanServo[Communications.CAN.CanBoard.CanServo2])
+            else if (sender == Connections.ConnectionsCan[Communications.CAN.CanBoard.CanServo2])
                 SetPicImage(picServo2, connected);
-            else if (sender == Connections.ConnectionsCanServo[Communications.CAN.CanBoard.CanServo3])
+            else if (sender == Connections.ConnectionsCan[Communications.CAN.CanBoard.CanServo3])
                 SetPicImage(picServo3, connected);
-            else if (sender == Connections.ConnectionsCanServo[Communications.CAN.CanBoard.CanServo4])
+            else if (sender == Connections.ConnectionsCan[Communications.CAN.CanBoard.CanServo4])
                 SetPicImage(picServo4, connected);
-            else if (sender == Connections.ConnectionsCanServo[Communications.CAN.CanBoard.CanServo5])
+            else if (sender == Connections.ConnectionsCan[Communications.CAN.CanBoard.CanServo5])
                 SetPicImage(picServo5, connected);
-            else if (sender == Connections.ConnectionsCanServo[Communications.CAN.CanBoard.CanServo6])
+            else if (sender == Connections.ConnectionsCan[Communications.CAN.CanBoard.CanServo6])
                 SetPicImage(picServo6, connected);
+            else if (sender == Connections.ConnectionsCan[Communications.CAN.CanBoard.CanAlim])
+                SetPicImage(picAlim, connected);
         }
 
         private void GrosRobot_ChangementEtatCapteurOnOff(SensorOnOffID capteur, bool etat)

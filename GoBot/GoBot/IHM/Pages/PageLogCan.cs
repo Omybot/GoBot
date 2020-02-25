@@ -46,12 +46,13 @@ namespace GoBot.IHM.Pages
 
             _boardColor = new Dictionary<CanBoard, Color>();
             _boardColor.Add(CanBoard.PC, Color.FromArgb(180, 245, 245));
-            _boardColor.Add(CanBoard.CanServo1, Color.FromArgb(130, 255, 220));
-            _boardColor.Add(CanBoard.CanServo2, Color.FromArgb(160, 255, 220));
-            _boardColor.Add(CanBoard.CanServo3, Color.FromArgb(190, 255, 220));
-            _boardColor.Add(CanBoard.CanServo4, Color.FromArgb(220, 255, 220));
-            _boardColor.Add(CanBoard.CanServo5, Color.FromArgb(250, 255, 220));
-            _boardColor.Add(CanBoard.CanServo6, Color.FromArgb(100, 255, 220));
+            _boardColor.Add(CanBoard.CanServo1, Color.FromArgb(70, 255, 220));
+            _boardColor.Add(CanBoard.CanServo2, Color.FromArgb(100, 255, 220));
+            _boardColor.Add(CanBoard.CanServo3, Color.FromArgb(130, 255, 220));
+            _boardColor.Add(CanBoard.CanServo4, Color.FromArgb(160, 255, 220));
+            _boardColor.Add(CanBoard.CanServo5, Color.FromArgb(190, 255, 220));
+            _boardColor.Add(CanBoard.CanServo6, Color.FromArgb(220, 255, 220));
+            _boardColor.Add(CanBoard.CanAlim, Color.FromArgb(250, 255, 220));
 
             _boxLists = new List<CheckedListBox>();
             _boxLists.Add(lstSender);
