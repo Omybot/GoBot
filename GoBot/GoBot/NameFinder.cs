@@ -203,26 +203,6 @@ namespace GoBot
         }
 
         /// <summary>
-        /// Retourne le nom usuel d'un capteur
-        /// </summary>
-        /// <param name="sensor">Capteur à nommer</param>
-        /// <returns>Nom du capteur</returns>
-        public static String GetName(CapteurID sensor)
-        {
-            switch (sensor)
-            {
-                case CapteurID.Balise:
-                    return "balise";
-                case CapteurID.BaliseRapide1:
-                    return "balise capteur 1";
-                case CapteurID.BaliseRapide2:
-                    return "balise capteur 2";
-                default:
-                    return sensor.ToString();
-            }
-        }
-
-        /// <summary>
         /// Retourne le nom usuel d'un capteur couleur
         /// </summary>
         /// <param name="sensor">Capteur couleur à nommer</param>

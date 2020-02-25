@@ -65,13 +65,6 @@
         AvailableOnRecMove12 = 12 // RecMove
     }
 
-    public enum CapteurID
-    {
-        Balise = 1,
-        BaliseRapide1 = 2,
-        BaliseRapide2 = 3
-    }
-
     public enum ActuatorOnOffID
     {
         PowerSensorColorBuoyLeft = 1,

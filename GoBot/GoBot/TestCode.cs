@@ -15,11 +15,10 @@ namespace GoBot
         public static void TestEnums()
         {
             StringBuilder errors = new StringBuilder();
-            errors.AppendLine("Les valeurs d'énumerations suivantes n'ont pas de traduction litéralle dans le nommeur :");
+            errors.AppendLine("Les valeurs d'énumerations suivantes n'ont pas de traduction littérale dans le nommeur :");
             bool error = false;
 
             List<Type> typesEnum = new List<Type>();
-            typesEnum.Add(typeof(CapteurID));
             typesEnum.Add(typeof(SensorOnOffID));
             typesEnum.Add(typeof(ActuatorOnOffID));
             typesEnum.Add(typeof(ServomoteurID));

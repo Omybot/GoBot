@@ -83,7 +83,6 @@
     <Compile Include="Actions\Asservissement\ActionVitessePivot.cs" />
     <Compile Include="Actions\ActionMoteur.cs" />
     <Compile Include="Actions\ActionOnOff.cs" />
-    <Compile Include="Actions\ActionCapteur.cs" />
     <Compile Include="Actions\Deplacement\ActionRecallage.cs" />
     <Compile Include="Actions\ActionServo.cs" />
     <Compile Include="Actions\ITimeableAction.cs" />
